@@ -79,6 +79,8 @@
 		return
 	if(owner == attacker || !isliving(attacker))
 		return
+	if(isnull(owner.client) && isnull(owner.ai_controller))
+		return
 	if(owner.stat != CONSCIOUS || owner.incapacitated())
 		return
 
@@ -122,33 +124,51 @@
 
 	addtimer(CALLBACK(src, PROC_REF(start_combat)), 0.5 SECONDS, TIMER_DELETE_ME)
 
-/datum/combat_instance/proc/factions_remaining()
-	var/list/factions_left = list()
+/datum/combat_instance/proc/enemies_remaining()
+	var/list/mob/living/fighters_left = list()
 	for(var/mob/living/remaining as anything in get_fighting_mobs())
 		if(can_fight(remaining))
-			factions_left |= remaining.faction
+			fighters_left += remaining
 
-	return factions_left - FACTION_NEUTRAL
+	var/i = 1
+	var/j = 1
+	while(i <= length(fighters_left) - 1)
+		j = i + 1
+		while(j <= length(fighters_left))
+			if(fighters_left[i].faction_check_atom(fighters_left[j]))
+				return TRUE
+			j += 1
+		i += 1
+
+	return FALSE
 
 /datum/combat_instance/proc/get_fighting_mobs()
 	var/list/mobs = list()
 	mobs += attacked
-	for(var/turf/field_turf as anything in field.chronofield.edge_turfs | field.chronofield.field_turfs)
+	for(var/turf/field_turf as anything in field.chronofield.edge_turfs + field.chronofield.field_turfs)
 		for(var/mob/living/fighter in field_turf)
-			mobs |= fighter
+			if(fighter == attacked)
+				continue
+			mobs += fighter
 
 	return mobs
 
 /datum/combat_instance/proc/can_fight(mob/living/guy)
-	if(HAS_TRAIT(guy, TRAIT_CRITICAL_CONDITION) \
-		|| guy.stat == DEAD \
-		|| (guy.incapacitated() && !HAS_TRAIT_FROM(guy, TRAIT_IMMOBILIZED, "stun-trait")) \
-	)
+#ifndef TESTING
+	if(isnull(guy.client) && isnull(guy.ai_controller))
+		return FALSE
+#endif
+	if(HAS_TRAIT(guy, TRAIT_CRITICAL_CONDITION))
+		return FALSE
+	if(guy.stat == DEAD)
+		return FALSE
+	// this check is a hack because timestop "stuns" you
+	if(guy.incapacitated() && !HAS_TRAIT_FROM(guy, TRAIT_IMMOBILIZED, "stun-trait"))
 		return FALSE
 	return TRUE
 
 /datum/combat_instance/proc/start_combat()
-	if(length(factions_remaining()) <= 1)
+	if(!enemies_remaining())
 		end_combat()
 		return
 
@@ -163,7 +183,7 @@
 	addtimer(CALLBACK(src, PROC_REF(start_turn), turn_one_guy), 0.1 SECONDS, TIMER_DELETE_ME)
 
 /datum/combat_instance/proc/start_turn(mob/living/turn_guy)
-	if(length(factions_remaining()) <= 1)
+	if(!enemies_remaining())
 		end_combat()
 		return
 
@@ -171,8 +191,8 @@
 
 	turn_guy.add_filter("your_turn_filter", 1, list("type" = "outline", "size" = 2, "color" = COLOR_GOLD, "alpha" = 0))
 	var/the_filter = turn_guy.get_filter("your_turn_filter")
-	animate(the_filter, alpha = 200, time = 0.5 SECONDS)
-	animate(alpha = 0, time = 0.5 SECONDS, loop = 2)
+	animate(the_filter, alpha = 200, time = 0.3 SECONDS, loop = 2)
+	animate(alpha = 0, time = 0.3 SECONDS)
 
 	if(!can_fight(turn_guy))
 		turn_guy.balloon_alert(turn_guy, "turn skipped!")
@@ -282,15 +302,18 @@
 
 	REMOVE_TRAIT(combatant, TRAIT_TURN_COMBATANT, REF(field.chronofield))
 
-	if(length(factions_remaining()) <= 1)
+	if(!enemies_remaining())
 		end_combat()
 
-/mob/living/carbon/human/Initialize(mapload)
+/mob/living/Initialize(mapload)
 	. = ..()
 	make_turn_based()
 
-/mob/living/carbon/human/proc/make_turn_based()
+/mob/living/proc/make_turn_based()
 	GRANT_ACTION(/datum/action/cooldown/spell/timestop/turn_based)
+
+/mob/living/silicon/ai/make_turn_based()
+	return
 
 /mob/living/carbon/human/dummy/make_turn_based()
 	return
