@@ -1,0 +1,5 @@
+author: "SyncIt21,Pickle-Coding"
+delete-after: True
+changes:
+  - bugfix: "space heater(including improvised) turns off when cell is drained"
+  - bugfix: "optimized power usage for both improvised and main space heater. Improvised heater now works & uses beaker heat capacity"
