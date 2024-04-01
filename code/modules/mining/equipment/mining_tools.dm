@@ -216,6 +216,7 @@
 	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 	wound_bonus = 10
+	can_crit = FALSE
 
 /obj/item/trench_tool/get_all_tool_behaviours()
 	return list(TOOL_MINING, TOOL_SHOVEL, TOOL_WRENCH)

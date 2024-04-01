@@ -41,6 +41,9 @@
 
 	uses_integrity = TRUE
 
+	/// Can get critical hits
+	var/can_crit = TRUE
+
 /obj/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, obj_flags))
 		if ((obj_flags & DANGEROUS_POSSESSION) && !(vval & DANGEROUS_POSSESSION))
