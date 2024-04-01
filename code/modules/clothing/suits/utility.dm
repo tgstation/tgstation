@@ -169,6 +169,11 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 
+/obj/item/clothing/head/utility/radiation/Initialize(mapload)
+	. = ..()
+	if(flags_inv & HIDEFACE)
+		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+
 /datum/armor/utility_radiation
 	bio = 60
 	fire = 30
