@@ -13,7 +13,7 @@
 /// When we enter crit, prepare for a zenkai boost
 /obj/item/organ/internal/heart/saiyan/proc/on_stat_changed(mob/living/source, new_stat)
 	SIGNAL_HANDLER
-	if (new_stat != UNCONSCIOUS)
+	if (new_stat != HARD_CRIT)
 		return
 	source.apply_status_effect(/datum/status_effect/saiyan_survivor_tracker)
 
