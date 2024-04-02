@@ -119,7 +119,7 @@ export const DestructiveAnalyzer = (props) => {
                 act('deconstruct', { deconstruct_id: node.node_id })
               }
             >
-              node.node_name
+              {node.node_name}
             </Button.Confirm>
           ))}
         </Section>
