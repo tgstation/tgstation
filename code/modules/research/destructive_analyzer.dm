@@ -115,6 +115,12 @@
 				say("Destructive analysis failed!")
 			return TRUE
 
+//Let emags in on a right click
+/obj/machinery/rnd/destructive_analyzer/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	if(is_right_clicking && istype(tool, /obj/item/card/emag))
+		return NONE
+	return ..()
+
 //This allows people to put syndicate screwdrivers in the machine. Secondary act still passes.
 /obj/machinery/rnd/destructive_analyzer/screwdriver_act(mob/living/user, obj/item/tool)
 	return FALSE
