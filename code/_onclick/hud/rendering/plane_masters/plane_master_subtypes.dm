@@ -261,6 +261,7 @@
 	blend_mode = BLEND_ADD
 	render_target = GRAVITY_PULSE_RENDER_TARGET
 	render_relay_planes = list()
+	critical = PLANE_CRITICAL_DISPLAY
 	// We start out hidden
 	start_hidden = TRUE
 	allow_rendering_in_place = FALSE

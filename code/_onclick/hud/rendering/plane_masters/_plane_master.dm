@@ -271,6 +271,15 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /atom/movable/screen/plane_master/proc/unhide_plane(mob/enfold)
 	force_hidden = FALSE
 	show_to(enfold)
+	if(hidden_by_distance == NOT_HIDDEN)
+		return
+	// If we're being hid by something else, we're gonna have another go at setting it up
+	var/turf/viewing = get_turf(enfold)
+	var/lowest_possible_offset = GET_LOWEST_STACK_OFFSET(viewing.z)
+	var/multiz_boundary = enfold?.client?.prefs?.read_preference(/datum/preference/numeric/multiz_performance)
+	// gotta reset hidden_by_distance so the proc can reapply it
+	hidden_by_distance = NOT_HIDDEN
+	set_distance_from_owner(enfold, distance_from_owner, multiz_boundary, lowest_possible_offset)
 
 /// Mirrors our force hidden state to the hidden state of the plane that came before, assuming it's valid
 /// This allows us to mirror any hidden sets from before we were created, no matter how low that chance is
@@ -297,8 +306,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /atom/movable/screen/plane_master/proc/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset)
 	SHOULD_CALL_PARENT(TRUE)
 	distance_from_owner = new_distance
-	var/old_hidden = hidden_by_distance
-	#warn being unforce hid needs to rerun distance calcs (and not guarenteed show you)
 	// If we are above our owner's z layer nuke er
 	if(distance_from_owner > 0)
 		if(hidden_by_distance == HIDDEN_ABOVE)
@@ -342,6 +349,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		hide_from(relevant)
 		return FALSE
 	else if(hidden_by_distance != NOT_HIDDEN)
+		var/old_hidden = hidden_by_distance
 		hidden_by_distance = NOT_HIDDEN
 		if(old_hidden == HIDDEN_ABOVE && (critical & PLANE_CRITICAL_SOURCE) || \
 			old_hidden == HIDDEN_BELOW && (critical & PLANE_CRITICAL_DISPLAY))
