@@ -19569,9 +19569,7 @@
 /turf/open/floor/plating,
 /area/station/security)
 "hMb" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/effect/turf_decal/tile/yellow/opposingcorners{
 	dir = 8
@@ -73439,9 +73437,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "xug" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/effect/turf_decal/tile/yellow/opposingcorners{
 	dir = 8
