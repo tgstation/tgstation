@@ -31,7 +31,7 @@
 		trigger_organ_action(TRIGGER_FORCE_AVAILABLE)
 
 /obj/item/organ/internal/monster_core/regenerative_core/on_triggered_internal()
-	owner.revive(HEAL_ALL)
+	owner.revive(HEAL_DAMAGE)
 	qdel(src)
 
 /// Log applications and apply moodlet.
