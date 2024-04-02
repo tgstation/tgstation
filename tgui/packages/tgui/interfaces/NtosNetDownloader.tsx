@@ -74,9 +74,7 @@ export const NtosNetDownloader = (props) => {
       ? // If we have a query, search everything for it.
         programs.filter(search)
       : // Otherwise, show respective programs for the category.
-        programs.filter(
-          (program: ProgramData) => program.category === selectedCategory,
-        );
+        programs.filter((program) => program.category === selectedCategory);
   // This sorts all programs in the lists by name and compatibility
   items = sortBy(
     (program: ProgramData) => !program.compatible,
@@ -84,9 +82,7 @@ export const NtosNetDownloader = (props) => {
   )(items);
   if (!emagged) {
     // This filters the list to only contain verified programs
-    items = items.filter(
-      (program: ProgramData) => program.verifiedsource === 1,
-    );
+    items = items.filter((program) => program.verifiedsource === 1);
   }
   const disk_free_space = downloading
     ? disk_size - Number(toFixed(disk_used + downloadcompletion))
