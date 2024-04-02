@@ -2,12 +2,16 @@ import { filterMap, sortBy } from 'common/collections';
 import { classes } from 'common/react';
 import { useState } from 'react';
 
+import { filter } from '../../../common/collections';
+import { flow } from '../../../common/fp';
+import { createSearch } from '../../../common/string';
 import { sendAct, useBackend } from '../../backend';
 import {
   Autofocus,
   Box,
   Button,
   Flex,
+  Input,
   LabeledList,
   Popper,
   Stack,
@@ -78,22 +82,27 @@ const CharacterControls = (props: {
   );
 };
 
-const ChoicedSelection = (props: {
-  name: string;
-  catalog: FeatureChoicedServerData;
-  selected: string;
-  supplementalFeature?: string;
-  supplementalValue?: unknown;
-  onClose: () => void;
-  onSelect: (value: string) => void;
-}) => {
+const ChoicedSelection = (
+  props: {
+    name: string;
+    catalog: FeatureChoicedServerData;
+    selected: string;
+    supplementalFeature?: string;
+    supplementalValue?: unknown;
+    onClose: () => void;
+    onSelect: (value: string) => void;
+  },
+  context,
+) => {
   const { act } = useBackend<PreferencesMenuData>();
 
   const { catalog, supplementalFeature, supplementalValue } = props;
+  const [searchText, searchTextSet] = useState(context, 'searchText', '');
 
   if (!catalog.icons) {
     return <Box color="red">Provided catalog had no icons!</Box>;
   }
+  console.log(catalog.icons);
 
   return (
     <Box
@@ -145,45 +154,63 @@ const ChoicedSelection = (props: {
 
         <Stack.Item overflowX="hidden" overflowY="scroll">
           <Autofocus>
+            <Input
+              placeholder="Write something"
+              width={'100%'}
+              onChange={(_, value) => {
+                searchTextSet(value);
+                console.log(searchText);
+              }}
+            />
             <Flex wrap>
-              {Object.entries(catalog.icons).map(([name, image], index) => {
-                return (
-                  <Flex.Item
-                    key={index}
-                    basis={`${CLOTHING_SELECTION_CELL_SIZE}px`}
-                    style={{
-                      padding: '5px',
-                    }}
-                  >
-                    <Button
-                      onClick={() => {
-                        props.onSelect(name);
-                      }}
-                      selected={name === props.selected}
-                      tooltip={name}
-                      tooltipPosition="right"
+              {searchInCatalog(searchText, catalog.icons).map(
+                ([name, image], index) => {
+                  return (
+                    <Flex.Item
+                      key={index}
+                      basis={`${CLOTHING_SELECTION_CELL_SIZE}px`}
                       style={{
-                        height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
-                        width: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                        padding: '5px',
                       }}
                     >
-                      <Box
-                        className={classes([
-                          'preferences32x32',
-                          image,
-                          'centered-image',
-                        ])}
-                      />
-                    </Button>
-                  </Flex.Item>
-                );
-              })}
+                      <Button
+                        onClick={() => {
+                          props.onSelect(name);
+                        }}
+                        selected={name === props.selected}
+                        tooltip={name}
+                        tooltipPosition="right"
+                        style={{
+                          height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                          width: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                        }}
+                      >
+                        <Box
+                          className={classes([
+                            'preferences32x32',
+                            image,
+                            'centered-image',
+                          ])}
+                        />
+                      </Button>
+                    </Flex.Item>
+                  );
+                },
+              )}
             </Flex>
           </Autofocus>
         </Stack.Item>
       </Stack>
     </Box>
   );
+};
+
+const searchInCatalog = (searchText = '', catalog) => {
+  const maybeSearch = createSearch<Record>(
+    searchText,
+    ([name, icons], index) => name,
+  );
+  return flow([searchText && filter(maybeSearch)])(Object.entries(catalog));
 };
 
 const GenderButton = (props: {
