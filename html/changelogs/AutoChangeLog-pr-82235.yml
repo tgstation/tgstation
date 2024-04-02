@@ -1,0 +1,5 @@
+author: "Bilbo367"
+delete-after: True
+changes:
+  - qol: "some experiments now give you more helpful hints at why your failing"
+  - code_imp: "changes around some experiment code to make it more understandable"
