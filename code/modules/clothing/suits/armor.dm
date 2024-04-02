@@ -667,7 +667,7 @@
 	bomb = 25
 	fire = 10
 	acid = 50
-	wound = 10
+	wound = 20
 
 /obj/item/clothing/suit/armor/riot/knight/warlord
 	name = "golden plate armor"
@@ -680,11 +680,11 @@
 	slowdown = 0.8
 
 /datum/armor/armor_warlord
-	melee = 60
-	bullet = 40
-	laser = 55
-	energy = 55
+	melee = 70
+	bullet = 60
+	laser = 70
+	energy = 70
 	bomb = 40
 	fire = 50
 	acid = 50
-	wound = 15
+	wound = 30
