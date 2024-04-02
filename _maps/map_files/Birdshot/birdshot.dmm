@@ -1031,6 +1031,9 @@
 /obj/structure/railing{
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron/small,
 /area/station/engineering/supermatter/room)
 "ayK" = (
@@ -3202,9 +3205,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold/orange/visible,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/machinery/meter,
 /turf/open/floor/iron/small,
 /area/station/engineering/supermatter/room)
@@ -15251,7 +15251,6 @@
 /turf/open/floor/iron/dark/small,
 /area/station/engineering/storage_shared)
 "gub" = (
-/obj/machinery/atmospherics/pipe/bridge_pipe/orange/visible,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
 	name = "Distro to Waste"
@@ -15262,6 +15261,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
 "gun" = (
@@ -16271,7 +16271,7 @@
 /turf/closed/wall,
 /area/station/maintenance/disposal/incinerator)
 "gKz" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/hidden,
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /turf/closed/wall/r_wall,
 /area/station/engineering/hallway)
 "gKC" = (
@@ -55054,7 +55054,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "sqg" = (
-/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden,
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /turf/closed/wall/r_wall,
 /area/station/engineering/hallway)
 "sqh" = (
