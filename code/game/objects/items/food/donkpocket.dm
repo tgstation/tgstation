@@ -21,9 +21,9 @@
 	/// The upper end for how long it takes to bake
 	var/baking_time_long = 30 SECONDS
 	/// The reagents added when microwaved. Needed since microwaving ignores food_reagents
-	var/static/list/added_reagents = list(/datum/reagent/medicine/omnizine = 6)
+	var/static/list/added_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	/// The reagents that most child types add when microwaved. Needed because you can't override static lists.
-	var/static/list/child_added_reagents = list(/datum/reagent/medicine/omnizine = 2)
+	var/static/list/child_added_reagents = list(/datum/reagent/consumable/nutriment = 1)
 
 /obj/item/food/donkpocket/make_bakeable()
 	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, added_reagents)
@@ -35,9 +35,8 @@
 	name = "warm Donk-pocket"
 	desc = "The heated food of choice for the seasoned traitor."
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/protein = 2,
-		/datum/reagent/medicine/omnizine = 6,
 	)
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtypes = GRAIN
@@ -84,9 +83,8 @@
 	desc = "The classic snack food, now maybe a bit too spicy."
 	icon_state = "donkpocketspicy"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/protein = 2,
-		/datum/reagent/medicine/omnizine = 2,
 		/datum/reagent/consumable/capsaicin = 5,
 	)
 	tastes = list("meat" = 2, "dough" = 2, "weird spices" = 2)
@@ -116,9 +114,8 @@
 	desc = "An east-asian take on the classic stationside snack, now steamy and warm."
 	icon_state = "donkpocketteriyaki"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/protein = 3,
-		/datum/reagent/medicine/omnizine = 2,
 		/datum/reagent/consumable/soysauce = 2,
 	)
 	tastes = list("meat" = 2, "dough" = 2, "soy sauce" = 2)
@@ -148,9 +145,8 @@
 	desc = "Delicious, cheesy, and even better when hot."
 	icon_state = "donkpocketpizza"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/protein = 2,
-		/datum/reagent/medicine/omnizine = 2,
 		/datum/reagent/consumable/tomatojuice = 2,
 	)
 	tastes = list("meat" = 2, "dough" = 2, "melty cheese"= 2)
@@ -169,7 +165,7 @@
 	warm_type = /obj/item/food/donkpocket/warm/honk
 	crafting_complexity = FOOD_COMPLEXITY_3
 	var/static/list/honk_added_reagents = list(
-		/datum/reagent/medicine/omnizine = 2,
+		/datum/reagent/consumable/nutriment = 1,
 		/datum/reagent/consumable/laughter = 6,
 	)
 
@@ -184,8 +180,7 @@
 	desc = "The award-winning donk-pocket, now warm and toasty."
 	icon_state = "donkpocketbanana"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 4,
-		/datum/reagent/medicine/omnizine = 2,
+		/datum/reagent/consumable/nutriment = 5,
 		/datum/reagent/consumable/banana = 4,
 		/datum/reagent/consumable/laughter = 6,
 	)
@@ -216,8 +211,7 @@
 	desc = "A relentlessly sweet donk-pocket, now warm and delicious."
 	icon_state = "donkpocketberry"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 4,
-		/datum/reagent/medicine/omnizine = 2,
+		/datum/reagent/consumable/nutriment = 5,
 		/datum/reagent/consumable/berryjuice = 3,
 	)
 	tastes = list("dough" = 2, "warm jam" = 2)
@@ -237,7 +231,7 @@
 
 	warm_type = /obj/item/food/donkpocket/warm/gondola
 	var/static/list/gondola_added_reagents = list(
-		/datum/reagent/medicine/omnizine = 2,
+		/datum/reagent/consumable/nutriment = 1,
 		/datum/reagent/gondola_mutation_toxin = 5,
 	)
 
@@ -252,9 +246,8 @@
 	desc = "The choice to use real gondola meat in the recipe is controversial, to say the least."
 	icon_state = "donkpocketgondola"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/protein = 2,
-		/datum/reagent/medicine/omnizine = 2,
 		/datum/reagent/gondola_mutation_toxin = 10,
 	)
 	tastes = list("meat" = 2, "dough" = 2, "inner peace" = 1)
