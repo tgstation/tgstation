@@ -20,21 +20,29 @@
 	var/location_type
 	///Where to draw the progress bar above the icon
 	var/offset_y
+	/// The progress visible to other players
+	var/cog
+	/// User mask for the cog
+	var/image/inverse_cog
 
-/datum/progressbar/New(mob/User, goal_number, atom/target)
+/datum/progressbar/New(mob/user, goal_number, atom/target)
 	. = ..()
 	if (!istype(target))
 		stack_trace("Invalid target [target] passed in")
 		qdel(src)
 		return
-	if(QDELETED(User) || !istype(User))
-		stack_trace("/datum/progressbar created with [isnull(User) ? "null" : "invalid"] user")
+	if(QDELETED(user) || !istype(user))
+		stack_trace("/datum/progressbar created with [isnull(user) ? "null" : "invalid"] user")
 		qdel(src)
 		return
 	if(!isnum(goal_number))
-		stack_trace("/datum/progressbar created with [isnull(User) ? "null" : "invalid"] goal_number")
+		stack_trace("/datum/progressbar created with [isnull(user) ? "null" : "invalid"] goal_number")
 		qdel(src)
 		return
+	if(isnull(user.client))
+		qdel(src)
+		return
+
 	goal = goal_number
 	bar_loc = target
 	location_type = bar_loc.type
@@ -44,9 +52,9 @@
 	offset_y = icon_offsets["y"]
 
 	bar = image('icons/effects/progressbar.dmi', bar_loc, "prog_bar_0", pixel_x = offset_x)
-	SET_PLANE_EXPLICIT(bar, ABOVE_HUD_PLANE, User)
+	SET_PLANE_EXPLICIT(bar, ABOVE_HUD_PLANE, user)
 	bar.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	user = User
+	src.user = user
 
 	LAZYADDASSOCLIST(user.progressbars, bar_loc, src)
 	var/list/bars = user.progressbars[bar_loc]
@@ -55,6 +63,17 @@
 	if(user.client)
 		user_client = user.client
 		add_prog_bar_image_to_client()
+	
+	cog = SSvis_overlays.add_vis_overlay(user, 
+		icon = 'icons/effects/progressbar.dmi',
+		iconstate = "cog",
+		plane = ABOVE_HUD_PLANE,
+		add_appearance_flags = APPEARANCE_UI_IGNORE_ALPHA,	
+	)
+
+	inverse_cog = image('icons/blanks/32x32.dmi', user, "nothing")
+	SET_PLANE_EXPLICIT(inverse_cog, ABOVE_HUD_PLANE, user)
+	user.add_overlay(inverse_cog)
 
 	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(on_user_delete))
 	RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(clean_user_client))
@@ -63,6 +82,9 @@
 
 /datum/progressbar/Destroy()
 	if(user)
+		SSvis_overlays.remove_vis_overlay(user, user.managed_vis_overlays)
+		user.cut_overlay(inverse_cog)
+
 		for(var/pb in user.progressbars[bar_loc])
 			var/datum/progressbar/progress_bar = pb
 			if(progress_bar == src || progress_bar.listindex <= listindex)
@@ -81,6 +103,7 @@
 
 	bar_loc = null
 	bar = null
+	cog = null
 
 	return ..()
 
@@ -141,6 +164,7 @@
 		bar.icon_state = "[bar.icon_state]_fail"
 
 	animate(bar, alpha = 0, time = PROGRESSBAR_ANIMATION_TIME)
+	animate(cog, alpha = 0, time = PROGRESSBAR_ANIMATION_TIME)
 
 	QDEL_IN(src, PROGRESSBAR_ANIMATION_TIME)
 
