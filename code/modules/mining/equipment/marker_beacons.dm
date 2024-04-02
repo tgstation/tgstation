@@ -100,9 +100,9 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	update_appearance()
 
 /obj/structure/marker_beacon/atom_deconstruct(disassembled = TRUE)
-	var/obj/item/stack/marker_beacon/M = new(loc)
-	M.picked_color = picked_color
-	M.update_appearance()
+	var/obj/item/stack/marker_beacon/beacon = new(loc)
+	beacon.picked_color = picked_color
+	beacon.update_appearance()
 
 /obj/structure/marker_beacon/examine(mob/user)
 	. = ..()

@@ -291,8 +291,8 @@
 
 
 /obj/structure/grille/atom_deconstruct(disassembled = TRUE)
-	var/obj/R = new rods_type(drop_location(), rods_amount)
-	transfer_fingerprints_to(R)
+	var/obj/rods = new rods_type(drop_location(), rods_amount)
+	transfer_fingerprints_to(rods)
 
 /obj/structure/grille/atom_break()
 	. = ..()

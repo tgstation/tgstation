@@ -39,8 +39,8 @@
 
 /obj/structure/filingcabinet/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/iron(loc, 2)
-	for(var/obj/item/I in src)
-		I.forceMove(loc)
+	for(var/obj/item/obj in src)
+		obj.forceMove(loc)
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/living/user, params)
 	var/list/modifiers = params2list(params)

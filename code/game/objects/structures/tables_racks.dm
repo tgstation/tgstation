@@ -298,14 +298,13 @@
 	return
 
 /obj/structure/table/atom_deconstruct(disassembled = TRUE)
-	var/turf/T = get_turf(src)
+	var/turf/target_turf = get_turf(src)
 	if(buildstack)
-		new buildstack(T, buildstackamount)
+		new buildstack(target_turf, buildstackamount)
 	else
-		for(var/i in custom_materials)
-			var/datum/material/M = i
-			new M.sheet_type(T, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
-		new framestack(T, framestackamount)
+		for(var/datum/material/mat in custom_materials)
+			new M.sheet_type(target_turf, FLOOR(custom_materials[mat] / SHEET_MATERIAL_AMOUNT, 1))
+		new framestack(target_turf, framestackamount)
 
 /obj/structure/table/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)

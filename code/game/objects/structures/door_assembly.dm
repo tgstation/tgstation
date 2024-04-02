@@ -364,18 +364,18 @@
 	qdel(source)
 
 /obj/structure/door_assembly/atom_deconstruct(disassembled = TRUE)
-	var/turf/T = get_turf(src)
+	var/turf/target_turf = get_turf(src)
 	if(!disassembled)
 		material_amt = rand(2,4)
-	new material_type(T, material_amt)
+	new material_type(target_turf, material_amt)
 	if(glass)
 		if(disassembled)
 			if(heat_proof_finished)
-				new /obj/item/stack/sheet/rglass(T)
+				new /obj/item/stack/sheet/rglass(target_turf)
 			else
-				new /obj/item/stack/sheet/glass(T)
+				new /obj/item/stack/sheet/glass(target_turf)
 		else
-			new /obj/item/shard(T)
+			new /obj/item/shard(target_turf)
 	if(mineral)
 		var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 		new mineral_path(T, 2)

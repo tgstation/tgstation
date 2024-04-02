@@ -182,13 +182,12 @@
 			construct.setDir(dir)
 			spawn_pipe = FALSE
 	else
-		var/turf/T = get_turf(src)
-		for(var/D in GLOB.cardinals)
-			if(D & dpdir)
-				var/obj/structure/disposalpipe/broken/P = new(T)
-				P.setDir(D)
+		var/turf/location = get_turf(src)
+		for(var/dir in GLOB.cardinals)
+			if(dir & dpdir)
+				var/obj/structure/disposalpipe/broken/pipe = new(location)
+				pipe.setDir(dir)
 	spew_forth()
-
 
 /obj/structure/disposalpipe/singularity_pull(S, current_size)
 	..()

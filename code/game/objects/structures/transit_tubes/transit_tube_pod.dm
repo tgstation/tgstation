@@ -41,9 +41,9 @@
 
 /obj/structure/transit_tube_pod/atom_deconstruct(disassembled = TRUE)
 	var/atom/location = get_turf(src)
-	var/obj/structure/c_transit_tube_pod/R = new/obj/structure/c_transit_tube_pod(location)
-	transfer_fingerprints_to(R)
-	R.setDir(dir)
+	var/obj/structure/c_transit_tube_pod/tube_pod = new/obj/structure/c_transit_tube_pod(location)
+	transfer_fingerprints_to(tube_pod)
+	tube_pod.setDir(dir)
 	empty_pod(location)
 
 /obj/structure/transit_tube_pod/ex_act(severity, target)

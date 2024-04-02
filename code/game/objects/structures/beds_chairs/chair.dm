@@ -40,9 +40,8 @@
 	if(buildstacktype)
 		new buildstacktype(loc,buildstackamount)
 	else
-		for(var/i in custom_materials)
-			var/datum/material/M = i
-			new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
+		for(var/datum/material/mat as anything in custom_materials)
+			new M.sheet_type(loc, FLOOR(custom_materials[mat] / SHEET_MATERIAL_AMOUNT, 1))
 
 /obj/structure/chair/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
