@@ -191,3 +191,29 @@
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous/gunner
 	rank = "Coruscant"
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval
+	name = "\improper Improvised sleeper"
+	desc = "A body bag poked with holes, used as a sleeping bag. someone seems to be sleeping inside of it."
+	density = FALSE
+	you_are_text = "You were a nobody before, until you were given a sword and the opportunity to rise up in ranks. If you put some effort, you can make it big!"
+	flavour_text = "Raiding some cretins while engaging in bloodsport and violence? what a deal. Stay together and pillage everything!"
+	icon = 'icons/obj/medical/bodybag.dmi'
+	icon_state = "bodybag"
+	fluff_spawn = null
+	prompt_name = "a medieval warmonger"
+	outfit = /datum/outfit/pirate/medieval
+	rank = "Footsoldier"
+
+	/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/special(mob/living/spawned_mob)
+		. = ..()
+		ADD_TRAIT(spawned_mob, TRAIT_NOGUNS, INNATE_TRAIT)
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord
+	rank = "Warlord"
+	outfit = /datum/outfit/pirate/medieval/warlord
+
+	/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord/special(mob/living/carbon/spawned_mob)
+		. = ..()
+		spawned_mob.dna.add_mutation(/datum/mutation/human/hulk)
+		spawned_mob.dna.add_mutation(/datum/mutation/human/gigantism)

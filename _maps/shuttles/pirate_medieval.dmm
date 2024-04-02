@@ -1,0 +1,287 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/shuttle/pirate)
+"e" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 10
+	},
+/obj/structure/table/wood,
+/obj/item/shield/buckler{
+	pixel_x = 11;
+	pixel_y = 7
+	},
+/obj/item/shield/buckler{
+	pixel_y = -4;
+	pixel_x = 8
+	},
+/obj/item/spear/military{
+	pixel_y = 8;
+	pixel_x = -7
+	},
+/obj/item/spear/military{
+	pixel_y = 1;
+	pixel_x = -6
+	},
+/obj/item/spear/military{
+	pixel_y = -2;
+	pixel_x = 1
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"g" = (
+/obj/machinery/computer/piratepad_control,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"h" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/window/reinforced,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"l" = (
+/obj/machinery/piratepad,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"n" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"p" = (
+/obj/structure/fans/tiny,
+/obj/structure/mineral_door/wood{
+	color = "#6b6536"
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"q" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/stack/sheet/mineral/wood/fifty{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 10
+	},
+/obj/item/stack/medical/poultice{
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/obj/item/stack/medical/poultice{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/loot_locator,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"x" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/shuttle/pirate/drop_pod,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"z" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/flashlight/lantern{
+	start_on = 1
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"A" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval,
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"C" = (
+/obj/machinery/shuttle_scrambler,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"D" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fermenting_barrel/thermite,
+/obj/item/reagent_containers/cup/bucket/wooden,
+/obj/item/reagent_containers/cup/bucket/wooden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"G" = (
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"I" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"L" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/shard,
+/obj/item/assault_pod/medieval,
+/obj/structure/frame/computer{
+	anchored = 1
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"M" = (
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"N" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"O" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"T" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/bodypart/leg/left{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"U" = (
+/obj/docking_port/mobile/pirate{
+	dir = 8
+	},
+/obj/docking_port/stationary{
+	dwidth = 11;
+	height = 16;
+	shuttle_id = "pirate_home";
+	name = "Deep Space";
+	width = 17;
+	dir = 8
+	},
+/obj/structure/fans/tiny,
+/obj/structure/mineral_door/wood{
+	color = "#6b6536"
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"V" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"X" = (
+/obj/machinery/door/window/survival_pod{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval,
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+
+(1,1,1) = {"
+c
+c
+c
+c
+p
+I
+c
+c
+"}
+(2,1,1) = {"
+a
+I
+C
+x
+h
+X
+A
+c
+"}
+(3,1,1) = {"
+c
+c
+v
+M
+z
+Q
+D
+c
+"}
+(4,1,1) = {"
+a
+I
+L
+G
+O
+n
+e
+c
+"}
+(5,1,1) = {"
+c
+c
+y
+E
+z
+T
+q
+c
+"}
+(6,1,1) = {"
+a
+I
+g
+l
+M
+V
+N
+c
+"}
+(7,1,1) = {"
+c
+c
+c
+c
+U
+I
+c
+c
+"}

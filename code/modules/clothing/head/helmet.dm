@@ -533,3 +533,43 @@
 	fire = 65
 	acid = 40
 	wound = 15
+
+/obj/item/clothing/head/helmet/military
+	name = "Crude Helmet"
+	desc = "A cheaply made kettle helmet with an added plate to protect the face."
+	icon_state = "military"
+	inhand_icon_state = "knight_helmet"
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	strip_delay = 80
+	dog_fashion = null
+	armor_type = /datum/armor/helmet_military
+
+/datum/armor/helmet_military
+	melee = 45
+	bullet = 25
+	laser = 20
+	energy = 25
+	bomb = 25
+	fire = 10
+	acid = 50
+	wound = 10
+
+/obj/item/clothing/head/helmet/knight/warlord
+	name = "golden barbute helmet"
+	desc = "There is no man behind the helmet, only a terrible thought."
+	icon_state = "warlord"
+	inhand_icon_state = null
+	armor_type = /datum/armor/helmet_warlord
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEMASK|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	slowdown = 0.2
+
+/datum/armor/helmet_warlord
+	melee = 50
+	bullet = 30
+	laser = 55
+	energy = 55
+	bomb = 30
+	fire = 50
+	acid = 50
+	wound = 15

@@ -17,6 +17,10 @@
 	icon_state = "headpike-bamboo"
 	speartype = /obj/item/spear/bamboospear
 
+/obj/structure/headpike/military //for military spears
+	icon_state = "headpike-military"
+	speartype = /obj/item/spear/military
+
 /obj/structure/headpike/Initialize(mapload)
 	. = ..()
 	if(mapload)
