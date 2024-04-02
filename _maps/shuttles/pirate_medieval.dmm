@@ -38,11 +38,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone,
 /area/shuttle/pirate)
-"h" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced,
-/turf/open/floor/stone,
-/area/shuttle/pirate)
 "l" = (
 /obj/machinery/piratepad,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -110,9 +105,6 @@
 "A" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval,
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -206,9 +198,6 @@
 /turf/open/floor/stone,
 /area/shuttle/pirate)
 "X" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval,
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval,
@@ -230,7 +219,7 @@ a
 I
 C
 x
-h
+V
 X
 A
 c
