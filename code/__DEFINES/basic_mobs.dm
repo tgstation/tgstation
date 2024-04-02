@@ -30,3 +30,23 @@
 
 ///keeps track of how many gutlunches are born
 GLOBAL_VAR_INIT(gutlunch_count, 0)
+
+//raptor defines
+
+#define RAPTOR_RED "Red"
+#define RAPTOR_GREEN "Green"
+#define RAPTOR_PURPLE "Purple"
+#define RAPTOR_WHITE "White"
+#define RAPTOR_YELLOW "Yellow"
+#define RAPTOR_BLACK "Black"
+
+#define RAPTOR_INHERIT_MAX_ATTACK 5
+#define RAPTOR_INHERIT_MAX_HEALTH 30
+
+GLOBAL_LIST_INIT(raptor_growth_paths, list(
+	/mob/living/basic/mining/raptor/baby_raptor/red = list(RAPTOR_PURPLE, RAPTOR_WHITE),
+	/mob/living/basic/mining/raptor/baby_raptor/white = list(RAPTOR_GREEN, RAPTOR_PURPLE),
+	/mob/living/basic/mining/raptor/baby_raptor/purple = list(RAPTOR_GREEN, RAPTOR_WHITE),
+	/mob/living/basic/mining/raptor/baby_raptor/yellow = list(RAPTOR_GREEN, RAPTOR_RED),
+	/mob/living/basic/mining/raptor/baby_raptor/green = list(RAPTOR_RED, RAPTOR_YELLOW),
+))

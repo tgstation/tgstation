@@ -15,5 +15,5 @@
 	mineral_wall.gets_drilled(source)
 
 /datum/element/proficient_miner/Detach(datum/source, ...)
-	UnregisterSignal(target, COMSIG_MOVABLE_BUMP)
+	UnregisterSignal(source, COMSIG_MOVABLE_BUMP)
 	return ..()
