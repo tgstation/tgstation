@@ -88,7 +88,7 @@
 	item = /obj/item/spear/energy/red
 	progression_minimum = 30 MINUTES
 	surplus = 20
-	cost = 8
+	cost = 10
 	illegal_tech = TRUE
 
 /datum/uplink_item/dangerous/m1911pistol

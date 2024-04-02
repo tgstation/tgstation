@@ -164,6 +164,10 @@
 	if(isliving(victim) && Adjacent(victim))
 		victim.Paralyze(stun_time)
 
+/obj/effect/mine/stun/heavy
+	name = "sledgehammer stun mine"
+	stun_time = 20 SECONDS
+
 /obj/effect/mine/kickmine
 	name = "kick mine"
 
@@ -248,6 +252,7 @@
 
 	var/mine_type = /obj/effect/mine/shrapnel/capspawn
 	var/active = FALSE
+	var/uses = 1
 
 /obj/item/minespawner/attack_self(mob/user)
 	. = ..()
@@ -267,4 +272,8 @@
 	visible_message(span_danger("\The [src] releases a puff of smoke, revealing \a [new_mine]!"))
 	var/obj/effect/particle_effect/fluid/smoke/poof = new (get_turf(src))
 	poof.lifetime = 3
-	qdel(src)
+	if(uses >= 1)
+		qdel(src)
+	else
+		uses -= 1
+		return

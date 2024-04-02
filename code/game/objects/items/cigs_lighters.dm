@@ -465,6 +465,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	lung_harm = 2
 	list_reagents = list (/datum/reagent/drug/nicotine = 20, /datum/reagent/medicine/regen_jelly = 15, /datum/reagent/drug/krokodil = 4)
 
+// Trick cigs
+
+/obj/item/clothing/mask/cigarette/syndicate/explosive
+	chem_volume = 5
+	smoketime = 1 MINUTES
+	list_reagents = list(/datum/reagent/drug/nicotine = 5)
+
+/obj/item/clothing/mask/cigarette/syndicate/explosive/put_out(mob/user, done_early = FALSE)
+	explosion(src.loc,1,1,2,flame_range = 3)
+	qdel(src)
+	src.visible_message("<span class='alert'>The [src] explodes!</span>")
+
 // Rollies.
 
 /obj/item/clothing/mask/cigarette/rollie

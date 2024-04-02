@@ -412,6 +412,11 @@
 	if(!contents.len)
 		. += "[base_icon_state]_empty"
 
+// Trick Cigarettes
+
+/obj/item/storage/fancy/cigarettes/trick_cigs
+	spawn_type = /obj/item/clothing/mask/cigarette/syndicate/explosive
+
 /////////////
 //CIGAR BOX//
 /////////////

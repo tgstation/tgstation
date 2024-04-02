@@ -1415,3 +1415,60 @@
 		affected_mob.adjust_confusion(5 SECONDS)
 	return ..()
 
+/datum/reagent/toxin/saxitoxin
+	name = "Saxitoxin"
+	description = "Nasty poison gas that's highly volatile when breathed. It features an unholy BRAIN-TOX-BURN triad on top of distinct jittering and stuns."
+	reagent_state = GAS
+	color = "#ffffc6"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/toxin/saxitoxin/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
+	if(!ishuman(M) && !ismonkey(M))
+		return
+
+	var/mob/living/carbon/victim = M
+	if(methods & (TOUCH|VAPOR))
+		//check for protection
+		var/mouth_covered = victim.is_mouth_covered()
+		var/eyes_covered = victim.is_eyes_covered()
+
+		//actually handle the pepperspray effects
+		if ( eyes_covered && mouth_covered )
+			return
+		else if ( mouth_covered )	// Reduced effects if partially protected
+			if(prob(50))
+				victim.emote("scream")
+			victim.adjust_eye_blur(14)
+			victim.set_confusion_if_lower(10 SECONDS)
+			victim.damageoverlaytemp = 75
+			victim.Paralyze(10 SECONDS)
+			M.adjustStaminaLoss(3)
+			return
+		else if ( eyes_covered ) // Eye cover is better than mouth cover
+			if(prob(20))
+				victim.emote("cough")
+			victim.adjust_eye_blur(4)
+			victim.set_confusion_if_lower(5 SECONDS)
+			victim.damageoverlaytemp = 50
+			M.adjustStaminaLoss(3)
+			return
+		else // Oh dear :D
+			if(prob(60))
+				victim.emote("scream")
+			victim.adjust_eye_blur(14)
+			victim.set_confusion_if_lower(12 SECONDS)
+			victim.damageoverlaytemp = 100
+			victim.Paralyze(14 SECONDS)
+			M.adjustStaminaLoss(5)
+		victim.update_damage_hud()
+
+/datum/reagent/toxin/saxitoxin/on_mob_life(mob/living/breather, seconds_per_tick, times_fired)
+	breather.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
+	breather.adjustFireLoss(1, FALSE)
+	if(iscarbon(breather))
+		breather.adjustToxLoss(1, FALSE)
+	if(prob(10))
+		breather.Paralyze(20, 1, 0)
+		breather.adjust_jitter(10 SECONDS)
+	return ..()
+

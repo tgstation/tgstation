@@ -999,6 +999,50 @@
 	new /obj/item/reagent_containers/cup/beaker/large/leadacetate(src)
 	new /obj/item/reagent_containers/cup/beaker/large/teslium(src)
 
+/obj/item/storage/box/syndie_kit/molotovs/PopulateContents()
+	new /obj/item/lighter(src)
+	new /obj/item/reagent_containers/cup/glass/bottle/molotov/ethanol(src)
+	new /obj/item/reagent_containers/cup/glass/bottle/molotov/fuel(src)
+	new /obj/item/reagent_containers/cup/glass/bottle/molotov/clf3(src)
+	new /obj/item/reagent_containers/cup/glass/bottle/molotov/phlogiston(src)
+	new /obj/item/reagent_containers/cup/glass/bottle/molotov/napalm(src)
+	new /obj/item/reagent_containers/cup/glass/bottle/molotov/hellwater(src)
+	new /obj/item/reagent_containers/cup/glass/bottle/molotov/plasma(src)
+	new /obj/item/reagent_containers/cup/glass/bottle/molotov/spore_burning(src)
+
+/obj/item/storage/box/syndie_kit/syndirigcells/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/stock_parts/cell/bluespace/syndirig(src)
+
+/obj/item/storage/box/lights/mixed/syndirigged
+	name = "box of replacement lights"
+	illustration = "lightmixed"
+
+/obj/item/storage/box/lights/mixed/syndirigged/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/light/tube/syndirig(src)
+	for(var/i in 1 to 7)
+		new /obj/item/light/bulb/syndirig(src)
+
+/obj/item/storage/box/syndie_kit/explosivemines/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/deployablemine/explosive(src)
+
+/obj/item/storage/box/syndie_kit/stunmine/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/deployablemine/stun(src)
+
+/obj/item/storage/box/syndie_kit/heavymine/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/deployablemine/heavy(src)
+
+/obj/item/storage/box/syndie_kit/plasmafiremine/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/deployablemine/plasma(src)
+
+/obj/item/storage/box/syndie_kit/sleepymine/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/deployablemine/sleepy(src)
 
 
 

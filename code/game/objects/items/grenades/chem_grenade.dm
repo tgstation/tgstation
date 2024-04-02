@@ -952,3 +952,51 @@
 	beakers += B1
 	beakers += B2
 
+/obj/item/grenade/chem_grenade/engiairfoam
+	name = "breatheable air grenade"
+	desc = "A foam grenade containing highly condensed breatheable air, pull the pin and launch into a room that has been vacuumed for easy air distribution."
+	icon = 'icons/obj/weapons/grenade.dmi'
+	icon_state = "oxy"
+	stage = GRENADE_READY
+	can_dismantle = FALSE
+
+/obj/item/grenade/chem_grenade/engiairfoam/Initialize(mapload)
+	. = ..()
+	icon_state = "oxy" // just to fix the icon being missing.
+
+	var/obj/item/reagent_containers/cup/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B2 = new(src)
+
+	B1.reagents.add_reagent(/datum/reagent/fluorosurfactant, 15)
+	B1.reagents.add_reagent(/datum/reagent/liquid_air, 80)
+	B2.reagents.add_reagent(/datum/reagent/water, 15)
+	B2.reagents.add_reagent(/datum/reagent/liquid_air, 80)
+
+	beakers += B1
+	beakers += B2
+
+
+/obj/item/grenade/chem_grenade/saxitoxin
+	name = "saxitoxin grenade"
+	desc = "A smoke grenade containing highly toxin saxitoxin, those who breathe the smoke will suffer burn, toxin, and brain damage."
+	icon = 'icons/obj/weapons/grenade.dmi'
+	icon_state = "saxitoxin"
+	stage = GRENADE_READY
+	can_dismantle = FALSE
+
+/obj/item/grenade/chem_grenade/saxitoxin/Initialize(mapload)
+	. = ..()
+	icon_state = "saxitoxin" // just to fix the icon being missing.
+
+	var/obj/item/reagent_containers/cup/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/B2 = new(src)
+
+	B1.reagents.add_reagent(/datum/reagent/potassium, 15)
+	B1.reagents.add_reagent(/datum/reagent/consumable/sugar, 15)
+	B1.reagents.add_reagent(/datum/reagent/toxin/saxitoxin, 65)
+	B2.reagents.add_reagent(/datum/reagent/phosphorus, 15)
+	B2.reagents.add_reagent(/datum/reagent/toxin/saxitoxin, 80)
+
+	beakers += B1
+	beakers += B2
+

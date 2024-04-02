@@ -485,3 +485,25 @@ effective or pretty fucking useless.
 /obj/projectile/bullet/toolbox_turret
 	damage = 10
 	speed = 0.6
+
+
+/obj/item/stock_parts/cell/bluespace/syndirig
+	rigged = TRUE
+
+/obj/item/stock_parts/cell/bluespace/syndirig/explode()
+	if (charge==0)
+		return
+	//explosion(T, 0, 1, 2, 2)
+	addtimer(CALLBACK(src, PROC_REF(syndiplode)), 60 SECONDS)
+
+/obj/item/stock_parts/cell/bluespace/syndirig/proc/syndiplode()
+	explosion(src, -1, 4, 10, 0)
+	qdel(src)
+
+/obj/item/stack/telecrystal/trick
+	item_flags = null
+
+/obj/item/stack/telecrystal/trick/afterattack(obj/item/I, mob/user, proximity)
+	to_chat(user, span_notice("[src] explodes violently!"))
+	explosion(src, 1,2,0,0)
+	qdel(src)

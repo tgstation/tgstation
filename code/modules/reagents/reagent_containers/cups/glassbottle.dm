@@ -843,6 +843,34 @@
 		return
 	return ..()
 
+// Filled Molotovs
+
+/obj/item/reagent_containers/cup/glass/bottle/molotov/ethanol
+	list_reagents = list(/datum/reagent/consumable/ethanol = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/molotov/fuel
+	list_reagents = list(/datum/reagent/fuel = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/molotov/clf3
+	list_reagents = list(/datum/reagent/clf3 = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/molotov/phlogiston
+	list_reagents = list(/datum/reagent/phlogiston = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/molotov/napalm
+	list_reagents = list(/datum/reagent/napalm = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/molotov/hellwater
+	list_reagents = list(/datum/reagent/hellwater = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/molotov/plasma
+	list_reagents = list(/datum/reagent/toxin/plasma = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/molotov/spore_burning
+	list_reagents = list(/datum/reagent/toxin/spore_burning = 100)
+
+//
+
 /obj/item/reagent_containers/cup/glass/bottle/pruno
 	name = "pruno mix"
 	desc = "A trash bag filled with fruit, sugar, yeast, and water, pulped together into a pungent slurry to be fermented in an enclosed space, traditionally the toilet. Security would love to confiscate this, one of the many things wrong with them."

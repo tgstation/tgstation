@@ -7,6 +7,11 @@
 	var/forced_value = 0
 	var/duration = 300
 
+/obj/item/grenade/antigravity/syndicate
+	range = 20
+	forced_value = 0
+	duration = 600
+
 /obj/item/grenade/antigravity/detonate(mob/living/lanced_by)
 	. = ..()
 	if(!.)
