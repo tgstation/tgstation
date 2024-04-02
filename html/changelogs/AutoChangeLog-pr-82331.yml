@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Detective revolvers can no longer exist in a quantum state of both being chambered in .38 and .357, without risk of misfire. Detectives, cowboy enthusiasts and reckless federal agents across the Spinward Sector mourn the loss."
