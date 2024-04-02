@@ -20273,11 +20273,11 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningfoundry)
 "hZf" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/visible{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -20845,11 +20845,11 @@
 /turf/open/floor/iron/textured_large,
 /area/station/hallway/primary/central/fore)
 "ijP" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/visible{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
