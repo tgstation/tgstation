@@ -103,3 +103,10 @@
 	cost = 5
 	item = /obj/item/grenade/spawnergrenade/cat
 	surplus = 30
+
+/datum/uplink_item/dangerous/compact_bow
+	name = "Compact bow"
+	desc = "Hi-Tech compact energy bow with a compact power core capable of creating 3 types of arrows: damage, emp and repule. After each shot, it takes half a second to reload."
+	cost = 11
+	item = /obj/item/gun/ballistic/bow/compact
+	surplus = 15

@@ -101,3 +101,65 @@
 		return
 	to_chat(human_target, span_danger("[src] reacts with the flames on y-"))
 	explosion(src, light_impact_range = 1, flame_range = 2) //ow
+
+/obj/item/ammo_casing/arrow/intangible
+	name = "intangible arrow"
+	desc = "a clot of intangible energy"
+	projectile_type = /obj/projectile/bullet/arrow/intangible
+	reusable = FALSE
+
+/obj/projectile/bullet/arrow/intangible
+	name = "intangible arrow"
+	desc = "a clot of intangible energy"
+	damage = 0
+
+/obj/item/ammo_casing/arrow/intangible/standart
+	name = "damage"
+	icon_state = "intangible_standart"
+	base_icon_state = "intangible_standart"
+	projectile_type = /obj/projectile/bullet/arrow/intangible/standart
+
+/obj/projectile/bullet/arrow/intangible/standart
+	icon_state = "intangible_standart_projectile"
+	damage = 60
+	stamina = 60
+	knockdown = 4 SECONDS
+	drowsy = 15 SECONDS
+	jitter = 15 SECONDS
+
+/obj/item/ammo_casing/arrow/intangible/emp
+	name = "emp"
+	icon_state = "intangible_emp"
+	base_icon_state = "intangible_emp"
+	projectile_type = /obj/projectile/bullet/arrow/intangible/emp
+
+/obj/projectile/bullet/arrow/intangible/emp
+	icon_state = "intangible_emp_projectile"
+
+/obj/projectile/bullet/arrow/intangible/emp/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	empulse(target, 1, 2)
+
+/obj/item/ammo_casing/arrow/intangible/repulse
+	name = "repulse"
+	icon_state = "intangible_repulse"
+	base_icon_state = "intangible_repulse"
+	projectile_type = /obj/projectile/bullet/arrow/intangible/repulse
+
+/obj/projectile/bullet/arrow/intangible/repulse
+	icon_state = "intangible_repulse_projectile"
+
+/obj/projectile/bullet/arrow/intangible/repulse/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	for(var/atom/movable/repulse in range(target, 1))
+		var/dir = get_edge_target_turf(target, get_dir(target, get_step_away(repulse, target)))
+		if(repulse.anchored)
+			continue
+		if(get_turf(repulse) == get_turf(target))
+			dir = get_edge_target_turf(firer, get_dir(firer, get_step_away(repulse, firer)))
+		repulse.safe_throw_at(dir, 4, 2)
+		if(isliving(repulse))
+			var/mob/living/knockem = repulse
+			knockem.Knockdown(6 SECONDS)
+	new /obj/effect/temp_visual/arrow_repulse(get_turf(target))
+	playsound(get_turf(target), 'sound/magic/repulse.ogg', 40, vary = TRUE)

@@ -709,3 +709,9 @@
 		flags = ANIMATION_RELATIVE,
 	)
 	return ..()
+
+/obj/effect/temp_visual/arrow_repulse
+	name = "repulse arrow"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "arrow_repulse"
+	duration = 2 SECONDS
