@@ -139,7 +139,7 @@
 		this_plane["offset"] = plane.offset
 		this_plane["real_plane"] = plane.real_plane
 		this_plane["renders_onto"] = plane.render_relay_planes
-		this_plane["blend_mode"] = GLOB.blend_names["[plane.blend_mode_override || initial(plane.blend_mode)]"]
+		this_plane["blend_mode"] = GLOB.blend_names["[initial(plane.blend_mode)]"]
 		this_plane["color"] = plane.color
 		this_plane["alpha"] = plane.alpha
 		this_plane["render_target"] = plane.render_target

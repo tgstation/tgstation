@@ -8,6 +8,7 @@
 	render_relay_planes = list()
 	// We do NOT allow offsetting, because there's no case where you would want to block only one layer, at least currently
 	allows_offsetting = FALSE
+	allow_rendering_in_place = FALSE
 	// We mark as multiz_scaled FALSE so transforms don't effect us, and we draw to the planes below us as if they were us.
 	// This is safe because we will ALWAYS be on the top z layer, so it DON'T MATTER
 	multiz_scaled = FALSE
@@ -66,7 +67,7 @@
 
 /atom/movable/screen/plane_master/parallax_white/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
-	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_SPACE_LAYER)
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_SPACE_LAYER, relay_color = GLOB.emissive_color)
 
 /atom/movable/screen/plane_master/parallax_white/show_to(mob/mymob)
 	. = ..()
@@ -79,15 +80,31 @@
 		return
 	RegisterSignals(our_hud, list(SIGNAL_ADDTRAIT(TRAIT_PARALLAX_ENABLED), SIGNAL_REMOVETRAIT(TRAIT_PARALLAX_ENABLED)), PROC_REF(update_color), override = TRUE)
 
+// This is a bit hacky. We know parallax will always have something to render onto (cause emissives always render)
+// But we want it to render in place if it's being masked regardless, so we gotta do this. :3
+/atom/movable/screen/plane_master/parallax_white/retain_hidden_plane(mob/relevant)
+	set_render_in_place(TRUE)
+	update_color()
+	return ..()
+
+/atom/movable/screen/plane_master/parallax_white/restore_hidden_plane(mob/relevant)
+	set_render_in_place(FALSE)
+	update_color()
+	return ..()
+
 /atom/movable/screen/plane_master/parallax_white/proc/update_color()
 	var/datum/hud/our_hud = home.our_hud
 	if(isnull(our_hud))
 		return
 
+	var/turf/viewing_turf = get_turf(our_hud.mymob)
 	// We could do not do parallax for anything except the main plane group
 	// This could be changed, but it would require refactoring this whole thing
 	// And adding non client particular hooks for all the inputs, and I do not have the time I'm sorry :(
-	if(HAS_TRAIT(our_hud, TRAIT_PARALLAX_ENABLED) && home.key == PLANE_GROUP_MAIN)
+	// We only want to be white if we're on a z layer where parallax will be rendering (not the hidden ones)
+	if(HAS_TRAIT(our_hud, TRAIT_PARALLAX_ENABLED) && \
+		home.key == PLANE_GROUP_MAIN && \
+		(!hidden_by_distance || !viewing_turf || offset == GET_LOWEST_STACK_OFFSET(viewing_turf.z)))
 		color = list(
 			0, 0, 0, 0,
 			0, 0, 0, 0,
@@ -165,24 +182,27 @@
 			add_relay_to(GET_NEW_PLANE(plane, offset), BLEND_OVERLAY)
 
 /atom/movable/screen/plane_master/parallax/set_distance_from_owner(mob/relevant, new_offset, multiz_boundary)
+	var/old_hidden = hidden_by_distance
 	. = ..()
 	if(.)
 		// Don't draw to yourself bro
 		if(offset == 0)
 			return
-		// if we're rendering, always readd.
-		// just in case we lost it
+		if(!old_hidden)
+			return
 		var/atom/movable/screen/plane_master/parent_parallax = home.our_hud.get_plane_master(PLANE_SPACE_PARALLAX)
-		parent_parallax.add_relay_to(plane, BLEND_OVERLAY)
-		return
-	// If we can't render, and we aren't the bottom layer, don't render us
-	// This way we only multiply against stuff that's not fullwhite space
-	var/atom/movable/screen/plane_master/parent_parallax = home.our_hud.get_plane_master(PLANE_SPACE_PARALLAX)
-	var/turf/viewing_turf = get_turf(relevant)
-	if(!viewing_turf || offset != GET_LOWEST_STACK_OFFSET(viewing_turf.z))
+		// Clear away the blend multiply
 		parent_parallax.remove_relay_from(plane)
-	else
 		parent_parallax.add_relay_to(plane, BLEND_OVERLAY)
+	else
+		// If we can't render, and we aren't the bottom layer, don't render us
+		// This way we only multiply against stuff that's fullwhite space
+		var/atom/movable/screen/plane_master/parent_parallax = home.our_hud.get_plane_master(PLANE_SPACE_PARALLAX)
+		var/turf/viewing_turf = get_turf(relevant)
+		if(!viewing_turf || offset != GET_LOWEST_STACK_OFFSET(viewing_turf.z))
+			parent_parallax.remove_relay_from(plane)
+		else
+			parent_parallax.add_relay_to(plane, BLEND_MULTIPLY)
 
 /atom/movable/screen/plane_master/parallax/retain_hidden_plane(mob/relevant)
 	// The 0'th prallax plane always wants to render, but we do want to avoid drawing to our parent so let's yeet that
@@ -194,6 +214,14 @@
 	if(offset != 0)
 		return ..()
 	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME, 0))
+
+// This really only applies to the origional parallax and other parallax sources
+// When we render at them and they're hidden, what we want is to render "as if" we were them
+// So we want the relay to draw you feel me?
+/atom/movable/screen/plane_master/parallax/should_hide_relay(target_plane)
+	if(offset == 0 && PLANE_TO_TRUE(target_plane) == PLANE_SPACE_PARALLAX)
+		return FALSE
+	return TRUE
 
 // Needs to handle rejoining on a lower z level, so we NEED to readd old planes
 /atom/movable/screen/plane_master/parallax/check_outside_bounds()
@@ -240,6 +268,7 @@
 	render_relay_planes = list()
 	// We start out hidden
 	start_hidden = TRUE
+	allow_rendering_in_place = FALSE
 
 /atom/movable/screen/plane_master/gravpulse/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
@@ -272,7 +301,8 @@
 	plane = TRANSPARENT_FLOOR_PLANE
 	render_relay_planes = list(LIGHT_MASK_PLANE)
 	// Needs to be critical or it uh, it'll look white
-	critical = PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_RELAY
+	critical = PLANE_CRITICAL_DISPLAY
+	allow_rendering_in_place = FALSE
 
 /atom/movable/screen/plane_master/floor/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
@@ -347,7 +377,7 @@
 	plane = LIGHTING_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_LIGHTING)
-	blend_mode_override = BLEND_ADD
+	blend_mode = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	critical = PLANE_CRITICAL_DISPLAY
 

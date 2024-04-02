@@ -591,6 +591,7 @@
 #include "code\_onclick\hud\rendering\render_plate.dm"
 #include "code\_onclick\hud\rendering\plane_masters\_plane_master.dm"
 #include "code\_onclick\hud\rendering\plane_masters\plane_master_subtypes.dm"
+#include "code\_onclick\hud\rendering\plane_masters\render_relay.dm"
 #include "code\controllers\admin.dm"
 #include "code\controllers\controller.dm"
 #include "code\controllers\failsafe.dm"

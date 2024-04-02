@@ -904,6 +904,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 				if(!render_target)
 					render_target = get_plane_master_render_base(initial(master_type.name))
 				render_offset_blacklist[render_target] = TRUE
+				render_offset_blacklist["*[render_target]"] = TRUE
 				if(plane_offset != 0)
 					continue
 

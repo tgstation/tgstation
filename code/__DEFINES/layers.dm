@@ -6,7 +6,7 @@
 
 // Doesn't really layer, just throwing this in here cause it's the best place imo
 #define FIELD_OF_VISION_BLOCKER_PLANE -45
-#define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*FIELD_OF_VISION_BLOCKER_RENDER_TARGET"
+#define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "FIELD_OF_VISION_BLOCKER_RENDER_TARGET"
 
 #define CLICKCATCHER_PLANE -40
 
@@ -14,7 +14,7 @@
 #define PLANE_SPACE_PARALLAX -20
 
 #define GRAVITY_PULSE_PLANE -12
-#define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
+#define GRAVITY_PULSE_RENDER_TARGET "GRAVPULSE_RENDER_TARGET"
 
 #define RENDER_PLANE_TRANSPARENT -11 //Transparent plane that shows openspace underneath the floor
 
@@ -30,7 +30,7 @@
 
 #define RENDER_PLANE_GAME_WORLD_AO -2
 #define RENDER_PLANE_GAME_WORLD -1
-#define GAME_WORLD_RENDER_TARGET "*GAME_WORLD_RENDER_TARGET"
+#define GAME_WORLD_RENDER_TARGET "GAME_WORLD_RENDER_TARGET"
 
 #define DEFAULT_PLANE 0 //Marks out the default plane, even if we don't use it
 
@@ -50,7 +50,7 @@
 #define EMISSIVE_PLANE 13
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
 #define EMISSIVE_RENDER_PLATE 14
-#define EMISSIVE_RENDER_TARGET "*EMISSIVE_PLANE"
+#define EMISSIVE_RENDER_TARGET "EMISSIVE_PLANE"
 // Ensures all the render targets that point at the emissive plate layer correctly
 #define EMISSIVE_Z_BELOW_LAYER 1
 #define EMISSIVE_FLOOR_LAYER 2
@@ -62,7 +62,7 @@
 /// Masks the lighting plane with turfs, so we never light up the void
 /// Failing that, masks emissives and the overlay lighting plane
 #define LIGHT_MASK_PLANE 16
-#define LIGHT_MASK_RENDER_TARGET "*LIGHT_MASK_PLANE"
+#define LIGHT_MASK_RENDER_TARGET "LIGHT_MASK_PLANE"
 
 ///Things that should render ignoring lighting
 #define ABOVE_LIGHTING_PLANE 17
@@ -85,7 +85,7 @@
 ///Popup Chat Messages
 #define RUNECHAT_AO_PLANE 29
 #define RUNECHAT_PLANE 30
-#define RUNECHAT_RENDER_TARGET "*RUNECHAT_RENDER_TARGET"
+#define RUNECHAT_RENDER_TARGET "RUNECHAT_RENDER_TARGET"
 /// Plane for balloon text (text that fades up)
 #define BALLOON_CHAT_PLANE 31
 
@@ -310,11 +310,6 @@
 #define PLANE_CRITICAL_DISPLAY (1<<0)
 /// This plane master will draw even while its z layer is ABOVE the cull
 #define PLANE_CRITICAL_SOURCE (1<<1)
-/// This plane master will temporarially remove relays to all other planes
-/// Allows us to retain the effects of a plane while cutting off the changes it makes
-#define PLANE_CRITICAL_NO_RELAY (1<<2)
-/// We assume this plane master has a render target starting with *, it'll be removed, forcing it to render in place
-#define PLANE_CRITICAL_CUT_RENDER (1<<3)
 
 #define PLANE_CRITICAL_ALWAYS_DISPLAY (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_SOURCE)
 
@@ -324,3 +319,6 @@
 /// Increment this define if you make a huge map. We unit test for it too just to make it easy for you
 /// If you modify this, you'll need to modify the tsx file too
 #define MAX_EXPECTED_Z_DEPTH 3
+
+// from /atom/movable/screen/plane_master/proc/set_render_in_place: (old_source, new_source)
+#define SIGNAL_RENDER_IN_PLACE_CHANGED(render_target) "render_in_place_[render_target]_changed"

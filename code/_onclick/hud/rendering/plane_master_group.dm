@@ -9,6 +9,13 @@
 	var/datum/hud/our_hud
 	/// List in the form "[plane]" = object, the plane masters we own
 	var/list/atom/movable/screen/plane_master/plane_masters = list()
+	/// List in the form "[target_plane]" = list(relays targeting this plane)
+	/// We need a way to handle async relay additions
+	var/list/relays = list()
+	/// list in the form invalid_render_source -> actual_render_source
+	/// We need to be able to correct invalid render sources in filters and shit
+	var/list/canon_source_to_reality = list()
+
 	/// The visual offset we are currently using
 	var/active_offset = 0
 	/// What, if any, submap we render onto
