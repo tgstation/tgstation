@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Psicodine helps Socially Anxious people again (as does signing)"
+  - bugfix: "Speech effects such as stuttering no longer applies its TTS filter if the resulting message doesn't actually change the message"
