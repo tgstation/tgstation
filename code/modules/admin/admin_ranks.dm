@@ -354,9 +354,9 @@ GLOBAL_PROTECT(protected_ranks)
 		return
 	sync_ranks_with_db()
 	var/list/sql_admins = list()
-	for(var/i in GLOB.protected_admins)
-		var/datum/admins/A = GLOB.protected_admins[i]
-		sql_admins += list(list("ckey" = A.target, "rank" = A.rank_names()))
+	for(var/holder_ckey in GLOB.protected_admins)
+		var/datum/admins/holder = GLOB.protected_admins[holder_ckey]
+		sql_admins += list(list("ckey" = holder.target, "rank" = holder.rank_names()))
 	SSdbcore.MassInsert(format_table_name("admin"), sql_admins, duplicate_key = TRUE)
 	var/datum/db_query/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] AS p INNER JOIN [format_table_name("admin")] AS a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
 	query_admin_rank_update.Execute()
