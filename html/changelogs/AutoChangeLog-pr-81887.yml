@@ -1,0 +1,9 @@
+author: "Pickle-Coding"
+delete-after: True
+changes:
+  - balance: "Halon combustion releases 2.5 moles of pluoxium per mole of halon consumed."
+  - balance: "Halon combustion no longer releases carbon dioxide."
+  - balance: "Halon combustion releases resin foam."
+  - balance: "Halon formation requirements changed to require electrolysing BZ instead of N2O and CO2."
+  - balance: "Halon formation changed to no longer slow down at higher pressures. It instead accelerates at higher temperatures. It is much faster overall."
+  - balance: "Halon formation releases 91.2321kJ of thermal energy per mole of halon consumed."
