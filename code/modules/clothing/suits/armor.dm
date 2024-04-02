@@ -657,7 +657,7 @@
 		/obj/item/claymore/shortsword,
 		/obj/item/nullrod,
 		/obj/item/spear,
-		)
+	)
 
 /datum/armor/military
 	melee = 45
