@@ -82,7 +82,7 @@ export const ChemReactionChamber = (props) => {
                         value={ph}
                         minValue={0}
                         maxValue={14}
-                        format={() => null}
+                        format={() => ''}
                         position="absolute"
                         size={1.5}
                         top={0.5}
