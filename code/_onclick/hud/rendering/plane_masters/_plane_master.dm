@@ -12,10 +12,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// Plaintext and basic html are fine to use here.
 	/// I'll bonk you if I find you putting "lmao stuff" in here, make this useful.
 	var/documentation = ""
-	/// Our real alpha value, so alpha can persist through being hidden/shown
-	var/true_alpha = 255
-	/// Tracks if we're using our true alpha, or being manipulated in some other way
-	var/alpha_enabled = TRUE
 
 	/// The plane master group we're a member of, our "home"
 	var/datum/plane_master_group/home
@@ -75,12 +71,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// + means it's higher, - means it's lower
 	var/distance_from_owner = 0
 	/// If this plane master has been hidden by its z layer distance
-	var/hidden_by_distance = FALSE
+	var/hidden_by_distance = NOT_HIDDEN
 
 /atom/movable/screen/plane_master/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset = 0)
 	. = ..()
 	src.offset = offset
-	true_alpha = alpha
 	real_plane = plane
 
 	if(!set_home(home))
@@ -134,20 +129,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	else
 		set_render_in_place(FALSE)
 
-/atom/movable/screen/plane_master/proc/set_alpha(new_alpha)
-	true_alpha = new_alpha
-	if(!alpha_enabled)
-		return
-	alpha = new_alpha
-
-/atom/movable/screen/plane_master/proc/disable_alpha()
-	alpha_enabled = FALSE
-	alpha = 0
-
-/atom/movable/screen/plane_master/proc/enable_alpha()
-	alpha_enabled = TRUE
-	alpha = true_alpha
-
 /atom/movable/screen/plane_master/proc/set_render_in_place(render_apart = FALSE)
 	render_in_place = render_apart
 	var/in_place = copytext(render_target, 1, 2) != "*"
@@ -163,8 +144,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		render_target = "*[render_target]"
 		bare_render_target = old_render_target
 
-	// We assert that all initial render targets will have no *
 	#warn unit test for this
+	// We assert that all initial render targets will have no *
 	// Swapping em around
 	home.canon_source_to_reality -= render_target
 	home.canon_source_to_reality[old_render_target] = render_target
@@ -261,19 +242,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	for(var/atom/movable/render_plane_relay/relay as anything in home.relays["[plane]"])
 		relay.sync_relay(our_client)
 
-	// Alright, let's get this out of the way
-	// Mobs can move z levels without their client. If this happens, we need to ensure critical display settings are respected
-	// This is done here. Mild to severe pain but it's nessesary
-	// (We check to see if we use the critical system, then if we don't want some realys, then if we are actually outside bounds)
-	// If we want all our relays then there's no point doing this now is there
-	//if(!(critical & (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_SOURCE)) || !check_outside_bounds())
-	//	our_client.screen += relays
 	return TRUE
-
-/// Hook to allow planes to work around is_outside_bounds
-/// Return false to allow a show, true otherwise
-/atom/movable/screen/plane_master/proc/check_outside_bounds()
-	return hidden_by_distance
 
 /// Hides a plane master from the passeed in mob
 /// Do your effect cleanup here
@@ -330,43 +299,54 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /atom/movable/screen/plane_master/proc/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset)
 	SHOULD_CALL_PARENT(TRUE)
 	distance_from_owner = new_distance
-	// If we are above our owner's z layer
-	#warn in order to make this work disabling a plane fully needs to disable any relays that draw at it
-	#warn otherwise this shit is fucked. so we need a linkback list.
-	#warn (do we need to disable all of them? I guess we would, and then prevent adding new ones without asking)
-	#warn this is gonna fuck up plane master handling real bad, need to make removing/readding relays efficent somehow
-	#warn group them by when we remove them maybe and then stick em in the vis_contents of screen objects?
-	#warn also we need hidden_by_distance to track what kind of hidden we are, so we can fullhide everything on the z layer below the bottom displayed
-	//if(distance_from_owner > 0)
-	//	if(hidden_by_distance || force_hidden)
-	//		return critical & PLANE_CRITICAL_SOURCE
-	//	hidden_by_distance = TRUE
-	//	// If critical, hold on
-	//	if(critical & PLANE_CRITICAL_SOURCE)
-	//		retain_hidden_plane(relevant)
-	//		return TRUE
-	//	// otherwise, hide that shit
-	//	hide_from(relevant)
-	//	return FALSE
+	var/old_hidden = hidden_by_distance
+	#warn being unforce hid needs to rerun distance calcs
+	// If we are above our owner's z layer nuke er
+	if(distance_from_owner > 0)
+		if(hidden_by_distance == HIDDEN_ABOVE)
+			return critical & PLANE_CRITICAL_SOURCE
+
+		// Need to maintain consistency
+		if(hidden_by_distance != NOT_HIDDEN)
+			show_to(relevant)
+
+		hidden_by_distance = HIDDEN_ABOVE
+		// If critical, hold on
+		if(critical & PLANE_CRITICAL_SOURCE)
+			retain_hidden_plane(relevant)
+			return TRUE
+		// otherwise, hide that shit
+		hide_from(relevant)
+		return FALSE
+	// If we're just not visible at all
+	else if(distance_from_owner < 0 && offset > lowest_possible_offset)
+		if(hidden_by_distance == HIDDEN_BELOW_THE_BOTTOM)
+			return FALSE
+		hidden_by_distance = HIDDEN_BELOW_THE_BOTTOM
+		hide_from(relevant)
+		return FALSE
 	// If we are below the acceptable z level offset (set by pref)
-	// (Or if we're just not visible at all)
-	//else
-	if(distance_from_owner < 0 && (offset > lowest_possible_offset || \
-		multiz_boundary != MULTIZ_PERFORMANCE_DISABLE && abs(distance_from_owner) > multiz_boundary))
-		if(hidden_by_distance || force_hidden)
-			return (critical & PLANE_CRITICAL_DISPLAY && offset <= lowest_possible_offset) // yeah this is dumb I'm sorry
-		hidden_by_distance = TRUE
+	else if(distance_from_owner < 0 && (multiz_boundary != MULTIZ_PERFORMANCE_DISABLE && abs(distance_from_owner) > multiz_boundary))
+		if(hidden_by_distance)
+			return critical & PLANE_CRITICAL_DISPLAY // yeah this is dumb I'm sorry
+
+		// Need to maintain consistency
+		if(hidden_by_distance != NOT_HIDDEN)
+			show_to(relevant)
+
+		hidden_by_distance = HIDDEN_BELOW
 		// If it's critical to how lower layers look visually (mostly lighting)
 		// Keep the bare bones
-		if((critical & PLANE_CRITICAL_DISPLAY) && (offset <= lowest_possible_offset))
+		if((critical & PLANE_CRITICAL_DISPLAY))
 			retain_hidden_plane(relevant)
 			return TRUE
 		// Otherwise, yayeeet
 		hide_from(relevant)
 		return FALSE
-	else if(hidden_by_distance)
-		hidden_by_distance = FALSE
-		if(critical & (PLANE_CRITICAL_SOURCE|PLANE_CRITICAL_DISPLAY))
+	else if(hidden_by_distance != NOT_HIDDEN)
+		hidden_by_distance = NOT_HIDDEN
+		if(old_hidden == HIDDEN_ABOVE && (critical & PLANE_CRITICAL_SOURCE) || \
+			old_hidden == HIDDEN_BELOW && (critical & PLANE_CRITICAL_DISPLAY))
 			restore_hidden_plane(relevant)
 			return TRUE
 		show_to(relevant)

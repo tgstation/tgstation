@@ -107,7 +107,7 @@
 
 	if(!renderLighting)
 		for(var/atom/movable/screen/plane_master/instance as anything in holder.mob.hud_used.get_true_plane_masters(LIGHTING_PLANE, planes.key))
-			instance.set_alpha(100)
+			instance.alpha = 100
 
 	cam_background = new
 	cam_background.assigned_map = map_name

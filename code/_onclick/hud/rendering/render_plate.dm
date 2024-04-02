@@ -207,7 +207,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	add_filter("games", 0, layering_filter(render_source = OFFSET_RENDER_TARGET(GAME_WORLD_RENDER_TARGET, offset), y = -2, color = "#04080F6F", transform = SCALE_MATRIX(1/2, 1/2)))
 	add_filter("blur", 2, gauss_blur_filter(1))
-	add_relay_to(RENDER_PLANE_GAME, relay_transform = SCALE_MATRIX(2, 2), relay_appearance_flags = PIXEL_SCALE)
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME, offset), relay_transform = SCALE_MATRIX(2, 2), relay_appearance_flags = PIXEL_SCALE)
 
 ///Contains all lighting objects
 /atom/movable/screen/plane_master/rendering_plate/lighting
@@ -257,14 +257,6 @@
 	backdrop = mymob.overlay_fullscreen("lighting_backdrop_unlit_[home.key]#[offset]", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
 	SET_PLANE_EXPLICIT(backdrop, PLANE_TO_TRUE(backdrop.plane), src)
 
-	// Sorry, this is a bit annoying
-	// Basically, we only want the lighting plane we can actually see to attempt to render
-	// If we don't our lower plane gets totally overriden by the black void of the upper plane
-	var/datum/hud/hud = home.our_hud
-	// show_to can be called twice successfully with no hide_from call. Ensure no runtimes off the registers from this
-	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change), override = TRUE)
-	offset_change(hud?.current_plane_offset || 0)
 	set_light_cutoff(mymob.lighting_cutoff, mymob.lighting_color_cutoffs)
 
 
@@ -272,20 +264,6 @@
 	. = ..()
 	oldmob.clear_fullscreen("lighting_backdrop_lit_[home.key]#[offset]")
 	oldmob.clear_fullscreen("lighting_backdrop_unlit_[home.key]#[offset]")
-	var/datum/hud/hud = home.our_hud
-	if(hud)
-		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
-
-/atom/movable/screen/plane_master/rendering_plate/lighting/proc/on_offset_change(datum/source, old_offset, new_offset)
-	SIGNAL_HANDLER
-	offset_change(new_offset)
-
-/atom/movable/screen/plane_master/rendering_plate/lighting/proc/offset_change(mob_offset)
-	// Offsets stack down remember. This implies that we're above the mob's view plane, and shouldn't render
-	if(offset < mob_offset)
-		disable_alpha()
-	else
-		enable_alpha()
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/proc/set_light_cutoff(light_cutoff, list/color_cutoffs)
 	var/list/new_cutoffs = list(light_cutoff)

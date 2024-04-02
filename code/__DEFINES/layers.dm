@@ -320,5 +320,11 @@
 /// If you modify this, you'll need to modify the tsx file too
 #define MAX_EXPECTED_Z_DEPTH 3
 
+/// Different values that hidden_by_distance can have
+#define NOT_HIDDEN 0
+#define HIDDEN_ABOVE 1
+#define HIDDEN_BELOW 2
+#define HIDDEN_BELOW_THE_BOTTOM 3
+
 // from /atom/movable/screen/plane_master/proc/set_render_in_place: (old_source, new_source)
 #define SIGNAL_RENDER_IN_PLACE_CHANGED(render_target) "render_in_place_[render_target]_changed"
