@@ -205,15 +205,15 @@
 	outfit = /datum/outfit/pirate/medieval
 	rank = "Footsoldier"
 
-	/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/special(mob/living/spawned_mob)
-		. = ..()
-		ADD_TRAIT(spawned_mob, TRAIT_NOGUNS, INNATE_TRAIT)
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/special(mob/living/spawned_mob)
+	. = ..()
+	ADD_TRAIT(spawned_mob, TRAIT_NOGUNS, INNATE_TRAIT)
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord
 	rank = "Warlord"
 	outfit = /datum/outfit/pirate/medieval/warlord
 
-	/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord/special(mob/living/carbon/spawned_mob)
-		. = ..()
-		spawned_mob.dna.add_mutation(/datum/mutation/human/hulk)
-		spawned_mob.dna.add_mutation(/datum/mutation/human/gigantism)
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord/special(mob/living/carbon/spawned_mob)
+	. = ..()
+	spawned_mob.dna.add_mutation(/datum/mutation/human/hulk)
+	spawned_mob.dna.add_mutation(/datum/mutation/human/gigantism)
