@@ -25,10 +25,6 @@
 	. = ..()
 	if(!sword_color_icon)
 		sword_color_icon = pick("red", "blue", "green", "purple")
-
-/obj/item/melee/energy/sword/holographic/make_transformable()
-	. = ..()
-	GetComponent(/datum/component/transforming).clumsy_damage_type = STAMINA
 	
 /obj/item/melee/energy/sword/holographic/green
 	sword_color_icon = "green"
