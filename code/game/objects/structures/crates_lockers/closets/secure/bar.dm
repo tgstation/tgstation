@@ -18,4 +18,4 @@
 	new /obj/item/roulette_wheel_beacon(src)
 	new /obj/item/storage/fancy/candle_box(src)
 	new /obj/item/storage/fancy/candle_box(src)
-	new /obj/item/choice_beacon/jukebox(src) //this line is a monkestation edit!
+	new /obj/item/jukebox_beacon(src) //monkestation edit

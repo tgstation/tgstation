@@ -5741,6 +5741,7 @@
 #include "monkestation\code\game\objects\items\choice_beacon.dm"
 #include "monkestation\code\game\objects\items\cirno_plush.dm"
 #include "monkestation\code\game\objects\items\gravity_gun.dm"
+#include "monkestation\code\game\objects\items\jukebox_beacon.dm"
 #include "monkestation\code\game\objects\items\miningweapons.dm"
 #include "monkestation\code\game\objects\items\mothlet_grenade.dm"
 #include "monkestation\code\game\objects\items\plushies.dm"

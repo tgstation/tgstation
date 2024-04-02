@@ -92,13 +92,3 @@
 		return
 
 	to_chat(user, span_notice("[uses] use[uses > 1 ? "s" : ""] remain[uses > 1 ? "" : "s"] on [src]."))
-
-/obj/item/choice_beacon/jukebox //this is probably a terrible way to do this, but its the first that worked.
-	name = "jukebox beacon"
-	desc = "Deploys a jukebox! Also comes wrenched down to the floor for you on delivery! How convenient!"
-/obj/item/choice_beacon/jukebox/interact(mob/user)
-	to_chat(user, span_hear("You hear a crackle before a message plays through [src]: \"Thank you for picking Dave's Instant Jukebox Shipping! This beacon will now self destruct.\""))
-	new /obj/machinery/media/jukebox(get_turf(user))
-	playsound(src, 'sound/weapons/emitter2.ogg', 50, extrarange = SILENCED_SOUND_EXTRARANGE)
-	do_sparks(3, source = src)
-	qdel(src)
