@@ -41,7 +41,7 @@
 		)
 	if(hitting_projectile.suppressed != SUPPRESSED_VERY)
 		visible_message(
-			span_danger("[src] is hit by \a [hitting_projectile][damage_sustained ? "" : ", without leaving a mark"]!"),
+			span_danger("[src] is hit by \a [hitting_projectile][damage_sustained ? "" : ", [no_damage_feedback]"]!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 		)
 
@@ -54,7 +54,7 @@
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 	var/damage = take_damage(hulk_damage(), BRUTE, MELEE, 0, get_dir(src, user))
-	user.visible_message(span_danger("[user] smashes [src][damage ? "" : ", without leaving a mark"]!"), span_danger("You smash [src][damage ? "" : ", without leaving a mark"]!"), null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_danger("[user] smashes [src][damage ? "" : ", [no_damage_feedback]"]!"), span_danger("You smash [src][damage ? "" : ", [no_damage_feedback]"]!"), null, COMBAT_MESSAGE_RANGE)
 	return TRUE
 
 /obj/blob_act(obj/structure/blob/B)
