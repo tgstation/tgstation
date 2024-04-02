@@ -47,3 +47,8 @@
   - code_imp: The status effect that was called Stagger (not Staggered, which is separate)
       is now called Rebuked.
   - balance: Rebuked applies a x2 action delay cooldown, rather than x1.5.
+2024-04-02:
+  SyncIt21,Pickle-Coding:
+  - bugfix: space heater(including improvised) turns off when cell is drained
+  - bugfix: optimized power usage for both improvised and main space heater. Improvised
+      heater now works & uses beaker heat capacity
