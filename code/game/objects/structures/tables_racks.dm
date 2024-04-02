@@ -303,7 +303,7 @@
 		new buildstack(target_turf, buildstackamount)
 	else
 		for(var/datum/material/mat in custom_materials)
-			new M.sheet_type(target_turf, FLOOR(custom_materials[mat] / SHEET_MATERIAL_AMOUNT, 1))
+			new mat.sheet_type(target_turf, FLOOR(custom_materials[mat] / SHEET_MATERIAL_AMOUNT, 1))
 		new framestack(target_turf, framestackamount)
 
 /obj/structure/table/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
