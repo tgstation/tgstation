@@ -144,8 +144,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		render_target = "*[render_target]"
 		bare_render_target = old_render_target
 
-	#warn unit test for this
-	// We assert that all initial render targets will have no *
 	// Swapping em around
 	home.canon_source_to_reality -= render_target
 	home.canon_source_to_reality[old_render_target] = render_target
@@ -300,7 +298,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	SHOULD_CALL_PARENT(TRUE)
 	distance_from_owner = new_distance
 	var/old_hidden = hidden_by_distance
-	#warn being unforce hid needs to rerun distance calcs
+	#warn being unforce hid needs to rerun distance calcs (and not guarenteed show you)
 	// If we are above our owner's z layer nuke er
 	if(distance_from_owner > 0)
 		if(hidden_by_distance == HIDDEN_ABOVE)
