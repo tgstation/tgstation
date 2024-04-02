@@ -242,6 +242,7 @@ SUBSYSTEM_DEF(explosions)
 		EXARG_KEY_IGNORE_CAP = ignorecap,
 		EXARG_KEY_SILENT = silent,
 		EXARG_KEY_SMOKE = smoke,
+		EXARG_KEY_PROTECT_EPICENTER = protect_epicenter,
 		EXARG_KEY_EXPLOSION_CAUSE = explosion_cause ? explosion_cause : origin,
 		EXARG_KEY_EXPLOSION_DIRECTION = explosion_direction,
 		EXARG_KEY_EXPLOSION_ARC = explosion_arc,
@@ -304,31 +305,6 @@ SUBSYSTEM_DEF(explosions)
 	var/orig_dev_range = devastation_range
 	var/orig_heavy_range = heavy_impact_range
 	var/orig_light_range = light_impact_range
-
-	// Work out the angles to explode between
-	var/first_angle_limit = WRAP(explosion_direction - explosion_arc/2, 0, 360)
-	var/second_angle_limit = WRAP(explosion_direction + explosion_arc/2, 0, 360)
-
-	// Get them in the right order
-	var/lower_angle_limit
-	var/upper_angle_limit
-	var/do_directional
-
-	if(first_angle_limit == second_angle_limit) // CASE A: FULL CIRCLE
-		do_directional = FALSE
-		message_admins("CASE A")
-	else if(first_angle_limit < second_angle_limit) // CASE B: When the arc does not cross 0 degrees
-		lower_angle_limit = first_angle_limit
-		upper_angle_limit = second_angle_limit
-		do_directional = TRUE
-		message_admins("CASE B")
-	else if (first_angle_limit > second_angle_limit) // CASE C: When the arc does not cross 0 degrees
-		lower_angle_limit = second_angle_limit
-		upper_angle_limit = first_angle_limit
-		do_directional = TRUE
-		message_admins("CASE C")
-
-	message_admins("ANGLE RANGE: [first_angle_limit], [second_angle_limit]. ANGLE RANGE DIRECTED: [lower_angle_limit], [upper_angle_limit]. ANGLE: [explosion_direction]")
 
 	var/orig_max_distance = max(devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range)
 
@@ -414,7 +390,7 @@ SUBSYSTEM_DEF(explosions)
 		for(var/mob/living/L in viewers(flash_range, epicenter))
 			L.flash_act()
 
-	var/list/affected_turfs = prepare_explosion_turfs(max_range, epicenter)
+	var/list/affected_turfs = prepare_explosion_turfs(max_range, epicenter, protect_epicenter, explosion_direction, explosion_arc)
 
 	var/reactionary = CONFIG_GET(flag/reactionary_explosions)
 	// this list is setup in the form position -> block for that position
@@ -429,7 +405,6 @@ SUBSYSTEM_DEF(explosions)
 		var/our_x = explode.x
 		var/our_y = explode.y
 		var/dist = CHEAP_HYPOTENUSE(our_x, our_y, x0, y0)
-		var/angle = get_angle(explode, epicenter)
 		var/block = 0
 		// Using this pattern, block will flow out from blocking turfs, essentially caching the recursion
 		// This is safe because if get_step_towards is ever anything but caridnally off, it'll do a diagonal move
@@ -443,10 +418,6 @@ SUBSYSTEM_DEF(explosions)
 				block += our_block
 				cached_exp_block[explode] = our_block + explode.explosive_resistance
 
-		if(do_directional)
-			if(!ISINRANGE(angle, lower_angle_limit, upper_angle_limit))
-				continue // Drop any turf outwith the arc of the explosion
-
 		var/severity = EXPLODE_NONE
 		if(dist + (block * EXPLOSION_BLOCK_DEV) < devastation_range)
 			severity = EXPLODE_DEVASTATE
@@ -456,24 +427,19 @@ SUBSYSTEM_DEF(explosions)
 			severity = EXPLODE_LIGHT
 
 		if(explode == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
-			if(!protect_epicenter)
-				var/list/items = list()
-				for(var/atom/holder as anything in explode)
-					if (length(holder.contents) && !(holder.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
-						items += holder.get_all_contents(ignore_flag_1 = PREVENT_CONTENTS_EXPLOSION_1)
-					if(isliving(holder))
-						items -= holder		//Stops mobs from taking double damage from explosions originating from them/their turf, such as from projectiles
-				switch(severity)
-					if(EXPLODE_DEVASTATE)
-						SSexplosions.high_mov_atom += items
-						SSexplosions.highturf += explode
-					if(EXPLODE_HEAVY)
-						SSexplosions.med_mov_atom += items
-						SSexplosions.medturf += explode
-					if(EXPLODE_LIGHT)
-						SSexplosions.low_mov_atom += items
-						SSexplosions.lowturf += explode
-				continue // We won't ever check for whether to put a fire on the epicenter, but it's only a 40% chance so unlikely anyone will notice, and saves an extra check for every single affected turf
+			var/list/items = list()
+			for(var/atom/holder as anything in explode)
+				if (length(holder.contents) && !(holder.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
+					items += holder.get_all_contents(ignore_flag_1 = PREVENT_CONTENTS_EXPLOSION_1)
+				if(isliving(holder))
+					items -= holder		//Stops mobs from taking double damage from explosions originating from them/their turf, such as from projectiles
+			switch(severity)
+				if(EXPLODE_DEVASTATE)
+					SSexplosions.high_mov_atom += items
+				if(EXPLODE_HEAVY)
+					SSexplosions.med_mov_atom += items
+				if(EXPLODE_LIGHT)
+					SSexplosions.low_mov_atom += items
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
 				SSexplosions.highturf += explode
@@ -616,10 +582,12 @@ SUBSYSTEM_DEF(explosions)
 /// Returns in a unique order, spiraling outwards
 /// This is done to ensure our progressive cache of blast resistance is always valid
 /// This is quite fast
-/proc/prepare_explosion_turfs(range, turf/epicenter)
+/proc/prepare_explosion_turfs(range, turf/epicenter, protect_epicenter, explosion_direction, explosion_arc)
 	var/list/outlist = list()
-	// Add in the center
-	outlist += epicenter
+	var/list/candidates = list()
+	// Add in the center if it's not protected
+	if(!protect_epicenter)
+		outlist += epicenter
 
 	var/our_x = epicenter.x
 	var/our_y = epicenter.y
@@ -627,6 +595,31 @@ SUBSYSTEM_DEF(explosions)
 
 	var/max_x = world.maxx
 	var/max_y = world.maxy
+
+	// Work out the angles to explode between
+	var/first_angle_limit = WRAP(explosion_direction - explosion_arc/2, 0, 360)
+	var/second_angle_limit = WRAP(explosion_direction + explosion_arc/2, 0, 360)
+
+	// Get everything in the right order
+	var/lower_angle_limit
+	var/upper_angle_limit
+	var/do_directional
+	var/reverse_angle
+
+	// Work out which case we're in
+	if(first_angle_limit == second_angle_limit) // CASE A: FULL CIRCLE
+		do_directional = FALSE
+	else if(first_angle_limit < second_angle_limit) // CASE B: When the arc does not cross 0 degrees
+		lower_angle_limit = first_angle_limit
+		upper_angle_limit = second_angle_limit
+		do_directional = TRUE
+		reverse_angle = FALSE
+	else if (first_angle_limit > second_angle_limit) // CASE C: When the arc crosses 0 degrees
+		lower_angle_limit = second_angle_limit
+		upper_angle_limit = first_angle_limit
+		do_directional = TRUE
+		reverse_angle = TRUE
+
 	for(var/i in 1 to range)
 		var/lowest_x = our_x - i
 		var/lowest_y = our_y - i
@@ -634,25 +627,33 @@ SUBSYSTEM_DEF(explosions)
 		var/highest_y = our_y + i
 		// top left to one before top right
 		if(highest_y <= max_y)
-			outlist += block(
+			candidates += block(
 				locate(max(lowest_x, 1), highest_y, our_z),
 				locate(min(highest_x - 1, max_x), highest_y, our_z))
 		// top right to one before bottom right
 		if(highest_x <= max_x)
-			outlist += block(
+			candidates += block(
 				locate(highest_x, min(highest_y, max_y), our_z),
 				locate(highest_x, max(lowest_y + 1, 1), our_z))
 		// bottom right to one before bottom left
 		if(lowest_y >= 1)
-			outlist += block(
+			candidates += block(
 				locate(min(highest_x, max_x), lowest_y, our_z),
 				locate(max(lowest_x + 1, 1), lowest_y, our_z))
 		// bottom left to one before top left
 		if(lowest_x >= 1)
-			outlist += block(
+			candidates += block(
 				locate(lowest_x, max(lowest_y, 1), our_z),
 				locate(lowest_x, min(highest_y - 1, max_y), our_z))
 
+	if(!do_directional)
+		outlist += candidates
+	else
+		for(var/turf/candidate as anything in candidates)
+			var/angle = get_angle(candidate, epicenter)
+			if(ISINRANGE(angle, lower_angle_limit, upper_angle_limit) ^ reverse_angle)
+				outlist += candidate
+			else
 	return outlist
 
 /datum/controller/subsystem/explosions/fire(resumed = 0)
