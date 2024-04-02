@@ -377,7 +377,7 @@ GLOBAL_PROTECT(protected_ranks)
 		"ranks" = list(),
 		"admins" = list()
 	)
-	for(var/datum/admin_rank/R in GLOB.admin_ranks)
+	for(var/datum/admin_rank/R as anything in GLOB.admin_ranks)
 		file_data["ranks"]["[R.name]"] = list()
 		file_data["ranks"]["[R.name]"]["include rights"] = R.include_rights
 		file_data["ranks"]["[R.name]"]["exclude rights"] = R.exclude_rights
