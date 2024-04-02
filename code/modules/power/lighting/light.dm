@@ -81,6 +81,12 @@
 	///Power usage - W per unit of luminosity
 	var/power_consumption_rate = 20
 
+	/// Did a syndicate light tube/bulb get inserted?
+	var/riggedtoblow = FALSE
+
+	/// Did a syndicate RADIATION light tube/bulb get inserted?
+	var/riggedtorads = FALSE
+
 /obj/machinery/light/Move()
 	if(status != LIGHT_BROKEN)
 		break_light_tube(TRUE)
@@ -352,6 +358,13 @@
 		if(!user.temporarilyRemoveItemFromInventory(light_object))
 			return
 
+		if(istype(tool, /obj/item/light/tube/syndirig) || istype(tool, /obj/item/light/bulb/syndirig))
+			riggedtoblow = TRUE
+			break_light_tube()
+
+		if(istype(tool, /obj/item/light/tube/radiation) || istype(tool, /obj/item/light/bulb/radiation))
+			riggedtorads = TRUE
+
 		add_fingerprint(user)
 		if(status != LIGHT_EMPTY)
 			drop_light_tube(user)
@@ -424,18 +437,6 @@
 		return
 	if(prob(12))
 		electrocute_mob(user, get_area(src), src, 0.3, TRUE)
-
-	// Below checks to see if a radiation light tube/bulb was inserted.
-	if(istype(attacking_object, /obj/item/light/tube/radiation) || istype(attacking_object, /obj/item/light/bulb/radiation))
-		radiation_pulse(attacking_object, max_range = 12, threshold = RAD_FULL_INSULATION)
-
-	// Below checks to see if a syndicate rigged light tube/bulb was inserted.
-	if(istype(attacking_object, /obj/item/light/tube/radiation) || istype(attacking_object, /obj/item/light/bulb/radiation))
-		syndiplode()
-
-/obj/machinery/light/proc/syndiplode()
-	sleep(60 SECONDS)
-	explosion(src, devastation_range = 0, heavy_impact_range = 1, light_impact_range = 4, flash_range = 8)
 
 /obj/machinery/light/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
@@ -647,6 +648,16 @@
 			do_sparks(3, TRUE, src)
 	status = LIGHT_BROKEN
 	update()
+
+	if(riggedtoblow)
+		sleep(1 MINUTES)
+		explosion(src, 0, 2, 3, 4)
+		qdel(src)
+		riggedtoblow = FALSE // To prevent multiple procs.
+
+	if(riggedtorads)
+		radiation_pulse(src, max_range = 12, threshold = RAD_FULL_INSULATION)
+		riggedtorads = FALSE // To prevent multiple procs.
 
 /obj/machinery/light/proc/fix()
 	if(status == LIGHT_OK)

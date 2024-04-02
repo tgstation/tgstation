@@ -144,7 +144,7 @@
 	name = "Radioactive Lights"
 	desc = "A box disguised as a replacement lights package, containing 6 light tubes and 6 light bulbs. \
 			Light tubes and bulbs contained within are hazardous to life and will erratically pulse with radiation. \
-			When properly installed into any light sources, the light tubes/bulbs within will burst with radiation."
+			When properly installed into any light sources, the light tubes/bulbs within will burst with radiation when broken."
 	item = /obj/item/storage/box/lights/mixed/radiation
 	progression_minimum = 20 MINUTES
 	cost = 4
@@ -157,6 +157,7 @@
 	item = /obj/item/knife/combat/survival/chemical/venom
 	cost = 3
 	surplus = 35
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/stealthy_weapons/knifelexorin
 	name = "Reagent Knife (Lexorin)"
@@ -165,6 +166,7 @@
 	item = /obj/item/knife/combat/survival/chemical/lexorin
 	cost = 6
 	surplus = 35
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/stealthy_weapons/knifeamanitin
 	name = "Reagent Knife (Amanitin)"
@@ -173,6 +175,7 @@
 	item = /obj/item/knife/combat/survival/chemical/amanitin
 	cost = 4
 	surplus = 35
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/stealthy_weapons/knifestaminatoxin
 	name = "Reagent Knife (Tirizene)"
@@ -181,6 +184,7 @@
 	item = /obj/item/knife/combat/survival/chemical/staminatoxin
 	cost = 2
 	surplus = 35
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/stealthy_weapons/knifecurare
 	name = "Reagent Knife (Curare)"
@@ -189,6 +193,7 @@
 	item = /obj/item/knife/combat/survival/chemical/curare
 	cost = 6
 	surplus = 35
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/stealthy_weapons/knifeinitropidril
 	name = "Reagent Knife (Initropidril)"
@@ -197,6 +202,7 @@
 	item = /obj/item/knife/combat/survival/chemical/initropidril
 	cost = 8
 	surplus = 35
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/stealthy_weapons/knifepancuronium
 	name = "Reagent Knife (Pancuronium)"
@@ -205,6 +211,7 @@
 	item = /obj/item/knife/combat/survival/chemical/pancuronium
 	cost = 6
 	surplus = 35
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/stealthy_weapons/knifeheparin
 	name = "Reagent Knife (Heparin)"
@@ -213,6 +220,7 @@
 	item = /obj/item/knife/combat/survival/chemical/heparin
 	cost = 2
 	surplus = 35
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/stealthy_weapons/syndispraycan
 	name = "Syndicate Spraycan"

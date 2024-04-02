@@ -3,6 +3,7 @@
 	desc = "An unarmed landmine. It can be planted to arm it."
 	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "landmine"
+	w_class = WEIGHT_CLASS_SMALL
 	var/mine_type = /obj/effect/mine
 	var/arming_time = 3 SECONDS
 
@@ -28,9 +29,10 @@
 	desc = "An unarmed heavy stun mine designed to cripple those who step upon it."
 	mine_type = /obj/effect/mine/stun/heavy
 	arming_time = 10 SECONDS
-	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/deployablemine/explosive
+	name = "explosive mine"
+	desc = "An unarmed explosive mine designed to give whomever steps upon it the last bad day of their lives."
 	mine_type = /obj/effect/mine/explosive
 
 /obj/item/deployablemine/honk

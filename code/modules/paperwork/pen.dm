@@ -667,27 +667,12 @@
 **/
 
 /obj/item/pen/explosive
-	desc = "It's a normal black ink pen."
 	name = "pen"
-	icon_state = "pen"
-	inhand_icon_state = "pen"
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
-	throwforce = 0
-	w_class = WEIGHT_CLASS_TINY
-	throw_speed = 3
-	throw_range = 7
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.1)
-	pressure_resistance = 2
-	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
-	sharpness = SHARP_POINTY
 
 /obj/item/pen/explosive/attack_self(mob/living/carbon/user)
-	if(!IS_TRAITOR(user) || !IS_NUKE_OP(user)) // if non syndicate , it is just a regular pen as they don't know how to activate the explosive.
-		return
-	else
-		to_chat(user, span_warning("You activate the hidden explosive payload! 5 seconds before detonation!"))
-		sleep(5 SECONDS)
-		explode()
+	to_chat(user, span_warning("You click the pen and something begins ticking! 5 seconds!"))
+	sleep(5 SECONDS)
+	explode()
 
 /obj/item/pen/explosive/proc/explode()
 	explosion(src, 1, 0, 2, flame_range = 1)

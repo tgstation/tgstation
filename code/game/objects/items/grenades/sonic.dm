@@ -28,18 +28,9 @@
 	if(M.stat == DEAD)	//They're dead!
 		return
 	M.show_message(span_userdanger("SCREECH"), MSG_AUDIBLE)
-	var/distance = max(0,get_dist(get_turf(src),T))
-	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
-		M.Paralyze(5 SECONDS)
-		M.Knockdown(20 SECONDS)
-		M.adjust_confusion(24 SECONDS)
-		M.adjust_jitter(5 SECONDS)
-		M.soundbang_act(1, 20, 10, 15)
-		M.adjustOrganLoss(ORGAN_SLOT_EARS, -base_damage)
-		return
-
-	var/banged = M.soundbang_act(1, 20/max(1,distance), rand(0, 5))
-
-	// If banged
-	if(banged)
-		M.Knockdown(max(15 / max(1, distance), 6) SECONDS)
+	M.Paralyze(5 SECONDS)
+	M.Knockdown(15 SECONDS)
+	M.adjust_confusion(24 SECONDS)
+	M.adjust_jitter(5 SECONDS)
+	M.soundbang_act(1, 20, 10, 15)
+	M.adjustOrganLoss(ORGAN_SLOT_EARS, -base_damage)

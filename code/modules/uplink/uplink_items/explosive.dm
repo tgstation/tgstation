@@ -117,6 +117,7 @@
 	item = /obj/item/storage/fancy/cigarettes/trick_cigs
 	cost = 2
 	surplus = 40
+	progression_minimum = 5 MINUTES
 
 /datum/uplink_item/explosives/explosivepen
 	name = "Explosive Pen"
@@ -125,6 +126,7 @@
 	item = /obj/item/pen/explosive
 	cost = 1
 	surplus = 60
+	progression_minimum = 10 MINUTES
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/explosives/molotovs
@@ -143,6 +145,7 @@
 	surplus = 1
 	cost = 20
 	illegal_tech = FALSE
+	progression_minimum = 30 MINUTES
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/explosives/bioterrorfoam
@@ -153,6 +156,7 @@
 	item = /obj/item/grenade/chem_grenade/bioterrorfoam
 	cost = 4
 	surplus = 35
+	progression_minimum = 10 MINUTES
 
 /datum/uplink_item/explosives/saxitoxinnade
 	name = "Saxitoxin Grenade"
@@ -163,12 +167,40 @@
 	surplus = 40
 	purchasable_from = UPLINK_NUKE_OPS
 
+/datum/uplink_item/explosives/shrapnelgrenademega
+	name = "FRAGmentation Grenade"
+	desc = "A singular FRAGmentation Grenade. Anything adjacent when it explodes will likely get shredded to atoms. VERY Likely to kill anyone nearby. Has no additional explosive power."
+	item = /obj/item/grenade/frag/mega
+	cost = 3
+	surplus = 40
+	progression_minimum = 30 MINUTES
+	purchasable_from = ~UPLINK_CLOWN_OPS
+
+/datum/uplink_item/explosives/banananade
+	name = "Banana Grenade"
+	desc = "A singular Banana Grenade. Temporarily blinds those nearby without eye protection, and shoots banana peels everywhere nearby. \
+			Useful for gaining distance from would-be pursuers."
+	item = /obj/item/grenade/spawnergrenade/bananapeel
+	cost = 1
+	surplus = 0
+	purchasable_from = (UPLINK_TRAITORS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/explosives/rotfragnade
+	name = "ROTFrag Grenade"
+	desc = "A singular ROTFrag Grenade. After priming, shake rapidly in hand to increase it's shrapnel potential, then throw."
+	item = /obj/item/grenade/primer
+	cost = 3
+	surplus = 20
+	progression_minimum = 25 MINUTES
+	purchasable_from = ~UPLINK_CLOWN_OPS
+
 /datum/uplink_item/explosives/spesscarp
 	name = "Space Carp Grenade"
 	desc = "A grenade that when detonated, will release 5 space carps into the immediate vicinity. No hydration required!"
 	item = /obj/item/grenade/spawnergrenade/spesscarp
 	cost = 6
 	surplus = 10
+	progression_minimum = 5 MINUTES
 
 /datum/uplink_item/explosives/bombchameleon
 	name = "Chameleon Bomb"
@@ -178,12 +210,46 @@
 	item = /obj/item/device/chameleon/bomb
 	cost = 2
 	surplus = 50
+	progression_minimum = 10 MINUTES
 
-/datum/uplink_item/explosives/fraggrenades
+/datum/uplink_item/explosives/flashbangs
+	name = "Flashbangs"
+	desc = "A pouch containing approximately 5 Flashbangs. Causes temporary blindness and deafness in those nearby who are unprotected. \
+			Capable of leaving many station personnel in your kind, and of-so-loving hands."
+	item = /obj/item/ammo_box/nadepouch/flashbang
+	cost = 2
+	surplus = 50
+
+/datum/uplink_item/explosives/firecrackers
+	name = "Firecrackers"
+	desc = "A pouch containing approximately 10 Firecrackers. Not super powerful, but are great for area denial. \
+			Doesn't come with a lighter."
+	item = /obj/item/ammo_box/nadepouch/firecracker
+	cost = 2
+	surplus = 30
+
+/datum/uplink_item/explosives/stingbangs
+	name = "Stingbangs"
+	desc = "A pouch containing approximately 5 Stingbangs. Useful for subdueing unarmored targets, or those who'd normally be resistant to flashbangs."
+	item = /obj/item/ammo_box/nadepouch/stingbang
+	cost = 4
+	surplus = 40
+
+/datum/uplink_item/explosives/mirages
+	name = "Mirage Grenades"
+	desc = "A pouch containing approximately 5 Mirage Grenades. After exploding, these mirage grenades will temporarily project your form where they were thrown. \
+			Useful for confusing people or throwing idiotic security personnel off your trail."
+	item = /obj/item/ammo_box/nadepouch/mirage
+	cost = 3
+	surplus = 30
+
+/datum/uplink_item/explosives/shrapnelgrenades
 	name = "Fragmentation Grenades"
-	desc = "A pouch containing approximately 5 Fragmentation Grenades. Anything adjacent when it explodes will be heavily damaged. Likely to cause a small hull breach."
+	desc = "A pouch containing approximately 5 Fragmentation Grenades. Anything adjacent when it explodes will be heavily damaged. Likely to kill anyone nearby."
+	item = /obj/item/ammo_box/nadepouch/frag
 	cost = 7
-	surplus = 20
+	surplus = 40
+	progression_minimum = 10 MINUTES
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/explosives/gluongrenades
@@ -193,6 +259,7 @@
 	item = /obj/item/ammo_box/nadepouch/gluon
 	cost = 4
 	surplus = 25
+	progression_minimum = 10 MINUTES
 
 /datum/uplink_item/explosives/concussgrenades
 	name = "Concussion Grenades"
@@ -210,13 +277,14 @@
 	cost = 4
 	surplus = 30
 	purchasable_from = ~UPLINK_CLOWN_OPS
+	progression_minimum = 10 MINUTES
 
 /datum/uplink_item/explosives/sonicgrenades
 	name = "Sonic Grenades"
 	desc = "A pouch containing approximately 5 Sonic Grenades. These grenades are capable of incapacitating both carbon-based and silicon-based lifeforms. \
-			The extremely loud screeching sound emitted will damage the ears and temporarily stun and confuse all who hear it. Ensure you have ear-protection before use."
+			The extremely loud screeching sound emitted will damage the ears and temporarily stun and confuse all nearby. Ear-protection won't protect you or them."
 	item = /obj/item/ammo_box/nadepouch/sonic
-	cost = 4
+	cost = 6
 	surplus = 20
 
 /datum/uplink_item/explosives/antigravity
@@ -235,6 +303,7 @@
 	cost = 4
 	surplus = 30
 	purchasable_from = ~UPLINK_CLOWN_OPS
+	progression_minimum = 10 MINUTES
 
 /datum/uplink_item/explosives/acidfoamnades
 	name = "Highly-Acidic Grenades"
@@ -243,6 +312,7 @@
 	cost = 5
 	surplus = 30
 	purchasable_from = ~UPLINK_CLOWN_OPS
+	progression_minimum = 15 MINUTES
 
 /datum/uplink_item/explosives/eyebreakersmoke
 	name = "Box of Eyebreaker Smokebombs"
@@ -251,6 +321,7 @@
 	cost = 4
 	surplus = 40
 	illegal_tech = FALSE
+	progression_minimum = 10 MINUTES
 
 /datum/uplink_item/explosives/supermatternades
 	name = "Supermatter Grenades"
@@ -261,6 +332,7 @@
 	cost = 7
 	surplus = 35
 	purchasable_from = ~UPLINK_CLOWN_OPS
+	progression_minimum = 20 MINUTES
 
 /datum/uplink_item/explosives/whiteholenades
 	name = "Whitehole Grenades"
@@ -272,6 +344,7 @@
 	cost = 7
 	surplus = 35
 	purchasable_from = ~UPLINK_CLOWN_OPS
+	progression_minimum = 20 MINUTES
 
 /datum/uplink_item/explosives/hellgrenades
 	name = "Hellfoam Grenades"
@@ -281,6 +354,7 @@
 	cost = 8
 	surplus = 6
 	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_SPY)
+	progression_minimum = 20 MINUTES
 
 /datum/uplink_item/explosives/explosivemines
 	name = "Box of Explosive Mines"
@@ -289,6 +363,7 @@
 	cost = 8
 	surplus = 10
 	purchasable_from = ~UPLINK_CLOWN_OPS
+	progression_minimum = 20 MINUTES
 
 /datum/uplink_item/explosives/stunmines
 	name = "Box of Stun Mines"
@@ -311,6 +386,7 @@
 	cost = 5
 	surplus = 40
 	purchasable_from = ~UPLINK_CLOWN_OPS
+	progression_minimum = 20 MINUTES
 
 /datum/uplink_item/explosives/sleepymines
 	name = "Box of Sleepy Gas Mines"
@@ -318,6 +394,7 @@
 	item = /obj/item/storage/box/syndie_kit/sleepymine
 	cost = 4
 	surplus = 45
+	progression_minimum = 20 MINUTES
 
 /datum/uplink_item/explosives/riggedstunbaton
 	name = "Rigged Stun Baton"
@@ -326,6 +403,7 @@
 	cost = 6
 	surplus = 50
 	purchasable_from = ~UPLINK_NUKE_OPS
+	progression_minimum = 30 MINUTES
 
 /datum/uplink_item/explosives/tricktelecrystal
 	name = "Trick Telecrystal"
@@ -337,16 +415,17 @@
 	cost = 5
 	surplus = 0
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	progression_minimum = 30 MINUTES
 
 /datum/uplink_item/explosives/riggedcells
 	name = "Box of Rigged Power Cells"
 	desc = "A box containing six of our specialty-designed rigged power cells! \
 			Each are designed to be as powerful as a bluespace power cell, but explode 60 seconds after their installation. \
-			These cells explode in a more devastating manner than a normal rigged power cell. \
-			Pairs exceptionally well with a bluespace RPED for quick bombings or if you intend to frame someone else for the explosives."
+			These cells explode in a more devastating manner than a normal rigged power cell."
 	item = /obj/item/storage/box/syndie_kit/syndirigcells
 	cost = 5
 	surplus = 30
+	progression_minimum = 20 MINUTES
 
 /datum/uplink_item/explosives/riggedlights
 	name = "Box of Rigged Replacement Lights"
@@ -356,6 +435,7 @@
 	item = /obj/item/storage/box/lights/mixed/syndirigged
 	cost = 7
 	surplus = 25
+	progression_minimum = 20 MINUTES
 
 /datum/uplink_item/explosives/clusterclf3
 	name = "The Hell-Bomb Cluster"
@@ -426,3 +506,4 @@
 	item = /obj/item/grenade/clusterbuster/metalfoam
 	cost = 2
 	surplus = 10
+	progression_minimum = 10 MINUTES
