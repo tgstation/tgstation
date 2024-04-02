@@ -314,7 +314,7 @@ GLOBAL_PROTECT(protected_ranks)
 
 
 /proc/update_everything_flag_in_db()
-	for(var/datum/admin_rank/R in GLOB.admin_ranks)
+	for(var/datum/admin_rank/R as anything in GLOB.admin_ranks)
 		var/list/flags = list()
 		if(R.include_rights == R_EVERYTHING)
 			flags += "flags"
