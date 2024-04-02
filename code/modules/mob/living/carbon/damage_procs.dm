@@ -145,8 +145,9 @@
 
 /mob/living/carbon/adjustStaminaLoss(amount, updating_stamina, forced, required_biotype = ALL)
 	. = ..()
-	if(amount > 0)
-		stam_regen_start_time = world.time + STAMINA_REGEN_BLOCK_TIME
+	if(amount <= 0 || HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
+		return
+	stam_regen_start_time = world.time + STAMINA_REGEN_BLOCK_TIME
 
 /**
  * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the damage proc on that organ.
