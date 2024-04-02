@@ -7,6 +7,7 @@ export const AtmosControlPanel = (props) => {
   const groups = data.excited_groups
     .map((group, i) => ({
       ...group,
+      // Generate a unique id
       id: group.area + i,
     }))
     .sort((a, b) => a.id.localeCompare(b.id));
