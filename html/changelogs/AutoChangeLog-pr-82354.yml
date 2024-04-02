@@ -1,0 +1,4 @@
+author: "DATA-xPUNGED"
+delete-after: True
+changes:
+  - bugfix: "Fixed Prosthetic limb quirk preferences"
