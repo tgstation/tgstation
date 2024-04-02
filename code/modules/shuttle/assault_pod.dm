@@ -67,7 +67,7 @@
 	name = "Shuttle placement designator"
 	icon = 'icons/obj/scrolls.dmi'
 	icon_state = "blueprints"
-	inhand_icon_state = "blueprints"
+	inhand_icon_state = null
 	desc = "A map of the station used to select where you want to land your shuttle."
 	shuttle_id = "pirate"
 	width = 8
