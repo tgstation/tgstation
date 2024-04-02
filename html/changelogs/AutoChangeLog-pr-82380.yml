@@ -1,0 +1,8 @@
+author: "Zytolg"
+delete-after: True
+changes:
+  - balance: "Readds some N2O to the Birdshot AI sat. I'll be working on a better solution for this in the coming weeks."
+  - bugfix: "Due to a Misprint, the Atmos Gas -> Pure pipes were incorrectly labeled on Birdshot. Your Cargo Techs have since remedied this."
+  - bugfix: "Our cable laying intern team didn't lay cable to the Secure Storage APC in Enigneering. Getting coffee instead of working is a big no-no here at Nanotrasen Tech Support, and they have since been reassigned. Your Chief Engineers have been instructed to make the modifications on all Birdshot Class Stations."
+  - bugfix: "We've noticed some Heads-Of-Staff getting lost on Birdshot. While Telecommunications does have a GPS waypoint, our staffs stubbornness often means this is ineffective. Additional Signage has been placed to help direct our most senior of staff."
+  - bugfix: "The Birdshot Turbine will no longer Pre-Load itself with highly flammable Plasma Gas. Do your own jobs you lazy atmos bums."
