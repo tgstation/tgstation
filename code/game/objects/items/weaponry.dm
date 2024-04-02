@@ -138,7 +138,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "shortsword"
 	desc = "A mercenary's sword, chipped and worn from battles long gone. you could say it is a swordsmans's shortsword short sword."
 	icon_state = "shortsword"
-	inhand_icon_state = "shortsword"
+	inhand_icon_state = "shsword"
 	worn_icon_state = "shortsword"
 	slot_flags = ITEM_SLOT_BELT
 	force = 20
