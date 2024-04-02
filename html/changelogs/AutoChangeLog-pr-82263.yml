@@ -1,0 +1,4 @@
+author: "moocowswag"
+delete-after: True
+changes:
+  - bugfix: "Modular shields now give correct feedback and no longer dissuade individuals from breaking them."
