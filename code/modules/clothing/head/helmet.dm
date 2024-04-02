@@ -553,7 +553,7 @@
 	bomb = 25
 	fire = 10
 	acid = 50
-	wound = 10
+	wound = 20
 
 /obj/item/clothing/head/helmet/knight/warlord
 	name = "golden barbute helmet"
@@ -565,11 +565,11 @@
 	slowdown = 0.2
 
 /datum/armor/helmet_warlord
-	melee = 50
-	bullet = 30
-	laser = 55
-	energy = 55
-	bomb = 30
+	melee = 70
+	bullet = 60
+	laser = 70
+	energy = 70
+	bomb = 40
 	fire = 50
 	acid = 50
-	wound = 15
+	wound = 30
