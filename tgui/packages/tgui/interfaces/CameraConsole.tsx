@@ -1,4 +1,3 @@
-import { sortBy } from 'common/collections';
 import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useState } from 'react';
@@ -73,7 +72,7 @@ const selectCameras = (cameras: Camera[], searchText = ''): Camera[] => {
   if (searchText) {
     queriedCameras = queriedCameras.filter(testSearch);
   }
-  queriedCameras = sortBy((camera: Camera) => camera)(queriedCameras);
+  queriedCameras = queriedCameras.sort();
 
   return queriedCameras;
 };

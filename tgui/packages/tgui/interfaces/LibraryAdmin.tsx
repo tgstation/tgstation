@@ -1,5 +1,3 @@
-import { sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { capitalize } from 'common/string';
 import { useState } from 'react';
 
@@ -120,15 +118,16 @@ const SearchAndDisplay = (props) => {
     view_raw,
     show_deleted,
   } = data;
-  const books = flow([
-    (pages) =>
-      pages.map((book, i) => ({
-        ...book,
-        // Generate a unique id
-        key: i,
-      })),
-    sortBy<DisplayBook>((book) => book.key),
-  ])(pages);
+  const books = pages
+    .map(
+      (book, i) =>
+        ({
+          ...book,
+          // Generate a unique id
+          key: i,
+        }) as DisplayBook,
+    )
+    .sort((bookA, bookB) => bookA.key - bookB.key);
   return (
     <Section>
       <Stack justify="space-between">

@@ -1,5 +1,3 @@
-import { sortBy } from 'common/collections';
-
 import { useBackend } from '../backend';
 import { Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -31,8 +29,8 @@ const sortDestinations = (locations: string[]): DestinationInfo[] => {
         sorting_id: index + 1,
       }) as DestinationInfo,
   );
-  queriedLocations = sortBy<DestinationInfo>((dest) => dest.name)(
-    queriedLocations,
+  queriedLocations = queriedLocations.sort((destA, destB) =>
+    destA.name.localeCompare(destB.name),
   );
   return queriedLocations;
 };

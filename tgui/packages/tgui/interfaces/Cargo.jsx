@@ -1,5 +1,3 @@
-import { sortBy } from 'common/collections';
-
 import { useBackend, useSharedState } from '../backend';
 import {
   AnimatedNumber,
@@ -166,7 +164,9 @@ const searchForSupplies = (supplies, search) => {
         pack.desc?.toLowerCase().includes(search.toLowerCase()),
     );
 
-  queriedSupplies = sortBy((pack) => pack.name)(queriedSupplies);
+  queriedSupplies = queriedSupplies.sort((packA, packB) =>
+    packA.name.localeCompare(packB.name),
+  );
 
   return queriedSupplies.slice(0, 25);
 };
