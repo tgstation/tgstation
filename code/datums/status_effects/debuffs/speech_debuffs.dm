@@ -2,8 +2,10 @@
 	id = null
 	alert_type = null
 	remove_on_fullheal = TRUE
-
+	tick_interval = -1
+	/// If TRUE, TTS will say the original message rather than what we changed it to
 	var/make_tts_message_original = FALSE
+	/// If set, this will be appended to the TTS filter of the message
 	var/tts_filter = ""
 
 /datum/status_effect/speech/on_creation(mob/living/new_owner, duration = 10 SECONDS)
@@ -41,7 +43,7 @@
 	for(var/i = 1, i <= length(phrase), i += length(original_char))
 		original_char = phrase[i]
 
-		final_phrase += apply_speech(original_char, original_char)
+		final_phrase += apply_speech(original_char)
 
 	message_args[TREAT_MESSAGE_ARG] = sanitize(final_phrase)
 
@@ -51,19 +53,25 @@
  *
  * Return the modified_char to be reapplied to the message.
  */
-/datum/status_effect/speech/proc/apply_speech(original_char, modified_char)
+/datum/status_effect/speech/proc/apply_speech(original_char)
 	stack_trace("[type] didn't implement apply_speech.")
 	return original_char
 
 /datum/status_effect/speech/stutter
 	id = "stutter"
-	/// The probability of adding a stutter to any character
-	var/stutter_prob = 80
-	/// Regex of characters we won't apply a stutter to
-	var/static/regex/no_stutter
-
 	make_tts_message_original = TRUE
 	tts_filter = "tremolo=f=10:d=0.8,rubberband=tempo=0.5"
+
+	/// The probability of adding a stutter to any character
+	var/stutter_prob = 80
+	/// The chance of a four character stutter
+	var/four_char_chance = 10
+	/// The chance of a three character stutter
+	var/three_char_chance = 20
+	/// The chance of a two character stutter
+	var/two_char_chance = 95
+	/// Regex of characters we won't apply a stutter to
+	var/static/regex/no_stutter
 
 /datum/status_effect/speech/stutter/on_creation(mob/living/new_owner, ...)
 	. = ..()
@@ -72,18 +80,29 @@
 	if(!no_stutter)
 		no_stutter = regex(@@[aeiouAEIOU ""''()[\]{}.!?,:;_`~-]@)
 
-/datum/status_effect/speech/stutter/apply_speech(original_char, modified_char)
+/datum/status_effect/speech/stutter/apply_speech(original_char)
 	if(prob(stutter_prob) && !no_stutter.Find(original_char))
-		if(prob(10))
-			modified_char = "[modified_char]-[modified_char]-[modified_char]-[modified_char]"
-		else if(prob(20))
-			modified_char = "[modified_char]-[modified_char]-[modified_char]"
-		else if(prob(95))
-			modified_char = "[modified_char]-[modified_char]"
-		else
-			modified_char = ""
+		if(prob(four_char_chance))
+			return "[original_char]-[original_char]-[original_char]-[original_char]"
+		if(prob(three_char_chance))
+			return "[original_char]-[original_char]-[original_char]"
+		if(prob(two_char_chance))
+			return "[original_char]-[original_char]"
 
-	return modified_char
+	return original_char
+
+/datum/status_effect/speech/stutter/anxiety
+	id = "anxiety_stutter"
+	stutter_prob = 5
+	four_char_chance = 4
+	three_char_chance = 10
+	two_char_chance = 100
+	remove_on_fullheal = FALSE
+
+/datum/status_effect/speech/stutter/anxiety/handle_message(datum/source, list/message_args)
+	var/datum/quirk/social_anxiety/host_quirk = owner.get_quirk(/datum/quirk/social_anxiety)
+	stutter_prob = clamp(host_quirk?.calculate_mood_mod() * 0.5, 5, 50)
+	return ..()
 
 /datum/status_effect/speech/stutter/derpspeech
 	id = "derp_stutter"
@@ -160,8 +179,9 @@
 	string_replacements = speech_changes["string_replacements"]
 	string_additions = speech_changes["string_additions"]
 
-/datum/status_effect/speech/slurring/apply_speech(original_char, modified_char)
+/datum/status_effect/speech/slurring/apply_speech(original_char)
 
+	var/modified_char = original_char
 	var/lower_char = lowertext(modified_char)
 	if(prob(common_prob) && (lower_char in common_replacements))
 		var/to_replace = common_replacements[lower_char]

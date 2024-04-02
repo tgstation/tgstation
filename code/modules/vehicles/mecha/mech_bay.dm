@@ -11,7 +11,7 @@
 	///Ref to charge console for seeing charge for this port, cyclical reference
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
 	///Power unit per second to charge by
-	var/recharge_power = 25
+	var/recharge_power = 25 KILO WATTS
 	///turf that will be checked when a mech wants to charge. directly one turf in the direction it is facing
 	var/turf/recharging_turf
 
@@ -45,7 +45,7 @@
 	var/total_rating = 0
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		total_rating += capacitor.tier
-	recharge_power = total_rating * 12.5
+	recharge_power = total_rating * 12.5 KILO WATTS
 
 /obj/machinery/mech_bay_recharge_port/examine(mob/user)
 	. = ..()

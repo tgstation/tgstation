@@ -1,0 +1,4 @@
+author: "Iamgoofball"
+delete-after: True
+changes:
+  - balance: "Makes the Captain's Spare safe actually secure from being smashed open now that it's been removed from a wall. Damage Deflection of 30 has been added to it."

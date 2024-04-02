@@ -797,3 +797,30 @@
 /datum/greyscale_config/gi/worn
 	name = "Gi (Worn)"
 	icon_file = 'icons/mob/clothing/under/costume.dmi'
+
+/datum/greyscale_config/jester_suit
+	name = "Jester Suit"
+	icon_file = 'icons/obj/clothing/under/civilian.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester_suit.json'
+
+/datum/greyscale_config/jester_suit/worn
+	name = "Jester Suit (Worn)"
+	icon_file = 'icons/mob/clothing/under/civilian.dmi'
+
+/datum/greyscale_config/jester_shoes
+	name = "Jester Shoes"
+	icon_file = 'icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester_shoes.json'
+
+/datum/greyscale_config/jester_shoes/worn
+	name = "Jester Shoes (Worn)"
+	icon_file = 'icons/mob/clothing/feet.dmi'
+
+/datum/greyscale_config/jester_hat
+	name = "Jester Hat"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester_hat.json'
+
+/datum/greyscale_config/jester_hat/worn
+	name = "Jester Hat (Worn)"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
