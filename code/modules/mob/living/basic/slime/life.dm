@@ -43,17 +43,17 @@
 		adjust_nutrition((life_stage == SLIME_LIFE_STAGE_ADULT ? -1 : -0.5) * seconds_per_tick)
 
 	if(nutrition < SLIME_STARVE_NUTRITION)
-		ai_controller.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_STARVING)
+		ai_controller?.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_STARVING)
 
 		if(SPT_PROB(0.5, seconds_per_tick) && LAZYLEN(ai_controller?.blackboard[BB_FRIENDS_LIST]))
 			var/your_fault = pick(ai_controller?.blackboard[BB_FRIENDS_LIST])
 			unfriend(your_fault)
 
 	else if(nutrition < SLIME_HUNGER_NUTRITION || (nutrition < SLIME_GROW_NUTRITION && SPT_PROB(25, seconds_per_tick)) )
-		ai_controller.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_HUNGRY)
+		ai_controller?.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_HUNGRY)
 
 	else
-		ai_controller.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_NONE)
+		ai_controller?.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_NONE)
 
 	if(nutrition == 0) //adjust nutrition ensures it can't go below 0
 		if(SPT_PROB(50, seconds_per_tick))

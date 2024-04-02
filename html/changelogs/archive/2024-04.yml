@@ -1,0 +1,54 @@
+2024-04-01:
+  00-Steven:
+  - bugfix: Ethereal starvation has been updated to the new joules/watts standard.
+      Congratulations Ethereals! You can starve again!
+  - code_imp: Whether something counts as a stimulant to All Nighter is now handled
+      by the reagent itself when metabolized, for everyone's sanity. Side-effect,
+      you need a liver to process stimulants for All Nighter.
+  - balance: Fuel your sleep deprivation in style! Made more reagents work with All
+      Nighter. This includes all coffee/tea variants, a few other drinks that would
+      have a high enough caffeine level, kronkaine, ephedrine, and in case you're
+      insane you can straight up eat coffee or tea grounds.
+  KingkumaArt:
+  - bugfix: ' Hatsune mi-go now is a friendly gold slime mob, and doesn''t hurt your
+      ears.'
+  - rscadd: Hatsune mi-go drops a keyboard synth on death (you monster.)
+  Majkl-J:
+  - bugfix: after 9 years, adds a single dot to the dragnet code, making it deal stamina
+      damage as intended
+  Melbert:
+  - qol: Socially Anxious people should be able to talk a bit more clearer while still
+      maintaining the stuttering "charm"
+  Melbret:
+  - bugfix: Revival Surgery, Strange Reagent, and the Reviver Implant will restart
+      your heart when you are revived
+  Profakos:
+  - bugfix: Slime properly load their slowdown values from the config files.
+  - bugfix: Slimes who lose their AI controller will no longer runtime when they get
+      hungry.
+  Thunder12345:
+  - image: Supermatter slivers and the tools used to steal them have been resprited.
+  - image: The jester costume now supports GAGS
+  hyperjll:
+  - rscadd: Added a 'kaching' sound to the game, and made uplinks play this sound
+      locally to the user whenever a purchase is made.
+  moocowswag:
+  - bugfix: anchored circuits no longer blow up after 2 components are used.
+  necromanceranne:
+  - qol: The eye of god now protects from the madness inducing effects of supermatter
+      crystals and singularities. This trait is shared by the meson night vision goggles
+      (which this is a better version of)
+  - refactor: The Scan ability has been refactored into a pointed spell.
+  - balance: The Scan ability has a lower cooldown of 35 seconds.
+  - balance: The Scan ability now gives an advanced health scan readout of the target.
+  - balance: Scanning someone alerts the target as to who is responsible, rather than
+      being completely silent as to the culprit (much to the annoyance of anyone who
+      is victimized by someone using this on them)
+  - code_imp: The status effect that was called Stagger (not Staggered, which is separate)
+      is now called Rebuked.
+  - balance: Rebuked applies a x2 action delay cooldown, rather than x1.5.
+2024-04-02:
+  SyncIt21,Pickle-Coding:
+  - bugfix: space heater(including improvised) turns off when cell is drained
+  - bugfix: optimized power usage for both improvised and main space heater. Improvised
+      heater now works & uses beaker heat capacity
