@@ -34,6 +34,10 @@
 	var/list/attack_verb_simple_on
 	/// Whether clumsy people need to succeed an RNG check to turn it on without hurting themselves
 	var/clumsy_check
+	/// The damage type to deal to clumsy people who hurt themselves
+	var/clumsy_damage_type
+	/// Amount of damage to deal to clumsy people
+	var/clumsy_damage
 	/// If we get sharpened with a whetstone, save the bonus here for later use if we un/redeploy
 	var/sharpened_bonus = 0
 	/// Dictate whether we change inhands or not
@@ -51,6 +55,8 @@
 	hitsound_on = 'sound/weapons/blade1.ogg',
 	w_class_on = WEIGHT_CLASS_BULKY,
 	clumsy_check = TRUE,
+	clumsy_damage_type = BRUTE,
+	clumsy_damage = 10,
 	list/attack_verb_continuous_on,
 	list/attack_verb_simple_on,
 	inhand_icon_change = TRUE,
@@ -69,6 +75,8 @@
 	src.hitsound_on = hitsound_on
 	src.w_class_on = w_class_on
 	src.clumsy_check = clumsy_check
+	src.clumsy_damage_type = clumsy_damage_type
+	src.clumsy_damage = clumsy_damage
 	src.inhand_icon_change = inhand_icon_change
 
 	if(attack_verb_continuous_on)
@@ -266,8 +274,20 @@
 			span_warning("[user] triggers [parent] while holding it backwards and [hurt_self_verb_continuous] themself, like a doofus!"),
 			span_warning("You trigger [parent] while holding it backwards and [hurt_self_verb_simple] yourself, like a doofus!"),
 		)
-		user.take_bodypart_damage(10)
+
+		if(clumsy_damage_type == STAMINA)
+			user.adjustStaminaLoss(clumsy_damage)
+		else if(clumsy_damage_type == OXY)
+			user.adjustOxyLoss(clumsy_damage)
+		else if(clumsy_damage_type == TOX)
+			user.adjustToxLoss(clumsy_damage)
+		else if(clumsy_damage_type == BRUTE)
+			user.take_bodypart_damage(brute=clumsy_damage)
+		else if(clumsy_damage_type == BURN)
+			user.take_bodypart_damage(burn=clumsy_damage)
+
 		return TRUE
+
 	return FALSE
 
 /*
