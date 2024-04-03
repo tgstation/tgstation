@@ -1472,3 +1472,26 @@
 		breather.adjust_jitter(10 SECONDS)
 	return ..()
 
+/datum/reagent/toxin/nocturine
+	name = "Nocturine"
+	description = "A nonlethal poison that causes near-instant loss of conscience in small doses for extended periods of time."
+	silent_toxin = TRUE
+	self_consuming = TRUE
+	reagent_state = LIQUID
+	color = "#11f4ff"
+	toxpwr = 0
+	metabolization_rate = 1 * REAGENTS_METABOLISM
+	data = 35
+
+/datum/reagent/toxin/nocturine/on_mob_life(mob/living/carbon/affected_mob)
+	switch(current_cycle)
+		if(1 to 3)
+			affected_mob.adjustStaminaLoss(REM * data, 0)
+			affected_mob.adjust_confusion(2 SECONDS * REM)
+			affected_mob.adjust_drowsiness(4 SECONDS * REM)
+		if(3 to INFINITY)
+			affected_mob.adjustStaminaLoss(REM * data, 0)
+			affected_mob.Sleeping(7 SECONDS * REM)
+			. = TRUE
+	..()
+

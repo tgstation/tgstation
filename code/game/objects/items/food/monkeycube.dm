@@ -113,3 +113,16 @@
 	)
 	tastes = list("buzzing" = 1, "honey" = 1, "regret" = 1)
 	spawned_mob = /mob/living/basic/bee
+
+/obj/item/food/monkeycube/mice
+	name = "mice cube"
+	desc = "A Waffle Co. brand mice cube. Now with extra cheese!"
+	bite_consumption = 20
+	food_reagents = list(
+		/datum/reagent/carbon = 25,
+		/datum/reagent/blood = 5,
+		/datum/reagent/medicine/strange_reagent = 5,
+	)
+	tastes = list("cheese" = 1, "cartoon antics" = 1, "wire-munching critters" = 1)
+	spawned_mob = /mob/living/basic/mouse
+

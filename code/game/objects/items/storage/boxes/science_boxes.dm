@@ -53,6 +53,10 @@
 	desc = "Waffle Co. brand monkey cubes. Just add water and a dash of subterfuge!"
 	cube_type = /obj/item/food/monkeycube/syndicate
 
+/obj/item/storage/box/monkeycubes/syndicate/mice
+	desc = "Waffle Co. brand mice cubes. Just add water and a dash of subterfuge!"
+	cube_type = /obj/item/food/monkeycube/mice
+
 /obj/item/storage/box/gorillacubes
 	name = "gorilla cube box"
 	desc = "Waffle Co. brand gorilla cubes. Do not taunt."

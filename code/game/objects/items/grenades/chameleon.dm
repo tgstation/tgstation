@@ -12,7 +12,7 @@
 
 /obj/item/device/chameleon/bomb/examine(mob/user)
 	. = ..()
-	if((IS_TRAITOR(user) || IS_NUKE_OP(user)) && armed) //helpful to other syndicates
+	if((IS_TRAITOR(user) || !IS_NUKE_OP(user)) && armed) //helpful to other syndicates
 		. += "This is a bomb in disguise!"
 
 /obj/item/device/chameleon/bomb/dropped()

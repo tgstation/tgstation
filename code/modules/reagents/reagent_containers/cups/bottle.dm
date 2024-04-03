@@ -428,6 +428,14 @@
 	name = "thermite bottle"
 	list_reagents = list(/datum/reagent/thermite = 30)
 
+/obj/item/reagent_containers/glass/bottle/nocturine
+	name = "nocturine bottle"
+	list_reagents = list(/datum/reagent/toxin/nocturine = 30)
+
+/obj/item/reagent_containers/glass/bottle/nocturine/full
+	name = "nocturine bottle"
+	list_reagents = list(/datum/reagent/toxin/nocturine = 50)
+
 // Bottles for mail goodies.
 
 /obj/item/reagent_containers/cup/bottle/clownstears

@@ -122,7 +122,7 @@
 /datum/uplink_item/explosives/explosivepen
 	name = "Explosive Pen"
 	desc = "A normal black pen, it's been filled with explosives. Has a 5 second timer, and is completely silent when being armed. \
-			Can only be activated by syndicate agents, the explosion is TINY but extremely powerful."
+			The explosion is TINY but extremely powerful."
 	item = /obj/item/pen/explosive
 	cost = 1
 	surplus = 60

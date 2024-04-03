@@ -129,3 +129,55 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
+
+
+/obj/item/clothing/gloves/color/yellow
+	desc = "These gloves provide protection against electric shock. The thickness of the rubber makes your fingers seem bigger."
+	name = "insulated gloves"
+	icon_state = "yellow"
+	inhand_icon_state = "ygloves"
+	siemens_coefficient = 0
+	armor_type = /datum/armor/color_yellow
+	resistance_flags = NONE
+	custom_price = PAYCHECK_CREW * 10
+	custom_premium_price = PAYCHECK_COMMAND * 6
+	cut_type = /obj/item/clothing/gloves/cut
+	clothing_traits = list(TRAIT_CHUNKYFINGERS)
+
+/obj/item/clothing/gloves/color/yellow/apply_fantasy_bonuses(bonus)
+	. = ..()
+	if(bonus >= 10)
+		detach_clothing_traits(TRAIT_CHUNKYFINGERS)
+
+/obj/item/clothing/gloves/color/yellow/remove_fantasy_bonuses(bonus)
+	attach_clothing_traits(TRAIT_CHUNKYFINGERS)
+
+
+/obj/item/clothing/gloves/chameleon/thiefgloves
+	name = "thieves gloves"
+	desc = "These tactical gloves are fireproof and shock resistant. They also have small bluespace pockets for concealing contraband."
+	icon = 'icons/obj/clothing/gloves.dmi'
+	icon_state = "black"
+	inhand_icon_state = "blackgloves"
+	strip_delay = 80
+	siemens_coefficient = 0
+	slot_flags = ITEM_SLOT_HANDS
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = NONE
+	armor_type = /datum/armor/thiefgloves
+	actions_types = list(/datum/action/item_action/chameleon/change/gloves)
+
+/datum/armor/thiefgloves
+	bio = 60
+	fire = 80
+	acid = 50
+
+/obj/item/clothing/gloves/chameleon/thiefgloves/Initialize(mapload)
+	. = ..()
+	create_storage(storage_type = /datum/storage/pockets/small)
+	atom_storage.max_total_storage = 8
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	slot_flags = 4 // Fixes the item slot not being gloves.
