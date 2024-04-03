@@ -354,6 +354,8 @@
 			new_clown.dropItemToGround(to_strip)
 		new_clown.dress_up_as_job(SSjob.GetJobType(/datum/job/clown))
 		clowned_mob_refs += clown_ref
+	
+	return TRUE
 
 /// Transforms the area to look like a new one
 /obj/machinery/anomalous_crystal/theme_warp
@@ -432,6 +434,8 @@
 		//Free revives, but significantly limits your options for reviving except via the crystal
 		//except JK who cares about BADDNA anymore. this even heals suicides.
 		ADD_TRAIT(to_revive, TRAIT_BADDNA, MAGIC_TRAIT)
+	
+	return TRUE
 
 /obj/machinery/anomalous_crystal/helpers //Lets ghost spawn as helpful creatures that can only heal people slightly. Incredibly fragile and they can't converse with humans
 	observer_desc = "This crystal allows ghosts to turn into a fragile creature that can heal people."
