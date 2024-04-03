@@ -613,6 +613,7 @@
 #include "code\controllers\configuration\entries\resources.dm"
 #include "code\controllers\subsystem\achievements.dm"
 #include "code\controllers\subsystem\addiction.dm"
+#include "code\controllers\subsystem\admin_verbs.dm"
 #include "code\controllers\subsystem\ai_controllers.dm"
 #include "code\controllers\subsystem\air.dm"
 #include "code\controllers\subsystem\ambience.dm"

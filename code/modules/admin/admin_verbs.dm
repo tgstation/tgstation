@@ -1,27 +1,6 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
 //the procs are cause you can't put the comments in the GLOB var define
-GLOBAL_LIST_INIT(admin_verbs_default, world.AVerbsDefault())
-GLOBAL_PROTECT(admin_verbs_default)
-/world/proc/AVerbsDefault()
-	return list(
-	/client/proc/cmd_admin_pm_context, /*right-click adminPM interface*/
-	/client/proc/cmd_admin_pm_panel, /*admin-pm list*/
-	/client/proc/cmd_admin_say, /*admin-only ooc chat*/
-	/client/proc/deadmin, /*destroys our own admin datum so we can play as a regular player*/
-	/client/proc/debugstatpanel,
-	/client/proc/debug_variables, /*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
-	/client/proc/dsay, /*talk in deadchat using our ckey/fakekey*/
-	/client/proc/fix_air, /*resets air in designated radius to its default atmos composition*/
-	/client/proc/hide_verbs, /*hides all our adminverbs*/
-	/client/proc/investigate_show, /*various admintools for investigation. Such as a singulo grief-log*/
-	/client/proc/mark_datum_mapview,
-	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
-	/client/proc/reload_admins,
-	/client/proc/requests,
-	/client/proc/secrets,
-	/client/proc/stop_sounds,
-	/client/proc/tag_datum_mapview,
-	)
+
 GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 GLOBAL_PROTECT(admin_verbs_admin)
 /world/proc/AVerbsAdmin()
@@ -89,7 +68,6 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/list_signalers,
 	/client/proc/manage_sect, /*manage chaplain religious sect*/
 	/client/proc/message_pda, /*send a message to somebody on PDA*/
-	/client/proc/respawn_character,
 	/client/proc/show_manifest,
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/toggle_combo_hud, /* toggle display of the combination pizza antag and taco sci/med/eng hud */
@@ -134,8 +112,6 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/toggle_random_events,
 	))
 GLOBAL_PROTECT(admin_verbs_fun)
-GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character, /datum/admins/proc/beaker_panel))
-GLOBAL_PROTECT(admin_verbs_spawn)
 GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
 GLOBAL_PROTECT(admin_verbs_server)
 /world/proc/AVerbsServer()
@@ -243,11 +219,15 @@ GLOBAL_LIST_INIT(admin_verbs_poll, list(/client/proc/poll_panel))
 GLOBAL_PROTECT(admin_verbs_poll)
 
 /client/proc/add_admin_verbs()
+	if(isnull(holder))
+		return
+
+	control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
+	SSadmin_verbs.assosciate_admin(src)
 	if(holder)
 		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 
 		var/rights = holder.rank_flags()
-		add_verb(src, GLOB.admin_verbs_default)
 		if(rights & R_BUILD)
 			add_verb(src, /client/proc/togglebuildmodeself)
 		if(rights & R_ADMIN)
@@ -272,8 +252,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 			add_verb(src, GLOB.admin_verbs_sounds)
 			if(CONFIG_GET(string/invoke_youtubedl))
 				add_verb(src, /client/proc/play_web_sound)
-		if(rights & R_SPAWN)
-			add_verb(src, GLOB.admin_verbs_spawn)
 #ifdef MAP_TEST
 		remove_verb(src, /client/proc/enable_mapping_verbs)
 		add_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
@@ -281,7 +259,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 /client/proc/remove_admin_verbs()
 	remove_verb(src, list(
-		GLOB.admin_verbs_default,
 		/client/proc/togglebuildmodeself,
 		GLOB.admin_verbs_admin,
 		GLOB.admin_verbs_ban,
@@ -294,36 +271,29 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		GLOB.admin_verbs_poll,
 		GLOB.admin_verbs_sounds,
 		/client/proc/play_web_sound,
-		GLOB.admin_verbs_spawn,
 		/*Debug verbs added by "show debug verbs"*/
 		GLOB.admin_verbs_debug_mapping,
 		/client/proc/disable_mapping_verbs,
 		/client/proc/readmin
 		))
 
-/client/proc/hide_verbs()
-	set name = "Adminverbs - Hide All"
-	set category = "Admin"
+ADMIN_VERB(hide_verbs, R_NONE, "Adminverbs - Hide All", "Hide most of your admin verbs.", ADMIN_CATEGORY_MAIN)
+	user.remove_admin_verbs()
+	add_verb(user, /client/proc/show_verbs)
 
-	remove_admin_verbs()
-	add_verb(src, /client/proc/show_verbs)
-
-	to_chat(src, span_interface("Almost all of your adminverbs have been hidden."), confidential = TRUE)
+	to_chat(user, span_interface("Almost all of your adminverbs have been hidden."), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Hide All Adminverbs")
-	return
 
+// Should NOT be an admin verb datum. Manually added by /datum/admin_verb/hide_verbs
 /client/proc/show_verbs()
 	set name = "Adminverbs - Show"
-	set category = "Admin"
+	set category = ADMIN_CATEGORY_MAIN
 
 	remove_verb(src, /client/proc/show_verbs)
 	add_admin_verbs()
 
 	to_chat(src, span_interface("All of your adminverbs are now visible."), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Show Adminverbs")
-
-
-
 
 /client/proc/admin_ghost()
 	set category = "Admin.Game"
@@ -912,19 +882,11 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		return
 	set_new_religious_sect(choices[choice], reset_existing = TRUE)
 
-/client/proc/deadmin()
-	set name = "Deadmin"
-	set category = "Admin"
-	set desc = "Shed your admin powers."
-
-	if(!holder)
-		return
-
-	holder.deactivate()
-
-	to_chat(src, span_interface("You are now a normal player."))
-	log_admin("[src] deadminned themselves.")
-	message_admins("[src] deadminned themselves.")
+ADMIN_VERB(deadmin, R_NONE, "DeAdmin", "Shed your admin powers.", ADMIN_CATEGORY_MAIN)
+	user.holder.deactivate()
+	to_chat(user, span_interface("You are now a normal player."))
+	log_admin("[key_name(user)] deadminned themselves.")
+	message_admins("[key_name_admin(user)] deadminned themselves.")
 	BLACKBOX_LOG_ADMIN_VERB("Deadmin")
 
 /client/proc/readmin()
@@ -975,11 +937,8 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
 
-/client/proc/debugstatpanel()
-	set name = "Debug Stat Panel"
-	set category = "Debug"
-
-	src.stat_panel.send_message("create_debug")
+ADMIN_VERB(debug_statpanel, R_DEBUG, "Debug Stat Panel", "Toggles local debug of the stat panel", ADMIN_CATEGORY_DEBUG)
+	user.stat_panel.send_message("create_debug")
 
 /client/proc/admin_2fa_verify()
 	set name = "Verify Admin"

@@ -1,17 +1,15 @@
-
-ADMIN_VERB( \
-    name_of_verb, \
-    R_ADMIN, \
-    "Verb Name", \
-    "Verb Desc", \
-    "Verb Category", \
-    /mob/target in view(1),
-)
-    to_chat(user, span_userdanger("Hello!"))
+GENERAL_PROTECT_DATUM(/mob/admin_verb_holder)
+GENERAL_PROTECT_DATUM(/datum/admin_verb)
 
 /// The only purpose of this fake mob is to hold the admin verb and utilize the group verb system.
 /mob/admin_verb_holder
     var/datum/admin_verb/parent_admin_verb //! The parent admin verb datum which this holder is assigned to.
+
+/mob/admin_verb_holder/Destroy(force)
+    if(!QDELING(parent_admin_verb))
+        qdel(parent_admin_verb, TRUE)
+    parent_admin_verb = null
+    return ..()
 
 /**
  * This is the admin verb datum. It is used to store the verb's information and handle the verb's functionality.
@@ -24,26 +22,39 @@ ADMIN_VERB( \
     var/category //! The category of the verb.
     var/permissions //! The permissions required to use the verb.
     var/mob/admin_verb_holder/verb_holder //! The holder for this verb.
-    var/list/mobs_assigned_by_ckey = list() //! A list of mobs assigned to this verb by ckey. Used for tracking and removing the holder from mob groups
+    var/list/mob/mobs_assigned_by_ckey = list() //! A list of mobs assigned to this verb by ckey. Used for tracking and removing the holder from mob groups
 
-/datum/admin_verb/proc/assign_to_client(client/admin)
-    SHOULD_NOT_OVERRIDE(TRUE)
-    if(admin.ckey in mobs_assigned_by_ckey)
-        remove_from_client(admin)
-    admin.mob.group += list(verb_holder)
-    mobs_assigned_by_ckey[admin.ckey] = verb_holder
+/datum/admin_verb/New()
+    verb_holder = new verb_holder
+    verb_holder.parent_admin_verb = src
+    return ..()
 
-/datum/admin_verb/proc/remove_from_client(client/admin)
-    SHOULD_NOT_OVERRIDE(TRUE)
-    if(!(admin.ckey in mobs_assigned_by_ckey))
-        return
-    mobs_assigned_by_ckey[admin.ckey].group -= list(verb_holder)
-    mobs_assigned_by_ckey -= admin.ckey
+/datum/admin_verb/Destroy(force)
+    if(!force)
+        return QDEL_HINT_LETMELIVE
+    // its very important we do it in this order!
+    for(var/ckey in mobs_assigned_by_ckey)
+        unassign_ckey(ckey)
+    if(!QDELING(verb_holder))
+        qdel(verb_holder, TRUE)
+    verb_holder = null
+    return ..()
 
-/datum/admin_verb/proc/handle_client_login(client/admin)
-    SHOULD_NOT_OVERRIDE(TRUE)
-    assign_to_client(admin)
+/datum/admin_verb/proc/check_should_exist()
+    return TRUE
 
-/datum/admin_verb/proc/handle_client_logout(client/admin)
-    SHOULD_NOT_OVERRIDE(TRUE)
-    remove_from_client(admin)
+/// Assigns a mob to this admin verb and stores a reference to it to prevent double assignment
+/datum/admin_verb/proc/assign_to_mob(mob/target)
+    if(isnull(target.ckey))
+        CRASH("Attempted to assign admin verb [type] to a mob that doesnt have a ckey. Absolutely not.")
+    if(target.ckey in mobs_assigned_by_ckey)
+        unassign_ckey(target.ckey)
+    target.group += list(verb_holder)
+    mobs_assigned_by_ckey[target.ckey] = target
+
+/// Unassigns the mob referenced to by the specified ckey. Usually for logout or mob switching.
+/datum/admin_verb/proc/unassign_ckey(ckey)
+    if(!(ckey in mobs_assigned_by_ckey))
+        return // not even in the list, fool
+    mobs_assigned_by_ckey[ckey].group -= list(verb_holder)
+    mobs_assigned_by_ckey -= ckey

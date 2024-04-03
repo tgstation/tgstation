@@ -210,18 +210,13 @@
 	message_admins("[key_name_admin(src)] set the round end sound to [S]")
 	BLACKBOX_LOG_ADMIN_VERB("Set Round End Sound")
 
-/client/proc/stop_sounds()
-	set category = "Debug"
-	set name = "Stop All Playing Sounds"
-	if(!src.holder)
-		return
-
-	log_admin("[key_name(src)] stopped all currently playing sounds.")
-	message_admins("[key_name_admin(src)] stopped all currently playing sounds.")
-	for(var/mob/M in GLOB.player_list)
-		SEND_SOUND(M, sound(null))
-		var/client/C = M.client
-		C?.tgui_panel?.stop_music()
+ADMIN_VERB(stop_sounds, R_NONE, "Stop All Playing Sounds", "Stops all playing sounds for EVERYONE.", ADMIN_CATEGORY_DEBUG)
+	log_admin("[key_name(user)] stopped all currently playing sounds.")
+	message_admins("[key_name_admin(user)] stopped all currently playing sounds.")
+	for(var/mob/player as anything in GLOB.player_list)
+		SEND_SOUND(player, sound(null))
+		var/client/player_client = player.client
+		player_client?.tgui_panel?.stop_music()
 
 	S_TIMER_COOLDOWN_RESET(SStimer, COOLDOWN_INTERNET_SOUND)
 	BLACKBOX_LOG_ADMIN_VERB("Stop All Playing Sounds")

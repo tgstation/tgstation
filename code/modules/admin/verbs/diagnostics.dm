@@ -67,20 +67,14 @@
 	usr << browse(output,"window=radioreport")
 	BLACKBOX_LOG_ADMIN_VERB("Show Radio Report")
 
-/client/proc/reload_admins()
-	set name = "Reload Admins"
-	set category = "Admin"
-
-	if(!src.holder)
-		return
-
-	var/confirm = tgui_alert(usr, "Are you sure you want to reload all admins?", "Confirm", list("Yes", "No"))
+ADMIN_VERB(reload_admins, R_NONE, "Reload Admins", "Reloads all admins from the database.", ADMIN_CATEGORY_MAIN)
+	var/confirm = tgui_alert(user, "Are you sure you want to reload all admins?", "Confirm", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 
 	load_admins()
 	BLACKBOX_LOG_ADMIN_VERB("Reload All Admins")
-	message_admins("[key_name_admin(usr)] manually reloaded admins")
+	message_admins("[key_name_admin(user)] manually reloaded admins")
 
 /client/proc/toggle_cdn()
 	set name = "Toggle CDN"
