@@ -97,12 +97,11 @@ const ChoicedSelection = (
   const { act } = useBackend<PreferencesMenuData>();
 
   const { catalog, supplementalFeature, supplementalValue } = props;
-  const [searchText, searchTextSet] = useState(context, 'searchText', '');
+  const [getSearchText, searchTextSet] = useState('');
 
   if (!catalog.icons) {
     return <Box color="red">Provided catalog had no icons!</Box>;
   }
-  console.log(catalog.icons);
 
   return (
     <Box
@@ -155,15 +154,18 @@ const ChoicedSelection = (
         <Stack.Item overflowX="hidden" overflowY="scroll">
           <Autofocus>
             <Input
-              placeholder="Write something"
-              width={'100%'}
-              onChange={(_, value) => {
+              placeholder="Search..."
+              style={{
+                margin: '0px 5px',
+                width: '95%',
+              }}
+              onInput={(_, value) => {
                 searchTextSet(value);
-                console.log(searchText);
+                setTimeout(() => console.log(getSearchText), 4000);
               }}
             />
             <Flex wrap>
-              {searchInCatalog(searchText, catalog.icons).map(
+              {searchInCatalog(getSearchText, catalog.icons).map(
                 ([name, image], index) => {
                   return (
                     <Flex.Item
@@ -205,11 +207,8 @@ const ChoicedSelection = (
   );
 };
 
-const searchInCatalog = (searchText = '', catalog) => {
-  const maybeSearch = createSearch<Record>(
-    searchText,
-    ([name, icons], index) => name,
-  );
+const searchInCatalog = (searchText = '', catalog: Record<string, string>) => {
+  const maybeSearch = createSearch(searchText, ([name, _icon]) => name);
   return flow([searchText && filter(maybeSearch)])(Object.entries(catalog));
 };
 
