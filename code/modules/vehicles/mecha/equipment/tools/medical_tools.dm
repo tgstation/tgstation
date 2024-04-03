@@ -296,7 +296,7 @@
 	)
 	var/list/contained_reagents = list()
 	if(length(reagents.reagent_list))
-		for(var/datum/reagent/reagent in reagents.reagent_list)
+		for(var/datum/reagent/reagent as anything in reagents.reagent_list)
 			contained_reagents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
 	data["contained_reagents"] = contained_reagents
 	return data
