@@ -63,3 +63,4 @@
 // Special categories that are seperated
 #define ADMIN_CATEGORY_DEBUG "Debug"
 #define ADMIN_CATEGORY_SERVER "Server"
+#define ADMIN_CATEGORY_OBJECT "Object"

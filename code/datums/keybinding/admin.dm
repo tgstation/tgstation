@@ -51,7 +51,7 @@
 	. = ..()
 	if(.)
 		return
-	user.togglebuildmodeself()
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/build_mode_self)
 	return TRUE
 
 /datum/keybinding/admin/stealthmode
@@ -65,7 +65,7 @@
 	. = ..()
 	if(.)
 		return
-	user.stealth()
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/stealth)
 	return TRUE
 
 /datum/keybinding/admin/invisimin

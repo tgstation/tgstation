@@ -1,5 +1,5 @@
 
-ADMIN_VERB(possess, R_POSSES, "Possess Obj", "Possess an object.", ADMIN_CATEGORY_OBJECT, obj/target in world)
+ADMIN_VERB(possess, R_POSSESS, "Possess Obj", "Possess an object.", ADMIN_CATEGORY_OBJECT, obj/target in world)
 	var/result = user.mob.AddComponent(/datum/component/object_possession, target)
 
 	if(isnull(result)) // trigger a safety movement just in case we yonk
@@ -18,12 +18,3 @@ ADMIN_VERB(release, R_POSSESS, "Release Object", "Stop possessing an object.", A
 	if(!isnull(possess_component))
 		qdel(possess_component)
 	BLACKBOX_LOG_ADMIN_VERB("Release Object")
-
-/proc/give_possession_verbs(mob/dude in GLOB.mob_list)
-	set desc = "Give this guy possess/release verbs"
-	set category = "Debug"
-	set name = "Give Possessing Verbs"
-
-	add_verb(dude, GLOBAL_PROC_REF(possess))
-	add_verb(dude, GLOBAL_PROC_REF(release))
-	BLACKBOX_LOG_ADMIN_VERB("Give Possessing Verbs")
