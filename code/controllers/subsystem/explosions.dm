@@ -650,7 +650,7 @@ SUBSYSTEM_DEF(explosions)
 		outlist += candidates
 	else
 		for(var/turf/candidate as anything in candidates)
-			var/angle = get_angle(candidate, epicenter)
+			var/angle = get_angle(epicenter, candidate)
 			if(ISINRANGE(angle, lower_angle_limit, upper_angle_limit) ^ reverse_angle)
 				outlist += candidate
 			else

@@ -15,6 +15,7 @@
 	var/atom/target = null
 	var/mutable_appearance/plastic_overlay
 	var/directional = FALSE
+	var/directional_arc = 120
 	var/aim_dir = NORTH
 	var/boom_sizes = list(0, 0, 3)
 	var/full_damage_on_mobs = FALSE
@@ -68,18 +69,20 @@
 
 	. = ..()
 	var/turf/location
+	var/target_density
 	if(target)
 		if(!QDELETED(target))
 			location = get_turf(target)
+			target_density = target.density // We're about to blow target up, so need to save this value for later
 			target.cut_overlay(plastic_overlay, TRUE)
 			if(!ismob(target) || full_damage_on_mobs)
 				EX_ACT(target, EXPLODE_HEAVY, target)
 	else
 		location = get_turf(src)
 	if(location)
-		if(directional && target?.density)
-			var/turf/turf = get_step(location, aim_dir)
-			explosion(get_step(turf, aim_dir), devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3], explosion_cause = src)
+		if(directional && target_density)
+			var/angle = dir2angle(aim_dir)
+			explosion(location, devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3], explosion_cause = src, explosion_direction = angle, explosion_arc = directional_arc)
 		else
 			explosion(location, devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3], explosion_cause = src)
 	qdel(src)
