@@ -2,16 +2,16 @@
 
 /**
  * ### Cogbar
- * Represents that the user is busy doing something .
+ * Represents that the user is busy doing something.
  */
 /datum/cogbar
-	/// The user of the cogbar
+	/// Who's doing the thing
 	var/mob/user
 	/// The user client
 	var/client/user_client
 	/// The visible element to other players
 	var/obj/effect/overlay/vis/cog
-	/// The blank image to hide the cog
+	/// The blank image that overlaps the cog - hides it from the source user
 	var/image/blank
 	/// The offset of the icon
 	var/offset_y

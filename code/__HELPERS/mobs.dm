@@ -202,8 +202,10 @@ GLOBAL_LIST_EMPTY(species_list)
  * Checks that `user` does not move, change hands, get stunned, etc. for the
  * given `delay`. Returns `TRUE` on success or `FALSE` on failure.
  * Interaction_key is the assoc key under which the do_after is capped, with max_interact_count being the cap. Interaction key will default to target if not set.
+ * 
+ * @param hidden - If the action is visible to other users (creates a cog)
  */
-/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, visibility = DO_PUBLIC)
+/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, hidden = FALSE)
 	if(!user)
 		return FALSE
 	if(!isnum(delay))
@@ -234,7 +236,8 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	if(progress)
 		progbar = new(user, delay, target || user)
-		if(visibility == DO_PUBLIC && delay >= 1 SECONDS)
+
+		if(!hidden && delay >= 1 SECONDS)
 			cog = new(user)
 
 	SEND_SIGNAL(user, COMSIG_DO_AFTER_BEGAN)
