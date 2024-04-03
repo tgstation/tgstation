@@ -6053,7 +6053,6 @@
 #include "monkestation\code\modules\bloodsuckers\powers\_base_power.dm"
 #include "monkestation\code\modules\bloodsuckers\powers\cloak.dm"
 #include "monkestation\code\modules\bloodsuckers\powers\feed.dm"
-#include "monkestation\code\modules\bloodsuckers\powers\force_level.dm"
 #include "monkestation\code\modules\bloodsuckers\powers\fortitude.dm"
 #include "monkestation\code\modules\bloodsuckers\powers\go_home.dm"
 #include "monkestation\code\modules\bloodsuckers\powers\masquerade.dm"
