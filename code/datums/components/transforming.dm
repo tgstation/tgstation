@@ -271,16 +271,17 @@
 			span_warning("You trigger [parent] while holding it backwards and [hurt_self_verb_simple] yourself, like a doofus!"),
 		)
 		var/obj/item/item_parent = parent
-		if(item_parent.damtype == STAMINA)
-			user.adjustStaminaLoss(clumsy_damage)
-		else if(item_parent.damtype == OXY)
-			user.adjustOxyLoss(clumsy_damage)
-		else if(item_parent.damtype == TOX)
-			user.adjustToxLoss(clumsy_damage)
-		else if(item_parent.damtype == BRUTE)
-			user.take_bodypart_damage(brute=clumsy_damage)
-		else if(item_parent.damtype == BURN)
-			user.take_bodypart_damage(burn=clumsy_damage)
+		switch(item_parent.damtype)
+			if(STAMINA)
+				user.adjustStaminaLoss(clumsy_damage)
+			if(OXY)
+				user.adjustOxyLoss(clumsy_damage)
+			if(TOX)
+				user.adjustToxLoss(clumsy_damage)
+			if(BRUTE)
+				user.take_bodypart_damage(brute=clumsy_damage)
+			if(BURN)
+				user.take_bodypart_damage(burn=clumsy_damage)
 
 		return TRUE
 

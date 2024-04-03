@@ -25,7 +25,7 @@
 	. = ..()
 	if(!sword_color_icon)
 		sword_color_icon = pick("red", "blue", "green", "purple")
-	
+
 /obj/item/melee/energy/sword/holographic/green
 	sword_color_icon = "green"
 
