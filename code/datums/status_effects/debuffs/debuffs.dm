@@ -18,10 +18,12 @@
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
-	. = ..()
-	if(. && (needs_update_stat || issilicon(owner)))
-		owner.update_stat()
+	return ..()
 
+/datum/status_effect/incapacitating/on_apply()
+	if(needs_update_stat || issilicon(owner))
+		owner.update_stat()
+	return TRUE
 
 /datum/status_effect/incapacitating/on_remove()
 	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates

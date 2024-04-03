@@ -143,10 +143,9 @@
 		amount = min(amount, 0)
 	return ..()
 
-/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina, forced, required_biotype = ALL)
-	. = ..()
-	if(amount > 0)
-		stam_regen_start_time = world.time + STAMINA_REGEN_BLOCK_TIME
+/mob/living/carbon/stamcrit_check(stamina_level)
+	if(stamina_level > DAMAGE_PRECISION && (maxHealth - stamina_level) <= crit_threshold && stat != DEAD)
+		apply_status_effect(/datum/status_effect/incapacitating/stamcrit)
 
 /**
  * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the damage proc on that organ.
