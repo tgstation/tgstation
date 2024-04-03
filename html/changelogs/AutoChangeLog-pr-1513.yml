@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fix sleeping carp not properly detecting combat mode, resulting in things like not being able to normally grab people and always reflecting projectiles."
