@@ -1,4 +1,0 @@
-author: "Cyprex"
-delete-after: True
-changes:
-  - config: "mech logging is now on by default. Existing config setups will not mirror this change."

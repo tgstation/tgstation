@@ -1,6 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Fix using a multitool on a power object with wires not actually opening the wires menu when it should."
-  - bugfix: "Fix a runtime from a power object being deleted before selecting what cable layer to put it at."
-  - bugfix: "Fix power object cable changing not caring about whether you were still adjacent, still holding your multitool, or whether it even still existed after the selection menu was closed."

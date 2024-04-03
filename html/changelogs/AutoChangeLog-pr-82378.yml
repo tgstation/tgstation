@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - qol: "adds missing examine for when machine frames can be deconstructed"
-  - qol: "both machine & computer frames must be unanchored before it can be deconstructed & adds examines to explain the same"

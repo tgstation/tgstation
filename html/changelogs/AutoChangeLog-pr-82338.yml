@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "buying & selling huge quantities of materials on the market won't cause their prices & quantities to go beyond bounds."

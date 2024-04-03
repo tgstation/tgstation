@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Mechbay & modsuit rechargers waste a small amount of energy as heat"
-  - bugfix: "Mechbay recharger console displays mech charge as joules & charges directly from the grid thus sparing the rooms apc cell from huge loads"
