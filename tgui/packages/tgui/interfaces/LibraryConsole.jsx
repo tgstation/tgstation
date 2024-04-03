@@ -1,5 +1,3 @@
-import { sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { useState } from 'react';
 
@@ -136,15 +134,13 @@ export const Inventory = (props) => {
 
 export const InventoryDetails = (props) => {
   const { act, data } = useBackend();
-  const inventory = flow([
-    (inventory) =>
-      inventory.map((book, i) => ({
-        ...book,
-        // Generate a unique id
-        key: i,
-      })),
-    sortBy((book) => book.key),
-  ])(data.inventory);
+  const inventory = data.inventory
+    .map((book, i) => ({
+      ...book,
+      // Generate a unique id
+      key: i,
+    }))
+    .sort((bookA, bookB) => bookA.key - bookB.key);
   return (
     <Section>
       <Table>
@@ -262,15 +258,13 @@ export const CheckoutEntries = (props) => {
 
 const CheckoutModal = (props) => {
   const { act, data } = useBackend();
-  const inventory = flow([
-    (inventory) =>
-      inventory.map((book, i) => ({
-        ...book,
-        // Generate a unique id
-        key: i,
-      })),
-    sortBy((book) => book.key),
-  ])(data.inventory);
+  const inventory = data.inventory
+    .map((book, i) => ({
+      ...book,
+      // Generate a unique id
+      key: i,
+    }))
+    .sort((bookA, bookB) => bookA.key - bookB.key);
 
   const [checkoutBook, setCheckoutBook] = useLocalState('CheckoutBook', false);
   const [bookName, setBookName] = useState('Insert Book name...');
@@ -389,15 +383,13 @@ export const SearchAndDisplay = (props) => {
     params_changed,
     can_db_request,
   } = data;
-  const records = flow([
-    (pages) =>
-      pages.map((record, i) => ({
-        ...record,
-        // Generate a unique id
-        key: i,
-      })),
-    sortBy((record) => record.key),
-  ])(data.pages);
+  const records = data.pages
+    .map((record, i) => ({
+      ...record,
+      // Generate a unique id
+      key: i,
+    }))
+    .sort((recordA, recordB) => recordA.key - recordB.key);
 
   return (
     <Box>
