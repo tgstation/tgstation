@@ -479,6 +479,8 @@
 			return FALSE
 		for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool in cyborg.model.modules)
 			omnitool.upgrade_omnitool()
+		for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool in cyborg.held_items)
+			omnitool.upgrade_omnitool()
 
 /obj/item/borg/upgrade/engineering_omnitool/deactivate(mob/living/silicon/robot/cyborg, user = usr)
 	. = ..()

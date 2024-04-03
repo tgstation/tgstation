@@ -306,7 +306,7 @@
 		if(TOOL_RETRACTOR)
 			reference = /obj/item/retractor
 		if(TOOL_CAUTERY)
-			reference = /obj/item/shovel
+			reference = /obj/item/cautery
 		if(TOOL_SAW)
 			reference = /obj/item/circular_saw
 		if(TOOL_BONESET)
