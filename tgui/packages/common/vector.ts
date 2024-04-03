@@ -10,10 +10,10 @@
 
 import { zip } from './collections';
 
-const ADD = (a, b) => a + b;
-const SUB = (a, b) => a - b;
-const MUL = (a, b) => a * b;
-const DIV = (a, b) => a / b;
+const ADD = (a: number, b: number) => a + b;
+const SUB = (a: number, b: number) => a - b;
+const MUL = (a: number, b: number) => a * b;
+const DIV = (a: number, b: number) => a / b;
 
 export type Vector = number[];
 
