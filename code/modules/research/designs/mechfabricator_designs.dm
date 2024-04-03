@@ -1409,14 +1409,14 @@
 	)
 
 /datum/design/borg_upgrade_surgicalomnitool
-	name = "Surgical Omnitool Upgrade"
+	name = "Advanced Surgical Omnitool Upgrade"
 	id = "borg_upgrade_surgicalomnitool"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/surgery_omnitool
 	materials = list(
-		/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5,
-		/datum/material/glass =SHEET_MATERIAL_AMOUNT*2,
-		/datum/material/titanium =SHEET_MATERIAL_AMOUNT*2,
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/silver=SHEET_MATERIAL_AMOUNT*2,
 	)
 	construction_time = 4 SECONDS
 	category = list(
@@ -1424,14 +1424,14 @@
 	)
 
 /datum/design/borg_upgrade_engineeringomnitool
-	name = "Engineering Omnitool Upgrade"
+	name = "Advanced Engineering Omnitool Upgrade"
 	id = "borg_upgrade_engineeringomnitool"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/engineering_omnitool
 	materials = list(
-		/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5,
-		/datum/material/glass =SHEET_MATERIAL_AMOUNT*2,
-		/datum/material/uranium =SHEET_MATERIAL_AMOUNT*2,
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/gold=SHEET_MATERIAL_AMOUNT*2,
 	)
 	construction_time = 4 SECONDS
 	category = list(

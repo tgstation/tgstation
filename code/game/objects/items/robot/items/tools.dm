@@ -1,5 +1,6 @@
 #define PKBORG_DAMPEN_CYCLE_DELAY (2 SECONDS)
 #define NO_TOOL "deactivated"
+#define TOOL_DRAPES "surgical_drapes"
 
 /obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
 	name = "plating repair tool"
@@ -260,7 +261,7 @@
 	item_flags = SURGICAL_TOOL
 
 /obj/item/borg/cyborg_omnitool/medical/get_all_tool_behaviours()
-	return list(TOOL_SCALPEL, TOOL_HEMOSTAT, TOOL_RETRACTOR, TOOL_SAW, TOOL_DRILL, TOOL_CAUTERY, TOOL_BONESET, TOOL_BLOODFILTER)
+	return list(TOOL_SCALPEL, TOOL_HEMOSTAT, TOOL_RETRACTOR, TOOL_SAW, TOOL_DRILL, TOOL_CAUTERY, TOOL_BONESET)
 
 /obj/item/borg/cyborg_omnitool/medical/Initialize(mapload)
 	. = ..()
@@ -278,13 +279,14 @@
 		TOOL_DRILL = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_DRILL]"),
 		TOOL_CAUTERY = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_CAUTERY]"),
 		TOOL_BONESET = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_BONESET]"),
-		TOOL_BLOODFILTER = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_BLOODFILTER]"),
+		TOOL_DRAPES = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_DRAPES]"),
 	)
 
 /obj/item/borg/cyborg_omnitool/medical/reference_item_for_parameters()
 	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = tool_behaviour == (TOOL_SCALPEL && TOOL_SAW)
 	RemoveElement(/datum/element/eyestab)
+	RemoveComponentSource(/datum/component/surgery_initiator)
 	switch(tool_behaviour)
 		if(TOOL_SCALPEL)
 			reference = /obj/item/scalpel
@@ -302,8 +304,9 @@
 			reference = /obj/item/circular_saw
 		if(TOOL_BONESET)
 			reference = /obj/item/bonesetter
-		if(TOOL_BLOODFILTER)
-			reference = /obj/item/blood_filter
+		if(TOOL_DRAPES)
+			reference = /obj/item/surgical_drapes
+			AddComponent(/datum/component/surgery_initiator)
 
 //Toolset for engineering cyborgs, this is all of the tools except for the welding tool. since it's quite hard to implement (read:can't be arsed to)
 /obj/item/borg/cyborg_omnitool/engineering
@@ -344,3 +347,4 @@
 
 #undef PKBORG_DAMPEN_CYCLE_DELAY
 #undef NO_TOOL
+#undef TOOL_DRAPES
