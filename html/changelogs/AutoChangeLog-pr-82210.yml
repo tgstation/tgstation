@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Cargobus chat console and Departmental Order console are now combined into one."
-  - qol: "Mod PCs active on the \"chat client\" apps no longer look like AI uploads (and now have their own sprite)"
-  - refactor: "Departmental order consoles were refactored a bit, report any oddities."

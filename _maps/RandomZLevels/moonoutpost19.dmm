@@ -6097,7 +6097,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "OO" = (
 /obj/machinery/power/smes{
-	charge = 1.5e+006;
+	charge = 3e+007;
 	input_level = 10000;
 	inputting = 0;
 	output_level = 15000

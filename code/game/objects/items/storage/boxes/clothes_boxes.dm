@@ -47,11 +47,6 @@
 	new /obj/item/clothing/head/syndicatefake(src)
 	new /obj/item/clothing/suit/syndicatefake(src)
 
-/obj/item/storage/box/syndie_kit/space_dragon/PopulateContents()
-	new /obj/item/dna_probe/carp_scanner(src)
-	new /obj/item/clothing/suit/hooded/carp_costume/spaceproof/old(src)
-	new /obj/item/clothing/mask/gas/carp(src)
-
 /obj/item/storage/box/deputy
 	name = "box of deputy armbands"
 	desc = "To be issued to those authorized to act as deputy of security."

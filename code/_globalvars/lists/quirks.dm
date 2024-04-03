@@ -18,6 +18,8 @@ GLOBAL_LIST_INIT(limb_choice, list(
 	"Right leg" = /obj/item/bodypart/leg/right/robot/surplus,
 ))
 
+
+///Transhumanist quirk
 GLOBAL_LIST_INIT(part_choice_transhuman, list(
 	"Left Arm" = /obj/item/bodypart/arm/left/robot,
 	"Right Arm" = /obj/item/bodypart/arm/right/robot,
