@@ -3,43 +3,37 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 SUBSYSTEM_DEF(admin_verbs)
     name = "Admin Verbs"
     flags = SS_NO_FIRE
-    var/list/datum/admin_verb/admin_verbs_by_type
-    var/list/datum/admin_verb/admin_verbs_by_permission
+    init_order = INIT_ORDER_ADMIN_VERBS
+    var/list/datum/admin_verb/admin_verbs_by_type = list()
+    var/list/admins_assosciated = list()
+    var/list/admins_pending_subsytem_init = list()
 
 /datum/controller/subsystem/admin_verbs/Initialize()
     setup_verb_list()
-    setup_permissions_map()
+    process_pending_admins()
     return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/admin_verbs/Recover()
     admin_verbs_by_type = SSadmin_verbs.admin_verbs_by_type
-    admin_verbs_by_permission = SSadmin_verbs.admin_verbs_by_permission
 
 /datum/controller/subsystem/admin_verbs/stat_entry(msg)
     return "[..()] | V: [length(admin_verbs_by_type)]"
 
+/datum/controller/subsystem/admin_verbs/proc/process_pending_admins()
+    var/list/pending_admins = admins_pending_subsytem_init
+    admins_pending_subsytem_init = null
+    for(var/admin_ckey in pending_admins)
+        assosciate_admin(GLOB.directory[admin_ckey])
+
 /datum/controller/subsystem/admin_verbs/proc/setup_verb_list()
     if(length(admin_verbs_by_type))
         CRASH("Attempting to setup admin verbs twice!")
-    admin_verbs_by_type = list()
     for(var/datum/admin_verb/verb_type as anything in subtypesof(/datum/admin_verb))
         var/datum/admin_verb/verb_singleton = new verb_type
         if(!verb_singleton.check_should_exist())
             qdel(verb_singleton, force = TRUE)
             continue
         admin_verbs_by_type[verb_type] = verb_singleton
-
-/datum/controller/subsystem/admin_verbs/proc/setup_permissions_map()
-    if(length(admin_verbs_by_permission))
-        CRASH("Attempting to setup verb permission map twice!")
-    admin_verbs_by_permission = list()
-    for(var/flag in GLOB.bitflags)
-        admin_verbs_by_permission[flag] = list()
-
-    for(var/datum/admin_verb/verb_singleton as anything in admin_verbs_by_type)
-        verb_singleton = admin_verbs_by_type[verb_singleton]
-        for(var/permission_flag in bitfield_to_list(verb_singleton.permissions))
-            admin_verbs_by_permission[permission_flag] += list(verb_singleton)
 
 /datum/controller/subsystem/admin_verbs/proc/get_valid_verbs_for_admin(client/admin)
     if(isnull(admin.holder))
@@ -48,13 +42,13 @@ SUBSYSTEM_DEF(admin_verbs)
     var/list/has_permission = list()
     for(var/permission_flag in GLOB.bitflags)
         if(admin.holder.check_for_rights(permission_flag))
-            has_permission[permission_flag] = TRUE
+            has_permission["[permission_flag]"] = TRUE
 
     var/list/valid_verbs = list()
     for(var/datum/admin_verb/verb_type as anything in admin_verbs_by_type)
         var/datum/admin_verb/verb_singleton = admin_verbs_by_type[verb_type]
         for(var/permission_flag in bitfield_to_list(verb_singleton.permissions))
-            if(!has_permission[permission_flag])
+            if(!has_permission["[permission_flag]"])
                 continue
             valid_verbs |= list(verb_singleton)
 
@@ -94,7 +88,16 @@ SUBSYSTEM_DEF(admin_verbs)
     if(IsAdminAdvancedProcCall())
         return
 
-    RegisterSignal(admin, COMSIG_CLIENT_MOB_LOGIN, PROC_REF(on_client_mob_login))
+    if(!isnull(admins_pending_subsytem_init)) // if the list exists we are still initializing
+        to_chat(admin, span_big(span_green("Admin Verbs are still initializing. Please wait and you will be automatically assigned your verbs when it is complete.")))
+        admins_pending_subsytem_init |= list(admin.ckey)
+        return
+
+    if(!admins_assosciated[admin.ckey])
+        admins_assosciated[admin.ckey] = TRUE
+        RegisterSignal(admin, COMSIG_CLIENT_MOB_LOGIN, PROC_REF(on_client_mob_login))
+
+    // even if they are already assosciated we need to refresh their verb assignments
     var/mob/admin_mob = admin.mob
     for(var/datum/admin_verb/verb_singleton as anything in get_valid_verbs_for_admin(admin))
         verb_singleton.assign_to_mob(admin_mob)
@@ -108,6 +111,9 @@ SUBSYSTEM_DEF(admin_verbs)
     if(IsAdminAdvancedProcCall())
         return
 
+    if(!admins_assosciated[admin.ckey])
+        return
+    admins_assosciated -= admin.ckey
     UnregisterSignal(admin, COMSIG_CLIENT_MOB_LOGIN)
     var/admin_ckey = admin.ckey
     for(var/datum/admin_verb/verb_type as anything in admin_verbs_by_type)

@@ -31,7 +31,9 @@
         to_chat(usr, "<span class='adminnotice'>You do not have permission to use this verb.</span>"); \
         return; \
     }; \
-    parent_admin_verb:handle_do_verb(usr.client, args); \
+    var/list/_verb_args = list(usr.client); \
+    _verb_args += args; \
+    parent_admin_verb:handle_do_verb(arglist(_verb_args)); \
 }; \
 /datum/admin_verb/##verb_path_name/proc/handle_do_verb(client/user, ##verb_args)
 
