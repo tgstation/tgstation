@@ -76,9 +76,12 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/log_viewer_new,
 	/client/proc/player_ticket_history,
 	)
-GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel, /client/proc/library_control))
-GLOBAL_PROTECT(admin_verbs_ban)
-GLOBAL_LIST_INIT(admin_verbs_sounds, list(/client/proc/play_local_sound, /client/proc/play_direct_mob_sound, /client/proc/play_sound, /client/proc/set_round_end_sound))
+GLOBAL_LIST_INIT(admin_verbs_sounds, list(
+	/client/proc/play_local_sound,
+	/client/proc/play_direct_mob_sound,
+	/client/proc/play_sound,
+	/client/proc/set_round_end_sound,
+))
 GLOBAL_PROTECT(admin_verbs_sounds)
 GLOBAL_LIST_INIT(admin_verbs_fun, list(
 // Admin datums
@@ -211,7 +214,10 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/view_runtimes,
 	/client/proc/stop_weather,
 	)
-GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
+GLOBAL_LIST_INIT(admin_verbs_possess, list(
+	/proc/possess,
+	/proc/release,
+))
 GLOBAL_PROTECT(admin_verbs_possess)
 GLOBAL_LIST_INIT(admin_verbs_permissions, list(/client/proc/edit_admin_permissions))
 GLOBAL_PROTECT(admin_verbs_permissions)
@@ -232,8 +238,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 			add_verb(src, /client/proc/togglebuildmodeself)
 		if(rights & R_ADMIN)
 			add_verb(src, GLOB.admin_verbs_admin)
-		if(rights & R_BAN)
-			add_verb(src, GLOB.admin_verbs_ban)
 		if(rights & R_FUN)
 			add_verb(src, GLOB.admin_verbs_fun)
 		if(rights & R_SERVER)
@@ -261,7 +265,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	remove_verb(src, list(
 		/client/proc/togglebuildmodeself,
 		GLOB.admin_verbs_admin,
-		GLOB.admin_verbs_ban,
 		GLOB.admin_verbs_fun,
 		GLOB.admin_verbs_server,
 		GLOB.admin_verbs_debug,
@@ -404,20 +407,12 @@ ADMIN_VERB(hide_verbs, R_NONE, "Adminverbs - Hide All", "Hide most of your admin
 	holder.list_fingerprints()
 	BLACKBOX_LOG_ADMIN_VERB("List Fingerprints")
 
-/client/proc/ban_panel()
-	set name = "Banning Panel"
-	set category = "Admin"
-	if(!check_rights(R_BAN))
-		return
-	holder.ban_panel()
+ADMIN_VERB(ban_panel, R_BAN, "Banning Panel", "Ban players here.", ADMIN_CATEGORY_MAIN)
+	user.holder.ban_panel()
 	BLACKBOX_LOG_ADMIN_VERB("Banning Panel")
 
-/client/proc/unban_panel()
-	set name = "Unbanning Panel"
-	set category = "Admin"
-	if(!check_rights(R_BAN))
-		return
-	holder.unban_panel()
+ADMIN_VERB(unban_panel, R_BAN, "Unbanning Panel", "Unban players here.", ADMIN_CATEGORY_MAIN)
+	user.holder.unban_panel()
 	BLACKBOX_LOG_ADMIN_VERB("Unbanning Panel")
 
 /client/proc/game_panel()
@@ -1100,15 +1095,10 @@ ADMIN_VERB(debug_statpanel, R_DEBUG, "Debug Stat Panel", "Toggles local debug of
 	message_admins("[key_name_admin(usr)] has loaded lazy template '[choice]'")
 	to_chat(usr, span_boldnicegreen("Template loaded, you have been moved to the bottom left of the reservation."))
 
-/client/proc/library_control()
-	set name = "Library Management"
-	set category = "Admin"
-	if(!check_rights(R_BAN))
-		return
-
-	if(!holder.library_manager)
-		holder.library_manager = new()
-	holder.library_manager.ui_interact(usr)
+ADMIN_VERB(library_control, R_BAN, "Library Management", "List and manage the Library.", ADMIN_CATEGORY_MAIN)
+	if(!user.holder.library_manager)
+		user.holder.library_manager = new
+	user.holder.library_manager.ui_interact(user.mob)
 	BLACKBOX_LOG_ADMIN_VERB("Library Management")
 
 /client/proc/create_mob_worm()
