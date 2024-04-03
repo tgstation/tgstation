@@ -268,7 +268,8 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	if(!QDELETED(progbar))
 		progbar.end_progress()
-		cog?.remove()
+	
+	cog?.remove()
 
 	if(interaction_key)
 		var/reduced_interaction_count = (LAZYACCESS(user.do_afters, interaction_key) || 0) - 1
