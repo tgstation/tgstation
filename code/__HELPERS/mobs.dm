@@ -230,7 +230,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		delay *= user.cached_multiplicative_actions_slowdown
 
 	var/datum/progressbar/progbar
-	if(progress)
+	if(progress && user.client)
 		progbar = new(user, delay, target || user)
 
 	SEND_SIGNAL(user, COMSIG_DO_AFTER_BEGAN)
