@@ -1,4 +1,0 @@
-author: "Tractor Mann"
-delete-after: True
-changes:
-  - refactor: "Jukebox Beacon Code has been refactored, changes to note is that jukeboxes no longer deploy instantly and now come with a wrench."
