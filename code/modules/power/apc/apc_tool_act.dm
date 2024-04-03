@@ -157,8 +157,10 @@
 			return ITEM_INTERACT_BLOCKING
 		if(!pseudocircuit.adapt_circuit(user, circuit_cost = 50 KILO JOULES))
 			return ITEM_INTERACT_BLOCKING
-		user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
-		span_notice("You adapt a power control board and click it into place in [src]'s guts."))
+		user.visible_message(
+			span_notice("[user] fabricates a circuit and places it into [src]."),
+			span_notice("You adapt a power control board and click it into place in [src]'s guts."),
+		)
 		has_electronics = APC_ELECTRONICS_INSTALLED
 		locked = FALSE
 		return ITEM_INTERACT_SUCCESS
@@ -172,8 +174,10 @@
 		var/obj/item/stock_parts/cell/crap/empty/bad_cell = new(src)
 		bad_cell.forceMove(src)
 		cell = bad_cell
-		user.visible_message(span_notice("[user] fabricates a weak power cell and places it into [src]."), \
-		span_warning("Your [pseudocircuit.name] whirrs with strain as you create a weak power cell and place it into [src]!"))
+		user.visible_message(
+			span_notice("[user] fabricates a weak power cell and places it into [src]."),
+			span_warning("Your [pseudocircuit.name] whirrs with strain as you create a weak power cell and place it into [src]!"),
+		)
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
