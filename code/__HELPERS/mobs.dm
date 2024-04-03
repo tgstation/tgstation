@@ -203,7 +203,7 @@ GLOBAL_LIST_EMPTY(species_list)
  * given `delay`. Returns `TRUE` on success or `FALSE` on failure.
  * Interaction_key is the assoc key under which the do_after is capped, with max_interact_count being the cap. Interaction key will default to target if not set.
  * 
- * @param hidden - Defaults to FALSE. If TRUE, a cog will be visible during the action (assuming its duration is 1 second or longer).
+ * @param hidden - By default, any action 1 second or longer shows a cog over the user while it is in progress. If hidden is set to TRUE, the cog will not be shown.
  */
 /proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, hidden = FALSE)
 	if(!user)
