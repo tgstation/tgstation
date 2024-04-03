@@ -76,13 +76,6 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/log_viewer_new,
 	/client/proc/player_ticket_history,
 	)
-GLOBAL_LIST_INIT(admin_verbs_sounds, list(
-	/client/proc/play_local_sound,
-	/client/proc/play_direct_mob_sound,
-	/client/proc/play_sound,
-	/client/proc/set_round_end_sound,
-))
-GLOBAL_PROTECT(admin_verbs_sounds)
 GLOBAL_LIST_INIT(admin_verbs_fun, list(
 // Admin datums
 	/datum/admins/proc/station_traits_panel,
@@ -252,10 +245,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 			add_verb(src, /client/proc/stealth)
 		if(rights & R_POLL)
 			add_verb(src, GLOB.admin_verbs_poll)
-		if(rights & R_SOUND)
-			add_verb(src, GLOB.admin_verbs_sounds)
-			if(CONFIG_GET(string/invoke_youtubedl))
-				add_verb(src, /client/proc/play_web_sound)
 #ifdef MAP_TEST
 		remove_verb(src, /client/proc/enable_mapping_verbs)
 		add_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
@@ -272,8 +261,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		GLOB.admin_verbs_permissions,
 		/client/proc/stealth,
 		GLOB.admin_verbs_poll,
-		GLOB.admin_verbs_sounds,
-		/client/proc/play_web_sound,
 		/*Debug verbs added by "show debug verbs"*/
 		GLOB.admin_verbs_debug_mapping,
 		/client/proc/disable_mapping_verbs,
