@@ -241,8 +241,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 			add_verb(src, GLOB.admin_verbs_possess)
 		if(rights & R_PERMISSIONS)
 			add_verb(src, GLOB.admin_verbs_permissions)
-		if(rights & R_STEALTH)
-			add_verb(src, /client/proc/stealth)
 		if(rights & R_POLL)
 			add_verb(src, GLOB.admin_verbs_poll)
 #ifdef MAP_TEST
@@ -259,7 +257,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		GLOB.admin_verbs_debug,
 		GLOB.admin_verbs_possess,
 		GLOB.admin_verbs_permissions,
-		/client/proc/stealth,
 		GLOB.admin_verbs_poll,
 		/*Debug verbs added by "show debug verbs"*/
 		GLOB.admin_verbs_debug_mapping,
@@ -450,16 +447,11 @@ ADMIN_VERB(unban_panel, R_BAN, "Unbanning Panel", "Unban players here.", ADMIN_C
 /client/proc/createStealthKey()
 	GLOB.stealthminID["[ckey]"] = generateStealthCkey()
 
-/client/proc/stealth()
-	set category = "Admin"
-	set name = "Stealth Mode"
-	if(!holder)
-		return
-
-	if(holder.fakekey)
-		disable_stealth_mode()
+ADMIN_VERB(stealth, R_STEALTH, "Stealth Mode", "Toggle stealth.", ADMIN_CATEGORY_MAIN)
+	if(user.holder.fakekey)
+		user.disable_stealth_mode()
 	else
-		enable_stealth_mode()
+		user.enable_stealth_mode()
 
 	BLACKBOX_LOG_ADMIN_VERB("Stealth Mode")
 
