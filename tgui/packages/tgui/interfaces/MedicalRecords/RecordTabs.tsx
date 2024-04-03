@@ -1,5 +1,3 @@
-import { sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { useState } from 'react';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
@@ -28,9 +26,19 @@ export const MedicalRecordTabs = (props) => {
 
   const [search, setSearch] = useState('');
 
-  const sorted: MedicalRecord[] = flow([
-    sortBy((record: MedicalRecord) => record.name?.toLowerCase()),
-  ])(records.filter((record) => isRecordMatch(record, search)));
+  const sorted: MedicalRecord[] = records
+    .filter((record) => isRecordMatch(record, search))
+    .sort((recordA, recordB) => {
+      if (recordA === undefined || recordA === null) {
+        if (recordA === recordB) {
+          return 0;
+        } else {
+          return 1;
+        }
+      }
+
+      return recordA.name?.localeCompare(recordB.name);
+    });
 
   return (
     <Stack fill vertical>

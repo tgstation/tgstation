@@ -42,15 +42,16 @@ export const getMostRelevant = (
   searchQuery: string,
   observables: Observable[][],
 ): Observable => {
-  let queriedObservables = observables
+  const queriedObservables = observables
     // Makes a single Observables list for an easy search
     .flat()
     // Filters out anything that doesn't match search
-    .filter((observable) => isJobOrNameMatch(observable, searchQuery));
-  // Sorts descending by orbiters
-  queriedObservables = sortBy<Observable>(
-    (observable) => -(observable.orbiters || 0),
-  )(queriedObservables);
+    .filter((observable) => isJobOrNameMatch(observable, searchQuery))
+    // Sorts descending by orbiters
+    .sort(
+      (observableA, observableB) =>
+        (observableB.orbiters || 0) - (observableA.orbiters || 0),
+    );
   return queriedObservables[0];
 };
 

@@ -182,9 +182,9 @@ export const PersonalCrafting = (props) => {
   const [activeType, setFoodType] = useState(
     Object.keys(craftability).length ? 'Can Make' : data.foodtypes[0],
   );
-  const material_occurences = sortBy<Material>(
-    (material) => -material.occurences,
-  )(data.material_occurences);
+  const material_occurences = data.material_occurences.sort(
+    (materialA, materialB) => materialB.occurences - materialA.occurences,
+  );
   const [activeMaterial, setMaterial] = useState(
     material_occurences[0].atom_id,
   );

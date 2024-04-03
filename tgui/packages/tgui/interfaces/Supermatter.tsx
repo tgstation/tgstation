@@ -1,4 +1,3 @@
-import { sortBy } from 'common/collections';
 import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { ReactNode, useState } from 'react';
@@ -128,9 +127,9 @@ export const SupermatterContent = (props: SupermatterProps) => {
       ([gas_path, amount]) => amount !== 0,
     );
   }
-  gas_composition = sortBy(([gas_path, amount]) => -amount)(
-    gas_composition,
-  ) as [string, number][];
+  gas_composition = gas_composition.sort(
+    ([, amountA], [, amountB]) => amountB - amountA,
+  );
 
   return (
     <Stack height="100%">
