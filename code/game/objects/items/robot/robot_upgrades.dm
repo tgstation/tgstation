@@ -448,13 +448,12 @@
 /obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/cyborg, user = usr)
 	. = ..()
 	if(.)
-		var/found_omnitool = FALSE
+		var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade = locate() in cyborg.model
+		if(omnitool_upgrade.upgraded)
+			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
+			return FALSE
 		for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.model.modules)
 			omnitool.upgrade_omnitool()
-			found_omnitool = TRUE
-
-		if(!found_omnitool)
-			return FALSE
 
 /obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, user = usr)
 	. = ..()
@@ -474,13 +473,12 @@
 /obj/item/borg/upgrade/engineering_omnitool/action(mob/living/silicon/robot/cyborg, user = usr)
 	. = ..()
 	if(.)
-		var/found_omnitool = FALSE
+		var/obj/item/borg/cyborg_omnitool/engineering/omnitool_upgrade = locate() in cyborg.model
+		if(omnitool_upgrade.upgraded)
+			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
+			return FALSE
 		for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool in cyborg.model.modules)
 			omnitool.upgrade_omnitool()
-			found_omnitool = TRUE
-
-		if(!found_omnitool)
-			return FALSE
 
 /obj/item/borg/upgrade/engineering_omnitool/deactivate(mob/living/silicon/robot/cyborg, user = usr)
 	. = ..()

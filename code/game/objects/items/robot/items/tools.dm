@@ -187,6 +187,8 @@
 	var/list/radial_menu_options = list()
 	toolspeed = 1 //The toolspeed for our tools
 	var/obj/item/reference
+	//is the toolset upgraded or not
+	var/upgraded = FALSE
 
 /obj/item/borg/cyborg_omnitool/get_all_tool_behaviours()
 	return list(TOOL_SCALPEL)
@@ -254,6 +256,7 @@
 	name = "advanced [name]"
 	desc = "[desc] \nIt seems that this one has been upgraded to perform tasks faster."
 	toolspeed = 0.7
+	upgraded = TRUE
 
 /obj/item/borg/cyborg_omnitool/medical
 	name = "surgical omni-toolset"
