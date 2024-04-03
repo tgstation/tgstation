@@ -234,7 +234,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	if(progress)
 		progbar = new(user, delay, target || user)
-		if(visibility == DO_PUBLIC)
+		if(visibility == DO_PUBLIC && delay >= 1 SECONDS)
 			cog = new(user)
 
 	SEND_SIGNAL(user, COMSIG_DO_AFTER_BEGAN)
