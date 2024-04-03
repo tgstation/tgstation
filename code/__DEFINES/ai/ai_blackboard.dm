@@ -14,6 +14,8 @@
 #define BB_BREED_READY "BB_breed_ready"
 ///maximum kids we can have
 #define BB_MAX_CHILDREN "BB_max_children"
+///our current happiness level
+#define BB_BASIC_HAPPINESS "BB_basic_happiness"
 
 /// Store a single or list of emotes at this key
 #define BB_EMOTE_KEY "BB_emotes"

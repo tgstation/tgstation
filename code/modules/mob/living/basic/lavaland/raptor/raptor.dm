@@ -28,10 +28,13 @@
 	var/datum/raptor_inheritance/inherited_stats
 	///our color
 	var/raptor_color
+	///the description that appears in the dex
+	var/dex_description
 
 /mob/living/basic/mining/raptor/Initialize(mapload)
 	. = ..()
 	inherited_stats = new
+	AddComponent(/datum/component/happiness)
 	if(can_breed)
 		AddComponent(\
 			/datum/component/breed,\
@@ -70,6 +73,8 @@
 	melee_damage_lower = 28
 	melee_damage_upper = 33
 	raptor_color = RAPTOR_RED
+	dex_description = "A resilient breed of raptors, battle-tested and bred for the purpose of humbling its foes in combat, \
+		This breed demonstrates higher combat capabilities than its peers and oozes rutheless aggression."
 
 /mob/living/basic/mining/raptor/purple
 	name = "purple raptor"
@@ -77,6 +82,7 @@
 	icon_living = "raptor_purple"
 	icon_dead = "raptor_purple_dead"
 	raptor_color = RAPTOR_PURPLE
+	dex_description = "A dependable mount, bred for the purpose of long distance pilgrimages. This breed is also able to store its rider's possessions."
 
 /mob/living/basic/mining/raptor/green
 	name = "green raptor"
@@ -86,6 +92,8 @@
 	maxHealth = 450
 	health = 450
 	raptor_color = RAPTOR_GREEN
+	dex_description = "A tough breed of raptor, made to withstand the harshest of punishment and to laugh in the face of pain, \
+		This breed is able to withstand more beating than its peers."
 
 /mob/living/basic/mining/raptor/green/Initialize(mapload)
 	. = ..()
@@ -97,6 +105,7 @@
 	icon_living = "raptor_white"
 	icon_dead = "raptor_white_dead"
 	raptor_color = RAPTOR_WHITE
+	dex_description = "A loving sort, it cares for it peers and rushes to their aid with reckless abandon. It is able to heal any raptors' ailments."
 
 /mob/living/basic/mining/raptor/white/Initialize(mapload)
 	. = ..()
@@ -119,6 +128,7 @@
 	melee_damage_lower = 28
 	melee_damage_upper = 33
 	raptor_color = RAPTOR_BLACK
+	dex_description = "An ultra rare breed. Due to its sparse nature, not much is known about this sort. However it is said to possess many of its peers' abilities."
 
 /mob/living/basic/mining/raptor/yellow
 	name = "yellow raptor"
@@ -127,6 +137,7 @@
 	icon_dead = "raptor_yellow_dead"
 	speed = 1
 	raptor_color = RAPTOR_YELLOW
+	dex_description = "This breed possesses greasy fast speed, DEMON speed, making light work of long pilgrimages. It's said that a thunderclap could be heard when this breed reaches its maximum speed."
 
 /obj/item/food/egg/raptor_egg
 	icon = 'icons/mob/simple/lavaland/raptor.dmi'

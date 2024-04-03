@@ -20,6 +20,7 @@ type Data = {
   raptor_speed: number;
   raptor_color: String;
   raptor_image: String;
+  raptor_description: String;
   inherited_attack: number;
   inherited_attack_max: number;
   inherited_health: number;
@@ -39,10 +40,11 @@ export const RaptorDex = (props) => {
     inherited_health,
     inherited_health_max,
     inherited_traits,
+    raptor_description,
     raptor_color,
   } = data;
   return (
-    <Window title="Raptor Data" width={625} height={625} theme="hackerman">
+    <Window title="Raptor Data" width={625} height={370} theme="hackerman">
       <Window.Content>
         <Stack>
           <Stack.Item width="33%">
@@ -107,6 +109,9 @@ export const RaptorDex = (props) => {
             </Section>
           </Stack.Item>
         </Stack>
+        <Section fill title="Desc">
+          {raptor_description}
+        </Section>
       </Window.Content>
     </Window>
   );

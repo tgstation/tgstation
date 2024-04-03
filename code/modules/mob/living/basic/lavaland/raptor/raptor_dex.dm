@@ -25,6 +25,7 @@
 	data["raptor_health"] = my_raptor.maxHealth
 	data["raptor_speed"] = my_raptor.speed
 	data["raptor_color"] = my_raptor.name
+	data["raptor_description"] = my_raptor.dex_description
 	var/datum/raptor_inheritance/inherit = my_raptor.inherited_stats
 	if(isnull(inherit))
 		return data
