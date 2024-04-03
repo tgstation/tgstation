@@ -770,6 +770,12 @@
 				if(prob(50))
 					breather.emote("shiver")
 			if(prob(breath_effect_prob))
+				// Breathing into your mask, no particle. We can add fogged up glasses later
+				if(breather.is_mouth_covered())
+					return
+				// Even though breathing via internals TECHNICALLY exhales into the environment, we'll still block it
+				if(breather.internal || breather.external)
+					return
 				emit_breath_particle(breather, /particles/fog/breath)
 
 	if(!HAS_TRAIT(breather, TRAIT_RESISTHEAT)) // HEAT DAMAGE
@@ -794,12 +800,6 @@
 /// Creates a particle effect off the mouth of the passed mob.
 /obj/item/organ/internal/lungs/proc/emit_breath_particle(mob/living/carbon/human/breather, particle_type)
 	ASSERT(ispath(particle_type, /particles))
-	// Breathing into your mask, no particle. We can add fogged up glasses later
-	if(breather.is_mouth_covered())
-		return
-	// Even though breathing via internals TECHNICALLY exhales into the environment, we'll still block it
-	if(breather.internal || breather.external)
-		return
 
 	var/obj/effect/abstract/particle_holder/holder = new(breather, particle_type)
 	var/particles/breath_particle = holder.particles
