@@ -137,7 +137,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(span_notice("[user.name] inserts the power control board into [src]."))
-	balloon_alert(user, "you start to insert the board...")
+	balloon_alert(user, "inserting the board...")
 	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 
 	if(!do_after(user, 10, target = src) || has_electronics)
