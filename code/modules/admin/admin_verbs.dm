@@ -214,8 +214,6 @@ GLOBAL_LIST_INIT(admin_verbs_possess, list(
 GLOBAL_PROTECT(admin_verbs_possess)
 GLOBAL_LIST_INIT(admin_verbs_permissions, list(/client/proc/edit_admin_permissions))
 GLOBAL_PROTECT(admin_verbs_permissions)
-GLOBAL_LIST_INIT(admin_verbs_poll, list(/client/proc/poll_panel))
-GLOBAL_PROTECT(admin_verbs_poll)
 
 /client/proc/add_admin_verbs()
 	if(isnull(holder))
@@ -239,8 +237,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 			add_verb(src, GLOB.admin_verbs_possess)
 		if(rights & R_PERMISSIONS)
 			add_verb(src, GLOB.admin_verbs_permissions)
-		if(rights & R_POLL)
-			add_verb(src, GLOB.admin_verbs_poll)
 #ifdef MAP_TEST
 		remove_verb(src, /client/proc/enable_mapping_verbs)
 		add_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
@@ -254,7 +250,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		GLOB.admin_verbs_debug,
 		GLOB.admin_verbs_possess,
 		GLOB.admin_verbs_permissions,
-		GLOB.admin_verbs_poll,
 		/*Debug verbs added by "show debug verbs"*/
 		GLOB.admin_verbs_debug_mapping,
 		/client/proc/disable_mapping_verbs,
@@ -403,12 +398,8 @@ ADMIN_VERB(unban_panel, R_BAN, "Unbanning Panel", "Unban players here.", ADMIN_C
 		holder.Game()
 	BLACKBOX_LOG_ADMIN_VERB("Game Panel")
 
-/client/proc/poll_panel()
-	set name = "Server Poll Management"
-	set category = "Admin"
-	if(!check_rights(R_POLL))
-		return
-	holder.poll_list_panel()
+ADMIN_VERB(poll_panel, R_POLL, "Server Poll Management", "View and manage polls.", ADMIN_CATEGORY_MAIN)
+	user.holder.poll_list_panel()
 	BLACKBOX_LOG_ADMIN_VERB("Server Poll Management")
 
 /// Returns this client's stealthed ckey
