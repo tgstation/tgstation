@@ -224,8 +224,18 @@
 	. = ..()
 	if(!.)
 		return
-	//if(!mymob?.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
-	//	hide_plane(mymob)
+	if(!mymob?.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
+		hide_plane(mymob)
+
+/atom/movable/screen/plane_master/rendering_plate/game_world_ao/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset)
+	. = ..()
+	if(!.)
+		return
+	// We run AO on just the plane below us, since it becomes unremarkable 1 more layer down
+	if(abs(distance_from_owner) <= 1)
+		show_to(relevant)
+	else
+		hide_from(relevant)
 
 ///Contains all lighting objects
 /atom/movable/screen/plane_master/rendering_plate/lighting
@@ -407,3 +417,14 @@
 		return
 	if(!mymob?.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		hide_plane(mymob)
+
+/atom/movable/screen/plane_master/rendering_plate/runechat_ao/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset)
+	. = ..()
+	if(!.)
+		return
+	// No sense wasting gpu time on this
+	if(distance_from_owner == 0)
+		show_to(relevant)
+	else
+		hide_from(relevant)
+

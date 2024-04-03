@@ -181,7 +181,7 @@
 			// Overlay so we don't multiply twice, and thus fuck up our rendering
 			add_relay_to(GET_NEW_PLANE(plane, offset), BLEND_OVERLAY)
 
-/atom/movable/screen/plane_master/parallax/set_distance_from_owner(mob/relevant, new_offset, multiz_boundary)
+/atom/movable/screen/plane_master/parallax/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset)
 	var/old_hidden = hidden_by_distance
 	. = ..()
 	if(.)
