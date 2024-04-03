@@ -227,8 +227,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 
 		var/rights = holder.rank_flags()
-		if(rights & R_BUILD)
-			add_verb(src, /client/proc/togglebuildmodeself)
 		if(rights & R_ADMIN)
 			add_verb(src, GLOB.admin_verbs_admin)
 		if(rights & R_FUN)
@@ -250,7 +248,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 /client/proc/remove_admin_verbs()
 	remove_verb(src, list(
-		/client/proc/togglebuildmodeself,
 		GLOB.admin_verbs_admin,
 		GLOB.admin_verbs_fun,
 		GLOB.admin_verbs_server,
@@ -814,13 +811,9 @@ ADMIN_VERB(stealth, R_STEALTH, "Stealth Mode", "Toggle stealth.", ADMIN_CATEGORY
 	log_admin("[key_name(usr)] made [O] at [AREACOORD(O)] say \"[message]\"")
 	message_admins(span_adminnotice("[key_name_admin(usr)] made [O] at [AREACOORD(O)]. say \"[message]\""))
 	BLACKBOX_LOG_ADMIN_VERB("Object Say")
-/client/proc/togglebuildmodeself()
-	set name = "Toggle Build Mode Self"
-	set category = "Admin.Events"
-	if (!(holder.rank_flags() & R_BUILD))
-		return
-	if(src.mob)
-		togglebuildmode(src.mob)
+
+ADMIN_VERB(build_mode_self, R_BUILD, "Toggle Build Mode Self", "Toggle build mode for yourself.", ADMIN_CATEGORY_EVENTS)
+	togglebuildmode(user.mob) // why is this a global proc???
 	BLACKBOX_LOG_ADMIN_VERB("Toggle Build Mode")
 
 /client/proc/check_ai_laws()
