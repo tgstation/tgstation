@@ -3,6 +3,7 @@
 	desc = "This device recharges energy dependent lifeforms, like cyborgs, ethereals and MODsuit users."
 	icon = 'icons/obj/machines/borg_charger.dmi'
 	icon_state = "borgcharger0"
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 	density = FALSE
 	req_access = list(ACCESS_ROBOTICS)
 	state_open = TRUE
@@ -176,4 +177,8 @@
 /obj/machinery/recharge_station/proc/process_occupant(seconds_per_tick)
 	if(!occupant)
 		return
+
+	if(!use_energy(active_power_usage * seconds_per_tick))
+		return
+
 	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, charge_cell, seconds_per_tick, repairs, sendmats)

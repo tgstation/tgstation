@@ -446,13 +446,31 @@ const SnowflakeSleeper = (props) => {
     </>
   );
 };
-
+type Data = {
+  contained_reagents: Reagent[];
+  analyzed_reagents: KnownReagent[];
+};
+type Reagent = {
+  name: string;
+  volume: number;
+};
+type KnownReagent = {
+  name: string;
+  enabled: boolean;
+};
 const SnowflakeSyringe = (props) => {
   const { act, data } = useBackend<MainData>();
   const { power_level, weapons_safety } = data;
   const { ref, energy_per_use, equip_cooldown } = props.module;
-  const { mode, syringe, max_syringe, reagents, total_reagents } =
-    props.module.snowflake;
+  const {
+    mode,
+    syringe,
+    max_syringe,
+    reagents,
+    total_reagents,
+    contained_reagents,
+    analyzed_reagents,
+  } = props.module.snowflake;
   return (
     <>
       <LabeledList.Item label={'Syringes'}>
@@ -476,17 +494,49 @@ const SnowflakeSyringe = (props) => {
           }
         />
       </LabeledList.Item>
-      <LabeledList.Item label={'Reagent control'}>
+      <LabeledList.Item label="Synthesizing">
+        {analyzed_reagents.map((reagent) => (
+          <LabeledList.Item key={reagent.name} label={reagent.name}>
+            <Button.Checkbox
+              checked={reagent.enabled}
+              onClick={() =>
+                act('equip_act', {
+                  ref: ref,
+                  gear_action: `toggle_reagent_${reagent.name}`,
+                })
+              }
+            />
+          </LabeledList.Item>
+        ))}
+      </LabeledList.Item>
+      <LabeledList.Item>
         <Button
-          content={'View'}
           onClick={() =>
             act('equip_act', {
               ref: ref,
-              gear_action: 'show_reagents',
+              gear_action: `purge_all`,
             })
           }
-        />
+        >
+          Purge All
+        </Button>
       </LabeledList.Item>
+      {contained_reagents.map((reagent) => (
+        <LabeledList.Item key={reagent.name} label={reagent.name}>
+          <LabeledList.Item label={`${reagent.volume}u`}>
+            <Button
+              onClick={() =>
+                act('equip_act', {
+                  ref: ref,
+                  gear_action: `purge_reagent_${reagent.name}`,
+                })
+              }
+            >
+              Purge
+            </Button>
+          </LabeledList.Item>
+        </LabeledList.Item>
+      ))}
     </>
   );
 };

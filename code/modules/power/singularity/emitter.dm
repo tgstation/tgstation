@@ -77,11 +77,13 @@
 	welded = TRUE
 	. = ..()
 
-/obj/machinery/power/emitter/cable_layer_change_checks(mob/living/user, obj/item/tool)
+/obj/machinery/power/emitter/cable_layer_act(mob/living/user, obj/item/tool)
+	if(panel_open)
+		return NONE
 	if(welded)
 		balloon_alert(user, "unweld first!")
-		return FALSE
-	return TRUE
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/machinery/power/emitter/set_anchored(anchorvalue)
 	. = ..()
