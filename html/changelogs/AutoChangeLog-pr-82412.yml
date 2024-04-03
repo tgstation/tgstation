@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - bugfix: "Adjusted the code for changeling reviving stasis to only make them spend chemicals once."

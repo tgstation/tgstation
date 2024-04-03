@@ -235,7 +235,8 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/datum/cogbar/cog
 
 	if(progress)
-		progbar = new(user, delay, target || user)
+		if(user.client)
+			progbar = new(user, delay, target || user)
 
 		if(!hidden && delay >= 1 SECONDS)
 			cog = new(user)
