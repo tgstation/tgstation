@@ -1,7 +1,11 @@
 #define AUXTOOLS_FULL_INIT 2
 #define AUXTOOLS_PARTIAL_INIT 1
 
-GLOBAL_LIST_EMPTY(auxtools_initialized)
+/datum/controller/global_vars/var/global/list/auxtools_initialized
+/datum/controller/global_vars/proc/InitGlobalauxtools_initialized(){\
+	auxtools_initialized = list();\
+	gvars_datum_init_order += auxtools_initialized;\
+}
 GLOBAL_PROTECT(auxtools_initialized)
 
 #define AUXTOOLS_CHECK(LIB)\
