@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_CHASM_STOPPER" = TRAIT_CHASM_STOPPER,
 	),
 	/datum/controller/global_vars = list(
-		"TRAIT_DISTORTION_IN_USE" = TRAIT_DISTORTION_IN_USE,
+		"TRAIT_DISTORTION_IN_USE" = TRAIT_DISTORTION_IN_USE(0),
 	),
 	/datum/controller/subsystem/economy = list(
 		"TRAIT_MARKET_CRASHING" = TRAIT_MARKET_CRASHING,
