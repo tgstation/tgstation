@@ -770,7 +770,7 @@
 				if(prob(50))
 					breather.emote("shiver")
 			if(prob(breath_effect_prob))
-				emit_breath_particle(breather)
+				emit_breath_particle(breather, /particles/fog/breath)
 
 	if(!HAS_TRAIT(breather, TRAIT_RESISTHEAT)) // HEAT DAMAGE
 		var/heat_modifier = breather.dna.species.heatmod
@@ -791,16 +791,17 @@
 	// The air you breathe out should match your body temperature
 	breath.temperature = breather.bodytemperature
 
-/// Creates a cold chill breath particle effect
-/obj/item/organ/internal/lungs/proc/emit_breath_particle(mob/living/carbon/human/breather)
+/// Creates a particle effect off the mouth of the passed mob.
+/obj/item/organ/internal/lungs/proc/emit_breath_particle(mob/living/carbon/human/breather, particle_type)
+	ASSERT(ispath(particle_type, /particles))
+	// Breathing into your mask, no particle. We can add fogged up glasses later
 	if(breather.is_mouth_covered())
-		// Breathing into your mask, no partical. We can add fogged up glasses later
 		return
+	// Even though breathing via internals TECHNICALLY exhales into the environment, we'll still block it
 	if(breather.internal || breather.external)
-		// Even though breathing via internals TECHNICALLY exhales into the environment, we'll still block it
 		return
 
-	var/obj/effect/abstract/particle_holder/holder = new(breather, /particles/fog/breath)
+	var/obj/effect/abstract/particle_holder/holder = new(breather, particle_type)
 	var/particles/breath_particle = holder.particles
 	var/breath_dir = breather.dir
 
@@ -830,7 +831,7 @@
 	breath_particle.gravity = particle_grav
 	breath_particle.position = particle_pos
 
-	QDEL_IN(holder, holder.particles.lifespan)
+	QDEL_IN(holder, breath_particle.lifespan)
 
 /obj/item/organ/internal/lungs/on_life(seconds_per_tick, times_fired)
 	. = ..()
