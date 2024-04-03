@@ -36,7 +36,7 @@
 
 	user = null
 	user_client = null
-	QDEL_NULL(cog)
+	cog = null
 	QDEL_NULL(blank)
 
 	return ..()
@@ -81,7 +81,6 @@
 /datum/cogbar/proc/on_user_delete(datum/source)
 	SIGNAL_HANDLER
 
-	SSvis_overlays.remove_vis_overlay(user, user.managed_vis_overlays)
 	qdel(src)
 	
 
