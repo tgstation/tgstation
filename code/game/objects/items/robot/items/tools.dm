@@ -257,6 +257,10 @@
 	desc = "[desc] \nIt seems that this one has been upgraded to perform tasks faster."
 	toolspeed = 0.7
 	upgraded = TRUE
+	tool_behaviour = null
+	reference_item_for_parameters()
+	update_tool_parameters(reference)
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/borg/cyborg_omnitool/medical
 	name = "surgical omni-toolset"
@@ -274,7 +278,6 @@
 	disabled = TRUE, \
 	)
 	radial_menu_options = list(
-		NO_TOOL = image(icon = 'icons/mob/silicon/robot_items.dmi', icon_state = initial(icon_state)),
 		TOOL_SCALPEL = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_SCALPEL]"),
 		TOOL_HEMOSTAT = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_HEMOSTAT]"),
 		TOOL_RETRACTOR = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_RETRACTOR]"),
@@ -325,7 +328,6 @@
 /obj/item/borg/cyborg_omnitool/engineering/Initialize(mapload)
 	. = ..()
 	radial_menu_options = list(
-		NO_TOOL = image(icon = 'icons/obj/items_cyborg.dmi', icon_state = initial(icon_state)),
 		TOOL_SCREWDRIVER = image(icon = 'icons/obj/tools.dmi', icon_state = "[TOOL_SCREWDRIVER]_map"),
 		TOOL_CROWBAR = image(icon = 'icons/obj/tools.dmi', icon_state = "[TOOL_CROWBAR]"),
 		TOOL_WRENCH = image(icon = 'icons/obj/tools.dmi', icon_state = "[TOOL_WRENCH]"),
