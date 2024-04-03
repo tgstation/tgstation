@@ -744,7 +744,7 @@
 
 /datum/uplink_item/ammo/clownshells
 	name = "Fake Shotgun Shells Box"
-	desc = "A box containing 14 fake shells for a shotgun, for when you love wasting your telecrystals on harmless pranks."
+	desc = "A box containing 14 fake shells for a shotgun, for when you love wasting security's time. Have this one on us, sponsored by the folks on Clown-p55."
 	item = /obj/item/storage/box/clownshells/syndi
 	cost = 0
 	limited_stock = 1

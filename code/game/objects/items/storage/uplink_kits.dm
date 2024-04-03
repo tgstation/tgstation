@@ -1044,14 +1044,6 @@
 	for(var/i in 1 to 5)
 		new /obj/item/deployablemine/sleepy(src)
 
-/obj/item/storage/box/syndie_kit/bugs
-	name = "box of bugs"
-	desc = "Bzzz....?"
-
-/obj/item/storage/box/syndie_kit/bugs/PopulateContents()
-	for (var/i in 1 to 9)
-		new /obj/item/spy_bug(src)
-
 /obj/item/storage/box/syndie_kit/thievesgloves/PopulateContents()
 	new /obj/item/clothing/gloves/chameleon/thiefgloves(src)
 	new /obj/item/screwdriver(src)
@@ -1062,6 +1054,10 @@
 	new /obj/item/implanter/stealthimplanter/tracking(src)
 	for(var/i in 1 to 5)
 		new /obj/item/implantcase/tracking/syndicate(src)
+
+/obj/item/storage/box/syndie_kit/syndiekeys/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/encryptionkey/syndicate(src)
 
 
 

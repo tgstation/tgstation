@@ -107,6 +107,7 @@
 	inhand_icon_state = "sec-case"
 
 /obj/item/storage/briefcase/secure/bluespace/Initialize(mapload)
+	. = ..()
 	atom_storage.max_total_storage = 80
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
 	AddComponent(/datum/component/lockable_storage)

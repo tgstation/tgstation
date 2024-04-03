@@ -6,13 +6,6 @@
 	category = /datum/uplink_category/stealthy_tools
 
 
-/datum/uplink_item/stealthy_tools/spy_bug
-	name = "Box of Spy Bugs"
-	desc = "A box of 10 spy bugs. These attach onto the target invisibly and cannot be removed, and broadcast all they hear to the secure syndicate channel.\
-	Can be attached to animals and objects. Does not come with a syndicate encryption key."
-	item = /obj/item/storage/box/syndie_kit/bugs
-	cost = 1
-
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification Card"
 	desc = "Agent cards prevent artificial intelligences from tracking the wearer, and hold up to 5 wildcards \
@@ -122,16 +115,9 @@
 /datum/uplink_item/stealthy_tools/mousecubes
 	name = "Box of Mouse Cubes"
 	desc = "A box with twenty four Waffle Co. brand mouse cubes. Deploy near wiring. \
-			Caution: Product may rehydrate when exposed to water."
+			Caution: Product may rehydrate when exposed to water. Useful for taking out wiring in maintenance without suspicion."
 	item = /obj/item/storage/box/monkeycubes/syndicate/mice
 	cost = 1
-
-/datum/uplink_item/stealthy_tools/angelcoolboy
-	name = "Angelic Potion"
-	desc = "After many failed attempts, the syndicate has reverse engineered an angel potion smuggled off of the lava planet V-227. \
-			Those who drink the contents of the bottle provided will immediately sprout wings capable of sustained flight. Wings may vary in appearance."
-	cost = 2
-	item = /obj/item/reagent_containers/cup/bottle/potion/flight
 
 /datum/uplink_item/stealthy_tools/mail_counterfeit
 	name = "GLA Brand Mail Counterfeit Device"
@@ -158,14 +144,15 @@
 	name = "Syndicate Moustache"
 	desc = "A moustache to prevent people from recognizing you. Be sure to conceal your real identification card or it won't work. \
 			The moustache provided is completely fire proof, and has minor protection technology installed to aid you should you be found out. \
-			Also allows you to properly use internals, and even has a slot for smoking cigarettes."
-	item = /obj/item/clothing/mask/fakemoustache/syndicate
+			Also allows you to properly use internals, and even has a slot for smoking cigarettes. Comes with an in-built voice changer."
+	item = /obj/item/clothing/mask/gas/fakemoustache/syndicate
 	cost = 3
 	surplus = 50
 
 /datum/uplink_item/stealthy_tools/voice_changer
 	name = "Voice Changer"
-	desc = "A mask with voice changing capabilities and chameleon technology, it'll change your voice automatically to match the appearance or ID you have. Be sure to conceal your real identity or it won't work."
+	desc = "A mask with voice changing capabilities and chameleon technology, it'll change your voice automatically to match the appearance or ID you have. \
+			Be sure to conceal your real identity or it won't work. Less blatantly obvious than our fake moustaches."
 	item = /obj/item/clothing/mask/chameleon
 	cost = 1
 	surplus = 50
@@ -185,17 +172,7 @@
 	cost = 4
 	surplus = 20
 	illegal_tech = TRUE
-/**
-/datum/uplink_item/stealthy_tools/pseudocider
-	name = "Pseudocider"
-	desc = "Disguised as a common pocket watch, the pseudocider will convincingly feign your fall, making you invisible \
-			and completely silent as you slip away from the scene, or into a better position! You will not be able to take \
-			any actions for the 7 second duration."
-	item = /obj/item/pseudocider
-	cost = 6
-	surplus = 20
-	purchasable_from = ~UPLINK_NUKE_OPS
-**/
+
 /datum/uplink_item/stealthy_tools/bluespace_briefcase
 	name = "Bluespace Briefcase"
 	desc = "One of our secure briefcases, it's been fitted with bluespace technology allowing it to hold even the bulkiest of items \

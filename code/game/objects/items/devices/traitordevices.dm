@@ -500,6 +500,7 @@ effective or pretty fucking useless.
 	explosion(src, -1, 4, 10, 0)
 	qdel(src)
 
+
 /obj/item/stack/telecrystal/trick
 	item_flags = null
 
@@ -507,6 +508,7 @@ effective or pretty fucking useless.
 	to_chat(user, span_notice("[src] explodes violently!"))
 	explosion(src, 1,2,0,0)
 	qdel(src)
+
 
 /obj/item/pinpointer/crew/syndicate //A modified pinpointer that tracks mobs with tracking implants and is disguised as a crew pinpointer
 	name = "crew pinpointer"

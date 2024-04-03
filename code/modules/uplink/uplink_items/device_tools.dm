@@ -23,11 +23,11 @@
 	surplus = 66
 
 /datum/uplink_item/device_tools/encryptionkey
-	name = "Syndicate Encryption Key"
-	desc = "A key that, when inserted into a radio headset, allows you to listen to all station department channels \
+	name = "Syndicate Encryption Keys"
+	desc = "Two keys that, when inserted into a radio headset, allows you to listen to all station department channels \
 			as well as talk on an encrypted Syndicate channel with other agents that have the same key. In addition, this key also protects \
-			your headset from radio jammers."
-	item = /obj/item/encryptionkey/syndicate
+			your headset from radio jammers. Give one to a friend!"
+	item = /obj/item/storage/box/syndie_kit/syndiekeys
 	cost = 2
 	surplus = 75
 	restricted = TRUE
@@ -269,3 +269,10 @@
 	desc = "High-tech rope, a refined hook structure, the peak of climbing technology. Only useful for climbing up holes, provided the operation site has any."
 	item = /obj/item/climbing_hook/syndicate
 	cost = 1
+
+/datum/uplink_item/device_tools/angelcoolboy
+	name = "Angelic Potion"
+	desc = "After many failed attempts, the syndicate has reverse engineered an angel potion smuggled off of the lava planet V-227. \
+			Those who drink the contents of the bottle provided will immediately sprout wings capable of sustained flight. Wings may vary in appearance."
+	cost = 2
+	item = /obj/item/reagent_containers/cup/bottle/potion/flight
