@@ -477,7 +477,7 @@
 //siemens_coeff - layman's terms, conductivity
 //dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)
 //No animations will be performed by this proc.
-/proc/electrocute_mob(mob/living/carbon/victim, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
+/proc/electrocute_mob(mob/living/carbon/victim, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE, max_damage = 200)
 	if(!istype(victim) || ismecha(victim.loc))
 		return FALSE //feckin mechs are dumb
 
@@ -509,6 +509,8 @@
 	else
 		power_source = cell
 		shock_damage = cell_damage
+	//cap shock damage
+	shock_damage = min(shock_damage, max_damage)
 	var/drained_hp = victim.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
 	log_combat(source, victim, "electrocuted")
 

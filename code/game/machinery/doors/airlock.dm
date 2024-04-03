@@ -481,7 +481,7 @@
 		return FALSE //you lucked out, no shock for you
 	do_sparks(5, TRUE, src)
 	var/check_range = TRUE
-	if(electrocute_mob(user, get_area(src), src, 1, check_range))
+	if(electrocute_mob(user, get_area(src), src, 1, check_range, wires.is_cut(WIRE_SHOCK) ? 200 : 80))
 		COOLDOWN_START(src, shockCooldown, 1 SECONDS)
 		// Provides timed airlock shock immunity, to prevent overly cheesy deathtraps
 		ADD_TRAIT(user, TRAIT_AIRLOCK_SHOCKIMMUNE, REF(src))
