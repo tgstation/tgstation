@@ -211,7 +211,8 @@
 /atom/movable/screen/plane_master/rendering_plate/game_world_ao/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	var/matrix/scale_down_matrix = new /matrix()
-	scale_down_matrix.Translate(0, -2).Scale(1/AO_TRANSFORM_CONSTANT)
+	scale_down_matrix.Translate(0, -2)
+	scale_down_matrix.Scale(1/AO_TRANSFORM_CONSTANT)
 	// The way I WANT to do this is just run a relay from the game world to this plate (and transform the relay and such)
 	// Fuckin can't tho cause of funny byond bugs (I think it's not properly differenciating between relays somehow). So we gotta do this instead. Sadge
 	// Also of note, I'd like to somehow scale down the thing we're rendering "onto" before we render, since that should save even more time. I can't seem to though
@@ -406,7 +407,8 @@
 /atom/movable/screen/plane_master/rendering_plate/runechat_ao/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	var/matrix/scale_down_matrix = new /matrix()
-	scale_down_matrix.Translate(0, -2).Scale(1/AO_TRANSFORM_CONSTANT)
+	scale_down_matrix.Translate(0, -2)
+	scale_down_matrix.Scale(1/AO_TRANSFORM_CONSTANT)
 	add_filter("runechat", 0, layering_filter(render_source = OFFSET_RENDER_TARGET(RUNECHAT_RENDER_TARGET, offset), color = "#04080F6F", transform = scale_down_matrix))
 	add_filter("blur", 2, gauss_blur_filter(1))
 	var/matrix/scale_up_matrix = new /matrix()
