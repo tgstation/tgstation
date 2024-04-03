@@ -260,6 +260,18 @@
 	reference_item_for_parameters()
 	update_tool_parameters(reference)
 	update_appearance(UPDATE_ICON_STATE)
+	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
+
+/obj/item/borg/cyborg_omnitool/proc/downgrade_omnitool()
+	name = initial(name)
+	desc = initial(desc)
+	toolspeed = initial(toolspeed)
+	upgraded = FALSE
+	tool_behaviour = null
+	reference_item_for_parameters()
+	update_tool_parameters(reference)
+	update_appearance(UPDATE_ICON_STATE)
+	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
 
 /obj/item/borg/cyborg_omnitool/medical
 	name = "surgical omni-toolset"

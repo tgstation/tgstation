@@ -448,22 +448,18 @@
 /obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/cyborg, user = usr)
 	. = ..()
 	if(.)
-		var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade = locate() in cyborg.model
-		if(omnitool_upgrade.upgraded)
-			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
-			return FALSE
+		for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade in cyborg.model.modules)
+			if(omnitool_upgrade.upgraded)
+				to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
+				return FALSE
 		for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.model.modules)
-			omnitool.upgrade_omnitool()
-		for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.held_items)
 			omnitool.upgrade_omnitool()
 
 /obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, user = usr)
 	. = ..()
 	if(.)
 		for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
-			omnitool.toolspeed = initial(omnitool.toolspeed)
-		for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.held_items)
-			omnitool.toolspeed = initial(omnitool.toolspeed)
+			omnitool.downgrade_omnitool()
 
 /obj/item/borg/upgrade/engineering_omnitool
 	name = "cyborg engineering omni-tool upgrade"
@@ -477,22 +473,18 @@
 /obj/item/borg/upgrade/engineering_omnitool/action(mob/living/silicon/robot/cyborg, user = usr)
 	. = ..()
 	if(.)
-		var/obj/item/borg/cyborg_omnitool/engineering/omnitool_upgrade = locate() in cyborg.model
-		if(omnitool_upgrade.upgraded)
-			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
-			return FALSE
+		for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool_upgrade in cyborg.model.modules)
+			if(omnitool_upgrade.upgraded)
+				to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
+				return FALSE
 		for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool in cyborg.model.modules)
-			omnitool.upgrade_omnitool()
-		for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool in cyborg.held_items)
 			omnitool.upgrade_omnitool()
 
 /obj/item/borg/upgrade/engineering_omnitool/deactivate(mob/living/silicon/robot/cyborg, user = usr)
 	. = ..()
 	if(.)
 		for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
-			omnitool.toolspeed = initial(omnitool.toolspeed)
-		for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.held_items)
-			omnitool.toolspeed = initial(omnitool.toolspeed)
+			omnitool.downgrade_omnitool()
 
 /obj/item/borg/upgrade/defib
 	name = "medical cyborg defibrillator"
