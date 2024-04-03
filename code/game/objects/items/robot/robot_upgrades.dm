@@ -442,7 +442,7 @@
 		surgical omnitool, to be on par with advanced surgical tools"
 	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/medical)
+	model_type = list(/obj/item/robot_model/medical,  /obj/item/robot_model/syndicate_medical)
 	model_flags = BORG_MODEL_MEDICAL
 
 /obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/cyborg, user = usr)
@@ -467,7 +467,7 @@
 		engineering omnitool, to be on par with advanced engineering tools"
 	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/engineering)
+	model_type = list(/obj/item/robot_model/engineering,  /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
 
 /obj/item/borg/upgrade/engineering_omnitool/action(mob/living/silicon/robot/cyborg, user = usr)

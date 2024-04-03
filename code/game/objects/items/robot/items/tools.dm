@@ -293,6 +293,7 @@
 	butchering.butchering_enabled = tool_behaviour == (TOOL_SCALPEL && TOOL_SAW)
 	RemoveElement(/datum/element/eyestab)
 	RemoveComponentSource(/datum/component/surgery_initiator)
+	item_flags = SURGICAL_TOOL
 	switch(tool_behaviour)
 		if(TOOL_SCALPEL)
 			reference = /obj/item/scalpel
@@ -313,6 +314,7 @@
 		if(TOOL_DRAPES)
 			reference = /obj/item/surgical_drapes
 			AddComponent(/datum/component/surgery_initiator)
+			item_flags = null
 
 //Toolset for engineering cyborgs, this is all of the tools except for the welding tool. since it's quite hard to implement (read:can't be arsed to)
 /obj/item/borg/cyborg_omnitool/engineering
