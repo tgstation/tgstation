@@ -69,6 +69,9 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_WEATHER_IMMUNE" = TRAIT_WEATHER_IMMUNE,
 		"TRAIT_CHASM_STOPPER" = TRAIT_CHASM_STOPPER,
 	),
+	/datum/controller/global_vars = list(
+		"TRAIT_DISTORTION_IN_USE " = TRAIT_DISTORTION_IN_USE,
+	),
 	/datum/controller/subsystem/economy = list(
 		"TRAIT_MARKET_CRASHING" = TRAIT_MARKET_CRASHING,
 	),
@@ -103,6 +106,10 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 	),
 	/datum/deathmatch_lobby = list(
 		"TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS" = TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS,
+	),
+	/datum/hud = list(
+		"TRAIT_ESCAPE_MENU_OPEN" = TRAIT_ESCAPE_MENU_OPEN,
+		"TRAIT_PARALLAX_ENABLED" = TRAIT_PARALLAX_ENABLED, 
 	),
 	/datum/wound = list(
 		"TRAIT_WOUND_SCANNED" = TRAIT_WOUND_SCANNED,

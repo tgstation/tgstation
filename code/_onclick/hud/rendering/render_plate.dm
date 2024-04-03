@@ -204,7 +204,7 @@
 		<br>It'd be like 20% of our client budget for 1 z layer. That's no good.\
 		<br>There's a fun trick we can do though. We can use transforms to scale down the game world, and then blur THAT.\
 		<br>This essentially quarters the amount of work we need to do. Then we just bump it back up and we're golden."
-	plane = RENDER_PLANE_GAME_WORLD_AO
+plane = RENDER_PLANE_GAME_WORLD_AO
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_planes = list()
 
