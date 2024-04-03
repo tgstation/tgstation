@@ -1,7 +1,7 @@
 /obj/projectile/energy/electrode
 	name = "electrode"
 	icon_state = "spark"
-	color = "#FFFF00"
+	color = COLOR_YELLOW
 	paralyze = 10 SECONDS
 	stutter = 10 SECONDS
 	jitter = 40 SECONDS

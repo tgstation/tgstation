@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - rscadd: "Disposal bins can now hold destination taggers using right click, and can be removed the same way. Some disposal bins should have some pre-loaded as well."
