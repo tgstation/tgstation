@@ -458,6 +458,21 @@
 
 #undef BEAM_FADE_TIME
 
+//Briefcase subtype that allows you to teleport to specific beacons (if they are enabled)
+/obj/item/storage/briefcase/launchpad/multiz
+
+/obj/item/storage/briefcase/launchpad/multiz/PopulateContents()
+	new /obj/item/pen(src)
+	new /obj/item/launchpad_remote/multiz(src, pad)
+
+/obj/item/launchpad_remote/multiz/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "LaunchpadRemote")
+		ui.open()
+	ui.set_autoupdate(TRUE)
+
+
 /obj/item/circuit_component/bluespace_launchpad
 	display_name = "Bluespace Launchpad"
 	desc = "Teleports anything to and from any location on the station. Doesn't use actual GPS coordinates, but rather offsets from the launchpad itself. Can only go as far as the launchpad can go, which depends on its parts."
