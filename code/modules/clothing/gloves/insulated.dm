@@ -177,7 +177,7 @@
 
 /obj/item/clothing/gloves/chameleon/thiefgloves/Initialize(mapload)
 	. = ..()
-	create_storage(storage_type = /datum/storage/pockets/small)
+	create_storage(storage_type = /datum/storage)
 	atom_storage.max_total_storage = 8
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	slot_flags = 4 // Fixes the item slot not being gloves.

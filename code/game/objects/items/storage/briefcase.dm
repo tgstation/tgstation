@@ -99,6 +99,13 @@
 	for(var/iterator in 1 to 5)
 		new /obj/item/stack/spacecash/c1000(src)
 
+/obj/item/storage/briefcase/secure/bluespace
+	name = "secure briefcase"
+	desc = "A large briefcase with a digital locking system."
+	icon_state = "secure"
+	base_icon_state = "secure"
+	inhand_icon_state = "sec-case"
+
 /obj/item/storage/briefcase/secure/bluespace/Initialize(mapload)
 	atom_storage.max_total_storage = 80
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY

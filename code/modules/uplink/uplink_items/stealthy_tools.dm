@@ -34,14 +34,14 @@
 /datum/uplink_item/stealthy_tools/shadowcloak
 	name = "Cloaker Belt"
 	desc = "A tactical belt that renders the wearer invisible while active. Has a short charge that is refilled in darkness; only charges when in use."
-	item = /obj/item/storage/belt/military/shadowcloak
+	item = /obj/item/shadowcloak
 	cost = 15
 	purchasable_from = ~UPLINK_NUKE_OPS
 
 /datum/uplink_item/stealthy_tools/nuclearshadowcloak
 	name = "Cloaker Belt"
 	desc = "A tactical belt that renders the wearer invisible while active. Has a short charge that is refilled in darkness; only charges when in use."
-	item = /obj/item/storage/belt/military/shadowcloak
+	item = /obj/item/shadowcloak
 	cost = 20
 	purchasable_from = UPLINK_NUKE_OPS
 
@@ -143,7 +143,7 @@
 /datum/uplink_item/stealthy_tools/nocturine
 	name = "Nocturine Bottle"
 	desc = "A bottle containing 30 units of Nocturine, a chemical agent capable of robbing any living organism's conscience from it extremely quickly -- even in small doses."
-	item = /obj/item/reagent_containers/glass/bottle/nocturine
+	item = /obj/item/reagent_containers/cup/bottle/nocturine
 	cost = 3
 	surplus = 40
 
@@ -239,14 +239,6 @@
 	item = /obj/item/holodisguiser
 	cost = 4
 	surplus = 40
-
-/datum/uplink_item/stealthy_tools/manifest_spoofer
-	name = "Crew Manifest Spoofer"
-	desc = "A signaler capable of copying your current identity straight to the crew manifest of the station. \
-			Goes hand-in-hand with mulligan tactics. Can be used once every 20 minutes."
-	item = /obj/item/manifest_spoofer
-	cost = 2
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/stealthy_tools/lightbreaker
 	name = "Light Breaker"

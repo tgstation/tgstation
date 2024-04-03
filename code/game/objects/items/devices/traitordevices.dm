@@ -320,36 +320,6 @@ effective or pretty fucking useless.
 		Lasts indefinitely in darkness, but will not recharge unless inactive."
 	actions_types = list(/datum/action/item_action/stealth_mode/weaker)
 
-/// Checks if a given atom is in range of a radio jammer, returns TRUE if it is.
-/proc/is_within_radio_jammer_range(atom/source)
-	for(var/obj/item/jammer/jammer as anything in GLOB.active_jammers)
-		if(IN_GIVEN_RANGE(source, jammer, jammer.range))
-			return TRUE
-	return FALSE
-
-/obj/item/jammer
-	name = "radio jammer"
-	desc = "Device used to disrupt nearby radio communication."
-	icon = 'icons/obj/devices/syndie_gadget.dmi'
-	icon_state = "jammer"
-	var/active = FALSE
-	var/range = 12
-
-/obj/item/jammer/attack_self(mob/user)
-	to_chat(user,span_notice("You [active ? "deactivate" : "activate"] [src]."))
-	active = !active
-	if(active)
-		GLOB.active_jammers |= src
-
-	else
-		GLOB.active_jammers -= src
-
-	update_appearance()
-
-/obj/item/jammer/Destroy()
-	GLOB.active_jammers -= src
-	return ..()
-
 /obj/item/storage/toolbox/emergency/turret
 	desc = "You feel a strange urge to hit this with a wrench."
 
@@ -486,6 +456,36 @@ effective or pretty fucking useless.
 	damage = 10
 	speed = 0.6
 
+/// Checks if a given atom is in range of a radio jammer, returns TRUE if it is.
+/proc/is_within_radio_jammer_range(atom/source)
+	for(var/obj/item/jammer/jammer as anything in GLOB.active_jammers)
+		if(IN_GIVEN_RANGE(source, jammer, jammer.range))
+			return TRUE
+	return FALSE
+
+/obj/item/jammer
+	name = "radio jammer"
+	desc = "Device used to disrupt nearby radio communication."
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
+	icon_state = "jammer"
+	var/active = FALSE
+	var/range = 12
+
+/obj/item/jammer/attack_self(mob/user)
+	to_chat(user,span_notice("You [active ? "deactivate" : "activate"] [src]."))
+	active = !active
+	if(active)
+		GLOB.active_jammers |= src
+
+	else
+		GLOB.active_jammers -= src
+
+	update_appearance()
+
+/obj/item/jammer/Destroy()
+	GLOB.active_jammers -= src
+	return ..()
+
 
 /obj/item/stock_parts/cell/bluespace/syndirig
 	rigged = TRUE
@@ -507,76 +507,6 @@ effective or pretty fucking useless.
 	to_chat(user, span_notice("[src] explodes violently!"))
 	explosion(src, 1,2,0,0)
 	qdel(src)
-
-/obj/item/storage/belt/military/shadowcloak
-	name = "cloaker belt"
-	desc = "A tactical belt that can make you invisible for short periods of time. Recharges in darkness, but must be turned on to recharge."
-	icon = 'icons/obj/clothing/belts.dmi'
-	icon_state = "utilitybelt"
-	inhand_icon_state = "utility"
-
-	var/mob/living/carbon/human/user = null
-	var/charge = 300
-	var/max_charge = 300
-	var/on = FALSE
-	var/old_alpha = 0
-	var/charge_speed = 25
-	var/decay_speed = 7.5
-	var/move_loss = 100
-	actions_types = list(/datum/action/item_action/toggle)
-
-/obj/item/storage/belt/military/shadowcloak/ui_action_click(mob/user)
-	if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
-		if(!on)
-			Activate(usr)
-		else
-			Deactivate()
-	return
-
-/obj/item/storage/belt/military/shadowcloak/item_action_slot_check(slot, mob/user)
-	if(slot == ITEM_SLOT_BELT)
-		return 1
-
-/obj/item/storage/belt/military/shadowcloak/proc/Activate(mob/living/carbon/human/user)
-	if(!user)
-		return
-	to_chat(user, span_notice("You activate [src]."))
-	src.user = user
-	START_PROCESSING(SSobj, src)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	old_alpha = user.alpha
-	on = TRUE
-
-/obj/item/storage/belt/military/shadowcloak/proc/Deactivate()
-	to_chat(user, span_notice("You deactivate [src]."))
-	STOP_PROCESSING(SSobj, src)
-	if(user)
-		user.alpha = old_alpha
-		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-	on = FALSE
-	user = null
-
-/obj/item/storage/belt/military/shadowcloak/dropped(mob/user)
-	..()
-	if(user && user.get_item_by_slot(ITEM_SLOT_BELT) != src)
-		Deactivate()
-
-/obj/item/storage/belt/military/shadowcloak/process(delta_time)
-	if(user.get_item_by_slot(ITEM_SLOT_BELT) != src)
-		Deactivate()
-		return
-	var/turf/T = get_turf(src)
-	if(on)
-		var/lumcount = T.get_lumcount()
-		if(lumcount > 0.3)
-			charge = max(0,charge - decay_speed * delta_time)//Slow decreas in light
-		else
-			charge = min(max_charge,charge + charge_speed * delta_time) //Charge in the dark
-		animate(user,alpha = clamp(255 - charge,0,255),time = 1 SECONDS)
-
-/obj/item/storage/belt/military/shadowcloak/proc/on_move(mob/user, Dir, Forced = FALSE)
-	charge = max(0,charge - move_loss)	//You can creep in the dark but not run
-
 
 /obj/item/pinpointer/crew/syndicate //A modified pinpointer that tracks mobs with tracking implants and is disguised as a crew pinpointer
 	name = "crew pinpointer"
@@ -714,14 +644,6 @@ effective or pretty fucking useless.
 		return
 	var/mob/living/carbon/human/H = humanfound
 	var/effectpath = /datum/status_effect/holodisguise
-	/**
-	var/static/list/effects = subtypesof(/datum/status_effect/stabilized)
-	for(var/X in effects)
-		var/datum/status_effect/stabilized/S = X
-		if(initial(S.colour) == colour)
-			effectpath = S
-			break
-	**/
 	if(!H.has_status_effect(effectpath))
 		var/datum/status_effect/holodisguise/S = H.apply_status_effect(effectpath)
 		owner = H
@@ -771,43 +693,6 @@ effective or pretty fucking useless.
 		originalDNA.transfer_identity(H)
 		H.real_name = originalname
 		H.updateappearance(mutcolor_update=1)
-
-
-/obj/item/manifest_spoofer
-	name = "remote signaling device"
-	desc = "Used to remotely activate devices. Allows for syncing when using a secure signaler on another."
-	icon = 'icons/obj/devices/new_assemblies.dmi'
-	icon_state = "signaller"
-	inhand_icon_state = "signaler"
-	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	var/recharge_time = 20 MINUTES
-	var/currenttitle = "Assistant"
-	var/datum/manifest/manifester
-	COOLDOWN_DECLARE(manifest_spoofer)
-
-/obj/item/manifest_spoofer/afterattack(obj/item/I, mob/user, proximity)
-	if(IS_TRAITOR(user) || IS_NUKE_OP(user))
-		if(ishuman(user) && (COOLDOWN_FINISHED(src, manifest_spoofer)))
-			var/mob/living/carbon/human/H = user
-			var/obj/item/card/id/ID = H.wear_id.GetID()
-			if(!ID)
-				to_chat(user, span_notice("You need to have an ID for this to work!"))
-				return
-			if(alert(user, "Are you sure you want your crew manifest entry to be [H.name], [ID.assignment]?", "", "Yes", "No") == "Yes")
-				var/list/all_jobs = subtypesof(/datum/job)
-				if((ID.assignment in all_jobs) || (alert(user, "Are you sure you want your job to be '[ID.assignment]'? This is not a default job, and may look strange on the manifest!", "", "Yes", "No") == "Yes"))
-					currenttitle = ID.assignment
-					manifester.inject(currenttitle, force = TRUE, use_real_name = FALSE)
-					to_chat(user, span_notice("Added to manifest."))
-					do_sparks(2, FALSE, src)
-					COOLDOWN_START(src, manifest_spoofer, recharge_time)
-		else
-			to_chat(user, span_notice("[src] isn't ready to activate again!"))
-	else
-		to_chat(user, span_notice("[src] explodes violently!"))
-		explosion(src, 0,1,3,0)
-		qdel(src)
 
 
 /obj/item/lightbreaker

@@ -1,10 +1,10 @@
-/datum/component/bugged/proc/Hear(datum/source, list/hearing_args)
-	var/atom/movable/virtualspeaker/speaker = new(null, hearing_args[HEARING_SPEAKER], null)
+/datum/component/bugged/proc/on_heard(datum/source, list/hearing_args)
+	var/atom/movable/virtualspeaker/speaker = new(null, hearing_args[HEARING_SPEAKER], src)
 	var/datum/signal/subspace/vocal/signal = new(hearing_args[HEARING_SPEAKER], FREQ_SYNDICATE, speaker, /datum/language/common, hearing_args[HEARING_RAW_MESSAGE], list(SPAN_ROBOT), list())
 	signal.send_to_receivers()
 
 /datum/component/bugged/Initialize()
-	RegisterSignals(parent, list(COMSIG_MOVABLE_HEAR), PROC_REF(Hear))
+	RegisterSignals(parent, list(COMSIG_MOVABLE_HEAR), PROC_REF(on_heard))
 
 /obj/item/spy_bug
 	name = "\improper spy bug"
