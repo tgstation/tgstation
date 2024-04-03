@@ -945,3 +945,86 @@
       way the money on those cards work is now a bit different. Players shouldn't
       be able to use the money on those cards in any context though, don't fret about
       that. Just know that the money printer goes wrrrr
+2024-03-29:
+  BurgerBB:
+  - balance: 'You can no longer visually track something (See: AI tracking) if that
+      object is inside something. You are also considered invisible by tracking if
+      your alpha level is less than 50.'
+  Higgin:
+  - bugfix: air analyzers work again
+  Jacquerel:
+  - rscadd: Wise cows produce surprising milk.
+  - spellcheck: You now milk the owner of an udder, not the udder.
+  - spellcheck: fixed grammatical error in chemical splashing
+  Kapu1178:
+  - bugfix: Botanists will be given dank pizza when consuming the infinite pizza
+  Melbert:
+  - bugfix: '"Mind Gate" does self brain damage as intended'
+  SyncIt21:
+  - bugfix: anything that has reagents can be either grinded or juiced
+  - bugfix: stuff that does not have reagents but has grind results can still be grinded
+      but not juiced
+  bigfatbananacyclops:
+  - balance: secbots no longer can be buckled
+  mc-oofert:
+  - bugfix: Certain weather types that arent supposed to be glowing no longer glow
+  - image: Snow storms no longer glow
+  moocowswag:
+  - bugfix: Circuit multitools can now correctly scan carbons who are wearing clothes
+      or holding objects again.
+  necromanceranne:
+  - bugfix: Unfathomable Curios now properly block as expected.
+  - bugfix: The shielded component actually respects the shield_inhand when determining
+      blocking potential.
+  - bugfix: Ensures that the shielded component has a wearer before attempting to
+      block, and that this wearer is the same as the owner of the item.
+  zeroisthebiggay:
+  - spellcheck: however, he burn`s` his finger in the process.
+2024-03-30:
+  00-Steven:
+  - bugfix: You can actually hit racks with objects when in combat mode again. Importantly,
+      painting them with spraycans like that works again.
+  Ghommie:
+  - bugfix: Fixed the "Random" deathmatch modifier. Also turned the "Heightened Hearing"
+      option into a modifier as well.
+  Majkl-J:
+  - code_imp: Borgo rightclick ranged code
+  Pickle-Coding:
+  - bugfix: Fixes lavaland SMES and other crap from not starting with enough energy.
+  - bugfix: The pirate SMES are now magical instead of secretly infinite.
+  Profakos:
+  - code_imp: Made the easter rabbits spawn on a more curated list.
+  - bugfix: Slimes now feed faster, and should only need one monkey to reach their
+      next lifestage.
+  Xander3359:
+  - qol: You can now open airlocks (That you have access to) while inside a stealth
+      implant box
+  Zytolg:
+  - qol: Wholesale Revamp of Birdshots Engineering Department
+  - bugfix: Some Birdshot Amtospherics Concerns
+  - bugfix: Some Birdshot Engine Concerns
+2024-03-31:
+  Absolucy:
+  - bugfix: Fixed double-encoded messages with AI holocalls.
+  Ben10Omintrix:
+  - balance: minebots have been buffed and have recieved new upgrades
+  DATA-xPUNGED:
+  - rscadd: Prosthetic organ users are now allowed to pick what they want to start
+      with.
+  - rscadd: Junkie of all kinds, including smokers and alcoholics, are also able to
+      pick their favorite type.
+  Iamgoofball:
+  - balance: Your heart stops beating when you die now.
+  Profakos:
+  - bugfix: Slimes stop being in stasis when taken out of a BZ filled environment
+  - bugfix: Slimes no longer become hungry while in stasis
+  SyncIt21:
+  - bugfix: chem dispenser UI doesn't brick when beaker is ejected while recording
+      recipes
+  - code_imp: removed deprecated `content` tag from buttons in chem dispenser
+  - bugfix: Fixed cell energy usage for a bunch of stuff(Part 5). See PR 82296 for
+      details
+  Thunder12345:
+  - image: Pinpointers have been resprited
+  mc-oofert:
+  - bugfix: elevators may no longer pick up things from under the floor during movement

@@ -1,0 +1,5 @@
+author: "Bilbo367"
+delete-after: True
+changes:
+  - bugfix: "destructive analyzers can now get screwdrivered instead of put it in."
+  - bugfix: "destructive analyzer now accepts alien wire cutters, and emags."

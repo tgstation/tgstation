@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - qol: "Makes the clown anomalous crystal actually useful for once rather than an open griefing tool. It now revives the dead...as clowns!"
+  - admin: "Adds logging for the anomalous crystal activation, including fingerprints."

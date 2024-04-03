@@ -117,9 +117,7 @@
 /turf/open/floor/engine,
 /area/shuttle/hunter)
 "fp" = (
-/obj/machinery/power/smes/engineering{
-	charge = 1e+006
-	},
+/obj/machinery/power/smes/ship,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,

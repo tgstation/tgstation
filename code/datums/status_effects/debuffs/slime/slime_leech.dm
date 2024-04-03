@@ -87,7 +87,7 @@
 
 		to_chat(owner, span_userdanger(pick(pain_lines)))
 
-	our_slime.adjust_nutrition(-1 * 1.6 * totaldamage * seconds_between_ticks)
+	our_slime.adjust_nutrition(-1 * 1.8 * totaldamage) //damage is already modified by seconds_between_ticks
 
 	//Heal yourself.
 	our_slime.adjustBruteLoss(-1.5 * seconds_between_ticks)

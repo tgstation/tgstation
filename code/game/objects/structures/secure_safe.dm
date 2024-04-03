@@ -79,6 +79,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	base_icon_state = "safe"
 	armor_type = /datum/armor/safe_caps_spare
 	max_integrity = 300
+	damage_deflection = 30 // prevents stealing the captain's spare using null rods/lavaland monsters/AP projectiles
 	density = TRUE
 	anchored_tabletop_offset = 4
 	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT)
