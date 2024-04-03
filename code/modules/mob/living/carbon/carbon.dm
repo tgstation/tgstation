@@ -894,8 +894,6 @@
 
 	return .
 
-
-
 /mob/living/carbon/fully_heal(heal_flags = HEAL_ALL)
 
 	// Should be handled via signal on embedded, or via heal on bodypart
