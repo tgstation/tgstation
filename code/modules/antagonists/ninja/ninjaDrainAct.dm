@@ -154,7 +154,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/computer/records/security/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 20 SECONDS, src, extra_checks = CALLBACK(src, PROC_REF(can_hack), ninja, visibility = DO_HIDDEN)))
+	if(!do_after(ninja, 20 SECONDS, src, extra_checks = CALLBACK(src, PROC_REF(can_hack), ninja), visibility = DO_HIDDEN))
 		return
 	for(var/datum/record/crew/target in GLOB.manifest.general)
 		target.wanted_status = WANTED_ARREST
