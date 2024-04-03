@@ -11,7 +11,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// GLOB trait, applied whenever something in the world wants to use the distortion plane
 /// Distortion is an expensive effect, so it's worthwhile to keep it off until we care
-#define TRAIT_DISTORTION_IN_USE(z_layer) "distortion_in_use_#[z_layer]"
+/// I don't want the linter looking at this because traits with args are not well supported
+UNLINT(#define TRAIT_DISTORTION_IN_USE(z_layer) "distortion_in_use_#[z_layer]")
 
 ///SSeconomy trait, if the market is crashing and people can't withdraw credits from ID cards.
 #define TRAIT_MARKET_CRASHING "market_crashing"
