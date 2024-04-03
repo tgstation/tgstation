@@ -1,12 +1,12 @@
 {
   "private": true,
   "name": "tgui-panel",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "dependencies": {
-    "@types/node": "^14.x",
-    "@types/react": "^18.2.42",
+    "@types/node": "^20.12.3",
+    "@types/react": "^18.2.74",
     "common": "workspace:*",
-    "dompurify": "^2.4.4",
+    "dompurify": "^2.4.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tgui": "workspace:*",
