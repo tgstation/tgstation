@@ -228,7 +228,7 @@
 	ex_patient.AdjustUnconscious(-40 * seconds_per_tick)
 	if(ex_patient.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 5)
 		ex_patient.reagents.add_reagent(/datum/reagent/medicine/epinephrine, 5)
-	chassis.use_power(energy_drain)
+	chassis.use_energy(energy_drain)
 
 
 ///////////////////////////////// Syringe Gun ///////////////////////////////////////////////////////////////
@@ -246,7 +246,7 @@
 	///Lazylist of syringes that we've picked up
 	var/list/syringes
 	///List of all scanned reagents, starts with epinephrine and multiver
-	var/list/known_reagents
+	var/list/datum/reagent/known_reagents
 	///List of reagents we want to be creating this processing tick
 	var/list/processed_reagents
 	///Maximu amount of syringes we can hold
@@ -267,11 +267,6 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/create_reagents(max_vol, flags)
-	. = ..()
-	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
-	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
-
 /// Handles detaching signal hooks incase someone is crazy enough to make this edible.
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/on_reagents_del(datum/reagents/reagents)
 	SIGNAL_HANDLER
@@ -283,7 +278,13 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/get_snowflake_data()
-	return list(
+	var/list/analyzed_reagents = list() // we need to make this list because .tsk wont map over an indexed array
+	for(var/i=1 to known_reagents.len)
+		var/enabled = FALSE
+		if(known_reagents[i] in processed_reagents)
+			enabled = TRUE
+		analyzed_reagents += list((list("name" = known_reagents[i].name, "enabled" = enabled)))
+	var/list/data = list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_SYRINGE,
 		"mode" = mode == FIRE_SYRINGE_MODE ? "Launch" : "Analyze",
 		"mode_label" = "Action",
@@ -291,15 +292,43 @@
 		"max_syringe" = max_syringes,
 		"reagents" = reagents.total_volume,
 		"total_reagents" = reagents.maximum_volume,
+		"analyzed_reagents" = analyzed_reagents,
 	)
+	var/list/contained_reagents = list()
+	if(length(reagents.reagent_list))
+		for(var/datum/reagent/reagent as anything in reagents.reagent_list)
+			contained_reagents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
+	data["contained_reagents"] = contained_reagents
+	return data
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/handle_ui_act(action, list/params)
 	if(action == "change_mode")
 		mode = !mode
 		return TRUE
-	else if(action == "show_reagents")
-		usr << browse(get_reagents_page(),"window=msyringegun")
-		return FALSE
+	else if(action == "purge_all")
+		reagents.clear_reagents()
+	else
+		for(var/i=1 to known_reagents.len)
+			var/reagent_id = known_reagents[i]
+			if(action == ("purge_reagent_" + known_reagents[i].name))
+				reagents.del_reagent(reagent_id)
+			else if(action == ("toggle_reagent_" + known_reagents[i].name))
+				synthesize(reagent_id)
+
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/synthesize(reagent)
+	if(reagent in processed_reagents)
+		LAZYREMOVE(processed_reagents, reagent)
+		return
+	var/message = "[known_reagents[reagent]]"
+	LAZYADD(processed_reagents, reagent)
+	if(!LAZYLEN(processed_reagents))
+		return
+
+	message += " added to production"
+	START_PROCESSING(SSobj, src)
+	to_chat(usr, message)
+	to_chat(usr, "[icon2html(src, usr)][span_notice("Reagent processing started.")]")
+	log_message("Reagent processing started.", LOG_MECHA)
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
@@ -327,99 +356,6 @@
 	chambered.fire_casing(target, source, null, 0, 0, null, 0, src)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Topic(href,href_list)
-	..()
-	if (href_list["toggle_mode"])
-		mode = !mode
-		return
-	if (href_list["select_reagents"])
-		LAZYCLEARLIST(processed_reagents)
-		var/processingreagentamount = 0
-		var/message
-		for(var/i=1 to known_reagents.len)
-			if(processingreagentamount >= synth_speed)
-				break
-			var/reagent = text2path(href_list["reagent_[i]"])
-			if(reagent && (reagent in known_reagents))
-				message = "[processingreagentamount ? ", " : null][known_reagents[reagent]]"
-				LAZYADD(processed_reagents, reagent)
-				processingreagentamount++
-		if(LAZYLEN(processed_reagents))
-			message += " added to production"
-			START_PROCESSING(SSobj, src)
-			to_chat(usr, message)
-			to_chat(usr, "[icon2html(src, usr)][span_notice("Reagent processing started.")]")
-			log_message("Reagent processing started.", LOG_MECHA)
-		return
-	if (href_list["purge_reagent"])
-		var/reagent = href_list["purge_reagent"]
-		if(!reagent)
-			return
-		reagents.del_reagent(reagent)
-		return
-	if (href_list["purge_all"])
-		reagents.clear_reagents()
-
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_reagents_page()
-	var/output = {"<html>
-						<head>
-						<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-						<title>Reagent Synthesizer</title>
-						<script language='javascript' type='text/javascript'>
-						[js_byjax]
-						</script>
-						<style>
-						h3 {margin-bottom:2px;font-size:14px;}
-						#reagents, #reagents_form {}
-						form {width: 90%; margin:10px auto; border:1px dotted #999; padding:6px;}
-						#submit {margin-top:5px;}
-						</style>
-						</head>
-						<body>
-						<h3>Current reagents:</h3>
-						<div id="reagents">
-						[get_current_reagents()]
-						</div>
-						<h3>Reagents production:</h3>
-						<div id="reagents_form">
-						[get_reagents_form()]
-						</div>
-						</body>
-						</html>
-						"}
-	return output
-
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_reagents_form()
-	var/r_list = get_reagents_list()
-	var/inputs
-	if(r_list)
-		inputs += "<input type=\"hidden\" name=\"src\" value=\"[REF(src)]\">"
-		inputs += "<input type=\"hidden\" name=\"select_reagents\" value=\"1\">"
-		inputs += "<input id=\"submit\" type=\"submit\" value=\"Apply settings\">"
-	var/output = {"<form action="byond://" method="get">
-						[r_list || "No known reagents"]
-						[inputs]
-						</form>
-						[r_list? "<span style=\"font-size:80%;\">Only the first [synth_speed] selected reagent\s will be added to production</span>" : null]
-						"}
-	return output
-
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_reagents_list()
-	var/output
-	for(var/i=1 to known_reagents.len)
-		var/reagent_id = known_reagents[i]
-		output += {"<input type="checkbox" value="[reagent_id]" name="reagent_[i]" [(reagent_id in processed_reagents)? "checked=\"1\"" : null]> [known_reagents[reagent_id]]<br />"}
-	return output
-
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_current_reagents()
-	var/output
-	for(var/datum/reagent/R in reagents.reagent_list)
-		if(R.volume > 0)
-			output += "[R]: [round(R.volume,0.001)] - <a href=\"?src=[REF(src)];purge_reagent=[R]\">Purge Reagent</a><br />"
-	if(output)
-		output += "Total: [round(reagents.total_volume,0.001)]/[reagents.maximum_volume] - <a href=\"?src=[REF(src)];purge_all=1\">Purge All</a>"
-	return output || "None"
-
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/load_syringe(obj/item/reagent_containers/syringe/S, mob/user)
 	if(LAZYLEN(syringes) >= max_syringes)
 		to_chat(user, "[icon2html(src, user)][span_warning("[src]'s syringe chamber is full!")]")
@@ -444,7 +380,6 @@
 	for(var/datum/reagent/R in A.reagents.reagent_list)
 		if((R.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED) && add_known_reagent(R.type,R.name))
 			to_chat(user, "[icon2html(src, user)][span_notice("Reagent analyzed, identified as [R.name] and added to database.")]")
-			send_byjax(chassis.occupants,"msyringegun.browser","reagents_form",get_reagents_form())
 	to_chat(user, "[icon2html(src, user)][span_notice("Analysis complete.")]")
 	return TRUE
 
@@ -454,14 +389,6 @@
 	known_reagents += r_id
 	known_reagents[r_id] = r_name
 	return TRUE
-
-/// Updates the equipment info list when the reagents change. Eats signal args.
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/on_reagent_change(datum/reagents/holder, ...)
-	SIGNAL_HANDLER
-	send_byjax(chassis.occupants,"msyringegun.browser","reagents",get_current_reagents())
-	send_byjax(chassis.occupants,"msyringegun.browser","reagents_form",get_reagents_form())
-	return NONE
-
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/process(seconds_per_tick)
 	. = ..()
@@ -474,7 +401,7 @@
 	var/amount = seconds_per_tick * synth_speed / LAZYLEN(processed_reagents)
 	for(var/reagent in processed_reagents)
 		reagents.add_reagent(reagent,amount)
-		chassis.use_power(energy_drain)
+		chassis.use_energy(energy_drain)
 
 #undef FIRE_SYRINGE_MODE
 #undef ANALYZE_SYRINGE_MODE

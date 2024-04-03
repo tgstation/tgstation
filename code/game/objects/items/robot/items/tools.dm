@@ -1,6 +1,7 @@
 #define PKBORG_DAMPEN_CYCLE_DELAY (2 SECONDS)
 #define NO_TOOL "deactivated"
 #define TOOL_DRAPES "surgical_drapes"
+#define POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER (0.4 KILO WATTS)
 
 /obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
 	name = "plating repair tool"
@@ -26,8 +27,6 @@
 	var/energy = 1500
 	/// Recharging rate in energy per second
 	var/energy_recharge = 37.5
-	/// Charge draining right
-	var/energy_recharge_cyborg_drain_coefficient = 0.4
 	/// Critical power level percentage
 	var/cyborg_cell_critical_percentage = 0.05
 	/// The owner of the dampener
@@ -158,7 +157,7 @@
 			energy = clamp(energy + energy_recharge * seconds_per_tick, 0, maxenergy)
 			return
 	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
-		host.cell.use(energy_recharge * seconds_per_tick * energy_recharge_cyborg_drain_coefficient)
+		host.cell.use(energy_recharge * seconds_per_tick * POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER)
 		energy += energy_recharge * seconds_per_tick
 
 /obj/item/borg/projectile_dampen/proc/dampen_projectile(datum/source, obj/projectile/projectile)
@@ -353,5 +352,3 @@
 			reference = /obj/item/multitool
 
 #undef PKBORG_DAMPEN_CYCLE_DELAY
-#undef NO_TOOL
-#undef TOOL_DRAPES

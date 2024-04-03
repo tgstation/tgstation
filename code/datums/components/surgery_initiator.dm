@@ -88,6 +88,8 @@
 			continue
 		if(!is_type_in_list(target, surgery.target_mobtypes))
 			continue
+		if(user == target && !(surgery.surgery_flags & SURGERY_SELF_OPERABLE))
+			continue
 
 		if(isnull(affecting))
 			if(surgery.surgery_flags & SURGERY_REQUIRE_LIMB)

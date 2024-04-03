@@ -42,7 +42,7 @@
 
 	for(var/obj/item/organ/organ as anything in organs)
 		if((drop_bitflags & DROP_BRAIN) && istype(organ, /obj/item/organ/internal/brain))
-			if(drop_bitflags & DROP_BODYPARTS)
+			if((drop_bitflags & DROP_BODYPARTS) && (check_zone(organ.zone) != BODY_ZONE_CHEST)) // chests can't drop
 				continue // the head will drop, so the brain should stay inside
 
 			organ.Remove(src)

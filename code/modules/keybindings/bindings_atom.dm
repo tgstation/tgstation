@@ -11,6 +11,9 @@
 	// If we're not movin anywhere, we aren't movin anywhere
 	// Safe because nothing adds to movement_dir after this moment
 	if(!movement_dir)
+		// No input == our removal would have done nothing
+		// So we can safely forget about it
+		user.next_move_dir_sub = NONE
 		return FALSE
 
 	if(user.next_move_dir_sub)

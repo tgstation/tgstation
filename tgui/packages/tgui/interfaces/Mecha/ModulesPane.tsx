@@ -446,13 +446,31 @@ const SnowflakeSleeper = (props) => {
     </>
   );
 };
-
+type Data = {
+  contained_reagents: Reagent[];
+  analyzed_reagents: KnownReagent[];
+};
+type Reagent = {
+  name: string;
+  volume: number;
+};
+type KnownReagent = {
+  name: string;
+  enabled: boolean;
+};
 const SnowflakeSyringe = (props) => {
   const { act, data } = useBackend<MainData>();
   const { power_level, weapons_safety } = data;
   const { ref, energy_per_use, equip_cooldown } = props.module;
-  const { mode, syringe, max_syringe, reagents, total_reagents } =
-    props.module.snowflake;
+  const {
+    mode,
+    syringe,
+    max_syringe,
+    reagents,
+    total_reagents,
+    contained_reagents,
+    analyzed_reagents,
+  } = props.module.snowflake;
   return (
     <>
       <LabeledList.Item label={'Syringes'}>
@@ -476,17 +494,49 @@ const SnowflakeSyringe = (props) => {
           }
         />
       </LabeledList.Item>
-      <LabeledList.Item label={'Reagent control'}>
+      <LabeledList.Item label="Synthesizing">
+        {analyzed_reagents.map((reagent) => (
+          <LabeledList.Item key={reagent.name} label={reagent.name}>
+            <Button.Checkbox
+              checked={reagent.enabled}
+              onClick={() =>
+                act('equip_act', {
+                  ref: ref,
+                  gear_action: `toggle_reagent_${reagent.name}`,
+                })
+              }
+            />
+          </LabeledList.Item>
+        ))}
+      </LabeledList.Item>
+      <LabeledList.Item>
         <Button
-          content={'View'}
           onClick={() =>
             act('equip_act', {
               ref: ref,
-              gear_action: 'show_reagents',
+              gear_action: `purge_all`,
             })
           }
-        />
+        >
+          Purge All
+        </Button>
       </LabeledList.Item>
+      {contained_reagents.map((reagent) => (
+        <LabeledList.Item key={reagent.name} label={reagent.name}>
+          <LabeledList.Item label={`${reagent.volume}u`}>
+            <Button
+              onClick={() =>
+                act('equip_act', {
+                  ref: ref,
+                  gear_action: `purge_reagent_${reagent.name}`,
+                })
+              }
+            >
+              Purge
+            </Button>
+          </LabeledList.Item>
+        </LabeledList.Item>
+      ))}
     </>
   );
 };
@@ -547,7 +597,7 @@ const SnowflakeRadio = (props) => {
       </LabeledList.Item>
       <LabeledList.Item label="Frequency">
         <NumberInput
-          animate
+          animated
           unit="kHz"
           step={0.2}
           stepPixelSize={10}
@@ -555,7 +605,7 @@ const SnowflakeRadio = (props) => {
           maxValue={maxFrequency / 10}
           value={frequency / 10}
           format={(value) => toFixed(value, 1)}
-          onDrag={(e, value) =>
+          onDrag={(value) =>
             act('equip_act', {
               ref: ref,
               gear_action: 'set_frequency',
@@ -661,7 +711,7 @@ const SnowflakeAirTank = (props) => {
               minValue={tank_release_pressure_min}
               maxValue={tank_release_pressure_max}
               step={10}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('equip_act', {
                   ref: ref,
                   gear_action: 'set_cabin_pressure',
@@ -740,8 +790,8 @@ const SnowflakeAirTank = (props) => {
             minValue={tank_pump_pressure_min}
             maxValue={tank_pump_pressure_max}
             step={10}
-            format={(value) => Math.round(value)}
-            onChange={(e, value) =>
+            format={(value) => `${Math.round(value)}`}
+            onChange={(value) =>
               act('equip_act', {
                 ref: ref,
                 gear_action: 'set_tank_pump_pressure',

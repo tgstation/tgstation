@@ -115,7 +115,7 @@
 			"...an annoying buzz in your ears..."\
 		)]</span>")
 
-	use_power(active_power_usage * seconds_per_tick)
+	use_energy(active_power_usage * seconds_per_tick)
 
 /obj/machinery/hypnochair/proc/finish_interrogation()
 	interrogating = FALSE

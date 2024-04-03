@@ -58,12 +58,12 @@
 		else
 			replaced.forceMove(get_turf(receiver))
 
-		if(!IS_ROBOTIC_ORGAN(src) && (organ_flags & ORGAN_VIRGIN))
-			blood_dna_info = receiver.get_blood_dna_list()
-			// need to remove the synethic blood DNA that is initialized
-			// wash also adds the blood dna again
-			wash(CLEAN_TYPE_BLOOD)
-			organ_flags &= ~ORGAN_VIRGIN
+	if(!IS_ROBOTIC_ORGAN(src) && (organ_flags & ORGAN_VIRGIN))
+		blood_dna_info = receiver.get_blood_dna_list()
+		// need to remove the synethic blood DNA that is initialized
+		// wash also adds the blood dna again
+		wash(CLEAN_TYPE_BLOOD)
+		organ_flags &= ~ORGAN_VIRGIN
 
 	receiver.organs |= src
 	receiver.organs_slot[slot] = src
