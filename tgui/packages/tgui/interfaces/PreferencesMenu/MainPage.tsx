@@ -82,18 +82,15 @@ const CharacterControls = (props: {
   );
 };
 
-const ChoicedSelection = (
-  props: {
-    name: string;
-    catalog: FeatureChoicedServerData;
-    selected: string;
-    supplementalFeature?: string;
-    supplementalValue?: unknown;
-    onClose: () => void;
-    onSelect: (value: string) => void;
-  },
-  context,
-) => {
+const ChoicedSelection = (props: {
+  name: string;
+  catalog: FeatureChoicedServerData;
+  selected: string;
+  supplementalFeature?: string;
+  supplementalValue?: unknown;
+  onClose: () => void;
+  onSelect: (value: string) => void;
+}) => {
   const { act } = useBackend<PreferencesMenuData>();
 
   const { catalog, supplementalFeature, supplementalValue } = props;
@@ -159,10 +156,7 @@ const ChoicedSelection = (
                 margin: '0px 5px',
                 width: '95%',
               }}
-              onInput={(_, value) => {
-                searchTextSet(value);
-                setTimeout(() => console.log(getSearchText), 4000);
-              }}
+              onInput={(_, value) => searchTextSet(value)}
             />
             <Flex wrap>
               {searchInCatalog(getSearchText, catalog.icons).map(
