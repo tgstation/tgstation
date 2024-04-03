@@ -9,6 +9,8 @@
 	var/locked
 	/// Quality of the mutation
 	var/quality
+	/// Bitflags like DO_NOT_AHEAL
+	var/flags
 	/// Message given to the user upon gaining this mutation
 	var/text_gain_indication = ""
 	/// Message given to the user upon losing this mutation

@@ -193,7 +193,8 @@
 	desc = "A strange genome, believing to be what differentiates monkeys from humans."
 	text_gain_indication = "You feel unusually monkey-like."
 	text_lose_indication = "You feel like your old self."
-	quality = POSITIVE
+	quality = NEGATIVE
+	flags = DO_NOT_AHEAL
 	locked = TRUE //Species specific, keep out of actual gene pool
 	var/datum/species/original_species = /datum/species/human
 	var/original_name

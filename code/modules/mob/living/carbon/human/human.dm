@@ -701,7 +701,7 @@
 /mob/living/carbon/human/fully_heal(heal_flags = HEAL_ALL)
 	if(heal_flags & HEAL_NEGATIVE_MUTATIONS)
 		for(var/datum/mutation/human/existing_mutation in dna.mutations)
-			if(existing_mutation.quality != POSITIVE)
+			if(existing_mutation.quality != POSITIVE || existing_mutation.flags & DO_NOT_AHEAL)
 				dna.remove_mutation(existing_mutation)
 
 	if(heal_flags & HEAL_TEMP)
