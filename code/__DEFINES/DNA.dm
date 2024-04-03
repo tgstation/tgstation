@@ -16,9 +16,6 @@
 #define MINOR_NEGATIVE 4
 
 
-//Extra flags for mutations
-#define DO_NOT_AHEAL
-
 //Mutation classes. Normal being on them, extra being additional mutations with instability and other being stuff you dont want people to fuck with like wizard mutate
 /// A mutation that can be activated and deactived by completing a sequence
 #define MUT_NORMAL 1
