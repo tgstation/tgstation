@@ -110,6 +110,7 @@
 	layer = DOOR_HELPER_LAYER
 	late = TRUE
 
+/* replaced in monkestation\code\modules\mapping\mapping_helpers.dm
 /obj/effect/mapping_helpers/airlock/Initialize(mapload)
 	. = ..()
 	if(!mapload)
@@ -121,6 +122,7 @@
 		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
 	else
 		payload(airlock)
+*/
 
 /obj/effect/mapping_helpers/airlock/LateInitialize()
 	. = ..()

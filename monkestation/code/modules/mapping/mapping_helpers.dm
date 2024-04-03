@@ -50,3 +50,30 @@
 
 /obj/effect/area_power_helper/requires_power
 	set_state = TRUE
+
+/obj/effect/mapping_helpers/airlock/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return
+
+	var/turf/spot = (offset_dir ? get_step(src, offset_dir) : loc)
+	if(!try_for_airlock(spot) && !try_for_windoor(spot))
+		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
+
+/obj/effect/mapping_helpers/airlock/proc/try_for_airlock(turf/spot)
+	. = FALSE
+	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in spot
+	if(!QDELETED(airlock))
+		payload(airlock)
+		return TRUE
+
+/obj/effect/mapping_helpers/airlock/proc/try_for_windoor(turf/spot)
+	. = FALSE
+	var/obj/machinery/door/window/windoor = locate(/obj/machinery/door/window) in spot
+	if(!QDELETED(windoor))
+		payload_windoor(windoor)
+		return TRUE
+
+/obj/effect/mapping_helpers/airlock/proc/payload_windoor(obj/machinery/door/window/windoor)
+	return
