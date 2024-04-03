@@ -67,6 +67,10 @@
 
 /// Removes the cog from the user
 /datum/cogbar/proc/remove()
+	if(isnull(cog))
+		qdel(src)
+		return
+
 	animate(cog, alpha = 0, time = COGBAR_ANIMATION_TIME)
 
 	QDEL_IN(src, COGBAR_ANIMATION_TIME)   
