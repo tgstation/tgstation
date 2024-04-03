@@ -454,11 +454,15 @@
 			return FALSE
 		for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.model.modules)
 			omnitool.upgrade_omnitool()
+		for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.held_items)
+			omnitool.upgrade_omnitool()
 
 /obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, user = usr)
 	. = ..()
 	if(.)
 		for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
+			omnitool.toolspeed = initial(omnitool.toolspeed)
+		for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.held_items)
 			omnitool.toolspeed = initial(omnitool.toolspeed)
 
 /obj/item/borg/upgrade/engineering_omnitool
@@ -486,6 +490,8 @@
 	. = ..()
 	if(.)
 		for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
+			omnitool.toolspeed = initial(omnitool.toolspeed)
+		for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.held_items)
 			omnitool.toolspeed = initial(omnitool.toolspeed)
 
 /obj/item/borg/upgrade/defib
