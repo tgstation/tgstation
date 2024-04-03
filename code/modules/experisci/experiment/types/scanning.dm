@@ -106,7 +106,7 @@
  * * target - The atom to attempt to scan
  */
 /datum/experiment/scanning/proc/experiment_requirements(datum/component/experiment_handler/experiment_handler, atom/target)
-	var/destructive = traits & EXPERIMENT_TRAIT_DESTRUCTIVE
+	var/destructive = (traits & EXPERIMENT_TRAIT_DESTRUCTIVE)
 	for (var/req_atom in required_atoms)
 		if (!istype(target, req_atom))
 			continue
