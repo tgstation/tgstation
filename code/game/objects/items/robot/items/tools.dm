@@ -251,7 +251,7 @@
 
 /obj/item/borg/cyborg_omnitool/proc/upgrade_omnitool()
 	name = "advanced [name]"
-	desc = "[desc] \n It seems that this one has been upgraded to perform tasks faster"
+	desc = "[desc] \nIt seems that this one has been upgraded to perform tasks faster."
 	toolspeed = 0.7
 
 /obj/item/borg/cyborg_omnitool/medical
@@ -308,7 +308,7 @@
 //Toolset for engineering cyborgs, this is all of the tools except for the welding tool. since it's quite hard to implement (read:can't be arsed to)
 /obj/item/borg/cyborg_omnitool/engineering
 	name = "engineering omni-toolset"
-	desc = "A set of engineering tools used by cyborgs to conduct various engineering tasks"
+	desc = "A set of engineering tools used by cyborgs to conduct various engineering tasks."
 	icon = 'icons/obj/items_cyborg.dmi' //why are there two different files for items that do the same exact things (items for borgs)?
 	icon_state = "toolkit_engiborg"
 	item_flags = null

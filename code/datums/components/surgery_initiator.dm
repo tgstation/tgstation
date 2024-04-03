@@ -133,8 +133,8 @@
 		required_tool_type = TOOL_SCREWDRIVER
 
 	if(iscyborg(user))
-		close_tool = locate(/obj/item/cautery) in user.held_items
-		if(!close_tool)
+		close_tool = locate(/obj/item/borg/cyborg_omnitool/medical) in user.held_items
+		if(!close_tool || close_tool.tool_behaviour != TOOL_CAUTERY)
 			patient.balloon_alert(user, "need a cautery in an inactive slot to stop the surgery!")
 			return
 	else if(!close_tool || close_tool.tool_behaviour != required_tool_type)
