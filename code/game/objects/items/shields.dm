@@ -397,4 +397,48 @@
 			balloon_alert(user, "extend it first!")
 		return COMPONENT_BLOCK_ITEM_DISARM_ATTACK
 
+/datum/armor/item_shield/ballistic
+	melee = 30
+	bullet = 85
+	bomb = 10
+	laser = 80
+
+/obj/item/shield/ballistic
+	name = "ballistic shield"
+	desc = "A heavy shield designed for blocking projectiles, weaker to melee."
+	icon_state = "ballistic"
+	inhand_icon_state = "ballistic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/titanium =SHEET_MATERIAL_AMOUNT)
+	max_integrity = 75
+	shield_break_leftover = /obj/item/stack/rods/ten
+	armor_type = /datum/armor/item_shield/ballistic
+
+/obj/item/shield/ballistic/attackby(obj/item/attackby_item, mob/user, params)
+	if(istype(attackby_item, /obj/item/stack/sheet/mineral/titanium))
+		if (atom_integrity >= max_integrity)
+			to_chat(user, span_warning("[src] is already in perfect condition."))
+			return
+		var/obj/item/stack/sheet/mineral/titanium/titanium_sheet = attackby_item
+		titanium_sheet.use(1)
+		atom_integrity = max_integrity
+		to_chat(user, span_notice("You repair [src] with [titanium_sheet]."))
+		return
+	return ..()
+
+/datum/armor/item_shield/improvised
+	melee = 40
+	bullet = 30
+	laser = 30
+
+/obj/item/shield/improvised
+	name = "improvised shield"
+	desc = "A crude shield made out of several sheets of iron taped together, not very durable."
+	icon_state = "improvised"
+	inhand_icon_state = "improvised"
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 2)
+	max_integrity = 35
+	shield_break_leftover = /obj/item/stack/rods/two
+	armor_type = /datum/armor/item_shield/improvised
+	block_sound = 'sound/items/trayhit2.ogg'
+
 #undef BATON_BASH_COOLDOWN

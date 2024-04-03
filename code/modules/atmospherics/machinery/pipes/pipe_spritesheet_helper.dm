@@ -18,6 +18,13 @@
 		"[WEST]"=icon('icons/obj/pipes_n_cables/pipe_template_pieces.dmi', "damage_mask", WEST),
 	)
 
+	var/static/list/icon/cap_masks = list(
+		"[NORTH]" = icon('icons/obj/pipes_n_cables/pipe_template_pieces.dmi', "cap_mask", NORTH),
+		"[EAST]" = icon('icons/obj/pipes_n_cables/pipe_template_pieces.dmi', "cap_mask", EAST),
+		"[SOUTH]" = icon('icons/obj/pipes_n_cables/pipe_template_pieces.dmi', "cap_mask", SOUTH),
+		"[WEST]" = icon('icons/obj/pipes_n_cables/pipe_template_pieces.dmi', "cap_mask", WEST),
+	)
+
 	var/icon/generated_icons
 
 /datum/pipe_icon_generator/proc/Start(icon_state_suffix="")
@@ -85,6 +92,34 @@
 		outputs[damaged] = "[icon_state_dirs]_[layer]"
 	return outputs
 
+/datum/pipe_icon_generator/proc/generate_capped(icon/working, layer, dirs, x_offset=1, y_offset=1)
+	var/list/outputs = list()
+	var/list/completed = list()
+	for(var/combined_dirs in 1 to 15)
+		combined_dirs &= dirs
+
+		var/completion_key = "[combined_dirs]"
+		if(completed[completion_key] || (combined_dirs == NONE))
+			continue
+
+		completed[completion_key] = TRUE
+
+		var/icon/capped_mask = icon('icons/obj/pipes_n_cables/pipe_template_pieces.dmi', "blank_mask")
+		for(var/i in 0 to 3)
+			var/dir = 1 << i
+			if(!(combined_dirs & dir))
+				continue
+
+			var/icon/cap_mask = cap_masks["[dir]"]
+			capped_mask.Blend(cap_mask, ICON_OVERLAY, x_offset, y_offset)
+
+		var/icon/capped = icon(working)
+		capped.Blend(capped_mask, ICON_MULTIPLY)
+
+		var/icon_state_dirs = (dirs & ~combined_dirs) | CARDINAL_TO_PIPECAPS(combined_dirs)
+		outputs[capped] = "[icon_state_dirs]_[layer]"
+
+	return outputs
 
 /datum/pipe_icon_generator/proc/GeneratePipeStraight(icon_state_suffix, layer, combined_dirs)
 	var/list/output = list()
@@ -97,8 +132,10 @@
 	switch(combined_dirs)
 		if(NORTH | SOUTH)
 			output += GenerateDamaged(working, layer, combined_dirs, y_offset=offset)
+			output += generate_capped(working, layer, combined_dirs, y_offset=offset)
 		if(EAST | WEST)
 			output += GenerateDamaged(working, layer, combined_dirs, x_offset=offset)
+			output += generate_capped(working, layer, combined_dirs, x_offset=offset)
 
 	return output
 
@@ -117,6 +154,7 @@
 
 	output[working] = "[combined_dirs]_[layer]"
 	output += GenerateDamaged(working, layer, combined_dirs)
+	output += generate_capped(working, layer, combined_dirs)
 
 	return output
 
@@ -135,6 +173,7 @@
 
 	output[working] = "[combined_dirs]_[layer]"
 	output += GenerateDamaged(working, layer, combined_dirs)
+	output += generate_capped(working, layer, combined_dirs)
 
 	return output
 
@@ -144,5 +183,6 @@
 
 	output[working] = "[combined_dirs]_[layer]"
 	output += GenerateDamaged(working, layer, combined_dirs)
+	output += generate_capped(working, layer, combined_dirs)
 
 	return output

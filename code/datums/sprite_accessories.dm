@@ -1901,6 +1901,26 @@
 	hasinner = TRUE
 	color_src = HAIR_COLOR
 
+/datum/sprite_accessory/ears/cat/big
+	name = "Big"
+	icon_state = "big"
+
+/datum/sprite_accessory/ears/cat/miqo
+	name = "Coeurl"
+	icon_state = "miqo"
+
+/datum/sprite_accessory/ears/cat/fold
+	name = "Fold"
+	icon_state = "fold"
+
+/datum/sprite_accessory/ears/cat/lynx
+	name = "Lynx"
+	icon_state = "lynx"
+
+/datum/sprite_accessory/ears/cat/round
+	name = "Round"
+	icon_state = "round"
+
 /datum/sprite_accessory/ears/fox
 	icon = 'icons/mob/human/fox_features.dmi'
 	name = "Fox"
@@ -2249,6 +2269,10 @@
 	name = "Moffra"
 	icon_state = "moffra"
 
+/datum/sprite_accessory/moth_wings/lightbearer
+	name = "Lightbearer"
+	icon_state = "lightbearer"
+
 /datum/sprite_accessory/moth_antennae //Finally splitting the sprite
 	icon = 'icons/mob/human/species/moth/moth_antennae.dmi'
 	color_src = null
@@ -2336,6 +2360,10 @@
 	name = "Moffra"
 	icon_state = "moffra"
 
+/datum/sprite_accessory/moth_antennae/lightbearer
+	name = "Lightbearer"
+	icon_state = "lightbearer"
+
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
 	icon = 'icons/mob/human/species/moth/moth_markings.dmi'
 	color_src = null
@@ -2399,3 +2427,7 @@
 /datum/sprite_accessory/moth_markings/witchwing
 	name = "Witch Wing"
 	icon_state = "witchwing"
+
+/datum/sprite_accessory/moth_markings/lightbearer
+	name = "Lightbearer"
+	icon_state = "lightbearer"

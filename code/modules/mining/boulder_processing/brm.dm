@@ -37,26 +37,23 @@
 	register_context()
 
 /obj/machinery/brm/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = CONTEXTUAL_SCREENTIP_SET
+	. = NONE
 
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Teleport single boulder"
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle [toggled_on ? "Off" : "On"] automatic boulder retrieval"
-		return
+		return CONTEXTUAL_SCREENTIP_SET
 
 	if(!isnull(held_item))
 		if(held_item.tool_behaviour == TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "" : "Un"] Anchor"
-			return
-		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
-			return
-
-		if(panel_open)
-			if(held_item.tool_behaviour == TOOL_CROWBAR)
-				context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
-
-	return CONTEXTUAL_SCREENTIP_SET
+			context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]Anchor"
+			return CONTEXTUAL_SCREENTIP_SET
+		else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+			return CONTEXTUAL_SCREENTIP_SET
+		else if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
+			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+			return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/brm/examine(mob/user)
 	. = ..()
@@ -131,8 +128,6 @@
 	var/result = pre_collect_boulder()
 	if(result == TURF_BLOCKED_BY_BOULDER)
 		balloon_alert(user, "no space")
-	else if(result)
-		balloon_alert(user, "teleporting")
 	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
 	return TRUE
@@ -188,7 +183,9 @@
 /**
  * Toggles automatic boulder retrieval on.
  * Adjusts the teleportation sound, icon state, and begins processing.
- * @param mob/user The user who toggled the BRM.
+ * Arguments
+ *
+ * * mob/user - the player who has toggled us
  */
 /obj/machinery/brm/proc/toggle_auto_on(mob/user)
 	PRIVATE_PROC(TRUE)
@@ -225,7 +222,7 @@
 		return PROCESS_KILL
 
 	//have some cooldown after processing the previous batch of boulders
-	if(!COOLDOWN_FINISHED(src, batch_start_cooldown))
+	if(batch_processing || !COOLDOWN_FINISHED(src, batch_start_cooldown))
 		return
 
 	pre_collect_boulder(FALSE, boulders_processing_max)
@@ -234,17 +231,19 @@
  * Begins to collect a boulder from the available boulders list in SSore_generation.
  * Boulders must be in the available boulders list.
  * A selected boulder is picked randomly.
- * The actual movement is then handled by collect_boulder() after a timed callback.
  * Arguments
  *
  * * feedback - should we play sound and display allert if now boulders are available
  * * boulders_remaining - how many boulders we want to try & collect spawning a boulder every TELEPORTATION_TIME seconds
- * * new_batch - is this the very 1st boulder processed from boulders_remaining. Used to wait for all the boulders to be collected
  */
-/obj/machinery/brm/proc/pre_collect_boulder(feedback = TRUE, boulders_remaining = 1, new_batch = TRUE)
+/obj/machinery/brm/proc/pre_collect_boulder(feedback = TRUE, boulders_remaining = 1)
 	PRIVATE_PROC(TRUE)
 
+	batch_processing = TRUE
+
+	//not within operation parameters
 	if(!anchored || panel_open || !is_operational || machine_stat & (BROKEN | NOPOWER))
+		batch_processing = FALSE
 		return FALSE
 
 	//There is an boulder in our loc. it has be removed so we don't clog up our loc with even more boulders
@@ -260,57 +259,25 @@
 		batch_processing = FALSE
 		return FALSE
 
-	//we are trying to process a new batch of boulders
-	if(new_batch)
-		if(batch_processing) //the previous one hasen't completed yet, wait
-			return FALSE
-		batch_processing = TRUE
-
-	var/obj/item/boulder/random_boulder = pick(SSore_generation.available_boulders)
-	if(random_boulder.processed_by)
-		return FALSE
-	SSore_generation.available_boulders -= random_boulder
-	random_boulder.processed_by = src
-	random_boulder.Shake(shake_interval = TELEPORTATION_TIME)
-	addtimer(CALLBACK(src, PROC_REF(collect_boulder), random_boulder, feedback, boulders_remaining), TELEPORTATION_TIME)
-	return TRUE
-
-/**
- * Callback to spawn a boulder collected in pre_collect_boulder(). Can be used to collect
- * multiple boulders by setting boulders_remaining but must only be called by pre_collect_boulder()
- * and not directly
- * Arguments
- *
- * * obj/item/boulder/random_boulder - the boulder we are trying to move out
- * * feedback - see pre_collect_boulder()
- * * boulders_remaining - passed back to pre_collect_boulder() if count > 0
- */
-/obj/machinery/brm/proc/collect_boulder(obj/item/boulder/random_boulder, feedback, boulders_remaining)
-	if(QDELETED(random_boulder))
-		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
-		balloon_alert_to_viewers("target lost!")
-		return FALSE
-
-	if(locate(/obj/item/boulder) in loc)
-		batch_processing = FALSE
-		return
-
+	//pick & spawn the boulder
 	flick("brm-flash", src)
 	playsound(src, toggled_on ? AUTO_TELEPORT_SOUND : MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	var/obj/item/boulder/random_boulder = pick(SSore_generation.available_boulders)
+	SSore_generation.available_boulders -= random_boulder
 	random_boulder.forceMove(drop_location())
 	random_boulder.pixel_x = rand(-2, 2)
 	random_boulder.pixel_y = rand(-2, 2)
-	random_boulder.processed_by = null
 	balloon_alert_to_viewers("boulder appears!")
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
+	//try again if we have more boulders to work with
 	boulders_remaining -= 1
 	if(boulders_remaining <= 0)
 		COOLDOWN_START(src, batch_start_cooldown, BATCH_COOLDOWN)
 		batch_processing = FALSE
 		return TRUE
 	else
-		return pre_collect_boulder(feedback, boulders_remaining, FALSE)
+		addtimer(CALLBACK(src, PROC_REF(pre_collect_boulder), feedback, boulders_remaining, FALSE), TELEPORTATION_TIME)
 
 #undef MANUAL_TELEPORT_SOUND
 #undef AUTO_TELEPORT_SOUND

@@ -33,7 +33,8 @@
 
 /obj/item/healthanalyzer/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click [src] to toggle the limb damage readout.")
+	if(src.mode != SCANNER_NO_MODE)
+		. += span_notice("Alt-click [src] to toggle the limb damage readout.")
 
 /obj/item/healthanalyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!"))
@@ -219,7 +220,7 @@
 				if(ears.damage)
 					render_list += "<span class='alert ml-2'>Subject has [ears.damage > ears.maxHealth ? "permanent ": "temporary "]hearing damage.\n</span>"
 				if(ears.deaf)
-					render_list += "<span class='alert ml-2'>Subject is [ears.damage > ears.maxHealth ? "permanently ": "temporarily "] deaf.\n</span>"
+					render_list += "<span class='alert ml-2'>Subject is [ears.damage > ears.maxHealth ? "permanently": "temporarily"] deaf.\n</span>"
 
 		// Eye status
 		var/obj/item/organ/internal/eyes/eyes = carbontarget.get_organ_slot(ORGAN_SLOT_EYES)

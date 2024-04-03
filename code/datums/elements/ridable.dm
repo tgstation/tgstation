@@ -133,7 +133,7 @@
 	ridable_atom.AddElement(/datum/element/ridable, component_type = riding_component_type, potion_boost = TRUE)
 	to_chat(user, span_notice("You slather the red gunk over [ridable_atom], making it faster."))
 	ridable_atom.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	ridable_atom.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
+	ridable_atom.add_atom_colour(COLOR_RED, FIXED_COLOUR_PRIORITY)
 	qdel(speed_potion)
 	return SPEED_POTION_STOP
 

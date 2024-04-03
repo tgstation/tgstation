@@ -130,6 +130,12 @@
 	///What is the cap on our misfire probability? Do not set this to 100.
 	var/misfire_probability_cap = 25
 
+	/// Fire Selector Variables ///
+	/// Tracks the firemode of burst weapons. TRUE means it is in burst mode.
+	var/burst_fire_selection = FALSE
+	/// If it has an icon for a selector switch indicating current firemode.
+	var/selector_switch_icon = FALSE
+
 /obj/item/gun/ballistic/Initialize(mapload)
 	. = ..()
 	if(!spawn_magazine_type)
@@ -200,6 +206,14 @@
 
 /obj/item/gun/ballistic/update_overlays()
 	. = ..()
+
+	if(selector_switch_icon)
+		switch(burst_fire_selection)
+			if(FALSE)
+				. += "[initial(icon_state)]_semi"
+			if(TRUE)
+				. += "[initial(icon_state)]_burst"
+
 	if(show_bolt_icon)
 		if (bolt_type == BOLT_TYPE_LOCKING)
 			. += "[icon_state]_bolt[bolt_locked ? "_locked" : ""]"
@@ -249,6 +263,27 @@
 	if(capacity_number)
 		. += "[icon_state]_mag_[capacity_number]"
 
+/obj/item/gun/ballistic/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/toggle_firemode))
+		burst_select()
+	else
+		..()
+
+/obj/item/gun/ballistic/proc/burst_select()
+	var/mob/living/carbon/human/user = usr
+	burst_fire_selection = !burst_fire_selection
+	if(!burst_fire_selection)
+		burst_size = 1
+		fire_delay = 0
+		balloon_alert(user, "switched to semi-automatic")
+	else
+		burst_size = initial(burst_size)
+		fire_delay = initial(fire_delay)
+		balloon_alert(user, "switched to [burst_size]-round burst")
+
+	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	update_appearance()
+	update_item_action_buttons()
 
 /obj/item/gun/ballistic/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
@@ -264,8 +299,7 @@
 				casing.bounce_away(TRUE)
 				SEND_SIGNAL(casing, COMSIG_CASING_EJECTED)
 		else if(empty_chamber)
-			UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
-			chambered = null
+			clear_chambered()
 	if (chamber_next_round && (magazine?.max_ammo > 1))
 		chamber_round()
 
@@ -640,45 +674,38 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		return TRUE
 
 /obj/item/gun/ballistic/proc/guncleaning(mob/user, obj/item/A)
-	if(misfire_probability == 0)
+	if(misfire_probability == initial(misfire_probability))
 		balloon_alert(user, "it's already clean!")
 		return
 
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message(span_notice("[user] begins to cleaning [src]."), span_notice("You begin to clean the internals of [src]."))
+	balloon_alert(user, "cleaning...")
 
 	if(do_after(user, 100, target = src))
-		var/original_misfire_value = initial(misfire_probability)
-		if(misfire_probability > original_misfire_value)
-			misfire_probability = original_misfire_value
-			user.visible_message(span_notice("[user] cleans [src] of any fouling."), span_notice("You clean [src], removing any fouling, preventing misfire."))
-			return TRUE
-
-/obj/item/gun/ballistic/wrench_act(mob/living/user, obj/item/I)
-	if(!user.is_holding(src))
-		to_chat(user, span_notice("You need to hold [src] to modify it."))
+		misfire_probability = initial(misfire_probability)
+		balloon_alert(user, "fouling cleaned out")
 		return TRUE
 
+/obj/item/gun/ballistic/wrench_act(mob/living/user, obj/item/I)
 	if(!can_modify_ammo)
 		return
 
-	if(bolt_type == BOLT_TYPE_STANDARD)
-		if(get_ammo())
-			to_chat(user, span_notice("You can't get at the internals while the gun has a bullet in it!"))
-			return
+	if(!user.is_holding(src))
+		balloon_alert(user, "hold to modify!")
+		return TRUE
 
-		else if(!bolt_locked)
-			to_chat(user, span_notice("You can't get at the internals while the bolt is down!"))
-			return
+	if(get_ammo())
+		balloon_alert(user, "can't modify while loaded!")
+		return
 
-	to_chat(user, span_notice("You begin to tinker with [src]..."))
+	if(!bolt_locked && bolt_type == BOLT_TYPE_LOCKING)
+		balloon_alert(user, "the bolt is in the way!")
+		return
+
+	balloon_alert(user, "tinkering...")
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 3 SECONDS))
 		return TRUE
-
-	if(blow_up(user))
-		user.visible_message(span_danger("[src] goes off!"), span_danger("[src] goes off in your face!"))
-		return
 
 	if(magazine.caliber == initial_caliber)
 		magazine.caliber = alternative_caliber
@@ -692,7 +719,6 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 			can_misfire = FALSE
 		fire_sound = initial_fire_sound
 		to_chat(user, span_notice("You reset [src]. Now it will fire [initial_caliber] rounds."))
-
 
 ///used for sawing guns, causes the gun to fire without the input of the user
 /obj/item/gun/ballistic/proc/blow_up(mob/user)

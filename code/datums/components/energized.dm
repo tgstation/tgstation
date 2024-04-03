@@ -110,11 +110,6 @@
 		return FALSE
 
 	// Finally the interesting part where they ACTUALLY get hit!
-	notify_ghosts(
-		"[future_tram_victim] has fallen in the path of an oncoming tram!",
-		source = future_tram_victim,
-		header = "Electrifying!",
-	)
 	do_sparks(4, FALSE, source)
 	playsound(parent, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	source.audible_message(span_danger("[parent] makes a loud electric crackle!"))

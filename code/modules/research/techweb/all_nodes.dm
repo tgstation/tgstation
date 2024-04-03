@@ -121,6 +121,8 @@
 		"toy_armblade",
 		"toy_balloon",
 		"toygun",
+		"tram_floor_dark",
+		"tram_floor_light",
 		"trapdoor_electronics",
 		"turbine_part_compressor",
 		"turbine_part_rotor",
@@ -209,6 +211,7 @@
 		"mod_plating_standard",
 		"mod_storage",
 		"mod_welding",
+		"mod_safety",
 		"mod_mouthhole",
 		"mod_flashlight",
 		"mod_longfall",
@@ -1064,6 +1067,18 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/ai_basic/New()
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI))
+		design_ids -= list(
+			"aicore",
+			"borg_ai_control",
+			"intellicard",
+			"mecha_tracking_ai_control",
+			"aifixer",
+			"aiupload",
+		)
+
 /datum/techweb_node/ai_adv
 	id = "ai_adv"
 	display_name = "Advanced Artificial Intelligence"
@@ -1189,8 +1204,10 @@
 		"idcard",
 		"libraryconsole",
 		"mining",
+		"photobooth",
 		"rdcamera",
 		"seccamera",
+		"security_photobooth",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
@@ -1549,6 +1566,7 @@
 	design_ids = list(
 		"fishing_rod_tech",
 		"stabilized_hook",
+		"auto_reel",
 		"fish_analyzer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
@@ -1623,6 +1641,7 @@
 	description = "Our researchers have found new ways to weaponize just about everything now."
 	prereq_ids = list("engineering")
 	design_ids = list(
+		"ballistic_shield",
 		"pin_testing",
 		"tele_shield",
 		"lasershell",

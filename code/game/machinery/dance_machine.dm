@@ -44,7 +44,7 @@
 	icon_state = "[base_icon_state][music_player.active_song_sound ? "-active" : null]"
 	return ..()
 
-/obj/machinery/jukebox/ui_status(mob/user)
+/obj/machinery/jukebox/ui_status(mob/user, datum/ui_state/state)
 	if(isobserver(user))
 		return ..()
 	if(!anchored)

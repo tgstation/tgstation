@@ -325,6 +325,7 @@
 	door.update_appearance()
 
 	qdel(src)
+	return door
 
 /obj/structure/door_assembly/update_overlays()
 	. = ..()

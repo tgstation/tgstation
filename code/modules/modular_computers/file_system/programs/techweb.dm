@@ -201,7 +201,7 @@
 		if(stored_research.research_node_id(id))
 			computer.say("Successfully researched [tech_node.display_name].")
 			var/logname = "Unknown"
-			if(isAI(user))
+			if(HAS_AI_ACCESS(user))
 				logname = "AI [user.name]"
 			if(iscyborg(user))
 				logname = "CYBORG [user.name]"

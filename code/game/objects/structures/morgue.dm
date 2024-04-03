@@ -446,14 +446,10 @@ GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/bodycontainer/crematorium/creamatorium/cremate(mob/user)
 	var/list/icecreams = list()
 	for(var/mob/living/i_scream as anything in get_all_contents_type(/mob/living))
-		var/obj/item/food/icecream/IC = new /obj/item/food/icecream(
-			loc = null,
-			prefill_flavours = list(ICE_CREAM_MOB = list(null, i_scream.name))
-		)
-		icecreams += IC
+		icecreams += new /obj/item/food/icecream(null, list(ICE_CREAM_MOB = list(null, i_scream.name)))
 	. = ..()
-	for(var/obj/IC in icecreams)
-		IC.forceMove(src)
+	for(var/obj/ice_cream as anything in icecreams)
+		ice_cream.forceMove(src)
 
 /*
  * Generic Tray

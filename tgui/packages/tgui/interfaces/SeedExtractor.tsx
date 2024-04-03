@@ -78,7 +78,7 @@ export const SeedExtractor = (props) => {
         <Section>
           <Table>
             <Table.Row header>
-              <Table.Cell colspan="3" px={1} py={2}>
+              <Table.Cell colSpan={3} px={1} py={2}>
                 <Input
                   autoFocus
                   placeholder={'Search...'}
@@ -283,7 +283,7 @@ export const SeedExtractor = (props) => {
                     py={0.5}
                     px={1}
                     collapsing
-                    colspan="2"
+                    colSpan={2}
                     textAlign="right"
                   >
                     {action ? (
@@ -356,7 +356,7 @@ const ReagentTooltip = (props) => {
   return (
     <Table>
       <Table.Row header>
-        <Table.Cell colspan="2">Reagents on grind:</Table.Cell>
+        <Table.Cell colSpan={2}>Reagents on grind:</Table.Cell>
       </Table.Row>
       {props.reagents?.map((reagent, i) => (
         <Table.Row key={i}>
@@ -373,13 +373,13 @@ const ReagentTooltip = (props) => {
       {!!props.grind_results.length && (
         <>
           <Table.Row header>
-            <Table.Cell colspan="2" pt={1}>
+            <Table.Cell colSpan={2} pt={1}>
               Nutriments turn into:
             </Table.Cell>
           </Table.Row>
           {props.grind_results?.map((reagent, i) => (
-            <Table.Row key={i} colspan="2">
-              <Table.Cell>{reagent}</Table.Cell>
+            <Table.Row key={i}>
+              <Table.Cell colSpan={2}>{reagent}</Table.Cell>
             </Table.Row>
           ))}
         </>
