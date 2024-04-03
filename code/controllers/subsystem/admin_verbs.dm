@@ -61,18 +61,21 @@ SUBSYSTEM_DEF(admin_verbs)
     return valid_verbs
 
 /datum/controller/subsystem/admin_verbs/proc/dynamic_invoke_verb(client/admin, datum/admin_verb/verb_type, ...)
+    if(ismob(admin))
+        var/mob/mob = admin
+        admin = mob.client
+
     if(!ispath(verb_type, /datum/admin_verb) || verb_type == /datum/admin_verb)
         CRASH("Attempted to dynamically invoke admin verb with invalid typepath '[verb_type]'.")
     if(isnull(admin.holder))
         CRASH("Attempted to dynamically invoke admin verb '[verb_type]' with a non-admin.")
 
     var/list/verb_args = args.Copy(3)
-    var/datum/admin_verb/verb_singleton = admin_verbs_by_type[verb_type]
+    var/verb_singleton = admin_verbs_by_type[verb_type] // this cannot be typed because we need to use `:`
     if(isnull(verb_singleton))
         CRASH("Attempted to dynamically invoke admin verb '[verb_type]' that doesn't exist.")
     
     var/old_usr = usr
-    admin = CLIENT_FROM_VAR(admin)
     usr = admin.mob
     // THE MACRO ENSURES THIS EXISTS. IF IT EVER DOESNT EXIST SOMEONE DIDNT USE THE DAMN MACRO!
     verb_singleton:do_verb(arglist(verb_args))

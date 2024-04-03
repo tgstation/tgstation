@@ -33,7 +33,7 @@
     }; \
     parent_admin_verb:handle_do_verb(usr.client, args); \
 }; \
-/datum/admin_verb/##verb_path_name/verb/handle_do_verb(client/user, ##verb_args)
+/datum/admin_verb/##verb_path_name/proc/handle_do_verb(client/user, ##verb_args)
 
 /// Used to define a special check to determine if the admin verb should exist at all. Useful for verbs such as play sound which require configuration.
 #define ADMIN_VERB_CUSTOM_EXIST_CHECK(verb_path_name) \
