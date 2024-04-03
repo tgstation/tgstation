@@ -30,8 +30,9 @@
 
 
 /datum/cogbar/Destroy()
-	SSvis_overlays.remove_vis_overlay(user, user.managed_vis_overlays)
-	user_client?.images -= blank
+	if(user)
+		SSvis_overlays.remove_vis_overlay(user, user.managed_vis_overlays)
+		user_client?.images -= blank
 
 	user = null
 	user_client = null
