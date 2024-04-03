@@ -653,7 +653,6 @@ SUBSYSTEM_DEF(explosions)
 			var/angle = get_angle(epicenter, candidate)
 			if(ISINRANGE(angle, lower_angle_limit, upper_angle_limit) ^ reverse_angle)
 				outlist += candidate
-			else
 	return outlist
 
 /datum/controller/subsystem/explosions/fire(resumed = 0)
