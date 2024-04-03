@@ -79,10 +79,14 @@ type Book = {
   category: string;
   title: string;
   id: number;
+};
+
+type AdminBook = Book & {
+  author_ckey: string;
   deleted: boolean;
 };
 
-type DisplayBook = Book & {
+type DisplayAdminBook = AdminBook & {
   key: number;
 };
 
@@ -125,7 +129,7 @@ const SearchAndDisplay = (props) => {
           ...book,
           // Generate a unique id
           key: i,
-        }) as DisplayBook,
+        }) as DisplayAdminBook,
     )
     .sort((bookA, bookB) => bookA.key - bookB.key);
   return (
