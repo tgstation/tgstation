@@ -272,6 +272,12 @@
 	for(var/ejectee in occupants)
 		mob_exit(ejectee, silent = TRUE)
 
+	/// If the former occupants get polymorphed, mutated, chestburstered,
+	/// or otherwise replaced by another mob, that mob is no longer in .occupants
+	/// and gets deleted with the mech. We need to save them.
+	for(var/mob/buggy_ejectee in contents)
+		buggy_ejectee.forceMove(src.loc)
+
 	if(LAZYLEN(flat_equipment))
 		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in flat_equipment)
 			equip.detach(loc)
