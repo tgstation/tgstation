@@ -207,11 +207,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/view_runtimes,
 	/client/proc/stop_weather,
 	)
-GLOBAL_LIST_INIT(admin_verbs_possess, list(
-	/proc/possess,
-	/proc/release,
-))
-GLOBAL_PROTECT(admin_verbs_possess)
 
 /client/proc/add_admin_verbs()
 	if(isnull(holder))
@@ -231,8 +226,6 @@ GLOBAL_PROTECT(admin_verbs_possess)
 			add_verb(src, GLOB.admin_verbs_server)
 		if(rights & R_DEBUG)
 			add_verb(src, GLOB.admin_verbs_debug)
-		if(rights & R_POSSESS)
-			add_verb(src, GLOB.admin_verbs_possess)
 #ifdef MAP_TEST
 		remove_verb(src, /client/proc/enable_mapping_verbs)
 		add_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
@@ -244,7 +237,6 @@ GLOBAL_PROTECT(admin_verbs_possess)
 		GLOB.admin_verbs_fun,
 		GLOB.admin_verbs_server,
 		GLOB.admin_verbs_debug,
-		GLOB.admin_verbs_possess,
 		/*Debug verbs added by "show debug verbs"*/
 		GLOB.admin_verbs_debug_mapping,
 		/client/proc/disable_mapping_verbs,
