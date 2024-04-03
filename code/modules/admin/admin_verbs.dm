@@ -212,8 +212,6 @@ GLOBAL_LIST_INIT(admin_verbs_possess, list(
 	/proc/release,
 ))
 GLOBAL_PROTECT(admin_verbs_possess)
-GLOBAL_LIST_INIT(admin_verbs_permissions, list(/client/proc/edit_admin_permissions))
-GLOBAL_PROTECT(admin_verbs_permissions)
 
 /client/proc/add_admin_verbs()
 	if(isnull(holder))
@@ -235,8 +233,6 @@ GLOBAL_PROTECT(admin_verbs_permissions)
 			add_verb(src, GLOB.admin_verbs_debug)
 		if(rights & R_POSSESS)
 			add_verb(src, GLOB.admin_verbs_possess)
-		if(rights & R_PERMISSIONS)
-			add_verb(src, GLOB.admin_verbs_permissions)
 #ifdef MAP_TEST
 		remove_verb(src, /client/proc/enable_mapping_verbs)
 		add_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
@@ -249,7 +245,6 @@ GLOBAL_PROTECT(admin_verbs_permissions)
 		GLOB.admin_verbs_server,
 		GLOB.admin_verbs_debug,
 		GLOB.admin_verbs_possess,
-		GLOB.admin_verbs_permissions,
 		/*Debug verbs added by "show debug verbs"*/
 		GLOB.admin_verbs_debug_mapping,
 		/client/proc/disable_mapping_verbs,
