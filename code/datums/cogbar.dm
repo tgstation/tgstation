@@ -47,7 +47,7 @@
 	cog = SSvis_overlays.add_vis_overlay(user, 
 		icon = 'icons/effects/progressbar.dmi',
 		iconstate = "cog",
-		plane = ABOVE_HUD_PLANE,
+		plane = HIGH_GAME_PLANE,
 		add_appearance_flags = APPEARANCE_UI_IGNORE_ALPHA,
 		unique = TRUE,
 		alpha = 0,
@@ -59,7 +59,7 @@
 		return
 
 	blank = image('icons/blanks/32x32.dmi', cog, "nothing")
-	SET_PLANE_EXPLICIT(blank, ABOVE_HUD_PLANE, user)
+	SET_PLANE_EXPLICIT(blank, HIGH_GAME_PLANE, user)
 	blank.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	blank.override = TRUE	
 
