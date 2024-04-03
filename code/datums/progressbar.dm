@@ -2,28 +2,28 @@
 #define PROGRESSBAR_ANIMATION_TIME 5
 
 /datum/progressbar
-	///The progress bar visual element.
+	/// The progress bar visual element.
 	var/image/bar
-	///The target where this progress bar is applied and where it is shown.
+	/// The target where this progress bar is applied and where it is shown.
 	var/atom/bar_loc
-	///The mob whose client sees the progress bar.
+	/// The mob whose client sees the progress bar.
 	var/mob/user
-	///The client seeing the progress bar.
+	/// The client seeing the progress bar.
 	var/client/user_client
-	///Effectively the number of steps the progress bar will need to do before reaching completion.
+	/// Effectively the number of steps the progress bar will need to do before reaching completion.
 	var/goal = 1
-	///Control check to see if the progress was interrupted before reaching its goal.
+	/// Control check to see if the progress was interrupted before reaching its goal.
 	var/last_progress = 0
-	///Variable to ensure smooth visual stacking on multiple progress bars.
+	/// Variable to ensure smooth visual stacking on multiple progress bars.
 	var/listindex = 0
-	///The type of our last value for bar_loc, for debugging
+	/// The type of our last value for bar_loc, for debugging
 	var/location_type
-	///Where to draw the progress bar above the icon
+	/// Where to draw the progress bar above the icon
 	var/offset_y
 	/// The progress visible to other players
-	var/cog
-	/// User mask for the cog
-	var/image/inverse_cog
+	var/obj/effect/overlay/vis/cog
+	/// The blank image to hide the cog
+	var/image/blank
 
 /datum/progressbar/New(mob/user, goal_number, atom/target)
 	. = ..()
@@ -37,9 +37,6 @@
 		return
 	if(!isnum(goal_number))
 		stack_trace("/datum/progressbar created with [isnull(user) ? "null" : "invalid"] goal_number")
-		qdel(src)
-		return
-	if(isnull(user.client))
 		qdel(src)
 		return
 
@@ -60,31 +57,19 @@
 	var/list/bars = user.progressbars[bar_loc]
 	listindex = bars.len
 
-	if(user.client)
-		user_client = user.client
-		add_prog_bar_image_to_client()
+	user_client = user.client
+	add_prog_bar_image_to_client()
+	add_cog_to_user()
 	
-	cog = SSvis_overlays.add_vis_overlay(user, 
-		icon = 'icons/effects/progressbar.dmi',
-		iconstate = "cog",
-		plane = ABOVE_HUD_PLANE,
-		add_appearance_flags = APPEARANCE_UI_IGNORE_ALPHA,	
-	)
-
-	inverse_cog = image('icons/blanks/32x32.dmi', user, "nothing")
-	SET_PLANE_EXPLICIT(inverse_cog, ABOVE_HUD_PLANE, user)
-	user.add_overlay(inverse_cog)
-
 	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(on_user_delete))
 	RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(clean_user_client))
 	RegisterSignal(user, COMSIG_MOB_LOGIN, PROC_REF(on_user_login))
 
 
 /datum/progressbar/Destroy()
-	if(user)
-		SSvis_overlays.remove_vis_overlay(user, user.managed_vis_overlays)
-		user.cut_overlay(inverse_cog)
+	SSvis_overlays.remove_vis_overlay(user, user.managed_vis_overlays)
 
+	if(user)
 		for(var/pb in user.progressbars[bar_loc])
 			var/datum/progressbar/progress_bar = pb
 			if(progress_bar == src || progress_bar.listindex <= listindex)
@@ -98,7 +83,7 @@
 		LAZYREMOVEASSOC(user.progressbars, bar_loc, src)
 		user = null
 
-	if(user_client)
+	if(user_client)		
 		clean_user_client()
 
 	bar_loc = null
@@ -108,7 +93,7 @@
 	return ..()
 
 
-///Called right before the user's Destroy()
+/// Called right before the user's Destroy()
 /datum/progressbar/proc/on_user_delete(datum/source)
 	SIGNAL_HANDLER
 
@@ -117,17 +102,17 @@
 	qdel(src)
 
 
-///Removes the progress bar image from the user_client and nulls the variable, if it exists.
+/// Removes the progress bar image from the user_client and nulls the variable, if it exists.
 /datum/progressbar/proc/clean_user_client(datum/source)
 	SIGNAL_HANDLER
 
-	if(!user_client) //Disconnected, already gone.
+	if(isnull(user_client)) //Disconnected, already gone.
 		return
-	user_client.images -= bar
+	user_client.images.Remove(bar, blank)
 	user_client = null
 
 
-///Called by user's Login(), it transfers the progress bar image to the new client.
+/// Called by user's Login(), it transfers the progress bar image to the new client.
 /datum/progressbar/proc/on_user_login(datum/source)
 	SIGNAL_HANDLER
 
@@ -135,21 +120,41 @@
 		if(user_client == user.client) //If this was not client handling I'd condemn this sanity check. But clients are fickle things.
 			return
 		clean_user_client()
-	if(!user.client) //Clients can vanish at any time, the bastards.
+	if(!isnull(user.client)) //Clients can vanish at any time, the bastards.
 		return
 	user_client = user.client
 	add_prog_bar_image_to_client()
 
 
-///Adds a smoothly-appearing progress bar image to the player's screen.
+/// Adds a smoothly-appearing progress bar image to the player's screen.
 /datum/progressbar/proc/add_prog_bar_image_to_client()
 	bar.pixel_y = 0
 	bar.alpha = 0
-	user_client.images += bar
+	user_client.images.Add(bar)
 	animate(bar, pixel_y = world.icon_size + offset_y + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
+/// Adds the cog to the user, visible by other players
+/datum/progressbar/proc/add_cog_to_user()
+	cog = SSvis_overlays.add_vis_overlay(user, 
+		icon = 'icons/effects/progressbar.dmi',
+		iconstate = "cog",
+		plane = ABOVE_HUD_PLANE,
+		add_appearance_flags = APPEARANCE_UI_IGNORE_ALPHA,
+		unique = TRUE,
+		alpha = 0,
+	)
+	cog.pixel_y = world.icon_size + offset_y
+	animate(cog, alpha = 255, time = PROGRESSBAR_ANIMATION_TIME)
 
-///Updates the progress bar image visually.
+	if(isnull(user_client))
+		return
+
+	blank = image('icons/blanks/32x32.dmi', cog, "nothing")
+	SET_PLANE_EXPLICIT(blank, ABOVE_HUD_PLANE, user)
+	blank.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	blank.override = TRUE	
+
+/// Updates the progress bar image visually.
 /datum/progressbar/proc/update(progress)
 	progress = clamp(progress, 0, goal)
 	if(progress == last_progress)
@@ -158,7 +163,7 @@
 	bar.icon_state = "prog_bar_[round(((progress / goal) * 100), 5)]"
 
 
-///Called on progress end, be it successful or a failure. Wraps up things to delete the datum and bar.
+/// Called on progress end, be it successful or a failure. Wraps up things to delete the datum and bar.
 /datum/progressbar/proc/end_progress()
 	if(last_progress != goal)
 		bar.icon_state = "[bar.icon_state]_fail"
@@ -168,8 +173,8 @@
 
 	QDEL_IN(src, PROGRESSBAR_ANIMATION_TIME)
 
-///Progress bars are very generic, and what hangs a ref to them depends heavily on the context in which they're used
-///So let's make hunting harddels easier yeah?
+/// Progress bars are very generic, and what hangs a ref to them depends heavily on the context in which they're used
+/// So let's make hunting harddels easier yeah?
 /datum/progressbar/dump_harddel_info()
 	if(harddel_deets_dumped)
 		return
