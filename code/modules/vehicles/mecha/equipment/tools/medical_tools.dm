@@ -321,12 +321,14 @@
 		return
 	var/message = "[known_reagents[reagent]]"
 	LAZYADD(processed_reagents, reagent)
-	if(LAZYLEN(processed_reagents))
-		message += " added to production"
-		START_PROCESSING(SSobj, src)
-		to_chat(usr, message)
-		to_chat(usr, "[icon2html(src, usr)][span_notice("Reagent processing started.")]")
-		log_message("Reagent processing started.", LOG_MECHA)
+	if(!LAZYLEN(processed_reagents))
+		return
+
+	message += " added to production"
+	START_PROCESSING(SSobj, src)
+	to_chat(usr, message)
+	to_chat(usr, "[icon2html(src, usr)][span_notice("Reagent processing started.")]")
+	log_message("Reagent processing started.", LOG_MECHA)
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
