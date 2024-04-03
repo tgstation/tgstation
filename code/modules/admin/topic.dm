@@ -1065,7 +1065,7 @@
 		var/mob/M = locate(href_list["playsoundto"])
 		var/S = input("", "Select a sound file",) as null|sound
 		if(S)
-			usr.client.play_direct_mob_sound(S, M)
+			SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb/play_direct_mob_sound, S, M)
 
 	else if(href_list["individuallog"])
 		if(!check_rights(R_ADMIN))
