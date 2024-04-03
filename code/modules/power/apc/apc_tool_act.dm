@@ -195,30 +195,30 @@
 	if((machine_stat & BROKEN) && opened == APC_COVER_REMOVED && has_electronics && terminal) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
 		user.visible_message(span_notice("[user.name] replaces missing APC's cover."))
 		balloon_alert(user, "replacing APC's cover...")
-		if(do_after(user, 20, target = src)) // replacing cover is quicker than replacing whole frame
-			balloon_alert(user, "cover replaced")
-			qdel(wallframe)
-			update_integrity(30) //needs to be welded to fully repair but can work without
-			set_machine_stat(machine_stat & ~(BROKEN|MAINT))
-			opened = APC_COVER_OPENED
-			update_appearance()
-			return ITEM_INTERACT_SUCCESS
-		return ITEM_INTERACT_BLOCKING
+		if(!do_after(user, 20, target = src)) // replacing cover is quicker than replacing whole frame
+			return ITEM_INTERACT_BLOCKING
+		balloon_alert(user, "cover replaced")
+		qdel(wallframe)
+		update_integrity(30) //needs to be welded to fully repair but can work without
+		set_machine_stat(machine_stat & ~(BROKEN|MAINT))
+		opened = APC_COVER_OPENED
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 	if(has_electronics)
 		balloon_alert(user, "remove the board inside!")
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message(span_notice("[user.name] replaces the damaged APC frame with a new one."))
 	balloon_alert(user, "replacing damaged frame...")
-	if(do_after(user, 50, target = src))
-		balloon_alert(user, "replaced frame")
-		qdel(wallframe)
-		set_machine_stat(machine_stat & ~BROKEN)
-		atom_integrity = max_integrity
-		if(opened == APC_COVER_REMOVED)
-			opened = APC_COVER_OPENED
-		update_appearance()
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	if(!do_after(user, 50, target = src))
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "replaced frame")
+	qdel(wallframe)
+	set_machine_stat(machine_stat & ~BROKEN)
+	atom_integrity = max_integrity
+	if(opened == APC_COVER_REMOVED)
+		opened = APC_COVER_OPENED
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/apc/crowbar_act(mob/user, obj/item/crowbar)
 	. = TRUE
