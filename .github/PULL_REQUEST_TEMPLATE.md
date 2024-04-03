@@ -9,9 +9,9 @@
 
 <!-- Argue for the merits of your changes and how they benefit the game, especially if they are controversial and/or far reaching. If you can't actually explain WHY what you are doing will improve the game, then it probably isn't good for the game in the first place. -->
 
-## Proof of Testing
+## Optional:  Proof of Testing
 
-<!-- We want to make sure you tested this on a local machine before PRing it. If you have a good reason to not test it locally, put it here, but make sure it's really good. -->
+<!-- Maintainers are more likely to merge your PR if you provide proof of testing here. -->
 
 ## Changelog
 
