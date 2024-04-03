@@ -38,6 +38,7 @@
 
 	return ..()
 
+
 /// Adds the cog to the user, visible by other players
 /datum/cogbar/proc/add_cog_to_user()
 	cog = SSvis_overlays.add_vis_overlay(user, 
