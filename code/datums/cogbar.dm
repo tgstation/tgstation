@@ -35,6 +35,7 @@
 	user_client = null
 	QDEL_NULL(cog)
 	QDEL_NULL(blank)
+	QDEL_NULL(cog)
 
 	return ..()
 
