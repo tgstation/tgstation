@@ -83,7 +83,7 @@
 ///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
 
 ///Popup Chat Messages
-#define RUNECHAT_AO_PLANE 29
+#define RENDER_PLANE_RUNECHAT_AO 29
 #define RUNECHAT_PLANE 30
 #define RUNECHAT_RENDER_TARGET "RUNECHAT_RENDER_TARGET"
 /// Plane for balloon text (text that fades up)
@@ -298,6 +298,9 @@
 
 ///cinematics are "below" the splash screen
 #define CINEMATIC_LAYER -1
+
+/// We scale AO down and then up to save client time doing the actual effect
+#define AO_TRANSFORM_CONSTANT 2
 
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"

@@ -7,7 +7,6 @@
 		REMOVE_TRAIT(screenmob.hud_used, TRAIT_PARALLAX_ENABLED, TRAIT_GENERIC)
 		return
 	ADD_TRAIT(screenmob.hud_used, TRAIT_PARALLAX_ENABLED, TRAIT_GENERIC)
-	#warn why does this spam on z change?
 	if(!length(C.parallax_layers_cached))
 		C.parallax_layers_cached = list()
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_1(null, src)

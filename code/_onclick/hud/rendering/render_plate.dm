@@ -198,16 +198,34 @@
 	blend_mode = BLEND_OVERLAY
 
 /atom/movable/screen/plane_master/rendering_plate/game_world_ao
-	name = "Gme world AO"
+	name = "Game world ambient occlusion"
+	documentation = "Alright so we want like a dark outline around the world right? The way you'd typically do this is with the dropshadow filter.\
+		<br>But it's slow as HELL. This is mostly cause of the blur filter. (Dropshadow is a composite of blur, offsetting and layering)\
+		<br>It'd be like 20% of our client budget for 1 z layer. That's no good.\
+		<br>There's a fun trick we can do though. We can use transforms to scale down the game world, and then blur THAT.\
+		<br>This essentially quarters the amount of work we need to do. Then we just bump it back up and we're golden."
 	plane = RENDER_PLANE_GAME_WORLD_AO
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_planes = list()
 
 /atom/movable/screen/plane_master/rendering_plate/game_world_ao/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	add_filter("games", 0, layering_filter(render_source = OFFSET_RENDER_TARGET(GAME_WORLD_RENDER_TARGET, offset), y = -2, color = "#04080F6F", transform = SCALE_MATRIX(1/2, 1/2)))
+	var/matrix/scale_down_matrix = new /matrix()
+	scale_down_matrix.Translate(0, -2).Scale(1/AO_TRANSFORM_CONSTANT)
+	// The way I WANT to do this is just run a relay from the game world to this plate (and transform the relay and such)
+	// Fuckin can't tho cause of funny byond bugs (I think it's not properly differenciating between relays somehow). So we gotta do this instead. Sadge
+	add_filter("game_world", 0, layering_filter(render_source = OFFSET_RENDER_TARGET(GAME_WORLD_RENDER_TARGET, offset), color = "#04080F6F", transform = scale_down_matrix))
 	add_filter("blur", 2, gauss_blur_filter(1))
-	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME, offset), relay_transform = SCALE_MATRIX(2, 2), relay_appearance_flags = PIXEL_SCALE)
+	var/matrix/scale_up_matrix = new /matrix()
+	scale_up_matrix.Scale(AO_TRANSFORM_CONSTANT)
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME, offset), relay_transform = scale_up_matrix, relay_appearance_flags = PIXEL_SCALE)
+
+/atom/movable/screen/plane_master/rendering_plate/game_world_ao/show_to(mob/mymob)
+	. = ..()
+	if(!.)
+		return
+	//if(!mymob?.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
+	//	hide_plane(mymob)
 
 ///Contains all lighting objects
 /atom/movable/screen/plane_master/rendering_plate/lighting
@@ -364,3 +382,28 @@
 	documentation = "Renders anything that's out of character. Mostly useful as a converse to the game rendering plate."
 	plane = RENDER_PLANE_NON_GAME
 	render_relay_planes = list(RENDER_PLANE_MASTER)
+
+/atom/movable/screen/plane_master/rendering_plate/runechat_ao
+	name = "Runechat ambient occlusion"
+	documentation = "This is essentially the same effect as the game world AO, except for its scope.\
+		<br>The amount of pixels this actually modifies is drastically less then the game world. Doesn't impact our logic tho."
+	plane = RENDER_PLANE_RUNECHAT_AO
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_planes = list()
+
+/atom/movable/screen/plane_master/rendering_plate/runechat_ao/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	var/matrix/scale_down_matrix = new /matrix()
+	scale_down_matrix.Translate(0, -2).Scale(1/AO_TRANSFORM_CONSTANT)
+	add_filter("runechat", 0, layering_filter(render_source = OFFSET_RENDER_TARGET(RUNECHAT_RENDER_TARGET, offset), color = "#04080F6F", transform = scale_down_matrix))
+	add_filter("blur", 2, gauss_blur_filter(1))
+	var/matrix/scale_up_matrix = new /matrix()
+	scale_up_matrix.Scale(AO_TRANSFORM_CONSTANT)
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_NON_GAME, offset), relay_transform = scale_up_matrix, relay_appearance_flags = PIXEL_SCALE)
+
+/atom/movable/screen/plane_master/rendering_plate/runechat_ao/show_to(mob/mymob)
+	. = ..()
+	if(!.)
+		return
+	if(!mymob?.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
+		hide_plane(mymob)

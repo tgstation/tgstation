@@ -493,18 +493,6 @@
 	render_target = RUNECHAT_RENDER_TARGET
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 
-/atom/movable/screen/plane_master/rendering_plate/runechat_ao
-	name = "Runechat AO"
-	plane = RUNECHAT_AO_PLANE
-	render_relay_planes = list()
-
-/atom/movable/screen/plane_master/rendering_plate/runechat_ao/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
-	. = ..()
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-#warn is this transform actually saving time? what happens if we do this work on a non plane master screen overlay
-	add_filter("games", 0, layering_filter(render_source = OFFSET_RENDER_TARGET(RUNECHAT_RENDER_TARGET, offset), y = -2, color = "#04080F6F", transform = SCALE_MATRIX(1/2, 1/2)))
-	add_filter("blur", 2, gauss_blur_filter(1))
-	add_relay_to(RENDER_PLANE_NON_GAME, relay_transform = SCALE_MATRIX(2, 2), relay_appearance_flags = PIXEL_SCALE)
 
 /atom/movable/screen/plane_master/balloon_chat
 	name = "Balloon chat"

@@ -5,8 +5,17 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/toggle/ambient_occlusion/apply_to_client(client/client, value)
-	/// Backdrop for the game world plane.
-	for(var/atom/movable/screen/plane_master/plane_master as anything in client.mob?.hud_used?.get_true_plane_masters(RENDER_PLANE_GAME_WORLD))
-		plane_master.show_to(client.mob)
-	for(var/atom/movable/screen/plane_master/plane_master as anything in client.mob?.hud_used?.get_true_plane_masters(RUNECHAT_PLANE))
-		plane_master.show_to(client.mob)
+	var/datum/hud/our_hud = client.mob?.hud_used
+	if(!our_hud)
+		return
+	if(!value)
+		for(var/atom/movable/screen/plane_master/plane_master as anything in our_hud.get_true_plane_masters(RENDER_PLANE_GAME_WORLD_AO))
+			plane_master.hide_plane(client.mob)
+		for(var/atom/movable/screen/plane_master/plane_master as anything in our_hud.get_true_plane_masters(RENDER_PLANE_RUNECHAT_AO))
+			plane_master.hide_plane(client.mob)
+		return
+
+	for(var/atom/movable/screen/plane_master/plane_master as anything in our_hud.get_true_plane_masters(RENDER_PLANE_GAME_WORLD_AO))
+		plane_master.unhide_plane(client.mob)
+	for(var/atom/movable/screen/plane_master/plane_master as anything in our_hud.get_true_plane_masters(RENDER_PLANE_RUNECHAT_AO))
+		plane_master.unhide_plane(client.mob)
