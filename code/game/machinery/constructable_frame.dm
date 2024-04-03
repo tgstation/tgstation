@@ -58,6 +58,9 @@
 /obj/structure/frame/proc/try_dissassemble(mob/living/user, obj/item/tool, disassemble_time = 8 SECONDS)
 	if(state != FRAME_STATE_EMPTY)
 		return NONE
+	if(anchored && state == FRAME_STATE_EMPTY) //when using a screwdriver on an incomplete frame(missing components) no point checking for this
+		balloon_alert(user, "must be unanchored first!")
+		return ITEM_INTERACT_BLOCKING
 	if(!tool.tool_start_check(user, amount = (tool.tool_behaviour == TOOL_WELDER ? 1 : 0)))
 		return ITEM_INTERACT_BLOCKING
 

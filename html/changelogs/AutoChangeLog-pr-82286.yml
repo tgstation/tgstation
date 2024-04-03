@@ -1,0 +1,5 @@
+author: "Bilbo367"
+delete-after: True
+changes:
+  - bugfix: "fixes reagent production selection overwrite updating during selection"
+  - code_imp: "updates reagent menu for Odysseus"

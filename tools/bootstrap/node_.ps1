@@ -31,18 +31,7 @@ if ($Env:TG_BOOTSTRAP_CACHE) {
 	$Cache = $Env:TG_BOOTSTRAP_CACHE
 }
 
-# Get OS version
-$OSVersion = (Get-WmiObject -Class Win32_OperatingSystem).Version
-
-# Set Node version based on OS version
-if ($OSVersion -gt 6.1) {
- # Windows 7 is version 6.1
-	$NodeVersion = Extract-Variable -Path "$BaseDir\..\..\dependencies.sh" -Key "NODE_VERSION_COMPAT"
-}
-else {
-	$NodeVersion = Extract-Variable -Path "$BaseDir\..\..\dependencies.sh" -Key "NODE_VERSION_LTS"
-}
-
+$NodeVersion = Extract-Variable -Path "$BaseDir\..\..\dependencies.sh" -Key "NODE_VERSION_LTS"
 $NodeSource = "https://nodejs.org/download/release/v$NodeVersion/win-x64/node.exe"
 $NodeTargetDir = "$Cache\node-v$NodeVersion-x64"
 $NodeTarget = "$NodeTargetDir\node.exe"

@@ -52,3 +52,84 @@
   - bugfix: space heater(including improvised) turns off when cell is drained
   - bugfix: optimized power usage for both improvised and main space heater. Improvised
       heater now works & uses beaker heat capacity
+2024-04-03:
+  00-Steven:
+  - bugfix: Fix using a multitool on a power object with wires not actually opening
+      the wires menu when it should.
+  - bugfix: Fix a runtime from a power object being deleted before selecting what
+      cable layer to put it at.
+  - bugfix: Fix power object cable changing not caring about whether you were still
+      adjacent, still holding your multitool, or whether it even still existed after
+      the selection menu was closed.
+  Absolucy:
+  - qol: Makes it easier for heretics to click on influences without accidentally
+      drawing a rune with their codex cicatrix because the animation shifted and made
+      you click on the floor instead.
+  Ben10Omintrix:
+  - balance: evil seedlings can no longer be mass produced
+  Bilbo367:
+  - qol: some experiments now give you more helpful hints at why your failing
+  - code_imp: changes around some experiment code to make it more understandable
+  Cyprex:
+  - config: mech logging is now on by default. Existing config setups will not mirror
+      this change.
+  DATA-xPUNGED:
+  - bugfix: Fixed Prosthetic limb quirk preferences
+  Iamgoofball:
+  - balance: Makes the Captain's Spare safe actually secure from being smashed open
+      now that it's been removed from a wall. Damage Deflection of 30 has been added
+      to it.
+  Jacquerel:
+  - balance: Traitors can no longer turn themselves into dragons.
+  - rscadd: You can now fax painted canvases in order to send memes to each other.
+  LT3:
+  - code_imp: APCs can now calculate time-to-charge
+  - qol: Overloaded lathes will now tell you the wait time until they're ready to
+      print again
+  Melbert:
+  - bugfix: Psicodine helps Socially Anxious people again (as does signing)
+  - bugfix: Speech effects such as stuttering no longer applies its TTS filter if
+      the resulting message doesn't actually change the message
+  Pickle-Coding:
+  - balance: Halon combustion releases 2.5 moles of pluoxium per mole of halon consumed.
+  - balance: Halon combustion no longer releases carbon dioxide.
+  - balance: Halon combustion releases resin foam.
+  - balance: Halon formation requirements changed to require electrolysing BZ instead
+      of N2O and CO2.
+  - balance: Halon formation changed to no longer slow down at higher pressures. It
+      instead accelerates at higher temperatures. It is much faster overall.
+  - balance: Halon formation releases 91.2321kJ of thermal energy per mole of halon
+      consumed.
+  SyncIt21:
+  - bugfix: buying & selling huge quantities of materials on the market won't cause
+      their prices & quantities to go beyond bounds.
+  - bugfix: igniter in meta station ordinance burn chamber works again
+  - bugfix: Mechbay & modsuit rechargers waste a small amount of energy as heat
+  - bugfix: Mechbay recharger console displays mech charge as joules & charges directly
+      from the grid thus sparing the rooms apc cell from huge loads
+  - qol: adds missing examine for when machine frames can be deconstructed
+  - qol: both machine & computer frames must be unanchored before it can be deconstructed
+      & adds examines to explain the same
+  Zytolg:
+  - balance: Readds some N2O to the Birdshot AI sat. I'll be working on a better solution
+      for this in the coming weeks.
+  - bugfix: Due to a Misprint, the Atmos Gas -> Pure pipes were incorrectly labeled
+      on Birdshot. Your Cargo Techs have since remedied this.
+  - bugfix: Our cable laying intern team didn't lay cable to the Secure Storage APC
+      in Enigneering. Getting coffee instead of working is a big no-no here at Nanotrasen
+      Tech Support, and they have since been reassigned. Your Chief Engineers have
+      been instructed to make the modifications on all Birdshot Class Stations.
+  - bugfix: We've noticed some Heads-Of-Staff getting lost on Birdshot. While Telecommunications
+      does have a GPS waypoint, our staffs stubbornness often means this is ineffective.
+      Additional Signage has been placed to help direct our most senior of staff.
+  - bugfix: The Birdshot Turbine will no longer Pre-Load itself with highly flammable
+      Plasma Gas. Do your own jobs you lazy atmos bums.
+  mc-oofert:
+  - qol: AIs now get a z level indicator
+  moocowswag:
+  - bugfix: Modular shields now give correct feedback and no longer dissuade individuals
+      from breaking them.
+  necromanceranne:
+  - bugfix: Detective revolvers can no longer exist in a quantum state of both being
+      chambered in .38 and .357, without risk of misfire. Detectives, cowboy enthusiasts
+      and reckless federal agents across the Spinward Sector mourn the loss.
