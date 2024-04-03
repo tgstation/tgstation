@@ -160,7 +160,9 @@
 	return ..()
 
 /datum/martial_art/the_sleeping_carp/proc/can_deflect(mob/living/carp_user)
-	if(!can_use(carp_user) || !((carp_user.istate & ISTATE_HARM|ISTATE_BLOCKING) || carp_user.throw_mode)) // monke edit: istates/intents
+	if(!can_use(carp_user))
+		return FALSE
+	if(!(carp_user.istate & ISTATE_HARM)) // monke edit: istates/intents
 		return FALSE
 	if(carp_user.incapacitated(IGNORE_GRAB)) //NO STUN
 		return FALSE
