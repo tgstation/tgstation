@@ -10,7 +10,7 @@
 
 	/// How long it takes for revival to ready upon entering stasis.
 	/// The changeling can opt to stay in fakedeath for longer, though.
-	var/fakedeath_duration = 40 SECONDS
+	var/fakedeath_duration = 5 SECONDS
 	/// If TRUE, we're ready to revive and can click the button to heal.
 	var/revive_ready = FALSE
 
@@ -19,7 +19,6 @@
 	..()
 	if(revive_ready)
 		INVOKE_ASYNC(src, PROC_REF(revive), user)
-		disable_revive(user) // this should be already called via signal, but just incase something wacky happens
 		return TRUE
 
 	var/death_duration_mod = 1
@@ -51,13 +50,20 @@
 /// Can be called mid-revival if the process is being cancelled
 /datum/action/changeling/fakedeath/proc/disable_revive(mob/living/changeling)
 	if(revive_ready)
-		chemical_cost = 15
-		revive_ready = FALSE
-		build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
+		addtimer(CALLBACK(src, PROC_REF(reset_chemical_cost)), 2 DECISECONDS, TIMER_UNIQUE)
+		//a timer is used here because this needs to be done after the upstream logic
+		//of try_to_sting()
 
 	REMOVE_TRAIT(changeling, TRAIT_STASIS, CHANGELING_TRAIT)
 	UnregisterSignal(changeling, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA))
 	UnregisterSignal(changeling, COMSIG_MOB_STATCHANGE)
+
+/// This proc is called after a short delay to reset the chemical cost of the revival
+/// as well as the revive ready flag and button states.
+/datum/action/changeling/fakedeath/proc/reset_chemical_cost()
+	chemical_cost = 15
+	revive_ready = FALSE
+	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
 /// Sets [revive_ready] to TRUE and updates the button icons.
 /datum/action/changeling/fakedeath/proc/enable_revive(mob/living/changeling)
