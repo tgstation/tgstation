@@ -15,7 +15,7 @@
 		if(!iscarbon(M))
 			continue
 		entangled_mob = M
-		addtimer(CALLBACK(src, PROC_REF(quantum_swap)), rand(60, 240) SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(quantum_swap)), rand(600, 2400))
 		return
 
 /obj/item/organ/internal/heart/gland/quantum/proc/quantum_swap()

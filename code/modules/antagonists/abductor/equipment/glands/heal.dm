@@ -159,7 +159,7 @@
 	else
 		to_chat(owner, span_warning("You feel a weird rumble behind your eye sockets..."))
 
-	addtimer(CALLBACK(src, PROC_REF(finish_replace_eyes)), rand(10, 20) SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_replace_eyes)), rand(100, 200))
 
 /obj/item/organ/internal/heart/gland/heal/proc/finish_replace_eyes()
 	var/eye_type = /obj/item/organ/internal/eyes
@@ -177,7 +177,7 @@
 	else
 		to_chat(owner, span_warning("You feel a weird tingle in your [parse_zone(body_zone)]... even if you don't have one."))
 
-	addtimer(CALLBACK(src, PROC_REF(finish_replace_limb), body_zone), rand(15, 30) SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_replace_limb), body_zone), rand(150, 300))
 
 /obj/item/organ/internal/heart/gland/heal/proc/finish_replace_limb(body_zone)
 	owner.visible_message(span_warning("With a loud snap, [owner]'s [parse_zone(body_zone)] rapidly grows back from [owner.p_their()] body!"),
