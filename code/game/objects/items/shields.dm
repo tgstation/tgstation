@@ -276,7 +276,6 @@
 	throw_speed = 3
 	breakable_by_damage = FALSE
 	block_sound = 'sound/weapons/block_blade.ogg'
-	is_bashable = FALSE
 	/// Force of the shield when active.
 	var/active_force = 10
 	/// Throwforce of the shield when active.
@@ -325,7 +324,6 @@
 	if(user)
 		balloon_alert(user, active ? "activated" : "deactivated")
 	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
-	is_bashable = !is_bashable
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shield/energy/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, send_message = TRUE)
