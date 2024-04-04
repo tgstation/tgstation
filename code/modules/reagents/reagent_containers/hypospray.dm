@@ -122,7 +122,7 @@
 	has_variable_transfer_amount = FALSE
 	volume = 15
 	ignore_flags = 1 //so you can medipen through spacesuits
-	reagent_flags = DRAWABLE
+	reagent_flags = NONE
 	flags_1 = null
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulant = 2)
 	custom_price = PAYCHECK_CREW
