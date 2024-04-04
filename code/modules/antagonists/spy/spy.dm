@@ -130,6 +130,25 @@
 		your_mission.owner = owner
 		your_mission.explanation_text = pick_list_replacements(SPY_OBJECTIVE_FILE, "objective_body")
 		objectives += your_mission
+	
+	if(prob(25))
+		switch(rand(1, 4))
+			if(1)
+				var/datum/objective/protect/save_the_person = new()
+				save_the_person.owner = owner
+				objectives += save_the_person
+			if(2)
+				var/datum/objective/protect/nonhuman/save_the_entity = new()
+				save_the_entity.owner = owner
+				objectives += save_the_entity
+			if(3)
+				var/datum/objective/jailbreak/save_the_jailbird = new()
+				save_the_jailbird.owner = owner
+				objectives += save_the_jailbird
+			if(4)
+				var/datum/objective/jailbreak/detain/cage_the_jailbird = new()
+				cage_the_jailbird.owner = owner
+				objectives += cage_the_jailbird
 
 	if(prob(10))
 		var/datum/objective/martyr/leave_no_trace = new()
@@ -140,6 +159,11 @@
 		var/datum/objective/hijack/steal_the_shuttle = new()
 		steal_the_shuttle.owner = owner
 		objectives += steal_the_shuttle
+
+	else if(prob(10)) //10% chance on 87.3% chance
+		var/datum/objective/exile/hit_the_bricks = new()
+		hit_the_bricks.owner = owner
+		objectives += hit_the_bricks
 
 	else
 		var/datum/objective/escape/gtfo = new()
