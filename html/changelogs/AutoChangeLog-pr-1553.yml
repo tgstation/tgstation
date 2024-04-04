@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "The revival policy message now only displays when you're actually revived (i.e it'll no longer display after using a regenerative slime extract to simply heal your wounds)"
