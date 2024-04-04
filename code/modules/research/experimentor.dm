@@ -674,7 +674,7 @@
 
 /obj/item/relic/proc/teleport(mob/user)
 	to_chat(user, span_notice("[src] begins to vibrate!"))
-	addtimer(CALLBACK(src, PROC_REF(do_the_teleport), user), rand(10, 3 SECONDS))
+	addtimer(CALLBACK(src, PROC_REF(do_the_teleport), user), rand(1, 3) SECONDS)
 
 /obj/item/relic/proc/do_the_teleport(mob/user)
 	var/turf/userturf = get_turf(user)
