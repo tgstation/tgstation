@@ -6,7 +6,6 @@
 		/datum/traitor_objective/ultimate/dark_matteor = 1,
 		/datum/traitor_objective/ultimate/infect_ai = 1,
 		/datum/traitor_objective/ultimate/romerol = 1,
-		/datum/traitor_objective/ultimate/space_dragon = 1,
 		/datum/traitor_objective/ultimate/supermatter_cascade = 1,
 	)
 	weight = 100

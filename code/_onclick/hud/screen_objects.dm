@@ -384,7 +384,7 @@
 /atom/movable/screen/mov_intent/proc/toggle(mob/living/user)
 	if(!istype(user))
 		return
-	user.toggle_move_intent(user)
+	user.toggle_move_intent()
 
 /atom/movable/screen/pull
 	name = "stop pulling"

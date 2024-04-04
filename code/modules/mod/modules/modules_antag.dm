@@ -147,7 +147,7 @@
 )
 	SIGNAL_HANDLER
 
-	if(SEND_SIGNAL(mod, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, 0, damage, attack_type, damage_type) & COMPONENT_HIT_REACTION_BLOCK)
+	if(mod.hit_reaction(owner, hitby, attack_text, 0, damage, attack_type))
 		drain_power(use_energy_cost)
 		return SUCCESSFUL_BLOCK
 	return NONE

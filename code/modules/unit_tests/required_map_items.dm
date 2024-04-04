@@ -14,7 +14,7 @@
 /// More detailed information about each item (mainly, how much of each should exist) is set on a per item basis
 /datum/unit_test/required_map_items/proc/setup_expected_types()
 	expected_types += subtypesof(/obj/item/stamp/head)
-	expected_types += subtypesof(/obj/machinery/computer/department_orders)
+	expected_types += subtypesof(/obj/machinery/modular_computer/preset/cargochat)
 
 	expected_types += /mob/living/basic/parrot/poly
 	expected_types += /mob/living/basic/pet/dog/corgi/ian

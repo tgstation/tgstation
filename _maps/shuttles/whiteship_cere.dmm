@@ -63,7 +63,7 @@
 "aB" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/power/smes{
-	charge = 5e+006;
+	charge = 5e+007;
 	output_level = 20000
 	},
 /obj/structure/cable,

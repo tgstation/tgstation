@@ -8,7 +8,7 @@
 	var/lock_override = NONE
 	var/mob/camera/ai_eye/remote/eyeobj
 	var/mob/living/current_user = null
-	var/list/networks = list("ss13")
+	var/list/networks = list(CAMERANET_NETWORK_SS13)
 	/// Typepath of the action button we use as "off"
 	/// It's a typepath so subtypes can give it fun new names
 	var/datum/action/innate/camera_off/off_action = /datum/action/innate/camera_off
