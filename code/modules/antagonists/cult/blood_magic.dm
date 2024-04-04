@@ -1,5 +1,6 @@
 #define USES_TO_BLOOD 2
 #define BLOOD_DRAIN_GAIN 50
+#define SELF_HEAL_PENALTY 1.65
 
 /datum/action/innate/cult/blood_magic //Blood magic handles the creation of blood spells (formerly talismans)
 	name = "Prepare Blood Magic"
@@ -738,7 +739,8 @@
 	*
 	**damage healing stuff:
 	**overall_damage = sum of brute, toxin, fire, and oxygen damage
-	**healing_ratio = percentage of damage healed, between 0 and 1 (0-100%)
+	**SELF_HEAL_PENALTY = multiplier which determines how many more spell uses it takes to heal oneself
+	**damage_healed = how much we can heal, the lesser of uses & damage
 	**healing_cost = how many spell uses we lose due to healing
 	**blood_donor = used to ensure the proc returns TRUE if we completely restore an undamaged persons blood
 */
@@ -770,21 +772,20 @@
 		to_chat(user,span_cult("That cultist doesn't require healing!"))
 		return FALSE
 
-	var/healing_ratio = uses / overall_damage
-	var/healing_cost = round(overall_damage)
+	var/damage_healed = -1 * min(uses, overall_damage)
+	var/healing_cost = damage_healed
 	if(human_bloodbag == user)
 		to_chat(user,span_cult("<b>Your blood healing is far less efficient when used on yourself!</b>"))
-		healing_ratio *= 0.35 // self-healing is 65% less effective
-		healing_cost *= 1.65  // self-healing is 65% more expensive
-	healing_ratio = -1 * clamp(healing_ratio, 0, 1)
-	uses = max(0, uses-healing_cost)
+		damage_healed = -1 * min(uses * (1 / SELF_HEAL_PENALTY), overall_damage)
+		healing_cost = damage_healed * SELF_HEAL_PENALTY
+	uses += round(healing_cost)
 	human_bloodbag.visible_message(span_warning("[human_bloodbag] is [uses == 0 ? "partially healed":"fully healed"] by [human_bloodbag == user ? "[human_bloodbag.p_their()]":"[human_bloodbag]'s"] blood magic!"))
 
 	var/need_mob_update = FALSE
-	need_mob_update += human_bloodbag.adjustOxyLoss((overall_damage*healing_ratio) * (human_bloodbag.getOxyLoss() / overall_damage), updating_health = FALSE)
-	need_mob_update += human_bloodbag.adjustToxLoss((overall_damage*healing_ratio) * (human_bloodbag.getToxLoss() / overall_damage), updating_health = FALSE)
-	need_mob_update += human_bloodbag.adjustFireLoss((overall_damage*healing_ratio) * (human_bloodbag.getFireLoss() / overall_damage), updating_health = FALSE)
-	need_mob_update += human_bloodbag.adjustBruteLoss((overall_damage*healing_ratio) * (human_bloodbag.getBruteLoss() / overall_damage), updating_health = FALSE)
+	need_mob_update += human_bloodbag.adjustOxyLoss(damage_healed * (human_bloodbag.getOxyLoss() / overall_damage), updating_health = FALSE)
+	need_mob_update += human_bloodbag.adjustToxLoss(damage_healed * (human_bloodbag.getToxLoss() / overall_damage), updating_health = FALSE)
+	need_mob_update += human_bloodbag.adjustFireLoss(damage_healed * (human_bloodbag.getFireLoss() / overall_damage), updating_health = FALSE)
+	need_mob_update += human_bloodbag.adjustBruteLoss(damage_healed * (human_bloodbag.getBruteLoss() / overall_damage), updating_health = FALSE)
 	if(need_mob_update)
 		human_bloodbag.updatehealth()
 	playsound(get_turf(human_bloodbag), 'sound/magic/staff_healing.ogg', 25)
@@ -898,3 +899,4 @@
 
 #undef USES_TO_BLOOD
 #undef BLOOD_DRAIN_GAIN
+#undef SELF_HEAL_PENALTY
