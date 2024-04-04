@@ -888,7 +888,11 @@
 	if(!HAS_TRAIT(src, TRAIT_LIVERLESS_METABOLISM) && !isnull(dna?.species.mutantliver) && !get_organ_slot(ORGAN_SLOT_LIVER))
 		return FALSE
 
-	return ..()
+	. = ..()
+	if(.) // if revived successfully
+		set_heartattack(FALSE)
+
+	return .
 
 /mob/living/carbon/fully_heal(heal_flags = HEAL_ALL)
 
