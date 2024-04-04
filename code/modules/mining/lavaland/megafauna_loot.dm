@@ -162,7 +162,7 @@
 		new /obj/effect/temp_visual/hierophant/telegraph(source, user)
 		playsound(destination,'sound/magic/wand_teleport.ogg', 200, TRUE)
 		playsound(source,'sound/machines/airlockopen.ogg', 200, TRUE)
-		if(!do_after(user, 3, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
+		if(!do_after(user, 0.3 SECONDS, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
 			if(user)
 				user.update_mob_action_buttons()

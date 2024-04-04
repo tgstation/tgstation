@@ -124,7 +124,7 @@
 		if(smile == FALSE)
 			var/obj/item/toy/crayon/CR = hitting_item
 			to_chat(user, span_notice("You start drawing a smiley face on the helmet's visor.."))
-			if(do_after(user, 25, target = src))
+			if(do_after(user, 2.5 SECONDS, target = src))
 				smile = TRUE
 				smile_color = CR.paint_color
 				to_chat(user, "You draw a smiley on the helmet visor.")
