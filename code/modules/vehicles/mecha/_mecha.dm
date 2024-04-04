@@ -269,12 +269,9 @@
 	AddElement(/datum/element/hostile_machine)
 
 /obj/vehicle/sealed/mecha/Destroy()
-	for(var/ejectee in occupants)
-		mob_exit(ejectee, silent = TRUE)
-
 	/// If the former occupants get polymorphed, mutated, chestburstered,
 	/// or otherwise replaced by another mob, that mob is no longer in .occupants
-	/// and gets deleted with the mech. We need to save them.
+	/// and gets deleted with the mech. However, they do remain in .contents
 	for(var/mob/buggy_ejectee in contents)
 		mob_exit(buggy_ejectee, silent = TRUE)
 
