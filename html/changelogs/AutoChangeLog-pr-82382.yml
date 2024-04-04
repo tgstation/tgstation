@@ -1,0 +1,4 @@
+author: "KingkumaArt"
+delete-after: True
+changes:
+  - bugfix: "Moves that one wall on NorthStar to not block the maints passage"
