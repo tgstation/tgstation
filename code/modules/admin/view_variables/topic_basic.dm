@@ -98,9 +98,7 @@
 		if(!check_rights(NONE))
 			return
 		var/mass_remove = href_list[VV_HK_MASS_REMOVECOMPONENT]
-		var/list/components = list()
-		for(var/datum/component/component in target.GetComponents(/datum/component))
-			components += component.type
+		var/list/components = target.GetAllComponentTypes()
 		var/list/names = list()
 		names += "---Components---"
 		if(length(components))
