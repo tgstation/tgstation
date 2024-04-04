@@ -437,7 +437,7 @@
 
 /obj/item/clothing/under/costume/gamberson/military
 	name = "swordsman's Gamberson"
-	desc = "A padded medieval gamberson. has enough woolen layers to dull a strike from any small weapon."
+	desc = "A padded medieval gamberson. Has enough woolen layers to dull a strike from any small weapon."
 	armor_type = /datum/armor/clothing_under/rank_security
 	has_sensor = NO_SENSORS
 

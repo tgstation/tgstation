@@ -194,7 +194,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval
 	name = "\improper Improvised sleeper"
-	desc = "A body bag poked with holes, used as a sleeping bag. someone seems to be sleeping inside of it."
+	desc = "A body bag poked with holes, currently being used as a sleeping bag. Someone seems to be sleeping inside of it."
 	density = FALSE
 	you_are_text = "You were a nobody before, until you were given a sword and the opportunity to rise up in ranks. If you put some effort, you can make it big!"
 	flavour_text = "Raiding some cretins while engaging in bloodsport and violence? what a deal. Stay together and pillage everything!"

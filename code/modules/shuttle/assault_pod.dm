@@ -76,7 +76,7 @@
 
 /obj/item/assault_pod/medieval/Initialize(mapload)
 	. = ..()
-	var/counter = 1 + length(SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/shuttle/pirate))
+	var/counter = length(SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/shuttle/pirate))
 	if(counter != 1)
 		shuttle_id = "[shuttle_id]_[counter]"
 		lzname = "[lzname] [counter]"
