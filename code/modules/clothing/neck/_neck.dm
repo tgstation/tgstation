@@ -495,6 +495,7 @@
 	icon_state = "watcher_wreath"
 	worn_y_offset = 10
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/neck/wreath/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
