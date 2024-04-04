@@ -138,12 +138,12 @@
 		owner.SetImmobilized(0)
 		owner.SetParalyzed(0)
 		owner.setStaminaLoss(0)
-		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, src)
-		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_IGNOREDAMAGESLOWDOWN, src), stun_resistance_time)
-		ADD_TRAIT(owner, TRAIT_BATON_RESISTANCE, src)
-		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_BATON_RESISTANCE, src), stun_resistance_time)
-		ADD_TRAIT(owner, TRAIT_STUNIMMUNE, src)
-		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_STUNIMMUNE, src), stun_resistance_time)
+		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, REF(src))
+		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_IGNOREDAMAGESLOWDOWN, REF(src)), stun_resistance_time)
+		ADD_TRAIT(owner, TRAIT_BATON_RESISTANCE, REF(src))
+		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_BATON_RESISTANCE, REF(src)), stun_resistance_time)
+		ADD_TRAIT(owner, TRAIT_STUNIMMUNE, REF(src))
+		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_STUNIMMUNE, REF(src)), stun_resistance_time)
 		organ_flags |= ORGAN_FAILING
 		addtimer(CALLBACK(src, PROC_REF(reboot)), implant_cooldown)
 
