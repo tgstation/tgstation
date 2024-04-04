@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Allow dot radio prefixes to also work with the tgui-say radio prefix display."
