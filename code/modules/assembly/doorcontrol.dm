@@ -53,7 +53,7 @@
 			if(openclose == null || !sync_doors)
 				openclose = M.density
 			INVOKE_ASYNC(M, openclose ? TYPE_PROC_REF(/obj/structure/curtain/cloth/fancy/mechanical, open) : TYPE_PROC_REF(/obj/structure/curtain/cloth/fancy/mechanical, close))
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 5)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 0.5 SECONDS)
 
 
 /obj/item/assembly/control/airlock

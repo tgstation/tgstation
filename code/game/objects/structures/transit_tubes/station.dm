@@ -153,7 +153,7 @@
 
 /obj/structure/transit_tube/station/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
 	pod_moving = TRUE
-	addtimer(CALLBACK(src, PROC_REF(start_stopped), pod), 5)
+	addtimer(CALLBACK(src, PROC_REF(start_stopped), pod), 0.5 SECONDS)
 
 /obj/structure/transit_tube/station/proc/start_stopped(obj/structure/transit_tube_pod/pod)
 	if(QDELETED(pod))

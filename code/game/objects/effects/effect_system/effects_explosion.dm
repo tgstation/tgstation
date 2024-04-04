@@ -63,4 +63,4 @@
 
 /datum/effect_system/explosion/smoke/start()
 	..()
-	addtimer(CALLBACK(src, PROC_REF(create_smoke)), 5)
+	addtimer(CALLBACK(src, PROC_REF(create_smoke)), 0.5 SECONDS)

@@ -97,7 +97,7 @@
 			if(istype(content) && in_range(src, usr))
 				usr.put_in_hands(content)
 				icon_state = "[initial(icon_state)]-open"
-				addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 5)
+				addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 0.5 SECONDS)
 				return TRUE
 
 /obj/structure/filingcabinet/attack_tk(mob/user)
