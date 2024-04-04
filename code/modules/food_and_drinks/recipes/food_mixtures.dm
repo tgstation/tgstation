@@ -1,4 +1,5 @@
 /datum/crafting_recipe/food
+	mass_craftable = TRUE
 
 /datum/crafting_recipe/food/on_craft_completion(mob/user, atom/result)
 	SHOULD_CALL_PARENT(TRUE)

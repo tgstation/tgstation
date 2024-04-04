@@ -714,6 +714,28 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                       })
                     }
                   />
+				  {item.mass_craftable && (
+					<Button
+                    my={0.3}
+                    lineHeight={2.5}
+                    align="center"
+                    content="Make a lot"
+                    disabled={!craftable || busy}
+                    icon={
+                      busy
+                        ? 'circle-notch'
+                        : mode === MODE.cooking
+                          ? 'utensils'
+                          : 'hammer'
+                    }
+                    iconSpin={busy ? 1 : 0}
+                    onClick={() =>
+                      act('make_mass', {
+                        recipe: item.ref,
+                      })
+                    }
+                  />
+				  )}
                 </Box>
               ) : (
                 item.steps && (
@@ -852,6 +874,29 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
                   }
                 />
               )}
+			  <br />
+			  {(!item.non_craftable && item.mass_craftable) && (<Button
+                  width="104px"
+                  lineHeight={2.5}
+                  align="center"
+				  tooltip={"Starts infinite(until you step/run out of things to craft) crafting items/food."}
+				  tooltipPosition={"top"}
+                  content="Make a lot"
+                  disabled={!craftable || busy}
+                  icon={
+                    busy
+                      ? 'circle-notch'
+                      : mode === MODE.cooking
+                        ? 'utensils'
+                        : 'hammer'
+                  }
+                  iconSpin={busy ? 1 : 0}
+                  onClick={() =>
+                    act('make_mass', {
+                      recipe: item.ref,
+                    })
+                  }
+                />)}
               {!!item.complexity && (
                 <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
                   Complexity: {item.complexity}
