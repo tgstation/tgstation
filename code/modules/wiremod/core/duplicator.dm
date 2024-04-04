@@ -230,7 +230,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	var/txt
 	switch(option)
 		if("File")
-			txt = file2text(input(usr, "Input File") as file|null)
+			txt = file2text(input(usr, "Input File") as null|file)
 		if("Direct Input")
 			txt = input(usr, "Input JSON", "Input JSON") as text|null
 

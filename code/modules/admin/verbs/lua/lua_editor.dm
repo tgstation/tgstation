@@ -105,6 +105,11 @@
 		return
 	if(!check_rights_for(usr.client, R_ADMIN))
 		return
+	if(action == "runCodeFile")
+		params["code"] = file2text(input(usr, "Input File") as null|file)
+		if(isnull(params["code"]))
+			return
+		action = "runCode"
 	switch(action)
 		if("newState")
 			var/state_name = params["name"]
