@@ -2455,6 +2455,7 @@
 #include "code\game\objects\items\grenades\syndieminibomb.dm"
 #include "code\game\objects\items\implants\implant.dm"
 #include "code\game\objects\items\implants\implant_abductor.dm"
+#include "code\game\objects\items\implants\implant_battle_royale.dm"
 #include "code\game\objects\items\implants\implant_clown.dm"
 #include "code\game\objects\items\implants\implant_deathrattle.dm"
 #include "code\game\objects\items\implants\implant_explosive.dm"
