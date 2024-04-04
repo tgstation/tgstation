@@ -55,9 +55,9 @@
 	/// How long it takes to break out of the SSU.
 	var/breakout_time = 30 SECONDS
 	/// Power contributed by this machine to charge the mod suits cell without any capacitors
-	var/base_charge_rate = 100 KILO WATTS
+	var/base_charge_rate = 200 KILO WATTS
 	/// Final charge rate which is base_charge_rate + contribution by capacitors
-	var/final_charge_rate = 150 KILO WATTS
+	var/final_charge_rate = 250 KILO WATTS
 	/// is the card reader installed in this machine
 	var/card_reader_installed = FALSE
 	/// physical reference of the players id card to check for PERSONAL access level
@@ -287,7 +287,7 @@
 	. = ..()
 
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		final_charge_rate = base_charge_rate + (capacitor.tier * 25 KILO WATTS)
+		final_charge_rate = base_charge_rate + (capacitor.tier * 50 KILO WATTS)
 
 	set_access()
 
@@ -567,7 +567,7 @@
 
 	var/charge_per_item = (final_charge_rate * seconds_per_tick) / cell_count
 	for(var/obj/item/stock_parts/cell/cell as anything in cells_to_charge)
-		charge_cell(charge_per_item, cell)
+		charge_cell(charge_per_item, cell, grid_only = TRUE)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))
