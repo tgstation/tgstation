@@ -273,3 +273,15 @@
 //netguardians
 /// rocket launcher
 #define BB_NETGUARDIAN_ROCKET_ABILITY "netguardian_rocket"
+
+
+///this mob will go around attacking helpless weaker animals
+#define	BB_RAPTOR_RUTHELESS "raptor_rutheless"
+///this mob will care for its young
+#define	BB_RAPTOR_MOTHERLY "raptor_motherly"
+///this mob will be playful around their owners
+#define BB_RAPTOR_PLAYFUL "raptor_playful"
+///this mob will flee combat when it feels threatened
+#define BB_RAPTOR_COWARD "raptor_coward"
+///this mob will go out seeking trouble against its kind
+#define BB_RAPTOR_TROUBLE_MAKER "raptor_trouble_maker"

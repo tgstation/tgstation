@@ -10,6 +10,7 @@ import {
   NumberInput,
   ProgressBar,
   Section,
+  Box,
   Stack,
 } from '../components';
 import { Window } from '../layouts';
@@ -20,6 +21,7 @@ type Data = {
   raptor_speed: number;
   raptor_color: String;
   raptor_image: String;
+  raptor_happiness: String;
   raptor_description: String;
   inherited_attack: number;
   inherited_attack_max: number;
@@ -39,6 +41,7 @@ export const RaptorDex = (props) => {
     inherited_attack_max,
     inherited_health,
     inherited_health_max,
+    raptor_happiness,
     inherited_traits,
     raptor_description,
     raptor_color,
@@ -106,6 +109,23 @@ export const RaptorDex = (props) => {
                   />
                 </LabeledList.Item>
               </LabeledList>
+            </Section>
+          </Stack.Item>
+          <Stack.Item width="33%">
+            <Section textAlign="center" title="Friendship bond">
+              <Image
+                mt={-7}
+                src={`data:image/jpeg;base64,${raptor_happiness}`}
+                height="72px"
+                width="72px"
+              />
+            </Section>
+            <Section textAlign="center" title="Inherited Traits">
+              <Stack vertical>
+                {inherited_traits.map((trait, index) => (
+                  <Stack.Item key={index}>{trait}</Stack.Item>
+                ))}
+              </Stack>
             </Section>
           </Stack.Item>
         </Stack>

@@ -10,8 +10,6 @@
 	var/happiness_level
 	///our maximum happiness level
 	var/maximum_happiness
-	///intervals we trigger a happiness change
-	var/interval_change
 	///happiness AI blackboard key
 	var/blackboard_key
 	///happiness when we get groomed
@@ -20,6 +18,8 @@
 	var/on_petted_change
 	///happiness when we eat
 	var/on_eat_change
+	///percentages we should be calling back on
+	var/list/callback_percentages
 	///callback when our happiness changes
 	var/datum/callback/happiness_callback
 
@@ -30,17 +30,17 @@
 	///how long till we can groom it again
 	COOLDOWN_DECLARE(groom_cooldown)
 
-/datum/component/happiness/Initialize(maximum_happiness = 400, interval_change = 100, blackboard_key = BB_BASIC_HAPPINESS, on_groom_change = 200, on_eat_change = 300, on_petted_change = 30, happiness_callback)
+/datum/component/happiness/Initialize(maximum_happiness = 400, blackboard_key = BB_BASIC_HAPPINESS, on_groom_change = 200, on_eat_change = 300, on_petted_change = 30, callback_percentages = list(0, 25, 50, 100), happiness_callback)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.maximum_happiness = maximum_happiness
-	src.interval_change = interval_change
 	src.blackboard_key = blackboard_key
 	src.on_groom_change = on_groom_change
 	src.on_petted_change = on_petted_change
 	src.on_eat_change = on_eat_change
 	src.happiness_callback = happiness_callback
+	src.callback_percentages = callback_percentages
 
 	ADD_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
 
@@ -94,23 +94,25 @@
 	var/list/offset_to_add= get_icon_dimensions(source.icon)
 	var/y_position = offset_to_add["height"] + 1
 	var/obj/effect/overlay/happiness_overlay/hearts = new
-	var/amount_of_hearts = round(happiness_level/interval_change, 1)
 	hearts.pixel_y = y_position
-	hearts.set_hearts(amount_of_hearts)
+	hearts.set_hearts(happiness_level/maximum_happiness)
 	source.vis_contents += hearts
 	COOLDOWN_START(src, happiness_inspect, INSPECT_TIMER)
 
 
 /datum/component/happiness/process()
-	happiness_level--
-
-	if(happiness_level % interval_change == 0)
-		var/mob/living/living_parent = parent
-		living_parent.ai_controller?.set_blackboard_key(blackboard_key, happiness_level)
+	var/mob/living/living_parent = parent
+	var/happiness_percentage = happiness_level/maximum_happiness
+	living_parent.ai_controller?.set_blackboard_key(blackboard_key, happiness_percentage)
+	var/check_percentage_in_list = round(happiness_percentage * 100, 1)
+	if(check_percentage_in_list in callback_percentages)
+		SEND_SIGNAL(parent, COMSIG_MOB_HAPPINESS_CHANGE, happiness_percentage)
 		happiness_callback?.Invoke()
 
 	if(happiness_level <= 0)
 		return PROCESS_KILL
+	
+	happiness_level--
 
 /obj/effect/overlay/happiness_overlay
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -118,7 +120,7 @@
 	vis_flags = VIS_INHERIT_DIR
 	layer = ABOVE_HUD_PLANE
 	///how many hearts should we display
-	VAR_PRIVATE/amount_of_hearts
+	VAR_PRIVATE/hearts_percentage
 	///icon of our heart
 	var/heart_icon = 'icons/effects/effects.dmi'
 
@@ -126,15 +128,16 @@
 	. = ..()
 	QDEL_IN(src, 5 SECONDS)
 
-/obj/effect/overlay/happiness_overlay/proc/set_hearts(heart_amounts)
-	amount_of_hearts = heart_amounts
+/obj/effect/overlay/happiness_overlay/proc/set_hearts(happiness_percentage)
+	hearts_percentage = happiness_percentage
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/effect/overlay/happiness_overlay/update_overlays()
 	. = ..()
 	var/static/list/heart_positions = list(-13, -5, 3, 11)
+	var/display_amount = round(length(heart_positions) * hearts_percentage, 1)
 	for(var/index in 1 to length(heart_positions))
-		var/heart_icon_state = amount_of_hearts > index ? "full_heart" : "empty_heart"
+		var/heart_icon_state = display_amount >= index ? "full_heart" : "empty_heart"
 		var/image/display_icon = image(icon = heart_icon, icon_state = heart_icon_state, layer = ABOVE_HUD_PLANE)
 		display_icon.pixel_x = heart_positions[index]
 		. += display_icon

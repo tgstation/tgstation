@@ -50,3 +50,12 @@ GLOBAL_LIST_INIT(raptor_growth_paths, list(
 	/mob/living/basic/mining/raptor/baby_raptor/yellow = list(RAPTOR_GREEN, RAPTOR_RED),
 	/mob/living/basic/mining/raptor/baby_raptor/green = list(RAPTOR_RED, RAPTOR_YELLOW),
 ))
+
+GLOBAL_LIST_INIT(raptor_inherit_traits, list(
+	BB_RAPTOR_RUTHELESS = "Rutheless",
+	BB_RAPTOR_MOTHERLY = "Motherly",
+	BB_RAPTOR_PLAYFUL = "Playful",
+	BB_RAPTOR_COWARD = "Cowardly",
+	BB_RAPTOR_TROUBLE_MAKER = "Trouble Maker",
+))
+

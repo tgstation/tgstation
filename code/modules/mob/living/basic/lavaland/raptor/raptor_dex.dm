@@ -26,6 +26,12 @@
 	data["raptor_speed"] = my_raptor.speed
 	data["raptor_color"] = my_raptor.name
 	data["raptor_description"] = my_raptor.dex_description
+	var/happiness_percentage = my_raptor.ai_controller?.blackboard[BB_BASIC_HAPPINESS]
+	var/obj/effect/overlay/happiness_overlay/display = new
+	display.set_hearts(happiness_percentage)
+	display.pixel_y = world.icon_size * 0.5
+	data["raptor_happiness"] = icon2base64(getFlatIcon(display))
+	qdel(display)
 	var/datum/raptor_inheritance/inherit = my_raptor.inherited_stats
 	if(isnull(inherit))
 		return data
@@ -33,7 +39,9 @@
 	data["inherited_attack_max"] = RAPTOR_INHERIT_MAX_ATTACK
 	data["inherited_health"] = inherit.health_modifier
 	data["inherited_health_max"] = RAPTOR_INHERIT_MAX_HEALTH
-	data["inherited_traits"] = inherit.inherit_traits
+	data["inherited_traits"] = list()
+	for(var/index in inherit.inherit_traits)
+		data["inherited_traits"] += GLOB.raptor_inherit_traits[index]
 	return data
 
 

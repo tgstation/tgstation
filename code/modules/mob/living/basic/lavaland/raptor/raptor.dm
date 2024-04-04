@@ -12,6 +12,7 @@
 	attack_verb_simple = "chomps"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	speak_emote = list("screeches")
+	ai_controller = /datum/ai_controller/basic_controller/sheep
 	///can this mob breed
 	var/can_breed = TRUE
 	///can we ride this mob
@@ -54,8 +55,9 @@
 /mob/living/basic/mining/raptor/proc/inherit_properties()
 	if(isnull(inherited_stats))
 		return
-	for(var/trait in inherited_stats.inherit_traits)
-		ADD_TRAIT(src, trait, INNATE_TRAIT)
+	for(var/trait in GLOB.raptor_inherit_traits) // done this way to allow overriding of traits when assigned new inherit datum
+		var/should_inherit = (GLOB.raptor_inherit_traits in inherited_stats.inherit_traits)
+		ai_controller?.set_blackboard_key(trait, should_inherit)
 	melee_damage_lower += inherited_stats.attack_modifier
 	melee_damage_upper += melee_damage_lower + 5
 	maxHealth += inherited_stats.health_modifier
@@ -192,6 +194,7 @@
 	QDEL_NULL(inherited_stats)
 	return ..()
 
+#define RANDOM_INHERIT_AMOUNT 2
 /datum/raptor_inheritance
 	///list of traits we inherit
 	var/list/inherit_traits = list()
@@ -207,6 +210,9 @@
 /datum/raptor_inheritance/proc/randomize_stats()
 	attack_modifier = rand(0, RAPTOR_INHERIT_MAX_ATTACK)
 	health_modifier = rand(0, RAPTOR_INHERIT_MAX_HEALTH)
+	var/list/traits_to_pick = GLOB.raptor_inherit_traits.Copy()
+	for(var/i in 1 to RANDOM_INHERIT_AMOUNT)
+		inherit_traits += pick_n_take(traits_to_pick)
 
 /datum/raptor_inheritance/proc/set_parents(datum/raptor_inheritance/father, datum/raptor_inheritance/mother)
 	if(isnull(father) || isnull(mother))
@@ -224,3 +230,5 @@
 	new_clone.health_modifier = health_modifier
 	new_clone.inherit_traits += inherit_traits
 	return new_clone
+
+#undef RANDOM_INHERIT_AMOUNT
