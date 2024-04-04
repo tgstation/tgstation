@@ -285,7 +285,7 @@
 	SSexplosions.high_mov_atom += src
 
 /obj/item/stock_parts/cell/proc/get_electrocute_damage()
-	return ELECTROCUTE_DAMAGE(charge)
+	return ELECTROCUTE_DAMAGE(charge / (0.001 * STANDARD_CELL_CHARGE))
 
 /obj/item/stock_parts/cell/get_part_rating()
 	return maxcharge * 10 + charge
