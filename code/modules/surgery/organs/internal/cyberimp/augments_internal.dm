@@ -144,11 +144,12 @@
 		ADD_TRAIT(owner, TRAIT_STUNIMMUNE, REF(src))
 		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_STUNIMMUNE, REF(src)), stun_resistance_time)
 		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, setStaminaLoss), 0), stun_resistance_time)
-		COOLDOWN_START(src, implant_cooldown, 40 SECONDS)
-		addtimer(CALLBACK(src, PROC_REF(implant_ready)),40 SECONDS)
+		COOLDOWN_START(src, implant_cooldown, 60 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(implant_ready)),60 SECONDS)
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/implant_ready()
-	to_chat(owner, span_purple("Your rebooter implant is ready."))
+	if(owner)
+		to_chat(owner, span_purple("Your rebooter implant is ready."))
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()
@@ -159,8 +160,7 @@
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING 
-	if(owner)
-		implant_ready()
+	implant_ready()
 
 //[[[[MOUTH]]]]
 /obj/item/organ/internal/cyberimp/mouth
