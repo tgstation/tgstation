@@ -663,7 +663,7 @@
 
 /obj/item/relic/proc/explode(mob/user)
 	to_chat(user, span_danger("[src] begins to heat up!"))
-	addtimer(CALLBACK(src, PROC_REF(do_explode), user), rand(35, 10 SECONDS))
+	addtimer(CALLBACK(src, PROC_REF(do_explode), user), rand(3.5, 10) SECONDS)
 
 /obj/item/relic/proc/do_explode(mob/user)
 	if(loc == user)
