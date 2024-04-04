@@ -70,13 +70,15 @@
 	inhand_icon_state = null
 	desc = "A map of the station used to select where you want to land your shuttle."
 	shuttle_id = "pirate"
-	width = 8
-	lz_dir = 8
+	dwidth = 1
+	dheight = 1
+	width = 15
+	height = 9
 	lzname = "pirate"
 
 /obj/item/assault_pod/medieval/Initialize(mapload)
 	. = ..()
-	var/counter = 1 + length(SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/shuttle/pirate))
+	var/counter = length(SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/shuttle/pirate))
 	if(counter != 1)
 		shuttle_id = "[shuttle_id]_[counter]"
 		lzname = "[lzname] [counter]"

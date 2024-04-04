@@ -2,23 +2,54 @@
 "a" = (
 /turf/template_noop,
 /area/template_noop)
+"b" = (
+/obj/structure/table/wood,
+/obj/item/stack/sheet/mineral/wood/fifty{
+	pixel_y = 4
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
 "c" = (
-/turf/closed/wall/mineral/wood/nonmetal,
+/obj/structure/fake_stairs/wood/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"d" = (
+/obj/structure/fake_stairs/wood/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/structure/mineral_door/gold,
+/turf/open/floor/stone,
 /area/shuttle/pirate)
 "e" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 10
-	},
+/obj/effect/spawner/random/trash/botanical_waste,
+/obj/effect/spawner/random/trash/garbage,
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"f" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"g" = (
+/obj/structure/fans/tiny,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/mineral_door/iron,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"h" = (
 /obj/structure/table/wood,
-/obj/item/shield/buckler{
-	pixel_x = 11;
-	pixel_y = 7
-	},
-/obj/item/shield/buckler{
-	pixel_y = -4;
-	pixel_x = 8
-	},
 /obj/item/spear/military{
 	pixel_y = 8;
 	pixel_x = -7
@@ -33,244 +64,461 @@
 	},
 /turf/open/floor/stone,
 /area/shuttle/pirate)
-"g" = (
-/obj/machinery/computer/piratepad_control,
-/obj/effect/decal/cleanable/dirt/dust,
+"j" = (
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"k" = (
+/obj/structure/table/wood,
+/obj/item/shield/buckler,
+/obj/item/shield/buckler,
+/obj/item/restraints/legcuffs/bola,
 /turf/open/floor/stone,
 /area/shuttle/pirate)
 "l" = (
-/obj/machinery/piratepad,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/blood/old,
+/obj/structure/fans/tiny,
+/obj/structure/mineral_door/iron,
 /turf/open/floor/stone,
+/area/shuttle/pirate)
+"m" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/arrows{
+	dir = 8
+	},
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/effect/spawner/random/trash/botanical_waste,
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "n" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 10
-	},
+/obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/stone,
 /area/shuttle/pirate)
-"p" = (
-/obj/structure/fans/tiny,
-/obj/structure/mineral_door/wood{
-	color = "#6b6536"
-	},
-/turf/open/floor/stone,
-/area/shuttle/pirate)
-"q" = (
-/obj/structure/table/wood,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/stack/sheet/mineral/wood/fifty{
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 10
-	},
-/obj/item/stack/medical/poultice{
-	pixel_x = -4;
-	pixel_y = -5
-	},
-/obj/item/stack/medical/poultice{
-	pixel_x = -6;
-	pixel_y = 7
-	},
-/turf/open/floor/stone,
-/area/shuttle/pirate)
-"v" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/loot_locator,
-/turf/open/floor/stone,
-/area/shuttle/pirate)
-"x" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/mapping_helpers/airalarm/all_access,
-/obj/machinery/airalarm/directional/west,
-/turf/open/floor/stone,
-/area/shuttle/pirate)
-"y" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/shuttle/pirate/drop_pod,
-/turf/open/floor/stone,
-/area/shuttle/pirate)
-"z" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/flashlight/lantern{
-	start_on = 1
-	},
-/turf/open/floor/stone,
-/area/shuttle/pirate)
-"A" = (
+"o" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/mob_spawn/ghost_role/human/pirate/medieval,
+/obj/effect/turf_decal/arrows{
+	dir = 4
+	},
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/spawner/random/trash/garbage,
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/open/floor/stone,
+/turf/open/floor/plating,
 /area/shuttle/pirate)
-"C" = (
-/obj/machinery/shuttle_scrambler,
-/turf/open/floor/stone,
+"p" = (
+/turf/closed/wall/mineral/wood,
 /area/shuttle/pirate)
-"D" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fermenting_barrel/thermite,
-/obj/item/reagent_containers/cup/bucket/wooden,
-/obj/item/reagent_containers/cup/bucket/wooden,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 10
-	},
-/turf/open/floor/stone,
-/area/shuttle/pirate)
-"E" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/stone,
-/area/shuttle/pirate)
-"G" = (
+"q" = (
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord,
-/obj/effect/decal/cleanable/glass,
-/turf/open/floor/stone,
-/area/shuttle/pirate)
-"I" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/structure/barricade/wooden/crude,
-/turf/open/floor/stone,
-/area/shuttle/pirate)
-"L" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/shard,
-/obj/item/assault_pod/medieval,
-/obj/structure/frame/computer{
-	anchored = 1
-	},
-/turf/open/floor/stone,
-/area/shuttle/pirate)
-"M" = (
-/turf/open/floor/stone,
-/area/shuttle/pirate)
-"N" = (
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 8
-	},
-/turf/open/floor/stone,
-/area/shuttle/pirate)
-"O" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/stone,
-/area/shuttle/pirate)
-"Q" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/vomit/old,
-/turf/open/floor/stone,
-/area/shuttle/pirate)
-"T" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/bodypart/leg/left{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/stone,
 /area/shuttle/pirate)
-"U" = (
+"r" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/trash/garbage,
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"s" = (
+/obj/structure/fans/tiny,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/docking_port/mobile/pirate{
-	dir = 8
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
+	name = "Pirate Ship";
+	port_direction = 2
 	},
 /obj/docking_port/stationary{
 	dwidth = 11;
 	height = 16;
 	shuttle_id = "pirate_home";
 	name = "Deep Space";
-	width = 17;
-	dir = 8
+	width = 17
 	},
-/obj/structure/fans/tiny,
-/obj/structure/mineral_door/wood{
-	color = "#6b6536"
+/obj/structure/mineral_door/iron,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"u" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/item/food/meat/slab/human/mutant/zombie,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"v" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"w" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/stone,
 /area/shuttle/pirate)
-"V" = (
+"x" = (
+/obj/structure/fake_stairs/wood/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/structure/mineral_door/gold,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"y" = (
+/obj/machinery/shuttle_scrambler,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"z" = (
+/obj/structure/fans/tiny,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/mineral_door/iron,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"A" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"C" = (
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone,
 /area/shuttle/pirate)
-"X" = (
+"D" = (
+/obj/machinery/piratepad,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"E" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"F" = (
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"G" = (
+/obj/machinery/computer/piratepad_control,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"H" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair/wood/wings,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"I" = (
+/obj/structure/fake_stairs/wood/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"J" = (
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/item/food/burger/human,
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/bottle/rum{
+	pixel_y = 15;
+	pixel_x = -4
+	},
+/obj/item/reagent_containers/cup/glass/bottle/rum{
+	pixel_y = 8;
+	pixel_x = 8
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"K" = (
+/obj/structure/table/wood,
+/obj/item/stack/medical/poultice{
+	pixel_y = 6;
+	pixel_x = -3
+	},
+/obj/item/stack/medical/poultice{
+	pixel_y = -3;
+	pixel_x = 5
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"L" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"M" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/spawner/random/trash/graffiti,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/ghost_role/human/pirate/medieval,
-/obj/effect/mob_spawn/ghost_role/human/pirate/medieval,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"N" = (
+/obj/machinery/computer/shuttle/pirate/drop_pod,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"O" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/kitchen/fork,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"P" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"Q" = (
+/obj/item/reagent_containers/cup/bucket/wooden,
+/obj/structure/fermenting_barrel/thermite,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"R" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 1
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"S" = (
+/obj/structure/frame/computer{
+	anchored = 1
+	},
+/obj/item/assault_pod/medieval,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"T" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"U" = (
+/obj/machinery/loot_locator,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"V" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"W" = (
+/obj/structure/table/wood,
+/obj/item/radio/intercom{
+	pixel_y = 5
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"X" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/item/bodypart/head/skeleton{
+	pixel_x = -6
+	},
+/obj/item/bodypart/head/skeleton{
+	pixel_y = -2;
+	pixel_x = 5
+	},
+/obj/item/bodypart/head/skeleton{
+	pixel_x = 1;
+	pixel_y = 8
+	},
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"Y" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/shuttle/pirate)
+"Z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
 /turf/open/floor/stone,
 /area/shuttle/pirate)
 
 (1,1,1) = {"
-c
-c
-c
-c
+a
+a
 p
-I
-c
-c
+p
+l
+p
+p
+p
+a
 "}
 (2,1,1) = {"
 a
-I
-C
-x
-V
-X
+a
+g
+f
+o
+r
 A
-c
+s
+a
 "}
 (3,1,1) = {"
-c
-c
-v
-M
-z
-Q
-D
-c
+a
+a
+a
+a
+I
+a
+a
+a
+a
 "}
 (4,1,1) = {"
+p
+p
+p
+p
+x
+p
+E
+p
 a
-I
-L
-G
-O
-n
-e
-c
 "}
 (5,1,1) = {"
-c
-c
-y
+a
 E
-z
+R
+X
 T
-q
-c
+C
+Q
+p
+p
 "}
 (6,1,1) = {"
-a
-I
-g
-l
-M
-V
-N
-c
+p
+p
+W
+F
+T
+j
+Y
+h
+E
 "}
 (7,1,1) = {"
-c
-c
-c
-c
+a
+E
+N
+Y
+T
+Y
+F
+k
+p
+"}
+(8,1,1) = {"
+V
+V
+S
+P
+q
+L
+F
+F
+l
+"}
+(9,1,1) = {"
+a
+E
+y
+F
+w
+n
+H
+b
+p
+"}
+(10,1,1) = {"
+p
+p
 U
-I
+F
+w
+Z
+u
+K
+E
+"}
+(11,1,1) = {"
+a
+E
+G
+D
+T
+O
+J
+p
+p
+"}
+(12,1,1) = {"
+p
+p
+p
+p
+d
+p
+E
+p
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
 c
-c
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+z
+M
+m
+e
+v
+z
+a
+"}
+(15,1,1) = {"
+a
+a
+p
+p
+l
+p
+p
+p
+a
 "}
