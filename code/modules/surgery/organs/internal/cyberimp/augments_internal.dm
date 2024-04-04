@@ -111,7 +111,12 @@
 		COMSIG_LIVING_STATUS_PARALYZE,
 	)
 
-	var/stun_cap_amount = 40
+	///timer before the implant activates
+	var/stun_cap_amount = 2 SECONDS
+	///amount of time you are resistant to stuns and knockdowns
+	var/stun_resistance_time = 5 SECONDS
+	///Cooldown before the implant can be activated again
+	var/implant_cooldown = 40 SECONDS
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/on_mob_remove(mob/living/carbon/implant_owner)
 	. = ..()
@@ -132,6 +137,15 @@
 		owner.SetKnockdown(0)
 		owner.SetImmobilized(0)
 		owner.SetParalyzed(0)
+		owner.setStaminaLoss(0)
+		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, src)
+		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_IGNOREDAMAGESLOWDOWN, src), stun_resistance_time)
+		ADD_TRAIT(owner, TRAIT_BATON_RESISTANCE, src)
+		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_BATON_RESISTANCE, src), stun_resistance_time)
+		ADD_TRAIT(owner, TRAIT_STUNIMMUNE, src)
+		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_STUNIMMUNE, src), stun_resistance_time)
+		organ_flags |= ORGAN_FAILING
+		addtimer(CALLBACK(src, PROC_REF(reboot)), implant_cooldown)
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()
@@ -142,6 +156,7 @@
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
+	to_chat(owner, span_purple("Your rebooter implant is ready"))
 
 //[[[[MOUTH]]]]
 /obj/item/organ/internal/cyberimp/mouth
