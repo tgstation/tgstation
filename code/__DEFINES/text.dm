@@ -65,7 +65,7 @@
 #define PREVENT_CHARACTER_TRIM_LOSS(integer) (integer + 1)
 
 /// BYOND's string procs, `lowertext()` here, don't support being used on datum references (as in it doesn't look for a name for stringification)- so we use this macro to ensure that we will only pass strings
-#define LOWER_TEXT(thing) lowertext(UNLINT(istype(thing, /datum) ? thing.name : thing))
+#define LOWER_TEXT(thing) lowertext(UNLINT("[thing]"))
 
 /// Folder directory for strings
 #define STRING_DIRECTORY "strings"
