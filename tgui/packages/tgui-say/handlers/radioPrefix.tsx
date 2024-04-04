@@ -14,7 +14,10 @@ export const handleRadioPrefix = function (this: Modal) {
   if (channel > 1 || !value || value.length < 3) {
     return;
   }
-  const nextPrefix = value?.slice(0, 3)?.toLowerCase();
+  const nextPrefix = value
+    ?.slice(0, 3)
+    ?.toLowerCase()
+    ?.replace('.', ':');
   if (!RADIO_PREFIXES[nextPrefix] || radioPrefix === nextPrefix) {
     return;
   }
