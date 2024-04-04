@@ -156,7 +156,8 @@
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
-	to_chat(owner, span_purple("Your rebooter implant is ready"))
+	if(owner)
+		to_chat(owner, span_purple("Your rebooter implant is ready."))
 
 //[[[[MOUTH]]]]
 /obj/item/organ/internal/cyberimp/mouth
