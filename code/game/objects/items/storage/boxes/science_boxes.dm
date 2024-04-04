@@ -60,6 +60,9 @@
 	for(var/i in 1 to 24)
 		new cube_type(src)
 
+/obj/item/storage/box/monkeycubes/syndicate/syndis
+	cube_type = /obj/item/food/monkeycube/syndi
+
 /obj/item/storage/box/gorillacubes
 	name = "gorilla cube box"
 	desc = "Waffle Co. brand gorilla cubes. Do not taunt."

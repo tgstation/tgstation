@@ -372,7 +372,7 @@
 	desc = "A gun that changes temperatures."
 	pin = /obj/item/firing_pin
 	ammo_type = list(/obj/item/ammo_casing/energy/temp/syndicate, /obj/item/ammo_casing/energy/temp/syndicate/hot)
-	cell_type = "/obj/item/stock_parts/cell/super"
+	cell_type = /obj/item/stock_parts/cell/super
 
 /obj/item/gun/energy/gravity_gun
 	name = "one-point gravitational manipulator"

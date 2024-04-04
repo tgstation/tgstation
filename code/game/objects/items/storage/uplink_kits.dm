@@ -1059,7 +1059,31 @@
 	for(var/i in 1 to 2)
 		new /obj/item/encryptionkey/syndicate(src)
 
+/obj/item/storage/box/syndie_kit/launchpadcamerabundle/PopulateContents()
+	new /obj/item/stack/sheet/iron/ten(src)
+	new /obj/item/stack/sheet/iron/five(src)
+	for(var/i in 1 to 4)
+		new /obj/item/stack/sheet/glass(src)
+	new /obj/item/stack/cable_coil(src)
+	new /obj/item/circuitboard/computer/launchpad_console(src)
+	new /obj/item/circuitboard/machine/launchpad(src)
+	new /obj/item/circuitboard/computer/advanced_camera(src)
+	new /obj/item/stock_parts/servo/femto(src)
+	new /obj/item/stack/ore/bluespace_crystal(src)
+	new /obj/item/wrench(src)
+	new /obj/item/screwdriver(src)
+	new /obj/item/multitool(src)
 
+/obj/item/storage/box/syndie_kit/spininverters/PopulateContents()
+	new /obj/item/swapper(src)
+	new /obj/item/swapper(src)
+
+/obj/item/storage/box/syndie_kit/syndifulton/PopulateContents()
+	new /obj/item/book/granter/crafting_recipe/syndifultons(src)
+	for(var/i in 1 to 2)
+		new /obj/item/extraction_pack/non_contractor(src)
+	for(var/i in 1 to 2)
+		new /obj/item/fulton_core/syndicate(src)
 
 
 #undef KIT_RECON

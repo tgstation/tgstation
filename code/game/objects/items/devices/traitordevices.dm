@@ -19,7 +19,7 @@ effective or pretty fucking useless.
 	name = "mind batterer"
 	desc = "A strange device with twin antennas."
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
-	icon_state = "batterer"
+	icon_state = "mindbatterer"
 	throwforce = 5
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
@@ -762,3 +762,32 @@ effective or pretty fucking useless.
 	M.soundbang_act(1, 20, 10, 15)
 	M.adjustOrganLoss(ORGAN_SLOT_EARS, -10)
 	return
+
+/obj/item/bone_gel_dangerous
+	name = "bone gel"
+	desc = "A potent medical gel that, when applied to a damaged bone in a proper surgical setting, triggers an intense melding reaction to repair the wound. Can be directly applied alongside surgical sticky tape to a broken bone in dire circumstances, though this is very harmful to the patient and not recommended."
+
+	icon = 'icons/obj/medical/surgery_tools.dmi'
+	icon_state = "bone-gel"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+
+/obj/item/bone_gel_dangerous/attack(mob/living/M, mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = M
+		visible_message(span_warning("[M] is trying to apply [src] rather hastily to [C]!"), span_notice("You hastily begin applying the [src] to [C]."))
+		if(do_after(user, 4 SECONDS))
+			for(var/i in C.bodyparts)
+				var/obj/item/bodypart/bone = i // fine to just, use these raw, its a meme anyway
+				var/datum/wound/blunt/bone/severe/oof_ouch = new
+				oof_ouch.apply_wound(bone, wound_source = "bone gel")
+				var/datum/wound/blunt/bone/critical/oof_OUCH = new
+				oof_OUCH.apply_wound(bone, wound_source = "bone gel")
+
+			for(var/i in C.bodyparts)
+				var/obj/item/bodypart/bone = i
+				bone.receive_damage(brute=15)
+			qdel(src)
+			return BRUTELOSS
+	return
+

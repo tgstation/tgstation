@@ -180,6 +180,11 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(uses_left <= 0)
 		qdel(src)
 
+/obj/item/extraction_pack/non_contractor
+	can_use_indoors = TRUE
+	uses_left = 3
+	beacon_networks = list("station", "syndicate")
+
 /obj/item/fulton_core
 	name = "extraction beacon assembly kit"
 	desc = "When built, emits a signal which fulton recovery devices can lock onto. Activate in hand to unfold into a beacon."
@@ -192,6 +197,15 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		playsound(src, 'sound/items/deconstruct.ogg', vol = 50, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
 		qdel(src)
 
+/obj/item/fulton_core/syndicate
+	name = "suspicious extraction beacon assembly kit"
+	icon_state = "folded_extraction"
+
+/obj/item/fulton_core/syndicate/attack_self(mob/user)
+	if(do_after(user, 1.5 SECONDS, user) && !QDELETED(src))
+		new /obj/structure/extraction_point/syndi(get_turf(user))
+		qdel(src)
+
 /obj/structure/extraction_point
 	name = "fulton recovery beacon"
 	desc = "A beacon for the fulton recovery system. Activate a pack in your hand to link it to a beacon."
@@ -201,6 +215,10 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	density = FALSE
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	var/beacon_network = "station"
+
+/obj/structure/extraction_point/syndi
+	alpha = 0
+	beacon_network = "syndicate"
 
 /obj/structure/extraction_point/Initialize(mapload)
 	. = ..()

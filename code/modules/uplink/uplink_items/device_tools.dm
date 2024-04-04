@@ -44,8 +44,8 @@
 /datum/uplink_item/device_tools/tram_remote
 	name = "Tram Remote Control"
 	desc = "When linked to a tram's on board computer systems, this device allows the user to manipulate the controls remotely. \
-		Includes direction toggle and a rapid mode to bypass door safety checks and crossing signals. \
-		Perfect for running someone over in the name of a tram malfunction!"
+			Includes direction toggle and a rapid mode to bypass door safety checks and crossing signals. \
+			Perfect for running someone over in the name of a tram malfunction!"
 	item = /obj/item/assembly/control/transport/remote
 	cost = 2
 
@@ -275,4 +275,91 @@
 	desc = "After many failed attempts, the syndicate has reverse engineered an angel potion smuggled off of the lava planet V-227. \
 			Those who drink the contents of the bottle provided will immediately sprout wings capable of sustained flight. Wings may vary in appearance."
 	cost = 2
+	surplus = 10
 	item = /obj/item/reagent_containers/cup/bottle/potion/flight
+
+/datum/uplink_item/device_tools/jetpack
+	name = "Smuggled Jetpack"
+	desc = "A blue jetpack smuggled from NT's suppliers. It's been pre-filled with oxygen."
+	item = /obj/item/tank/jetpack/oxygen
+	cost = 2
+	illegal_tech = FALSE
+
+/datum/uplink_item/device_tools/advlaunchcamerasetup
+	name = "Launchpad & Camera Setup Bundle"
+	desc = "A box utilizing bluespace technology, it contains everything you'd require to setup a launchpad and advanced camera monitor. \
+			Thank our smugglers in advance. Does not come with any power setup. If you'd prefer a mobile setup, try our briefcase launchpad."
+	item = /obj/item/storage/box/syndie_kit/launchpadcamerabundle
+	cost = 8
+	surplus = 15
+	illegal_tech = FALSE
+
+/datum/uplink_item/device_tools/portalgun
+	name = "Bluespace Wormhole Projector"
+	desc = "A projector that emits high density quantum-coupled bluespace beams capable of ripping holes within the fabric of space-time. \
+			Shoot once for a blue portal, a second time for a red portal. Entities may pass through one portal to emerge from the other. \
+			Portals will collapse and disappear eventually on their own, and portals may be created through windows."
+	item = /obj/item/gun/energy/wormhole_projector/core_inserted
+	cost = 5
+	surplus = 18
+	illegal_tech = FALSE
+
+/datum/uplink_item/device_tools/spininverters
+	name = "Quantum Spin Inverters"
+	desc = "An experimental device that is able to swap the locations of two entities by switching their particles' spin values. Must be linked to another device to function."
+	item = /obj/item/storage/box/syndie_kit/spininverters
+	cost = 2
+	surplus = 20
+	illegal_tech = TRUE
+
+/datum/uplink_item/device_tools/belt_bluecham
+	name = "Bluespace Chameleon Belt"
+	desc = "A robust belt fitted with chameleon technology that is capable of holding all manner of tactical equipment, and can even hold the bulkiest items!"
+	item = /obj/item/storage/belt/chameleon/bluespace
+	cost = 3
+
+/datum/uplink_item/device_tools/syndicubes
+	name = "Box of Syndicate Cubes"
+	desc = "A box containing 5 simple lifeform producing cubes, when water is applied, human-like lifeforms will spring forth and will attack everyone nearby. \
+			Syndicates produced have limited intelligence and may not be able to identify undercover agents. They are armed however."
+	item = /obj/item/storage/box/monkeycubes/syndicate/syndis
+	cost = 5
+	surplus = 10
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
+
+/datum/uplink_item/device_tools/dangerous_bone_gel
+	name = "Reverse Bone Gel"
+	desc = "A single bottle of bone gel, we've specifically modified it to do the exact OPPOSITE of it's intended purpose. Refrain from using on yourself. \
+			The reverse bone gel will apply itself all over the victims body regardless of where it's applied, and only has enough for one use."
+	item = /obj/item/bone_gel_dangerous
+	cost = 3
+	surplus = 10
+
+/datum/uplink_item/device_tools/mrfreezesprayer
+	name = "Frost Oil Chemical Sprayer"
+	desc = "One of our bioterror chemical sprayers, rather than spewing lethal chemicals, it generates and shoots frost oil. \
+			Frost oil leaves behind frozen tiles which cause slips, this cannot be prevented by no-slip shoes or magboots. \
+			Best used as an escape tool rather than being used to gain an advantage over an opponent."
+	item = /obj/item/reagent_containers/spray/chemsprayer/freeze
+	cost = 5
+	surplus = 10
+
+/datum/uplink_item/device_tools/syndicate_fulton
+	name = "Syndicate Fulton Package"
+	desc = "A box containing two fulton packs that can be used anywhere, and two beacons for those fultons. \
+			The fulton packs can be used anywhere, and the beacons can only be discovered via our packs. \
+			Beacons are completely invisible. Comes with a manual to make more."
+	item = /obj/item/storage/box/syndie_kit/syndifulton
+	cost = 6
+	surplus = 30
+
+/datum/uplink_item/device_tools/universal_key
+	name = "Universal Encryption Key"
+	desc = "A syndicate encryption key given superior subspace technology by an unknown party. \
+			Insert this encryption key into a headset to both hear and speak over all departmental channels. \
+			Also grants access to our secure syndicate channel and even Nanotrasen's private channels. \
+			Does NOT translate binary."
+	item = /obj/item/encryptionkey/universal
+	cost = 3
+	surplus = 0
+	illegal_tech = TRUE
