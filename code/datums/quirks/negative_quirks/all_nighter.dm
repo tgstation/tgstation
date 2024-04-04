@@ -61,7 +61,6 @@
 	var/mob/living/carbon/human/sleepy_head = quirk_holder
 	var/obj/item/bodypart/head/face = sleepy_head?.get_bodypart(BODY_ZONE_HEAD)
 	if(face)
-		//our overlay is stored as a datum var, so referencing it is easy
 		face.remove_bodypart_overlay(bodypart_overlay)
 		sleepy_head.update_body_parts()
 	QDEL_NULL(bodypart_overlay)
