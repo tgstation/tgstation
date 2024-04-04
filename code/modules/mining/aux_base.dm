@@ -355,7 +355,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 		return
 
 	anti_spam_cd = 1
-	addtimer(CALLBACK(src, PROC_REF(clear_cooldown)), 50)
+	addtimer(CALLBACK(src, PROC_REF(clear_cooldown)), 5 SECONDS)
 
 	var/turf/landing_spot = get_turf(src)
 

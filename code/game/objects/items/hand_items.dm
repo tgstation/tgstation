@@ -50,7 +50,7 @@
 
 	if(owner == sucker) // big mood
 		to_chat(owner, span_danger("Wait a second... you just looked at your own [src.name]!"))
-		addtimer(CALLBACK(src, PROC_REF(selfGottem), owner), 10)
+		addtimer(CALLBACK(src, PROC_REF(selfGottem), owner), 1 SECONDS)
 	else
 		to_chat(sucker, span_danger("Wait a second... was that a-"))
 		addtimer(CALLBACK(src, PROC_REF(GOTTEM), owner, sucker), 6)

@@ -20,7 +20,7 @@
 	owner.Unconscious(200 * GET_MUTATION_POWER(src))
 	owner.set_jitter(2000 SECONDS * GET_MUTATION_POWER(src)) //yes this number looks crazy but the jitter animations are amplified based on the duration.
 	owner.add_mood_event("epilepsy", /datum/mood_event/epilepsy)
-	addtimer(CALLBACK(src, PROC_REF(jitter_less)), 90)
+	addtimer(CALLBACK(src, PROC_REF(jitter_less)), 9 SECONDS)
 
 /datum/mutation/human/epilepsy/proc/jitter_less()
 	if(QDELETED(owner))

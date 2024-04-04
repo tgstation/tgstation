@@ -183,7 +183,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/onHeadDeath()
 	myhead = null
-	addtimer(CALLBACK(src, PROC_REF(regain_head)), 50)
+	addtimer(CALLBACK(src, PROC_REF(regain_head)), 5 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/regain_head()
 	has_head = TRUE

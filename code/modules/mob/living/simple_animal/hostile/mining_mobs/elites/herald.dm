@@ -154,7 +154,7 @@
 	addtimer(CALLBACK(src, PROC_REF(shoot_projectile), target_turf, angle_to_target, FALSE, TRUE), 4)
 	if(health < maxHealth * 0.5 && !is_mirror)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
-		addtimer(CALLBACK(src, PROC_REF(shoot_projectile), target_turf, angle_to_target, FALSE, TRUE), 10)
+		addtimer(CALLBACK(src, PROC_REF(shoot_projectile), target_turf, angle_to_target, FALSE, TRUE), 1 SECONDS)
 		addtimer(CALLBACK(src, PROC_REF(shoot_projectile), target_turf, angle_to_target, FALSE, TRUE), 12)
 		addtimer(CALLBACK(src, PROC_REF(shoot_projectile), target_turf, angle_to_target, FALSE, TRUE), 14)
 
@@ -177,7 +177,7 @@
 	if(health < maxHealth * 0.5 && !is_mirror)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 		addtimer(CALLBACK(src, PROC_REF(herald_circleshot), 22.5), 15)
-	addtimer(CALLBACK(src, PROC_REF(unenrage)), 20)
+	addtimer(CALLBACK(src, PROC_REF(unenrage)), 2 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_teleshot(target)
 	ranged_cooldown = world.time + 30
@@ -283,7 +283,7 @@
 	owner.visible_message(span_danger("[owner]'s [src] emits a loud noise as [owner] is struck!"))
 	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
-	addtimer(CALLBACK(src, PROC_REF(reactionshot), owner), 10)
+	addtimer(CALLBACK(src, PROC_REF(reactionshot), owner), 1 SECONDS)
 
 #undef HERALD_TRISHOT
 #undef HERALD_DIRECTIONALSHOT
