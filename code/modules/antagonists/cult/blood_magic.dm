@@ -126,7 +126,7 @@
 	..()
 
 /datum/action/innate/cult/blood_spell/IsAvailable(feedback = FALSE)
-	if(!IS_CULTIST(owner) || owner.incapacitated() || !charges)
+	if(!IS_CULTIST(owner) || owner.incapacitated() || (!charges && deletes_on_empty))
 		return FALSE
 	return ..()
 
@@ -330,6 +330,7 @@
 	button_icon_state = "manip"
 	charges = 5
 	magic_path = "/obj/item/melee/blood_magic/manipulator"
+	deletes_on_empty = FALSE
 
 // The "magic hand" items
 /obj/item/melee/blood_magic
@@ -393,7 +394,7 @@
 			user.apply_damage(health_cost, BRUTE, BODY_ZONE_L_ARM, wound_bonus = CANT_WOUND)
 		else
 			user.apply_damage(health_cost, BRUTE, BODY_ZONE_R_ARM, wound_bonus = CANT_WOUND)
-	if(uses <= 0 && source.deletes_on_empty)
+	if(uses <= 0)
 		qdel(src)
 	else if(source)
 		source.desc = source.base_desc
@@ -676,7 +677,6 @@
 	name = "Blood Rite Aura"
 	desc = "Absorbs blood from anything you touch. Touching cultists and constructs can heal them. Use in-hand to cast an advanced rite."
 	color = "#7D1717"
-	deletes_on_empty = FALSE
 
 /obj/item/melee/blood_magic/manipulator/examine(mob/user)
 	. = ..()
@@ -693,7 +693,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_bloodbag = target
 		if(HAS_TRAIT(human_bloodbag, TRAIT_NOBLOOD))
-			human_bloodbag.balloon_alert(user, "bloodless!")
+			human_bloodbag.balloon_alert(user, "no blood!")
 			return
 		if(human_bloodbag.stat == DEAD)
 			human_bloodbag.balloon_alert(user, "dead!")
@@ -713,6 +713,9 @@
 		construct_thing.balloon_alert(user, "no damage!")
 		return FALSE
 
+	if(uses <= 0)
+		construct_thing.balloon_alert(user, "out of blood!")
+		return FALSE
 	if(uses > missing_health)
 		construct_thing.adjust_health(-missing_health)
 		construct_thing.visible_message(span_warning("[construct_thing] is fully healed by [user]'s blood magic!"))
@@ -739,6 +742,10 @@
 	**healing_cost = how many spell uses we lose due to healing
 */
 /obj/item/melee/blood_magic/manipulator/proc/heal_cultist(mob/living/carbon/human/human_bloodbag, mob/living/carbon/human/user)
+	if(uses <= 0)
+		human_bloodbag.balloon_alert(user, "out of blood!")
+		return FALSE
+
 	// here we handle blood restoration for those cultists who need it
 	if(human_bloodbag.blood_volume < BLOOD_VOLUME_SAFE)
 		var/blood_needed = BLOOD_VOLUME_SAFE - human_bloodbag.blood_volume
@@ -748,10 +755,9 @@
 			to_chat(user,span_danger("You use the last of your blood rites to restore what blood you could!"))
 			uses = 0
 			return TRUE
-		else
-			human_bloodbag.blood_volume = BLOOD_VOLUME_SAFE
-			uses -= round(blood_needed / USES_TO_BLOOD)
-			to_chat(user,span_warning("Your blood rites have restored [human_bloodbag == user ? "your" : "[human_bloodbag.p_their()]"] blood to safe levels!"))
+		human_bloodbag.blood_volume = BLOOD_VOLUME_SAFE
+		uses -= round(blood_needed / USES_TO_BLOOD)
+		to_chat(user,span_warning("Your blood rites have restored [human_bloodbag == user ? "your" : "[human_bloodbag.p_their()]"] blood to safe levels!"))
 
 	// and here we heal hurt cultists
 	var/overall_damage = human_bloodbag.getBruteLoss() + human_bloodbag.getFireLoss() + human_bloodbag.getToxLoss() + human_bloodbag.getOxyLoss()
