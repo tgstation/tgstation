@@ -106,6 +106,7 @@
 	///Random serial number generated for each cyborg upon its initialization
 	var/ident = 0
 	var/locked = TRUE
+	req_one_access = list(ACCESS_ROBOTICS)
 
 	///Whether the robot has no charge left.
 	var/low_power_mode = FALSE
