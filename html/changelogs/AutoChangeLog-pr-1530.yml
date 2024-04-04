@@ -1,0 +1,6 @@
+author: "Absolucy, Watermelon914"
+delete-after: True
+changes:
+  - refactor: "Auxlua no longer uses the timer subsystem to get stuff done, so Lua scripts shouldn't slow down timers anymore."
+  - bugfix: "Fixed lua error logging."
+  - admin: "Admins can now run lua files bigger than 36 KB by importing them directly."
