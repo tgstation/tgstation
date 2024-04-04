@@ -54,3 +54,8 @@
   Tractor Mann:
   - refactor: Jukebox Beacon Code has been refactored, changes to note is that jukeboxes
       no longer deploy instantly and now come with a wrench.
+2024-04-04:
+  Absolucy:
+  - bugfix: Fix sleeping carp not properly detecting combat mode, resulting in things
+      like not being able to normally grab people and always reflecting projectiles.
+  - bugfix: Airlock mapping helpers now work with windoors.
