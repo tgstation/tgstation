@@ -133,3 +133,22 @@
   - bugfix: Detective revolvers can no longer exist in a quantum state of both being
       chambered in .38 and .357, without risk of misfire. Detectives, cowboy enthusiasts
       and reckless federal agents across the Spinward Sector mourn the loss.
+2024-04-04:
+  00-Steven:
+  - refactor: APCs have had their item interaction chain refactored. This should functionally
+      be the same, but please report any issues.
+  Bilbo367:
+  - bugfix: fixes reagent production selection overwrite updating during selection
+  - code_imp: updates reagent menu for Odysseus
+  - bugfix: aheal no longer turns monkies into humans
+  - qol: Player panel "make monkey" turns humans into monkeys through mutation instead
+      of making a new mob
+  - bugfix: destructive analyzers can now get screwdrivered instead of put it in.
+  - bugfix: destructive analyzer now accepts alien wire cutters, and emags.
+  Bisar:
+  - bugfix: Adjusted the code for changeling reviving stasis to only make them spend
+      chemicals once.
+  necromanceranne:
+  - qol: Makes the clown anomalous crystal actually useful for once rather than an
+      open griefing tool. It now revives the dead...as clowns!
+  - admin: Adds logging for the anomalous crystal activation, including fingerprints.
