@@ -2,17 +2,7 @@ import { BooleanLike } from 'common/react';
 import { useState } from 'react';
 
 import { useBackend } from '../backend';
-import {
-  Button,
-  Dropdown,
-  Image,
-  LabeledList,
-  NumberInput,
-  ProgressBar,
-  Section,
-  Box,
-  Stack,
-} from '../components';
+import { Image, LabeledList, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
