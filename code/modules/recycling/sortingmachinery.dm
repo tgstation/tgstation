@@ -80,7 +80,7 @@
 		movable_loc.relay_container_resist_act(user, object)
 		return
 	to_chat(user, span_notice("You lean on the back of [object] and start pushing to rip the wrapping around it."))
-	if(do_after(user, 50, target = object))
+	if(do_after(user, 5 SECONDS, target = object))
 		if(!user || user.stat != CONSCIOUS || user.loc != object || object.loc != src)
 			return
 		to_chat(user, span_notice("You successfully removed [object]'s wrapping!"))

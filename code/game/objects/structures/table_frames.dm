@@ -110,7 +110,7 @@
 				to_chat(user, span_warning("You need one [material.name] sheet to do this!"))
 				return
 			to_chat(user, span_notice("You start adding [material] to [src]..."))
-			if(do_after(user, 20, target = src) && material.use(1))
+			if(do_after(user, 2 SECONDS, target = src) && material.use(1))
 				make_new_table(toConstruct, null, carpet_type)
 	else
 		return ..()

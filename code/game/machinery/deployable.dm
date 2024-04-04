@@ -77,7 +77,7 @@
 		else
 			to_chat(user, span_notice("You start adding [I] to [src]..."))
 			playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
-			if(do_after(user, 50, target=src))
+			if(do_after(user, 5 SECONDS, target=src))
 				W.use(5)
 				var/turf/T = get_turf(src)
 				T.place_on_top(/turf/closed/wall/mineral/wood/nonmetal)

@@ -214,7 +214,7 @@
 					if(C.get_amount() >= 5)
 						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 						balloon_alert(user, "adding cables to frame...")
-						if(do_after(user, 20, target = src) && state == SCREWED_CORE && C.use(5))
+						if(do_after(user, 2 SECONDS, target = src) && state == SCREWED_CORE && C.use(5))
 							balloon_alert(user, "added cables to frame.")
 							state = CABLED_CORE
 							update_appearance()
@@ -241,7 +241,7 @@
 					if(G.get_amount() >= 2)
 						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 						balloon_alert(user, "adding glass panel...")
-						if(do_after(user, 20, target = src) && state == CABLED_CORE && G.use(2))
+						if(do_after(user, 2 SECONDS, target = src) && state == CABLED_CORE && G.use(2))
 							balloon_alert(user, "added glass panel")
 							state = GLASS_CORE
 							update_appearance()
