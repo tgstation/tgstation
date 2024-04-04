@@ -75,14 +75,14 @@ function SS13.await(thing_to_call, proc_to_call, ...)
 	return return_value, runtime_message
 end
 
-function SS13.register_signal(datum, signal, func, make_easy_clear_function)
+function SS13.register_signal(datum, signal, func)
 	if not SS13.istype(datum, "/datum") then
 		return
 	end
 	if not __SS13_signal_handlers[datum] then
 		__SS13_signal_handlers[datum] = {}
 	end
-	if signal == "_cleanup" then
+	if signal == "parent_qdeleting_post_signal" then
 		return
 	end
 	if not __SS13_signal_handlers[datum][signal] then
@@ -92,11 +92,13 @@ function SS13.register_signal(datum, signal, func, make_easy_clear_function)
 	callback:call_proc("RegisterSignal", datum, signal, "Invoke")
 	local path = { "__SS13_signal_handlers", dm.global_proc("WEAKREF", datum), signal, dm.global_proc("WEAKREF", callback), "func" }
 	callback.vars.arguments = { path }
-	if not __SS13_signal_handlers[datum]["_cleanup"] then
-		local cleanup_path = { "__SS13_signal_handlers", dm.global_proc("WEAKREF", datum), "_cleanup", "func" }
-		local cleanup_callback = SS13.new("/datum/callback", SS13.state, "call_function_return_first", cleanup_path)
-		cleanup_callback:call_proc("RegisterSignal", datum, "parent_qdeleting", "Invoke")
-		__SS13_signal_handlers[datum]["_cleanup"] = {
+	if not __SS13_signal_handlers[datum]["parent_qdeleting_post_signal"] then
+		__SS13_signal_handlers[datum]["parent_qdeleting_post_signal"] = {}
+		local cleanup_callback = SS13.new("/datum/callback", SS13.state, "call_function_return_first")
+		local cleanup_path = { "__SS13_signal_handlers", dm.global_proc("WEAKREF", datum), "parent_qdeleting_post_signal", dm.global_proc("WEAKREF", cleanup_callback), "func" }
+		cleanup_callback.vars.arguments = { cleanup_path }
+		cleanup_callback:call_proc("RegisterSignal", datum, "parent_qdeleting_post_signal", "Invoke")
+		__SS13_signal_handlers[datum]["parent_qdeleting_post_signal"][cleanup_callback] = {
 			func = function(datum)
 				SS13.signal_handler_cleanup(datum)
 				SS13.stop_tracking(cleanup_callback)
@@ -104,29 +106,7 @@ function SS13.register_signal(datum, signal, func, make_easy_clear_function)
 			callback = cleanup_callback,
 		}
 	end
-	if signal == "parent_qdeleting" then --We want to make sure that the cleanup function is the very last signal handler called.
-		local comp_lookup = datum.vars._listen_lookup
-		if comp_lookup then
-			local lookup_for_signal = comp_lookup.entries.parent_qdeleting
-			if lookup_for_signal and not SS13.istype(lookup_for_signal, "/datum") then
-				local cleanup_callback_index =
-					dm.global_proc("_list_find", lookup_for_signal, __SS13_signal_handlers[datum]["_cleanup"].callback)
-				if cleanup_callback_index ~= 0 and cleanup_callback_index ~= #comp_lookup then
-					dm.global_proc("_list_swap", lookup_for_signal, cleanup_callback_index, #lookup_for_signal)
-				end
-			end
-		end
-	end
 	__SS13_signal_handlers[datum][signal][callback] = { func = func, callback = callback }
-	if make_easy_clear_function then
-		local clear_function_name = "clear_signal_" .. tostring(datum) .. "_" .. signal .. "_" .. tostring(callback)
-		SS13[clear_function_name] = function()
-			if callback then
-				SS13.unregister_signal(datum, signal, callback)
-			end
-			SS13[clear_function_name] = nil
-		end
-	end
 	return callback
 end
 
@@ -134,6 +114,7 @@ function SS13.stop_tracking(datum)
 	SS13.state:call_proc("let_soft_delete", datum)
 end
 
+local signalBypass = false
 function SS13.unregister_signal(datum, signal, callback)
 	local function clear_handler(handler_info)
 		if not handler_info then
@@ -147,24 +128,20 @@ function SS13.unregister_signal(datum, signal, callback)
 		SS13.stop_tracking(handler_callback)
 	end
 
-	local function clear_easy_clear_function(callback_to_clear)
-		local clear_function_name = "clear_signal_" .. tostring(datum) .. "_" .. signal .. "_" .. tostring(callback_to_clear)
-		SS13[clear_function_name] = nil
-	end
-
 	if not __SS13_signal_handlers[datum] then
 		return
 	end
-	if signal == "_cleanup" then
+
+	if not signalBypass and signal == "parent_qdeleting_post_signal" then
 		return
 	end
+
 	if not __SS13_signal_handlers[datum][signal] then
 		return
 	end
 
 	if not callback then
 		for handler_key, handler_info in __SS13_signal_handlers[datum][signal] do
-			clear_easy_clear_function(handler_key)
 			clear_handler(handler_info)
 		end
 		__SS13_signal_handlers[datum][signal] = nil
@@ -172,7 +149,6 @@ function SS13.unregister_signal(datum, signal, callback)
 		if not SS13.istype(callback, "/datum/callback") then
 			return
 		end
-		clear_easy_clear_function(callback)
 		clear_handler(__SS13_signal_handlers[datum][signal][callback])
 		__SS13_signal_handlers[datum][signal][callback] = nil
 	end
@@ -183,9 +159,11 @@ function SS13.signal_handler_cleanup(datum)
 		return
 	end
 
+	signalBypass = true
 	for signal, _ in __SS13_signal_handlers[datum] do
 		SS13.unregister_signal(datum, signal)
 	end
+	signalBypass = false
 
 	__SS13_signal_handlers[datum] = nil
 end
