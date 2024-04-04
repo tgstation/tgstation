@@ -32,18 +32,20 @@
 	if(!length(phrase))
 		return
 
-	if(length(tts_filter) > 0)
-		message_args[TREAT_TTS_FILTER_ARG] += tts_filter
-	if(make_tts_message_original)
-		message_args[TREAT_TTS_MESSAGE_ARG] = message_args[TREAT_MESSAGE_ARG]
-
 	var/final_phrase = ""
 	var/original_char = ""
 
 	for(var/i = 1, i <= length(phrase), i += length(original_char))
 		original_char = phrase[i]
-
 		final_phrase += apply_speech(original_char)
+
+	if(final_phrase == phrase)
+		return // No change was done, whatever
+
+	if(length(tts_filter) > 0)
+		message_args[TREAT_TTS_FILTER_ARG] += tts_filter
+	if(make_tts_message_original)
+		message_args[TREAT_TTS_MESSAGE_ARG] = message_args[TREAT_MESSAGE_ARG]
 
 	message_args[TREAT_MESSAGE_ARG] = sanitize(final_phrase)
 
@@ -100,8 +102,11 @@
 	remove_on_fullheal = FALSE
 
 /datum/status_effect/speech/stutter/anxiety/handle_message(datum/source, list/message_args)
-	var/datum/quirk/social_anxiety/host_quirk = owner.get_quirk(/datum/quirk/social_anxiety)
-	stutter_prob = clamp(host_quirk?.calculate_mood_mod() * 0.5, 5, 50)
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS) || HAS_TRAIT(owner, TRAIT_SIGN_LANG))
+		stutter_prob = 0
+	else
+		var/datum/quirk/social_anxiety/host_quirk = owner.get_quirk(/datum/quirk/social_anxiety)
+		stutter_prob = clamp(host_quirk?.calculate_mood_mod() * 0.5, 5, 50)
 	return ..()
 
 /datum/status_effect/speech/stutter/derpspeech

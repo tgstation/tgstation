@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Breathing cold air now has a particle effect associated, careful not to let your glasses fog up."
+  - qol: "Breathing cold air will now occasionally make your spaceman shiver. Brrr."
