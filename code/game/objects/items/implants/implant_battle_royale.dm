@@ -7,6 +7,9 @@
 	master_implant = TRUE
 	delay = 10 SECONDS
 	panic_beep_sound = TRUE
+	announce_activation = FALSE
+	/// Where is this going to tell us to go to avoid death?
+	var/target_area_name = ""
 	/// Is this implant active yet?
 	var/battle_started = FALSE
 	/// Are we presently exploding?
@@ -51,15 +54,13 @@
 	. = ..()
 	UnregisterSignal(target, COMSIG_LIVING_LIFE)
 	QDEL_NULL(camera)
-	visible_message(span_boldwarning("[src] beeps ominously."))
-	playsound(loc, 'sound/items/timer.ogg', 50, vary = FALSE)
-
 	if (has_exploded || QDELETED(src))
 		return
-	if (prob(50))
+	if (prob(75))
+		target.visible_message(span_boldwarning("[src] beeps ominously."))
+		playsound(loc, 'sound/items/timer.ogg', 50, vary = FALSE)
 		explode()
-	else
-		timed_explosion()
+	target?.mind?.remove_antag_datum(/datum/antagonist/survivalist/battle_royale)
 
 /obj/item/implant/explosive/battle_royale/explode()
 	has_exploded = TRUE
@@ -75,10 +76,11 @@
 	to_chat(source, span_boldwarning("You feel a lump which shouldn't be there."))
 
 /// Start the battle royale
-/obj/item/implant/explosive/battle_royale/proc/start_battle()
+/obj/item/implant/explosive/battle_royale/proc/start_battle(target_area_name)
 	if (isnull(imp_in))
 		explode()
 		return
+	src.target_area_name = target_area_name
 	battle_started = TRUE
 	name = "[name] - [imp_in.real_name]"
 	imp_in.AddComponent( \
@@ -91,11 +93,7 @@
 	AddComponent(/datum/component/gps, "Rumble Royale - [imp_in.real_name]")
 	playsound(loc, 'sound/items/timer.ogg', 50, vary = FALSE)
 
-/// Give a little spiel to our new contestant
+/// Add the antag datum to our new contestant, also printing some flavour text
 /obj/item/implant/explosive/battle_royale/proc/announce()
-	to_chat(imp_in, span_warning("[span_bold("You hear a tinny voice in your ear: ")] \
-		Welcome contestant to Rumble Royale, the galaxy's greatest show! \n\
-		You may have already heard our announcement, but we're glad to tell you that you are on live TV! \n\
-		Your objective in this contest is simple: Within ten minutes be the last contestant left alive, to win a fabulous prize! \n\
-		Your fellow contestants will be hearing this too, so you should grab a GPS quick and get hunting! \n\
-		Noncompliance and removal of this implant is not recommended, and remember to smile for the cameras!"))
+	var/datum/antagonist/survivalist/battle_royale/royale = imp_in.mind?.add_antag_datum(/datum/antagonist/survivalist/battle_royale)
+	royale?.set_target_area(target_area_name)

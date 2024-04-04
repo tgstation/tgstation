@@ -37,6 +37,8 @@
 	var/master_implant = FALSE
 	///Will this implant notify ghosts when activated?
 	var/notify_ghosts = TRUE
+	///Do we tell people when they activated it?
+	var/announce_activation = TRUE
 
 /obj/item/implant/explosive/proc/on_death(datum/source, gibbed)
 	SIGNAL_HANDLER
@@ -71,7 +73,8 @@
 			return FALSE
 	if(cause == "death" && HAS_TRAIT(imp_in, TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION))
 		return FALSE
-	to_chat(imp_in, span_notice("You activate your [name]."))
+	if(announce_activation)
+		to_chat(imp_in, span_notice("You activate your [name]."))
 	active = TRUE
 	var/turf/boomturf = get_turf(imp_in)
 	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [ADMIN_VERBOSEJMP(boomturf)], with cause of [cause].")

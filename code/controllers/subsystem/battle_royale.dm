@@ -77,7 +77,7 @@ SUBSYSTEM_DEF(battle_royale)
 /// Start a battle royale with the list of provided implants
 /datum/battle_royale_controller/proc/start(list/implants, battle_time = 1 MINUTES)
 	for (var/obj/item/implant/explosive/battle_royale/contestant_implant in implants)
-		contestant_implant.start_battle()
+		contestant_implant.start_battle("my ass")
 		if (isnull(contestant_implant))
 			continue // Might have exploded if it was removed from a person
 		RegisterSignal(contestant_implant, COMSIG_QDELETING, PROC_REF(implant_destroyed))
