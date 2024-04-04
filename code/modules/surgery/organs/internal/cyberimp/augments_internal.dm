@@ -112,11 +112,10 @@
 	)
 
 	///timer before the implant activates
-	var/stun_cap_amount = 2 SECONDS
+	var/stun_cap_amount = 1 SECONDS
 	///amount of time you are resistant to stuns and knockdowns
-	var/stun_resistance_time = 5 SECONDS
-	///Cooldown before the implant can be activated again
-	var/implant_cooldown = 40 SECONDS
+	var/stun_resistance_time = 6 SECONDS
+	COOLDOWN_DECLARE(implant_cooldown)
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/on_mob_remove(mob/living/carbon/implant_owner)
 	. = ..()
@@ -132,7 +131,7 @@
 		addtimer(CALLBACK(src, PROC_REF(clear_stuns)), stun_cap_amount, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/clear_stuns()
-	if(owner || !(organ_flags & ORGAN_FAILING))
+	if(owner && !(organ_flags & ORGAN_FAILING) && (COOLDOWN_FINISHED(src, implant_cooldown)))
 		owner.SetStun(0)
 		owner.SetKnockdown(0)
 		owner.SetImmobilized(0)
@@ -144,8 +143,12 @@
 		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_BATON_RESISTANCE, REF(src)), stun_resistance_time)
 		ADD_TRAIT(owner, TRAIT_STUNIMMUNE, REF(src))
 		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_STUNIMMUNE, REF(src)), stun_resistance_time)
-		organ_flags |= ORGAN_FAILING
-		addtimer(CALLBACK(src, PROC_REF(reboot)), implant_cooldown)
+		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, setStaminaLoss), 0), stun_resistance_time)
+		COOLDOWN_START(src, implant_cooldown, 40 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(implant_ready)),40 SECONDS)
+
+/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/implant_ready()
+	to_chat(owner, span_purple("Your rebooter implant is ready."))
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()
@@ -155,8 +158,9 @@
 	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/reboot()
-	organ_flags &= ~ORGAN_FAILING
-	to_chat(owner, span_purple("Your rebooter implant is ready"))
+	organ_flags &= ~ORGAN_FAILING 
+	if(owner)
+		implant_ready()
 
 //[[[[MOUTH]]]]
 /obj/item/organ/internal/cyberimp/mouth
