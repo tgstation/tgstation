@@ -510,7 +510,7 @@
 	greyscale_config = /datum/greyscale_config/plush_lizard
 	attack_verb_continuous = list("claws", "hisses", "tail slaps")
 	attack_verb_simple = list("claw", "hiss", "tail slap")
-	squeak_override = list('sound/weapons/slash.ogg' = 1)
+	squeak_override = list('sound/voice/weh.ogg' = 1)
 
 /obj/item/toy/plush/lizard_plushie/Initialize(mapload)
 	. = ..()
