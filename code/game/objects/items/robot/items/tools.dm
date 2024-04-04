@@ -253,7 +253,7 @@
 
 /obj/item/borg/cyborg_omnitool/proc/upgrade_omnitool()
 	name = "advanced [name]"
-	desc = "[desc] \nIt seems that this one has been upgraded to perform tasks faster."
+	desc += "\nIt seems that this one has been upgraded to perform tasks faster."
 	toolspeed = 0.7
 	upgraded = TRUE
 	tool_behaviour = null
@@ -331,7 +331,7 @@
 /obj/item/borg/cyborg_omnitool/engineering
 	name = "engineering omni-toolset"
 	desc = "A set of engineering tools used by cyborgs to conduct various engineering tasks."
-	icon = 'icons/obj/items_cyborg.dmi' //why are there two different files for items that do the same exact things (items for borgs)?
+	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg"
 	item_flags = null
 

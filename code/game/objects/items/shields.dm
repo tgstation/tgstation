@@ -26,8 +26,6 @@
 	var/shield_break_sound = 'sound/effects/bang.ogg'
 	/// baton bash cooldown
 	COOLDOWN_DECLARE(baton_bash)
-	/// is shield bashable?
-	var/is_bashable = TRUE
 
 /datum/armor/item_shield
 	melee = 50
@@ -62,16 +60,6 @@
 			. += span_info("It appears heavily damaged.")
 		if(0 to 25)
 			. += span_warning("It's falling apart!")
-
-/obj/item/shield/attackby(obj/item/attackby_item, mob/user, params)
-	. = ..()
-	if(istype(attackby_item, /obj/item/melee/baton) && is_bashable)
-		if(!COOLDOWN_FINISHED(src, baton_bash))
-			return
-		user.visible_message(span_warning("[user] bashes [src] with [attackby_item]!"))
-		playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, TRUE)
-		COOLDOWN_START(src, baton_bash, BATON_BASH_COOLDOWN)
-		return
 
 /obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!breakable_by_damage || (damage_type != BRUTE && damage_type != BURN))
@@ -154,6 +142,13 @@
 	)
 
 /obj/item/shield/riot/attackby(obj/item/attackby_item, mob/user, params)
+	if(istype(attackby_item, /obj/item/melee/baton))
+		if(!COOLDOWN_FINISHED(src, baton_bash))
+			return
+		user.visible_message(span_warning("[user] bashes [src] with [attackby_item]!"))
+		playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, TRUE)
+		COOLDOWN_START(src, baton_bash, BATON_BASH_COOLDOWN)
+		return
 	if(istype(attackby_item, /obj/item/stack/sheet/mineral/titanium))
 		if (atom_integrity >= max_integrity)
 			to_chat(user, span_warning("[src] is already in perfect condition."))
