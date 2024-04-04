@@ -312,7 +312,6 @@
 	base_icon_state = "gorillapen"
 	volume = 5
 	ignore_flags = 0
-	reagent_flags = NONE
 	list_reagents = list(/datum/reagent/magillitis = 5)
 
 /obj/item/reagent_containers/hypospray/medipen/pumpup
