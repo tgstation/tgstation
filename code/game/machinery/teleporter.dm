@@ -103,6 +103,10 @@
 	LAZYADD(component_parts, super_bin)
 	RefreshParts()
 
+/obj/machinery/teleport/hub/syndicate/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	GLOB.active_syndicate_beacons += src
+
 /obj/machinery/teleport/station
 	name = "teleporter station"
 	desc = "The power control station for a bluespace teleporter. Used for toggling power, and can activate a test-fire to prevent malfunctions."

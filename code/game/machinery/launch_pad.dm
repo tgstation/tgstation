@@ -157,16 +157,20 @@
 
 	return null
 
-/// Performs the teleport.
-/// sending - TRUE/FALSE depending on if the launch pad is teleporting *to* or *from* the target.
-/// alternate_log_name - An alternative name to use in logs, if `user` is not present..
-/obj/machinery/launchpad/proc/doteleport(mob/user, sending, alternate_log_name = null)
+/**
+ * Performs the teleport.
+ * sending - TRUE/FALSE depending on if the launch pad is teleporting *to* or *from* the target.
+ * alternate_log_name - An alternative name to use in logs, if `user` is not present..
+ */
+/obj/machinery/launchpad/proc/doteleport(mob/user, sending, alternate_log_name = null, forced_target)
 
 	var/turf/dest = get_turf(src)
 
 	var/target_x = x + x_offset
 	var/target_y = y + y_offset
 	var/turf/target = locate(target_x, target_y, z)
+	if(forced_target)
+		target = forced_target
 	var/area/A = get_area(target)
 
 	flick(icon_teleport, src)
@@ -458,19 +462,31 @@
 
 #undef BEAM_FADE_TIME
 
-//Briefcase subtype that allows you to teleport to specific beacons (if they are enabled)
-/obj/item/storage/briefcase/launchpad/multiz
+/obj/item/storage/briefcase/launchpad/multiz //Briefcase subtype that allows you to teleport to specific beacons (if they are enabled)
+	w_class = 3
+	///Where our launchpad will teleport us to when we use our "Key"
+	var/teleport_target
 
 /obj/item/storage/briefcase/launchpad/multiz/PopulateContents()
-	new /obj/item/pen(src)
+	new /obj/item/pen/multiz(src)
 	new /obj/item/launchpad_remote/multiz(src, pad)
 
+/obj/item/pen/multiz //Special pen that acts as a key to teleport
+
+/obj/item/storage/briefcase/launchpad/multiz/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	if(istype(I, /obj/item/pen/multiz))
+		pad.doteleport(forced_target = teleport_target)
+
+
+GLOBAL_LIST_EMPTY(active_syndicate_beacons)
+
 /obj/item/launchpad_remote/multiz/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "LaunchpadRemote")
-		ui.open()
-	ui.set_autoupdate(TRUE)
+	var/teleport_target = tgui_input_list(user, "Where to launch to?", "Set Teleporter?", GLOB.active_syndicate_beacons)
+	if(!teleport_target)
+		return
+	var/obj/machinery/launchpad/briefcase/our_pad = pad.resolve()
+	our_pad.set_target(teleport_target)
 
 
 /obj/item/circuit_component/bluespace_launchpad
