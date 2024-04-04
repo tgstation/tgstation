@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 
 #ifndef TESTING
-	if (LOWER_TEXT(hsrc_command) == "_debug") //disable the integrated byond vv in the client side debugging tools since it doesn't respect vv read protections
+	if (lower_text(hsrc_command) == "_debug") //disable the integrated byond vv in the client side debugging tools since it doesn't respect vv read protections
 		return
 #endif
 

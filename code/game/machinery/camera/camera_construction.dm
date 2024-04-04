@@ -39,7 +39,7 @@
 				return ITEM_INTERACT_BLOCKING
 			for(var/i in tempnetwork)
 				tempnetwork -= i
-				tempnetwork += LOWER_TEXT(i)
+				tempnetwork += lower_text(i)
 			camera_construction_state = CAMERA_STATE_FINISHED
 			toggle_cam(user, displaymessage = FALSE)
 			network = tempnetwork

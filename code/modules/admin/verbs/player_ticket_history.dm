@@ -34,7 +34,7 @@ GLOBAL_PROTECT(player_ticket_history)
 	var/list/user_selections = list()
 
 /datum/ticket_history_holder/proc/cache_history_for_ckey(ckey, entries = 5)
-	ckey = LOWER_TEXT(ckey)
+	ckey = lower_text(ckey)
 
 	if(!isnum(entries) || entries <= 0)
 		return

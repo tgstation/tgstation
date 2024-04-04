@@ -501,7 +501,7 @@
 				set_beam_color(new_color, to_update)
 				return TRUE
 		if("enter_color")
-			var/new_color = LOWER_TEXT(params["new_color"])
+			var/new_color = lower_text(params["new_color"])
 			var/to_update = params["to_update"]
 			set_beam_color(new_color, to_update, sanitize = TRUE)
 			return TRUE

@@ -155,7 +155,7 @@ fi;
 part "ensure proper lowertext usage"
 if $grep -i 'lowertext\(.+\)' $code_files | $grep -v 'UNLINT\(.+\)'; then
 	echo
-	echo -e "${RED}ERROR: Found a lowertext() proc call. Please use the LOWER_TEXT() macro instead. If you know what you are doing, wrap your text (ensure it is a string) in UNLINT().${NC}"
+	echo -e "${RED}ERROR: Found a lowertext() proc call. Please use the lower_text() macro instead. If you know what you are doing, wrap your text (ensure it is a string) in UNLINT().${NC}"
 	st=1
 fi;
 
