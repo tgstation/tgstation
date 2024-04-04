@@ -49,7 +49,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	for(var/obj/machinery/machine as anything in possible_machines)
 		prepare_machine(machine)
 
-	replace_in_name("%JOB%", lowertext(chosen_job))
+	replace_in_name("%JOB%", LOWER_TEXT(chosen_job))
 	replace_in_name("%MACHINE%", possible_machines[1].name)
 	return TRUE
 

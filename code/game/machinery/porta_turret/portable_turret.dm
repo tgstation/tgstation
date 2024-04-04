@@ -1066,7 +1066,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	shoot_cyborgs = !shoot_cyborgs
 	if (user)
 		var/status = shoot_cyborgs ? "Shooting Borgs" : "Not Shooting Borgs"
-		balloon_alert(user, lowertext(status))
+		balloon_alert(user, LOWER_TEXT(status))
 		add_hiddenprint(user)
 		log_combat(user, src, "[status]")
 	updateTurrets()

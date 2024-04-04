@@ -163,4 +163,4 @@
 /// Serializes an antag name to be used for preferences UI
 /proc/serialize_antag_name(antag_name)
 	// These are sent through CSS, so they need to be safe to use as class names.
-	return lowertext(sanitize_css_class_name(antag_name))
+	return LOWER_TEXT(sanitize_css_class_name(antag_name))
