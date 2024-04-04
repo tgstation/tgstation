@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(species_list)
  * 
  * @param {mob} user - The mob performing the action.
  * 
- * @param {number} delay - The time in seconds to wait.
+ * @param {number} delay - The time in deciseconds. Use the SECONDS define for readability. `1 SECONDS` is 10 deciseconds.
  * 
  * @param {atom} target - The target of the action. This is where the progressbar will display.
  * 
