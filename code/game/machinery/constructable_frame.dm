@@ -63,6 +63,9 @@
 		return NONE
 	if(obj_flags & NO_DECONSTRUCTION)
 		return NONE
+	if(anchored && state == FRAME_STATE_EMPTY) //when using a screwdriver on an incomplete frame(missing components) no point checking for this
+		balloon_alert(user, "must be unanchored first!")
+		return ITEM_INTERACT_BLOCKING
 	if(!tool.tool_start_check(user, amount = (tool.tool_behaviour == TOOL_WELDER ? 1 : 0)))
 		return ITEM_INTERACT_BLOCKING
 

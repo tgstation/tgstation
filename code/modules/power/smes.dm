@@ -81,11 +81,11 @@
 /obj/machinery/power/smes/should_have_node()
 	return TRUE
 
-/obj/machinery/power/smes/cable_layer_change_checks(mob/living/user, obj/item/tool)
+/obj/machinery/power/smes/cable_layer_act(mob/living/user, obj/item/tool)
 	if(!QDELETED(terminal))
 		balloon_alert(user, "cut the terminal first!")
-		return FALSE
-	return TRUE
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/machinery/power/smes/attackby(obj/item/item, mob/user, params)
 	//opening using screwdriver
