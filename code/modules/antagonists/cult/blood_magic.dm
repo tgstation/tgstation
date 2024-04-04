@@ -729,7 +729,7 @@
 	return TRUE
 
 /**
-	* blood rites cultist healing procedure
+	* blood rites healing and blood restoration proc
 	*
 	**blood healing stuff:
 	**blood_needed = how much blood the target needs to return to safe levels
@@ -740,6 +740,7 @@
 	**overall_damage = sum of brute, toxin, fire, and oxygen damage
 	**healing_ratio = percentage of damage healed, between 0 and 1 (0-100%)
 	**healing_cost = how many spell uses we lose due to healing
+	**blood_donor = used to ensure the proc returns TRUE if we completely restore an undamaged persons blood
 */
 /obj/item/melee/blood_magic/manipulator/proc/heal_cultist(mob/living/carbon/human/human_bloodbag, mob/living/carbon/human/user)
 	if(uses <= 0)
@@ -747,6 +748,7 @@
 		return FALSE
 
 	// here we handle blood restoration for those cultists who need it
+	var/blood_donor = FALSE
 	if(human_bloodbag.blood_volume < BLOOD_VOLUME_SAFE)
 		var/blood_needed = BLOOD_VOLUME_SAFE - human_bloodbag.blood_volume
 		var/blood_bank = USES_TO_BLOOD * uses
@@ -755,6 +757,7 @@
 			to_chat(user,span_danger("You use the last of your blood rites to restore what blood you could!"))
 			uses = 0
 			return TRUE
+		blood_donor = TRUE
 		human_bloodbag.blood_volume = BLOOD_VOLUME_SAFE
 		uses -= round(blood_needed / USES_TO_BLOOD)
 		to_chat(user,span_warning("Your blood rites have restored [human_bloodbag == user ? "your" : "[human_bloodbag.p_their()]"] blood to safe levels!"))
@@ -762,6 +765,8 @@
 	// and here we heal hurt cultists
 	var/overall_damage = human_bloodbag.getBruteLoss() + human_bloodbag.getFireLoss() + human_bloodbag.getToxLoss() + human_bloodbag.getOxyLoss()
 	if(overall_damage == 0)
+		if(blood_donor)
+			return TRUE
 		to_chat(user,span_cult("That cultist doesn't require healing!"))
 		return FALSE
 
@@ -772,7 +777,7 @@
 		healing_ratio *= 0.35 // self-healing is 65% less effective
 		healing_cost *= 1.65  // self-healing is 65% more expensive
 	healing_ratio = -1 * clamp(healing_ratio, 0, 1)
-	uses = clamp(uses - healing_cost, 0, INFINITY)
+	uses = max(0, uses-healing_cost)
 	human_bloodbag.visible_message(span_warning("[human_bloodbag] is [uses == 0 ? "partially healed":"fully healed"] by [human_bloodbag == user ? "[human_bloodbag.p_their()]":"[human_bloodbag]'s"] blood magic!"))
 
 	var/need_mob_update = FALSE
