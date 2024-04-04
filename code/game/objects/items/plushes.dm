@@ -8,6 +8,7 @@
 	attack_verb_simple = list("thump", "whomp", "bump")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
+	obj_flags = UNIQUE_RENAME
 	var/list/squeak_override //Weighted list; If you want your plush to have different squeak sounds use this
 	var/stuffed = TRUE //If the plushie has stuffing in it
 	var/obj/item/grenade/grenade //You can remove the stuffing from a plushie and add a grenade to it for *nefarious uses*
@@ -508,8 +509,8 @@
 	desc = "An adorable stuffed toy that resembles a lizardperson."
 	icon_state = "map_plushie_lizard"
 	greyscale_config = /datum/greyscale_config/plush_lizard
-	attack_verb_continuous = list("claws", "hisses", "tail slaps")
-	attack_verb_simple = list("claw", "hiss", "tail slap")
+	attack_verb_continuous = list("cuddles", "hisses", "tail slaps")
+	attack_verb_simple = list("cuddle", "hiss", "tail slap")
 	squeak_override = list('sound/voice/weh.ogg' = 1)
 
 /obj/item/toy/plush/lizard_plushie/Initialize(mapload)
