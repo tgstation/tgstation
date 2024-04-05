@@ -11,18 +11,16 @@
 	AddComponent(/datum/component/simple_rotation)
 	register_context()
 
-/obj/structure/frame/computer/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/atom/drop_loc = drop_location()
-		if(state == FRAME_COMPUTER_STATE_GLASSED)
-			if(disassembled)
-				new /obj/item/stack/sheet/glass(drop_loc, 2)
-			else
-				new /obj/item/shard(drop_loc)
-				new /obj/item/shard(drop_loc)
-		if(state >= FRAME_COMPUTER_STATE_WIRED)
-			new /obj/item/stack/cable_coil(drop_loc, 5)
-
+/obj/structure/frame/computer/atom_deconstruct(disassembled = TRUE)
+	var/atom/drop_loc = drop_location()
+	if(state == FRAME_COMPUTER_STATE_GLASSED)
+		if(disassembled)
+			new /obj/item/stack/sheet/glass(drop_loc, 2)
+		else
+			new /obj/item/shard(drop_loc)
+			new /obj/item/shard(drop_loc)
+	if(state >= FRAME_COMPUTER_STATE_WIRED)
+		new /obj/item/stack/cable_coil(drop_loc, 5)
 	return ..()
 
 /obj/structure/frame/computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
