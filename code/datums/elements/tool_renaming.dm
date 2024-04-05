@@ -29,7 +29,7 @@
 		return NONE
 
 	var/pen_choice = tgui_input_list(user, "What would you like to edit?", "Pen Setting", list("Rename", "Description", "Reset"))
-	if(QDELETED(renamed_obj) || !user.can_perform_action(renamed_obj))
+	if(QDELETED(renamed_obj) || !user.can_perform_action(renamed_obj) || isnull(pen_choice))
 		return ITEM_INTERACT_BLOCKING
 
 	switch(pen_choice)
