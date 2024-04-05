@@ -106,7 +106,6 @@
 
 	var/static/list/signalCache = list(
 		COMSIG_LIVING_STATUS_STUN,
-		COMSIG_LIVING_STATUS_KNOCKDOWN,
 		COMSIG_LIVING_STATUS_IMMOBILIZE,
 		COMSIG_LIVING_STATUS_PARALYZE,
 	)
@@ -120,14 +119,21 @@
 /obj/item/organ/internal/cyberimp/brain/anti_stun/on_mob_remove(mob/living/carbon/implant_owner)
 	. = ..()
 	UnregisterSignal(implant_owner, signalCache)
+	UnregisterSignal(implant_owner, COMSIG_CARBON_ENTER_STAMCRIT)
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
 	RegisterSignals(receiver, signalCache, PROC_REF(on_signal))
+	RegisterSignal(receiver, COMSIG_CARBON_ENTER_STAMCRIT, PROC_REF(on_stamcrit))
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/on_signal(datum/source, amount)
 	SIGNAL_HANDLER
 	if(!(organ_flags & ORGAN_FAILING) && amount > 0)
+		addtimer(CALLBACK(src, PROC_REF(clear_stuns)), stun_cap_amount, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/on_stamcrit(datum/source)
+	SIGNAL_HANDLER
+	if(!(organ_flags & ORGAN_FAILING))
 		addtimer(CALLBACK(src, PROC_REF(clear_stuns)), stun_cap_amount, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/clear_stuns()
@@ -141,9 +147,9 @@
 	owner.setStaminaLoss(0)
 	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, setStaminaLoss), 0), stun_resistance_time)
 	
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	sparks.set_up(5, 1, src)
+	sparks.start()
 
 	owner.add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE), REF(src))
 	addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_IGNOREDAMAGESLOWDOWN, REF(src)), stun_resistance_time)	
