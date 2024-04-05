@@ -274,24 +274,27 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	if(hidden_by_distance == NOT_HIDDEN)
 		return
 	// If we're being hid by something else, we're gonna have another go at setting it up
-	var/turf/viewing = get_turf(enfold)
-	var/lowest_possible_offset = GET_LOWEST_STACK_OFFSET(viewing.z)
 	var/multiz_boundary = enfold?.client?.prefs?.read_preference(/datum/preference/numeric/multiz_performance)
+	var/list/offset_info = home.get_offsets()
+	var/lowest_possible_offset = offset_info[1]
+	var/highest_possible_offset = offset_info[2]
 	// gotta reset hidden_by_distance so the proc can reapply it
 	hidden_by_distance = NOT_HIDDEN
-	set_distance_from_owner(enfold, distance_from_owner, multiz_boundary, lowest_possible_offset)
+	set_distance_from_owner(enfold, distance_from_owner, multiz_boundary, lowest_possible_offset, highest_possible_offset)
 
 /// Mirrors our force hidden state to the hidden state of the plane that came before, assuming it's valid
 /// This allows us to mirror any hidden sets from before we were created, no matter how low that chance is
 /atom/movable/screen/plane_master/proc/mirror_parent_hidden()
-	var/mob/our_mob = home?.our_hud?.mymob
-	var/atom/movable/screen/plane_master/true_plane = our_mob?.hud_used?.get_plane_master(plane)
+	if(offset == 0)
+		return
+	var/atom/movable/screen/plane_master/true_plane = home.get_plane(GET_NEW_PLANE(PLANE_TO_TRUE(plane), offset - 1))
 	if(true_plane == src || !true_plane)
 		return
 
 	if(true_plane.force_hidden == force_hidden)
 		return
 
+	var/mob/our_mob = home?.our_hud?.mymob
 	// If one of us already exists and it's not hidden, unhide ourselves
 	if(true_plane.force_hidden)
 		hide_plane(our_mob)
@@ -303,11 +306,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /// Takse the mob to apply changes to, the new working distance,
 // the multiz_boundary of the mob and the lowest possible offset for anything the mob will see  (expensive lookup, faster this way)
 /// Returns TRUE if the plane master is still visible, FALSE if it's hidden
-/atom/movable/screen/plane_master/proc/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset)
+/atom/movable/screen/plane_master/proc/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset, highest_possible_offset)
 	SHOULD_CALL_PARENT(TRUE)
 	distance_from_owner = new_distance
 	// If we are above our owner's z layer nuke er
-	if(distance_from_owner > 0)
+	if(offset < highest_possible_offset)
 		if(hidden_by_distance == HIDDEN_ABOVE)
 			return critical & PLANE_CRITICAL_SOURCE
 

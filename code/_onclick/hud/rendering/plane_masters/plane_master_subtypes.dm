@@ -102,9 +102,11 @@
 	// This could be changed, but it would require refactoring this whole thing
 	// And adding non client particular hooks for all the inputs, and I do not have the time I'm sorry :(
 	// We only want to be white if we're on a z layer where parallax will be rendering (not the hidden ones)
+	var/list/offsets = home.get_offsets()
+	var/lowest_possible_offset = offsets[1]
 	if(HAS_TRAIT(our_hud, TRAIT_PARALLAX_ENABLED) && \
 		home.key == PLANE_GROUP_MAIN && \
-		(hidden_by_distance == NOT_HIDDEN || !viewing_turf || offset == GET_LOWEST_STACK_OFFSET(viewing_turf.z)))
+		(hidden_by_distance == NOT_HIDDEN || !viewing_turf || offset == lowest_possible_offset))
 		color = list(
 			0, 0, 0, 0,
 			0, 0, 0, 0,
@@ -181,7 +183,7 @@
 			// Overlay so we don't multiply twice, and thus fuck up our rendering
 			add_relay_to(GET_NEW_PLANE(plane, offset), BLEND_OVERLAY)
 
-/atom/movable/screen/plane_master/parallax/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset)
+/atom/movable/screen/plane_master/parallax/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset, highest_possible_offset)
 	var/old_hidden = hidden_by_distance
 	. = ..()
 	if(.)
@@ -190,16 +192,16 @@
 			return
 		if(old_hidden == NOT_HIDDEN)
 			return
-		var/atom/movable/screen/plane_master/parent_parallax = home.our_hud.get_plane_master(PLANE_SPACE_PARALLAX)
+		var/atom/movable/screen/plane_master/parent_parallax = home.get_plane(PLANE_SPACE_PARALLAX)
 		// Clear away the blend multiply
 		parent_parallax.remove_relay_from(plane)
 		parent_parallax.add_relay_to(plane, BLEND_OVERLAY)
 	else
 		// If we can't render, and we aren't the bottom layer, don't render us
 		// This way we only multiply against stuff that's fullwhite space
-		var/atom/movable/screen/plane_master/parent_parallax = home.our_hud.get_plane_master(PLANE_SPACE_PARALLAX)
+		var/atom/movable/screen/plane_master/parent_parallax = home.get_plane(PLANE_SPACE_PARALLAX)
 		var/turf/viewing_turf = get_turf(relevant)
-		if(!viewing_turf || offset != GET_LOWEST_STACK_OFFSET(viewing_turf.z))
+		if(!viewing_turf || offset != lowest_possible_offset)
 			parent_parallax.remove_relay_from(plane)
 		else
 			parent_parallax.add_relay_to(plane, BLEND_MULTIPLY)

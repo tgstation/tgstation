@@ -25,35 +25,15 @@
 	plane = RENDER_PLANE_MASTER
 	render_relay_planes = list()
 
-/atom/movable/screen/plane_master/rendering_plate/master/show_to(mob/mymob)
+/atom/movable/screen/plane_master/rendering_plate/master/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset, highest_possible_offset)
 	. = ..()
 	if(!.)
 		return
 	if(offset == 0)
 		return
-	// Non 0 offset render plates will relay up to the transparent plane above them, assuming they're not on the same z level as their target of course
-	var/datum/hud/hud = home.our_hud
-	// show_to can be called twice successfully with no hide_from call. Ensure no runtimes off the registers from this
-	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change), override = TRUE)
-	offset_change(hud?.current_plane_offset || 0)
-
-/atom/movable/screen/plane_master/rendering_plate/master/hide_from(mob/oldmob)
-	. = ..()
-	if(offset == 0)
-		return
-	var/datum/hud/hud = home.our_hud
-	if(hud)
-		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
-
-/atom/movable/screen/plane_master/rendering_plate/master/proc/on_offset_change(datum/source, old_offset, new_offset)
-	SIGNAL_HANDLER
-	offset_change(new_offset)
-
-/atom/movable/screen/plane_master/rendering_plate/master/proc/offset_change(new_offset)
-	if(new_offset == offset) // If we're on our own z layer, relay to nothing, just draw
+	if(distance_from_owner == 0)
 		remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_TRANSPARENT, offset - 1))
-	else // Otherwise, regenerate the relay
+	else
 		add_relay_to(GET_NEW_PLANE(RENDER_PLANE_TRANSPARENT, offset - 1))
 
 ///renders general in charachter game objects
@@ -210,6 +190,11 @@
 
 /atom/movable/screen/plane_master/rendering_plate/game_world_ao/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
+	// For.. some reason submaps do not play well with transforms, so none for now
+	// When it's fixed we can remove this
+	if(home.key != PLANE_GROUP_MAIN)
+		hide_plane()
+		return
 	var/matrix/scale_down_matrix = new /matrix()
 	scale_down_matrix.Translate(0, -2)
 	scale_down_matrix.Scale(1/AO_TRANSFORM_CONSTANT)
@@ -230,7 +215,7 @@
 	if(!mymob?.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		hide_plane(mymob)
 
-/atom/movable/screen/plane_master/rendering_plate/game_world_ao/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset)
+/atom/movable/screen/plane_master/rendering_plate/game_world_ao/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset, highest_possible_offset)
 	. = ..()
 	if(!.)
 		return
@@ -290,11 +275,10 @@
 
 	set_light_cutoff(mymob.lighting_cutoff, mymob.lighting_color_cutoffs)
 
-
 /atom/movable/screen/plane_master/rendering_plate/lighting/hide_from(mob/oldmob)
 	. = ..()
-	oldmob.clear_fullscreen("lighting_backdrop_lit_[home.key]#[offset]")
-	oldmob.clear_fullscreen("lighting_backdrop_unlit_[home.key]#[offset]")
+	oldmob.clear_fullscreen("lighting_backdrop_lit_[home.key]#[offset]", animated = 0)
+	oldmob.clear_fullscreen("lighting_backdrop_unlit_[home.key]#[offset]", animated = 0)
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/proc/set_light_cutoff(light_cutoff, list/color_cutoffs)
 	var/list/new_cutoffs = list(light_cutoff)
@@ -360,7 +344,7 @@
 	if(!.)
 		return
 
-	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(handle_sight))
+	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(handle_sight), override = TRUE)
 	handle_sight(mymob, mymob.sight, NONE)
 
 /atom/movable/screen/plane_master/rendering_plate/light_mask/hide_from(mob/oldmob)
@@ -406,6 +390,10 @@
 
 /atom/movable/screen/plane_master/rendering_plate/runechat_ao/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
+	// For.. some reason submaps do not play well with transforms, so none for now
+	if(home.key != PLANE_GROUP_MAIN)
+		hide_plane()
+		return
 	var/matrix/scale_down_matrix = new /matrix()
 	scale_down_matrix.Translate(0, -2)
 	scale_down_matrix.Scale(1/AO_TRANSFORM_CONSTANT)
@@ -422,7 +410,7 @@
 	if(!mymob?.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		hide_plane(mymob)
 
-/atom/movable/screen/plane_master/rendering_plate/runechat_ao/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset)
+/atom/movable/screen/plane_master/rendering_plate/runechat_ao/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset, highest_possible_offset)
 	. = ..()
 	if(!.)
 		return
