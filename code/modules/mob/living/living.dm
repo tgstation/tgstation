@@ -1752,7 +1752,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 	if(registered_z)
 		SSmobs.clients_by_zlevel[registered_z] -= src
-	if(!client)
+	if(isnull(client))
 		registered_z = null
 		return
 
