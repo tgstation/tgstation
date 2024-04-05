@@ -93,7 +93,7 @@
 /datum/antagonist/survivalist/battle_royale/proc/set_target_area(target_area_name)
 	var/datum/objective/custom/travel = new
 	travel.owner = owner
-	travel.explanation_text = "Reach [target_area_name] before time runs out."
+	travel.explanation_text = "Reach the [target_area_name] before time runs out."
 	objectives.Insert(1, travel)
 	owner.announce_objectives()
 

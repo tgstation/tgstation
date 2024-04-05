@@ -1,3 +1,28 @@
+/// Global list of areas which are considered to be inside the same department for our purposes
+GLOBAL_LIST_INIT(battle_royale_regions, list(
+	"Medical Bay" = list(
+		/area/station/command/heads_quarters/cmo,
+		/area/station/medical,
+		/area/station/security/checkpoint/medical,
+	),
+	"Research Division" = list(
+		/area/station/command/heads_quarters/rd,
+		/area/station/security/checkpoint/science, 
+		/area/station/science,
+	),
+	"Engineering Bay" = list(
+		/area/station/command/heads_quarters/ce,
+		/area/station/engineering,
+		/area/station/maintenance/disposal/incinerator,
+		/area/station/security/checkpoint/engineering,
+	),
+	"Cargo Bay" = list(
+		/area/station/cargo,
+		/area/station/command/heads_quarters/qm,
+		/area/station/security/checkpoint/supply,
+	),
+))
+
 /// Basically just exists to hold references to datums so that they don't GC
 SUBSYSTEM_DEF(battle_royale)
 	name = "Battle Royale"
@@ -26,6 +51,8 @@ SUBSYSTEM_DEF(battle_royale)
 
 /// Datum which controls the conflict
 /datum/battle_royale_controller
+	/// Where is our battle taking place?
+	var/chosen_area 
 	/// Is the battle currently in progress?
 	var/battle_running = TRUE
 	/// Should we let everyone know that someone has died?
@@ -76,8 +103,9 @@ SUBSYSTEM_DEF(battle_royale)
 
 /// Start a battle royale with the list of provided implants
 /datum/battle_royale_controller/proc/start(list/implants, battle_time = 1 MINUTES)
+	chosen_area = pick(GLOB.battle_royale_regions)
 	for (var/obj/item/implant/explosive/battle_royale/contestant_implant in implants)
-		contestant_implant.start_battle("my ass")
+		contestant_implant.start_battle(chosen_area, GLOB.battle_royale_regions[chosen_area])
 		if (isnull(contestant_implant))
 			continue // Might have exploded if it was removed from a person
 		RegisterSignal(contestant_implant, COMSIG_QDELETING, PROC_REF(implant_destroyed))
@@ -88,7 +116,8 @@ SUBSYSTEM_DEF(battle_royale)
 
 	priority_announce(
 		text = "Congratulations [station_name()], you have been chosen as the next site of the Rumble Royale! \n\
-			Viewers across the sector will watch our [convert_integer_to_words(length(contestant_implants))] lucky contestants battle it out across your facility over the next ten minutes! \n\
+			Viewers across the sector will watch our [convert_integer_to_words(length(contestant_implants))] lucky contestants battle their way into your [chosen_area] and fight until only one is left standing! \n\
+			If they don't make it in five minutes, they'll be disqualified. If you see one of our players struggling to get in, do lend them a hand... or don't, if you can live with the consequences!  \n\
 			As a gesture of gratitude, we will be providing our premium broadcast to your entertainment monitors at no cost so that you can watch the excitement. \n\
 			Bystanders are advised not to intervene... but if you do, make it look good for the camera!",
 		title = "Rumble Royale Beginning",
@@ -100,6 +129,7 @@ SUBSYSTEM_DEF(battle_royale)
 
 	for (var/obj/item/implant/explosive/battle_royale/contestant_implant as anything in contestant_implants)
 		contestant_implant.announce()
+	addtimer(CALLBACK(src, PROC_REF(limit_area)), battle_time / 2, TIMER_DELETE_ME)
 	addtimer(CALLBACK(src, PROC_REF(finish)), battle_time, TIMER_DELETE_ME)
 	return TRUE
 
@@ -162,7 +192,22 @@ SUBSYSTEM_DEF(battle_royale)
 	)
 
 	qdel(winning_implant) // You get to live!
+	winner?.mind?.remove_antag_datum(/datum/antagonist/survivalist/battle_royale)
 	qdel(src)
+
+/// Called halfway through the battle, if you've not made it to the designated battle zone we kill you
+/datum/battle_royale_controller/proc/limit_area()
+	priority_announce(
+		text = "We're halfway done folks! And bad news to anyone who hasn't made it to the [chosen_area]... you're out!",
+		title = "Rumble Royale Update",
+		sound = 'sound/misc/notice1.ogg',
+		has_important_message = TRUE,
+		sender_override = "Rumble Royale Pirate Broadcast Station",
+		color_override = "red",
+	)
+
+	for (var/obj/item/implant/explosive/battle_royale/contestant_implant as anything in contestant_implants)
+		contestant_implant.limit_areas()
 
 /// Well you're out of time, bad luck
 /datum/battle_royale_controller/proc/finish()

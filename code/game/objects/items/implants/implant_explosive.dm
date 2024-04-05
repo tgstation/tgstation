@@ -165,14 +165,15 @@
 
 
 ///When called, just explodes
-/obj/item/implant/explosive/proc/explode()
+/obj/item/implant/explosive/proc/explode(atom/override_explode_target = null)
 	explosion_devastate = round(explosion_devastate)
 	explosion_heavy = round(explosion_heavy)
 	explosion_light = round(explosion_light)
-	explosion(src, devastation_range = explosion_devastate, heavy_impact_range = explosion_heavy, light_impact_range = explosion_light, flame_range = explosion_light, flash_range = explosion_light, explosion_cause = src)
-	if(imp_in)
-		imp_in.investigate_log("has been gibbed by an explosive implant.", INVESTIGATE_DEATHS)
-		imp_in.gib(DROP_ORGANS|DROP_BODYPARTS)
+	explosion(override_explode_target || src, devastation_range = explosion_devastate, heavy_impact_range = explosion_heavy, light_impact_range = explosion_light, flame_range = explosion_light, flash_range = explosion_light, explosion_cause = src)
+	var/mob/living/kill_mob = isliving(override_explode_target) ? override_explode_target : imp_in
+	if(!isnull(kill_mob))
+		kill_mob.investigate_log("has been gibbed by an explosive implant.", INVESTIGATE_DEATHS)
+		kill_mob.gib(DROP_ORGANS|DROP_BODYPARTS)
 	qdel(src)
 
 ///Macrobomb has the strength and delay of 10 microbombs

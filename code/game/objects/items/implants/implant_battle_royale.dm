@@ -12,10 +12,16 @@
 	var/target_area_name = ""
 	/// Is this implant active yet?
 	var/battle_started = FALSE
+	/// Are we enforcing a specific area yet?
+	var/area_limited = FALSE
 	/// Are we presently exploding?
 	var/has_exploded = FALSE
+	/// How likely are we to blow up if removed?
+	var/removed_explode_chance = 70
 	/// Reference to our applied camera component
 	var/camera
+	/// We will explode if we're not in here after a set time
+	var/list/limited_areas = list()
 
 /obj/item/implant/explosive/battle_royale/get_data()
 	return "<b>Implant Specifications:</b><BR> \
@@ -49,20 +55,26 @@
 		emp_proof = TRUE, \
 	)
 	announce()
+	if (area_limited)
+		limit_areas()
 
 /obj/item/implant/explosive/battle_royale/removed(mob/target, silent, special)
 	. = ..()
-	UnregisterSignal(target, COMSIG_LIVING_LIFE)
+	UnregisterSignal(target, list(COMSIG_LIVING_LIFE, COMSIG_ENTER_AREA))
 	QDEL_NULL(camera)
 	if (has_exploded || QDELETED(src))
 		return
-	if (prob(75))
+	if (!special && prob(removed_explode_chance))
 		target.visible_message(span_boldwarning("[src] beeps ominously."))
 		playsound(loc, 'sound/items/timer.ogg', 50, vary = FALSE)
-		explode()
+		explode(target)
 	target?.mind?.remove_antag_datum(/datum/antagonist/survivalist/battle_royale)
 
-/obj/item/implant/explosive/battle_royale/explode()
+/obj/item/implant/explosive/battle_royale/emp_act(severity)
+	removed_explode_chance = rand(0, 100)
+	return ..()
+
+/obj/item/implant/explosive/battle_royale/explode(atom/override_explode_target = null)
 	has_exploded = TRUE
 	return ..()
 
@@ -76,11 +88,12 @@
 	to_chat(source, span_boldwarning("You feel a lump which shouldn't be there."))
 
 /// Start the battle royale
-/obj/item/implant/explosive/battle_royale/proc/start_battle(target_area_name)
+/obj/item/implant/explosive/battle_royale/proc/start_battle(target_area_name, list/limited_areas)
 	if (isnull(imp_in))
 		explode()
 		return
 	src.target_area_name = target_area_name
+	src.limited_areas = limited_areas
 	battle_started = TRUE
 	name = "[name] - [imp_in.real_name]"
 	imp_in.AddComponent( \
@@ -92,6 +105,36 @@
 	)
 	AddComponent(/datum/component/gps, "Rumble Royale - [imp_in.real_name]")
 	playsound(loc, 'sound/items/timer.ogg', 50, vary = FALSE)
+
+/// Limit the owner to the specified area
+/obj/item/implant/explosive/battle_royale/proc/limit_areas()
+	if (isnull(imp_in))
+		explode()
+		return
+	area_limited = TRUE
+	RegisterSignal(imp_in, COMSIG_ENTER_AREA, PROC_REF(check_area))
+	check_area(imp_in)
+
+/// Called when our implantee moves somewhere
+/obj/item/implant/explosive/battle_royale/proc/check_area(mob/living/source)
+	SIGNAL_HANDLER
+	if (!length(limited_areas))
+		return
+	if (is_type_in_list(get_area(source), limited_areas))
+		return
+	playsound(imp_in, 'sound/items/timer.ogg', 50, vary = FALSE)
+	to_chat(imp_in, span_boldwarning("You are out of bounds! Get to the [target_area_name] quickly!"))
+	addtimer(CALLBACK(src, PROC_REF(check_area_deadly)), 5 SECONDS, TIMER_DELETE_ME)
+
+/// After a grace period they're still out of bounds, killing time
+/obj/item/implant/explosive/battle_royale/proc/check_area_deadly()
+	if (isnull(imp_in) || has_exploded)
+		return
+	var/area/our_area = get_area(imp_in)
+	if (is_type_in_list(our_area, limited_areas))
+		return
+	log_combat(src, imp_in, "exploded due to out of bounds", addition = "target area was [target_area_name], area was [our_area]")
+	explode()
 
 /// Add the antag datum to our new contestant, also printing some flavour text
 /obj/item/implant/explosive/battle_royale/proc/announce()
