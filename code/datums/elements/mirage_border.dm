@@ -14,8 +14,22 @@
 		stack_trace("[type] improperly attached with the following args: target=\[[target_turf]\], direction=\[[direction]\], range=\[[range]\]")
 		return ELEMENT_INCOMPATIBLE
 	#endif
+	var/turf/owning_turf = target
 
-	var/atom/movable/mirage_holder/holder = new(target)
+	var/atom/movable/mirage_holder/holder = new(owning_turf)
+	// This is an optimization to avoid needing to check for mirage partners to pass along depth info
+	// We just assert that mirages display all the levels their partner ever could
+	var/our_offset = GET_Z_PLANE_OFFSET(owning_turf.z)
+	var/their_offset = GET_Z_PLANE_OFFSET(target_turf.z)
+	var/our_lowest = GET_LOWEST_STACK_OFFSET(owning_turf.z)
+	var/their_lowest = GET_LOWEST_STACK_OFFSET(target_turf.z)
+	// If our spans are different mark er down
+	if(our_offset != their_offset || our_lowest != their_lowest)
+		var/list/depths = list()
+		for(var/depth in our_offset to their_lowest)
+			depths += depth + 1
+		// We'll never remove these because mirage holders are not reliable. Sorry
+		owning_turf.add_plane_visibilities(depths)
 
 	var/x = target_turf.x
 	var/y = target_turf.y

@@ -103,3 +103,6 @@
 
 /// Global signal sent when narsie summon count is updated: (new count)
 #define COMSIG_NARSIE_SUMMON_UPDATE "!narsie_summon_update"
+
+/// Global signal sent when a visibility cell is created: (datum/visibility_cell/new_cell)
+#define COMSIG_VIS_CELL_CREATED "!vis_cell_created"
