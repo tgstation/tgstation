@@ -5,6 +5,8 @@
 	var/can_be_driven = TRUE
 	/// If TRUE, this creature's abilities can be triggered by the rider while mounted
 	var/can_use_abilities = FALSE
+	/// shall we require riders to go through the riding minigame if they arent in our friends list
+	var/require_minigame = FALSE
 	/// list of blacklisted abilities that cant be shared
 	var/list/blacklist_abilities = list()
 
@@ -215,6 +217,15 @@
 		ADD_TRAIT(riding_mob, TRAIT_UNDENSE, VEHICLE_TRAIT)
 	else if(ride_check_flags & CARRIER_NEEDS_ARM) // fireman
 		human_parent.buckle_lying = 90
+
+/datum/component/riding/creature/post_vehicle_mob_buckle(mob/living/ridden, mob/living/rider)
+	if(!require_minigame|| ridden.faction.Find(rider))
+		return
+	ridden.Shake(duration = 2 SECONDS)
+	ridden.balloon_alert(rider, "tries to shake you off.")
+	var/datum/riding_minigame/game = new
+	INVOKE_ASYNC(game, TYPE_PROC_REF(/datum/riding_minigame, commence_minigame), ridden, rider)
+
 
 /datum/component/riding/creature/human/RegisterWithParent()
 	. = ..()
@@ -523,6 +534,7 @@
 	UnregisterSignal(rider,  COMSIG_MOB_POINTED)
 
 /datum/component/riding/creature/raptor
+	require_minigame = TRUE
 
 /datum/component/riding/creature/raptor/handle_specials()
 	. = ..()
@@ -531,16 +543,6 @@
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
-
-/datum/component/riding/creature/raptor/vehicle_mob_buckle(mob/living/ridden, mob/living/rider, force = FALSE)
-	. = ..()
-	if(ridden.faction.Find(rider))
-		return
-	ridden.Shake(duration = 2 SECONDS)
-	ridden.balloon_alert(rider, "tries to shake you off.")
-	var/datum/riding_minigame/game = new
-	INVOKE_ASYNC(game, TYPE_PROC_REF(/datum/riding_minigame, commence_minigame), ridden, rider)
-
 
 /datum/riding_minigame
 	///our host mob
@@ -629,7 +631,7 @@
 			if(picked_answer)
 				return TRUE
 			picked_answer = params["picked_answer"]
-			var/sound_to_play = picked_answer == correct_answer ?
+		//	var/sound_to_play = picked_answer == correct_answer ?
 	
 /datum/riding_minigame/proc/end_game(victory)
 	var/mob/living/living_host = host?.resolve()
