@@ -1,6 +1,9 @@
 // from /client/proc/change_view() : (new_size)
 #define COMSIG_VIEW_SET "view_set"
 
+// from /client/proc/set_functional_offsets() : (offset_x, offset_y)
+#define COMSIG_CLIENT_OFFSETS_CHANGED "client_offsets_changed"
+
 // from /client/proc/handle_popup_close() : (window_id)
 #define COMSIG_POPUP_CLEARED "popup_cleared"
 

@@ -184,6 +184,11 @@
 
 	/// datum wrapper for client view
 	var/datum/view_data/view_size
+	/// The functional pixel_x offset of our view
+	/// We really only care about the big jumps
+	var/major_pixel_x = 0
+	/// The functional pixel_y offset of our view
+	var/major_pixel_y = 0
 
 	/// our current tab
 	var/stat_tab

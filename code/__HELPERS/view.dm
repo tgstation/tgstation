@@ -1,4 +1,7 @@
 /proc/getviewsize(view)
+	if(islist(view) && length(view) == 2 && isnum(view[1]) && isnum(view[2]))
+		var/list/list_view = view
+		return list_view.Copy() // Just to cover our bases
 	if(!view) // Just to avoid any runtimes that could otherwise cause constant disconnect loops.
 		stack_trace("Missing value for 'view' in getviewsize(), defaulting to world.view!")
 		view = world.view
