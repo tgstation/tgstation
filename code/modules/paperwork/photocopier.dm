@@ -673,6 +673,10 @@ GLOBAL_LIST_INIT(paper_blanks_synd, init_paper_blanks(BLANKS_SYND_FILE_NAME))
 	return TRUE
 
 /obj/machinery/photocopier/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	. = ..()
+	if(.)
+		return .
+
 	if(istype(tool, /obj/item/paper) || istype(tool, /obj/item/photo) || istype(tool, /obj/item/documents))
 		if(istype(tool, /obj/item/paper))
 			var/obj/item/paper/paper = tool
