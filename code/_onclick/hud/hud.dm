@@ -57,12 +57,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	///Assoc list of controller groups, associated with key string group name with value of the plane master controller ref
 	var/list/atom/movable/plane_master_controller/plane_master_controllers = list()
 
-	/// Think of multiz as a stack of z levels. Each index in that stack has its own group of plane masters
-	/// This variable is the plane offset our mob/client is currently "on"
-	/// We use it to track what we should show/not show
-	/// Goes from 0 to the max (z level stack size - 1)
-	var/current_plane_offset = 0
-
 	///UI for screentips that appear when you mouse over things
 	var/atom/movable/screen/screentip/screentip_text
 
@@ -185,7 +179,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	for(var/group_key as anything in master_groups)
 		var/datum/plane_master_group/group = master_groups[group_key]
-		group.transform_lower_turfs(src, current_plane_offset)
+		group.offset_planes()
 
 /datum/hud/proc/should_use_scale()
 	return should_sight_scale(mymob.sight)
@@ -193,21 +187,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/should_sight_scale(sight_flags)
 	return (sight_flags & (SEE_TURFS | SEE_OBJS)) != SEE_TURFS
 
-/datum/hud/proc/eye_z_changed(atom/eye)
+/datum/hud/proc/eye_z_changed(atom/eye,turf/old_turf, turf/new_turf, same_z_layer)
 	SIGNAL_HANDLER
 	update_parallax_pref() // If your eye changes z level, so should your parallax prefs
-	var/turf/eye_turf = get_turf(eye)
-	var/new_offset = GET_TURF_PLANE_OFFSET(eye_turf)
-	if(current_plane_offset == new_offset)
-		return
-	var/old_offset = current_plane_offset
-	current_plane_offset = new_offset
-
-	SEND_SIGNAL(src, COMSIG_HUD_OFFSET_CHANGED, old_offset, new_offset)
-	if(should_use_scale())
-		for(var/group_key as anything in master_groups)
-			var/datum/plane_master_group/group = master_groups[group_key]
-			group.transform_lower_turfs(src, new_offset)
+	SEND_SIGNAL(src, COMSIG_HUD_Z_CHANGED, old_turf.z, new_turf.z)
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)

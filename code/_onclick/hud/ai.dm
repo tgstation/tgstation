@@ -179,7 +179,7 @@
 /atom/movable/screen/ai/floor_indicator/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	if(istype(hud_owner))
-		RegisterSignal(hud_owner, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(update_z))
+		RegisterSignal(hud_owner, COMSIG_HUD_Z_CHANGED, PROC_REF(update_z))
 		update_z()
 
 /atom/movable/screen/ai/floor_indicator/proc/update_z(datum/hud/source)
