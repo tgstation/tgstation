@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "All Nighter: fixed a runtime from not having a head, whether from hars/deletion/somesuch."
-  - bugfix: "All Nighter: losing and regaining your head while you had eyebags no longer removes your eyebags until you've slept."

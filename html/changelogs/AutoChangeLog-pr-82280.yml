@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - refactor: "refactors how objects are deconstructed in relation to the `NO_DECONSTRUCTION` flag. Certain objects & machinery may display different tool interactions & behaviours when destroyed/deconstructed. Report these changes if you feel like they are bugs"

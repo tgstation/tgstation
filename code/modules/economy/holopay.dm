@@ -65,9 +65,8 @@
 		if(BURN)
 			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
 
-/obj/structure/holopay/deconstruct()
+/obj/structure/holopay/atom_deconstruct(dissambled = TRUE)
 	dissipate()
-	return ..()
 
 /obj/structure/holopay/Destroy()
 	linked_card?.my_store = null

@@ -214,8 +214,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
 
 /obj/item/gps/computer/wrench_act(mob/living/user, obj/item/I)
 	..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return TRUE
 
 	user.visible_message(span_warning("[user] disassembles [src]."),
 		span_notice("You start to disassemble [src]..."), span_hear("You hear clanking and banging noises."))

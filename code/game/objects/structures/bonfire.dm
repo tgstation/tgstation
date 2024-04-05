@@ -85,7 +85,7 @@
 	if(burning)
 		to_chat(user, span_warning("You need to extinguish [src] before removing the logs!"))
 		return
-	if(!has_buckled_mobs() && do_after(user, 50, target = src))
+	if(!has_buckled_mobs() && do_after(user, 5 SECONDS, target = src))
 		for(var/obj/item/grown/log/bonfire_log in contents)
 			bonfire_log.forceMove(drop_location())
 			bonfire_log.pixel_x += rand(1,4)

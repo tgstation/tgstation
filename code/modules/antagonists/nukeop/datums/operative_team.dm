@@ -313,5 +313,9 @@
 			return TRUE
 	return FALSE
 
+/datum/team/nuclear/add_member(datum/mind/new_member)
+	..()
+	SEND_SIGNAL(src, COMSIG_NUKE_TEAM_ADDITION, new_member.current)
+
 #undef SPAWN_AT_BASE
 #undef SPAWN_AT_INFILTRATOR
