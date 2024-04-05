@@ -207,7 +207,6 @@
 		/obj/item/stack/sheet/bone = 2,
 		/obj/item/stack/sheet/sinew = 2,
 		/obj/item/stack/ore/diamond = 2,
-		/obj/item/crusher_trophy/watcher_wing = 1,
 	)
 	category = CAT_CLOTHING
 
