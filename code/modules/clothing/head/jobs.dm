@@ -254,7 +254,7 @@
 	if(prefix_index != 1)
 		return .
 
-	var/the_phrase = lowertext(trim_left(replacetext(raw_message, prefix, "")))
+	var/the_phrase = copytext(lowertext(trim_left(replacetext(raw_message, prefix, ""))),1,length(the_phrase))
 	var/obj/item/result = items_by_phrase[the_phrase]
 	if(!result)
 		return .
