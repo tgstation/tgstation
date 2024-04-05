@@ -136,14 +136,6 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"dS" = (
-/obj/machinery/light/floor{
-	brightness = 2;
-	bulb_colour = "#deefff";
-	bulb_power = 0.6
-	},
-/turf/closed/mineral/asteroid,
-/area/ruin/space)
 "el" = (
 /obj/item/disk/cargo/bluespace_pod{
 	pixel_y = 8
@@ -3449,7 +3441,7 @@ Dk
 Dk
 Dk
 Dk
-dS
+Dk
 Dk
 Dk
 Dk
