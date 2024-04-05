@@ -73,7 +73,7 @@
 			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
 			. = CONTEXTUAL_SCREENTIP_SET
 
-	if(!(obj_flags & NO_DECONSTRUCTION) && deconstruction_ready)
+	if(deconstruction_ready)
 		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_RMB] = "Disassemble"
 			. = CONTEXTUAL_SCREENTIP_SET
@@ -207,7 +207,7 @@
 	pushed_mob.add_mood_event("table", /datum/mood_event/table_limbsmash, banged_limb)
 
 /obj/structure/table/screwdriver_act_secondary(mob/living/user, obj/item/tool)
-	if(obj_flags & NO_DECONSTRUCTION || !deconstruction_ready)
+	if(!deconstruction_ready)
 		return FALSE
 	to_chat(user, span_notice("You start disassembling [src]..."))
 	if(tool.use_tool(src, user, 2 SECONDS, volume=50))
@@ -215,12 +215,12 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/wrench_act_secondary(mob/living/user, obj/item/tool)
-	if(obj_flags & NO_DECONSTRUCTION || !deconstruction_ready)
+	if(!deconstruction_ready)
 		return FALSE
 	to_chat(user, span_notice("You start deconstructing [src]..."))
 	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		deconstruct(TRUE, 1)
+		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/attackby(obj/item/I, mob/living/user, params)
@@ -297,20 +297,14 @@
 /obj/structure/table/proc/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	return
 
-/obj/structure/table/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/turf/T = get_turf(src)
-		if(buildstack)
-			new buildstack(T, buildstackamount)
-		else
-			for(var/i in custom_materials)
-				var/datum/material/M = i
-				new M.sheet_type(T, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
-		if(!wrench_disassembly)
-			new frame(T)
-		else
-			new framestack(T, framestackamount)
-	qdel(src)
+/obj/structure/table/atom_deconstruct(disassembled = TRUE)
+	var/turf/target_turf = get_turf(src)
+	if(buildstack)
+		new buildstack(target_turf, buildstackamount)
+	else
+		for(var/datum/material/mat in custom_materials)
+			new mat.sheet_type(target_turf, FLOOR(custom_materials[mat] / SHEET_MATERIAL_AMOUNT, 1))
+		new framestack(target_turf, framestackamount)
 
 /obj/structure/table/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
@@ -437,8 +431,7 @@
 
 /obj/structure/table/glass/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
+
 	if(!isliving(AM))
 		return
 	// Don't break if they're just flying past
@@ -469,19 +462,16 @@
 	victim.Paralyze(100)
 	qdel(src)
 
-/obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(disassembled)
-			..()
-			return
-		else
-			var/turf/T = get_turf(src)
-			playsound(T, SFX_SHATTER, 50, TRUE)
+/obj/structure/table/glass/atom_deconstruct(disassembled = TRUE)
+	if(disassembled)
+		..()
+		return
+	else
+		var/turf/T = get_turf(src)
+		playsound(T, SFX_SHATTER, 50, TRUE)
 
-			new frame(loc)
-			new glass_shard_type(loc)
-
-	qdel(src)
+		new frame(loc)
+		new glass_shard_type(loc)
 
 /obj/structure/table/glass/narsie_act()
 	color = NARSIE_WINDOW_COLOUR
@@ -841,10 +831,9 @@
 	if(isnull(held_item))
 		return NONE
 
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(held_item.tool_behaviour == TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
-			return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
 
@@ -860,8 +849,6 @@
 		return TRUE
 
 /obj/structure/rack/wrench_act_secondary(mob/living/user, obj/item/tool)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return NONE
 	tool.play_tool_sound(src)
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
@@ -901,12 +888,10 @@
  * Rack destruction
  */
 
-/obj/structure/rack/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		set_density(FALSE)
-		var/obj/item/rack_parts/newparts = new(loc)
-		transfer_fingerprints_to(newparts)
-	qdel(src)
+/obj/structure/rack/atom_deconstruct(disassembled = TRUE)
+	set_density(FALSE)
+	var/obj/item/rack_parts/newparts = new(loc)
+	transfer_fingerprints_to(newparts)
 
 
 /*
@@ -935,24 +920,19 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Construct Rack"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(held_item.tool_behaviour == TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
-			return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
 
 /obj/item/rack_parts/wrench_act(mob/living/user, obj/item/tool)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return NONE
 	tool.play_tool_sound(src)
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/rack_parts/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(drop_location())
-	return ..()
+/obj/item/rack_parts/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/iron(drop_location())
 
 /obj/item/rack_parts/attack_self(mob/user)
 	if(building)

@@ -1085,10 +1085,11 @@
 	bodypart_overlays -= overlay
 	overlay.removed_from_limb(src)
 
-/obj/item/bodypart/deconstruct(disassembled = TRUE)
+/obj/item/bodypart/atom_deconstruct(disassembled = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	drop_organs()
+
 	return ..()
 
 /// INTERNAL PROC, DO NOT USE

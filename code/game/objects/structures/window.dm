@@ -78,8 +78,6 @@
 
 /obj/structure/window/examine(mob/user)
 	. = ..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
 
 	switch(state)
 		if(WINDOW_SCREWED_TO_FRAME)
@@ -210,8 +208,6 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/screwdriver_act(mob/living/user, obj/item/tool)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
 
 	switch(state)
 		if(WINDOW_SCREWED_TO_FRAME)
@@ -240,7 +236,7 @@
 /obj/structure/window/wrench_act(mob/living/user, obj/item/tool)
 	if(anchored)
 		return FALSE
-	if((obj_flags & NO_DECONSTRUCTION) || (reinf && state >= RWINDOW_FRAME_BOLTED))
+	if(reinf && state >= RWINDOW_FRAME_BOLTED)
 		return FALSE
 
 	to_chat(user, span_notice("You begin to disassemble [src]..."))
@@ -255,7 +251,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/crowbar_act(mob/living/user, obj/item/tool)
-	if(!anchored || (obj_flags & NO_DECONSTRUCTION))
+	if(!anchored)
 		return FALSE
 
 	switch(state)
@@ -330,17 +326,12 @@
 			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
 
-/obj/structure/window/deconstruct(disassembled = TRUE)
-	if(QDELETED(src))
-		return
+/obj/structure/window/atom_deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		playsound(src, break_sound, 70, TRUE)
-		if(!(obj_flags & NO_DECONSTRUCTION))
-			for(var/obj/item/shard/debris in spawn_debris(drop_location()))
-				transfer_fingerprints_to(debris) // transfer fingerprints to shards only
-	qdel(src)
+		for(var/obj/item/shard/debris in spawn_debris(drop_location()))
+			transfer_fingerprints_to(debris) // transfer fingerprints to shards only
 	update_nearby_icons()
-
 
 ///Spawns shard and debris decal based on the glass_material_datum, spawns rods if window is reinforned and number of shards/rods is determined by the window being fulltile or not.
 /obj/structure/window/proc/spawn_debris(location)
@@ -480,9 +471,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 	return FALSE
 
 /obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return ..()
-
 	switch(state)
 		if(RWINDOW_SECURE)
 			if(tool.tool_behaviour == TOOL_WELDER)
@@ -546,7 +534,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 /obj/structure/window/reinforced/crowbar_act(mob/living/user, obj/item/tool)
 	if(!anchored)
 		return FALSE
-	if((obj_flags & NO_DECONSTRUCTION) || (state != WINDOW_OUT_OF_FRAME))
+	if(state != WINDOW_OUT_OF_FRAME)
 		return FALSE
 	to_chat(user, span_notice("You begin to lever the window back into the frame..."))
 	if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
@@ -561,8 +549,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 
 /obj/structure/window/reinforced/examine(mob/user)
 	. = ..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
+
 	switch(state)
 		if(RWINDOW_SECURE)
 			. += span_notice("It's been screwed in with one way screws, you'd need to <b>heat them</b> to have any chance of backing them out.")
@@ -803,9 +790,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 
 /obj/structure/window/reinforced/shuttle/indestructible
 	name = "hardened shuttle window"
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 	flags_1 = PREVENT_CLICK_UNDER_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 
 /obj/structure/window/reinforced/shuttle/indestructible/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE

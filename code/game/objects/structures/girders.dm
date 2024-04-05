@@ -384,11 +384,9 @@
 		return TRUE
 	return FALSE
 
-/obj/structure/girder/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/iron)
-		new remains(loc)
-	qdel(src)
+/obj/structure/girder/atom_deconstruct(disassembled = TRUE)
+	var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/iron)
+	new remains(loc)
 
 /obj/structure/girder/narsie_act()
 	new /obj/structure/girder/cult(loc)
@@ -461,10 +459,8 @@
 /obj/structure/girder/cult/narsie_act()
 	return
 
-/obj/structure/girder/cult/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
-	qdel(src)
+/obj/structure/girder/cult/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
 
 /obj/structure/girder/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)

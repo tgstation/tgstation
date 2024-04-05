@@ -41,9 +41,8 @@
 		if(BURN)
 			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/pinata/deconstruct(disassembled)
+/obj/structure/pinata/atom_deconstruct(disassembled)
 	new debris(get_turf(src))
-	return ..()
 
 ///An item that when used inhand spawns an immovable pinata
 /obj/item/pinata
@@ -72,7 +71,7 @@
 	base_icon_state = "pinata_syndie_placed"
 	destruction_loot = 2
 	debris = /obj/effect/decal/cleanable/wrapping/pinata/syndie
-	candy_options = list( 
+	candy_options = list(
 		/obj/item/food/bubblegum,
 		/obj/item/food/candy,
 		/obj/item/food/chocolatebar,
