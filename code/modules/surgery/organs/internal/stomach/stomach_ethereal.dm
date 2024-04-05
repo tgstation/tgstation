@@ -10,7 +10,7 @@
 
 /obj/item/organ/internal/stomach/ethereal/Initialize(mapload)
 	. = ..()
-	cell = new/obj/item/stock_parts/cell/ethereal(src)
+	cell = new/obj/item/stock_parts/cell/ethereal(null)
 
 /obj/item/organ/internal/stomach/ethereal/Destroy()
 	QDEL_NULL(cell)
