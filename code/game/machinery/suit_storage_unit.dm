@@ -567,7 +567,7 @@
 
 	var/charge_per_item = (final_charge_rate * seconds_per_tick) / cell_count
 	for(var/obj/item/stock_parts/cell/cell as anything in cells_to_charge)
-		charge_cell(charge_per_item, cell)
+		charge_cell(charge_per_item, cell, grid_only = TRUE)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))
