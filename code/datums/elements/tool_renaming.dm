@@ -66,4 +66,3 @@
 			to_chat(user, span_notice("You have successfully reset [renamed_obj]'s name and description."))
 			REMOVE_TRAIT(renamed_obj, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
 			renamed_obj.update_appearance(UPDATE_ICON)
-	
