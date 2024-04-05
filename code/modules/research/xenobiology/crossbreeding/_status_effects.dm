@@ -748,6 +748,8 @@
 		C.real_name = O.real_name
 		O.dna.transfer_identity(C)
 		C.updateappearance(mutcolor_update=1)
+		for(var/datum/disease/D in O.diseases)
+			D.infect(C)
 	return ..()
 
 /datum/status_effect/stabilized/cerulean/tick(seconds_between_ticks)
