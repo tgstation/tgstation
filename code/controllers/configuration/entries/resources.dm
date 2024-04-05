@@ -6,7 +6,7 @@
 
 /datum/config_entry/string/asset_transport
 /datum/config_entry/string/asset_transport/ValidateAndSet(str_val)
-	return (lower_text(str_val) in list("simple", "webroot")) && ..(lower_text(str_val))
+	return (LOWER_TEXT(str_val) in list("simple", "webroot")) && ..(LOWER_TEXT(str_val))
 
 /datum/config_entry/string/asset_cdn_webroot
 	protection = CONFIG_ENTRY_LOCKED

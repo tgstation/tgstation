@@ -378,8 +378,8 @@
 /datum/component/uplink/proc/new_ringtone(datum/source, mob/living/user, new_ring_text)
 	SIGNAL_HANDLER
 
-	if(trim(lower_text(new_ring_text)) != trim(lower_text(unlock_code)))
-		if(trim(lower_text(new_ring_text)) == trim(lower_text(failsafe_code)))
+	if(trim(LOWER_TEXT(new_ring_text)) != trim(LOWER_TEXT(unlock_code)))
+		if(trim(LOWER_TEXT(new_ring_text)) == trim(LOWER_TEXT(failsafe_code)))
 			failsafe(user)
 			return COMPONENT_STOP_RINGTONE_CHANGE
 		return
@@ -415,8 +415,8 @@
 	if(channel != RADIO_CHANNEL_UPLINK)
 		return
 
-	if(!findtext(lower_text(message), lower_text(unlock_code)))
-		if(failsafe_code && findtext(lower_text(message), lower_text(failsafe_code)))
+	if(!findtext(LOWER_TEXT(message), LOWER_TEXT(unlock_code)))
+		if(failsafe_code && findtext(LOWER_TEXT(message), LOWER_TEXT(failsafe_code)))
 			failsafe(user)  // no point returning cannot radio, youre probably ded
 		return
 	locked = FALSE
