@@ -299,15 +299,6 @@
 	return islist(components) ? components : list(components)
 
 /**
- * Gets all components with no typepath provided.
- */
-/datum/proc/GetAllComponentTypes()
-	var/list/components = list()
-	for(var/component_type in _datum_components)
-		components += component_type
-	return components
-
-/**
  * Creates an instance of `new_type` in the datum and attaches to it as parent
  *
  * Sends the [COMSIG_COMPONENT_ADDED] signal to the datum
