@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - rscadd: "Nuclear Operatives now purchase an Intelligence Agent, who can watch cameras and bodycams, move the shuttle, and provide radio support. Only 12 Telecrystals!"

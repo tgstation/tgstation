@@ -106,15 +106,13 @@ By design, d1 is the smallest direction and d2 is the highest
 		QDEL_NULL(stored)
 	return ..() // then go ahead and delete the pipe_cleaner
 
-/obj/structure/pipe_cleaner/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/turf/T = get_turf(loc)
-		if(T)
-			stored.forceMove(T)
-			stored = null
-		else
-			qdel(stored)
-	qdel(src)
+/obj/structure/pipe_cleaner/atom_deconstruct(disassembled = TRUE)
+	var/turf/location = get_turf(loc)
+	if(location)
+		stored.forceMove(location)
+		stored = null
+	else
+		qdel(stored)
 
 ///////////////////////////////////
 // General procedures

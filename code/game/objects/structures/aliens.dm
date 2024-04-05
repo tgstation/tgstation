@@ -41,10 +41,8 @@
 	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "gelmound"
 
-/obj/structure/alien/gelpod/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/effect/mob_spawn/corpse/human/damaged(get_turf(src))
-	qdel(src)
+/obj/structure/alien/gelpod/atom_deconstruct(disassembled = TRUE)
+	new /obj/effect/mob_spawn/corpse/human/damaged(get_turf(src))
 
 /*
  * Resin
@@ -446,9 +444,8 @@
 
 /obj/structure/alien/egg/atom_break(damage_flag)
 	. = ..()
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(status != BURST)
-			Burst(kill=TRUE)
+	if(status != BURST)
+		Burst(kill=TRUE)
 
 /obj/structure/alien/egg/HasProximity(atom/movable/AM)
 	if(status == GROWN)

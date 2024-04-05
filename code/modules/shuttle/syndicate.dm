@@ -64,5 +64,6 @@
 	y_offset = -1
 	whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/closed/mineral, /turf/open/openspace, /turf/open/misc)
 	see_hidden = TRUE
+	circuit = /obj/item/circuitboard/computer/syndicate_shuttle_docker
 
 #undef SYNDICATE_CHALLENGE_TIMER
