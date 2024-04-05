@@ -1085,6 +1085,57 @@
 	for(var/i in 1 to 2)
 		new /obj/item/fulton_core/syndicate(src)
 
+/obj/item/storage/box/syndie_kit/syndiefirearmauth/PopulateContents()
+	new /obj/item/implanter/weapons_auth(src)
+
+/obj/item/storage/box/syndie_kit/adrenalineimplant/PopulateContents()
+	new /obj/item/implanter/adrenalin(src)
+
+/obj/item/storage/box/syndie_kit/regen_implant_box/PopulateContents()
+	new /obj/item/autosurgeon/syndicate/reviver/hidden(src)
+	new /obj/item/autosurgeon/syndicate/reviver/hidden(src)
+	new /obj/item/autosurgeon/syndicate/reviver/hidden(src)
+
+/obj/item/storage/box/syndie_kit/cybertoolsets/PopulateContents()
+	new /obj/item/autosurgeon/syndicate/toolset/hidden/single_use(src)
+	new /obj/item/autosurgeon/syndicate/surgery/hidden/single_use(src)
+
+/obj/item/storage/box/syndie_kit/cyberlifesupport/PopulateContents()
+	new /obj/item/autosurgeon/syndicate/nutrimentplus/hidden/single_use(src)
+	new /obj/item/autosurgeon/syndicate/breathing_tube/hidden/single_use(src)
+
+/obj/item/storage/box/syndie_kit/waspimplant/PopulateContents()
+	new /obj/item/implanter/wasps(src)
+
+/obj/item/storage/box/syndie_kit/waspimplantmacro/PopulateContents()
+	new /obj/item/implanter/wasps/macro(src)
+
+/obj/item/storage/box/syndie_kit/teslaimplant/PopulateContents()
+	new /obj/item/implanter/tesla(src)
+
+/obj/item/storage/box/syndie_kit/teslaimplantmacro/PopulateContents()
+	new /obj/item/implanter/tesla/macro(src)
+
+/obj/item/storage/box/syndie_kit/chem_storage_implant_bundle/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/implantcase/syndiechem(src)
+	new /obj/item/implanter(src)
+	new /obj/item/reagent_containers/syringe(src)
+	new /obj/item/reagent_containers/cup/beaker(src)
+
+/obj/item/storage/box/syndie_kit/chem_storage_implant/PopulateContents()
+	new /obj/item/implantcase/syndiechem(src)
+	new /obj/item/implanter(src)
+	new /obj/item/reagent_containers/syringe(src)
+	new /obj/item/reagent_containers/cup/beaker(src)
+
+/obj/item/storage/box/syndie_kit/krav_maga/PopulateContents()
+	new /obj/item/implanter/krav_maga(src)
+
+/obj/item/storage/box/syndie_kit/emp_shield/PopulateContents()
+	new /obj/item/implanter/empshield(src)
+
+
 
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI

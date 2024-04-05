@@ -43,6 +43,10 @@
 	empty_indicator = TRUE
 	suppressor_x_offset = 12
 
+/obj/item/gun/ballistic/automatic/pistol/implant
+	name = "Makarov implant"
+	desc = "A modified version of the Makarov pistol placed inside of the forearm, allows for easy concealment."
+
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"
 	desc = "A classic .45 handgun with a small magazine capacity."
@@ -54,6 +58,10 @@
 	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
 	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
+
+/obj/item/gun/ballistic/automatic/pistol/m1911/implant
+	name = "m1911 implant"
+	desc = "A modified version of the m1911 pistol placed inside of the forearm, allows for easy concealment."
 
 /**
  * Weak 1911 for syndicate chimps. It comes in a 4 TC kit.
@@ -106,6 +114,11 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/r10mm
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	obj_flags = UNIQUE_RENAME // if you did the sidequest, you get the customization
+
+/obj/item/gun/ballistic/automatic/pistol/deagle/implant
+	name = "desert eagle implant"
+	desc = "A modified version of the desert eagle placed inside of the forearm, allows for easy concealment."
+
 
 /obj/item/gun/ballistic/automatic/pistol/aps
 	name = "\improper Stechkin APS machine pistol"
@@ -164,6 +177,10 @@
 /obj/item/gun/ballistic/automatic/pistol/viper/no_mag
 	spawnwithmagazine = FALSE
 
+/obj/item/gun/ballistic/automatic/pistol/viper/implant
+	name = "viper implant"
+	desc = "A modified version of the viper pistol placed inside of the forearm, allows for easy concealment."
+
 /obj/item/gun/ballistic/automatic/pistol/cobra
 	name = "\improper Cobra"
 	desc = "A classic .45 handgun with a small magazine capacity. It makes very little noise at all when firing."
@@ -188,4 +205,8 @@
 
 /obj/item/gun/ballistic/automatic/pistol/cobra/caseless
 	spawn_magazine_type = /obj/item/ammo_box/magazine/m45/cs
+
+/obj/item/gun/ballistic/automatic/pistol/cobra/implant
+	name = "cobra implant"
+	desc = "A modified version of the cobra pistol placed inside of the forearm, allows for easy concealment."
 

@@ -247,6 +247,13 @@
 /obj/item/organ/internal/cyberimp/arm/gun/laser/l
 	zone = BODY_ZONE_L_ARM
 
+/obj/item/organ/internal/cyberimp/arm/gun/laser/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/arm/gun/laser/syndicate/l
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+
 /obj/item/organ/internal/cyberimp/arm/gun/taser
 	name = "arm-mounted taser implant"
 	desc = "A variant of the arm cannon implant that fires electrodes and disabler shots. The cannon emerges from the subject's arm and remains inside when not in use."
@@ -255,6 +262,13 @@
 
 /obj/item/organ/internal/cyberimp/arm/gun/taser/l
 	zone = BODY_ZONE_L_ARM
+
+/obj/item/organ/internal/cyberimp/arm/gun/taser/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/arm/gun/taser/syndicate/l
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
 
 /obj/item/organ/internal/cyberimp/arm/toolset
 	name = "integrated toolset implant"
@@ -282,16 +296,27 @@
 	items_list += WEAKREF(new /obj/item/knife/combat/cyborg(src))
 	return TRUE
 
+/obj/item/organ/internal/cyberimp/arm/toolset/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/arm/toolset/syndicate/l
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
 /obj/item/organ/internal/cyberimp/arm/esword
 	name = "arm-mounted energy blade"
 	desc = "An illegal and highly dangerous cybernetic implant that can project a deadly blade of concentrated energy."
 	items_to_create = list(/obj/item/melee/energy/blade/hardlight)
+
+/obj/item/organ/internal/cyberimp/arm/esword/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
 
 /obj/item/organ/internal/cyberimp/arm/medibeam
 	name = "integrated medical beamgun"
 	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
 	items_to_create = list(/obj/item/gun/medbeam)
 
+/obj/item/organ/internal/cyberimp/arm/medibeam/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
 
 /obj/item/organ/internal/cyberimp/arm/flash
 	name = "integrated high-intensity photon projector" //Why not
@@ -317,10 +342,16 @@
 		active_item.set_light_on(FALSE)
 	return ..()
 
+/obj/item/organ/internal/cyberimp/arm/flash/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
 /obj/item/organ/internal/cyberimp/arm/baton
 	name = "arm electrification implant"
 	desc = "An illegal combat implant that allows the user to administer disabling shocks from their arm."
 	items_to_create = list(/obj/item/borg/stun)
+
+/obj/item/organ/internal/cyberimp/arm/baton/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
 
 /obj/item/organ/internal/cyberimp/arm/combat
 	name = "combat cybernetics implant"
@@ -341,6 +372,9 @@
 		var/obj/item/assembly/flash/armimplant/flash = potential_flash
 		flash.arm = WEAKREF(src)
 
+/obj/item/organ/internal/cyberimp/arm/combat/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
 /obj/item/organ/internal/cyberimp/arm/surgery
 	name = "surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
@@ -355,6 +389,9 @@
 		/obj/item/surgical_drapes,
 	)
 
+/obj/item/organ/internal/cyberimp/arm/surgery/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
 /obj/item/organ/internal/cyberimp/arm/surgery/emagged
 	name = "hacked surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm. This one seems to have been tampered with."
@@ -368,6 +405,9 @@
 		/obj/item/surgical_drapes,
 		/obj/item/knife/combat/cyborg,
 	)
+
+/obj/item/organ/internal/cyberimp/arm/surgery/emagged/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
 
 /obj/item/organ/internal/cyberimp/arm/muscle
 	name = "\proper Strong-Arm empowered musculature implant"
@@ -479,3 +519,71 @@
 	log_combat(source, target, "[picked_hit_type]ed", "muscle implant")
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/obj/item/organ/internal/cyberimp/arm/muscle/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/arm/signaler
+	name = "arm-concealed signaler"
+	desc = "An illegal cybernetic implant that can produce and conceal a signaling device."
+	items_to_create = list(/obj/item/assembly/signaler)
+
+/obj/item/organ/internal/cyberimp/arm/signaler/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+
+/obj/item/organ/internal/cyberimp/arm/syndie_mantis
+	name = "G.O.R.L.E.X. mantis blade implant"
+	desc = "Modernized mantis blades designed and coined by Tiger operatives. Energy actuators makes the blade a much deadlier weapon."
+	items_to_create = list(/obj/item/mantis/blade/syndicate)
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/arm/syndie_mantis/l
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/arm/syndie_hammer
+	name = "Vxtvul Hammer implant"
+	desc = "A folded Vxtvul Hammer designed to be incorporated into preterni chassis. Surgery can permit it to fit in other organic bodies."
+	items_to_create = list(/obj/item/melee/vxtvulhammer)
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/arm/nt_mantis
+	name = "H.E.P.H.A.E.S.T.U.S. mantis blade implants"
+	desc = "Retractable arm-blade implants to get you out of a pinch. Wielding two will let you double-attack."
+	items_to_create = list(/obj/item/mantis/blade/NT)
+
+/obj/item/organ/internal/cyberimp/arm/nt_mantis/l
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/arm/makarov_implant
+	name = "Makarov implant"
+	desc = "A modified version of the Makarov pistol placed inside of the forearm to allow for easy concealment."
+	items_to_create = list(/obj/item/gun/ballistic/automatic/pistol/implant)
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/arm/m1911_implant
+	name = "M1911 implant"
+	desc = "A modified version of the M1911 pistol placed inside of the forearm to allow for easy concealment."
+	items_to_create = list(/obj/item/gun/ballistic/automatic/pistol/m1911/implant)
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/arm/deagle_implant
+	name = "Desert Eagle implant"
+	desc = "A modified version of the Desert Eagle placed inside of the forearm to allow for easy concealment."
+	items_to_create = list(/obj/item/gun/ballistic/automatic/pistol/deagle/implant)
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/arm/viper_implant
+	name = "Viper implant"
+	desc = "A modified version of the Viper pistol placed inside of the forearm to allow for easy concealment."
+	items_to_create = list(/obj/item/gun/ballistic/automatic/pistol/viper/implant)
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/arm/cobra_implant
+	name = "Cobra implant"
+	desc = "A modified version of the Cobra pistol placed inside of the forearm to allow for easy concealment."
+	items_to_create = list(/obj/item/gun/ballistic/automatic/pistol/cobra/implant)
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+
+

@@ -297,7 +297,7 @@
 /datum/uplink_item/device_tools/portalgun
 	name = "Bluespace Wormhole Projector"
 	desc = "A projector that emits high density quantum-coupled bluespace beams capable of ripping holes within the fabric of space-time. \
-			Shoot once for a blue portal, a second time for a red portal. Entities may pass through one portal to emerge from the other. \
+			Shoot once for a blue portal, and alt-fire for a orange portal. Entities may pass through one portal to emerge from the other. \
 			Portals will collapse and disappear eventually on their own, and portals may be created through windows."
 	item = /obj/item/gun/energy/wormhole_projector/core_inserted
 	cost = 5

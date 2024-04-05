@@ -58,7 +58,7 @@
 	item = /obj/item/katana/syndicate
 	progression_minimum = 25 MINUTES
 	surplus = 25
-	cost = 7
+	cost = 10
 	illegal_tech = TRUE
 
 /datum/uplink_item/dangerous/powerfist

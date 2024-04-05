@@ -746,9 +746,15 @@
 
 /datum/uplink_item/implants/nuclear/reviver
 	name = "Reviver Implant"
-	desc = "This implant will attempt to revive and heal you if you lose consciousness. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/syndicate/reviver
+	desc = "This implant will attempt to revive and heal you if you lose consciousness, these superior versions have a drastically lowered cooldown than most. Comes with an autosurgeon."
+	item = /obj/item/autosurgeon/syndicate/reviver/better/hidden/single_use
 	cost = 8
+
+/datum/uplink_item/implants/nuclear/regenerativeops
+	name = "Regenerative Implants"
+	desc = "Three surgical implants that when inserted into the body will very slowly repair the host. Allowing for VERY slow recovery of all forms of damage."
+	item = /obj/item/storage/box/syndie_kit/regen_implant_box
+	cost = 10
 
 /datum/uplink_item/implants/nuclear/thermals
 	name = "Thermal Eyes"
@@ -765,8 +771,15 @@
 /datum/uplink_item/implants/nuclear/antistun
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/syndicate/anti_stun
+	item = /obj/item/autosurgeon/syndicate/anti_stun/hidden/single_use
 	cost = 8
+
+/datum/uplink_item/implants/nuclear/medibeam
+	name = "Integrated Medical Beam Gun Implant"
+	desc = "A complete, miniaturized medical healing beam gun straight from our factories, it'll fit perfectly within one of your arms to support your fellow operatives in the midst of battle. \
+			Comes with an autosurgeon."
+	item = /obj/item/autosurgeon/syndicate/medibeam/hidden/single_use
+	cost = 15
 
 // Badass (meme items)
 

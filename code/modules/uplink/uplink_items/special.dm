@@ -8,13 +8,18 @@
 	surplus = 0
 	purchasable_from = NONE
 
-/datum/uplink_item/special/autosurgeon
-	name = "Syndicate Autosurgeon"
-	desc = "A multi-use autosurgeon for implanting whatever you want into yourself. Rip that station apart and make it part of you."
-	item = /obj/item/autosurgeon/syndicate
-	cost = 5
 
-/datum/uplink_item/special/autosurgeon/New()
+/datum/uplink_item/special/synditaser
+	name = "Syndicate Taser Implant"
+	desc = "An specialized syndicate arm-mounted taser, for quick subjugation of most personnel. Slowly recharges using bio-electricity."
+	item = /obj/item/autosurgeon/syndicate/taser/hidden/single_use
+	progression_minimum = 30 MINUTES
+	cost = 15
+	surplus = 0
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
+
+/datum/uplink_item/special/synditaser/New()
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		purchasable_from |= UPLINK_TRAITORS
+

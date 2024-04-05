@@ -46,6 +46,10 @@
 	var/extra_speed = 0
 	var/oof_noise = FALSE //We smacked something with denisty, so play a noise
 	var/mob/thrower = throwingdatum?.get_thrower()
+
+	if(HAS_TRAIT(src, TRAIT_IMPACTIMMUNE))
+		return
+
 	if(thrower != src)
 		extra_speed = min(max(0, throwingdatum.speed - initial(throw_speed)), CARBON_MAX_IMPACT_SPEED_BONUS)
 

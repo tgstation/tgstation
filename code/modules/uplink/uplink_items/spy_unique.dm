@@ -53,7 +53,7 @@
 	name = "Switchblade"
 	desc = "A switchblade. Switches between not sharp and sharp."
 	item = /obj/item/switchblade
-
+/**
 /datum/uplink_item/spy_unique/sechud_implant
 	name = "SecHUD Implant"
 	desc = "A SecHUD implant. Shows you the ID of people you're looking at. It's also stealthy!"
@@ -64,7 +64,7 @@
 	desc = "A bolt-action rifle, with a scope. Won't jam, either."
 	item = /obj/item/gun/ballistic/rifle/boltaction/prime
 	cost = SPY_UPPER_COST_THRESHOLD
-
+**/
 /datum/uplink_item/spy_unique/cycler_shotgun
 	name = "Cycler Shotgun"
 	desc = "A cycler shotgun. It's a shotgun that cycles between two barrels."
@@ -88,40 +88,40 @@
 	desc = "A rocket launcher. I would recommend against jumping with it."
 	item = /obj/item/gun/ballistic/rocketlauncher
 	cost = SPY_UPPER_COST_THRESHOLD - 1 // It's a meme item
-
+/**
 /datum/uplink_item/spy_unique/shotgun_ammo
 	name = "Box of Buckshot"
 	desc = "A box of buckshot rounds for a shotgun. For when you don't want to miss."
 	item = /obj/item/storage/box/lethalshot
 	cost = 1
-
+**/
 /datum/uplink_item/spy_unique/shotgun_ammo/breacher_slug
 	name = "Box of Breacher Slugs"
 	desc = "A box of breacher slugs for a shotgun. For making a good first impression."
 	item = /obj/item/storage/box/breacherslug
-
+/**
 /datum/uplink_item/spy_unique/shotgun_ammo/slugs
 	name = "Box of Slugs"
 	desc = "A box of slugs for a shotgun. For big game hunting."
 	item = /obj/item/storage/box/slugs
-
+**/
 /datum/uplink_item/spy_unique/stealth_belt
 	name = "Stealth Belt"
 	desc = "A stealth belt that lets you sneak behind enemy lines."
 	item = /obj/item/shadowcloak/weaker
 	cost = SPY_UPPER_COST_THRESHOLD
-
+/**
 /datum/uplink_item/spy_unique/katana
 	name = "Katana"
 	desc = "A really sharp Katana. Did I mention it's sharp?"
 	item = /obj/item/katana
 	cost = /datum/uplink_item/dangerous/doublesword::cost // Puts it in the same pool as Desword
-
+**/
 /datum/uplink_item/spy_unique/medkit_lite
 	name = "Syndicate First Medic Kit"
 	desc = "A syndicate tactical combat medkit, but only stocked enough to do basic first aid."
 	item = /obj/item/storage/medkit/tactical_lite
-
+/**
 /datum/uplink_item/spy_unique/antistun
 	name = /datum/uplink_item/implants/nuclear/antistun::name
 	desc = /datum/uplink_item/implants/nuclear/antistun::desc
@@ -131,7 +131,7 @@
 	name = /datum/uplink_item/implants/nuclear/reviver::name
 	desc = /datum/uplink_item/implants/nuclear/reviver::desc
 	item = /obj/item/autosurgeon/syndicate/reviver/single_use
-
+**/
 /datum/uplink_item/spy_unique/thermals
 	name = /datum/uplink_item/implants/nuclear/thermals::name
 	desc = /datum/uplink_item/implants/nuclear/thermals::desc

@@ -70,6 +70,16 @@
 	desc = "These cybernetic eye implants will display a diagnostic HUD over everything you see."
 	HUD_type = DATA_HUD_DIAGNOSTIC_ADVANCED
 
+/obj/item/organ/internal/cyberimp/eyes/hud/medical/syndicate
+	name = "Contraband Medical HUD implant"
+	desc = "A Cybersun Industries brand Medical HUD. These illicit cybernetic eye implants will display a medical HUD over everything you see."
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/eyes/hud/diagnostic/syndicate
+	name = "Contraband Diagnostic HUD implant"
+	desc = "A Cybersun Industries brand Diagnostic HUD. These illicit cybernetic eye implants will display a diagnostic HUD over everything you see."
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
 /obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate
 	name = "Contraband Security HUD Implant"
 	desc = "A Cybersun Industries brand Security HUD Implant. These illicit cybernetic eye implants will display a security HUD over everything you see."

@@ -205,7 +205,7 @@
 /datum/uplink_item/explosives/bombchameleon
 	name = "Chameleon Bomb"
 	desc = "An explosive device fitted with our chameleon technology, when used on an object, the bomb will disguise itself as that object. \
-			To arm, simply drop the bomb at any time, disguised or not, the bomb will arm itself and will detonate upon being picked up. \
+			To arm, remove the bomb from your hands, disguised or not, the bomb will arm itself and will detonate upon being picked up. \
 			The explosive isn't super powerful, but can seriously harm those who pick it up and leave them incapacitated temporarily."
 	item = /obj/item/device/chameleon/bomb
 	cost = 2
@@ -315,7 +315,7 @@
 	progression_minimum = 15 MINUTES
 
 /datum/uplink_item/explosives/eyebreakersmoke
-	name = "Box of Eyebreaker Smokebombs"
+	name = "Eyebreaker Smokebombs"
 	desc = "A pouch containing 5 chemical grenades, housing smoke laced with a unique reagent known for destroying the eyes of those it's exposed too."
 	item = /obj/item/ammo_box/nadepouch/eyebreak
 	cost = 4
@@ -351,7 +351,7 @@
 	desc = "A pouch containing approximately 5 Hellfoam Grenades. Perfect for clearing large areas of both station AND personnel."
 	item = /obj/item/ammo_box/nadepouch/clf3
 	limited_stock = 1
-	cost = 8
+	cost = 10
 	surplus = 6
 	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_SPY)
 	progression_minimum = 20 MINUTES
@@ -360,7 +360,7 @@
 	name = "Box of Explosive Mines"
 	desc = "A box containing approximately 5 Explosive landmines which can be planted on any tile. These mines can easily kill and gib those who step on them as well as destroying all of their stuff."
 	item = /obj/item/storage/box/syndie_kit/explosivemines
-	cost = 8
+	cost = 6
 	surplus = 10
 	purchasable_from = ~UPLINK_CLOWN_OPS
 	progression_minimum = 20 MINUTES

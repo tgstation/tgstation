@@ -98,6 +98,10 @@
 	UnregisterSignal(source, COMSIG_ITEM_DROPPED)
 	stored_items -= source
 
+/obj/item/organ/internal/cyberimp/brain/anti_drop/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+
 /obj/item/organ/internal/cyberimp/brain/anti_stun
 	name = "CNS Rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
@@ -143,6 +147,9 @@
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
 
+/obj/item/organ/internal/cyberimp/brain/anti_stun/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
 //[[[[MOUTH]]]]
 /obj/item/organ/internal/cyberimp/mouth
 	zone = BODY_ZONE_PRECISE_MOUTH
@@ -161,6 +168,9 @@
 	if(prob(60/severity))
 		to_chat(owner, span_warning("Your breathing tube suddenly closes!"))
 		owner.losebreath += 2
+
+/obj/item/organ/internal/cyberimp/mouth/breathing_tube/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
 
 //BOX O' IMPLANTS
 
