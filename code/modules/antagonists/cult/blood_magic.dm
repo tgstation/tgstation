@@ -1,5 +1,8 @@
+/// how many units of blood one charge of blood rites is worth
 #define USES_TO_BLOOD 2
+/// blood rites charges gained from sapping blood from a victim
 #define BLOOD_DRAIN_GAIN 50
+/// penalty for self healing, 1 point of damage * this # = charges required
 #define SELF_HEAL_PENALTY 1.65
 
 /datum/action/innate/cult/blood_magic //Blood magic handles the creation of blood spells (formerly talismans)
@@ -683,6 +686,16 @@
 	. = ..()
 	. += "Bloody halberd, blood bolt barrage, and blood beam cost [BLOOD_HALBERD_COST], [BLOOD_BARRAGE_COST], and [BLOOD_BEAM_COST] charges respectively."
 
+/**
+ * handles inhand use of blood rites on constructs, humans, or non-living blood sources
+ *
+ * see '/obj/item/melee/blood_magic/manipulator/proc/heal_construct' for construct behavior
+ * see '/obj/item/melee/blood_magic/manipulator/proc/heal_cultist' for human cultist behavior
+ * see '/obj/item/melee/blood_magic/manipulator/proc/drain_victim' for human non-cultist behavior
+ * if any of the above procs return FALSE, '/obj/item/melee/blood_magic/afterattack' will not be called
+ *
+ * '/obj/item/melee/blood_magic/manipulator/proc/blood_draw' handles non-living blood sources and does not affect parent proc
+ */ 
 /obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/human/user, proximity)
 	if(!proximity)
 		return
@@ -707,6 +720,11 @@
 
 	..()
 
+/**
+ * handles blood rites usage on constructs
+ *
+ * will only return TRUE if some amount healing is done
+ */
 /obj/item/melee/blood_magic/manipulator/proc/heal_construct(atom/target, mob/living/carbon/human/user)
 	var/mob/living/basic/construct/construct_thing = target
 	var/missing_health = construct_thing.maxHealth - construct_thing.health
@@ -730,29 +748,21 @@
 	return TRUE
 
 /**
-	* blood rites healing and blood restoration proc
-	*
-	**blood healing stuff:
-	**blood_needed = how much blood the target needs to return to safe levels
-	**USES_TO_BLOOD = how many units of blood one "use" of the spell is worth
-	**blood_bank = how many units of blood we can restore
-	*
-	**damage healing stuff:
-	**overall_damage = sum of brute, toxin, fire, and oxygen damage
-	**SELF_HEAL_PENALTY = multiplier which determines how many more spell uses it takes to heal oneself
-	**damage_healed = how much we can heal, the lesser of uses & damage
-	**healing_cost = how many spell uses we lose due to healing
-	**blood_donor = used to ensure the proc returns TRUE if we completely restore an undamaged persons blood
-*/
+ * handles blood rites usage on human cultists
+ *
+ * first restores blood, then heals damage. healing damage is more expensive, especially if performed on oneself
+ * returns TRUE if some amount of blood is restored and/or damage is healed
+ */
 /obj/item/melee/blood_magic/manipulator/proc/heal_cultist(mob/living/carbon/human/human_bloodbag, mob/living/carbon/human/user)
 	if(uses <= 0)
 		human_bloodbag.balloon_alert(user, "out of blood!")
 		return FALSE
 
-	// here we handle blood restoration for those cultists who need it
+	/// used to ensure the proc returns TRUE if we completely restore an undamaged persons blood
 	var/blood_donor = FALSE
 	if(human_bloodbag.blood_volume < BLOOD_VOLUME_SAFE)
 		var/blood_needed = BLOOD_VOLUME_SAFE - human_bloodbag.blood_volume
+		/// how much blood we are capable of restoring, based on spell charges
 		var/blood_bank = USES_TO_BLOOD * uses
 		if(blood_bank < blood_needed)
 			human_bloodbag.blood_volume += blood_bank
@@ -764,15 +774,15 @@
 		uses -= round(blood_needed / USES_TO_BLOOD)
 		to_chat(user,span_warning("Your blood rites have restored [human_bloodbag == user ? "your" : "[human_bloodbag.p_their()]"] blood to safe levels!"))
 
-	// and here we heal hurt cultists
 	var/overall_damage = human_bloodbag.getBruteLoss() + human_bloodbag.getFireLoss() + human_bloodbag.getToxLoss() + human_bloodbag.getOxyLoss()
 	if(overall_damage == 0)
 		if(blood_donor)
 			return TRUE
 		to_chat(user,span_cult("That cultist doesn't require healing!"))
 		return FALSE
-
+	/// how much damage we can/will heal
 	var/damage_healed = -1 * min(uses, overall_damage)
+	/// how many spell charges will be consumed to heal said damage
 	var/healing_cost = damage_healed
 	if(human_bloodbag == user)
 		to_chat(user,span_cult("<b>Your blood healing is far less efficient when used on yourself!</b>"))
@@ -793,15 +803,18 @@
 	user.Beam(human_bloodbag, icon_state="sendbeam", time = 15)
 	return TRUE
 
+/**
+ * handles blood rites use on a non-cultist human
+ *
+ * returns TRUE if blood is successfully drained from the victim 
+ */
 /obj/item/melee/blood_magic/manipulator/proc/drain_victim(mob/living/carbon/human/human_bloodbag, mob/living/carbon/human/user)
 	if(human_bloodbag.has_status_effect(/datum/status_effect/speech/slurring/cult))
 		to_chat(user,span_danger("[human_bloodbag.p_Their()] blood has been tainted by an even stronger form of blood magic, it's no use to us like this!"))
 		return FALSE
-
 	if(human_bloodbag.blood_volume <= BLOOD_VOLUME_SAFE)
 		to_chat(user,span_warning("[human_bloodbag.p_Theyre()] missing too much blood - you cannot drain [human_bloodbag.p_them()] further!"))
 		return FALSE
-
 	human_bloodbag.blood_volume -= BLOOD_DRAIN_GAIN * USES_TO_BLOOD
 	uses += BLOOD_DRAIN_GAIN
 	user.Beam(human_bloodbag, icon_state="drainbeam", time = 1 SECONDS)
@@ -811,6 +824,9 @@
 	new /obj/effect/temp_visual/cult/sparks(get_turf(human_bloodbag))
 	return TRUE
 
+/**
+ * handles blood rites use on nonhuman potential blood sources
+ */
 /obj/item/melee/blood_magic/manipulator/proc/blood_draw(atom/target, mob/living/carbon/human/user)
 	var/blood_to_gain = 0
 	var/turf/our_turf = get_turf(target)
@@ -835,6 +851,11 @@
 			to_chat(user, span_cult_italic("Your blood rite has gained [round(blood_to_gain)] charge\s from blood sources around you!"))
 			uses += max(1, round(blood_to_gain))
 
+/**
+ * handles untargeted use of blood rites
+ *
+ * allows user to trade in spell uses for equipment or spells
+ */
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	var/static/list/spells = list(
 		"Bloody Halberd (150)" = image(icon = 'icons/obj/weapons/spear.dmi', icon_state = "occultpoleaxe0"),
