@@ -59,3 +59,16 @@
   - bugfix: Fix sleeping carp not properly detecting combat mode, resulting in things
       like not being able to normally grab people and always reflecting projectiles.
   - bugfix: Airlock mapping helpers now work with windoors.
+2024-04-05:
+  Absolucy:
+  - bugfix: Allow dot radio prefixes to also work with the tgui-say radio prefix display.
+  - rscadd: Potassium iodide can now be used to decontaminate items (i.e fill a fire
+      extinguisher or spray bottle with it, and spray it on green glowing items)
+  - bugfix: The revival policy message now only displays when you're actually revived
+      (i.e it'll no longer display after using a regenerative slime extract to simply
+      heal your wounds)
+  Absolucy, Watermelon914:
+  - refactor: Auxlua no longer uses the timer subsystem to get stuff done, so Lua
+      scripts shouldn't slow down timers anymore.
+  - bugfix: Fixed lua error logging.
+  - admin: Admins can now run lua files bigger than 36 KB by importing them directly.
