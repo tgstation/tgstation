@@ -42,9 +42,8 @@ GLOBAL_LIST_INIT(tendrils, list())
 	AddComponent(/datum/component/gps, "Eerie Signal")
 	GLOB.tendrils += src
 
-/obj/structure/spawner/lavaland/deconstruct(disassembled)
+/obj/structure/spawner/lavaland/atom_deconstruct(disassembled)
 	new /obj/effect/collapse(loc)
-	return ..()
 
 /obj/structure/spawner/lavaland/examine(mob/user)
 	var/list/examine_messages = ..()

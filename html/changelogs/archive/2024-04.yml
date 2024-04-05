@@ -133,3 +133,50 @@
   - bugfix: Detective revolvers can no longer exist in a quantum state of both being
       chambered in .38 and .357, without risk of misfire. Detectives, cowboy enthusiasts
       and reckless federal agents across the Spinward Sector mourn the loss.
+2024-04-04:
+  00-Steven:
+  - refactor: APCs have had their item interaction chain refactored. This should functionally
+      be the same, but please report any issues.
+  Bilbo367:
+  - bugfix: fixes reagent production selection overwrite updating during selection
+  - code_imp: updates reagent menu for Odysseus
+  - bugfix: aheal no longer turns monkies into humans
+  - qol: Player panel "make monkey" turns humans into monkeys through mutation instead
+      of making a new mob
+  - bugfix: destructive analyzers can now get screwdrivered instead of put it in.
+  - bugfix: destructive analyzer now accepts alien wire cutters, and emags.
+  Bisar:
+  - bugfix: Adjusted the code for changeling reviving stasis to only make them spend
+      chemicals once.
+  necromanceranne:
+  - qol: Makes the clown anomalous crystal actually useful for once rather than an
+      open griefing tool. It now revives the dead...as clowns!
+  - admin: Adds logging for the anomalous crystal activation, including fingerprints.
+2024-04-05:
+  00-Steven:
+  - bugfix: 'All Nighter: fixed a runtime from not having a head, whether from hars/deletion/somesuch.'
+  - bugfix: 'All Nighter: losing and regaining your head while you had eyebags no
+      longer removes your eyebags until you''ve slept.'
+  Bilbo367:
+  - bugfix: material experiments not scanning
+  DATA-xPUNGED:
+  - bugfix: Fixes Alcoholic quirk selection
+  - bugfix: Fixes Junkie, Smoker, and Alcoholic not giving you more addiction when
+      you come clean.
+  KingkumaArt:
+  - bugfix: Moves that one wall on NorthStar to not block the maints passage
+  Majkl-J:
+  - bugfix: Observers can now see people's quirks again
+  Melbert:
+  - qol: Breathing cold air now has a particle effect associated, careful not to let
+      your glasses fog up.
+  - qol: Breathing cold air will now occasionally make your spaceman shiver. Brrr.
+  - bugfix: Heretic sac restarts your heart
+  Momo8289:
+  - bugfix: Holographic energy swords have undergone some more rigorous safety inspections,
+      and should no longer be a danger to clumsy crew members.
+  Zergspower:
+  - bugfix: borg panel access now requires robotics access again
+  nikothedude:
+  - bugfix: Root beer no longer causes laser carbines and disabler smgs to fire infinitely
+      fast.

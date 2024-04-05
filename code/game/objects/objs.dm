@@ -367,8 +367,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /// If we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
 /obj/proc/can_be_unfasten_wrench(mob/user, silent)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return CANT_UNFASTEN
 	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
 		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
 		return FAILED_UNFASTEN
