@@ -678,37 +678,51 @@ GLOBAL_LIST_INIT(paper_blanks_synd, init_paper_blanks(BLANKS_SYND_FILE_NAME))
 		return .
 
 	if(istype(tool, /obj/item/paper) || istype(tool, /obj/item/photo) || istype(tool, /obj/item/documents))
-		if(istype(tool, /obj/item/paper))
-			var/obj/item/paper/paper = tool
-			if(paper.is_empty())
-				insert_empty_paper(paper, user)
-				return
-		insert_copy_object(tool, user)
-
+		. = copyable_act(user, tool)
 	else if(istype(tool, /obj/item/toner))
-		if(toner_cartridge)
-			balloon_alert(user, "another cartridge inside!")
-			return
-		tool.forceMove(src)
-		toner_cartridge = tool
-		balloon_alert(user, "cartridge inserted")
-
+		. = toner_act(user, tool)
 	else if(istype(tool, /obj/item/areaeditor/blueprints))
 		to_chat(user, span_warning("\The [tool] is too large to put into the copier. You need to find something else to record the document."))
-
+		. = ITEM_INTERACT_BLOCKING
 	else if(istype(tool, /obj/item/paperwork))
-		if(istype(tool, /obj/item/paperwork/photocopy)) //No infinite paper chain. You need the original paperwork to make more copies.
-			to_chat(user, span_warning("The [tool] is far too messy to produce a good copy!"))
-		else
-			insert_copy_object(tool, user)
-
+		. = paperwork_act(user, tool)
 	else if(istype(tool, /obj/item/stock_parts/card_reader))
-		if(!panel_open)
-			return
-		if(payment_component)
-			balloon_alert(user, "another card reader inside!")
-			return
-		insert_card_reader(tool, user)
+		. = card_reader_act(user, tool)
+
+	return .
+
+/obj/machinery/photocopier/proc/copyable_act(mob/living/user, obj/item/copyable)
+	if(istype(copyable, /obj/item/paper))
+		var/obj/item/paper/paper = copyable
+		if(paper.is_empty())
+			insert_empty_paper(paper, user)
+			return ITEM_INTERACT_SUCCESS
+	insert_copy_object(tool, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/photocopier/proc/toner_act(mob/living/user, obj/item/toner/inserted_toner)
+	if(toner_cartridge)
+		balloon_alert(user, "another cartridge inside!")
+		return ITEM_INTERACT_BLOCKING
+	inserted_toner.forceMove(src)
+	toner_cartridge = inserted_toner
+	balloon_alert(user, "cartridge inserted")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/photocopier/proc/paperwork_act(mob/living/user, obj/item/paperwork/inserted_paperwork)
+	if(istype(inserted_paperwork, /obj/item/paperwork/photocopy)) //No infinite paper chain. You need the original paperwork to make more copies.
+		to_chat(user, span_warning("The [inserted_paperwork] is far too messy to produce a good copy!"))
+		return ITEM_INTERACT_BLOCKING
+	insert_copy_object(inserted_paperwork, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/photocopier/proc/card_reader_act(mob/living/user, obj/item/stock_parts/card_reader/inserted_reader)
+	if(!panel_open)
+		return NONE
+	if(payment_component)
+		balloon_alert(user, "another card reader inside!")
+		return ITEM_INTERACT_BLOCKING
+	return insert_card_reader(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 /**
  * Attempts to shock the passed user, returns true if they are shocked.
