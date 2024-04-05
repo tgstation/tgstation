@@ -4339,6 +4339,7 @@
 #include "code\modules\library\skill_learning\skillchip.dm"
 #include "code\modules\library\skill_learning\job_skillchips\_job.dm"
 #include "code\modules\library\skill_learning\job_skillchips\chef.dm"
+#include "code\modules\library\skill_learning\job_skillchips\chief_medical_officer.dm"
 #include "code\modules\library\skill_learning\job_skillchips\janitor.dm"
 #include "code\modules\library\skill_learning\job_skillchips\miner.dm"
 #include "code\modules\library\skill_learning\job_skillchips\psychologist.dm"

@@ -72,6 +72,12 @@
 #define SURGERY_SPEED_MORBID_CURIOSITY 0.7
 ///Modifier given to patients with TRAIT_ANALGESIA
 #define SURGERY_SPEED_TRAIT_ANALGESIA 0.8
+///The penalty for trying to do a surgery as an untrained person
+#define SURGERY_SPEED_TRAIT_UNTRAINED 1.3
+///As above but the inverse; only applied in un-ideal conditions
+#define SURGERY_SPEED_TRAIT_TRAINED 0.7
+///Job trained in surgery: medbay for medicine, science for dissection, cyborgs and AI
+#define JOBS_TRAINED_IN_SURGERY list(/datum/job/paramedic, /datum/job/doctor, /datum/job/chief_medical_officer, /datum/job/scientist, /datum/job/research_director, /datum/job/cyborg, /datum/job/ai)
 
 /datum/surgery_step/proc/initiate(mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	// Only followers of Asclepius have the ability to use Healing Touch and perform miracle feats of surgery.
@@ -100,6 +106,12 @@
 	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
 		speed_mod *= SURGERY_SPEED_TRAIT_ANALGESIA
 
+	if(!(is_type_in_list(user.mind.assigned_role, JOBS_TRAINED_IN_SURGERY)) || !(is_special_character(user)) || !(HAS_TRAIT(user, TRAIT_SURGEON)))
+		speed_mod *= SURGERY_SPEED_TRAIT_UNTRAINED
+		///Untrained personnel are slower at surgery; but if they're an antag
+		///maybe they got special heretic or syndicate training or some shit
+		///The point is we don't nerf antags for stealing your kidneys in maint
+
 	var/implement_speed_mod = 1
 	if(implement_type) //this means it isn't a require hand or any item step.
 		implement_speed_mod = implements[implement_type] / 100.0
@@ -107,12 +119,18 @@
 	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod) * target.mob_surgery_speed_mod
 	var/modded_time = time * speed_mod
 
+	if (modded_time > time)
+		if(is_type_in_list(user.mind.assigned_role, JOBS_TRAINED_IN_SURGERY) || HAS_TRAIT(user, TRAIT_SURGEON))//any immunities to surgery slowdown should go in this check.
+			if(iscyborg(user) || isAI(user))
+				modded_time = min(time, modded_time * SURGERY_SPEED_TRAIT_TRAINED)
+			else
+				modded_time = max(modded_time * SURGERY_SPEED_TRAIT_TRAINED, time)
+			/// Cyborgs and AI do the surgery at default speed at the their slowest
+			/// whereas trained humans can only manage to mitigate penalties down to
+			/// the default speed with training
 
 	fail_prob = min(max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
 	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)//also if that, then cap modded_time at time*modifier
-
-	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
-		modded_time = time
 
 	var/was_sleeping = (target.stat != DEAD && target.IsSleeping())
 
@@ -276,3 +294,6 @@
 #undef SURGERY_SPEED_DISSECTION_MODIFIER
 #undef SURGERY_SPEED_MORBID_CURIOSITY
 #undef SURGERY_SLOWDOWN_CAP_MULTIPLIER
+#undef SURGERY_SPEED_TRAIT_UNTRAINED
+#undef SURGERY_SPEED_TRAIT_TRAINED
+#undef JOBS_TRAINED_IN_SURGERY

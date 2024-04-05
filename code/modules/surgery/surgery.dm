@@ -78,9 +78,13 @@
 		return FALSE
 
 	// True surgeons (like abductor scientists) need no instructions
-	if(HAS_MIND_TRAIT(user, TRAIT_SURGEON))
+	if(HAS_TRAIT(user, TRAIT_SURGEON))
 		if(replaced_by) // only show top-level surgeries
 			return FALSE
+		else if(HAS_TRAIT(user, TRAIT_ABDUCTOR_SCIENTIST_TRAINING))
+			return TRUE
+		else if(is_type_in_list(src, list(/datum/surgery/advanced/necrotic_revival, /datum/surgery/advanced/brainwashing, /datum/surgery/advanced/brainwashing_sleeper)))
+			. = FALSE
 		else
 			return TRUE
 

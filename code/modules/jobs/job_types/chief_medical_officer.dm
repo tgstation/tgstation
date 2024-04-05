@@ -80,7 +80,7 @@
 		/obj/item/gun/syringe,
 		/obj/item/stamp/head/cmo,
 		)
-	skillchips = list(/obj/item/skillchip/entrails_reader)
+	skillchips = list(/obj/item/skillchip/job/chief_medical_officer)
 
 /datum/outfit/job/cmo/mod
 	name = "Chief Medical Officer (MODsuit)"
