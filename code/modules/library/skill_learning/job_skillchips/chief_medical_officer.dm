@@ -1,7 +1,7 @@
 /obj/item/skillchip/job/chief_medical_officer
 	name = "M.A.L. PRCTC skillchip"
 	desc = "The Medical Additional Learning for Practicioners skillchip, furnished to certain station personnel to mitigate certain lawsuits."
-	auto_traits = list(TRAIT_SURGEON)
+	auto_traits = list(TRAIT_SURGEON, TRAIT_SURGICAL_TRAINING)
 	skill_name = "Surgical Acumen"
 	skill_description = "A nearly endless recollection of the visceral insides of the galaxy's various species. Educational!"
 	skill_icon = "notes-medical"
