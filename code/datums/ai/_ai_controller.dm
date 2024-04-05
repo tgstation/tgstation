@@ -183,11 +183,11 @@ multiple modular subtrees with behaviors
 	UnregisterSignal(pawn, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE, COMSIG_QDELETING))
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
-	pawn.ai_controller = null
-	pawn = null
 	var/turf/pawn_turf = get_turf(pawn)
 	if(pawn_turf)
 		SSai_controllers.ai_controllers_by_zlevel[pawn_turf.z] -= src
+	pawn.ai_controller = null
+	pawn = null
 	if(destroy)
 		qdel(src)
 
@@ -355,6 +355,8 @@ multiple modular subtrees with behaviors
 /// Turn the controller on or off based on if you're alive, we only register to this if the flag is present so don't need to check again
 /datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)
 	SIGNAL_HANDLER
+	if(QDELETED(pawn))
+		return
 	reset_ai_status()
 
 /datum/ai_controller/proc/on_sentience_gained()
