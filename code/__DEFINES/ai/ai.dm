@@ -2,14 +2,12 @@
 #define GET_TARGETING_STRATEGY(targeting_type) SSai_behaviors.targeting_strategies[targeting_type]
 #define HAS_AI_CONTROLLER_TYPE(thing, type) istype(thing?.ai_controller, type)
 
-//Simple animal AI flags
-//If you add a new status, be sure to add a list for it to the simple_animals global in _globalvars/lists/mobs.dm
-///The AI is currently active
+//AI controller flags
+//If you add a new status, be sure to add it to the ai_controllers subsystem's ai_controllers_by_status list.
+///The AI is currently active.
 #define AI_STATUS_ON "ai_on"
 ///The AI is currently off for misc reasons, such as being frozen in time or sentient.
 #define AI_STATUS_OFF "ai_off"
-///The AI is currently off because there's no one on the Z level.
-#define AI_STATUS_Z_OFF "ai_z_off"
 
 ///For JPS pathing, the maximum length of a path we'll try to generate. Should be modularized depending on what we're doing later on
 #define AI_MAX_PATH_LENGTH 30 // 30 is possibly overkill since by default we lose interest after 14 tiles of distance, but this gives wiggle room for weaving around obstacles

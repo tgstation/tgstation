@@ -13,10 +13,9 @@ SUBSYSTEM_DEF(ai_controllers)
 	var/list/ai_controllers_by_status = list(
 		AI_STATUS_ON = list(),
 		AI_STATUS_OFF = list(),
-		AI_STATUS_Z_OFF = list(),
 	)
-	///Assoc List of all Offline AI controllers and the Z level they are on, which we check when someone enters/leaves a Z level to turn them on/off.
-	var/list/offline_ai_controllers_by_zlevel = list()
+	///Assoc List of all AI controllers and the Z level they are on, which we check when someone enters/leaves a Z level to turn them on/off.
+	var/list/ai_controllers_by_zlevel = list()
 
 /datum/controller/subsystem/ai_controllers/Initialize()
 	setup_subtrees()
@@ -25,7 +24,7 @@ SUBSYSTEM_DEF(ai_controllers)
 /datum/controller/subsystem/ai_controllers/Recover()
 	ai_subtrees = SSai_controllers.ai_subtrees
 	ai_controllers_by_status = SSai_controllers.ai_controllers_by_status
-	offline_ai_controllers_by_zlevel = SSai_controllers.offline_ai_controllers_by_zlevel
+	ai_controllers_by_zlevel = SSai_controllers.ai_controllers_by_zlevel
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
 	for(var/datum/ai_controller/ai_controller as anything in ai_controllers_by_status[AI_STATUS_ON])
@@ -46,8 +45,8 @@ SUBSYSTEM_DEF(ai_controllers)
 
 ///Called when the max Z level was changed, updating our coverage.
 /datum/controller/subsystem/ai_controllers/proc/on_max_z_changed()
-	if (!islist(offline_ai_controllers_by_zlevel))
-		offline_ai_controllers_by_zlevel = new /list(world.maxz,0)
-	while (SSai_controllers.offline_ai_controllers_by_zlevel.len < world.maxz)
-		SSai_controllers.offline_ai_controllers_by_zlevel.len++
-		SSai_controllers.offline_ai_controllers_by_zlevel[offline_ai_controllers_by_zlevel.len] = list()
+	if (!islist(ai_controllers_by_zlevel))
+		ai_controllers_by_zlevel = new /list(world.maxz,0)
+	while (SSai_controllers.ai_controllers_by_zlevel.len < world.maxz)
+		SSai_controllers.ai_controllers_by_zlevel.len++
+		SSai_controllers.ai_controllers_by_zlevel[ai_controllers_by_zlevel.len] = list()
