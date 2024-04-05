@@ -51,7 +51,7 @@
 		report += printobjectives(objectives)
 
 	var/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/consume_ability = locate() in owner.current?.actions
-	if(!isnull(consume_ability))
+	if(consume_ability?.consume_count > 0)
 		report += span_greentext("The [name] consumed a total of [consume_ability.consume_count] bodies!")
 	else
 		report += span_redtext("The [name] did not consume anyone! Shame!!")
