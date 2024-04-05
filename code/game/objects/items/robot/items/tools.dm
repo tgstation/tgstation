@@ -184,10 +184,13 @@
 	icon_state = "toolkit_medborg"
 	///our tools
 	var/list/radial_menu_options = list()
-	toolspeed = 1 //The toolspeed for our tools
+	///The toolspeed for our tools
+	toolspeed = 1
 	var/obj/item/reference
 	//is the toolset upgraded or not
 	var/upgraded = FALSE
+	///how much faster should the toolspeed be?
+	var/upgraded_toolspeed = 0.7
 
 /obj/item/borg/cyborg_omnitool/get_all_tool_behaviours()
 	return list(TOOL_SCALPEL)
@@ -254,7 +257,7 @@
 /obj/item/borg/cyborg_omnitool/proc/upgrade_omnitool()
 	name = "advanced [name]"
 	desc += "\nIt seems that this one has been upgraded to perform tasks faster."
-	toolspeed = 0.7
+	toolspeed = upgraded_toolspeed
 	upgraded = TRUE
 	tool_behaviour = null
 	reference_item_for_parameters()
@@ -334,6 +337,8 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg"
 	item_flags = null
+	toolspeed = 0.5
+	upgraded_toolspeed = 0.3
 
 /obj/item/borg/cyborg_omnitool/engineering/get_all_tool_behaviours()
 	return list(TOOL_SCREWDRIVER, TOOL_CROWBAR, TOOL_WRENCH, TOOL_WIRECUTTER, TOOL_MULTITOOL)
