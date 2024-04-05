@@ -132,30 +132,29 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/reset_ai_status()
 	set_ai_status(get_expected_ai_status())
 
-/// Returns what the AI status should be based on current conditions.
+/**
+ * Returns the AI status the controller should be expected to be on.
+ * Returns AI_STATUS_OFF if it's inhabited by a Client and shouldn't be, if it's dead and cannot act while dead,
+ * or is on a z level with no clients.
+ * Otherwise, it will return AI_STATUS_ON.
+ */
 /datum/ai_controller/proc/get_expected_ai_status()
-	var/final_status = AI_STATUS_ON
-
 	if (!ismob(pawn))
-		return final_status
+		return AI_STATUS_ON
+
+	var/mob/living/mob_pawn = pawn
+	if(!continue_processing_when_client && mob_pawn.client)
+		return AI_STATUS_OFF
+
+	if(mob_pawn.stat == DEAD)
+		if(ai_traits & CAN_ACT_WHILE_DEAD)
+			return AI_STATUS_ON
+		return AI_STATUS_OFF
 	
 	var/turf/pawn_turf = get_turf(pawn)
 	if(!length(SSmobs.clients_by_zlevel[pawn_turf.z]))
-		final_status = AI_STATUS_OFF
-		return final_status
-
-	var/mob/living/mob_pawn = pawn
-
-	if(!continue_processing_when_client && mob_pawn.client)
-		final_status = AI_STATUS_OFF
-
-	if(ai_traits & CAN_ACT_WHILE_DEAD)
-		return final_status
-
-	if(mob_pawn.stat == DEAD)
-		final_status = AI_STATUS_OFF
-
-	return final_status
+		return AI_STATUS_OFF
+	return AI_STATUS_ON
 
 ///Called when the AI controller pawn changes z levels, we check if there's any clients on the new one and wake up the AI if there is.
 /datum/ai_controller/proc/on_changed_z_level(atom/source, turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -355,8 +354,6 @@ multiple modular subtrees with behaviors
 /// Turn the controller on or off based on if you're alive, we only register to this if the flag is present so don't need to check again
 /datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)
 	SIGNAL_HANDLER
-	if(QDELETED(pawn))
-		return
 	reset_ai_status()
 
 /datum/ai_controller/proc/on_sentience_gained()
