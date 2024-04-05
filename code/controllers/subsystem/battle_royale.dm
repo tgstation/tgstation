@@ -102,7 +102,7 @@ SUBSYSTEM_DEF(battle_royale)
 	return ..()
 
 /// Start a battle royale with the list of provided implants
-/datum/battle_royale_controller/proc/start(list/implants, battle_time = 1 MINUTES)
+/datum/battle_royale_controller/proc/start(list/implants, battle_time = 10 MINUTES)
 	chosen_area = pick(GLOB.battle_royale_regions)
 	for (var/obj/item/implant/explosive/battle_royale/contestant_implant in implants)
 		contestant_implant.start_battle(chosen_area, GLOB.battle_royale_regions[chosen_area])
