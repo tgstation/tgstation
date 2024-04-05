@@ -203,5 +203,5 @@
 	icon_state = "inducer-syndi"
 	inhand_icon_state = "inducer-syndi"
 	desc = "A tool for inductively charging internal power cells. This one has a suspicious colour scheme, and seems to be rigged to transfer charge at a much faster rate."
-	powertransfer = 2000
+	powertransfer = 2 * STANDARD_CELL_CHARGE
 	cell_type = /obj/item/stock_parts/cell/super
