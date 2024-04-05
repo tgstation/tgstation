@@ -47,11 +47,6 @@ type ByondType = {
   IS_BYOND: boolean;
 
   /**
-   * True if the window is running blink engine v123 or higher.
-   */
-  IS_BLINK: boolean;
-
-  /**
    * If `true`, unhandled errors and common mistakes result in a blue screen
    * of death, which stops this window from handling incoming messages and
    * closes the active instance of tgui datum if there was one.
