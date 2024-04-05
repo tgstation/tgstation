@@ -1,5 +1,6 @@
 /// Simple component to integrate a bodycam into a mob
 /datum/component/simple_bodycam
+	dupe_mode = COMPONENT_DUPE_SELECTIVE
 	/// The actual camera, in our mob's contents
 	VAR_PRIVATE/obj/machinery/camera/bodycam
 	/// How fast we update
@@ -36,6 +37,17 @@
 	else
 		QDEL_NULL(bodycam)
 	return ..()
+
+/datum/component/simple_bodycam/CheckDupeComponent(
+	datum/component/simple_bodycam/new_bodycam, // will be null
+	camera_name,
+	c_tag,
+	network = "ss13",
+	emp_proof,
+	camera_update_time,
+)
+	// Dupes are only allowed if we don't have a camera on that network already
+	return (network in bodycam.network)
 
 /datum/component/simple_bodycam/proc/update_cam(datum/source, atom/old_loc, ...)
 	SIGNAL_HANDLER

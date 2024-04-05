@@ -240,7 +240,7 @@
 	if(total_paper == 0)
 		deconstruct(FALSE)
 
-/obj/item/paper_bin/bundlenatural/deconstruct(disassembled)
+/obj/item/paper_bin/bundlenatural/atom_deconstruct(disassembled)
 	dump_contents(drop_location())
 	return ..()
 

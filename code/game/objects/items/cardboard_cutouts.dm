@@ -92,10 +92,8 @@
 	if((damage_flag == BULLET || damage_flag == MELEE) && (damage_type == BRUTE) && prob(damage_sustained))
 		push_over()
 
-/obj/item/cardboard_cutout/deconstruct(disassembled)
-	if(!(flags_1 & HOLOGRAM_1) || !(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/cardboard(loc, 1)
-	return ..()
+/obj/item/cardboard_cutout/atom_deconstruct(disassembled)
+	new /obj/item/stack/sheet/cardboard(loc, 1)
 
 /proc/get_cardboard_cutout_instance(datum/cardboard_cutout/cardboard_cutout)
 	ASSERT(ispath(cardboard_cutout), "[cardboard_cutout] is not a path of /datum/cardboard_cutout")

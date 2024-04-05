@@ -1,0 +1,182 @@
+2024-04-01:
+  00-Steven:
+  - bugfix: Ethereal starvation has been updated to the new joules/watts standard.
+      Congratulations Ethereals! You can starve again!
+  - code_imp: Whether something counts as a stimulant to All Nighter is now handled
+      by the reagent itself when metabolized, for everyone's sanity. Side-effect,
+      you need a liver to process stimulants for All Nighter.
+  - balance: Fuel your sleep deprivation in style! Made more reagents work with All
+      Nighter. This includes all coffee/tea variants, a few other drinks that would
+      have a high enough caffeine level, kronkaine, ephedrine, and in case you're
+      insane you can straight up eat coffee or tea grounds.
+  KingkumaArt:
+  - bugfix: ' Hatsune mi-go now is a friendly gold slime mob, and doesn''t hurt your
+      ears.'
+  - rscadd: Hatsune mi-go drops a keyboard synth on death (you monster.)
+  Majkl-J:
+  - bugfix: after 9 years, adds a single dot to the dragnet code, making it deal stamina
+      damage as intended
+  Melbert:
+  - qol: Socially Anxious people should be able to talk a bit more clearer while still
+      maintaining the stuttering "charm"
+  Melbret:
+  - bugfix: Revival Surgery, Strange Reagent, and the Reviver Implant will restart
+      your heart when you are revived
+  Profakos:
+  - bugfix: Slime properly load their slowdown values from the config files.
+  - bugfix: Slimes who lose their AI controller will no longer runtime when they get
+      hungry.
+  Thunder12345:
+  - image: Supermatter slivers and the tools used to steal them have been resprited.
+  - image: The jester costume now supports GAGS
+  hyperjll:
+  - rscadd: Added a 'kaching' sound to the game, and made uplinks play this sound
+      locally to the user whenever a purchase is made.
+  moocowswag:
+  - bugfix: anchored circuits no longer blow up after 2 components are used.
+  necromanceranne:
+  - qol: The eye of god now protects from the madness inducing effects of supermatter
+      crystals and singularities. This trait is shared by the meson night vision goggles
+      (which this is a better version of)
+  - refactor: The Scan ability has been refactored into a pointed spell.
+  - balance: The Scan ability has a lower cooldown of 35 seconds.
+  - balance: The Scan ability now gives an advanced health scan readout of the target.
+  - balance: Scanning someone alerts the target as to who is responsible, rather than
+      being completely silent as to the culprit (much to the annoyance of anyone who
+      is victimized by someone using this on them)
+  - code_imp: The status effect that was called Stagger (not Staggered, which is separate)
+      is now called Rebuked.
+  - balance: Rebuked applies a x2 action delay cooldown, rather than x1.5.
+2024-04-02:
+  SyncIt21,Pickle-Coding:
+  - bugfix: space heater(including improvised) turns off when cell is drained
+  - bugfix: optimized power usage for both improvised and main space heater. Improvised
+      heater now works & uses beaker heat capacity
+2024-04-03:
+  00-Steven:
+  - bugfix: Fix using a multitool on a power object with wires not actually opening
+      the wires menu when it should.
+  - bugfix: Fix a runtime from a power object being deleted before selecting what
+      cable layer to put it at.
+  - bugfix: Fix power object cable changing not caring about whether you were still
+      adjacent, still holding your multitool, or whether it even still existed after
+      the selection menu was closed.
+  Absolucy:
+  - qol: Makes it easier for heretics to click on influences without accidentally
+      drawing a rune with their codex cicatrix because the animation shifted and made
+      you click on the floor instead.
+  Ben10Omintrix:
+  - balance: evil seedlings can no longer be mass produced
+  Bilbo367:
+  - qol: some experiments now give you more helpful hints at why your failing
+  - code_imp: changes around some experiment code to make it more understandable
+  Cyprex:
+  - config: mech logging is now on by default. Existing config setups will not mirror
+      this change.
+  DATA-xPUNGED:
+  - bugfix: Fixed Prosthetic limb quirk preferences
+  Iamgoofball:
+  - balance: Makes the Captain's Spare safe actually secure from being smashed open
+      now that it's been removed from a wall. Damage Deflection of 30 has been added
+      to it.
+  Jacquerel:
+  - balance: Traitors can no longer turn themselves into dragons.
+  - rscadd: You can now fax painted canvases in order to send memes to each other.
+  LT3:
+  - code_imp: APCs can now calculate time-to-charge
+  - qol: Overloaded lathes will now tell you the wait time until they're ready to
+      print again
+  Melbert:
+  - bugfix: Psicodine helps Socially Anxious people again (as does signing)
+  - bugfix: Speech effects such as stuttering no longer applies its TTS filter if
+      the resulting message doesn't actually change the message
+  Pickle-Coding:
+  - balance: Halon combustion releases 2.5 moles of pluoxium per mole of halon consumed.
+  - balance: Halon combustion no longer releases carbon dioxide.
+  - balance: Halon combustion releases resin foam.
+  - balance: Halon formation requirements changed to require electrolysing BZ instead
+      of N2O and CO2.
+  - balance: Halon formation changed to no longer slow down at higher pressures. It
+      instead accelerates at higher temperatures. It is much faster overall.
+  - balance: Halon formation releases 91.2321kJ of thermal energy per mole of halon
+      consumed.
+  SyncIt21:
+  - bugfix: buying & selling huge quantities of materials on the market won't cause
+      their prices & quantities to go beyond bounds.
+  - bugfix: igniter in meta station ordinance burn chamber works again
+  - bugfix: Mechbay & modsuit rechargers waste a small amount of energy as heat
+  - bugfix: Mechbay recharger console displays mech charge as joules & charges directly
+      from the grid thus sparing the rooms apc cell from huge loads
+  - qol: adds missing examine for when machine frames can be deconstructed
+  - qol: both machine & computer frames must be unanchored before it can be deconstructed
+      & adds examines to explain the same
+  Zytolg:
+  - balance: Readds some N2O to the Birdshot AI sat. I'll be working on a better solution
+      for this in the coming weeks.
+  - bugfix: Due to a Misprint, the Atmos Gas -> Pure pipes were incorrectly labeled
+      on Birdshot. Your Cargo Techs have since remedied this.
+  - bugfix: Our cable laying intern team didn't lay cable to the Secure Storage APC
+      in Enigneering. Getting coffee instead of working is a big no-no here at Nanotrasen
+      Tech Support, and they have since been reassigned. Your Chief Engineers have
+      been instructed to make the modifications on all Birdshot Class Stations.
+  - bugfix: We've noticed some Heads-Of-Staff getting lost on Birdshot. While Telecommunications
+      does have a GPS waypoint, our staffs stubbornness often means this is ineffective.
+      Additional Signage has been placed to help direct our most senior of staff.
+  - bugfix: The Birdshot Turbine will no longer Pre-Load itself with highly flammable
+      Plasma Gas. Do your own jobs you lazy atmos bums.
+  mc-oofert:
+  - qol: AIs now get a z level indicator
+  moocowswag:
+  - bugfix: Modular shields now give correct feedback and no longer dissuade individuals
+      from breaking them.
+  necromanceranne:
+  - bugfix: Detective revolvers can no longer exist in a quantum state of both being
+      chambered in .38 and .357, without risk of misfire. Detectives, cowboy enthusiasts
+      and reckless federal agents across the Spinward Sector mourn the loss.
+2024-04-04:
+  00-Steven:
+  - refactor: APCs have had their item interaction chain refactored. This should functionally
+      be the same, but please report any issues.
+  Bilbo367:
+  - bugfix: fixes reagent production selection overwrite updating during selection
+  - code_imp: updates reagent menu for Odysseus
+  - bugfix: aheal no longer turns monkies into humans
+  - qol: Player panel "make monkey" turns humans into monkeys through mutation instead
+      of making a new mob
+  - bugfix: destructive analyzers can now get screwdrivered instead of put it in.
+  - bugfix: destructive analyzer now accepts alien wire cutters, and emags.
+  Bisar:
+  - bugfix: Adjusted the code for changeling reviving stasis to only make them spend
+      chemicals once.
+  necromanceranne:
+  - qol: Makes the clown anomalous crystal actually useful for once rather than an
+      open griefing tool. It now revives the dead...as clowns!
+  - admin: Adds logging for the anomalous crystal activation, including fingerprints.
+2024-04-05:
+  00-Steven:
+  - bugfix: 'All Nighter: fixed a runtime from not having a head, whether from hars/deletion/somesuch.'
+  - bugfix: 'All Nighter: losing and regaining your head while you had eyebags no
+      longer removes your eyebags until you''ve slept.'
+  Bilbo367:
+  - bugfix: material experiments not scanning
+  DATA-xPUNGED:
+  - bugfix: Fixes Alcoholic quirk selection
+  - bugfix: Fixes Junkie, Smoker, and Alcoholic not giving you more addiction when
+      you come clean.
+  KingkumaArt:
+  - bugfix: Moves that one wall on NorthStar to not block the maints passage
+  Majkl-J:
+  - bugfix: Observers can now see people's quirks again
+  Melbert:
+  - qol: Breathing cold air now has a particle effect associated, careful not to let
+      your glasses fog up.
+  - qol: Breathing cold air will now occasionally make your spaceman shiver. Brrr.
+  - bugfix: Heretic sac restarts your heart
+  Momo8289:
+  - bugfix: Holographic energy swords have undergone some more rigorous safety inspections,
+      and should no longer be a danger to clumsy crew members.
+  Zergspower:
+  - bugfix: borg panel access now requires robotics access again
+  nikothedude:
+  - bugfix: Root beer no longer causes laser carbines and disabler smgs to fire infinitely
+      fast.
