@@ -196,6 +196,8 @@ multiple modular subtrees with behaviors
 	var/turf/pawn_turf = get_turf(pawn)
 	if(pawn_turf)
 		SSai_controllers.ai_controllers_by_zlevel[pawn_turf.z] -= src
+	if(ai_status)
+		SSai_controllers.ai_controllers_by_status[ai_status] -= src
 	pawn.ai_controller = null
 	pawn = null
 	if(destroy)
