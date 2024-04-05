@@ -672,39 +672,39 @@ GLOBAL_LIST_INIT(paper_blanks_synd, init_paper_blanks(BLANKS_SYND_FILE_NAME))
 	update_appearance()
 	return TRUE
 
-/obj/machinery/photocopier/attackby(obj/item/object, mob/user, params)
-	if(istype(object, /obj/item/paper) || istype(object, /obj/item/photo) || istype(object, /obj/item/documents))
-		if(istype(object, /obj/item/paper))
-			var/obj/item/paper/paper = object
+/obj/machinery/photocopier/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	if(istype(tool, /obj/item/paper) || istype(tool, /obj/item/photo) || istype(tool, /obj/item/documents))
+		if(istype(tool, /obj/item/paper))
+			var/obj/item/paper/paper = tool
 			if(paper.is_empty())
 				insert_empty_paper(paper, user)
 				return
-		insert_copy_object(object, user)
+		insert_copy_object(tool, user)
 
-	else if(istype(object, /obj/item/toner))
+	else if(istype(tool, /obj/item/toner))
 		if(toner_cartridge)
 			balloon_alert(user, "another cartridge inside!")
 			return
-		object.forceMove(src)
-		toner_cartridge = object
+		tool.forceMove(src)
+		toner_cartridge = tool
 		balloon_alert(user, "cartridge inserted")
 
-	else if(istype(object, /obj/item/areaeditor/blueprints))
-		to_chat(user, span_warning("\The [object] is too large to put into the copier. You need to find something else to record the document."))
+	else if(istype(tool, /obj/item/areaeditor/blueprints))
+		to_chat(user, span_warning("\The [tool] is too large to put into the copier. You need to find something else to record the document."))
 
-	else if(istype(object, /obj/item/paperwork))
-		if(istype(object, /obj/item/paperwork/photocopy)) //No infinite paper chain. You need the original paperwork to make more copies.
-			to_chat(user, span_warning("The [object] is far too messy to produce a good copy!"))
+	else if(istype(tool, /obj/item/paperwork))
+		if(istype(tool, /obj/item/paperwork/photocopy)) //No infinite paper chain. You need the original paperwork to make more copies.
+			to_chat(user, span_warning("The [tool] is far too messy to produce a good copy!"))
 		else
-			insert_copy_object(object, user)
+			insert_copy_object(tool, user)
 
-	else if(istype(object, /obj/item/stock_parts/card_reader))
+	else if(istype(tool, /obj/item/stock_parts/card_reader))
 		if(!panel_open)
 			return
 		if(payment_component)
 			balloon_alert(user, "another card reader inside!")
 			return
-		insert_card_reader(object, user)
+		insert_card_reader(tool, user)
 
 /**
  * Attempts to shock the passed user, returns true if they are shocked.
