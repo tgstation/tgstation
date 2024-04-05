@@ -265,10 +265,10 @@
 	remove_depth_block(lower_x, lower_y, upper_x, upper_y, z)
 	depths_in_view = new /list(SSmapping.max_plane_offset + 1) // Just in case
 	var/turf/source_turf = get_turf(source)
-	lower_x = CELL_TRANSFORM(source_turf.x + view_offsets[1] - view_range[1] / 2 - 1)
-	lower_y = CELL_TRANSFORM(source_turf.y + view_offsets[2] - view_range[2] / 2 - 1)
-	upper_x = CELL_TRANSFORM(source_turf.x + view_offsets[1] + view_range[1] / 2 + 1)
-	upper_y = CELL_TRANSFORM(source_turf.y + view_offsets[2] + view_range[2] / 2 + 1)
+	lower_x = max(CELL_TRANSFORM(source_turf.x + view_offsets[1] - view_range[1] / 2 - 1), 1)
+	lower_y = max(CELL_TRANSFORM(source_turf.y + view_offsets[2] - view_range[2] / 2 - 1), 1)
+	upper_x = min(CELL_TRANSFORM(source_turf.x + view_offsets[1] + view_range[1] / 2 + 1), MAX_CELL_COUNT)
+	upper_y = min(CELL_TRANSFORM(source_turf.y + view_offsets[2] + view_range[2] / 2 + 1), MAX_CELL_COUNT)
 	z = source_turf.z
 	add_depth_block(lower_x, lower_y, upper_x, upper_y, z)
 	offset_planes()
@@ -298,7 +298,7 @@
 	var/list/our_cells = cells_in_view
 	var/list/existing_depth = our_depths.Copy()
 	var/list/existing_cells = our_cells.Copy()
-	var/lower_x_cell = CELL_TRANSFORM(source_turf.x + view_offsets[1] - view_range[1] / 2 - 1)
+	var/lower_x_cell = CELL_TRANSFORM(source_turf.x + view_offsets[1] - view_range[1] / 2 - 1) 
 	var/lower_y_cell = CELL_TRANSFORM(source_turf.y + view_offsets[2] - view_range[2] / 2 - 1)
 	var/upper_x_cell = CELL_TRANSFORM(source_turf.x + view_offsets[1] + view_range[1] / 2 + 1)
 	var/upper_y_cell = CELL_TRANSFORM(source_turf.y + view_offsets[2] + view_range[2] / 2 + 1)
@@ -522,9 +522,6 @@
 	. = ..()
 	our_mob = null
 
-/datum/plane_master_group/hudless/hook_into_source()
-	set_source(our_mob)
-
 /datum/plane_master_group/hudless/hide_hud()
 	for(var/thing in plane_masters)
 		var/atom/movable/screen/plane_master/plane = plane_masters[thing]
@@ -532,3 +529,68 @@
 
 /datum/plane_master_group/hudless/show_plane(atom/movable/screen/plane_master/plane)
 	plane.show_to(our_mob)
+
+/// Doesn't actually display anything. Double hack to allow us to build visualizations for depth sight
+/datum/plane_master_group/hudless/no_bitches
+
+/datum/plane_master_group/hudless/no_bitches/get_plane_types()
+	return list()
+
+// Shim to make things faster, yes I know it sucks
+/datum/plane_master_group/hudless/no_bitches/update_depth()
+	var/turf/source_turf = get_turf(source)
+	if(!source_turf)
+		clear_depth()
+		return
+	if(source_turf.z != z)
+		reset_depth()
+		return
+
+	var/list/our_depths = depths_in_view
+	var/list/our_cells = cells_in_view
+	var/list/existing_cells = our_cells.Copy()
+	var/lower_x_cell = CELL_TRANSFORM(source_turf.x + view_offsets[1] - view_range[1] / 2 - 1) 
+	var/lower_y_cell = CELL_TRANSFORM(source_turf.y + view_offsets[2] - view_range[2] / 2 - 1)
+	var/upper_x_cell = CELL_TRANSFORM(source_turf.x + view_offsets[1] + view_range[1] / 2 + 1)
+	var/upper_y_cell = CELL_TRANSFORM(source_turf.y + view_offsets[2] + view_range[2] / 2 + 1)
+	var/list/new_cells = SSvis_cells.get_visibility_cells(lower_x_cell, lower_y_cell, upper_x_cell, upper_y_cell, source_turf.z)
+	for(var/datum/visibility_cell/removed_cell as anything in existing_cells - new_cells)
+		var/list/depths = removed_cell.counts
+		for(var/depth in 1 to length(depths))	
+			our_depths[depth] -= depths[depth]
+		our_cells -= removed_cell
+	
+	for(var/datum/visibility_cell/added_cell as anything in new_cells - existing_cells)
+		var/list/depths = added_cell.counts
+		for(var/depth in 1 to length(depths))	
+			our_depths[depth] += depths[depth]
+		our_cells += added_cell
+
+	lower_x = lower_x_cell
+	lower_y = lower_y_cell
+	upper_x = upper_x_cell
+	upper_y = upper_y_cell
+	z = source_turf.z
+
+/datum/plane_master_group/hudless/no_bitches/add_depth_block(lower_x, lower_y, upper_x, upper_y, z)
+	var/list/our_depths = depths_in_view
+	var/list/our_cells = cells_in_view
+	var/list/datum/visibility_cell/new_cells = SSvis_cells.get_visibility_cells(lower_x, lower_y, upper_x, upper_y, z)
+	for(var/datum/visibility_cell/cell as anything in new_cells)
+		var/list/depths = cell.counts
+		for(var/depth in 1 to length(depths))	
+			our_depths[depth] += depths[depth]
+		our_cells += cell
+
+/datum/plane_master_group/hudless/no_bitches/remove_depth_block(lower_x, lower_y, upper_x, upper_y, z)
+	var/list/our_depths = depths_in_view
+	var/list/our_cells = cells_in_view
+	var/list/datum/visibility_cell/new_cells = SSvis_cells.get_visibility_cells(lower_x, lower_y, upper_x, upper_y, z)
+	for(var/datum/visibility_cell/cell as anything in new_cells)
+		var/list/depths = cell.counts
+		for(var/depth in 1 to length(depths))	
+			our_depths[depth] -= depths[depth]
+		our_cells -= cell
+
+/datum/plane_master_group/hudless/no_bitches/offset_planes(use_scale)
+	return	

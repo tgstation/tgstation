@@ -24,19 +24,20 @@
 	var/our_lowest = GET_LOWEST_STACK_OFFSET(owning_turf.z)
 	var/their_lowest = GET_LOWEST_STACK_OFFSET(target_turf.z)
 	// If our spans are different mark er down
+	var/list/depths = list()
 	if(our_offset != their_offset || our_lowest != their_lowest)
-		var/list/depths = list()
-		for(var/depth in our_offset to their_lowest)
+		for(var/depth in their_offset to their_lowest)
 			depths += depth + 1
-		// We'll never remove these because mirage holders are not reliable. Sorry
-		owning_turf.add_plane_visibilities(depths)
 
 	var/x = target_turf.x
 	var/y = target_turf.y
 	var/z = clamp(target_turf.z, 1, world.maxz)
 	var/turf/southwest = locate(clamp(x - (direction & WEST ? range : 0), 1, world.maxx), clamp(y - (direction & SOUTH ? range : 0), 1, world.maxy), z)
 	var/turf/northeast = locate(clamp(x + (direction & EAST ? range : 0), 1, world.maxx), clamp(y + (direction & NORTH ? range : 0), 1, world.maxy), z)
-	holder.vis_contents += block(southwest, northeast)
+	for(var/turf/in_block as anything in block(southwest, northeast))
+		// We'll never remove these because mirage holders are not reliable. Sorry
+		in_block.add_plane_visibilities(depths)
+		holder.vis_contents += in_block 
 	if(direction & SOUTH)
 		holder.pixel_y -= world.icon_size * range
 	if(direction & WEST)

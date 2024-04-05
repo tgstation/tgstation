@@ -1,7 +1,11 @@
-// Alright. This system exists to let us pull the highest/lowest plane offset we need to render at a particular position
-// We store a list of "cells", clumps of turfs that we cache info on
-// Then when we need to check for info we call into those cells and request it
-// Doesn't take opacity into account because I am not interested in remaking camera code
+#define VIS_DISPLAYING_NOTHING 0
+#define VIS_DISPLAYING_CELLS 1
+#define VIS_DISPLAYING_EFFECTS 2
+
+/// Alright. This system exists to let us pull the highest/lowest plane offset we need to render at a particular position
+/// We store a list of "cells", clumps of turfs that we cache info on
+/// Then when we need to check for info we call into those cells and request it
+/// Doesn't take opacity into account because I am not interested in remaking camera code
 SUBSYSTEM_DEF(vis_cells)
 	name = "Visible Cells"
 	flags = SS_NO_INIT
@@ -11,6 +15,11 @@ SUBSYSTEM_DEF(vis_cells)
 	var/list/visibility_cells_by_z = list()
 	/// List of cells that MIGHT be empty, gotta check
 	var/list/datum/visibility_cell/inspection_queue = list()
+	/// Should our cells display on creation
+	var/display = VIS_DISPLAYING_NOTHING
+	/// The z level overlays are displayed on, if any
+	var/displayed_z = -1
+	/// How many cells do we have? Purely a profiling thing
 	var/cell_count = 0
 
 /datum/controller/subsystem/vis_cells/stat_entry(msg)
@@ -22,7 +31,7 @@ SUBSYSTEM_DEF(vis_cells)
 	while(length(inspection_queue))
 		var/datum/visibility_cell/test = inspection_queue[length(inspection_queue)]
 		var/list/counts = test.counts
-		var/found_depth = TRUE
+		var/found_depth = FALSE
 		for(var/depth in 1 to length(counts))
 			if(counts[depth])
 				found_depth = TRUE
@@ -45,6 +54,86 @@ SUBSYSTEM_DEF(vis_cells)
 		// So we just stop at the rows
 		x_cells[x] = null
 
+/datum/controller/subsystem/vis_cells/proc/generate_display_overlay(display_offset, source_offset)
+	var/mutable_appearance/glow = mutable_appearance('icons/effects/effects.dmi', "atmos_top", plane = ABOVE_LIGHTING_PLANE, offset_const = source_offset)
+	glow.alpha = 160
+	glow.color = hsl_gradient(abs(display_offset - source_offset), 0, "#39e7b3", SSmapping.max_plane_offset, "#a7084a")
+	return glow
+
+/datum/controller/subsystem/vis_cells/proc/toggle_cell_display(atom/ref_point)
+	if(display == VIS_DISPLAYING_EFFECTS)
+		disable_effects_display()
+
+	if(display == VIS_DISPLAYING_NOTHING)
+		display = VIS_DISPLAYING_CELLS
+		var/turf/ref_turf = get_turf(ref_point)
+		displayed_z = ref_turf.z
+		for(var/z in SSmapping.z_level_to_stack[displayed_z])
+			var/list/x_cells = visibility_cells_by_z[z]
+			for(var/list/y_cells in x_cells)
+				for(var/datum/visibility_cell/cell in y_cells)
+					cell.enable_display()
+	else
+		for(var/z in SSmapping.z_level_to_stack[displayed_z])
+			var/list/x_cells = visibility_cells_by_z[z]
+			for(var/list/y_cells in x_cells)
+				for(var/datum/visibility_cell/cell in y_cells)
+					cell.disable_display()
+		display = VIS_DISPLAYING_NOTHING
+		displayed_z = -1
+
+/obj/effect/abstract/stepper 
+	
+/obj/effect/abstract/stepper/newtonian_move(direction, instant, start_delay)
+	return	
+
+/datum/controller/subsystem/vis_cells/proc/enable_effects_display(view_range, atom/ref_point)
+	if(display == VIS_DISPLAYING_CELLS)
+		toggle_cell_display()
+	if(display == VIS_DISPLAYING_EFFECTS)
+		disable_effects_display()
+	display = VIS_DISPLAYING_EFFECTS
+	var/list/view_info = getviewsize(view_range)
+	var/list/possible_overlays = new /list(SSmapping.max_plane_offset + 1)
+	for(var/source_offset in 1 to length(possible_overlays))
+		possible_overlays[source_offset] = new /list(SSmapping.max_plane_offset + 1)
+		for(var/display_offset in 1 to length(possible_overlays[source_offset]))
+			possible_overlays[source_offset][display_offset] = generate_display_overlay(display_offset - 1, source_offset - 1)
+
+	var/datum/plane_master_group/hudless/no_bitches/dummy_group = new()
+	var/obj/effect/abstract/stepper/me_irl = new(null)
+	dummy_group.set_source(me_irl)
+	dummy_group.set_view_range(view_info)
+	var/depth_size = SSmapping.max_plane_offset + 1
+	var/turf/ref_turf = get_turf(ref_point)
+	displayed_z = ref_turf.z
+	for(var/z in SSmapping.z_level_to_stack[displayed_z])
+		var/z_offset = GET_Z_PLANE_OFFSET(z)
+		var/list/displays = possible_overlays[z_offset + 1]
+		for(var/turf/color_turf as anything in Z_TURFS(z))
+			me_irl.abstract_move(color_turf)
+			var/list/depths = dummy_group.depths_in_view
+			var/impactful_depth
+			for(var/depth in depth_size to 1 step -1)
+				if(depths[depth])
+					impactful_depth = depth
+					break
+			if(isnull(impactful_depth))
+				continue
+			color_turf.overlays += displays[impactful_depth]
+
+/datum/controller/subsystem/vis_cells/proc/disable_effects_display()
+	var/list/all_overlays = list()
+	for(var/source_offset in 1 to SSmapping.max_plane_offset + 1)
+		for(var/display_offset in 1 to SSmapping.max_plane_offset + 1)
+			all_overlays += generate_display_overlay(display_offset - 1, source_offset - 1)
+
+	for(var/z in SSmapping.z_level_to_stack[displayed_z])
+		for(var/turf/uncolor_turf as anything in Z_TURFS(z))
+			uncolor_turf.overlays -= all_overlays
+	display = VIS_DISPLAYING_NOTHING
+	displayed_z = -1
+
 /// Stores infromation about the visible z stacks stored at any one position
 /// A datum purely because it allows me to register signals onto it (this is relevant for efficent movement)
 /datum/visibility_cell
@@ -56,16 +145,62 @@ SUBSYSTEM_DEF(vis_cells)
 	var/list/counts = list()
 	/// Are we been queued for a checkover?
 	var/queued_for_inspection = FALSE
+	/// The MA we are currently displaying
+	var/mutable_appearance/display
 
 /datum/visibility_cell/New(x, y, z)
 	src.x = x
 	src.y = y
 	src.z = z
 	SSvis_cells.cell_count += 1
+	if(SSvis_cells.display == VIS_DISPLAYING_CELLS && (SSvis_cells.displayed_z in SSmapping.z_level_to_stack[z]))
+		enable_display()
 	SEND_GLOBAL_SIGNAL(COMSIG_VIS_CELL_CREATED, src)
 	return ..()
 
+/datum/visibility_cell/proc/get_turfs_in_cell()
+	var/lower_x = CELL_KEY_TO_POSITION(x)
+	var/lower_y = CELL_KEY_TO_POSITION(y)
+	var/turf/lower_corner = locate(lower_x, lower_y, z)
+	return CORNER_BLOCK(lower_corner, CELL_SIZE, CELL_SIZE)
+
+/datum/visibility_cell/proc/get_current_overlay()
+	var/display_offset = null
+	var/list/depths = counts
+	for(var/depth in length(depths) to 1 step -1)
+		if(depths[depth])
+			display_offset = depth - 1
+			break
+	if(!display_offset)
+		return null
+	var/offset = GET_Z_PLANE_OFFSET(z)
+	return SSvis_cells.generate_display_overlay(display_offset, offset)
+
+/datum/visibility_cell/proc/enable_display()	
+	RegisterSignal(src, COMSIG_CELL_DEPTH_CHANGED, PROC_REF(refresh_display))
+	var/mutable_appearance/glow = get_current_overlay()
+	for(var/turf/in_range as anything in get_turfs_in_cell())
+		in_range.overlays += glow
+	display = glow
+
+/datum/visibility_cell/proc/refresh_display()
+	var/mutable_appearance/display = src.display
+	var/mutable_appearance/glow = get_current_overlay()
+	for(var/turf/in_range as anything in get_turfs_in_cell())
+		in_range.overlays -= display
+		in_range.overlays += glow
+	src.display = glow
+
+/datum/visibility_cell/proc/disable_display()
+	UnregisterSignal(src, COMSIG_CELL_DEPTH_CHANGED)
+	var/mutable_appearance/display = src.display
+	for(var/turf/in_range as anything in get_turfs_in_cell())
+		in_range.overlays -= display
+	src.display = null
+
 /datum/visibility_cell/Destroy()
+	if(SSvis_cells.display == VIS_DISPLAYING_CELLS && (SSvis_cells.displayed_z in SSmapping.z_level_to_stack[z]))
+		disable_display()
 	SSvis_cells.remove_cell(x, y, z)
 	SSvis_cells.cell_count -= 1
 	return ..()
@@ -90,7 +225,7 @@ SUBSYSTEM_DEF(vis_cells)
 	var/turf/above = GET_TURF_ABOVE(src)
 	if(above && HAS_TRAIT(above, TURF_Z_TRANSPARENT_TRAIT))
 		above.remove_plane_visibilities(depths)
-	LAZYNULL(plane_visibility)
+	UNSETEMPTY(plane_visibility)
 
 /// Increments visibilty info at a particular coord
 /datum/controller/subsystem/vis_cells/proc/insert_visibility_info(x, y, z, list/depths)
@@ -171,9 +306,10 @@ SUBSYSTEM_DEF(vis_cells)
 	SEND_SIGNAL(cell_info, COMSIG_CELL_DEPTH_CHANGED, depths, TRUE)
 	if(removed_all && !cell_info.queued_for_inspection)
 		cell_info.queued_for_inspection = TRUE
-		SSvis_cells.inspection_queue += cell_info
+		inspection_queue += cell_info
 
 /// Takes a block of space and returns a list of all the cells that apply to it
+/// Expects the block in terms of cell coords rather then map coords
 /datum/controller/subsystem/vis_cells/proc/get_visibility_cells(lower_x, lower_y, upper_x, upper_y, z)
 	if(lower_x <= 0 || lower_y <= 0 || upper_x <= 0 || upper_y <= 0 || z <= 0)
 		return list()
@@ -185,11 +321,11 @@ SUBSYSTEM_DEF(vis_cells)
 	if(!our_z)
 		return list()
 
-	var/lower_y_key = CELL_TRANSFORM(lower_y)
-	var/upper_y_key = CELL_TRANSFORM(upper_y)
+	var/lower_y_key = lower_y
+	var/upper_y_key = upper_y
 	var/list/collected_cells = list()
 	//Now that we've got the z layer sorted, we're gonna check the X line
-	for(var/cell_x in CELL_TRANSFORM(lower_x) to min(CELL_TRANSFORM(upper_x), length(our_z)))
+	for(var/cell_x in lower_x to min(upper_x, length(our_z)))
 		var/list/our_x = our_z[cell_x]
 		if(!our_x)
 			continue
@@ -201,3 +337,6 @@ SUBSYSTEM_DEF(vis_cells)
 			collected_cells += cell_info
 	return collected_cells
 
+#undef VIS_DISPLAYING_NOTHING
+#undef VIS_DISPLAYING_CELLS
+#undef VIS_DISPLAYING_EFFECTS

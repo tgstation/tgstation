@@ -198,8 +198,11 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/debugNatureMapGenerator,
 	/client/proc/debug_plane_masters,
 	/client/proc/debug_spell_requirements,
+	/client/proc/disable_vis_effects,
 	/client/proc/display_sendmaps,
+	/client/proc/display_vis_cells,
 	/client/proc/enable_mapping_verbs,
+	/client/proc/enable_vis_effects,
 	/client/proc/generate_wikichem_list,
 	/client/proc/get_dynex_power, /*debug verbs for dynex explosions.*/
 	/client/proc/get_dynex_range, /*debug verbs for dynex explosions.*/
@@ -640,6 +643,29 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	GLOB.DYN_EX_SCALE = ex_scale
 	log_admin("[key_name(usr)] has modified Dynamic Explosion Scale: [ex_scale]")
 	message_admins("[key_name_admin(usr)] has  modified Dynamic Explosion Scale: [ex_scale]")
+
+/client/proc/display_vis_cells()
+	set category = "Debug"
+	set name = "Toggle Vis Cells"
+	set desc = "Toggles displaying all visibility cells to the world."
+
+	SSvis_cells.toggle_cell_display(mob)
+
+/client/proc/disable_vis_effects()
+	set category = "Debug"
+	set name = "Disable Vis Effects"
+	set desc = "Disables the turfs impacted by vis cells."
+
+	SSvis_cells.disable_effects_display()
+
+/client/proc/enable_vis_effects()
+	set category = "Debug"
+	set name = "Enable Vis Effects"
+	set desc = "Displays the turfs impacted by vis cells."
+
+	var/width = tgui_input_number(usr, "How wide should the view of our \"mob\" be?", "Bros")
+	var/height = tgui_input_number(usr, "How tall should the view of our \"mob\" be?", "It's jover")
+	SSvis_cells.enable_effects_display(list(width, height), mob)
 
 /client/proc/atmos_control()
 	set name = "Atmos Control Panel"
