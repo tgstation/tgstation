@@ -697,7 +697,7 @@ GLOBAL_LIST_INIT(paper_blanks_synd, init_paper_blanks(BLANKS_SYND_FILE_NAME))
 		if(paper.is_empty())
 			insert_empty_paper(paper, user)
 			return ITEM_INTERACT_SUCCESS
-	insert_copy_object(tool, user)
+	insert_copy_object(copyable, user)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/photocopier/proc/toner_act(mob/living/user, obj/item/toner/inserted_toner)
@@ -722,7 +722,7 @@ GLOBAL_LIST_INIT(paper_blanks_synd, init_paper_blanks(BLANKS_SYND_FILE_NAME))
 	if(payment_component)
 		balloon_alert(user, "another card reader inside!")
 		return ITEM_INTERACT_BLOCKING
-	return insert_card_reader(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+	return insert_card_reader(inserted_reader, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 /**
  * Attempts to shock the passed user, returns true if they are shocked.
