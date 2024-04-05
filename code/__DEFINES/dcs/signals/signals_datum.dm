@@ -14,8 +14,6 @@
 #define COMSIG_PREQDELETED "parent_preqdeleted"
 /// just before a datum's Destroy() is called: (force), at this point none of the other components chose to interrupt qdel and Destroy will be called
 #define COMSIG_QDELETING "parent_qdeleting"
-/// called after the COMSIG_QDELETING signal, primarily used by lua scripts to do final cleanup after all parent_qdeleting signals have been handled.
-#define COMSIG_QDELETING_POST_SIGNAL "parent_qdeleting_post_signal"
 /// generic topic handler (usr, href_list)
 #define COMSIG_TOPIC "handle_topic"
 /// handler for vv_do_topic (usr, href_list)
