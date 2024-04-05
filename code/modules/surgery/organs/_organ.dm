@@ -242,8 +242,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 		// Ears have aditional vаr "deaf", need to update it too
 		var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
-		if(ears)
-			ears.adjustEarDamage(0, -INFINITY) // full heal ears deafness
+		ears?.adjustEarDamage(0, -INFINITY) // full heal ears deafness
 
 		return
 
