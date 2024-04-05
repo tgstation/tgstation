@@ -23,7 +23,7 @@
 	. = ..()
 	if(.)
 		return
-	user.admin_ghost()
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_ghost)
 	return TRUE
 
 /datum/keybinding/admin/player_panel_new
@@ -79,7 +79,7 @@
 	. = ..()
 	if(.)
 		return
-	user.invisimin()
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/invisimin)
 	return TRUE
 
 /datum/keybinding/admin/deadsay
@@ -135,5 +135,5 @@
 	. = ..()
 	if(.)
 		return
-	user.holder?.display_tags()
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/display_tags)
 	return TRUE

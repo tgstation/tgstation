@@ -99,25 +99,25 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 					D.cure(0)
 
 		if("list_bombers")
-			holder.list_bombers()
+			holder.holder.list_bombers()
 
 		if("list_signalers")
-			holder.list_signalers()
+			holder.holder.list_signalers()
 
 		if("list_lawchanges")
-			holder.list_law_changes()
+			holder.holder.list_law_changes()
 
 		if("showailaws")
-			holder.check_ai_laws()
+			holder.holder.list_law_changes()
 
 		if("manifest")
-			holder.show_manifest()
+			holder.holder.show_manifest()
 
 		if("dna")
-			holder.list_dna()
+			holder.holder.list_dna()
 
 		if("fingerprints")
-			holder.list_fingerprints()
+			holder.holder.list_fingerprints()
 
 		if("ctfbutton")
 			toggle_id_ctf(holder, CTF_GHOST_CTF_GAME_ID)

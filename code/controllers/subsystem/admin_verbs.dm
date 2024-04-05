@@ -58,6 +58,10 @@ SUBSYSTEM_DEF(admin_verbs)
 	return valid_verbs
 
 /datum/controller/subsystem/admin_verbs/proc/dynamic_invoke_verb(client/admin, datum/admin_verb/verb_type, ...)
+	if(IsAdminAdvancedProcCall())
+		message_admins("PERMISSION ELEVATION: [key_name_admin(admin)] attempted to dynamically invoke admin verb '[verb_type]'.")
+		return
+
 	if(ismob(admin))
 		var/mob/mob = admin
 		admin = mob.client
@@ -74,7 +78,7 @@ SUBSYSTEM_DEF(admin_verbs)
 		CRASH("Attempted to dynamically invoke admin verb '[verb_type]' that doesn't exist.")
 
 	if(!admin.holder.check_for_rights(verb_singleton.permissions))
-		to_chat(admin, span_adminnotice("You lack the permissions to use this verb."))
+		to_chat(admin, span_adminnotice("You lack the permissions to do this."))
 		return
 
 	var/old_usr = usr

@@ -5,13 +5,6 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 GLOBAL_PROTECT(admin_verbs_admin)
 /world/proc/AVerbsAdmin()
 	return list(
-// Admin datums
-	/datum/admins/proc/access_news_network, /*allows access of newscasters*/
-	/datum/admins/proc/announce, /*priority announce something to all clients.*/
-	/datum/admins/proc/display_tags,
-	/datum/admins/proc/fishing_calculator,
-	/datum/admins/proc/known_alts_panel,
-	/datum/admins/proc/show_lag_switch_panel,
 	/datum/admins/proc/open_borgopanel,
 	/datum/admins/proc/open_shuttlepanel, /* Opens shuttle manipulator UI */
 	/datum/admins/proc/paintings_manager,
@@ -31,11 +24,9 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/admin_cancel_shuttle, /*allows us to cancel the emergency shuttle, sending it back to centcom*/
 	/client/proc/admin_disable_shuttle, /*allows us to disable the emergency shuttle admin-wise so that it cannot be called*/
 	/client/proc/admin_enable_shuttle,  /*undoes the above*/
-	/client/proc/admin_ghost, /*allows us to ghost/reenter body at will*/
 	/client/proc/admin_hostile_environment, /*Allows admins to prevent the emergency shuttle from leaving, also lets admins clear hostile environments if theres one stuck*/
 	/client/proc/centcom_podlauncher,/*Open a window to launch a Supplypod and configure it or it's contents*/
 	/client/proc/check_ai_laws, /*shows AI and borg laws*/
-	/client/proc/check_antagonists, /*shows all antags*/
 	/client/proc/cmd_admin_check_contents, /*displays the contents of an instance*/
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
 	/client/proc/cmd_admin_create_centcom_report,
@@ -49,26 +40,18 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/create_mob_worm,
 	/client/proc/fax_panel, /*send a paper to fax*/
 	/client/proc/force_load_lazy_template,
-	/client/proc/game_panel, /*game panel, allows to change game-mode etc*/
 	/client/proc/Getmob, /*teleports a mob to our location*/
 	/client/proc/Getkey, /*teleports a mob with a certain ckey to our location*/
 	/client/proc/getserverlogs, /*for accessing server logs*/
 	/client/proc/getcurrentlogs, /*for accessing server logs for the current round*/
 	/client/proc/ghost_pool_protection, /*opens a menu for toggling ghost roles*/
-	/client/proc/invisimin, /*allows our mob to go invisible/visible*/
 	/client/proc/jumptoarea,
 	/client/proc/jumptokey, /*allows us to jump to the location of a mob with a certain ckey*/
 	/client/proc/jumptomob, /*allows us to jump to a specific mob*/
 	/client/proc/jumptoturf, /*allows us to jump to a specific turf*/
 	/client/proc/jumptocoord, /*we ghost and jump to a coordinate*/
-	/client/proc/list_bombers,
-	/client/proc/list_dna,
-	/client/proc/list_fingerprints,
-	/client/proc/list_law_changes,
-	/client/proc/list_signalers,
 	/client/proc/manage_sect, /*manage chaplain religious sect*/
 	/client/proc/message_pda, /*send a message to somebody on PDA*/
-	/client/proc/show_manifest,
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/toggle_combo_hud, /* toggle display of the combination pizza antag and taco sci/med/eng hud */
 	/client/proc/toggle_view_range, /*changes how far we can see*/
@@ -144,7 +127,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	#endif
 	/proc/machine_upgrade,
 	/datum/admins/proc/create_or_modify_area,
-	/client/proc/adventure_manager,
 	/client/proc/atmos_control,
 	/client/proc/callproc,
 	/client/proc/callproc_datum,
@@ -261,113 +243,75 @@ ADMIN_VERB(hide_verbs, R_NONE, "Adminverbs - Hide All", "Hide most of your admin
 	to_chat(src, span_interface("All of your adminverbs are now visible."), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Show Adminverbs")
 
-/client/proc/admin_ghost()
-	set category = "Admin.Game"
-	set name = "Aghost"
-	if(!holder)
-		return
+ADMIN_VERB(admin_ghost, R_ADMIN, "AGhost", "Become a ghost without DNR.", ADMIN_CATEGORY_GAME)
 	. = TRUE
-	if(isobserver(mob))
+	if(isobserver(user.mob))
 		//re-enter
-		var/mob/dead/observer/ghost = mob
+		var/mob/dead/observer/ghost = user.mob
 		if(!ghost.mind || !ghost.mind.current) //won't do anything if there is no body
 			return FALSE
 		if(!ghost.can_reenter_corpse)
-			log_admin("[key_name(usr)] re-entered corpse")
-			message_admins("[key_name_admin(usr)] re-entered corpse")
+			log_admin("[key_name(user)] re-entered corpse")
+			message_admins("[key_name_admin(user)] re-entered corpse")
 		ghost.can_reenter_corpse = 1 //force re-entering even when otherwise not possible
 		ghost.reenter_corpse()
 		BLACKBOX_LOG_ADMIN_VERB("Admin Reenter")
-	else if(isnewplayer(mob))
-		to_chat(src, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>", confidential = TRUE)
+	else if(isnewplayer(user.mob))
+		to_chat(user, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>", confidential = TRUE)
 		return FALSE
 	else
 		//ghostize
-		log_admin("[key_name(usr)] admin ghosted.")
-		message_admins("[key_name_admin(usr)] admin ghosted.")
-		var/mob/body = mob
+		log_admin("[key_name(user)] admin ghosted.")
+		message_admins("[key_name_admin(user)] admin ghosted.")
+		var/mob/body = user.mob
 		body.ghostize(TRUE)
-		init_verbs()
+		user.init_verbs()
 		if(body && !body.key)
-			body.key = "@[key]" //Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
+			body.key = "@[user.key]" //Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
 		BLACKBOX_LOG_ADMIN_VERB("Admin Ghost")
 
-/client/proc/invisimin()
-	set name = "Invisimin"
-	set category = "Admin.Game"
-	set desc = "Toggles ghost-like invisibility (Don't abuse this)"
-
-	if(isnull(holder) || isnull(mob))
+ADMIN_VERB(invisimin, R_ADMIN, "Inisimin", "Toggles ghost-like invisibility.", ADMIN_CATEGORY_GAME)
+	if(HAS_TRAIT(user.mob, TRAIT_INVISIMIN))
+		REMOVE_TRAIT(user.mob, TRAIT_INVISIMIN, ADMIN_TRAIT)
+		user.mob.add_to_all_human_data_huds()
+		user.mob.RemoveInvisibility(INVISIBILITY_SOURCE_INVISIMIN)
+		to_chat(user, span_adminnotice(span_bold("Invisimin off. Invisibility reset.")), confidential = TRUE)
 		return
 
-	if(HAS_TRAIT(mob, TRAIT_INVISIMIN))
-		REMOVE_TRAIT(mob, TRAIT_INVISIMIN, ADMIN_TRAIT)
-		mob.add_to_all_human_data_huds()
-		mob.RemoveInvisibility(INVISIBILITY_SOURCE_INVISIMIN)
-		to_chat(mob, span_adminnotice(span_bold("Invisimin off. Invisibility reset.")), confidential = TRUE)
-		return
+	ADD_TRAIT(user.mob, TRAIT_INVISIMIN, ADMIN_TRAIT)
+	user.mob.remove_from_all_data_huds()
+	user.mob.SetInvisibility(INVISIBILITY_OBSERVER, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
+	to_chat(user, span_adminnotice(span_bold("Invisimin on. You are now as invisible as a ghost.")), confidential = TRUE)
 
-	ADD_TRAIT(mob, TRAIT_INVISIMIN, ADMIN_TRAIT)
-	mob.remove_from_all_data_huds()
-	mob.SetInvisibility(INVISIBILITY_OBSERVER, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
-	to_chat(mob, span_adminnotice(span_bold("Invisimin on. You are now as invisible as a ghost.")), confidential = TRUE)
-
-/client/proc/check_antagonists()
-	set name = "Check Antagonists"
-	set category = "Admin.Game"
-	if(holder)
-		holder.check_antagonists()
-		log_admin("[key_name(usr)] checked antagonists.") //for tsar~
-		if(!isobserver(usr) && SSticker.HasRoundStarted())
-			message_admins("[key_name_admin(usr)] checked antagonists.")
+ADMIN_VERB(check_antagonists, R_ADMIN, "Check Antagonists", "See all antagonists for the round.", ADMIN_CATEGORY_GAME)
+	user.holder.check_antagonists()
+	log_admin("[key_name(user)] checked antagonists.")
+	if(!isobserver(user.mob) && SSticker.HasRoundStarted())
+		message_admins("[key_name_admin(user)] checked antagonists.")
 	BLACKBOX_LOG_ADMIN_VERB("Check Antagonists")
 
-/client/proc/list_bombers()
-	set name = "List Bombers"
-	set category = "Admin.Game"
-	if(!holder)
-		return
-	holder.list_bombers()
+ADMIN_VERB(list_bombers, R_ADMIN, "List Bombers", "Look at all bombs and their likely culprit.", ADMIN_CATEGORY_GAME)
+	user.holder.list_bombers()
 	BLACKBOX_LOG_ADMIN_VERB("List Bombers")
 
-/client/proc/list_signalers()
-	set name = "List Signalers"
-	set category = "Admin.Game"
-	if(!holder)
-		return
-	holder.list_signalers()
+ADMIN_VERB(list_signalers, R_ADMIN, "List Signalers", "View all signalers.", ADMIN_CATEGORY_GAME)
+	user.holder.list_signalers()
 	BLACKBOX_LOG_ADMIN_VERB("List Signalers")
 
-/client/proc/list_law_changes()
-	set name = "List Law Changes"
-	set category = "Debug"
-	if(!holder)
-		return
-	holder.list_law_changes()
+ADMIN_VERB(list_law_changes, R_ADMIN, "List Law Changes", "View all AI law changes.", ADMIN_CATEGORY_DEBUG)
+	user.holder.list_law_changes()
 	BLACKBOX_LOG_ADMIN_VERB("List Law Changes")
 
-/client/proc/show_manifest()
-	set name = "Show Manifest"
-	set category = "Debug"
-	if(!holder)
-		return
-	holder.show_manifest()
+ADMIN_VERB(show_manifest, R_ADMIN, "Show Manifest", "View the shift's Manifest.", ADMIN_CATEGORY_DEBUG)
+	user.holder.show_manifest()
 	BLACKBOX_LOG_ADMIN_VERB("Show Manifest")
 
-/client/proc/list_dna()
-	set name = "List DNA"
-	set category = "Debug"
-	if(!holder)
-		return
-	holder.list_dna()
+ADMIN_VERB(list_dna, R_ADMIN, "List DNA", "View DNA.", ADMIN_CATEGORY_DEBUG)
+	user.holder.list_dna()
 	BLACKBOX_LOG_ADMIN_VERB("List DNA")
 
-/client/proc/list_fingerprints()
-	set name = "List Fingerprints"
-	set category = "Debug"
-	if(!holder)
-		return
-	holder.list_fingerprints()
+ADMIN_VERB(list_fingerprints, R_ADMIN, "List Fingerprints", "View fingerprints.", ADMIN_CATEGORY_DEBUG)
+	user.holder.list_fingerprints()
 	BLACKBOX_LOG_ADMIN_VERB("List Fingerprints")
 
 ADMIN_VERB(ban_panel, R_BAN, "Banning Panel", "Ban players here.", ADMIN_CATEGORY_MAIN)
@@ -378,11 +322,8 @@ ADMIN_VERB(unban_panel, R_BAN, "Unbanning Panel", "Unban players here.", ADMIN_C
 	user.holder.unban_panel()
 	BLACKBOX_LOG_ADMIN_VERB("Unbanning Panel")
 
-/client/proc/game_panel()
-	set name = "Game Panel"
-	set category = "Admin.Game"
-	if(holder)
-		holder.Game()
+ADMIN_VERB(game_panel, R_ADMIN, "Game Panel", "Look at the state of the game.", ADMIN_CATEGORY_GAME)
+	user.holder.Game()
 	BLACKBOX_LOG_ADMIN_VERB("Game Panel")
 
 ADMIN_VERB(poll_panel, R_POLL, "Server Poll Management", "View and manage polls.", ADMIN_CATEGORY_MAIN)
@@ -1039,7 +980,7 @@ ADMIN_VERB(debug_statpanel, R_DEBUG, "Debug Stat Panel", "Toggles local debug of
 		return
 
 	if(!isobserver(usr))
-		admin_ghost()
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_ghost)
 	usr.forceMove(reservation.bottom_left_turfs[1])
 
 	message_admins("[key_name_admin(usr)] has loaded lazy template '[choice]'")

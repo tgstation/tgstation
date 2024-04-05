@@ -26,19 +26,15 @@
 	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
 	BLACKBOX_LOG_ADMIN_VERB("Show Tip")
 
-/datum/admins/proc/announce()
-	set category = "Admin"
-	set name = "Announce"
-	set desc="Announce your desires to the world"
-	if(!check_rights(0))
+ADMIN_VERB(announce, R_ADMIN, "Announce", "Announce your desires to the world.", ADMIN_CATEGORY_MAIN)
+	var/message = input(user, "Global message to send:", "Admin Announce")  as message|null
+	if(!message)
 		return
 
-	var/message = input("Global message to send:", "Admin Announce", null, null)  as message|null
-	if(message)
-		if(!check_rights(R_SERVER,0))
-			message = adminscrub(message,500)
-		send_ooc_announcement(message, "From [usr.client.holder.fakekey ? "Administrator" : usr.key]")
-		log_admin("Announce: [key_name(usr)] : [message]")
+	if(!user.holder.check_for_rights(R_SERVER))
+		message = adminscrub(message,500)
+	send_ooc_announcement(message, "From [user.holder.fakekey ? "Administrator" : user.key]")
+	log_admin("Announce: [key_name(user)] : [message]")
 	BLACKBOX_LOG_ADMIN_VERB("Announce")
 
 /datum/admins/proc/unprison(mob/M in GLOB.mob_list)

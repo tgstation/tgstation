@@ -1168,7 +1168,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return 0
 
 	if(!isnum(player_age) || player_age < 0)
-		return 0 
+		return 0
 
 	if(!isnum(days_needed))
 		return 0
@@ -1178,13 +1178,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /// Attempts to make the client orbit the given object, for administrative purposes.
 /// If they are not an observer, will try to aghost them.
 /client/proc/admin_follow(atom/movable/target)
-	var/can_ghost = TRUE
-
-	if (!isobserver(mob))
-		can_ghost = admin_ghost()
-
-	if(!can_ghost)
-		return FALSE
+	if(!isobserver(mob))
+		SSadmin_verbs.dynamic_invoke_verb(src, /datum/admin_verb/admin_ghost)
+		if(!isobserver(mob))
+			return
 
 	var/mob/dead/observer/observer = mob
 	observer.ManualFollow(target)

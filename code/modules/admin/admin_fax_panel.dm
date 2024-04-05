@@ -97,15 +97,15 @@
 	switch(action)
 
 		if("follow")
-			if(!isobserver(usr))
-				usr.client?.admin_ghost()
+			if(!isobserver(ui.user))
+				SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/admin_ghost)
 
-			usr.client?.admin_follow(action_fax)
+			ui.user.client?.admin_follow(action_fax)
 
 		if("preview") // see saved variant
 			if(!fax_paper)
 				return
-			fax_paper.ui_interact(usr)
+			fax_paper.ui_interact(ui.user)
 
 		if("save") // save paper
 			if(params["paperName"])
@@ -129,7 +129,7 @@
 			if(stamp)
 				fax_paper.add_stamp(stamp_class, params["stampX"], params["stampY"], params["stampAngle"], stamp)
 
-			fax_paper.update_static_data(usr) // OK, it's work, and update UI.
+			fax_paper.update_static_data(ui.user) // OK, it's work, and update UI.
 
 		if("send")
 			//copy
@@ -137,9 +137,9 @@
 			our_fax.name = fax_paper.name
 			//send
 			action_fax.receive(our_fax, sending_fax_name)
-			message_admins("[key_name_admin(usr)] has sent a custom fax message to [action_fax.name][ADMIN_FLW(action_fax)][ADMIN_SHOW_PAPER(fax_paper)].")
-			log_admin("[key_name(usr)] has sent a custom fax message to [action_fax.name]")
+			message_admins("[key_name_admin(ui.user)] has sent a custom fax message to [action_fax.name][ADMIN_FLW(action_fax)][ADMIN_SHOW_PAPER(fax_paper)].")
+			log_admin("[key_name(ui.user)] has sent a custom fax message to [action_fax.name]")
 
 		if("createPaper")
-			var/obj/item/paper/our_paper = fax_paper.copy(/obj/item/paper, usr.loc)
+			var/obj/item/paper/our_paper = fax_paper.copy(/obj/item/paper, ui.user.loc)
 			our_paper.name = fax_paper.name

@@ -211,7 +211,7 @@
 
 	switch(action)
 		if("lawchange_logs")
-			usr.client?.list_law_changes()
+			ui.user?.client?.holder?.list_law_changes()
 			return FALSE
 
 		if("force_state_laws")
