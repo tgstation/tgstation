@@ -119,6 +119,7 @@ multiple modular subtrees with behaviors
 	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_POSSESSED_PAWN)
 
 	reset_ai_status()
+	RegisterSignal(pawn, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_changed_z_level))
 	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 	RegisterSignal(pawn, COMSIG_QDELETING, PROC_REF(on_pawn_qdeleted))
@@ -132,6 +133,11 @@ multiple modular subtrees with behaviors
 	var/final_status = AI_STATUS_ON
 
 	if (!ismob(pawn))
+		return final_status
+	
+	var/turf/pawn_turf = get_turf(pawn)
+	if(!length(SSmobs.clients_by_zlevel[pawn_turf.z]))
+		final_status = AI_STATUS_Z_OFF
 		return final_status
 
 	var/mob/living/mob_pawn = pawn
@@ -147,6 +153,16 @@ multiple modular subtrees with behaviors
 
 	return final_status
 
+///Called when the AI controller pawn changes z levels, we check if there's any clients on the new one and wake up the AI if there is.
+/datum/ai_controller/proc/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	SIGNAL_HANDLER
+	var/mob/mob_pawn = pawn
+	if(mob_pawn?.client && !continue_processing_when_client)
+		return
+	var/new_level_clients = SSmobs.clients_by_zlevel[new_turf.z].len
+	if(new_level_clients)
+		set_ai_status(AI_STATUS_ON)
+
 ///Abstract proc for initializing the pawn to the new controller
 /datum/ai_controller/proc/TryPossessPawn(atom/new_pawn)
 	return
@@ -156,7 +172,7 @@ multiple modular subtrees with behaviors
 	if(isnull(pawn))
 		return // instantiated without an applicable pawn, fine
 
-	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE, COMSIG_QDELETING))
+	UnregisterSignal(pawn, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE, COMSIG_QDELETING))
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
 	pawn.ai_controller = null
@@ -269,16 +285,34 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/set_ai_status(new_ai_status)
 	if(ai_status == new_ai_status)
 		return FALSE //no change
-
+	
+	var/was_offline = (ai_status == AI_STATUS_Z_OFF)
+	//remove old status, if we've got one
+	if(ai_status)
+		SSai_controllers.ai_controllers_by_status[ai_status] -= src
 	ai_status = new_ai_status
+	//add new status
+	if(!SSai_controllers.ai_controllers_by_status[new_ai_status])
+		SSai_controllers.ai_controllers_by_status[new_ai_status] = list()
+	SSai_controllers.ai_controllers_by_status[new_ai_status] += src
 	switch(ai_status)
 		if(AI_STATUS_ON)
-			SSai_controllers.active_ai_controllers += src
 			START_PROCESSING(SSai_behaviors, src)
+			if(was_offline)
+				var/turf/current_turf = get_turf(pawn)
+				SSai_controllers.offline_ai_controllers_by_zlevel[current_turf.z] -= src
 		if(AI_STATUS_OFF)
 			STOP_PROCESSING(SSai_behaviors, src)
-			SSai_controllers.active_ai_controllers -= src
 			CancelActions()
+			if(was_offline)
+				var/turf/current_turf = get_turf(pawn)
+				SSai_controllers.offline_ai_controllers_by_zlevel[current_turf.z] -= src
+		if(AI_STATUS_Z_OFF)
+			STOP_PROCESSING(SSai_behaviors, src)
+			CancelActions()
+			if(!was_offline)
+				var/turf/current_turf = get_turf(pawn)
+				SSai_controllers.offline_ai_controllers_by_zlevel[current_turf.z] += src
 
 /datum/ai_controller/proc/PauseAi(time)
 	paused_until = world.time + time

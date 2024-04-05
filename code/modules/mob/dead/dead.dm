@@ -91,15 +91,17 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 #undef SERVER_HOPPER_TRAIT
 
 /mob/dead/proc/update_z(new_z) // 1+ to register, null to unregister
-	if (registered_z != new_z)
-		if (registered_z)
-			SSmobs.dead_players_by_zlevel[registered_z] -= src
-		if (client)
-			if (new_z)
-				SSmobs.dead_players_by_zlevel[new_z] += src
-			registered_z = new_z
-		else
-			registered_z = null
+	if(!client || !new_z)
+		registered_z = null
+		return
+	if(registered_z == new_z)
+		return
+	if(registered_z)
+		SSmobs.dead_players_by_zlevel[registered_z] -= src
+	registered_z = new_z
+	//this check prevents issues such as ghosting, which puts you in several times.
+	if(!(src in SSmobs.dead_players_by_zlevel[registered_z]))
+		SSmobs.dead_players_by_zlevel[new_z] += src
 
 /mob/dead/Login()
 	. = ..()

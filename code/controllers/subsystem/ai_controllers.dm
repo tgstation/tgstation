@@ -8,22 +8,27 @@ SUBSYSTEM_DEF(ai_controllers)
 	wait = 0.5 SECONDS //Plan every half second if required, not great not terrible.
 
 	///List of all ai_subtree singletons, key is the typepath while assigned value is a newly created instance of the typepath. See setup_subtrees()
-	var/list/ai_subtrees = list()
-	///List of all ai controllers currently running
-	var/list/active_ai_controllers = list()
+	var/list/datum/ai_planning_subtree/ai_subtrees = list()
+	///Assoc List of all AI statuses and all AI controllers with that status.
+	var/list/ai_controllers_by_status = list(
+		AI_STATUS_ON = list(),
+		AI_STATUS_OFF = list(),
+		AI_STATUS_Z_OFF = list(),
+	)
+	///Assoc List of all Offline AI controllers and the Z level they are on, which we check when someone enters/leaves a Z level to turn them on/off.
+	var/list/offline_ai_controllers_by_zlevel = list()
 
 /datum/controller/subsystem/ai_controllers/Initialize()
 	setup_subtrees()
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/ai_controllers/proc/setup_subtrees()
-	ai_subtrees = list()
-	for(var/subtree_type in subtypesof(/datum/ai_planning_subtree))
-		var/datum/ai_planning_subtree/subtree = new subtree_type
-		ai_subtrees[subtree_type] = subtree
+/datum/controller/subsystem/ai_controllers/Recover()
+	ai_subtrees = SSai_controllers.ai_subtrees
+	ai_controllers_by_status = SSai_controllers.ai_controllers_by_status
+	offline_ai_controllers_by_zlevel = SSai_controllers.offline_ai_controllers_by_zlevel
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
-	for(var/datum/ai_controller/ai_controller as anything in active_ai_controllers)
+	for(var/datum/ai_controller/ai_controller as anything in ai_controllers_by_status[AI_STATUS_ON])
 		if(!COOLDOWN_FINISHED(ai_controller, failed_planning_cooldown))
 			continue
 
@@ -32,3 +37,17 @@ SUBSYSTEM_DEF(ai_controllers)
 		ai_controller.SelectBehaviors(wait * 0.1)
 		if(!LAZYLEN(ai_controller.current_behaviors)) //Still no plan
 			COOLDOWN_START(ai_controller, failed_planning_cooldown, AI_FAILED_PLANNING_COOLDOWN)
+
+///Creates all instances of ai_subtrees and assigns them to the ai_subtrees list.
+/datum/controller/subsystem/ai_controllers/proc/setup_subtrees()
+	for(var/subtree_type in subtypesof(/datum/ai_planning_subtree))
+		var/datum/ai_planning_subtree/subtree = new subtree_type
+		ai_subtrees[subtree_type] = subtree
+
+///Called when the max Z level was changed, updating our coverage.
+/datum/controller/subsystem/ai_controllers/proc/on_max_z_changed()
+	if (!islist(offline_ai_controllers_by_zlevel))
+		offline_ai_controllers_by_zlevel = new /list(world.maxz,0)
+	while (SSai_controllers.offline_ai_controllers_by_zlevel.len < world.maxz)
+		SSai_controllers.offline_ai_controllers_by_zlevel.len++
+		SSai_controllers.offline_ai_controllers_by_zlevel[offline_ai_controllers_by_zlevel.len] = list()
