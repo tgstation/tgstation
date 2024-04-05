@@ -10,36 +10,35 @@
 #define ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, verb_args...) \
 /datum/admin_verb/##verb_path_name \
 { \
-    name = ##verb_name; \
-    description = ##verb_desc; \
-    category = ##verb_category; \
-    permissions = ##verb_permissions; \
-    verb_holder = /mob/admin_verb_holder/##verb_path_name; \
+	name = ##verb_name; \
+	description = ##verb_desc; \
+	category = ##verb_category; \
+	permissions = ##verb_permissions; \
+	verb_path = /client/proc/__avd_##verb_path_name; \
 }; \
-/mob/admin_verb_holder/##verb_path_name/verb/do_verb(##verb_args) \
+/client/proc/__avd_##verb_path_name(##verb_args) \
 { \
-    set name = ##verb_name; \
-    set desc = ##verb_desc; \
-    set category = ##verb_category; \
-    set src in usr.group; \
-    if(IsAdminAdvancedProcCall()) { \
-        message_admins("[key_name_admin(usr)] attempted to elevate permissions and call [type] directly."); \
-        return; \
-    }; \
-    if(!usr.client?.holder?.check_for_rights(##verb_permissions)) { \
-        /* cannot use span define, those don't exist yet lol */ \
-        to_chat(usr, "<span class='adminnotice'>You do not have permission to use this verb.</span>"); \
-        return; \
-    }; \
-    var/list/_verb_args = list(usr.client); \
-    _verb_args += args; \
-    parent_admin_verb:handle_do_verb(arglist(_verb_args)); \
+	set name = ##verb_name; \
+	set desc = ##verb_desc; \
+	set hidden = FALSE; /* this is explicitly needed as the proc begins with an underscore */ \
+	set category = ##verb_category; \
+	var/list/_verb_args = list(usr, /datum/admin_verb/##verb_path_name); \
+	_verb_args += args; \
+	SSadmin_verbs.dynamic_invoke_verb(arglist(_verb_args)); \
 }; \
-/datum/admin_verb/##verb_path_name/proc/handle_do_verb(client/user, ##verb_args)
+/datum/admin_verb/##verb_path_name/__avd_do_verb(client/user, ##verb_args)
 
 /// Used to define a special check to determine if the admin verb should exist at all. Useful for verbs such as play sound which require configuration.
 #define ADMIN_VERB_CUSTOM_EXIST_CHECK(verb_path_name) \
-/datum/admin_verb/##verb_path_name/check_should_exist()
+/datum/admin_verb/##verb_path_name/__avd_check_should_exist()
+
+// These are put here to prevent the "procedure override precedes definition" error.
+/datum/admin_verb/proc/__avd_get_verb_path()
+	CRASH("__avd_get_verb_path not defined. use the macro")
+/datum/admin_verb/proc/__avd_do_verb(...)
+	CRASH("__avd_do_verb not defined. use the macro")
+/datum/admin_verb/proc/__avd_check_should_exist()
+	return TRUE
 
 /*
  * This is an example of how to use the above macro:
