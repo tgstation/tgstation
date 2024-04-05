@@ -551,7 +551,7 @@
 
 /datum/centcom_podlauncher/proc/setupViewBay()
 	var/list/visible_turfs = list()
-	for(var/turf/bay_turf in bay)
+	for(var/turf/bay_turf in bay.get_turfs_from_all_zlevels())
 		visible_turfs += bay_turf
 	setupView(visible_turfs)
 
@@ -566,8 +566,15 @@
 	var/size_y = bbox[4] - bbox[2] + 1
 
 	cam_screen.vis_contents = visible_turfs
+	var/turf/random_lad = visible_turfs[1]
+	// We don't have an explicit "center" so we're going to operate based off the rough center of the passed turfs
+	var/turf/source_turf = locate(bbox[1] + size_x / 2, bbox[2] + size_y / 2, random_lad.z)
+	// Center our turf
+	cam_screen.set_center(source_turf)
+	cam_screen.set_display_bounds(size_x, size_y)
 	cam_background.icon_state = "clear"
-	cam_background.fill_rect(1, 1, size_x, size_y)
+	cam_background.fill_rect(1, 1, size_x, size_y)	
+	SET_PLANE_EXPLICIT(cam_background, PLANE_TO_TRUE(cam_background.plane), source_turf)
 
 /datum/centcom_podlauncher/proc/updateCursor(forceClear = FALSE) //Update the mouse of the user
 	if (!holder) //Can't update the mouse icon if the client doesnt exist!

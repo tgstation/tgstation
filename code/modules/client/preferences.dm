@@ -346,6 +346,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /// A preview of a character for use in the preferences menu
 /atom/movable/screen/map_view/char_preview
 	name = "character_preview"
+	just_the_center = TRUE
 
 	/// The body that is displayed
 	var/mob/living/carbon/human/dummy/body
@@ -354,6 +355,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /atom/movable/screen/map_view/char_preview/Initialize(mapload, datum/preferences/preferences)
 	. = ..()
+	set_center(src) // We are drawing ourselves here
 	src.preferences = preferences
 
 /atom/movable/screen/map_view/char_preview/Destroy()
@@ -369,6 +371,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	else
 		body.wipe_state()
 	appearance = preferences.render_new_preview_appearance(body)
+	set_center(src) // Refresh in case planes change a bunch
 
 /atom/movable/screen/map_view/char_preview/proc/create_body()
 	QDEL_NULL(body)

@@ -124,6 +124,9 @@
 	mmi_view.vis_contents.Cut()
 	for(var/turf/visible_turf in view(2, get_turf(brain_ref)))
 		mmi_view.vis_contents += visible_turf
+	mmi_view.set_center(get_turf(brain_ref))
+	mmi_view.set_display_bounds(5, 5)
+	SET_PLANE_EXPLICIT(mmi_view_background, PLANE_TO_TRUE(mmi_view_background.plane), brain_ref)
 
 /// Signal proc for [COMSIG_MOVABLE_HEAR] to relay stuff the MMI hears to the ling.
 /// Not super good, but it works.

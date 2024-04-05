@@ -63,6 +63,7 @@
 	if(!user_client.intended_direction)
 		user_mob.face_atom(tracker.given_turf)
 	animate(user_client, world.tick_lag, pixel_x = tracker.given_x, pixel_y = tracker.given_y)
+	user_client.set_functional_offsets(tracker.given_x, tracker.given_y)
 
 /datum/component/scope/proc/on_move(atom/movable/source, atom/oldloc, dir, forced)
 	SIGNAL_HANDLER
@@ -220,6 +221,8 @@
 
 	if(user.client)
 		animate(user.client, 0.2 SECONDS, pixel_x = 0, pixel_y = 0)
+		user.client.set_functional_offsets(tracker.given_x, tracker.given_y)
+
 	tracker = null
 	tracker_owner_ckey = null
 

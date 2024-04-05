@@ -437,6 +437,9 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	var/turf/center_turf = our_destination?.get_target_turf()
 	if(!center_turf)
 		// Draw static
+		enable_center_only()
+		set_display_bounds(0, 0)
+		set_center(cam_background)
 		cam_background.icon_state = "scanline2"
 		cam_background.color = null
 		cam_background.alpha = 255
@@ -445,6 +448,10 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	cam_background.add_filter("portal_blur", 1, list("type" = "blur", "size" = 0.5))
 
 	vis_contents += TURF_NEIGHBORS(center_turf)
+	set_center(center_turf)
+	set_display_bounds(3, 3)
+	disable_center_only()
 	cam_background.icon_state = "scanline4"
 	cam_background.color = "#adadff"
 	cam_background.alpha = 128
+	SET_PLANE_EXPLICIT(cam_background, PLANE_TO_TRUE(cam_background.plane), center_turf)

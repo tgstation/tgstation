@@ -44,7 +44,9 @@
 	editing_mod = mod
 	proxy_view = new()
 	proxy_view.generate_view("color_matrix_proxy_[REF(user.client)]")
-
+	proxy_view.enable_center_only()
+	proxy_view.set_center(src)
+	
 	proxy_view.appearance = editing_mod.appearance
 	proxy_view.color = null
 	proxy_view.display_to(user)

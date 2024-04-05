@@ -134,7 +134,7 @@
 	var/list/visible_turfs = list()
 
 	// Get the camera's turf to correctly gather what's visible from it's turf, in case it's located in a moving object (borgs / mechs)
-	var/new_cam_turf = get_turf(active_camera)
+	var/turf/new_cam_turf = get_turf(active_camera)
 
 	// If we're not forcing an update for some reason and the cameras are in the same location,
 	// we don't need to update anything.
@@ -157,8 +157,13 @@
 	var/size_y = bbox[4] - bbox[2] + 1
 
 	cam_screen.vis_contents = visible_turfs
+	// Center our turf
+	cam_screen.set_center(new_cam_turf)
+	cam_screen.set_display_bounds(size_x, size_y)
+	cam_screen.disable_center_only()
 	cam_background.icon_state = "clear"
-	cam_background.fill_rect(1, 1, size_x, size_y)
+	cam_background.fill_rect(1, 1, size_x, size_y)	
+	SET_PLANE_EXPLICIT(cam_background, PLANE_TO_TRUE(cam_background.plane), new_cam_turf)
 
 /obj/machinery/computer/security/ui_close(mob/user)
 	. = ..()
@@ -176,6 +181,9 @@
 
 /obj/machinery/computer/security/proc/show_camera_static()
 	cam_screen.vis_contents.Cut()
+	cam_screen.enable_center_only()
+	cam_screen.set_display_bounds(0, 0)
+	cam_screen.set_center(cam_background)
 	cam_background.icon_state = "scanline2"
 	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
 

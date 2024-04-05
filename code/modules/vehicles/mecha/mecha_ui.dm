@@ -73,6 +73,7 @@
 	data["capacitor"] = capacitor?.name
 	data["servo"] = servo?.name
 	ui_view.appearance = appearance
+	ui_view.set_center(src)
 	data["name"] = name
 	data["integrity"] = atom_integrity
 	data["integrity_max"] = max_integrity

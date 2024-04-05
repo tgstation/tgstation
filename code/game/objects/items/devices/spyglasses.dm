@@ -79,6 +79,8 @@
 	cam_screen.vis_contents.Cut()
 	for(var/turf/visible_turf in view(cam_range, get_turf(src)))//fuck you usr
 		cam_screen.vis_contents += visible_turf
+	cam_screen.set_center(get_turf(src))
+	cam_screen.set_display_bounds(cam_range * 2 + 1, cam_range)
 
 //it needs to be linked, hence a kit.
 /obj/item/storage/box/rxglasses/spyglasskit
