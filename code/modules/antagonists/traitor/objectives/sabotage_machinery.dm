@@ -165,7 +165,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	if (. || !istype(target, target_machine_path))
 		return
 	balloon_alert(user, "planting device...")
-	if(!do_after(user, delay = deploy_time, target = src, interaction_key = DOAFTER_SOURCE_PLANTING_DEVICE))
+	if(!do_after(user, delay = deploy_time, target = src, interaction_key = DOAFTER_SOURCE_PLANTING_DEVICE, hidden = TRUE))
 		return TRUE
 	target.AddComponent(\
 		/datum/component/interaction_booby_trap,\

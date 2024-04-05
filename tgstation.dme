@@ -764,6 +764,7 @@
 #include "code\datums\candidate_poll.dm"
 #include "code\datums\chat_payload.dm"
 #include "code\datums\chatmessage.dm"
+#include "code\datums\cogbar.dm"
 #include "code\datums\dash_weapon.dm"
 #include "code\datums\datum.dm"
 #include "code\datums\datumvars.dm"
