@@ -133,14 +133,12 @@
 		playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 	deconstruct(disassembled)
 
-/obj/structure/falsewall/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(disassembled)
-			new girder_type(loc)
-		if(mineral_amount)
-			for(var/i in 1 to mineral_amount)
-				new mineral(loc)
-	qdel(src)
+/obj/structure/falsewall/atom_deconstruct(disassembled = TRUE)
+	if(disassembled)
+		new girder_type(loc)
+	if(mineral_amount)
+		for(var/i in 1 to mineral_amount)
+			new mineral(loc)
 
 /obj/structure/falsewall/get_dumping_location()
 	return null
@@ -387,14 +385,12 @@
 	canSmoothWith = SMOOTH_GROUP_MATERIAL_WALLS
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
-/obj/structure/falsewall/material/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(disassembled)
-			new girder_type(loc)
-		for(var/material in custom_materials)
-			var/datum/material/material_datum = material
-			new material_datum.sheet_type(loc, FLOOR(custom_materials[material_datum] / SHEET_MATERIAL_AMOUNT, 1))
-	qdel(src)
+/obj/structure/falsewall/material/atom_deconstruct(disassembled = TRUE)
+	if(disassembled)
+		new girder_type(loc)
+	for(var/material in custom_materials)
+		var/datum/material/material_datum = material
+		new material_datum.sheet_type(loc, FLOOR(custom_materials[material_datum] / SHEET_MATERIAL_AMOUNT, 1))
 
 /obj/structure/falsewall/material/mat_update_desc(mat)
 	desc = "A huge chunk of [mat] used to separate rooms."

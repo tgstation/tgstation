@@ -1,4 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - bugfix: "after 9 years, adds a single dot to the dragnet code, making it deal stamina damage as intended"

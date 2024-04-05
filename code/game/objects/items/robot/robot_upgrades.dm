@@ -633,7 +633,6 @@
 
 /obj/item/inducer/cyborg
 	name = "Internal inducer"
-	powertransfer = 1500
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
 	cell_type = null

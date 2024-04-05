@@ -120,7 +120,7 @@
 		if(isturf(user.loc))
 			user.visible_message(span_hierophant_warning("[user] starts fiddling with [src]'s pommel..."), \
 			span_notice("You start detaching the hierophant beacon..."))
-			if(do_after(user, 50, target = user) && !beacon)
+			if(do_after(user, 5 SECONDS, target = user) && !beacon)
 				var/turf/user_turf = get_turf(user)
 				playsound(user_turf,'sound/magic/blind.ogg', 200, TRUE, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(user_turf, user)
@@ -149,7 +149,7 @@
 	beacon.icon_state = "hierophant_tele_on"
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/user_telegraph = new /obj/effect/temp_visual/hierophant/telegraph/edge(user.loc)
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/beacon_telegraph = new /obj/effect/temp_visual/hierophant/telegraph/edge(beacon.loc)
-	if(do_after(user, 40, target = user) && user && beacon)
+	if(do_after(user, 4 SECONDS, target = user) && user && beacon)
 		var/turf/destination = get_turf(beacon)
 		var/turf/source = get_turf(user)
 		if(destination.is_blocked_turf(TRUE))
@@ -162,7 +162,7 @@
 		new /obj/effect/temp_visual/hierophant/telegraph(source, user)
 		playsound(destination,'sound/magic/wand_teleport.ogg', 200, TRUE)
 		playsound(source,'sound/machines/airlockopen.ogg', 200, TRUE)
-		if(!do_after(user, 3, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
+		if(!do_after(user, 0.3 SECONDS, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
 			if(user)
 				user.update_mob_action_buttons()
