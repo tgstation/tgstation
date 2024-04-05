@@ -104,4 +104,4 @@
 
 /datum/mood_event/royale_survivor
 	description = "I made it out of Rumble Royale with my life."
-	mood_change = 1
+	mood_change = 4
