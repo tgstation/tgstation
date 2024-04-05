@@ -382,6 +382,14 @@
 	incompatible_modules = list(/obj/item/mod/module/surgical_processor)
 	cooldown_time = 0.5 SECONDS
 
+/obj/item/mod/module/surgical_processor/on_activation()
+	. = ..()
+	ADD_TRAIT(mod.wearer, TRAIT_SURGICAL_TRAINING_SILICON, MOD_TRAIT)
+
+/obj/item/mod/module/surgical_processor/on_deactivation()
+	. = ..()
+	REMOVE_TRAIT(mod.wearer, TRAIT_SURGICAL_TRAINING_SILICON, MOD_TRAIT)
+
 /obj/item/surgical_processor/mod
 	name = "MOD surgical processor"
 
