@@ -11,6 +11,7 @@
 	attack_verb_continuous = "pecks"
 	attack_verb_simple = "chomps"
 	attack_sound = 'sound/weapons/punch1.ogg'
+	move_resist = MOVE_FORCE_VERY_STRONG
 	speak_emote = list("screeches")
 	ai_controller = /datum/ai_controller/basic_controller/sheep
 	///can this mob breed
@@ -36,6 +37,8 @@
 	. = ..()
 	inherited_stats = new
 	AddComponent(/datum/component/happiness)
+	if(can_ride)
+		AddElement(/datum/element/ridable, /datum/component/riding/creature/raptor)
 	if(can_breed)
 		AddComponent(\
 			/datum/component/breed,\
@@ -85,6 +88,14 @@
 	icon_dead = "raptor_purple_dead"
 	raptor_color = RAPTOR_PURPLE
 	dex_description = "A dependable mount, bred for the purpose of long distance pilgrimages. This breed is also able to store its rider's possessions."
+
+/mob/living/basic/mining/raptor/purple/Initialize(mapload)
+	. = ..()
+	create_storage(
+		max_specific_storage = WEIGHT_CLASS_NORMAL,
+		max_total_storage = 10,
+        storage_type = /datum/storage/raptor_storage,
+	)
 
 /mob/living/basic/mining/raptor/green
 	name = "green raptor"
@@ -231,4 +242,8 @@
 	new_clone.inherit_traits += inherit_traits
 	return new_clone
 
+/datum/storage/raptor_storage
+    animated = FALSE
+    insert_on_attack = FALSE
+	
 #undef RANDOM_INHERIT_AMOUNT

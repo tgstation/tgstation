@@ -521,3 +521,124 @@
 /datum/component/riding/leaper/handle_unbuckle(mob/living/rider)
 	. = ..()
 	UnregisterSignal(rider,  COMSIG_MOB_POINTED)
+
+/datum/component/riding/creature/raptor
+
+/datum/component/riding/creature/raptor/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(11, 3), TEXT_SOUTH = list(11, 3), TEXT_EAST = list(9, 3), TEXT_WEST = list(14, 3)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/creature/raptor/vehicle_mob_buckle(mob/living/ridden, mob/living/rider, force = FALSE)
+	. = ..()
+	if(ridden.faction.Find(rider))
+		return
+	ridden.Shake(duration = 2 SECONDS)
+	ridden.balloon_alert(rider, "tries to shake you off.")
+	var/datum/riding_minigame/game = new
+	INVOKE_ASYNC(game, TYPE_PROC_REF(/datum/riding_minigame, commence_minigame), ridden, rider)
+
+
+/datum/riding_minigame
+	///our host mob
+	var/datum/weakref/host
+	///our current rider
+	var/datum/weakref/mounter
+	///the total amount of tries the rider gets
+	var/maximum_attempts = 10
+	///the current attempt we are on
+	var/current_attempts = 0
+	///maximum number of failures before we fail
+	var/maximum_failures = 3
+	///our total number of failures
+	var/current_failures = 0
+	///have we already attempted our current attempt?
+	var/already_attempted = FALSE
+	///cached icons
+	var/list/cached_icons = list()
+	///correct answer
+	var/correct_answer
+	///have we already picked an answer?
+	var/picked_answer
+
+/datum/riding_minigame/proc/commence_minigame(mob/living/ridden, mob/living/rider)
+	RegisterSignals(rider, list(COMSIG_MOB_UNBUCKLED, COMSIG_MOVABLE_MOVED), PROC_REF(end_game))
+	host = WEAKREF(ridden)
+	mounter = WEAKREF(rider)
+	for(var/direction in GLOB.cardinals)
+		var/icon/directional_icon = getFlatIcon(image(icon = initial(ridden.icon), icon_state = initial(ridden.icon_state), dir = direction))
+		var/string_icon = icon2base64(directional_icon)
+		var/opposite_direction = dir2text(REVERSE_DIR(direction))
+		cached_icons[opposite_direction] = string_icon
+	generate_cycle()
+	ui_interact(rider)
+
+
+/datum/riding_minigame/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "RideMinigame")
+		ui.open()
+
+/datum/riding_minigame/proc/generate_cycle()
+	if(QDELETED(src))
+		return
+	if(picked_answer != correct_answer)
+		current_failures++
+	if(current_failures >= maximum_failures)
+		end_game(victory = FALSE)
+		return
+	current_attempts++
+	if(current_attempts >= maximum_attempts)
+		end_game(victory = TRUE)
+		return
+	picked_answer = null
+	var/list/answer_pool = cached_icons.Copy() - correct_answer
+	correct_answer = pick(answer_pool)
+	addtimer(CALLBACK(src, PROC_REF(generate_cycle)), 2 SECONDS)
+
+/datum/riding_minigame/ui_data(mob/user)
+	var/list/data = list()
+	. = data
+	var/mob/living/living_host = host?.resolve()
+	if(isnull(living_host))
+		return
+	data["already_chosen"] = !!picked_answer 
+	data["current_attempts"] = current_attempts
+	data["current_failures"] = current_failures
+	data["chosen_icon"] =  cached_icons[correct_answer]
+	return data
+
+/datum/riding_minigame/ui_static_data(mob/user)
+	var/list/data = list()
+	data["maximum_attempts"] = maximum_attempts
+	data["maximum_failures"] = maximum_failures
+	return data
+
+/datum/riding_minigame/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/riding_minigame/ui_act(action, params, datum/tgui/ui)
+	. = ..()
+	switch(action)
+
+		if("submit_answer")
+			if(picked_answer)
+				return TRUE
+			picked_answer = params["picked_answer"]
+			var/sound_to_play = picked_answer == correct_answer ?
+	
+/datum/riding_minigame/proc/end_game(victory)
+	var/mob/living/living_host = host?.resolve()
+	var/mob/living/living_rider = mounter?.resolve()
+	if(isnull(living_host) || isnull(living_rider))
+		qdel(src)
+		return
+	if(victory)
+		living_host.befriend(living_rider)
+	else if(LAZYFIND(living_host.buckled_mobs, living_rider))
+		living_host.spin(spintime = 2 SECONDS, speed = 1)
+	qdel(src)
