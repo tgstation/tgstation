@@ -386,7 +386,7 @@
 	. = ..()
 	ADD_TRAIT(mod.wearer, TRAIT_SURGICAL_TRAINING_SILICON, MOD_TRAIT)
 
-/obj/item/mod/module/surgical_processor/on_deactivation()
+/obj/item/mod/module/surgical_processor/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	REMOVE_TRAIT(mod.wearer, TRAIT_SURGICAL_TRAINING_SILICON, MOD_TRAIT)
 
