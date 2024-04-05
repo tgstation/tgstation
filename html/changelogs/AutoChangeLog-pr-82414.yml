@@ -1,4 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - bugfix: "Root beer no longer causes laser carbines and disabler smgs to fire infinitely fast."
