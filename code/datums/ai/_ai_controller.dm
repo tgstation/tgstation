@@ -151,10 +151,19 @@ multiple modular subtrees with behaviors
 			return AI_STATUS_ON
 		return AI_STATUS_OFF
 	
-	var/turf/pawn_turf = get_turf(pawn)
+	var/turf/pawn_turf = get_turf(mob_pawn)
+#ifdef TESTING
+	if(!pawn_turf)
+		CRASH("AI controller [src] controlling pawn ([pawn]) is not on a turf.")
+#endif
 	if(!length(SSmobs.clients_by_zlevel[pawn_turf.z]))
 		return AI_STATUS_OFF
 	return AI_STATUS_ON
+
+/datum/ai_controller/proc/get_current_turf()
+	var/mob/living/mob_pawn = pawn
+	var/turf/pawn_turf = get_turf(mob_pawn)
+	to_chat(world, "[pawn_turf]")
 
 ///Called when the AI controller pawn changes z levels, we check if there's any clients on the new one and wake up the AI if there is.
 /datum/ai_controller/proc/on_changed_z_level(atom/source, turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -162,13 +171,15 @@ multiple modular subtrees with behaviors
 	var/mob/mob_pawn = pawn
 	if((mob_pawn?.client && !continue_processing_when_client))
 		return
-	SSai_controllers.ai_controllers_by_zlevel[old_turf.z] -= src
-	SSai_controllers.ai_controllers_by_zlevel[new_turf.z] += src
-	var/new_level_clients = SSmobs.clients_by_zlevel[new_turf.z].len
-	if(new_level_clients)
-		set_ai_status(AI_STATUS_ON)
-	else
-		set_ai_status(AI_STATUS_OFF)
+	if(old_turf)
+		SSai_controllers.ai_controllers_by_zlevel[old_turf.z] -= src
+	if(new_turf)
+		SSai_controllers.ai_controllers_by_zlevel[new_turf.z] += src
+		var/new_level_clients = SSmobs.clients_by_zlevel[new_turf.z].len
+		if(new_level_clients)
+			set_ai_status(AI_STATUS_ON)
+		else
+			set_ai_status(AI_STATUS_OFF)
 
 ///Abstract proc for initializing the pawn to the new controller
 /datum/ai_controller/proc/TryPossessPawn(atom/new_pawn)
