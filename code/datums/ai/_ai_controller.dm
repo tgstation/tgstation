@@ -117,7 +117,8 @@ multiple modular subtrees with behaviors
 	pawn.ai_controller = src
 
 	var/turf/pawn_turf = get_turf(pawn)
-	SSai_controllers.ai_controllers_by_zlevel[pawn_turf.z] += src
+	if(pawn_turf)
+		SSai_controllers.ai_controllers_by_zlevel[pawn_turf.z] += src
 
 	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_POSSESSED_PAWN)
 
