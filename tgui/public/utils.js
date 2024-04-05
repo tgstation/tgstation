@@ -1,17 +1,7 @@
 (function () {
   // Utility functions
   let hasOwn = Object.prototype.hasOwnProperty;
-  let assign = function (target) {
-    for (let i = 1; i < arguments.length; i++) {
-      let source = arguments[i];
-      for (let key in source) {
-        if (hasOwn.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-    return target;
-  };
+  let assign = Object.assign;
   let parseMetaTag = function (name) {
     let content = document.getElementById(name).getAttribute('content');
     if (content === '[' + name + ']') {
