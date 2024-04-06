@@ -452,10 +452,10 @@ const SnowflakeSleeper = (props) => {
       <LabeledList.Item label={'Respiratory Damage'}>
         {patient.oxygen_loss}
       </LabeledList.Item>
-      {has_brain_damage && (
+      {!!has_brain_damage && (
         <LabeledList.Item label={'Detected'}>Brain Damage</LabeledList.Item>
       )}
-      {has_traumas && (
+      {!!has_traumas && (
         <LabeledList.Item label={'Detected'}>Traumatic Damage</LabeledList.Item>
       )}
       <LabeledList.Item label={'Reagent Details'}>
