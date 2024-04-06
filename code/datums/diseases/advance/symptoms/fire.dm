@@ -33,9 +33,9 @@
 	if(!.)
 		return
 	if(A.totalStageSpeed() >= 4)
-		power = 1.5
+		power = 1.5 + GLOB.symptom_randomness[type]["power"]
 	if(A.totalStageSpeed() >= 8)
-		power = 2
+		power = 2 + GLOB.symptom_randomness[type]["power"]
 	if(A.totalStealth() >= 4)
 		suppress_warning = TRUE
 	if(A.totalTransmittable() >= 8) //burning skin spreads the virus through smoke
@@ -112,7 +112,7 @@ Bonus
 	if(!.)
 		return
 	if(A.totalResistance() >= 9) //intense but sporadic effect
-		power = 2
+		power = 2 + GLOB.symptom_randomness[type]["power"]
 		symptom_delay_min = 50
 		symptom_delay_max = 140
 	if(A.totalStageSpeed() >= 8) //serious boom when wet

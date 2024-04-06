@@ -32,10 +32,10 @@
 	if(!.)
 		return
 	if(A.totalResistance() >= 5) //dangerous fever
-		power = 1.5
+		power = 1.5 + GLOB.symptom_randomness[type]["power"]
 		unsafe = TRUE
 	if(A.totalResistance() >= 10)
-		power = 2.5
+		power = 2.5 + GLOB.symptom_randomness[type]["power"]
 
 /datum/symptom/fever/Activate(datum/disease/advance/A)
 	. = ..()

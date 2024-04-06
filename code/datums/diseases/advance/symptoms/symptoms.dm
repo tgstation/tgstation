@@ -1,4 +1,5 @@
 // Symptoms are the effects that engineered advanced diseases do.
+GLOBAL_LIST_EMPTY(symptom_randomness)
 
 /datum/symptom
 	var/name = "8-bitten bugs"
@@ -41,12 +42,30 @@
 	var/required_organ
 
 /datum/symptom/New()
+	//intialize new random symptom behavior
+	if(isnull(GLOB.symptom_randomness[type]))
+		GLOB.symptom_randomness[type] = list("stealth" = randomize_stats(), "resistance" = randomize_stats(), "stage_speed" = randomize_stats(), "transmittable" = randomize_stats(), "power" = randomize_stats() / 2)
+	//inherit random symptom behavior
+	stealth += GLOB.symptom_randomness[type]["stealth"]
+	resistance += GLOB.symptom_randomness[type]["resistance"]
+	stage_speed += GLOB.symptom_randomness[type]["stage_speed"]
+	transmittable += GLOB.symptom_randomness[type]["transmittable"]
+	power += GLOB.symptom_randomness[type]["power"]
+
 	var/list/S = SSdisease.list_symptoms
 	for(var/i = 1; i <= S.len; i++)
 		if(type == S[i])
 			id = "[i]"
 			return
 	CRASH("We couldn't assign an ID!")
+
+/datum/symptom/proc/randomize_stats()
+	if(prob(50))
+		return 0
+	if(prob(50))
+		return prob(15) + 1
+	else
+		return -prob(15) - 1
 
 ///Called when processing of the advance disease that holds this symptom infects a host and upon each Refresh() of that advance disease.
 /datum/symptom/proc/Start(datum/disease/advance/A)

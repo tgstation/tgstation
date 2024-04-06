@@ -42,9 +42,9 @@
 	if(active_disease.totalTransmittable() >= 7)
 		spread_range = 2
 	if(active_disease.totalResistance() >= 11) //strong enough to drop items
-		power = 1.5
+		power = 1.5 + GLOB.symptom_randomness[type]["power"]
 	if(active_disease.totalResistance() >= 15) //strong enough to stun (occasionally)
-		power = 2
+		power = 2 + GLOB.symptom_randomness[type]["power"]
 	if(active_disease.totalStageSpeed() >= 6) //cough more often
 		symptom_delay_max = 10
 

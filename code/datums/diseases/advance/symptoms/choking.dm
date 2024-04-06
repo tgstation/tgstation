@@ -112,7 +112,7 @@ Bonus
 	if(A.totalStageSpeed() >= 8)
 		paralysis = TRUE
 	if(A.totalTransmittable() >= 8)
-		power = 2
+		power = 2 + GLOB.symptom_randomness[type]["power"]
 
 /datum/symptom/asphyxiation/Activate(datum/disease/advance/A)
 	. = ..()

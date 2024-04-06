@@ -36,7 +36,7 @@
 	if(advanced_disease.totalResistance() >= 6)
 		brain_damage = TRUE
 	if(advanced_disease.totalTransmittable() >= 6)
-		power = 1.5
+		power = 1.5 + GLOB.symptom_randomness[type]["power"]
 	if(advanced_disease.totalStealth() >= 4)
 		suppress_warning = TRUE
 

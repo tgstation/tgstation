@@ -71,7 +71,7 @@
 	if(A.totalTransmittable() >= 6)
 		nearspace_penalty = 1
 	if(A.totalStageSpeed() >= 6)
-		power = 2
+		power = 2 + GLOB.symptom_randomness[type]["power"]
 
 /datum/symptom/heal/starlight/proc/CanTileHealDirectional(turf/turf_to_check, direction)
 	if(direction == UP)
@@ -200,7 +200,7 @@
 	if(A.totalStageSpeed() >= 6)
 		food_conversion = TRUE
 	if(A.totalResistance() >= 7)
-		power = 2
+		power = 2 + GLOB.symptom_randomness[type]["power"]
 
 /datum/symptom/heal/chem/Heal(mob/living/M, datum/disease/advance/A, actual_power)
 	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
@@ -281,7 +281,7 @@
 	if(!.)
 		return
 	if(A.totalStageSpeed() >= 8)
-		power = 2
+		power = 2 + GLOB.symptom_randomness[type]["power"]
 
 /datum/symptom/heal/darkness/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
@@ -343,7 +343,7 @@
 	if(!.)
 		return
 	if(A.totalStageSpeed() >= 7)
-		power = 1.5
+		power = 1.5 + GLOB.symptom_randomness[type]["power"]
 	if(A.totalResistance() >= 4)
 		stabilize = TRUE
 	if(A.totalStealth() >= 2)
@@ -440,7 +440,7 @@
 	if(!.)
 		return
 	if(A.totalStageSpeed() >= 7)
-		power = 2
+		power = 2 + GLOB.symptom_randomness[type]["power"]
 	if(A.totalResistance() >= 5)
 		absorption_coeff = 0.25
 
@@ -515,7 +515,7 @@
 	if(!.)
 		return
 	if(A.totalStageSpeed() >= 7)
-		power = 2
+		power = 2 + GLOB.symptom_randomness[type]["power"]
 	if(A.totalTransmittable() >= 6)
 		temp_rate = 4
 
@@ -626,7 +626,7 @@
 	if(!.)
 		return
 	if(A.totalResistance() >= 7)
-		power = 2
+		power = 2 + GLOB.symptom_randomness[type]["power"]
 
 /datum/symptom/heal/radiation/CanHeal(datum/disease/advance/A)
 	return HAS_TRAIT(A.affected_mob, TRAIT_IRRADIATED) ? power : 0

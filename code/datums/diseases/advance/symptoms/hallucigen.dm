@@ -34,7 +34,7 @@
 		fake_healthy = TRUE
 		base_message_chance = 50
 	if(A.totalStageSpeed() >= 7) //stronger hallucinations
-		power = 2
+		power = 2 + GLOB.symptom_randomness[type]["power"]
 
 /datum/symptom/hallucigen/Activate(datum/disease/advance/A)
 	. = ..()

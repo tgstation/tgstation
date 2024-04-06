@@ -31,7 +31,7 @@
 	if(A.totalStealth() >= 4)
 		suppress_warning = TRUE
 	if(A.totalTransmittable() >= 6) //druggy
-		power = 2
+		power = 2 + GLOB.symptom_randomness[type]["power"]
 
 /datum/symptom/dizzy/Activate(datum/disease/advance/A)
 	. = ..()

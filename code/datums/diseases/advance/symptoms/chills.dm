@@ -31,10 +31,10 @@
 	if(!.)
 		return
 	if(A.totalStageSpeed() >= 5) //dangerous cold
-		power = 1.5
+		power = 1.5 + GLOB.symptom_randomness[type]["power"]
 		unsafe = TRUE
 	if(A.totalStageSpeed() >= 10)
-		power = 2.5
+		power = 2.5 + GLOB.symptom_randomness[type]["power"]
 
 /datum/symptom/chills/Activate(datum/disease/advance/A)
 	. = ..()

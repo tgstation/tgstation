@@ -32,11 +32,11 @@
 	if(A.totalStealth() >= 4)
 		base_message_chance = 50
 	if(A.totalStageSpeed() >= 6) //severe pain
-		power = 2
+		power = 2 + GLOB.symptom_randomness[type]["power"]
 	if(A.totalStageSpeed() >= 9) //cluster headaches
 		symptom_delay_min = 30
 		symptom_delay_max = 60
-		power = 3
+		power = 3 + GLOB.symptom_randomness[type]["power"]
 
 /datum/symptom/headache/Activate(datum/disease/advance/A)
 	. = ..()
