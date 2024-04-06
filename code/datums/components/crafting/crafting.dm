@@ -490,7 +490,7 @@
 				while(make_action(crafting_recipe, user))
 					crafted_items++
 				if(crafted_items)
-					to_chat(user, span_notice("You maked [crafted_items] item[crafted_items-1 > 1 ? "s" : ""]"))
+					to_chat(user, span_notice("You made [crafted_items] item[crafted_items-1 > 1 ? "s" : ""]"))
 			else
 				make_action(crafting_recipe, user)
 			busy = FALSE
