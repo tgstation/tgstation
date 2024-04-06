@@ -291,3 +291,5 @@
 #define BB_RAPTOR_BABY "raptor_baby"
 ///the raptor we will heal up
 #define BB_INJURED_RAPTOR "injured_raptor"
+///the raptor we will bully
+#define BB_RAPTOR_VICTIM "raptor_victim"

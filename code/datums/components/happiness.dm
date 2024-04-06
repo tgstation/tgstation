@@ -47,7 +47,8 @@
 /datum/component/happiness/RegisterWithParent()
 
 	if(on_petted_change)
-		RegisterSignals(parent, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW), PROC_REF(on_petted))
+		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_petted))
+		RegisterSignal(parent, COMSIG_ATOM_ATTACK_BASIC_MOB, PROC_REF(on_animal_petted))
 	if(on_groom_change)
 		RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
 	if(on_eat_change)
@@ -74,12 +75,24 @@
 
 /datum/component/happiness/proc/on_petted(datum/source, mob/living/petter, list/modifiers)
 	SIGNAL_HANDLER
-	if(!COOLDOWN_FINISHED(src, pet_cooldown))
-		return
 	if(!LAZYACCESS(modifiers, LEFT_CLICK) || petter.combat_mode)
 		return
-	COOLDOWN_START(src, pet_cooldown, PET_COOLDOWN)
+	pet_animal()
+
+/datum/component/happiness/proc/on_animal_petted(datum/source, mob/living/petter)
+	SIGNAL_HANDLER
+
+	if(petter.combat_mode)
+		return
+	pet_animal()
+	return COMSIG_BASIC_ATTACK_CANCEL_CHAIN
+
+/datum/component/happiness/proc/pet_animal()
+	if(!COOLDOWN_FINISHED(src, pet_cooldown))
+		return
 	increase_happiness_level(on_petted_change)
+	COOLDOWN_START(src, pet_cooldown, PET_COOLDOWN)
+
 
 /datum/component/happiness/proc/increase_happiness_level(amount)
 	happiness_level = min(happiness_level + amount, maximum_happiness)

@@ -12,6 +12,7 @@
 	attack_verb_simple = "chomps"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	move_resist = MOVE_FORCE_VERY_STRONG
+	faction = list(FACTION_RAPTOR)
 	speak_emote = list("screeches")
 	ai_controller = /datum/ai_controller/basic_controller/raptor
 	///can this mob breed
@@ -36,6 +37,7 @@
 /mob/living/basic/mining/raptor/Initialize(mapload)
 	. = ..()
 	inherited_stats = new
+	inherit_properties()
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured, stop_fleeing_at = 0.5, start_fleeing_below = 0.2)
 	AddComponent(/datum/component/happiness)
@@ -61,7 +63,7 @@
 	if(isnull(inherited_stats))
 		return
 	for(var/trait in GLOB.raptor_inherit_traits) // done this way to allow overriding of traits when assigned new inherit datum
-		var/should_inherit = (GLOB.raptor_inherit_traits in inherited_stats.inherit_traits)
+		var/should_inherit = (trait in inherited_stats.inherit_traits)
 		ai_controller?.set_blackboard_key(trait, should_inherit)
 	melee_damage_lower += inherited_stats.attack_modifier
 	melee_damage_upper += melee_damage_lower + 5

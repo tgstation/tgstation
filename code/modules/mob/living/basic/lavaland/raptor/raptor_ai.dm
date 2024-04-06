@@ -15,17 +15,18 @@
         /datum/ai_planning_subtree/find_and_hunt_target/heal_raptors,
         /datum/ai_planning_subtree/pet_planning,
         /datum/ai_planning_subtree/target_retaliate,
+        /datum/ai_planning_subtree/simple_find_target,
         /datum/ai_planning_subtree/basic_melee_attack_subtree,
         /datum/ai_planning_subtree/find_and_hunt_target/care_for_young,
         /datum/ai_planning_subtree/make_babies,
-        /datum/ai_planning_subtree/raptor_start_trouble,
+        /datum/ai_planning_subtree/find_and_hunt_target/raptor_start_trouble,
 	)
 
 /datum/targeting_strategy/basic/raptor
 
 //dont attack anyone with the neutral faction. 
 /datum/targeting_strategy/basic/raptor/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
-	return the_target.faction.Find(FACTION_NEUTRAL)
+    return (the_target.faction.Find(FACTION_NEUTRAL) || the_target.faction.Find(FACTION_RAPTOR))
 
 /datum/ai_planning_subtree/find_and_hunt_target/heal_raptors
 	target_key = BB_INJURED_RAPTOR
@@ -55,30 +56,34 @@
         return
     return ..()
 
-/datum/ai_planning_subtree/raptor_start_trouble
+/datum/ai_planning_subtree/find_and_hunt_target/raptor_start_trouble
+	target_key = BB_RAPTOR_VICTIM
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/bully_raptors
+	finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_victim
+	hunt_targets = list(/mob/living/basic/mining/raptor)
+	hunt_chance = 30
+	hunt_range = 9
 
-/datum/ai_planning_subtree/raptor_start_trouble/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-    if(!controller.blackboard[BB_RAPTOR_TROUBLE_MAKER] || !SPT_PROB(0.5, seconds_per_tick))
+/datum/ai_behavior/find_hunt_target/raptor_victim
+
+/datum/ai_behavior/find_hunt_target/raptor_victim/valid_dinner(mob/living/source, mob/living/target, radius)
+    if(target.ai_controller?.blackboard[BB_RAPTOR_TROUBLE_MAKER])
+        return FALSE
+    return can_see(source, target, radius) && target.stat != DEAD
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/bully_raptors
+    always_reset_target = TRUE
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/bully_raptors/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
+    if(succeeded)
+        controller.blackboard[BB_RAPTOR_TROUBLE_COOLDOWN] = world.time + 30 SECONDS
+    return ..()
+
+/datum/ai_planning_subtree/find_and_hunt_target/raptor_start_trouble/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+    if(controller.blackboard[BB_BASIC_MOB_HEALER] || !controller.blackboard[BB_RAPTOR_TROUBLE_MAKER])
         return
     if(world.time > controller.blackboard[BB_RAPTOR_TROUBLE_COOLDOWN])
         return
-    controller.queue_behavior(/datum/ai_behavior/find_and_set/raptor_victim, BB_BASIC_MOB_CURRENT_TARGET, /mob/living/basic/mining/raptor)
-
-/datum/ai_behavior/find_and_set/raptor_victim
-
-/datum/ai_behavior/find_and_set/raptor_victim/search_tactic(datum/ai_controller/controller, locate_path, search_range)
-    for(var/mob/living/basic/mining/raptor/target in oview(search_range, controller.pawn))
-        if(target.stat == DEAD)
-            continue
-        if(target.ai_controller?.blackboard[BB_RAPTOR_TROUBLE_MAKER])
-            continue
-        return target
-	
-    return null
-
-/datum/ai_behavior/find_and_set/raptor_victim/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
-    if(succeeded)
-        controller.blackboard[BB_RAPTOR_TROUBLE_COOLDOWN] = world.time + 5 MINUTES
     return ..()
 
 /datum/ai_planning_subtree/find_and_hunt_target/care_for_young
@@ -86,7 +91,7 @@
 	hunting_behavior = /datum/ai_behavior/hunt_target/care_for_young
 	finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_baby
 	hunt_targets = list(/mob/living/basic/mining/raptor/baby_raptor)
-	hunt_chance = 30
+	hunt_chance = 75
 	hunt_range = 9
 
 /datum/ai_planning_subtree/find_and_hunt_target/care_for_young/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)

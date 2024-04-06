@@ -24,12 +24,16 @@
 		/datum/component/growth_and_differentiation,\
 		growth_time = null,\
 		growth_path = growth_path,\
-		growth_probability = 100,\
+		growth_probability = 20,\
 		lower_growth_value = 0.5,\
-		upper_growth_value = 20,\
+		upper_growth_value = 0.8,\
 		signals_to_kill_on = list(COMSIG_MOB_CLIENT_LOGIN),\
-		optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
+		optional_checks = CALLBACK(src, PROC_REF(check_grow)),\
+		optional_grow_behavior = CALLBACK(src, PROC_REF(ready_to_grow)),\
 	)
+
+/mob/living/basic/mining/raptor/baby_raptor/proc/check_grow()
+	return (stat != DEAD)
 
 /mob/living/basic/mining/raptor/baby_raptor/proc/ready_to_grow()
 	var/mob/living/basic/mining/raptor/grown_mob = new growth_path(get_turf(src))
