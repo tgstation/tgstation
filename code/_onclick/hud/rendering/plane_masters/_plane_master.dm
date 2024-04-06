@@ -275,12 +275,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		return
 	// If we're being hid by something else, we're gonna have another go at setting it up
 	var/multiz_boundary = enfold?.client?.prefs?.read_preference(/datum/preference/numeric/multiz_performance)
-	var/list/offset_info = home.get_offsets()
-	var/lowest_possible_offset = offset_info[1]
-	var/highest_possible_offset = offset_info[2]
+	var/list/renderable_offsets = home.get_renderable_offsets()
 	// gotta reset hidden_by_distance so the proc can reapply it
 	hidden_by_distance = NOT_HIDDEN
-	set_distance_from_owner(enfold, distance_from_owner, multiz_boundary, lowest_possible_offset, highest_possible_offset)
+	set_distance_from_owner(enfold, distance_from_owner, multiz_boundary, renderable_offsets)
 
 /// Mirrors our force hidden state to the hidden state of the plane that came before, assuming it's valid
 /// This allows us to mirror any hidden sets from before we were created, no matter how low that chance is
@@ -303,39 +301,20 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /// Sets and reacts to the distance we are from our owner's z layer
 /// This is what handles culling plane masters that are out of the sight of our mob
-/// Takse the mob to apply changes to, the new working distance,
-// the multiz_boundary of the mob and the lowest possible offset for anything the mob will see  (expensive lookup, faster this way)
+/// Takes the mob to apply changes to the new working distance, our multiz render preferences, 
+/// and a list in the form offset + 1 -> if we should render. 
 /// Returns TRUE if the plane master is still visible, FALSE if it's hidden
-/atom/movable/screen/plane_master/proc/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset, highest_possible_offset)
+/atom/movable/screen/plane_master/proc/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, list/blocks)
 	SHOULD_CALL_PARENT(TRUE)
 	distance_from_owner = new_distance
-	// If we are above our owner's z layer nuke er
-	if(offset < highest_possible_offset)
-		if(hidden_by_distance == HIDDEN_ABOVE)
-			return critical & PLANE_CRITICAL_SOURCE
+	// The idea is we render everything a set of brackets, and we don't render anythinng outside them
+	// This really only exists because of multiz space transitions. Life is pain
+	var/in_bounds = blocks[offset + 1]
+	var/home_offset = home.active_offset
 
-		// Need to maintain consistency
-		if(hidden_by_distance != NOT_HIDDEN)
-			show_to(relevant)
-
-		hidden_by_distance = HIDDEN_ABOVE
-		// If critical, hold on
-		if(critical & PLANE_CRITICAL_SOURCE)
-			retain_hidden_plane(relevant)
-			return TRUE
-		// otherwise, hide that shit
-		hide_from(relevant)
-		return FALSE
-	// If we're just not visible at all
-	else if(distance_from_owner < 0 && offset > lowest_possible_offset)
-		if(hidden_by_distance == HIDDEN_BELOW_THE_BOTTOM)
-			return FALSE
-		hidden_by_distance = HIDDEN_BELOW_THE_BOTTOM
-		hide_from(relevant)
-		return FALSE
-	// If we are below the acceptable z level offset (set by pref)
-	else if(distance_from_owner < 0 && (multiz_boundary != MULTIZ_PERFORMANCE_DISABLE && abs(distance_from_owner) > multiz_boundary))
-		if(hidden_by_distance)
+	// If we're in bounds but hidden by multiz prefs
+	if(in_bounds && new_distance < 0 && multiz_boundary != MULTIZ_PERFORMANCE_DISABLE && -new_distance > multiz_boundary)
+		if(hidden_by_distance == HIDDEN_BELOW)
 			return critical & PLANE_CRITICAL_DISPLAY // yeah this is dumb I'm sorry
 
 		// Need to maintain consistency
@@ -351,15 +330,41 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		// Otherwise, yayeeet
 		hide_from(relevant)
 		return FALSE
-	else if(hidden_by_distance != NOT_HIDDEN)
-		var/old_hidden = hidden_by_distance
-		hidden_by_distance = NOT_HIDDEN
-		if(old_hidden == HIDDEN_ABOVE && (critical & PLANE_CRITICAL_SOURCE) || \
-			old_hidden == HIDDEN_BELOW && (critical & PLANE_CRITICAL_DISPLAY))
-			restore_hidden_plane(relevant)
+	// If we're just in bounds normally
+	else if(in_bounds)
+		if(hidden_by_distance != NOT_HIDDEN)
+			var/old_hidden = hidden_by_distance
+			hidden_by_distance = NOT_HIDDEN
+			if(old_hidden == HIDDEN_ABOVE && (critical & PLANE_CRITICAL_SOURCE) || \
+				old_hidden == HIDDEN_BELOW && (critical & PLANE_CRITICAL_DISPLAY))
+				restore_hidden_plane(relevant)
+				return TRUE
+			show_to(relevant)
+		return TRUE
+	// If we are not in bounds we display differently based off our position relative to the source offset
+	else if(offset < home_offset) // we're above
+		if(hidden_by_distance == HIDDEN_ABOVE)
+			return critical & PLANE_CRITICAL_SOURCE
+
+		// Need to maintain consistency
+		if(hidden_by_distance != NOT_HIDDEN)
+			show_to(relevant)
+
+		hidden_by_distance = HIDDEN_ABOVE
+		// If critical, hold on
+		if(critical & PLANE_CRITICAL_SOURCE)
+			retain_hidden_plane(relevant)
 			return TRUE
-		show_to(relevant)
-	return TRUE
+		// otherwise, hide that shit
+		hide_from(relevant)
+		return FALSE
+	// If we're below the home offset just don't render at all
+	else if(offset > home_offset)
+		if(hidden_by_distance == HIDDEN_BELOW_THE_BOTTOM)
+			return FALSE
+		hidden_by_distance = HIDDEN_BELOW_THE_BOTTOM
+		hide_from(relevant)
+		return FALSE
 
 // idea is if no relays exist we'll want to render "in place" based off our plane var
 // if we do have relays, we should send to them instead

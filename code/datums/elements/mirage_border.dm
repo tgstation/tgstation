@@ -26,8 +26,11 @@
 	// If our spans are different mark er down
 	var/list/depths = list()
 	if(our_offset != their_offset || our_lowest != their_lowest)
-		for(var/depth in their_offset to their_lowest)
+		for(var/depth in our_offset to our_lowest)
 			depths += depth + 1
+	
+	var/list/z_levels = list()
+	z_levels += owning_turf.z
 
 	var/x = target_turf.x
 	var/y = target_turf.y
@@ -37,6 +40,7 @@
 	for(var/turf/in_block as anything in block(southwest, northeast))
 		// We'll never remove these because mirage holders are not reliable. Sorry
 		in_block.add_plane_visibilities(depths)
+		in_block.add_z_visibilities(z_levels)
 		holder.vis_contents += in_block 
 	if(direction & SOUTH)
 		holder.pixel_y -= world.icon_size * range

@@ -25,7 +25,7 @@
 	plane = RENDER_PLANE_MASTER
 	render_relay_planes = list()
 
-/atom/movable/screen/plane_master/rendering_plate/master/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset, highest_possible_offset)
+/atom/movable/screen/plane_master/rendering_plate/master/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, list/blocks)
 	. = ..()
 	if(!.)
 		return
@@ -215,7 +215,7 @@
 	if(!mymob?.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		hide_plane(mymob)
 
-/atom/movable/screen/plane_master/rendering_plate/game_world_ao/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset, highest_possible_offset)
+/atom/movable/screen/plane_master/rendering_plate/game_world_ao/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, list/blocks)
 	. = ..()
 	if(!.)
 		return
@@ -339,19 +339,14 @@
 	blend_mode = BLEND_MULTIPLY
 	render_relay_planes = list()
 
-/atom/movable/screen/plane_master/rendering_plate/light_mask/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset, highest_possible_offset)
-	var/old_hidden_by_distance = hidden_by_distance
+/atom/movable/screen/plane_master/rendering_plate/light_mask/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, list/blocks)
 	. = ..()
 	if(!.)
 		return
-	#warn need to disable planes that are in between "chunks" of view
-	/// OOOOK if we are not like "in" the view of our parent don't draw us, yeah?
-	/// This is to prevent situations where we're drawing "between" like a low z layer and a high one
-	/// Ideally we would cull out the unused layers in between but that's a lot of work and this is a super rare case sooo
-	if(!home.depths_in_view[offset + 1])
-		hide_from(relevant)
-	else if(old_hidden_by_distance != NOT_HIDDEN)
-		show_to(relevant)		
+	if(get_turf(home.source))
+		unhide_plane(relevant)		
+	else
+		hide_plane(relevant)
 
 /atom/movable/screen/plane_master/rendering_plate/light_mask/show_to(mob/mymob)
 	. = ..()
@@ -424,7 +419,7 @@
 	if(!mymob?.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		hide_plane(mymob)
 
-/atom/movable/screen/plane_master/rendering_plate/runechat_ao/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, lowest_possible_offset, highest_possible_offset)
+/atom/movable/screen/plane_master/rendering_plate/runechat_ao/set_distance_from_owner(mob/relevant, new_distance, multiz_boundary, list/blocks)
 	. = ..()
 	if(!.)
 		return

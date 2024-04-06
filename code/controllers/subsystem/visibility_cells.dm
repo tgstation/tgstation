@@ -123,6 +123,8 @@ SUBSYSTEM_DEF(vis_cells)
 			color_turf.overlays += displays[impactful_depth]
 
 /datum/controller/subsystem/vis_cells/proc/disable_effects_display()
+	if(displayed_z == -1)
+		return
 	var/list/all_overlays = list()
 	for(var/source_offset in 1 to SSmapping.max_plane_offset + 1)
 		for(var/display_offset in 1 to SSmapping.max_plane_offset + 1)
@@ -142,7 +144,9 @@ SUBSYSTEM_DEF(vis_cells)
 	var/z
 	/// A list in the form depth +1 -> how many sources we have for each depth
 	/// We are betting that this will not get desynced
-	var/list/counts = list()
+	var/list/counts 
+	/// A list in the form z level -> how many mirages we have displaying it
+	var/list/mirages
 	/// Are we been queued for a checkover?
 	var/queued_for_inspection = FALSE
 	/// The MA we are currently displaying
@@ -205,31 +209,27 @@ SUBSYSTEM_DEF(vis_cells)
 	SSvis_cells.cell_count -= 1
 	return ..()
 
-/turf  
-	/// Lazylist that stores depths this turf adds
-	var/list/plane_visibility
+/// Pulls a vis cell at the world coords if one exists, otherwise returns null
+/datum/controller/subsystem/vis_cells/proc/pull_vis_cell(x, y, z)
+	var/x_cell = CELL_TRANSFORM(x)
+	var/y_cell = CELL_TRANSFORM(y)
+	var/list/cells_by_z = visibility_cells_by_z
 	
-/turf/proc/add_plane_visibilities(list/depths)
-	LAZYINITLIST(plane_visibility)
-	plane_visibility += depths
-	SSvis_cells.insert_visibility_info(x, y, z, depths)
+	if(length(cells_by_z) < z)
+		return null
+	var/list/our_z = cells_by_z[z]
+	if(!our_z || length(our_z) < x_cell)
+		return null
 
-	var/turf/above = GET_TURF_ABOVE(src)
-	if(above && HAS_TRAIT(above, TURF_Z_TRANSPARENT_TRAIT))
-		above.add_plane_visibilities(depths)
+	var/list/our_x = our_z[x_cell]
+	if(!our_x || length(our_x) < y_cell)
+		return null
 
-/turf/proc/remove_plane_visibilities(list/depths)
-	plane_visibility -= depths
-	SSvis_cells.remove_visibility_info(x, y, z, depths)
+	var/datum/visibility_cell/cell_info = our_x[y_cell]
+	return cell_info	
 
-	var/turf/above = GET_TURF_ABOVE(src)
-	if(above && HAS_TRAIT(above, TURF_Z_TRANSPARENT_TRAIT))
-		above.remove_plane_visibilities(depths)
-	UNSETEMPTY(plane_visibility)
-
-/// Increments visibilty info at a particular coord
-/datum/controller/subsystem/vis_cells/proc/insert_visibility_info(x, y, z, list/depths)
-	var/greatest_depth = max(depths)
+/// Gets a vis cell for the passed in world coords. If none exists we create one
+/datum/controller/subsystem/vis_cells/proc/get_vis_cell(x, y, z)
 	var/x_cell = CELL_TRANSFORM(x)
 	var/y_cell = CELL_TRANSFORM(y)
 	var/list/cells_by_z = visibility_cells_by_z
@@ -250,9 +250,71 @@ SUBSYSTEM_DEF(vis_cells)
 	if(!cell_info)
 		cell_info = new(x_cell, y_cell, z)
 		our_x[y_cell] = cell_info
+	return cell_info
 
+/turf  
+	/// Lazylist that stores vis_cell info this turf adds
+	var/list/visibility_info
+
+/turf/proc/add_vis_info(list/add, key)
+	if(length(visibility_info) < key)
+		LAZYINITLIST(visibility_info)
+		visibility_info.len = key
+		for(var/i in length(visibility_info) to key)
+			visibility_info[i] += list()
+	visibility_info[key] += add
+
+/turf/proc/remove_vis_info(list/remove, key)
+	if(length(visibility_info) > key)
+		return // guh
+	visibility_info[key] -= remove
+	// If there's more left/we're not the end entry, keep er
+	if(length(visibility_info[key]) != 0 || key != length(visibility_info))
+		return
+	// Otherwise cull what remains
+	var/next_existing = 0
+	for(var/i in length(visibility_info) to 1 step -1)
+		if(length(visibility_info[i]))
+			next_existing = i
+			break
+	if(!next_existing)
+		LAZYNULL(visibility_info)
+		return
+	visibility_info.len = next_existing
+
+/turf/proc/add_plane_visibilities(list/depths)
+	add_vis_info(depths, VIS_CELL_DEPTHS)
+	SSvis_cells.insert_depth_info(x, y, z, depths)
+	var/turf/above = GET_TURF_ABOVE(src)
+	if(above && HAS_TRAIT(above, TURF_Z_TRANSPARENT_TRAIT))
+		above.add_plane_visibilities(depths)
+
+/turf/proc/remove_plane_visibilities(list/depths)
+	remove_vis_info(depths, VIS_CELL_DEPTHS)
+	SSvis_cells.remove_depth_info(x, y, z, depths)
+
+	var/turf/above = GET_TURF_ABOVE(src)
+	if(above && HAS_TRAIT(above, TURF_Z_TRANSPARENT_TRAIT))
+		above.remove_plane_visibilities(depths)
+
+/turf/proc/add_z_visibilities(list/z_levels)
+	add_vis_info(z_levels, VIS_CELL_Z_STACKS)
+	SSvis_cells.insert_z_info(x, y, z, z_levels)
+
+/turf/proc/remove_z_visibilities(list/z_levels)
+	remove_vis_info(z_levels, VIS_CELL_Z_STACKS)
+	SSvis_cells.remove_z_info(x, y, z, z_levels)
+
+/// Increments depth info at a particular coord
+/datum/controller/subsystem/vis_cells/proc/insert_depth_info(x, y, z, list/depths)
+	var/datum/visibility_cell/cell_info = get_vis_cell(x, y, z)
 	var/list/cell_count = cell_info.counts
+
+	var/greatest_depth = max(depths)
 	if(length(cell_count) < greatest_depth)
+		if(!cell_count)
+			cell_count = list()
+			cell_info.counts = cell_count
 		cell_count.len = greatest_depth
 	for(var/depth in depths)
 		cell_count[depth] += 1
@@ -261,32 +323,16 @@ SUBSYSTEM_DEF(vis_cells)
 		cell_info.queued_for_inspection = FALSE
 		inspection_queue -= cell_info
 
-/// Removes the visibility information from a cell at the passed in coords
-/datum/controller/subsystem/vis_cells/proc/remove_visibility_info(x, y, z, list/depths)
-	var/greatest_depth = max(depths)
-	var/x_cell = CELL_TRANSFORM(x)
-	var/y_cell = CELL_TRANSFORM(y)
-	var/list/cells_by_z = visibility_cells_by_z
-	
-	if(length(cells_by_z) < z)
-		CRASH("Tried to remove visibility info from a cell at [x_cell] [y_cell] [z] but no cell existed")
-
-	var/list/our_z = cells_by_z[z]
-	if(!our_z || length(our_z) < x_cell)
-		CRASH("Tried to remove visibility info from a cell at [x_cell] [y_cell] [z] but no cell existed")
-
-	var/list/our_x = our_z[x_cell]
-	if(!our_x || length(our_x) < y_cell)
-		CRASH("Tried to remove visibility info from a cell at [x_cell] [y_cell] [z] but no cell existed")
-
-	var/datum/visibility_cell/cell_info = our_x[y_cell]
-	// What the fuck
+/// Removes depth information from a cell at the passed in coords
+/datum/controller/subsystem/vis_cells/proc/remove_depth_info(x, y, z, list/depths)
+	var/datum/visibility_cell/cell_info = pull_vis_cell(x, y, z)
 	if(!cell_info)
-		CRASH("Tried to remove visibility info from a cell at [x_cell] [y_cell] [z] but no cell existed")
+		CRASH("Tried to remove visibility info from a cell at [CELL_TRANSFORM(x)] [CELL_TRANSFORM(y)] [z] but no cell existed")
 
 	var/list/cell_count = cell_info.counts
+	var/greatest_depth = max(depths)
 	if(length(cell_count) < greatest_depth)
-		stack_trace("Tried to remove visibility info from a cell at [x_cell] [y_cell] [z] but the cell did not have enough depth. (Ours: [greatest_depth], Cells: [length(cell_count)])")
+		stack_trace("Tried to remove visibility info from a cell at [CELL_TRANSFORM(x)] [CELL_TRANSFORM(y)] [z] but the cell did not have enough depth. (Ours: [greatest_depth], Cells: [length(cell_count)])")
 		for(var/depth in depths)
 			if(depth > length(cell_count))
 				depths -= depth
@@ -296,7 +342,7 @@ SUBSYSTEM_DEF(vis_cells)
 	var/removed_all = FALSE
 	for(var/depth in depths)
 		if(cell_count[depth] == 0)
-			stack_trace("Tried to remove visibility info from a cell at [x_cell] [y_cell] [z] but the cell didn't have the sources to give [depth]")
+			stack_trace("Tried to remove visibility info from a cell at [CELL_TRANSFORM(x)] [CELL_TRANSFORM(y)] [z] but the cell didn't have the sources to give [depth]")
 			continue
 		cell_count[depth] -= 1
 		if(cell_count[depth] == 0)
@@ -304,6 +350,56 @@ SUBSYSTEM_DEF(vis_cells)
 
 	// I'm sorry bout this but I do not want to have to register more shit on each cell then is absolutely needed
 	SEND_SIGNAL(cell_info, COMSIG_CELL_DEPTH_CHANGED, depths, TRUE)
+	if(removed_all && !cell_info.queued_for_inspection)
+		cell_info.queued_for_inspection = TRUE
+		inspection_queue += cell_info
+
+/// Inserts viewable z levels into a cell at a given coord
+/datum/controller/subsystem/vis_cells/proc/insert_z_info(x, y, z, list/z_levels)
+	var/datum/visibility_cell/cell_info = get_vis_cell(x, y ,z)
+	var/list/mirages = cell_info.mirages
+	
+	var/greatest_z = max(z_levels)
+	if(length(mirages) < greatest_z)
+		if(!mirages)
+			mirages = list()
+			cell_info.mirages = mirages
+		mirages.len = greatest_z
+
+	for(var/visible in z_levels)
+		mirages[visible] += 1
+	SEND_SIGNAL(cell_info, COMSIG_CELL_Z_CHANGED, mirages, FALSE)
+	if(cell_info.queued_for_inspection)
+		cell_info.queued_for_inspection = FALSE
+		inspection_queue -= cell_info
+
+/// Removes viewable z levels from a cell at the passed in coords
+/datum/controller/subsystem/vis_cells/proc/remove_z_info(x, y, z, list/z_levels)
+	var/datum/visibility_cell/cell_info = pull_vis_cell(x, y, z)
+	if(!cell_info)
+		CRASH("Tried to remove viewable Z levels from a cell at [CELL_TRANSFORM(x)] [CELL_TRANSFORM(y)] [z] but no cell existed")
+
+	var/greatest_z = max(z_levels)
+	var/list/mirages = cell_info.mirages
+	if(length(mirages) < greatest_z)
+		stack_trace("Tried to remove viewable Z levels from a cell at [CELL_TRANSFORM(x)] [CELL_TRANSFORM(y)] [z] but the cell did not have enough Zs. (Ours: [greatest_z], Cells: [length(cell_count)])")
+		for(var/visible in z_levels)
+			if(visible > length(mirages))
+				z_levels -= visible
+		if(!length(z_levels))
+			return
+
+	var/removed_all = FALSE
+	for(var/visible in z_levels)
+		if(mirages[visible] == 0)
+			stack_trace("Tried to remove viewable Z levels from a cell at [CELL_TRANSFORM(x)] [CELL_TRANSFORM(y)] [z] but the cell didn't have the sources to give [visible]")
+			continue
+		mirages[visible] -= 1
+		if(mirages[visible] == 0)
+			removed_all = TRUE
+
+	// I'm sorry bout this but I do not want to have to register more shit on each cell then is absolutely needed
+	SEND_SIGNAL(cell_info, COMSIG_CELL_Z_CHANGED, mirages, TRUE)
 	if(removed_all && !cell_info.queued_for_inspection)
 		cell_info.queued_for_inspection = TRUE
 		inspection_queue += cell_info

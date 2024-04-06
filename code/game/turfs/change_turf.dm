@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	changing_turf = TRUE
 	qdel(src) //Just get the side effects and call Destroy
-	var/list/old_plane_visibility = plane_visibility
+	var/list/old_visibility_info = visibility_info
 	//We do this here so anything that doesn't want to persist can clear itself
 	var/list/old_listen_lookup = _listen_lookup?.Copy()
 	var/list/old_signal_procs = _signal_procs?.Copy()
@@ -121,8 +121,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	else
 		new_turf.baseturfs = baseturfs_string_list(old_baseturfs, new_turf) //Just to be safe
 
-	if(old_plane_visibility)
-		new_turf.plane_visibility += old_plane_visibility
+	if(old_visibility_info)
+		for(var/key in 1 to length(old_visibility_info))
+			if(old_visibility_info[key])
+				new_turf.add_vis_info(old_visibility_info[key], key)
 	if(!(flags & CHANGETURF_DEFER_CHANGE))
 		new_turf.AfterChange(flags, old_type)
 

@@ -27,6 +27,8 @@
 	var/z = 0
 	/// List in the form depth -> amount of view cells that require the depth
 	var/list/depths_in_view
+	/// List in the form z_levels -> amount of view cells that require the z_level
+	var/list/z_levels_in_view
 	/// List of cells in our view
 	var/list/cells_in_view = list()
 	/// List in the form "[plane]" = object, the plane masters we own
@@ -54,6 +56,7 @@
 	src.key = key
 	src.map = map
 	depths_in_view = new /list(SSmapping.max_plane_offset + 1)
+	z_levels_in_view = new /list(world.maxz)
 	build_plane_masters(0, SSmapping.max_plane_offset)
 	RegisterSignal(SSdcs, COMSIG_VIS_CELL_CREATED, PROC_REF(on_cell_create))
 
@@ -184,10 +187,6 @@
 	var/old_offset = active_offset
 	var/new_offset = GET_TURF_PLANE_OFFSET(source)
 	active_offset = new_offset
-	var/list/offset_info = get_offsets()
-	// We clamp here both because it lets us avoid contridicting ourselves and because it ensures these values are never null
-	var/lowest_possible_offset = offset_info[1]
-	var/highest_possible_offset = offset_info[2] 
 
 	// Each time we go "down" a visual z level, we'll reduce the scale by this amount
 	// Chosen because mothblocks liked it, didn't cause motion sickness while also giving a sense of height
@@ -219,6 +218,7 @@
 		multiz_shrink.Scale(scale)
 		offsets += multiz_shrink
 
+	var/list/renderable_offsets = get_renderable_offsets()
 	for(var/plane_key in plane_masters)
 		var/atom/movable/screen/plane_master/plane = plane_masters[plane_key]
 		if(!plane.allows_offsetting)
@@ -230,7 +230,7 @@
 			should_rescale = FALSE
 		// If we aren't being displayed, don't fuckin render ya hear me?
 		// inverse the offset so it's in a nicer to think about space (- == below)
-		if(!plane.set_distance_from_owner(our_mob, visual_offset * -1, multiz_boundary, lowest_possible_offset, highest_possible_offset))
+		if(!plane.set_distance_from_owner(our_mob, visual_offset * -1, multiz_boundary, renderable_offsets))
 			continue
 
 		if(!plane.multiz_scaled)
@@ -243,27 +243,39 @@
 		// So this will always animate nicely
 		animate(plane, transform = offsets[max(visual_offset, 0) + 1], 0.05 SECONDS, easing = LINEAR_EASING)
 
-/// Returns a list in the form list(lowest_possible_offset, highest_possible_offset)
-/datum/plane_master_group/proc/get_offsets()
-	var/lowest_possible_offset = -1
-	var/highest_possible_offset = INFINITY
-	for(var/depth in 1 to length(depths_in_view))
-		if(!depths_in_view[depth])
+/// Returns a list in the form list(offset + 1 -> can we render it)
+/datum/plane_master_group/proc/get_renderable_offsets()
+	var/turf/our_turf = get_turf(source)
+	var/list/renderable_offsets = depths_in_view.Copy()
+	var/current_offset
+	if(our_turf)
+		current_offset = GET_Z_PLANE_OFFSET(our_turf.z)
+	else
+		current_offset = PLANE_TO_OFFSET(source.plane)
+	renderable_offsets[current_offset + 1] = TRUE
+	return renderable_offsets
+
+/// Returns a list in the form list(offset + 1 -> is this offset the "bottom" of a stack in view)
+/datum/plane_master_group/proc/get_bottom_offsets()
+	var/list/bottom_offsets = new /list(SSmapping.max_plane_offset + 1)
+	var/turf/our_turf = get_turf(source)
+	if(!our_turf)
+		bottom_offsets[PLANE_TO_OFFSET(source.plane) + 1] = TRUE
+		return bottom_offsets
+	var/our_lowest = GET_LOWEST_STACK_OFFSET(our_turf.z)
+	bottom_offsets[our_lowest + 1] = TRUE
+	for(var/z_level in 1 to length(z_levels_in_view))
+		if(!z_levels_in_view[z_level])
 			continue
-		if(highest_possible_offset == INFINITY)
-			highest_possible_offset = depth - 1
-		lowest_possible_offset = depth - 1
-
-	var/current_offset = GET_TURF_PLANE_OFFSET(source)
-	lowest_possible_offset = max(lowest_possible_offset, current_offset)
-	highest_possible_offset = min(highest_possible_offset, current_offset)
-
-	return list(lowest_possible_offset, highest_possible_offset)
+		var/lowest_offset = GET_LOWEST_STACK_OFFSET(z_level)
+		bottom_offsets[lowest_offset + 1] = TRUE
+	return bottom_offsets
 
 /// Fully recalculates the depths in our view. Expensive, but will ALWAYS work
 /datum/plane_master_group/proc/reset_depth()
 	remove_depth_block(lower_x, lower_y, upper_x, upper_y, z)
 	depths_in_view = new /list(SSmapping.max_plane_offset + 1) // Just in case
+	z_levels_in_view = new /list(world.maxz)
 	var/turf/source_turf = get_turf(source)
 	lower_x = max(CELL_TRANSFORM(source_turf.x + view_offsets[1] - view_range[1] / 2 - 1), 1)
 	lower_y = max(CELL_TRANSFORM(source_turf.y + view_offsets[2] - view_range[2] / 2 - 1), 1)
@@ -277,6 +289,7 @@
 /datum/plane_master_group/proc/clear_depth()
 	remove_depth_block(lower_x, lower_y, upper_x, upper_y, z)
 	depths_in_view = new /list(SSmapping.max_plane_offset + 1) // Just in case
+	z_levels_in_view = new /list(world.maxz)
 	lower_x = 0
 	lower_y = 0
 	upper_x = 0
@@ -295,8 +308,10 @@
 		return
 
 	var/list/our_depths = depths_in_view
+	var/list/our_zs = z_levels_in_view
 	var/list/our_cells = cells_in_view
 	var/list/existing_depth = our_depths.Copy()
+	var/list/existing_zs = our_zs.Copy()
 	var/list/existing_cells = our_cells.Copy()
 	var/lower_x_cell = CELL_TRANSFORM(source_turf.x + view_offsets[1] - view_range[1] / 2 - 1) 
 	var/lower_y_cell = CELL_TRANSFORM(source_turf.y + view_offsets[2] - view_range[2] / 2 - 1)
@@ -304,18 +319,27 @@
 	var/upper_y_cell = CELL_TRANSFORM(source_turf.y + view_offsets[2] + view_range[2] / 2 + 1)
 	var/list/new_cells = SSvis_cells.get_visibility_cells(lower_x_cell, lower_y_cell, upper_x_cell, upper_y_cell, source_turf.z)
 	for(var/datum/visibility_cell/removed_cell as anything in existing_cells - new_cells)
-		UnregisterSignal(removed_cell, list(COMSIG_CELL_DEPTH_CHANGED, COMSIG_QDELETING))
+		UnregisterSignal(removed_cell, list(COMSIG_CELL_DEPTH_CHANGED, COMSIG_CELL_Z_CHANGED, COMSIG_QDELETING))
 		var/list/depths = removed_cell.counts
 		for(var/depth in 1 to length(depths))	
 			our_depths[depth] -= depths[depth]
+		if(length(removed_cell.mirages))
+			var/list/z_levels = removed_cell.mirages
+			for(var/z_level in 1 to length(z_levels))	
+				our_zs[z_level] -= z_levels[z_level]
 		our_cells -= removed_cell
 	
 	for(var/datum/visibility_cell/added_cell as anything in new_cells - existing_cells)
 		RegisterSignal(added_cell, COMSIG_CELL_DEPTH_CHANGED, PROC_REF(cell_depth_changed))
+		RegisterSignal(added_cell, COMSIG_CELL_Z_CHANGED, PROC_REF(cell_z_changed))
 		RegisterSignal(added_cell, COMSIG_QDELETING, PROC_REF(remove_cell))
 		var/list/depths = added_cell.counts
 		for(var/depth in 1 to length(depths))	
 			our_depths[depth] += depths[depth]
+		if(length(added_cell.mirages))
+			var/list/z_levels = added_cell.mirages
+			for(var/z_level in 1 to length(z_levels))	
+				our_zs[z_level] += z_levels[z_level]
 		our_cells += added_cell
 
 	lower_x = lower_x_cell
@@ -324,34 +348,51 @@
 	upper_y = upper_y_cell
 	z = source_turf.z
 
-	for(var/depth in length(depths_in_view) to 1 step -1)
-		if(!!existing_depth[depth] != !!depths_in_view[depth])
+	for(var/depth in length(our_depths) to 1 step -1)
+		if(!!existing_depth[depth] != !!our_depths[depth])
 			offset_planes()
 			break
+	
+	if(length(existing_zs))
+		for(var/depth in length(our_zs) to 1 step -1)
+			if(!!existing_zs[depth] != !!our_zs[depth])
+				offset_planes()
+				break
 
 /// Helper for other depth procs, adds a block of cells and DOES NOT refresh our planes
 /datum/plane_master_group/proc/add_depth_block(lower_x, lower_y, upper_x, upper_y, z)
 	var/list/our_depths = depths_in_view
+	var/list/our_zs = z_levels_in_view
 	var/list/our_cells = cells_in_view
 	var/list/datum/visibility_cell/new_cells = SSvis_cells.get_visibility_cells(lower_x, lower_y, upper_x, upper_y, z)
 	for(var/datum/visibility_cell/cell as anything in new_cells)
 		RegisterSignal(cell, COMSIG_CELL_DEPTH_CHANGED, PROC_REF(cell_depth_changed))
+		RegisterSignal(cell, COMSIG_CELL_Z_CHANGED, PROC_REF(cell_z_changed))
 		RegisterSignal(cell, COMSIG_QDELETING, PROC_REF(remove_cell))
 		var/list/depths = cell.counts
 		for(var/depth in 1 to length(depths))	
 			our_depths[depth] += depths[depth]
+		if(length(cell.mirages))
+			var/list/z_levels = cell.mirages
+			for(var/z_level in 1 to length(z_levels))	
+				our_zs[z_level] += z_levels[z_level]
 		our_cells += cell
 
 /// Helper for other depth procs, removes a block of cells and DOES NOT refresh our planes
 /datum/plane_master_group/proc/remove_depth_block(lower_x, lower_y, upper_x, upper_y, z)
 	var/list/our_depths = depths_in_view
+	var/list/our_zs = z_levels_in_view
 	var/list/our_cells = cells_in_view
 	var/list/datum/visibility_cell/new_cells = SSvis_cells.get_visibility_cells(lower_x, lower_y, upper_x, upper_y, z)
 	for(var/datum/visibility_cell/cell as anything in new_cells)
-		UnregisterSignal(cell, list(COMSIG_CELL_DEPTH_CHANGED, COMSIG_QDELETING))
+		UnregisterSignal(cell, list(COMSIG_CELL_DEPTH_CHANGED, COMSIG_CELL_Z_CHANGED, COMSIG_QDELETING))
 		var/list/depths = cell.counts
 		for(var/depth in 1 to length(depths))	
 			our_depths[depth] -= depths[depth]
+		if(length(cell.mirages))
+			var/list/z_levels = cell.mirages
+			for(var/z_level in 1 to length(z_levels))	
+				our_zs[z_level] -= z_levels[z_level]
 		our_cells -= cell
 
 /// Called whenever a cell is created in the world
@@ -361,13 +402,13 @@
 		return
 	// We assert that cells will not have any depth on creation
 	RegisterSignal(new_cell, COMSIG_CELL_DEPTH_CHANGED, PROC_REF(cell_depth_changed))
+	RegisterSignal(new_cell, COMSIG_CELL_Z_CHANGED, PROC_REF(cell_z_changed))
 	RegisterSignal(new_cell, COMSIG_QDELETING, PROC_REF(remove_cell))
 	cells_in_view += new_cell
 
 /// Reacts to one of our cells being deleted
 /datum/plane_master_group/proc/remove_cell(datum/visibility_cell/cell)
-	UnregisterSignal(cell, COMSIG_CELL_DEPTH_CHANGED)
-	UnregisterSignal(cell, COMSIG_QDELETING)
+	UnregisterSignal(cell, list(COMSIG_CELL_DEPTH_CHANGED, COMSIG_CELL_Z_CHANGED, COMSIG_QDELETING))
 	var/list/depths = cell.counts
 	var/list/our_depths = depths_in_view
 	var/changed = FALSE
@@ -375,6 +416,11 @@
 		our_depths[depth] -= depths[depth]
 		if(!our_depths[depth])
 			changed = TRUE
+	if(length(cell.mirages))
+		var/list/our_zs = z_levels_in_view
+		var/list/z_levels = cell.mirages
+		for(var/z_level in 1 to length(z_levels))	
+			our_zs[z_level] -= z_levels[z_level]
 	cells_in_view -= cell
 	if(changed)
 		offset_planes()
@@ -382,30 +428,36 @@
 /// Called whenever one of our tracked cells depth's changes
 /datum/plane_master_group/proc/cell_depth_changed(datum/source, list/depths, removed = FALSE)
 	SIGNAL_HANDLER
-	if(removed)
-		remove_depths(depths)
-	else
-		add_depths(depths)
-
-/// Adds a list of depths to our set
-/datum/plane_master_group/proc/add_depths(list/depths)
 	var/list/our_depths = depths_in_view
 	var/changed = FALSE
-	for(var/depth in depths)	
-		if(!our_depths[depth])
-			changed = TRUE
-		our_depths[depth] += 1
+	if(removed)
+		for(var/depth in depths)	
+			our_depths[depth] -= 1
+			if(!our_depths[depth])
+				changed = TRUE
+	else
+		for(var/depth in depths)	
+			if(!our_depths[depth])
+				changed = TRUE
+			our_depths[depth] += 1
 	if(changed)
 		offset_planes()
 
-/// Removes a list of depths from our set
-/datum/plane_master_group/proc/remove_depths(list/depths)
-	var/list/our_depths = depths_in_view
+/// Called whenever one of our tracked cells z_levels change
+/datum/plane_master_group/proc/cell_z_changed(datum/source, list/z_levels, removed = FALSE)
+	SIGNAL_HANDLER
+	var/list/our_zs = z_levels_in_view
 	var/changed = FALSE
-	for(var/depth in depths)	
-		our_depths[depth] -= 1
-		if(!our_depths[depth])
-			changed = TRUE
+	if(removed)
+		for(var/z_level in z_levels)	
+			our_zs[z_level] -= 1
+			if(!our_zs[z_level])
+				changed = TRUE
+	else
+		for(var/z_level in z_levels)	
+			if(!our_zs[z_level])
+				changed = TRUE
+			our_zs[z_level] += 1
 	if(changed)
 		offset_planes()
 

@@ -186,9 +186,9 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	var/turf/below_turf = GET_TURF_BELOW(our_turf)
 	if(below_turf)
 		var/list/depths = list(GET_Z_PLANE_OFFSET(below_turf.z) + 1) // + 1 to speak in the correct units 
-		var/list/below_depths = below_turf.plane_visibility
-		if(below_depths)
-			depths += below_depths
+		var/list/below_info = below_turf.visibility_info
+		if(length(below_info) >= VIS_CELL_DEPTHS)
+			depths += below_info[VIS_CELL_DEPTHS]
 		our_turf.add_plane_visibilities(depths) 
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, PROC_REF(on_multiz_turf_del))
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_NEW, PROC_REF(on_multiz_turf_new))
@@ -245,9 +245,9 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 				z_boss.parent_cleared(below_turf, our_turf)
 		// Clear away visibilities
 		var/list/depths = list(GET_Z_PLANE_OFFSET(below_turf.z) + 1)
-		var/list/below_depths = below_turf.plane_visibility
-		if(below_depths)
-			depths += below_depths
+		var/list/below_info = below_turf.visibility_info
+		if(length(below_info) >= VIS_CELL_DEPTHS)
+			depths += below_info[VIS_CELL_DEPTHS]
 		our_turf.remove_plane_visibilities(depths) 
 	else
 		our_turf.underlays -= get_baseturf_underlay(our_turf)
