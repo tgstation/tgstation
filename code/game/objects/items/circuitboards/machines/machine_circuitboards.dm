@@ -79,7 +79,6 @@
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
 
-
 /obj/item/circuitboard/machine/telecomms/broadcaster
 	name = "Subspace Broadcaster"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -309,9 +308,6 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/rnd/production/protolathe/department/engineering
 
-/obj/item/circuitboard/machine/protolathe/department/engineering/no_tax
-	build_path = /obj/machinery/rnd/production/protolathe/department/engineering/no_tax
-
 /obj/item/circuitboard/machine/rtg
 	name = "RTG"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -528,9 +524,11 @@
 /obj/item/circuitboard/machine/reagentgrinder
 	name = "All-In-One Grinder"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
-	build_path = /obj/machinery/reagentgrinder/constructed
+	build_path = /obj/machinery/reagentgrinder
 	req_components = list(
-		/datum/stock_part/servo = 1)
+		/datum/stock_part/servo = 1,
+		/datum/stock_part/matter_bin = 1,
+	)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/smartfridge
@@ -1114,6 +1112,19 @@
 	build_path = /obj/machinery/rnd/production/techfab/department/security
 
 //Service
+/obj/item/circuitboard/machine/photobooth
+	name = "Photobooth"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/photobooth
+	req_components = list(
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/servo = 1,
+	)
+
+/obj/item/circuitboard/machine/photobooth/security
+	name = "Security Photobooth"
+	greyscale_colors = CIRCUIT_COLOR_SECURITY
+	build_path = /obj/machinery/photobooth/security
 
 /obj/item/circuitboard/machine/biogenerator
 	name = "Biogenerator"
@@ -1562,7 +1573,7 @@
 /obj/item/circuitboard/machine/brm
 	name = "Boulder Retrieval Matrix"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/bouldertech/brm
+	build_path = /obj/machinery/brm
 	req_components = list(
 		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/scanning_module = 1,
@@ -1574,10 +1585,9 @@
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/bouldertech/refinery
 	req_components = list(
-		/obj/item/reagent_containers/cup/beaker = 1,
 		/obj/item/assembly/igniter/condenser = 1,
 		/datum/stock_part/servo = 2,
-		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/matter_bin = 2,
 	)
 
 /obj/item/circuitboard/machine/smelter

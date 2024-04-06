@@ -10,6 +10,7 @@ export const ANTAG2COLOR = {
   'Xenomorph Infestation': 'violet',
   'Spacetime Aberrations': 'white',
   'Deviant Crew': 'white',
+  'Invasive Overgrowth': 'green',
 } as const;
 
 export const THREAT = {

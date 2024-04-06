@@ -16,10 +16,9 @@
 
 /datum/surgery/gastrectomy/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/stomach/target_stomach = target.get_organ_slot(ORGAN_SLOT_STOMACH)
-	if(target_stomach)
-		if(target_stomach.damage > 50 && !target_stomach.operated)
-			return TRUE
-	return FALSE
+	if(isnull(target_stomach) || target_stomach.damage < 50 || target_stomach.operated)
+		return FALSE
+	return ..()
 
 ////Gastrectomy, because we truly needed a way to repair stomachs.
 //95% chance of success to be consistent with most organ-repairing surgeries.
@@ -72,4 +71,3 @@
 		span_warning("[user] cuts the wrong part of [target]'s stomach!"),
 	)
 	display_pain(target, "Your stomach throbs with pain; it's not getting any better!")
-

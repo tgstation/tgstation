@@ -3,6 +3,7 @@
 
 // Baseline fishing difficulty levels
 #define FISHING_DEFAULT_DIFFICULTY 15
+#define FISHING_EASY_DIFFICULTY 10
 
 /// Difficulty modifier when bait is fish's favorite
 #define FAV_BAIT_DIFFICULTY_MOD -5
@@ -52,6 +53,8 @@
 #define FISHING_LINE_BOUNCY (1 << 2)
 /// The sorta opposite of FISHING_LINE_BOUNCY. It makes it slower to gain completion and faster to lose it.
 #define FISHING_LINE_STIFF (1 << 3)
+///Skip the biting phase and go straight to the fishing phase.
+#define FISHING_LINE_AUTOREEL (1 << 4)
 
 ///Keeps the bait from falling from gravity, instead allowing the player to move the bait down with right click.
 #define FISHING_MINIGAME_RULE_BIDIRECTIONAL (1 << 0)
@@ -65,6 +68,8 @@
 #define FISHING_MINIGAME_RULE_ANTIGRAV (1 << 4)
 ///Will filp the minigame hud for the duration of the effect
 #define FISHING_MINIGAME_RULE_FLIP (1 << 5)
+///Skip the biting phase and go straight to the minigame, avoiding the penalty for having slow reflexes.
+#define FISHING_MINIGAME_AUTOREEL (1 << 6)
 
 ///all the effects that are active and will last for a few seconds before triggering a cooldown
 #define FISHING_MINIGAME_ACTIVE_EFFECTS (FISHING_MINIGAME_RULE_ANTIGRAV|FISHING_MINIGAME_RULE_FLIP)

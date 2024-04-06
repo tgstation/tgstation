@@ -65,6 +65,18 @@
 		..()
 		return TRUE
 
+	var/obj/item/clothing/shoes/shoes = user.shoes
+	if(istype(shoes) && shoes.tied == SHOES_KNOTTED && !(shoes.resistance_flags & (INDESTRUCTIBLE|UNACIDABLE|ACID_PROOF)))
+		new /obj/effect/decal/cleanable/greenglow(shoes.drop_location())
+		user.visible_message(
+			span_warning("[user] vomits a glob of acid on [user.p_their()] tied up [shoes.name], melting [shoes.p_them()] into a pool of goo!"),
+			span_warning("We vomit acidic ooze onto our tied up [shoes.name], melting [shoes.p_them()] into a pool of goo!"),
+		)
+		log_combat(user, shoes, "melted own shoes", addition = "(biodegrade)")
+		qdel(shoes)
+		..()
+		return TRUE
+
 	user.balloon_alert(user, "already free!")
 	return FALSE
 

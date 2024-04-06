@@ -781,7 +781,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 				n_p ++
 	else if (SSticker.IsRoundInProgress())
 		for(var/mob/living/carbon/human/P in GLOB.player_list)
-			if(!(P.mind.has_antag_datum(/datum/antagonist/changeling)) && !(P.mind in owners))
+			if(!(IS_CHANGELING(P)) && !(P.mind in owners))
 				n_p ++
 	target_amount = min(target_amount, n_p)
 
@@ -1005,6 +1005,11 @@ GLOBAL_LIST_EMPTY(possible_items)
 	var/payout = 0
 	var/payout_bonus = 0
 	var/area/dropoff = null
+
+/datum/objective/contract/is_valid_target(datum/mind/possible_target)
+	if(HAS_TRAIT(possible_target, TRAIT_HAS_BEEN_KIDNAPPED))
+		return FALSE
+	return ..()
 
 // Generate a random valid area on the station that the dropoff will happen.
 /datum/objective/contract/proc/generate_dropoff()

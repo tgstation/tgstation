@@ -4,23 +4,25 @@
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	base_icon_state = "button"
 	icon_state = "button"
-	///Icon suffix for the skin of the front pannel that is added to base_icon_state
-	var/skin = ""
-	///Whether it is possible to change the panel skin
-	var/can_alter_skin = TRUE
 	power_channel = AREA_USAGE_ENVIRON
-	var/obj/item/assembly/device
-	var/obj/item/electronics/airlock/board
-	var/device_type = null
-	var/id = null
-	var/initialized_button = 0
-	var/silicon_access_disabled = FALSE
 	light_power = 0.5 // Minimums, we want the button to glow if it has a mask, not light an area
 	light_range = 1.5
 	light_color = LIGHT_COLOR_VIVID_GREEN
 	armor_type = /datum/armor/machinery_button
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
+	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OPEN
+	///Icon suffix for the skin of the front pannel that is added to base_icon_state
+	var/skin = ""
+	///Whether it is possible to change the panel skin
+	var/can_alter_skin = TRUE
+
+	var/obj/item/assembly/device
+	var/obj/item/electronics/airlock/board
+	var/device_type = null
+	var/id = null
+	var/initialized_button = 0
+	var/silicon_access_disabled = FALSE
 
 /obj/machinery/button/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -44,7 +46,7 @@
 	if(!built && !device && device_type)
 		device = new device_type(src)
 
-	src.check_access(null)
+	check_access(null)
 
 	if(length(req_access) || length(req_one_access))
 		board = new(src)
@@ -184,7 +186,7 @@
 		id = "[port.shuttle_id]_[id]"
 		setup_device()
 
-/obj/machinery/button/attack_hand(mob/user, list/modifiers)
+/obj/machinery/button/interact(mob/user)
 	. = ..()
 	if(.)
 		return
@@ -227,7 +229,7 @@
 		flick_overlay_view("[base_icon_state]-overlay-error", 1 SECONDS)
 		return
 
-	use_power(5)
+	use_energy(5 JOULES)
 	flick_overlay_view("[base_icon_state]-overlay-success", 1 SECONDS)
 
 	if(device)

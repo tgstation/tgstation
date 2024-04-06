@@ -219,9 +219,9 @@
 /obj/item/hand_item/slapper/attack(mob/living/slapped, mob/living/carbon/human/user)
 	SEND_SIGNAL(user, COMSIG_LIVING_SLAP_MOB, slapped)
 
-	if(ishuman(slapped))
-		var/mob/living/carbon/human/human_slapped = slapped
-		SEND_SIGNAL(human_slapped, COMSIG_ORGAN_WAG_TAIL, FALSE)
+	if(iscarbon(slapped))
+		var/mob/living/carbon/potential_tailed = slapped
+		potential_tailed.unwag_tail()
 	user.do_attack_animation(slapped)
 
 	var/slap_volume = 50

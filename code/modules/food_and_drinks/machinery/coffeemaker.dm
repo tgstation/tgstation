@@ -45,10 +45,9 @@
 		coffeepot = new /obj/item/reagent_containers/cup/coffeepot(src)
 		cartridge = new /obj/item/coffee_cartridge(src)
 
-/obj/machinery/coffeemaker/deconstruct()
+/obj/machinery/coffeemaker/on_deconstruction(disassembled)
 	coffeepot?.forceMove(drop_location())
 	cartridge?.forceMove(drop_location())
-	return ..()
 
 /obj/machinery/coffeemaker/Destroy()
 	QDEL_NULL(coffeepot)
@@ -322,7 +321,7 @@
 	if(length(options) == 1)
 		choice = options[1]
 	else
-		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
+		choice = show_radial_menu(user, src, options, require_near = !HAS_SILICON_ACCESS(user))
 
 	// post choice verification
 	if(brewing || (isAI(user) && machine_stat & NOPOWER) || !user.can_perform_action(src, ALLOW_SILICON_REACH))
@@ -402,7 +401,7 @@
 	if(!silent)
 		playsound(src, 'sound/machines/coffeemaker_brew.ogg', 20, vary = TRUE)
 	toggle_steam()
-	use_power(active_power_usage * time * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
+	use_energy(active_power_usage * time / (1 SECONDS)) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
 	addtimer(CALLBACK(src, PROC_REF(stop_operating)), time / speed)
 
 /obj/machinery/coffeemaker/proc/stop_operating()

@@ -70,6 +70,9 @@
 				teleatom.balloon_alert(teleatom, "something holds you back!")
 			return FALSE
 
+	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_TELEPORTED, destination, channel)
+	SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORTED, channel, curturf, destturf)
+
 	if(isobserver(teleatom))
 		teleatom.abstract_move(destturf)
 		return TRUE
@@ -85,7 +88,7 @@
 		teleatom.log_message("teleported from [loc_name(curturf)] to [loc_name(destturf)].", LOG_GAME, log_globally = FALSE)
 		M.cancel_camera()
 
-	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_POST_TELEPORT)
+	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_POST_TELEPORT, destination, channel)
 
 	return TRUE
 
@@ -208,8 +211,5 @@
 
 	if(SEND_SIGNAL(destination_turf, COMSIG_ATOM_INTERCEPT_TELEPORTING, channel, origin_turf, destination_turf) & COMPONENT_BLOCK_TELEPORT)
 		return FALSE
-
-	SEND_SIGNAL(teleported_atom, COMSIG_MOVABLE_TELEPORTED, destination, channel)
-	SEND_SIGNAL(destination_turf, COMSIG_ATOM_INTERCEPT_TELEPORTED, channel, origin_turf, destination_turf)
 
 	return TRUE

@@ -46,6 +46,7 @@ Possible to do for anyone motivated enough:
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_holopad
 	circuit = /obj/item/circuitboard/machine/holopad
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 	// Blue, dim light
 	light_power = 0.8
 	light_color = LIGHT_COLOR_BLUE
@@ -110,6 +111,9 @@ Possible to do for anyone motivated enough:
 	)
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
 
+	if(on_network)
+		holopads += src
+
 /obj/machinery/holopad/secure
 	name = "secure holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
@@ -173,11 +177,6 @@ Possible to do for anyone motivated enough:
 		return
 	if(!replay_mode && (disk?.record))
 		replay_start()
-
-/obj/machinery/holopad/Initialize(mapload)
-	. = ..()
-	if(on_network)
-		holopads += src
 
 /obj/machinery/holopad/Destroy()
 	if(outgoing_call)
@@ -271,7 +270,7 @@ Possible to do for anyone motivated enough:
 
 	return ..()
 
-/obj/machinery/holopad/ui_status(mob/user)
+/obj/machinery/holopad/ui_status(mob/user, datum/ui_state/state)
 	if(!is_operational)
 		return UI_CLOSE
 	if(outgoing_call && !calling)

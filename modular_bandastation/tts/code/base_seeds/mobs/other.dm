@@ -12,7 +12,7 @@
 /mob/living/simple_animal/bot
 	tts_seed = null
 
-/mob/living/simple_animal/slime
+/mob/living/basic/slime
 	tts_seed = "Chen"
 
 /mob/living/carbon/human/species/monkey

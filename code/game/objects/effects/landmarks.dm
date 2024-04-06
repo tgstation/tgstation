@@ -36,7 +36,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/proc/after_round_start()
 	// We'd like to keep these around for unit tests, so we can check that they exist.
-#ifndef UNIT_TESTS
+#if !defined(UNIT_TESTS) && !defined(MAP_TEST)
 	if(delete_after_roundstart)
 		qdel(src)
 #endif
@@ -285,6 +285,16 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/nukeop_leader/Initialize(mapload)
 	..()
 	GLOB.nukeop_leader_start += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/start/nukeop_overwatch
+	name = "nukeop overwatch"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "snukeop_leader_spawn"
+
+/obj/effect/landmark/start/nukeop_overwatch/Initialize(mapload)
+	..()
+	GLOB.nukeop_overwatch_start += loc
 	return INITIALIZE_HINT_QDEL
 
 // Must be immediate because players will

@@ -57,7 +57,7 @@
 		QDEL_NULL(cell)
 	return ..()
 
-/obj/machinery/electrolyzer/on_deconstruction()
+/obj/machinery/electrolyzer/on_deconstruction(disassembled)
 	if(cell)
 		LAZYADD(component_parts, cell)
 		cell = null
@@ -125,9 +125,9 @@
 
 	var/power_to_use = (5 * (3 * working_power) * working_power) / (efficiency + working_power)
 	if(anchored)
-		use_power(power_to_use)
+		use_energy(power_to_use)
 	else
-		cell.use(power_to_use)
+		cell.use(power_to_use KILO JOULES)
 
 /obj/machinery/electrolyzer/proc/call_reactions(datum/gas_mixture/env)
 	for(var/reaction in GLOB.electrolyzer_reactions)

@@ -3,8 +3,7 @@
 	set name = "Map template - Place"
 
 	var/datum/map_template/template
-
-	var/map = input(src, "Choose a Map Template to place at your CURRENT LOCATION","Place Map Template") as null|anything in sort_list(SSmapping.map_templates)
+	var/map = tgui_input_list(usr, "Choose a Map Template to place at your CURRENT LOCATION","Place Map Template", sort_list(SSmapping.map_templates))
 	if(!map)
 		return
 	template = SSmapping.map_templates[map]

@@ -24,7 +24,7 @@
 
 /obj/structure/hoop/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_REQUIRE_WRENCH|ROTATION_IGNORE_ANCHORED, AfterRotation = CALLBACK(src, PROC_REF(reset_appearance)))
+	AddComponent(/datum/component/simple_rotation, ROTATION_REQUIRE_WRENCH|ROTATION_IGNORE_ANCHORED, post_rotation = CALLBACK(src, PROC_REF(reset_appearance)))
 	update_appearance()
 	register_context()
 

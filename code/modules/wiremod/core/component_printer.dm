@@ -184,8 +184,7 @@
 			"cost" = cost,
 			"id" = researched_design_id,
 			"categories" = design.category,
-			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
-			"constructionTime" = -1
+			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]"
 		)
 
 	data["designs"] = designs

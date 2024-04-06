@@ -223,7 +223,7 @@
 	balloon_alert(user, "ooh, free coupon")
 	var/obj/item/coupon/attached_coupon = new
 	user.put_in_hands(attached_coupon)
-	attached_coupon.generate(rigged_omen ? COUPON_OMEN : null)
+	attached_coupon.generate(rigged_omen ? COUPON_OMEN : null, null, user)
 	attached_coupon = null
 	spawn_coupon = FALSE
 	name = "discarded cigarette packet"
@@ -424,7 +424,7 @@
 	base_icon_state = "cigarcase"
 	w_class = WEIGHT_CLASS_NORMAL
 	contents_tag = "premium cigar"
-	spawn_type = /obj/item/clothing/mask/cigarette/cigar
+	spawn_type = /obj/item/clothing/mask/cigarette/cigar/premium
 	spawn_count = 5
 	spawn_coupon = FALSE
 	display_cigs = FALSE

@@ -278,7 +278,7 @@
 	name = "Sugar"
 	description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 255, 255, 255
+	color = COLOR_WHITE // rgb: 255, 255, 255
 	taste_mult = 1.5 // stop sugar drowning out other flavours
 	nutriment_factor = 2
 	metabolization_rate = 5 * REAGENTS_METABOLISM
@@ -399,7 +399,7 @@
 		exposed_open_turf.air.temperature = max(exposed_open_turf.air.temperature - ((temperature - TCMB) * (heat_capacity * reac_volume * specific_heat) / (heat_capacity + reac_volume * specific_heat)) / heat_capacity, TCMB) // Exchanges environment temperature with reagent. Reagent is at 2.7K with a heat capacity of 40J per unit.
 	if(reac_volume < 5)
 		return
-	for(var/mob/living/simple_animal/slime/exposed_slime in exposed_turf)
+	for(var/mob/living/basic/slime/exposed_slime in exposed_turf)
 		exposed_slime.adjustToxLoss(rand(15,30))
 
 /datum/reagent/consumable/condensedcapsaicin
@@ -453,7 +453,7 @@
 	name = "Table Salt"
 	description = "A salt made of sodium chloride. Commonly used to season food."
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 255,255,255
+	color = COLOR_WHITE // rgb: 255,255,255
 	taste_description = "salt"
 	penetrates_skin = NONE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -525,14 +525,7 @@
 	taste_description = "garlic"
 	metabolization_rate = 0.15 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/garlic/on_mob_add(mob/living/affected_mob, amount)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_GARLIC_BREATH, type)
-
-/datum/reagent/consumable/garlic/on_mob_delete(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_GARLIC_BREATH, type)
+	added_traits = list(TRAIT_GARLIC_BREATH)
 
 /datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -571,7 +564,7 @@
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
-	color = "#FF00FF" // rgb: 255, 0, 255
+	color = COLOR_MAGENTA // rgb: 255, 0, 255
 	taste_description = "childhood whimsy"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -636,7 +629,7 @@
 	name = "Flour"
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 0, 0, 0
+	color = COLOR_WHITE // rgb: 0, 0, 0
 	taste_description = "chalky wheat"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
 	default_container = /obj/item/reagent_containers/condiment/flour
@@ -701,7 +694,7 @@
 	description = "tiny nutritious grains"
 	reagent_state = SOLID
 	nutriment_factor = 3
-	color = "#FFFFFF" // rgb: 0, 0, 0
+	color = COLOR_WHITE // rgb: 0, 0, 0
 	taste_description = "rice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/rice
@@ -710,7 +703,7 @@
 	name = "Rice Flour"
 	description = "Flour mixed with Rice"
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 0, 0, 0
+	color = COLOR_WHITE // rgb: 0, 0, 0
 	taste_description = "chalky wheat with rice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -969,7 +962,7 @@
 	nutriment_factor = 0
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 255, 255, 255
+	color = COLOR_WHITE // rgb: 255, 255, 255
 	taste_mult = 8
 	taste_description = "sweetness"
 	overdose_threshold = 17
@@ -1041,7 +1034,7 @@
 /datum/reagent/consumable/chocolatepudding
 	name = "Chocolate Pudding"
 	description = "A great dessert for chocolate lovers."
-	color = "#800000"
+	color = COLOR_MAROON
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 4
 	taste_description = "sweet chocolate"
@@ -1106,7 +1099,7 @@
 	name = "Korta Milk"
 	description = "A milky liquid made by crushing the centre of a korta nut."
 	taste_description = "sugary milk"
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/korta_nectar

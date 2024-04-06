@@ -257,8 +257,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 /obj/item/assault_pod/mining
 	name = "Landing Field Designator"
 	icon = 'icons/obj/devices/remote.dmi'
-	icon_state = "gangtool-purple"
-	inhand_icon_state = "electronic"
+	icon_state = "designator_mining"
+	inhand_icon_state = "minertalkie"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	desc = "Deploy to designate the landing zone of the auxiliary base."
@@ -273,7 +273,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 
 	to_chat(user, span_notice("You begin setting the landing zone parameters..."))
 	setting = TRUE
-	if(!do_after(user, 50, target = user)) //You get a few seconds to cancel if you do not want to drop there.
+	if(!do_after(user, 5 SECONDS, target = user)) //You get a few seconds to cancel if you do not want to drop there.
 		setting = FALSE
 		return
 	setting = FALSE

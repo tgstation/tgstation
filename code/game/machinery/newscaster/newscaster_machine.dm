@@ -534,12 +534,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
 
-/obj/machinery/newscaster/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(loc, 2)
-		new /obj/item/shard(loc)
-		new /obj/item/shard(loc)
-	qdel(src)
+/obj/machinery/newscaster/on_deconstruction(disassembled)
+	new /obj/item/stack/sheet/iron(loc, 2)
+	new /obj/item/shard(loc)
+	new /obj/item/shard(loc)
 
 /obj/machinery/newscaster/atom_break(damage_flag)
 	. = ..()

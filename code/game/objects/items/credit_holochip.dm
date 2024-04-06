@@ -9,10 +9,13 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/credits = 0
 
-/obj/item/holochip/Initialize(mapload, amount)
+/obj/item/holochip/Initialize(mapload, amount = 1)
 	. = ..()
 	if(amount)
 		credits = amount
+	if(credits <= 0 && !mapload)
+		stack_trace("Holochip created with 0 or less credits in [get_area_name(src)]!")
+		return INITIALIZE_HINT_QDEL
 	update_appearance()
 
 /obj/item/holochip/examine(mob/user)
@@ -64,7 +67,7 @@
 		if(20 to 49)
 			overlay_color = "#358F34"
 		if(50 to 99)
-			overlay_color = "#676767"
+			overlay_color = COLOR_SLIME_METAL
 		if(100 to 199)
 			overlay_color = "#009D9B"
 		if(200 to 499)

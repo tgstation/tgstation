@@ -204,14 +204,12 @@
 /////////////////////// END TOOL OVERRIDES ///////////////////////
 
 
-/obj/structure/mineral_door/deconstruct(disassembled = TRUE)
+/obj/structure/mineral_door/atom_deconstruct(disassembled = TRUE)
 	var/turf/T = get_turf(src)
 	if(disassembled)
 		new sheetType(T, sheetAmount)
 	else
 		new sheetType(T, max(sheetAmount - 2, 1))
-	qdel(src)
-
 
 /obj/structure/mineral_door/iron
 	name = "iron door"

@@ -32,8 +32,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///The maximum number of bodyparts this species can have.
 	var/max_bodypart_count = 6
-	///This allows races to have specific hair colors. If null, it uses the H's hair/facial hair colors. If "mutcolor", it uses the H's mutant_color. If "fixedmutcolor", it uses fixedmutcolor
-	var/hair_color
+	/// This allows races to have specific hair colors.
+	/// If null, it uses the mob's hair/facial hair colors.
+	/// If USE_MUTANT_COLOR, it uses the mob's mutant_color.
+	/// If USE_FIXED_MUTANT_COLOR, it uses fixedmutcolor
+	var/hair_color_mode
 	///The alpha used by the hair. 255 is completely solid, 0 is invisible.
 	var/hair_alpha = 255
 	///The alpha used by the facial hair. 255 is completely solid, 0 is invisible.
@@ -44,7 +47,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///If your race bleeds something other than bog standard blood, change this to reagent id. For example, ethereals bleed liquid electricity.
 	var/datum/reagent/exotic_blood
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
-	var/exotic_bloodtype = ""
+	var/exotic_bloodtype
 	///The rate at which blood is passively drained by having the blood deficiency quirk. Some races such as slimepeople can regen their blood at different rates so this is to account for that
 	var/blood_deficiency_drain_rate = BLOOD_REGEN_FACTOR + BLOOD_DEFICIENCY_MODIFIER // slightly above the regen rate so it slowly drains instead of regenerates.
 	///What the species drops when gibbed by a gibber machine.
@@ -114,8 +117,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/siemens_coeff = 1
 	///To use MUTCOLOR with a fixed color that's independent of the mcolor feature in DNA.
 	var/fixed_mut_color = ""
-	///A fixed hair color that's independent of the mcolor feature in DNA.
-	var/fixed_hair_color = ""
 	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
 	var/inert_mutation = /datum/mutation/human/dwarfism
 	///Used to set the mob's death_sound upon species change
@@ -161,9 +162,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///Unique cookie given by admins through prayers
 	var/species_cookie = /obj/item/food/cookie
-
-	///For custom overrides for species ass images
-	var/icon/ass_image
 
 	/// List of family heirlooms this species can get with the family heirloom quirk. List of types.
 	var/list/family_heirlooms
@@ -348,9 +346,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				qdel(existing_organ)
 			continue
 
-		if(!isnull(old_species) && !isnull(existing_organ))
-			if(existing_organ.type != old_species.get_mutant_organ_type_for_slot(slot))
-				continue // we don't want to remove organs that are not the default for this species
+		// we don't want to remove organs that are not the default for this species
+		if(!isnull(existing_organ))
+			if(!isnull(old_species) && existing_organ.type != old_species.get_mutant_organ_type_for_slot(slot))
+				continue
+			else if(!replace_current && existing_organ.type != get_mutant_organ_type_for_slot(slot))
+				continue
 
 		// at this point we already know new_organ is not null
 		if(existing_organ?.type == new_organ)
@@ -564,45 +565,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
 /**
- * Proc called when mail goodies need to be updated for this species.
- *
- * Updates the mail goodies if that is required. e.g. for the blood deficiency quirk, which sends bloodbags to quirk holders, update the sent bloodpack to match the species' exotic blood.
- * This is currently only used for the blood deficiency quirk but more can be added as needed.
- * Arguments:
- * * mob/living/carbon/human/recipient - the mob receiving the mail goodies
- */
-/datum/species/proc/update_mail_goodies(mob/living/carbon/human/recipient)
-	update_quirk_mail_goodies(recipient, recipient.get_quirk(/datum/quirk/blooddeficiency))
-
-/**
- * Updates the mail goodies of a specific quirk.
- *
- * Updates the mail goodies belonging to a specific quirk.
- * Add implementation as needed for each individual species. The base species proc should give the species the 'default' version of whatever mail goodies are required.
- * Arguments:
- * * mob/living/carbon/human/recipient - the mob receiving the mail goodies
- * * datum/quirk/quirk - the quirk to update the mail goodies of. Use get_quirk(datum/quirk/some_quirk) to get the actual mob's quirk to pass.
- * * list/mail_goodies - a list of mail goodies. Generally speaking you should not be using this argument on the initial function call. You should instead add to the species' implementation of this proc.
- */
-/datum/species/proc/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies)
-	if(isnull(quirk))
-		return
-	if(length(mail_goodies))
-		quirk.mail_goodies = mail_goodies
-		return
-	if(istype(quirk, /datum/quirk/blooddeficiency))
-		if(HAS_TRAIT(recipient, TRAIT_NOBLOOD) && isnull(recipient.dna.species.exotic_blood))  // TRAIT_NOBLOOD and no exotic blood (yes we have to check for both, jellypeople exist)
-			quirk.mail_goodies = list() // means no blood pack gets sent to them.
-			return
-
-
-	// The default case if no species implementation exists. Set quirk's mail_goodies to initial.
-	var/datum/quirk/readable_quirk = new quirk.type
-	quirk.mail_goodies = readable_quirk.mail_goodies
-	qdel(readable_quirk) // We have to do it this way because initial will not work on lists in this version of DM
-	return
-
-/**
  * Handles the body of a human
  *
  * Handles lipstick, having no eyes, eye color, undergarnments like underwear, undershirts, and socks, and body layers.
@@ -690,7 +652,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				working_shirt.pixel_y += height_offset
 				standing += working_shirt
 
-		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodytype & BODYTYPE_DIGITIGRADE))
+		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodyshape & BODYSHAPE_DIGITIGRADE))
 			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[species_human.socks]
 			if(socks)
 				standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
@@ -767,19 +729,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if(!forced_colour)
 					switch(accessory.color_src)
 						if(MUTANT_COLOR)
-							if(fixed_mut_color)
-								accessory_overlay.color = fixed_mut_color
-							else
-								accessory_overlay.color = source.dna.features["mcolor"]
+							accessory_overlay.color = fixed_mut_color || source.dna.features["mcolor"]
 						if(HAIR_COLOR)
-							if(hair_color == "mutcolor")
-								accessory_overlay.color = source.dna.features["mcolor"]
-							else if(hair_color == "fixedmutcolor")
-								accessory_overlay.color = fixed_hair_color
-							else
-								accessory_overlay.color = source.hair_color
+							accessory_overlay.color = get_fixed_hair_color(source) || source.hair_color
 						if(FACIAL_HAIR_COLOR)
-							accessory_overlay.color = source.facial_hair_color
+							accessory_overlay.color = get_fixed_hair_color(source) || source.facial_hair_color
 						if(EYE_COLOR)
 							accessory_overlay.color = source.eye_color_left
 				else
@@ -908,7 +862,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_FEET)
 			if(H.num_legs < 2)
 				return FALSE
-			if((H.bodytype & BODYTYPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
+			if((H.bodyshape & BODYSHAPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
 				if(!(I.supports_variations_flags & (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON)))
 					if(!disable_warning)
 						to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))
@@ -939,7 +893,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ICLOTHING)
 			var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
-			if(chest && (chest.bodytype & BODYTYPE_MONKEY))
+			if(chest && (chest.bodyshape & BODYSHAPE_MONKEY))
 				if(!(I.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
 					if(!disable_warning)
 						to_chat(H, span_warning("[I] doesn't fit your [chest.name]!"))
@@ -1198,13 +1152,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		log_combat(user, target, "punched")
 
 	//If we rolled a punch high enough to hit our stun threshold, or our target is staggered and they have at least 40 damage+stamina loss, we knock them down
-	if((target.stat != DEAD) && prob(limb_accuracy) || (target.stat != DEAD) && staggered && (target.getStaminaLoss() + user.getBruteLoss()) >= 40)
-		target.visible_message(span_danger("[user] knocks [target] down!"), \
-						span_userdanger("You're knocked down by [user]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You knock [target] down!"))
-		var/knockdown_duration = 4 SECONDS + (target.getStaminaLoss() + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 4 second base stun + 4 second stun modifier = 8 second knockdown duration
-		target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
-		log_combat(user, target, "got a stun punch with their previous punch")
+	//This does not work against opponents who are knockdown immune, such as from wearing riot armor.
+	if(!HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
+		if((target.stat != DEAD) && prob(limb_accuracy) || (target.stat != DEAD) && staggered && (target.getStaminaLoss() + user.getBruteLoss()) >= 40)
+			target.visible_message(span_danger("[user] knocks [target] down!"), \
+							span_userdanger("You're knocked down by [user]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, span_danger("You knock [target] down!"))
+			var/knockdown_duration = 4 SECONDS + (target.getStaminaLoss() + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 4 second base stun + 4 second stun modifier = 8 second knockdown duration
+			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
+			log_combat(user, target, "got a stun punch with their previous punch")
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(user.body_position != STANDING_UP)
@@ -1382,7 +1338,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 3)
 
 	// Body temperature is too cold, and we do not have resist traits
-	else if(bodytemp < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
+	else if(bodytemp < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD) && !humi.has_status_effect(/datum/status_effect/inebriated))
 		// clear any hot moods and apply cold mood
 		humi.clear_mood_event("hot")
 		humi.add_mood_event("cold", /datum/mood_event/cold)
@@ -2030,6 +1986,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/create_pref_liver_perks()
 	RETURN_TYPE(/list)
 
+	if(isnull(mutantliver) || (TRAIT_LIVERLESS_METABOLISM in inherent_traits))
+		return null
+
 	var/list/to_add = list()
 
 	var/alcohol_tolerance = initial(mutantliver.alcohol_tolerance)
@@ -2069,6 +2028,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /datum/species/proc/create_pref_lung_perks()
 	RETURN_TYPE(/list)
+
+	if(isnull(mutantlungs) || (TRAIT_NOBREATH in inherent_traits))
+		return null
 
 	var/list/to_add = list()
 
@@ -2165,3 +2127,21 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 	harddel_deets_dumped = TRUE
 	return "Gained / Owned: [properly_gained ? "Yes" : "No"]"
+
+/**
+ * Get what hair color is used by this species for a mob.
+ *
+ * Arguments
+ * * for_mob - The mob to get the hair color for. Required.
+ *
+ * Returns a color string or null.
+ */
+/datum/species/proc/get_fixed_hair_color(mob/living/carbon/human/for_mob)
+	ASSERT(!isnull(for_mob))
+	switch(hair_color_mode)
+		if(USE_MUTANT_COLOR)
+			return for_mob.dna.features["mcolor"]
+		if(USE_FIXED_MUTANT_COLOR)
+			return fixed_mut_color
+
+	return null

@@ -2402,9 +2402,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Jf" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -2433,16 +2431,12 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "Ju" = (
-/obj/structure/rack{
-	icon = 'icons/obj/fluff/general.dmi';
-	icon_state = "minibar";
-	name = "skeletal minibar"
-	},
 /obj/item/book/codex_gigas,
 /obj/machinery/camera/directional/south{
 	c_tag = "Monastery Archives Aft";
 	network = list("ss13","monastery")
 	},
+/obj/structure/rack/skeletal,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Jv" = (

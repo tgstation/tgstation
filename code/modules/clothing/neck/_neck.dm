@@ -409,7 +409,7 @@
 	icon_state = "infinity_scarf"
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW
-	greyscale_colors = "#EEEEEE"
+	greyscale_colors = COLOR_VERY_LIGHT_GRAY
 	greyscale_config = /datum/greyscale_config/infinity_scarf
 	greyscale_config_worn = /datum/greyscale_config/infinity_scarf/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -469,7 +469,7 @@
 		var/true_price = round(price*profit_scaling)
 		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [I], value: <b>[true_price]</b> credits[I.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]"))
 		if(selling)
-			new /obj/item/holochip(get_turf(user),true_price)
+			new /obj/item/holochip(get_turf(user), true_price)
 	else
 		to_chat(user, span_warning("There is no export value for [I] or any items within it."))
 
