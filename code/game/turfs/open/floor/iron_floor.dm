@@ -510,3 +510,6 @@
 	base_icon_state = "sepia"
 	desc = "Well, the flow of time is normal on these tiles, weird."
 	floor_tile = /obj/item/stack/tile/iron/sepia
+
+/turf/open/floor/iron/low_pressure_plasma
+	initial_gas_mix = LOW_PRESURE_PLASMA

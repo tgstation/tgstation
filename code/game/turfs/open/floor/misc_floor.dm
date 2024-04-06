@@ -262,6 +262,9 @@
 	// Especially since it looks like we don't even change the default icon/iconstate???
 	AddElement(/datum/element/rust)
 
+/turf/open/floor/plating/lowp_ressure_plasma
+	initial_gas_mix = LOW_PRESURE_PLASMA
+
 /turf/open/floor/stone
 	name = "stone brick floor"
 	desc = "Odd, really, how it looks exactly like the iron walls yet is stone instead of iron. Now, if that's really more of a complaint about\

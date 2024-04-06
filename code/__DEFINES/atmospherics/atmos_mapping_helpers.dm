@@ -27,6 +27,8 @@
 #define SPACE_TEMP_NOBLIUM GAS_HYPER_NOBLIUM + "=7500;TEMP=2.7"
 ///Xenobio slime containment turf
 #define XENOBIO_BZ GAS_BZ + "=100;TEMP=293.15"
+//plasmaman ghostrole ruin turfs
+#define LOW_PRESURE_PLASMA GAS_PLASMA + "=100;TEMP=293.15""
 
 //ATMOSPHERICS DEPARTMENT GAS TANK TURFS
 #define ATMOS_TANK_N2O GAS_N2O + "=6000;TEMP=293.15"
