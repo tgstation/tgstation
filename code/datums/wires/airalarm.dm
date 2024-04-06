@@ -34,7 +34,7 @@
 			if(!A.shorted)
 				A.shorted = TRUE
 				A.update_appearance()
-			addtimer(CALLBACK(A, TYPE_PROC_REF(/obj/machinery/airalarm, reset), wire), 120 SECONDS)
+			addtimer(CALLBACK(A, TYPE_PROC_REF(/obj/machinery/airalarm, reset), wire), 2 MINUTES)
 		if(WIRE_IDSCAN) // Toggle lock.
 			A.locked = !A.locked
 		if(WIRE_AI) // Disable AI control for a while.

@@ -44,8 +44,8 @@
 	// keep in mind we have infinite range (the entire pipenet is our playground, it's just a matter of random choice as to where we end up) so lower and upper both have their gives and takes.
 	// but, also remember the more time we aren't in a vent, the more susceptible we are to dying to anything and everything.
 	// also remember we can't evolve if we're in a vent. lots to keep in mind when you set these variables.
-	ai_controller.set_blackboard_key(BB_LOWER_VENT_TIME_LIMIT, rand(90, 110))
-	ai_controller.set_blackboard_key(BB_UPPER_VENT_TIME_LIMIT, rand(120, 140))
+	ai_controller.set_blackboard_key(BB_LOWER_VENT_TIME_LIMIT, rand(9, 11) SECONDS)
+	ai_controller.set_blackboard_key(BB_UPPER_VENT_TIME_LIMIT, rand(12, 14) SECONDS)
 
 /mob/living/basic/spider/growing/spiderling/death(gibbed)
 	if(isturf(get_turf(loc)) && (basic_mob_flags & DEL_ON_DEATH || gibbed))

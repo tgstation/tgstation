@@ -424,7 +424,7 @@
 	RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(on_user_logout))
 	if(length(active_effects))
 		// Give the player a moment to prepare for active minigame effects
-		COOLDOWN_START(src, active_effect_cd, rand(50, 90))
+		COOLDOWN_START(src, active_effect_cd, rand(5, 9) SECONDS)
 	START_PROCESSING(SSfishing, src)
 
 ///Stop processing and remove references to the minigame hud
@@ -465,12 +465,12 @@
 			if(FISHING_MINIGAME_RULE_ANTIGRAV)
 				fishing_hud.icon_state = "background_antigrav"
 				SEND_SOUND(user, sound('sound/effects/arcade_jump.ogg', volume = 50))
-				COOLDOWN_START(src, active_effect_cd, rand(60, 90))
+				COOLDOWN_START(src, active_effect_cd, rand(6, 9) SECONDS)
 			if(FISHING_MINIGAME_RULE_FLIP)
 				fishing_hud.icon_state = "background_flip"
 				fishing_hud.transform = fishing_hud.transform.Scale(1, -1)
 				SEND_SOUND(user, sound('sound/effects/boing.ogg'))
-				COOLDOWN_START(src, active_effect_cd, rand(50, 60))
+				COOLDOWN_START(src, active_effect_cd, rand(5, 6) SECONDS)
 		return
 
 	///go back to normal
@@ -479,10 +479,10 @@
 			var/sound/inverted_sound = sound('sound/effects/arcade_jump.ogg', volume = 50)
 			inverted_sound.frequency = -1
 			SEND_SOUND(user, inverted_sound)
-			COOLDOWN_START(src, active_effect_cd, rand(100, 130))
+			COOLDOWN_START(src, active_effect_cd, rand(10, 13) SECONDS)
 		if(FISHING_MINIGAME_RULE_FLIP)
 			fishing_hud.transform = fishing_hud.transform.Scale(1, -1)
-			COOLDOWN_START(src, active_effect_cd, rand(80, 120))
+			COOLDOWN_START(src, active_effect_cd, rand(8, 12) SECONDS)
 
 	fishing_hud.icon_state = background
 	current_active_effect = null
