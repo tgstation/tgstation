@@ -485,17 +485,6 @@ const SnowflakeSleeper = (props) => {
           </LabeledList.Item>
         ))}
       </LabeledList.Item>
-      <LabeledList.Item label={'Detailed Vitals'}>
-        <Button
-          content={'View'}
-          onClick={() =>
-            act('equip_act', {
-              ref: ref,
-              gear_action: 'view_stats',
-            })
-          }
-        />
-      </LabeledList.Item>
     </>
   );
 };

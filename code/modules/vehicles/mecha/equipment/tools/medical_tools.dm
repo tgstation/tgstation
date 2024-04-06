@@ -26,13 +26,18 @@
 	var/mob/living/carbon/patient
 	/// amount of chems to inject into patient from other hands syringe gun
 	var/inject_amount = 10
-	/// List of avalible chemst to inject
-	var/list/injectible_reagents = list()
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/Destroy()
 	for(var/atom/movable/content as anything in src)
 		content.forceMove(get_turf(src))
 	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/medical/proc/get_reagent_data(var/list/datum/reagent/reagent_list)
+	var/list/contained_reagents = list()
+	if(length(reagent_list))
+		for(var/datum/reagent/reagent as anything in reagent_list)
+			contained_reagents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
+	return contained_reagents
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/get_snowflake_data()
 	var/list/data = list("snowflake_id" = MECHA_SNOWFLAKE_ID_SLEEPER)
@@ -64,19 +69,10 @@
 	)
 	data["has_brain_damage"] = patient.get_organ_loss(ORGAN_SLOT_BRAIN) != 0
 	data["has_traumas"] = length(patient.get_traumas()) != 0
-	var/list/contained_reagents = list()
-	if(length(patient.reagents.reagent_list))
-		for(var/datum/reagent/reagent as anything in patient.reagents.reagent_list)
-			contained_reagents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
-	data["contained_reagents"] = contained_reagents
+	data["contained_reagents"] = get_reagent_data(patient.reagents.reagent_list)
 	
-	injectible_reagents = list()
 	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG = locate(/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun) in chassis
-	if(SG && SG.reagents && islist(SG.reagents.reagent_list))
-		for(var/datum/reagent/R in SG.reagents.reagent_list)
-			if(R.volume > 0)
-				injectible_reagents += list(list("name" = R.name, "volume" = round(R.volume, 0.01)))
-	data["injectible_reagents"] = injectible_reagents
+	data["injectible_reagents"] = get_reagent_data(SG.reagents.reagent_list)
 	return data
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/handle_ui_act(action, list/params)
@@ -84,10 +80,6 @@
 		if("eject")
 			go_out()
 			return TRUE
-		if("view_stats")
-			usr << browse(get_patient_stats(),"window=msleeper")
-			onclose(usr, "msleeper")
-			return FALSE
 		else
 			var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG = locate() in chassis
 			for(var/datum/reagent/R in SG.reagents.reagent_list)
@@ -144,91 +136,6 @@
 		return
 	STOP_PROCESSING(SSobj, src)
 	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/Topic(href,href_list)
-	. = ..()
-	if(.)
-		return
-	if(!(usr in chassis.occupants))
-		return
-	if(href_list["inject"])
-		var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG = locate() in chassis
-		var/datum/reagent/R = locate(href_list["inject"]) in SG.reagents.reagent_list
-		if(istype(R))
-			inject_reagent(R, SG)
-
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_stats()
-	if(!patient)
-		return
-	return {"<html>
-				<head>
-				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-				<title>[patient] statistics</title>
-				<script language='javascript' type='text/javascript'>
-				[js_byjax]
-				</script>
-				<style>
-				h3 {margin-bottom:2px;font-size:14px;}
-				#lossinfo, #reagents, #injectwith {padding-left:15px;}
-				</style>
-				</head>
-				<body>
-				<h3>Health statistics</h3>
-				<div id="lossinfo">
-				[get_patient_dam()]
-				</div>
-				<h3>Reagents in bloodstream</h3>
-				<div id="reagents">
-				[get_patient_reagents()]
-				</div>
-				<div id="injectwith">
-				[get_available_reagents()]
-				</div>
-				</body>
-				</html>"}
-
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_dam()
-	var/t1
-	switch(patient.stat)
-		if(0)
-			t1 = "Conscious"
-		if(1)
-			t1 = "Unconscious"
-		if(2)
-			t1 = "*dead*"
-		else
-			t1 = "Unknown"
-	var/core_temp = ""
-	if(ishuman(patient))
-		var/mob/living/carbon/human/humi = patient
-		core_temp = {"<font color="[humi.coretemperature > 300 ? "#3d5bc3" : "#c51e1e"]"><b>Body Temperature:</b> [humi.bodytemperature-T0C]&deg;C ([humi.bodytemperature*1.8-459.67]&deg;F)</font><br />"}
-	return {"<font color="[patient.health > 50 ? "#3d5bc3" : "#c51e1e"]"><b>Health:</b> [patient.stat > 1 ? "[t1]" : "[patient.health]% ([t1])"]</font><br />
-				[core_temp]
-				<font color="[patient.bodytemperature > 300 ? "#3d5bc3" : "#c51e1e"]"><b>Body Temperature:</b> [patient.bodytemperature-T0C]&deg;C ([patient.bodytemperature*1.8-459.67]&deg;F)</font><br />
-				<font color="[patient.getBruteLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Brute Damage:</b> [patient.getBruteLoss()]%</font><br />
-				<font color="[patient.getOxyLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Respiratory Damage:</b> [patient.getOxyLoss()]%</font><br />
-				<font color="[patient.getToxLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Toxin Content:</b> [patient.getToxLoss()]%</font><br />
-				<font color="[patient.getFireLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Burn Severity:</b> [patient.getFireLoss()]%</font><br />
-				[span_danger("[patient.get_organ_loss(ORGAN_SLOT_BRAIN) ? "Significant brain damage detected." : ""]")]<br />
-				[span_danger("[length(patient.get_traumas()) ? "Brain Traumas detected." : ""]")]<br />
-				"}
-
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_reagents()
-	if(patient.reagents)
-		for(var/datum/reagent/R in patient.reagents.reagent_list)
-			if(R.volume > 0)
-				. += "[R]: [round(R.volume,0.01)]<br />"
-	return . || "None"
-
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_available_reagents()
-	var/output
-	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG = locate(/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun) in chassis
-	if(SG && SG.reagents && islist(SG.reagents.reagent_list))
-		for(var/datum/reagent/R in SG.reagents.reagent_list)
-			if(R.volume > 0)
-				output += "<a href=\"?src=[REF(src)];inject=[REF(R)]\">Inject [R.name]</a><br />"
-	return output
-
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/inject_reagent(datum/reagent/R, obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG)
 	if(!R || !patient || !SG || !(SG in chassis.flat_equipment))
@@ -336,11 +243,7 @@
 		"total_reagents" = reagents.maximum_volume,
 		"analyzed_reagents" = analyzed_reagents,
 	)
-	var/list/contained_reagents = list()
-	if(length(reagents.reagent_list))
-		for(var/datum/reagent/reagent as anything in reagents.reagent_list)
-			contained_reagents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
-	data["contained_reagents"] = contained_reagents
+	data["contained_reagents"] = get_reagent_data(reagents.reagent_list)
 	return data
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/handle_ui_act(action, list/params)
