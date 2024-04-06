@@ -323,3 +323,36 @@
 /obj/item/clothing/mask/chameleon/gps/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "Encrypted Signal")
+
+/obj/effect/mob_spawn/ghost_role/human/plasmaman
+	name = "plasma filled pod"
+	desc = "A sleeper retrofitted to use plasma instead of oxygen."
+	prompt_name = "plasmaman survivor"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "psykerpod"
+	density = TRUE
+	mob_species = /datum/species/plasma
+	you_are_text = "You are a plasmaman, a sentient colony of fungi created by one of the plasma pits outside."
+	flavour_text = "Dispite not knowing your past or who you once were, you were able to keep information even through your rebirth \
+	The language you remember feels forign on your tongue, yet you still speak it."
+
+/obj/effect/mob_spawn/ghost_role/human/plasmaman/Initialize(mapload)
+	. = ..()
+	mob_name = pick("Hydrogen", "Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen", \
+	"Fluorine", "Neon", "Sodium", "Magnesium", "Aluminum", "Silicon", "Phosphorus", "Sulfur", "Chlorine", \
+	"Argon", "Potassium", "Calcium", "Scandium", "Titanium", "Vanadium", "Chromium", "Manganese", "Iron", \
+	"Cobalt", "Nickel", "Copper", "Zinc", "Gallium", "Germanium", "Arsenic", "Selenium", "Bromine", "Krypton", \
+	"Rubidium", "Strontium", "Yttrium", "Zirconium", "Niobium", "Molybdenum", "Technetium", "Ruthenium", \
+	"Rhodium", "Palladium", "Silver", "Cadmium", "Indium", "Tin", "Antimony", "Tellurium", "Iodine", "Xenon", \
+	"Cesium", "Barium", "Lanthanum", "Cerium", "Praseodymium", "Neodymium", "Promethium", "Samarium", "Europium", \
+	"Gadolinium", "Terbium", "Dysprosium", "Holmium", "Erbium", "Thulium", "Ytterbium", "Lutetium", "Hafnium", \
+	"Tantalum", "Tungsten", "Rhenium", "Osmium", "Iridium", "Platinum", "Gold", "Mercury", "Thallium", "Lead", \
+	"Bismuth", "Polonium", "Astatine", "Radon", "Francium", "Radium", "Actinium", "Thorium", "Protactinium", \
+	"Uranium", "Neptunium", "Plutonium", "Americium", "Curium", "Berkelium", "Californium", "Einsteinium", \
+	"Fermium", "Mendelevium", "Nobelium", "Lawrencium", "Rutherfordium", "Dubnium", "Seaborgium", "Bohrium", \
+	"Hassium", "Meitnerium", "Darmstadtium", "Roentgenium", "Copernicium", "Nihonium", "Flerovium", \
+	"Moscovium", "Livermorium", "Tennessine", "Oganesson")
+
+/obj/effect/mob_spawn/ghost_role/human/plasmaman/Destroy()
+	new/obj/structure/fluff/empty_terrarium(get_turf(src))
+	return ..()
