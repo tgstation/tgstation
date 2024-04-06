@@ -121,18 +121,19 @@
 
 /obj/projectile/bullet/arrow/intangible/standart
 	icon_state = "intangible_standart_projectile"
-	damage = 15
+	damage = 35
 	stamina = 40
 	knockdown = 2 SECONDS
 	drowsy = 15 SECONDS
 	jitter = 15 SECONDS
+	armour_penetration = 50
 
 /obj/item/ammo_casing/arrow/intangible/standart/pulsed
 	projectile_type = /obj/projectile/bullet/arrow/intangible/standart/pulsed
 
 /obj/projectile/bullet/arrow/intangible/standart/pulsed
-	damage = 40
-	stamina = 10
+	damage = 55
+	stamina = 20
 	knockdown = 1 SECONDS
 
 /obj/item/ammo_casing/arrow/intangible/emp
