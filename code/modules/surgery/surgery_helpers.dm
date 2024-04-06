@@ -34,7 +34,7 @@
 			if(covered_locations & HEAD)
 				return FALSE
 		if(BODY_ZONE_PRECISE_EYES)
-			if(face_covered & HIDEEYES || eyesmouth_covered & (MASKCOVERSEYES|HEADCOVERSEYES|GLASSESCOVERSEYES))
+			if((face_covered & HIDEEYES) || (eyesmouth_covered & (MASKCOVERSEYES|HEADCOVERSEYES|GLASSESCOVERSEYES)))
 				return FALSE
 		if(BODY_ZONE_PRECISE_MOUTH)
 			if((face_covered & HIDEFACE) || (eyesmouth_covered & (MASKCOVERSMOUTH|HEADCOVERSMOUTH)))
