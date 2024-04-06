@@ -47,7 +47,7 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 			var/delay = input("What delay should the restart have (in seconds)?", "Restart Delay", 5) as num|null
 			if(!delay)
 				return FALSE
-			if(!(isnull(user.address) || (user.address in localhost_addresses)))
+			if(!user.is_localhost())
 				if(alert(user,"Are you sure you want to restart the server?","This server is live", "Restart", "Cancel") != "Restart")
 					return FALSE
 			SSticker.Reboot(init_by, "admin reboot - by [user.key] [user.holder.fakekey ? "(stealth)" : ""]", delay * 10)
