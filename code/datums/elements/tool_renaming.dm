@@ -46,7 +46,7 @@
 			renamed_obj.AddComponent(/datum/component/rename, input, renamed_obj.desc)
 			to_chat(user, span_notice("You have successfully renamed \the [old_name] to [renamed_obj]."))
 			ADD_TRAIT(renamed_obj, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
-			renamed_obj.update_appearance(UPDATE_ICON)
+			renamed_obj.update_appearance(UPDATE_NAME)
 
 		if(OPTION_DESCRIPTION)
 			var/input = tgui_input_text(user, "Describe [renamed_obj]", "Description", "[renamed_obj.desc]", 280)
@@ -59,10 +59,10 @@
 			renamed_obj.AddComponent(/datum/component/rename, renamed_obj.name, input)
 			to_chat(user, span_notice("You have successfully changed [renamed_obj]'s description."))
 			ADD_TRAIT(renamed_obj, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
-			renamed_obj.update_appearance(UPDATE_ICON)
+			renamed_obj.update_appearance(UPDATE_DESC)
 
 		if(OPTION_RESET)
 			qdel(renamed_obj.GetComponent(/datum/component/rename))
 			to_chat(user, span_notice("You have successfully reset [renamed_obj]'s name and description."))
 			REMOVE_TRAIT(renamed_obj, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
-			renamed_obj.update_appearance(UPDATE_ICON)
+			renamed_obj.update_appearance(UPDATE_NAME | UPDATE_DESC)
