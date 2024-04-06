@@ -3,9 +3,9 @@ SUBSYSTEM_DEF(ai_controllers)
 	name = "AI Controller Ticker"
 	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND
 	priority = FIRE_PRIORITY_NPC
-	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	init_order = INIT_ORDER_AI_CONTROLLERS
 	wait = 0.5 SECONDS //Plan every half second if required, not great not terrible.
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	///List of all ai_subtree singletons, key is the typepath while assigned value is a newly created instance of the typepath. See setup_subtrees()
 	var/list/datum/ai_planning_subtree/ai_subtrees = list()
@@ -21,10 +21,11 @@ SUBSYSTEM_DEF(ai_controllers)
 	setup_subtrees()
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/ai_controllers/Recover()
-	ai_subtrees = SSai_controllers.ai_subtrees
-	ai_controllers_by_status = SSai_controllers.ai_controllers_by_status
-	ai_controllers_by_zlevel = SSai_controllers.ai_controllers_by_zlevel
+/datum/controller/subsystem/ai_controllers/stat_entry(msg)
+	var/list/active_list = ai_controllers_by_status[AI_STATUS_ON]
+	var/list/inactive_list = ai_controllers_by_status[AI_STATUS_OFF]
+	msg = "Active AIs:[length(active_list)]|Inactive:[length(inactive_list)]"
+	return ..()
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
 	for(var/datum/ai_controller/ai_controller as anything in ai_controllers_by_status[AI_STATUS_ON])

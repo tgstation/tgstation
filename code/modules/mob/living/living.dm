@@ -1756,22 +1756,26 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		registered_z = null
 		return
 
-	//Check the amount of clients exists on the Z level we're moving towards
-	var/new_level_old_clients = SSmobs.clients_by_zlevel[new_z].len
-	if(new_level_old_clients == 0) //No one was here before, wake up all the AIS.
-		for (var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[new_z])
-			controller.set_ai_status(AI_STATUS_ON)
-
 	//Check the amount of clients exists on the Z level we're leaving from,
 	//this excludes us as we haven't added ourselves to the new z level yet.
 	var/old_level_new_clients = (registered_z ? SSmobs.clients_by_zlevel[registered_z].len : null)
-	if(registered_z && old_level_new_clients == 0) //No one is left after we're gone, shut off inactive ones
+	//No one is left after we're gone, shut off inactive ones
+	if(registered_z && old_level_new_clients == 0)
 		for(var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[registered_z])
 			controller.set_ai_status(AI_STATUS_OFF)
 	
+	//Check the amount of clients exists on the Z level we're moving towards, excluding ourselves.
+	var/new_level_old_clients = SSmobs.clients_by_zlevel[new_z].len
+
 	registered_z = new_z
-	//this check prevents issues such as ghosting, which puts you in several times.
+	//We'll add ourselves to the list now so get_expected_ai_status() will know we're on the z level.
 	SSmobs.clients_by_zlevel[registered_z] += src
+
+	if(new_level_old_clients == 0) //No one was here before, wake up all the AIs.
+		for (var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[new_z])
+			//We don't set them directly on, for instances like AIs acting while dead and other cases that may exist in the future.
+			//This isn't a problem for AIs with a client since the client will prevent this from being called anyway.
+			controller.set_ai_status(controller.get_expected_ai_status())
 
 /mob/living/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	..()

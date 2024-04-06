@@ -6,7 +6,7 @@
 //If you add a new status, be sure to add it to the ai_controllers subsystem's ai_controllers_by_status list.
 ///The AI is currently active.
 #define AI_STATUS_ON "ai_on"
-///The AI is currently off for misc reasons, such as being frozen in time or sentient.
+///The AI is currently offline for any reason.
 #define AI_STATUS_OFF "ai_off"
 
 ///For JPS pathing, the maximum length of a path we'll try to generate. Should be modularized depending on what we're doing later on

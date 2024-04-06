@@ -68,7 +68,6 @@ multiple modular subtrees with behaviors
 		PossessPawn(new_pawn)
 
 /datum/ai_controller/Destroy(force)
-	set_ai_status(AI_STATUS_OFF)
 	UnpossessPawn(FALSE)
 	set_movement_target(type, null)
 	if(ai_movement.moving_controllers[src])
@@ -133,10 +132,9 @@ multiple modular subtrees with behaviors
 	set_ai_status(get_expected_ai_status())
 
 /**
- * Returns the AI status the controller should be expected to be on.
- * Returns AI_STATUS_OFF if it's inhabited by a Client and shouldn't be, if it's dead and cannot act while dead,
- * or is on a z level with no clients.
- * Otherwise, it will return AI_STATUS_ON.
+ * Gets the AI status we expect the AI controller to be on at this current moment.
+ * Returns AI_STATUS_OFF if it's inhabited by a Client and shouldn't be, if it's dead and cannot act while dead, or is on a z level without clients.
+ * Returns AI_STATUS_ON otherwise.
  */
 /datum/ai_controller/proc/get_expected_ai_status()
 	if (!ismob(pawn))
@@ -190,6 +188,7 @@ multiple modular subtrees with behaviors
 	if(isnull(pawn))
 		return // instantiated without an applicable pawn, fine
 
+	set_ai_status(AI_STATUS_OFF)
 	UnregisterSignal(pawn, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE, COMSIG_QDELETING))
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
