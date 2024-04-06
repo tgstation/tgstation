@@ -203,3 +203,6 @@
 /turf/open/openspace/icemoon/ruins
 	protect_ruin = FALSE
 	drill_below = FALSE
+
+/turf/open/openspace/telecomms
+	initial_gas_mix = TCOMMS_ATMOS

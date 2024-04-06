@@ -200,7 +200,7 @@
 	if(!istype(power_cell))
 		return
 
-	if(power_cell.charge < 300)
+	if(power_cell.charge < 0.3 * STANDARD_CELL_CHARGE)
 		to_chat(chap, span_notice("[GLOB.deity] does not accept pity amounts of power."))
 		return
 

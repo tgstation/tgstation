@@ -184,7 +184,7 @@
 		W.play_tool_sound(src, 100)
 		user.visible_message(span_notice("[user] installs the electronics into the airlock assembly."), \
 							span_notice("You start to install electronics into the airlock assembly..."))
-		if(do_after(user, 40, target = src))
+		if(do_after(user, 4 SECONDS, target = src))
 			if( state != AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS )
 				return
 			if(!user.transferItemToLoc(W, src))
@@ -224,7 +224,7 @@
 							playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
 							user.visible_message(span_notice("[user] adds [G.name] to the airlock assembly."), \
 												span_notice("You start to install [G.name] into the airlock assembly..."))
-							if(do_after(user, 40, target = src))
+							if(do_after(user, 4 SECONDS, target = src))
 								if(G.get_amount() < 1 || glass)
 									return
 								if(G.type == /obj/item/stack/sheet/rglass)
@@ -247,7 +247,7 @@
 								playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
 								user.visible_message(span_notice("[user] adds [G.name] to the airlock assembly."), \
 									span_notice("You start to install [G.name] into the airlock assembly..."))
-								if(do_after(user, 40, target = src))
+								if(do_after(user, 4 SECONDS, target = src))
 									if(G.get_amount() < 2 || mineral)
 										return
 									to_chat(user, span_notice("You install [M] plating into the airlock assembly."))
@@ -363,25 +363,22 @@
 	target.update_name()
 	qdel(source)
 
-/obj/structure/door_assembly/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/turf/T = get_turf(src)
-		if(!disassembled)
-			material_amt = rand(2,4)
-		new material_type(T, material_amt)
-		if(glass)
-			if(disassembled)
-				if(heat_proof_finished)
-					new /obj/item/stack/sheet/rglass(T)
-				else
-					new /obj/item/stack/sheet/glass(T)
+/obj/structure/door_assembly/atom_deconstruct(disassembled = TRUE)
+	var/turf/target_turf = get_turf(src)
+	if(!disassembled)
+		material_amt = rand(2,4)
+	new material_type(target_turf, material_amt)
+	if(glass)
+		if(disassembled)
+			if(heat_proof_finished)
+				new /obj/item/stack/sheet/rglass(target_turf)
 			else
-				new /obj/item/shard(T)
-		if(mineral)
-			var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-			new mineral_path(T, 2)
-	qdel(src)
-
+				new /obj/item/stack/sheet/glass(target_turf)
+		else
+			new /obj/item/shard(target_turf)
+	if(mineral)
+		var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+		new mineral_path(target_turf, 2)
 
 /obj/structure/door_assembly/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)

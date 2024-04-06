@@ -7,6 +7,8 @@
 	/// Extra examine line to describe controls, such as right-clicking, left-clicking, etc.
 	var/desc_controls
 
+	/// The context returned when an attack against this object doesnt deal any traditional damage to the object.
+	var/no_damage_feedback = "without leaving a mark"
 	/// Icon to use as a 32x32 preview in crafting menus and such
 	var/icon_preview
 	var/icon_state_preview
@@ -80,8 +82,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if(attacking_item.demolition_mod < 1)
 		damage_verb = "ineffectively pierce"
 
-	user.visible_message(span_danger("[user] [damage_verb][plural_s(damage_verb)] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
-		span_danger("You [damage_verb] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_danger("[user] [damage_verb][plural_s(damage_verb)] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]"]!"), \
+		span_danger("You [damage_verb] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]"]!"), null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "attacked", attacking_item)
 
 /obj/assume_air(datum/gas_mixture/giver)
@@ -365,8 +367,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /// If we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
 /obj/proc/can_be_unfasten_wrench(mob/user, silent)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return CANT_UNFASTEN
 	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
 		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
 		return FAILED_UNFASTEN

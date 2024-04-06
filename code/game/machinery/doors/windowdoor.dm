@@ -347,8 +347,6 @@
 
 /obj/machinery/door/window/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
 	if(density || operating)
 		to_chat(user, span_warning("You need to open the door to access the maintenance panel!"))
 		return
@@ -360,8 +358,6 @@
 
 /obj/machinery/door/window/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
 	if(!panel_open || density || operating)
 		return
 	add_fingerprint(user)

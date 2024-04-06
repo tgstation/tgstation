@@ -174,7 +174,7 @@
 	if(tank_assembly)
 		. += span_warning("There is some kind of device [EXAMINE_HINT("rigged")] to the tank!")
 
-/obj/item/tank/deconstruct(disassembled = TRUE)
+/obj/item/tank/atom_deconstruct(disassembled = TRUE)
 	var/atom/location = loc
 	if(location)
 		location.assume_air(air_contents)
