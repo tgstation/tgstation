@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Skill rewards should properly be dropped out of unworthy player's hands"
