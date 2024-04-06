@@ -225,9 +225,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return
 
 	if(href_list[VV_HK_OSAY])
-		if(!check_rights(R_FUN, FALSE))
-			return
-		usr.client.object_say(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/object_say, src)
 
 	if(href_list[VV_HK_MASS_DEL_TYPE])
 		if(!check_rights(R_DEBUG|R_SERVER))

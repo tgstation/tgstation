@@ -252,18 +252,6 @@ ADMIN_VERB(run_weather, R_FUN, "Run Weather", "Triggers specific weather on the 
 	log_admin("[key_name(user)] started weather of type [weather_type] on the z-level [z_level].")
 	BLACKBOX_LOG_ADMIN_VERB("Run Weather")
 
-ADMIN_VERB(marked_mob_add_ability, R_FUN, "Add Mob Ability (Marked Mob)", "Adds an ability to the mob you have marked.", ADMIN_CATEGORY_EVENTS)
-	if(!isliving(user.holder.marked_datum))
-		to_chat(user, span_warning("Error: Please mark a mob to add actions to it."))
-		return
-	user.give_mob_action(user.holder.marked_datum)
-
-ADMIN_VERB(marked_mob_remove_ability, R_FUN, "Remove Mob Ability (Marked Mob)", "Removes an ability from the mob you have marked.", ADMIN_CATEGORY_EVENTS)
-	if(!isliving(user.holder.marked_datum))
-		to_chat(user, span_warning("Error: Please mark a mob to remove actions from it."))
-		return
-	user.remove_mob_action(user.holder.marked_datum)
-
 ADMIN_VERB(command_report_footnote, R_ADMIN, "Command Report Footnote", "Adds a footnote to the roundstart command report.", ADMIN_CATEGORY_EVENTS)
 	var/datum/command_footnote/command_report_footnote = new /datum/command_footnote()
 	SScommunications.block_command_report += 1 //Add a blocking condition to the counter until the inputs are done.

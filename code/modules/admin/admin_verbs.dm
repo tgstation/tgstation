@@ -19,7 +19,6 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/reset_tram, //tram related admin actions
 // Client procs
 	/client/proc/centcom_podlauncher,/*Open a window to launch a Supplypod and configure it or it's contents*/
-	/client/proc/check_ai_laws, /*shows AI and borg laws*/
 	/client/proc/cmd_admin_check_contents, /*displays the contents of an instance*/
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
 	/client/proc/cmd_admin_create_centcom_report,
@@ -37,9 +36,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/jumptomob, /*allows us to jump to a specific mob*/
 	/client/proc/jumptoturf, /*allows us to jump to a specific turf*/
 	/client/proc/jumptocoord, /*we ghost and jump to a coordinate*/
-	/client/proc/manage_sect, /*manage chaplain religious sect*/
 	/client/proc/message_pda, /*send a message to somebody on PDA*/
-	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/toggle_combo_hud, /* toggle display of the combination pizza antag and taco sci/med/eng hud */
 	/client/proc/toggle_view_range, /*changes how far we can see*/
 	/client/proc/cmd_admin_law_panel,
@@ -47,18 +44,13 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/player_ticket_history,
 	)
 GLOBAL_LIST_INIT(admin_verbs_fun, list(
-	/client/proc/cinematic,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/cmd_select_equipment,
-	/client/proc/drop_bomb,
-	/client/proc/drop_dynex_bomb,
 	/client/proc/forceEvent,
 	/client/proc/mass_zombie_cure,
 	/client/proc/mass_zombie_infection,
-	/client/proc/object_say,
 	/client/proc/polymorph_all,
 	/client/proc/reset_ooc,
-	/client/proc/set_dynex_scale,
 	/client/proc/set_ooc,
 	/client/proc/show_tip,
 	/client/proc/smite,
@@ -88,11 +80,8 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/debugNatureMapGenerator,
 	/client/proc/debug_plane_masters,
 	/client/proc/debug_spell_requirements,
-	/client/proc/display_sendmaps,
 	/client/proc/enable_mapping_verbs,
 	/client/proc/generate_wikichem_list,
-	/client/proc/get_dynex_power, /*debug verbs for dynex explosions.*/
-	/client/proc/get_dynex_range, /*debug verbs for dynex explosions.*/
 	/client/proc/jump_to_ruin,
 	/client/proc/load_circuit,
 	/client/proc/map_export,
@@ -102,23 +91,16 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/open_colorblind_test,
 	/client/proc/open_lua_editor,
 	/client/proc/outfit_manager,
-	/client/proc/populate_world,
 	/client/proc/pump_random_event,
-	/client/proc/print_cards,
 	/client/proc/reestablish_tts_connection,
-	/client/proc/reload_cards,
 	/client/proc/reload_configuration,
 	/client/proc/restart_controller,
 	/client/proc/run_empty_query,
 	/client/proc/SDQL2_query,
-	/client/proc/set_dynex_scale,
-	/client/proc/spawn_debug_full_crew,
-	/client/proc/test_cardpack_distribution,
 	/client/proc/test_movable_UI,
 	/client/proc/test_snap_UI,
 	/client/proc/toggle_medal_disable,
 	/client/proc/unload_ctf,
-	/client/proc/validate_cards,
 	/client/proc/validate_puzzgrids,
 	/client/proc/GeneratePipeSpritesheet,
 	/client/proc/view_runtimes,
@@ -345,113 +327,86 @@ ADMIN_VERB(stealth, R_STEALTH, "Stealth Mode", "Toggle stealth.", ADMIN_CATEGORY
 
 #undef STEALTH_MODE_TRAIT
 
-/client/proc/drop_bomb()
-	set category = "Admin.Fun"
-	set name = "Drop Bomb"
-	set desc = "Cause an explosion of varying strength at your location."
-
+ADMIN_VERB(drop_bomb, R_FUN, "Drop Bomb", "Cause an explosion of varying strength at your location", ADMIN_CATEGORY_FUN)
 	var/list/choices = list("Small Bomb (1, 2, 3, 3)", "Medium Bomb (2, 3, 4, 4)", "Big Bomb (3, 5, 7, 5)", "Maxcap", "Custom Bomb")
-	var/choice = tgui_input_list(src, "What size explosion would you like to produce? NOTE: You can do all this rapidly and in an IC manner (using cruise missiles!) with the Config/Launch Supplypod verb. WARNING: These ignore the maxcap", "Drop Bomb", choices)
+	var/choice = tgui_input_list(user, "What size explosion would you like to produce? NOTE: You can do all this rapidly and in an IC manner (using cruise missiles!) with the Config/Launch Supplypod verb. WARNING: These ignore the maxcap", "Drop Bomb", choices)
 	if(isnull(choice))
 		return
-	var/turf/epicenter = mob.loc
+	var/turf/epicenter = user.mob.loc
 
 	switch(choice)
 		if("Small Bomb (1, 2, 3, 3)")
-			explosion(epicenter, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3, flash_range = 3, adminlog = TRUE, ignorecap = TRUE, explosion_cause = mob)
+			explosion(epicenter, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3, flash_range = 3, adminlog = TRUE, ignorecap = TRUE, explosion_cause = user.mob)
 		if("Medium Bomb (2, 3, 4, 4)")
-			explosion(epicenter, devastation_range = 2, heavy_impact_range = 3, light_impact_range = 4, flash_range = 4, adminlog = TRUE, ignorecap = TRUE, explosion_cause = mob)
+			explosion(epicenter, devastation_range = 2, heavy_impact_range = 3, light_impact_range = 4, flash_range = 4, adminlog = TRUE, ignorecap = TRUE, explosion_cause = user.mob)
 		if("Big Bomb (3, 5, 7, 5)")
-			explosion(epicenter, devastation_range = 3, heavy_impact_range = 5, light_impact_range = 7, flash_range = 5, adminlog = TRUE, ignorecap = TRUE, explosion_cause = mob)
+			explosion(epicenter, devastation_range = 3, heavy_impact_range = 5, light_impact_range = 7, flash_range = 5, adminlog = TRUE, ignorecap = TRUE, explosion_cause = user.mob)
 		if("Maxcap")
-			explosion(epicenter, devastation_range = GLOB.MAX_EX_DEVESTATION_RANGE, heavy_impact_range = GLOB.MAX_EX_HEAVY_RANGE, light_impact_range = GLOB.MAX_EX_LIGHT_RANGE, flash_range = GLOB.MAX_EX_FLASH_RANGE, adminlog = TRUE, ignorecap = TRUE, explosion_cause = mob)
+			explosion(epicenter, devastation_range = GLOB.MAX_EX_DEVESTATION_RANGE, heavy_impact_range = GLOB.MAX_EX_HEAVY_RANGE, light_impact_range = GLOB.MAX_EX_LIGHT_RANGE, flash_range = GLOB.MAX_EX_FLASH_RANGE, adminlog = TRUE, ignorecap = TRUE, explosion_cause = user.mob)
 		if("Custom Bomb")
-			var/range_devastation = input("Devastation range (in tiles):") as null|num
+			var/range_devastation = input(user, "Devastation range (in tiles):") as null|num
 			if(range_devastation == null)
 				return
-			var/range_heavy = input("Heavy impact range (in tiles):") as null|num
+			var/range_heavy = input(user, "Heavy impact range (in tiles):") as null|num
 			if(range_heavy == null)
 				return
-			var/range_light = input("Light impact range (in tiles):") as null|num
+			var/range_light = input(user, "Light impact range (in tiles):") as null|num
 			if(range_light == null)
 				return
-			var/range_flash = input("Flash range (in tiles):") as null|num
+			var/range_flash = input(user, "Flash range (in tiles):") as null|num
 			if(range_flash == null)
 				return
 			if(range_devastation > GLOB.MAX_EX_DEVESTATION_RANGE || range_heavy > GLOB.MAX_EX_HEAVY_RANGE || range_light > GLOB.MAX_EX_LIGHT_RANGE || range_flash > GLOB.MAX_EX_FLASH_RANGE)
-				if(tgui_alert(usr, "Bomb is bigger than the maxcap. Continue?",,list("Yes","No")) != "Yes")
+				if(tgui_alert(user, "Bomb is bigger than the maxcap. Continue?",,list("Yes","No")) != "Yes")
 					return
-			epicenter = mob.loc //We need to reupdate as they may have moved again
-			explosion(epicenter, devastation_range = range_devastation, heavy_impact_range = range_heavy, light_impact_range = range_light, flash_range = range_flash, adminlog = TRUE, ignorecap = TRUE, explosion_cause = mob)
-	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
-	log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
+			epicenter = get_turf(user.mob) //We need to reupdate as they may have moved again
+			explosion(epicenter, devastation_range = range_devastation, heavy_impact_range = range_heavy, light_impact_range = range_light, flash_range = range_flash, adminlog = TRUE, ignorecap = TRUE, explosion_cause = user.mob)
+	message_admins("[ADMIN_LOOKUPFLW(user.mob)] creating an admin explosion at [epicenter.loc].")
+	log_admin("[key_name(user)] created an admin explosion at [epicenter.loc].")
 	BLACKBOX_LOG_ADMIN_VERB("Drop Bomb")
 
-/client/proc/drop_dynex_bomb()
-	set category = "Admin.Fun"
-	set name = "Drop DynEx Bomb"
-	set desc = "Cause an explosion of varying strength at your location."
+ADMIN_VERB(drop_bomb_dynex, R_FUN, "Drop DynEx Bomb", "Cause an explosion of varying strength at your location.", ADMIN_CATEGORY_FUN)
+	var/ex_power = input(user, "Explosive Power:") as null|num
+	var/turf/epicenter = get_turf(user.mob)
+	if(!ex_power || !epicenter)
+		return
+	dyn_explosion(epicenter, ex_power)
+	message_admins("[ADMIN_LOOKUPFLW(user.mob)] creating an admin explosion at [epicenter.loc].")
+	log_admin("[key_name(user)] created an admin explosion at [epicenter.loc].")
+	BLACKBOX_LOG_ADMIN_VERB("Drop Dynamic Bomb")
 
-	var/ex_power = input("Explosive Power:") as null|num
-	var/turf/epicenter = mob.loc
-	if(ex_power && epicenter)
-		dyn_explosion(epicenter, ex_power)
-		message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
-		log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
-		BLACKBOX_LOG_ADMIN_VERB("Drop Dynamic Bomb")
-
-/client/proc/get_dynex_range()
-	set category = "Debug"
-	set name = "Get DynEx Range"
-	set desc = "Get the estimated range of a bomb, using explosive power."
-
-	var/ex_power = input("Explosive Power:") as null|num
+ADMIN_VERB(get_dynex_range, R_FUN, "Get DynEx Range", "Get the estimated range of a bomb using explosive power.", ADMIN_CATEGORY_DEBUG)
+	var/ex_power = input(user, "Explosive Power:") as null|num
 	if (isnull(ex_power))
 		return
 	var/range = round((2 * ex_power)**GLOB.DYN_EX_SCALE)
-	to_chat(usr, "Estimated Explosive Range: (Devastation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])", confidential = TRUE)
+	to_chat(user, "Estimated Explosive Range: (Devastation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])", confidential = TRUE)
 
-/client/proc/get_dynex_power()
-	set category = "Debug"
-	set name = "Get DynEx Power"
-	set desc = "Get the estimated required power of a bomb, to reach a specific range."
-
-	var/ex_range = input("Light Explosion Range:") as null|num
+ADMIN_VERB(get_dynex_power, R_FUN, "Get DynEx Power", "Get the estimated required power of a bomb to reach the given range.", ADMIN_CATEGORY_DEBUG)
+	var/ex_range = input(user, "Light Explosion Range:") as null|num
 	if (isnull(ex_range))
 		return
 	var/power = (0.5 * ex_range)**(1/GLOB.DYN_EX_SCALE)
-	to_chat(usr, "Estimated Explosive Power: [power]", confidential = TRUE)
+	to_chat(user, "Estimated Explosive Power: [power]", confidential = TRUE)
 
-/client/proc/set_dynex_scale()
-	set category = "Debug"
-	set name = "Set DynEx Scale"
-	set desc = "Set the scale multiplier of dynex explosions. The default is 0.5."
-
-	var/ex_scale = input("New DynEx Scale:") as null|num
+ADMIN_VERB(set_dynex_scale, R_FUN, "Set DynEx Scale", "Set the scale multiplier on dynex explosions. Default 0.5.", ADMIN_CATEGORY_DEBUG)
+	var/ex_scale = input(user, "New DynEx Scale:") as null|num
 	if(!ex_scale)
 		return
 	GLOB.DYN_EX_SCALE = ex_scale
-	log_admin("[key_name(usr)] has modified Dynamic Explosion Scale: [ex_scale]")
-	message_admins("[key_name_admin(usr)] has  modified Dynamic Explosion Scale: [ex_scale]")
+	log_admin("[key_name(user)] has modified Dynamic Explosion Scale: [ex_scale]")
+	message_admins("[key_name_admin(user)] has  modified Dynamic Explosion Scale: [ex_scale]")
 
 ADMIN_VERB(atmos_control, R_DEBUG|R_SERVER, "Atmos Control Panel", "Open the atmospherics control panel.", ADMIN_CATEGORY_DEBUG)
 	SSair.ui_interact(user.mob)
 
-/client/proc/reload_cards()
-	set name = "Reload Cards"
-	set category = "Debug"
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB(reload_cards, R_DEBUG, "Reload Cards", "Reload all TCG cards.", ADMIN_CATEGORY_DEBUG)
 	if(!SStrading_card_game.loaded)
 		message_admins("The card subsystem is not currently loaded")
 		return
 	SStrading_card_game.reloadAllCardFiles()
 
-/client/proc/validate_cards()
-	set name = "Validate Cards"
-	set category = "Debug"
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB(validate_cards, R_DEBUG, "Validate Cards", "Validate the card settings.", ADMIN_CATEGORY_DEBUG)
 	if(!SStrading_card_game.loaded)
 		message_admins("The card subsystem is not currently loaded")
 		return
@@ -462,66 +417,55 @@ ADMIN_VERB(atmos_control, R_DEBUG|R_SERVER, "Atmos Control Panel", "Open the atm
 	else
 		message_admins("No errors found in card rarities or overrides.")
 
-/client/proc/test_cardpack_distribution()
-	set name = "Test Cardpack Distribution"
-	set category = "Debug"
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB(test_cardpack_distribution, R_DEBUG, "Test Cardpack Distribution", "Test the distribution of a card pack.", ADMIN_CATEGORY_DEBUG)
 	if(!SStrading_card_game.loaded)
 		message_admins("The card subsystem is not currently loaded")
 		return
-	var/pack = tgui_input_list(usr, "Which pack should we test?", "You fucked it didn't you", sort_list(SStrading_card_game.card_packs))
+	var/pack = tgui_input_list(user, "Which pack should we test?", "You fucked it didn't you", sort_list(SStrading_card_game.card_packs))
 	if(!pack)
 		return
-	var/batch_count = tgui_input_number(usr, "How many times should we open it?", "Don't worry, I understand")
-	var/batch_size = tgui_input_number(usr, "How many cards per batch?", "I hope you remember to check the validation")
-	var/guar = tgui_input_number(usr, "Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system")
-
+	var/batch_count = tgui_input_number(user, "How many times should we open it?", "Don't worry, I understand")
+	var/batch_size = tgui_input_number(user, "How many cards per batch?", "I hope you remember to check the validation")
+	var/guar = tgui_input_number(user, "Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system")
 	SStrading_card_game.check_card_distribution(pack, batch_size, batch_count, guar)
 
-/client/proc/print_cards()
-	set name = "Print Cards"
-	set category = "Debug"
+ADMIN_VERB(print_cards, R_DEBUG, "Print Cards", "Print all cards to chat.", ADMIN_CATEGORY_DEBUG)
 	SStrading_card_game.printAllCards()
 
-/client/proc/give_mob_action(mob/ability_recipient in GLOB.mob_list)
-	set category = "Admin.Fun"
-	set name = "Give Mob Action"
-	set desc = "Gives a mob ability to a mob."
-
+ADMIN_VERB(give_mob_action, R_FUN, "Give Mob Action", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/ability_recipient in world)
 	var/static/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	var/static/list/actions_by_name = list()
 	if (!length(actions_by_name))
 		for (var/datum/action/cooldown/mob_cooldown as anything in all_mob_actions)
 			actions_by_name["[initial(mob_cooldown.name)] ([mob_cooldown])"] = mob_cooldown
 
-	var/ability = tgui_input_list(usr, "Choose an ability", "Ability", actions_by_name)
+	var/ability = tgui_input_list(user, "Choose an ability", "Ability", actions_by_name)
 	if(isnull(ability))
 		return
 
 	var/ability_type = actions_by_name[ability]
 	var/datum/action/cooldown/mob_cooldown/add_ability
 
-	var/make_sequence = tgui_alert(usr, "Would you like this action to be a sequence of multiple abilities?", "Sequence Ability", list("Yes", "No"))
+	var/make_sequence = tgui_alert(user, "Would you like this action to be a sequence of multiple abilities?", "Sequence Ability", list("Yes", "No"))
 	if(make_sequence == "Yes")
 		add_ability = new /datum/action/cooldown/mob_cooldown(ability_recipient)
 		add_ability.sequence_actions = list()
 		while(!isnull(ability_type))
-			var/ability_delay = tgui_input_number(usr, "Enter the delay in seconds before the next ability in the sequence is used", "Ability Delay", 2)
+			var/ability_delay = tgui_input_number(user, "Enter the delay in seconds before the next ability in the sequence is used", "Ability Delay", 2)
 			if(isnull(ability_delay) || ability_delay < 0)
 				ability_delay = 0
 			add_ability.sequence_actions[ability_type] = ability_delay * 1 SECONDS
-			ability = tgui_input_list(usr, "Choose a new sequence ability", "Sequence Ability", actions_by_name)
+			ability = tgui_input_list(user, "Choose a new sequence ability", "Sequence Ability", actions_by_name)
 			ability_type = actions_by_name[ability]
-		var/ability_cooldown = tgui_input_number(usr, "Enter the sequence abilities cooldown in seconds", "Ability Cooldown", 2)
+		var/ability_cooldown = tgui_input_number(user, "Enter the sequence abilities cooldown in seconds", "Ability Cooldown", 2)
 		if(isnull(ability_cooldown) || ability_cooldown < 0)
 			ability_cooldown = 2
 		add_ability.cooldown_time = ability_cooldown * 1 SECONDS
-		var/ability_melee_cooldown = tgui_input_number(usr, "Enter the abilities melee cooldown in seconds", "Melee Cooldown", 2)
+		var/ability_melee_cooldown = tgui_input_number(user, "Enter the abilities melee cooldown in seconds", "Melee Cooldown", 2)
 		if(isnull(ability_melee_cooldown) || ability_melee_cooldown < 0)
 			ability_melee_cooldown = 2
 		add_ability.melee_cooldown_time = ability_melee_cooldown * 1 SECONDS
-		add_ability.name = tgui_input_text(usr, "Choose ability name", "Ability name", "Generic Ability")
+		add_ability.name = tgui_input_text(user, "Choose ability name", "Ability name", "Generic Ability")
 		add_ability.create_sequence_actions()
 	else
 		add_ability = new ability_type(ability_recipient)
@@ -530,15 +474,11 @@ ADMIN_VERB(atmos_control, R_DEBUG|R_SERVER, "Atmos Control Panel", "Open the atm
 		return
 	add_ability.Grant(ability_recipient)
 
-	message_admins("[key_name_admin(usr)] added mob ability [ability_type] to mob [ability_recipient].")
-	log_admin("[key_name(usr)] added mob ability [ability_type] to mob [ability_recipient].")
+	message_admins("[key_name_admin(user)] added mob ability [ability_type] to mob [ability_recipient].")
+	log_admin("[key_name(user)] added mob ability [ability_type] to mob [ability_recipient].")
 	BLACKBOX_LOG_ADMIN_VERB("Add Mob Ability")
 
-/client/proc/remove_mob_action(mob/removal_target in GLOB.mob_list)
-	set category = "Admin.Fun"
-	set name = "Remove Mob Action"
-	set desc = "Remove a special ability from the selected mob."
-
+ADMIN_VERB(remove_mob_action, R_FUN, "Remove Mob Action", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/removal_target in world)
 	var/list/target_abilities = list()
 	for(var/datum/action/cooldown/mob_cooldown/ability in removal_target.actions)
 		target_abilities[ability.name] = ability
@@ -546,7 +486,7 @@ ADMIN_VERB(atmos_control, R_DEBUG|R_SERVER, "Atmos Control Panel", "Open the atm
 	if(!length(target_abilities))
 		return
 
-	var/chosen_ability = tgui_input_list(usr, "Choose the spell to remove from [removal_target]", "Depower", sort_list(target_abilities))
+	var/chosen_ability = tgui_input_list(user, "Choose the spell to remove from [removal_target]", "Depower", sort_list(target_abilities))
 	if(isnull(chosen_ability))
 		return
 	var/datum/action/cooldown/mob_cooldown/to_remove = target_abilities[chosen_ability]
@@ -554,20 +494,16 @@ ADMIN_VERB(atmos_control, R_DEBUG|R_SERVER, "Atmos Control Panel", "Open the atm
 		return
 
 	qdel(to_remove)
-	log_admin("[key_name(usr)] removed the ability [chosen_ability] from [key_name(removal_target)].")
-	message_admins("[key_name_admin(usr)] removed the ability [chosen_ability] from [key_name_admin(removal_target)].")
+	log_admin("[key_name(user)] removed the ability [chosen_ability] from [key_name(removal_target)].")
+	message_admins("[key_name_admin(user)] removed the ability [chosen_ability] from [key_name_admin(removal_target)].")
 	BLACKBOX_LOG_ADMIN_VERB("Remove Mob Ability")
 
-/client/proc/give_spell(mob/spell_recipient in GLOB.mob_list)
-	set category = "Admin.Fun"
-	set name = "Give Spell"
-	set desc = "Gives a spell to a mob."
-
-	var/which = tgui_alert(usr, "Chose by name or by type path?", "Chose option", list("Name", "Typepath"))
+ADMIN_VERB(give_spell, R_FUN, "Give Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/spell_recipient in world)
+	var/which = tgui_alert(user, "Chose by name or by type path?", "Chose option", list("Name", "Typepath"))
 	if(!which)
 		return
 	if(QDELETED(spell_recipient))
-		to_chat(usr, span_warning("The intended spell recipient no longer exists."))
+		to_chat(user, span_warning("The intended spell recipient no longer exists."))
 		return
 
 	var/list/spell_list = list()
@@ -581,22 +517,22 @@ ADMIN_VERB(atmos_control, R_DEBUG|R_SERVER, "Atmos Control Panel", "Open the atm
 		else
 			spell_list += to_add
 
-	var/chosen_spell = tgui_input_list(usr, "Choose the spell to give to [spell_recipient]", "ABRAKADABRA", sort_list(spell_list))
+	var/chosen_spell = tgui_input_list(user, "Choose the spell to give to [spell_recipient]", "ABRAKADABRA", sort_list(spell_list))
 	if(isnull(chosen_spell))
 		return
 	var/datum/action/cooldown/spell/spell_path = which == "Typepath" ? chosen_spell : spell_list[chosen_spell]
 	if(!ispath(spell_path))
 		return
 
-	var/robeless = (tgui_alert(usr, "Would you like to force this spell to be robeless?", "Robeless Casting?", list("Force Robeless", "Use Spell Setting")) == "Force Robeless")
+	var/robeless = (tgui_alert(user, "Would you like to force this spell to be robeless?", "Robeless Casting?", list("Force Robeless", "Use Spell Setting")) == "Force Robeless")
 
 	if(QDELETED(spell_recipient))
-		to_chat(usr, span_warning("The intended spell recipient no longer exists."))
+		to_chat(user, span_warning("The intended spell recipient no longer exists."))
 		return
 
 	BLACKBOX_LOG_ADMIN_VERB("Give Spell")
-	log_admin("[key_name(usr)] gave [key_name(spell_recipient)] the spell [chosen_spell][robeless ? " (Forced robeless)" : ""].")
-	message_admins("[key_name_admin(usr)] gave [key_name_admin(spell_recipient)] the spell [chosen_spell][robeless ? " (Forced robeless)" : ""].")
+	log_admin("[key_name(user)] gave [key_name(spell_recipient)] the spell [chosen_spell][robeless ? " (Forced robeless)" : ""].")
+	message_admins("[key_name_admin(user)] gave [key_name_admin(spell_recipient)] the spell [chosen_spell][robeless ? " (Forced robeless)" : ""].")
 
 	var/datum/action/cooldown/spell/new_spell = new spell_path(spell_recipient.mind || spell_recipient)
 
@@ -606,14 +542,10 @@ ADMIN_VERB(atmos_control, R_DEBUG|R_SERVER, "Atmos Control Panel", "Open the atm
 	new_spell.Grant(spell_recipient)
 
 	if(!spell_recipient.mind)
-		to_chat(usr, span_userdanger("Spells given to mindless mobs will belong to the mob and not their mind, \
+		to_chat(user, span_userdanger("Spells given to mindless mobs will belong to the mob and not their mind, \
 			and as such will not be transferred if their mind changes body (Such as from Mindswap)."))
 
-/client/proc/remove_spell(mob/removal_target in GLOB.mob_list)
-	set category = "Admin.Fun"
-	set name = "Remove Spell"
-	set desc = "Remove a spell from the selected mob."
-
+ADMIN_VERB(remove_spell, R_FUN, "Remove Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/removal_target in world)
 	var/list/target_spell_list = list()
 	for(var/datum/action/cooldown/spell/spell in removal_target.actions)
 		target_spell_list[spell.name] = spell
@@ -621,7 +553,7 @@ ADMIN_VERB(atmos_control, R_DEBUG|R_SERVER, "Atmos Control Panel", "Open the atm
 	if(!length(target_spell_list))
 		return
 
-	var/chosen_spell = tgui_input_list(usr, "Choose the spell to remove from [removal_target]", "ABRAKADABRA", sort_list(target_spell_list))
+	var/chosen_spell = tgui_input_list(user, "Choose the spell to remove from [removal_target]", "ABRAKADABRA", sort_list(target_spell_list))
 	if(isnull(chosen_spell))
 		return
 	var/datum/action/cooldown/spell/to_remove = target_spell_list[chosen_spell]
@@ -629,54 +561,39 @@ ADMIN_VERB(atmos_control, R_DEBUG|R_SERVER, "Atmos Control Panel", "Open the atm
 		return
 
 	qdel(to_remove)
-	log_admin("[key_name(usr)] removed the spell [chosen_spell] from [key_name(removal_target)].")
-	message_admins("[key_name_admin(usr)] removed the spell [chosen_spell] from [key_name_admin(removal_target)].")
+	log_admin("[key_name(user)] removed the spell [chosen_spell] from [key_name(removal_target)].")
+	message_admins("[key_name_admin(user)] removed the spell [chosen_spell] from [key_name_admin(removal_target)].")
 	BLACKBOX_LOG_ADMIN_VERB("Remove Spell")
 
-/client/proc/give_disease(mob/living/T in GLOB.mob_living_list)
-	set category = "Admin.Fun"
-	set name = "Give Disease"
-	set desc = "Gives a Disease to a mob."
-	if(!istype(T))
-		to_chat(src, span_notice("You can only give a disease to a mob of type /mob/living."), confidential = TRUE)
-		return
-	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in sort_list(SSdisease.diseases, GLOBAL_PROC_REF(cmp_typepaths_asc))
+ADMIN_VERB(give_disease, R_FUN, "Give Disease", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/victim in world)
+	var/datum/disease/D = input(user, "Choose the disease to give to that guy", "ACHOO") as null|anything in sort_list(SSdisease.diseases, GLOBAL_PROC_REF(cmp_typepaths_asc))
 	if(!D)
 		return
-	T.ForceContractDisease(new D, FALSE, TRUE)
+	victim.ForceContractDisease(new D, FALSE, TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Give Disease")
-	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
-	message_admins(span_adminnotice("[key_name_admin(usr)] gave [key_name_admin(T)] the disease [D]."))
+	log_admin("[key_name(user)] gave [key_name(victim)] the disease [D].")
+	message_admins(span_adminnotice("[key_name_admin(user)] gave [key_name_admin(victim)] the disease [D]."))
 
-/client/proc/object_say(obj/O in world)
-	set category = "Admin.Events"
-	set name = "OSay"
-	set desc = "Makes an object say something."
-	var/message = tgui_input_text(usr, "What do you want the message to be?", "Make Sound", encode = FALSE)
+ADMIN_VERB(object_say, R_FUN, "OSay", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, obj/speaker in world)
+	var/message = tgui_input_text(user, "What do you want the message to be?", "Make Sound", encode = FALSE)
 	if(!message)
 		return
-	O.say(message, sanitize = FALSE)
-	log_admin("[key_name(usr)] made [O] at [AREACOORD(O)] say \"[message]\"")
-	message_admins(span_adminnotice("[key_name_admin(usr)] made [O] at [AREACOORD(O)]. say \"[message]\""))
+	speaker.say(message, sanitize = FALSE)
+	log_admin("[key_name(user)] made [speaker] at [AREACOORD(speaker)] say \"[message]\"")
+	message_admins(span_adminnotice("[key_name_admin(user)] made [speaker] at [AREACOORD(speaker)]. say \"[message]\""))
 	BLACKBOX_LOG_ADMIN_VERB("Object Say")
 
 ADMIN_VERB(build_mode_self, R_BUILD, "Toggle Build Mode Self", "Toggle build mode for yourself.", ADMIN_CATEGORY_EVENTS)
 	togglebuildmode(user.mob) // why is this a global proc???
 	BLACKBOX_LOG_ADMIN_VERB("Toggle Build Mode")
 
-/client/proc/check_ai_laws()
-	set name = "Check AI Laws"
-	set category = "Admin.Game"
-	if(holder)
-		src.holder.output_ai_laws()
+ADMIN_VERB(check_ai_laws, R_ADMIN, "Check AI Laws", "View the current AI laws.", ADMIN_CATEGORY_GAME)
+	user.holder.output_ai_laws()
 
-/client/proc/manage_sect()
-	set name = "Manage Religious Sect"
-	set category = "Admin.Game"
-
+ADMIN_VERB(manage_sect, R_ADMIN, "Manage Religious Sect", "Manages the chaplain's religion.", ADMIN_CATEGORY_GAME)
 	if (!isnull(GLOB.religious_sect))
 		var/you_sure = tgui_alert(
-			usr,
+			user,
 			"The Chaplain has already chosen [GLOB.religious_sect.name], override their selection?",
 			"Replace God?",
 			list("Yes", "Cancel"),
@@ -689,7 +606,7 @@ ADMIN_VERB(build_mode_self, R_BUILD, "Toggle Build Mode Self", "Toggle build mod
 		choices["nothing"] = null
 		for(var/datum/religion_sect/sect as anything in subtypesof(/datum/religion_sect))
 			choices[initial(sect.name)] = sect
-	var/choice = tgui_input_list(usr, "Set new Chaplain sect", "God Picker", choices)
+	var/choice = tgui_input_list(user, "Set new Chaplain sect", "God Picker", choices)
 	if(isnull(choice))
 		return
 	if(choice == "nothing")
@@ -729,28 +646,20 @@ ADMIN_VERB(deadmin, R_NONE, "DeAdmin", "Shed your admin powers.", ADMIN_CATEGORY
 	log_admin("[src] re-adminned themselves.")
 	BLACKBOX_LOG_ADMIN_VERB("Readmin")
 
-/client/proc/populate_world(amount = 50)
-	set name = "Populate World"
-	set category = "Debug"
-	set desc = "(\"Amount of mobs to create\") Populate the world with test mobs."
-
+ADMIN_VERB(populate_world, R_DEBUG, "Populate World", "Populate the world with test mobs.", ADMIN_CATEGORY_DEBUG, amount = 50 as num)
 	for (var/i in 1 to amount)
 		var/turf/tile = get_safe_random_station_turf()
 		var/mob/living/carbon/human/hooman = new(tile)
 		hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
 		testing("Spawned test mob at [get_area_name(tile, TRUE)] ([tile.x],[tile.y],[tile.z])")
 
-/client/proc/toggle_AI_interact()
-	set name = "Toggle Admin AI Interact"
-	set category = "Admin.Game"
-	set desc = "Allows you to interact with most machines as an AI would as a ghost"
+ADMIN_VERB(toggle_ai_interact, R_ADMIN, "Toggle Admin AI Interact", "Allows you to interact with most machines as an AI would as a ghost.", ADMIN_CATEGORY_GAME)
+	user.AI_Interact = !user.AI_Interact
+	if(user.mob && isAdminGhostAI(user.mob))
+		user.mob.has_unlimited_silicon_privilege = user.AI_Interact
 
-	AI_Interact = !AI_Interact
-	if(mob && isAdminGhostAI(mob))
-		mob.has_unlimited_silicon_privilege = AI_Interact
-
-	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
-	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
+	log_admin("[key_name(user)] has [user.AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
+	message_admins("[key_name_admin(user)] has [user.AI_Interact ? "activated" : "deactivated"] their AI interaction")
 
 ADMIN_VERB(debug_statpanel, R_DEBUG, "Debug Stat Panel", "Toggles local debug of the stat panel", ADMIN_CATEGORY_DEBUG)
 	user.stat_panel.send_message("create_debug")
@@ -762,46 +671,26 @@ ADMIN_VERB(debug_statpanel, R_DEBUG, "Debug Stat Panel", "Toggles local debug of
 	var/datum/admins/admin = GLOB.admin_datums[ckey]
 	admin?.associate(src)
 
-/client/proc/display_sendmaps()
-	set name = "Send Maps Profile"
-	set category = "Debug"
+ADMIN_VERB(display_sendmaps, R_DEBUG, "Send Maps Profile", "View the profile.", ADMIN_CATEGORY_DEBUG)
+	user << link("?debug=profile&type=sendmaps&window=test")
 
-	src << link("?debug=profile&type=sendmaps&window=test")
-
-/**
- * Debug verb that spawns human crewmembers
- * of each job type, gives them a mind and assigns the role,
- * and injects them into the manifest, as if they were a "player".
- *
- * This spawns humans with minds and jobs, but does NOT make them 'players'.
- * They're all clientles mobs with minds / jobs.
- */
-/client/proc/spawn_debug_full_crew()
-	set name = "Spawn Debug Full Crew"
-	set desc = "Creates a full crew for the station, filling the datacore and assigning them all minds / jobs. Don't do this on live"
-	set category = "Debug"
-
-	if(!check_rights(R_DEBUG))
-		return
-
-	var/mob/admin = usr
-
+ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a full crew for the station, flling datacore and assigning minds and jobs.", ADMIN_CATEGORY_DEBUG)
 	if(SSticker.current_state != GAME_STATE_PLAYING)
-		to_chat(admin, "You should only be using this after a round has setup and started.")
+		to_chat(user, "You should only be using this after a round has setup and started.")
 		return
 
 	// Two input checks here to make sure people are certain when they're using this.
-	if(tgui_alert(admin, "This command will create a bunch of dummy crewmembers with minds, job, and datacore entries, which will take a while and fill the manifest.", "Spawn Crew", list("Yes", "Cancel")) != "Yes")
+	if(tgui_alert(user, "This command will create a bunch of dummy crewmembers with minds, job, and datacore entries, which will take a while and fill the manifest.", "Spawn Crew", list("Yes", "Cancel")) != "Yes")
 		return
 
-	if(tgui_alert(admin, "I sure hope you aren't doing this on live. Are you sure?", "Spawn Crew (Be certain)", list("Yes", "Cancel")) != "Yes")
+	if(tgui_alert(user, "I sure hope you aren't doing this on live. Are you sure?", "Spawn Crew (Be certain)", list("Yes", "Cancel")) != "Yes")
 		return
 
 	// Find the observer spawn, so we have a place to dump the dummies.
 	var/obj/effect/landmark/observer_start/observer_point = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	var/turf/destination = get_turf(observer_point)
 	if(!destination)
-		to_chat(admin, "Failed to find the observer spawn to send the dummies.")
+		to_chat(user, "Failed to find the observer spawn to send the dummies.")
 		return
 
 	// Okay, now go through all nameable occupations.
@@ -823,7 +712,7 @@ ADMIN_VERB(debug_statpanel, R_DEBUG, "Debug Stat Panel", "Toggles local debug of
 		// Assign the rank to the new player dummy.
 		if(!SSjob.AssignRole(new_guy, job, do_eligibility_checks = FALSE))
 			qdel(new_guy)
-			to_chat(admin, "[rank] wasn't able to be spawned.")
+			to_chat(user, "[rank] wasn't able to be spawned.")
 			continue
 
 		// It's got a job, spawn in a human and shove it in the human.
@@ -844,7 +733,7 @@ ADMIN_VERB(debug_statpanel, R_DEBUG, "Debug Stat Panel", "Toggles local debug of
 		number_made++
 		CHECK_TICK
 
-	to_chat(admin, "[number_made] crewmembers have been created.")
+	to_chat(user, "[number_made] crewmembers have been created.")
 
 /// Debug verb for seeing at a glance what all spells have as set requirements
 /client/proc/debug_spell_requirements()

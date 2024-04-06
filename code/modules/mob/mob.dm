@@ -1426,29 +1426,19 @@
 		usr.client.cmd_admin_godmode(src)
 
 	if(href_list[VV_HK_GIVE_MOB_ACTION])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_mob_action(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_mob_action, src)
 
 	if(href_list[VV_HK_REMOVE_MOB_ACTION])
-		if(!check_rights(NONE))
-			return
-		usr.client.remove_mob_action(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/remove_mob_action, src)
 
 	if(href_list[VV_HK_GIVE_SPELL])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_spell(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_spell, src)
 
 	if(href_list[VV_HK_REMOVE_SPELL])
-		if(!check_rights(NONE))
-			return
-		usr.client.remove_spell(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/remove_spell, src)
 
 	if(href_list[VV_HK_GIVE_DISEASE])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_disease(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_disease, src)
 
 	if(href_list[VV_HK_GIB])
 		if(!check_rights(R_FUN))
