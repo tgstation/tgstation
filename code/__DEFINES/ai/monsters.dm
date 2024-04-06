@@ -289,3 +289,5 @@
 #define BB_RAPTOR_TROUBLE_COOLDOWN "raptor_trouble_maker_cooldown"
 ///our raptor baby target we will take care of
 #define BB_RAPTOR_BABY "raptor_baby"
+///the raptor we will heal up
+#define BB_INJURED_RAPTOR "injured_raptor"

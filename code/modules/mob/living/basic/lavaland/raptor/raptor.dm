@@ -13,7 +13,7 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	move_resist = MOVE_FORCE_VERY_STRONG
 	speak_emote = list("screeches")
-	ai_controller = /datum/ai_controller/basic_controller/sheep
+	ai_controller = /datum/ai_controller/basic_controller/raptor
 	///can this mob breed
 	var/can_breed = TRUE
 	///can we ride this mob
