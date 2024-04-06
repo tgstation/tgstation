@@ -15,8 +15,6 @@
 	item = /obj/item/autosurgeon/syndicate/taser/hidden/single_use
 	progression_minimum = 30 MINUTES
 	cost = 15
-	surplus = 0
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 
 /datum/uplink_item/special/synditaser/New()
 	..()

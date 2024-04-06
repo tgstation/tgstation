@@ -78,7 +78,7 @@
 	actions_types = null
 	var/active = FALSE
 	var/zap_range = 7
-	var/zap_power = 15000
+	var/zap_power = 30000
 
 /obj/item/implant/tesla/proc/on_deef(datum/source, gibbed)
 	SIGNAL_HANDLER
@@ -124,7 +124,7 @@
 
 /obj/item/implant/tesla/macro
 	zap_range = 20
-	zap_power = 60000
+	zap_power = 90000
 
 
 /obj/item/implanter/tesla

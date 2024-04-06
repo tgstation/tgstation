@@ -223,7 +223,7 @@
 	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/stealthy_weapons/syndispraycan
-	name = "Syndicate Spraycan"
+	name = "Syndicate Hellcan"
 	desc = "A normal spraycan that's been filled with CLF3 and Plasma, perfect for close-range incendiary shenanigans. Only has 10 uses."
 	item = /obj/item/toy/crayon/spraycan/syndicate
 	progression_minimum = 15 MINUTES

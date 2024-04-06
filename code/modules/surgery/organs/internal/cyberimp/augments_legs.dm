@@ -308,6 +308,6 @@
 
 /datum/action/innate/magboots/proc/UpdateSpeed()
 	if(lockdown && !HAS_TRAIT(owner, TRAIT_IGNORESLOWDOWN) && owner.has_gravity())
-		owner.add_movespeed_modifier("Magbootimplant", update=TRUE, priority=100, multiplicative_slowdown=2, blacklisted_movetypes=(FLYING|FLOATING))
-	else if(owner.has_movespeed_modifier("Magbootimplant"))
-		owner.remove_movespeed_modifier("Magbootimplant")
+		owner.add_movespeed_modifier(/datum/movespeed_modifier/magbootimplant, update=TRUE)
+	else if(owner.has_movespeed_modifier(/datum/movespeed_modifier/magbootimplant))
+		owner.remove_movespeed_modifier(/datum/movespeed_modifier/magbootimplant)

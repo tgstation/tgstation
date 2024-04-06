@@ -446,9 +446,9 @@
 			COOLDOWN_START(src, startsoundcooldown, 1 SECONDS)
 		if(syndicate_implant)//the toy doesn't do anything aside from the trail and the sound
 			if(ishuman(owner))
-				owner.add_actionspeed_modifier("spinalimplant", priority=100, multiplicative_slowdown=-0.35)
+				owner.add_actionspeed_modifier(/datum/actionspeed_modifier/neuraloverclockactions)
 			owner.next_move_modifier *= 0.7
-			owner.add_movespeed_modifier("spinalimplant", priority=100, multiplicative_slowdown=-1)
+			owner.add_movespeed_modifier(/datum/movespeed_modifier/neuraloverclock, update=TRUE)
 		RegisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(move_react))
 	else
 		if(COOLDOWN_FINISHED(src, endsoundcooldown))
@@ -456,9 +456,9 @@
 			COOLDOWN_START(src, endsoundcooldown, 1 SECONDS)
 		if(syndicate_implant)
 			if(ishuman(owner))
-				owner.remove_actionspeed_modifier("spinalimplant")
+				owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/neuraloverclockactions)
 			owner.next_move_modifier /= 0.7
-			owner.remove_movespeed_modifier("spinalimplant")
+			owner.remove_movespeed_modifier(/datum/movespeed_modifier/neuraloverclock)
 		UnregisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE)
 	on = !on
 	if(!silent)

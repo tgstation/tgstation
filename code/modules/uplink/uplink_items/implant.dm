@@ -9,9 +9,15 @@
 
 /datum/uplink_item/implants/reusableautosurgeon
 	name = "Syndicate Autosurgeon"
-	desc = "A multi-use autosurgeon for implanting whatever you want into yourself. You'll never have to beg a doctor for basic surgery again."
+	desc = "A multi-use autosurgeon for surgically implanting whatever you want into yourself. \
+			Works on both organs and cybernetics. Often useful for installing multiple of our cybernetics."
 	item = /obj/item/autosurgeon/syndicate
-	cost = 5
+	cost = 4
+
+/datum/uplink_item/implants/reusableautosurgeon/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		cost /= 2
 
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"
@@ -85,7 +91,7 @@
 	name = "Regenerative Implant"
 	desc = "A surgical implant that when inserted into the body will slowly repair the host. Allowing for slow recovery of all forms of damage. \
 			Beware of health scanners, as constant supervision of your health may give you away."
-	item = /obj/item/autosurgeon/syndicate/reviver/better/hidden
+	item = /obj/item/autosurgeon/syndicate/regenerativebetter/hidden/single_use
 	cost = 5
 	surplus = 20
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
@@ -113,6 +119,7 @@
 			defibrillate your heart should you perish. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/reviver/better/hidden/single_use
 	cost = 6
+	surplus = 20
 
 /datum/uplink_item/implants/syndiantistun
 	name = "Syndicate CNS Rebooter Implant"
@@ -143,7 +150,7 @@
 	item = /obj/item/autosurgeon/syndicate/esword/hidden/single_use
 	progression_minimum = 30 MINUTES
 	cost = 10
-	surplus = 10
+	surplus = 40
 
 /datum/uplink_item/implants/strength
 	name = "S.A.E.M Implant"
@@ -153,7 +160,7 @@
 	item = /obj/item/autosurgeon/syndicate/muscle/hidden/single_use
 	progression_minimum = 10 MINUTES
 	cost = 6
-	surplus = 0
+	surplus = 30
 
 /datum/uplink_item/implants/kravmaga
 	name = "Krav Maga Implant"
@@ -162,7 +169,7 @@
 	item = /obj/item/storage/box/syndie_kit/krav_maga
 	progression_minimum = 30 MINUTES
 	cost = 12
-	surplus = 0
+	surplus = 10
 
 /datum/uplink_item/implants/lifesupport
 	name = "Life-Support Implants"
@@ -280,7 +287,7 @@
 	desc = "One G.O.R.L.E.X Mantis blade implant able to be retracted inside your body at will for easy storage and concealing. Two blades can be used at once."
 	item = /obj/item/autosurgeon/syndicate/syndie_mantis
 	cost = 6
-	surplus = 0
+	surplus = 50
 	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/implants/makarov_implant
@@ -288,24 +295,28 @@
 	desc = "A modified version of the Makarov pistol placed inside of the forearm to allow for easy concealment."
 	item = /obj/item/autosurgeon/syndicate/makarov_implant
 	cost = 9
+	surplus = 20
 
 /datum/uplink_item/implants/m1911_implant
 	name = "M1911 Arm implant"
 	desc = "A modified version of the M1911 pistol placed inside of the forearm to allow for easy concealment."
 	item = /obj/item/autosurgeon/syndicate/m1911_implant
 	cost = 8
+	surplus = 20
 
 /datum/uplink_item/implants/deagle_implant
 	name = "Desert Eagle Arm implant"
 	desc = "A modified version of the Desert Eagle placed inside of the forearm to allow for easy concealment."
 	item = /obj/item/autosurgeon/syndicate/deagle_implant
 	cost = 12
+	surplus = 20
 
 /datum/uplink_item/implants/viper_implant
 	name = "Viper Arm implant"
 	desc = "A modified version of the Viper pistol placed inside of the forearm to allow for easy concealment."
 	item = /obj/item/autosurgeon/syndicate/viper_implant
 	cost = 10
+	surplus = 20
 
 /datum/uplink_item/implants/cobra_implant
 	name = "Cobra Arm implant"
@@ -313,21 +324,24 @@
 	item = /obj/item/autosurgeon/syndicate/cobra_implant
 	progression_minimum = 5 MINUTES
 	cost = 9
+	surplus = 20
 
-/datum/uplink_item/implants/spinal
+/datum/uplink_item/implants/spinaloverclock
 	name = "Neural Overclocker Implant"
 	desc = "Stimulates your central nervous system in order to enable you to perform muscle movements faster. Careful not to overuse it."
 	item = /obj/item/autosurgeon/syndicate/spinalspeed
 	cost = 14
 	surplus = 0
 	limited_stock = 1
+	progression_minimum = 30 MINUTES
 
 /datum/uplink_item/implants/emp_shield
 	name = "EMP Shield Implant"
 	desc = "Developed by Cybersun to assist with the S.E.L.F. movement, this implant will protect you and your insides from electromagnetic interference. \
 			Due to technical limitations, it will overload and shut down for a short time if triggered too often."
 	item = /obj/item/storage/box/syndie_kit/emp_shield
-	cost = 2
+	cost = 4
+	surplus = 20
 
 /datum/uplink_item/implants/hammerimplant
 	name = "Vxtvul Hammer Implant"
@@ -335,5 +349,6 @@
 			This hammer can be retracted and wielded in two hands as an effective armor-piercing weapon. \
 			It can be charged by the user's concentration, which permits a single blow that will decimate construction, \
 			fling bodies, and heavily damage mechs. Vir'ln krx'tai, lost one."
-	cost = 10
+	cost = 14
+	surplus = 5
 	item = /obj/item/autosurgeon/syndicate/syndie_hammer

@@ -209,7 +209,7 @@
 /datum/action/item_action/charge_hammer
 	name = "Charge the Blast Pads"
 
-/datum/action/item_action/charge_hammer/Trigger()
+/datum/action/item_action/charge_hammer/Trigger(trigger_flags)
 	var/obj/item/melee/vxtvulhammer/vxtvulhammer = target
 	if(istype(vxtvulhammer))
 		vxtvulhammer.charge_hammer(owner)
