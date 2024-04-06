@@ -285,11 +285,12 @@
 			wearer.visible_message(span_warning("[src] drops [found_item] into the hands of [wearer]!"))
 			. = TRUE
 		else
-			balloon_alert(wearer, "cant put in hands!")
+			balloon_alert(wearer, "can't put in hands!")
 			break
+			
+	return .
 
 /obj/item/clothing/head/fedora/inspector_hat/attackby(obj/item/item, mob/user, params)
-
 	. = ..()
 
 	if(LAZYLEN(contents) >= max_items)
@@ -352,11 +353,11 @@
 		items_by_regex -= found_regex
 		phrases_by_regex -= found_regex
 
-	. = ..()
+	return ..()
 
 /obj/item/clothing/head/fedora/inspector_hat/Destroy()
 	QDEL_LIST_ASSOC(items_by_regex) //Anything that failed to drop gets deleted.
-	. = ..()
+	return ..()
 
 //Mime
 /obj/item/clothing/head/beret
