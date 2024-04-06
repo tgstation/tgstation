@@ -331,7 +331,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "psykerpod"
 	density = TRUE
-	mob_species = /datum/species/plasma
+	mob_species = /datum/species/plasmaman
 	you_are_text = "You are a plasmaman, a sentient colony of fungi created by one of the plasma pits outside."
 	flavour_text = "Dispite not knowing your past or who you once were, you were able to keep information even through your rebirth \
 	The language you remember feels forign on your tongue, yet you still speak it."
