@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - balance: "punches no longer knock down or deal stamina damage"
