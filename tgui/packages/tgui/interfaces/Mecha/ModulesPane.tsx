@@ -434,40 +434,52 @@ const SnowflakeSleeper = (props) => {
           value={patient.patient_health}
         />
       </LabeledList.Item>
-      <LabeledList.Item label={'State'}>
+      <LabeledList.Item className="candystripe" label={'State'}>
         {patient.patient_state}
       </LabeledList.Item>
-      <LabeledList.Item label={'Temperature'}>
+      <LabeledList.Item className="candystripe" label={'Temperature'}>
         {patient.core_temp} C
       </LabeledList.Item>
-      <LabeledList.Item label={'Brute Damage'}>
+      <LabeledList.Item className="candystripe" label={'Brute Damage'}>
         {patient.brute_loss}
       </LabeledList.Item>
-      <LabeledList.Item label={'Burn Severity'}>
+      <LabeledList.Item className="candystripe" label={'Burn Severity'}>
         {patient.burn_loss}
       </LabeledList.Item>
-      <LabeledList.Item label={'Toxin Content'}>
+      <LabeledList.Item className="candystripe" label={'Toxin Content'}>
         {patient.toxin_loss}
       </LabeledList.Item>
-      <LabeledList.Item label={'Respiratory Damage'}>
+      <LabeledList.Item className="candystripe" label={'Respiratory Damage'}>
         {patient.oxygen_loss}
       </LabeledList.Item>
       {!!has_brain_damage && (
-        <LabeledList.Item label={'Detected'}>Brain Damage</LabeledList.Item>
+        <LabeledList.Item className="candystripe" label={'Detected'}>
+          Brain Damage
+        </LabeledList.Item>
       )}
       {!!has_traumas && (
-        <LabeledList.Item label={'Detected'}>Traumatic Damage</LabeledList.Item>
+        <LabeledList.Item className="candystripe" label={'Detected'}>
+          Traumatic Damage
+        </LabeledList.Item>
       )}
       <LabeledList.Item label={'Reagent Details'}>
         {contained_reagents.map((reagent) => (
-          <LabeledList.Item key={reagent.name} label={reagent.name}>
+          <LabeledList.Item
+            key={reagent.name}
+            className="candystripe"
+            label={reagent.name}
+          >
             <LabeledList.Item label={`${reagent.volume}u`} />
           </LabeledList.Item>
         ))}
       </LabeledList.Item>
       <LabeledList.Item label={'Reagent Injection'}>
         {injectible_reagents.map((reagent) => (
-          <LabeledList.Item key={reagent.name} label={reagent.name}>
+          <LabeledList.Item
+            className="candystripe"
+            key={reagent.name}
+            label={reagent.name}
+          >
             <LabeledList.Item label={`${reagent.volume}u`}>
               <Button
                 onClick={() =>
