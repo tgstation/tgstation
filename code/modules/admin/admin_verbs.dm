@@ -23,9 +23,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
 	/client/proc/cmd_admin_create_centcom_report,
 	/client/proc/cmd_change_command_name,
-	/client/proc/create_mob_worm,
 	/client/proc/fax_panel, /*send a paper to fax*/
-	/client/proc/force_load_lazy_template,
 	/client/proc/Getmob, /*teleports a mob to our location*/
 	/client/proc/Getkey, /*teleports a mob with a certain ckey to our location*/
 	/client/proc/getserverlogs, /*for accessing server logs*/
@@ -79,7 +77,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/debug_huds,
 	/client/proc/debugNatureMapGenerator,
 	/client/proc/debug_plane_masters,
-	/client/proc/debug_spell_requirements,
 	/client/proc/enable_mapping_verbs,
 	/client/proc/generate_wikichem_list,
 	/client/proc/jump_to_ruin,
@@ -146,17 +143,6 @@ ADMIN_VERB(hide_verbs, R_NONE, "Adminverbs - Hide All", "Hide most of your admin
 
 	to_chat(user, span_interface("Almost all of your adminverbs have been hidden."), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Hide All Adminverbs")
-
-// Should NOT be an admin verb datum. Manually added by /datum/admin_verb/hide_verbs
-/client/proc/show_verbs()
-	set name = "Adminverbs - Show"
-	set category = ADMIN_CATEGORY_MAIN
-
-	remove_verb(src, /client/proc/show_verbs)
-	add_admin_verbs()
-
-	to_chat(src, span_interface("All of your adminverbs are now visible."), confidential = TRUE)
-	BLACKBOX_LOG_ADMIN_VERB("Show Adminverbs")
 
 ADMIN_VERB(admin_ghost, R_ADMIN, "AGhost", "Become a ghost without DNR.", ADMIN_CATEGORY_GAME)
 	. = TRUE
@@ -621,31 +607,6 @@ ADMIN_VERB(deadmin, R_NONE, "DeAdmin", "Shed your admin powers.", ADMIN_CATEGORY
 	message_admins("[key_name_admin(user)] deadminned themselves.")
 	BLACKBOX_LOG_ADMIN_VERB("Deadmin")
 
-/client/proc/readmin()
-	set name = "Readmin"
-	set category = "Admin"
-	set desc = "Regain your admin powers."
-
-	var/datum/admins/A = GLOB.deadmins[ckey]
-
-	if(!A)
-		A = GLOB.admin_datums[ckey]
-		if (!A)
-			var/msg = " is trying to readmin but they have no deadmin entry"
-			message_admins("[key_name_admin(src)][msg]")
-			log_admin_private("[key_name(src)][msg]")
-			return
-
-	A.associate(src)
-
-	if (!holder)
-		return //This can happen if an admin attempts to vv themself into somebody elses's deadmin datum by getting ref via brute force
-
-	to_chat(src, span_interface("You are now an admin."), confidential = TRUE)
-	message_admins("[src] re-adminned themselves.")
-	log_admin("[src] re-adminned themselves.")
-	BLACKBOX_LOG_ADMIN_VERB("Readmin")
-
 ADMIN_VERB(populate_world, R_DEBUG, "Populate World", "Populate the world with test mobs.", ADMIN_CATEGORY_DEBUG, amount = 50 as num)
 	for (var/i in 1 to amount)
 		var/turf/tile = get_safe_random_station_turf()
@@ -663,13 +624,6 @@ ADMIN_VERB(toggle_ai_interact, R_ADMIN, "Toggle Admin AI Interact", "Allows you 
 
 ADMIN_VERB(debug_statpanel, R_DEBUG, "Debug Stat Panel", "Toggles local debug of the stat panel", ADMIN_CATEGORY_DEBUG)
 	user.stat_panel.send_message("create_debug")
-
-/client/proc/admin_2fa_verify()
-	set name = "Verify Admin"
-	set category = "Admin"
-
-	var/datum/admins/admin = GLOB.admin_datums[ckey]
-	admin?.associate(src)
 
 ADMIN_VERB(display_sendmaps, R_DEBUG, "Send Maps Profile", "View the profile.", ADMIN_CATEGORY_DEBUG)
 	user << link("?debug=profile&type=sendmaps&window=test")
@@ -735,11 +689,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 
 	to_chat(user, "[number_made] crewmembers have been created.")
 
-/// Debug verb for seeing at a glance what all spells have as set requirements
-/client/proc/debug_spell_requirements()
-	set name = "Show Spell Requirements"
-	set category = "Debug"
-
+ADMIN_VERB(debug_spell_requirements, R_DEBUG, "Debug Spell Requirements", "View all spells and their requirements.", ADMIN_CATEGORY_DEBUG)
 	var/header = "<tr><th>Name</th> <th>Requirements</th>"
 	var/all_requirements = list()
 	for(var/datum/action/cooldown/spell/spell as anything in typesof(/datum/action/cooldown/spell))
@@ -767,42 +717,37 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 
 	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"
 	var/page_contents = "[page_style]<table style=\"width:100%\">[header][jointext(all_requirements, "")]</table>"
-	var/datum/browser/popup = new(mob, "spellreqs", "Spell Requirements", 600, 400)
+	var/datum/browser/popup = new(user.mob, "spellreqs", "Spell Requirements", 600, 400)
 	popup.set_content(page_contents)
 	popup.open()
 
-/client/proc/force_load_lazy_template()
-	set name = "Load/Jump Lazy Template"
-	set category = "Admin.Events"
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(load_lazy_template, R_ADMIN, "Load/Jump Lazy Template", "Loads a lazy template and/or jumps to it.", ADMIN_CATEGORY_EVENTS)
 	var/list/choices = LAZY_TEMPLATE_KEY_LIST_ALL()
-	var/choice = tgui_input_list(usr, "Key?", "Lazy Loader", choices)
+	var/choice = tgui_input_list(user, "Key?", "Lazy Loader", choices)
 	if(!choice)
 		return
 
 	choice = choices[choice]
 	if(!choice)
-		to_chat(usr, span_warning("No template with that key found, report this!"))
+		to_chat(user, span_warning("No template with that key found, report this!"))
 		return
 
 	var/already_loaded = LAZYACCESS(SSmapping.loaded_lazy_templates, choice)
 	var/force_load = FALSE
-	if(already_loaded && (tgui_alert(usr, "Template already loaded.", "", list("Jump", "Load Again")) == "Load Again"))
+	if(already_loaded && (tgui_alert(user, "Template already loaded.", "", list("Jump", "Load Again")) == "Load Again"))
 		force_load = TRUE
 
 	var/datum/turf_reservation/reservation = SSmapping.lazy_load_template(choice, force = force_load)
 	if(!reservation)
-		to_chat(usr, span_boldwarning("Failed to load template!"))
+		to_chat(user, span_boldwarning("Failed to load template!"))
 		return
 
-	if(!isobserver(usr))
-		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_ghost)
-	usr.forceMove(reservation.bottom_left_turfs[1])
+	if(!isobserver(user.mob))
+		SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_ghost)
+	user.mob.forceMove(reservation.bottom_left_turfs[1])
 
-	message_admins("[key_name_admin(usr)] has loaded lazy template '[choice]'")
-	to_chat(usr, span_boldnicegreen("Template loaded, you have been moved to the bottom left of the reservation."))
+	message_admins("[key_name_admin(user)] has loaded lazy template '[choice]'")
+	to_chat(user, span_boldnicegreen("Template loaded, you have been moved to the bottom left of the reservation."))
 
 ADMIN_VERB(library_control, R_BAN, "Library Management", "List and manage the Library.", ADMIN_CATEGORY_MAIN)
 	if(!user.holder.library_manager)
@@ -810,21 +755,14 @@ ADMIN_VERB(library_control, R_BAN, "Library Management", "List and manage the Li
 	user.holder.library_manager.ui_interact(user.mob)
 	BLACKBOX_LOG_ADMIN_VERB("Library Management")
 
-/client/proc/create_mob_worm()
-	set category = "Admin.Fun"
-	set name = "Create Mob Worm"
-	set desc = "Attached a linked list of mobs to a marked mob"
-	if (!check_rights(R_FUN))
+ADMIN_VERB(create_mob_worm, R_FUN, "Create Mob Worm", "Attach a linked list of mobs to your marked mob.", ADMIN_CATEGORY_FUN)
+	if(!isliving(user.holder.marked_datum))
+		to_chat(user, span_warning("Error: Please mark a mob to attach mobs to."))
 		return
-	if(isnull(holder))
-		return
-	if(!isliving(holder.marked_datum))
-		to_chat(usr, span_warning("Error: Please mark a mob to attach mobs to."))
-		return
-	var/mob/living/head = holder.marked_datum
+	var/mob/living/head = user.holder.marked_datum
 
 	var/attempted_target_path = tgui_input_text(
-		usr,
+		user,
 		"Enter typepath of a mob you'd like to make your chain from.",
 		"Typepath",
 		"[/mob/living/basic/pet/dog/corgi/ian]",
@@ -839,7 +777,7 @@ ADMIN_VERB(library_control, R_BAN, "Library Management", "List and manage the Li
 	if(isnull(desired_mob) || !ispath(desired_mob) || QDELETED(head))
 		return //The user pressed "Cancel"
 
-	var/amount = tgui_input_number(usr, "How long should our tail be?", "Worm Configurator", default = 3, min_value = 1)
+	var/amount = tgui_input_number(user, "How long should our tail be?", "Worm Configurator", default = 3, min_value = 1)
 	if (isnull(amount) || amount < 1 || QDELETED(head))
 		return
 	head.AddComponent(/datum/component/mob_chain)

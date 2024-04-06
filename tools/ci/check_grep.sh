@@ -22,6 +22,7 @@ if command -v rg >/dev/null 2>&1; then
 	code_files="code/**/**.dm"
 	map_files="_maps/**/**.dmm"
 	code_x_515="code/**/!(__byond_version_compat).dm"
+	code_av_enforce="code/**/!(admin_verbs?).dm"
 else
 	pcre2_support=0
 	grep=grep
