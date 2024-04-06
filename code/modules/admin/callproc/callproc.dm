@@ -232,7 +232,7 @@ ADMIN_VERB(call_proc_datum, R_DEBUG, "Atom ProcCall", ADMIN_VERB_NO_DESCRIPTION,
 	if(!procname)
 		return
 	if(!hascall(thing, procname))
-		to_chat(user, "<font color='red'>Error: callproc_datum(): type [A.type] has no proc named [procname].</font>", confidential = TRUE)
+		to_chat(user, "<font color='red'>Error: callproc_datum(): type [thing.type] has no proc named [procname].</font>", confidential = TRUE)
 		return
 	var/list/lst = user.get_callproc_args()
 	if(!lst)
@@ -248,7 +248,7 @@ ADMIN_VERB(call_proc_datum, R_DEBUG, "Atom ProcCall", ADMIN_VERB_NO_DESCRIPTION,
 	BLACKBOX_LOG_ADMIN_VERB("Atom ProcCall")
 
 	var/returnval = WrapAdminProcCall(thing, procname, lst) // Pass the lst as an argument list to the proc
-	. = get_callproc_returnval(returnval,procname)
+	. = user.get_callproc_returnval(returnval,procname)
 	if(.)
 		to_chat(user, ., confidential = TRUE)
 

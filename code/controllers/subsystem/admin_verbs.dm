@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(admin_verbs)
 	/// A list of all admin verbs indexed by their type.
 	var/list/datum/admin_verb/admin_verbs_by_type = list()
 	/// A list of all admin verbs indexed by their visibility flag.
-	var/list/datum/admin_verb/admin_verbs_by_visibility_flag = list()
+	var/list/list/datum/admin_verb/admin_verbs_by_visibility_flag = list()
 	/// A map of all assosciated admins and their visibility flags.
 	var/list/admin_visibility_flags = list()
 	/// A list of all admins that are pending initialization of this SS.
@@ -38,7 +38,12 @@ SUBSYSTEM_DEF(admin_verbs)
 		if(!verb_singleton.__avd_check_should_exist())
 			qdel(verb_singleton, force = TRUE)
 			continue
+
 		admin_verbs_by_type[verb_type] = verb_singleton
+		if(verb_singleton.visibility_flag)
+			if(!(verb_singleton.visibility_flag in admin_verbs_by_visibility_flag))
+				admin_verbs_by_visibility_flag[verb_singleton.visibility_flag] = list()
+			admin_verbs_by_visibility_flag[verb_singleton.visibility_flag] |= list(verb_singleton)
 
 /datum/controller/subsystem/admin_verbs/proc/get_valid_verbs_for_admin(client/admin)
 	if(isnull(admin.holder))

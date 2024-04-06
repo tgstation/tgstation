@@ -18,21 +18,11 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/change_shuttle_events, //allows us to change the shuttle events
 	/datum/admins/proc/reset_tram, //tram related admin actions
 // Client procs
-	/client/proc/admin_call_shuttle, /*allows us to call the emergency shuttle*/
-	/client/proc/admin_cancel_shuttle, /*allows us to cancel the emergency shuttle, sending it back to centcom*/
-	/client/proc/admin_disable_shuttle, /*allows us to disable the emergency shuttle admin-wise so that it cannot be called*/
-	/client/proc/admin_enable_shuttle,  /*undoes the above*/
-	/client/proc/admin_hostile_environment, /*Allows admins to prevent the emergency shuttle from leaving, also lets admins clear hostile environments if theres one stuck*/
 	/client/proc/centcom_podlauncher,/*Open a window to launch a Supplypod and configure it or it's contents*/
 	/client/proc/check_ai_laws, /*shows AI and borg laws*/
 	/client/proc/cmd_admin_check_contents, /*displays the contents of an instance*/
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/cmd_admin_direct_narrate, /*send text directly to a player with no padding. Useful for narratives and fluff-text*/
-	/client/proc/cmd_admin_headset_message, /*send a message to somebody through their headset as CentCom*/
-	/client/proc/cmd_admin_local_narrate, /*sends text to all mobs within view of atom*/
-	/client/proc/cmd_admin_subtle_message, /*send a message to somebody as a 'voice in their head'*/
-	/client/proc/cmd_admin_world_narrate, /*sends text to all players with no padding*/
 	/client/proc/cmd_change_command_name,
 	/client/proc/create_mob_worm,
 	/client/proc/fax_panel, /*send a paper to fax*/
@@ -57,18 +47,9 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/player_ticket_history,
 	)
 GLOBAL_LIST_INIT(admin_verbs_fun, list(
-// Admin datums
-	/datum/admins/proc/station_traits_panel,
-// Client procs
-	/client/proc/admin_away,
-	/client/proc/add_marked_mob_ability,
-	/client/proc/admin_change_sec_level,
 	/client/proc/cinematic,
-	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/cmd_select_equipment,
-	/client/proc/command_report_footnote,
-	/client/proc/delay_command_report,
 	/client/proc/drop_bomb,
 	/client/proc/drop_dynex_bomb,
 	/client/proc/forceEvent,
@@ -76,15 +57,12 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/mass_zombie_infection,
 	/client/proc/object_say,
 	/client/proc/polymorph_all,
-	/client/proc/remove_marked_mob_ability,
 	/client/proc/reset_ooc,
-	/client/proc/run_weather,
 	/client/proc/set_dynex_scale,
 	/client/proc/set_ooc,
 	/client/proc/show_tip,
 	/client/proc/smite,
 	/client/proc/summon_ert,
-	/client/proc/toggle_nuke,
 	))
 GLOBAL_PROTECT(admin_verbs_fun)
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
@@ -169,6 +147,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 #endif
 
 /client/proc/remove_admin_verbs()
+	SSadmin_verbs.deassosciate_admin(src)
 	remove_verb(src, list(
 		GLOB.admin_verbs_admin,
 		GLOB.admin_verbs_fun,

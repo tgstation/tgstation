@@ -1044,18 +1044,10 @@
 		usr.client.sendmob(M)
 
 	else if(href_list["narrateto"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["narrateto"])
-		usr.client.cmd_admin_direct_narrate(M)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_admin_direct_narrate, locate(href_list["narrateto"]))
 
 	else if(href_list["subtlemessage"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["subtlemessage"])
-		usr.client.cmd_admin_subtle_message(M)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_admin_subtle_message, locate(href_list["subtlemessage"]))
 
 	else if(href_list["playsoundto"])
 		if(!check_rights(R_SOUND))

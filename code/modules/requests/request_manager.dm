@@ -170,10 +170,11 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			var/mob/M = request.owner?.mob
 			usr.client.debug_variables(M)
 			return TRUE
+
 		if ("sm")
-			var/mob/M = request.owner?.mob
-			usr.client.cmd_admin_subtle_message(M)
+			SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/cmd_admin_subtle_message, request.owner?.mob)
 			return TRUE
+
 		if ("flw")
 			var/mob/M = request.owner?.mob
 			usr.client.admin_follow(M)
