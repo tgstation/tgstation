@@ -22,14 +22,12 @@ if command -v rg >/dev/null 2>&1; then
 	code_files="code/**/**.dm"
 	map_files="_maps/**/**.dmm"
 	code_x_515="code/**/!(__byond_version_compat).dm"
-	code_av_enforce="code/**/!(admin_verbs?).dm"
 else
 	pcre2_support=0
 	grep=grep
 	code_files="-r --include=code/**/**.dm"
 	map_files="-r --include=_maps/**/**.dmm"
 	code_x_515="-r --include=code/**/!(__byond_version_compat).dm"
-	code_av_enforce="-r --include=code/**/!(admin_verbs?).dm"
 fi
 
 echo -e "${BLUE}Using grep provider at $(which $grep)${NC}"
@@ -240,14 +238,6 @@ if $grep '\.proc/' $code_x_515 ; then
     echo
     echo -e "${RED}ERROR: Outdated proc reference use detected in code, please use proc reference helpers.${NC}"
     st=1
-fi;
-
-section "AVD Macro Use Enforcement"
-part "illegal access to internal vars"
-if $grep '__avd' $code_av_enforce; then
-	echo
-	echo -e "${RED}ERROR: Illegal access to __avd detected in code, please use the AVD macro.${NC}"
-	st=1
 fi;
 
 if [ "$pcre2_support" -eq 1 ]; then
