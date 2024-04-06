@@ -17,6 +17,22 @@
 	var/turf/owning_turf = target
 
 	var/atom/movable/mirage_holder/holder = new(owning_turf)
+	if(direction & SOUTH)
+		holder.pixel_y -= world.icon_size * range
+	if(direction & WEST)
+		holder.pixel_x -= world.icon_size * range
+
+	var/x = target_turf.x
+	var/y = target_turf.y
+	var/z = clamp(target_turf.z, 1, world.maxz)
+	var/turf/southwest = locate(clamp(x - (direction & WEST ? range : 0), 1, world.maxx), clamp(y - (direction & SOUTH ? range : 0), 1, world.maxy), z)
+	var/turf/northeast = locate(clamp(x + (direction & EAST ? range : 0), 1, world.maxx), clamp(y + (direction & NORTH ? range : 0), 1, world.maxy), z)
+	// We are not interested in setting up any tracking if we aren't in a world with z offsetting
+	// Since we assert nothing will care
+	if(!SSmapping.max_plane_offset)
+		holder.vis_contents += block(southwest, northeast)
+		return
+
 	// This is an optimization to avoid needing to check for mirage partners to pass along depth info
 	// We just assert that mirages display all the levels their partner ever could
 	var/our_offset = GET_Z_PLANE_OFFSET(owning_turf.z)
@@ -32,20 +48,11 @@
 	var/list/z_levels = list()
 	z_levels += owning_turf.z
 
-	var/x = target_turf.x
-	var/y = target_turf.y
-	var/z = clamp(target_turf.z, 1, world.maxz)
-	var/turf/southwest = locate(clamp(x - (direction & WEST ? range : 0), 1, world.maxx), clamp(y - (direction & SOUTH ? range : 0), 1, world.maxy), z)
-	var/turf/northeast = locate(clamp(x + (direction & EAST ? range : 0), 1, world.maxx), clamp(y + (direction & NORTH ? range : 0), 1, world.maxy), z)
 	for(var/turf/in_block as anything in block(southwest, northeast))
 		// We'll never remove these because mirage holders are not reliable. Sorry
 		in_block.add_plane_visibilities(depths)
 		in_block.add_z_visibilities(z_levels)
 		holder.vis_contents += in_block 
-	if(direction & SOUTH)
-		holder.pixel_y -= world.icon_size * range
-	if(direction & WEST)
-		holder.pixel_x -= world.icon_size * range
 
 /datum/element/mirage_border/Detach(atom/movable/target)
 	. = ..()

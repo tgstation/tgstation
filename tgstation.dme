@@ -340,7 +340,6 @@
 #include "code\__DEFINES\dcs\signals\signals_object.dm"
 #include "code\__DEFINES\dcs\signals\signals_operating_computer.dm"
 #include "code\__DEFINES\dcs\signals\signals_painting.dm"
-#include "code\__DEFINES\dcs\signals\signals_plane_group.dm"
 #include "code\__DEFINES\dcs\signals\signals_proxmonitor.dm"
 #include "code\__DEFINES\dcs\signals\signals_radiation.dm"
 #include "code\__DEFINES\dcs\signals\signals_reagent.dm"

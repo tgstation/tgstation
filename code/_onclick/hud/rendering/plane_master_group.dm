@@ -57,8 +57,9 @@
 	src.map = map
 	depths_in_view = new /list(SSmapping.max_plane_offset + 1)
 	z_levels_in_view = new /list(world.maxz)
+	if(SSmapping.max_plane_offset)
+		RegisterSignal(SSdcs, COMSIG_VIS_CELL_CREATED, PROC_REF(on_cell_create))
 	build_plane_masters(0, SSmapping.max_plane_offset)
-	RegisterSignal(SSdcs, COMSIG_VIS_CELL_CREATED, PROC_REF(on_cell_create))
 
 /datum/plane_master_group/Destroy()
 	orphan_hud()
@@ -132,9 +133,9 @@
 		UnregisterSignal(src.source, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 	src.source = source
 	if(source)
-		RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(source_moved))
+		if(SSmapping.max_plane_offset)
+			RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(source_moved))
 		RegisterSignal(source, COMSIG_QDELETING, PROC_REF(source_deleted))
-	SEND_SIGNAL(src, COSMIG_PLANE_SOURCE_CHANGED, source)
 	update_depth()
 
 /datum/plane_master_group/proc/source_moved(datum/source)
@@ -175,6 +176,8 @@
 // So they look nicer. if you can't it's all good, if you think you can sanely look at monster's work
 // It's hard, and potentially expensive. be careful
 /datum/plane_master_group/proc/offset_planes(use_scale = TRUE)
+	if(!SSmapping.max_plane_offset)
+		return
 	// Check if this feature is disabled for the client, in which case don't use scale.
 	var/mob/our_mob = our_hud?.mymob
 	if(!our_mob?.client?.prefs?.read_preference(/datum/preference/toggle/multiz_parallax))
@@ -299,6 +302,8 @@
 /// Refreshes our depth stack and updates our plane masters to match it
 /// Will try and do as little work as possible
 /datum/plane_master_group/proc/update_depth()
+	if(!SSmapping.max_plane_offset)
+		return
 	var/turf/source_turf = get_turf(source)
 	if(!source_turf)
 		clear_depth()
@@ -590,6 +595,8 @@
 
 // Shim to make things faster, yes I know it sucks
 /datum/plane_master_group/hudless/no_bitches/update_depth()
+	if(!SSmapping.max_plane_offset)
+		return
 	var/turf/source_turf = get_turf(source)
 	if(!source_turf)
 		clear_depth()
