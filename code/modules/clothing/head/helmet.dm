@@ -82,6 +82,30 @@
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
+/obj/item/clothing/head/helmet/webhelmet
+	name = "web helmet"
+	desc = "A sturdy helmet outfitted with extensive webbing and armor plating. It's strangely light-weight and easy to take off and on."
+	icon_state = "helmetalt"
+	inhand_icon_state = "helmet"
+	armor_type = /datum/armor/webhelmet
+	dog_fashion = null
+
+/datum/armor/webhelmet
+	melee = 35
+	bullet = 65
+	laser = 30
+	energy = 30
+	bomb = 60
+	bio = 15
+	fire = 60
+	acid = 60
+	wound = 45
+
+/obj/item/clothing/head/helmet/webhelmet/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
+
+
 /obj/item/clothing/head/helmet/marine
 	name = "tactical combat helmet"
 	desc = "A tactical black helmet, sealed from outside hazards with a plate of glass and not much else."

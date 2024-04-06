@@ -417,6 +417,19 @@
 /obj/item/storage/fancy/cigarettes/trick_cigs
 	spawn_type = /obj/item/clothing/mask/cigarette/syndicate/explosive
 
+// Dermal Hardening Cigarettes
+
+/obj/item/storage/fancy/cigarettes/dermal_harden
+	name = "\improper Robust packet"
+	desc = "Smoked by the robust."
+	icon_state = "robustg"
+	base_icon_state = "robustg"
+	spawn_type = /obj/item/clothing/mask/cigarette/syndicate/dermalharden
+
+/obj/item/storage/fancy/cigarettes/dermal_harden/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/clothing/mask/cigarette/syndicate/dermalharden(src)
+
 /////////////
 //CIGAR BOX//
 /////////////

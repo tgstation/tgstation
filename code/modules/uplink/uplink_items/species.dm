@@ -1,6 +1,6 @@
 /datum/uplink_category/species
 	name = "Species Restricted"
-	weight = 1
+	weight = 2
 
 /datum/uplink_item/species_restricted
 	category = /datum/uplink_category/species

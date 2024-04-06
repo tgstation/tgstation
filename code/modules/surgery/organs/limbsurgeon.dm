@@ -59,6 +59,12 @@
 			desc = "[initial(desc)] Looks like it's been used up."
 	return TRUE
 
+/obj/item/autosurgeon/limb/syndicate
+	icon_state = "autosurgeon_syndicate"
+	surgery_speed = 0.75
+	loaded_overlay = "autosurgeon_syndicate_loaded_overlay"
+
+
 /obj/item/autosurgeon/limb/head/robot
 	uses = 1
 	starting_organ = /obj/item/bodypart/head/robot

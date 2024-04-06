@@ -477,6 +477,16 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	qdel(src)
 	src.visible_message("<span class='alert'>The [src] explodes!</span>")
 
+// Dermal hardening cigs
+
+/obj/item/clothing/mask/cigarette/syndicate/dermalharden
+	desc = "A Robust brand cigarette."
+	chem_volume = 20
+	smoketime = 4 MINUTES
+	dragtime = 12 SECONDS
+	smoke_all = TRUE
+	list_reagents = list(/datum/reagent/medicine/dermalnanites = 20)
+
 // Rollies.
 
 /obj/item/clothing/mask/cigarette/rollie

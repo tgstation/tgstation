@@ -1,6 +1,6 @@
 /datum/uplink_category/special
 	name = "Special"
-	weight = -3
+	weight = -1
 
 /datum/uplink_item/special
 	category = /datum/uplink_category/special

@@ -1,6 +1,6 @@
 /datum/uplink_category/device_tools
 	name = "Misc. Gadgets"
-	weight = 4
+	weight = 8
 
 /datum/uplink_item/device_tools
 	category = /datum/uplink_category/device_tools

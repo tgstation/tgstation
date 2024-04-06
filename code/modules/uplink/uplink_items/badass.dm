@@ -38,13 +38,6 @@
 	surplus = 40
 	illegal_tech = FALSE
 
-/datum/uplink_item/badass/syndiecigs
-	name = "Syndicate Smokes"
-	desc = "Strong flavor, dense smoke, infused with omnizine."
-	item = /obj/item/storage/fancy/cigarettes/cigpack_syndicate
-	cost = 2
-	illegal_tech = FALSE
-
 /datum/uplink_item/badass/syndiecash
 	name = "Syndicate Briefcase Full of Cash"
 	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods \

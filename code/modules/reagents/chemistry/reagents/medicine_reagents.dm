@@ -1733,3 +1733,46 @@
 		if(affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, updating_stamina = FALSE))
 			. = UPDATE_MOB_HEALTH
 	affected_mob.adjust_disgust(-10 * REM * seconds_per_tick)
+
+/datum/reagent/medicine/dermalnanites
+	name = "Dermal Nanites"
+	description = "Specialized nanites that cures all damage types slowly over time. Stabilizes temperature and cleanses radiation. Metabolizes very slowly."
+	reagent_state = LIQUID
+	color = "#DCDCDC"
+	metabolization_rate = 0.1
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	self_consuming = TRUE
+	var/healing = 0.1
+	var/radpower = 10
+
+/datum/reagent/medicine/dermalnanites/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(affected_mob.bodytemperature > BODYTEMP_NORMAL)
+		affected_mob.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	else if(affected_mob.bodytemperature < (BODYTEMP_NORMAL + 1))
+		affected_mob.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	..()
+
+	affected_mob.adjustToxLoss(-healing, FALSE)
+	affected_mob.adjustOxyLoss(-healing, FALSE)
+	affected_mob.adjustBruteLoss(-healing, FALSE)
+	affected_mob.adjustFireLoss(-healing, FALSE)
+
+	..()
+	. = TRUE
+
+/datum/reagent/medicine/dermalnanites/on_mob_metabolize(mob/living/carbon/affected_mob)
+	..()
+	if(ishuman(affected_mob))
+		var/mob/living/carbon/human/H = affected_mob
+		H.physiology.brute_mod *= 0.75
+		H.physiology.burn_mod *= 0.75
+		H.physiology.tox_mod *= 0.75
+		H.physiology.oxy_mod *= 0.75
+
+/datum/reagent/medicine/dermalnanites/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	if(ishuman(affected_mob))
+		var/mob/living/carbon/human/H = affected_mob
+		H.physiology.brute_mod /= 0.75
+		H.physiology.burn_mod /= 0.75
+		H.physiology.tox_mod /= 0.75
+		H.physiology.oxy_mod /= 0.75

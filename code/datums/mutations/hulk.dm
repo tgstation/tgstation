@@ -7,6 +7,7 @@
 	difficulty = 16
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
 	species_allowed = list(SPECIES_HUMAN) //no skeleton/lizard hulk
+	conflicts = list(/datum/mutation/human/superhuman)
 	health_req = 25
 	instability = 40
 	var/scream_delay = 50

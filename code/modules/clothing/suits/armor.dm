@@ -332,6 +332,27 @@
 	acid = 50
 	wound = 20
 
+/obj/item/clothing/suit/armor/webvest
+	name = "web vest"
+	desc = "A bulletproof vest that has been fitted with additional webbing and armor plates for additional protection. It's strangely light-weight and easy to take off and on."
+	icon_state = "webvest"
+	inhand_icon_state = "webvest"
+	blood_overlay_type = "armor"
+	armor_type = /datum/armor/armor_webvest
+	strip_delay = 120
+	equip_delay_other = 80
+
+/datum/armor/armor_webvest
+	melee = 35
+	bullet = 65
+	laser = 30
+	energy = 30
+	bomb = 60
+	bio = 15
+	fire = 60
+	acid = 60
+	wound = 45
+
 /obj/item/clothing/suit/armor/laserproof
 	name = "reflector vest"
 	desc = "A vest that excels in protecting the wearer against energy projectiles, as well as occasionally reflecting them."

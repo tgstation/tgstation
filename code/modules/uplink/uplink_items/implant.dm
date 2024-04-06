@@ -1,6 +1,6 @@
 /datum/uplink_category/implants
 	name = "Implants"
-	weight = 2
+	weight = 3
 
 
 /datum/uplink_item/implants

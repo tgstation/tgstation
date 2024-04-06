@@ -2,7 +2,7 @@
 
 /datum/uplink_category/suits
 	name = "Space Suits"
-	weight = 3
+	weight = 7
 
 /datum/uplink_item/suits
 	category = /datum/uplink_category/suits

@@ -1,7 +1,7 @@
 //All bundles and telecrystals
 /datum/uplink_category/dangerous
 	name = "Conspicuous Weapons"
-	weight = 10
+	weight = 13
 
 /datum/uplink_item/dangerous
 	category = /datum/uplink_category/dangerous
