@@ -95,14 +95,6 @@ GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
 GLOBAL_PROTECT(admin_verbs_server)
 /world/proc/AVerbsServer()
 	return list(
-// Admin datums
-	/datum/admins/proc/delay,
-	/datum/admins/proc/delay_round_end,
-	/datum/admins/proc/end_round,
-	/datum/admins/proc/restart,
-	/datum/admins/proc/startnow,
-	/datum/admins/proc/toggleaban,
-	/datum/admins/proc/toggleAI,
 // Client procs
 	/client/proc/adminchangemap,
 	/client/proc/cmd_admin_delete, /*delete an instance/object/mob/etc*/
