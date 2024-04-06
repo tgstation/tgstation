@@ -663,7 +663,7 @@
 
 /obj/item/relic/proc/explode(mob/user)
 	to_chat(user, span_danger("[src] begins to heat up!"))
-	addtimer(CALLBACK(src, PROC_REF(do_explode), user), rand(35, 100))
+	addtimer(CALLBACK(src, PROC_REF(do_explode), user), rand(3.5 SECONDS, 10 SECONDS))
 
 /obj/item/relic/proc/do_explode(mob/user)
 	if(loc == user)
@@ -674,7 +674,7 @@
 
 /obj/item/relic/proc/teleport(mob/user)
 	to_chat(user, span_notice("[src] begins to vibrate!"))
-	addtimer(CALLBACK(src, PROC_REF(do_the_teleport), user), rand(10, 30))
+	addtimer(CALLBACK(src, PROC_REF(do_the_teleport), user), rand(1 SECONDS, 3 SECONDS))
 
 /obj/item/relic/proc/do_the_teleport(mob/user)
 	var/turf/userturf = get_turf(user)
