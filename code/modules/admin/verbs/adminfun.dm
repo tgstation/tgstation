@@ -99,33 +99,29 @@
 	if (istype(ourself))
 		ourself.gib()
 
-/client/proc/everyone_random()
-	set category = "Admin.Fun"
-	set name = "Make Everyone Random"
-	set desc = "Make everyone have a random appearance. You can only use this before rounds!"
-
+ADMIN_VERB(everyone_random, R_SERVER, "Make Everyone Random", "Make everyone have a random appearance.", ADMIN_CATEGORY_FUN)
 	if(SSticker.HasRoundStarted())
-		to_chat(usr, "Nope you can't do this, the game's already started. This only works before rounds!", confidential = TRUE)
+		to_chat(user, "Nope you can't do this, the game's already started. This only works before rounds!", confidential = TRUE)
 		return
 
 	var/frn = CONFIG_GET(flag/force_random_names)
 	if(frn)
 		CONFIG_SET(flag/force_random_names, FALSE)
-		message_admins("Admin [key_name_admin(usr)] has disabled \"Everyone is Special\" mode.")
-		to_chat(usr, "Disabled.", confidential = TRUE)
+		message_admins("Admin [key_name_admin(user)] has disabled \"Everyone is Special\" mode.")
+		to_chat(user, "Disabled.", confidential = TRUE)
 		return
 
-	var/notifyplayers = tgui_alert(usr, "Do you want to notify the players?", "Options", list("Yes", "No", "Cancel")) || "Cancel"
+	var/notifyplayers = tgui_alert(user, "Do you want to notify the players?", "Options", list("Yes", "No", "Cancel")) || "Cancel"
 	if(notifyplayers == "Cancel")
 		return
 
-	log_admin("Admin [key_name(src)] has forced the players to have random appearances.")
-	message_admins("Admin [key_name_admin(usr)] has forced the players to have random appearances.")
+	log_admin("Admin [key_name(user)] has forced the players to have random appearances.")
+	message_admins("Admin [key_name_admin(user)] has forced the players to have random appearances.")
 
 	if(notifyplayers == "Yes")
-		to_chat(world, span_adminnotice("Admin [usr.key] has forced the players to have completely random identities!"), confidential = TRUE)
+		to_chat(world, span_adminnotice("Admin [user.key] has forced the players to have completely random identities!"), confidential = TRUE)
 
-	to_chat(usr, "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>.", confidential = TRUE)
+	to_chat(user, "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>.", confidential = TRUE)
 
 	CONFIG_SET(flag/force_random_names, TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Make Everyone Random")

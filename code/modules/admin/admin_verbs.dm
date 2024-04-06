@@ -28,7 +28,6 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/cmd_admin_check_contents, /*displays the contents of an instance*/
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/cmd_admin_delete, /*delete an instance/object/mob/etc*/
 	/client/proc/cmd_admin_direct_narrate, /*send text directly to a player with no padding. Useful for narratives and fluff-text*/
 	/client/proc/cmd_admin_headset_message, /*send a message to somebody through their headset as CentCom*/
 	/client/proc/cmd_admin_local_narrate, /*sends text to all mobs within view of atom*/
@@ -86,28 +85,8 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/smite,
 	/client/proc/summon_ert,
 	/client/proc/toggle_nuke,
-	/client/proc/toggle_random_events,
 	))
 GLOBAL_PROTECT(admin_verbs_fun)
-GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
-GLOBAL_PROTECT(admin_verbs_server)
-/world/proc/AVerbsServer()
-	return list(
-// Client procs
-	/client/proc/adminchangemap,
-	/client/proc/cmd_admin_delete, /*delete an instance/object/mob/etc*/
-	/client/proc/cmd_debug_del_all,
-	/client/proc/cmd_debug_force_del_all,
-	/client/proc/cmd_debug_hard_del_all,
-	/client/proc/everyone_random,
-	/client/proc/forcerandomrotate,
-	/client/proc/generate_job_config,
-	/client/proc/panicbunker,
-	/client/proc/toggle_cdn,
-	/client/proc/toggle_hub,
-	/client/proc/toggle_interviews,
-	/client/proc/toggle_random_events,
-	)
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 GLOBAL_PROTECT(admin_verbs_debug)
 /world/proc/AVerbsDebug()
@@ -124,12 +103,8 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/check_timer_sources,
 	/client/proc/clear_dynamic_transit,
 	/client/proc/cmd_admin_debug_traitor_objectives,
-	/client/proc/cmd_admin_delete,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/cmd_admin_toggle_fov,
-	/client/proc/cmd_debug_del_all,
-	/client/proc/cmd_debug_force_del_all,
-	/client/proc/cmd_debug_hard_del_all,
 	/client/proc/cmd_debug_make_powernets,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_display_del_log,
@@ -170,7 +145,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/test_cardpack_distribution,
 	/client/proc/test_movable_UI,
 	/client/proc/test_snap_UI,
-	/client/proc/toggle_cdn,
 	/client/proc/toggle_medal_disable,
 	/client/proc/unload_ctf,
 	/client/proc/validate_cards,
@@ -194,8 +168,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 			add_verb(src, GLOB.admin_verbs_admin)
 		if(rights & R_FUN)
 			add_verb(src, GLOB.admin_verbs_fun)
-		if(rights & R_SERVER)
-			add_verb(src, GLOB.admin_verbs_server)
 		if(rights & R_DEBUG)
 			add_verb(src, GLOB.admin_verbs_debug)
 #ifdef MAP_TEST
@@ -207,7 +179,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	remove_verb(src, list(
 		GLOB.admin_verbs_admin,
 		GLOB.admin_verbs_fun,
-		GLOB.admin_verbs_server,
 		GLOB.admin_verbs_debug,
 		/*Debug verbs added by "show debug verbs"*/
 		GLOB.admin_verbs_debug_mapping,

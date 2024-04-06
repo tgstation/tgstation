@@ -50,13 +50,8 @@
 		return
 	return types[key]
 
-//TODO: merge the vievars version into this or something maybe mayhaps
-/client/proc/cmd_debug_del_all(object as text)
-	set category = "Debug"
-	set name = "Del-All"
-
-	var/type_to_del = poll_type_to_del(object)
-
+ADMIN_VERB(cmd_del_all, R_DEBUG|R_SPAWN, "Del-All", "Delete all datums with the specified type.", ADMIN_CATEGORY_DEBUG, object as text)
+	var/type_to_del = user.poll_type_to_del(object)
 	if(!type_to_del)
 		return
 
@@ -66,16 +61,12 @@
 			counter++
 			qdel(O)
 		CHECK_TICK
-	log_admin("[key_name(src)] has deleted all ([counter]) instances of [type_to_del].")
-	message_admins("[key_name_admin(src)] has deleted all ([counter]) instances of [type_to_del].")
+	log_admin("[key_name(user)] has deleted all ([counter]) instances of [type_to_del].")
+	message_admins("[key_name_admin(user)] has deleted all ([counter]) instances of [type_to_del].")
 	BLACKBOX_LOG_ADMIN_VERB("Delete All")
 
-/client/proc/cmd_debug_force_del_all(object as text)
-	set category = "Debug"
-	set name = "Force-Del-All"
-
-	var/type_to_del = poll_type_to_del(object)
-
+ADMIN_VERB(cmd_del_all_force, R_DEBUG|R_SPAWN, "Force-Del-All", "Forcibly delete all datums with the specified type.", ADMIN_CATEGORY_DEBUG, object as text)
+	var/type_to_del = user.poll_type_to_del(object)
 	if(!type_to_del)
 		return
 
@@ -85,29 +76,25 @@
 			counter++
 			qdel(O, force = TRUE)
 		CHECK_TICK
-	log_admin("[key_name(src)] has force-deleted all ([counter]) instances of [type_to_del].")
-	message_admins("[key_name_admin(src)] has force-deleted all ([counter]) instances of [type_to_del].")
+	log_admin("[key_name(user)] has force-deleted all ([counter]) instances of [type_to_del].")
+	message_admins("[key_name_admin(user)] has force-deleted all ([counter]) instances of [type_to_del].")
 	BLACKBOX_LOG_ADMIN_VERB("Force-Delete All")
 
-/client/proc/cmd_debug_hard_del_all(object as text)
-	set category = "Debug"
-	set name = "Hard-Del-All"
-
-	var/type_to_del = poll_type_to_del(object)
-
+ADMIN_VERB(cmd_del_all_hard, R_DEBUG|R_SPAWN, "Hard-Del-All", "Hard delete all datums with the specified type.", ADMIN_CATEGORY_DEBUG, object as text)
+	var/type_to_del = user.poll_type_to_del(object)
 	if(!type_to_del)
 		return
 
-	var/choice = alert("ARE YOU SURE that you want to hard delete this type? It will cause MASSIVE lag.", "Hoooo lad what happen?", "Yes", "No")
+	var/choice = alert(user, "ARE YOU SURE that you want to hard delete this type? It will cause MASSIVE lag.", "Hoooo lad what happen?", "Yes", "No")
 	if(choice != "Yes")
 		return
 
-	choice = alert("Do you want to pre qdelete the atom? This will speed things up significantly, but may break depending on your level of fuckup.", "How do you even get it that bad", "Yes", "No")
+	choice = alert(user, "Do you want to pre qdelete the atom? This will speed things up significantly, but may break depending on your level of fuckup.", "How do you even get it that bad", "Yes", "No")
 	var/should_pre_qdel = TRUE
 	if(choice == "No")
 		should_pre_qdel = FALSE
 
-	choice = alert("Ok one last thing, do you want to yield to the game? or do it all at once. These are hard deletes remember.", "Jesus christ man", "Yield", "Ignore the server")
+	choice = alert(user, "Ok one last thing, do you want to yield to the game? or do it all at once. These are hard deletes remember.", "Jesus christ man", "Yield", "Ignore the server")
 	var/should_check_tick = TRUE
 	if(choice == "Ignore the server")
 		should_check_tick = FALSE
@@ -129,8 +116,8 @@
 					qdel(O)
 				del(O)
 			CHECK_TICK
-	log_admin("[key_name(src)] has hard deleted all ([counter]) instances of [type_to_del].")
-	message_admins("[key_name_admin(src)] has hard deleted all ([counter]) instances of [type_to_del].")
+	log_admin("[key_name(user)] has hard deleted all ([counter]) instances of [type_to_del].")
+	message_admins("[key_name_admin(user)] has hard deleted all ([counter]) instances of [type_to_del].")
 	BLACKBOX_LOG_ADMIN_VERB("Hard Delete All")
 
 /client/proc/cmd_debug_make_powernets()
@@ -517,14 +504,8 @@
 	admin_ticket_log(M, msg)
 	BLACKBOX_LOG_ADMIN_VERB("Rejuvenate")
 
-/client/proc/cmd_admin_delete(atom/A as obj|mob|turf in world)
-	set category = "Debug"
-	set name = "Delete"
-
-	if(!check_rights(R_SPAWN|R_DEBUG))
-		return
-
-	admin_delete(A)
+ADMIN_VERB(cmd_admin_delete, R_DEBUG|R_SPAWN, "Delete", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/target as obj|mob|turf in world)
+	user.admin_delete(target)
 
 /client/proc/cmd_admin_check_contents(mob/living/M in GLOB.mob_list)
 	set category = "Debug"

@@ -1,22 +1,16 @@
 // Server Tab - Server Verbs
 
-/client/proc/toggle_random_events()
-	set category = "Server"
-	set name = "Toggle random events on/off"
-	set desc = "Toggles random events such as meteors, black holes, blob (but not space dust) on/off"
+ADMIN_VERB(toggle_random_events, R_SERVER, "Toggle Random Events", "Toggles random events on or off.", ADMIN_CATEGORY_SERVER)
 	var/new_are = !CONFIG_GET(flag/allow_random_events)
 	CONFIG_SET(flag/allow_random_events, new_are)
-	message_admins("[key_name_admin(usr)] has [new_are ? "enabled" : "disabled"] random events.")
+	message_admins("[key_name_admin(user)] has [new_are ? "enabled" : "disabled"] random events.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Random Events", "[new_are ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-/client/proc/toggle_hub()
-	set category = "Server"
-	set name = "Toggle Hub"
-
+ADMIN_VERB(toggle_hub, R_SERVER, "Toggle Hub", "Toggles the server's visilibility on the BYOND Hub.", ADMIN_CATEGORY_SERVER)
 	world.update_hub_visibility(!GLOB.hub_visibility)
 
-	log_admin("[key_name(usr)] has toggled the server's hub status for the round, it is now [(GLOB.hub_visibility?"on":"off")] the hub.")
-	message_admins("[key_name_admin(usr)] has toggled the server's hub status for the round, it is now [(GLOB.hub_visibility?"on":"off")] the hub.")
+	log_admin("[key_name(user)] has toggled the server's hub status for the round, it is now [(GLOB.hub_visibility?"on":"off")] the hub.")
+	message_admins("[key_name_admin(user)] has toggled the server's hub status for the round, it is now [(GLOB.hub_visibility?"on":"off")] the hub.")
 	if (GLOB.hub_visibility && !world.reachable)
 		message_admins("WARNING: The server will not show up on the hub because byond is detecting that a filewall is blocking incoming connections.")
 

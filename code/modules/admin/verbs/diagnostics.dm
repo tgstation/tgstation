@@ -76,11 +76,9 @@ ADMIN_VERB(reload_admins, R_NONE, "Reload Admins", "Reloads all admins from the 
 	BLACKBOX_LOG_ADMIN_VERB("Reload All Admins")
 	message_admins("[key_name_admin(user)] manually reloaded admins")
 
-/client/proc/toggle_cdn()
-	set name = "Toggle CDN"
-	set category = "Server"
+ADMIN_VERB(toggle_cdn, R_SERVER|R_DEBUG, "Toggle CDN", "Toggles the CDN for the server.", ADMIN_CATEGORY_SERVER)
 	var/static/admin_disabled_cdn_transport = null
-	if (alert(usr, "Are you sure you want to toggle the CDN asset transport?", "Confirm", "Yes", "No") != "Yes")
+	if (alert(user, "Are you sure you want to toggle the CDN asset transport?", "Confirm", "Yes", "No") != "Yes")
 		return
 	var/current_transport = CONFIG_GET(string/asset_transport)
 	if (!current_transport || current_transport == "simple")
@@ -88,17 +86,17 @@ ADMIN_VERB(reload_admins, R_NONE, "Reload Admins", "Reloads all admins from the 
 			CONFIG_SET(string/asset_transport, admin_disabled_cdn_transport)
 			admin_disabled_cdn_transport = null
 			SSassets.OnConfigLoad()
-			message_admins("[key_name_admin(usr)] re-enabled the CDN asset transport")
-			log_admin("[key_name(usr)] re-enabled the CDN asset transport")
+			message_admins("[key_name_admin(user)] re-enabled the CDN asset transport")
+			log_admin("[key_name(user)] re-enabled the CDN asset transport")
 		else
-			to_chat(usr, span_adminnotice("The CDN is not enabled!"))
-			if (tgui_alert(usr, "The CDN asset transport is not enabled! If you having issues with assets you can also try disabling filename mutations.", "The CDN asset transport is not enabled!", list("Try disabling filename mutations", "Nevermind")) == "Try disabling filename mutations")
+			to_chat(user, span_adminnotice("The CDN is not enabled!"))
+			if (tgui_alert(user, "The CDN asset transport is not enabled! If you having issues with assets you can also try disabling filename mutations.", "The CDN asset transport is not enabled!", list("Try disabling filename mutations", "Nevermind")) == "Try disabling filename mutations")
 				SSassets.transport.dont_mutate_filenames = !SSassets.transport.dont_mutate_filenames
-				message_admins("[key_name_admin(usr)] [(SSassets.transport.dont_mutate_filenames ? "disabled" : "re-enabled")] asset filename transforms")
-				log_admin("[key_name(usr)] [(SSassets.transport.dont_mutate_filenames ? "disabled" : "re-enabled")] asset filename transforms")
+				message_admins("[key_name_admin(user)] [(SSassets.transport.dont_mutate_filenames ? "disabled" : "re-enabled")] asset filename transforms")
+				log_admin("[key_name(user)] [(SSassets.transport.dont_mutate_filenames ? "disabled" : "re-enabled")] asset filename transforms")
 	else
 		admin_disabled_cdn_transport = current_transport
 		CONFIG_SET(string/asset_transport, "simple")
 		SSassets.OnConfigLoad()
-		message_admins("[key_name_admin(usr)] disabled the CDN asset transport")
-		log_admin("[key_name(usr)] disabled the CDN asset transport")
+		message_admins("[key_name_admin(user)] disabled the CDN asset transport")
+		log_admin("[key_name(user)] disabled the CDN asset transport")
