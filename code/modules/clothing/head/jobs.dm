@@ -346,10 +346,10 @@
 
 /obj/item/clothing/head/fedora/inspector_hat/atom_destruction(damage_flag)
 
-	var/atom/A = drop_location()
+	var/atom/atom_location = drop_location()
 	for(var/found_regex in items_by_regex)
 		var/obj/item/result = items_by_regex[found_regex]
-		result.forceMove(A)
+		result.forceMove(atom_location)
 		items_by_regex -= found_regex
 		phrases_by_regex -= found_regex
 
