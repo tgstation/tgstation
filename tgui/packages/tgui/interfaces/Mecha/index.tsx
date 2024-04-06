@@ -78,14 +78,15 @@ export const Content = (props) => {
                     <LabeledList.Item label="ID Lock">
                       <Button
                         icon={id_lock ? 'lock' : 'lock-open'}
-                        content={id_lock ? 'Enabled' : 'Disabled'}
                         tooltipPosition="top"
                         onClick={() => {
                           editAccess(false);
                           act('toggle_id_lock');
                         }}
-                        selected={id_lock}
-                      />
+                        selected={!!id_lock}
+                      >
+                        {id_lock ? 'Enabled' : 'Disabled'}
+                      </Button>
                       {!!id_lock && (
                         <>
                           <Button
@@ -206,11 +207,12 @@ const LightsBar = (props) => {
     <LabeledList.Item label="Lights">
       <Button
         icon="lightbulb"
-        content={lights_on ? 'On' : 'Off'}
-        selected={lights_on}
+        selected={!!lights_on}
         disabled={!has_lights || !power_max || !power_level}
         onClick={() => act('toggle_lights')}
-      />
+      >
+        {lights_on ? 'On' : 'Off'}
+      </Button>
     </LabeledList.Item>
   );
 };

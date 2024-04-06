@@ -26,9 +26,9 @@ export function Timing(props) {
           <Button
             color="transparent"
             disabled={!effectReverse}
-            icon={custom_rev_delay === 1 ? 'toggle-on' : 'toggle-off'}
+            icon={custom_rev_delay ? 'toggle-on' : 'toggle-off'}
             onClick={() => act('toggleRevDelays')}
-            selected={custom_rev_delay}
+            selected={!!custom_rev_delay}
             tooltip={multiline`
             Toggle Reverse Delays
             Note: Top set is

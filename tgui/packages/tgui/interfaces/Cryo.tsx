@@ -119,7 +119,7 @@ export const Cryo = () => {
                 icon={isOperating ? 'power-off' : 'times'}
                 disabled={isOpen}
                 onClick={() => act('power')}
-                color={isOperating && 'green'}
+                color={!!isOperating && 'green'}
               >
                 {isOperating ? 'On' : 'Off'}
               </Button>

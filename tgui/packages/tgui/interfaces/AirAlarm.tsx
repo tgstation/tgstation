@@ -226,7 +226,7 @@ const AirAlarmControlHome = (props) => {
     <>
       <Button
         icon={atmosAlarm ? 'exclamation-triangle' : 'exclamation'}
-        color={atmosAlarm && 'caution'}
+        color={!!atmosAlarm && 'caution'}
         content="Area Atmosphere Alarm"
         onClick={() => act(atmosAlarm ? 'reset' : 'alarm')}
       />

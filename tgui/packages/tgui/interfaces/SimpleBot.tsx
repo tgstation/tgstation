@@ -86,7 +86,7 @@ const TabDisplay = (props) => {
         disabled={!has_access && !can_hack}
         icon={locked ? 'lock' : 'lock-open'}
         onClick={() => act('lock')}
-        selected={locked}
+        selected={!!locked}
         tooltip={`${locked ? 'Unlock' : 'Lock'} the control panel.`}
       >
         Controls Lock

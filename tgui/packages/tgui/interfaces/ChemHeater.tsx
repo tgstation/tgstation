@@ -112,14 +112,14 @@ export const ReactionDisplay = (props: ReactionDisplayProps) => {
           </Table.Row>
           {activeReactions.map((reaction) => (
             <Table.Row key="reactions">
-              <Table.Cell width={'60px'} color={reaction.danger && 'red'}>
+              <Table.Cell width={'60px'} color={!!reaction.danger && 'red'}>
                 {reaction.name}
               </Table.Cell>
               <Table.Cell width={'100px'} pr={'10px'}>
                 {!highQualityDisplay ? (
                   <Icon
                     name={reaction.danger ? 'exclamation-triangle' : 'spinner'}
-                    color={reaction.danger && 'red'}
+                    color={!!reaction.danger && 'red'}
                     spin={!reaction.danger}
                     ml={2.5}
                   />
@@ -164,7 +164,7 @@ export const ReactionDisplay = (props: ReactionDisplayProps) => {
                     </ProgressBar>
                   </>
                 ) : (
-                  <Box color={reaction.danger && 'red'} ml={2}>
+                  <Box color={!!reaction.danger && 'red'} ml={2}>
                     {reaction.targetVol}u
                   </Box>
                 )}

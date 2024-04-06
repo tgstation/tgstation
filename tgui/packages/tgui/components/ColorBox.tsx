@@ -16,7 +16,7 @@ type Props = {
 export function ColorBox(props: Props) {
   const { content, children, className, ...rest } = props;
 
-  rest.color = content ? null : 'default';
+  rest.color = content ? '' : 'default';
   rest.backgroundColor = props.color || 'default';
 
   return (

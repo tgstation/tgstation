@@ -222,7 +222,7 @@ const DirectionButton = (props: DirectedButtonProps) => {
   return (
     <Button
       icon={icon}
-      selected={workingDir & dir}
+      selected={!!(workingDir & dir)}
       onClick={() => setWorkingDir(dir)}
     />
   );

@@ -18,7 +18,7 @@ import { logger } from '../logging';
 
 type BooleanProps = Partial<Record<keyof typeof booleanStyleMap, boolean>>;
 type StringProps = Partial<
-  Record<keyof typeof stringStyleMap, string | BooleanLike>
+  Record<keyof typeof stringStyleMap, string | number | false>
 >;
 
 export type EventHandlers = Partial<{

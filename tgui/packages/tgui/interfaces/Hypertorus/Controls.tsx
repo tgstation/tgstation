@@ -16,7 +16,7 @@ import { HypertorusFilter } from '.';
 import { HelpDummy, HoverHelp } from './helpers';
 
 type ComboProps = {
-  color?: string | BooleanLike;
+  color?: string | false;
   defaultValue: number;
   flipIcon?: BooleanLike;
   help?: string;
@@ -182,7 +182,7 @@ export const HypertorusSecondaryControls = (props) => {
         </LabeledControls.Item>
         <LabeledControls.Item label="Current Damper">
           <ComboKnob
-            color={current_damper && 'yellow'}
+            color={!!current_damper && 'yellow'}
             value={current_damper}
             unit="W"
             minValue={0}

@@ -307,7 +307,7 @@ const DirectionButton = (props: DirectedButtonProps) => {
   return (
     <Button
       icon={icon}
-      selected={direction & dir}
+      selected={!!(direction & dir)}
       onClick={() =>
         act('set_dir', {
           value: dir,

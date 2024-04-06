@@ -168,14 +168,15 @@ const ModeItem = (props) => {
       {TOOLS.map((tool) => (
         <Button.Checkbox
           key={tool.bitmask}
-          checked={mode & tool.bitmask}
-          content={tool.name}
+          checked={!!(mode & tool.bitmask)}
           onClick={() =>
             act('mode', {
               mode: tool.bitmask,
             })
           }
-        />
+        >
+          {tool.name}
+        </Button.Checkbox>
       ))}
     </LabeledList.Item>
   );
@@ -227,12 +228,13 @@ const LayerSelect = (props) => {
           key={layer.bitmask}
           checked={
             multi_layer
-              ? pipe_layers & layer.bitmask
+              ? !!(pipe_layers & layer.bitmask)
               : layer.bitmask === pipe_layers
           }
-          content={layer.name}
           onClick={() => act('pipe_layers', { pipe_layers: layer.bitmask })}
-        />
+        >
+          {layer.name}
+        </Button.Checkbox>
       ))}
       <Button.Checkbox
         key="multilayer"

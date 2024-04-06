@@ -17,7 +17,7 @@ export function StylePage(props) {
           color="transparent"
           icon="edit"
           onClick={() => act('effectName')}
-          selected={effectName}
+          selected={!!effectName}
           tooltip={multiline`
             Edit pod's
             name/desc.`}

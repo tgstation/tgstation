@@ -219,7 +219,7 @@ export const ChemRecipeDebug = (props) => {
                   <LabeledList>
                     <LabeledList.Item label="Force Purity">
                       <Button.Checkbox
-                        checked={use_forced_purity}
+                        checked={!!use_forced_purity}
                         onClick={() => act('toggle_forced_purity')}
                       >
                         {use_forced_purity ? 'Disable' : 'Enable'}

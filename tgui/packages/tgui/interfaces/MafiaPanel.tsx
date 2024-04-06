@@ -436,7 +436,7 @@ const MafiaPlayers = (props) => {
                 grow
                 color={!player.alive && 'red'}
                 backgroundColor={
-                  player.ref === person_voted_up_ref ? 'yellow' : null
+                  player.ref === person_voted_up_ref ? 'yellow' : ''
                 }
               >
                 {player.name}

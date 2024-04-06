@@ -147,14 +147,15 @@ export const Vent = (props: VentProps) => {
             />
             <Button
               icon="undo"
-              disabled={intdefault}
-              content="Reset"
+              disabled={!!intdefault}
               onClick={() =>
                 act('reset_internal_pressure', {
                   ref: refID,
                 })
               }
-            />
+            >
+              Reset
+            </Button>
           </LabeledList.Item>
         )}
         {!!excheck && (
@@ -175,14 +176,15 @@ export const Vent = (props: VentProps) => {
             />
             <Button
               icon="undo"
-              disabled={extdefault}
-              content="Reset"
+              disabled={!!extdefault}
               onClick={() =>
                 act('reset_external_pressure', {
                   ref: refID,
                 })
               }
-            />
+            >
+              Reset
+            </Button>
           </LabeledList.Item>
         )}
       </LabeledList>

@@ -159,11 +159,12 @@ export const Canister = (props) => {
                     lineHeight={2}
                     fontSize="11px"
                     color={
-                      valveOpen ? (holdingTank ? 'caution' : 'danger') : null
+                      valveOpen ? (holdingTank ? 'caution' : 'danger') : ''
                     }
-                    content={valveOpen ? 'Open' : 'Closed'}
                     onClick={() => act('valve')}
-                  />
+                  >
+                    {valveOpen ? 'Open' : 'Closed'}
+                  </Button>
                 </LabeledControls.Item>
                 <LabeledControls.Item mr={1} label="Port">
                   <Tooltip
@@ -209,10 +210,11 @@ export const Canister = (props) => {
                 !!holdingTank && (
                   <Button
                     icon="eject"
-                    color={valveOpen && 'danger'}
-                    content="Eject"
+                    color={!!valveOpen && 'danger'}
                     onClick={() => act('eject')}
-                  />
+                  >
+                    Eject
+                  </Button>
                 )
               }
             >

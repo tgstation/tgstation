@@ -63,31 +63,33 @@ const HypertorusMainControls = (props) => {
           <Button
             disabled={power_level > 0}
             icon={start_power ? 'power-off' : 'times'}
-            content={start_power ? 'On' : 'Off'}
-            selected={start_power}
+            selected={!!start_power}
             onClick={() => act('start_power')}
-          />
+          >
+            {start_power ? 'On' : 'Off'}
+          </Button>
         </Stack.Item>
         <Stack.Item color="label">
           {'Start cooling: '}
           <Button
             disabled={
-              start_fuel === 1 ||
-              start_moderator === 1 ||
-              start_power === 0 ||
+              !!start_fuel ||
+              !!start_moderator ||
+              !start_power ||
               (start_cooling && power_level > 0)
             }
             icon={start_cooling ? 'power-off' : 'times'}
-            content={start_cooling ? 'On' : 'Off'}
-            selected={start_cooling}
+            selected={!!start_cooling}
             onClick={() => act('start_cooling')}
-          />
+          >
+            {start_cooling ? 'On' : 'Off'}
+          </Button>
         </Stack.Item>
       </Stack>
       <Collapsible title="Recipe selection">
         <HypertorusRecipes
           baseMaxTemperature={base_max_temperature}
-          enableRecipeSelection={power_level === 0}
+          enableRecipeSelection={!power_level}
           onRecipe={(id) => act('fuel', { mode: id })}
         />
       </Collapsible>
