@@ -13,6 +13,9 @@
 	var/automatic_gameend_time = 8 MINUTES
 	/// List of allowed loadouts for this map, otherwise defaults to all loadouts
 	var/list/allowed_loadouts = list()
+	/// whether we are currently being loaded by a lobby
+	var/template_in_use = FALSE
+		
 
 /datum/lazy_template/deathmatch/ragecage
 	name = "Ragecage"
