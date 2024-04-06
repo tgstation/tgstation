@@ -689,7 +689,7 @@
 /**
  * handles inhand use of blood rites on constructs, humans, or non-living blood sources
  *
- * see '/obj/item/melee/blood_magic/manipulator/proc/heal_construct' for construct behavior
+ * see '/obj/item/melee/blood_magic/manipulator/proc/heal_construct' for construct/shade behavior
  * see '/obj/item/melee/blood_magic/manipulator/proc/heal_cultist' for human cultist behavior
  * see '/obj/item/melee/blood_magic/manipulator/proc/drain_victim' for human non-cultist behavior
  * if any of the above procs return FALSE, '/obj/item/melee/blood_magic/afterattack' will not be called
@@ -700,7 +700,7 @@
 	if(!proximity)
 		return
 
-	if(isconstruct(target) && IS_CULTIST(target) && !heal_construct(target, user))
+	if((isconstruct(target) || isshade(target)) && !heal_construct(target, user))
 		return
 	if(istype(target, /obj/effect/decal/cleanable/blood) || istype(target, /obj/effect/decal/cleanable/trail_holder) || isturf(target))
 		blood_draw(target, user)
@@ -726,6 +726,8 @@
  */
 /obj/item/melee/blood_magic/manipulator/proc/heal_construct(atom/target, mob/living/carbon/human/user)
 	var/mob/living/basic/construct/construct_thing = target
+	if(!IS_CULTIST(construct_thing))
+		return FALSE
 	var/missing_health = construct_thing.maxHealth - construct_thing.health
 	if(!missing_health)
 		to_chat(user,span_cult("That cultist doesn't require healing!"))
