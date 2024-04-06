@@ -15,7 +15,7 @@ import { focusMap } from 'tgui/focus';
 // text you can select with the mouse.
 const MIN_SELECTION_DISTANCE = 10;
 
-const deferredFocusMap = () => setTimeout(() => focusMap());
+const deferredFocusMap = () => setImmediate(() => focusMap());
 
 export const setupPanelFocusHacks = () => {
   let focusStolen = false;

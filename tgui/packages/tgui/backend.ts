@@ -177,7 +177,7 @@ export const backendMiddleware = (store) => {
       Byond.winset(Byond.windowId, {
         'is-visible': false,
       });
-      setTimeout(() => focusMap());
+      setImmediate(() => focusMap());
     }
 
     if (type === 'backend/update') {
@@ -207,7 +207,7 @@ export const backendMiddleware = (store) => {
       setupDrag();
       // We schedule this for the next tick here because resizing and unhiding
       // during the same tick will flash with a white background.
-      setTimeout(() => {
+      setImmediate(() => {
         perf.mark('resume/start');
         // Doublecheck if we are not re-suspended.
         const { suspended } = selectBackend(store.getState());

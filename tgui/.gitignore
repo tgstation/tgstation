@@ -17,7 +17,6 @@ package-lock.json
 /public/**/*
 !/public/*.html
 !/public/tgui-polyfill.min.js
-!/public/utils.min.js
 /coverage
 
 ## Previously ignored locations that are kept to avoid confusing git
