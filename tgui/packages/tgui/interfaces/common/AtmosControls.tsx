@@ -216,26 +216,28 @@ export const Scrubber = (props: ScrubberProps) => {
         <LabeledList.Item label="Mode">
           <Button
             icon={scrubbing ? 'filter' : 'sign-in-alt'}
-            color={scrubbing || 'danger'}
-            content={scrubbing ? 'Scrubbing' : 'Siphoning'}
+            color={!!scrubbing && 'danger'}
             onClick={() =>
               act('scrubbing', {
                 ref: refID,
                 val: Number(!scrubbing),
               })
             }
-          />
+          >
+            {scrubbing ? 'Scrubbing' : 'Siphoning'}
+          </Button>
           <Button
             icon={widenet ? 'expand' : 'compress'}
-            selected={widenet}
-            content={widenet ? 'Expanded range' : 'Normal range'}
+            selected={!!widenet}
             onClick={() =>
               act('widenet', {
                 ref: refID,
                 val: Number(!widenet),
               })
             }
-          />
+          >
+            {widenet ? 'Expanded range' : 'Normal range'}
+          </Button>
         </LabeledList.Item>
         <LabeledList.Item label="Filters">
           {(scrubbing &&
