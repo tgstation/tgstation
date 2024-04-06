@@ -72,9 +72,14 @@ SUBSYSTEM_DEF(admin_verbs)
 /datum/controller/subsystem/admin_verbs/proc/update_visibility_flag(client/admin, flag, state)
 	if(state)
 		admin_visibility_flags[admin.ckey] |= list(flag)
-	else
-		admin_visibility_flags[admin.ckey] -= list(flag)
-	assosciate_admin(admin)
+		assosciate_admin(admin)
+		return
+
+	admin_visibility_flags[admin.ckey] -= list(flag)
+	// they lost the flag, iterate over verbs with that flag and yoink em
+	for(var/datum/admin_verb/verb_singleton as anything in admin_verbs_by_visibility_flag[flag])
+		verb_singleton.unassign_from_client(admin)
+	admin.init_verbs()
 
 /datum/controller/subsystem/admin_verbs/proc/dynamic_invoke_verb(client/admin, datum/admin_verb/verb_type, ...)
 	if(IsAdminAdvancedProcCall())
@@ -123,6 +128,7 @@ SUBSYSTEM_DEF(admin_verbs)
 	admin_visibility_flags[admin.ckey] ||= list()
 	for(var/datum/admin_verb/verb_singleton as anything in get_valid_verbs_for_admin(admin))
 		verb_singleton.assign_to_client(admin)
+	admin.init_verbs()
 
 /**
  * Unassosciates an admin from their admin verbs.
