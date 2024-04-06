@@ -37,8 +37,6 @@ export const TGUI_CHAT_COMPONENTS = {
   Tooltip,
 };
 
-let reactRoot = null;
-
 // List of injectable attibute names mapped to their proper prop
 // We need this because attibutes don't support lowercase names
 export const TGUI_CHAT_ATTRIBUTES_TO_PROPS = {
@@ -416,9 +414,7 @@ class ChatRenderer {
           }
           const Element = TGUI_CHAT_COMPONENTS[targetName];
 
-          if (!reactRoot) {
-            reactRoot = createRoot(childNode);
-          }
+          const reactRoot = createRoot(childNode);
 
           /* eslint-disable react/no-danger */
           reactRoot.render(
