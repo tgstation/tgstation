@@ -32,32 +32,34 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 			return FALSE
 
 	var/result = input(user, "Select reboot method", "World Reboot", options[1]) as null|anything in options
-	if(result)
-		BLACKBOX_LOG_ADMIN_VERB("Reboot World")
-		var/init_by = "Initiated by [user.holder.fakekey ? "Admin" : user.key]."
-		switch(result)
-			if("Regular Restart")
-				if(!(isnull(user.address) || (user.address in localhost_addresses)))
-					if(alert(user, "Are you sure you want to restart the server?","This server is live", "Restart", "Cancel") != "Restart")
-						return FALSE
-				SSticker.Reboot(init_by, "admin reboot - by [user.key] [user.holder.fakekey ? "(stealth)" : ""]", 10)
-			if("Regular Restart (with delay)")
-				var/delay = input("What delay should the restart have (in seconds)?", "Restart Delay", 5) as num|null
-				if(!delay)
+	if(isnull(result))
+		return
+
+	BLACKBOX_LOG_ADMIN_VERB("Reboot World")
+	var/init_by = "Initiated by [user.holder.fakekey ? "Admin" : user.key]."
+	switch(result)
+		if("Regular Restart")
+			if(!user.is_localhost())
+				if(alert(user, "Are you sure you want to restart the server?","This server is live", "Restart", "Cancel") != "Restart")
 					return FALSE
-				if(!(isnull(user.address) || (user.address in localhost_addresses)))
-					if(alert(user,"Are you sure you want to restart the server?","This server is live", "Restart", "Cancel") != "Restart")
-						return FALSE
-				SSticker.Reboot(init_by, "admin reboot - by [user.key] [user.holder.fakekey ? "(stealth)" : ""]", delay * 10)
-			if("Hard Restart (No Delay, No Feeback Reason)")
-				to_chat(world, "World reboot - [init_by]")
-				world.Reboot()
-			if("Hardest Restart (No actions, just reboot)")
-				to_chat(world, "Hard world reboot - [init_by]")
-				world.Reboot(fast_track = TRUE)
-			if("Server Restart (Kill and restart DD)")
-				to_chat(world, "Server restart - [init_by]")
-				world.TgsEndProcess()
+			SSticker.Reboot(init_by, "admin reboot - by [user.key] [user.holder.fakekey ? "(stealth)" : ""]", 10)
+		if("Regular Restart (with delay)")
+			var/delay = input("What delay should the restart have (in seconds)?", "Restart Delay", 5) as num|null
+			if(!delay)
+				return FALSE
+			if(!(isnull(user.address) || (user.address in localhost_addresses)))
+				if(alert(user,"Are you sure you want to restart the server?","This server is live", "Restart", "Cancel") != "Restart")
+					return FALSE
+			SSticker.Reboot(init_by, "admin reboot - by [user.key] [user.holder.fakekey ? "(stealth)" : ""]", delay * 10)
+		if("Hard Restart (No Delay, No Feeback Reason)")
+			to_chat(world, "World reboot - [init_by]")
+			world.Reboot()
+		if("Hardest Restart (No actions, just reboot)")
+			to_chat(world, "Hard world reboot - [init_by]")
+			world.Reboot(fast_track = TRUE)
+		if("Server Restart (Kill and restart DD)")
+			to_chat(world, "Server restart - [init_by]")
+			world.TgsEndProcess()
 
 ADMIN_VERB(end_round, R_SERVER, "End Round", "Forcibly ends the round and allows the server to restart normally.", ADMIN_CATEGORY_SERVER)
 	var/confirm = tgui_alert(user, "End the round and  restart the game world?", "End Round", list("Yes", "Cancel"))
@@ -69,7 +71,7 @@ ADMIN_VERB(end_round, R_SERVER, "End Round", "Forcibly ends the round and allows
 ADMIN_VERB(toggle_ooc, R_ADMIN, "Toggle OOC", "Toggle the OOC channel on or off.", ADMIN_CATEGORY_SERVER)
 	toggle_ooc()
 	log_admin("[key_name(user)] toggled OOC.")
-	message_admins("[key_name_admin(uesr)] toggled OOC.")
+	message_admins("[key_name_admin(user)] toggled OOC.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle OOC", "[GLOB.ooc_allowed ? "Enabled" : "Disabled"]"))
 
 ADMIN_VERB(toggle_ooc_dead, R_ADMIN, "Toggle Dead OOC", "Toggle the OOC channel for dead players on or off.", ADMIN_CATEGORY_SERVER)
@@ -93,7 +95,7 @@ ADMIN_VERB(start_now, R_SERVER, "Start Now", "Start the round RIGHT NOW.", ADMIN
 		log_admin("[key_name(user)] has cancelled immediate game start.")
 		return
 
-	if(!is_localhost())
+	if(!user.is_localhost())
 		var/response = tgui_alert(user, "Are you sure you want to start the round?", "Start Now", list("Start Now", "Cancel"))
 		if(response != "Start Now")
 			return

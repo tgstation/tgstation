@@ -136,8 +136,7 @@
 		to_chat(usr, "[shuttle_console] was [shuttle_console.admin_controlled ? "locked" : "unlocked"].", confidential = TRUE)
 
 	else if(href_list["delay_round_end"])
-		// Permissions are checked in delay_round_end
-		delay_round_end()
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/delay_round_end)
 
 	else if(href_list["undelay_round_end"])
 		if(!check_rights(R_SERVER))
@@ -1521,13 +1520,7 @@
 		toggle_id_ctf(usr, CTF_GHOST_CTF_GAME_ID)
 
 	else if(href_list["rebootworld"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/confirm = tgui_alert(usr,"Are you sure you want to reboot the server?", "Confirm Reboot", list("Yes", "No"))
-		if(confirm == "No")
-			return
-		if(confirm == "Yes")
-			restart()
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/restart)
 
 	else if(href_list["check_teams"])
 		if(!check_rights(R_ADMIN))
