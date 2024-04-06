@@ -180,3 +180,31 @@
   nikothedude:
   - bugfix: Root beer no longer causes laser carbines and disabler smgs to fire infinitely
       fast.
+2024-04-06:
+  00-Steven:
+  - admin: Refresh button on the View Round Logs menu actually works, instead of just
+      adding a runtime to the logs (and not updating them).
+  Archie700:
+  - bugfix: changed value of cell charge from 5000 to 5 megajoules
+  Artemchik542:
+  - bugfix: aheal now properly heals ears deafness
+  Blacklist897:
+  - balance: suit and cell chargers should draw from grid preventing instant apc blackouts
+      in most cases.
+  EnterTheJake:
+  - balance: CNS Rebooter Implant will now pull you out of stamcrit and grant you
+      a few seconds of stun immunity
+  JohnFulpWillard:
+  - admin: Removing components button now lists components to remove
+  Rhials:
+  - rscadd: Nuclear Operatives now purchase an Intelligence Agent, who can watch cameras
+      and bodycams, move the shuttle, and provide radio support. Only 12 Telecrystals!
+  SyncIt21:
+  - refactor: refactors how objects are deconstructed in relation to the `NO_DECONSTRUCTION`
+      flag. Certain objects & machinery may display different tool interactions &
+      behaviours when destroyed/deconstructed. Report these changes if you feel like
+      they are bugs
+  Zergspower:
+  - bugfix: fixes Borg and Syndicate inducers not working
+  jlsnow301, infraredbaron:
+  - rscadd: Added a new UI element over players that are interacting, building, etc.
