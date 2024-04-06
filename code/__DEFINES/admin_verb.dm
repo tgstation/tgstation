@@ -32,6 +32,9 @@
 #define ADMIN_VERB_CUSTOM_EXIST_CHECK(verb_path_name) \
 /datum/admin_verb/##verb_path_name/__avd_check_should_exist()
 
+/// Used to define the visibility flag of the verb. If the admin does not have this flag enabled they will not see the verb.
+#define ADMIN_VERB_VISIBILITY(verb_path_name, verb_visibility) /datum/admin_verb/##verb_path_name/visibility_flag = ##verb_visibility
+
 // These are put here to prevent the "procedure override precedes definition" error.
 /datum/admin_verb/proc/__avd_get_verb_path()
 	CRASH("__avd_get_verb_path not defined. use the macro")
@@ -65,3 +68,6 @@
 #define ADMIN_CATEGORY_DEBUG "Debug"
 #define ADMIN_CATEGORY_SERVER "Server"
 #define ADMIN_CATEGORY_OBJECT "Object"
+
+// Visibility flags
+#define ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG "Map-Debug"

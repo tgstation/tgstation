@@ -1,29 +1,16 @@
-/client/proc/Debug2()
-	set category = "Debug"
-	set name = "Debug-Game"
-	if(!check_rights(R_DEBUG))
-		return
-
-	if(GLOB.Debug2)
-		GLOB.Debug2 = 0
-		message_admins("[key_name(src)] toggled debugging off.")
-		log_admin("[key_name(src)] toggled debugging off.")
-	else
-		GLOB.Debug2 = 1
-		message_admins("[key_name(src)] toggled debugging on.")
-		log_admin("[key_name(src)] toggled debugging on.")
-
+ADMIN_VERB(toggle_game_debug, R_DEBUG, "Debug-Game", "Toggles game debugging.", ADMIN_CATEGORY_DEBUG)
+	GLOB.Debug2 = !GLOB.Debug2
+	var/message = "toggled debugging [(GLOB.Debug2 ? "ON" : "OFF")]"
+	message_admins("[key_name_admin(user)] [message].")
+	log_admin("[key_name(user)] [message].")
 	BLACKBOX_LOG_ADMIN_VERB("Toggle Debug Two")
 
-/client/proc/Cell()
-	set category = "Debug"
-	set name = "Air Status in Location"
-	if(!mob)
+ADMIN_VERB_VISIBILITY(air_status, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB(air_status, R_DEBUG, "Air Status In Location", "Gets the air status for your current turf.", ADMIN_CATEGORY_DEBUG)
+	var/turf/user_turf = get_turf(user.mob)
+	if(!isturf(user_turf))
 		return
-	var/turf/T = get_turf(mob)
-	if(!isturf(T))
-		return
-	atmos_scan(user=usr, target=T, silent=TRUE)
+	atmos_scan(user.mob, user_turf, silent = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Air Status In Location")
 
 /client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
@@ -120,12 +107,10 @@ ADMIN_VERB(cmd_del_all_hard, R_DEBUG|R_SPAWN, "Hard-Del-All", "Hard delete all d
 	message_admins("[key_name_admin(user)] has hard deleted all ([counter]) instances of [type_to_del].")
 	BLACKBOX_LOG_ADMIN_VERB("Hard Delete All")
 
-/client/proc/cmd_debug_make_powernets()
-	set category = "Debug"
-	set name = "Make Powernets"
+ADMIN_VERB(cmd_debug_make_powernets, R_DEBUG|R_SERVER, "Make Powernets", "Regenerates all powernets for all cables.", ADMIN_CATEGORY_DEBUG)
 	SSmachines.makepowernets()
-	log_admin("[key_name(src)] has remade the powernet. makepowernets() called.")
-	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.")
+	log_admin("[key_name(user)] has remade the powernet. makepowernets() called.")
+	message_admins("[key_name_admin(user)] has remade the powernets. makepowernets() called.")
 	BLACKBOX_LOG_ADMIN_VERB("Make Powernets")
 
 /client/proc/cmd_admin_grantfullaccess(mob/M in GLOB.mob_list)

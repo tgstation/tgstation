@@ -94,9 +94,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	#ifdef TESTING /* Keep these at the top to not make the list look fugly */
 	/client/proc/check_missing_sprites,
 	#endif
-	/proc/machine_upgrade,
-	/datum/admins/proc/create_or_modify_area,
-	/client/proc/atmos_control,
 	/client/proc/callproc,
 	/client/proc/callproc_datum,
 	/client/proc/check_bomb_impacts,
@@ -105,12 +102,10 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_admin_debug_traitor_objectives,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/cmd_admin_toggle_fov,
-	/client/proc/cmd_debug_make_powernets,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_display_del_log,
 	/client/proc/cmd_display_init_log,
 	/client/proc/cmd_display_overlay_log,
-	/client/proc/Debug2,
 	/client/proc/debug_controller,
 	/client/proc/debug_hallucination_weighted_list_per_type,
 	/client/proc/debug_huds,
@@ -462,12 +457,8 @@ ADMIN_VERB(stealth, R_STEALTH, "Stealth Mode", "Toggle stealth.", ADMIN_CATEGORY
 	log_admin("[key_name(usr)] has modified Dynamic Explosion Scale: [ex_scale]")
 	message_admins("[key_name_admin(usr)] has  modified Dynamic Explosion Scale: [ex_scale]")
 
-/client/proc/atmos_control()
-	set name = "Atmos Control Panel"
-	set category = "Debug"
-	if(!check_rights(R_DEBUG))
-		return
-	SSair.ui_interact(mob)
+ADMIN_VERB(atmos_control, R_DEBUG|R_SERVER, "Atmos Control Panel", "Open the atmospherics control panel.", ADMIN_CATEGORY_DEBUG)
+	SSair.ui_interact(user.mob)
 
 /client/proc/reload_cards()
 	set name = "Reload Cards"

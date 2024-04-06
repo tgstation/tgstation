@@ -10,6 +10,7 @@ GENERAL_PROTECT_DATUM(/datum/admin_verb)
 	var/description //! The description of the verb.
 	var/category //! The category of the verb.
 	var/permissions //! The permissions required to use the verb.
+	var/visibility_flag //! The flag that determines if the verb is visible.
 	VAR_PROTECTED/verb_path //! The path to the verb proc.
 
 /datum/admin_verb/Destroy(force)

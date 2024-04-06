@@ -4,8 +4,13 @@ SUBSYSTEM_DEF(admin_verbs)
 	name = "Admin Verbs"
 	flags = SS_NO_FIRE
 	init_order = INIT_ORDER_ADMIN_VERBS
+	/// A list of all admin verbs indexed by their type.
 	var/list/datum/admin_verb/admin_verbs_by_type = list()
-	var/list/admins_assosciated = list()
+	/// A list of all admin verbs indexed by their visibility flag.
+	var/list/datum/admin_verb/admin_verbs_by_visibility_flag = list()
+	/// A map of all assosciated admins and their visibility flags.
+	var/list/admin_visibility_flags = list()
+	/// A list of all admins that are pending initialization of this SS.
 	var/list/admins_pending_subsytem_init = list()
 
 /datum/controller/subsystem/admin_verbs/Initialize()
@@ -47,6 +52,9 @@ SUBSYSTEM_DEF(admin_verbs)
 	var/list/valid_verbs = list()
 	for(var/datum/admin_verb/verb_type as anything in admin_verbs_by_type)
 		var/datum/admin_verb/verb_singleton = admin_verbs_by_type[verb_type]
+		if(!verify_visibility(admin, verb_singleton))
+			continue
+
 		var/verb_permissions = verb_singleton.permissions
 		if(verb_permissions == R_NONE)
 			valid_verbs |= list(verb_singleton)
@@ -56,6 +64,17 @@ SUBSYSTEM_DEF(admin_verbs)
 			valid_verbs |= list(verb_singleton)
 
 	return valid_verbs
+
+/datum/controller/subsystem/admin_verbs/proc/verify_visibility(client/admin, datum/admin_verb/verb_singleton)
+	var/needed_flag = verb_singleton.visibility_flag
+	return !needed_flag || (needed_flag in admin_visibility_flags[admin.ckey])
+
+/datum/controller/subsystem/admin_verbs/proc/update_visibility_flag(client/admin, flag, state)
+	if(state)
+		admin_visibility_flags[admin.ckey] |= list(flag)
+	else
+		admin_visibility_flags[admin.ckey] -= list(flag)
+	assosciate_admin(admin)
 
 /datum/controller/subsystem/admin_verbs/proc/dynamic_invoke_verb(client/admin, datum/admin_verb/verb_type, ...)
 	if(IsAdminAdvancedProcCall())
@@ -88,13 +107,8 @@ SUBSYSTEM_DEF(admin_verbs)
 	usr = old_usr
 	SSblackbox.record_feedback("tally", "dynamic_admin_verb_invocation", 1, "[verb_type]")
 
-/// Reacts to the client logging into another mob. Admin verb assigning will automatically unassign their old mob on new mob assignment.
-/datum/controller/subsystem/admin_verbs/proc/on_client_mob_login(client/source)
-	SIGNAL_HANDLER
-	assosciate_admin(source)
-
 /**
- * Assosciates an admin with their admin verbs. Also registers to the client logging into another a mob so that their admin verbs carry over properly.
+ * Assosciates and/or resyncs an admin with their accessible admin verbs.
  */
 /datum/controller/subsystem/admin_verbs/proc/assosciate_admin(client/admin)
 	if(IsAdminAdvancedProcCall())
@@ -105,7 +119,8 @@ SUBSYSTEM_DEF(admin_verbs)
 		admins_pending_subsytem_init |= list(admin.ckey)
 		return
 
-	// even if they are already assosciated we need to refresh their verb assignments
+	// refresh their verbs
+	admin_visibility_flags[admin.ckey] ||= list()
 	for(var/datum/admin_verb/verb_singleton as anything in get_valid_verbs_for_admin(admin))
 		verb_singleton.assign_to_client(admin)
 
@@ -121,3 +136,4 @@ SUBSYSTEM_DEF(admin_verbs)
 	UnregisterSignal(admin, COMSIG_CLIENT_MOB_LOGIN)
 	for(var/datum/admin_verb/verb_type as anything in admin_verbs_by_type)
 		admin_verbs_by_type[verb_type].unassign_from_client(admin)
+	admin_visibility_flags -= list(admin.ckey)
