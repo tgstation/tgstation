@@ -694,13 +694,13 @@
  * see '/obj/item/melee/blood_magic/manipulator/proc/drain_victim' for human non-cultist behavior
  * if any of the above procs return FALSE, '/obj/item/melee/blood_magic/afterattack' will not be called
  *
- * '/obj/item/melee/blood_magic/manipulator/proc/blood_draw' handles non-living blood sources and does not affect parent proc
- */ 
+ * '/obj/item/melee/blood_magic/manipulator/proc/blood_draw' handles blood pools/trails and does not affect parent proc
+ */
 /obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/human/user, proximity)
 	if(!proximity)
 		return
 
-	if(isconstruct(target) && !heal_construct(target, user))
+	if(isconstruct(target) && IS_CULTIST(target) && !heal_construct(target, user))
 		return
 	if(istype(target, /obj/effect/decal/cleanable/blood) || istype(target, /obj/effect/decal/cleanable/trail_holder) || isturf(target))
 		blood_draw(target, user)
@@ -717,7 +717,6 @@
 			return
 		if(!IS_CULTIST(human_bloodbag) && !drain_victim(human_bloodbag, user))
 			return
-
 	..()
 
 /**
@@ -729,7 +728,7 @@
 	var/mob/living/basic/construct/construct_thing = target
 	var/missing_health = construct_thing.maxHealth - construct_thing.health
 	if(!missing_health)
-		construct_thing.balloon_alert(user, "no damage!")
+		to_chat(user,span_cult("That cultist doesn't require healing!"))
 		return FALSE
 
 	if(uses <= 0)
@@ -806,7 +805,7 @@
 /**
  * handles blood rites use on a non-cultist human
  *
- * returns TRUE if blood is successfully drained from the victim 
+ * returns TRUE if blood is successfully drained from the victim
  */
 /obj/item/melee/blood_magic/manipulator/proc/drain_victim(mob/living/carbon/human/human_bloodbag, mob/living/carbon/human/user)
 	if(human_bloodbag.has_status_effect(/datum/status_effect/speech/slurring/cult))
@@ -825,31 +824,36 @@
 	return TRUE
 
 /**
- * handles blood rites use on nonhuman potential blood sources
+ * handles blood rites use on turfs, blood pools, and blood trails
  */
 /obj/item/melee/blood_magic/manipulator/proc/blood_draw(atom/target, mob/living/carbon/human/user)
 	var/blood_to_gain = 0
 	var/turf/our_turf = get_turf(target)
-	if(our_turf)
-		for(var/obj/effect/decal/cleanable/blood/blood_around_us in range(our_turf,2))
-			if(blood_around_us.blood_state == BLOOD_STATE_HUMAN)
-				if(blood_around_us.bloodiness == 100) //Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
-					blood_to_gain += 30
-				else
-					blood_to_gain += max((blood_around_us.bloodiness**2)/800,1)
-				new /obj/effect/temp_visual/cult/turf/floor(get_turf(blood_around_us))
-				qdel(blood_around_us)
-		for(var/obj/effect/decal/cleanable/trail_holder/trail_around_us in range(our_turf, 2))
-			if(trail_around_us.blood_state == BLOOD_STATE_HUMAN)
-				blood_to_gain += 5 //These don't get bloodiness, so we'll just increase this by a fixed value
-				new /obj/effect/temp_visual/cult/turf/floor(get_turf(trail_around_us))
-			qdel(trail_around_us)
-		if(blood_to_gain)
-			user.Beam(our_turf,icon_state="drainbeam", time = 15)
-			new /obj/effect/temp_visual/cult/sparks(get_turf(user))
-			playsound(our_turf, 'sound/magic/enter_blood.ogg', 50)
-			to_chat(user, span_cult_italic("Your blood rite has gained [round(blood_to_gain)] charge\s from blood sources around you!"))
-			uses += max(1, round(blood_to_gain))
+	if(!our_turf)
+		return
+	for(var/obj/effect/decal/cleanable/blood/blood_around_us in range(our_turf,2))
+		if(blood_around_us.blood_state != BLOOD_STATE_HUMAN)
+			break
+		if(blood_around_us.bloodiness == 100) // Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
+			blood_to_gain += 30
+		else
+			blood_to_gain += max((blood_around_us.bloodiness**2)/800,1)
+		new /obj/effect/temp_visual/cult/turf/floor(get_turf(blood_around_us))
+		qdel(blood_around_us)
+	for(var/obj/effect/decal/cleanable/trail_holder/trail_around_us in range(our_turf, 2))
+		if(trail_around_us.blood_state != BLOOD_STATE_HUMAN)
+			break
+		blood_to_gain += 5 //These don't get bloodiness, so we'll just increase this by a fixed value
+		new /obj/effect/temp_visual/cult/turf/floor(get_turf(trail_around_us))
+		qdel(trail_around_us)
+
+	if(!blood_to_gain)
+		return
+	user.Beam(our_turf,icon_state="drainbeam", time = 15)
+	new /obj/effect/temp_visual/cult/sparks(get_turf(user))
+	playsound(our_turf, 'sound/magic/enter_blood.ogg', 50)
+	to_chat(user, span_cult_italic("Your blood rite has gained [round(blood_to_gain)] charge\s from blood sources around you!"))
+	uses += max(1, round(blood_to_gain))
 
 /**
  * handles untargeted use of blood rites
