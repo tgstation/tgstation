@@ -20,8 +20,6 @@
 //- Check if the area has too much empty space. If so, make it smaller and replace the rest with maintenance tunnels.
 
 GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
-	/client/proc/camera_view, //-errorage
-	/client/proc/sec_camera_report, //-errorage
 	/client/proc/intercom_view, //-errorage
 	/client/proc/air_status, //Air things
 	/client/proc/atmosscan, //check plumbing
@@ -59,10 +57,8 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 ))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
-/client/proc/camera_view()
-	set category = "Mapping"
-	set name = "Camera Range Display"
-
+ADMIN_VERB_VISIBILITY(camera_view, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB(camera_view, R_DEBUG, "Camera Range Display", "Shows the range of cameras on the station.", ADMIN_CATEGORY_MAPPING)
 	var/on = FALSE
 	for(var/turf/T in world)
 		if(T.maptext)
@@ -95,14 +91,8 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	popup.open()
 #endif
 
-/client/proc/sec_camera_report()
-	set category = "Mapping"
-	set name = "Camera Report"
-
-	if(!Master)
-		tgui_alert(usr,"Master_controller not found.","Sec Camera Report")
-		return FALSE
-
+ADMIN_VERB_VISIBILITY(sec_camera_report, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB(sec_camera_report, R_DEBUG, "Camera Report", "Get a printout of all camera issues.", ADMIN_CATEGORY_MAPPING)
 	var/list/obj/machinery/camera/CL = list()
 
 	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
@@ -132,7 +122,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 					output += "<li><font color='red'>Camera not connected to wall at [ADMIN_VERBOSEJMP(C1)] Network: [json_encode(C1.network)]</font></li>"
 
 	output += "</ul>"
-	usr << browse(output,"window=airreport;size=1000x500")
+	user << browse(output,"window=airreport;size=1000x500")
 	BLACKBOX_LOG_ADMIN_VERB("Show Camera Report")
 
 /client/proc/intercom_view()

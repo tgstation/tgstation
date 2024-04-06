@@ -68,6 +68,7 @@
 #define ADMIN_CATEGORY_DEBUG "Debug"
 #define ADMIN_CATEGORY_SERVER "Server"
 #define ADMIN_CATEGORY_OBJECT "Object"
+#define ADMIN_CATEGORY_MAPPING "Mapping"
 
 // Visibility flags
 #define ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG "Map-Debug"

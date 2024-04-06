@@ -94,8 +94,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	#ifdef TESTING /* Keep these at the top to not make the list look fugly */
 	/client/proc/check_missing_sprites,
 	#endif
-	/client/proc/callproc,
-	/client/proc/callproc_datum,
 	/client/proc/check_bomb_impacts,
 	/client/proc/check_timer_sources,
 	/client/proc/clear_dynamic_transit,
