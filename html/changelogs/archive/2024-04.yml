@@ -72,3 +72,7 @@
       scripts shouldn't slow down timers anymore.
   - bugfix: Fixed lua error logging.
   - admin: Admins can now run lua files bigger than 36 KB by importing them directly.
+2024-04-06:
+  Jacquerel:
+  - bugfix: Dismounting from a piggyback no longer allows you to phase through other
+      players.
