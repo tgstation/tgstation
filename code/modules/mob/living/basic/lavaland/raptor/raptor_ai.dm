@@ -2,7 +2,9 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
-		BB_STORM_APPROACHING = FALSE,
+        BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/mining/raptor),
+		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/mining/raptor/baby_raptor),
+		BB_MAX_CHILDREN = 5,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -16,6 +18,7 @@
         /datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_and_hunt_target/care_for_young,
+        /datum/ai_planning_subtree/make_babies,
         /datum/ai_planning_subtree/raptor_start_trouble,
 	)
 
@@ -99,6 +102,7 @@
     always_reset_target = TRUE
 
 /datum/ai_behavior/hunt_target/care_for_young/target_caught(mob/living/hunter, atom/hunted)
+    hunter.manual_emote("grooms [hunted]!")
     hunter.set_combat_mode(FALSE)
     hunter.OnClick(hunted)
 
