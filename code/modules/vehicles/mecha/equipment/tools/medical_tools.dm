@@ -17,7 +17,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper
 	name = "mounted sleeper"
-	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents in the exosuit's reserves."
+	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents from a equiped exosuit syringe gun."
 	icon_state = "mecha_sleeper"
 	energy_drain = 20
 	range = MECHA_MELEE
@@ -70,7 +70,7 @@
 	data["has_brain_damage"] = patient.get_organ_loss(ORGAN_SLOT_BRAIN) != 0
 	data["has_traumas"] = length(patient.get_traumas()) != 0
 	data["contained_reagents"] = get_reagent_data(patient.reagents.reagent_list)
-	
+
 	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG = locate(/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun) in chassis
 	data["injectible_reagents"] = get_reagent_data(SG.reagents.reagent_list)
 	return data
