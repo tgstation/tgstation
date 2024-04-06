@@ -1,6 +1,7 @@
 (function () {
   // Utility functions
   let hasOwn = Object.prototype.hasOwnProperty;
+  // todo: remove
   let assign = function (target) {
     for (let i = 1; i < arguments.length; i++) {
       let source = arguments[i];
@@ -32,6 +33,7 @@
   window.__windowId__ = Byond.windowId;
 
   // Trident engine version
+  // todo: remove
   Byond.TRIDENT = (function () {
     let groups = navigator.userAgent.match(/Trident\/(\d+).+?;/i);
     let majorVersion = groups && groups[1];
@@ -46,6 +48,7 @@
   })();
 
   // Basic checks to detect whether this page runs in BYOND
+  // todo: remoe trident
   let isByond =
     (Byond.TRIDENT !== null || Byond.BLINK !== null || window.cef_to_byond) &&
     location.hostname === '127.0.0.1' &&
@@ -102,6 +105,7 @@
     }
 
     // Perform a standard call via location.href
+    // todo: remove
     if (url.length < 2048) {
       location.href = 'byond://' + url;
       return;
@@ -236,9 +240,13 @@
 
   let injectNode = function (node) {
     if (!document.body) {
+      // todo: replace with DOMContentLoaded
       setTimeout(() => {
         injectNode(node);
       });
+      // document.addEventListener('DOMContentLoaded', () => {
+      //   injectNode(node);
+      // });
       return;
     }
     let refs = document.body.childNodes;
