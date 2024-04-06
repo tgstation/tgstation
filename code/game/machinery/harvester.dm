@@ -136,7 +136,7 @@
 				organ_to_remove.forceMove(target) //Some organs, like chest ones, are different so we need to manually move them
 		operation_order.Remove(limb_to_remove)
 		break
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(harvest)), interval)
 
 /obj/machinery/harvester/proc/end_harvesting(success = TRUE)
@@ -171,7 +171,7 @@
 		return TRUE
 
 /obj/machinery/harvester/default_pry_open(obj/item/tool) //wew
-	. = !(state_open || panel_open || (obj_flags & NO_DECONSTRUCTION)) && tool.tool_behaviour == TOOL_CROWBAR //We removed is_operational here
+	. = !(state_open || panel_open) && tool.tool_behaviour == TOOL_CROWBAR //We removed is_operational here
 	if(.)
 		tool.play_tool_sound(src, 50)
 		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open [src]."))

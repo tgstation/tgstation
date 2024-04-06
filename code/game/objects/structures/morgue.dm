@@ -104,10 +104,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		return
 	return attack_hand(user)
 
-/obj/structure/bodycontainer/deconstruct(disassembled = TRUE)
-	if (!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(loc, 5)
-	qdel(src)
+/obj/structure/bodycontainer/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/iron(loc, 5)
 
 /obj/structure/bodycontainer/container_resist_act(mob/living/user)
 	if(!locked)
@@ -446,14 +444,10 @@ GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/bodycontainer/crematorium/creamatorium/cremate(mob/user)
 	var/list/icecreams = list()
 	for(var/mob/living/i_scream as anything in get_all_contents_type(/mob/living))
-		var/obj/item/food/icecream/IC = new /obj/item/food/icecream(
-			loc = null,
-			prefill_flavours = list(ICE_CREAM_MOB = list(null, i_scream.name))
-		)
-		icecreams += IC
+		icecreams += new /obj/item/food/icecream(null, list(ICE_CREAM_MOB = list(null, i_scream.name)))
 	. = ..()
-	for(var/obj/IC in icecreams)
-		IC.forceMove(src)
+	for(var/obj/ice_cream as anything in icecreams)
+		ice_cream.forceMove(src)
 
 /*
  * Generic Tray
@@ -477,9 +471,8 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		connected = null
 	return ..()
 
-/obj/structure/tray/deconstruct(disassembled = TRUE)
+/obj/structure/tray/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/iron (loc, 2)
-	qdel(src)
 
 /obj/structure/tray/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)

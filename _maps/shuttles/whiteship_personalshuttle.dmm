@@ -273,7 +273,7 @@
 /area/shuttle/abandoned/bridge)
 "pS" = (
 /obj/machinery/light/small/directional/south,
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 4
 	},
 /obj/structure/bed/pod{

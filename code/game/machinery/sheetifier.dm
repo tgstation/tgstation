@@ -56,7 +56,7 @@
 	busy_processing = FALSE
 	update_appearance()
 	materials.retrieve_all() //Returns all as sheets
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/sheetifier/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

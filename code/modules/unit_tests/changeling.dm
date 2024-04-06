@@ -8,7 +8,7 @@
 /datum/unit_test/transformation_sting/Run()
 	var/mob/living/carbon/human/ling = setup_ling()
 	var/mob/living/carbon/human/victim = setup_victim()
-	var/datum/antagonist/changeling/ling_datum = ling.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/ling_datum = IS_CHANGELING(ling)
 
 	// Get the ability we're testing
 	ling_datum.purchase_power(/datum/action/changeling/sting/transformation)
@@ -82,8 +82,8 @@
 	ling.dna.features["spines"] = "Long + Membrane"
 	ling.dna.features["body_markings"] = "Light Belly"
 	ling.dna.features["legs"] = DIGITIGRADE_LEGS
-	ling.eye_color_left = "#FFFFFF"
-	ling.eye_color_right = "#FFFFFF"
+	ling.eye_color_left = COLOR_WHITE
+	ling.eye_color_right = COLOR_WHITE
 	ling.dna.update_ui_block(DNA_EYE_COLOR_LEFT_BLOCK)
 	ling.dna.update_ui_block(DNA_EYE_COLOR_RIGHT_BLOCK)
 	ling.set_species(/datum/species/lizard)

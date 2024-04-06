@@ -200,7 +200,7 @@
 	machine_parts = null
 	return..()
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/on_deconstruction()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/on_deconstruction(disassembled)
 	var/turf/local_turf = get_turf(loc)
 	var/datum/gas_mixture/to_release = moderator_internal || internal_fusion
 	if(to_release == moderator_internal)

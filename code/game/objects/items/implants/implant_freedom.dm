@@ -17,16 +17,30 @@
 /obj/item/implant/freedom/activate()
 	. = ..()
 	var/mob/living/carbon/carbon_imp_in = imp_in
-	if(!carbon_imp_in.handcuffed && !carbon_imp_in.legcuffed)
+	if(!can_trigger(carbon_imp_in))
 		balloon_alert(carbon_imp_in, "no restraints!")
 		return
 
 	uses--
 
 	carbon_imp_in.uncuff()
+	var/obj/item/clothing/shoes/shoes = carbon_imp_in.shoes
+	if(istype(shoes) && shoes.tied == SHOES_KNOTTED)
+		shoes.adjust_laces(SHOES_TIED, carbon_imp_in)
+
 	if(!uses)
 		addtimer(CALLBACK(carbon_imp_in, TYPE_PROC_REF(/atom, balloon_alert), carbon_imp_in, "implant degraded!"), 1 SECONDS)
 		qdel(src)
+
+/obj/item/implant/freedom/proc/can_trigger(mob/living/carbon/implanted_in)
+	if(implanted_in.handcuffed || implanted_in.legcuffed)
+		return TRUE
+
+	var/obj/item/clothing/shoes/shoes = implanted_in.shoes
+	if(istype(shoes) && shoes.tied == SHOES_KNOTTED)
+		return TRUE
+
+	return FALSE
 
 /obj/item/implant/freedom/get_data()
 	return "<b>Implant Specifications:</b><BR> \

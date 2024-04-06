@@ -58,7 +58,6 @@
 	eyes.bodypart_insert(my_head)
 	human.update_body()
 	head.update_icon_dropped()
-	human.set_safe_hunger_level()
 	RegisterSignal(head, COMSIG_QDELETING, PROC_REF(on_head_destroyed))
 
 /// If we gained a new body part, it had better not be a head

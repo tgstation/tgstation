@@ -326,9 +326,11 @@ const NewscasterWantedScreen = (props) => {
         </>
       ) : (
         <Box>
-          {wanted.active
-            ? 'Please contact your local security officer if spotted.'
-            : 'No wanted issue posted. Have a secure day.'}
+          {wanted.map((activeWanted) =>
+            activeWanted.active
+              ? 'Please contact your local security officer if spotted.'
+              : 'No wanted issue posted. Have a secure day.',
+          )}
         </Box>
       )}
     </Modal>
@@ -445,6 +447,7 @@ const NewscasterChannelBox = (props) => {
           <Box>
             <Button
               icon="newspaper"
+              tooltip={paper <= 0 ? 'Insert paper first!' : ''}
               disabled={paper <= 0}
               onClick={() => act('printNewspaper')}
             >

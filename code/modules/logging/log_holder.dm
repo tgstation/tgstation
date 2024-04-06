@@ -107,11 +107,10 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		return
 
 	switch(action)
-		if("re-render")
+		if("refresh")
 			cache_ui_data()
 			SStgui.update_uis(src)
 			return TRUE
-
 		else
 			stack_trace("unknown ui_act action [action] for [type]")
 
@@ -340,7 +339,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		var/datum/data = data_list[key]
 
 		if(isnull(data))
-			// do nothing - nulls are allowed
+			pass() // nulls are allowed
 
 		else if(islist(data))
 			data = recursive_jsonify(data, semvers)

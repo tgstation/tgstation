@@ -118,3 +118,19 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	hidden = TRUE
+
+/// only player mobs (has ckey) may pass, reverse for the opposite
+/obj/effect/playeronly_barrier
+	name = "player-only barrier"
+	desc = "You shall pass."
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = "blocker"
+	anchored = TRUE
+	invisibility = INVISIBILITY_MAXIMUM
+	var/reverse = FALSE //Block if has ckey
+
+/obj/effect/playeronly_barrier/CanAllowThrough(mob/living/mover, border_dir)
+	. = ..()
+	if(!istype(mover))
+		return
+	return isnull(mover.ckey) == reverse

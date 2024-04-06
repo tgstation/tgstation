@@ -263,13 +263,11 @@
 	var/matrix/M = matrix(transform)
 	transform = M.Turn(-previous_rotation)
 
-/obj/structure/flora/deconstruct()
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(harvested)
-			return ..()
+/obj/structure/flora/atom_deconstruct(disassembled = TRUE)
+	if(harvested)
+		return ..()
 
-		harvest(product_amount_multiplier = 0.6)
-	. = ..()
+	harvest(product_amount_multiplier = 0.6)
 
 /*********
  * Trees *

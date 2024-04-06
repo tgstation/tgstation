@@ -102,6 +102,8 @@
 /datum/martial_art/krav_maga/proc/leg_sweep(mob/living/attacker, mob/living/defender)
 	if(defender.stat != CONSCIOUS || defender.IsParalyzed())
 		return MARTIAL_ATTACK_INVALID
+	if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
+		return MARTIAL_ATTACK_INVALID // Does 5 damage, so we can't let pacifists leg sweep.
 	defender.visible_message(
 		span_warning("[attacker] leg sweeps [defender]!"),
 		span_userdanger("Your legs are sweeped by [attacker]!"),
@@ -134,6 +136,8 @@
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/krav_maga/proc/neck_chop(mob/living/attacker, mob/living/defender)
+	if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
+		return MARTIAL_ATTACK_INVALID // Does 10 damage, so we can't let pacifists neck chop.
 	attacker.do_attack_animation(defender)
 	defender.visible_message(
 		span_warning("[attacker] karate chops [defender]'s neck!"),
@@ -186,7 +190,6 @@
 		return MARTIAL_ATTACK_FAIL
 	if(check_streak(attacker, defender))
 		return MARTIAL_ATTACK_SUCCESS
-	attacker.do_attack_animation(defender, ATTACK_EFFECT_DISARM)
 	var/obj/item/stuff_in_hand = defender.get_active_held_item()
 	if(prob(60) && stuff_in_hand && defender.temporarilyRemoveItemFromInventory(stuff_in_hand))
 		attacker.put_in_hands(stuff_in_hand)
@@ -200,19 +203,7 @@
 		to_chat(attacker, span_danger("You disarm [defender]!"))
 		playsound(defender, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		log_combat(attacker, defender, "disarmed (Krav Maga)", addition = "(disarmed of [stuff_in_hand])")
-		return MARTIAL_ATTACK_SUCCESS
-
-	defender.visible_message(
-		span_danger("[attacker] fails to disarm [defender]!"), \
-		span_userdanger("You're nearly disarmed by [attacker]!"),
-		span_hear("You hear a swoosh!"),
-		COMBAT_MESSAGE_RANGE,
-		attacker,
-	)
-	to_chat(attacker, span_warning("You fail to disarm [defender]!"))
-	playsound(defender, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
-	log_combat(attacker, defender, "failed to disarm (Krav Maga)")
-	return MARTIAL_ATTACK_FAIL
+	return MARTIAL_ATTACK_INVALID // normal shove
 
 //Krav Maga Gloves
 
