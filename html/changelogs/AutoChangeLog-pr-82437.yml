@@ -1,4 +1,0 @@
-author: "Archie700"
-delete-after: True
-changes:
-  - bugfix: "changed value of cell charge from 5000 to 5 megajoules"
