@@ -16,6 +16,8 @@
 #define BB_MAX_CHILDREN "BB_max_children"
 ///our current happiness level
 #define BB_BASIC_HAPPINESS "BB_basic_happiness"
+///can this mob heal?
+#define BB_BASIC_MOB_HEALER "BB_basic_mob_healer"
 
 /// Store a single or list of emotes at this key
 #define BB_EMOTE_KEY "BB_emotes"

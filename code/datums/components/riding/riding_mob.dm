@@ -554,25 +554,13 @@
 	var/datum/weakref/mounter
 	///the total amount of tries the rider gets
 	var/maximum_attempts = 6
-	///the current attempt we are on
-	var/current_attempts = 0
 	///maximum number of failures before we fail
 	var/maximum_failures = 3
-	///our total number of failures
-	var/current_failures = 0
-	///have we already attempted our current attempt?
-	var/already_attempted = FALSE
-	///how long before we generate the next turn
-	var/interval_timer = 2.5 SECONDS
 	///cached icons
 	var/list/cached_icons = list()
-	///correct answer
-	var/correct_answer
-	///have we already picked an answer?
-	var/picked_answer
 
 /datum/riding_minigame/proc/commence_minigame(mob/living/ridden, mob/living/rider)
-	RegisterSignal(rider, COMSIG_MOB_UNBUCKLED, PROC_REF(end_game))
+	RegisterSignal(rider, COMSIG_MOB_UNBUCKLED, PROC_REF(lose_game))
 	host = WEAKREF(ridden)
 	mounter = WEAKREF(rider)
 	for(var/direction in GLOB.cardinals)
@@ -580,9 +568,17 @@
 		var/string_icon = icon2base64(directional_icon)
 		var/opposite_direction = dir2text(REVERSE_DIR(direction))
 		cached_icons[opposite_direction] = string_icon
-	generate_cycle()
+	START_PROCESSING(SSprocessing, src)
 	ui_interact(rider)
 
+/datum/riding_minigame/process()
+	var/mob/living/living_host = host?.resolve()
+	if(isnull(living_host))
+		return PROCESS_KILL
+	if(prob(60)) //we shake and move uncontrollably!
+		living_host.Shake(duration = 2 SECONDS)
+		var/list/new_direction = GLOB.cardinals.Copy() - living_host.dir
+		living_host.setDir(pick(new_direction))
 
 /datum/riding_minigame/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -590,42 +586,16 @@
 		ui = new(user, src, "RideMinigame")
 		ui.open()
 
-/datum/riding_minigame/proc/generate_cycle()
-	if(QDELETED(src))
-		return
-	if(picked_answer != correct_answer)
-		current_failures++
-	if(current_failures >= maximum_failures)
-		end_game(victory = FALSE)
-		return
-	current_attempts++
-	if(current_attempts >= maximum_attempts)
-		end_game(victory = TRUE)
-		return
-	picked_answer = null
-	var/list/answer_pool = cached_icons.Copy() - correct_answer
-	correct_answer = pick(answer_pool)
-	var/mob/living/living_host = host?.resolve()
-	living_host.setDir(REVERSE_DIR(text2dir(correct_answer)))
-	living_host.Shake(duration = interval_timer)
-	addtimer(CALLBACK(src, PROC_REF(generate_cycle)), interval_timer)
-
-/datum/riding_minigame/ui_data(mob/user)
-	var/list/data = list()
-	. = data
-	var/mob/living/living_host = host?.resolve()
-	if(isnull(living_host))
-		return
-	data["already_chosen"] = !!picked_answer 
-	data["current_attempts"] = current_attempts
-	data["current_failures"] = current_failures
-	data["chosen_icon"] =  cached_icons[correct_answer]
-	return data
-
 /datum/riding_minigame/ui_static_data(mob/user)
 	var/list/data = list()
 	data["maximum_attempts"] = maximum_attempts
 	data["maximum_failures"] = maximum_failures
+	data["all_icons"] = list()
+	for(var/index in cached_icons)
+		data["all_icons"] += list(list(
+			"direction" = index,
+			"icon" = cached_icons[index],
+		))
 	return data
 
 /datum/riding_minigame/ui_state(mob/user)
@@ -635,25 +605,28 @@
 	. = ..()
 	switch(action)
 
-		if("submit_answer")
-			if(picked_answer)
-				return TRUE
-			picked_answer = params["picked_answer"]
-			var/sound_to_play = picked_answer == correct_answer ? 'sound/items/orbie_trick_learned.ogg' : 'sound/machines/buzz-sigh.ogg' 
-			var/mob/living/living_rider = mounter?.resolve()
-			if(living_rider)
-				SEND_SOUND(living_rider, sound_to_play)
-	
-/datum/riding_minigame/proc/end_game(victory)
+		if("lose_game")
+			lose_game()
+		if("win_game")
+			win_game()
+			
+/datum/riding_minigame/proc/win_game()
 	var/mob/living/living_host = host?.resolve()
 	var/mob/living/living_rider = mounter?.resolve()
 	if(isnull(living_host) || isnull(living_rider))
 		qdel(src)
 		return
-	if(victory)
-		living_host.befriend(living_rider)
-		living_host.balloon_alert(living_rider, "calms down...")
-	else if(LAZYFIND(living_host.buckled_mobs, living_rider))
+	living_host.befriend(living_rider)
+	living_host.balloon_alert(living_rider, "calms down...")
+	qdel(src)
+
+/datum/riding_minigame/proc/lose_game()
+	var/mob/living/living_host = host?.resolve()
+	var/mob/living/living_rider = mounter?.resolve()
+	if(isnull(living_host) || isnull(living_rider))
+		qdel(src)
+		return
+	if(LAZYFIND(living_host.buckled_mobs, living_rider))
 		UnregisterSignal(living_rider, COMSIG_MOB_UNBUCKLED) //we're about to knock them down!
 		living_host.spin(spintime = 2 SECONDS, speed = 1)
 		living_rider.Knockdown(4 SECONDS)
@@ -661,7 +634,11 @@
 		living_host.balloon_alert(living_rider, "knocks you down!")
 	qdel(src)
 
+/datum/riding_minigame/ui_close(mob/user)
+	lose_game()
+
 /datum/riding_minigame/Destroy()
+	STOP_PROCESSING(SSprocessing, src)
 	mounter = null
 	host = null
 	return ..()

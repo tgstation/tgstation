@@ -36,6 +36,8 @@
 /mob/living/basic/mining/raptor/Initialize(mapload)
 	. = ..()
 	inherited_stats = new
+	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/ai_flee_while_injured, stop_fleeing_at = 0.5, start_fleeing_below = 0.2)
 	AddComponent(/datum/component/happiness)
 	if(ridable_component)
 		AddElement(/datum/element/ridable, ridable_component)

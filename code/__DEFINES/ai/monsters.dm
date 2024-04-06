@@ -285,3 +285,7 @@
 #define BB_RAPTOR_COWARD "raptor_coward"
 ///this mob will go out seeking trouble against its kind
 #define BB_RAPTOR_TROUBLE_MAKER "raptor_trouble_maker"
+///cooldown till we go out cause trouble again
+#define BB_RAPTOR_TROUBLE_COOLDOWN "raptor_trouble_maker_cooldown"
+///our raptor baby target we will take care of
+#define BB_RAPTOR_BABY "raptor_baby"
