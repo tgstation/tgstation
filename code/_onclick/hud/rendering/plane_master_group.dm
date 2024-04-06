@@ -539,6 +539,7 @@
 	RegisterSignal(our_hud, COMSIG_HUD_EYE_CHANGED, PROC_REF(eye_changed))
 	var/client/our_client = our_hud?.mymob?.client
 	if(!our_client)
+		set_source(our_hud.mymob)
 		return
 	set_source(our_client.eye)
 	attach_client(our_client)
@@ -557,11 +558,11 @@
 	if(!old_eye) // If we had no eye before we assume this is a new client
 		attach_client(our_hud?.mymob?.client)
 
-/datum/plane_master_group/proc/view_changed(datum/source, new_size)
+/datum/plane_master_group/main/proc/view_changed(datum/source, new_size)
 	SIGNAL_HANDLER
 	set_view_range(new_size)
 
-/datum/plane_master_group/proc/offsets_changed(datum/source, offset_x, offset_y)
+/datum/plane_master_group/main/proc/offsets_changed(datum/source, offset_x, offset_y)
 	SIGNAL_HANDLER
 	set_view_offsets(list(offset_x, offset_y))
 
