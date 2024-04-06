@@ -262,7 +262,7 @@
 	// Especially since it looks like we don't even change the default icon/iconstate???
 	AddElement(/datum/element/rust)
 
-/turf/open/floor/plating/lowp_ressure_plasma
+/turf/open/floor/plating/low_pressure_plasma
 	initial_gas_mix = LOW_PRESURE_PLASMA
 
 /turf/open/floor/stone
