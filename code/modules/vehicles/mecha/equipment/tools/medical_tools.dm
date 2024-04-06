@@ -22,10 +22,12 @@
 	energy_drain = 20
 	range = MECHA_MELEE
 	equip_cooldown = 20
-	///ref to the patient loaded in the sleeper
+	/// ref to the patient loaded in the sleeper
 	var/mob/living/carbon/patient
 	/// amount of chems to inject into patient from other hands syringe gun
 	var/inject_amount = 10
+	/// List of avalible chemst to inject
+	var/list/injectible_reagents = list()
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/Destroy()
 	for(var/atom/movable/content as anything in src)
@@ -34,13 +36,47 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/get_snowflake_data()
 	var/list/data = list("snowflake_id" = MECHA_SNOWFLAKE_ID_SLEEPER)
-	if(!patient)
+	if(isnull(patient))
 		return data
+	var/patient_state
+	switch(patient.stat)
+		if(0)
+			patient_state = "Conscious"
+		if(1)
+			patient_state = "Unconscious"
+		if(2)
+			patient_state = "*dead*"
+		else
+			patient_state = "Unknown"
+	var/core_temp = ""
+	if(ishuman(patient))
+		var/mob/living/carbon/human/humi = patient
+		core_temp = humi.bodytemperature-T0C
 	data["patient"] = list(
-		"patientname" = patient.name,
-		"is_dead" = patient.stat == DEAD,
+		"patient_name" = patient.name,
 		"patient_health" = patient.health/patient.maxHealth,
+		"patient_state" = patient_state,
+		"core_temp" = core_temp,
+		"brute_loss" = patient.getBruteLoss(),
+		"burn_loss" = patient.getFireLoss(),
+		"toxin_loss" = patient.getToxLoss(),
+		"oxygen_loss" = patient.getOxyLoss(),
 	)
+	data["has_brain_damage"] = patient.get_organ_loss(ORGAN_SLOT_BRAIN) != 0
+	data["has_traumas"] = length(patient.get_traumas()) != 0
+	var/list/contained_reagents = list()
+	if(length(patient.reagents.reagent_list))
+		for(var/datum/reagent/reagent as anything in patient.reagents.reagent_list)
+			contained_reagents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
+	data["contained_reagents"] = contained_reagents
+	
+	injectible_reagents = list()
+	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG = locate(/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun) in chassis
+	if(SG && SG.reagents && islist(SG.reagents.reagent_list))
+		for(var/datum/reagent/R in SG.reagents.reagent_list)
+			if(R.volume > 0)
+				injectible_reagents += list(list("name" = R.name, "volume" = round(R.volume, 0.01)))
+	data["injectible_reagents"] = injectible_reagents
 	return data
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/handle_ui_act(action, list/params)
@@ -52,6 +88,12 @@
 			usr << browse(get_patient_stats(),"window=msleeper")
 			onclose(usr, "msleeper")
 			return FALSE
+		else
+			var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG = locate() in chassis
+			for(var/datum/reagent/R in SG.reagents.reagent_list)
+				if(action == ("inject_reagent_" + R.name))
+					inject_reagent(R, SG)
+					return
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/action(mob/source, atom/atomtarget, list/modifiers)
 	if(!action_checks(atomtarget))
@@ -59,7 +101,7 @@
 	if(!iscarbon(atomtarget))
 		return
 	var/mob/living/carbon/target = atomtarget
-	if(!patient_insertion_check(target))
+	if(!patient_insertion_check(target, source))
 		return
 	to_chat(source, "[icon2html(src, source)][span_notice("You start putting [target] into [src]...")]")
 	chassis.visible_message(span_warning("[chassis] starts putting [target] into \the [src]."))
@@ -76,7 +118,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/patient_insertion_check(mob/living/carbon/target, mob/user)
-	if(target.buckled)
+	if(!isnull(target.buckled))
 		to_chat(user, "[icon2html(src, user)][span_warning("[target] will not fit into the sleeper because [target.p_theyre()] buckled to [target.buckled]!")]")
 		return FALSE
 	if(target.has_buckled_mobs())
@@ -188,7 +230,7 @@
 	return output
 
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/inject_reagent(datum/reagent/R,obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG)
+/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/inject_reagent(datum/reagent/R, obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG)
 	if(!R || !patient || !SG || !(SG in chassis.flat_equipment))
 		return
 	var/to_inject = min(R.volume, inject_amount)

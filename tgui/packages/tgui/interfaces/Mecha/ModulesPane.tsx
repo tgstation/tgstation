@@ -396,7 +396,13 @@ const SnowflakeWeaponBallistic = (props) => {
 const SnowflakeSleeper = (props) => {
   const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
-  const { patient } = props.module.snowflake;
+  const {
+    patient,
+    contained_reagents,
+    injectible_reagents,
+    has_brain_damage,
+    has_traumas,
+  } = props.module.snowflake;
   return !patient ? (
     <LabeledList.Item label="Patient">None</LabeledList.Item>
   ) : (
@@ -416,21 +422,68 @@ const SnowflakeSleeper = (props) => {
           />
         }
       >
-        {patient.patientname}
+        {patient.patient_name}
       </LabeledList.Item>
       <LabeledList.Item label={'Health'}>
-        {patient.is_dead ? (
-          <Box color="red">Patient dead</Box>
-        ) : (
-          <ProgressBar
-            ranges={{
-              good: [0.75, Infinity],
-              average: [0.25, 0.75],
-              bad: [-Infinity, 0.25],
-            }}
-            value={patient.patient_health}
-          />
-        )}
+        <ProgressBar
+          ranges={{
+            good: [0.75, Infinity],
+            average: [0.25, 0.75],
+            bad: [-Infinity, 0.25],
+          }}
+          value={patient.patient_health}
+        />
+      </LabeledList.Item>
+      <LabeledList.Item label={'State'}>
+        {patient.patient_state}
+      </LabeledList.Item>
+      <LabeledList.Item label={'Temperature'}>
+        {patient.core_temp} C
+      </LabeledList.Item>
+      <LabeledList.Item label={'Brute Damage'}>
+        {patient.brute_loss}
+      </LabeledList.Item>
+      <LabeledList.Item label={'Burn Severity'}>
+        {patient.burn_loss}
+      </LabeledList.Item>
+      <LabeledList.Item label={'Toxin Content'}>
+        {patient.toxin_loss}
+      </LabeledList.Item>
+      <LabeledList.Item label={'Respiratory Damage'}>
+        {patient.oxygen_loss}
+      </LabeledList.Item>
+      {(has_brain_damage && (
+        <LabeledList.Item label={'Detected'}>Brain Damage</LabeledList.Item>
+      )) ||
+        undefined}
+      {(has_traumas && (
+        <LabeledList.Item label={'Detected'}>Traumatic Damage</LabeledList.Item>
+      )) ||
+        undefined}
+      <LabeledList.Item label={'Reagent Details'}>
+        {contained_reagents.map((reagent) => (
+          <LabeledList.Item key={reagent.name} label={reagent.name}>
+            <LabeledList.Item label={`${reagent.volume}u`} />
+          </LabeledList.Item>
+        ))}
+      </LabeledList.Item>
+      <LabeledList.Item label={'Reagent Injection'}>
+        {injectible_reagents.map((reagent) => (
+          <LabeledList.Item key={reagent.name} label={reagent.name}>
+            <LabeledList.Item label={`${reagent.volume}u`}>
+              <Button
+                onClick={() =>
+                  act('equip_act', {
+                    ref: ref,
+                    gear_action: `inject_reagent_${reagent.name}`,
+                  })
+                }
+              >
+                Inject
+              </Button>
+            </LabeledList.Item>
+          </LabeledList.Item>
+        ))}
       </LabeledList.Item>
       <LabeledList.Item label={'Detailed Vitals'}>
         <Button
