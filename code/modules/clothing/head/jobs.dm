@@ -605,6 +605,7 @@
 	desc = "Used by doctors to look into a patient's eyes, ears, and mouth. \
 		A little useless now, given the technology available, but it certainly completes the look."
 	icon_state = "headmirror"
+	clothing_traits = list(TRAIT_SURGICAL_TRAINING)
 	body_parts_covered = NONE
 
 /obj/item/clothing/head/utility/head_mirror/examine(mob/user)

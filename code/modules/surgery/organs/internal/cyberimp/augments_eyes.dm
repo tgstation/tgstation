@@ -59,6 +59,22 @@
 	HUD_type = DATA_HUD_MEDICAL_ADVANCED
 	HUD_trait = TRAIT_MEDICAL_HUD
 
+/obj/item/organ/internal/cyberimp/eyes/hud/medical/Insert(mob/living/carbon/eye_owner, special = FALSE, movement_flags)
+	. = ..()
+	ADD_TRAIT(eye_owner, TRAIT_SURGICAL_TRAINING, ORGAN_TRAIT)
+
+/obj/item/organ/internal/cyberimp/eyes/hud/medical/Remove(mob/living/carbon/eye_owner, special, movement_flags)
+	if (toggled_on)
+		REMOVE_TRAIT(eye_owner, TRAIT_SURGICAL_TRAINING, ORGAN_TRAIT)
+	. = ..()
+
+/obj/item/organ/internal/cyberimp/eyes/hud/medical/toggle_hud(mob/living/carbon/eye_owner)
+	. = ..()
+	if (toggled_on)
+		ADD_TRAIT(eye_owner, TRAIT_SURGICAL_TRAINING, ORGAN_TRAIT)
+	else
+		REMOVE_TRAIT(eye_owner, TRAIT_SURGICAL_TRAINING, ORGAN_TRAIT)
+
 /obj/item/organ/internal/cyberimp/eyes/hud/security
 	name = "Security HUD implant"
 	desc = "These cybernetic eye implants will display a security HUD over everything you see."

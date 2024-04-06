@@ -56,7 +56,7 @@
 	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their health status."
 	icon_state = "healthhud"
 	hud_type = DATA_HUD_MEDICAL_ADVANCED
-	clothing_traits = list(TRAIT_MEDICAL_HUD)
+	clothing_traits = list(TRAIT_MEDICAL_HUD, TRAIT_SURGICAL_TRAINING)
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
 
 /obj/item/clothing/glasses/hud/health/night

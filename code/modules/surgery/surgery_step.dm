@@ -72,6 +72,14 @@
 #define SURGERY_SPEED_MORBID_CURIOSITY 0.7
 ///Modifier given to patients with TRAIT_ANALGESIA
 #define SURGERY_SPEED_TRAIT_ANALGESIA 0.8
+///Only gives speed improvements for
+///cyborgs and MODsuit users; otherwise it only mitigates penalties
+#define SURGERY_SPEED_TRAIT_TRAINED 0.7
+///Check if the user has surgical training of any kind
+#define HAS_ANY_SURGICAL_TRAINING (HAS_TRAIT(user, TRAIT_SURGICAL_TRAINING) || HAS_TRAIT(user, TRAIT_SURGICAL_TRAINING_SILICON))
+///Returns 1 if they have silicon surgical training, otherwise 0
+///Only used if we know they already have training
+#define SURGICAL_TRAINING_SILICON_LEVEL (HAS_TRAIT(user, TRAIT_SURGICAL_TRAINING_SILICON) ? 1 : 0)
 
 /datum/surgery_step/proc/initiate(mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	// Only followers of Asclepius have the ability to use Healing Touch and perform miracle feats of surgery.
@@ -100,6 +108,11 @@
 	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
 		speed_mod *= SURGERY_SPEED_TRAIT_ANALGESIA
 
+	if(SURGICAL_TRAINING_SILICON_LEVEL) /// 1 if silicon-level training
+		speed_mod *= SURGERY_SPEED_TRAIT_TRAINED
+		///Cyborgs and modsuit users are simply better at surgery
+		///than unassisted humans
+
 	var/implement_speed_mod = 1
 	if(implement_type) //this means it isn't a require hand or any item step.
 		implement_speed_mod = implements[implement_type] / 100.0
@@ -107,6 +120,16 @@
 	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod) * target.mob_surgery_speed_mod
 	var/modded_time = time * speed_mod
 
+	if (modded_time <= time && !(HAS_ANY_SURGICAL_TRAINING))
+		modded_time = time ///untrained people can only do surgery at base speed at the fastest
+
+	if (modded_time > time && HAS_ANY_SURGICAL_TRAINING)
+		if (SURGICAL_TRAINING_SILICON_LEVEL)
+			modded_time = time
+		else
+			modded_time = max(time, modded_time * SURGERY_SPEED_TRAIT_TRAINED)
+	///MODsuit assisted surgeons and silicons never get slower than base speed
+	///whereas fleshy humans can only mitigate to a certain degree
 
 	fail_prob = min(max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
 	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)//also if that, then cap modded_time at time*modifier
@@ -277,3 +300,5 @@
 #undef SURGERY_SPEED_MORBID_CURIOSITY
 #undef SURGERY_SLOWDOWN_CAP_MULTIPLIER
 #undef SURGERY_SPEED_TRAIT_TRAINED
+#undef HAS_ANY_SURGICAL_TRAINING
+#undef SURGICAL_TRAINING_SILICON_LEVEL
