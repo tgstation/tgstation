@@ -32,7 +32,7 @@
 		content.forceMove(get_turf(src))
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/medical/proc/get_reagent_data(var/list/datum/reagent/reagent_list)
+/obj/item/mecha_parts/mecha_equipment/medical/proc/get_reagent_data(list/datum/reagent/reagent_list)
 	var/list/contained_reagents = list()
 	if(length(reagent_list))
 		for(var/datum/reagent/reagent as anything in reagent_list)
