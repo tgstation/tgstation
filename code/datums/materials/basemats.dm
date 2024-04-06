@@ -2,8 +2,8 @@
 /datum/material/iron
 	name = "iron"
 	desc = "Common iron ore often found in sedimentary and igneous layers of the crust."
-	color = "#82888F"
-	greyscale_colors = "#82888F"
+	color = "#B6BEC2"
+	greyscale_colors = "#B6BEC2"
 	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/iron
 	ore_type = /obj/item/stack/ore/iron
@@ -168,8 +168,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/plasma
 	name = "plasma"
 	desc = "Isn't plasma a state of matter? Oh whatever."
-	color = "#DC68C4"
-	greyscale_colors = "#DC68C4"
+	color = "#BA3692"
+	greyscale_colors = "#BA3692"
 	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	ore_type = /obj/item/stack/ore/plasma
@@ -223,7 +223,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/bananium
 	name = "bananium"
 	desc = "Material with hilarious properties"
-	color = "#FFF269"
+	color = list(460/255, 464/255, 0, 0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //obnoxiously bright yellow //It's literally perfect I can't change it
 	greyscale_colors = "#FFF269"
 	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
