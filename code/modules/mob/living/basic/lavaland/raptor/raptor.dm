@@ -17,7 +17,7 @@
 	///can this mob breed
 	var/can_breed = TRUE
 	///can we ride this mob
-	var/can_ride = TRUE
+	var/ridable_component = /datum/component/riding/creature/raptor
 	//pet commands when we tame the grub
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
@@ -37,8 +37,8 @@
 	. = ..()
 	inherited_stats = new
 	AddComponent(/datum/component/happiness)
-	if(can_ride)
-		AddElement(/datum/element/ridable, /datum/component/riding/creature/raptor)
+	if(ridable_component)
+		AddElement(/datum/element/ridable, ridable_component)
 	if(can_breed)
 		AddComponent(\
 			/datum/component/breed,\
@@ -138,6 +138,7 @@
 	maxHealth = 450
 	health = 450
 	speed = 1
+	ridable_component = /datum/component/riding/creature/raptor/fast
 	melee_damage_lower = 28
 	melee_damage_upper = 33
 	raptor_color = RAPTOR_BLACK
@@ -148,6 +149,7 @@
 	icon_state = "raptor_yellow"
 	icon_living = "raptor_yellow"
 	icon_dead = "raptor_yellow_dead"
+	ridable_component = /datum/component/riding/creature/raptor/fast
 	speed = 1
 	raptor_color = RAPTOR_YELLOW
 	dex_description = "This breed possesses greasy fast speed, DEMON speed, making light work of long pilgrimages. It's said that a thunderclap could be heard when this breed reaches its maximum speed."
@@ -234,13 +236,6 @@
 		inherit_traits += pick(mother.inherit_traits)
 	attack_modifier = rand(min(father.attack_modifier, mother.attack_modifier), max(father.attack_modifier, mother.attack_modifier))
 	health_modifier = rand(min(father.health_modifier, mother.health_modifier), min(father.health_modifier, mother.health_modifier))
-
-/datum/raptor_inheritance/proc/clone_inheritance()
-	var/datum/raptor_inheritance/new_clone = new
-	new_clone.attack_modifier = attack_modifier
-	new_clone.health_modifier = health_modifier
-	new_clone.inherit_traits += inherit_traits
-	return new_clone
 
 /datum/storage/raptor_storage
     animated = FALSE

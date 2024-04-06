@@ -25,7 +25,7 @@ export const RideMinigame = (props) => {
     maximum_failures,
   } = data;
   return (
-    <Window title="Raptor Data" width={318} height={220} theme="hackerman">
+    <Window title="Raptor Data" width={318} height={220}>
       <Window.Content>
         <Stack>
           <Stack.Item>
@@ -55,7 +55,6 @@ export const RideMinigame = (props) => {
               <Stack vertical>
                 <Stack.Item textAlign="center">
                   <Button
-                    disabled={already_chosen}
                     style={{ padding: '3px' }}
                     icon="arrow-up"
                     width="30px"
@@ -70,7 +69,6 @@ export const RideMinigame = (props) => {
                   <Stack>
                     <Stack.Item grow>
                       <Button
-                        disabled={already_chosen}
                         style={{ padding: '3px' }}
                         icon="arrow-left"
                         width="30px"
@@ -83,7 +81,6 @@ export const RideMinigame = (props) => {
                     </Stack.Item>
                     <Stack.Item>
                       <Button
-                        disabled={already_chosen}
                         style={{ padding: '3px' }}
                         icon="arrow-right"
                         width="30px"
@@ -98,7 +95,6 @@ export const RideMinigame = (props) => {
                 </Stack.Item>
                 <Stack.Item textAlign="center">
                   <Button
-                    disabled={already_chosen}
                     style={{ padding: '3px' }}
                     width="30px"
                     icon="arrow-down"

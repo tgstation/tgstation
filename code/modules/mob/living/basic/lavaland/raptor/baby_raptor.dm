@@ -8,7 +8,7 @@
 	melee_damage_upper = 5
 	can_breed = FALSE
 	move_resist = MOVE_RESIST_DEFAULT
-	can_ride = FALSE
+	ridable_component = null
 	dex_description = "A cute baby raptor, Having it near a parent or a birds-nest could encourage it to grow faster, \
 		grooming it and feeding it could also ensure that it grows up quicker!"
 	///what do we grow into

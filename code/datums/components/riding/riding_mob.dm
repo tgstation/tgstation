@@ -219,7 +219,7 @@
 		human_parent.buckle_lying = 90
 
 /datum/component/riding/creature/post_vehicle_mob_buckle(mob/living/ridden, mob/living/rider)
-	if(!require_minigame|| ridden.faction.Find(rider))
+	if(!require_minigame|| ridden.faction.Find(REF(rider)))
 		return
 	ridden.Shake(duration = 2 SECONDS)
 	ridden.balloon_alert(rider, "tries to shake you off.")
@@ -538,11 +538,14 @@
 
 /datum/component/riding/creature/raptor/handle_specials()
 	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(11, 3), TEXT_SOUTH = list(11, 3), TEXT_EAST = list(9, 3), TEXT_WEST = list(14, 3)))
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(0, 9), TEXT_WEST = list(0, 9)))
 	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/creature/raptor/fast
+	vehicle_move_delay = 1.5
 
 /datum/riding_minigame
 	///our host mob
@@ -550,7 +553,7 @@
 	///our current rider
 	var/datum/weakref/mounter
 	///the total amount of tries the rider gets
-	var/maximum_attempts = 10
+	var/maximum_attempts = 6
 	///the current attempt we are on
 	var/current_attempts = 0
 	///maximum number of failures before we fail
@@ -559,6 +562,8 @@
 	var/current_failures = 0
 	///have we already attempted our current attempt?
 	var/already_attempted = FALSE
+	///how long before we generate the next turn
+	var/interval_timer = 2.5 SECONDS
 	///cached icons
 	var/list/cached_icons = list()
 	///correct answer
@@ -567,7 +572,7 @@
 	var/picked_answer
 
 /datum/riding_minigame/proc/commence_minigame(mob/living/ridden, mob/living/rider)
-	RegisterSignals(rider, list(COMSIG_MOB_UNBUCKLED, COMSIG_MOVABLE_MOVED), PROC_REF(end_game))
+	RegisterSignal(rider, COMSIG_MOB_UNBUCKLED, PROC_REF(end_game))
 	host = WEAKREF(ridden)
 	mounter = WEAKREF(rider)
 	for(var/direction in GLOB.cardinals)
@@ -600,7 +605,10 @@
 	picked_answer = null
 	var/list/answer_pool = cached_icons.Copy() - correct_answer
 	correct_answer = pick(answer_pool)
-	addtimer(CALLBACK(src, PROC_REF(generate_cycle)), 2 SECONDS)
+	var/mob/living/living_host = host?.resolve()
+	living_host.setDir(REVERSE_DIR(text2dir(correct_answer)))
+	living_host.Shake(duration = interval_timer)
+	addtimer(CALLBACK(src, PROC_REF(generate_cycle)), interval_timer)
 
 /datum/riding_minigame/ui_data(mob/user)
 	var/list/data = list()
@@ -631,7 +639,10 @@
 			if(picked_answer)
 				return TRUE
 			picked_answer = params["picked_answer"]
-		//	var/sound_to_play = picked_answer == correct_answer ?
+			var/sound_to_play = picked_answer == correct_answer ? 'sound/items/orbie_trick_learned.ogg' : 'sound/machines/buzz-sigh.ogg' 
+			var/mob/living/living_rider = mounter?.resolve()
+			if(living_rider)
+				SEND_SOUND(living_rider, sound_to_play)
 	
 /datum/riding_minigame/proc/end_game(victory)
 	var/mob/living/living_host = host?.resolve()
@@ -641,6 +652,16 @@
 		return
 	if(victory)
 		living_host.befriend(living_rider)
+		living_host.balloon_alert(living_rider, "calms down...")
 	else if(LAZYFIND(living_host.buckled_mobs, living_rider))
+		UnregisterSignal(living_rider, COMSIG_MOB_UNBUCKLED) //we're about to knock them down!
 		living_host.spin(spintime = 2 SECONDS, speed = 1)
+		living_rider.Knockdown(4 SECONDS)
+		living_host.unbuckle_mob(living_rider)
+		living_host.balloon_alert(living_rider, "knocks you down!")
 	qdel(src)
+
+/datum/riding_minigame/Destroy()
+	mounter = null
+	host = null
+	return ..()
