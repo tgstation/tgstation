@@ -41,7 +41,7 @@
 		if(WIRE_LIGHT)
 			mecha.set_light_on(!mecha.light_on)
 		if(WIRE_OVERCLOCK)
-			mecha.toggle_overclock()
+			mecha.toggle_overclock(TRUE)
 
 /datum/wires/mecha/on_cut(wire, mend, source)
 	var/obj/vehicle/sealed/mecha/mecha = holder
