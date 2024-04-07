@@ -56,6 +56,8 @@ multiple modular subtrees with behaviors
 	// The variables below are fucking stupid and should be put into the blackboard at some point.
 	///AI paused time
 	var/paused_until = 0
+	///Can this AI idle?
+	var/can_idle = TRUE
 
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
@@ -317,6 +319,9 @@ multiple modular subtrees with behaviors
 		if(AI_STATUS_ON)
 			START_PROCESSING(SSai_behaviors, src)
 		if(AI_STATUS_OFF)
+			STOP_PROCESSING(SSai_behaviors, src)
+			CancelActions()
+		if(AI_STATUS_IDLE)
 			STOP_PROCESSING(SSai_behaviors, src)
 			CancelActions()
 
