@@ -199,3 +199,11 @@
 	cost = 0
 	mineral_cost = 1
 	always_place = TRUE
+
+/datum/map_template/ruin/icemoon/ruin/plasmamanruin
+	name = "Plasmaman Survivor Ruin"
+	id = "plasmamanruin"
+	description = "An abandoned mining base reclaimed by plasmamen."
+	suffix = "plasmamanruin.dmm"
+	allow_duplicates = FALSE
+	always_place = TRUE
