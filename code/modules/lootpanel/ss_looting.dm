@@ -23,9 +23,9 @@ PROCESSING_SUBSYSTEM_DEF(looting)
 		return PROCESS_KILL
 
 	var/current = 0
-	var/processed = FALSE
 	for(var/ref in contents)
-		if(current == 5)
+		if(current == search_speed)
+			panel.send_update()
 			return
 
 		var/datum/search_object/obj = contents[ref]
@@ -43,10 +43,7 @@ PROCESSING_SUBSYSTEM_DEF(looting)
 			continue
 
 		current++
-		processed = TRUE
-		panel.send_update()	
 
-	if(!processed)
-		searching = FALSE
-		panel.send_update()	
-		return PROCESS_KILL
+	searching = FALSE
+	panel.send_update()	
+	return PROCESS_KILL
