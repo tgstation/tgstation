@@ -22,6 +22,11 @@
 	if(isnull(tile))
 		return FALSE
 
+	if(!user.Adjacent(tile))
+		search_turf_ref = null
+		reset()
+		return FALSE
+
 	var/datum/search_object/found_item = contents[ref]
 	if(isnull(found_item))
 		return FALSE

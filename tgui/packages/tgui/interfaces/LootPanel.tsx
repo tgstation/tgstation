@@ -37,19 +37,21 @@ export function LootPanel(props) {
   );
 
   return (
-    <Window height={250} width={180} title="Contents">
+    <Window height={250} width={190} title="Contents">
       <Window.Content>
         <Section
           fill
           scrollable
           title={
             <Stack>
-              <Input
-                autoFocus
-                onInput={(event, value) => setSearchText(value)}
-                placeholder="Search"
-                width="11rem"
-              />
+              <Stack.Item grow>
+                <Input
+                  autoFocus
+                  fluid
+                  onInput={(event, value) => setSearchText(value)}
+                  placeholder="Search"
+                />
+              </Stack.Item>
               <Button icon="sync" onClick={() => act('refresh')} />
             </Stack>
           }
