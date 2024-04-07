@@ -3,7 +3,7 @@
 /obj/machinery/door/poddoor/incinerator_atmos_main{
 	id = "plasmaruin_incinerator_mainvent"
 	},
-/turf/open/space/basic,
+/turf/open/floor/engine/low_pressure_plasma,
 /area/space)
 "aT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -41,11 +41,22 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/plating/low_pressure_plasma,
 /area/space)
+"fa" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/machinery/computer/atmos_control/nocontrol{
+	chamber_id = list("iceboxplasmaplas" = "iceboxplasman2o" = "iceboxplasmaco2" = "iceboxplasmaoxy" = "iceboxplasman2" = "iceboxplasmaair")
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/space)
+"fR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/space)
 "gi" = (
 /obj/machinery/power/turbine/inlet_compressor{
 	dir = 4
 	},
-/turf/open/space/basic,
+/turf/open/floor/engine/low_pressure_plasma,
 /area/space)
 "gl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
@@ -69,6 +80,33 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"hZ" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/machinery/door/airlock/public/glass/incinerator{
+	id_tag = "plasma_incinerator_interior"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/airlock_controller{
+	pixel_y = -25;
+	pixel_x = 10;
+	id_tag = "plasma_incinerator_controller"
+	},
+/turf/open/floor/engine/low_pressure_plasma,
+/area/space)
+"jI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer4,
+/turf/open/floor/engine/low_pressure_plasma,
+/area/space)
+"jP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer4,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/space)
 "ka" = (
 /obj/effect/turf_decal/tile/yellow/half,
 /obj/machinery/light/directional/south,
@@ -83,6 +121,14 @@
 	chamber_id = "iceboxplasmaplas"
 	},
 /turf/open/floor/engine/plasma,
+/area/space)
+"kX" = (
+/obj/machinery/button/ignition/incinerator{
+	id = "plasma_igniter";
+	pixel_y = -6;
+	pixel_x = 10
+	},
+/turf/closed/wall/r_wall,
 /area/space)
 "ll" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on{
@@ -105,6 +151,12 @@
 	chamber_id = "iceboxplasmaair"
 	},
 /turf/open/floor/engine/air,
+/area/space)
+"ms" = (
+/obj/machinery/air_sensor/incinerator_tank{
+	chamber_id = "plas_incinerator"
+	},
+/turf/open/floor/engine/low_pressure_plasma,
 /area/space)
 "mA" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/dark/visible,
@@ -146,6 +198,10 @@
 	},
 /turf/open/floor/iron/low_pressure_plasma,
 /area/space)
+"pX" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/visible,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/space)
 "qd" = (
 /turf/template_noop,
 /area/space)
@@ -161,6 +217,7 @@
 "qR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/iron/low_pressure_plasma,
 /area/space)
 "qX" = (
@@ -207,6 +264,16 @@
 	},
 /turf/open/floor/iron/low_pressure_plasma,
 /area/space)
+"tz" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/public/glass/incinerator{
+	id_tag = "plasma_incinerator_exterior"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer4,
+/turf/open/floor/engine/low_pressure_plasma,
+/area/space)
 "tE" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
 	dir = 8
@@ -216,18 +283,33 @@
 "ud" = (
 /turf/closed/wall/r_wall,
 /area/space)
+"uS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/space)
 "vp" = (
 /turf/open/floor/iron/low_pressure_plasma,
 /area/space)
 "vt" = (
 /obj/machinery/power/turbine/core_rotor{
 	dir = 4;
-	mapping_id = "main_turbine"
+	mapping_id = "plas_turbine"
 	},
-/turf/open/space/basic,
+/turf/open/floor/engine/low_pressure_plasma,
 /area/space)
 "vL" = (
-/turf/open/space/basic,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer2{
+	dir = 8
+	},
+/turf/open/floor/engine/low_pressure_plasma,
+/area/space)
+"wr" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/low_pressure_plasma,
 /area/space)
 "xA" = (
 /turf/open/floor/engine/co2/equalized_with_regular_air,
@@ -238,21 +320,70 @@
 	},
 /turf/open/floor/engine/n2,
 /area/space)
+"yu" = (
+/obj/machinery/computer/turbine_computer{
+	mapping_id = "plas_turbine"
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/space)
 "yz" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/dark/visible,
 /turf/open/floor/iron/low_pressure_plasma,
 /area/space)
+"yV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/machinery/computer/atmos_control/nocontrol/incinerator{
+	dir = 1;
+	atmos_chambers = list("plas_incinerator")
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/space)
+"zP" = (
+/obj/machinery/igniter{
+	id = "plasma_ignter"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer4,
+/turf/open/floor/engine/low_pressure_plasma,
+/area/space)
 "zZ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer4,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/space)
+"Ac" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/iron/low_pressure_plasma,
 /area/space)
 "Ah" = (
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/low_pressure_plasma,
 /area/space)
+"As" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/layer4{
+	chamber_id = "plas_incinerator"
+	},
+/turf/open/floor/engine/low_pressure_plasma,
+/area/space)
+"Az" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer4,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/space)
 "AA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/iron/low_pressure_plasma,
+/area/space)
+"AK" = (
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume{
+	dir = 4;
+	id_tag = "plasma_incinerator_pump"
+	},
+/obj/machinery/airlock_sensor{
+	pixel_y = 25;
+	id_tag = "plasma_incinerator_sensor"
+	},
+/turf/open/floor/engine/low_pressure_plasma,
 /area/space)
 "Ck" = (
 /obj/effect/baseturf_helper/asteroid/snow,
@@ -271,6 +402,9 @@
 "Ec" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/machinery/computer/atmos_control/nocontrol{
+	chamber_id = list("iceboxplasmaplas" = "iceboxplasman2o" = "iceboxplasmaco2" )
+	},
 /turf/open/floor/plating,
 /area/space)
 "EN" = (
@@ -291,6 +425,18 @@
 /area/space)
 "FD" = (
 /turf/open/floor/engine/n2,
+/area/space)
+"FU" = (
+/obj/machinery/atmospherics/components/trinary/mixer/flipped/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/space)
+"FW" = (
+/obj/machinery/atmospherics/components/trinary/filter/flipped/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/low_pressure_plasma,
 /area/space)
 "GL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
@@ -374,16 +520,40 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/iron/low_pressure_plasma,
 /area/space)
+"LJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/space)
 "Mw" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
 /turf/open/floor/plating,
 /area/space)
+"Na" = (
+/obj/machinery/button/door/incinerator_vent_atmos_aux{
+	pixel_x = -6;
+	pixel_y = 38;
+	id = "plasmaruin_incinerator_auxvent"
+	},
+/obj/machinery/button/door/incinerator_vent_atmos_main{
+	pixel_y = 27;
+	pixel_x = -6;
+	id = "plasmaruin_incinerator_mainvent"
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/space)
 "Ne" = (
 /obj/machinery/power/turbine/turbine_outlet{
 	dir = 4
 	},
-/turf/open/space/basic,
+/turf/open/floor/engine/low_pressure_plasma,
+/area/space)
+"NA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/open/floor/iron/low_pressure_plasma,
 /area/space)
 "NS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
@@ -461,6 +631,18 @@
 	},
 /turf/open/floor/engine/n2,
 /area/space)
+"Uq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/space)
+"UF" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer4,
+/turf/open/floor/plating/low_pressure_plasma,
+/area/space)
 "UM" = (
 /turf/closed/wall,
 /area/space)
@@ -478,7 +660,8 @@
 /turf/open/floor/iron/low_pressure_plasma,
 /area/space)
 "WD" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/plating/low_pressure_plasma,
 /area/space)
 "WI" = (
@@ -489,6 +672,12 @@
 "XB" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
+/area/space)
+"XC" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/low_pressure_plasma,
 /area/space)
 "Yv" = (
 /turf/open/floor/engine/air,
@@ -1249,7 +1438,7 @@ JJ
 JJ
 JJ
 JJ
-rx
+ud
 vp
 vp
 vp
@@ -1872,15 +2061,15 @@ qJ
 qJ
 qJ
 hs
-vL
-vL
-vp
-vp
-WD
-vp
-vp
-vp
-vp
+As
+zP
+tz
+jI
+UF
+jP
+jP
+fR
+pX
 kJ
 Fu
 kJ
@@ -1924,15 +2113,15 @@ qJ
 qJ
 qJ
 ud
-vL
+ms
 vL
 ud
-vp
+AK
 WD
-vp
-vp
-vp
-vp
+FW
+Az
+LJ
+LJ
 gZ
 ll
 aT
@@ -1979,11 +2168,11 @@ ud
 gi
 ud
 ud
-vp
-ud
-vp
-vp
-vp
+hZ
+kX
+Na
+FU
+XC
 qR
 IO
 zZ
@@ -2031,12 +2220,12 @@ ud
 vt
 vp
 vp
+NA
 vp
 vp
+wr
 vp
-vp
-vp
-TX
+Ac
 dn
 vp
 vp
@@ -2082,13 +2271,13 @@ qJ
 ud
 Ne
 ud
-vp
-vp
-vp
-vp
-vp
-Cn
-TX
+yu
+NA
+yV
+fa
+NA
+Uq
+uS
 dn
 vp
 vp
