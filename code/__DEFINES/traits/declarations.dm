@@ -1063,6 +1063,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to a dragon who fails to defend their rifts
 #define TRAIT_RIFT_FAILURE "fail_dragon_loser"
 
+///this mob is able to relay happiness, given by /datum/component/happiness
+#define TRAIT_MOB_RELAY_HAPPINESS "mob_relay_happiness"
 ///trait determines if this mob can breed given by /datum/component/breeding
 #define TRAIT_MOB_BREEDER "mob_breeder"
 /// Trait given to mobs that we do not want to mindswap

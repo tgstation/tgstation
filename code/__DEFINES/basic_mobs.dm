@@ -30,3 +30,55 @@
 
 ///keeps track of how many gutlunches are born
 GLOBAL_VAR_INIT(gutlunch_count, 0)
+
+//raptor defines
+
+#define RAPTOR_RED "Red"
+#define RAPTOR_GREEN "Green"
+#define RAPTOR_PURPLE "Purple"
+#define RAPTOR_WHITE "White"
+#define RAPTOR_YELLOW "Yellow"
+#define RAPTOR_BLACK "Black"
+
+#define RAPTOR_INHERIT_MAX_ATTACK 5
+#define RAPTOR_INHERIT_MAX_HEALTH 30
+
+GLOBAL_LIST_INIT(raptor_growth_paths, list(
+	/mob/living/basic/mining/raptor/baby_raptor/red = list(RAPTOR_PURPLE, RAPTOR_WHITE),
+	/mob/living/basic/mining/raptor/baby_raptor/white = list(RAPTOR_GREEN, RAPTOR_PURPLE),
+	/mob/living/basic/mining/raptor/baby_raptor/purple = list(RAPTOR_GREEN, RAPTOR_WHITE),
+	/mob/living/basic/mining/raptor/baby_raptor/yellow = list(RAPTOR_GREEN, RAPTOR_RED),
+	/mob/living/basic/mining/raptor/baby_raptor/green = list(RAPTOR_RED, RAPTOR_YELLOW),
+))
+
+///this mob will go around attacking helpless weaker animals
+#define BB_RAPTOR_RUTHELESS "raptor_ruthless"
+///this mob will care for its young
+#define BB_RAPTOR_MOTHERLY "raptor_motherly"
+///this mob will be playful around their owners
+#define BB_RAPTOR_PLAYFUL "raptor_playful"
+///this mob will flee combat when it feels threatened
+#define BB_RAPTOR_COWARD "raptor_coward"
+///this mob will go out seeking trouble against its kind
+#define BB_RAPTOR_TROUBLE_MAKER "raptor_trouble_maker"
+///cooldown till we go out cause trouble again
+#define BB_RAPTOR_TROUBLE_COOLDOWN "raptor_trouble_maker_cooldown"
+///our raptor baby target we will take care of
+#define BB_RAPTOR_BABY "raptor_baby"
+///the raptor we will heal up
+#define BB_INJURED_RAPTOR "injured_raptor"
+///the raptor we will bully
+#define BB_RAPTOR_VICTIM "raptor_victim"
+///the cooldown for next time we eat
+#define BB_RAPTOR_EAT_COOLDOWN "raptor_eat_cooldown"
+///our trough target
+#define BB_RAPTOR_TROUGH_TARGET "raptor_trough_target"
+
+GLOBAL_LIST_INIT(raptor_inherit_traits, list(
+	BB_RAPTOR_RUTHELESS = "Ruthless",
+	BB_RAPTOR_MOTHERLY = "Motherly",
+	BB_RAPTOR_PLAYFUL = "Playful",
+	BB_RAPTOR_COWARD = "Coward",
+	BB_RAPTOR_TROUBLE_MAKER = "Trouble Maker",
+))
+
