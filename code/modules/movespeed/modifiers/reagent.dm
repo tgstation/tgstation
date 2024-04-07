@@ -2,7 +2,13 @@
 	blacklisted_movetypes = (FLYING|FLOATING)
 
 /datum/movespeed_modifier/reagent/stimulants
-	multiplicative_slowdown = -0.55
+	multiplicative_slowdown = -0.4
+
+/datum/movespeed_modifier/reagent/expstimulants
+	multiplicative_slowdown = -0.8
+
+/datum/movespeed_modifier/reagent/syndimeth
+	multiplicative_slowdown = -1.6
 
 /datum/movespeed_modifier/reagent/ephedrine
 	variable = TRUE

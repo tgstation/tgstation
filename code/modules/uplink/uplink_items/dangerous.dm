@@ -93,8 +93,7 @@
 
 /datum/uplink_item/dangerous/m1911pistol
 	name = "M1911"
-	desc = "A single M1911 Pistol that fires .45 bullets. Loaded with 8 lethal shots. \
-			Additional ammunition can be purchased under the ammunition tab."
+	desc = "A single M1911 Pistol that fires .45 bullets. Loaded with 8 lethal shots."
 	item = /obj/item/gun/ballistic/automatic/pistol/m1911
 	cost = 6
 	surplus = 45
@@ -103,7 +102,7 @@
 /datum/uplink_item/dangerous/viper
 	name = "Viper"
 	desc = "A single Viper Pistol that fires 10mm bullets. Loaded with 9 lethal shots. \
-			This pistol fires quickly and is fully-automatic. Additional ammunition can be purchased under the ammunition tab."
+			This pistol fires quickly and is fully-automatic."
 	item = /obj/item/gun/ballistic/automatic/pistol/viper
 	cost = 8
 	surplus = 50
@@ -201,7 +200,7 @@
 	illegal_tech = TRUE
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
-/** Keeping this here, i may add it later.
+/** Keeping this here, i may add it later. - hyperjll
 /datum/uplink_item/dangerous/spes12
 	name = "SPES-12 Shotgun"
 	desc = "A shotgun capable of automatic fire but must still have it's pump racked to the next shell, can have 12 shells loaded at any time. \
@@ -302,36 +301,7 @@
 	surplus = 20
 	cost = 10
 	illegal_tech = TRUE
-/** I'll add these later.
-/datum/uplink_item/dangerous/syndicatehardlightbow
-	name = "Syndicate Hardlight Energy Bow"
-	desc = "A modern bow that can fabricate hardlight arrows using an internal energy source. \
-			Can fire two different arrows: X-Ray and Energy. X-Ray arrows deal less damage but travel through all obstacles."
-	item = /obj/item/gun/energy/recharge/ebow/syndicate
-	surplus = 30
-	cost = 8
-	illegal_tech = TRUE
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
-/datum/uplink_item/dangerous/advancedhardlightbow
-	name = "Syndicate Advanced Hardlight Energy Bow"
-	desc = "A modern bow that can fabricate hardlight arrows using an internal energy. \
-			Can fire five different arrows: Energy, Disabler, X-Ray, Pulse, and Shock."
-	item = /obj/item/gun/energy/recharge/ebow/syndicate/advanced
-	surplus = 5
-	cost = 12
-	illegal_tech = TRUE
-	purchasable_from = UPLINK_NUKE_OPS
-
-/datum/uplink_item/dangerous/energyshotgun
-	name = "Syndicate Energy Shotgun"
-	desc = "A combat shotgun gutted and refitted with an internal energy generator. Capable of firing both lethal and disabling scatter shots. Recharges automatically but VERY slowly."
-	item = /obj/item/gun/energy/laser/scatter/syndicateshotgun
-	surplus = 20
-	cost = 9
-	illegal_tech = TRUE
-	purchasable_from = ~UPLINK_CLOWN_OPS
-**/
 /datum/uplink_item/dangerous/syndielaserrifle
 	name = "Syndicate Energy Rifle"
 	desc = "A laser rifle originally manufactured by Nanotrasen, we've augmented the rifle to recharge automatically. \
@@ -402,6 +372,6 @@
 	cost = 40
 	cant_discount = TRUE
 	illegal_tech = TRUE
-
+	purchasable_from = ~UPLINK_SPY
 
 

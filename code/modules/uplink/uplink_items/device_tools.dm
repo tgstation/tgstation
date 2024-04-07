@@ -14,14 +14,6 @@
 	surplus = 50
 	illegal_tech = FALSE
 
-/datum/uplink_item/device_tools/surgerybag
-	name = "Syndicate Surgery Duffel Bag"
-	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
-			a Syndicate brand MMI, a straitjacket, and a muzzle."
-	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
-	cost = 4
-	surplus = 66
-
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Keys"
 	desc = "Two keys that, when inserted into a radio headset, allows you to listen to all station department channels \
@@ -201,14 +193,6 @@
 	item = /obj/item/card/emag
 	cost = 4
 
-/datum/uplink_item/device_tools/stimpack
-	name = "Stimpack"
-	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
-			5 minutes after injection."
-	item = /obj/item/reagent_containers/hypospray/medipen/stimulants
-	cost = 5
-	surplus = 90
-
 /datum/uplink_item/device_tools/super_pointy_tape
 	name = "Super Pointy Tape"
 	desc = "An all-purpose super pointy tape roll. The tape is built with hundreds of tiny metal needles, the roll comes with in 5 pieces. When added to items the \
@@ -284,6 +268,7 @@
 	item = /obj/item/tank/jetpack/oxygen
 	cost = 2
 	illegal_tech = FALSE
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/device_tools/advlaunchcamerasetup
 	name = "Launchpad & Camera Setup Bundle"

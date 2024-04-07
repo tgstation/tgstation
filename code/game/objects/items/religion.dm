@@ -137,7 +137,7 @@
 	need_mob_update += inspired_human.setOxyLoss(0, updating_health = FALSE)
 	if(need_mob_update)
 		inspired_human.updatehealth()
-	inspired_human.reagents.add_reagent(/datum/reagent/medicine/inaprovaline, 5)
+	inspired_human.reagents.add_reagent(/datum/reagent/medicine/coagulant/inaprovaline, 5)
 
 /obj/item/banner/science
 	name = "sciencia banner"

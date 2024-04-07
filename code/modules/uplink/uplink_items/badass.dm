@@ -15,6 +15,7 @@
 	lock_other_purchases = TRUE
 	cant_discount = TRUE
 	illegal_tech = FALSE
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/badass/balloon/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	. = ..()

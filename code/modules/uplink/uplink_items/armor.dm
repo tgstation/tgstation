@@ -2,6 +2,10 @@
 	name = "Armor"
 	weight = 6
 
+/datum/uplink_item/armor
+	category = /datum/uplink_category/armor
+	surplus = 0
+
 /datum/uplink_item/armor/webvest
 	name = "Web Vest"
 	desc = "A bulletproof vest, it's been fitted with additional webbing and armor plates for additional protection. Unfortunately, it'll likely blow your cover."
@@ -12,7 +16,7 @@
 
 /datum/uplink_item/armor/webhelmet
 	name = "Web Helmet"
-	desc = "A sturdy helmet, often provided to NT's security department. It's been fitted with additional webbing and armor plates for additional protection. Unfortunately, it'll likely blow your cover."
+	desc = "A sturdy helmet, often provided to armed forces across the galaxy. It's been fitted with additional webbing and armor plates for additional protection. Unfortunately, it'll likely blow your cover."
 	item = /obj/item/clothing/head/helmet/webhelmet
 	cost = 5
 	surplus = 35
@@ -192,28 +196,4 @@
 	cost = 4
 	surplus = 20
 	illegal_tech = FALSE
-
-/datum/uplink_item/armor/armorpolish
-	name = "Armor Polish"
-	desc = "This two use polish will strengthen clothing to be as strong as a standard-issue armor vest.  \
-			Reinforced with nanite technology, you are able to stay looking good while bashing heads in. \
-			Beware, you can only polish suits and headgear!"
-	item = /obj/item/armorpolish
-	cost = 6
-	surplus = 10
-
-/datum/uplink_item/armor/augmentation
-	name = "Augmentation Kit"
-	desc = "A box containing limb autosurgeons each with a different robotic limb. Allows for quick robotization in the host."
-	item = /obj/item/storage/box/syndie_kit/augmentation
-	cost = 8
-	surplus = 0
-
-/datum/uplink_item/armor/superioraugmentation
-	name = "Superior Augmentation Kit"
-	desc = "A box containing limb autosurgeons each with a different robotic limb. Allows for quick robotization in the host. \
-			Also comes with upgraded cybernetic organs and autosurgeons for those organs. To top it all off: Also comes with an emp shield implant."
-	item = /obj/item/storage/box/syndie_kit/augmentation/superior
-	cost = 16
-	surplus = 0
 

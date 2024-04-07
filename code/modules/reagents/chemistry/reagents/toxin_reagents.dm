@@ -1397,24 +1397,6 @@
 	M.adjustOrganLoss(ORGAN_SLOT_EYES, 3, 95)
 	..()
 
-/datum/reagent/toxin/leadacetate
-	name = "Lead Acetate"
-	description = "Used hundreds of years ago as a sweetener, before it was realized that it's incredibly poisonous."
-	reagent_state = SOLID
-	color = "#2b2b2b"
-	toxpwr = 0.5
-	taste_mult = 1.3
-	taste_description = "sugary sweetness"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/toxin/leadacetate/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_EARS, 1)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
-	if(prob(0.5))
-		to_chat(affected_mob, span_notice("Ah, what was that? You thought you heard something..."))
-		affected_mob.adjust_confusion(5 SECONDS)
-	return ..()
-
 /datum/reagent/toxin/saxitoxin
 	name = "Saxitoxin"
 	description = "Nasty poison gas that's highly volatile when breathed. It features an unholy BRAIN-TOX-BURN triad on top of distinct jittering and stuns."
@@ -1493,5 +1475,39 @@
 			affected_mob.adjustStaminaLoss(REM * data, 0)
 			affected_mob.Sleeping(7 SECONDS * REM)
 			. = TRUE
+	..()
+
+/datum/reagent/toxin/nanitedestroyers
+	name = "Unknown Nanites"
+	description = "A nanite-based virus. Metabolizes very slowly, and when depleted it causes a massive amount of toxin and brute damage depending on how long it has been in the victim's bloodstream."
+	silent_toxin = TRUE
+	self_consuming = TRUE
+	reagent_state = LIQUID
+	color = "#FFFFFF"
+	toxpwr = 0
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	var/delayed_toxin_damage = 0
+	var/delayed_brute_damage = 0
+	var/delayed_organ_damage = 0
+
+/datum/reagent/toxin/nanitedestroyers/on_mob_delete(mob/living/M)
+	var/delayed_toxin_damage = current_cycle*5*REM
+	M.log_message("has taken [delayed_toxin_damage] toxin damage from nanite destroyers", LOG_ATTACK)
+	M.adjustToxLoss(delayed_toxin_damage)
+	..()
+
+/datum/reagent/toxin/nanitedestroyers/on_mob_delete(mob/living/M)
+	var/delayed_brute_damage = current_cycle*3*REM
+	M.log_message("has taken [delayed_brute_damage] brute damage from nanite destroyers", LOG_ATTACK)
+	M.adjustBruteLoss(delayed_brute_damage)
+	..()
+
+/datum/reagent/toxin/nanitedestroyers/on_mob_delete(mob/living/M)
+	var/delayed_organ_damage = current_cycle*5*REM
+	M.log_message("has taken [delayed_organ_damage] organ damage from nanite destroyers", LOG_ATTACK)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, delayed_organ_damage)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, delayed_organ_damage)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, delayed_organ_damage)
+	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, delayed_organ_damage)
 	..()
 

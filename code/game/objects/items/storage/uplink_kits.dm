@@ -1135,33 +1135,50 @@
 /obj/item/storage/box/syndie_kit/emp_shield/PopulateContents()
 	new /obj/item/implanter/empshield(src)
 
-/obj/item/storage/box/syndie_kit/augmentation
-	name = "augmentation kit"
+/obj/item/storage/box/syndie_kit/stimulant_kit/PopulateContents()
+	var/list/item_list = list(
+		/obj/item/reagent_containers/hypospray/medipen/methamphetamine,
+		/obj/item/reagent_containers/hypospray/medipen/stimulants,
+		/obj/item/reagent_containers/hypospray/medipen/experistimulants,
+		/obj/item/reagent_containers/hypospray/medipen/donkcostim,
+		/obj/item/reagent_containers/hypospray/medipen/juggernaut
+	)
 
-/obj/item/storage/box/syndie_kit/augmentation/PopulateContents()
-	new /obj/item/autosurgeon/limb/head/robot(src)
-	new /obj/item/autosurgeon/limb/chest/robot(src)
-	new /obj/item/autosurgeon/limb/l_arm/robot(src)
-	new /obj/item/autosurgeon/limb/r_arm/robot(src)
-	new /obj/item/autosurgeon/limb/l_leg/robot(src)
-	new /obj/item/autosurgeon/limb/r_leg/robot(src)
+	for(var/i in 1 to 5)
+		var/item = pick(item_list)
+		new item(src)
 
-/obj/item/storage/box/syndie_kit/augmentation/superior
-	name = "superior augmentation kit"
+/obj/item/storage/box/syndie_kit/restore_nanite_kit/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/hypospray/medipen/restorationnaniteinjector(src)
 
-/obj/item/storage/box/syndie_kit/augmentation/superior/PopulateContents()
-	..()
-	new /obj/item/autosurgeon/limb/head/robot(src)
-	new /obj/item/autosurgeon/limb/chest/robot(src)
-	new /obj/item/autosurgeon/limb/l_arm/robot(src)
-	new /obj/item/autosurgeon/limb/r_arm/robot(src)
-	new /obj/item/autosurgeon/limb/l_leg/robot(src)
-	new /obj/item/autosurgeon/limb/r_leg/robot(src)
-	new /obj/item/autosurgeon/upgraded_cyberheart(src)
-	new /obj/item/autosurgeon/upgraded_cyberliver(src)
-	new /obj/item/autosurgeon/upgraded_cyberlungs(src)
-	new /obj/item/autosurgeon/upgraded_cyberstomach(src)
-	new /obj/item/implanter/empshield(src)
+/obj/item/storage/firstaid/emergency/combatmedipens
+	name = "emergency medkit"
+
+/obj/item/storage/firstaid/emergency/combatmedipens/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/hypospray/medipen/combatmedicine(src)
+
+/obj/item/storage/bag/chemistry/syndimedipens/PopulateContents()
+	new /obj/item/reagent_containers/hypospray/medipen/combatmedicine(src)
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/hypospray/medipen/cardiaccs(src)
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/hypospray/medipen/bloodlosscs(src)
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/hypospray/medipen/lifesupportcs(src)
+
+/obj/item/storage/bag/chemistry/syndimedipens/deluxe/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/hypospray/medipen/combatmedicine(src)
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/hypospray/medipen/cardiaccs(src)
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/hypospray/medipen/bloodlosscs(src)
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/hypospray/medipen/lifesupportcs(src)
+
+
 
 
 

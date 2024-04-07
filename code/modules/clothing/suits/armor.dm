@@ -345,8 +345,8 @@
 /datum/armor/armor_webvest
 	melee = 35
 	bullet = 65
-	laser = 30
-	energy = 30
+	laser = 35
+	energy = 35
 	bomb = 60
 	bio = 15
 	fire = 60

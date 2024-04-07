@@ -17,6 +17,11 @@
 		icon_state = "bottle"
 	update_appearance()
 
+/obj/item/reagent_containers/cup/bottle/omnizine
+	name = "omnizine bottle"
+	desc = "A small bottle of omnizine. Drink in moderation."
+	list_reagents = list(/datum/reagent/medicine/omnizine = 30)
+
 /obj/item/reagent_containers/cup/bottle/epinephrine
 	name = "epinephrine bottle"
 	desc = "A small bottle. Contains epinephrine - used to stabilize patients."
@@ -566,3 +571,34 @@
 	name = "bottle of laugh syrup"
 	desc = "A pump bottle containing laugh syrup. The product of juicing Laughin' Peas. Fizzy, and seems to change flavour based on what it's used with!"
 	list_reagents = list(/datum/reagent/consumable/laughsyrup = 50)
+
+
+
+/// Red-space flasks of eternal whatever -- expensive traitor shit.
+
+/obj/item/reagent_containers/cup/bottle/eternal
+	name = "Eternal Flask"
+	desc = "A deceptively stylish glass bottle that's been augmented with redspace technology. It doesn't produce anything, for whatever reason."
+	var/generate_reagent = null
+	var/last_generate = 0
+	var/generate_delay = 50 //deciseconds or 5 seconds
+
+/obj/item/reagent_containers/cup/bottle/eternal/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/reagent_containers/cup/bottle/eternal/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
+
+/obj/item/reagent_containers/cup/bottle/eternal/process()
+	if(world.time < last_generate + generate_delay)
+		return
+	last_generate = world.time
+	reagents.add_reagent(generate_reagent, 1)
+
+/obj/item/reagent_containers/cup/bottle/eternal/omnizine
+	name = "Eternal Flask of Omnizine"
+	desc = "A deceptively stylish glass bottle that's been augmented with redspace technology. It generates an endless supply of it's reagents over time."
+	list_reagents = list(/datum/reagent/medicine/omnizine = 50)
+	generate_reagent = /datum/reagent/medicine/omnizine

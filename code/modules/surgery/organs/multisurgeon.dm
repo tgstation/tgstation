@@ -59,17 +59,17 @@
 		desc = "[initial(desc)] Looks like it's been used up."
 
 /obj/item/multisurgeon/airshoes //for traitors
-	starting_organ = list(/obj/item/organ/internal/cyberimp/leg/airshoes, /obj/item/organ/internal/cyberimp/leg/airshoes/l)
+	starting_organ = list(/obj/item/organ/internal/cyberimp/leg/airshoes/syndicate, /obj/item/organ/internal/cyberimp/leg/airshoes/syndicate/l)
 
 /obj/item/multisurgeon/noslipall //for traitors
-	starting_organ = list(/obj/item/organ/internal/cyberimp/leg/noslip, /obj/item/organ/internal/cyberimp/leg/noslip/l)
+	starting_organ = list(/obj/item/organ/internal/cyberimp/leg/noslip/syndicate, /obj/item/organ/internal/cyberimp/leg/noslip/syndicate/l)
 
 /obj/item/multisurgeon/jumpboots //for shaft miner traitors?
-	starting_organ = list(/obj/item/organ/internal/cyberimp/leg/jumpboots, /obj/item/organ/internal/cyberimp/leg/jumpboots/l)
+	starting_organ = list(/obj/item/organ/internal/cyberimp/leg/jumpboots/syndicate, /obj/item/organ/internal/cyberimp/leg/jumpboots/syndicate/l)
 
 /obj/item/multisurgeon/magboots //for ce and traitors
 	desc = "A single-use multisurgeon that contains magboot implants for each leg."
-	starting_organ = list(/obj/item/organ/internal/cyberimp/leg/magboot, /obj/item/organ/internal/cyberimp/leg/magboot/l)
+	starting_organ = list(/obj/item/organ/internal/cyberimp/leg/magboot/syndicate, /obj/item/organ/internal/cyberimp/leg/magboot/syndicate/l)
 
 /obj/item/multisurgeon/toolsets //for traitors
 	starting_organ = list(/obj/item/organ/internal/cyberimp/arm/surgery/syndicate, /obj/item/organ/internal/cyberimp/arm/toolset/syndicate/l)

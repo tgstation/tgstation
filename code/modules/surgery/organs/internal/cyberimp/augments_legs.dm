@@ -124,6 +124,12 @@
 	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, "Antislip_implant")
 	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_ICE, "Antislip_implant")
 
+/obj/item/organ/internal/cyberimp/leg/galosh/syndicate/l
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/leg/galosh/syndicate/l
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
 //------------true noslip implant
 /obj/item/organ/internal/cyberimp/leg/noslip
 	name = "advanced antislip implant"
@@ -138,6 +144,12 @@
 
 /obj/item/organ/internal/cyberimp/leg/noslip/RemoveEffect()
 	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_ALL, "Noslip_implant")
+
+/obj/item/organ/internal/cyberimp/leg/noslip/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/leg/noslip/syndicate/l
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
 
 //------------dash boots implant
 /obj/item/organ/internal/cyberimp/leg/jumpboots
@@ -158,6 +170,12 @@
 	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_ICE, "Jumpboot_implant")
 	if(implant_ability)
 		implant_ability.Remove(owner)
+
+/obj/item/organ/internal/cyberimp/leg/jumpboots/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/leg/jumpboots/syndicate/l
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
 
 //surf_ss13
 /datum/action/cooldown/boost
@@ -217,6 +235,12 @@
 	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_ICE, "Airshoes_implant")
 	if(implant_dash)
 		implant_dash.Remove(owner)
+
+/obj/item/organ/internal/cyberimp/leg/airshoes/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/leg/airshoes/syndicate/l
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
 
 
 /datum/action/cooldown/airshoes
@@ -311,3 +335,9 @@
 		owner.add_movespeed_modifier(/datum/movespeed_modifier/magbootimplant, update=TRUE)
 	else if(owner.has_movespeed_modifier(/datum/movespeed_modifier/magbootimplant))
 		owner.remove_movespeed_modifier(/datum/movespeed_modifier/magbootimplant)
+
+/obj/item/organ/internal/cyberimp/leg/magboot/syndicate
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+
+/obj/item/organ/internal/cyberimp/leg/magboot/syndicate/l
+	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
