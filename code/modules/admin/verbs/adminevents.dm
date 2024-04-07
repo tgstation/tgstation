@@ -240,7 +240,6 @@ ADMIN_VERB(run_weather, R_FUN, "Run Weather", "Triggers specific weather on the 
 	if(!weather_type)
 		return
 
-	var/weather_type = input(user, "Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/weather), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	var/turf/T = get_turf(user.mob)
 	var/z_level = input(user, "Z-Level to target?", "Z-Level", T?.z) as num|null
 	if(!isnum(z_level))
