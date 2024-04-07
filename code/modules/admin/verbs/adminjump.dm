@@ -4,10 +4,10 @@ ADMIN_VERB(jump_to_area, R_ADMIN, "Jump To Area", "Jumps to the specified area."
 
 	var/turf/drop_location
 	top_level:
-	for(var/list/zlevel_turfs as anything in target.get_zlevel_turf_lists())
-		for(var/turf/area_turf as anything in zlevel_turfs)
-			drop_location = area_turf
-			break top_level
+		for(var/list/zlevel_turfs as anything in target.get_zlevel_turf_lists())
+			for(var/turf/area_turf as anything in zlevel_turfs)
+				drop_location = area_turf
+				break top_level
 
 	if(isnull(drop_location))
 		to_chat(user, span_warning("No valid drop location found in the area!"))
@@ -55,7 +55,7 @@ ADMIN_VERB(jump_to_key, R_ADMIN, "Jump To Key", "Jump to a specific player.", AD
 	var/list/keys = list()
 	for(var/mob/M in GLOB.player_list)
 		keys += M.client
-	var/client/selection = input(user, "Please, select a player!", "Admin Jumping", null, null) as null|anything in sort_key(keys)
+	var/client/selection = input(user, "Please, select a player!", "Admin Jumping") as null|anything in sort_key(keys)
 	if(!selection)
 		to_chat(user, "No keys found.", confidential = TRUE)
 		return
@@ -91,7 +91,7 @@ ADMIN_VERB(get_key, R_ADMIN, "Get Key", "Teleport the player with the provided k
 	var/list/keys = list()
 	for(var/mob/M in GLOB.player_list)
 		keys += M.client
-	var/client/selection = input(user, "Please, select a player!", "Admin Jumping", null, null) as null|anything in sort_key(keys)
+	var/client/selection = input(user, "Please, select a player!", "Admin Jumping") as null|anything in sort_key(keys)
 	if(!selection)
 		return
 	var/mob/M = selection.mob

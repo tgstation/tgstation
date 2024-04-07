@@ -2,15 +2,10 @@
 //the procs are cause you can't put the comments in the GLOB var define
 
 GLOBAL_LIST_INIT(admin_verbs_fun, list(
-	/client/proc/cmd_admin_gib_self,
 	/client/proc/cmd_select_equipment,
 	/client/proc/forceEvent,
-	/client/proc/mass_zombie_cure,
-	/client/proc/mass_zombie_infection,
-	/client/proc/polymorph_all,
 	/client/proc/reset_ooc,
 	/client/proc/set_ooc,
-	/client/proc/smite,
 	/client/proc/summon_ert,
 	))
 GLOBAL_PROTECT(admin_verbs_fun)

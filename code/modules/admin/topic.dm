@@ -965,15 +965,7 @@
 		give_admin_popup(target, owner, message)
 
 	else if(href_list["adminsmite"])
-		if(!check_rights(R_ADMIN|R_FUN))
-			return
-
-		var/mob/living/carbon/human/H = locate(href_list["adminsmite"]) in GLOB.mob_list
-		if(!H || !istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human", confidential = TRUE)
-			return
-
-		usr.client.smite(H)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_smite, locate(href_list["adminsmite"]))
 
 	else if(href_list["CentComReply"])
 		if(!check_rights(R_ADMIN))

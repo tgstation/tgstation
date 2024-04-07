@@ -1439,9 +1439,7 @@
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_disease, src)
 
 	if(href_list[VV_HK_GIB])
-		if(!check_rights(R_FUN))
-			return
-		usr.client.cmd_admin_gib(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/gib_them, src)
 
 	if(href_list[VV_HK_BUILDMODE])
 		if(!check_rights(R_BUILD))
