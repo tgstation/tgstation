@@ -14,7 +14,7 @@
 
 /obj/item/organ/internal/stomach/ethereal/Destroy()
 	QDEL_NULL(cell)
-	. = ..()
+	return ..()
 
 /obj/item/organ/internal/stomach/ethereal/on_life(seconds_per_tick, times_fired)
 	. = ..()
