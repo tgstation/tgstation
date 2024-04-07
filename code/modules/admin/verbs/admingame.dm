@@ -288,13 +288,8 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 	BLACKBOX_LOG_ADMIN_VERB("Respawn Character")
 	return new_character
 
-/client/proc/cmd_admin_list_open_jobs()
-	set category = "Admin.Game"
-	set name = "Manage Job Slots"
-
-	if(!check_rights(R_ADMIN))
-		return
-	holder.manage_free_slots()
+ADMIN_VERB(manage_job_slots, R_ADMIN, "Manage Job Slots", "Manage the number of available job slots.", ADMIN_CATEGORY_GAME)
+	user.holder.manage_free_slots()
 	BLACKBOX_LOG_ADMIN_VERB("Manage Job Slots")
 
 /datum/admins/proc/manage_free_slots()
@@ -337,38 +332,25 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 	browser.set_content(dat.Join())
 	browser.open()
 
-/client/proc/toggle_view_range()
-	set category = "Admin.Game"
-	set name = "Change View Range"
-	set desc = "switches between 1x and custom views"
-
-	if(view_size.getView() == view_size.default)
-		view_size.setTo(input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,37) - 7)
+ADMIN_VERB(toggle_view_range, R_ADMIN, "Change View Range", "Switch between 1x and custom views.", ADMIN_CATEGORY_GAME)
+	if(user.view_size.getView() == user.view_size.default)
+		user.view_size.setTo(input(user, "Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,37) - 7)
 	else
-		view_size.resetToDefault(getScreenSize(prefs.read_preference(/datum/preference/toggle/widescreen)))
+		user.view_size.resetToDefault(getScreenSize(user.prefs.read_preference(/datum/preference/toggle/widescreen)))
 
-	log_admin("[key_name(usr)] changed their view range to [view].")
-	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].") //why? removed by order of XSI
+	log_admin("[key_name(user)] changed their view range to [user.view].")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Change View Range", "[user.view]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Change View Range", "[view]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
-
-/client/proc/toggle_combo_hud()
-	set category = "Admin.Game"
-	set name = "Toggle Combo HUD"
-	set desc = "Toggles the Admin Combo HUD (antag, sci, med, eng)"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	if (combo_hud_enabled)
-		disable_combo_hud()
+ADMIN_VERB(combo_hud, R_ADMIN, "Toggle Combo HUD", "Toggles the Admin Combo HUD.", ADMIN_CATEGORY_GAME)
+	if(user.combo_hud_enabled)
+		user.disable_combo_hud()
 	else
-		enable_combo_hud()
+		user.enable_combo_hud()
 
-	to_chat(usr, "You toggled your admin combo HUD [combo_hud_enabled ? "ON" : "OFF"].", confidential = TRUE)
-	message_admins("[key_name_admin(usr)] toggled their admin combo HUD [combo_hud_enabled ? "ON" : "OFF"].")
-	log_admin("[key_name(usr)] toggled their admin combo HUD [combo_hud_enabled ? "ON" : "OFF"].")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Combo HUD", "[combo_hud_enabled ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	to_chat(user, "You toggled your admin combo HUD [user.combo_hud_enabled ? "ON" : "OFF"].", confidential = TRUE)
+	message_admins("[key_name_admin(user)] toggled their admin combo HUD [user.combo_hud_enabled ? "ON" : "OFF"].")
+	log_admin("[key_name(user)] toggled their admin combo HUD [user.combo_hud_enabled ? "ON" : "OFF"].")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Combo HUD", "[user.combo_hud_enabled ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/enable_combo_hud()
 	if (combo_hud_enabled)
@@ -402,35 +384,26 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 	mob.lighting_cutoff = mob.default_lighting_cutoff()
 	mob.update_sight()
 
-/datum/admins/proc/show_traitor_panel(mob/target_mob in GLOB.mob_list)
-	set category = "Admin.Game"
-	set desc = "Edit mobs's memory and role"
-	set name = "Show Traitor Panel"
+ADMIN_VERB(show_traitor_panel, R_ADMIN, "Show Traitor Panel", "Edit mobs's memory and role", ADMIN_CATEGORY_GAME, mob/target_mob in world)
 	var/datum/mind/target_mind = target_mob.mind
 	if(!target_mind)
-		to_chat(usr, "This mob has no mind!", confidential = TRUE)
+		to_chat(user, "This mob has no mind!", confidential = TRUE)
 		return
 	if(!istype(target_mob) && !istype(target_mind))
-		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
+		to_chat(user, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
 		return
 	target_mind.traitor_panel()
 	BLACKBOX_LOG_ADMIN_VERB("Traitor Panel")
 
-/datum/admins/proc/show_skill_panel(target)
-	set category = "Admin.Game"
-	set desc = "Edit mobs's experience and skill levels"
-	set name = "Show Skill Panel"
+ADMIN_VERB(show_skill_panel, R_ADMIN, "Show Skill Panel", "Edit mobs's experience and skill levels", ADMIN_CATEGORY_GAME, mob/target_mob in world)
 	var/datum/mind/target_mind
-	if(ismob(target))
-		var/mob/target_mob = target
-		target_mind = target_mob.mind
-	else if (istype(target, /datum/mind))
-		target_mind = target
+	if(istype(target_mob, /datum/mind))
+		target_mind = target_mob
 	else
-		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
-		return
-	var/datum/skill_panel/SP = new(usr, target_mind)
-	SP.ui_interact(usr)
+		target_mind = target_mob.mind
+
+	var/datum/skill_panel/SP = new(user, target_mind)
+	SP.ui_interact(user.mob)
 
 ADMIN_VERB(lag_switch_panel, R_ADMIN, "Show Lag Switches", "Display the controls for drastic lag mitigation.", ADMIN_CATEGORY_GAME)
 	if(!SSlag_switch.initialized)

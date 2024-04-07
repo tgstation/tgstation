@@ -37,7 +37,6 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/see_dirty_varedits,
 	#endif
 	/client/proc/cmd_admin_rejuvenate,
-	/datum/admins/proc/show_traitor_panel,
 	/client/proc/disable_communication,
 	/client/proc/show_map_reports,
 	/client/proc/cmd_show_at_list,

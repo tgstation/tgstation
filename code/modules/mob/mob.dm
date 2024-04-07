@@ -1449,9 +1449,7 @@
 		togglebuildmode(src)
 
 	if(href_list[VV_HK_DROP_ALL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_admin_drop_everything(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/drop_everything, src)
 
 	if(href_list[VV_HK_DIRECT_CONTROL])
 		if(!check_rights(NONE))

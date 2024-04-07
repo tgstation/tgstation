@@ -193,7 +193,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 					D.traitor_panel()
 					return TRUE
 			else
-				usr.client.holder.show_traitor_panel(M)
+				SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_traitor_panel, M)
 				return TRUE
 		if ("logs")
 			var/mob/M = request.owner?.mob

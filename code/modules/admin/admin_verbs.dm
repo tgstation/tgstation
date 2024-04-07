@@ -1,30 +1,6 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
 //the procs are cause you can't put the comments in the GLOB var define
 
-GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
-GLOBAL_PROTECT(admin_verbs_admin)
-/world/proc/AVerbsAdmin()
-	return list(
-	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
-	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/cmd_change_command_name,
-	/client/proc/fax_panel, /*send a paper to fax*/
-	/client/proc/Getmob, /*teleports a mob to our location*/
-	/client/proc/Getkey, /*teleports a mob with a certain ckey to our location*/
-	/client/proc/getserverlogs, /*for accessing server logs*/
-	/client/proc/getcurrentlogs, /*for accessing server logs for the current round*/
-	/client/proc/ghost_pool_protection, /*opens a menu for toggling ghost roles*/
-	/client/proc/jumptoarea,
-	/client/proc/jumptokey, /*allows us to jump to the location of a mob with a certain ckey*/
-	/client/proc/jumptomob, /*allows us to jump to a specific mob*/
-	/client/proc/jumptoturf, /*allows us to jump to a specific turf*/
-	/client/proc/jumptocoord, /*we ghost and jump to a coordinate*/
-	/client/proc/message_pda, /*send a message to somebody on PDA*/
-	/client/proc/toggle_combo_hud, /* toggle display of the combination pizza antag and taco sci/med/eng hud */
-	/client/proc/toggle_view_range, /*changes how far we can see*/
-	/client/proc/cmd_admin_law_panel,
-	/client/proc/log_viewer_new,
-	)
 GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/cmd_select_equipment,
@@ -34,7 +10,6 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/polymorph_all,
 	/client/proc/reset_ooc,
 	/client/proc/set_ooc,
-	/client/proc/show_tip,
 	/client/proc/smite,
 	/client/proc/summon_ert,
 	))
@@ -50,7 +25,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/check_timer_sources,
 	/client/proc/clear_dynamic_transit,
 	/client/proc/cmd_admin_debug_traitor_objectives,
-	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/cmd_admin_toggle_fov,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_display_del_log,
@@ -90,15 +64,13 @@ GLOBAL_PROTECT(admin_verbs_debug)
 /client/proc/add_admin_verbs()
 	if(isnull(holder))
 		return
-
 	control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 	SSadmin_verbs.assosciate_admin(src)
+
 	if(holder)
 		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 
 		var/rights = holder.rank_flags()
-		if(rights & R_ADMIN)
-			add_verb(src, GLOB.admin_verbs_admin)
 		if(rights & R_FUN)
 			add_verb(src, GLOB.admin_verbs_fun)
 		if(rights & R_DEBUG)
@@ -109,16 +81,8 @@ GLOBAL_PROTECT(admin_verbs_debug)
 #endif
 
 /client/proc/remove_admin_verbs()
+	control_freak = initial(control_freak)
 	SSadmin_verbs.deassosciate_admin(src)
-	remove_verb(src, list(
-		GLOB.admin_verbs_admin,
-		GLOB.admin_verbs_fun,
-		GLOB.admin_verbs_debug,
-		/*Debug verbs added by "show debug verbs"*/
-		GLOB.admin_verbs_debug_mapping,
-		/client/proc/disable_mapping_verbs,
-		/client/proc/readmin
-		))
 
 ADMIN_VERB(hide_verbs, R_NONE, "Adminverbs - Hide All", "Hide most of your admin verbs.", ADMIN_CATEGORY_MAIN)
 	user.remove_admin_verbs()

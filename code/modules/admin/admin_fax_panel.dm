@@ -1,15 +1,6 @@
-/**
- * If client have R_ADMIN flag, opens an admin fax panel.
- */
-/client/proc/fax_panel()
-	set category = "Admin.Events"
-	set name = "Fax Panel"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/datum/fax_panel_interface/ui = new(usr)
-	ui.ui_interact(usr)
+ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to CC.", ADMIN_CATEGORY_EVENTS)
+	var/datum/fax_panel_interface/ui = new /datum/fax_panel_interface(user.mob)
+	ui.ui_interact(user.mob)
 
 /// Admin Fax Panel. Tool for sending fax messages faster.
 /datum/fax_panel_interface

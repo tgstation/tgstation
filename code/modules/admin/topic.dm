@@ -759,20 +759,13 @@
 		AM.forceMove(get_turf(usr))
 
 	else if(href_list["adminplayerobservecoodjump"])
-		if(!isobserver(usr) && !check_rights(R_ADMIN))
-			return
-		if(isnewplayer(usr))
-			return
-
-		var/x = text2num(href_list["X"])
-		var/y = text2num(href_list["Y"])
-		var/z = text2num(href_list["Z"])
-
-		var/client/C = usr.client
-		if(!isobserver(usr))
-			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_ghost)
-		sleep(0.2 SECONDS)
-		C.jumptocoord(x,y,z)
+		return SSadmin_verbs.dynamic_invoke_verb(
+			usr,
+			/datum/admin_verb/jump_to_coord,
+			text2num(href_list["X"]),
+			text2num(href_list["Y"]),
+			text2num(href_list["Z"]),
+		)
 
 	else if(href_list["adminchecklaws"])
 		if(!check_rights(R_ADMIN))
@@ -1009,28 +1002,15 @@
 		var/obj/item/station_charter/charter = locate(href_list["reject_custom_name"])
 		if(istype(charter))
 			charter.reject_proposed(usr)
-	else if(href_list["jumpto"])
-		if(!isobserver(usr) && !check_rights(R_ADMIN))
-			return
 
-		var/mob/M = locate(href_list["jumpto"])
-		usr.client.jumptomob(M)
+	else if(href_list["jumpto"])
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/jump_to_mob, locate(href_list["jumpto"]))
 
 	else if(href_list["getmob"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		if(tgui_alert(usr, "Confirm?", "Message", list("Yes", "No")) != "Yes")
-			return
-		var/mob/M = locate(href_list["getmob"])
-		usr.client.Getmob(M)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/get_mob, locate(href_list["getmob"]))
 
 	else if(href_list["sendmob"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["sendmob"])
-		usr.client.sendmob(M)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/send_mob, locate(href_list["sendmob"]))
 
 	else if(href_list["narrateto"])
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_admin_direct_narrate, locate(href_list["narrateto"]))
@@ -1084,7 +1064,8 @@
 			else
 				D.traitor_panel()
 		else
-			show_traitor_panel(M)
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_traitor_panel, M)
+		return
 
 	else if(href_list["skill"])
 		if(!check_rights(R_ADMIN))
@@ -1104,7 +1085,8 @@
 		else
 			to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
 			return
-		show_skill_panel(target_mind)
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_skill_panel, target_mind)
+		return
 
 	else if(href_list["borgpanel"])
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/borg_panel, locate(href_list["borgpanel"]))
