@@ -226,3 +226,6 @@
 
 /turf/open/floor/engine/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
+
+/turf/open/floor/engine/low_pressure_plasma
+	initial_gas_mix = LOW_PRESURE_PLASMA
