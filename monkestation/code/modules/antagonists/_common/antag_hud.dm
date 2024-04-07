@@ -10,11 +10,6 @@
 	if(!valid_keys)
 		return TRUE
 
-	var/islist_datum_keys = islist(antag_datum.hud_keys)
-	if(islist(valid_keys))
-		if(islist_datum_keys)
-			return length(valid_keys - antag_datum.hud_keys) != length(valid_keys)
-		return antag_datum.hud_keys in valid_keys
-	else if(islist_datum_keys)
-		return valid_keys in antag_datum.hud_keys
-	return valid_keys == antag_datum.hud_keys
+	if(!islist(valid_keys))
+		valid_keys = list(valid_keys)
+	return length(valid_keys - antag_datum.hud_keys) != length(valid_keys)
