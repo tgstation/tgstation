@@ -84,6 +84,35 @@
 	LAZYNULL(sac_targets)
 	return ..()
 
+/datum/antagonist/heretic/proc/get_icon_of_knowledge(datum/heretic_knowledge/knowledge)
+	if(ispath(knowledge))
+		//if the argument is a typepath, we need to make a dummy so we can access some of its properties
+		knowledge = new knowledge()
+
+	//if the knowledge has a special icon, use that
+	if(!isnull(knowledge.research_tree_icon))
+		return knowledge.research_tree_icon
+
+	//if the knowledge is a transmutation, use the result
+	if(!isnull(knowledge.result_atoms) && knowledge.result_atoms.len)
+		var/atom/result_thing = knowledge.result_atoms[1]
+		return icon(result_thing.icon,result_thing.icon_state,frame=1)
+
+	//if the knowledge is a spell, use the spell's button
+	if(istype(knowledge,/datum/heretic_knowledge/spell))
+		var/datum/heretic_knowledge/spell/spell_knowledge = knowledge
+		var/datum/action/cooldown/spell/result_spell = spell_knowledge.spell_to_add
+		return icon(result_spell.button_icon,result_spell.button_icon_state,frame=1)
+
+	//if the knowledge is a summon, use the mob sprite
+	if(istype(knowledge,/datum/heretic_knowledge/summon))
+		var/datum/heretic_knowledge/summon/summon_knowledge = knowledge
+		var/mob/living/result_mob = summon_knowledge.mob_to_summon
+		return icon(result_mob.icon,result_mob.icon_state,frame=1)
+
+	//if all else fails, use a default icon
+	return icon('icons/mob/actions/actions_ecult.dmi',"eye")
+
 /datum/antagonist/heretic/ui_data(mob/user)
 	var/list/data = list()
 
@@ -102,6 +131,7 @@
 		knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
 		knowledge_data["cost"] = initial(knowledge.cost)
 		knowledge_data["disabled"] = initial(knowledge.cost) > knowledge_points
+		knowledge_data["icon"] = icon2base64(get_icon_of_knowledge(knowledge))
 
 		// Final knowledge can't be learned until all objectives are complete.
 		if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
@@ -129,6 +159,7 @@
 		knowledge_data["cost"] = found_knowledge.cost
 		knowledge_data["hereticPath"] = found_knowledge.route
 		knowledge_data["color"] = path_to_ui_color[found_knowledge.route] || "grey"
+		knowledge_data["icon"] = icon2base64(get_icon_of_knowledge(found_knowledge))
 
 		data["learnedKnowledge"] += list(knowledge_data)
 

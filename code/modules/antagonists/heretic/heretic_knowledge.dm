@@ -38,6 +38,9 @@
 	var/priority = 0
 	/// What path is this on. If set to "null", assumed to be unreachable (or abstract).
 	var/route
+	/// In case we want to override the default UI icon getter and plug in our own icon instead.
+	/// If set to "null", the icon of result_atom or spell_to_add is used.
+	var/icon/research_tree_icon
 
 /datum/heretic_knowledge/New()
 	if(!mutually_exclusive)

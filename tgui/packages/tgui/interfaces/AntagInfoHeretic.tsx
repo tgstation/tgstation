@@ -2,7 +2,7 @@ import { BooleanLike } from 'common/react';
 import { useState } from 'react';
 
 import { useBackend } from '../backend';
-import { BlockQuote, Box, Button, Section, Stack, Tabs } from '../components';
+import { BlockQuote, Box, Button, Image, Section, Stack, Tabs } from '../components';
 import { CssColor } from '../constants';
 import { Window } from '../layouts';
 import {
@@ -44,6 +44,7 @@ type Knowledge = {
   disabled: boolean;
   hereticPath: string;
   color: CssColor;
+  icon: string;
 };
 
 type KnowledgeInfo = {
@@ -236,6 +237,14 @@ const ResearchedKnowledge = (props) => {
                   content={`${learned.hereticPath} - ${learned.name}`}
                   tooltip={learned.desc}
                 />
+                <Image
+                  src={`data:image/jpeg;base64,${learned.icon}`}
+                  height="100%"
+                  width="100%"
+                  style={{
+                    verticalAlign: 'middle',
+                  }}
+                />
               </Stack.Item>
             ))}
         </Stack>
@@ -266,6 +275,14 @@ const KnowledgeShop = (props) => {
                 }`}
                 tooltip={toLearn.desc}
                 onClick={() => act('research', { path: toLearn.path })}
+              />
+              <Image
+                src={`data:image/jpeg;base64,${toLearn.icon}`}
+                height="100%"
+                width="100%"
+                style={{
+                  verticalAlign: 'middle',
+                }}
               />
               {!!toLearn.gainFlavor && (
                 <BlockQuote>
