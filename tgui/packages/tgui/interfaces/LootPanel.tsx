@@ -21,7 +21,7 @@ type Data = {
 };
 
 type Atom = {
-  icon: string;
+  icon?: string;
   name: string;
   ref: string;
 };
@@ -52,7 +52,11 @@ export function LootPanel(props) {
                   placeholder="Search"
                 />
               </Stack.Item>
-              <Button icon="sync" onClick={() => act('refresh')} />
+              <Button
+                disabled={!!searching}
+                icon="sync"
+                onClick={() => act('refresh')}
+              />
             </Stack>
           }
         >
@@ -62,11 +66,6 @@ export function LootPanel(props) {
                 <SearchItem atom={atom} />
               </Stack.Item>
             ))}
-            {!!searching && (
-              <Stack.Item m={1}>
-                <SearchItem />
-              </Stack.Item>
-            )}
           </Stack>
         </Section>
       </Window.Content>
@@ -74,26 +73,20 @@ export function LootPanel(props) {
   );
 }
 
-function SearchItem({ atom }: { atom?: Atom }) {
+function SearchItem({ atom }: { atom: Atom }) {
   const { act } = useBackend();
 
-  const tooltip = atom ? capitalizeAll(atom.name) : 'Searching...';
-
-  function onClickHandler(event: React.MouseEvent<HTMLDivElement>) {
-    if (!atom) return;
-
-    act('grab', {
-      ctrl: event.ctrlKey,
-      ref: atom.ref,
-      shift: event.shiftKey,
-    });
-  }
-
   return (
-    <Tooltip content={tooltip}>
+    <Tooltip content={capitalizeAll(atom.name)}>
       <Box
         height={3}
-        onClick={onClickHandler}
+        onClick={(event) =>
+          act('grab', {
+            ctrl: event.ctrlKey,
+            ref: atom.ref,
+            shift: event.shiftKey,
+          })
+        }
         style={{
           alignItems: 'center',
           background: 'black',
@@ -103,7 +96,7 @@ function SearchItem({ atom }: { atom?: Atom }) {
         }}
         width={2.9}
       >
-        {!atom ? (
+        {!atom.icon ? (
           <Icon name="spinner" spin size={1.9} color="grey" />
         ) : (
           <Image src={atom.icon} />

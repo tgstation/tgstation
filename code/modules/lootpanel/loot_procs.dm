@@ -1,3 +1,26 @@
+/// Converts the contents of the tile into search objects
+/datum/lootpanel/proc/convert_tile_contents(list/slice)
+	var/list/found = list()
+
+	for(var/atom/thing as anything in slice)
+		if(QDELETED(thing) || !thing.Adjacent(user) || !can_see(user, thing, 2) || user.see_invisible < thing.invisibility)
+			continue
+
+		var/ref = REF(thing)
+		if(contents[ref])
+			continue
+
+		RegisterSignals(thing, list(
+			COMSIG_MOVABLE_MOVED,
+			COMSIG_QDELETING,
+			), PROC_REF(on_item_moved))
+
+		var/datum/search_object/item = new(user, thing)
+		found[ref] = item
+
+	return found
+
+
 /// UI helper for converting the associative list to a list of lists
 /datum/lootpanel/proc/get_contents()
 	var/list/items = list()
@@ -10,7 +33,7 @@
 		UNTYPED_LIST_ADD(items, list(
 			"icon" = item.icon, 
 			"name" = item.name, 
-			"ref" = item.ref, 
+			"ref" = item.string_ref, 
 		))
 	
 	return items
@@ -53,8 +76,6 @@
 
 	qdel(found_item)
 	contents -= ref
-	current--
-	total--
 
 	return TRUE
 
@@ -63,8 +84,8 @@
 /datum/lootpanel/proc/open(mob/user, turf/tile)
 	search_turf_ref = WEAKREF(tile)
 	src.user = user
-	total = length(tile.contents)
 
+	contents += convert_tile_contents(tile.contents)
 	start_search()
 	ui_interact(user)
 
@@ -73,38 +94,26 @@
 /datum/lootpanel/proc/reset()
 	QDEL_LIST(contents)
 	searching = FALSE
-	current = 0
-	total = 0
 	STOP_PROCESSING(SSlooting, src)
 
 
-/// Search helper for finding all items in a slice. Returns a list
-/datum/lootpanel/proc/search(list/slice)
-	var/list/found = list()
+/// Restarts the search process. Used by the UI action
+/datum/lootpanel/proc/restart_search()
+	QDEL_LIST(contents)
 
-	for(var/atom/thing as anything in slice)
-		if(QDELETED(thing) || !thing.Adjacent(user) || !can_see(user, thing, 2) || user.see_invisible < thing.invisibility)
-			total--
-			continue
+	if(searching)
+		return FALSE
 
-		var/ref = REF(thing)
-		if(contents[ref])
-			continue
+	var/turf/tile = search_turf_ref?.resolve()
+	if(isnull(tile) || !user.TurfAdjacent(tile))
+		return FALSE
 
-		RegisterSignals(thing, list(
-			COMSIG_MOVABLE_MOVED,
-			COMSIG_QDELETING,
-			), PROC_REF(on_item_moved))
-
-		var/datum/search_object/item = new(user, thing)
-		found[ref] = item
-
-	return found
+	contents += convert_tile_contents(tile.contents)
+	start_search()
+	return TRUE
 
 
 /// Helper for starting the search process
 /datum/lootpanel/proc/start_search()
-	QDEL_LIST(contents)
-	current = 0
 	searching = TRUE
 	START_PROCESSING(SSlooting, src)

@@ -7,33 +7,46 @@ PROCESSING_SUBSYSTEM_DEF(looting)
 	wait = 2 SECONDS
 
 
+/**
+ * The intent of this is to iterate over the contents and find invalid items or items that still need icons.
+ * It runs normally until its out of icons, but the user can restart the process which will prune invalid
+ */
 /datum/lootpanel/process(seconds_per_tick)
 	var/datum/tgui/panel = SStgui.get_open_ui(user, src)
 	if(isnull(panel))
 		reset()
 		return PROCESS_KILL
 
-	var/turf/search_turf = search_turf_ref?.resolve()
-	if(isnull(search_turf))
+	var/turf/tile = search_turf_ref?.resolve()
+	if(isnull(tile) || !user.Adjacent(tile))
 		reset()
 		return PROCESS_KILL
 
-	if(!length(search_turf.contents))
-		reset()
-		panel.send_update()
+	var/current = 0
+	var/processed = FALSE
+	for(var/ref in contents)
+		if(current == 5)
+			return
+
+		var/datum/search_object/obj = contents[ref]
+
+		var/atom/thing  = obj.item_ref?.resolve()
+		if(isnull(thing) || !user.Adjacent(thing) || !locate(thing) in tile.contents)
+			contents -= ref
+			continue
+
+		if(obj.icon)
+			continue
+
+		if(!obj.generate_icon())
+			contents -= ref
+			continue
+
+		current++
+		processed = TRUE
+		panel.send_update()	
+
+	if(!processed)
+		searching = FALSE
+		panel.send_update()	
 		return PROCESS_KILL
-
-	var/end = total - current > search_speed ? current + search_speed : 0
-	var/list/slice_search = search_turf.contents.Copy(current + 1, end)
-
-	contents += search(slice_search)	
-	current += length(slice_search)
-	panel.send_update()	
-
-	if(current < total)
-		return
-
-	searching = FALSE
-	panel.send_update()	
-
-	return PROCESS_KILL

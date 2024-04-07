@@ -6,8 +6,6 @@
 /datum/lootpanel
 	/// The owner of the panel
 	var/client/user_client
-	// Tracking the current items cached
-	var/current = 0
 	/// The turf being searched
 	var/datum/weakref/search_turf_ref
 	/// Associative list of contents
@@ -18,8 +16,6 @@
 	var/search_speed = 5
 	/// If we're currently running slow_search_contents
 	var/searching = FALSE
-	/// Tracking the total items in the turf
-	var/total = 0
 
 
 /datum/lootpanel/New(client/owner)
@@ -85,7 +81,8 @@
 			return TRUE
 
 		if("refresh")
-			start_search()
+			if(!restart_search())
+				return FALSE
 			return TRUE
 
 	return FALSE

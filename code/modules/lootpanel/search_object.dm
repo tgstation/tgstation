@@ -8,27 +8,41 @@
 	/// The name of the object
 	var/name
 	/// The STRING reference of the object for indexing purposes
-	var/ref
+	var/string_ref
 	/// Weakref to the original object
 	var/datum/weakref/item_ref
+	/// Client attached to the search_object
+	var/client/user_client
 
 
 /datum/search_object/New(mob/user, atom/item)
 	. = ..()
 
-	name = item.name
-	ref = REF(item)
 	item_ref = WEAKREF(item)
-
-	if(ismob(item) || length(item.overlays) > 2)
-		icon = costly_icon2html(item, user.client, sourceonly = TRUE)
-	else
-		icon = icon2html(item, user.client, sourceonly = TRUE)
+	name = item.name
+	string_ref = REF(item)
+	user_client = user.client
 
 
 /datum/search_object/Destroy(force)
 	icon = null
 	name = null
-	ref = null
+	string_ref = null
+	user_client = null
 
 	return ..()
+
+
+/// Generates the icon for the search object. This is the expensive part.
+/datum/search_object/proc/generate_icon()
+	var/atom/item = item_ref?.resolve()
+	if(isnull(item))
+		qdel(src)
+
+	if(ismob(item) || length(item.overlays) > 2)
+		icon = costly_icon2html(item, user_client, sourceonly = TRUE)
+	else
+		icon = icon2html(item, user_client, sourceonly = TRUE)
+
+	if(icon)
+		return TRUE
