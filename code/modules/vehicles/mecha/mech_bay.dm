@@ -1,10 +1,11 @@
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
 	desc = "This port recharges a mech's internal power cell."
-	density = TRUE
-	dir = EAST
 	icon = 'icons/obj/machines/mech_bay.dmi'
 	icon_state = "recharge_port"
+	density = TRUE
+	dir = EAST
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 	circuit = /obj/item/circuitboard/machine/mech_recharger
 	///Weakref to currently recharging mech on our recharging_turf
 	var/datum/weakref/recharging_mech_ref
@@ -64,9 +65,9 @@
 	if(!recharging_mech?.cell)
 		return
 	if(recharging_mech.cell.charge < recharging_mech.cell.maxcharge)
-		var/delta = min(recharge_power * seconds_per_tick, recharging_mech.cell.maxcharge - recharging_mech.cell.charge)
-		recharging_mech.give_power(delta)
-		use_energy(delta + active_power_usage)
+		if(!use_energy(active_power_usage * seconds_per_tick))
+			return
+		charge_cell(recharge_power * seconds_per_tick, recharging_mech.cell, grid_only = TRUE)
 	else
 		recharge_console.update_appearance()
 	if(recharging_mech.loc != recharging_turf)
