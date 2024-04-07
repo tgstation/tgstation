@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useBackend } from '../backend';
 import {
   Box,
+  Button,
   Icon,
   Image,
   Input,
@@ -20,14 +21,14 @@ type Data = {
 };
 
 type Atom = {
-  image: string;
+  icon: string;
   name: string;
   ref: string;
 };
 
 export function LootPanel(props) {
   const { act, data } = useBackend<Data>();
-  const { contents = [] } = data;
+  const { contents = [], searching } = data;
 
   const [searchText, setSearchText] = useState('');
 
@@ -39,37 +40,63 @@ export function LootPanel(props) {
     <Window height={250} width={180} title="Contents">
       <Window.Content>
         <Section
-          buttons={
-            <Input
-              autoFocus
-              onInput={(event, value) => setSearchText(value)}
-              placeholder="Search"
-              width="11rem"
-            />
-          }
           fill
           scrollable
-          title={<Icon name="search" />}
+          title={
+            <Stack>
+              <Input
+                autoFocus
+                onInput={(event, value) => setSearchText(value)}
+                placeholder="Search"
+                width="11rem"
+              />
+              <Button icon="sync" onClick={() => act('refresh')} />
+            </Stack>
+          }
         >
           <Stack fill wrap>
             {filteredContents.map((atom, index) => (
               <Stack.Item key={index} m={1}>
-                <Tooltip content={capitalizeAll(atom.name)}>
-                  <Box
-                    onClick={() => act('grab', { ref: atom.ref })}
-                    style={{
-                      border: 'thin solid #212121',
-                      background: 'black',
-                    }}
-                  >
-                    <Image src={atom.image} />
-                  </Box>
-                </Tooltip>
+                <SearchItem atom={atom} />
               </Stack.Item>
             ))}
+            {!!searching && (
+              <Stack.Item m={1}>
+                <SearchItem />
+              </Stack.Item>
+            )}
           </Stack>
         </Section>
       </Window.Content>
     </Window>
+  );
+}
+
+function SearchItem({ atom }: { atom?: Atom }) {
+  const { act } = useBackend();
+
+  const tooltip = atom ? capitalizeAll(atom.name) : 'Searching...';
+
+  return (
+    <Tooltip content={tooltip}>
+      <Box
+        onClick={() => atom && act('grab', { ref: atom.ref })}
+        height={3}
+        style={{
+          alignItems: 'center',
+          background: 'black',
+          border: 'thin solid #212121',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+        width={2.9}
+      >
+        {!atom ? (
+          <Icon name="spinner" spin size={1.9} color="grey" />
+        ) : (
+          <Image src={atom.icon} />
+        )}
+      </Box>
+    </Tooltip>
   );
 }

@@ -1,15 +1,32 @@
-/// Grabs an object from the contents
+/// UI helper for converting the associative list to a list of lists
+/datum/lootpanel/proc/get_contents()
+	var/list/items = list()
+
+	for(var/ref in contents)
+		var/datum/search_object/item = contents[ref]
+		if(!item.item_ref?.resolve())
+			continue
+
+		UNTYPED_LIST_ADD(items, list(
+			"icon" = item.icon, 
+			"name" = item.name, 
+			"ref" = item.ref, 
+		))
+	
+	return items
+
+
+/// Grabs an object from the contents. Validates the object and the user
 /datum/lootpanel/proc/grab(mob/user, ref)
 	var/turf/tile = search_turf_ref?.resolve()
 	if(isnull(tile))
 		return FALSE
 
-	var/atom/thing
-	for(var/item in contents)
-		if(item["ref"] == ref)
-			thing = item
-			break
-
+	var/datum/search_object/found_item = contents[ref]
+	if(isnull(found_item))
+		return FALSE
+	
+	var/atom/thing = found_item.item_ref?.resolve()	
 	if(QDELETED(thing) || QDELETED(user))
 		return FALSE
 
@@ -19,7 +36,11 @@
 	if(!user.put_in_active_hand(thing))
 		return FALSE
 
-	contents -= thing
+	qdel(found_item)
+	contents -= ref
+	current--
+	total--
+
 	return TRUE
 
 
@@ -33,11 +54,10 @@
 	ui_interact(user)
 
 
-/// Helper for clearing the panel cache
+/// Helper for clearing the panel cache. "what the hell is going on" proc
 /datum/lootpanel/proc/reset()
-	contents.Cut()
+	QDEL_LIST(contents)
 	searching = FALSE
-	search_turf_ref = null
 	current = 0
 	total = 0
 	STOP_PROCESSING(SSlooting, src)
@@ -51,24 +71,24 @@
 		if(QDELETED(thing) || QDELETED(user) || !thing.Adjacent(user))
 			continue
 
-		var/string_icon
-		if(ismob(thing) || length(thing.overlays) > 2)
-			string_icon = costly_icon2html(thing, user_client, sourceonly = TRUE)
-		else
-			string_icon = icon2html(thing, user_client, sourceonly = TRUE)
+		var/ref = REF(thing)
+		if(contents[ref])
+			continue
 
-		found += list(list(
-			"icon" = string_icon,
-			"name" = thing.name,
-			"ref" = REF(thing),
-		))
+		RegisterSignals(thing, list(
+			COMSIG_MOVABLE_MOVED,
+			COMSIG_QDELETING,
+			), PROC_REF(on_item_moved))
+
+		var/datum/search_object/item = new(user, thing)
+		found[ref] = item
 
 	return found
 
 
 /// Helper for starting the search process
 /datum/lootpanel/proc/start_search()
-	contents.Cut()
+	QDEL_LIST(contents)
 	current = 0
 	searching = TRUE
 	START_PROCESSING(SSlooting, src)

@@ -4371,6 +4371,7 @@
 #include "code\modules\logging\categories\log_category_target_zone_switch.dm"
 #include "code\modules\logging\categories\log_category_uplink.dm"
 #include "code\modules\lootpanel\_lootpanel.dm"
+#include "code\modules\lootpanel\loot_handlers.dm"
 #include "code\modules\lootpanel\loot_procs.dm"
 #include "code\modules\lootpanel\search_object.dm"
 #include "code\modules\lootpanel\ss_looting.dm"

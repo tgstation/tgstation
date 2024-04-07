@@ -8,8 +8,8 @@
 	var/client/user_client
 	/// The turf being searched
 	var/datum/weakref/search_turf_ref
-	/// Cache of current contents
-	var/list/datum/search_object/contents = list()
+	/// Associative list of contents
+	var/list/contents = list()
 	/// The mob of the owner
 	var/mob/user
 	/// The speed at which we search, represented as items per 2 seconds
@@ -53,7 +53,7 @@
 /datum/lootpanel/ui_data(mob/user)
 	var/list/data = list()
 
-	data["contents"] = contents
+	data["contents"] = get_contents()
 	data["searching"] = searching
 
 	return data
