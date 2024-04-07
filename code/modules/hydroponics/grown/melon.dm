@@ -11,7 +11,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_dead = "watermelon-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	possible_mutations = list(/datum/hydroponics/plant_mutation/melon_barrel, /datum/hydroponics/plant_mutation/holy_melon)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/melon_barrel, /datum/hydroponics/plant_mutation/holy_melon, /datum/hydroponics/plant_mutation/honeydew)
 	reagents_add = list(/datum/reagent/water = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.2)
 
 /obj/item/seeds/watermelon/suicide_act(mob/living/user)

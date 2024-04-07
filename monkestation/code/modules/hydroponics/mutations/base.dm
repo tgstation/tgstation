@@ -418,3 +418,10 @@
 	required_endurance = list(60, 70)
 	required_yield = list(5, 10)
 	required_lifespan = list(-INFINITY, 20)
+
+/datum/hydroponics/plant_mutation/honeydew
+	mutates_from = list(/obj/item/seeds/watermelon)
+	created_product = /obj/item/food/grown/honeydew
+	created_seed = /obj/item/seeds/watermelon/honeydew
+	required_yield = list(20, INFINITY)
+	required_lifespan = list(60, INFINITY)
