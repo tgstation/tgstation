@@ -4,7 +4,7 @@ PROCESSING_SUBSYSTEM_DEF(looting)
 	name = "Loot Panel Search"
 	flags = SS_NO_INIT
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
-	wait = 2 SECONDS
+	wait = 0.5 SECONDS
 
 
 /**
@@ -22,10 +22,11 @@ PROCESSING_SUBSYSTEM_DEF(looting)
 		reset()
 		return PROCESS_KILL
 
-	var/current = 0
+	var/throttle = 0
 	for(var/ref in contents)
-		if(current == search_speed)
+		if(throttle == search_speed)
 			panel.send_update()
+			CHECK_TICK
 			return
 
 		var/datum/search_object/obj = contents[ref]
@@ -42,7 +43,8 @@ PROCESSING_SUBSYSTEM_DEF(looting)
 			contents -= ref
 			continue
 
-		current++
+		throttle++
+		CHECK_TICK
 
 	searching = FALSE
 	panel.send_update()	
