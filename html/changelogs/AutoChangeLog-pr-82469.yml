@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - balance: "Basic mob AIs with no mobs on the Z level now stop."
