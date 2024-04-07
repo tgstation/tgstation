@@ -12,23 +12,22 @@
 	/// Weakref to the original object
 	var/datum/weakref/item_ref
 	/// Client attached to the search_object
-	var/client/user_client
+	var/datum/weakref/client_ref
 
 
 /datum/search_object/New(mob/user, atom/item)
 	. = ..()
 
+	client_ref = WEAKREF(user.client)
 	item_ref = WEAKREF(item)
 	name = item.name
 	string_ref = REF(item)
-	user_client = user.client
 
 
 /datum/search_object/Destroy(force)
 	icon = null
 	name = null
 	string_ref = null
-	user_client = null
 
 	return ..()
 
@@ -37,6 +36,10 @@
 /datum/search_object/proc/generate_icon()
 	var/atom/item = item_ref?.resolve()
 	if(isnull(item))
+		qdel(src)
+
+	var/client/user_client = client_ref?.resolve()
+	if(isnull(user_client))
 		qdel(src)
 
 	if(ismob(item) || length(item.overlays) > 2)
