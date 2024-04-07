@@ -37,7 +37,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	//Direction -> if we have a conveyor belt in that direction
 	var/list/neighbors
 
-/obj/machinery/conveyor/Initialize(mapload)
+/obj/machinery/conveyor/Initialize(mapload, new_dir, new_id)
 	. = ..()
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_CONVEYOR_PRIORITY)
 	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN)
