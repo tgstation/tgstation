@@ -177,7 +177,7 @@ multiple modular subtrees with behaviors
 		SSai_controllers.ai_controllers_by_zlevel[new_turf.z] += src
 		var/new_level_clients = SSmobs.clients_by_zlevel[new_turf.z].len
 		if(new_level_clients)
-			set_ai_status(AI_STATUS_ON)
+			set_ai_status(AI_STATUS_IDLE)
 		else
 			set_ai_status(AI_STATUS_OFF)
 
@@ -383,7 +383,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/on_sentience_lost()
 	SIGNAL_HANDLER
 	UnregisterSignal(pawn, COMSIG_MOB_LOGOUT)
-	set_ai_status(AI_STATUS_ON) //Can't do anything while player is connected
+	set_ai_status(AI_STATUS_IDLE) //Can't do anything while player is connected
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
 // Turn the controller off if the pawn has been qdeleted
