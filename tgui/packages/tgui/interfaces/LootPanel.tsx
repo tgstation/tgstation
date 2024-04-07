@@ -1,3 +1,4 @@
+import { KEY } from 'common/keys';
 import { BooleanLike } from 'common/react';
 import { capitalizeAll, createSearch } from 'common/string';
 import { useState } from 'react';
@@ -38,7 +39,13 @@ export function LootPanel(props) {
 
   return (
     <Window height={250} width={190} title="Contents">
-      <Window.Content>
+      <Window.Content
+        onKeyDown={(event) => {
+          if (event.key === KEY.Enter && filteredContents.length > 0) {
+            act('grab', { ref: filteredContents[0].ref });
+          }
+        }}
+      >
         <Section
           fill
           scrollable
