@@ -6605,6 +6605,7 @@
 #include "monkestation\code\modules\possession\basic_pixel_shift_editor.dm"
 #include "monkestation\code\modules\possession\item_overrides.dm"
 #include "monkestation\code\modules\possession\possessed_hud.dm"
+#include "monkestation\code\modules\power\cables.dm"
 #include "monkestation\code\modules\power\lighting\floor_light.dm"
 #include "monkestation\code\modules\power\lighting\neon_lining.dm"
 #include "monkestation\code\modules\power\power_transmission_laser\code\announcement.dm"

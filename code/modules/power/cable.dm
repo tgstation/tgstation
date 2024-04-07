@@ -184,12 +184,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	return ..()
 
 
-/obj/structure/cable/examine(mob/user)
-	. = ..()
-	if(isobserver(user))
-		. += get_power_info()
-
-
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
 	var/turf/T = get_turf(src)
 	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
