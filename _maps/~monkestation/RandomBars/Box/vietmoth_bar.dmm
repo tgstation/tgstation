@@ -1,4 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ak" = (
+/obj/structure/flora/bush/jungle/c/style_random,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
 "cc" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -21,7 +25,6 @@
 /obj/structure/chair/wood{
 	dir = 1
 	},
-/obj/effect/landmark/start/assistant,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "dx" = (
@@ -53,6 +56,11 @@
 	},
 /turf/open/misc/dirt/jungle,
 /area/station/service/theater)
+"gM" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
 "gY" = (
 /obj/machinery/media/jukebox,
 /obj/machinery/light/directional/north,
@@ -156,6 +164,7 @@
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "pg" = (
+/obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/leavy/style_random,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
@@ -177,7 +186,6 @@
 /area/station/service/theater)
 "qi" = (
 /obj/structure/chair/wood,
-/obj/effect/landmark/start/assistant,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "tT" = (
@@ -231,6 +239,7 @@
 /turf/open/floor/grass,
 /area/station/service/theater)
 "wF" = (
+/obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
@@ -288,6 +297,14 @@
 /area/station/commons/lounge)
 "BD" = (
 /obj/machinery/restaurant_portal/bar,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"CE" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"CX" = (
+/obj/structure/flora/bush/jungle/a/style_random,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "Dd" = (
@@ -356,6 +373,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
+"Ke" = (
+/obj/structure/flora/rock/style_random,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
 "Mu" = (
 /obj/machinery/light/directional/east,
 /turf/open/misc/dirt/jungle,
@@ -397,10 +418,12 @@
 /obj/machinery/camera/autoname/directional/west,
 /obj/machinery/light/small/directional/west,
 /obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "QO" = (
-/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "QW" = (
@@ -452,8 +475,8 @@ YM
 ir
 nj
 OP
-nj
-nj
+gM
+CE
 yJ
 "}
 (2,1,1) = {"
@@ -477,13 +500,13 @@ yJ
 "}
 (3,1,1) = {"
 Ub
-nj
+CX
 TV
 nj
 vy
 nj
 jK
-nj
+QO
 dx
 dx
 Dg
@@ -525,7 +548,7 @@ fg
 nR
 Oz
 pg
-nj
+CE
 uo
 wM
 QW
@@ -537,7 +560,7 @@ Ub
 gY
 nj
 lY
-nj
+Ke
 mL
 MI
 fm
@@ -582,7 +605,7 @@ wF
 nj
 nj
 ZB
-nj
+ak
 wd
 pP
 jB
@@ -591,7 +614,7 @@ NP
 "}
 (9,1,1) = {"
 Ub
-nj
+gM
 ir
 nj
 mC

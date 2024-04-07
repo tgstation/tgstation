@@ -333,6 +333,14 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"kx" = (
+/obj/structure/table,
+/obj/machinery/camera/directional/north{
+	c_tag = "Engineering - SMES, Engine";
+	name = "engineering camera"
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "kz" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
@@ -1143,12 +1151,12 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable/layer1,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engine SMES Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "MB" = (
@@ -1336,10 +1344,6 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/airalarm/directional/north,
 /obj/structure/table,
-/obj/item/paper{
-	name = "Important Note";
-	default_raw_text = "<p>Please do not wire these SMES units into the grid, these are specifically for the supermatter engine area.<br>Also, DO NOT max out these SMES units like you would the main ones. These units only need as much input/output that is needed to power the engine area and equipment.<p>"
-	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "Tk" = (
@@ -1668,7 +1672,7 @@ xP
 "}
 (6,1,1) = {"
 GP
-FD
+kx
 uh
 Ao
 QO

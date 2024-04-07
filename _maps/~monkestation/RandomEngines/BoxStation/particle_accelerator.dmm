@@ -335,10 +335,6 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/airalarm/directional/north,
 /obj/structure/table,
-/obj/item/paper{
-	name = "Important Note";
-	default_raw_text = "<p>Please do not wire these SMES units into the grid, these are specifically for the station-side particle accelerator.<br>Also, DO NOT max out these SMES units like you would the main ones. These units only need as much input/output that is needed to power the engine area and equipment.<p>"
-	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "vF" = (
@@ -363,12 +359,12 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable/layer1,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engine SMES Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "wK" = (
@@ -473,6 +469,14 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"Cp" = (
+/obj/structure/table,
+/obj/machinery/camera/directional/north{
+	c_tag = "Engineering - SMES, Engine";
+	name = "engineering camera"
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "Cq" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
@@ -945,7 +949,7 @@ GW
 "}
 (6,1,1) = {"
 PG
-HB
+Cp
 GK
 CY
 jL
@@ -1057,9 +1061,9 @@ El
 "}
 (10,1,1) = {"
 PG
-Cq
+aW
 zF
-Cq
+aW
 PG
 FH
 PG

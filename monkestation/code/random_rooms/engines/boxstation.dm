@@ -26,5 +26,5 @@
 	centerspawner = FALSE
 	template_height = 26
 	template_width = 29
-	weight = 0 // Changed from 4 to 0 until PR 1521 gets merged.
+	weight = 4 // Should probably be rarer than the other two engines.
 	station_name = "Box Station"

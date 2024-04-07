@@ -111,7 +111,7 @@
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "rV" = (
-/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "sW" = (
@@ -333,14 +333,6 @@
 	},
 /turf/open/floor/cult,
 /area/station/commons/lounge)
-"SU" = (
-/obj/structure/table/wood/fancy/red,
-/obj/item/paper/crumpled/bloody{
-	name = "Bloody Crumpled Note";
-	default_raw_text = "<p style="text-align:center"><i>It calls me<br>in a sea of flesh<br>we will become one<br>but I can never go back<br>to being me<p>"
-	},
-/turf/open/floor/cult,
-/area/station/commons/lounge)
 "Uu" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood/large,
@@ -368,6 +360,7 @@
 /area/station/commons/lounge)
 "UO" = (
 /obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "VJ" = (
@@ -477,7 +470,7 @@ QE
 uS
 ue
 uS
-SU
+uS
 Bl
 Bl
 zU

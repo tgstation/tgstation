@@ -153,11 +153,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
-"wY" = (
-/obj/structure/chair/bronze,
-/obj/effect/landmark/start/assistant,
-/turf/open/floor/bronze,
-/area/station/commons/lounge)
 "xT" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -346,13 +341,6 @@
 /obj/structure/fluff/clockwork/alloy_shards/large,
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
-"Up" = (
-/obj/structure/chair/bronze{
-	dir = 1
-	},
-/obj/effect/landmark/start/assistant,
-/turf/open/floor/bronze,
-/area/station/commons/lounge)
 "Uz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -514,9 +502,9 @@ RG
 TL
 mm
 Jy
-Up
+cu
 qG
-wY
+si
 Jy
 JZ
 TL
@@ -567,7 +555,7 @@ zp
 "}
 (10,1,1) = {"
 OD
-wY
+si
 Jy
 JZ
 OD
@@ -577,7 +565,7 @@ cr
 OD
 mm
 Jy
-Up
+cu
 Rp
 ca
 jv
