@@ -398,11 +398,28 @@
 /atom/proc/AltClick(mob/user)
 	if(!user.can_interact_with(src))
 		return FALSE
+
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
-		return
-	var/turf/T = get_turf(src)
-	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T) && !HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
-		user.set_listed_turf(T)
+		return FALSE
+
+	var/turf/tile = get_turf(src)
+	if(isnull(tile))
+		return FALSE
+
+	if(!isturf(loc) && !isturf(src))
+		return FALSE
+
+	if(!user.TurfAdjacent(tile))
+		return FALSE
+
+	if(HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
+		return FALSE
+
+	var/datum/lootpanel/panel = user.client?.loot_panel
+	if(isnull(panel))
+		return FALSE
+	
+	panel.open(user, tile)
 
 ///The base proc of when something is right clicked on when alt is held - generally use alt_click_secondary instead
 /atom/proc/alt_click_on_secondary(atom/A)
@@ -422,13 +439,13 @@
 		return
 
 /// Use this instead of [/mob/proc/AltClickOn] where you only want turf content listing without additional atom alt-click interaction
-/atom/proc/AltClickNoInteract(mob/user, atom/A)
-	var/turf/T = get_turf(A)
-	if(T && user.TurfAdjacent(T))
-		user.set_listed_turf(T)
+/atom/proc/AltClickNoInteract(mob/user, atom/zone)
+	var/turf/tile = get_turf(zone)
+	if(tile && user.TurfAdjacent(tile))
+		user.listed_turf = tile
 
-/mob/proc/TurfAdjacent(turf/T)
-	return T.Adjacent(src)
+/mob/proc/TurfAdjacent(turf/tile)
+	return tile.Adjacent(src)
 
 /**
  * Control+Shift click
