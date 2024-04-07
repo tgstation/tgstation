@@ -2,6 +2,8 @@
 /datum/unit_test/confusion_symptom/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 	var/datum/disease/advance/confusion/disease = allocate(/datum/disease/advance/confusion)
+	// Ignore randomization
+	GLOB.symptom_randomness[/datum/disease/advance/confusion] = list("stealth" = 0, "resistance" = 0, "stage_speed" = 0, "transmittable" = 0, "power" = 0)
 	var/datum/symptom/confusion/confusion = disease.symptoms[1]
 	disease.processing = TRUE
 	disease.update_stage(5)
