@@ -91,6 +91,7 @@
 	)
 	cost = 1
 	route = PATH_RUST
+	research_tree_icon = icon('icons/obj/antags/eldritch.dmi',"rusty_medalion")
 
 /datum/heretic_knowledge/rust_regen/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))

@@ -88,6 +88,7 @@
 	)
 	cost = 1
 	route = PATH_VOID
+	research_tree_icon = icon('icons/hud/screen_alert.dmi',"cold",frame=1)
 
 /datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	user.add_traits(list(TRAIT_NOBREATH, TRAIT_RESISTCOLD), type)

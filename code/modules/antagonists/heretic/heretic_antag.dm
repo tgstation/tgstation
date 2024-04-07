@@ -108,7 +108,7 @@
 	if(istype(knowledge,/datum/heretic_knowledge/summon))
 		var/datum/heretic_knowledge/summon/summon_knowledge = knowledge
 		var/mob/living/result_mob = summon_knowledge.mob_to_summon
-		return icon(result_mob.icon,result_mob.icon_state,frame=1)
+		return icon(result_mob.icon,result_mob.icon_state,frame=1,dir=SOUTH,moving=0)
 
 	//if all else fails, use a default icon
 	return icon('icons/mob/actions/actions_ecult.dmi',"eye")

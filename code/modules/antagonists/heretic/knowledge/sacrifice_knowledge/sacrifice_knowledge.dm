@@ -26,6 +26,7 @@
 	var/list/datum/mind/target_blacklist
 	/// An assoc list of [ref] to [timers] - a list of all the timers of people in the shadow realm currently
 	var/list/return_timers
+	research_tree_icon = icon('icons/mob/actions/actions_spells.dmi',"scream_for_me")
 
 /datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force)
 	heretic_mind = null

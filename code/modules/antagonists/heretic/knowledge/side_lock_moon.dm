@@ -54,6 +54,7 @@
 	result_atoms = list(/obj/item/canvas)
 	cost = 1
 	route = PATH_SIDE
+	research_tree_icon = icon('icons/obj/signs.dmi',"eldritch_painting_weeping")
 
 /datum/heretic_knowledge/painting/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(locate(/obj/item/organ/internal/eyes) in atoms)

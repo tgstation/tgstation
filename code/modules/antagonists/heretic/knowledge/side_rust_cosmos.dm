@@ -29,6 +29,7 @@
 	cost = 0
 	route = PATH_SIDE
 	var/rusting_range = 4
+	research_tree_icon = icon('icons/effects/rust_overlay.dmi',"rust_default")
 
 /datum/heretic_knowledge/entropy_pulse/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	for(var/turf/nearby_turf in view(rusting_range, loc))
@@ -60,6 +61,7 @@
 	curse_color = "#c1ffc9"
 	cost = 1
 	route = PATH_SIDE
+	research_tree_icon = icon('icons/obj/signs.dmi',"bio")
 
 /datum/heretic_knowledge/curse/corrosion/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
 	to_chat(chosen_mob, span_danger("You feel very ill..."))

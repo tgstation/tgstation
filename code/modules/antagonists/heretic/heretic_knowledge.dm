@@ -582,6 +582,7 @@
 	priority = MAX_KNOWLEDGE_PRIORITY - 10 // A pretty important midgame ritual.
 	/// Whether we've done the ritual. Only doable once.
 	var/was_completed = FALSE
+	research_tree_icon = icon('icons/obj/antags/eldritch.dmi',"book_open")
 
 /datum/heretic_knowledge/knowledge_ritual/New()
 	. = ..()

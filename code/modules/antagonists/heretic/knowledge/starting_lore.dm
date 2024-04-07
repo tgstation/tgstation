@@ -50,6 +50,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	route = PATH_START
 	/// The typepath of the organ type required for our heart.
 	var/required_organ_type = /obj/item/organ/internal/heart
+	research_tree_icon = icon('icons/obj/antags/eldritch.dmi',"living_heart",frame=1)
 
 /datum/heretic_knowledge/living_heart/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()

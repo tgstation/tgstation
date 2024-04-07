@@ -137,6 +137,7 @@
 	limit = 2
 	cost = 1
 	route = PATH_FLESH
+	research_tree_icon = icon('icons/mob/actions/actions_changeling.dmi',"fake_death")
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
