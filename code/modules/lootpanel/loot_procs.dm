@@ -3,7 +3,11 @@
 	var/list/found = list()
 
 	for(var/atom/thing as anything in slice)
-		if(QDELETED(thing) || !thing.Adjacent(user) || !can_see(user, thing, 2) || user.see_invisible < thing.invisibility)
+		if(thing.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
+			continue
+		if(thing.IsObscured())
+			continue
+		if(thing.invisibility > user.see_invisible)
 			continue
 
 		var/ref = REF(thing)
@@ -28,6 +32,7 @@
 	for(var/ref in contents)
 		var/datum/search_object/item = contents[ref]
 		if(!item.item_ref?.resolve())
+			contents -= ref
 			continue
 
 		UNTYPED_LIST_ADD(items, list(
