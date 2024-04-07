@@ -721,7 +721,7 @@
 	var/obj/item/food/grown/coffee/reference_bean = new /obj/item/food/grown/coffee(src)
 	for(var/datum/reagent/ref_bean_reagent as anything in reference_bean.reagents.reagent_list)
 		reference_bean_reagents += ref_bean_reagent.name
-qdel(reference_bean)
+
 	// add all the reagents from the coffee beans to the coffeepot (ommit the ones from the reference bean)
 	var/list/reagent_delta = list()
 	var/obj/item/food/grown/coffee/bean = coffee[coffee_amount]
@@ -730,6 +730,8 @@ qdel(reference_bean)
 			reagent_delta += list(substance.type = substance.volume)
 	coffeepot.reagents.add_reagent_list(reagent_delta)
 
+	qdel(reference_bean)
+	
 	// remove the coffee beans from the machine
 	coffee.Cut(1,2)
 	coffee_amount--
