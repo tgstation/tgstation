@@ -1,3 +1,5 @@
+#define NEXT_EAT_COOLDOWN 2 MINUTES
+
 /datum/ai_controller/basic_controller/raptor
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
@@ -17,10 +19,22 @@
         /datum/ai_planning_subtree/target_retaliate,
         /datum/ai_planning_subtree/simple_find_target,
         /datum/ai_planning_subtree/basic_melee_attack_subtree,
+        /datum/ai_planning_subtree/find_and_hunt_target/raptor_trough,
         /datum/ai_planning_subtree/find_and_hunt_target/care_for_young,
         /datum/ai_planning_subtree/make_babies,
         /datum/ai_planning_subtree/find_and_hunt_target/raptor_start_trouble,
+        /datum/ai_planning_subtree/express_happiness,
 	)
+
+/datum/ai_controller/basic_controller/raptor/TryPossessPawn(atom/new_pawn)
+	. = ..()
+	if(. & AI_CONTROLLER_INCOMPATIBLE)
+		return
+	RegisterSignal(new_pawn, COMSIG_MOB_ATE, PROC_REF(post_eat))
+
+/datum/ai_controller/basic_controller/raptor/proc/post_eat()
+    controller.clear_blackboard_key(BB_RAPTOR_TROUGH_TARGET)
+    controller.blackboard[BB_RAPTOR_EAT_COOLDOWN] = world.time + NEXT_EAT_COOLDOWN
 
 /datum/targeting_strategy/basic/raptor
 
@@ -115,3 +129,51 @@
     var/mob/living/living_pawn = controller.pawn
     living_pawn.set_combat_mode(initial(living_pawn.combat_mode))
     return ..()
+
+/datum/ai_planning_subtree/find_and_hunt_target/raptor_trough
+    target_key = BB_RAPTOR_TROUGH_TARGET
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target
+	finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_trough
+	hunt_targets = list(/obj/structure/ore_container/food_trough/raptor_trough)
+	hunt_chance = 80
+	hunt_range = 9
+
+/datum/ai_planning_subtree/find_and_hunt_target/raptor_trough/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+    if(world.time < controller.blackboard[BB_RAPTOR_EAT_COOLDOWN])
+        return
+    return ..()
+
+/datum/ai_behavior/find_hunt_target/raptor_trough
+
+/datum/ai_behavior/find_hunt_target/raptor_trough/valid_dinner(mob/living/source, atom/movable/trough, radius)
+    return !!(locate(/obj/item/stack/ore) in trough.contents)
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/raptor_trough
+    always_reset_target = TRUE
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/raptor_trough/target_caught(mob/living/hunter, atom/hunted)
+    hunter.set_combat_mode(FALSE)
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/raptor_trough/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
+    var/mob/living/living_pawn = controller.pawn
+    living_pawn.set_combat_mode(initial(living_pawn.combat_mode))
+    return ..()
+
+/datum/ai_controller/basic_controller/baby_raptor
+	blackboard = list(
+        BB_FIND_MOM_TYPES = list(/mob/living/basic/mining/raptor),
+		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/mining/raptor/baby_raptor),
+		BB_MAX_CHILDREN = 5,
+	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+        /datum/ai_planning_subtree/simple_find_target,
+        /datum/ai_planning_subtree/flee_target,
+        /datum/ai_planning_subtree/find_and_hunt_target/raptor_trough,
+        /datum/ai_planning_subtree/express_happiness,
+        /datum/ai_planning_subtree/look_for_adult,
+	)
+
+#undef NEXT_EAT_COOLDOWN

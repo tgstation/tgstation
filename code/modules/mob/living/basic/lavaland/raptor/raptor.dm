@@ -42,6 +42,7 @@
 	. = ..()
 	inherited_stats = new
 	inherit_properties()
+	AddElement(/datum/element/basic_eating, food_types = list(/obj/item/stack/ore))
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured, stop_fleeing_at = 0.5, start_fleeing_below = 0.2)
 	if(ridable_component)
@@ -65,6 +66,21 @@
 		on_eat_change = 200,\
 		happiness_callback = CALLBACK(src, PROC_REF(happiness_change))
 	)
+
+/mob/living/basic/mining/raptor/proc/pre_attack(mob/living/puncher, atom/target)
+	SIGNAL_HANDLER
+
+	if(!istype(target, /obj/structure/ore_container/food_trough/raptor_trough))
+		return
+
+	var/obj/ore_food = locate(/obj/item/stack/ore) in target
+
+	if(isnull(ore_food))
+		balloon_alert(src, "no food!")
+	else
+		melee_attack(ore_food)
+	return COMPONENT_HOSTILE_NO_ATTACK
+
 
 /mob/living/basic/mining/raptor/proc/happiness_change(percent_value)
 	var/attack_boost = ROUND(initial(melee_damage_lower) * percent_value * HAPPINESS_BOOST_DAMPENER, 1)

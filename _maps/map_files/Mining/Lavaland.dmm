@@ -5773,6 +5773,13 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/eva)
+"Jr" = (
+/obj/structure/table/wood,
+/obj/item/raptor_dex,
+/obj/item/raptor_dex,
+/obj/item/raptor_dex,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "Jt" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -50642,7 +50649,7 @@ jl
 ny
 ny
 mH
-pU
+Jr
 pU
 jl
 ny

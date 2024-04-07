@@ -69,6 +69,8 @@ GLOBAL_LIST_INIT(raptor_growth_paths, list(
 #define BB_INJURED_RAPTOR "injured_raptor"
 ///the raptor we will bully
 #define BB_RAPTOR_VICTIM "raptor_victim"
+///the cooldown for next time we eat
+#define BB_RAPTOR_EAT_COOLDOWN "raptor_eat_cooldown"
 
 GLOBAL_LIST_INIT(raptor_inherit_traits, list(
 	BB_RAPTOR_RUTHELESS = "Ruthless",

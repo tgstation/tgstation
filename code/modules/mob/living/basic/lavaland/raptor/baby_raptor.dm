@@ -8,6 +8,7 @@
 	melee_damage_upper = 5
 	can_breed = FALSE
 	move_resist = MOVE_RESIST_DEFAULT
+	ai_controller = /datum/ai_controller/basic_controller/baby_raptor
 	ridable_component = null
 	dex_description = "A cute baby raptor, Having it near a parent or a birds-nest could encourage it to grow faster, \
 		grooming it and feeding it could also ensure that it grows up quicker!"
@@ -52,25 +53,37 @@
 
 /mob/living/basic/mining/raptor/baby_raptor/black
 	icon_state = "baby_black"
+	icon_living = "baby_black"
+	icon_dead = "baby_black_dead"
 	growth_path = /mob/living/basic/mining/raptor/black
 	roll_rate = 10
 
 /mob/living/basic/mining/raptor/baby_raptor/red
 	icon_state = "baby_red"
+	icon_living = "baby_red"
+	icon_dead = "baby_red_dead"
 	growth_path = /mob/living/basic/mining/raptor/red
 
 /mob/living/basic/mining/raptor/baby_raptor/purple
 	icon_state = "baby_purple"
+	icon_living = "baby_purple"
+	icon_dead = "baby_purple_dead"
 	growth_path = /mob/living/basic/mining/raptor/purple
 
 /mob/living/basic/mining/raptor/baby_raptor/white
 	icon_state = "baby_white"
+	icon_living = "baby_white"
+	icon_dead = "baby_white_dead"
 	growth_path = /mob/living/basic/mining/raptor/white
 
 /mob/living/basic/mining/raptor/baby_raptor/yellow
 	icon_state = "baby_yellow"
+	icon_living = "baby_yellow"
+	icon_dead = "baby_yellow_dead"
 	growth_path = /mob/living/basic/mining/raptor/yellow
 
 /mob/living/basic/mining/raptor/baby_raptor/green
 	icon_state = "baby_green"
+	icon_living = "baby_green"
+	icon_dead = "baby_green_dead"
 	growth_path = /mob/living/basic/mining/raptor/green
