@@ -1,3 +1,5 @@
+#define HAPPINESS_BOOST_DAMPENER 0.3
+
 /mob/living/basic/mining/raptor
 	name = "raptor"
 	desc = "A trusty powerful stead. Taming it might prove difficult..."
@@ -33,6 +35,8 @@
 	var/raptor_color
 	///the description that appears in the dex
 	var/dex_description
+	///path of our child
+	var/child_path
 
 /mob/living/basic/mining/raptor/Initialize(mapload)
 	. = ..()
@@ -40,7 +44,6 @@
 	inherit_properties()
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured, stop_fleeing_at = 0.5, start_fleeing_below = 0.2)
-	AddComponent(/datum/component/happiness)
 	if(ridable_component)
 		AddElement(/datum/element/ridable, ridable_component)
 	if(can_breed)
@@ -51,6 +54,23 @@
 			post_birth = CALLBACK(src, PROC_REF(egg_inherit)),\
 			breed_timer = 3 MINUTES,\
 		)
+	add_happiness_component()
+
+
+/mob/living/basic/mining/raptor/proc/add_happiness_component()
+	AddComponent(\
+		/datum/component/happiness,\
+		on_petted_change = 50,\
+		on_groom_change = 50,\
+		on_eat_change = 200,\
+		happiness_callback = CALLBACK(src, PROC_REF(happiness_change))
+	)
+
+/mob/living/basic/mining/raptor/proc/happiness_change(percent_value)
+	var/attack_boost = ROUND(initial(melee_damage_lower) * percent_value * HAPPINESS_BOOST_DAMPENER, 1)
+	melee_damage_lower = initial(melee_damage_lower) + attack_boost
+	melee_damage_upper = melee_damage_lower + 5
+
 
 ///pass down our inheritance to the egg
 /mob/living/basic/mining/raptor/proc/egg_inherit(obj/item/food/egg/raptor_egg/baby_egg, mob/living/basic/mining/raptor/partner)
@@ -84,6 +104,7 @@
 	raptor_color = RAPTOR_RED
 	dex_description = "A resilient breed of raptors, battle-tested and bred for the purpose of humbling its foes in combat, \
 		This breed demonstrates higher combat capabilities than its peers and oozes rutheless aggression."
+	child_path = /mob/living/basic/mining/raptor/baby_raptor/red
 
 /mob/living/basic/mining/raptor/purple
 	name = "purple raptor"
@@ -92,6 +113,7 @@
 	icon_dead = "raptor_purple_dead"
 	raptor_color = RAPTOR_PURPLE
 	dex_description = "A dependable mount, bred for the purpose of long distance pilgrimages. This breed is also able to store its rider's possessions."
+	child_path = /mob/living/basic/mining/raptor/baby_raptor/purple
 
 /mob/living/basic/mining/raptor/purple/Initialize(mapload)
 	. = ..()
@@ -111,6 +133,7 @@
 	raptor_color = RAPTOR_GREEN
 	dex_description = "A tough breed of raptor, made to withstand the harshest of punishment and to laugh in the face of pain, \
 		This breed is able to withstand more beating than its peers."
+	child_path = /mob/living/basic/mining/raptor/baby_raptor/green
 
 /mob/living/basic/mining/raptor/green/Initialize(mapload)
 	. = ..()
@@ -123,6 +146,7 @@
 	icon_dead = "raptor_white_dead"
 	raptor_color = RAPTOR_WHITE
 	dex_description = "A loving sort, it cares for it peers and rushes to their aid with reckless abandon. It is able to heal any raptors' ailments."
+	child_path = /mob/living/basic/mining/raptor/baby_raptor/white
 
 /mob/living/basic/mining/raptor/white/Initialize(mapload)
 	. = ..()
@@ -147,6 +171,7 @@
 	melee_damage_upper = 33
 	raptor_color = RAPTOR_BLACK
 	dex_description = "An ultra rare breed. Due to its sparse nature, not much is known about this sort. However it is said to possess many of its peers' abilities."
+	child_path = /mob/living/basic/mining/raptor/baby_raptor/black
 
 /mob/living/basic/mining/raptor/yellow
 	name = "yellow raptor"
@@ -157,6 +182,7 @@
 	speed = 1
 	raptor_color = RAPTOR_YELLOW
 	dex_description = "This breed possesses greasy fast speed, DEMON speed, making light work of long pilgrimages. It's said that a thunderclap could be heard when this breed reaches its maximum speed."
+	child_path = /mob/living/basic/mining/raptor/baby_raptor/yellow
 
 /obj/item/food/egg/raptor_egg
 	icon = 'icons/mob/simple/lavaland/raptor.dmi'
@@ -166,7 +192,7 @@
 
 /obj/item/food/egg/raptor_egg/proc/determine_growth_path(mob/living/basic/mining/raptor/dad, mob/living/basic/mining/raptor/mom)
 	if(dad.type == mom.type)
-		add_growth_component(dad.type)
+		add_growth_component(dad.child_path)
 		return
 	var/dad_color = dad.raptor_color
 	var/mom_color = mom.raptor_color
@@ -246,3 +272,4 @@
     insert_on_attack = FALSE
 	
 #undef RANDOM_INHERIT_AMOUNT
+#undef HAPPINESS_BOOST_DAMPENER

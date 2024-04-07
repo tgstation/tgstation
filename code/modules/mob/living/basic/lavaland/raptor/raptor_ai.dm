@@ -48,6 +48,7 @@
     if(!controller.blackboard[BB_BASIC_MOB_HEALER])
         return
     return ..()
+
 /datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/raptor
     target_key = BB_BASIC_MOB_FLEE_TARGET
 
@@ -82,7 +83,7 @@
 /datum/ai_planning_subtree/find_and_hunt_target/raptor_start_trouble/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
     if(controller.blackboard[BB_BASIC_MOB_HEALER] || !controller.blackboard[BB_RAPTOR_TROUBLE_MAKER])
         return
-    if(world.time > controller.blackboard[BB_RAPTOR_TROUBLE_COOLDOWN])
+    if(world.time < controller.blackboard[BB_RAPTOR_TROUBLE_COOLDOWN])
         return
     return ..()
 

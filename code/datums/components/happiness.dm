@@ -120,7 +120,7 @@
 	var/check_percentage_in_list = round(happiness_percentage * 100, 1)
 	if(check_percentage_in_list in callback_percentages)
 		SEND_SIGNAL(parent, COMSIG_MOB_HAPPINESS_CHANGE, happiness_percentage)
-		happiness_callback?.Invoke()
+		happiness_callback?.Invoke(happiness_percentage)
 
 	if(happiness_level <= 0)
 		return PROCESS_KILL
