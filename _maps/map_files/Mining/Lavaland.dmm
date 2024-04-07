@@ -1376,6 +1376,11 @@
 	dir = 1
 	},
 /area/mine/hydroponics)
+"if" = (
+/obj/structure/table/wood,
+/obj/item/raptor_dex,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "ii" = (
 /obj/effect/turf_decal/sand/plating/volcanic,
 /obj/structure/marker_beacon/yellow,
@@ -1469,6 +1474,10 @@
 	},
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
+"iK" = (
+/obj/effect/spawner/random/lavaland_mob/raptor,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "iN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1533,12 +1542,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /turf/open/floor/plating,
 /area/mine/maintenance/public/north)
-"jl" = (
-/obj/structure/railing/wooden_fence{
-	dir = 9
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "jm" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Showers"
@@ -1862,6 +1865,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/mine/production)
+"lc" = (
+/obj/structure/railing/wooden_fence{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "ld" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/tile/brown/fourcorners,
@@ -1974,12 +1983,6 @@
 	dir = 4
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"lA" = (
-/obj/structure/railing/wooden_fence{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lC" = (
 /obj/structure/stone_tile/block/cracked{
@@ -2184,6 +2187,12 @@
 	dir = 1
 	},
 /area/mine/lounge)
+"mo" = (
+/obj/structure/railing/wooden_fence{
+	dir = 5
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "mq" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -2277,12 +2286,6 @@
 	dir = 1
 	},
 /area/mine/laborcamp/security)
-"mH" = (
-/obj/structure/railing/wooden_fence{
-	dir = 10
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "mJ" = (
 /obj/docking_port/stationary{
 	dwidth = 2;
@@ -2541,12 +2544,6 @@
 /obj/machinery/mining_weather_monitor/directional/south,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/security)
-"ny" = (
-/obj/structure/railing/wooden_fence{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "nA" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/ore_box,
@@ -2767,6 +2764,12 @@
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
+"oR" = (
+/obj/structure/railing/wooden_fence{
+	dir = 9
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "oS" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "Mining External Airlock"
@@ -2825,12 +2828,6 @@
 /obj/effect/spawner/random/trash/hobo_squat,
 /turf/open/floor/plating,
 /area/mine/maintenance/public/south)
-"pi" = (
-/obj/structure/railing/wooden_fence{
-	dir = 5
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "pm" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
@@ -3502,10 +3499,6 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
-"tA" = (
-/obj/structure/railing/wooden_fence,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "tB" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
@@ -4513,6 +4506,12 @@
 /obj/structure/cable,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"zY" = (
+/obj/structure/railing/wooden_fence{
+	dir = 10
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "Ae" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4657,10 +4656,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp)
-"Bz" = (
-/obj/structure/ore_container/food_trough/raptor_trough,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "BA" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -5349,10 +5344,6 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
 /area/mine/lounge)
-"GJ" = (
-/obj/effect/spawner/random/lavaland_mob/raptor,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "GL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -5503,6 +5494,10 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance/service/comms)
+"HL" = (
+/obj/structure/ore_container/food_trough/raptor_trough,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "HN" = (
 /obj/structure/stone_tile/cracked{
 	dir = 8
@@ -5773,13 +5768,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/eva)
-"Jr" = (
-/obj/structure/table/wood,
-/obj/item/raptor_dex,
-/obj/item/raptor_dex,
-/obj/item/raptor_dex,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "Jt" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -5795,6 +5783,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/mechbay)
+"Jv" = (
+/obj/structure/railing/wooden_fence,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "Jw" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -5935,6 +5927,12 @@
 	dir = 4
 	},
 /obj/structure/stone_tile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"JX" = (
+/obj/structure/railing/wooden_fence{
+	dir = 1
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "JZ" = (
@@ -6763,6 +6761,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white/textured_large,
 /area/mine/cafeteria)
+"OY" = (
+/obj/structure/railing/wooden_fence{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "OZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -7209,6 +7213,12 @@
 /obj/structure/lattice/catwalk,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"RM" = (
+/obj/structure/railing/wooden_fence{
+	dir = 6
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "RV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -7651,12 +7661,6 @@
 	},
 /turf/open/floor/iron/checker,
 /area/mine/laborcamp)
-"UL" = (
-/obj/structure/railing/wooden_fence{
-	dir = 6
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "UN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -8356,12 +8360,6 @@
 /area/mine/maintenance/labor)
 "YM" = (
 /obj/structure/barricade/wooden,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"YN" = (
-/obj/structure/railing/wooden_fence{
-	dir = 4
-	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "YR" = (
@@ -49121,15 +49119,15 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
 pU
 pU
-aj
-aj
-aj
-aj
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 aj
 aj
 "}
@@ -49375,19 +49373,19 @@ pU
 pU
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+oR
+OY
+OY
+OY
+zY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 aj
 "}
 (160,1,1) = {"
@@ -49626,25 +49624,25 @@ aj
 pU
 aj
 aj
+aj
+aj
+aj
+aj
+aj
+aj
+JX
 pU
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
 pU
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+pU
+pU
+pU
+pU
+oR
+OY
+OY
+OY
+zY
+pU
 aj
 "}
 (161,1,1) = {"
@@ -49882,26 +49880,26 @@ aj
 aj
 aj
 aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+JX
 pU
 pU
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+iK
 pU
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+pU
+pU
+JX
+HL
+pU
+pU
+Jv
+pU
 aj
 "}
 (162,1,1) = {"
@@ -50136,9 +50134,6 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
 pU
 aj
 aj
@@ -50149,17 +50144,20 @@ aj
 aj
 aj
 aj
+JX
 pU
 pU
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+pU
+pU
+pU
+pU
+JX
+pU
+pU
+pU
+Jv
+pU
+pU
 "}
 (163,1,1) = {"
 aa
@@ -50392,8 +50390,8 @@ aj
 aj
 aj
 aj
-aj
-aj
+pU
+pU
 aj
 aj
 aj
@@ -50403,20 +50401,20 @@ aj
 pU
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+JX
+pU
+HL
+pU
+pU
+pU
+pU
+mo
+pU
+pU
+pU
+RM
+pU
+pU
 "}
 (164,1,1) = {"
 aa
@@ -50645,35 +50643,35 @@ ai
 ai
 pU
 pU
-jl
-ny
-ny
-mH
-Jr
-pU
-jl
-ny
-mH
-aj
-aj
-aj
 pU
 pU
 aj
 aj
+pU
 aj
+aj
+aj
+pU
 aj
 aj
 aj
 pU
 pU
 aj
-aj
-aj
-aj
-aj
-aj
-aj
+mo
+lc
+lc
+lc
+RM
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 "}
 (165,1,1) = {"
 aa
@@ -50902,35 +50900,35 @@ ai
 ai
 ai
 pU
-lA
-pU
-GJ
-pU
-pU
-pU
-lA
-Bz
-tA
-aj
-aj
-pU
-pU
 pU
 pU
 pU
 aj
 aj
+aj
+aj
+pU
 pU
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+iK
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 "}
 (166,1,1) = {"
 aa
@@ -51159,21 +51157,6 @@ aj
 ai
 ai
 pU
-lA
-pU
-pU
-pU
-pU
-pU
-lA
-pU
-tA
-pU
-pU
-pU
-pU
-pU
-pU
 pU
 pU
 pU
@@ -51181,12 +51164,27 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+oR
+pU
+pU
+pU
+pU
+zY
+pU
+pU
+pU
+pU
+pU
+pU
 aj
 "}
 (167,1,1) = {"
@@ -51416,33 +51414,33 @@ aj
 aj
 aj
 pU
-lA
-Bz
-pU
-pU
-pU
-pU
-pi
-pU
-UL
-pU
-pU
-pU
-pU
-pU
 pU
 pU
 pU
 pU
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+JX
+pU
+pU
+pU
+pU
+Jv
+if
+pU
+pU
+pU
+pU
 aj
 aj
 "}
@@ -51673,33 +51671,33 @@ aj
 aj
 aj
 aj
-pi
-YN
-YN
-UL
-pU
-pU
-pU
-pU
-pU
-pU
-pU
-pU
 pU
 pU
 pU
 pU
 pU
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+JX
+iK
+HL
+pU
+pU
+Jv
+if
+pU
+pU
+pU
+pU
 aj
 aj
 "}
@@ -51935,7 +51933,6 @@ pU
 pU
 pU
 pU
-GJ
 pU
 pU
 pU
@@ -51946,17 +51943,18 @@ pU
 pU
 pU
 pU
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+pU
+JX
+pU
+pU
+pU
+pU
+Jv
+if
+pU
+pU
+pU
+pU
 aj
 aj
 "}
@@ -52203,16 +52201,16 @@ pU
 pU
 pU
 pU
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+mo
+lc
+lc
+lc
+lc
+RM
+pU
+pU
+pU
+pU
 aj
 aj
 aj
@@ -52444,10 +52442,10 @@ ai
 ai
 ai
 pU
-jl
 pU
 pU
-mH
+pU
+pU
 pU
 pU
 pU
@@ -52464,8 +52462,8 @@ aj
 aj
 aj
 aj
-aj
-aj
+pU
+pU
 pU
 aj
 aj
@@ -52701,10 +52699,10 @@ pU
 ai
 ai
 pU
-lA
 pU
 pU
-tA
+pU
+pU
 pU
 pU
 pU
@@ -52958,10 +52956,10 @@ aj
 aj
 pU
 pU
-lA
-GJ
-Bz
-tA
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -53215,10 +53213,10 @@ aj
 aj
 aj
 aj
-pi
-YN
-YN
-UL
+pU
+pU
+pU
+pU
 pU
 pU
 pU

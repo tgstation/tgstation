@@ -42,6 +42,7 @@
 	. = ..()
 	inherited_stats = new
 	inherit_properties()
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	AddElement(/datum/element/basic_eating, food_types = list(/obj/item/stack/ore))
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured, stop_fleeing_at = 0.5, start_fleeing_below = 0.2)
@@ -199,6 +200,22 @@
 	raptor_color = RAPTOR_YELLOW
 	dex_description = "This breed possesses greasy fast speed, DEMON speed, making light work of long pilgrimages. It's said that a thunderclap could be heard when this breed reaches its maximum speed."
 	child_path = /mob/living/basic/mining/raptor/baby_raptor/yellow
+
+/mob/living/basic/mining/raptor/blue
+	name = "blue raptor"
+	icon_state = "raptor_blue"
+	icon_living = "raptor_blue"
+	icon_dead = "raptor_blue_dead"
+	raptor_color = RAPTOR_BLUE
+	dex_description = "Known to produce nutritous and equally delicious milk, which is also said to possess healing properties."
+	child_path = /mob/living/basic/mining/raptor/baby_raptor/blue
+
+/mob/living/basic/mining/raptor/blue/Initialize(madpload)
+	. = ..()
+	AddComponent(\
+		/datum/component/udder,\
+		udder_type = /obj/item/udder/raptor,\
+	)
 
 /obj/item/food/egg/raptor_egg
 	icon = 'icons/mob/simple/lavaland/raptor.dmi'

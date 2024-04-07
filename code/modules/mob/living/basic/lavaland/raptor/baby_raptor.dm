@@ -87,3 +87,9 @@
 	icon_living = "baby_green"
 	icon_dead = "baby_green_dead"
 	growth_path = /mob/living/basic/mining/raptor/green
+
+/mob/living/basic/mining/raptor/baby_raptor/blue
+	icon_state = "baby_blue"
+	icon_living = "baby_blue"
+	icon_dead = "baby_blue_dead"
+	growth_path = /mob/living/basic/mining/raptor/blue

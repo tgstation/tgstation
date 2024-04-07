@@ -124,8 +124,8 @@
 
 	if(happiness_level <= 0)
 		return PROCESS_KILL
-	
-	happiness_level--
+	var/modifier = living_parent.ai_controller?.blackboard[BB_BASIC_DEPRESSED] ? 2 : 1
+	happiness_level = max(0, happiness_level - modifier)
 
 /obj/effect/overlay/happiness_overlay
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

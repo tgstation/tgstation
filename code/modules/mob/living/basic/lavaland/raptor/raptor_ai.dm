@@ -56,7 +56,7 @@
 /datum/ai_behavior/find_hunt_target/injured_raptor
 
 /datum/ai_behavior/find_hunt_target/injured_raptor/valid_dinner(mob/living/source, mob/living/target, radius)
-    return (target.health < target.maxHealth)
+    return (source != target && target.health < target.maxHealth)
 
 /datum/ai_planning_subtree/find_and_hunt_target/heal_raptors/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
     if(!controller.blackboard[BB_BASIC_MOB_HEALER])
@@ -161,6 +161,7 @@
 
 /datum/ai_controller/basic_controller/baby_raptor
 	blackboard = list(
+        BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
         BB_FIND_MOM_TYPES = list(/mob/living/basic/mining/raptor),
 		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/mining/raptor/baby_raptor),
 		BB_MAX_CHILDREN = 5,
