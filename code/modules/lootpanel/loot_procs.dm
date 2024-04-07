@@ -17,12 +17,16 @@
 
 
 /// Grabs an object from the contents. Validates the object and the user
-/datum/lootpanel/proc/grab(mob/user, ref)
+/datum/lootpanel/proc/grab(mob/user, list/params)
+	var/ref = params["ref"]
+	if(isnull(ref))
+		return FALSE
+
 	var/turf/tile = search_turf_ref?.resolve()
 	if(isnull(tile))
 		return FALSE
 
-	if(!user.Adjacent(tile))
+	if(!user.TurfAdjacent(tile))
 		search_turf_ref = null
 		reset()
 		return FALSE
@@ -38,7 +42,13 @@
 	if(!locate(thing) in tile.contents ||!thing.Adjacent(user))
 		return FALSE
 
-	if(!user.put_in_active_hand(thing))
+	var/modifiers = ""
+	if(params["ctrl"])
+		modifiers += "ctrl=1;"
+	if(params["shift"])
+		modifiers += "shift=1;"
+
+	if(!user.ClickOn(thing, modifiers))
 		return FALSE
 
 	qdel(found_item)
@@ -73,7 +83,8 @@
 	var/list/found = list()
 
 	for(var/atom/thing as anything in slice)
-		if(QDELETED(thing) || QDELETED(user) || !thing.Adjacent(user))
+		if(QDELETED(thing) || !thing.Adjacent(user) || !can_see(user, thing, 2) || user.see_invisible < thing.invisibility)
+			total--
 			continue
 
 		var/ref = REF(thing)

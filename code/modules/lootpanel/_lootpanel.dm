@@ -64,8 +64,11 @@
 	if(isnull(tile))
 		return UI_CLOSE
 	
-	if(!user.Adjacent(tile))
+	if(!user.TurfAdjacent(tile))
 		return UI_CLOSE
+
+	if(user.incapacitated())
+		return UI_DISABLED
 
 	return UI_INTERACTIVE
 
@@ -77,7 +80,9 @@
 
 	switch(action)
 		if("grab")
-			return grab(user, params["ref"])
+			if(!grab(user, params))
+				return FALSE
+			return TRUE
 
 		if("refresh")
 			start_search()

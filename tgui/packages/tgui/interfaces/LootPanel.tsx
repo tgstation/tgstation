@@ -79,11 +79,21 @@ function SearchItem({ atom }: { atom?: Atom }) {
 
   const tooltip = atom ? capitalizeAll(atom.name) : 'Searching...';
 
+  function onClickHandler(event: React.MouseEvent<HTMLDivElement>) {
+    if (!atom) return;
+
+    act('grab', {
+      ctrl: event.ctrlKey,
+      ref: atom.ref,
+      shift: event.shiftKey,
+    });
+  }
+
   return (
     <Tooltip content={tooltip}>
       <Box
-        onClick={() => atom && act('grab', { ref: atom.ref })}
         height={3}
+        onClick={onClickHandler}
         style={{
           alignItems: 'center',
           background: 'black',

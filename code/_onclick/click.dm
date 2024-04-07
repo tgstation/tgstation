@@ -438,12 +438,6 @@
 		user.client.toggle_tag_datum(src)
 		return
 
-/// Use this instead of [/mob/proc/AltClickOn] where you only want turf content listing without additional atom alt-click interaction
-/atom/proc/AltClickNoInteract(mob/user, atom/zone)
-	var/turf/tile = get_turf(zone)
-	if(tile && user.TurfAdjacent(tile))
-		user.listed_turf = tile
-
 /mob/proc/TurfAdjacent(turf/tile)
 	return tile.Adjacent(src)
 
