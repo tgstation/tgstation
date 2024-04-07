@@ -199,3 +199,9 @@
 	name = "fly wings"
 	desc = "Fly as a fly."
 	sprite_accessory_override = /datum/sprite_accessory/wings/fly
+
+///slime wings, which relate to slimes.
+/obj/item/organ/external/wings/functional/slime
+	name = "slime wings"
+	desc = "How does something so squishy even fly?"
+	sprite_accessory_override = /datum/sprite_accessory/wings/slime

@@ -10,12 +10,13 @@
 		HAIR,FACEHAIR,
 		)
 	inherent_traits = list(
+		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_TOXINLOVER,
 		TRAIT_NOFIRE,
 		//TRAIT_ALWAYS_CLEAN,
 		TRAIT_EASYDISMEMBER,
-		TRAIT_NOBLOOD,
-		)
+		TRAIT_NOBLOOD
+	)
 
 	hair_color = "mutcolor"
 	hair_alpha = 150
@@ -33,6 +34,7 @@
 	//swimming_component = /datum/component/swimming/dissolve
 	toxic_food = NONE
 	disliked_food = NONE
+	wing_types = list(/obj/item/organ/external/wings/functional/slime)
 
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/oozeling,

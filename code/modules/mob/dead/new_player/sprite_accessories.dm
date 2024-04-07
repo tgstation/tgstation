@@ -2030,6 +2030,21 @@ MONKESTATION EDIT
 	center = TRUE
 	dimension_y = 32
 
+/datum/sprite_accessory/wings/slime
+	name = "Slime"
+	icon_state = "slime"
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+	locked = TRUE
+
+/datum/sprite_accessory/wings_open/slime
+	name = "Slime"
+	icon_state = "slime"
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+
 /datum/sprite_accessory/frills
 	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
 
