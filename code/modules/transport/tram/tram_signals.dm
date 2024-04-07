@@ -511,6 +511,7 @@
 	SStransport.sensors += src
 
 /obj/machinery/transport/guideway_sensor/post_machine_initialize()
+	. = ..()
 	pair_sensor()
 	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(wake_up))
 
