@@ -20,7 +20,7 @@ ADMIN_VERB(cmd_admin_robotize, R_FUN, "Make Cyborg", ADMIN_VERB_NO_DESCRIPTION, 
 	if(issilicon(target))
 		tgui_alert(user, "They are already a cyborg.")
 		return
-	log_admin("[key_name(user)] has robotized [M.key].")
+	log_admin("[key_name(user)] has robotized [target.key].")
 	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, Robotize))
 
 /client/proc/poll_type_to_del(search_string)

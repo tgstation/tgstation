@@ -5,9 +5,6 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 GLOBAL_PROTECT(admin_verbs_admin)
 /world/proc/AVerbsAdmin()
 	return list(
-// Client procs
-	/client/proc/centcom_podlauncher,/*Open a window to launch a Supplypod and configure it or it's contents*/
-	/client/proc/cmd_admin_check_contents, /*displays the contents of an instance*/
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
 	/client/proc/cmd_admin_create_centcom_report,
 	/client/proc/cmd_change_command_name,
@@ -71,7 +68,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/map_export,
 	/client/proc/map_template_load,
 	/client/proc/map_template_upload,
-	/client/proc/modify_goals,
 	/client/proc/open_colorblind_test,
 	/client/proc/open_lua_editor,
 	/client/proc/outfit_manager,

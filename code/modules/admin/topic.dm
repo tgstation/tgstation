@@ -724,17 +724,7 @@
 		our_mob.AIize(our_mob.client, move)
 
 	else if(href_list["makerobot"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/our_mob = locate(href_list["makerobot"])
-		if(!istype(our_mob))
-			return
-		if(iscyborg(our_mob))
-			to_chat(usr, "That's already a cyborg.", confidential = TRUE)
-			return
-
-		usr.client.cmd_admin_robotize(our_mob)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_admin_robotize, locate(href_list["makerobot"]))
 
 	else if(href_list["adminplayeropts"])
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_player_panel, locate(href_list["adminplayeropts"]))
