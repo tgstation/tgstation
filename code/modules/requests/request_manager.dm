@@ -163,9 +163,9 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 
 	switch(action)
 		if ("pp")
-			var/mob/M = request.owner?.mob
-			usr.client.holder.show_player_panel(M)
+			SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/show_player_panel, request.owner?.mob)
 			return TRUE
+
 		if ("vv")
 			var/mob/M = request.owner?.mob
 			usr.client.debug_variables(M)

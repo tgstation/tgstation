@@ -13,15 +13,15 @@ ADMIN_VERB(air_status, R_DEBUG, "Air Status In Location", "Gets the air status f
 	atmos_scan(user.mob, user_turf, silent = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Air Status In Location")
 
-/client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
-	set category = "Admin.Fun"
-	set name = "Make Cyborg"
-
+ADMIN_VERB(cmd_admin_robotize, R_FUN, "Make Cyborg", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr,"Wait until the game starts")
+		tgui_alert(user, "Wait until the game starts")
 		return
-	log_admin("[key_name(src)] has robotized [M.key].")
-	INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, Robotize))
+	if(issilicon(target))
+		tgui_alert(user, "They are already a cyborg.")
+		return
+	log_admin("[key_name(user)] has robotized [M.key].")
+	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, Robotize))
 
 /client/proc/poll_type_to_del(search_string)
 	var/list/types = get_fancy_list_of_atom_types()
@@ -492,23 +492,14 @@ ADMIN_VERB(cmd_debug_make_powernets, R_DEBUG|R_SERVER, "Make Powernets", "Regene
 ADMIN_VERB(cmd_admin_delete, R_DEBUG|R_SPAWN, "Delete", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/target as obj|mob|turf in world)
 	user.admin_delete(target)
 
-/client/proc/cmd_admin_check_contents(mob/living/M in GLOB.mob_list)
-	set category = "Debug"
-	set name = "Check Contents"
-
-	var/list/L = M.get_contents()
-	for(var/t in L)
-		to_chat(usr, "[t] [ADMIN_VV(t)] [ADMIN_TAG(t)]", confidential = TRUE)
+ADMIN_VERB(cmd_check_contents, R_ADMIN, "Check Contents", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/mob in world)
+	var/list/mob_contents = mob.get_contents()
+	for(var/content in mob_contents)
+		to_chat(user, "[content] [ADMIN_VV(content)] [ADMIN_TAG(content)]", confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Check Contents")
 
-/client/proc/modify_goals()
-	set category = "Debug"
-	set name = "Modify goals"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	holder.modify_goals()
+ADMIN_VERB(modify_goals, R_ADMIN, "Modify Goals", "Modify the station goals for the shift.", ADMIN_CATEGORY_DEBUG)
+	user.holder.modify_goals()
 
 /datum/admins/proc/modify_goals()
 	var/dat = ""

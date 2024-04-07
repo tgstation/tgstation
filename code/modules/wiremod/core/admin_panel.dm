@@ -63,9 +63,10 @@ ADMIN_VERB(view_all_circuits, R_ADMIN, "View All Circuits", "List all circuits i
 			usr.client?.debug_variables(circuit)
 		if ("open_circuit")
 			circuit.ui_interact(usr)
+
 		if ("open_player_panel")
 			var/datum/mind/inserter = circuit.inserter_mind?.resolve()
-			usr.client?.holder?.show_player_panel(inserter?.current)
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_player_panel, inserter?.current)
 
 	return TRUE
 
