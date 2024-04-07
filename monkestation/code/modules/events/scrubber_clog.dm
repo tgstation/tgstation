@@ -1,3 +1,6 @@
+/datum/round_event_control/scrubber_clog
+	shared_occurence_type = /datum/round_event_control/scrubber_clog
+
 /datum/round_event_control/scrubber_clog/flood //I have it here cause of the extra silly spaghetti code all of the scrubbers depend on being in here
 	name = "Scrubber Clog: Flood"
 	typepath = /datum/round_event/scrubber_clog/flood
