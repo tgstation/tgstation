@@ -44,6 +44,22 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	register_context()
 
+	if(new_dir)
+		setDir(new_dir)
+	if(new_id)
+		id = new_id
+	neighbors = list()
+	///Leaving onto conveyor detection won't work at this point, but that's alright since it's an optimization anyway
+	///Should be fine without it
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_EXITED = PROC_REF(conveyable_exit),
+		COMSIG_ATOM_ENTERED = PROC_REF(conveyable_enter),
+		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(conveyable_enter)
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+	update_move_direction()
+	LAZYADD(GLOB.conveyors_by_id[id], src)
+
 /obj/machinery/conveyor/examine(mob/user)
 	. = ..()
 	if(inverted)
@@ -95,25 +111,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/auto/inverted
 	icon_state = "conveyor_map_inverted"
 	flipped = TRUE
-
-// create a conveyor
-/obj/machinery/conveyor/Initialize(mapload, new_dir, new_id)
-	..()
-	if(new_dir)
-		setDir(new_dir)
-	if(new_id)
-		id = new_id
-	neighbors = list()
-	///Leaving onto conveyor detection won't work at this point, but that's alright since it's an optimization anyway
-	///Should be fine without it
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXITED = PROC_REF(conveyable_exit),
-		COMSIG_ATOM_ENTERED = PROC_REF(conveyable_enter),
-		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(conveyable_enter)
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-	update_move_direction()
-	LAZYADD(GLOB.conveyors_by_id[id], src)
 
 /obj/machinery/conveyor/post_machine_initialize()
 	. = ..()
