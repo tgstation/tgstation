@@ -112,7 +112,7 @@
 		L.visible_message(span_revennotice("A strange purple glow wraps itself around [L] as [L.p_they()] suddenly fall[L.p_s()] unconscious."),
 			span_revendanger("[desc]"))
 		// Don't let them sit suround unconscious forever
-		addtimer(CALLBACK(src, PROC_REF(sleeper_dreams), L), 100)
+		addtimer(CALLBACK(src, PROC_REF(sleeper_dreams), L), 10 SECONDS)
 
 	// Existing sleepers
 	for(var/i in found)
