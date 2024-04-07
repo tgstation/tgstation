@@ -122,15 +122,12 @@ ADMIN_VERB(delay_round_end, R_SERVER, "Delay Round End", "Prevent the server fro
 	message_admins("[key_name_admin(user)] delayed the round end for reason: [SSticker.admin_delay_notice]")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Delay Round End", "Reason: [delay_reason]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-/datum/admins/proc/toggleenter()
-	set category = "Server"
-	set desc = "People can't enter"
-	set name = "Toggle Entering"
+ADMIN_VERB(toggle_enter, R_SERVER, "Toggle Entering", "Toggle the ability to enter the game.", ADMIN_CATEGORY_SERVER)
 	if(!SSlag_switch.initialized)
 		return
 	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, !SSlag_switch.measures[DISABLE_NON_OBSJOBS])
-	log_admin("[key_name(usr)] toggled new player game entering. Lag Switch at index ([DISABLE_NON_OBSJOBS])")
-	message_admins("[key_name_admin(usr)] toggled new player game entering [SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "OFF" : "ON"].")
+	log_admin("[key_name(user)] toggled new player game entering. Lag Switch at index ([DISABLE_NON_OBSJOBS])")
+	message_admins("[key_name_admin(user)] toggled new player game entering [SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "OFF" : "ON"].")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Entering", "[!SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 ADMIN_VERB(toggle_ai, R_SERVER, "Toggle AI", "Toggle the ability to choose AI jobs.", ADMIN_CATEGORY_SERVER)
@@ -199,39 +196,34 @@ ADMIN_VERB(delay, R_SERVER, "Delay Pre-Game", "Delay the game start.", ADMIN_CAT
 		log_admin("[key_name(user)] set the pre-game delay to [DisplayTimeText(newtime)].")
 	BLACKBOX_LOG_ADMIN_VERB("Delay Game Start")
 
-/datum/admins/proc/set_admin_notice()
-	set category = "Server"
-	set name = "Set Admin Notice"
-	set desc ="Set an announcement that appears to everyone who joins the server. Only lasts this round"
-	if(!check_rights(0))
-		return
-
-	var/new_admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",GLOB.admin_notice) as message|null
+ADMIN_VERB(set_admin_notice, R_SERVER, "Set Admin Notice", "Set an announcement that appears to everyone who joins the server. Only lasts this round.", ADMIN_CATEGORY_SERVER)
+	var/new_admin_notice = input(
+		user,
+		"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):",
+		"Set Notice",
+		GLOB.admin_notice,
+	) as message|null
 	if(new_admin_notice == null)
 		return
 	if(new_admin_notice == GLOB.admin_notice)
 		return
 	if(new_admin_notice == "")
-		message_admins("[key_name(usr)] removed the admin notice.")
-		log_admin("[key_name(usr)] removed the admin notice:\n[GLOB.admin_notice]")
+		message_admins("[key_name(user)] removed the admin notice.")
+		log_admin("[key_name(user)] removed the admin notice:\n[GLOB.admin_notice]")
 	else
-		message_admins("[key_name(usr)] set the admin notice.")
-		log_admin("[key_name(usr)] set the admin notice:\n[new_admin_notice]")
+		message_admins("[key_name(user)] set the admin notice.")
+		log_admin("[key_name(user)] set the admin notice:\n[new_admin_notice]")
 		to_chat(world, span_adminnotice("<b>Admin Notice:</b>\n \t [new_admin_notice]"), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Set Admin Notice")
 	GLOB.admin_notice = new_admin_notice
-	return
 
-/datum/admins/proc/toggleguests()
-	set category = "Server"
-	set desc = "Guests can't enter"
-	set name = "Toggle guests"
+ADMIN_VERB(toggle_guests, R_SERVER, "Toggle Guests", "Toggle the ability for guests to enter the game.", ADMIN_CATEGORY_SERVER)
 	var/new_guest_ban = !CONFIG_GET(flag/guest_ban)
 	CONFIG_SET(flag/guest_ban, new_guest_ban)
 	if (new_guest_ban)
 		to_chat(world, "<B>Guests may no longer enter the game.</B>", confidential = TRUE)
 	else
 		to_chat(world, "<B>Guests may now enter the game.</B>", confidential = TRUE)
-	log_admin("[key_name(usr)] toggled guests game entering [!new_guest_ban ? "" : "dis"]allowed.")
-	message_admins(span_adminnotice("[key_name_admin(usr)] toggled guests game entering [!new_guest_ban ? "" : "dis"]allowed."))
+	log_admin("[key_name(user)] toggled guests game entering [!new_guest_ban ? "" : "dis"]allowed.")
+	message_admins(span_adminnotice("[key_name_admin(user)] toggled guests game entering [!new_guest_ban ? "" : "dis"]allowed."))
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Guests", "[!new_guest_ban ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!

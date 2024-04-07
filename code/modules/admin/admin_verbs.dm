@@ -5,18 +5,6 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 GLOBAL_PROTECT(admin_verbs_admin)
 /world/proc/AVerbsAdmin()
 	return list(
-	/datum/admins/proc/open_borgopanel,
-	/datum/admins/proc/open_shuttlepanel, /* Opens shuttle manipulator UI */
-	/datum/admins/proc/paintings_manager,
-	/datum/admins/proc/set_admin_notice, /*announcement all clients see when joining the server.*/
-	/datum/admins/proc/show_player_panel, /*shows an interface for individual players, with various links (links require additional flags*/
-	/datum/admins/proc/toggleenter, /*toggles whether people can join the current game*/
-	/datum/admins/proc/toggleguests, /*toggles whether guests can join the current game*/
-	/datum/admins/proc/trophy_manager,
-	/datum/admins/proc/view_all_circuits,
-	/datum/verbs/menu/Admin/verb/playerpanel, /* It isn't /datum/admin but it fits no less */
-	/datum/admins/proc/change_shuttle_events, //allows us to change the shuttle events
-	/datum/admins/proc/reset_tram, //tram related admin actions
 // Client procs
 	/client/proc/centcom_podlauncher,/*Open a window to launch a Supplypod and configure it or it's contents*/
 	/client/proc/cmd_admin_check_contents, /*displays the contents of an instance*/
