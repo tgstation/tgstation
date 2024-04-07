@@ -1293,7 +1293,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/mapping_helpers/requests_console/LateInitialize(mapload)
+/obj/effect/mapping_helpers/requests_console/LateInitialize()
 	var/obj/machinery/airalarm/target = locate(/obj/machinery/requests_console) in loc
 	if(isnull(target))
 		var/area/target_area = get_area(target)
