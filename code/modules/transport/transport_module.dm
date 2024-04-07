@@ -96,7 +96,6 @@
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/transport/linear/LateInitialize()
-	. = ..()
 	//after everything is initialized the transport controller can order everything
 	transport_controller_datum.order_platforms_by_z_level()
 

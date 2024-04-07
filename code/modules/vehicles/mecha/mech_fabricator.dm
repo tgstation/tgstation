@@ -55,7 +55,7 @@
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	return ..()
 
-/obj/machinery/mecha_part_fabricator/LateInitialize()
+/obj/machinery/mecha_part_fabricator/post_machine_initialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)

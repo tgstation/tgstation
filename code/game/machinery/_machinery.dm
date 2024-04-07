@@ -184,12 +184,8 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/LateInitialize()
-	. = ..()
-	power_change()
-	if(use_power == NO_POWER_USE)
-		return
-	update_current_power_usage()
-	setup_area_power_relationship()
+	SHOULD_NOT_OVERRIDE(TRUE)
+	post_machine_initialize()
 
 /obj/machinery/Destroy(force)
 	SSmachines.unregister_machine(src)
@@ -199,6 +195,14 @@
 	unset_static_power()
 
 	return ..()
+
+/obj/machinery/proc/post_machine_initialize()
+	SHOULD_CALL_PARENT(TRUE)
+	power_change()
+	if(use_power == NO_POWER_USE)
+		return
+	update_current_power_usage()
+	setup_area_power_relationship()
 
 /**
  * proc to call when the machine starts to require power after a duration of not requiring power

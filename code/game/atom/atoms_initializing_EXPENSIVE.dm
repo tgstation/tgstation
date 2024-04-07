@@ -162,3 +162,5 @@
  */
 /atom/proc/LateInitialize()
 	set waitfor = FALSE
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("[src] ([type]) called LateInitialize but has nothing on it!")
