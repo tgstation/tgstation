@@ -52,9 +52,9 @@ GLOBAL_LIST_INIT(raptor_growth_paths, list(
 ))
 
 ///this mob will go around attacking helpless weaker animals
-#define	BB_RAPTOR_RUTHELESS "raptor_ruthless"
+#define BB_RAPTOR_RUTHELESS "raptor_ruthless"
 ///this mob will care for its young
-#define	BB_RAPTOR_MOTHERLY "raptor_motherly"
+#define BB_RAPTOR_MOTHERLY "raptor_motherly"
 ///this mob will be playful around their owners
 #define BB_RAPTOR_PLAYFUL "raptor_playful"
 ///this mob will flee combat when it feels threatened
@@ -71,6 +71,8 @@ GLOBAL_LIST_INIT(raptor_growth_paths, list(
 #define BB_RAPTOR_VICTIM "raptor_victim"
 ///the cooldown for next time we eat
 #define BB_RAPTOR_EAT_COOLDOWN "raptor_eat_cooldown"
+///our trough target
+#define BB_RAPTOR_TROUGH_TARGET "raptor_trough_target"
 
 GLOBAL_LIST_INIT(raptor_inherit_traits, list(
 	BB_RAPTOR_RUTHELESS = "Ruthless",

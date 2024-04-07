@@ -64,7 +64,7 @@
 		on_petted_change = 50,\
 		on_groom_change = 50,\
 		on_eat_change = 200,\
-		happiness_callback = CALLBACK(src, PROC_REF(happiness_change))
+		happiness_callback = CALLBACK(src, PROC_REF(happiness_change)),\
 	)
 
 /mob/living/basic/mining/raptor/proc/pre_attack(mob/living/puncher, atom/target)
@@ -83,7 +83,7 @@
 
 
 /mob/living/basic/mining/raptor/proc/happiness_change(percent_value)
-	var/attack_boost = ROUND(initial(melee_damage_lower) * percent_value * HAPPINESS_BOOST_DAMPENER, 1)
+	var/attack_boost = round(initial(melee_damage_lower) * percent_value * HAPPINESS_BOOST_DAMPENER, 1)
 	melee_damage_lower = initial(melee_damage_lower) + attack_boost
 	melee_damage_upper = melee_damage_lower + 5
 

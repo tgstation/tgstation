@@ -33,7 +33,7 @@
 		optional_grow_behavior = CALLBACK(src, PROC_REF(ready_to_grow)),\
 	)
 
-/mob/living/basic/mining/raptor/add_happiness_component()
+/mob/living/basic/mining/raptor/baby_raptor/add_happiness_component()
 	AddComponent(\
 		/datum/component/happiness,\
 		on_petted_change = 100,\

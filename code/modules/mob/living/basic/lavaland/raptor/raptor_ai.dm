@@ -33,8 +33,8 @@
 	RegisterSignal(new_pawn, COMSIG_MOB_ATE, PROC_REF(post_eat))
 
 /datum/ai_controller/basic_controller/raptor/proc/post_eat()
-    controller.clear_blackboard_key(BB_RAPTOR_TROUGH_TARGET)
-    controller.blackboard[BB_RAPTOR_EAT_COOLDOWN] = world.time + NEXT_EAT_COOLDOWN
+    clear_blackboard_key(BB_RAPTOR_TROUGH_TARGET)
+    blackboard[BB_RAPTOR_EAT_COOLDOWN] = world.time + NEXT_EAT_COOLDOWN
 
 /datum/targeting_strategy/basic/raptor
 
@@ -132,11 +132,11 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/raptor_trough
     target_key = BB_RAPTOR_TROUGH_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target
-	finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_trough
-	hunt_targets = list(/obj/structure/ore_container/food_trough/raptor_trough)
-	hunt_chance = 80
-	hunt_range = 9
+    hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target
+    finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_trough
+    hunt_targets = list(/obj/structure/ore_container/food_trough/raptor_trough)
+    hunt_chance = 80
+    hunt_range = 9
 
 /datum/ai_planning_subtree/find_and_hunt_target/raptor_trough/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
     if(world.time < controller.blackboard[BB_RAPTOR_EAT_COOLDOWN])

@@ -19,6 +19,7 @@
 ///can this mob heal?
 #define BB_BASIC_MOB_HEALER "BB_basic_mob_healer"
 
+
 /// Store a single or list of emotes at this key
 #define BB_EMOTE_KEY "BB_emotes"
 /// Chance to perform an emote per second
