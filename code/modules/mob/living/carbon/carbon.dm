@@ -1462,3 +1462,13 @@
 	if (!IS_ORGANIC_LIMB(target_part) || (target_part.bodypart_flags & BODYPART_PSEUDOPART))
 		return FALSE
 	return ..()
+
+/mob/living/carbon/ominous_nosebleed()
+	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
+	if(isnull(head))
+		return ..()
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
+		to_chat(src, span_notice("You get a headache."))
+		return
+	head.adjustBleedStacks(5)
+	visible_message(span_notice("[src] gets a nosebleed."), span_warning("You get a nosebleed."))
