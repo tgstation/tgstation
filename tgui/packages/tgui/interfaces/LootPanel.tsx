@@ -19,6 +19,7 @@ import { Window } from '../layouts';
 type Data = {
   contents: Atom[];
   searching: BooleanLike;
+  total: number;
 };
 
 type Atom = {
@@ -29,7 +30,7 @@ type Atom = {
 
 export function LootPanel(props) {
   const { act, data } = useBackend<Data>();
-  const { contents = [], searching } = data;
+  const { contents = [], searching, total = 0 } = data;
 
   const [searchText, setSearchText] = useState('');
 
@@ -38,7 +39,7 @@ export function LootPanel(props) {
   );
 
   return (
-    <Window height={250} width={190} title="Contents">
+    <Window height={250} width={190} title={`Contents: ${total - 1}`}>
       <Window.Content
         onKeyDown={(event) => {
           if (event.key === KEY.Enter && filteredContents.length > 0) {

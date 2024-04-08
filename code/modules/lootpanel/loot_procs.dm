@@ -25,6 +25,12 @@
 	return found
 
 
+/// Helper function for removing a search object
+/datum/lootpanel/proc/delete_search_object(datum/search_object/item)
+	contents -= item.string_ref
+	qdel(item)
+
+
 /// UI helper for converting the associative list to a list of lists
 /datum/lootpanel/proc/get_contents()
 	var/list/items = list()
@@ -55,8 +61,7 @@
 		return FALSE
 
 	if(!user.TurfAdjacent(tile))
-		search_turf_ref = null
-		reset()
+		stop_search()
 		return FALSE
 
 	var/datum/search_object/found_item = contents[ref]
@@ -79,8 +84,7 @@
 	if(!user.ClickOn(thing, modifiers))
 		return FALSE
 
-	qdel(found_item)
-	contents -= ref
+	delete_search_object(found_item)
 
 	return TRUE
 
@@ -90,35 +94,46 @@
 	search_turf_ref = WEAKREF(tile)
 	src.user = user
 
-	contents += convert_tile_contents(tile.contents)
+	RegisterSignal(tile, COMSIG_TURF_CHANGE, PROC_REF(on_tile_change))
 	start_search()
 	ui_interact(user)
 
 
-/// Helper for clearing the panel cache. "what the hell is going on" proc
-/datum/lootpanel/proc/reset()
-	QDEL_LIST(contents)
-	searching = FALSE
-	STOP_PROCESSING(SSlooting, src)
-
-
-/// Restarts the search process. Used by the UI action
-/datum/lootpanel/proc/restart_search()
-	QDEL_LIST(contents)
-
-	if(searching)
-		return FALSE
+/// Helper for starting the search process. Dumps contents, validates tile, starts image processing
+/datum/lootpanel/proc/start_search()
+	stop_search()
 
 	var/turf/tile = search_turf_ref?.resolve()
-	if(isnull(tile) || !user.TurfAdjacent(tile))
+	if(QDELETED(tile) || !user.TurfAdjacent(tile))
 		return FALSE
 
+	var/datum/search_object/source = new(user, tile)
+	contents[source.string_ref] = source
 	contents += convert_tile_contents(tile.contents)
-	start_search()
+
+	searching = TRUE
+	START_PROCESSING(SSlooting, src)
 	return TRUE
 
 
-/// Helper for starting the search process
-/datum/lootpanel/proc/start_search()
-	searching = TRUE
-	START_PROCESSING(SSlooting, src)
+/// Helper for clearing the panel cache. "what the hell is going on" proc
+/datum/lootpanel/proc/stop_search()
+	STOP_PROCESSING(SSlooting, src)
+	searching = FALSE
+	
+	for(var/ref in contents)
+		var/datum/search_object/obj = contents[ref]
+
+		var/atom/thing = obj.item_ref?.resolve()
+		if(QDELETED(thing))
+			delete_search_object(obj)
+			continue
+
+		if(isturf(thing)) // Our base turf
+			UnregisterSignal(thing, COMSIG_TURF_CHANGE)
+		else // Anything else
+			if(!QDELETED(thing))
+				UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
+				UnregisterSignal(thing, COMSIG_QDELETING)
+
+		delete_search_object(obj)

@@ -25,7 +25,7 @@
 
 
 /datum/lootpanel/Destroy(force)
-	reset()
+	stop_search()
 	user = null
 	user_client = null
 
@@ -43,25 +43,26 @@
 /datum/lootpanel/ui_close(mob/user)
 	. = ..()
 
-	reset()
-
+	stop_search()
+		
 
 /datum/lootpanel/ui_data(mob/user)
 	var/list/data = list()
 
 	data["contents"] = get_contents()
 	data["searching"] = searching
+	data["total"] = length(contents)
 
 	return data
 
 
 /datum/lootpanel/ui_status(mob/user, datum/ui_state/state)
-	var/turf/tile = search_turf_ref?.resolve()
-	if(isnull(tile))
-		return UI_CLOSE
+	// var/turf/tile = search_turf_ref?.resolve()
+	// if(isnull(tile)) // let's try one more time
+	// 	return UI_CLOSE
 	
-	if(!user.TurfAdjacent(tile))
-		return UI_CLOSE
+	// if(!user.TurfAdjacent(tile))
+	// 	return UI_CLOSE
 
 	if(user.incapacitated())
 		return UI_DISABLED
@@ -81,7 +82,9 @@
 			return TRUE
 
 		if("refresh")
-			if(!restart_search())
+			if(!searching)
+				return FALSE
+			if(!start_search())
 				return FALSE
 			return TRUE
 

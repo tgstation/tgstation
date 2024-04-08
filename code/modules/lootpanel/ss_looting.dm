@@ -14,12 +14,12 @@ PROCESSING_SUBSYSTEM_DEF(looting)
 /datum/lootpanel/process(seconds_per_tick)
 	var/datum/tgui/panel = SStgui.get_open_ui(user, src)
 	if(isnull(panel))
-		reset()
+		stop_search()
 		return PROCESS_KILL
 
 	var/turf/tile = search_turf_ref?.resolve()
 	if(isnull(tile) || !user.Adjacent(tile))
-		reset()
+		stop_search()
 		return PROCESS_KILL
 
 	var/throttle = 0
@@ -30,11 +30,21 @@ PROCESSING_SUBSYSTEM_DEF(looting)
 			return
 
 		var/datum/search_object/obj = contents[ref]
-
+		
 		var/atom/thing  = obj.item_ref?.resolve()
-		if(isnull(thing) || !user.Adjacent(thing) || !locate(thing) in tile.contents)
-			contents -= ref
-			continue
+		if(isnull(thing))
+			stop_search()
+			return
+
+		// Our base turf
+		if(isturf(thing))
+			if(!user.TurfAdjacent(thing))
+				stop_search()
+				return
+		else // it's an object inside the turf
+			if(isnull(thing) || !locate(thing) in tile.contents)
+				contents -= ref
+				continue
 
 		if(obj.icon)
 			continue

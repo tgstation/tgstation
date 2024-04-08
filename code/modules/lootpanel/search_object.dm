@@ -9,10 +9,10 @@
 	var/name
 	/// The STRING reference of the object for indexing purposes
 	var/string_ref
-	/// Weakref to the original object
-	var/datum/weakref/item_ref
 	/// Client attached to the search_object
 	var/datum/weakref/client_ref
+	/// Weakref to the original object
+	var/datum/weakref/item_ref
 
 
 /datum/search_object/New(mob/user, atom/item)
@@ -22,14 +22,6 @@
 	item_ref = WEAKREF(item)
 	name = item.name
 	string_ref = REF(item)
-
-
-/datum/search_object/Destroy(force)
-	icon = null
-	name = null
-	string_ref = null
-
-	return ..()
 
 
 /// Generates the icon for the search object. This is the expensive part.
