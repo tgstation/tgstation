@@ -263,7 +263,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(!GLOB.admin_datums[ckey])
 			var/list/autoadmin_ranks = ranks_from_rank_name(CONFIG_GET(string/autoadmin_rank))
 			if (autoadmin_ranks.len == 0)
-				to_chat(world, "Autoadmin rank not found")
+				to_chat(GLOB.admins, "Autoadmin rank not found")
 			else
 				new /datum/admins(autoadmin_ranks, ckey)
 	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin)
@@ -1165,7 +1165,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return 0
 
 	if(!isnum(player_age) || player_age < 0)
-		return 0 
+		return 0
 
 	if(!isnum(days_needed))
 		return 0

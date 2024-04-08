@@ -172,7 +172,7 @@
 	for(var/obj/structure/disposalpipe/P in T)
 		if(fdir & P.dpdir) // find pipe direction mask that matches flipped dir
 			if(QDELING(P))
-				to_chat(world, "DEBUG -- [src] here, new pipe is being thanos'd")
+				CRASH("Pipe is being deleted while being used by a disposal holder at ([P.x], [P.y], [P.z]")
 			return P
 	// if no matching pipe, return null
 	return null
