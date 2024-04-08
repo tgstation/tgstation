@@ -334,7 +334,7 @@
 "xE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /obj/machinery/computer/atmos_control/nocontrol{
-	chamber_id = list("iceboxplasmaplas" = "iceboxplasman2o" = "iceboxplasmaco2" = "iceboxplasmaoxy" = "iceboxplasman2" = "iceboxplasmaair")
+	atmos_chambers = list("iceboxplasmaplas" = "iceboxplasman2o" = "iceboxplasmaco2" = "iceboxplasmaoxy" = "iceboxplasman2" = "iceboxplasmaair")
 	},
 /turf/open/floor/iron/low_pressure_plasma,
 /area/space)
