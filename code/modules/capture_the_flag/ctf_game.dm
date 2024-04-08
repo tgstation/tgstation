@@ -468,7 +468,7 @@
 /obj/structure/table/reinforced/ctf/wrench_act_secondary(mob/living/user, obj/item/tool)
 	return NONE
 
-/obj/structure/table/reinforced/ctf/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/structure/table/reinforced/ctf/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	return NONE
 
 #define CTF_LOADING_UNLOADED 0
