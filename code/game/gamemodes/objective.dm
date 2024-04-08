@@ -5,7 +5,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/datum/team/team //An alternative to 'owner': a team. Use this when writing new code.
 	var/name = "generic objective" //Name for admin prompts
 	var/explanation_text = "Nothing" //What that person is supposed to do.
-	var/no_failure = FALSE //if this objective doesn't print failure or success
+	///if this objective doesn't print failure or success in the roundend report
+	var/no_failure = FALSE 
 	///name used in printing this objective (Objective #1)
 	var/objective_name = "Objective"
 	var/team_explanation_text //For when there are multiple owners.
@@ -348,11 +349,12 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/protect/check_completion()
 	var/obj/item/organ/internal/brain/brain_target
-	if(target)
-		if(human_check)
-			brain_target = target.current?.get_organ_slot(ORGAN_SLOT_BRAIN)
-		//Protect will always suceed when someone suicides
-		return !target || (target.current && HAS_TRAIT(target.current, TRAIT_SUICIDED)) || considered_alive(target, enforce_human = human_check) || (brain_target && HAS_TRAIT(brain_target, TRAIT_SUICIDED))
+	if(isnull(target))
+		return FALSE
+	if(human_check)
+		brain_target = target.current?.get_organ_slot(ORGAN_SLOT_BRAIN)
+	//Protect will always suceed when someone suicides
+	return !target || (target.current && HAS_TRAIT(target.current, TRAIT_SUICIDED)) || considered_alive(target, enforce_human = human_check) || (brain_target && HAS_TRAIT(brain_target, TRAIT_SUICIDED))
 
 /datum/objective/protect/update_explanation_text()
 	..()
