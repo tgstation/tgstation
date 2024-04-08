@@ -232,3 +232,17 @@
       accessory for you to wear a few inches behind your head. Comes in Normal and
       Icewing variants.
   - rscadd: Some bounties for the two variants of watcher wreaths.
+2024-04-08:
+  Fluffles:
+  - bugfix: Hats/glasses/masks should hopefully behave more predictably for the purposes
+      of eye/mouth surgery.
+  Jacquerel:
+  - rscadd: Adds a new Final Objective where you force your fellow crew to fight to
+      the death on pain of... death.
+  LemonInTheDark:
+  - bugfix: The color matrix editor now works properly again
+  Metekillot:
+  - bugfix: Broken chameleon kits can't be unbroken by an EMP.
+  Rhials:
+  - bugfix: Sweeps a tile of dust off of the Maint Mania deathmatch map, which was
+      causing errors.

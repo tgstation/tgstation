@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Sweeps a tile of dust off of the Maint Mania deathmatch map, which was causing errors."
