@@ -1,0 +1,4 @@
+author: "DimWhat"
+delete-after: True
+changes:
+  - bugfix: "Simians no longer turn invisible when husked."
