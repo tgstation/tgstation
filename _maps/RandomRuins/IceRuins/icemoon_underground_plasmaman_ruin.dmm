@@ -384,9 +384,6 @@
 "Ec" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/machinery/computer/atmos_control/nocontrol{
-	chamber_id = list("iceboxplasmaplas" = "iceboxplasman2o" = "iceboxplasmaco2" )
-	},
 /turf/open/floor/plating,
 /area/space)
 "Em" = (
