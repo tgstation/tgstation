@@ -333,8 +333,9 @@
 	density = TRUE
 	mob_species = /datum/species/plasmaman
 	you_are_text = "You are a plasmaman, a sentient colony of fungi created by one of the plasma pits outside."
-	flavour_text = "Dispite not knowing your past or who you once were, you were able to keep information even through your rebirth \
-	The language you remember feels forign on your tongue, yet you still speak it."
+	flavour_text = "A mining accident? An experiment gone wrong? While you don't remember the exact cause what you know now is that you catch aflame in normal\
+	air, luckily, the mining base you were stationed at was fairly easy to convert into plasma only atmospherics.\
+	Strange how any higher ups haven't bothered to check in..."
 
 /obj/effect/mob_spawn/ghost_role/human/plasmaman/Initialize(mapload)
 	. = ..()
