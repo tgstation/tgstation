@@ -82,7 +82,7 @@
 			return TRUE
 
 		if("refresh")
-			if(!searching)
+			if(searching)
 				return FALSE
 			if(!start_search())
 				return FALSE
