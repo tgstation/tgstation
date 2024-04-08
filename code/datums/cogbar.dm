@@ -1,4 +1,4 @@
-#define COGBAR_ANIMATION_TIME 5 DECISECONDS
+#define COGBAR_ANIMATION_TIME (0.5 SECONDS)
 
 /**
  * ### Cogbar
