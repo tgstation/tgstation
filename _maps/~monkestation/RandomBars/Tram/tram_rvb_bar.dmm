@@ -1810,7 +1810,7 @@
 /area/station/commons/lounge)
 "BV" = (
 /obj/effect/spawner/structure/window,
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/station/commons/lounge)
 "Cd" = (
 /obj/machinery/door/airlock/public/glass{
