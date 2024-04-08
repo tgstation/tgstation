@@ -2211,8 +2211,11 @@
 /datum/reagent/medicine/resurrector_nanites/expose_mob(mob/living/carbon/M)
 	if(M.stat != DEAD)
 		return
+	M.notify_revival("Your body is being revived with Resurrector Nanites!")
+	M.set_jitter_if_lower(20 SECONDS)
+	sleep(10 SECONDS)
 	M.fully_heal(heal_flags = HEAL_ALL)
-	M.adjust_jitter(10 SECONDS)
+	M.revive()
 	M.emote("gasp")
 
 

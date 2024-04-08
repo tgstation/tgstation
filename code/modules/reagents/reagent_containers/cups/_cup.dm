@@ -471,6 +471,68 @@
 	name = "teslium large beaker"
 	list_reagents = list(/datum/reagent/teslium = 100)
 
+
+/obj/item/reagent_containers/cup/beaker/large/doctor_delight
+	name = "doctor's delight"
+	list_reagents = list(/datum/reagent/consumable/doctor_delight = 100)
+
+/obj/item/reagent_containers/cup/beaker/large/grey_bull
+	name = "grey bull"
+	list_reagents = list(/datum/reagent/consumable/grey_bull = 100)
+
+/obj/item/reagent_containers/cup/beaker/large/cuba_libre
+	name = "cuba libre"
+	list_reagents = list(/datum/reagent/consumable/ethanol/cuba_libre = 100)
+
+/obj/item/reagent_containers/cup/beaker/large/screwdrivercocktail
+	name = "screwdriver"
+	list_reagents = list(/datum/reagent/consumable/ethanol/screwdrivercocktail = 100)
+
+/obj/item/reagent_containers/cup/beaker/large/alexander
+	name = "alexander"
+	list_reagents = list(/datum/reagent/consumable/ethanol/alexander = 100)
+
+/obj/item/reagent_containers/cup/beaker/large/bastion_bourbon
+	name = "bastion bourbon"
+	list_reagents = list(/datum/reagent/consumable/ethanol/bastion_bourbon = 100)
+
+/obj/item/reagent_containers/cup/beaker/large/bloody_mary
+	name = "bloody mary"
+	list_reagents = list(/datum/reagent/consumable/ethanol/bloody_mary = 100)
+
+/obj/item/reagent_containers/cup/beaker/large/brave_bull
+	name = "brave bull"
+	list_reagents = list(/datum/reagent/consumable/ethanol/brave_bull = 100)
+
+/obj/item/reagent_containers/cup/beaker/large/changelingsting
+	name = "changeling sting"
+	list_reagents = list(/datum/reagent/consumable/ethanol/changelingsting = 100)
+
+/obj/item/reagent_containers/cup/beaker/large/demonsblood
+	name = "demon's blood"
+	list_reagents = list(/datum/reagent/consumable/ethanol/demonsblood = 100)
+
+/obj/item/reagent_containers/cup/beaker/large/devilskiss
+	name = "devil's kiss"
+	list_reagents = list(/datum/reagent/consumable/ethanol/devilskiss = 100)
+
+/obj/item/reagent_containers/cup/beaker/large/hearty_punch
+	name = "hearty punch"
+	list_reagents = list(/datum/reagent/consumable/ethanol/hearty_punch = 100)
+
+/obj/item/reagent_containers/cup/beaker/large/the_juice
+	name = "the juice"
+	list_reagents = list(/datum/reagent/consumable/ethanol/the_juice = 100)
+
+/obj/item/reagent_containers/cup/beaker/large/neurotoxin
+	name = "neurotoxin"
+	list_reagents = list(/datum/reagent/consumable/ethanol/neurotoxin = 100)
+
+/obj/item/reagent_containers/cup/beaker/large/turbo
+	name = "turbo"
+	list_reagents = list(/datum/reagent/consumable/ethanol/turbo = 100)
+
+
 /obj/item/reagent_containers/cup/bucket
 	name = "bucket"
 	desc = "It's a bucket."

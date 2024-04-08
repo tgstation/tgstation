@@ -123,3 +123,26 @@
 	new /obj/item/clothing/mask/balaclava(src)
 	new /obj/item/bodybag(src)
 	new /obj/item/soap/nanotrasen(src)
+
+/// A special counterfeiting briefcase.
+
+/obj/item/storage/secure/briefcase/cargonia
+	force = 25
+
+/obj/item/storage/secure/briefcase/cargonia/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 60
+	regenerate_cash()
+
+/obj/item/storage/secure/briefcase/cargonia/proc/regenerate_cash()
+	addtimer(CALLBACK(src, PROC_REF(regenerate_cash)), 30 SECONDS)
+
+	var/mob/M = get(loc, /mob)
+	if(!istype(M))
+		return
+	if(IS_TRAITOR(M))
+		var/turf/floor = get_turf(src)
+		var/obj/item/I = new /obj/item/stack/spacecash/c1000(floor)
+		if(!atom_storage.attempt_insert(I, src, override = TRUE, force = STORAGE_SOFT_LOCKED))
+			qdel(I)

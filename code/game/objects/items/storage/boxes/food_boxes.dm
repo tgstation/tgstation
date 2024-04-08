@@ -46,6 +46,10 @@
 	icon_state = "donkpocketboxbanana"
 	donktype = /obj/item/food/donkpocket/honk
 
+/obj/item/storage/box/donkpockets/donkpocketsyndi
+	name = "box of donk-pockets"
+	donktype = /obj/item/food/donkpocket/syndi
+
 /obj/item/storage/box/papersack
 	name = "paper sack"
 	desc = "A sack neatly crafted out of paper."

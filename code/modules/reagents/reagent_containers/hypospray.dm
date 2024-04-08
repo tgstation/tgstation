@@ -85,6 +85,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "gorlex"
 	volume = 80
+	ignore_flags = 1 // So they can heal their comrades.
 	possible_transfer_amounts = list(1,3,5,10,20,30)
 
 //combat

@@ -1179,6 +1179,320 @@
 		new /obj/item/reagent_containers/hypospray/medipen/lifesupportcs(src)
 
 
+/obj/item/storage/box/syndie_kit/chefchemicals/PopulateContents()
+	new /obj/item/reagent_containers/cup/bottle/fentanyl(src)
+	new /obj/item/reagent_containers/cup/bottle/fentanyl(src)
+	new /obj/item/reagent_containers/cup/bottle/cyanide(src)
+	new /obj/item/reagent_containers/cup/bottle/cyanide(src)
+	new /obj/item/reagent_containers/cup/bottle/coniine(src)
+	new /obj/item/reagent_containers/cup/bottle/coniine(src)
+	new /obj/item/reagent_containers/cup/bottle/amanitin(src)
+	new /obj/item/reagent_containers/cup/bottle/amanitin(src)
+
+
+/obj/item/storage/bag/plantssyndie
+	name = "plant bag"
+
+/obj/item/storage/bag/plantssyndie/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 14
+	atom_storage.max_total_storage = 99
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.set_holdable(list(
+		/obj/item/food/grown,
+		/obj/item/grown,
+		/obj/item/food/honeycomb,
+		/obj/item/seeds,
+		))
+
+/obj/item/storage/bag/plantssyndie/PopulateContents()
+	new /obj/item/food/grown/nettle/death(src)
+	new /obj/item/food/grown/berries/poison(src)
+	new /obj/item/food/grown/berries/death(src)
+	new /obj/item/food/grown/cannabis/death(src)
+	new /obj/item/food/grown/banana/mime(src)
+	new /obj/item/food/grown/banana/bluespace(src)
+	new /obj/item/food/grown/firelemon(src)
+	new /obj/item/food/grown/bungofruit(src)
+	new /obj/item/food/grown/mushroom/angel(src)
+	new /obj/item/food/grown/tomato/killer(src)
+	new /obj/item/seeds/replicapod(src)
+
+/obj/item/storage/bag/plantssyndiebluespace
+	name = "plant bag"
+
+/obj/item/storage/bag/plantssyndiebluespace/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 14
+	atom_storage.max_total_storage = 99
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.set_holdable(list(
+		/obj/item/food/grown,
+		/obj/item/grown,
+		/obj/item/food/honeycomb,
+		/obj/item/seeds,
+		))
+
+/obj/item/storage/box/syndie_kit/two_freedom_implant_bundle/PopulateContents()
+	new /obj/item/implanter/freedom(src)
+	new /obj/item/implanter/freedom(src)
+
+/obj/item/storage/box/syndie_kit/syndie_relief_bundle/PopulateContents()
+	new /obj/item/stack/telecrystal/five(src)
+	new /obj/item/stack/telecrystal/five(src)
+
+/obj/item/storage/box/syndie_kit/bluespace_crystal_arti_bundle/PopulateContents()
+	for(var/i in 1 to 20)
+		new /obj/item/stack/ore/bluespace_crystal/artificial(src)
+
+/obj/item/storage/box/syndie_kit/escapist_bundle/PopulateContents()
+	new /obj/item/storage/box/syndie_kit/chameleon(src)
+	new /obj/item/card/id/advanced/chameleon(src)
+	new /obj/item/pen/sleepy(src)
+	new /obj/item/card/emag(src)
+	new /obj/item/clothing/glasses/thermal/syndi(src)
+	new /obj/item/implanter/uplink(src)
+	new /obj/item/pen/edagger(src)
+	for(var/i in 1 to 4)
+		new /obj/item/grenade/c4(src)
+
+/obj/item/storage/backpack/duffelbag/clown/cream_pie/syndicate/PopulateContents()
+	for(var/i in 1 to 20)
+		new /obj/item/food/pie/cream(src)
+
+/obj/item/storage/box/syndie_kit/holy_healing_bundle/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/cup/bottle/omnizine(src)
+	new /obj/item/reagent_containers/cup/bottle/mutagen(src)
+
+/obj/item/storage/box/syndie_kit/burning_extract_bundle/PopulateContents()
+	new /obj/item/slimecross/burning/yellow(src)
+	new /obj/item/slimecross/burning/metal(src)
+	new /obj/item/slimecross/burning/gold(src)
+	new /obj/item/reagent_containers/cup/bottle/plasma(src)
+	new /obj/item/reagent_containers/cup/bottle/plasma(src)
+	new /obj/item/reagent_containers/syringe(src)
+	var/list/types = subtypesof(/obj/item/slimecross/burning/)
+	for(var/i in 1 to 3)
+		var/type = pick(types)
+		new type(src)
+
+/obj/item/storage/box/syndie_kit/charged_extract_bundle/PopulateContents()
+	new /obj/item/slimecross/charged/darkblue(src)
+	new /obj/item/slimecross/charged/red(src)
+	new /obj/item/slimecross/charged/green(src)
+	new /obj/item/reagent_containers/cup/bottle/plasma(src)
+	new /obj/item/reagent_containers/cup/bottle/plasma(src)
+	new /obj/item/reagent_containers/syringe(src)
+	var/list/types = subtypesof(/obj/item/slimecross/charged/)
+	for(var/i in 1 to 3)
+		var/type = pick(types)
+		new type(src)
+
+/obj/item/storage/box/syndie_kit/chilling_extract_bundle/PopulateContents()
+	new /obj/item/slimecross/chilling/metal(src)
+	new /obj/item/slimecross/chilling/darkblue(src)
+	new /obj/item/slimecross/chilling/bluespace(src)
+	new /obj/item/reagent_containers/cup/bottle/plasma(src)
+	new /obj/item/reagent_containers/cup/bottle/plasma(src)
+	new /obj/item/reagent_containers/syringe(src)
+	var/list/types = subtypesof(/obj/item/slimecross/chilling/)
+	for(var/i in 1 to 3)
+		var/type = pick(types)
+		new type(src)
+
+/obj/item/storage/box/syndie_kit/consuming_extract_bundle/PopulateContents()
+	new /obj/item/slimecross/consuming/purple(src)
+	new /obj/item/slimecross/consuming/metal(src)
+	new /obj/item/slimecross/consuming/oil(src)
+	var/list/types = subtypesof(/obj/item/slimecross/consuming/)
+	for(var/i in 1 to 3)
+		var/type = pick(types)
+		new type(src)
+
+/obj/item/storage/box/syndie_kit/industrial_extract_bundle/PopulateContents()
+	new /obj/item/slimecross/industrial/purple(src)
+	new /obj/item/slimecross/industrial/gold(src)
+	new /obj/item/slimecross/industrial/pink(src)
+	new /obj/item/reagent_containers/cup/bottle/plasma(src)
+	new /obj/item/reagent_containers/cup/bottle/plasma(src)
+	new /obj/item/reagent_containers/cup/bottle/plasma(src)
+	new /obj/item/reagent_containers/cup/bottle/plasma(src)
+	new /obj/item/reagent_containers/cup/bottle/plasma(src)
+	new /obj/item/reagent_containers/cup/bottle/plasma(src)
+	new /obj/item/reagent_containers/syringe(src)
+	var/list/types = subtypesof(/obj/item/slimecross/industrial/)
+	for(var/i in 1 to 3)
+		var/type = pick(types)
+		new type(src)
+
+/obj/item/storage/box/syndie_kit/regenerative_extract_bundle/PopulateContents()
+	new /obj/item/slimecross/regenerative/purple(src)
+	new /obj/item/slimecross/regenerative/sepia(src)
+	new /obj/item/slimecross/regenerative/adamantine(src)
+	var/list/types = subtypesof(/obj/item/slimecross/regenerative/)
+	for(var/i in 1 to 3)
+		var/type = pick(types)
+		new type(src)
+
+/obj/item/storage/box/syndie_kit/stabilized_extract_bundle/PopulateContents()
+	new /obj/item/slimecross/stabilized/purple(src)
+	new /obj/item/slimecross/stabilized/bluespace(src)
+	new /obj/item/slimecross/stabilized/adamantine(src)
+	var/list/types = subtypesof(/obj/item/slimecross/stabilized/)
+	for(var/i in 1 to 3)
+		var/type = pick(types)
+		new type(src)
+
+/obj/item/storage/box/syndie_kit/clown_trolling_security_bundle/PopulateContents()
+	new /obj/item/storage/box/flashbangs(src)
+	new /obj/item/restraints/legcuffs/bola/energy(src)
+	new /obj/item/restraints/legcuffs/bola/energy(src)
+	new /obj/item/reagent_containers/spray/pepper(src)
+	new /obj/item/restraints/handcuffs(src)
+	new /obj/item/restraints/handcuffs(src)
+	new /obj/item/clothing/glasses/sunglasses(src)
+	new /obj/item/clothing/glasses/sunglasses(src)
+
+/obj/item/storage/box/syndie_kit/clown_stun_resist_bundle/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/cup/bottle/probital(src)
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/cup/bottle/modafinil(src)
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/cup/bottle/methamphetamine(src)
+
+/obj/item/storage/box/syndie_kit/syndicate_virus_box/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/reagent_containers/cup/bottle/random_virus(src)
+	new /obj/item/reagent_containers/cup/bottle/flu_virion(src)
+	new /obj/item/reagent_containers/cup/bottle/cold(src)
+	new /obj/item/reagent_containers/cup/bottle/fake_gbs(src)
+	new /obj/item/reagent_containers/cup/bottle/magnitis(src)
+	new /obj/item/reagent_containers/cup/bottle/pierrot_throat(src)
+	new /obj/item/reagent_containers/cup/bottle/brainrot(src)
+	new /obj/item/reagent_containers/cup/bottle/anxiety(src)
+	new /obj/item/reagent_containers/cup/bottle/beesease(src)
+	new /obj/item/storage/box/syringes(src)
+	new /obj/item/storage/box/beakers(src)
+	new /obj/item/reagent_containers/cup/bottle/mutagen(src)
+
+
+/obj/item/storage/box/syndie_kit/manifold_injector_bundle
+	name = "Bundle of HMS Injectors"
+
+/obj/item/storage/box/syndie_kit/manifold_injector_bundle/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/reagent_containers/hypospray/medipen/manifoldinjector(src)
+
+
+/obj/item/storage/box/syndie_kit/syndie_hypnotism_bundle/PopulateContents()
+	new /obj/item/assembly/flash/hypnotic(src)
+	new /obj/item/grenade/hypnotic(src)
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/chem_grenade/mindbreaker(src)
+
+
+/obj/item/storage/box/syndie_kit/lathe_supply_package
+	name = "Lathe Supply Package"
+
+/obj/item/storage/box/syndie_kit/lathe_supply_package/PopulateContents()
+	new /obj/item/circuitboard/machine/autolathe(src)
+	new /obj/item/circuitboard/machine/protolathe(src)
+	for(var/i in 1 to 5)
+		new /obj/item/stock_parts/matter_bin/bluespace(src)
+	for(var/i in 1 to 3)
+		new /obj/item/stock_parts/servo/femto(src)
+	new /obj/item/reagent_containers/cup/beaker(src)
+	new /obj/item/reagent_containers/cup/beaker(src)
+	new /obj/item/stack/sheet/glass(src)
+	new /obj/item/stack/sheet/iron/ten(src)
+	new /obj/item/stack/cable_coil(src)
+	new /obj/item/screwdriver(src)
+	new /obj/item/wrench(src)
+
+
+/obj/item/storage/box/syndie_kit/nocturine_deluxe/PopulateContents()
+	new /obj/item/pen/sleepy(src)
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/cup/bottle/nocturine/full(src)
+
+/obj/item/storage/box/syndie_kit/helpful_barkeep_drinks/PopulateContents()
+	new /obj/item/reagent_containers/cup/beaker/large/doctor_delight(src)
+	new /obj/item/reagent_containers/cup/beaker/large/grey_bull(src)
+	new /obj/item/reagent_containers/cup/beaker/large/cuba_libre(src)
+	new /obj/item/reagent_containers/cup/beaker/large/screwdrivercocktail(src)
+	new /obj/item/reagent_containers/cup/beaker/large/alexander(src)
+	new /obj/item/reagent_containers/cup/beaker/large/bastion_bourbon(src)
+	new /obj/item/reagent_containers/cup/beaker/large/bloody_mary(src)
+	new /obj/item/reagent_containers/cup/beaker/large/brave_bull(src)
+	new /obj/item/reagent_containers/cup/beaker/large/changelingsting(src)
+	new /obj/item/reagent_containers/cup/beaker/large/demonsblood(src)
+	new /obj/item/reagent_containers/cup/beaker/large/devilskiss(src)
+	new /obj/item/reagent_containers/cup/beaker/large/hearty_punch(src)
+	new /obj/item/reagent_containers/cup/beaker/large/the_juice(src)
+	new /obj/item/reagent_containers/cup/beaker/large/neurotoxin(src)
+	new /obj/item/reagent_containers/cup/beaker/large/turbo(src)
+
+/obj/item/storage/box/syndie_kit/janitor_acidnade_bundle/PopulateContents()
+	for(var/i in 1 to 10)
+		new /obj/item/grenade/chem_grenade/highacidfoam(src)
+	new /obj/item/screwdriver(src)
+	new /obj/item/wirecutters(src)
+	for(var/i in 1 to 5)
+		new /obj/item/assembly/prox_sensor(src)
+	for(var/i in 1 to 6)
+		new /obj/item/assembly/signaler(src)
+
+/obj/item/storage/box/syndie_kit/janitor_bloodnade_bundle/PopulateContents()
+	for(var/i in 1 to 10)
+		new /obj/item/grenade/chem_grenade/bloodyfoam(src)
+	new /obj/item/screwdriver(src)
+	new /obj/item/wirecutters(src)
+
+/obj/item/storage/box/syndie_kit/bluespace_bodybag_bundle/PopulateContents()
+	new /obj/item/bodybag/bluespace(src)
+	new /obj/item/bodybag/bluespace(src)
+	new /obj/item/pen/sleepy(src)
+	for(var/i in 1 to 4)
+		new /obj/item/reagent_containers/cup/bottle/chloralhydrate(src)
+
+/obj/item/storage/box/syndie_kit/n2o_nade_bundle/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/chem_grenade/nofoam(src)
+
+/obj/item/storage/box/syndie_kit/chemistry_machine_bundle/PopulateContents()
+	new /obj/item/circuitboard/machine/chem_dispenser(src)
+	new /obj/item/circuitboard/machine/chem_heater(src)
+	new /obj/item/circuitboard/machine/chem_master(src)
+	new /obj/item/circuitboard/machine/reagentgrinder(src)
+	new /obj/item/stack/sheet/iron/twenty(src)
+	new /obj/item/stack/cable_coil(src)
+	new /obj/item/stock_parts/micro_laser/quadultra(src)
+	new /obj/item/stock_parts/capacitor/quadratic(src)
+	new /obj/item/stock_parts/servo/femto(src)
+	new /obj/item/stock_parts/servo/femto(src)
+	new /obj/item/stock_parts/servo/femto(src)
+	new /obj/item/stock_parts/matter_bin/bluespace(src)
+	new /obj/item/stock_parts/matter_bin/bluespace(src)
+	new /obj/item/stock_parts/cell/high(src)
+	for(var/i in 1 to 3)
+		new /obj/item/stack/sheet/glass(src)
+	new /obj/item/reagent_containers/cup/beaker(src)
+	new /obj/item/reagent_containers/cup/beaker(src)
+	new /obj/item/wrench(src)
+	new /obj/item/screwdriver(src)
+
+/obj/item/storage/box/syndie_kit/xenobio_starter_kit/PopulateContents()
+	new /obj/item/slimecross/industrial/grey(src)
+	new /obj/item/reagent_containers/cup/bottle/plasma(src)
+	new /obj/item/reagent_containers/syringe(src)
+	new /obj/item/storage/box/monkeycubes(src)
+	new /obj/item/storage/box/monkeycubes(src)
+
+/obj/item/storage/box/syndie_kit/syndisauce/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/reagent_containers/condiment/pack/syndicate(src)
 
 
 

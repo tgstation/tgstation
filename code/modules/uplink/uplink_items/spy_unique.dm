@@ -38,12 +38,12 @@
 	name = "Guerrilla Gloves"
 	desc = "A pair of Guerrilla gloves. They're insulated AND you can tackle people with it!"
 	item = /obj/item/clothing/gloves/tackler/combat/insulated
-
+/**
 /datum/uplink_item/spy_unique/kudzu
 	name = "Kudzu"
 	desc = "A packet of Kudzu - plant and forget, a great distraction."
 	item = /obj/item/seeds/kudzu
-
+**/
 /datum/uplink_item/spy_unique/big_knife
 	name = "Combat Knife"
 	desc = "A big knife. It's sharp."

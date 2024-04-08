@@ -137,3 +137,9 @@
 	icon_state = "syndieenvirobag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner/pressurized/syndicate
 	resistance_flags = ACID_PROOF | FIRE_PROOF | FREEZE_PROOF | LAVA_PROOF
+
+/obj/item/bodybag/invis
+	name = "camouflaging body bag"
+	desc = "A folded bag designed for the storage and transportation of cadavers. The phrase 'Glory to the Syndicate' is written on the side."
+	unfoldedbag_path = /obj/structure/closet/body_bag
+

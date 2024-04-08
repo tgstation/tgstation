@@ -517,6 +517,23 @@
 /obj/item/flashlight/flare/get_temperature()
 	return light_on * heat
 
+/obj/item/flashlight/flare/lethal
+	on_damage = 20
+
+/obj/item/flashlight/flare/lethal/attack(mob/living/carbon/victim, mob/living/carbon/user)
+	if(!isliving(victim))
+		return ..()
+
+	if(light_on)
+		victim.adjust_fire_stacks(1)
+		victim.ignite_mob()
+
+	if(light_on && victim.ignite_mob())
+		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(victim)] on fire with [src] at [AREACOORD(user)]")
+		user.log_message("set [key_name(victim)] on fire with [src]", LOG_ATTACK)
+
+	return ..()
+
 /obj/item/flashlight/flare/candle
 	name = "red candle"
 	desc = "In Greek myth, Prometheus stole fire from the Gods and gave it to \

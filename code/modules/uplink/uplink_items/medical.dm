@@ -43,7 +43,7 @@
 	name = "Medipen Kit"
 	desc = "A bluespace-compressed medkit containing multiple medicinal medipens filled with various reagents. Useful in a pinch."
 	item = /obj/item/storage/medkit/medipenkit
-	cost = 3
+	cost = 2
 	surplus = 35
 	illegal_tech = FALSE
 
@@ -90,8 +90,8 @@
 
 /datum/uplink_item/medical/miraclesyringe
 	name = "Miracle Syringe"
-	desc = "Contains 5 units of nearly every effective medicine we could muster, included within are all of \
-			the lemoline medicines, omnizine, healing nanites, antihol, sanguirite, iron, and potassium iodide."
+	desc = "Contains 5 units of nearly every effective medicine we could muster, included within are \
+			bicaridine, dermaline, anti-toxin, omnizine, healing nanites, antihol, sanguirite, iron, and potassium iodide."
 	item = /obj/item/reagent_containers/syringe/bluespace/miracle
 	cost = 1
 	surplus = 50

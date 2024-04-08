@@ -386,3 +386,9 @@
 /obj/structure/closet/body_bag/environmental/prisoner/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))
 		playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)
+
+
+/obj/structure/closet/body_bag/invis
+	name = ""
+	desc = "Is... anything there?"
+	alpha = 0

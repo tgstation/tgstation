@@ -168,3 +168,50 @@
 
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"
+
+
+/obj/item/chainsaw/botany
+	name = "botany chainsaw"
+	desc = "A versatile power tool. Useful for limbing trees and delimbing humans. Excellent in cutting down plants and vines."
+	icon = 'icons/obj/weapons/chainsaw.dmi'
+	icon_state = "c_saw_off"
+	inhand_icon_state = "c_saw_off"
+	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
+	tool_behaviour = TOOL_SAW
+	force = 3
+	demolition_mod = 1
+	force_on = 5
+	var/icon_name = "c_saw"
+	var/item_name = "c_saw"
+
+/obj/item/chainsaw/botany/attack_self(mob/user)
+	on = !on
+	to_chat(user, "As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]")
+	force = on ? force_on : initial(force)
+	throwforce = on ? force_on : initial(force)
+	icon_state = "[icon_name]_[on ? "on" : "off"]"
+	inhand_icon_state = "[item_name]_[on ? "on" : "off"]"
+	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
+	butchering.butchering_enabled = on
+
+/obj/item/chainsaw/botany/afterattack(target, mob/user, proximity_flag)
+	. = ..()
+	var/mob/living/carbon/human/species/L = target
+	if(ishuman(L) && ispodperson(L) || (L.faction == "plants") || (L.faction == "vines") && proximity_flag)
+		L.apply_damage(15, BRUTE)
+
+/obj/item/chainsaw/botany/syndicate
+	name = "syndicate chainsaw"
+	desc = "A powerful versatile power tool. Useful for limbing trees and delimbing humans. Excellent in cutting down plants and vines."
+	icon = 'icons/obj/weapons/chainsaw.dmi'
+	icon_state = "c_saw_s_off"
+	inhand_icon_state = "c_saw_s_off"
+	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
+	force = 13
+	demolition_mod = 1.5
+	force_on = 35
+	icon_name = "c_saw_s"
+	item_name = "c_saw_s"
+
