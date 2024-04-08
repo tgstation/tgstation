@@ -21,7 +21,9 @@
 		return
 
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
-	delete_search_object(source)
+
+	var/datum/search_object/found_item = contents[ref]
+	delete_search_object(found_item)
 	panel.send_update()
 
 
