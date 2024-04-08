@@ -19,6 +19,7 @@
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/void)
 	cost = 1
 	route = PATH_SIDE
+	depth = SIDE_TIER_1
 
 /datum/heretic_knowledge/spell/blood_siphon
 	name = "Blood Siphon"
@@ -32,6 +33,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/blood_siphon
 	cost = 1
 	route = PATH_SIDE
+	depth = SIDE_TIER_2
 
 /datum/heretic_knowledge/spell/cleave
 	name = "Blood Cleave"
@@ -46,3 +48,4 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/cleave
 	cost = 1
 	route = PATH_SIDE
+	depth = SIDE_TIER_3

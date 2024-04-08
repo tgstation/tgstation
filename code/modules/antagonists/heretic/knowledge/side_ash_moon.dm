@@ -16,6 +16,7 @@
 	result_atoms = list(/obj/item/clothing/neck/eldritch_amulet)
 	cost = 1
 	route = PATH_SIDE
+	depth = SIDE_TIER_1
 
 /datum/heretic_knowledge/curse/paralysis
 	name = "Curse of Paralysis"
@@ -38,6 +39,7 @@
 	cost = 1
 	route = PATH_SIDE
 	research_tree_icon = icon('icons/mob/actions/actions_spells.dmi',"autotomy")
+	depth = SIDE_TIER_2
 
 /datum/heretic_knowledge/curse/paralysis/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
 	if(chosen_mob.usable_legs <= 0) // What're you gonna do, curse someone who already can't walk?
@@ -76,6 +78,7 @@
 	cost = 1
 	route = PATH_SIDE
 	poll_ignore_define = POLL_IGNORE_ASH_SPIRIT
+	depth = SIDE_TIER_3
 
 /datum/heretic_knowledge/summon/ashy/cleanup_atoms(list/selected_atoms)
 	var/obj/item/bodypart/head/ritual_head = locate() in selected_atoms

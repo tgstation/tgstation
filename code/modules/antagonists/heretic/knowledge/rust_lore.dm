@@ -51,6 +51,7 @@
 	next_knowledge = list(/datum/heretic_knowledge/rust_regen)
 	cost = 1
 	route = PATH_RUST
+	depth = GRASP_TIER
 
 /datum/heretic_knowledge/rust_fist/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -92,6 +93,7 @@
 	cost = 1
 	route = PATH_RUST
 	research_tree_icon = icon('icons/obj/antags/eldritch.dmi',"rusty_medalion")
+	depth = SIDE_TIER_1
 
 /datum/heretic_knowledge/rust_regen/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
@@ -166,6 +168,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 1
 	route = PATH_RUST
+	depth = MID_TIER
 
 /datum/heretic_knowledge/spell/area_conversion
 	name = "Aggressive Spread"
@@ -182,6 +185,7 @@
 	spell_to_add = /datum/action/cooldown/spell/aoe/rust_conversion
 	cost = 1
 	route = PATH_RUST
+	depth = SIDE_TIER_2
 
 /datum/heretic_knowledge/blade_upgrade/rust
 	name = "Toxic Blade"
@@ -210,6 +214,7 @@
 	spell_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	cost = 1
 	route = PATH_RUST
+	depth = SIDE_TIER_3
 
 /datum/heretic_knowledge/ultimate/rust_final
 	name = "Rustbringer's Oath"

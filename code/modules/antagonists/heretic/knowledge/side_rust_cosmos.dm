@@ -17,6 +17,7 @@
 	result_atoms = list(/obj/item/reagent_containers/cup/beaker/eldritch)
 	cost = 1
 	route = PATH_SIDE
+	depth = SIDE_TIER_1
 
 /datum/heretic_knowledge/entropy_pulse
 	name = "Pulse of Entropy"
@@ -30,6 +31,7 @@
 	route = PATH_SIDE
 	var/rusting_range = 4
 	research_tree_icon = icon('icons/effects/rust_overlay.dmi',"rust_default")
+	depth = SIDE_TIER_1
 
 /datum/heretic_knowledge/entropy_pulse/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	for(var/turf/nearby_turf in view(rusting_range, loc))
@@ -62,6 +64,7 @@
 	cost = 1
 	route = PATH_SIDE
 	research_tree_icon = icon('icons/obj/signs.dmi',"bio")
+	depth = SIDE_TIER_2
 
 /datum/heretic_knowledge/curse/corrosion/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
 	to_chat(chosen_mob, span_danger("You feel very ill..."))
@@ -94,6 +97,7 @@
 	cost = 1
 	route = PATH_SIDE
 	poll_ignore_define = POLL_IGNORE_RUST_SPIRIT
+	depth = SIDE_TIER_3
 
 /datum/heretic_knowledge/summon/rusty/cleanup_atoms(list/selected_atoms)
 	var/obj/item/bodypart/head/ritual_head = locate() in selected_atoms

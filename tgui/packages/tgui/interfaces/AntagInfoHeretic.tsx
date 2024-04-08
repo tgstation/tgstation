@@ -2,7 +2,7 @@ import { BooleanLike } from 'common/react';
 import { useState } from 'react';
 
 import { useBackend } from '../backend';
-import { BlockQuote, Box, Button, Image, Section, Stack, Tabs } from '../components';
+import { Box, Button, Image, Section, Stack, Tabs } from '../components';
 import { CssColor } from '../constants';
 import { Window } from '../layouts';
 import {
@@ -45,11 +45,17 @@ type Knowledge = {
   hereticPath: string;
   color: CssColor;
   icon: string;
+  finished: boolean;
 };
 
 type KnowledgeInfo = {
-  learnableKnowledge: Knowledge[];
-  learnedKnowledge: Knowledge[];
+  knowledge_tiers: KnowledgeTier[];
+};
+
+type KnowledgeTier = {
+  depth: number;
+  background: string;
+  nodes: Knowledge[];
 };
 
 type Info = {
@@ -220,77 +226,42 @@ const InformationSection = (props) => {
   );
 };
 
-const ResearchedKnowledge = (props) => {
-  const { data } = useBackend<KnowledgeInfo>();
-  const { learnedKnowledge } = data;
+const KnowledgeTree = (props) => {
+  const { data, act } = useBackend<KnowledgeInfo>();
+  const { knowledge_tiers } = data;
 
   return (
     <Stack.Item grow>
-      <Section title="Researched Knowledge" fill scrollable>
+      <Section title="Research Tree" fill scrollable>
         <Stack vertical>
-          {(!learnedKnowledge.length && 'None!') ||
-            learnedKnowledge.map((learned) => (
-              <Stack.Item key={learned.name}>
-                <Button
-                  width="100%"
-                  color={learned.color}
-                  content={`${learned.hereticPath} - ${learned.name}`}
-                  tooltip={learned.desc}
-                />
-                <Image
-                  src={`data:image/jpeg;base64,${learned.icon}`}
-                  height="100%"
-                  width="100%"
-                  style={{
-                    verticalAlign: 'middle',
-                  }}
-                />
+          {(!knowledge_tiers.length && 'None!') ||
+            knowledge_tiers.map((tier) => (
+              <Stack.Item key={tier.depth}>
+                <Box>
+                  {
+                    tier.nodes.map((node) => (
+                      <Button key={node.name}
+                        color={node.color}
+                        disabled={node.disabled || node.finished}
+                        tooltip={
+                          `${node.name} (${node.cost} point${node.cost !==1 ? 's' : ''})
+                          ${node.desc}`
+                        }
+                        onClick={() => act('research', { path: node.path })}
+                      >
+                        
+                        <Image
+                          src={`data:image/jpeg;base64,${node.icon}`}
+                          height="100%"
+                          width="100%"
+                        />
+                      </Button>
+                    ))
+                  }
+                </Box>
               </Stack.Item>
             ))}
         </Stack>
-      </Section>
-    </Stack.Item>
-  );
-};
-
-const KnowledgeShop = (props) => {
-  const { data, act } = useBackend<KnowledgeInfo>();
-  const { learnableKnowledge } = data;
-
-  return (
-    <Stack.Item grow>
-      <Section title="Potential Knowledge" fill scrollable>
-        {(!learnableKnowledge.length && 'None!') ||
-          learnableKnowledge.map((toLearn) => (
-            <Stack.Item key={toLearn.name} mb={1}>
-              <Button
-                width="100%"
-                color={toLearn.color}
-                disabled={toLearn.disabled}
-                content={`${toLearn.hereticPath} - ${
-                  toLearn.cost > 0
-                    ? `${toLearn.name}: ${toLearn.cost}
-                  point${toLearn.cost !== 1 ? 's' : ''}`
-                    : toLearn.name
-                }`}
-                tooltip={toLearn.desc}
-                onClick={() => act('research', { path: toLearn.path })}
-              />
-              <Image
-                src={`data:image/jpeg;base64,${toLearn.icon}`}
-                height="100%"
-                width="100%"
-                style={{
-                  verticalAlign: 'middle',
-                }}
-              />
-              {!!toLearn.gainFlavor && (
-                <BlockQuote>
-                  <i>{toLearn.gainFlavor}</i>
-                </BlockQuote>
-              )}
-            </Stack.Item>
-          ))}
       </Section>
     </Stack.Item>
   );
@@ -313,8 +284,7 @@ const ResearchInfo = (props) => {
           </Stack.Item>
           <Stack.Item grow>
             <Stack height="100%">
-              <ResearchedKnowledge />
-              <KnowledgeShop />
+              <KnowledgeTree />
             </Stack>
           </Stack.Item>
         </Stack>

@@ -16,6 +16,7 @@
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch)
 	cost = 1
 	route = PATH_SIDE
+	depth = SIDE_TIER_1
 
 /datum/heretic_knowledge/crucible
 	name = "Mawed Crucible"
@@ -34,6 +35,7 @@
 	result_atoms = list(/obj/structure/destructible/eldritch_crucible)
 	cost = 1
 	route = PATH_SIDE
+	depth = SIDE_TIER_2
 
 /datum/heretic_knowledge/rifle
 	name = "Lionhunter's Rifle"
@@ -59,6 +61,7 @@
 	result_atoms = list(/obj/item/gun/ballistic/rifle/lionhunter)
 	cost = 1
 	route = PATH_SIDE
+	depth = SIDE_TIER_2
 
 /datum/heretic_knowledge/rifle_ammo
 	name = "Lionhunter Rifle Ammunition (free)"
@@ -74,6 +77,7 @@
 	result_atoms = list(/obj/item/ammo_box/strilka310/lionhunter)
 	cost = 0
 	route = PATH_SIDE
+	depth = SIDE_TIER_2
 	/// A list of calibers that the ritual will deny. Only ballistic calibers are allowed.
 	var/static/list/caliber_blacklist = list(
 		CALIBER_LASER,
@@ -107,3 +111,4 @@
 	spell_to_add = /datum/action/cooldown/mob_cooldown/charge/rust
 	cost = 1
 	route = PATH_SIDE
+	depth = SIDE_TIER_3

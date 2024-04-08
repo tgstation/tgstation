@@ -89,6 +89,19 @@
 #define PATH_LOCK "Lock Path"
 #define PATH_MOON "Moon Path"
 
+// Heretic knowledge tiers defines.
+#define STARTING_TIER 1
+#define ENTRY_TIER 2
+#define GRASP_TIER 3
+#define SIDE_TIER_1 4
+#define MARK_TIER 5
+#define KNOWLEDGE_RITUAL_TIER 6
+#define MID_TIER 7
+#define SIDE_TIER_2 8
+#define BLADE_TIER 9
+#define SIDE_TIER_3 10
+#define ASCENSION_TIER 11
+
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
 #define HERETIC_NO_LIVING_HEART 0

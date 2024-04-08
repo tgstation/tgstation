@@ -120,9 +120,39 @@
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
 
+	//setup tiers
+	var/list/tiers = list(
+		list("depth"=0,"background"="beep boop","nodes"=list()),
+		list("depth"=1,"background"="beep boop","nodes"=list()),
+		list("depth"=2,"background"="beep boop","nodes"=list()),
+		list("depth"=3,"background"="beep boop","nodes"=list()),
+		list("depth"=4,"background"="beep boop","nodes"=list()),
+		list("depth"=5,"background"="beep boop","nodes"=list()),
+		list("depth"=6,"background"="beep boop","nodes"=list()),
+		list("depth"=7,"background"="beep boop","nodes"=list()),
+		list("depth"=8,"background"="beep boop","nodes"=list()),
+		list("depth"=9,"background"="beep boop","nodes"=list()),
+		list("depth"=10,"background"="beep boop","nodes"=list()),
+	)
+
 	// This should be cached in some way, but the fact that final knowledge
 	// has to update its disabled state based on whether all objectives are complete,
 	// makes this very difficult. I'll figure it out one day maybe
+	for(var/path in researched_knowledge)
+		var/list/knowledge_data = list()
+		var/datum/heretic_knowledge/found_knowledge = researched_knowledge[path]
+		knowledge_data["name"] = found_knowledge.name
+		knowledge_data["desc"] = found_knowledge.desc
+		knowledge_data["gainFlavor"] = found_knowledge.gain_text
+		knowledge_data["cost"] = found_knowledge.cost
+		knowledge_data["disabled"] = FALSE
+		knowledge_data["hereticPath"] = found_knowledge.route
+		knowledge_data["color"] = path_to_ui_color[found_knowledge.route] || "grey"
+		knowledge_data["icon"] = icon2base64(get_icon_of_knowledge(found_knowledge))
+		knowledge_data["finished"] = TRUE
+
+		tiers[found_knowledge.depth]["nodes"] += list(knowledge_data)
+
 	for(var/datum/heretic_knowledge/knowledge as anything in get_researchable_knowledge())
 		var/list/knowledge_data = list()
 		knowledge_data["path"] = knowledge
@@ -131,16 +161,18 @@
 		knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
 		knowledge_data["cost"] = initial(knowledge.cost)
 		knowledge_data["disabled"] = initial(knowledge.cost) > knowledge_points
+		knowledge_data["hereticPath"] = initial(knowledge.route)
+		knowledge_data["color"] = path_to_ui_color[initial(knowledge.route)] || "grey"
 		knowledge_data["icon"] = icon2base64(get_icon_of_knowledge(knowledge))
+		knowledge_data["finished"] = FALSE
 
 		// Final knowledge can't be learned until all objectives are complete.
 		if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
 			knowledge_data["disabled"] = !can_ascend()
 
-		knowledge_data["hereticPath"] = initial(knowledge.route)
-		knowledge_data["color"] = path_to_ui_color[initial(knowledge.route)] || "grey"
+		tiers[initial(knowledge.depth)]["nodes"] += list(knowledge_data)
 
-		data["learnableKnowledge"] += list(knowledge_data)
+	data["knowledge_tiers"] = tiers
 
 	return data
 
@@ -149,19 +181,6 @@
 
 	data["objectives"] = get_objectives()
 	data["can_change_objective"] = can_assign_self_objectives
-
-	for(var/path in researched_knowledge)
-		var/list/knowledge_data = list()
-		var/datum/heretic_knowledge/found_knowledge = researched_knowledge[path]
-		knowledge_data["name"] = found_knowledge.name
-		knowledge_data["desc"] = found_knowledge.desc
-		knowledge_data["gainFlavor"] = found_knowledge.gain_text
-		knowledge_data["cost"] = found_knowledge.cost
-		knowledge_data["hereticPath"] = found_knowledge.route
-		knowledge_data["color"] = path_to_ui_color[found_knowledge.route] || "grey"
-		knowledge_data["icon"] = icon2base64(get_icon_of_knowledge(found_knowledge))
-
-		data["learnedKnowledge"] += list(knowledge_data)
 
 	return data
 

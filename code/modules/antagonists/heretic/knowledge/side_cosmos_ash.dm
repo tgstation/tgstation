@@ -19,6 +19,7 @@
 	cost = 1
 	route = PATH_SIDE
 	poll_ignore_define = POLL_IGNORE_FIRE_SHARK
+	depth = SIDE_TIER_1
 
 /datum/heretic_knowledge/spell/space_phase
 	name = "Space Phase"
@@ -32,6 +33,7 @@
 	spell_to_add = /datum/action/cooldown/spell/jaunt/space_crawl
 	cost = 1
 	route = PATH_SIDE
+	depth = SIDE_TIER_2
 
 /datum/heretic_knowledge/eldritch_coin
 	name = "Eldritch Coin"
@@ -51,3 +53,4 @@
 	result_atoms = list(/obj/item/coin/eldritch)
 	cost = 1
 	route = PATH_SIDE
+	depth = SIDE_TIER_3

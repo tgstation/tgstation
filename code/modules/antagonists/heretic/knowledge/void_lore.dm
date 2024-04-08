@@ -58,6 +58,7 @@
 	next_knowledge = list(/datum/heretic_knowledge/cold_snap)
 	cost = 1
 	route = PATH_VOID
+	depth = GRASP_TIER
 
 /datum/heretic_knowledge/void_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -89,6 +90,7 @@
 	cost = 1
 	route = PATH_VOID
 	research_tree_icon = icon('icons/hud/screen_alert.dmi',"cold",frame=1)
+	depth = SIDE_TIER_1
 
 /datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	user.add_traits(list(TRAIT_NOBREATH, TRAIT_RESISTCOLD), type)
@@ -120,6 +122,7 @@
 	spell_to_add = /datum/action/cooldown/spell/cone/staggered/cone_of_cold/void
 	cost = 1
 	route = PATH_VOID
+	depth = MID_TIER
 
 /datum/heretic_knowledge/spell/void_phase
 	name = "Void Phase"
@@ -136,6 +139,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/void_phase
 	cost = 1
 	route = PATH_VOID
+	depth = SIDE_TIER_2
 
 /datum/heretic_knowledge/blade_upgrade/void
 	name = "Seeking Blade"
@@ -169,6 +173,7 @@
 	spell_to_add = /datum/action/cooldown/spell/aoe/void_pull
 	cost = 1
 	route = PATH_VOID
+	depth = SIDE_TIER_3
 
 /datum/heretic_knowledge/ultimate/void_final
 	name = "Waltz at the End of Time"

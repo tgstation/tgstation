@@ -52,6 +52,7 @@
 	next_knowledge = list(/datum/heretic_knowledge/blade_dance)
 	cost = 1
 	route = PATH_BLADE
+	depth = GRASP_TIER
 
 /datum/heretic_knowledge/blade_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -111,6 +112,7 @@
 	)
 	cost = 1
 	route = PATH_BLADE
+	depth = SIDE_TIER_1
 	/// Whether the counter-attack is ready or not.
 	/// Used instead of cooldowns, so we can give feedback when it's ready again
 	var/riposte_ready = TRUE
@@ -232,6 +234,7 @@
 	spell_to_add = /datum/action/cooldown/spell/realignment
 	cost = 1
 	route = PATH_BLADE
+	depth = MID_TIER
 
 /// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
 #define BLOOD_FLOW_PER_SEVEIRTY -1
@@ -255,6 +258,7 @@
 	/// Whether we're currently in duelist stance, gaining certain buffs (low health)
 	var/in_duelist_stance = FALSE
 	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"shatter",frame=1)
+	depth = SIDE_TIER_2
 
 /datum/heretic_knowledge/duel_stance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	ADD_TRAIT(user, TRAIT_NODISMEMBER, type)
@@ -316,6 +320,7 @@
 	var/offand_force_decrement = 0
 	/// How much force was the last weapon we offhanded with? If it's different, we need to re-calculate the decrement
 	var/last_weapon_force = -1
+	depth = SIDE_TIER_3
 
 /datum/heretic_knowledge/blade_upgrade/blade/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(target == source)
