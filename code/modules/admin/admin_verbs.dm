@@ -1,14 +1,6 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
 //the procs are cause you can't put the comments in the GLOB var define
 
-GLOBAL_LIST_INIT(admin_verbs_fun, list(
-	/client/proc/cmd_select_equipment,
-	/client/proc/forceEvent,
-	/client/proc/reset_ooc,
-	/client/proc/set_ooc,
-	/client/proc/summon_ert,
-	))
-GLOBAL_PROTECT(admin_verbs_fun)
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 GLOBAL_PROTECT(admin_verbs_debug)
 /world/proc/AVerbsDebug()
@@ -66,8 +58,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 
 		var/rights = holder.rank_flags()
-		if(rights & R_FUN)
-			add_verb(src, GLOB.admin_verbs_fun)
 		if(rights & R_DEBUG)
 			add_verb(src, GLOB.admin_verbs_debug)
 #ifdef MAP_TEST
