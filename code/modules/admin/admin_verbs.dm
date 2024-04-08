@@ -8,9 +8,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	#ifdef TESTING /* Keep these at the top to not make the list look fugly */
 	/client/proc/check_missing_sprites,
 	#endif
-	/client/proc/check_bomb_impacts,
-	/client/proc/check_timer_sources,
-	/client/proc/clear_dynamic_transit,
 	/client/proc/cmd_admin_debug_traitor_objectives,
 	/client/proc/cmd_admin_toggle_fov,
 	/client/proc/cmd_debug_mob_lists,

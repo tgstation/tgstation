@@ -720,18 +720,18 @@ ADMIN_VERB(modify_goals, R_ADMIN, "Modify Goals", "Modify the station goals for 
 
 	message_admins("[key_name_admin(src)] ran [val] empty queries.")
 
-/client/proc/clear_dynamic_transit()
-	set category = "Debug"
-	set name = "Clear Dynamic Turf Reservations"
-	set desc = "Deallocates all reserved space, restoring it to round start conditions."
-	if(!holder)
-		return
-	var/answer = tgui_alert(usr,"WARNING: THIS WILL WIPE ALL RESERVED SPACE TO A CLEAN SLATE! ANY MOVING SHUTTLES, ELEVATORS, OR IN-PROGRESS PHOTOGRAPHY WILL BE DELETED!", "Really wipe dynamic turfs?", list("YES", "NO"))
+ADMIN_VERB(clear_turf_reservations, R_DEBUG, "Clear Dynamic Turf Reservations", "Deallocates all reserved space, restoring it to round start conditions.", ADMIN_CATEGORY_DEBUG)
+	var/answer = tgui_alert(
+		user,
+		"WARNING: THIS WILL WIPE ALL RESERVED SPACE TO A CLEAN SLATE! ANY MOVING SHUTTLES, ELEVATORS, OR IN-PROGRESS PHOTOGRAPHY WILL BE DELETED!",
+		"Really wipe dynamic turfs?",
+		list("YES", "NO"),
+	)
 	if(answer != "YES")
 		return
-	message_admins(span_adminnotice("[key_name_admin(src)] cleared dynamic transit space."))
-	BLACKBOX_LOG_ADMIN_VERB("Clear Dynamic Transit")
-	log_admin("[key_name(src)] cleared dynamic transit space.")
+	message_admins(span_adminnotice("[key_name_admin(user)] cleared dynamic transit space."))
+	BLACKBOX_LOG_ADMIN_VERB("Clear Dynamic Turf Reservations")
+	log_admin("[key_name(user)] cleared dynamic turf reservations.")
 	SSmapping.wipe_reservations() //this goes after it's logged, incase something horrible happens.
 
 /client/proc/toggle_medal_disable()
@@ -827,18 +827,11 @@ ADMIN_VERB(modify_goals, R_ADMIN, "Modify Goals", "Modify the station goals for 
 	if(tgui_alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modifications?", "Really reset?", list("No", "Yes")) == "Yes")
 		config.admin_reload()
 
-/// A debug verb to check the sources of currently running timers
-/client/proc/check_timer_sources()
-	set category = "Debug"
-	set name = "Check Timer Sources"
-	set desc = "Checks the sources of the running timers"
-	if (!check_rights(R_DEBUG))
-		return
-
+ADMIN_VERB(check_timer_sources, R_DEBUG, "Check Timer Sources", "Checks the sources of running timers.", ADMIN_CATEGORY_DEBUG)
 	var/bucket_list_output = generate_timer_source_output(SStimer.bucket_list)
 	var/second_queue = generate_timer_source_output(SStimer.second_queue)
 
-	usr << browse({"
+	user << browse({"
 		<h3>bucket_list</h3>
 		[bucket_list_output]
 
