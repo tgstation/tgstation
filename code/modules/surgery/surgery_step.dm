@@ -77,8 +77,6 @@
 #define SURGERY_SPEED_TRAIT_TRAINED 0.7
 ///Check if the user has surgical training of any kind
 #define HAS_ANY_SURGICAL_TRAINING(which_mob) (HAS_TRAIT(which_mob, TRAIT_SURGICAL_TRAINING) || HAS_TRAIT(which_mob, TRAIT_SURGICAL_TRAINING_SILICON))
-///Returns 1 if they have silicon surgical training, otherwise 0
-///Only used if we know they already have training
 
 /datum/surgery_step/proc/initiate(mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	// Only followers of Asclepius have the ability to use Healing Touch and perform miracle feats of surgery.
