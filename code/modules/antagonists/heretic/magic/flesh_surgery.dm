@@ -211,7 +211,7 @@
 		carbon_victim.emote("scream")
 
 	// We need to wait for the spell to actually finish casting to put the organ in their hands, hence, 1 ms timer.
-	addtimer(CALLBACK(caster, TYPE_PROC_REF(/mob, put_in_hands), picked_organ), 1)
+	addtimer(CALLBACK(caster, TYPE_PROC_REF(/mob, put_in_hands), picked_organ), 0.1 SECONDS)
 	return TRUE
 
 /// Extra checks ran while we're extracting an organ to make sure we can continue to do.

@@ -220,7 +220,7 @@
 	to_chat(owner, span_warning("Your connection to [linked_target] suddenly feels extremely strong... you can feel it pulling you!"))
 	owner.playsound_local(owner, 'sound/magic/lightning_chargeup.ogg', 75, FALSE)
 	returning = TRUE
-	addtimer(CALLBACK(src, PROC_REF(snapback)), 100)
+	addtimer(CALLBACK(src, PROC_REF(snapback)), 10 SECONDS)
 
 /datum/brain_trauma/special/quantum_alignment/proc/snapback()
 	returning = FALSE
@@ -295,7 +295,7 @@
 /datum/brain_trauma/special/death_whispers/proc/whispering()
 	ADD_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
 	active = TRUE
-	addtimer(CALLBACK(src, PROC_REF(cease_whispering)), rand(50, 300))
+	addtimer(CALLBACK(src, PROC_REF(cease_whispering)), rand(5 SECONDS, 30 SECONDS))
 
 /datum/brain_trauma/special/death_whispers/proc/cease_whispering()
 	REMOVE_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)

@@ -409,7 +409,7 @@ DEFINE_BITFIELD(turret_flags, list(
 			spark_system.start()
 		if(on && !(turret_flags & TURRET_FLAG_SHOOT_ALL_REACT) && !(obj_flags & EMAGGED))
 			turret_flags |= TURRET_FLAG_SHOOT_ALL_REACT
-			addtimer(CALLBACK(src, PROC_REF(reset_attacked)), 60)
+			addtimer(CALLBACK(src, PROC_REF(reset_attacked)), 6 SECONDS)
 
 /obj/machinery/porta_turret/proc/reset_attacked()
 	turret_flags &= ~TURRET_FLAG_SHOOT_ALL_REACT
@@ -827,9 +827,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(target)
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
 		shootAt(target)
-		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 5)
-		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 10)
-		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 15)
+		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 0.5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 1.5 SECONDS)
 		return TRUE
 
 /obj/machinery/porta_turret/ai

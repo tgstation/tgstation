@@ -108,7 +108,7 @@
 			return 120
 		if(SLIME_ACTIVATE_MAJOR)
 			to_chat(user, span_notice("Your [name] starts pulsing..."))
-			if(do_after(user, 40, target = user))
+			if(do_after(user, 4 SECONDS, target = user))
 				var/mob/living/basic/slime/new_slime = new(get_turf(user), /datum/slime_type/grey)
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				to_chat(user, span_notice("You spit out [new_slime]."))
@@ -128,7 +128,7 @@
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			user.visible_message(span_warning("[user] starts shaking!"),span_notice("Your [name] starts pulsing gently..."))
-			if(do_after(user, 40, target = user))
+			if(do_after(user, 4 SECONDS, target = user))
 				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), FRIENDLY_SPAWN)
 				spawned_mob.faction |= FACTION_NEUTRAL
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
@@ -137,7 +137,7 @@
 
 		if(SLIME_ACTIVATE_MAJOR)
 			user.visible_message(span_warning("[user] starts shaking violently!"),span_warning("Your [name] starts pulsing violently..."))
-			if(do_after(user, 50, target = user))
+			if(do_after(user, 5 SECONDS, target = user))
 				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), HOSTILE_SPAWN)
 				if(!user.combat_mode)
 					spawned_mob.faction |= FACTION_NEUTRAL
@@ -274,12 +274,12 @@
 				to_chat(user, span_warning("Your glow is already enhanced!"))
 				return
 			species.update_glow(user, 5)
-			addtimer(CALLBACK(species, TYPE_PROC_REF(/datum/species/jelly/luminescent, update_glow), user, LUMINESCENT_DEFAULT_GLOW), 600)
+			addtimer(CALLBACK(species, TYPE_PROC_REF(/datum/species/jelly/luminescent, update_glow), user, LUMINESCENT_DEFAULT_GLOW), 1 MINUTES)
 			to_chat(user, span_notice("You start glowing brighter."))
 
 		if(SLIME_ACTIVATE_MAJOR)
 			user.visible_message(span_warning("[user]'s skin starts flashing intermittently..."), span_warning("Your skin starts flashing intermittently..."))
-			if(do_after(user, 25, target = user))
+			if(do_after(user, 2.5 SECONDS, target = user))
 				empulse(user, 1, 2)
 				user.visible_message(span_warning("[user]'s skin flashes!"), span_warning("Your skin flashes as you emit an electromagnetic pulse!"))
 				return 600
@@ -384,7 +384,7 @@
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, span_warning("You feel yourself reverting to human form..."))
-			if(do_after(user, 120, target = user))
+			if(do_after(user, 12 SECONDS, target = user))
 				to_chat(user, span_warning("You feel human again!"))
 				user.set_species(/datum/species/human)
 				return
@@ -392,7 +392,7 @@
 
 		if(SLIME_ACTIVATE_MAJOR)
 			to_chat(user, span_warning("You feel yourself radically changing your slime type..."))
-			if(do_after(user, 120, target = user))
+			if(do_after(user, 12 SECONDS, target = user))
 				to_chat(user, span_warning("You feel different!"))
 				user.set_species(pick(/datum/species/jelly/slime, /datum/species/jelly/stargazer))
 				return
@@ -437,7 +437,7 @@
 
 		if(SLIME_ACTIVATE_MAJOR)
 			to_chat(user, span_warning("You feel your own light turning dark..."))
-			if(do_after(user, 120, target = user))
+			if(do_after(user, 12 SECONDS, target = user))
 				to_chat(user, span_warning("You feel a longing for darkness."))
 				user.set_species(pick(/datum/species/shadow))
 				return
@@ -459,7 +459,7 @@
 
 		if(SLIME_ACTIVATE_MAJOR)
 			user.visible_message(span_warning("[user]'s skin starts pulsing and glowing ominously..."), span_userdanger("You feel unstable..."))
-			if(do_after(user, 60, target = user))
+			if(do_after(user, 6 SECONDS, target = user))
 				to_chat(user, span_userdanger("You explode!"))
 				explosion(user, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6, explosion_cause = src)
 				user.investigate_log("has been gibbed by an oil slime extract explosion.", INVESTIGATE_DEATHS)
@@ -487,7 +487,7 @@
 
 		if(SLIME_ACTIVATE_MAJOR)
 			to_chat(user, span_warning("You feel your body rapidly hardening..."))
-			if(do_after(user, 120, target = user))
+			if(do_after(user, 12 SECONDS, target = user))
 				to_chat(user, span_warning("You feel solid."))
 				user.set_species(/datum/species/golem)
 				return
@@ -511,7 +511,7 @@
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, span_warning("You feel your body vibrating..."))
-			if(do_after(user, 25, target = user))
+			if(do_after(user, 2.5 SECONDS, target = user))
 				to_chat(user, span_warning("You teleport!"))
 				do_teleport(user, get_turf(user), 6, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 				return 300
@@ -598,7 +598,7 @@
 
 		if(SLIME_ACTIVATE_MAJOR)
 			to_chat(user, span_warning("You feel time slow down..."))
-			if(do_after(user, 30, target = user))
+			if(do_after(user, 3 SECONDS, target = user))
 				new /obj/effect/timestop(get_turf(user), 2, 50, list(user))
 				return 900
 

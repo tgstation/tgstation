@@ -37,8 +37,6 @@
 
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
 	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
 		return
 	variant = rand(1,3)

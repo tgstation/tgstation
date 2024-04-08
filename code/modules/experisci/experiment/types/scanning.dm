@@ -106,17 +106,20 @@
  * * target - The atom to attempt to scan
  */
 /datum/experiment/scanning/proc/experiment_requirements(datum/component/experiment_handler/experiment_handler, atom/target)
+	var/destructive = (traits & EXPERIMENT_TRAIT_DESTRUCTIVE)
 	for (var/req_atom in required_atoms)
-		if (istype(target, req_atom))
-			// Try to select a required atom that this scanned atom would contribute towards
-			var/destructive = traits & EXPERIMENT_TRAIT_DESTRUCTIVE
-			var/list/seen = scanned[req_atom]
-			var/selected = destructive && (req_atom in scanned) && seen < required_atoms[req_atom]
-			if (!selected)
-				selected = !destructive && seen.len < required_atoms[req_atom] && !(WEAKREF(target) in seen)
-			// Run any additonal checks if necessary
-			if (selected && final_contributing_index_checks(experiment_handler, target, selected))
-				return req_atom
+		if (!istype(target, req_atom))
+			continue
+		// Try to select a required atom that this scanned atom would contribute towards
+		var/selected
+		var/list/seen = scanned[req_atom]
+		if (destructive && (req_atom in scanned) && scanned[req_atom] < required_atoms[req_atom])
+			selected = req_atom
+		else if (!destructive && seen.len < required_atoms[req_atom] && !(WEAKREF(target) in seen))
+			selected = req_atom
+		// Run any additonal checks if necessary
+		if (selected && final_contributing_index_checks(experiment_handler, target, selected))
+			return selected
 
 /**
  * Performs any additional checks against the atom being considered for selection as a contributing index
