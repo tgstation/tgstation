@@ -23,6 +23,10 @@
 /turf/open/floor/iron/low_pressure_plasma,
 /area/space)
 "aY" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	piping_layer = 4;
+	chamber_id = "plas_incinerator"
+	},
 /turf/open/floor/engine/low_pressure_plasma,
 /area/space)
 "bb" = (
@@ -335,7 +339,7 @@
 "xE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /obj/machinery/computer/atmos_control/nocontrol{
-	atmos_chambers = list("iceboxplasmaplas" = "iceboxplasman2o" = "iceboxplasmaco2" = "iceboxplasmaoxy" = "iceboxplasman2" = "iceboxplasmaair")
+	atmos_chambers = list("iceboxplasmaplas" = "Plasma", "iceboxplasman2o" = "Nitrous Oxide", "iceboxplasmaco2" = "Carbon Dioxide", "iceboxplasmaoxy" = "Oxygen", "iceboxplasman2" = "Nitrogen", "iceboxplasmaair" = "Air")
 	},
 /turf/open/floor/iron/low_pressure_plasma,
 /area/space)
