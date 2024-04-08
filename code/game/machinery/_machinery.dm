@@ -196,6 +196,12 @@
 
 	return ..()
 
+/**
+ * Called in LateInitialize meant to be the machine replacement to it
+ * This sets up power for the machine and requires parent be called,
+ * ensuring power works on all machines unless exempted with NO_POWER_USE.
+ * This is the proc to override if you want to do anything in LateInitialize.
+ */
 /obj/machinery/proc/post_machine_initialize()
 	SHOULD_CALL_PARENT(TRUE)
 	power_change()
