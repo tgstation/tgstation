@@ -28,7 +28,7 @@ type IconUnion =
       src?: string;
     };
 
-const maxAttempts = 3;
+const maxAttempts = 5;
 
 /** Image component. Use this instead of Box as="img". */
 export function Image(props: Props) {
@@ -61,7 +61,7 @@ export function Image(props: Props) {
       />
     );
   } else {
-    content = <Icon name="spinner" spin color="light-gray" />;
+    content = <Icon name="spinner" spin size={2.4} color="gray" />;
   }
 
   if (tooltip) {
@@ -79,7 +79,7 @@ export function Image(props: Props) {
         setAttempts((prev) => prev + 1);
         setError(false);
       }
-    }, 1000);
+    }, 1500);
 
     return () => {
       isMounted = false;
