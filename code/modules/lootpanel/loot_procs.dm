@@ -93,7 +93,7 @@
 	search_turf_ref = WEAKREF(tile)
 	src.user = user
 
-	RegisterSignal(tile, COMSIG_TURF_CHANGE, PROC_REF(on_tile_change))
+	RegisterSignal(tile, COMSIG_TURF_CHANGE, PROC_REF(on_tile_change), override = TRUE)
 	start_search()
 	ui_interact(user)
 
