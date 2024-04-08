@@ -66,37 +66,37 @@
 /area/ruin/powered/hermit
 	name = "\improper Hermit's Cabin"
 
-/area/ruin/powered/plasmamanruin
+/area/ruin/plasmamanruin
 	name= "\improper Plasma Base"
 
-/area/ruin/powered/plasmamanruin/common
+/area/ruin/plasmamanruin/common
 	name= "\improper Plasma Base Commons Area"
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
-/area/ruin/unpowered/plasmamanruin/cargo
+/area/ruin/plasmamanruin/cargo
 	name= "\improper Plasma Base Warehouse"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
-/area/ruin/unpowered/plasmamanruin/med
+/area/ruin/plasmamanruin/med
 	name= "\improper Plasma Base Medical"
 	ambience_index = AMBIENCE_MEDICAL
 	sound_environment = SOUND_AREA_STANDARD_STATION
 	min_ambience_cooldown = 90 SECONDS
 	max_ambience_cooldown = 180 SECONDS
 
-/area/ruin/unpowered/plasmamanruin/atmos
+/area/ruin/plasmamanruin/atmos
 	name= "\improper Plasma Base Atmospherics"
 	ambience_index = AMBIENCE_ENGI
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
-/area/ruin/unpowered/plasmamanruin/science
+/area/ruin/plasmamanruin/science
 	name= "\improper Plasma Base Science"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
-/area/ruin/unpowered/plasmamanruin/botany
+/area/ruin/plasmamanruin/botany
 	name= "\improper Plasma Base Botany"
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
-/area/ruin/unpowered/plasmamanruin/bar
+/area/ruin/plasmamanruin/bar
 	name= "\improper Plasma Base Bar"
 	sound_environment = SOUND_AREA_STANDARD_STATION

@@ -23,10 +23,6 @@
 /turf/open/floor/iron/low_pressure_plasma,
 /area/space)
 "aY" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "plas_incinerator";
-	piping_layer = 4
-	},
 /turf/open/floor/engine/low_pressure_plasma,
 /area/space)
 "bb" = (
@@ -41,6 +37,7 @@
 /area/space)
 "cB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible/layer2,
+/obj/machinery/atmospherics/pipe/bridge_pipe/dark/visible,
 /turf/open/floor/iron/low_pressure_plasma,
 /area/space)
 "cX" = (
@@ -63,6 +60,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/plating/low_pressure_plasma,
+/area/space)
+"fw" = (
+/obj/machinery/atmospherics/pipe/bridge_pipe/dark/visible,
+/turf/open/floor/iron/low_pressure_plasma,
 /area/space)
 "gi" = (
 /obj/machinery/power/turbine/inlet_compressor{
@@ -193,7 +194,7 @@
 /area/space)
 "qd" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "qp" = (
 /obj/machinery/air_sensor{
 	chamber_id = "iceboxplasman2o"
@@ -202,7 +203,7 @@
 /area/space)
 "qJ" = (
 /turf/open/lava/plasma/ice_moon,
-/area/space)
+/area/icemoon/surface/outdoors/nospawn)
 "qR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -363,7 +364,7 @@
 "Ck" = (
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "Cn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/iron/low_pressure_plasma,
@@ -394,7 +395,7 @@
 /area/space)
 "EN" = (
 /turf/closed/wall/ice,
-/area/space)
+/area/icemoon/surface/outdoors/nospawn)
 "Fu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/visible/layer2{
 	dir = 8
@@ -410,6 +411,11 @@
 /area/space)
 "FD" = (
 /turf/open/floor/engine/n2,
+/area/space)
+"Gj" = (
+/obj/effect/turf_decal/tile/yellow/half,
+/obj/machinery/atmospherics/pipe/bridge_pipe/dark/visible,
+/turf/open/floor/iron/low_pressure_plasma,
 /area/space)
 "GL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
@@ -479,7 +485,7 @@
 "JJ" = (
 /obj/structure/lattice/catwalk/mining,
 /turf/open/lava/plasma/ice_moon,
-/area/space)
+/area/icemoon/surface/outdoors/nospawn)
 "JX" = (
 /turf/open/floor/engine/o2,
 /area/space)
@@ -599,7 +605,7 @@
 /area/space)
 "TB" = (
 /turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
-/area/space)
+/area/icemoon/surface/outdoors/nospawn)
 "TX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/iron/low_pressure_plasma,
@@ -2388,8 +2394,8 @@ QU
 nl
 em
 cB
-vp
-qY
+fw
+Gj
 WI
 PZ
 JX
@@ -2488,8 +2494,8 @@ JY
 JY
 KO
 WI
-vp
-vp
+fw
+fw
 PW
 Zr
 gl
@@ -2696,8 +2702,8 @@ HB
 HB
 Dm
 WI
-vp
-vp
+fw
+fw
 Wl
 Zr
 mN
