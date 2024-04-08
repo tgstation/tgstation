@@ -30,6 +30,7 @@
 
 /datum/round_event_control/antagonist/solo/changeling/midround
 	name = "Genome Awakening (Changelings)"
+	antag_flag = ROLE_CHANGELING_MIDROUND
 	prompted_picking = TRUE
 	max_occurrences = 2
 	shared_occurences = list(/datum/round_event_control/antagonist/solo/changeling/roundstart)

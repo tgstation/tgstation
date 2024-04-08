@@ -26,7 +26,7 @@
 /// Handle antags as well as assigning people to their jobs
 /datum/controller/subsystem/job/proc/handle_final_setup()
 	var/sanity = 0
-	var/max_sane_loops = length(subtypesof(/datum/round_event_control/antagonist/solo) - typesof(/datum/round_event_control/antagonist/solo/ghost)) //not exact, but its close enough
+	var/max_sane_loops = length(subtypesof(/datum/round_event_control/antagonist/solo) - typesof(/datum/round_event_control/antagonist/solo/from_ghosts)) //not exact, but its close enough
 	pick_desired_roundstart()
 	while(!handle_roundstart_antags() && !sanity >= max_sane_loops)
 		sanity++

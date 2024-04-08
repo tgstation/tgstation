@@ -399,12 +399,10 @@
 /obj/machinery/smartfridge/extract/accept_check(obj/item/O)
 	if(istype(O, /obj/item/slime_extract))
 		return TRUE
-	if(istype(O, /obj/item/slime_scanner))
-		return TRUE
 	return FALSE
 
 /obj/machinery/smartfridge/extract/preloaded
-	initial_contents = list(/obj/item/slime_scanner = 2)
+	initial_contents = list(/obj/item/slime_extract/grey = 2)
 
 // -------------------------------------
 // Cytology Petri Dish Smartfridge

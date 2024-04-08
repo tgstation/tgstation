@@ -123,6 +123,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("fire alarm frame", /obj/item/wallframe/firealarm, 2, check_density = FALSE, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("extinguisher cabinet frame", /obj/item/wallframe/extinguisher_cabinet, 2, check_density = FALSE, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("button frame", /obj/item/wallframe/button, 1, check_density = FALSE, category = CAT_EQUIPMENT), \
+	new/datum/stack_recipe("slime pen management frame", /obj/item/wallframe/slime_pen_controller, 1, check_density = FALSE, category = CAT_EQUIPMENT), \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_DOORS), \
 	new/datum/stack_recipe("filing cabinet", /obj/structure/filingcabinet, 2, time = 10 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \

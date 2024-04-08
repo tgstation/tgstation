@@ -28,21 +28,13 @@
 
 /obj/structure/chemical_tank/factory/proc/load_styles()
 	//expertly copypasted from chemmasters
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
 	pill_styles = list()
 	for (var/x in 1 to PILL_STYLE_COUNT)
-		var/list/SL = list()
-		SL["id"] = x
-		SL["class_name"] = assets.icon_class_name("pill[x]")
-		pill_styles += list(SL)
-	var/datum/asset/spritesheet/simple/patches_assets = get_asset_datum(/datum/asset/spritesheet/simple/patches)
+		pill_styles += list("[x]" = image(icon = 'icons/obj/medical/chemical.dmi', icon_state = "pill[x]"))
+
 	patch_styles = list()
 	for (var/raw_patch_style in PATCH_STYLE_LIST)
-		//adding class_name for use in UI
-		var/list/patch_style = list()
-		patch_style["style"] = raw_patch_style
-		patch_style["class_name"] = patches_assets.icon_class_name(raw_patch_style)
-		patch_styles += list(patch_style)
+		patch_styles += list("[raw_patch_style]" = image(icon = 'icons/obj/medical/chemical.dmi', icon_state = raw_patch_style))
 
 /obj/structure/chemical_tank/factory/proc/generate_product(mob/user)
 	if(reagents.total_volume < current_volume)
@@ -52,7 +44,10 @@
 		reagents.trans_to(P, current_volume)
 		P.name = trim("[product_name] pill")
 		user.put_in_hands(P)
-		P.icon_state = "pill[rand(1,21)]"
+		if(pill_number == RANDOM_PILL_STYLE)
+			P.icon_state = "pill[rand(1,21)]"
+		else
+			P.icon_state = "pill[pill_number]"
 		if(P.icon_state == "pill4") //mirrored from chem masters
 			P.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
 	else if (product == "patch")
@@ -69,6 +64,8 @@
 
 /obj/structure/chemical_tank/factory/AltClick(mob/user)
 	. = ..()
+	if(!length(pill_styles) || !length(patch_styles))
+		load_styles()
 	var/choice_product = tgui_input_list(user, "Pick Product", "[name]", list("pill", "patch", "bottle"))
 	if(choice_product)
 		product = choice_product
@@ -80,6 +77,17 @@
 	var/choice_volume = tgui_input_number(user, "Choose a product volume", "[name]", current_volume, max_volume, min_volume)
 	if(choice_volume)
 		current_volume = choice_volume
+
+	if(choice_product == "patch")
+		var/patch_choice = show_radial_menu(user, src, patch_styles)
+		if(patch_choice)
+			patch_style = patch_choice
+
+	if(choice_product == "pill")
+		var/pill_choice = show_radial_menu(user, src, pill_styles)
+		if(pill_choice)
+			pill_number = text2num(pill_choice)
+
 
 /obj/structure/chemical_tank/factory/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

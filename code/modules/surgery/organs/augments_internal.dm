@@ -105,6 +105,7 @@
 	slot = ORGAN_SLOT_BRAIN_ANTISTUN
 
 	var/static/list/signalCache = list(
+		COMSIG_LIVING_STAMINA_STUN,
 		COMSIG_LIVING_STATUS_STUN,
 		COMSIG_LIVING_STATUS_KNOCKDOWN,
 		COMSIG_LIVING_STATUS_IMMOBILIZE,
@@ -128,6 +129,7 @@
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/clear_stuns()
 	if(owner || !(organ_flags & ORGAN_FAILING))
+		owner.exit_stamina_stun()
 		owner.SetStun(0)
 		owner.SetKnockdown(0)
 		owner.SetImmobilized(0)

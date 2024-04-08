@@ -80,7 +80,7 @@
 
 /datum/symptom/transformation/slime
 	name = "Advanced Mutation Transformation"
-	new_form = /mob/living/simple_animal/slime
+	new_form = /mob/living/basic/slime
 
 /datum/symptom/transformation/corgi
 	name = "The Barkening"

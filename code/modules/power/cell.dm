@@ -433,7 +433,7 @@
 	name = "EMP-proof slime core"
 	desc = "A yellow slime core infused with plasma. Its organic nature makes it immune to EMPs."
 	icon = 'icons/mob/simple/slimes.dmi'
-	icon_state = "yellow slime extract"
+	icon_state = "yellow_slime_extract"
 	custom_materials = null
 	maxcharge = 5000
 	charge_light_type = null

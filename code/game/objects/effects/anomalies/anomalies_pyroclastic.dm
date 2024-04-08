@@ -27,13 +27,11 @@
 	if(istype(tile))
 		tile.atmos_spawn_air("o2=500;plasma=500;TEMP=1000") //Make it hot and burny for the new slime
 
-	var/new_colour = pick("red", "orange")
-	var/mob/living/simple_animal/slime/pyro = new(tile, new_colour)
-	pyro.rabid = TRUE
-	pyro.amount_grown = SLIME_EVOLUTION_THRESHOLD
-	pyro.Evolve()
-	var/datum/action/innate/slime/reproduce/repro_action = new
-	repro_action.Grant(pyro)
+	var/new_colour = pick(/datum/slime_color/red, /datum/slime_color/orange)
+	var/mob/living/basic/slime/pyro = new(tile, new_colour)
+	ADD_TRAIT(pyro, TRAIT_SLIME_RABID, "pyro")
+	pyro.maximum_survivable_temperature = INFINITY
+	pyro.apply_temperature_requirements()
 
 	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
 		"Do you want to play as a pyroclastic anomaly slime?",

@@ -3,8 +3,8 @@
 /obj/item/slime_extract
 	name = "slime extract"
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
-	icon = 'icons/mob/simple/slimes.dmi'
-	icon_state = "grey slime extract"
+	icon = 'monkestation/code/modules/slimecore/icons/slimes.dmi'
+	icon_state = "grey_slime_extract"
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
@@ -16,6 +16,8 @@
 	var/effectmod ///Which type of crossbred
 	var/list/activate_reagents = list() ///Reagents required for activation
 	var/recurring = FALSE
+
+	var/tier = 1
 
 /obj/item/slime_extract/examine(mob/user)
 	. = ..()
@@ -58,45 +60,16 @@
 	to_chat(user, span_warning("Nothing happened... This slime extract cannot be activated this way."))
 	return FALSE
 
-/**
-* Core-crossing: Feeding adult slimes extracts to obtain a much more powerful, single extract.
-*
-* By using a valid core on a living adult slime, then feeding it nine more of the same type, you can mutate it into more useful items. Not every slime type has an implemented core cross.
-*/
-/obj/item/slime_extract/attack(mob/living/simple_animal/slime/M, mob/user)
-	if(!isslime(M))
-		return ..()
-	if(M.stat)
-		to_chat(user, span_warning("The slime is dead!"))
-		return
-	if(!M.is_adult)
-		to_chat(user, span_warning("The slime must be an adult to cross its core!"))
-		return
-	if(M.effectmod && M.effectmod != effectmod)
-		to_chat(user, span_warning("The slime is already being crossed with a different extract!"))
-		return
-
-	if(!M.effectmod)
-		M.effectmod = effectmod
-
-	M.applied++
-	qdel(src)
-	to_chat(user, span_notice("You feed the slime [src], [M.applied == 1 ? "starting to mutate its core." : "further mutating its core."]"))
-	playsound(M, 'sound/effects/attackblob.ogg', 50, TRUE)
-
-	if(M.applied >= SLIME_EXTRACT_CROSSING_REQUIRED)
-		M.spawn_corecross()
-
 /obj/item/slime_extract/grey
 	name = "grey slime extract"
-	icon_state = "grey slime extract"
+	icon_state = "grey_slime_extract"
 	effectmod = "reproductive"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 
 /obj/item/slime_extract/grey/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			var/obj/item/food/monkeycube/M = new
+			var/obj/item/stack/biomass/M = new
 			if(!user.put_in_active_hand(M))
 				M.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
@@ -105,7 +78,7 @@
 		if(SLIME_ACTIVATE_MAJOR)
 			to_chat(user, span_notice("Your [name] starts pulsing..."))
 			if(do_after(user, 40, target = user))
-				var/mob/living/simple_animal/slime/S = new(get_turf(user), "grey")
+				var/mob/living/basic/slime/S = new(get_turf(user))
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				to_chat(user, span_notice("You spit out [S]."))
 				return 350
@@ -114,9 +87,10 @@
 
 /obj/item/slime_extract/gold
 	name = "gold slime extract"
-	icon_state = "gold slime extract"
+	icon_state = "gold_slime_extract"
 	effectmod = "symbiont"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
+	tier = 4
 
 
 
@@ -145,9 +119,10 @@
 
 /obj/item/slime_extract/silver
 	name = "silver slime extract"
-	icon_state = "silver slime extract"
+	icon_state = "silver_slime_extract"
 	effectmod = "consuming"
 	activate_reagents = list(/datum/reagent/toxin/plasma,/datum/reagent/water)
+	tier = 2
 
 
 
@@ -173,7 +148,7 @@
 
 /obj/item/slime_extract/metal
 	name = "metal slime extract"
-	icon_state = "metal slime extract"
+	icon_state = "metal_slime_extract"
 	effectmod = "industrial"
 	activate_reagents = list(/datum/reagent/toxin/plasma,/datum/reagent/water)
 
@@ -197,7 +172,7 @@
 
 /obj/item/slime_extract/purple
 	name = "purple slime extract"
-	icon_state = "purple slime extract"
+	icon_state = "purple_slime_extract"
 	effectmod = "regenerative"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
 
@@ -216,9 +191,10 @@
 
 /obj/item/slime_extract/darkpurple
 	name = "dark purple slime extract"
-	icon_state = "dark purple slime extract"
+	icon_state = "dark_purple_slime_extract"
 	effectmod = "self-sustaining"
 	activate_reagents = list(/datum/reagent/toxin/plasma)
+	tier = 2
 
 /obj/item/slime_extract/darkpurple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -239,7 +215,7 @@
 
 /obj/item/slime_extract/orange
 	name = "orange slime extract"
-	icon_state = "orange slime extract"
+	icon_state = "orange_slime_extract"
 	effectmod = "burning"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 
@@ -259,9 +235,10 @@
 
 /obj/item/slime_extract/yellow
 	name = "yellow slime extract"
-	icon_state = "yellow slime extract"
+	icon_state = "yellow_slime_extract"
 	effectmod = "charged"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
+	tier = 2
 
 /obj/item/slime_extract/yellow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -282,9 +259,10 @@
 
 /obj/item/slime_extract/red
 	name = "red slime extract"
-	icon_state = "red slime extract"
+	icon_state = "red_slime_extract"
 	effectmod = "sanguine"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
+	tier = 3
 
 /obj/item/slime_extract/red/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -295,14 +273,14 @@
 
 		if(SLIME_ACTIVATE_MAJOR)
 			user.visible_message(span_warning("[user]'s skin flashes red for a moment..."), span_warning("Your skin flashes red as you emit rage-inducing pheromones..."))
-			for(var/mob/living/simple_animal/slime/slime in viewers(get_turf(user), null))
-				slime.rabid = TRUE
+			for(var/mob/living/basic/slime/slime in viewers(get_turf(user), null))
+				ADD_TRAIT(slime, TRAIT_SLIME_RABID, "red-extract")
 				slime.visible_message(span_danger("The [slime] is driven into a frenzy!"))
 			return 600
 
 /obj/item/slime_extract/blue
 	name = "blue slime extract"
-	icon_state = "blue slime extract"
+	icon_state = "blue_slime_extract"
 	effectmod = "stabilized"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 
@@ -322,9 +300,10 @@
 
 /obj/item/slime_extract/darkblue
 	name = "dark blue slime extract"
-	icon_state = "dark blue slime extract"
+	icon_state = "dark_blue_slime_extract"
 	effectmod = "chilling"
 	activate_reagents = list(/datum/reagent/toxin/plasma,/datum/reagent/water)
+	tier = 2
 
 /obj/item/slime_extract/darkblue/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -345,9 +324,10 @@
 
 /obj/item/slime_extract/pink
 	name = "pink slime extract"
-	icon_state = "pink slime extract"
+	icon_state = "pink_slime_extract"
 	effectmod = "gentle"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
+	tier = 4
 
 /obj/item/slime_extract/pink/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -373,9 +353,10 @@
 
 /obj/item/slime_extract/green
 	name = "green slime extract"
-	icon_state = "green slime extract"
+	icon_state = "green_slime_extract"
 	effectmod = "mutative"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/uranium/radium)
+	tier = 4
 
 /obj/item/slime_extract/green/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -397,9 +378,10 @@
 
 /obj/item/slime_extract/lightpink
 	name = "light pink slime extract"
-	icon_state = "light pink slime extract"
+	icon_state = "light_pink_slime_extract"
 	effectmod = "loyal"
 	activate_reagents = list(/datum/reagent/toxin/plasma)
+	tier = 5
 
 /obj/item/slime_extract/lightpink/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -421,9 +403,10 @@
 
 /obj/item/slime_extract/black
 	name = "black slime extract"
-	icon_state = "black slime extract"
+	icon_state = "black_slime_extract"
 	effectmod = "transformative"
 	activate_reagents = list(/datum/reagent/toxin/plasma)
+	tier = 5
 
 /obj/item/slime_extract/black/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -441,9 +424,10 @@
 
 /obj/item/slime_extract/oil
 	name = "oil slime extract"
-	icon_state = "oil slime extract"
+	icon_state = "oil_slime_extract"
 	effectmod = "detonating"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
+	tier = 5
 
 /obj/item/slime_extract/oil/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -465,9 +449,10 @@
 
 /obj/item/slime_extract/adamantine
 	name = "adamantine slime extract"
-	icon_state = "adamantine slime extract"
+	icon_state = "adamantine_slime_extract"
 	effectmod = "crystalline"
 	activate_reagents = list(/datum/reagent/toxin/plasma)
+	tier = 5
 
 /obj/item/slime_extract/adamantine/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -494,13 +479,14 @@
 
 /obj/item/slime_extract/bluespace
 	name = "bluespace slime extract"
-	icon_state = "bluespace slime extract"
+	icon_state = "bluespace_slime_extract"
 	effectmod = "warping"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
 	var/teleport_ready = FALSE
 	var/teleport_x = 0
 	var/teleport_y = 0
 	var/teleport_z = 0
+	tier = 6
 
 /obj/item/slime_extract/bluespace/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -530,9 +516,10 @@
 
 /obj/item/slime_extract/pyrite
 	name = "pyrite slime extract"
-	icon_state = "pyrite slime extract"
+	icon_state = "pyrite_slime_extract"
 	effectmod = "prismatic"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
+	tier = 3
 
 /obj/item/slime_extract/pyrite/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -557,9 +544,10 @@
 
 /obj/item/slime_extract/cerulean
 	name = "cerulean slime extract"
-	icon_state = "cerulean slime extract"
+	icon_state = "cerulean_slime_extract"
 	effectmod = "recurring"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
+	tier = 3
 
 /obj/item/slime_extract/cerulean/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -577,9 +565,10 @@
 
 /obj/item/slime_extract/sepia
 	name = "sepia slime extract"
-	icon_state = "sepia slime extract"
+	icon_state = "sepia_slime_extract"
 	effectmod = "lengthened"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
+	tier = 3
 
 /obj/item/slime_extract/sepia/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -599,9 +588,10 @@
 
 /obj/item/slime_extract/rainbow
 	name = "rainbow slime extract"
-	icon_state = "rainbow slime extract"
+	icon_state = "rainbow_slime_extract"
 	effectmod = "hyperchromatic"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,"lesser plasma",/datum/reagent/toxin/slimejelly,"holy water and uranium") //Curse this snowflake reagent list.
+	tier = 6
 
 /obj/item/slime_extract/rainbow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -653,21 +643,20 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potsilver"
 
-/obj/item/slimepotion/slime/docility/attack(mob/living/simple_animal/slime/M, mob/user)
+/obj/item/slimepotion/slime/docility/attack(mob/living/basic/slime/M, mob/user)
 	if(!isslime(M))
 		to_chat(user, span_warning("The potion only works on slimes!"))
 		return ..()
 	if(M.stat)
 		to_chat(user, span_warning("The slime is dead!"))
 		return
-	if(M.rabid) //Stops being rabid, but doesn't become truly docile.
+	if(HAS_TRAIT(M, TRAIT_SLIME_RABID)) //Stops being rabid, but doesn't become truly docile.
 		to_chat(M, span_warning("You absorb the potion, and your rabid hunger finally settles to a normal desire to feed."))
 		to_chat(user, span_notice("You feed the slime the potion, calming its rabid rage."))
-		M.rabid = FALSE
+		REMOVE_TRAIT(M, TRAIT_SLIME_RABID, null)
 		qdel(src)
 		return
-	M.docile = 1
-	M.set_nutrition(700)
+	M.add_trait(/datum/slime_trait/docility)
 	to_chat(M, span_warning("You absorb the potion and feel your intense desire to feed melt away."))
 	to_chat(user, span_notice("You feed the slime the potion, removing its hunger and calming it."))
 	var/newname = sanitize_name(tgui_input_text(user, "Would you like to give the slime a name?", "Name your new pet", "Pet Slime", MAX_NAME_LEN))
@@ -799,22 +788,18 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potred"
 
-/obj/item/slimepotion/slime/steroid/attack(mob/living/simple_animal/slime/M, mob/user)
+/obj/item/slimepotion/slime/steroid/attack(mob/living/basic/slime/M, mob/user)
 	if(!isslime(M))//If target is not a slime.
 		to_chat(user, span_warning("The steroid only works on baby slimes!"))
 		return ..()
-	if(M.is_adult) //Can't steroidify adults
-		to_chat(user, span_warning("Only baby slimes can use the steroid!"))
-		return
 	if(M.stat)
 		to_chat(user, span_warning("The slime is dead!"))
 		return
-	if(M.cores >= 5)
-		to_chat(user, span_warning("The slime already has the maximum amount of extract!"))
+	if(M.ooze_production >= 50)
+		to_chat(user, span_warning("The slime is already producing too much ooze!"))
 		return
-
-	to_chat(user, span_notice("You feed the slime the steroid. It will now produce one more extract."))
-	M.cores++
+	to_chat(user, span_notice("You feed the slime the steroid. It will now produce more ooze."))
+	M.ooze_production++
 	qdel(src)
 
 /obj/item/slimepotion/enhancer
@@ -829,7 +814,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potcyan"
 
-/obj/item/slimepotion/slime/stabilizer/attack(mob/living/simple_animal/slime/M, mob/user)
+/obj/item/slimepotion/slime/stabilizer/attack(mob/living/basic/slime/M, mob/user)
 	if(!isslime(M))
 		to_chat(user, span_warning("The stabilizer only works on slimes!"))
 		return ..()
@@ -850,14 +835,14 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potgreen"
 
-/obj/item/slimepotion/slime/mutator/attack(mob/living/simple_animal/slime/M, mob/user)
+/obj/item/slimepotion/slime/mutator/attack(mob/living/basic/slime/M, mob/user)
 	if(!isslime(M))
 		to_chat(user, span_warning("The mutator only works on slimes!"))
 		return ..()
 	if(M.stat)
 		to_chat(user, span_warning("The slime is dead!"))
 		return
-	if(M.mutator_used)
+	if(HAS_TRAIT(M, TRAIT_MUTATOR_USED))
 		to_chat(user, span_warning("This slime has already consumed a mutator, any more would be far too unstable!"))
 		return
 	if(M.mutation_chance == 100)
@@ -866,7 +851,7 @@
 
 	to_chat(user, span_notice("You feed the slime the mutator. It is now more likely to mutate."))
 	M.mutation_chance = clamp(M.mutation_chance+12,0,100)
-	M.mutator_used = TRUE
+	ADD_TRAIT(M, TRAIT_MUTATOR_USED, "slime-mutator")
 	qdel(src)
 
 /obj/item/slimepotion/speed

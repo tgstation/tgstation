@@ -11295,7 +11295,6 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
-/obj/machinery/processor/slime,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "FD" = (
@@ -13990,7 +13989,6 @@
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "MT" = (
-/obj/machinery/computer/camera_advanced/xenobio,
 /obj/structure/noticeboard/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
@@ -14835,7 +14833,6 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
-/obj/machinery/monkey_recycler,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "Pv" = (
@@ -17344,7 +17341,7 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/medical)
 "Ww" = (
-/mob/living/simple_animal/slime,
+/mob/living/basic/slime,
 /turf/open/floor/circuit/red/off,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "Wx" = (

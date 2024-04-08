@@ -16,7 +16,7 @@ Slimecrossing Mobs
 
 	convert_damage = TRUE
 	convert_damage_type = CLONE
-	possible_shapes = list(/mob/living/simple_animal/slime/transformed_slime)
+	possible_shapes = list(/mob/living/basic/slime)
 
 	/// If TRUE, we self-delete (remove ourselves) the next time we turn back into a human
 	var/remove_on_restore = FALSE
@@ -28,14 +28,6 @@ Slimecrossing Mobs
 
 	if(remove_on_restore)
 		qdel(src)
-
-/// Transformed slime - from Burning Black
-/mob/living/simple_animal/slime/transformed_slime
-
-// Just in case.
-/mob/living/simple_animal/slime/transformed_slime/Reproduce()
-	to_chat(src, span_warning("I can't reproduce...")) // Mood
-	return
 
 //Slime corgi - Chilling Pink
 /mob/living/basic/pet/dog/corgi/puppy/slime

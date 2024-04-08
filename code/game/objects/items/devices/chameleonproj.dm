@@ -137,8 +137,6 @@
 /obj/effect/dummy/chameleon/attack_animal(mob/user, list/modifiers)
 	master.disrupt()
 
-/obj/effect/dummy/chameleon/attack_slime(mob/user, list/modifiers)
-	master.disrupt()
 
 /obj/effect/dummy/chameleon/attack_alien(mob/user, list/modifiers)
 	master.disrupt()

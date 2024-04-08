@@ -46,6 +46,9 @@ SUBSYSTEM_DEF(liquids)
 	if(length(arrayed_groups))
 		for(var/g in arrayed_groups)
 			var/datum/liquid_group/LG = g
+			if(!LG)
+				arrayed_groups -= g
+				continue
 			while(!MC_TICK_CHECK && length(LG.splitting_array)) // three at a time until we either finish or over-run, this should be done before anything else
 				LG.work_on_split_queue()
 				LG.cleanse_members()
@@ -86,6 +89,9 @@ SUBSYSTEM_DEF(liquids)
 				var/turf/open/temperature_turf = tur
 				temperature_queue -= temperature_turf
 				if(!temperature_turf.liquids)
+					continue
+				if(!temperature_turf.liquids.liquid_group)
+					qdel(temperature_turf.liquids)
 					continue
 				temperature_turf.liquids.liquid_group.act_on_queue(temperature_turf)
 		run_type = SSLIQUIDS_RUN_TYPE_EVAPORATION

@@ -49,6 +49,7 @@
 /obj/item/construction/plumbing/proc/set_plumbing_designs()
 	plumbing_design_types = list(
 		//category 1 Synthesizers i.e devices which creates , reacts & destroys chemicals
+		/obj/machinery/plumbing/synthesizer = 15,
 		/obj/machinery/plumbing/reaction_chamber/chem = 15,
 		/obj/machinery/plumbing/grinder_chemical = 30,
 		/obj/machinery/plumbing/growing_vat = 20,
@@ -292,12 +293,16 @@
 /obj/item/construction/plumbing/research/set_plumbing_designs()
 	plumbing_design_types = list(
 		//category 1 synthesizers
+		/obj/machinery/plumbing/synthesizer = 15,
 		/obj/machinery/plumbing/reaction_chamber = 15,
 		/obj/machinery/plumbing/grinder_chemical = 30,
 		/obj/machinery/plumbing/disposer = 10,
 		/obj/machinery/plumbing/growing_vat = 20,
 
 		//category 2 Distributors
+		/obj/machinery/plumbing/ooze_sucker = 5,
+		/obj/machinery/plumbing/slime_grinder = 5,
+		/obj/machinery/plumbing/ooze_compressor = 20,
 		/obj/machinery/duct = 1,
 		/obj/machinery/plumbing/input = 5,
 		/obj/machinery/plumbing/filter = 5,

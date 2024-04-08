@@ -7,7 +7,8 @@
 	reagent_flags =  TRANSPARENT
 
 	var/max_inject = 20
-	var/inject_amount = 10
+	var/inject_amount = 0
+	var/creator_ckey = ""
 
 /obj/structure/chemical_tank/injector/Initialize(mapload)
 	. = ..()
@@ -23,12 +24,17 @@
 		return
 	if(!iscarbon(AM))
 		return
+	if(!inject_amount)
+		return
 
 	visible_message("[name] pricks [AM] with a needle injecting [inject_amount] units into them.")
 	reagents.trans_to(AM, inject_amount, methods = INJECT)
+	if(creator_ckey)
+		logger.Log(LOG_CATEGORY_ATTACK, "[creator_ckey] injected [AM] with [inject_amount] units using a remote injector.")
 
 /obj/structure/chemical_tank/injector/AltClick(mob/user)
 	. = ..()
-	var/inject_choice = tgui_input_number(user, "How much to put into a patch?", "[name]", inject_amount, max_inject, 1)
+	var/inject_choice = tgui_input_number(user, "How much to inject someone with?", "[name]", inject_amount, max_inject, 1)
 	if(inject_choice)
 		inject_amount = inject_choice
+	creator_ckey = user.client?.ckey

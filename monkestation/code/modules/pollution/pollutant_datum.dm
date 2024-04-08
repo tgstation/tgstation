@@ -18,14 +18,14 @@
 	/// Scent of the smell
 	var/scent
 
-///When a pollutant touches an unprotected carbon mob
-/datum/pollutant/proc/touch_act(mob/living/carbon/victim, amount)
+///When a pollutant touches an unprotected mob
+/datum/pollutant/proc/touch_act(mob/living/victim, amount)
 	return
 
 ///When a carbon mob breathes in the pollutant
 /datum/pollutant/proc/breathe_act(mob/living/carbon/victim, amount)
 	return
 
-///When a carbon mob smells scents this is called 
+///When a carbon mob smells scents this is called
 /datum/pollutant/proc/on_smell(mob/living/carbon/victim, amount)
 	return

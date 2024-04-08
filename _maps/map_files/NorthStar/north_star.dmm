@@ -13122,11 +13122,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
-"drB" = (
-/obj/machinery/processor/slime,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
-/area/station/maintenance/floor3/starboard)
 "drD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -28195,7 +28190,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/locker)
 "hBX" = (
-/mob/living/simple_animal/slime,
+/mob/living/basic/slime,
 /turf/open/floor/grass,
 /area/station/science/xenobiology)
 "hBY" = (
@@ -51144,9 +51139,6 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor2/port/aft)
 "nyc" = (
-/obj/machinery/computer/camera_advanced/xenobio{
-	dir = 4
-	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "nyd" = (
@@ -53900,7 +53892,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/fore)
 "oiH" = (
-/mob/living/simple_animal/slime,
+/mob/living/basic/slime,
 /turf/open/floor/grass,
 /area/station/maintenance/floor3/starboard)
 "oiJ" = (
@@ -58698,7 +58690,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/circuits)
 "pBw" = (
-/mob/living/simple_animal/slime,
+/mob/living/basic/slime,
 /obj/machinery/camera/directional/south{
 	c_tag = "Xenobiology - Slime Pens"
 	},
@@ -72640,7 +72632,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor4/fore)
 "tuA" = (
-/obj/machinery/monkey_recycler,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/circuit,
@@ -80706,7 +80697,7 @@
 /area/station/science/xenobiology/hallway)
 "vHn" = (
 /obj/machinery/light/cold/no_nightlight/directional/east,
-/mob/living/simple_animal/slime,
+/mob/living/basic/slime,
 /turf/open/floor/grass,
 /area/station/science/xenobiology)
 "vHq" = (
@@ -82841,7 +82832,6 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "wlb" = (
-/obj/machinery/processor/slime,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/circuit,
@@ -250465,7 +250455,7 @@ fNq
 iKT
 xNf
 mpy
-drB
+iKT
 iHm
 rGl
 vIh

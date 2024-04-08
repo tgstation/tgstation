@@ -105,6 +105,8 @@
 
 ///from base of mob/living/Stun() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_STUN "living_stun"
+///from mob/living/carbon/enter_stamina_stun()
+#define COMSIG_LIVING_STAMINA_STUN "carbon_stamina_stun"
 ///from base of mob/living/Knockdown() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_KNOCKDOWN "living_knockdown"
 ///from base of mob/living/Paralyze() (amount, ignore_canstun)

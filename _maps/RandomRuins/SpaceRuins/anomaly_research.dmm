@@ -1138,7 +1138,6 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 9
 	},
-/obj/machinery/monkey_recycler,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)

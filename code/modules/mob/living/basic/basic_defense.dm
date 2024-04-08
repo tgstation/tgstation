@@ -28,6 +28,7 @@
 						span_notice("[user] [response_help_continuous] you."), null, null, user)
 		to_chat(user, span_notice("You [response_help_simple] [src]."))
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+		SEND_SIGNAL(src, COMSIG_EMOTION_STORE, user, EMOTION_HAPPY, "[response_help_continuous] me.")
 	else
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))
 			to_chat(user, span_warning("You don't want to hurt [src]!"))
@@ -101,13 +102,6 @@
 	if(.)
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 		return attack_threshold_check(damage, user.melee_damage_type)
-
-/mob/living/basic/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
-	if(..()) //successful slime attack
-		var/damage = rand(15, 25)
-		if(M.is_adult)
-			damage = rand(20, 35)
-		return attack_threshold_check(damage)
 
 /mob/living/basic/attack_drone(mob/living/basic/drone/attacking_drone)
 	if(attacking_drone.istate & ISTATE_HARM) //No kicking dogs even as a rogue drone. Use a weapon.

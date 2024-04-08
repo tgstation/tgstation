@@ -578,14 +578,15 @@
 	if(!only_pulling && pulledby && moving_diagonally != FIRST_DIAG_STEP && (get_dist(src, pulledby) > 1 || z != pulledby.z)) //separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
-/atom/movable/proc/set_glide_size(target = 8)
+/atom/movable/proc/set_glide_size(target = 8, recursed = FALSE)
 	if (HAS_TRAIT(src, TRAIT_NO_GLIDE))
 		return
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, target)
 	glide_size = target
 
-	for(var/mob/buckled_mob as anything in buckled_mobs)
-		buckled_mob.set_glide_size(target)
+	if(!recursed)
+		for(var/mob/buckled_mob as anything in buckled_mobs)
+			buckled_mob.set_glide_size(target, TRUE)
 
 /**
  * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
@@ -641,8 +642,13 @@
 			if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, entering_loc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 				return
 	else // Else just try to enter the single destination.
-		if(!newloc.Enter(src))
-			return
+		if(isliving(src))
+			var/mob/living/living = src
+			if(!newloc.Enter(src) && !living.buckled)
+				return
+		else
+			if(!newloc.Enter(src))
+				return
 		if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 			return
 

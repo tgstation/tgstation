@@ -5,6 +5,7 @@
 	min_players = 20
 	category = EVENT_CATEGORY_HEALTH
 	description = "A random crewmember becomes obsessed with another."
+	weight = 0 // essentially disables it
 
 /datum/round_event/obsessed
 	fakeable = FALSE

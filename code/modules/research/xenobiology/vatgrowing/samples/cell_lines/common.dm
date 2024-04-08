@@ -249,7 +249,7 @@
 		/datum/reagent/consumable/ice = -2) //Brrr!
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/mob/living/simple_animal/slime = 1)
+	resulting_atoms = list(/mob/living/basic/slime = 1)
 
 /datum/micro_organism/cell_line/blob_spore //shitty cell line to dilute the pool, feel free to make easier to grow if it doesn't interfer with growing the powerful mobs enough.
 	desc = "Immature blob spores"

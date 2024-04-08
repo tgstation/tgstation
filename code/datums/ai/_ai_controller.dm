@@ -34,7 +34,7 @@ multiple modular subtrees with behaviors
 	///Stored arguments for behaviors given during their initial creation
 	var/list/behavior_args = list()
 	///Tracks recent pathing attempts, if we fail too many in a row we fail our current plans.
-	var/pathing_attempts
+	var/consecutive_pathing_attempts
 	///Can the AI remain in control if there is a client?
 	var/continue_processing_when_client = FALSE
 	///distance to give up on target

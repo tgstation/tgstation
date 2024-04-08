@@ -183,7 +183,7 @@ Slimecrossing Potions
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potsilver"
 
-/obj/item/slimepotion/slime_reviver/attack(mob/living/simple_animal/slime/revive_target, mob/user)
+/obj/item/slimepotion/slime_reviver/attack(mob/living/basic/slime/revive_target, mob/user)
 	if(!isslime(revive_target))
 		to_chat(user, span_warning("The potion only works on slimes!"))
 		return ..()
@@ -207,7 +207,7 @@ Slimecrossing Potions
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potcyan"
 
-/obj/item/slimepotion/slime/chargedstabilizer/attack(mob/living/simple_animal/slime/stabilize_target, mob/user)
+/obj/item/slimepotion/slime/chargedstabilizer/attack(mob/living/basic/slime/stabilize_target, mob/user)
 	if(!isslime(stabilize_target))
 		to_chat(user, span_warning("The stabilizer only works on slimes!"))
 		return ..()

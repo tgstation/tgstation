@@ -5,8 +5,9 @@
 	access = ACCESS_XENOBIOLOGY
 	contains = list(/obj/item/slime_extract/grey = 2,
 					/obj/item/reagent_containers/syringe/plasma,
-					/obj/item/circuitboard/computer/xenobiology,
-					/obj/item/circuitboard/machine/monkey_recycler,
-					/obj/item/circuitboard/machine/processor/slime)
+					/obj/item/circuitboard/computer/slime_market,
+					/obj/item/circuitboard/machine/slime_market_pad,
+					/obj/item/circuitboard/machine/biomass_recycler,
+					/obj/item/vacuum_pack)
 	crate_name = "xenobiology starter crate"
 	crate_type = /obj/structure/closet/crate/secure/science

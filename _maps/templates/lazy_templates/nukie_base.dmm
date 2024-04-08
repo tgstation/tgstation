@@ -319,7 +319,6 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
-/obj/machinery/processor/slime,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "ek" = (
@@ -2041,7 +2040,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "zR" = (
-/mob/living/simple_animal/slime,
+/mob/living/basic/slime,
 /turf/open/floor/circuit/red/off,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "zT" = (
@@ -3259,7 +3258,6 @@
 /turf/open/floor/iron/smooth,
 /area/centcom/syndicate_mothership/control)
 "Mv" = (
-/obj/machinery/computer/camera_advanced/xenobio,
 /obj/structure/noticeboard/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
@@ -3460,7 +3458,6 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
-/obj/machinery/monkey_recycler,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "Pc" = (

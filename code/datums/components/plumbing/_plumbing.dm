@@ -96,20 +96,27 @@
 	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = null, dir = dir)
 
 ///check who can give us what we want, and how many each of them will give us
-/datum/component/plumbing/proc/process_request(amount, reagent, dir)
-	var/list/valid_suppliers = list()
+/datum/component/plumbing/proc/process_request(amount = MACHINE_REAGENT_TRANSFER, reagent, dir)
+	//find the duct to take from
 	var/datum/ductnet/net
 	if(!ducts.Find(num2text(dir)))
 		return
 	net = ducts[num2text(dir)]
+
+	//find all valid suppliers in the duct
+	var/list/valid_suppliers = list()
 	for(var/datum/component/plumbing/supplier as anything in net.suppliers)
 		if(supplier.can_give(amount, reagent, net))
 			valid_suppliers += supplier
-	// Need to ask for each in turn very carefully, making sure we get the total volume. This is to avoid a division that would always round down and become 0
-	var/targetVolume = reagents.total_volume + amount
 	var/suppliersLeft = valid_suppliers.len
+	if(!suppliersLeft)
+		return
+
+	//take an equal amount from each supplier
+	var/currentRequest
+	var/target_volume = reagents.total_volume + amount
 	for(var/datum/component/plumbing/give as anything in valid_suppliers)
-		var/currentRequest = (targetVolume - reagents.total_volume) / suppliersLeft
+		currentRequest = (target_volume - reagents.total_volume) / suppliersLeft
 		give.transfer_to(src, currentRequest, reagent, net)
 		suppliersLeft--
 
@@ -117,13 +124,14 @@
 /datum/component/plumbing/proc/can_give(amount, reagent, datum/ductnet/net)
 	if(amount <= 0)
 		return
-
 	if(reagent) //only asked for one type of reagent
 		for(var/datum/reagent/contained_reagent as anything in reagents.reagent_list)
 			if(contained_reagent.type == reagent)
 				return TRUE
-	else if(reagents.total_volume > 0) //take whatever
+	else if(reagents.total_volume) //take whatever
 		return TRUE
+
+	return FALSE
 
 ///this is where the reagent is actually transferred and is thus the finish point of our process()
 /datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)

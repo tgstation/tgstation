@@ -77,4 +77,6 @@
 		playsound(eater.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	else
 		playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
+	SEND_SIGNAL(eater, COMSIG_LIVING_ATE, target)
+	SEND_SIGNAL(eater, COMSIG_EMOTION_STORE, null, EMOTION_HAPPY, "I ate [target], I really like [target].")
 	qdel(target)

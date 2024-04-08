@@ -3,6 +3,7 @@
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	///do we finish this action after hitting once?
 	var/terminate_after_action = FALSE
+	var/melee_attacks = TRUE
 
 /datum/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
@@ -36,10 +37,11 @@
 
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
-	if(hiding_target) //Slap it!
-		basic_mob.melee_attack(hiding_target)
-	else
-		basic_mob.melee_attack(target)
+	if(melee_attacks)
+		if(hiding_target) //Slap it!
+			basic_mob.melee_attack(hiding_target)
+		else
+			basic_mob.melee_attack(target)
 
 	if(terminate_after_action)
 		finish_action(controller, TRUE, target_key)

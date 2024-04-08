@@ -264,7 +264,7 @@
 	. = ..()
 	if(reac_volume < 5)
 		return
-	for(var/mob/living/simple_animal/slime/exposed_slime in exposed_turf)
+	for(var/mob/living/basic/slime/exposed_slime in exposed_turf)
 		exposed_slime.adjustToxLoss(rand(15,30))
 
 #undef CRYO_SPEED_PREFACTOR

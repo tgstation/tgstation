@@ -297,6 +297,8 @@
 	var/incapacitated = FALSE
 	/// Is our mob incorporeal
 	var/incorporeal_move = FALSE
+	/// is our mob a xenofauna or slime
+	var/xenofauna_or_slime = FALSE
 	/// If our mob has a rider, what does it look like
 	var/datum/can_pass_info/rider_info = null
 	/// If our mob is buckled to something, what's it like
@@ -346,6 +348,9 @@
 		src.can_ventcrawl = HAS_TRAIT(living_construct, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(living_construct, TRAIT_VENTCRAWLER_NUDE)
 		src.mob_size = living_construct.mob_size
 		src.incorporeal_move = living_construct.incorporeal_move
+		if(istype(living_construct, /mob/living/basic/slime) || istype(living_construct, /mob/living/basic/xenofauna))
+			src.xenofauna_or_slime = TRUE
+
 	if(iscameramob(construct_from))
 		src.camera_type = construct_from.type
 	src.is_bot = isbot(construct_from)

@@ -15126,9 +15126,6 @@
 "fjh" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/computer/camera_advanced/xenobio{
-	dir = 8
-	},
 /obj/machinery/button/door/directional/north{
 	id = "xeno3";
 	name = "Creature Cell 3 Toggle";
@@ -26868,7 +26865,6 @@
 "iKn" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/processor/slime,
 /obj/machinery/button/door/directional/south{
 	id = "xeno4";
 	name = "Creature Cell 4 Toggle";
@@ -50051,9 +50047,6 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "qEj" = (
-/obj/machinery/computer/camera_advanced/xenobio{
-	dir = 4
-	},
 /obj/effect/turf_decal/bot,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/light/directional/north,
@@ -64153,10 +64146,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
-"vhx" = (
-/mob/living/simple_animal/slime,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "vhK" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -68244,7 +68233,6 @@
 "wqR" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/monkey_recycler,
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
@@ -110474,13 +110462,13 @@ wpw
 ieb
 xcf
 wpw
-vhx
+qmW
 nQx
 qmW
 uXM
 qmW
 nQx
-vhx
+qmW
 lZi
 qdM
 nmu
@@ -113048,7 +113036,7 @@ qmW
 nQx
 qmW
 wpw
-vhx
+qmW
 nQx
 qmW
 lDu

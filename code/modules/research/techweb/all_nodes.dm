@@ -105,7 +105,6 @@
 		"shaker",
 		"shot_glass",
 		"signaler",
-		"slime_scanner",
 		"solar_panel",
 		"solar_tracker",
 		"space_heater",
@@ -474,13 +473,19 @@
 		"gibber",
 		"griddle",
 		"microwave",
-		"monkey_recycler",
 		"oven",
 		"processor",
 		"range", // should be in a further node, probably
 		"reagentgrinder",
 		"smartfridge",
 		"stove",
+		"biomass_recycler",
+		"corral_corner",
+		"slime_extract_requestor",
+		"slime_market_pad",
+		"slime_market",
+		"slimevac",
+
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/cytology = 3000) //Big discount to reinforce doing it.
@@ -707,7 +712,6 @@
 		"beacon",
 		"bluespace_crystal",
 		"telesci_gps",
-		"xenobioconsole",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

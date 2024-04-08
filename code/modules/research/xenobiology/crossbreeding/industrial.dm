@@ -54,7 +54,7 @@ Industrial extracts:
 /obj/item/slimecross/industrial/grey
 	colour = "grey"
 	effect_desc = "Produces monkey cubes."
-	itempath = /obj/item/food/monkeycube
+	itempath = /obj/item/stack/biomass
 	itemamount = 5
 
 /obj/item/slimecross/industrial/orange

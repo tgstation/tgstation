@@ -218,30 +218,6 @@
 
 
 /*
-	Slimes
-	Nothing happening here
-*/
-/mob/living/simple_animal/slime/resolve_unarmed_attack(atom/attack_target, proximity_flag, list/modifiers)
-	if(isturf(attack_target))
-		return ..()
-	attack_target.attack_slime(src, modifiers)
-
-/mob/living/simple_animal/slime/resolve_right_click_attack(atom/target, list/modifiers)
-	if(isturf(target))
-		return ..()
-	return target.attack_slime_secondary(src, modifiers)
-
-/atom/proc/attack_slime(mob/user, list/modifiers)
-	return
-
-/**
- * Called when a slime mob right clicks an atom (that is not a turf).
- * Returns a SECONDARY_ATTACK_* value.
- */
-/atom/proc/attack_slime_secondary(mob/user, list/modifiers)
-	return SECONDARY_ATTACK_CALL_NORMAL
-
-/*
 	Drones
 */
 

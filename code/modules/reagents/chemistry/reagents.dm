@@ -125,6 +125,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/restricted = FALSE
 	/// do we have a turf exposure (used to prevent liquids doing un-needed processes)
 	var/turf_exposure = FALSE
+	/// are we slippery?
+	var/slippery = TRUE
 	/// A list of traits to apply while the reagent is being metabolized.
 	var/list/metabolized_traits
 	/// A list of traits to apply while the reagent is in a mob.

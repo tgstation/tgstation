@@ -21,6 +21,8 @@
 
 	for(var/current_account as anything in SSeconomy.bank_accounts_by_id)
 		var/datum/bank_account/current_bank_account = SSeconomy.bank_accounts_by_id[current_account]
+		if(!current_bank_account.account_job || !current_bank_account)
+			continue
 		player_accounts += list(list(
 			"name" = current_bank_account.account_holder,
 			"job" = current_bank_account.account_job.title,

@@ -1,5 +1,5 @@
 /datum/round_event_control/antagonist/solo/traitor
-	antag_flag = ROLE_TRAITOR
+	antag_flag = ROLE_SYNDICATE_INFILTRATOR
 	tags = list(TAG_COMBAT)
 	antag_datum = /datum/antagonist/traitor/infiltrator
 	protected_roles = list(
@@ -21,7 +21,7 @@
 
 /datum/round_event_control/antagonist/solo/traitor/roundstart
 	name = "Traitors"
-	antag_flag = ROLE_SYNDICATE_INFILTRATOR
+	antag_flag = ROLE_TRAITOR
 	antag_datum = /datum/antagonist/traitor
 	roundstart = TRUE
 	earliest_start = 0 SECONDS

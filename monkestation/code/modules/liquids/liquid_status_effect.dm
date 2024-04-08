@@ -29,10 +29,11 @@
 	return ..()
 
 /datum/status_effect/water_affected/on_remove()
-	owner.remove_movespeed_modifier("water_slow")
+	owner.remove_movespeed_modifier("liquid_slowdown")
 
 
 /datum/movespeed_modifier/liquids
+	id = "liquid_slowdown"
 	variable = TRUE
 	blacklisted_movetypes = FLOATING
 

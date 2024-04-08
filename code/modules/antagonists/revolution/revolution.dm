@@ -556,10 +556,10 @@
 		if (player_mind in ex_revs + ex_headrevs)
 			continue
 
-		player_mind.add_antag_datum(/datum/antagonist/enemy_of_the_revolution)
-
 		if (!istype(player))
 			continue
+
+		player_mind.add_antag_datum(/datum/antagonist/enemy_of_the_revolution)
 
 		if(player_mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			ADD_TRAIT(player, TRAIT_DEFIB_BLACKLISTED, REF(src))

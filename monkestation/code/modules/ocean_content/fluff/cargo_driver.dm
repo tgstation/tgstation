@@ -4,7 +4,7 @@
 	name = "Cargo Driver"
 	id = MASSDRIVER_CARGO
 
-/obj/machinery/mass_driver/drive(amount)
+/obj/machinery/mass_driver/cargo_driver/drive(amount)
 	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	use_power(active_power_usage)
@@ -24,7 +24,8 @@
 				break
 			use_power(active_power_usage)
 			O.throw_at(target, get_dist(src, target) + 4, power)
-			addtimer(CALLBACK(O, TYPE_PROC_REF(/atom/movable, attempt_map_sell)), 4 SECONDS / power)
+			if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+				addtimer(CALLBACK(O, TYPE_PROC_REF(/atom/movable, attempt_map_sell)), 4 SECONDS / power)
 	flick("mass_driver1", src)
 
 /atom/movable/proc/attempt_map_sell()
