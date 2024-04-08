@@ -89,6 +89,11 @@
 	ambience_index = AMBIENCE_ENGI
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
+/area/ruin/plasmamanruin/Incinerator
+	name= "\improper Plasma Base Incinerator"
+	ambience_index = AMBIENCE_ENGI
+	sound_environment = SOUND_AREA_STANDARD_STATION
+
 /area/ruin/plasmamanruin/science
 	name= "\improper Plasma Base Science"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
