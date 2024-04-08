@@ -1,7 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - balance: "Lowered the weight of the gravity generator blackout event to 8 (from 30), and capped it at 2 occurrences."
-  - balance: "Lowered the weight of the radiation storm event to 5 (from 10), and capped it at 1 occurrence."
-  - balance: "All scrubber clog+overflow events now share the same occurrence counter."
-  - bugfix: "You should no longer roll obsessed without being prompted for it first."

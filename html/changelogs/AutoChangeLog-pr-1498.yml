@@ -1,6 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - balance: "Borger artifacts no longer react if touched with a robotic limb."
-  - balance: "Borger artifacts will now just turn your arm robotic the first time you touch it."
-  - qol: "Made the examine text for borger artifacts more obvious."

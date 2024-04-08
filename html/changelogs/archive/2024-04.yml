@@ -76,3 +76,53 @@
   Jacquerel:
   - bugfix: Dismounting from a piggyback no longer allows you to phase through other
       players.
+2024-04-08:
+  Absolucy:
+  - qol: Added tinyfans to the solars airlocks on MetaStation.
+  - qol: Added catwalk covering to the flooring of solars areas on MetaStation.
+  - qol: 'All the solars panels on MetaStation are now actually deployed (consistent
+      with other maps), rather than requiring you to manually place them for 2 of
+      the solars.
+
+      qol; Made that stupid weirdo Meta northwest solars make sense.'
+  - qol: Added catwalk covering to the SMES wiring output on MetaStation.
+  - balance: Borger artifacts no longer react if touched with a robotic limb.
+  - balance: Borger artifacts will now just turn your arm robotic the first time you
+      touch it.
+  - qol: Made the examine text for borger artifacts more obvious.
+  - bugfix: You can now properly surgically reattach an oozeling's head.
+  - balance: Lowered the weight of the gravity generator blackout event to 8 (from
+      30), and capped it at 2 occurrences.
+  - balance: Lowered the weight of the radiation storm event to 5 (from 10), and capped
+      it at 1 occurrence.
+  - balance: All scrubber clog+overflow events now share the same occurrence counter.
+  - bugfix: You should no longer roll obsessed without being prompted for it first.
+  Absolucy, Thlumyn:
+  - rscadd: Oozelings and Slimepeople can now get wings from flight potions.
+  Bastian0930:
+  - bugfix: Rod of Asclepius can no longer be used with telepathy. The geneticist
+      responsible has been forced to roll a boulder for the rest of time.
+  DimWhat:
+  - image: Touched up both the worn and object sprites for ascots.
+  Gboster-0:
+  - rscadd: Added two new types of wiring to the youtool vendor, high-voltages no
+      longer seem scary if you just prepare
+  KittyNoodle:
+  - bugfix: fixes Aetericilide being useless.
+  MrMelbert:
+  - qol: Breathing cold air now has a particle effect associated, careful not to let
+      your glasses fog up.
+  - qol: Breathing cold air will now occasionally make your spaceman shiver. Brrr.
+  SeeBeeSee:
+  - rscadd: Added new honeydew melons that distill into honey, as well as slices for
+      a quick snack
+  The-Black-Screen:
+  - rscadd: added miscellaneous things around parts of the map.
+  - rscdel: removed all custom notes.
+  - bugfix: fixed the teg engine map file and miscellaneous things around parts of
+      the map.
+  - code_imp: changed the code in `monkestation/code/random_rooms/engines/boxstation.dm`
+      to re-enable the teg engine.
+  Tractor Mann:
+  - bugfix: fixed Rocket Jump Waltz in the jukebox, you can actually listen to it
+      end now hopefully.

@@ -1,7 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Added tinyfans to the solars airlocks on MetaStation."
-  - qol: "Added catwalk covering to the flooring of solars areas on MetaStation."
-  - qol: "All the solars panels on MetaStation are now actually deployed (consistent with other maps), rather than requiring you to manually place them for 2 of the solars.\nqol; Made that stupid weirdo Meta northwest solars make sense."
-  - qol: "Added catwalk covering to the SMES wiring output on MetaStation."

@@ -1,7 +1,0 @@
-author: "The-Black-Screen"
-delete-after: True
-changes:
-  - rscadd: "added miscellaneous things around parts of the map."
-  - rscdel: "removed all custom notes."
-  - bugfix: "fixed the teg engine map file and miscellaneous things around parts of the map."
-  - code_imp: "changed the code in `monkestation/code/random_rooms/engines/boxstation.dm` to re-enable the teg engine."

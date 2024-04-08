@@ -1,4 +1,0 @@
-author: "Gboster-0"
-delete-after: True
-changes:
-  - rscadd: "Added two new types of wiring to the youtool vendor, high-voltages no longer seem scary if you just prepare"
