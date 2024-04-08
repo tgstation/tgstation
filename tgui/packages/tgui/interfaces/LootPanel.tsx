@@ -83,6 +83,8 @@ export function LootPanel(props) {
 function SearchItem({ atom }: { atom: Atom }) {
   const { act } = useBackend();
 
+  const atomLetter = atom.name?.[0].toUpperCase();
+
   return (
     <Tooltip content={capitalizeAll(atom.name)}>
       <div
@@ -104,11 +106,25 @@ function SearchItem({ atom }: { atom: Atom }) {
         }}
       >
         {!atom.icon ? (
-          <Icon name="spinner" spin size={1.9} color="grey" />
+          <LoadingIcon letter={atomLetter} />
         ) : (
           <Image src={atom.icon} />
         )}
       </div>
     </Tooltip>
+  );
+}
+
+function LoadingIcon({ letter }: { letter?: string }) {
+  return (
+    <div className="SearchItem--loading">
+      <Icon
+        name="spinner"
+        size={2.5}
+        spin
+        style={{ color: 'rgba(211, 211, 211, 0.3)' }}
+      />
+      {!!letter && <div className="SearchItem--text">{letter}</div>}
+    </div>
   );
 }
