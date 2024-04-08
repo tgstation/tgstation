@@ -4,11 +4,16 @@ import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon } from '../components';
 import { Window } from '../layouts';
 
+type NukeKeypadPropsType = {
+  keypadClassPrefix: string;
+};
+
 // This ui is so many manual overrides and !important tags
 // and hand made width sets that changing pretty much anything
 // is going to require a lot of tweaking it get it looking correct again
 // I'm sorry, but it looks bangin
-export const NukeKeypad = (props) => {
+export const NukeKeypad = (props: NukeKeypadPropsType) => {
+  const { keypadClassPrefix } = props;
   const { act } = useBackend();
   const keypadKeys = [
     ['1', '2', '3'],
@@ -17,7 +22,7 @@ export const NukeKeypad = (props) => {
     ['C', '0', 'E'],
   ];
   return (
-    <Box className="NuclearBomb__Button--keypad" width="185px">
+    <Box className={keypadClassPrefix + '__Button--keypad'} width="185px">
       <Flex direction="column" justify="center">
         {keypadKeys.map((keyRow) => (
           <Flex direction="inline" key={keyRow[0]}>
@@ -32,9 +37,9 @@ export const NukeKeypad = (props) => {
                 lineHeight={1.25}
                 width="55px"
                 className={classes([
-                  'NuclearBomb__Button',
-                  'NuclearBomb__Button--keypad',
-                  'NuclearBomb__Button--' + key,
+                  keypadClassPrefix + '__Button',
+                  keypadClassPrefix + '__Button--keypad',
+                  keypadClassPrefix + '__Button--' + key,
                 ])}
                 onClick={() => act('keypad', { digit: key })}
               >
@@ -48,8 +53,15 @@ export const NukeKeypad = (props) => {
   );
 };
 
+type NuclearBombPropType = {
+  anchored: boolean;
+  disk_present: boolean;
+  status1: string;
+  status2: string;
+};
+
 export const NuclearBomb = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<NuclearBombPropType>();
   const { anchored, disk_present, status1, status2 } = data;
   // Side note, why the width in the flex?  Otherwise the text
   // box can scroll willy nilly
@@ -84,7 +96,7 @@ export const NuclearBomb = (props) => {
 
           <Flex ml="3px">
             <Flex.Item>
-              <NukeKeypad />
+              <NukeKeypad keypadClassPrefix="NuclearBomb" />
             </Flex.Item>
             <Flex.Item ml="6px" width="129px">
               <Box>

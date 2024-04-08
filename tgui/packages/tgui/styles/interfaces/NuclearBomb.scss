@@ -32,6 +32,12 @@ $background-beige: #e8e4c9;
   }
 }
 
+.NuclearBomb__Button--1 {
+  background-color: #d3cfb7 !important;
+  border-color: #d3cfb7 !important;
+  color: #a9a692 !important;
+}
+
 .NuclearBomb__Button--E {
   background-color: $color-caution !important;
   border-color: $color-caution !important;
@@ -55,4 +61,20 @@ $background-beige: #e8e4c9;
   background-size: 70%;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.LockedSafe__Button {
+  @extend .NuclearBomb__Button !optional;
+}
+
+.LockedSafe__Button--keypad {
+  @extend .NuclearBomb__Button--keypad !optional;
+}
+
+.LockedSafe__Button--E {
+  @extend .NuclearBomb__Button--E !optional;
+}
+
+.LockedSafe__Button--C {
+  @extend .NuclearBomb__Button--C !optional;
 }

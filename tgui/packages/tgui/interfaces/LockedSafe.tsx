@@ -27,7 +27,7 @@ export const LockedSafe = (props) => {
             {!!lock_code && (!locked ? 'Unlocked' : 'Locked')}
           </Flex.Item>
           <Flex.Item ml="3px">
-            <NukeKeypad />
+            <NukeKeypad keypadClassPrefix="LockedSafe" />
           </Flex.Item>
         </Flex>
       </Window.Content>
