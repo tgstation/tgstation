@@ -1,0 +1,8 @@
+author: "JohnFulpWillard, Zeek the Rat"
+delete-after: True
+changes:
+  - rscadd: "Battle Arcade has been completely overhauled in a new progression system, this time using TGUI."
+  - rscadd: "The Curator's keys can now reset arcade cabinets."
+  - balance: "You now need to be literate to play arcade games, except for Mediborg's Amputation Adventure."
+  - bugfix: "You can no longer screwdriver emagged arcade consoles. Accept your fate."
+  - bugfix: "Silicons can no longer play Mediborg's Amputation Adventure."
