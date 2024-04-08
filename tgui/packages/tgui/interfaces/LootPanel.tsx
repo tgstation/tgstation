@@ -5,7 +5,6 @@ import { useState } from 'react';
 
 import { useBackend } from '../backend';
 import {
-  Box,
   Button,
   Icon,
   Image,
@@ -86,8 +85,8 @@ function SearchItem({ atom }: { atom: Atom }) {
 
   return (
     <Tooltip content={capitalizeAll(atom.name)}>
-      <Box
-        height={3}
+      <div
+        className="SearchItem"
         onClick={(event) =>
           act('grab', {
             ctrl: event.ctrlKey,
@@ -95,21 +94,21 @@ function SearchItem({ atom }: { atom: Atom }) {
             shift: event.shiftKey,
           })
         }
-        style={{
-          alignItems: 'center',
-          background: 'black',
-          border: 'thin solid #212121',
-          display: 'flex',
-          justifyContent: 'center',
+        onContextMenu={(event) => {
+          event.preventDefault();
+          act('grab', {
+            middle: true,
+            ref: atom.ref,
+            shift: true,
+          });
         }}
-        width={2.9}
       >
         {!atom.icon ? (
           <Icon name="spinner" spin size={1.9} color="grey" />
         ) : (
           <Image src={atom.icon} />
         )}
-      </Box>
+      </div>
     </Tooltip>
   );
 }

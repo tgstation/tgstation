@@ -78,8 +78,10 @@
 	var/modifiers = ""
 	if(params["ctrl"])
 		modifiers += "ctrl=1;"
+	if(params["middle"])
+		modifiers += "middle=1;"
 	if(params["shift"])
-		modifiers += "shift=1;"
+		modifiers += "shift=1;"	
 
 	user.ClickOn(thing, modifiers)
 
