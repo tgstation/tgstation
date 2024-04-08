@@ -14,7 +14,7 @@
 	light_power = 0.8
 	light_color = "#99ccff"
 	pass_flags = PASSMOB | PASSFLAPS
-	status_flags = (CANPUSH | CANSTUN)
+	status_flags = CANSTUN
 	ai_controller = /datum/ai_controller/basic_controller/bot/medbot
 
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_MEDICAL)
