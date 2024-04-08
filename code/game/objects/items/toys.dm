@@ -115,7 +115,7 @@
 
 /obj/item/toy/balloon
 	name = "balloon"
-	desc = "No birthday is complete without it."
+	desc = "No birthday is complete without it. Sealed with a mechanical bluespace wrap so it remains floating no matter what."
 	icon = 'icons/obj/toys/balloons.dmi'
 	icon_state = "balloon"
 	inhand_icon_state = "balloon"
@@ -133,7 +133,7 @@
 
 /obj/item/toy/balloon/long
 	name = "long balloon"
-	desc = "A perfect balloon to contort into goofy forms."
+	desc = "A perfect balloon to contort into goofy forms. Sealed with a mechanical bluespace wrap so it remains floating no matter what."
 	icon_state = "balloon_long"
 	inhand_icon_state = "balloon"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -154,44 +154,34 @@
 	if(hit_by.current_color == current_color)
 		to_chat(user, span_warning("You must use balloons of different colours to do that!"))
 		return ..()
-
-	if(hit_by.current_color != current_color)
+	else
 		visible_message(span_notice("[user.name] starts contorting up a balloon animal!"),
 			blind_message = span_hear("You hear balloons being contorted."),
 			vision_distance = 3,
 			ignored_mobs = user
 		)
-		if((hit_by.current_color == "red" && current_color == "blue") || (hit_by.current_color == "blue" && current_color == "red"))
-			user.put_in_hands(new /obj/item/toy/balloon_animal/guy)
-		if((hit_by.current_color == "red" && current_color == "green") || (hit_by.current_color == "green" && current_color == "red"))
-			user.put_in_hands(new /obj/item/toy/balloon_animal/nukie)
-		if((hit_by.current_color == "red" && current_color == "yellow") || (hit_by.current_color == "yellow" && current_color == "red"))
-			user.put_in_hands(new /obj/item/toy/balloon_animal/clown)
-		if((hit_by.current_color == "red" && current_color == "orange") || (hit_by.current_color == "orange" && current_color == "red"))
-			user.put_in_hands(new /obj/item/toy/balloon_animal/cat)
-		if((hit_by.current_color == "red" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "red"))
-			user.put_in_hands(new /obj/item/toy/balloon_animal/fly)
-		if((hit_by.current_color == "blue" && current_color == "green") || (hit_by.current_color == "green" && current_color == "blue"))
-			user.put_in_hands(new /obj/item/toy/balloon_animal/podguy)
-		if((hit_by.current_color == "blue" && current_color == "yellow") || (hit_by.current_color == "yellow" && current_color == "blue"))
-			user.put_in_hands(new /obj/item/toy/balloon_animal/ai)
-		if((hit_by.current_color == "blue" && current_color == "orange") || (hit_by.current_color == "orange" && current_color == "blue"))
-			user.put_in_hands(new /obj/item/toy/balloon_animal/dog)
-		if((hit_by.current_color == "blue" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "blue"))
-			user.put_in_hands(new /obj/item/toy/balloon_animal/xeno)
-		if((hit_by.current_color == "green" && current_color == "yellow") || (hit_by.current_color == "yellow" && current_color == "green"))
-			user.put_in_hands(new /obj/item/toy/balloon_animal/banana)
-		if((hit_by.current_color == "green" && current_color == "orange") || (hit_by.current_color == "orange" && current_color == "green"))
-			user.put_in_hands(new /obj/item/toy/balloon_animal/lizard)
-		if((hit_by.current_color == "green" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "green"))
-			user.put_in_hands(new /obj/item/toy/balloon_animal/slime)
-		if((hit_by.current_color == "yellow" && current_color == "orange") || (hit_by.current_color == "orange" && current_color == "yellow"))
-			user.put_in_hands(new /obj/item/toy/balloon_animal/moth)
-		if((hit_by.current_color == "yellow" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "yellow"))
-			user.put_in_hands(new /obj/item/toy/balloon_animal/ethereal)
-		if((hit_by.current_color == "orange" && current_color == "purple") || (hit_by.current_color == "purple" && current_color == "orange"))
-			user.put_in_hands(new /obj/item/toy/balloon_animal/plasmaman)
-
+		var/list/balloon_combos = list(
+			list("red", "blue") = /obj/item/toy/balloon_animal/guy,
+			list("red", "green") = /obj/item/toy/balloon_animal/nukie,
+			list("red", "yellow") = /obj/item/toy/balloon_animal/clown,
+			list("red", "orange") = /obj/item/toy/balloon_animal/cat,
+			list("red", "purple") = /obj/item/toy/balloon_animal/fly,
+			list("blue", "green") = /obj/item/toy/balloon_animal/podguy,
+			list("blue", "yellow") = /obj/item/toy/balloon_animal/ai,
+			list("blue", "orange") = /obj/item/toy/balloon_animal/dog,
+			list("blue", "purple") = /obj/item/toy/balloon_animal/xeno,
+			list("green", "yellow") = /obj/item/toy/balloon_animal/banana,
+			list("green", "orange") = /obj/item/toy/balloon_animal/lizard,
+			list("green", "purple") = /obj/item/toy/balloon_animal/slime,
+			list("yellow", "orange") = /obj/item/toy/balloon_animal/moth,
+			list("yellow", "purple") = /obj/item/toy/balloon_animal/ethereal,
+			list("orange", "purple") = /obj/item/toy/balloon_animal/plasmaman,
+		)
+		for(var/list/pair_of_colors in balloon_combos)
+			if((hit_by.current_color == pair_of_colors[1] && current_color == pair_of_colors[2]) || (current_color == pair_of_colors[1] && hit_by.current_color == pair_of_colors[2]))
+				var/path_to_spawn = balloon_combos[pair_of_colors] 
+				user.put_in_hands(new path_to_spawn)
+				break 
 		qdel(hit_by)
 		qdel(src)
 		return TRUE
