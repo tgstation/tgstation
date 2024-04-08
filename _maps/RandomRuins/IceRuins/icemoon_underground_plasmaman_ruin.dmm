@@ -5,183 +5,293 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer4,
 /turf/open/floor/plating/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/Incinerator)
 "aF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "aH" = (
 /obj/machinery/door/poddoor/incinerator_atmos_main{
 	id = "plasmaruin_incinerator_mainvent"
 	},
 /turf/open/floor/engine/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/Incinerator)
 "aT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/common)
 "aY" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
 	piping_layer = 4;
 	chamber_id = "plas_incinerator"
 	},
 /turf/open/floor/engine/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/Incinerator)
 "bb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer4,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "bh" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
 /turf/open/floor/plating,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"bG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/common)
+"bK" = (
+/turf/closed/wall/r_wall,
+/area/ruin/plasmamanruin/atmos)
+"bO" = (
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/science)
 "cB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible/layer2,
 /obj/machinery/atmospherics/pipe/bridge_pipe/dark/visible,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"cG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/bar)
+"cN" = (
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/unlocked,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/Incinerator)
+"cW" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/bar)
 "cX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "dn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/cargo)
+"dv" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/botany)
+"dI" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/atmos)
+"dS" = (
+/turf/closed/wall,
+/area/ruin/plasmamanruin/cargo)
 "em" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible/layer2,
 /obj/machinery/atmospherics/components/trinary/filter/atmos/o2{
 	dir = 4
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"eq" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/botany)
 "eI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/plating/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/med)
+"eQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/atmos)
 "fw" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/dark/visible,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"fD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/science)
 "gi" = (
 /obj/machinery/power/turbine/inlet_compressor{
 	dir = 4
 	},
 /turf/open/floor/engine/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/Incinerator)
 "gl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "gR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 1
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/common)
 "gZ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"hh" = (
+/obj/structure/cable,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/atmos)
 "hs" = (
 /obj/machinery/door/poddoor/incinerator_atmos_aux{
 	id = "plasmaruin_incinerator_auxvent"
 	},
 /turf/open/space/basic,
-/area/space)
+/area/ruin/plasmamanruin/Incinerator)
+"hN" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/ruin/plasmamanruin/science)
 "hS" = (
 /obj/effect/mob_spawn/ghost_role/human/plasmaman,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/common)
+"jt" = (
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/med)
+"jW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/structure/cable,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/atmos)
 "ka" = (
 /obj/effect/turf_decal/tile/yellow/half,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "kJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"kM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/atmos)
 "kW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
 	chamber_id = "iceboxplasmaplas"
 	},
 /turf/open/floor/engine/plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "ll" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on{
 	dir = 8
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"lB" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/science)
+"lU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/common)
 "mj" = (
 /obj/effect/turf_decal/tile/yellow/half,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "mp" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green,
 /turf/open/floor/plating,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "mq" = (
 /obj/machinery/air_sensor{
 	chamber_id = "iceboxplasmaair"
 	},
 /turf/open/floor/engine/air,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "mA" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/dark/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible{
 	dir = 4
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "mN" = (
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/inverse{
 	dir = 4
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "mR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/science)
 "mZ" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple,
 /turf/open/floor/plating,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "nl" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/purple/visible/layer2,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"nm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/cargo)
 "nL" = (
 /obj/machinery/atmospherics/components/trinary/mixer/flipped/layer4{
 	dir = 4
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"nY" = (
+/obj/machinery/power/smes/full,
+/obj/structure/cable,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/atmos)
 "of" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "og" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/general/visible/layer2{
 	dir = 4
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "ou" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /obj/machinery/computer/atmos_control/nocontrol/incinerator{
@@ -189,13 +299,32 @@
 	atmos_chambers = list("plas_incinerator")
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"oz" = (
+/turf/closed/wall,
+/area/ruin/plasmamanruin/science)
+"oS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer2,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/atmos)
+"pq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/med)
 "pJ" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible{
 	dir = 4
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"pU" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/cargo)
 "qd" = (
 /turf/template_noop,
 /area/template_noop)
@@ -204,7 +333,11 @@
 	chamber_id = "iceboxplasman2o"
 	},
 /turf/open/floor/engine/n2o,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"qF" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/ruin/plasmamanruin/common)
 "qJ" = (
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/surface/outdoors/nospawn)
@@ -213,66 +346,85 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "qX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 1
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/common)
 "qY" = (
 /obj/effect/turf_decal/tile/yellow/half,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "qZ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
 	dir = 8
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"rd" = (
+/turf/closed/wall,
+/area/ruin/plasmamanruin/atmos)
 "rh" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
 	chamber_id = "iceboxplasmaco2"
 	},
 /turf/open/floor/engine/co2/equalized_with_regular_air,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "rv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
 	chamber_id = "iceboxplasmaair";
 	dir = 1
 	},
 /turf/open/floor/engine/air,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "rx" = (
 /turf/open/floor/plating/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/med)
 "rA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/cargo)
 "rS" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/green/visible,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"te" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/med)
 "tt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/common)
 "tE" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
 	dir = 8
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"tJ" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/ruin/plasmamanruin/botany)
 "ud" = (
 /turf/closed/wall/r_wall,
-/area/space)
+/area/ruin/plasmamanruin/bar)
+"ui" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/med)
 "uj" = (
 /obj/machinery/igniter{
 	id = "plasma_ignter"
@@ -280,38 +432,45 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer4,
 /turf/open/floor/engine/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/Incinerator)
 "uK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/obj/structure/cable,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "vp" = (
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/common)
 "vt" = (
 /obj/machinery/power/turbine/core_rotor{
 	dir = 4;
 	mapping_id = "plas_turbine"
 	},
+/obj/structure/cable,
 /turf/open/floor/engine/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/Incinerator)
 "vL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2{
 	dir = 8
 	},
 /turf/open/floor/engine/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/Incinerator)
 "vN" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/layer2{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "vQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"we" = (
+/turf/closed/wall/r_wall,
+/area/ruin/plasmamanruin/med)
 "wo" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass/incinerator{
@@ -321,7 +480,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer4,
 /turf/open/floor/engine/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/Incinerator)
 "xa" = (
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume{
 	dir = 4;
@@ -332,39 +491,90 @@
 	id_tag = "plasma_incinerator_sensor"
 	},
 /turf/open/floor/engine/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/Incinerator)
+"xe" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/cargo)
+"xo" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/botany)
+"xx" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/atmos)
 "xA" = (
 /turf/open/floor/engine/co2/equalized_with_regular_air,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "xE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /obj/machinery/computer/atmos_control/nocontrol{
 	atmos_chambers = list("iceboxplasmaplas" = "Plasma", "iceboxplasman2o" = "Nitrous Oxide", "iceboxplasmaco2" = "Carbon Dioxide", "iceboxplasmaoxy" = "Oxygen", "iceboxplasman2" = "Nitrogen", "iceboxplasmaair" = "Air")
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "yg" = (
 /obj/machinery/air_sensor{
 	chamber_id = "iceboxplasman2"
 	},
 /turf/open/floor/engine/n2,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "yz" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/dark/visible,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"yY" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/common)
+"zq" = (
+/turf/closed/wall,
+/area/ruin/plasmamanruin/bar)
 "zZ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer4,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "Ah" = (
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/common)
+"Al" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/botany)
 "AA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/cargo)
+"AO" = (
+/turf/closed/wall/r_wall,
+/area/ruin/plasmamanruin/Incinerator)
+"Bt" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/common)
+"Bw" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/bar)
+"BN" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/cargo)
 "Ck" = (
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/template_noop,
@@ -372,230 +582,308 @@
 "Cn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/common)
+"CG" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/med)
 "Dm" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
 	chamber_id = "iceboxplasman2o"
 	},
 /turf/open/floor/engine/n2o,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "DM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "Ec" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/plating,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "Em" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/visible,
+/obj/structure/cable,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "EN" = (
 /turf/closed/wall/ice,
 /area/icemoon/surface/outdoors/nospawn)
+"Ff" = (
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/cargo)
 "Fu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/visible/layer2{
 	dir = 8
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "Fy" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
 	chamber_id = "iceboxplasmaair";
 	dir = 1
 	},
 /turf/open/floor/engine/air,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "FD" = (
 /turf/open/floor/engine/n2,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "Gj" = (
 /obj/effect/turf_decal/tile/yellow/half,
 /obj/machinery/atmospherics/pipe/bridge_pipe/dark/visible,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "GL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/common)
 "Hc" = (
 /obj/structure/fans/tiny,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/common)
 "Hh" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
 /turf/open/floor/plating,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "Hv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer4,
 /turf/open/floor/engine/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/Incinerator)
 "HB" = (
 /turf/open/floor/engine/n2o,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "HR" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /obj/effect/turf_decal/tile/yellow/half,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"Is" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/botany)
 "Iu" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
 	chamber_id = "iceboxplasmaco2"
 	},
 /turf/open/floor/engine/co2/equalized_with_regular_air,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"Iz" = (
+/turf/closed/wall/r_wall,
+/area/ruin/plasmamanruin/science)
+"IH" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/ruin/plasmamanruin/med)
 "IM" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/dark/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible{
 	dir = 4
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "IO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/science)
 "IR" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible{
 	dir = 4
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"Je" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/science)
 "Jz" = (
 /obj/effect/turf_decal/tile/yellow/half,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "JE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/common)
 "JJ" = (
 /obj/structure/lattice/catwalk/mining,
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/surface/outdoors/nospawn)
+"JV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/science)
 "JX" = (
 /turf/open/floor/engine/o2,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "JY" = (
 /turf/open/floor/engine/plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "KO" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
 	chamber_id = "iceboxplasmaplas"
 	},
 /turf/open/floor/engine/plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"KW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/botany)
 "Lg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/common)
 "LC" = (
 /obj/machinery/air_sensor/incinerator_tank{
 	chamber_id = "plas_incinerator"
 	},
 /turf/open/floor/engine/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/Incinerator)
 "LH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "Mw" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
 /turf/open/floor/plating,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "MF" = (
 /obj/machinery/computer/turbine_computer{
 	mapping_id = "plas_turbine"
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"MK" = (
+/turf/closed/wall/r_wall,
+/area/ruin/plasmamanruin/common)
+"MV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/science)
 "Ne" = (
 /obj/machinery/power/turbine/turbine_outlet{
 	dir = 4
 	},
 /turf/open/floor/engine/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/Incinerator)
+"NN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/common)
 "NS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/cargo)
+"OF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/common)
+"Pd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/common)
 "Pg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
 	chamber_id = "iceboxplasman2o"
 	},
 /turf/open/floor/engine/n2o,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "Pu" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
 	chamber_id = "iceboxplasman2";
 	dir = 1
 	},
 /turf/open/floor/engine/n2,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"Pw" = (
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/cargo)
 "PL" = (
 /obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/common)
 "PW" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/plasma{
 	dir = 8
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "PZ" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
 	chamber_id = "iceboxplasmaoxy";
 	dir = 1
 	},
 /turf/open/floor/engine/o2,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "QO" = (
 /obj/machinery/air_sensor{
 	chamber_id = "iceboxplasmaco2"
 	},
 /turf/open/floor/engine/co2/equalized_with_regular_air,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "QT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "QU" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/purple/visible,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"Rg" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/cargo)
+"Rt" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/ruin/plasmamanruin/cargo)
+"RM" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/cargo)
 "RN" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/n2{
 	dir = 4
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "Sv" = (
 /obj/machinery/air_sensor{
 	chamber_id = "iceboxplasmaoxy"
 	},
 /turf/open/floor/engine/o2,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "SU" = (
 /obj/machinery/button/ignition/incinerator{
 	id = "plasma_igniter";
@@ -603,52 +891,89 @@
 	pixel_x = 10
 	},
 /turf/closed/wall/r_wall,
-/area/space)
+/area/ruin/plasmamanruin/Incinerator)
 "TB" = (
 /turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
 /area/icemoon/surface/outdoors/nospawn)
+"TD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/atmos)
 "TX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/cargo)
 "Ue" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
 	chamber_id = "iceboxplasman2";
 	dir = 1
 	},
 /turf/open/floor/engine/n2,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"Up" = (
+/turf/closed/wall,
+/area/ruin/plasmamanruin/botany)
+"Ur" = (
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/bar)
+"UF" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/common)
 "UM" = (
 /turf/closed/wall,
-/area/space)
+/area/ruin/plasmamanruin/common)
 "Vd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
 	chamber_id = "iceboxplasmaoxy";
 	dir = 1
 	},
 /turf/open/floor/engine/o2,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"Vs" = (
+/turf/closed/wall/r_wall,
+/area/ruin/plasmamanruin/cargo)
+"Vy" = (
+/turf/closed/wall/r_wall,
+/area/ruin/plasmamanruin/botany)
 "Vz" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"VZ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/med)
+"Wh" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/common)
 "Wl" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2o{
 	dir = 8
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "WD" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/plating/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/Incinerator)
 "WI" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
 /turf/open/floor/plating,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "WO" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
@@ -664,30 +989,51 @@
 	id_tag = "plasma_incinerator_controller"
 	},
 /turf/open/floor/engine/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/Incinerator)
+"Xq" = (
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/atmos)
 "Xs" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
 	dir = 1
 	},
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"Xx" = (
+/turf/closed/wall,
+/area/ruin/plasmamanruin/med)
+"XA" = (
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/botany)
 "XB" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"XZ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/med)
 "Yv" = (
 /turf/open/floor/engine/air,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
+"YF" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/low_pressure_plasma,
+/area/ruin/plasmamanruin/med)
 "YK" = (
 /obj/machinery/air_sensor{
 	chamber_id = "iceboxplasmaplas"
 	},
 /turf/open/floor/engine/plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "Zr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "Zy" = (
 /obj/machinery/button/door/incinerator_vent_atmos_aux{
 	pixel_x = -6;
@@ -702,15 +1048,16 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/atmos)
 "ZD" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/unlocked,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/mapping_helpers/airalarm/tlv_no_checks,
 /turf/open/floor/iron/low_pressure_plasma,
-/area/space)
+/area/ruin/plasmamanruin/common)
 
 (1,1,1) = {"
 Ck
@@ -953,13 +1300,13 @@ qJ
 qJ
 qJ
 qJ
-XB
-XB
-XB
-XB
-XB
-XB
-XB
+hN
+hN
+hN
+hN
+hN
+hN
+hN
 qJ
 qJ
 qJ
@@ -1004,15 +1351,15 @@ qJ
 qJ
 qJ
 qJ
-XB
-XB
-vp
-vp
-vp
-vp
-vp
-XB
-XB
+hN
+hN
+bO
+bO
+bO
+bO
+bO
+hN
+hN
 qJ
 qJ
 qJ
@@ -1055,17 +1402,17 @@ qJ
 qJ
 qJ
 qJ
-XB
-XB
-vp
-vp
-vp
+hN
+hN
+bO
+bO
+bO
 mR
-vp
-vp
-vp
-XB
-XB
+bO
+bO
+bO
+hN
+hN
 qJ
 qJ
 qJ
@@ -1090,16 +1437,14 @@ qJ
 JJ
 JJ
 JJ
-ud
-XB
-XB
-XB
-XB
-XB
-XB
-XB
-ud
-ud
+Vy
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
 ud
 ud
 ud
@@ -1108,17 +1453,19 @@ ud
 ud
 ud
 ud
-vp
-vp
-vp
-vp
-dn
-vp
-vp
-vp
-vp
-XB
-XB
+ud
+Iz
+bO
+bO
+bO
+bO
+JV
+bO
+bO
+bO
+bO
+hN
+hN
 qJ
 qJ
 qJ
@@ -1142,35 +1489,35 @@ qJ
 JJ
 JJ
 JJ
-ud
-vp
-vp
-vp
-vp
-vp
-vp
-vp
-UM
-vp
-vp
-vp
-vp
-vp
-vp
-vp
-UM
-vp
-vp
-vp
-vp
-vp
-tt
-vp
-vp
-vp
-vp
-vp
-XB
+Vy
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+zq
+Ur
+Ur
+Ur
+Ur
+Ur
+Ur
+Ur
+zq
+bO
+bO
+bO
+bO
+bO
+fD
+bO
+bO
+bO
+bO
+bO
+hN
 qJ
 qJ
 qJ
@@ -1194,35 +1541,35 @@ qJ
 JJ
 JJ
 JJ
-ud
-vp
-vp
-vp
-vp
-vp
-vp
-vp
-UM
-vp
+Vy
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+zq
+Ur
+Bw
+Ur
+Ur
+Ur
+Ur
+Ur
+zq
+bO
+bO
 mR
-vp
-vp
-vp
-vp
-vp
-UM
-vp
-vp
-mR
-vp
-vp
+bO
+bO
 IO
-vp
-vp
+bO
+bO
 mR
-vp
-vp
-XB
+bO
+bO
+hN
 qJ
 qJ
 qJ
@@ -1246,16 +1593,24 @@ qJ
 JJ
 JJ
 JJ
-ud
-vp
-mR
-vp
-vp
-vp
-aT
-vp
-UM
-vp
+Vy
+XA
+xo
+XA
+XA
+XA
+dv
+Is
+zq
+Ur
+cG
+cG
+cG
+cG
+cG
+cG
+cG
+MV
 IO
 IO
 IO
@@ -1264,17 +1619,9 @@ IO
 IO
 IO
 IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-vp
-vp
-XB
+bO
+bO
+hN
 qJ
 qJ
 qJ
@@ -1298,35 +1645,35 @@ JJ
 JJ
 JJ
 JJ
-ud
-vp
-dn
-dn
-dn
-dn
+Vy
+XA
+KW
+KW
+KW
+KW
+eq
+Al
+cG
+cG
+cG
+Ur
+Ur
+Ur
+cW
+Ur
+zq
+lB
+bO
+Je
+bO
+bO
 IO
-IO
-IO
-IO
-IO
-vp
-vp
-vp
-JE
-vp
-UM
-vp
-vp
-JE
-vp
-vp
-IO
-vp
-vp
-JE
-vp
-vp
-XB
+bO
+bO
+Je
+bO
+bO
+hN
 qJ
 qJ
 qJ
@@ -1350,35 +1697,35 @@ JJ
 JJ
 JJ
 JJ
-ud
-vp
-vp
-vp
-vp
-vp
-vp
-vp
-UM
-vp
+Vy
+XA
+XA
+XA
+XA
+XA
+XA
+XA
+zq
+Ur
+cG
+Ur
+Ur
+Ur
+Ur
+Ur
+zq
+bO
+bO
+bO
+bO
+bO
 IO
-vp
-vp
-vp
-vp
-vp
-UM
-vp
-vp
-vp
-vp
-vp
-IO
-vp
-vp
-vp
-vp
-vp
-XB
+bO
+bO
+bO
+bO
+bO
+hN
 qJ
 qJ
 qJ
@@ -1398,39 +1745,39 @@ qJ
 qJ
 JJ
 JJ
-ud
-ud
+MK
+MK
 Hc
-ud
-ud
-UM
-UM
-UM
-UM
-UM
-UM
-UM
-UM
-UM
+MK
+Vy
+Up
+Up
+Up
+Up
+Up
+Up
+Up
+zq
+zq
+cG
+zq
+zq
+zq
+zq
+zq
+zq
+oz
+oz
+oz
+oz
+oz
 IO
-UM
-UM
-UM
-UM
-UM
-UM
-UM
-UM
-UM
-UM
-UM
-IO
-UM
-UM
-UM
-UM
-UM
-ud
+oz
+oz
+oz
+oz
+oz
+Iz
 qJ
 qJ
 qJ
@@ -1450,7 +1797,7 @@ JJ
 JJ
 JJ
 JJ
-ud
+MK
 vp
 vp
 vp
@@ -1464,25 +1811,25 @@ aT
 vp
 UM
 Ah
-IO
+OF
 vp
 UM
 vp
 aT
 vp
-UM
-vp
-vp
-vp
-vp
-vp
-IO
-vp
-vp
-vp
-vp
-vp
-ud
+dS
+Pw
+Pw
+Pw
+Pw
+Pw
+nm
+Pw
+Pw
+Pw
+Pw
+Pw
+Vs
 qJ
 qJ
 qJ
@@ -1504,7 +1851,7 @@ JJ
 JJ
 Hc
 vp
-tt
+lU
 qX
 UM
 hS
@@ -1516,25 +1863,25 @@ Lg
 vp
 UM
 PL
-IO
+OF
 vp
 UM
 hS
 Lg
 vp
-UM
-vp
-mR
-vp
-vp
-vp
-IO
-vp
-vp
-vp
-aT
-vp
-XB
+dS
+Pw
+pU
+Pw
+Pw
+Pw
+nm
+Pw
+Pw
+Pw
+RM
+Pw
+Rt
 qJ
 qJ
 qJ
@@ -1554,39 +1901,39 @@ JJ
 JJ
 JJ
 JJ
-ud
+MK
 vp
-IO
-vp
-UM
-vp
-IO
+bG
 vp
 UM
 vp
-IO
+bG
 vp
 UM
 vp
-IO
+bG
 vp
 UM
 vp
-IO
+OF
 vp
 UM
 vp
+bG
+vp
+dS
+Pw
 dn
-vp
-vp
-vp
-IO
-vp
-vp
-vp
+Pw
+Pw
+Pw
+nm
+Pw
+Pw
+Pw
 TX
-vp
-XB
+Pw
+Rt
 qJ
 qJ
 qJ
@@ -1604,41 +1951,41 @@ qJ
 qJ
 qJ
 qJ
-ud
-ud
-ud
+MK
+MK
+MK
 UM
-IO
-UM
-UM
-UM
-IO
+bG
 UM
 UM
 UM
-IO
+bG
 UM
 UM
-vp
-IO
-vp
 UM
-UM
-IO
+bG
 UM
 UM
 vp
+OF
+vp
+UM
+UM
+bG
+UM
+dS
+Pw
 dn
-vp
-vp
-vp
-IO
-vp
-vp
-vp
+Pw
+Pw
+Pw
+nm
+Pw
+Pw
+Pw
 TX
-vp
-XB
+Pw
+Rt
 qJ
 qJ
 qJ
@@ -1656,41 +2003,41 @@ qJ
 qJ
 qJ
 qJ
-ud
+MK
 vp
 vp
 vp
-IO
+bG
 vp
 vp
 vp
-IO
+bG
 vp
 ZD
 vp
-IO
+bG
 vp
 vp
 vp
-IO
+OF
 gR
 vp
 vp
-IO
+bG
 vp
-UM
-vp
+dS
+BN
 dn
-vp
-vp
-vp
-IO
-vp
-vp
-vp
+Pw
+Pw
+Pw
+nm
+Pw
+Pw
+Pw
 TX
-vp
-XB
+Pw
+Rt
 qJ
 qJ
 qJ
@@ -1708,41 +2055,41 @@ qJ
 qJ
 qJ
 qJ
-XB
+qF
 vp
 Cn
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-IO
-vp
-XB
+bG
+bG
+bG
+bG
+bG
+bG
+bG
+OF
+OF
+OF
+OF
+OF
+OF
+OF
+OF
+OF
+OF
+OF
+OF
+Rg
+Rg
+nm
+nm
+nm
+nm
+nm
+nm
+nm
+nm
+nm
+Pw
+Rt
 qJ
 qJ
 qJ
@@ -1760,41 +2107,41 @@ qJ
 qJ
 qJ
 qJ
-XB
+qF
 vp
 vp
-dn
+Pd
 vp
 vp
 vp
 vp
-IO
+bG
 vp
-JE
+Wh
 vp
-IO
+bG
 vp
 vp
 Cn
-IO
+OF
 vp
 vp
 vp
-IO
+bG
 vp
-UM
-vp
+dS
+Pw
 TX
-vp
-vp
-vp
-IO
-vp
-vp
-vp
+Pw
+Pw
+Pw
+nm
+Pw
+Pw
+Pw
 dn
-vp
-XB
+Pw
+Rt
 qJ
 qJ
 qJ
@@ -1812,41 +2159,41 @@ qJ
 qJ
 qJ
 qJ
-XB
+qF
 vp
 vp
-dn
+Pd
 vp
 vp
 UM
 UM
-IO
+bG
 UM
 UM
 UM
-IO
-UM
-UM
-vp
-IO
-vp
-UM
-UM
-IO
+bG
 UM
 UM
 vp
+OF
+vp
+UM
+UM
+bG
+UM
+dS
+Pw
 TX
-vp
-vp
-vp
-IO
-vp
-vp
-vp
+Pw
+Pw
+Pw
+nm
+Pw
+Pw
+Pw
 dn
-vp
-XB
+Pw
+Rt
 qJ
 qJ
 qJ
@@ -1864,41 +2211,41 @@ qd
 qJ
 qJ
 qJ
-XB
+qF
 vp
 vp
-dn
+Pd
 vp
 vp
 UM
 vp
-IO
+bG
 vp
 UM
 vp
-IO
+bG
 vp
 UM
 vp
-IO
+OF
 vp
 UM
 vp
-IO
+bG
 vp
-UM
-vp
+dS
+Pw
 TX
-vp
-vp
-vp
-IO
-vp
-vp
-vp
+Pw
+Pw
+Pw
+nm
+Pw
+Pw
+Pw
 dn
-vp
-XB
+Pw
+Rt
 qJ
 qJ
 qJ
@@ -1916,41 +2263,41 @@ qd
 qJ
 qJ
 qJ
-XB
+qF
 vp
 vp
+UF
+vp
+vp
+UM
+hS
+GL
+vp
+UM
+hS
+GL
+vp
+UM
+vp
+OF
+vp
+UM
+hS
+GL
+vp
+dS
+Pw
+xe
+Pw
+Pw
+Pw
+nm
+Pw
+Pw
+Pw
 NS
-vp
-vp
-UM
-hS
-GL
-vp
-UM
-hS
-GL
-vp
-UM
-vp
-IO
-vp
-UM
-hS
-GL
-vp
-UM
-vp
-JE
-vp
-vp
-vp
-IO
-vp
-vp
-vp
-NS
-vp
-XB
+Pw
+Rt
 qJ
 qJ
 qJ
@@ -1968,7 +2315,7 @@ qd
 qJ
 qJ
 qJ
-ud
+MK
 vp
 vp
 vp
@@ -1984,25 +2331,25 @@ JE
 vp
 UM
 vp
-IO
+OF
 vp
 UM
 vp
 JE
 vp
-UM
-vp
-vp
-vp
-vp
-vp
-IO
-vp
-vp
-vp
-vp
-vp
-ud
+dS
+Pw
+Pw
+Pw
+Pw
+Pw
+nm
+Pw
+Pw
+Pw
+Pw
+Pw
+Vs
 qJ
 qJ
 qJ
@@ -2020,41 +2367,41 @@ qd
 qJ
 qJ
 qJ
-ud
-ud
-ud
-ud
-ud
-ud
+AO
+AO
+AO
+AO
+AO
+AO
+rd
+rd
+rd
+rd
+rd
+rd
+rd
+rd
+rd
+UM
+OF
 UM
 UM
 UM
 UM
 UM
-UM
-UM
-UM
-UM
-UM
-IO
-UM
-UM
-UM
-UM
-UM
-UM
-UM
-UM
-UM
-UM
-UM
-IO
-UM
-ud
-ud
-ud
-ud
-ud
+dS
+dS
+dS
+dS
+dS
+dS
+nm
+dS
+Vs
+Vs
+Vs
+Vs
+Vs
 qJ
 qJ
 qJ
@@ -2084,25 +2431,25 @@ uK
 Em
 kJ
 Fu
-kJ
-kJ
-UM
+oS
+oS
+rd
 vp
-IO
-vp
-vp
-vp
-vp
-UM
+OF
 vp
 vp
 vp
 vp
-UM
-vp
-IO
-vp
-ud
+Xx
+jt
+jt
+jt
+jt
+dS
+Pw
+nm
+Pw
+Vs
 JJ
 JJ
 JJ
@@ -2124,10 +2471,10 @@ qd
 qJ
 qJ
 qJ
-ud
+AO
 LC
 vL
-ud
+AO
 xa
 WD
 vN
@@ -2136,25 +2483,25 @@ of
 of
 gZ
 ll
-aT
-kJ
-UM
+dI
+oS
+rd
 vp
-IO
+OF
 vp
 vp
-mR
+yY
 vp
 rx
-vp
-aT
-vp
-vp
-UM
+jt
+pq
+jt
+jt
+dS
 AA
 rA
-vp
-Hc
+Pw
+Ff
 JJ
 JJ
 JJ
@@ -2176,37 +2523,37 @@ qJ
 qJ
 qJ
 qJ
-ud
+AO
 gi
-ud
-ud
+AO
+AO
 WO
 SU
 Zy
 nL
 Xs
 qR
-IO
+kM
 zZ
-TX
+eQ
 cX
-IO
-IO
-IO
-IO
-IO
-dn
+kM
+OF
+OF
+OF
+OF
+Bt
 vp
 rx
-vp
-IO
-qX
-vp
-UM
-vp
-vp
-vp
-ud
+jt
+te
+YF
+jt
+dS
+Pw
+Pw
+Pw
+Vs
 JJ
 JJ
 JJ
@@ -2228,37 +2575,37 @@ qJ
 qJ
 qJ
 qJ
-ud
+AO
 vt
-vp
-vp
-aF
-vp
-vp
+cN
+hh
+jW
+hh
+hh
 qZ
-vp
+Xq
 LH
-dn
+TD
+Xq
+xx
+nY
+rd
 vp
 vp
 vp
-UM
-vp
-vp
-vp
-TX
+NN
 tt
 vp
 rx
-vp
-IO
-vp
-vp
-ud
-ud
-Hc
-ud
-ud
+jt
+te
+jt
+jt
+Vs
+Vs
+Ff
+Vs
+Vs
 JJ
 JJ
 qJ
@@ -2280,9 +2627,9 @@ qJ
 qJ
 qJ
 qJ
-ud
+AO
 Ne
-ud
+AO
 MF
 aF
 ou
@@ -2290,23 +2637,23 @@ xE
 aF
 Vz
 DM
-dn
+TD
+hh
+xx
+nY
+rd
 vp
 vp
 vp
-UM
+NN
+OF
 vp
-vp
-vp
-TX
-IO
-vp
-UM
-vp
-IO
-vp
-vp
-ud
+Xx
+jt
+te
+jt
+jt
+we
 JJ
 JJ
 JJ
@@ -2332,33 +2679,33 @@ qJ
 qJ
 qJ
 qJ
-ud
+AO
 aH
-ud
-ud
-ud
-ud
-ud
-vp
-vp
+AO
+bK
+bK
+bK
+bK
+Xq
+Xq
 pJ
 og
+Xq
+Xq
+bK
+bK
+bK
+bK
+bK
 vp
+OF
 vp
-ud
-ud
-ud
-ud
-ud
-vp
-IO
-vp
-UM
-UM
+Xx
+Xx
 eI
 rx
-UM
-ud
+Xx
+we
 JJ
 JJ
 JJ
@@ -2386,7 +2733,7 @@ qJ
 qJ
 qJ
 qJ
-ud
+bK
 JY
 JY
 kW
@@ -2401,16 +2748,16 @@ WI
 PZ
 JX
 JX
-ud
+bK
 vp
-IO
+OF
 vp
 rx
-vp
-IO
-vp
-vp
-ud
+jt
+te
+jt
+jt
+we
 JJ
 JJ
 JJ
@@ -2438,31 +2785,31 @@ qJ
 qJ
 qJ
 qJ
-ud
+bK
 JY
 YK
 JY
 XB
-vp
-vp
+Xq
+Xq
 IR
-vp
-vp
+Xq
+Xq
 qY
 XB
 JX
 Sv
 JX
-ud
+bK
 vp
-IO
+OF
 vp
 rx
-vp
-IO
-vp
-vp
-XB
+jt
+te
+jt
+jt
+IH
 JJ
 JJ
 JJ
@@ -2490,7 +2837,7 @@ qJ
 qJ
 qJ
 qJ
-ud
+bK
 JY
 JY
 KO
@@ -2505,16 +2852,16 @@ bh
 Vd
 JX
 JX
-ud
-UM
-IO
-UM
-UM
-vp
-IO
-vp
-vp
-XB
+bK
+Xx
+ui
+Xx
+Xx
+jt
+te
+jt
+jt
+IH
 JJ
 JJ
 JJ
@@ -2542,31 +2889,31 @@ qJ
 qJ
 qJ
 qJ
-ud
-ud
-ud
-ud
-ud
-vp
-vp
+bK
+bK
+bK
+bK
+bK
+Xq
+Xq
 IR
 Zr
 gl
 qY
-ud
-ud
-ud
-ud
-ud
-vp
-IO
-vp
-vp
-vp
-IO
-vp
-vp
-XB
+bK
+bK
+bK
+bK
+bK
+jt
+ui
+CG
+jt
+jt
+te
+jt
+jt
+IH
 JJ
 JJ
 JJ
@@ -2594,13 +2941,13 @@ qJ
 qJ
 qJ
 qJ
-ud
+bK
 HB
 HB
 Pg
 mp
 rS
-vp
+Xq
 RN
 mA
 IM
@@ -2609,16 +2956,16 @@ WI
 Pu
 FD
 FD
-ud
-vp
-IO
-vp
-mR
-vp
-IO
-vp
-vp
-XB
+bK
+jt
+te
+jt
+XZ
+jt
+te
+jt
+jt
+IH
 JJ
 JJ
 JJ
@@ -2646,13 +2993,13 @@ qJ
 qJ
 qJ
 qJ
-ud
+bK
 HB
 qp
 HB
 XB
-vp
-vp
+Xq
+Xq
 IR
 Zr
 gl
@@ -2661,16 +3008,16 @@ XB
 FD
 yg
 FD
-ud
-vp
-IO
-IO
-IO
-IO
-IO
-vp
-vp
-ud
+bK
+jt
+te
+te
+te
+te
+te
+jt
+jt
+we
 JJ
 JJ
 JJ
@@ -2698,7 +3045,7 @@ qJ
 qJ
 qJ
 qJ
-ud
+bK
 HB
 HB
 Dm
@@ -2713,16 +3060,16 @@ bh
 Ue
 FD
 FD
-ud
-vp
-vp
-vp
-JE
-vp
-vp
-vp
-vp
-ud
+bK
+jt
+jt
+jt
+VZ
+jt
+jt
+jt
+jt
+we
 JJ
 JJ
 JJ
@@ -2750,31 +3097,31 @@ qJ
 qJ
 qJ
 qJ
-ud
-ud
-ud
-ud
-ud
-vp
-vp
+bK
+bK
+bK
+bK
+bK
+Xq
+Xq
 IR
 Zr
 gl
 ka
-ud
-ud
-ud
-ud
-ud
-vp
-vp
-vp
-vp
-vp
-vp
-vp
-vp
-ud
+bK
+bK
+bK
+bK
+bK
+jt
+jt
+jt
+jt
+jt
+jt
+jt
+jt
+we
 JJ
 JJ
 JJ
@@ -2802,13 +3149,13 @@ qJ
 qJ
 qJ
 qJ
-ud
+bK
 xA
 xA
 Iu
 WI
 yz
-vp
+Xq
 IR
 Zr
 gl
@@ -2817,16 +3164,16 @@ Mw
 Fy
 Yv
 Yv
-ud
-ud
-ud
-ud
-ud
-ud
-ud
-ud
-ud
-ud
+bK
+we
+we
+we
+we
+we
+we
+we
+we
+we
 JJ
 JJ
 JJ
@@ -2854,22 +3201,22 @@ qJ
 qJ
 qJ
 qJ
-ud
+bK
 xA
 QO
 xA
 XB
-vp
-vp
+Xq
+Xq
 IR
 Zr
-vp
+Xq
 qY
 XB
 Yv
 mq
 Yv
-ud
+bK
 qJ
 qJ
 qJ
@@ -2906,7 +3253,7 @@ qJ
 qJ
 qJ
 qJ
-ud
+bK
 xA
 xA
 rh
@@ -2921,7 +3268,7 @@ Hh
 rv
 Yv
 Yv
-ud
+bK
 qJ
 qJ
 qJ
@@ -2958,22 +3305,22 @@ qJ
 qJ
 qJ
 qJ
-ud
-ud
-ud
-ud
-ud
-ud
+bK
+bK
+bK
+bK
+bK
+bK
 XB
 Ec
 XB
 XB
-ud
-ud
-ud
-ud
-ud
-ud
+bK
+bK
+bK
+bK
+bK
+bK
 qJ
 qJ
 qJ
