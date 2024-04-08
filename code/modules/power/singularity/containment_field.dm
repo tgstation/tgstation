@@ -29,6 +29,8 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	var/static/list/turf_traits = list(TRAIT_CONTAINMENT_FIELD)
+	AddElement(/datum/element/give_turf_traits, turf_traits)
 
 /obj/machinery/field/containment/Destroy()
 	if(field_gen_1)

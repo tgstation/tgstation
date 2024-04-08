@@ -35,8 +35,11 @@
 		if (!isnull(new_target) && new_target != pursuit_target)
 			pursuit_target = new_target
 			new_target.ominous_nosebleed()
-	if (!isnull(pursuit_target))
-		step(src, get_dir(src, pursuit_target))
+	if (isnull(pursuit_target))
+		return
+	var/turf/step_turf = get_step(src, get_dir(src, pursuit_target))
+	if (!HAS_TRAIT(step_turf, TRAIT_CONTAINMENT_FIELD))
+		Move(step_turf)
 
 /// Returns the closest carbon on our z level or null if there somehow isn't one
 /obj/effect/anomaly/bioscrambler/proc/find_nearest_target()
