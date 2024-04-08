@@ -69,12 +69,20 @@ export function Image(props: Props) {
   }
 
   useEffect(() => {
+    if (!error) return;
+
+    // Extra careful with memory leaks, possibly unnecessary
+    let isMounted = true;
+
     const timer = setTimeout(() => {
-      setAttempts((prev) => prev + 1);
-      setError(false);
+      if (isMounted) {
+        setAttempts((prev) => prev + 1);
+        setError(false);
+      }
     }, 2000);
 
     return () => {
+      isMounted = false;
       clearTimeout(timer);
     };
   }, [error]);
