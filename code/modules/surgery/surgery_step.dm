@@ -76,10 +76,9 @@
 ///cyborgs and MODsuit users; otherwise it only mitigates penalties
 #define SURGERY_SPEED_TRAIT_TRAINED 0.7
 ///Check if the user has surgical training of any kind
-#define HAS_ANY_SURGICAL_TRAINING (HAS_TRAIT(user, TRAIT_SURGICAL_TRAINING) || HAS_TRAIT(user, TRAIT_SURGICAL_TRAINING_SILICON))
+#define HAS_ANY_SURGICAL_TRAINING(which_mob) (HAS_TRAIT(which_mob, TRAIT_SURGICAL_TRAINING) || HAS_TRAIT(which_mob, TRAIT_SURGICAL_TRAINING_SILICON))
 ///Returns 1 if they have silicon surgical training, otherwise 0
 ///Only used if we know they already have training
-#define SURGICAL_TRAINING_SILICON_LEVEL (HAS_TRAIT(user, TRAIT_SURGICAL_TRAINING_SILICON) ? 1 : 0)
 
 /datum/surgery_step/proc/initiate(mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	// Only followers of Asclepius have the ability to use Healing Touch and perform miracle feats of surgery.
@@ -108,7 +107,7 @@
 	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
 		speed_mod *= SURGERY_SPEED_TRAIT_ANALGESIA
 
-	if(SURGICAL_TRAINING_SILICON_LEVEL) /// 1 if silicon-level training
+	if(HAS_TRAIT(user, TRAIT_SURGICAL_TRAINING_SILICON)) /// 1 if silicon-level training
 		speed_mod *= SURGERY_SPEED_TRAIT_TRAINED
 		///Cyborgs and modsuit users are simply better at surgery
 		///than unassisted humans
@@ -120,11 +119,11 @@
 	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod) * target.mob_surgery_speed_mod
 	var/modded_time = time * speed_mod
 
-	if (modded_time <= time && !(HAS_ANY_SURGICAL_TRAINING))
+	if (modded_time <= time && !(HAS_ANY_SURGICAL_TRAINING(user)))
 		modded_time = time ///untrained people can only do surgery at base speed at the fastest
 
-	if (modded_time > time && HAS_ANY_SURGICAL_TRAINING)
-		if (SURGICAL_TRAINING_SILICON_LEVEL)
+	if (modded_time > time && HAS_ANY_SURGICAL_TRAINING(user))
+		if (HAS_TRAIT(user, TRAIT_SURGICAL_TRAINING_SILICON))
 			modded_time = time
 		else
 			modded_time = max(time, modded_time * SURGERY_SPEED_TRAIT_TRAINED)
