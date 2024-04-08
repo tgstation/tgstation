@@ -79,7 +79,7 @@ export function Image(props: Props) {
         setAttempts((prev) => prev + 1);
         setError(false);
       }
-    }, 2000);
+    }, 1000);
 
     return () => {
       isMounted = false;
