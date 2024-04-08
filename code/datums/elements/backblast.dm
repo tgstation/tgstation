@@ -7,10 +7,13 @@
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 
-	/// What are the explosion ranges
+	/// Devasatation range of the explosion
 	var/dev_range
+	/// HGeavy damage range of the explosion
 	var/heavy_range
+	/// Light damage range of the explosion
 	var/light_range
+	/// Flame range of the explosion
 	var/flame_range
 	/// What angle do we want the backblast to cover
 	var/blast_angle

@@ -208,7 +208,10 @@ SUBSYSTEM_DEF(explosions)
  * - flame_range: The range at which the explosion should produce hotspots.
  * - silent: Whether to generate/execute sound effects.
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
+ * - protect_epicenter: Whether to leave the epicenter turf unaffected by the explosion
  * - explosion_cause: [Optional] The atom that caused the explosion, when different to the origin. Used for logging.
+ * - explosion_direction: The angle in which the explosion is pointed (for directional explosions.)
+ * - explosion_arc: The angle of the arc covered by a directional explosion (if 360 the explosion is non-directional.)
  */
 /proc/explosion(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = null, flash_range = null, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, protect_epicenter = FALSE, atom/explosion_cause = null, explosion_direction = 0, explosion_arc = 360)
 	. = SSexplosions.explode(arglist(args))
@@ -228,7 +231,10 @@ SUBSYSTEM_DEF(explosions)
  * - flame_range: The range at which the explosion should produce hotspots.
  * - silent: Whether to generate/execute sound effects.
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
+ * - protect_epicenter: Whether to leave the epicenter turf unaffected by the explosion
  * - explosion_cause: [Optional] The atom that caused the explosion, when different to the origin. Used for logging.
+ * - explosion_direction: The angle in which the explosion is pointed (for directional explosions.)
+ * - explosion_arc: The angle of the arc covered by a directional explosion (if 360 the explosion is non-directional.)
  */
 /datum/controller/subsystem/explosions/proc/explode(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = null, flash_range = null, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, protect_epicenter = FALSE, atom/explosion_cause = null, explosion_direction = 0, explosion_arc = 360)
 	var/list/arguments = list(
@@ -273,7 +279,7 @@ SUBSYSTEM_DEF(explosions)
 /**
  * Handles the effects of an explosion originating from a given point.
  *
- * Primarily handles popagating the balstwave of the explosion to the relevant turfs.
+ * Primarily handles popagating the blastwave of the explosion to the relevant turfs.
  * Also handles the fireball from the explosion.
  * Also handles the smoke cloud from the explosion.
  * Also handles sfx and screenshake.
@@ -289,7 +295,10 @@ SUBSYSTEM_DEF(explosions)
  * - flame_range: The range at which the explosion should produce hotspots.
  * - silent: Whether to generate/execute sound effects.
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
- * - explosion_cause: The atom that caused the explosion. Used for logging.
+ * - protect_epicenter: Whether to leave the epicenter turf unaffected by the explosion
+ * - explosion_cause: [Optional] The atom that caused the explosion, when different to the origin. Used for logging.
+ * - explosion_direction: The angle in which the explosion is pointed (for directional explosions.)
+ * - explosion_arc: The angle of the arc covered by a directional explosion (if 360 the explosion is non-directional.)
  */
 /datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke, protect_epicenter, atom/explosion_cause, explosion_direction, explosion_arc)
 	epicenter = get_turf(epicenter)
@@ -597,8 +606,8 @@ SUBSYSTEM_DEF(explosions)
 	var/max_y = world.maxy
 
 	// Work out the angles to explode between
-	var/first_angle_limit = WRAP(explosion_direction - explosion_arc/2, 0, 360)
-	var/second_angle_limit = WRAP(explosion_direction + explosion_arc/2, 0, 360)
+	var/first_angle_limit = WRAP(explosion_direction - explosion_arc * 0.5, 0, 360)
+	var/second_angle_limit = WRAP(explosion_direction + explosion_arc * 0.5, 0, 360)
 
 	// Get everything in the right order
 	var/lower_angle_limit
