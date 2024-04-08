@@ -57,12 +57,12 @@
 
 
 /datum/lootpanel/ui_status(mob/user, datum/ui_state/state)
-	// var/turf/tile = search_turf_ref?.resolve()
-	// if(isnull(tile)) // let's try one more time
-	// 	return UI_CLOSE
+	var/turf/tile = search_turf_ref?.resolve()
+	if(isnull(tile)) // let's try one more time
+		return UI_CLOSE
 	
-	// if(!user.TurfAdjacent(tile))
-	// 	return UI_CLOSE
+	if(!user.TurfAdjacent(tile))
+		return UI_CLOSE
 
 	if(user.incapacitated())
 		return UI_DISABLED

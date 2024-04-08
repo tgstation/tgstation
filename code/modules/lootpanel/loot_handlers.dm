@@ -24,8 +24,9 @@
 	delete_search_object(source)
 	panel.send_update()
 
+
 /// The turf has been changed, update via callback
-/datum/lootpanel/proc/on_tile_change(turf/source, list/new_baseturfs, flags, list/post_change_callbacks)
+/datum/lootpanel/proc/on_tile_change(datum/source, path, list/new_baseturfs, flags, list/post_change_callbacks)
 	SIGNAL_HANDLER
 
 	var/ref = REF(source)
@@ -34,6 +35,7 @@
 		return
 
 	post_change_callbacks += CALLBACK(src, PROC_REF(on_post_change))
+
 
 /// Reset the search in case there were underlying items
 /datum/lootpanel/proc/on_post_change(turf/new_tile)

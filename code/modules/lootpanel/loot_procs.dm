@@ -72,7 +72,7 @@
 	if(QDELETED(thing) || QDELETED(user))
 		return FALSE
 
-	if(!locate(thing) in tile.contents ||!thing.Adjacent(user))
+	if(!locate(thing) in tile.contents || thing != tile || !thing.Adjacent(user))
 		return FALSE
 
 	var/modifiers = ""
@@ -81,10 +81,7 @@
 	if(params["shift"])
 		modifiers += "shift=1;"
 
-	if(!user.ClickOn(thing, modifiers))
-		return FALSE
-
-	delete_search_object(found_item)
+	user.ClickOn(thing, modifiers)
 
 	return TRUE
 
