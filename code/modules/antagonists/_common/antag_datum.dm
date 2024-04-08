@@ -301,7 +301,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		owner.current.ghostize(FALSE)
 		owner.current.key = chosen_one.key
 	else
-		log_game("Couldn't find antagonist ban replacement for ([key_name(owner)])")
+		log_game("Couldn't find antagonist ban replacement for ([key_name(owner)]).")
 
 /**
  * Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.
