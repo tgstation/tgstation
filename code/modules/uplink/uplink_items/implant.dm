@@ -289,6 +289,7 @@
 	cost = 6
 	surplus = 50
 	purchasable_from = ~UPLINK_SPY
+	progression_minimum = 5 MINUTES
 
 /datum/uplink_item/implants/makarov_implant
 	name = "Makarov Arm implant"
@@ -342,6 +343,7 @@
 	item = /obj/item/storage/box/syndie_kit/emp_shield
 	cost = 4
 	surplus = 20
+	progression_minimum = 10 MINUTES
 
 /datum/uplink_item/implants/hammerimplant
 	name = "Vxtvul Hammer Implant"
@@ -351,4 +353,5 @@
 			fling bodies, and heavily damage mechs. Vir'ln krx'tai, lost one."
 	cost = 14
 	surplus = 5
+	progression_minimum = 35 MINUTES
 	item = /obj/item/autosurgeon/syndicate/syndie_hammer

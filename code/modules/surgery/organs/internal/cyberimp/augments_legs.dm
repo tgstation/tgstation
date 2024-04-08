@@ -341,3 +341,4 @@
 
 /obj/item/organ/internal/cyberimp/leg/magboot/syndicate/l
 	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+	zone = "l_leg"

@@ -267,28 +267,10 @@
 	cost = 20
 	cant_discount = TRUE
 	restricted = TRUE
-	restricted_roles = list(JOB_HEAD_OF_PERSONNEL)
+	restricted_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_QUARTERMASTER, JOB_CHIEF_ENGINEER, JOB_CHIEF_MEDICAL_OFFICER, JOB_RESEARCH_DIRECTOR)
 
 /datum/uplink_item/role_restricted/lesser_nuclear_signal/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	force_event(/datum/round_event_control/operative, "a strange signal")
-	return source //For log icon
-
-/datum/uplink_item/role_restricted/nuclearassault
-	name = "Nuclear Request Beacon"
-	desc = "When purchased, your uplink will send an encrypted signal to one of our nearby outposts, and we'll put together a nuclear assault team for your station. Be prepared to assist or die trying."
-	item = /obj/effect/gibspawner/generic
-	surplus = 0
-	progression_minimum = 30 MINUTES
-	limited_stock = 1
-	cost = 40
-	cant_discount = TRUE
-	restricted = TRUE
-	restricted_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_QUARTERMASTER, JOB_CHIEF_ENGINEER, JOB_CHIEF_MEDICAL_OFFICER, JOB_RESEARCH_DIRECTOR)
-
-/datum/uplink_item/role_restricted/nuclearassault/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
-	force_event(/datum/round_event_control/operative, "a multitude of encrypted signals")
-	force_event(/datum/round_event_control/operative, "a multitude of encrypted signals")
-	force_event(/datum/round_event_control/operative, "a multitude of encrypted signals")
 	return source //For log icon
 
 /datum/uplink_item/role_restricted/spacepirates

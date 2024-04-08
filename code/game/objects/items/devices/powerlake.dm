@@ -23,7 +23,7 @@
 	throw_speed = 1
 	throw_range = 2
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT* 7.5)
-	var/max_heat = 3e7 // Maximum contained heat before exploding. Not actual temperature.
+	var/max_heat = 5e7 // Maximum contained heat before exploding. Not actual temperature.
 	var/internal_heat = 0 // Contained heat, goes down every tick.
 	var/mode = DISCONNECTED // DISCONNECTED, CLAMPED_OFF, OPERATING
 	var/warning_given = FALSE //! Stop warning spam, only warn the admins/deadchat once that we are about to boom.
@@ -159,19 +159,19 @@
 /// Provides power to the connected powernet, if any.
 /obj/item/powerlake/proc/provide_power()
 	var/datum/powernet/powernet = attached.powernet
-	var/provided = 100000 // 100KW?
+	var/provided = 100 KILO JOULES
 	set_light(5)
 
 	// Provide as much as we can from the powernet.
 	//provided = attached.newavail()
 	attached.add_avail(provided)
 
-	// If tried to drain more than available on powernet, now look for APCs and drain their cells
+	// If tried to provide more than maximum on powernet, now look for APCs and recharge their cells
 	for(var/obj/machinery/power/terminal/terminal in powernet.nodes)
 		if(istype(terminal.master, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/apc = terminal.master
 			if(apc.operating && apc.cell)
-				provided += 0.001 * apc.cell.give(50 KILO JOULES, force = TRUE)
+				provided /= 10 //apc.cell.give(50 KILO JOULES)
 	internal_heat += provided
 
 /obj/item/powerlake/process()
