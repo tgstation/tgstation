@@ -211,7 +211,7 @@
 		return FALSE
 	to_chat(user, span_notice("You start disassembling [src]..."))
 	if(tool.use_tool(src, user, 2 SECONDS, volume=50))
-		deconstruct_top()
+		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/wrench_act_secondary(mob/living/user, obj/item/tool)
@@ -220,6 +220,7 @@
 	to_chat(user, span_notice("You start deconstructing [src]..."))
 	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		frame = null
 		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
@@ -299,26 +300,16 @@
 
 /obj/structure/table/atom_deconstruct(disassembled = TRUE)
 	var/turf/target_turf = get_turf(src)
-	// Drop the materials for our top.
-	drop_top_mats(target_turf)
-	// And remember to drop our frame materials too.
-	new framestack(target_turf, framestackamount)
-
-/obj/structure/table/proc/deconstruct_top()
-	var/obj/table_frame = new frame(loc)
-	if(obj_flags & NO_DECONSTRUCTION)
-		table_frame.obj_flags |= NO_DECONSTRUCTION
-	else // Mimic deconstruction logic, only drop our materials without NO_DECONSTRUCTION
-		var/turf/target_turf = get_turf(src)
-		drop_top_mats(target_turf)
-	qdel(src)
-
-/obj/structure/table/proc/drop_top_mats(turf/target_turf)
 	if(buildstack)
 		new buildstack(target_turf, buildstackamount)
 	else
 		for(var/datum/material/mat in custom_materials)
 			new mat.sheet_type(target_turf, FLOOR(custom_materials[mat] / SHEET_MATERIAL_AMOUNT, 1))
+
+	if(frame)
+		new frame(target_turf)
+	else
+		new framestack(get_turf(src), framestackamount)
 
 /obj/structure/table/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
