@@ -1,6 +1,0 @@
-author: "Skeleton-In-Disguise"
-delete-after: True
-changes:
-  - rscadd: "Transhumanist now allows you to select your augmentation"
-  - rscadd: "Transhumanist can now provide a robotic voice box, or flashlight eyes"
-  - spellcheck: "Transhumanist's roundstart text has been re-written to not be wrong"
