@@ -1,5 +1,0 @@
-author: "Bilbo367"
-delete-after: True
-changes:
-  - bugfix: "aheal no longer turns monkies into humans"
-  - qol: "Player panel \"make monkey\" turns humans into monkeys through mutation instead of making a new mob"

@@ -127,7 +127,7 @@
 		user.visible_message(span_notice("[user] starts recharging [target] with [src]."), span_notice("You start recharging [target] with [src]."))
 
 		while(target_cell.charge < target_cell.maxcharge)
-			if(do_after(user, 10, target = user) && our_cell.charge)
+			if(do_after(user, 1 SECONDS, target = user) && our_cell.charge)
 				done_any = TRUE
 				induce(target_cell, coefficient)
 				do_sparks(1, FALSE, target)
@@ -203,5 +203,5 @@
 	icon_state = "inducer-syndi"
 	inhand_icon_state = "inducer-syndi"
 	desc = "A tool for inductively charging internal power cells. This one has a suspicious colour scheme, and seems to be rigged to transfer charge at a much faster rate."
-	powertransfer = 2000
+	powertransfer = 2 * STANDARD_CELL_CHARGE
 	cell_type = /obj/item/stock_parts/cell/super

@@ -105,11 +105,10 @@ ADMIN_VERB(log_viewer_new, R_ADMIN|R_DEBUG, "View Round Logs", "View the rounds 
 		return
 
 	switch(action)
-		if("re-render")
+		if("refresh")
 			cache_ui_data()
 			SStgui.update_uis(src)
 			return TRUE
-
 		else
 			stack_trace("unknown ui_act action [action] for [type]")
 

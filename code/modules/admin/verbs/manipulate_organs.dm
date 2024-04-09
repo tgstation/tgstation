@@ -69,7 +69,7 @@ ADMIN_VERB(manipulate_organs, R_DEBUG, "Manipulate Organs", "Manipulate the orga
 				organ_holder.Remove(carbon_victim)
 			else
 				implant_holder = organ_to_modify
-				implant_holder.removed(carbon_victim)
+				implant_holder.removed(carbon_victim, special = TRUE)
 
 			organ_to_modify.forceMove(get_turf(carbon_victim))
 
