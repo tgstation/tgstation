@@ -1082,12 +1082,12 @@
 	turf_type = /turf/open/floor/sepia
 	merge_type = /obj/item/stack/tile/sepia
 
-/obj/item/areaeditor/blueprints/slime
+/obj/item/blueprints/slime
 	name = "cerulean prints"
 	desc = "A one use yet of blueprints made of jelly like organic material. Extends the reach of the management console."
 	color = "#2956B2"
 
-/obj/item/areaeditor/blueprints/slime/edit_area()
+/obj/item/blueprints/slime/edit_area()
 	..()
 	var/area/area = get_area(src)
 	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())

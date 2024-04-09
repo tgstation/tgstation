@@ -1,69 +1,49 @@
-/obj/item/areaeditor
-	name = "area modification item"
+///The area is a "Station" area, showing no special text.
+#define AREA_STATION 1
+///The area is in outdoors (lavaland/icemoon/jungle/space), therefore unclaimed territories.
+#define AREA_OUTDOORS 2
+///The area is special (shuttles/centcom), therefore can't be claimed.
+#define AREA_SPECIAL 3
+
+/**
+ * Blueprints
+ * Used to see the wires of machines on the station, the roundstart layout of pipes/cables/tubes,
+ * as well as allowing you to rename existing areas and create new ones.
+ * Used by the station, cyborgs, and golems.
+ */
+/obj/item/blueprints
+	name = "station blueprints"
+	desc = "Blueprints of the station. There is a \"Classified\" stamp and several coffee stains on it."
 	icon = 'icons/obj/scrolls.dmi'
 	icon_state = "blueprints"
 	inhand_icon_state = "blueprints"
 	attack_verb_continuous = list("attacks", "baps", "hits")
 	attack_verb_simple = list("attack", "bap", "hit")
-	var/fluffnotice = "Nobody's gonna read this stuff!"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+	var/fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
 	var/in_use = FALSE
 	///When using it to create a new area, this will be its type.
-	var/new_area_type = /area
+	var/area/new_area_type = /area
+	var/list/image/showing = list()
+	var/client/viewing
+	var/legend = FALSE //Viewing the wire legend
 
-/obj/item/areaeditor/attack_self(mob/user)
+/obj/item/blueprints/attack_self(mob/user)
 	add_fingerprint(user)
 	. = "<BODY><HTML><head><title>[src]</title></head> \
 				<h2>[station_name()] [src.name]</h2> \
 				<small>[fluffnotice]</small><hr>"
-	switch(get_area_type())
-		if(AREA_SPACE)
+	switch(get_area_type(user))
+		if(AREA_OUTDOORS)
 			. += "<p>According to the [src.name], you are now in an unclaimed territory.</p>"
 		if(AREA_SPECIAL)
 			. += "<p>This place is not noted on the [src.name].</p>"
 	. += "<p><a href='?src=[REF(src)];create_area=1'>Create or modify an existing area</a></p>"
 
-
-/obj/item/areaeditor/Topic(href, href_list)
-	if(..())
-		return TRUE
-	if(!usr.can_perform_action(src) || usr != loc)
-		usr << browse(null, "window=blueprints")
-		return TRUE
-	if(href_list["create_area"])
-		if(in_use)
-			return
-		var/area/A = get_area(usr)
-		if(A.area_flags & NOTELEPORT)
-			to_chat(usr, span_warning("You cannot edit restricted areas."))
-			return
-		in_use = TRUE
-		create_area(usr, new_area_type)
-		in_use = FALSE
-	updateUsrDialog()
-
-//Station blueprints!!!
-/obj/item/areaeditor/blueprints
-	name = "station blueprints"
-	desc = "Blueprints of the station. There is a \"Classified\" stamp and several coffee stains on it."
-	icon = 'icons/obj/scrolls.dmi'
-	icon_state = "blueprints"
-	fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/list/image/showing = list()
-	var/client/viewing
-	var/legend = FALSE //Viewing the wire legend
-
-
-/obj/item/areaeditor/blueprints/Destroy()
-	clear_viewer()
-	return ..()
-
-
-/obj/item/areaeditor/blueprints/attack_self(mob/user)
-	. = ..()
 	if(!legend)
 		var/area/A = get_area(user)
-		if(get_area_type() == AREA_STATION)
+		if(get_area_type(user) == AREA_STATION)
 			. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
 			. += "<p><a href='?src=[REF(src)];edit_area=1'>Change area name</a></p>"
 		. += "<p><a href='?src=[REF(src)];view_legend=1'>View wire colour legend</a></p>"
@@ -85,24 +65,37 @@
 	popup.open()
 	onclose(user, "blueprints")
 
-
-/obj/item/areaeditor/blueprints/Topic(href, href_list)
-	if(..())
-		return
+/obj/item/blueprints/Topic(href, href_list)
+	. = ..()
+	if(.)
+		return TRUE
+	if(!usr.can_perform_action(src) || usr != loc)
+		usr << browse(null, "window=blueprints")
+		return TRUE
+	if(href_list["create_area"])
+		if(in_use)
+			return
+		var/area/A = get_area(usr)
+		if(A.area_flags & NOTELEPORT)
+			to_chat(usr, span_warning("You cannot edit restricted areas."))
+			return
+		in_use = TRUE
+		create_area(usr, new_area_type)
+		in_use = FALSE
 	if(href_list["edit_area"])
-		if(get_area_type() != AREA_STATION)
+		if(get_area_type(usr) != AREA_STATION)
 			return
 		if(in_use)
 			return
 		in_use = TRUE
-		edit_area()
+		edit_area(usr)
 		in_use = FALSE
 	if(href_list["exit_legend"])
-		legend = FALSE;
+		legend = FALSE
 	if(href_list["view_legend"])
-		legend = TRUE;
+		legend = TRUE
 	if(href_list["view_wireset"])
-		legend = href_list["view_wireset"];
+		legend = href_list["view_wireset"]
 	if(href_list["view_blueprints"])
 		set_viewer(usr, span_notice("You flip the blueprints over to view the complex information diagram."))
 	if(href_list["hide_blueprints"])
@@ -111,9 +104,13 @@
 		clear_viewer(usr)
 		set_viewer(usr)
 
-	attack_self(usr) //this is not the proper way, but neither of the old update procs work! it's too ancient and I'm tired shush.
+	updateUsrDialog()
 
-/obj/item/areaeditor/blueprints/proc/get_images(turf/central_turf, viewsize)
+/obj/item/blueprints/Destroy()
+	clear_viewer()
+	return ..()
+
+/obj/item/blueprints/proc/get_images(turf/central_turf, viewsize)
 	. = list()
 	var/list/dimensions = getviewsize(viewsize)
 	var/horizontal_radius = dimensions[1] / 2
@@ -122,7 +119,7 @@
 		if(nearby_turf.blueprint_data)
 			. += nearby_turf.blueprint_data
 
-/obj/item/areaeditor/blueprints/proc/set_viewer(mob/user, message = "")
+/obj/item/blueprints/proc/set_viewer(mob/user, message = "")
 	if(user?.client)
 		if(viewing)
 			clear_viewer()
@@ -132,7 +129,7 @@
 		if(message)
 			to_chat(user, message)
 
-/obj/item/areaeditor/blueprints/proc/clear_viewer(mob/user, message = "")
+/obj/item/blueprints/proc/clear_viewer(mob/user, message = "")
 	if(viewing)
 		viewing.images -= showing
 		viewing = null
@@ -140,39 +137,19 @@
 	if(message)
 		to_chat(user, message)
 
-/obj/item/areaeditor/blueprints/dropped(mob/user)
+/obj/item/blueprints/dropped(mob/user)
 	..()
 	clear_viewer()
 	legend = FALSE
 
-
-/obj/item/areaeditor/proc/get_area_type(area/A)
-	if (!A)
-		A = get_area(usr)
-	if(A.outdoors)
-		return AREA_SPACE
-	var/list/SPECIALS = list(
-		/area/shuttle,
-		/area/centcom,
-		/area/centcom/asteroid,
-		/area/centcom/tdome,
-		/area/centcom/wizard_station,
-		/area/misc/hilbertshotel,
-		/area/misc/hilbertshotelstorage
-	)
-	for (var/type in SPECIALS)
-		if ( istype(A,type) )
-			return AREA_SPECIAL
-	return AREA_STATION
-
-/obj/item/areaeditor/blueprints/proc/view_wire_devices(mob/user)
+/obj/item/blueprints/proc/view_wire_devices(mob/user)
 	var/message = "<br>You examine the wire legend.<br>"
 	for(var/wireset in GLOB.wire_color_directory)
 		message += "<br><a href='?src=[REF(src)];view_wireset=[wireset]'>[GLOB.wire_name_directory[wireset]]</a>"
 	message += "</p>"
 	return message
 
-/obj/item/areaeditor/blueprints/proc/view_wire_set(mob/user, wireset)
+/obj/item/blueprints/proc/view_wire_set(mob/user, wireset)
 	//for some reason you can't use wireset directly as a derefencer so this is the next best :/
 	for(var/device in GLOB.wire_color_directory)
 		if("[device]" == wireset) //I know... don't change it...
@@ -185,70 +162,68 @@
 			return message
 	return ""
 
-/obj/item/areaeditor/proc/edit_area()
-	var/area/A = get_area(usr)
-	var/prevname = "[A.name]"
-	var/str = tgui_input_text(usr, "New area name", "Area Creation", max_length = MAX_NAME_LEN)
-	if(!str || !length(str) || str == prevname) //cancel
-		return
-	if(length(str) > 50)
-		to_chat(usr, span_warning("The given name is too long. The area's name is unchanged."))
+/**
+ * Gets the area type the user is currently standing in.
+ * Returns: AREA_STATION, AREA_OUTDOORS, or AREA_SPECIAL
+ * Args:
+ * - user: The person we're getting the area of to check if it's a special area.
+ */
+/obj/item/blueprints/proc/get_area_type(mob/user)
+	var/area/area_checking = get_area(user)
+	if(area_checking.outdoors)
+		return AREA_OUTDOORS
+	var/static/list/special_areas = typecacheof(list(
+		/area/shuttle,
+		/area/centcom,
+		/area/centcom/asteroid,
+		/area/centcom/tdome,
+		/area/centcom/wizard_station,
+		/area/misc/hilbertshotel,
+		/area/misc/hilbertshotelstorage,
+	))
+	if(area_checking.type in special_areas)
+		return AREA_SPECIAL
+	return AREA_STATION
+
+/**
+ * edit_area
+ * Takes input from the player and renames the area the blueprints are currently in.
+ */
+/obj/item/blueprints/proc/edit_area(mob/user)
+	var/area/area_editing = get_area(src)
+	var/prevname = "[area_editing.name]"
+	var/new_name = tgui_input_text(user, "New area name", "Area Creation", max_length = MAX_NAME_LEN)
+	if(!new_name || !length(new_name) || new_name == prevname) //cancel
 		return
 
-	rename_area(A, str)
-
-	to_chat(usr, span_notice("You rename the '[prevname]' to '[str]'."))
-	usr.log_message("has renamed [prevname] to [str]", LOG_GAME)
-	A.update_areasize()
-	interact()
+	rename_area(area_editing, new_name)
+	user.balloon_alert(user, "area renamed to [new_name]")
+	user.log_message("has renamed [prevname] to [new_name]", LOG_GAME)
+	updateUsrDialog()
 	return TRUE
 
-//Blueprint Subtypes
-
-/obj/item/areaeditor/blueprints/cyborg
+/**
+ * Cyborg blueprints
+ * The same as regular but with a different fluff text.
+ */
+/obj/item/blueprints/cyborg
 	name = "station schematics"
 	desc = "A digital copy of the station blueprints stored in your memory."
-	icon = 'icons/obj/scrolls.dmi'
-	icon_state = "blueprints"
 	fluffnotice = "Intellectual Property of Nanotrasen. For use in engineering cyborgs only. Wipe from memory upon departure from the station."
 
-/obj/item/areaeditor/blueprints/golem
+/**
+ * Golem blueprints
+ * Used by golems to make new "golem" areas, which doesn't come with slowdown for their
+ * hazard area debuff.
+ */
+/obj/item/blueprints/golem
 	name = "land claim"
 	desc = "Use it to build new structures in the wastes."
 	fluffnotice = "In memory of the Liberator's brother, Delaminator, and his Scarlet Macaw-iathan, from which this artifact was stolen."
 	new_area_type = /area/golem
 
-/proc/rename_area(a, new_name)
-	var/area/A = get_area(a)
-	var/prevname = "[A.name]"
-	set_area_machinery_title(A, new_name, prevname)
-	A.name = new_name
-	require_area_resort() //area renamed so resort the names
 
-	if(A.firedoors)
-		for(var/D in A.firedoors)
-			var/obj/machinery/door/firedoor/FD = D
-			FD.CalculateAffectingAreas()
-	A.update_areasize()
-	return TRUE
+#undef AREA_STATION
+#undef AREA_OUTDOORS
+#undef AREA_SPECIAL
 
-
-/proc/set_area_machinery_title(area/area, title, oldtitle)
-	if(!oldtitle) // or replacetext goes to infinite loop
-		return
-
-	//stuff tied to the area to rename
-	var/static/list/to_rename = typecacheof(list(
-		/obj/machinery/airalarm,
-		/obj/machinery/atmospherics/components/unary/vent_scrubber,
-		/obj/machinery/atmospherics/components/unary/vent_pump,
-		/obj/machinery/door,
-		/obj/machinery/firealarm,
-		/obj/machinery/light_switch,
-		/obj/machinery/power/apc,
-	))
-	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
-		for (var/turf/area_turf as anything in zlevel_turfs)
-			for(var/obj/machine as anything in typecache_filter_list(area_turf.contents, to_rename))
-				machine.name = replacetext(machine.name, oldtitle, title)
-	//TODO: much much more. Unnamed airlocks, cameras, etc.

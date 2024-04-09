@@ -1,0 +1,2 @@
+/obj/item/areaeditor/@SUBTYPES{@OLD} : /obj/item/blueprints/@SUBTYPES{@OLD}
+
