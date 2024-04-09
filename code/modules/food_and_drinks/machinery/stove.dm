@@ -115,6 +115,25 @@
 	. = ..()
 	LAZYREMOVE(added_ingredients, gone)
 
+/obj/item/reagent_containers/cup/soup_pot/proc/containeradd(obj/item/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/storage))
+		var/obj/item/storage/tray = attacking_item
+		var/loaded = 0
+
+		for(var/obj/tray_item in tray.contents)
+			if(!can_add_ingredient(tray_item))
+				continue
+			if(LAZYLEN(added_ingredients) >= max_ingredients)
+				balloon_alert(user, "it's full!")
+				return TRUE
+			if(tray.atom_storage.attempt_remove(tray_item, src))
+				loaded++
+				LAZYADD(added_ingredients, tray_item)
+		if(loaded)
+			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+			update_appearance(UPDATE_OVERLAYS)
+		return TRUE
+
 /obj/item/reagent_containers/cup/soup_pot/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
 	if(.)

@@ -63,6 +63,29 @@
 
 
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/storage))
+		var/obj/item/storage/tray = I
+		var/loaded = 0
+
+		if(!istype(I, /obj/item/storage/bag/tray))
+			// Non-tray dumping requires a do_after
+			to_chat(user, span_notice("You start dumping out the contents of [I] into [src]..."))
+			if(!do_after(user, 2 SECONDS, target = tray))
+				return
+
+		for(var/obj/tray_item in tray.contents)
+			if(!IS_EDIBLE(tray_item))
+				continue
+			if(griddled_objects.len >= max_items)
+				balloon_alert(user, "it's full!")
+				return TRUE
+			if(tray.atom_storage.attempt_remove(tray_item, src))
+				loaded++
+				AddToGrill(tray_item, user)
+		if(loaded)
+			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+		return
+
 	if(griddled_objects.len >= max_items)
 		to_chat(user, span_notice("[src] can't fit more items!"))
 		return
