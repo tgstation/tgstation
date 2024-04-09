@@ -14,7 +14,8 @@
 	novariants = FALSE
 	material_flags = MATERIAL_EFFECTS
 	var/sheettype = null //this is used for girders in the creation of walls/false walls
-	var/point_value = 0 //turn-in value for the gulag stacker - loosely relative to its rarity.
+	///If true, this is worth points in the gulag labour stacker
+	var/gulag_valid = FALSE
 	///What type of wall does this sheet spawn
 	var/walltype
 	/// whether this sheet can be sniffed by the material sniffer

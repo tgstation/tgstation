@@ -678,6 +678,8 @@
 	while(sheet_amt > 0)
 		//don't merge yet. we need to do stuff with it first
 		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, min(sheet_amt, MAX_STACK_SIZE), FALSE)
+		ADD_TRAIT(new_sheets, TRAIT_SHEET_SMELTED, INNATE_TRAIT)
+		new_sheets.AddElement(/datum/element/manufactured_material_sheet)
 		count += new_sheets.amount
 		//use material & deduct work needed
 		use_amount_mat(new_sheets.amount * SHEET_MATERIAL_AMOUNT, material)
