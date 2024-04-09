@@ -51,7 +51,7 @@
 			renamed_obj.update_appearance(UPDATE_NAME)
 
 		if(OPTION_DESCRIPTION)
-			var/input = tgui_input_text(user, "Describe [renamed_obj]", "Description", "[renamed_obj.desc]", 280)
+			var/input = tgui_input_text(user, "Describe [renamed_obj]", "Description", "[renamed_obj.desc]", MAX_DESC_LEN)
 			var/old_desc = renamed_obj.desc
 			if(QDELETED(renamed_obj) || !user.can_perform_action(renamed_obj))
 				return
