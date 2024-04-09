@@ -1,17 +1,17 @@
 #define NEXT_EAT_COOLDOWN 2 MINUTES
 
 /datum/ai_controller/basic_controller/raptor
-	blackboard = list(
+    blackboard = list(
 	    BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
 	    BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
         BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/mining/raptor),
         BB_BABIES_CHILD_TYPES = list(/mob/living/basic/mining/raptor/baby_raptor),
 	    BB_MAX_CHILDREN = 5,
-	)
+    )
 
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
+    ai_movement = /datum/ai_movement/basic_avoidance
+    idle_behavior = /datum/idle_behavior/idle_random_walk
+    planning_subtrees = list(
         /datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/raptor,
         /datum/ai_planning_subtree/flee_target/from_flee_key,
         /datum/ai_planning_subtree/find_and_hunt_target/heal_raptors,
@@ -24,13 +24,13 @@
         /datum/ai_planning_subtree/make_babies,
         /datum/ai_planning_subtree/find_and_hunt_target/raptor_start_trouble,
         /datum/ai_planning_subtree/express_happiness,
-	)
+    )
 
 /datum/ai_controller/basic_controller/raptor/TryPossessPawn(atom/new_pawn)
-	. = ..()
-	if(. & AI_CONTROLLER_INCOMPATIBLE)
-		return
-	RegisterSignal(new_pawn, COMSIG_MOB_ATE, PROC_REF(post_eat))
+    . = ..()
+    if(. & AI_CONTROLLER_INCOMPATIBLE)
+	    return
+    RegisterSignal(new_pawn, COMSIG_MOB_ATE, PROC_REF(post_eat))
 
 /datum/ai_controller/basic_controller/raptor/proc/post_eat()
     clear_blackboard_key(BB_RAPTOR_TROUGH_TARGET)
@@ -43,12 +43,12 @@
     return (the_target.faction.Find(FACTION_NEUTRAL) || the_target.faction.Find(FACTION_RAPTOR))
 
 /datum/ai_planning_subtree/find_and_hunt_target/heal_raptors
-	target_key = BB_INJURED_RAPTOR
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/heal_raptor
-	finding_behavior = /datum/ai_behavior/find_hunt_target/injured_raptor
-	hunt_targets = list(/mob/living/basic/mining/raptor)
-	hunt_chance = 70
-	hunt_range = 9
+    target_key = BB_INJURED_RAPTOR
+    hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/heal_raptor
+    finding_behavior = /datum/ai_behavior/find_hunt_target/injured_raptor
+    hunt_targets = list(/mob/living/basic/mining/raptor)
+    hunt_chance = 70
+    hunt_range = 9
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/heal_raptor
     always_reset_target = TRUE
@@ -72,12 +72,12 @@
     return ..()
 
 /datum/ai_planning_subtree/find_and_hunt_target/raptor_start_trouble
-	target_key = BB_RAPTOR_VICTIM
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/bully_raptors
-	finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_victim
-	hunt_targets = list(/mob/living/basic/mining/raptor)
-	hunt_chance = 30
-	hunt_range = 9
+    target_key = BB_RAPTOR_VICTIM
+    hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/bully_raptors
+    finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_victim
+    hunt_targets = list(/mob/living/basic/mining/raptor)
+    hunt_chance = 30
+    hunt_range = 9
 
 /datum/ai_behavior/find_hunt_target/raptor_victim
 
@@ -91,7 +91,7 @@
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/bully_raptors/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
     if(succeeded)
-        controller.blackboard[BB_RAPTOR_TROUBLE_COOLDOWN] = world.time + 30 SECONDS
+        controller.set_blackboard_key(BB_RAPTOR_TROUBLE_COOLDOWN, world.time + 30 SECONDS)
     return ..()
 
 /datum/ai_planning_subtree/find_and_hunt_target/raptor_start_trouble/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
@@ -102,12 +102,12 @@
     return ..()
 
 /datum/ai_planning_subtree/find_and_hunt_target/care_for_young
-	target_key = BB_RAPTOR_BABY
-	hunting_behavior = /datum/ai_behavior/hunt_target/care_for_young
-	finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_baby
-	hunt_targets = list(/mob/living/basic/mining/raptor/baby_raptor)
-	hunt_chance = 75
-	hunt_range = 9
+    target_key = BB_RAPTOR_BABY
+    hunting_behavior = /datum/ai_behavior/hunt_target/care_for_young
+    finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_baby
+    hunt_targets = list(/mob/living/basic/mining/raptor/baby_raptor)
+    hunt_chance = 75
+    hunt_range = 9
 
 /datum/ai_planning_subtree/find_and_hunt_target/care_for_young/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
     if(!controller.blackboard[BB_RAPTOR_MOTHERLY])
@@ -115,7 +115,7 @@
     return ..()
 
 /datum/ai_behavior/find_hunt_target/raptor_baby/valid_dinner(mob/living/source, mob/living/target, radius)
-	return can_see(source, target, radius) && target.stat != DEAD
+    return can_see(source, target, radius) && target.stat != DEAD
 
 /datum/ai_behavior/hunt_target/care_for_young
     always_reset_target = TRUE
@@ -160,21 +160,21 @@
     return ..()
 
 /datum/ai_controller/basic_controller/baby_raptor
-	blackboard = list(
+    blackboard = list(
         BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
         BB_FIND_MOM_TYPES = list(/mob/living/basic/mining/raptor),
 	    BB_IGNORE_MOM_TYPES = list(/mob/living/basic/mining/raptor/baby_raptor),
 	    BB_MAX_CHILDREN = 5,
-	)
+    )
 
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
+    ai_movement = /datum/ai_movement/basic_avoidance
+    idle_behavior = /datum/idle_behavior/idle_random_walk
+    planning_subtrees = list(
         /datum/ai_planning_subtree/simple_find_target,
         /datum/ai_planning_subtree/flee_target,
         /datum/ai_planning_subtree/find_and_hunt_target/raptor_trough,
         /datum/ai_planning_subtree/express_happiness,
         /datum/ai_planning_subtree/look_for_adult,
-	)
+    )
 
 #undef NEXT_EAT_COOLDOWN
