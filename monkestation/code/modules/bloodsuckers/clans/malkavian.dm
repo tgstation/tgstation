@@ -41,7 +41,7 @@
 	if(prob(85) || bloodsuckerdatum.owner.current.stat != CONSCIOUS || HAS_TRAIT(bloodsuckerdatum.owner.current, TRAIT_MASQUERADE))
 		return
 	var/message = pick(strings("malkavian_revelations.json", "revelations", "fulp_modules/strings/bloodsuckers"))
-	INVOKE_ASYNC(bloodsuckerdatum.owner.current, /atom/movable/proc/say, message, , , , , , CLAN_MALKAVIAN)
+	INVOKE_ASYNC(bloodsuckerdatum.owner.current, TYPE_PROC_REF(/atom/movable, say), message, , , , , , CLAN_MALKAVIAN)
 
 /datum/bloodsucker_clan/malkavian/on_favorite_vassal(datum/antagonist/bloodsucker/source, datum/antagonist/vassal/vassaldatum)
 	var/mob/living/carbon/carbonowner = vassaldatum.owner.current
