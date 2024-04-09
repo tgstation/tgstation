@@ -135,21 +135,20 @@
 	return ..()
 
 /datum/action/innate/cult/blood_spell/Activate()
-	if(magic_path) //If this spell flows from the hand
-		if(!hand_magic)
-			hand_magic = new magic_path(owner, src)
-			if(!owner.put_in_hands(hand_magic))
-				qdel(hand_magic)
-				hand_magic = null
-				to_chat(owner, span_warning("You have no empty hand for invoking blood magic!"))
-				return
-			to_chat(owner, span_notice("Your wounds glow as you invoke the [name]."))
-			return
-		if(hand_magic)
-			qdel(hand_magic)
-			hand_magic = null
-			to_chat(owner, span_warning("You snuff out the spell, saving it for later."))
-
+	if(!magic_path) // only concerned with spells that flow from the hand
+		return
+	if(hand_magic)
+		qdel(hand_magic)
+		hand_magic = null
+		to_chat(owner, span_warning("You snuff out the spell, saving it for later."))
+		return
+	hand_magic = new magic_path(owner, src)
+	if(!owner.put_in_hands(hand_magic))
+		qdel(hand_magic)
+		hand_magic = null
+		to_chat(owner, span_warning("You have no empty hand for invoking blood magic!"))
+		return
+	to_chat(owner, span_notice("Your wounds glow as you invoke the [name]."))
 
 //Cult Blood Spells
 /datum/action/innate/cult/blood_spell/stun
@@ -725,14 +724,13 @@
  * will only return TRUE if some amount healing is done
  */
 /obj/item/melee/blood_magic/manipulator/proc/heal_construct(atom/target, mob/living/carbon/human/user)
-	var/mob/living/basic/construct/construct_thing = target
+	var/mob/living/basic/construct_thing = target
 	if(!IS_CULTIST(construct_thing))
 		return FALSE
 	var/missing_health = construct_thing.maxHealth - construct_thing.health
 	if(!missing_health)
 		to_chat(user,span_cult("That cultist doesn't require healing!"))
 		return FALSE
-
 	if(uses <= 0)
 		construct_thing.balloon_alert(user, "out of blood!")
 		return FALSE
