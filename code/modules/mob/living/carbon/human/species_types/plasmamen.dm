@@ -61,6 +61,7 @@
 		/datum/outfit/syndicate/reinforcement/interdyne = /datum/outfit/syndicate/reinforcement/plasmaman,
 		/datum/outfit/syndicate/reinforcement/mi13 = /datum/outfit/syndicate/reinforcement/plasmaman,
 		/datum/outfit/syndicate/reinforcement/waffle = /datum/outfit/syndicate/reinforcement/plasmaman,
+		/datum/outfit/syndicate/support = /datum/outfit/syndicate/support/plasmaman,
 	)
 
 	/// If the bones themselves are burning clothes won't help you much

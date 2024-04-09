@@ -262,7 +262,7 @@
 
 /obj/item/mod/core/ethereal/charge_amount()
 	var/obj/item/organ/internal/stomach/ethereal/charge_source = charge_source()
-	return charge_source?.crystal_charge || ETHEREAL_CHARGE_NONE
+	return charge_source?.cell.charge() || ETHEREAL_CHARGE_NONE
 
 /obj/item/mod/core/ethereal/max_charge_amount()
 	return ETHEREAL_CHARGE_FULL

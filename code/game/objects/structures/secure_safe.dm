@@ -45,12 +45,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	if(mapload)
 		PopulateContents()
 
-/obj/structure/secure_safe/deconstruct(disassembled)
+/obj/structure/secure_safe/atom_deconstruct(disassembled)
 	if(!density) //if we're a wall item, we'll drop a wall frame.
 		var/obj/item/wallframe/secure_safe/new_safe = new(get_turf(src))
 		for(var/obj/item in contents)
 			item.forceMove(new_safe)
-	return ..()
 
 /obj/structure/secure_safe/proc/PopulateContents()
 	new /obj/item/paper(src)
@@ -79,6 +78,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	base_icon_state = "safe"
 	armor_type = /datum/armor/safe_caps_spare
 	max_integrity = 300
+	damage_deflection = 30 // prevents stealing the captain's spare using null rods/lavaland monsters/AP projectiles
 	density = TRUE
 	anchored_tabletop_offset = 4
 	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT)

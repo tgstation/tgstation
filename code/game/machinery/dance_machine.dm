@@ -32,8 +32,6 @@
 /obj/machinery/jukebox/wrench_act(mob/living/user, obj/item/tool)
 	if(!isnull(music_player.active_song_sound))
 		return NONE
-	if(obj_flags & NO_DECONSTRUCTION)
-		return NONE
 
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		return ITEM_INTERACT_SUCCESS

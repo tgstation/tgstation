@@ -380,7 +380,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 	if(toggleOn)
 		if(last_program && (last_program != offline_program))
-			addtimer(CALLBACK(src, PROC_REF(load_program), last_program, TRUE), 25)
+			addtimer(CALLBACK(src, PROC_REF(load_program), last_program, TRUE), 2.5 SECONDS)
 		active = TRUE
 	else
 		last_program = program

@@ -164,6 +164,8 @@
 #define ui_ai_multicam "BOTTOM+1:6,LEFT+1"
 #define ui_ai_add_multicam "BOTTOM+1:6,LEFT"
 #define ui_ai_take_picture "BOTTOM+2:6,LEFT"
+#define ui_ai_floor_indicator "BOTTOM+5,RIGHT"
+#define ui_ai_godownup "BOTTOM+5,RIGHT-1"
 
 //pAI
 #define ui_pai_software "SOUTH:6,WEST"

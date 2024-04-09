@@ -185,7 +185,7 @@
 			exposed_mob.emote("scream")
 		playsound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
 		ADD_TRAIT(exposed_mob, TRAIT_OIL_FRIED, "cooking_oil_react")
-		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 3)
+		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 0.3 SECONDS)
 	if(FryLoss)
 		exposed_mob.adjustFireLoss(FryLoss)
 
@@ -946,7 +946,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 30)
+		stomach.adjust_charge(reac_volume * 0.03 * STANDARD_CELL_CHARGE)
 
 /datum/reagent/consumable/liquidelectricity/enriched/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
