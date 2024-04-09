@@ -718,16 +718,10 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                     <Button
                       my={0.3}
                       lineHeight={2.5}
+					  width={"32px"}
                       align="center"
-                      content="Make a lot"
                       disabled={!craftable || busy}
-                      icon={
-                        busy
-                          ? 'circle-notch'
-                          : mode === MODE.cooking
-                            ? 'utensils'
-                            : 'hammer'
-                      }
+                      icon={"repeat"}
                       iconSpin={busy ? 1 : 0}
                       onClick={() =>
                         act('make_mass', {
@@ -854,7 +848,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
             <Stack.Item pl={1}>
               {!item.non_craftable && (
                 <Button
-                  width="104px"
+                  width={item.mass_craftable ? "74px" : "104px"}
                   lineHeight={2.5}
                   align="center"
                   content="Make"
@@ -874,25 +868,17 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
                   }
                 />
               )}
-              <br />
               {!item.non_craftable && item.mass_craftable && (
                 <Button
-                  width="104px"
+                  width="30px"
                   lineHeight={2.5}
                   align="center"
                   tooltip={
                     'Starts infinite(until you step/run out of things to craft) crafting items/food.'
                   }
                   tooltipPosition={'top'}
-                  content="Make a lot"
                   disabled={!craftable || busy}
-                  icon={
-                    busy
-                      ? 'circle-notch'
-                      : mode === MODE.cooking
-                        ? 'utensils'
-                        : 'hammer'
-                  }
+                  icon={"repeat"}
                   iconSpin={busy ? 1 : 0}
                   onClick={() =>
                     act('make_mass', {
