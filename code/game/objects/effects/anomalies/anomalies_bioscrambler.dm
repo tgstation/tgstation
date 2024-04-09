@@ -24,7 +24,7 @@
 		return
 
 	COOLDOWN_START(src, pulse_cooldown, pulse_delay)
-	for(var/mob/living/carbon/nearby in range(range, src))
+	for(var/mob/living/carbon/nearby in hearers(range, src))
 		nearby.bioscramble(name)
 
 /obj/effect/anomaly/bioscrambler/move_anomaly()
