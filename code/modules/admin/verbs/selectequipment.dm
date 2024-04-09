@@ -148,7 +148,7 @@ ADMIN_VERB(select_equipment, R_FUN, "Select Equipment", ADMIN_VERB_NO_DESCRIPTIO
 			return custom_outfit
 
 
-/datum/select_equipment/ui_act(action, params)
+/datum/select_equipment/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
 	. = TRUE
@@ -177,7 +177,7 @@ ADMIN_VERB(select_equipment, R_FUN, "Select Equipment", ADMIN_VERB_NO_DESCRIPTIO
 			user.admin_apply_outfit(target_mob, new_outfit)
 
 		if("customoutfit")
-			user.outfit_manager()
+			return SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/outfit_manager)
 
 		if("togglefavorite")
 			var/datum/outfit/outfit_path = resolve_outfit(params["path"])

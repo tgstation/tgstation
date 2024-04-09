@@ -508,34 +508,27 @@ ADMIN_VERB(modify_goals, R_ADMIN, "Modify Goals", "Modify the station goals for 
 	dat += "<br><a href='?src=[REF(src)];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
 	usr << browse(dat, "window=goals;size=400x400")
 
-/client/proc/cmd_debug_mob_lists()
-	set category = "Debug"
-	set name = "Debug Mob Lists"
-	set desc = "For when you just gotta know"
-	var/chosen_list = tgui_input_list(usr, "Which list?", "Select List", list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
+ADMIN_VERB(debug_mob_lists, R_DEBUG, "Debug Mob Lists", "For when you just gotta know.", ADMIN_CATEGORY_DEBUG)
+	var/chosen_list = tgui_input_list(user, "Which list?", "Select List", list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
 	if(isnull(chosen_list))
 		return
 	switch(chosen_list)
 		if("Players")
-			to_chat(usr, jointext(GLOB.player_list,","), confidential = TRUE)
+			to_chat(user, jointext(GLOB.player_list,","), confidential = TRUE)
 		if("Admins")
-			to_chat(usr, jointext(GLOB.admins,","), confidential = TRUE)
+			to_chat(user, jointext(GLOB.admins,","), confidential = TRUE)
 		if("Mobs")
-			to_chat(usr, jointext(GLOB.mob_list,","), confidential = TRUE)
+			to_chat(user, jointext(GLOB.mob_list,","), confidential = TRUE)
 		if("Living Mobs")
-			to_chat(usr, jointext(GLOB.alive_mob_list,","), confidential = TRUE)
+			to_chat(user, jointext(GLOB.alive_mob_list,","), confidential = TRUE)
 		if("Dead Mobs")
-			to_chat(usr, jointext(GLOB.dead_mob_list,","), confidential = TRUE)
+			to_chat(user, jointext(GLOB.dead_mob_list,","), confidential = TRUE)
 		if("Clients")
-			to_chat(usr, jointext(GLOB.clients,","), confidential = TRUE)
+			to_chat(user, jointext(GLOB.clients,","), confidential = TRUE)
 		if("Joined Clients")
-			to_chat(usr, jointext(GLOB.joined_player_list,","), confidential = TRUE)
+			to_chat(user, jointext(GLOB.joined_player_list,","), confidential = TRUE)
 
-/client/proc/cmd_display_del_log()
-	set category = "Debug"
-	set name = "Display del() Log"
-	set desc = "Display del's log of everything that's passed through it."
-
+ADMIN_VERB(del_log, R_DEBUG, "Display del() Log", "Display del's log of everything that's passed through it.", ADMIN_CATEGORY_DEBUG)
 	var/list/dellog = list("<B>List of things that have gone through qdel this round</B><BR><BR><ol>")
 	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
 	for(var/path in SSgarbage.items)
@@ -566,37 +559,19 @@ ADMIN_VERB(modify_goals, R_ADMIN, "Modify Goals", "Modify the station goals for 
 
 	dellog += "</ol>"
 
-	usr << browse(dellog.Join(), "window=dellog")
+	user << browse(dellog.Join(), "window=dellog")
 
-/client/proc/cmd_display_overlay_log()
-	set category = "Debug"
-	set name = "Display overlay Log"
-	set desc = "Display SSoverlays log of everything that's passed through it."
+ADMIN_VERB(display_overlay_log, R_DEBUG, "Display Overlay Log", "Display SSoverlays log of everything that's passed through it.", ADMIN_CATEGORY_DEBUG)
+	render_stats(SSoverlays.stats, user)
 
-	render_stats(SSoverlays.stats, src)
+ADMIN_VERB(init_log, R_DEBUG, "Display Initialize() Log", "Displays a list of things that didn't handle Initialize() properly.", ADMIN_CATEGORY_DEBUG)
+	user << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")
 
-/client/proc/cmd_display_init_log()
-	set category = "Debug"
-	set name = "Display Initialize() Log"
-	set desc = "Displays a list of things that didn't handle Initialize() properly"
+ADMIN_VERB(debug_color_test, R_DEBUG, "Colorblind Testing", "Change your view to a budget version of colorblindness to test for usability.", ADMIN_CATEGORY_DEBUG)
+	user.holder.color_test.ui_interact(user.mob)
 
-	usr << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")
-
-/client/proc/open_colorblind_test()
-	set category = "Debug"
-	set name = "Colorblind Testing"
-	set desc = "Change your view to a budget version of colorblindness to test for usability"
-
-	if(!holder)
-		return
-	holder.color_test.ui_interact(mob)
-
-/client/proc/debug_plane_masters()
-	set category = "Debug"
-	set name = "Edit/Debug Planes"
-	set desc = "Edit and visualize plane masters and their connections (relays)"
-
-	edit_plane_masters()
+ADMIN_VERB(debug_plane_masters, R_DEBUG, "Edit/Debug Planes", "Edit and visualize plane masters and their connections (relays).", ADMIN_CATEGORY_DEBUG)
+	user.edit_plane_masters()
 
 /client/proc/edit_plane_masters(mob/debug_on)
 	if(!holder)
@@ -608,21 +583,10 @@ ADMIN_VERB(modify_goals, R_ADMIN, "Modify Goals", "Modify the station goals for 
 		holder.plane_debug.set_mirroring(FALSE)
 	holder.plane_debug.ui_interact(mob)
 
-/client/proc/debug_huds(i as num)
-	set category = "Debug"
-	set name = "Debug HUDs"
-	set desc = "Debug the data or antag HUDs"
+ADMIN_VERB(debug_huds, R_DEBUG, "Debug HUDs", "Debug the data or antag HUDs.", ADMIN_CATEGORY_DEBUG, i as num)
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/debug_variables, GLOB.huds[i])
 
-	if(!holder)
-		return
-	debug_variables(GLOB.huds[i])
-
-/client/proc/jump_to_ruin()
-	set category = "Debug"
-	set name = "Jump to Ruin"
-	set desc = "Displays a list of all placed ruins to teleport to."
-	if(!holder)
-		return
+ADMIN_VERB(jump_to_ruin, R_DEBUG, "Jump to Ruin", "Displays a list of all placed ruins to teleport to.", ADMIN_CATEGORY_DEBUG)
 	var/list/names = list()
 	for(var/obj/effect/landmark/ruin/ruin_landmark as anything in GLOB.ruin_landmarks)
 		var/datum/map_template/ruin/template = ruin_landmark.ruin_template
@@ -637,23 +601,17 @@ ADMIN_VERB(modify_goals, R_ADMIN, "Modify Goals", "Modify the station goals for 
 
 		names[name] = ruin_landmark
 
-	var/ruinname = tgui_input_list(usr, "Select ruin", "Jump to Ruin", sort_list(names))
-
+	var/ruinname = tgui_input_list(user, "Select ruin", "Jump to Ruin", sort_list(names))
 	var/obj/effect/landmark/ruin/landmark = names[ruinname]
-
-	if(istype(landmark))
-		var/datum/map_template/ruin/template = landmark.ruin_template
-		usr.forceMove(get_turf(landmark))
-		to_chat(usr, span_name("[template.name]"), confidential = TRUE)
-		to_chat(usr, "<span class='italics'>[template.description]</span>", confidential = TRUE)
-
-/client/proc/place_ruin()
-	set category = "Debug"
-	set name = "Spawn Ruin"
-	set desc = "Attempt to randomly place a specific ruin."
-	if (!holder)
+	if(!istype(landmark))
 		return
+	var/datum/map_template/ruin/template = landmark.ruin_template
+	user.mob.forceMove(get_turf(landmark))
+	to_chat(user, span_name("[template.name]"), confidential = TRUE)
+	to_chat(user, "<span class='italics'>[template.description]</span>", confidential = TRUE)
 
+ADMIN_VERB_VISIBILITY(place_ruin, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a specific ruin.", ADMIN_CATEGORY_MAPPING)
 	var/list/exists = list()
 	for(var/landmark in GLOB.ruin_landmarks)
 		var/obj/effect/landmark/ruin/L = landmark
@@ -671,15 +629,15 @@ ADMIN_VERB(modify_goals, R_ADMIN, "Modify Goals", "Modify the station goals for 
 			themed_names[name] = list(ruin, theme, list(ruin.default_area))
 		names += sort_list(themed_names)
 
-	var/ruinname = tgui_input_list(usr, "Select ruin", "Spawn Ruin", sort_list(names))
+	var/ruinname = tgui_input_list(user, "Select ruin", "Spawn Ruin", sort_list(names))
 	var/data = names[ruinname]
 	if (!data)
 		return
 	var/datum/map_template/ruin/template = data[1]
 	if (exists[template])
-		var/response = tgui_alert(usr,"There is already a [template] in existence.", "Spawn Ruin", list("Jump", "Place Another", "Cancel"))
+		var/response = tgui_alert(user,"There is already a [template] in existence.", "Spawn Ruin", list("Jump", "Place Another", "Cancel"))
 		if (response == "Jump")
-			usr.forceMove(get_turf(exists[template]))
+			user.mob.forceMove(get_turf(exists[template]))
 			return
 		else if (response == "Cancel")
 			return
@@ -688,12 +646,12 @@ ADMIN_VERB(modify_goals, R_ADMIN, "Modify Goals", "Modify the station goals for 
 	seedRuins(SSmapping.levels_by_trait(data[2]), max(1, template.cost), data[3], list(ruinname = template))
 	if (GLOB.ruin_landmarks.len > len)
 		var/obj/effect/landmark/ruin/landmark = GLOB.ruin_landmarks[GLOB.ruin_landmarks.len]
-		log_admin("[key_name(src)] randomly spawned ruin [ruinname] at [COORD(landmark)].")
-		usr.forceMove(get_turf(landmark))
-		to_chat(src, span_name("[template.name]"), confidential = TRUE)
-		to_chat(src, "<span class='italics'>[template.description]</span>", confidential = TRUE)
+		log_admin("[key_name(user)] randomly spawned ruin [ruinname] at [COORD(landmark)].")
+		user.mob.forceMove(get_turf(landmark))
+		to_chat(user, span_name("[template.name]"), confidential = TRUE)
+		to_chat(user, "<span class='italics'>[template.description]</span>", confidential = TRUE)
 	else
-		to_chat(src, span_warning("Failed to place [template.name]."), confidential = TRUE)
+		to_chat(user, span_warning("Failed to place [template.name]."), confidential = TRUE)
 
 /client/proc/unload_ctf()
 	set category = "Debug"
@@ -702,11 +660,7 @@ ADMIN_VERB(modify_goals, R_ADMIN, "Modify Goals", "Modify the station goals for 
 
 	toggle_id_ctf(usr, CTF_GHOST_CTF_GAME_ID, unload=TRUE)
 
-/client/proc/run_empty_query(val as num)
-	set category = "Debug"
-	set name = "Run empty query"
-	set desc = "Amount of queries to run"
-
+ADMIN_VERB(run_empty_query, R_DEBUG, "Run Empty Query", "Runs a specified number of empty queries.", ADMIN_CATEGORY_DEBUG, val as num)
 	var/list/queries = list()
 	for(var/i in 1 to val)
 		var/datum/db_query/query = SSdbcore.NewQuery("NULL")
@@ -718,7 +672,7 @@ ADMIN_VERB(modify_goals, R_ADMIN, "Modify Goals", "Modify the station goals for 
 		qdel(query)
 	queries.Cut()
 
-	message_admins("[key_name_admin(src)] ran [val] empty queries.")
+	message_admins("[key_name_admin(user)] ran [val] empty queries.")
 
 ADMIN_VERB(clear_turf_reservations, R_DEBUG, "Clear Dynamic Turf Reservations", "Deallocates all reserved space, restoring it to round start conditions.", ADMIN_CATEGORY_DEBUG)
 	var/answer = tgui_alert(
@@ -734,29 +688,15 @@ ADMIN_VERB(clear_turf_reservations, R_DEBUG, "Clear Dynamic Turf Reservations", 
 	log_admin("[key_name(user)] cleared dynamic turf reservations.")
 	SSmapping.wipe_reservations() //this goes after it's logged, incase something horrible happens.
 
-/client/proc/toggle_medal_disable()
-	set category = "Debug"
-	set name = "Toggle Medal Disable"
-	set desc = "Toggles the safety lock on trying to contact the medal hub."
-
-	if(!check_rights(R_DEBUG))
-		return
-
+ADMIN_VERB(toggle_medal_disable, R_DEBUG, "Toggle Medal Disable", "Toggles the safety lock on trying to contact the medal hub.", ADMIN_CATEGORY_DEBUG)
 	SSachievements.achievements_enabled = !SSachievements.achievements_enabled
 
-	message_admins(span_adminnotice("[key_name_admin(src)] [SSachievements.achievements_enabled ? "disabled" : "enabled"] the medal hub lockout."))
+	message_admins(span_adminnotice("[key_name_admin(user)] [SSachievements.achievements_enabled ? "disabled" : "enabled"] the medal hub lockout."))
 	BLACKBOX_LOG_ADMIN_VERB("Toggle Medal Disable")
-	log_admin("[key_name(src)] [SSachievements.achievements_enabled ? "disabled" : "enabled"] the medal hub lockout.")
+	log_admin("[key_name(user)] [SSachievements.achievements_enabled ? "disabled" : "enabled"] the medal hub lockout.")
 
-/client/proc/view_runtimes()
-	set category = "Debug"
-	set name = "View Runtimes"
-	set desc = "Open the runtime Viewer"
-
-	if(!holder)
-		return
-
-	GLOB.error_cache.show_to(src)
+ADMIN_VERB(view_runtimes, R_DEBUG, "View Runtimes", "Opens the runtime viewer.", ADMIN_CATEGORY_DEBUG)
+	GLOB.error_cache.show_to(user)
 
 	// The runtime viewer has the potential to crash the server if there's a LOT of runtimes
 	// this has happened before, multiple times, so we'll just leave an alert on it
@@ -765,20 +705,14 @@ ADMIN_VERB(clear_turf_reservations, R_DEBUG, "Clear Dynamic Turf Reservations", 
 		if(GLOB.total_runtimes >= 100000)
 			warning = "There are a TON of runtimes, clicking any button (especially \"linear\") WILL LIKELY crash the server"
 		// Not using TGUI alert, because it's view runtimes, stuff is probably broken
-		alert(usr, "[warning]. Proceed with caution. If you really need to see the runtimes, download the runtime log and view it in a text editor.", "HEED THIS WARNING CAREFULLY MORTAL")
+		alert(user, "[warning]. Proceed with caution. If you really need to see the runtimes, download the runtime log and view it in a text editor.", "HEED THIS WARNING CAREFULLY MORTAL")
 
-/client/proc/pump_random_event()
-	set category = "Debug"
-	set name = "Pump Random Event"
-	set desc = "Schedules the event subsystem to fire a new random event immediately. Some events may fire without notification."
-	if(!holder)
-		return
-
+ADMIN_VERB(pump_random_event, R_DEBUG, "Pump Random Event", "Schedules the event subsystem to fire a new random event immediately. Some events may fire without notification.", ADMIN_CATEGORY_DEBUG)
 	SSevents.scheduled = world.time
 
-	message_admins(span_adminnotice("[key_name_admin(src)] pumped a random event."))
+	message_admins(span_adminnotice("[key_name_admin(user)] pumped a random event."))
 	BLACKBOX_LOG_ADMIN_VERB("Pump Random Event")
-	log_admin("[key_name(src)] pumped a random event.")
+	log_admin("[key_name(user)] pumped a random event.")
 
 /client/proc/start_line_profiling()
 	set category = "Profile"
@@ -818,14 +752,10 @@ ADMIN_VERB(clear_turf_reservations, R_DEBUG, "Clear Dynamic Turf Reservations", 
 	sort = sortlist[sort]
 	profile_show(src, sort)
 
-/client/proc/reload_configuration()
-	set category = "Debug"
-	set name = "Reload Configuration"
-	set desc = "Force config reload to world default"
-	if(!check_rights(R_DEBUG))
+ADMIN_VERB(reload_configuration, R_DEBUG, "Reload Configuration", "Reloads the configuration from the default path on the disk, wiping any in-round modifications.", ADMIN_CATEGORY_DEBUG)
+	if(!tgui_alert(user, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modifications?", "Really reset?", list("No", "Yes")) == "Yes")
 		return
-	if(tgui_alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modifications?", "Really reset?", list("No", "Yes")) == "Yes")
-		config.admin_reload()
+	config.admin_reload()
 
 ADMIN_VERB(check_timer_sources, R_DEBUG, "Check Timer Sources", "Checks the sources of running timers.", ADMIN_CATEGORY_DEBUG)
 	var/bucket_list_output = generate_timer_source_output(SStimer.bucket_list)
@@ -839,24 +769,16 @@ ADMIN_VERB(check_timer_sources, R_DEBUG, "Check Timer Sources", "Checks the sour
 		[second_queue]
 	"}, "window=check_timer_sources;size=700x700")
 
-/// A debug verb to try and re-establish a connection with the TTS server and to refetch TTS voices.
-/// Since voices are cached beforehand, this is unlikely to update preferences.
-/client/proc/reestablish_tts_connection()
-	set category = "Debug"
-	set name = "Re-establish Connection To TTS"
-	set desc = "Re-establishes connection to the TTS server if possible"
-	if (!check_rights(R_DEBUG))
-		return
-
-	message_admins("[key_name_admin(usr)] attempted to re-establish connection to the TTS HTTP server.")
-	log_admin("[key_name(usr)] attempted to re-establish connection to the TTS HTTP server.")
+ADMIN_VERB(reestablish_tts_connection, R_DEBUG, "Re-establish Connection To TTS", "Re-establishes connection to the TTS server if possible", ADMIN_CATEGORY_DEBUG)
+	message_admins("[key_name_admin(user)] attempted to re-establish connection to the TTS HTTP server.")
+	log_admin("[key_name(user)] attempted to re-establish connection to the TTS HTTP server.")
 	var/success = SStts.establish_connection_to_tts()
 	if(!success)
-		message_admins("[key_name_admin(usr)] failed to re-established the connection to the TTS HTTP server.")
-		log_admin("[key_name(usr)] failed to re-established the connection to the TTS HTTP server.")
+		message_admins("[key_name_admin(user)] failed to re-established the connection to the TTS HTTP server.")
+		log_admin("[key_name(user)] failed to re-established the connection to the TTS HTTP server.")
 		return
-	message_admins("[key_name_admin(usr)] successfully re-established the connection to the TTS HTTP server.")
-	log_admin("[key_name(usr)] successfully re-established the connection to the TTS HTTP server.")
+	message_admins("[key_name_admin(user)] successfully re-established the connection to the TTS HTTP server.")
+	log_admin("[key_name(user)] successfully re-established the connection to the TTS HTTP server.")
 
 /proc/generate_timer_source_output(list/datum/timedevent/events)
 	var/list/per_source = list()

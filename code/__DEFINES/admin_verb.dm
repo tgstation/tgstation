@@ -1,3 +1,10 @@
+/client/CanProcCall(procname)
+	if(findtext(procname, "__avd_") == 1)
+		message_admins("[key_name_admin(usr)] attempted to directly call admin verb '[procname]'.")
+		log_admin("[key_name(usr)] attempted to directly call admin verb '[procname]'.")
+		return FALSE
+	return ..()
+
 /**
  * This is the only macro you should use to define admin verbs.
  * It will define the verb and the verb holder for you.
