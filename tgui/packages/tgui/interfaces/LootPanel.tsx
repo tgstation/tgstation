@@ -44,6 +44,9 @@ export function LootPanel(props) {
           if (event.key === KEY.Enter && filteredContents.length > 0) {
             act('grab', { ref: filteredContents[0].ref });
           }
+          if (event.key === KEY.Escape) {
+            Byond.sendMessage('close');
+          }
         }}
       >
         <Section
