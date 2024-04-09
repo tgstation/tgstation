@@ -154,37 +154,37 @@
 	if(hit_by.current_color == current_color)
 		to_chat(user, span_warning("You must use balloons of different colours to do that!"))
 		return ..()
-	else
-		visible_message(span_notice("[user.name] starts contorting up a balloon animal!"),
-			blind_message = span_hear("You hear balloons being contorted."),
-			vision_distance = 3,
-			ignored_mobs = user
-		)
-		var/list/balloon_combos = list(
-			list("red", "blue") = /obj/item/toy/balloon_animal/guy,
-			list("red", "green") = /obj/item/toy/balloon_animal/nukie,
-			list("red", "yellow") = /obj/item/toy/balloon_animal/clown,
-			list("red", "orange") = /obj/item/toy/balloon_animal/cat,
-			list("red", "purple") = /obj/item/toy/balloon_animal/fly,
-			list("blue", "green") = /obj/item/toy/balloon_animal/podguy,
-			list("blue", "yellow") = /obj/item/toy/balloon_animal/ai,
-			list("blue", "orange") = /obj/item/toy/balloon_animal/dog,
-			list("blue", "purple") = /obj/item/toy/balloon_animal/xeno,
-			list("green", "yellow") = /obj/item/toy/balloon_animal/banana,
-			list("green", "orange") = /obj/item/toy/balloon_animal/lizard,
-			list("green", "purple") = /obj/item/toy/balloon_animal/slime,
-			list("yellow", "orange") = /obj/item/toy/balloon_animal/moth,
-			list("yellow", "purple") = /obj/item/toy/balloon_animal/ethereal,
-			list("orange", "purple") = /obj/item/toy/balloon_animal/plasmaman,
-		)
-		for(var/list/pair_of_colors in balloon_combos)
-			if((hit_by.current_color == pair_of_colors[1] && current_color == pair_of_colors[2]) || (current_color == pair_of_colors[1] && hit_by.current_color == pair_of_colors[2]))
-				var/path_to_spawn = balloon_combos[pair_of_colors] 
-				user.put_in_hands(new path_to_spawn)
-				break 
-		qdel(hit_by)
-		qdel(src)
-		return TRUE
+	visible_message(
+		span_notice("[user.name] starts contorting up a balloon animal!"),
+		blind_message = span_hear("You hear balloons being contorted."),
+		vision_distance = 3,
+		ignored_mobs = user,
+	)
+	var/list/balloon_combos = list(
+		list("red", "blue") = /obj/item/toy/balloon_animal/guy,
+		list("red", "green") = /obj/item/toy/balloon_animal/nukie,
+		list("red", "yellow") = /obj/item/toy/balloon_animal/clown,
+		list("red", "orange") = /obj/item/toy/balloon_animal/cat,
+		list("red", "purple") = /obj/item/toy/balloon_animal/fly,
+		list("blue", "green") = /obj/item/toy/balloon_animal/podguy,
+		list("blue", "yellow") = /obj/item/toy/balloon_animal/ai,
+		list("blue", "orange") = /obj/item/toy/balloon_animal/dog,
+		list("blue", "purple") = /obj/item/toy/balloon_animal/xeno,
+		list("green", "yellow") = /obj/item/toy/balloon_animal/banana,
+		list("green", "orange") = /obj/item/toy/balloon_animal/lizard,
+		list("green", "purple") = /obj/item/toy/balloon_animal/slime,
+		list("yellow", "orange") = /obj/item/toy/balloon_animal/moth,
+		list("yellow", "purple") = /obj/item/toy/balloon_animal/ethereal,
+		list("orange", "purple") = /obj/item/toy/balloon_animal/plasmaman,
+	)
+	for(var/list/pair_of_colors in balloon_combos)
+		if((hit_by.current_color == pair_of_colors[1] && current_color == pair_of_colors[2]) || (current_color == pair_of_colors[1] && hit_by.current_color == pair_of_colors[2]))
+			var/path_to_spawn = balloon_combos[pair_of_colors] 
+			user.put_in_hands(new path_to_spawn)
+			break 
+	qdel(hit_by)
+	qdel(src)
+	return TRUE
 
 /obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_casing/foam_dart) && ismonkey(user))
