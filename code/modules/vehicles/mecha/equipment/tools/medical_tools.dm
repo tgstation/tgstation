@@ -80,12 +80,13 @@
 		if("eject")
 			go_out()
 			return TRUE
-		else
-			var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG = locate() in chassis
-			for(var/datum/reagent/R in SG.reagents.reagent_list)
-				if(action == ("inject_reagent_" + R.name))
-					inject_reagent(R, SG)
-					return
+	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/shooter = locate() in chassis
+	for(var/datum/reagent/medication in shooter.reagents.reagent_list)
+		if(action == ("inject_reagent_" + medication.name))
+			inject_reagent(medication, shooter)
+			break // or maybe return TRUE? i'm not certain
+				
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/action(mob/source, atom/atomtarget, list/modifiers)
 	if(!action_checks(atomtarget))
