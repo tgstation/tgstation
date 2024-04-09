@@ -138,18 +138,22 @@ const MainMenu = () => {
       <Box>
         {viewing ? (
           <>
-            <Button
-              fluid
-              icon="wrench"
-              content="Refresh structural data"
-              onClick={() => act('refresh')}
-            />
-            <Button
-              fluid
-              icon="wrench"
-              content="Hide structural data"
-              onClick={() => act('hide_blueprints')}
-            />
+            <Box>
+              <Button
+                fluid
+                icon="wrench"
+                content="Refresh structural data"
+                onClick={() => act('refresh')}
+              />
+            </Box>
+            <Box>
+              <Button
+                fluid
+                icon="wrench"
+                content="Hide structural data"
+                onClick={() => act('hide_blueprints')}
+              />
+            </Box>
           </>
         ) : (
           <Button
