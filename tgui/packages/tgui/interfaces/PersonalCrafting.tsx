@@ -718,10 +718,10 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                     <Button
                       my={0.3}
                       lineHeight={2.5}
-					  width={"32px"}
+                      width={'32px'}
                       align="center"
                       disabled={!craftable || busy}
-                      icon={"repeat"}
+                      icon={'repeat'}
                       iconSpin={busy ? 1 : 0}
                       onClick={() =>
                         act('make_mass', {
@@ -848,7 +848,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
             <Stack.Item pl={1}>
               {!item.non_craftable && (
                 <Button
-                  width={item.mass_craftable ? "74px" : "104px"}
+                  width={item.mass_craftable ? '74px' : '104px'}
                   lineHeight={2.5}
                   align="center"
                   content="Make"
@@ -878,7 +878,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
                   }
                   tooltipPosition={'top'}
                   disabled={!craftable || busy}
-                  icon={"repeat"}
+                  icon={'repeat'}
                   iconSpin={busy ? 1 : 0}
                   onClick={() =>
                     act('make_mass', {
