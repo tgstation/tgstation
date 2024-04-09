@@ -147,7 +147,7 @@
 		knowledge_data["cost"] = found_knowledge.cost
 		knowledge_data["disabled"] = FALSE
 		knowledge_data["hereticPath"] = found_knowledge.route
-		knowledge_data["color"] = "good"
+		knowledge_data["color"] = "black"
 		knowledge_data["icon"] = icon2base64(get_icon_of_knowledge(found_knowledge))
 		knowledge_data["finished"] = TRUE
 
