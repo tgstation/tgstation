@@ -229,7 +229,7 @@
 		if(!LAZYLEN(destinations))
 			to_chat(owner, span_warning("You need more space to summon your cult!"))
 			return
-		if(do_after(owner, 30, target = owner))
+		if(do_after(owner, 3 SECONDS, target = owner))
 			for(var/datum/mind/B in antag.cult_team.members)
 				if(B.current && B.current.stat != DEAD)
 					var/turf/mobloc = get_turf(B.current)
@@ -252,7 +252,7 @@
 									S.release_shades(owner)
 								B.current.setDir(SOUTH)
 								new /obj/effect/temp_visual/cult/blood(final)
-								addtimer(CALLBACK(B.current, TYPE_PROC_REF(/mob/, reckon), final), 10)
+								addtimer(CALLBACK(B.current, TYPE_PROC_REF(/mob/, reckon), final), 1 SECONDS)
 		else
 			return
 	antag.cult_team.reckoning_complete = TRUE

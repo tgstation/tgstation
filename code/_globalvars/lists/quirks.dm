@@ -18,13 +18,17 @@ GLOBAL_LIST_INIT(limb_choice, list(
 	"Right Leg" = /obj/item/bodypart/leg/right/robot/surplus,
 ))
 
+
 ///Transhumanist quirk
-GLOBAL_LIST_INIT(limb_choice_transhuman, list(
+GLOBAL_LIST_INIT(part_choice_transhuman, list(
 	"Left Arm" = /obj/item/bodypart/arm/left/robot,
 	"Right Arm" = /obj/item/bodypart/arm/right/robot,
 	"Left Leg" = /obj/item/bodypart/leg/left/robot,
 	"Right Leg" = /obj/item/bodypart/leg/right/robot,
+	"Robotic Voice Box" = /obj/item/organ/internal/tongue/robot,
+	"Flashlights for Eyes" = /obj/item/organ/internal/eyes/robotic/flashlight,
 ))
+
 ///Hemiplegic Quirk
 GLOBAL_LIST_INIT(side_choice_hemiplegic, list(
 	"Left Side" = /datum/brain_trauma/severe/paralysis/hemiplegic/left,

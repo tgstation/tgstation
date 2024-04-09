@@ -467,7 +467,12 @@
 	if(M.active_storage?.attempt_insert(src, M))
 		return TRUE
 
-	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_by_slot(ITEM_SLOT_BELT), M.get_item_by_slot(ITEM_SLOT_DEX_STORAGE), M.get_item_by_slot(ITEM_SLOT_BACK))
+	var/list/obj/item/possible = list(
+		M.get_inactive_held_item(),
+		M.get_item_by_slot(ITEM_SLOT_BELT),
+		M.get_item_by_slot(ITEM_SLOT_DEX_STORAGE),
+		M.get_item_by_slot(ITEM_SLOT_BACK),
+	)
 	for(var/i in possible)
 		if(!i)
 			continue

@@ -196,12 +196,9 @@
 				explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 6, flame_range = 8)
 	qdel(src)
 
-/obj/structure/reagent_dispensers/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(!disassembled)
-			boom()
-	else
-		qdel(src)
+/obj/structure/reagent_dispensers/atom_deconstruct(disassembled = TRUE)
+	if(!disassembled)
+		boom()
 
 /obj/structure/reagent_dispensers/proc/tank_leak()
 	if(leaking && reagents && reagents.total_volume >= amount_to_leak)

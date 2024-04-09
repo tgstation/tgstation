@@ -88,7 +88,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /obj/machinery/barsign/atom_break(damage_flag)
 	. = ..()
-	if((machine_stat & BROKEN) && !(obj_flags & NO_DECONSTRUCTION))
+	if(machine_stat & BROKEN)
 		set_sign(new /datum/barsign/hiddensigns/signoff)
 
 /obj/machinery/barsign/on_deconstruction(disassembled)

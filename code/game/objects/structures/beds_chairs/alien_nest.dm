@@ -12,9 +12,17 @@
 	smoothing_groups = SMOOTH_GROUP_ALIEN_NEST
 	canSmoothWith = SMOOTH_GROUP_ALIEN_NEST
 	build_stack_type = null
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 	elevation = 0
 	var/static/mutable_appearance/nest_overlay = mutable_appearance('icons/mob/nonhuman-player/alien.dmi', "nestoverlay", LYING_MOB_LAYER)
+
+/obj/structure/bed/nest/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		return NONE
+
+	return ..()
+
+/obj/structure/bed/nest/wrench_act_secondary(mob/living/user, obj/item/weapon)
+	return ITEM_INTERACT_BLOCKING
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
 	if(has_buckled_mobs())
