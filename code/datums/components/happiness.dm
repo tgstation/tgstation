@@ -53,7 +53,7 @@
 		RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
 	if(on_eat_change)
 		RegisterSignal(parent, COMSIG_MOB_ATE, PROC_REF(on_eat))
-	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(view_happiness))
+	RegisterSignal(parent, COMSIG_SHIFT_CLICKED_ON, PROC_REF(view_happiness))
 	ADD_TRAIT(parent, TRAIT_MOB_RELAY_HAPPINESS, REF(src))
 
 /datum/component/happiness/UnregisterFromParent()
@@ -102,7 +102,7 @@
 	START_PROCESSING(SSprocessing, src)
 
 /datum/component/happiness/proc/view_happiness(mob/living/source, mob/living/clicker)
-	if(!istype(clicker) || !COOLDOWN_FINISHED(src, happiness_inspect))
+	if(!istype(clicker) || !COOLDOWN_FINISHED(src, happiness_inspect) || !clicker.CanReach(source))
 		return
 	var/list/offset_to_add = get_icon_dimensions(source.icon)
 	var/y_position = offset_to_add["height"] + 1

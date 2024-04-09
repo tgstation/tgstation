@@ -84,3 +84,6 @@ GLOBAL_LIST_INIT(raptor_inherit_traits, list(
 	BB_RAPTOR_TROUBLE_MAKER = "Trouble Maker",
 ))
 
+#define MAX_RAPTOR_POP 20
+
+GLOBAL_VAR_INIT(raptor_count, 0)

@@ -1067,6 +1067,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MOB_RELAY_HAPPINESS "mob_relay_happiness"
 ///trait determines if this mob can breed given by /datum/component/breeding
 #define TRAIT_MOB_BREEDER "mob_breeder"
+///trait given to mobs that are hatched
+#define TRAIT_MOB_HATCHED "mob_hatched"
 /// Trait given to mobs that we do not want to mindswap
 #define TRAIT_NO_MINDSWAP "no_mindswap"
 ///trait given to food that can be baked by /datum/component/bakeable

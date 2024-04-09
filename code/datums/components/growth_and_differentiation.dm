@@ -155,3 +155,4 @@
 	var/mob/living/transformed_mob = old_mob.change_mob_type(growth_path, old_mob.loc, new_name = new_mob_name, delete_old_mob = TRUE)
 	if(initial(new_mob.unique_name))
 		transformed_mob.set_name()
+	ADD_TRAIT(transformed_mob, TRAIT_MOB_HATCHED, INNATE_TRAIT)

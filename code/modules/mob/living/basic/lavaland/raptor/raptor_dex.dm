@@ -25,6 +25,7 @@
 	data["raptor_health"] = my_raptor.maxHealth
 	data["raptor_speed"] = my_raptor.speed
 	data["raptor_color"] = my_raptor.name
+	data["raptor_gender"] = my_raptor.gender
 	data["raptor_description"] = my_raptor.dex_description
 	var/happiness_percentage = my_raptor.ai_controller?.blackboard[BB_BASIC_HAPPINESS]
 	var/obj/effect/overlay/happiness_overlay/display = new
@@ -47,10 +48,10 @@
 
 /obj/item/raptor_dex/interact_with_atom(atom/attacked_atom, mob/living/user)
 	if(!istype(attacked_atom, /mob/living/basic/mining/raptor))
-		balloon_alert(user, "cant be analyzed!")
-		return ITEM_INTERACT_BLOCKING
+		return NONE
 
 	raptor = WEAKREF(attacked_atom)
 	playsound(src, 'sound/items/orbie_send_out.ogg', 20)
 	balloon_alert(user, "scanned")
+	ui_interact(user)
 	return ITEM_INTERACT_SUCCESS

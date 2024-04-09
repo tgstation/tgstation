@@ -1228,7 +1228,7 @@
 /area/lavaland/surface/outdoors)
 "JD" = (
 /obj/effect/mapping_helpers/no_lava,
-/obj/structure/ore_container/gutlunch_trough,
+/obj/structure/ore_container/food_trough/gutlunch_trough,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Kg" = (

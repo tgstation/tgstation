@@ -6,10 +6,11 @@
 	icon = 'icons/mob/simple/lavaland/raptor.dmi'
 	speed = 2
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	maxHealth = 200
-	health = 200
+	maxHealth = 250
+	health = 250
 	melee_damage_lower = 10
 	melee_damage_upper = 15
+	sentience_type = SENTIENCE_BOSS
 	attack_verb_continuous = "pecks"
 	attack_verb_simple = "chomps"
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -40,6 +41,13 @@
 
 /mob/living/basic/mining/raptor/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/obeys_commands, pet_commands)
+	AddElement(\
+		/datum/element/change_force_on_death,\
+		move_resist = MOVE_RESIST_DEFAULT,\
+	)
+	if(!mapload)
+		GLOB.raptor_count++
 	inherited_stats = new
 	inherit_properties()
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
@@ -82,7 +90,11 @@
 		melee_attack(ore_food)
 	return COMPONENT_HOSTILE_NO_ATTACK
 
-
+/mob/living/basic/mining/raptor/death(gibbed)
+	. = ..()
+	if(HAS_TRAIT(src, TRAIT_MOB_HATCHED))
+		GLOB.raptor_count--
+	
 /mob/living/basic/mining/raptor/proc/happiness_change(percent_value)
 	var/attack_boost = round(initial(melee_damage_lower) * percent_value * HAPPINESS_BOOST_DAMPENER, 1)
 	melee_damage_lower = initial(melee_damage_lower) + attack_boost
@@ -145,8 +157,8 @@
 	icon_state = "raptor_green"
 	icon_living = "raptor_green"
 	icon_dead = "raptor_green_dead"
-	maxHealth = 280
-	health = 280
+	maxHealth = 320
+	health = 320
 	raptor_color = RAPTOR_GREEN
 	dex_description = "A tough breed of raptor, made to withstand the harshest of punishment and to laugh in the face of pain, \
 		This breed is able to withstand more beating than its peers."
@@ -180,8 +192,8 @@
 	icon_state = "raptor_black"
 	icon_living = "raptor_black"
 	icon_dead = "raptor_black_dead"
-	maxHealth = 280
-	health = 280
+	maxHealth = 320
+	health = 320
 	speed = 1
 	ridable_component = /datum/component/riding/creature/raptor/fast
 	melee_damage_lower = 20
@@ -247,12 +259,14 @@
 	add_growth_component(pick(valid_subtypes))
 
 /obj/item/food/egg/raptor_egg/proc/add_growth_component(growth_path)
+	if(GLOB.raptor_count >= MAX_RAPTOR_POP)
+		return
 	AddComponent(\
 		/datum/component/fertile_egg,\
 		embryo_type = growth_path,\
-		minimum_growth_rate = 1,\
-		maximum_growth_rate = 2,\
-		total_growth_required = 50,\
+		minimum_growth_rate = 0.5,\
+		maximum_growth_rate = 1,\
+		total_growth_required = 300,\
 		current_growth = 0,\
 		location_allowlist = typecacheof(list(/turf)),\
 		post_hatch = CALLBACK(src, PROC_REF(post_hatch)),\

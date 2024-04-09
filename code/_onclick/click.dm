@@ -341,6 +341,7 @@
 	return
 
 /atom/proc/ShiftClick(mob/user)
+	SEND_SIGNAL(src, COMSIG_SHIFT_CLICKED_ON, user)
 	var/flags = SEND_SIGNAL(user, COMSIG_CLICK_SHIFT, src)
 	if(flags & COMSIG_MOB_CANCEL_CLICKON)
 		return

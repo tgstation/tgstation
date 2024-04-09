@@ -48,6 +48,7 @@
 	grown_mob.inherited_stats = inherited_stats
 	inherited_stats = null
 	grown_mob.inherit_properties()
+	ADD_TRAIT(grown_mob, TRAIT_MOB_HATCHED, INNATE_TRAIT) //pass on the hatched trait
 	qdel(src)
 
 /mob/living/basic/mining/raptor/baby_raptor/black

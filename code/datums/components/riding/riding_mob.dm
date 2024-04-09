@@ -570,9 +570,13 @@
 		var/opposite_direction = dir2text(REVERSE_DIR(direction))
 		cached_icons[opposite_direction] = string_icon
 
-/datum/riding_minigame/proc/commence_minigame(mob/living/ridden, mob/living/rider)
+/datum/riding_minigame/proc/commence_minigame()
 	set waitfor = FALSE
 	START_PROCESSING(SSprocessing, src)
+	var/mob/living/rider = mounter?.resolve()
+	if(isnull(rider))
+		lose_game()
+		return
 	ui_interact(rider)
 
 /datum/riding_minigame/process()

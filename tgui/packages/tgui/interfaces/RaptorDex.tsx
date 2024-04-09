@@ -1,4 +1,3 @@
-
 import { useBackend } from '../backend';
 import { Image, LabeledList, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -9,6 +8,7 @@ type Data = {
   raptor_speed: number;
   raptor_color: String;
   raptor_image: String;
+  raptor_gender: String;
   raptor_happiness: String;
   raptor_description: String;
   inherited_attack: number;
@@ -25,6 +25,7 @@ export const RaptorDex = (props) => {
     raptor_health,
     raptor_speed,
     raptor_image,
+    raptor_gender,
     inherited_attack,
     inherited_attack_max,
     inherited_health,
@@ -63,6 +64,9 @@ export const RaptorDex = (props) => {
                 </LabeledList.Item>
                 <LabeledList.Item label="Speed">
                   {10 - raptor_speed}
+                </LabeledList.Item>
+                <LabeledList.Item label="Gender">
+                  {raptor_gender}
                 </LabeledList.Item>
               </LabeledList>
             </Section>

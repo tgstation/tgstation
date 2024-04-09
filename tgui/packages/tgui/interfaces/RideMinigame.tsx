@@ -88,7 +88,7 @@ export const RideMinigame = (props) => {
                     icon="arrow-up"
                     width="30px"
                     onClick={() => UpdateAnswer('north')}
-                   />
+                  />
                 </Stack.Item>
                 <Stack.Item>
                   <Stack>
@@ -99,7 +99,7 @@ export const RideMinigame = (props) => {
                         icon="arrow-left"
                         width="30px"
                         onClick={() => UpdateAnswer('west')}
-                       />
+                      />
                     </Stack.Item>
                     <Stack.Item>
                       <Button
@@ -108,7 +108,7 @@ export const RideMinigame = (props) => {
                         icon="arrow-right"
                         width="30px"
                         onClick={() => UpdateAnswer('east')}
-                       />
+                      />
                     </Stack.Item>
                   </Stack>
                 </Stack.Item>
@@ -119,7 +119,7 @@ export const RideMinigame = (props) => {
                     width="30px"
                     icon="arrow-down"
                     onClick={() => UpdateAnswer('south')}
-                   />
+                  />
                 </Stack.Item>
               </Stack>
             </Section>

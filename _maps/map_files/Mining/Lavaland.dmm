@@ -513,6 +513,12 @@
 /obj/structure/lattice/catwalk/mining,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"dp" = (
+/obj/structure/table/wood,
+/obj/item/raptor_dex,
+/obj/item/soap,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "dq" = (
 /obj/structure/stone_tile{
 	dir = 4
@@ -7646,6 +7652,12 @@
 /obj/structure/stone_tile{
 	dir = 1
 	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"UB" = (
+/obj/structure/table/wood,
+/obj/item/raptor_dex,
+/obj/item/reagent_containers/cup/bucket/wooden,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "UD" = (
@@ -51173,12 +51185,12 @@ pU
 pU
 pU
 pU
-oR
 pU
 pU
 pU
 pU
-zY
+pU
+pU
 pU
 pU
 pU
@@ -51430,13 +51442,13 @@ pU
 pU
 pU
 pU
-JX
+pU
+oR
 pU
 pU
 pU
 pU
-Jv
-if
+zY
 pU
 pU
 pU
@@ -51687,14 +51699,14 @@ pU
 pU
 pU
 pU
+pU
 JX
-iK
-HL
+pU
+pU
 pU
 pU
 Jv
-if
-pU
+dp
 pU
 pU
 pU
@@ -51944,14 +51956,14 @@ pU
 pU
 pU
 pU
+pU
 JX
-pU
-pU
+iK
+HL
 pU
 pU
 Jv
 if
-pU
 pU
 pU
 pU
@@ -52201,14 +52213,14 @@ pU
 pU
 pU
 pU
-mo
-lc
-lc
-lc
-lc
-RM
+pU
+JX
 pU
 pU
+pU
+pU
+Jv
+UB
 pU
 pU
 aj
@@ -52459,13 +52471,13 @@ pU
 pU
 pU
 aj
-aj
-aj
-aj
+mo
+lc
+lc
+lc
+lc
+RM
 pU
-pU
-pU
-aj
 aj
 aj
 aj
