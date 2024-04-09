@@ -237,37 +237,33 @@ const KnowledgeTree = (props) => {
           {(!knowledge_tiers.length && 'None!') ||
             knowledge_tiers.map((tier) => (
               <Stack.Item key={tier.depth}>
-                <Box
+                <Flex
+                  direction="row"
+                  justify="space-evenly"
                   backgroundColor="#303030"
                 >
-                  <Flex
-                    direction="row"
-                    justify="space-evenly"
-                  >
-                    {
-                      tier.nodes.map((node) => (
-                        <Flex.Item key={node.name}>
-                          <Button key={node.name}
-                            color={node.finished ? "#006900" : node.color}
-                            disabled={node.disabled}
-                            tooltip={
-                              `${node.name} ${node.finished ? '' : (`${node.cost} point${node.cost !==1 ? 's' : ''}`)}
-                              ${node.desc}`
-                            }
-                            onClick={node.finished ? (() => null) : () => act('research', { path: node.path })}
-                          >
-                            
-                            <Image
-                              src={`data:image/jpeg;base64,${node.icon}`}
-                              height="100%"
-                              width="100%"
-                            />
-                          </Button>
-                        </Flex.Item>
-                      ))
-                    }
-                  </Flex>
-                </Box>
+                  {
+                    tier.nodes.map((node) => (
+                    <Flex.Item key={node.name}>
+                      <Button key={node.name}
+                        color={node.color}
+                        disabled={node.disabled}
+                        tooltip={
+                          `${node.name} ${node.finished ? '' : (`${node.cost} point${node.cost !==1 ? 's' : ''}`)}
+                          ${node.desc}`
+                        }
+                        onClick={node.finished ? (() => null) : () => act('research', { path: node.path })}
+                      >
+                        <Image
+                          src={`data:image/jpeg;base64,${node.icon}`}
+                          height="100%"
+                          width="100%"
+                        />
+                      </Button>
+                    </Flex.Item>
+                    ))
+                  }
+                </Flex>
               </Stack.Item>
             ))}
         </Stack>
