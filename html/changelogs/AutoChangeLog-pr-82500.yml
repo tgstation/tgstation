@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - image: "Updates the colors of various material datum to bring them closer in-line with their actual material stacks"
+  - image: "Improves the sprites for the material knight armor and helmet."

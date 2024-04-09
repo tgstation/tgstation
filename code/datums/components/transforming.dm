@@ -212,7 +212,7 @@
 		source.attack_verb_simple = attack_verb_simple_on
 
 	source.hitsound = hitsound_on
-	source.w_class = w_class_on
+	source.update_weight_class(w_class_on)
 	source.icon_state = "[source.icon_state]_on"
 	if(inhand_icon_change && source.inhand_icon_state)
 		source.inhand_icon_state = "[source.inhand_icon_state]_on"
@@ -241,7 +241,7 @@
 		source.attack_verb_simple = attack_verb_simple_off
 
 	source.hitsound = initial(source.hitsound)
-	source.w_class = initial(source.w_class)
+	source.update_weight_class(initial(source.w_class))
 	source.icon_state = initial(source.icon_state)
 	source.inhand_icon_state = initial(source.inhand_icon_state)
 	if(ismob(source.loc))

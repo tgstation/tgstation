@@ -58,7 +58,7 @@
 
 	stored_slimes = list()
 
-/obj/machinery/computer/camera_advanced/xenobio/LateInitialize(mapload)
+/obj/machinery/computer/camera_advanced/xenobio/post_machine_initialize()
 	. = ..()
 	for(var/obj/machinery/monkey_recycler/recycler in GLOB.monkey_recyclers)
 		if(get_area(recycler.loc) == get_area(loc))

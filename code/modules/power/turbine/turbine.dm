@@ -43,7 +43,7 @@
 	register_context()
 
 
-/obj/machinery/power/turbine/LateInitialize()
+/obj/machinery/power/turbine/post_machine_initialize()
 	. = ..()
 	activate_parts()
 
