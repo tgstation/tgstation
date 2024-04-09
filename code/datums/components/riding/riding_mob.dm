@@ -559,7 +559,7 @@
 	///cached directional icons of our host
 	var/list/cached_icons = list()
 
-/datum/raptor_inheritance/New(mob/living/ridden, mob/living/rider)
+/datum/riding_minigame/New(mob/living/ridden, mob/living/rider)
 	. = ..()
 	RegisterSignal(rider, COMSIG_MOB_UNBUCKLED, PROC_REF(lose_game))
 	host = WEAKREF(ridden)

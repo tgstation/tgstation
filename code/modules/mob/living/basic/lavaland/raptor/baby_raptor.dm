@@ -44,8 +44,7 @@
 
 /mob/living/basic/mining/raptor/baby_raptor/proc/ready_to_grow()
 	var/mob/living/basic/mining/raptor/grown_mob = new growth_path(get_turf(src))
-	if(!isnull(grown_mob.inherited_stats))
-		QDEL_NULL(grown_mob.inherited_stats)
+	QDEL_NULL(grown_mob.inherited_stats)
 	grown_mob.inherited_stats = inherited_stats
 	inherited_stats = null
 	grown_mob.inherit_properties()

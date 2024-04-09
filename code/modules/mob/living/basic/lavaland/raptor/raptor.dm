@@ -261,8 +261,7 @@
 /obj/item/food/egg/raptor_egg/proc/post_hatch(mob/living/basic/mining/raptor/baby)
 	if(!istype(baby))
 		return
-	if(!isnull(baby.inherited_stats))
-		QDEL_NULL(baby.inherited_stats)
+	QDEL_NULL(baby.inherited_stats)
 	baby.inherited_stats = inherited_stats
 	inherited_stats = null
 

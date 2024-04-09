@@ -195,8 +195,7 @@
 
 	parent = new_parent
 	// a few of theses should probably be on the real_location rather than the parent
-	if(insert_on_attack)
-		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignals(parent, list(COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_HAND), PROC_REF(on_attack))
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_mousedrop_onto))
 	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(on_mousedropped_onto))
@@ -788,7 +787,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_attackby(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
 
-	if(!thing.attackby_storage_insert(src, parent, user))
+	if(!insert_on_attack || !thing.attackby_storage_insert(src, parent, user))
 		return
 
 	if(iscyborg(user))
