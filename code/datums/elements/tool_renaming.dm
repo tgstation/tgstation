@@ -32,7 +32,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /datum/element/tool_renaming/proc/async_rename(mob/living/user, obj/renamed_obj)
-	var/pen_choice = tgui_input_list(user, "What would you like to edit?", "Pen Setting", list(OPTION_RENAME, OPTION_DESCRIPTION, OPTION_RESET))
+	var/pen_choice = tgui_input_list(user, "What would you like to edit?", "Customization", list(OPTION_RENAME, OPTION_DESCRIPTION, OPTION_RESET))
 	if(QDELETED(renamed_obj) || !user.can_perform_action(renamed_obj) || isnull(pen_choice))
 		return
 
