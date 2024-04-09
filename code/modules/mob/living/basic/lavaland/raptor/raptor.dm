@@ -137,7 +137,7 @@
 	create_storage(
 		max_specific_storage = WEIGHT_CLASS_NORMAL,
 		max_total_storage = 10,
-    	storage_type = /datum/storage/raptor_storage,
+		storage_type = /datum/storage/raptor_storage,
 	)
 
 /mob/living/basic/mining/raptor/green
@@ -210,7 +210,7 @@
 	dex_description = "Known to produce nutritous and equally delicious milk, which is also said to possess healing properties."
 	child_path = /mob/living/basic/mining/raptor/baby_raptor/blue
 
-/mob/living/basic/mining/raptor/blue/Initialize(madpload)
+/mob/living/basic/mining/raptor/blue/Initialize(mapload)
 	. = ..()
 	AddComponent(\
 		/datum/component/udder,\
@@ -300,8 +300,8 @@
 	health_modifier = rand(min(father.health_modifier, mother.health_modifier), min(father.health_modifier, mother.health_modifier))
 
 /datum/storage/raptor_storage
-    animated = FALSE
-    insert_on_attack = FALSE
+	animated = FALSE
+	insert_on_attack = FALSE
 	
 #undef RANDOM_INHERIT_AMOUNT
 #undef HAPPINESS_BOOST_DAMPENER

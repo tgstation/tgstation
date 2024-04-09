@@ -34,7 +34,7 @@
 
 /datum/ai_controller/basic_controller/raptor/proc/post_eat()
     clear_blackboard_key(BB_RAPTOR_TROUGH_TARGET)
-    blackboard[BB_RAPTOR_EAT_COOLDOWN] = world.time + NEXT_EAT_COOLDOWN
+    set_blackboard_key(BB_RAPTOR_EAT_COOLDOWN, world.time + NEXT_EAT_COOLDOWN)
 
 /datum/targeting_strategy/basic/raptor
 
