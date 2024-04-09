@@ -1,5 +1,5 @@
-local Timer = require("timer")
-local State = require("state")
+local timer = require("timer")
+local state = require("state")
 
 local SS13 = {}
 
@@ -9,7 +9,7 @@ SS13.SSlua = dm.global_vars.vars.SSlua
 
 SS13.global_proc = "some_magic_bullshit"
 
-SS13.state = State.state
+SS13.state = state.state
 
 function SS13.get_runner_ckey()
 	return SS13.state:get_var("ckey_last_runner")
@@ -30,7 +30,7 @@ function SS13.start_tracking(datum)
 end
 
 function SS13.new(type, ...)
-	local datum = SS13.new_untracked(type, table.unpack({...}))
+	local datum = SS13.new_untracked(type, ...)
 	if datum then
 		SS13.start_tracking(datum)
 		return datum
@@ -96,14 +96,14 @@ function SS13.register_signal(datum, signal, func)
 	callback:call_proc("RegisterSignal", datum, signal, "Invoke")
 	local path = { "__SS13_signal_handlers", datumWeakRef, signal, callbackWeakRef, "func" }
 	callback.vars.arguments = { path }
-	if not __SS13_signal_handlers[datumWeakRef]["_cleanup"] then
+	if not __SS13_signal_handlers[datumWeakRef]._cleanup then
 		local cleanupCallback = SS13.new("/datum/callback", SS13.state, "call_function_return_first")
 		local cleanupPath = { "__SS13_signal_handlers", datumWeakRef, "_cleanup"}
 		cleanupCallback.vars.arguments = { cleanupPath }
 		cleanupCallback:call_proc("RegisterSignal", datum, "parent_qdeleting", "Invoke")
-		__SS13_signal_handlers[datumWeakRef]["_cleanup"] = function(datum)
+		__SS13_signal_handlers[datumWeakRef]._cleanup = function(datum)
 			SS13.start_tracking(datumWeakRef)
-			Timer.set_timeout(0, function()
+			timer.set_timeout(0, function()
 				SS13.signal_handler_cleanup(datumWeakRef)
 				SS13.stop_tracking(cleanupCallback)
 				SS13.stop_tracking(datumWeakRef)

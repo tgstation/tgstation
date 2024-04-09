@@ -1,4 +1,4 @@
-local State = require("state")
+local state = require("state")
 
 local Timer = {}
 
@@ -37,7 +37,7 @@ function __stop_internal_timer(func)
 end
 
 __Timer_timer_processing = __Timer_timer_processing or false
-State.state:set_var("timer_enabled", 1)
+state.state:set_var("timer_enabled", 1)
 __Timer_timer_process = function(seconds_per_tick)
 	if __Timer_timer_processing then
 		return 0
@@ -52,7 +52,7 @@ __Timer_timer_process = function(seconds_per_tick)
 			sleep()
 		end
 		if time >= timeData.executeTime then
-			State.state:get_var("functions_to_execute"):add(func)
+			state.state:get_var("functions_to_execute"):add(func)
 			timeData.executing = true
 		end
 	end
@@ -63,7 +63,7 @@ end
 function Timer.wait(time)
 	local next_yield_index = __next_yield_index
 	__add_internal_timer(function()
-		SSlua:call_proc("queue_resume", State.state, next_yield_index)
+		SSlua:call_proc("queue_resume", state.state, next_yield_index)
 	end, time * 10, false)
 	coroutine.yield()
 end
