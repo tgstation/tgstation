@@ -17,7 +17,7 @@
 
 /obj/effect/anomaly/bioscrambler/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
-	pursuit_target = find_nearest_target()
+	pursuit_target = WEAKREF(find_nearest_target())
 
 /obj/effect/anomaly/bioscrambler/anomalyEffect(seconds_per_tick)
 	. = ..()
