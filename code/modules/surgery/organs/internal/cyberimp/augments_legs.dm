@@ -129,6 +129,7 @@
 
 /obj/item/organ/internal/cyberimp/leg/galosh/syndicate/l
 	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+	zone = BODY_ZONE_L_LEG
 
 //------------true noslip implant
 /obj/item/organ/internal/cyberimp/leg/noslip
@@ -150,6 +151,7 @@
 
 /obj/item/organ/internal/cyberimp/leg/noslip/syndicate/l
 	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+	zone = BODY_ZONE_L_LEG
 
 //------------dash boots implant
 /obj/item/organ/internal/cyberimp/leg/jumpboots
@@ -176,6 +178,7 @@
 
 /obj/item/organ/internal/cyberimp/leg/jumpboots/syndicate/l
 	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+	zone = BODY_ZONE_L_LEG
 
 //surf_ss13
 /datum/action/cooldown/boost
@@ -241,6 +244,7 @@
 
 /obj/item/organ/internal/cyberimp/leg/airshoes/syndicate/l
 	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
+	zone = BODY_ZONE_L_LEG
 
 
 /datum/action/cooldown/airshoes
@@ -341,4 +345,4 @@
 
 /obj/item/organ/internal/cyberimp/leg/magboot/syndicate/l
 	organ_flags = ORGAN_ROBOTIC | ORGAN_HIDDEN
-	zone = "l_leg"
+	zone = BODY_ZONE_L_LEG

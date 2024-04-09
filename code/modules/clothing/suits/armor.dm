@@ -341,6 +341,15 @@
 	armor_type = /datum/armor/armor_webvest
 	strip_delay = 120
 	equip_delay_other = 80
+	allowed = list(
+		/obj/item/gun,
+		/obj/item/gun/ballistic/shotgun,
+		/obj/item/gun/ballistic/automatic,
+		/obj/item/gun/ballistic/rifle,
+		/obj/item/gun/ballistic/rocketlauncher,
+		/obj/item/gun/energy/laser,
+		/obj/item/gun/energy/e_gun,
+		)
 
 /datum/armor/armor_webvest
 	melee = 35

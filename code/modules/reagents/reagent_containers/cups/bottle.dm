@@ -650,16 +650,16 @@
 
 /obj/item/reagent_containers/cup/bottle/syndisymptombuffer/stealth
 	name = "STE. Gene culture bottle"
-	spawned_disease = /datum/disease/advance/syndicate/stealth
+	spawned_disease = /datum/disease/advance/syndicate/stealth/stealth
 
 /obj/item/reagent_containers/cup/bottle/syndisymptombuffer/resist
 	name = "SRE. Gene culture bottle"
-	spawned_disease = /datum/disease/advance/syndicate/resist
+	spawned_disease = /datum/disease/advance/syndicate/resist/resist
 
 /obj/item/reagent_containers/cup/bottle/syndisymptombuffer/speed
 	name = "SPD. Gene culture bottle"
-	spawned_disease = /datum/disease/advance/syndicate/speed
+	spawned_disease = /datum/disease/advance/syndicate/speed/speed
 
 /obj/item/reagent_containers/cup/bottle/syndisymptombuffer/trans
 	name = "STR. Gene culture bottle"
-	spawned_disease = /datum/disease/advance/syndicate/trans
+	spawned_disease = /datum/disease/advance/syndicate/trans/trans

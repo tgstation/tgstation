@@ -55,6 +55,7 @@
 	cost = 20
 	restricted_roles = list(JOB_ASSISTANT)
 	surplus = 0
+	purchasable_from = ~UPLINK_SPY // Fuck you, baltimore!
 
 /datum/uplink_item/role_restricted/oldtoolboxclean
 	name = "Ancient Toolbox"
@@ -63,6 +64,7 @@
 	cost = 2
 	restricted_roles = list(JOB_ASSISTANT)
 	surplus = 0
+	purchasable_from = ~UPLINK_SPY // Spies can't get telecrystals?
 
 /datum/uplink_item/role_restricted/clownpin
 	name = "Ultra Hilarious Firing Pin"
@@ -415,7 +417,7 @@
 	name = "Assorted Plant Bag"
 	desc = "A regular, nanotrasen approved plant bag from one of the vendors. It includes several mutated plant produce ready to use or be turned into seeds. \
 			Included within are the: Death Nettle, Poison Berry, Death Berry, Deathweed, Mimana, Bluespace Banana, Combustible Lemon, Bungo Fruit, Destroying Angel, Killer Tomato, and a Replica Pod seed."
-	item = /obj/item/storage/bag/plantssyndie
+	item = /obj/item/storage/bag/plants/syndie
 	cost = 5
 	restricted_roles = list(JOB_BOTANIST)
 
@@ -423,7 +425,7 @@
 	name = "Bluespace Plant Bag"
 	desc = "A regular, nanotrasen approved plant bag from one of the vendors. We've augmented the bag with bluespace technology, allowing for nearly infinite storage. \
 			The bag however, still only accepts your typical plant bag items."
-	item = /obj/item/storage/bag/plantssyndiebluespace
+	item = /obj/item/storage/bag/plants/bluespace
 	cost = 7
 	restricted_roles = list(JOB_BOTANIST)
 
@@ -488,6 +490,7 @@
 	cant_discount = TRUE
 	limited_stock = 1
 	restricted_roles = list(JOB_PRISONER)
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/twoforone_freedom_implant
 	name = "Two-For-One Freedom Implant Bundle"
@@ -495,6 +498,7 @@
 	item = /obj/item/storage/box/syndie_kit/two_freedom_implant_bundle
 	cost = 5
 	restricted_roles = list(JOB_PRISONER)
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/microbomb_prisoner_implanter
 	name = "Microbomb Implanter"
@@ -504,6 +508,7 @@
 	cost = 2
 	surplus = 10
 	restricted_roles = list(JOB_PRISONER)
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/bluespace_crystal_arti_bundle
 	name = "Box of Artificial Bluespace Crystals"
@@ -512,6 +517,7 @@
 	cost = 1
 	surplus = 25
 	restricted_roles = list(JOB_PRISONER, JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST)
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/escapist_bundle
 	name = "Escapist Bundle"
@@ -521,6 +527,7 @@
 	cost = 20
 	surplus = 1
 	restricted_roles = list(JOB_PRISONER)
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/chemistry_machine_bundle
 	name = "Supplementary Chemical Dispensery"
@@ -648,7 +655,7 @@
 
 /datum/uplink_item/role_restricted/clown_stun_resist_bundle
 	name = "Stun Resistance Bundle"
-	desc = "A box containing 3 bottles of Probital (Drink over 20u to Overdose), 2 bottles of Modafinil (Do not drink more than 20u at a time), and 3 bottles of Methamphetamine."
+	desc = "A box containing 3 bottles of Probital (Drink over 20u to Overdose), 2 bottles of Modafinil (Do not drink more than 10u at a time), and 3 bottles of Methamphetamine."
 	item = /obj/item/storage/box/syndie_kit/clown_stun_resist_bundle
 	cost = 7
 	restricted_roles = list(JOB_CLOWN)
@@ -667,7 +674,7 @@
 	desc = "That pesky Chief Medical Officer too paranoid to let you have a Virus Crate? Well, you can always purchase one from us. \
 			This crate contains twelve different bottles of several viral samples, also includes seven beakers and syringes."
 	item = /obj/item/storage/box/syndie_kit/syndicate_virus_box
-	cost = 8
+	cost = 12
 	surplus = 5
 	restricted_roles = list(JOB_VIROLOGIST)
 
@@ -716,11 +723,67 @@
 /datum/uplink_item/role_restricted/surplus
 	name = "Syndicate Surplus Crate (25% off!)"
 	desc = "A dusty crate from the back of the Syndicate warehouse. Rumored to contain a valuable assortment of items, \
-			but you never know. Contents are sorted to always be worth 50 TC."
+			but you never know. Contents are sorted to always be worth 30 TC."
 	item = /obj/structure/closet/crate
 	cost = 15
 	restricted_roles = list(JOB_ASSISTANT)
-	var/starting_crate_value = 50
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
+	stock_key = UPLINK_SHARED_STOCK_SURPLUS
+	/// Value of items inside the crate in TC
+	var/crate_tc_value = 30
+	/// crate that will be used for the surplus crate
+	var/crate_type = /obj/structure/closet/crate
+
+/datum/uplink_item/role_restricted/surplus/proc/generate_possible_items(mob/user, datum/uplink_handler/handler)
+	var/list/possible_items = list()
+	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
+		var/datum/uplink_item/uplink_item = SStraitor.uplink_items_by_type[item_path]
+		if(src == uplink_item || !uplink_item.item)
+			continue
+		if(!handler.check_if_restricted(uplink_item))
+			continue
+		if(!uplink_item.surplus)
+			continue
+		if(handler.not_enough_reputation(uplink_item))
+			continue
+		possible_items += uplink_item
+	return possible_items
+
+/// picks items from the list given to proc and generates a valid uplink item that is less or equal to the amount of TC it can spend
+/datum/uplink_item/role_restricted/surplus/proc/pick_possible_item(list/possible_items, tc_budget)
+	var/datum/uplink_item/uplink_item = pick(possible_items)
+	if(prob(100 - uplink_item.surplus))
+		return null
+	if(tc_budget < uplink_item.cost)
+		return null
+	return uplink_item
+
+/// fills the crate that will be given to the traitor, edit this to change the crate and how the item is filled
+/datum/uplink_item/role_restricted/surplus/proc/fill_crate(obj/structure/closet/crate/surplus_crate, list/possible_items)
+	var/tc_budget = crate_tc_value
+	while(tc_budget)
+		var/datum/uplink_item/uplink_item = pick_possible_item(possible_items, tc_budget)
+		if(!uplink_item)
+			continue
+		tc_budget -= uplink_item.cost
+		new uplink_item.item(surplus_crate)
+
+/// overwrites item spawning proc for surplus items to spawn an appropriate crate via a podspawn
+/datum/uplink_item/role_restricted/surplus/spawn_item(spawn_path, mob/user, datum/uplink_handler/handler, atom/movable/source)
+	var/obj/structure/closet/crate/surplus_crate = new crate_type()
+	if(!istype(surplus_crate))
+		CRASH("crate_type is not a crate")
+	var/list/possible_items = generate_possible_items(user, handler)
+
+	fill_crate(surplus_crate, possible_items)
+
+	podspawn(list(
+		"target" = get_turf(user),
+		"style" = STYLE_SYNDICATE,
+		"spawn" = surplus_crate,
+	))
+	return source //For log icon
+
 
 /datum/uplink_item/role_restricted/lathe_supply_package
 	name = "Lathe Supply Package"
@@ -735,6 +798,7 @@
 	item = /obj/item/storage/box/syndie_kit/nocturine_deluxe
 	cost = 8
 	surplus = 25
+	limited_stock = 1
 	restricted_roles = list(JOB_ASSISTANT)
 
 /datum/uplink_item/role_restricted/deluxe_bluespace_chameleon_backpack
@@ -788,10 +852,11 @@
 
 /datum/uplink_item/role_restricted/bluespace_bodybag_bundle
 	name = "Bluespace Body Bag Bundle"
-	desc = "A box utilizing bluespace technology, within you'll find two bluespace bodybags, 4 bottles of chloral hydrate, and a Sleepy Pen. Perfect for kidnappings."
+	desc = "A box utilizing bluespace technology, within you'll find two bluespace bodybags, a bottle of nocturine, and a Sleepy Pen. Perfect for kidnappings."
 	item = /obj/item/storage/box/syndie_kit/bluespace_bodybag_bundle
-	cost = 7
+	cost = 8
 	surplus = 10
+	limited_stock = 1
 	restricted_roles = list(JOB_CORONER)
 
 /datum/uplink_item/role_restricted/bodybaginvis
@@ -873,7 +938,7 @@
 	name = "Combat Defibrillator"
 	desc = "A malfunctioning defibrillator, it's electrical shocks stun your foes, and can lead to an inevitable death should you use it like a regular defibrillator."
 	item = /obj/item/defibrillator/compact/combat/loaded
-	cost = 2
+	cost = 12
 	surplus = 15
 	restricted_roles = list(JOB_PARAMEDIC)
 
@@ -892,7 +957,7 @@
 	desc = "One of our finest redspace-engineered counterfeit money printers, we've disguised it as a secure briefcase to avoid suspicion. \
 			The briefcase will silently print and store 1000$ dollar bills over time to ensure you can take advantage of NT's lackluster cargo security. \
 			It's also a bit more robust than our typical briefcases, just in case. Only prints money while in the hands of a syndicate agent and while unlocked."
-	item = /obj/item/storage/secure/briefcase/cargonia
+	item = /obj/item/storage/briefcase/secure/cargonia
 	cost = 6
 	surplus = 10
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
@@ -902,7 +967,7 @@
 	name = "Anomaly Releaser"
 	desc = "A medipen loaded with chemicals so confidental -- even WE can't afford to tell you what it is. \
 			If injected into an anomaly core, the substance will cause the core to undergo mitosis, creating an anomaly based off the anomaly core. \
-			The medipen can only be used once, luckily however, the anomaly core is never expended."
+			The medipen can only be used once."
 	item = /obj/item/anomaly_releaser
 	cost = 2
 	surplus = 35
@@ -920,7 +985,7 @@
 	name = "Holy Hand Grenade"
 	desc = "The priest's patented special surprise, produces a small explosion comparable to that of a potassium & water explosion. Makes a distinct sound when detonated."
 	item = /obj/item/grenade/chem_grenade/holy
-	cost = 1
+	cost = 5
 	surplus = 45
 	restricted_roles = list(JOB_CHAPLAIN)
 

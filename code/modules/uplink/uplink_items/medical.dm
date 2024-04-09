@@ -20,7 +20,7 @@
 	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
 			a Syndicate brand MMI, a straitjacket, and a muzzle."
 	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
-	cost = 2
+	cost = 3
 	surplus = 66
 
 /datum/uplink_item/medical/medical_variety_pack

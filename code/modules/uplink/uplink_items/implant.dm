@@ -92,7 +92,7 @@
 	desc = "A surgical implant that when inserted into the body will slowly repair the host. Allowing for slow recovery of all forms of damage. \
 			Beware of health scanners, as constant supervision of your health may give you away."
 	item = /obj/item/autosurgeon/syndicate/regenerativebetter/hidden/single_use
-	cost = 5
+	cost = 8
 	surplus = 20
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
@@ -117,7 +117,7 @@
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness, and can even repair your body and \
 			defibrillate your heart should you perish. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/syndicate/reviver/better/hidden/single_use
+	item = /obj/item/autosurgeon/syndicate/reviver/hidden/single_use
 	cost = 6
 	surplus = 20
 

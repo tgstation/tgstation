@@ -159,7 +159,7 @@
 /// Provides power to the connected powernet, if any.
 /obj/item/powerlake/proc/provide_power()
 	var/datum/powernet/powernet = attached.powernet
-	var/provided = 100 KILO JOULES
+	var/provided = 200000
 	set_light(5)
 
 	// Provide as much as we can from the powernet.
@@ -171,8 +171,8 @@
 		if(istype(terminal.master, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/apc = terminal.master
 			if(apc.operating && apc.cell)
-				provided /= 10 //apc.cell.give(50 KILO JOULES)
-	internal_heat += provided
+				provided /= 2 //apc.cell.give(50 KILO JOULES)
+	internal_heat += (provided / 2) // Just to compensate for the big blast radius. Would like to give people more time to combat it.
 
 /obj/item/powerlake/process()
 	if(!attached)

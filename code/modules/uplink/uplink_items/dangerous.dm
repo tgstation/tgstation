@@ -370,6 +370,7 @@
 	item = /obj/item/gun/explosivereagentgun
 	surplus = 0
 	cost = 40
+	progression_minimum = 30 MINUTES
 	cant_discount = TRUE
 	illegal_tech = TRUE
 	purchasable_from = ~UPLINK_SPY

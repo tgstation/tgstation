@@ -1190,22 +1190,23 @@
 	new /obj/item/reagent_containers/cup/bottle/amanitin(src)
 
 
-/obj/item/storage/bag/plantssyndie
+/obj/item/storage/bag/plants/syndie
 	name = "plant bag"
 
-/obj/item/storage/bag/plantssyndie/Initialize(mapload)
+/obj/item/storage/bag/plants/syndie/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 14
-	atom_storage.max_total_storage = 99
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 100
+	atom_storage.max_slots = 100
 	atom_storage.set_holdable(list(
 		/obj/item/food/grown,
+		/obj/item/graft,
 		/obj/item/grown,
 		/obj/item/food/honeycomb,
 		/obj/item/seeds,
-		))
+	))
 
-/obj/item/storage/bag/plantssyndie/PopulateContents()
+/obj/item/storage/bag/plants/syndie/PopulateContents()
 	new /obj/item/food/grown/nettle/death(src)
 	new /obj/item/food/grown/berries/poison(src)
 	new /obj/item/food/grown/berries/death(src)
@@ -1218,20 +1219,21 @@
 	new /obj/item/food/grown/tomato/killer(src)
 	new /obj/item/seeds/replicapod(src)
 
-/obj/item/storage/bag/plantssyndiebluespace
+/obj/item/storage/bag/plants/bluespace
 	name = "plant bag"
 
-/obj/item/storage/bag/plantssyndiebluespace/Initialize(mapload)
+/obj/item/storage/bag/plants/bluespace/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 14
-	atom_storage.max_total_storage = 99
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 999
+	atom_storage.max_slots = 999
 	atom_storage.set_holdable(list(
 		/obj/item/food/grown,
+		/obj/item/graft,
 		/obj/item/grown,
 		/obj/item/food/honeycomb,
 		/obj/item/seeds,
-		))
+	))
 
 /obj/item/storage/box/syndie_kit/two_freedom_implant_bundle/PopulateContents()
 	new /obj/item/implanter/freedom(src)
@@ -1249,7 +1251,7 @@
 	new /obj/item/storage/box/syndie_kit/chameleon(src)
 	new /obj/item/card/id/advanced/chameleon(src)
 	new /obj/item/pen/sleepy(src)
-	new /obj/item/card/emag(src)
+	new /obj/item/card/emag/doorjack(src)
 	new /obj/item/clothing/glasses/thermal/syndi(src)
 	new /obj/item/implanter/uplink(src)
 	new /obj/item/pen/edagger(src)
@@ -1403,8 +1405,6 @@
 		new /obj/item/stock_parts/matter_bin/bluespace(src)
 	for(var/i in 1 to 3)
 		new /obj/item/stock_parts/servo/femto(src)
-	new /obj/item/reagent_containers/cup/beaker(src)
-	new /obj/item/reagent_containers/cup/beaker(src)
 	new /obj/item/stack/sheet/glass(src)
 	new /obj/item/stack/sheet/iron/ten(src)
 	new /obj/item/stack/cable_coil(src)
@@ -1454,8 +1454,8 @@
 	new /obj/item/bodybag/bluespace(src)
 	new /obj/item/bodybag/bluespace(src)
 	new /obj/item/pen/sleepy(src)
-	for(var/i in 1 to 4)
-		new /obj/item/reagent_containers/cup/bottle/chloralhydrate(src)
+	new /obj/item/reagent_containers/cup/bottle/nocturine/full(src)
+
 
 /obj/item/storage/box/syndie_kit/n2o_nade_bundle/PopulateContents()
 	for(var/i in 1 to 5)
@@ -1470,11 +1470,10 @@
 	new /obj/item/stack/cable_coil(src)
 	new /obj/item/stock_parts/micro_laser/quadultra(src)
 	new /obj/item/stock_parts/capacitor/quadratic(src)
-	new /obj/item/stock_parts/servo/femto(src)
-	new /obj/item/stock_parts/servo/femto(src)
-	new /obj/item/stock_parts/servo/femto(src)
-	new /obj/item/stock_parts/matter_bin/bluespace(src)
-	new /obj/item/stock_parts/matter_bin/bluespace(src)
+	for(var/i in 1 to 3)
+		new /obj/item/stock_parts/servo/femto(src)
+	for(var/i in 1 to 3)
+		new /obj/item/stock_parts/matter_bin/bluespace(src)
 	new /obj/item/stock_parts/cell/high(src)
 	for(var/i in 1 to 3)
 		new /obj/item/stack/sheet/glass(src)
