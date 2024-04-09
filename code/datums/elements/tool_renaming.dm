@@ -1,3 +1,7 @@
+#define OPTION_RENAME "Rename"
+#define OPTION_DESCRIPTION "Description"
+#define OPTION_RESET "Reset"
+
 /**
  * Renaming tool element
  *
@@ -68,3 +72,7 @@
 			to_chat(user, span_notice("You have successfully reset [renamed_obj]'s name and description."))
 			REMOVE_TRAIT(renamed_obj, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
 			renamed_obj.update_appearance(UPDATE_NAME | UPDATE_DESC)
+
+#undef OPTION_RENAME
+#undef OPTION_DESCRIPTION
+#undef OPTION_RESET
