@@ -154,7 +154,7 @@ SUBSYSTEM_DEF(explosions)
 		else
 			continue
 
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(wipe_color_and_text), wipe_colours), 100)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(wipe_color_and_text), wipe_colours), 10 SECONDS)
 
 /proc/wipe_color_and_text(list/atom/wiping)
 	for(var/i in wiping)
@@ -208,9 +208,12 @@ SUBSYSTEM_DEF(explosions)
  * - flame_range: The range at which the explosion should produce hotspots.
  * - silent: Whether to generate/execute sound effects.
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
+ * - protect_epicenter: Whether to leave the epicenter turf unaffected by the explosion
  * - explosion_cause: [Optional] The atom that caused the explosion, when different to the origin. Used for logging.
+ * - explosion_direction: The angle in which the explosion is pointed (for directional explosions.)
+ * - explosion_arc: The angle of the arc covered by a directional explosion (if 360 the explosion is non-directional.)
  */
-/proc/explosion(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = null, flash_range = null, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, atom/explosion_cause = null)
+/proc/explosion(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = null, flash_range = null, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, protect_epicenter = FALSE, atom/explosion_cause = null, explosion_direction = 0, explosion_arc = 360)
 	. = SSexplosions.explode(arglist(args))
 
 
@@ -228,9 +231,12 @@ SUBSYSTEM_DEF(explosions)
  * - flame_range: The range at which the explosion should produce hotspots.
  * - silent: Whether to generate/execute sound effects.
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
+ * - protect_epicenter: Whether to leave the epicenter turf unaffected by the explosion
  * - explosion_cause: [Optional] The atom that caused the explosion, when different to the origin. Used for logging.
+ * - explosion_direction: The angle in which the explosion is pointed (for directional explosions.)
+ * - explosion_arc: The angle of the arc covered by a directional explosion (if 360 the explosion is non-directional.)
  */
-/datum/controller/subsystem/explosions/proc/explode(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = null, flash_range = null, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, atom/explosion_cause = null)
+/datum/controller/subsystem/explosions/proc/explode(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = null, flash_range = null, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, protect_epicenter = FALSE, atom/explosion_cause = null, explosion_direction = 0, explosion_arc = 360)
 	var/list/arguments = list(
 		EXARG_KEY_ORIGIN = origin,
 		EXARG_KEY_DEV_RANGE = devastation_range,
@@ -242,7 +248,10 @@ SUBSYSTEM_DEF(explosions)
 		EXARG_KEY_IGNORE_CAP = ignorecap,
 		EXARG_KEY_SILENT = silent,
 		EXARG_KEY_SMOKE = smoke,
+		EXARG_KEY_PROTECT_EPICENTER = protect_epicenter,
 		EXARG_KEY_EXPLOSION_CAUSE = explosion_cause ? explosion_cause : origin,
+		EXARG_KEY_EXPLOSION_DIRECTION = explosion_direction,
+		EXARG_KEY_EXPLOSION_ARC = explosion_arc,
 	)
 	var/atom/location = isturf(origin) ? origin : origin.loc
 	if(SEND_SIGNAL(origin, COMSIG_ATOM_EXPLODE, arguments) & COMSIG_CANCEL_EXPLOSION)
@@ -270,7 +279,7 @@ SUBSYSTEM_DEF(explosions)
 /**
  * Handles the effects of an explosion originating from a given point.
  *
- * Primarily handles popagating the balstwave of the explosion to the relevant turfs.
+ * Primarily handles popagating the blastwave of the explosion to the relevant turfs.
  * Also handles the fireball from the explosion.
  * Also handles the smoke cloud from the explosion.
  * Also handles sfx and screenshake.
@@ -286,9 +295,12 @@ SUBSYSTEM_DEF(explosions)
  * - flame_range: The range at which the explosion should produce hotspots.
  * - silent: Whether to generate/execute sound effects.
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
- * - explosion_cause: The atom that caused the explosion. Used for logging.
+ * - protect_epicenter: Whether to leave the epicenter turf unaffected by the explosion
+ * - explosion_cause: [Optional] The atom that caused the explosion, when different to the origin. Used for logging.
+ * - explosion_direction: The angle in which the explosion is pointed (for directional explosions.)
+ * - explosion_arc: The angle of the arc covered by a directional explosion (if 360 the explosion is non-directional.)
  */
-/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke, atom/explosion_cause)
+/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke, protect_epicenter, atom/explosion_cause, explosion_direction, explosion_arc)
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
 		return
@@ -387,7 +399,7 @@ SUBSYSTEM_DEF(explosions)
 		for(var/mob/living/L in viewers(flash_range, epicenter))
 			L.flash_act()
 
-	var/list/affected_turfs = prepare_explosion_turfs(max_range, epicenter)
+	var/list/affected_turfs = prepare_explosion_turfs(max_range, epicenter, protect_epicenter, explosion_direction, explosion_arc)
 
 	var/reactionary = CONFIG_GET(flag/reactionary_explosions)
 	// this list is setup in the form position -> block for that position
@@ -414,7 +426,6 @@ SUBSYSTEM_DEF(explosions)
 				var/our_block = cached_exp_block[get_step_towards(explode, epicenter)]
 				block += our_block
 				cached_exp_block[explode] = our_block + explode.explosive_resistance
-
 
 		var/severity = EXPLODE_NONE
 		if(dist + (block * EXPLOSION_BLOCK_DEV) < devastation_range)
@@ -580,10 +591,12 @@ SUBSYSTEM_DEF(explosions)
 /// Returns in a unique order, spiraling outwards
 /// This is done to ensure our progressive cache of blast resistance is always valid
 /// This is quite fast
-/proc/prepare_explosion_turfs(range, turf/epicenter)
+/proc/prepare_explosion_turfs(range, turf/epicenter, protect_epicenter, explosion_direction, explosion_arc)
 	var/list/outlist = list()
-	// Add in the center
-	outlist += epicenter
+	var/list/candidates = list()
+	// Add in the center if it's not protected
+	if(!protect_epicenter)
+		outlist += epicenter
 
 	var/our_x = epicenter.x
 	var/our_y = epicenter.y
@@ -591,6 +604,31 @@ SUBSYSTEM_DEF(explosions)
 
 	var/max_x = world.maxx
 	var/max_y = world.maxy
+
+	// Work out the angles to explode between
+	var/first_angle_limit = WRAP(explosion_direction - explosion_arc * 0.5, 0, 360)
+	var/second_angle_limit = WRAP(explosion_direction + explosion_arc * 0.5, 0, 360)
+
+	// Get everything in the right order
+	var/lower_angle_limit
+	var/upper_angle_limit
+	var/do_directional
+	var/reverse_angle
+
+	// Work out which case we're in
+	if(first_angle_limit == second_angle_limit) // CASE A: FULL CIRCLE
+		do_directional = FALSE
+	else if(first_angle_limit < second_angle_limit) // CASE B: When the arc does not cross 0 degrees
+		lower_angle_limit = first_angle_limit
+		upper_angle_limit = second_angle_limit
+		do_directional = TRUE
+		reverse_angle = FALSE
+	else if (first_angle_limit > second_angle_limit) // CASE C: When the arc crosses 0 degrees
+		lower_angle_limit = second_angle_limit
+		upper_angle_limit = first_angle_limit
+		do_directional = TRUE
+		reverse_angle = TRUE
+
 	for(var/i in 1 to range)
 		var/lowest_x = our_x - i
 		var/lowest_y = our_y - i
@@ -598,25 +636,32 @@ SUBSYSTEM_DEF(explosions)
 		var/highest_y = our_y + i
 		// top left to one before top right
 		if(highest_y <= max_y)
-			outlist += block(
+			candidates += block(
 				locate(max(lowest_x, 1), highest_y, our_z),
 				locate(min(highest_x - 1, max_x), highest_y, our_z))
 		// top right to one before bottom right
 		if(highest_x <= max_x)
-			outlist += block(
+			candidates += block(
 				locate(highest_x, min(highest_y, max_y), our_z),
 				locate(highest_x, max(lowest_y + 1, 1), our_z))
 		// bottom right to one before bottom left
 		if(lowest_y >= 1)
-			outlist += block(
+			candidates += block(
 				locate(min(highest_x, max_x), lowest_y, our_z),
 				locate(max(lowest_x + 1, 1), lowest_y, our_z))
 		// bottom left to one before top left
 		if(lowest_x >= 1)
-			outlist += block(
+			candidates += block(
 				locate(lowest_x, max(lowest_y, 1), our_z),
 				locate(lowest_x, min(highest_y - 1, max_y), our_z))
 
+	if(!do_directional)
+		outlist += candidates
+	else
+		for(var/turf/candidate as anything in candidates)
+			var/angle = get_angle(epicenter, candidate)
+			if(ISINRANGE(angle, lower_angle_limit, upper_angle_limit) ^ reverse_angle)
+				outlist += candidate
 	return outlist
 
 /datum/controller/subsystem/explosions/fire(resumed = 0)

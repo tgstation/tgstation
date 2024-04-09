@@ -1,0 +1,7 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - rscadd: "Added support for directional explosions."
+  - rscadd: "Rocket launcher backblast is now 271% more explosive, check your six for friendlies!"
+  - rscadd: "X4 charges now explode in a cone away from the user when placed on a sufficiently solid object."
+  - bugfix: "X4 charges will now behave correctly when placed on dense atoms (note: don't try to read a variable from an atom you just blew up)"

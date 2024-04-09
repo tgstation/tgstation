@@ -65,4 +65,5 @@
 
 /datum/component/simple_bodycam/proc/camera_gone(datum/source)
 	SIGNAL_HANDLER
-	qdel(src)
+	if (!QDELETED(src))
+		qdel(src)
