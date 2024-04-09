@@ -184,7 +184,7 @@
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/door/airlock/tram/LateInitialize(mapload)
+/obj/machinery/door/airlock/tram/post_machine_initialize()
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(open))
 	SStransport.doors += src

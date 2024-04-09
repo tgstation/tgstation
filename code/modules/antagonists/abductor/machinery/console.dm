@@ -198,11 +198,8 @@
 		pad.teleport_target = location
 		to_chat(user, span_notice("Location marked as test subject release point."))
 
-/obj/machinery/abductor/console/Initialize(mapload)
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/abductor/console/LateInitialize()
+/obj/machinery/abductor/console/post_machine_initialize()
+	. = ..()
 	if(!team_number)
 		return
 

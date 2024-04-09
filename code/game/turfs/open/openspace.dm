@@ -32,7 +32,6 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/openspace/LateInitialize()
-	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
 
 /turf/open/openspace/ChangeTurf(path, list/new_baseturfs, flags)
