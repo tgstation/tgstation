@@ -42,8 +42,8 @@
 
 	switch(pen_choice)
 		if(OPTION_RENAME)
-			var/input = tgui_input_text(user, "What do you want to name [renamed_obj]?", "Object Name", "[renamed_obj.name]", MAX_NAME_LEN)
 			var/old_name = renamed_obj.name
+			var/input = tgui_input_text(user, "What do you want to name [renamed_obj]?", "Object Name", "[old_name]", MAX_NAME_LEN)
 			if(QDELETED(renamed_obj) || !user.can_perform_action(renamed_obj))
 				return
 			if(input == old_name || !input)
@@ -55,8 +55,8 @@
 			renamed_obj.update_appearance(UPDATE_NAME)
 
 		if(OPTION_DESCRIPTION)
-			var/input = tgui_input_text(user, "Describe [renamed_obj]", "Description", "[renamed_obj.desc]", MAX_DESC_LEN)
 			var/old_desc = renamed_obj.desc
+			var/input = tgui_input_text(user, "Describe [renamed_obj]", "Description", "[old_desc]", MAX_DESC_LEN)
 			if(QDELETED(renamed_obj) || !user.can_perform_action(renamed_obj))
 				return
 			if(input == old_desc || !input)
