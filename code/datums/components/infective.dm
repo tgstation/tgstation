@@ -78,6 +78,9 @@
 /datum/component/infective/proc/try_infect_drink(datum/source, mob/living/drinker, mob/living/feeder)
 	SIGNAL_HANDLER
 
+	if(HAS_TRAIT(drinker, TRAIT_STRONG_STOMACH))
+		return
+
 	var/appendage_zone = feeder.held_items.Find(source)
 	appendage_zone = appendage_zone == 0 ? BODY_ZONE_CHEST : appendage_zone % 2 ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM
 	try_infect(feeder, appendage_zone)
