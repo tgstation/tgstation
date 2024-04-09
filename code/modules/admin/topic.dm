@@ -1734,7 +1734,4 @@
 		web_sound(usr, link_url, credit)
 
 	else if(href_list["debug_z_levels"])
-		if(!check_rights(R_DEBUG))
-			return
-
-		owner.debug_z_levels()
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/debug_z_levels)

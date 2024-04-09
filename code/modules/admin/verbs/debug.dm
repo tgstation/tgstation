@@ -157,46 +157,39 @@ ADMIN_VERB(cmd_debug_make_powernets, R_DEBUG|R_SERVER, "Make Powernets", "Regene
 	log_admin("[key_name(src)] has granted [M.key] full access.")
 	message_admins(span_adminnotice("[key_name_admin(usr)] has granted [M.key] full access."))
 
-/client/proc/cmd_assume_direct_control(mob/M in GLOB.mob_list)
-	set category = "Admin.Game"
-	set name = "Assume direct control"
-	set desc = "Direct intervention"
-
+ADMIN_VERB(cmd_assume_direct_control, R_ADMIN, "Assume Direct Control", "Assume direct control of a mob.", ADMIN_CATEGORY_DEBUG, mob/M in world)
 	if(M.ckey)
-		if(tgui_alert(usr,"This mob is being controlled by [M.key]. Are you sure you wish to assume control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
+		if(tgui_alert(user,"This mob is being controlled by [M.key]. Are you sure you wish to assume control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
 			return
 	if(!M || QDELETED(M))
-		to_chat(usr, span_warning("The target mob no longer exists."))
+		to_chat(user, span_warning("The target mob no longer exists."))
 		return
-	message_admins(span_adminnotice("[key_name_admin(usr)] assumed direct control of [M]."))
-	log_admin("[key_name(usr)] assumed direct control of [M].")
-	var/mob/adminmob = mob
+	message_admins(span_adminnotice("[key_name_admin(user)] assumed direct control of [M]."))
+	log_admin("[key_name(user)] assumed direct control of [M].")
+	var/mob/adminmob = user.mob
 	if(M.ckey)
 		M.ghostize(FALSE)
-	M.key = key
-	init_verbs()
+	M.key = user.key
+	user.init_verbs()
 	if(isobserver(adminmob))
 		qdel(adminmob)
 	BLACKBOX_LOG_ADMIN_VERB("Assume Direct Control")
 
-/client/proc/cmd_give_direct_control(mob/M in GLOB.mob_list)
-	set category = "Admin.Game"
-	set name = "Give direct control"
-
+ADMIN_VERB(cmd_give_direct_control, R_ADMIN, "Give Direct Control", "Give direct control of a mob to another player.", ADMIN_CATEGORY_GAME, mob/M in world)
 	if(!M)
 		return
 	if(M.ckey)
-		if(tgui_alert(usr,"This mob is being controlled by [M.key]. Are you sure you wish to give someone else control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
+		if(tgui_alert(user,"This mob is being controlled by [M.key]. Are you sure you wish to give someone else control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
 			return
-	var/client/newkey = input(src, "Pick the player to put in control.", "New player") as null|anything in sort_list(GLOB.clients)
+	var/client/newkey = input(user, "Pick the player to put in control.", "New player") as null|anything in sort_list(GLOB.clients)
 	if(isnull(newkey))
 		return
 	var/mob/oldmob = newkey.mob
 	var/delmob = FALSE
-	if((isobserver(oldmob) || tgui_alert(usr,"Do you want to delete [newkey]'s old mob?","Delete?",list("Yes","No")) != "No"))
+	if((isobserver(oldmob) || tgui_alert(user,"Do you want to delete [newkey]'s old mob?","Delete?",list("Yes","No")) != "No"))
 		delmob = TRUE
 	if(!M || QDELETED(M))
-		to_chat(usr, span_warning("The target mob no longer exists, aborting."))
+		to_chat(user, span_warning("The target mob no longer exists, aborting."))
 		return
 	if(M.ckey)
 		M.ghostize(FALSE)
@@ -204,14 +197,12 @@ ADMIN_VERB(cmd_debug_make_powernets, R_DEBUG|R_SERVER, "Make Powernets", "Regene
 	M.client?.init_verbs()
 	if(delmob)
 		qdel(oldmob)
-	message_admins(span_adminnotice("[key_name_admin(usr)] gave away direct control of [M] to [newkey]."))
-	log_admin("[key_name(usr)] gave away direct control of [M] to [newkey].")
+	message_admins(span_adminnotice("[key_name_admin(user)] gave away direct control of [M] to [newkey]."))
+	log_admin("[key_name(user)] gave away direct control of [M] to [newkey].")
 	BLACKBOX_LOG_ADMIN_VERB("Give Direct Control")
 
-/client/proc/cmd_admin_areatest(on_station, filter_maint)
-	set category = "Mapping"
-	set name = "Test Areas"
-
+ADMIN_VERB_VISIBILITY(cmd_admin_areatest, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB(cmd_admin_areatest, R_DEBUG, "Test Areas", "Tests the areas for various machinery.", ADMIN_CATEGORY_MAPPING, on_station as num, filter_maint as num)
 	var/list/dat = list()
 	var/list/areas_all = list()
 	var/list/areas_with_APC = list()
@@ -242,7 +233,7 @@ ADMIN_VERB(cmd_debug_make_powernets, R_DEBUG|R_SERVER, "Make Powernets", "Regene
 	))
 
 	if(SSticker.current_state == GAME_STATE_STARTUP)
-		to_chat(usr, "Game still loading, please hold!", confidential = TRUE)
+		to_chat(user, "Game still loading, please hold!", confidential = TRUE)
 		return
 
 	var/log_message
@@ -255,8 +246,8 @@ ADMIN_VERB(cmd_debug_make_powernets, R_DEBUG|R_SERVER, "Make Powernets", "Regene
 		dat += "<b>Maintenance Areas Filtered Out</b>"
 		log_message += ", with no maintenance areas"
 
-	message_admins(span_adminnotice("[key_name_admin(usr)] used the Test Areas debug command checking [log_message]."))
-	log_admin("[key_name(usr)] used the Test Areas debug command checking [log_message].")
+	message_admins(span_adminnotice("[key_name_admin(user)] used the Test Areas debug command checking [log_message]."))
+	log_admin("[key_name(user)] used the Test Areas debug command checking [log_message].")
 
 	for(var/area/A as anything in GLOB.areas)
 		if(on_station)
@@ -397,28 +388,23 @@ ADMIN_VERB(cmd_debug_make_powernets, R_DEBUG|R_SERVER, "Make Powernets", "Regene
 	if(!(areas_with_APC.len || areas_with_multiple_APCs.len || areas_with_air_alarm.len || areas_with_RC.len || areas_with_light.len || areas_with_LS.len || areas_with_intercom.len || areas_with_camera.len))
 		dat += "<b>No problem areas!</b>"
 
-	var/datum/browser/popup = new(usr, "testareas", "Test Areas", 500, 750)
+	var/datum/browser/popup = new(user.mob, "testareas", "Test Areas", 500, 750)
 	popup.set_content(dat.Join())
 	popup.open()
 
+ADMIN_VERB_VISIBILITY(cmd_admin_areatest_station, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB(cmd_admin_areatest_station, R_DEBUG, "Test Areas (STATION ONLY)", "Tests the areas for various machinery on station z-levels.", ADMIN_CATEGORY_MAPPING)
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/cmd_admin_areatest, /* on_station = */ TRUE)
 
-/client/proc/cmd_admin_areatest_station()
-	set category = "Mapping"
-	set name = "Test Areas (STATION ONLY)"
-	cmd_admin_areatest(TRUE)
+ADMIN_VERB_VISIBILITY(cmd_admin_areatest_station_no_maintenance, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB(cmd_admin_areatest_station_no_maintenance, R_DEBUG, "Test Areas (STATION - NO MAINT)", "Tests the areas for various machinery on station z-levels, excluding maintenance areas.", ADMIN_CATEGORY_MAPPING)
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/cmd_admin_areatest, /* on_station = */ TRUE, /* filter_maint = */ TRUE)
 
-/client/proc/cmd_admin_areatest_station_no_maintenance()
-	set category = "Mapping"
-	set name = "Test Areas (STATION - NO MAINT)"
-	cmd_admin_areatest(on_station = TRUE, filter_maint = TRUE)
-
-/client/proc/cmd_admin_areatest_all()
-	set category = "Mapping"
-	set name = "Test Areas (ALL)"
-	cmd_admin_areatest(FALSE)
+ADMIN_VERB_VISIBILITY(cmd_admin_areatest_all, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, "Test Areas (ALL)", "Tests the areas for various machinery on all z-levels.", ADMIN_CATEGORY_MAPPING)
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/cmd_admin_areatest)
 
 /client/proc/robust_dress_shop()
-
 	var/list/baseoutfits = list("Naked","Custom","As Job...", "As Plasmaman...")
 	var/list/outfits = list()
 	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman)
@@ -469,22 +455,14 @@ ADMIN_VERB(cmd_debug_make_powernets, R_DEBUG|R_SERVER, "Make Powernets", "Regene
 
 	return dresscode
 
-/client/proc/cmd_admin_rejuvenate(mob/living/M in GLOB.mob_list)
-	set category = "Debug"
-	set name = "Rejuvenate"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	if(!mob)
-		return
+ADMIN_VERB(cmd_admin_rejuvenate, R_ADMIN, "Rejuvenate", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/M in world)
 	if(!istype(M))
-		tgui_alert(usr,"Cannot revive a ghost")
+		tgui_alert(user,"Cannot revive a ghost")
 		return
 	M.revive(ADMIN_HEAL_ALL)
 
-	log_admin("[key_name(usr)] healed / revived [key_name(M)]")
-	var/msg = span_danger("Admin [key_name_admin(usr)] healed / revived [ADMIN_LOOKUPFLW(M)]!")
+	log_admin("[key_name(user)] healed / revived [key_name(M)]")
+	var/msg = span_danger("Admin [key_name_admin(user)] healed / revived [ADMIN_LOOKUPFLW(M)]!")
 	message_admins(msg)
 	admin_ticket_log(M, msg)
 	BLACKBOX_LOG_ADMIN_VERB("Rejuvenate")
