@@ -395,12 +395,20 @@
 		return
 	A.AltClick(src)
 
+/**
+ * Alt click on an atom.
+ * Performs alt-click actions before attempting to open a loot window.
+ * Returns TRUE if successful, FALSE if not.
+ */
 /atom/proc/AltClick(mob/user)
 	if(!user.can_interact_with(src))
 		return FALSE
 
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
-		return FALSE
+		return TRUE
+
+	if(HAS_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER))
+		return TRUE
 
 	var/turf/tile = get_turf(src)
 	if(isnull(tile))
@@ -420,6 +428,7 @@
 		return FALSE
 	
 	panel.open(user, tile)
+	return TRUE
 
 ///The base proc of when something is right clicked on when alt is held - generally use alt_click_secondary instead
 /atom/proc/alt_click_on_secondary(atom/A)
