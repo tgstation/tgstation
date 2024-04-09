@@ -208,3 +208,41 @@
   - bugfix: fixes Borg and Syndicate inducers not working
   jlsnow301, infraredbaron:
   - rscadd: Added a new UI element over players that are interacting, building, etc.
+2024-04-07:
+  Bilbo367:
+  - bugfix: Narcolepsy is no longer activated while neutered.
+  JohnFulpWillard:
+  - bugfix: You can no longer take chemicals out of medipens with a syringe.
+  - balance: Basic mob AIs with no mobs on the Z level now stop.
+  Melbert:
+  - bugfix: Fix fancy anomaly theme being broken
+  - bugfix: Skill rewards should properly be dropped out of unworthy player's hands
+  - bugfix: Items will properly pass through slime on occasion
+  - bugfix: Captive Xeno end round report should make a tad more sense
+  Skeleton-In-Disguise:
+  - rscadd: Transhumanist now allows you to select your augmentation
+  - rscadd: Transhumanist can now provide a robotic voice box, or flashlight eyes
+  - spellcheck: Transhumanist's roundstart text has been re-written to not be wrong
+  Vishenka0704:
+  - qol: Added search bar to character prefs catalogs
+  mc-oofert:
+  - balance: punches no longer knock down or deal stamina damage
+  necromanceranne:
+  - rscadd: Watcher wreaths. Made from the mangled remains of a watcher, now a handsome
+      accessory for you to wear a few inches behind your head. Comes in Normal and
+      Icewing variants.
+  - rscadd: Some bounties for the two variants of watcher wreaths.
+2024-04-08:
+  Fluffles:
+  - bugfix: Hats/glasses/masks should hopefully behave more predictably for the purposes
+      of eye/mouth surgery.
+  Jacquerel:
+  - rscadd: Adds a new Final Objective where you force your fellow crew to fight to
+      the death on pain of... death.
+  LemonInTheDark:
+  - bugfix: The color matrix editor now works properly again
+  Metekillot:
+  - bugfix: Broken chameleon kits can't be unbroken by an EMP.
+  Rhials:
+  - bugfix: Sweeps a tile of dust off of the Maint Mania deathmatch map, which was
+      causing errors.
