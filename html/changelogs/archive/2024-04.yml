@@ -126,3 +126,8 @@
   Tractor Mann:
   - bugfix: fixed Rocket Jump Waltz in the jukebox, you can actually listen to it
       end now hopefully.
+2024-04-09:
+  DimWhat:
+  - bugfix: Simians no longer turn invisible when husked.
+  KnigTheThrasher:
+  - rscadd: Added a new reagent container (aka. I fixed the bitrunning beach bar)
