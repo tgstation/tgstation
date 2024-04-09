@@ -241,6 +241,7 @@ const KnowledgeTree = (props) => {
                 justify="center"
                 align="center"
                 backgroundColor="#303030"
+                wrap="wrap"
               >
                 {
                   tier.nodes.map((node) => (
@@ -255,16 +256,26 @@ const KnowledgeTree = (props) => {
                         onClick={node.finished ? (() => null) : () => act('research', { path: node.path })}
                         width="64px"
                         height="64px"
+                        m="8px"
                       >
                         <Image
                         src={`data:image/jpeg;base64,${node.icon}`}
                         height="100%"
                         width="100%"
                         position="absolute"
-                        top="0"
-                        left="0"
+                        top="0px"
+                        left="0px"
                         />
-                        <b>{node.finished ? "" : (node.cost > 0 ? node.cost : "FREE")}</b>
+                        <Box
+                          position="absolute"
+                          top="0px"
+                          left="0px"
+                          backgroundColor="black"
+                          textColor="white"
+                          bold
+                        >
+                          {node.finished ? "" : (node.cost > 0 ? node.cost : "FREE")}
+                        </Box>
                       </Button>
                     </Flex.Item>
                   ))
