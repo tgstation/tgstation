@@ -179,7 +179,7 @@
 
 	user.balloon_alert_to_viewers("plunging vent...", "plunging clogged vent...")
 	if(do_after(user, 6 SECONDS, target = vent))
-		to_chat(user, span_notice("You finish pumping [vent]."))
+		user.balloon_alert_to_viewers("finished plunging")
 		clear_signals()
 		kill()
 
