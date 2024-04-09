@@ -208,7 +208,6 @@
 	rename_area(area_editing, new_name)
 	user.balloon_alert(user, "area renamed to [new_name]")
 	user.log_message("has renamed [prevname] to [new_name]", LOG_GAME)
-	updateUsrDialog()
 	return TRUE
 
 ///Cyborg blueprints - The same as regular but with a different fluff text.
