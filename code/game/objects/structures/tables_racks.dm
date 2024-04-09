@@ -220,6 +220,7 @@
 	to_chat(user, span_notice("You start deconstructing [src]..."))
 	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		frame = null
 		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
@@ -304,7 +305,11 @@
 	else
 		for(var/datum/material/mat in custom_materials)
 			new mat.sheet_type(target_turf, FLOOR(custom_materials[mat] / SHEET_MATERIAL_AMOUNT, 1))
-		new framestack(target_turf, framestackamount)
+
+	if(frame)
+		new frame(target_turf)
+	else
+		new framestack(get_turf(src), framestackamount)
 
 /obj/structure/table/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
