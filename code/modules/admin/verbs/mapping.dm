@@ -189,20 +189,13 @@ ADMIN_VERB(sec_camera_report, R_DEBUG, "Camera Report", "Get a printout of all c
 
 	BLACKBOX_LOG_ADMIN_VERB("Show Roundstart Active Turf Markers")
 
-/client/proc/enable_mapping_verbs()
-	set category = "Debug"
-	set name = "Mapping verbs - Enable"
-	if(!check_rights(R_DEBUG))
-		return
-	remove_verb(src, /client/proc/enable_mapping_verbs)
-	add_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
+ADMIN_VERB(enable_mapping_verbs, R_DEBUG, "Enable Mapping Verbs", "Enable all mapping verbs.", ADMIN_CATEGORY_MAPPING)
+	SSadmin_verbs.update_visibility_flag(user, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG, TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Enable Debug Verbs")
 
-/client/proc/disable_mapping_verbs()
-	set category = "Debug"
-	set name = "Mapping verbs - Disable"
-	remove_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
-	add_verb(src, /client/proc/enable_mapping_verbs)
+ADMIN_VERB_VISIBILITY(disable_mapping_verbs, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB(disable_mapping_verbs, R_DEBUG, "Disable Mapping Verbs", "Disable all mapping verbs.", ADMIN_CATEGORY_MAPPING)
+	SSadmin_verbs.update_visibility_flag(user, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG, FALSE)
 	BLACKBOX_LOG_ADMIN_VERB("Disable Debug Verbs")
 
 /client/proc/count_objects_on_z_level()

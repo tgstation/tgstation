@@ -1,38 +1,6 @@
-//admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
-//the procs are cause you can't put the comments in the GLOB var define
-
-GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
-GLOBAL_PROTECT(admin_verbs_debug)
-/world/proc/AVerbsDebug()
-	return list(
-	#ifdef TESTING /* Keep these at the top to not make the list look fugly */
-	/client/proc/check_missing_sprites,
-	#endif
-	/client/proc/enable_mapping_verbs,
-	/client/proc/test_movable_UI,
-	/client/proc/test_snap_UI,
-	/client/proc/unload_ctf,
-	/client/proc/validate_puzzgrids,
-	/client/proc/GeneratePipeSpritesheet,
-	/client/proc/stop_weather,
-	)
-
 /client/proc/add_admin_verbs()
-	if(isnull(holder))
-		return
 	control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 	SSadmin_verbs.assosciate_admin(src)
-
-	if(holder)
-		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
-
-		var/rights = holder.rank_flags()
-		if(rights & R_DEBUG)
-			add_verb(src, GLOB.admin_verbs_debug)
-#ifdef MAP_TEST
-		remove_verb(src, /client/proc/enable_mapping_verbs)
-		add_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
-#endif
 
 /client/proc/remove_admin_verbs()
 	control_freak = initial(control_freak)
