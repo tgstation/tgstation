@@ -14,6 +14,9 @@
 /// Essentially means it cannot be picked up or placed in an inventory, (e.g. mech parts, safe)
 #define WEIGHT_CLASS_GIGANTIC 6
 
+/// Weight class that can fit in pockets
+#define POCKET_WEIGHT_CLASS WEIGHT_CLASS_SMALL
+
 //Inventory depth: limits how many nested storage items you can access directly.
 //1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
 #define INVENTORY_DEPTH 3
