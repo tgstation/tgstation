@@ -20,7 +20,7 @@
 /datum/element/tool_renaming/proc/attempt_rename(datum/source, mob/living/user, atom/interacting_with, list/modifiers)
 	if(!isobj(interacting_with))
 		return NONE
-	
+
 	var/obj/renamed_obj = interacting_with
 
 	if(!(renamed_obj.obj_flags & UNIQUE_RENAME))
