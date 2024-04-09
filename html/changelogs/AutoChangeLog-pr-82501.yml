@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - spellcheck: "Shoes and Gloves are now referred to as \"a pair of\" rather than \"some\"."
-  - spellcheck: "Reinforced Window's description is less out of place."
-  - spellcheck: "Fixed an empty space in examining a human's bloody hands."
-  - code_imp: "It's a tad easier to exit an atom's examine text now."
