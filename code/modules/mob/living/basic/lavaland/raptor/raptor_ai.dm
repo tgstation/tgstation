@@ -2,11 +2,11 @@
 
 /datum/ai_controller/basic_controller/raptor
     blackboard = list(
-	    BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
-	    BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
+        BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
+        BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
         BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/mining/raptor),
         BB_BABIES_CHILD_TYPES = list(/mob/living/basic/mining/raptor/baby_raptor),
-	    BB_MAX_CHILDREN = 5,
+        BB_MAX_CHILDREN = 5,
     )
 
     ai_movement = /datum/ai_movement/basic_avoidance
@@ -29,7 +29,7 @@
 /datum/ai_controller/basic_controller/raptor/TryPossessPawn(atom/new_pawn)
     . = ..()
     if(. & AI_CONTROLLER_INCOMPATIBLE)
-	    return
+        return
     RegisterSignal(new_pawn, COMSIG_MOB_ATE, PROC_REF(post_eat))
 
 /datum/ai_controller/basic_controller/raptor/proc/post_eat()
@@ -163,8 +163,8 @@
     blackboard = list(
         BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
         BB_FIND_MOM_TYPES = list(/mob/living/basic/mining/raptor),
-	    BB_IGNORE_MOM_TYPES = list(/mob/living/basic/mining/raptor/baby_raptor),
-	    BB_MAX_CHILDREN = 5,
+        BB_IGNORE_MOM_TYPES = list(/mob/living/basic/mining/raptor/baby_raptor),
+        BB_MAX_CHILDREN = 5,
     )
 
     ai_movement = /datum/ai_movement/basic_avoidance
