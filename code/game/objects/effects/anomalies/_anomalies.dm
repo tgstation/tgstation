@@ -81,7 +81,7 @@
 
 /// Move in a direction
 /obj/effect/anomaly/proc/move_anomaly()
-	step(src,pick(GLOB.alldirs))
+	step(src, pick(GLOB.alldirs))
 
 /obj/effect/anomaly/proc/detonate()
 	return

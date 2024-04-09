@@ -512,7 +512,7 @@
 /// Turn the machine on with side effects
 /obj/machinery/power/shieldwallgen/proc/activate()
 	active = ACTIVE_SETUPFIELDS
-	ADD_TRAIT(loc, TRAIT_CONTAINMENT_FIELD, REF(src))
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
 
 /// Turn the machine off with side effects
 /obj/machinery/power/shieldwallgen/proc/deactivate()
@@ -520,7 +520,7 @@
 	for(var/d in GLOB.cardinals)
 		cleanup_field(d)
 	update_appearance()
-	REMOVE_TRAIT(loc, TRAIT_CONTAINMENT_FIELD, REF(src))
+	RemoveElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
 
 //////////////Containment Field START
 /obj/machinery/shieldwall
@@ -547,8 +547,7 @@
 		L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 		L.gib(DROP_ALL_REMAINS)
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity))
-	var/static/list/turf_traits = list(TRAIT_CONTAINMENT_FIELD)
-	AddElement(/datum/element/give_turf_traits, turf_traits)
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
 
 /obj/machinery/shieldwall/Destroy()
 	gen_primary = null
