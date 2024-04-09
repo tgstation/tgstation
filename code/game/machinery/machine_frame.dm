@@ -17,17 +17,10 @@
 	QDEL_LIST(components)
 	return ..()
 
-/obj/structure/frame/machine/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(state >= FRAME_STATE_WIRED)
-			new /obj/item/stack/cable_coil(drop_location(), 5)
-		dump_contents()
-	return ..()
-
-/obj/structure/frame/machine/try_dissassemble(mob/living/user, obj/item/tool, disassemble_time)
-	if(anchored && state == FRAME_STATE_EMPTY) //when using a screwdriver on an incomplete frame(missing components) no point checking for this
-		balloon_alert(user, "must be unanchored first!")
-		return FALSE
+/obj/structure/frame/machine/atom_deconstruct(disassembled = TRUE)
+	if(state >= FRAME_STATE_WIRED)
+		new /obj/item/stack/cable_coil(drop_location(), 5)
+	dump_contents()
 	return ..()
 
 /obj/structure/frame/machine/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -90,6 +83,8 @@
 	if(!circuit?.needs_anchored)
 		. += span_notice("It can be [EXAMINE_HINT("anchored")] [anchored ? "loose" : "in place"]")
 	if(state == FRAME_STATE_EMPTY)
+		if(!anchored)
+			. += span_notice("It can be [EXAMINE_HINT("welded")] or [EXAMINE_HINT("screwed")] apart.")
 		. += span_warning("It needs [EXAMINE_HINT("5 cable")] pieces to wire it.")
 		return
 	if(state == FRAME_STATE_WIRED)

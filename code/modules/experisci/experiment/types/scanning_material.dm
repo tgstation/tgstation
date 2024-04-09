@@ -15,7 +15,7 @@
 		var/chosen_material = pick(possible_material_types)
 		required_materials[req_atom] = chosen_material
 
-/datum/experiment/scanning/random/material/final_contributing_index_checks(atom/target, typepath)
+/datum/experiment/scanning/random/material/final_contributing_index_checks(datum/component/experiment_handler/experiment_handler, atom/target, typepath)
 	return ..() && target.custom_materials && target.has_material_type(required_materials[typepath])
 
 /datum/experiment/scanning/random/material/serialize_progress_stage(atom/target, list/seen_instances)

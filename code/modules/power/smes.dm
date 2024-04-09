@@ -81,11 +81,11 @@
 /obj/machinery/power/smes/should_have_node()
 	return TRUE
 
-/obj/machinery/power/smes/cable_layer_change_checks(mob/living/user, obj/item/tool)
+/obj/machinery/power/smes/cable_layer_act(mob/living/user, obj/item/tool)
 	if(!QDELETED(terminal))
 		balloon_alert(user, "cut the terminal first!")
-		return FALSE
-	return TRUE
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/machinery/power/smes/attackby(obj/item/item, mob/user, params)
 	//opening using screwdriver
@@ -145,7 +145,7 @@
 		to_chat(user, span_notice("You start building the power terminal..."))
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 2 SECONDS, target = src))
 			if(cable.get_amount() < 10 || !cable)
 				return
 			var/obj/structure/cable/connected_cable = turf.get_cable_node(terminal_cable_layer) //get the connecting node cable, if there's one

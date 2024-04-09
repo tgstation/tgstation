@@ -30,30 +30,40 @@
 
 ///adds the corresponding moodlet and visual effects
 /datum/quirk/all_nighter/add(client/client_source)
+	RegisterSignal(quirk_holder, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(on_removed_limb))
 	quirk_holder.add_mood_event("all_nighter", /datum/mood_event/all_nighter)
 	add_bags()
 
 ///removes the corresponding moodlet and visual effects
 /datum/quirk/all_nighter/remove(client/client_source)
+	UnregisterSignal(quirk_holder, COMSIG_CARBON_REMOVE_LIMB)
 	quirk_holder.clear_mood_event("all_nighter", /datum/mood_event/all_nighter)
-	remove_bags()
+	if(bodypart_overlay)
+		remove_bags()
+
+///if we have bags and lost a head, remove them
+/datum/quirk/all_nighter/proc/on_removed_limb(datum/source, obj/item/bodypart/removed_limb, special, dismembered)
+	if(bodypart_overlay && istype(removed_limb, /obj/item/bodypart/head))
+		remove_bags()
 
 ///adds the bag overlay
-/datum/quirk/all_nighter/proc/add_bags(client/client_source)
+/datum/quirk/all_nighter/proc/add_bags()
 	var/mob/living/carbon/human/sleepy_head = quirk_holder
-	var/obj/item/bodypart/head/face = sleepy_head.get_bodypart(BODY_ZONE_HEAD)
+	var/obj/item/bodypart/head/face = sleepy_head?.get_bodypart(BODY_ZONE_HEAD)
+	if(isnull(face))
+		return
 	bodypart_overlay = new() //creates our overlay
 	face.add_bodypart_overlay(bodypart_overlay)
 	sleepy_head.update_body_parts() //make sure to update icon
 
 ///removes the bag overlay
-/datum/quirk/all_nighter/proc/remove_bags(client/client_source)
+/datum/quirk/all_nighter/proc/remove_bags()
 	var/mob/living/carbon/human/sleepy_head = quirk_holder
-	var/obj/item/bodypart/head/face = sleepy_head.get_bodypart(BODY_ZONE_HEAD)
-	//our overlay is stored as a datum var, so referencing it is easy
-	face.remove_bodypart_overlay(bodypart_overlay)
+	var/obj/item/bodypart/head/face = sleepy_head?.get_bodypart(BODY_ZONE_HEAD)
+	if(face)
+		face.remove_bodypart_overlay(bodypart_overlay)
+		sleepy_head.update_body_parts()
 	QDEL_NULL(bodypart_overlay)
-	sleepy_head.update_body_parts()
 
 /**
 *Here we actively handle our moodlet & eye bags, adding/removing them as necessary

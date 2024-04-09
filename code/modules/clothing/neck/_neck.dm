@@ -487,3 +487,23 @@
 /obj/item/clothing/neck/beads/Initialize(mapload)
 	. = ..()
 	color = color = pick("#ff0077","#d400ff","#2600ff","#00ccff","#00ff2a","#e5ff00","#ffae00","#ff0000", "#ffffff")
+
+/obj/item/clothing/neck/wreath
+	name = "\improper Watcher Wreath"
+	desc = "An elaborate crown made from the twisted flesh and sinew of a watcher. \
+		Wearing it makes you feel like you have eyes in the back of your head."
+	icon_state = "watcher_wreath"
+	worn_y_offset = 10
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/wreath/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "wreath_emissive", src, alpha = src.alpha)
+
+/obj/item/clothing/neck/wreath/icewing
+	name = "\improper Icewing Wreath"
+	desc = "An elaborate crown made from the twisted flesh and sinew of an icewing watcher. \
+		Wearing it sends shivers down your spine just from being near it."
+	icon_state = "icewing_wreath"

@@ -144,7 +144,7 @@
 	update_appearance(UPDATE_ICON)
 	// Rest of the chat program setup is done in LateInit
 
-/obj/machinery/modular_computer/preset/cargochat/cargo/LateInitialize()
+/obj/machinery/modular_computer/preset/cargochat/cargo/post_machine_initialize()
 	. = ..()
 	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")
 	chatprogram.username = "cargo_requests_operator"

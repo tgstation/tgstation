@@ -733,6 +733,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
+#define TRAIT_ANOSMIA "anosmia"
 #define TRAIT_HEAVY_DRINKER "heavy_drinker"
 #define TRAIT_AGEUSIA "ageusia"
 #define TRAIT_HEAVY_SLEEPER "heavy_sleeper"

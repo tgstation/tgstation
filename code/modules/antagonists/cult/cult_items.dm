@@ -989,7 +989,7 @@ Striking a noncultist, however, will tear their flesh."}
 		if(.)
 			if(illusions > 0)
 				illusions--
-				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 450)
+				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 45 SECONDS)
 				if(prob(60))
 					var/mob/living/simple_animal/hostile/illusion/M = new(owner.loc)
 					M.faction = list(FACTION_CULT)

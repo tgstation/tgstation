@@ -34,12 +34,11 @@
 
 /obj/structure/bed/examine(mob/user)
 	. = ..()
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		. += span_notice("It's held together by a couple of <b>bolts</b>.")
+	. += span_notice("It's held together by a couple of <b>bolts</b>.")
 
 /obj/structure/bed/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item)
-		if(held_item.tool_behaviour != TOOL_WRENCH || obj_flags & NO_DECONSTRUCTION)
+		if(held_item.tool_behaviour != TOOL_WRENCH)
 			return
 
 		context[SCREENTIP_CONTEXT_RMB] = "Dismantle"
@@ -49,19 +48,14 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Unbuckle"
 		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/structure/bed/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(build_stack_type)
-			new build_stack_type(loc, build_stack_amount)
-	..()
+/obj/structure/bed/atom_deconstruct(disassembled = TRUE)
+	if(build_stack_type)
+		new build_stack_type(loc, build_stack_amount)
 
 /obj/structure/bed/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
 /obj/structure/bed/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return TRUE
-
 	..()
 	weapon.play_tool_sound(src)
 	deconstruct(disassembled = TRUE)

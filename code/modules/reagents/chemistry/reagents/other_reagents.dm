@@ -1228,7 +1228,7 @@
 		to_chat(affected_mob, span_warning("You feel unstable..."))
 		affected_mob.set_jitter_if_lower(2 SECONDS)
 		current_cycle = 1
-		addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/living, bluespace_shuffle)), 30)
+		addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/living, bluespace_shuffle)), 3 SECONDS)
 
 /mob/living/proc/bluespace_shuffle()
 	do_teleport(src, get_turf(src), 5, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
