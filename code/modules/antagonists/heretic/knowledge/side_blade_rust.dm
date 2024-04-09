@@ -64,7 +64,7 @@
 	depth = SIDE_TIER_2
 
 /datum/heretic_knowledge/rifle_ammo
-	name = "Lionhunter Rifle Ammunition (free)"
+	name = "Lionhunter Rifle Ammunition"
 	desc = "Allows you to transmute 3 ballistic ammo casings (used or unused) of any caliber, \
 		including shotgun shot, with any animal hide to create an extra clip of ammunition for the Lionhunter Rifle."
 	gain_text = "The weapon came with three rough iron balls, intended to be used as ammunition. \

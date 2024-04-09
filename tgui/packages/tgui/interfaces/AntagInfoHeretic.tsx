@@ -264,7 +264,7 @@ const KnowledgeTree = (props) => {
                         top="0"
                         left="0"
                         />
-                        <b>{node.finished ? "" : node.cost}</b>
+                        <b>{node.finished ? "" : (node.cost > 0 ? node.cost : "FREE")}</b>
                       </Button>
                     </Flex.Item>
                   ))
