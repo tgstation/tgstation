@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - bugfix: "Mechs will no longer delete their living non-occupant contents when destroyed."
