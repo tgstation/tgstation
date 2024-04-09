@@ -18,6 +18,8 @@
 	UnregisterSignal(source, COMSIG_ITEM_INTERACTING_WITH_ATOM)
 
 /datum/element/tool_renaming/proc/attempt_rename(datum/source, mob/living/user, atom/interacting_with, list/modifiers)
+	SIGNAL_HANDLER
+
 	if(!isobj(interacting_with))
 		return NONE
 
