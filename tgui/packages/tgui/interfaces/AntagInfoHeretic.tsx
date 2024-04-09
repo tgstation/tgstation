@@ -238,30 +238,36 @@ const KnowledgeTree = (props) => {
             <Stack.Item key={tier.depth}>
               <Flex
                 direction="row"
-                justify="space-evenly"
+                justify="center"
                 align="center"
                 backgroundColor="#303030"
               >
                 {
                   tier.nodes.map((node) => (
-                  <Flex.Item key={node.name}>
-                    <Button key={node.name}
-                      color={node.color}
-                      disabled={node.disabled}
-                      tooltip={
-                        `${node.name}:
-                        ${node.desc}`
-                      }
-                      onClick={node.finished ? (() => null) : () => act('research', { path: node.path })}
-                    >
-                    <Image
-                      src={`data:image/jpeg;base64,${node.icon}`}
-                      height="100%"
-                      width="100%"
-                    />
-                    </Button>
-                  </Flex.Item>
-                ))
+                    <Flex.Item key={node.name}>
+                      <Button key={node.name}
+                        color={node.color}
+                        disabled={node.disabled}
+                        tooltip={
+                          `${node.name}:
+                          ${node.desc}`
+                        }
+                        onClick={node.finished ? (() => null) : () => act('research', { path: node.path })}
+                        width="64px"
+                        height="64px"
+                      >
+                        <Image
+                        src={`data:image/jpeg;base64,${node.icon}`}
+                        height="100%"
+                        width="100%"
+                        position="absolute"
+                        top="0"
+                        left="0"
+                        />
+                        <b>{node.finished ? "" : node.cost}</b>
+                      </Button>
+                    </Flex.Item>
+                  ))
                 }
               </Flex>
             </Stack.Item>

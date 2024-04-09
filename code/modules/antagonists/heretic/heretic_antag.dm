@@ -125,17 +125,17 @@
 
 	//setup tiers
 	var/list/tiers = list(
-		list("depth"=0,"background"=test_icon,"nodes"=list()),
-		list("depth"=1,"background"=test_icon,"nodes"=list()),
-		list("depth"=2,"background"=test_icon,"nodes"=list()),
-		list("depth"=3,"background"=test_icon,"nodes"=list()),
-		list("depth"=4,"background"=test_icon,"nodes"=list()),
-		list("depth"=5,"background"=test_icon,"nodes"=list()),
-		list("depth"=6,"background"=test_icon,"nodes"=list()),
-		list("depth"=7,"background"=test_icon,"nodes"=list()),
-		list("depth"=8,"background"=test_icon,"nodes"=list()),
-		list("depth"=9,"background"=test_icon,"nodes"=list()),
-		list("depth"=10,"background"=test_icon,"nodes"=list()),
+		list("depth"=0,"nodes"=list()),
+		list("depth"=1,"nodes"=list()),
+		list("depth"=2,"nodes"=list()),
+		list("depth"=3,"nodes"=list()),
+		list("depth"=4,"nodes"=list()),
+		list("depth"=5,"nodes"=list()),
+		list("depth"=6,"nodes"=list()),
+		list("depth"=7,"nodes"=list()),
+		list("depth"=8,"nodes"=list()),
+		list("depth"=9,"nodes"=list()),
+		list("depth"=10,"nodes"=list()),
 	)
 
 	// This should be cached in some way, but the fact that final knowledge
