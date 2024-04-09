@@ -1,8 +1,8 @@
-import { BooleanLike } from 'common/react';
-import { useEffect, useState } from 'react';
 import { randomPick } from 'common/random';
+import { useEffect, useState } from 'react';
+
 import { useBackend } from '../backend';
-import { Image, LabeledList, Button, Section, Stack } from '../components';
+import { Button, Image, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -88,7 +88,7 @@ export const RideMinigame = (props) => {
                     icon="arrow-up"
                     width="30px"
                     onClick={() => UpdateAnswer('north')}
-                  ></Button>
+                   />
                 </Stack.Item>
                 <Stack.Item>
                   <Stack>
@@ -99,7 +99,7 @@ export const RideMinigame = (props) => {
                         icon="arrow-left"
                         width="30px"
                         onClick={() => UpdateAnswer('west')}
-                      ></Button>
+                       />
                     </Stack.Item>
                     <Stack.Item>
                       <Button
@@ -108,7 +108,7 @@ export const RideMinigame = (props) => {
                         icon="arrow-right"
                         width="30px"
                         onClick={() => UpdateAnswer('east')}
-                      ></Button>
+                       />
                     </Stack.Item>
                   </Stack>
                 </Stack.Item>
@@ -119,7 +119,7 @@ export const RideMinigame = (props) => {
                     width="30px"
                     icon="arrow-down"
                     onClick={() => UpdateAnswer('south')}
-                  ></Button>
+                   />
                 </Stack.Item>
               </Stack>
             </Section>
