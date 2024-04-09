@@ -193,7 +193,7 @@
 	var/area/area_editing = get_area(src)
 	var/prevname = "[area_editing.name]"
 	var/new_name = tgui_input_text(user, "New area name", "Area Creation", max_length = MAX_NAME_LEN)
-	if(!new_name || !length(new_name) || new_name == prevname) //cancel
+	if(isnull(new_name) || !length(new_name) || new_name == prevname)
 		return
 
 	rename_area(area_editing, new_name)
@@ -222,6 +222,25 @@
 	fluffnotice = "In memory of the Liberator's brother, Delaminator, and his Scarlet Macaw-iathan, from which this artifact was stolen."
 	new_area_type = /area/golem
 
+/**
+ * Slime blueprints
+ * Works the same as regular blueprints, but editing an area will color it and make it xenobio camera console traversable.
+ * One time use so it deletes itself after.
+ */
+/obj/item/blueprints/slime
+	name = "cerulean prints"
+	desc = "A one use yet of blueprints made of jelly like organic material. Extends the reach of the management console."
+	color = "#2956B2"
+
+/obj/item/blueprints/slime/edit_area(mob/user)
+	. = ..()
+	var/area/area = get_area(src)
+	for(var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			area_turf.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+			area_turf.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
+	area.area_flags |= XENOBIOLOGY_COMPATIBLE
+	qdel(src)
 
 #undef AREA_STATION
 #undef AREA_OUTDOORS
