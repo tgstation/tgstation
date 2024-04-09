@@ -1,7 +1,7 @@
 import { BooleanLike } from 'common/react';
 
 import { useBackend } from '../backend';
-import { Box, Button, Divider } from '../components';
+import { Box, Button, Divider, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -33,7 +33,7 @@ export const Blueprints = () => {
   const { legend, legend_viewing_list, legend_off } = data;
 
   return (
-    <Window width={450} height={330}>
+    <Window width={450} height={340}>
       <Window.Content scrollable>
         {legend === legend_viewing_list ? (
           <WireList />
@@ -52,7 +52,7 @@ const WireList = () => {
   const { wire_devices = [] } = data;
 
   return (
-    <Box>
+    <Section>
       <Button
         fluid
         icon="chevron-left"
@@ -73,7 +73,7 @@ const WireList = () => {
           />
         ))}
       </Box>
-    </Box>
+    </Section>
   );
 };
 
@@ -82,7 +82,7 @@ const WireArea = () => {
   const { wires_name, wire_data = [] } = data;
 
   return (
-    <>
+    <Section>
       <Button
         fluid
         icon="chevron-left"
@@ -96,7 +96,7 @@ const WireArea = () => {
           {wire.message}
         </Box>
       ))}
-    </>
+    </Section>
   );
 };
 
@@ -105,11 +105,13 @@ const MainMenu = () => {
   const { area_notice, area_name, fluff_notice, station_name, viewing } = data;
 
   return (
-    <>
+    <Section>
       <Box bold m={1}>
         {station_name} blueprints
       </Box>
-      <Box>{fluff_notice}</Box>
+      <Box italic fontSize={0.9}>
+        {fluff_notice}
+      </Box>
       <Divider />
       <Box>
         <Button
@@ -167,6 +169,6 @@ const MainMenu = () => {
           />
         )}
       </Box>
-    </>
+    </Section>
   );
 };
