@@ -128,7 +128,7 @@
 			part_type = /obj/item/bodypart/leg/right/flesh
 
 	target.visible_message(span_danger("[src] [target_part ? "tears off and attaches itself" : "attaches itself"] to where [target][target.p_s()] limb used to be!"))
-	var/obj/item/bodypart/new_bodypart = new part_type() //dont_spawn_flesh, we cant use named arguments here
+	var/obj/item/bodypart/new_bodypart = new part_type()
 	forceMove(new_bodypart)
 	new_bodypart.replace_limb(target, TRUE)
 	register_to_limb(new_bodypart)
