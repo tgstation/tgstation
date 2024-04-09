@@ -61,7 +61,7 @@
 		PATH_RUST = "brown",
 		PATH_FLESH = "red",
 		PATH_ASH = "white",
-		PATH_VOID = "blue",
+		PATH_VOID = "violet",
 		PATH_BLADE = "label", // my favorite color is label
 		PATH_COSMIC = "purple",
 		PATH_LOCK = "yellow",
@@ -147,7 +147,7 @@
 		knowledge_data["cost"] = found_knowledge.cost
 		knowledge_data["disabled"] = FALSE
 		knowledge_data["hereticPath"] = found_knowledge.route
-		knowledge_data["color"] = path_to_ui_color[found_knowledge.route] || "grey"
+		knowledge_data["color"] = "good"
 		knowledge_data["icon"] = icon2base64(get_icon_of_knowledge(found_knowledge))
 		knowledge_data["finished"] = TRUE
 
