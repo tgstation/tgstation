@@ -71,8 +71,8 @@
 	data["has_traumas"] = length(patient.get_traumas()) != 0
 	data["contained_reagents"] = get_reagent_data(patient.reagents.reagent_list)
 
-	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG = locate(/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun) in chassis
-	data["injectible_reagents"] = get_reagent_data(SG.reagents.reagent_list)
+	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/shooter = locate(/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun) in chassis
+	data["injectible_reagents"] = get_reagent_data(shooter.reagents.reagent_list)
 	return data
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/handle_ui_act(action, list/params)
