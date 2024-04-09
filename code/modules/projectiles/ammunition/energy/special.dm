@@ -96,3 +96,9 @@
 	harmful = FALSE
 	e_cost = LASER_SHOTS(2, STANDARD_CELL_CHARGE * 0.5)
 	fire_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg' // fwip fwip fwip fwip
+
+/obj/item/ammo_casing/energy/xenoglob
+	projectile_type = /obj/projectile/energy/xenoglob
+	select_name = "neuro-acid"
+	e_cost = 120
+	fire_sound = 'sound/weapons/plasma.ogg'

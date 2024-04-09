@@ -1493,6 +1493,33 @@
 	for(var/i in 1 to 6)
 		new /obj/item/reagent_containers/condiment/pack/syndicate(src)
 
+/obj/item/storage/box/syndie_kit/killertomato/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/food/grown/tomato/killer(src)
+	new /obj/item/seeds/tomato/killer(src)
+
+
+/obj/item/storage/box/syndie_kit/riggedglowsticks/PopulateContents()
+	var/list/types = subtypesof(/obj/item/flashlight/syndirig/glowstick/)
+	for(var/i in 1 to 6)
+		var/type = pick(types)
+		new type(src)
+
+/obj/item/storage/box/syndie_kit/riggedplushies/PopulateContents()
+	var/list/item_list = list(
+		/obj/item/deployablemine/explosive/mothplushie,
+		/obj/item/deployablemine/explosive/lizardplushie,
+		/obj/item/deployablemine/explosive/carpplushie,
+		/obj/item/deployablemine/explosive/bubbleplush,
+		/obj/item/deployablemine/explosive/plushvar,
+		/obj/item/deployablemine/explosive/narplush,
+		/obj/item/deployablemine/explosive/nukeplushie,
+		/obj/item/deployablemine/explosive/slimeplushie
+	)
+
+	for(var/i in 1 to 6)
+		var/item = pick(item_list)
+		new item(src)
 
 
 
