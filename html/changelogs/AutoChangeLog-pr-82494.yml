@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "You can't fit items which are normally too large for a storage by fitting it in the storage when it is small, then growing it to a larger size."
