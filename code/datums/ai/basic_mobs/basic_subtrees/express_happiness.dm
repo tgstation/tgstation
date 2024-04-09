@@ -7,13 +7,15 @@
     var/happiness_key = BB_BASIC_HAPPINESS
     ///list of emotions we relay when happy
     var/static/list/happy_emotions = list(
-        "celebrates happily!",
+        "celebrate happily!",
         "dances around in excitement!",
     )
+    ///our moderate emotions
     var/static/list/moderate_emotions = list(
         "looks satisfied.",
         "trots around.",
     )
+    ///emotions we display when we are sad
     var/static/list/depressed_emotions = list(
         "looks depressed...",
         "turns its back and sulks...",
@@ -25,7 +27,7 @@
         return
     var/happiness_value = controller.blackboard[happiness_key]
     if(isnull(happiness_value))
-        return 
+        return
     var/list/final_list
     switch(happiness_value)
         if(HIGH_HAPPINESS_THRESHOLD to INFINITY)
@@ -35,7 +37,7 @@
         else
             final_list = depressed_emotions
     if(!length(final_list))
-        return    
+        return
     controller.queue_behavior(/datum/ai_behavior/perform_emote, pick(final_list))
 
 #undef HIGH_HAPPINESS_THRESHOLD
