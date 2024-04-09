@@ -45,18 +45,12 @@
 	return data
 
 
-/obj/item/raptor_dex/afterattack(atom/attacked_atom, mob/living/user, proximity)
-	. = ..()
-
-	if(!proximity)
-		return
-
-	. |= AFTERATTACK_PROCESSED_ITEM
-
+/obj/item/raptor_dex/interact_with_atom(atom/attacked_atom, mob/living/user)
 	if(!istype(attacked_atom, /mob/living/basic/mining/raptor))
 		balloon_alert(user, "cant be analyzed!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	raptor = WEAKREF(attacked_atom)
 	playsound(src, 'sound/items/orbie_send_out.ogg', 20)
 	balloon_alert(user, "scanned")
+	return ITEM_INTERACT_SUCCESS

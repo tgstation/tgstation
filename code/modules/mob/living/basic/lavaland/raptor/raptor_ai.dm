@@ -2,11 +2,11 @@
 
 /datum/ai_controller/basic_controller/raptor
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
-		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
+	    BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
+	    BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
         BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/mining/raptor),
         BB_BABIES_CHILD_TYPES = list(/mob/living/basic/mining/raptor/baby_raptor),
-		BB_MAX_CHILDREN = 5,
+	    BB_MAX_CHILDREN = 5,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -84,7 +84,7 @@
 /datum/ai_behavior/find_hunt_target/raptor_victim/valid_dinner(mob/living/source, mob/living/target, radius)
     if(target.ai_controller?.blackboard[BB_RAPTOR_TROUBLE_MAKER])
         return FALSE
-    return can_see(source, target, radius) && target.stat != DEAD
+    return target.stat != DEAD && can_see(source, target, radius) 
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/bully_raptors
     always_reset_target = TRUE
@@ -163,8 +163,8 @@
 	blackboard = list(
         BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
         BB_FIND_MOM_TYPES = list(/mob/living/basic/mining/raptor),
-		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/mining/raptor/baby_raptor),
-		BB_MAX_CHILDREN = 5,
+	    BB_IGNORE_MOM_TYPES = list(/mob/living/basic/mining/raptor/baby_raptor),
+	    BB_MAX_CHILDREN = 5,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

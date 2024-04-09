@@ -223,9 +223,8 @@
 		return
 	ridden.Shake(duration = 2 SECONDS)
 	ridden.balloon_alert(rider, "tries to shake you off.")
-	var/datum/riding_minigame/game = new
-	INVOKE_ASYNC(game, TYPE_PROC_REF(/datum/riding_minigame, commence_minigame), ridden, rider)
-
+	var/datum/riding_minigame/game = new(ridden, rider)
+	game.commence_minigame()
 
 /datum/component/riding/creature/human/RegisterWithParent()
 	. = ..()
@@ -547,6 +546,7 @@
 /datum/component/riding/creature/raptor/fast
 	vehicle_move_delay = 1.5
 
+//a simple minigame players must win to mount and tame a mob
 /datum/riding_minigame
 	///our host mob
 	var/datum/weakref/host
@@ -556,10 +556,11 @@
 	var/maximum_attempts = 6
 	///maximum number of failures before we fail
 	var/maximum_failures = 3
-	///cached icons
+	///cached directional icons of our host
 	var/list/cached_icons = list()
 
-/datum/riding_minigame/proc/commence_minigame(mob/living/ridden, mob/living/rider)
+/datum/raptor_inheritance/New(mob/living/ridden, mob/living/rider)
+	. = ..()
 	RegisterSignal(rider, COMSIG_MOB_UNBUCKLED, PROC_REF(lose_game))
 	host = WEAKREF(ridden)
 	mounter = WEAKREF(rider)
@@ -568,6 +569,9 @@
 		var/string_icon = icon2base64(directional_icon)
 		var/opposite_direction = dir2text(REVERSE_DIR(direction))
 		cached_icons[opposite_direction] = string_icon
+
+/datum/riding_minigame/proc/commence_minigame(mob/living/ridden, mob/living/rider)
+	set waitfor = FALSE
 	START_PROCESSING(SSprocessing, src)
 	ui_interact(rider)
 

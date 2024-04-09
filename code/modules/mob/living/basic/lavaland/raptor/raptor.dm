@@ -6,10 +6,10 @@
 	icon = 'icons/mob/simple/lavaland/raptor.dmi'
 	speed = 2
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	maxHealth = 400
-	health = 400
-	melee_damage_lower = 25
-	melee_damage_upper = 30
+	maxHealth = 200
+	health = 200
+	melee_damage_lower = 10
+	melee_damage_upper = 15
 	attack_verb_continuous = "pecks"
 	attack_verb_simple = "chomps"
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -21,7 +21,7 @@
 	var/can_breed = TRUE
 	///can we ride this mob
 	var/ridable_component = /datum/component/riding/creature/raptor
-	//pet commands when we tame the grub
+	//pet commands when we tame the raptor
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
@@ -116,8 +116,8 @@
 	icon_state = "raptor_red"
 	icon_living = "raptor_red"
 	icon_dead = "raptor_red_dead"
-	melee_damage_lower = 28
-	melee_damage_upper = 33
+	melee_damage_lower = 15
+	melee_damage_upper = 20
 	raptor_color = RAPTOR_RED
 	dex_description = "A resilient breed of raptors, battle-tested and bred for the purpose of humbling its foes in combat, \
 		This breed demonstrates higher combat capabilities than its peers and oozes rutheless aggression."
@@ -137,7 +137,7 @@
 	create_storage(
 		max_specific_storage = WEIGHT_CLASS_NORMAL,
 		max_total_storage = 10,
-        storage_type = /datum/storage/raptor_storage,
+    	storage_type = /datum/storage/raptor_storage,
 	)
 
 /mob/living/basic/mining/raptor/green
@@ -145,8 +145,8 @@
 	icon_state = "raptor_green"
 	icon_living = "raptor_green"
 	icon_dead = "raptor_green_dead"
-	maxHealth = 450
-	health = 450
+	maxHealth = 280
+	health = 280
 	raptor_color = RAPTOR_GREEN
 	dex_description = "A tough breed of raptor, made to withstand the harshest of punishment and to laugh in the face of pain, \
 		This breed is able to withstand more beating than its peers."
@@ -180,12 +180,12 @@
 	icon_state = "raptor_black"
 	icon_living = "raptor_black"
 	icon_dead = "raptor_black_dead"
-	maxHealth = 450
-	health = 450
+	maxHealth = 280
+	health = 280
 	speed = 1
 	ridable_component = /datum/component/riding/creature/raptor/fast
-	melee_damage_lower = 28
-	melee_damage_upper = 33
+	melee_damage_lower = 20
+	melee_damage_upper = 25
 	raptor_color = RAPTOR_BLACK
 	dex_description = "An ultra rare breed. Due to its sparse nature, not much is known about this sort. However it is said to possess many of its peers' abilities."
 	child_path = /mob/living/basic/mining/raptor/baby_raptor/black

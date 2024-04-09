@@ -104,7 +104,7 @@
 /datum/component/happiness/proc/view_happiness(mob/living/source, mob/living/clicker)
 	if(!istype(clicker) || !COOLDOWN_FINISHED(src, happiness_inspect))
 		return
-	var/list/offset_to_add= get_icon_dimensions(source.icon)
+	var/list/offset_to_add = get_icon_dimensions(source.icon)
 	var/y_position = offset_to_add["height"] + 1
 	var/obj/effect/overlay/happiness_overlay/hearts = new
 	hearts.pixel_y = y_position
