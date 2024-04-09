@@ -43,7 +43,7 @@
 	hallucinated_item.desc = initial(template_item_type.desc)
 	hallucinated_item.icon = initial(template_item_type.icon)
 	hallucinated_item.icon_state = initial(template_item_type.icon_state)
-	hallucinated_item.w_class = initial(template_item_type.w_class) // Not strictly necessary, but keen eyed people will notice
+	hallucinated_item.update_weight_class(initial(template_item_type.w_class)) // Not strictly necessary, but keen eyed people will notice
 
 	return hallucinated_item
 

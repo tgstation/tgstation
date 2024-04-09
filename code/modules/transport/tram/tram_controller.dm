@@ -715,12 +715,11 @@
 	register_context()
 	if(!id_tag)
 		id_tag = assign_random_name()
-	return INITIALIZE_HINT_LATELOAD
 
 /**
  * Mapped or built tram cabinet isn't located on a transport module.
  */
-/obj/machinery/transport/tram_controller/LateInitialize(mapload)
+/obj/machinery/transport/tram_controller/post_machine_initialize()
 	. = ..()
 	SStransport.hello(src, name, id_tag)
 	find_controller()

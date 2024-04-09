@@ -255,6 +255,7 @@
 #include "station_trait_tests.dm"
 #include "status_effect_ticks.dm"
 #include "stomach.dm"
+#include "storage.dm"
 #include "strange_reagent.dm"
 #include "strippable.dm"
 #include "stuns.dm"
