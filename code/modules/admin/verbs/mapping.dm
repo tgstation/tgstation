@@ -1,18 +1,3 @@
-GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
-#ifdef TESTING
-	/client/proc/see_dirty_varedits,
-#endif
-	/client/proc/atmosscan,
-	/client/proc/powerdebug,
-	/client/proc/set_server_fps,
-	/client/proc/cmd_admin_grantfullaccess,
-	/client/proc/manipulate_organs,
-	/client/proc/start_line_profiling,
-	/client/proc/stop_line_profiling,
-	/client/proc/show_line_profiling,
-))
-GLOBAL_PROTECT(admin_verbs_debug_mapping)
-
 ADMIN_VERB_VISIBILITY(camera_view, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(camera_view, R_DEBUG, "Camera Range Display", "Shows the range of cameras on the station.", ADMIN_CATEGORY_MAPPING)
 	var/on = FALSE
