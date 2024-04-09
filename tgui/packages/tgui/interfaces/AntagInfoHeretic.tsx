@@ -231,44 +231,43 @@ const KnowledgeTree = (props) => {
   const { knowledge_tiers } = data;
 
   return (
-    <Stack.Item grow>
-      <Section title="Research Tree" fill scrollable>
-        <Stack vertical>
-          {(!knowledge_tiers.length && 'None!') ||
-            knowledge_tiers.map((tier) => (
-              <Stack.Item key={tier.depth}>
-                <Flex
-                  direction="row"
-                  justify="space-evenly"
-                  backgroundColor="#303030"
-                >
-                  {
-                    tier.nodes.map((node) => (
-                    <Flex.Item key={node.name}>
-                      <Button key={node.name}
-                        color={node.color}
-                        disabled={node.disabled}
-                        tooltip={
-                          `${node.name} ${node.finished ? '' : (`${node.cost} point${node.cost !==1 ? 's' : ''}`)}
-                          ${node.desc}`
-                        }
-                        onClick={node.finished ? (() => null) : () => act('research', { path: node.path })}
-                      >
-                        <Image
-                          src={`data:image/jpeg;base64,${node.icon}`}
-                          height="100%"
-                          width="100%"
-                        />
-                      </Button>
-                    </Flex.Item>
-                    ))
-                  }
-                </Flex>
-              </Stack.Item>
-            ))}
-        </Stack>
-      </Section>
-    </Stack.Item>
+    <Section title="Research Tree" fill scrollable>
+      <Stack vertical>
+        {(!knowledge_tiers.length && 'None!') ||
+          knowledge_tiers.map((tier) => (
+            <Stack.Item key={tier.depth}>
+              <Flex
+                direction="row"
+                justify="space-evenly"
+                align="center"
+                backgroundColor="#303030"
+              >
+                {
+                  tier.nodes.map((node) => (
+                  <Flex.Item key={node.name}>
+                    <Button key={node.name}
+                      color={node.color}
+                      disabled={node.disabled}
+                      tooltip={
+                        `${node.name}:
+                        ${node.desc}`
+                      }
+                      onClick={node.finished ? (() => null) : () => act('research', { path: node.path })}
+                    >
+                    <Image
+                      src={`data:image/jpeg;base64,${node.icon}`}
+                      height="100%"
+                      width="100%"
+                    />
+                    </Button>
+                  </Flex.Item>
+                ))
+                }
+              </Flex>
+            </Stack.Item>
+          ))}
+      </Stack>
+    </Section>
   );
 };
 
@@ -277,22 +276,16 @@ const ResearchInfo = (props) => {
   const { charges } = data;
 
   return (
-    <Stack justify="space-evenly" height="100%" width="100%">
+    <Stack vertical height="100%" width="100%">
+      <Stack.Item fontSize="20px" textAlign="center">
+        You have <b>{charges || 0}</b>&nbsp;
+        <span style={hereticBlue}>
+          knowledge point{charges !== 1 ? 's' : ''}
+        </span>{' '}
+        to spend.
+      </Stack.Item>
       <Stack.Item grow>
-        <Stack vertical height="100%">
-          <Stack.Item fontSize="20px" textAlign="center">
-            You have <b>{charges || 0}</b>&nbsp;
-            <span style={hereticBlue}>
-              knowledge point{charges !== 1 ? 's' : ''}
-            </span>{' '}
-            to spend.
-          </Stack.Item>
-          <Stack.Item grow>
-            <Stack height="100%">
-              <KnowledgeTree />
-            </Stack>
-          </Stack.Item>
-        </Stack>
+        <KnowledgeTree />
       </Stack.Item>
     </Stack>
   );

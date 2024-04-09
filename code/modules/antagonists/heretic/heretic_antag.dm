@@ -120,19 +120,22 @@
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
 
+	//placeholder background for testing
+	var/test_icon = icon2base64(icon('icons/mob/actions/actions_ecult.dmi',"eye"))
+
 	//setup tiers
 	var/list/tiers = list(
-		list("depth"=0,"background"="beep boop","nodes"=list()),
-		list("depth"=1,"background"="beep boop","nodes"=list()),
-		list("depth"=2,"background"="beep boop","nodes"=list()),
-		list("depth"=3,"background"="beep boop","nodes"=list()),
-		list("depth"=4,"background"="beep boop","nodes"=list()),
-		list("depth"=5,"background"="beep boop","nodes"=list()),
-		list("depth"=6,"background"="beep boop","nodes"=list()),
-		list("depth"=7,"background"="beep boop","nodes"=list()),
-		list("depth"=8,"background"="beep boop","nodes"=list()),
-		list("depth"=9,"background"="beep boop","nodes"=list()),
-		list("depth"=10,"background"="beep boop","nodes"=list()),
+		list("depth"=0,"background"=test_icon,"nodes"=list()),
+		list("depth"=1,"background"=test_icon,"nodes"=list()),
+		list("depth"=2,"background"=test_icon,"nodes"=list()),
+		list("depth"=3,"background"=test_icon,"nodes"=list()),
+		list("depth"=4,"background"=test_icon,"nodes"=list()),
+		list("depth"=5,"background"=test_icon,"nodes"=list()),
+		list("depth"=6,"background"=test_icon,"nodes"=list()),
+		list("depth"=7,"background"=test_icon,"nodes"=list()),
+		list("depth"=8,"background"=test_icon,"nodes"=list()),
+		list("depth"=9,"background"=test_icon,"nodes"=list()),
+		list("depth"=10,"background"=test_icon,"nodes"=list()),
 	)
 
 	// This should be cached in some way, but the fact that final knowledge
