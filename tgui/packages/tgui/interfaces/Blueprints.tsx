@@ -53,24 +53,22 @@ const WireList = () => {
 
   return (
     <Section>
-      <Button
-        fluid
-        icon="chevron-left"
-        content="Back"
-        onClick={() => act('exit_legend')}
-      />
+      <Button fluid icon="chevron-left" onClick={() => act('exit_legend')}>
+        Back
+      </Button>
       <Box>
         {wire_devices.map((wire) => (
           <Button
             width="49.5%"
             key={wire.ref}
-            content={wire.name}
             onClick={() =>
               act('view_wireset', {
                 view_wireset: wire.ref,
               })
             }
-          />
+          >
+            {wire.name}
+          </Button>
         ))}
       </Box>
     </Section>
@@ -83,12 +81,9 @@ const WireArea = () => {
 
   return (
     <Section>
-      <Button
-        fluid
-        icon="chevron-left"
-        content="Back"
-        onClick={() => act('view_legend')}
-      />
+      <Button fluid icon="chevron-left" onClick={() => act('view_legend')}>
+        Back
+      </Button>
       <Box bold>{wires_name} wires:</Box>
       {wire_data.map((wire) => (
         <Box ml={1} m={1} key={wire.message}>
@@ -106,7 +101,7 @@ const MainMenu = () => {
 
   return (
     <Section>
-      <Box bold m={1}>
+      <Box bold m={1} textAlign="center">
         {station_name} blueprints
       </Box>
       <Box italic fontSize={0.9}>
@@ -116,29 +111,38 @@ const MainMenu = () => {
       <Box>
         <Button
           fluid
+          pb={0.75}
+          textAlign="center"
           icon="pencil"
-          content="Create or modify an existing area"
           onClick={() => act('create_area')}
-        />
+        >
+          Create or modify an existing area
+        </Button>
       </Box>
-      <Box bold m={1.5}>
+      <Box bold m={1.5} textAlign="center">
         {area_notice}
       </Box>
       <Box>
         <Button
           fluid
+          pb={0.75}
+          textAlign="center"
           icon="font"
-          content="Change area name"
           onClick={() => act('edit_area')}
-        />
+        >
+          Change area name
+        </Button>
       </Box>
       <Box>
         <Button
           fluid
+          pb={0.75}
+          textAlign="center"
           icon="chevron-right"
-          content="View wire color legend"
           onClick={() => act('view_legend')}
-        />
+        >
+          View wire color legend
+        </Button>
       </Box>
       <Box>
         {viewing ? (
@@ -146,27 +150,36 @@ const MainMenu = () => {
             <Box>
               <Button
                 fluid
+                pb={0.75}
+                textAlign="center"
                 icon="wrench"
-                content="Refresh structural data"
                 onClick={() => act('refresh')}
-              />
+              >
+                Refresh structural data
+              </Button>
             </Box>
             <Box>
               <Button
                 fluid
+                pb={0.75}
+                textAlign="center"
                 icon="wrench"
-                content="Hide structural data"
                 onClick={() => act('hide_blueprints')}
-              />
+              >
+                Hide structural data
+              </Button>
             </Box>
           </>
         ) : (
           <Button
             fluid
+            pb={0.75}
+            textAlign="center"
             icon="wrench"
-            content="View structural data"
             onClick={() => act('view_blueprints')}
-          />
+          >
+            View structural data
+          </Button>
         )}
       </Box>
     </Section>
