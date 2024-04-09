@@ -13,7 +13,6 @@ type Data = {
   legend_off: string;
   fluff_notice: string;
   station_name: string;
-  legend: string;
   wires_name: string;
   wire_devices: WireDevices[];
   viewing: BooleanLike;
@@ -36,7 +35,13 @@ export const Blueprints = () => {
   return (
     <Window width={450} height={330}>
       <Window.Content scrollable>
-        {legend === legend_viewing_list ? (<WireList />) : (legend === legend_off ? (<MainMenu />) : (<WireArea />))}
+        {legend === legend_viewing_list ? (
+          <WireList />
+        ) : legend === legend_off ? (
+          <MainMenu />
+        ) : (
+          <WireArea />
+        )}
       </Window.Content>
     </Window>
   );
@@ -61,9 +66,10 @@ const WireList = () => {
             key={wire.ref}
             content={wire.name}
             onClick={() =>
-            act('view_wireset', {
-              view_wireset: wire.ref,
-            })}
+              act('view_wireset', {
+                view_wireset: wire.ref,
+              })
+            }
           />
         ))}
       </Box>
@@ -83,12 +89,11 @@ const WireArea = () => {
         content="Back"
         onClick={() => act('view_legend')}
       />
-      <Box bold>
-        {wires_name} wires:
-      </Box>
+      <Box bold>{wires_name} wires:</Box>
       {wire_data.map((wire) => (
-        <Box ml={1} m={1} key={wire}>
-          <span style={{ color: wire.color }}>{wire.color}</span>: {wire.message}
+        <Box ml={1} m={1} key={wire.message}>
+          <span style={{ color: wire.color }}>{wire.color}</span>:{' '}
+          {wire.message}
         </Box>
       ))}
     </>
@@ -104,9 +109,7 @@ const MainMenu = () => {
       <Box bold m={1}>
         {station_name} blueprints
       </Box>
-      <Box>
-        {fluff_notice}
-      </Box>
+      <Box>{fluff_notice}</Box>
       <Divider />
       <Box>
         <Button
