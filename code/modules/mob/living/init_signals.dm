@@ -65,6 +65,20 @@
 
 	RegisterSignal(src, COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY, PROC_REF(edit_immerse_overlay))
 
+	RegisterSignals(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_XRAY_VISION),
+		SIGNAL_REMOVETRAIT(TRAIT_XRAY_VISION),
+
+		SIGNAL_ADDTRAIT(TRAIT_THERMAL_VISION),
+		SIGNAL_REMOVETRAIT(TRAIT_THERMAL_VISION),
+
+		SIGNAL_ADDTRAIT(TRAIT_MESON_VISION),
+		SIGNAL_REMOVETRAIT(TRAIT_MESON_VISION),
+
+		SIGNAL_ADDTRAIT(TRAIT_TRUE_NIGHT_VISION),
+		SIGNAL_REMOVETRAIT(TRAIT_TRUE_NIGHT_VISION)
+	), PROC_REF(vision_changed))
+
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
 	SIGNAL_HANDLER
@@ -273,3 +287,8 @@
 /mob/living/proc/undense_changed(datum/source)
 	SIGNAL_HANDLER
 	update_density()
+
+/// Called when a vision trait ([TRAIT_XRAY_VISION], [TRAIT_THERMAL_VISION], [TRAIT_MESON_VISION], [TRAIT_TRUE_NIGHT_VISION]) is gained or lost
+/mob/living/proc/vision_changed(datum/source)
+	SIGNAL_HANDLER
+	update_sight()
