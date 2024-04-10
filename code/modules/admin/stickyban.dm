@@ -481,5 +481,5 @@
 
 	. = list2params(.)
 
-ADMIN_VERB_NO_CONTEXT_MENU(panel_sticky_ban, R_BAN, "Sticky Ban Panel", "List and manage sticky bans.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(panel_sticky_ban, R_BAN, "Sticky Ban Panel", "List and manage sticky bans.", ADMIN_CATEGORY_MAIN)
 	user.holder.stickyban_show()

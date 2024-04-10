@@ -1,4 +1,4 @@
-ADMIN_VERB_NO_CONTEXT_MENU(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_EVENTS)
 	if(!isobserver(user) && SSticker.HasRoundStarted())
 		message_admins("[key_name_admin(user)] checked AI laws via the Law Panel.")
 	var/datum/law_panel/tgui = new

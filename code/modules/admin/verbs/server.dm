@@ -1,12 +1,12 @@
 // Server Tab - Server Verbs
 
-ADMIN_VERB_NO_CONTEXT_MENU(toggle_random_events, R_SERVER, "Toggle Random Events", "Toggles random events on or off.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(toggle_random_events, R_SERVER, "Toggle Random Events", "Toggles random events on or off.", ADMIN_CATEGORY_SERVER)
 	var/new_are = !CONFIG_GET(flag/allow_random_events)
 	CONFIG_SET(flag/allow_random_events, new_are)
 	message_admins("[key_name_admin(user)] has [new_are ? "enabled" : "disabled"] random events.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Random Events", "[new_are ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-ADMIN_VERB_NO_CONTEXT_MENU(toggle_hub, R_SERVER, "Toggle Hub", "Toggles the server's visilibility on the BYOND Hub.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(toggle_hub, R_SERVER, "Toggle Hub", "Toggles the server's visilibility on the BYOND Hub.", ADMIN_CATEGORY_SERVER)
 	world.update_hub_visibility(!GLOB.hub_visibility)
 
 	log_admin("[key_name(user)] has toggled the server's hub status for the round, it is now [(GLOB.hub_visibility?"on":"off")] the hub.")
@@ -16,7 +16,7 @@ ADMIN_VERB_NO_CONTEXT_MENU(toggle_hub, R_SERVER, "Toggle Hub", "Toggles the serv
 
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Hub Visibility", "[GLOB.hub_visibility ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-ADMIN_VERB_NO_CONTEXT_MENU(restart, R_SERVER, "Reboot World", "Restarts the world immediately.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.", ADMIN_CATEGORY_SERVER)
 	var/list/options = list("Regular Restart", "Regular Restart (with delay)", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
 	if(world.TgsAvailable())
 		options += "Server Restart (Kill and restart DD)";
@@ -55,26 +55,26 @@ ADMIN_VERB_NO_CONTEXT_MENU(restart, R_SERVER, "Reboot World", "Restarts the worl
 			to_chat(world, "Server restart - [init_by]")
 			world.TgsEndProcess()
 
-ADMIN_VERB_NO_CONTEXT_MENU(end_round, R_SERVER, "End Round", "Forcibly ends the round and allows the server to restart normally.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(end_round, R_SERVER, "End Round", "Forcibly ends the round and allows the server to restart normally.", ADMIN_CATEGORY_SERVER)
 	var/confirm = tgui_alert(user, "End the round and  restart the game world?", "End Round", list("Yes", "Cancel"))
 	if(confirm != "Yes")
 		return
 	SSticker.force_ending = FORCE_END_ROUND
 	BLACKBOX_LOG_ADMIN_VERB("End Round")
 
-ADMIN_VERB_NO_CONTEXT_MENU(toggle_ooc, R_ADMIN, "Toggle OOC", "Toggle the OOC channel on or off.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(toggle_ooc, R_ADMIN, "Toggle OOC", "Toggle the OOC channel on or off.", ADMIN_CATEGORY_SERVER)
 	toggle_ooc()
 	log_admin("[key_name(user)] toggled OOC.")
 	message_admins("[key_name_admin(user)] toggled OOC.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle OOC", "[GLOB.ooc_allowed ? "Enabled" : "Disabled"]"))
 
-ADMIN_VERB_NO_CONTEXT_MENU(toggle_ooc_dead, R_ADMIN, "Toggle Dead OOC", "Toggle the OOC channel for dead players on or off.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(toggle_ooc_dead, R_ADMIN, "Toggle Dead OOC", "Toggle the OOC channel for dead players on or off.", ADMIN_CATEGORY_SERVER)
 	toggle_dooc()
 	log_admin("[key_name(user)] toggled OOC.")
 	message_admins("[key_name_admin(user)] toggled Dead OOC.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Dead OOC", "[GLOB.dooc_allowed ? "Enabled" : "Disabled"]"))
 
-ADMIN_VERB_NO_CONTEXT_MENU(start_now, R_SERVER, "Start Now", "Start the round RIGHT NOW.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(start_now, R_SERVER, "Start Now", "Start the round RIGHT NOW.", ADMIN_CATEGORY_SERVER)
 	var/static/list/waiting_states = list(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
 	if(!(SSticker.current_state in waiting_states))
 		to_chat(user, span_warning(span_red("The game has already started!")))
@@ -101,7 +101,7 @@ ADMIN_VERB_NO_CONTEXT_MENU(start_now, R_SERVER, "Start Now", "Start the round RI
 		message_admins("The server is still setting up, but the round will be started as soon as possible.")
 	BLACKBOX_LOG_ADMIN_VERB("Start Now")
 
-ADMIN_VERB_NO_CONTEXT_MENU(delay_round_end, R_SERVER, "Delay Round End", "Prevent the server from restarting.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(delay_round_end, R_SERVER, "Delay Round End", "Prevent the server from restarting.", ADMIN_CATEGORY_SERVER)
 	if(SSticker.delay_end)
 		tgui_alert(user, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
 		return
@@ -122,7 +122,7 @@ ADMIN_VERB_NO_CONTEXT_MENU(delay_round_end, R_SERVER, "Delay Round End", "Preven
 	message_admins("[key_name_admin(user)] delayed the round end for reason: [SSticker.admin_delay_notice]")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Delay Round End", "Reason: [delay_reason]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-ADMIN_VERB_NO_CONTEXT_MENU(toggle_enter, R_SERVER, "Toggle Entering", "Toggle the ability to enter the game.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(toggle_enter, R_SERVER, "Toggle Entering", "Toggle the ability to enter the game.", ADMIN_CATEGORY_SERVER)
 	if(!SSlag_switch.initialized)
 		return
 	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, !SSlag_switch.measures[DISABLE_NON_OBSJOBS])
@@ -130,7 +130,7 @@ ADMIN_VERB_NO_CONTEXT_MENU(toggle_enter, R_SERVER, "Toggle Entering", "Toggle th
 	message_admins("[key_name_admin(user)] toggled new player game entering [SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "OFF" : "ON"].")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Entering", "[!SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-ADMIN_VERB_NO_CONTEXT_MENU(toggle_ai, R_SERVER, "Toggle AI", "Toggle the ability to choose AI jobs.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(toggle_ai, R_SERVER, "Toggle AI", "Toggle the ability to choose AI jobs.", ADMIN_CATEGORY_SERVER)
 	var/alai = CONFIG_GET(flag/allow_ai)
 	CONFIG_SET(flag/allow_ai, !alai)
 	if (alai)
@@ -141,7 +141,7 @@ ADMIN_VERB_NO_CONTEXT_MENU(toggle_ai, R_SERVER, "Toggle AI", "Toggle the ability
 	world.update_status()
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle AI", "[!alai ? "Disabled" : "Enabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-ADMIN_VERB_NO_CONTEXT_MENU(toggle_respawn, R_SERVER, "Toggle Respawn", "Toggle the ability to respawn.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(toggle_respawn, R_SERVER, "Toggle Respawn", "Toggle the ability to respawn.", ADMIN_CATEGORY_SERVER)
 	var/respawn_state = CONFIG_GET(flag/allow_respawn)
 	var/new_state = -1
 	var/new_state_text = ""
@@ -178,7 +178,7 @@ ADMIN_VERB_NO_CONTEXT_MENU(toggle_respawn, R_SERVER, "Toggle Respawn", "Toggle t
 	world.update_status()
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Respawn", "[new_state_text]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-ADMIN_VERB_NO_CONTEXT_MENU(delay, R_SERVER, "Delay Pre-Game", "Delay the game start.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(delay, R_SERVER, "Delay Pre-Game", "Delay the game start.", ADMIN_CATEGORY_SERVER)
 	var/newtime = input(user, "Set a new time in seconds. Set -1 for indefinite delay.", "Set Delay", round(SSticker.GetTimeLeft()/10)) as num|null
 	if(!newtime)
 		return
@@ -196,7 +196,7 @@ ADMIN_VERB_NO_CONTEXT_MENU(delay, R_SERVER, "Delay Pre-Game", "Delay the game st
 		log_admin("[key_name(user)] set the pre-game delay to [DisplayTimeText(newtime)].")
 	BLACKBOX_LOG_ADMIN_VERB("Delay Game Start")
 
-ADMIN_VERB_NO_CONTEXT_MENU(set_admin_notice, R_SERVER, "Set Admin Notice", "Set an announcement that appears to everyone who joins the server. Only lasts this round.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(set_admin_notice, R_SERVER, "Set Admin Notice", "Set an announcement that appears to everyone who joins the server. Only lasts this round.", ADMIN_CATEGORY_SERVER)
 	var/new_admin_notice = input(
 		user,
 		"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):",
@@ -217,7 +217,7 @@ ADMIN_VERB_NO_CONTEXT_MENU(set_admin_notice, R_SERVER, "Set Admin Notice", "Set 
 	BLACKBOX_LOG_ADMIN_VERB("Set Admin Notice")
 	GLOB.admin_notice = new_admin_notice
 
-ADMIN_VERB_NO_CONTEXT_MENU(toggle_guests, R_SERVER, "Toggle Guests", "Toggle the ability for guests to enter the game.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(toggle_guests, R_SERVER, "Toggle Guests", "Toggle the ability for guests to enter the game.", ADMIN_CATEGORY_SERVER)
 	var/new_guest_ban = !CONFIG_GET(flag/guest_ban)
 	CONFIG_SET(flag/guest_ban, new_guest_ban)
 	if (new_guest_ban)

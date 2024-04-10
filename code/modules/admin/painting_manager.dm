@@ -1,4 +1,4 @@
-ADMIN_VERB_NO_CONTEXT_MENU(painting_manager, R_ADMIN, "Paintings Manager", "View and redact paintings.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(painting_manager, R_ADMIN, "Paintings Manager", "View and redact paintings.", ADMIN_CATEGORY_MAIN)
 	var/static/datum/paintings_manager/ui = new
 	ui.ui_interact(user.mob)
 

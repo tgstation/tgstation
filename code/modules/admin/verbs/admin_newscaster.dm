@@ -1,4 +1,4 @@
-ADMIN_VERB_NO_CONTEXT_MENU(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows you to view, add, and edit news feeds.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows you to view, add, and edit news feeds.", ADMIN_CATEGORY_EVENTS)
 	var/datum/newspanel/new_newspanel = new
 	new_newspanel.ui_interact(user.mob)
 

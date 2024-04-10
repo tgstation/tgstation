@@ -8,7 +8,7 @@
 	holder.RegisterSignal(holder.marked_datum, COMSIG_QDELETING, TYPE_PROC_REF(/datum/admins, handle_marked_del))
 	vv_update_display(D, "marked", VV_MSG_MARKED)
 
-ADMIN_VERB_NO_CONTEXT_MENU(mark_datum, R_NONE, "Mark Object", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, datum/target as mob|obj|turf|area in view())
+ADMIN_VERB(mark_datum, R_NONE, "Mark Object", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, datum/target as mob|obj|turf|area in view())
 	user.mark_datum(target)
 
 /datum/admins/proc/handle_marked_del(datum/source)

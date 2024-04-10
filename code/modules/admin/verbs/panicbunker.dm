@@ -1,4 +1,4 @@
-ADMIN_VERB_NO_CONTEXT_MENU(panic_bunker, R_SERVER, "Toggle Panic Bunker", "Toggles the panic bunker for the server.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(panic_bunker, R_SERVER, "Toggle Panic Bunker", "Toggles the panic bunker for the server.", ADMIN_CATEGORY_SERVER)
 	if (!CONFIG_GET(flag/sql_enabled))
 		to_chat(user, span_adminnotice("The Database is not enabled!"), confidential = TRUE)
 		return
@@ -24,7 +24,7 @@ ADMIN_VERB_NO_CONTEXT_MENU(panic_bunker, R_SERVER, "Toggle Panic Bunker", "Toggl
 		message_admins("The Database is not connected! Panic bunker will not work until the connection is reestablished.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Panic Bunker", "[new_pb ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-ADMIN_VERB_NO_CONTEXT_MENU(toggle_interviews, R_SERVER, "Toggle PB Interviews", "Toggle whether new players will be interviewed or blocked from connecting.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(toggle_interviews, R_SERVER, "Toggle PB Interviews", "Toggle whether new players will be interviewed or blocked from connecting.", ADMIN_CATEGORY_SERVER)
 	if (!CONFIG_GET(flag/panic_bunker))
 		to_chat(user, span_adminnotice("NOTE: The panic bunker is not enabled, so this change will not effect anything until it is enabled."), confidential = TRUE)
 	var/new_interview = !CONFIG_GET(flag/panic_bunker_interview)

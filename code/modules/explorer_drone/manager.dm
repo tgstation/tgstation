@@ -83,6 +83,6 @@
 	. = ..()
 	QDEL_NULL(temp_adventure)
 
-ADMIN_VERB_NO_CONTEXT_MENU(adventure_manager, R_DEBUG, "Adventure Manager", "View and edit adventures.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(adventure_manager, R_DEBUG, "Adventure Manager", "View and edit adventures.", ADMIN_CATEGORY_DEBUG)
 	var/datum/adventure_browser/browser = new()
 	browser.ui_interact(user.mob)

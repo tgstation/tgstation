@@ -1,4 +1,4 @@
-ADMIN_VERB_NO_CONTEXT_MENU(outfit_manager, R_DEBUG|R_ADMIN, "Outfit Manager", "View and edit outfits.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(outfit_manager, R_DEBUG|R_ADMIN, "Outfit Manager", "View and edit outfits.", ADMIN_CATEGORY_DEBUG)
 	var/static/datum/outfit_manager/ui = new
 	ui.ui_interact(user.mob)
 

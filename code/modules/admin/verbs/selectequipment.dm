@@ -1,4 +1,4 @@
-ADMIN_VERB_NO_CONTEXT_MENU(select_equipment, R_FUN, "Select Equipment", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
+ADMIN_VERB(select_equipment, R_FUN, "Select Equipment", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
 	var/datum/select_equipment/ui = new(user, target)
 	ui.ui_interact(user.mob)
 

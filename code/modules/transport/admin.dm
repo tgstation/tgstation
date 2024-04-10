@@ -1,4 +1,4 @@
-ADMIN_VERB_NO_CONTEXT_MENU(reset_tram, R_DEBUG|R_ADMIN, "Reset Tram", "Reset a tram controller or its contents.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(reset_tram, R_DEBUG|R_ADMIN, "Reset Tram", "Reset a tram controller or its contents.", ADMIN_CATEGORY_DEBUG)
 	var/static/list/debug_tram_list = list(
 		TRAMSTATION_LINE_1,
 		BIRDSHOT_LINE_1,

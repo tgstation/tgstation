@@ -1,4 +1,4 @@
-ADMIN_VERB_NO_CONTEXT_MENU(generate_wikichem_list, R_DEBUG, "Parse Wikichems", "Parse and generate a text file for wikichem.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(generate_wikichem_list, R_DEBUG, "Parse Wikichems", "Parse and generate a text file for wikichem.", ADMIN_CATEGORY_DEBUG)
 	//If we're a reaction product
 	var/static/prefix_reaction = {"{| class=\"wikitable sortable\" style=\"width:100%; text-align:left; border: 3px solid #FFDD66; cellspacing=0; cellpadding=2; background-color:white;\"
 ! scope=\"col\" style='width:150px; background-color:#FFDD66;'|Name

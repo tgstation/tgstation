@@ -1,6 +1,6 @@
 //very similar to centcom_podlauncher in terms of how this is coded, so i kept a lot of comments from it
 
-ADMIN_VERB_NO_CONTEXT_MENU(ghost_pool_protection, R_ADMIN, "Ghost Pool Protection", "Choose which ways people can get into the round, or just clear it out completely for admin events.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(ghost_pool_protection, R_ADMIN, "Ghost Pool Protection", "Choose which ways people can get into the round, or just clear it out completely for admin events.", ADMIN_CATEGORY_EVENTS)
 	var/datum/ghost_pool_menu/tgui = new(user)
 	tgui.ui_interact(user.mob)
 

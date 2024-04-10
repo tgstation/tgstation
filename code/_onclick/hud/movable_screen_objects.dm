@@ -44,7 +44,7 @@
 		offset[2] += y_off
 	return offset_to_screen_loc(offset[1], offset[2], our_client?.view)
 
-ADMIN_VERB_NO_CONTEXT_MENU(test_movable_UI, R_DEBUG, "Spawn Movable UI Object", "Spawn a movable UI object for testing.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(test_movable_UI, R_DEBUG, "Spawn Movable UI Object", "Spawn a movable UI object for testing.", ADMIN_CATEGORY_DEBUG)
 	var/atom/movable/screen/movable/M = new
 	M.name = "Movable UI Object"
 	M.icon_state = "block"
@@ -58,7 +58,7 @@ ADMIN_VERB_NO_CONTEXT_MENU(test_movable_UI, R_DEBUG, "Spawn Movable UI Object", 
 	M.screen_loc = screen_l
 	user.screen += M
 
-ADMIN_VERB_NO_CONTEXT_MENU(test_snap_ui, R_DEBUG, "Spawn Snap UI Object", "Spawn a snap UI object for testing.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(test_snap_ui, R_DEBUG, "Spawn Snap UI Object", "Spawn a snap UI object for testing.", ADMIN_CATEGORY_DEBUG)
 	var/atom/movable/screen/movable/snap/S = new
 	S.name = "Snap UI Object"
 	S.icon_state = "block"
