@@ -127,9 +127,9 @@
 	throw_range = 7
 	force = 0
 	var/random_color = TRUE
-	var/world_state
-	var/storage_state
-	var/current_color
+	var/world_state //the string of the dmi state the balloon has while on the floor.
+	var/storage_state //the string of the dmi state the balloon has while in your inventory.
+	var/current_color //the string describing the name of balloon's current colour.
 
 /obj/item/toy/balloon/long
 	name = "long balloon"
@@ -137,6 +137,23 @@
 	icon_state = "balloon_long"
 	inhand_icon_state = "balloon"
 	w_class = WEIGHT_CLASS_NORMAL
+	var/list/balloon_combos = list(
+		list("red", "blue") = /obj/item/toy/balloon_animal/guy,
+		list("red", "green") = /obj/item/toy/balloon_animal/nukie,
+		list("red", "yellow") = /obj/item/toy/balloon_animal/clown,
+		list("red", "orange") = /obj/item/toy/balloon_animal/cat,
+		list("red", "purple") = /obj/item/toy/balloon_animal/fly,
+		list("blue", "green") = /obj/item/toy/balloon_animal/podguy,
+		list("blue", "yellow") = /obj/item/toy/balloon_animal/ai,
+		list("blue", "orange") = /obj/item/toy/balloon_animal/dog,
+		list("blue", "purple") = /obj/item/toy/balloon_animal/xeno,
+		list("green", "yellow") = /obj/item/toy/balloon_animal/banana,
+		list("green", "orange") = /obj/item/toy/balloon_animal/lizard,
+		list("green", "purple") = /obj/item/toy/balloon_animal/slime,
+		list("yellow", "orange") = /obj/item/toy/balloon_animal/moth,
+		list("yellow", "purple") = /obj/item/toy/balloon_animal/ethereal,
+		list("orange", "purple") = /obj/item/toy/balloon_animal/plasmaman,
+	) /// For balloon animals.
 
 /obj/item/toy/balloon/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -159,23 +176,6 @@
 		blind_message = span_hear("You hear balloons being contorted."),
 		vision_distance = 3,
 		ignored_mobs = user,
-	)
-	var/list/balloon_combos = list(
-		list("red", "blue") = /obj/item/toy/balloon_animal/guy,
-		list("red", "green") = /obj/item/toy/balloon_animal/nukie,
-		list("red", "yellow") = /obj/item/toy/balloon_animal/clown,
-		list("red", "orange") = /obj/item/toy/balloon_animal/cat,
-		list("red", "purple") = /obj/item/toy/balloon_animal/fly,
-		list("blue", "green") = /obj/item/toy/balloon_animal/podguy,
-		list("blue", "yellow") = /obj/item/toy/balloon_animal/ai,
-		list("blue", "orange") = /obj/item/toy/balloon_animal/dog,
-		list("blue", "purple") = /obj/item/toy/balloon_animal/xeno,
-		list("green", "yellow") = /obj/item/toy/balloon_animal/banana,
-		list("green", "orange") = /obj/item/toy/balloon_animal/lizard,
-		list("green", "purple") = /obj/item/toy/balloon_animal/slime,
-		list("yellow", "orange") = /obj/item/toy/balloon_animal/moth,
-		list("yellow", "purple") = /obj/item/toy/balloon_animal/ethereal,
-		list("orange", "purple") = /obj/item/toy/balloon_animal/plasmaman,
 	)
 	for(var/list/pair_of_colors in balloon_combos)
 		if((hit_by.current_color == pair_of_colors[1] && current_color == pair_of_colors[2]) || (current_color == pair_of_colors[1] && hit_by.current_color == pair_of_colors[2]))
