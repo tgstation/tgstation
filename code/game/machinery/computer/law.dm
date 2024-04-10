@@ -41,8 +41,8 @@
 	for(var/obj/item/circuitboard/computer/board in src.contents)
 		if(!contents && board.GetComponent(/datum/component/gps))
 			return
-		AddComponent(/datum/component/gps, "Imprinted Upload Signal")
-		
+		board.AddComponent(/datum/component/gps, "Imprinted Upload Signal")
+
 /obj/machinery/computer/upload/ai
 	name = "\improper AI upload console"
 	desc = "Used to upload laws to the AI."
