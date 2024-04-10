@@ -239,3 +239,54 @@
 	reagents.add_reagent(generate_type1, 25)
 	reagents.add_reagent(generate_type2, 12.5)
 	reagents.add_reagent(generate_type3, 12.5)
+
+
+/obj/item/gun/medicalreagentgun
+	name = "medical reagent gun"
+	desc = "A weapon favored by nuclear operative medics for it's ability to quickly get their teammates back into the fight."
+	icon_state = "chemgunmed"
+	inhand_icon_state = "syringegun"
+	w_class = WEIGHT_CLASS_NORMAL
+	throw_speed = 3
+	throw_range = 7
+	force = 4
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
+	clumsy_check = FALSE
+	fire_sound = 'sound/items/syringeproj.ogg'
+	var/time_per_syringe = 200
+	var/syringes_left = 10
+	var/max_syringes = 10
+	var/last_synth = 0
+
+/obj/item/gun/medicalreagentgun/Initialize(mapload)
+	. = ..()
+	chambered = new /obj/item/ammo_casing/medicalreagentgun(src)
+	START_PROCESSING(SSobj, src)
+	create_reagents(400, OPENCONTAINER)
+	reagents.add_reagent(/datum/reagent/medicine/stimulants, 100)
+	reagents.add_reagent(/datum/reagent/medicine/morphine, 25)
+	reagents.add_reagent(/datum/reagent/medicine/salglu_solution, 75)
+	reagents.add_reagent(/datum/reagent/medicine/omnizine, 100)
+	reagents.add_reagent(/datum/reagent/medicine/healingnanites, 100)
+
+/obj/item/gun/medicalreagentgun/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
+
+/obj/item/gun/medicalreagentgun/can_shoot()
+	return syringes_left
+
+/obj/item/gun/medicalreagentgun/handle_chamber()
+	if(chambered && !chambered.loaded_projectile && syringes_left)
+		chambered.newshot()
+
+/obj/item/gun/medicalreagentgun/process()
+	if(syringes_left >= max_syringes)
+		return
+	if(world.time < last_synth+time_per_syringe)
+		return
+	to_chat(loc, span_warning("You hear a click as [src] synthesizes a new dart."))
+	syringes_left++
+	if(chambered && !chambered.loaded_projectile)
+		chambered.newshot()
+	last_synth = world.time

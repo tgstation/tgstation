@@ -232,6 +232,21 @@
 	name = "methamphetamine bottle"
 	list_reagents = list(/datum/reagent/drug/methamphetamine = 30)
 
+/obj/item/reagent_containers/cup/bottle/libital
+	name = "libital bottle"
+	desc = "A small bottle of libital."
+	list_reagents = list(/datum/reagent/medicine/c2/libital = 30)
+
+/obj/item/reagent_containers/cup/bottle/aiuri
+	name = "aiuri bottle"
+	desc = "A small bottle of aiuri."
+	list_reagents = list(/datum/reagent/medicine/c2/aiuri = 30)
+
+/obj/item/reagent_containers/cup/bottle/stimulants
+	name = "stimulants bottle"
+	desc = "A small bottle of stimulants."
+	list_reagents = list(/datum/reagent/medicine/stimulants = 30)
+
 
 /obj/item/reagent_containers/cup/bottle/random_buffer
 	name = "Buffer bottle"

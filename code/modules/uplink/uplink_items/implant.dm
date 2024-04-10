@@ -120,6 +120,7 @@
 	item = /obj/item/autosurgeon/syndicate/reviver/hidden/single_use
 	cost = 6
 	surplus = 20
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/implants/syndiantistun
 	name = "Syndicate CNS Rebooter Implant"

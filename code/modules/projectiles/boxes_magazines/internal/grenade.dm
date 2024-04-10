@@ -15,3 +15,9 @@
 	ammo_type = /obj/item/ammo_casing/rocket
 	caliber = CALIBER_84MM
 	max_ammo = 1
+
+/obj/item/ammo_box/magazine/internal/chinalake
+	name = "chinalake payload loader"
+	ammo_type = /obj/item/ammo_casing/chinalake
+	caliber = CALIBER_40MM
+	max_ammo = 6

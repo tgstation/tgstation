@@ -432,7 +432,7 @@
 
 
 /obj/item/storage/medkit/medical_variety_pack
-	name = "Medical Variety Pack"
+	name = "\improper Medical Variety Pack"
 	desc = "It's a bluespace medical kit, it's capable of holding far more medical supplies than normal."
 	icon = 'icons/obj/storage/medkit.dmi'
 	icon_state = "medkit_bluespace"
@@ -451,7 +451,7 @@
 		new /obj/item/storage/medkit/advanced(src)
 
 /obj/item/storage/medkit/deluxe_medical_variety_pack
-	name = "Deluxe Medical Variety Pack"
+	name = "\improper Deluxe Medical Variety Pack"
 	desc = "It's a bluespace medical kit, it's capable of holding far more medical supplies than normal."
 	icon = 'icons/obj/storage/medkit.dmi'
 	icon_state = "medkit_bluespace2"
@@ -483,7 +483,7 @@
 		new /obj/item/reagent_containers/hypospray/medipen/combatmedicine(src)
 
 /obj/item/storage/medkit/medipenkit
-	name = "Medipen Kit"
+	name = "\improper Medipen Kit"
 	desc = "It's a medical kit designed to contain medipens of various kinds."
 	icon = 'icons/obj/storage/medkit.dmi'
 	icon_state = "medipenkit"
@@ -509,7 +509,7 @@
 	new /obj/item/lighter(src)
 
 /obj/item/storage/medkit/syndiecigsvarietypack
-	name = "Syndicate Variety Cigarettes"
+	name = "\improper Syndicate Variety Cigarettes"
 	icon = 'icons/obj/storage/medkit.dmi'
 	icon_state = "cigarettepacker"
 
@@ -520,7 +520,7 @@
 	new /obj/item/storage/fancy/cigarettes/uplift_salbutamol(src)
 
 /obj/item/storage/medkit/syndiecigsvarietypackdeluxe
-	name = "Syndicate Variety Cigarettes Deluxe Edition"
+	name = "\improper Syndicate Variety Cigarettes Deluxe Edition"
 	icon = 'icons/obj/storage/medkit.dmi'
 	icon_state = "cigarettepacker2"
 
@@ -554,6 +554,21 @@
 	new /obj/item/reagent_containers/syringe/mutatemoth(src)
 	new /obj/item/reagent_containers/syringe/mutatepod(src)
 	new /obj/item/reagent_containers/syringe/mutateandroid(src)
+
+/obj/item/storage/medkit/hypospray
+	name = "hypospray kit"
+	icon = 'icons/obj/storage/medkit.dmi'
+	icon_state = "hypospraykit"
+
+/obj/item/storage/medkit/hypospray/PopulateContents()
+	new /obj/item/reagent_containers/cup/bottle/libital(src)
+	new /obj/item/reagent_containers/cup/bottle/aiuri(src)
+	new /obj/item/reagent_containers/cup/bottle/syriniver(src)
+	new /obj/item/reagent_containers/cup/bottle/atropine(src)
+	new /obj/item/reagent_containers/cup/bottle/omnizine(src)
+	new /obj/item/reagent_containers/cup/bottle/epinephrine(src)
+	new /obj/item/reagent_containers/cup/bottle/stimulants(src)
+
 
 /*
  * Pill Bottles

@@ -30,6 +30,7 @@
 	cost = 2
 	surplus = 35
 	illegal_tech = FALSE
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/medical/deluxe_medical_variety_pack
 	name = "Deluxe Medical Variety Pack"
@@ -38,6 +39,7 @@
 	cost = 5
 	surplus = 30
 	illegal_tech = FALSE
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/medical/medipenkit
 	name = "Medipen Kit"
@@ -258,7 +260,7 @@
 /datum/uplink_item/medical/gorlexhypo
 	name = "Gorlex Hypospray"
 	desc = "A Vahlen Pharmaceuticals brand hypospray, it's features include an expanded reagent container, the ability to dispense reagents quickly, \
-			and comes filled with various healing chemicals."
+			and comes filled with various healing chemicals. Has a diamond-tipped needle to penetrate armor."
 	item = /obj/item/reagent_containers/hypospray/gorlex
 	cost = 8
 	surplus = 0

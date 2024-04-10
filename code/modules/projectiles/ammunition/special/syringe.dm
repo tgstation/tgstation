@@ -104,6 +104,24 @@
 		CG.syringes_left--
 	return ..()
 
+/obj/item/ammo_casing/medicalreagentgun
+	name = "syndicate medical dart synthesiser"
+	desc = "A high-power spring, linked to an energy-based dart synthesiser."
+	projectile_type = /obj/projectile/bullet/dart/piercing
+	firing_effect_type = null
+
+/obj/item/ammo_casing/medicalreagentgun/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+	if(!loaded_projectile)
+		return
+	if(istype(loc, /obj/item/gun/medicalreagentgun))
+		var/obj/item/gun/medicalreagentgun/CG = loc
+		if(CG.syringes_left <= 0)
+			return
+		CG.reagents.trans_to(loaded_projectile, 40, transferred_by = user)
+		loaded_projectile.name = "piercing chemical dart"
+		CG.syringes_left--
+	return ..()
+
 /obj/item/ammo_casing/dnainjector
 	name = "rigged syringe gun spring"
 	desc = "A high-power spring that throws DNA injectors."

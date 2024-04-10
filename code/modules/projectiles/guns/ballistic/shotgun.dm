@@ -348,11 +348,6 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 
-/obj/item/ammo_box/magazine/internal/shot/kammerer
-	name = "kammerer internal magazine"
-	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
-	max_ammo = 4
-
 /obj/item/gun/ballistic/shotgun/automatic/combat/kammerer
 	name = "\improper Kammerer"
 	desc = "A semi-automatic shotgun with a four-shell capacity. Often favored over compact shotguns for their slightly better performance."
@@ -378,10 +373,6 @@
 	slot_flags = null
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/kammerer
 // Syndicate uplink shotgun for traitors
-/obj/item/ammo_box/magazine/internal/shot/kammerer/syndicate
-	name = "kammerer internal magazine"
-	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
-	max_ammo = 8
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/kammerer/syndicate
 	name = "\improper Kammerer"

@@ -280,7 +280,7 @@
 	surplus = 30
 	illegal_tech = TRUE
 	purchasable_from = ~UPLINK_CLOWN_OPS
-
+/** Temperature guns are broken for some reason. That, or i'm fucking stupid. - hyperjll
 /datum/uplink_item/dangerous/temperaturegun
 	name = "Syndicate Temperature Gun"
 	desc = "A temperature gun orginally designed by Nanotrasen, given more lethal firepower by the Syndicate. \
@@ -291,7 +291,7 @@
 	surplus = 15
 	illegal_tech = TRUE
 	purchasable_from = ~UPLINK_CLOWN_OPS
-
+**/
 /datum/uplink_item/dangerous/chemsprayer
 	name = "Chemical Sprayer"
 	desc = "A chemical sprayer? More like a chemical cannon, this 'sprayer' shoots 30 units to 50 units of it's contents forward for up to 5 meters ahead. \
@@ -356,7 +356,7 @@
 			It's filled with a 400u concoction specifically designed to incapacitate and likely kill your targets. \
 			The gun shoots 40u each shot, and will generate it's toxins slowly thanks to redspace technology. Synthesises syringes automatically."
 	item = /obj/item/gun/toxicreagentgun
-	cost = 15
+	cost = 25
 	surplus = 10
 	illegal_tech = TRUE
 	purchasable_from = (UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
