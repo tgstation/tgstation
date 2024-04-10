@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "The tide of post-round blob zombies when a blob wins will no longer break the speakers in your headset."
