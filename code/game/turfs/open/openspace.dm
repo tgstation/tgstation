@@ -187,8 +187,9 @@
 	if(!T)
 		return
 	if(T.turf_flags & NO_RUINS && protect_ruin)
+		var/is_openspace = isopenspaceturf(replacement_turf) // because we're about to change this to something that potentially does not have the 'replacement_turf' var
 		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
-		if(!isopenspaceturf(replacement_turf)) // only openspace turfs should be returning INITIALIZE_HINT_LATELOAD
+		if(!is_openspace) // only openspace turfs should be returning INITIALIZE_HINT_LATELOAD
 			return INITIALIZE_HINT_NORMAL
 		return
 	if(!ismineralturf(T) || !drill_below)
