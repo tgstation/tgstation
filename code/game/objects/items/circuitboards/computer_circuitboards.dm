@@ -3,8 +3,8 @@
 	name_extension = "(Computer Board)"
 
 /obj/item/circuitboard/computer/examine()
+	. = ..()
 	if(GetComponent(/datum/component/gps))
-		. = ..()
 		. += span_info("there's a small, blinking light!")
 
 //Command
