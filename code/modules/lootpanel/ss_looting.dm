@@ -18,7 +18,7 @@ PROCESSING_SUBSYSTEM_DEF(looting)
 		return PROCESS_KILL
 
 	var/turf/tile = search_turf_ref?.resolve()
-	if(isnull(tile) || !user.Adjacent(tile))
+	if(isnull(tile) || !user.TurfAdjacent(tile))
 		stop_search()
 		return PROCESS_KILL
 

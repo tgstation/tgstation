@@ -136,3 +136,9 @@
 				UnregisterSignal(thing, COMSIG_QDELETING)
 
 		delete_search_object(obj)
+
+	var/datum/tgui/panel = SStgui.get_open_ui(user, src)
+	if(isnull(panel))
+		return
+
+	panel.send_update()
