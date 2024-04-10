@@ -54,7 +54,6 @@ type KnowledgeInfo = {
 
 type KnowledgeTier = {
   depth: number;
-  background: string;
   nodes: Knowledge[];
 };
 
