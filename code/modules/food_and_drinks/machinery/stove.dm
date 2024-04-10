@@ -122,9 +122,9 @@
  * * attacking_item: The container that's being used to add items to the soup pot. Must not be null.
  * * use: the entity adding ingredients via a container to a soup pot. Must not be null.
  */
-/obj/item/reagent_containers/cup/soup_pot/proc/containeradd(obj/item/attacking_item, mob/user, params)
+/obj/item/reagent_containers/cup/soup_pot/proc/transfer_from_container_to_pot(obj/item/transfer_from, mob/user)
 	if(attacking_item.atom_storage)
-		var/obj/item/storage/tray = attacking_item
+		var/obj/item/storage/tray = transfer_from
 		var/loaded = 0
 
 		for(var/obj/tray_item in tray.contents)
