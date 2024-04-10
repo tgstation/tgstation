@@ -188,8 +188,9 @@
 		return
 	if(T.turf_flags & NO_RUINS && protect_ruin)
 		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
-		if(isopenspaceturf(replacement_turf)) // only openspace turfs should be returning INITIALIZE_HINT_LATELOAD
+		if(!isopenspaceturf(replacement_turf)) // only openspace turfs should be returning INITIALIZE_HINT_LATELOAD
 			return INITIALIZE_HINT_NORMAL
+		return
 	if(!ismineralturf(T) || !drill_below)
 		return
 	var/turf/closed/mineral/M = T
