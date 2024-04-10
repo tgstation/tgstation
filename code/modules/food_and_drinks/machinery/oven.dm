@@ -103,7 +103,7 @@
 /obj/machinery/oven/attackby(obj/item/I, mob/user, params)
 
 	if(open && used_tray && istype(I, /obj/item/storage))
-		used_tray.attackby(I, user)
+		used_tray.item_interaction(user, I)
 		return
 
 	if(open && !used_tray && istype(I, /obj/item/plate/oven_tray))
@@ -248,7 +248,7 @@
 	max_items = 6
 	biggest_w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/plate/oven_tray/attackby(obj/item/item, mob/living/user, params)
+/obj/item/plate/oven_tray/item_interaction(mob/living/user, obj/item/item, params)
 
 	if(istype(item, /obj/item/storage))
 		var/obj/item/storage/tray = item
