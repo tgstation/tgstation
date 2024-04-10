@@ -49,6 +49,10 @@
 	. = ..()
 	manufactured = manufactured && target_stack.manufactured
 
+/obj/item/stack/sheet/copy_evidences(obj/item/stack/from)
+	. = ..()
+	manufactured = from.manufactured
+
 /// removing from sniffable handled by the sniffer itself when it checks for targets
 
 /**
