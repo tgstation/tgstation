@@ -13,7 +13,7 @@
 // We also make SURE to fail loud, IE: if something stops the message from reaching the recipient, the sender HAS to know
 // If you "refactor" this to make it "cleaner" I will send you to hell
 
-ADMIN_VERB(cmd_admin_pm_context, R_NONE, "Admin PM Mob", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
+ADMIN_VERB_NO_CONTEXT_MENU(cmd_admin_pm_context, R_NONE, "Admin PM Mob", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
 	if(!ismob(target))
 		to_chat(
 			src,
@@ -25,7 +25,7 @@ ADMIN_VERB(cmd_admin_pm_context, R_NONE, "Admin PM Mob", ADMIN_VERB_NO_DESCRIPTI
 	user.cmd_admin_pm(target.client, null)
 	BLACKBOX_LOG_ADMIN_VERB("Admin PM Mob")
 
-ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB_NO_CONTEXT_MENU(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM", ADMIN_CATEGORY_MAIN)
 	var/list/targets = list()
 	for(var/client/client in GLOB.clients)
 		var/nametag = ""

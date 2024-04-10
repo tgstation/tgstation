@@ -19,7 +19,7 @@ GENERAL_PROTECT_DATUM(/datum/ticket_log_entry)
 GLOBAL_DATUM_INIT(player_ticket_history, /datum/ticket_history_holder, new)
 GLOBAL_PROTECT(player_ticket_history)
 
-ADMIN_VERB(player_ticket_history, R_ADMIN, "Player Ticket History", "Allows you to view the ticket history of a player.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB_NO_CONTEXT_MENU(player_ticket_history, R_ADMIN, "Player Ticket History", "Allows you to view the ticket history of a player.", ADMIN_CATEGORY_MAIN)
 	GLOB.player_ticket_history.ui_interact(user.mob)
 
 /datum/ticket_history_holder

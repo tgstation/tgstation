@@ -140,7 +140,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(IsAdminAdvancedProcCall())
 		return
 
-ADMIN_VERB(set_ooc_color, R_FUN, "Set Player OOC Color", "Modifies the global OOC color.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB_NO_CONTEXT_MENU(set_ooc_color, R_FUN, "Set Player OOC Color", "Modifies the global OOC color.", ADMIN_CATEGORY_SERVER)
 	var/newColor = input(user, "Please select the new player OOC color.", "OOC color") as color|null
 	if(isnull(newColor))
 		return
@@ -156,7 +156,7 @@ ADMIN_VERB(set_ooc_color, R_FUN, "Set Player OOC Color", "Modifies the global OO
 	if(IsAdminAdvancedProcCall())
 		return
 
-ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC color to default.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB_NO_CONTEXT_MENU(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC color to default.", ADMIN_CATEGORY_SERVER)
 	if(tgui_alert(user, "Are you sure you want to reset the OOC color of all players?", "Reset Player OOC Color", list("Yes", "No")) != "Yes")
 		return
 	message_admins("[key_name_admin(user)] has reset the players' ooc color.")

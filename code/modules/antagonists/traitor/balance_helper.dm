@@ -1,4 +1,4 @@
-ADMIN_VERB(debug_traitor_objectives, R_DEBUG, "Debug Traitor Objectives", "Verify functionality of traitor goals.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB_NO_CONTEXT_MENU(debug_traitor_objectives, R_DEBUG, "Debug Traitor Objectives", "Verify functionality of traitor goals.", ADMIN_CATEGORY_DEBUG)
 	SStraitor.traitor_debug_panel?.ui_interact(user.mob)
 
 /datum/traitor_objective_debug

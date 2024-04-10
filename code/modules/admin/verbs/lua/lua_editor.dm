@@ -233,6 +233,6 @@
 	. = ..()
 	qdel(src)
 
-ADMIN_VERB(lua_editor, R_DEBUG, "Open Lua Editor", "Its codin' time.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB_NO_CONTEXT_MENU(lua_editor, R_DEBUG, "Open Lua Editor", "Its codin' time.", ADMIN_CATEGORY_DEBUG)
 	var/datum/lua_editor/editor = new
 	editor.ui_interact(user.mob)

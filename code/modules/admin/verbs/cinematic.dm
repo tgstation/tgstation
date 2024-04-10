@@ -1,4 +1,4 @@
-ADMIN_VERB(cinematic, R_FUN, "Cinematic", "Show a cinematic to all players.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB_NO_CONTEXT_MENU(cinematic, R_FUN, "Cinematic", "Show a cinematic to all players.", ADMIN_CATEGORY_FUN)
 	var/datum/cinematic/choice = tgui_input_list(
 		user,
 		"Chose a cinematic to play to everyone in the server.",

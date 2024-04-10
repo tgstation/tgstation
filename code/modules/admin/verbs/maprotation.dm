@@ -1,5 +1,5 @@
 
-ADMIN_VERB(force_random_rotate, R_SERVER, "Trigger 'Random' Map Rotation", "Force a map vote.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB_NO_CONTEXT_MENU(force_random_rotate, R_SERVER, "Trigger 'Random' Map Rotation", "Force a map vote.", ADMIN_CATEGORY_SERVER)
 	var/rotate = tgui_alert(user,"Force a random map rotation to trigger?", "Rotate map?", list("Yes", "Cancel"))
 	if (rotate != "Yes")
 		return
@@ -7,7 +7,7 @@ ADMIN_VERB(force_random_rotate, R_SERVER, "Trigger 'Random' Map Rotation", "Forc
 	log_admin("[key_name(user)] is forcing a random map rotation.")
 	SSmapping.maprotate()
 
-ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB_NO_CONTEXT_MENU(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_CATEGORY_SERVER)
 	var/list/maprotatechoices = list()
 	for (var/map in config.maplist)
 		var/datum/map_config/virtual_map = config.maplist[map]

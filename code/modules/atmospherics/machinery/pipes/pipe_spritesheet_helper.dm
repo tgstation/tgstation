@@ -1,4 +1,4 @@
-ADMIN_VERB(generate_pipe_spritesheet, R_DEBUG, "Generate Pipe Spritesheet", "Generates the pipe spritesheets.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB_NO_CONTEXT_MENU(generate_pipe_spritesheet, R_DEBUG, "Generate Pipe Spritesheet", "Generates the pipe spritesheets.", ADMIN_CATEGORY_DEBUG)
 	var/datum/pipe_icon_generator/generator = new
 	generator.Start()
 	fcopy(generator.generated_icons, "icons/obj/pipes_n_cables/!pipes_bitmask.dmi")

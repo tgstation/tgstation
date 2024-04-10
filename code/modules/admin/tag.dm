@@ -49,7 +49,7 @@
 					<font color='#00cc66'>[X.getToxLoss()]</font> \
 					<font color='#00cccc'>[X.getOxyLoss()]</font>"
 
-ADMIN_VERB(display_tags, R_ADMIN, "View Tags", "Display all of the tagged datums.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB_NO_CONTEXT_MENU(display_tags, R_ADMIN, "View Tags", "Display all of the tagged datums.", ADMIN_CATEGORY_GAME)
 	var/index = 0
 	var/list/dat = list("<center><B>Tag Menu</B></center><hr>")
 

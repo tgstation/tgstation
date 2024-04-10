@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(explosions)
 	throwturf -= T
 	held_throwturf -= T
 
-ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effect of a bomb would be.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB_NO_CONTEXT_MENU(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effect of a bomb would be.", ADMIN_CATEGORY_DEBUG)
 	var/newmode = tgui_alert(user, "Use reactionary explosions?","Check Bomb Impact", list("Yes", "No"))
 	var/turf/epicenter = get_turf(user.mob)
 	if(!epicenter)

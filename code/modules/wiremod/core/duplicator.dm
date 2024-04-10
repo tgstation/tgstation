@@ -220,7 +220,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	rel_x = component_data["rel_x"]
 	rel_y = component_data["rel_y"]
 
-ADMIN_VERB(load_circuit, R_VAREDIT, "Load Circuit", "Loads a circuit from a file or direct input.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB_NO_CONTEXT_MENU(load_circuit, R_VAREDIT, "Load Circuit", "Loads a circuit from a file or direct input.", ADMIN_CATEGORY_FUN)
 	var/list/errors = list()
 
 	var/option = alert(user, "Load by file or direct input?", "Load by file or string", "File", "Direct Input")

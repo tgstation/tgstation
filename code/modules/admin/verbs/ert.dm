@@ -261,7 +261,7 @@
 
 	return
 
-ADMIN_VERB(summon_ert, R_FUN, "Summon ERT", "Summons an emergency response team.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB_NO_CONTEXT_MENU(summon_ert, R_FUN, "Summon ERT", "Summons an emergency response team.", ADMIN_CATEGORY_FUN)
 	message_admins("[key_name_admin(user)] is creating a CentCom response team...")
 	if(user.holder?.makeEmergencyresponseteam())
 		message_admins("[key_name_admin(user)] created a CentCom response team.")

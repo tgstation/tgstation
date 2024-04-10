@@ -1,4 +1,4 @@
-ADMIN_VERB(change_shuttle_events, R_ADMIN|R_FUN, "Change Shuttle Events", "Change the events on a shuttle.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB_NO_CONTEXT_MENU(change_shuttle_events, R_ADMIN|R_FUN, "Change Shuttle Events", "Change the events on a shuttle.", ADMIN_CATEGORY_EVENTS)
 	//At least for now, just letting admins modify the emergency shuttle is fine
 	var/obj/docking_port/mobile/port = SSshuttle.emergency
 

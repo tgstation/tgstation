@@ -1,4 +1,4 @@
-ADMIN_VERB(toggle_fov, R_ADMIN|R_DEBUG, "Enable/Disable Field Of View", "Toggle FOV globally.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB_NO_CONTEXT_MENU(toggle_fov, R_ADMIN|R_DEBUG, "Enable/Disable Field Of View", "Toggle FOV globally.", ADMIN_CATEGORY_DEBUG)
 	var/on_off = CONFIG_GET(flag/native_fov)
 
 	message_admins("[key_name_admin(user)] has [on_off ? "disabled" : "enabled"] the Native Field of View configuration..")

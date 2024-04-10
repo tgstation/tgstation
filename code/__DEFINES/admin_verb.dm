@@ -14,7 +14,7 @@
  * Note that the verb args have an injected `client/user` argument that is the user that called the verb.
  * Do not use usr in your verb; technically you can but I'll kill you.
  */
-#define ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, verb_args...) \
+#define _ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, show_in_context_menu, verb_args...) \
 /datum/admin_verb/##verb_path_name \
 { \
 	name = ##verb_name; \
@@ -28,12 +28,19 @@
 	set name = ##verb_name; \
 	set desc = ##verb_desc; \
 	set hidden = FALSE; /* this is explicitly needed as the proc begins with an underscore */ \
+	set popup_menu = ##show_in_context_menu; \
 	set category = ##verb_category; \
 	var/list/_verb_args = list(usr, /datum/admin_verb/##verb_path_name); \
 	_verb_args += args; \
 	SSadmin_verbs.dynamic_invoke_verb(arglist(_verb_args)); \
 }; \
 /datum/admin_verb/##verb_path_name/__avd_do_verb(client/user, ##verb_args)
+
+#define ADMIN_VERB_AND_CONTEXT_MENU(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, verb_args...) \
+_ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, TRUE, ##verb_args)
+
+#define ADMIN_VERB_NO_CONTEXT_MENU(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, verb_args...) \
+_ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, FALSE, ##verb_args)
 
 /// Used to define a special check to determine if the admin verb should exist at all. Useful for verbs such as play sound which require configuration.
 #define ADMIN_VERB_CUSTOM_EXIST_CHECK(verb_path_name) \

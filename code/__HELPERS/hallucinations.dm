@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 	to_chat(usr, span_boldnotice("The total weight of the hallucination weighted list is [total_weight]."))
 	return total_weight
 
-ADMIN_VERB(debug_hallucination_weighted_list_per_type, R_DEBUG, "Show Hallucination Weights", "View the weight of each hallucination subtype in the random weighted list.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB_NO_CONTEXT_MENU(debug_hallucination_weighted_list_per_type, R_DEBUG, "Show Hallucination Weights", "View the weight of each hallucination subtype in the random weighted list.", ADMIN_CATEGORY_DEBUG)
 	var/header = "<tr><th>Type</th> <th>Weight</th> <th>Percent</th>"
 
 	var/total_weight = debug_hallucination_weighted_list()

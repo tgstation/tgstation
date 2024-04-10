@@ -280,7 +280,7 @@
 	var/list/answers = list()
 	var/description
 
-ADMIN_VERB(validate_puzzgrids, R_DEBUG, "Validate Puzzgrid Config", "Validate the puzzgrid config to ensure it's set up correctly.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB_NO_CONTEXT_MENU(validate_puzzgrids, R_DEBUG, "Validate Puzzgrid Config", "Validate the puzzgrid config to ensure it's set up correctly.", ADMIN_CATEGORY_DEBUG)
 	var/line_number = 0
 
 	for (var/line in world.file2list(PUZZGRID_CONFIG))
