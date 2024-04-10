@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(ai_controllers)
 	var/timer = TICK_USAGE_REAL
 	for(var/datum/ai_controller/ai_controller as anything in ai_controllers_by_status[AI_STATUS_IDLE])
 		for(var/client/client_found in GLOB.clients)
-			if(get_dist(get_turf(client_found.mob), get_turf(ai_controller.pawn)) <= AI_INTERESTING_DIST)
+			if(get_dist(get_turf(client_found.mob), get_turf(ai_controller.pawn)) <= ai_controller.interesting_dist)
 				ai_controller.set_ai_status(AI_STATUS_ON)
 				break
 	cost_idle = MC_AVERAGE(cost_idle, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(ai_controllers)
 		if(ai_controller.can_idle)
 			var/found_interesting = FALSE
 			for(var/client/client_found in GLOB.clients)
-				if(get_dist(get_turf(client_found.mob), get_turf(ai_controller.pawn)) <= AI_INTERESTING_DIST)
+				if(get_dist(get_turf(client_found.mob), get_turf(ai_controller.pawn)) <= ai_controller.interesting_dist)
 					found_interesting = TRUE
 					break
 			if(!found_interesting)
