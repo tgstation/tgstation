@@ -21,7 +21,7 @@
 	name = "glob of acidic neurotoxin"
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "xenoshot0"
-	damage = 20
+	damage = 10
 	damage_type = STAMINA
 	armour_penetration = 0
 	reflectable = NONE

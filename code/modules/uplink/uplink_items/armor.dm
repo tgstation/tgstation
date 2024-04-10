@@ -38,6 +38,7 @@
 	cost = 8
 	surplus = 20
 	illegal_tech = TRUE
+	progression_minimum = 20 MINUTES
 
 /datum/uplink_item/armor/armoredtie
 	name = "Armored Tie"
@@ -64,6 +65,7 @@
 	cost = 12
 	surplus = 10
 	illegal_tech = TRUE
+	progression_minimum = 30 MINUTES
 
 /datum/uplink_item/armor/reactiveincendiarysyndicate
 	name = "Augmented Incendiary Vest"
@@ -73,6 +75,7 @@
 	cost = 12
 	surplus = 5
 	illegal_tech = TRUE
+	progression_minimum = 30 MINUTES
 
 /datum/uplink_item/armor/reactivestealthsyndicate
 	name = "Augmented Stealth Vest"
@@ -82,6 +85,7 @@
 	cost = 12
 	surplus = 10
 	illegal_tech = TRUE
+	progression_minimum = 30 MINUTES
 
 /datum/uplink_item/armor/reactiveteslasyndicate
 	name = "Augmented Telsa Vest"
@@ -91,6 +95,7 @@
 	cost = 12
 	surplus = 10
 	illegal_tech = TRUE
+	progression_minimum = 30 MINUTES
 
 /datum/uplink_item/armor/reactiverepulsesyndicate
 	name = "Augmented Repulse Vest"
@@ -100,6 +105,7 @@
 	cost = 12
 	surplus = 10
 	illegal_tech = TRUE
+	progression_minimum = 30 MINUTES
 
 /datum/uplink_item/armor/reactivetablesyndicate
 	name = "Augmented Tabletop Vest"
@@ -109,6 +115,7 @@
 	cost = 12
 	surplus = 10
 	illegal_tech = TRUE
+	progression_minimum = 30 MINUTES
 
 /datum/uplink_item/armor/reactivehallucinatingsyndicate
 	name = "Augmented Hallucination Vest"
@@ -118,6 +125,7 @@
 	cost = 12
 	surplus = 10
 	illegal_tech = TRUE
+	progression_minimum = 30 MINUTES
 
 /datum/uplink_item/armor/reactiveradiationsyndicate
 	name = "Augmented Radioactive Vest"
@@ -127,6 +135,7 @@
 	cost = 12
 	surplus = 10
 	illegal_tech = TRUE
+	progression_minimum = 30 MINUTES
 
 /datum/uplink_item/armor/reactivebioscramblingsyndicate
 	name = "Augmented Bioscrambling Vest"
@@ -136,6 +145,7 @@
 	cost = 12
 	surplus = 10
 	illegal_tech = TRUE
+	progression_minimum = 30 MINUTES
 
 /datum/uplink_item/armor/reactivebarricadesyndicate
 	name = "Augmented Barricade Vest"
@@ -145,6 +155,7 @@
 	cost = 12
 	surplus = 10
 	illegal_tech = TRUE
+	progression_minimum = 30 MINUTES
 
 /datum/uplink_item/armor/reactiveectoplasmsyndicate
 	name = "Augmented Ectoplasm Vest"
@@ -154,6 +165,7 @@
 	cost = 12
 	surplus = 10
 	illegal_tech = TRUE
+	progression_minimum = 30 MINUTES
 
 /datum/uplink_item/armor/dermal_harden
 	name = "Dermal Hardening Cigarettes"
@@ -172,6 +184,7 @@
 	cost = 11
 	surplus = 15
 	illegal_tech = FALSE
+	progression_minimum = 15 MINUTES
 
 /datum/uplink_item/armor/metallineskin
 	name = "Metalline Gelatine Injector"

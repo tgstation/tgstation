@@ -20,15 +20,17 @@
 	desc = "This DNA mutator contains a highly experimental mutation that significantly boosts a human's physical and mental attributes to it's peak potential. \
 			Superhuman's slowly regenerate health, have greater stamina, have greater maximum health, slightly resist damage, are immune to stuns, have near-immunity to slips, easily ignore pain, and cannot be dismembered. \
 			Mutadone CANNOT cure this mutation, but this mutation causes great genetic instability. Proceed with extreme caution. Incompatible with hulk mutations."
-	cost = 20
+	cost = 25
 	surplus = 0
+	progression_minimum = 30 MINUTES
 	item = /obj/item/dnainjector/superhuman
 	restricted_species = list(SPECIES_HUMAN)
 
 /datum/uplink_item/species_restricted/hulk // cheaper...
 	name = "Hulk Mutator"
 	desc = "Stolen research from a SIC scientist who went postal led to the development of this revolutionary mutator. Causes extreme muscle growth, enough to punch through walls, and practically limitless stamina, at the cost of reduced cognitive ability, and green skin pigmentation."
-	cost = 8
+	cost = 10
+	progression_minimum = 20 MINUTES
 	item = /obj/item/dnainjector/hulkmut
 	restricted_species = list(SPECIES_HUMAN)
 
@@ -36,7 +38,8 @@
 	name = "X-Ray Vision Mutator"
 	desc = "One of our most popular mutations to date, this mutator grants the mutatee X-Ray vision, allowing them to see past any and all obstacles and obstructions. \
 			This mutation CAN BE CURED via mutadone."
-	cost = 8
+	cost = 12
+	progression_minimum = 20 MINUTES
 	item = /obj/item/dnainjector/xraymut
 	restricted_species = list(SPECIES_HUMAN)
 
@@ -46,6 +49,7 @@
 			It fires globs of a highly acidic reagent as well as a small amount of an alien neurotoxin. \
 			Refuels itself automatically but very slowly. Does no damage outright, but useful when attempting to incapacitate someone."
 	cost = 8
+	progression_minimum = 20 MINUTES
 	item = /obj/item/gun/energy/xenospitter
 	restricted_species = list(SPECIES_PLASMAMAN)
 
@@ -70,6 +74,7 @@
 	item = /obj/item/seeds/kudzu
 	cost = 3
 	surplus = 0
+	progression_minimum = 10 MINUTES
 	restricted_species = list(SPECIES_PODPERSON)
 
 /datum/uplink_item/species_restricted/eternal_mutagen
@@ -100,23 +105,16 @@
 	item = /obj/item/grenade/chem_grenade/large/phytosiansmoke
 	cost = 3
 	surplus = 0
+	progression_minimum = 10 MINUTES
 	restricted_species = list(SPECIES_PODPERSON)
 
 /datum/uplink_item/species_restricted/tesliumnades
 	name = "Tesla Grenades"
 	desc = "A pouch containing 5 pyro grenades filled to the brim with teslium. Perfect for mass electrocutions."
 	cost = 5
+	progression_minimum = 10 MINUTES
 	item = /obj/item/ammo_box/nadepouch/tesla
 	restricted_species = list(SPECIES_ETHEREAL)
-
-/datum/uplink_item/species_restricted/universal_tele
-	name = "Universal Hand Teleporter"
-	desc = "A hand tele previously secured by our agents in the field, we've upgraded it with unregulated bluespace technology to allow it to recieve signals from all teleportation points. \
-			Can lock onto Teleportation Hubs, Tracking Beacons, and Tracking Implants. Can be upgraded by replacing the manipulator within."
-	cost = 10
-	item = /obj/item/hand_tele/universal
-	restricted_species = list(SPECIES_FLYPERSON)
-	purchasable_from = (UPLINK_TRAITORS | UPLINK_SPY)
 
 /datum/uplink_item/species_restricted/syndilampflash
 	name = "Flashing Lantern"
@@ -132,6 +130,7 @@
 	item = /obj/item/flashlight/flare/lethal
 	cost = 4
 	surplus = 0
+	progression_minimum = 5 MINUTES
 	restricted_species = list(SPECIES_MOTH)
 
 /datum/uplink_item/species_restricted/riggedglowsticks
@@ -140,6 +139,7 @@
 	item = /obj/item/storage/box/syndie_kit/riggedglowsticks
 	cost = 4
 	surplus = 8
+	progression_minimum = 20 MINUTES
 	restricted_species = list(SPECIES_MOTH)
 
 /datum/uplink_item/species_restricted/lizardsbane
@@ -157,6 +157,7 @@
 	item = /obj/item/disguisedgrenade/lizardplush
 	cost = 4
 	surplus = 0
+	progression_minimum = 30 MINUTES
 	restricted_species = list(SPECIES_LIZARD)
 
 /datum/uplink_item/species_restricted/degeneratewhip
@@ -166,6 +167,7 @@
 	item = /obj/item/melee/chainofcommand/tailwhip/kitty/syndicate
 	cost = 6
 	surplus = 0
+	progression_minimum = 30 MINUTES
 	restricted_species = list(SPECIES_FELINE)
 
 /datum/uplink_item/species_restricted/angryralsei
@@ -185,6 +187,7 @@
 	item = /obj/item/storage/box/syndie_kit/riggedplushies
 	cost = 4
 	surplus = 0
+	progression_minimum = 30 MINUTES
 	restricted_species = list(SPECIES_FELINE)
 
 /datum/uplink_item/species_restricted/jellypersonregen
@@ -201,4 +204,5 @@
 	item = /obj/item/grenade/chem_grenade/jellypersonsmoke
 	cost = 5
 	surplus = 0
+	progression_minimum = 10 MINUTES
 	restricted_species = list(SPECIES_JELLYPERSON)

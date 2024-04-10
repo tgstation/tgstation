@@ -262,7 +262,7 @@
 	desc = "When purchased, we'll authorize ONE of our operatives to scope out the situation and attempt to destroy the station with the on-board nuclear device. Be prepared to aid them, or die trying."
 	item = /obj/effect/gibspawner/generic
 	surplus = 0
-	progression_minimum = 20 MINUTES
+	progression_minimum = 40 MINUTES
 	limited_stock = 1
 	cost = 20
 	cant_discount = TRUE
@@ -279,7 +279,7 @@
 			ATTENTION: WE CANNOT SEND PIRATES TO ANY STATIONS RESIDING UPON A PLANET (IceBox)"
 	item = /obj/effect/gibspawner/generic
 	surplus = 0
-	progression_minimum = 20 MINUTES
+	progression_minimum = 30 MINUTES
 	limited_stock = 1
 	cost = 10
 	cant_discount = TRUE
@@ -295,7 +295,7 @@
 	desc = "When purchased, we'll authorize ONE of our classified micro-organisms to be sent onto the station via bluespace technology. Do be mindful, that the virus is very unpredictable."
 	item = /obj/effect/gibspawner/generic
 	surplus = 0
-	progression_minimum = 20 MINUTES
+	progression_minimum = 30 MINUTES
 	limited_stock = 1
 	cost = 10
 	cant_discount = TRUE

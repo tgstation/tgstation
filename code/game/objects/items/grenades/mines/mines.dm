@@ -81,14 +81,14 @@
 	name = "lizard plushie"
 	desc = "An adorable stuffed toy that resembles a lizardperson."
 	icon = 'icons/obj/toys/plushes.dmi'
-	icon_state = "plushie_lizard"
+	icon_state = "map_plushie_lizard"
 	inhand_icon_state = "plushie_lizard"
 	mine_type = /obj/effect/mine/explosive/lizardplushie
 
 /obj/item/deployablemine/explosive/carpplushie
 	name = "space carp plushie"
 	desc = "An adorable stuffed toy that resembles a space carp."
-	icon_state = "carpplush"
+	icon_state = "map_plushie_carp"
 	inhand_icon_state = "carp_plushie"
 	icon = 'icons/obj/toys/plushes.dmi'
 	mine_type = /obj/effect/mine/explosive/carpplushie
@@ -125,7 +125,7 @@
 /obj/item/deployablemine/explosive/slimeplushie
 	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
-	icon_state = "plushie_slime"
+	icon_state = "map_plushie_slime"
 	inhand_icon_state = "plushie_slime"
 	icon = 'icons/obj/toys/plushes.dmi'
 	mine_type = /obj/effect/mine/explosive/slimeplushie
@@ -133,6 +133,6 @@
 /obj/item/deployablemine/explosive/fakeian
 	name = "Ian"
 	desc = "It's the HoP's beloved corgi."
-	icon = 'icons/mob/pets.dmi'
-	icon_state = "old_corgi"
+	icon = 'icons/mob/simple/pets.dmi'
+	icon_state = "corgi"
 	mine_type = /obj/effect/mine/explosive/fakeian

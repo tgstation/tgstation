@@ -882,6 +882,7 @@
 	item = /obj/item/flashlight/flare/lethal
 	cost = 4
 	surplus = 20
+	progression_minimum = 5 MINUTES
 	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)
 
 /datum/uplink_item/role_restricted/electricaxe
@@ -890,6 +891,7 @@
 	item = /obj/item/fireaxe/electric
 	cost = 12
 	surplus = 5
+	progression_minimum = 30 MINUTES
 	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)
 
 /datum/uplink_item/role_restricted/n2o_nade_bundle
@@ -996,6 +998,7 @@
 	cost = 8
 	surplus = 0
 	restricted_roles = list(JOB_VIROLOGIST)
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/syndivirusbufferstealth
 	name = "STE. Gene Culture Bottle"
@@ -1004,6 +1007,7 @@
 	cost = 4
 	surplus = 0
 	restricted_roles = list(JOB_VIROLOGIST)
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/syndivirusbufferresist
 	name = "SRE. Gene Culture Bottle"
@@ -1012,6 +1016,7 @@
 	cost = 4
 	surplus = 0
 	restricted_roles = list(JOB_VIROLOGIST)
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/syndivirusbufferspeed
 	name = "SPD. Gene Culture Bottle"
@@ -1020,6 +1025,7 @@
 	cost = 4
 	surplus = 0
 	restricted_roles = list(JOB_VIROLOGIST)
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/syndivirusbuffertrans
 	name = "STR. Gene Culture Bottle"
@@ -1028,6 +1034,7 @@
 	cost = 4
 	surplus = 0
 	restricted_roles = list(JOB_VIROLOGIST)
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/syndisauce
 	name = "Box of Syndicate Sauce"
