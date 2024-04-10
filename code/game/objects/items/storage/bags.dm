@@ -375,7 +375,7 @@
 			/obj/item/storage/box/matches,
 			/obj/item/storage/fancy,
 			/obj/item/trash,
-	),
+		),
 		cant_hold_list = list(
 			/obj/item/plate/oven_tray,
 			/obj/item/reagent_containers/cup/soup_pot,
