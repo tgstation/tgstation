@@ -47,6 +47,15 @@
 	new /obj/item/clothing/head/syndicatefake(src)
 	new /obj/item/clothing/suit/syndicatefake(src)
 
+/obj/item/storage/box/syndie_kit/battle_royale
+	name = "rumble royale broadcast kit"
+	desc = "Contains everything you need to host the galaxy's greatest show; Rumble Royale."
+
+/obj/item/storage/box/syndie_kit/battle_royale/PopulateContents()
+	var/obj/item/royale_implanter/implanter = new(src)
+	var/obj/item/royale_remote/remote = new(src)
+	remote.link_implanter(implanter)
+
 /obj/item/storage/box/deputy
 	name = "box of deputy armbands"
 	desc = "To be issued to those authorized to act as deputy of security."

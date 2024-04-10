@@ -99,7 +99,12 @@
 		. += span_notice("Filled to <b>[round((total_weight / maximum_weight) * 100)]%</b> capacity.")
 
 	if(!QDELETED(beaker))
-		. += span_notice("A beaker of <b>[beaker.reagents.maximum_volume]u</b> capacity is present.")
+		. += span_notice("A beaker of <b>[beaker.reagents.maximum_volume]u</b> capacity is present. Contains:")
+		if(beaker.reagents.total_volume)
+			for(var/datum/reagent/reg as anything in beaker.reagents.reagent_list)
+				. += span_notice("[round(reg.volume, CHEMICAL_VOLUME_ROUNDING)]u of [reg.name]")
+		else
+			. += span_notice("Nothing.")
 		. += span_notice("[EXAMINE_HINT("Right click")] with empty hand to remove beaker.")
 	else
 		. += span_warning("It's missing a beaker.")

@@ -21,11 +21,6 @@
 GLOBAL_LIST_INIT(bioscrambler_parts_blacklist, typecacheof(list(
 	/obj/item/bodypart/chest/larva,
 	/obj/item/bodypart/head/larva,
-	// Re-add the ones below this line when the bug with offset is fixed
-	/obj/item/bodypart/leg/left/monkey,
-	/obj/item/bodypart/leg/right/monkey,
-	/obj/item/bodypart/leg/left/tallboy,
-	/obj/item/bodypart/leg/right/tallboy,
 )))
 
 /// Blacklist of organs which should not appear when bioscrambled.
