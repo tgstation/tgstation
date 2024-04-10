@@ -188,7 +188,7 @@
 		return
 	if(T.turf_flags & NO_RUINS && protect_ruin)
 		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
-		return
+		return INITIALIZE_HINT_NORMAL
 	if(!ismineralturf(T) || !drill_below)
 		return
 	var/turf/closed/mineral/M = T
