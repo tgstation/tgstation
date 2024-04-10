@@ -43,6 +43,9 @@
 /obj/item/grapple_gun/afterattack(atom/target, mob/living/user, proximity)
 	. = ..()
 
+	if(isgroundlessturf(target))
+		return
+
 	if(!lavaland_equipment_pressure_check(get_turf(user)))
 		user.balloon_alert(user, "gun mechanism wont work here!")
 		return
@@ -124,7 +127,7 @@
 
 /obj/item/grapple_gun/proc/launch_user(atom/target_atom)
 	var/mob/living/my_user = zipliner?.resolve()
-	if(isnull(my_user) || isnull(target_atom))
+	if(isnull(my_user) || isnull(target_atom) || my_user.buckled)
 		cancel_hook()
 		return
 	zipline_sound.start()
