@@ -1,5 +1,0 @@
-author: "00-Steven, SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Wrench table deconstruction gives the right materials again."
-  - bugfix: "Screwdriver table deconstruction only deconstructs the top again."
