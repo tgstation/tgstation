@@ -387,7 +387,7 @@ SUBSYSTEM_DEF(dynamic)
 	switch(round(shown_threat))
 		if(0)
 			advisory_string += "Advisory Level: <b>White Dwarf</b></center><BR>"
-			advisory_string += "Your sector's advisory level is White Dwarf. Our surveilence has ruled out any and all potential threats known in our database, eliminating most risks to our assets in the Spinward Sector. We advise a lower level of security, alongside distributing ressources on potential profit."
+			advisory_string += "Your sector's advisory level is White Dwarf. Our surveillance has ruled out any and all potential threats known in our database, eliminating most risks to our assets in the Spinward Sector. We advise a lower level of security, alongside distributing resources on potential profit."
 		if(1 to 19)
 			var/show_core_territory = (GLOB.current_living_antags.len > 0)
 			if (prob(FAKE_GREENSHIFT_FORM_CHANCE))
