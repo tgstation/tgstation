@@ -9,18 +9,10 @@
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/computer/upload/ai
 
-/obj/item/circuitboard/computer/aiupload/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/gps, "Weak AI Upload Signal")
-
 /obj/item/circuitboard/computer/borgupload
 	name = "Cyborg Upload"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/computer/upload/borg
-
-/obj/item/circuitboard/computer/borgupload/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/gps, "Weak Cyborg Upload Signal")
 
 /obj/item/circuitboard/computer/bsa_control
 	name = "Bluespace Artillery Controls"
@@ -199,16 +191,11 @@
 	name = "Communications"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/communications
-	
-/obj/item/circuitboard/computer/communications/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/gps, "Weak Communications Signal")
 
 /obj/item/circuitboard/computer/communications/syndicate
 	name = "Syndicate Communications"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/communications/syndicate
-
 
 /obj/item/circuitboard/computer/message_monitor
 	name = "Message Monitor"
