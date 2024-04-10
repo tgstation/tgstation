@@ -123,7 +123,7 @@
  * * use: the entity adding ingredients via a container to a soup pot. Must not be null.
  */
 /obj/item/reagent_containers/cup/soup_pot/proc/transfer_from_container_to_pot(obj/item/transfer_from, mob/user)
-	if(attacking_item.atom_storage)
+	if(transfer_from.atom_storage)
 		var/obj/item/storage/tray = transfer_from
 		var/loaded = 0
 

@@ -133,7 +133,7 @@
 		var/obj/item/reagent_containers/cup/soup_pot/soup_pot = container
 
 		if(!range.open)
-			soup_pot.containeradd(attacking_item, user)
+			soup_pot.transfer_from_container_to_pot(attacking_item, user)
 			return COMPONENT_NO_AFTERATTACK
 
 	if(!attacking_item.is_open_container())
