@@ -166,6 +166,13 @@
 	update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
+/obj/item/reagent_containers/cup/soup_pot/item_interaction(mob/living/user, obj/item/item, list/modifiers, is_right_clicking)
+
+	if(!is_right_clicking)
+		return transfer_from_container_to_pot(item, user)
+	else
+		return ..()
+
 /obj/item/reagent_containers/cup/soup_pot/attack_hand_secondary(mob/user, list/modifiers)
 	if(!LAZYLEN(added_ingredients))
 		return SECONDARY_ATTACK_CALL_NORMAL

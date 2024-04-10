@@ -84,8 +84,11 @@
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
+	
+	if(isnull(item.atom_storage))
+		return .
 
-	if(item.atom_storage && !is_right_clicking)
+	if(!is_right_clicking)
 		var/obj/item/storage/tray = item
 		var/loaded = 0
 
@@ -109,14 +112,12 @@
 			update_appearance()
 		return ITEM_INTERACT_SUCCESS
 	
-	if(item.atom_storage && is_right_clicking)
+	else
 		var/obj/item/storage/tray = item
 
 		for(var/obj/tray_item in griddled_objects)
 			tray.atom_storage?.attempt_insert(tray_item, user, TRUE)
-	
-	. = ..()
-	return
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/griddle/attack_hand(mob/user, list/modifiers)
 	. = ..()

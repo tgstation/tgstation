@@ -101,9 +101,9 @@
 
 
 /obj/machinery/oven/attackby(obj/item/I, mob/user, params)
-	if(open && used_tray && I.atom_storage)
+	//if(open && used_tray && I.atom_storage)
 		//Stop containers from beating up our oven in general.
-		return
+		//return
 
 	if(open && !used_tray && I.atom_storage)
 		if(user.transferItemToLoc(I, src, silent = FALSE))
@@ -253,8 +253,12 @@
 	biggest_w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/plate/oven_tray/item_interaction(mob/living/user, obj/item/item,  list/modifiers, is_right_clicking)
+	. = ..()
 
-	if(item.atom_storage && !is_right_clicking)
+	if(isnull(item.atom_storage))
+		return .
+
+	if(!is_right_clicking)
 		var/obj/item/storage/tray = item
 		var/loaded = 0
 
@@ -262,31 +266,28 @@
 			// Non-tray dumping requires a do_after
 			to_chat(user, span_notice("You start dumping out the contents of [item] into [src]..."))
 			if(!do_after(user, 2 SECONDS, target = tray))
-				return
+				return ITEM_INTERACT_BLOCKING
 
 		for(var/obj/tray_item in tray.contents)
 			if(!IS_EDIBLE(tray_item))
 				continue
 			if(contents.len >= max_items)
 				balloon_alert(user, "it's full!")
-				return TRUE
+				return ITEM_INTERACT_BLOCKING
 			if(tray.atom_storage.attempt_remove(tray_item, src))
 				loaded++
 				AddToPlate(tray_item, user)
 		if(loaded)
 			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
 			update_appearance()
-		. = ..()
-		return
-	
-	if(item.atom_storage && is_right_clicking)
+		return ITEM_INTERACT_SUCCESS
+		
+	else
 		var/obj/item/storage/tray = item
 
 		for(var/obj/tray_item in contents)
 			tray.atom_storage?.attempt_insert(tray_item, user, TRUE)
-		
-	. = ..()
-	return
+	return ITEM_INTERACT_SUCCESS
 
 #undef OVEN_SMOKE_STATE_NONE
 #undef OVEN_SMOKE_STATE_GOOD
