@@ -49,7 +49,7 @@
 	. = ..()
 	manufactured = manufactured && target_stack.manufactured
 
-/obj/item/stack/sheet/copy_evidences(obj/item/stack/from)
+/obj/item/stack/sheet/copy_evidences(obj/item/stack/sheet/from)
 	. = ..()
 	manufactured = from.manufactured
 
