@@ -6,13 +6,13 @@ import { Window } from '../layouts';
 import { Access, AccessConfig } from './common/AccessConfig';
 
 type Data = {
-  oneAccess: BooleanLike;
-  unres_direction: number;
-  passedName: string;
-  passedCycleId: number;
-  regions: Access[];
   accesses: string[];
+  oneAccess: BooleanLike;
+  passedCycleId: number;
+  passedName: string;
+  regions: Access[];
   shell: BooleanLike;
+  unres_direction: number;
 };
 
 export function AirlockElectronics(props) {
@@ -44,62 +44,68 @@ export function AirLockMainSection(props) {
           <LabeledList>
             <LabeledList.Item label="Integrated Circuit Shell">
               <Button.Checkbox
-                content="Shell"
                 checked={shell}
                 onClick={() => {
                   act('set_shell', { on: !shell });
                 }}
                 tooltip="Whether this airlock can have an integrated circuit placed inside of it or not."
-              />
+              >
+                Shell
+              </Button.Checkbox>
             </LabeledList.Item>
             <LabeledList.Item label="Access Required">
               <Button
                 icon={oneAccess ? 'unlock' : 'lock'}
-                content={oneAccess ? 'One' : 'All'}
                 onClick={() => act('one_access')}
-              />
+              >
+                {oneAccess ? 'One' : 'All'}
+              </Button>
             </LabeledList.Item>
             <LabeledList.Item label="Unrestricted Access">
               <Button
                 icon={unres_direction & 1 ? 'check-square-o' : 'square-o'}
-                content="North"
                 selected={unres_direction & 1}
                 onClick={() =>
                   act('direc_set', {
                     unres_direction: '1',
                   })
                 }
-              />
+              >
+                North
+              </Button>
               <Button
                 icon={unres_direction & 2 ? 'check-square-o' : 'square-o'}
-                content="South"
                 selected={unres_direction & 2}
                 onClick={() =>
                   act('direc_set', {
                     unres_direction: '2',
                   })
                 }
-              />
+              >
+                South
+              </Button>
               <Button
                 icon={unres_direction & 4 ? 'check-square-o' : 'square-o'}
-                content="East"
                 selected={unres_direction & 4}
                 onClick={() =>
                   act('direc_set', {
                     unres_direction: '4',
                   })
                 }
-              />
+              >
+                East
+              </Button>
               <Button
                 icon={unres_direction & 8 ? 'check-square-o' : 'square-o'}
-                content="West"
                 selected={unres_direction & 8}
                 onClick={() =>
                   act('direc_set', {
                     unres_direction: '8',
                   })
                 }
-              />
+              >
+                West
+              </Button>
             </LabeledList.Item>
             <LabeledList.Item label="Airlock Name">
               <Input

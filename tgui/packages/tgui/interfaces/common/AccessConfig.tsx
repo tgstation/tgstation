@@ -5,26 +5,26 @@ import { Button, Section, Stack, Tabs } from '../../components';
 
 type BaseProps = {
   accessMod: (ref: string) => void;
-  grantDep: (ref: string) => void;
   denyDep: (ref: string) => void;
+  grantDep: (ref: string) => void;
 };
 
 type ConfigProps = {
   accesses: Access[];
-  grantAll: () => void;
   denyAll: () => void;
+  grantAll: () => void;
   selectedList: string[];
 } & BaseProps;
 
 type AccessButtonProps = {
-  selectedAccessEntries: Area[];
   selectedAccess: Access;
+  selectedAccessEntries: Area[];
   selectedList: string[];
 } & BaseProps;
 
 export type Access = {
-  name: string;
   accesses: Area[];
+  name: string;
 };
 
 export type Area = {
