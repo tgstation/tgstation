@@ -46,7 +46,6 @@
 	if(isnull(user_client))
 		qdel(src)
 
-
 	icon = costly_icon2html(item, user_client, sourceonly = TRUE)
 	
 	return !!icon
