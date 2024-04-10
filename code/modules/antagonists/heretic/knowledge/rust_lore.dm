@@ -186,6 +186,7 @@
 	cost = 1
 	route = PATH_RUST
 	depth = SIDE_TIER_2
+	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"corrode",frame=5)
 
 /datum/heretic_knowledge/blade_upgrade/rust
 	name = "Toxic Blade"

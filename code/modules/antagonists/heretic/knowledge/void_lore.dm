@@ -140,6 +140,7 @@
 	cost = 1
 	route = PATH_VOID
 	depth = SIDE_TIER_2
+	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"voidblink",frame=7)
 
 /datum/heretic_knowledge/blade_upgrade/void
 	name = "Seeking Blade"
@@ -174,6 +175,7 @@
 	cost = 1
 	route = PATH_VOID
 	depth = SIDE_TIER_3
+	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"voidpull",frame=6)
 
 /datum/heretic_knowledge/ultimate/void_final
 	name = "Waltz at the End of Time"

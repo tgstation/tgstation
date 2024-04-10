@@ -122,6 +122,7 @@
 	cost = 1
 	route = PATH_ASH
 	depth = MID_TIER
+	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"flames",frame=7)
 
 
 /datum/heretic_knowledge/mad_mask
@@ -178,6 +179,7 @@
 	cost = 1
 	route = PATH_ASH
 	depth = SIDE_TIER_3
+	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"smoke",frame=5)
 
 /datum/heretic_knowledge/ultimate/ash_final
 	name = "Ashlord's Rite"

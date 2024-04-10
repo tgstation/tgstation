@@ -134,6 +134,7 @@
 	cost = 1
 	route = PATH_MOON
 	depth = SIDE_TIER_2
+	research_tree_icon = icon('icons/obj/antags/eldritch.dmi',"moon_amulette",frame=9)
 
 /datum/heretic_knowledge/blade_upgrade/moon
 	name = "Moonlight Blade"
@@ -169,6 +170,7 @@
 	cost = 1
 	route = PATH_MOON
 	depth = SIDE_TIER_3
+	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"moon_ringleader",frame=5)
 
 /datum/heretic_knowledge/ultimate/moon_final
 	name = "The Last Act"

@@ -120,9 +120,6 @@
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
 
-	//placeholder background for testing
-	var/test_icon = icon2base64(icon('icons/mob/actions/actions_ecult.dmi',"eye"))
-
 	//setup tiers
 	var/list/tiers = list(
 		list("depth"=0,"nodes"=list()),
