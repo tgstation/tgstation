@@ -1,4 +1,4 @@
-import { ReactNode, useRef } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { BoxProps, computeBoxProps } from './Box';
 import { Tooltip } from './Tooltip';
@@ -6,6 +6,8 @@ import { Tooltip } from './Tooltip';
 type Props = Partial<{
   /** True is default, this fixes an ie thing */
   fixBlur: boolean;
+  /** False by default. Good if you're fetching images on UIs that do not auto update. This will attempt to fix the 'x' icon 5 times. */
+  fixErrors: boolean;
   /** Fill is default. */
   objectFit: 'contain' | 'cover'; // fill is default
   /** Creates a tooltip window using tooltip component. */
@@ -30,7 +32,7 @@ const maxAttempts = 5;
 /** Image component. Use this instead of Box as="img". */
 export function Image(props: Props) {
   const { fixBlur = true, objectFit = 'fill', src, tooltip, ...rest } = props;
-  const attempts = useRef(0);
+  const [attempts, setAttempts] = useState(0);
 
   const computedProps = computeBoxProps(rest);
   computedProps['style'] = {
@@ -41,11 +43,10 @@ export function Image(props: Props) {
 
   let content = (
     <img
-      onError={(event) => {
-        if (attempts.current < maxAttempts) {
+      onError={() => {
+        if (attempts < maxAttempts) {
           setTimeout(() => {
-            attempts.current++;
-            event.currentTarget.src = `${src}`;
+            setAttempts((attempts) => attempts + 1);
           }, 1500);
         }
       }}
