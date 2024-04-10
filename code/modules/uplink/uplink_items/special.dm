@@ -40,7 +40,6 @@
 	item = /obj/item/stack/telecrystal
 	cost = 0
 	surplus = 0
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 
 /datum/uplink_item/special/extratc/New()
 	..()
@@ -67,7 +66,6 @@
 	item = /obj/item/storage/box/syndie_kit/riggedglitterbombs
 	cost = 9
 	surplus = 0
-	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/special/riggedglitterbombs/New()
 	..()
@@ -96,7 +94,6 @@
 	item = /obj/item/implanter/stealthimplanter/explosive
 	cost = 4
 	surplus = 0
-	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/special/stealthmicrobomb/New()
 	..()
@@ -231,7 +228,6 @@
 	item = /obj/item/stack/spacecash/c10000
 	cost = 1
 	surplus = 0
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY) // Probably best to keep it out of spy bounties.
 
 /datum/uplink_item/special/syndicategrant/New()
 	..()
