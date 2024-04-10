@@ -1,4 +1,4 @@
-ADMIN_VERB(debug_variables, R_NONE, "View Variables", "View the variables of a datum.", ADMIN_CATEGORY_DEBUG, datum/thing in world)
+ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the variables of a datum.", ADMIN_CATEGORY_DEBUG, datum/thing in world)
 	user.debug_variables(thing)
 
 // This is kept as a seperate proc because admins are able to show VV to non-admins
