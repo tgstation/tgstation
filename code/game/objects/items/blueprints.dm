@@ -5,7 +5,9 @@
 ///The area is special (shuttles/centcom), therefore can't be claimed.
 #define AREA_SPECIAL 3
 
+///The blueprints are currently reading the list of all wire datums.
 #define LEGEND_VIEWING_LIST "watching_list"
+///The blueprints are on the main page.
 #define LEGEND_OFF "off"
 
 /**
@@ -31,7 +33,8 @@
 	var/in_use = FALSE
 	///The type of area we'll create when we make a new area. This is a typepath.
 	var/area/new_area_type = /area
-	///If set, this is the legend type the blueprints are currently looking at, which is modularly set by wires datums.
+	///The legend type the blueprints are currently looking at, which is either modularly
+	///set by wires datums, the main page, or an overview of them all.
 	var/legend_viewing = LEGEND_OFF
 
 	///List of images that we're showing to a client, used for showing blueprint data.
@@ -63,7 +66,7 @@
 		if(AREA_OUTDOORS)
 			data["area_notice"] = "You are in unclaimed territory."
 		if(AREA_SPECIAL)
-			data["area_notice"] = "This place is not noted on \the [name]."
+			data["area_notice"] = "This area has no notes."
 		else
 			var/area/current_area = get_area(user)
 			data["area_notice"] = "You are now in \the [current_area.name]"
@@ -144,6 +147,7 @@
 			user.balloon_alert_to_viewers("flips blueprints over")
 			clear_viewer()
 		if("refresh")
+			playsound(src, 'sound/items/paper_flip.ogg', 40, TRUE)
 			clear_viewer()
 			set_viewer(user)
 	return TRUE
