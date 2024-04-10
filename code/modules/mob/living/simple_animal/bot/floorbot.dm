@@ -326,7 +326,7 @@
 		toggle_magnet()
 		visible_message(span_notice("[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] "))
 		mode = BOT_REPAIRING
-		if(do_after(src, 50, target = target_turf) && mode == BOT_REPAIRING)
+		if(do_after(src, 5 SECONDS, target = target_turf) && mode == BOT_REPAIRING)
 			if(autotile) //Build the floor and include a tile.
 				if(replacetiles && tilestack)
 					target_turf.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)	//make sure a hull is actually below the floor tile
@@ -348,14 +348,14 @@
 			toggle_magnet()
 			mode = BOT_REPAIRING
 			visible_message(span_notice("[src] begins [(F.broken || F.burnt) ? "repairing the floor" : "placing a floor tile"]."))
-			if(do_after(src, 50, target = F) && mode == BOT_REPAIRING)
+			if(do_after(src, 5 SECONDS, target = F) && mode == BOT_REPAIRING)
 				success = TRUE
 
 		else if(replacetiles && tilestack && F.type != tilestack.turf_type)
 			toggle_magnet()
 			mode = BOT_REPAIRING
 			visible_message(span_notice("[src] begins replacing the floor tiles."))
-			if(do_after(src, 50, target = target_turf) && mode == BOT_REPAIRING && tilestack)
+			if(do_after(src, 5 SECONDS, target = target_turf) && mode == BOT_REPAIRING && tilestack)
 				success = TRUE
 
 		if(success)

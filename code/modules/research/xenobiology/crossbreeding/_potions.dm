@@ -54,7 +54,7 @@ Slimecrossing Potions
 		peace_target.visible_message(span_danger("[user] starts to drink [src]!"),
 			span_danger("You start to drink [src]!"))
 
-	if(!do_after(user, 100, target = peace_target))
+	if(!do_after(user, 10 SECONDS, target = peace_target))
 		return
 	if(peace_target != user)
 		to_chat(user, span_notice("You feed [peace_target] [src]!"))
@@ -91,7 +91,7 @@ Slimecrossing Potions
 	love_target.visible_message(span_danger("[user] starts to feed [love_target] a love potion!"),
 		span_userdanger("[user] starts to feed you a love potion!"))
 
-	if(!do_after(user, 50, target = love_target))
+	if(!do_after(user, 5 SECONDS, target = love_target))
 		return
 	to_chat(user, span_notice("You feed [love_target] the love potion!"))
 	to_chat(love_target, span_notice("You develop feelings for [user], and anyone [user.p_they()] like[user.p_s()]."))
@@ -183,7 +183,7 @@ Slimecrossing Potions
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potsilver"
 
-/obj/item/slimepotion/slime_reviver/attack(mob/living/simple_animal/slime/revive_target, mob/user)
+/obj/item/slimepotion/slime_reviver/attack(mob/living/basic/slime/revive_target, mob/user)
 	if(!isslime(revive_target))
 		to_chat(user, span_warning("The potion only works on slimes!"))
 		return ..()
@@ -207,7 +207,7 @@ Slimecrossing Potions
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potcyan"
 
-/obj/item/slimepotion/slime/chargedstabilizer/attack(mob/living/simple_animal/slime/stabilize_target, mob/user)
+/obj/item/slimepotion/slime/chargedstabilizer/attack(mob/living/basic/slime/stabilize_target, mob/user)
 	if(!isslime(stabilize_target))
 		to_chat(user, span_warning("The stabilizer only works on slimes!"))
 		return ..()

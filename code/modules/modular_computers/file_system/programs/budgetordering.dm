@@ -8,6 +8,7 @@
 	can_run_on_flags = PROGRAM_LAPTOP | PROGRAM_PDA
 	size = 10
 	tgui_id = "NtosCargo"
+	program_icon = FA_ICON_CART_FLATBED
 	///Are you actually placing orders with it?
 	var/requestonly = TRUE
 	///Can the tablet see or buy illegal stuff?

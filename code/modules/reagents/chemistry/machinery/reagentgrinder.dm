@@ -99,7 +99,12 @@
 		. += span_notice("Filled to <b>[round((total_weight / maximum_weight) * 100)]%</b> capacity.")
 
 	if(!QDELETED(beaker))
-		. += span_notice("A beaker of <b>[beaker.reagents.maximum_volume]u</b> capacity is present.")
+		. += span_notice("A beaker of <b>[beaker.reagents.maximum_volume]u</b> capacity is present. Contains:")
+		if(beaker.reagents.total_volume)
+			for(var/datum/reagent/reg as anything in beaker.reagents.reagent_list)
+				. += span_notice("[round(reg.volume, CHEMICAL_VOLUME_ROUNDING)]u of [reg.name]")
+		else
+			. += span_notice("Nothing.")
 		. += span_notice("[EXAMINE_HINT("Right click")] with empty hand to remove beaker.")
 	else
 		. += span_warning("It's missing a beaker.")
@@ -174,12 +179,12 @@
 			continue
 
 		//Nothing would come from grinding or juicing
-		if(!length(ingredient.grind_results) && !ingredient.juice_typepath)
+		if(!length(ingredient.grind_results) && !ingredient.reagents.total_volume)
 			to_chat(user, span_warning("You cannot grind/juice [ingredient] into reagents!"))
 			continue
 
 		//Error messages should be in the objects' definitions
-		if(!ingredient.grind_requirements(src))
+		if(!ingredient.blend_requirements(src))
 			continue
 
 		filtered_list += ingredient
@@ -241,7 +246,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 	//add item directly
-	else if(tool.grind_results || tool.juice_typepath)
+	else if(length(tool.grind_results) || tool.reagents?.total_volume)
 		if(tool.atom_storage) //anything that has internal storage would be too much recursion for us to handle
 			to_chat(user, span_notice("Drag this item onto [src] to dump its contents."))
 			return ITEM_INTERACT_BLOCKING
@@ -439,12 +444,11 @@
 				break
 
 			if(juicing)
-				if(ingredient.juice_typepath)
-					if(!ingredient.juice(beaker.reagents, user))
-						to_chat(user, span_danger("[src] shorts out as it tries to juice up [ingredient], and transfers it back to storage."))
-						continue
-					item_processed = TRUE
-			else if(ingredient.grind_results)
+				if(!ingredient.juice(beaker.reagents, user))
+					to_chat(user, span_danger("[src] shorts out as it tries to juice up [ingredient], and transfers it back to storage."))
+					continue
+				item_processed = TRUE
+			else if(length(ingredient.grind_results) || ingredient.reagents?.total_volume)
 				if(!ingredient.grind(beaker.reagents, user))
 					if(isstack(ingredient))
 						to_chat(user, span_notice("[src] attempts to grind as many pieces of [ingredient] as possible."))

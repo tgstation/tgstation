@@ -268,7 +268,7 @@
 			if(machine_target.anchored)
 				balloon_alert(user, "unanchor first!")
 				return
-			if(do_after(user, 20, target = target))
+			if(do_after(user, 2 SECONDS, target = target))
 				machine_target.deconstruct() //Let's not substract matter
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 			return

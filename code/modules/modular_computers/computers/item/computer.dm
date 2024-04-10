@@ -491,7 +491,7 @@
 				to_chat(user, span_warning("You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."))
 		return FALSE
 
-	if(use_energy()) // checks if the PC is powered
+	if(use_energy(base_active_power_usage)) // checks if the PC is powered
 		if(looping_sound)
 			soundloop.start()
 		enabled = TRUE
@@ -901,20 +901,18 @@
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/modular_computer/deconstruct(disassembled = TRUE)
+/obj/item/modular_computer/atom_deconstruct(disassembled = TRUE)
 	remove_pai()
 	eject_aicard()
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if (disassembled)
-			internal_cell?.forceMove(drop_location())
-			computer_id_slot?.forceMove(drop_location())
-			inserted_disk?.forceMove(drop_location())
-			new /obj/item/stack/sheet/iron(drop_location(), steel_sheet_cost)
-		else
-			physical.visible_message(span_notice("\The [src] breaks apart!"))
-			new /obj/item/stack/sheet/iron(drop_location(), round(steel_sheet_cost * 0.5))
+	if (disassembled)
+		internal_cell?.forceMove(drop_location())
+		computer_id_slot?.forceMove(drop_location())
+		inserted_disk?.forceMove(drop_location())
+		new /obj/item/stack/sheet/iron(drop_location(), steel_sheet_cost)
+	else
+		physical.visible_message(span_notice("\The [src] breaks apart!"))
+		new /obj/item/stack/sheet/iron(drop_location(), round(steel_sheet_cost * 0.5))
 	relay_qdel()
-	return ..()
 
 // Ejects the inserted intellicard, if one exists. Used when the computer is deconstructed.
 /obj/item/modular_computer/proc/eject_aicard()

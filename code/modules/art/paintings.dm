@@ -256,7 +256,7 @@
 	if(!id_card)
 		to_chat(user, span_warning("You don't even have a id and you want to be an art patron?"))
 		return
-	if(!id_card.registered_account || !id_card.registered_account.account_job)
+	if(!id_card.can_be_used_in_payment(user))
 		to_chat(user, span_warning("No valid non-departmental account found."))
 		return
 	var/datum/bank_account/account = id_card.registered_account

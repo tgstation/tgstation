@@ -85,7 +85,7 @@
 	if(burning)
 		to_chat(user, span_warning("You need to extinguish [src] before removing the logs!"))
 		return
-	if(!has_buckled_mobs() && do_after(user, 50, target = src))
+	if(!has_buckled_mobs() && do_after(user, 5 SECONDS, target = src))
 		for(var/obj/item/grown/log/bonfire_log in contents)
 			bonfire_log.forceMove(drop_location())
 			bonfire_log.pixel_x += rand(1,4)
@@ -191,7 +191,6 @@
 
 // Late init so that we can wait for air to exist in lazyloaded templates
 /obj/structure/bonfire/prelit/LateInitialize()
-	. = ..()
 	start_burning()
 
 #undef BONFIRE_FIRE_STACK_STRENGTH

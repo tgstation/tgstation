@@ -49,12 +49,7 @@
 	/// Cooldown between being able to toggle broadcasting
 	COOLDOWN_DECLARE(broadcast_toggle_cd)
 
-/obj/machinery/quantum_server/Initialize(mapload)
-	. = ..()
-
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/quantum_server/LateInitialize()
+/obj/machinery/quantum_server/post_machine_initialize()
 	. = ..()
 
 	radio = new(src)

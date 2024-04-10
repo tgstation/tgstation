@@ -147,7 +147,7 @@
 )
 	SIGNAL_HANDLER
 
-	if(SEND_SIGNAL(mod, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, 0, damage, attack_type, damage_type) & COMPONENT_HIT_REACTION_BLOCK)
+	if(mod.hit_reaction(owner, hitby, attack_text, 0, damage, attack_type))
 		drain_power(use_energy_cost)
 		return SUCCESSFUL_BLOCK
 	return NONE
@@ -460,10 +460,10 @@
 
 /obj/item/mod/module/plate_compression/on_install()
 	old_size = mod.w_class
-	mod.w_class = new_size
+	mod.update_weight_class(new_size)
 
 /obj/item/mod/module/plate_compression/on_uninstall(deleting = FALSE)
-	mod.w_class = old_size
+	mod.update_weight_class(old_size)
 	old_size = null
 	if(!mod.loc)
 		return

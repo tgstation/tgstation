@@ -47,6 +47,9 @@
 
 #define NO_FREEBIES "commies go home"
 
+/// The special account ID for admins using debug cards.
+#define ADMIN_ACCOUNT_ID "ADMIN!"
+
 //Defines that set what kind of civilian bounties should be applied mid-round.
 #define CIV_JOB_BASIC 1
 #define CIV_JOB_ROBO 2
