@@ -77,6 +77,7 @@
 /obj/machinery/power/apc/proc/can_place_terminal(mob/living/user, obj/item/stack/cable_coil/installing_cable, silent = TRUE)
 	if(!opened)
 		return FALSE
+	var/turf/host_turf = get_turf(src)
 	if(host_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		if(!silent && user)
 			balloon_alert(user, "remove the floor plating!")

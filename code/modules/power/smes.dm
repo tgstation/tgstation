@@ -134,6 +134,8 @@
 		if(do_after(user, 2 SECONDS, target = src))
 			if(!can_place_terminal(user, item, silent = TRUE))
 				return
+			var/obj/item/stack/cable_coil/cable = item
+			var/turf/turf = get_turf(src)
 			var/obj/structure/cable/connected_cable = turf.get_cable_node(terminal_cable_layer) //get the connecting node cable, if there's one
 			if (prob(50) && electrocute_mob(user, connected_cable, connected_cable, 1, TRUE)) //animate the electrocution if uncautious and unlucky
 				do_sparks(5, TRUE, src)
@@ -159,6 +161,7 @@
 
 	return ..()
 
+/// Checks if we're in a valid state to place a terminal
 /obj/machinery/power/smes/proc/can_place_terminal(mob/living/user, obj/item/stack/cable_coil/installing_cable, silent = TRUE)
 	var/set_dir = get_dir(user, src)
 	if(set_dir & (set_dir - 1))//we don't want diagonal click
