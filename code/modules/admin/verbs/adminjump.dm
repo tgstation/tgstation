@@ -106,7 +106,7 @@ ADMIN_VERB(get_key, R_ADMIN, "Get Key", "Teleport the player with the provided k
 		M.forceMove(get_turf(user))
 		BLACKBOX_LOG_ADMIN_VERB("Get Key")
 
-ADMIN_VERB(send_mob, R_ADMIN, "Send Mob", "Teleport the specified mob to an area of your choosing.", ADMIN_CATEGORY_GAME, mob/jumper in world)
+ADMIN_VERB(send_mob, R_ADMIN, "Send Mob", "Teleport the specified mob to an area of your choosing.", ADMIN_CATEGORY_GAME, mob/jumper)
 	var/list/sorted_areas = get_sorted_areas()
 	if(!length(sorted_areas))
 		to_chat(user, "No areas found.", confidential = TRUE)

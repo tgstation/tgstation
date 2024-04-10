@@ -83,7 +83,7 @@ ADMIN_VERB(cmd_admin_local_narrate, R_ADMIN, "Local Narrate", ADMIN_VERB_NO_DESC
 	message_admins(span_adminnotice("<b> LocalNarrate: [key_name_admin(user)] at [ADMIN_VERBOSEJMP(locale)]:</b> [msg]<BR>"))
 	BLACKBOX_LOG_ADMIN_VERB("Local Narrate")
 
-ADMIN_VERB(cmd_admin_direct_narrate, R_ADMIN, "Direct Narrate", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
+ADMIN_VERB(cmd_admin_direct_narrate, R_ADMIN, "Direct Narrate", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target)
 	var/msg = input(user, "Message:", "Enter the text you wish to appear to your target:") as text|null
 
 	if( !msg )
