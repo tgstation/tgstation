@@ -67,16 +67,16 @@
 	recharge_speed = 0
 	repairs = 0
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		recharge_speed += (capacitor.tier * STANDARD_CELL_CHARGE * 0.1)
+		recharge_speed += 5e-3 * capacitor.tier
 	for(var/datum/stock_part/servo/servo in component_parts)
 		repairs += servo.tier - 1
 	for(var/obj/item/stock_parts/cell/cell in component_parts)
-		recharge_speed *= (cell.maxcharge / STANDARD_CELL_CHARGE)
+		recharge_speed *= cell.maxcharge
 
 /obj/machinery/recharge_station/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Recharging <b>[recharge_speed]J</b> per cycle.")
+		. += span_notice("The status display reads: Recharging: <b>[display_power(recharge_speed, convert = FALSE)]</b>.")
 		if(materials.silo)
 			. += span_notice("The ore silo link indicator is lit, and cyborg restocking can be toggled by <b>Right-Clicking</b> [src].")
 		if(repairs)

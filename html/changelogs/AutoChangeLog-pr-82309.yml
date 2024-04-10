@@ -1,4 +1,0 @@
-author: "Blacklist897"
-delete-after: True
-changes:
-  - balance: "suit and cell chargers should draw from grid preventing instant apc blackouts in most cases."

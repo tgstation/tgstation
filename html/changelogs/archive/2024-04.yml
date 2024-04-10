@@ -180,3 +180,149 @@
   nikothedude:
   - bugfix: Root beer no longer causes laser carbines and disabler smgs to fire infinitely
       fast.
+2024-04-06:
+  00-Steven:
+  - admin: Refresh button on the View Round Logs menu actually works, instead of just
+      adding a runtime to the logs (and not updating them).
+  Archie700:
+  - bugfix: changed value of cell charge from 5000 to 5 megajoules
+  Artemchik542:
+  - bugfix: aheal now properly heals ears deafness
+  Blacklist897:
+  - balance: suit and cell chargers should draw from grid preventing instant apc blackouts
+      in most cases.
+  EnterTheJake:
+  - balance: CNS Rebooter Implant will now pull you out of stamcrit and grant you
+      a few seconds of stun immunity
+  JohnFulpWillard:
+  - admin: Removing components button now lists components to remove
+  Rhials:
+  - rscadd: Nuclear Operatives now purchase an Intelligence Agent, who can watch cameras
+      and bodycams, move the shuttle, and provide radio support. Only 12 Telecrystals!
+  SyncIt21:
+  - refactor: refactors how objects are deconstructed in relation to the `NO_DECONSTRUCTION`
+      flag. Certain objects & machinery may display different tool interactions &
+      behaviours when destroyed/deconstructed. Report these changes if you feel like
+      they are bugs
+  Zergspower:
+  - bugfix: fixes Borg and Syndicate inducers not working
+  jlsnow301, infraredbaron:
+  - rscadd: Added a new UI element over players that are interacting, building, etc.
+2024-04-07:
+  Bilbo367:
+  - bugfix: Narcolepsy is no longer activated while neutered.
+  JohnFulpWillard:
+  - bugfix: You can no longer take chemicals out of medipens with a syringe.
+  - balance: Basic mob AIs with no mobs on the Z level now stop.
+  Melbert:
+  - bugfix: Fix fancy anomaly theme being broken
+  - bugfix: Skill rewards should properly be dropped out of unworthy player's hands
+  - bugfix: Items will properly pass through slime on occasion
+  - bugfix: Captive Xeno end round report should make a tad more sense
+  Skeleton-In-Disguise:
+  - rscadd: Transhumanist now allows you to select your augmentation
+  - rscadd: Transhumanist can now provide a robotic voice box, or flashlight eyes
+  - spellcheck: Transhumanist's roundstart text has been re-written to not be wrong
+  Vishenka0704:
+  - qol: Added search bar to character prefs catalogs
+  mc-oofert:
+  - balance: punches no longer knock down or deal stamina damage
+  necromanceranne:
+  - rscadd: Watcher wreaths. Made from the mangled remains of a watcher, now a handsome
+      accessory for you to wear a few inches behind your head. Comes in Normal and
+      Icewing variants.
+  - rscadd: Some bounties for the two variants of watcher wreaths.
+2024-04-08:
+  Fluffles:
+  - bugfix: Hats/glasses/masks should hopefully behave more predictably for the purposes
+      of eye/mouth surgery.
+  Jacquerel:
+  - rscadd: Adds a new Final Objective where you force your fellow crew to fight to
+      the death on pain of... death.
+  LemonInTheDark:
+  - bugfix: The color matrix editor now works properly again
+  Metekillot:
+  - bugfix: Broken chameleon kits can't be unbroken by an EMP.
+  Rhials:
+  - bugfix: Sweeps a tile of dust off of the Maint Mania deathmatch map, which was
+      causing errors.
+2024-04-09:
+  JohnFulpWillard, Zeek the Rat:
+  - rscadd: Battle Arcade has been completely overhauled in a new progression system,
+      this time using TGUI.
+  - rscadd: The Curator's keys can now reset arcade cabinets.
+  - balance: You now need to be literate to play arcade games, except for Mediborg's
+      Amputation Adventure.
+  - bugfix: You can no longer screwdriver emagged arcade consoles. Accept your fate.
+  - bugfix: Silicons can no longer play Mediborg's Amputation Adventure.
+  Melbert:
+  - spellcheck: Shoes and Gloves are now referred to as "a pair of" rather than "some".
+  - spellcheck: Reinforced Window's description is less out of place.
+  - spellcheck: Fixed an empty space in examining a human's bloody hands.
+  - code_imp: It's a tad easier to exit an atom's examine text now.
+  mc-oofert:
+  - qol: slaughter/laughter demons have a cooler round end report
+  - qol: you may not bodyslam yourself as a demon
+  - code_imp: slaughter and laughter demons are given their antag datum when their
+      mind initializes
+2024-04-10:
+  00-Steven:
+  - bugfix: Lead acid batteries have had their power values fixed.
+  00-Steven, SyncIt21:
+  - bugfix: Wrench table deconstruction gives the right materials again.
+  - bugfix: Screwdriver table deconstruction only deconstructs the top again.
+  ArcaneMusic:
+  - bugfix: Vorpal Scythe execute messages now read correctly.
+  Bisar:
+  - bugfix: Mechs will no longer delete their living non-occupant contents when destroyed.
+  Higgin:
+  - balance: 'Spies can now get five additional types of objective: Protect Human,
+      Protect Nonhuman, Detain, Jailbreak, and Escape (Exile).'
+  - balance: Spy objectives now feature a much wider array of targets and treatments.
+  - refactor: added no_failure var to objectives. Objectives with no_failure = TRUE
+      do not print a success at roundend. Custom objectives use this now instead of
+      a separate string.
+  IndieanaJones:
+  - qol: Basic dexterous mobs now have a health doll and screen damage indication
+      like other basic mobs.
+  JohnFulpWillard:
+  - rscadd: A bunch of new medipens you can refill with the medipen refiller (survival/luxury/mutadone/saturnx/meth)
+  - bugfix: Mech pads, door buttons, message monitors, tram machines, abductor consoles
+      & holodeck computers now use power.
+  JohnFulpWillard, Tattax:
+  - rscadd: Monkeys can now wear all jumpsuits.
+  - rscadd: Bioscrambler anomalies can now give monkey legs.
+  - bugfix: Monkeys can have their tails removed, and tails are no longer invisible
+      when implanted into another species.
+  Melbert:
+  - bugfix: You can't fit items which are normally too large for a storage by fitting
+      it in the storage when it is small, then growing it to a larger size.
+  NeonNik2245:
+  - rscadd: Adds anosmia quirk
+  Pickle-Coding:
+  - bugfix: Fixes many instances of energy sources for ethereals supplying a thousand
+      times less energy than intended.
+  - bugfix: Fixes recharging stations not being able to charge ethereals.
+  - bugfix: Fixes recharge stations charging too fast.
+  - qol: Recharge stations display their recharging speed in formatted power, rather
+      than unformatted energy per cycle.
+  - balance: Cells will only consider 0.1% of their charge for calculating shock damage.
+  Rhials:
+  - bugfix: The tide of post-round blob zombies when a blob wins will no longer break
+      the speakers in your headset.
+  SyncIt21:
+  - bugfix: Reagent grinders display reagents of its beaker on examination
+  Thunder12345:
+  - rscadd: Added support for directional explosions.
+  - rscadd: Rocket launcher backblast is now 271% more explosive, check your six for
+      friendlies!
+  - rscadd: X4 charges now explode in a cone away from the user when placed on a sufficiently
+      solid object.
+  - bugfix: 'X4 charges will now behave correctly when placed on dense atoms (note:
+      don''t try to read a variable from an atom you just blew up)'
+  mc-oofert:
+  - bugfix: deathmatch can no longer occassionally send people to nullspace
+  necromanceranne:
+  - image: Updates the colors of various material datum to bring them closer in-line
+      with their actual material stacks
+  - image: Improves the sprites for the material knight armor and helmet.

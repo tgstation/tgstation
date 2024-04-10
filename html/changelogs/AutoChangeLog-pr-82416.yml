@@ -1,4 +1,0 @@
-author: "jlsnow301, infraredbaron"
-delete-after: True
-changes:
-  - rscadd: "Added a new UI element over players that are interacting, building, etc."

@@ -555,7 +555,7 @@
 		update_appearance()
 		playsound(src, 'sound/effects/pope_entry.ogg', 100)
 		Rumble()
-		addtimer(CALLBACK(src, PROC_REF(stopRumble)), 600)
+		addtimer(CALLBACK(src, PROC_REF(stopRumble)), 60 SECONDS)
 	else
 		to_chat(user, span_warning("[src] is already active!"))
 

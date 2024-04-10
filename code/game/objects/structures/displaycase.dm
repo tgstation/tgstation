@@ -451,8 +451,8 @@
 		ui.open()
 
 /obj/item/key/displaycase
-	name = "display case key"
-	desc = "The key to the curator's display cases."
+	name = "curator key"
+	desc = "The key to the curator's display cases and arcade cabinets."
 
 /obj/item/showpiece_dummy
 	name = "holographic replica"
