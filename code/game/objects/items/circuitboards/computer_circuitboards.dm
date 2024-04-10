@@ -7,7 +7,7 @@
 /obj/item/circuitboard/computer/aiupload
 	name = "AI Upload"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/computer/upload/ai/obj/machinery/computer/upload/ai
+	build_path = /obj/machinery/computer/upload/ai
 
 /obj/item/circuitboard/computer/aiupload/Initialize(mapload)
 	. = ..()
