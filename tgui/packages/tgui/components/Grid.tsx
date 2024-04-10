@@ -6,12 +6,14 @@
 
 import { PropsWithChildren } from 'react';
 
+import { logger } from '../logging';
 import { BoxProps } from './Box';
 import { Table } from './Table';
 
 /** @deprecated Do not use. Use stack instead. */
 export function Grid(props: PropsWithChildren<BoxProps>) {
   const { children, ...rest } = props;
+  logger.error('Grid component is deprecated. Use a Stack instead.');
   return (
     <Table {...rest}>
       <Table.Row>{children}</Table.Row>
