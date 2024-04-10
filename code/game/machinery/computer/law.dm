@@ -28,7 +28,7 @@
 			current = null
 			return
 		M.install(current.laws, user)
-		imprint_gps()
+		imprint_gps(gps_tag = "Weak Upload Signal")
 	else
 		return ..()
 
@@ -36,12 +36,6 @@
 	if(S.stat == DEAD)
 		return FALSE
 	return TRUE
-
-/obj/machinery/computer/upload/proc/imprint_gps()
-	for(var/obj/item/circuitboard/computer/board in src.contents)
-		if(!contents || board.GetComponent(/datum/component/gps))
-			return
-		board.AddComponent(/datum/component/gps, "Imprinted Upload Signal")
 
 /obj/machinery/computer/upload/ai
 	name = "\improper AI upload console"
