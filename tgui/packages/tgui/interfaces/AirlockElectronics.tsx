@@ -3,14 +3,14 @@ import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, Input, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { Access, AccessConfig } from './common/AccessConfig';
+import { AccessConfig, Region } from './common/AccessConfig';
 
 type Data = {
   accesses: string[];
   oneAccess: BooleanLike;
   passedCycleId: number;
   passedName: string;
-  regions: Access[];
+  regions: Region[];
   shell: BooleanLike;
   unres_direction: number;
 };

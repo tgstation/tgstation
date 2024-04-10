@@ -10,19 +10,19 @@ type BaseProps = {
 };
 
 type ConfigProps = {
-  accesses: Access[];
+  accesses: Region[];
   denyAll: () => void;
   grantAll: () => void;
   selectedList: string[];
 } & BaseProps;
 
 type AccessButtonProps = {
-  selectedAccess: Access;
+  selectedAccess: Region;
   selectedAccessEntries: Area[];
   selectedList: string[];
 } & BaseProps;
 
-export type Access = {
+export type Region = {
   accesses: Area[];
   name: string;
 };
