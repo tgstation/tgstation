@@ -40,7 +40,7 @@ export function AirLockMainSection(props) {
   return (
     <Stack fill vertical>
       <Stack.Item>
-        <Section fill title="Main">
+        <Section fill>
           <LabeledList>
             <LabeledList.Item label="Integrated Circuit Shell">
               <Button.Checkbox
