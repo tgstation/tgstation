@@ -109,7 +109,7 @@ function SearchItem({ atom }: { atom: Atom }) {
         {!atom.icon ? (
           <Icon name="spinner" size={2.4} spin color="gray" />
         ) : (
-          <Image src={atom.icon} />
+          <Image fixErrors src={atom.icon} />
         )}
       </div>
     </Tooltip>
