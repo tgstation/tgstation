@@ -101,17 +101,22 @@
 
 
 /obj/machinery/oven/attackby(obj/item/I, mob/user, params)
-
-	if(open && used_tray && istype(I, /obj/item/storage))
-		used_tray.item_interaction(user, I)
+	if(open && used_tray && I.atom_storage)
+		//Stop containers from beating up our oven in general.
 		return
 
-	if(open && !used_tray && istype(I, /obj/item/plate/oven_tray))
+	if(open && !used_tray && I.atom_storage)
 		if(user.transferItemToLoc(I, src, silent = FALSE))
 			to_chat(user, span_notice("You put [I] in [src]."))
 			add_tray_to_oven(I, user)
 	else
 		return ..()
+
+/obj/machinery/oven/item_interaction(mob/living/user, obj/item/item,  list/modifiers, is_right_clicking)
+	if(open && used_tray && item.atom_storage)
+		used_tray.item_interaction(user, item, modifiers, is_right_clicking)
+		. = ..()
+		return
 
 ///Adds a tray to the oven, making sure the shit can get baked.
 /obj/machinery/oven/proc/add_tray_to_oven(obj/item/plate/oven_tray, mob/baker)
@@ -283,8 +288,6 @@
 		
 	. = ..()
 	return
-
-	// . = ..()
 
 #undef OVEN_SMOKE_STATE_NONE
 #undef OVEN_SMOKE_STATE_GOOD

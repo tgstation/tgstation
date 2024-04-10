@@ -115,8 +115,6 @@
 	
 	. = ..()
 	return
-	
-	// . = ..()
 
 /obj/machinery/griddle/attack_hand(mob/user, list/modifiers)
 	. = ..()
