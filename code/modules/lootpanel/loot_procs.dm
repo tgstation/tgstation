@@ -58,6 +58,10 @@
 	if(isnull(ref))
 		return FALSE
 
+	var/datum/search_object/obj = contents[ref]
+	if(isnull(obj))
+		return FALSE
+
 	var/turf/source_tile = search_turf_ref?.resolve()
 	if(isnull(source_tile))
 		return FALSE
@@ -66,11 +70,7 @@
 		stop_search()
 		return FALSE
 
-	var/datum/search_object/found_item = contents[ref]
-	if(isnull(found_item))
-		return FALSE
-	
-	var/atom/thing = found_item.item_ref?.resolve()	
+	var/atom/thing = obj.item_ref?.resolve()	
 	if(QDELETED(thing))
 		return FALSE
 

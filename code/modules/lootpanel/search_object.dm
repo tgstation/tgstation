@@ -37,7 +37,7 @@
 	if(!isfile(item.icon) || !length("[item.icon]"))
 		return
 
-	icon = item.icon
+	icon = "[item.icon]"
 	icon_state = item.icon_state
 
 
