@@ -95,7 +95,7 @@
 		if(!contents || board.GetComponent(/datum/component/gps))
 			return
 		board.AddComponent(/datum/component/gps, "[tracker]")
-		balloon_alert_to_viewers("Board Authenticated and Imprinted", vision_distance = 1)
+		balloon_alert_to_viewers("board tracker enabled", vision_distance = 1)
 
 /obj/machinery/computer/emp_act(severity)
 	. = ..()
