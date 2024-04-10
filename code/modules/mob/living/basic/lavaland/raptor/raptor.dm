@@ -52,7 +52,7 @@
 	inherit_properties()
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	var/static/list/my_food = list(/obj/item/stack/ore)
-	AddElement(/datum/element/basic_eating, my_food)
+	AddElement(/datum/element/basic_eating, food_types = my_food)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured, stop_fleeing_at = 0.5, start_fleeing_below = 0.2)
 	if(ridable_component)
@@ -69,11 +69,13 @@
 
 
 /mob/living/basic/mining/raptor/proc/add_happiness_component()
+	var/static/list/percentage_callbacks = list(0, 15, 25, 35, 50, 75, 90, 100)
 	AddComponent(\
 		/datum/component/happiness,\
 		on_petted_change = 50,\
 		on_groom_change = 50,\
 		on_eat_change = 200,\
+		callback_percentages = percentage_callbacks,\
 		happiness_callback = CALLBACK(src, PROC_REF(happiness_change)),\
 	)
 
@@ -312,7 +314,7 @@
 	if(length(mother.inherit_traits))
 		inherit_traits += pick(mother.inherit_traits)
 	attack_modifier = rand(min(father.attack_modifier, mother.attack_modifier), max(father.attack_modifier, mother.attack_modifier))
-	health_modifier = rand(min(father.health_modifier, mother.health_modifier), min(father.health_modifier, mother.health_modifier))
+	health_modifier = rand(min(father.health_modifier, mother.health_modifier), max(father.health_modifier, mother.health_modifier))
 
 /datum/storage/raptor_storage
 	animated = FALSE

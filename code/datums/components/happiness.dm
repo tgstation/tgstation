@@ -30,7 +30,7 @@
 	///how long till we can groom it again
 	COOLDOWN_DECLARE(groom_cooldown)
 
-/datum/component/happiness/Initialize(maximum_happiness = 400, blackboard_key = BB_BASIC_HAPPINESS, on_groom_change = 200, on_eat_change = 300, on_petted_change = 30, callback_percentages = list(0, 25, 50, 100), happiness_callback)
+/datum/component/happiness/Initialize(maximum_happiness = 400, blackboard_key = BB_BASIC_HAPPINESS, on_groom_change = 200, on_eat_change = 300, on_petted_change = 30, callback_percentages = list(0, 25, 50, 75, 100), happiness_callback)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
