@@ -114,9 +114,8 @@
 
 /obj/machinery/oven/item_interaction(mob/living/user, obj/item/item,  list/modifiers, is_right_clicking)
 	if(open && used_tray && item.atom_storage)
-		used_tray.item_interaction(user, item, modifiers, is_right_clicking)
-		. = ..()
-		return
+		return used_tray.item_interaction(user, item, modifiers, is_right_clicking)
+	return ..()
 
 ///Adds a tray to the oven, making sure the shit can get baked.
 /obj/machinery/oven/proc/add_tray_to_oven(obj/item/plate/oven_tray, mob/baker)

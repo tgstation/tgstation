@@ -379,7 +379,7 @@
 		cant_hold_list = list(
 			/obj/item/plate/oven_tray,
 			/obj/item/reagent_containers/cup/soup_pot,
-	),
+		),
 	) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Food Containers, Food Trash, Organs, Tobacco Products, Lighters, and Kitchen Tools.
 	atom_storage.insert_preposition = "on"
 	atom_storage.max_slots = 6

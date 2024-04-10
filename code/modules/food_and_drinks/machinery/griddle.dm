@@ -81,6 +81,9 @@
 		return ..()
 
 /obj/machinery/griddle/item_interaction(mob/living/user, obj/item/item, list/modifiers, is_right_clicking)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
 
 	if(item.atom_storage && !is_right_clicking)
 		var/obj/item/storage/tray = item
@@ -90,22 +93,21 @@
 			// Non-tray dumping requires a do_after
 			to_chat(user, span_notice("You start dumping out the contents of [item] into [src]..."))
 			if(!do_after(user, 2 SECONDS, target = tray))
-				return
+				return ITEM_INTERACT_BLOCKING
 
 		for(var/obj/tray_item in tray.contents)
 			if(!IS_EDIBLE(tray_item))
 				continue
 			if(contents.len >= max_items)
 				balloon_alert(user, "it's full!")
-				return TRUE
+				return ITEM_INTERACT_BLOCKING
 			if(tray.atom_storage.attempt_remove(tray_item, src))
 				loaded++
 				AddToGrill(tray_item, user)
 		if(loaded)
 			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
 			update_appearance()
-		. = ..()
-		return
+		return ITEM_INTERACT_SUCCESS
 	
 	if(item.atom_storage && is_right_clicking)
 		var/obj/item/storage/tray = item
