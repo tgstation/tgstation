@@ -12,10 +12,9 @@
 ///from base of atom/get_examine_name(): (/mob, list/overrides)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"
 	//Positions for overrides list
-	#define EXAMINE_POSITION_ARTICLE (1<<0)
-	#define EXAMINE_POSITION_BEFORE (1<<1)
-	//End positions
-	#define COMPONENT_EXNAME_CHANGED (1<<0)
+	#define EXAMINE_POSITION_ARTICLE 1
+	#define EXAMINE_POSITION_BEFORE 2
+	#define EXAMINE_POSITION_NAME 3
 ///from base of atom/examine(): (/mob, list/examine_text, can_see_inside)
 #define COMSIG_ATOM_REAGENT_EXAMINE "atom_reagent_examine"
 	/// Stop the generic reagent examine text

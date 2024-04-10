@@ -185,7 +185,6 @@
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/item/keycard/cafeteria/LateInitialize()
-	. = ..()
 	if(SSqueuelinks.queues[CAFE_KEYCARD_TOILETS])
 		SSqueuelinks.pop_link(CAFE_KEYCARD_TOILETS)
 

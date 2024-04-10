@@ -34,7 +34,7 @@
 
 	var/processing = FALSE
 
-/obj/machinery/airlock_controller/LateInitialize()
+/obj/machinery/airlock_controller/post_machine_initialize()
 	. = ..()
 
 	var/obj/machinery/door/interior_door = GLOB.objects_by_id_tag[interior_door_tag]

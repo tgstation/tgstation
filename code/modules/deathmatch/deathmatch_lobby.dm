@@ -47,6 +47,7 @@
 		clear_reservation()
 	players = null
 	observers = null
+	map?.template_in_use = FALSE //just incase
 	map = null
 	location = null
 	loadouts = null
@@ -55,13 +56,18 @@
 /datum/deathmatch_lobby/proc/start_game()
 	if (playing)
 		return
+	if(map.template_in_use)
+		to_chat(get_mob_by_ckey(host), span_warning("This map is currently loading for another lobby. Please wait until that other map finishes loading. It would be a disaster if these two mixed up."))
+		return
 	playing = DEATHMATCH_PRE_PLAYING
 
+	map.template_in_use = TRUE
 	RegisterSignal(map, COMSIG_LAZY_TEMPLATE_LOADED, PROC_REF(find_spawns_and_start_delay))
 	location = map.lazy_load()
 	if (!location)
 		to_chat(get_mob_by_ckey(host), span_warning("Couldn't reserve/load a map location (all locations used?), try again later, or contact a coder."))
 		playing = FALSE
+		map.template_in_use = FALSE
 		UnregisterSignal(map, COMSIG_LAZY_TEMPLATE_LOADED)
 		return FALSE
 
@@ -72,6 +78,7 @@
 			player_spawns += thing
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
+	map.template_in_use = FALSE
 	addtimer(CALLBACK(src, PROC_REF(start_game_after_delay)), 8 SECONDS)
 
 /datum/deathmatch_lobby/proc/start_game_after_delay()
@@ -202,7 +209,7 @@
 
 	announce(span_reallybig("[player.real_name] HAS DIED.<br>[players.len] REMAIN."))
 
-	if(!gibbed && !QDELING(player)) // for some reason dusting or deleting in chasm storage messes up tgui bad
+	if(!gibbed && !QDELING(player))
 		if(!HAS_TRAIT(src, TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS))
 			player.dust(TRUE, TRUE, TRUE)
 	if (players.len <= 1)
