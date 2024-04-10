@@ -43,7 +43,6 @@
 #include "code\__DEFINES\apc_defines.dm"
 #include "code\__DEFINES\appearance.dm"
 #include "code\__DEFINES\arcades.dm"
-#include "code\__DEFINES\area_editor.dm"
 #include "code\__DEFINES\art.dm"
 #include "code\__DEFINES\assemblies.dm"
 #include "code\__DEFINES\assert.dm"
