@@ -31,7 +31,14 @@ const maxAttempts = 5;
 
 /** Image component. Use this instead of Box as="img". */
 export function Image(props: Props) {
-  const { fixBlur = true, objectFit = 'fill', src, tooltip, ...rest } = props;
+  const {
+    fixBlur = true,
+    fixErrors = false,
+    objectFit = 'fill',
+    src,
+    tooltip,
+    ...rest
+  } = props;
   const [attempts, setAttempts] = useState(0);
 
   const computedProps = computeBoxProps(rest);
@@ -44,7 +51,7 @@ export function Image(props: Props) {
   let content = (
     <img
       onError={() => {
-        if (attempts < maxAttempts) {
+        if (fixErrors && attempts < maxAttempts) {
           setTimeout(() => {
             setAttempts((attempts) => attempts + 1);
           }, 1500);
