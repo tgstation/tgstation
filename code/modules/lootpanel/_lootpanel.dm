@@ -12,8 +12,6 @@
 	var/list/contents = list()
 	/// The mob of the owner
 	var/mob/user
-	/// The speed at which we search, represented as items per tick
-	var/search_speed = 20
 	/// If we're currently running slow_search_contents
 	var/searching = FALSE
 

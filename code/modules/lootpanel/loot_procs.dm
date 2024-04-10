@@ -58,11 +58,11 @@
 	if(isnull(ref))
 		return FALSE
 
-	var/turf/tile = search_turf_ref?.resolve()
-	if(isnull(tile))
+	var/turf/source_tile = search_turf_ref?.resolve()
+	if(isnull(source_tile))
 		return FALSE
 
-	if(!user.TurfAdjacent(tile))
+	if(!user.TurfAdjacent(source_tile))
 		stop_search()
 		return FALSE
 
@@ -71,10 +71,10 @@
 		return FALSE
 	
 	var/atom/thing = found_item.item_ref?.resolve()	
-	if(QDELETED(thing) || QDELETED(user))
+	if(QDELETED(thing))
 		return FALSE
 
-	if(thing != tile && (!thing.Adjacent(user) || !thing.Adjacent(user)))
+	if(thing != source_tile && (!thing.Adjacent(user) || !locate(thing) in source_tile.contents))
 		return FALSE
 
 	var/modifiers = ""

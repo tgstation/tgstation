@@ -28,24 +28,28 @@
 	path = isobj(item) && item.type
 	string_ref = REF(item)
 
-	if(!ismob(item) && length(item.overlays) < 3)
-		icon = item.icon
-		icon_state = item.icon_state
+	// Icon generation conditions //////////////	
+	// Condition 1: Icon is complex
+	if(ismob(item) || length(item.overlays) > 2)
+		return
+
+	// Condition 2: Can't get icon path
+	if(!isfile(item.icon) || !length("[item.icon]"))
+		return
+
+	icon = item.icon
+	icon_state = item.icon_state
 
 
 /// Generates the icon for the search object. This is the expensive part.
 /datum/search_object/proc/generate_icon()
-	if(icon && icon_state)
-		return TRUE
-
 	var/atom/item = item_ref?.resolve()
-	if(isnull(item))
-		qdel(src)
+	if(QDELETED(item))
+		return FALSE
 
 	var/client/user_client = client_ref?.resolve()
 	if(isnull(user_client))
-		qdel(src)
+		return FALSE
 
 	icon = costly_icon2html(item, user_client, sourceonly = TRUE)
-	
-	return !!icon
+	return TRUE

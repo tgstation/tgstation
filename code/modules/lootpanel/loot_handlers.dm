@@ -41,5 +41,6 @@
 
 /// Reset the search in case there were underlying items
 /datum/lootpanel/proc/on_post_change(turf/new_tile)
+	stop_search()
 	search_turf_ref = WEAKREF(new_tile)
 	start_search()

@@ -7,10 +7,7 @@ PROCESSING_SUBSYSTEM_DEF(looting)
 	wait = 0.5 SECONDS
 
 
-/**
- * The intent of this is to iterate over the contents and find invalid items or items that still need icons.
- * It runs normally until its out of icons, but the user can restart the process which will prune invalid
- */
+// Iterates over the tile contents for search objects without icons
 /datum/lootpanel/process(seconds_per_tick)
 	var/datum/tgui/panel = SStgui.get_open_ui(user, src)
 	if(isnull(panel))
@@ -22,39 +19,22 @@ PROCESSING_SUBSYSTEM_DEF(looting)
 		stop_search()
 		return PROCESS_KILL
 
-	var/throttle = 0
+	var/processed = FALSE
 	for(var/ref in contents)
-		if(throttle == search_speed)
-			panel.send_update()
-			CHECK_TICK
-			return
-
-		var/datum/search_object/obj = contents[ref]
+		CHECK_TICK
 		
-		var/atom/thing  = obj.item_ref?.resolve()
-		if(isnull(thing))
-			stop_search()
-			return
-
-		// Our base turf
-		if(isturf(thing))
-			if(!user.TurfAdjacent(thing))
-				stop_search()
-				return
-		else // it's an object inside the turf
-			if(isnull(thing) || !locate(thing) in tile.contents)
-				contents -= ref
-				continue
-
+		var/datum/search_object/obj = contents[ref]
 		if(obj.icon)
 			continue
 
 		if(!obj.generate_icon())
-			contents -= ref
+			delete_search_object(obj)
 			continue
 
-		throttle++
-		CHECK_TICK
+		processed = TRUE
+
+	if(processed)
+		return
 
 	searching = FALSE
 	panel.send_update()	
