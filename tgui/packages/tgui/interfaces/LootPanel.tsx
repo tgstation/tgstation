@@ -1,11 +1,12 @@
 import { KEY } from 'common/keys';
 import { BooleanLike } from 'common/react';
 import { capitalizeAll, createSearch } from 'common/string';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useBackend } from '../backend';
 import {
   Button,
+  Flex,
   Icon,
   Image,
   Input,
@@ -24,6 +25,7 @@ type Data = {
 type Atom = {
   icon?: string;
   name: string;
+  path?: string;
   ref: string;
 };
 
@@ -33,16 +35,36 @@ export function LootPanel(props) {
 
   const [searchText, setSearchText] = useState('');
 
-  const filteredContents = contents.filter(
-    createSearch(searchText, (atom) => atom.name),
-  );
+  // limitations: stacks of items with uneven amounts
+  const contentsByPath = useMemo(() => {
+    const acc: Record<string, Atom[]> = {};
+
+    for (let i = 0; i < contents.length; i++) {
+      const atom = contents[i];
+      if (atom.path) {
+        if (!acc[atom.path]) {
+          acc[atom.path] = [];
+        }
+        acc[atom.path].push(atom);
+      } else {
+        acc[atom.ref] = [atom];
+      }
+    }
+    return acc;
+  }, [contents]);
+
+  const filteredContents: Group[] = Object.entries(contentsByPath)
+    .filter(([path, atoms]) =>
+      createSearch(searchText, () => atoms[0].name)(path),
+    )
+    .map(([_, atoms]) => ({ atom: atoms[0], amount: atoms.length }));
 
   return (
     <Window height={250} width={190} title={`Contents: ${total - 1}`}>
       <Window.Content
         onKeyDown={(event) => {
           if (event.key === KEY.Enter && filteredContents.length > 0) {
-            act('grab', { ref: filteredContents[0].ref });
+            act('grab', { ref: filteredContents[0].atom.ref });
           }
           if (event.key === KEY.Escape) {
             Byond.sendMessage('close');
@@ -70,21 +92,33 @@ export function LootPanel(props) {
             </Stack>
           }
         >
-          <Stack fill wrap>
-            {filteredContents.map((atom, index) => (
-              <Stack.Item key={index} m={1}>
-                <SearchItem atom={atom} />
-              </Stack.Item>
+          <Flex wrap>
+            {filteredContents.map((group, index) => (
+              <Flex.Item key={index} m={1}>
+                <SearchItem group={group} />
+              </Flex.Item>
             ))}
-          </Stack>
+          </Flex>
         </Section>
       </Window.Content>
     </Window>
   );
 }
+type SearchItemProps = {
+  group: Group;
+};
 
-function SearchItem({ atom }: { atom: Atom }) {
+type Group = {
+  atom: Atom;
+  amount: number;
+};
+
+function SearchItem(props: SearchItemProps) {
   const { act } = useBackend();
+
+  const {
+    group: { atom, amount },
+  } = props;
 
   return (
     <Tooltip content={capitalizeAll(atom.name)}>
@@ -111,6 +145,7 @@ function SearchItem({ atom }: { atom: Atom }) {
         ) : (
           <Image fixErrors src={atom.icon} />
         )}
+        {amount > 1 && <div className="SearchItem--amount">{amount}</div>}
       </div>
     </Tooltip>
   );

@@ -44,6 +44,7 @@
 		UNTYPED_LIST_ADD(items, list(
 			"icon" = item.icon, 
 			"name" = item.name, 
+			"path" = item.path,
 			"ref" = item.string_ref, 
 		))
 	
@@ -72,7 +73,7 @@
 	if(QDELETED(thing) || QDELETED(user))
 		return FALSE
 
-	if(!locate(thing) in tile.contents || thing != tile || !thing.Adjacent(user))
+	if(thing != tile && (!thing.Adjacent(user) || !thing.Adjacent(user)))
 		return FALSE
 
 	var/modifiers = ""
