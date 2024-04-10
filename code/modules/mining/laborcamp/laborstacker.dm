@@ -143,7 +143,7 @@
 	return ..()
 
 /obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/input)
-	if (HAS_TRAIT(input, TRAIT_SHEET_SMELTED) && input.gulag_valid)
+	if (input.manufactured && input.gulag_valid)
 		points += SHEET_POINT_VALUE * input.amount
 	return ..()
 

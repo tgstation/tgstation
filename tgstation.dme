@@ -1446,7 +1446,6 @@
 #include "code\datums\elements\light_eaten.dm"
 #include "code\datums\elements\light_eater.dm"
 #include "code\datums\elements\loomable.dm"
-#include "code\datums\elements\manufactured_material_sheet.dm"
 #include "code\datums\elements\mirage_border.dm"
 #include "code\datums\elements\mob_access.dm"
 #include "code\datums\elements\mob_grabber.dm"

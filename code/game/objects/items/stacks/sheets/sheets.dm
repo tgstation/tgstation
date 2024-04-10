@@ -16,6 +16,8 @@
 	var/sheettype = null //this is used for girders in the creation of walls/false walls
 	///If true, this is worth points in the gulag labour stacker
 	var/gulag_valid = FALSE
+	///Set to true if this is vended from a material storage
+	var/manufactured = FALSE
 	///What type of wall does this sheet spawn
 	var/walltype
 	/// whether this sheet can be sniffed by the material sniffer
@@ -33,10 +35,19 @@
 		GLOB.sniffable_sheets -= src
 	return ..()
 
+/obj/item/stack/sheet/examine(mob/user)
+	. = ..()
+	if (manufactured && gulag_valid)
+		. += "It has been embossed with a manufacturer's mark of guaranteed quality."
+
 /obj/item/stack/sheet/add(_amount)
 	. = ..()
 	if(sniffable && amount >= 10 && is_station_level(z))
 		GLOB.sniffable_sheets |= src
+
+/obj/item/stack/sheet/merge(obj/item/stack/sheet/target_stack, limit)
+	. = ..()
+	manufactured = manufactured && target_stack.manufactured
 
 /// removing from sniffable handled by the sniffer itself when it checks for targets
 

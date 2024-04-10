@@ -145,7 +145,7 @@
 	if(materials.silo && !materials.on_hold())
 		var/matlist = input.custom_materials & materials.mat_container.materials
 		if (length(matlist))
-			materials.mat_container.insert_item(input, context = src)
+			materials.insert_item(input)
 			return
 
 	// No silo attached process to internal storage
