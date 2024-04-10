@@ -52,6 +52,7 @@
 	cost = 1
 	route = PATH_MOON
 	depth = 3
+	research_tree_icon = icon('icons/ui_icons/antags/heretic/knowledge.dmi',"grasp_moon")
 
 /datum/heretic_knowledge/moon_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))

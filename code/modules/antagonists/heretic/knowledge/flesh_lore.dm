@@ -65,6 +65,7 @@
 	cost = 1
 	route = PATH_FLESH
 	depth = 3
+	research_tree_icon = icon('icons/ui_icons/antags/heretic/knowledge.dmi',"grasp_flesh")
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))

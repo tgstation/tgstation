@@ -50,6 +50,7 @@
 	cost = 1
 	route = PATH_LOCK
 	depth = 3
+	research_tree_icon = icon('icons/ui_icons/antags/heretic/knowledge.dmi',"grasp_lock")
 
 /datum/heretic_knowledge/lock_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
