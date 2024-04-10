@@ -228,8 +228,8 @@ const ModuleDetailsBasic = (props) => {
           label="Integrity"
           buttons={
             <Button
-              content={'Repair'}
-              icon={'wrench'}
+              content="Repair"
+              icon="wrench"
               onClick={() =>
                 act('equip_act', {
                   ref: ref,
@@ -363,7 +363,7 @@ const SnowflakeWeaponBallistic = (props) => {
           !disabledreload &&
           projectiles_cache > 0 && (
             <Button
-              icon={'redo'}
+              icon="redo"
               disabled={projectiles >= max_magazine}
               onClick={() =>
                 act('equip_act', {
@@ -424,7 +424,7 @@ const SnowflakeSleeper = (props) => {
       >
         {patient.patient_name}
       </LabeledList.Item>
-      <LabeledList.Item label={'Health'}>
+      <LabeledList.Item label="Health">
         <ProgressBar
           ranges={{
             good: [0.75, Infinity],
@@ -434,35 +434,35 @@ const SnowflakeSleeper = (props) => {
           value={patient.patient_health}
         />
       </LabeledList.Item>
-      <LabeledList.Item className="candystripe" label={'State'}>
+      <LabeledList.Item className="candystripe" label="State">
         {patient.patient_state}
       </LabeledList.Item>
-      <LabeledList.Item className="candystripe" label={'Temperature'}>
+      <LabeledList.Item className="candystripe" label="Temperature">
         {patient.core_temp} C
       </LabeledList.Item>
-      <LabeledList.Item className="candystripe" label={'Brute Damage'}>
+      <LabeledList.Item className="candystripe" label="Brute Damage">
         {patient.brute_loss}
       </LabeledList.Item>
-      <LabeledList.Item className="candystripe" label={'Burn Severity'}>
+      <LabeledList.Item className="candystripe" label="Burn Severity">
         {patient.burn_loss}
       </LabeledList.Item>
-      <LabeledList.Item className="candystripe" label={'Toxin Content'}>
+      <LabeledList.Item className="candystripe" label="Toxin Content">
         {patient.toxin_loss}
       </LabeledList.Item>
-      <LabeledList.Item className="candystripe" label={'Respiratory Damage'}>
+      <LabeledList.Item className="candystripe" label="Respiratory Damage">
         {patient.oxygen_loss}
       </LabeledList.Item>
       {!!has_brain_damage && (
-        <LabeledList.Item className="candystripe" label={'Detected'}>
+        <LabeledList.Item className="candystripe" label="Detected">
           Brain Damage
         </LabeledList.Item>
       )}
       {!!has_traumas && (
-        <LabeledList.Item className="candystripe" label={'Detected'}>
+        <LabeledList.Item className="candystripe" label="Detected">
           Traumatic Damage
         </LabeledList.Item>
       )}
-      <LabeledList.Item label={'Reagent Details'}>
+      <LabeledList.Item label="Reagent Details">
         {contained_reagents.map((reagent) => (
           <LabeledList.Item
             key={reagent.name}
@@ -473,7 +473,7 @@ const SnowflakeSleeper = (props) => {
           </LabeledList.Item>
         ))}
       </LabeledList.Item>
-      <LabeledList.Item label={'Reagent Injection'}>
+      <LabeledList.Item label="Reagent Injection">
         {injectible_reagents.map((reagent) => (
           <LabeledList.Item
             className="candystripe"
@@ -525,17 +525,17 @@ const SnowflakeSyringe = (props) => {
   } = props.module.snowflake;
   return (
     <>
-      <LabeledList.Item label={'Syringes'}>
+      <LabeledList.Item label="Syringes">
         <ProgressBar value={syringe / max_syringe}>
           {`${syringe} of ${max_syringe}`}
         </ProgressBar>
       </LabeledList.Item>
-      <LabeledList.Item label={'Reagents'}>
+      <LabeledList.Item label="Reagents">
         <ProgressBar value={reagents / total_reagents}>
           {`${reagents} of ${total_reagents} units`}
         </ProgressBar>
       </LabeledList.Item>
-      <LabeledList.Item label={'Mode'}>
+      <LabeledList.Item label="Mode">
         <Button
           content={mode}
           onClick={() =>
@@ -696,8 +696,8 @@ const SnowflakeAirTank = (props) => {
             label="Integrity"
             buttons={
               <Button
-                content={'Repair'}
-                icon={'wrench'}
+                content="Repair"
+                icon="wrench"
                 onClick={() =>
                   act('equip_act', {
                     ref: ref,
@@ -985,8 +985,8 @@ const SnowflakeExtinguisher = (props) => {
         label="Water"
         buttons={
           <Button
-            content={'Refill'}
-            icon={'fill'}
+            content="Refill"
+            icon="fill"
             onClick={() =>
               act('equip_act', {
                 ref: ref,
@@ -1002,10 +1002,10 @@ const SnowflakeExtinguisher = (props) => {
       </LabeledList.Item>
       <LabeledList.Item label="Extinguisher">
         <Button
-          content={'Activate'}
-          color={'red'}
+          content="Activate"
+          color="red"
           disabled={reagents < reagents_required}
-          icon={'fire-extinguisher'}
+          icon="fire-extinguisher"
           onClick={() =>
             act('equip_act', {
               ref: ref,
@@ -1069,9 +1069,9 @@ const SnowflakeLawClaw = (props) => {
       label="Handcuff Suspects"
       buttons={
         <Button
-          content={'Toggle'}
+          content="Toggle"
           color={autocuff ? 'green' : 'blue'}
-          icon={'handcuffs'}
+          icon="handcuffs"
           onClick={() =>
             act('equip_act', {
               ref: ref,
