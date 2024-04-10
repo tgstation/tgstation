@@ -43,6 +43,10 @@
 /obj/item/grapple_gun/afterattack(atom/target, mob/living/user, proximity)
 	. = ..()
 
+	if(!lavaland_equipment_pressure_check(get_turf(user)))
+		user.balloon_alert(user, "gun mechanism wont work here!")
+		return
+
 	if(target == user || !hooked)
 		return
 
