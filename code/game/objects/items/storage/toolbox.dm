@@ -429,8 +429,8 @@
 /obj/item/storage/toolbox/guncase/chinalake
 	name = "china lake case"
 	weapon_to_spawn = /obj/item/gun/ballistic/chinalake
-	extra_to_spawn = /obj/item/ammo_casing/chinalake/blast
-	var/second_extra_to_spawn = /obj/item/ammo_casing/chinalake/frag
+	extra_to_spawn = /obj/item/ammo_casing/caseless/chinalake/blast
+	var/second_extra_to_spawn = /obj/item/ammo_casing/caseless/chinalake/frag
 
 /obj/item/storage/toolbox/guncase/chinalake/PopulateContents()
 	new weapon_to_spawn (src)

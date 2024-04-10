@@ -958,6 +958,18 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_UNIQUE_AI "station_trait_unique_ai"
 #define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
 #define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage"
+#define STATION_TRAIT_STRONG_SUPPLY_LINES "station_trait_strong_supply_lines"
+#define STATION_TRAIT_GALACTIC_GRANT "station_trait_galactic_grant"
+#define STATION_TRAIT_BOUNTIFUL_BOUNTIES "station_trait_bountiful_bounties"
+#define STATION_TRAIT_SCARVES "station_trait_scarves"
+#define STATION_TRAIT_IAN_ADVENTURE "station_trait_ian_adventure"
+#define STATION_TRAIT_DEATHRATTLED_DEPARTMENT "station_trait_deathrattled_department"
+#define STATION_TRAIT_DEATHRATTLED_ALL "station_trait_deathrattled_all"
+#define STATION_TRAIT_SLOW_SHUTTLE "station_trait_slow_shuttle"
+#define STATION_TRAIT_ION_STORMS "station_trait_ion_storms"
+#define STATION_TRAIT_RAD_STORMS "station_trait_rad_storms"
+#define STATION_TRAIT_BLACKOUT "station_trait_blackout"
+#define STATION_TRAIT_DISTANT_SUPPLYLINES "station_trait_distant_supplylines"
 
 ///Deathmatch traits
 #define TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS "deathmath_explosive_implants"

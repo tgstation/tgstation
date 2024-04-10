@@ -101,6 +101,7 @@
 	name = "deathrattled department"
 	trait_type = STATION_TRAIT_POSITIVE
 	show_in_report = TRUE
+	trait_to_give = STATION_TRAIT_DEATHRATTLED_DEPARTMENT
 	abstract_type = /datum/station_trait/deathrattle_department
 	blacklist = list(/datum/station_trait/deathrattle_all)
 
@@ -173,6 +174,7 @@
 	name = "Deathrattled Station"
 	trait_type = STATION_TRAIT_POSITIVE
 	show_in_report = TRUE
+	trait_to_give = STATION_TRAIT_DEATHRATTLED_ALL
 	weight = 1
 	report_message = "All members of the station have received an implant to notify each other if one of them dies. This should help improve job-safety!"
 	var/datum/deathrattle_group/deathrattle_group

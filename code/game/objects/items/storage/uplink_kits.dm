@@ -1521,6 +1521,38 @@
 		var/item = pick(item_list)
 		new item(src)
 
+/obj/item/storage/box/syndie_kit/piratekit
+	name = "Pirate Kit"
+
+/obj/item/storage/box/syndie_kit/piratekit/PopulateContents()
+	new /obj/item/gun/ballistic/handcannon/syndicate(src)
+	for(var/i in 1 to 4)
+		new /obj/item/ammo_casing/caseless/cannonball(src)
+	new /obj/item/book/granter/crafting_recipe/syndipiratemanual(src)
+
+/obj/item/storage/box/syndie_kit/riggedglitterbombs
+	name = "Box of Explosive Glitterbombs"
+
+/obj/item/storage/box/syndie_kit/riggedglitterbombs/PopulateContents()
+	var/list/item_list = list(
+		/obj/item/grenade/chem_grenade/pyro/explosive/pinkglitter,
+		/obj/item/grenade/chem_grenade/pyro/explosive/blueglitter,
+		/obj/item/grenade/chem_grenade/pyro/explosive/whiteglitter
+	)
+
+	for(var/i in 1 to 5)
+		var/item = pick(item_list)
+		new item(src)
+
+/obj/item/storage/box/syndie_kit/boxed_dehydrated_carp/PopulateContents()
+	for(var/i in 1 to 8)
+		new /obj/item/toy/plush/carpplushie/dehy_carp(src)
+
+/obj/item/storage/box/syndie_kit/stealthmicrobomb/PopulateContents()
+	new /obj/item/implanter/stealthimplanter/explosive(src)
+
+
+
 
 
 #undef KIT_RECON

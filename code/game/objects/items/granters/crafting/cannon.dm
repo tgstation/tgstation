@@ -17,3 +17,14 @@
 /obj/item/book/granter/crafting_recipe/trash_cannon/recoil(mob/living/user)
 	to_chat(user, span_warning("The book turns to dust in your hands."))
 	qdel(src)
+
+/obj/item/book/granter/crafting_recipe/syndipiratemanual
+	name = "Syndicate Pirate Manual"
+	desc = "The front page simply says... 'Yar.'"
+	icon_state = "cooking_learing_illegal"
+	crafting_recipe_types = list(
+	/datum/crafting_recipe/syndihandcannon,
+	/datum/crafting_recipe/cannonball,
+	/datum/crafting_recipe/cannonball/emp,
+	/datum/crafting_recipe/cannonball/explosive)
+	icon_state = "bookCrafting"

@@ -258,14 +258,14 @@
 /datum/uplink_item/ammo_nuclear/basic/blastnade
 	name = "Blast Grenade Casing"
 	desc = "A 40mm Grenade Round specifically designed to be fired from a China-Lake Grenade Launcher."
-	item = /obj/item/ammo_casing/chinalake/blast
+	item = /obj/item/ammo_casing/caseless/chinalake/blast
 	cost = 3
 
 /datum/uplink_item/ammo_nuclear/basic/fragnade
 	name = "Frag Grenade Casing"
 	desc = "A 40mm Grenade Round specifically designed to be fired from a China-Lake Grenade Launcher. \
 			Highly explosive, stay clear when firing."
-	item = /obj/item/ammo_casing/chinalake/frag
+	item = /obj/item/ammo_casing/caseless/chinalake/frag
 	cost = 5
 
 //High-cost: 18 TC each. Really should only be coming out during war for how powerful it is, or be the majority of your TC outside of war.

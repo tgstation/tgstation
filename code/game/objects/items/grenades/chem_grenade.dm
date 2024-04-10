@@ -770,6 +770,18 @@
 	beakers += B1
 	beakers += B2
 
+/obj/item/grenade/chem_grenade/pyro/explosive/pinkglitter
+	name = "pink glitter bomb"
+	desc = "For that HOT glittery look."
+
+/obj/item/grenade/chem_grenade/pyro/explosive/blueglitter
+	name = "white glitter bomb"
+	desc = "For that somnolent glittery look."
+
+/obj/item/grenade/chem_grenade/pyro/explosive/whiteglitter
+	name = "blue glitter bomb"
+	desc = "For that COOL glittery look."
+
 
 /obj/item/grenade/chem_grenade/syndiefire
 	name = "incendiary grenade"

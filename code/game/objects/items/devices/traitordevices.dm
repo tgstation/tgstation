@@ -791,3 +791,66 @@ effective or pretty fucking useless.
 			return BRUTELOSS
 	return
 
+/obj/item/camera/rewind/syndicate // Improved sepia camera courtesy of the syndicate.
+	pictures_left = 10
+	pictures_max = 10
+
+/obj/item/batterer/cargoshuttle
+	name = "cargo shuttle navigation corruptor"
+	desc = "A strange device with twin antennas and a static-like touch."
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
+	icon_state = "cargoshuttlebatterer"
+	throwforce = 5
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 3
+	throw_range = 7
+	inhand_icon_state = "electronic"
+	times_used = 0 //Number of times it's been used.
+	max_uses = 1
+
+/obj/item/batterer/cargoshuttle/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
+	if(!user) return
+
+	SSshuttle.supply.callTime += (1 MINUTES)
+
+	priority_announce("Attention, due to data corruption caused by unknown circumstances: The navigation protocols on the cargo shuttle has degraded in quality, the cargo shuttle will take another minute to depart and return. We apologize for the inconveinence.", "Cental Command - Cargo Shuttle Update", 'sound/misc/notice1.ogg')
+
+	playsound(src.loc, 'sound/misc/interference.ogg', 50, TRUE)
+	to_chat(user, span_danger("The cargo shuttle navigation corruptor self-destructs!"))
+	qdel(src)
+
+/obj/item/card/emag/botemagger
+	desc = "It's a card with a magnetic strip attached to some circuitry. It looks... off, somehow."
+	name = "bot behavior sequencer"
+	icon_state = "emag"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
+	/// How many charges can the emag hold?
+	var/max_charges = 5
+	/// How many charges does the emag start with?
+	var/charges = 5
+	/// How fast (in seconds) does charges increase by 1?
+	var/recharge_rate = 0.1
+	/// Does usage require you to be in range?
+	prox_check = TRUE
+
+/obj/item/card/emag/botemagger/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	var/atom/A = target
+	if(!proximity && prox_check)
+		return
+
+	if(!A.emag_act(user, src) && ((charges + 1) > max_charges)) // This is here because some emag_act use sleep and that could mess things up.
+		charges++
+	if(!istype(target, /mob/living/simple_animal/bot/))
+		if(max_charges > 1)
+			to_chat(user, span_danger("\The [src] short-circuits while subverting the [target]!"))
+			max_charges--
+			return
+		if(max_charges <= 1)
+			to_chat(user, span_danger("\The [src] self-destructs while subverting the [target]!"))
+			qdel(src)
+			return
+
