@@ -37,8 +37,8 @@ export function GroupedContents(props: Props) {
 
   return (
     <Flex wrap>
-      {filteredContents.map((group, index) => (
-        <Flex.Item key={index} m={1}>
+      {filteredContents.map((group) => (
+        <Flex.Item key={group.item.name} m={1}>
           <LootBox group={group} />
         </Flex.Item>
       ))}

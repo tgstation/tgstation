@@ -18,8 +18,8 @@ export function RawContents(props: Props) {
 
   return (
     <Flex wrap>
-      {filteredContents.map((item, index) => (
-        <Flex.Item key={index} m={1}>
+      {filteredContents.map((item) => (
+        <Flex.Item key={item.ref} m={1}>
           <LootBox item={item} />
         </Flex.Item>
       ))}
