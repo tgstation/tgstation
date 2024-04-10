@@ -119,8 +119,8 @@
  * Adds items to a soup pot without invoking any procs that call sleep() when using in a component.
  *
  * Args:
- * * attacking_item: The container that's being used to add items to the soup pot. Must not be null.
- * * use: the entity adding ingredients via a container to a soup pot. Must not be null.
+ * * transfer_from: The container that's being used to add items to the soup pot. Must not be null.
+ * * user: the entity adding ingredients via a container to a soup pot. Must not be null.
  */
 /obj/item/reagent_containers/cup/soup_pot/proc/transfer_from_container_to_pot(obj/item/transfer_from, mob/user)
 	if(transfer_from.atom_storage)
