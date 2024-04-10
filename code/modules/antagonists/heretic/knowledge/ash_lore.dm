@@ -48,7 +48,7 @@
 	next_knowledge = list(/datum/heretic_knowledge/spell/ash_passage)
 	cost = 1
 	route = PATH_ASH
-	depth = GRASP_TIER
+	depth = 3
 
 /datum/heretic_knowledge/ashen_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -81,7 +81,7 @@
 	spell_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
 	cost = 1
 	route = PATH_ASH
-	depth = SIDE_TIER_1
+	depth = 4
 
 /datum/heretic_knowledge/mark/ash_mark
 	name = "Mark of Ash"
@@ -121,7 +121,7 @@
 	spell_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
 	cost = 1
 	route = PATH_ASH
-	depth = MID_TIER
+	depth = 7
 	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"flames",frame=7)
 
 
@@ -146,7 +146,7 @@
 	result_atoms = list(/obj/item/clothing/mask/madness_mask)
 	cost = 1
 	route = PATH_ASH
-	depth = SIDE_TIER_2
+	depth = 8
 
 /datum/heretic_knowledge/blade_upgrade/ash
 	name = "Fiery Blade"
@@ -179,7 +179,7 @@
 	spell_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 1
 	route = PATH_ASH
-	depth = SIDE_TIER_3
+	depth = 10
 	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"smoke",frame=5)
 
 /datum/heretic_knowledge/ultimate/ash_final

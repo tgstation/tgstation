@@ -49,7 +49,7 @@
 	next_knowledge = list(/datum/heretic_knowledge/key_ring)
 	cost = 1
 	route = PATH_LOCK
-	depth = GRASP_TIER
+	depth = 3
 
 /datum/heretic_knowledge/lock_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
@@ -112,7 +112,7 @@
 	)
 	cost = 1
 	route = PATH_LOCK
-	depth = SIDE_TIER_1
+	depth = 4
 
 /datum/heretic_knowledge/mark/lock_mark
 	name = "Mark of Lock"
@@ -142,7 +142,7 @@
 	next_knowledge = list(/datum/heretic_knowledge/spell/burglar_finesse)
 	cost = 1
 	route = PATH_LOCK
-	depth = MID_TIER
+	depth = 7
 
 /datum/heretic_knowledge/spell/burglar_finesse
 	name = "Burglar's Finesse"
@@ -159,7 +159,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
 	cost = 1
 	route = PATH_LOCK
-	depth = SIDE_TIER_2
+	depth = 8
 
 /datum/heretic_knowledge/blade_upgrade/flesh/lock //basically a chance-based weeping avulsion version of the former
 	name = "Opening Blade"
@@ -188,7 +188,7 @@
 	route = PATH_LOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 1
-	depth = SIDE_TIER_3
+	depth = 10
 
 /datum/heretic_knowledge/ultimate/lock_final
 	name = "Unlock the Labyrinth"

@@ -12,7 +12,7 @@
 	)
 	cost = 1
 	route = PATH_SIDE
-	depth = SIDE_TIER_2
+	depth = 8
 
 /datum/heretic_knowledge/reroll_targets/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 

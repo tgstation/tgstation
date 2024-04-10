@@ -42,7 +42,7 @@
 	/// If set to "null", the icon of result_atom or spell_to_add is used.
 	var/icon/research_tree_icon
 	/// Level of knowledge tree where this knowledge should be in the UI
-	var/depth = STARTING_TIER
+	var/depth = 1
 
 /datum/heretic_knowledge/New()
 	if(!mutually_exclusive)
@@ -266,7 +266,7 @@
 	limit = 2
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 5
-	depth = ENTRY_TIER
+	depth = 2
 
 /datum/heretic_knowledge/limited_amount/starting/New()
 	. = ..()
@@ -291,7 +291,7 @@
 	abstract_parent_type = /datum/heretic_knowledge/mark
 	mutually_exclusive = TRUE
 	cost = 2
-	depth = MARK_TIER
+	depth = 5
 	/// The status effect typepath we apply on people on mansus grasp.
 	var/datum/status_effect/eldritch/mark_type
 
@@ -357,7 +357,7 @@
 	abstract_parent_type = /datum/heretic_knowledge/blade_upgrade
 	mutually_exclusive = TRUE
 	cost = 2
-	depth = BLADE_TIER
+	depth = 9
 
 /datum/heretic_knowledge/blade_upgrade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
@@ -585,7 +585,7 @@
 	mutually_exclusive = TRUE
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 10 // A pretty important midgame ritual.
-	depth = KNOWLEDGE_RITUAL_TIER
+	depth = 6
 	/// Whether we've done the ritual. Only doable once.
 	var/was_completed = FALSE
 	research_tree_icon = icon('icons/obj/antags/eldritch.dmi',"book_open")
@@ -680,7 +680,7 @@
 	cost = 2
 	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
 	required_atoms = list(/mob/living/carbon/human = 3)
-	depth = ASCENSION_TIER
+	depth = 11
 
 /datum/heretic_knowledge/ultimate/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()

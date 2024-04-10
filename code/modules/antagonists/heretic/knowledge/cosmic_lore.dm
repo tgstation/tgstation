@@ -49,7 +49,7 @@
 	next_knowledge = list(/datum/heretic_knowledge/spell/cosmic_runes)
 	cost = 1
 	route = PATH_COSMIC
-	depth = GRASP_TIER
+	depth = 3
 
 /datum/heretic_knowledge/cosmic_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -80,7 +80,7 @@
 	spell_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 1
 	route = PATH_COSMIC
-	depth = SIDE_TIER_1
+	depth = 4
 
 /datum/heretic_knowledge/mark/cosmic_mark
 	name = "Mark of Cosmos"
@@ -110,7 +110,7 @@
 	spell_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 1
 	route = PATH_COSMIC
-	depth = MID_TIER
+	depth = 7
 
 /datum/heretic_knowledge/spell/star_blast
 	name = "Star Blast"
@@ -126,7 +126,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
 	cost = 1
 	route = PATH_COSMIC
-	depth = SIDE_TIER_2
+	depth = 8
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
@@ -239,7 +239,7 @@
 	spell_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
 	cost = 1
 	route = PATH_COSMIC
-	depth = SIDE_TIER_3
+	depth = 10
 
 /datum/heretic_knowledge/ultimate/cosmic_final
 	name = "Creators's Gift"

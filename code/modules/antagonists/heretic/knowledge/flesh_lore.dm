@@ -64,7 +64,7 @@
 	limit = 1
 	cost = 1
 	route = PATH_FLESH
-	depth = GRASP_TIER
+	depth = 3
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -139,7 +139,7 @@
 	cost = 1
 	route = PATH_FLESH
 	research_tree_icon = icon('icons/mob/actions/actions_changeling.dmi',"fake_death")
-	depth = SIDE_TIER_1
+	depth = 4
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
@@ -230,7 +230,7 @@
 	spell_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
 	cost = 1
 	route = PATH_FLESH
-	depth = MID_TIER
+	depth = 7
 
 /datum/heretic_knowledge/summon/raw_prophet
 	name = "Raw Ritual"
@@ -254,7 +254,7 @@
 	cost = 1
 	route = PATH_FLESH
 	poll_ignore_define = POLL_IGNORE_RAW_PROPHET
-	depth = SIDE_TIER_2
+	depth = 8
 
 /datum/heretic_knowledge/blade_upgrade/flesh
 	name = "Bleeding Steel"
@@ -298,7 +298,7 @@
 	cost = 1
 	route = PATH_FLESH
 	poll_ignore_define = POLL_IGNORE_STALKER
-	depth = SIDE_TIER_3
+	depth = 10
 
 /datum/heretic_knowledge/ultimate/flesh_final
 	name = "Priest's Final Hymn"

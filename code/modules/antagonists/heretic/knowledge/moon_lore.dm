@@ -51,7 +51,7 @@
 	next_knowledge = list(/datum/heretic_knowledge/spell/moon_smile)
 	cost = 1
 	route = PATH_MOON
-	depth = GRASP_TIER
+	depth = 3
 
 /datum/heretic_knowledge/moon_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -83,7 +83,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/moon_smile
 	cost = 1
 	route = PATH_MOON
-	depth = SIDE_TIER_1
+	depth = 4
 
 /datum/heretic_knowledge/mark/moon_mark
 	name = "Mark of Moon"
@@ -109,7 +109,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 1
 	route = PATH_MOON
-	depth = MID_TIER
+	depth = 7
 
 
 /datum/heretic_knowledge/moon_amulette
@@ -133,7 +133,7 @@
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulette)
 	cost = 1
 	route = PATH_MOON
-	depth = SIDE_TIER_2
+	depth = 8
 	research_tree_icon = icon('icons/obj/antags/eldritch.dmi',"moon_amulette",frame=9)
 
 /datum/heretic_knowledge/blade_upgrade/moon
@@ -170,7 +170,7 @@
 	spell_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
 	cost = 1
 	route = PATH_MOON
-	depth = SIDE_TIER_3
+	depth = 10
 	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"moon_ringleader",frame=5)
 
 /datum/heretic_knowledge/ultimate/moon_final

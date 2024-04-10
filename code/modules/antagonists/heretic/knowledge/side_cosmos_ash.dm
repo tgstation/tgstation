@@ -19,7 +19,7 @@
 	cost = 1
 	route = PATH_SIDE
 	poll_ignore_define = POLL_IGNORE_FIRE_SHARK
-	depth = SIDE_TIER_1
+	depth = 4
 	research_tree_icon = icon('icons/mob/nonhuman-player/eldritch_mobs.dmi',"fire_shark",dir=EAST,moving=FALSE)
 
 /datum/heretic_knowledge/spell/space_phase
@@ -34,7 +34,7 @@
 	spell_to_add = /datum/action/cooldown/spell/jaunt/space_crawl
 	cost = 1
 	route = PATH_SIDE
-	depth = SIDE_TIER_2
+	depth = 8
 	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"space_crawl",frame=6)
 
 /datum/heretic_knowledge/eldritch_coin
@@ -55,4 +55,4 @@
 	result_atoms = list(/obj/item/coin/eldritch)
 	cost = 1
 	route = PATH_SIDE
-	depth = SIDE_TIER_3
+	depth = 10
