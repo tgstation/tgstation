@@ -76,15 +76,11 @@
 
 	switch(action)
 		if("grab")
-			if(!grab(user, params))
-				return FALSE
-			return TRUE
-
+			return grab(user, params)
 		if("refresh")
 			if(searching)
-				stop_search()
-			if(!start_search())
 				return FALSE
-			return TRUE
+			stop_search()
+			return start_search()
 
 	return FALSE

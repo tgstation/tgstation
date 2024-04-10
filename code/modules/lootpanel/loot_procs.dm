@@ -95,8 +95,8 @@
 	search_turf_ref = WEAKREF(tile)
 	src.user = user
 
-	var/datum/lootpanel/panel = SStgui.get_open_ui(user, src)
-	if(panel || searching)
+	var/datum/tgui/open_window = SStgui.get_open_ui(user, src)
+	if(open_window || searching)
 		stop_search()
 
 	RegisterSignal(tile, COMSIG_TURF_CHANGE, PROC_REF(on_tile_change), override = TRUE)

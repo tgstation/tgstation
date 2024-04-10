@@ -49,12 +49,18 @@ export function DmIcon(props: Props) {
   const query = `${iconRef}?state=${icon_state}&dir=${direction}&movement=${movement}&frame=${frame}`;
 
   useEffect(() => {
-    if (!refMap) {
-      fetchRetry(resolveAsset('icon_ref_map.json')).then((response) =>
-        response.json().then((value) => (refMap = value)),
-      );
+    async function fetchRefMap() {
+      const response = await fetchRetry(resolveAsset('icon_ref_map.json'));
+      const data = await response.json();
+      refMap = data;
+      setIconRef(data[icon]);
     }
-    setIconRef(refMap?.[icon] || '');
+
+    if (!refMap) {
+      fetchRefMap();
+    } else {
+      setIconRef(refMap[icon]);
+    }
   }, []);
 
   return <Image src={query} {...rest} />;
