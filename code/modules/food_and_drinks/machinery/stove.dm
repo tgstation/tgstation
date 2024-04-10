@@ -115,8 +115,15 @@
 	. = ..()
 	LAZYREMOVE(added_ingredients, gone)
 
+/**
+ * Adds items to a soup pot without invoking any procs that call sleep() when using in a component.
+ *
+ * Args:
+ * * attacking_item: The container that's being used to add items to the soup pot. Must not be null.
+ * * use: the entity adding ingredients via a container to a soup pot. Must not be null.
+ */
 /obj/item/reagent_containers/cup/soup_pot/proc/containeradd(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/storage))
+	if(attacking_item.atom_storage)
 		var/obj/item/storage/tray = attacking_item
 		var/loaded = 0
 

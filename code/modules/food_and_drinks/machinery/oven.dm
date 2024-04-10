@@ -248,9 +248,9 @@
 	max_items = 6
 	biggest_w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/plate/oven_tray/item_interaction(mob/living/user, obj/item/item, params)
+/obj/item/plate/oven_tray/item_interaction(mob/living/user, obj/item/item,  list/modifiers, is_right_clicking)
 
-	if(istype(item, /obj/item/storage))
+	if(item.atom_storage && !is_right_clicking)
 		var/obj/item/storage/tray = item
 		var/loaded = 0
 
