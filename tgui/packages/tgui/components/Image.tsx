@@ -1,7 +1,6 @@
-import { ReactNode, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { BoxProps, computeBoxProps } from './Box';
-import { Tooltip } from './Tooltip';
 
 type Props = Partial<{
   /** True is default, this fixes an ie thing */
@@ -10,8 +9,6 @@ type Props = Partial<{
   fixErrors: boolean;
   /** Fill is default. */
   objectFit: 'contain' | 'cover'; // fill is default
-  /** Creates a tooltip window using tooltip component. */
-  tooltip: ReactNode;
 }> &
   IconUnion &
   BoxProps;
@@ -36,10 +33,10 @@ export function Image(props: Props) {
     fixErrors = false,
     objectFit = 'fill',
     src,
-    tooltip,
     ...rest
   } = props;
-  const [attempts, setAttempts] = useState(0);
+  const attempts = useRef(0);
+  const [source, setSource] = useState(src);
 
   const computedProps = computeBoxProps(rest);
   computedProps['style'] = {
@@ -48,23 +45,18 @@ export function Image(props: Props) {
     objectFit,
   };
 
-  let content = (
+  return (
     <img
       onError={() => {
-        if (fixErrors && attempts < maxAttempts) {
+        if (fixErrors && attempts.current < maxAttempts) {
           setTimeout(() => {
-            setAttempts((attempts) => attempts + 1);
+            attempts.current++;
+            setSource(`${src}?attempt=${attempts.current}`);
           }, 1500);
         }
       }}
-      src={src}
+      src={source}
       {...computedProps}
     />
   );
-
-  if (tooltip) {
-    content = <Tooltip content={tooltip}>{content}</Tooltip>;
-  }
-
-  return content;
 }
