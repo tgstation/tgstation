@@ -46,6 +46,12 @@
 		/datum/element/change_force_on_death,\
 		move_resist = MOVE_RESIST_DEFAULT,\
 	)
+	var/static/list/display_emote = list(
+		BB_EMOTE_SAY = list("Chirp chirp chirp!", ),
+		BB_EMOTE_SEE = list("shakes its feathers!", "stretches!")
+		BB_SPEAK_CHANCE = 5,
+	)
+	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, display_emote)
 	if(!mapload)
 		GLOB.raptor_count++
 	inherited_stats = new

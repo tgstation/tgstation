@@ -1,4 +1,4 @@
-#define NEXT_EAT_COOLDOWN 2 MINUTES
+#define NEXT_EAT_COOLDOWN 45 SECONDS
 
 /datum/ai_controller/basic_controller/raptor
 	blackboard = list(
@@ -15,6 +15,7 @@
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/raptor,
 		/datum/ai_planning_subtree/flee_target/from_flee_key,
 		/datum/ai_planning_subtree/find_and_hunt_target/heal_raptors,
+		/datum/ai_planning_subtree/random_speech/blackboard,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/simple_find_target,
@@ -91,7 +92,7 @@
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/bully_raptors/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
 	if(succeeded)
-		controller.set_blackboard_key(BB_RAPTOR_TROUBLE_COOLDOWN, world.time + 30 SECONDS)
+		controller.set_blackboard_key(BB_RAPTOR_TROUBLE_COOLDOWN, world.time + 2 MINUTES)
 	return ..()
 
 /datum/ai_planning_subtree/find_and_hunt_target/raptor_start_trouble/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
@@ -171,6 +172,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/flee_target,
+		/datum/ai_planning_subtree/random_speech/blackboard,
 		/datum/ai_planning_subtree/find_and_hunt_target/raptor_trough,
 		/datum/ai_planning_subtree/express_happiness,
 		/datum/ai_planning_subtree/look_for_adult,
