@@ -140,6 +140,7 @@
 	icon_state = "balloon_long"
 	inhand_icon_state = "balloon"
 	w_class = WEIGHT_CLASS_NORMAL
+	/// Combinations of balloon colours to make specific animals.
 	var/list/balloon_combos = list(
 		list("red", "blue") = /obj/item/toy/balloon_animal/guy,
 		list("red", "green") = /obj/item/toy/balloon_animal/nukie,
@@ -156,7 +157,7 @@
 		list("yellow", "orange") = /obj/item/toy/balloon_animal/moth,
 		list("yellow", "purple") = /obj/item/toy/balloon_animal/ethereal,
 		list("orange", "purple") = /obj/item/toy/balloon_animal/plasmaman,
-	) /// For balloon animals.
+	)
 
 /obj/item/toy/balloon/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
