@@ -1331,8 +1331,7 @@
 		affected_mob.adjust_hallucinations(-10 SECONDS * REM * seconds_per_tick)
 
 	if(affected_mob.getStaminaLoss() >= 100)
-		for(var/datum/reagent/medicine/haloperidol/H in affected_mob.reagents.reagent_list)
-			affected_mob.reagents.remove_reagent(H.type, 2 * REM * seconds_per_tick)
+		affected_mob.reagents.remove_reagent(/datum/reagent/medicine/haloperidol, 2 * REM * seconds_per_tick)
 
 	var/need_mob_update = FALSE
 	if(SPT_PROB(10, seconds_per_tick))
