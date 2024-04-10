@@ -3298,6 +3298,7 @@
 #include "code\modules\asset_cache\assets\fontawesome.dm"
 #include "code\modules\asset_cache\assets\genetics.dm"
 #include "code\modules\asset_cache\assets\headers.dm"
+#include "code\modules\asset_cache\assets\icon_ref_map.dm"
 #include "code\modules\asset_cache\assets\inventory.dm"
 #include "code\modules\asset_cache\assets\irv.dm"
 #include "code\modules\asset_cache\assets\jquery.dm"

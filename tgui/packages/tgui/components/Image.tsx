@@ -8,7 +8,7 @@ type Props = Partial<{
   /** False by default. Good if you're fetching images on UIs that do not auto update. This will attempt to fix the 'x' icon 5 times. */
   fixErrors: boolean;
   /** Fill is default. */
-  objectFit: 'contain' | 'cover'; // fill is default
+  objectFit: 'contain' | 'cover';
 }> &
   IconUnion &
   BoxProps;

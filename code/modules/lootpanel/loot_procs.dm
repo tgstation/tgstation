@@ -42,7 +42,8 @@
 			continue
 
 		UNTYPED_LIST_ADD(items, list(
-			"icon" = item.icon, 
+			"icon_state" = item.icon_state,
+			"icon" = item.icon,
 			"name" = item.name, 
 			"path" = item.path,
 			"ref" = item.string_ref, 
@@ -94,6 +95,10 @@
 	search_turf_ref = WEAKREF(tile)
 	src.user = user
 
+	var/datum/lootpanel/panel = SStgui.get_open_ui(user, src)
+	if(panel || searching)
+		stop_search()
+
 	RegisterSignal(tile, COMSIG_TURF_CHANGE, PROC_REF(on_tile_change), override = TRUE)
 	start_search()
 	ui_interact(user)
@@ -101,8 +106,6 @@
 
 /// Helper for starting the search process. Dumps contents, validates tile, starts image processing
 /datum/lootpanel/proc/start_search()
-	stop_search()
-
 	var/turf/tile = search_turf_ref?.resolve()
 	if(QDELETED(tile) || !user.TurfAdjacent(tile))
 		return FALSE

@@ -9,6 +9,8 @@
 	var/datum/weakref/item_ref
 	/// Url to the image of the object
 	var/icon
+	/// Icon state, for inexpensive icons
+	var/icon_state
 	/// The name of the object
 	var/name
 	/// The typepath, used for concatenating the search results
@@ -23,12 +25,19 @@
 	client_ref = WEAKREF(user.client)
 	item_ref = WEAKREF(item)
 	name = item.name
-	string_ref = REF(item)
 	path = isobj(item) && item.type
+	string_ref = REF(item)
+
+	if(!ismob(item) && length(item.overlays) < 3)
+		icon = item.icon
+		icon_state = item.icon_state
 
 
 /// Generates the icon for the search object. This is the expensive part.
 /datum/search_object/proc/generate_icon()
+	if(icon && icon_state)
+		return TRUE
+
 	var/atom/item = item_ref?.resolve()
 	if(isnull(item))
 		qdel(src)
@@ -37,10 +46,7 @@
 	if(isnull(user_client))
 		qdel(src)
 
-	if(ismob(item) || length(item.overlays) > 2)
-		icon = costly_icon2html(item, user_client, sourceonly = TRUE)
-	else
-		icon = icon2html(item, user_client, sourceonly = TRUE)
 
-	if(icon)
-		return TRUE
+	icon = costly_icon2html(item, user_client, sourceonly = TRUE)
+	
+	return !!icon

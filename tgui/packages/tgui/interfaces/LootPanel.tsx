@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react';
 import { useBackend } from '../backend';
 import {
   Button,
+  DmIcon,
   Flex,
   Icon,
   Image,
@@ -19,19 +20,20 @@ import { Window } from '../layouts';
 type Data = {
   contents: Atom[];
   searching: BooleanLike;
-  total: number;
 };
 
 type Atom = {
-  icon?: string;
   name: string;
-  path?: string;
+  path: string;
   ref: string;
-};
+} & Partial<{
+  icon: string;
+  icon_state: string;
+}>;
 
 export function LootPanel(props) {
   const { act, data } = useBackend<Data>();
-  const { contents = [], searching, total = 0 } = data;
+  const { contents = [], searching } = data;
 
   const [searchText, setSearchText] = useState('');
 
@@ -59,8 +61,10 @@ export function LootPanel(props) {
     )
     .map(([_, atoms]) => ({ atom: atoms[0], amount: atoms.length }));
 
+  const total = contents.length ? contents.length - 1 : 0;
+
   return (
-    <Window height={250} width={190} title={`Contents: ${total - 1}`}>
+    <Window height={250} width={190} title={`Contents: ${total}`}>
       <Window.Content
         onKeyDown={(event) => {
           if (event.key === KEY.Enter && filteredContents.length > 0) {
@@ -104,6 +108,7 @@ export function LootPanel(props) {
     </Window>
   );
 }
+
 type SearchItemProps = {
   group: Group;
 };
@@ -140,13 +145,29 @@ function SearchItem(props: SearchItemProps) {
           });
         }}
       >
-        {!atom.icon ? (
-          <Icon name="spinner" size={2.4} spin color="gray" />
-        ) : (
-          <Image fixErrors src={atom.icon} />
-        )}
+        <IconDisplay atom={atom} />
         {amount > 1 && <div className="SearchItem--amount">{amount}</div>}
       </div>
     </Tooltip>
   );
+}
+
+type IconDisplayProps = {
+  atom: Atom;
+};
+
+function IconDisplay(props: IconDisplayProps) {
+  const {
+    atom: { icon, icon_state },
+  } = props;
+
+  if (!icon) {
+    return <Icon name="spinner" size={2.4} spin color="gray" />;
+  }
+
+  if (icon_state) {
+    return <DmIcon icon={icon} icon_state={icon_state} />;
+  }
+
+  return <Image fixErrors src={icon} />;
 }

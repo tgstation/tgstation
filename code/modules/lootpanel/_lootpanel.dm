@@ -51,7 +51,6 @@
 
 	data["contents"] = get_contents()
 	data["searching"] = searching
-	data["total"] = length(contents)
 
 	return data
 
@@ -83,7 +82,7 @@
 
 		if("refresh")
 			if(searching)
-				return FALSE
+				stop_search()
 			if(!start_search())
 				return FALSE
 			return TRUE
