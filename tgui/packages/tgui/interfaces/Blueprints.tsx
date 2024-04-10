@@ -1,7 +1,7 @@
 import { BooleanLike } from 'common/react';
 
 import { useBackend } from '../backend';
-import { Box, Button, Divider, Section } from '../components';
+import { Box, Button, Divider, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -100,54 +100,51 @@ const MainMenu = () => {
   const { area_notice, area_name, fluff_notice, station_name, viewing } = data;
 
   return (
-    <Section>
-      <Box bold m={1} textAlign="center">
-        {station_name} blueprints
-      </Box>
+    <Section title={`${station_name} blueprints`}>
       <Box italic fontSize={0.9}>
         {fluff_notice}
       </Box>
       <Divider />
-      <Box>
-        <Button
-          fluid
-          pb={0.75}
-          textAlign="center"
-          icon="pencil"
-          onClick={() => act('create_area')}
-        >
-          Create or modify an existing area
-        </Button>
-      </Box>
       <Box bold m={1.5} textAlign="center">
         {area_notice}
       </Box>
-      <Box>
-        <Button
-          fluid
-          pb={0.75}
-          textAlign="center"
-          icon="font"
-          onClick={() => act('edit_area')}
-        >
-          Change area name
-        </Button>
-      </Box>
-      <Box>
-        <Button
-          fluid
-          pb={0.75}
-          textAlign="center"
-          icon="chevron-right"
-          onClick={() => act('view_legend')}
-        >
-          View wire color legend
-        </Button>
-      </Box>
-      <Box>
+      <Stack fill vertical>
+        <Stack.Item>
+          <Button
+            fluid
+            pb={0.75}
+            textAlign="center"
+            icon="pencil"
+            onClick={() => act('create_area')}
+          >
+            Create or modify an existing area
+          </Button>
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            fluid
+            pb={0.75}
+            textAlign="center"
+            icon="font"
+            onClick={() => act('edit_area')}
+          >
+            Change area name
+          </Button>
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            fluid
+            pb={0.75}
+            textAlign="center"
+            icon="chevron-right"
+            onClick={() => act('view_legend')}
+          >
+            View wire color legend
+          </Button>
+        </Stack.Item>
         {viewing ? (
           <>
-            <Box>
+            <Stack.Item>
               <Button
                 fluid
                 pb={0.75}
@@ -157,8 +154,8 @@ const MainMenu = () => {
               >
                 Refresh structural data
               </Button>
-            </Box>
-            <Box>
+            </Stack.Item>
+            <Stack.Item>
               <Button
                 fluid
                 pb={0.75}
@@ -168,20 +165,22 @@ const MainMenu = () => {
               >
                 Hide structural data
               </Button>
-            </Box>
+            </Stack.Item>
           </>
         ) : (
-          <Button
-            fluid
-            pb={0.75}
-            textAlign="center"
-            icon="wrench"
-            onClick={() => act('view_blueprints')}
-          >
-            View structural data
-          </Button>
+          <Stack.Item>
+            <Button
+              fluid
+              pb={0.75}
+              textAlign="center"
+              icon="wrench"
+              onClick={() => act('view_blueprints')}
+            >
+              View structural data
+            </Button>
+          </Stack.Item>
         )}
-      </Box>
+      </Stack>
     </Section>
   );
 };
