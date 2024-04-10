@@ -1,8 +1,12 @@
 /datum/status_effect/incapacitating/stamcrit
 	status_type = STATUS_EFFECT_REFRESH
 	duration = STAMINA_REGEN_BLOCK_TIME
-
+	/// Cooldown between displaying warning messages that we hit diminishing returns
+	COOLDOWN_DECLARE(warn_cd)
+	/// A counter that tracks every time we've taken enough damage to trigger diminishing returns
 	var/diminishing_return_counter = 0
+	/// The threshold past which taking stamina damage triggers diminishing returns
+	var/diminishing_return_threshold = 5
 
 /datum/status_effect/incapacitating/stamcrit/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
@@ -10,15 +14,13 @@
 		return .
 
 	// This should be in on apply but we need it to happen AFTER being added to the mob
-
 	if(owner.getStaminaLoss() < 120)
 		// Puts you a little further into the initial stamcrit, makes stamcrit harder to outright counter with chems.
 		owner.adjustStaminaLoss(30, FALSE)
 
 	// Same
-
-	RegisterSignal(owner, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_remove))
 	RegisterSignal(owner, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(update_diminishing_return))
+	RegisterSignal(owner, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_remove))
 
 /datum/status_effect/incapacitating/stamcrit/on_apply()
 	if(owner.stat == DEAD)
@@ -42,16 +44,26 @@
 	owner.adjustStaminaLoss(-INFINITY)
 	return ..()
 
-/datum/status_effect/incapacitating/stamcrit/proc/check_remove(datum/source, ...)
-	SIGNAL_HANDLER
-	if(owner.maxHealth - owner.getStaminaLoss() > owner.crit_threshold)
-		qdel(src)
-
 /datum/status_effect/incapacitating/stamcrit/proc/update_diminishing_return(datum/source, type, amount, forced)
 	SIGNAL_HANDLER
 	if(amount <= 0 || forced)
 		return NONE
 	var/mod_amount = ceil(sqrt(amount) / 2) - diminishing_return_counter
-	if(amount > 5)
+	// We check base amount not mod_amount because we still want to up tick it even if we've already got a high counter
+	// We also only uptick it after calculating damage so we don't get a free uptick
+	if(amount > diminishing_return_threshold)
 		diminishing_return_counter++
-	return mod_amount <= 0 ? COMPONENT_IGNORE_CHANGE : NONE
+	if(mod_amount > 0)
+		return NONE
+
+	if(COOLDOWN_FINISHED(src, warn_cd) && owner.stat == CONSCIOUS)
+		to_chat(owner, span_notice("You start to recover from the exhaustion!"))
+		owner.visible_message(span_warning("[owner] starts to recover from the exhaustion!"), ignored_mobs = owner)
+		COOLDOWN_START(src, warn_cd, 2.5 SECONDS)
+
+	return COMPONENT_IGNORE_CHANGE
+
+/datum/status_effect/incapacitating/stamcrit/proc/check_remove(datum/source, ...)
+	SIGNAL_HANDLER
+	if(owner.maxHealth - owner.getStaminaLoss() > owner.crit_threshold)
+		qdel(src)
