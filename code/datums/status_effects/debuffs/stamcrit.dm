@@ -5,8 +5,6 @@
 	COOLDOWN_DECLARE(warn_cd)
 	/// A counter that tracks every time we've taken enough damage to trigger diminishing returns
 	var/diminishing_return_counter = 0
-	/// The threshold past which taking stamina damage triggers diminishing returns
-	var/diminishing_return_threshold = 5
 
 /datum/status_effect/incapacitating/stamcrit/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
@@ -50,9 +48,12 @@
 		return NONE
 	var/mod_amount = ceil(sqrt(amount) / 2) - diminishing_return_counter
 	// We check base amount not mod_amount because we still want to up tick it even if we've already got a high counter
-	// We also only uptick it after calculating damage so we don't get a free uptick
-	if(amount > diminishing_return_threshold)
-		diminishing_return_counter++
+	// We also only uptick it after calculating damage so we start ticking up after the damage and not before
+	switch(amount)
+		if(5 to INFINITY)
+			diminishing_return_counter += 1
+		if(2 to 5) // Prevent chems from skyrockting DR
+			diminishing_return_counter += 0.05
 	if(mod_amount > 0)
 		return NONE
 
