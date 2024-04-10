@@ -104,8 +104,19 @@
 		if(loaded)
 			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
 			update_appearance()
+		. = ..()
 		return
+	
+	if(item.atom_storage && is_right_clicking)
+		var/obj/item/storage/tray = item
+
+		for(var/obj/tray_item in griddled_objects)
+			tray.atom_storage?.attempt_insert(tray_item, user, TRUE)
+	
 	. = ..()
+	return
+	
+	// . = ..()
 
 /obj/machinery/griddle/attack_hand(mob/user, list/modifiers)
 	. = ..()
