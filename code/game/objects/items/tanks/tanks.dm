@@ -460,7 +460,7 @@
 	tank_assembly = assembly //Tell the tank about its assembly part
 	assembly.master = src //Tell the assembly about its new owner
 	assembly.on_attach()
-	w_class = WEIGHT_CLASS_BULKY
+	update_weight_class(WEIGHT_CLASS_BULKY)
 
 	balloon_alert(user, "bomb assembled")
 	update_appearance(UPDATE_OVERLAYS)
@@ -474,7 +474,7 @@
 	user.put_in_hands(tank_assembly)
 	tank_assembly.master = null
 	tank_assembly = null
-	w_class = initial(w_class)
+	update_weight_class(initial(w_class))
 	update_appearance(UPDATE_OVERLAYS)
 
 /// Ignites the contents of the tank. Called when receiving a signal if the tank is welded and has an igniter attached.

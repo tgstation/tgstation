@@ -37,8 +37,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/item/assembly/control/transport/call_button/LateInitialize(mapload)
-	. = ..()
+/obj/item/assembly/control/transport/call_button/LateInitialize()
 	if(!id_tag)
 		id_tag = assign_random_name()
 	SStransport.hello(src, name, id_tag)
