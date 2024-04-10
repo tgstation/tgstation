@@ -2,7 +2,7 @@
 
 /obj/item/grapple_gun
 	name = "grapple gun"
-	desc = "I am vengeance."
+	desc = "A handy tool for traversing the land-scape of lava-land!"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "grapple_gun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -34,6 +34,11 @@
 	. = ..()
 	zipline_sound = new(src)
 	update_appearance()
+
+/obj/item/grapple_gun/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	if(!hooked)
+		cancel_hook()
 
 /obj/item/grapple_gun/afterattack(atom/target, mob/living/user, proximity)
 	. = ..()
