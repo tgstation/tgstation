@@ -4,11 +4,14 @@
  * @license MIT
  */
 
+import { logger } from '../logging';
 import { Table } from './Table';
 
 /** @deprecated */
 export const Grid = (props) => {
   const { children, ...rest } = props;
+  logger.error('Grid component is deprecated. Use a Stack instead.');
+
   return (
     <Table {...rest}>
       <Table.Row>{children}</Table.Row>
