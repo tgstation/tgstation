@@ -48,9 +48,11 @@ export function Image(props: Props) {
     <img
       onError={(event) => {
         if (fixErrors && attempts.current < maxAttempts) {
+          const imgElement = event.currentTarget;
+
           setTimeout(() => {
             attempts.current++;
-            event.currentTarget.src = `${src}?currentAttempts=${attempts.current}`;
+            imgElement.src = `${src}?currentAttempts=${attempts.current}`;
           }, 1500);
         }
       }}
