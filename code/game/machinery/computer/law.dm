@@ -39,7 +39,7 @@
 
 /obj/machinery/computer/upload/proc/imprint_gps()
 	for(var/obj/item/circuitboard/computer/board in src.contents)
-		if(!contents && board.GetComponent(/datum/component/gps))
+		if(!contents || board.GetComponent(/datum/component/gps))
 			return
 		board.AddComponent(/datum/component/gps, "Imprinted Upload Signal")
 
