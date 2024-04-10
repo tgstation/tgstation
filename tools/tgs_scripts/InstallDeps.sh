@@ -8,20 +8,21 @@ has_cargo="$(command -v ~/.cargo/bin/cargo)"
 has_sudo="$(command -v sudo)"
 has_youtubedl="$(command -v youtube-dl)"
 has_pip3="$(command -v pip3)"
+has_cmake="$(command -v cmake)"
 set -e
 set -x
 
 # apt packages, libssl needed by rust-g but not included in TGS barebones install
-if ! ( [ -x "$has_git" ] && [ -x "$has_curl" ] && [ -f "/usr/lib/i386-linux-gnu/libssl.so" ] ); then
+if ! ( [ -x "$has_git" ] && [ -x "$has_curl" ] && [ -x "$has_cmake" ] && [ -f "/usr/lib/i386-linux-gnu/libssl.so" ] ); then
 	echo "Installing apt dependencies..."
 	if ! [ -x "$has_sudo" ]; then
 		dpkg --add-architecture i386
 		apt-get update
-		apt-get install -y lib32z1 git pkg-config libssl-dev:i386 libssl-dev zlib1g-dev:i386 curl
+		apt-get install -y lib32z1 git pkg-config libssl-dev:i386 libssl-dev zlib1g-dev:i386 curl cmake
 	else
 		sudo dpkg --add-architecture i386
 		sudo apt-get update
-		sudo apt-get install -y lib32z1 git pkg-config libssl-dev:i386 libssl-dev zlib1g-dev:i386 curl
+		sudo apt-get install -y lib32z1 git pkg-config libssl-dev:i386 libssl-dev zlib1g-dev:i386 curl cmake
 	fi
 fi
 

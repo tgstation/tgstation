@@ -1,7 +1,10 @@
 #include "_defines220.dm"
 
+#include "code/signals_atom.dm"
 #include "code/defines/keybindings.dm"
+#include "code/defines/misc.dm"
 #include "code/defines/spans.dm"
+#include "code/defines/text_to_speech.dm"
 #include "code/signals_mob/signals_mob_ai.dm"
 #include "code/signals_mob/signals_mob_carbon.dm"
 #include "code/signals_mob/signals_mob_living.dm"

@@ -1,24 +1,42 @@
-/datum/tts_seed
-	var/name = "STUB"
-	var/value = "STUB"
-	var/category = TTS_CATEGORY_OTHER
-	var/gender = TTS_GENDER_ANY
-	var/datum/tts_provider/provider = /datum/tts_provider
-	var/donator_level = 0
+/datum/dna
+	var/datum/tts_seed/tts_seed_dna
 
-/datum/tts_seed/vv_edit_var(var_name, var_value)
-	return FALSE
+/datum/dna/transfer_identity(mob/living/carbon/destination, transfer_SE, transfer_species)
+	if(!istype(destination))
+		return
+	. = ..()
+	destination.dna.tts_seed_dna = tts_seed_dna
+	destination.AddComponent(/datum/component/tts_component, tts_seed_dna)
 
-/datum/preference/text/tts_seed
-	savefile_key = "tts_seed"
-	savefile_identifier = PREFERENCE_CHARACTER
+/datum/dna/copy_dna(datum/dna/new_dna)
+	. = ..()
+	new_dna.tts_seed_dna = tts_seed_dna
 
-/datum/preference/text/tts_seed/create_default_value()
-	return "Arthas"
+/atom/proc/add_tts_component()
+	return
 
-/// Any movable atom
-/atom/movable
-	var/tts_seed
+/atom/Initialize(mapload, ...)
+	. = ..()
+	add_tts_component()
 
-/datum/preference/text/tts_seed/apply_to_human(mob/living/carbon/human/target, value)
-	target.tts_seed = value
+/atom/proc/cast_tts(mob/listener, message, atom/location, is_local = TRUE, effect = null, traits = TTS_TRAIT_RATE_FASTER, preSFX, postSFX)
+	SEND_SIGNAL(src, COMSIG_ATOM_TTS_CAST, listener, message, location, is_local, effect, traits, preSFX, postSFX)
+
+// TODO: Do it better?
+/atom/proc/get_tts_seed()
+	var/datum/component/tts_component/tts_component = GetComponent(/datum/component/tts_component)
+	if(tts_component)
+		return tts_component.tts_seed
+
+/atom/proc/change_tts_seed(mob/chooser, override, list/new_traits = null)
+	if(!get_tts_seed())
+		if(alert(chooser, "Отсутствует TTS компонент. Создать?", "Изменение TTS", "Да", "Нет") == "Нет")
+			return
+		AddComponent(/datum/component/tts_component, /datum/tts_seed/silero/angel)
+	SEND_SIGNAL(src, COMSIG_ATOM_TTS_SEED_CHANGE, chooser, override, new_traits)
+
+/atom/proc/tts_trait_add(trait)
+	SEND_SIGNAL(src, COMSIG_ATOM_TTS_TRAIT_ADD, trait)
+
+/atom/proc/tts_trait_remove(trait)
+	SEND_SIGNAL(src, COMSIG_ATOM_TTS_TRAIT_REMOVE, trait)

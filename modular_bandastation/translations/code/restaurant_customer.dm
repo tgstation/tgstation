@@ -1,6 +1,6 @@
 /datum/customer_data
 	speech_sound = null
-	var/list/tts_seeds = list("Arthas")
+	var/list/tts_seeds = /datum/tts_seed/silero/angel
 
 /datum/customer_data/american
 	found_seat_lines = list("Я надеюсь тут найдется местечко, которое выдержит мой вес.", "Надеюсь, я могу проносить сюда оружие.", "Я надеюсь здесь подают тройной жир-бургер делюкс.", "Люблю я здешнюю культуру.")
@@ -12,8 +12,7 @@
 	first_warning_line = "Не стоит со мной шутить!"
 	second_warning_line = "Последнее предупреждение, чувак! Отвали!"
 	self_defense_line = "РЕЖИМ ЖИРОМЕНТАЛЯ АКТИВИРОВАН!"
-	tts_seeds = list("Braum", "Malfurion", "Medivh", "Ozara", "Pudge")
-
+	tts_seeds = list(/datum/tts_seed/silero/braum, /datum/tts_seed/silero/malfurion, /datum/tts_seed/silero/medivh, /datum/tts_seed/silero/ozara, /datum/tts_seed/silero/pudge)
 
 /datum/customer_data/italian
 	prefix_file = "strings/names/italian_prefix.txt"
@@ -28,8 +27,7 @@
 	first_warning_line = "Не трогай меня, мамма-мия!"
 	second_warning_line = "Последнее предупреждение! Не прикасайся к моим спагетти!"
 	self_defense_line = "Я замешу тебя так, как моя мамма замешивала свои фирменные фрикадельки!"
-	tts_seeds = list("Barbas", "Clockwerk", "Muradin", "Rasil")
-
+	tts_seeds = list(/datum/tts_seed/silero/barbas, /datum/tts_seed/silero/clockwerk, /datum/tts_seed/silero/muradin, /datum/tts_seed/silero/rasil)
 
 /datum/customer_data/french
 	prefix_file = "strings/names/french_prefix.txt"
@@ -45,8 +43,7 @@
 	second_warning_line = "Не трогай меня, ты, грязное животное! Последнее предупреждение!"
 	self_defense_line = "Я сломаю тебя словно багет!"
 	speech_sound = null
-	tts_seeds = list("Archmage", "Awilo", "Belloc", "Priest")
-
+	tts_seeds = list(/datum/tts_seed/silero/archmage, /datum/tts_seed/silero/awilo, /datum/tts_seed/silero/belloc, /datum/tts_seed/silero/priest)
 
 /datum/customer_data/japanese
 	prefix_file = "strings/names/japanese_prefix.txt"
@@ -62,8 +59,7 @@
 	second_warning_line = "Я стану супер-сайяном, если ты снова прикоснешься ко мне! Последнее предупреждение!"
 	self_defense_line = "OMAE WA MO, SHINDEROU!"
 	speech_sound = null
-	tts_seeds = list("Ahri", "Chromie", "Eudora", "Luna", "Qiyana")
-
+	tts_seeds = list(/datum/tts_seed/silero/ahri, /datum/tts_seed/silero/chromie, /datum/tts_seed/silero/eudora, /datum/tts_seed/silero/luna, /datum/tts_seed/silero/qiyana)
 
 /datum/customer_data/japanese/salaryman
 	clothing_sets = list("japanese_salary")
@@ -77,8 +73,7 @@
 	second_warning_line = "Отстань от меня, я пытаюсь сконцентрироваться. Последнее предупреждение!"
 	self_defense_line = "Я не хотел, чтобы это закончилось вот так."
 	speech_sound = null
-	tts_seeds = list("Malkoran", "Narrator", "Overseer", "Rhombus")
-
+	tts_seeds = list(/datum/tts_seed/silero/malkoran, /datum/tts_seed/silero/narrator, /datum/tts_seed/silero/overseer, /datum/tts_seed/silero/rhombus)
 
 /datum/customer_data/moth
 	prefix_file = "strings/names/moth_prefix.txt"
@@ -93,8 +88,7 @@
 	second_warning_line = "Последнее предупреждение! Я уничтожу тебя!"
 	self_defense_line = "Крылатая атака!"
 	speech_sound = null
-	tts_seeds = list("Ahri", "Chromie", "Eudora", "Luna", "Qiyana")
-
+	tts_seeds = list(/datum/tts_seed/silero/ahri, /datum/tts_seed/silero/chromie, /datum/tts_seed/silero/eudora, /datum/tts_seed/silero/luna, /datum/tts_seed/silero/qiyana)
 
 /datum/customer_data/mexican
 	base_icon_state = "mexican"
@@ -110,8 +104,7 @@
 	second_warning_line = "Комрад, хватит значит хватит! Последнее предупреждение!"
 	self_defense_line = "Пришло время тебе узнать, какой из меня робот. Готов?"
 	speech_sound = null
-	tts_seeds = list("Barney", "Batrider", "Putricide", "Soldier")
-
+	tts_seeds = list(/datum/tts_seed/silero/barney, /datum/tts_seed/silero/batrider, /datum/tts_seed/silero/putricide, /datum/tts_seed/silero/soldier)
 
 /datum/customer_data/british
 	base_icon_state = "british"
@@ -121,8 +114,7 @@
 	second_warning_line = "И мирно вернуться в свои жилища или к своим законным делам, приложив усилия, содержащиеся в акте, изданном королём Георгом в первый год своего правления для предотвращения бунтов и мятежей. Более предупреждений не будет."
 	self_defense_line = "Боже, храни Королеву."
 	speech_sound = null
-	tts_seeds = list("Ebony", "Ekko", "Emperor", "Loxley")
-
+	tts_seeds = list(/datum/tts_seed/silero/ebony, /datum/tts_seed/silero/ekko, /datum/tts_seed/silero/emperor, /datum/tts_seed/silero/loxley)
 
 /datum/customer_data/british/gent
 	clothing_sets = list("british_gentleman")
@@ -156,7 +148,7 @@
 	second_warning_line = "Сломать-ты-так-сильно-ты-вспомнить-дни-до-этот-момент.exe: запуск..."
 	self_defense_line = "Я был создан, чтобы делать две вещи: заказывать еду и ломать каждую кость в твоем теле."
 	speech_sound = null
-	tts_seeds = list("Glados")
+	tts_seeds = list(/datum/tts_seed/silero/glados)
 
 /datum/venue/restaurant/order_food_line(order)
 	var/obj/item/object_to_order = order
@@ -182,4 +174,4 @@
 	. = ..()
 	var/datum/customer_data/customer_info = SSrestaurant.all_customers[customer_data]
 	if(customer_info)
-		tts_seed = pick(customer_info.tts_seeds)
+		AddComponent(/datum/component/tts_component, pick(customer_info.tts_seeds))

@@ -1,7 +1,7 @@
 //All named pets
 
-/mob/living/basic/giant_spider/sgt_araneus
-	tts_seed = "Anubarak"
+/mob/living/basic/giant_spider/sgt_araneus/add_tts_component()
+	AddComponent(/datum/component/tts_component, /datum/tts_seed/silero/anubarak)
 
-/mob/living/basic/parrot/poly
-	tts_seed = "Gyro"
+/mob/living/basic/parrot/poly/add_tts_component()
+	AddComponent(/datum/component/tts_component, /datum/tts_seed/silero/gyro)

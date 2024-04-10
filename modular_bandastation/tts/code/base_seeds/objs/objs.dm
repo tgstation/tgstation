@@ -1,26 +1,23 @@
-/obj/machinery
-	tts_seed = "Glados"
+/obj/machinery/add_tts_component()
+	AddComponent(/datum/component/tts_component, /datum/tts_seed/silero/glados)
 
-/obj/machinery/computer
-	tts_seed = null
+/obj/machinery/computer/add_tts_component()
+	return
 
-/obj/machinery/modular_computer
-	tts_seed = null
+/obj/machinery/modular_computer/add_tts_component()
+	return
 
-/obj/machinery/rnd
-	tts_seed = null
+/obj/machinery/rnd/add_tts_component()
+	return
 
-/obj/machinery/autolathe
-	tts_seed = null
+/obj/machinery/autolathe/add_tts_component()
+	return
 
-/obj/machinery/mecha_part_fabricator
-	tts_seed = null
+/obj/machinery/mecha_part_fabricator/add_tts_component()
+	return
 
-/obj/item/modular_computer
-	tts_seed = null
+/obj/item/modular_computer/add_tts_component()
+	return
 
-/obj/item/taperecorder
-	tts_seed = "Xenia"
-
-/obj/item/ttsdevice
-	tts_seed = "Xenia"
+/obj/item/taperecorder/add_tts_component()
+	AddComponent(/datum/component/tts_component, /datum/tts_seed/silero/xenia)

@@ -147,7 +147,6 @@ export type PreferencesMenuData = {
       gender: Gender;
       joblessrole: JoblessRole;
       species: string;
-      tts_seed: string; // BANDASTATION EDIT ADD - TTS
     };
 
     randomization: Record<string, RandomSetting>;
@@ -177,7 +176,10 @@ export type PreferencesMenuData = {
   active_slot: number;
   name_to_use: string;
 
+  window: Window;
+
   // BANDASTATION EDIT START - TTS
+  tts_seed: string;
   tts_enabled: BooleanLike;
   providers: Array<{
     name: string;
@@ -193,8 +195,6 @@ export type PreferencesMenuData = {
   }>;
   phrases: string[];
   // BANDASTATION EDIT END
-
-  window: Window;
 };
 
 export type ServerData = {

@@ -1,161 +1,93 @@
+#define TTS_REPLACEMENTS_FILE_PATH "config/bandastation/tts_replacements.json"
+#define TTS_ACRONYM_REPLACEMENTS "tts_acronym_replacements"
+#define TTS_JOB_REPLACEMENTS "tts_job_replacements"
+
+#define FILE_CLEANUP_DELAY 30 SECONDS
+
 SUBSYSTEM_DEF(tts220)
 	name = "Text-to-Speech 220"
 	init_order = INIT_ORDER_DEFAULT
-	wait = 1 SECONDS
+	wait = 0.5 SECONDS
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
-	var/tts_wanted = 0
-	var/tts_request_failed = 0
-	var/tts_request_succeeded = 0
-	var/tts_reused = 0
-	var/list/tts_errors = list()
-	var/tts_error_raw = ""
+	/// All time tts uses
+	VAR_PRIVATE/tts_wanted = 0
+	/// Amount of errored requests to providers
+	VAR_PRIVATE/tts_request_failed = 0
+	/// Amount of successfull requests to providers
+	VAR_PRIVATE/tts_request_succeeded = 0
+	/// Amount of cache hits
+	VAR_PRIVATE/tts_reused = 0
+	/// Assoc list of request error codes
+	VAR_PRIVATE/list/tts_errors = list()
+	/// Last errored requests' contents
+	VAR_PRIVATE/tts_error_raw = ""
 
 	// Simple Moving Average RPS
-	var/list/tts_rps_list = list()
-	var/tts_sma_rps = 0
+	VAR_PRIVATE/list/tts_rps_list = list()
+	VAR_PRIVATE/tts_sma_rps = 0
 
-	// Requests per Second (RPS), only real API requests
-	var/tts_rps = 0
-	var/tts_rps_counter = 0
+	/// Requests per Second (RPS), only real API requests
+	VAR_PRIVATE/tts_rps = 0
+	VAR_PRIVATE/tts_rps_counter = 0
 
-	// Total Requests per Second (TRPS), all TTS request, even reused
-	var/tts_trps = 0
-	var/tts_trps_counter = 0
+	/// Total Requests per Second (TRPS), all TTS request, even reused
+	VAR_PRIVATE/tts_trps = 0
+	VAR_PRIVATE/tts_trps_counter = 0
 
-	// Reused Requests per Second (RRPS), only reused requests
-	var/tts_rrps = 0
-	var/tts_rrps_counter = 0
+	/// Reused Requests per Second (RRPS), only reused requests
+	VAR_PRIVATE/tts_rrps = 0
+	VAR_PRIVATE/tts_rrps_counter = 0
 
-	var/is_enabled = TRUE
-
+	VAR_PRIVATE/is_enabled = TRUE
+	/// List of all available TTS seeds
 	var/list/datum/tts_seed/tts_seeds = list()
-	var/list/tts_seeds_names = list()
-	var/list/tts_seeds_names_by_donator_levels = list()
+	/// List of all available TTS providers
 	var/list/datum/tts_provider/tts_providers = list()
 
-	var/list/tts_local_channels_by_owner = list()
+	VAR_PRIVATE/tts_requests_queue_limit = 100
+	VAR_PRIVATE/tts_rps_limit = 11
+	VAR_PRIVATE/last_network_fire = 0
 
-	var/list/tts_requests_queue = list()
-	var/tts_requests_queue_limit = 100
-	var/tts_rps_limit = 5
+	/// General request queue
+	VAR_PRIVATE/list/tts_queue = list()
+	/// Ffmpeg queue. Is an assoc list. Each entry is a filename mapped to the list of sound processing requests which require it.
+	VAR_PRIVATE/list/tts_effects_queue = list()
+	/// Lazy list of request that need to performed to TTS provider API
+	VAR_PRIVATE/list/tts_requests_queue
 
-	var/list/tts_queue = list()
-	var/list/tts_effects_queue = list()
+	/// List of currently existing binding of atom and sound channel: `atom` => `sound_channel`. SS220 TODO: free channel when atom is detroyed and may be on some other circumstances
+	VAR_PRIVATE/list/tts_local_channels_by_owner = list()
 
-	var/sanitized_messages_caching = TRUE
-	var/list/sanitized_messages_cache = list()
-	var/sanitized_messages_cache_hit = 0
-	var/sanitized_messages_cache_miss = 0
-
-	var/debug_mode_enabled = FALSE
-
-	var/static/list/tts_job_replacements = list(
-		"nanotrasen navy field officer" = "Полевой офицер флота Нанотрэйзен",
-		"nanotrasen navy officer" = "Офицер флота nanotrasen",
-		"supreme commander" = "Верховный главнокомандующий",
-		"solar federation general" = "Генерал Солнечной Федерации",
-		"special operations officer" = "Офицер специальных операций",
-		"civilian" = "Гражданский",
-		"tourist" = "Турист",
-		"businessman" = "Бизнэсмэн",
-		"trader" = "Торговец",
-		"assistant" = "Ассистент",
-		"chief engineer" = "Главный Инженер",
-		"station engineer" = "Станционный инженер",
-		"trainee engineer" = "Инженер-стажер",
-		"Engineer Assistant" = "Инженерный Ассистент",
-		"Technical Assistant" = "Технический Ассистент",
-		"Engineer Student" = "Инженер-практикант",
-		"Technical Student" = "Техник-практикант",
-		"Technical Trainee" = "Техник-стажер",
-		"maintenance technician" = "Техник по обслуживанию",
-		"engine technician" = "Техник по двигателям",
-		"electrician" = "Электрик",
-		"life support specialist" = "Специалист по жизнеобеспечению",
-		"atmospheric technician" = "Атмосферный техник",
-		"mechanic" = "Механик",
-		"chief medical officer" = "Главный врач",
-		"medical doctor" = "Врач",
-		"Intern" = "Интерн",
-		"Student Medical Doctor" = "Врач-практикант",
-		"Medical Assistant" = "Ассистирующий врач",
-		"surgeon" = "Хирург",
-		"nurse" = "Медсестра",
-		"coroner" = "К+оронэр",
-		"chemist" = "Химик",
-		"pharmacist" = "Фармацевт",
-		"pharmacologist" = "Фармаколог",
-		"geneticist" = "Генетик",
-		"virologist" = "Вирусолог",
-		"pathologist" = "Патологоанатом",
-		"microbiologist" = "Микробиолог",
-		"psychiatrist" = "Психиатр",
-		"psychologist" = "Психолог",
-		"therapist" = "Терапевт",
-		"paramedic" = "Парамедик",
-		"research director" = "Директор исследований",
-		"scientist" = "Учёный",
-		"student scientist" = "Учёный-практикант",
-		"Scientist Assistant" = "Научный Ассистент",
-		"Scientist Pregraduate" = "Учёный-бакалавр",
-		"Scientist Graduate" = "Научный выпускник",
-		"Scientist Postgraduate" = "Учёный-аспирант",
-		"anomalist" = "Аномалист",
-		"plasma researcher" = "Исследователь плазмы",
-		"xenobiologist" = "Ксенобиолог",
-		"chemical researcher" = "Химик-исследователь",
-		"roboticist" = "Робототехник",
-		"student robotist" = "Студент-робототехник",
-		"biomechanical engineer" = "Биомеханический инженер",
-		"mechatronic engineer" = "Инженер мехатроники",
-		"head of security" = "Глава службы безопасности",
-		"warden" = "Смотритель",
-		"detective" = "Детектив",
-		"forensic technician" = "Криминалист",
-		"security officer" = "Офицер службы безопасности",
-		"security cadet" = "Кадет службы безопасности",
-		"Security Assistant" = "Ассистент службы безопасности",
-		"Security Graduate" = "Выпускник кадетской академии",
-		"brig physician" = "Врач брига",
-		"security pod pilot" = "Пилот пода службы безопасности",
-		"ai" = "И И",
-		"cyborg" = "Киборг",
-		"robot" = "Робот",
-		"captain" = "Капитан",
-		"head of personnel" = "Глава персонала",
-		"nanotrasen representative" = "Представитель Нанотрэйзен",
-		"blueshield" = "Блюшилд",
-		"magistrate" = "Магистрат",
-		"internal affairs agent" = "Агент внутренних дел",
-		"human resources agent" = "Агент по персоналу",
-		"bartender" = "Бармэн",
-		"chef" = "Повар",
-		"cook" = "Кук",
-		"culinary artist" = "Кулинар",
-		"butcher" = "Мясник",
-		"botanist" = "Ботаник",
-		"hydroponicist" = "Гидропонист",
-		"botanical researcher" = "Ботаник-исследователь",
-		"quartermaster" = "Квартирмейстер",
-		"cargo technician" = "Карго техник",
-		"shaft miner" = "Шахтёр",
-		"spelunker" = "Спелеолог",
-		"clown" = "Клоун",
-		"mime" = "Мим",
-		"janitor" = "Уборщик",
-		"custodial technician" = "Техник по уходу за помещениями",
-		"librarian" = "Библиотекарь",
-		"journalist" = "Журналист",
-		"barber" = "Парикмахер",
-		"hair stylist" = "Стилист",
-		"beautician" = "Косметолог",
-		"explorer" = "Исследователь",
-		"chaplain" = "Священник",
-		"syndicate officer" = "Офицер синдиката",
-		"visitor" = "посетитель",
+	/// Mapping of BYOND gender to TTS gender
+	VAR_PRIVATE/list/gender_table = list(
+		NEUTER = TTS_GENDER_ANY,
+		PLURAL = TTS_GENDER_ANY,
+		MALE = TTS_GENDER_MALE,
+		FEMALE = TTS_GENDER_FEMALE
 	)
+	/// Is debug mode enabled or not. Information about `sanitized_messages_cache_hit` and `sanitized_messages_cache_miss` is printed to debug logs each SS fire
+	VAR_PRIVATE/debug_mode_enabled = FALSE
+	/// Whether or not caching of sanitized messages is performed
+	VAR_PRIVATE/sanitized_messages_caching = TRUE
+	/// Amount of message duplicates that were sanitized current SS fire. Debug purpose only
+	VAR_PRIVATE/sanitized_messages_cache_hit = 0
+	/// Amount of unique messages that were sanitized current SS fire. Debug purpose only
+	VAR_PRIVATE/sanitized_messages_cache_miss = 0
+	/// List of all messages that were sanitized as: `meesage md5 hash` => `message`
+	VAR_PRIVATE/list/sanitized_messages_cache = list()
 
+	/// List of all available TTS seed names
+	VAR_PRIVATE/list/tts_seeds_names = list()
+	/// List of all available TTS seed names, mapped by donator level for faster access
+	VAR_PRIVATE/list/tts_seeds_names_by_donator_levels = list()
+
+	/// List of all tts seeds mapped by TTS gender: `tts gender` => `list of seeds`
+	VAR_PRIVATE/list/tts_seeds_by_gender
+	/// Replacement map for acronyms for proper TTS spelling. Not private because `replacetext` can use only global procs
+	var/list/tts_acronym_replacements
+	/// Replacement map for jobs for proper TTS spelling
+	VAR_PRIVATE/list/tts_job_replacements
 /datum/controller/subsystem/tts220/stat_entry(msg)
 	msg += "tRPS:[tts_trps] "
 	msg += "rRPS:[tts_rrps] "
@@ -172,6 +104,7 @@ SUBSYSTEM_DEF(tts220)
 	for(var/path in subtypesof(/datum/tts_provider))
 		var/datum/tts_provider/provider = new path
 		tts_providers[provider.name] += provider
+
 	for(var/path in subtypesof(/datum/tts_seed))
 		var/datum/tts_seed/seed = new path
 		if(seed.value == "STUB")
@@ -179,17 +112,31 @@ SUBSYSTEM_DEF(tts220)
 		seed.provider = tts_providers[initial(seed.provider.name)]
 		tts_seeds[seed.name] = seed
 		tts_seeds_names += seed.name
-		tts_seeds_names_by_donator_levels["[seed.donator_level]"] += list(seed.name)
-	tts_seeds_names = sortTim(tts_seeds_names, /proc/cmp_text_asc)
+		tts_seeds_names_by_donator_levels["[seed.required_donator_level]"] += list(seed.name)
+		LAZYADDASSOCLIST(tts_seeds_by_gender, seed.gender, seed.name)
+	tts_seeds_names = sortTim(tts_seeds_names, GLOBAL_PROC_REF(cmp_text_asc))
 
 /datum/controller/subsystem/tts220/Initialize(start_timeofday)
-	is_enabled = CONFIG_GET(flag/tts_enabled)
-	if(!is_enabled)
-		flags |= SS_NO_FIRE
+	if(!CONFIG_GET(flag/tts_enabled))
+		is_enabled = FALSE
+		return SS_INIT_NO_NEED
+
+	load_replacements()
 
 	return SS_INIT_SUCCESS
 
+/datum/controller/subsystem/tts220/pause()
+	. = ..()
+	is_enabled = FALSE
+
 /datum/controller/subsystem/tts220/fire()
+	if(last_network_fire + 1 SECONDS <= world.time)
+		fire_networking()
+	fire_sound_processing()
+
+/datum/controller/subsystem/tts220/proc/fire_networking()
+	last_network_fire = world.time
+
 	tts_rps = tts_rps_counter
 	tts_rps_counter = 0
 	tts_trps = tts_trps_counter
@@ -198,16 +145,16 @@ SUBSYSTEM_DEF(tts220)
 	tts_rrps_counter = 0
 
 	tts_rps_list += tts_rps
-	if(tts_rps_list.len > 15)
+	if(length(tts_rps_list) > 15)
 		tts_rps_list.Cut(1,2)
 
 	var/rps_sum = 0
 	for(var/rps in tts_rps_list)
 		rps_sum += rps
-	tts_sma_rps = round(rps_sum / tts_rps_list.len, 0.1)
+	tts_sma_rps = round(rps_sum / length(tts_rps_list), 0.1)
 
 	var/free_rps = clamp(tts_rps_limit - tts_rps, 0, tts_rps_limit)
-	var/requests = tts_requests_queue.Copy(1, clamp(LAZYLEN(tts_requests_queue), 0, free_rps) + 1)
+	var/requests = LAZYCOPY_RANGE(tts_requests_queue, 1, clamp(LAZYLEN(tts_requests_queue), 0, free_rps) + 1)
 	for(var/request in requests)
 		var/text = request[1]
 		var/datum/tts_seed/seed = request[2]
@@ -215,14 +162,35 @@ SUBSYSTEM_DEF(tts220)
 		var/datum/tts_provider/provider = seed.provider
 		provider.request(text, seed, proc_callback)
 		tts_rps_counter++
-	tts_requests_queue.Cut(1, clamp(LAZYLEN(tts_requests_queue), 0, free_rps) + 1)
+	LAZYCUT(tts_requests_queue, 1, clamp(LAZYLEN(tts_requests_queue), 0, free_rps) + 1)
 
 	if(sanitized_messages_caching)
 		sanitized_messages_cache.Cut()
 		if(debug_mode_enabled)
-			world.log << "sanitized_messages_cache: HIT=[sanitized_messages_cache_hit] / MISS=[sanitized_messages_cache_miss]"
+			logger.Log(LOG_CATEGORY_DEBUG, "sanitized_messages_cache: HIT=[sanitized_messages_cache_hit] / MISS=[sanitized_messages_cache_miss]")
 		sanitized_messages_cache_hit = 0
 		sanitized_messages_cache_miss = 0
+
+/datum/controller/subsystem/tts220/proc/fire_sound_processing()
+	var/queue_position = 1
+	while(LAZYLEN(tts_effects_queue) >= queue_position)
+		var/filename = tts_effects_queue[queue_position++]
+		INVOKE_ASYNC(src, PROC_REF(process_filename_sound_effect_requests), filename)
+
+		if(MC_TICK_CHECK)
+			break
+
+	LAZYCUT(tts_effects_queue, 1, queue_position)
+
+/datum/controller/subsystem/tts220/proc/process_filename_sound_effect_requests(filename)
+	var/list/filename_requests = tts_effects_queue[filename]
+	var/datum/sound_effect_request/request = filename_requests[1]
+
+	if(!apply_sound_effect(request.effect, request.original_filename, request.output_filename))
+		return
+
+	for(var/datum/sound_effect_request/adjacent_request as anything in filename_requests)
+		adjacent_request.cb.InvokeAsync()
 
 /datum/controller/subsystem/tts220/Recover()
 	is_enabled = SStts220.is_enabled
@@ -230,11 +198,27 @@ SUBSYSTEM_DEF(tts220)
 	tts_request_failed = SStts220.tts_request_failed
 	tts_request_succeeded = SStts220.tts_request_succeeded
 	tts_reused = SStts220.tts_reused
+	tts_acronym_replacements = SStts220.tts_acronym_replacements
+	tts_job_replacements = SStts220.tts_job_replacements
+
+/datum/controller/subsystem/tts220/proc/load_replacements()
+	if(!fexists(TTS_REPLACEMENTS_FILE_PATH))
+		logger.Log(LOG_CATEGORY_DEBUG, "No file for TTS replacements located at: [TTS_REPLACEMENTS_FILE_PATH]. No replacements will be applied for TTS.")
+		return
+
+	var/tts_replacements_json = file2text(TTS_REPLACEMENTS_FILE_PATH)
+	if(!length(tts_replacements_json))
+		logger.Log(LOG_CATEGORY_DEBUG, "TTS replacements file is empty at: [TTS_REPLACEMENTS_FILE_PATH].")
+		return
+
+	var/list/replacements = json_decode(tts_replacements_json)
+	tts_acronym_replacements = replacements[TTS_ACRONYM_REPLACEMENTS]
+	tts_job_replacements = replacements[TTS_JOB_REPLACEMENTS]
 
 /datum/controller/subsystem/tts220/proc/queue_request(text, datum/tts_seed/seed, datum/callback/proc_callback)
 	if(LAZYLEN(tts_requests_queue) > tts_requests_queue_limit)
 		is_enabled = FALSE
-		to_chat(world, span_announce("SERVER: очередь запросов превысила лимит, подсистема SStts принудительно отключена!"))
+		to_chat(world, span_info("SERVER: очередь запросов превысила лимит, подсистема [src] принудительно отключена!"))
 		return FALSE
 
 	if(tts_rps_counter < tts_rps_limit)
@@ -243,24 +227,25 @@ SUBSYSTEM_DEF(tts220)
 		tts_rps_counter++
 		return TRUE
 
-	tts_requests_queue += list(list(text, seed, proc_callback))
+	LAZYADD(tts_requests_queue, list(list(text, seed, proc_callback)))
 	return TRUE
 
-/datum/controller/subsystem/tts220/proc/get_tts(atom/speaker, mob/listener, message, seed_name, is_local = TRUE, effect = SOUND_EFFECT_NONE, traits = TTS_TRAIT_RATE_FASTER, preSFX = null, postSFX = null)
+/datum/controller/subsystem/tts220/proc/get_tts(atom/speaker, mob/listener, message, datum/tts_seed/tts_seed, is_local = TRUE, datum/singleton/sound_effect/effect = null, traits = TTS_TRAIT_RATE_FASTER, preSFX = null, postSFX = null)
 	if(!is_enabled)
 		return
 	if(!message)
 		return
 	if(isnull(listener) || !listener.client)
 		return
-	if(isnull(seed_name) || !(seed_name in tts_seeds))
+	if(ispath(tts_seed) && SStts220.tts_seeds[initial(tts_seed.name)])
+		tts_seed = SStts220.tts_seeds[initial(tts_seed.name)]
+	if(!istype(tts_seed))
 		return
-	var/datum/tts_seed/seed = tts_seeds[seed_name]
 
 	tts_wanted++
 	tts_trps_counter++
 
-	var/datum/tts_provider/provider = seed.provider
+	var/datum/tts_provider/provider = tts_seed.provider
 	if(!provider.is_enabled)
 		return
 	if(provider.throttle_check())
@@ -281,16 +266,18 @@ SUBSYSTEM_DEF(tts220)
 	if(traits & TTS_TRAIT_PITCH_WHISPER)
 		text = provider.pitch_whisper(text)
 
-	var/hash = rustgss220_hash_string(RUSTG_HASH_MD5, text)
-	var/filename = "sound/tts_cache/[seed.name]/[hash]"
+	var/hash = md5(lowertext(text))
 
-	var/datum/callback/play_tts_cb = CALLBACK(src, PROC_REF(play_tts), speaker, listener, filename, is_local, effect, preSFX, postSFX)
+	var/filename = "data/tts_cache/[tts_seed.name]/[hash]"
+	var/datum/singleton/sound_effect/effect_singleton = GET_SINGLETON(effect)
 
 	if(fexists("[filename].ogg"))
 		tts_reused++
 		tts_rrps_counter++
-		play_tts(speaker, listener, filename, is_local, effect, preSFX, postSFX)
+		play_tts(speaker, listener, filename, is_local, effect_singleton, preSFX, postSFX)
 		return
+
+	var/datum/callback/play_tts_cb = CALLBACK(src, PROC_REF(play_tts), speaker, listener, filename, is_local, effect_singleton, preSFX, postSFX)
 
 	if(LAZYLEN(tts_queue[filename]))
 		tts_reused++
@@ -298,8 +285,8 @@ SUBSYSTEM_DEF(tts220)
 		LAZYADD(tts_queue[filename], play_tts_cb)
 		return
 
-	var/datum/callback/cb = CALLBACK(src, PROC_REF(get_tts_callback), speaker, listener, filename, seed, is_local, effect, preSFX, postSFX)
-	queue_request(text, seed, cb)
+	queue_request(text, tts_seed, CALLBACK(src, PROC_REF(get_tts_callback), speaker, listener, filename, tts_seed, is_local, effect_singleton, preSFX, postSFX))
+
 	LAZYADD(tts_queue[filename], play_tts_cb)
 
 /datum/controller/subsystem/tts220/proc/get_tts_callback(atom/speaker, mob/listener, filename, datum/tts_seed/seed, is_local, effect, preSFX, postSFX, datum/http_response/response)
@@ -307,17 +294,15 @@ SUBSYSTEM_DEF(tts220)
 
 	// Bail if it errored
 	if(response.errored)
-		provider.failed_requests++
-		if(provider.failed_requests >= provider.failed_requests_limit)
-			provider.is_enabled = FALSE
-		message_admins("<span class='warning'>Error connecting to [provider.name] TTS API. Please inform a maintainer or server host.</span>")
+		provider.timed_out_requests++
+		log_game(span_warning("Error connecting to [provider.name] TTS API. Please inform a maintainer or server host."))
+		message_admins(span_warning("Error connecting to [provider.name] TTS API. Please inform a maintainer or server host."))
 		return
 
 	if(response.status_code != 200)
 		provider.failed_requests++
-		if(provider.failed_requests >= provider.failed_requests_limit)
-			provider.is_enabled = FALSE
-		message_admins("<span class='warning'>Error performing [provider.name] TTS API request (Code: [response.status_code])</span>")
+		log_game(span_warning("Error performing [provider.name] TTS API request (Code: [response.status_code])"))
+		message_admins(span_warning("Error performing [provider.name] TTS API request (Code: [response.status_code])"))
 		tts_request_failed++
 		if(response.status_code)
 			if(tts_errors["[response.status_code]"])
@@ -336,8 +321,8 @@ SUBSYSTEM_DEF(tts220)
 
 	rustgss220_file_write_b64decode(voice, "[filename].ogg")
 
-	if (!CONFIG_GET(flag/tts_cache))
-		addtimer(CALLBACK(src, PROC_REF(cleanup_tts_file), "[filename].ogg"), 30 SECONDS)
+	if(!CONFIG_GET(flag/tts_cache_enabled))
+		addtimer(CALLBACK(src, PROC_REF(cleanup_tts_file), "[filename].ogg"), FILE_CLEANUP_DELAY)
 
 	for(var/datum/callback/cb in tts_queue[filename])
 		cb.InvokeAsync()
@@ -345,98 +330,70 @@ SUBSYSTEM_DEF(tts220)
 
 	tts_queue -= filename
 
-/datum/controller/subsystem/tts220/proc/play_tts(atom/speaker, mob/listener, filename, is_local = TRUE, effect = SOUND_EFFECT_NONE, preSFX = null, postSFX = null)
+/datum/controller/subsystem/tts220/proc/queue_sound_effect_processing(pure_filename, effect, processed_filename, datum/callback/output_tts_cb)
+	var/datum/sound_effect_request/request = new
+	request.original_filename = "[pure_filename].ogg"
+	request.output_filename = processed_filename
+	request.effect = effect
+	request.cb = output_tts_cb
+	LAZYADD(tts_effects_queue[processed_filename], request)
+
+/datum/controller/subsystem/tts220/proc/play_tts(atom/speaker, mob/listener, pure_filename, is_local = TRUE, datum/singleton/sound_effect/effect = null, preSFX = null, postSFX = null)
 	if(isnull(listener) || !listener.client)
 		return
 
-	var/voice
-	switch(effect)
-		if(SOUND_EFFECT_NONE)
-			voice = "[filename].ogg"
-		if(SOUND_EFFECT_RADIO)
-			voice = "[filename]_radio.ogg"
-		if(SOUND_EFFECT_ROBOT)
-			voice = "[filename]_robot.ogg"
-		if(SOUND_EFFECT_RADIO_ROBOT)
-			voice = "[filename]_radio_robot.ogg"
-		if(SOUND_EFFECT_MEGAPHONE)
-			voice = "[filename]_megaphone.ogg"
-		if(SOUND_EFFECT_MEGAPHONE_ROBOT)
-			voice = "[filename]_megaphone_robot.ogg"
-		else
-			CRASH("Invalid sound effect chosen.")
-	if(effect != SOUND_EFFECT_NONE)
-		if(!fexists(voice))
-			var/datum/callback/play_tts_cb = CALLBACK(src, PROC_REF(play_tts), speaker, listener, filename, is_local, effect, preSFX, postSFX)
-			if(LAZYLEN(tts_effects_queue[voice]))
-				LAZYADD(tts_effects_queue[voice], play_tts_cb)
-				return
-			LAZYADD(tts_effects_queue[voice], play_tts_cb)
-			apply_sound_effect(effect, "[filename].ogg", voice)
-			for(var/datum/callback/cb in tts_effects_queue[voice])
-				tts_effects_queue[voice] -= cb
-				if(cb == play_tts_cb)
-					continue
-				cb.InvokeAsync()
-			tts_effects_queue -= voice
+	var/filename2play = "[pure_filename][effect?.suffix].ogg"
+
+	if(isnull(effect) || fexists(filename2play))
+		output_tts(speaker, listener, filename2play, is_local, preSFX, postSFX)
+		return
+
+	var/datum/callback/output_tts_cb = CALLBACK(src, PROC_REF(output_tts), speaker, listener, filename2play, is_local, preSFX, postSFX)
+	queue_sound_effect_processing(pure_filename, effect, filename2play, output_tts_cb)
+
+/datum/controller/subsystem/tts220/proc/output_tts(atom/speaker, mob/listener, filename2play, is_local = TRUE, preSFX = null, postSFX = null)
+	var/volume = listener?.client?.prefs?.read_preference(/datum/preference/numeric/sound_tts_volume)
+	if(!volume)
+		return
 
 	var/turf/turf_source = get_turf(speaker)
 
-	var/volume
-	var/channel
-	if(is_local)
-		volume = LOCAL_TTS_VOLUME(listener)
-		channel = get_local_channel_by_owner(speaker)
-	else
-		volume = RADIO_TTS_VOLUME(listener)
-		channel = CHANNEL_TTS_RADIO
-
-	var/sound/output = sound(voice)
+	var/sound/output = sound(filename2play)
 	output.status = SOUND_STREAM
-
-	if(isnull(speaker))
+	if(!is_local || isnull(speaker))
 		output.wait = TRUE
-		output.channel = channel
-		// TODO: SS220-TTS
-		// output.volume = volume * listener.client.prefs.get_channel_volume(CHANNEL_GENERAL) * listener.client.prefs.get_channel_volume(channel)
-		output.volume = volume
-		output.environment = -1
+		output.volume = volume * 0.75 // non-local is slightly less loud // TODO220: Make volume different
+		output.environment = SOUND_ENVIRONMENT_NONE
 
 		if(output.volume <= 0)
 			return
 
-		if(preSFX)
-			play_sfx(listener, preSFX, output.channel, output.volume, output.environment)
-
+		play_sfx_if_exists(listener, preSFX, output)
 		SEND_SOUND(listener, output)
+		play_sfx_if_exists(listener, postSFX, output)
+
 		return
 
-	if(preSFX)
-		play_sfx(listener, preSFX, output.channel, output.volume, output.environment)
+	play_sfx_if_exists(listener, preSFX, output)
 
-	listener.playsound_local(turf_source, output, volume, sound_to_use = output, channel = channel, wait = TRUE)
+	output = listener.playsound_local(turf_source, output, volume)
 
 	if(!output || output.volume <= 0)
 		return
 
-	if(postSFX)
-		play_sfx(listener, postSFX, output.channel, output.volume, output.environment)
+	play_sfx_if_exists(listener, postSFX, output)
 
-/datum/controller/subsystem/tts220/proc/play_sfx(mob/listener, sfx, channel, volume, environment)
+/datum/controller/subsystem/tts220/proc/play_sfx_if_exists(mob/listener, sfx, sound/output)
+	if(sfx)
+		play_sfx(listener, sfx, output.volume, output.environment)
+
+/datum/controller/subsystem/tts220/proc/play_sfx(mob/listener, sfx, volume, environment)
 	var/sound/output = sound(sfx)
 	output.status = SOUND_STREAM
 	output.wait = TRUE
-	output.channel = channel
 	output.volume = volume
 	output.environment = environment
 	SEND_SOUND(listener, output)
-
-/datum/controller/subsystem/tts220/proc/get_local_channel_by_owner(owner)
-	var/channel = tts_local_channels_by_owner[owner]
-	if(isnull(channel))
-		channel = SSsounds.reserve_sound_channel_datumless()
-		tts_local_channels_by_owner[owner] = channel
-	return channel
 
 /datum/controller/subsystem/tts220/proc/cleanup_tts_file(filename)
 	fdel(filename)
@@ -453,10 +410,6 @@ SUBSYSTEM_DEF(tts220)
 	if(!M.client)
 		return _tts_seeds_names
 
-	// TODO: SS220-TTS
-	// for(var/donator_level in 0 to DONATOR_LEVEL_MAX)
-	// 	if(M.client.donator_level < donator_level)
-	// 		_tts_seeds_names -= tts_seeds_names_by_donator_levels["[donator_level]"]
 	return _tts_seeds_names
 
 /datum/controller/subsystem/tts220/proc/get_random_seed(owner)
@@ -465,113 +418,73 @@ SUBSYSTEM_DEF(tts220)
 /datum/controller/subsystem/tts220/proc/sanitize_tts_input(message)
 	var/hash
 	if(sanitized_messages_caching)
-		hash = rustgss220_hash_string(RUSTG_HASH_MD5, message)
+		hash = md5(lowertext(message))
 		if(sanitized_messages_cache[hash])
 			sanitized_messages_cache_hit++
 			return sanitized_messages_cache[hash]
 		sanitized_messages_cache_miss++
 	. = message
 	. = trim(.)
-
 	var/static/regex/punctuation_check = new(@"[.,?!]\Z")
 	if(!punctuation_check.Find(.))
 		. += "."
-
 	var/static/regex/html_tags = new(@"<[^>]*>", "g")
 	. = html_tags.Replace(., "")
 	. = html_decode(.)
-
 	var/static/regex/forbidden_symbols = new(@"[^a-zA-Z0-9а-яА-ЯёЁ,!?+./ \r\n\t:—()-]", "g")
 	. = forbidden_symbols.Replace(., "")
+	var/static/regex/acronyms = new(@"(?<![a-zA-Zа-яёА-ЯЁ])[a-zA-Zа-яёА-ЯЁ]+?(?![a-zA-Zа-яёА-ЯЁ])", "gm")
+	. = replacetext_char(., acronyms, /proc/tts_acronym_replacer)
 
-	var/static/regex/words = new(@"(?<![a-zA-Zа-яёА-ЯЁ])[a-zA-Zа-яёА-ЯЁ]+?(?![a-zA-Zа-яёА-ЯЁ])", "igm")
-	. = replacetext(., words, /proc/tts_word_replacer)
-	for(var/job in tts_job_replacements)
-		. = replacetext(., regex(job, "igm"), tts_job_replacements[job])
+	if(LAZYLEN(tts_job_replacements))
+		for(var/job in tts_job_replacements)
+			. = replacetext_char(., job, tts_job_replacements[job])
 	. = rustgss220_latin_to_cyrillic(.)
 
 	var/static/regex/decimals = new(@"-?\d+\.\d+", "g")
-	. = replacetext(., decimals, /proc/dec_in_words)
+	. = replacetext_char(., decimals, GLOBAL_PROC_REF(dec_in_words))
 
 	var/static/regex/numbers = new(@"-?\d+", "g")
-	. = replacetext(., numbers, /proc/num_in_words)
+	. = replacetext_char(., numbers, GLOBAL_PROC_REF(num_in_words))
 	if(sanitized_messages_caching)
 		sanitized_messages_cache[hash] = .
 
-/proc/tts_cast(atom/speaker, mob/listener, message, seed_name, is_local = TRUE, effect = SOUND_EFFECT_NONE, traits = TTS_TRAIT_RATE_FASTER, preSFX = null, postSFX = null)
-	SStts220.get_tts(speaker, listener, message, seed_name, is_local, effect, traits, preSFX, postSFX)
+/datum/controller/subsystem/tts220/proc/get_tts_by_gender(gender)
+	return LAZYACCESS(tts_seeds_by_gender, get_tts_gender(gender))
 
-/proc/tts_word_replacer(word)
-	var/static/list/tts_replacement_list
-	if(!tts_replacement_list)
-		tts_replacement_list = list(
-			"нт" = "Эн Тэ",
-			"смо" = "Эс Мэ О",
-			"гп" = "Гэ Пэ",
-			"рд" = "Эр Дэ",
-			"гсб" = "Гэ Эс Бэ",
-			"срп" = "Эс Эр Пэ",
-			"цк" = "Цэ Каа",
-			"рнд" = "Эр Эн Дэ",
-			"сб" = "Эс Бэ",
-			"рцд" = "Эр Цэ Дэ",
-			"брпд" = "Бэ Эр Пэ Дэ",
-			"рпд" = "Эр Пэ Дэ",
-			"рпед" = "Эр Пед",
-			"тсф" = "Тэ Эс Эф",
-			"срт" = "Эс Эр Тэ",
-			"обр" = "О Бэ Эр",
-			"кпк" = "Кэ Пэ Каа",
-			"пда" = "Пэ Дэ А",
-			"id" = "Ай Ди",
-			"мщ" = "Эм Ще",
-			"вт" = "Вэ Тэ",
-			"ерп" = "Йе Эр Пэ",
-			"се" = "Эс Йе",
-			"апц" = "А Пэ Цэ",
-			"лкп" = "Эл Ка Пэ",
-			"см" = "Эс Эм",
-			"ека" = "Йе Ка",
-			"ка" = "Кэ А",
-			"бса" = "Бэ Эс Аа",
-			"тк" = "Тэ Ка",
-			"бфл" = "Бэ Эф Эл",
-			"бщ" = "Бэ Щэ",
-			"кк" = "Кэ Ка",
-			"ск" = "Эс Ка",
-			"зк" = "Зэ Ка",
-			"ерт" = "Йе Эр Тэ",
-			"вкд" = "Вэ Ка Дэ",
-			"нтр" = "Эн Тэ Эр",
-			"пнт" = "Пэ Эн Тэ",
-			"авд" = "А Вэ Дэ",
-			"пнв" = "Пэ Эн Вэ",
-			"ссд" = "Эс Эс Дэ",
-			"кпб" = "Кэ Пэ Бэ",
-			"сссп" = "Эс Эс Эс Пэ",
-			"крб" = "Ка Эр Бэ",
-			"бд" = "Бэ Дэ",
-			"сст" = "Эс Эс Тэ",
-			"скс" = "Эс Ка Эс",
-			"икн" = "И Ка Эн",
-			"нсс" = "Эн Эс Эс",
-			"емп" = "Йе Эм Пэ",
-			"бс" = "Бэ Эс",
-			"цкс" = "Цэ Ка Эс",
-			"срд" = "Эс Эр Дэ",
-			"жпс" = "Джи Пи Эс",
-			"gps" = "Джи Пи Эс",
-			"ннксс" = "Эн Эн Ка Эс Эс",
-			"ss" = "Эс Эс",
-			"сс" = "Эс Эс",
-			"тесла" = "тэсла",
-			"трейзен" = "трэйзэн",
-			"нанотрейзен" = "нанотрэйзэн",
-			"мед" = "м ед",
-			"меде" = "м еде",
-			"кз" = "Кэ Зэ",
-		)
-	var/match = tts_replacement_list[lowertext(word)]
-	if(match)
-		return match
-	return word
+/datum/controller/subsystem/tts220/proc/get_tts_gender(gender)
+	var/tts_gender = gender_table[gender]
+	if(!tts_gender)
+		log_runtime("No mapping found for gender `[gender]` in `SStts220.gender_table`")
+		return TTS_GENDER_ANY
+
+	return tts_gender
+
+/datum/controller/subsystem/tts220/proc/pick_tts_seed_by_gender(gender)
+	var/tts_gender = SStts220.get_tts_gender(gender)
+	var/tts_by_gender = LAZYACCESS(SStts220.tts_seeds_by_gender, tts_gender)
+	if(!length(tts_by_gender))
+		logger.Log(LOG_CATEGORY_DEBUG, "No tts for gender `[gender]`, tts_gender: `[tts_gender]`")
+		return null
+
+	return pick(tts_by_gender)
+
+/// Proc intended to use with `replacetext`. Is global because `replacetext` cant use non globabl procs.
+/proc/tts_acronym_replacer(word)
+	if(!word || !LAZYLEN(SStts220.tts_acronym_replacements))
+		return word
+
+	var/match = SStts220.tts_acronym_replacements[lowertext(word)]
+	return match || word
+
+/datum/sound_effect_request
+	var/original_filename
+	var/output_filename
+	var/datum/singleton/sound_effect/effect
+	var/datum/callback/cb
+
+#undef TTS_REPLACEMENTS_FILE_PATH
+#undef TTS_ACRONYM_REPLACEMENTS
+#undef TTS_JOB_REPLACEMENTS
+
+#undef FILE_CLEANUP_DELAY

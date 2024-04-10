@@ -1,4 +1,4 @@
 /datum/modpack/tts
-	name = "TTS Silero"
-	desc = "Добавляет ТТС Силеро"
+	name = "Text-To-Speech"
+	desc = "2д космонавтики говорят вслух."
 	author = "furior"

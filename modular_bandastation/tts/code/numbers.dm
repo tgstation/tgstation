@@ -12,11 +12,7 @@
 	if(num.cache["[n]"])
 		return num.cache["[n]"]
 
-	var/result
-	if(decimal)
-		result = num.decimal2words(n)
-	else
-		result = num.int2words(n)
+	var/result = decimal ? num.decimal2words(n) : num.int2words(n)
 
 	result = " [result] "
 	num.cache["[n]"] = result
@@ -84,12 +80,7 @@
 	var/plural = 3
 	var/list/name = list()
 	var/use_teens = (rest % 100 >= 10) && (rest % 100 <= 19)
-	var/list/data = list()
-
-	if(!use_teens)
-		data = list( list(units, 10), list(tens, 100), list(hundreds, 1000) )
-	else
-		data = list( list(teens, 10), list(hundreds, 1000) )
+	var/list/data = use_teens ? list(list(teens, 10), list(hundreds, 1000)) : list(list(units, 10), list(tens, 100), list(hundreds, 1000))
 	for(var/list in data)
 
 		var/names = list[1]

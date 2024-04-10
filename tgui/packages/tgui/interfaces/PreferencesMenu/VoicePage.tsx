@@ -69,14 +69,7 @@ const getCheckboxGroup = (
 export const VoicePage = (props) => {
   const { act, data } = useBackend<PreferencesMenuData>();
 
-  const {
-    providers,
-    seeds,
-    phrases,
-    character_preferences: {
-      misc: { tts_seed },
-    },
-  } = data;
+  const { providers, seeds, phrases, tts_seed } = data;
 
   const donator_level = 5;
 

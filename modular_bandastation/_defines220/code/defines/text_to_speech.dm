@@ -1,17 +1,10 @@
 #define VV_HK_SELECT_TTS_VOICE "select_tts_voice"
 
-#define SOUND_EFFECT_NONE 0
-#define SOUND_EFFECT_RADIO 1
-#define SOUND_EFFECT_ROBOT 2
-#define SOUND_EFFECT_RADIO_ROBOT 3
-#define SOUND_EFFECT_MEGAPHONE 4
-#define SOUND_EFFECT_MEGAPHONE_ROBOT 5
-
-#define CHANNEL_TTS_RADIO 1008
-
 #define TTS_TRAIT_PITCH_WHISPER (1<<1)
 #define TTS_TRAIT_RATE_FASTER (1<<2)
 #define TTS_TRAIT_RATE_MEDIUM (1<<3)
+
+#define TTS_TRAIT_ROBOTIZE "tts_trait_robotize"
 
 #define TTS_CATEGORY_OTHER "Другое"
 #define TTS_CATEGORY_WARCRAFT3 "WarCraft 3"
@@ -34,6 +27,25 @@
 #define TTS_CATEGORY_HEARTHSTONE "Hearthstone"
 #define TTS_CATEGORY_VALORANT "Valorant"
 #define TTS_CATEGORY_EVILISLANDS "Evil Islands"
+#define TTS_CATEGORY_WITCHER "Witcher"
+#define TTS_CATEGORY_LEFT4DEAD "Left 4 Dead"
+#define TTS_CATEGORY_SPONGEBOB "SpongeBob"
+#define TTS_CATEGORY_TINYBUNNY "Tiny Bunny"
+#define TTS_CATEGORY_BALDURS_GATE_3 "Baldur's gate 3"
+#define TTS_CATEGORY_PORTAL "Portal"
+#define TTS_CATEGORY_TMNT "Teenage mutant ninja turtle"
+#define TTS_CATEGORY_STAR_WARS "Star Wars"
+#define TTS_CATEGORY_TRANSFORMERS "Transformers"
+#define TTS_CATEGORY_LOTR "The Lord of the rings"
+#define TTS_CATEGORY_SHREK "Shrek"
+#define TTS_CATEGORY_POTC "Pirates of the Caribbean"
+#define TTS_CATEGORY_HARRY_POTTER "Harry Potter"
+#define TTS_CATEGORY_X3 "X3"
+#define TTS_CATEGORY_OVERLORD2 "The Overlord 2"
+#define TTS_CATEGORY_MARVEL "Marvel"
+#define TTS_CATEGORY_WOW "World of Warcraft"
+#define TTS_CATEGORY_TREASURE_ISLAND "Treasure Island"
+#define TTS_CATEGORY_BOYS_WORD "Слово пацана"
 
 #define TTS_GENDER_ANY "Любой"
 #define TTS_GENDER_MALE "Мужской"
@@ -55,10 +67,9 @@
 		"Капитан, вы уверены что хотите назначить клоуна на должность главы персонала?",\
 	)
 
-#define LOCAL_TTS_VOLUME(mob) mob.client.prefs.read_preference(/datum/preference/numeric/sound_tts_local)
-#define RADIO_TTS_VOLUME(mob) mob.client.prefs.read_preference(/datum/preference/numeric/sound_tts_radio)
-#define LOCAL_TTS_ENABLED(mob) LOCAL_TTS_VOLUME(mob)
-#define RADIO_TTS_ENABLED(mob) RADIO_TTS_VOLUME(mob)
+#define BIG_WORKER_TIER 220
+#define LITTLE_WORKER_TIER 110
 
-/proc/error(msg)
-	log_world("## ERROR: [msg]")
+#define BIG_WORKER_TTS_LEVEL 3
+#define LITTLE_WORKER_TTS_LEVEL 1
+#define DONATOR_LEVEL_MAX 5

@@ -1,8 +1,13 @@
-//Fallback values for TTS voices
+// Fallback values for TTS voices
 
-/mob/living
-	tts_seed = "Kleiner"
+/mob/living/add_tts_component()
+	AddComponent(/datum/component/tts_component)
 
-// /mob/living/basic
+/mob/living/basic/add_tts_component()
+	AddComponent(/datum/component/tts_component, /datum/tts_seed/silero/angel)
 
-// /mob/living/simple_animal
+/mob/living/simple_animal/add_tts_component()
+	AddComponent(/datum/component/tts_component, /datum/tts_seed/silero/angel)
+
+/mob/living/silicon/add_tts_component()
+	AddComponent(/datum/component/tts_component, null, TTS_TRAIT_ROBOTIZE)
