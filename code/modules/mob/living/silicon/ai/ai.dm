@@ -53,6 +53,7 @@
 	var/shunted = FALSE //1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
 	var/obj/machinery/ai_voicechanger/ai_voicechanger = null // reference to machine that holds the voicechanger
 	var/malfhacking = FALSE // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
+	var/list/hacked_apcs = list() // List of hacked APCs
 	var/malf_cooldown = 0 //Cooldown var for malf modules, stores a worldtime + cooldown
 
 	var/obj/machinery/power/apc/malfhack
@@ -1043,6 +1044,7 @@
 	apc.coverlocked = TRUE
 	apc.flicker_hacked_icon()
 	apc.set_hacked_hud()
+	hacked_apcs += apc
 	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
 	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
 

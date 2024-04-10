@@ -328,7 +328,7 @@
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
 			var/mob/living/silicon/ai/ai = occupant
-			if(!ai.linked_core) // we probably shouldnt gib AIs with a core
+			if(!ai.linked_core && !ai.can_shunt) // we probably shouldnt gib AIs with a core
 				unlucky_ai = occupant
 				ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
 				ai.gib(DROP_ALL_REMAINS) //No wreck, no AI to recover

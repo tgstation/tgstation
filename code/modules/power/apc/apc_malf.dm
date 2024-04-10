@@ -19,7 +19,7 @@
 		return
 	to_chat(malf, span_notice("Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."))
 	malf.malfhack = src
-	malf.malfhacking = addtimer(CALLBACK(malf, TYPE_PROC_REF(/mob/living/silicon/ai/, malfhacked), src), 600, TIMER_STOPPABLE)
+	malf.malfhacking = addtimer(CALLBACK(malf, TYPE_PROC_REF(/mob/living/silicon/ai/, malfhacked), src), 30, TIMER_STOPPABLE)
 
 	var/atom/movable/screen/alert/hackingapc/hacking_apc
 	hacking_apc = malf.throw_alert(ALERT_HACKING_APC, /atom/movable/screen/alert/hackingapc)
@@ -37,18 +37,16 @@
 	if(!is_station_level(z))
 		return
 	malf.ShutOffDoomsdayDevice()
-	occupier = new /mob/living/silicon/ai(src, malf.laws.copy_lawset(), malf) //DEAR GOD WHY? //IKR????
-	occupier.adjustOxyLoss(malf.getOxyLoss())
+	occupier = malf
+	if (istype(malf.loc, /turf)) // create a deactivated AI core if the AI isn't coming from an emergency mech shunt
+		malf.linked_core = new /obj/structure/ai_core/deactivated
+		malf.linked_core.remote_ai = malf // note that we do not set the deactivated core's core_mmi.brainmob
+	malf.forceMove(src) // move INTO the APC, not to its tile
 	if(!findtext(occupier.name, "APC Copy"))
 		occupier.name = "[malf.name] APC Copy"
-	if(malf.parent)
-		occupier.parent = malf.parent
-	else
-		occupier.parent = malf
 	malf.shunted = TRUE
 	occupier.eyeobj.name = "[occupier.name] (AI Eye)"
-	if(malf.parent)
-		qdel(malf)
+	occupier.eyeobj.forceMove(src.loc)
 	for(var/obj/item/pinpointer/nuke/disk_pinpointers in GLOB.pinpointer_list)
 		disk_pinpointers.switch_mode_to(TRACK_MALF_AI) //Pinpointer will track the shunted AI
 	var/datum/action/innate/core_return/return_action = new
@@ -58,12 +56,11 @@
 /obj/machinery/power/apc/proc/malfvacate(forced)
 	if(!occupier)
 		return
-	if(occupier.parent && occupier.parent.stat != DEAD)
-		occupier.mind.transfer_to(occupier.parent)
-		occupier.parent.shunted = FALSE
-		occupier.parent.setOxyLoss(occupier.getOxyLoss())
-		occupier.parent.cancel_camera()
-		qdel(occupier)
+	if(occupier.linked_core)
+		occupier.shunted = FALSE
+		occupier.forceMove(occupier.linked_core.loc)
+		qdel(occupier.linked_core)
+		occupier.cancel_camera()
 		return
 	to_chat(occupier, span_danger("Primary core damaged, unable to return core processes."))
 	if(forced)
@@ -89,7 +86,7 @@
 	if(!occupier.mind || !occupier.client)
 		to_chat(user, span_warning("[occupier] is either inactive or destroyed!"))
 		return FALSE
-	if(!occupier.parent.stat)
+	if(occupier.linked_core) //if they have an active linked_core, they can't be transferred from an APC
 		to_chat(user, span_warning("[occupier] is refusing all attempts at transfer!") )
 		return FALSE
 	if(transfer_in_progress)
@@ -127,7 +124,7 @@
 	to_chat(occupier, span_notice("Transfer complete! You've been stored in [user]'s [card.name]."))
 	occupier.forceMove(card)
 	card.AI = occupier
-	occupier.parent.shunted = FALSE
+	occupier.shunted = FALSE
 	occupier.cancel_camera()
 	occupier = null
 	transfer_in_progress = FALSE

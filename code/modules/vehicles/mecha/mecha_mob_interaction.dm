@@ -121,8 +121,12 @@
 		AI.eyeobj?.forceMove(newloc) //kick the eye out as well
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
 			if(!AI.linked_core) //if the victim AI has no core
-				AI.investigate_log("has been gibbed by being forced out of their mech by another AI.", INVESTIGATE_DEATHS)
-				AI.gib(DROP_ALL_REMAINS)  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
+				if (!AI.can_shunt || !AI.hacked_apcs)
+					AI.investigate_log("has been gibbed by being forced out of their mech by another AI.", INVESTIGATE_DEATHS)
+					AI.gib(DROP_ALL_REMAINS)  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
+				else
+					var/obj/machinery/power/apc/emergency_shunt_apc = pick(AI.hacked_apcs)
+					emergency_shunt_apc.malfoccupy(AI) //get shunted into a random APC (you don't get to choose which)
 			AI = null
 			mecha_flags &= ~SILICON_PILOT
 			return
@@ -184,9 +188,14 @@
 /obj/vehicle/sealed/mecha/container_resist_act(mob/living/user)
 	if(isAI(user))
 		var/mob/living/silicon/ai/AI = user
-		if(!AI.can_shunt)
-			to_chat(AI, span_notice("You can't leave a mech after dominating it!."))
-			return FALSE
+		if(!AI.linked_core)
+			if(!AI.can_shunt || !AI.hacked_apcs.len)
+				to_chat(AI, span_userdanger("Inactive core destroyed. Unable to return."))
+				return FALSE
+			var/confirm = tgui_alert(AI, "Shunt to a random APC?", "Confirm Emergency Shunt", list("Yes", "No"))
+			if(confirm)
+				mob_exit(AI, forced = TRUE)
+				return
 	to_chat(user, span_notice("You begin the ejection procedure. Equipment is disabled during this process. Hold still to finish ejecting."))
 	is_currently_ejecting = TRUE
 	if(do_after(user, has_gravity() ? exit_delay : 0 , target = src))
