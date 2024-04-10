@@ -66,21 +66,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(HAS_TRAIT(user,TRAIT_BALLOON_SUTRA))
 		. = "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
 
-/obj/item/balloon_mallet/attack(mob/living/M, mob/living/user)
+/obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
 	playsound(loc, 'sound/creatures/clown/hehe.ogg', 20)
-	if (!isliving(M))
+	if (!isliving(target))
 		return
-	switch(M.mob_mood.sanity)
+	switch(target.mob_mood.sanity)
 		if (SANITY_INSANE to SANITY_CRAZY)
 			force = 8
 		if (SANITY_UNSTABLE to SANITY_DISTURBED)
 			force = 4
-			M.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
+			target.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
 		if (SANITY_NEUTRAL to SANITY_GREAT)
-			M.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
+			target.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
 
 	if(user.combat_mode)
-		return ..(M, user)
+		return ..(target, user)
 
 /obj/item/sord
 	name = "\improper SORD"
