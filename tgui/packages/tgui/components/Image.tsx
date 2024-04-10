@@ -53,7 +53,7 @@ export function Image(props: Props) {
           setTimeout(() => {
             attempts.current++;
             imgElement.src = `${src}?currentAttempts=${attempts.current}`;
-          }, 1500);
+          }, 1000);
         }
       }}
       src={src}
