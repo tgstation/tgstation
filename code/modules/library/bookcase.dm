@@ -172,14 +172,13 @@
 		choice.forceMove(drop_location())
 	update_appearance()
 
-/obj/structure/bookcase/deconstruct(disassembled = TRUE)
+/obj/structure/bookcase/atom_deconstruct(disassembled = TRUE)
 	var/atom/Tsec = drop_location()
 	new /obj/item/stack/sheet/mineral/wood(Tsec, 4)
 	for(var/obj/item/I in contents)
 		if(!isbook(I)) //Wake me up inside
 			continue
 		I.forceMove(Tsec)
-	return ..()
 
 /obj/structure/bookcase/update_icon_state()
 	if(state == BOOKCASE_UNANCHORED || state == BOOKCASE_ANCHORED)

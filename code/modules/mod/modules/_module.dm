@@ -16,7 +16,7 @@
 	/// Power use when active
 	var/active_power_cost = DEFAULT_CHARGE_DRAIN * 0
 	/// Power use when used, we call it manually
-	var/use_power_cost = DEFAULT_CHARGE_DRAIN * 0
+	var/use_energy_cost = DEFAULT_CHARGE_DRAIN * 0
 	/// ID used by their TGUI
 	var/tgui_id
 	/// Linked MODsuit
@@ -151,7 +151,7 @@
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		balloon_alert(mod.wearer, "on cooldown!")
 		return FALSE
-	if(!check_power(use_power_cost))
+	if(!check_power(use_energy_cost))
 		balloon_alert(mod.wearer, "not enough charge!")
 		return FALSE
 	if(!(allow_flags & MODULE_ALLOW_PHASEOUT) && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))

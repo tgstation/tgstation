@@ -185,7 +185,7 @@
 			exposed_mob.emote("scream")
 		playsound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
 		ADD_TRAIT(exposed_mob, TRAIT_OIL_FRIED, "cooking_oil_react")
-		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 3)
+		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 0.3 SECONDS)
 	if(FryLoss)
 		exposed_mob.adjustFireLoss(FryLoss)
 
@@ -278,7 +278,7 @@
 	name = "Sugar"
 	description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 255, 255, 255
+	color = COLOR_WHITE // rgb: 255, 255, 255
 	taste_mult = 1.5 // stop sugar drowning out other flavours
 	nutriment_factor = 2
 	metabolization_rate = 5 * REAGENTS_METABOLISM
@@ -399,7 +399,7 @@
 		exposed_open_turf.air.temperature = max(exposed_open_turf.air.temperature - ((temperature - TCMB) * (heat_capacity * reac_volume * specific_heat) / (heat_capacity + reac_volume * specific_heat)) / heat_capacity, TCMB) // Exchanges environment temperature with reagent. Reagent is at 2.7K with a heat capacity of 40J per unit.
 	if(reac_volume < 5)
 		return
-	for(var/mob/living/simple_animal/slime/exposed_slime in exposed_turf)
+	for(var/mob/living/basic/slime/exposed_slime in exposed_turf)
 		exposed_slime.adjustToxLoss(rand(15,30))
 
 /datum/reagent/consumable/condensedcapsaicin
@@ -453,7 +453,7 @@
 	name = "Table Salt"
 	description = "A salt made of sodium chloride. Commonly used to season food."
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 255,255,255
+	color = COLOR_WHITE // rgb: 255,255,255
 	taste_description = "salt"
 	penetrates_skin = NONE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -531,7 +531,10 @@
 	. = ..()
 	if(isvampire(affected_mob)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
 		if(SPT_PROB(min((current_cycle-1)/2, 12.5), seconds_per_tick))
-			to_chat(affected_mob, span_danger("You can't get the scent of garlic out of your nose! You can barely think..."))
+			if(HAS_TRAIT(affected_mob, TRAIT_ANOSMIA))
+				to_chat(affected_mob, span_danger("You feel that something is wrong, your strength is leaving you! You can barely think..."))
+			else
+				to_chat(affected_mob, span_danger("You can't get the scent of garlic out of your nose! You can barely think..."))
 			affected_mob.Paralyze(10)
 			affected_mob.set_jitter_if_lower(20 SECONDS)
 	else
@@ -564,7 +567,7 @@
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
-	color = "#FF00FF" // rgb: 255, 0, 255
+	color = COLOR_MAGENTA // rgb: 255, 0, 255
 	taste_description = "childhood whimsy"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -629,7 +632,7 @@
 	name = "Flour"
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 0, 0, 0
+	color = COLOR_WHITE // rgb: 0, 0, 0
 	taste_description = "chalky wheat"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
 	default_container = /obj/item/reagent_containers/condiment/flour
@@ -694,7 +697,7 @@
 	description = "tiny nutritious grains"
 	reagent_state = SOLID
 	nutriment_factor = 3
-	color = "#FFFFFF" // rgb: 0, 0, 0
+	color = COLOR_WHITE // rgb: 0, 0, 0
 	taste_description = "rice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/rice
@@ -703,7 +706,7 @@
 	name = "Rice Flour"
 	description = "Flour mixed with Rice"
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 0, 0, 0
+	color = COLOR_WHITE // rgb: 0, 0, 0
 	taste_description = "chalky wheat with rice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -946,7 +949,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 30)
+		stomach.adjust_charge(reac_volume * 0.03 * STANDARD_CELL_CHARGE)
 
 /datum/reagent/consumable/liquidelectricity/enriched/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -962,7 +965,7 @@
 	nutriment_factor = 0
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 255, 255, 255
+	color = COLOR_WHITE // rgb: 255, 255, 255
 	taste_mult = 8
 	taste_description = "sweetness"
 	overdose_threshold = 17
@@ -1034,7 +1037,7 @@
 /datum/reagent/consumable/chocolatepudding
 	name = "Chocolate Pudding"
 	description = "A great dessert for chocolate lovers."
-	color = "#800000"
+	color = COLOR_MAROON
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 4
 	taste_description = "sweet chocolate"
@@ -1099,7 +1102,7 @@
 	name = "Korta Milk"
 	description = "A milky liquid made by crushing the centre of a korta nut."
 	taste_description = "sugary milk"
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/korta_nectar

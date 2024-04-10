@@ -715,12 +715,11 @@
 	register_context()
 	if(!id_tag)
 		id_tag = assign_random_name()
-	return INITIALIZE_HINT_LATELOAD
 
 /**
  * Mapped or built tram cabinet isn't located on a transport module.
  */
-/obj/machinery/transport/tram_controller/LateInitialize(mapload)
+/obj/machinery/transport/tram_controller/post_machine_initialize()
 	. = ..()
 	SStransport.hello(src, name, id_tag)
 	find_controller()
@@ -955,7 +954,7 @@
  * Since the machinery obj is a dumb terminal for the controller datum, sync the display with the status bitfield of the tram
  */
 /obj/machinery/transport/tram_controller/proc/sync_controller(source, controller, controller_status, travel_direction, destination_platform)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	if(controller != controller_datum)
 		return
 	update_appearance()

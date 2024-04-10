@@ -139,6 +139,8 @@
 			mob_container = AI
 			newloc = get_turf(AI.linked_core)
 			qdel(AI.linked_core)
+	else if(isliving(M))
+		mob_container = M
 	else
 		return ..()
 	var/mob/living/ejector = M

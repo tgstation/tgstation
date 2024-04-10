@@ -249,6 +249,12 @@
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/bait_can/worm/premium)
 
+/datum/supply_pack/goody/fish_feed
+	name = "Can of fish food"
+	desc = "For keeping your little friends fed and alive."
+	cost = PAYCHECK_CREW * 1
+	contains = list(/obj/item/fish_feed)
+
 /datum/supply_pack/goody/naturalbait
 	name = "Freshness Jars full of Natural Bait"
 	desc = "Homemade in the Spinward Sector."

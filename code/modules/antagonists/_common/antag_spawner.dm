@@ -103,11 +103,13 @@
 	/// The applied outfit
 	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/reinforcement
 	/// The antag datum applied
-	var/datum/antagonist/nukeop/reinforcement/antag_datum = /datum/antagonist/nukeop/reinforcement
+	var/antag_datum = /datum/antagonist/nukeop/reinforcement
 	/// Style used by the droppod
 	var/pod_style = STYLE_SYNDICATE
 	/// Do we use a random subtype of the outfit?
 	var/use_subtypes = TRUE
+	/// Where do we land our pod?
+	var/turf/spawn_location
 
 /obj/item/antag_spawner/nuke_ops/proc/check_usability(mob/user)
 	if(used)
@@ -143,7 +145,6 @@
 
 /obj/item/antag_spawner/nuke_ops/spawn_antag(client/our_client, turf/T, kind, datum/mind/user)
 	var/mob/living/carbon/human/nukie = new()
-	var/obj/structure/closet/supplypod/pod = setup_pod()
 	our_client.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
 	nukie.ckey = our_client.key
 	var/datum/mind/op_mind = nukie.mind
@@ -152,15 +153,33 @@
 	else
 		nukie.forceMove(locate(1,1,1))
 
-	antag_datum = new()
-
-	antag_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
+	var/new_datum = new antag_datum()
 
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
-	op_mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
+	op_mind.add_antag_datum(new_datum, creator_op ? creator_op.get_team() : null)
 	op_mind.special_role = special_role_name
+
+	if(outfit)
+		var/datum/antagonist/nukeop/nukie_datum = op_mind.has_antag_datum(antag_datum)
+		nukie_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
+
+	var/obj/structure/closet/supplypod/pod = setup_pod()
 	nukie.forceMove(pod)
-	new /obj/effect/pod_landingzone(get_turf(src), pod)
+	new /obj/effect/pod_landingzone(spawn_location ? spawn_location : get_turf(src), pod)
+
+/obj/item/antag_spawner/nuke_ops/overwatch
+	name = "overwatch support beacon"
+	desc = "Assigns an Overwatch Intelligence Agent to your operation. Stationed at their own remote outpost, they can view station cameras, alarms, and even move the Infiltrator shuttle! \
+		Also, all members of your operation will recieve body cameras that they can view your progress from."
+	special_role_name = ROLE_OPERATIVE_OVERWATCH
+	outfit = /datum/outfit/syndicate/support
+	use_subtypes = FALSE
+	antag_datum = /datum/antagonist/nukeop/support
+
+/obj/item/antag_spawner/nuke_ops/overwatch/Initialize(mapload)
+	. = ..()
+	if(length(GLOB.nukeop_overwatch_start)) //Otherwise, it will default to the datum's spawn point anyways
+		spawn_location = pick(GLOB.nukeop_overwatch_start)
 
 //////CLOWN OP
 /obj/item/antag_spawner/nuke_ops/clown
@@ -176,8 +195,6 @@
 /obj/item/antag_spawner/nuke_ops/borg_tele
 	name = "syndicate cyborg beacon"
 	desc = "A single-use beacon designed to quickly launch reinforcement cyborgs into the field."
-	icon = 'icons/obj/devices/remote.dmi'
-	icon_state = "gangtool-red"
 	antag_datum = /datum/antagonist/nukeop/reinforcement/cyborg
 	special_role_name = "Syndicate Cyborg"
 
@@ -267,7 +284,6 @@
 	new /obj/effect/dummy/phased_mob(T, spawned)
 
 	spawned.key = C.key
-	spawned.generate_antagonist_status()
 
 /obj/item/antag_spawner/slaughter_demon/laughter
 	name = "vial of tickles"

@@ -10,18 +10,13 @@
 			continue
 		wearable_item_paths |= item_path
 
-	for(var/clothing_path in (subtypesof(/obj/item/clothing) - typesof(/obj/item/clothing/head/mob_holder) - typesof(/obj/item/clothing/suit/space/santa))) //mob_holder is a psuedo abstract item. santa suit is a VERY SNOWFLAKE admin spawn suit that can hold /every/ possible item.
-		var/obj/item/clothing/spawned_item = new clothing_path
-		for(var/path in spawned_item.allowed) //find all usable suit storage stuff.
+	for(var/obj/item/clothing/clothing_path in (subtypesof(/obj/item/clothing) - typesof(/obj/item/clothing/head/mob_holder) - typesof(/obj/item/clothing/suit/space/santa))) //mob_holder is a psuedo abstract item. santa suit is a VERY SNOWFLAKE admin spawn suit that can hold /every/ possible item.
+		for(var/path in clothing_path::allowed) //find all usable suit storage stuff.
 			wearable_item_paths |= path
-		qdel(spawned_item)
 
-	for(var/mod_path in subtypesof(/obj/item/mod/control))
-		var/obj/item/mod/control/control_mod = new
-		for(var/path in control_mod.chestplate.allowed)
+	for(var/obj/item/mod/control/mod_path in subtypesof(/obj/item/mod/control))
+		for(var/path in mod_path::chestplate::allowed)
 			wearable_item_paths |= path
-		qdel(control_mod)
-
 
 	var/list/already_warned_icons = list()
 	var/count = 1 //to be removed once the test goes live / into CI failure mode.

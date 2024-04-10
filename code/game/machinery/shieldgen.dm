@@ -94,7 +94,7 @@
 /obj/structure/emergency_shield/cult/weak
 	name = "Invoker's Shield"
 	desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals."
-	color = "#FF0000"
+	color = COLOR_RED
 	max_integrity = 20
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = ABOVE_MOB_LAYER
@@ -243,7 +243,7 @@
 			to_chat(user, span_warning("You need one length of cable to repair [src]!"))
 			return
 		to_chat(user, span_notice("You begin to replace the wires..."))
-		if(do_after(user, 30, target = src))
+		if(do_after(user, 3 SECONDS, target = src))
 			if(coil.get_amount() < 1)
 				return
 			coil.use(1)

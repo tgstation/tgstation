@@ -686,7 +686,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		I.loc = T
 		client.images += I
 		I.icon_state = "[success ? "green" : "red"]Overlay" //greenOverlay and redOverlay for success and failure respectively
-		addtimer(CALLBACK(src, PROC_REF(remove_transformer_image), client, I, T), 30)
+		addtimer(CALLBACK(src, PROC_REF(remove_transformer_image), client, I, T), 3 SECONDS)
 	if(!success)
 		to_chat(src, span_warning("[alert_msg]"))
 	return success
@@ -801,7 +801,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		if(!uses)
 			break
-		if(!C.status || C.view_range != initial(C.view_range))
+		if(!C.camera_enabled || C.view_range != initial(C.view_range))
 			C.toggle_cam(owner_AI, 0) //Reactivates the camera based on status. Badly named proc.
 			C.view_range = initial(C.view_range)
 			fixed_cameras++
@@ -831,10 +831,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 	var/upgraded_cameras = 0
 	for(var/obj/machinery/camera/camera as anything in GLOB.cameranet.cameras)
-		var/obj/structure/camera_assembly/assembly = camera.assembly_ref?.resolve()
-		if(!assembly)
-			continue
-
 		var/upgraded = FALSE
 
 		if(!camera.isXRay())

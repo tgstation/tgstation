@@ -2402,9 +2402,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Jf" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/escape)

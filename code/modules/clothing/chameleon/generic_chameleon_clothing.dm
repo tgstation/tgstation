@@ -3,6 +3,7 @@
 do { \
 	var/datum/action/item_action/chameleon/change/_action = locate() in item.actions; \
 	_action?.emp_randomise(INFINITY); \
+	item.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF); \
 } while(FALSE)
 
 // Cham jumpsuit

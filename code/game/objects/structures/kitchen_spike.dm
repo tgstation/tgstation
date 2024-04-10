@@ -159,13 +159,12 @@
 	buckled_mob.pixel_y = buckled_mob.base_pixel_y + PIXEL_Y_OFFSET_LYING
 	REMOVE_TRAIT(buckled_mob, TRAIT_MOVE_UPSIDE_DOWN, REF(src))
 
-/obj/structure/kitchenspike/deconstruct(disassembled = TRUE)
+/obj/structure/kitchenspike/atom_deconstruct(disassembled = TRUE)
 	if(disassembled)
 		var/obj/structure/meatspike_frame = new /obj/structure/kitchenspike_frame(src.loc)
 		transfer_fingerprints_to(meatspike_frame)
 	else
 		new /obj/item/stack/sheet/iron(src.loc, 4)
 	new /obj/item/stack/rods(loc, MEATSPIKE_IRONROD_REQUIREMENT)
-	qdel(src)
 
 #undef MEATSPIKE_IRONROD_REQUIREMENT

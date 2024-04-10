@@ -36,11 +36,11 @@
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD)
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 	///How much energy the mech will consume each time it moves. this is the current active energy consumed
-	var/step_energy_drain = 8
+	var/step_energy_drain = 8 KILO JOULES
 	///How much energy we drain each time we mechpunch someone
-	var/melee_energy_drain = 15
+	var/melee_energy_drain = 15 KILO JOULES
 	///Power we use to have the lights on
-	var/light_energy_drain = 2
+	var/light_power_drain = 2 KILO WATTS
 	///Modifiers for directional damage reduction
 	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 0.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 1.5)
 	///if we cant use our equipment(such as due to EMP)
@@ -187,7 +187,7 @@
 	///check for phasing, if it is set to text (to describe how it is phasing: "flying", "phasing") it will let the mech walk through walls.
 	var/phasing = ""
 	///Power we use every time we phaze through something
-	var/phasing_energy_drain = 200
+	var/phasing_energy_drain = 0.2 * STANDARD_CELL_CHARGE
 	///icon_state for flick() when phazing
 	var/phase_state = ""
 
@@ -269,8 +269,12 @@
 	AddElement(/datum/element/hostile_machine)
 
 /obj/vehicle/sealed/mecha/Destroy()
-	for(var/ejectee in occupants)
-		mob_exit(ejectee, silent = TRUE)
+	/// If the former occupants get polymorphed, mutated, chestburstered,
+	/// or otherwise replaced by another mob, that mob is no longer in .occupants
+	/// and gets deleted with the mech. However, they do remain in .contents
+	var/list/potential_occupants = contents ^ occupants
+	for(var/mob/buggy_ejectee in potential_occupants)
+		mob_exit(buggy_ejectee, silent = TRUE)
 
 	if(LAZYLEN(flat_equipment))
 		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in flat_equipment)
@@ -554,8 +558,9 @@
 
 	if(internal_damage & MECHA_INT_SHORT_CIRCUIT && get_charge())
 		spark_system.start()
-		use_power(min(10 * seconds_per_tick, cell.charge))
-		cell.maxcharge -= min(10 * seconds_per_tick, cell.maxcharge)
+		var/damage_energy_consumption = 0.005 * STANDARD_CELL_CHARGE * seconds_per_tick
+		use_energy(damage_energy_consumption)
+		cell.maxcharge -= min(damage_energy_consumption, cell.maxcharge)
 
 /obj/vehicle/sealed/mecha/proc/process_cabin_air(seconds_per_tick)
 	if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && cabin_air && cabin_air.return_volume() > 0)
@@ -620,7 +625,7 @@
 	diag_hud_set_mechstat()
 
 /obj/vehicle/sealed/mecha/proc/process_constant_power_usage(seconds_per_tick)
-	if(mecha_flags & LIGHTS_ON && !use_power(light_energy_drain * seconds_per_tick))
+	if(mecha_flags & LIGHTS_ON && !use_energy(light_power_drain * seconds_per_tick))
 		mecha_flags &= ~LIGHTS_ON
 		set_light_on(mecha_flags & LIGHTS_ON)
 		playsound(src,'sound/machines/clockcult/brass_skewer.ogg', 40, TRUE)
@@ -696,7 +701,7 @@
 
 	if(!has_charge(melee_energy_drain))
 		return
-	use_power(melee_energy_drain)
+	use_energy(melee_energy_drain)
 
 	SEND_SIGNAL(user, COMSIG_MOB_USED_MECH_MELEE, src)
 	target.mech_melee_attack(src, user)
@@ -856,11 +861,11 @@
 	if(capacitor)
 		phasing_energy_drain = initial(phasing_energy_drain) / capacitor.rating
 		melee_energy_drain = initial(melee_energy_drain) / capacitor.rating
-		light_energy_drain = initial(light_energy_drain) / capacitor.rating
+		light_power_drain = initial(light_power_drain) / capacitor.rating
 	else
 		phasing_energy_drain = initial(phasing_energy_drain)
 		melee_energy_drain = initial(melee_energy_drain)
-		light_energy_drain = initial(light_energy_drain)
+		light_power_drain = initial(light_power_drain)
 
 /// Toggle lights on/off
 /obj/vehicle/sealed/mecha/proc/toggle_lights(forced_state = null, mob/user)
@@ -868,7 +873,7 @@
 		if(user)
 			balloon_alert(user, "mech has no lights!")
 		return
-	if((!(mecha_flags & LIGHTS_ON) && forced_state != FALSE) && get_charge() < light_energy_drain)
+	if((!(mecha_flags & LIGHTS_ON) && forced_state != FALSE) && get_charge() < power_to_energy(light_power_drain, scheduler = SSobj))
 		if(user)
 			balloon_alert(user, "no power for lights!")
 		return
