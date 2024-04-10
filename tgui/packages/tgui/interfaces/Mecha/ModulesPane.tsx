@@ -434,7 +434,7 @@ const SnowflakeSleeper = (props) => {
           value={patient.patient_health}
         />
       </LabeledList.Item>
-      <LabeledList.Item className="candystripe" label={'State'}>
+      <LabeledList.Item className="candystripe" label="State">
         {patient.patient_state}
       </LabeledList.Item>
       <LabeledList.Item className="candystripe" label={'Temperature'}>
