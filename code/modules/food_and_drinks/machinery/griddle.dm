@@ -83,7 +83,7 @@
 /obj/machinery/griddle/item_interaction(mob/living/user, obj/item/item, list/modifiers, is_right_clicking)
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
+		return
 	
 	if(isnull(item.atom_storage))
 		return .
