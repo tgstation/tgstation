@@ -429,7 +429,7 @@ ADMIN_VERB(give_disease, R_FUN, "Give Disease", ADMIN_VERB_NO_DESCRIPTION, ADMIN
 	log_admin("[key_name(user)] gave [key_name(victim)] the disease [D].")
 	message_admins(span_adminnotice("[key_name_admin(user)] gave [key_name_admin(victim)] the disease [D]."))
 
-ADMIN_VERB(object_say, R_FUN, "OSay", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, obj/speaker in world)
+ADMIN_VERB_AND_CONTEXT_MENU(object_say, R_FUN, "OSay", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, obj/speaker in world)
 	var/message = tgui_input_text(user, "What do you want the message to be?", "Make Sound", encode = FALSE)
 	if(!message)
 		return
