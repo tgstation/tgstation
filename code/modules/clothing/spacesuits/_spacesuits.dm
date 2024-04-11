@@ -1,5 +1,5 @@
 /// Charge per tick consumed by the thermal regulator
-#define THERMAL_REGULATOR_COST (18 KILO JOULES)
+#define THERMAL_REGULATOR_COST (0.018 * STANDARD_CELL_CHARGE)
 
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
 //      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!
