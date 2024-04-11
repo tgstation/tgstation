@@ -65,7 +65,7 @@
 	if(!recharging_mech?.cell)
 		return
 	if(recharging_mech.cell.charge < recharging_mech.cell.maxcharge)
-		if(!use_energy(active_power_usage * seconds_per_tick))
+		if(!use_energy(active_power_usage * seconds_per_tick, force = FALSE))
 			return
 		charge_cell(recharge_power * seconds_per_tick, recharging_mech.cell, grid_only = TRUE)
 	else
