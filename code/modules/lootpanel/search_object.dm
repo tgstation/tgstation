@@ -38,7 +38,9 @@
 		return
 
 	// Condition 3: Using older byond version
-	if(user.client.byond_version != 515 || user.client.byond_build < 1635)
+	var/build = user.client.byond_build
+	var/version = user.client.byond_version
+	if(build < 515 || (build == 515 && version < 1635))
 		return
 
 	icon = "[item.icon]"
