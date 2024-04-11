@@ -2,16 +2,9 @@
 #define MACHINE_VIEW 1
 #define MAX_NETWORK_ID_LENGTH 15
 
-/*
- * ## Telecomms monitor
- * Tracks the overall trafficing of a telecommunications network
- * and displays a heirarchy of linked machines.
- */
 /obj/machinery/computer/telecomms/monitor
 	name = "telecommunications monitoring console"
 	desc = "Monitors the details of the telecommunications network it's synced with."
-	circuit = /obj/item/circuitboard/computer/comm_monitor
-
 	circuit = /obj/item/circuitboard/computer/comm_monitor
 
 	icon_screen = "comm_monitor"
