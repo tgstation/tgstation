@@ -449,7 +449,6 @@
 	icon_state = "pinepresents"
 	desc = "A wondrous decorated Christmas tree. It has presents!"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF //protected by the christmas spirit
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 	var/gift_type = /obj/item/gift/anything
 	var/unlimited = FALSE
 	var/static/list/took_presents //shared between all xmas trees
