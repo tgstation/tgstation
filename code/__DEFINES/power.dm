@@ -23,7 +23,7 @@
 #define STANDARD_CELL_VALUE (1 MEGA)
 	///The amount of energy, in joules, a standard powercell has.
 	#define STANDARD_CELL_CHARGE (STANDARD_CELL_VALUE JOULES) // 1 MJ.
-	///The amount of power, in watts, a standard powercell can give
+	///The amount of power, in watts, a standard powercell can give.
 	#define STANDARD_CELL_RATE (STANDARD_CELL_VALUE WATTS) // 1 MW.
 
 GLOBAL_VAR_INIT(CHARGELEVEL, 0.01) // Cap for how fast cells charge, as a percentage per second (.01 means cellcharge is capped to 1% per second)
