@@ -21,7 +21,7 @@ git commit -m "Generate translation file"
 git restore .
 
 echo Applying result...
-./tools/translate/ss220_replacer_linux
+./tools/translate/ss220_replacer_linux --prefix=ss220 --root=./ --location=./tools/translate/ 
 git add .
 git commit -m "Apply translation"
 

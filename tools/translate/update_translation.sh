@@ -9,7 +9,7 @@ git checkout -b translate_tmp
 git reset --hard origin/master
 
 git checkout origin/translate -- ./tools/translate/ss220replace.json
-./tools/translate/ss220_replacer_linux
+./tools/translate/ss220_replacer_linux --prefix=ss220 --root=./ --location=./tools/translate/ 
 git add .
 git commit -m "Apply translation"
 
