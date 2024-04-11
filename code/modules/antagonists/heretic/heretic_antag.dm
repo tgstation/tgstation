@@ -110,6 +110,12 @@
 		var/mob/living/result_mob = summon_knowledge.mob_to_summon
 		return icon(result_mob.icon,result_mob.icon_state,frame=1,dir=SOUTH,moving=0)
 
+	//if the knowledge is an eldritch mark, use the mark sprite
+	if(istype(knowledge,/datum/heretic_knowledge/mark))
+		var/datum/heretic_knowledge/mark/mark_knowledge = knowledge
+		var/datum/status_effect/eldritch/mark_effect = mark_knowledge.mark_type
+		return icon(mark_effect.effect_icon,mark_effect.effect_icon_state,frame=1)
+
 	//if all else fails, use a default icon
 	return icon('icons/mob/actions/actions_ecult.dmi',"eye")
 
