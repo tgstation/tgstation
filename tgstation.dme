@@ -2048,7 +2048,6 @@
 #include "code\game\machinery\computer\warrant.dm"
 #include "code\game\machinery\computer\arcade\_arcade.dm"
 #include "code\game\machinery\computer\arcade\amputation.dm"
-#include "code\game\machinery\computer\arcade\arcade.dm"
 #include "code\game\machinery\computer\arcade\battle.dm"
 #include "code\game\machinery\computer\arcade\battle_gear.dm"
 #include "code\game\machinery\computer\arcade\orion.dm"
