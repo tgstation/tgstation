@@ -963,9 +963,6 @@
 	if(!istype(replacer_tool))
 		return FALSE
 
-	if(!replacer_tool.works_from_distance)
-		return FALSE
-
 	var/shouldplaysound = FALSE
 	if(!component_parts)
 		return FALSE
