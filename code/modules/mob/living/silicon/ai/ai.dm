@@ -1041,7 +1041,7 @@
 		else //combat software AIs use a different UI
 			malf_picker.update_static_data_for_all_viewers()
 	if(apc.malfai) // another malf hacked this one; counter-hack!
-		apc.malfai(to_chat, span_warning("An adversarial subroutine has counter-hacked [apc]!"))
+		to_chat(apc.malfai, span_warning("An adversarial subroutine has counter-hacked [apc]!"))
 		apc.malfai.hacked_apcs -= apc
 	apc.malfai = src
 	apc.malfhack = TRUE
