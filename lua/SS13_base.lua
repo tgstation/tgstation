@@ -78,7 +78,11 @@ function SS13.await(thing_to_call, proc_to_call, ...)
 end
 
 function SS13.register_signal(datum, signal, func)
-	if not SS13.istype(datum, "/datum") or not SS13.is_valid(datum) then
+	if not SS13.istype(datum, "/datum") then
+		return
+	end
+	if not SS13.is_valid(datum) then
+		error("Tried to register a signal on a deleted datum!", 2)
 		return
 	end
 	local datumWeakRef = dm.global_proc("WEAKREF", datum)
