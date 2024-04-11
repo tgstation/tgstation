@@ -68,7 +68,7 @@
 	. = ..()
 	holder?.update_appearance()
 
-/obj/item/assembly/signaler/ui_status(mob/user)
+/obj/item/assembly/signaler/ui_status(mob/user, datum/ui_state/state)
 	if(is_secured(user))
 		return ..()
 	return UI_CLOSE

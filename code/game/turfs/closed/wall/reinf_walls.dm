@@ -252,12 +252,6 @@
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	smoothing_flags = SMOOTH_BITMASK
 
-/turf/closed/wall/r_wall/syndicate/nosmooth
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall"
-	smoothing_flags = NONE
-	use_splitvis = FALSE
-
 /turf/closed/wall/r_wall/syndicate/overspace
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)

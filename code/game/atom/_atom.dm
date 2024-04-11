@@ -65,7 +65,7 @@
 	var/datum/wires/wires = null
 
 	///Light systems, both shouldn't be active at the same time.
-	var/light_system = STATIC_LIGHT
+	var/light_system = COMPLEX_LIGHT
 	///Range of the light in tiles. Zero means no light.
 	var/light_range = 0
 	///Intensity of the light. The stronger, the less shadows you will see on the lit area.
@@ -298,7 +298,7 @@
 		if(mobile_docking_port.launch_status != check_for_launch_status)
 			continue
 		for(var/area/shuttle/shuttle_area as anything in mobile_docking_port.shuttle_areas)
-			if(current_turf in shuttle_area.get_contained_turfs())
+			if(shuttle_area == current_turf.loc)
 				return TRUE
 
 	return FALSE
@@ -794,6 +794,10 @@
  * Override this if you want an atom to be usable as a supplypod.
  */
 /atom/proc/setClosed()
+	return
+
+///Called after the atom is 'tamed' for type-specific operations, Usually called by the tameable component but also other things.
+/atom/proc/tamed(mob/living/tamer, obj/item/food)
 	return
 
 /**

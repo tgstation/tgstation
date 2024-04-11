@@ -28,12 +28,12 @@ jobs:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Restore BYOND cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/BYOND
-          key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
+          key: ${{ runner.os }}-byond-${{ hashFiles('dependencies.sh') }}
       - name: Setup database
         run: |
           sudo systemctl start mysql
@@ -64,9 +64,9 @@ jobs:
           bash tools/ci/run_server.sh ${{ inputs.map }}
       - name: Upload screenshot tests
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: test_artifacts_${{ inputs.map }}
+          name: test_artifacts_${{ inputs.map }}_${{ inputs.major }}_${{ inputs.minor }}
           path: data/screenshots_new/
           retention-days: 1
       - name: Check client Compatibility

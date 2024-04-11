@@ -152,7 +152,7 @@
 		return "ERROR: Launchpad busy."
 
 	var/area/surrounding = get_area(src)
-	if(is_centcom_level(z) || istype(surrounding, /area/shuttle))
+	if(is_centcom_level(z) || istype(surrounding, /area/shuttle/supply) ||istype(surrounding, /area/shuttle/transport))
 		return "ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible."
 
 	return null
@@ -203,7 +203,7 @@
 		playsound(target, 'sound/weapons/emitter2.ogg', 25, TRUE)
 
 	// use a lot of power
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	var/turf/source = target
 	var/list/log_msg = list()
@@ -304,7 +304,7 @@
 		if(!briefcase || !usr.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 			return
 		usr.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
-		if(do_after(usr, 30, target = usr))
+		if(do_after(usr, 3 SECONDS, target = usr))
 			usr.put_in_hands(briefcase)
 			moveToNullspace() //hides it from suitcase contents
 			closed = TRUE
@@ -343,7 +343,7 @@
 		return
 	add_fingerprint(user)
 	user.visible_message(span_notice("[user] starts setting down [src]..."), span_notice("You start setting up [pad]..."))
-	if(do_after(user, 30, target = user))
+	if(do_after(user, 3 SECONDS, target = user))
 		pad.forceMove(get_turf(src))
 		pad.update_indicator()
 		pad.closed = FALSE

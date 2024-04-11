@@ -265,12 +265,6 @@
 /turf/closed/wall/mineral/titanium/nodiagonal
 	smoothing_flags = SMOOTH_BITMASK
 
-/turf/closed/wall/mineral/titanium/nosmooth
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall"
-	smoothing_flags = NONE
-	use_splitvis = FALSE
-
 /turf/closed/wall/mineral/titanium/overspace
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)
@@ -317,12 +311,6 @@
 
 /turf/closed/wall/mineral/plastitanium/nodiagonal
 	smoothing_flags = SMOOTH_BITMASK
-
-/turf/closed/wall/mineral/plastitanium/nosmooth
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall"
-	smoothing_flags = NONE
-	use_splitvis = FALSE
 
 /turf/closed/wall/mineral/plastitanium/overspace
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS

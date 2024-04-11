@@ -67,7 +67,7 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/machinery/reagentgrinder/constructed,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "al" = (
@@ -162,9 +162,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/power/smes/engineering{
-	charge = 1e+600
-	},
+/obj/machinery/power/smes/magical,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
@@ -625,7 +623,7 @@
 /obj/item/stack/sheet/mineral/plasma,
 /obj/item/stack/sheet/mineral/plasma,
 /obj/item/stack/sheet/mineral/plasma,
-/obj/machinery/reagentgrinder/constructed,
+/obj/machinery/reagentgrinder,
 /obj/item/storage/box/monkeycubes/syndicate,
 /obj/item/storage/box/monkeycubes/syndicate,
 /obj/item/reagent_containers/cup/bottle,

@@ -36,7 +36,7 @@
 /datum/component/ghost_edible/UnregisterFromParent()
 	STOP_PROCESSING(SSdcs, src)
 
-/datum/component/ghost_edible/Destroy(force, silent)
+/datum/component/ghost_edible/Destroy(force)
 	STOP_PROCESSING(SSdcs, src)
 	return ..()
 
@@ -51,7 +51,7 @@
 	if (!prob(munch_chance))
 		return
 	playsound(atom_parent.loc,'sound/items/eatfood.ogg', vol = rand(10,50), vary = TRUE)
-	atom_parent.reagents.remove_any(bite_consumption)
+	atom_parent.reagents.remove_all(bite_consumption)
 	if (atom_parent.reagents.total_volume <= 0)
 		atom_parent.visible_message(span_notice("[atom_parent] disappears completely!"))
 		new /obj/item/ectoplasm(atom_parent.loc)

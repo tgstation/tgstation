@@ -50,19 +50,26 @@
 	update()
 	update_appearance()
 
+/// Returns the surplus energy from the terminal's grid.
 /obj/machinery/power/apc/surplus()
 	if(terminal)
 		return terminal.surplus()
 	return 0
 
+/// Adds load (energy) to the terminal's grid.
 /obj/machinery/power/apc/add_load(amount)
 	if(terminal?.powernet)
 		terminal.add_load(amount)
 
+/// Returns the amount of energy the terminal's grid has.
 /obj/machinery/power/apc/avail(amount)
 	if(terminal)
 		return terminal.avail(amount)
 	return 0
+
+/// Returns the surplus energy from the terminal's grid and the cell.
+/obj/machinery/power/apc/available_energy()
+	return charge() + surplus()
 
 /**
  * Returns the new status value for an APC channel.
@@ -138,8 +145,10 @@
 	if(nightshift_lights == on)
 		return //no change
 	nightshift_lights = on
-	for(var/obj/machinery/light/night_light in area)
-		if(night_light.nightshift_allowed)
-			night_light.nightshift_enabled = nightshift_lights
-			night_light.update(FALSE)
-		CHECK_TICK
+	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/machinery/light/night_light in area_turf)
+				if(night_light.nightshift_allowed)
+					night_light.nightshift_enabled = nightshift_lights
+					night_light.update(FALSE)
+				CHECK_TICK

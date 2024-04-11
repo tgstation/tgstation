@@ -55,7 +55,7 @@
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	return ..()
 
-/obj/machinery/mecha_part_fabricator/LateInitialize()
+/obj/machinery/mecha_part_fabricator/post_machine_initialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
@@ -474,7 +474,7 @@
 /obj/machinery/mecha_part_fabricator/proc/AfterMaterialInsert(item_inserted, id_inserted, amount_inserted)
 	var/datum/material/M = id_inserted
 	add_overlay("fab-load-[M.name]")
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), "fab-load-[M.name]"), 10)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), "fab-load-[M.name]"), 1 SECONDS)
 
 /obj/machinery/mecha_part_fabricator/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())

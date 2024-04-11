@@ -28,7 +28,7 @@
 	src.tool_act_callback = tool_act_callback
 	src.consume_callback = consume_callback
 
-/datum/component/supermatter_crystal/Destroy(force, silent)
+/datum/component/supermatter_crystal/Destroy(force)
 	tool_act_callback = null
 	consume_callback = null
 	return ..()
@@ -288,15 +288,23 @@
 	consume(atom_source, nom)
 
 /datum/component/supermatter_crystal/proc/consume(atom/source, atom/movable/consumed_object)
+	if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
+		return
+	if(isliving(consumed_object))
+		var/mob/living/consumed_mob = consumed_object
+		if(consumed_mob.status_flags & GODMODE)
+			return
+
 	var/atom/atom_source = source
+	SEND_SIGNAL(consumed_object, COMSIG_SUPERMATTER_CONSUMED, atom_source)
+
 	var/object_size = 0
 	var/matter_increase = 0
 	var/damage_increase = 0
+
 	if(isliving(consumed_object))
 		var/mob/living/consumed_mob = consumed_object
 		object_size = consumed_mob.mob_size + 2
-		if(consumed_mob.status_flags & GODMODE)
-			return
 		message_admins("[atom_source] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(atom_source)].")
 		atom_source.investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.investigate_log("has been dusted by [atom_source].", INVESTIGATE_DEATHS)
@@ -312,8 +320,6 @@
 		if(is_clown_job(consumed_mob.mind?.assigned_role))
 			damage_increase += rand(-30, 30) // HONK
 		consume_returns(matter_increase, damage_increase)
-	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
-		return
 	else if(isobj(consumed_object))
 		if(!iseffect(consumed_object))
 			var/suspicion = ""
@@ -345,7 +351,7 @@
 			near_mob.show_message(span_hear("An unearthly ringing fills your ears, and you find your skin covered in new radiation burns."), MSG_AUDIBLE)
 	consume_returns(matter_increase, damage_increase)
 	var/obj/machinery/power/supermatter_crystal/our_crystal = parent
-	if(istype(parent))
+	if(istype(our_crystal))
 		our_crystal.log_activation(who = consumed_object)
 
 /datum/component/supermatter_crystal/proc/consume_returns(matter_increase = 0, damage_increase = 0)

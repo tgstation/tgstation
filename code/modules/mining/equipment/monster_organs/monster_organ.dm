@@ -65,7 +65,7 @@
 	. = ..()
 	decay_timer = addtimer(CALLBACK(src, PROC_REF(go_inert)), time_to_decay, TIMER_STOPPABLE)
 
-/obj/item/organ/internal/monster_core/Destroy(force, silent)
+/obj/item/organ/internal/monster_core/Destroy(force)
 	deltimer(decay_timer)
 	return ..()
 
@@ -143,7 +143,7 @@
 	return . | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/organ/internal/monster_core/attack_self(mob/user)
-	if (!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+	if (!user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
 		return
 	try_apply(user, user)
 

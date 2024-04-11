@@ -16,10 +16,8 @@
 	else
 		return ..()
 
-/obj/structure/dresser/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
-	qdel(src)
+/obj/structure/dresser/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 
 /obj/structure/dresser/attack_hand(mob/user, list/modifiers)
 	. = ..()

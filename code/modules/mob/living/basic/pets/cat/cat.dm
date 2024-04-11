@@ -33,6 +33,7 @@
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
+	cult_icon_state = "cat_cult"
 	///can this cat breed?
 	var/can_breed = TRUE
 	///can hold items?
@@ -54,6 +55,8 @@
 	. = ..()
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "purrs!")
+	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
+	add_cell_sample()
 	add_verb(src, /mob/living/proc/toggle_resting)
 	add_traits(list(TRAIT_CATLIKE_GRACE, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 	ai_controller.set_blackboard_key(BB_HUNTABLE_PREY, typecacheof(huntable_items))
@@ -64,6 +67,9 @@
 	if(can_interact_with_stove)
 		RegisterSignal(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(pre_unarmed_attack))
 
+/mob/living/basic/pet/cat/proc/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CAT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
 /mob/living/basic/pet/cat/proc/pre_attack(mob/living/source, atom/movable/target)
 	SIGNAL_HANDLER
 	if(!is_type_in_list(target, huntable_items) || held_food)
@@ -73,9 +79,12 @@
 /mob/living/basic/pet/cat/proc/pre_unarmed_attack(mob/living/hitter, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(istype(target, /obj/machinery/oven/range))
-		target.attack_hand(src)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+	if(!proximity || !can_unarmed_attack())
+		return NONE
+	if(!istype(target, /obj/machinery/oven/range))
+		return NONE
+	target.attack_hand(src)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /mob/living/basic/pet/cat/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -126,6 +135,7 @@
 	icon_state = "spacecat"
 	icon_living = "spacecat"
 	icon_dead = "spacecat_dead"
+	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = TCMB
 	maximum_survivable_temperature = T0C + 40
 	held_state = "spacecat"
@@ -147,6 +157,8 @@
 		/obj/item/food/breadslice/plain = 1
 	)
 
+/mob/living/basic/pet/cat/breadcat/add_cell_sample()
+	return
 
 /mob/living/basic/pet/cat/original
 	name = "Batsy"
@@ -158,6 +170,9 @@
 	collar_icon_state = null
 	unique_pet = TRUE
 	held_state = "original"
+
+/mob/living/basic/pet/cat/original/add_cell_sample()
+	return
 
 /mob/living/basic/pet/cat/kitten
 	name = "kitten"

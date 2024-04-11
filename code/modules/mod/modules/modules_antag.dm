@@ -11,7 +11,7 @@
 	module_type = MODULE_TOGGLE
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	removable = FALSE
-	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/welding)
+	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/welding, /obj/item/mod/module/headprotector)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_armorbooster_off"
 	overlay_state_active = "module_armorbooster_on"
@@ -26,6 +26,11 @@
 	var/list/armor_mod = /datum/armor/mod_module_armor_boost
 	/// List of parts of the suit that are spaceproofed, for giving them back the pressure protection.
 	var/list/spaceproofed = list()
+	/// List of traits added when the mod is activated
+	var/list/traits_to_add = list(TRAIT_HEAD_INJURY_BLOCKED)
+
+/obj/item/mod/module/armor_booster/no_speedbost
+	speed_added = 0
 
 /datum/armor/mod_module_armor_boost
 	melee = 25
@@ -46,9 +51,11 @@
 	if(!.)
 		return
 	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	balloon_alert(mod.wearer, "armor boosted, EVA lost")
 	actual_speed_added = max(0, min(mod.slowdown_active, speed_added))
 	mod.slowdown -= actual_speed_added
 	mod.wearer.update_equipment_speed_mods()
+	mod.wearer.add_traits(traits_to_add, MOD_TRAIT)
 	var/list/parts = mod.mod_parts + mod
 	for(var/obj/item/part as anything in parts)
 		part.set_armor(part.get_armor().add_other_armor(armor_mod))
@@ -65,8 +72,10 @@
 		return
 	if(!deleting)
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		balloon_alert(mod.wearer, "armor retracts, EVA ready")
 	mod.slowdown += actual_speed_added
 	mod.wearer.update_equipment_speed_mods()
+	mod.wearer.remove_traits(traits_to_add, MOD_TRAIT)
 	var/list/parts = mod.mod_parts + mod
 	for(var/obj/item/part as anything in parts)
 		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
@@ -92,7 +101,7 @@
 	icon_state = "energy_shield"
 	complexity = 3
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/energy_shield)
 	/// Max charges of the shield.
 	var/max_charges = 1
@@ -138,8 +147,8 @@
 )
 	SIGNAL_HANDLER
 
-	if(SEND_SIGNAL(mod, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, 0, damage, attack_type, damage_type) & COMPONENT_HIT_REACTION_BLOCK)
-		drain_power(use_power_cost)
+	if(mod.hit_reaction(owner, hitby, attack_text, 0, damage, attack_type))
+		drain_power(use_energy_cost)
 		return SUCCESSFUL_BLOCK
 	return NONE
 
@@ -150,8 +159,8 @@
 		This shield can perfectly nullify attacks ranging from high-caliber rifles to magic missiles, \
 		though can also be drained by more mundane attacks. It will not protect the caster from social ridicule."
 	icon_state = "battlemage_shield"
-	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0 //magic
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0 //magic too
+	idle_power_cost = 0 //magic
+	use_energy_cost = 0 //magic too
 	max_charges = 15
 	recharge_start_delay = 0 SECONDS
 	charge_recovery = 8
@@ -230,6 +239,9 @@
 /obj/item/mod/module/insignia/chaplain
 	color = "#f0a00c"
 
+/obj/item/mod/module/insignia/syndie
+	color = COLOR_SYNDIE_RED
+
 ///Anti Slip - Prevents you from slipping on water.
 /obj/item/mod/module/noslip
 	name = "MOD anti slip module"
@@ -259,7 +271,7 @@
 	desc = initial(the_dna_lock_behind_the_slaughter.desc)
 	icon_state = initial(the_dna_lock_behind_the_slaughter.icon_state)
 	complexity = initial(the_dna_lock_behind_the_slaughter.complexity)
-	use_power_cost = initial(the_dna_lock_behind_the_slaughter.use_power_cost)
+	use_energy_cost = initial(the_dna_lock_behind_the_slaughter.use_energy_cost)
 
 /obj/item/mod/module/springlock/bite_of_87/on_install()
 	mod.activation_step_time *= 0.1
@@ -281,7 +293,7 @@
 	icon_state = "flamethrower"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/flamethrower)
 	cooldown_time = 2.5 SECONDS
 	overlay_state_inactive = "module_flamethrower"
@@ -296,7 +308,7 @@
 	flame.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/flamethrower.ogg', 75, TRUE)
 	INVOKE_ASYNC(flame, TYPE_PROC_REF(/obj/projectile, fire))
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 ///Power kick - Lets the user launch themselves at someone to kick them.
 /obj/item/mod/module/power_kick
@@ -305,7 +317,7 @@
 	icon_state = "power_kick"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/power_kick)
 	cooldown_time = 5 SECONDS
 	/// Damage on kick.
@@ -329,7 +341,7 @@
 		animate(mod.wearer, 0.2 SECONDS, pixel_z = -16, flags = ANIMATION_RELATIVE, easing = SINE_EASING|EASE_IN)
 		return
 	animate(mod.wearer)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 	playsound(src, 'sound/items/modsuit/loader_launch.ogg', 75, TRUE)
 	var/angle = get_angle(mod.wearer, target) + 180
 	mod.wearer.transform = mod.wearer.transform.Turn(angle)
@@ -448,10 +460,10 @@
 
 /obj/item/mod/module/plate_compression/on_install()
 	old_size = mod.w_class
-	mod.w_class = new_size
+	mod.update_weight_class(new_size)
 
 /obj/item/mod/module/plate_compression/on_uninstall(deleting = FALSE)
-	mod.w_class = old_size
+	mod.update_weight_class(old_size)
 	old_size = null
 	if(!mod.loc)
 		return
@@ -481,12 +493,15 @@
 /obj/item/mod/module/infiltrator
 	name = "MOD infiltration core programs module"
 	desc = "The primary stealth systems operating within the suit. Utilizing electromagnetic signals, \
-		the wearer simply cannot be observed closely, or heard clearly by those around them."
+		the wearer simply cannot be observed closely, or heard clearly by those around them.\
+		It also contains some dampening systems to help protect a user from blows to the head."
 	icon_state = "infiltrator"
 	complexity = 0
 	removable = FALSE
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0
-	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/armor_booster, /obj/item/mod/module/welding)
+	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/armor_booster, /obj/item/mod/module/welding, /obj/item/mod/module/headprotector)
+	/// List of traits added when the suit is activated
+	var/list/traits_to_add = list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN, TRAIT_HEAD_INJURY_BLOCKED)
 
 /obj/item/mod/module/infiltrator/on_install()
 	mod.item_flags |= EXAMINE_SKIP
@@ -495,11 +510,11 @@
 	mod.item_flags &= ~EXAMINE_SKIP
 
 /obj/item/mod/module/infiltrator/on_suit_activation()
-	mod.wearer.add_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), MOD_TRAIT)
+	mod.wearer.add_traits(traits_to_add, MOD_TRAIT)
 	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/mod/module/infiltrator/on_suit_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), MOD_TRAIT)
+	mod.wearer.remove_traits(traits_to_add, MOD_TRAIT)
 	if(deleting)
 		return
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)

@@ -1,0 +1,5 @@
+author: "Boviro"
+delete-after: True
+changes:
+  - qol: "Atmospherics Overalls now can store fire extinguishers in the suit storage slot"
+  - balance: "Increased Advanced Extinguisher capacity to 100u"

@@ -18,6 +18,7 @@
 		TRAIT_RADIMMUNE,
 		TRAIT_SNOWSTORM_IMMUNE, // Shared with plasma river... but I guess if you can survive a plasma river a blizzard isn't a big deal
 		TRAIT_UNHUSKABLE,
+		TRAIT_BOULDER_BREAKER,
 	)
 	mutantheart = null
 	mutantlungs = null
@@ -63,6 +64,16 @@
 	return "Golems are hardy creatures made out of stone, which are thus naturally resistant to many dangers, including asphyxiation, fire, radiation, electricity, and viruses.\
 		They gain special abilities depending on the type of material consumed, but they need to consume material to keep their body animated."
 
+/datum/species/golem/get_species_description()
+	return "Golems are lithoid creatures who eat rocks and minerals to survive and adapt."
+
+/datum/species/golem/get_species_lore()
+	return list(
+		"While Golems have long been commonly found on frontier worlds, peacefully mining and otherwise living in harmony with the environment, \
+		it is believed they were originally constructed in Nanotrasen laboratories as a form of cheap labor. Whatever happened up to this point is unknown, \
+		but they have since gained freedom and are now a rare sight in the galaxy.",
+	)
+
 /datum/species/golem/create_pref_unique_perks()
 	var/list/to_add = list()
 
@@ -86,7 +97,7 @@
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "pickaxe",
 		SPECIES_PERK_NAME = "Natural Miners",
-		SPECIES_PERK_DESC = "Golems can see dimly in the dark, sense minerals, and mine stone with their bare hands. \
+		SPECIES_PERK_DESC = "Golems can see dimly in the dark, sense minerals, break boulders, and mine stone with their bare hands. \
 			They can even smelt ores in an internal furnace, if their surrounding environment is hot enough.",
 	))
 

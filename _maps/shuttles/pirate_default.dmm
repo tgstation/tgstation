@@ -436,9 +436,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/power/smes/engineering{
-	charge = 1e+006
-	},
+/obj/machinery/power/smes/ship,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -900,7 +898,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/window/spawner/directional/east,
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "Decontamination"
 	},
 /turf/open/floor/plating,

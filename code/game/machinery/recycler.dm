@@ -18,22 +18,9 @@
 	var/datum/component/material_container/materials
 
 /obj/machinery/recycler/Initialize(mapload)
-	var/list/allowed_materials = list(
-		/datum/material/iron,
-		/datum/material/glass,
-		/datum/material/silver,
-		/datum/material/plasma,
-		/datum/material/gold,
-		/datum/material/diamond,
-		/datum/material/plastic,
-		/datum/material/uranium,
-		/datum/material/bananium,
-		/datum/material/titanium,
-		/datum/material/bluespace
-	)
 	materials = AddComponent(
 		/datum/component/material_container, \
-		allowed_materials, \
+		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		INFINITY, \
 		MATCONTAINER_NO_INSERT \
 	)
@@ -47,7 +34,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/recycler/LateInitialize()
+/obj/machinery/recycler/post_machine_initialize()
 	. = ..()
 	update_appearance(UPDATE_ICON)
 	req_one_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION, REGION_CENTCOM))
@@ -81,6 +68,12 @@
 	. = ..()
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/recycler/can_be_unfasten_wrench(mob/user, silent)
+	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
+		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
+		return FAILED_UNFASTEN
+	return SUCCESSFUL_UNFASTEN
 
 /obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
@@ -154,7 +147,7 @@
 				continue
 			var/obj/item/bodypart/head/as_head = thing
 			var/obj/item/mmi/as_mmi = thing
-			if(istype(thing, /obj/item/organ/internal/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(thing, /obj/item/dullahan_relay))
+			if(istype(thing, /obj/item/organ/internal/brain) || (istype(as_head) && locate(/obj/item/organ/internal/brain) in as_head) || (istype(as_mmi) && as_mmi.brain) || istype(thing, /obj/item/dullahan_relay))
 				living_detected = TRUE
 			if(isitem(as_object))
 				var/obj/item/as_item = as_object
@@ -173,7 +166,7 @@
 					if(!is_operational) //we ran out of power after recycling a large amount to living stuff, time to stop
 						break
 					crush_living(CRUNCH)
-					use_power(active_power_usage)
+					use_energy(active_power_usage)
 		else // Stop processing right now without eating anything.
 			emergency_stop()
 			return
@@ -186,7 +179,7 @@
 	for(var/i = length(nom); i >= 1; i--)
 		if(!is_operational) //we ran out of power after recycling a large amount to items, time to stop
 			break
-		use_power(active_power_usage / (recycle_item(nom[i]) ? 1 : 2)) //recycling stuff that produces no material takes just half the power
+		use_energy(active_power_usage / (recycle_item(nom[i]) ? 1 : 2)) //recycling stuff that produces no material takes just half the power
 	if(nom.len && sound)
 		playsound(src, item_recycle_sound, (50 + nom.len * 5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
 	if(not_eaten)
@@ -240,7 +233,7 @@
 	L.Unconscious(100)
 	L.adjustBruteLoss(crush_damage)
 
-/obj/machinery/recycler/on_deconstruction()
+/obj/machinery/recycler/on_deconstruction(disassembled)
 	safety_mode = TRUE
 
 /obj/machinery/recycler/deathtrap

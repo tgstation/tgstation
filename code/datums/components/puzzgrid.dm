@@ -55,7 +55,7 @@
 		addtimer(CALLBACK(src, PROC_REF(out_of_time)), timer)
 		time_to_finish = world.time + timer
 
-/datum/component/puzzgrid/Destroy(force, silent)
+/datum/component/puzzgrid/Destroy(force)
 	puzzgrid = null
 	on_victory_callback = null
 	on_fail_callback = null
@@ -172,7 +172,7 @@
 
 	var/message = answers.Join("<p>-----</p>")
 
-	for (var/mob/mob as anything in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src))
+	for (var/mob/mob in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, parent))
 		to_chat(mob, message)
 
 /datum/component/puzzgrid/ui_data(mob/user)

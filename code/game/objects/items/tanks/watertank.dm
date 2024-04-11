@@ -304,7 +304,7 @@
 			balloon_alert(user, "still recharging!")
 			return
 		COOLDOWN_START(src, resin_cooldown, 10 SECONDS)
-		R.remove_any(100)
+		R.remove_all(100)
 		var/obj/effect/resin_container/resin = new (get_turf(src))
 		user.log_message("used Resin Launcher", LOG_GAME)
 		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)

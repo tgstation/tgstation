@@ -9,7 +9,7 @@
 	initialize_directions = SOUTH
 
 	layer = HIGH_OBJ_LAYER
-	device_type = UNARY
+	device_type = TRINARY
 	paintable = FALSE
 
 	construction_type = /obj/item/pipe/directional
@@ -54,8 +54,8 @@
 	for(var/obj/machinery/atmospherics/pipe/multiz/above in GET_TURF_ABOVE(local_turf))
 		if(!is_connectable(above, piping_layer))
 			continue
-		nodes += above
-		above.nodes += src //Two way travel :)
+		nodes[2] = above
+		above.nodes[3] = src //Two way travel :)
 	for(var/obj/machinery/atmospherics/pipe/multiz/below in GET_TURF_BELOW(local_turf))
 		if(!is_connectable(below, piping_layer))
 			continue

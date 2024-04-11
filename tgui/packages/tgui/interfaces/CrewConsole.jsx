@@ -38,6 +38,9 @@ const jobToColor = (jobId) => {
   if (jobId >= 50 && jobId < 60) {
     return COLORS.department.cargo;
   }
+  if (jobId >= 60 && jobId < 200) {
+    return COLORS.department.service;
+  }
   if (jobId >= 200 && jobId < 230) {
     return COLORS.department.centcom;
   }

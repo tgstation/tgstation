@@ -59,7 +59,7 @@
 		. += "[t_He] [t_has] [gloves.get_examine_string(user)] on [t_his] hands."
 	else if(GET_ATOM_BLOOD_DNA_LENGTH(src))
 		if(num_hands)
-			. += span_warning("[t_He] [t_has] [num_hands > 1 ? "" : "a"] blood-stained hand[num_hands > 1 ? "s" : ""]!")
+			. += span_warning("[t_He] [t_has] [num_hands > 1 ? "" : "a "]blood-stained hand[num_hands > 1 ? "s" : ""]!")
 
 	//handcuffed?
 	if(handcuffed)
@@ -383,7 +383,7 @@
 			. += "<a href='?src=[REF(src)];hud=m;quirk=1;examine_time=[world.time]'>\[See quirks\]</a>"
 
 		if(HAS_TRAIT(user, TRAIT_SECURITY_HUD))
-			if(!user.stat && user != src)
+			if((user.stat == CONSCIOUS || isobserver(user)) && user != src)
 			//|| !user.canmove || user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 				var/wanted_status = WANTED_NONE
 				var/security_note = "None."
@@ -393,15 +393,18 @@
 					wanted_status = target_record.wanted_status
 					if(target_record.security_note)
 						security_note = target_record.security_note
-
-				. += "<span class='deptradio'>Criminal status:</span> <a href='?src=[REF(src)];hud=s;status=1;examine_time=[world.time]'>\[[wanted_status]\]</a>"
+				if(ishuman(user))
+					. += "<span class='deptradio'>Criminal status:</span> <a href='?src=[REF(src)];hud=s;status=1;examine_time=[world.time]'>\[[wanted_status]\]</a>"
+				else
+					. += "<span class='deptradio'>Criminal status:</span> [wanted_status]"
 				. += "<span class='deptradio'>Important Notes: [security_note]"
-				. += jointext(list("<span class='deptradio'>Security record:</span> <a href='?src=[REF(src)];hud=s;view=1;examine_time=[world.time]'>\[View\]</a>",
-					"<a href='?src=[REF(src)];hud=s;add_citation=1;examine_time=[world.time]'>\[Add citation\]</a>",
-					"<a href='?src=[REF(src)];hud=s;add_crime=1;examine_time=[world.time]'>\[Add crime\]</a>",
-					"<a href='?src=[REF(src)];hud=s;add_note=1;examine_time=[world.time]'>\[Add note\]</a>"), "")
-	else if(isobserver(user))
-		. += span_info("<b>Quirks:</b> [get_quirk_string(FALSE, CAT_QUIRK_ALL)]")
+				. += "<span class='deptradio'>Security record:</span> <a href='?src=[REF(src)];hud=s;view=1;examine_time=[world.time]'>\[View\]</a>"
+				if(ishuman(user))
+					. += jointext(list("<a href='?src=[REF(src)];hud=s;add_citation=1;examine_time=[world.time]'>\[Add citation\]</a>",
+						"<a href='?src=[REF(src)];hud=s;add_crime=1;examine_time=[world.time]'>\[Add crime\]</a>",
+						"<a href='?src=[REF(src)];hud=s;add_note=1;examine_time=[world.time]'>\[Add note\]</a>"), "")
+	if(isobserver(user))
+		. += span_info("\n<b>Quirks:</b> [get_quirk_string(FALSE, CAT_QUIRK_ALL)]")
 	. += "</span>"
 
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)

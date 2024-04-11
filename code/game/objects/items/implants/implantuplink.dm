@@ -16,7 +16,7 @@
 	if(!uplink_flag)
 		uplink_flag = src.uplink_flag
 	src.uplink_handler = uplink_handler
-	RegisterSignal(src, COMSIG_COMPONENT_REMOVING, PROC_REF(_component_removal))
+	RegisterSignal(src, COMSIG_COMPONENT_REMOVING, PROC_REF(on_component_removing))
 
 /obj/item/implant/uplink/implant(mob/living/carbon/target, mob/user, silent, force)
 	. = ..()
@@ -34,8 +34,12 @@
  * generally by admin verbs or var editing. Implant does nothing without
  * the component, so delete itself.
  */
-/obj/item/implant/uplink/proc/_component_removal(datum/source, datum/component/component)
+/obj/item/implant/uplink/proc/on_component_removing(datum/source, datum/component/component)
 	SIGNAL_HANDLER
+
+	if (QDELING(src))
+		return
+
 	if(istype(component, /datum/component/uplink))
 		qdel(src)
 

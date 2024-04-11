@@ -45,6 +45,7 @@
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)
 	take_damage(5 , BRUTE, MELEE, 1)
+	log_combat(user, src, "swatted")
 
 /obj/structure/holosign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -110,6 +111,20 @@
 	alpha = 150
 	rad_insulation = RAD_LIGHT_INSULATION
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
+
+/obj/structure/holosign/barrier/atmos/proc/clearview_transparency()
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	alpha = 25
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	var/turf/our_turf = get_turf(src)
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir)
+
+/obj/structure/holosign/barrier/atmos/proc/reset_transparency()
+	mouse_opacity = initial(mouse_opacity)
+	alpha = initial(alpha)
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	var/turf/our_turf = get_turf(src)
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir, add_appearance_flags = RESET_ALPHA)
 
 /obj/structure/holosign/barrier/atmos/sturdy
 	name = "sturdy holofirelock"
@@ -200,7 +215,7 @@
 			var/mob/living/M = user
 			M.electrocute_act(15,"Energy Barrier")
 			shockcd = TRUE
-			addtimer(CALLBACK(src, PROC_REF(cooldown)), 5)
+			addtimer(CALLBACK(src, PROC_REF(cooldown)), 0.5 SECONDS)
 
 /obj/structure/holosign/barrier/cyborg/hacked/Bumped(atom/movable/AM)
 	if(shockcd)
@@ -212,4 +227,4 @@
 	var/mob/living/M = AM
 	M.electrocute_act(15,"Energy Barrier")
 	shockcd = TRUE
-	addtimer(CALLBACK(src, PROC_REF(cooldown)), 5)
+	addtimer(CALLBACK(src, PROC_REF(cooldown)), 0.5 SECONDS)

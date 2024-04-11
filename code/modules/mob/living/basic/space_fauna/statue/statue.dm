@@ -51,12 +51,10 @@
 	pull_force = MOVE_FORCE_EXTREMELY_STRONG
 
 	ai_controller = /datum/ai_controller/basic_controller/statue
-	/// Stores the creator in here if it has one.
-	var/mob/living/creator = null
 
-/mob/living/basic/statue/Initialize(mapload, mob/living/creator)
+/mob/living/basic/statue/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_UNOBSERVANT, INNATE_TRAIT)
+	add_traits(list(TRAIT_MUTE, TRAIT_UNOBSERVANT), INNATE_TRAIT)
 	AddComponent(/datum/component/unobserved_actor, unobserved_flags = NO_OBSERVED_MOVEMENT | NO_OBSERVED_ATTACKS)
 
 	var/static/list/innate_actions = list(
@@ -65,23 +63,13 @@
 	)
 	grant_actions_by_list(innate_actions)
 
-	// Set creator
-	if(creator)
-		src.creator = creator
-
 /mob/living/basic/statue/med_hud_set_health()
 	return //we're a statue we're invincible
 
 /mob/living/basic/statue/med_hud_set_status()
 	return //we're a statue we're invincible
 
-/mob/living/basic/statue/can_speak(allow_mimes = FALSE)
-	return FALSE // We're a statue, of course we can't talk.
-
 // Cannot talk
-
-/mob/living/basic/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
-	return
 
 // Turn to dust when gibbed
 
@@ -142,7 +130,6 @@
 /datum/ai_controller/basic_controller/statue
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_LOW_PRIORITY_HUNTING_TARGET = null, // lights
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

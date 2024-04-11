@@ -61,8 +61,7 @@
 
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/papercutter/deconstruct(disassembled)
-	..()
+/obj/item/papercutter/atom_deconstruct(disassembled)
 	if(!disassembled)
 		return
 

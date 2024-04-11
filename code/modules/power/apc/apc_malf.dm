@@ -37,7 +37,7 @@
 	if(!is_station_level(z))
 		return
 	malf.ShutOffDoomsdayDevice()
-	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY? //IKR????
+	occupier = new /mob/living/silicon/ai(src, malf.laws.copy_lawset(), malf) //DEAR GOD WHY? //IKR????
 	occupier.adjustOxyLoss(malf.getOxyLoss())
 	if(!findtext(occupier.name, "APC Copy"))
 		occupier.name = "[malf.name] APC Copy"
@@ -116,7 +116,7 @@
 		return FALSE
 	to_chat(user, span_notice("AI accepted request. Transferring stored intelligence to [card]..."))
 	to_chat(occupier, span_notice("Transfer starting. You will be moved to [card] shortly."))
-	if(!do_after(user, 50, target = src))
+	if(!do_after(user, 5 SECONDS, target = src))
 		to_chat(occupier, span_warning("[user] was interrupted! Transfer canceled."))
 		transfer_in_progress = FALSE
 		return FALSE

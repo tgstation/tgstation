@@ -43,7 +43,7 @@
 	if(!on)
 		return
 	. = ..()
-	use_power(active_power_usage) //use power for analyzing gases
+	use_energy(active_power_usage) //use power for analyzing gases
 
 /obj/machinery/air_sensor/process()
 	//update appearance according to power state
@@ -221,8 +221,6 @@
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/air_sensor/deconstruct(disassembled)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/analyzer(loc)
-		new /obj/item/stack/sheet/iron(loc, 1)
-	return ..()
+/obj/item/air_sensor/atom_deconstruct(disassembled)
+	new /obj/item/analyzer(loc)
+	new /obj/item/stack/sheet/iron(loc, 1)

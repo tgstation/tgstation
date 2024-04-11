@@ -49,12 +49,12 @@
 		else
 			show_eyeless = FALSE
 	else
-		if(!hair_hidden && !brain)
+		if(!hair_hidden && !(locate(/obj/item/organ/internal/brain) in src))
 			show_debrained = TRUE
 		else
 			show_debrained = FALSE
 
-		if(!eyes)
+		if(!(locate(/obj/item/organ/internal/eyes) in src))
 			show_eyeless = TRUE
 		else
 			show_eyeless = FALSE
@@ -70,7 +70,7 @@
 	facial_hairstyle = human_head_owner.facial_hairstyle
 	facial_hair_alpha = owner_species.facial_hair_alpha
 	facial_hair_color = human_head_owner.facial_hair_color
-	fixed_hair_color = owner_species.fixed_hair_color //Can be null
+	fixed_hair_color = owner_species.get_fixed_hair_color(human_head_owner) //Can be null
 	gradient_styles = human_head_owner.grad_style?.Copy()
 	gradient_colors = human_head_owner.grad_color?.Copy()
 

@@ -262,6 +262,21 @@
 	result = /obj/item/food/beef_wellington
 	category = CAT_MEAT
 
+/datum/crafting_recipe/food/korta_wellington
+	name = "Korta Wellington"
+	reqs = list(
+		/obj/item/food/meat/steak = 1,
+		/obj/item/food/grown/mushroom = 1,
+		/obj/item/food/grown/garlic = 1,
+		/obj/item/food/meat/bacon = 1,
+		/obj/item/food/flatrootdough = 1,
+		/datum/reagent/consumable/korta_milk = 5,
+		/datum/reagent/consumable/salt = 2,
+		/datum/reagent/consumable/blackpepper = 2
+	)
+	result = /obj/item/food/korta_wellington
+	category = CAT_MEAT
+
 /datum/crafting_recipe/food/full_roast
 	name = "Roast Chicken Dinner"
 	reqs = list(

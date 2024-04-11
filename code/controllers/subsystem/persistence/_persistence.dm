@@ -20,8 +20,31 @@ SUBSYSTEM_DEF(persistence)
 	var/list/blocked_maps = list()
 	var/list/saved_trophies = list()
 	var/list/picture_logging_information = list()
-	var/list/obj/structure/sign/picture_frame/photo_frames
-	var/list/obj/item/storage/photo_album/photo_albums
+
+	/// A json_database linking to data/photo_frames.json.
+	/// Schema is persistence_id => array of photo names.
+	var/datum/json_database/photo_frames_database
+
+	/// A lazy list of every picture frame that is going to be loaded with persistent photos.
+	/// Will be null'd once the persistence system initializes, and never read from again.
+	var/list/obj/structure/sign/picture_frame/queued_photo_frames
+
+	/// A json_database linking to data/photo_albums.json.
+	/// Schema is persistence_id => array of photo names.
+	var/datum/json_database/photo_albums_database
+
+	/// A lazy list of every photo album that is going to be loaded with persistent photos.
+	/// Will be null'd once the persistence system initializes, and never read from again.
+	var/list/obj/item/storage/photo_album/queued_photo_albums
+
+	/// A json_database to data/piggy banks.json
+	/// Schema is persistence_id => array of coins, space cash and holochips.
+	var/datum/json_database/piggy_banks_database
+	/// List of persistene ids which piggy banks.
+	var/list/queued_broken_piggy_ids
+
+	var/list/broken_piggy_banks
+
 	var/rounds_since_engine_exploded = 0
 	var/delam_highscore = 0
 	var/tram_hits_this_round = 0
@@ -47,7 +70,6 @@ SUBSYSTEM_DEF(persistence)
 	save_prisoner_tattoos()
 	collect_trophies()
 	collect_maps()
-	save_photo_persistence() //THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	save_randomized_recipes()
 	save_scars()
 	save_custom_outfits()

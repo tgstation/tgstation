@@ -85,7 +85,7 @@
 	src.manifest_can_fail = manifest_can_fail
 	src.can_be_cancelled = can_be_cancelled
 
-/datum/supply_order/Destroy(force, ...)
+/datum/supply_order/Destroy(force)
 	QDEL_NULL(applied_coupon)
 	return ..()
 
@@ -208,7 +208,7 @@
 /// Custom type of order who's supply pack can be safely deleted
 /datum/supply_order/disposable
 
-/datum/supply_order/disposable/Destroy(force, ...)
+/datum/supply_order/disposable/Destroy(force)
 	QDEL_NULL(pack)
 	return ..()
 

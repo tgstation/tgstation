@@ -82,7 +82,7 @@
 					balloon_alert(user, "need [amount] rods!")
 					return
 				balloon_alert(user, "concealing entrance...")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 2 SECONDS, target = src))
 					if(rod.get_amount() < amount)
 						return
 					rod.use(amount)
@@ -95,7 +95,7 @@
 					balloon_alert(user, "need [amount] rods!")
 					return
 				balloon_alert(user, "adding plating...")
-				if(do_after(user, 40, target = src))
+				if(do_after(user, 4 SECONDS, target = src))
 					if(rod.get_amount() < amount)
 						return
 					rod.use(amount)
@@ -177,7 +177,7 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "concealing entrance...")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 2 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
@@ -244,7 +244,7 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "concealing entrance...")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 2 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
@@ -266,7 +266,7 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "adding plating...")
-				if (do_after(user, 40, target = src))
+				if (do_after(user, 4 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
@@ -387,11 +387,9 @@
 		return TRUE
 	return FALSE
 
-/obj/structure/girder/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/iron)
-		new remains(loc)
-	qdel(src)
+/obj/structure/girder/atom_deconstruct(disassembled = TRUE)
+	var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/iron)
+	new remains(loc)
 
 /obj/structure/girder/update_icon()
 	. = ..()
@@ -425,11 +423,10 @@
 	max_integrity = 350
 
 /obj/structure/girder/tram
-	name = "tram frame"
+	name = "tram girder"
 	desc = "Titanium framework to construct tram walls. Can be plated with <b>titanium glass</b> or other wall materials."
 	icon_state = "tram"
 	state = GIRDER_TRAM
-	density = FALSE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 
 /obj/structure/girder/tram/corner
@@ -462,7 +459,7 @@
 			balloon_alert(user, "need [amount] sheet!")
 			return
 		balloon_alert(user, "adding plating...")
-		if(do_after(user, 50, target = src))
+		if(do_after(user, 5 SECONDS, target = src))
 			if(R.get_amount() < amount)
 				return
 			R.use(amount)
@@ -476,10 +473,8 @@
 /obj/structure/girder/cult/narsie_act()
 	return
 
-/obj/structure/girder/cult/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
-	qdel(src)
+/obj/structure/girder/cult/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
 
 /obj/structure/girder/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -534,7 +529,7 @@
 			balloon_alert(user, "need [amount] sheets!")
 			return
 		balloon_alert(user, "adding plating...")
-		if(do_after(user, 50, target = src))
+		if(do_after(user, 5 SECONDS, target = src))
 			if(B.get_amount() < amount)
 				return
 			B.use(amount)

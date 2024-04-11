@@ -368,7 +368,7 @@
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/assembly/signaler/cyborg,
-		/obj/item/areaeditor/blueprints/cyborg,
+		/obj/item/blueprints/cyborg,
 		/obj/item/electroadaptive_pseudocircuit,
 		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
@@ -600,7 +600,7 @@
 
 	reagents.expose(our_turf, TOUCH, min(1, 10 / reagents.total_volume))
 	// We use more water doing this then mopping
-	reagents.remove_any(2) //reaction() doesn't use up the reagents
+	reagents.remove_all(2) //reaction() doesn't use up the reagents
 
 /datum/action/toggle_buffer/update_button_name(atom/movable/screen/movable/action_button/current_button, force)
 	if(buffer_on)
@@ -700,6 +700,7 @@
 		/obj/item/gun/energy/recharge/kinetic_accelerator/cyborg,
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon,
+		/obj/item/t_scanner/adv_mining_scanner/cyborg,
 	)
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
 	emag_modules = list(
@@ -713,16 +714,6 @@
 		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin"),
 		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
 	)
-	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes. //fuck you
-
-/obj/item/robot_model/miner/rebuild_modules()
-	. = ..()
-	if(!mining_scanner)
-		mining_scanner = new(src)
-
-/obj/item/robot_model/miner/Destroy()
-	QDEL_NULL(mining_scanner)
-	return ..()
 
 /obj/item/robot_model/peacekeeper
 	name = "Peacekeeper"

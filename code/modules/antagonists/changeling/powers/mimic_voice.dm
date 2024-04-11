@@ -9,7 +9,7 @@
 
 // Fake Voice
 /datum/action/changeling/mimicvoice/sting_action(mob/user)
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	if(changeling.mimicing)
 		changeling.mimicing = ""
 		changeling.chem_recharge_slowdown -= 0.25
@@ -27,7 +27,7 @@
 	return TRUE
 
 /datum/action/changeling/mimicvoice/Remove(mob/user)
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	if(changeling?.mimicing)
 		changeling.chem_recharge_slowdown = max(0, changeling.chem_recharge_slowdown - 0.25)
 		changeling.mimicing = ""

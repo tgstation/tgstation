@@ -72,7 +72,7 @@
 
 	GLOB.experiment_handlers += src
 
-/datum/component/experiment_handler/Destroy(force, silent)
+/datum/component/experiment_handler/Destroy(force)
 	. = ..()
 	GLOB.experiment_handlers -= src
 
@@ -136,7 +136,6 @@
 	else if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
 		to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
-
 
 /**
  * Hooks on destructive scans to try and run an experiment (When using a handheld handler)

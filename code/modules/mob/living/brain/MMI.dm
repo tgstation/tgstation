@@ -208,6 +208,7 @@
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		var/obj/item/organ/internal/brain/newbrain = H.get_organ_by_type(/obj/item/organ/internal/brain)
+		newbrain.Remove(H, special = TRUE, movement_flags = NO_ID_TRANSFER)
 		newbrain.forceMove(src)
 		brain = newbrain
 	else if(!brain)
@@ -288,10 +289,9 @@
 				brainmob.emp_damage = min(brainmob.emp_damage + rand(0,10), 30)
 		brainmob.emote("alarm")
 
-/obj/item/mmi/deconstruct(disassembled = TRUE)
+/obj/item/mmi/atom_deconstruct(disassembled = TRUE)
 	if(brain)
 		eject_brain()
-	qdel(src)
 
 /obj/item/mmi/examine(mob/user)
 	. = ..()

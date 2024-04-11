@@ -37,10 +37,13 @@
 	if(mapload)
 		return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/door/poddoor/LateInitialize(mapload)
+/obj/machinery/door/poddoor/post_machine_initialize(mapload)
 	. = ..()
 	if(mapload)
 		auto_align()
+
+/obj/machinery/door/poddoor/get_save_vars()
+	return ..() + NAMEOF(src, id)
 
 /obj/machinery/door/poddoor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()

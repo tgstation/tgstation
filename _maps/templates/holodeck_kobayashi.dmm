@@ -27,9 +27,7 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "f" = (
-/obj/machinery/door/window/left/directional/west{
-	dir = 2
-	},
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "j" = (
@@ -142,10 +140,7 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "H" = (
-/obj/machinery/door/window/left/directional/west{
-	dir = 2;
-	icon_state = "right"
-	},
+/obj/machinery/door/window/right/directional/south,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "J" = (

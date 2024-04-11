@@ -14,6 +14,7 @@
 
 #define AVAILABLE_SPRAYCAN_SPACE 8 // enough to fill one radial menu page
 
+#define DRAW_TIME 5 SECONDS
 #define INFINITE_CHARGES -1
 
 /*
@@ -30,6 +31,7 @@
 	attack_verb_continuous = list("attacks", "colours")
 	attack_verb_simple = list("attack", "colour")
 	grind_results = list()
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 
 	/// Icon state to use when capped
 	var/icon_capped
@@ -41,7 +43,7 @@
 	/// Crayon overlay to use if placed into a crayon box
 	var/crayon_color = "red"
 	/// Current paint colour
-	var/paint_color = "#FF0000"
+	var/paint_color = COLOR_RED
 
 	/// Contains chosen symbol to draw
 	var/drawtype
@@ -416,7 +418,7 @@
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
 	text = copytext(text, 1, MAX_MESSAGE_LEN)
 	var/static/regex/crayon_regex = new /regex(@"[^\w!?,.=&%#+/\-]", "ig")
-	return lowertext(crayon_regex.Replace(text, ""))
+	return LOWER_TEXT(crayon_regex.Replace(text, ""))
 
 /// Attempts to color the target. Returns how many charges were used.
 /obj/item/toy/crayon/proc/use_on(atom/target, mob/user, params)
@@ -504,11 +506,13 @@
 		audible_message(span_notice("You hear spraying."))
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 
-	var/wait_time = 50
+	var/wait_time = DRAW_TIME
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		wait_time *= 3
+	if(istagger)
+		wait_time *= 0.5
 
-	if(!instant && !do_after(user, 50, target = target))
+	if(!instant && !do_after(user, wait_time, target = target))
 		return
 
 	if(!use_charges(user, cost))
@@ -688,12 +692,14 @@
 
 /obj/item/storage/crayons/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/toy/crayon),
-		list(
+	atom_storage.set_holdable(
+		can_hold_list = /obj/item/toy/crayon,
+		cant_hold_list = list(
 			/obj/item/toy/crayon/spraycan,
 			/obj/item/toy/crayon/mime,
 			/obj/item/toy/crayon/rainbow,
-		))
+		),
+	)
 
 /obj/item/storage/crayons/PopulateContents()
 	new /obj/item/toy/crayon/red(src)
@@ -803,7 +809,7 @@
 	if(pre_noise || post_noise)
 		playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
 	if(can_change_colour)
-		set_painting_tool_color("#C0C0C0")
+		set_painting_tool_color(COLOR_SILVER)
 	update_appearance()
 	if(actually_paints)
 		H.update_lips("spray_face", paint_color)
@@ -1007,7 +1013,7 @@
 	expose_turfs = TRUE
 	charges = 100
 	reagent_contents = list(/datum/reagent/clf3 = 1)
-	paint_color = "#000000"
+	paint_color = COLOR_BLACK
 
 /obj/item/toy/crayon/spraycan/hellcan/isValidSurface(surface)
 	return isfloorturf(surface)
@@ -1036,7 +1042,7 @@
 	overlay_paint_colour = FALSE
 
 	can_change_colour = FALSE
-	paint_color = "#FFFFFF" //RGB
+	paint_color = COLOR_WHITE //RGB
 
 	pre_noise = FALSE
 	post_noise = FALSE
@@ -1064,3 +1070,4 @@
 #undef PAINT_LARGE_HORIZONTAL_ICON
 
 #undef INFINITE_CHARGES
+#undef DRAW_TIME

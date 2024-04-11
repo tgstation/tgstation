@@ -35,7 +35,7 @@ icon/MinColors(icon)
 icon/MaxColors(icon)
 	The icon is blended with a second icon where the maximum of each RGB pixel is the result.
 	Opacity may increase, as if the icons were blended with ICON_OR. You may supply a color in place of an icon.
-icon/Opaque(background = "#000000")
+icon/Opaque(background = COLOR_BLACK)
 	All alpha values are set to 255 throughout the icon. Transparent pixels become black, or whatever background color you specify.
 icon/BecomeAlphaMask()
 	You can convert a simple grayscale icon into an alpha mask to use with other icons very easily with this proc.
@@ -60,55 +60,41 @@ RGB isn't the only way to represent color. Sometimes it's more useful to work wi
 	* The value of a color determines how bright it is. A high-value color is vivid, moderate value is dark,
 	and no value at all is black.
 
-Just as BYOND uses "#rrggbb" to represent RGB values, a similar format is used for HSV: "#hhhssvv". The hue is three
-hex digits because it ranges from 0 to 0x5FF.
+While rgb is typically stored in the #rrggbb" format (with optional "aa" on the end), HSV never needs to be displayed.
+Most procs that work in HSV "space" will simply accept RGB inputs and convert them in place using rgb2num(color, space = COLORSPACE_HSV).
 
-	* 0 to 0xFF - red to yellow
-	* 0x100 to 0x1FF - yellow to green
-	* 0x200 to 0x2FF - green to cyan
-	* 0x300 to 0x3FF - cyan to blue
-	* 0x400 to 0x4FF - blue to magenta
-	* 0x500 to 0x5FF - magenta to red
+That said, if you want to manually modify these values rgb2hsv() will hand you back a list in the format list(hue, saturation, value, alpha).
+Converting back is simple, just a hsv2rgb(hsv) call
 
-Knowing this, you can figure out that red is "#000ffff" in HSV format, which is hue 0 (red), saturation 255 (as colorful as possible),
-value 255 (as bright as possible). Green is "#200ffff" and blue is "#400ffff".
+Hue ranges from 0 to 360 (it's in degrees of a color wheel)
+Saturation ranges from 0 to 100
+Value ranges from 0 to 100
 
-More than one HSV color can match the same RGB color.
+Knowing this, you can figure out that red is list(0, 100, 100) in HSV format, which is hue 0 (red), saturation 100 (as colorful as possible),
+value 255 (as bright as possible). Green is list(120, 100, 100) and blue is list(240, 100, 100).
+
+It is worth noting that while we do not have helpers for them currently, these same ideas apply to all of byond's color spaces
+HSV (hue saturation value), HSL (hue satriation luminosity) and HCY (hue chroma luminosity)
 
 Here are some procs you can use for color management:
 
-ReadRGB(rgb)
-	Takes an RGB string like "#ffaa55" and converts it to a list such as list(255,170,85). If an RGBA format is used
-	that includes alpha, the list will have a fourth item for the alpha value.
-hsv(hue, sat, val, apha)
-	Counterpart to rgb(), this takes the values you input and converts them to a string in "#hhhssvv" or "#hhhssvvaa"
-	format. Alpha is not included in the result if null.
-ReadHSV(rgb)
-	Takes an HSV string like "#100FF80" and converts it to a list such as list(256,255,128). If an HSVA format is used that
-	includes alpha, the list will have a fourth item for the alpha value.
-RGBtoHSV(rgb)
-	Takes an RGB or RGBA string like "#ffaa55" and converts it into an HSV or HSVA color such as "#080aaff".
-HSVtoRGB(hsv)
-	Takes an HSV or HSVA string like "#080aaff" and converts it into an RGB or RGBA color such as "#ff55aa".
 BlendRGB(rgb1, rgb2, amount)
 	Blends between two RGB or RGBA colors using regular RGB blending. If amount is 0, the first color is the result;
 	if 1, the second color is the result. 0.5 produces an average of the two. Values outside the 0 to 1 range are allowed as well.
-	The returned value is an RGB or RGBA color.
-BlendHSV(hsv1, hsv2, amount)
-	Blends between two HSV or HSVA colors using HSV blending, which tends to produce nicer results than regular RGB
+	Returns an RGB or RGBA string
+BlendHSV(rgb1, rgb2, amount)
+	Blends between two RGB or RGBA colors using HSV blending, which tends to produce nicer results than regular RGB
 	blending because the brightness of the color is left intact. If amount is 0, the first color is the result; if 1,
 	the second color is the result. 0.5 produces an average of the two. Values outside the 0 to 1 range are allowed as well.
-	The returned value is an HSV or HSVA color.
-BlendRGBasHSV(rgb1, rgb2, amount)
-	Like BlendHSV(), but the colors used and the return value are RGB or RGBA colors. The blending is done in HSV form.
+	Returns an RGB or RGBA string
 HueToAngle(hue)
 	Converts a hue to an angle range of 0 to 360. Angle 0 is red, 120 is green, and 240 is blue.
 AngleToHue(hue)
 	Converts an angle to a hue in the valid range.
-RotateHue(hsv, angle)
-	Takes an HSV or HSVA value and rotates the hue forward through red, green, and blue by an angle from 0 to 360.
-	(Rotating red by 60° produces yellow.) The result is another HSV or HSVA color with the same saturation and value
-	as the original, but a different hue.
+RotateHue(rgb, angle)
+	Takes an RGB or RGBA value and rotates the hue forward through red, green, and blue by an angle from 0 to 360.
+	(Rotating red by 60° produces yellow.)
+	Returns an RGB or RGBA string
 GrayScale(rgb)
 	Takes an RGB or RGBA color and converts it to grayscale. Returns an RGB or RGBA string.
 ColorTone(rgb, tone)
@@ -227,7 +213,7 @@ world
 /icon/proc/ColorTone(tone)
 	GrayScale()
 
-	var/list/TONE = ReadRGB(tone)
+	var/list/TONE = rgb2num(tone)
 	var/gray = round(TONE[1]*0.3 + TONE[2]*0.59 + TONE[3]*0.11, 1)
 
 	var/icon/upper = (255-gray) ? new(src) : null
@@ -256,8 +242,8 @@ world
 	else
 		// solid color
 		new_icon = new(src)
-		new_icon.Blend("#000000", ICON_OVERLAY)
-		new_icon.SwapColor("#000000", null)
+		new_icon.Blend(COLOR_BLACK, ICON_OVERLAY)
+		new_icon.SwapColor(COLOR_BLACK, null)
 		new_icon.Blend(icon, ICON_OVERLAY)
 	var/icon/blend_icon = new(src)
 	blend_icon.Opaque()
@@ -265,7 +251,7 @@ world
 	Blend(new_icon, ICON_OR)
 
 // make this icon fully opaque--transparent pixels become black
-/icon/proc/Opaque(background = "#000000")
+/icon/proc/Opaque(background = COLOR_BLACK)
 	SwapColor(null, background)
 	MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,0, 0,0,0,1)
 
@@ -285,245 +271,24 @@ world
 	// apply mask
 	Blend(mask_icon, ICON_ADD)
 
-/*
-	HSV format is represented as "#hhhssvv" or "#hhhssvvaa"
+/// Converts an rgb color into a list storing hsva
+/// Exists because it's useful to have a guarenteed alpha value
+/proc/rgb2hsv(rgb)
+	var/list/hsv = rgb2num(rgb, COLORSPACE_HSV)
+	if(length(hsv) < 4)
+		hsv += 255 // Max alpha, just to make life easy
+	return hsv
 
-	Hue ranges from 0 to 0x5ff (1535)
-
-		0x000 = red
-		0x100 = yellow
-		0x200 = green
-		0x300 = cyan
-		0x400 = blue
-		0x500 = magenta
-
-	Saturation is from 0 to 0xff (255)
-
-		More saturation = more color
-		Less saturation = more gray
-
-	Value ranges from 0 to 0xff (255)
-
-		Higher value means brighter color
- */
-
-/proc/ReadRGB(rgb)
-	if(!rgb)
-		return
-
-	// interpret the HSV or HSVA value
-	var/i=1,start=1
-	if(text2ascii(rgb) == 35) ++start // skip opening #
-	var/ch,which=0,r=0,g=0,b=0,alpha=0,usealpha
-	var/digits=0
-	for(i=start, i <= length(rgb), ++i)
-		ch = text2ascii(rgb, i)
-		if(ch < 48 || (ch > 57 && ch < 65) || (ch > 70 && ch < 97) || ch > 102)
-			break
-		++digits
-		if(digits == 8)
-			break
-
-	var/single = digits < 6
-	if(digits != 3 && digits != 4 && digits != 6 && digits != 8)
-		return
-	if(digits == 4 || digits == 8)
-		usealpha = 1
-	for(i=start, digits>0, ++i)
-		ch = text2ascii(rgb, i)
-		if(ch >= 48 && ch <= 57)
-			ch -= 48
-		else if(ch >= 65 && ch <= 70)
-			ch -= 55
-		else if(ch >= 97 && ch <= 102)
-			ch -= 87
-		else
-			break
-		--digits
-		switch(which)
-			if(0)
-				r = (r << 4) | ch
-				if(single)
-					r |= r << 4
-					++which
-				else if(!(digits & 1))
-					++which
-			if(1)
-				g = (g << 4) | ch
-				if(single)
-					g |= g << 4
-					++which
-				else if(!(digits & 1))
-					++which
-			if(2)
-				b = (b << 4) | ch
-				if(single)
-					b |= b << 4
-					++which
-				else if(!(digits & 1))
-					++which
-			if(3)
-				alpha = (alpha << 4) | ch
-				if(single)
-					alpha |= alpha << 4
-
-	. = list(r, g, b)
-	if(usealpha)
-		. += alpha
-
-/proc/ReadHSV(hsv)
-	if(!hsv)
-		return
-
-	// interpret the HSV or HSVA value
-	var/i=1,start=1
-	if(text2ascii(hsv) == 35)
-		++start // skip opening #
-	var/ch,which=0,hue=0,sat=0,val=0,alpha=0,usealpha
-	var/digits=0
-	for(i=start, i <= length(hsv), ++i)
-		ch = text2ascii(hsv, i)
-		if(ch < 48 || (ch > 57 && ch < 65) || (ch > 70 && ch < 97) || ch > 102)
-			break
-		++digits
-		if(digits == 9)
-			break
-	if(digits > 7)
-		usealpha = 1
-	if(digits <= 4)
-		++which
-	if(digits <= 2)
-		++which
-	for(i=start, digits>0, ++i)
-		ch = text2ascii(hsv, i)
-		if(ch >= 48 && ch <= 57)
-			ch -= 48
-		else if(ch >= 65 && ch <= 70)
-			ch -= 55
-		else if(ch >= 97 && ch <= 102)
-			ch -= 87
-		else
-			break
-		--digits
-		switch(which)
-			if(0)
-				hue = (hue << 4) | ch
-				if(digits == (usealpha ? 6 : 4))
-					++which
-			if(1)
-				sat = (sat << 4) | ch
-				if(digits == (usealpha ? 4 : 2))
-					++which
-			if(2)
-				val = (val << 4) | ch
-				if(digits == (usealpha ? 2 : 0))
-					++which
-			if(3)
-				alpha = (alpha << 4) | ch
-
-	. = list(hue, sat, val)
-	if(usealpha)
-		. += alpha
-
-/proc/HSVtoRGB(hsv)
-	if(!hsv)
-		return "#000000"
-	var/list/HSV = ReadHSV(hsv)
-	if(!HSV)
-		return "#000000"
-
-	var/hue = HSV[1]
-	var/sat = HSV[2]
-	var/val = HSV[3]
-
-	// Compress hue into easier-to-manage range
-	hue -= hue >> 8
-	if(hue >= 0x5fa)
-		hue -= 0x5fa
-
-	var/hi,mid,lo,r,g,b
-	hi = val
-	lo = round((255 - sat) * val / 255, 1)
-	mid = lo + round(abs(round(hue, 510) - hue) * (hi - lo) / 255, 1)
-	if(hue >= 765)
-		if(hue >= 1275) {r=hi;  g=lo;  b=mid}
-		else if(hue >= 1020) {r=mid; g=lo;  b=hi }
-		else {r=lo;  g=mid; b=hi }
-	else
-		if(hue >= 510) {r=lo;  g=hi;  b=mid}
-		else if(hue >= 255) {r=mid; g=hi;  b=lo }
-		else {r=hi;  g=mid; b=lo }
-
-	return (HSV.len > 3) ? rgb(r,g,b,HSV[4]) : rgb(r,g,b)
-
-/proc/RGBtoHSV(rgb)
-	if(!rgb)
-		return "#0000000"
-	var/list/RGB = ReadRGB(rgb)
-	if(!RGB)
-		return "#0000000"
-
-	var/r = RGB[1]
-	var/g = RGB[2]
-	var/b = RGB[3]
-	var/hi = max(r,g,b)
-	var/lo = min(r,g,b)
-
-	var/val = hi
-	var/sat = hi ? round((hi-lo) * 255 / hi, 1) : 0
-	var/hue = 0
-
-	if(sat)
-		var/dir
-		var/mid
-		if(hi == r)
-			if(lo == b) {hue=0; dir=1; mid=g}
-			else {hue=1535; dir=-1; mid=b}
-		else if(hi == g)
-			if(lo == r) {hue=512; dir=1; mid=b}
-			else {hue=511; dir=-1; mid=r}
-		else if(hi == b)
-			if(lo == g) {hue=1024; dir=1; mid=r}
-			else {hue=1023; dir=-1; mid=g}
-		hue += dir * round((mid-lo) * 255 / (hi-lo), 1)
-
-	return hsv(hue, sat, val, (RGB.len>3 ? RGB[4] : null))
-
-/proc/hsv(hue, sat, val, alpha)
-	if(hue < 0 || hue >= 1536)
-		hue %= 1536
-	if(hue < 0)
-		hue += 1536
-	if((hue & 0xFF) == 0xFF)
-		++hue
-		if(hue >= 1536)
-			hue = 0
-	if(sat < 0)
-		sat = 0
-	if(sat > 255)
-		sat = 255
-	if(val < 0)
-		val = 0
-	if(val > 255)
-		val = 255
-	. = "#"
-	. += TO_HEX_DIGIT(hue >> 8)
-	. += TO_HEX_DIGIT(hue >> 4)
-	. += TO_HEX_DIGIT(hue)
-	. += TO_HEX_DIGIT(sat >> 4)
-	. += TO_HEX_DIGIT(sat)
-	. += TO_HEX_DIGIT(val >> 4)
-	. += TO_HEX_DIGIT(val)
-	if(!isnull(alpha))
-		if(alpha < 0)
-			alpha = 0
-		if(alpha > 255)
-			alpha = 255
-		. += TO_HEX_DIGIT(alpha >> 4)
-		. += TO_HEX_DIGIT(alpha)
+/// Converts a list storing hsva into an rgb color
+/proc/hsv2rgb(hsv)
+	if(length(hsv) < 3)
+		return COLOR_BLACK
+	if(length(hsv) == 3)
+		return rgb(hsv[1], hsv[2], hsv[3], space = COLORSPACE_HSV)
+	return rgb(hsv[1], hsv[2], hsv[3], hsv[4], space = COLORSPACE_HSV)
 
 /*
-	Smooth blend between HSV colors
+	Smooth blend between RGB colors interpreted as HSV
 
 	amount=0 is the first color
 	amount=1 is the second color
@@ -532,63 +297,7 @@ world
 	amount<0 or amount>1 are allowed
  */
 /proc/BlendHSV(hsv1, hsv2, amount)
-	var/list/HSV1 = ReadHSV(hsv1)
-	var/list/HSV2 = ReadHSV(hsv2)
-
-	// add missing alpha if needed
-	if(HSV1.len < HSV2.len)
-		HSV1 += 255
-	else if(HSV2.len < HSV1.len)
-		HSV2 += 255
-	var/usealpha = HSV1.len > 3
-
-	// normalize hsv values in case anything is screwy
-	if(HSV1[1] > 1536)
-		HSV1[1] %= 1536
-	if(HSV2[1] > 1536)
-		HSV2[1] %= 1536
-	if(HSV1[1] < 0)
-		HSV1[1] += 1536
-	if(HSV2[1] < 0)
-		HSV2[1] += 1536
-	if(!HSV1[3]) {HSV1[1] = 0; HSV1[2] = 0}
-	if(!HSV2[3]) {HSV2[1] = 0; HSV2[2] = 0}
-
-	// no value for one color means don't change saturation
-	if(!HSV1[3])
-		HSV1[2] = HSV2[2]
-	if(!HSV2[3])
-		HSV2[2] = HSV1[2]
-	// no saturation for one color means don't change hues
-	if(!HSV1[2])
-		HSV1[1] = HSV2[1]
-	if(!HSV2[2])
-		HSV2[1] = HSV1[1]
-
-	// Compress hues into easier-to-manage range
-	HSV1[1] -= HSV1[1] >> 8
-	HSV2[1] -= HSV2[1] >> 8
-
-	var/hue_diff = HSV2[1] - HSV1[1]
-	if(hue_diff > 765)
-		hue_diff -= 1530
-	else if(hue_diff <= -765)
-		hue_diff += 1530
-
-	var/hue = round(HSV1[1] + hue_diff * amount, 1)
-	var/sat = round(HSV1[2] + (HSV2[2] - HSV1[2]) * amount, 1)
-	var/val = round(HSV1[3] + (HSV2[3] - HSV1[3]) * amount, 1)
-	var/alpha = usealpha ? round(HSV1[4] + (HSV2[4] - HSV1[4]) * amount, 1) : null
-
-	// normalize hue
-	if(hue < 0 || hue >= 1530)
-		hue %= 1530
-	if(hue < 0)
-		hue += 1530
-	// decompress hue
-	hue += round(hue / 255)
-
-	return hsv(hue, sat, val, alpha)
+	return hsv_gradient(amount, 0, hsv1, 1, hsv2, "loop")
 
 /*
 	Smooth blend between RGB colors
@@ -600,25 +309,7 @@ world
 	amount<0 or amount>1 are allowed
  */
 /proc/BlendRGB(rgb1, rgb2, amount)
-	var/list/RGB1 = ReadRGB(rgb1)
-	var/list/RGB2 = ReadRGB(rgb2)
-
-	// add missing alpha if needed
-	if(RGB1.len < RGB2.len)
-		RGB1 += 255
-	else if(RGB2.len < RGB1.len)
-		RGB2 += 255
-	var/usealpha = RGB1.len > 3
-
-	var/r = round(RGB1[1] + (RGB2[1] - RGB1[1]) * amount, 1)
-	var/g = round(RGB1[2] + (RGB2[2] - RGB1[2]) * amount, 1)
-	var/b = round(RGB1[3] + (RGB2[3] - RGB1[3]) * amount, 1)
-	var/alpha = usealpha ? round(RGB1[4] + (RGB2[4] - RGB1[4]) * amount, 1) : null
-
-	return isnull(alpha) ? rgb(r, g, b) : rgb(r, g, b, alpha)
-
-/proc/BlendRGBasHSV(rgb1, rgb2, amount)
-	return HSVtoRGB(RGBtoHSV(rgb1), RGBtoHSV(rgb2), amount)
+	return rgb_gradient(amount, 0, rgb1, 1, rgb2, "loop")
 
 /proc/HueToAngle(hue)
 	// normalize hsv in case anything is screwy
@@ -639,10 +330,9 @@ world
 	hue += round(hue / 255)
 	return hue
 
-
 // positive angle rotates forward through red->green->blue
-/proc/RotateHue(hsv, angle)
-	var/list/HSV = ReadHSV(hsv)
+/proc/RotateHue(rgb, angle)
+	var/list/HSV = rgb2hsv(rgb)
 
 	// normalize hsv in case anything is screwy
 	if(HSV[1] >= 1536)
@@ -665,24 +355,24 @@ world
 	// decompress hue
 	HSV[1] += round(HSV[1] / 255)
 
-	return hsv(HSV[1], HSV[2], HSV[3], (HSV.len > 3 ? HSV[4] : null))
+	return hsv2rgb(HSV)
 
 // Convert an rgb color to grayscale
 /proc/GrayScale(rgb)
-	var/list/RGB = ReadRGB(rgb)
+	var/list/RGB = rgb2num(rgb)
 	var/gray = RGB[1]*0.3 + RGB[2]*0.59 + RGB[3]*0.11
 	return (RGB.len > 3) ? rgb(gray, gray, gray, RGB[4]) : rgb(gray, gray, gray)
 
 // Change grayscale color to black->tone->white range
 /proc/ColorTone(rgb, tone)
-	var/list/RGB = ReadRGB(rgb)
-	var/list/TONE = ReadRGB(tone)
+	var/list/RGB = rgb2num(rgb)
+	var/list/TONE = rgb2num(tone)
 
 	var/gray = RGB[1]*0.3 + RGB[2]*0.59 + RGB[3]*0.11
 	var/tone_gray = TONE[1]*0.3 + TONE[2]*0.59 + TONE[3]*0.11
 
 	if(gray <= tone_gray)
-		return BlendRGB("#000000", tone, gray/(tone_gray || 1))
+		return BlendRGB(COLOR_BLACK, tone, gray/(tone_gray || 1))
 	else
 		return BlendRGB(tone, "#ffffff", (gray-tone_gray)/((255-tone_gray) || 1))
 
@@ -989,7 +679,7 @@ world
 		if(uppercase == 1)
 			letter = uppertext(letter)
 		else if(uppercase == -1)
-			letter = lowertext(letter)
+			letter = LOWER_TEXT(letter)
 
 	var/image/text_image = new(loc = A)
 	text_image.maptext = MAPTEXT("<span style='font-size: 24pt'>[letter]</span>")
@@ -1544,7 +1234,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/list/icon_dimensions = get_icon_dimensions(source.icon)
 	var/width = icon_dimensions["width"]
 	var/height = icon_dimensions["height"]
-	
+
 	if(width > world.icon_size)
 		alert_overlay.pixel_x = -(world.icon_size / 2) * ((width - world.icon_size) / world.icon_size)
 	if(height > world.icon_size)
