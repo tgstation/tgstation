@@ -59,7 +59,6 @@
 	var/obj/machinery/power/apc/malfhack
 	var/explosive = FALSE //does the AI explode when it dies?
 
-	var/mob/living/silicon/ai/parent
 	var/camera_light_on = FALSE
 	var/list/obj/machinery/camera/lit_cameras = list()
 
@@ -451,6 +450,10 @@
 	if(make_mmi_drop_and_transfer(ai_core.core_mmi, the_core = ai_core))
 		qdel(src)
 	return ai_core
+
+/mob/living/silicon/ai/proc/break_core_link()
+	to_chat(src, span_danger("Your core has been destroyed!"))
+	linked_core = null
 
 /mob/living/silicon/ai/proc/make_mmi_drop_and_transfer(obj/item/mmi/the_mmi, the_core)
 	var/mmi_type
@@ -1038,7 +1041,7 @@
 		else //combat software AIs use a different UI
 			malf_picker.update_static_data_for_all_viewers()
 
-	apc.malfai = parent || src
+	apc.malfai = src
 	apc.malfhack = TRUE
 	apc.locked = TRUE
 	apc.coverlocked = TRUE

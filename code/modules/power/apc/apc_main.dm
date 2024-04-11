@@ -229,6 +229,7 @@
 /obj/machinery/power/apc/Destroy()
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10, 0, 1000)
+		malfai.hacked_apcs -= src
 	disconnect_from_area()
 	QDEL_NULL(alarm_manager)
 	if(occupier)

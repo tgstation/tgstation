@@ -1,7 +1,7 @@
 /obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
 	if(!istype(malf) || !malf.malf_picker)
 		return APC_AI_NO_MALF
-	if(malfai != (malf.parent || malf))
+	if(malfai != malf)
 		return APC_AI_NO_HACK
 	if(occupier == malf)
 		return APC_AI_HACK_SHUNT_HERE
@@ -12,7 +12,7 @@
 /obj/machinery/power/apc/proc/malfhack(mob/living/silicon/ai/malf)
 	if(!istype(malf))
 		return
-	if(get_malf_status(malf) != 1)
+	if(!get_malf_status(malf))
 		return
 	if(malf.malfhacking)
 		to_chat(malf, span_warning("You are already hacking an APC!"))

@@ -59,11 +59,19 @@
 		update_appearance()
 
 /obj/structure/ai_core/Destroy()
+	if(istype(remote_ai))
+		remote_ai.break_core_link()
+		remote_ai = null
 	QDEL_NULL(circuit)
 	QDEL_NULL(core_mmi)
 	QDEL_NULL(laws)
-	remote_ai.linked_core = null
 	return ..()
+
+/obj/structure/ai_core/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+	if(istype(remote_ai))
+		to_chat(remote_ai, span_danger("Your core is under attack!"))
+	. = ..()
+	
 
 /obj/structure/ai_core/deactivated
 	icon_state = "ai-empty"
@@ -300,13 +308,14 @@
 					tool.play_tool_sound(src)
 					balloon_alert(user, "removed [AI_CORE_BRAIN(core_mmi)]")
 					if(remote_ai)
-						remote_ai.linked_core = null
+						remote_ai.break_core_link()
 						if(!(IS_MALF_AI(remote_ai)))
 							//don't pull back shunted malf AIs
-							remote_ai.death()
+							remote_ai.death(gibbed = TRUE, drop_mmi = FALSE)
+							///the drop_mmi param determines whether the MMI is dropped at their current location
+							///which in this case would be somewhere else, so we drop their MMI at the core instead
 							remote_ai.make_mmi_drop_and_transfer(core_mmi, src)
-							core_mmi.forceMove(loc)
-							return
+						remote_ai = null
 					core_mmi.forceMove(loc) //if they're malf, just drops a blank MMI, or if it's an incomplete shell
 					return					//it drops the mmi that was put in before it was finished
 

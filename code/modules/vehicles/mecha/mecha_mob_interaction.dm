@@ -120,22 +120,25 @@
 		AI.eyeobj?.UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 		AI.eyeobj?.forceMove(newloc) //kick the eye out as well
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
+			AI.controlled_equipment = null
+			AI.remote_control = null
 			if(!AI.linked_core) //if the victim AI has no core
-				if (!AI.can_shunt || !AI.hacked_apcs)
-					AI.investigate_log("has been gibbed by being forced out of their mech by another AI.", INVESTIGATE_DEATHS)
-					AI.gib(DROP_ALL_REMAINS)  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
+				if (!AI.can_shunt || !(LAZYLEN(AI.hacked_apcs)))
+					AI.investigate_log("has been gibbed by being forced out of their mech.", INVESTIGATE_DEATHS)
+					AI.gib(DROP_ALL_REMAINS)  //If one Malf decides to steal a mech from another AI (even other Malfs!), and they have no hacked APCs or core, they are destroyed
+					AI = null
+					mecha_flags &= ~SILICON_PILOT
+					return
 				else
 					var/obj/machinery/power/apc/emergency_shunt_apc = pick(AI.hacked_apcs)
 					emergency_shunt_apc.malfoccupy(AI) //get shunted into a random APC (you don't get to choose which)
-			AI = null
-			mecha_flags &= ~SILICON_PILOT
-			return
+					AI = null
+					mecha_flags &= ~SILICON_PILOT
+					return
+			newloc = get_turf(AI.linked_core)
+			qdel(AI.linked_core)
+			AI.forceMove(newloc)
 		else
-			if(!AI.linked_core)
-				if(!silent)
-					to_chat(AI, span_userdanger("Inactive core destroyed. Unable to return."))
-				AI.linked_core = null
-				return
 			if(!silent)
 				to_chat(AI, span_notice("Returning to core..."))
 			AI.controlled_equipment = null
@@ -143,6 +146,7 @@
 			mob_container = AI
 			newloc = get_turf(AI.linked_core)
 			qdel(AI.linked_core)
+			AI.forceMove(newloc)
 	else if(isliving(M))
 		mob_container = M
 	else
@@ -189,13 +193,14 @@
 	if(isAI(user))
 		var/mob/living/silicon/ai/AI = user
 		if(!AI.linked_core)
+			to_chat(AI, span_userdanger("Inactive core destroyed. Unable to return."))
 			if(!AI.can_shunt || !AI.hacked_apcs.len)
-				to_chat(AI, span_userdanger("Inactive core destroyed. Unable to return."))
+				to_chat(AI, span_warning(AI.can_shunt ? "No hacked APCs available." : "No shunting capabilities."))
 				return FALSE
-			var/confirm = tgui_alert(AI, "Shunt to a random APC?", "Confirm Emergency Shunt", list("Yes", "No"))
-			if(confirm)
+			var/confirm = tgui_alert(AI, "Shunt to a random APC? You won't have anywhere else to go!", "Confirm Emergency Shunt", list("Yes", "No"))
+			if(confirm == "Yes")
 				mob_exit(AI, forced = TRUE)
-				return
+			return
 	to_chat(user, span_notice("You begin the ejection procedure. Equipment is disabled during this process. Hold still to finish ejecting."))
 	is_currently_ejecting = TRUE
 	if(do_after(user, has_gravity() ? exit_delay : 0 , target = src))
