@@ -321,9 +321,3 @@
 	cost = PAYCHECK_COMMAND * 18
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/ballistic/shotgun/doublebarrel)
-
-/datum/supply_pack/goody/boxing_gloves
-	name = "Boxing Gloves"
-	desc = "A set of boxing gloves, perfect for making others see your way."
-	cost = PAYCHECK_CREW
-	contains = list(/obj/item/clothing/gloves/boxing)

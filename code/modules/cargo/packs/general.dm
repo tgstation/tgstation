@@ -255,3 +255,13 @@
 		/obj/item/hatchet/cutterblade = 1,
 	)
 	crate_name = "paper cutters crate"
+
+/datum/supply_pack/misc/boxing_gloves
+	name = "Boxer Glove Set"
+	desc = "Contains multiple sets of gloves fit for anyone seeking to go one \
+		more round when they don't think they can anymore."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(
+		/obj/item/clothing/gloves/boxing,
+		/obj/item/clothing/gloves/boxing/blue,
+	)
