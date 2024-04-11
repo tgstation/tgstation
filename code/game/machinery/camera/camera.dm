@@ -216,7 +216,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		return
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(!(prob(150 / severity)))
+	if(!prob(150 / severity))
 		return
 	network = list()
 	GLOB.cameranet.removeCamera(src)
