@@ -514,6 +514,7 @@
 	//use power
 	if(!use_energy(active_power_usage))
 		is_printing = FALSE
+		update_appearance(UPDATE_OVERLAYS)
 		return
 
 	//print the stuff
