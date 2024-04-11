@@ -40,7 +40,7 @@
 	///How much energy we drain each time we mechpunch someone
 	var/melee_energy_drain = 0.015 * STANDARD_CELL_CHARGE
 	///Power we use to have the lights on
-	var/light_power_drain = 2 KILO WATTS
+	var/light_power_drain = 0.002 * STANDARD_CELL_RATE
 	///Modifiers for directional damage reduction
 	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 0.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 1.5)
 	///if we cant use our equipment(such as due to EMP)
