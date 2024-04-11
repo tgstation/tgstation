@@ -246,6 +246,11 @@
 	for(var/result in result_atoms)
 		var/atom/created_thing = new result(loc)
 		LAZYADD(created_items, WEAKREF(created_thing))
+		if(istype(created_thing, /obj/item/melee/sickly_blade))
+			var/obj/item/melee/sickly_blade/blade_check = created_thing
+			var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+			blade_check.owner = our_heretic
+			LAZYADD(our_heretic.blades_list, blade_check)
 	return TRUE
 
 /**

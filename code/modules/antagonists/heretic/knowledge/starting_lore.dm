@@ -293,3 +293,35 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	body.do_jitter_animation()
 	body.visible_message(span_danger("An awful ripping sound is heard as [ripped_thing]'s [exterior_text] is ripped straight out, wrapping around [le_book || "the book"], turning into an eldritch shade of blue!"))
 	return ..()
+
+/datum/heretic_knowledge/blade_recall
+	name = "Blade Recall"
+	desc = "Transmute any shard and cloth to summon all your lost or unattended blades directly to the rune."
+	cost = 0
+	route = PATH_START
+	required_atoms = list(
+		/obj/item/shard = 1,
+		/obj/item/stack/sheet/cloth = 1,
+	)
+	priority = MAX_KNOWLEDGE_PRIORITY - 4
+
+/datum/heretic_knowledge/blade_recall/can_be_invoked(datum/antagonist/heretic/invoker)
+	if(!LAZYLEN(invoker.blades_list)) //no blade no spell
+		return FALSE
+	return TRUE
+
+/datum/heretic_knowledge/blade_recall/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	var/valid_blades = 0
+	for(var/obj/item/melee/sickly_blade/recoll_my_blade in our_heretic.blades_list)
+		if(isnull(recoll_my_blade.loc))
+			continue
+		if(get_turf(user) == get_turf(recoll_my_blade))
+			continue
+		valid_blades++
+		var/turf/random_for_fun = pick(RANGE_TURFS(1,loc)) // Drop blade not only on centre of rune.
+		recoll_my_blade.forceMove(random_for_fun)
+	if(valid_blades < 1)
+		to_chat(user, span_warning("None of the blades recoll."))
+		return FALSE //if we have no blades to return then we don't need to finish spell.
+	return TRUE
