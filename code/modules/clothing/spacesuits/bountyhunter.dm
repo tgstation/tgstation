@@ -9,7 +9,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	cell = /obj/item/stock_parts/cell/hyper
 
-/obj/item/clothing/suit/space/officer/Initialize()
+/obj/item/clothing/suit/space/hunter/Initialize()
 	. = ..()
 	allowed += list(
 		/obj/item/gun,
