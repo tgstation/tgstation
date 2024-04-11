@@ -1150,7 +1150,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		if(replacer.works_from_distance)
 			to_chat(user, display_parts(user))
 		for(var/replacer_item in replacer)
-			if(istype(replacer, refill_canister))
+			if(istype(replacer_item, refill_canister))
 				moved += restock(replacer_item)
 	else
 		to_chat(user, display_parts(user))
