@@ -827,7 +827,7 @@
 /obj/machinery/handle_deconstruct(disassembled = TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(obj_flags & NO_DECONSTRUCTION)
+	if(obj_flags & NO_DEBRIS_AFTER_DECONSTRUCTION)
 		dump_inventory_contents() //drop stuff we consider important
 		return //Just delete us, no need to call anything else.
 
