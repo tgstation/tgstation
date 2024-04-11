@@ -2098,7 +2098,7 @@
 	name = "uranium airlock"
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_uranium
-	greyscale_colors = rgb(0,51,0)+rgb(0,51,0)+rgb(0,68,0)+rgb(0,68,0)+rgb(0,51,0)+rgb(109,101,101)+rgb(0,51,0)
+	greyscale_colors = "#003300#003300#004400#004400#003300#6d6565#003300"
 	var/last_event = 0
 	//Is this airlock actually radioactive?
 	var/actually_radioactive = TRUE
