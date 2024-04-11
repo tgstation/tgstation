@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes:
-  - admin: "LUA - Adds a new library called handler_group. Include it in your files by doing require('handler_group')"
