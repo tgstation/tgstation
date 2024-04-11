@@ -24,7 +24,7 @@
 	. = ..()
 	materials = AddComponent(/datum/component/remote_materials, mapload)
 
-/obj/machinery/component_printer/LateInitialize()
+/obj/machinery/component_printer/post_machine_initialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !techweb)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(techweb, src)

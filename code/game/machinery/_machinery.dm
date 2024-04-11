@@ -184,12 +184,8 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/LateInitialize()
-	. = ..()
-	power_change()
-	if(use_power == NO_POWER_USE)
-		return
-	update_current_power_usage()
-	setup_area_power_relationship()
+	SHOULD_NOT_OVERRIDE(TRUE)
+	post_machine_initialize()
 
 /obj/machinery/Destroy(force)
 	SSmachines.unregister_machine(src)
@@ -199,6 +195,20 @@
 	unset_static_power()
 
 	return ..()
+
+/**
+ * Called in LateInitialize meant to be the machine replacement to it
+ * This sets up power for the machine and requires parent be called,
+ * ensuring power works on all machines unless exempted with NO_POWER_USE.
+ * This is the proc to override if you want to do anything in LateInitialize.
+ */
+/obj/machinery/proc/post_machine_initialize()
+	SHOULD_CALL_PARENT(TRUE)
+	power_change()
+	if(use_power == NO_POWER_USE)
+		return
+	update_current_power_usage()
+	setup_area_power_relationship()
 
 /**
  * proc to call when the machine starts to require power after a duration of not requiring power
@@ -662,7 +672,7 @@
 	update_last_used(user)
 	. = ..()
 
-/obj/machinery/ui_act(action, list/params)
+/obj/machinery/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	add_fingerprint(usr)
 	update_last_used(usr)
 	if(HAS_AI_ACCESS(usr) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs can still access off-camera stuff.
@@ -698,8 +708,8 @@
 			hit_with_what_noun += plural_s(hit_with_what_noun) // hit with "their hands"
 
 	user.visible_message(
-		span_danger("[user] smashes [src] with [user.p_their()] [hit_with_what_noun][damage ? "." : ", [no_damage_feedback]"]!"),
-		span_danger("You smash [src] with your [hit_with_what_noun][damage ? "." : ", [no_damage_feedback]"]!"),
+		span_danger("[user] smashes [src] with [user.p_their()] [hit_with_what_noun][damage ? "." : ", [no_damage_feedback]!"]"),
+		span_danger("You smash [src] with your [hit_with_what_noun][damage ? "." : ", [no_damage_feedback]!"]"),
 		span_hear("You hear a [damage ? "smash" : "thud"]."),
 		COMBAT_MESSAGE_RANGE,
 	)
@@ -817,7 +827,7 @@
 /obj/machinery/handle_deconstruct(disassembled = TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(obj_flags & NO_DECONSTRUCTION)
+	if(obj_flags & NO_DEBRIS_AFTER_DECONSTRUCTION)
 		dump_inventory_contents() //drop stuff we consider important
 		return //Just delete us, no need to call anything else.
 
@@ -951,9 +961,6 @@
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer_tool)
 	if(!istype(replacer_tool))
-		return FALSE
-
-	if(!replacer_tool.works_from_distance)
 		return FALSE
 
 	var/shouldplaysound = FALSE

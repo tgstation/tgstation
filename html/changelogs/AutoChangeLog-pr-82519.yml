@@ -1,0 +1,4 @@
+author: "disappointedButNotSuprised"
+delete-after: True
+changes:
+  - rscadd: "Coffee machines can now carry over reagents from the beans to the coffee (surely no one will inject poison into them)"

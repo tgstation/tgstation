@@ -104,7 +104,7 @@
 
 // We late initialize here so all stationary tanks have time to set up their
 // initial gas mixes and signal registrations.
-/obj/machinery/atmospherics/components/tank/LateInitialize()
+/obj/machinery/atmospherics/components/tank/post_machine_initialize()
 	. = ..()
 	GetMergeGroup(merger_id, merger_typecache)
 
