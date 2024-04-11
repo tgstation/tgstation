@@ -1040,7 +1040,9 @@
 			malf_ai_datum.update_static_data_for_all_viewers()
 		else //combat software AIs use a different UI
 			malf_picker.update_static_data_for_all_viewers()
-
+	if(apc.malfai) // another malf hacked this one; counter-hack!
+		apc.malfai("An adversarial subroutine has counter-hacked [apc]!")
+		apc.malfai.hacked_apcs -= apc
 	apc.malfai = src
 	apc.malfhack = TRUE
 	apc.locked = TRUE
