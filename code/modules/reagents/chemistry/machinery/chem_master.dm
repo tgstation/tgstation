@@ -513,6 +513,7 @@
 
 	//use power
 	if(!use_energy(active_power_usage))
+		is_printing = FALSE
 		return
 
 	//print the stuff
