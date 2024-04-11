@@ -45700,10 +45700,6 @@
 	},
 /turf/open/floor/iron/dark/side,
 /area/station/science/xenobiology)
-"pRb" = (
-/obj/item/computer_disk/virus/mime,
-/turf/closed/mineral/random/stationside,
-/area/space/nearstation)
 "pRe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table/wood,
@@ -88018,7 +88014,7 @@ aJq
 aJq
 aJq
 aJq
-pRb
+aJq
 dDB
 dDB
 dDB
@@ -88275,7 +88271,7 @@ aJq
 aJq
 aJq
 aJq
-pRb
+aJq
 aJq
 aJq
 aJq
@@ -88532,7 +88528,7 @@ aJq
 aJq
 aJq
 aJq
-pRb
+aJq
 aJq
 aJq
 aJq
