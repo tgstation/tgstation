@@ -9,6 +9,15 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	cell = /obj/item/stock_parts/cell/hyper
 
+/obj/item/clothing/suit/space/officer/Initialize()
+	. = ..()
+	allowed += list(
+		/obj/item/gun,
+		/obj/item/melee/baton,
+		/obj/item/restraints/handcuffs,
+		/obj/item/knife/combat
+	)
+
 /datum/armor/space_hunter
 	melee = 60
 	bullet = 40

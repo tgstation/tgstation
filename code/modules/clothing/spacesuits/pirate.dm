@@ -25,8 +25,18 @@
 	desc = "A modified suit to allow space pirates to board shuttles and stations while avoiding the maw of the void. Comes with additional protection and is lighter to move in."
 	icon_state = "spacepirate"
 	w_class = WEIGHT_CLASS_NORMAL
-	allowed = list(/obj/item/gun, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/cup/glass/bottle/rum)
 	slowdown = 0
 	armor_type = /datum/armor/space_pirate
 	strip_delay = 40
 	equip_delay_other = 20
+/obj/item/clothing/suit/space/pirate/Initialize()
+	. = ..()
+	allowed += list(
+		/obj/item/gun,
+		/obj/item/melee/baton,
+		/obj/item/restraints/handcuffs,
+		/obj/item/melee/energy/sword/pirate,
+		/obj/item/clothing/glasses/eyepatch,
+		/obj/item/reagent_containers/cup/glass/bottle/rum
+		)
+	

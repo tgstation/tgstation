@@ -10,7 +10,6 @@
 	icon_state = "void"
 	inhand_icon_state = "void_suit"
 	desc = "An old, NASA CentCom branch designed, dark red space suit."
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
 
 /obj/item/clothing/head/helmet/space/nasavoid/old
 	name = "Engineering Void Helmet"
