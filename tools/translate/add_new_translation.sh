@@ -14,10 +14,11 @@ git commit -m "Move old translation"
 
 echo Generating new translation...
 git cherry-pick -n translate
+git reset .
 python ./tools/translate/converter.py
 git add ./tools/translate/ss220replace.json
 git commit -m "Generate translation file"
-git reset .
+git restore .
 
 echo Applying result...
 ./tools/translate/ss220_replacer_linux
