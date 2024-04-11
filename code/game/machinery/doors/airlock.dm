@@ -1496,7 +1496,7 @@
 
 /obj/machinery/door/airlock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if((damage_amount >= atom_integrity) && (damage_flag == BOMB))
-		obj_flags |= NO_DECONSTRUCTION  //If an explosive took us out, don't drop the assembly
+		obj_flags |= NO_DEBRIS_AFTER_DECONSTRUCTION  //If an explosive took us out, don't drop the assembly
 	. = ..()
 	if(atom_integrity < (0.75 * max_integrity))
 		update_appearance()
@@ -2152,7 +2152,7 @@
 
 	return ..()
 
-/obj/machinery/door/airlock/external/LateInitialize()
+/obj/machinery/door/airlock/external/post_machine_initialize()
 	. = ..()
 	if(space_dir)
 		unres_sides |= space_dir

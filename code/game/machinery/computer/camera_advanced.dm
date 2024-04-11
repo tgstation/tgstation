@@ -30,7 +30,7 @@
 	. = ..()
 	for(var/i in networks)
 		networks -= i
-		networks += lowertext(i)
+		networks += LOWER_TEXT(i)
 	if(lock_override)
 		if(lock_override & CAMERA_LOCK_STATION)
 			z_lock |= SSmapping.levels_by_trait(ZTRAIT_STATION)

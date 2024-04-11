@@ -104,12 +104,12 @@
 	if(screen_on)
 		to_chat(user, span_notice("You close \the [src]."))
 		slowdown = initial(slowdown)
-		w_class = initial(w_class)
+		update_weight_class(initial(w_class))
 		drag_slowdown = initial(drag_slowdown)
 	else
 		to_chat(user, span_notice("You open \the [src]."))
 		slowdown = slowdown_open
-		w_class = w_class_open
+		update_weight_class(w_class_open)
 		drag_slowdown = slowdown_open
 	if(isliving(loc))
 		var/mob/living/localmob = loc

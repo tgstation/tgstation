@@ -1,6 +1,6 @@
 #define CELL_DRAIN_TIME 35
-#define CELL_POWER_GAIN 60
-#define CELL_POWER_DRAIN 750
+#define CELL_POWER_GAIN (0.06 * STANDARD_CELL_CHARGE)
+#define CELL_POWER_DRAIN (0.75 * STANDARD_CELL_CHARGE)
 
 /**
  * # Power cell
@@ -186,6 +186,19 @@
 		explode()
 	return power_used
 
+/**
+ * Changes the charge of the cell.
+ * Args:
+ * - amount: The energy to give to the cell (can be negative).
+ * Returns: The energy that was given to the cell (can be negative).
+ */
+/obj/item/stock_parts/cell/proc/change(amount)
+	var/energy_used = clamp(amount, -charge, maxcharge - charge)
+	charge += energy_used
+	if(rigged && energy_used)
+		explode()
+	return energy_used
+
 /obj/item/stock_parts/cell/examine(mob/user)
 	. = ..()
 	if(rigged)
@@ -259,18 +272,19 @@
 
 			var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - CELL_POWER_GAIN
 			var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
+			var/obj/item/stock_parts/cell/stomach_cell = stomach.cell
 			if((stomach.drain_time > world.time) || !stomach)
 				return
 			if(charge < CELL_POWER_DRAIN)
 				to_chat(H, span_warning("[src] doesn't have enough power!"))
 				return
-			if(stomach.crystal_charge > charge_limit)
+			if(stomach_cell.charge() > charge_limit)
 				to_chat(H, span_warning("Your charge is full!"))
 				return
 			to_chat(H, span_notice("You begin clumsily channeling power from [src] into your body."))
 			stomach.drain_time = world.time + CELL_DRAIN_TIME
 			while(do_after(user, CELL_DRAIN_TIME, target = src))
-				if((charge < CELL_POWER_DRAIN) || (stomach.crystal_charge > charge_limit))
+				if((charge < CELL_POWER_DRAIN) || (stomach_cell.charge() > charge_limit))
 					return
 				if(istype(stomach))
 					to_chat(H, span_notice("You receive some charge from [src], wasting some in the process."))
@@ -285,7 +299,7 @@
 	SSexplosions.high_mov_atom += src
 
 /obj/item/stock_parts/cell/proc/get_electrocute_damage()
-	return ELECTROCUTE_DAMAGE(charge)
+	return ELECTROCUTE_DAMAGE(charge / max(0.001 * STANDARD_CELL_CHARGE, 1)) // Wouldn't want it to consider more energy than whatever is actually in the cell if for some strange reason someone set the STANDARD_CELL_CHARGE to below 1kJ.
 
 /obj/item/stock_parts/cell/get_part_rating()
 	return maxcharge * 10 + charge
@@ -502,6 +516,21 @@
 
 /obj/item/stock_parts/cell/inducer_supply
 	maxcharge = STANDARD_CELL_CHARGE * 5
+
+/obj/item/stock_parts/cell/ethereal
+	name = "ahelp it"
+	desc = "you sohuldn't see this"
+	maxcharge = ETHEREAL_CHARGE_DANGEROUS
+	charge = ETHEREAL_CHARGE_FULL
+	icon_state = null
+	charge_light_type = null
+	connector_type = null
+	custom_materials = null
+	grind_results = null
+
+/obj/item/stock_parts/cell/ethereal/examine(mob/user)
+	. = ..()
+	CRASH("[src.type] got examined by [user]")
 
 #undef CELL_DRAIN_TIME
 #undef CELL_POWER_GAIN

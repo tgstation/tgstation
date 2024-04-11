@@ -14,7 +14,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/byteforge/LateInitialize()
+/obj/machinery/byteforge/post_machine_initialize()
 	. = ..()
 
 	setup_particles()
