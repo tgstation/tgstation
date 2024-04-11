@@ -131,22 +131,23 @@
 		balloon_alert(user, "adding cables...")
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 
-		if(do_after(user, 2 SECONDS, target = src))
-			if(!can_place_terminal(user, item, silent = TRUE))
-				return
-			var/obj/item/stack/cable_coil/cable = item
-			var/turf/turf = get_turf(src)
-			var/obj/structure/cable/connected_cable = turf.get_cable_node(terminal_cable_layer) //get the connecting node cable, if there's one
-			if (prob(50) && electrocute_mob(user, connected_cable, connected_cable, 1, TRUE)) //animate the electrocution if uncautious and unlucky
-				do_sparks(5, TRUE, src)
-				return
-			cable.use(10)
-			user.visible_message(span_notice("[user.name] adds cables to [src]"))
-			balloon_alert(user, "cables added")
-			//build the terminal and link it to the network
-			make_terminal(turf, terminal_cable_layer)
-			terminal.connect_to_network()
-			connect_to_network()
+		if(!do_after(user, 2 SECONDS, target = src))
+			return
+		if(!can_place_terminal(user, item, silent = TRUE))
+			return
+		var/obj/item/stack/cable_coil/cable = item
+		var/turf/turf = get_turf(src)
+		var/obj/structure/cable/connected_cable = turf.get_cable_node(terminal_cable_layer) //get the connecting node cable, if there's one
+		if (prob(50) && electrocute_mob(user, connected_cable, connected_cable, 1, TRUE)) //animate the electrocution if uncautious and unlucky
+			do_sparks(5, TRUE, src)
+			return
+		cable.use(10)
+		user.visible_message(span_notice("[user.name] adds cables to [src]"))
+		balloon_alert(user, "cables added")
+		//build the terminal and link it to the network
+		make_terminal(turf, terminal_cable_layer)
+		terminal.connect_to_network()
+		connect_to_network()
 		return
 
 	//crowbarring it !
