@@ -114,10 +114,10 @@
 	var/mob/living/silicon/ai/AI = user
 	var/mob/living/silicon/robot/robot = user
 	if(istype(AI) || istype(robot))
-		if(istype(malfai) && (malfai != AI || !(robot in malfai.connected_robots)))
-			. = FALSE 
 		if(aidisabled)
 			. = FALSE
+		else if(istype(malfai) && (malfai != AI || !(robot in malfai.connected_robots)))
+			. = FALSE 
 	if (!. && !loud)
 		balloon_alert(user, "it's disabled!")
 	return .
