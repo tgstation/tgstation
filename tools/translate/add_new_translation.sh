@@ -22,6 +22,7 @@ git restore .
 
 echo Applying result...
 ./tools/translate/ss220_replacer_linux
+git add .
 git commit -m "Apply translation"
 
 git push -f origin translate_tmp:translate
