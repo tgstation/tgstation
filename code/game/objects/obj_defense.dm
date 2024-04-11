@@ -168,9 +168,9 @@
 
 /**
  * The interminate proc between deconstruct() & atom_deconstruct(). By default this delegates deconstruction to
- * atom_deconstruct if NO_DECONSTRUCTION is absent but subtypes can override this to handle NO_DECONSTRUCTION in their
+ * atom_deconstruct if NO_DEBRIS_AFTER_DECONSTRUCTION is absent but subtypes can override this to handle NO_DEBRIS_AFTER_DECONSTRUCTION in their
  * own unique way. Override this if for example you want to dump out important content like mobs from the
- * atom before deconstruction regardless if NO_DECONSTRUCTION is present or not
+ * atom before deconstruction regardless if NO_DEBRIS_AFTER_DECONSTRUCTION is present or not
  * Arguments
  *
  * * disassembled - TRUE means we cleanly took this atom apart using tools. FALSE means this was destroyed in a violent way
@@ -178,7 +178,7 @@
 /obj/proc/handle_deconstruct(disassembled = TRUE)
 	SHOULD_CALL_PARENT(FALSE)
 
-	if(!(obj_flags & NO_DECONSTRUCTION))
+	if(!(obj_flags & NO_DEBRIS_AFTER_DECONSTRUCTION))
 		atom_deconstruct(disassembled)
 
 /**

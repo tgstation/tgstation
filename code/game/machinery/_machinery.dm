@@ -829,7 +829,7 @@
 /obj/machinery/handle_deconstruct(disassembled = TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(obj_flags & NO_DECONSTRUCTION)
+	if(obj_flags & NO_DEBRIS_AFTER_DECONSTRUCTION)
 		dump_inventory_contents() //drop stuff we consider important
 		return //Just delete us, no need to call anything else.
 
@@ -963,9 +963,6 @@
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer_tool)
 	if(!istype(replacer_tool))
-		return FALSE
-
-	if(!replacer_tool.works_from_distance)
 		return FALSE
 
 	var/shouldplaysound = FALSE

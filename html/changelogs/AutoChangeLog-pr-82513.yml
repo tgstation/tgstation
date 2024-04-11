@@ -1,6 +1,0 @@
-author: "Bilbo367"
-delete-after: True
-changes:
-  - bugfix: "fixes ody sleeper UI not updating to new chems to inject."
-  - bugfix: "fixes ody sleeper not telling user why they can't pick up a person."
-  - code_imp: "gives a common method for giving reagent list data to .tsx"
