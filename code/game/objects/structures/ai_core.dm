@@ -12,7 +12,8 @@
 	var/datum/ai_laws/laws
 	var/obj/item/circuitboard/aicore/circuit
 	var/obj/item/mmi/core_mmi
-	var/mob/living/silicon/ai/remote_ai = null // only used in cases of AIs piloting mechs or shunted malf AIs, possible later use cases
+	/// only used in cases of AIs piloting mechs or shunted malf AIs, possible later use cases
+	var/mob/living/silicon/ai/remote_ai = null
 
 /obj/structure/ai_core/Initialize(mapload)
 	. = ..()

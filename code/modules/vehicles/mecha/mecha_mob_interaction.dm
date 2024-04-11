@@ -196,9 +196,14 @@
 			to_chat(AI, span_userdanger("Inactive core destroyed. Unable to return."))
 			if(!AI.can_shunt || !AI.hacked_apcs.len)
 				to_chat(AI, span_warning("[AI.can_shunt ? "No hacked APCs available." : "No shunting capabilities."]"))
-				return FALSE
+				return
 			var/confirm = tgui_alert(AI, "Shunt to a random APC? You won't have anywhere else to go!", "Confirm Emergency Shunt", list("Yes", "No"))
 			if(confirm == "Yes")
+				/// Mechs with open cockpits can have the pilot shot by projectiles, or EMPs may destroy the AI inside
+				/// Alternatively, destroying the mech will shunt the AI if they can shunt, or a deadeye wizard can hit
+				/// them with a teleportation bolt
+				if (AI.stat == DEAD || AI.loc != src)
+					return
 				mob_exit(AI, forced = TRUE)
 			return
 	to_chat(user, span_notice("You begin the ejection procedure. Equipment is disabled during this process. Hold still to finish ejecting."))
