@@ -68,9 +68,9 @@
 	return ..()
 
 /obj/structure/ai_core/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
-	if(istype(remote_ai))
-		to_chat(remote_ai, span_danger("Your core is under attack!"))
 	. = ..()
+	if(. > 0 && istype(remote_ai))
+		to_chat(remote_ai, span_danger("Your core is under attack!"))
 	
 
 /obj/structure/ai_core/deactivated
@@ -309,7 +309,7 @@
 					balloon_alert(user, "removed [AI_CORE_BRAIN(core_mmi)]")
 					if(remote_ai)
 						remote_ai.break_core_link()
-						if(!(IS_MALF_AI(remote_ai)))
+						if(!IS_MALF_AI(remote_ai))
 							//don't pull back shunted malf AIs
 							remote_ai.death(gibbed = TRUE, drop_mmi = FALSE)
 							///the drop_mmi param determines whether the MMI is dropped at their current location

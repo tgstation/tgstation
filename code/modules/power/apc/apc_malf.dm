@@ -38,7 +38,7 @@
 		return
 	malf.ShutOffDoomsdayDevice()
 	occupier = malf
-	if (istype(malf.loc, /turf)) // create a deactivated AI core if the AI isn't coming from an emergency mech shunt
+	if (isturf(malf.loc)) // create a deactivated AI core if the AI isn't coming from an emergency mech shunt
 		malf.linked_core = new /obj/structure/ai_core/deactivated
 		malf.linked_core.remote_ai = malf // note that we do not set the deactivated core's core_mmi.brainmob
 	malf.forceMove(src) // move INTO the APC, not to its tile

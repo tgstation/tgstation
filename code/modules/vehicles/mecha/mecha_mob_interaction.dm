@@ -123,7 +123,7 @@
 			AI.controlled_equipment = null
 			AI.remote_control = null
 			if(!AI.linked_core) //if the victim AI has no core
-				if (!AI.can_shunt || !(LAZYLEN(AI.hacked_apcs)))
+				if (!AI.can_shunt || !length(AI.hacked_apcs))
 					AI.investigate_log("has been gibbed by being forced out of their mech.", INVESTIGATE_DEATHS)
 					AI.gib(DROP_ALL_REMAINS)  //If one Malf decides to steal a mech from another AI (even other Malfs!), and they have no hacked APCs or core, they are destroyed
 					AI = null
@@ -195,7 +195,7 @@
 		if(!AI.linked_core)
 			to_chat(AI, span_userdanger("Inactive core destroyed. Unable to return."))
 			if(!AI.can_shunt || !AI.hacked_apcs.len)
-				to_chat(AI, span_warning(AI.can_shunt ? "No hacked APCs available." : "No shunting capabilities."))
+				to_chat(AI, span_warning("[AI.can_shunt ? "No hacked APCs available." : "No shunting capabilities."]"))
 				return FALSE
 			var/confirm = tgui_alert(AI, "Shunt to a random APC? You won't have anywhere else to go!", "Confirm Emergency Shunt", list("Yes", "No"))
 			if(confirm == "Yes")
