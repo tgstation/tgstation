@@ -1,4 +1,0 @@
-author: "SethLafuente"
-delete-after: True
-changes:
-  - bugfix: "Fixes Radiation Hood not having FOV blockage"

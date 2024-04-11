@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - code_imp: "renamed `NO_DECONSTRUCTION` to `NO_DEBRIS_AFTER_DECONSTRUCTION` so its name matches its intended purpose"
+  - bugfix: "fixes some items that incorrectly used `NO_DECONSTRUCTION` prior to its refactor, meaning makes some objects non deconstructable again"
