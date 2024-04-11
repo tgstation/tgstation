@@ -1,4 +1,4 @@
-#define ASSET_CROSS_ROUND_CACHE_DIRECTORY "tmp/assets"
+#define ASSET_CROSS_ROUND_CACHE_DIRECTORY "cache/assets"
 
 //These datums are used to populate the asset cache, the proc "register()" does this.
 //Place any asset datums you create in asset_list_items.dm

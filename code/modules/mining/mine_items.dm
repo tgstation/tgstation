@@ -26,6 +26,10 @@
 	set_cap = 1
 	set_luminosity = 1.6
 
+/obj/effect/light_emitter/fake_outdoors
+	light_color = COLOR_LIGHT_YELLOW
+	set_cap = 1
+
 /**********************Miner Lockers**************************/
 
 /obj/structure/closet/wardrobe/miner

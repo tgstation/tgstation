@@ -47,7 +47,6 @@
 	lighting_cutoff_red = 30
 	lighting_cutoff_green = 35
 	lighting_cutoff_blue = 25
-
 	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD
 	/// `TRUE` if we have picked our visual appearance, `FALSE` otherwise (default)
@@ -161,6 +160,12 @@
 		/obj/item/clothing/mask,
 		/obj/item/storage/box/lights,
 		/obj/item/lightreplacer,
+		/obj/item/construction/rcd,
+		/obj/item/rcd_ammo,
+		/obj/item/rcd_upgrade,
+		/obj/item/storage/part_replacer,
+		/obj/item/soap,
+		/obj/item/holosign_creator,
 	)
 	/// machines whitelisted from being shy with
 	var/list/shy_machine_whitelist = list(
@@ -258,6 +263,9 @@
 
 /mob/living/basic/drone/gib()
 	dust()
+
+/mob/living/basic/drone/get_butt_sprite()
+	return BUTT_SPRITE_DRONE
 
 /mob/living/basic/drone/examine(mob/user)
 	. = list("<span class='info'>This is [icon2html(src, user)] \a <b>[src]</b>!")

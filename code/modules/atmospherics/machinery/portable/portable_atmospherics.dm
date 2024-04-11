@@ -43,6 +43,8 @@
 	air_contents.volume = volume
 	air_contents.temperature = T20C
 	SSair.start_processing_machine(src)
+	AddElement(/datum/element/climbable, climb_time = 3 SECONDS, climb_stun = 3 SECONDS)
+	AddElement(/datum/element/elevation, pixel_shift = 8)
 
 /obj/machinery/portable_atmospherics/Destroy()
 	disconnect()

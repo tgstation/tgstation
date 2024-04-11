@@ -1,35 +1,8 @@
-///Spawns a contractor partner to a spawning user, with a given key to assign to the new player.
-/proc/spawn_contractor_partner(mob/living/user, key)
-	var/mob/living/carbon/human/partner = new()
-	var/datum/outfit/contractor_partner/partner_outfit = new()
-
-	partner_outfit.equip(partner)
-
-	var/obj/structure/closet/supplypod/arrival_pod = new(null, STYLE_SYNDICATE)
-	arrival_pod.explosionSize = list(0,0,0,1)
-	arrival_pod.bluespace = TRUE
-
-	var/turf/free_location = find_obstruction_free_location(2, user)
-
-	// We really want to send them - if we can't find a nice location just land it on top of them.
-	if (!free_location)
-		free_location = get_turf(user)
-
-	partner.forceMove(arrival_pod)
-	partner.ckey = key
-
-	/// We give a reference to the mind that'll be the support unit
-	var/datum/antagonist/traitor/contractor_support/new_datum = partner.mind.add_antag_datum(/datum/antagonist/traitor/contractor_support)
-
-	to_chat(partner, "\n[span_alertwarning("[user.real_name] is your superior. Follow any, and all orders given by them. You're here to support their mission only.")]")
-	to_chat(partner, "[span_alertwarning("Should they perish, or be otherwise unavailable, you're to assist other active agents in this mission area to the best of your ability.")]")
-
-	new /obj/effect/pod_landingzone(free_location, arrival_pod)
-	return new_datum
-
 /// Support unit gets it's own very basic antag datum for admin logging.
 /datum/antagonist/traitor/contractor_support
 	name = "Contractor Support Unit"
+	job_rank = ROLE_CONTRACTOR_SUPPORT
+	employer = "Contractor Support Unit"
 	show_in_roundend = FALSE
 	give_objectives = TRUE
 	give_uplink = FALSE

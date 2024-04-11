@@ -17,12 +17,13 @@
 	var/proj_pass_rate = 50 //How many projectiles will pass the cover. Lower means stronger cover
 	var/bar_material = METAL
 
-/obj/structure/barricade/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		make_debris()
-	qdel(src)
+/obj/structure/barricade/atom_deconstruct(disassembled = TRUE)
+	make_debris()
 
+/// Spawn debris & stuff upon deconstruction
 /obj/structure/barricade/proc/make_debris()
+	PROTECTED_PROC(TRUE)
+
 	return
 
 /obj/structure/barricade/attackby(obj/item/I, mob/living/user, params)
@@ -77,7 +78,7 @@
 		else
 			to_chat(user, span_notice("You start adding [I] to [src]..."))
 			playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
-			if(do_after(user, 50, target=src))
+			if(do_after(user, 5 SECONDS, target=src))
 				W.use(5)
 				var/turf/T = get_turf(src)
 				T.place_on_top(/turf/closed/wall/mineral/wood/nonmetal)

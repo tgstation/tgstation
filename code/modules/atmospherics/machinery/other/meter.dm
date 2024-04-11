@@ -134,10 +134,8 @@
 		deconstruct()
 	return TRUE
 
-/obj/machinery/meter/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/pipe_meter(loc)
-	. = ..()
+/obj/machinery/meter/on_deconstruction(disassembled)
+	new /obj/item/pipe_meter(loc)
 
 /obj/machinery/meter/interact(mob/user)
 	if(machine_stat & (NOPOWER|BROKEN))

@@ -257,7 +257,7 @@
 			tool_behaviour = TOOL_WRENCH
 			sharpness = NONE
 			toolspeed = 0.75
-			w_class = WEIGHT_CLASS_SMALL
+			update_weight_class(WEIGHT_CLASS_SMALL)
 			usesound = 'sound/items/ratchet.ogg'
 			attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 			attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
@@ -265,7 +265,7 @@
 			tool_behaviour = TOOL_SHOVEL
 			sharpness = SHARP_EDGED
 			toolspeed = 0.25
-			w_class = WEIGHT_CLASS_NORMAL
+			update_weight_class(WEIGHT_CLASS_NORMAL)
 			usesound = 'sound/effects/shovel_dig.ogg'
 			attack_verb_continuous = list("slashes", "impales", "stabs", "slices")
 			attack_verb_simple = list("slash", "impale", "stab", "slice")
@@ -273,7 +273,7 @@
 			tool_behaviour = TOOL_MINING
 			sharpness = SHARP_POINTY
 			toolspeed = 0.5
-			w_class = WEIGHT_CLASS_NORMAL
+			update_weight_class(WEIGHT_CLASS_NORMAL)
 			usesound = 'sound/effects/picaxe1.ogg'
 			attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
 			attack_verb_simple = list("hit", "pierce", "slice", "attack")
@@ -314,8 +314,7 @@
 	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	block_sound = 'sound/weapons/sonic_jackhammer.ogg'
-	obj_flags = IMMUTABLE_SLOW
-	item_flags = SLOWS_WHILE_IN_HAND
+	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 	slowdown = 3
 	attack_speed = 1.2 SECONDS
 	/// The factor at which the recoil becomes less.

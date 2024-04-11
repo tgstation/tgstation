@@ -104,6 +104,8 @@
 
 /obj/item/pillow/AltClick(mob/user)
 	. = ..()
+	if(!can_interact(user) || !user.can_hold_items(src))
+		return
 	if(!pillow_trophy)
 		balloon_alert(user, "no tag!")
 		return

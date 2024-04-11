@@ -5,7 +5,6 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	fixed_mut_color = "#DBBF92"
-	hair_color = "#FF4B19" //cap color, spot color uses eye color
 
 	external_organs = list(/obj/item/organ/external/mushroom_cap = "Round")
 
@@ -42,12 +41,13 @@
 /datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
 	if(ishuman(C))
-		mush = new(null)
+		mush = new()
 		mush.teach(C)
+		mush.allow_temp_override = FALSE
 
 /datum/species/mush/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	mush.remove(C)
+	mush.fully_remove(C)
 	QDEL_NULL(mush)
 
 /datum/species/mush/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
@@ -56,6 +56,9 @@
 		return
 	if(chem.type == /datum/reagent/toxin/plantbgone/weedkiller)
 		affected.adjustToxLoss(3 * REM * seconds_per_tick)
+
+/datum/species/mush/get_fixed_hair_color(mob/living/carbon/human/for_mob)
+	return "#FF4B19" //cap color, spot color uses eye color
 
 /// A mushpersons mushroom cap organ
 /obj/item/organ/external/mushroom_cap
@@ -87,4 +90,3 @@
 		return FALSE
 
 	return TRUE
-

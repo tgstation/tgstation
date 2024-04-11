@@ -100,7 +100,7 @@
 	armour_penetration = 50
 	hitsound = 'sound/effects/coin2.ogg'
 	icon_state = "pellet"
-	color = "#FFD700"
+	color = COLOR_GOLD
 	/// The gold charge in this pellet
 	var/gold_charge = 0
 

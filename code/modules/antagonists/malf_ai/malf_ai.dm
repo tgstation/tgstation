@@ -60,8 +60,6 @@
 
 /// Generates a complete set of malf AI objectives up to the traitor objective limit.
 /datum/antagonist/malf_ai/proc/forge_ai_objectives()
-	objectives.Cut()
-
 	if(prob(PROB_SPECIAL))
 		forge_special_objective()
 
@@ -248,7 +246,7 @@
 
 	result += objectives_text
 
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 
 	if(malf_ai_won)
 		result += span_greentext("The [special_role_text] was successful!")

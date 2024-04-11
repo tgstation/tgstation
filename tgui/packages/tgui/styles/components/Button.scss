@@ -27,20 +27,13 @@ $bg-map: colors.$bg-map !default;
   background-color: $color;
   color: $text-color;
 
-  &:hover {
-    transition:
-      color 0ms,
-      background-color 0ms;
-  }
-
   &:focus {
     transition:
       color 100ms,
       background-color 100ms;
   }
 
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: lighten($color, 30%);
     color: $text-color;
   }

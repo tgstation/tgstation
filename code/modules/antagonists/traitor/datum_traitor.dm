@@ -34,7 +34,7 @@
 	///if TRUE, this traitor will always get hijacking as their final objective
 	var/is_hijacker = FALSE
 
-	///the name of the antag flavor this traitor has.
+	///the name of the antag flavor this traitor has, set in Traitor's setup if not preset.
 	var/employer
 
 	///assoc list of strings set up after employer is given
@@ -57,7 +57,7 @@
 	// There will still be a timelock on uplink items
 	name = "\improper Infiltrator"
 	give_secondary_objectives = FALSE
-	uplink_flag_given = UPLINK_TRAITORS | UPLINK_INFILTRATORS
+	uplink_flag_given = UPLINK_INFILTRATORS
 
 /datum/antagonist/traitor/infiltrator/sleeper_agent
 	name = "\improper Syndicate Sleeper Agent"
@@ -123,6 +123,9 @@
 		uplink_handler.has_objectives = FALSE
 		uplink_handler.can_replace_objectives = null
 		uplink_handler.replace_objectives = null
+	owner.take_uplink()
+	owner.special_role = null
+	owner.forget_crafting_recipe(/datum/crafting_recipe/syndicate_uplink_beacon)
 	return ..()
 
 /datum/antagonist/traitor/proc/traitor_objective_to_html(datum/traitor_objective/to_display)
@@ -182,33 +185,28 @@
 	replacement_uplink_code = "[pick(GLOB.phonetic_alphabet)] [rand(10,99)]"
 	replacement_uplink_frequency = sanitize_frequency(rand(MIN_UNUSED_FREQ, MAX_FREQ), free = FALSE, syndie = FALSE)
 
-/datum/antagonist/traitor/on_removal()
-	owner.special_role = null
-	owner.forget_crafting_recipe(/datum/crafting_recipe/syndicate_uplink_beacon)
-	return ..()
-
 /datum/antagonist/traitor/proc/pick_employer()
-	var/faction = prob(75) ? FLAVOR_FACTION_SYNDICATE : FLAVOR_FACTION_NANOTRASEN
-	var/list/possible_employers = list()
+	if(!employer)
+		var/faction = prob(75) ? FLAVOR_FACTION_SYNDICATE : FLAVOR_FACTION_NANOTRASEN
+		var/list/possible_employers = list()
 
-	possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
+		possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
 
-	if(istype(ending_objective, /datum/objective/hijack))
-		possible_employers -= GLOB.normal_employers
-	else //escape or martyrdom
-		possible_employers -= GLOB.hijack_employers
+		if(istype(ending_objective, /datum/objective/hijack))
+			possible_employers -= GLOB.normal_employers
+		else //escape or martyrdom
+			possible_employers -= GLOB.hijack_employers
 
-	switch(faction)
-		if(FLAVOR_FACTION_SYNDICATE)
-			possible_employers -= GLOB.nanotrasen_employers
-		if(FLAVOR_FACTION_NANOTRASEN)
-			possible_employers -= GLOB.syndicate_employers
-	employer = pick(possible_employers)
+		switch(faction)
+			if(FLAVOR_FACTION_SYNDICATE)
+				possible_employers -= GLOB.nanotrasen_employers
+			if(FLAVOR_FACTION_NANOTRASEN)
+				possible_employers -= GLOB.syndicate_employers
+		employer = pick(possible_employers)
 	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
 
 /// Generates a complete set of traitor objectives up to the traitor objective limit, including non-generic objectives such as martyr and hijack.
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
-	objectives.Cut()
 	var/objective_count = 0
 
 	if((GLOB.joined_player_list.len >= HIJACK_MIN_PLAYERS) && prob(HIJACK_PROB))
@@ -308,6 +306,7 @@
 	data["allies"] = traitor_flavor["allies"]
 	data["goal"] = traitor_flavor["goal"]
 	data["has_uplink"] = uplink ? TRUE : FALSE
+	data["given_uplink"] = give_uplink
 	if(uplink)
 		data["uplink_intro"] = traitor_flavor["uplink"]
 		data["uplink_unlock_info"] = uplink.unlock_text
@@ -361,7 +360,7 @@
 			result += contractor_round_end()
 		result += "<br>The traitor had a total of [DISPLAY_PROGRESSION(uplink_handler.progression_points)] Reputation and [uplink_handler.telecrystals] Unused Telecrystals."
 
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 
 	if(traitor_won)
 		result += span_greentext("The [special_role_text] was successful!")

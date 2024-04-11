@@ -184,6 +184,7 @@
 	visor_flags_inv = HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
 
 /datum/armor/toggleable_riot
 	melee = 50
@@ -193,6 +194,21 @@
 	fire = 80
 	acid = 80
 	wound = 15
+
+/obj/item/clothing/head/helmet/balloon
+	name = "balloon helmet"
+	desc = "A helmet made out of balloons. Its likes saw great usage in the Great Clown - Mime War. Surprisingly resistant to fire. Mimes were doing unspeakable things."
+	icon_state = "helmet_balloon"
+	inhand_icon_state = "helmet_balloon"
+	armor_type = /datum/armor/balloon
+	flags_inv = HIDEHAIR|HIDEEARS|HIDESNOUT
+	resistance_flags = FIRE_PROOF
+	dog_fashion = null
+
+/datum/armor/balloon
+	melee = 10
+	fire = 60
+	acid = 50
 
 /obj/item/clothing/head/helmet/toggleable/justice
 	name = "helmet of justice"
@@ -247,6 +263,7 @@
 	strip_delay = 80
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
+	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
 
 /datum/armor/helmet_swat
 	melee = 40
@@ -394,6 +411,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
+	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
 
 /datum/armor/helmet_knight
 	melee = 50
@@ -419,16 +437,6 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/knight_greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
-
-/datum/armor/knight_greyscale
-	melee = 35
-	bullet = 10
-	laser = 10
-	energy = 10
-	bomb = 10
-	bio = 10
-	fire = 40
-	acid = 40
 
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"

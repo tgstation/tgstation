@@ -1,5 +1,9 @@
 /// How much time (in seconds) is assumed to pass while assuming air. Used to scale overpressure/overtemp damage when assuming air.
 #define ASSUME_AIR_DT_FACTOR 1
+/// Multiplies the pressure of assembly bomb explosions before it's put through THE LOGARITHM
+#define ASSEMBLY_BOMB_COEFFICIENT 0.5
+/// Base of the logarithmic function used to calculate assembly bomb explosion size
+#define ASSEMBLY_BOMB_BASE 2.7
 
 /**
  * # Gas Tank
@@ -48,6 +52,10 @@
 	var/list/reaction_info
 	/// Mob that is currently breathing from the tank.
 	var/mob/living/carbon/breathing_mob = null
+	/// Attached assembly, can either detonate the tank or release its contents when receiving a signal
+	var/obj/item/assembly_holder/tank_assembly
+	/// Whether or not it will try to explode when it receives a signal
+	var/bomb_status = FALSE
 
 /// Closes the tank if dropped while open.
 /datum/armor/item_tank
@@ -123,7 +131,15 @@
 /obj/item/tank/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	air_contents = null
+	QDEL_NULL(tank_assembly)
 	return ..()
+
+/obj/item/tank/update_overlays()
+	. = ..()
+	if(tank_assembly)
+		. += tank_assembly.icon_state
+		. += tank_assembly.overlays
+		. += "bomb_assembly"
 
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src
@@ -155,7 +171,10 @@
 
 	. += span_notice("It feels [descriptive].")
 
-/obj/item/tank/deconstruct(disassembled = TRUE)
+	if(tank_assembly)
+		. += span_warning("There is some kind of device [EXAMINE_HINT("rigged")] to the tank!")
+
+/obj/item/tank/atom_deconstruct(disassembled = TRUE)
 	var/atom/location = loc
 	if(location)
 		location.assume_air(air_contents)
@@ -176,8 +195,30 @@
 /obj/item/tank/attackby(obj/item/attacking_item, mob/user, params)
 	add_fingerprint(user)
 	if(istype(attacking_item, /obj/item/assembly_holder))
+		if(tank_assembly)
+			balloon_alert(user, "something already attached!")
+			return ITEM_INTERACT_BLOCKING
 		bomb_assemble(attacking_item, user)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
+	return ..()
+
+/obj/item/tank/wrench_act(mob/living/user, obj/item/tool)
+	if(tank_assembly)
+		tool.play_tool_sound(src)
+		bomb_disassemble(user)
+		return ITEM_INTERACT_SUCCESS
+	return ..()
+
+/obj/item/tank/welder_act(mob/living/user, obj/item/tool)
+	if(bomb_status)
+		balloon_alert(user, "already welded!")
+		return ITEM_INTERACT_BLOCKING
+	if(tool.use_tool(src, user, 0, volume=40))
+		bomb_status = TRUE
+		balloon_alert(user, "bomb armed")
+		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [air_contents.temperature] Pressure: [air_contents.return_pressure()]")
+		add_fingerprint(user)
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /obj/item/tank/ui_state(mob/user)
@@ -361,16 +402,93 @@
 /obj/item/tank/proc/explosion_information()
 	return list(TANK_RESULTS_REACTION = reaction_info, TANK_RESULTS_MISC = explosion_info)
 
-/obj/item/tank/proc/ignite() //This happens when a bomb is told to explode
-	if(igniting)
-		stack_trace("Attempted to ignite a /obj/item/tank multiple times")
-		return //no double ignite
-	igniting = TRUE
-	// This is done in return_air call, but even then it actually makes zero sense, this tank is going to be deleted
-	// before ever getting a chance to process.
-	//START_PROCESSING(SSobj, src)
-	var/datum/gas_mixture/our_mix = return_air()
+/obj/item/tank/on_found(mob/finder) //for mousetraps
+	. = ..()
+	if(tank_assembly)
+		tank_assembly.on_found(finder)
 
+/obj/item/tank/attack_hand() //also for mousetraps
+	if(..())
+		return
+	if(tank_assembly)
+		tank_assembly.attack_hand()
+
+/obj/item/tank/Move()
+	. = ..()
+	if(tank_assembly)
+		tank_assembly.setDir(dir)
+
+/obj/item/tank/dropped()
+	. = ..()
+	if(tank_assembly)
+		tank_assembly.dropped()
+
+/obj/item/tank/IsSpecialAssembly()
+	return TRUE
+
+/obj/item/tank/receive_signal() //This is mainly called by the sensor through sense() to the holder, and from the holder to here.
+	audible_message(span_warning("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
+	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(ignite)), 1 SECONDS)
+
+/// Attaches an assembly holder to the tank to create a bomb.
+/obj/item/tank/proc/bomb_assemble(obj/item/assembly_holder/assembly, mob/living/user)
+	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
+	var/igniter_count = 0
+	for(var/obj/item/assembly/igniter/attached_assembly in assembly.assemblies)
+		igniter_count++
+
+	if(LAZYLEN(assembly.assemblies) == igniter_count)
+		return
+
+	if(isitem(loc)) // we are in a storage item
+		balloon_alert(user, "can't reach!")
+		return
+
+	if((src in user.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE)) && !user.canUnEquip(src))
+		balloon_alert(user, "it's stuck!")
+		return
+
+	if(!user.canUnEquip(assembly))
+		balloon_alert(user, "it's stuck!")
+		return
+
+	if(!user.transferItemToLoc(assembly, src))
+		balloon_alert(user, "it's stuck!")
+		return
+
+	tank_assembly = assembly //Tell the tank about its assembly part
+	assembly.master = src //Tell the assembly about its new owner
+	assembly.on_attach()
+	update_weight_class(WEIGHT_CLASS_BULKY)
+
+	balloon_alert(user, "bomb assembled")
+	update_appearance(UPDATE_OVERLAYS)
+
+/// Detaches an assembly holder from the tank, disarming the bomb
+/obj/item/tank/proc/bomb_disassemble(mob/user)
+	bomb_status = FALSE
+	balloon_alert(user, "bomb disarmed")
+	if(!tank_assembly)
+		CRASH("bomb_disassemble() called on a tank with no assembly!")
+	user.put_in_hands(tank_assembly)
+	tank_assembly.master = null
+	tank_assembly = null
+	update_weight_class(initial(w_class))
+	update_appearance(UPDATE_OVERLAYS)
+
+/// Ignites the contents of the tank. Called when receiving a signal if the tank is welded and has an igniter attached.
+/obj/item/tank/proc/ignite()
+	if(!bomb_status) // if it isn't welded, release the gases instead
+		release()
+		return
+
+	// check to make sure it's not already exploding before exploding it
+	if(igniting)
+		CRASH("ignite() called multiple times on [type]")
+	igniting = TRUE
+
+	var/datum/gas_mixture/our_mix = return_air()
 	our_mix.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
 	var/fuel_moles = our_mix.gases[/datum/gas/plasma][MOLES] + our_mix.gases[/datum/gas/oxygen][MOLES]/6
 	our_mix.garbage_collect()
@@ -378,6 +496,14 @@
 	var/strength = 1
 
 	var/turf/ground_zero = get_turf(loc)
+
+	/// Used to determine what the temperature of the hotspot when it isn't able to explode
+	var/igniter_temperature = 0
+	for(var/obj/item/assembly/igniter/firestarter in tank_assembly.assemblies)
+		igniter_temperature = max(igniter_temperature, firestarter.heat)
+
+	if(!igniter_temperature)
+		CRASH("[type] called ignite() without any igniters attached")
 
 	if(bomb_mixture.temperature > (T0C + 400))
 		strength = (fuel_moles/15)
@@ -392,7 +518,7 @@
 			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 		else
 			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(1000, 125)
+			ground_zero.hotspot_expose(igniter_temperature, 125)
 
 	else if(bomb_mixture.temperature > (T0C + 250))
 		strength = (fuel_moles/20)
@@ -403,7 +529,7 @@
 			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 		else
 			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(1000, 125)
+			ground_zero.hotspot_expose(igniter_temperature, 125)
 
 	else if(bomb_mixture.temperature > (T0C + 100))
 		strength = (fuel_moles/25)
@@ -412,21 +538,24 @@
 			explosion(ground_zero, devastation_range = -1, light_impact_range = round(strength,1), flash_range = round(strength*3,1), explosion_cause = src)
 		else
 			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(1000, 125)
+			ground_zero.hotspot_expose(igniter_temperature, 125)
 
 	else
 		ground_zero.assume_air(bomb_mixture)
-		ground_zero.hotspot_expose(1000, 125)
+		ground_zero.hotspot_expose(igniter_temperature, 125)
 
-	if(master)
-		qdel(master)
 	qdel(src)
 
-/obj/item/tank/proc/release() //This happens when the bomb is not welded. Tank contents are just spat out.
+/// Releases air stored in the tank. Called when signaled without being welded, or when ignited without enough pressure to explode.
+/obj/item/tank/proc/release()
 	var/datum/gas_mixture/our_mix = return_air()
 	var/datum/gas_mixture/removed = remove_air(our_mix.total_moles())
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
+	log_atmos("[type] released its contents of ", removed)
 	T.assume_air(removed)
+
+#undef ASSEMBLY_BOMB_BASE
+#undef ASSEMBLY_BOMB_COEFFICIENT
 #undef ASSUME_AIR_DT_FACTOR

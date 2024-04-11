@@ -193,14 +193,20 @@
 /mob/camera/blob/proc/pick_blobbernaut_candidate(obj/structure/blob/special/factory/factory)
 	if(isnull(factory))
 		return
-
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), factory)
-	factory.AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_BLOB, \
-		job_bans = ROLE_BLOB, \
-		to_call = to_call, \
-		title = "Blobbernaut", \
+	var/icon/blobbernaut_icon = icon(icon, "blobbernaut")
+	blobbernaut_icon.Blend(blobstrain.color, ICON_MULTIPLY)
+	var/image/blobbernaut_image = image(blobbernaut_icon)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		check_jobban = ROLE_BLOB,
+		poll_time = 20 SECONDS,
+		checked_target = factory,
+		ignore_category = POLL_IGNORE_BLOB,
+		alert_pic = blobbernaut_image,
+		jump_target = factory,
+		role_name_text = "blobbernaut",
+		chat_text_border_icon = blobbernaut_image,
 	)
+	on_poll_concluded(factory, chosen_one)
 
 /// Called when the ghost poll concludes
 /mob/camera/blob/proc/on_poll_concluded(obj/structure/blob/special/factory/factory, mob/dead/observer/ghost)

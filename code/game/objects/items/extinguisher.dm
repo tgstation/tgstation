@@ -124,6 +124,7 @@
 	tanktype = /obj/structure/reagent_dispensers/foamtank
 	sprite_name = "foam_extinguisher"
 	precision = TRUE
+	max_water = 100
 
 /obj/item/extinguisher/advanced/empty
 	starting_water = FALSE
@@ -215,7 +216,7 @@
 		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
 			var/obj/B = user.buckled
 			var/movementdirection = REVERSE_DIR(direction)
-			addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/extinguisher, move_chair), B, movementdirection), 1)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/extinguisher, move_chair), B, movementdirection), 0.1 SECONDS)
 		else
 			user.newtonian_move(REVERSE_DIR(direction))
 
@@ -279,13 +280,8 @@
 
 /obj/item/extinguisher/proc/EmptyExtinguisher(mob/user)
 	if(loc == user && reagents.total_volume)
+		reagents.expose(user.loc, TOUCH)
 		reagents.clear_reagents()
-
-		var/turf/T = get_turf(loc)
-		if(isopenturf(T))
-			var/turf/open/theturf = T
-			theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
-
 		user.visible_message(span_notice("[user] empties out \the [src] onto the floor using the release valve."), span_info("You quietly empty out \the [src] using its release valve."))
 
 //firebot assembly
@@ -297,3 +293,10 @@
 		user.put_in_hands(new /obj/item/bot_assembly/firebot)
 	else
 		..()
+
+/obj/item/extinguisher/anti
+	name = "fire extender"
+	desc = "A traditional red fire extinguisher. Made in Britain... wait, what?"
+	chem = /datum/reagent/fuel
+	tanktype = /obj/structure/reagent_dispensers/fueltank
+	cooling_power = 0

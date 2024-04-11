@@ -6,6 +6,7 @@
 	show_in_antagpanel = FALSE
 	suicide_cry = "PRAISE THE RINGLEADER!!"
 	antag_moodlet = /datum/mood_event/heretics/lunatic
+	antag_hud_name = "lunatic"
 	can_assign_self_objectives = FALSE
 	hardcore_random_bonus = FALSE
 	// The mind of the ascended heretic who created us
@@ -33,6 +34,9 @@
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, "Ancient knowledge from the moon has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	our_mob.faction |= FACTION_HERETIC
+	add_team_hud(our_mob)
+	add_team_hud(our_mob, /datum/antagonist/heretic)
+	ADD_TRAIT(our_mob, TRAIT_MADNESS_IMMUNE, REF(src))
 
 	var/datum/action/cooldown/lunatic_track/moon_track = new /datum/action/cooldown/lunatic_track()
 	var/datum/action/cooldown/spell/touch/mansus_grasp/mad_touch = new /datum/action/cooldown/spell/touch/mansus_grasp()

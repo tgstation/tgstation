@@ -10,7 +10,7 @@
 	maxHealth = 300
 	health = 300
 	living_flags = 0
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
 
 /mob/living/circuit_drone/Initialize(mapload)
@@ -74,11 +74,11 @@
 	UnregisterSignal(shell, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 	return ..()
 
-/obj/item/circuit_component/bot_circuit/proc/on_borg_charge(datum/source, amount)
+/obj/item/circuit_component/bot_circuit/proc/on_borg_charge(datum/source, datum/callback/charge_cell, seconds_per_tick)
 	SIGNAL_HANDLER
 	if (isnull(parent.cell))
 		return
-	parent.cell.give(amount)
+	charge_cell.Invoke(parent.cell, seconds_per_tick)
 
 /obj/item/circuit_component/bot_circuit/populate_ports()
 	north = add_input_port("Move North", PORT_TYPE_SIGNAL)

@@ -3,9 +3,8 @@
 	/// ID card currently inserted into the computer.
 	VAR_FINAL/obj/item/card/id/advanced/prisoner/contained_id
 
-/obj/machinery/computer/prisoner/deconstruct(disassembled, mob/user)
+/obj/machinery/computer/prisoner/on_deconstruction(disassembled)
 	contained_id?.forceMove(drop_location())
-	return ..()
 
 /obj/machinery/computer/prisoner/Destroy()
 	QDEL_NULL(contained_id)

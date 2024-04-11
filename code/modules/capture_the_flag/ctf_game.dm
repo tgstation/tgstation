@@ -221,7 +221,6 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/ctf_flag/LateInitialize()
-	. = ..()
 	ctf_game = GLOB.ctf_games[game_id] //Flags don't create ctf games by themselves since you can get ctf flags from christmas trees.
 
 /obj/item/ctf_flag/Destroy()
@@ -464,7 +463,7 @@
 
 /obj/structure/table/reinforced/ctf
 	resistance_flags = INDESTRUCTIBLE
-	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 
 #define CTF_LOADING_UNLOADED 0
 #define CTF_LOADING_LOADING 1

@@ -154,6 +154,13 @@
 	ranged_cooldown = 3 SECONDS
 	r_hand = /obj/item/gun/ballistic/automatic/c20r
 
+///Spawns from an emagged orion trail machine set to kill the player.
+/mob/living/basic/trooper/syndicate/ranged/smg/orion
+	name = "spaceport security"
+	desc = "Premier corporate security forces for all spaceports found along the Orion Trail."
+	faction = list(FACTION_ORION)
+	loot = list()
+
 /mob/living/basic/trooper/syndicate/ranged/smg/pilot //caravan ambush ruin
 	name = "Syndicate Salvage Pilot"
 	loot = list(/obj/effect/mob_spawn/corpse/human/syndicatepilot)

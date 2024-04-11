@@ -199,7 +199,12 @@
 				if(posttransformoutfit && istype(newmob))
 					newmob.equipOutfit(posttransformoutfit)
 			if("monkey")
-				M.change_mob_type( /mob/living/carbon/human/species/monkey , null, null, delmob )
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
+					H.dna.activate_mutation(/datum/mutation/human/race)
+				else
+					M.change_mob_type( /mob/living/carbon/human/species/monkey , null, null, delmob )
 			if("robot")
 				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
 
@@ -1350,7 +1355,6 @@
 				return
 			G.report_message = description
 		message_admins("[key_name(usr)] created \"[G.name]\" station goal.")
-		GLOB.station_goals += G
 		modify_goals()
 
 	else if(href_list["change_lag_switch"])

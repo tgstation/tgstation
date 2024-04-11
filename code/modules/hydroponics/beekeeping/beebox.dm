@@ -249,7 +249,7 @@
 				visible_message(span_notice("[user] removes the queen from the apiary."))
 				queen_bee = null
 
-/obj/structure/beebox/deconstruct(disassembled = TRUE)
+/obj/structure/beebox/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood (loc, 20)
 	for(var/mob/living/basic/bee/worker as anything in bees)
 		if(worker.loc == src)
@@ -260,7 +260,6 @@
 		if(frame.loc == src)
 			frame.forceMove(get_turf(src))
 		honey_frames -= frame
-	qdel(src)
 
 /obj/structure/beebox/unwrenched
 	anchored = FALSE

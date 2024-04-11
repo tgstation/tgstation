@@ -1,28 +1,3 @@
-/datum/storage/surgery_tray
-	max_total_storage = 30
-	max_specific_storage = WEIGHT_CLASS_NORMAL
-	max_slots = 14
-
-/datum/storage/surgery_tray/New()
-	. = ..()
-	set_holdable(list(
-		/obj/item/autopsy_scanner,
-		/obj/item/blood_filter,
-		/obj/item/bonesetter,
-		/obj/item/cautery,
-		/obj/item/circular_saw,
-		/obj/item/clothing/mask/surgical,
-		/obj/item/hemostat,
-		/obj/item/razor,
-		/obj/item/reagent_containers/medigel,
-		/obj/item/retractor,
-		/obj/item/scalpel,
-		/obj/item/stack/medical/bone_gel,
-		/obj/item/stack/sticky_tape/surgical,
-		/obj/item/surgical_drapes,
-		/obj/item/surgicaldrill,
-	))
-
 /**
  * Surgery Trays
  * A storage object that displays tools in its contents based on tier, better tools are more visible.
@@ -175,12 +150,10 @@
 	for(var/atom/movable/tool as anything in contents)
 		tool.forceMove(drop_point)
 
-/obj/item/surgery_tray/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		dump_contents()
-		new /obj/item/stack/rods(drop_location(), 2)
-		new /obj/item/stack/sheet/mineral/silver(drop_location())
-	return ..()
+/obj/item/surgery_tray/atom_deconstruct(disassembled = TRUE)
+	dump_contents()
+	new /obj/item/stack/rods(drop_location(), 2)
+	new /obj/item/stack/sheet/mineral/silver(drop_location())
 
 /obj/item/surgery_tray/deployed
 	is_portable = FALSE

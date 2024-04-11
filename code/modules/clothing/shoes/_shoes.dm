@@ -12,6 +12,8 @@
 	armor_type = /datum/armor/clothing_shoes
 	slowdown = SHOES_SLOWDOWN
 	strip_delay = 1 SECONDS
+	article = "a pair of"
+
 	var/offset = 0
 	var/equipped_before_drop = FALSE
 	///Whether these shoes have laces that can be tied/untied
@@ -22,6 +24,7 @@
 	var/lace_time = 5 SECONDS
 	///An active alert
 	var/datum/weakref/our_alert_ref
+	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
 
 /datum/armor/clothing_shoes
 	bio = 50

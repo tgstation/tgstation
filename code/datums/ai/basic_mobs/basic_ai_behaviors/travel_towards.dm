@@ -8,13 +8,15 @@
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	/// If true we will get rid of our target on completion
 	var/clear_target = FALSE
+	///should we use a different movement type?
+	var/new_movement_type
 
 /datum/ai_behavior/travel_towards/setup(datum/ai_controller/controller, target_key)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return FALSE
-	set_movement_target(controller, target)
+	set_movement_target(controller, target, new_movement_type)
 
 /datum/ai_behavior/travel_towards/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
@@ -24,6 +26,8 @@
 	. = ..()
 	if (clear_target)
 		controller.clear_blackboard_key(target_key)
+	if(new_movement_type)
+		controller.change_ai_movement_type(initial(controller.ai_movement))
 
 /datum/ai_behavior/travel_towards/stop_on_arrival
 	clear_target = TRUE

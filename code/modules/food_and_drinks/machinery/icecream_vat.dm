@@ -211,12 +211,10 @@
 	ice_cream_icon.color = flavor.color
 	return ice_cream_icon
 
-/obj/machinery/icecream_vat/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(loc, 4)
+/obj/machinery/icecream_vat/on_deconstruction(disassembled = TRUE)
+	new /obj/item/stack/sheet/iron(loc, 4)
 	if(custom_ice_cream_beaker)
 		custom_ice_cream_beaker.forceMove(loc)
-	qdel(src)
 
 ///Makes an ice cream cone of the make_type, using ingredients list as reagents used to make it. Puts in user's hand if possible.
 /obj/machinery/icecream_vat/proc/make_cone(mob/user, make_type, list/ingredients)
@@ -250,6 +248,12 @@
 		for(var/reagents_used in flavor.ingredients)
 			reagents.remove_reagent(reagents_used, CONE_REAGENET_NEEDED)
 		balloon_alert_to_viewers("scoops [selected_flavour]", "scoops [selected_flavour]")
+
+	if(istype(cone))
+		if(isnull(cone.crafted_food_buff))
+			cone.crafted_food_buff = /datum/status_effect/food/chilling
+		if(user.mind)
+			ADD_TRAIT(cone, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
 
 ///Swaps the mode to the next one meant to be selected, then tells the user who changed it.
 /obj/machinery/icecream_vat/proc/swap_modes(mob/user)

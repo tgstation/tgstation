@@ -1,6 +1,12 @@
 import { sortBy, sortStrings } from 'common/collections';
 import { BooleanLike, classes } from 'common/react';
-import { ComponentType, createElement, ReactNode, useState } from 'react';
+import {
+  ComponentType,
+  createElement,
+  ReactNode,
+  useEffect,
+  useState,
+} from 'react';
 
 import { sendAct, useBackend } from '../../../../backend';
 import {
@@ -297,7 +303,7 @@ export const FeatureNumberInput = (
 
   return (
     <NumberInput
-      onChange={(e, value) => {
+      onChange={(value) => {
         props.handleSetValue(value);
       }}
       minValue={props.serverData.minimum}
@@ -347,6 +353,10 @@ export const FeatureValueInput = (props: {
     setPredictedValue(newValue);
     createSetPreference(props.act, props.featureId)(newValue);
   };
+
+  useEffect(() => {
+    setPredictedValue(props.value);
+  }, [data.active_slot, props.value]);
 
   return (
     <ServerPreferencesFetcher

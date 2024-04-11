@@ -322,7 +322,7 @@
 
 		convert_to_biomass(food_to_convert)
 
-	use_power(active_power_usage * seconds_per_tick)
+	use_energy(active_power_usage * seconds_per_tick)
 
 	if(!current_item_count)
 		stop_process(FALSE)
@@ -458,7 +458,7 @@
 	update_appearance(UPDATE_ICON)
 
 
-/obj/machinery/biogenerator/ui_status(mob/user)
+/obj/machinery/biogenerator/ui_status(mob/user, datum/ui_state/state)
 	if(machine_stat & BROKEN || panel_open)
 		return UI_CLOSE
 

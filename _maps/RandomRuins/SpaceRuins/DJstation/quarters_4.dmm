@@ -39,7 +39,7 @@
 /turf/open/floor/iron/freezer/airless,
 /area/ruin/space/djstation)
 "x" = (
-/obj/item/bedsheet/random,
+/obj/effect/spawner/random/bedsheet/any,
 /turf/open/floor/plating/airless,
 /area/ruin/space/djstation)
 "A" = (

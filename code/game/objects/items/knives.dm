@@ -124,6 +124,7 @@
 	name = "combat knife"
 	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "buckknife"
+	worn_icon_state = "buckknife"
 	desc = "A military combat utility survival knife."
 	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
 	force = 20
@@ -131,11 +132,32 @@
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "cut")
 	bayonet = TRUE
+	slot_flags = ITEM_SLOT_MASK
+
+/obj/item/knife/combat/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
+
+/obj/item/knife/combat/dropped(mob/living/user, slot)
+	. = ..()
+	if(user.get_item_by_slot(ITEM_SLOT_MASK) == src && !user.has_status_effect(/datum/status_effect/choke) && prob(20))
+		user.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
+		playsound(user, 'sound/weapons/slice.ogg', 50, TRUE)
+		user.visible_message(span_danger("[user] accidentally cuts [user.p_them()]self while pulling [src] out of [user.p_them()] teeth! What a doofus!"), span_userdanger("You accidentally cut your mouth with [src]!"))
+
+/obj/item/knife/combat/equipped(mob/living/user, slot, initial = FALSE)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(20))
+		if(user.get_item_by_slot(ITEM_SLOT_MASK) == src)
+			user.apply_status_effect(/datum/status_effect/choke, src)
+			user.visible_message(span_danger("[user] accidentally swallows [src]!"))
+			playsound(user, 'sound/items/eatfood.ogg', 100, TRUE)
 
 /obj/item/knife/combat/survival
 	name = "survival knife"
 	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "survivalknife"
+	worn_icon_state = "survivalknife"
 	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
 	desc = "A hunting grade survival knife."
 	force = 15
@@ -152,13 +174,11 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharpened bone. The bare minimum in survival."
 	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
+	obj_flags = parent_type::obj_flags & ~CONDUCTS_ELECTRICITY
+	slot_flags = NONE
 	force = 15
 	throwforce = 15
 	custom_materials = null
-
-/obj/item/knife/combat/bone/Initialize(mapload)
-	flags_1 &= ~CONDUCTS_ELECTRICITY
-	return ..()
 
 /obj/item/knife/combat/cyborg
 	name = "cyborg knife"
@@ -174,16 +194,13 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A makeshift glass shiv."
+	obj_flags = parent_type::obj_flags & ~CONDUCTS_ELECTRICITY
 	force = 8
 	throwforce = 12
 	attack_verb_continuous = list("shanks", "shivs")
 	attack_verb_simple = list("shank", "shiv")
 	armor_type = /datum/armor/none
 	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
-
-/obj/item/knife/shiv/Initialize(mapload)
-	flags_1 &= ~CONDUCTS_ELECTRICITY
-	return ..()
 
 /obj/item/knife/shiv/plasma
 	name = "plasma shiv"

@@ -14,7 +14,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/byteforge/LateInitialize()
+/obj/machinery/byteforge/post_machine_initialize()
 	. = ..()
 
 	setup_particles()
@@ -63,5 +63,5 @@
 /obj/machinery/byteforge/proc/start_to_spawn(obj/cache)
 	flicker()
 
-	addtimer(CALLBACK(src, PROC_REF(spawn_cache), cache), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, PROC_REF(spawn_cache), cache), 1 SECONDS)
 

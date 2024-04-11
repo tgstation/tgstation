@@ -21,7 +21,7 @@
 	///Pay token what we want to find
 	var/wanted_token
 
-/datum/computer_file/program/nt_pay/ui_act(action, list/params, datum/tgui/ui, datum/tgui/ui, datum/ui_state/state)
+/datum/computer_file/program/nt_pay/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	switch(action)
 		if("Transaction")
@@ -60,6 +60,8 @@
 	SEND_SIGNAL(computer, COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT, payment_result)
 
 /datum/computer_file/program/nt_pay/proc/_pay(token, money_to_send, mob/user)
+	money_to_send = round(money_to_send)
+
 	if(IS_DEPARTMENTAL_ACCOUNT(current_user))
 		if(user)
 			to_chat(user, span_notice("The app is unable to withdraw from that card."))
@@ -95,6 +97,9 @@
 
 	recipient.bank_card_talk("You received [money_to_send] credit(s). Reason: transfer from [current_user.account_holder]")
 	recipient.transfer_money(current_user, money_to_send)
+	for(var/obj/item/card/id/id_card as anything in recipient.bank_cards)
+		SEND_SIGNAL(id_card, COMSIG_ID_CARD_NTPAY_MONEY_RECEIVED, computer, money_to_send)
+
 	current_user.bank_card_talk("You send [money_to_send] credit(s) to [recipient.account_holder]. Now you have [current_user.account_balance] credit(s)")
 
 	return NT_PAY_STATUS_SUCCESS
@@ -110,38 +115,70 @@
 	var/datum/port/input/money_port
 	///Let's us know if the payment has gone through or not.
 	var/datum/port/output/payment_status
+	///The device from which the payment was received
+	var/datum/port/output/payment_device
+	///Amount of a received payment
+	var/datum/port/output/payment_amount
+	///Pinged whether a payment is received
+	var/datum/port/output/payment_received
 
 /obj/item/circuit_component/mod_program/nt_pay/register_shell(atom/movable/shell)
 	. = ..()
-	RegisterSignal(associated_program.computer, COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT, PROC_REF(on_payment_result))
+	var/obj/item/modular_computer/modpc = associated_program.computer
+	RegisterSignal(modpc, COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT, PROC_REF(on_payment_done))
+	RegisterSignal(modpc, COMSIG_MODULAR_COMPUTER_INSERTED_ID, PROC_REF(register_id))
+	if(modpc.computer_id_slot)
+		register_id(inserted_id = modpc.computer_id_slot)
 
 /obj/item/circuit_component/mod_program/nt_pay/unregister_shell()
-	UnregisterSignal(associated_program.computer, COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT)
+	var/obj/item/modular_computer/modpc = associated_program.computer
+	UnregisterSignal(modpc, list(COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT, COMSIG_MODULAR_COMPUTER_INSERTED_ID))
+	if(modpc.computer_id_slot)
+		UnregisterSignal(modpc.computer_id_slot, list(COMSIG_ID_CARD_NTPAY_MONEY_RECEIVED, COMSIG_MOVABLE_MOVED))
 	return ..()
+
+/obj/item/circuit_component/mod_program/nt_pay/proc/register_id(datum/source, obj/item/card/inserted_id, mob/user)
+	SIGNAL_HANDLER
+	RegisterSignal(inserted_id, COMSIG_ID_CARD_NTPAY_MONEY_RECEIVED, PROC_REF(on_payment_received))
+	RegisterSignal(inserted_id, COMSIG_MOVABLE_MOVED, PROC_REF(unregister_id))
+
+/obj/item/circuit_component/mod_program/nt_pay/proc/unregister_id(obj/item/card/gone)
+	SIGNAL_HANDLER
+	UnregisterSignal(gone, list(COMSIG_ID_CARD_NTPAY_MONEY_RECEIVED, COMSIG_MOVABLE_MOVED))
 
 /obj/item/circuit_component/mod_program/nt_pay/populate_ports()
 	. = ..()
 	token_port = add_input_port("Token", PORT_TYPE_STRING)
 	money_port = add_input_port("Amount", PORT_TYPE_NUMBER)
 	payment_status = add_output_port("Status", PORT_TYPE_NUMBER)
+	payment_device = add_output_port("Payment Sender", PORT_TYPE_ATOM)
+	payment_amount = add_output_port("Received Amount", PORT_TYPE_NUMBER)
+	payment_received = add_output_port("Received Payment", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/mod_program/nt_pay/get_ui_notices()
 	. = ..()
+	. += create_ui_notice("Outputs require inserted ID", "orange")
 	. += create_ui_notice("NT-Pay Statuses:")
+	. += create_ui_notice("Success - [NT_PAY_STATUS_SUCCESS]", "green")
 	. += create_ui_notice("Fail (No Account) - [NT_PAY_STATUS_NO_ACCOUNT]", "red")
 	. += create_ui_notice("Fail (Dept Account) - [NT_PAY_STATUS_DEPT_ACCOUNT]", "red")
 	. += create_ui_notice("Fail (Invalid Token) - [NT_PAY_STATUS_INVALID_TOKEN]", "red")
 	. += create_ui_notice("Fail (Sender = Receiver) - [NT_PAY_SATUS_SENDER_IS_RECEIVER]", "red")
 	. += create_ui_notice("Fail (Invalid Amount) - [NT_PAY_STATUS_INVALID_MONEY]", "red")
-	. += create_ui_notice("Success - [NT_PAY_STATUS_SUCCESS]", "green")
 
 /obj/item/circuit_component/mod_program/nt_pay/input_received(datum/port/port)
 	var/datum/computer_file/program/nt_pay/program = associated_program
 	program.make_payment(token_port.value, money_port.value)
 
-/obj/item/circuit_component/mod_program/nt_pay/proc/on_payment_result(datum/source, payment_result)
+/obj/item/circuit_component/mod_program/nt_pay/proc/on_payment_done(datum/source, payment_result)
 	SIGNAL_HANDLER
 	payment_status.set_output(payment_result)
+
+/obj/item/circuit_component/mod_program/nt_pay/proc/on_payment_received(datum/source, obj/item/modular_computer/computer, money_received)
+	SIGNAL_HANDLER
+	payment_device.set_output(computer)
+	payment_amount.set_output(money_received)
+	payment_received.set_output(COMPONENT_SIGNAL)
 
 #undef NT_PAY_STATUS_NO_ACCOUNT
 #undef NT_PAY_STATUS_DEPT_ACCOUNT

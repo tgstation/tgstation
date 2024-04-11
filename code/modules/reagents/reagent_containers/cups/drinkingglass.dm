@@ -30,6 +30,7 @@
 		CALLBACK(src, PROC_REF(on_cup_reset)), \
 		base_container_type = base_container_type, \
 	)
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_cleaned))
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
@@ -45,6 +46,22 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_cup_reset()
 	. = ..()
 	fill_icon_thresholds ||= list(0)
+
+/obj/item/reagent_containers/cup/glass/drinkingglass/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT(src, TRAIT_WAS_RENAMED))
+		. += span_notice("This glass has been given a custom name. It can be removed by washing it.")
+
+/obj/item/reagent_containers/cup/glass/drinkingglass/proc/on_cleaned(obj/source_component, obj/source)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(src, TRAIT_WAS_RENAMED))
+		return
+
+	REMOVE_TRAIT(src, TRAIT_WAS_RENAMED, SHAKER_LABEL_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
+	name = initial(name)
+	desc = initial(desc)
+	update_appearance(UPDATE_NAME | UPDATE_DESC)
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
