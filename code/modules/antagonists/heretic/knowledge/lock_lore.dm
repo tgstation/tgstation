@@ -206,6 +206,7 @@
 		The Labyrinth will be Locked no more, and freedom will be ours! WITNESS US!"
 	required_atoms = list(/mob/living/carbon/human = 3)
 	route = PATH_LOCK
+	ascension_achievement = /datum/award/achievement/misc/lock_ascension
 
 /datum/heretic_knowledge/ultimate/lock_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
@@ -234,13 +235,11 @@
 		sound = ANNOUNCER_SPANOMALIES,
 		color_override = "pink",
 	)
-	user.client?.give_award(/datum/award/achievement/misc/lock_ascension, user)
 
 	// buffs
 	var/datum/action/cooldown/spell/shapeshift/eldritch/ascension/transform_spell = new(user.mind)
 	transform_spell.Grant(user)
 
-	user.client?.give_award(/datum/award/achievement/misc/lock_ascension, user)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	var/datum/heretic_knowledge/blade_upgrade/flesh/lock/blade_upgrade = heretic_datum.get_knowledge(/datum/heretic_knowledge/blade_upgrade/flesh/lock)
 	blade_upgrade.chance += 30

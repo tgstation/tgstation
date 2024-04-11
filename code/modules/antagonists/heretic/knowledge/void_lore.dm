@@ -190,6 +190,7 @@
 		The Aristocrat stands before me, beckoning. We will play a waltz to the whispers of dying reality, \
 		as the world is destroyed before our eyes. The void will return all to nothing, WITNESS MY ASCENSION!"
 	route = PATH_VOID
+	ascension_achievement = /datum/award/achievement/misc/void_ascension
 	///soundloop for the void theme
 	var/datum/looping_sound/void_loop/sound_loop
 	///Reference to the ongoing voidstrom that surrounds the heretic
@@ -215,7 +216,6 @@
 		sound = ANNOUNCER_SPANOMALIES,
 		color_override = "pink",
 	)
-	user.client?.give_award(/datum/award/achievement/misc/void_ascension, user)
 	ADD_TRAIT(user, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
 
 	// Let's get this show on the road!

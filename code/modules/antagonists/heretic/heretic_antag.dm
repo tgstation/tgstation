@@ -116,6 +116,13 @@
 		var/datum/status_effect/eldritch/mark_effect = mark_knowledge.mark_type
 		return icon(mark_effect.effect_icon,mark_effect.effect_icon_state,frame=1)
 
+	//if the knowledge is an ascension, use the achievement sprite
+	if(istype(knowledge,/datum/heretic_knowledge/ultimate))
+		var/datum/heretic_knowledge/ultimate/ascension_knowledge = knowledge
+		var/datum/award/achievement/misc/achievement = ascension_knowledge.ascension_achievement
+		if(!isnull(achievement))
+			return icon(achievement.icon,achievement.icon_state)
+
 	//if all else fails, use a default icon
 	return icon('icons/mob/actions/actions_ecult.dmi',"eye")
 

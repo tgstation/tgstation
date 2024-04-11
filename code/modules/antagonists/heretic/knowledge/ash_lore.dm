@@ -196,6 +196,7 @@
 		for the Nightwatcher brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
 		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
 	route = PATH_ASH
+	ascension_achievement = /datum/award/achievement/misc/ash_ascension
 	/// A static list of all traits we apply on ascension.
 	var/static/list/traits_to_apply = list(
 		TRAIT_BOMBIMMUNE,
@@ -242,6 +243,5 @@
 	var/datum/action/cooldown/spell/aoe/fiery_rebirth/fiery_rebirth = locate() in user.actions
 	fiery_rebirth?.cooldown_time *= 0.16
 
-	user.client?.give_award(/datum/award/achievement/misc/ash_ascension, user)
 	if(length(traits_to_apply))
 		user.add_traits(traits_to_apply, MAGIC_TRAIT)

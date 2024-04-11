@@ -258,6 +258,7 @@
 		I closed my eyes with my head laid against their form. I was safe. \
 		WITNESS MY ASCENSION!"
 	route = PATH_COSMIC
+	ascension_achievement = /datum/award/achievement/misc/cosmic_ascension
 	/// A static list of command we can use with our mob.
 	var/static/list/star_gazer_commands = list(
 		/datum/pet_command/idle,
@@ -304,5 +305,3 @@
 
 	var/datum/action/cooldown/spell/conjure/cosmic_expansion/cosmic_expansion_spell = locate() in user.actions
 	cosmic_expansion_spell?.ascended = TRUE
-
-	user.client?.give_award(/datum/award/achievement/misc/cosmic_ascension, user)

@@ -682,6 +682,8 @@
 	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
 	required_atoms = list(/mob/living/carbon/human = 3)
 	depth = 11
+	//use this to store the achievement typepath
+	var/datum/award/achievement/misc/ascension_achievement
 
 /datum/heretic_knowledge/ultimate/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -742,6 +744,8 @@
 		source = user,
 		header = "A Heretic is Ascending!",
 	)
+	if(!isnull(ascension_achievement))
+		user.client?.give_award(ascension_achievement, user)
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)

@@ -185,6 +185,7 @@
 		for where the Ringleader had started the parade, I shall continue it unto the suns demise \
 		WITNESS MY ASCENSION, THE MOON SMILES ONCE MORE AND FOREVER MORE IT SHALL!"
 	route = PATH_MOON
+	ascension_achievement = /datum/award/achievement/misc/moon_ascension
 
 /datum/heretic_knowledge/ultimate/moon_final/is_valid_sacrifice(mob/living/sacrifice)
 
@@ -201,7 +202,6 @@
 	priority_announce("[generate_heretic_text()] Laugh, for the ringleader [user.real_name] has ascended! \
 					The truth shall finally devour the lie! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 
-	user.client?.give_award(/datum/award/achievement/misc/moon_ascension, user)
 	ADD_TRAIT(user, TRAIT_MADNESS_IMMUNE, REF(src))
 	heretic_datum.add_team_hud(user, /datum/antagonist/lunatic)
 

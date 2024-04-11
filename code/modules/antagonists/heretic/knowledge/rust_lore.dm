@@ -229,6 +229,7 @@
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark, for the RUSTBRINGER has come! \
 		The Blacksmith forges ahead! Rusted Hills, CALL MY NAME! WITNESS MY ASCENSION!"
 	route = PATH_RUST
+	ascension_achievement = /datum/award/achievement/misc/rust_ascension
 	/// If TRUE, then immunities are currently active.
 	var/immunities_active = FALSE
 	/// A typepath to an area that we must finish the ritual in.
@@ -277,7 +278,6 @@
 	new /datum/rust_spread(loc)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
-	user.client?.give_award(/datum/award/achievement/misc/rust_ascension, user)
 
 /**
  * Signal proc for [COMSIG_MOVABLE_MOVED].
