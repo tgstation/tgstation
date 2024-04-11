@@ -37,7 +37,12 @@
 	if(!isfile(item.icon) || !length("[item.icon]"))
 		return
 
-	// Condition 3: Using older byond version
+	// Condition 3: Using opendream
+#ifdef OPENDREAM
+	return
+#endif
+
+	// Condition 4: Using older byond version
 	var/build = user.client.byond_build
 	var/version = user.client.byond_version
 	if(build < 515 || (build == 515 && version < 1635))
