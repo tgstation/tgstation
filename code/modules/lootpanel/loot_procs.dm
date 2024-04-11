@@ -95,8 +95,9 @@
 	search_turf_ref = WEAKREF(tile)
 	src.user = user
 
-	if(!notified && (user_client.byond_version != 515 || user_client.byond_build < 1635))
-		warn_image_generation()
+	if(!notified)
+		if(build < 515 || (build == 515 && version < 1635))
+			warn_image_generation()
 
 	var/datum/tgui/open_window = SStgui.get_open_ui(user, src)
 	if(open_window || searching)
