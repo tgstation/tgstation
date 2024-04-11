@@ -405,11 +405,12 @@
 
 	if(welded)
 		to_chat(user, span_notice("You cannot pump [src] if it's welded shut!"))
+		balloon_alert(user, "welded!")
 		return
 
-	to_chat(user, span_notice("You begin pumping [src] with your plunger."))
+	user.balloon_alert_to_viewers("plunging scrubber...", "plunging clogged scrubber...")
 	if(do_after(user, 6 SECONDS, target = src))
-		to_chat(user, span_notice("You finish pumping [src]."))
+		user.balloon_alert_to_viewers("finished plunging")
 		clogged = FALSE
 
 /**

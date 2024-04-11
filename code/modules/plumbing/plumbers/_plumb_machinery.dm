@@ -37,9 +37,9 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/plumbing/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
-	to_chat(user, span_notice("You start furiously plunging [name]."))
+	user.balloon_alert_to_viewers("furiously plunging...")
 	if(do_after(user, 30, target = src))
-		to_chat(user, span_notice("You finish plunging the [name]."))
+		user.balloon_alert_to_viewers("finished plunging")
 		reagents.expose(get_turf(src), TOUCH) //splash on the floor
 		reagents.clear_reagents()
 
