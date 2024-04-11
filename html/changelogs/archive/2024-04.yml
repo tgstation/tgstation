@@ -326,3 +326,59 @@
   - image: Updates the colors of various material datum to bring them closer in-line
       with their actual material stacks
   - image: Improves the sprites for the material knight armor and helmet.
+2024-04-11:
+  Absolucy:
+  - qol: Added balloon alerts whenever you start plunging something (i.e )
+  Bilbo367:
+  - bugfix: fixes ody sleeper UI not updating to new chems to inject.
+  - bugfix: fixes ody sleeper not telling user why they can't pick up a person.
+  - code_imp: gives a common method for giving reagent list data to .tsx
+  Boviro:
+  - qol: Atmospherics Overalls now can store fire extinguishers in the suit storage
+      slot
+  - balance: Increased Advanced Extinguisher capacity to 100u
+  Jacquerel:
+  - bugfix: Medbots can no longer be used as especially large golden ID cards
+  JohnFulpWillard:
+  - refactor: Blueprints now use TGUI.
+  - qol: Blueprints can now be used while lying down.
+  SethLafuente:
+  - bugfix: Fixes Radiation Hood not having FOV blockage
+  SyncIt21:
+  - qol: Adds screen tips & examines for screwdriver, wrench, crowbar & beaker insertion,
+      removal & replacing actions
+  - qol: Analyzing reagents no longer blocks other players from doing other operations.
+      Multiple players can analyze different reagents on the same machine
+  - qol: You cannot do any tool acts on the machine while printing to prevent any
+      side effects.
+  - qol: The preferred container for the master reagent in the beaker is now showed
+      in both condiment & chem master. The feature can be enabled/disabled via a check
+      box
+  - code_imp: removed defines for reagent transfer, vars for reagent analyzis to save
+      memory. Autodoc for other vars & procs
+  - bugfix: You can hit the chem master with tools like screwdriver, crowbar, wrench
+      & beaker in combat mode
+  - bugfix: You cannot insert hologram items into the chem master
+  - bugfix: Deconstructing a condiment master will give you the circuit board already
+      pre-programmed with that option
+  - bugfix: You now print the exact amount of containers requested even with upgraded
+      parts without creating empty containers. Max printable containers is 13 with
+      tier 4 parts able to print 50 containers.
+  - refactor: Optimized client side UI code & chem master as a whole.
+  - bugfix: Autolathe correctly computes the print amount of custom material items
+      like toolboxes and doesn't grey out its print button
+  Watermelon914:
+  - admin: LUA - Adds a new library called handler_group. Include it in your files
+      by doing require('handler_group')
+  YesterdaysPromise:
+  - rscadd: Added long balloon box to the clown's starting inventory, and a skill-chip
+      of long lost honk-motherian knowledge to their brain.
+  - rscadd: Added long balloons. Consequently, added balloon animals to make from
+      such balloons. Also, balloon top hat, vest, helmet, and a mallet. Don't ask
+      about the mallet.
+  - rscadd: A long balloons box harvested fresh from the farms on the clown planet
+      will be able to be shipped in a crate to the cargo department near you!
+  - rscadd: As per requests; water balloons can now be printed at service lathe, and
+      entertainment modsuit can now blow long balloons!
+  - image: Balloons will now have an unique sprite when in the inventory, compared
+      when to on the ground.
