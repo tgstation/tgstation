@@ -195,6 +195,21 @@
 	acid = 80
 	wound = 15
 
+/obj/item/clothing/head/helmet/balloon
+	name = "balloon helmet"
+	desc = "A helmet made out of balloons. Its likes saw great usage in the Great Clown - Mime War. Surprisingly resistant to fire. Mimes were doing unspeakable things."
+	icon_state = "helmet_balloon"
+	inhand_icon_state = "helmet_balloon"
+	armor_type = /datum/armor/balloon
+	flags_inv = HIDEHAIR|HIDEEARS|HIDESNOUT
+	resistance_flags = FIRE_PROOF
+	dog_fashion = null
+
+/datum/armor/balloon
+	melee = 10
+	fire = 60
+	acid = 50
+
 /obj/item/clothing/head/helmet/toggleable/justice
 	name = "helmet of justice"
 	desc = "WEEEEOOO. WEEEEEOOO. WEEEEOOOO."
