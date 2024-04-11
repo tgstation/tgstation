@@ -110,7 +110,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 	for(var/network_name in network)
 		network -= network_name
-		network += lowertext(network_name)
+		network += LOWER_TEXT(network_name)
 
 	GLOB.cameranet.cameras += src
 

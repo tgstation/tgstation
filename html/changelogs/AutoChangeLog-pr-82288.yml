@@ -1,0 +1,8 @@
+author: "YesterdaysPromise"
+delete-after: True
+changes:
+  - rscadd: "Added long balloon box to the clown's starting inventory, and a skill-chip of long lost honk-motherian knowledge to their brain."
+  - rscadd: "Added long balloons. Consequently, added balloon animals to make from such balloons. Also, balloon top hat, vest, helmet, and a mallet. Don't ask about the mallet."
+  - rscadd: "A long balloons box harvested fresh from the farms on the clown planet will be able to be shipped in a crate to the cargo department near you!"
+  - rscadd: "As per requests; water balloons can now be printed at service lathe, and entertainment modsuit can now blow long balloons!"
+  - image: "Balloons will now have an unique sprite when in the inventory, compared when to on the ground."
