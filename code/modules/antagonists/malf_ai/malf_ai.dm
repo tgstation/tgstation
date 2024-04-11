@@ -159,6 +159,9 @@
 
 	to_chat(malf_ai, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
 
+	if(malf_ai.malf_picker)
+		stack_trace("Attempted to give malf AI malf picker to \[[owner]\], who already has a malf picker.")
+		return
 	malf_ai.add_malf_picker()
 
 
