@@ -693,6 +693,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 #undef LINE1_Y
 #undef LINE2_X
 #undef LINE2_Y
+#undef PROJECTION_TEXT_ALPHA
 #undef PROJECTION_FLOOR_ALPHA
 #undef PROJECTION_BEAM_ALPHA
 #undef STATUS_DISPLAY_FONT_DATUM

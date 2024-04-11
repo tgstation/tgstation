@@ -201,7 +201,7 @@
 	if(mapload)
 		return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/door/airlock/LateInitialize(mapload)
+/obj/machinery/door/airlock/post_machine_initialize(mapload)
 	. = ..()
 	if(mapload)
 		auto_align()
