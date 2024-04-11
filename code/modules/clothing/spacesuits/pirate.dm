@@ -29,7 +29,7 @@
 	armor_type = /datum/armor/space_pirate
 	strip_delay = 40
 	equip_delay_other = 20
-/obj/item/clothing/suit/space/pirate/Initialize()
+/obj/item/clothing/suit/space/pirate/Initialize(mapload)
 	. = ..()
 	allowed += list(
 		/obj/item/gun,
@@ -39,4 +39,3 @@
 		/obj/item/clothing/glasses/eyepatch,
 		/obj/item/reagent_containers/cup/glass/bottle/rum
 		)
-	

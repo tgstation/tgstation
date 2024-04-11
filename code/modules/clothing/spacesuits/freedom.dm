@@ -31,12 +31,10 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	slowdown = 0
-/obj/item/clothing/suit/space/freedom/Initialize()
+/obj/item/clothing/suit/space/freedom/Initialize(mapload)
 	. = ..()
 	allowed += list(
 		/obj/item/gun,
 		/obj/item/melee/baton,
 		/obj/item/restraints/handcuffs
 	)
-
-	

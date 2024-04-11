@@ -40,7 +40,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-/obj/item/clothing/suit/space/officer/Initialize()
+/obj/item/clothing/suit/space/officer/Initialize(mapload)
 	. = ..()
 	allowed += list(
 		/obj/item/gun,

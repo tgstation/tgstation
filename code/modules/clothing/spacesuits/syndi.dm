@@ -51,7 +51,6 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 		/obj/item/restraints/handcuffs
 	)
 	
-
 //Green syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/green
 	name = "green space helmet"
