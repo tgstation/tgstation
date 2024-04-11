@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 	cell = /obj/item/stock_parts/cell/hyper
 	var/helmet_type = /obj/item/clothing/head/helmet/space/syndicate
 
-/obj/item/clothing/suit/space/syndicate/Initialize()
+/obj/item/clothing/suit/space/syndicate/Initialize(mapload)
 	. = ..()
 	allowed += list(
 		/obj/item/gun,
