@@ -325,7 +325,7 @@
 
 /obj/item/clothing/gloves/the_sleeping_carp
 	name = "carp gloves"
-	desc = "This gloves are capable of making people use The Sleeping Carp."
+	desc = "These gloves are capable of making people use The Sleeping Carp."
 	icon_state = "black"
 	greyscale_colors = COLOR_BLACK
 	cold_protection = HANDS
@@ -347,12 +347,26 @@
 /obj/item/clothing/gloves/the_sleeping_carp/equipped(mob/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_GLOVES)
-		style.teach(user, TRUE)
+		RegisterSignals(user, list(COMSIG_MOB_MIND_TRANSFERRED_INTO, COMSIG_MOB_MIND_INITIALIZED), PROC_REF(teach_carp))
+		RegisterSignal(user, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, PROC_REF(forget_carp))
+		teach_carp(user)
 
 /obj/item/clothing/gloves/the_sleeping_carp/dropped(mob/user)
 	. = ..()
-	if(!isnull(style))
-		style.fully_remove(user)
+	UnregisterSignal(user, list(COMSIG_MOB_MIND_TRANSFERRED_INTO, COMSIG_MOB_MIND_INITIALIZED, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF))
+	forget_carp(user)
+
+/obj/item/clothing/gloves/the_sleeping_carp/proc/teach_carp(mob/source)
+	SIGNAL_HANDLER
+	if(isnull(style))
+		return
+	style.teach(source, TRUE)
+
+/obj/item/clothing/gloves/the_sleeping_carp/proc/forget_carp(mob/source)
+	SIGNAL_HANDLER
+	if(isnull(style))
+		return
+	style.fully_remove(source)
 
 #undef STRONG_PUNCH_COMBO
 #undef LAUNCH_KICK_COMBO
