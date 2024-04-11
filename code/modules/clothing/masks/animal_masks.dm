@@ -151,6 +151,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	animal_sounds = list("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEYES|HIDEEARS|HIDESNOUT
 	curse_spawn_sound = 'sound/magic/horsehead_curse.ogg'
+	flags_cover = NONE // Monkestation addition
 
 /obj/item/clothing/mask/animal/horsehead/cursed
 	cursed = TRUE

@@ -9,7 +9,6 @@
 #define MEDAL_MATERIALCRAFT "Getting an Upgrade"
 #define MEDAL_SINGULARITY_BUSTER "The Lord Dethroned" //Singularity Nullified
 
-
 //Boss medals
 
 // Medal hub IDs for boss medals (Pre-fixes)
