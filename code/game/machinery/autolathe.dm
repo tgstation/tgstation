@@ -5,7 +5,7 @@
 	icon_state = "autolathe"
 	density = TRUE
 	//Energy cost per full stack of sheets worth of materials used. Material insertion is 40% of this.
-	active_power_usage = 25 * BASE_MACHINE_ACTIVE_CONSUMPTION
+	active_power_usage = 0.25 * STANDARD_CELL_RATE
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
 	processing_flags = NONE

@@ -2,7 +2,7 @@
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
 	// Energy cost per full stack of materials spent. Material insertion is 40% of this.
-	active_power_usage = 50 * BASE_MACHINE_ACTIVE_CONSUMPTION
+	active_power_usage = 0.5 * STANDARD_CELL_RATE
 
 	/// The efficiency coefficient. Material costs and print times are multiplied by this number;
 	var/efficiency_coeff = 1
