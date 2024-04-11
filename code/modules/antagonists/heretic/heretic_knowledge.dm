@@ -588,7 +588,7 @@
 	depth = 6
 	/// Whether we've done the ritual. Only doable once.
 	var/was_completed = FALSE
-	research_tree_icon = icon('icons/obj/antags/eldritch.dmi',"book_open")
+	research_tree_icon = icon('icons/obj/antags/eldritch.dmi',"book")
 
 /datum/heretic_knowledge/knowledge_ritual/New()
 	. = ..()
@@ -667,6 +667,7 @@
 	desc += " (Completed!)"
 	log_heretic_knowledge("[key_name(user)] completed a [name] at [worldtime2text()].")
 	user.add_mob_memory(/datum/memory/heretic_knowledge_ritual)
+	research_tree_icon = icon('icons/obj/antags/eldritch.dmi',"book_open")
 	return TRUE
 
 #undef KNOWLEDGE_RITUAL_POINTS
