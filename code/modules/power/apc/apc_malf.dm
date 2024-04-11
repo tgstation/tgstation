@@ -12,14 +12,14 @@
 /obj/machinery/power/apc/proc/malfhack(mob/living/silicon/ai/malf)
 	if(!istype(malf))
 		return
-	if(!get_malf_status(malf))
+	if(get_malf_status(malf) =! APC_AI_HACK_NO_SHUNT || get_malf_status(malf) =! APC_AI_NO_HACK)
 		return
 	if(malf.malfhacking)
 		to_chat(malf, span_warning("You are already hacking an APC!"))
 		return
 	to_chat(malf, span_notice("Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."))
 	malf.malfhack = src
-	malf.malfhacking = addtimer(CALLBACK(malf, TYPE_PROC_REF(/mob/living/silicon/ai/, malfhacked), src), 30, TIMER_STOPPABLE)
+	malf.malfhacking = addtimer(CALLBACK(malf, TYPE_PROC_REF(/mob/living/silicon/ai/, malfhacked), src), 600, TIMER_STOPPABLE)
 
 	var/atom/movable/screen/alert/hackingapc/hacking_apc
 	hacking_apc = malf.throw_alert(ALERT_HACKING_APC, /atom/movable/screen/alert/hackingapc)
