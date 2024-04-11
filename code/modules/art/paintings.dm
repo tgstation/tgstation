@@ -429,10 +429,14 @@
 	// wallening todo: same as above, conflicting offsets
 	pixel_x = 6
 	pixel_y = 9
+	framed_offset_x = 6
+	framed_offset_y = 7
 	wall_y_offset = 30
+/*
 	SET_BASE_PIXEL(7, 7)
 	framed_offset_x = 7
 	framed_offset_y = 7
+*/
 
 /obj/item/canvas/twentythree_nineteen
 	name = "canvas (23x19)"
@@ -442,10 +446,14 @@
 	// Ok this just applies to all of these
 	pixel_x = 4
 	pixel_y = 10
+	framed_offset_x = 4
+	framed_offset_y = 7
 	wall_y_offset = 30
+/*
 	SET_BASE_PIXEL(5, 7)
 	framed_offset_x = 5
 	framed_offset_y = 7
+*/
 	pixels_per_unit = 8
 
 /obj/item/canvas/twentythree_twentythree
@@ -455,10 +463,14 @@
 	height = 23
 	pixel_x = 5
 	pixel_y = 9
+	framed_offset_x = 4
+	framed_offset_y = 7
 	wall_y_offset = 28
+/*
 	SET_BASE_PIXEL(5, 5)
 	framed_offset_x = 5
 	framed_offset_y = 5
+*/
 	pixels_per_unit = 8
 
 /obj/item/canvas/twentyfour_twentyfour
@@ -469,9 +481,10 @@
 	height = 24
 	SET_BASE_PIXEL(4, 4)
 	framed_offset_x = 4
-	framed_offset_y = 4
-	pixels_per_unit = 8
+	framed_offset_y = 7
 	wall_y_offset = 28
+	// framed_offset_y = 4
+	pixels_per_unit = 8
 
 /obj/item/canvas/thirtysix_twentyfour
 	name = "canvas (36x24)"
