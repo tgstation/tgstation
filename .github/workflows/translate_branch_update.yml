@@ -1,0 +1,28 @@
+name: Update translation branch
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['master']
+
+concurrency:
+  group: translation
+  cancel-in-progress: false
+
+jobs:
+  update_translation:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    name: 'Update old translation'
+
+    steps:
+      - name: 'Update Branch'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run script
+        run: ./tools/translate/update_translation.sh
+          
