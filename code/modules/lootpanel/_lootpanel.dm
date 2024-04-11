@@ -12,6 +12,8 @@
 	var/list/contents = list()
 	/// The mob of the owner
 	var/mob/user
+	/// We've been notified about client version
+	var/notified = FALSE
 	/// If we're currently running slow_search_contents
 	var/searching = FALSE
 

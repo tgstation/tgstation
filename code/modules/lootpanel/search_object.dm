@@ -37,6 +37,10 @@
 	if(!isfile(item.icon) || !length("[item.icon]"))
 		return
 
+	// Condition 3: Using older byond version
+	if(user.client.byond_version != 515 || user.client.byond_build < 1635)
+		return
+
 	icon = "[item.icon]"
 	icon_state = item.icon_state
 
@@ -51,5 +55,9 @@
 	if(isnull(user_client))
 		return FALSE
 
-	icon = costly_icon2html(item, user_client, sourceonly = TRUE)
+	if(ismob(item) || length(item.overlays) > 2)
+		icon = costly_icon2html(item, user_client, sourceonly = TRUE)
+	else
+		icon = icon2html(item, user_client, sourceonly = TRUE)
+
 	return TRUE

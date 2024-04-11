@@ -95,6 +95,9 @@
 	search_turf_ref = WEAKREF(tile)
 	src.user = user
 
+	if(!notified && (user_client.byond_version != 515 || user_client.byond_build < 1635))
+		warn_image_generation()
+
 	var/datum/tgui/open_window = SStgui.get_open_ui(user, src)
 	if(open_window || searching)
 		stop_search()
@@ -146,3 +149,18 @@
 		return
 
 	panel.send_update()
+
+
+/// Warns when a client does not support the fast 515 image generation.
+/datum/lootpanel/proc/warn_image_generation()
+	var/build = user_client.byond_build
+	var/version = user_client.byond_version
+
+	to_chat(user, examine_block(span_info("\
+		<span class='bolddanger'>Your version of Byond doesn't support fast image loading.</span>\n\
+		Detected: [version].[build]\n\
+		Required version for this feature: <b>515.1635</b> or later.\n\
+		Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.\n\
+	")))
+
+	notified = TRUE
