@@ -156,7 +156,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	machine.increment()
 	if(isnull(machine.current_ticket))
 		to_chat(activator, span_notice("The button light indicates that there are no more tickets to be processed."))
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 1 SECONDS)
 
 /obj/machinery/ticket_machine/update_icon()
 	. = ..()

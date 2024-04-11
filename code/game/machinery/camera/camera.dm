@@ -110,7 +110,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 	for(var/network_name in network)
 		network -= network_name
-		network += lowertext(network_name)
+		network += LOWER_TEXT(network_name)
 
 	GLOB.cameranet.cameras += src
 
@@ -355,7 +355,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		change_msg = "reactivates"
 		triggerCameraAlarm()
 		if(!QDELETED(src)) //We'll be doing it anyway in destroy
-			addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 100)
+			addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 10 SECONDS)
 	if(displaymessage)
 		if(user)
 			visible_message(span_danger("[user] [change_msg] [src]!"))
