@@ -166,18 +166,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
-/datum/design/tray_large
-	name = "Large Serving Tray"
-	id = "largeservingtray"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2)
-	build_path = /obj/item/storage/bag/tray/large
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
-
 /datum/design/plate
 	name = "Plate"
 	id = "plate"

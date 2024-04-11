@@ -65,7 +65,6 @@
 		"intercom_frame",
 		"kitchen_knife",
 		"laptop",
-		"largeservingtray",
 		"light_bulb",
 		"light_replacer",
 		"light_tube",

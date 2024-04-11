@@ -382,8 +382,8 @@
 		),
 	) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Food Containers, Food Trash, Organs, Tobacco Products, Lighters, and Kitchen Tools.
 	atom_storage.insert_preposition = "on"
-	atom_storage.max_slots = 6
-	atom_storage.max_total_storage = 12
+	atom_storage.max_slots = 8
+	atom_storage.max_total_storage = 16
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -438,17 +438,6 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "foodtray"
 	desc = "A cheap metal tray to pile today's meal onto."
-
-/obj/item/storage/bag/tray/large
-	name = "large serving tray"
-	icon_state = "tray_large"
-	desc = "A large metal tray to lay food on."
-
-/obj/item/storage/bag/tray/large/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 8
-	atom_storage.max_specific_storage = 4
-	atom_storage.max_total_storage = 16
 
 /*
  * Chemistry bag

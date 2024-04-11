@@ -9,8 +9,7 @@
 			"name" = "Kitchen Utensils",
 			"icon" = FA_ICON_KITCHEN_SET,
 			"products" = list(
-				/obj/item/storage/bag/tray = 4,
-				/obj/item/storage/bag/tray/large = 4,
+				/obj/item/storage/bag/tray = 8,
 				/obj/item/reagent_containers/cup/soup_pot = 3,
 				/obj/item/kitchen/spoon/soup_ladle = 3,
 				/obj/item/clothing/suit/apron/chef = 2,
