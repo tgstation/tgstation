@@ -632,7 +632,6 @@
 /mob/living/silicon/ai/proc/ai_network_change()
 	set category = "AI Commands"
 	set name = "Jump To Network"
-	unset_machine()
 	ai_tracking_tool.reset_tracking()
 	var/cameralist[0]
 
