@@ -9,7 +9,7 @@
 	desc = "An exosuit module that allows exosuits to teleport to any position in view."
 	icon_state = "mecha_teleport"
 	equip_cooldown = 150
-	energy_drain = 1 MEGA JOULES
+	energy_drain = STANDARD_CELL_CHARGE
 	range = MECHA_RANGED
 	var/teleport_range = 7
 

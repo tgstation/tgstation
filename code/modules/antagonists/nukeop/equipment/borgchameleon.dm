@@ -1,4 +1,4 @@
-#define ACTIVATION_COST (300 KILO JOULES)
+#define ACTIVATION_COST (0.3 * STANDARD_CELL_CHARGE)
 #define ACTIVATION_UP_KEEP (25 KILO WATTS)
 
 /obj/item/borg_chameleon

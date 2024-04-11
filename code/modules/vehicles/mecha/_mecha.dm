@@ -36,9 +36,9 @@
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD)
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 	///How much energy the mech will consume each time it moves. this is the current active energy consumed
-	var/step_energy_drain = 8 KILO JOULES
+	var/step_energy_drain = 0.008 * STANDARD_CELL_CHARGE
 	///How much energy we drain each time we mechpunch someone
-	var/melee_energy_drain = 15 KILO JOULES
+	var/melee_energy_drain = 0.015 * STANDARD_CELL_CHARGE
 	///Power we use to have the lights on
 	var/light_power_drain = 2 KILO WATTS
 	///Modifiers for directional damage reduction
