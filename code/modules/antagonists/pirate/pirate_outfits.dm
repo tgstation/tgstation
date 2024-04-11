@@ -174,6 +174,6 @@
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/helmet/knight/warlord
 	mask = /obj/item/clothing/mask/breath
-	belt = null
+	belt = /obj/item/gun/magic/hook
 	l_pocket = /obj/item/tank/internals/emergency_oxygen
 	r_pocket = /obj/item/flashlight/lantern
