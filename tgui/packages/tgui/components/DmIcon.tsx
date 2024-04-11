@@ -63,5 +63,5 @@ export function DmIcon(props: Props) {
     }
   }, []);
 
-  return <Image src={query} {...rest} />;
+  return <Image fixErrors src={query} {...rest} />;
 }

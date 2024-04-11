@@ -51,8 +51,11 @@ export function Image(props: Props) {
           const imgElement = event.currentTarget;
 
           setTimeout(() => {
+            // prevents flicker from dm icons
+            if (attempts.current > 0) {
+              imgElement.src = `${src}?attempts=${attempts.current}`;
+            }
             attempts.current++;
-            imgElement.src = `${src}?attempts=${attempts.current}`;
           }, 1000);
         }
       }}
