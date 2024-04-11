@@ -7,7 +7,7 @@
 		UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 		return
 
-	var/datum/tgui/panel = SStgui.get_open_ui(usr, src)
+	var/datum/tgui/panel = SStgui.get_open_ui(user, src)
 	if(isnull(panel))
 		stop_search()
 		return
