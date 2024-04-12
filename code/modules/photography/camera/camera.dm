@@ -206,7 +206,7 @@
 			turfs += placeholder
 			for(var/mob/M in placeholder)
 				mobs += M
-			if(locate(/obj/item/areaeditor/blueprints) in placeholder)
+			if(locate(/obj/item/blueprints) in placeholder)
 				blueprints = TRUE
 
 	// do this before picture is taken so we can reveal revenants for the photo

@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	"Alt-click to select a color. Current color is [picked_color].</span>"
 
 /obj/item/stack/marker_beacon/update_icon_state()
-	icon_state = "[initial(icon_state)][lowertext(picked_color)]"
+	icon_state = "[initial(icon_state)][LOWER_TEXT(picked_color)]"
 	return ..()
 
 /obj/item/stack/marker_beacon/attack_self(mob/user)
@@ -116,7 +116,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	set_light(light_range, light_power, GLOB.marker_beacon_colors[picked_color])
 
 /obj/structure/marker_beacon/update_icon_state()
-	icon_state = "[icon_prefix][lowertext(picked_color)]-on"
+	icon_state = "[icon_prefix][LOWER_TEXT(picked_color)]-on"
 	return ..()
 
 /obj/structure/marker_beacon/attack_hand(mob/living/user, list/modifiers)
