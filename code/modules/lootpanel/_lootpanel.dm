@@ -6,16 +6,16 @@
 /datum/lootpanel
 	/// The owner of the panel
 	var/client/owner
-	/// Associative list of contents (key:search_object)
+	/// An associative list of all items indexed. ref:search_obj
 	var/list/contents = list()
+	/// The list of search_items needing processed
+	var/list/datum/search_object/to_image = list()
 	/// We've been notified about client version
 	var/notified = FALSE
 	/// If we have icons in queue for generating
 	var/searching = FALSE
 	/// The turf being searched
 	var/turf/source_turf
-	/// The list of search_items needing processed
-	var/list/datum/search_object/to_image = list()
 
 
 /datum/lootpanel/New(client/owner)

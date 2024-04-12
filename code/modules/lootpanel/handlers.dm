@@ -4,14 +4,14 @@
 
 	var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
 	if(isnull(window))
-		reset_contents(update = FALSE)
+		reset_contents()
 		return
 
-	var/datum/search_object/item = contents[REF(source)]
-	if(isnull(item))
+	var/datum/search_object/index = contents[REF(source)]
+	if(QDELETED(index))
 		return
 		
-	delete_search_object(item)
+	delete_search_object(index)
 	window.send_update()
 
 

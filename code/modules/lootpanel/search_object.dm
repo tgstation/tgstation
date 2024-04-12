@@ -3,29 +3,26 @@
  * An object for content lists. Compacted item data.
  */
 /datum/search_object
-	/// Weakref to the client
-	var/datum/weakref/client_ref
-	/// Weakref to the original object
-	var/datum/weakref/item_ref
+	/// Item we're indexing
+	var/atom/item
 	/// Url to the image of the object
 	var/icon
 	/// Icon state, for inexpensive icons
 	var/icon_state
-	/// The name of the object
+	/// Name of the original object
 	var/name
-	/// The typepath, used for concatenating the search results
+	/// Typepath of the original object for ui grouping
 	var/path
-	/// The STRING reference of the object for indexing purposes
+	/// String ref of the parent item. Used to look up this obj in contents
 	var/string_ref
 
 
 /datum/search_object/New(client/owner, atom/item)
 	. = ..()
 
-	client_ref = WEAKREF(owner)
-	item_ref = WEAKREF(item)
+	src.item = item
 	name = item.name
-	if(isobj(item)) // Grouping in the ui is for objects only
+	if(isobj(item))
 		path = item.type
 	string_ref = REF(item)
 
@@ -53,19 +50,15 @@
 	icon_state = item.icon_state
 
 
+/datum/search_object/Destroy(force)
+	item = null
+
+	return ..()
+
+
 /// Generates the icon for the search object. This is the expensive part.
-/datum/search_object/proc/generate_icon()
-	var/atom/item = item_ref?.resolve()
-	if(QDELETED(item))
-		return FALSE
-
-	var/client/owner = client_ref?.resolve()
-	if(isnull(owner))
-		return FALSE
-
+/datum/search_object/proc/generate_icon(client/owner)
 	if(ismob(item) || length(item.overlays) > 2)
 		icon = costly_icon2html(item, owner, sourceonly = TRUE)
 	else // our pre 515.1635 fallback for normal items
 		icon = icon2html(item, owner, sourceonly = TRUE)
-
-	return TRUE

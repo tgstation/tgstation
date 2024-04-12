@@ -3,14 +3,14 @@
 	var/list/items = list()
 
 	for(var/ref in contents)
-		var/datum/search_object/item = contents[ref]
+		var/datum/search_object/index = contents[ref]
 
 		UNTYPED_LIST_ADD(items, list(
-			"icon_state" = item.icon_state,
-			"icon" = item.icon,
-			"name" = item.name, 
-			"path" = item.path,
-			"ref" = item.string_ref, 
+			"icon_state" = index.icon_state,
+			"icon" = index.icon,
+			"name" = index.name, 
+			"path" = index.path,
+			"ref" = index.string_ref, 
 		))
 	
 	return items
@@ -26,17 +26,13 @@
 		reset_contents()
 		return FALSE
 
-	var/datum/search_object/obj = contents[ref]
-	if(isnull(obj)) 
+	var/datum/search_object/index = contents[ref]
+	var/atom/thing = index?.item
+	if(QDELETED(index) || QDELETED(thing)) // Obj is gone
 		return FALSE
 
-	var/atom/thing = obj.item_ref?.resolve()
-	if(QDELETED(thing)) // Object no longer valid
-		delete_search_object(obj)
-		return TRUE
-
 	if(thing != source_turf && !(locate(thing) in source_turf.contents))
-		delete_search_object(obj) // Item has moved
+		delete_search_object(index) // Item has moved
 		return TRUE
 
 	var/modifiers = ""
@@ -50,4 +46,3 @@
 	user.ClickOn(thing, modifiers)
 
 	return TRUE  
-
