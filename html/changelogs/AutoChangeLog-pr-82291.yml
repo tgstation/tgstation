@@ -1,0 +1,4 @@
+author: "hyperjll"
+delete-after: True
+changes:
+  - balance: "Haloperidol now purges 2 units per second of itself, should the victim have zero stamina. (Stamcrit)"

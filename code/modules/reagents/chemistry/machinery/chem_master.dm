@@ -400,7 +400,7 @@
 		return FALSE
 
 	//use energy
-	if(!use_energy(active_power_usage))
+	if(!use_energy(active_power_usage, force = FALSE))
 		return FALSE
 
 	//do the operation
@@ -512,7 +512,9 @@
 		return
 
 	//use power
-	if(!use_energy(active_power_usage))
+	if(!use_energy(active_power_usage, force = FALSE))
+		is_printing = FALSE
+		update_appearance(UPDATE_OVERLAYS)
 		return
 
 	//print the stuff
