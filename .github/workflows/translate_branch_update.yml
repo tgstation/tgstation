@@ -23,6 +23,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Run script
-        run: ./tools/translate/update_translation.sh
+      - name: Merge with their incoming
+        run: |
+        git merge origin/master --strategy-option theirs
+
           
