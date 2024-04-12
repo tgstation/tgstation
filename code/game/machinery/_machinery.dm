@@ -181,8 +181,6 @@
 		randomize_language_if_on_station()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_MACHINE, src)
 
-	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, REF(src))
-
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/LateInitialize()
