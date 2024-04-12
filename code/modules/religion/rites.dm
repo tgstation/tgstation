@@ -129,16 +129,20 @@
 	..()
 	var/altar_turf = get_turf(religious_tool)
 	var/blessing = pick(
+		prob(0.0001)
 		/obj/item/organ/internal/cyberimp/arm/combat,
-		/obj/item/organ/internal/cyberimp/arm/gun/laser,
 		/obj/item/organ/internal/cyberimp/arm/surgery,
+		prob(150)
 		/obj/item/organ/internal/cyberimp/arm/toolset,
 		/obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
 		/obj/item/organ/internal/cyberimp/eyes/hud/medical,
+		prob(80)
 		/obj/item/organ/internal/cyberimp/mouth/breathing_tube,
+		prob(50)
 		/obj/item/organ/internal/cyberimp/chest/reviver,
 		/obj/item/organ/internal/cyberimp/chest/thrusters,
 		/obj/item/organ/internal/cyberimp/brain/anti_drop,
+		prob(10)
 		/obj/item/organ/internal/cyberimp/brain/anti_stun,
 		/obj/item/organ/internal/eyes/robotic/shield,
 		/obj/item/organ/internal/eyes/robotic/glow,
