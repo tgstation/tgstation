@@ -47,7 +47,7 @@
 
 		index.generate_icon(owner)
 		to_image -= index
-	
+
 	var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
 	if(isnull(window))
 		reset_contents()
@@ -55,4 +55,3 @@
 
 	searching = FALSE
 	window.send_update()
-	

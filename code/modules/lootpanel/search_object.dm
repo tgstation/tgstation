@@ -26,7 +26,7 @@
 		path = item.type
 	string_ref = REF(item)
 
-	// Icon generation conditions //////////////	
+	// Icon generation conditions //////////////
 	// Condition 1: Icon is complex
 	if(ismob(item) || length(item.overlays) > 2)
 		return

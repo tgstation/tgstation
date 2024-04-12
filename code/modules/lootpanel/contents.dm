@@ -7,7 +7,7 @@
 	var/datum/search_object/source = new(owner, source_turf)
 	RegisterSignal(source_turf, COMSIG_TURF_CHANGE, PROC_REF(on_turf_change))
 	contents[REF(source_turf)] = source
-	
+
 	for(var/atom/thing as anything in source_turf.contents)
 		// validate
 		if(thing.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
@@ -49,7 +49,7 @@
 /// For: Resetting to empty.
 /datum/lootpanel/proc/reset_contents()
 	searching = FALSE
-	
+
 	for(var/ref in contents)
 		var/datum/search_object/index = contents[ref]
 		if(QDELETED(index))

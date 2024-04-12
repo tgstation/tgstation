@@ -8,11 +8,11 @@
 		UNTYPED_LIST_ADD(items, list(
 			"icon_state" = index.icon_state,
 			"icon" = index.icon,
-			"name" = index.name, 
+			"name" = index.name,
 			"path" = index.path,
-			"ref" = index.string_ref, 
+			"ref" = index.string_ref,
 		))
-	
+
 	return items
 
 
@@ -41,8 +41,8 @@
 	if(params["middle"])
 		modifiers += "middle=1;"
 	if(params["shift"])
-		modifiers += "shift=1;"	
+		modifiers += "shift=1;"
 
 	user.ClickOn(thing, modifiers)
 
-	return TRUE  
+	return TRUE

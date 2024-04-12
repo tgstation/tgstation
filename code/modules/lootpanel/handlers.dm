@@ -10,7 +10,7 @@
 	var/datum/search_object/index = contents[REF(source)]
 	if(QDELETED(index))
 		return
-		
+
 	delete_search_object(index)
 	window.send_update()
 

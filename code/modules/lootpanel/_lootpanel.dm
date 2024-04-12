@@ -44,8 +44,8 @@
 	. = ..()
 
 	source_turf = null
-	reset_contents()	
-		
+	reset_contents()
+
 
 /datum/lootpanel/ui_data(mob/user)
 	var/list/data = list()
