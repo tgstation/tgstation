@@ -1,0 +1,7 @@
+author: "wesoda25"
+delete-after: True
+changes:
+  - bugfix: "blood rites - will no longer delete after running out of charges"
+  - bugfix: "blood rites - now heal shades as well"
+  - bugfix: "blood rites - now charge 1.65x for self healing as opposed to the ~2x they were before"
+  - code_imp: "blood rites code hurts my eyes a bit less now"
