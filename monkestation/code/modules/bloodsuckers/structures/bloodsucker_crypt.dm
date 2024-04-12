@@ -130,6 +130,8 @@
 	var/disloyalty_confirm = FALSE
 	/// Prevents popup spam.
 	var/disloyalty_offered = FALSE
+	// Prevent spamming torture via spam click. Otherwise they're able to lose a lot of blood quickly
+	var/blood_draining = FALSE
 
 /obj/structure/bloodsucker/vassalrack/Initialize(mapload)
 	. = ..()
@@ -282,6 +284,9 @@
 			balloon_alert(user, "someone else's vassal!")
 			return FALSE
 
+	if(!ishuman(target))
+		balloon_alert(user, "you can't torture an animal or basic mob!")
+		return FALSE
 	var/disloyalty_requires = RequireDisloyalty(user, target)
 
 	if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
@@ -294,6 +299,11 @@
 
 	// Conversion Process
 	if(convert_progress)
+		//Are we currently torturing this person? If so, do not spill blood more.
+		if(blood_draining)
+			return
+		//We're torturing. Do not start another torture on this rack.
+		blood_draining = TRUE
 		balloon_alert(user, "spilling blood...")
 		bloodsuckerdatum.AddBloodVolume(-TORTURE_BLOOD_HALF_COST)
 		if(!do_torture(user, target))
@@ -312,26 +322,27 @@
 			balloon_alert(user, "has external loyalties! more persuasion required!")
 		else
 			balloon_alert(user, "ready for communion!")
-		return
-
-	if(!disloyalty_confirm && disloyalty_requires)
-		if(!do_disloyalty(user, target))
 			return
-		if(!disloyalty_confirm)
-			balloon_alert(user, "refused persuasion!")
-		else
-			balloon_alert(user, "ready for communion!")
-		return
 
-	user.balloon_alert_to_viewers("smears blood...", "painting bloody marks...")
-	if(!do_after(user, 5 SECONDS, target))
-		balloon_alert(user, "interrupted!")
-		return
-	// Convert to Vassal!
-	bloodsuckerdatum.AddBloodVolume(-TORTURE_CONVERSION_COST)
-	if(bloodsuckerdatum.make_vassal(target))
-		remove_loyalties(target)
-		SEND_SIGNAL(bloodsuckerdatum, BLOODSUCKER_MADE_VASSAL, user, target)
+		if(!disloyalty_confirm && disloyalty_requires)
+			if(!do_disloyalty(user, target))
+				return
+			if(!disloyalty_confirm)
+				balloon_alert(user, "refused persuasion!")
+			else
+				balloon_alert(user, "ready for communion!")
+			return
+	//If they don't need any more torture, start converting them into a vassal!
+	else
+		user.balloon_alert_to_viewers("smears blood...", "painting bloody marks...")
+		if(!do_after(user, 5 SECONDS, target))
+			balloon_alert(user, "interrupted!")
+			return
+		// Convert to Vassal!
+		bloodsuckerdatum.AddBloodVolume(-TORTURE_CONVERSION_COST)
+		if(bloodsuckerdatum.make_vassal(target))
+			remove_loyalties(target)
+			SEND_SIGNAL(bloodsuckerdatum, BLOODSUCKER_MADE_VASSAL, user, target)
 
 /obj/structure/bloodsucker/vassalrack/proc/do_torture(mob/living/user, mob/living/carbon/target, mult = 1)
 	// Fifteen seconds if you aren't using anything. Shorter with weapons and such.
@@ -363,6 +374,8 @@
 	torture_time = max(5 SECONDS, torture_time * 10)
 	// Now run process.
 	if(!do_after(user, (torture_time * mult), target))
+		//Torture failed. You can start again.
+		blood_draining = FALSE
 		return FALSE
 
 	if(held_item)
@@ -374,6 +387,8 @@
 	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, emote), "scream")
 	target.set_timed_status_effect(5 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 	target.apply_damages(brute = torture_dmg_brute, burn = torture_dmg_burn, def_zone = selected_bodypart.body_zone)
+	//Torture succeeded. You may torture again.
+	blood_draining = FALSE
 	return TRUE
 
 /// Offer them the oppertunity to join now.
