@@ -160,6 +160,7 @@
 		if(!user.transferItemToLoc(beaker, src))
 			return ITEM_INTERACT_BLOCKING
 
+		var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 		replace_beaker(user, !is_right_clicking, beaker)
 		to_chat(user, span_notice("You add [beaker] to [is_right_clicking ? "output" : "input"] slot."))
 		update_appearance()
