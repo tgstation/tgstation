@@ -148,7 +148,7 @@
 	return ..()
 
 /obj/item/secure_camera_console_pod
-	name = "advanced camera control pod"
+	name = "pre-packaged advanced camera control"
 	desc = "A pre-packaged camera console used for all your AI stuff, programmed to only active in the SAT."
 	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "botpad_controller"
