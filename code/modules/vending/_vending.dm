@@ -549,7 +549,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	return .
 
 /**
- * Refill a vending machine from a refill canister
+ * After-effects of refilling a vending machine from a refill canister
  *
  * This takes the amount of products restocked and gives the user our contained credits if needed,
  * sending the user a fitting message.
