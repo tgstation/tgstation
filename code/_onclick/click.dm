@@ -427,7 +427,7 @@
 	if(isnull(panel))
 		return FALSE
 	
-	panel.open(user, tile)
+	panel.open(tile)
 	return TRUE
 
 ///The base proc of when something is right clicked on when alt is held - generally use alt_click_secondary instead

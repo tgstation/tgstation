@@ -5,29 +5,27 @@
  */
 /datum/lootpanel
 	/// The owner of the panel
-	var/client/user_client
-	/// The turf being searched
-	var/datum/weakref/search_turf_ref
-	/// Associative list of contents
+	var/client/owner
+	/// Associative list of contents (key:search_object)
 	var/list/contents = list()
-	/// The mob of the owner
-	var/mob/user
 	/// We've been notified about client version
 	var/notified = FALSE
 	/// If we're currently running slow_search_contents
 	var/searching = FALSE
+	/// The turf being searched
+	var/turf/source_turf
 
 
 /datum/lootpanel/New(client/owner)
 	. = ..()
 
-	src.user_client = owner
+	src.owner = owner
 
 
 /datum/lootpanel/Destroy(force)
-	stop_search()
-	user = null
-	user_client = null
+	reset_contents()
+	owner = null
+	source_turf = null
 
 	return ..()
 
@@ -43,7 +41,7 @@
 /datum/lootpanel/ui_close(mob/user)
 	. = ..()
 
-	stop_search()
+	reset_contents()	
 		
 
 /datum/lootpanel/ui_data(mob/user)
@@ -56,11 +54,7 @@
 
 
 /datum/lootpanel/ui_status(mob/user, datum/ui_state/state)
-	var/turf/tile = search_turf_ref?.resolve()
-	if(isnull(tile)) // let's try one more time
-		return UI_CLOSE
-	
-	if(!user.TurfAdjacent(tile))
+	if(!user.TurfAdjacent(source_turf))
 		return UI_CLOSE
 
 	if(user.incapacitated())
@@ -76,11 +70,8 @@
 
 	switch(action)
 		if("grab")
-			return grab(user, params)
+			return grab(usr, params)
 		if("refresh")
-			if(searching)
-				return FALSE
-			stop_search()
-			return start_search()
+			return populate_contents()
 
 	return FALSE

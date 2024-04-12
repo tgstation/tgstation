@@ -529,9 +529,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if (!interviewee)
 		initialize_menus()
 
-	if(isnull(loot_panel))
-		loot_panel = new(src)
-
+	loot_panel = new(src)
+	
 	view_size = new(src, getScreenSize(prefs.read_preference(/datum/preference/toggle/widescreen)))
 	view_size.resetFormat()
 	view_size.setZoomMode()

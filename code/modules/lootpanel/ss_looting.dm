@@ -9,14 +9,15 @@ PROCESSING_SUBSYSTEM_DEF(looting)
 
 // Iterates over the tile contents for search objects without icons
 /datum/lootpanel/process(seconds_per_tick)
+	var/mob/user = owner.mob
+	
 	var/datum/tgui/panel = SStgui.get_open_ui(user, src)
 	if(isnull(panel))
-		stop_search()
+		reset_contents()
 		return PROCESS_KILL
 
-	var/turf/tile = search_turf_ref?.resolve()
-	if(isnull(tile) || !user.TurfAdjacent(tile))
-		stop_search()
+	if(!user?.TurfAdjacent(source_turf))
+		reset_contents()
 		return PROCESS_KILL
 
 	var/processed = FALSE

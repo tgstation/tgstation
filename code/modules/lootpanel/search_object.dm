@@ -3,7 +3,7 @@
  * An object for content lists. Compacted item data.
  */
 /datum/search_object
-	/// Client attached to the search_object
+	/// Weakref to the client
 	var/datum/weakref/client_ref
 	/// Weakref to the original object
 	var/datum/weakref/item_ref
@@ -19,10 +19,10 @@
 	var/string_ref
 
 
-/datum/search_object/New(mob/user, atom/item)
+/datum/search_object/New(client/owner, atom/item)
 	. = ..()
 
-	client_ref = WEAKREF(user.client)
+	client_ref = WEAKREF(owner)
 	item_ref = WEAKREF(item)
 	name = item.name
 	path = isobj(item) && item.type
@@ -43,8 +43,8 @@
 #endif
 
 	// Condition 4: Using older byond version
-	var/build = user.client.byond_build
-	var/version = user.client.byond_version
+	var/build = owner.byond_build
+	var/version = owner.byond_version
 	if(build < 515 || (build == 515 && version < 1635))
 		return
 
@@ -58,13 +58,13 @@
 	if(QDELETED(item))
 		return FALSE
 
-	var/client/user_client = client_ref?.resolve()
-	if(isnull(user_client))
+	var/client/owner = client_ref?.resolve()
+	if(isnull(owner))
 		return FALSE
 
 	if(ismob(item) || length(item.overlays) > 2)
-		icon = costly_icon2html(item, user_client, sourceonly = TRUE)
-	else
-		icon = icon2html(item, user_client, sourceonly = TRUE)
+		icon = costly_icon2html(item, owner, sourceonly = TRUE)
+	else // our pre 515.1635 fallback for normal items
+		icon = icon2html(item, owner, sourceonly = TRUE)
 
 	return TRUE
