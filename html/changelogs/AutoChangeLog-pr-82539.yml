@@ -1,0 +1,6 @@
+author: "Iamgoofball"
+delete-after: True
+changes:
+  - bugfix: "Fixes AI lag by re-adding idle mode to all AI that was lost with the simple mob to basic mob conversion."
+  - bugfix: "AI controllers with no clients around for 14 tiles will move into idle mode and stop planning or acting."
+  - bugfix: "AI controllers will now record how much time was spent on planning or un-idling AI controllers."
