@@ -166,7 +166,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/nuke_station
 	name = "Doomsday Device"
 	desc = "Activates the doomsday device. This is not reversible."
-	button_icon_state = "doomsday_device"
+	button_icon = 'icons/obj/machines/nuke_terminal.dmi'
+	button_icon_state = "nuclearbomb_timing"
 	auto_use_uses = FALSE
 
 /datum/action/innate/ai/nuke_station/Activate()
@@ -598,6 +599,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/honk
 	name = "Percussive Intercomm Interference"
 	desc = "Rock the station's intercom system with an obnoxious HONK!"
+	button_icon = 'icons/obj/machines/wallmounts.dmi'
 	button_icon_state = "intercom"
 	uses = 2
 
@@ -761,7 +763,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/emergency_lights
 	name = "Disable Emergency Lights"
 	desc = "Disables all emergency lighting. Note that emergency lights can be restored through reboot at an APC."
-	button_icon_state = "emergency_lights"
+	button_icon = 'icons/obj/lighting.dmi'
+	button_icon_state = "floor_emergency"
 	uses = 1
 
 /datum/action/innate/ai/emergency_lights/Activate()
