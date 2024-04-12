@@ -113,6 +113,8 @@
 	if(isnull(battle_arcade_gear_list))
 		var/list/all_gear = list()
 		for(var/datum/battle_arcade_gear/template as anything in subtypesof(/datum/battle_arcade_gear))
+			if(!(template::slot)) //needs to fit in something.
+				continue
 			all_gear[template::name] = new template
 		battle_arcade_gear_list = all_gear
 
@@ -216,7 +218,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 		usr.log_message("outbombed Cuban Pete and has been awarded a bomb.", LOG_GAME)
 	else
-		to_chat(user, span_notice("[src] dispenses 2 tickets!"))
+		visible_message(span_notice("[src] dispenses 2 tickets!"))
 		new /obj/item/stack/arcadeticket((get_turf(src)), 2)
 	player_gold += enemy_gold_reward
 	if(user)
@@ -282,12 +284,14 @@
 	process_enemy_turn(user)
 
 ///Called when you successfully counterattack the enemy.
-/obj/machinery/computer/arcade/battle/proc/successful_counterattack()
+/obj/machinery/computer/arcade/battle/proc/successful_counterattack(mob/user)
 	var/datum/battle_arcade_gear/weapon = equipped_gear[WEAPON_SLOT]
 	var/damage_dealt = (rand(20, 30) * (!isnull(weapon) ? weapon.bonus_modifier : 1))
 	enemy_hp -= round(max(0, damage_dealt), 1)
 	feedback_message = "User counterattacked for [damage_dealt] damage!"
 	playsound(loc, 'sound/arcade/boom.ogg', 40, TRUE, extrarange = -3)
+	if(enemy_hp <= 0)
+		on_battle_win(user)
 	SStgui.update_uis(src)
 
 ///Handles the delay between the user's and enemy's turns to process what's going on.
@@ -346,7 +350,7 @@
 	var/chance_at_counterattack = 40 + (skill_level * 5) //at level 1 this is 45, at legendary this is 75
 	var/damage_dealt = (defending_flags & BATTLE_ATTACK_FLAG_DEFEND) ? rand(5, 10) : rand(15, 20)
 	if((defending_flags & BATTLE_ATTACK_FLAG_COUNTERATTACK) && prob(chance_at_counterattack))
-		return successful_counterattack()
+		return successful_counterattack(user)
 	return user_take_damage(user, damage_dealt)
 
 /obj/machinery/computer/arcade/battle/ui_data(mob/user)
