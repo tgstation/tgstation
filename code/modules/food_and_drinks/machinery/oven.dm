@@ -100,15 +100,11 @@
 	use_energy(active_power_usage)
 
 
-/obj/machinery/oven/attackby(obj/item/I, mob/user, params)
-	//if(open && used_tray && I.atom_storage)
-		//Stop containers from beating up our oven in general.
-		//return
-
-	if(open && !used_tray && I.atom_storage)
-		if(user.transferItemToLoc(I, src, silent = FALSE))
-			to_chat(user, span_notice("You put [I] in [src]."))
-			add_tray_to_oven(I, user)
+/obj/machinery/oven/attackby(obj/item/item, mob/user, params)
+	if(open && !used_tray && item.atom_storage)
+		if(user.transferItemToLoc(item, src, silent = FALSE))
+			to_chat(user, span_notice("You put [item] in [src]."))
+			add_tray_to_oven(item, user)
 	else
 		return ..()
 
@@ -257,36 +253,36 @@
 
 	if(isnull(item.atom_storage))
 		return
-
-	if(!is_right_clicking)
-		var/obj/item/storage/tray = item
-		var/loaded = 0
-
-		if(!istype(item, /obj/item/storage/bag/tray))
-			// Non-tray dumping requires a do_after
-			to_chat(user, span_notice("You start dumping out the contents of [item] into [src]..."))
-			if(!do_after(user, 2 SECONDS, target = tray))
-				return ITEM_INTERACT_BLOCKING
-
-		for(var/obj/tray_item in tray.contents)
-			if(!IS_EDIBLE(tray_item))
-				continue
-			if(contents.len >= max_items)
-				balloon_alert(user, "it's full!")
-				return ITEM_INTERACT_BLOCKING
-			if(tray.atom_storage.attempt_remove(tray_item, src))
-				loaded++
-				AddToPlate(tray_item, user)
-		if(loaded)
-			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
-			update_appearance()
-		return ITEM_INTERACT_SUCCESS
-		
-	else
+	
+	if(is_right_clicking)
 		var/obj/item/storage/tray = item
 
 		for(var/obj/tray_item in contents)
 			tray.atom_storage?.attempt_insert(tray_item, user, TRUE)
+
+		return ITEM_INTERACT_SUCCESS
+
+	var/obj/item/storage/tray = item
+	var/loaded = 0
+
+	if(!istype(item, /obj/item/storage/bag/tray))
+		// Non-tray dumping requires a do_after
+		to_chat(user, span_notice("You start dumping out the contents of [item] into [src]..."))
+		if(!do_after(user, 2 SECONDS, target = tray))
+			return ITEM_INTERACT_BLOCKING
+
+	for(var/obj/tray_item in tray.contents)
+		if(!IS_EDIBLE(tray_item))
+			continue
+		if(contents.len >= max_items)
+			balloon_alert(user, "it's full!")
+			return ITEM_INTERACT_BLOCKING
+		if(tray.atom_storage.attempt_remove(tray_item, src))
+			loaded++
+			AddToPlate(tray_item, user)
+	if(loaded)
+		to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+		update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
 #undef OVEN_SMOKE_STATE_NONE

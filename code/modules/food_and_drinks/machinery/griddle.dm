@@ -87,36 +87,35 @@
 	
 	if(isnull(item.atom_storage))
 		return .
-
-	if(!is_right_clicking)
-		var/obj/item/storage/tray = item
-		var/loaded = 0
-
-		if(!istype(item, /obj/item/storage/bag/tray))
-			// Non-tray dumping requires a do_after
-			to_chat(user, span_notice("You start dumping out the contents of [item] into [src]..."))
-			if(!do_after(user, 2 SECONDS, target = tray))
-				return ITEM_INTERACT_BLOCKING
-
-		for(var/obj/tray_item in tray.contents)
-			if(!IS_EDIBLE(tray_item))
-				continue
-			if(contents.len >= max_items)
-				balloon_alert(user, "it's full!")
-				return ITEM_INTERACT_BLOCKING
-			if(tray.atom_storage.attempt_remove(tray_item, src))
-				loaded++
-				AddToGrill(tray_item, user)
-		if(loaded)
-			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
-			update_appearance()
-		return ITEM_INTERACT_SUCCESS
 	
-	else
+	if(is_right_clicking)
 		var/obj/item/storage/tray = item
 
 		for(var/obj/tray_item in griddled_objects)
 			tray.atom_storage?.attempt_insert(tray_item, user, TRUE)
+		return ITEM_INTERACT_SUCCESS
+
+	var/obj/item/storage/tray = item
+	var/loaded = 0
+
+	if(!istype(item, /obj/item/storage/bag/tray))
+		// Non-tray dumping requires a do_after
+		to_chat(user, span_notice("You start dumping out the contents of [item] into [src]..."))
+		if(!do_after(user, 2 SECONDS, target = tray))
+			return ITEM_INTERACT_BLOCKING
+
+	for(var/obj/tray_item in tray.contents)
+		if(!IS_EDIBLE(tray_item))
+			continue
+		if(contents.len >= max_items)
+			balloon_alert(user, "it's full!")
+			return ITEM_INTERACT_BLOCKING
+		if(tray.atom_storage.attempt_remove(tray_item, src))
+			loaded++
+			AddToGrill(tray_item, user)
+	if(loaded)
+		to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+		update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/griddle/attack_hand(mob/user, list/modifiers)
