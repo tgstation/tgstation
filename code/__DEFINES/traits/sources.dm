@@ -286,8 +286,8 @@
 
 /// Trait from an organ being inside a bodypart
 #define ORGAN_INSIDE_BODY_TRAIT "organ_inside_body"
-/// Trait when something was labelled by a pen.
-#define PEN_LABEL_TRAIT "pen_label"
+/// Trait when something was labelled by the /datum/element/tool_renaming element.
+#define RENAMING_TOOL_LABEL_TRAIT "renaming_tool_label"
 
 /// Trait when a drink was renamed by a shaker
 #define SHAKER_LABEL_TRAIT "shaker_trait"

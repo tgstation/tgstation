@@ -382,3 +382,23 @@
       entertainment modsuit can now blow long balloons!
   - image: Balloons will now have an unique sprite when in the inventory, compared
       when to on the ground.
+2024-04-12:
+  00-Steven:
+  - bugfix: Standard RPEDs work on machines again.
+  Jacquerel:
+  - spellcheck: Effectively hitting furniture and machines with objects will no longer
+      be double punctuated.
+  - bugfix: Goliaths can't grab their own riders with tentacles
+  Melbert:
+  - qol: Basic Bots will use their "salute" emotes less often.
+  - rscdel: Basic bot fists.
+  Pickle-Coding:
+  - balance: Atmos resin can directly cool the floor.
+  SyncIt21:
+  - code_imp: renamed `NO_DECONSTRUCTION` to `NO_DEBRIS_AFTER_DECONSTRUCTION` so its
+      name matches its intended purpose
+  - bugfix: fixes some items that incorrectly used `NO_DECONSTRUCTION` prior to its
+      refactor, meaning makes some objects non deconstructable again
+  disappointedButNotSuprised:
+  - rscadd: Coffee machines can now carry over reagents from the beans to the coffee
+      (surely no one will inject poison into them)

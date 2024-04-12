@@ -1,17 +1,5 @@
 #define CALL_BOT_COOLDOWN 900
 
-//Not sure why this is necessary...
-/proc/AutoUpdateAI(obj/subject)
-	var/is_in_use = 0
-	if (subject != null)
-		for(var/A in GLOB.ai_list)
-			var/mob/living/silicon/ai/M = A
-			if ((M.client && M.machine == subject))
-				is_in_use = 1
-				subject.attack_ai(M)
-	return is_in_use
-
-
 /mob/living/silicon/ai
 	name = "AI"
 	real_name = "AI"
@@ -644,7 +632,6 @@
 /mob/living/silicon/ai/proc/ai_network_change()
 	set category = "AI Commands"
 	set name = "Jump To Network"
-	unset_machine()
 	ai_tracking_tool.reset_tracking()
 	var/cameralist[0]
 
