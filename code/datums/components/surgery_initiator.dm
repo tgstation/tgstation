@@ -317,7 +317,7 @@
 	var/datum/surgery/procedure = new surgery.type(target, selected_zone, affecting_limb)
 	ADD_TRAIT(target, TRAIT_ALLOWED_HONORBOUND_ATTACK, type)
 
-	target.balloon_alert(user, "starting \"[lowertext(procedure.name)]\"")
+	target.balloon_alert(user, "starting \"[LOWER_TEXT(procedure.name)]\"")
 
 	user.visible_message(
 		span_notice("[user] drapes [parent] over [target]'s [parse_zone(selected_zone)] to prepare for surgery."),

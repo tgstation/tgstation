@@ -30,7 +30,7 @@
 	data["right"] = english_right
 	return data
 
-/obj/machinery/plumbing/filter/ui_act(action, params)
+/obj/machinery/plumbing/filter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -42,6 +42,8 @@
 			var/selected_reagent = tgui_input_list(usr, "Select [which] reagent", "Reagent", GLOB.name2reagent)
 			if(!selected_reagent)
 				return TRUE
+			if(QDELETED(ui) || ui.status != UI_INTERACTIVE)
+				return FALSE
 
 			var/datum/reagent/chem_id = GLOB.name2reagent[selected_reagent]
 			if(!chem_id)
@@ -69,5 +71,3 @@
 					if(english_right.Find(chem_name))
 						english_right -= chem_name
 						right -= chem_id
-
-

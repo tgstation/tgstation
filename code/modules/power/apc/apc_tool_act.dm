@@ -26,7 +26,7 @@
 		. = wallframe_act(user, tool)
 	if(.)
 		return .
-	
+
 	if(panel_open && !opened && is_wire_tool(tool))
 		wires.interact(user)
 		return ITEM_INTERACT_SUCCESS
@@ -73,44 +73,59 @@
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
+/// Checks if we can place a terminal on the APC
+/obj/machinery/power/apc/proc/can_place_terminal(mob/living/user, obj/item/stack/cable_coil/installing_cable, silent = TRUE)
+	if(!opened)
+		return FALSE
+	var/turf/host_turf = get_turf(src)
+	if(host_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
+		if(!silent && user)
+			balloon_alert(user, "remove the floor plating!")
+		return FALSE
+	if(!isnull(terminal))
+		if(!silent && user)
+			balloon_alert(user, "already wired!")
+		return FALSE
+	if(!has_electronics)
+		if(!silent && user)
+			balloon_alert(user, "no board to wire!")
+		return FALSE
+	if(panel_open)
+		if(!silent && user)
+			balloon_alert(user, "wires prevent placing a terminal!")
+		return FALSE
+	if(installing_cable.get_amount() < 10)
+		if(!silent && user)
+			balloon_alert(user, "need ten lengths of cable!")
+		return FALSE
+	return TRUE
+
 /// Called when we interact with the APC with a cable, attempts to wire the APC and create a terminal
 /obj/machinery/power/apc/proc/cable_act(mob/living/user, obj/item/stack/cable_coil/installing_cable, is_right_clicking)
 	if(!opened)
 		return NONE
-
-	var/turf/host_turf = get_turf(src)
-	if(!host_turf)
-		CRASH("cable_act on APC when it's not on a turf")
-	if(host_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
-		balloon_alert(user, "remove the floor plating!")
-		return ITEM_INTERACT_BLOCKING
-	if(terminal)
-		balloon_alert(user, "already wired!")
-		return ITEM_INTERACT_BLOCKING
-	if(!has_electronics)
-		balloon_alert(user, "no board to wire!")
-		return ITEM_INTERACT_BLOCKING
-
-	if(installing_cable.get_amount() < 10)
-		balloon_alert(user, "need ten lengths of cable!")
+	if(!can_place_terminal(user, installing_cable, silent = FALSE))
 		return ITEM_INTERACT_BLOCKING
 
 	var/terminal_cable_layer = cable_layer // Default to machine's cable layer
 	if(is_right_clicking)
 		var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
-		if(isnull(choice))
+		if(isnull(choice) \
+			|| !user.is_holding(installing_cable) \
+			|| !user.Adjacent(src) \
+			|| user.incapacitated() \
+			|| !can_place_terminal(user, installing_cable, silent = TRUE) \
+		)
 			return ITEM_INTERACT_BLOCKING
 		terminal_cable_layer = GLOB.cable_name_to_layer[choice]
 
-	user.visible_message(span_notice("[user.name] adds cables to the APC frame."))
-	balloon_alert(user, "adding cables to the frame...")
-	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	user.visible_message(span_notice("[user.name] starts addding cables to the APC frame."))
+	balloon_alert(user, "adding cables...")
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 
 	if(!do_after(user, 2 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
-	if(installing_cable.get_amount() < 10 || !installing_cable)
-		return ITEM_INTERACT_BLOCKING
-	if(terminal || !opened || !has_electronics)
+	if(!can_place_terminal(user, installing_cable, silent = TRUE))
 		return ITEM_INTERACT_BLOCKING
 	var/turf/our_turf = get_turf(src)
 	var/obj/structure/cable/cable_node = our_turf.get_cable_node(terminal_cable_layer)
@@ -118,7 +133,8 @@
 		do_sparks(5, TRUE, src)
 		return ITEM_INTERACT_BLOCKING
 	installing_cable.use(10)
-	balloon_alert(user, "cables added to the frame")
+	user.visible_message(span_notice("[user.name] adds cables to the APC frame."))
+	balloon_alert(user, "cables added")
 	make_terminal(terminal_cable_layer)
 	terminal.connect_to_network()
 	return ITEM_INTERACT_SUCCESS
@@ -127,7 +143,7 @@
 /obj/machinery/power/apc/proc/electronics_act(mob/living/user, obj/item/electronics/apc/installing_board)
 	if(!opened)
 		return NONE
-	
+
 	if(has_electronics)
 		balloon_alert(user, "there is already a board!")
 		return ITEM_INTERACT_BLOCKING
