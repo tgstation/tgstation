@@ -27,6 +27,7 @@
 	var/current_pathing_attempts = 0
 	///if we cant reach it after this many attempts, add it to our ignore list
 	var/max_pathing_attempts = 25
+	can_idle = FALSE // we want these to be running always
 
 /datum/ai_controller/basic_controller/bot/TryPossessPawn(atom/new_pawn)
 	. = ..()
