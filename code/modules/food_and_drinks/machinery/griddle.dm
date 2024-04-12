@@ -86,7 +86,7 @@
 		return
 	
 	if(isnull(item.atom_storage))
-		return .
+		return
 	
 	if(is_right_clicking)
 		var/obj/item/storage/tray = item

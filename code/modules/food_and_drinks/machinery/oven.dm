@@ -101,12 +101,12 @@
 
 
 /obj/machinery/oven/attackby(obj/item/item, mob/user, params)
-	if(open && !used_tray && item.atom_storage)
-		if(user.transferItemToLoc(item, src, silent = FALSE))
-			to_chat(user, span_notice("You put [item] in [src]."))
-			add_tray_to_oven(item, user)
-	else
+	if(!open || used_tray || !item.atom_storage)
 		return ..()
+		
+	if(user.transferItemToLoc(item, src, silent = FALSE))
+		to_chat(user, span_notice("You put [item] in [src]."))
+		add_tray_to_oven(item, user)
 
 /obj/machinery/oven/item_interaction(mob/living/user, obj/item/item,  list/modifiers, is_right_clicking)
 	if(open && used_tray && item.atom_storage)
