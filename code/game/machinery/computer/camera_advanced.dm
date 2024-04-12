@@ -338,7 +338,7 @@
 /obj/machinery/computer/camera_advanced/human_ai/screwdriver_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "repackaging...")
 	if(!do_after(user, 5 SECONDS, src))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	tool.play_tool_sound(src, 40)
 	new /obj/item/secure_camera_console_pod(get_turf(src))
 	qdel(src)
