@@ -707,7 +707,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/break_air_alarms
 	name = "Override Air Alarm Safeties"
 	desc = "Enables extremely dangerous settings on all air alarms."
-	button_icon_state = "break_air_alarms"
+	button_icon = 'icons/obj/machines/wallmounts.dmi'
+	button_icon_state = "alarmx"
 	uses = 1
 
 /datum/action/innate/ai/break_air_alarms/Activate()
