@@ -35,11 +35,6 @@
 	zipline_sound = new(src)
 	update_appearance()
 
-/obj/item/grapple_gun/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(!hooked)
-		cancel_hook()
-
 /obj/item/grapple_gun/afterattack(atom/target, mob/living/user, proximity)
 	. = ..()
 
