@@ -220,7 +220,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	source.log_message("is being pickpocketed of [item] by [key_name(user)] ([pocket_side])", LOG_VICTIM, color="orange", log_globally=FALSE)
 	item.add_fingerprint(src)
 
-	var/result = start_unequip_mob(item, source, user, POCKET_STRIP_DELAY)
+	var/result = start_unequip_mob(item, source, user, strip_delay = POCKET_STRIP_DELAY, hidden = TRUE)
 
 	if (!result)
 		warn_owner(source)
