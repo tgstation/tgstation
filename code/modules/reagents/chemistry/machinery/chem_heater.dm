@@ -94,7 +94,7 @@
 		heater_coefficient *= micro_laser.tier
 
 
-/obj/machinery/chem_heater/item_interaction(mob/living/user, obj/item/held_item, list/modifiers, is_right_clicking)
+/obj/machinery/chem_heater/item_interaction(mob/living/user, obj/item/held_item, list/modifiers)
 	if((held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
 		return NONE
 

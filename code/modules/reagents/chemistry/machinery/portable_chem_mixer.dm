@@ -105,7 +105,7 @@
 /obj/item/storage/portable_chem_mixer/ex_act(severity, target)
 	return severity > EXPLODE_LIGHT ? ..() : FALSE
 
-/obj/item/storage/portable_chem_mixer/item_interaction(mob/living/user, obj/item/weapon, list/modifiers, is_right_clicking)
+/obj/item/storage/portable_chem_mixer/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
 	if (!atom_storage.locked || \
 		(weapon.item_flags & ABSTRACT) || \
 		(weapon.flags_1 & HOLOGRAM_1) || \
