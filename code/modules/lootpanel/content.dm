@@ -1,22 +1,7 @@
-/// Helper function for removing a search object. Takes a ref, finds it in contents.
+/// Unregisters and deletes. Called by lootpanel itself
 /datum/lootpanel/proc/delete_search_object(datum/search_object/item)
-	if(isnull(item))
-		return
-
-	contents -= item.string_ref
-
-	var/atom/thing = item.item_ref?.resolve()
-	if(QDELETED(thing))
-		qdel(item)
-		return
-
-	if(isturf(thing)) // Our base turf
-		UnregisterSignal(thing, COMSIG_TURF_CHANGE)
-	else // Anything else
-		UnregisterSignal(thing, COMSIG_ITEM_PICKUP)
-		UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
-		UnregisterSignal(thing, COMSIG_QDELETING)
-
+	unregister_searchable(item)
+	UnregisterSignal(item, COMSIG_QDELETING) // dont want to trigger a loop
 	qdel(item)
 
 
@@ -26,6 +11,7 @@
 		reset_contents(update = FALSE)
 
 	var/datum/search_object/source = new(owner, source_turf)
+	RegisterSignal(source_turf, COMSIG_TURF_CHANGE, PROC_REF(on_turf_change))
 	contents[source.string_ref] = source
 	
 	var/mob/user = owner.mob
@@ -48,24 +34,45 @@
 			), PROC_REF(on_item_moved))
 
 		var/datum/search_object/item = new(owner, thing)
+		RegisterSignal(item, COMSIG_QDELETING, PROC_REF(on_searchable_deleted))
 		contents[ref] = item
 
 	searching = TRUE
 	var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
 	window?.send_update()
-	START_PROCESSING(SSlooting, src)
+	SSlooting.add_contents(contents)
 
 	return TRUE
 
 
 /// Clears contents, stops searching, and updates the UI if needed.
 /datum/lootpanel/proc/reset_contents(update = TRUE)
-	STOP_PROCESSING(SSlooting, src)
 	searching = FALSE
 	
 	for(var/ref in contents)
-		delete_search_object(contents[ref])
+		var/datum/search_object/item = contents[ref]
+		if(isnull(item))
+			contents -= ref
+			continue
+
+		delete_search_object(item)
 
 	if(update)
 		var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
 		window?.send_update()
+		
+
+/// Unregisters signals and removes the search object from contents.
+/datum/lootpanel/proc/unregister_searchable(datum/search_object/item)
+	contents -= item.string_ref
+
+	var/atom/thing = item.item_ref?.resolve()
+	if(QDELETED(thing))
+		return
+
+	if(isturf(thing)) // Our base turf
+		UnregisterSignal(thing, COMSIG_TURF_CHANGE)
+	else // Anything else
+		UnregisterSignal(thing, COMSIG_ITEM_PICKUP)
+		UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(thing, COMSIG_QDELETING)

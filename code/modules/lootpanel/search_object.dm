@@ -25,7 +25,8 @@
 	client_ref = WEAKREF(owner)
 	item_ref = WEAKREF(item)
 	name = item.name
-	path = isobj(item) && item.type
+	if(isobj(item)) // Grouping in the ui is for objects only
+		path = item.type
 	string_ref = REF(item)
 
 	// Icon generation conditions //////////////	

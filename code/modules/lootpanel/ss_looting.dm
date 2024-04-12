@@ -1,42 +1,42 @@
 
-/// Slow search
-PROCESSING_SUBSYSTEM_DEF(looting)
-	name = "Loot Panel Search"
-	flags = SS_NO_INIT
-	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
+/// Queues image generation for search objects without icons
+SUBSYSTEM_DEF(looting)
+	name = "Loot Icon Generation"
+	init_order = INIT_ORDER_LOOT
+	priority = FIRE_PRIORITY_PROCESS
 	wait = 0.5 SECONDS
+	/// The list of search objects needing icons
+	var/list/datum/search_object/backlog = list()
+	/// Cached contents currently processing
+	var/list/datum/search_object/processing = list()
 
 
-// Iterates over the tile contents for search objects without icons
-/datum/lootpanel/process(seconds_per_tick)
-	var/mob/user = owner.mob
+/datum/controller/subsystem/looting/stat_entry(msg)
+	msg = "P:[length(backlog)]"
+	return ..()
+
+
+/datum/controller/subsystem/looting/fire(resumed)
+	if(!resumed)
+		processing = backlog.Copy()
+
+	processing = backlog
+	backlog = list()
 	
-	var/datum/tgui/panel = SStgui.get_open_ui(user, src)
-	if(isnull(panel))
-		reset_contents()
-		return PROCESS_KILL
-
-	if(!user?.TurfAdjacent(source_turf))
-		reset_contents()
-		return PROCESS_KILL
-
-	var/processed = FALSE
-	for(var/ref in contents)
-		CHECK_TICK
-		
-		var/datum/search_object/obj = contents[ref]
-		if(obj.icon)
+	while(length(processing))
+		var/datum/search_object/item = processing[length(processing)]
+		if(QDELETED(item))
+			processing.len--
 			continue
 
-		if(!obj.generate_icon())
-			delete_search_object(obj)
-			continue
+		if(!item.generate_icon())
+			qdel(item)
 
-		processed = TRUE
+		processing.len--
 
-	if(processed)
-		return
 
-	searching = FALSE
-	panel.send_update()	
-	return PROCESS_KILL
+/// Adds the list of contents that require icons to the backlog
+/datum/controller/subsystem/looting/proc/add_contents(list/contents)
+	for(var/datum/search_object/item in contents)
+		if(!item.icon)
+			backlog += item
