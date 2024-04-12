@@ -1,6 +1,6 @@
 /datum/keybinding/mob/stop_pulling
 	full_name = "Перестать тащить"
-	hotkey_keys = list("H", "Delete")
+	hotkey_keys = list("C", "Delete")
 
 /datum/keybinding/mob/swap_hands
 	full_name = "Поменять руки"

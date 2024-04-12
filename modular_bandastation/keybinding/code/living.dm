@@ -25,7 +25,7 @@
 
 /datum/keybinding/living/toggle_move_intent
 	full_name = "Смена режима ходьбы (зажать)"
-	hotkey_keys = list("C")
+	hotkey_keys = list("Unbound")
 	description = "Удерживайте, чтобы временно поменять режим передвижения."
 
 /datum/keybinding/living/toggle_move_intent_alternative
