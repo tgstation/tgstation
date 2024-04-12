@@ -53,6 +53,7 @@
 
 	else
 		data["slimes"] = list()
+		linked_data.update_slimes()
 		for(var/mob/living/basic/slime/slime as anything in linked_data.managed_slimes)
 			var/list/slime_data = list()
 			slime_data += list(

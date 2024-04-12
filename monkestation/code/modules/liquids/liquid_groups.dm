@@ -515,7 +515,10 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	if(group_burn_rate >= reagents_per_turf)
 		var/list/removed_turf = list()
-		for(var/num = 1, num < round(group_burn_rate / reagents_per_turf))
+		var/number = round(group_burn_rate / reagents_per_turf)
+		for(var/num in 1 to number)
+			if(!length(burning_members))
+				break
 			var/turf/picked_turf = burning_members[1]
 			extinguish(picked_turf)
 			remove_from_group(picked_turf)
