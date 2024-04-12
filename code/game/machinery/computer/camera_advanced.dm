@@ -342,4 +342,4 @@
 	tool.play_tool_sound(src, 40)
 	new /obj/item/secure_camera_console_pod(get_turf(src))
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
