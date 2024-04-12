@@ -86,4 +86,4 @@ GLOBAL_LIST_INIT(raptor_inherit_traits, list(
 
 #define MAX_RAPTOR_POP 20
 
-GLOBAL_VAR_INIT(raptor_count, 0)
+GLOBAL_LIST_EMPTY(raptor_population)

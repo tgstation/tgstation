@@ -28,7 +28,7 @@
 	add_growth_component(pick(valid_subtypes))
 
 /obj/item/food/egg/raptor_egg/proc/add_growth_component(growth_path)
-	if(GLOB.raptor_count >= MAX_RAPTOR_POP)
+	if(length(GLOB.raptor_population) >= MAX_RAPTOR_POP)
 		return
 	AddComponent(\
 		/datum/component/fertile_egg,\

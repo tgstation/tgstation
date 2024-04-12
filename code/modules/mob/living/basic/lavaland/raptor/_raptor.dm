@@ -43,7 +43,7 @@
 /mob/living/basic/mining/raptor/Initialize(mapload)
 	. = ..()
 	if(!mapload)
-		GLOB.raptor_count++
+		GLOB.raptor_population += REF(src)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 
 	AddElement(\
@@ -108,8 +108,7 @@
 
 /mob/living/basic/mining/raptor/death(gibbed)
 	. = ..()
-	if(HAS_TRAIT(src, TRAIT_MOB_HATCHED))
-		GLOB.raptor_count--
+	GLOB.raptor_population -= REF(src)
 	
 /mob/living/basic/mining/raptor/proc/happiness_change(percent_value)
 	var/attack_boost = round(initial(melee_damage_lower) * percent_value * HAPPINESS_BOOST_DAMPENER, 1)
@@ -248,5 +247,5 @@
 /datum/storage/raptor_storage
 	animated = FALSE
 	insert_on_attack = FALSE
-	
+
 #undef HAPPINESS_BOOST_DAMPENER
