@@ -1,6 +1,6 @@
 /// Used to populate contents and start generating if needed
 /datum/lootpanel/proc/populate_contents()
-	if(length(contents) || searching)
+	if(length(contents))
 		reset_contents()
 
 	// Add source turf first
@@ -33,14 +33,13 @@
 		// flag for processing
 		if(!index.icon)
 			to_image += index
-			searching = TRUE
 
 		contents[ref] = index
 
 	var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
 	window?.send_update()
 
-	if(searching)
+	if(length(to_image))
 		SSlooting.backlog += src
 
 	return TRUE
@@ -48,8 +47,6 @@
 
 /// For: Resetting to empty.
 /datum/lootpanel/proc/reset_contents()
-	searching = FALSE
-
 	for(var/ref in contents)
 		var/datum/search_object/index = contents[ref]
 		if(QDELETED(index))

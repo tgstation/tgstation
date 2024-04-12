@@ -12,8 +12,6 @@
 	var/list/datum/search_object/to_image = list()
 	/// We've been notified about client version
 	var/notified = FALSE
-	/// If we have icons in queue for generating
-	var/searching = FALSE
 	/// The turf being searched
 	var/turf/source_turf
 
@@ -51,7 +49,7 @@
 	var/list/data = list()
 
 	data["contents"] = get_contents()
-	data["searching"] = searching
+	data["searching"] = length(to_image)
 
 	return data
 

@@ -53,5 +53,4 @@
 		reset_contents()
 		return
 
-	searching = FALSE
 	window.send_update()
