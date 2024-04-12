@@ -85,4 +85,3 @@
 	if(update)
 		var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
 		window?.send_update()
-		
