@@ -529,3 +529,8 @@
 
 /// from /datum/component/dart_insert/on_reskin()
 #define COMSIG_DART_INSERT_PARENT_RESKINNED "dart_insert_parent_reskinned"
+
+/// Sent from /obj/item/update_weight_class(). (old_w_class, new_w_class)
+#define COMSIG_ITEM_WEIGHT_CLASS_CHANGED "item_weight_class_changed"
+/// Sent from /obj/item/update_weight_class(), to it's loc. (obj/item/changed_item, old_w_class, new_w_class)
+#define COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED "atom_contents_weight_class_changed"

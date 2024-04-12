@@ -284,7 +284,6 @@
 	new /obj/effect/dummy/phased_mob(T, spawned)
 
 	spawned.key = C.key
-	spawned.generate_antagonist_status()
 
 /obj/item/antag_spawner/slaughter_demon/laughter
 	name = "vial of tickles"

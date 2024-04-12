@@ -85,7 +85,7 @@ Notes:
 	queueHide = showing ? TRUE : FALSE
 
 	if (queueHide)
-		addtimer(CALLBACK(src, PROC_REF(do_hide)), 1)
+		addtimer(CALLBACK(src, PROC_REF(do_hide)), 0.1 SECONDS)
 	else
 		do_hide()
 

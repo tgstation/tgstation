@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - admin: "Refresh button on the View Round Logs menu actually works, instead of just adding a runtime to the logs (and not updating them)."

@@ -160,7 +160,8 @@
 
 	for(var/s in symptoms)
 		var/datum/symptom/symptom_datum = s
-		symptom_datum.Activate(src)
+		if(!symptom_datum.neutered)
+			symptom_datum.Activate(src)
 
 
 // Tell symptoms stage changed

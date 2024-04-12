@@ -190,13 +190,11 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	/// Minimum temperature of the internal air mixture
 	var/minimum_temperature = T0C - 60
 
-
 /obj/structure/bodycontainer/morgue/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/bodycontainer/morgue/LateInitialize()
-	. = ..()
 	var/datum/gas_mixture/external_air = loc.return_air()
 	if(external_air)
 		internal_air = external_air.copy()
