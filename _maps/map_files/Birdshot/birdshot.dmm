@@ -31057,6 +31057,7 @@
 	pixel_x = -12;
 	pixel_y = 8
 	},
+/obj/item/megaphone/clown,
 /turf/open/floor/wood/parquet,
 /area/station/service/greenroom)
 "luC" = (
