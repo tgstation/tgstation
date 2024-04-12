@@ -73,6 +73,20 @@
 /obj/machinery/proc/remove_eye_control(mob/living/user)
 	CRASH("[type] does not implement ai eye handling")
 
+/obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
+	if(isnull(user?.client))
+		return
+	GrantActions(user)
+	current_user = user
+	eyeobj.eye_user = user
+	eyeobj.name = "Camera Eye ([user.name])"
+	user.remote_control = eyeobj
+	user.reset_perspective(eyeobj)
+	eyeobj.setLoc(eyeobj.loc)
+	if(should_supress_view_changes)
+		user.client.view_size.supress()
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(check_eye))
+
 /obj/machinery/computer/camera_advanced/remove_eye_control(mob/living/user)
 	if(isnull(user?.client))
 		return
@@ -92,8 +106,10 @@
 	current_user = null
 	unset_machine(user)
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
-/obj/machinery/computer/camera_advanced/check_eye(mob/user)
+/obj/machinery/computer/camera_advanced/proc/check_eye(mob/user)
+	SIGNAL_HANDLER
 	if(!can_use(user) || (issilicon(user) && !user.has_unlimited_silicon_privilege))
 		unset_machine(user)
 
@@ -166,19 +182,6 @@
 
 /obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 	return //AIs would need to disable their own camera procs to use the console safely. Bugs happen otherwise.
-
-/obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
-	if(isnull(user?.client))
-		return
-	GrantActions(user)
-	current_user = user
-	eyeobj.eye_user = user
-	eyeobj.name = "Camera Eye ([user.name])"
-	user.remote_control = eyeobj
-	user.reset_perspective(eyeobj)
-	eyeobj.setLoc(eyeobj.loc)
-	if(should_supress_view_changes)
-		user.client.view_size.supress()
 
 /mob/camera/ai_eye/remote
 	name = "Inactive Camera Eye"

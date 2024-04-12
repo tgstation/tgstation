@@ -216,19 +216,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		return
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(prob(150 / severity))
-		network = list()
-		GLOB.cameranet.removeCamera(src)
-		set_machine_stat(machine_stat | EMPED)
-		set_light(0)
-		emped++ //Increase the number of consecutive EMP's
-		update_appearance()
-		addtimer(CALLBACK(src, PROC_REF(post_emp_reset), emped, network), reset_time)
-		for(var/mob/M as anything in GLOB.player_list)
-			if (M.client?.eye == src)
-				M.unset_machine()
-				M.reset_perspective(null)
-				to_chat(M, span_warning("The screen bursts into static!"))
+	if(!prob(150 / severity))
+		return
+	network = list()
+	GLOB.cameranet.removeCamera(src)
+	set_machine_stat(machine_stat | EMPED)
+	set_light(0)
+	emped++ //Increase the number of consecutive EMP's
+	update_appearance()
+	addtimer(CALLBACK(src, PROC_REF(post_emp_reset), emped, network), reset_time)
+	for(var/mob/M as anything in GLOB.player_list)
+		if (M.client?.eye == src)
+			M.reset_perspective(null)
+			to_chat(M, span_warning("The screen bursts into static!"))
 
 /obj/machinery/camera/proc/on_saboteur(datum/source, disrupt_duration)
 	SIGNAL_HANDLER
@@ -371,7 +371,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	//I guess that doesn't matter since they can't use it anyway?
 	for(var/mob/O as anything in GLOB.player_list)
 		if (O.client?.eye == src)
-			O.unset_machine()
 			O.reset_perspective(null)
 			to_chat(O, span_warning("The screen bursts into static!"))
 

@@ -5,7 +5,6 @@
 /obj/machinery/computer/telecomms/monitor
 	name = "telecommunications monitoring console"
 	desc = "Monitors the details of the telecommunications network it's synced with."
-
 	circuit = /obj/item/circuitboard/computer/comm_monitor
 
 	icon_screen = "comm_monitor"
