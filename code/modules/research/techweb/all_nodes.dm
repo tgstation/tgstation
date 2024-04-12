@@ -106,6 +106,7 @@
 		"slime_scanner",
 		"solar_panel",
 		"solar_tracker",
+		"souppot",
 		"space_heater",
 		"spoon",
 		"status_display_frame",

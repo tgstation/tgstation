@@ -187,6 +187,8 @@
 
 /obj/item/clothing/neck/link_scryer/attack_self(mob/user, modifiers)
 	var/new_label = reject_bad_text(tgui_input_text(user, "Change the visible name", "Set Name", label, MAX_NAME_LEN))
+	if(!user.is_holding(src))
+		return
 	if(!new_label)
 		balloon_alert(user, "invalid name!")
 		return
