@@ -5,10 +5,10 @@ SUBSYSTEM_DEF(looting)
 	init_order = INIT_ORDER_LOOT
 	priority = FIRE_PRIORITY_PROCESS
 	wait = 0.5 SECONDS
-	/// The list of search objects needing icons
-	var/list/datum/search_object/backlog = list()
-	/// Cached contents currently processing
-	var/list/datum/search_object/processing = list()
+	/// Backlog of items. Gets put into processing
+	var/list/datum/lootpanel/backlog = list()
+	/// Actively processing items
+	var/list/datum/lootpanel/processing = list()
 
 
 /datum/controller/subsystem/looting/stat_entry(msg)
@@ -17,26 +17,25 @@ SUBSYSTEM_DEF(looting)
 
 
 /datum/controller/subsystem/looting/fire(resumed)
-	if(!resumed)
+	if(!length(backlog))
+		return
+
+	if(resumed)
 		processing = backlog.Copy()
 
 	processing = backlog
 	backlog = list()
-	
+
 	while(length(processing))
-		var/datum/search_object/item = processing[length(processing)]
-		if(QDELETED(item))
+		var/datum/lootpanel/panel = processing[length(processing)]
+		if(QDELETED(panel) || !length(panel.to_image))
 			processing.len--
 			continue
 
-		if(!item.generate_icon())
-			qdel(item)
-
+		if(!panel.process_images())
+			backlog += panel
+		
 		processing.len--
 
-
-/// Adds the list of contents that require icons to the backlog
-/datum/controller/subsystem/looting/proc/add_contents(list/contents)
-	for(var/datum/search_object/item in contents)
-		if(!item.icon)
-			backlog += item
+		if(MC_TICK_CHECK)
+			return 

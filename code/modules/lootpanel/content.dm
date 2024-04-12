@@ -5,7 +5,7 @@
 	qdel(item)
 
 
-/// Used to populate contents and start searching
+/// Used to populate contents and start searching. If theres icons needing generated, notifies sslooting
 /datum/lootpanel/proc/populate_contents()
 	if(length(contents) || searching)
 		reset_contents(update = FALSE)
@@ -15,6 +15,7 @@
 	contents[source.string_ref] = source
 	
 	var/mob/user = owner.mob
+	var/needs_processing = FALSE
 	for(var/atom/thing as anything in source_turf.contents)
 		if(thing.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
 			continue
@@ -35,14 +36,50 @@
 
 		var/datum/search_object/item = new(owner, thing)
 		RegisterSignal(item, COMSIG_QDELETING, PROC_REF(on_searchable_deleted))
+
+		if(!item.icon) // queue for image processing
+			to_image += item
+			needs_processing = TRUE
+
 		contents[ref] = item
 
 	searching = TRUE
 	var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
 	window?.send_update()
-	SSlooting.add_contents(contents)
+
+	if(needs_processing)
+		SSlooting.backlog += src
 
 	return TRUE
+
+
+/// Used by SSlooting to process images from the to_image list. Returns whether it was successful
+/datum/lootpanel/proc/process_images()
+	for(var/datum/search_object/item as anything in to_image)
+		if(QDELETED(item) || item.icon)
+			to_image -= item
+			continue
+	
+		var/atom/thing = item.item_ref?.resolve()
+		if(QDELETED(thing))
+			delete_search_object(item)
+			to_image -= item
+			continue
+
+		if(!item.generate_icon())
+			delete_search_object(item)
+
+		to_image -= item
+	
+	var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
+	if(isnull(window))
+		reset_contents(update = FALSE)
+		return TRUE // just remove it from sslooting
+
+	searching = FALSE
+	window.send_update()
+
+	return !!length(to_image)
 
 
 /// Clears contents, stops searching, and updates the UI if needed.
@@ -56,6 +93,8 @@
 			continue
 
 		delete_search_object(item)
+
+	to_image.Cut()
 
 	if(update)
 		var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)

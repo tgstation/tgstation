@@ -14,6 +14,8 @@
 	var/searching = FALSE
 	/// The turf being searched
 	var/turf/source_turf
+	/// The list of search_items needing processed
+	var/list/datum/search_object/to_image = list()
 
 
 /datum/lootpanel/New(client/owner)
@@ -41,6 +43,7 @@
 /datum/lootpanel/ui_close(mob/user)
 	. = ..()
 
+	source_turf = null
 	reset_contents()	
 		
 
