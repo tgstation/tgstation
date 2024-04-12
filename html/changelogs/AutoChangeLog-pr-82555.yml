@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "The Bioscrambler will now actively attempt to get closer to living targets rather than chilling in a closet nobody goes into (unless you trap it in a containment field)."
+  - balance: "Because it can now travel through walls, the Bioscrambler will no longer transform you THROUGH walls."
