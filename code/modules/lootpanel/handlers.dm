@@ -15,19 +15,6 @@
 	window.send_update()
 
 
-/// Search object was deemed invalid or qdeld (by ssloot?). As this doesnt need to qdel, it only unregisters the object
-/datum/lootpanel/proc/on_searchable_deleted(datum/search_object/source)
-	SIGNAL_HANDLER
-
-	var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
-	if(isnull(window))
-		reset_contents(update = FALSE)
-		return
-
-	unregister_searchable(source)
-	window.send_update()
-
-
 /// The turf has been changed, update via callback
 /datum/lootpanel/proc/on_turf_change(datum/source, path, list/new_baseturfs, flags, list/post_change_callbacks)
 	SIGNAL_HANDLER

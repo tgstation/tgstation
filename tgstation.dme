@@ -4386,6 +4386,7 @@
 #include "code\modules\lootpanel\content.dm"
 #include "code\modules\lootpanel\handlers.dm"
 #include "code\modules\lootpanel\open.dm"
+#include "code\modules\lootpanel\processing.dm"
 #include "code\modules\lootpanel\search_object.dm"
 #include "code\modules\lootpanel\ss_looting.dm"
 #include "code\modules\lootpanel\ui.dm"

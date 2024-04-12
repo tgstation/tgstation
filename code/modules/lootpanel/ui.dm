@@ -22,7 +22,7 @@
 	if(isnull(ref))
 		return FALSE
 
-	if(!user.TurfAdjacent(source_turf)) // Source tile is no longer valid
+	if(!source_turf.Adjacent(user)) // Source tile is no longer valid
 		reset_contents()
 		return FALSE
 

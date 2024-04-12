@@ -1,7 +1,18 @@
 /// Unregisters and deletes. Called by lootpanel itself
 /datum/lootpanel/proc/delete_search_object(datum/search_object/item)
-	unregister_searchable(item)
-	UnregisterSignal(item, COMSIG_QDELETING) // dont want to trigger a loop
+	contents -= item.string_ref
+
+	var/atom/thing = item.item_ref?.resolve()
+	if(QDELETED(thing))
+		return
+
+	if(isturf(thing)) // Our base turf
+		UnregisterSignal(thing, COMSIG_TURF_CHANGE)
+	else // Anything else
+		UnregisterSignal(thing, COMSIG_ITEM_PICKUP)
+		UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(thing, COMSIG_QDELETING)
+
 	qdel(item)
 
 
@@ -10,13 +21,16 @@
 	if(length(contents) || searching)
 		reset_contents(update = FALSE)
 
+	// Get source turf first
 	var/datum/search_object/source = new(owner, source_turf)
 	RegisterSignal(source_turf, COMSIG_TURF_CHANGE, PROC_REF(on_turf_change))
 	contents[source.string_ref] = source
 	
 	var/mob/user = owner.mob
 	var/needs_processing = FALSE
+
 	for(var/atom/thing as anything in source_turf.contents)
+		// validate
 		if(thing.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
 			continue
 		if(thing.IsObscured())
@@ -28,6 +42,7 @@
 		if(contents[ref])
 			continue
 
+		// convert
 		RegisterSignals(thing, list(
 			COMSIG_ITEM_PICKUP,
 			COMSIG_MOVABLE_MOVED,
@@ -35,15 +50,15 @@
 			), PROC_REF(on_item_moved))
 
 		var/datum/search_object/item = new(owner, thing)
-		RegisterSignal(item, COMSIG_QDELETING, PROC_REF(on_searchable_deleted))
 
-		if(!item.icon) // queue for image processing
+		// flag for processing
+		if(!item.icon)
 			to_image += item
-			needs_processing = TRUE
+			needs_processing = TRUE			
 
 		contents[ref] = item
 
-	searching = TRUE
+	searching = needs_processing
 	var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
 	window?.send_update()
 
@@ -51,35 +66,6 @@
 		SSlooting.backlog += src
 
 	return TRUE
-
-
-/// Used by SSlooting to process images from the to_image list. Returns whether it was successful
-/datum/lootpanel/proc/process_images()
-	for(var/datum/search_object/item as anything in to_image)
-		if(QDELETED(item) || item.icon)
-			to_image -= item
-			continue
-	
-		var/atom/thing = item.item_ref?.resolve()
-		if(QDELETED(thing))
-			delete_search_object(item)
-			to_image -= item
-			continue
-
-		if(!item.generate_icon())
-			delete_search_object(item)
-
-		to_image -= item
-	
-	var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
-	if(isnull(window))
-		reset_contents(update = FALSE)
-		return TRUE // just remove it from sslooting
-
-	searching = FALSE
-	window.send_update()
-
-	return !!length(to_image)
 
 
 /// Clears contents, stops searching, and updates the UI if needed.
@@ -100,18 +86,3 @@
 		var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
 		window?.send_update()
 		
-
-/// Unregisters signals and removes the search object from contents.
-/datum/lootpanel/proc/unregister_searchable(datum/search_object/item)
-	contents -= item.string_ref
-
-	var/atom/thing = item.item_ref?.resolve()
-	if(QDELETED(thing))
-		return
-
-	if(isturf(thing)) // Our base turf
-		UnregisterSignal(thing, COMSIG_TURF_CHANGE)
-	else // Anything else
-		UnregisterSignal(thing, COMSIG_ITEM_PICKUP)
-		UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
-		UnregisterSignal(thing, COMSIG_QDELETING)

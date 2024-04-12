@@ -10,7 +10,7 @@
 	var/list/contents = list()
 	/// We've been notified about client version
 	var/notified = FALSE
-	/// If we're currently running slow_search_contents
+	/// If we have icons in queue for generating
 	var/searching = FALSE
 	/// The turf being searched
 	var/turf/source_turf
@@ -57,7 +57,7 @@
 
 
 /datum/lootpanel/ui_status(mob/user, datum/ui_state/state)
-	if(!user.TurfAdjacent(source_turf))
+	if(!source_turf.Adjacent(user))
 		return UI_CLOSE
 
 	if(user.incapacitated())
