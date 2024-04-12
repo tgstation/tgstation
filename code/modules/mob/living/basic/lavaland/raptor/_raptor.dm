@@ -39,21 +39,25 @@
 	///path of our child
 	var/child_path
 
+
 /mob/living/basic/mining/raptor/Initialize(mapload)
 	. = ..()
+	if(!mapload)
+		GLOB.raptor_count++
 	AddComponent(/datum/component/obeys_commands, pet_commands)
+
 	AddElement(\
 		/datum/element/change_force_on_death,\
 		move_resist = MOVE_RESIST_DEFAULT,\
 	)
+
 	var/static/list/display_emote = list(
 		BB_EMOTE_SAY = list("Chirp chirp chirp!", ),
 		BB_EMOTE_SEE = list("shakes its feathers!", "stretches!"),
 		BB_SPEAK_CHANCE = 5,
 	)
+
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, display_emote)
-	if(!mapload)
-		GLOB.raptor_count++
 	inherited_stats = new
 	inherit_properties()
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
@@ -61,8 +65,10 @@
 	AddElement(/datum/element/basic_eating, food_types = my_food)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured, stop_fleeing_at = 0.5, start_fleeing_below = 0.2)
+
 	if(ridable_component)
 		AddElement(/datum/element/ridable, ridable_component)
+
 	if(can_breed)
 		AddComponent(\
 			/datum/component/breed,\
@@ -71,6 +77,7 @@
 			post_birth = CALLBACK(src, PROC_REF(egg_inherit)),\
 			breed_timer = 3 MINUTES,\
 		)
+
 	add_happiness_component()
 
 
@@ -238,93 +245,8 @@
 		udder_type = /obj/item/udder/raptor,\
 	)
 
-/obj/item/food/egg/raptor_egg
-	icon = 'icons/mob/simple/lavaland/raptor.dmi'
-	icon_state = "raptor_egg"
-	///inheritance datum to pass on to the child
-	var/datum/raptor_inheritance/inherited_stats
-
-/obj/item/food/egg/raptor_egg/proc/determine_growth_path(mob/living/basic/mining/raptor/dad, mob/living/basic/mining/raptor/mom)
-	if(dad.type == mom.type)
-		add_growth_component(dad.child_path)
-		return
-	var/dad_color = dad.raptor_color
-	var/mom_color = mom.raptor_color
-	var/list/my_colors = list(dad_color, mom_color)
-	sortTim(my_colors, GLOBAL_PROC_REF(cmp_text_asc))
-	for(var/path in GLOB.raptor_growth_paths) //guaranteed spawns
-		var/list/required_colors = GLOB.raptor_growth_paths[path]
-		if(!compare_list(my_colors, required_colors))
-			continue
-		add_growth_component(path)
-		return
-	var/list/valid_subtypes = list()
-	var/static/list/all_subtypes = subtypesof(/mob/living/basic/mining/raptor/baby_raptor)
-	for(var/path in all_subtypes)
-		var/mob/living/basic/mining/raptor/baby_raptor/raptor_path = path
-		if(!prob(initial(raptor_path.roll_rate)))
-			continue
-		valid_subtypes += raptor_path
-	add_growth_component(pick(valid_subtypes))
-
-/obj/item/food/egg/raptor_egg/proc/add_growth_component(growth_path)
-	if(GLOB.raptor_count >= MAX_RAPTOR_POP)
-		return
-	AddComponent(\
-		/datum/component/fertile_egg,\
-		embryo_type = growth_path,\
-		minimum_growth_rate = 0.5,\
-		maximum_growth_rate = 1,\
-		total_growth_required = 300,\
-		current_growth = 0,\
-		location_allowlist = typecacheof(list(/turf)),\
-		post_hatch = CALLBACK(src, PROC_REF(post_hatch)),\
-	)
-
-/obj/item/food/egg/raptor_egg/proc/post_hatch(mob/living/basic/mining/raptor/baby)
-	if(!istype(baby))
-		return
-	QDEL_NULL(baby.inherited_stats)
-	baby.inherited_stats = inherited_stats
-	inherited_stats = null
-
-/obj/item/food/egg/raptor_egg/Destroy()
-	QDEL_NULL(inherited_stats)
-	return ..()
-
-#define RANDOM_INHERIT_AMOUNT 2
-/datum/raptor_inheritance
-	///list of traits we inherit
-	var/list/inherit_traits = list()
-	///attack modifier
-	var/attack_modifier
-	///health_modifier
-	var/health_modifier
-
-/datum/raptor_inheritance/New(datum/raptor_inheritance/father, datum/raptor_inheritance/mother)
-	. = ..()
-	randomize_stats()
-
-/datum/raptor_inheritance/proc/randomize_stats()
-	attack_modifier = rand(0, RAPTOR_INHERIT_MAX_ATTACK)
-	health_modifier = rand(0, RAPTOR_INHERIT_MAX_HEALTH)
-	var/list/traits_to_pick = GLOB.raptor_inherit_traits.Copy()
-	for(var/i in 1 to RANDOM_INHERIT_AMOUNT)
-		inherit_traits += pick_n_take(traits_to_pick)
-
-/datum/raptor_inheritance/proc/set_parents(datum/raptor_inheritance/father, datum/raptor_inheritance/mother)
-	if(isnull(father) || isnull(mother))
-		return
-	if(length(father.inherit_traits))
-		inherit_traits += pick(father.inherit_traits)
-	if(length(mother.inherit_traits))
-		inherit_traits += pick(mother.inherit_traits)
-	attack_modifier = rand(min(father.attack_modifier, mother.attack_modifier), max(father.attack_modifier, mother.attack_modifier))
-	health_modifier = rand(min(father.health_modifier, mother.health_modifier), max(father.health_modifier, mother.health_modifier))
-
 /datum/storage/raptor_storage
 	animated = FALSE
 	insert_on_attack = FALSE
 	
-#undef RANDOM_INHERIT_AMOUNT
 #undef HAPPINESS_BOOST_DAMPENER

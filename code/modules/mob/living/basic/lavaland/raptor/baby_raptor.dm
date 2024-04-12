@@ -34,10 +34,7 @@
 	)
 
 /mob/living/basic/mining/raptor/baby_raptor/add_happiness_component()
-	AddComponent(\
-		/datum/component/happiness,\
-		on_petted_change = 100,\
-	)
+	AddComponent(/datum/component/happiness, on_petted_change = 100)
 
 /mob/living/basic/mining/raptor/baby_raptor/proc/check_grow()
 	return (stat != DEAD)
