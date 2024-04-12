@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - refactor: "Instead of being hardcoded to the pen, renaming items is now an element. Currently only pens have this, and functionality should be the same, but please report it if you find any items that were renamable but now aren't."
