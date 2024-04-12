@@ -1173,8 +1173,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	post_restock(user, restocked)
 	if(restocked)
 		replacer.play_rped_sound()
-		return TRUE
-	return FALSE
+	return TRUE
 
 /obj/machinery/vending/on_deconstruction(disassembled)
 	update_canister()
