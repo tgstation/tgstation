@@ -125,8 +125,6 @@
 /obj/machinery/computer/camera_advanced/on_set_is_operational(old_value)
 	if(!is_operational)
 		unset_machine(current_user)
-	else if(!QDELETED(current_user))
-		begin_processing()
 
 /obj/machinery/computer/camera_advanced/proc/unset_machine(mob/M)
 	if(M == current_user)
