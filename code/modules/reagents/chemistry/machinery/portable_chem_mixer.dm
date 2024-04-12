@@ -112,7 +112,7 @@
 		!is_reagent_container(weapon) || \
 		!weapon.is_open_container() \
 	)
-		return ..()
+		return NONE
 
 	replace_beaker(user, weapon)
 	update_appearance()

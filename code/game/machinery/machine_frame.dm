@@ -389,7 +389,7 @@
 	balloon_alert(user, "can't add that!")
 	return FALSE
 
-/obj/structure/frame/machine/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+/obj/structure/frame/machine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
