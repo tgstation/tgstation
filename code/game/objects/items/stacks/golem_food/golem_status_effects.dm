@@ -209,6 +209,7 @@
 	our_apc.cell?.give(damage * ENERGY_PER_DAMAGE)
 
 #undef ENERGY_PER_DAMAGE
+#undef BURN_MULTIPLIER
 
 /// Shoot a beam at the target atom
 /datum/status_effect/golem/plasma/proc/zap_effect(atom/target)
