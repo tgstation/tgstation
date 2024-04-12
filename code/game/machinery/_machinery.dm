@@ -338,7 +338,6 @@
 	if(drop)
 		dump_inventory_contents()
 	update_appearance()
-	updateUsrDialog()
 
 /**
  * Drop every movable atom in the machine's contents list, including any components and circuit.
@@ -423,7 +422,6 @@
 	if(target && !target.has_buckled_mobs() && (!isliving(target) || !mobtarget.buckled))
 		set_occupant(target)
 		target.forceMove(src)
-	updateUsrDialog()
 	update_appearance()
 
 ///updates the use_power var for this machine and updates its static power usage from its area to reflect the new value
@@ -667,10 +665,8 @@
 
 //Return a non FALSE value to interrupt attack_hand propagation to subtypes.
 /obj/machinery/interact(mob/user)
-	if(interaction_flags_machine & INTERACT_MACHINE_SET_MACHINE)
-		user.set_machine(src)
 	update_last_used(user)
-	. = ..()
+	return ..()
 
 /obj/machinery/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	add_fingerprint(usr)
@@ -827,7 +823,7 @@
 /obj/machinery/handle_deconstruct(disassembled = TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(obj_flags & NO_DECONSTRUCTION)
+	if(obj_flags & NO_DEBRIS_AFTER_DECONSTRUCTION)
 		dump_inventory_contents() //drop stuff we consider important
 		return //Just delete us, no need to call anything else.
 
@@ -961,9 +957,6 @@
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer_tool)
 	if(!istype(replacer_tool))
-		return FALSE
-
-	if(!replacer_tool.works_from_distance)
 		return FALSE
 
 	var/shouldplaysound = FALSE
