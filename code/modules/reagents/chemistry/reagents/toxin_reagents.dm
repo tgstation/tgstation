@@ -511,6 +511,7 @@
 	toxpwr = 0.5
 	ph = 4.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/toxin/teapowder
 	name = "Ground Tea Leaves"
@@ -521,6 +522,7 @@
 	taste_description = "green tea"
 	ph = 4.9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/toxin/mushroom_powder
 	name = "Mushroom Powder"
@@ -751,19 +753,20 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	var/need_mob_update = FALSE
-	if(SPT_PROB(8, seconds_per_tick))
-		to_chat(affected_mob, span_danger("You scratch at your head."))
-		need_mob_update += affected_mob.adjustBruteLoss(0.2*REM, FALSE, required_bodytype = affected_bodytype)
-	if(SPT_PROB(8, seconds_per_tick))
-		to_chat(affected_mob, span_danger("You scratch at your leg."))
-		need_mob_update += affected_mob.adjustBruteLoss(0.2*REM, FALSE, required_bodytype = affected_bodytype)
-	if(SPT_PROB(8, seconds_per_tick))
-		to_chat(affected_mob, span_danger("You scratch at your arm."))
-		need_mob_update += affected_mob.adjustBruteLoss(0.2*REM, FALSE, required_bodytype = affected_bodytype)
+	var/scratched = FALSE
+	var/scratch_damage = 0.2 * REM
 
-	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+	var/obj/item/bodypart/head = affected_mob.get_bodypart(BODY_ZONE_HEAD)
+	if(!isnull(head) && SPT_PROB(8, seconds_per_tick))
+		scratched = affected_mob.itch(damage = scratch_damage, target_part = head)
+
+	var/obj/item/bodypart/leg = affected_mob.get_bodypart(pick(BODY_ZONE_L_LEG,BODY_ZONE_R_LEG))
+	if(!isnull(leg) && SPT_PROB(8, seconds_per_tick))
+		scratched = affected_mob.itch(damage = scratch_damage, target_part = leg, silent = scratched) || scratched
+
+	var/obj/item/bodypart/arm = affected_mob.get_bodypart(pick(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM))
+	if(!isnull(arm) && SPT_PROB(8, seconds_per_tick))
+		scratched = affected_mob.itch(damage = scratch_damage, target_part = arm, silent = scratched) || scratched
 
 	if(SPT_PROB(1.5, seconds_per_tick))
 		holder.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))

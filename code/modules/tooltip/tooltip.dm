@@ -85,7 +85,7 @@ Notes:
 	queueHide = showing ? TRUE : FALSE
 
 	if (queueHide)
-		addtimer(CALLBACK(src, PROC_REF(do_hide)), 1)
+		addtimer(CALLBACK(src, PROC_REF(do_hide)), 0.1 SECONDS)
 	else
 		do_hide()
 
@@ -112,7 +112,7 @@ Notes:
 		return
 	var/ui_style = user.client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
 	if(!theme && ui_style)
-		theme = lowertext(ui_style)
+		theme = LOWER_TEXT(ui_style)
 	if(!theme)
 		theme = "default"
 	user.client.tooltips.show(tip_src, params, title, content, theme)

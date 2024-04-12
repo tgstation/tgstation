@@ -37,8 +37,6 @@
 
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
 	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
 		return
 	variant = rand(1,3)
@@ -65,6 +63,7 @@
 
 
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
+
 	if(griddled_objects.len >= max_items)
 		to_chat(user, span_notice("[src] can't fit more items!"))
 		return
@@ -80,6 +79,44 @@
 		AddToGrill(I, user)
 	else
 		return ..()
+
+/obj/machinery/griddle/item_interaction(mob/living/user, obj/item/item, list/modifiers, is_right_clicking)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return
+	
+	if(isnull(item.atom_storage))
+		return
+	
+	if(is_right_clicking)
+		var/obj/item/storage/tray = item
+
+		for(var/obj/tray_item in griddled_objects)
+			tray.atom_storage?.attempt_insert(tray_item, user, TRUE)
+		return ITEM_INTERACT_SUCCESS
+
+	var/obj/item/storage/tray = item
+	var/loaded = 0
+
+	if(!istype(item, /obj/item/storage/bag/tray))
+		// Non-tray dumping requires a do_after
+		to_chat(user, span_notice("You start dumping out the contents of [item] into [src]..."))
+		if(!do_after(user, 2 SECONDS, target = tray))
+			return ITEM_INTERACT_BLOCKING
+
+	for(var/obj/tray_item in tray.contents)
+		if(!IS_EDIBLE(tray_item))
+			continue
+		if(contents.len >= max_items)
+			balloon_alert(user, "it's full!")
+			return ITEM_INTERACT_BLOCKING
+		if(tray.atom_storage.attempt_remove(tray_item, src))
+			loaded++
+			AddToGrill(tray_item, user)
+	if(loaded)
+		to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+		update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/griddle/attack_hand(mob/user, list/modifiers)
 	. = ..()

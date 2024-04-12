@@ -79,9 +79,6 @@
 	var/computer_id = null
 	var/list/logging = list()
 
-	/// The machine the mob is interacting with (this is very bad old code btw)
-	var/obj/machinery/machine = null
-
 	/// Tick time the mob can next move
 	var/next_move = null
 
@@ -164,7 +161,7 @@
 	///Allows a datum to intercept all click calls this mob is the source of
 	var/datum/click_intercept
 
-	///THe z level this mob is currently registered in
+	///The z level this mob is currently registered in
 	var/registered_z = null
 
 	var/memory_throttle_time = 0

@@ -139,7 +139,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/BYOND
-          key: ${{ runner.os }}-byond
+          key: ${{ runner.os }}-byond-${{ hashFiles('dependencies.sh') }}
       - name: Compile All Maps
         run: |
           bash tools/ci/install_byond.sh

@@ -96,8 +96,8 @@ export const ListInputModal = (props) => {
     setSearchBarVisible(!searchBarVisible);
     setSearchQuery('');
   };
-  const filteredItems = items.filter(
-    (item) => item?.toLowerCase().includes(searchQuery.toLowerCase()),
+  const filteredItems = items.filter((item) =>
+    item?.toLowerCase().includes(searchQuery.toLowerCase()),
   );
   // Dynamically changes the window height based on the message.
   const windowHeight =

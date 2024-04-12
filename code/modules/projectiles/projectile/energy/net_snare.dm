@@ -15,11 +15,11 @@
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
 			new /obj/effect/nettingportal(Tloc)
-	..()
+	. = ..()
 
 /obj/projectile/energy/net/on_range()
 	do_sparks(1, TRUE, src)
-	..()
+	. = ..()
 
 /obj/effect/nettingportal
 	name = "DRAGnet teleportation field"
@@ -40,7 +40,7 @@
 		else
 			com.target_ref = null
 
-	addtimer(CALLBACK(src, PROC_REF(pop), teletarget), 30)
+	addtimer(CALLBACK(src, PROC_REF(pop), teletarget), 3 SECONDS)
 
 /obj/effect/nettingportal/proc/pop(teletarget)
 	if(teletarget)

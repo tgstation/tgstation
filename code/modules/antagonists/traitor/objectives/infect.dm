@@ -166,7 +166,7 @@
 	to_chat(affected_mob, span_warning("You feel someone try to inject you with something."))
 	balloon_alert(user, "injecting...")
 	log_combat(user, affected_mob, "attempted to inject", src)
-	if(!do_after(user, 1.5 SECONDS))
+	if(!do_after(user, 1.5 SECONDS, hidden = TRUE))
 		balloon_alert(user, "interrupted!")
 		return
 	var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()

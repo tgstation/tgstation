@@ -601,7 +601,7 @@
 	// The brain trauma itself does its own set of logging, but this is the only place the source of the hypnosis phrase can be found.
 	hearing_speaker.log_message("hypnotised [key_name(C)] with the phrase '[hearing_args[HEARING_RAW_MESSAGE]]'", LOG_ATTACK, color="red")
 	C.log_message("has been hypnotised by the phrase '[hearing_args[HEARING_RAW_MESSAGE]]' spoken by [key_name(hearing_speaker)]", LOG_VICTIM, color="orange", log_globally = FALSE)
-	addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon, gain_trauma), /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
+	addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon, gain_trauma), /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 1 SECONDS)
 	addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/living, Stun), 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)
 
@@ -900,25 +900,25 @@
 	name = "Fire Ants!"
 	desc = span_warning("JESUS FUCKING CHRIST IT BURNS! CLICK TO GET THOSE THINGS OFF!")
 
-/datum/status_effect/stagger
-	id = "stagger"
+/datum/status_effect/rebuked
+	id = "rebuked"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 30 SECONDS
 	tick_interval = 1 SECONDS
 	alert_type = null
 
-/datum/status_effect/stagger/on_apply()
-	owner.next_move_modifier *= 1.5
+/datum/status_effect/rebuked/on_apply()
+	owner.next_move_modifier *= 2
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/simple_owner = owner
 		simple_owner.ranged_cooldown_time *= 2.5
 	return TRUE
 
-/datum/status_effect/stagger/on_remove()
+/datum/status_effect/rebuked/on_remove()
 	. = ..()
 	if(QDELETED(owner))
 		return
-	owner.next_move_modifier /= 1.5
+	owner.next_move_modifier *= 0.5
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/simple_owner = owner
 		simple_owner.ranged_cooldown_time /= 2.5
