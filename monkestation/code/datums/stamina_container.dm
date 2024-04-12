@@ -86,3 +86,17 @@
 /// Revitalize the stamina to the maximum this container can have.
 /datum/stamina_container/proc/revitalize(forced = FALSE)
 	return adjust(maximum, forced)
+
+/datum/stamina_container/proc/adjust_to(amount, lowest_stamina_value, forced = FALSE)
+	if((!amount || !COOLDOWN_FINISHED(src, stamina_grace_period)) && !forced)
+		return
+
+	var/stamina_after_loss = current + amount
+	if(stamina_after_loss < lowest_stamina_value)
+		amount = current - lowest_stamina_value
+
+	current = round(clamp(current + amount, 0, maximum), DAMAGE_PRECISION)
+	update()
+	if((amount < 0) && is_regenerating)
+		pause(STAMINA_REGEN_TIME)
+	return amount

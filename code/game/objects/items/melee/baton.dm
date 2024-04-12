@@ -204,7 +204,11 @@
 		target.Paralyze((isnull(stun_override) ? stun_time_cyborg : stun_override) * (trait_check ? 0.1 : 1))
 		additional_effects_cyborg(target, user)
 	else
-		target.stamina.adjust(-stamina_damage)
+		if(!trait_check)
+			target.stamina.adjust(-stamina_damage)
+		else
+			var/stamina_to_min = (target.stamina.maximum * 0.35)
+			target.stamina.adjust_to(-stamina_damage, stamina_to_min)
 		if(!trait_check)
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
 		additional_effects_non_cyborg(target, user)
