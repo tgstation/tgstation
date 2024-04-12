@@ -97,6 +97,10 @@
 		// Update action button icon for adjusted mask, if someone is holding it.
 		user.update_mob_action_buttons()
 
+/obj/item/clothing/mask/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/adjust))
+		adjustmask(user)
+
 /**
  * Proc called in lungs.dm to act if wearing a mask with filters, used to reduce the filters durability, return a changed gas mixture depending on the filter status
  * Arguments:
