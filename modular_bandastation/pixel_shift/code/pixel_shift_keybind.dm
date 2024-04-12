@@ -1,8 +1,8 @@
 /datum/keybinding/mob/pixel_shift
 	hotkey_keys = list("B")
 	name = "pixel_shift"
-	full_name = "Pixel Shift"
-	description = "Shift your characters offset."
+	full_name = "Пиксель-Шифт"
+	description = "Попиксельное перемещение персонажа в тайле."
 	category = CATEGORY_MOVEMENT
 	keybind_signal = COMSIG_KB_MOB_PIXEL_SHIFT_DOWN
 

@@ -1,11 +1,11 @@
-#include "_keybindings.dm"
+#include "_keybinding.dm"
 
 #include "code/admin.dm"
 #include "code/artificial_intelligence.dm"
 #include "code/carbon.dm"
 #include "code/client.dm"
 #include "code/communication.dm"
-//#include "code/emote.dm" TODO: Return it when Emote Panel is merged
+#include "code/emote.dm"
 #include "code/human.dm"
 #include "code/living.dm"
 #include "code/mob.dm"

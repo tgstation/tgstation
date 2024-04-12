@@ -4,7 +4,7 @@
 
 /datum/keybinding/client/communication/radio
 	full_name = "Общий канал рации (;)"
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list("Y")
 
 /datum/keybinding/client/communication/ooc
 	full_name = "OOC"
