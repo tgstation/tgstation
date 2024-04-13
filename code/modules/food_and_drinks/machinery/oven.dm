@@ -99,11 +99,10 @@
 	update_appearance()
 	use_energy(active_power_usage)
 
-
 /obj/machinery/oven/attackby(obj/item/item, mob/user, params)
-	if(!open || used_tray || !item.atom_storage)
+	if(!open || used_tray || !istype(item, /obj/item/plate/oven_tray))
 		return ..()
-		
+
 	if(user.transferItemToLoc(item, src, silent = FALSE))
 		to_chat(user, span_notice("You put [item] in [src]."))
 		add_tray_to_oven(item, user)
@@ -253,7 +252,7 @@
 
 	if(isnull(item.atom_storage))
 		return
-	
+
 	if(is_right_clicking)
 		var/obj/item/storage/tray = item
 
