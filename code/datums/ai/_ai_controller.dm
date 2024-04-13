@@ -56,6 +56,10 @@ multiple modular subtrees with behaviors
 	// The variables below are fucking stupid and should be put into the blackboard at some point.
 	///AI paused time
 	var/paused_until = 0
+	///Can this AI idle?
+	var/can_idle = TRUE
+	///What distance should we be checking for interesting things when considering idling/deidling? Defaults to AI_DEFAULT_INTERESTING_DIST
+	var/interesting_dist = AI_DEFAULT_INTERESTING_DIST
 
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
@@ -175,7 +179,7 @@ multiple modular subtrees with behaviors
 		SSai_controllers.ai_controllers_by_zlevel[new_turf.z] += src
 		var/new_level_clients = SSmobs.clients_by_zlevel[new_turf.z].len
 		if(new_level_clients)
-			set_ai_status(AI_STATUS_ON)
+			set_ai_status(AI_STATUS_IDLE)
 		else
 			set_ai_status(AI_STATUS_OFF)
 
@@ -319,6 +323,9 @@ multiple modular subtrees with behaviors
 		if(AI_STATUS_OFF)
 			STOP_PROCESSING(SSai_behaviors, src)
 			CancelActions()
+		if(AI_STATUS_IDLE)
+			STOP_PROCESSING(SSai_behaviors, src)
+			CancelActions()
 
 /datum/ai_controller/proc/PauseAi(time)
 	paused_until = world.time + time
@@ -378,7 +385,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/on_sentience_lost()
 	SIGNAL_HANDLER
 	UnregisterSignal(pawn, COMSIG_MOB_LOGOUT)
-	set_ai_status(AI_STATUS_ON) //Can't do anything while player is connected
+	set_ai_status(AI_STATUS_IDLE) //Can't do anything while player is connected
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
 // Turn the controller off if the pawn has been qdeleted
