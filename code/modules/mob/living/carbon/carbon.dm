@@ -237,7 +237,7 @@
 
 /mob/living/carbon/resist_buckle()
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED))
-		buckled.user_buckle_mob(src, src)
+		buckled.user_unbuckle_mob(src, src)
 		return
 
 	changeNext_move(CLICK_CD_BREAKOUT)
