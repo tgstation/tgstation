@@ -28,3 +28,5 @@
 
 	panel.populate_contents() // this also calls reset_contents bc length(contents)
 	TEST_ASSERT_EQUAL(length(panel.contents), 2, "Contents should repopulate with the new toolbox")
+
+	mock_client.mob = null
