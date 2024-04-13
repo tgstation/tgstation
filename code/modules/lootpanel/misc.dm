@@ -3,9 +3,9 @@
 	source_turf = tile
 
 #if !defined(OPENDREAM) && !defined(UNIT_TESTS)
-	var/build = owner.byond_build
-	var/version = owner.byond_version
 	if(!notified)
+		var/build = owner.byond_build
+		var/version = owner.byond_version
 		if(build < 515 || (build == 515 && version < 1635))
 			to_chat(owner.mob, examine_block(span_info("\
 				<span class='bolddanger'>Your version of Byond doesn't support fast image loading.</span>\n\

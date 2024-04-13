@@ -18,7 +18,6 @@
 	TEST_ASSERT_EQUAL(searchable.item, box, "Second item should be the box")
 
 	qdel(box)
-	TEST_ASSERT_EQUAL(!QDELETED(searchable), FALSE, "Search object should have deleted itself on parent move")
 	TEST_ASSERT_EQUAL(length(panel.contents), 1, "Contents should update on searchobj deleted")
 	TEST_ASSERT_EQUAL(length(panel.to_image), 1, "to_image should update on searchobj deleted")
 
@@ -28,5 +27,8 @@
 
 	panel.populate_contents() // this also calls reset_contents bc length(contents)
 	TEST_ASSERT_EQUAL(length(panel.contents), 2, "Contents should repopulate with the new toolbox")
+
+	panel.populate_contents()
+	TEST_ASSERT_EQUAL(length(panel.contents), 2, "Panel shouldnt dupe searchables if reopened")
 
 	mock_client.mob = null

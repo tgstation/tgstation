@@ -1,7 +1,7 @@
 /// Adds the item to contents and to_image (if needed)
 /datum/lootpanel/proc/add_to_index(datum/search_object/index)
 	RegisterSignal(index, COMSIG_QDELETING, PROC_REF(on_searchable_deleted))
-	if(!index.icon)
+	if(isnull(index.icon))
 		to_image += index
 
 	contents += index
@@ -36,11 +36,14 @@
 		SSlooting.backlog += src
 
 
-/// For: Resetting to empty. Ignores the searchable callback
+/// For: Resetting to empty. Ignores the searchable qdel event
 /datum/lootpanel/proc/reset_contents()
 	for(var/datum/search_object/index as anything in contents)
+		contents -= index
+		to_image -= index
+
 		if(QDELETED(index))
-			contents -= index
+			continue
 
 		UnregisterSignal(index, COMSIG_QDELETING)
 		qdel(index)
