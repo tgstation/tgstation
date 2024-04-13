@@ -152,7 +152,7 @@ multiple modular subtrees with behaviors
 		if(ai_traits & CAN_ACT_WHILE_DEAD)
 			return AI_STATUS_ON
 		return AI_STATUS_OFF
-	
+
 	var/turf/pawn_turf = get_turf(mob_pawn)
 #ifdef TESTING
 	if(!pawn_turf)
@@ -298,6 +298,7 @@ multiple modular subtrees with behaviors
 			if(subtree.SelectBehaviors(src, seconds_per_tick) == SUBTREE_RETURN_FINISH_PLANNING)
 				break
 
+	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_PICKED_BEHAVIORS, current_behaviors, planned_behaviors)
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 		if(LAZYACCESS(planned_behaviors, current_behavior))
 			continue
@@ -311,7 +312,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/set_ai_status(new_ai_status)
 	if(ai_status == new_ai_status)
 		return FALSE //no change
-	
+
 	//remove old status, if we've got one
 	if(ai_status)
 		SSai_controllers.ai_controllers_by_status[ai_status] -= src
