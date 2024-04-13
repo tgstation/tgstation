@@ -351,7 +351,7 @@
 	icon_file = 'icons/obj/clothing/gloves.dmi'
 	json_config = 'code/datums/greyscale/json_configs/golden_gloves.json'
 
-/datum/greyscale_config/golden_gloves__worn
+/datum/greyscale_config/golden_gloves_worn
 	name = "Worn Golden Gloves"
 	icon_file = 'icons/mob/clothing/hands.dmi'
 	json_config = 'code/datums/greyscale/json_configs/golden_gloves_worn.json'
