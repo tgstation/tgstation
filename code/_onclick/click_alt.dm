@@ -7,7 +7,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
 
-	var/early_sig_return = SEND_SIGNAL(src, COMSIG_CLICK_ALT, thing)
+	var/early_sig_return = SEND_SIGNAL(src, COMSIG_CLICK_ALT, thing) & COMPONENT_CANCEL_CLICK_ALT
 	if(early_sig_return)
 		return early_sig_return
 
@@ -29,7 +29,10 @@
  *
  * Override this proc with your custom behavior, then return a CLICK_ACTION_* flag to handle further actions
  *
- * Return NONE to continue the base alt click behavior.
+ * CLICK_ACTION_SUCCESS, CLICK_ACTION_FAILURE will prevent alt click from continuing.
+ *
+ * `return NONE` or `return` to continue the base alt click behavior. (favor explicit)
  */
 /atom/proc/click_alt(mob/user)
+	SHOULD_CALL_PARENT(FALSE)
 	return NONE
