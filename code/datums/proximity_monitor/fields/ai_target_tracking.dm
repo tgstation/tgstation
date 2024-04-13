@@ -27,7 +27,7 @@
 	src.target_key = target_key
 	src.targeting_strategy_key = targeting_strategy_key
 	src.hiding_location_key = hiding_location_key
-	src.filter = controller.blackboard[targeting_strategy_key]
+	src.filter = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 	RegisterSignal(controller, COMSIG_QDELETING, PROC_REF(controller_deleted))
 	RegisterSignal(controller, COMSIG_AI_CONTROLLER_PICKED_BEHAVIORS, PROC_REF(controller_think))
 	RegisterSignal(controller, COMSIG_AI_CONTROLLER_POSSESSED_PAWN, PROC_REF(pawn_changed))
