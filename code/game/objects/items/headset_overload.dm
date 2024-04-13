@@ -56,7 +56,7 @@
 		playsound(receiver, 'sound/items/airhorn.ogg', vol = 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		var/mob/living/headset_wearer = receiver.loc
 		receiver.Shake()
-		if (!isliving(headset_wearer) || !headset_wearer.can_hear())
+		if (!isliving(headset_wearer) || !headset_wearer.can_hear() || (!ishuman(headset_wearer) && headset_wearer.mob_biotypes & MOB_ROBOTIC))
 			continue
 		to_chat(headset_wearer, span_boldbig("BWAAAAAAAAAAAHHH!!!"))
 		to_chat(headset_wearer, span_warning("Your head fills with an unbearable ringing..."))
