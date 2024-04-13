@@ -69,7 +69,8 @@
 	. += span_notice("You can shatter the blade to teleport to a random, (mostly) safe location by <b>activating it in-hand</b>.")
 
 /obj/item/melee/sickly_blade/proc/remove_from_list_then_qdel()
-	LAZYREMOVE(owner.blades_list, src)
+	if(!isnull(owner))
+		LAZYREMOVE(owner.blades_list, src)
 	
 // Path of Rust's blade
 /obj/item/melee/sickly_blade/rust
