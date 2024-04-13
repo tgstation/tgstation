@@ -261,8 +261,9 @@
 /datum/heretic_knowledge/limited_amount/proc/add_to_list_sickly_blade(mob/living/heretic, obj/item/melee/sickly_blade/created_blade)
 	var/obj/item/melee/sickly_blade/blade_check = created_blade
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(heretic)
-	blade_check.owner = our_heretic
-	LAZYADD(our_heretic.blades_list, blade_check)
+	if(!isnull(our_heretic))
+		blade_check.owner = our_heretic
+		LAZYADD(our_heretic.blades_list, blade_check)
 
 /datum/heretic_knowledge/limited_amount/proc/blades_limit_check(mob/living/heretic)
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(heretic)
