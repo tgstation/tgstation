@@ -1,25 +1,8 @@
-/// Unregisters and deletes an individual searchobj.
-/datum/lootpanel/proc/delete_search_object(datum/search_object/index)
-	contents -= index.string_ref
-	to_image -= index
-
-	var/atom/thing = index.item
-
-	if(isturf(thing)) // Our base turf
-		UnregisterSignal(thing, COMSIG_TURF_CHANGE)
-	else // Anything else
-		UnregisterSignal(thing, COMSIG_ITEM_PICKUP)
-		UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
-		UnregisterSignal(thing, COMSIG_QDELETING)
-
-	qdel(index)
-
-
 /// Helper to open the panel
 /datum/lootpanel/proc/open(turf/tile)
 	source_turf = tile
 
-#ifndef OPENDREAM
+#if !defined(OPENDREAM) && !defined(UNIT_TESTS)
 	var/build = owner.byond_build
 	var/version = owner.byond_version
 	if(!notified)

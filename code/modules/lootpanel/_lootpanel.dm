@@ -6,9 +6,9 @@
 /datum/lootpanel
 	/// The owner of the panel
 	var/client/owner
-	/// An associative list of all items indexed. ref:search_obj
-	var/list/contents = list()
-	/// The list of search_items needing processed
+	/// The list of all search objects indexed.
+	var/list/datum/search_object/contents = list()
+	/// The list of search_objects needing processed
 	var/list/datum/search_object/to_image = list()
 	/// We've been notified about client version
 	var/notified = FALSE

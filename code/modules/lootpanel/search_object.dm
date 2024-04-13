@@ -13,8 +13,6 @@
 	var/name
 	/// Typepath of the original object for ui grouping
 	var/path
-	/// String ref of the parent item. Used to look up this obj in contents
-	var/string_ref
 
 
 /datum/search_object/New(client/owner, atom/item)
@@ -24,7 +22,15 @@
 	name = item.name
 	if(isobj(item))
 		path = item.type
-	string_ref = REF(item)
+
+	if(isturf(item))
+		RegisterSignal(item, COMSIG_TURF_CHANGE, PROC_REF(on_turf_change))
+	else
+		RegisterSignals(item, list(
+			COMSIG_ITEM_PICKUP,
+			COMSIG_MOVABLE_MOVED,
+			COMSIG_QDELETING,
+			), PROC_REF(on_item_moved))
 
 	// Icon generation conditions //////////////
 	// Condition 1: Icon is complex
@@ -36,7 +42,7 @@
 		return
 
 	// Condition 3: Using opendream
-#ifdef OPENDREAM
+#if defined(OPENDREAM) || defined(UNIT_TESTS)
 	return
 #endif
 
@@ -62,3 +68,18 @@
 		icon = costly_icon2html(item, owner, sourceonly = TRUE)
 	else // our pre 515.1635 fallback for normal items
 		icon = icon2html(item, owner, sourceonly = TRUE)
+
+
+/// Parent item has been altered, search object no longer valid
+/datum/search_object/proc/on_item_moved(atom/source)
+	SIGNAL_HANDLER
+
+	qdel(src)
+
+
+/// Parent tile has been altered, entire search needs reset
+/datum/search_object/proc/on_turf_change(turf/source, path, list/new_baseturfs, flags, list/post_change_callbacks)
+	SIGNAL_HANDLER
+
+	post_change_callbacks += CALLBACK(src, PROC_REF(qdel), src)
+

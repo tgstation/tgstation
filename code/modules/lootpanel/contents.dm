@@ -1,3 +1,12 @@
+/// Adds the item to contents and to_image (if needed)
+/datum/lootpanel/proc/add_to_index(datum/search_object/index)
+	RegisterSignal(index, COMSIG_QDELETING, PROC_REF(on_searchable_deleted))
+	if(!index.icon)
+		to_image += index
+
+	contents += index
+
+
 /// Used to populate contents and start generating if needed
 /datum/lootpanel/proc/populate_contents()
 	if(length(contents))
@@ -5,8 +14,7 @@
 
 	// Add source turf first
 	var/datum/search_object/source = new(owner, source_turf)
-	RegisterSignal(source_turf, COMSIG_TURF_CHANGE, PROC_REF(on_turf_change))
-	contents[REF(source_turf)] = source
+	add_to_index(source)
 
 	for(var/atom/thing as anything in source_turf.contents)
 		// validate
@@ -17,24 +25,9 @@
 		if(thing.invisibility > owner.mob.see_invisible)
 			continue
 
-		var/ref = REF(thing)
-		if(contents[ref])
-			continue
-
 		// convert
-		RegisterSignals(thing, list(
-			COMSIG_ITEM_PICKUP,
-			COMSIG_MOVABLE_MOVED,
-			COMSIG_QDELETING,
-			), PROC_REF(on_item_moved))
-
 		var/datum/search_object/index = new(owner, thing)
-
-		// flag for processing
-		if(!index.icon)
-			to_image += index
-
-		contents[ref] = index
+		add_to_index(index)
 
 	var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
 	window?.send_update()
@@ -42,14 +35,12 @@
 	if(length(to_image))
 		SSlooting.backlog += src
 
-	return TRUE
 
-
-/// For: Resetting to empty.
+/// For: Resetting to empty. Ignores the searchable callback
 /datum/lootpanel/proc/reset_contents()
-	for(var/ref in contents)
-		var/datum/search_object/index = contents[ref]
+	for(var/datum/search_object/index as anything in contents)
 		if(QDELETED(index))
-			contents -= ref
+			contents -= index
 
-		delete_search_object(index)
+		UnregisterSignal(index, COMSIG_QDELETING)
+		qdel(index)
