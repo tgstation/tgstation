@@ -145,7 +145,8 @@
 			new /obj/item/storage/backpack/duffelbag/syndie/sabotage(src) // 5 tc for 3 c4 and 2 x4
 			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
 			new /obj/item/sbeacondrop/powersink(src) // 11 tc
-			new /obj/item/computer_disk/virus/detomatix(src) // 6 tc
+			new/obj/item/headset_overloader(src) // 4 tc
+			new/obj/item/headset_overloader(src) // 4 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/pizzabox/bomb(src) // 6 tc
 			new /obj/item/storage/box/syndie_kit/emp(src) // 2 tc

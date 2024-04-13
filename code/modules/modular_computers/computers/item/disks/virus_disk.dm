@@ -57,46 +57,6 @@
 	app.ringtone = ""
 
 /**
- * Detomatix virus
- * Sends a false message, and blows the PDA up if the target responds to it (or opens their messenger before a timer)
- */
-/obj/item/computer_disk/virus/detomatix
-	name = "\improper D.E.T.O.M.A.T.I.X. disk"
-	charges = 6
-
-/obj/item/computer_disk/virus/detomatix/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user, message)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	var/difficulty = target.get_detomatix_difficulty()
-	if(SEND_SIGNAL(target, COMSIG_TABLET_CHECK_DETONATE) & COMPONENT_TABLET_NO_DETONATE || prob(difficulty * 15))
-		user.show_message(span_danger("ERROR: Target could not be bombed."), MSG_VISUAL)
-		charges--
-		return
-
-	var/original_host = source
-	var/fakename = sanitize_name(tgui_input_text(user, "Enter a name for the rigged message.", "Forge Message", max_length = MAX_NAME_LEN), allow_numbers = TRUE)
-	if(!fakename || source != original_host || !user.can_perform_action(source))
-		return
-	var/fakejob = sanitize_name(tgui_input_text(user, "Enter a job for the rigged message.", "Forge Message", max_length = MAX_NAME_LEN), allow_numbers = TRUE)
-	if(!fakejob || source != original_host || !user.can_perform_action(source))
-		return
-	var/attach_fake_photo = tgui_alert(user, "Attach a fake photo?", "Forge Message", list("Yes", "No")) == "Yes"
-
-	var/datum/computer_file/program/messenger/app = locate() in source.stored_files
-	var/datum/computer_file/program/messenger/target_app = locate() in target.stored_files
-	if(!app || charges <= 0 || !app.send_rigged_message(user, message, list(target_app), fakename, fakejob, attach_fake_photo))
-		return FALSE
-	charges--
-	user.show_message(span_notice("Success!"))
-	var/reference = REF(src)
-	target.add_traits(list(TRAIT_PDA_CAN_EXPLODE, TRAIT_PDA_MESSAGE_MENU_RIGGED), reference)
-	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_PDA_MESSAGE_MENU_RIGGED, reference), 10 SECONDS)
-	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_PDA_CAN_EXPLODE, reference), 1 MINUTES)
-	return TRUE
-
-/**
  * Frame cartridge
  * Creates and opens a false uplink on someone's PDA
  * Can be loaded with TC to show up on the false uplink.

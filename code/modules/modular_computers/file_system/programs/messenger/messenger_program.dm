@@ -749,13 +749,6 @@
 				viewing_messages_of = target_href
 			computer.update_tablet_open_uis(usr)
 
-		if("explode")
-			if(!HAS_TRAIT(computer, TRAIT_PDA_CAN_EXPLODE))
-				return
-
-			var/obj/item/modular_computer/pda/comp = computer
-			comp.explode(usr, from_message_menu = TRUE)
-
 #undef PDA_MESSAGE_TIMESTAMP_FORMAT
 #undef MAX_PDA_MESSAGE_LEN
 #undef TEMP_IMAGE_PATH

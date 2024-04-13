@@ -285,7 +285,6 @@
 	download_access = list(ACCESS_JANITOR)
 	program_icon = "broom"
 	size = 2
-	detomatix_resistance = DETOMATIX_RESIST_MINOR
 	circuit_comp_type = /obj/item/circuit_component/mod_program/radar/janitor
 
 /datum/computer_file/program/radar/custodial_locator/find_atom()

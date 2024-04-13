@@ -21,13 +21,8 @@
 
 /obj/item/modular_computer/pda/heads/captain/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TABLET_CHECK_DETONATE, PROC_REF(tab_no_detonate))
 	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
 		messenger_app.spam_mode = TRUE
-
-/obj/item/modular_computer/pda/heads/captain/proc/tab_no_detonate()
-	SIGNAL_HANDLER
-	return COMPONENT_TABLET_NO_DETONATE
 
 /obj/item/modular_computer/pda/heads/hop
 	name = "head of personnel PDA"

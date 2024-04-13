@@ -82,10 +82,6 @@
 	to_chat(user, span_notice("It doesn't feel right to snoop around like that..."))
 	return // we don't want ais or cyborgs using a private role tablet
 
-/obj/item/modular_computer/pda/interact(mob/user)
-	. = ..()
-	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))
-		explode(user, from_message_menu = TRUE)
 
 /obj/item/modular_computer/pda/attack_self(mob/user)
 	// bypass literacy checks to access syndicate uplink
@@ -171,15 +167,6 @@
 
 	remove_pen(user)
 
-///Finds how hard it is to send a virus to this tablet, checking all programs downloaded.
-/obj/item/modular_computer/pda/proc/get_detomatix_difficulty()
-	var/detomatix_difficulty
-
-	for(var/datum/computer_file/program/downloaded_apps in stored_files)
-		detomatix_difficulty += downloaded_apps.detomatix_resistance
-
-	return detomatix_difficulty
-
 /obj/item/modular_computer/pda/proc/remove_pen(mob/user)
 
 	if(issilicon(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH)) //TK doesn't work even with this removed but here for readability
@@ -191,36 +178,6 @@
 		inserted_item = null
 		update_appearance()
 		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
-
-/obj/item/modular_computer/pda/proc/explode(mob/target, mob/bomber, from_message_menu = FALSE)
-	var/turf/current_turf = get_turf(src)
-
-	if(from_message_menu)
-		log_bomber(null, null, target, "'s tablet exploded as [target.p_they()] tried to open their tablet message menu because of a recent tablet bomb.")
-	else
-		log_bomber(bomber, "successfully tablet-bombed", target, "as [target.p_they()] tried to reply to a rigged tablet message [bomber && !is_special_character(bomber) ? "(SENT BY NON-ANTAG)" : ""]")
-
-	if (ismob(loc))
-		var/mob/loc_mob = loc
-		loc_mob.show_message(
-			msg = span_userdanger("Your [src] explodes!"),
-			type = MSG_VISUAL,
-			alt_msg = span_warning("You hear a loud *pop*!"),
-			alt_type = MSG_AUDIBLE,
-		)
-	else
-		visible_message(span_danger("[src] explodes!"), span_warning("You hear a loud *pop*!"))
-
-	target.client?.give_award(/datum/award/achievement/misc/clickbait, target)
-
-	if(current_turf)
-		current_turf.hotspot_expose(700,125)
-		if(istype(inserted_disk, /obj/item/computer_disk/virus/detomatix))
-			explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 4)
-		else
-			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flash_range = 3)
-	qdel(src)
-
 
 /**
  * A simple helper proc that applies the client's ringtone prefs to the tablet's messenger app,

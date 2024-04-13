@@ -24,14 +24,12 @@
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK_SECONDARY, PROC_REF(on_pre_attack_secondary))
-	RegisterSignal(parent, COMSIG_TABLET_CHECK_DETONATE, PROC_REF(block_pda_bombs))
 
 /datum/component/spy_uplink/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ITEM_ATTACK_SELF,
 		COMSIG_ITEM_PRE_ATTACK_SECONDARY,
-		COMSIG_TABLET_CHECK_DETONATE,
 	))
 
 /// Checks that the passed mob is the owner of this uplink.
@@ -47,11 +45,6 @@
 	examine_list += span_notice("You recognize this as your <i>spy uplink</i>.")
 	examine_list += span_notice("- [EXAMINE_HINT("Use it in hand")] to view your bounty list.")
 	examine_list += span_notice("- [EXAMINE_HINT("Right click")] with it on a bounty target to claim it.")
-
-/datum/component/spy_uplink/proc/block_pda_bombs(obj/item/source)
-	SIGNAL_HANDLER
-
-	return COMPONENT_TABLET_NO_DETONATE
 
 /datum/component/spy_uplink/proc/on_attack_self(obj/item/source, mob/user)
 	SIGNAL_HANDLER

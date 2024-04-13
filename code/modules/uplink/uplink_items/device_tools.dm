@@ -175,6 +175,15 @@
 	cost = 3
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
+/datum/uplink_item/device_tools/headset_disruptor
+	name = "Headset Disruptor"
+	desc = "The MI13 Headset Disruptor is a device which is elegant in its simplicity. The first use tunes it to a specific departmental radio frequency \
+		and the second broadcasts an unbearably loud sound on that frequency, temporarily incapacitating those who are tuned in."
+	item = /obj/item/headset_overloader
+	restricted = TRUE
+	cost = 4
+	limited_stock = 1
+
 /datum/uplink_item/device_tools/suspiciousphone
 	name = "Protocol CRAB-17 Phone"
 	desc = "The Protocol CRAB-17 Phone, a phone borrowed from an unknown third party, it can be used to crash the space market, funneling the losses of the crew to your bank account.\

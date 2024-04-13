@@ -12,7 +12,6 @@
 	tgui_id = "NtosCouponMaster"
 	program_icon = "ticket"
 	can_run_on_flags = PROGRAM_PDA //It relies on the PDA messenger to let you know of new codes
-	detomatix_resistance = DETOMATIX_RESIST_MALUS
 
 /datum/computer_file/program/coupon/on_install()
 	. = ..()

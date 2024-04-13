@@ -9,7 +9,6 @@
 	size = 4
 	can_run_on_flags = PROGRAM_PDA | PROGRAM_LAPTOP
 	program_flags = NONE
-	detomatix_resistance = DETOMATIX_RESIST_MINOR
 
 	var/mode
 
