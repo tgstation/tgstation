@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "advanced camera consoles correctly deactivate when something happens(no proximity, no power etc) to its user"
