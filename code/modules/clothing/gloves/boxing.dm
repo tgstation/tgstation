@@ -27,11 +27,9 @@
 /obj/item/clothing/gloves/boxing/golden
 	name = "golden gloves"
 	desc = "The reigning champ of the station!"
-	icon_state = "boxinggreyscale"
-	greyscale_config = /datum/greyscale_config/golden_gloves
-	greyscale_config_worn = /datum/greyscale_config/golden_gloves_worn
+	icon_state = "boxinggold"
 	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT*1)  //LITERALLY GOLD
-	material_flags = MATERIAL_EFFECTS | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS //Makes our gloves inherit the golden color
+	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
 	equip_delay_other = 120
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 
