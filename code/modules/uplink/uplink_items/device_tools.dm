@@ -182,7 +182,7 @@
 		The effect is unfortunately reduced in 'Bowman' style noise-cancelling headsets often issued to security forces, which automatically adjust the frequency."
 	item = /obj/item/headset_overloader
 	restricted = TRUE
-	cost = 4
+	cost = 6
 	limited_stock = 1
 	purchasable_from = ~(UPLINK_NUKE_OPS)
 
