@@ -1,0 +1,3 @@
+#define CLICK_ACTION_SUCCESS (1<<0)
+#define CLICK_ACTION_BLOCKING (1<<1)
+#define CLICK_ACTION_SKIP (1<<2)
