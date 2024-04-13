@@ -30,7 +30,9 @@ SUBSYSTEM_DEF(looting)
 			processing.len--
 			continue
 
-		panel.process_images()
+		if(!panel.process_images())
+			backlog += panel
+			
 		if(MC_TICK_CHECK)
 			return
 
