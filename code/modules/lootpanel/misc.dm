@@ -21,21 +21,28 @@
 	ui_interact(owner.mob)
 
 
-/// Used by SSlooting to process images from the to_image list.
+/**
+ * Called by SSlooting whenever this datum is added to its backlog.
+ * Iterates over to_image list to create icons, then removes them.
+ * Returns boolean - whether this proc has finished the queue or not.
+ */
 /datum/lootpanel/proc/process_images()
 	for(var/datum/search_object/index as anything in to_image)
+		to_image -= index
+
 		if(QDELETED(index) || index.icon)
-			to_image -= index
 			continue
 
 		index.generate_icon(owner)
-		to_image -= index
+
 		if(TICK_CHECK)
-			return
+			break
 
 	var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
 	if(isnull(window))
 		reset_contents()
-		return
+		return TRUE
 
 	window.send_update()
+
+	return !length(to_image)
