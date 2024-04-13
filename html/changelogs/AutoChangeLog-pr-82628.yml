@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "The HoP's photobooth button is now consistently connected to the HoP's photobooth."
