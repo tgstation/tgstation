@@ -20,7 +20,7 @@
 
 ///Called by the AI controller when this action is performed
 /datum/ai_behavior/proc/perform(seconds_per_tick, datum/ai_controller/controller, ...)
-	controller.behavior_cooldowns[src] = world.time + get_cooldown()
+	controller.behavior_cooldowns[src] = world.time + get_cooldown(controller)
 	return
 
 ///Called when the action is finished. This needs the same args as perform besides the default ones
