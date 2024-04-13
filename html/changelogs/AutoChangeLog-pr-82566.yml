@@ -1,6 +1,0 @@
-author: "Ketrai"
-delete-after: True
-changes:
-  - qol: "chef equipment can now deposit and withdraw to/from trays!"
-  - qol: "chef now has access to griddle and oven sized trays!"
-  - qol: "service can now print soup pots"

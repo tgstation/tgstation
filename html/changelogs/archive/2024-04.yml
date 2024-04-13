@@ -402,3 +402,71 @@
   disappointedButNotSuprised:
   - rscadd: Coffee machines can now carry over reagents from the beans to the coffee
       (surely no one will inject poison into them)
+2024-04-13:
+  00-Steven:
+  - refactor: Instead of being hardcoded to the pen, renaming items is now an element.
+      Currently only pens have this, and functionality should be the same, but please
+      report it if you find any items that were renamable but now aren't.
+  DaCoolBoss:
+  - spellcheck: Fixes a typo in the cargo console.
+  Horatio22:
+  - spellcheck: grammar fixes in the roundstart advisory warnings
+  Iamgoofball:
+  - bugfix: Fixes AI lag by re-adding idle mode to all AI that was lost with the simple
+      mob to basic mob conversion.
+  - bugfix: AI controllers with no clients around for 14 tiles will move into idle
+      mode and stop planning or acting.
+  - bugfix: AI controllers will now record how much time was spent on planning or
+      un-idling AI controllers.
+  Jacquerel:
+  - balance: The Bioscrambler will now actively attempt to get closer to living targets
+      rather than chilling in a closet nobody goes into (unless you trap it in a containment
+      field).
+  - balance: Because it can now travel through walls, the Bioscrambler will no longer
+      transform you THROUGH walls.
+  JohnFulpWillard:
+  - bugfix: Advanced camera consoles now boots you off when you're moved out of reach.
+  Ketrai:
+  - qol: chef equipment can now deposit and withdraw to/from trays!
+  - qol: chef now has access to griddle and oven sized trays!
+  - qol: service can now print soup pots
+  Melbert:
+  - bugfix: You can't change the GPS tag of something unless you can actually use
+      the GPS
+  - bugfix: You can't set the teleporter to a location unless you can actually use
+      the teleporter
+  - bugfix: You can't reply to request console requests unless you can actually use
+      the console
+  - bugfix: You can't update AI lawboards unless you're actually holding them
+  - bugfix: You can't update a borg rename board unless you're actually holding it
+  - bugfix: You can't mess with plumbing machines unless you can actually use them
+  - bugfix: You can't recolor / relayer ducts unless you're actually holding them
+  - bugfix: You can't magically wire APCs and SMESs unless you're right by them
+  - bugfix: You can't use Stargazer Telepathy on people who you can't see
+  - bugfix: You can't configure the Inspector Hat unless you can actually use it
+  StrangeWeirdKitten:
+  - balance: The upload and communication boards directly have trackers installed,
+      activated only when authenticated.
+  SyncIt21:
+  - bugfix: chem master properly shuts down if it loses power mid printing and won't
+      transfer reagents for the same
+  Watermelon914:
+  - bugfix: 'LUA: Registering a signal on a deleted datum will throw a more descriptive
+      error message.'
+  ZephyrTFA:
+  - admin: Something changed, but you shouldn't be able to notice. If verbs are funky
+      report this to <@946283057915232337> on discord.
+  hyperjll:
+  - balance: Haloperidol now purges 2 units per second of itself, should the victim
+      have zero stamina. (Stamcrit)
+  jlsnow301:
+  - bugfix: 'Deviants buffed: Rogue shoelacing, pickpocketing and restraint resisting
+      no longer give cogbar icons.'
+  - bugfix: Airlock electronics and other access-config type UIs should look much
+      better.
+  wesoda25:
+  - bugfix: blood rites - will no longer delete after running out of charges
+  - bugfix: blood rites - now heal shades as well
+  - bugfix: blood rites - now charge 1.65x for self healing as opposed to the ~2x
+      they were before
+  - code_imp: blood rites code hurts my eyes a bit less now

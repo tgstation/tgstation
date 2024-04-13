@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Advanced camera consoles now boots you off when you're moved out of reach."
