@@ -1177,7 +1177,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 /// Removes all non-alphanumerics from the text, keep in mind this can lead to id conflicts
 /proc/sanitize_css_class_name(name)
-	var/static/regex/regex = new(@"[^a-zA-Z0-9]","g")
+	var/static/regex/regex = new(@"[^a-zA-Z0-9а-яА-ЯёЁ]","g") // BANDASTATION EDIT: Add Cyrillic support for this proc
 	return replacetext(name, regex, "")
 
 /// Converts a semver string into a list of numbers
