@@ -45,15 +45,12 @@
 	colored_overlay.color = lipstick_color
 	. += colored_overlay
 
-/obj/item/lipstick/AltClick(mob/user)
-	. = ..()
-	if(.)
-		return TRUE
-
+/obj/item/lipstick/click_alt(mob/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))
-		return FALSE
+		return NONE
 
-	return display_radial_menu(user)
+	display_radial_menu(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/lipstick/proc/display_radial_menu(mob/living/carbon/human/user)
 	var/style_options = list(

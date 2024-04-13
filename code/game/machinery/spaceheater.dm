@@ -440,11 +440,11 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/space_heater/improvised_chem_heater/AltClick(mob/living/user)
-	. = ..()
+/obj/machinery/space_heater/improvised_chem_heater/click_alt(mob/living/user)
 	if(!can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+		return NONE
 	replace_beaker(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/space_heater/improvised_chem_heater/update_icon_state()
 	. = ..()

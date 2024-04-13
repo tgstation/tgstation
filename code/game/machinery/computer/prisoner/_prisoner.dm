@@ -20,10 +20,12 @@
 	if(contained_id)
 		. += span_notice("<b>Alt-click</b> to eject the ID card.")
 
-/obj/machinery/computer/prisoner/AltClick(mob/user)
-	. = ..()
-	if(user.can_perform_action(src, ALLOW_SILICON_REACH))
-		id_eject(user)
+/obj/machinery/computer/prisoner/click_alt(mob/user)
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
+		return NONE
+
+	id_eject(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/computer/prisoner/proc/id_insert(mob/user, obj/item/card/id/advanced/prisoner/new_id)
 	if(!istype(new_id))

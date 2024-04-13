@@ -210,15 +210,15 @@
 		stored_research = tool.buffer
 	return TRUE
 
-/obj/machinery/computer/scan_consolenew/AltClick(mob/user)
+/obj/machinery/computer/scan_consolenew/click_alt(mob/user)
 	// Make sure the user can interact with the machine.
-	. = ..()
 	if(!can_interact(user))
-		return
+		return NONE
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
+		return NONE
 
 	eject_disk(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/computer/scan_consolenew/Initialize(mapload)
 	. = ..()

@@ -128,12 +128,12 @@
 		new_frame.state = FRAME_COMPUTER_STATE_GLASSED
 	new_frame.update_appearance(UPDATE_ICON_STATE)
 
-/obj/machinery/computer/AltClick(mob/user)
-	. = ..()
+/obj/machinery/computer/click_alt(mob/user)
 	if(!can_interact(user))
-		return
+		return NONE
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !is_operational)
-		return
+		return NONE
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/computer/ui_interact(mob/user, datum/tgui/ui)
 	SHOULD_CALL_PARENT(TRUE)

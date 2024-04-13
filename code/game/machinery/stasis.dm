@@ -39,10 +39,9 @@
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = sound_freq)
 		last_stasis_sound = _running
 
-/obj/machinery/stasis/AltClick(mob/user)
-	. = ..()
+/obj/machinery/stasis/click_alt(mob/user)
 	if(!can_interact(user))
-		return
+		return NONE
 	if(world.time >= stasis_can_toggle && user.can_perform_action(src, ALLOW_SILICON_REACH))
 		stasis_enabled = !stasis_enabled
 		stasis_can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
@@ -52,6 +51,7 @@
 					span_hear("You hear a nearby machine [stasis_enabled ? "power on" : "shut down"]."))
 		play_power_sound()
 		update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/stasis/Exited(atom/movable/gone, direction)
 	if(gone == occupant)
