@@ -20,11 +20,9 @@ SUBSYSTEM_DEF(looting)
 	if(!length(backlog))
 		return
 
-	if(resumed)
-		processing = backlog.Copy()
-
-	processing = backlog
-	backlog = list()
+	if(!resumed)
+		processing = backlog
+		backlog = list()
 
 	while(length(processing))
 		var/datum/lootpanel/panel = processing[length(processing)]
