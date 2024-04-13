@@ -8,7 +8,7 @@
 	icon_state = "bikehorn"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/bikehorn)
 	cooldown_time = 1 SECONDS
 
@@ -17,7 +17,7 @@
 	if(!.)
 		return
 	playsound(src, 'sound/items/bikehorn.ogg', 100, FALSE)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 ///Microwave Beam - Microwaves items instantly.
 /obj/item/mod/module/microwave_beam
@@ -28,7 +28,7 @@
 	icon_state = "microwave_beam"
 	module_type = MODULE_ACTIVE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/microwave_beam, /obj/item/mod/module/organ_thrower)
 	cooldown_time = 10 SECONDS
 
@@ -53,7 +53,7 @@
 	var/datum/effect_system/spark_spread/spark_effect_two = new()
 	spark_effect_two.set_up(2, 1, microwave_target)
 	spark_effect_two.start()
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 //Waddle - Makes you waddle and squeak.
 /obj/item/mod/module/waddle
@@ -70,13 +70,13 @@
 
 /obj/item/mod/module/waddle/on_suit_activation()
 	mod.boots.AddComponent(/datum/component/squeak, list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
-	mod.wearer.AddElement(/datum/element/waddling)
+	mod.wearer.AddElementTrait(TRAIT_WADDLING, MOD_TRAIT, /datum/element/waddling)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
 /obj/item/mod/module/waddle/on_suit_deactivation(deleting = FALSE)
 	if(!deleting)
 		qdel(mod.boots.GetComponent(/datum/component/squeak))
-	mod.wearer.RemoveElement(/datum/element/waddling)
+	REMOVE_TRAIT(mod.wearer, TRAIT_WADDLING, MOD_TRAIT)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.clear_mood_event("clownshoes")

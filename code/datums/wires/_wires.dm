@@ -258,7 +258,7 @@
 		return TRUE
 
 	// Station blueprints do that too, but only if the wires are not randomized.
-	if(user.is_holding_item_of_type(/obj/item/areaeditor/blueprints) && !randomize)
+	if(user.is_holding_item_of_type(/obj/item/blueprints) && !randomize)
 		return TRUE
 
 	return FALSE
@@ -277,7 +277,7 @@
 /datum/wires/ui_host()
 	return holder
 
-/datum/wires/ui_status(mob/user)
+/datum/wires/ui_status(mob/user, datum/ui_state/state)
 	if(interactable(user))
 		return ..()
 	return UI_CLOSE

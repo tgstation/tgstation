@@ -120,7 +120,7 @@
 			return TRUE
 		SSticker.start_immediately = FALSE
 		SSticker.SetTimeLeft(1800)
-		to_chat(world, "<span class='infoplain'><b>The game will start in 180 seconds.</b></span>")
+		to_chat(world, span_infoplain(span_bold("The game will start in 180 seconds.")))
 		SEND_SOUND(world, sound('sound/ai/default/attention.ogg'))
 		message_admins("<font color='blue'>[usr.key] has cancelled immediate game start. Game will start in 180 seconds.</font>")
 		log_admin("[usr.key] has cancelled immediate game start.")
@@ -174,9 +174,9 @@
 	var/alai = CONFIG_GET(flag/allow_ai)
 	CONFIG_SET(flag/allow_ai, !alai)
 	if (alai)
-		to_chat(world, "<B>The AI job is no longer chooseable.</B>", confidential = TRUE)
+		to_chat(world, span_bold("The AI job is no longer chooseable."), confidential = TRUE)
 	else
-		to_chat(world, "<B>The AI job is chooseable now.</B>", confidential = TRUE)
+		to_chat(world, span_bold("The AI job is chooseable now."), confidential = TRUE)
 	log_admin("[key_name(usr)] toggled AI allowed.")
 	world.update_status()
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle AI", "[!alai ? "Disabled" : "Enabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
@@ -236,10 +236,10 @@
 	SSticker.SetTimeLeft(newtime)
 	SSticker.start_immediately = FALSE
 	if(newtime < 0)
-		to_chat(world, "<span class='infoplain'><b>The game start has been delayed.</b></span>", confidential = TRUE)
+		to_chat(world, span_infoplain(span_bold("The game start has been delayed.")), confidential = TRUE)
 		log_admin("[key_name(usr)] delayed the round start.")
 	else
-		to_chat(world, "<span class='infoplain'><b>The game will start in [DisplayTimeText(newtime)].</b></span>", confidential = TRUE)
+		to_chat(world, span_infoplain(span_bold("The game will start in [DisplayTimeText(newtime)].")), confidential = TRUE)
 		SEND_SOUND(world, sound('sound/ai/default/attention.ogg'))
 		log_admin("[key_name(usr)] set the pre-game delay to [DisplayTimeText(newtime)].")
 	BLACKBOX_LOG_ADMIN_VERB("Delay Game Start")
@@ -274,9 +274,9 @@
 	var/new_guest_ban = !CONFIG_GET(flag/guest_ban)
 	CONFIG_SET(flag/guest_ban, new_guest_ban)
 	if (new_guest_ban)
-		to_chat(world, "<B>Guests may no longer enter the game.</B>", confidential = TRUE)
+		to_chat(world, span_bold("Guests may no longer enter the game."), confidential = TRUE)
 	else
-		to_chat(world, "<B>Guests may now enter the game.</B>", confidential = TRUE)
+		to_chat(world, span_bold("Guests may now enter the game."), confidential = TRUE)
 	log_admin("[key_name(usr)] toggled guests game entering [!new_guest_ban ? "" : "dis"]allowed.")
 	message_admins(span_adminnotice("[key_name_admin(usr)] toggled guests game entering [!new_guest_ban ? "" : "dis"]allowed."))
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Guests", "[!new_guest_ban ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!

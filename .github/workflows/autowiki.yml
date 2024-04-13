@@ -20,13 +20,13 @@ jobs:
         echo "SECRETS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
     - name: Checkout
       if: steps.secrets_set.outputs.SECRETS_ENABLED
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Restore BYOND cache
       if: steps.secrets_set.outputs.SECRETS_ENABLED
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/BYOND
-        key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
+        key: ${{ runner.os }}-byond-${{ hashFiles('dependencies.sh') }}
     - name: Install rust-g
       if: steps.secrets_set.outputs.SECRETS_ENABLED
       run: |

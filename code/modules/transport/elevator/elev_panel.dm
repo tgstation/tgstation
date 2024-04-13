@@ -60,19 +60,15 @@
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Send Elevator")
 
-	// Machinery returns lateload by default via parent,
-	// this is just here for redundancy's sake.
-	. = INITIALIZE_HINT_LATELOAD
-
 	maploaded = mapload
-	// Maploaded panels link in LateInitialize...
+	// Maploaded panels link in post_machine_initialize...
 	if(mapload)
 		return
 
 	// And non-mapload panels link in Initialize
 	link_with_lift(log_error = FALSE)
 
-/obj/machinery/elevator_control_panel/LateInitialize()
+/obj/machinery/elevator_control_panel/post_machine_initialize()
 	. = ..()
 	// If we weren't maploaded, we probably already linked (or tried to link) in Initialize().
 	if(!maploaded)
@@ -254,7 +250,7 @@
 		ui = new(user, src, "ElevatorPanel", name)
 		ui.open()
 
-/obj/machinery/elevator_control_panel/ui_status(mob/user)
+/obj/machinery/elevator_control_panel/ui_status(mob/user, datum/ui_state/state)
 	// We moved up a z-level, probably via the elevator itself, so don't preserve the UI.
 	if(user.z != z)
 		return UI_CLOSE

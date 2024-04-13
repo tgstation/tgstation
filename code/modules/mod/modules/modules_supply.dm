@@ -9,7 +9,7 @@
 	icon_state = "gps"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/gps)
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
@@ -33,7 +33,7 @@
 	icon_state = "clamp"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/clamp)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_clamp"
@@ -64,7 +64,7 @@
 		stored_crates += picked_crate
 		picked_crate.forceMove(src)
 		balloon_alert(mod.wearer, "picked up [picked_crate]")
-		drain_power(use_power_cost)
+		drain_power(use_energy_cost)
 	else if(length(stored_crates))
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.is_blocked_turf())
@@ -78,7 +78,7 @@
 		var/atom/movable/dropped_crate = pop(stored_crates)
 		dropped_crate.forceMove(target_turf)
 		balloon_alert(mod.wearer, "dropped [dropped_crate]")
-		drain_power(use_power_cost)
+		drain_power(use_energy_cost)
 	else
 		balloon_alert(mod.wearer, "invalid target!")
 
@@ -119,7 +119,7 @@
 	icon_state = "drill"
 	module_type = MODULE_ACTIVE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/drill)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_active = "module_drill"
@@ -145,17 +145,17 @@
 	if(ismineralturf(target))
 		var/turf/closed/mineral/mineral_turf = target
 		mineral_turf.gets_drilled(mod.wearer)
-		drain_power(use_power_cost)
+		drain_power(use_energy_cost)
 	else if(isasteroidturf(target))
 		var/turf/open/misc/asteroid/sand_turf = target
 		if(!sand_turf.can_dig(mod.wearer))
 			return
 		sand_turf.getDug()
-		drain_power(use_power_cost)
+		drain_power(use_energy_cost)
 
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER
-	if(!ismineralturf(bumped_into) || !drain_power(use_power_cost))
+	if(!ismineralturf(bumped_into) || !drain_power(use_energy_cost))
 		return
 	var/turf/closed/mineral/mineral_turf = bumped_into
 	var/turf/closed/mineral/gibtonite/giberal_turf = mineral_turf
@@ -176,7 +176,7 @@
 	icon_state = "ore"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/orebag)
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
@@ -214,7 +214,7 @@
 	for(var/obj/item/ore as anything in ores)
 		ore.forceMove(drop_location())
 		ores -= ore
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/item/mod/module/hydraulic
 	name = "MOD loader hydraulic arms module"
@@ -222,7 +222,7 @@
 	icon_state = "launch_loader"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN*10
+	use_energy_cost = DEFAULT_CHARGE_DRAIN*10
 	incompatible_modules = list(/obj/item/mod/module/hydraulic)
 	cooldown_time = 4 SECONDS
 	overlay_state_inactive = "module_hydraulic"
@@ -252,7 +252,7 @@
 	if(!do_after(mod.wearer, launch_time, target = mod))
 		power = world.time - current_time
 		animate(game_renderer)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 	new /obj/effect/temp_visual/mook_dust(get_turf(src))
 	playsound(src, 'sound/items/modsuit/loader_launch.ogg', 75, TRUE)
 	game_renderer.transform = game_renderer.transform.Scale(0.8, 0.8)
@@ -311,7 +311,7 @@
 	icon_state = "magnet_loader"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/magnet)
 	cooldown_time = 1.5 SECONDS
 	overlay_state_active = "module_magnet"
@@ -479,7 +479,7 @@
 	module_type = MODULE_ACTIVE
 	removable = FALSE
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/sphere_transform)
 	cooldown_time = 1.25 SECONDS
 	/// Time it takes us to complete the animation.
@@ -544,7 +544,7 @@
 	bomb.firer = mod.wearer
 	playsound(src, 'sound/weapons/gun/general/grenade_launch.ogg', 75, TRUE)
 	INVOKE_ASYNC(bomb, TYPE_PROC_REF(/obj/projectile, fire))
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/item/mod/module/sphere_transform/on_active_process(seconds_per_tick)
 	animate(mod.wearer) //stop the animation
@@ -568,7 +568,7 @@
 	range = 6
 	suppressed = SUPPRESSED_VERY
 	armor_flag = BOMB
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 1
 	light_power = 1
 	light_color = COLOR_LIGHT_ORANGE
@@ -590,7 +590,7 @@
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF|LAVA_PROOF
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 1
 	light_power = 1
 	light_color = COLOR_LIGHT_ORANGE

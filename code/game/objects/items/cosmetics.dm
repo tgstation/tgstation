@@ -176,7 +176,7 @@
 
 	user.visible_message(span_warning("[user] begins to wipe [target]'s lipstick off with \the [src]."), \
 		span_notice("You begin to wipe off [target]'s lipstick..."))
-	if(!do_after(user, 10, target = target))
+	if(!do_after(user, 1 SECONDS, target = target))
 		return
 	user.visible_message(span_notice("[user] wipes [target]'s lipstick off with \the [src]."), \
 		span_notice("You wipe off [target]'s lipstick."))

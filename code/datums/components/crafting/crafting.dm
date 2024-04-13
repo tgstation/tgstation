@@ -10,7 +10,7 @@
 	C.icon = H.ui_style
 	H.static_inventory += C
 	CL.screen += C
-	RegisterSignal(C, COMSIG_CLICK, PROC_REF(component_ui_interact))
+	RegisterSignal(C, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(component_ui_interact))
 
 #define COOKING TRUE
 #define CRAFTING FALSE
@@ -214,10 +214,10 @@
 				if(result.atom_storage && recipe.delete_contents)
 					for(var/obj/item/thing in result)
 						qdel(thing)
-			result.reagents?.clear_reagents()
 			var/datum/reagents/holder = locate() in parts
 			if(holder) //transfer reagents from ingredients to result
-				if(result.reagents)
+				if(!ispath(recipe.result,  /obj/item/reagent_containers) && result.reagents)
+					result.reagents.clear_reagents()
 					holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
 				parts -= holder
 				qdel(holder)

@@ -2,7 +2,6 @@
 /mob/living/basic/trooper/nanotrasen
 	name = "\improper Nanotrasen Private Security Officer"
 	desc = "An officer of Nanotrasen's private security force. Seems rather unpleased to meet you."
-	speed = 0
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	faction = list(ROLE_DEATHSQUAD)
@@ -65,7 +64,7 @@
 	desc = "Pray for your life, syndicate. Run while you can."
 	maxHealth = 150
 	health = 150
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	unsuitable_cold_damage = 0
 	casingtype = /obj/item/ammo_casing/energy/laser
 	burst_shots = 3

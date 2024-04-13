@@ -17,9 +17,9 @@
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	drop_sound = 'sound/items/handling/weldingtool_drop.ogg'
 	pickup_sound = 'sound/items/handling/weldingtool_pickup.ogg'
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 2
-	light_power = 0.75
+	light_power = 1.5
 	light_color = LIGHT_COLOR_FIRE
 	light_on = FALSE
 	throw_speed = 3
@@ -145,14 +145,15 @@
 	if(isnull(affecting) || !IS_ROBOTIC_LIMB(affecting))
 		return NONE
 
-	if(!use_tool(attacked_humanoid, user, 0, volume=50, amount=1))
-		return ITEM_INTERACT_BLOCKING
+	var/use_delay = 0
 
 	if(user == attacked_humanoid)
 		user.visible_message(span_notice("[user] starts to fix some of the dents on [attacked_humanoid]'s [affecting.name]."),
 			span_notice("You start fixing some of the dents on [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
-		if(!do_after(user, 5 SECONDS, attacked_humanoid))
-			return ITEM_INTERACT_BLOCKING
+		use_delay = 5 SECONDS
+
+	if(!use_tool(attacked_humanoid, user, use_delay, volume=50, amount=1))
+		return ITEM_INTERACT_BLOCKING
 
 	item_heal_robotic(attacked_humanoid, user, 15, 0)
 	return ITEM_INTERACT_SUCCESS

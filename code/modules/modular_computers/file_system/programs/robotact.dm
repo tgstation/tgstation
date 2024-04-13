@@ -47,6 +47,7 @@
 	data["maxcharge"] = maxcharge //Cell max charge
 	data["integrity"] = ((cyborg.health + 100) / 2) //health, as percentage
 	data["lampIntensity"] = cyborg.lamp_intensity //lamp power setting
+	data["lampConsumption"] = cyborg.lamp_power_consumption //Power consumption of the lamp per lamp intensity.
 	data["sensors"] = "[cyborg.sensors_on?"ACTIVE":"DISABLED"]"
 	data["printerPictures"] = cyborg.connected_ai? cyborg.connected_ai.aicamera.stored.len : cyborg.aicamera.stored.len //Number of pictures taken, synced to AI if available
 	data["printerToner"] = cyborg.toner //amount of toner
@@ -84,6 +85,7 @@
 	return data
 
 /datum/computer_file/program/robotact/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	//Implied type, memes
 	var/obj/item/modular_computer/pda/silicon/tablet = computer
 	var/mob/living/silicon/robot/cyborg = tablet.silicon_owner

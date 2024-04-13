@@ -221,7 +221,6 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/ctf_flag/LateInitialize()
-	. = ..()
 	ctf_game = GLOB.ctf_games[game_id] //Flags don't create ctf games by themselves since you can get ctf flags from christmas trees.
 
 /obj/item/ctf_flag/Destroy()
@@ -464,7 +463,7 @@
 
 /obj/structure/table/reinforced/ctf
 	resistance_flags = INDESTRUCTIBLE
-	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 
 #define CTF_LOADING_UNLOADED 0
 #define CTF_LOADING_LOADING 1
@@ -510,8 +509,9 @@
 
 	var/ctf_enabled = FALSE
 	ctf_enabled = ctf_controller.toggle_ctf()
-	for(var/obj/machinery/power/emitter/emitter in ctf_area)
-		emitter.active = ctf_enabled
+	for(var/turf/ctf_turf as anything in get_area_turfs(ctf_area))
+		for(var/obj/machinery/power/emitter/emitter in ctf_turf)
+			emitter.active = ctf_enabled
 	if(user)
 		message_admins("[key_name_admin(user)] has [ctf_enabled ? "enabled" : "disabled"] CTF!")
 	else if(automated)

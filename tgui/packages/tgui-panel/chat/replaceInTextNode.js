@@ -93,7 +93,7 @@ export const replaceInTextNode = (regex, words, createNode) => (node) => {
     for (let word of words) {
       // Capture if the word is at the beginning, end, middle,
       // or by itself in a message
-      wordRegexStr += `^${word}\\W|\\W${word}\\W|\\W${word}$|^${word}$`;
+      wordRegexStr += `^${word}\\s\\W|\\s\\W${word}\\s\\W|\\s\\W${word}$|^${word}\\s\\W$`;
       // Make sure the last character for the expression is NOT '|'
       if (++i !== words.length) {
         wordRegexStr += '|';

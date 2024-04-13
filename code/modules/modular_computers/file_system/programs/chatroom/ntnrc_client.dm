@@ -8,13 +8,13 @@
 	filename = "ntnrc_client"
 	filedesc = "Chat Client"
 	downloader_category = PROGRAM_CATEGORY_DEVICE
-	program_open_overlay = "command"
-	extended_desc = "This program allows communication over NTNRC network"
+	program_open_overlay = "text"
+	extended_desc = "This program allows communication over NTNRC network."
 	size = 8
 	ui_header = "ntnrc_idle.gif"
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	tgui_id = "NtosNetChat"
-	program_icon = "comment-alt"
+	program_icon = FA_ICON_COMMENT_ALT
 	alert_able = TRUE
 
 	///The user's screen name.
@@ -49,6 +49,7 @@
 	return new_converstaion
 
 /datum/computer_file/program/chatclient/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	var/datum/ntnet_conversation/channel = SSmodular_computers.get_chat_channel_by_id(active_channel)
 	var/authed = FALSE
 	if(channel && ((channel.channel_operator == src) || netadmin_mode))

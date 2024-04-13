@@ -17,11 +17,11 @@
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 1,
 	)
+	mecha_flags = CAN_STRAFE | HAS_LIGHTS | MMI_COMPATIBLE
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	mech_type = EXOSUIT_MODULE_RIPLEY
 	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
 	accesses = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
-	enclosed = FALSE //Normal ripley has an open cockpit design
 	enter_delay = 10 //can enter in a quarter of the time of other mechs
 	exit_delay = 10
 	/// Custom Ripley step and turning sounds (from TGMC)
@@ -75,10 +75,10 @@
 	movedelay = 4
 	max_temperature = 30000
 	max_integrity = 250
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_TEMP_CONTROL|MECHA_CABIN_AIR_BREACH|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
 	armor_type = /datum/armor/mecha_ripley_mk2
 	wreckage = /obj/structure/mecha_wreckage/ripley/mk2
-	enclosed = TRUE
 	enter_delay = 40
 	silicon_icon_state = null
 
@@ -186,7 +186,7 @@
 
 /obj/vehicle/sealed/mecha/ripley/paddy/preset
 	accesses = list(ACCESS_SECURITY)
-	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | ID_LOCK_ON
+	mecha_flags = CAN_STRAFE | HAS_LIGHTS | MMI_COMPATIBLE | ID_LOCK_ON
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler,
 		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw,
@@ -206,7 +206,7 @@
 	lights_power = 7
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
 	step_energy_drain = 0
-	enclosed = TRUE
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 	enter_delay = 40
 	silicon_icon_state = null
 	equip_by_category = list(
@@ -318,7 +318,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 
 /obj/item/mecha_parts/mecha_equipment/ejector/relay_container_resist_act(mob/living/user, obj/container)
 	to_chat(user, span_notice("You lean on the back of [container] and start pushing so it falls out of [src]."))
-	if(do_after(user, 300, target = container))
+	if(do_after(user, 30 SECONDS, target = container))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || container.loc != src )
 			return
 		to_chat(user, span_notice("You successfully pushed [container] out of [src]!"))

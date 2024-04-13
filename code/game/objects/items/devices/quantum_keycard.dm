@@ -4,7 +4,7 @@
 	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "quantum_keycard_gags"
 	greyscale_config = /datum/greyscale_config/quantum_keycard
-	greyscale_colors = "#FFFFFF"
+	greyscale_colors = COLOR_WHITE
 	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
@@ -44,7 +44,7 @@
 	if(!istype(user) || !user.can_perform_action(src, NEED_DEXTERITY))
 		return
 	to_chat(user, span_notice("You start pressing [src]'s unlink button..."))
-	if(do_after(user, 40, target = src))
+	if(do_after(user, 4 SECONDS, target = src))
 		to_chat(user, span_notice("The keycard beeps twice and disconnects the quantum link."))
 		set_pad()
 

@@ -5,6 +5,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/datum/team/team //An alternative to 'owner': a team. Use this when writing new code.
 	var/name = "generic objective" //Name for admin prompts
 	var/explanation_text = "Nothing" //What that person is supposed to do.
+	///if this objective doesn't print failure or success in the roundend report
+	var/no_failure = FALSE 
 	///name used in printing this objective (Objective #1)
 	var/objective_name = "Objective"
 	var/team_explanation_text //For when there are multiple owners.
@@ -96,6 +98,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /// Provides a string describing what a good job you did or did not do
 /datum/objective/proc/get_roundend_success_suffix()
+	if(no_failure)
+		return "" // Just print the objective with no success/fail evaluation, as it has no mechanical backing
 	return check_completion() ? span_greentext("Success!") : span_redtext("Fail.")
 
 /datum/objective/proc/is_unique_objective(possible_target, dupe_search_range)
@@ -345,6 +349,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/protect/check_completion()
 	var/obj/item/organ/internal/brain/brain_target
+	if(isnull(target))
+		return FALSE
 	if(human_check)
 		brain_target = target.current?.get_organ_slot(ORGAN_SLOT_BRAIN)
 	//Protect will always suceed when someone suicides
@@ -394,7 +400,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/jailbreak/detain/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role] is delivered to nanotrasen alive and in custody."
+		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role] is delivered to Nanotrasen alive and in custody."
 	else
 		explanation_text = "Free objective."
 
@@ -781,7 +787,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 				n_p ++
 	else if (SSticker.IsRoundInProgress())
 		for(var/mob/living/carbon/human/P in GLOB.player_list)
-			if(!(P.mind.has_antag_datum(/datum/antagonist/changeling)) && !(P.mind in owners))
+			if(!(IS_CHANGELING(P)) && !(P.mind in owners))
 				n_p ++
 	target_amount = min(target_amount, n_p)
 
@@ -981,14 +987,12 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/custom
 	name = "custom"
 	admin_grantable = TRUE
+	no_failure = TRUE
 
 /datum/objective/custom/admin_edit(mob/admin)
 	var/expl = stripped_input(admin, "Custom objective:", "Objective", explanation_text)
 	if(expl)
 		explanation_text = expl
-
-/datum/objective/custom/get_roundend_success_suffix()
-	return "" // Just print the objective with no success/fail evaluation, as it has no mechanical backing
 
 //Ideally this would be all of them but laziness and unusual subtypes
 /proc/generate_admin_objective_list()
@@ -1005,6 +1009,11 @@ GLOBAL_LIST_EMPTY(possible_items)
 	var/payout = 0
 	var/payout_bonus = 0
 	var/area/dropoff = null
+
+/datum/objective/contract/is_valid_target(datum/mind/possible_target)
+	if(HAS_TRAIT(possible_target, TRAIT_HAS_BEEN_KIDNAPPED))
+		return FALSE
+	return ..()
 
 // Generate a random valid area on the station that the dropoff will happen.
 /datum/objective/contract/proc/generate_dropoff()

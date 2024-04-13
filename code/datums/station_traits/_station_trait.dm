@@ -11,6 +11,8 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	var/trait_processes = FALSE
 	///Chance relative to other traits of its type to be picked
 	var/weight = 10
+	///The cost of the trait, which is removed from the budget.
+	var/cost = STATION_TRAIT_COST_FULL
 	///Whether this trait is always enabled; generally used for debugging
 	var/force = FALSE
 	///Does this trait show in the centcom report?
@@ -91,7 +93,7 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	SHOULD_CALL_PARENT(TRUE)
 	lobby_buttons |= lobby_button
 	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_ICON, PROC_REF(on_lobby_button_update_icon))
-	RegisterSignal(lobby_button, COMSIG_CLICK, PROC_REF(on_lobby_button_click))
+	RegisterSignal(lobby_button, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(on_lobby_button_click))
 	RegisterSignal(lobby_button, COMSIG_QDELETING, PROC_REF(on_lobby_button_destroyed))
 	lobby_button.update_appearance(UPDATE_ICON)
 

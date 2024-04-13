@@ -73,3 +73,10 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/mothroach,
 	)
+
+/mob/living/basic/mothroach/bar
+	name = "mothroach bartender"
+	desc = "A mothroach serving drinks. Look at him go."
+	icon_state = "barroach"
+	icon_living = "barroach"
+	icon_dead = "barroach_dead"

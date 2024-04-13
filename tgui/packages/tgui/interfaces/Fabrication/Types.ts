@@ -68,16 +68,6 @@ export type Design = {
    * 32x32.**
    */
   icon: string;
-
-  /**
-   * The amount of time, in seconds, that this design takes to print.
-   */
-  constructionTime: number;
-
-  /**
-   * The maximum number of items than can be printed
-   */
-  maxmult: number;
 };
 
 /**

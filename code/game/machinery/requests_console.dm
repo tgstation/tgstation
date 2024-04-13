@@ -394,10 +394,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		return
 	return ..()
 
-/obj/machinery/requests_console/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/wallframe/requests_console(loc)
-	qdel(src)
+/obj/machinery/requests_console/on_deconstruction(disassembled)
+	new /obj/item/wallframe/requests_console(loc)
 
 /obj/machinery/requests_console/auto_name // Register an autoname variant and then make the directional helpers before undefing all the magic bits
 	auto_name = TRUE

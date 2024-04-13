@@ -68,8 +68,8 @@
 	if(client && hud_used)
 		hud_used.reorganize_alerts()
 	if(!no_anim)
-		thealert.transform = matrix(32, 6, MATRIX_TRANSLATE)
-		animate(thealert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
+		thealert.transform = matrix(32, 0, MATRIX_TRANSLATE)
+		animate(thealert, transform = matrix(), time = 1 SECONDS, easing = ELASTIC_EASING)
 	if(timeout_override)
 		thealert.timeout = timeout_override
 	if(thealert.timeout)
@@ -184,22 +184,6 @@
 	icon_state = ALERT_TOO_MUCH_N2O
 
 //End gas alerts
-
-
-/atom/movable/screen/alert/fat
-	name = "Fat"
-	desc = "You ate too much food, lardass. Run around the station and lose some weight."
-	icon_state = "fat"
-
-/atom/movable/screen/alert/hungry
-	name = "Hungry"
-	desc = "Some food would be good right about now."
-	icon_state = "hungry"
-
-/atom/movable/screen/alert/starving
-	name = "Starving"
-	desc = "You're severely malnourished. The hunger pains make moving around a chore."
-	icon_state = "starving"
 
 /atom/movable/screen/alert/gross
 	name = "Grossed out."
@@ -464,7 +448,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/mob/living/living_owner = owner
 	var/last_whisper
 	if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
-		last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince")
+		last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince", encode = FALSE) // saycode already handles sanitization
 	if(isnull(last_whisper))
 		if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
 			return
@@ -826,6 +810,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/poll_alert/Initialize(mapload)
 	. = ..()
+	signed_up_overlay = mutable_appearance('icons/hud/screen_gen.dmi', icon_state = "selector")
 	register_context()
 
 /atom/movable/screen/alert/poll_alert/proc/set_role_overlay()
@@ -843,6 +828,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	QDEL_NULL(stacks_overlay)
 	QDEL_NULL(candidates_num_overlay)
 	QDEL_NULL(signed_up_overlay)
+	if(poll)
+		poll.alert_buttons -= src
+	poll = null
 	return ..()
 
 /atom/movable/screen/alert/poll_alert/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -873,9 +861,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		time_left_overlay.maptext = MAPTEXT("<span style='color: [(timeleft <= 10 SECONDS) ? "red" : "white"]'><b>[CEILING(timeleft / (1 SECONDS), 1)]</b></span>")
 		time_left_overlay.transform = time_left_overlay.transform.Translate(4, 19)
 		add_overlay(time_left_overlay)
-	if(isnull(poll))
-		return
-	..()
 
 /atom/movable/screen/alert/poll_alert/Click(location, control, params)
 	. = ..()
@@ -886,7 +871,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		set_never_round()
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK) && poll.jump_to_me)
-		jump_to_pic_source()
+		jump_to_jump_target()
 		return
 	handle_sign_up()
 
@@ -895,16 +880,18 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		poll.remove_candidate(owner)
 	else if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
 		poll.sign_up(owner)
+	update_signed_up_overlay()
 
 /atom/movable/screen/alert/poll_alert/proc/set_never_round()
 	if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
 		poll.do_never_for_this_round(owner)
 		color = "red"
+		update_signed_up_overlay()
 		return
 	poll.undo_never_for_this_round(owner)
 	color = initial(color)
 
-/atom/movable/screen/alert/poll_alert/proc/jump_to_pic_source()
+/atom/movable/screen/alert/poll_alert/proc/jump_to_jump_target()
 	if(!poll?.jump_to_me || !isobserver(owner))
 		return
 	var/turf/target_turf = get_turf(poll.jump_to_me)
@@ -918,11 +905,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(href_list["signup"])
 		handle_sign_up()
 	if(href_list["jump"])
-		jump_to_pic_source()
+		jump_to_jump_target()
 		return
 
 /atom/movable/screen/alert/poll_alert/proc/update_signed_up_overlay()
-	signed_up_overlay = mutable_appearance('icons/hud/screen_gen.dmi', icon_state = "selector")
 	if(owner in poll.signed_up)
 		add_overlay(signed_up_overlay)
 	else
@@ -1032,41 +1018,39 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
+/// Gets the placement for the alert based on its index
+/datum/hud/proc/get_ui_alert_placement(index)
+	// Only has support for 5 slots currently
+	if(index > 5)
+		return ""
+
+	return "EAST-1:28,CENTER+[6 - index]:[29 - (index * 2)]"
+
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there
 /datum/hud/proc/reorganize_alerts(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
 	if(!screenmob.client)
-		return
+		return FALSE
 	var/list/alerts = mymob.alerts
 	if(!hud_shown)
 		for(var/i in 1 to alerts.len)
 			screenmob.client.screen -= alerts[alerts[i]]
-		return 1
-	for(var/i in 1 to alerts.len)
+		return TRUE
+	for(var/i in 1 to length(alerts))
 		var/atom/movable/screen/alert/alert = alerts[alerts[i]]
 		if(alert.icon_state == "template")
 			alert.icon = ui_style
-		switch(i)
-			if(1)
-				. = ui_alert1
-			if(2)
-				. = ui_alert2
-			if(3)
-				. = ui_alert3
-			if(4)
-				. = ui_alert4
-			if(5)
-				. = ui_alert5 // Right now there's 5 slots
-			else
-				. = ""
-		alert.screen_loc = .
+		alert.screen_loc = get_ui_alert_placement(i)
 		screenmob.client.screen |= alert
 	if(!viewmob)
-		for(var/M in mymob.observers)
-			reorganize_alerts(M)
-	return 1
+		for(var/viewer in mymob.observers)
+			reorganize_alerts(viewer)
+	return TRUE
 
 /atom/movable/screen/alert/Click(location, control, params)
+	SHOULD_CALL_PARENT(TRUE)
+
+	..()
 	if(!usr || !usr.client)
 		return FALSE
 	if(usr != owner)

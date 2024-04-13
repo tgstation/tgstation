@@ -117,14 +117,10 @@
 	return ..()
 
 /obj/item/melee/sabre/on_exit_storage(datum/storage/container)
-	var/obj/item/storage/belt/sabre/sabre = container.real_location?.resolve()
-	if(istype(sabre))
-		playsound(sabre, 'sound/items/unsheath.ogg', 25, TRUE)
+	playsound(container.parent, 'sound/items/unsheath.ogg', 25, TRUE)
 
 /obj/item/melee/sabre/on_enter_storage(datum/storage/container)
-	var/obj/item/storage/belt/sabre/sabre = container.real_location?.resolve()
-	if(istype(sabre))
-		playsound(sabre, 'sound/items/sheath.ogg', 25, TRUE)
+	playsound(container.parent, 'sound/items/sheath.ogg', 25, TRUE)
 
 /obj/item/melee/sabre/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!"))
@@ -450,7 +446,7 @@
 	finish_roasting(user, target)
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
-	if(do_after(user, 100, target = user))
+	if(do_after(user, 10 SECONDS, target = user))
 		to_chat(user, span_notice("You finish roasting [held_sausage]."))
 		playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
 		held_sausage.add_atom_colour(rgb(103, 63, 24), FIXED_COLOUR_PRIORITY)
@@ -474,7 +470,7 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/cleric_mace_lefthand
 	greyscale_config_inhand_right = /datum/greyscale_config/cleric_mace_righthand
 	greyscale_config_worn = /datum/greyscale_config/cleric_mace
-	greyscale_colors = "#FFFFFF"
+	greyscale_colors = COLOR_WHITE
 
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS //Material type changes the prefix as well as the color.
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6)  //Defaults to an Iron Mace.

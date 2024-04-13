@@ -43,7 +43,7 @@
 		return
 	var/datum/looping_sound/typing/typing_sounds = new(src, start_immediately = TRUE)
 	balloon_alert(user, "synchronizing...")
-	if(!do_after(user = user, delay = 3 SECONDS, target = src, interaction_key = REF(src)))
+	if(!do_after(user = user, delay = 3 SECONDS, target = src, interaction_key = REF(src), hidden = TRUE))
 		typing_sounds.stop()
 		return
 	typing_sounds.stop()
@@ -52,7 +52,7 @@
 /obj/structure/syndicate_uplink_beacon/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
 	balloon_alert(user, "deconstructing...")
-	if (!do_after(user, 5 SECONDS, target = src))
+	if (!do_after(user, 5 SECONDS, target = src, hidden = TRUE))
 		return FALSE
 	var/turf/beacon_tile = get_turf(src)
 	new /obj/item/stack/sheet/iron/five(beacon_tile)

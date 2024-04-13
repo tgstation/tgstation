@@ -785,7 +785,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return string
 
 	var/base = next_backslash == 1 ? "" : copytext(string, 1, next_backslash)
-	var/macro = lowertext(copytext(string, next_backslash + length(string[next_backslash]), next_space))
+	var/macro = LOWER_TEXT(copytext(string, next_backslash + length(string[next_backslash]), next_space))
 	var/rest = next_backslash > leng ? "" : copytext(string, next_space + length(string[next_space]))
 
 	//See https://secure.byond.com/docs/ref/info.html#/DM/text/macros
@@ -1082,7 +1082,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	var/text_length = length(text)
 
 	//remove caps since words will be shuffled
-	text = lowertext(text)
+	text = LOWER_TEXT(text)
 	//remove punctuation for same reasons as above
 	var/punctuation = ""
 	var/punctuation_hit_list = list("!","?",".","-")
@@ -1196,3 +1196,10 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/endswith(input_text, ending)
 	var/input_length = LAZYLEN(ending)
 	return !!findtext(input_text, ending, -input_length)
+
+/// Generate a grawlix string of length of the text argument.
+/proc/grawlix(text)
+	var/grawlix = ""
+	for(var/iteration in 1 to length_char(text))
+		grawlix += pick("@", "$", "?", "!", "#", "§", "*", "£", "%", "☠", "★", "☆", "¿", "⚡")
+	return grawlix

@@ -89,7 +89,7 @@ export const Vent = (props: VentProps) => {
               'Overclocking will allow the vent to overpower extreme pressure conditions. However, it will also cause the vent to become damaged over time and eventually fail. The lower the integrity, the less effective the vent will be when in normal operation.'
             }
           >
-            Integrity: {(integrity * 100).toFixed(2)}%
+            {(integrity * 100).toFixed(2)}%
           </p>
         </LabeledList.Item>
         <LabeledList.Item label="Mode">
@@ -138,7 +138,7 @@ export const Vent = (props: VentProps) => {
               minValue={0}
               step={10}
               maxValue={5066}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_internal_pressure', {
                   ref: refID,
                   value,
@@ -166,7 +166,7 @@ export const Vent = (props: VentProps) => {
               minValue={0}
               step={10}
               maxValue={5066}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_external_pressure', {
                   ref: refID,
                   value,

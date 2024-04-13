@@ -121,18 +121,16 @@
 		visually_turn(new_angle)
 		azimuth_current = new_angle
 
-/obj/machinery/power/solar/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(disassembled)
-			var/obj/item/solar_assembly/S = locate() in src
-			if(S)
-				S.forceMove(loc)
-				S.give_glass(machine_stat & BROKEN)
-		else
-			playsound(src, SFX_SHATTER, 70, TRUE)
-			new /obj/item/shard(src.loc)
-			new /obj/item/shard(src.loc)
-	qdel(src)
+/obj/machinery/power/solar/on_deconstruction(disassembled)
+	if(disassembled)
+		var/obj/item/solar_assembly/S = locate() in src
+		if(S)
+			S.forceMove(loc)
+			S.give_glass(machine_stat & BROKEN)
+	else
+		playsound(src, SFX_SHATTER, 70, TRUE)
+		new /obj/item/shard(src.loc)
+		new /obj/item/shard(src.loc)
 
 /obj/machinery/power/solar/update_overlays()
 	. = ..()
@@ -250,7 +248,7 @@
 		return
 
 	var/sgen = SOLAR_GEN_RATE * sunfrac
-	add_avail(sgen)
+	add_avail(power_to_energy(sgen))
 	if(control)
 		control.gen += sgen
 

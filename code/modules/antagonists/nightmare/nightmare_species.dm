@@ -39,7 +39,6 @@
 	. = ..()
 
 	C.fully_replace_character_name(null, pick(GLOB.nightmare_names))
-	C.set_safe_hunger_level()
 
 /datum/species/shadow/nightmare/check_roundstart_eligible()
 	return FALSE

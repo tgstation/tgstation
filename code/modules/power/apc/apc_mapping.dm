@@ -28,3 +28,5 @@
 
 APC_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/worn_out)
 APC_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name)
+
+#undef APC_DIRECTIONAL_HELPERS

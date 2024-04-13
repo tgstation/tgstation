@@ -358,13 +358,12 @@ and displays selected entry.
 - See inherited props: [Box](#box)
 - See inherited props: [Icon](#icon)
 - `options: string[] | DropdownEntry[]` - An array of strings which will be displayed in the
-  dropdown when open. See Dropdown.tsx for more adcanced usage with DropdownEntry
+  dropdown when open. See Dropdown.tsx for more advanced usage with DropdownEntry
 - `selected: any` - Currently selected entry
-- `width: string` - Width of dropdown button and resulting menu; css width value
 - `over: boolean` - Dropdown renders over instead of below
 - `color: string` - Color of dropdown button
-- `nochevron: boolean` - Whether or not the arrow on the right hand side of the dropdown button is visible
-- `displayText: string | number | ReactNode` - Text to always display in place of the selected text
+- `noChevron: boolean` - Whether or not the arrow on the right hand side of the dropdown button is visible
+- `displayText: ReactNode` - Text to always display in place of the selected text
 - `onClick: (e) => void` - Called when dropdown button is clicked
 - `onSelected: (value) => void` - Called when a value is picked from the list, `value` is the value that was picked
 
@@ -556,6 +555,8 @@ A basic text input, which allow users to enter text into a UI.
 - `onEnter: (e, value) => void` - Fires when the user hits enter.
 - `onEscape: (e) => void` - Fires when the user hits escape.
 - `onInput: (e, value) => void` - Fires when the user types into the input.
+- `expensive: boolean` - Introduces a delay before updating the input. Useful for large filters,
+  where you don't want to update on every keystroke.
 
 ### `Knob`
 
@@ -709,27 +710,25 @@ to fine tune the value, or single click it to manually type a number.
 **Props:**
 
 - `animated: boolean` - Animates the value if it was changed externally.
+- `disabled: boolean` - Makes the input field uneditable & non draggable to prevent user changes
 - `fluid: boolean` - Fill all available horizontal space.
-- `value: number` - Value itself.
+- `value: string|number` - Value itself.
 - `unit: string` - Unit to display to the right of value.
 - `minValue: number` - Lowest possible value.
 - `maxValue: number` - Highest possible value.
-- `step: number` (default: 1) - Adjust value by this amount when
+- `step: number` - Adjust value by this amount when
   dragging the input.
 - `stepPixelSize: number` (default: 1) - Screen distance mouse needs
   to travel to adjust value by one `step`.
-- `width: string|number` - Width of the element, in `Box` units or pixels.
-- `height: string|numer` - Height of the element, in `Box` units or pixels.
-- `lineHeight: string|number` - lineHeight of the element, in `Box` units or pixels.
-- `fontSize: string|number` - fontSize of the element, in `Box` units or pixels.
-- `format: value => value` - Format value using this function before
+- `width: string` - Width of the element, in `Box` units or pixels.
+- `height: string` - Height of the element, in `Box` units or pixels.
+- `lineHeight: string` - lineHeight of the element, in `Box` units or pixels.
+- `fontSize: string` - fontSize of the element, in `Box` units or pixels.
+- `format: (value: number) => string` - Format value using this function before
   displaying it.
-- `suppressFlicker: number` - A number in milliseconds, for which the input
-  will hold off from updating while events propagate through the backend.
-  Default is about 250ms, increase it if you still see flickering.
-- `onChange: (e, value) => void` - An event, which fires when you release
+- `onChange: (value: number) => void` - An event, which fires when you release
   the input, or successfully enter a number.
-- `onDrag: (e, value) => void` - An event, which fires about every 500ms
+- `onDrag: (value: number) => void` - An event, which fires about every 500ms
   when you drag the input up and down, on release and on manual editing.
 
 ### `Popper`
@@ -738,9 +737,10 @@ Popper lets you position elements so that they don't go out of the bounds of the
 
 **Props:**
 
-- `popperContent: ReactNode` - The content that will be put inside the popper.
-- `options?: { ... }` - An object of options to pass to `createPopper`. See [https://popper.js.org/docs/v2/constructors/#options], but the one you want most is `placement`. Valid placements are "bottom", "top", "left", and "right". You can affix "-start" and "-end" to achieve something like top left or top right respectively. You can also use "auto" (with an optional "-start" or "-end"), where a best fit will be chosen.
-- `additionalStyles: { ... }` - A map of CSS styles to add to the element that will contain the popper.
+- `content: ReactNode` - The content that will be put inside the popper.
+- `isOpen: boolean` - Whether or not the popper is open.
+- `onClickOutside?: (e) => void` - A function that will be called when the user clicks outside of the popper.
+- `placement?: string` - The placement of the popper. See [https://popper.js.org/docs/v2/constructors/#placement]
 
 ### `ProgressBar`
 

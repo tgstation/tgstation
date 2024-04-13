@@ -69,16 +69,13 @@
 	. = ..()
 	emag_act()
 
-/obj/machinery/digital_clock/deconstruct(disassembled = TRUE)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
+/obj/machinery/digital_clock/on_deconstruction(disassembled)
 	if(disassembled)
 		new /obj/item/wallframe/digital_clock(drop_location())
 	else
 		new /obj/item/stack/sheet/iron(drop_location(), 2)
 		new /obj/item/shard(drop_location())
 		new /obj/item/shard(drop_location())
-	qdel(src)
 
 /obj/machinery/digital_clock/Initialize(mapload)
 	. = ..()

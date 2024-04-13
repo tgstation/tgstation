@@ -58,7 +58,7 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_constant_data, /datum/quirk_constant_data, gene
 /datum/quirk_constant_data/proc/is_customizable()
 	return LAZYLEN(customization_options) > 0
 
-/datum/quirk_constant_data/Destroy(force, ...)
+/datum/quirk_constant_data/Destroy(force)
 	var/error_message = "[src], a singleton quirk constant data instance, was destroyed! This should not happen!"
 	if (force)
 		error_message += " NOTE: This Destroy() was called with force == TRUE. This instance will be deleted and replaced with a new one."

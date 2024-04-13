@@ -201,7 +201,7 @@
 	if(mapload)
 		return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/door/airlock/LateInitialize(mapload)
+/obj/machinery/door/airlock/post_machine_initialize(mapload)
 	. = ..()
 	if(mapload)
 		auto_align()
@@ -321,9 +321,6 @@
 		for(var/obj/machinery/door/airlock/otherlock as anything in close_others)
 			otherlock.close_others -= src
 		close_others.Cut()
-	if(id_tag)
-		for(var/obj/machinery/door_buttons/D as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door_buttons))
-			D.removeMe(src)
 	QDEL_NULL(note)
 	QDEL_NULL(seal)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
@@ -823,7 +820,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!(issilicon(user) || isAdminGhostAI(user)))
+	if(!HAS_SILICON_ACCESS(user))
 		if(isElectrified() && shock(user, 100))
 			return
 
@@ -1034,7 +1031,7 @@
 	return TRUE
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)
-	if(!issilicon(user) && !isAdminGhostAI(user))
+	if(!HAS_SILICON_ACCESS(user))
 		if(isElectrified() && (C.obj_flags & CONDUCTS_ELECTRICITY) && shock(user, 75))
 			return
 	add_fingerprint(user)
@@ -1301,14 +1298,14 @@
 		if(DEFAULT_DOOR_CHECKS) // Regular behavior.
 			if(!hasPower() || wires.is_cut(WIRE_OPEN) || (obj_flags & EMAGGED))
 				return FALSE
-			use_power(50)
+			use_energy(50 JOULES)
 			playsound(src, doorOpen, 30, TRUE)
 			return TRUE
 
 		if(FORCING_DOOR_CHECKS) // Only one check.
 			if(obj_flags & EMAGGED)
 				return FALSE
-			use_power(50)
+			use_energy(50 JOULES)
 			playsound(src, doorOpen, 30, TRUE)
 			return TRUE
 
@@ -1383,7 +1380,7 @@
 		if(DEFAULT_DOOR_CHECKS to FORCING_DOOR_CHECKS)
 			if(obj_flags & EMAGGED)
 				return FALSE
-			use_power(50)
+			use_energy(50 JOULES)
 			playsound(src, doorClose, 30, TRUE)
 			return TRUE
 
@@ -1490,7 +1487,7 @@
 
 /obj/machinery/door/airlock/hostile_lockdown(mob/origin)
 	// Must be powered and have working AI wire.
-	if(canAIControl(src) && !machine_stat)
+	if(canAIControl(origin) && !machine_stat)
 		locked = FALSE //For airlocks that were bolted open.
 		safe = FALSE //DOOR CRUSH
 		close()
@@ -1502,7 +1499,7 @@
 
 /obj/machinery/door/airlock/disable_lockdown()
 	// Must be powered and have working AI wire.
-	if(canAIControl(src) && !machine_stat)
+	if(canAIControl() && !machine_stat)
 		unbolt()
 		set_electrified(MACHINE_NOT_ELECTRIFIED)
 		open()
@@ -1580,38 +1577,31 @@
 	assembly.update_name()
 	assembly.update_appearance()
 
-/obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/obj/structure/door_assembly/A
-		if(assemblytype)
-			A = new assemblytype(loc)
-		else
-			A = new /obj/structure/door_assembly(loc)
-			//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
-		prepare_deconstruction_assembly(A)
+/obj/machinery/door/airlock/on_deconstruction(disassembled)
+	var/obj/structure/door_assembly/A
+	if(assemblytype)
+		A = new assemblytype(loc)
+	else
+		A = new /obj/structure/door_assembly(loc)
+		//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
+	prepare_deconstruction_assembly(A)
 
-		if(!disassembled)
-			A?.update_integrity(A.max_integrity * 0.5)
-		else if(obj_flags & EMAGGED)
-			if(user)
-				to_chat(user, span_warning("You discard the damaged electronics."))
-		else
-			if(user)
-				to_chat(user, span_notice("You remove the airlock electronics."))
+	if(!disassembled)
+		A?.update_integrity(A.max_integrity * 0.5)
 
-			var/obj/item/electronics/airlock/ae
-			if(!electronics)
-				ae = new/obj/item/electronics/airlock(loc)
-				if(length(req_one_access))
-					ae.one_access = 1
-					ae.accesses = req_one_access
-				else
-					ae.accesses = req_access
+	else if(!(obj_flags & EMAGGED))
+		var/obj/item/electronics/airlock/ae
+		if(!electronics)
+			ae = new/obj/item/electronics/airlock(loc)
+			if(length(req_one_access))
+				ae.one_access = 1
+				ae.accesses = req_one_access
 			else
-				ae = electronics
-				electronics = null
-				ae.forceMove(drop_location())
-	qdel(src)
+				ae.accesses = req_access
+		else
+			ae = electronics
+			electronics = null
+			ae.forceMove(drop_location())
 
 /obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -1748,7 +1738,7 @@
 			. = TRUE
 
 /obj/machinery/door/airlock/proc/user_allowed(mob/user)
-	return (issilicon(user) && canAIControl(user)) || isAdminGhostAI(user)
+	return (HAS_SILICON_ACCESS(user) && canAIControl(user)) || isAdminGhostAI(user)
 
 /obj/machinery/door/airlock/proc/shock_restore(mob/user)
 	if(!user_allowed(user))
@@ -1878,6 +1868,7 @@
 	normal_integrity = 450
 	greyscale_config = null
 	greyscale_colors = null
+	var/id = null
 
 /obj/machinery/door/airlock/engineering
 	name = "engineering airlock"
@@ -2107,7 +2098,7 @@
 	name = "uranium airlock"
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_uranium
-	greyscale_colors = rgb(0,51,0)+rgb(0,51,0)+rgb(0,68,0)+rgb(0,68,0)+rgb(0,51,0)+rgb(109,101,101)+rgb(0,51,0)
+	greyscale_colors = "#003300#003300#004400#004400#003300#6d6565#003300"
 	var/last_event = 0
 	//Is this airlock actually radioactive?
 	var/actually_radioactive = TRUE
@@ -2117,7 +2108,6 @@
 		if(prob(50))
 			radiate()
 		last_event = world.time
-	..()
 
 /obj/machinery/door/airlock/uranium/proc/radiate()
 	radiation_pulse(
@@ -2264,7 +2254,7 @@
 
 	return ..()
 
-/obj/machinery/door/airlock/external/LateInitialize()
+/obj/machinery/door/airlock/external/post_machine_initialize()
 	. = ..()
 	if(space_dir)
 		unres_sides |= space_dir
@@ -2420,6 +2410,7 @@
 /obj/machinery/door/airlock/cult/Initialize(mapload)
 	. = ..()
 	new openingoverlaytype(loc)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/machinery/door/airlock/cult/canAIControl(mob/user)
 	return (IS_CULTIST(user) && !isAllPowerCut())
@@ -2446,7 +2437,7 @@
 			var/atom/throwtarget
 			throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
 			SEND_SOUND(L, sound(pick('sound/hallucinations/turn_around1.ogg','sound/hallucinations/turn_around2.ogg'),0,1,50))
-			flash_color(L, flash_color="#960000", flash_time=20)
+			flash_color(L, flash_color=COLOR_CULT_RED, flash_time=20)
 			L.Paralyze(40)
 			L.throw_at(throwtarget, 5, 1)
 		return FALSE
@@ -2468,9 +2459,6 @@
 	update_appearance()
 
 /obj/machinery/door/airlock/cult/narsie_act()
-	return
-
-/obj/machinery/door/airlock/cult/emp_act(severity)
 	return
 
 /obj/machinery/door/airlock/cult/friendly

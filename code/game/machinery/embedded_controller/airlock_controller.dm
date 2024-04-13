@@ -39,9 +39,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airlock_controller)
 	. = ..()
 	find_and_hang_on_wall()
 
-/obj/machinery/airlock_controller/LateInitialize()
+/obj/machinery/airlock_controller/post_machine_initialize()
 	. = ..()
-
 	var/obj/machinery/door/interior_door = GLOB.objects_by_id_tag[interior_door_tag]
 	if (!isnull(interior_door_tag) && !istype(interior_door))
 		stack_trace("interior_door_tag is set to [interior_door_tag], which is not a door ([interior_door || "null"])")

@@ -12,8 +12,10 @@
 	var/remove_inner_pools = TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_warp/Activate(atom/target_atom)
+	disable_cooldown_actions()
 	blood_warp(target_atom)
 	StartCooldown()
+	enable_cooldown_actions()
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_warp/proc/blood_warp(atom/target)
@@ -32,7 +34,7 @@
 		return FALSE
 
 	var/obj/effect/temp_visual/decoy/DA = new /obj/effect/temp_visual/decoy(owner.loc, owner)
-	DA.color = "#FF0000"
+	DA.color = COLOR_RED
 	var/oldtransform = DA.transform
 	DA.transform = matrix()*2
 	animate(DA, alpha = 255, color = initial(DA.color), transform = oldtransform, time = 3)

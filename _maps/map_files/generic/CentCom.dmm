@@ -236,9 +236,7 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation/ship)
 "bd" = (
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/south{
 	name = "Thunderdome Booth";
 	req_access = list("cent_captain")
 	},
@@ -415,8 +413,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "bP" = (
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/south{
 	name = "CentCom Stand";
 	req_access = list("cent_captain")
 	},
@@ -1420,8 +1417,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
 "gC" = (
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/south{
 	name = "CentCom Stand";
 	req_access = list("cent_captain")
 	},
@@ -2418,7 +2414,7 @@
 /area/centcom/central_command_areas/control)
 "lb" = (
 /obj/structure/table/wood,
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /obj/item/radio/intercom{
 	desc = "Talk smack through this.";
 	syndie = 1
@@ -2439,8 +2435,7 @@
 	desc = "Talk smack through this.";
 	syndie = 1
 	},
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/south{
 	name = "CentCom Stand";
 	req_access = list("cent_captain")
 	},
@@ -3342,10 +3337,7 @@
 "pl" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
-	dir = 4;
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "CentCom Customs";
 	req_access = list("cent_captain")
 	},
@@ -4623,14 +4615,11 @@
 /obj/machinery/door/firedoor,
 /obj/item/folder/red,
 /obj/item/pen/red,
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
-	dir = 1;
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/north{
 	name = "CentCom Customs";
 	req_access = list("cent_captain")
 	},
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
@@ -6242,10 +6231,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/storage/fancy/donut_box,
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
-	dir = 1;
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/north{
 	name = "CentCom Customs";
 	req_access = list("cent_captain")
 	},
@@ -6264,10 +6250,7 @@
 "BP" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
-	dir = 1;
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/north{
 	name = "CentCom Customs";
 	req_access = list("cent_captain")
 	},
@@ -6625,14 +6608,11 @@
 /obj/machinery/door/firedoor,
 /obj/item/folder/red,
 /obj/item/pen/red,
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
-	dir = 4;
-	icon_state = "rightsecure";
+/obj/effect/turf_decal/bot,
+/obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "CentCom Customs";
 	req_access = list("cent_captain")
 	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "DI" = (
@@ -6640,14 +6620,11 @@
 /obj/machinery/door/firedoor,
 /obj/item/folder/white,
 /obj/item/pen/blue,
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
-	dir = 8;
-	icon_state = "rightsecure";
+/obj/effect/turf_decal/bot,
+/obj/machinery/door/window/brigdoor/right/directional/west{
 	name = "CentCom Customs";
 	req_access = list("cent_captain")
 	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "DJ" = (
@@ -6805,9 +6782,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/four)
 "EH" = (
-/obj/machinery/door/window{
-	dir = 8
-	},
+/obj/machinery/door/window/left/directional/west,
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
@@ -6949,8 +6924,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
 "Fw" = (
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/south{
 	name = "CentCom Stand";
 	req_access = list("cent_captain")
 	},
@@ -10504,8 +10478,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/one)
 "XF" = (
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/south{
 	name = "CentCom Stand";
 	req_access = list("cent_captain")
 	},

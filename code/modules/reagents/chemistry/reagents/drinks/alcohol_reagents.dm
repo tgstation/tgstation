@@ -158,6 +158,7 @@
 		drinker.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 
 /datum/reagent/consumable/ethanol/beer/green/on_mob_end_metabolize(mob/living/drinker)
+	. = ..()
 	drinker.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, color)
 
 /datum/reagent/consumable/ethanol/beer/green/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -181,6 +182,7 @@
 	boozepwr = 45
 	ph = 6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
@@ -229,6 +231,7 @@
 	overdose_threshold = 60
 	taste_description = "jitters and death"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
@@ -420,7 +423,7 @@
 	description = "A sweet and strongly alcoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
 	color = "#AB3C05" // rgb: 171, 60, 5
 	boozepwr = 75
-	taste_description = "angry and irish"
+	taste_description = "smooth and french"
 	ph = 3.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
@@ -589,37 +592,55 @@
 	taste_description = "oranges"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/screwdrivercocktail/on_transfer(atom/atom, methods = TOUCH, trans_volume)
-	if(!(methods & INGEST))
-		return ..()
-
-	if(src == atom.reagents.get_master_reagent() && istype(atom, /obj/item/reagent_containers/cup/glass/drinkingglass))
-		var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = atom
-		drink.tool_behaviour = TOOL_SCREWDRIVER
+/datum/reagent/consumable/ethanol/screwdrivercocktail/on_new(data)
+	. = ..()
+	// We want to turn only base drinking glasses with screwdriver(cocktail) into screwdrivers(tool),
+	// but we can't check style so we have to check type, and we don't want it match subtypes like istype does
+	if(holder?.my_atom && holder.my_atom.type == /obj/item/reagent_containers/cup/glass/drinkingglass/)
 		var/list/reagent_change_signals = list(
 			COMSIG_REAGENTS_ADD_REAGENT,
 			COMSIG_REAGENTS_NEW_REAGENT,
 			COMSIG_REAGENTS_REM_REAGENT,
-			COMSIG_REAGENTS_DEL_REAGENT,
-			COMSIG_REAGENTS_CLEAR_REAGENTS,
-			COMSIG_REAGENTS_REACTED,
 		)
-		RegisterSignals(drink.reagents, reagent_change_signals, PROC_REF(on_reagent_change))
-
-	return ..()
+		RegisterSignals(holder, reagent_change_signals, PROC_REF(on_reagent_change))
+		RegisterSignal(holder, COMSIG_REAGENTS_CLEAR_REAGENTS, PROC_REF(on_reagents_clear))
+		RegisterSignal(holder, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_delete))
+		if(src == holder.get_master_reagent())
+			var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = holder.my_atom
+			drink.tool_behaviour = TOOL_SCREWDRIVER
+			drink.usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagent_change(datum/reagents/reagents)
 	SIGNAL_HANDLER
-	if(src != reagents.get_master_reagent())
-		var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = reagents.my_atom
+	var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = reagents.my_atom
+	if(reagents.get_master_reagent() == src)
+		drink.tool_behaviour = TOOL_SCREWDRIVER
+		drink.usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
+	else
 		drink.tool_behaviour = initial(drink.tool_behaviour)
-		UnregisterSignal(reagents, list(
+		drink.usesound = initial(drink.usesound)
+
+/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagents_clear(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	unregister_screwdriver(reagents)
+
+/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagent_delete(datum/reagents/reagents, datum/reagent/deleted_reagent)
+	SIGNAL_HANDLER
+	if(deleted_reagent != src)
+		return
+	unregister_screwdriver(reagents)
+
+/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/unregister_screwdriver(datum/reagents/reagents)
+	var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = reagents.my_atom
+	if(drink.tool_behaviour == TOOL_SCREWDRIVER)
+		drink.tool_behaviour = initial(drink.tool_behaviour)
+		drink.usesound = initial(drink.usesound)
+	UnregisterSignal(reagents, list(
 			COMSIG_REAGENTS_ADD_REAGENT,
 			COMSIG_REAGENTS_NEW_REAGENT,
 			COMSIG_REAGENTS_REM_REAGENT,
 			COMSIG_REAGENTS_DEL_REAGENT,
 			COMSIG_REAGENTS_CLEAR_REAGENTS,
-			COMSIG_REAGENTS_REACTED,
 		))
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
@@ -666,6 +687,7 @@
 	taste_description = "alcoholic bravery"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
+	metabolized_traits = list(TRAIT_FEARLESS, TRAIT_ANALGESIA)
 	var/tough_text
 
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_metabolize(mob/living/drinker)
@@ -674,14 +696,12 @@
 	to_chat(drinker, span_notice("You feel [tough_text]!"))
 	drinker.maxHealth += 10 //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
 	drinker.health += 10
-	ADD_TRAIT(drinker, TRAIT_FEARLESS, type)
 
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_end_metabolize(mob/living/drinker)
 	. = ..()
 	to_chat(drinker, span_notice("You no longer feel [tough_text]."))
 	drinker.maxHealth -= 10
 	drinker.health = min(drinker.health - 10, drinker.maxHealth) //This can indeed crit you if you're alive solely based on alchol ingestion
-	REMOVE_TRAIT(drinker, TRAIT_FEARLESS, type)
 
 /datum/reagent/consumable/ethanol/tequila_sunrise
 	name = "Tequila Sunrise"
@@ -698,7 +718,7 @@
 	. = ..()
 	to_chat(drinker, span_notice("You feel gentle warmth spread through your body!"))
 	light_holder = new(drinker)
-	light_holder.set_light(3, 0.7, "#FFCC00") //Tequila Sunrise makes you radiate dim light, like a sunrise!
+	light_holder.set_light(3, 0.7, COLOR_TANGERINE_YELLOW) //Tequila Sunrise makes you radiate dim light, like a sunrise!
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(QDELETED(light_holder))
@@ -728,7 +748,7 @@
 /datum/reagent/consumable/ethanol/beepsky_smash
 	name = "Beepsky Smash"
 	description = "Drink this and prepare for the LAW."
-	color = "#808000" // rgb: 128,128,0
+	color = COLOR_OLIVE // rgb: 128,128,0
 	boozepwr = 60 //THE FIST OF THE LAW IS STRONG AND HARD
 	quality = DRINK_GOOD
 	metabolization_rate = 1.25 * REAGENTS_METABOLISM
@@ -849,6 +869,7 @@
 	quality = DRINK_NICE
 	taste_description = "giving up on the day"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/consumable/ethanol/margarita
 	name = "Margarita"
@@ -934,7 +955,7 @@
 /datum/reagent/consumable/ethanol/snowwhite
 	name = "Snow White"
 	description = "A cold refreshment."
-	color = "#FFFFFF" // rgb: 255, 255, 255
+	color = COLOR_WHITE // rgb: 255, 255, 255
 	boozepwr = 35
 	quality = DRINK_NICE
 	taste_description = "refreshing cold"
@@ -948,6 +969,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "sweet tasting iron"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/consumable/ethanol/demonsblood/on_mob_metabolize(mob/living/metabolizer)
 	. = ..()
@@ -1055,15 +1077,11 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "concentrated matter"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_MADNESS_IMMUNE)
 	var/static/list/ray_filter = list(type = "rays", size = 40, density = 15, color = SUPERMATTER_SINGULARITY_RAYS_COLOUR, factor = 15)
-
-/datum/reagent/consumable/ethanol/singulo/on_mob_metabolize(mob/living/drinker)
-	. = ..()
-	ADD_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
 
 /datum/reagent/consumable/ethanol/singulo/on_mob_end_metabolize(mob/living/drinker)
 	. = ..()
-	REMOVE_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
 	drinker.remove_filter("singulo_rays")
 
 /datum/reagent/consumable/ethanol/singulo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
@@ -1195,7 +1213,7 @@
 
 /datum/reagent/consumable/ethanol/changelingsting/on_mob_life(mob/living/carbon/target, seconds_per_tick, times_fired)
 	. = ..()
-	var/datum/antagonist/changeling/changeling = target.mind?.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = IS_CHANGELING(target)
 	changeling?.adjust_chemicals(metabolization_rate * REM * seconds_per_tick)
 
 /datum/reagent/consumable/ethanol/irishcarbomb
@@ -1530,7 +1548,7 @@
 /datum/reagent/consumable/ethanol/triple_sec
 	name = "Triple Sec"
 	description = "A sweet and vibrant orange liqueur."
-	color = "#ffcc66"
+	color = COLOR_ICECREAM_PEACH
 	boozepwr = 30
 	taste_description = "a warm flowery orange taste which recalls the ocean air and summer wind of the caribbean"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1617,7 +1635,7 @@
 /datum/reagent/consumable/ethanol/bastion_bourbon
 	name = "Bastion Bourbon"
 	description = "Soothing hot herbal brew with restorative properties. Hints of citrus and berry flavors."
-	color = "#00FFFF"
+	color = COLOR_CYAN
 	boozepwr = 30
 	quality = DRINK_FANTASTIC
 	taste_description = "hot herbal brew with a hint of fruit"
@@ -1640,7 +1658,7 @@
 	need_mob_update += drinker.adjustStaminaLoss(-heal_amt, updating_stamina = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		drinker.updatehealth()
-	drinker.visible_message(span_warning("[drinker] shivers with renewed vigor!"), span_notice("One taste of [lowertext(name)] fills you with energy!"))
+	drinker.visible_message(span_warning("[drinker] shivers with renewed vigor!"), span_notice("One taste of [LOWER_TEXT(name)] fills you with energy!"))
 	if(!drinker.stat && heal_points == 20) //brought us out of softcrit
 		drinker.visible_message(span_danger("[drinker] lurches to [drinker.p_their()] feet!"), span_boldnotice("Up and at 'em, kid."))
 
@@ -1659,7 +1677,7 @@
 /datum/reagent/consumable/ethanol/squirt_cider
 	name = "Squirt Cider"
 	description = "Fermented squirt extract with a nose of stale bread and ocean water. Whatever a squirt is."
-	color = "#FF0000"
+	color = COLOR_RED
 	boozepwr = 40
 	taste_description = "stale bread with a staler aftertaste"
 	nutriment_factor = 2
@@ -1933,7 +1951,7 @@
 /datum/reagent/consumable/ethanol/fruit_wine
 	name = "Fruit Wine"
 	description = "A wine made from grown plants."
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 	boozepwr = 35
 	quality = DRINK_GOOD
 	taste_description = "bad coding"
@@ -2155,14 +2173,7 @@
 	quality = DRINK_GOOD
 	taste_description = "artifical fruityness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/ethanol/rubberneck/on_mob_metabolize(mob/living/drinker)
-	. = ..()
-	ADD_TRAIT(drinker, TRAIT_SHOCKIMMUNE, type)
-
-/datum/reagent/consumable/ethanol/rubberneck/on_mob_end_metabolize(mob/living/drinker)
-	REMOVE_TRAIT(drinker, TRAIT_SHOCKIMMUNE, type)
-	return ..()
+	metabolized_traits = list(TRAIT_SHOCKIMMUNE)
 
 /datum/reagent/consumable/ethanol/duplex
 	name = "Duplex"
@@ -2242,6 +2253,7 @@
 	quality = DRINK_NICE
 	taste_description = "sugary tartness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/reagent/consumable/ethanol/pina_colada
 	name = "Pina Colada"
@@ -2402,7 +2414,7 @@
 	name = "Triumphal Arch"
 	description = "A drink celebrating the Lizard Empire and its military victories. It's popular at bars on Unification Day."
 	boozepwr = 60
-	color = "#FFD700"
+	color = COLOR_GOLD
 	quality = DRINK_FANTASTIC
 	taste_description = "victory"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -2620,24 +2632,17 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 3)
+		stomach.adjust_charge(reac_volume * 0.003 * STANDARD_CELL_CHARGE)
 
 /datum/reagent/consumable/ethanol/telepole
 	name = "Telepole"
-	description = "A grounding rod in the form of a drink.  Recharges ethereals, and gives temporary shock resistance."
+	description = "A grounding rod in the form of a drink. Recharges ethereals, and gives temporary shock resistance."
 	boozepwr = 50
 	color = "#b300ff"
 	quality = DRINK_NICE
 	taste_description = "the howling storm"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/ethanol/telepole/on_mob_metabolize(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
-
-/datum/reagent/consumable/ethanol/telepole/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
+	metabolized_traits = list(TRAIT_SHOCKIMMUNE)
 
 /datum/reagent/consumable/ethanol/telepole/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	. = ..()
@@ -2647,7 +2652,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 2)
+		stomach.adjust_charge(reac_volume * 0.002 * STANDARD_CELL_CHARGE)
 
 /datum/reagent/consumable/ethanol/pod_tesla
 	name = "Pod Tesla"
@@ -2674,7 +2679,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 5)
+		stomach.adjust_charge(reac_volume * 0.005 * STANDARD_CELL_CHARGE)
 
 // Welcome to the Blue Room Bar and Grill, home to Mars' finest cocktails
 /datum/reagent/consumable/ethanol/rice_beer
@@ -2728,7 +2733,7 @@
 	description = "A drink glorifying Cybersun's enduring business."
 	boozepwr = 20
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_FANTASTIC
 	taste_description = "betrayal"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2737,7 +2742,7 @@
 	description = "A variation on the Long Island Iced Tea, made with yuyake for an alternative flavour that's hard to place."
 	boozepwr = 40
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "an asian twist on the liquor cabinet"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2746,7 +2751,7 @@
 	description = "It's a melon cream soda, except with alcohol- what's not to love? Well... possibly the hangovers."
 	boozepwr = 6
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_GOOD
 	taste_description = "creamy melon soda"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2755,7 +2760,7 @@
 	description = "A new take on a classic cocktail, the Kumicho takes the Godfather formula and adds shochu for an Asian twist."
 	boozepwr = 62
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "rice and rye"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2764,7 +2769,7 @@
 	description = "Made in celebration of the Martian Concession, the Red Planet is based on the classic El Presidente, and is as patriotic as it is bright crimson."
 	boozepwr = 45
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "the spirit of freedom"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2773,7 +2778,7 @@
 	description = "Named for Amaterasu, the Shinto Goddess of the Sun, this cocktail embodies radiance- or something like that, anyway."
 	boozepwr = 54 //1 part bitters is a lot
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "sweet nectar of the gods"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2782,7 +2787,7 @@
 	description = "An overly sweet cocktail, made with melon liqueur, melon juice, and champagne (which contains no melon, unfortunately)."
 	boozepwr = 17
 	color = "#FF0C8D"
-	quality = DRINK_NICE
+	quality = DRINK_GOOD
 	taste_description = "MELON"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2791,7 +2796,7 @@
 	description = "Based on the galaxy-famous \"Kyūkyoku no Ninja Pawā Sentai\", the Sentai Quencha is a favourite at anime conventions and weeb bars."
 	boozepwr = 28
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_GOOD
 	taste_description = "ultimate ninja power"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2800,7 +2805,7 @@
 	description = "A simple summer drink from Mars, made from a 1:1 mix of rice beer and lemonade."
 	boozepwr = 6
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_GOOD
 	taste_description = "bittersweet lemon"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2809,7 +2814,7 @@
 	description = "Sweet, bitter, spicy- that's a great combination."
 	boozepwr = 6
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "spicy pineapple beer"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2827,7 +2832,7 @@
 	description = "A stiff, bitter drink with an odd name and odder recipe."
 	boozepwr = 26
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "bitter raspberry"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2836,7 +2841,7 @@
 	description = "A drink to power your typing hands."
 	boozepwr = 26
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_GOOD
 	taste_description = "cyberspace"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2845,7 +2850,7 @@
 	description = "A take on the classic White Russian, subbing out the classics for some tropical flavours."
 	boozepwr = 16
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_GOOD
 	taste_description = "COCONUT"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2854,7 +2859,7 @@
 	description = "Behind this drink's red facade lurks a sharp, complex flavour."
 	boozepwr = 15
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "sunrise over the pacific"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2863,7 +2868,7 @@
 	description = "For when orgeat is in short supply, do as the spacers do- make do and mend."
 	boozepwr = 52
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "spicy nutty rum"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2872,16 +2877,17 @@
 	description = "Coconut rum, coffee liqueur, and espresso- an odd combination, to be sure, but a welcomed one."
 	boozepwr = 20
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "coconut coffee"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/consumable/ethanol/blue_hawaiian //pineapple juice, lemon juice, coconut rum, blue curacao
 	name = "Blue Hawaiian"
 	description = "Sweet, sharp and coconutty."
 	boozepwr = 30
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "the aloha state"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 

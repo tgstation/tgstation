@@ -252,8 +252,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "ja" = (
-/obj/machinery/door/window{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Spare Equipment";
 	req_access = list("syndicate")
 	},
@@ -472,7 +471,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "sq" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "Control Room";
 	req_access = list("syndicate")
 	},
@@ -889,8 +888,7 @@
 /area/space)
 "Lo" = (
 /obj/structure/filingcabinet,
-/obj/machinery/door/window{
-	dir = 8;
+/obj/machinery/door/window/left/directional/west{
 	name = "Syndicate Interior Door";
 	req_access = list("syndicate")
 	},

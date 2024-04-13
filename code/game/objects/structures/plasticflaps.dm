@@ -127,8 +127,5 @@
 		if(living_mover.body_position == STANDING_UP && living_mover.mob_size != MOB_SIZE_TINY && !(HAS_TRAIT(living_mover, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(living_mover, TRAIT_VENTCRAWLER_NUDE)))
 			return FALSE //If you're not laying down, or a small creature, or a ventcrawler, then no pass.
 
-
-/obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/plastic/five(loc)
-	qdel(src)
+/obj/structure/plasticflaps/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/plastic/five(loc)

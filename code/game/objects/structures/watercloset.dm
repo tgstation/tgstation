@@ -84,17 +84,15 @@
 	icon_state = "toilet[open][cistern]"
 	return ..()
 
-/obj/structure/toilet/deconstruct()
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		for(var/obj/toilet_item in contents)
-			toilet_item.forceMove(drop_location())
-		if(buildstacktype)
-			new buildstacktype(loc,buildstackamount)
-		else
-			for(var/i in custom_materials)
-				var/datum/material/M = i
-				new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
-	..()
+/obj/structure/toilet/atom_deconstruct(dissambled = TRUE)
+	for(var/obj/toilet_item in contents)
+		toilet_item.forceMove(drop_location())
+	if(buildstacktype)
+		new buildstacktype(loc,buildstackamount)
+	else
+		for(var/i in custom_materials)
+			var/datum/material/M = i
+			new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
 	add_fingerprint(user)
@@ -106,7 +104,7 @@
 			cistern = !cistern
 			update_appearance()
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	else if(I.tool_behaviour == TOOL_WRENCH && !(obj_flags & NO_DECONSTRUCTION))
+	else if(I.tool_behaviour == TOOL_WRENCH)
 		I.play_tool_sound(src)
 		deconstruct()
 		return TRUE
@@ -228,10 +226,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/urinal)
 		exposed = !exposed
 	return TRUE
 
-/obj/structure/urinal/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/wallframe/urinal(loc)
-	qdel(src)
+/obj/structure/urinal/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/wallframe/urinal(loc)
 
 /obj/item/wallframe/urinal
 	name = "urinal frame"
@@ -257,7 +253,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/urinal)
 /obj/item/food/urinalcake/attack_self(mob/living/user)
 	user.visible_message(span_notice("[user] squishes [src]!"), span_notice("You squish [src]."), "<i>You hear a squish.</i>")
 	icon_state = "urinalcake_squish"
-	addtimer(VARSET_CALLBACK(src, icon_state, "urinalcake"), 8)
+	addtimer(VARSET_CALLBACK(src, icon_state, "urinalcake"), 0.8 SECONDS)
 
 /obj/item/bikehorn/rubberducky/plasticducky
 	name = "plastic ducky"
@@ -358,12 +354,12 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 						span_notice("You start washing your [washing_face ? "face" : "hands"]..."))
 	busy = TRUE
 
-	if(!do_after(user, 40, target = src))
+	if(!do_after(user, 4 SECONDS, target = src))
 		busy = FALSE
 		return
 
 	busy = FALSE
-	reagents.remove_any(5)
+	reagents.remove_all(5)
 	reagents.expose(user, TOUCH, 5 / max(reagents.total_volume, 5))
 	begin_reclamation()
 	if(washing_face)
@@ -420,7 +416,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
 
-	if(O.tool_behaviour == TOOL_WRENCH && !(obj_flags & NO_DECONSTRUCTION))
+	if(O.tool_behaviour == TOOL_WRENCH)
 		O.play_tool_sound(src)
 		deconstruct()
 		return
@@ -484,7 +480,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	if(!user.combat_mode)
 		to_chat(user, span_notice("You start washing [O]..."))
 		busy = TRUE
-		if(!do_after(user, 40, target = src))
+		if(!do_after(user, 4 SECONDS, target = src))
 			busy = FALSE
 			return 1
 		busy = FALSE
@@ -496,12 +492,10 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	else
 		return ..()
 
-/obj/structure/sink/deconstruct()
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		drop_materials()
-		if(has_water_reclaimer)
-			new /obj/item/stock_parts/water_recycler(drop_location())
-	..()
+/obj/structure/sink/atom_deconstruct(dissambled = TRUE)
+	drop_materials()
+	if(has_water_reclaimer)
+		new /obj/item/stock_parts/water_recycler(drop_location())
 
 /obj/structure/sink/process(seconds_per_tick)
 	// Water reclamation complete?
@@ -572,10 +566,8 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	deconstruct()
 	return TRUE
 
-/obj/structure/sinkframe/deconstruct()
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		drop_materials()
-	return ..()
+/obj/structure/sinkframe/atom_deconstruct(dissambled = TRUE)
+	drop_materials()
 
 /obj/structure/sinkframe/proc/drop_materials()
 	for(var/datum/material/material as anything in custom_materials)
@@ -726,9 +718,6 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	. = ..()
 	icon_state = "puddle"
 
-/obj/structure/water_source/puddle/deconstruct(disassembled = TRUE)
-	qdel(src)
-
 //End legacy sink
 
 
@@ -761,11 +750,9 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	open = !open
 	if(open)
 		layer = SIGN_LAYER
-		set_density(FALSE)
 		set_opacity(FALSE)
 	else
 		layer = WALL_OBJ_LAYER
-		set_density(TRUE)
 		if(opaque_closed)
 			set_opacity(TRUE)
 
@@ -807,11 +794,10 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	playsound(loc, 'sound/effects/curtain.ogg', 50, TRUE)
 	toggle()
 
-/obj/structure/curtain/deconstruct(disassembled = TRUE)
+/obj/structure/curtain/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/cloth (loc, 2)
 	new /obj/item/stack/sheet/plastic (loc, 2)
 	new /obj/item/stack/rods (loc, 1)
-	qdel(src)
 
 /obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -843,10 +829,9 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	alpha = 255
 	opaque_closed = TRUE
 
-/obj/structure/curtain/cloth/deconstruct(disassembled = TRUE)
+/obj/structure/curtain/cloth/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/cloth (loc, 4)
 	new /obj/item/stack/rods (loc, 1)
-	qdel(src)
 
 /obj/structure/curtain/cloth/fancy
 	icon_type = "cur_fancy"

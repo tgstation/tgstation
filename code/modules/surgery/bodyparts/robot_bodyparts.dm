@@ -23,7 +23,8 @@
 	icon_state = "borg_l_arm"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -56,7 +57,8 @@
 	icon_state = "borg_r_arm"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -90,7 +92,8 @@
 	icon_state = "borg_l_leg"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -137,7 +140,8 @@
 	icon_state = "borg_r_leg"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -183,7 +187,8 @@
 	icon_state = "borg_chest"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -357,7 +362,8 @@
 	icon_state = "borg_head"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 

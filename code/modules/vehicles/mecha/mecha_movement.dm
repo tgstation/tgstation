@@ -19,6 +19,11 @@
 		//we can reach it and it's in front of us? grab it!
 		if(ore.Adjacent(src) && ((get_dir(src, ore) & dir) || ore.loc == loc))
 			ore.forceMove(ore_box)
+	for(var/obj/item/boulder/boulder in range(1, src))
+		//As above, but for boulders
+		if(boulder.Adjacent(src) && ((get_dir(src, boulder) & dir) || boulder.loc == loc))
+			boulder.forceMove(ore_box)
+
 
 ///Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
@@ -92,13 +97,13 @@
 	if(isnull(capacitor))
 		missing_parts += "capacitor"
 	if(isnull(servo))
-		missing_parts += "micro-servo"
+		missing_parts += "servo"
 	if(length(missing_parts))
 		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
 			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing [english_list(missing_parts)].")]")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
-	if(!use_power(step_energy_drain))
+	if(!use_energy(step_energy_drain))
 		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
 			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Insufficient power to move!")]")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
@@ -137,7 +142,7 @@
 	//Otherwise just walk normally
 	. = try_step_multiz(direction)
 	if(phasing)
-		use_power(phasing_energy_drain)
+		use_energy(phasing_energy_drain)
 	if(strafe)
 		setDir(olddir)
 

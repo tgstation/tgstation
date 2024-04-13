@@ -7,7 +7,7 @@
 	icon_screen = null
 	icon_keyboard = null
 	layer = SIGN_LAYER
-	network = list("thunder")
+	network = list(CAMERANET_NETWORK_THUNDERDOME)
 	density = FALSE
 	circuit = null
 	light_power = 0
@@ -28,10 +28,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen)
 	. = ..()
 	find_and_hang_on_wall()
 
-/obj/machinery/computer/security/telescreen/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new frame_type(loc)
-	qdel(src)
+/obj/machinery/computer/security/telescreen/on_deconstruction(disassembled)
+	new frame_type(loc)
 
 /obj/machinery/computer/security/telescreen/update_icon_state()
 	icon_state = initial(icon_state)
@@ -103,10 +101,65 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/enter
 
 	notify(network.len, announcement)
 
+/**
+ * Adds a camera network to all entertainment monitors.
+ *
+ * * camera_net - The camera network ID to add to the monitors.
+ * * announcement - Optional, what announcement to make when the show starts.
+ */
+/proc/start_broadcasting_network(camera_net, announcement)
+	for(var/obj/machinery/computer/security/telescreen/entertainment/tv as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
+		tv.update_shows(
+			is_show_active = TRUE,
+			tv_show_id = camera_net,
+			announcement = announcement,
+		)
+
+/**
+ * Removes a camera network from all entertainment monitors.
+ *
+ * * camera_net - The camera network ID to remove from the monitors.
+ * * announcement - Optional, what announcement to make when the show ends.
+ */
+/proc/stop_broadcasting_network(camera_net, announcement)
+	for(var/obj/machinery/computer/security/telescreen/entertainment/tv as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
+		tv.update_shows(
+			is_show_active = FALSE,
+			tv_show_id = camera_net,
+			announcement = announcement,
+		)
+
+/**
+ * Sets the camera network status on all entertainment monitors.
+ * A way to force a network to a status if you are unsure of the current state.
+ *
+ * * camera_net - The camera network ID to set on the monitors.
+ * * is_show_active - Whether the show is active or not.
+ * * announcement - Optional, what announcement to make.
+ * Note this announcement will be made regardless of the current state of the show:
+ * This means if it's currently on and you set it to on, the announcement will still be made.
+ * Likewise, there's no way to differentiate off -> on and on -> off, unless you handle that yourself.
+ */
+/proc/set_network_broadcast_status(camera_net, is_show_active, announcement)
+	for(var/obj/machinery/computer/security/telescreen/entertainment/tv as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
+		tv.update_shows(
+			is_show_active = is_show_active,
+			tv_show_id = camera_net,
+			announcement = announcement,
+		)
+
 /obj/machinery/computer/security/telescreen/rd
 	name = "\improper Research Director's telescreen"
 	desc = "Used for watching the AI and the RD's goons from the safety of his office."
-	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test", "toxins")
+	network = list(
+		CAMERANET_NETWORK_RD,
+		CAMERANET_NETWORK_AI_CORE,
+		CAMERANET_NETWORK_AI_UPLOAD,
+		CAMERANET_NETWORK_MINISAT,
+		CAMERANET_NETWORK_XENOBIOLOGY,
+		CAMERANET_NETWORK_TEST_CHAMBER,
+		CAMERANET_NETWORK_ORDNANCE,
+	)
 	frame_type = /obj/item/wallframe/telescreen/rd
 
 /obj/item/wallframe/telescreen/rd
@@ -118,7 +171,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/rd)
 /obj/machinery/computer/security/telescreen/research
 	name = "research telescreen"
 	desc = "A telescreen with access to the research division's camera network."
-	network = list("rd")
+	network = list(CAMERANET_NETWORK_RD)
 	frame_type = /obj/item/wallframe/telescreen/research
 
 /obj/item/wallframe/telescreen/research
@@ -130,7 +183,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/resea
 /obj/machinery/computer/security/telescreen/ce
 	name = "\improper Chief Engineer's telescreen"
 	desc = "Used for watching the engine, telecommunications and the minisat."
-	network = list("engine", "singularity", "tcomms", "minisat")
+	network = list(CAMERANET_NETWORK_ENGINE, CAMERANET_NETWORK_TELECOMMS, CAMERANET_NETWORK_MINISAT)
 	frame_type = /obj/item/wallframe/telescreen/ce
 
 /obj/item/wallframe/telescreen/ce
@@ -142,7 +195,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ce)
 /obj/machinery/computer/security/telescreen/cmo
 	name = "\improper Chief Medical Officer's telescreen"
 	desc = "A telescreen with access to the medbay's camera network."
-	network = list("medbay")
+	network = list(CAMERANET_NETWORK_MEDBAY)
 	frame_type = /obj/item/wallframe/telescreen/cmo
 
 /obj/item/wallframe/telescreen/cmo
@@ -154,7 +207,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cmo)
 /obj/machinery/computer/security/telescreen/vault
 	name = "vault monitor"
 	desc = "A telescreen that connects to the vault's camera network."
-	network = list("vault")
+	network = list(CAMERANET_NETWORK_VAULT)
 	frame_type = /obj/item/wallframe/telescreen/vault
 
 /obj/item/wallframe/telescreen/vault
@@ -166,7 +219,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/vault
 /obj/machinery/computer/security/telescreen/ordnance
 	name = "bomb test site monitor"
 	desc = "A telescreen that connects to the bomb test site's camera."
-	network = list("ordnance")
+	network = list(CAMERANET_NETWORK_ORDNANCE)
 	frame_type = /obj/item/wallframe/telescreen/ordnance
 
 /obj/item/wallframe/telescreen/ordnance
@@ -178,7 +231,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ordna
 /obj/machinery/computer/security/telescreen/engine
 	name = "engine monitor"
 	desc = "A telescreen that connects to the engine's camera network."
-	network = list("engine")
+	network = list(CAMERANET_NETWORK_ENGINE)
 	frame_type = /obj/item/wallframe/telescreen/engine
 
 /obj/item/wallframe/telescreen/engine
@@ -190,7 +243,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engin
 /obj/machinery/computer/security/telescreen/turbine
 	name = "turbine monitor"
 	desc = "A telescreen that connects to the turbine's camera."
-	network = list("turbine")
+	network = list(CAMERANET_NETWORK_TURBINE)
 	frame_type = /obj/item/wallframe/telescreen/turbine
 
 /obj/item/wallframe/telescreen/turbine
@@ -202,7 +255,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/turbi
 /obj/machinery/computer/security/telescreen/interrogation
 	name = "interrogation room monitor"
 	desc = "A telescreen that connects to the interrogation room's camera."
-	network = list("interrogation")
+	network = list(CAMERANET_NETWORK_INTERROGATION)
 	frame_type = /obj/item/wallframe/telescreen/interrogation
 
 /obj/item/wallframe/telescreen/interrogation
@@ -214,7 +267,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/inter
 /obj/machinery/computer/security/telescreen/prison
 	name = "prison monitor"
 	desc = "A telescreen that connects to the permabrig's camera network."
-	network = list("prison")
+	network = list(CAMERANET_NETWORK_PRISON)
 	frame_type = /obj/item/wallframe/telescreen/prison
 
 /obj/item/wallframe/telescreen/prison
@@ -226,7 +279,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/priso
 /obj/machinery/computer/security/telescreen/auxbase
 	name = "auxiliary base monitor"
 	desc = "A telescreen that connects to the auxiliary base's camera."
-	network = list("auxbase")
+	network = list(CAMERANET_NETWORK_AUXBASE)
 	frame_type = /obj/item/wallframe/telescreen/auxbase
 
 /obj/item/wallframe/telescreen/auxbase
@@ -238,7 +291,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/auxba
 /obj/machinery/computer/security/telescreen/minisat
 	name = "minisat monitor"
 	desc = "A telescreen that connects to the minisat's camera network."
-	network = list("minisat")
+	network = list(CAMERANET_NETWORK_MINISAT)
 	frame_type = /obj/item/wallframe/telescreen/minisat
 
 /obj/item/wallframe/telescreen/minisat
@@ -250,7 +303,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/minis
 /obj/machinery/computer/security/telescreen/aiupload
 	name = "\improper AI upload monitor"
 	desc = "A telescreen that connects to the AI upload's camera network."
-	network = list("aiupload")
+	network = list(CAMERANET_NETWORK_AI_UPLOAD)
 	frame_type = /obj/item/wallframe/telescreen/aiupload
 
 /obj/item/wallframe/telescreen/aiupload
@@ -262,7 +315,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/aiupl
 /obj/machinery/computer/security/telescreen/bar
 	name = "bar monitor"
 	desc = "A telescreen that connects to the bar's camera network. Perfect for checking on customers."
-	network = list("bar")
+	network = list(CAMERANET_NETWORK_BAR)
 	frame_type = /obj/item/wallframe/telescreen/bar
 
 /obj/item/wallframe/telescreen/bar
@@ -313,5 +366,4 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/bar)
 	is_show_active = !is_show_active
 	say("The [tv_show_name] show has [is_show_active ? "begun" : "ended"]")
 	var/announcement = is_show_active ? pick(tv_starters) : pick(tv_enders)
-	for(var/obj/machinery/computer/security/telescreen/entertainment/tv as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
-		tv.update_shows(is_show_active, tv_network_id, announcement)
+	set_network_broadcast_status(tv_network_id, is_show_active, announcement)

@@ -119,7 +119,7 @@ GLOBAL_VAR(restart_counter)
 	// From a really fucking old commit (91d7150)
 	// I wanted to move it but I think this needs to be after /world/New is called but before any sleeps?
 	// - Dominion/Cyberboss
-	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
+	GLOB.timezoneOffset = world.timezone * 36000
 
 	// First possible sleep()
 	InitTgs()
@@ -380,12 +380,23 @@ GLOBAL_VAR(restart_counter)
 	if(length(features))
 		new_status += ": [jointext(features, ", ")]"
 
-	new_status += "<br>Time: <b>[gameTimestamp("hh:mm")]</b>"
+	if(!SSticker || SSticker?.current_state == GAME_STATE_STARTUP)
+		new_status += "<br><b>STARTING</b>"
+	else if(SSticker)
+		if(SSticker.current_state == GAME_STATE_PREGAME && SSticker.GetTimeLeft() > 0)
+			new_status += "<br>Starting: <b>[round((SSticker.GetTimeLeft())/10)]</b>"
+		else if(SSticker.current_state == GAME_STATE_SETTING_UP)
+			new_status += "<br>Starting: <b>Now</b>"
+		else if(SSticker.IsRoundInProgress())
+			new_status += "<br>Time: <b>[time2text(STATION_TIME_PASSED(), "hh:mm", 0)]</b>"
+			if(SSshuttle?.emergency && SSshuttle?.emergency?.mode != (SHUTTLE_IDLE || SHUTTLE_ENDGAME))
+				new_status += " | Shuttle: <b>[SSshuttle.emergency.getModeStr()] [SSshuttle.emergency.getTimerStr()]</b>"
+		else if(SSticker.current_state == GAME_STATE_FINISHED)
+			new_status += "<br><b>RESTARTING</b>"
 	if(SSmapping.config)
 		new_status += "<br>Map: <b>[SSmapping.config.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.config.map_name]</b>"
-	var/alert_text = SSsecurity_level.get_current_level_as_text()
-	if(alert_text)
-		new_status += "<br>Alert: <b>[capitalize(alert_text)]</b>"
+	if(SSmapping.next_map_config)
+		new_status += "[SSmapping.config ? " | " : "<br>"]Next: <b>[SSmapping.next_map_config.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.next_map_config.map_name]</b>"
 
 	status = new_status
 
@@ -411,10 +422,13 @@ GLOBAL_VAR(restart_counter)
 	if(!map_load_z_cutoff)
 		return
 	var/area/global_area = GLOB.areas_by_type[world.area] // We're guaranteed to be touching the global area, so we'll just do this
-	var/list/to_add = block(
-		locate(old_max + 1, 1, 1),
-		locate(maxx, maxy, map_load_z_cutoff))
-	global_area.contained_turfs += to_add
+	LISTASSERTLEN(global_area.turfs_by_zlevel, map_load_z_cutoff, list())
+	for (var/zlevel in 1 to map_load_z_cutoff)
+		var/list/to_add = block(
+			locate(old_max + 1, 1, zlevel),
+			locate(maxx, maxy, zlevel))
+
+		global_area.turfs_by_zlevel[zlevel] += to_add
 
 /world/proc/increase_max_y(new_maxy, map_load_z_cutoff = maxz)
 	if(new_maxy <= maxy)
@@ -424,15 +438,17 @@ GLOBAL_VAR(restart_counter)
 	if(!map_load_z_cutoff)
 		return
 	var/area/global_area = GLOB.areas_by_type[world.area] // We're guarenteed to be touching the global area, so we'll just do this
-	var/list/to_add = block(
-		locate(1, old_maxy + 1, 1),
-		locate(maxx, maxy, map_load_z_cutoff))
-	global_area.contained_turfs += to_add
+	LISTASSERTLEN(global_area.turfs_by_zlevel, map_load_z_cutoff, list())
+	for (var/zlevel in 1 to map_load_z_cutoff)
+		var/list/to_add = block(
+			locate(1, old_maxy + 1, 1),
+			locate(maxx, maxy, map_load_z_cutoff))
+		global_area.turfs_by_zlevel[zlevel] += to_add
 
 /world/proc/incrementMaxZ()
 	maxz++
 	SSmobs.MaxZChanged()
-	SSidlenpcpool.MaxZChanged()
+	SSai_controllers.on_max_z_changed()
 
 /world/proc/change_fps(new_value = 20)
 	if(new_value <= 0)

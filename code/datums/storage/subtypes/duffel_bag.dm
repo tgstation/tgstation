@@ -10,7 +10,12 @@
 	silent = TRUE
 	exception_max = 2
 
-/datum/storage/duffel/syndicate/New()
+/datum/storage/duffel/syndicate/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
 	. = ..()
 
 	var/static/list/exception_type_list = list(

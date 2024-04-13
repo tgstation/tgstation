@@ -4,15 +4,7 @@
 	icon = 'icons/obj/machines/button.dmi'
 	base_icon_state = "button"
 	icon_state = "button"
-	///Whether it is possible to change the panel skin
-	var/can_alter_skin = TRUE
 	power_channel = AREA_USAGE_ENVIRON
-	var/obj/item/assembly/device
-	var/obj/item/electronics/airlock/board
-	var/device_type = null
-	var/id = null
-	var/initialized_button = 0
-	var/silicon_access_disabled = FALSE
 	/// How long to animate our success for
 	var/success_delay = 1 SECONDS
 	/// How long to animate failure to activate for
@@ -27,6 +19,18 @@
 	armor_type = /datum/armor/machinery_button
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
+	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OPEN
+	///Icon suffix for the skin of the front pannel that is added to base_icon_state
+	var/skin = ""
+	///Whether it is possible to change the panel skin
+	var/can_alter_skin = TRUE
+
+	var/obj/item/assembly/device
+	var/obj/item/electronics/airlock/board
+	var/device_type = null
+	var/id = null
+	var/initialized_button = 0
+	var/silicon_access_disabled = FALSE
 
 /obj/machinery/button/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -50,7 +54,7 @@
 	if(!built && !device && device_type)
 		device = new device_type(src)
 
-	src.check_access(null)
+	check_access(null)
 
 	if(length(req_access) || length(req_one_access))
 		board = new(src)
@@ -217,7 +221,7 @@
 		id = "[port.shuttle_id]_[id]"
 		setup_device()
 
-/obj/machinery/button/attack_hand(mob/user, list/modifiers)
+/obj/machinery/button/interact(mob/user)
 	. = ..()
 	if(.)
 		return
@@ -263,9 +267,7 @@
 		start_animation(deny_delay)
 		return
 
-	use_power(5)
-	icon_state = "[base_icon_state]-success"
-	update_glow()
+	use_energy(5 JOULES)
 	start_animation(success_delay)
 
 	if(device)

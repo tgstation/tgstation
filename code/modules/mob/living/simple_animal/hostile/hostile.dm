@@ -554,6 +554,8 @@
 		A.attack_animal(src)//Bang on it till we get out
 
 /mob/living/simple_animal/hostile/proc/FindHidden()
+	if(isnull(target))
+		return FALSE
 	if(istype(target.loc, /obj/structure/closet) || istype(target.loc, /obj/machinery/disposal) || istype(target.loc, /obj/machinery/sleeper))
 		var/atom/A = target.loc
 		var/atom/target_from = GET_TARGETS_FROM(src)
@@ -612,29 +614,6 @@
 	if(!value)
 		value = initial(search_objects)
 	search_objects = value
-
-/mob/living/simple_animal/hostile/consider_wakeup()
-	..()
-	var/list/tlist
-	var/turf/T = get_turf(src)
-
-	if (!T)
-		return
-
-	if (!length(SSmobs.clients_by_zlevel[T.z])) // It's fine to use .len here but doesn't compile on 511
-		toggle_ai(AI_Z_OFF)
-		return
-
-	var/cheap_search = isturf(T) && !is_station_level(T.z)
-	if (cheap_search)
-		tlist = ListTargetsLazy(T.z)
-	else
-		tlist = ListTargets()
-
-	if(AIStatus == AI_IDLE && FindTarget(tlist))
-		if(cheap_search) //Try again with full effort
-			FindTarget()
-		toggle_ai(AI_ON)
 
 /mob/living/simple_animal/hostile/proc/ListTargetsLazy(_Z)//Step 1, find out what we can see
 	var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))

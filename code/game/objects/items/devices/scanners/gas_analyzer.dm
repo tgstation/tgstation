@@ -21,6 +21,7 @@
 	var/cooldown_time = 250
 	var/barometer_accuracy // 0 is the best accuracy.
 	var/list/last_gasmix_data
+	var/ranged_scan_distance = 1
 
 /obj/item/analyzer/Initialize(mapload)
 	. = ..()
@@ -142,6 +143,13 @@
 
 	ui_interact(user)
 
+/obj/item/analyzer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!can_see(user, target, ranged_scan_distance))
+		return
+	. |= AFTERATTACK_PROCESSED_ITEM
+	atmos_scan(user, (target.return_analyzable_air() ? target : get_turf(target)))
+
 /// Called when our analyzer is used on something
 /obj/item/analyzer/proc/on_analyze(datum/source, atom/target)
 	SIGNAL_HANDLER
@@ -151,7 +159,7 @@
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
 	var/list/new_gasmix_data = list()
 	for(var/datum/gas_mixture/air as anything in airs)
-		var/mix_name = capitalize(lowertext(target.name))
+		var/mix_name = capitalize(LOWER_TEXT(target.name))
 		if(airs.len != 1) //not a unary gas mixture
 			mix_name += " - Node [airs.Find(air)]"
 		new_gasmix_data += list(gas_mixture_parser(air, mix_name))
@@ -176,7 +184,7 @@
 
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
 	for(var/datum/gas_mixture/air as anything in airs)
-		var/mix_name = capitalize(lowertext(target.name))
+		var/mix_name = capitalize(LOWER_TEXT(target.name))
 		if(airs.len > 1) //not a unary gas mixture
 			var/mix_number = airs.Find(air)
 			message += span_boldnotice("Node [mix_number]")
@@ -199,8 +207,8 @@
 			message += span_notice("Temperature: [round(temperature - T0C,0.01)] &deg;C ([round(temperature, 0.01)] K)")
 			message += span_notice("Volume: [volume] L")
 			message += span_notice("Pressure: [round(pressure, 0.01)] kPa")
-			message += span_notice("Heat Capacity: [display_joules(heat_capacity)] / K")
-			message += span_notice("Thermal Energy: [display_joules(thermal_energy)]")
+			message += span_notice("Heat Capacity: [display_energy(heat_capacity)] / K")
+			message += span_notice("Thermal Energy: [display_energy(thermal_energy)]")
 		else
 			message += airs.len > 1 ? span_notice("This node is empty!") : span_notice("[target] is empty!")
 			message += span_notice("Volume: [volume] L") // don't want to change the order volume appears in, suck it
@@ -217,10 +225,4 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2, /datum/material/gold = SMALL_MATERIAL_AMOUNT*3, /datum/material/bluespace=SMALL_MATERIAL_AMOUNT*2)
 	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
-
-/obj/item/analyzer/ranged/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!can_see(user, target, 15))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	atmos_scan(user, (target.return_analyzable_air() ? target : get_turf(target)))
+	ranged_scan_distance = 15
