@@ -4,6 +4,80 @@
  * @license MIT
  */
 
+/**
+ * Iterates over elements of collection, returning an array of all elements
+ * iteratee returns truthy for. The predicate is invoked with three
+ * arguments: (value, index|key, collection).
+ *
+ * If collection is 'null' or 'undefined', it will be returned "as is"
+ * without emitting any errors (which can be useful in some cases).
+ */
+export const filter = <T>(
+  collection: T[],
+  iterateeFn: (input: T, index: number, collection: T[]) => boolean,
+) => {
+  if (collection === null || collection === undefined) {
+    return collection;
+  }
+  if (Array.isArray(collection)) {
+    const result: T[] = [];
+    for (let i = 0; i < collection.length; i++) {
+      const item = collection[i];
+      if (iterateeFn(item, i, collection)) {
+        result.push(item);
+      }
+    }
+    return result;
+  }
+  throw new Error(`filter() can't iterate on type ${typeof collection}`);
+};
+
+type MapFunction = {
+  <T, U>(
+    collection: T[],
+    iterateeFn: (value: T, index: number, collection: T[]) => U,
+  ): U[];
+
+  <T, U, K extends string | number>(
+    collection: Record<K, T>,
+    iterateeFn: (value: T, index: K, collection: Record<K, T>) => U,
+  ): U[];
+};
+
+/**
+ * Creates an array of values by running each element in collection
+ * thru an iteratee function. The iteratee is invoked with three
+ * arguments: (value, index|key, collection).
+ *
+ * If collection is 'null' or 'undefined', it will be returned "as is"
+ * without emitting any errors (which can be useful in some cases).
+ */
+export const map: MapFunction = (collection, iterateeFn) => {
+  if (collection === null || collection === undefined) {
+    return collection;
+  }
+
+  if (Array.isArray(collection)) {
+    const result: unknown[] = [];
+    for (let i = 0; i < collection.length; i++) {
+      result.push(iterateeFn(collection[i], i, collection));
+    }
+    return result;
+  }
+
+  if (typeof collection === 'object') {
+    const result: unknown[] = [];
+    for (let i in collection) {
+      if (Object.prototype.hasOwnProperty.call(collection, i)) {
+        result.push(iterateeFn(collection[i], i, collection));
+      }
+    }
+    return result;
+  }
+
+  throw new Error(`map() can't iterate on type ${typeof collection}`);
+};
+
 const COMPARATOR = (objA, objB) => {
   const criteriaA = objA.criteria;
   const criteriaB = objB.criteria;
@@ -63,6 +137,48 @@ export const sortBy =
  */
 export const range = (start: number, end: number): number[] =>
   new Array(end - start).fill(null).map((_, index) => index + start);
+
+type ReduceFunction = {
+  <T, U>(
+    array: T[],
+    reducerFn: (
+      accumulator: U,
+      currentValue: T,
+      currentIndex: number,
+      array: T[],
+    ) => U,
+    initialValue: U,
+  ): U;
+  <T>(
+    array: T[],
+    reducerFn: (
+      accumulator: T,
+      currentValue: T,
+      currentIndex: number,
+      array: T[],
+    ) => T,
+  ): T;
+};
+
+/**
+ * A fast implementation of reduce.
+ */
+export const reduce: ReduceFunction = (array, reducerFn, initialValue?) => {
+  const length = array.length;
+  let i: number;
+  let result;
+  if (initialValue === undefined) {
+    i = 1;
+    result = array[0];
+  } else {
+    i = 0;
+    result = initialValue;
+  }
+  for (; i < length; i++) {
+    result = reducerFn(result, array[i], i, array);
+  }
+  return result;
+};
 
 /**
  * Creates a duplicate-free version of an array, using SameValueZero for
