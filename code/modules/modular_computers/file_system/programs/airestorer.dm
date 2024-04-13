@@ -1,14 +1,12 @@
 /datum/computer_file/program/ai_restorer
 	filename = "ai_restore"
 	filedesc = "AI Manager & Restorer"
-	category = PROGRAM_CATEGORY_SCI
-	program_icon_state = "generic"
+	downloader_category = PROGRAM_CATEGORY_SCIENCE
+	program_open_overlay = "generic"
 	extended_desc = "Firmware Restoration Kit, capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
-	requires_ntnet = FALSE
-	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
-	transfer_access = list(ACCESS_RD)
-	available_on_ntnet = TRUE
+	can_run_on_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
+	download_access = list(ACCESS_RD)
 	tgui_id = "NtosAiRestorer"
 	program_icon = "laptop-code"
 
@@ -30,11 +28,11 @@
 	examine_text += span_info("Alt-click to eject the intelliCard.")
 	return examine_text
 
-/datum/computer_file/program/ai_restorer/kill_program(forced)
+/datum/computer_file/program/ai_restorer/kill_program(mob/user)
 	try_eject(forced = TRUE)
 	return ..()
 
-/datum/computer_file/program/ai_restorer/process_tick(delta_time)
+/datum/computer_file/program/ai_restorer/process_tick(seconds_per_tick)
 	. = ..()
 	if(!restoring) //Put the check here so we don't check for an ai all the time
 		return
@@ -98,11 +96,8 @@
 	return TRUE
 
 
-/datum/computer_file/program/ai_restorer/ui_act(action, params)
+/datum/computer_file/program/ai_restorer/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
-		return
-
 	switch(action)
 		if("PRG_beginReconstruction")
 			if(!stored_card || !stored_card.AI)
@@ -110,7 +105,7 @@
 			var/mob/living/silicon/ai/A = stored_card.AI
 			if(A && A.health < 100)
 				restoring = TRUE
-				A.notify_ghost_cloning("Your core files are being restored!", source = computer)
+				A.notify_revival("Your core files are being restored!", source = computer)
 			return TRUE
 		if("PRG_eject")
 			if(stored_card)

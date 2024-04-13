@@ -192,3 +192,38 @@
 		SSlighting.corners_queue -= src
 
 	return ..()
+
+/// Debug proc to aid in understanding how corners work
+/datum/lighting_corner/proc/display(max_lum)
+	if(QDELETED(src))
+		return
+
+	var/turf/draw_to = master_SW || master_NE || master_SE || master_NW
+	var/mutable_appearance/display = mutable_appearance('icons/turf/debug.dmi', "corner_color", LIGHT_DEBUG_LAYER, draw_to, BALLOON_CHAT_PLANE)
+	if(x > draw_to.x)
+		display.pixel_x = 16
+	else
+		display.pixel_x = -16
+	if(y > draw_to.y)
+		display.pixel_y = 16
+	else
+		display.pixel_y = -16
+
+	display.color = rgb(cache_r * 255, cache_g * 255, cache_b * 255)
+
+	draw_to.add_overlay(display)
+
+/datum/lighting_corner/dummy/display()
+	return
+
+/// Makes all lighting corners visible, debug to aid in understanding
+/proc/display_corners()
+	var/list/corners = list()
+	var/max_lum = 0
+	for(var/datum/lighting_corner/corner) // I am so sorry
+		corners += corner
+		max_lum = max(max_lum, corner.largest_color_luminosity)
+
+
+	for(var/datum/lighting_corner/corner as anything in corners)
+		corner.display(max_lum)

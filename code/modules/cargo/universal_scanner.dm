@@ -3,9 +3,10 @@
 /obj/item/universal_scanner
 	name = "universal scanner"
 	desc = "A device used to check objects against Nanotrasen exports database, assign price tags, or ready an item for a custom vending machine."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "export scanner"
-	inhand_icon_state = "radio"
+	worn_icon_state = "electronic"
+	inhand_icon_state = "export_scanner"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	item_flags = NOBLUDGEON
@@ -167,16 +168,52 @@
  * Scans an object, target, and provides it's export value based on selling to the cargo shuttle, to mob/user.
  */
 /obj/item/universal_scanner/proc/export_scan(obj/target, mob/user)
-	// Before you fix it:
-	// yes, checking manifests is a part of intended functionality.
-	var/datum/export_report/ex = export_item_and_contents(target, dry_run = TRUE)
+	var/datum/export_report/report = export_item_and_contents(target, dry_run = TRUE)
 	var/price = 0
-	for(var/x in ex.total_amount)
-		price += ex.total_value[x]
-	if(price)
-		to_chat(user, span_notice("Scanned [target], value: <b>[price]</b> credits[target.contents.len ? " (contents included)" : ""]."))
+	for(var/exported_datum in report.total_amount)
+		price += report.total_value[exported_datum]
+
+	var/message = "Scanned [target]"
+	var/warning = FALSE
+	if(length(target.contents))
+		message = "Scanned [target] and its contents"
+		if(price)
+			message += ", total value: <b>[price]</b> credits"
+		else
+			message += ", no export values"
+			warning = TRUE
+		if(!report.all_contents_scannable)
+			message += " (Undeterminable value detected, final value may differ)"
+		message += "."
 	else
-		to_chat(user, span_warning("Scanned [target], no export value."))
+		if(!report.all_contents_scannable)
+			message += ", unable to determine value."
+			warning = TRUE
+		else if(price)
+			message += ", value: <b>[price]</b> credits."
+		else
+			message += ", no export value."
+			warning = TRUE
+	if(warning)
+		to_chat(user, span_warning(message))
+	else
+		to_chat(user, span_notice(message))
+
+	if(price)
+		playsound(src, 'sound/machines/terminal_select.ogg', 50, vary = TRUE)
+
+	if(istype(target, /obj/item/delivery))
+		var/obj/item/delivery/parcel = target
+		if(!parcel.sticker)
+			return
+		var/obj/item/barcode/our_code = parcel.sticker
+		to_chat(user, span_notice("Export barcode detected! This parcel, upon export, will pay out to [our_code.payments_acc.account_holder], \
+			with a [our_code.cut_multiplier * 100]% split to them (already reflected in above recorded value)."))
+
+	if(istype(target, /obj/item/barcode))
+		var/obj/item/barcode/our_code = target
+		to_chat(user, span_notice("Export barcode detected! This barcode, if attached to a parcel, will pay out to [our_code.payments_acc.account_holder], \
+			with a [our_code.cut_multiplier * 100]% split to them."))
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/scan_human = user
@@ -227,7 +264,7 @@
 /obj/item/barcode
 	name = "barcode tag"
 	desc = "A tiny tag, associated with a crewmember's account. Attach to a wrapped item to give that account a portion of the wrapped item's profit."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "barcode"
 	w_class = WEIGHT_CLASS_TINY
 	//All values inherited from the sales tagger it came from.

@@ -13,10 +13,10 @@
 /datum/tutorial/New(mob/user)
 	src.user = user
 
-	RegisterSignal(user, COMSIG_PARENT_QDELETING, PROC_REF(destroy_self))
-	RegisterSignal(user.client, COMSIG_PARENT_QDELETING, PROC_REF(destroy_self))
+	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(destroy_self))
+	RegisterSignal(user.client, COMSIG_QDELETING, PROC_REF(destroy_self))
 
-/datum/tutorial/Destroy(force, ...)
+/datum/tutorial/Destroy(force)
 	user.client?.screen -= instruction_screen
 	QDEL_NULL(instruction_screen)
 
@@ -100,7 +100,7 @@
 	PROTECTED_PROC(TRUE)
 
 	if (isnull(instruction_screen))
-		instruction_screen = new(null, message, user.client)
+		instruction_screen = new(null, null, message, user.client)
 		user.client?.screen += instruction_screen
 	else
 		instruction_screen.change_message(message)
@@ -163,7 +163,7 @@
 	ASSERT(ispath(tutorial_type, /datum/tutorial))
 	src.tutorial_type = tutorial_type
 
-/datum/tutorial_manager/Destroy(force, ...)
+/datum/tutorial_manager/Destroy(force)
 	if (!force)
 		stack_trace("Something is trying to destroy [type], which is a singleton")
 		return QDEL_HINT_LETMELIVE

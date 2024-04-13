@@ -7,13 +7,14 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	modifystate = TRUE
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	cell_type = /obj/item/stock_parts/cell/pulse
 
-/obj/item/gun/energy/pulse/emp_act(severity)
-	return
+/obj/item/gun/energy/pulse/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/gun/energy/pulse/prize
 	pin = /obj/item/firing_pin
@@ -26,7 +27,11 @@
 	message_admins("A pulse rifle prize has been created at [ADMIN_VERBOSEJMP(T)]")
 	log_game("A pulse rifle prize has been created at [AREACOORD(T)]")
 
-	notify_ghosts("Someone won a pulse rifle as a prize!", source = src, action = NOTIFY_ORBIT, header = "Pulse rifle prize")
+	notify_ghosts(
+		"Someone won a pulse rifle as a prize!",
+		source = src,
+		header = "Pulse rifle prize",
+	)
 
 /obj/item/gun/energy/pulse/loyalpin
 	pin = /obj/item/firing_pin/implant/mindshield

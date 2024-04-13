@@ -7,19 +7,8 @@
  *
  **/
 
-//Init the debugger datum first so we can debug Master
-//You might wonder why not just create the debugger datum global in its own file, since its loaded way earlier than this DM file
-//Well for whatever reason then the Master gets created first and then the debugger when doing that
-//So thats why this code lives here now, until someone finds out how Byond inits globals
-GLOBAL_REAL(Debugger, /datum/debugger) = new
-//This is the ABSOLUTE ONLY THING that should init globally like this
-//2019 update: the failsafe,config and Global controllers also do it
-GLOBAL_REAL(Master, /datum/controller/master) = new
-
-//THIS IS THE INIT ORDER
-//Master -> SSPreInit -> GLOB -> world -> config -> SSInit -> Failsafe
-//GOT IT MEMORIZED?
-
+// See initialization order in /code/game/world.dm
+GLOBAL_REAL(Master, /datum/controller/master)
 /datum/controller/master
 	name = "Master"
 
@@ -43,6 +32,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/init_timeofday
 	var/init_time
 	var/tickdrift = 0
+	/// Tickdrift as of last tick, w no averaging going on
+	var/olddrift = 0
 
 	/// How long is the MC sleeping between runs, read only (set by Loop() based off of anti-tick-contention heuristics)
 	var/sleep_delta = 1
@@ -71,6 +62,10 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	/// Outside of initialization, returns null.
 	var/current_initializing_subsystem = null
 
+	/// The last decisecond we force dumped profiling information
+	/// Used to avoid spamming profile reads since they can be expensive (string memes)
+	var/last_profiled = 0
+
 	var/static/restart_clear = 0
 	var/static/restart_timeout = 0
 	var/static/restart_count = 0
@@ -88,7 +83,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 	if(!random_seed)
 		#ifdef UNIT_TESTS
-		random_seed = 29051994
+		random_seed = 29051994 // How about 22475?
 		#else
 		random_seed = rand(1, 1e9)
 		#endif
@@ -252,7 +247,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		if (!mc_started)
 			mc_started = TRUE
 			if (!current_runlevel)
-				SetRunLevel(1)
+				SetRunLevel(1) // Intentionally not using the defines here because the MC doesn't care about them
 			// Loop.
 			Master.StartProcessing(0)
 
@@ -295,6 +290,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		SS_INIT_NONE,
 		SS_INIT_SUCCESS,
 		SS_INIT_NO_NEED,
+		SS_INIT_NO_MESSAGE,
 	)
 
 	if (subsystem.flags & SS_NO_INIT || subsystem.initialized) //Don't init SSs with the corresponding flag or if they already are initialized
@@ -340,7 +336,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		if(SS_INIT_FAILURE)
 			message_prefix = "Failed to initialize [subsystem.name] subsystem after"
 			chat_warning = TRUE
-		if(SS_INIT_SUCCESS)
+		if(SS_INIT_SUCCESS, SS_INIT_NO_MESSAGE)
 			message_prefix = "Initialized [subsystem.name] subsystem within"
 		if(SS_INIT_NO_NEED)
 			// This SS is disabled or is otherwise shy.
@@ -353,17 +349,17 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/message = "[message_prefix] [seconds] second[seconds == 1 ? "" : "s"]!"
 	var/chat_message = chat_warning ? span_boldwarning(message) : span_boldannounce(message)
 
-	to_chat(world, chat_message)
+	if(result != SS_INIT_NO_MESSAGE)
+		to_chat(world, chat_message)
 	log_world(message)
 
 /datum/controller/master/proc/SetRunLevel(new_runlevel)
 	var/old_runlevel = current_runlevel
-	if(isnull(old_runlevel))
-		old_runlevel = "NULL"
 
-	testing("MC: Runlevel changed from [old_runlevel] to [new_runlevel]")
+	testing("MC: Runlevel changed from [isnull(old_runlevel) ? "NULL" : old_runlevel] to [new_runlevel]")
 	current_runlevel = log(2, new_runlevel) + 1
 	if(current_runlevel < 1)
+		current_runlevel = old_runlevel
 		CRASH("Attempted to set invalid runlevel: [new_runlevel]")
 
 // Starts the mc, and sticks around to restart it if the loop ever ends.
@@ -454,8 +450,13 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	canary.use_variable()
 	//the actual loop.
 	while (1)
-		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
+		var/newdrift = ((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag
+		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, newdrift))
 		var/starting_tick_usage = TICK_USAGE
+
+		if(newdrift - olddrift >= CONFIG_GET(number/drift_dump_threshold))
+			AttemptProfileDump(CONFIG_GET(number/drift_profile_delay))
+		olddrift = newdrift
 
 		if (init_stage != init_stage_completed)
 			return MC_LOOP_RTN_NEWSTAGES
@@ -683,9 +684,15 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 			queue_node.state = SS_RUNNING
 
+			if(queue_node.profiler_focused)
+				world.Profile(PROFILE_START)
+
 			tick_usage = TICK_USAGE
 			var/state = queue_node.ignite(queue_node_paused)
 			tick_usage = TICK_USAGE - tick_usage
+
+			if(queue_node.profiler_focused)
+				world.Profile(PROFILE_STOP)
 
 			if (state == SS_RUNNING)
 				state = SS_IDLE
@@ -815,3 +822,11 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	for (var/thing in subsystems)
 		var/datum/controller/subsystem/SS = thing
 		SS.OnConfigLoad()
+
+/// Attempts to dump our current profile info into a file, triggered if the MC thinks shit is going down
+/// Accepts a delay in deciseconds of how long ago our last dump can be, this saves causing performance problems ourselves
+/datum/controller/master/proc/AttemptProfileDump(delay)
+	if(REALTIMEOFDAY - last_profiled <= delay)
+		return FALSE
+	last_profiled = REALTIMEOFDAY
+	SSprofiler.DumpFile(allow_yield = FALSE)

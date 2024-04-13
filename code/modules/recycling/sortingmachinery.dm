@@ -51,23 +51,22 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += contents
 
-/obj/item/delivery/deconstruct()
+/obj/item/delivery/atom_deconstruct(dissambled = TRUE)
 	unwrap_contents()
 	post_unwrap_contents()
-	return ..()
 
 /obj/item/delivery/examine(mob/user)
 	. = ..()
 	if(note)
 		if(!in_range(user, src))
-			. += "There's a [note.name] attached to it. You can't read it from here."
+			. += span_info("There's a [EXAMINE_HINT(note.name)] attached to it. You can't read it from here.")
 		else
-			. += "There's a [note.name] attached to it..."
+			. += span_info("There's a [EXAMINE_HINT(note.name)] attached to it...")
 			. += note.examine(user)
 	if(sticker)
-		. += "There's a barcode attached to the side."
+		. += span_notice("There's a [EXAMINE_HINT("barcode")] attached to the side. The package is marked for [EXAMINE_HINT("export.")]")
 	if(sort_tag)
-		. += "There's a sorting tag with the destination set to [GLOB.TAGGERLOCATIONS[sort_tag]]."
+		. += span_notice("There's a [EXAMINE_HINT("sorting tag")] with the destination set to [EXAMINE_HINT("[GLOB.TAGGERLOCATIONS[sort_tag]].")]")
 
 /obj/item/delivery/proc/disposal_handling(disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
 	SIGNAL_HANDLER
@@ -80,10 +79,10 @@
 		movable_loc.relay_container_resist_act(user, object)
 		return
 	to_chat(user, span_notice("You lean on the back of [object] and start pushing to rip the wrapping around it."))
-	if(do_after(user, 50, target = object))
+	if(do_after(user, 5 SECONDS, target = object))
 		if(!user || user.stat != CONSCIOUS || user.loc != object || object.loc != src)
 			return
-		to_chat(user, span_notice("You successfully removed [object]'s wrapping !"))
+		to_chat(user, span_notice("You successfully removed [object]'s wrapping!"))
 		object.forceMove(loc)
 		unwrap_contents()
 		post_unwrap_contents(user)
@@ -102,7 +101,7 @@
 	if(note)
 		. += "[base_icon_state]_note"
 	if(sticker)
-		. += "[base_icon_state]_tag"
+		. += "[base_icon_state]_barcode"
 
 /obj/item/delivery/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/dest_tagger))
@@ -193,7 +192,7 @@
 
 	else if(istype(item, /obj/item/boxcutter))
 		var/obj/item/boxcutter/boxcutter_item = item
-		if(boxcutter_item.on)
+		if(HAS_TRAIT(boxcutter_item, TRAIT_TRANSFORM_ACTIVE))
 			if(!attempt_pre_unwrap_contents(user, time = 0.5 SECONDS))
 				return
 			unwrap_contents()
@@ -258,7 +257,7 @@
 /obj/item/dest_tagger
 	name = "destination tagger"
 	desc = "Used to set the destination of properly wrapped packages."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "cargo tagger"
 	worn_icon_state = "cargotagger"
 	var/currTag = 0 //Destinations are stored in code\globalvars\lists\flavor_misc.dm
@@ -267,7 +266,7 @@
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/dest_tagger/borg
@@ -325,7 +324,7 @@
 /obj/item/sales_tagger
 	name = "sales tagger"
 	desc = "A scanner that lets you tag wrapped items for sale, splitting the profit between you and cargo."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "sales tagger"
 	worn_icon_state = "salestagger"
 	inhand_icon_state = "electronic"

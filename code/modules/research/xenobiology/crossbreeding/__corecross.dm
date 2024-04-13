@@ -27,7 +27,7 @@ To add a crossbreed:
 /obj/item/slimecross //The base type for crossbred extracts. Mostly here for posterity, and to set base case things.
 	name = "crossbred slime extract"
 	desc = "An extremely potent slime extract, formed through crossbreeding."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "base"
 	var/colour = "null"
 	var/effect = "null"
@@ -46,54 +46,54 @@ To add a crossbreed:
 /obj/item/slimecross/Initialize(mapload)
 	. = ..()
 	name = effect + " " + colour + " extract"
-	var/itemcolor = "#FFFFFF"
+	var/itemcolor = COLOR_WHITE
 	switch(colour)
-		if("orange")
+		if(SLIME_TYPE_ORANGE)
 			itemcolor = "#FFA500"
-		if("purple")
+		if(SLIME_TYPE_PURPLE)
 			itemcolor = "#B19CD9"
-		if("blue")
+		if(SLIME_TYPE_BLUE)
 			itemcolor = "#ADD8E6"
-		if("metal")
+		if(SLIME_TYPE_METAL)
 			itemcolor = "#7E7E7E"
-		if("yellow")
-			itemcolor = "#FFFF00"
-		if("dark purple")
-			itemcolor = "#551A8B"
-		if("dark blue")
-			itemcolor = "#0000FF"
-		if("silver")
+		if(SLIME_TYPE_YELLOW)
+			itemcolor = COLOR_YELLOW
+		if(SLIME_TYPE_DARK_PURPLE)
+			itemcolor = COLOR_DARK_PURPLE
+		if(SLIME_TYPE_DARK_BLUE)
+			itemcolor = COLOR_BLUE
+		if(SLIME_TYPE_SILVER)
 			itemcolor = "#D3D3D3"
-		if("bluespace")
-			itemcolor = "#32CD32"
-		if("sepia")
+		if(SLIME_TYPE_BLUESPACE)
+			itemcolor = COLOR_LIME
+		if(SLIME_TYPE_SEPIA)
 			itemcolor = "#704214"
-		if("cerulean")
+		if(SLIME_TYPE_CERULEAN)
 			itemcolor = "#2956B2"
-		if("pyrite")
+		if(SLIME_TYPE_PYRITE)
 			itemcolor = "#FAFAD2"
-		if("red")
-			itemcolor = "#FF0000"
-		if("green")
-			itemcolor = "#00FF00"
-		if("pink")
+		if(SLIME_TYPE_RED)
+			itemcolor = COLOR_RED
+		if(SLIME_TYPE_GREEN)
+			itemcolor = COLOR_VIBRANT_LIME
+		if(SLIME_TYPE_PINK)
 			itemcolor = "#FF69B4"
-		if("gold")
-			itemcolor = "#FFD700"
-		if("oil")
+		if(SLIME_TYPE_GOLD)
+			itemcolor = COLOR_GOLD
+		if(SLIME_TYPE_OIL)
 			itemcolor = "#505050"
-		if("black")
-			itemcolor = "#000000"
-		if("light pink")
+		if(SLIME_TYPE_BLACK)
+			itemcolor = COLOR_BLACK
+		if(SLIME_TYPE_LIGHT_PINK)
 			itemcolor = "#FFB6C1"
-		if("adamantine")
+		if(SLIME_TYPE_ADAMANTINE)
 			itemcolor = "#008B8B"
 	add_atom_colour(itemcolor, FIXED_COLOUR_PRIORITY)
 
 /obj/item/slimecrossbeaker //To be used as a result for extract reactions that make chemicals.
 	name = "result extract"
 	desc = "You shouldn't see this."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "base"
 	var/del_on_empty = TRUE
 	var/list/list_reagents
@@ -119,7 +119,7 @@ To add a crossbreed:
 /obj/item/slimecrossbeaker/bloodpack //Pack of 50u blood. Deletes on empty.
 	name = "blood extract"
 	desc = "A sphere of liquid blood, somehow managing to stay together."
-	color = "#FF0000"
+	color = COLOR_RED
 	list_reagents = list(/datum/reagent/blood = 50)
 
 /obj/item/slimecrossbeaker/pax //5u synthpax.
@@ -131,7 +131,7 @@ To add a crossbreed:
 /obj/item/slimecrossbeaker/omnizine //15u omnizine.
 	name = "healing extract"
 	desc = "A gelatinous extract of pure omnizine."
-	color = "#FF00FF"
+	color = COLOR_MAGENTA
 	list_reagents = list(/datum/reagent/medicine/omnizine = 15)
 
 /obj/item/slimecrossbeaker/autoinjector //As with the above, but automatically injects whomever it is used on with contents.
@@ -152,7 +152,7 @@ To add a crossbreed:
 		to_chat(user, span_warning("This can only be used on yourself."))
 		return
 	if(reagents.total_volume && (ignore_flags || M.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE)))
-		reagents.trans_to(M, reagents.total_volume, transfered_by = user)
+		reagents.trans_to(M, reagents.total_volume, transferred_by = user)
 		if(user != M)
 			to_chat(M, span_warning("[user] presses [src] against you!"))
 			to_chat(user, span_notice("You press [src] against [M], injecting [M.p_them()]."))
@@ -165,7 +165,7 @@ To add a crossbreed:
 	ignore_flags = TRUE //It is, after all, intended to heal.
 	name = "mending solution"
 	desc = "A strange glob of sweet-smelling semifluid, which seems to stick to skin rather easily."
-	color = "#FF00FF"
+	color = COLOR_MAGENTA
 	list_reagents = list(/datum/reagent/medicine/regen_jelly = 20)
 
 /obj/item/slimecrossbeaker/autoinjector/slimejelly //Primarily for slimepeople, but you do you.
@@ -173,7 +173,7 @@ To add a crossbreed:
 	ignore_flags = TRUE
 	name = "slime jelly bubble"
 	desc = "A sphere of slime jelly. It seems to stick to your skin, but avoids other surfaces."
-	color = "#00FF00"
+	color = COLOR_VIBRANT_LIME
 	list_reagents = list(/datum/reagent/toxin/slimejelly = 50)
 
 /obj/item/slimecrossbeaker/autoinjector/peaceandlove
@@ -189,5 +189,5 @@ To add a crossbreed:
 /obj/item/slimecrossbeaker/autoinjector/slimestimulant
 	name = "invigorating gel"
 	desc = "A bubbling purple mixture, designed to heal and boost movement."
-	color = "#FF00FF"
+	color = COLOR_MAGENTA
 	list_reagents = list(/datum/reagent/medicine/regen_jelly = 30, /datum/reagent/drug/methamphetamine = 9)

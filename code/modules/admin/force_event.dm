@@ -1,12 +1,6 @@
-///Allows an admin to force an event
-/client/proc/forceEvent()
-	set name = "Trigger Event"
-	set category = "Admin.Events"
 
-	if(!holder || !check_rights(R_FUN))
-		return
-
-	holder.forceEvent()
+ADMIN_VERB(force_event, R_FUN, "Trigger Event", "Forces an event to occur.", ADMIN_CATEGORY_EVENTS)
+	user.holder.forceEvent()
 
 ///Opens up the Force Event Panel
 /datum/admins/proc/forceEvent()
@@ -90,11 +84,11 @@
 			if(!event)
 				return
 			if(length(event.admin_setup))
-				for(var/datum/event_admin_setup/admin_setup_datum in event.admin_setup)
+				for(var/datum/event_admin_setup/admin_setup_datum as anything in event.admin_setup)
 					if(admin_setup_datum.prompt_admins() == ADMIN_CANCEL_EVENT)
 						return
 			var/always_announce_chance = 100
 			var/no_announce_chance = 0
-			event.runEvent(announce_chance_override = announce_event ? always_announce_chance : no_announce_chance, admin_forced = TRUE)
+			event.run_event(announce_chance_override = announce_event ? always_announce_chance : no_announce_chance, admin_forced = TRUE)
 			message_admins("[key_name_admin(usr)] has triggered an event. ([event.name])")
 			log_admin("[key_name(usr)] has triggered an event. ([event.name])")

@@ -9,9 +9,9 @@
 	health = 25
 	maxHealth = 25
 	pass_flags = PASSMOB | PASSFLAPS
-	light_system = MOVABLE_LIGHT
-	light_range = 7
-	light_power = 3
+	light_system = OVERLAY_LIGHT
+	light_range = 6
+	light_power = 2
 
 	hackables = "vibing scanners"
 	radio_key = /obj/item/encryptionkey/headset_service
@@ -19,6 +19,7 @@
 	bot_type = VIBE_BOT
 	data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	path_image_color = "#2cac12"
+	possessed_message = "You are a vibebot! Maintain the station's vibes to the best of your ability!"
 
 	///The vibe ability given to vibebots, so sentient ones can still change their color.
 	var/datum/action/innate/vibe/vibe_ability

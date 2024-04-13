@@ -16,13 +16,14 @@
 	var/wipe_atoms = FALSE
 
 	if(istype(clone_area) && total_x == clone_area.width && total_y == clone_area.height && size_x >= 0 && size_y > 0)
-		var/cloned_center_x = round(clone_area.bottom_left_coords[1] + ((total_x - 1) / 2))
-		var/cloned_center_y = round(clone_area.bottom_left_coords[2] + ((total_y - 1) / 2))
+		var/turf/bottom_left = clone_area.bottom_left_turfs[1]
+		var/cloned_center_x = round(bottom_left.x + ((total_x - 1) / 2))
+		var/cloned_center_y = round(bottom_left.y + ((total_y - 1) / 2))
 		for(var/t in turfs)
 			var/turf/T = t
 			var/offset_x = T.x - center.x
 			var/offset_y = T.y - center.y
-			var/turf/newT = locate(cloned_center_x + offset_x, cloned_center_y + offset_y, clone_area.bottom_left_coords[3])
+			var/turf/newT = locate(cloned_center_x + offset_x, cloned_center_y + offset_y, bottom_left.z)
 			if(!(newT in clone_area.reserved_turfs)) //sanity check so we don't overwrite other areas somehow
 				continue
 			atoms += new /obj/effect/appearance_clone(newT, T)
@@ -34,7 +35,7 @@
 					atoms += new /obj/effect/appearance_clone(newT, A)
 		skip_normal = TRUE
 		wipe_atoms = TRUE
-		center = locate(cloned_center_x, cloned_center_y, clone_area.bottom_left_coords[3])
+		center = locate(cloned_center_x, cloned_center_y, bottom_left.z)
 
 	if(!skip_normal)
 		for(var/i in turfs)

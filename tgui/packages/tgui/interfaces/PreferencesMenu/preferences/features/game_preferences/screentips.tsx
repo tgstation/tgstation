@@ -1,8 +1,16 @@
 import { multiline } from 'common/string';
-import { FeatureColorInput, Feature, FeatureChoiced, FeatureDropdownInput } from '../base';
+
+import {
+  CheckboxInput,
+  Feature,
+  FeatureChoiced,
+  FeatureColorInput,
+  FeatureDropdownInput,
+  FeatureToggle,
+} from '../base';
 
 export const screentip_color: Feature<string> = {
-  name: 'Screentips color',
+  name: 'Screentips: Screentips color',
   category: 'UI',
   description: multiline`
     The color of screen tips, the text you see when hovering over something.
@@ -10,8 +18,16 @@ export const screentip_color: Feature<string> = {
   component: FeatureColorInput,
 };
 
+export const screentip_images: FeatureToggle = {
+  name: 'Screentips: Allow images',
+  category: 'UI',
+  description: multiline`When enabled, screentip hints use images for
+    the mouse button rather than LMB/RMB.`,
+  component: CheckboxInput,
+};
+
 export const screentip_pref: FeatureChoiced = {
-  name: 'Enable screentips',
+  name: 'Screentips: Enable screentips',
   category: 'UI',
   description: multiline`
     Enables screen tips, the text you see when hovering over something.

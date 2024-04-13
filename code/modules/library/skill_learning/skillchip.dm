@@ -9,8 +9,8 @@
 	name = "skillchip"
 	desc = "This biochip integrates with user's brain to enable mastery of specific skill. Consult certified Nanotrasen neurosurgeon before use."
 
-	icon = 'icons/obj/card.dmi'
-	icon_state = "data_3"
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon_state = "skillchip"
 	custom_price = PAYCHECK_CREW * 3
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -42,7 +42,9 @@
 	var/cooldown = 5 MINUTES
 	/// Cooldown for chip actions.
 	COOLDOWN_DECLARE(chip_cooldown)
-	/// Used to determine if this is an abstract type or not. If this is meant to be an abstract type, set it to the type's path. Will be overridden by subsequent abstract parents. See /datum/action/item_action/chameleon/change/skillchip/initialize_disguises()
+	/// Used to determine if this is an abstract type or not.
+	/// If this is meant to be an abstract type, set it to the type's path.
+	/// Will be overridden by subsequent abstract parents.
 	var/abstract_parent_type = /obj/item/skillchip
 	/// Set to TRUE when the skill chip's effects are applied. Set to FALSE when they're not.
 	var/active = FALSE
@@ -104,7 +106,7 @@
 		return "Skillchip is not active."
 
 	// Should not happen. Holding brain is destroyed and the chip hasn't had its state set appropriately.
-	if(QDELETED(holding_brain))
+	if(!holding_brain)
 		stack_trace("Skillchip's owner is null or qdeleted brain.")
 		return "Skillchip cannot detect viable brain."
 
@@ -149,8 +151,8 @@
 	if(!silent && activate_message)
 		to_chat(user, activate_message)
 
-	for(var/trait in auto_traits)
-		ADD_TRAIT(user, trait, SKILLCHIP_TRAIT)
+	if(length(auto_traits))
+		user.add_traits(auto_traits, SKILLCHIP_TRAIT)
 
 	active = TRUE
 
@@ -183,8 +185,8 @@
 	if(!silent && deactivate_message)
 		to_chat(user, deactivate_message)
 
-	for(var/trait in auto_traits)
-		REMOVE_TRAIT(user, trait, SKILLCHIP_TRAIT)
+	if(length(auto_traits))
+		user.remove_traits(auto_traits, SKILLCHIP_TRAIT)
 
 	active = FALSE
 
@@ -248,7 +250,7 @@
 		return "Incompatible lifeform detected."
 
 	// No brain
-	var/obj/item/organ/internal/brain/brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(QDELETED(brain))
 		return "No brain detected."
 
@@ -486,5 +488,48 @@
 	skill_icon = "cookie"
 	activate_message = span_notice("You recall learning from your grandmother how they baked their cookies with love.")
 	deactivate_message = span_notice("You forget all memories imparted upon you by your grandmother. Were they even your real grandma?")
+
+/obj/item/skillchip/master_angler
+	name = "Mast-Angl-Er skillchip"
+	auto_traits = list(TRAIT_REVEAL_FISH, TRAIT_EXAMINE_FISHING_SPOT)
+	skill_name = "Fisherman's Discernment"
+	skill_description = "Lists fishes when examining a fishing spot, and gives a hint of whatever thing's biting the hook."
+	skill_icon = "fish"
+	activate_message = span_notice("You feel the knowledge and passion of several sunbaked, seasoned fishermen burn within you.")
+	deactivate_message = span_notice("You no longer feel like casting a fishing rod by the sunny riverside.")
+
+/obj/item/skillchip/intj
+	name = "Integrated Intuitive Thinking and Judging skillchip"
+	auto_traits = list(TRAIT_REMOTE_TASTING)
+	skill_name = "Mental Flavour Calculus"
+	skill_description = "When examining food, you can experience the flavours just as well as if you were eating it."
+	skill_icon = FA_ICON_DRUMSTICK_BITE
+	activate_message = span_notice("You think of your favourite food and realise that you can rotate its flavour in your mind.")
+	deactivate_message = span_notice("You feel your food-based mind palace crumbling...")
+
+/obj/item/skillchip/matrix_flip
+	name = "BULLET_DODGER skillchip"
+	skill_name = "Flip 2 Dodge"
+	skill_description = "At the cost of stamina, your flips can also be used to dodge incoming projectiles."
+	skill_icon = FA_ICON_SPINNER
+	activate_message = span_notice("You feel the urge to flip scenically as if you are the 'Chosen One'.")
+	deactivate_message = span_notice("The urge to flip goes away.")
+
+/obj/item/skillchip/matrix_flip/on_activate(mob/living/carbon/user, silent = FALSE)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOB_EMOTED("flip"), PROC_REF(on_flip))
+
+/obj/item/skillchip/matrix_flip/on_deactivate(mob/living/carbon/user, silent=FALSE)
+	UnregisterSignal(user, COMSIG_MOB_EMOTED("flip"))
+	return ..()
+
+/obj/item/skillchip/matrix_flip/proc/on_flip(mob/living/source)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT_FROM(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT))
+		return
+	playsound(source, 'sound/weapons/fwoosh.ogg', 90, FALSE)
+	ADD_TRAIT(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT)
+	source.adjustStaminaLoss(20)
+	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT), FLIP_EMOTE_DURATION + 0.1 SECONDS)
 
 #undef SKILLCHIP_CATEGORY_GENERAL

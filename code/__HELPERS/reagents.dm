@@ -70,13 +70,13 @@
 		GLOB.chemical_reactions_list_reactant_index[rid] -= R
 
 //see build_chemical_reactions_list in holder.dm for explanations
-/proc/add_chemical_reaction(datum/chemical_reaction/R)
-	if(!GLOB.chemical_reactions_list_reactant_index || !R.required_reagents || !R.required_reagents.len)
+/proc/add_chemical_reaction(datum/chemical_reaction/add)
+	if(!GLOB.chemical_reactions_list_reactant_index || !add.required_reagents || !add.required_reagents.len)
 		return
-	var/primary_reagent = R.required_reagents[1]
-	if(!GLOB.chemical_reactions_list_reactant_index[primary_reagent])
-		GLOB.chemical_reactions_list_reactant_index[primary_reagent] = list()
-	GLOB.chemical_reactions_list_reactant_index[primary_reagent] += R
+	var/rand_reagent = pick(add.required_reagents)
+	if(!GLOB.chemical_reactions_list_reactant_index[rand_reagent])
+		GLOB.chemical_reactions_list_reactant_index[rand_reagent] = list()
+	GLOB.chemical_reactions_list_reactant_index[rand_reagent] += add
 
 //Creates foam from the reagent. Metaltype is for metal foam, notification is what to show people in textbox
 /datum/reagents/proc/create_foam(foamtype, foam_volume, result_type = null, notification = null, log = FALSE)
@@ -155,7 +155,7 @@
 
 ///Returns a list of chemical_reaction datums that have the input STRING as a product
 /proc/get_reagent_type_from_product_string(string)
-	var/input_reagent = replacetext(lowertext(string), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the name
+	var/input_reagent = replacetext(LOWER_TEXT(string), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the name
 	if (isnull(input_reagent))
 		return
 
@@ -194,7 +194,7 @@
 /proc/get_chem_id(chem_name)
 	for(var/X in GLOB.chemical_reagents_list)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
-		if(ckey(chem_name) == ckey(lowertext(R.name)))
+		if(ckey(chem_name) == ckey(LOWER_TEXT(R.name)))
 			return X
 
 ///Takes a type in and returns a list of associated recipes

@@ -3,7 +3,7 @@
  */
 /obj/item/photo
 	name = "photo"
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/art/camera.dmi'
 	icon_state = "photo"
 	inhand_icon_state = "paper"
 	w_class = WEIGHT_CLASS_TINY
@@ -42,7 +42,8 @@
 			continue
 		if(!isobserver(seen))
 			continue
-		set_custom_materials(list(/datum/material/hauntium = 2000))
+		set_custom_materials(list(/datum/material/hauntium =SHEET_MATERIAL_AMOUNT))
+		grind_results = list(/datum/reagent/hauntium = 20)
 		break
 
 /obj/item/photo/update_icon_state()
@@ -53,11 +54,11 @@
 		icon = I
 	return ..()
 
-/obj/item/photo/suicide_act(mob/living/carbon/user)
+/obj/item/photo/suicide_act(mob/living/carbon/human/user)
 	user.visible_message(span_suicide("[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!"))//when you wanna look at photo of waifu one last time before you die...
-	if (user.gender == MALE)
+	if (!ishuman(user) || user.physique == MALE)
 		playsound(user, 'sound/voice/human/manlaugh1.ogg', 50, TRUE)//EVERY TIME I DO IT MAKES ME LAUGH
-	else if (user.gender == FEMALE)
+	else
 		playsound(user, 'sound/voice/human/womanlaugh.ogg', 50, TRUE)
 	return OXYLOSS
 
@@ -104,7 +105,7 @@
 	var/n_name = tgui_input_text(usr, "What would you like to label the photo?", "Photo Labelling", max_length = MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
 	if(n_name && (loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && !usr.incapacitated())
-		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
+		name = "photo[(n_name ? "- '[n_name]'" : null)]"
 	add_fingerprint(usr)
 
 /obj/item/photo/old

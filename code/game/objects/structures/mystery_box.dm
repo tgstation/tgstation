@@ -47,8 +47,8 @@ GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/ballistic/automatic/m90,
 	/obj/item/gun/ballistic/automatic/tommygun,
 	/obj/item/gun/ballistic/automatic/wt550,
-	/obj/item/gun/ballistic/automatic/sniper_rifle,
-	/obj/item/gun/ballistic/rifle/boltaction/brand_new,
+	/obj/item/gun/ballistic/rifle/sniper_rifle,
+	/obj/item/gun/ballistic/rifle/boltaction,
 ))
 
 GLOBAL_LIST_INIT(mystery_box_extended, list(
@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 		if(grant_extra_mag && istype(instantiated_gun, /obj/item/gun/ballistic))
 			var/obj/item/gun/ballistic/instantiated_ballistic = instantiated_gun
 			if(!instantiated_ballistic.internal_magazine)
-				var/obj/item/ammo_box/magazine/extra_mag = new instantiated_ballistic.mag_type(loc)
+				var/obj/item/ammo_box/magazine/extra_mag = new instantiated_ballistic.spawn_magazine_type(loc)
 				user.put_in_hands(extra_mag)
 
 	user.visible_message(span_notice("[user] takes [presented_item] from [src]."), span_notice("You take [presented_item] from [src]."), vision_distance = COMBAT_MESSAGE_RANGE)
@@ -272,7 +272,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 
 /obj/mystery_box_item/proc/present_item()
 	var/obj/item/selected_item = selected_path
-	add_filter("ready_outline", 2, list("type" = "outline", "color" = "#FBFF23", "size" = 0.2))
+	add_filter("ready_outline", 2, list("type" = "outline", "color" = COLOR_VIVID_YELLOW, "size" = 0.2))
 	name = initial(selected_item.name)
 	parent_box.present_weapon()
 	claimable = TRUE

@@ -57,6 +57,8 @@
 		if(fov_type > highest_fov)
 			highest_fov = fov_type
 	fov_view = highest_fov
+	if(HAS_TRAIT(src, TRAIT_EXPANDED_FOV))
+		fov_view += 30
 	update_fov_client()
 
 /// Updates the FOV for the client.
@@ -130,11 +132,4 @@
 	icon_state = "90"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	plane = FIELD_OF_VISION_BLOCKER_PLANE
-	screen_loc = "BOTTOM,LEFT"
-
-/atom/movable/screen/fov_shadow
-	icon = 'icons/effects/fov/field_of_view.dmi'
-	icon_state = "90_v"
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	plane = ABOVE_LIGHTING_PLANE
 	screen_loc = "BOTTOM,LEFT"

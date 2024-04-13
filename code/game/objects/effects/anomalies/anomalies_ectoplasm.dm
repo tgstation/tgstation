@@ -4,6 +4,7 @@
 	icon_state = "ectoplasm"
 	aSignal = /obj/item/assembly/signaler/anomaly/ectoplasm
 	lifespan = ANOMALY_COUNTDOWN_TIMER + 2 SECONDS //This one takes slightly longer, because it can run away.
+	immobile = TRUE //prevents it from moving around so ghosts can actually move it with decent accuracy
 
 	///Blocks the anomaly from updating ghost count. Used in case an admin wants to rig the anomaly to be a certain size or intensity.
 	var/override_ghosts = FALSE
@@ -34,7 +35,7 @@
 		if(50 to 100)
 			. += span_alert("The anomaly pulsates heavily, about to burst with unearthly energy. This can't be good.")
 
-/obj/effect/anomaly/ectoplasm/anomalyEffect(delta_time)
+/obj/effect/anomaly/ectoplasm/anomalyEffect(seconds_per_tick)
 	. = ..()
 
 	if(override_ghosts)
@@ -61,9 +62,7 @@
 
 	if(effect_power >= 10) //Performs something akin to a revenant defile spell.
 		var/effect_range = ghosts_orbiting + 3
-		var/effect_area = range(effect_range, src)
-
-		for(var/impacted_thing in effect_area)
+		for(var/impacted_thing in range(effect_range, src))
 			if(isfloorturf(impacted_thing))
 				if(prob(5))
 					new /obj/effect/decal/cleanable/blood(get_turf(impacted_thing))
@@ -129,7 +128,7 @@
 /obj/structure/ghost_portal
 	name = "Spooky Portal"
 	desc = "A portal between our dimension and who-knows-where? It's emitting an absolutely ungodly wailing sound."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/anomaly.dmi'
 	icon_state = "anom"
 	anchored = TRUE
 	var/static/list/spooky_noises = list(
@@ -147,9 +146,9 @@
 	START_PROCESSING(SSobj, src)
 	INVOKE_ASYNC(src, PROC_REF(make_ghost_swarm), candidate_list)
 	playsound(src, pick(spooky_noises), 100, TRUE)
-	QDEL_IN(src, 2 MINUTES)
+	QDEL_IN(WEAKREF(src), 2 MINUTES)
 
-/obj/structure/ghost_portal/process(delta_time)
+/obj/structure/ghost_portal/process(seconds_per_tick)
 	. = ..()
 
 	if(prob(5))
@@ -174,12 +173,12 @@
  * Ghosts are deleted two minutes after being made, and exist to punch stuff until it breaks.
  */
 
-/obj/structure/ghost_portal/proc/make_ghost_swarm(list/candidate_list)
+/obj/structure/ghost_portal/proc/make_ghost_swarm(list/candidate_list = list())
 	if(!length(candidate_list)) //If we are not passed a candidate list we just poll everyone who is dead, meaning these can also be spawned directly.
 		candidate_list += GLOB.current_observers_list
 		candidate_list += GLOB.dead_player_list
 
-	var/list/candidates = poll_candidates("Would you like to participate in a spooky ghost swarm? (Warning: you will not be able to return to your body!)", ROLE_SENTIENCE, FALSE, 10 SECONDS, group = candidate_list)
+	var/list/candidates = SSpolling.poll_candidates("Would you like to participate in a spooky ghost swarm? (Warning: you will not be able to return to your body!)", check_jobban = ROLE_SENTIENCE, poll_time = 10 SECONDS, group = candidate_list, alert_pic = src, role_name_text = "ghost swarm")
 	for(var/mob/dead/observer/candidate_ghost as anything in candidates)
 		var/mob/living/basic/ghost/swarm/new_ghost = new(get_turf(src))
 		ghosts_spawned += new_ghost

@@ -3,7 +3,7 @@
 /obj/structure/tank_dispenser
 	name = "tank dispenser"
 	desc = "A simple yet bulky storage device for gas tanks. Holds up to 10 oxygen tanks and 10 plasma tanks."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "dispenser"
 	density = TRUE
 	anchored = TRUE
@@ -37,7 +37,7 @@
 /obj/structure/tank_dispenser/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tank_dispenser/attackby(obj/item/I, mob/living/user, params)
 	var/full
@@ -103,13 +103,11 @@
 	return TRUE
 
 
-/obj/structure/tank_dispenser/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		for(var/X in src)
-			var/obj/item/I = X
-			I.forceMove(loc)
-		new /obj/item/stack/sheet/iron (loc, 2)
-	qdel(src)
+/obj/structure/tank_dispenser/atom_deconstruct(disassembled = TRUE)
+	for(var/X in src)
+		var/obj/item/I = X
+		I.forceMove(loc)
+	new /obj/item/stack/sheet/iron (loc, 2)
 
 /obj/structure/tank_dispenser/proc/dispense(tank_type, mob/receiver)
 	var/existing_tank = locate(tank_type) in src

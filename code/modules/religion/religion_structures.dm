@@ -1,7 +1,7 @@
 /obj/structure/altar_of_gods
 	name = "\improper Altar of the Gods"
 	desc = "An altar which allows the head of the church to choose a sect of religious teachings as well as provide sacrifices to earn favor."
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "convertaltar"
 	density = TRUE
 	anchored = TRUE
@@ -18,6 +18,7 @@
 	reflect_sect_in_icons()
 	GLOB.chaplain_altars += src
 	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/altar_of_gods/Destroy()
 	GLOB.chaplain_altars -= src
@@ -61,7 +62,10 @@
 		. += list(span_notice("Chaplains: [chaplains]."))
 
 /obj/structure/altar_of_gods/proc/reflect_sect_in_icons()
-	if(GLOB.religious_sect)
+	if(isnull(GLOB.religious_sect))
+		icon = initial(icon)
+		icon_state = initial(icon_state)
+	else
 		sect_to_altar = GLOB.religious_sect
 		if(sect_to_altar.altar_icon)
 			icon = sect_to_altar.altar_icon
@@ -81,12 +85,13 @@
 /obj/item/ritual_totem
 	name = "ritual totem"
 	desc = "A wooden totem with strange carvings on it."
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "ritual_totem"
 	inhand_icon_state = "sheet-wood"
 	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
 	//made out of a single sheet of wood
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 	item_flags = NO_PIXEL_RANDOM_DROP
 
 /obj/item/ritual_totem/Initialize(mapload)

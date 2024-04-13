@@ -1,6 +1,7 @@
 /obj/machinery/computer/bank_machine
 	name = "bank machine"
 	desc = "A machine used to deposit and withdraw station funds."
+	circuit = /obj/item/circuitboard/computer/bankmachine
 	icon_screen = "vault"
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_VAULT)
@@ -34,6 +35,9 @@
 	radio.recalculateChannels()
 	synced_bank_account = SSeconomy.get_dep_account(account_department)
 
+	if(!mapload)
+		AddComponent(/datum/component/gps, "Forbidden Cash Signal")
+
 /obj/machinery/computer/bank_machine/Destroy()
 	QDEL_NULL(radio)
 	synced_bank_account = null
@@ -55,7 +59,7 @@
 		return
 	return ..()
 
-/obj/machinery/computer/bank_machine/process(delta_time)
+/obj/machinery/computer/bank_machine/process(seconds_per_tick)
 	. = ..()
 	if(!siphoning || !synced_bank_account)
 		return
@@ -63,7 +67,7 @@
 		say("Insufficient power. Halting siphon.")
 		end_siphon()
 		return
-	var/siphon_am = 100 * delta_time
+	var/siphon_am = 100 * seconds_per_tick
 	if(!synced_bank_account.has_money(siphon_am))
 		say("[synced_bank_account.account_holder] depleted. Halting siphon.")
 		end_siphon()
@@ -101,26 +105,34 @@
 
 	switch(action)
 		if("siphon")
-			say("Siphon of station credits has begun!")
-			start_siphon(ui.user)
+			if(is_station_level(src.z) || is_centcom_level(src.z))
+				say("Siphon of station credits has begun!")
+				start_siphon(ui.user)
+			else
+				say("Error: Console not in reach of station, withdrawal cannot begin.")
 			. = TRUE
 		if("halt")
 			say("Station credit withdrawal halted.")
 			end_siphon()
 			. = TRUE
 
+/obj/machinery/computer/bank_machine/on_changed_z_level()
+	. = ..()
+	if(siphoning && !(is_station_level(src.z) || is_centcom_level(src.z)))
+		say("Error: Console not in reach of station. Siphon halted.")
+		end_siphon()
+
 /obj/machinery/computer/bank_machine/proc/end_siphon()
 	siphoning = FALSE
 	unauthorized = FALSE
-	new /obj/item/holochip(drop_location(), syphoning_credits) //get the loot
+	if(syphoning_credits > 0)
+		new /obj/item/holochip(drop_location(), syphoning_credits) //get the loot
 	syphoning_credits = 0
 
 /obj/machinery/computer/bank_machine/proc/start_siphon(mob/living/carbon/user)
-	siphoning = TRUE
-	unauthorized = FALSE
 	var/obj/item/card/id/card = user.get_idcard(hand_first = TRUE)
-	if(!istype(card))
-		return
-	if(!check_access(card))
-		return
-	unauthorized = TRUE
+	if(!istype(card) || !check_access(card))
+		unauthorized = TRUE
+	else
+		unauthorized = FALSE
+	siphoning = TRUE

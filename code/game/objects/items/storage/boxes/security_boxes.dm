@@ -69,60 +69,6 @@
 	for(var/i in 1 to 5)
 		new /obj/item/grenade/empgrenade(src)
 
-/obj/item/storage/box/trackimp
-	name = "boxed tracking implant kit"
-	desc = "Box full of scum-bag tracking utensils."
-	icon_state = "secbox"
-	illustration = "implant"
-
-/obj/item/storage/box/trackimp/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/implantcase/tracking = 4,
-		/obj/item/implanter = 1,
-		/obj/item/implantpad = 1,
-		/obj/item/locator = 1,
-	)
-	generate_items_inside(items_inside,src)
-
-/obj/item/storage/box/minertracker
-	name = "boxed tracking implant kit"
-	desc = "For finding those who have died on the accursed lavaworld."
-	illustration = "implant"
-
-/obj/item/storage/box/minertracker/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/implantcase/tracking = 3,
-		/obj/item/implanter = 1,
-		/obj/item/implantpad = 1,
-		/obj/item/locator = 1,
-	)
-	generate_items_inside(items_inside,src)
-
-/obj/item/storage/box/chemimp
-	name = "boxed chemical implant kit"
-	desc = "Box of stuff used to implant chemicals."
-	illustration = "implant"
-
-/obj/item/storage/box/chemimp/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/implantcase/chem = 5,
-		/obj/item/implanter = 1,
-		/obj/item/implantpad = 1,
-	)
-	generate_items_inside(items_inside,src)
-
-/obj/item/storage/box/exileimp
-	name = "boxed exile implant kit"
-	desc = "Box of exile implants. It has a picture of a clown being booted through the Gateway."
-	illustration = "implant"
-
-/obj/item/storage/box/exileimp/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/implantcase/exile = 5,
-		/obj/item/implanter = 1,
-	)
-	generate_items_inside(items_inside,src)
-
 /obj/item/storage/box/prisoner
 	name = "box of prisoner IDs"
 	desc = "Take away their last shred of dignity, their name."
@@ -209,8 +155,8 @@
 		new /obj/item/restraints/handcuffs/alien(src)
 
 /obj/item/storage/box/rubbershot
-	name = "box of rubber shots"
-	desc = "A box full of rubber shots, designed for riot shotguns."
+	name = "box of shotgun shells (Less Lethal - Rubber Shot)"
+	desc = "A box full of rubber shot shotgun shells, designed for shotguns."
 	icon_state = "rubbershot_box"
 	illustration = null
 
@@ -219,8 +165,8 @@
 		new /obj/item/ammo_casing/shotgun/rubbershot(src)
 
 /obj/item/storage/box/lethalshot
-	name = "box of lethal shotgun shots"
-	desc = "A box full of lethal shots, designed for riot shotguns."
+	name = "box of shotgun shells (Lethal)"
+	desc = "A box full of lethal shotgun shells, designed for shotguns."
 	icon_state = "lethalshot_box"
 	illustration = null
 
@@ -228,15 +174,35 @@
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/shotgun/buckshot(src)
 
+/obj/item/storage/box/slugs
+	name = "box of shotgun shells (Lethal - Slugs)"
+	desc = "A box full of lethal shotgun slugs, designed for shotguns."
+	icon_state = "breacher_box"
+	illustration = null
+
+/obj/item/storage/box/slugs/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/shotgun(src)
+
 /obj/item/storage/box/beanbag
-	name = "box of beanbags"
-	desc = "A box full of beanbag shells."
+	name = "box of shotgun shells (Less Lethal - Beanbag)"
+	desc = "A box full of beanbag shotgun shells, designed for shotguns."
 	icon_state = "beanbagshot_box"
 	illustration = null
 
 /obj/item/storage/box/beanbag/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+
+/obj/item/storage/box/breacherslug
+	name = "box of breaching shotgun shells"
+	desc = "A box full of breaching slugs, designed for rapid entry, not very effective against anything else."
+	icon_state = "breacher_box"
+	illustration = null
+
+/obj/item/storage/box/breacherslug/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/shotgun/breacher(src)
 
 /obj/item/storage/box/emptysandbags
 	name = "box of empty sandbags"

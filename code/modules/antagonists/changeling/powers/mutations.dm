@@ -15,7 +15,7 @@
 	desc = "Go tell a coder if you see this"
 	helptext = "Yell at Miauw and/or Perakp"
 	chemical_cost = 1000
-	dna_cost = -1
+	dna_cost = CHANGELING_POWER_UNOBTAINABLE
 
 	var/silent = FALSE
 	var/weapon_type
@@ -88,10 +88,10 @@
 	desc = "Go tell a coder if you see this"
 	helptext = "Yell at Miauw and/or Perakp"
 	chemical_cost = 1000
-	dna_cost = -1
+	dna_cost = CHANGELING_POWER_UNOBTAINABLE
 
-	var/helmet_type = /obj/item
-	var/suit_type = /obj/item
+	var/helmet_type = null
+	var/suit_type = null
 	var/suit_name_simple = "    "
 	var/helmet_name_simple = "     "
 	var/recharge_slowdown = 0
@@ -121,14 +121,18 @@
 
 //checks if we already have an organic suit and casts it off.
 /datum/action/changeling/suit/proc/check_suit(mob/user)
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	if(!ishuman(user) || !changeling)
 		return 1
 	var/mob/living/carbon/human/H = user
+
 	if(istype(H.wear_suit, suit_type) || istype(H.head, helmet_type))
-		H.visible_message(span_warning("[H] casts off [H.p_their()] [suit_name_simple]!"), span_warning("We cast off our [suit_name_simple]."), span_hear("You hear the organic matter ripping and tearing!"))
-		H.temporarilyRemoveItemFromInventory(H.head, TRUE) //The qdel on dropped() takes care of it
-		H.temporarilyRemoveItemFromInventory(H.wear_suit, TRUE)
+		var/name_to_use = (isnull(suit_type) ? helmet_name_simple : suit_name_simple)
+		H.visible_message(span_warning("[H] casts off [H.p_their()] [name_to_use]!"), span_warning("We cast off our [name_to_use]."), span_hear("You hear the organic matter ripping and tearing!"))
+		if(!isnull(helmet_type))
+			H.temporarilyRemoveItemFromInventory(H.head, TRUE) //The qdel on dropped() takes care of it
+		if(!isnull(suit_type))
+			H.temporarilyRemoveItemFromInventory(H.wear_suit, TRUE)
 		H.update_worn_oversuit()
 		H.update_worn_head()
 		H.update_body_parts()
@@ -141,20 +145,21 @@
 		return 1
 
 /datum/action/changeling/suit/sting_action(mob/living/carbon/human/user)
-	if(!user.canUnEquip(user.wear_suit))
+	if(!user.canUnEquip(user.wear_suit) && !isnull(suit_type))
 		user.balloon_alert(user, "body occupied!")
 		return
-	if(!user.canUnEquip(user.head))
+	if(!user.canUnEquip(user.head) && !isnull(helmet_type))
 		user.balloon_alert(user, "head occupied!")
 		return
 	..()
-	user.dropItemToGround(user.head)
-	user.dropItemToGround(user.wear_suit)
+	if(!isnull(suit_type))
+		user.dropItemToGround(user.wear_suit)
+		user.equip_to_slot_if_possible(new suit_type(user), ITEM_SLOT_OCLOTHING, 1, 1, 1)
+	if(!isnull(helmet_type))
+		user.dropItemToGround(user.head)
+		user.equip_to_slot_if_possible(new helmet_type(user), ITEM_SLOT_HEAD, 1, 1, 1)
 
-	user.equip_to_slot_if_possible(new suit_type(user), ITEM_SLOT_OCLOTHING, 1, 1, 1)
-	user.equip_to_slot_if_possible(new helmet_type(user), ITEM_SLOT_HEAD, 1, 1, 1)
-
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	changeling.chem_recharge_slowdown += recharge_slowdown
 	return TRUE
 
@@ -192,8 +197,9 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
-	wound_bonus = -20
-	bare_wound_bonus = 20
+	wound_bonus = 10
+	bare_wound_bonus = 10
+	armour_penetration = 35
 	var/can_drop = FALSE
 	var/fake = FALSE
 
@@ -277,6 +283,7 @@
 	flags_1 = NONE
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = NONE
+	antimagic_flags = NONE
 	pinless = TRUE
 	ammo_type = /obj/item/ammo_casing/magic/tentacle
 	fire_sound = 'sound/effects/splat.ogg'
@@ -365,59 +372,93 @@
 		for(var/obj/item/I in H.held_items)
 			if(I.get_sharpness())
 				C.visible_message(span_danger("[H] impales [C] with [H.p_their()] [I.name]!"), span_userdanger("[H] impales you with [H.p_their()] [I.name]!"))
-				C.apply_damage(I.force, BRUTE, BODY_ZONE_CHEST)
+				C.apply_damage(I.force, BRUTE, BODY_ZONE_CHEST, attacking_item = I)
 				H.do_item_attack_animation(C, used_item = I)
 				H.add_mob_blood(C)
 				playsound(get_turf(H),I.hitsound,75,TRUE)
 				return
 
-/obj/projectile/tentacle/on_hit(atom/target, blocked = FALSE)
-	var/mob/living/carbon/human/H = firer
+/obj/projectile/tentacle/on_hit(atom/movable/target, blocked = 0, pierce_hit)
+	if(!isliving(firer) || !ismovable(target))
+		return ..()
+
 	if(blocked >= 100)
 		return BULLET_ACT_BLOCK
-	if(isitem(target))
-		var/obj/item/I = target
-		if(!I.anchored)
-			to_chat(firer, span_notice("You pull [I] towards yourself."))
-			H.throw_mode_on(THROW_MODE_TOGGLE)
-			I.throw_at(H, 10, 2)
-			. = BULLET_ACT_HIT
 
-	else if(isliving(target))
-		var/mob/living/L = target
-		if(!L.anchored && !L.throwing)//avoid double hits
-			if(iscarbon(L))
-				var/mob/living/carbon/C = L
-				var/firer_combat_mode = TRUE
-				var/mob/living/living_shooter = firer
-				if(istype(living_shooter))
-					firer_combat_mode = living_shooter.combat_mode
-				if(fire_modifiers && fire_modifiers["right"])
-					var/obj/item/I = C.get_active_held_item()
-					if(I)
-						if(C.dropItemToGround(I))
-							C.visible_message(span_danger("[I] is yanked off [C]'s hand by [src]!"),span_userdanger("A tentacle pulls [I] away from you!"))
-							on_hit(I) //grab the item as if you had hit it directly with the tentacle
-							return BULLET_ACT_HIT
-						else
-							to_chat(firer, span_warning("You can't seem to pry [I] off [C]'s hands!"))
-							return BULLET_ACT_BLOCK
-					else
-						to_chat(firer, span_danger("[C] has nothing in hand to disarm!"))
-						return BULLET_ACT_HIT
-				if(firer_combat_mode)
-					C.visible_message(span_danger("[L] is thrown towards [H] by a tentacle!"),span_userdanger("A tentacle grabs you and throws you towards [H]!"))
-					C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE, callback=CALLBACK(src, PROC_REF(tentacle_grab), H, C))
-					return BULLET_ACT_HIT
-				else
-					C.visible_message(span_danger("[L] is grabbed by [H]'s tentacle!"),span_userdanger("A tentacle grabs you and pulls you towards [H]!"))
-					C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE)
-					return BULLET_ACT_HIT
+	var/mob/living/ling = firer
+	if(isitem(target) && iscarbon(ling))
+		var/obj/item/catching = target
+		if(catching.anchored)
+			return BULLET_ACT_BLOCK
 
-			else
-				L.visible_message(span_danger("[L] is pulled by [H]'s tentacle!"),span_userdanger("A tentacle grabs you and pulls you towards [H]!"))
-				L.throw_at(get_step_towards(H,L), 8, 2)
-				. = BULLET_ACT_HIT
+		var/mob/living/carbon/carbon_ling = ling
+		to_chat(carbon_ling, span_notice("You pull [catching] towards yourself."))
+		carbon_ling.throw_mode_on(THROW_MODE_TOGGLE)
+		catching.throw_at(
+			target = carbon_ling,
+			range = 10,
+			speed = 2,
+			thrower = carbon_ling,
+			diagonals_first = TRUE,
+			callback = CALLBACK(src, PROC_REF(reset_throw), carbon_ling),
+			gentle = TRUE,
+		)
+		return BULLET_ACT_HIT
+
+	. = ..()
+	if(. != BULLET_ACT_HIT)
+		return .
+	var/mob/living/victim = target
+	if(!isliving(victim) || target.anchored || victim.throwing)
+		return BULLET_ACT_BLOCK
+
+	if(!iscarbon(victim) || !ishuman(ling) || !ling.combat_mode)
+		victim.visible_message(
+			span_danger("[victim] is grabbed by [ling]'s [src]]!"),
+			span_userdanger("\A [src] grabs you and pulls you towards [ling]!"),
+		)
+		victim.throw_at(
+			target = get_step_towards(ling, victim),
+			range = 8,
+			speed = 2,
+			thrower = ling,
+			diagonals_first = TRUE,
+			gentle = TRUE,
+		)
+		return BULLET_ACT_HIT
+
+	if(LAZYACCESS(fire_modifiers, RIGHT_CLICK))
+		var/obj/item/stealing = victim.get_active_held_item()
+		if(!isnull(stealing))
+			if(victim.dropItemToGround(stealing))
+				victim.visible_message(
+					span_danger("[stealing] is yanked off [victim]'s hand by [src]!"),
+					span_userdanger("\A [src] pulls [stealing] away from you!"),
+				)
+				return on_hit(stealing) //grab the item as if you had hit it directly with the tentacle
+
+			to_chat(ling, span_warning("You can't seem to pry [stealing] off [victim]'s hands!"))
+			return BULLET_ACT_BLOCK
+
+		to_chat(ling, span_danger("[victim] has nothing in hand to disarm!"))
+		return BULLET_ACT_HIT
+
+	if(ling.combat_mode)
+		victim.visible_message(
+			span_danger("[victim] is thrown towards [ling] by \a [src]!"),
+			span_userdanger("\A [src] grabs you and throws you towards [ling]!"),
+		)
+		victim.throw_at(
+			target = get_step_towards(ling, victim),
+			range  = 8,
+			speed = 2,
+			thrower = ling,
+			diagonals_first = TRUE,
+			callback = CALLBACK(src, PROC_REF(tentacle_grab), ling, victim),
+			gentle = TRUE,
+		)
+
+	return BULLET_ACT_HIT
 
 /obj/projectile/tentacle/Destroy()
 	qdel(chain)
@@ -441,7 +482,7 @@
 	weapon_name_simple = "shield"
 
 /datum/action/changeling/weapon/shield/sting_action(mob/user)
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling) //So we can read the absorbed_count.
+	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user) //So we can read the absorbed_count.
 	if(!changeling)
 		return
 
@@ -467,7 +508,7 @@
 	if(ismob(loc))
 		loc.visible_message(span_warning("The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!"), span_warning("We inflate our hand into a strong shield."), span_hear("You hear organic matter ripping and tearing!"))
 
-/obj/item/shield/changeling/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/changeling/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(remaining_uses < 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
@@ -477,78 +518,6 @@
 	else
 		remaining_uses--
 		return ..()
-
-
-/***************************************\
-|*********SPACE SUIT + HELMET***********|
-\***************************************/
-/datum/action/changeling/suit/organic_space_suit
-	name = "Organic Space Suit"
-	desc = "We grow an organic suit to protect ourselves from space exposure, including regulation of temperature and oxygen needs. Costs 20 chemicals."
-	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Cannot be used in lesser form."
-	button_icon_state = "organic_suit"
-	chemical_cost = 20
-	dna_cost = 2
-	req_human = TRUE
-
-	suit_type = /obj/item/clothing/suit/space/changeling
-	helmet_type = /obj/item/clothing/head/helmet/space/changeling
-	suit_name_simple = "flesh shell"
-	helmet_name_simple = "space helmet"
-	recharge_slowdown = 0.25
-	blood_on_castoff = 1
-
-/obj/item/clothing/suit/space/changeling
-	name = "flesh mass"
-	icon_state = "lingspacesuit_t"
-	icon = 'icons/obj/clothing/suits/costume.dmi'
-	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
-	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
-	item_flags = DROPDEL
-	clothing_flags = STOPSPRESSUREDAMAGE //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/oxygen)
-	armor_type = /datum/armor/space_changeling
-	actions_types = list()
-	cell = null
-	show_hud = FALSE
-
-/datum/armor/space_changeling
-	bio = 100
-	fire = 90
-	acid = 90
-
-/obj/item/clothing/suit/space/changeling/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
-	if(ismob(loc))
-		loc.visible_message(span_warning("[loc.name]\'s flesh rapidly inflates, forming a bloated mass around [loc.p_their()] body!"), span_warning("We inflate our flesh, creating a spaceproof suit!"), span_hear("You hear organic matter ripping and tearing!"))
-	START_PROCESSING(SSobj, src)
-
-// seal the cell door
-/obj/item/clothing/suit/space/changeling/toggle_spacesuit_cell(mob/user)
-	return
-
-/obj/item/clothing/suit/space/changeling/process(delta_time)
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.reagents.add_reagent(/datum/reagent/medicine/salbutamol, REAGENTS_METABOLISM * (delta_time / SSMOBS_DT))
-		H.adjust_bodytemperature(temperature_setting - H.bodytemperature) // force changelings to normal temp step mode played badly
-
-/obj/item/clothing/head/helmet/space/changeling
-	name = "flesh mass"
-	icon = 'icons/obj/clothing/head/costume.dmi'
-	worn_icon = 'icons/mob/clothing/head/costume.dmi'
-	icon_state = "lingspacehelmet"
-	inhand_icon_state = null
-	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
-	item_flags = DROPDEL
-	clothing_flags = STOPSPRESSUREDAMAGE | HEADINTERNALS
-	armor_type = /datum/armor/space_changeling
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-
-/obj/item/clothing/head/helmet/space/changeling/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
 /***************************************\
 |*****************ARMOR*****************|
@@ -618,3 +587,124 @@
 /obj/item/clothing/head/helmet/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+/datum/action/changeling/suit/hive_head
+	name = "Hive Head"
+	desc = "We coat our head in a waxy outing coating similar to a bee hive which can be used to manufacture bees to attack our enemies. Costs 15 chemicals."
+	helptext = "While the hive head does not provide much in the ways of armor, it does allow the user to send bees out to attack targets. Reagents can poured inside the hive to cause all bees released to inject said reagents."
+	button_icon_state = "hive_head"
+	chemical_cost = 15
+	dna_cost = 2
+	req_human = FALSE
+	blood_on_castoff = TRUE
+
+	helmet_type = /obj/item/clothing/head/helmet/changeling_hivehead
+	helmet_name_simple = "hive head"
+
+/obj/item/clothing/head/helmet/changeling_hivehead
+	name = "hive head"
+	desc = "A strange, waxy outer coating covering your head. Gives you tinnitus."
+	icon_state = "hivehead"
+	inhand_icon_state = null
+	flash_protect = FLASH_PROTECTION_FLASH
+	item_flags = DROPDEL
+	armor_type = /datum/armor/changeling_hivehead
+	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
+	actions_types = list(/datum/action/cooldown/hivehead_spawn_minions)
+	///Does this hive head hold reagents?
+	var/holds_reagents = TRUE
+
+/obj/item/clothing/head/helmet/changeling_hivehead/Initialize(mapload)
+	. = ..()
+	if(holds_reagents)
+		create_reagents(50, REFILLABLE)
+
+/datum/armor/changeling_hivehead
+	melee = 10
+	bullet = 10
+	laser = 10
+	energy = 10
+	bio = 50
+
+/obj/item/clothing/head/helmet/changeling_hivehead/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+/obj/item/clothing/head/helmet/changeling_hivehead/attackby(obj/item/attacking_item, mob/user, params)
+	. = ..()
+	if(!istype(attacking_item, /obj/item/organ/internal/monster_core/regenerative_core/legion) || !holds_reagents)
+		return
+	visible_message(span_boldwarning("As [user] shoves [attacking_item] into [src], [src] begins to mutate."))
+	var/mob/living/carbon/wearer = loc
+	playsound(wearer, 'sound/effects/attackblob.ogg', 60, TRUE)
+	wearer.temporarilyRemoveItemFromInventory(wearer.head, TRUE)
+	wearer.equip_to_slot_if_possible(new /obj/item/clothing/head/helmet/changeling_hivehead/legion(wearer), ITEM_SLOT_HEAD, 1, 1, 1)
+	qdel(attacking_item)
+
+
+/datum/action/cooldown/hivehead_spawn_minions
+	name = "Release Bees"
+	desc = "Release a group of bees to attack all other lifeforms."
+	background_icon_state = "bg_demon"
+	overlay_icon_state = "bg_demon_border"
+	button_icon = 'icons/mob/simple/bees.dmi'
+	button_icon_state = "queen_item"
+	cooldown_time = 30 SECONDS
+	///The mob we're going to spawn
+	var/spawn_type = /mob/living/basic/bee/timed/short
+	///How many are we going to spawn
+	var/spawn_count = 6
+
+/datum/action/cooldown/hivehead_spawn_minions/PreActivate(atom/target)
+	if(owner.movement_type & VENTCRAWLING)
+		owner.balloon_alert(owner, "unavailable here")
+		return
+	return ..()
+
+/datum/action/cooldown/hivehead_spawn_minions/Activate(atom/target)
+	. = ..()
+	do_tell()
+	var/spawns = spawn_count
+	if(owner.stat >= HARD_CRIT)
+		spawns = 1
+	for(var/i in 1 to spawns)
+		var/mob/living/basic/summoned_minion = new spawn_type(get_turf(owner))
+		summoned_minion.faction = list("[REF(owner)]")
+		minion_additional_changes(summoned_minion)
+
+///Our tell that we're using this ability. Usually a sound and a visible message.area
+/datum/action/cooldown/hivehead_spawn_minions/proc/do_tell()
+	owner.visible_message(span_warning("[owner]'s head begins to buzz as bees begin to pour out!"), span_warning("We release the bees."), span_hear("You hear a loud buzzing sound!"))
+	playsound(owner, 'sound/creatures/bee_swarm.ogg', 60, TRUE)
+
+///Stuff we want to do to our minions. This is in its own proc so subtypes can override this behaviour.
+/datum/action/cooldown/hivehead_spawn_minions/proc/minion_additional_changes(mob/living/basic/minion)
+	var/mob/living/basic/bee/summoned_bee = minion
+	var/mob/living/carbon/wearer = owner
+	if(istype(summoned_bee) && length(wearer.head.reagents.reagent_list))
+		summoned_bee.assign_reagent(pick(wearer.head.reagents.reagent_list))
+
+/obj/item/clothing/head/helmet/changeling_hivehead/legion
+	name = "legion hive head"
+	desc = "A strange, boney coating covering your head with a fleshy inside. Surprisingly comfortable."
+	icon_state = "hivehead_legion"
+	actions_types = list(/datum/action/cooldown/hivehead_spawn_minions/legion)
+	holds_reagents = FALSE
+
+/datum/action/cooldown/hivehead_spawn_minions/legion
+	name = "Release Legion"
+	desc = "Release a group of legion to attack all other lifeforms."
+	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	button_icon_state = "legion_head"
+	cooldown_time = 15 SECONDS
+	spawn_type = /mob/living/basic/legion_brood
+	spawn_count = 4
+
+/datum/action/cooldown/hivehead_spawn_minions/legion/do_tell()
+	owner.visible_message(span_warning("[owner]'s head begins to shake as legion begin to pour out!"), span_warning("We release the legion."), span_hear("You hear a loud squishing sound!"))
+	playsound(owner, 'sound/effects/attackblob.ogg', 60, TRUE)
+
+/datum/action/cooldown/hivehead_spawn_minions/legion/minion_additional_changes(mob/living/basic/minion)
+	var/mob/living/basic/legion_brood/brood = minion
+	if (istype(brood))
+		brood.assign_creator(owner, FALSE)

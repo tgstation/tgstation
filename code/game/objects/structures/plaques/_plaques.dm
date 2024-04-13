@@ -7,7 +7,7 @@
 	opacity = FALSE
 	density = FALSE
 	layer = SIGN_LAYER
-	custom_materials = list(/datum/material/gold = 2000)
+	custom_materials = list(/datum/material/gold =SHEET_MATERIAL_AMOUNT)
 	max_integrity = 200 //Twice as durable as regular signs.
 	armor_type = /datum/armor/structure_plaque
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again. Static plaques are already engraved.
@@ -69,7 +69,7 @@
 	if(atom_integrity == max_integrity)
 		to_chat(user, span_warning("This plaque is already in perfect condition."))
 		return TRUE
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=1))
 		return TRUE
 	user.visible_message(span_notice("[user] starts repairing [src]..."), \
 		span_notice("You start repairing [src]."))
@@ -121,7 +121,7 @@
 	name = "blank plaque"
 	desc = "A blank plaque, use a fancy pen to engrave it. It can be placed on a wall."
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/gold = 2000)
+	custom_materials = list(/datum/material/gold =SHEET_MATERIAL_AMOUNT)
 	max_integrity = 200
 	armor_type = /datum/armor/item_plaque
 	///This points the item to make the proper structure when placed on a wall.
@@ -141,7 +141,7 @@
 	if(atom_integrity == max_integrity)
 		to_chat(user, span_warning("This plaque is already in perfect condition."))
 		return TRUE
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=1))
 		return TRUE
 	user.visible_message(span_notice("[user] starts repairing [src]..."), \
 		span_notice("You start repairing [src]."))
@@ -169,7 +169,7 @@
 			return
 		user.visible_message(span_notice("[user] begins engraving [src]."), \
 			span_notice("You begin engraving [src]."))
-		if(!do_after(user, 40, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
+		if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
 			return
 		name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
 		desc = "The plaque reads: '[descriptionchoice]'"

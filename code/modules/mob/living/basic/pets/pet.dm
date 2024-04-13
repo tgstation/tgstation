@@ -10,9 +10,12 @@
 	var/collar_icon_state = null
 	/// We have a seperate _rest collar icon state when the pet is resting.
 	var/has_collar_resting_icon_state = FALSE
-
 	/// Our collar
 	var/obj/item/clothing/neck/petcollar/collar
+	///can we become cultists?
+	var/can_cult_convert = TRUE
+	///whether we have a custom icon state when we get culted
+	var/cult_icon_state
 
 /mob/living/basic/pet/Initialize(mapload)
 	. = ..()
@@ -22,6 +25,8 @@
 		collar = new(src)
 
 	update_icon(UPDATE_OVERLAYS)
+	if(can_cult_convert)
+		RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(become_cultist))
 
 /mob/living/basic/pet/Destroy()
 	. = ..()
@@ -43,21 +48,30 @@
 /mob/living/basic/pet/update_overlays()
 	. = ..()
 
+	if(isnull(mind) && (FACTION_CULT in faction))
+		var/image/cult_indicator = image(icon = 'icons/mob/simple/pets.dmi', icon_state = "pet_cult_indicator", layer = ABOVE_GAME_PLANE)
+		. += cult_indicator
+
 	if(!collar || !collar_icon_state)
 		return
 
 	// Determine which status tag to add to the middle of the icon state.
-	var/dead_tag = stat == DEAD ? "_dead" : null
+	var/dead_tag = (stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH)) ? "_dead" : null
 	var/rest_tag = has_collar_resting_icon_state && resting ? "_rest" : null
 	var/stat_tag = dead_tag || rest_tag || ""
 
 	. += mutable_appearance(icon, "[collar_icon_state][stat_tag]collar")
 	. += mutable_appearance(icon, "[collar_icon_state][stat_tag]tag")
 
-/mob/living/basic/pet/gib()
-	. = ..()
+/mob/living/basic/pet/update_icon_state()
+	if(cult_icon_state && (FACTION_CULT in faction))
+		icon_state = cult_icon_state
+		icon_living = cult_icon_state
+	return ..()
 
+/mob/living/basic/pet/gib()
 	remove_collar(drop_location(), update_visuals = FALSE)
+	return ..()
 
 /mob/living/basic/pet/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
@@ -70,10 +84,9 @@
 	. = ..()
 	add_memory_in_range(src, 7, /datum/memory/pet_died, deuteragonist = src) //Protagonist is the person memorizing it
 
-/mob/living/basic/pet/handle_atom_del(atom/deleting_atom)
+/mob/living/basic/pet/Exited(atom/movable/gone, direction)
 	. = ..()
-
-	if(deleting_atom != collar)
+	if(gone != collar)
 		return
 
 	collar = null

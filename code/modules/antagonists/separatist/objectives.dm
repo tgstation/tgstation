@@ -51,3 +51,20 @@
 
 /datum/objective/separatist_fluff/check_completion()
 	return TRUE
+
+/datum/objective/united_nations
+	explanation_text = "Maintain the peace on the station. Ensure every nation has a delegate alive by the end of the round."
+	team_explanation_text = "Maintain the peace on the station. Ensure every nation has a delegate alive by the end of the round."
+
+/datum/objective/united_nations/check_completion()
+	var/list/all_separatists = list()
+	var/list/alive_separatists = list()
+
+	for(var/datum/team/nation/separatist_team in GLOB.antagonist_teams)
+		all_separatists |= separatist_team.department
+		for(var/datum/mind/separatist as anything in separatist_team.members)
+			if(considered_escaped(separatist))
+				alive_separatists |= separatist_team.department
+				break
+
+	return length(all_separatists) == length(alive_separatists)

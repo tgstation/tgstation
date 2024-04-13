@@ -3,7 +3,7 @@
 	name = "galoshes"
 	icon_state = "galoshes"
 	inhand_icon_state = "galoshes"
-	clothing_flags = NOSLIP
+	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	slowdown = SHOES_SLOWDOWN+1
 	strip_delay = 30
 	equip_delay_other = 50

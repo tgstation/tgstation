@@ -36,6 +36,8 @@
 		/obj/item/organ/internal/ears = TRUE,
 		/obj/item/organ/internal/ears/cybernetic = FALSE,
 		/obj/item/organ/internal/ears/cybernetic/upgraded = TRUE,
+		/obj/item/organ/internal/ears/cybernetic/whisper = TRUE,
+		/obj/item/organ/internal/ears/cybernetic/xray = TRUE,
 	)
 
 /datum/bounty/item/medical/liver

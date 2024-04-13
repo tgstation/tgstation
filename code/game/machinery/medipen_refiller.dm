@@ -14,6 +14,11 @@
 		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = /datum/reagent/medicine/oxandrolone,
 		/obj/item/reagent_containers/hypospray/medipen/salacid = /datum/reagent/medicine/sal_acid,
 		/obj/item/reagent_containers/hypospray/medipen/penacid = /datum/reagent/medicine/pen_acid,
+		/obj/item/reagent_containers/hypospray/medipen/mutadone = /datum/reagent/medicine/mutadone,
+		/obj/item/reagent_containers/hypospray/medipen/methamphetamine = /datum/reagent/drug/methamphetamine,
+		/obj/item/reagent_containers/hypospray/medipen/survival = /datum/reagent/medicine/c2/libital,
+		/obj/item/reagent_containers/hypospray/medipen/survival/luxury = /datum/reagent/medicine/c2/penthrite,
+		/obj/item/reagent_containers/hypospray/medipen/invisibility = /datum/reagent/drug/saturnx,
 	)
 
 /obj/machinery/medipen_refiller/Initialize(mapload)
@@ -57,9 +62,9 @@
 		if(!length(reagent_container.reagents.reagent_list))
 			balloon_alert(user, "nothing to transfer!")
 			return
-		var/units = reagent_container.reagents.trans_to(src, reagent_container.amount_per_transfer_from_this, transfered_by = user)
+		var/units = reagent_container.reagents.trans_to(src, reagent_container.amount_per_transfer_from_this, transferred_by = user)
 		if(units)
-			balloon_alert(user, "[units] units transfered")
+			balloon_alert(user, "[units] units transferred")
 		else
 			balloon_alert(user, "reagent storage full!")
 		return
@@ -76,25 +81,25 @@
 			return
 		add_overlay("active")
 		if(do_after(user, 2 SECONDS, src))
-			medipen.reagents.maximum_volume = initial(medipen.reagents.maximum_volume)
+			medipen.used_up = FALSE
 			medipen.add_initial_reagents()
 			reagents.remove_reagent(allowed_pens[medipen.type], 10)
 			balloon_alert(user, "refilled")
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 		cut_overlays()
 		return
 	return ..()
 
 /obj/machinery/medipen_refiller/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
-	to_chat(user, span_notice("You start furiously plunging [name]."))
-	if(do_after(user, 30, target = src))
-		to_chat(user, span_notice("You finish plunging the [name]."))
+	user.balloon_alert_to_viewers("furiously plunging...", "plunging medipen refiller...")
+	if(do_after(user, 3 SECONDS, target = src))
+		user.balloon_alert_to_viewers("finished plunging")
 		reagents.expose(get_turf(src), TOUCH)
 		reagents.clear_reagents()
 
 /obj/machinery/medipen_refiller/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/medipen_refiller/crowbar_act(mob/living/user, obj/item/tool)
 	default_deconstruction_crowbar(tool)

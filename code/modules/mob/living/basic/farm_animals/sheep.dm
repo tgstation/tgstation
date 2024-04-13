@@ -9,7 +9,7 @@
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	speak_emote = list("baas","bleats")
 	speed = 1.1
-	butcher_results = list(/obj/item/food/meat/slab = 3)
+	butcher_results = list(/obj/item/food/meat/slab/grassfed = 3)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -58,11 +58,11 @@
 
 	if(cult_converted)
 		for(var/mob/living/cultist as anything in invokers)
-			to_chat(cultist, span_cultitalic("[src] has already been sacrificed!"))
+			to_chat(cultist, span_cult_italic("[src] has already been sacrificed!"))
 		return STOP_SACRIFICE
 
 	for(var/mob/living/cultist as anything in invokers)
-		to_chat(cultist, span_cultitalic("This feels a bit too cliché, don't you think?"))
+		to_chat(cultist, span_cult_italic("This feels a bit too cliché, don't you think?"))
 
 	cult_converted = TRUE
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "BAAAAAAAAH!")
@@ -81,8 +81,7 @@
 
 /datum/ai_controller/basic_controller/sheep
 	blackboard = list(
-		BB_BASIC_MOB_FLEEING = TRUE,
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance

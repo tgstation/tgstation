@@ -43,7 +43,7 @@
 
 /obj/machinery/power/supermatter_crystal/shard/syndicate
 	name = "syndicate supermatter shard"
-	desc = "Your benefactors conveinently neglected to mention it's already assembled."
+	desc = "Your benefactors conveniently neglected to mention it's already assembled."
 	anchored = TRUE
 	radio_key = /obj/item/encryptionkey/syndicate
 	emergency_channel = "Syndicate"

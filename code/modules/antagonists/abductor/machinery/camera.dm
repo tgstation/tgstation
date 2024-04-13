@@ -1,14 +1,14 @@
 /obj/machinery/computer/camera_advanced/abductor
 	name = "Human Observation Console"
 	var/team_number = 0
-	networks = list("ss13", "abductor")
+	networks = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_ABDUCTOR)
 	var/obj/machinery/abductor/console/console
 	/// We can't create our actions until after LateInitialize
 	/// So we instead do it on the first call to GrantActions
 	var/abduct_created = FALSE
 	lock_override = TRUE
 
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "camera"
 	icon_keyboard = null
 	icon_screen = null
@@ -25,7 +25,7 @@
 	eyeobj.visible_icon = TRUE
 	eyeobj.icon = 'icons/mob/silicon/cameramob.dmi'
 	eyeobj.icon_state = "abductor_camera"
-	eyeobj.invisibility = INVISIBILITY_OBSERVER
+	eyeobj.SetInvisibility(INVISIBILITY_OBSERVER)
 
 /obj/machinery/computer/camera_advanced/abductor/GrantActions(mob/living/carbon/user)
 	if(!abduct_created)

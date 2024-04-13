@@ -7,12 +7,12 @@
 	if (!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK_SECONDARY, PROC_REF(on_item_pre_attack_secondary))
 
 /datum/element/wall_engraver/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(source, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(source, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(source, COMSIG_ITEM_PRE_ATTACK_SECONDARY)
 
 ///signal called on parent being examined
@@ -37,7 +37,7 @@
 	if(HAS_TRAIT_FROM(wall, TRAIT_NOT_ENGRAVABLE, TRAIT_GENERIC))
 		user.balloon_alert(user, "wall has already been engraved!")
 		return
-	if(!user.mind?.memories?.len)
+	if(!length(user.mind?.memories))
 		user.balloon_alert(user, "nothing memorable to engrave!")
 		return
 	var/datum/memory/memory_to_engrave = user.mind.select_memory("engrave")

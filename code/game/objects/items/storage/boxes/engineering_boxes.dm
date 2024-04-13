@@ -22,6 +22,13 @@
 	name = "box of materials"
 	illustration = "implant"
 
+/obj/item/storage/box/material/Initialize(mapload)
+	. = ..()
+	atom_storage.allow_big_nesting = TRUE
+	atom_storage.max_slots = 99
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
+	atom_storage.max_total_storage = 99
+
 /obj/item/storage/box/material/PopulateContents() //less uranium because radioactive
 	var/static/items_inside = list(
 		/obj/item/stack/sheet/iron/fifty=1,
@@ -50,6 +57,13 @@
 	name = "box of debug tools"
 	icon_state = "syndiebox"
 
+/obj/item/storage/box/debugtools/Initialize(mapload)
+	. = ..()
+	atom_storage.allow_big_nesting = TRUE
+	atom_storage.max_slots = 99
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
+	atom_storage.max_total_storage = 99
+
 /obj/item/storage/box/debugtools/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/card/emag=1,
@@ -75,7 +89,7 @@
 	icon_state = "plasticbox"
 	foldable_result = null
 	illustration = "writing"
-	custom_materials = list(/datum/material/plastic = 1000) //You lose most if recycled.
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT) //You lose most if recycled.
 
 /obj/item/storage/box/emergencytank
 	name = "emergency oxygen tank box"

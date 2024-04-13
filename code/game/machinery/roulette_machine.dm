@@ -58,7 +58,7 @@
 /obj/machinery/roulette/Initialize(mapload)
 	. = ..()
 	jackpot_loop = new(src, FALSE)
-	wires = new /datum/wires/roulette(src)
+	set_wires(new /datum/wires/roulette(src))
 
 /obj/machinery/roulette/Destroy()
 	QDEL_NULL(jackpot_loop)
@@ -139,7 +139,7 @@
 			return FALSE
 
 		if(my_card)
-			if(istype(player_card, /obj/item/card/id/departmental_budget)) // Are they using a department ID
+			if(IS_DEPARTMENTAL_CARD(player_card)) // Are they using a department ID
 				say("You cannot gamble with the department budget!")
 				playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
 				return FALSE
@@ -193,7 +193,7 @@
 			name = msg
 			desc = "Owned by [player_card.registered_account.account_holder], draws directly from [user.p_their()] account."
 			my_card = player_card
-			RegisterSignal(my_card, COMSIG_PARENT_QDELETING, PROC_REF(on_my_card_deleted))
+			RegisterSignal(my_card, COMSIG_QDELETING, PROC_REF(on_my_card_deleted))
 			to_chat(user, span_notice("You link the wheel to your account."))
 			power_change()
 			return
@@ -224,9 +224,9 @@
 
 	playsound(src, 'sound/machines/roulettewheel.ogg', 50)
 	addtimer(CALLBACK(src, PROC_REF(finish_play), player_id, bet_type, bet_amount, payout, rolled_number), 34) //4 deciseconds more so the animation can play
-	addtimer(CALLBACK(src, PROC_REF(finish_play_animation)), 30)
+	addtimer(CALLBACK(src, PROC_REF(finish_play_animation)), 3 SECONDS)
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/roulette/proc/finish_play_animation()
 	icon_state = "idle"
@@ -439,7 +439,7 @@
 /obj/item/roulette_wheel_beacon
 	name = "roulette wheel beacon"
 	desc = "N.T. approved roulette wheel beacon, toss it down and you will have a complementary roulette wheel delivered to you."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "floor_beacon"
 	var/used
 
@@ -448,7 +448,7 @@
 		return
 	loc.visible_message(span_warning("\The [src] begins to beep loudly!"))
 	used = TRUE
-	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 40)
+	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 4 SECONDS)
 
 /obj/item/roulette_wheel_beacon/proc/launch_payload()
 	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
@@ -457,6 +457,15 @@
 
 	new /obj/effect/pod_landingzone(drop_location(), toLaunch)
 	qdel(src)
+
+#undef ROULETTE_DOZ_COL_PAYOUT
+#undef ROULETTE_BET_1TO12
+#undef ROULETTE_BET_13TO24
+#undef ROULETTE_BET_25TO36
+
+#undef ROULETTE_BET_2TO1_FIRST
+#undef ROULETTE_BET_2TO1_SECOND
+#undef ROULETTE_BET_2TO1_THIRD
 
 #undef ROULETTE_SINGLES_PAYOUT
 #undef ROULETTE_SIMPLE_PAYOUT

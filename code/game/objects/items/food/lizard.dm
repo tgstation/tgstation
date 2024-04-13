@@ -15,6 +15,7 @@
 	tastes = list("meat" = 1, "black pudding" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/raw_tiziran_sausage/Initialize(mapload)
 	. = ..()
@@ -32,6 +33,8 @@
 	tastes = list("meat" = 1, "black pudding" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_price = PAYCHECK_CREW
 
 /obj/item/food/raw_headcheese
 	name = "raw headcheese block"
@@ -45,6 +48,7 @@
 	tastes = list("meat" = 1, "salt" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/raw_headcheese/Initialize(mapload)
 	. = ..()
@@ -62,6 +66,7 @@
 	tastes = list("cheese" = 1, "salt" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/headcheese/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/headcheese_slice, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
@@ -78,6 +83,7 @@
 	tastes = list("cheese" = 1, "salt" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/shredded_lungs
 	name = "crispy shredded lung stirfry"
@@ -93,6 +99,7 @@
 	foodtypes = MEAT | VEGETABLES | GORE
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/tsatsikh
 	name = "tsatsikh"
@@ -103,6 +110,7 @@
 	tastes = list("assorted minced organs" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/liver_pate
 	name = "liver pate"
@@ -113,6 +121,7 @@
 	tastes = list("liver" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/moonfish_eggs
 	name = "moonfish eggs"
@@ -126,6 +135,7 @@
 	tastes = list("caviar" = 1)
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/moonfish_caviar
 	name = "moonfish caviar paste"
@@ -139,6 +149,7 @@
 	tastes = list("caviar" = 1)
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/lizard_escargot
 	name = "desert snail cocleas"
@@ -153,6 +164,7 @@
 	tastes = list("snails" = 1, "garlic" = 1, "oil" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/fried_blood_sausage
 	name = "fried blood sausage"
@@ -163,11 +175,12 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/salt = 1,
-		/datum/reagent/consumable/cooking_oil = 1,
+		/datum/reagent/consumable/nutriment/fat/oil = 1,
 	)
 	tastes = list("black pudding" = 1, "batter" = 1, "oil" = 1)
 	foodtypes = MEAT | FRIED
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 //Why does like, every language on the planet besides English call them pommes? Who knows, who cares- the lizards call them it too, because funny.
 /obj/item/food/lizard_fries
@@ -184,6 +197,7 @@
 	tastes = list("fries" = 2, "bbq sauce" = 1, "barbecued meat" = 1)
 	foodtypes = MEAT | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/brain_pate
 	name = "eyeball-and-brain pate"
@@ -197,6 +211,7 @@
 	tastes = list("brains" = 2)
 	foodtypes = MEAT | VEGETABLES | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/crispy_headcheese
 	name = "crispy breaded headcheese"
@@ -206,11 +221,12 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 5,
 		/datum/reagent/consumable/nutriment = 3,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 	)
 	tastes = list("cheese" = 1, "oil" = 1)
 	foodtypes = MEAT | VEGETABLES | NUTS | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/kebab/picoss_skewers
 	name = "picoss skewer"
@@ -226,6 +242,7 @@
 	tastes = list("fish" = 1, "acid" = 1, "onion" = 1, "heat" = 1)
 	foodtypes = SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/nectar_larvae
 	name = "nectar larvae"
@@ -240,6 +257,7 @@
 	tastes = list("meat" = 1, "sweet" = 1, "heat" = 1)
 	foodtypes = GORE | MEAT | BUGS
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/mushroomy_stirfry
 	name = "mushroomy stirfry"
@@ -253,6 +271,7 @@
 	tastes = list("marvelous mushrooms" = 1, "sublime shrooms" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 //Fish Dishes
 /obj/item/food/grilled_moonfish
@@ -266,8 +285,8 @@
 	)
 	tastes = list("fish" = 1)
 	foodtypes = SEAFOOD
-	burns_on_grill = TRUE
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/moonfish_demiglace
 	name = "moonfish demiglace"
@@ -282,6 +301,7 @@
 	tastes = list("fish" = 2, "potatoes" = 1, "carrots" = 1)
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/lizard_surf_n_turf
 	name = "\improper Zagosk surf 'n' turf smorgasbord"
@@ -296,6 +316,7 @@
 	tastes = list("surf" = 1, "turf" = 1)
 	foodtypes = MEAT | SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_BULKY
+	crafting_complexity = FOOD_COMPLEXITY_5
 
 //Spaghetti Dishes
 
@@ -310,6 +331,7 @@
 	)
 	tastes = list("gnocchi" = 1)
 	foodtypes = VEGETABLES | NUTS
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/spaghetti/snail_nizaya
 	name = "desert snail nizaya"
@@ -323,6 +345,7 @@
 	)
 	tastes = list("snails" = 1, "wine" = 1, "gnocchi" = 1)
 	foodtypes = VEGETABLES | MEAT | NUTS
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/spaghetti/garlic_nizaya
 	name = "garlic-and-oil nizaya"
@@ -335,6 +358,7 @@
 	)
 	tastes = list("garlic" = 1, "oil" = 1, "gnocchi" = 1)
 	foodtypes = VEGETABLES | NUTS
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/spaghetti/demit_nizaya
 	name = "demit nizaya"
@@ -348,6 +372,7 @@
 	)
 	tastes = list("peppery sweet" = 1, "veggies" = 1, "gnocchi" = 1)
 	foodtypes = VEGETABLES | SUGAR | NUTS
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/spaghetti/mushroom_nizaya
 	name = "mushroom nizaya"
@@ -360,6 +385,7 @@
 	)
 	tastes = list("savouriness" = 1, "nuttiness" = 1, "gnocchi" = 1)
 	foodtypes = VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 //Dough Dishes
 
@@ -372,6 +398,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/rootdough/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/bread/root, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -387,6 +414,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/flatrootdough/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rootdoughslice, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
@@ -403,6 +431,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/rootdoughslice/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spaghetti/nizaya, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
@@ -418,7 +447,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8)
 	tastes = list("bread" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
-	burns_on_grill = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/rootroll
 	name = "rootroll"
@@ -429,7 +458,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("roll" = 1) // the roll tastes of roll.
 	foodtypes = VEGETABLES | NUTS
-	burns_in_oven = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 //Bread Dishes
 
@@ -443,7 +472,6 @@
 	foodtypes = VEGETABLES | NUTS
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
-	burns_in_oven = TRUE
 	slice_type = /obj/item/food/breadslice/root
 
 /obj/item/food/bread/root/Initialize(mapload)
@@ -467,6 +495,7 @@
 //Pizza Dishes
 /obj/item/food/pizza/flatbread
 	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = null
 	slice_type = null
 
 /obj/item/food/pizza/flatbread/rustic
@@ -481,6 +510,7 @@
 	tastes = list("bread" = 1, "herb" = 1, "oil" = 1, "garlic" = 1)
 	foodtypes = VEGETABLES | NUTS
 	boxtag = "Tiziran Flatbread"
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/flatbread/italic
 	name = "\improper Italic flatbread"
@@ -494,6 +524,7 @@
 	tastes = list("bread" = 1, "herb" = 1, "oil" = 1, "garlic" = 1, "tomato" = 1, "meat" = 1)
 	foodtypes = VEGETABLES | NUTS | MEAT
 	boxtag = "Italic Flatbread"
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pizza/flatbread/imperial
 	name = "\improper Imperial flatbread"
@@ -507,6 +538,7 @@
 	tastes = list("bread" = 1, "herb" = 1, "oil" = 1, "garlic" = 1, "tomato" = 1, "meat" = 1)
 	foodtypes = VEGETABLES | MEAT | NUTS | GORE
 	boxtag = "Imperial Victory Flatbread"
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pizza/flatbread/rawmeat
 	name = "meatlovers flatbread"
@@ -518,6 +550,7 @@
 	)
 	tastes = list("bread" = 1, "meat" = 1)
 	foodtypes = MEAT | NUTS | RAW | GORE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/flatbread/stinging
 	name = "\improper Stinging flatbread"
@@ -530,6 +563,7 @@
 	)
 	tastes = list("bread" = 1, "sweetness" = 1, "stinging" = 1, "slime" = 1)
 	foodtypes = BUGS | NUTS | SEAFOOD | GORE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/flatbread/zmorgast  // Name is based off of the Swedish dish Smörgåstårta
 	name = "\improper Zmorgast flatbread"
@@ -542,6 +576,7 @@
 	)
 	tastes = list("bread" = 1, "liver" = 1, "family" = 1)
 	foodtypes = VEGETABLES | NUTS | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/flatbread/fish
 	name = "\improper BBQ fish flatbread"
@@ -554,6 +589,7 @@
 	)
 	tastes = list("bread" = 1, "fish" = 1)
 	foodtypes = SEAFOOD | NUTS
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pizza/flatbread/mushroom
 	name = "mushroom and tomato flatbread"
@@ -565,6 +601,7 @@
 	)
 	tastes =  list("bread" = 1, "mushroom" = 1, "tomatoes" = 1)
 	foodtypes = VEGETABLES | NUTS
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pizza/flatbread/nutty
 	name = "nut paste flatbread"
@@ -573,6 +610,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20)
 	tastes =  list("bread" = 1, "nuts" = 2)
 	foodtypes = NUTS
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 //Sandwiches/Toast Dishes
 /obj/item/food/emperor_roll
@@ -589,6 +627,7 @@
 	foodtypes = VEGETABLES | NUTS | MEAT | GORE | SEAFOOD
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/honey_roll
 	name = "honey sweetroll"
@@ -604,73 +643,7 @@
 	foodtypes = VEGETABLES | NUTS | FRUIT
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
-
-//Soup Dishes
-/obj/item/food/soup/atrakor_dumplings
-	name = "\improper Atrakor dumpling soup"
-	desc = "A bowl of rich, meaty dumpling soup, traditionally served during the festival of Atrakor's Might on Tizira. The dumplings are shaped like the Night Sky Lord himself."
-	icon = 'icons/obj/food/lizard.dmi'
-	icon_state = "atrakor_dumplings"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 6,
-		/datum/reagent/consumable/nutriment/protein = 10,
-		/datum/reagent/consumable/nutriment/vitamin = 4,
-		/datum/reagent/water = 5,
-	)
-	tastes = list("bone broth" = 1, "onion" = 1, "potato" = 1)
-	foodtypes = MEAT | VEGETABLES | NUTS
-
-/obj/item/food/soup/meatball_noodles
-	name = "meatball noodle soup"
-	desc = "A hearty noodle soup made from meatballs and nizaya in a rich broth. Commonly topped with a handful of chopped nuts."
-	icon = 'icons/obj/food/lizard.dmi'
-	icon_state = "meatball_noodles"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 6,
-		/datum/reagent/consumable/nutriment/protein = 8,
-		/datum/reagent/consumable/nutriment/vitamin = 6,
-		/datum/reagent/water = 5,
-	)
-	tastes = list("bone broth" = 1, "meat" = 1, "gnocchi" = 1, "peanuts" = 1)
-	foodtypes = MEAT | VEGETABLES | NUTS
-
-/obj/item/food/soup/black_broth
-	name = "\improper Tiziran black broth"
-	desc = "A bowl of sausage, onion, blood and vinegar, served ice cold. Every bit as rough as it sounds."
-	icon = 'icons/obj/food/lizard.dmi'
-	icon_state = "black_broth"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment/protein = 10,
-		/datum/reagent/blood = 8,
-		/datum/reagent/consumable/liquidgibs = 2,
-	)
-	tastes = list("vinegar" = 1, "metal" = 1)
-	foodtypes = MEAT | VEGETABLES | GORE
-
-/obj/item/food/soup/jellyfish
-	name = "jellyfish stew"
-	desc = "A slimy bowl of jellyfish stew. It jiggles if you shake it."
-	icon = 'icons/obj/food/lizard.dmi'
-	icon_state = "jellyfish_stew"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment/protein = 10,
-		/datum/reagent/consumable/nutriment = 6,
-	)
-	tastes = list("slime" = 1)
-	foodtypes = MEAT | VEGETABLES | GORE
-
-/obj/item/food/soup/rootbread_soup
-	name = "rootbread soup"
-	desc = "A big bowl of spicy, savoury soup made with rootbread. Heavily seasoned, and very tasty."
-	icon = 'icons/obj/food/lizard.dmi'
-	icon_state = "rootbread_soup"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment/protein = 6,
-		/datum/reagent/consumable/nutriment = 10,
-		/datum/reagent/consumable/nutriment/vitamin = 6,
-	)
-	tastes = list("bread" = 1, "egg" = 1, "chili" = 1, "garlic" = 1)
-	foodtypes = MEAT | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 //Egg Dishes
 /obj/item/food/black_eggs
@@ -685,6 +658,7 @@
 	tastes = list("eggs" = 1, "greens" = 1, "blood" = 1)
 	foodtypes = MEAT | BREAKFAST | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/patzikula
 	name = "patzikula"
@@ -700,6 +674,7 @@
 	tastes = list("eggs" = 1, "tomato" = 1, "heat" = 1)
 	foodtypes = VEGETABLES | MEAT | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 //Cakes/Sweets
 
@@ -716,6 +691,7 @@
 	tastes = list("peppery heat" = 1, "sweetness" = 1)
 	foodtypes = NUTS | SUGAR
 	slice_type = /obj/item/food/cakeslice/korta_brittle
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cakeslice/korta_brittle
 	name = "korta brittle slice"
@@ -755,6 +731,7 @@
 	)
 	tastes = list("savouriness" = 1, "sweetness" = 1)
 	foodtypes = SUGAR | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 //Misc Dishes
 /obj/item/food/sauerkraut
@@ -766,6 +743,7 @@
 	tastes = list("cabbage" = 1, "acid" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/lizard_dumplings
 	name = "\improper Tiziran dumplings"
@@ -779,6 +757,7 @@
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/steeped_mushrooms
 	name = "steeped seraka mushrooms"
@@ -792,6 +771,7 @@
 	tastes = list("savouriness" = 1, "nuttiness" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/canned/jellyfish
 	name = "canned gunner jellyfish"
@@ -832,3 +812,138 @@
 	tastes = list("sweet bugs" = 1)
 	foodtypes = MEAT | GORE | BUGS
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/rootbread_peanut_butter_jelly
+	name = "peanut butter and jelly rootwich"
+	desc = "A classic PB&J rootwich, just like the replicant that replaced your mom used to make."
+	icon_state = "peanutbutter-jelly"
+	icon = 'icons/obj/food/lizard.dmi'
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("peanut butter" = 1, "jelly" = 1, "rootbread" = 2)
+	foodtypes = FRUIT | NUTS
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/rootbread_peanut_butter_banana
+	name = "peanut butter and banana rootwich"
+	desc = "A peanut butter rootwich with banana slices mixed in, a good high protein treat."
+	icon_state = "peanutbutter-banana"
+	icon = 'icons/obj/food/lizard.dmi'
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/banana = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("peanut butter" = 1, "banana" = 1, "rootbread" = 2)
+	foodtypes = FRUIT | NUTS
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/burger/plain/korta
+	name = "plain rootburger"
+	desc = "A simple patty in a rootdough bun."
+	icon_state = "kortaburger"
+	icon = 'icons/obj/food/lizard.dmi'
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
+	foodtypes = NUTS | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_3 //Gotta make the dough, +1
+
+/obj/item/food/burger/rat/korta
+	name = "rat rootburger"
+	desc = "Pretty much what you'd expect... Just in a rootdough bun."
+	icon_state = "ratburger"
+	icon = 'icons/obj/food/lizard.dmi'
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("dead rat" = 4, "bun" = 2)
+	foodtypes = NUTS | MEAT | GORE
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/burger/rootguffin
+	name = "root-guffin"
+	desc = "A cheap and greasy lizard-friendly imitation of an eggs benedict."
+	icon_state = "rootguffin"
+	icon = 'icons/obj/food/lizard.dmi'
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/eggyolk = 3,
+		/datum/reagent/consumable/nutriment/protein = 7,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
+	tastes = list("muffin" = 2, "bacon" = 3)
+	foodtypes = NUTS | MEAT | BREAKFAST
+	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_4
+
+/obj/item/food/burger/rootrib
+	name = "rootrib"
+	desc = "An elusive rib shaped burger with limited availablity across the galaxy. Now meeting subhuman requirements."
+	icon_state = "rootrib"
+	icon = 'icons/obj/food/lizard.dmi'
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/protein = 7,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/bbqsauce = 1,
+	)
+	tastes = list("bun" = 2, "pork patty" = 4)
+	foodtypes = NUTS | MEAT
+	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_4
+
+/obj/item/food/burger/rootchicken
+	name = "chicken rootwich"
+	desc = "A delicious chicken sandwich, in a soft rootbread roll."
+	icon_state = "rootchicken"
+	icon = 'icons/obj/food/lizard.dmi'
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/mayonnaise = 3,
+		/datum/reagent/consumable/nutriment/protein = 7,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
+	)
+	tastes = list("bun" = 2, "chicken" = 4, "God's covenant" = 1)
+	foodtypes = NUTS | MEAT | FRIED
+	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_4
+
+/obj/item/food/burger/rootfish
+	name = "Fish rootwich"
+	desc = "Lightly battered fish, sandwiched in a rootroll."
+	icon_state = "rootfish"
+	icon = 'icons/obj/food/lizard.dmi'
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)
+	tastes = list("bun" = 4, "fish" = 4)
+	foodtypes = NUTS | SEAFOOD
+	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/burger/sloppyroot
+	name = "sssloppy moe"
+	desc = "Ground meat mixed with onions and barbeque sssauce, sssloppily plopped onto a rootroll. Delicious, but guaranteed to get your hands dirty."
+	icon_state = "sloppyroot"
+	icon = 'icons/obj/food/lizard.dmi'
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 10,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
+	tastes = list("juicy meat" = 4, "BBQ sauce" = 3, "onions" = 2, "bun" = 2)
+	foodtypes = NUTS | MEAT | VEGETABLES
+	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_4

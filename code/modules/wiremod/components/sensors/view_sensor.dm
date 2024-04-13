@@ -11,7 +11,7 @@
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-	power_usage_per_input = 10 //Normal components have 1
+	energy_usage_per_input = 0.01 * STANDARD_CELL_CHARGE //Normal components have 0.001 * STANDARD_CELL_CHARGE
 
 	///Allows setting the range of the view sensor
 	var/datum/port/input/range
@@ -34,7 +34,10 @@
 	. += create_ui_notice("Scan Cooldown: [DisplayTimeText(view_cooldown)]", "orange", "stopwatch")
 
 /obj/item/circuit_component/view_sensor/input_received(datum/port/input/port)
-	if(TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_VIEW_SENSOR))
+	if(!parent.shell)
+		return
+
+	if(TIMER_COOLDOWN_RUNNING(parent.shell, COOLDOWN_CIRCUIT_VIEW_SENSOR))
 		result.set_output(null)
 		cooldown.set_output(COMPONENT_SIGNAL)
 		return
@@ -66,4 +69,4 @@
 		object_list += target
 
 	result.set_output(object_list)
-	TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_VIEW_SENSOR, view_cooldown)
+	TIMER_COOLDOWN_START(parent.shell, COOLDOWN_CIRCUIT_VIEW_SENSOR, view_cooldown)

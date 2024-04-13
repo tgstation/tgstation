@@ -85,7 +85,7 @@
 /obj/machinery/air_sensor/antinoblium_tank
 	name = "antinoblium tank gas sensor"
 	chamber_id = ATMOS_GAS_MONITOR_ANTINOBLIUM
-	
+
 /obj/machinery/air_sensor/incinerator_tank
 	name = "incinerator chamber gas sensor"
 	chamber_id = ATMOS_GAS_MONITOR_INCINERATOR
@@ -97,3 +97,7 @@
 /obj/machinery/air_sensor/ordnance_freezer_chamber
 	name = "ordnance freezer chamber gas sensor"
 	chamber_id = ATMOS_GAS_MONITOR_ORDNANCE_FREEZER
+
+/obj/machinery/air_sensor/engine_chamber
+	name = "supermatter engine chamber gas sensor"
+	chamber_id = ATMOS_GAS_MONITOR_ENGINE

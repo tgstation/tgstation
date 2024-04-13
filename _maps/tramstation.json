@@ -11,19 +11,19 @@
 	},
 	"traits": [
 		{
-			"Up": 1,
+			"Up": true,
 			"Baseturf": "/turf/open/misc/asteroid/airless",
 			"Linkage": "Cross"
 		},
 		{
-			"Down": -1,
+			"Down": true,
 			"Baseturf": "/turf/open/openspace",
 			"Linkage": "Cross"
 		}
 	],
 	"job_changes": {
 		"Cook": {
-			"additional_cqc_areas": ["/area/station/service/kitchen/diner"]
+			"additional_cqc_areas": ["/area/station/commons/lounge"]
 		},
 		"Captain": {
 			"special_charter": "asteroid"

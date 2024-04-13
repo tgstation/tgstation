@@ -13,16 +13,27 @@ Passive gate is similar to the regular pump except:
 	desc = "A one-way air valve that does not require power. Passes gas when the output pressure is lower than the target pressure."
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
-	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
+	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "passivegate"
 	use_power = NO_POWER_USE
 	///Set the target pressure the component should arrive to
 	var/target_pressure = ONE_ATMOSPHERE
 
+/obj/machinery/atmospherics/components/binary/passive_gate/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/machinery/atmospherics/components/binary/passive_gate/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize target pressure"
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/machinery/atmospherics/components/binary/passive_gate/CtrlClick(mob/user)
 	if(can_interact(user))
 		on = !on
+		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_appearance()
 	return ..()

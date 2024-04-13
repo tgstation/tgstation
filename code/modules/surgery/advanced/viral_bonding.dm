@@ -54,5 +54,6 @@
 	)
 	display_pain(target, "You feel a faint throbbing in your chest.")
 	for(var/datum/disease/infected_disease as anything in target.diseases)
-		infected_disease.carrier = TRUE
+		if(infected_disease.severity != DISEASE_SEVERITY_UNCURABLE) //no curing quirks, sweaty
+			infected_disease.carrier = TRUE
 	return TRUE

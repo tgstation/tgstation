@@ -36,7 +36,7 @@
 		override = TRUE,
 	)
 
-	del_timer_id = QDEL_IN(src, duration)
+	del_timer_id = QDEL_IN_STOPPABLE(src, duration)
 	return TRUE
 
 /datum/hallucination/fake_alert/need_oxygen
@@ -62,10 +62,6 @@
 /datum/hallucination/fake_alert/bad_co2
 	alert_category = ALERT_TOO_MUCH_CO2
 	alert_type = /atom/movable/screen/alert/too_much_co2
-
-/datum/hallucination/fake_alert/nutrition
-	alert_category = ALERT_NUTRITION
-	alert_type = list(/atom/movable/screen/alert/fat, /atom/movable/screen/alert/starving)
 
 /datum/hallucination/fake_alert/gravity
 	alert_category = ALERT_GRAVITY

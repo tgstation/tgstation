@@ -61,8 +61,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		var/obj/item/bodypart/bodypart = pick(human_owner.bodyparts)
-		var/datum/wound/slash/severe/crit_wound = new()
-		crit_wound.apply_wound(bodypart)
+		human_owner.cause_wound_of_type_and_severity(WOUND_SLASH, bodypart, WOUND_SEVERITY_SEVERE)
 
 	return ..()
 
@@ -144,13 +143,13 @@
 /datum/status_effect/eldritch/blade/on_apply()
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOVABLE_PRE_THROW, PROC_REF(on_pre_throw))
-	RegisterSignal(owner, COMSIG_MOVABLE_TELEPORTED, PROC_REF(on_teleport))
+	RegisterSignal(owner, COMSIG_MOVABLE_TELEPORTING, PROC_REF(on_teleport))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
 /datum/status_effect/eldritch/blade/on_remove()
 	UnregisterSignal(owner, list(
 		COMSIG_MOVABLE_PRE_THROW,
-		COMSIG_MOVABLE_TELEPORTED,
+		COMSIG_MOVABLE_TELEPORTING,
 		COMSIG_MOVABLE_MOVED,
 	))
 
@@ -219,3 +218,91 @@
 
 	source.Stun(1 SECONDS)
 	source.throw_at(further_behind_old_loc, 3, 1, gentle = TRUE) // Keeping this gentle so they don't smack into the heretic max speed
+
+/datum/status_effect/eldritch/cosmic
+	effect_icon_state = "emark6"
+	/// For storing the location when the mark got applied.
+	var/obj/effect/cosmic_diamond/cosmic_diamond
+	/// Effect when triggering mark.
+	var/obj/effect/teleport_effect = /obj/effect/temp_visual/cosmic_cloud
+
+/datum/status_effect/eldritch/cosmic/on_creation(mob/living/new_owner)
+	. = ..()
+	cosmic_diamond = new(get_turf(owner))
+
+/datum/status_effect/eldritch/cosmic/Destroy()
+	QDEL_NULL(cosmic_diamond)
+	return ..()
+
+/datum/status_effect/eldritch/cosmic/on_effect()
+	new teleport_effect(get_turf(owner))
+	new /obj/effect/forcefield/cosmic_field(get_turf(owner))
+	do_teleport(
+		owner,
+		get_turf(cosmic_diamond),
+		no_effects = TRUE,
+		channel = TELEPORT_CHANNEL_MAGIC,
+	)
+	new teleport_effect(get_turf(owner))
+	owner.Paralyze(2 SECONDS)
+	return ..()
+
+// MARK OF LOCK
+
+/datum/status_effect/eldritch/lock
+	effect_icon_state = "emark7"
+	duration = 10 SECONDS
+
+/datum/status_effect/eldritch/lock/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, STATUS_EFFECT_TRAIT)
+
+/datum/status_effect/eldritch/lock/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, STATUS_EFFECT_TRAIT)
+	return ..()
+
+// MARK OF MOON
+
+/datum/status_effect/eldritch/moon
+	effect_icon_state = "emark8"
+	///Used for checking if the pacifism effect should end early
+	var/damage_sustained = 0
+
+/datum/status_effect/eldritch/moon/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_PACIFISM, id)
+	owner.emote(pick("giggle", "laugh"))
+	owner.balloon_alert(owner, "you feel unable to hurt a soul!")
+	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	return TRUE
+
+/// Checks for damage so the heretic can't just attack them with another weapon whilst they are unable to fight back
+/datum/status_effect/eldritch/moon/proc/on_damaged(datum/source, damage, damagetype)
+	SIGNAL_HANDLER
+
+	// The grasp itself deals stamina damage so we will ignore it
+	if(damagetype == STAMINA)
+		return
+
+	damage_sustained += damage
+
+	if(damage_sustained < 15)
+		return
+
+	// Removes the trait in here since we don't wanna destroy the mark before its detonated or allow detonation triggers with other weapons
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
+	owner.balloon_alert(owner, "you feel able to once again strike!")
+
+/datum/status_effect/eldritch/moon/on_effect()
+	owner.adjust_confusion(30 SECONDS)
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25, 160)
+	owner.emote(pick("giggle", "laugh"))
+	owner.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
+	return ..()
+
+/datum/status_effect/eldritch/moon/on_remove()
+	. = ..()
+	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
+
+	// Incase the trait was not removed earlier
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)

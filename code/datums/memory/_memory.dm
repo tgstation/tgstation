@@ -57,7 +57,7 @@
 	src.deuteragonist_name = build_story_character(deuteragonist)
 	src.antagonist_name = build_story_character(antagonist)
 
-	if(protagonist && !(memory_flags & MEMORY_FLAG_NOLOCATION))
+	if(!src.where && isatom(protagonist) && !(memory_flags & MEMORY_FLAG_NOLOCATION))
 		src.where = get_area_name(protagonist)
 
 	if(!(memory_flags & MEMORY_FLAG_NOMOOD))
@@ -71,9 +71,25 @@
 	// This happens after everything's all set, remember this for New overrides
 	generate_memory_name()
 
-/datum/memory/Destroy(force, ...)
+/datum/memory/Destroy(force)
 	memorizer_mind = null
 	return ..()
+
+/datum/memory/serialize_list(list/options, list/semvers)
+	. = ..()
+
+	.["name"] = name
+	.["memorizer"] = memorizer
+	.["story_value"] = story_value
+	.["memory_flags"] = memory_flags
+	.["mood_verb"] = mood_verb
+	.["protagonist_name"] = protagonist_name
+	.["deuteragonist_name"] = deuteragonist_name
+	.["antagonist_name"] = antagonist_name
+	.["where"] = where
+
+	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
+	return .
 
 /**
  * Generates a name for the memory.
@@ -228,41 +244,41 @@
 	//entirely independent vars (not related to the action or story type)
 
 	var/static/list/something_pool = list(
+		/mob/living/basic/bat,
+		/mob/living/basic/bear,
+		/mob/living/basic/blob_minion/blobbernaut,
+		/mob/living/basic/butterfly,
 		/mob/living/basic/carp,
 		/mob/living/basic/carp/magic,
 		/mob/living/basic/carp/magic/chaos,
+		/mob/living/basic/chick,
+		/mob/living/basic/chicken,
 		/mob/living/basic/cow,
 		/mob/living/basic/cow/wisdom,
+		/mob/living/basic/crab,
+		/mob/living/basic/goat,
+		/mob/living/basic/gorilla,
+		/mob/living/basic/headslug,
+		/mob/living/basic/killer_tomato,
+		/mob/living/basic/lizard,
+		/mob/living/basic/mining/goliath,
+		/mob/living/basic/mining/watcher,
+		/mob/living/basic/morph,
 		/mob/living/basic/mouse,
+		/mob/living/basic/mushroom,
+		/mob/living/basic/parrot,
+		/mob/living/basic/pet/cat,
+		/mob/living/basic/pet/cat/cak,
 		/mob/living/basic/pet/dog/breaddog,
 		/mob/living/basic/pet/dog/corgi,
 		/mob/living/basic/pet/dog/pug,
+		/mob/living/basic/pet/fox,
+		/mob/living/basic/spider/giant,
+		/mob/living/basic/spider/giant/hunter,
 		/mob/living/basic/statue,
 		/mob/living/basic/stickman,
 		/mob/living/basic/stickman/dog,
-		/mob/living/simple_animal/butterfly,
-		/mob/living/simple_animal/chick,
-		/mob/living/simple_animal/chicken,
-		/mob/living/simple_animal/crab,
-		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
-		/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-		/mob/living/simple_animal/hostile/bear,
-		/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
-		/mob/living/basic/giant_spider,
-		/mob/living/basic/giant_spider/hunter,
-		/mob/living/simple_animal/hostile/gorilla,
-		/mob/living/simple_animal/hostile/headcrab,
-		/mob/living/simple_animal/hostile/killertomato,
-		/mob/living/simple_animal/hostile/lizard,
 		/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
-		/mob/living/simple_animal/hostile/morph,
-		/mob/living/simple_animal/hostile/mushroom,
-		/mob/living/simple_animal/hostile/retaliate/bat,
-		/mob/living/simple_animal/hostile/retaliate/goat,
-		/mob/living/simple_animal/parrot,
-		/mob/living/simple_animal/pet/cat,
-		/mob/living/simple_animal/pet/cat/cak,
-		/mob/living/simple_animal/pet/fox,
 		/obj/item/food/sausage/american,
 		/obj/item/skub,
 	)
@@ -376,7 +392,33 @@
 
 	if(istype(character, /datum/mind))
 		var/datum/mind/character_mind = character
-		return "\the [lowertext(initial(character_mind.assigned_role.title))]"
+		return "\the [LOWER_TEXT(initial(character_mind.assigned_role.title))]"
 
 	// Generic result - mobs get "the guy", objs / turfs get "a thing"
 	return ismob(character) ? "\the [character]" : "\a [character]"
+
+/**
+ * Creates a "quick copy" of the memory for another mind,
+ * copying just basic memory information (name, major charactecrs) over.
+ *
+ * The copied memory cannot be used for stories or anything.
+ * They should generally only be used to give a new mind an idea of another mind's memories.
+ */
+/datum/memory/proc/quick_copy_memory(datum/mind/new_memorizer)
+	var/datum/memory/copy/new_copy = new(new_memorizer, protagonist_name, deuteragonist_name, antagonist_name, where, memory_flags)
+	new_copy.name = name
+	new_copy.story_value = story_value
+	return new_copy
+
+// To only be used by quick copies of memories
+/datum/memory/copy
+	memory_flags = MEMORY_NO_STORY
+
+/datum/memory/copy/New(datum/mind/memorizer_mind, atom/protagonist, atom/deuteragonist, atom/antagonist, where, new_memory_flags)
+	src.where = where
+	src.memory_flags |= new_memory_flags
+	return ..()
+
+/datum/memory/copy/generate_memory_name()
+	// We just copy the original memory's name anyways
+	return

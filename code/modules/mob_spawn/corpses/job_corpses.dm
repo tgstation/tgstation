@@ -2,27 +2,27 @@
 //jobs from ss13 but DEAD.
 
 /obj/effect/mob_spawn/corpse/human/cargo_tech
-	name = "Cargo Tech"
+	name = JOB_CARGO_TECHNICIAN
 	outfit = /datum/outfit/job/cargo_tech
 	icon_state = "corpsecargotech"
 
 /obj/effect/mob_spawn/corpse/human/cook
-	name = "Cook"
+	name = JOB_COOK
 	outfit = /datum/outfit/job/cook
 	icon_state = "corpsecook"
 
 /obj/effect/mob_spawn/corpse/human/doctor
-	name = "Doctor"
+	name = JOB_MEDICAL_DOCTOR
 	outfit = /datum/outfit/job/doctor
 	icon_state = "corpsedoctor"
 
 /obj/effect/mob_spawn/corpse/human/geneticist
-	name = "Geneticist"
+	name = JOB_GENETICIST
 	outfit = /datum/outfit/job/geneticist
 	icon_state = "corpsescientist"
 
 /obj/effect/mob_spawn/corpse/human/engineer
-	name = "Engineer"
+	name = JOB_STATION_ENGINEER
 	outfit = /datum/outfit/job/engineer/gloved
 	icon_state = "corpseengineer"
 
@@ -30,17 +30,17 @@
 	outfit = /datum/outfit/job/engineer/mod
 
 /obj/effect/mob_spawn/corpse/human/clown
-	name = "Clown"
+	name = JOB_CLOWN
 	outfit = /datum/outfit/job/clown
 	icon_state = "corpseclown"
 
 /obj/effect/mob_spawn/corpse/human/scientist
-	name = "Scientist"
+	name = JOB_SCIENTIST
 	outfit = /datum/outfit/job/scientist
 	icon_state = "corpsescientist"
 
 /obj/effect/mob_spawn/corpse/human/miner
-	name = "Shaft Miner"
+	name = JOB_SHAFT_MINER
 	outfit = /datum/outfit/job/miner
 	icon_state = "corpseminer"
 
@@ -72,5 +72,19 @@
 	spawned_mob.ForceContractDisease(new /datum/disease/fluspanish)
 
 /obj/effect/mob_spawn/corpse/human/bartender
-	name = "Bartender"
+	name = JOB_BARTENDER
 	outfit = /datum/outfit/spacebartender
+
+/obj/effect/mob_spawn/corpse/human/prisoner
+	name = JOB_PRISONER
+	outfit = /datum/outfit/job/prisoner
+
+/obj/effect/mob_spawn/corpse/human/roboticist
+	name = JOB_ROBOTICIST
+	outfit = /datum/outfit/job/roboticist
+	icon_state = "corpseroboticist"
+
+/obj/effect/mob_spawn/corpse/human/bitrunner
+	name = JOB_BITRUNNER
+	outfit = /datum/outfit/job/bitrunner
+	icon_state = "corpsecargotech"

@@ -4,12 +4,16 @@
 		return 0
 	var/dy =(32 * end.y + end.pixel_y) - (32 * start.y + start.pixel_y)
 	var/dx =(32 * end.x + end.pixel_x) - (32 * start.x + start.pixel_x)
-	if(!dy)
-		return (dx >= 0) ? 90 : 270
-	. = arctan(dx/dy)
-	if(dy < 0)
+	return delta_to_angle(dx, dy)
+
+/// Calculate the angle produced by a pair of x and y deltas
+/proc/delta_to_angle(x, y)
+	if(!y)
+		return (x >= 0) ? 90 : 270
+	. = arctan(x/y)
+	if(y < 0)
 		. += 180
-	else if(dx < 0)
+	else if(x < 0)
 		. += 360
 
 /// Angle between two arbitrary points and horizontal line same as [/proc/get_angle]
@@ -80,39 +84,116 @@
 			line += locate(current_x_step, current_y_step, starting_z)
 	return line
 
-///Format a power value in W, kW, MW, or GW.
-/proc/display_power(powerused)
-	if(powerused < 1000) //Less than a kW
-		return "[powerused] W"
-	else if(powerused < 1000000) //Less than a MW
-		return "[round((powerused * 0.001),0.01)] kW"
-	else if(powerused < 1000000000) //Less than a GW
-		return "[round((powerused * 0.000001),0.001)] MW"
-	return "[round((powerused * 0.000000001),0.0001)] GW"
+/**
+ * Get a list of turfs in a perimeter given the `center_atom` and `radius`.
+ * Automatically rounds down decimals and does not accept values less than positive 1 as they dont play well with it.
+ * Is efficient on large circles but ugly on small ones
+ * Uses [Jesko`s method to the midpoint circle Algorithm](https://en.wikipedia.org/wiki/Midpoint_circle_algorithm).
+ */
+/proc/get_perimeter(atom/center, radius)
+	if(radius < 1)
+		return
+	var/rounded_radius = round(radius)
+	var/x = center.x
+	var/y = center.y
+	var/z = center.z
+	var/t1 = rounded_radius/16
+	var/dx = rounded_radius
+	var/dy = 0
+	var/t2
+	var/list/perimeter = list()
+	while(dx >= dy)
+		perimeter += locate(x + dx, y + dy, z)
+		perimeter += locate(x - dx, y + dy, z)
+		perimeter += locate(x + dx, y - dy, z)
+		perimeter += locate(x - dx, y - dy, z)
+		perimeter += locate(x + dy, y + dx, z)
+		perimeter += locate(x - dy, y + dx, z)
+		perimeter += locate(x + dy, y - dx, z)
+		perimeter += locate(x - dy, y - dx, z)
+		dy += 1
+		t1 += dy
+		t2 = t1 - dx
+		if(t2 > 0)
+			t1 = t2
+			dx -= 1
+	return perimeter
 
-///Format an energy value in J, kJ, MJ, or GJ. 1W = 1J/s.
-/proc/display_joules(units)
-	if (units < 1000) // Less than a kJ
-		return "[round(units, 0.1)] J"
-	else if (units < 1000000) // Less than a MJ
-		return "[round(units * 0.001, 0.01)] kJ"
-	else if (units < 1000000000) // Less than a GJ
-		return "[round(units * 0.000001, 0.001)] MJ"
-	return "[round(units * 0.000000001, 0.0001)] GJ"
+/**
+ * Formats a number into a list representing the si unit.
+ * Access the coefficient with [SI_COEFFICIENT], and access the unit with [SI_UNIT].
+ *
+ * Supports SI exponents between 1e-15 to 1e15, but properly handles numbers outside that range as well.
+ * Arguments:
+ * * value - The number to convert to text. Can be positive or negative.
+ * * unit - The base unit of the number, such as "Pa" or "W".
+ * * maxdecimals - Maximum amount of decimals to display for the final number. Defaults to 1.
+ * Returns: [SI_COEFFICIENT = si unit coefficient, SI_UNIT = prefixed si unit.]
+ */
+/proc/siunit_isolated(value, unit, maxdecimals=1)
+	var/static/list/prefixes = list("q","r","y","z","a","f","p","n","μ","m","","k","M","G","T","P","E","Z","Y","R","Q")
 
-/proc/joules_to_energy(joules)
-	return joules * (1 SECONDS) / SSmachines.wait
+	// We don't have prefixes beyond this point
+	// and this also captures value = 0 which you can't compute the logarithm for
+	// and also byond numbers are floats and doesn't have much precision beyond this point anyway
+	if(abs(value) < 1e-30)
+		. = list(SI_COEFFICIENT = 0, SI_UNIT = " [unit]")
+		return
 
-/proc/energy_to_joules(energy_units)
-	return energy_units * SSmachines.wait / (1 SECONDS)
+	var/exponent = clamp(log(10, abs(value)), -30, 30) // Calculate the exponent and clamp it so we don't go outside the prefix list bounds
+	var/divider = 10 ** (round(exponent / 3) * 3) // Rounds the exponent to nearest SI unit and power it back to the full form
+	var/coefficient = round(value / divider, 10 ** -maxdecimals) // Calculate the coefficient and round it to desired decimals
+	var/prefix_index = round(exponent / 3) + 11 // Calculate the index in the prefixes list for this exponent
 
-///Format an energy value measured in Power Cell units.
+	// An edge case which happens if we round 999.9 to 0 decimals for example, which gets rounded to 1000
+	// In that case, we manually swap up to the next prefix if there is one available
+	if(coefficient >= 1000 && prefix_index < 21)
+		coefficient /= 1e3
+		prefix_index++
+
+	var/prefix = prefixes[prefix_index]
+	. = list(SI_COEFFICIENT = coefficient, SI_UNIT = " [prefix][unit]")
+
+/**Format a power value in prefixed watts.
+ * Converts from energy if convert is true.
+ * Args:
+ * - power: The value of power to format.
+ * - convert: Whether to convert this from joules.
+ * - datum/controller/subsystem/scheduler: used in the conversion
+ * Returns: The string containing the formatted power.
+ */
+/proc/display_power(power, convert = TRUE, datum/controller/subsystem/scheduler = SSmachines)
+	power = convert ? energy_to_power(power, scheduler) : power
+	return siunit(power, "W", 3)
+
+/**
+ * Format an energy value in prefixed joules.
+ * Arguments
+ *
+ * * units - the value t convert
+ */
 /proc/display_energy(units)
-	// APCs process every (SSmachines.wait * 0.1) seconds, and turn 1 W of
-	// excess power into watts when charging cells.
-	// With the current configuration of wait=20 and CELLRATE=0.002, this
-	// means that one unit is 1 kJ.
-	return display_joules(energy_to_joules(units) WATTS)
+	return siunit(units, "J", 3)
+
+/**
+ * Converts the joule to the watt, assuming SSmachines tick rate.
+ * Arguments
+ *
+ * * joules - the value in joules to convert
+ * * datum/controller/subsystem/scheduler - the subsystem whos wait time is used in the conversion
+ */
+/proc/energy_to_power(joules, datum/controller/subsystem/scheduler = SSmachines)
+	return joules * (1 SECONDS) / scheduler.wait
+
+/**
+ * Converts the watt to the joule, assuming SSmachines tick rate.
+ * * Arguments
+ *
+ * * joules - the value in joules to convert
+ * * datum/controller/subsystem/scheduler - the subsystem whos wait time is used in the conversion
+ */
+/proc/power_to_energy(watts, datum/controller/subsystem/scheduler = SSmachines)
+	return watts * scheduler.wait / (1 SECONDS)
 
 ///chances are 1:value. anyprob(1) will always return true
 /proc/anyprob(value)
@@ -155,3 +236,8 @@
 		return max(new_value, threshold)
 	if(sign == -1)
 		return min(new_value, threshold * -1)
+
+/// Takes two values x and y, and returns 1/((1/x) + y)
+/// Useful for providing an additive modifier to a value that is used as a divisor, such as `/obj/projectile/var/speed`
+/proc/reciprocal_add(x, y)
+	return 1/((1/x)+y)

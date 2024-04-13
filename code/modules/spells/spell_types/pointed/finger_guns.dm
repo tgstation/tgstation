@@ -27,23 +27,26 @@
 	projectile_type = /obj/projectile/bullet/mime
 	projectile_amount = 3
 
-/datum/action/cooldown/spell/pointed/projectile/finger_guns/try_invoke(feedback = TRUE)
+/datum/action/cooldown/spell/pointed/projectile/finger_guns/try_invoke(mob/living/invoker, feedback = TRUE)
 	if(invocation_type == INVOCATION_EMOTE)
-		if(!ishuman(owner))
+		if(!ishuman(invoker))
 			return FALSE
 
-		var/mob/living/carbon/human/human_owner = owner
-		if(human_owner.incapacitated())
+		var/mob/living/carbon/human/human_invoker = invoker
+		if(human_invoker.incapacitated())
 			if(feedback)
-				to_chat(owner, span_warning("You can't properly point your fingers while incapacitated."))
+				to_chat(human_invoker, span_warning("You can't properly point your fingers while incapacitated."))
 			return FALSE
-		if(human_owner.get_active_held_item())
+		if(human_invoker.get_active_held_item())
 			if(feedback)
-				to_chat(owner, span_warning("You can't properly fire your finger guns with something in your hand."))
+				to_chat(human_invoker, span_warning("You can't properly fire your finger guns with something in your hand."))
 			return FALSE
 
 	return ..()
 
 /datum/action/cooldown/spell/pointed/projectile/finger_guns/before_cast(atom/cast_on)
 	. = ..()
-	invocation = span_notice("<b>[cast_on]</b> fires [cast_on.p_their()] finger gun!")
+	if(isnull(owner))
+		invocation = initial(invocation)
+	else
+		invocation = span_notice("<b>[owner]</b> fires [owner.p_their()] finger gun!")

@@ -74,6 +74,9 @@
 /turf/open/floor/wood/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/wood/lavaland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
 /turf/open/floor/wood/tile
 	icon_state = "wood_tile"
 	floor_tile = /obj/item/stack/tile/wood/tile
@@ -115,25 +118,29 @@
 
 /turf/open/floor/bamboo/tatami
 	desc = "A traditional Japanese floor mat."
-	icon_state = "tatami_green"
+	icon = 'icons/turf/floors/floor_variations.dmi'
+	icon_state = "bamboo-green"
 	floor_tile = /obj/item/stack/tile/bamboo/tatami
 	smoothing_flags = NONE
 
 /turf/open/floor/bamboo/tatami/broken_states()
+	// This state doesn't exist why is it here?
 	return list("tatami-damaged")
 
 /turf/open/floor/bamboo/tatami/purple
-	icon_state = "tatami_purple"
+	icon = 'icons/turf/floors/floor_variations.dmi'
+	icon_state = "bamboo-purple"
 	floor_tile = /obj/item/stack/tile/bamboo/tatami/purple
 
 /turf/open/floor/bamboo/tatami/black
-	icon_state = "tatami_black"
+	icon = 'icons/turf/floors/floor_variations.dmi'
+	icon_state = "bamboo-black"
 	floor_tile = /obj/item/stack/tile/bamboo/tatami/black
 
 /turf/open/floor/grass
 	name = "grass patch"
 	desc = "You can't tell if this is real grass or just cheap plastic imitation."
-	icon_state = "grass0"
+	icon_state = "grass"
 	floor_tile = /obj/item/stack/tile/grass
 	flags_1 = NONE
 	bullet_bounce_sound = null
@@ -144,7 +151,7 @@
 	tiled_dirt = FALSE
 
 /turf/open/floor/grass/broken_states()
-	return list("sand")
+	return list("[initial(icon_state)]_damaged")
 
 /turf/open/floor/grass/Initialize(mapload)
 	. = ..()
@@ -155,10 +162,21 @@
 /turf/open/floor/grass/proc/spawniconchange()
 	icon_state = "grass[rand(0,3)]"
 
+/turf/open/floor/grass/lavaland
+	name = "dead grass patch"
+	desc = "It turns out grass doesn't grow very well in hell."
+	icon_state = "sand"
+	broken = TRUE
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	damaged_dmi = 'icons/turf/damaged.dmi'
+
+/turf/open/floor/grass/lavaland/spawniconchange()
+	return
+
 /turf/open/floor/grass/fairy //like grass but fae-er
 	name = "fairygrass patch"
 	desc = "Something about this grass makes you want to frolic. Or get high."
-	icon_state = "fairygrass0"
+	icon_state = "fairygrass"
 	floor_tile = /obj/item/stack/tile/fairygrass
 	light_range = 2
 	light_power = 0.80
@@ -171,6 +189,7 @@
 	gender = PLURAL
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
+	damaged_dmi = 'icons/turf/snow.dmi'
 	desc = "Looks cold."
 	icon_state = "snow"
 	flags_1 = NONE
@@ -188,7 +207,7 @@
 
 /turf/open/floor/fake_snow/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/diggable, /obj/item/stack/tile/mineral/snow, 2, worm_chance = 0)
+	AddElement(/datum/element/diggable, /obj/item/stack/tile/mineral/snow, 1, worm_chance = 0)
 
 /turf/open/floor/fake_snow/broken_states()
 	return list("snow_dug")
@@ -259,12 +278,17 @@
 			QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/open/floor/carpet/lone
-	icon_state = "carpetsymbol"
+	icon = 'icons/turf/floors/floor_variations.dmi'
+	icon_state = "carpet-symbol"
 	smoothing_flags = NONE
 	floor_tile = /obj/item/stack/tile/carpet/symbol
 
+/turf/open/floor/carpet/lone/lavaland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
 /turf/open/floor/carpet/lone/star
-	icon_state = "carpetstar"
+	icon = 'icons/turf/floors/floor_variations.dmi'
+	icon_state = "carpet-star"
 	floor_tile = /obj/item/stack/tile/carpet/star
 
 /turf/open/floor/carpet/black
@@ -458,21 +482,24 @@
 /turf/open/floor/carpet/neon/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, null, null, alpha, neon_color, smoothing_junction)
-	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, EMISSIVE_PLANE, null, emissive_alpha, EMISSIVE_COLOR, smoothing_junction)
+	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, EMISSIVE_PLANE, null, emissive_alpha, GLOB.emissive_color, smoothing_junction)
 
 /turf/open/floor/carpet/neon/simple
 	name = "simple neon carpet"
-	icon = 'icons/turf/floors/carpet_neon_simple.dmi'
+	icon = 'icons/turf/floors/carpet_neon_base.dmi'
 	icon_state = "base-255"
 	base_icon_state = "base"
+	neon_icon = 'icons/turf/floors/carpet_neon_light.dmi'
 	neon_icon_state = "light"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON
 
 /turf/open/floor/carpet/neon/simple/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_NODOTS
@@ -487,8 +514,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_WHITE
 
 /turf/open/floor/carpet/neon/simple/white/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/white/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_WHITE_NODOTS
@@ -497,6 +526,7 @@
 /turf/open/floor/carpet/neon/simple/black
 	name = "simple black neon carpet"
 	desc = "A rubbery mat with a inset pattern of black phosphorescent dye."
+	neon_icon = 'icons/turf/floors/carpet_neon_glow.dmi'
 	neon_icon_state = "glow" // This one also lights up the edges of the lines.
 	neon_color = COLOR_BLACK
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/black
@@ -504,8 +534,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLACK
 
 /turf/open/floor/carpet/neon/simple/black/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_glow_nodots.dmi'
 	neon_icon_state = "glow-nodots"
 	neon_color = COLOR_BLACK
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/black/nodots
@@ -521,8 +553,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_RED
 
 /turf/open/floor/carpet/neon/simple/red/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/red/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_RED_NODOTS
@@ -537,8 +571,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_ORANGE
 
 /turf/open/floor/carpet/neon/simple/orange/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/orange/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_ORANGE_NODOTS
@@ -553,8 +589,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_YELLOW
 
 /turf/open/floor/carpet/neon/simple/yellow/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/yellow/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_YELLOW_NODOTS
@@ -569,8 +607,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_LIME
 
 /turf/open/floor/carpet/neon/simple/lime/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/lime/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_LIME_NODOTS
@@ -585,8 +625,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_GREEN
 
 /turf/open/floor/carpet/neon/simple/green/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/green/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_GREEN_NODOTS
@@ -601,8 +643,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_TEAL
 
 /turf/open/floor/carpet/neon/simple/teal/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/teal/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_TEAL_NODOTS
@@ -617,8 +661,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_CYAN
 
 /turf/open/floor/carpet/neon/simple/cyan/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/cyan/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_CYAN_NODOTS
@@ -633,8 +679,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLUE
 
 /turf/open/floor/carpet/neon/simple/blue/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/blue/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLUE_NODOTS
@@ -649,8 +697,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_PURPLE
 
 /turf/open/floor/carpet/neon/simple/purple/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/purple/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_PURPLE_NODOTS
@@ -665,8 +715,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_VIOLET
 
 /turf/open/floor/carpet/neon/simple/violet/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/violet/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_VIOLET_NODOTS
@@ -681,8 +733,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_PINK
 
 /turf/open/floor/carpet/neon/simple/pink/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/pink/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_PINK_NODOTS
@@ -775,6 +829,9 @@
 /turf/open/floor/carpet/neon/simple/pink/nodots/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/carpet/blue/lavaland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
 /turf/open/floor/fakepit
 	desc = "A clever illusion designed to look like a bottomless pit."
 	icon = 'icons/turf/floors/chasms.dmi'
@@ -810,6 +867,7 @@
 	floor_tile = /obj/item/stack/tile/fakespace
 	plane = PLANE_SPACE
 	tiled_dirt = FALSE
+	damaged_dmi = 'icons/turf/space.dmi'
 
 /turf/open/floor/fakespace/broken_states()
 	return list("damaged")

@@ -19,9 +19,10 @@
 	if(evidencebagEquip(I, user))
 		return 1
 
-/obj/item/evidencebag/handle_atom_del(atom/A)
+/obj/item/evidencebag/Exited(atom/movable/gone, direction)
+	. = ..()
 	cut_overlays()
-	w_class = initial(w_class)
+	update_weight_class(initial(w_class))
 	icon_state = initial(icon_state)
 	desc = initial(desc)
 
@@ -55,9 +56,12 @@
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
 		if(I.loc.atom_storage) //in a container.
-			I.loc.atom_storage.attempt_remove(I, src)
-		if(!user.dropItemToGround(I))
+			I.loc.atom_storage.remove_single(user, I, src)
+		if(!user.is_holding(I) || HAS_TRAIT(I, TRAIT_NODROP))
 			return
+
+	if(QDELETED(I))
+		return
 
 	user.visible_message(span_notice("[user] puts [I] into [src]."), span_notice("You put [I] inside [src]."),\
 	span_hear("You hear a rustle as someone puts something into a plastic bag."))
@@ -74,7 +78,7 @@
 
 	desc = "An evidence bag containing [I]. [I.desc]"
 	I.forceMove(src)
-	w_class = I.w_class
+	update_weight_class(I.w_class)
 	return 1
 
 /obj/item/evidencebag/attack_self(mob/user)
@@ -84,7 +88,7 @@
 		span_hear("You hear someone rustle around in a plastic bag, and remove something."))
 		cut_overlays() //remove the overlays
 		user.put_in_hands(I)
-		w_class = WEIGHT_CLASS_TINY
+		update_weight_class(WEIGHT_CLASS_TINY)
 		icon_state = "evidenceobj"
 		desc = "An empty evidence bag."
 

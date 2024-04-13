@@ -29,11 +29,9 @@
 	src.pre_clean_callback = pre_clean_callback
 	src.on_cleaned_callback = on_cleaned_callback
 
-/datum/component/cleaner/Destroy(force, silent)
-	if(pre_clean_callback)
-		QDEL_NULL(pre_clean_callback)
-	if(on_cleaned_callback)
-		QDEL_NULL(on_cleaned_callback)
+/datum/component/cleaner/Destroy(force)
+	pre_clean_callback = null
+	on_cleaned_callback = null
 	return ..()
 
 /datum/component/cleaner/RegisterWithParent()
@@ -91,15 +89,19 @@
  */
 /datum/component/cleaner/proc/clean(datum/source, atom/target, mob/living/user, clean_target = TRUE)
 	//make sure we don't attempt to clean something while it's already being cleaned
-	if(HAS_TRAIT(target, TRAIT_CURRENTLY_CLEANING))
+	if(HAS_TRAIT(target, TRAIT_CURRENTLY_CLEANING) || (SEND_SIGNAL(target, COMSIG_ATOM_PRE_CLEAN, user) & COMSIG_ATOM_CANCEL_CLEAN))
 		return
-
 	//add the trait and overlay
 	ADD_TRAIT(target, TRAIT_CURRENTLY_CLEANING, REF(src))
 	// We need to update our planes on overlay changes
 	RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(cleaning_target_moved))
 	var/mutable_appearance/low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, GAME_PLANE)
 	var/mutable_appearance/high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE)
+	var/list/icon_offsets = target.get_oversized_icon_offsets()
+	low_bubble.pixel_x = icon_offsets["x"]
+	low_bubble.pixel_y = icon_offsets["y"]
+	high_bubble.pixel_x = icon_offsets["x"]
+	high_bubble.pixel_y = icon_offsets["y"]
 	if(target.plane > low_bubble.plane) //check if the higher overlay is necessary
 		target.add_overlay(high_bubble)
 	else if(target.plane == low_bubble.plane)
@@ -117,16 +119,16 @@
 		cleaning_duration = (cleaning_duration * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+skill_duration_modifier_offset, 1))
 
 	//do the cleaning
-	user.visible_message(span_notice("[user] starts to clean [target]!"), span_notice("You start to clean [target]..."))
+	var/clean_succeeded = FALSE
 	if(do_after(user, cleaning_duration, target = target))
-		user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
+		clean_succeeded = TRUE
 		if(clean_target)
 			for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
 				user.mind?.adjust_experience(/datum/skill/cleaning, round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT))
 			if(target.wash(cleaning_strength))
 				user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP))
-		on_cleaned_callback?.Invoke(source, target, user)
 
+	on_cleaned_callback?.Invoke(source, target, user, clean_succeeded)
 	//remove the cleaning overlay
 	target.cut_overlay(low_bubble)
 	target.cut_overlay(high_bubble)

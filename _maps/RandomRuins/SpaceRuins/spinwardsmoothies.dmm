@@ -1,12 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aa" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/grass,
-/area/ruin/space/has_grav/spinwardsmoothies)
-"dq" = (
-/mob/living/simple_animal/butterfly,
-/turf/open/floor/grass,
-/area/ruin/space/has_grav/spinwardsmoothies)
 "dD" = (
 /obj/structure/billboard/smoothies{
 	pixel_y = 14
@@ -23,19 +15,23 @@
 	smoothing_flags = 0
 	},
 /area/ruin/space/has_grav/spinwardsmoothies)
+"qR" = (
+/obj/structure/flora/bush/flowers_br/style_random,
+/mob/living/basic/butterfly,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
 "qT" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/structure/fans/tiny,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/spinwardsmoothies)
-"rf" = (
-/obj/structure/flora/bush/flowers_br/style_random,
-/mob/living/simple_animal/butterfly,
-/turf/open/floor/grass,
-/area/ruin/space/has_grav/spinwardsmoothies)
 "ri" = (
 /obj/machinery/light/directional/east,
 /obj/structure/flora/bush/flowers_pp/style_random,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"sG" = (
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "sJ" = (
@@ -53,9 +49,14 @@
 	},
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/spinwardsmoothies)
-"uX" = (
+"wv" = (
 /obj/structure/flora/bush/flowers_pp/style_random,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"wH" = (
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/machinery/light/directional/south,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "xc" = (
@@ -85,21 +86,6 @@
 /area/space/nearstation)
 "AW" = (
 /turf/open/floor/grass,
-/area/ruin/space/has_grav/spinwardsmoothies)
-"CK" = (
-/obj/structure/flora/bush/flowers_br/style_random,
-/obj/machinery/light/directional/south,
-/turf/open/floor/grass,
-/area/ruin/space/has_grav/spinwardsmoothies)
-"CV" = (
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/siding/thinplating/terracotta{
-	dir = 8
-	},
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/bamboo{
-	smoothing_flags = 0
-	},
 /area/ruin/space/has_grav/spinwardsmoothies)
 "Dh" = (
 /obj/structure/table/wood,
@@ -135,9 +121,23 @@
 /obj/effect/turf_decal/siding/thinplating/terracotta/corner,
 /turf/open/floor/bamboo,
 /area/ruin/space/has_grav/spinwardsmoothies)
+"EL" = (
+/obj/structure/flora/bush/flowers_yw/style_random,
+/mob/living/basic/butterfly,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
 "Gd" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"Jw" = (
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 8
+	},
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/bamboo{
+	smoothing_flags = 0
+	},
 /area/ruin/space/has_grav/spinwardsmoothies)
 "JG" = (
 /obj/structure/table/wood/fancy,
@@ -146,10 +146,6 @@
 	dir = 4
 	},
 /turf/open/floor/bamboo,
-/area/ruin/space/has_grav/spinwardsmoothies)
-"KV" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "OI" = (
 /obj/structure/flora/bush/flowers_pp/style_random,
@@ -188,10 +184,13 @@
 "TE" = (
 /turf/closed/wall/mineral/wood,
 /area/ruin/space/has_grav/spinwardsmoothies)
-"UZ" = (
-/obj/structure/flora/bush/flowers_yw/style_random,
-/mob/living/simple_animal/butterfly,
-/turf/open/floor/grass,
+"Ws" = (
+/obj/structure/hedge{
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/siding/thinplating/terracotta,
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "XG" = (
 /obj/machinery/hydroponics/constructable,
@@ -470,11 +469,11 @@ Qi
 Qi
 TE
 TE
-aa
+AW
 AW
 Gd
-uX
-KV
+wv
+AW
 TE
 TE
 TE
@@ -490,7 +489,7 @@ YB
 Qi
 Qi
 TE
-Zs
+Ws
 OI
 AW
 AW
@@ -498,7 +497,7 @@ AW
 Pk
 AW
 Gd
-Pk
+wH
 TE
 Qi
 Qi
@@ -512,7 +511,7 @@ Qi
 Qi
 TE
 Zs
-dq
+sG
 AW
 sJ
 AW
@@ -559,7 +558,7 @@ Pk
 AW
 OI
 AW
-UZ
+EL
 AW
 Gd
 AW
@@ -583,7 +582,7 @@ Pk
 Gd
 Pk
 AW
-CK
+Gd
 TE
 Qi
 Qi
@@ -597,7 +596,7 @@ Qi
 TE
 Zs
 Gd
-rf
+qR
 AW
 xy
 QG
@@ -686,7 +685,7 @@ TE
 ti
 Sz
 XG
-CV
+Jw
 mR
 Sz
 DA

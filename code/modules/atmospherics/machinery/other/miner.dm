@@ -8,7 +8,7 @@
 /obj/machinery/atmospherics/miner
 	name = "gas miner"
 	desc = "Gasses mined from the gas giant below (above?) flow out through this massive vent."
-	icon = 'icons/obj/atmospherics/components/miners.dmi'
+	icon = 'icons/obj/machines/atmospherics/miners.dmi'
 	icon_state = "miner"
 	density = FALSE
 	resistance_flags = INDESTRUCTIBLE|ACID_PROOF|FIRE_PROOF
@@ -18,7 +18,7 @@
 	var/spawn_mol = MOLES_CELLSTANDARD * 5
 	var/max_ext_mol = INFINITY
 	var/max_ext_kpa = 6500
-	var/overlay_color = "#FFFFFF"
+	var/overlay_color = COLOR_WHITE
 	var/active = TRUE
 	var/power_draw = 0
 	var/power_draw_static = 2000
@@ -97,7 +97,7 @@
 		if(GASMINER_POWER_FULLSCALE)
 			update_use_power(ACTIVE_POWER_USE, (spawn_mol * power_draw_dynamic_mol_coeff) + (P * power_draw_dynamic_kpa_coeff))
 
-/obj/machinery/atmospherics/miner/proc/do_use_power(amount)
+/obj/machinery/atmospherics/miner/proc/do_use_energy(amount)
 	var/turf/T = get_turf(src)
 	if(T && istype(T))
 		var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
@@ -105,7 +105,7 @@
 			C.powernet.load += amount
 			return TRUE
 	if(powered())
-		use_power(amount)
+		use_energy(amount)
 		return TRUE
 	return FALSE
 
@@ -120,22 +120,22 @@
 		on_overlay.color = overlay_color
 		. += on_overlay
 
-/obj/machinery/atmospherics/miner/process(delta_time)
+/obj/machinery/atmospherics/miner/process(seconds_per_tick)
 	update_power()
 	check_operation()
 	if(active && !broken)
 		if(isnull(spawn_id))
 			return FALSE
-		if(do_use_power(active_power_usage))
-			mine_gas(delta_time)
+		if(do_use_energy(active_power_usage))
+			mine_gas(seconds_per_tick)
 
-/obj/machinery/atmospherics/miner/proc/mine_gas(delta_time = 2)
+/obj/machinery/atmospherics/miner/proc/mine_gas(seconds_per_tick = 2)
 	var/turf/open/O = get_turf(src)
 	if(!isopenturf(O))
 		return FALSE
 	var/datum/gas_mixture/merger = new
 	merger.assert_gas(spawn_id)
-	merger.gases[spawn_id][MOLES] = spawn_mol * delta_time
+	merger.gases[spawn_id][MOLES] = spawn_mol * seconds_per_tick
 	merger.temperature = spawn_temp
 	O.assume_air(merger)
 
@@ -161,7 +161,7 @@
 
 /obj/machinery/atmospherics/miner/plasma
 	name = "\improper Plasma Gas Miner"
-	overlay_color = "#FF0000"
+	overlay_color = COLOR_RED
 	spawn_id = /datum/gas/plasma
 
 /obj/machinery/atmospherics/miner/carbon_dioxide
@@ -243,3 +243,9 @@
 	name = "\improper Antinoblium Gas Miner"
 	overlay_color = "#022e00"
 	spawn_id = /datum/gas/antinoblium
+
+#undef GASMINER_POWER_NONE
+#undef GASMINER_POWER_STATIC
+#undef GASMINER_POWER_MOLES
+#undef GASMINER_POWER_KPA
+#undef GASMINER_POWER_FULLSCALE

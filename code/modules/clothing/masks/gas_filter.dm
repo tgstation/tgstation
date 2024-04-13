@@ -39,7 +39,8 @@
 		/datum/gas/nitrium,
 		/datum/gas/freon,
 		/datum/gas/hypernoblium,
-		/datum/gas/bz
+		/datum/gas/bz,
+		/datum/gas/miasma,
 		)
 	///List of gases with low filter priority
 	var/list/low_filtering_gases = list(
@@ -111,3 +112,10 @@
 		/datum/gas/carbon_dioxide,
 		/datum/gas/nitrous_oxide
 		)
+
+#undef HIGH_FILTERING_MOLES
+#undef HIGH_FILTERING_RATIO
+#undef LOW_FILTERING_MOLES
+#undef LOW_FILTERING_RATIO
+#undef MID_FILTERING_MOLES
+#undef FILTERS_CONSTANT_WEAR

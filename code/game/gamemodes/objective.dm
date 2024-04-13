@@ -5,6 +5,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/datum/team/team //An alternative to 'owner': a team. Use this when writing new code.
 	var/name = "generic objective" //Name for admin prompts
 	var/explanation_text = "Nothing" //What that person is supposed to do.
+	///if this objective doesn't print failure or success in the roundend report
+	var/no_failure = FALSE 
 	///name used in printing this objective (Objective #1)
 	var/objective_name = "Objective"
 	var/team_explanation_text //For when there are multiple owners.
@@ -94,6 +96,12 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/proc/check_completion()
 	return completed
 
+/// Provides a string describing what a good job you did or did not do
+/datum/objective/proc/get_roundend_success_suffix()
+	if(no_failure)
+		return "" // Just print the objective with no success/fail evaluation, as it has no mechanical backing
+	return check_completion() ? span_greentext("Success!") : span_redtext("Fail.")
+
 /datum/objective/proc/is_unique_objective(possible_target, dupe_search_range)
 	if(!islist(dupe_search_range))
 		stack_trace("Non-list passed as duplicate objective search range")
@@ -118,6 +126,19 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/proc/get_target()
 	return target
 
+/datum/objective/proc/is_valid_target(datum/mind/possible_target)
+	if(!ishuman(possible_target.current))
+		return FALSE
+
+	if(possible_target.current.stat == DEAD)
+		return FALSE
+
+	var/target_area = get_area(possible_target.current)
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS) && istype(target_area, /area/shuttle/arrival))
+		return FALSE
+
+	return TRUE
+
 //dupe_search_range is a list of antag datums / minds / teams
 /datum/objective/proc/find_target(dupe_search_range, list/blacklist)
 	var/list/datum/mind/owners = get_owners()
@@ -130,18 +151,13 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		if(O.late_joiner)
 			try_target_late_joiners = TRUE
 	for(var/datum/mind/possible_target in get_crewmember_minds())
-		var/target_area = get_area(possible_target.current)
 		if(possible_target in owners)
-			continue
-		if(!ishuman(possible_target.current))
-			continue
-		if(possible_target.current.stat == DEAD)
 			continue
 		if(!is_unique_objective(possible_target,dupe_search_range))
 			continue
-		if(!HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS) && istype(target_area, /area/shuttle/arrival))
-			continue
 		if(possible_target in blacklist)
+			continue
+		if(!is_valid_target(possible_target))
 			continue
 		possible_targets += possible_target
 	if(try_target_late_joiners)
@@ -157,7 +173,6 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	update_explanation_text()
 	return target
 
-
 /datum/objective/proc/update_explanation_text()
 	if(team_explanation_text && LAZYLEN(get_owners()) > 1)
 		explanation_text = team_explanation_text
@@ -170,7 +185,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 			var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK)
 			for(var/obj/equipment_path as anything in special_equipment)
 				var/obj/equipment_object = new equipment_path
-				if(!receiver_current.equip_in_one_of_slots(equipment_object, slots))
+				if(!receiver_current.equip_in_one_of_slots(equipment_object, slots, indirect_action = TRUE))
 					LAZYINITLIST(receiver.failed_special_equipment)
 					receiver.failed_special_equipment += equipment_path
 					receiver.try_give_equipment_fallback()
@@ -178,7 +193,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/action/special_equipment_fallback
 	name = "Request Objective-specific Equipment"
 	desc = "Call down a supply pod containing the equipment required for specific objectives."
-	button_icon = 'icons/obj/device.dmi'
+	button_icon = 'icons/obj/devices/tracker.dmi'
 	button_icon_state = "beacon"
 
 /datum/action/special_equipment_fallback/Trigger(trigger_flags)
@@ -203,7 +218,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	return TRUE
 
 /datum/objective/assassinate
-	name = "assasinate"
+	name = "assassinate"
 	martyr_compatible = TRUE
 	admin_grantable = TRUE
 	var/target_role_type = FALSE
@@ -222,17 +237,45 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/assassinate/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
 
+#define DISCONNECT_GRACE_TIME (2 MINUTES)
+#define DISCONNECT_GRACE_WARNING_TIME (1 MINUTES)
+
 /datum/objective/mutiny
 	name = "mutiny"
 	martyr_compatible = 1
 	var/target_role_type = FALSE
+	/// Not primarily used as a cooldown but a timer to give a little bit more of a chance for the player to reconnect.
+	COOLDOWN_DECLARE(disconnect_timer)
+	/// Whether admins have been warned about the potentially AFK player
+	var/warned_admins = FALSE
 
+/datum/objective/mutiny/proc/warn_admins()
+	message_admins("[ADMIN_LOOKUPFLW(target.current)] has gone AFK with a mutiny objective that involves them. They only have [COOLDOWN_TIMELEFT(src, disconnect_timer) / 10] seconds remaining before they are treated as if they were dead.")
 
 /datum/objective/mutiny/check_completion()
-	if(!target || !considered_alive(target) || considered_afk(target) || considered_exiled(target))
+	if(!target || !considered_alive(target) || considered_exiled(target))
 		return TRUE
+
+	if(considered_afk(target))
+		if(!COOLDOWN_STARTED(src, disconnect_timer))
+			COOLDOWN_START(src, disconnect_timer, DISCONNECT_GRACE_TIME)
+			warn_admins()
+		else if(COOLDOWN_FINISHED(src, disconnect_timer))
+			return TRUE
+		else if(COOLDOWN_TIMELEFT(src, disconnect_timer) <= DISCONNECT_GRACE_WARNING_TIME && !warned_admins)
+			warned_admins = TRUE
+			warn_admins()
+	else
+		COOLDOWN_RESET(src, disconnect_timer)
+		warned_admins = FALSE
+
 	var/turf/T = get_turf(target.current)
 	return !T || !is_station_level(T.z)
+
+#undef DISCONNECT_GRACE_TIME
+#undef DISCONNECT_GRACE_WARNING_TIME
+
+
 
 /datum/objective/mutiny/update_explanation_text()
 	..()
@@ -306,10 +349,12 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/protect/check_completion()
 	var/obj/item/organ/internal/brain/brain_target
+	if(isnull(target))
+		return FALSE
 	if(human_check)
-		brain_target = target.current?.getorganslot(ORGAN_SLOT_BRAIN)
+		brain_target = target.current?.get_organ_slot(ORGAN_SLOT_BRAIN)
 	//Protect will always suceed when someone suicides
-	return !target || target.current?.suiciding || considered_alive(target, enforce_human = human_check) || brain_target?.suicided
+	return !target || (target.current && HAS_TRAIT(target.current, TRAIT_SUICIDED)) || considered_alive(target, enforce_human = human_check) || (brain_target && HAS_TRAIT(brain_target, TRAIT_SUICIDED))
 
 /datum/objective/protect/update_explanation_text()
 	..()
@@ -355,7 +400,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/jailbreak/detain/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role] is delivered to nanotrasen alive and in custody."
+		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role] is delivered to Nanotrasen alive and in custody."
 	else
 		explanation_text = "Free objective."
 
@@ -474,6 +519,11 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	target = ..()
 	update_explanation_text()
 
+/datum/objective/escape/escape_with_identity/is_valid_target(datum/mind/possible_target)
+	if(HAS_TRAIT(possible_target.current, TRAIT_NO_DNA_COPY))
+		return FALSE
+	return ..()
+
 /datum/objective/escape/escape_with_identity/update_explanation_text()
 	if(target?.current)
 		target_real_name = target.current.real_name
@@ -488,12 +538,12 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		explanation_text += "." //Proper punctuation is important!
 
 	else
-		explanation_text = "Free objective."
+		explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
 
 /datum/objective/escape/escape_with_identity/check_completion()
-	if(!target || !target_real_name)
-		return TRUE
 	var/list/datum/mind/owners = get_owners()
+	if(!target || !target_real_name)
+		return ..()
 	for(var/datum/mind/M in owners)
 		if(!ishuman(M.current) || !considered_escaped(M))
 			continue
@@ -552,7 +602,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	for(var/datum/mind/M in owners)
 		if(considered_alive(M))
 			return FALSE
-		if(M.current?.suiciding) //killing yourself ISN'T glorious.
+		if(M.current && HAS_TRAIT(M.current, TRAIT_SUICIDED)) //killing yourself ISN'T glorious.
 			return FALSE
 	return TRUE
 
@@ -577,12 +627,6 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/steal/get_target()
 	return steal_target
-
-/datum/objective/steal/New()
-	..()
-	if(!GLOB.possible_items.len)//Only need to fill the list when it's needed.
-		for(var/I in subtypesof(/datum/objective_item/steal))
-			new I
 
 /datum/objective/steal/find_target(dupe_search_range, list/blacklist)
 	var/list/datum/mind/owners = get_owners()
@@ -709,6 +753,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/protect_object/proc/set_target(obj/O)
 	protect_target = O
+	RegisterSignal(protect_target, COMSIG_QDELETING, PROC_REF(on_objective_qdel))
 	update_explanation_text()
 
 /datum/objective/protect_object/update_explanation_text()
@@ -719,7 +764,11 @@ GLOBAL_LIST_EMPTY(possible_items)
 		explanation_text = "Free objective."
 
 /datum/objective/protect_object/check_completion()
-	return !QDELETED(protect_target)
+	return !isnull(protect_target)
+
+/datum/objective/protect_object/proc/on_objective_qdel()
+	SIGNAL_HANDLER
+	protect_target = null
 
 //Changeling Objectives
 
@@ -738,7 +787,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 				n_p ++
 	else if (SSticker.IsRoundInProgress())
 		for(var/mob/living/carbon/human/P in GLOB.player_list)
-			if(!(P.mind.has_antag_datum(/datum/antagonist/changeling)) && !(P.mind in owners))
+			if(!(IS_CHANGELING(P)) && !(P.mind in owners))
 				n_p ++
 	target_amount = min(target_amount, n_p)
 
@@ -930,7 +979,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 				continue
 			//this is an objective item
 			var/obj/item/organ/wanted = stolen
-			if(!(wanted.organ_flags & ORGAN_FAILING) && !(wanted.organ_flags & ORGAN_SYNTHETIC))
+			if(!(wanted.organ_flags & ORGAN_FAILING) && !IS_ROBOTIC_ORGAN(wanted))
 				stolen_count++
 	return stolen_count >= amount
 
@@ -938,6 +987,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/custom
 	name = "custom"
 	admin_grantable = TRUE
+	no_failure = TRUE
 
 /datum/objective/custom/admin_edit(mob/admin)
 	var/expl = stripped_input(admin, "Custom objective:", "Objective", explanation_text)
@@ -959,6 +1009,11 @@ GLOBAL_LIST_EMPTY(possible_items)
 	var/payout = 0
 	var/payout_bonus = 0
 	var/area/dropoff = null
+
+/datum/objective/contract/is_valid_target(datum/mind/possible_target)
+	if(HAS_TRAIT(possible_target, TRAIT_HAS_BEEN_KIDNAPPED))
+		return FALSE
+	return ..()
 
 // Generate a random valid area on the station that the dropoff will happen.
 /datum/objective/contract/proc/generate_dropoff()

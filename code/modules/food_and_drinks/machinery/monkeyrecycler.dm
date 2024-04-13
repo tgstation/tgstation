@@ -3,7 +3,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 /obj/machinery/monkey_recycler
 	name = "monkey recycler"
 	desc = "A machine used for recycling dead monkeys into monkey cubes."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
@@ -28,8 +28,8 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 /obj/machinery/monkey_recycler/RefreshParts() //Ranges from 0.2 to 0.8 per monkey recycled
 	. = ..()
 	cube_production = 0
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		cube_production += manipulator.tier * 0.1
+	for(var/datum/stock_part/servo/servo in component_parts)
+		cube_production += servo.tier * 0.1
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		cube_production += matter_bin.tier * 0.1
 
@@ -42,13 +42,13 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	. = ..()
 	if(default_unfasten_wrench(user, tool))
 		power_change()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
 		return
 
-	if(default_pry_open(O))
+	if(default_pry_open(O, close_after_pry = TRUE))
 		return
 
 	if(default_deconstruction_crowbar(O))
@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	playsound(src.loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	stored_matter += cube_production
 	addtimer(VARSET_CALLBACK(src, pixel_x, base_pixel_x))
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), user, span_notice("The machine now has [stored_matter] monkey\s worth of material stored.")))
@@ -98,6 +98,6 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 /obj/machinery/monkey_recycler/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if(istype(I))
-		to_chat(user, span_notice("You log [src] in the multitool's buffer."))
-		I.buffer = src
+		I.set_buffer(src)
+		balloon_alert(user, "saved to multitool buffer")
 		return TRUE

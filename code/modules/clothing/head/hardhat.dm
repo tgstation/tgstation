@@ -10,12 +10,13 @@
 	armor_type = /datum/armor/utility_hardhat
 	flags_inv = 0
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
-	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = SNUG_FIT | STACKABLE_HELMET_EXEMPT
 	resistance_flags = FIRE_PROOF
 
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_power = 0.8
+	light_color = "#ffcc99"
 	light_on = FALSE
 	dog_fashion = /datum/dog_fashion/head
 
@@ -23,7 +24,7 @@
 	var/hat_type = "yellow"
 	///Whether the headlamp is on or off.
 	var/on = FALSE
-
+	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
 
 /datum/armor/utility_hardhat
 	melee = 15
@@ -38,10 +39,8 @@
 
 /obj/item/clothing/head/utility/hardhat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HEAD)
-
-/obj/item/clothing/head/utility/hardhat/attack_self(mob/living/user)
-	toggle_helmet_light(user)
+	AddElement(/datum/element/update_icon_updates_onmob)
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/clothing/head/utility/hardhat/proc/toggle_helmet_light(mob/living/user)
 	on = !on
@@ -61,6 +60,15 @@
 /obj/item/clothing/head/utility/hardhat/proc/turn_off(mob/user)
 	set_light_on(FALSE)
 
+/obj/item/clothing/head/utility/hardhat/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(on)
+		toggle_helmet_light()
+		return COMSIG_SABOTEUR_SUCCESS
+
+/obj/item/clothing/head/utility/hardhat/attack_self(mob/living/user)
+	toggle_helmet_light(user)
+
 /obj/item/clothing/head/utility/hardhat/orange
 	icon_state = "hardhat0_orange"
 	inhand_icon_state = null
@@ -73,7 +81,7 @@
 	hat_type = "red"
 	dog_fashion = null
 	name = "firefighter helmet"
-	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = STOPSPRESSUREDAMAGE | STACKABLE_HELMET_EXEMPT
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD
@@ -86,14 +94,14 @@
 	inhand_icon_state = null
 	light_range = 5
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/plastic = 3000, /datum/material/silver = 500)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT*5)
 	hat_type = "purple"
 
 /obj/item/clothing/head/utility/hardhat/white
 	icon_state = "hardhat0_white"
 	inhand_icon_state = null
 	hat_type = "white"
-	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = STOPSPRESSUREDAMAGE | STACKABLE_HELMET_EXEMPT
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD
@@ -166,7 +174,7 @@
 	inhand_icon_state = null
 	light_range = 4 //Boss always takes the best stuff
 	hat_type = "white"
-	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = STOPSPRESSUREDAMAGE | STACKABLE_HELMET_EXEMPT
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD
@@ -184,7 +192,7 @@
 	dog_fashion = null
 	name = "atmospheric firefighter helmet"
 	desc = "A firefighter's helmet, able to keep the user cool in any situation. Comes with a light and a welding visor."
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	cold_protection = HEAD
@@ -208,7 +216,7 @@
 	icon_state = "hardhat0_pumpkin"
 	inhand_icon_state = null
 	hat_type = "pumpkin"
-	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = SNUG_FIT | STACKABLE_HELMET_EXEMPT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	armor_type = /datum/armor/none
 	light_range = 2 //luminosity when on
@@ -216,6 +224,7 @@
 	light_color = "#fff2bf"
 	worn_y_offset = 1
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
+	clothing_traits = list()
 
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/set_light_on(new_value)
 	. = ..()
@@ -269,6 +278,6 @@
 	flags_inv = 0
 	armor_type = /datum/armor/none
 	light_range = 1 //luminosity when on
-
+	clothing_traits = list()
 
 	dog_fashion = /datum/dog_fashion/head/reindeer

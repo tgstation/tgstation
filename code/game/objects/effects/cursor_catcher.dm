@@ -3,6 +3,7 @@
 	icon_state = "fullscreen_blocker" // Fullscreen semi transparent icon
 	plane = HUD_PLANE
 	mouse_opacity = MOUSE_OPACITY_ICON
+	default_click = TRUE
 	/// The mob whose cursor we are tracking.
 	var/mob/owner
 	/// Client view size of the scoping mob.
@@ -54,7 +55,11 @@
 /atom/movable/screen/fullscreen/cursor_catcher/proc/calculate_params()
 	var/list/modifiers = params2list(mouse_params)
 	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X))
+	if(isnull(icon_x))
+		icon_x = text2num(LAZYACCESS(modifiers, ICON_X))
 	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y))
+	if(isnull(icon_y))
+		icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
 	var/our_x = round(icon_x / world.icon_size)
 	var/our_y = round(icon_y / world.icon_size)
 	given_turf = locate(owner.x + our_x - round(view_list[1]/2), owner.y + our_y - round(view_list[2]/2), owner.z)

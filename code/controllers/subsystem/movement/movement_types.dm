@@ -13,7 +13,7 @@
 	var/atom/movable/moving
 	///Defines how different move loops override each other. Higher numbers beat lower numbers
 	var/priority = MOVEMENT_DEFAULT_PRIORITY
-	///Bitfield of different things that affect how a loop operates
+	///Bitfield of different things that affect how a loop operates, and other mechanics around it as well.
 	var/flags
 	///Time till we stop processing in deci-seconds, defaults to forever
 	var/lifetime = INFINITY
@@ -21,19 +21,19 @@
 	var/delay = 1
 	///The next time we should process
 	///Used primarially as a hint to be reasoned about by our [controller], and as the id of our bucket
-	///Should not be modified directly outside of [start_loop]
 	var/timer = 0
-	///Is this loop running or not
-	var/running = FALSE
-	///Track if we're currently paused
-	var/paused = FALSE
+	///The time we are CURRENTLY queued for processing
+	///Do not modify this directly
+	var/queued_time = -1
+	/// Status bitfield for what state the move loop is currently in
+	var/status = NONE
 
 /datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
 	src.owner = owner
 	src.controller = controller
 	src.extra_info = extra_info
 	if(extra_info)
-		RegisterSignal(extra_info, COMSIG_PARENT_QDELETING, PROC_REF(info_deleted))
+		RegisterSignal(extra_info, COMSIG_QDELETING, PROC_REF(info_deleted))
 	src.moving = moving
 	src.priority = priority
 	src.flags = flags
@@ -57,7 +57,7 @@
 /datum/move_loop/proc/loop_started()
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_START)
-	running = TRUE
+	status |= MOVELOOP_STATUS_RUNNING
 	//If this is our first time starting to move with this loop
 	//And we're meant to start instantly
 	if(!timer && flags & MOVEMENT_LOOP_START_FAST)
@@ -68,7 +68,7 @@
 ///Called when a loop is stopped, doesn't stop the loop itself
 /datum/move_loop/proc/loop_stopped()
 	SHOULD_CALL_PARENT(TRUE)
-	running = FALSE
+	status &= ~MOVELOOP_STATUS_RUNNING
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_STOP)
 
 /datum/move_loop/proc/info_deleted(datum/source)
@@ -91,7 +91,7 @@
 ///Pauses the move loop for some passed in period
 ///This functionally means shifting its timer up, and clearing it from its current bucket
 /datum/move_loop/proc/pause_for(time)
-	if(!controller || !running) //No controller or not running? go away
+	if(!controller || !(status & MOVELOOP_STATUS_RUNNING)) //No controller or not running? go away
 		return
 	//Dequeue us from our current bucket
 	controller.dequeue_loop(src)
@@ -101,6 +101,10 @@
 	controller.queue_loop(src)
 
 /datum/move_loop/process()
+	if(isnull(controller))
+		qdel(src)
+		return
+
 	var/old_delay = delay //The signal can sometimes change delay
 
 	if(SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_CHECK) & MOVELOOP_SKIP_STEP) //Chance for the object to react
@@ -113,7 +117,15 @@
 		return
 
 	var/visual_delay = controller.visual_delay
+	var/old_dir = moving.dir
+	var/old_loc = moving.loc
+
+	owner?.processing_move_loop_flags = flags
 	var/result = move() //Result is an enum value. Enums defined in __DEFINES/movement.dm
+	if(moving)
+		var/direction = get_dir(old_loc, moving.loc)
+		SEND_SIGNAL(moving, COMSIG_MOVABLE_MOVED_FROM_LOOP, src, old_dir, direction)
+	owner?.processing_move_loop_flags = NONE
 
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, result, delay * visual_delay)
 
@@ -133,21 +145,21 @@
 
 ///Pause our loop untill restarted with resume_loop()
 /datum/move_loop/proc/pause_loop()
-	if(!controller || !running || paused) //we dead
+	if(!controller || !(status & MOVELOOP_STATUS_RUNNING) || (status & MOVELOOP_STATUS_PAUSED)) //we dead
 		return
 
 	//Dequeue us from our current bucket
 	controller.dequeue_loop(src)
-	paused = TRUE
+	status |= MOVELOOP_STATUS_PAUSED
 
 ///Resume our loop after being paused by pause_loop()
 /datum/move_loop/proc/resume_loop()
-	if(!controller || !running || !paused)
+	if(!controller || (status & MOVELOOP_STATUS_RUNNING|MOVELOOP_STATUS_PAUSED) != (MOVELOOP_STATUS_RUNNING|MOVELOOP_STATUS_PAUSED))
 		return
 
-	controller.queue_loop(src)
 	timer = world.time
-	paused = FALSE
+	controller.queue_loop(src)
+	status &= ~MOVELOOP_STATUS_PAUSED
 
 ///Removes the atom from some movement subsystem. Defaults to SSmovement
 /datum/controller/subsystem/move_manager/proc/stop_looping(atom/movable/moving, datum/controller/subsystem/movement/subsystem = SSmovement)
@@ -196,31 +208,6 @@
 	// Moving also can be null on occasion, if the move deleted it and therefor us
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
-/**
- * Like move(), but it uses byond's pathfinding on a step by step basis
- *
- * Returns TRUE if the loop sucessfully started, or FALSE if it failed
- *
- * Arguments:
- * moving - The atom we want to move
- * direction - The direction we want to move in
- * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
- * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
- * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
- * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
- * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
- *
-**/
-/datum/controller/subsystem/move_manager/proc/move_to_dir(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
-	return add_to_loop(moving, subsystem, /datum/move_loop/move/move_to, priority, flags, extra_info, delay, timeout, direction)
-
-/datum/move_loop/move/move_to
-
-/datum/move_loop/move/move_to/move()
-	var/atom/old_loc = moving.loc
-	step_to(moving, get_step(moving, direction))
-	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
-
 
 /**
  * Like move(), but we don't care about collision at all
@@ -263,7 +250,7 @@
 	target = chasing
 
 	if(!isturf(target))
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(handle_no_target)) //Don't do this for turfs, because we don't care
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(handle_no_target)) //Don't do this for turfs, because we don't care
 
 /datum/move_loop/has_target/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing)
 	if(..() && chasing == target)
@@ -318,7 +305,7 @@
  * repath_delay - How often we're allowed to recalculate our path
  * max_path_length - The maximum number of steps we can take in a given path to search (default: 30, 0 = infinite)
  * miminum_distance - Minimum distance to the target before path returns, could be used to get near a target, but not right to it - for an AI mob with a gun, for example
- * id - An ID card representing what access we have and what doors we can open
+ * access - A list representing what access we have and what doors we can open
  * simulated_only -  Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
  * avoid - If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf
  * skip_first -  Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break things
@@ -335,11 +322,12 @@
 	repath_delay,
 	max_path_length,
 	minimum_distance,
-	obj/item/card/id/id,
+	list/access,
 	simulated_only,
 	turf/avoid,
 	skip_first,
 	subsystem,
+	diagonal_handling,
 	priority,
 	flags,
 	datum/extra_info,
@@ -356,10 +344,11 @@
 		repath_delay,
 		max_path_length,
 		minimum_distance,
-		id,
+		access,
 		simulated_only,
 		avoid,
 		skip_first,
+		diagonal_handling,
 		initial_path)
 
 /datum/move_loop/has_target/jps
@@ -369,44 +358,45 @@
 	var/max_path_length
 	///Minimum distance to the target before path returns
 	var/minimum_distance
-	///An ID card representing what access we have and what doors we can open. Kill me
-	var/obj/item/card/id/id
+	///A list representing what access we have and what doors we can open.
+	var/list/access
 	///Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
 	var/simulated_only
 	///A perticular turf to avoid
 	var/turf/avoid
 	///Should we skip the first step? This is the tile we're currently on, which breaks some things
 	var/skip_first
+	///Whether we replace diagonal movements with cardinal movements or follow through with them
+	var/diagonal_handling
 	///A list for the path we're currently following
 	var/list/movement_path
 	///Cooldown for repathing, prevents spam
 	COOLDOWN_DECLARE(repath_cooldown)
 	///Bool used to determine if we're already making a path in JPS. this prevents us from re-pathing while we're already busy.
 	var/is_pathing = FALSE
-	///Callback to invoke once we make a path
-	var/datum/callback/on_finish_callback
+	///Callbacks to invoke once we make a path
+	var/list/datum/callback/on_finish_callbacks = list()
 
 /datum/move_loop/has_target/jps/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
 	. = ..()
-	on_finish_callback = CALLBACK(src, PROC_REF(on_finish_pathing))
+	on_finish_callbacks += CALLBACK(src, PROC_REF(on_finish_pathing))
 
-/datum/move_loop/has_target/jps/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first, list/initial_path)
+/datum/move_loop/has_target/jps/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, list/initial_path)
 	. = ..()
 	if(!.)
 		return
 	src.repath_delay = repath_delay
 	src.max_path_length = max_path_length
 	src.minimum_distance = minimum_distance
-	src.id = id
+	src.access = access
 	src.simulated_only = simulated_only
 	src.avoid = avoid
 	src.skip_first = skip_first
-	movement_path = initial_path.Copy()
-	if(isidcard(id))
-		RegisterSignal(id, COMSIG_PARENT_QDELETING, PROC_REF(handle_no_id)) //I prefer erroring to harddels. If this breaks anything consider making id info into a datum or something
+	src.diagonal_handling = diagonal_handling
+	movement_path = initial_path?.Copy()
 
-/datum/move_loop/has_target/jps/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first, initial_path)
-	if(..() && repath_delay == src.repath_delay && max_path_length == src.max_path_length && minimum_distance == src.minimum_distance && id == src.id && simulated_only == src.simulated_only && avoid == src.avoid)
+/datum/move_loop/has_target/jps/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, initial_path)
+	if(..() && repath_delay == src.repath_delay && max_path_length == src.max_path_length && minimum_distance == src.minimum_distance && access ~= src.access && simulated_only == src.simulated_only && avoid == src.avoid)
 		return TRUE
 	return FALSE
 
@@ -420,20 +410,16 @@
 	movement_path = null
 
 /datum/move_loop/has_target/jps/Destroy()
-	id = null //Kill me
 	avoid = null
+	on_finish_callbacks = null
 	return ..()
-
-/datum/move_loop/has_target/jps/proc/handle_no_id()
-	SIGNAL_HANDLER
-	id = null
 
 ///Tries to calculate a new path for this moveloop.
 /datum/move_loop/has_target/jps/proc/recalculate_path()
 	if(!COOLDOWN_FINISHED(src, repath_cooldown))
 		return
 	COOLDOWN_START(src, repath_cooldown, repath_delay)
-	if(SSpathfinder.pathfind(moving, target, max_path_length, minimum_distance, id, simulated_only, avoid, skip_first, on_finish = on_finish_callback))
+	if(SSpathfinder.pathfind(moving, target, max_path_length, minimum_distance, access, simulated_only, avoid, skip_first, diagonal_handling, on_finish = on_finish_callbacks))
 		is_pathing = TRUE
 		SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_REPATH)
 
@@ -441,6 +427,7 @@
 /datum/move_loop/has_target/jps/proc/on_finish_pathing(list/path)
 	movement_path = path
 	is_pathing = FALSE
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_FINISHED_PATHING, path)
 
 /datum/move_loop/has_target/jps/move()
 	if(!length(movement_path))
@@ -452,13 +439,14 @@
 
 	var/turf/next_step = movement_path[1]
 	var/atom/old_loc = moving.loc
-	moving.Move(next_step, get_dir(moving, next_step))
+	moving.Move(next_step, get_dir(moving, next_step), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 	. = (old_loc != moving?.loc) ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 	// this check if we're on exactly the next tile may be overly brittle for dense objects who may get bumped slightly
 	// to the side while moving but could maybe still follow their path without needing a whole new path
 	if(get_turf(moving) == next_step)
-		movement_path.Cut(1,2)
+		if(length(movement_path))
+			movement_path.Cut(1,2)
 	else
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		return MOVELOOP_FAILURE
@@ -519,7 +507,8 @@
 	if(!.)
 		return
 	var/atom/old_loc = moving.loc
-	step_to(moving, target)
+	var/turf/next = get_step_to(moving, target)
+	moving.Move(next, get_dir(moving, next), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 /**
@@ -552,7 +541,8 @@
 	if(!.)
 		return
 	var/atom/old_loc = moving.loc
-	step_away(moving, target)
+	var/turf/next = get_step_away(moving, target)
+	moving.Move(next, get_dir(moving, next), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 
@@ -654,7 +644,7 @@
 	if(y_ticker >= 1)
 		y_ticker = MODULUS(x_ticker, 1)
 	var/atom/old_loc = moving.loc
-	moving.Move(moving_towards, get_dir(moving, moving_towards))
+	moving.Move(moving_towards, get_dir(moving, moving_towards), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 
 	//YOU FOUND THEM! GOOD JOB
 	if(home && get_turf(moving) == get_turf(target))
@@ -736,9 +726,31 @@
 /datum/move_loop/has_target/move_towards_budget/move()
 	var/turf/target_turf = get_step_towards(moving, target)
 	var/atom/old_loc = moving.loc
-	moving.Move(target_turf, get_dir(moving, target_turf))
+	moving.Move(target_turf, get_dir(moving, target_turf), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
+/**
+ * Assigns a target to a move loop that immediately freezes for a set duration of time.
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
+ * Arguments:
+ * moving - The atom we want to move
+ * halted_turf - The turf we want to freeze on. This should typically be the loc of moving.
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires. This should be considered extremely non-optional as it will completely stun out the movement loop <i>forever</i> if unset.
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
+ * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
+ */
+/datum/controller/subsystem/move_manager/proc/freeze(moving, halted_turf, delay, timeout, subsystem, priority, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/freeze, priority, flags, extra_info, delay, timeout, halted_turf)
+
+/// As close as you can get to a "do-nothing" move loop, the pure intention of this is to absolutely resist all and any automated movement until the move loop times out.
+/datum/move_loop/freeze
+
+/datum/move_loop/freeze/move()
+	return MOVELOOP_SUCCESS // it's successful because it's not moving. we autoclear outselves when `timeout` is reached
 
 /**
  * Helper proc for the move_rand datum
@@ -787,7 +799,7 @@
 		var/testdir = pick(potential_dirs)
 		var/turf/moving_towards = get_step(moving, testdir)
 		var/atom/old_loc = moving.loc
-		moving.Move(moving_towards, testdir)
+		moving.Move(moving_towards, testdir, FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 		if(old_loc != moving?.loc)  //If it worked, we're done
 			return MOVELOOP_SUCCESS
 		potential_dirs -= testdir
@@ -815,7 +827,8 @@
 
 /datum/move_loop/move_to_rand/move()
 	var/atom/old_loc = moving.loc
-	step_rand(moving)
+	var/turf/next = get_step_rand(moving)
+	moving.Move(next, get_dir(moving, next), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 /**

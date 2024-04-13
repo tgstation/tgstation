@@ -7,7 +7,7 @@
 	icon = 'icons/obj/clothing/under/plasmaman.dmi'
 	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
 	clothing_flags = PLASMAMAN_PREVENT_IGNITION
-	armor_type = /datum/armor/under_plasmaman
+	armor_type = /datum/armor/clothing_under/plasmaman
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = FALSE
 	strip_delay = 80
@@ -15,7 +15,7 @@
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
 
-/datum/armor/under_plasmaman
+/datum/armor/clothing_under/plasmaman
 	bio = 100
 	fire = 95
 	acid = 95
@@ -52,7 +52,7 @@
 	name = "envirosuit extinguisher cartridge"
 	desc = "A cartridge loaded with a compressed extinguisher mix, used to refill the automatic extinguisher on plasma envirosuits."
 	icon_state = "plasmarefill"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/canisters.dmi'
 
 
 /obj/item/clothing/under/plasmaman/cargo
@@ -75,7 +75,7 @@
 
 /obj/item/clothing/under/plasmaman/enviroslacks
 	name = "enviroslacks"
-	desc = "The pet project of a particularly posh plasmaman, this custom suit was quickly appropriated by Nanotrasen for its detectives, lawyers, and bartenders alike."
+	desc = "The pet project of a particularly posh plasmaman, this custom suit was quickly appropriated by Nanotrasen for its lawyers, and bartenders alike."
 	icon_state = "enviroslacks"
 	inhand_icon_state = null
 
@@ -115,6 +115,16 @@
 	icon_state = "clown_envirosuit"
 	inhand_icon_state = null
 
+/obj/item/clothing/under/plasmaman/bitrunner
+	name = "bitrunner envirosuit"
+	desc = "An envirosuit specially designed for plasmamen with bad posture."
+	icon_state = "bitrunner_envirosuit"
+	inhand_icon_state = null
+
+/obj/item/clothing/under/plasmaman/clown/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
+
 /obj/item/clothing/under/plasmaman/prisoner
 	name = "prisoner envirosuit"
 	desc = "An orange envirosuit identifying and protecting a criminal plasmaman. Its suit sensors are stuck in the \"Fully On\" position."
@@ -139,5 +149,5 @@
 			var/datum/effect_system/fluid_spread/foam/foam = new
 			var/datum/reagents/foamreagent = new /datum/reagents(15)
 			foamreagent.add_reagent(/datum/reagent/lube, 15)
-			foam.set_up(4, holder = src, location = loc, carry = foamreagent)
+			foam.set_up(4, holder = src, location = H.loc, carry = foamreagent)
 			foam.start() //Truly terrifying.

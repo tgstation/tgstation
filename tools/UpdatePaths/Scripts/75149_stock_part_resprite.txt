@@ -1,0 +1,3 @@
+#comment This replaces all references to manipulator stock parts with servos https://github.com/tgstation/tgstation/pull/75149
+
+/obj/item/stock_parts/manipulator/@SUBTYPES : /obj/item/stock_parts/servo/@SUBTYPES

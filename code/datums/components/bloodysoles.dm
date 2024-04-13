@@ -7,7 +7,7 @@
 	var/last_blood_state = BLOOD_STATE_NOT_BLOODY
 
 	/// How much of each grubby type we have on our feet
-	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
+	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0, BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 
 	/// The ITEM_SLOT_* slot the item is equipped on, if it is.
 	var/equipped_slot
@@ -20,6 +20,8 @@
 
 	/// The world.time when we last picked up blood
 	var/last_pickup
+
+	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
 
 /datum/component/bloodysoles/Initialize()
 	if(!isclothing(parent))
@@ -44,7 +46,20 @@
  * Returns true if the parent item is obscured by something else that the wielder is wearing
  */
 /datum/component/bloodysoles/proc/is_obscured()
-	return wielder.check_obscured_slots(TRUE) & equipped_slot
+	return wielder.check_obscured_slots(TRUE) & equipped_slot || is_under_feet_covered()
+
+/**
+ * Returns true if the parent item is worn in the ITEM_SLOT_ICLOTHING slot and the
+ * wielder is wearing something on their shoes.
+ *
+ * Allows for jumpsuits to cover feet without getting all bloodied when their wearer
+ * is wearing shoes.
+ */
+/datum/component/bloodysoles/proc/is_under_feet_covered()
+	if(!(equipped_slot & ITEM_SLOT_ICLOTHING))
+		return FALSE
+
+	return !isnull(wielder.shoes)
 
 /**
  * Run to update the icon of the parent
@@ -100,9 +115,9 @@
 /**
  * Find a blood decal on a turf that matches our last_blood_state
  */
-/datum/component/bloodysoles/proc/find_pool_by_blood_state(turf/turfLoc, typeFilter = null)
+/datum/component/bloodysoles/proc/find_pool_by_blood_state(turf/turfLoc, typeFilter = null, footprint_sprite)
 	for(var/obj/effect/decal/cleanable/blood/pool in turfLoc)
-		if(pool.blood_state == last_blood_state && (!typeFilter || istype(pool, typeFilter)))
+		if(pool.blood_state == last_blood_state && pool.footprint_sprite == footprint_sprite && (!typeFilter || istype(pool, typeFilter)))
 			return pool
 
 /**
@@ -158,23 +173,23 @@
 		return
 
 	var/half_our_blood = bloody_shoes[last_blood_state] / 2
-
+	var/footprint_sprite = wielder.get_footprint_sprite()
 	// Add footprints in old loc if we have enough cream
 	if(half_our_blood >= BLOOD_FOOTPRINTS_MIN)
 		var/turf/oldLocTurf = get_turf(OldLoc)
-		var/obj/effect/decal/cleanable/blood/footprints/oldLocFP = find_pool_by_blood_state(oldLocTurf, /obj/effect/decal/cleanable/blood/footprints)
+		var/obj/effect/decal/cleanable/blood/footprints/oldLocFP = find_pool_by_blood_state(oldLocTurf, /obj/effect/decal/cleanable/blood/footprints, footprint_sprite)
 		if(oldLocFP)
 			// Footprints found in the tile we left, add us to it
 			add_parent_to_footprint(oldLocFP)
 			if (!(oldLocFP.exited_dirs & wielder.dir))
 				oldLocFP.exited_dirs |= wielder.dir
 				oldLocFP.update_appearance()
-		else if(find_pool_by_blood_state(oldLocTurf))
+		else if(find_pool_by_blood_state(oldLocTurf, footprint_sprite = footprint_sprite))
 			// No footprints in the tile we left, but there was some other blood pool there. Add exit footprints on it
 			adjust_bloody_shoes(last_blood_state, half_our_blood)
 			update_icon()
 
-			oldLocFP = new(oldLocTurf)
+			oldLocFP = new(oldLocTurf, footprint_sprite)
 			if(!QDELETED(oldLocFP)) ///prints merged
 				oldLocFP.blood_state = last_blood_state
 				oldLocFP.exited_dirs |= wielder.dir
@@ -194,7 +209,7 @@
 		adjust_bloody_shoes(last_blood_state, half_our_blood)
 		update_icon()
 
-		var/obj/effect/decal/cleanable/blood/footprints/FP = new(get_turf(parent_atom))
+		var/obj/effect/decal/cleanable/blood/footprints/FP = new(get_turf(parent_atom), footprint_sprite)
 		if(!QDELETED(FP)) ///prints merged
 			FP.blood_state = last_blood_state
 			FP.entered_dirs |= wielder.dir
@@ -253,7 +268,8 @@
 		return COMPONENT_INCOMPATIBLE
 	parent_atom = parent
 	wielder = parent
-
+	if(footprint_sprite)
+		src.footprint_sprite = footprint_sprite
 	if(!bloody_feet)
 		bloody_feet = mutable_appearance('icons/effects/blood.dmi', "shoeblood", SHOES_LAYER)
 
@@ -263,16 +279,14 @@
 	RegisterSignal(parent, COMSIG_CARBON_EQUIP_SHOECOVER, PROC_REF(equip_shoecover))
 
 /datum/component/bloodysoles/feet/update_icon()
-	if(ishuman(wielder))
-		var/mob/living/carbon/human/human = wielder
-		if(NOBLOODOVERLAY in human.dna.species.species_traits)
-			return
-		if(bloody_shoes[BLOOD_STATE_HUMAN] > 0 && !is_obscured())
-			human.remove_overlay(SHOES_LAYER)
-			human.overlays_standing[SHOES_LAYER] = bloody_feet
-			human.apply_overlay(SHOES_LAYER)
-		else
-			human.update_worn_shoes()
+	if(!ishuman(wielder) || HAS_TRAIT(wielder, TRAIT_NO_BLOOD_OVERLAY))
+		return
+	if(bloody_shoes[BLOOD_STATE_HUMAN] > 0 && !is_obscured())
+		wielder.remove_overlay(SHOES_LAYER)
+		wielder.overlays_standing[SHOES_LAYER] = bloody_feet
+		wielder.apply_overlay(SHOES_LAYER)
+	else
+		wielder.update_worn_shoes()
 
 /datum/component/bloodysoles/feet/add_parent_to_footprint(obj/effect/decal/cleanable/blood/footprints/FP)
 	if(!ishuman(wielder))

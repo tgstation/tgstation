@@ -48,7 +48,6 @@
 	//Temporary/Internal stuff, do not copy these.
 	var/static/list/ignored_vars = list(
 		NAMEOF(item, animate_movement),
-		NAMEOF(item, cached_ref),
 		NAMEOF(item, datum_flags),
 		NAMEOF(item, fingerprintslast),
 		NAMEOF(item, layer),
@@ -121,9 +120,8 @@
 	//Copy backpack contents if exist.
 	var/obj/item/backpack = get_item_by_slot(ITEM_SLOT_BACK)
 	if(istype(backpack) && backpack.atom_storage)
-		var/list/bp_stuff = list()
+		var/list/bp_stuff = backpack.atom_storage.return_inv(recursive = FALSE)
 		var/list/typecounts = list()
-		backpack.atom_storage.return_inv(bp_stuff, FALSE)
 		for(var/obj/item/backpack_item in bp_stuff)
 			if(typecounts[backpack_item.type])
 				typecounts[backpack_item.type] += 1

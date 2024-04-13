@@ -85,3 +85,16 @@
 	. = ..()
 	whitelisted_turfs = typecacheof(/turf/closed/mineral)
 	banned_objects = typecacheof(/obj/structure/stone_tile)
+
+/datum/map_template/shelter/toilet
+	name = "Emergency Relief Shelter"
+	shelter_id = "shelter_toilet"
+	description = "A stripped-down emergency shelter focused on providing \
+		only the most essential amenities to unfortunate employees who find \
+		themselves in need far from home."
+	mappath = "_maps/templates/shelter_t.dmm"
+
+/datum/map_template/shelter/toilet/New()
+	. = ..()
+	whitelisted_turfs = typecacheof(/turf/closed/mineral)
+	banned_objects = typecacheof(/obj/structure/stone_tile)

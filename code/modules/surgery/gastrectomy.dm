@@ -15,11 +15,10 @@
 	)
 
 /datum/surgery/gastrectomy/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/internal/stomach/target_stomach = target.getorganslot(ORGAN_SLOT_STOMACH)
-	if(target_stomach)
-		if(target_stomach.damage > 50 && !target_stomach.operated)
-			return TRUE
-	return FALSE
+	var/obj/item/organ/internal/stomach/target_stomach = target.get_organ_slot(ORGAN_SLOT_STOMACH)
+	if(isnull(target_stomach) || target_stomach.damage < 50 || target_stomach.operated)
+		return FALSE
+	return ..()
 
 ////Gastrectomy, because we truly needed a way to repair stomachs.
 //95% chance of success to be consistent with most organ-repairing surgeries.
@@ -47,7 +46,7 @@
 
 /datum/surgery_step/gastrectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/mob/living/carbon/human/target_human = target
-	var/obj/item/organ/internal/stomach/target_stomach = target.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/target_stomach = target.get_organ_slot(ORGAN_SLOT_STOMACH)
 	target_human.setOrganLoss(ORGAN_SLOT_STOMACH, 20) // Stomachs have a threshold for being able to even digest food, so I might tweak this number
 	if(target_stomach)
 		target_stomach.operated = TRUE
@@ -72,4 +71,3 @@
 		span_warning("[user] cuts the wrong part of [target]'s stomach!"),
 	)
 	display_pain(target, "Your stomach throbs with pain; it's not getting any better!")
-

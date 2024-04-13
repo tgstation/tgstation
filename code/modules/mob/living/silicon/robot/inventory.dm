@@ -64,7 +64,6 @@
 			item_module.screen_loc = inv3.screen_loc
 
 	held_items[module_num] = item_module
-	item_module.equipped(src, ITEM_SLOT_HANDS)
 	item_module.mouse_opacity = initial(item_module.mouse_opacity)
 	SET_PLANE_EXPLICIT(item_module, ABOVE_HUD_PLANE, src)
 	item_module.forceMove(src)
@@ -78,6 +77,7 @@
 
 	if(storage_was_closed)
 		hud_used.toggle_show_robot_modules()
+	item_module.on_equipped(src, ITEM_SLOT_HANDS)
 	return TRUE
 
 /**
@@ -157,7 +157,7 @@
 			audible_message(span_warning("[src] sounds an alarm! \"CRITICAL ERROR: ALL modules OFFLINE.\""))
 
 			if(builtInCamera)
-				builtInCamera.status = FALSE
+				builtInCamera.camera_enabled = FALSE
 				to_chat(src, span_userdanger("CRITICAL ERROR: Built in security camera OFFLINE."))
 
 			to_chat(src, span_userdanger("CRITICAL ERROR: ALL modules OFFLINE."))
@@ -211,7 +211,7 @@
 			inv1.icon_state = initial(inv1.icon_state)
 			disabled_modules &= ~BORG_MODULE_ALL_DISABLED
 			if(builtInCamera)
-				builtInCamera.status = TRUE
+				builtInCamera.camera_enabled = TRUE
 				to_chat(src, span_notice("You hear your built in security camera focus adjust as it comes back online!"))
 		if(BORG_CHOOSE_MODULE_TWO)
 			if(!(disabled_modules & BORG_MODULE_TWO_DISABLED))
@@ -281,6 +281,8 @@
  */
 /mob/living/silicon/robot/proc/activated(obj/item/item_module)
 	if(item_module in held_items)
+		return TRUE
+	if(item_module.loc in held_items) //Apparatus check
 		return TRUE
 	return FALSE
 
@@ -399,6 +401,7 @@
 
 /mob/living/silicon/robot/perform_hand_swap()
 	cycle_modules()
+	return TRUE
 
 /mob/living/silicon/robot/can_hold_items(obj/item/I)
 	return (I && (I in model.modules)) //Only if it's part of our model.

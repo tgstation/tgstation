@@ -105,7 +105,7 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 				factor_info["factor_name"] = factor
 				factor_info["factor_type"] = "misc"
 				if(factor == "Temperature" || factor == "Pressure")
-					factor_info["tooltip"] = "Reaction is influenced by the [lowertext(factor)] of the place where the reaction is occuring."
+					factor_info["tooltip"] = "Reaction is influenced by the [LOWER_TEXT(factor)] of the place where the reaction is occuring."
 				else if(factor == "Energy")
 					factor_info["tooltip"] = "Energy released by the reaction, may or may not result in linear temperature change depending on a slew of other factors."
 				else if(factor == "Radiation")
@@ -138,7 +138,7 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 				factor_info["factor_name"] = factor
 				factor_info["factor_type"] = "misc"
 				if(factor == "Temperature" || factor == "Pressure")
-					factor_info["tooltip"] = "Reaction is influenced by the [lowertext(factor)] of the place where the reaction is occuring."
+					factor_info["tooltip"] = "Reaction is influenced by the [LOWER_TEXT(factor)] of the place where the reaction is occuring."
 				else if(factor == "Energy")
 					factor_info["tooltip"] = "Energy released by the reaction, may or may not result in linear temperature change depending on a slew of other factors."
 				else if(factor == "Radiation")
@@ -171,3 +171,38 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 			return object
 
 	return null
+
+/**
+ * A simple helped proc that checks if the contents of a list of gases are within acceptable terms.
+ *
+ * Arguments:
+ * * gases: The list of gases which contents are being checked
+ * * gases to check: An associated list of gas types and acceptable boundaries in moles. e.g. /datum/gas/oxygen = list(16, 30)
+ * * * if the assoc list is null, then it'll be considered a safe gas and won't return FALSE.
+ * * extraneous_gas_limit: If a gas not in gases is found, this is the limit above which the proc will return FALSE.
+ */
+/proc/check_gases(list/gases, list/gases_to_check, extraneous_gas_limit = 0.1)
+	gases_to_check = gases_to_check.Copy()
+	for(var/id in gases)
+		var/gas_moles = gases[id][MOLES]
+		if(!(id in gases_to_check))
+			if(gas_moles > extraneous_gas_limit)
+				return FALSE
+			continue
+		var/list/boundaries = gases_to_check[id]
+		if(boundaries && !ISINRANGE(gas_moles, boundaries[1], boundaries[2]))
+			return FALSE
+		gases_to_check -= id
+	///Check that gases absent from the turf have a lower boundary of zero or none at all, otherwise return FALSE
+	for(var/id in gases_to_check)
+		var/list/boundaries = gases_to_check[id]
+		if(boundaries && boundaries[1] > 0)
+			return FALSE
+	return TRUE
+
+/proc/print_gas_mixture(datum/gas_mixture/gas_mixture)
+	var/message = "TEMPERATURE: [gas_mixture.temperature]K, QUANTITY: [gas_mixture.total_moles()] mols, VOLUME: [gas_mixture.volume]L; "
+	for(var/key in gas_mixture.gases)
+		var/list/gaslist = gas_mixture.gases[key]
+		message += "[gaslist[GAS_META][META_GAS_ID]]=[gaslist[MOLES]] mols;"
+	return message

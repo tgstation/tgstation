@@ -10,7 +10,6 @@
 
 	var/obj/machinery/computer/holodeck/linked
 	var/restricted = FALSE // if true, program goes on emag list
-	network_root_id = "HOLODECK"
 /*
 	Power tracking: Use the holodeck computer's power grid
 	Asserts are to avoid the inevitable infinite loops
@@ -34,7 +33,7 @@
 	ASSERT(!istype(A, /area/station/holodeck))
 	return ..()
 
-/area/station/holodeck/use_power(amount, chan)
+/area/station/holodeck/use_energy(amount, chan)
 	if(!linked)
 		return FALSE
 	var/area/A = get_area(linked)

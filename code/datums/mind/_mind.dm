@@ -8,7 +8,7 @@
 		ghost.mind is however used as a reference to the ghost's corpse
 
 	- When creating a new mob for an existing IC character (e.g. cloning a dead guy or borging a brain of a human)
-		the existing mind of the old mob should be transfered to the new mob like so:
+		the existing mind of the old mob should be transferred to the new mob like so:
 
 			mind.transfer_to(new_mob)
 
@@ -53,7 +53,6 @@
 
 	/// Martial art on this mind
 	var/datum/martial_art/martial_art
-	var/static/default_martial_art = new/datum/martial_art
 	/// List of antag datums on this mind
 	var/list/antag_datums
 	/// this mind's ANTAG_HUD should have this icon_state
@@ -65,7 +64,6 @@
 	///If this mind's master is another mob (i.e. adamantine golems). Weakref of a /living.
 	var/datum/weakref/enslaved_to
 
-	var/datum/language_holder/language_holder
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
 	/// has this mind ever been an AI
@@ -108,7 +106,6 @@
 
 /datum/mind/New(_key)
 	key = _key
-	martial_art = default_martial_art
 	init_known_skills()
 	set_assigned_role(SSjob.GetJobType(/datum/job/unassigned)) // Unassigned by default.
 
@@ -118,10 +115,28 @@
 	QDEL_LIST(memories)
 	QDEL_NULL(memory_panel)
 	QDEL_LIST(antag_datums)
-	QDEL_NULL(language_holder)
 	set_current(null)
 	return ..()
 
+/datum/mind/serialize_list(list/options, list/semvers)
+	. = ..()
+
+	.["key"] = key
+	.["name"] = name
+	.["ghostname"] = ghostname
+	.["memories"] = memories
+	.["martial_art"] = martial_art
+	.["antag_datums"] = antag_datums
+	.["holy_role"] = holy_role
+	.["special_role"] = special_role
+	.["assigned_role"] = assigned_role.title
+	.["current"] = current
+
+	var/mob/enslaved_to = src.enslaved_to?.resolve()
+	.["enslaved_to"] = enslaved_to
+
+	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
+	return .
 
 /datum/mind/vv_edit_var(var_name, var_value)
 	switch(var_name)
@@ -138,19 +153,14 @@
 	if(new_current && QDELETED(new_current))
 		CRASH("Tried to set a mind's current var to a qdeleted mob, what the fuck")
 	if(current)
-		UnregisterSignal(src, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(src, COMSIG_QDELETING)
 	current = new_current
 	if(current)
-		RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(clear_current))
+		RegisterSignal(src, COMSIG_QDELETING, PROC_REF(clear_current))
 
 /datum/mind/proc/clear_current(datum/source)
 	SIGNAL_HANDLER
 	set_current(null)
-
-/datum/mind/proc/get_language_holder()
-	if(!language_holder)
-		language_holder = new (src)
-	return language_holder
 
 /datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)
 	set_original_character(null)
@@ -169,28 +179,42 @@
 		new_character.mind.set_current(null)
 
 	var/mob/living/old_current = current
-	if(current)
-		current.transfer_observers_to(new_character) //transfer anyone observing the old character to the new one
+	if(old_current)
+		//transfer anyone observing the old character to the new one
+		old_current.transfer_observers_to(new_character)
+
+		// Offload all mind languages from the old holder to a temp one
+		var/datum/language_holder/empty/temp_holder = new()
+		var/datum/language_holder/old_holder = old_current.get_language_holder()
+		var/datum/language_holder/new_holder = new_character.get_language_holder()
+		// Off load mind languages to the temp holder momentarily
+		new_holder.transfer_mind_languages(temp_holder)
+		// Transfer the old holder's mind languages to the new holder
+		old_holder.transfer_mind_languages(new_holder)
+		// And finally transfer the temp holder's mind languages back to the old holder
+		temp_holder.transfer_mind_languages(old_holder)
+
 	set_current(new_character) //associate ourself with our new body
 	QDEL_NULL(antag_hud)
 	new_character.mind = src //and associate our new body with ourself
 	antag_hud = new_character.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/antagonist_hud, "combo_hud", src)
-	for(var/a in antag_datums) //Makes sure all antag datums effects are applied in the new body
-		var/datum/antagonist/A = a
-		A.on_body_transfer(old_current, current)
+	for(var/datum/antagonist/antag_datum as anything in antag_datums) //Makes sure all antag datums effects are applied in the new body
+		antag_datum.on_body_transfer(old_current, current)
 	if(iscarbon(new_character))
-		var/mob/living/carbon/C = new_character
-		C.last_mind = src
-	transfer_martial_arts(new_character)
+		var/mob/living/carbon/carbon_character = new_character
+		carbon_character.last_mind = src
+
 	RegisterSignal(new_character, COMSIG_LIVING_DEATH, PROC_REF(set_death_time))
 	if(active || force_key_move)
 		new_character.key = key //now transfer the key to link the client to our new body
 	if(new_character.client)
 		LAZYCLEARLIST(new_character.client.recent_examines)
 		new_character.client.init_verbs() // re-initialize character specific verbs
-	current.update_atom_languages()
+
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFERRED, old_current)
-	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO)
+	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO, old_current)
+	if(!isnull(old_current))
+		SEND_SIGNAL(old_current, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, current)
 
 //I cannot trust you fucks to do this properly
 /datum/mind/proc/set_original_character(new_original_character)
@@ -333,6 +357,41 @@
 		objective.completed = !objective.completed
 		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")
 
+	else if(href_list["obj_prompt_custom"])
+		var/datum/antagonist/target_antag
+		if(href_list["target_antag"])
+			var/datum/antagonist/found_datum = locate(href_list["target_antag"]) in antag_datums
+			if(found_datum)
+				target_antag = found_datum
+		if(isnull(target_antag))
+			switch(length(antag_datums))
+				if(0)
+					target_antag = add_antag_datum(/datum/antagonist/custom)
+				if(1)
+					target_antag = antag_datums[1]
+				else
+					var/datum/antagonist/target = input("Which antagonist gets the objective:", "Antagonist", "(new custom antag)") as null|anything in sort_list(antag_datums) + "(new custom antag)"
+					if (QDELETED(target))
+						return
+					else if(target == "(new custom antag)")
+						target_antag = add_antag_datum(/datum/antagonist/custom)
+					else
+						target_antag = target
+		var/replace_existing = input("Replace existing objectives?","Replace objectives?") in list("Yes", "No")
+		if (isnull(replace_existing))
+			return
+		replace_existing = replace_existing == "Yes"
+		var/replace_escape
+		if (!replace_existing)
+			replace_escape = FALSE
+		else
+			replace_escape = input("Replace survive/escape/martyr objectives?","Replace objectives?") in list("Yes", "No")
+			if (isnull(replace_escape))
+				return
+			replace_escape = replace_escape == "Yes"
+		target_antag.submit_player_objective(retain_existing = !replace_existing, retain_escape = !replace_escape, force = TRUE)
+		log_admin("[key_name(usr)] prompted [current] to enter their own objectives for [target_antag].")
+
 	else if (href_list["silicon"])
 		switch(href_list["silicon"])
 			if("unemag")
@@ -392,15 +451,20 @@
 					current.dropItemToGround(W, TRUE) //The TRUE forces all items to drop, since this is an admin undress.
 			if("takeuplink")
 				take_uplink()
-				wipe_memory()//Remove any memory they may have had.
+				wipe_memory_type(/datum/memory/key/traitor_uplink/implant)
 				log_admin("[key_name(usr)] removed [current]'s uplink.")
 			if("crystals")
 				if(check_rights(R_FUN))
 					var/datum/component/uplink/U = find_syndicate_uplink()
 					if(U)
-						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.uplink_handler.telecrystals) as null | num
-						if(!isnull(crystals))
-							U.uplink_handler.telecrystals = crystals
+						var/crystals = tgui_input_number(
+							user = usr,
+							message = "Amount of telecrystals for [key]",
+							title = "Syndicate uplink",
+							default = U.uplink_handler.telecrystals,
+						)
+						if(isnum(crystals))
+							U.uplink_handler.set_telecrystals(crystals)
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
 			if("progression")
@@ -451,19 +515,6 @@
 		usr = current
 	traitor_panel()
 
-/datum/mind/proc/transfer_martial_arts(mob/living/new_character)
-	if(!ishuman(new_character))
-		return
-	if(martial_art)
-		if(martial_art.base) //Is the martial art temporary?
-			martial_art.remove(new_character)
-		else
-			martial_art.teach(new_character)
-
-/datum/mind/proc/has_martialart(string)
-	if(martial_art && martial_art.id == string)
-		return martial_art
-	return FALSE
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 	for(var/mob/dead/observer/G in (ghosts_with_clients ? GLOB.player_list : GLOB.dead_mob_list))
@@ -508,11 +559,9 @@
 	if(assigned_role != new_role)
 		return
 
-	to_chat(incoming_client || src, span_infoplain("<b>You are the [new_role.title].</b>"))
-
-	var/related_policy = get_policy(new_role.title)
-	if(related_policy)
-		to_chat(incoming_client || src, related_policy)
+	var/intro_message = new_role.get_spawn_message()
+	if(incoming_client && intro_message)
+		to_chat(incoming_client, intro_message)
 
 /mob/proc/sync_mind()
 	mind_initialize() //updates the mind (or creates and initializes one if one doesn't exist)

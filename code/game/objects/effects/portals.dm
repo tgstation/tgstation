@@ -13,30 +13,49 @@
 /obj/effect/portal
 	name = "portal"
 	desc = "Looks unstable. Best to test it with the clown."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/anomaly.dmi'
 	icon_state = "portal"
 	anchored = TRUE
 	density = TRUE // dense for receiving bumbs
 	layer = HIGH_OBJ_LAYER
+	light_system = COMPLEX_LIGHT
+	light_range = 3
+	light_power = 1
+	light_on = TRUE
+	light_color = COLOR_BLUE_LIGHT
+	/// Are mechs able to enter this portal?
 	var/mech_sized = FALSE
+	/// A reference to another "linked" destination portal
 	var/obj/effect/portal/linked
-	var/hardlinked = TRUE //Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
+	/// Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
+	var/hardlinked = TRUE
+	/// What teleport channel does this portal use?
 	var/teleport_channel = TELEPORT_CHANNEL_BLUESPACE
-	var/turf/hard_target //For when a portal needs a hard target and isn't to be linked.
+	/// For when a portal needs a hard target and isn't to be linked.
+	var/turf/hard_target
+	/// Do we teleport anchored objects?
 	var/allow_anchored = FALSE
+	/// What precision value do we pass to do_teleport (how far from the target destination we will pop out at).
 	var/innate_accuracy_penalty = 0
+	/// Used to track how often sparks should be output. Might want to turn this into a cooldown.
 	var/last_effect = 0
 	/// Does this portal bypass teleport restrictions? like TRAIT_NO_TELEPORT and NOTELEPORT flags.
 	var/force_teleport = FALSE
+	/// Does this portal create spark effect when teleporting?
+	var/sparkless = FALSE
+	/// If FALSE, the wibble filter will not be applied to this portal (only a visual effect).
+	var/wibbles = TRUE
 
 /obj/effect/portal/anom
 	name = "wormhole"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/anomaly.dmi'
 	icon_state = "anom"
 	layer = RIPPLE_LAYER
 	plane = ABOVE_GAME_PLANE
 	mech_sized = TRUE
 	teleport_channel = TELEPORT_CHANNEL_WORMHOLE
+	light_on = FALSE
+	wibbles = FALSE
 
 /obj/effect/portal/Move(newloc)
 	for(var/T in newloc)
@@ -84,6 +103,8 @@
 	hardlinked = automatic_link
 	if(isturf(hard_target_override))
 		hard_target = hard_target_override
+	if(wibbles)
+		apply_wibbly_filters(src)
 
 /obj/effect/portal/singularity_pull()
 	return
@@ -115,7 +136,7 @@
 	if(!force && (!ismecha(M) && !isprojectile(M) && M.anchored && !allow_anchored))
 		return
 	var/no_effect = FALSE
-	if(last_effect == world.time)
+	if(last_effect == world.time || sparkless)
 		no_effect = TRUE
 	else
 		last_effect = world.time

@@ -6,7 +6,7 @@
 	inhand_icon_state = "cola"
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
-	custom_materials = list(/datum/material/plastic = 1200)
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT*1.2)
 	max_integrity = 500
 
 /obj/item/storage/cans/suicide_act(mob/living/carbon/user)
@@ -30,8 +30,8 @@
 		/obj/item/reagent_containers/cup/soda_cans,
 		/obj/item/reagent_containers/cup/glass/bottle/beer,
 		/obj/item/reagent_containers/cup/glass/bottle/ale,
-		/obj/item/reagent_containers/cup/glass/waterbottle
-		))
+		/obj/item/reagent_containers/cup/glass/waterbottle,
+	))
 
 /obj/item/storage/cans/sixsoda
 	name = "soda bottle ring"

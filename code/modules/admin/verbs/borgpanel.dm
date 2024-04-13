@@ -1,21 +1,6 @@
-/datum/admins/proc/open_borgopanel(borgo in GLOB.silicon_mobs)
-	set category = "Admin.Game"
-	set name = "Show Borg Panel"
-	set desc = "Show borg panel"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	if (!iscyborg(borgo))
-		borgo = input("Select a borg", "Select a borg", null, null) as null|anything in sort_names(GLOB.silicon_mobs)
-	if (!iscyborg(borgo))
-		to_chat(usr, span_warning("Borg is required for borgpanel"), confidential = TRUE)
-
-	var/datum/borgpanel/borgpanel = new(usr, borgo)
-
-	borgpanel.ui_interact(usr)
-
-
+ADMIN_VERB(borg_panel, R_ADMIN, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/silicon/robot/borgo)
+	var/datum/borgpanel/borgpanel = new(user.mob, borgo)
+	borgpanel.ui_interact(user.mob)
 
 /datum/borgpanel
 	var/mob/living/silicon/robot/borg
@@ -51,9 +36,10 @@
 		"scrambledcodes" = borg.scrambledcodes
 	)
 	.["upgrades"] = list()
-	for (var/upgradetype in subtypesof(/obj/item/borg/upgrade)-/obj/item/borg/upgrade/hypospray) //hypospray is a dummy parent for hypospray upgrades
+	var/static/list/not_shown_upgrades = list(/obj/item/borg/upgrade/hypospray)
+	for (var/upgradetype in subtypesof(/obj/item/borg/upgrade)-not_shown_upgrades) //hypospray is a dummy parent for hypospray upgrades
 		var/obj/item/borg/upgrade/upgrade = upgradetype
-		if (initial(upgrade.model_type) && !is_type_in_list(borg.model, initial(upgrade.model_type))) // Upgrade requires a different model
+		if (initial(upgrade.model_type) && !is_type_in_list(borg.model, initial(upgrade.model_type))) // Upgrade requires a different model //HEY ASSHOLE, INITIAL DOESNT WORK WITH LISTS
 			continue
 		var/installed = FALSE
 		if (locate(upgradetype) in borg)

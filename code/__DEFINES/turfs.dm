@@ -15,8 +15,8 @@
 
 #define RECT_TURFS(H_RADIUS, V_RADIUS, CENTER) \
 	block( \
-	locate(max(CENTER.x-(H_RADIUS),1), max(CENTER.y-(V_RADIUS),1), CENTER.z), \
-	locate(min(CENTER.x+(H_RADIUS),world.maxx), min(CENTER.y+(V_RADIUS),world.maxy), CENTER.z) \
+	locate(max((CENTER).x-(H_RADIUS),1), max((CENTER).y-(V_RADIUS),1), (CENTER).z), \
+	locate(min((CENTER).x+(H_RADIUS),world.maxx), min((CENTER).y+(V_RADIUS),world.maxy), (CENTER).z) \
 	)
 
 ///Returns all turfs in a zlevel
@@ -64,9 +64,6 @@
 /// Turf has superlube on the floor and mobs will slip even if they are crawling
 #define TURF_WET_SUPERLUBE (1<<4)
 
-/// Checks if a turf is wet
-#define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
-
 /// Maximum amount of time, (in deciseconds) a tile can be wet for.
 #define MAXIMUM_WET_TIME (5 MINUTES)
 
@@ -85,12 +82,25 @@
  */
 #define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
 
-#define TEMPORARY_THERMAL_CONDUCTIVITY 1
-
-#define MAX_TEMPORARY_THERMAL_CONDUCTIVITY 1
 /// Turf will be passable if density is 0
 #define TURF_PATHING_PASS_DENSITY 0
 /// Turf will be passable depending on [CanAStarPass] return value
 #define TURF_PATHING_PASS_PROC 1
 /// Turf is never passable
 #define TURF_PATHING_PASS_NO 2
+
+/// Define the alpha for holiday/colored tile decals
+#define DECAL_ALPHA 60
+/// Generate horizontal striped color turf decals
+#define PATTERN_DEFAULT "default"
+/// Generate vertical striped color turf decals
+#define PATTERN_VERTICAL_STRIPE "vertical"
+/// Generate random color turf decals
+#define PATTERN_RANDOM "random"
+/// Generate rainbow color turf decals
+#define PATTERN_RAINBOW "rainbow"
+
+/**
+ * Finds the midpoint of two given turfs.
+ */
+#define TURF_MIDPOINT(a, b) (locate(((a.x + b.x) * 0.5), (a.y + b.y) * 0.5, (a.z + b.z) * 0.5))

@@ -21,6 +21,10 @@
 	anchored = TRUE
 
 /obj/structure/closet/emcloset/Initialize(mapload)
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA) && prob(30))
+		new /obj/structure/closet/radiation(loc)
+		return INITIALIZE_HINT_QDEL
+
 	. = ..()
 
 	if (prob(1))
@@ -120,11 +124,17 @@
 		new /obj/item/stack/cable_coil(src)
 	if(prob(20))
 		new /obj/item/multitool(src)
-	if(prob(5))
-		new /obj/item/clothing/gloves/color/yellow(src)
+
 	if(prob(40))
 		new /obj/item/clothing/head/utility/hardhat(src)
 
+
+/obj/structure/closet/toolcloset/populate_contents_immediate()
+	. = ..()
+
+	// Since they're a traitor objective, they have to be generated immediately.
+	if(prob(5))
+		new /obj/item/clothing/gloves/color/yellow(src)
 
 /*
  * Radiation Closet
@@ -167,14 +177,3 @@
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/head/utility/bomb_hood/white(src)
-
-/*
- * Ammunition
- */
-/obj/structure/closet/ammunitionlocker
-	name = "ammunition locker"
-
-/obj/structure/closet/ammunitionlocker/PopulateContents()
-	..()
-	for(var/i in 1 to 8)
-		new /obj/item/ammo_casing/shotgun/beanbag(src)

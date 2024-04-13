@@ -3,7 +3,7 @@
 ///////////////////////////////////
 
 /datum/design/milk
-	name = "Milk"
+	name = "Synthetic Milk"
 	id = "milk"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.4)
@@ -11,7 +11,7 @@
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/soymilk
-	name = "Soy Milk"
+	name = "Synthetic Soy Milk"
 	id = "soymilk"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.4)
@@ -19,7 +19,7 @@
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/ethanol
-	name = "Ethanol"
+	name = "Synthetic Ethanol"
 	id = "ethanol"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.6)
@@ -27,7 +27,7 @@
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/cream
-	name = "Cream"
+	name = "Synthetic Cream"
 	id = "cream"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.6)
@@ -35,7 +35,7 @@
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/black_pepper
-	name = "Black Pepper"
+	name = "Synthetic Black Pepper"
 	id = "black_pepper"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.6)
@@ -43,7 +43,7 @@
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/enzyme
-	name = "Universal Enzyme"
+	name = "Synthetic Enzyme"
 	id = "enzyme"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.6)
@@ -51,7 +51,7 @@
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/flour
-	name = "Flour"
+	name = "Synthetic Flour"
 	id = "flour_sack"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.6)
@@ -59,7 +59,7 @@
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/sugar
-	name = "Sugar"
+	name = "Synthetic Sugar"
 	id = "sugar"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.6)
@@ -184,4 +184,12 @@
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 1)
 	build_path = /obj/item/rollingpaper
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_MATERIALS)
+
+/datum/design/candle
+	name = "Candle"
+	id = "candle"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 3)
+	build_path = /obj/item/flashlight/flare/candle
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_MATERIALS)

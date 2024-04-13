@@ -41,15 +41,15 @@
 	// Easier to handle edits to the cooldown duration, prevents timer spam for short cooldown emitters
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/component/radioactive_emitter/Destroy(force, silent)
+/datum/component/radioactive_emitter/Destroy(force)
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /datum/component/radioactive_emitter/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/radioactive_emitter/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
 /datum/component/radioactive_emitter/InheritComponent(
 	datum/component/new_comp,
@@ -69,7 +69,7 @@
 	src.threshold = threshold
 	// Don't touch examine text or whatever else.
 
-/datum/component/radioactive_emitter/process(delta_time)
+/datum/component/radioactive_emitter/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, rad_pulse_cooldown))
 		return
 

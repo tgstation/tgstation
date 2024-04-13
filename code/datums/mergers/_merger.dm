@@ -28,7 +28,7 @@
 	src.attempt_merge_proc = attempt_merge_proc
 	Refresh()
 
-/datum/merger/Destroy(force, ...)
+/datum/merger/Destroy(force)
 	for(var/atom/thing as anything in members)
 		RemoveMember(thing)
 	return ..()
@@ -36,7 +36,7 @@
 /datum/merger/proc/RemoveMember(atom/thing, clean=TRUE)
 	SEND_SIGNAL(thing, COMSIG_MERGER_REMOVING, src)
 	UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(thing, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(thing, COMSIG_QDELETING)
 	if(!thing.mergers)
 		return
 	thing.mergers -= id
@@ -50,7 +50,7 @@
 /datum/merger/proc/AddMember(atom/thing, connected_dir) // note that this fires for the origin of the merger as well
 	SEND_SIGNAL(thing, COMSIG_MERGER_ADDING, src)
 	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(QueueRefresh))
-	RegisterSignal(thing, COMSIG_PARENT_QDELETING, PROC_REF(HandleMemberDel))
+	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(HandleMemberDel))
 	if(!thing.mergers)
 		thing.mergers = list()
 	else if(thing.mergers[id])
@@ -131,7 +131,7 @@
 /datum/merger/proc/check_turf(turf/location, list/found_turfs, asking_from)
 	var/found_something = FALSE
 	// if asking_from is invalid (like if it's 0), we get a random output. that's bad, let's check for falsyness
-	var/us_to_them = asking_from && turn(asking_from, 180)
+	var/us_to_them = asking_from && REVERSE_DIR(asking_from)
 
 	if(found_turfs[location])
 		found_turfs[location][MERGE_TURF_PACKET_DIR] |= us_to_them

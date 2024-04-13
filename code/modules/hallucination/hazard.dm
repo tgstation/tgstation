@@ -86,6 +86,10 @@
 	image_state = "flux"
 	image_layer = OBJ_LAYER + 0.01
 
+/obj/effect/client_image_holder/hallucination/danger/anomaly/generate_image()
+	. = ..()
+	apply_wibbly_filters(.)
+
 /obj/effect/client_image_holder/hallucination/danger/anomaly/Initialize(mapload, list/mobs_which_see_us, datum/hallucination/parent)
 	. = ..()
 	START_PROCESSING(SSobj, src)
@@ -94,8 +98,8 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/effect/client_image_holder/hallucination/danger/anomaly/process(delta_time)
-	if(DT_PROB(ANOMALY_MOVECHANCE, delta_time))
+/obj/effect/client_image_holder/hallucination/danger/anomaly/process(seconds_per_tick)
+	if(SPT_PROB(ANOMALY_MOVECHANCE, seconds_per_tick))
 		step(src, pick(GLOB.alldirs))
 
 /obj/effect/client_image_holder/hallucination/danger/anomaly/on_hallucinator_entered(mob/living/afflicted)

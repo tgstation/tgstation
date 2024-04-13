@@ -215,22 +215,22 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 			if(2)
 				switch(rand(1,3))//Food, drinks, or places. Only selectable once.
 					if(1)
-						. += lowertext(pick(drinks))
+						. += LOWER_TEXT(pick(drinks))
 					if(2)
-						. += lowertext(pick(foods))
+						. += LOWER_TEXT(pick(foods))
 					if(3)
-						. += lowertext(pick(locations))
+						. += LOWER_TEXT(pick(locations))
 				safety -= 2
 			if(3)
 				switch(rand(1,4))//Abstract nouns, objects, adjectives, threats. Can be selected more than once.
 					if(1)
-						. += lowertext(pick(nouns))
+						. += LOWER_TEXT(pick(nouns))
 					if(2)
-						. += lowertext(pick(objects))
+						. += LOWER_TEXT(pick(objects))
 					if(3)
-						. += lowertext(pick(adjectives))
+						. += LOWER_TEXT(pick(adjectives))
 					if(4)
-						. += lowertext(pick(threats))
+						. += LOWER_TEXT(pick(threats))
 		if(!return_list)
 			if(words == 1)
 				. += "."
@@ -242,6 +242,40 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 
 /proc/hive_name()
 	return "[pick(GLOB.hive_names)]-hive"
+
+/**
+ * Generate a name devices
+ *
+ * Creates a randomly generated tag or name for devices or anything really
+ * it keeps track of a special list that makes sure no name is used more than
+ * once
+ *
+ * args:
+ * * len (int)(Optional) Default=5 The length of the name
+ * * prefix (string)(Optional) static text in front of the random name
+ * * postfix (string)(Optional) static text in back of the random name
+ * Returns (string) The generated name
+ */
+/proc/assign_random_name(len=5, prefix="", postfix="")
+	//DO NOT REMOVE NAMES HERE UNLESS YOU KNOW WHAT YOU'RE DOING
+	//All names already used
+	var/static/list/used_names = list()
+
+	var/static/valid_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+	var/list/new_name = list()
+	var/text
+	// machine id's should be fun random chars hinting at a larger world
+	do
+		new_name.Cut()
+		new_name += prefix
+		for(var/i = 1 to len)
+			new_name += valid_chars[rand(1,length(valid_chars))]
+		new_name += postfix
+		text = new_name.Join()
+	while(used_names[text])
+	used_names[text] = TRUE
+	return text
+
 
 /**
  * returns an ic name of the tool needed

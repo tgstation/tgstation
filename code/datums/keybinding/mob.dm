@@ -71,41 +71,6 @@
 		user.mob.dropItemToGround(I)
 	return TRUE
 
-/datum/keybinding/mob/toggle_move_intent
-	hotkey_keys = list("C")
-	name = "toggle_move_intent"
-	full_name = "Hold to toggle move intent"
-	description = "Held down to cycle to the other move intent, release to cycle back"
-	keybind_signal = COMSIG_KB_MOB_TOGGLEMOVEINTENT_DOWN
-
-/datum/keybinding/mob/toggle_move_intent/down(client/user)
-	. = ..()
-	if(.)
-		return
-	var/mob/M = user.mob
-	M.toggle_move_intent()
-	return TRUE
-
-/datum/keybinding/mob/toggle_move_intent/up(client/user)
-	var/mob/M = user.mob
-	M.toggle_move_intent()
-	return TRUE
-
-/datum/keybinding/mob/toggle_move_intent_alternative
-	hotkey_keys = list("Unbound")
-	name = "toggle_move_intent_alt"
-	full_name = "press to cycle move intent"
-	description = "Pressing this cycle to the opposite move intent, does not cycle back"
-	keybind_signal = COMSIG_KB_MOB_TOGGLEMOVEINTENTALT_DOWN
-
-/datum/keybinding/mob/toggle_move_intent_alternative/down(client/user)
-	. = ..()
-	if(.)
-		return
-	var/mob/M = user.mob
-	M.toggle_move_intent()
-	return TRUE
-
 /datum/keybinding/mob/target/down(client/user)
 	. = ..()
 	if(.)
@@ -115,6 +80,8 @@
 	switch(keybind_signal)
 		if(COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN)
 			user.body_toggle_head()
+		if(COMSIG_KB_MOB_TARGETHEAD_DOWN)
+			user.body_head()
 		if(COMSIG_KB_MOB_TARGETEYES_DOWN)
 			user.body_eyes()
 		if(COMSIG_KB_MOB_TARGETMOUTH_DOWN)
@@ -142,6 +109,13 @@
 	full_name = "Target: Cycle Head"
 	description = "Pressing this key targets the head, and continued presses will cycle to the eyes and mouth. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN
+
+/datum/keybinding/mob/target/head
+	hotkey_keys = list("Unbound")
+	name = "target_head"
+	full_name = "Target: Head"
+	description = "Pressing this key targets the head. This will impact where you hit people, and can be used for surgery."
+	keybind_signal = COMSIG_KB_MOB_TARGETHEAD_DOWN
 
 /datum/keybinding/mob/target/eyes
 	hotkey_keys = list("Numpad7")

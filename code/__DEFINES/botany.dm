@@ -23,8 +23,6 @@
 #define FUNGAL_METAB_YIELD_MIN 1
 
 /// -- Hydroponics tray defines. --
-/// Macro for updating the tray name.
-#define TRAY_NAME_UPDATE name = myseed ? "[initial(name)] ([myseed.plantname])" : initial(name)
 ///  Base amount of nutrients a tray can old.
 #define STATIC_NUTRIENT_CAPACITY 10
 /// Maximum amount of toxins a tray can reach.
@@ -86,3 +84,6 @@
 
 /// A list of possible egg laying descriptions
 #define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
+
+/// Used as a baseline plant rarity for more uncommon plants, usually requiring mutation
+#define PLANT_MODERATELY_RARE 20

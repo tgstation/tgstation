@@ -5,76 +5,94 @@
  */
 
 import { canRender, classes } from 'common/react';
-import { Component, createRef, InfernoNode, RefObject } from 'inferno';
+import { forwardRef, ReactNode, RefObject, useEffect } from 'react';
+
 import { addScrollableNode, removeScrollableNode } from '../events';
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 
-type SectionProps = BoxProps & {
-  className?: string;
-  title?: InfernoNode;
-  buttons?: InfernoNode;
-  fill?: boolean;
-  fitted?: boolean;
-  scrollable?: boolean;
-  scrollableHorizontal?: boolean;
-  /** @deprecated This property no longer works, please remove it. */
-  level?: boolean;
-  /** @deprecated Please use `scrollable` property */
-  overflowY?: any;
-  /** @member Allows external control of scrolling. */
-  scrollableRef?: RefObject<HTMLDivElement>;
-  /** @member Callback function for the `scroll` event */
-  onScroll?: (this: GlobalEventHandlers, ev: Event) => any;
-};
-
-export class Section extends Component<SectionProps> {
-  scrollableRef: RefObject<HTMLDivElement>;
+type Props = Partial<{
+  /** Buttons to render aside the section title. */
+  buttons: ReactNode;
+  /** If true, fills all available vertical space. */
+  fill: boolean;
+  /** If true, removes all section padding. */
+  fitted: boolean;
+  /** Shows or hides the scrollbar. */
   scrollable: boolean;
-  onScroll?: (this: GlobalEventHandlers, ev: Event) => any;
+  /** Shows or hides the horizontal scrollbar. */
   scrollableHorizontal: boolean;
+  /** Title of the section. */
+  title: ReactNode;
+  /** id to assosiate with the parent div element used by this section, for uses with procs like getElementByID */
+  container_id: string;
+  /** @member Callback function for the `scroll` event */
+  onScroll: ((this: GlobalEventHandlers, ev: Event) => any) | null;
+}> &
+  BoxProps;
 
-  constructor(props) {
-    super(props);
-    this.scrollableRef = props.scrollableRef || createRef();
-    this.scrollable = props.scrollable;
-    this.onScroll = props.onScroll;
-    this.scrollableHorizontal = props.scrollableHorizontal;
-  }
-
-  componentDidMount() {
-    if (this.scrollable || this.scrollableHorizontal) {
-      addScrollableNode(this.scrollableRef.current);
-      if (this.onScroll && this.scrollableRef.current) {
-        this.scrollableRef.current.onscroll = this.onScroll;
-      }
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.scrollable || this.scrollableHorizontal) {
-      removeScrollableNode(this.scrollableRef.current);
-    }
-  }
-
-  render() {
+/**
+ * ## Section
+ * Section is a surface that displays content and actions on a single topic.
+ *
+ * They should be easy to scan for relevant and actionable information.
+ * Elements, like text and images, should be placed in them in a way that
+ * clearly indicates hierarchy.
+ *
+ * Sections can now be nested, and will automatically font size of the
+ * header according to their nesting level. Previously this was done via `level`
+ * prop, but now it is automatically calculated.
+ *
+ * Section can also be titled to clearly define its purpose.
+ *
+ * ```tsx
+ * <Section title="Cargo">Here you can order supply crates.</Section>
+ * ```
+ *
+ * If you want to have a button on the right side of an section title
+ * (for example, to perform some sort of action), there is a way to do that:
+ *
+ * ```tsx
+ * <Section title="Cargo" buttons={<Button>Send shuttle</Button>}>
+ *   Here you can order supply crates.
+ * </Section>
+ * ```
+ */
+export const Section = forwardRef(
+  (props: Props, forwardedRef: RefObject<HTMLDivElement>) => {
     const {
-      className,
-      title,
       buttons,
+      children,
+      className,
       fill,
       fitted,
+      onScroll,
       scrollable,
       scrollableHorizontal,
-      children,
-      onScroll,
+      title,
+      container_id,
       ...rest
-    } = this.props;
+    } = props;
+
     const hasTitle = canRender(title) || canRender(buttons);
+
+    /** We want to be able to scroll on hover, but using focus will steal it from inputs */
+    useEffect(() => {
+      if (!forwardedRef?.current) return;
+      if (!scrollable && !scrollableHorizontal) return;
+
+      addScrollableNode(forwardedRef.current);
+
+      return () => {
+        if (!forwardedRef?.current) return;
+        removeScrollableNode(forwardedRef.current!);
+      };
+    }, []);
+
     return (
       <div
+        id={container_id || ''}
         className={classes([
           'Section',
-          Byond.IS_LTE_IE8 && 'Section--iefix',
           fill && 'Section--fill',
           fitted && 'Section--fitted',
           scrollable && 'Section--scrollable',
@@ -82,7 +100,8 @@ export class Section extends Component<SectionProps> {
           className,
           computeBoxClassName(rest),
         ])}
-        {...computeBoxProps(rest)}>
+        {...computeBoxProps(rest)}
+      >
         {hasTitle && (
           <div className="Section__title">
             <span className="Section__titleText">{title}</span>
@@ -91,13 +110,16 @@ export class Section extends Component<SectionProps> {
         )}
         <div className="Section__rest">
           <div
-            ref={this.scrollableRef}
+            className="Section__content"
             onScroll={onScroll}
-            className="Section__content">
+            // For posterity: the forwarded ref needs to be here specifically
+            // to actually let things interact with the scrolling.
+            ref={forwardedRef}
+          >
             {children}
           </div>
         </div>
       </div>
     );
-  }
-}
+  },
+);

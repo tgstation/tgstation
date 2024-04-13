@@ -4,7 +4,6 @@
  * Definitions for /mob/living/silicon/robot and its children, including AI shells.
  *
  */
-
 /mob/living/silicon/robot
 	name = "Cyborg"
 	real_name = "Cyborg"
@@ -23,7 +22,7 @@
 	radio = /obj/item/radio/borg
 
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
 
 
@@ -53,6 +52,8 @@
 	var/lamp_doom = FALSE
 	///Lamp brightness. Starts at 3, but can be 1 - 5.
 	var/lamp_intensity = 3
+	////Power consumption of the light per lamp_intensity.
+	var/lamp_power_consumption = BORG_LAMP_POWER_CONSUMPTION
 
 	var/mutable_appearance/eye_lights
 
@@ -100,10 +101,12 @@
 	var/lockcharge = FALSE
 	///Boolean of whether the borg was locked by its AI or nothing
 	var/ai_lockdown = FALSE
+	///Timer that allows the borg to self-unlock after a set amount of time
+	var/lockdown_timer = null
 	///Random serial number generated for each cyborg upon its initialization
 	var/ident = 0
 	var/locked = TRUE
-	var/list/req_access = list(ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_ROBOTICS)
 
 	///Whether the robot has no charge left.
 	var/low_power_mode = FALSE
@@ -202,15 +205,30 @@
 	cell = /obj/item/stock_parts/cell/hyper
 	radio = /obj/item/radio/borg/syndicate
 
+/mob/living/silicon/robot/model/syndicate/Initialize(mapload)
+	laws = new /datum/ai_laws/syndicate_override()
+	laws.associate(src)
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(show_playstyle)), 0.5 SECONDS)
+
+/mob/living/silicon/robot/model/syndicate/create_modularInterface()
+	if(!modularInterface)
+		modularInterface = new /obj/item/modular_computer/pda/silicon/cyborg/syndicate(src)
+		modularInterface.imprint_id(job_name = "Cyborg")
+	return ..()
+
 /mob/living/silicon/robot/model/syndicate/proc/show_playstyle()
 	if(playstyle_string)
 		to_chat(src, playstyle_string)
+
+/mob/living/silicon/robot/model/syndicate/ResetModel()
+	return
 
 /mob/living/silicon/robot/model/syndicate/medical
 	icon_state = "synd_medical"
 	playstyle_string = "<span class='big bold'>You are a Syndicate medical cyborg!</span><br>\
 		<b>You are armed with powerful medical tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
-		Your hypospray will produce Restorative Nanites, a wonder-drug that will heal most types of bodily damages, including clone and brain damage. It also produces morphine for offense. \
+		Your hypospray will produce Restorative Nanites, a wonder-drug that will heal most types of bodily damages, including brain damage. It also produces morphine for offense. \
 		Your defibrillator paddles can revive operatives through their suits, or can be used on harm intent to shock enemies! \
 		Your energy saw functions as a circular saw, but can be activated to deal more damage, and your operative pinpointer will find and locate fellow nuclear operatives. \
 		<i>Help the operatives secure the disk at all costs!</i></b>"

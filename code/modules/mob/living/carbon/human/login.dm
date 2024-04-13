@@ -3,6 +3,9 @@
 
 	dna?.species?.on_owner_login(src)
 
+	if(SStts.tts_enabled && !voice)
+		voice = pick(SStts.available_speakers)
+
 	if(!LAZYLEN(afk_thefts))
 		return
 

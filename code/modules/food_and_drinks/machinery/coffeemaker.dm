@@ -8,7 +8,7 @@
 	base_icon_state = "coffeemaker"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/coffeemaker
-	pixel_y = 4 //needed to make it sit nicely on tables
+	anchored_tabletop_offset = 4
 	var/obj/item/reagent_containers/cup/coffeepot/coffeepot = null
 	var/brewing = FALSE
 	var/brew_time = 20 SECONDS
@@ -45,10 +45,9 @@
 		coffeepot = new /obj/item/reagent_containers/cup/coffeepot(src)
 		cartridge = new /obj/item/coffee_cartridge(src)
 
-/obj/machinery/coffeemaker/deconstruct()
+/obj/machinery/coffeemaker/on_deconstruction(disassembled)
 	coffeepot?.forceMove(drop_location())
 	cartridge?.forceMove(drop_location())
-	return ..()
 
 /obj/machinery/coffeemaker/Destroy()
 	QDEL_NULL(coffeepot)
@@ -56,11 +55,13 @@
 	return ..()
 
 /obj/machinery/coffeemaker/Exited(atom/movable/gone, direction)
+	. = ..()
 	if(gone == coffeepot)
 		coffeepot = null
+		update_appearance(UPDATE_OVERLAYS)
 	if(gone == cartridge)
 		cartridge = null
-	return ..()
+		update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/coffeemaker/RefreshParts()
 	. = ..()
@@ -139,14 +140,6 @@
 /obj/machinery/coffeemaker/attack_ai_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/coffeemaker/handle_atom_del(atom/A)
-	. = ..()
-	if(A == coffeepot)
-		coffeepot = null
-	if(A == cartridge)
-		cartridge = null
-	update_appearance(UPDATE_OVERLAYS)
-
 /obj/machinery/coffeemaker/update_overlays()
 	. = ..()
 	. += overlay_checks()
@@ -183,7 +176,7 @@
 /obj/machinery/coffeemaker/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/coffeemaker/attackby(obj/item/attack_item, mob/living/user, params)
 	//You can only screw open empty grinder
@@ -328,7 +321,7 @@
 	if(length(options) == 1)
 		choice = options[1]
 	else
-		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
+		choice = show_radial_menu(user, src, options, require_near = !HAS_SILICON_ACCESS(user))
 
 	// post choice verification
 	if(brewing || (isAI(user) && machine_stat & NOPOWER) || !user.can_perform_action(src, ALLOW_SILICON_REACH))
@@ -408,7 +401,7 @@
 	if(!silent)
 		playsound(src, 'sound/machines/coffeemaker_brew.ogg', 20, vary = TRUE)
 	toggle_steam()
-	use_power(active_power_usage * time * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
+	use_energy(active_power_usage * time / (1 SECONDS)) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
 	addtimer(CALLBACK(src, PROC_REF(stop_operating)), time / speed)
 
 /obj/machinery/coffeemaker/proc/stop_operating()
@@ -490,11 +483,12 @@
 	contents_tag = "coffee cartridge"
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	spawn_type = /obj/item/coffee_cartridge
+	spawn_count = 1
 
 /obj/item/storage/fancy/coffee_cart_rack/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 4
-	atom_storage.set_holdable(list(/obj/item/coffee_cartridge))
+	atom_storage.set_holdable(/obj/item/coffee_cartridge)
 
 /*
  * impressa coffee maker
@@ -525,13 +519,6 @@
 /obj/machinery/coffeemaker/impressa/Destroy()
 	QDEL_NULL(coffeepot)
 	QDEL_NULL(coffee)
-	return ..()
-
-/obj/machinery/coffeemaker/impressa/Exited(atom/movable/gone, direction)
-	if(gone == coffeepot)
-		coffeepot = null
-	if(gone == coffee)
-		coffee = null
 	return ..()
 
 /obj/machinery/coffeemaker/impressa/examine(mob/user)
@@ -571,13 +558,11 @@
 			. += "grinder_full"
 	return .
 
-/obj/machinery/coffeemaker/impressa/handle_atom_del(atom/A)
+/obj/machinery/coffeemaker/impressa/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(A == coffeepot)
-		coffeepot = null
-	if(A == coffee)
-		coffee.Cut()
-	update_appearance(UPDATE_OVERLAYS)
+	if(gone in coffee)
+		coffee -= gone
+		update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/coffeemaker/impressa/try_brew()
 	if(coffee_amount <= 0)
@@ -730,9 +715,32 @@
 	if(!try_brew())
 		return
 	operate_for(brew_time)
-	coffeepot.reagents.add_reagent_list(list(/datum/reagent/consumable/coffee = 120))
-	coffee.Cut(1,2) //remove the first item from the list
+
+	// create a reference bean reagent list
+	var/list/reference_bean_reagents = list()
+	var/obj/item/food/grown/coffee/reference_bean = new /obj/item/food/grown/coffee(src)
+	for(var/datum/reagent/ref_bean_reagent as anything in reference_bean.reagents.reagent_list)
+		reference_bean_reagents += ref_bean_reagent.name
+
+	// add all the reagents from the coffee beans to the coffeepot (ommit the ones from the reference bean)
+	var/list/reagent_delta = list()
+	var/obj/item/food/grown/coffee/bean = coffee[coffee_amount]
+	for(var/datum/reagent/substance as anything in bean.reagents.reagent_list)
+		if(!(reference_bean_reagents.Find(substance.name)))	// we only add the reagent if it's a non-standard for coffee beans
+			reagent_delta += list(substance.type = substance.volume)
+	coffeepot.reagents.add_reagent_list(reagent_delta)
+
+	qdel(reference_bean)
+	
+	// remove the coffee beans from the machine
+	coffee.Cut(1,2)
 	coffee_amount--
+
+	// fill the rest of the pot with coffee
+	if(coffeepot.reagents.total_volume < 120)
+		var/extra_coffee_amount = 120 - coffeepot.reagents.total_volume
+		coffeepot.reagents.add_reagent(/datum/reagent/consumable/coffee, extra_coffee_amount)
+
 	update_appearance(UPDATE_OVERLAYS)
 
 #undef BEAN_CAPACITY

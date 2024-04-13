@@ -6,14 +6,10 @@
 ///The dmi for humanoid oversuits
 #define DEFAULT_SUIT_FILE 'icons/mob/clothing/suits/default.dmi'
 
-//MONKEY PATHS
-///The dmi for monkey uniforms
-#define MONKEY_UNIFORM_FILE 'icons/mob/species/monkey/uniform.dmi'
-
 //DIGITIGRADE PATHS
 ///The dmi containing digitigrade uniforms
-#define DIGITIGRADE_UNIFORM_FILE 'icons/mob/species/misc/digitigrade.dmi'
+#define DIGITIGRADE_UNIFORM_FILE 'icons/mob/human/species/misc/digitigrade.dmi'
 ///The dmi containing digitigrade shoes
-#define DIGITIGRADE_SHOES_FILE 'icons/mob/species/misc/digitigrade_shoes.dmi'
+#define DIGITIGRADE_SHOES_FILE 'icons/mob/human/species/misc/digitigrade_shoes.dmi'
 ///The dmi containing digitigrade oversuits
-#define DIGITIGRADE_SUIT_FILE 'icons/mob/species/misc/digitigrade_suits.dmi'
+#define DIGITIGRADE_SUIT_FILE 'icons/mob/human/species/misc/digitigrade_suits.dmi'

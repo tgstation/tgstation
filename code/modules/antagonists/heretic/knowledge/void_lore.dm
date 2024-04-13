@@ -77,13 +77,12 @@
 
 /datum/heretic_knowledge/cold_snap
 	name = "Aristocrat's Way"
-	desc = "Grants you immunity to cold temperatures, and removes your need breathe. \
+	desc = "Grants you immunity to cold temperatures, and removes your need to breathe. \
 		You can still take damage due to a lack of pressure."
 	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. \
 		Translucent and white, a depiction of a nobleman stood before me."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/void_mark,
-		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/void_cloak,
 		/datum/heretic_knowledge/limited_amount/risen_corpse,
 	)
@@ -91,12 +90,10 @@
 	route = PATH_VOID
 
 /datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	ADD_TRAIT(user, TRAIT_RESISTCOLD, type)
-	ADD_TRAIT(user, TRAIT_NOBREATH, type)
+	user.add_traits(list(TRAIT_NOBREATH, TRAIT_RESISTCOLD), type)
 
 /datum/heretic_knowledge/cold_snap/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	REMOVE_TRAIT(user, TRAIT_RESISTCOLD, type)
-	REMOVE_TRAIT(user, TRAIT_NOBREATH, type)
+	user.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_NOBREATH), type)
 
 /datum/heretic_knowledge/mark/void_mark
 	name = "Mark of Void"
@@ -202,7 +199,12 @@
 
 /datum/heretic_knowledge/ultimate/void_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] The nobleman of void [user.real_name] has arrived, stepping along the Waltz that ends worlds! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce(
+		text = "[generate_heretic_text()] The nobleman of void [user.real_name] has arrived, stepping along the Waltz that ends worlds! [generate_heretic_text()]",
+		title = "[generate_heretic_text()]",
+		sound = ANNOUNCER_SPANOMALIES,
+		color_override = "pink",
+	)
 	user.client?.give_award(/datum/award/achievement/misc/void_ascension, user)
 	ADD_TRAIT(user, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
 
@@ -223,7 +225,7 @@
  *
  * Also starts storms in any area that doesn't have one.
  */
-/datum/heretic_knowledge/ultimate/void_final/proc/on_life(mob/living/source, delta_time, times_fired)
+/datum/heretic_knowledge/ultimate/void_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
 	for(var/mob/living/carbon/close_carbon in view(5, source))

@@ -1,11 +1,12 @@
 #define MANNEQUIN_WOOD "wood"
 #define MANNEQUIN_PLASTIC "plastic"
+#define MANNEQUIN_SKELETON "skeleton"
 
 /// A mannequin! A structure that can display clothing on itself.
 /obj/structure/mannequin
 	name = "mannequin"
 	desc = "Oh, so this is a dress-up game now."
-	icon = 'icons/mob/species/human/mannequin.dmi'
+	icon = 'icons/mob/human/mannequin.dmi'
 	icon_state = "mannequin_wood_male"
 	density = TRUE
 	resistance_flags = FLAMMABLE
@@ -42,18 +43,28 @@
 	)
 	/// Assoc list of all item slots (turned to strings) to the items they hold.
 	var/list/worn_items = list()
+	///List of all clothing items the mannequin should be spawning in with on Initialize.
+	var/list/obj/item/clothing/starting_items = list()
 
 /obj/structure/mannequin/Initialize(mapload)
 	. = ..()
 	for(var/slot_flag in slot_flags)
 		worn_items["[slot_flag]"] = null
+		for(var/obj/item/clothing/items as anything in starting_items)
+			if(initial(items.slot_flags) & slot_flag)
+				worn_items["[slot_flag]"] = new items(src)
+				starting_items -= items
+				break
+	if(starting_items.len)
+		CRASH("[src] had [starting_items.len] starting items fail to equip.")
 	if(!body_type)
 		body_type = pick(MALE, FEMALE)
 	if(!material)
-		material = pick("wood", "plastic")
+		material = pick(MANNEQUIN_WOOD, MANNEQUIN_PLASTIC)
 	icon_state = "mannequin_[material]_[body_type == FEMALE ? "female" : "male"]"
 	AddElement(/datum/element/strippable, GLOB.strippable_mannequin_items)
 	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED)
+	AddComponent(/datum/component/marionette)
 	update_appearance()
 
 /obj/structure/mannequin/Destroy()
@@ -77,7 +88,7 @@
 /obj/structure/mannequin/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/mannequin/update_overlays()
 	. = ..()
@@ -175,6 +186,16 @@
 
 /obj/structure/mannequin/plastic
 	material = MANNEQUIN_PLASTIC
+
+/obj/structure/mannequin/skeleton
+	name = "skeleton model"
+	desc = "Not to knock over."
+	material = MANNEQUIN_SKELETON
+	obj_flags = UNIQUE_RENAME
+	starting_items = list(
+		/obj/item/clothing/glasses/eyepatch,
+		/obj/item/clothing/suit/costume/hawaiian,
+	)
 
 GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	/datum/strippable_item/mannequin_slot/head,
@@ -274,3 +295,4 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 
 #undef MANNEQUIN_WOOD
 #undef MANNEQUIN_PLASTIC
+#undef MANNEQUIN_SKELETON

@@ -3,7 +3,7 @@
 /obj/machinery/prisongate
 	name = "prison gate scanner"
 	desc = "A hardlight gate with an ID scanner attached to the side. Good at deterring even the most persistent temporarily embarrassed employee."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/sec.dmi'
 	icon_state = "prisongate_on"
 	/// roughly the same health/armor as an airlock
 	max_integrity = 450

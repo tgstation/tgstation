@@ -11,6 +11,7 @@
 	icon = 'icons/obj/stairs.dmi'
 	icon_state = "stairs"
 	anchored = TRUE
+	move_resist = INFINITY
 
 	var/force_open_above = FALSE // replaces the turf above this stair obj with /turf/open/openspace
 	var/terminator_mode = STAIR_TERMINATOR_AUTOMATIC
@@ -93,7 +94,8 @@
 	var/turf/checking = get_step_multiz(get_turf(src), UP)
 	if(!istype(checking))
 		return
-	if(!checking.zPassIn(climber, UP, get_turf(src)))
+	// I'm only interested in if the pass is unobstructed, not if the mob will actually make it
+	if(!climber.can_z_move(UP, get_turf(src), checking, z_move_flags = ZMOVE_ALLOW_BUCKLED))
 		return
 	var/turf/target = get_step_multiz(get_turf(src), (dir|UP))
 	if(istype(target) && !climber.can_z_move(DOWN, target, z_move_flags = ZMOVE_FALL_FLAGS)) //Don't throw them into a tile that will just dump them back down.
@@ -207,9 +209,8 @@
 	deconstruct(TRUE)
 	return TRUE
 
-/obj/structure/stairs_frame/deconstruct(disassembled = TRUE)
+/obj/structure/stairs_frame/atom_deconstruct(disassembled = TRUE)
 	new frame_stack(get_turf(src), frame_stack_amount)
-	qdel(src)
 
 /obj/structure/stairs_frame/attackby(obj/item/attacked_by, mob/user, params)
 	if(!isstack(attacked_by))
@@ -241,7 +242,7 @@
 			return
 		var/list/material_list = list()
 		if(material.material_type)
-			material_list[material.material_type] = MINERAL_MATERIAL_AMOUNT * 10
+			material_list[material.material_type] = SHEET_MATERIAL_AMOUNT * 10
 		make_new_stairs(/obj/structure/stairs/material, material_list)
 	return TRUE
 
@@ -251,3 +252,7 @@
 	if(custom_materials)
 		new_stairs.set_custom_materials(custom_materials)
 	qdel(src)
+
+#undef STAIR_TERMINATOR_AUTOMATIC
+#undef STAIR_TERMINATOR_NO
+#undef STAIR_TERMINATOR_YES

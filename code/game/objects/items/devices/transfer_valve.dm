@@ -1,11 +1,13 @@
 /obj/item/transfer_valve
-	icon = 'icons/obj/assemblies/assemblies.dmi'
+	icon = 'icons/obj/devices/assemblies.dmi'
 	name = "tank transfer valve"
 	icon_state = "valve_1"
 	base_icon_state = "valve"
 	inhand_icon_state = "ttv"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
+	worn_icon = 'icons/mob/clothing/back/backpack.dmi'
+	worn_icon_state = "ttv"
 	desc = "Regulates the transfer of air between two tanks."
 	w_class = WEIGHT_CLASS_BULKY
 
@@ -15,6 +17,10 @@
 	var/mob/attacher = null
 	var/valve_open = FALSE
 	var/toggle = TRUE
+	///do we have cables attached to be able to be put on the back?
+	var/wired = FALSE
+	///our overlay when wired = true
+	var/mutable_appearance/cable_overlay
 
 /obj/item/transfer_valve/Initialize(mapload)
 	. = ..()
@@ -27,16 +33,14 @@
 /obj/item/transfer_valve/IsAssemblyHolder()
 	return TRUE
 
-/obj/item/transfer_valve/handle_atom_del(atom/deleted_atom)
+/obj/item/transfer_valve/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(deleted_atom == tank_one)
+	if(gone == tank_one)
 		tank_one = null
 		update_appearance()
-		return
-	if(deleted_atom == tank_two)
+	else if(gone == tank_two)
 		tank_two = null
 		update_appearance()
-		return
 
 /obj/item/transfer_valve/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/tank))
@@ -74,6 +78,27 @@
 		A.toggle_secure() //this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 		log_bomber(user, "attached a [item.name] to a ttv -", src, null, FALSE)
 		attacher = user
+
+	else if(istype(item, /obj/item/stack/cable_coil) && !wired)
+		var/obj/item/stack/cable_coil/coil = item
+		if (coil.get_amount() < 15)
+			to_chat(user, span_warning("You need fifteen lengths of coil for this!"))
+			return
+		coil.use(15)
+		to_chat(user, span_notice("You add some cables, not being really sure why. Looks like <i>backpack</i> straps."))
+		wired = TRUE
+		slot_flags |= ITEM_SLOT_BACK
+		update_appearance()
+
+	else if(item.tool_behaviour == TOOL_WIRECUTTER && wired)
+		item.play_tool_sound(src)
+		to_chat(user, span_notice("You remove the cables."))
+		wired = FALSE
+		slot_flags &= ~ITEM_SLOT_BACK
+		Move(drop_location())
+		new /obj/item/stack/cable_coil(drop_location(), 15)
+		update_appearance()
+
 	return
 
 //These keep attached devices synced up, for example a TTV with a mouse trap being found in a bag so it's triggered, or moving the TTV with an infrared beam sensor to update the beam's direction.
@@ -125,6 +150,19 @@
 		T.Translate(-13, 0)
 		J.transform = T
 		underlays = list(J)
+
+	if(wired)
+		cable_overlay = mutable_appearance(icon, icon_state = "valve_cables", layer = layer + 0.05, appearance_flags = KEEP_TOGETHER)
+		add_overlay(cable_overlay)
+
+	else if(cable_overlay)
+		cut_overlay(cable_overlay, TRUE)
+		cable_overlay = null
+
+	worn_icon_state = "[initial(worn_icon_state)][tank_two ? "l" : ""][tank_one ? "r" : ""]"
+	if(ishuman(loc)) //worn
+		var/mob/living/carbon/human/human = loc
+		human.update_worn_back()
 
 	if(!attached_device)
 		return
@@ -263,14 +301,12 @@
 				split_gases()
 				valve_open = FALSE
 				tank_one.forceMove(drop_location())
-				tank_one = null
 				. = TRUE
 		if("tanktwo")
 			if(tank_two)
 				split_gases()
 				valve_open = FALSE
 				tank_two.forceMove(drop_location())
-				tank_two = null
 				. = TRUE
 		if("toggle")
 			toggle_valve()
@@ -292,3 +328,11 @@
  */
 /obj/item/transfer_valve/proc/ready()
 	return tank_one && tank_two
+
+/obj/item/transfer_valve/fake/Initialize(mapload)
+	. = ..()
+
+	tank_one = new /obj/item/tank/internals/plasma (src)
+	tank_two = new /obj/item/tank/internals/oxygen (src)
+
+	update_appearance()

@@ -1,4 +1,5 @@
 /obj/item/clothing/suit/armor
+	name = "armor"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	allowed = null
@@ -27,6 +28,20 @@
 	. = ..()
 	if(!allowed)
 		allowed = GLOB.security_vest_allowed
+
+/obj/item/clothing/suit/armor/apply_fantasy_bonuses(bonus)
+	. = ..()
+	slowdown = modify_fantasy_variable("slowdown", slowdown, -bonus * 0.1, 0)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_equipment_speed_mods()
+
+/obj/item/clothing/suit/armor/remove_fantasy_bonuses(bonus)
+	slowdown = reset_fantasy_variable("slowdown", slowdown)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_equipment_speed_mods()
+	return ..()
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor vest"
@@ -68,6 +83,16 @@
 	acid = 50
 	wound = 20
 
+/datum/armor/pmc
+	melee = 40
+	bullet = 50
+	laser = 60
+	energy = 50
+	bomb = 50
+	bio = 100
+	acid = 50
+	wound = 20
+
 /obj/item/clothing/suit/armor/vest/marine/security
 	name = "large tactical armor vest"
 	icon_state = "marine_security"
@@ -80,6 +105,14 @@
 	name = "tactical medic's armor vest"
 	icon_state = "marine_medic"
 	body_parts_covered = CHEST|GROIN
+
+/obj/item/clothing/suit/armor/vest/marine/pmc
+	desc = "A set of the finest mass produced, stamped plasteel armor plates, for an all-around door-kicking and ass-smashing. Its stellar survivability making up is for it's lack of space worthiness"
+	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
+	clothing_flags = THICKMATERIAL
+	w_class = WEIGHT_CLASS_BULKY
+	armor_type = /datum/armor/pmc
 
 /obj/item/clothing/suit/armor/vest/old
 	name = "degrading armor vest"
@@ -165,6 +198,33 @@
 	desc = "A red jacket with silver rank pips and body armor strapped on top."
 	icon_state = "warden_jacket"
 
+/obj/item/clothing/suit/armor/vest/secjacket
+	name = "security jacket"
+	desc = "A red jacket in red Security colors. It has hi-vis stripes all over it."
+	icon_state = "secjacket"
+	inhand_icon_state = "armor"
+	armor_type = /datum/armor/armor_secjacket
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS|HANDS
+	heat_protection = CHEST|GROIN|ARMS|HANDS
+	resistance_flags = FLAMMABLE
+	dog_fashion = null
+
+/obj/item/clothing/suit/armor/vest/secjacket/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+
+/datum/armor/armor_secjacket //Gotta compensate those extra covered limbs
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 35
+	bomb = 20
+	fire = 30
+	acid = 30
+	wound = 5
+
 /obj/item/clothing/suit/armor/vest/leather
 	name = "security overcoat"
 	desc = "Lightly armored leather overcoat meant as casual wear for high-ranking officers. Bears the crest of Nanotrasen Security."
@@ -220,9 +280,9 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/armor_riot
-	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
+	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 
 /datum/armor/armor_riot
 	melee = 50
@@ -251,6 +311,40 @@
 	fire = 50
 	acid = 50
 	wound = 10
+
+/obj/item/clothing/suit/armor/balloon_vest
+	name = "balloon vest"
+	desc = "A vest made entirely from balloons, resistant to any evil forces a mime could throw at you, including electricity and fire. Just a strike with something sharp, though..."
+	icon_state = "balloon-vest"
+	inhand_icon_state = "balloon_armor"
+	blood_overlay_type = "armor"
+	armor_type = /datum/armor/balloon_vest
+	siemens_coefficient = 0
+	strip_delay = 70
+	equip_delay_other = 50
+
+/datum/armor/balloon_vest
+	melee = 10
+	laser = 10
+	energy = 10
+	fire = 60
+	acid = 50
+
+/obj/item/clothing/suit/armor/balloon_vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(isitem(hitby))
+		var/obj/item/item_hit = hitby
+		if(item_hit.sharpness)
+			pop()
+
+	if(istype(hitby, /obj/projectile/bullet))
+		pop()
+
+	return ..()
+
+/obj/item/clothing/suit/armor/balloon_vest/proc/pop()
+	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
+	qdel(src)
+
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof armor"
@@ -312,7 +406,8 @@
 
 /obj/item/clothing/suit/armor/swat
 	name = "MK.I SWAT Suit"
-	desc = "A tactical suit first developed in a joint effort by the defunct IS-ERI and Nanotrasen in 2321 for military operations. It has a minor slowdown, but offers decent protection."
+	desc = "A tactical suit first developed in a joint effort by the defunct IS-ERI and Nanotrasen in 2321 for military operations. \
+		It has a minor slowdown, but offers decent protection and helps the wearer resist shoving in close quarters."
 	icon_state = "heavy"
 	inhand_icon_state = "swat_suit"
 	armor_type = /datum/armor/armor_swat
@@ -325,6 +420,8 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	slowdown = 0.7
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
+
 
 //All of the armor below is mostly unused
 
@@ -444,6 +541,16 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
 	armor_type = /datum/armor/knight_greyscale
 
+/datum/armor/knight_greyscale
+	melee = 35
+	bullet = 10
+	laser = 10
+	energy = 10
+	bomb = 10
+	bio = 10
+	fire = 40
+	acid = 40
+
 /obj/item/clothing/suit/armor/vest/durathread
 	name = "durathread vest"
 	desc = "A vest made of durathread with strips of leather acting as trauma plates."
@@ -509,7 +616,7 @@
 	desc = "A superb armor made with the toughest and rarest materials available to man."
 	icon_state = "h2armor"
 	inhand_icon_state = null
-	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 	armor_type = /datum/armor/armor_elder_atmosian
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -561,3 +668,23 @@
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dog_fashion = null
+
+/obj/item/clothing/suit/armor/militia
+	name = "station defender's coat"
+	desc = "A well worn uniform used by militia across the frontier, it's thick padding useful for cushioning blows."
+	icon_state = "militia"
+	inhand_icon_state = "b_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	armor_type = /datum/armor/coat_militia
+
+/datum/armor/coat_militia
+	melee = 40
+	bullet = 40
+	laser = 30
+	energy = 25
+	bomb = 50
+	fire = 40
+	acid = 50
+	wound = 30

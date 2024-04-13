@@ -32,3 +32,18 @@
 
 /// Checks that no light shares a tile/pixel offsets with another
 /datum/unit_test/focus_only/stacked_lights
+
+/// Checks for bad icon / icon state setups in cooking crafting menu
+/datum/unit_test/focus_only/bad_cooking_crafting_icons
+
+/// Ensures openspace never spawns on the bottom of a z stack
+/datum/unit_test/focus_only/openspace_clear
+
+/// Checks to ensure that variables expected to exist in a job datum (for config reasons) actually exist
+/datum/unit_test/focus_only/missing_job_datum_variables
+
+/// Checks that the contents of the fish_counts list are also present in fish_table
+/datum/unit_test/focus_only/fish_sources_tables
+
+/// Checks that maploaded mobs with either the `atmos_requirements` or `body_temp_sensitive`
+/datum/unit_test/focus_only/atmos_and_temp_requirements

@@ -72,13 +72,105 @@
 /atom/movable/screen/plane_master/rendering_plate/game_plate
 	name = "Game rendering plate"
 	documentation = "Holds all objects that are ahhh, in character? is maybe the best way to describe it.\
-		<br>We apply a displacement effect from the gravity pulse plane too, so we can warp the game world."
+		<br>We apply a displacement effect from the gravity pulse plane too, so we can warp the game world.\
+		<br>If we have fov enabled we'll relay this onto two different rendering plates to apply fov effects to only a portion. If not, we just draw straight to master"
 	plane = RENDER_PLANE_GAME
 	render_relay_planes = list(RENDER_PLANE_MASTER)
 
-/atom/movable/screen/plane_master/rendering_plate/game_plate/Initialize(mapload)
+/atom/movable/screen/plane_master/rendering_plate/game_plate/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	add_filter("displacer", 1, displacement_map_filter(render_source = OFFSET_RENDER_TARGET(GRAVITY_PULSE_RENDER_TARGET, offset), size = 10))
+
+/atom/movable/screen/plane_master/rendering_plate/game_plate/show_to(mob/mymob)
+	. = ..()
+	if(!. || !mymob)
+		return .
+	RegisterSignal(mymob, SIGNAL_ADDTRAIT(TRAIT_FOV_APPLIED), PROC_REF(fov_enabled), override = TRUE)
+	RegisterSignal(mymob, SIGNAL_REMOVETRAIT(TRAIT_FOV_APPLIED), PROC_REF(fov_disabled), override = TRUE)
+	if(HAS_TRAIT(mymob, TRAIT_FOV_APPLIED))
+		fov_enabled(mymob)
+	else
+		fov_disabled(mymob)
+
+/atom/movable/screen/plane_master/rendering_plate/game_plate/proc/fov_enabled(mob/source)
+	SIGNAL_HANDLER
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME_UNMASKED, offset))
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME_MASKED, offset))
+	remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_MASTER, offset))
+
+/atom/movable/screen/plane_master/rendering_plate/game_plate/proc/fov_disabled(mob/source)
+	SIGNAL_HANDLER
+	remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME_UNMASKED, offset))
+	remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME_MASKED, offset))
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_MASTER, offset))
+
+///renders the parts of the plate unmasked by fov
+/atom/movable/screen/plane_master/rendering_plate/unmasked_game_plate
+	name = "Unmasked Game rendering plate"
+	documentation = "Holds the bits of the game plate that aren't impacted by fov.\
+		<br>We use an alpha mask to cut out the bits we plan on dealing with elsewhere"
+	plane = RENDER_PLANE_GAME_UNMASKED
+	render_relay_planes = list(RENDER_PLANE_MASTER)
+
+/atom/movable/screen/plane_master/rendering_plate/unmasked_game_plate/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_filter("fov_handled", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FIELD_OF_VISION_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
+
+/atom/movable/screen/plane_master/rendering_plate/unmasked_game_plate/show_to(mob/mymob)
+	. = ..()
+	if(!. || !mymob)
+		return .
+	RegisterSignal(mymob, SIGNAL_ADDTRAIT(TRAIT_FOV_APPLIED), PROC_REF(fov_enabled), override = TRUE)
+	RegisterSignal(mymob, SIGNAL_REMOVETRAIT(TRAIT_FOV_APPLIED), PROC_REF(fov_disabled), override = TRUE)
+	if(HAS_TRAIT(mymob, TRAIT_FOV_APPLIED))
+		fov_enabled(mymob)
+	else
+		fov_disabled(mymob)
+
+/atom/movable/screen/plane_master/rendering_plate/unmasked_game_plate/proc/fov_enabled(mob/source)
+	SIGNAL_HANDLER
+	if(force_hidden == FALSE)
+		return
+	unhide_plane(source)
+
+/atom/movable/screen/plane_master/rendering_plate/unmasked_game_plate/proc/fov_disabled(mob/source)
+	SIGNAL_HANDLER
+	hide_plane(source)
+
+///renders the parts of the plate masked by fov
+/atom/movable/screen/plane_master/rendering_plate/masked_game_plate
+	name = "FOV Game rendering plate"
+	documentation = "Contains the bits of the game plate that are hidden by some form of fov\
+		<br>Applies a color matrix to dim and create contrast, alongside a blur. Goal is only half being able to see stuff"
+	plane = RENDER_PLANE_GAME_MASKED
+	render_relay_planes = list(RENDER_PLANE_MASTER)
+
+/atom/movable/screen/plane_master/rendering_plate/masked_game_plate/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_filter("fov_blur", 1, gauss_blur_filter(1.8))
+	add_filter("fov_handled_space", 2, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FIELD_OF_VISION_BLOCKER_RENDER_TARGET, offset)))
+	add_filter("fov_matrix", 3, color_matrix_filter(list(0.5,-0.15,-0.15,0, -0.15,0.5,-0.15,0, -0.15,-0.15,0.5,0, 0,0,0,1, 0,0,0,0)))
+
+/atom/movable/screen/plane_master/rendering_plate/masked_game_plate/show_to(mob/mymob)
+	. = ..()
+	if(!. || !mymob)
+		return .
+	RegisterSignal(mymob, SIGNAL_ADDTRAIT(TRAIT_FOV_APPLIED), PROC_REF(fov_enabled), override = TRUE)
+	RegisterSignal(mymob, SIGNAL_REMOVETRAIT(TRAIT_FOV_APPLIED), PROC_REF(fov_disabled), override = TRUE)
+	if(HAS_TRAIT(mymob, TRAIT_FOV_APPLIED))
+		fov_enabled(mymob)
+	else
+		fov_disabled(mymob)
+
+/atom/movable/screen/plane_master/rendering_plate/masked_game_plate/proc/fov_enabled(mob/source)
+	SIGNAL_HANDLER
+	if(force_hidden == FALSE)
+		return
+	unhide_plane(source)
+
+/atom/movable/screen/plane_master/rendering_plate/masked_game_plate/proc/fov_disabled(mob/source)
+	SIGNAL_HANDLER
+	hide_plane(source)
 
 // Blackness renders weird when you view down openspace, because of transforms and borders and such
 // This is a consequence of not using lummy's grouped transparency, but I couldn't get that to work without totally fucking up
@@ -91,7 +183,7 @@
 	plane = RENDER_PLANE_TRANSPARENT
 	appearance_flags = PLANE_MASTER
 
-/atom/movable/screen/plane_master/rendering_plate/transparent/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/rendering_plate/transparent/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	// Don't display us if we're below everything else yeah?
 	AddComponent(/datum/component/plane_hide_highest_offset)
@@ -110,7 +202,7 @@
 	if(!.)
 		return
 	remove_filter("AO")
-	if(istype(mymob) && mymob.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
+	if(istype(mymob) && mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
 
 ///Contains all lighting objects
@@ -120,7 +212,7 @@
 		<br>That's how lighting functions at base. Because it uses BLEND_MULTIPLY and occasionally color matrixes, it needs a backdrop of blackness.\
 		<br>See <a href=\"https://secure.byond.com/forum/?post=2141928\">This byond post</a>\
 		<br>Lemme see uh, we're masked by the emissive plane so it can actually function (IE: make things glow in the dark).\
-		<br>We're also masked by the overlay lighting plane, which contains all the movable lights in the game. It draws to us and also the game plane.\
+		<br>We're also masked by the overlay lighting plane, which contains all the well overlay lights in the game. It draws to us and also the game plane.\
 		<br>Masks us out so it has the breathing room to apply its effect.\
 		<br>Oh and we quite often have our alpha changed to achive night vision effects, or things of that sort."
 	plane = RENDER_PLANE_LIGHTING
@@ -140,7 +232,7 @@
  * A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.
  * This is then used to alpha mask the lighting plane.
  */
-/atom/movable/screen/plane_master/rendering_plate/lighting/Initialize(mapload)
+/atom/movable/screen/plane_master/rendering_plate/lighting/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	add_filter("emissives", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_RENDER_TARGET, offset), flags = MASK_INVERSE))
 	add_filter("object_lighting", 2, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(O_LIGHTING_VISUAL_RENDER_TARGET, offset), flags = MASK_INVERSE))
@@ -225,7 +317,7 @@
 	render_relay_planes = list()
 	critical = PLANE_CRITICAL_DISPLAY
 
-/atom/movable/screen/plane_master/rendering_plate/emissive_slate/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/rendering_plate/emissive_slate/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	add_filter("em_block_masking", 2, color_matrix_filter(GLOB.em_mask_matrix))
 	if(offset != 0)
@@ -300,7 +392,7 @@
  * Other vars such as alpha will automatically be applied with the render source
  */
 /atom/movable/screen/plane_master/proc/generate_render_relays()
-	var/relay_loc = "CENTER"
+	var/relay_loc = home?.relay_loc || "CENTER"
 	// If we're using a submap (say for a popup window) make sure we draw onto it
 	if(home?.map)
 		relay_loc = "[home.map]:[relay_loc]"
@@ -323,7 +415,7 @@
 	if(get_relay_to(target_plane))
 		return
 	render_relay_planes += target_plane
-	var/client/display_lad = home?.our_hud?.mymob?.client
+	var/client/display_lad = home?.our_hud?.mymob?.canon_client
 	var/atom/movable/render_plane_relay/relay = generate_relay_to(target_plane, show_to = display_lad, blend_override = blend_override, relay_layer = relay_layer)
 	relay.color = relay_color
 
@@ -373,7 +465,7 @@
 	relays -= existing_relay
 	if(!length(relays) && !initial(render_target))
 		render_target = null
-	var/client/lad = home?.our_hud?.mymob?.client
+	var/client/lad = home?.our_hud?.mymob?.canon_client
 	if(lad)
 		lad.screen -= existing_relay
 

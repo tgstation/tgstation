@@ -235,10 +235,13 @@
 	// Set the default tgui state
 	set_default_state()
 
+/obj/machinery/computer/scan_consolenew/post_machine_initialize()
+	. = ..()
 	// Link machine with research techweb. Used for discovering and accessing
 	// already discovered mutations
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
-		stored_research = SSresearch.science_tech
+		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
+
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -334,8 +337,8 @@
 		data["subjectUF"] = scanner_occupant.dna.unique_features
 		data["storage"]["occupant"] = tgui_occupant_mutations
 
-		var/datum/component/genetic_damage/genetic_damage = scanner_occupant.GetComponent(/datum/component/genetic_damage)
-		data["subjectDamage"] = genetic_damage ? round((genetic_damage.total_damage / genetic_damage.minimum_before_damage) * 100, 0.1) : 0
+		var/datum/status_effect/genetic_damage/genetic_damage = scanner_occupant.has_status_effect(/datum/status_effect/genetic_damage)
+		data["subjectDamage"] = genetic_damage ? round((genetic_damage.total_damage / genetic_damage.minimum_before_tox_damage) * 100, 0.1) : 0
 	else
 		data["subjectName"] = null
 		data["subjectStatus"] = null
@@ -397,7 +400,6 @@
 	. = TRUE
 
 	add_fingerprint(usr)
-	usr.set_machine(src)
 
 	switch(action)
 		// Connect this DNA Console to a nearby DNA Scanner
@@ -436,11 +438,11 @@
 			scanner_occupant.dna.generate_dna_blocks()
 			scramble_ready = world.time + SCRAMBLE_TIMEOUT
 			to_chat(usr,span_notice("DNA scrambled."))
-			scanner_occupant.AddComponent(/datum/component/genetic_damage, GENETIC_DAMAGE_STRENGTH_MULTIPLIER*50/(connected_scanner.damage_coeff ** 2))
+			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, GENETIC_DAMAGE_STRENGTH_MULTIPLIER*50/(connected_scanner.damage_coeff ** 2))
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Check whether a specific mutation is eligible for discovery within the
@@ -546,6 +548,7 @@
 						var/truegenes = GET_SEQUENCE(path)
 						newgene = truegenes[genepos]
 						joker_ready = world.time + JOKER_TIMEOUT - (JOKER_UPGRADE * (connected_scanner.precision_coeff-1))
+						tgui_view_state["jokerActive"] = FALSE
 					else
 						var/current_letter = gene_letters.Find(sequence[genepos])
 						newgene = (current_letter == gene_letter_count) ? gene_letters[1] : gene_letters[current_letter + 1]
@@ -560,7 +563,7 @@
 			// Copy genome to scanner occupant and do some basic mutation checks as
 			//  we've increased the occupant genetic damage
 			scanner_occupant.dna.mutation_index[path] = copytext(sequence, 1, genepos) + newgene + copytext(sequence, genepos + 1)
-			scanner_occupant.AddComponent(/datum/component/genetic_damage, GENETIC_DAMAGE_STRENGTH_MULTIPLIER/connected_scanner.damage_coeff)
+			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, GENETIC_DAMAGE_STRENGTH_MULTIPLIER/connected_scanner.damage_coeff)
 			scanner_occupant.domutcheck()
 
 			// GUARD CHECK - Modifying genetics can lead to edge cases where the
@@ -575,9 +578,9 @@
 			// Check if we cracked a mutation
 			check_discovery(alias)
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Apply a chromosome to a specific mutation.
@@ -612,9 +615,9 @@
 					stored_chromosomes -= CM
 					CM.apply(HM)
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Attempt overwriting Base DNA : The pairs are instead the top row vs the top row of the new code.
@@ -716,10 +719,10 @@
 				//should be a "sometimes" thing, not an "always" thing, but risky enough to force the need for precautions to isolate the subject
 				if(prob(60))
 					var/datum/disease/advance/random/random_disease = new /datum/disease/advance/random(2,2)
-					random_disease.try_infect(scanner_occupant, FALSE)
+					scanner_occupant.ContactContractDisease(random_disease)
 				else if (prob(30))
 					var/datum/disease/advance/random/random_disease = new /datum/disease/advance/random(3,4)
-					random_disease.try_infect(scanner_occupant, FALSE)
+					scanner_occupant.ContactContractDisease(random_disease)
 				//Instantiate list to hold resulting mutation_index
 				var/mutation_data[0]
 				//Start with the bad mutation, overwrite with the desired mutation if it passes the check
@@ -751,9 +754,9 @@
 				scanner_occupant.domutcheck()
 
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 
 			return
 
@@ -835,9 +838,9 @@
 				else
 					injector_ready = world.time + INJECTOR_TIMEOUT * 5
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Save a mutation to the console's storage buffer.
@@ -1049,9 +1052,9 @@
 			stored_research.discovered_mutations += result_path
 			say("Successfully mutated [HM.name].")
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Combines two mutations from the disk to try and create a new mutation
@@ -1115,9 +1118,9 @@
 			stored_research.discovered_mutations += result_path
 			say("Successfully mutated [HM.name].")
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Sets the Genetic Makeup pulse strength.
@@ -1354,9 +1357,9 @@
 			if(I)
 				injector_ready = world.time + INJECTOR_TIMEOUT
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Applies a genetic makeup buffer to the scanner occupant
@@ -1394,9 +1397,9 @@
 
 			apply_genetic_makeup(type, buffer_slot)
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Applies a genetic makeup buffer to the next scanner occupant. This sets
@@ -1463,9 +1466,9 @@
 			genetic_damage_pulse_index = WRAP(text2num(params["index"]), 1, len+1)
 			begin_processing()
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Cancels the delayed action - In this context it is not the genetic damage
@@ -1625,9 +1628,9 @@
 			injector_selection[adv_inj] += A
 			to_chat(usr,span_notice("Mutation successfully added to advanced injector."))
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Deletes a mutation from an advanced injector
@@ -1692,7 +1695,7 @@
 			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 			scanner_occupant.dna.unique_identity = buffer_slot["UI"]
 			scanner_occupant.updateappearance(mutations_overlay_update=1)
-			scanner_occupant.AddComponent(/datum/component/genetic_damage, damage_increase)
+			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE
 		if("uf")
@@ -1705,7 +1708,7 @@
 			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 			scanner_occupant.dna.unique_features = buffer_slot["UF"]
 			scanner_occupant.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
-			scanner_occupant.AddComponent(/datum/component/genetic_damage, damage_increase)
+			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE
 		if("ue")
@@ -1720,7 +1723,7 @@
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
 			scanner_occupant.dna.blood_type = buffer_slot["blood_type"]
-			scanner_occupant.AddComponent(/datum/component/genetic_damage, damage_increase)
+			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE
 		if("mixed")
@@ -1738,7 +1741,7 @@
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
 			scanner_occupant.dna.blood_type = buffer_slot["blood_type"]
-			scanner_occupant.AddComponent(/datum/component/genetic_damage, damage_increase)
+			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE
 
@@ -2290,17 +2293,20 @@
 
 /obj/machinery/computer/scan_consolenew/proc/set_connected_scanner(new_scanner)
 	if(connected_scanner)
-		UnregisterSignal(connected_scanner, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(connected_scanner, COMSIG_QDELETING)
 		if(connected_scanner.linked_console == src)
 			connected_scanner.set_linked_console(null)
 	connected_scanner = new_scanner
 	if(connected_scanner)
-		RegisterSignal(connected_scanner, COMSIG_PARENT_QDELETING, PROC_REF(react_to_scanner_del))
+		RegisterSignal(connected_scanner, COMSIG_QDELETING, PROC_REF(react_to_scanner_del))
 		connected_scanner.set_linked_console(src)
 
 /obj/machinery/computer/scan_consolenew/proc/react_to_scanner_del(datum/source)
 	SIGNAL_HANDLER
 	set_connected_scanner(null)
+
+#undef GENETIC_DAMAGE_PULSE_UNIQUE_IDENTITY
+#undef GENETIC_DAMAGE_PULSE_UNIQUE_FEATURES
 
 #undef ENZYME_COPY_BASE_COOLDOWN
 #undef INJECTOR_TIMEOUT

@@ -16,11 +16,17 @@ SUBSYSTEM_DEF(lua)
 	var/list/resumes = list()
 
 	var/list/current_run = list()
+	var/list/current_states_run = list()
 
 	/// Protects return values from getting GCed before getting converted to lua values
-	var/gc_guard
+	/// Gets cleared every tick.
+	var/list/gc_guard = list()
 
 /datum/controller/subsystem/lua/Initialize()
+	if(!CONFIG_GET(flag/auxtools_enabled))
+		warning("SSlua requires auxtools to be enabled to run.")
+		return SS_INIT_NO_NEED
+
 	try
 		// Initialize the auxtools library
 		AUXTOOLS_CHECK(AUXLUA)
@@ -33,7 +39,9 @@ SUBSYSTEM_DEF(lua)
 		return SS_INIT_SUCCESS
 	catch(var/exception/e)
 		// Something went wrong, best not allow the subsystem to run
-		warning("Error initializing SSlua: [e.name]")
+		var/crash_message = "Error initializing SSlua: [e.name]"
+		initialization_failure_message = crash_message
+		warning(crash_message)
 		return SS_INIT_FAILURE
 
 /datum/controller/subsystem/lua/OnConfigLoad()
@@ -92,9 +100,11 @@ SUBSYSTEM_DEF(lua)
 	// then resumes every yielded task in the order their resumes were queued
 	if(!resumed)
 		current_run = list("sleeps" = sleeps.Copy(), "resumes" = resumes.Copy())
+		current_states_run = states.Copy()
 		sleeps.Cut()
 		resumes.Cut()
 
+	gc_guard.Cut()
 	var/list/current_sleeps = current_run["sleeps"]
 	var/list/affected_states = list()
 	while(length(current_sleeps))
@@ -129,6 +139,13 @@ SUBSYSTEM_DEF(lua)
 
 			if(MC_TICK_CHECK)
 				break
+
+	while(length(current_states_run))
+		var/datum/lua_state/state = current_states_run[current_states_run.len]
+		current_states_run.len--
+		state.process(wait)
+		if(MC_TICK_CHECK)
+			break
 
 	// Update every lua editor TGUI open for each state that had a task awakened or resumed
 	for(var/datum/lua_state/state in affected_states)

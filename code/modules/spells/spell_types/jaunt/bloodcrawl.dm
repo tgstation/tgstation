@@ -83,10 +83,10 @@
 	var/turf/jaunt_turf = get_turf(blood)
 
 	// Begin the jaunt
-	jaunter.notransform = TRUE
+	ADD_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 	var/obj/effect/dummy/phased_mob/holder = enter_jaunt(jaunter, jaunt_turf)
 	if(!holder)
-		jaunter.notransform = FALSE
+		REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 		return FALSE
 
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
@@ -104,7 +104,7 @@
 	playsound(jaunt_turf, 'sound/magic/enter_blood.ogg', 50, TRUE, -1)
 	jaunter.extinguish_mob()
 
-	jaunter.notransform = FALSE
+	REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 	return TRUE
 
 /**
@@ -113,7 +113,7 @@
  */
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/try_exit_jaunt(obj/effect/decal/cleanable/blood, mob/living/jaunter, forced = FALSE)
 	if(!forced)
-		if(jaunter.notransform)
+		if(HAS_TRAIT(jaunter, TRAIT_NO_TRANSFORM))
 			to_chat(jaunter, span_warning("You cannot exit yet!!"))
 			return FALSE
 
@@ -162,6 +162,8 @@
 		they will be consumed by you, fully healing you."
 	/// The sound played when someone's consumed.
 	var/consume_sound = 'sound/magic/demon_consume.ogg'
+	/// consume count (statistics and stuff)
+	var/consume_count = 0
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/try_enter_jaunt(obj/effect/decal/cleanable/blood, mob/living/jaunter)
 	// Save this before the actual jaunt
@@ -196,9 +198,9 @@
 		blind_message = span_notice("You hear a splash."),
 	)
 
-	jaunter.notransform = TRUE
+	ADD_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 	consume_victim(victim, jaunter)
-	jaunter.notransform = FALSE
+	REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 
 	return TRUE
 
@@ -228,6 +230,7 @@
 		victim.investigate_log("has been killed by being consumed by a slaugter demon.", INVESTIGATE_DEATHS)
 	victim.death()
 	on_victim_consumed(victim, jaunter)
+	consume_count++
 
 /**
  * Called when a victim starts to be consumed.
@@ -275,10 +278,10 @@
 	to_chat(jaunter, span_clown("[victim] joins your party! Your health is fully restored."))
 	consumed_mobs += victim
 	RegisterSignal(victim, COMSIG_MOB_STATCHANGE, PROC_REF(on_victim_statchange))
-	RegisterSignal(victim, COMSIG_PARENT_QDELETING, PROC_REF(on_victim_deleted))
+	RegisterSignal(victim, COMSIG_QDELETING, PROC_REF(on_victim_deleted))
 
 /**
- * Signal proc for COMSIG_LIVING_DEATH and COMSIG_PARENT_QDELETING
+ * Signal proc for COMSIG_LIVING_DEATH and COMSIG_QDELETING
  *
  * If our demon is deleted or destroyed, expel all of our consumed mobs
  */
@@ -289,7 +292,7 @@
 	for(var/mob/living/friend as anything in consumed_mobs)
 
 		// Unregister the signals first
-		UnregisterSignal(friend, list(COMSIG_MOB_STATCHANGE, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(friend, list(COMSIG_MOB_STATCHANGE, COMSIG_QDELETING))
 
 		friend.forceMove(release_turf)
 		// Heals them back to state one

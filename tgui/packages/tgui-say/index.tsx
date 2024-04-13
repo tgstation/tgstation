@@ -1,19 +1,18 @@
 import './styles/main.scss';
-import { createRenderer } from 'tgui/renderer';
-import { TguiSay } from './interfaces/TguiSay';
 
-const renderApp = createRenderer(() => {
-  return <TguiSay />;
-});
+import { createRoot, Root } from 'react-dom/client';
 
-const setupApp = () => {
-  // Delay setup
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupApp);
-    return;
+import { TguiSay } from './TguiSay';
+
+let reactRoot: Root | null = null;
+
+document.onreadystatechange = function () {
+  if (document.readyState !== 'complete') return;
+
+  if (!reactRoot) {
+    const root = document.getElementById('react-root');
+    reactRoot = createRoot(root!);
   }
 
-  renderApp();
+  reactRoot.render(<TguiSay />);
 };
-
-setupApp();

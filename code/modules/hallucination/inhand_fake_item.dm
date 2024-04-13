@@ -43,7 +43,7 @@
 	hallucinated_item.desc = initial(template_item_type.desc)
 	hallucinated_item.icon = initial(template_item_type.icon)
 	hallucinated_item.icon_state = initial(template_item_type.icon_state)
-	hallucinated_item.w_class = initial(template_item_type.w_class) // Not strictly necessary, but keen eyed people will notice
+	hallucinated_item.update_weight_class(initial(template_item_type.w_class)) // Not strictly necessary, but keen eyed people will notice
 
 	return hallucinated_item
 
@@ -129,17 +129,17 @@
 		stack_trace("[type] was created without a parent hallucination.")
 		return INITIALIZE_HINT_QDEL
 
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(parent_deleting))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(parent_deleting))
 	src.parent = parent
 
 	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
 
 /obj/item/hallucinated/Destroy(force)
-	UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(parent, COMSIG_QDELETING)
 	parent = null
 	return ..()
 
-/// Signal proc for [COMSIG_PARENT_QDELETING], if our associated hallucination deletes, we should too
+/// Signal proc for [COMSIG_QDELETING], if our associated hallucination deletes, we should too
 /obj/item/hallucinated/proc/parent_deleting(datum/source)
 	SIGNAL_HANDLER
 

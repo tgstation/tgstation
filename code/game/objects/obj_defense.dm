@@ -5,14 +5,14 @@
 
 /obj/ex_act(severity, target)
 	if(resistance_flags & INDESTRUCTIBLE)
-		return
+		return FALSE
 
 	. = ..() //contents explosion
 	if(QDELETED(src))
-		return
+		return TRUE
 	if(target == src)
 		take_damage(INFINITY, BRUTE, BOMB, 0)
-		return
+		return TRUE
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			take_damage(INFINITY, BRUTE, BOMB, 0)
@@ -21,14 +21,31 @@
 		if(EXPLODE_LIGHT)
 			take_damage(rand(10, 90), BRUTE, BOMB, 0)
 
-/obj/bullet_act(obj/projectile/P)
+	return TRUE
+
+/obj/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	. = ..()
-	playsound(src, P.hitsound, 50, TRUE)
-	var/damage
+	if(. != BULLET_ACT_HIT)
+		return .
+
+	playsound(src, hitting_projectile.hitsound, 50, TRUE)
+	var/damage_sustained = 0
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
-		damage = take_damage(P.damage, P.damage_type, P.armor_flag, 0, turn(P.dir, 180), P.armour_penetration)
-	if(P.suppressed != SUPPRESSED_VERY)
-		visible_message(span_danger("[src] is hit by \a [P][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE)
+		damage_sustained = take_damage(
+			hitting_projectile.damage * hitting_projectile.demolition_mod,
+			hitting_projectile.damage_type,
+			hitting_projectile.armor_flag,
+			FALSE,
+			REVERSE_DIR(hitting_projectile.dir),
+			hitting_projectile.armour_penetration,
+		)
+	if(hitting_projectile.suppressed != SUPPRESSED_VERY)
+		visible_message(
+			span_danger("[src] is hit by \a [hitting_projectile][damage_sustained ? "" : ", [no_damage_feedback]"]!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+		)
+
+	return damage_sustained > 0 ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
 
 /obj/attack_hulk(mob/living/carbon/human/user)
 	..()
@@ -37,7 +54,7 @@
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 	var/damage = take_damage(hulk_damage(), BRUTE, MELEE, 0, get_dir(src, user))
-	user.visible_message(span_danger("[user] smashes [src][damage ? "" : ", without leaving a mark"]!"), span_danger("You smash [src][damage ? "" : ", without leaving a mark"]!"), null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_danger("[user] smashes [src][damage ? "" : ", [no_damage_feedback]"]!"), span_danger("You smash [src][damage ? "" : ", [no_damage_feedback]"]!"), null, COMBAT_MESSAGE_RANGE)
 	return TRUE
 
 /obj/blob_act(obj/structure/blob/B)
@@ -81,12 +98,6 @@
 	var/amt = max(0, ((force - (move_resist * MOVE_FORCE_CRUSH_RATIO)) / (move_resist * MOVE_FORCE_CRUSH_RATIO)) * 10)
 	take_damage(amt, BRUTE)
 
-/obj/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
-	if(!user.is_adult)
-		return
-	if(attack_generic(user, rand(10, 15), BRUTE, MELEE, 1))
-		log_combat(user, src, "attacked")
-
 /obj/singularity_act()
 	SSexplosions.high_mov_atom += src
 	if(src && !QDELETED(src))
@@ -96,15 +107,13 @@
 
 ///// ACID
 
-GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "acid"))
-
 ///the obj's reaction when touched by acid
 /obj/acid_act(acidpwr, acid_volume)
 	. = ..()
-	if((resistance_flags & UNACIDABLE) || (acid_volume <= 0) || acidpwr <= 0)
+	if((resistance_flags & UNACIDABLE) || (acid_volume <= 0) || (acidpwr <= 0))
 		return FALSE
 
-	AddComponent(/datum/component/acid, acidpwr, acid_volume)
+	AddComponent(/datum/component/acid, acidpwr, acid_volume, custom_acid_overlay || GLOB.acid_overlay)
 	return TRUE
 
 ///called when the obj is destroyed by acid.
@@ -116,30 +125,19 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 ///Called when the obj is exposed to fire.
 /obj/fire_act(exposed_temperature, exposed_volume)
 	if(isturf(loc))
-		var/turf/T = loc
-		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
+		var/turf/our_turf = loc
+		if(our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
 			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, FIRE, 0)
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))
-		resistance_flags |= ON_FIRE
-		SSfire_burning.processing[src] = src
-		update_appearance()
-		return 1
+		AddComponent(/datum/component/burning, custom_fire_overlay || GLOB.fire_overlay, burning_particles)
+		return TRUE
 	return ..()
 
-///called when the obj is destroyed by fire
+/// Should be called when the atom is destroyed by fire, comparable to acid_melt() proc
 /obj/proc/burn()
-	if(resistance_flags & ON_FIRE)
-		SSfire_burning.processing -= src
 	deconstruct(FALSE)
-
-///Called when the obj is no longer on fire.
-/obj/proc/extinguish()
-	if(resistance_flags & ON_FIRE)
-		resistance_flags &= ~ON_FIRE
-		update_appearance()
-		SSfire_burning.processing -= src
 
 ///Called when the obj is hit by a tesla bolt.
 /obj/zap_act(power, zap_flags)
@@ -155,11 +153,50 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			buckled_mob.electrocute_act((clamp(round(strength/400), 10, 90) + rand(-5, 5)), src, flags = SHOCK_TESLA)
+			buckled_mob.electrocute_act((clamp(round(strength * 1.25e-3), 10, 90) + rand(-5, 5)), src, flags = SHOCK_TESLA)
 
-///the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
+/**
+ * Custom behaviour per atom subtype on how they should deconstruct themselves
+ * Arguments
+ *
+ * * disassembled - TRUE means we cleanly took this atom apart using tools. FALSE means this was destroyed in a violent way
+ */
+/obj/proc/atom_deconstruct(disassembled = TRUE)
+	PROTECTED_PROC(TRUE)
+
+	return
+
+/**
+ * The interminate proc between deconstruct() & atom_deconstruct(). By default this delegates deconstruction to
+ * atom_deconstruct if NO_DEBRIS_AFTER_DECONSTRUCTION is absent but subtypes can override this to handle NO_DEBRIS_AFTER_DECONSTRUCTION in their
+ * own unique way. Override this if for example you want to dump out important content like mobs from the
+ * atom before deconstruction regardless if NO_DEBRIS_AFTER_DECONSTRUCTION is present or not
+ * Arguments
+ *
+ * * disassembled - TRUE means we cleanly took this atom apart using tools. FALSE means this was destroyed in a violent way
+ */
+/obj/proc/handle_deconstruct(disassembled = TRUE)
+	SHOULD_CALL_PARENT(FALSE)
+
+	if(!(obj_flags & NO_DEBRIS_AFTER_DECONSTRUCTION))
+		atom_deconstruct(disassembled)
+
+/**
+ * The obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
+ * Arguments
+ *
+ * * disassembled - TRUE means we cleanly took this atom apart using tools. FALSE means this was destroyed in a violent way
+ */
 /obj/proc/deconstruct(disassembled = TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	//allow objects to deconstruct themselves
+	handle_deconstruct(disassembled)
+
+	//inform objects we were deconstructed
 	SEND_SIGNAL(src, COMSIG_OBJ_DECONSTRUCT, disassembled)
+
+	//delete our self
 	qdel(src)
 
 ///what happens when the obj's integrity reaches zero.

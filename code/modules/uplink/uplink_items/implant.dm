@@ -1,5 +1,3 @@
-// File ordered based on progression
-
 /datum/uplink_category/implants
 	name = "Implants"
 	weight = 2
@@ -9,13 +7,15 @@
 	category = /datum/uplink_category/implants
 	surplus = 50
 
-// No progression cost
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"
-	desc = "An implant injected into the body and later activated at the user's will. It will attempt to free the \
-			user from common restraints such as handcuffs."
+	desc = "Can be activated to release common restraints such as handcuffs, legcuffs, and even bolas tethered around the legs."
 	item = /obj/item/storage/box/syndie_kit/imp_freedom
 	cost = 5
+
+/datum/uplink_item/implants/freedom/New()
+	. = ..()
+	desc += " Implant has enough energy for [FREEDOM_IMPLANT_CHARGES] uses before it becomes inert and harmlessly self-destructs."
 
 /datum/uplink_item/implants/radio
 	name = "Internal Syndicate Radio Implant"
@@ -49,6 +49,7 @@
 	// An empty uplink is kinda useless.
 	surplus = 0
 	restricted = TRUE
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/implants/uplink/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/obj/item/storage/box/syndie_kit/uplink_box = ..()

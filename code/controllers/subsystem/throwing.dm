@@ -55,10 +55,10 @@ SUBSYSTEM_DEF(throwing)
 	var/init_dir
 	///The maximum number of turfs that the thrownthing will travel to reach it's target.
 	var/maxrange
-	///The speed of the projectile thrownthing being thrown.
+	///Turfs to travel per tick
 	var/speed
 	///If a mob is the one who has thrown the object, then it's moved here. This can be null and must be null checked before trying to use it.
-	var/mob/thrower
+	var/datum/weakref/thrower
 	///A variable that helps in describing objects thrown at an angle, if it should be moved diagonally first or last.
 	var/diagonals_first
 	///Set to TRUE if the throw is exclusively diagonal (45 Degree angle throws for example)
@@ -90,11 +90,10 @@ SUBSYSTEM_DEF(throwing)
 	///The last world.time value stored when the thrownthing was moving.
 	var/last_move = 0
 
-
 /datum/thrownthing/New(thrownthing, target, init_dir, maxrange, speed, thrower, diagonals_first, force, gentle, callback, target_zone)
 	. = ..()
 	src.thrownthing = thrownthing
-	RegisterSignal(thrownthing, COMSIG_PARENT_QDELETING, PROC_REF(on_thrownthing_qdel))
+	RegisterSignal(thrownthing, COMSIG_QDELETING, PROC_REF(on_thrownthing_qdel))
 	src.starting_turf = get_turf(thrownthing)
 	src.target_turf = get_turf(target)
 	if(target_turf != target)
@@ -102,13 +101,13 @@ SUBSYSTEM_DEF(throwing)
 	src.init_dir = init_dir
 	src.maxrange = maxrange
 	src.speed = speed
-	src.thrower = thrower
+	if(thrower)
+		src.thrower = WEAKREF(thrower)
 	src.diagonals_first = diagonals_first
 	src.force = force
 	src.gentle = gentle
 	src.callback = callback
 	src.target_zone = target_zone
-
 
 /datum/thrownthing/Destroy()
 	SSthrowing.processing -= thrownthing
@@ -117,10 +116,8 @@ SUBSYSTEM_DEF(throwing)
 	thrownthing = null
 	thrower = null
 	initial_target = null
-	if(callback)
-		QDEL_NULL(callback) //It stores a reference to the thrownthing, its source. Let's clean that.
+	callback = null
 	return ..()
-
 
 ///Defines the datum behavior on the thrownthing's qdeletion event.
 /datum/thrownthing/proc/on_thrownthing_qdel(atom/movable/source, force)
@@ -128,6 +125,11 @@ SUBSYSTEM_DEF(throwing)
 
 	qdel(src)
 
+/// Returns the mob thrower, or null
+/datum/thrownthing/proc/get_thrower()
+	. = thrower?.resolve()
+	if(isnull(.))
+		thrower = null
 
 /datum/thrownthing/proc/tick()
 	var/atom/movable/AM = thrownthing
@@ -140,10 +142,13 @@ SUBSYSTEM_DEF(throwing)
 		return
 
 	var/atom/movable/actual_target = initial_target?.resolve()
+	var/mob/mob_thrower = get_thrower()
 
 	if(dist_travelled) //to catch sneaky things moving on our tile while we slept
 		for(var/atom/movable/obstacle as anything in get_turf(thrownthing))
-			if (obstacle == thrownthing || (obstacle == thrower && !ismob(thrownthing)))
+			if (obstacle == thrownthing || (obstacle == mob_thrower && !ismob(thrownthing)))
+				continue
+			if(ismob(obstacle) && thrownthing.pass_flags & PASSMOB && (obstacle != actual_target))
 				continue
 			if(obstacle.pass_flags_self & LETPASSTHROW)
 				continue
@@ -227,5 +232,11 @@ SUBSYSTEM_DEF(throwing)
 
 	if(thrownthing)
 		SEND_SIGNAL(thrownthing, COMSIG_MOVABLE_THROW_LANDED, src)
+		var/turf/landed_turf = get_turf(thrownthing)
+		if(landed_turf)
+			SEND_SIGNAL(landed_turf, COMSIG_TURF_MOVABLE_THROW_LANDED, thrownthing)
 
 	qdel(src)
+
+#undef MAX_THROWING_DIST
+#undef MAX_TICKS_TO_MAKE_UP

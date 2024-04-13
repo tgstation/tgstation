@@ -19,7 +19,7 @@
 	base_message_chance = 15
 	symptom_delay_min = 2
 	symptom_delay_max = 15
-	var/spread_range = 1
+	required_organ = ORGAN_SLOT_LUNGS
 	threshold_descs = list(
 		"Resistance 11" = "The host will drop small items when coughing.",
 		"Resistance 15" = "Occasionally causes coughing fits that stun the host. The extra coughs do not spread the virus.",
@@ -31,6 +31,7 @@
 	COOLDOWN_DECLARE(cough_cooldown)
 	///if FALSE, there is a percentage chance that the mob will emote coughing while cough_cooldown is on cooldown. If TRUE, won't emote again until after the off cooldown cough occurs.
 	var/off_cooldown_coughed = FALSE
+	var/spread_range = 1
 
 /datum/symptom/cough/Start(datum/disease/advance/active_disease)
 	. = ..()
@@ -75,6 +76,6 @@
 			if(power >= 2 && prob(30))
 				to_chat(affected_mob, span_userdanger("[pick("You have a coughing fit!", "You can't stop coughing!")]"))
 				affected_mob.Immobilize(20)
-				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 6)
-				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 12)
-				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 18)
+				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 0.6 SECONDS)
+				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 1.2 SECONDS)
+				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 1.8 SECONDS)

@@ -31,7 +31,7 @@
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		create_character_preview_view(user)
+		character_preview_view = create_character_preview_view(user)
 		ui = new(user, src, "MedicalRecords")
 		ui.set_autoupdate(FALSE)
 		ui.open()
@@ -58,11 +58,14 @@
 			gender = target.gender,
 			major_disabilities = target.major_disabilities_desc,
 			minor_disabilities = target.minor_disabilities_desc,
+			physical_status = target.physical_status,
+			mental_status = target.mental_status,
 			name = target.name,
 			notes = notes,
 			quirk_notes = target.quirk_notes,
 			rank = target.rank,
 			species = target.species,
+			trim = target.trim,
 		))
 
 	data["records"] = records
@@ -73,6 +76,8 @@
 	var/list/data = list()
 	data["min_age"] = AGE_MIN
 	data["max_age"] = AGE_MAX
+	data["physical_statuses"] = PHYSICAL_STATUSES
+	data["mental_statuses"] = MENTAL_STATUSES
 	return data
 
 /obj/machinery/computer/records/medical/ui_act(action, list/params, datum/tgui/ui)
@@ -110,6 +115,24 @@
 
 			return TRUE
 
+		if("set_physical_status")
+			var/physical_status = params["physical_status"]
+			if(!physical_status || !(physical_status in PHYSICAL_STATUSES))
+				return FALSE
+
+			target.physical_status = physical_status
+
+			return TRUE
+
+		if("set_mental_status")
+			var/mental_status = params["mental_status"]
+			if(!mental_status || !(mental_status in MENTAL_STATUSES))
+				return FALSE
+
+			target.mental_status = mental_status
+
+			return TRUE
+
 	return FALSE
 
 /// Deletes medical information from a record.
@@ -126,6 +149,8 @@
 	target.medical_notes.Cut()
 	target.minor_disabilities = ""
 	target.minor_disabilities_desc = ""
+	target.physical_status = ""
+	target.mental_status = ""
 	target.name = "Unknown"
 	target.quirk_notes = ""
 	target.rank = "Unknown"

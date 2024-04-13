@@ -97,6 +97,7 @@
 
 /datum/food_processor_process/spidereggs
 	input = /obj/item/food/spidereggs
+	blacklist = list(/obj/item/food/spidereggs/processed)
 	output = /obj/item/food/spidereggs/processed
 
 /datum/food_processor_process/potato
@@ -129,7 +130,7 @@
 	output = /obj/item/food/roastparsnip
 
 /datum/food_processor_process/mob/slime
-	input = /mob/living/simple_animal/slime
+	input = /mob/living/basic/slime
 	output = null
 	required_machine = /obj/machinery/processor/slime
 

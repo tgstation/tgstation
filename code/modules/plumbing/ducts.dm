@@ -5,7 +5,7 @@ All the important duct code:
 */
 /obj/machinery/duct
 	name = "fluid duct"
-	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
+	icon = 'icons/obj/pipes_n_cables/hydrochem/fluid_ducts.dmi'
 	icon_state = "nduct"
 	layer = PLUMBING_PIPE_VISIBILE_LAYER
 	use_power = NO_POWER_USE
@@ -86,7 +86,7 @@ All the important duct code:
 
 ///connect to a duct
 /obj/machinery/duct/proc/connect_duct(obj/machinery/duct/other, direction)
-	var/opposite_dir = turn(direction, 180)
+	var/opposite_dir = REVERSE_DIR(direction)
 	if(!active || !other.active)
 		return
 
@@ -128,7 +128,7 @@ All the important duct code:
 
 ///connect to a plumbing object
 /obj/machinery/duct/proc/connect_plumber(datum/component/plumbing/plumbing, direction)
-	var/opposite_dir = turn(direction, 180)
+	var/opposite_dir = REVERSE_DIR(direction)
 
 	if(!(duct_layer & plumbing.ducting_layer))
 		return FALSE
@@ -182,7 +182,7 @@ All the important duct code:
 	if(!(other in neighbours))
 		neighbours[other] = direction
 	if(!(src in other.neighbours))
-		other.neighbours[src] = turn(direction, 180)
+		other.neighbours[src] = REVERSE_DIR(direction)
 
 ///remove all our neighbours, and remove us from our neighbours aswell
 /obj/machinery/duct/proc/lose_neighbours()
@@ -212,7 +212,7 @@ All the important duct code:
 	for(var/direction in GLOB.cardinals)
 		if(direction & connects)
 			for(var/obj/machinery/duct/other in get_step(src, direction))
-				if((turn(direction, 180) & other.connects) && other.active)
+				if((REVERSE_DIR(direction) & other.connects) && other.active)
 					adjacents += other
 	return adjacents
 
@@ -323,9 +323,9 @@ All the important duct code:
 	name = "stack of duct"
 	desc = "A stack of fluid ducts."
 	singular_name = "duct"
-	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
+	icon = 'icons/obj/pipes_n_cables/hydrochem/fluid_ducts.dmi'
 	icon_state = "ducts"
-	mats_per_unit = list(/datum/material/iron=500)
+	mats_per_unit = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*5)
 	w_class = WEIGHT_CLASS_TINY
 	novariants = FALSE
 	max_amount = 50
@@ -343,9 +343,13 @@ All the important duct code:
 
 /obj/item/stack/ducts/attack_self(mob/user)
 	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers, duct_layer)
+	if(!user.is_holding(src))
+		return
 	if(new_layer)
 		duct_layer = new_layer
 	var/new_color = tgui_input_list(user, "Select a color", "Color", GLOB.pipe_paint_colors, duct_color)
+	if(!user.is_holding(src))
+		return
 	if(new_color)
 		duct_color = new_color
 		add_atom_colour(GLOB.pipe_paint_colors[new_color], FIXED_COLOUR_PRIORITY)

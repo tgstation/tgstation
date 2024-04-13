@@ -3,11 +3,10 @@
 /obj/item/clothing/under/rank/engineering
 	icon = 'icons/obj/clothing/under/engineering.dmi'
 	worn_icon = 'icons/mob/clothing/under/engineering.dmi'
-	armor_type = /datum/armor/rank_engineering
+	armor_type = /datum/armor/clothing_under/rank_engineering
 	resistance_flags = NONE
 
-/datum/armor/rank_engineering
-	bio = 10
+/datum/armor/clothing_under/rank_engineering
 	fire = 60
 	acid = 20
 
@@ -16,10 +15,9 @@
 	name = "chief engineer's jumpsuit"
 	icon_state = "chiefengineer"
 	inhand_icon_state = "gy_suit"
-	armor_type = /datum/armor/engineering_chief_engineer
+	armor_type = /datum/armor/clothing_under/engineering_chief_engineer
 
-/datum/armor/engineering_chief_engineer
-	bio = 10
+/datum/armor/clothing_under/engineering_chief_engineer
 	fire = 80
 	acid = 40
 
@@ -28,6 +26,25 @@
 	desc = "It's a high visibility jumpskirt given to those engineers insane enough to achieve the rank of \"Chief Engineer\". Made from fire resistant materials."
 	icon_state = "chief_skirt"
 	inhand_icon_state = "gy_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	dying_key = DYE_REGISTRY_JUMPSKIRT
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck
+	name = "chief engineer's turtleneck"
+	desc = "A yellow turtleneck and white khakis, for a chief engineer with a superior sense of style."
+	icon_state = "ceturtle"
+	inhand_icon_state = "y_suit"
+	can_adjust = TRUE
+	alt_covers_chest = TRUE
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+
+/obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck/skirt
+	name = "chief engineer's turtleneck skirt"
+	desc = "A yellow turtleneck and white khaki skirt, for a chief engineer with a superior sense of style."
+	icon_state = "ceturtle_skirt"
+	inhand_icon_state = "y_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
@@ -54,7 +71,6 @@
 	name = "engineer's jumpsuit"
 	icon_state = "engine"
 	inhand_icon_state = "engi_suit"
-	species_exception = list(/datum/species/golem/uranium)
 
 /obj/item/clothing/under/rank/engineering/engineer/hazard
 	name = "engineer's hazard jumpsuit"

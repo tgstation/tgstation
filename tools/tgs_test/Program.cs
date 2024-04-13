@@ -11,6 +11,7 @@ using Tgstation.Server.Api.Models.Request;
 using Tgstation.Server.Api.Models;
 using Tgstation.Server.Api.Models.Response;
 using Tgstation.Server.Client;
+using Tgstation.Server.Common.Extensions;
 using YamlDotNet.Serialization.NamingConventions;
 using YamlDotNet.Serialization;
 
@@ -202,10 +203,14 @@ try
 		default);
 
 	Console.WriteLine("Installing BYOND...");
-	var byondInstallJob = await instanceClient.Byond.SetActiveVersion(
-		new ByondVersionRequest
+	var byondInstallJob = await instanceClient.Engine.SetActiveVersion(
+		new EngineVersionRequest
 		{
-			Version = targetByondVersion
+			EngineVersion = new EngineVersion
+			{
+				Version = targetByondVersion,
+				Engine = EngineType.Byond,
+			}
 		},
 		null,
 		default);
@@ -227,22 +232,19 @@ try
 		default);
 
 	Console.WriteLine("Uploading EventScripts...");
-	var configurationUploadTasks = new List<Task<ConfigurationFileResponse>>();
 	foreach (var scriptDownloadKvp in scriptDownloadTasks)
 	{
 		var scriptContent = await scriptDownloadKvp.Value;
 
 		var memoryStream = new MemoryStream(scriptContent);
-		configurationUploadTasks.Add(
-			instanceClient.Configuration.Write(new ConfigurationFileRequest
+		await instanceClient.Configuration.Write(
+			new ConfigurationFileRequest
 			{
 				Path = $"EventScripts/{scriptDownloadKvp.Key}"
 			},
 			memoryStream,
-			default));
+			default);
 	}
-
-	await Task.WhenAll(configurationUploadTasks);
 
 	Console.WriteLine("Creating GameStaticFiles structure...");
 	var staticFileDownloadTasks = new Dictionary<string, Dictionary<string, Task<byte[]>>>();

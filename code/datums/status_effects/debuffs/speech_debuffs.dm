@@ -2,6 +2,11 @@
 	id = null
 	alert_type = null
 	remove_on_fullheal = TRUE
+	tick_interval = -1
+	/// If TRUE, TTS will say the original message rather than what we changed it to
+	var/make_tts_message_original = FALSE
+	/// If set, this will be appended to the TTS filter of the message
+	var/tts_filter = ""
 
 /datum/status_effect/speech/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
@@ -23,7 +28,7 @@
 /datum/status_effect/speech/proc/handle_message(datum/source, list/message_args)
 	SIGNAL_HANDLER
 
-	var/phrase = html_decode(message_args[TREAT_MESSAGE_MESSAGE])
+	var/phrase = html_decode(message_args[TREAT_MESSAGE_ARG])
 	if(!length(phrase))
 		return
 
@@ -32,10 +37,17 @@
 
 	for(var/i = 1, i <= length(phrase), i += length(original_char))
 		original_char = phrase[i]
+		final_phrase += apply_speech(original_char)
 
-		final_phrase += apply_speech(original_char, original_char)
+	if(final_phrase == phrase)
+		return // No change was done, whatever
 
-	message_args[TREAT_MESSAGE_MESSAGE] = sanitize(final_phrase)
+	if(length(tts_filter) > 0)
+		message_args[TREAT_TTS_FILTER_ARG] += tts_filter
+	if(make_tts_message_original)
+		message_args[TREAT_TTS_MESSAGE_ARG] = message_args[TREAT_MESSAGE_ARG]
+
+	message_args[TREAT_MESSAGE_ARG] = sanitize(final_phrase)
 
 /**
  * Applies the speech effects on the past character, changing
@@ -43,14 +55,23 @@
  *
  * Return the modified_char to be reapplied to the message.
  */
-/datum/status_effect/speech/proc/apply_speech(original_char, modified_char)
+/datum/status_effect/speech/proc/apply_speech(original_char)
 	stack_trace("[type] didn't implement apply_speech.")
 	return original_char
 
 /datum/status_effect/speech/stutter
 	id = "stutter"
+	make_tts_message_original = TRUE
+	tts_filter = "tremolo=f=10:d=0.8,rubberband=tempo=0.5"
+
 	/// The probability of adding a stutter to any character
 	var/stutter_prob = 80
+	/// The chance of a four character stutter
+	var/four_char_chance = 10
+	/// The chance of a three character stutter
+	var/three_char_chance = 20
+	/// The chance of a two character stutter
+	var/two_char_chance = 95
 	/// Regex of characters we won't apply a stutter to
 	var/static/regex/no_stutter
 
@@ -61,18 +82,32 @@
 	if(!no_stutter)
 		no_stutter = regex(@@[aeiouAEIOU ""''()[\]{}.!?,:;_`~-]@)
 
-/datum/status_effect/speech/stutter/apply_speech(original_char, modified_char)
+/datum/status_effect/speech/stutter/apply_speech(original_char)
 	if(prob(stutter_prob) && !no_stutter.Find(original_char))
-		if(prob(10))
-			modified_char = "[modified_char]-[modified_char]-[modified_char]-[modified_char]"
-		else if(prob(20))
-			modified_char = "[modified_char]-[modified_char]-[modified_char]"
-		else if(prob(95))
-			modified_char = "[modified_char]-[modified_char]"
-		else
-			modified_char = ""
+		if(prob(four_char_chance))
+			return "[original_char]-[original_char]-[original_char]-[original_char]"
+		if(prob(three_char_chance))
+			return "[original_char]-[original_char]-[original_char]"
+		if(prob(two_char_chance))
+			return "[original_char]-[original_char]"
 
-	return modified_char
+	return original_char
+
+/datum/status_effect/speech/stutter/anxiety
+	id = "anxiety_stutter"
+	stutter_prob = 5
+	four_char_chance = 4
+	three_char_chance = 10
+	two_char_chance = 100
+	remove_on_fullheal = FALSE
+
+/datum/status_effect/speech/stutter/anxiety/handle_message(datum/source, list/message_args)
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS) || HAS_TRAIT(owner, TRAIT_SIGN_LANG))
+		stutter_prob = 0
+	else
+		var/datum/quirk/social_anxiety/host_quirk = owner.get_quirk(/datum/quirk/social_anxiety)
+		stutter_prob = clamp(host_quirk?.calculate_mood_mod() * 0.5, 5, 50)
+	return ..()
 
 /datum/status_effect/speech/stutter/derpspeech
 	id = "derp_stutter"
@@ -83,7 +118,7 @@
 
 /datum/status_effect/speech/stutter/derpspeech/handle_message(datum/source, list/message_args)
 
-	var/message = html_decode(message_args[TREAT_MESSAGE_MESSAGE])
+	var/message = html_decode(message_args[TREAT_MESSAGE_ARG])
 
 	message = replacetext(message, " am ", " ")
 	message = replacetext(message, " is ", " ")
@@ -100,7 +135,7 @@
 		message = uppertext(message)
 		message += "[apply_speech(exclamation, exclamation)]"
 
-	message_args[1] = message
+	message_args[TREAT_MESSAGE_ARG] = message
 
 	var/mob/living/living_source = source
 	if(!isliving(source) || living_source.has_status_effect(/datum/status_effect/speech/stutter))
@@ -149,9 +184,10 @@
 	string_replacements = speech_changes["string_replacements"]
 	string_additions = speech_changes["string_additions"]
 
-/datum/status_effect/speech/slurring/apply_speech(original_char, modified_char)
+/datum/status_effect/speech/slurring/apply_speech(original_char)
 
-	var/lower_char = lowertext(modified_char)
+	var/modified_char = original_char
+	var/lower_char = LOWER_TEXT(modified_char)
 	if(prob(common_prob) && (lower_char in common_replacements))
 		var/to_replace = common_replacements[lower_char]
 		if(islist(to_replace))
@@ -191,13 +227,35 @@
 
 	return modified_char
 
-/datum/status_effect/speech/slurring/drunk
-	id = "drunk_slurring"
+/datum/status_effect/speech/slurring/generic
+	id = "generic_slurring"
 	common_prob = 33
-	uncommon_prob = 5
+	uncommon_prob = 0
 	replacement_prob = 5
 	doubletext_prob = 10
 	text_modification_file = "slurring_drunk_text.json"
+
+/datum/status_effect/speech/slurring/drunk
+	id = "drunk_slurring"
+	// These defaults are updated when speech event occur.
+	common_prob = -1
+	uncommon_prob = -1
+	replacement_prob = -1
+	doubletext_prob = -1
+	text_modification_file = "slurring_drunk_text.json"
+
+/datum/status_effect/speech/slurring/drunk/handle_message(datum/source, list/message_args)
+	var/current_drunkness = owner.get_drunk_amount()
+	// These numbers are arbitarily picked
+	// Common replacements start at about 20, and maxes out at about 85
+	common_prob = clamp((current_drunkness * 0.8) - 16, 0, 50)
+	// Uncommon replacements (burping) start at 50 and max out at 110 (when you are dying)
+	uncommon_prob = clamp((current_drunkness * 0.2) - 10, 0, 12)
+	// Replacements start at 20 and max out at about 60
+	replacement_prob = clamp((current_drunkness * 0.4) - 8, 0, 12)
+	// Double texting start out at about 25 and max out at about 60
+	doubletext_prob = clamp((current_drunkness * 0.5) - 12, 0, 20)
+	return ..()
 
 /datum/status_effect/speech/slurring/cult
 	id = "cult_slurring"
@@ -206,6 +264,8 @@
 	replacement_prob = 33
 	doubletext_prob = 0
 	text_modification_file = "slurring_cult_text.json"
+
+	tts_filter = "rubberband=pitch=0.5,vibrato=5"
 
 /datum/status_effect/speech/slurring/heretic
 	id = "heretic_slurring"

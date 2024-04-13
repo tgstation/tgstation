@@ -190,3 +190,14 @@
 	)
 	result = /obj/item/food/spanish_rice
 	category = CAT_MEXICAN
+
+/datum/crafting_recipe/food/pineapple_salsa
+	name = "Pineapple salsa"
+	reqs = list(
+		/obj/item/food/pineappleslice = 2,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/chili = 1,
+	)
+	result = /obj/item/food/pineapple_salsa
+	category = CAT_MEXICAN

@@ -73,7 +73,7 @@
 	if(cached_json["apiValidateOnly"])
 		TGS_INFO_LOG("Validating API and exiting...")
 		Export(TGS4_COMM_VALIDATE, list(TGS4_PARAMETER_DATA = "[minimum_required_security_level]"))
-		del(world)
+		TerminateWorld()
 
 	security_level = cached_json["securityLevel"]
 	chat_channels_json_path = cached_json["chatChannelsJson"]
@@ -181,14 +181,14 @@
 	var/json = json_encode(data)
 
 	while(requesting_new_port && !override_requesting_new_port)
-		sleep(1)
+		sleep(world.tick_lag)
 
 	//we need some port open at this point to facilitate return communication
 	if(!world.port)
 		requesting_new_port = TRUE
 		if(!world.OpenPort(0)) //open any port
 			TGS_ERROR_LOG("Unable to open random port to retrieve new port![TGS4_PORT_CRITFAIL_MESSAGE]")
-			del(world)
+			TerminateWorld()
 
 		//request a new port
 		export_lock = FALSE
@@ -196,20 +196,20 @@
 
 		if(!new_port_json)
 			TGS_ERROR_LOG("No new port response from server![TGS4_PORT_CRITFAIL_MESSAGE]")
-			del(world)
+			TerminateWorld()
 
 		var/new_port = new_port_json[TGS4_PARAMETER_DATA]
 		if(!isnum(new_port) || new_port <= 0)
 			TGS_ERROR_LOG("Malformed new port json ([json_encode(new_port_json)])![TGS4_PORT_CRITFAIL_MESSAGE]")
-			del(world)
+			TerminateWorld()
 
 		if(new_port != world.port && !world.OpenPort(new_port))
 			TGS_ERROR_LOG("Unable to open port [new_port]![TGS4_PORT_CRITFAIL_MESSAGE]")
-			del(world)
+			TerminateWorld()
 		requesting_new_port = FALSE
 
 	while(export_lock)
-		sleep(1)
+		sleep(world.tick_lag)
 	export_lock = TRUE
 
 	last_interop_response = null
@@ -217,7 +217,7 @@
 	text2file(json, server_commands_json_path)
 
 	for(var/I = 0; I < EXPORT_TIMEOUT_DS && !last_interop_response; ++I)
-		sleep(1)
+		sleep(world.tick_lag)
 
 	if(!last_interop_response)
 		TGS_ERROR_LOG("Failed to get export result for: [json]")
@@ -256,33 +256,46 @@
 /datum/tgs_api/v4/Revision()
 	return cached_revision
 
-/datum/tgs_api/v4/ChatBroadcast(message, list/channels)
+/datum/tgs_api/v4/ChatBroadcast(datum/tgs_message_content/message, list/channels)
 	var/list/ids
 	if(length(channels))
 		ids = list()
 		for(var/I in channels)
 			var/datum/tgs_chat_channel/channel = I
 			ids += channel.id
-	message = list("message" = message, "channelIds" = ids)
+
+	message = UpgradeDeprecatedChatMessage(message)
+
+	if (!length(channels))
+		return
+
+	message = list("message" = message.text, "channelIds" = ids)
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
 	else
 		Export(TGS4_COMM_CHAT, message)
 
-/datum/tgs_api/v4/ChatTargetedBroadcast(message, admin_only)
+/datum/tgs_api/v4/ChatTargetedBroadcast(datum/tgs_message_content/message, admin_only)
 	var/list/channels = list()
 	for(var/I in ChatChannelInfo())
 		var/datum/tgs_chat_channel/channel = I
 		if (!channel.is_private_channel && ((channel.is_admin_channel && admin_only) || (!channel.is_admin_channel && !admin_only)))
 			channels += channel.id
-	message = list("message" = message, "channelIds" = channels)
+
+	message = UpgradeDeprecatedChatMessage(message)
+
+	if (!length(channels))
+		return
+
+	message = list("message" = message.text, "channelIds" = channels)
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
 	else
 		Export(TGS4_COMM_CHAT, message)
 
-/datum/tgs_api/v4/ChatPrivateMessage(message, datum/tgs_chat_user/user)
-	message = list("message" = message, "channelIds" = list(user.channel.id))
+/datum/tgs_api/v4/ChatPrivateMessage(datum/tgs_message_content/message, datum/tgs_chat_user/user)
+	message = UpgradeDeprecatedChatMessage(message)
+	message = list("message" = message.text, "channelIds" = list(user.channel.id))
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
 	else

@@ -2,7 +2,7 @@
 
 /obj/structure/kitchenspike_frame
 	name = "meatspike frame"
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "spikeframe"
 	desc = "The frame of a meat spike."
 	density = TRUE
@@ -66,7 +66,7 @@
 
 /obj/structure/kitchenspike
 	name = "meat spike"
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "spike"
 	desc = "A spike for collecting meat from animals."
 	density = TRUE
@@ -125,6 +125,7 @@
 	m180.Turn(180)
 	animate(target, transform = m180, time = 3)
 	target.pixel_y = target.base_pixel_y + PIXEL_Y_OFFSET_LYING
+	ADD_TRAIT(target, TRAIT_MOVE_UPSIDE_DOWN, REF(src))
 
 /obj/structure/kitchenspike/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(buckled_mob != user)
@@ -142,7 +143,7 @@
 		span_notice("You struggle to break free from [src], exacerbating your wounds! (Stay still for two minutes.)"),\
 		span_hear("You hear a wet squishing noise.."))
 		buckled_mob.adjustBruteLoss(30)
-		if(!do_after(buckled_mob, 2 MINUTES, target = src))
+		if(!do_after(buckled_mob, 2 MINUTES, target = src, hidden = TRUE))
 			if(buckled_mob?.buckled)
 				to_chat(buckled_mob, span_warning("You fail to free yourself!"))
 			return
@@ -156,14 +157,14 @@
 	m180.Turn(180)
 	animate(buckled_mob, transform = m180, time = 3)
 	buckled_mob.pixel_y = buckled_mob.base_pixel_y + PIXEL_Y_OFFSET_LYING
+	REMOVE_TRAIT(buckled_mob, TRAIT_MOVE_UPSIDE_DOWN, REF(src))
 
-/obj/structure/kitchenspike/deconstruct(disassembled = TRUE)
+/obj/structure/kitchenspike/atom_deconstruct(disassembled = TRUE)
 	if(disassembled)
 		var/obj/structure/meatspike_frame = new /obj/structure/kitchenspike_frame(src.loc)
 		transfer_fingerprints_to(meatspike_frame)
 	else
 		new /obj/item/stack/sheet/iron(src.loc, 4)
 	new /obj/item/stack/rods(loc, MEATSPIKE_IRONROD_REQUIREMENT)
-	qdel(src)
 
 #undef MEATSPIKE_IRONROD_REQUIREMENT

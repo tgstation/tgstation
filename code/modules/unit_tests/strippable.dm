@@ -1,7 +1,7 @@
 /datum/unit_test/strip_menu_ui_status/Run()
 	// We just need something that doesn't have strippable by default, so we can add it ourselves.
 	var/obj/target = allocate(/obj/item/pen, run_loc_floor_bottom_left)
-	var/datum/element/strippable/strippable = target.AddElement(/datum/element/strippable, list())
+	var/datum/element/strippable/strippable = target.AddElement(/datum/element/strippable)
 
 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent, run_loc_floor_bottom_left)
 	ADD_TRAIT(user, TRAIT_PRESERVE_UI_WITHOUT_CLIENT, TRAIT_SOURCE_UNIT_TESTS)

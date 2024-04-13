@@ -15,11 +15,11 @@
 /obj/vehicle/sealed/mecha/savannah_ivanov
 	name = "\improper Savannah-Ivanov"
 	desc = "An insanely overbulked mecha that handily crushes single-pilot opponents. The price is that you need two pilots to use it."
-	icon = 'icons/mecha/coop_mech.dmi'
+	icon = 'icons/mob/coop_mech.dmi'
 	base_icon_state = "savannah_ivanov"
 	icon_state = "savannah_ivanov_0_0"
 	//does not include mmi compatibility
-	mecha_flags = ADDING_ACCESS_POSSIBLE | CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS
 	mech_type = EXOSUIT_MODULE_SAVANNAH
 	movedelay = 3
 	max_integrity = 450 //really tanky, like damn
@@ -31,7 +31,9 @@
 	wreckage = /obj/structure/mecha_wreckage/savannah_ivanov
 	max_occupants = 2
 	max_equip_by_category = list(
-		MECHA_UTILITY = 1,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 3,
 	)
@@ -84,7 +86,7 @@
 	if(chassis.phasing)
 		to_chat(owner, span_warning("You're already airborne!"))
 		return
-	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_SKYFALL))
+	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_SKYFALL))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_SKYFALL)
 		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before attempting to Skyfall."))
 		return
@@ -145,7 +147,6 @@
 	chassis.movedelay = 1
 	chassis.density = FALSE
 	chassis.layer = ABOVE_ALL_MOB_LAYER
-	SET_PLANE(chassis, GAME_PLANE_UPPER_FOV_HIDDEN, launch_turf)
 	animate(chassis, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(chassis, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising mech (just like pods hehe)
 	addtimer(CALLBACK(src, PROC_REF(begin_landing)), 2 SECONDS)
@@ -210,7 +211,7 @@
 			to_chat(crushed_victim, span_userdanger("[chassis] crashes down on you from above!"))
 			if(crushed_victim.stat != CONSCIOUS)
 				crushed_victim.investigate_log("has been gibbed by a falling Savannah Ivanov mech.", INVESTIGATE_DEATHS)
-				crushed_victim.gib(FALSE, FALSE, FALSE)
+				crushed_victim.gib(DROP_ALL_REMAINS)
 				continue
 			crushed_victim.adjustBruteLoss(80)
 
@@ -252,7 +253,7 @@
 /datum/action/vehicle/sealed/mecha/ivanov_strike/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
-	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_MISSILE_STRIKE))
+	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_MISSILE_STRIKE))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_MISSILE_STRIKE)
 		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before firing another Ivanov Strike."))
 		return
@@ -290,7 +291,7 @@
 /**
  * ## end_missile_targeting
  *
- * Called by the ivanov strike datum action or other actions that would end targetting
+ * Called by the ivanov strike datum action or other actions that would end targeting
  * Unhooks signals into clicking to call drop_missile plus other flavor like the overlay
  */
 /datum/action/vehicle/sealed/mecha/ivanov_strike/proc/end_missile_targeting()

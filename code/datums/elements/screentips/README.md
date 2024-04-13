@@ -35,18 +35,17 @@ Example:
 
 ```dm
 /obj/structure/table/Initialize(mapload)
-	if (!(flags_1 & NODECONSTRUCT_1))
-		var/static/list/tool_behaviors = list(
-			TOOL_SCREWDRIVER = list(
-				SCREENTIP_CONTEXT_RMB = "Disassemble",
-			),
+	var/static/list/tool_behaviors = list(
+		TOOL_SCREWDRIVER = list(
+			SCREENTIP_CONTEXT_RMB = "Disassemble",
+		),
 
-			TOOL_WRENCH = list(
-				SCREENTIP_CONTEXT_RMB = "Deconstruct",
-			),
-		)
+		TOOL_WRENCH = list(
+			SCREENTIP_CONTEXT_RMB = "Deconstruct",
+		),
+	)
 
-		AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 ```
 
 This will display "RMB: Deconstruct" when the user hovers over a table with a wrench.

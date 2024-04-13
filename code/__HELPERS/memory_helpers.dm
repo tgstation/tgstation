@@ -112,3 +112,16 @@
 /// Small helper to clean out memories.
 /datum/mind/proc/wipe_memory()
 	QDEL_LIST_ASSOC_VAL(memories)
+
+/// Helder to wipe the passed memory type ONLY from our list of memories
+/datum/mind/proc/wipe_memory_type(memory_type)
+	qdel(memories[memory_type])
+	memories -= memory_type
+
+/// Helper to create quick copies of all of our memories
+/// Quick copies aren't full copies - just basic copies containing necessities.
+/// They cannot be used in stories.
+/datum/mind/proc/quick_copy_all_memories(datum/mind/new_memorizer)
+	for(var/memory_path in memories)
+		var/datum/memory/prime_memory = memories[memory_path]
+		new_memorizer.memories[memory_path] = prime_memory.quick_copy_memory(new_memorizer)

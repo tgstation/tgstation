@@ -92,11 +92,8 @@ GLOBAL_PROTECT(AdminProcCallHandler)
 	usr = lastusr
 	handler.remove_caller(user)
 
-/client/proc/callproc()
-	set category = "Debug"
-	set name = "Advanced ProcCall"
-	set waitfor = FALSE
-	callproc_blocking()
+ADMIN_VERB(advanced_proc_call, R_DEBUG, "Advanced ProcCall", "Call a proc on any datum in the server.", ADMIN_CATEGORY_DEBUG)
+	user.callproc_blocking()
 
 /client/proc/callproc_blocking(list/get_retval)
 	if(!check_rights(R_DEBUG))
@@ -160,7 +157,7 @@ GLOBAL_PROTECT(AdminProcCallHandler)
 		log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		message_admins("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].") //Proccall announce removed.
 		returnval = WrapAdminProcCall(GLOBAL_PROC, procname, lst) // Pass the lst as an argument list to the proc
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Advanced ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Advanced ProcCall")
 	if(get_retval)
 		get_retval += returnval
 	. = get_callproc_returnval(returnval, procname)
@@ -230,37 +227,30 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	return (GLOB.AdminProcCaller && GLOB.AdminProcCaller == usr?.client?.ckey) || (GLOB.AdminProcCallHandler && usr == GLOB.AdminProcCallHandler)
 #endif
 
-/client/proc/callproc_datum(datum/A as null|area|mob|obj|turf)
-	set category = "Debug"
-	set name = "Atom ProcCall"
-	set waitfor = FALSE
-
-	if(!check_rights(R_DEBUG))
-		return
-
-	var/procname = input("Proc name, eg: fake_blood","Proc:", null) as text|null
+ADMIN_VERB_ONLY_CONTEXT_MENU(call_proc_datum, R_DEBUG, "Atom ProcCall", datum/thing as null|area|mob|obj|turf)
+	var/procname = input(user, "Proc name, eg: fake_blood","Proc:", null) as text|null
 	if(!procname)
 		return
-	if(!hascall(A,procname))
-		to_chat(usr, "<font color='red'>Error: callproc_datum(): type [A.type] has no proc named [procname].</font>", confidential = TRUE)
+	if(!hascall(thing, procname))
+		to_chat(user, "<font color='red'>Error: callproc_datum(): type [thing.type] has no proc named [procname].</font>", confidential = TRUE)
 		return
-	var/list/lst = get_callproc_args()
+	var/list/lst = user.get_callproc_args()
 	if(!lst)
 		return
 
-	if(!A || !is_valid_src(A))
-		to_chat(usr, span_warning("Error: callproc_datum(): owner of proc no longer exists."), confidential = TRUE)
+	if(!thing || !is_valid_src(thing))
+		to_chat(user, span_warning("Error: callproc_datum(): owner of proc no longer exists."), confidential = TRUE)
 		return
-	log_admin("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-	var/msg = "[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"]."
+	log_admin("[key_name(user)] called [thing]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
+	var/msg = "[key_name(user)] called [thing]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"]."
 	message_admins(msg)
-	admin_ticket_log(A, msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Atom ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	admin_ticket_log(thing, msg)
+	BLACKBOX_LOG_ADMIN_VERB("Atom ProcCall")
 
-	var/returnval = WrapAdminProcCall(A, procname, lst) // Pass the lst as an argument list to the proc
-	. = get_callproc_returnval(returnval,procname)
+	var/returnval = WrapAdminProcCall(thing, procname, lst) // Pass the lst as an argument list to the proc
+	. = user.get_callproc_returnval(returnval,procname)
 	if(.)
-		to_chat(usr, ., confidential = TRUE)
+		to_chat(user, ., confidential = TRUE)
 
 /client/proc/get_callproc_args()
 	var/argnum = input("Number of arguments","Number:",0) as num|null
@@ -277,7 +267,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		if(named_arg)
 			named_args[named_arg] = value["value"]
 		else
-			. += value["value"]
+			. += LIST_VALUE_WRAP_LISTS(value["value"])
 	if(LAZYLEN(named_args))
 		. += named_args
 

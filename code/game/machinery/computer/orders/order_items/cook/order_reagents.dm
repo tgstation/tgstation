@@ -51,9 +51,9 @@
 	item_path = /obj/item/reagent_containers/condiment/vinegar
 	cost_per_order = 30
 
-/datum/orderable_item/reagents/quality_oil
-	name = "Quality Oil"
-	item_path = /obj/item/reagent_containers/condiment/quality_oil
+/datum/orderable_item/reagents/olive_oil
+	name = "Olive Oil"
+	item_path = /obj/item/reagent_containers/condiment/olive_oil
 	cost_per_order = 50 //Extra Virgin, just like you, the reader
 
 /datum/orderable_item/reagents/peanut_butter
@@ -64,4 +64,34 @@
 /datum/orderable_item/reagents/cherryjelly
 	name = "Cherry Jelly"
 	item_path = /obj/item/reagent_containers/condiment/cherryjelly
+	cost_per_order = 30
+
+/datum/orderable_item/reagents/worcestershire
+	name = "Worcestershire Sauce"
+	item_path = /obj/item/reagent_containers/condiment/worcestershire
+	cost_per_order = 30
+
+/datum/orderable_item/reagents/red_bay
+	name = "Red Bay Seasoning"
+	item_path = /obj/item/reagent_containers/condiment/red_bay
+	cost_per_order = 30
+
+/datum/orderable_item/reagents/curry_powder
+	name = "Curry Powder"
+	item_path = /obj/item/reagent_containers/condiment/curry_powder
+	cost_per_order = 30
+
+/datum/orderable_item/reagents/dashi_concentrate
+	name = "Dashi Concentrate"
+	item_path = /obj/item/reagent_containers/condiment/dashi_concentrate
+	cost_per_order = 30
+
+/datum/orderable_item/reagents/coconut_milk
+	name = "Coconut Milk"
+	item_path = /obj/item/reagent_containers/condiment/coconut_milk
+	cost_per_order = 30
+
+/datum/orderable_item/reagents/grounding_solution
+	name = "Grounding Solution"
+	item_path = /obj/item/reagent_containers/condiment/grounding_solution
 	cost_per_order = 30

@@ -1,24 +1,30 @@
-import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
-import { Box, Button, Section, Stack, Icon } from '../components';
-import { Window } from '../layouts';
-import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
-import { DesignBrowser } from './Fabrication/DesignBrowser';
-import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { Tooltip } from '../components';
 import { BooleanLike, classes } from 'common/react';
+
+import { useBackend } from '../backend';
+import { Box, Button, Icon, Section, Stack } from '../components';
+import { Tooltip } from '../components';
+import { Window } from '../layouts';
+import { DesignBrowser } from './Fabrication/DesignBrowser';
+import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
+import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
+import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
+
+type ExosuitDesign = Design & {
+  constructionTime: number;
+};
 
 type ExosuitFabricatorData = FabricatorData & {
   processing: BooleanLike;
+  designs: Record<string, ExosuitDesign>;
 };
 
-export const ExosuitFabricator = (props, context) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>(context);
+export const ExosuitFabricator = (props) => {
+  const { act, data } = useBackend<ExosuitFabricatorData>();
+  const { materials, SHEET_MATERIAL_AMOUNT } = data;
 
   const availableMaterials: MaterialMap = {};
 
-  for (const material of data.materials) {
+  for (const material of materials) {
     availableMaterials[material.name] = material.amount;
   }
 
@@ -33,7 +39,11 @@ export const ExosuitFabricator = (props, context) => {
                   designs={Object.values(data.designs)}
                   availableMaterials={availableMaterials}
                   buildRecipeElement={(design, availableMaterials) => (
-                    <Recipe available={availableMaterials} design={design} />
+                    <Recipe
+                      available={availableMaterials}
+                      design={design}
+                      SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+                    />
                   )}
                   categoryButtons={(category) => (
                     <Button
@@ -42,7 +52,8 @@ export const ExosuitFabricator = (props, context) => {
                         act('build', {
                           designs: category.children.map((design) => design.id),
                         });
-                      }}>
+                      }}
+                    >
                       Queue All
                     </Button>
                   )}
@@ -51,7 +62,8 @@ export const ExosuitFabricator = (props, context) => {
               <Stack.Item>
                 <Section>
                   <MaterialAccessBar
-                    availableMaterials={data.materials}
+                    availableMaterials={materials}
+                    SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
                     onEjectRequested={(material, amount) => {
                       act('remove_mat', { ref: material.ref, amount });
                     }}
@@ -61,7 +73,10 @@ export const ExosuitFabricator = (props, context) => {
             </Stack>
           </Stack.Item>
           <Stack.Item width="420px">
-            <Queue availableMaterials={availableMaterials} />
+            <Queue
+              availableMaterials={availableMaterials}
+              SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+            />
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -69,13 +84,19 @@ export const ExosuitFabricator = (props, context) => {
   );
 };
 
-const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>(context);
-  const { design, available } = props;
+type RecipeProps = {
+  design: Design;
+  available: MaterialMap;
+  SHEET_MATERIAL_AMOUNT: number;
+};
+
+const Recipe = (props: RecipeProps) => {
+  const { act } = useBackend<ExosuitFabricatorData>();
+  const { design, available, SHEET_MATERIAL_AMOUNT } = props;
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
-      !available[material] || amount > (available[material] ?? 0)
+      !available[material] || amount > (available[material] ?? 0),
   );
 
   return (
@@ -86,7 +107,8 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
             'FabricatorRecipe__Button',
             'FabricatorRecipe__Button--icon',
             !canPrint && 'FabricatorRecipe__Button--disabled',
-          ])}>
+          ])}
+        >
           <Icon name="question-circle" />
         </div>
       </Tooltip>
@@ -96,15 +118,20 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
           <MaterialCostSequence
             design={design}
             amount={1}
+            SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
             available={available}
           />
-        }>
+        }
+      >
         <div
           className={classes([
             'FabricatorRecipe__Title',
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
-          onClick={() => act('build', { designs: [design.id], now: true })}>
+          onClick={() =>
+            canPrint && act('build', { designs: [design.id], now: true })
+          }
+        >
           <div className="FabricatorRecipe__Icon">
             <Box
               width={'32px'}
@@ -124,7 +151,8 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
             !canPrint && 'FabricatorRecipe__Button--disabled',
           ])}
           color={'transparent'}
-          onClick={() => act('build', { designs: [design.id] })}>
+          onClick={() => act('build', { designs: [design.id] })}
+        >
           <Icon name="plus-circle" />
         </div>
       </Tooltip>
@@ -137,7 +165,8 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
             !canPrint && 'FabricatorRecipe__Button--disabled',
           ])}
           color={'transparent'}
-          onClick={() => act('build', { designs: [design.id], now: true })}>
+          onClick={() => act('build', { designs: [design.id], now: true })}
+        >
           <Icon name="play" />
         </div>
       </Tooltip>
@@ -145,9 +174,14 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
   );
 };
 
-const Queue = (props: { availableMaterials: MaterialMap }, context) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>(context);
-  const { availableMaterials } = props;
+type QueueProps = {
+  availableMaterials: MaterialMap;
+  SHEET_MATERIAL_AMOUNT: number;
+};
+
+const Queue = (props: QueueProps) => {
+  const { act, data } = useBackend<ExosuitFabricatorData>();
+  const { availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
   const { designs, processing } = data;
 
   const queue = data.queue || [];
@@ -199,16 +233,21 @@ const Queue = (props: { availableMaterials: MaterialMap }, context) => {
                   />
                 )}
               </>
-            }>
+            }
+          >
             <MaterialCostSequence
+              SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
               available={availableMaterials}
               costMap={materialCosts}
             />
           </Section>
         </Stack.Item>
         <Stack.Item grow>
-          <Section fill style={{ 'overflow': 'auto' }}>
-            <QueueList availableMaterials={availableMaterials} />
+          <Section fill style={{ overflow: 'auto' }}>
+            <QueueList
+              availableMaterials={availableMaterials}
+              SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+            />
           </Section>
         </Stack.Item>
       </Stack>
@@ -216,9 +255,14 @@ const Queue = (props: { availableMaterials: MaterialMap }, context) => {
   );
 };
 
-const QueueList = (props: { availableMaterials: MaterialMap }, context) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>(context);
-  const { availableMaterials } = props;
+type QueueListProps = {
+  availableMaterials: MaterialMap;
+  SHEET_MATERIAL_AMOUNT: number;
+};
+
+const QueueList = (props: QueueListProps) => {
+  const { act, data } = useBackend<ExosuitFabricatorData>();
+  const { availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
 
   const queue = data.queue || [];
   const designs = data.designs;
@@ -271,14 +315,17 @@ const QueueList = (props: { availableMaterials: MaterialMap }, context) => {
                 <MaterialCostSequence
                   design={entry.design}
                   amount={1}
+                  SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
                   available={availableMaterials}
                 />
-              }>
+              }
+            >
               <div
                 className={classes([
                   'FabricatorRecipe__Title',
                   !entry.canPrint && 'FabricatorRecipe__Title--disabled',
-                ])}>
+                ])}
+              >
                 <div className="FabricatorRecipe__Icon">
                   <Box
                     width={'32px'}
@@ -305,7 +352,8 @@ const QueueList = (props: { availableMaterials: MaterialMap }, context) => {
                   act('del_queue_part', {
                     index: entry.index + (queue[0]!.processing ? 0 : 1),
                   });
-                }}>
+                }}
+              >
                 <Tooltip content={'Remove from Queue'}>
                   <Icon name="minus-circle" />
                 </Tooltip>

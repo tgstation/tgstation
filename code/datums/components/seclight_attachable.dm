@@ -50,7 +50,7 @@
 	if(istype(starting_light))
 		add_light(starting_light)
 
-/datum/component/seclite_attachable/Destroy(force, silent)
+/datum/component/seclite_attachable/Destroy(force)
 	if(light)
 		remove_light()
 	return ..()
@@ -95,9 +95,10 @@
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_icon_state))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignal(parent, COMSIG_ITEM_UI_ACTION_CLICK, PROC_REF(on_action_click))
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_deleted))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_deleted))
+	RegisterSignal(parent, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /datum/component/seclite_attachable/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -107,9 +108,9 @@
 		COMSIG_ATOM_UPDATE_ICON_STATE,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_ITEM_UI_ACTION_CLICK,
-		COMSIG_PARENT_ATTACKBY,
-		COMSIG_PARENT_EXAMINE,
-		COMSIG_PARENT_QDELETING,
+		COMSIG_ATOM_ATTACKBY,
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_QDELETING,
 	))
 
 /// Sets a new light as our current light for our parent.
@@ -156,12 +157,10 @@
 	if(!light)
 		return FALSE
 
-	light.on = !light.on
-	light.update_brightness()
-	if(user)
-		user.balloon_alert(user, "[light.name] toggled [light.on ? "on":"off"]")
-
-	playsound(light, 'sound/weapons/empty.ogg', 100, TRUE)
+	var/successful_toggle = light.toggle_light(user)
+	if(!successful_toggle)
+		return TRUE
+	user.balloon_alert(user, "[light.name] toggled [light.light_on ? "on":"off"]")
 	update_light()
 	return TRUE
 
@@ -191,7 +190,7 @@
 	// We were deconstructed in any other way, so we can just drop the light on the ground (which removes it via signal).
 	light.forceMove(source.drop_location())
 
-/// Signal proc for [COMSIG_PARENT_QDELETING] that deletes our light if our parent is deleted.
+/// Signal proc for [COMSIG_QDELETING] that deletes our light if our parent is deleted.
 /datum/component/seclite_attachable/proc/on_parent_deleted(obj/item/source)
 	SIGNAL_HANDLER
 
@@ -211,7 +210,7 @@
 
 	return COMPONENT_ACTION_HANDLED
 
-/// Signal proc for [COMSIG_PARENT_ATTACKBY] that allows a user to attach a seclite by hitting our parent with it.
+/// Signal proc for [COMSIG_ATOM_ATTACKBY] that allows a user to attach a seclite by hitting our parent with it.
 /datum/component/seclite_attachable/proc/on_attackby(obj/item/source, obj/item/attacking_item, mob/attacker, params)
 	SIGNAL_HANDLER
 
@@ -237,7 +236,7 @@
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(unscrew_light), source, user, tool)
-	return COMPONENT_BLOCK_TOOL_ATTACK
+	return ITEM_INTERACT_BLOCKING
 
 /// Invoked asyncronously from [proc/on_screwdriver]. Handles removing the light from our parent.
 /datum/component/seclite_attachable/proc/unscrew_light(obj/item/source, mob/user, obj/item/tool)
@@ -251,7 +250,7 @@
 	if(source.Adjacent(user) && !issilicon(user))
 		user.put_in_hands(to_remove)
 
-/// Signal proc for [COMSIG_PARENT_EXAMINE] that shows our item can have / does have a seclite attached.
+/// Signal proc for [COMSIG_ATOM_EXAMINE] that shows our item can have / does have a seclite attached.
 /datum/component/seclite_attachable/proc/on_examine(obj/item/source, mob/examiner, list/examine_list)
 	SIGNAL_HANDLER
 
@@ -271,7 +270,7 @@
 	if(!light)
 		return
 
-	var/overlay_state = "[light_overlay][light.on ? "_on":""]"
+	var/overlay_state = "[light_overlay][light.light_on ? "_on":""]"
 	var/mutable_appearance/flashlight_overlay = mutable_appearance(light_overlay_icon, overlay_state)
 	flashlight_overlay.pixel_x = overlay_x
 	flashlight_overlay.pixel_y = overlay_y
@@ -289,10 +288,16 @@
 	var/base_state = source.base_icon_state || initial(source.icon_state)
 	// Updates our icon state based on our light state.
 	if(light)
-		source.icon_state = "[base_state]-[light_icon_state][light.on ? "-on":""]"
+		source.icon_state = "[base_state]-[light_icon_state][light.light_on ? "-on":""]"
 
 	// Reset their icon state when if we've got no light.
 	else if(source.icon_state != base_state)
 		// Yes, this might mess with other icon state alterations,
 		// but that's the downside of using icon states over overlays.
 		source.icon_state = base_state
+
+/// Signal proc for [COMSIG_HIT_BY_SABOTEUR] that turns the light off for a few seconds.
+/datum/component/seclite_attachable/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	. = light.on_saboteur(source, disrupt_duration)
+	update_light()

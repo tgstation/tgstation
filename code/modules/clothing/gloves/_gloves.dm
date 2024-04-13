@@ -16,10 +16,20 @@
 	attack_verb_simple = list("challenge")
 	strip_delay = 20
 	equip_delay_other = 40
+	article = "a pair of"
+
 	// Path variable. If defined, will produced the type through interaction with wirecutters.
 	var/cut_type = null
 	/// Used for handling bloody gloves leaving behind bloodstains on objects. Will be decremented whenever a bloodstain is left behind, and be incremented when the gloves become bloody.
 	var/transfer_blood = 0
+
+/obj/item/clothing/gloves/apply_fantasy_bonuses(bonus)
+	. = ..()
+	siemens_coefficient = modify_fantasy_variable("siemens_coefficient", siemens_coefficient, -bonus / 10)
+
+/obj/item/clothing/gloves/remove_fantasy_bonuses(bonus)
+	siemens_coefficient = reset_fantasy_variable("siemens_coefficient", siemens_coefficient)
+	return ..()
 
 /obj/item/clothing/gloves/wash(clean_types)
 	. = ..()
@@ -33,13 +43,13 @@
 
 /obj/item/clothing/gloves/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
-	if(!isinhands)
+	if(isinhands)
 		return
 
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands")
+		. += mutable_appearance('icons/effects/blood.dmi', "gloveblood")
 
 /obj/item/clothing/gloves/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
@@ -55,6 +65,9 @@
 	return TRUE
 
 /obj/item/clothing/gloves/attackby(obj/item/tool, mob/user, params)
+	. = ..()
+	if(.)
+		return
 	if(tool.tool_behaviour != TOOL_WIRECUTTER && !tool.get_sharpness())
 		return
 	if (!can_cut_with(tool))
@@ -66,3 +79,4 @@
 	balloon_alert(user, "cut fingertips off")
 	qdel(src)
 	user.put_in_hands(new cut_type)
+	return TRUE

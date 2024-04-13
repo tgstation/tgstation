@@ -10,7 +10,7 @@
 	potency = 25
 	instability = 15
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_grow = "peas-grow"
 	icon_dead = "peas-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -54,7 +54,7 @@
 	desc = "Ridens Cicer, guaranteed to improve your mood dramatically upon consumption!"
 	icon_state = "laughpeas"
 	foodtypes = VEGETABLES
-	juice_results = list (/datum/reagent/consumable/laughsyrup = 0)
+	juice_typepath = /datum/reagent/consumable/laughsyrup
 	tastes = list ("a prancing rabbit" = 1) //Vib Ribbon sends her regards.. wherever she is.
 	wine_power = 90
 	wine_flavor = "a vector-graphic rabbit dancing on your tongue"

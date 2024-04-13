@@ -25,6 +25,7 @@
 /datum/preferences/proc/hardcore_random_setup(mob/living/carbon/human/character)
 	var/next_hardcore_score = select_hardcore_quirks()
 	character.hardcore_survival_score = next_hardcore_score ** 1.2  //30 points would be about 60 score
+	log_game("[character] started hardcore random with [english_list(all_quirks)], for a score of [next_hardcore_score].")
 
 	//Add a sixpack because honestly
 	var/obj/item/bodypart/chest/chest = character.get_bodypart(BODY_ZONE_CHEST)
@@ -55,12 +56,13 @@
 		var/datum/quirk/picked_quirk = pick(available_hardcore_quirks)
 
 		var/picked_quirk_blacklisted = FALSE
-		for(var/bl in SSquirks.quirk_blacklist) //Check if the quirk is blacklisted with our current quirks. quirk_blacklist is a list of lists.
+		for(var/bl in GLOB.quirk_blacklist) //Check if the quirk is blacklisted with our current quirks. quirk_blacklist is a list of lists.
 			var/list/blacklist = bl
 			if(!(picked_quirk in blacklist))
 				continue
-			for(var/iterator_quirk in all_quirks) //Go through all the quirks we've already selected to see if theres a blacklist match
-				if((iterator_quirk in blacklist) && !(iterator_quirk == picked_quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
+			for(var/quirk_name in all_quirks) //Go through all the quirks we've already selected to see if theres a blacklist match
+				var/selected_quirk = SSquirks.quirks[quirk_name]
+				if((selected_quirk in blacklist) && !(selected_quirk == picked_quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
 					picked_quirk_blacklisted = TRUE
 					break
 			if(picked_quirk_blacklisted)

@@ -17,7 +17,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 3
-	custom_materials = list(/datum/material/iron = 7500, /datum/material/glass = 100)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	var/open = TRUE
 	var/locked = FALSE
 	var/list/occupants = list()
@@ -32,17 +32,11 @@
 	return ..()
 
 /obj/item/pet_carrier/Exited(atom/movable/gone, direction)
+	. = ..()
 	if(isliving(gone) && (gone in occupants))
-		var/mob/living/L = gone
+		var/mob/living/living_gone = gone
 		occupants -= gone
-		occupant_weight -= L.mob_size
-
-/obj/item/pet_carrier/handle_atom_del(atom/A)
-	if(A in occupants && isliving(A))
-		var/mob/living/L = A
-		occupants -= L
-		occupant_weight -= L.mob_size
-	..()
+		occupant_weight -= living_gone.mob_size
 
 /obj/item/pet_carrier/examine(mob/user)
 	. = ..()
@@ -83,12 +77,13 @@
 		playsound(user, 'sound/machines/boltsup.ogg', 30, TRUE)
 	update_appearance()
 
-/obj/item/pet_carrier/attack(mob/living/target, mob/living/user)
-	if(user.combat_mode)
-		return ..()
+/obj/item/pet_carrier/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(user.combat_mode || !isliving(interacting_with))
+		return NONE
 	if(!open)
 		to_chat(user, span_warning("You need to open [src]'s door!"))
-		return
+		return ITEM_INTERACT_BLOCKING
+	var/mob/living/target = interacting_with
 	if(target.mob_size > max_occupant_weight)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
@@ -98,11 +93,12 @@
 				to_chat(user, span_warning("Humans, generally, do not fit into pet carriers."))
 		else
 			to_chat(user, span_warning("You get the feeling [target] isn't meant for a [name]."))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(user == target)
 		to_chat(user, span_warning("Why would you ever do that?"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	load_occupant(user, target)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/pet_carrier/relaymove(mob/living/user, direction)
 	if(open)
@@ -135,7 +131,7 @@
 	else
 		loc.visible_message(span_warning("[src] starts rattling as something pushes against the door!"), null, null, null, user)
 		to_chat(user, span_notice("You start pushing out of [src]... (This will take about 20 seconds.)"))
-		if(!do_after(user, 200, target = user) || open || !locked || !(user in occupants))
+		if(!do_after(user, 20 SECONDS, target = user) || open || !locked || !(user in occupants))
 			return
 		loc.visible_message(span_warning("[user] shoves out of [src]!"), null, null, null, user)
 		to_chat(user, span_notice("You shove open [src]'s door against the lock's resistance and fall out!"))

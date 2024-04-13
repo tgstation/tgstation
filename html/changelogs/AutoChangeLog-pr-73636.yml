@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - bugfix: "You should only be able to spawn as one ghost role at a time. Close the prompt if you want to spawn as another one. Begone soulless randomgen humans!"

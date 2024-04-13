@@ -5,7 +5,6 @@
 	icon_state = "tube-construct-stage1"
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
-	plane = GAME_PLANE_UPPER
 	max_integrity = 200
 	armor_type = /datum/armor/structure_light_construct
 
@@ -33,6 +32,7 @@
 	. = ..()
 	if(building)
 		setDir(ndir)
+	find_and_hang_on_wall()
 
 /obj/structure/light_construct/Destroy()
 	QDEL_NULL(cell)
@@ -162,10 +162,8 @@
 	if(attacking_blob && attacking_blob.loc == loc)
 		qdel(src)
 
-/obj/structure/light_construct/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron(loc, sheets_refunded)
-	qdel(src)
+/obj/structure/light_construct/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/iron(loc, sheets_refunded)
 
 /obj/structure/light_construct/small
 	name = "small light fixture frame"

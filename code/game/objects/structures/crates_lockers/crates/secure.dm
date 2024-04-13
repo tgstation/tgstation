@@ -2,12 +2,14 @@
 	desc = "A secure crate."
 	name = "secure crate"
 	icon_state = "securecrate"
+	base_icon_state = "securecrate"
 	secure = TRUE
 	locked = TRUE
 	max_integrity = 500
 	armor_type = /datum/armor/crate_secure
-	var/tamperproof = 0
 	damage_deflection = 25
+
+	var/tamperproof = 0
 
 /datum/armor/crate_secure
 	melee = 30
@@ -20,8 +22,9 @@
 /obj/structure/closet/crate/secure/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NO_MANIFEST_CONTENTS_ERROR, TRAIT_GENERIC)
 
-/obj/structure/closet/crate/secure/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/structure/closet/crate/secure/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	if(prob(tamperproof) && damage_amount >= DAMAGE_PRECISION)
 		boom()
 	else
@@ -39,51 +42,91 @@
 	desc = "A secure weapons crate."
 	name = "weapons crate"
 	icon_state = "weaponcrate"
+	base_icon_state = "weaponcrate"
 
 /obj/structure/closet/crate/secure/plasma
 	desc = "A secure plasma crate."
 	name = "plasma crate"
 	icon_state = "plasmacrate"
+	base_icon_state = "plasmacrate"
 
 /obj/structure/closet/crate/secure/gear
 	desc = "A secure gear crate."
 	name = "gear crate"
 	icon_state = "secgearcrate"
+	base_icon_state = "secgearcrate"
 
 /obj/structure/closet/crate/secure/hydroponics
 	desc = "A crate with a lock on it, painted in the scheme of the station's botanists."
 	name = "secure hydroponics crate"
 	icon_state = "hydrosecurecrate"
+	base_icon_state = "hydrosecurecrate"
 
 /obj/structure/closet/crate/secure/freezer //for consistency with other "freezer" closets/crates
-	desc = "An insulated crate with a lock on it, used to secure perishables."
-	name = "secure kitchen crate"
+	desc = "An icebox with a lock on it, used to secure perishables."
+	name = "secure kitchen icebox"
 	icon_state = "kitchen_secure_crate"
+	base_icon_state = "kitchen_secure_crate"
+	paint_jobs = null
 
 /obj/structure/closet/crate/secure/freezer/pizza
 	name = "secure pizza crate"
 	desc = "An insulated crate with a lock on it, used to secure pizza."
-	req_access = list(ACCESS_KITCHEN)
 	tamperproof = 10
+	req_access = list(ACCESS_KITCHEN)
 
 /obj/structure/closet/crate/secure/freezer/pizza/PopulateContents()
 	. = ..()
 	new /obj/effect/spawner/random/food_or_drink/pizzaparty(src)
 
+/obj/structure/closet/crate/secure/centcom
+	name = "secure centcom crate"
+	icon_state = "centcom_secure"
+	base_icon_state = "centcom_secure"
+
+/obj/structure/closet/crate/secure/cargo
+	name = "secure cargo crate"
+	icon_state = "cargo_secure"
+	base_icon_state = "cargo_secure"
+
+/obj/structure/closet/crate/secure/cargo/mining
+	name = "secure mining crate"
+	icon_state = "mining_secure"
+	base_icon_state = "mining_secure"
+
+/obj/structure/closet/crate/secure/radiation
+	name = "secure radioation crate"
+	icon_state = "radiation_secure"
+	base_icon_state = "radiation_secure"
+
 /obj/structure/closet/crate/secure/engineering
 	desc = "A crate with a lock on it, painted in the scheme of the station's engineers."
 	name = "secure engineering crate"
 	icon_state = "engi_secure_crate"
+	base_icon_state = "engi_secure_crate"
+
+/obj/structure/closet/crate/secure/engineering/atmos
+	name = "secure atmospherics crate"
+	desc = "A crate with a lock on it, painted in the scheme of the station's atmospherics engineers."
+	icon_state = "atmos_secure"
+	base_icon_state = "atmos_secure"
 
 /obj/structure/closet/crate/secure/science
 	name = "secure science crate"
 	desc = "A crate with a lock on it, painted in the scheme of the station's scientists."
 	icon_state = "scisecurecrate"
+	base_icon_state = "scisecurecrate"
+
+/obj/structure/closet/crate/secure/science/robo
+	name = "robotics science crate"
+	icon_state = "robo_secure"
+	base_icon_state = "robo_secure"
 
 /obj/structure/closet/crate/secure/owned
 	name = "private crate"
 	desc = "A crate cover designed to only open for who purchased its contents."
 	icon_state = "privatecrate"
+	base_icon_state = "privatecrate"
 	///Account of the person buying the crate if private purchasing.
 	var/datum/bank_account/buyer_account
 	///Department of the person buying the crate if buying via the NIRN app.
@@ -100,7 +143,7 @@
 /obj/structure/closet/crate/secure/owned/Initialize(mapload, datum/bank_account/_buyer_account)
 	. = ..()
 	buyer_account = _buyer_account
-	if(istype(buyer_account, /datum/bank_account/department))
+	if(IS_DEPARTMENTAL_ACCOUNT(buyer_account))
 		department_purchase = TRUE
 		department_account = buyer_account
 

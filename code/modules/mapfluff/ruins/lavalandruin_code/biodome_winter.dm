@@ -6,7 +6,7 @@
 	name = "freeze cube"
 	desc = "A block of semi-clear ice treated with chemicals to behave as a throwable weapon. \
 		Somehow, it does not transfer its freezing temperatures until it comes into contact with a living creature."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "freeze_cube"
 	inhand_icon_state = "freeze_cube"
 	throwforce = 10
@@ -18,7 +18,7 @@
 	. = ..()
 	. += span_notice("Throw this at objects or creatures to freeze them, it will boomerang back so be cautious!")
 
-/obj/item/freeze_cube/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, quickstart = TRUE)
+/obj/item/freeze_cube/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle, quickstart = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -32,7 +32,7 @@
 	if(ismovable(hit_atom) && !caught && (!thrown_by || thrown_by && COOLDOWN_FINISHED(src, freeze_cooldown)))
 		freeze_hit_atom(hit_atom)
 	if(thrown_by && !caught)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, throw_at), thrown_by, throw_range+2, throw_speed, null, TRUE), 1)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, throw_at), thrown_by, throw_range+2, throw_speed, null, TRUE), 0.1 SECONDS)
 
 /obj/item/freeze_cube/proc/freeze_hit_atom(atom/movable/hit_atom)
 	playsound(src, 'sound/effects/glassbr3.ogg', 50, TRUE)

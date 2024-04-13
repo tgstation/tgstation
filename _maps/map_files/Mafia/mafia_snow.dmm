@@ -8,6 +8,10 @@
 "d" = (
 /turf/open/floor/plating,
 /area/centcom/mafia)
+"e" = (
+/obj/effect/landmark/mafia,
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
 "f" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
@@ -46,10 +50,6 @@
 	},
 /turf/open/floor/holofloor/wood,
 /area/centcom/mafia)
-"m" = (
-/obj/effect/landmark/mafia,
-/turf/open/floor/holofloor/wood,
-/area/centcom/mafia)
 "n" = (
 /obj/item/bedsheet/green,
 /obj/structure/bed,
@@ -71,7 +71,8 @@
 	max_integrity = 99999;
 	name = "Station Night Shutters"
 	},
-/turf/closed/indestructible/fakeglass,
+/obj/effect/spawner/structure/window/ice,
+/turf/open/space/basic,
 /area/centcom/mafia)
 "q" = (
 /turf/open/floor/iron/dark,
@@ -133,26 +134,19 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"B" = (
-/obj/effect/landmark/mafia,
-/obj/structure/lattice/catwalk,
-/turf/open/lava/plasma/mafia,
-/area/centcom/mafia)
 "C" = (
 /obj/mafia_game_board,
 /turf/open/floor/holofloor/snow,
 /area/centcom/mafia)
 "D" = (
 /obj/structure/closet/crate/science,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat/miner,
 /turf/open/floor/holofloor/snow,
 /area/centcom/mafia)
 "E" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/closet/crate/critter,
 /obj/item/clothing/suit/hooded/wintercoat/miner,
-/obj/item/clothing/shoes/winterboots,
 /turf/open/lava/plasma/mafia,
 /area/centcom/mafia)
 "F" = (
@@ -183,9 +177,21 @@
 "K" = (
 /turf/closed/indestructible/rock/snow,
 /area/centcom/mafia)
+"L" = (
+/turf/template_noop,
+/area/template_noop)
+"R" = (
+/obj/effect/landmark/mafia,
+/turf/open/floor/iron,
+/area/centcom/mafia)
+"W" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/landmark/mafia,
+/turf/open/lava/plasma/mafia,
+/area/centcom/mafia)
 
 (1,1,1) = {"
-a
+L
 a
 a
 a
@@ -210,8 +216,8 @@ a
 a
 "}
 (2,1,1) = {"
+L
 a
-b
 b
 b
 b
@@ -235,8 +241,8 @@ K
 a
 "}
 (3,1,1) = {"
+L
 a
-b
 b
 s
 s
@@ -260,8 +266,8 @@ K
 a
 "}
 (4,1,1) = {"
+L
 a
-b
 b
 s
 g
@@ -286,7 +292,7 @@ a
 "}
 (5,1,1) = {"
 a
-b
+a
 b
 s
 h
@@ -344,11 +350,11 @@ s
 o
 F
 p
-m
+F
 q
 p
 t
-y
+t
 p
 z
 E
@@ -366,17 +372,17 @@ s
 d
 d
 s
-m
+F
 r
 s
 s
 q
 s
 t
-p
-p
+s
+s
 z
-B
+z
 p
 w
 w
@@ -393,13 +399,13 @@ s
 s
 p
 r
-r
+R
 p
-q
+e
 p
-t
+y
 p
-z
+W
 z
 p
 p
@@ -425,7 +431,7 @@ p
 p
 p
 p
-p
+s
 p
 D
 p
@@ -440,19 +446,19 @@ b
 s
 d
 j
-m
+F
 F
 q
-q
+e
 x
 J
 t
 t
 p
-t
-t
-t
 y
+t
+t
+t
 p
 w
 t
@@ -465,7 +471,7 @@ b
 s
 i
 s
-b
+s
 p
 s
 p
@@ -475,10 +481,10 @@ v
 t
 p
 p
+s
 p
-p
-p
-p
+s
+s
 w
 w
 K
@@ -490,19 +496,19 @@ b
 s
 d
 j
-m
+F
 F
 r
-r
+R
 A
 J
 t
 t
 p
-t
-t
-t
 y
+t
+t
+t
 p
 w
 w
@@ -525,7 +531,7 @@ p
 p
 p
 p
-p
+s
 p
 D
 p
@@ -543,13 +549,13 @@ s
 s
 p
 q
-q
+e
 p
-r
+R
 p
-t
+y
 p
-z
+W
 z
 p
 p
@@ -566,17 +572,17 @@ s
 f
 d
 s
-m
+F
 q
 s
 s
 r
 s
 t
-p
-p
+s
+s
 z
-B
+z
 p
 w
 w
@@ -594,11 +600,11 @@ s
 G
 F
 p
-m
+F
 r
 p
 t
-y
+t
 p
 z
 E
@@ -636,7 +642,7 @@ a
 "}
 (19,1,1) = {"
 a
-b
+a
 b
 s
 h
@@ -660,8 +666,8 @@ K
 a
 "}
 (20,1,1) = {"
+L
 a
-b
 b
 s
 k
@@ -685,8 +691,8 @@ K
 a
 "}
 (21,1,1) = {"
+L
 a
-b
 b
 s
 s
@@ -710,8 +716,8 @@ K
 a
 "}
 (22,1,1) = {"
+L
 a
-b
 b
 b
 b
@@ -735,7 +741,7 @@ K
 a
 "}
 (23,1,1) = {"
-a
+L
 a
 a
 a

@@ -12,6 +12,8 @@
 	armor_type = /datum/armor/clothing_shoes
 	slowdown = SHOES_SLOWDOWN
 	strip_delay = 1 SECONDS
+	article = "a pair of"
+
 	var/offset = 0
 	var/equipped_before_drop = FALSE
 	///Whether these shoes have laces that can be tied/untied
@@ -22,6 +24,7 @@
 	var/lace_time = 5 SECONDS
 	///An active alert
 	var/datum/weakref/our_alert_ref
+	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
 
 /datum/armor/clothing_shoes
 	bio = 50
@@ -171,8 +174,7 @@
 				adjust_laces(SHOES_UNTIED, user)
 
 	else // if they're someone else's shoes, go knot-wards
-		var/mob/living/L = user
-		if(istype(L) && L.body_position == STANDING_UP)
+		if(istype(living_user) && living_user.body_position == STANDING_UP)
 			to_chat(user, span_warning("You must be on the floor to interact with [src]!"))
 			return
 		if(tied == SHOES_KNOTTED)
@@ -187,7 +189,7 @@
 		if(HAS_TRAIT(user, TRAIT_CLUMSY)) // based clowns trained their whole lives for this
 			mod_time *= 0.75
 
-		if(do_after(user, mod_time, target = our_guy, extra_checks = CALLBACK(src, PROC_REF(still_shoed), our_guy)))
+		if(do_after(user, mod_time, target = our_guy, extra_checks = CALLBACK(src, PROC_REF(still_shoed), our_guy), hidden = TRUE))
 			to_chat(user, span_notice("You [tied ? "untie" : "knot"] the laces on [loc]'s [src.name]."))
 			if(tied == SHOES_UNTIED)
 				adjust_laces(SHOES_KNOTTED, user)
@@ -197,12 +199,12 @@
 			user.visible_message(span_danger("[our_guy] stamps on [user]'s hand, mid-shoelace [tied ? "knotting" : "untying"]!"), span_userdanger("Ow! [our_guy] stamps on your hand!"), list(our_guy))
 			to_chat(our_guy, span_userdanger("You stamp on [user]'s hand! What the- [user.p_they()] [user.p_were()] [tied ? "knotting" : "untying"] your shoelaces!"))
 			user.emote("scream")
-			if(istype(L))
-				var/obj/item/bodypart/ouchie = L.get_bodypart(pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+			if(istype(living_user))
+				var/obj/item/bodypart/ouchie = living_user.get_bodypart(pick(GLOB.arm_zones))
 				if(ouchie)
 					ouchie.receive_damage(brute = 10)
-				L.adjustStaminaLoss(40)
-				L.Paralyze(10)
+				living_user.adjustStaminaLoss(40)
+				living_user.Paralyze(10)
 
 ///checking to make sure we're still on the person we're supposed to be, for lacing do_after's
 /obj/item/clothing/shoes/proc/still_shoed(mob/living/carbon/our_guy)
@@ -244,9 +246,7 @@
 
 			if(14 to 25) // 1.3ish% chance to stumble and be a bit off balance (like being disarmed)
 				to_chat(our_guy, span_danger("You stumble a bit on your untied shoelaces!"))
-				if(!our_guy.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-					our_guy.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-					addtimer(CALLBACK(our_guy, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
+				our_guy.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
 
 			if(26 to 1000)
 				wiser = FALSE
@@ -278,3 +278,17 @@
 	if(do_after(user, lace_time, target = src,extra_checks = CALLBACK(src, PROC_REF(still_shoed), user)))
 		to_chat(user, span_notice("You [tied ? "untie" : "tie"] the laces on [src]."))
 		adjust_laces(tied ? SHOES_UNTIED : SHOES_TIED, user)
+
+/obj/item/clothing/shoes/apply_fantasy_bonuses(bonus)
+	. = ..()
+	slowdown = modify_fantasy_variable("slowdown", slowdown, -bonus * 0.1, 0)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_equipment_speed_mods()
+
+/obj/item/clothing/shoes/remove_fantasy_bonuses(bonus)
+	slowdown = reset_fantasy_variable("slowdown", slowdown)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_equipment_speed_mods()
+	return ..()

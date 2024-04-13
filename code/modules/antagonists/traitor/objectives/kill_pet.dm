@@ -22,16 +22,16 @@
 			/mob/living/basic/pet/dog/corgi/ian,
 			/mob/living/basic/pet/dog/corgi/puppy/ian
 		),
-		JOB_CAPTAIN = /mob/living/simple_animal/pet/fox/renault,
-		JOB_CHIEF_MEDICAL_OFFICER = /mob/living/simple_animal/pet/cat/runtime,
-		JOB_CHIEF_ENGINEER = /mob/living/simple_animal/parrot/poly,
+		JOB_CAPTAIN = /mob/living/basic/pet/fox/renault,
+		JOB_CHIEF_MEDICAL_OFFICER = /mob/living/basic/pet/cat/runtime,
+		JOB_CHIEF_ENGINEER = /mob/living/basic/parrot/poly,
 		JOB_QUARTERMASTER = list(
-			/mob/living/simple_animal/sloth/citrus,
-			/mob/living/simple_animal/sloth/paperwork,
-			/mob/living/simple_animal/hostile/gorilla/cargo_domestic,
+			/mob/living/basic/gorilla/cargorilla,
+			/mob/living/basic/sloth/citrus,
+			/mob/living/basic/sloth/paperwork,
 		)
 	)
-	/// The head that we are targetting
+	/// The head that we are targeting
 	var/datum/job/target
 	/// Whether or not we only take from the traitor's own department head or not.
 	var/limited_to_department_head = TRUE
@@ -54,7 +54,7 @@
 	possible_heads = list(
 		JOB_HEAD_OF_SECURITY = list(
 			/mob/living/basic/carp/pet/lia,
-			/mob/living/basic/giant_spider/sgt_araneus,
+			/mob/living/basic/spider/giant/sgt_araneus,
 		),
 		JOB_WARDEN = list(
 			/mob/living/basic/pet/dog/pug/mcgriff
@@ -85,12 +85,12 @@
 	if(target_pet.stat == DEAD)
 		return FALSE
 	AddComponent(/datum/component/traitor_objective_register, target_pet, \
-		succeed_signals = list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+		succeed_signals = list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	replace_in_name("%DEPARTMENT HEAD%", target.title)
 	replace_in_name("%PET%", target_pet.name)
 	return TRUE
 
 /datum/traitor_objective/kill_pet/ungenerate_objective()
 	if(target_pet)
-		UnregisterSignal(target_pet, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+		UnregisterSignal(target_pet, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	target_pet = null

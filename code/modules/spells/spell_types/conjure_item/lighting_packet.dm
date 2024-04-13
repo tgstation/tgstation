@@ -9,6 +9,7 @@
 	spell_max_level = 1
 
 	item_type = /obj/item/spellpacket/lightningbolt
+	requires_hands = TRUE
 
 /datum/action/cooldown/spell/conjure_item/spellpacket/cast(mob/living/carbon/cast_on)
 	. = ..()
@@ -32,7 +33,7 @@
 			hit_living.electrocute_act(80, src, flags = SHOCK_ILLUSION | SHOCK_NOGLOVES)
 	qdel(src)
 
-/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY, quickstart = TRUE)
+/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY, gentle, quickstart = TRUE)
 	. = ..()
 	if(ishuman(thrower))
 		var/mob/living/carbon/human/human_thrower = thrower

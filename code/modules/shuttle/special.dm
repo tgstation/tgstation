@@ -6,7 +6,7 @@
 /obj/machinery/power/emitter/energycannon
 	name = "Energy Cannon"
 	desc = "A heavy duty industrial laser."
-	icon = 'icons/obj/engine/singularity.dmi'
+	icon = 'icons/obj/machines/engine/singularity.dmi'
 	icon_state = "emitter_+a"
 	base_icon_state = "emitter_+a"
 	anchored = TRUE
@@ -68,8 +68,8 @@
 /obj/machinery/power/emitter/energycannon/magical/ex_act(severity)
 	return FALSE
 
-/obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user)
-	return
+/obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user, obj/item/card/emag/emag_card)
+	return FALSE
 
 /obj/structure/table/abductor/wabbajack
 	name = "wabbajack altar"
@@ -79,7 +79,6 @@
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
 	var/list/mob/living/sleepers = list()
 	var/never_spoken = TRUE
-	flags_1 = NODECONSTRUCT_1
 
 /obj/structure/table/abductor/wabbajack/Initialize(mapload)
 	. = ..()
@@ -89,18 +88,21 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/structure/table/abductor/wabbajack/process()
-	var/area = orange(4, src)
-	if(!our_statue)
-		for(var/obj/machinery/power/emitter/energycannon/magical/M in area)
-			our_statue = M
-			break
+/obj/structure/table/abductor/wabbajack/screwdriver_act(mob/living/user, obj/item/tool)
+	return NONE
 
-	if(!our_statue)
+/obj/structure/table/abductor/wabbajack/wrench_act(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/structure/table/abductor/wabbajack/process()
+	if(isnull(our_statue))
+		our_statue = locate() in orange(4, src)
+
+	if(isnull(our_statue))
 		name = "inert [initial(name)]"
 		return
-	else
-		name = initial(name)
+
+	name = initial(name)
 
 	var/turf/T = get_turf(src)
 	var/list/found = list()
@@ -111,11 +113,11 @@
 	// New sleepers
 	for(var/i in found - sleepers)
 		var/mob/living/L = i
-		L.add_atom_colour("#800080", TEMPORARY_COLOUR_PRIORITY)
+		L.add_atom_colour(COLOR_PURPLE, TEMPORARY_COLOUR_PRIORITY)
 		L.visible_message(span_revennotice("A strange purple glow wraps itself around [L] as [L.p_they()] suddenly fall[L.p_s()] unconscious."),
 			span_revendanger("[desc]"))
 		// Don't let them sit suround unconscious forever
-		addtimer(CALLBACK(src, PROC_REF(sleeper_dreams), L), 100)
+		addtimer(CALLBACK(src, PROC_REF(sleeper_dreams), L), 10 SECONDS)
 
 	// Existing sleepers
 	for(var/i in found)
@@ -125,7 +127,7 @@
 	// Missing sleepers
 	for(var/i in sleepers - found)
 		var/mob/living/L = i
-		L.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#800080")
+		L.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_PURPLE)
 		L.visible_message("<span class='revennotice'>The glow from [L] fades \
 			away.</span>")
 		L.grab_ghost()
@@ -154,7 +156,7 @@
 // Bar staff, GODMODE mobs(as long as they stay in the shuttle) that just want to make sure people have drinks
 // and a good time.
 
-/mob/living/simple_animal/drone/snowflake/bardrone
+/mob/living/basic/drone/snowflake/bardrone
 	name = "Bardrone"
 	desc = "A barkeeping drone, a robot built to tend bars."
 	hacked = TRUE
@@ -166,47 +168,9 @@
 	initial_language_holder = /datum/language_holder/universal
 	default_storage = null
 
-/mob/living/simple_animal/drone/snowflake/bardrone/Initialize(mapload)
+/mob/living/basic/drone/snowflake/bardrone/Initialize(mapload)
 	. = ..()
-	access_card.add_access(list(ACCESS_CENT_BAR))
-	become_area_sensitive(ROUNDSTART_TRAIT)
-	RegisterSignal(src, COMSIG_ENTER_AREA, PROC_REF(check_barstaff_godmode))
-	check_barstaff_godmode()
-
-/mob/living/simple_animal/hostile/alien/maid/barmaid
-	gold_core_spawnable = NO_SPAWN
-	name = "Barmaid"
-	desc = "A barmaid, a maiden found in a bar."
-	pass_flags = PASSTABLE
-	unique_name = FALSE
-	AIStatus = AI_OFF
-	stop_automated_movement = TRUE
-	initial_language_holder = /datum/language_holder/universal
-
-/mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize(mapload)
-	. = ..()
-	// Simple bot ID card that can hold all accesses. Someone turn access into a component at some point, please.
-	access_card = new /obj/item/card/id/advanced/simple_bot(src)
-
-	var/datum/id_trim/job/cap_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/captain]
-	access_card.add_access(cap_trim.access + cap_trim.wildcard_access + list(ACCESS_CENT_BAR))
-
-	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-	become_area_sensitive(ROUNDSTART_TRAIT)
-	RegisterSignal(src, COMSIG_ENTER_AREA, PROC_REF(check_barstaff_godmode))
-	check_barstaff_godmode()
-
-/mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
-	qdel(access_card)
-	. = ..()
-
-/mob/living/simple_animal/proc/check_barstaff_godmode()
-	SIGNAL_HANDLER
-
-	if(istype(get_area(loc), /area/shuttle/escape))
-		status_flags |= GODMODE
-	else
-		status_flags &= ~GODMODE
+	AddComponentFrom(ROUNDSTART_TRAIT, /datum/component/area_based_godmode, area_type = /area/shuttle/escape, allow_area_subtypes = TRUE)
 
 // Bar table, a wooden table that kicks you in a direction if you're not
 // barstaff (defined as someone who was a roundstart bartender or someone
@@ -214,7 +178,6 @@
 
 /obj/structure/table/wood/shuttle_bar
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	flags_1 = NODECONSTRUCT_1
 	max_integrity = 1000
 	var/boot_dir = 1
 
@@ -224,6 +187,12 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/structure/table/wood/shuttle_bar/screwdriver_act(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/structure/table/wood/shuttle_bar/wrench_act(mob/living/user, obj/item/tool)
+	return NONE
 
 /obj/structure/table/wood/shuttle_bar/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -241,6 +210,9 @@
 		var/mob/living/carbon/human/human_user = user
 		if(is_bartender_job(human_user.mind?.assigned_role))
 			return TRUE
+
+	if(istype(user, /mob/living/basic/drone/snowflake/bardrone))
+		return TRUE
 
 	var/obj/item/card/id/ID = user.get_idcard(FALSE)
 	if(ID && (ACCESS_CENT_BAR in ID.access))
@@ -289,8 +261,8 @@
 /obj/machinery/scanner_gate/luxury_shuttle/attackby(obj/item/W, mob/user, params)
 	return
 
-/obj/machinery/scanner_gate/luxury_shuttle/emag_act(mob/user)
-	return
+/obj/machinery/scanner_gate/luxury_shuttle/emag_act(mob/user, obj/item/card/emag/emag_card)
+	return FALSE
 
 #define LUXURY_MESSAGE_COOLDOWN 100
 /obj/machinery/scanner_gate/luxury_shuttle/Bumped(atom/movable/AM)
@@ -391,15 +363,13 @@
 		var/change = FALSE
 		if(payees[AM] > 0)
 			change = TRUE
-			var/obj/item/holochip/HC = new /obj/item/holochip(AM.loc) //Change is made in holocredits exclusively.
-			HC.credits = payees[AM]
-			HC.name = "[HC.credits] credit holochip"
+			var/obj/item/holochip/holocred = new /obj/item/holochip(AM.loc, payees[AM]) //Change is made in holocredits exclusively.
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
-				if(!H.put_in_hands(HC))
-					AM.pulling = HC
+				if(!H.put_in_hands(holocred))
+					AM.pulling = holocred
 			else
-				AM.pulling = HC
+				AM.pulling = holocred
 			payees[AM] -= payees[AM]
 
 		say("Welcome to first class, [driver_holdout ? "[driver_holdout]" : "[AM]" ]![change ? " Here is your change." : ""]")
@@ -423,7 +393,7 @@
 		alarm_beep()
 		return ..()
 
-/mob/living/simple_animal/hostile/bear/fightpit
+/mob/living/basic/bear/fightpit
 	name = "fight pit bear"
 	desc = "This bear's trained through ancient Russian secrets to fear the walls of its glass prison."
 	environment_smash = ENVIRONMENT_SMASH_NONE
@@ -439,3 +409,5 @@
 
 /obj/effect/decal/hammerandsickle/shuttleRotate(rotation)
 	setDir(angle2dir(rotation+dir2angle(dir))) // No parentcall, rest of the rotate code breaks the pixel offset.
+
+#undef LUXURY_MESSAGE_COOLDOWN

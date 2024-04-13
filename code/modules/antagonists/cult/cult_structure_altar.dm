@@ -14,15 +14,15 @@
 /obj/structure/destructible/cult/item_dispenser/altar/setup_options()
 	var/static/list/altar_items = list(
 		ELDRITCH_WHETSTONE = list(
-			PREVIEW_IMAGE = image(icon = 'icons/obj/kitchen.dmi', icon_state = "cult_sharpener"),
+			PREVIEW_IMAGE = image(icon = 'icons/obj/antags/cult/items.dmi', icon_state = "cult_sharpener"),
 			OUTPUT_ITEMS = list(/obj/item/sharpener/cult),
 			),
 		CONSTRUCT_SHELL = list(
-			PREVIEW_IMAGE = image(icon = 'icons/obj/wizard.dmi', icon_state = "construct_cult"),
+			PREVIEW_IMAGE = image(icon = 'icons/mob/shells.dmi', icon_state = "construct_cult"),
 			OUTPUT_ITEMS = list(/obj/structure/constructshell),
 			),
 		UNHOLY_WATER = list(
-			PREVIEW_IMAGE = image(icon = 'icons/obj/drinks/bottles.dmi', icon_state = "holyflask"),
+			PREVIEW_IMAGE = image(icon = 'icons/obj/drinks/bottles.dmi', icon_state = "unholyflask"),
 			OUTPUT_ITEMS = list(/obj/item/reagent_containers/cup/beaker/unholywater),
 			),
 	)
@@ -30,7 +30,7 @@
 	options = altar_items
 
 /obj/structure/destructible/cult/item_dispenser/altar/succcess_message(mob/living/user, obj/item/spawned_item)
-	to_chat(user, span_cultitalic("You kneel before [src] and your faith is rewarded with [spawned_item]!"))
+	to_chat(user, span_cult_italic("You kneel before [src] and your faith is rewarded with [spawned_item]!"))
 
 #undef ELDRITCH_WHETSTONE
 #undef CONSTRUCT_SHELL

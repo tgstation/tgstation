@@ -5,6 +5,9 @@ GLOBAL_LIST_EMPTY(dynamic_human_appearances)
 /proc/get_dynamic_human_appearance(outfit_path, species_path = /datum/species/human, mob_spawn_path, r_hand, l_hand, bloody_slots = NONE, animated = TRUE)
 	if(!species_path)
 		return FALSE
+	if(!ispath(species_path))
+		stack_trace("Attempted to call get_dynamic_human_appearance() with an instantiated species_path. Pass the species datum typepath instead.")
+		return FALSE
 	var/arg_string = "[outfit_path]_[species_path]_[mob_spawn_path]_[l_hand]_[r_hand]_[bloody_slots]"
 	if(GLOB.dynamic_human_appearances[arg_string]) //if already exists in our cache, just return that
 		return GLOB.dynamic_human_appearances[arg_string]
@@ -54,4 +57,6 @@ GLOBAL_LIST_EMPTY(dynamic_human_appearances)
 /proc/set_dynamic_human_appearance(list/arguments)
 	var/atom/target = arguments[1] //1st argument is the target
 	var/dynamic_appearance = get_dynamic_human_appearance(arglist(arguments.Copy(2))) //the rest of the arguments starting from 2 matter to the proc
-	target.appearance = dynamic_appearance
+	target.icon = 'icons/blanks/32x32.dmi'
+	target.icon_state = "nothing"
+	target.copy_overlays(dynamic_appearance, cut_old = TRUE)

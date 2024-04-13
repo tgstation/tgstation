@@ -5,7 +5,7 @@
 	name = "drink"
 	desc = "yummy"
 	icon = 'icons/obj/drinks/drinks.dmi'
-	icon_state = null
+	icon_state = "glass_empty"
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	resistance_flags = NONE
 
@@ -15,7 +15,8 @@
 /obj/item/reagent_containers/cup/glass/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = TRUE)
 	. = ..()
 	if(!.) //if the bottle wasn't caught
-		smash(hit_atom, throwingdatum?.thrower, TRUE)
+		var/mob/thrower = throwingdatum?.get_thrower()
+		smash(hit_atom, thrower, TRUE)
 
 /obj/item/reagent_containers/cup/glass/proc/smash(atom/target, mob/thrower, ranged = FALSE, break_top = FALSE)
 	if(!isGlass)
@@ -48,10 +49,10 @@
 	force = 1
 	throwforce = 1
 	amount_per_transfer_from_this = 5
-	custom_materials = list(/datum/material/iron=100)
-	possible_transfer_amounts = list(5)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
+	has_variable_transfer_amount = FALSE
 	volume = 5
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	spillable = TRUE
 	resistance_flags = FIRE_PROOF
 	isGlass = FALSE
@@ -66,7 +67,7 @@
 	force = 14
 	throwforce = 10
 	amount_per_transfer_from_this = 20
-	custom_materials = list(/datum/material/gold=1000)
+	custom_materials = list(/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 150
 
 /obj/item/reagent_containers/cup/glass/trophy/silver_cup
@@ -78,7 +79,7 @@
 	force = 10
 	throwforce = 8
 	amount_per_transfer_from_this = 15
-	custom_materials = list(/datum/material/silver=800)
+	custom_materials = list(/datum/material/silver=SMALL_MATERIAL_AMOUNT*8)
 	volume = 100
 
 
@@ -91,7 +92,7 @@
 	force = 5
 	throwforce = 4
 	amount_per_transfer_from_this = 10
-	custom_materials = list(/datum/material/iron=400)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 4)
 	volume = 25
 
 ///////////////////////////////////////////////Drinks
@@ -212,7 +213,7 @@
 	icon_state = "smallbottle"
 	inhand_icon_state = null
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
-	custom_materials = list(/datum/material/plastic=1000)
+	custom_materials = list(/datum/material/plastic=HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 50
 	amount_per_transfer_from_this = 10
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
@@ -227,8 +228,8 @@
 	custom_price = PAYCHECK_LOWER * 0.8
 
 /obj/item/reagent_containers/cup/glass/waterbottle/Initialize(mapload)
-	. = ..()
 	cap_overlay = mutable_appearance(cap_icon, cap_icon_state)
+	. = ..()
 	if(cap_on)
 		spillable = FALSE
 		update_appearance()
@@ -314,9 +315,9 @@
 		return
 	if(prob(flip_chance)) // landed upright
 		src.visible_message(span_notice("[src] lands upright!"))
-		if(throwingdatum.thrower)
-			var/mob/living/living_thrower = throwingdatum.thrower
-			living_thrower.add_mood_event("bottle_flip", /datum/mood_event/bottle_flip)
+		var/mob/living/thrower = throwingdatum?.get_thrower()
+		if(thrower)
+			thrower.add_mood_event("bottle_flip", /datum/mood_event/bottle_flip)
 	else // landed on it's side
 		animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
 
@@ -331,7 +332,7 @@
 /obj/item/reagent_containers/cup/glass/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
-	custom_materials = list(/datum/material/plastic=3000)
+	custom_materials = list(/datum/material/plastic=SHEET_MATERIAL_AMOUNT * 1.5)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 10
@@ -380,16 +381,12 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/Initialize(mapload, vol)
 	. = ..()
-	AddComponent(/datum/component/takes_reagent_appearance, CALLBACK(src, PROC_REF(on_box_change)), CALLBACK(src, PROC_REF(on_box_reset)))
-
-/// Having our icon state change changes our food type
-/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/proc/on_box_change(datum/glass_style/juicebox/style)
-	if(!istype(style))
-		return
-	drink_type = style.drink_type
-
-/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/proc/on_box_reset()
-	drink_type = NONE
+	AddComponent( \
+		/datum/component/takes_reagent_appearance, \
+		on_icon_changed = CALLBACK(src, PROC_REF(on_cup_change)), \
+		on_icon_reset = CALLBACK(src, PROC_REF(on_cup_reset)), \
+		base_container_type = /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton, \
+	)
 
 /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(bartender_check(target) && ranged)
@@ -406,7 +403,7 @@
 	icon = 'icons/obj/drinks/colo.dmi'
 	icon_state = "colocup"
 	inhand_icon_state = "colocup"
-	custom_materials = list(/datum/material/plastic = 1000)
+	custom_materials = list(/datum/material/plastic =HALF_SHEET_MATERIAL_AMOUNT)
 	possible_transfer_amounts = list(5, 10, 15, 20)
 	volume = 20
 	amount_per_transfer_from_this = 5
@@ -429,22 +426,95 @@
 // itself), in Chemistry-Recipes.dm (for the reaction that changes the components into the drink), and here (for the drinking glass
 // icon states.
 
+
 /obj/item/reagent_containers/cup/glass/shaker
 	name = "shaker"
 	desc = "A metal shaker to mix drinks in."
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "shaker"
-	custom_materials = list(/datum/material/iron=1500)
+	custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	amount_per_transfer_from_this = 10
 	volume = 100
 	isGlass = FALSE
+	/// Whether or not poured drinks should use custom names and descriptions
+	var/using_custom_drinks = FALSE
+	/// Name custom drinks will have
+	var/custom_drink_name = "Custom drink"
+	/// Description custom drinks will have
+	var/custom_drink_desc = "Mixed by your favourite bartender!"
 
 /obj/item/reagent_containers/cup/glass/shaker/Initialize(mapload)
 	. = ..()
+	register_context()
 	if(prob(10))
-		name = "\improper NanoTrasen 20th Anniversary Shaker"
-		desc += " It has an emblazoned NanoTrasen logo on it."
+		name = "\improper Nanotrasen 20th Anniversary Shaker"
+		desc += " It has an emblazoned Nanotrasen logo on it."
 		icon_state = "shaker_n"
+
+/obj/item/reagent_containers/cup/glass/shaker/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "[using_custom_drinks ? "Disable" : "Enable"] custom drinks"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/reagent_containers/cup/glass/shaker/examine(mob/user)
+	. = ..()
+	. += span_notice("Alt-click to [using_custom_drinks ? "disable" : "enable"] custom drink naming")
+	if(using_custom_drinks)
+		. += span_notice("Drinks poured from this shaker will have the following name: [custom_drink_name]")
+		. += span_notice("Drinks poured from this shaker will have the following description: [custom_drink_desc]")
+
+/obj/item/reagent_containers/cup/glass/shaker/AltClick(mob/user)
+	. = ..()
+	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
+		return
+
+	if(using_custom_drinks)
+		using_custom_drinks = FALSE
+		disable_custom_drinks()
+		balloon_alert(user, "custom drinks disabled")
+		return
+
+	var/new_name = reject_bad_text(tgui_input_text(user, "Drink name", "Set drink name", custom_drink_name, 45, FALSE), 64)
+	if(!new_name)
+		balloon_alert(user, "invalid drink name!")
+		using_custom_drinks = FALSE
+		return
+
+	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
+		return
+
+	var/new_desc = reject_bad_text(tgui_input_text(user, "Drink description", "Set drink description", custom_drink_desc, 64, TRUE), 128)
+	if(!new_desc)
+		balloon_alert(user, "invalid drink description!")
+		using_custom_drinks = FALSE
+		return
+
+	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
+		return
+
+	using_custom_drinks = TRUE
+	custom_drink_name = new_name
+	custom_drink_desc = new_desc
+
+	enable_custom_drinks()
+	balloon_alert(user, "now pouring custom drinks")
+
+/obj/item/reagent_containers/cup/glass/shaker/proc/enable_custom_drinks()
+	RegisterSignal(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, PROC_REF(handle_transfer))
+
+/obj/item/reagent_containers/cup/glass/shaker/proc/disable_custom_drinks()
+	UnregisterSignal(src, COMSIG_REAGENTS_CUP_TRANSFER_TO)
+
+/obj/item/reagent_containers/cup/glass/shaker/proc/handle_transfer(atom/origin, atom/target)
+	SIGNAL_HANDLER
+	// Should only work on drinking/shot glasses
+	if(!istype(target, /obj/item/reagent_containers/cup/glass/drinkingglass))
+		return
+
+	var/obj/item/reagent_containers/cup/glass/drinkingglass/target_glass = target
+	target_glass.name = custom_drink_name
+	target_glass.desc = custom_drink_desc
+	ADD_TRAIT(target_glass, TRAIT_WAS_RENAMED, SHAKER_LABEL_TRAIT)
 
 /obj/item/reagent_containers/cup/glass/flask
 	name = "flask"
@@ -452,7 +522,7 @@
 	custom_price = PAYCHECK_COMMAND * 2
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "flask"
-	custom_materials = list(/datum/material/iron=250)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
 	volume = 60
 	isGlass = FALSE
 
@@ -460,7 +530,7 @@
 	name = "captain's flask"
 	desc = "A gold flask belonging to the captain."
 	icon_state = "flask_gold"
-	custom_materials = list(/datum/material/gold=500)
+	custom_materials = list(/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 
 /obj/item/reagent_containers/cup/glass/flask/det
 	name = "detective's flask"

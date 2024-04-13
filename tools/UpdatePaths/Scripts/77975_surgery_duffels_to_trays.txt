@@ -1,0 +1,4 @@
+#comment updates surgical duffels and coroner duffels to surgery trays and morgue surgery trays
+
+/obj/item/storage/backpack/duffelbag/med/surgery : /obj/item/surgery_tray{@OLD}
+/obj/item/storage/backpack/duffelbag/coroner/surgery : /obj/item/surgery_tray/morgue{@OLD}

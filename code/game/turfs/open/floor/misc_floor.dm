@@ -1,19 +1,28 @@
+// Usage for a bar light is 160, let's do a bit less then that since these tend to be used a lot in one place
+#define CIRCUIT_FLOOR_POWERUSE 120
 //Circuit flooring, glows a little
 /turf/open/floor/circuit
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
 	var/icon_normal = "bcircuit"
-	light_color = LIGHT_COLOR_CYAN
+	light_color = LIGHT_COLOR_BABY_BLUE
 	floor_tile = /obj/item/stack/tile/circuit
-	var/on = TRUE
+	/// If we want to ignore our area's power status and just be always off
+	/// Mostly for mappers doing asthetic things, or cases where the floor should be broken
+	var/always_off = FALSE
+	/// If this floor is powered or not
+	/// We don't consume any power, but we do require it
+	var/on = -1
 
 /turf/open/floor/circuit/Initialize(mapload)
 	SSmapping.nuke_tiles += src
-	update_appearance()
+	RegisterSignal(loc, COMSIG_AREA_POWER_CHANGE, PROC_REF(handle_powerchange))
+	handle_powerchange(loc)
 	. = ..()
 
 /turf/open/floor/circuit/Destroy()
 	SSmapping.nuke_tiles -= src
+	UnregisterSignal(loc, COMSIG_AREA_POWER_CHANGE)
 	return ..()
 
 /turf/open/floor/circuit/update_appearance(updates)
@@ -22,16 +31,43 @@
 		set_light(0)
 		return
 
-	set_light_color(LAZYLEN(SSmapping.nuke_threats) ? LIGHT_COLOR_FLARE : initial(light_color))
-	set_light(1.4, 0.5)
+	set_light_color(LAZYLEN(SSmapping.nuke_threats) ? LIGHT_COLOR_INTENSE_RED : initial(light_color))
+	set_light(2, 1.5)
 
 /turf/open/floor/circuit/update_icon_state()
 	icon_state = on ? (LAZYLEN(SSmapping.nuke_threats) ? "rcircuitanim" : icon_normal) : "[icon_normal]off"
 	return ..()
 
+/turf/open/floor/circuit/on_change_area(area/old_area, area/new_area)
+	. = ..()
+	UnregisterSignal(old_area, COMSIG_AREA_POWER_CHANGE)
+	RegisterSignal(new_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(handle_powerchange))
+	if(on)
+		old_area.removeStaticPower(CIRCUIT_FLOOR_POWERUSE, AREA_USAGE_STATIC_LIGHT)
+	handle_powerchange(new_area)
+
+/// Enables/disables our lighting based off our source area
+/turf/open/floor/circuit/proc/handle_powerchange(area/source)
+	SIGNAL_HANDLER
+	var/old_on = on
+	if(always_off)
+		on = FALSE
+	else
+		on = source.powered(AREA_USAGE_LIGHT)
+	if(on == old_on)
+		return
+
+	if(on)
+		source.addStaticPower(CIRCUIT_FLOOR_POWERUSE, AREA_USAGE_STATIC_LIGHT)
+	else
+		source.removeStaticPower(CIRCUIT_FLOOR_POWERUSE, AREA_USAGE_STATIC_LIGHT)
+	update_appearance()
+
+#undef CIRCUIT_FLOOR_POWERUSE
+
 /turf/open/floor/circuit/off
 	icon_state = "bcircuitoff"
-	on = FALSE
+	always_off = TRUE
 
 /turf/open/floor/circuit/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -48,12 +84,12 @@
 /turf/open/floor/circuit/green
 	icon_state = "gcircuit"
 	icon_normal = "gcircuit"
-	light_color = LIGHT_COLOR_GREEN
+	light_color = LIGHT_COLOR_VIVID_GREEN
 	floor_tile = /obj/item/stack/tile/circuit/green
 
 /turf/open/floor/circuit/green/off
 	icon_state = "gcircuitoff"
-	on = FALSE
+	always_off = TRUE
 
 /turf/open/floor/circuit/green/anim
 	icon_state = "gcircuitanim"
@@ -72,12 +108,12 @@
 /turf/open/floor/circuit/red
 	icon_state = "rcircuit"
 	icon_normal = "rcircuit"
-	light_color = LIGHT_COLOR_FLARE
+	light_color = LIGHT_COLOR_INTENSE_RED
 	floor_tile = /obj/item/stack/tile/circuit/red
 
 /turf/open/floor/circuit/red/off
 	icon_state = "rcircuitoff"
-	on = FALSE
+	always_off = TRUE
 
 /turf/open/floor/circuit/red/anim
 	icon_state = "rcircuitanim"
@@ -110,40 +146,22 @@
 	floor_tile = /obj/item/stack/tile/noslip
 	slowdown = -0.3
 
-/turf/open/floor/noslip/tram_plate
-	name = "linear induction plate"
-	desc = "The linear induction plate that powers the tram."
-	icon_state = "tram_plate"
-	base_icon_state = "tram_plate"
-	slowdown = 0
-
-/turf/open/floor/noslip/tram_platform
-	name = "tram platform"
-	desc = "A sturdy looking tram platform."
-	icon_state = "tram_platform"
-	base_icon_state = "tram_platform"
-	slowdown = 0
-
 /turf/open/floor/noslip/broken_states()
 	return list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
 
 /turf/open/floor/noslip/burnt_states()
 	return list("noslip-scorched1","noslip-scorched2")
 
-/turf/open/floor/noslip/tram_plate/broken_states()
-	return list("tram_plate-damaged1","tram_plate-damaged2")
-
-/turf/open/floor/noslip/tram_plate/burnt_states()
-	return list("tram_plate-scorched1","tram_plate-scorched2")
-
-/turf/open/floor/noslip/tram_platform/broken_states()
-	return list("tram_platform-damaged1","tram_platform-damaged2")
-
-/turf/open/floor/noslip/tram_platform/burnt_states()
-	return list("tram_platform-scorched1","tram_platform-scorched2")
-
 /turf/open/floor/noslip/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
+
+/turf/open/floor/noslip/tram/Initialize(mapload)
+	. = ..()
+	var/current_holiday_color = request_station_colors(src, PATTERN_VERTICAL_STRIPE) || request_holiday_colors(src, PATTERN_VERTICAL_STRIPE)
+	if(current_holiday_color)
+		color = current_holiday_color
+	else
+		color = "#EFB341"
 
 /turf/open/floor/oldshuttle
 	icon = 'icons/turf/shuttleold.dmi'
@@ -201,7 +219,7 @@
 	icon_state = "plastic"
 	thermal_conductivity = 0.1
 	heat_capacity = 900
-	custom_materials = list(/datum/material/plastic=500)
+	custom_materials = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT*5)
 	floor_tile = /obj/item/stack/tile/plastic
 
 /turf/open/floor/plastic/broken_states()
@@ -287,3 +305,25 @@
 
 /turf/open/floor/cult/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/material/meat
+	name = "living floor"
+	icon_state = "grey"
+	baseturfs = /turf/open/misc/asteroid
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/turf/open/floor/material/meat/Initialize(mapload)
+	. = ..()
+	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
+
+/turf/open/floor/material/meat/airless
+	initial_gas_mix = AIRLESS_ATMOS
+	baseturfs = /turf/open/misc/asteroid/airless
+
+/turf/open/floor/iron/tgmcemblem
+	name = "TGMC Emblem"
+	desc = "The symbol of the Terran Goverment."
+	icon_state = "tgmc_emblem"
+
+/turf/open/floor/iron/tgmcemblem/center
+	icon_state = "tgmc_center"

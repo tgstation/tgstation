@@ -1,0 +1,34 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"d" = (
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"u" = (
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"U" = (
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/obj/modular_map_connector,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+
+(1,1,1) = {"
+u
+U
+"}
+(2,1,1) = {"
+u
+d
+"}
+(3,1,1) = {"
+u
+d
+"}
+(4,1,1) = {"
+u
+a
+"}

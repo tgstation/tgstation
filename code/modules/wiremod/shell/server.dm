@@ -6,11 +6,11 @@
  */
 /obj/structure/server
 	name = "server"
-	icon = 'icons/obj/wiremod.dmi'
+	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "setup_stationary"
 
 	density = TRUE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_on = FALSE
 
 /obj/structure/server/Initialize(mapload)

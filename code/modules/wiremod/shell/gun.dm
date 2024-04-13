@@ -6,12 +6,12 @@
 /obj/item/gun/energy/wiremod_gun
 	name = "circuit gun"
 	desc = "A gun that fires projectiles able to control circuitry. It can recharge using power from an attached circuit."
-	icon = 'icons/obj/wiremod.dmi'
+	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "setup_gun"
 	ammo_type = list(/obj/item/ammo_casing/energy/wiremod_gun)
 	cell_type = /obj/item/stock_parts/cell/emproof/wiremod_gun
 	item_flags = NONE
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
 	automatic_charge_overlays = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
@@ -82,6 +82,6 @@
 	if(!parent?.cell)
 		return
 	var/obj/item/gun/energy/fired_gun = source
-	var/totransfer = min(100, parent.cell.charge)
+	var/totransfer = min(100 KILO JOULES, parent.cell.charge)
 	var/transferred = fired_gun.cell.give(totransfer)
 	parent.cell.use(transferred)

@@ -15,10 +15,10 @@
 	name = "auxiliary base management console"
 	desc = "Allows a deployable expedition base to be dropped from the station to a designated mining location. It can also \
 	interface with the mining shuttle at the landing site if a mobile beacon is also deployed."
-	icon = 'icons/obj/terminals.dmi'
-	icon_state = "dorm_available"
+	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_state = "pod_off"
 	icon_keyboard = null
-	icon_screen = null
+	icon_screen = "pod_on"
 	req_one_access = list(ACCESS_AUX_BASE, ACCESS_COMMAND)
 	circuit = /obj/item/circuitboard/computer/auxiliary_base
 	/// Shuttle ID of the base
@@ -256,8 +256,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 
 /obj/item/assault_pod/mining
 	name = "Landing Field Designator"
-	icon_state = "gangtool-purple"
-	inhand_icon_state = "electronic"
+	icon = 'icons/obj/devices/remote.dmi'
+	icon_state = "designator_mining"
+	inhand_icon_state = "minertalkie"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	desc = "Deploy to designate the landing zone of the auxiliary base."
@@ -272,7 +273,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 
 	to_chat(user, span_notice("You begin setting the landing zone parameters..."))
 	setting = TRUE
-	if(!do_after(user, 50, target = user)) //You get a few seconds to cancel if you do not want to drop there.
+	if(!do_after(user, 5 SECONDS, target = user)) //You get a few seconds to cancel if you do not want to drop there.
 		setting = FALSE
 		return
 	setting = FALSE
@@ -280,7 +281,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	var/turf/T = get_turf(user)
 	var/obj/machinery/computer/auxiliary_base/AB
 
-	for (var/obj/machinery/computer/auxiliary_base/A in GLOB.machines)
+	for (var/obj/machinery/computer/auxiliary_base/A as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/auxiliary_base))
 		if(is_station_level(A.z))
 			AB = A
 			break
@@ -334,7 +335,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	anchored = FALSE
 	density = FALSE
 	var/shuttle_ID = "landing_zone_dock"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "miningbeacon"
 	var/obj/docking_port/stationary/Mport //Linked docking port for the mining shuttle
 	pressure_resistance = 200 //So it does not get blown into lava.
@@ -354,7 +355,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 		return
 
 	anti_spam_cd = 1
-	addtimer(CALLBACK(src, PROC_REF(clear_cooldown)), 50)
+	addtimer(CALLBACK(src, PROC_REF(clear_cooldown)), 5 SECONDS)
 
 	var/turf/landing_spot = get_turf(src)
 
@@ -362,7 +363,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 		to_chat(user, span_warning("This device is only to be used in a mining zone."))
 		return
 	var/obj/machinery/computer/auxiliary_base/aux_base_console
-	for(var/obj/machinery/computer/auxiliary_base/ABC in GLOB.machines)
+	for(var/obj/machinery/computer/auxiliary_base/ABC as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/auxiliary_base))
 		if(get_dist(landing_spot, ABC) <= console_range)
 			aux_base_console = ABC
 			break

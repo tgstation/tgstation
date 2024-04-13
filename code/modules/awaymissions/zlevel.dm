@@ -1,6 +1,6 @@
 // How much "space" we give the edge of the map
 GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "awaymissionconfig.txt"))
-GLOBAL_LIST_INIT(potentialConfigRandomZlevels, generateConfigMapList(directory = "[global.config.directory]/away_missions/"))
+GLOBAL_LIST_INIT(potentialConfigRandomZlevels, generate_map_list_from_directory(directory = "[global.config.directory]/away_missions/"))
 
 /proc/createRandomZlevel(config_gateway = FALSE)
 	var/map
@@ -62,17 +62,18 @@ GLOBAL_LIST_INIT(potentialConfigRandomZlevels, generateConfigMapList(directory =
 		var/name = null
 
 		if (pos)
-			name = lowertext(copytext(t, 1, pos))
+			name = LOWER_TEXT(copytext(t, 1, pos))
 
 		else
-			name = lowertext(t)
+			name = LOWER_TEXT(t)
 
 		if (!name)
 			continue
 
 		. += t
 
-/proc/generateConfigMapList(directory)
+/// Returns a list of all maps to be found in the directory that is passed in.
+/proc/generate_map_list_from_directory(directory)
 	var/list/config_maps = list()
 	var/list/maps = flist(directory)
 	for(var/map_file in maps)

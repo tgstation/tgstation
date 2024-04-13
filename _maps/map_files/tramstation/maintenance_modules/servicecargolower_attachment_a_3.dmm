@@ -135,7 +135,7 @@
 /area/station/asteroid)
 "Y" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner/north,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "Z" = (

@@ -45,7 +45,7 @@
 	desc = "It seems to be powering and controlling the vault locks."
 	icon_screen = "power"
 	icon_keyboard = "power_key"
-	light_color = LIGHT_COLOR_YELLOW
+	light_color = LIGHT_COLOR_DIM_YELLOW
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -75,7 +75,7 @@
 
 ///Initializes airlock links.
 /obj/machinery/computer/vaultcontroller/proc/find_airlocks()
-	for(var/obj/machinery/door/airlock/A in GLOB.airlocks)
+	for(var/obj/machinery/door/airlock/A as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
 		if(A.id_tag == "derelictvault")
 			if(!door1)
 				door1 = A

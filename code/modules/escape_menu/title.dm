@@ -13,7 +13,7 @@ GLOBAL_DATUM(escape_menu_title, /atom/movable/screen/escape_menu/title)
 	maptext_height = 100
 	maptext_width = 500
 
-/atom/movable/screen/escape_menu/title/Initialize(mapload)
+/atom/movable/screen/escape_menu/title/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 
 	update_text()

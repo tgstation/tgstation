@@ -1,10 +1,6 @@
-/client/proc/edit_admin_permissions()
-	set category = "Admin"
-	set name = "Permissions Panel"
-	set desc = "Edit admin permissions"
-	if(!check_rights(R_PERMISSIONS))
-		return
-	usr.client.holder.edit_admin_permissions()
+
+ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit admin permissions.", ADMIN_CATEGORY_MAIN)
+	user.holder.edit_admin_permissions()
 
 /datum/admins/proc/edit_admin_permissions(action, target, operation, page)
 	if(!check_rights(R_PERMISSIONS))
@@ -192,6 +188,10 @@
 			admin_ckey = add_admin(admin_ckey, admin_key, use_db)
 			if(!admin_ckey)
 				return
+
+			if(!admin_key) // Prevents failures in logging admin rank changes.
+				admin_key = admin_ckey
+
 			change_admin_rank(admin_ckey, admin_key, use_db, null, legacy_only)
 		if("remove")
 			remove_admin(admin_ckey, admin_key, use_db, D)

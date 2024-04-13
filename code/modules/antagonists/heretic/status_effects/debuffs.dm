@@ -22,7 +22,7 @@
 	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BLUE_LIGHT)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill, update = TRUE)
 
-/datum/status_effect/void_chill/tick()
+/datum/status_effect/void_chill/tick(seconds_between_ticks)
 	owner.adjust_bodytemperature(cooling_per_tick * TEMPERATURE_DAMAGE_COEFFICIENT)
 
 /datum/status_effect/void_chill/major
@@ -48,7 +48,7 @@
 	to_chat(owner, span_boldwarning("You feel filled with a rage that is not your own!"))
 	return TRUE
 
-/datum/status_effect/amok/tick()
+/datum/status_effect/amok/tick(seconds_between_ticks)
 	var/prev_combat_mode = owner.combat_mode
 	owner.set_combat_mode(TRUE)
 
@@ -102,7 +102,7 @@
 	to_chat(owner, span_userdanger("Your body starts to break apart!"))
 	return TRUE
 
-/datum/status_effect/corrosion_curse/tick()
+/datum/status_effect/corrosion_curse/tick(seconds_between_ticks)
 	. = ..()
 	if(!ishuman(owner))
 		return
@@ -110,7 +110,7 @@
 	var/chance = rand(0, 100)
 	switch(chance)
 		if(0 to 10)
-			human_owner.vomit()
+			human_owner.vomit(VOMIT_CATEGORY_DEFAULT)
 		if(20 to 30)
 			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
@@ -137,3 +137,160 @@
 			human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 190)
 		if(95 to 100)
 			human_owner.adjust_confusion_up_to(12 SECONDS, 24 SECONDS)
+
+/datum/status_effect/star_mark
+	id = "star_mark"
+	alert_type = /atom/movable/screen/alert/status_effect/star_mark
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+	///overlay used to indicate that someone is marked
+	var/mutable_appearance/cosmic_overlay
+	/// icon file for the overlay
+	var/effect_icon = 'icons/effects/eldritch.dmi'
+	/// icon state for the overlay
+	var/effect_icon_state = "cosmic_ring"
+	/// Storage for the spell caster
+	var/datum/weakref/spell_caster
+
+/atom/movable/screen/alert/status_effect/star_mark
+	name = "Star Mark"
+	desc = "A ring above your head prevents you from entering cosmic fields or teleporting through cosmic runes..."
+	icon_state = "star_mark"
+
+/datum/status_effect/star_mark/on_creation(mob/living/new_owner, mob/living/new_spell_caster)
+	cosmic_overlay = mutable_appearance(effect_icon, effect_icon_state, BELOW_MOB_LAYER)
+	if(new_spell_caster)
+		spell_caster = WEAKREF(new_spell_caster)
+	return ..()
+
+/datum/status_effect/star_mark/Destroy()
+	QDEL_NULL(cosmic_overlay)
+	return ..()
+
+/datum/status_effect/star_mark/on_apply()
+	if(istype(owner, /mob/living/basic/heretic_summon/star_gazer))
+		return FALSE
+	var/mob/living/spell_caster_resolved = spell_caster?.resolve()
+	var/datum/antagonist/heretic_monster/monster = owner.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
+	if(spell_caster_resolved && monster)
+		if(monster.master?.current == spell_caster_resolved)
+			return FALSE
+	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
+	owner.update_appearance(UPDATE_OVERLAYS)
+	return TRUE
+
+/// Updates the overlay of the owner
+/datum/status_effect/star_mark/proc/update_owner_overlay(atom/source, list/overlays)
+	SIGNAL_HANDLER
+
+	overlays += cosmic_overlay
+
+/datum/status_effect/star_mark/on_remove()
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
+	owner.update_appearance(UPDATE_OVERLAYS)
+	return ..()
+
+/datum/status_effect/star_mark/extended
+	duration = 3 MINUTES
+
+// Last Resort
+/datum/status_effect/heretic_lastresort
+	id = "heretic_lastresort"
+	alert_type = /atom/movable/screen/alert/status_effect/heretic_lastresort
+	duration = 12 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = -1
+
+/atom/movable/screen/alert/status_effect/heretic_lastresort
+	name = "Last Resort"
+	desc = "Your head spins, heart pumping as fast as it can, losing the fight with the ground. Run to safety!"
+	icon_state = "lastresort"
+
+/datum/status_effect/heretic_lastresort/on_apply()
+	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
+	to_chat(owner, span_userdanger("You are on the brink of losing consciousness, run!"))
+	return TRUE
+
+/datum/status_effect/heretic_lastresort/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
+	owner.AdjustUnconscious(20 SECONDS, ignore_canstun = TRUE)
+
+
+
+/// Used by moon heretics to make people mad
+/datum/status_effect/moon_converted
+	id = "moon converted"
+	alert_type = /atom/movable/screen/alert/status_effect/moon_converted
+	duration = -1
+	status_type = STATUS_EFFECT_REPLACE
+	///used to track damage
+	var/damage_sustained = 0
+	///overlay used to indicate that someone is marked
+	var/mutable_appearance/moon_insanity_overlay
+	/// icon file for the overlay
+	var/effect_icon = 'icons/effects/eldritch.dmi'
+	/// icon state for the overlay
+	var/effect_icon_state = "moon_insanity_overlay"
+
+/atom/movable/screen/alert/status_effect/moon_converted
+	name = "Moon Converted"
+	desc = "THEY LIE, THEY ALL LIE!!! SLAY THEM!!! BURN THEM!!! MAKE THEM SEE THE TRUTH!!!"
+	icon_state = "lastresort"
+
+/datum/status_effect/moon_converted/on_creation()
+	. = ..()
+	moon_insanity_overlay = mutable_appearance(effect_icon, effect_icon_state, ABOVE_MOB_LAYER)
+
+/datum/status_effect/moon_converted/Destroy()
+	QDEL_NULL(moon_insanity_overlay)
+	return ..()
+
+/datum/status_effect/moon_converted/on_apply()
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	// Heals them so people who are in crit can have this affect applied on them and still be of some use for the heretic
+	owner.adjustBruteLoss( -150 + owner.mob_mood.sanity)
+	owner.adjustFireLoss(-150 + owner.mob_mood.sanity)
+
+	to_chat(owner, span_hypnophrase(("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!</span>")))
+	owner.balloon_alert(owner, "they lie..THEY ALL LIE!!!")
+	owner.AdjustUnconscious(7 SECONDS, ignore_canstun = FALSE)
+	ADD_TRAIT(owner, TRAIT_MUTE, REF(src))
+	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
+	owner.update_appearance(UPDATE_OVERLAYS)
+	owner.cause_hallucination(/datum/hallucination/delusion/preset/moon, "[id] status effect", duration = duration, affects_us = FALSE, affects_others = TRUE)
+	return TRUE
+
+/datum/status_effect/moon_converted/proc/on_damaged(datum/source, damage, damagetype)
+	SIGNAL_HANDLER
+
+	// Stamina damage is funky so we will ignore it
+	if(damagetype == STAMINA)
+		return
+
+	damage_sustained += damage
+
+	if (damage_sustained < 75)
+		return
+
+	qdel(src)
+
+/datum/status_effect/moon_converted/proc/update_owner_overlay(atom/source, list/overlays)
+	SIGNAL_HANDLER
+	overlays += moon_insanity_overlay
+
+/datum/status_effect/moon_converted/on_remove()
+	// Span warning and unconscious so they realize they aren't evil anymore
+	to_chat(owner, span_warning("Your mind is cleared from the effect of the mansus, your alligiences are as they were before"))
+	REMOVE_TRAIT(owner, TRAIT_MUTE, REF(src))
+	owner.AdjustUnconscious(5 SECONDS, ignore_canstun = FALSE)
+	owner.log_message("[owner] is no longer insane.", LOG_GAME)
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
+	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	owner.update_appearance(UPDATE_OVERLAYS)
+	return ..()
+
+
+/atom/movable/screen/alert/status_effect/moon_converted
+	name = "Moon Converted"
+	desc = "They LIE, SLAY ALL OF THE THEM!!! THE LIARS OF THE SUN MUST FALL!!!"
+	icon_state = "moon_insanity"

@@ -8,7 +8,7 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = SUPERVISOR_HOP
+	supervisors = SUPERVISOR_CAPTAIN
 	req_admin_notify = 1
 	minimal_player_age = 10
 	exp_requirements = 180
@@ -28,6 +28,7 @@
 	paycheck_department = ACCOUNT_SRV
 	bounty_types = CIV_JOB_RANDOM
 
+	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS)
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL
@@ -39,7 +40,7 @@
 
 	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/trophy/silver_cup)
 	rpg_title = "Guild Questgiver"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
 	voice_of_god_power = 1.4 //Command staff has authority
 
 
@@ -56,7 +57,6 @@
 	uniform = /obj/item/clothing/under/rank/civilian/head_of_personnel
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
-		/obj/item/storage/box/ids = 1,
 		)
 	belt = /obj/item/modular_computer/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop
@@ -66,12 +66,12 @@
 
 	chameleon_extras = list(
 		/obj/item/gun/energy/e_gun,
-		/obj/item/stamp/hop,
+		/obj/item/stamp/head/hop,
 		)
 
 /datum/outfit/job/hop/pre_equip(mob/living/carbon/human/H)
 	..()
-	if(check_holidays("Ian's Birthday"))
+	if(check_holidays(IAN_HOLIDAY))
 		undershirt = /datum/sprite_accessory/undershirt/ian
 
 //only pet worth reviving

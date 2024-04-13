@@ -22,17 +22,22 @@
 	src.secured_callback = secured_callback
 	src.unsecured_callback = unsecured_callback
 
+/datum/component/keep_me_secure/Destroy(force)
+	secured_callback = null
+	unsecured_callback = null
+	return ..()
+
 /datum/component/keep_me_secure/RegisterWithParent()
 	last_move = world.time
 	if (secured_callback || unsecured_callback)
 		START_PROCESSING(SSobj, src)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(on_examine_more))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine_more))
 
 
 /datum/component/keep_me_secure/UnregisterFromParent()
 	STOP_PROCESSING(SSobj, src)
-	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
 /// Returns whether the game is supposed to consider the parent "secure".
 /datum/component/keep_me_secure/proc/is_secured()
@@ -46,7 +51,7 @@
 
 	return TRUE
 
-/datum/component/keep_me_secure/process(delta_time)
+/datum/component/keep_me_secure/process(seconds_per_tick)
 	if(is_secured())
 		last_secured_location = get_turf(parent)
 		last_move = world.time

@@ -9,7 +9,7 @@
 	growthstages = 2
 	yield = 5
 	potency = 20
-	growing_icon = 'icons/obj/hydroponics/growing.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing.dmi'
 	icon_grow = "herbs-grow"
 	icon_dead = "herbs-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -22,6 +22,6 @@
 	icon_state = "herbs"
 	foodtypes = VEGETABLES
 	grind_results = list(/datum/reagent/consumable/nutriment = 0)
-	juice_results = list(/datum/reagent/consumable/nutriment = 0)
+	juice_typepath = /datum/reagent/consumable/nutriment
 	tastes = list("nondescript herbs" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/fernet

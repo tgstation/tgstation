@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../../backend';
-import { Flex, Input, Section, Button } from '../../components';
+import { Button, Flex, Input, Section } from '../../components';
 
 type Data = {
   upperText: string;
@@ -7,8 +7,8 @@ type Data = {
   maxStatusLineLength: number;
 };
 
-export const StatusDisplayControls = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const StatusDisplayControls = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     upperText: initialUpper,
     lowerText: initialLower,
@@ -16,14 +16,12 @@ export const StatusDisplayControls = (props, context) => {
   } = data;
 
   const [upperText, setUpperText] = useSharedState(
-    context,
     'statusUpperText',
-    initialUpper
+    initialUpper,
   );
   const [lowerText, setLowerText] = useSharedState(
-    context,
     'statusLowerText',
-    initialLower
+    initialLower,
   );
 
   return (
@@ -51,9 +49,9 @@ export const StatusDisplayControls = (props, context) => {
         />
 
         <Button
-          icon="bell-o"
-          content="Red Alert"
-          onClick={() => act('setStatusPicture', { picture: 'redalert' })}
+          icon="exclamation"
+          content="Security Alert Level"
+          onClick={() => act('setStatusPicture', { picture: 'currentalert' })}
         />
 
         <Button
@@ -66,6 +64,12 @@ export const StatusDisplayControls = (props, context) => {
           icon="biohazard"
           content="Biohazard"
           onClick={() => act('setStatusPicture', { picture: 'biohazard' })}
+        />
+
+        <Button
+          icon="radiation"
+          content="Radiation"
+          onClick={() => act('setStatusPicture', { picture: 'radiation' })}
         />
       </Section>
 

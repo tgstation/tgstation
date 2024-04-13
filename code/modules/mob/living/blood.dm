@@ -1,72 +1,69 @@
 #define BLOOD_DRIP_RATE_MOD 90 //Greater number means creating blood drips more often while bleeding
+// Conversion between internal drunk power and common blood alcohol content
+#define DRUNK_POWER_TO_BLOOD_ALCOHOL 0.003
 
 /****************************************************
 				BLOOD SYSTEM
 ****************************************************/
 
 // Takes care blood loss and regeneration
-/mob/living/carbon/human/handle_blood(delta_time, times_fired)
-
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+/mob/living/carbon/human/handle_blood(seconds_per_tick, times_fired)
+	// Under these circumstances blood handling is not necessary
+	if(bodytemperature < BLOOD_STOP_TEMP || HAS_TRAIT(src, TRAIT_FAKEDEATH) || HAS_TRAIT(src, TRAIT_HUSK))
 		return
-
-	if(bodytemperature < BLOOD_STOP_TEMP || (HAS_TRAIT(src, TRAIT_HUSK))) //cold or husked people do not pump the blood.
+	// Run the signal, still allowing mobs with noblood to "handle blood" in their own way
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_HUMAN_ON_HANDLE_BLOOD, seconds_per_tick, times_fired)
+	if((sigreturn & HANDLE_BLOOD_HANDLED) || HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return
 
 	//Blood regeneration if there is some space
-	if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
-		var/nutrition_ratio = 0
-		switch(nutrition)
-			if(0 to NUTRITION_LEVEL_STARVING)
-				nutrition_ratio = 0.2
-			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-				nutrition_ratio = 0.4
-			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-				nutrition_ratio = 0.6
-			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-				nutrition_ratio = 0.8
-			else
-				nutrition_ratio = 1
-		if(satiety > 80)
-			nutrition_ratio *= 1.25
-		adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * delta_time)
-		blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * delta_time), BLOOD_VOLUME_NORMAL)
+	if(!(sigreturn & HANDLE_BLOOD_NO_NUTRITION_DRAIN))
+		if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
+			var/nutrition_ratio = round(nutrition / NUTRITION_LEVEL_WELL_FED, 0.2)
+			if(satiety > 80)
+				nutrition_ratio *= 1.25
+			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * seconds_per_tick)
+			blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * seconds_per_tick), BLOOD_VOLUME_NORMAL)
 
 	//Effects of bloodloss
-	var/word = pick("dizzy","woozy","faint")
-	switch(blood_volume)
-		if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
-			if(DT_PROB(7.5, delta_time))
-				to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
-				investigate_log("has been gibbed by having too much blood.", INVESTIGATE_DEATHS)
-				inflate_gib()
-		if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
-			if(DT_PROB(5, delta_time))
-				to_chat(src, span_warning("You feel terribly bloated."))
-		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-			if(DT_PROB(2.5, delta_time))
-				to_chat(src, span_warning("You feel [word]."))
-			adjustOxyLoss(round(0.005 * (BLOOD_VOLUME_NORMAL - blood_volume) * delta_time, 1))
-		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-			adjustOxyLoss(round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * delta_time, 1))
-			if(DT_PROB(2.5, delta_time))
-				set_eye_blur_if_lower(12 SECONDS)
-				to_chat(src, span_warning("You feel very [word]."))
-		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-			adjustOxyLoss(2.5 * delta_time)
-			if(DT_PROB(7.5, delta_time))
-				Unconscious(rand(20,60))
-				to_chat(src, span_warning("You feel extremely [word]."))
-		if(-INFINITY to BLOOD_VOLUME_SURVIVE)
-			if(!HAS_TRAIT(src, TRAIT_NODEATH))
-				investigate_log("has died of bloodloss.", INVESTIGATE_DEATHS)
-				death()
+	if(!(sigreturn & HANDLE_BLOOD_NO_EFFECTS))
+		var/word = pick("dizzy","woozy","faint")
+		switch(blood_volume)
+			if(BLOOD_VOLUME_MAX_LETHAL to INFINITY)
+				if(SPT_PROB(7.5, seconds_per_tick))
+					to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
+					investigate_log("has been gibbed by having too much blood.", INVESTIGATE_DEATHS)
+					inflate_gib()
+			if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
+				if(SPT_PROB(5, seconds_per_tick))
+					to_chat(src, span_warning("You feel your skin swelling."))
+			if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
+				if(SPT_PROB(5, seconds_per_tick))
+					to_chat(src, span_warning("You feel terribly bloated."))
+			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
+				if(SPT_PROB(2.5, seconds_per_tick))
+					to_chat(src, span_warning("You feel [word]."))
+				adjustOxyLoss(round(0.005 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 1))
+			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
+				adjustOxyLoss(round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 1))
+				if(SPT_PROB(2.5, seconds_per_tick))
+					set_eye_blur_if_lower(12 SECONDS)
+					to_chat(src, span_warning("You feel very [word]."))
+			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
+				adjustOxyLoss(2.5 * seconds_per_tick)
+				if(SPT_PROB(7.5, seconds_per_tick))
+					Unconscious(rand(20,60))
+					to_chat(src, span_warning("You feel extremely [word]."))
+			if(-INFINITY to BLOOD_VOLUME_SURVIVE)
+				if(!HAS_TRAIT(src, TRAIT_NODEATH))
+					investigate_log("has died of bloodloss.", INVESTIGATE_DEATHS)
+					death()
 
 	var/temp_bleed = 0
 	//Bleeding out
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		var/iter_bleed_rate = iter_part.get_modified_bleed_rate()
-		temp_bleed += iter_bleed_rate * delta_time
+		temp_bleed += iter_bleed_rate * seconds_per_tick
 
 		if(iter_part.generic_bleedstacks) // If you don't have any bleedstacks, don't try and heal them
 			iter_part.adjustBleedStacks(-1, 0)
@@ -82,13 +79,13 @@
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
-	if(!blood_volume)
+	if(!blood_volume || (status_flags & GODMODE))
 		return
 	blood_volume = max(blood_volume - amt, 0)
 
 	//Blood loss still happens in locker, floor stays clean
 	if(isturf(loc) && prob(sqrt(amt)*BLOOD_DRIP_RATE_MOD))
-		add_splatter_floor(loc, (amt >= 10))
+		add_splatter_floor(loc, (amt <= 10))
 
 /mob/living/carbon/human/bleed(amt)
 	amt *= physiology.bleed_mod
@@ -255,7 +252,7 @@
 		else if(last_mind)
 			blood_data["ckey"] = ckey(last_mind.key)
 
-		if(!suiciding)
+		if(!HAS_TRAIT_FROM(src, TRAIT_SUICIDED, REF(src)))
 			blood_data["cloneable"] = 1
 		blood_data["blood_type"] = dna.blood_type
 		blood_data["gender"] = gender
@@ -277,7 +274,7 @@
 		return /datum/reagent/blood
 
 /mob/living/carbon/human/get_blood_id()
-	if(HAS_TRAIT(src, TRAIT_HUSK))
+	if(HAS_TRAIT(src, TRAIT_HUSK) || !dna)
 		return
 	if(check_holidays(APRIL_FOOLS) && is_clown_job(mind?.assigned_role))
 		return /datum/reagent/colorful_reagent
@@ -316,6 +313,8 @@
 		return
 	if(!T)
 		T = get_turf(src)
+	if(isclosedturf(T) || (isgroundlessturf(T) && !GET_TURF_BELOW(T)))
+		return
 
 	var/list/temp_blood_DNA
 	if(small_drip)
@@ -364,3 +363,14 @@
 	var/obj/effect/decal/cleanable/oil/B = locate() in T.contents
 	if(!B)
 		B = new(T)
+
+/mob/living/proc/get_blood_alcohol_content()
+	var/blood_alcohol_content = 0
+	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
+	if(!isnull(inebriation))
+		blood_alcohol_content = round(inebriation.drunk_value * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
+
+	return blood_alcohol_content
+
+#undef BLOOD_DRIP_RATE_MOD
+#undef DRUNK_POWER_TO_BLOOD_ALCOHOL

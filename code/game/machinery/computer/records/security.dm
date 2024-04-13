@@ -128,6 +128,7 @@
 			note = target.security_note,
 			rank = target.rank,
 			species = target.species,
+			trim = target.trim,
 			wanted_status = target.wanted_status,
 		))
 
@@ -146,6 +147,8 @@
 	if(.)
 		return
 
+	var/mob/user = ui.user
+
 	var/datum/record/crew/target
 	if(params["crew_ref"])
 		target = locate(params["crew_ref"]) in GLOB.manifest.general
@@ -154,28 +157,30 @@
 
 	switch(action)
 		if("add_crime")
-			add_crime(usr, target, params)
+			add_crime(user, target, params)
 			return TRUE
 
 		if("delete_record")
+			investigate_log("[user] deleted record: \"[target]\".", INVESTIGATE_RECORDS)
 			qdel(target)
 			return TRUE
 
 		if("edit_crime")
-			edit_crime(usr, target, params)
+			edit_crime(user, target, params)
 			return TRUE
 
 		if("invalidate_crime")
-			invalidate_crime(usr, target, params)
+			invalidate_crime(user, target, params)
 			return TRUE
 
 		if("print_record")
-			print_record(usr, target, params)
+			print_record(user, target, params)
 			return TRUE
 
 		if("set_note")
-			var/note = params["note"]
-			target.security_note = trim(note, MAX_MESSAGE_LEN)
+			var/note = trim(params["note"], MAX_MESSAGE_LEN)
+			investigate_log("[user] has changed the security note of record: \"[target]\" from \"[target.security_note]\" to \"[note]\".")
+			target.security_note = note
 			return TRUE
 
 		if("set_wanted")
@@ -187,6 +192,8 @@
 
 			investigate_log("[target.name] has been set from [target.wanted_status] to [wanted_status] by [key_name(usr)].", INVESTIGATE_RECORDS)
 			target.wanted_status = wanted_status
+
+			update_matching_security_huds(target.name)
 
 			return TRUE
 
@@ -216,6 +223,8 @@
 		investigate_log("New Crime: <strong>[input_name]</strong> | Added to [target.name] by [key_name(user)]. Their previous status was [target.wanted_status]", INVESTIGATE_RECORDS)
 		target.wanted_status = WANTED_ARREST
 
+		update_matching_security_huds(target.name)
+
 		return TRUE
 
 	var/datum/crime/citation/new_citation = new(name = input_name, details = input_details, author = usr, fine = params["fine"])
@@ -234,14 +243,19 @@
 		return FALSE
 
 	if(user != editing_crime.author && !has_armory_access(user)) // only warden/hos/command can edit crimes they didn't author
+		investigate_log("[user] attempted to edit crime: \"[editing_crime.name]\" for target: \"[target.name]\" but failed due to lacking armoury access and not being the author of the crime.", INVESTIGATE_RECORDS)
 		return FALSE
 
 	if(params["name"] && length(params["name"]) > 2 && params["name"] != editing_crime.name)
-		editing_crime.name = trim(params["name"], MAX_CRIME_NAME_LEN)
+		var/new_name = trim(params["name"], MAX_CRIME_NAME_LEN)
+		investigate_log("[user] edited crime: \"[editing_crime.name]\" for target: \"[target.name]\", changing the name to: \"[new_name]\".", INVESTIGATE_RECORDS)
+		editing_crime.name = new_name
 		return TRUE
 
 	if(params["details"] && length(params["description"]) > 2 && params["name"] != editing_crime.name)
-		editing_crime.details = trim(params["details"], MAX_MESSAGE_LEN)
+		var/new_details = trim(params["details"], MAX_MESSAGE_LEN)
+		investigate_log("[user] edited crime \"[editing_crime.name]\" for target: \"[target.name]\", changing the details to: \"[new_details]\" from: \"[editing_crime.details]\".", INVESTIGATE_RECORDS)
+		editing_crime.details = new_details
 		return TRUE
 
 	return FALSE
@@ -292,6 +306,7 @@
 		target.wanted_status = WANTED_DISCHARGED
 		investigate_log("[key_name(user)] has invalidated [target.name]'s last valid crime. Their status is now [WANTED_DISCHARGED].", INVESTIGATE_RECORDS)
 
+		update_matching_security_huds(target.name)
 	return TRUE
 
 /// Finishes printing, resets the printer.
@@ -305,7 +320,7 @@
 /// Handles printing records via UI. Takes the params from UI_act.
 /obj/machinery/computer/records/security/proc/print_record(mob/user, datum/record/crew/target, list/params)
 	if(printing)
-		balloon_alert(usr, "printer busy")
+		balloon_alert(user, "printer busy")
 		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
@@ -493,10 +508,10 @@
 		investigate_log("[names_of_entries.Join(", ")] have been set to [status_to_set] by [parent.get_creator()].", INVESTIGATE_RECORDS)
 		if(successful_set > COMP_SECURITY_ARREST_AMOUNT_TO_FLAG)
 			message_admins("[successful_set] security entries have been set to [status_to_set] by [parent.get_creator_admin()]. [ADMIN_COORDJMP(src)]")
-		for(var/mob/living/carbon/human/human as anything in GLOB.human_list)
-			human.sec_hud_set_security_status()
+		update_all_security_huds()
 
 #undef COMP_SECURITY_ARREST_AMOUNT_TO_FLAG
 #undef PRINTOUT_MISSING
 #undef PRINTOUT_RAPSHEET
 #undef PRINTOUT_WANTED
+#undef MAX_CRIME_NAME_LEN

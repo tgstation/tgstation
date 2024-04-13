@@ -31,7 +31,7 @@
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
 
-/obj/projectile/magic/death/on_hit(atom/target)
+/obj/projectile/magic/death/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 
 	if(isliving(target))
@@ -57,7 +57,7 @@
 	name = "bolt of resurrection"
 	icon_state = "ion"
 
-/obj/projectile/magic/resurrection/on_hit(atom/target)
+/obj/projectile/magic/resurrection/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 
 	if(isliving(target))
@@ -85,7 +85,7 @@
 	var/inner_tele_radius = 0
 	var/outer_tele_radius = 6
 
-/obj/projectile/magic/teleport/on_hit(mob/target)
+/obj/projectile/magic/teleport/on_hit(mob/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/teleammount = 0
 	var/teleloc = target
@@ -104,7 +104,7 @@
 	name = "bolt of safety"
 	icon_state = "bluespace"
 
-/obj/projectile/magic/safety/on_hit(atom/target)
+/obj/projectile/magic/safety/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isturf(target))
 		return BULLET_ACT_HIT
@@ -123,7 +123,7 @@
 	icon_state = "energy"
 	var/list/door_types = list(/obj/structure/mineral_door/wood, /obj/structure/mineral_door/iron, /obj/structure/mineral_door/silver, /obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium, /obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/plasma, /obj/structure/mineral_door/transparent/diamond)
 
-/obj/projectile/magic/door/on_hit(atom/target)
+/obj/projectile/magic/door/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(istype(target, /obj/machinery/door))
 		OpenDoor(target)
@@ -141,7 +141,7 @@
 /obj/projectile/magic/door/proc/OpenDoor(obj/machinery/door/D)
 	if(istype(D, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = D
-		A.locked = FALSE
+		A.unlock()
 	D.open()
 
 /obj/projectile/magic/change
@@ -153,7 +153,7 @@
 	/// If set, this projectile will only pass certain changeflags to wabbajack
 	var/set_wabbajack_changeflags
 
-/obj/projectile/magic/change/on_hit(atom/target)
+/obj/projectile/magic/change/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 
 	if(isliving(target))
@@ -171,43 +171,14 @@
 	icon_state = "red_1"
 	damage_type = BURN
 
-/obj/projectile/magic/animate/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/magic/animate/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	target.animate_atom_living(firer)
+	if(!is_type_in_typecache(target, GLOB.animatable_blacklist))
+		target.animate_atom_living(firer)
 
-/atom/proc/animate_atom_living(mob/living/owner = null)
-	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.animatable_blacklist))
-		if(istype(src, /obj/structure/statue/petrified))
-			var/obj/structure/statue/petrified/P = src
-			if(P.petrified_mob)
-				var/mob/living/L = P.petrified_mob
-				var/mob/living/basic/statue/S = new(P.loc, owner)
-				S.name = "statue of [L.name]"
-				if(owner)
-					S.faction = list("[REF(owner)]")
-				S.icon = P.icon
-				S.icon_state = P.icon_state
-				S.copy_overlays(P, TRUE)
-				S.color = P.color
-				S.atom_colours = P.atom_colours.Copy()
-				if(L.mind)
-					L.mind.transfer_to(S)
-					if(owner)
-						to_chat(S, span_userdanger("You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [owner], your creator."))
-				P.forceMove(S)
-				return
-		else
-			var/obj/O = src
-			if(isgun(O))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(drop_location(), src, owner)
-			else
-				new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)
-
-	else if(istype(src, /mob/living/simple_animal/hostile/mimic/copy))
-		// Change our allegiance!
-		var/mob/living/simple_animal/hostile/mimic/copy/C = src
-		if(owner)
-			C.ChangeOwner(owner)
+///proc to animate the target into a living creature
+/atom/proc/animate_atom_living(mob/living/owner)
+	return
 
 /obj/projectile/magic/spellblade
 	name = "blade energy"
@@ -251,7 +222,7 @@
 		target.forceMove(src)
 		return PROJECTILE_PIERCE_PHASE
 
-/obj/projectile/magic/locker/on_hit(target)
+/obj/projectile/magic/locker/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(created)
 		return ..()
 	if(LAZYLEN(contents))
@@ -276,6 +247,7 @@
 	breakout_time = 600
 	icon_welded = null
 	icon_state = "cursed"
+	paint_jobs = null
 	var/weakened_icon = "decursed"
 	var/auto_destroy = TRUE
 
@@ -284,13 +256,12 @@
 	if(auto_destroy)
 		addtimer(CALLBACK(src, PROC_REF(bust_open)), 5 MINUTES)
 
+/obj/structure/closet/decay/after_open(mob/living/user, force)
+	. = ..()
+	unmagify()
+
 /obj/structure/closet/decay/after_weld(weld_state)
 	if(weld_state)
-		unmagify()
-
-/obj/structure/closet/decay/open(mob/living/user, force = FALSE)
-	. = ..()
-	if(.)
 		unmagify()
 
 ///Give it the lesser magic icon and tell it to delete itself
@@ -313,7 +284,7 @@
 	name = "bolt of flying"
 	icon_state = "flight"
 
-/obj/projectile/magic/flying/on_hit(mob/living/target)
+/obj/projectile/magic/flying/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
@@ -323,7 +294,7 @@
 	name = "bolt of bounty"
 	icon_state = "bounty"
 
-/obj/projectile/magic/bounty/on_hit(mob/living/target)
+/obj/projectile/magic/bounty/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		target.apply_status_effect(/datum/status_effect/bounty, firer)
@@ -332,16 +303,16 @@
 	name = "bolt of antimagic"
 	icon_state = "antimagic"
 
-/obj/projectile/magic/antimagic/on_hit(mob/living/target)
+/obj/projectile/magic/antimagic/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(isliving(target))
+	if(istype(target))
 		target.apply_status_effect(/datum/status_effect/song/antimagic)
 
 /obj/projectile/magic/fetch
 	name = "bolt of fetching"
 	icon_state = "fetch"
 
-/obj/projectile/magic/fetch/on_hit(mob/living/target)
+/obj/projectile/magic/fetch/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/atom/throw_target = get_edge_target_turf(target, get_dir(target, firer))
@@ -351,7 +322,7 @@
 	name = "bolt of babel"
 	icon_state = "babel"
 
-/obj/projectile/magic/babel/on_hit(mob/living/carbon/target)
+/obj/projectile/magic/babel/on_hit(mob/living/carbon/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
 		if(curse_of_babel(target))
@@ -361,7 +332,7 @@
 	name = "bolt of necropotence"
 	icon_state = "necropotence"
 
-/obj/projectile/magic/necropotence/on_hit(mob/living/target)
+/obj/projectile/magic/necropotence/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(!isliving(target))
 		return
@@ -378,7 +349,7 @@
 	name = "bolt of possession"
 	icon_state = "wipe"
 
-/obj/projectile/magic/wipe/on_hit(mob/living/carbon/target)
+/obj/projectile/magic/wipe/on_hit(mob/living/carbon/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
 		for(var/x in target.get_traumas())//checks to see if the victim is already going through possession
@@ -391,24 +362,23 @@
 
 /obj/projectile/magic/wipe/proc/possession_test(mob/living/carbon/target)
 	var/datum/brain_trauma/special/imaginary_friend/trapped_owner/trauma = target.gain_trauma(/datum/brain_trauma/special/imaginary_friend/trapped_owner)
-	var/poll_message = "Do you want to play as [target.real_name]?"
+	var/poll_message = "Do you want to play as [span_danger(target.real_name)]?"
 	if(target.mind)
-		poll_message = "[poll_message] Job:[target.mind.assigned_role.title]."
+		poll_message = "[poll_message] Job:[span_notice(target.mind.assigned_role.title)]."
 	if(target.mind && target.mind.special_role)
-		poll_message = "[poll_message] Status:[target.mind.special_role]."
+		poll_message = "[poll_message] Status:[span_boldnotice(target.mind.special_role)]."
 	else if(target.mind)
 		var/datum/antagonist/A = target.mind.has_antag_datum(/datum/antagonist/)
 		if(A)
-			poll_message = "[poll_message] Status:[A.name]."
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob(poll_message, ROLE_PAI, FALSE, 10 SECONDS, target)
+			poll_message = "[poll_message] Status:[span_boldnotice(A.name)]."
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(poll_message, check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = target, alert_pic = target, role_name_text = "bolt of possession")
 	if(target.stat == DEAD)//boo.
 		return
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/ghost = pick(candidates)
+	if(chosen_one)
 		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
 		var/oldkey = target.key
 		target.ghostize(FALSE)
-		target.key = ghost.key
+		target.key = chosen_one.key
 		trauma.friend.key = oldkey
 		trauma.friend.reset_perspective(null)
 		trauma.friend.Show()
@@ -431,9 +401,9 @@
 	/// The duration of the trail before deleting.
 	var/trail_lifespan = 0 SECONDS
 	/// The icon the trail uses.
-	var/trail_icon = 'icons/obj/wizard.dmi'
+	var/trail_icon = 'icons/effects/magic.dmi'
 	/// The icon state the trail uses.
-	var/trail_icon_state = "trail"
+	var/trail_icon_state = "arrow"
 
 /obj/projectile/magic/aoe/Range()
 	if(trigger_range >= 1)
@@ -481,7 +451,7 @@
 	speed = 0.3
 
 	/// The power of the zap itself when it electrocutes someone
-	var/zap_power = 20000
+	var/zap_power = 2e4
 	/// The range of the zap itself when it electrocutes someone
 	var/zap_range = 15
 	/// The flags of the zap itself when it electrocutes someone
@@ -494,16 +464,16 @@
 		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]")
 	return ..()
 
-/obj/projectile/magic/aoe/lightning/on_hit(target)
+/obj/projectile/magic/aoe/lightning/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	tesla_zap(src, zap_range, zap_power, zap_flags)
+	tesla_zap(source = src, zap_range = zap_range, power = zap_power, cutoff = 1e3, zap_flags = zap_flags)
 
 /obj/projectile/magic/aoe/lightning/Destroy()
 	QDEL_NULL(chain)
 	return ..()
 
 /obj/projectile/magic/aoe/lightning/no_zap
-	zap_power = 10000
+	zap_power = 1e4
 	zap_range = 4
 	zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
 
@@ -522,7 +492,7 @@
 	/// Flash radius of the fireball
 	var/exp_flash = 3
 
-/obj/projectile/magic/fireball/on_hit(atom/target, blocked = FALSE, pierce_hit)
+/obj/projectile/magic/fireball/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/mob_target = target
@@ -577,7 +547,7 @@
 	speed = 1
 	pixel_speed_multiplier = 1/7
 
-/obj/projectile/magic/aoe/juggernaut/on_hit(atom/target, blocked)
+/obj/projectile/magic/aoe/juggernaut/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/turf/target_turf = get_turf(src)
 	playsound(target_turf, 'sound/weapons/resonator_blast.ogg', 100, FALSE)

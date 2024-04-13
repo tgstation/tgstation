@@ -4,7 +4,7 @@
 
 /obj/structure/bookcase
 	name = "bookcase"
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "bookempty"
 	desc = "A great place for storing knowledge."
 	anchored = FALSE
@@ -42,12 +42,17 @@
 	else
 		SSlibrary.shelves_to_load += src
 
+///proc for doing things after a bookcase is randomly populated
+/obj/structure/bookcase/proc/after_random_load()
+	return
+
 ///Loads the shelf, both by allowing it to generate random items, and by adding its contents to a list used by library machines
 /obj/structure/bookcase/proc/load_shelf()
 	//Loads a random selection of books in from the db, adds a copy of their info to a global list
 	//To send to library consoles as a starting inventory
 	if(load_random_books)
 		create_random_books(books_to_load, src, FALSE, random_category)
+		after_random_load()
 		update_appearance() //Make sure you look proper
 
 	var/area/our_area = get_area(src)
@@ -167,14 +172,13 @@
 		choice.forceMove(drop_location())
 	update_appearance()
 
-/obj/structure/bookcase/deconstruct(disassembled = TRUE)
+/obj/structure/bookcase/atom_deconstruct(disassembled = TRUE)
 	var/atom/Tsec = drop_location()
 	new /obj/item/stack/sheet/mineral/wood(Tsec, 4)
 	for(var/obj/item/I in contents)
 		if(!isbook(I)) //Wake me up inside
 			continue
 		I.forceMove(Tsec)
-	return ..()
 
 /obj/structure/bookcase/update_icon_state()
 	if(state == BOOKCASE_UNANCHORED || state == BOOKCASE_ANCHORED)

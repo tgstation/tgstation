@@ -71,12 +71,10 @@
 	)
 
 /datum/preference/choiced/ghost_form/init_possible_values()
-	var/list/values = list()
+	return assoc_to_keys(ghost_forms)
 
-	for (var/ghost_form in ghost_forms)
-		values[ghost_form] = icon('icons/mob/simple/mob.dmi', ghost_form)
-
-	return values
+/datum/preference/choiced/ghost_form/icon_for(value)
+	return icon('icons/mob/simple/mob.dmi', value)
 
 /datum/preference/choiced/ghost_form/create_default_value()
 	return "ghost"

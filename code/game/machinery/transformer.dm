@@ -3,7 +3,7 @@
 	desc = "A large metallic machine with an entrance and an exit. A sign on \
 		the side reads, 'human go in, robot come out'. The human must be \
 		lying down and alive. Has a cooldown between each use."
-	icon = 'icons/obj/recycling.dmi'
+	icon = 'icons/obj/machines/recycling.dmi'
 	icon_state = "separator-AO1"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	plane = ABOVE_GAME_PLANE
@@ -20,7 +20,7 @@
 	/// How long until the next mob can be processed
 	var/cooldown_timer
 	/// The created cyborg's cell chage
-	var/robot_cell_charge = 5000
+	var/robot_cell_charge = STANDARD_CELL_CHARGE * 5
 	/// The visual countdown effect
 	var/obj/effect/countdown/transformer/countdown
 	/// Who the master AI is that created this factory
@@ -99,7 +99,7 @@
 	// Sleep for a couple of ticks to allow the human to see the pain
 	sleep(0.5 SECONDS)
 
-	use_power(active_power_usage) // Use a lot of power.
+	use_energy(active_power_usage) // Use a lot of power.
 	var/mob/living/silicon/robot/new_borg = victim.Robotize()
 	new_borg.cell = new /obj/item/stock_parts/cell/upgraded/plus(new_borg, robot_cell_charge)
 

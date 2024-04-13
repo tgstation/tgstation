@@ -1,0 +1,3 @@
+# removes the plastitanium brig floor subtype
+
+/turf/open/floor/mineral/plastitanium/red/brig : /turf/open/floor/mineral/plastitanium/red{@OLD}

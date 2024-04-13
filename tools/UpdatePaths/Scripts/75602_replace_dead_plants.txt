@@ -1,0 +1,1 @@
+/obj/item/kirbyplants{icon_state = "plant-25"} : /obj/item/kirbyplants/dead{@OLD;icon_state=@SKIP}

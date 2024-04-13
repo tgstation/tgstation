@@ -57,7 +57,7 @@
 
 /obj/item/clothing/suit/armor/reactive/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_OCLOTHING)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/suit/armor/reactive/update_icon_state()
 	. = ..()
@@ -69,7 +69,7 @@
 	update_icon()
 	add_fingerprint(user)
 
-/obj/item/clothing/suit/armor/reactive/hit_reaction(owner, hitby, attack_text, final_block_chance, damage, attack_type)
+/obj/item/clothing/suit/armor/reactive/hit_reaction(owner, hitby, attack_text, final_block_chance, damage, attack_type, damage_type = BRUTE)
 	if(!active || !prob(hit_reaction_chance))
 		return FALSE
 	if(world.time < reactivearmor_cooldown)
@@ -226,7 +226,7 @@
 	emp_message = span_warning("The tesla capacitors beep ominously for a moment.")
 	clothing_traits = list(TRAIT_TESLA_SHOCKIMMUNE)
 	/// How strong are the zaps we give off?
-	var/zap_power = 25000
+	var/zap_power = 2.5e4
 	/// How far to the zaps we give off go?
 	var/zap_range = 20
 	/// What flags do we pass to the zaps we give off?
@@ -240,7 +240,7 @@
 
 /obj/item/clothing/suit/armor/reactive/tesla/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], sending out arcs of lightning!"))
-	tesla_zap(owner, zap_range, zap_power, zap_flags)
+	tesla_zap(source = owner, zap_range = zap_range, power = zap_power, cutoff = 1e3, zap_flags = zap_flags)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
@@ -406,29 +406,7 @@
 	for(var/mob/living/carbon/nearby in range(range, get_turf(src)))
 		if(!can_hit_owner && nearby == owner)
 			continue
-		if(nearby.run_armor_check(attack_flag = BIO, absorb_text = "Your armor protects you from [src]!") >= 100)
-			continue //We are protected
-		var/picked_zone = pick(zones)
-		var/obj/item/bodypart/picked_user_part = nearby.get_bodypart(picked_zone)
-		var/obj/item/bodypart/picked_part
-		switch(picked_zone)
-			if(BODY_ZONE_HEAD)
-				picked_part = pick(heads)
-			if(BODY_ZONE_CHEST)
-				picked_part = pick(chests)
-			if(BODY_ZONE_L_ARM)
-				picked_part = pick(l_arms)
-			if(BODY_ZONE_R_ARM)
-				picked_part = pick(r_arms)
-			if(BODY_ZONE_L_LEG)
-				picked_part = pick(l_legs)
-			if(BODY_ZONE_R_LEG)
-				picked_part = pick(r_legs)
-		var/obj/item/bodypart/new_part = new picked_part()
-		new_part.replace_limb(nearby, TRUE)
-		qdel(picked_user_part)
-		nearby.update_body(TRUE)
-		balloon_alert(nearby, "something has changed about you")
+		nearby.bioscramble(name)
 
 // When the wearer gets hit, this armor will push people nearby and spawn some blocking objects.
 /obj/item/clothing/suit/armor/reactive/barricade

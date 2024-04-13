@@ -1,0 +1,589 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aV" = (
+/obj/machinery/mass_driver{
+	id = "ft-1";
+	dir = 1
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/engine/airless,
+/area/ruin/space/massdriverhub)
+"bd" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "zaza"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"cE" = (
+/obj/machinery/conveyor/inverted{
+	dir = 9;
+	id = "zaza"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"eq" = (
+/obj/machinery/conveyor{
+	id = "zaza"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"gg" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "zaza"
+	},
+/obj/item/card/emagfake,
+/obj/structure/closet/crate,
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"hV" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "zaza"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"ik" = (
+/obj/machinery/conveyor/inverted{
+	dir = 10;
+	id = "zaza"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"jy" = (
+/obj/item/stack/conveyor/thirty{
+	amount = 10
+	},
+/turf/template_noop,
+/area/template_noop)
+"lq" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "zaza"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"mr" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"oj" = (
+/obj/machinery/conveyor{
+	dir = 2;
+	id = "zaza"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"oq" = (
+/mob/living/basic/carp,
+/turf/template_noop,
+/area/template_noop)
+"oR" = (
+/obj/item/gps/spaceruin,
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"pn" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "zaza"
+	},
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/medical/medkit,
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"qG" = (
+/obj/machinery/conveyor{
+	dir = 9;
+	id = "zaza"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"qH" = (
+/obj/item/shard,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/space/massdriverhub)
+"tm" = (
+/turf/open/floor/catwalk_floor{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/space/massdriverhub)
+"uv" = (
+/obj/item/shard,
+/obj/structure/disposalpipe/broken{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"uN" = (
+/obj/item/shard,
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"uW" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/delivery_chute{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"vl" = (
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"zn" = (
+/obj/machinery/conveyor{
+	dir = 10;
+	id = "zaza"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"AA" = (
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	range = 8;
+	pixel_y = 28;
+	id = "ft-1"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"AX" = (
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	range = 8;
+	pixel_y = -28;
+	id = "ft-3"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"Bv" = (
+/obj/machinery/conveyor/inverted{
+	dir = 5;
+	id = "zaza"
+	},
+/turf/open/floor/catwalk_floor{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/space/massdriverhub)
+"CI" = (
+/obj/structure/disposalpipe/broken{
+	dir = 1
+	},
+/obj/structure/disposalpipe/broken,
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"CX" = (
+/obj/item/stack/rods,
+/turf/template_noop,
+/area/template_noop)
+"DZ" = (
+/obj/machinery/power/rtg/advanced,
+/obj/structure/cable,
+/obj/machinery/light/directional/south,
+/turf/open/floor/catwalk_floor{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/space/massdriverhub)
+"EN" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/structure/disposaloutlet{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"EO" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/light/directional/north,
+/turf/open/floor/catwalk_floor{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/space/massdriverhub)
+"Fw" = (
+/obj/effect/decal/cleanable/robot_debris,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "zaza"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"FY" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/massdriverhub)
+"Gx" = (
+/obj/machinery/mass_driver{
+	id = "ft-2";
+	dir = 4
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/engine/airless,
+/area/ruin/space/massdriverhub)
+"GD" = (
+/obj/machinery/mass_driver{
+	id = "ft-4";
+	dir = 8
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/engine/airless,
+/area/ruin/space/massdriverhub)
+"GS" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/delivery_chute{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"GT" = (
+/obj/machinery/conveyor_switch{
+	id = "zaza"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"Hn" = (
+/obj/machinery/conveyor{
+	id = "zaza"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"HR" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"Jw" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"Kl" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "zaza"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"Lo" = (
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	range = 8;
+	pixel_x = -28;
+	id = "ft-4"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"MM" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "zaza"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"MY" = (
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/delivery_chute,
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"Nj" = (
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	range = 8;
+	pixel_x = 28;
+	id = "ft-2"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"No" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/space/massdriverhub)
+"QZ" = (
+/obj/machinery/conveyor/inverted{
+	dir = 5;
+	id = "zaza"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"Rm" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"Rz" = (
+/obj/machinery/conveyor{
+	id = "zaza"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"RX" = (
+/obj/structure/disposalpipe/broken,
+/obj/structure/disposalpipe/broken{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"Sx" = (
+/obj/machinery/mass_driver{
+	id = "ft-3"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/engine/airless,
+/area/ruin/space/massdriverhub)
+"SW" = (
+/obj/machinery/conveyor{
+	dir = 9;
+	id = "zaza"
+	},
+/obj/structure/closet/crate,
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"TM" = (
+/obj/item/stack/rods,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space/massdriverhub)
+"Ui" = (
+/obj/machinery/conveyor/inverted{
+	dir = 6;
+	id = "zaza"
+	},
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/engineering/toolbox,
+/obj/effect/spawner/random/engineering/toolbox,
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"Vd" = (
+/obj/machinery/conveyor/inverted{
+	dir = 6;
+	id = "zaza"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+"WK" = (
+/turf/template_noop,
+/area/template_noop)
+"YR" = (
+/obj/machinery/conveyor{
+	id = "zaza"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/massdriverhub)
+
+(1,1,1) = {"
+WK
+WK
+WK
+WK
+FY
+FY
+GD
+FY
+FY
+WK
+WK
+WK
+WK
+"}
+(2,1,1) = {"
+jy
+CX
+FY
+hV
+FY
+Lo
+Vd
+qG
+FY
+Rm
+FY
+FY
+WK
+"}
+(3,1,1) = {"
+CX
+oq
+Rm
+hV
+uN
+Rm
+oR
+Vd
+SW
+Rm
+Rm
+FY
+WK
+"}
+(4,1,1) = {"
+WK
+CX
+TM
+Fw
+Rm
+CI
+RX
+RX
+lq
+MY
+pn
+bd
+WK
+"}
+(5,1,1) = {"
+FY
+FY
+uv
+hV
+Rm
+Rm
+Rm
+Rm
+MM
+Rm
+Rm
+FY
+FY
+"}
+(6,1,1) = {"
+FY
+hV
+EN
+hV
+qH
+No
+No
+GT
+mr
+Rm
+Rm
+AX
+FY
+"}
+(7,1,1) = {"
+aV
+ik
+Rm
+hV
+DZ
+FY
+EO
+QZ
+Hn
+eq
+eq
+eq
+Sx
+"}
+(8,1,1) = {"
+FY
+AA
+Rm
+hV
+tm
+tm
+Bv
+zn
+uW
+Rm
+Rm
+Rm
+FY
+"}
+(9,1,1) = {"
+FY
+FY
+Rm
+GS
+Rm
+Rm
+gg
+Rm
+MM
+Rm
+Rm
+FY
+FY
+"}
+(10,1,1) = {"
+WK
+Rz
+eq
+YR
+eq
+eq
+zn
+Rm
+MM
+Rm
+Rm
+Rm
+WK
+"}
+(11,1,1) = {"
+WK
+FY
+Rm
+HR
+Jw
+vl
+Rm
+Rm
+Ui
+qG
+Rm
+FY
+WK
+"}
+(12,1,1) = {"
+WK
+FY
+FY
+Rm
+FY
+oj
+cE
+Nj
+FY
+Kl
+FY
+FY
+WK
+"}
+(13,1,1) = {"
+WK
+WK
+WK
+WK
+FY
+FY
+Gx
+FY
+FY
+WK
+WK
+WK
+WK
+"}

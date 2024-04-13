@@ -3,11 +3,13 @@
 /obj/machinery/processor
 	name = "food processor"
 	desc = "An industrial grinder used to process meat and other foods. Keep hands clear of intake area while operating."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "processor1"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
+	pass_flags = PASSTABLE
 	circuit = /obj/item/circuitboard/machine/processor
+	anchored_tabletop_offset = 8
 	///Is the processor blending items at the moment
 	var/processing = FALSE
 	///The speed at which the processor processes items
@@ -45,8 +47,8 @@
 	. = ..()
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		rating_amount = matter_bin.tier
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		rating_speed = manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		rating_speed = servo.tier
 
 /obj/machinery/processor/examine(mob/user)
 	. = ..()
@@ -67,13 +69,15 @@
 		var/cached_multiplier = (recipe.food_multiplier * rating_amount)
 		for(var/i in 1 to cached_multiplier)
 			var/atom/processed_food = new recipe.output(drop_location())
-			what.reagents.copy_to(processed_food, what.reagents.total_volume, multiplier = 1 / cached_multiplier)
+			if(processed_food.reagents && what.reagents)
+				processed_food.reagents.clear_reagents()
+				what.reagents.copy_to(processed_food, what.reagents.total_volume, multiplier = 1 / cached_multiplier)
 			if(cached_mats)
 				processed_food.set_custom_materials(cached_mats, 1 / cached_multiplier)
 
 	if(isliving(what))
 		var/mob/living/themob = what
-		themob.gib(TRUE,TRUE,TRUE)
+		themob.gib()
 	else
 		qdel(what)
 	LAZYREMOVE(processor_contents, what)
@@ -81,13 +85,13 @@
 /obj/machinery/processor/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/processor/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(processing)
 		to_chat(user, span_warning("[src] is in the process of processing!"))
 		return TRUE
-	if(default_deconstruction_screwdriver(user, "processor", "processor1", attacking_item) || default_pry_open(attacking_item) || default_deconstruction_crowbar(attacking_item))
+	if(default_deconstruction_screwdriver(user, "processor", "processor1", attacking_item) || default_pry_open(attacking_item, close_after_pry = TRUE) || default_deconstruction_crowbar(attacking_item))
 		return
 
 	if(istype(attacking_item, /obj/item/storage/bag/tray))
@@ -143,7 +147,7 @@
 		span_notice("You turn on [src]."), \
 		span_hear("You hear a food processor."))
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, TRUE)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	var/total_time = 0
 	for(var/atom/movable/movable_input as anything in processor_contents)
 		var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(movable_input)
@@ -151,16 +155,16 @@
 			log_admin("DEBUG: [movable_input] in processor doesn't have a suitable recipe. How did it get in there? Please report it immediately!!!")
 			continue
 		total_time += recipe.time
-	var/offset = prob(50) ? -2 : 2
-	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = (total_time / rating_speed)*5) //start shaking
-	sleep(total_time / rating_speed)
+
+	var/duration = (total_time / rating_speed)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, Shake), 2, 2, duration, max(duration*0.02, 0.01)) //initial values work out to duration 4 seconds, interval 0.8
+	sleep(duration)
 	for(var/atom/movable/content_item in processor_contents)
 		var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(content_item)
 		if (!recipe)
 			log_admin("DEBUG: [content_item] in processor doesn't have a suitable recipe. How do you put it in?")
 			continue
 		process_food(recipe, content_item)
-	pixel_x = base_pixel_x //return to its spot after shaking
 	processing = FALSE
 	visible_message(span_notice("\The [src] finishes processing."))
 
@@ -205,8 +209,8 @@
 /obj/machinery/processor/slime/process()
 	if(processing)
 		return
-	var/mob/living/simple_animal/slime/picked_slime
-	for(var/mob/living/simple_animal/slime/slime in range(1,src))
+	var/mob/living/basic/slime/picked_slime
+	for(var/mob/living/basic/slime/slime in range(1,src))
 		if(!CanReach(slime)) //don't take slimes behind glass panes or somesuch; also makes it ignore slimes inside the processor
 			continue
 		if(slime.stat)
@@ -223,7 +227,7 @@
 	picked_slime.forceMove(src)
 
 /obj/machinery/processor/slime/process_food(datum/food_processor_process/recipe, atom/movable/what)
-	var/mob/living/simple_animal/slime/processed_slime = what
+	var/mob/living/basic/slime/processed_slime = what
 	if (!istype(processed_slime))
 		return
 
@@ -233,9 +237,9 @@
 		return
 	var/core_count = processed_slime.cores
 	for(var/i in 1 to (core_count+rating_amount-1))
-		var/atom/movable/item = new processed_slime.coretype(drop_location())
+		var/atom/movable/item = new processed_slime.slime_type.core_type(drop_location())
 		adjust_item_drop_location(item)
-		SSblackbox.record_feedback("tally", "slime_core_harvested", 1, processed_slime.colour)
+		SSblackbox.record_feedback("tally", "slime_core_harvested", 1, processed_slime.slime_type.colour)
 	return ..()
 
 #undef PROCESSOR_SELECT_RECIPE

@@ -75,7 +75,7 @@
 		return
 	if (ismovable(M))
 		if(do_teleport(M, target, channel = TELEPORT_CHANNEL_BLUESPACE))
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 			if(!calibrated && prob(30 - ((accuracy) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
@@ -165,14 +165,14 @@
 			return
 		var/obj/item/multitool/M = W
 		if(panel_open)
-			M.buffer = src
-			to_chat(user, span_notice("You download the data to the [W.name]'s buffer."))
+			M.set_buffer(src)
+			balloon_alert(user, "saved to multitool buffer")
 		else
 			if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
 				if(linked_stations.len < efficiency)
 					linked_stations.Add(M.buffer)
-					M.buffer = null
-					to_chat(user, span_notice("You upload the data from the [W.name]'s buffer."))
+					M.set_buffer(null)
+					balloon_alert(user, "data uploaded from buffer")
 				else
 					to_chat(user, span_alert("This station can't hold more information, try to use better parts."))
 		return
@@ -196,7 +196,7 @@
 			to_chat(user, span_alert("The teleporter hub isn't responding."))
 		else
 			engaged = !engaged
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 			to_chat(user, span_notice("Teleporter [engaged ? "" : "dis"]engaged!"))
 	else
 		teleporter_console.target_ref = null

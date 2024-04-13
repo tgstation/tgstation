@@ -24,9 +24,9 @@
 	src.item_ref = WEAKREF(item)
 	src.item_callback = item_callback
 
-/datum/component/action_item_overlay/Destroy(force, silent)
+/datum/component/action_item_overlay/Destroy(force)
 	item_ref = null
-	QDEL_NULL(item_callback)
+	item_callback = null
 	item_appearance = null
 	return ..()
 

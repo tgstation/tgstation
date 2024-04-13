@@ -12,7 +12,7 @@
 	if(!.)
 		return FALSE
 	var/obj/machinery/fax/machine = holder
-	if(!issilicon(user) && machine.seconds_electrified && machine.shock(user, 100))
+	if(!HAS_SILICON_ACCESS(user) && machine.seconds_electrified && machine.shock(user, 100))
 		return FALSE
 	if(machine.panel_open)
 		return TRUE
@@ -38,7 +38,7 @@
 		if(WIRE_LOADCHECK)
 			machine.allow_exotic_faxes = !machine.allow_exotic_faxes
 
-/datum/wires/fax/on_cut(wire, mend)
+/datum/wires/fax/on_cut(wire, mend, source)
 	var/obj/machinery/fax/machine = holder
 	switch(wire)
 		if(WIRE_SHOCK)

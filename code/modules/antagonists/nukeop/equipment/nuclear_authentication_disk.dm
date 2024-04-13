@@ -1,5 +1,5 @@
 /obj/item/disk
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
@@ -26,7 +26,7 @@
 
 /obj/item/disk/nuclear/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bed_tuckable, 6, -6, 0)
+	AddElement(/datum/element/bed_tuckable, mapload, 6, -6, 0)
 	AddComponent(/datum/component/stationloving, !fake)
 
 	if(!fake)
@@ -69,7 +69,7 @@
 	if(!fake)
 		return
 
-	if(isobserver(user) || HAS_TRAIT(user, TRAIT_DISK_VERIFIER) || (user.mind && HAS_TRAIT(user.mind, TRAIT_DISK_VERIFIER)))
+	if(isobserver(user) || HAS_MIND_TRAIT(user, TRAIT_DISK_VERIFIER))
 		. += span_warning("The serial numbers on [src] are incorrect.")
 
 /*
@@ -104,7 +104,7 @@
 	user.visible_message(span_suicide("[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src, 'sound/machines/alarm.ogg', 50, -1, TRUE)
 	for(var/i in 1 to 100)
-		addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, add_atom_colour), (i % 2)? "#00FF00" : "#FF0000", ADMIN_COLOUR_PRIORITY), i)
+		addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, add_atom_colour), (i % 2)? COLOR_VIBRANT_LIME : COLOR_RED, ADMIN_COLOUR_PRIORITY), i)
 	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 101)
 	return MANUAL_SUICIDE
 

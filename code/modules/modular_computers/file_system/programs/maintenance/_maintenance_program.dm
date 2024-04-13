@@ -6,8 +6,4 @@
  */
 /datum/computer_file/program/maintenance
 	filetype = "MNT"
-	available_on_ntnet = FALSE
-
-/datum/computer_file/program/maintenance/clone(rename = FALSE)
-	. = ..()
-	qdel(src)
+	program_flags = PROGRAM_UNIQUE_COPY

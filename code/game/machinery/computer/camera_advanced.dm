@@ -8,7 +8,7 @@
 	var/lock_override = NONE
 	var/mob/camera/ai_eye/remote/eyeobj
 	var/mob/living/current_user = null
-	var/list/networks = list("ss13")
+	var/list/networks = list(CAMERANET_NETWORK_SS13)
 	/// Typepath of the action button we use as "off"
 	/// It's a typepath so subtypes can give it fun new names
 	var/datum/action/innate/camera_off/off_action = /datum/action/innate/camera_off
@@ -24,13 +24,13 @@
 	///Should we supress any view changes?
 	var/should_supress_view_changes = TRUE
 
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE | INTERACT_MACHINE_REQUIRES_SIGHT
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_REQUIRES_SIGHT
 
 /obj/machinery/computer/camera_advanced/Initialize(mapload)
 	. = ..()
 	for(var/i in networks)
 		networks -= i
-		networks += lowertext(i)
+		networks += LOWER_TEXT(i)
 	if(lock_override)
 		if(lock_override & CAMERA_LOCK_STATION)
 			z_lock |= SSmapping.levels_by_trait(ZTRAIT_STATION)
@@ -73,33 +73,45 @@
 /obj/machinery/proc/remove_eye_control(mob/living/user)
 	CRASH("[type] does not implement ai eye handling")
 
-/obj/machinery/computer/camera_advanced/remove_eye_control(mob/living/user)
-	if(!user)
+/obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
+	if(isnull(user?.client))
 		return
-	for(var/V in actions)
-		var/datum/action/A = V
-		A.Remove(user)
-	for(var/V in eyeobj.visibleCameraChunks)
-		var/datum/camerachunk/C = V
-		C.remove(eyeobj)
-	if(user.client)
-		user.reset_perspective(null)
-		if(eyeobj.visible_icon && user.client)
-			user.client.images -= eyeobj.user_image
-		user.client.view_size.unsupress()
+	GrantActions(user)
+	current_user = user
+	eyeobj.eye_user = user
+	eyeobj.name = "Camera Eye ([user.name])"
+	user.remote_control = eyeobj
+	user.reset_perspective(eyeobj)
+	eyeobj.setLoc(eyeobj.loc)
+	if(should_supress_view_changes)
+		user.client.view_size.supress()
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(check_eye))
+
+/obj/machinery/computer/camera_advanced/remove_eye_control(mob/living/user)
+	if(isnull(user?.client))
+		return
+
+	for(var/datum/action/actions_removed as anything in actions)
+		actions_removed.Remove(user)
+	for(var/datum/camerachunk/camerachunks_gone as anything in eyeobj.visibleCameraChunks)
+		camerachunks_gone.remove(eyeobj)
+
+	user.reset_perspective(null)
+	if(eyeobj.visible_icon)
+		user.client.images -= eyeobj.user_image
+	user.client.view_size.unsupress()
 
 	eyeobj.eye_user = null
 	user.remote_control = null
 	current_user = null
-	user.unset_machine()
-
-	for(var/atom/movable/screen/plane_master/plane_static in user.hud_used?.get_true_plane_masters(CAMERA_STATIC_PLANE))
-		plane_static.hide_plane(user)
+	unset_machine(user)
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
-/obj/machinery/computer/camera_advanced/check_eye(mob/user)
+/obj/machinery/computer/camera_advanced/proc/check_eye(mob/user)
+	SIGNAL_HANDLER
 	if(!can_use(user) || (issilicon(user) && !user.has_unlimited_silicon_privilege))
-		user.unset_machine()
+		unset_machine(user)
 
 /obj/machinery/computer/camera_advanced/Destroy()
 	if(eyeobj)
@@ -108,7 +120,7 @@
 	current_user = null
 	return ..()
 
-/obj/machinery/computer/camera_advanced/on_unset_machine(mob/M)
+/obj/machinery/computer/camera_advanced/proc/unset_machine(mob/M)
 	if(M == current_user)
 		remove_eye_control(M)
 
@@ -125,6 +137,8 @@
 	if(.)
 		return
 	if(!can_use(user))
+		return
+	if(isnull(user.client))
 		return
 	if(current_user)
 		to_chat(user, span_warning("The console is already in use!"))
@@ -158,7 +172,7 @@
 			give_eye_control(L)
 			eyeobj.setLoc(camera_location)
 		else
-			user.unset_machine()
+			unset_machine(user)
 	else
 		give_eye_control(L)
 		eyeobj.setLoc(eyeobj.loc)
@@ -168,20 +182,6 @@
 
 /obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 	return //AIs would need to disable their own camera procs to use the console safely. Bugs happen otherwise.
-
-/obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
-	GrantActions(user)
-	current_user = user
-	eyeobj.eye_user = user
-	eyeobj.name = "Camera Eye ([user.name])"
-	user.remote_control = eyeobj
-	user.reset_perspective(eyeobj)
-	eyeobj.setLoc(eyeobj.loc)
-	if(should_supress_view_changes)
-		user.client.view_size.supress()
-	// Who passes control like this god I hate static code
-	for(var/atom/movable/screen/plane_master/plane_static in user.hud_used?.get_true_plane_masters(CAMERA_STATIC_PLANE))
-		plane_static.unhide_plane(user)
 
 /mob/camera/ai_eye/remote
 	name = "Inactive Camera Eye"

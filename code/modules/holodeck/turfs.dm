@@ -8,8 +8,9 @@
 /turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)
 	return // HOLOFLOOR DOES NOT GIVE A FUCK
 
-/turf/open/floor/holofloor/tool_act(mob/living/user, obj/item/I, tool_type)
-	return
+/turf/open/floor/holofloor/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	SHOULD_CALL_PARENT(FALSE)
+	return NONE // Fuck you
 
 /turf/open/floor/holofloor/burn_tile()
 	return //you can't burn a hologram!
@@ -70,26 +71,30 @@
 	gender = PLURAL
 	name = "sand"
 	desc = "This is better than a vacation, since you're still getting paid."
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/turf/sand.dmi'
 	icon_state = "sand"
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
 
-/turf/open/floor/holofloor/beach/coast_t
+/turf/open/floor/holofloor/beach/coast
 	gender = NEUTER
 	name = "coastline"
-	icon_state = "sandwater_t"
+	icon = 'icons/turf/beach.dmi'
+	icon_state = "beach"
 
-/turf/open/floor/holofloor/beach/coast_b
-	gender = NEUTER
-	name = "coastline"
-	icon_state = "sandwater_b"
+/turf/open/floor/holofloor/beach/coast/corner
+	icon_state = "beach-corner"
 
 /turf/open/floor/holofloor/beach/water
 	name = "water"
 	desc = "Gives the impression you can walk on water. Chaplains love it."
+	icon = 'icons/turf/beach.dmi'
 	icon_state = "water"
 	bullet_sizzle = TRUE
+
+/turf/open/floor/holofloor/beach/water/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/fishing_spot, /datum/fish_source/holographic)
 
 /turf/open/floor/holofloor/asteroid
 	gender = PLURAL
@@ -153,7 +158,7 @@
 
 /turf/open/floor/holofloor/carpet/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 1)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 0.1 SECONDS)
 
 /turf/open/floor/holofloor/carpet/update_icon(updates=ALL)
 	. = ..()
@@ -176,9 +181,6 @@
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
 
-/turf/open/floor/holofloor/snow/cold
-	initial_gas_mix = "nob=7500;TEMP=2.7"
-
 /turf/open/floor/holofloor/dark
 	icon_state = "darkfull"
 	desc = "The surrounding enviroment is so dark you can hardly see yourself."
@@ -196,3 +198,11 @@
 
 /turf/open/floor/holofloor/stairs/right
 	icon_state = "stairs-r"
+
+/turf/open/floor/holofloor/chess_white
+	icon_state = "white_large"
+	color = "#eeeed2"
+
+/turf/open/floor/holofloor/chess_black
+	icon_state = "white_large"
+	color = "#93b570"

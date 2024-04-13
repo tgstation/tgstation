@@ -10,10 +10,15 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
-	if(!mob)
+	var/client_initalized = VALIDATE_CLIENT_INITIALIZATION(src)
+	if(isnull(mob) || !client_initalized)
+		if(!client_initalized)
+			unvalidated_client_error() // we only want to throw this warning message when it's directly related to client failure.
+
+		to_chat(usr, span_warning("Failed to send your OOC message. You attempted to send the following message:\n[span_big(msg)]"))
 		return
 
-	if(!holder)
+	if(isnull(holder))
 		if(!GLOB.ooc_allowed)
 			to_chat(src, span_danger("OOC is globally muted."))
 			return
@@ -66,7 +71,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
-	if(!(prefs.chat_toggles & CHAT_OOC))
+	if(!(get_chat_toggles(src) & CHAT_OOC))
 		to_chat(src, span_danger("You have OOC muted."))
 		return
 
@@ -83,7 +88,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	for(var/client/receiver as anything in GLOB.clients)
 		if(!receiver.prefs) // Client being created or deleted. Despite all, this can be null.
 			continue
-		if(!(receiver.prefs.chat_toggles & CHAT_OOC))
+		if(!(get_chat_toggles(receiver) & CHAT_OOC))
 			continue
 		if(holder?.fakekey in receiver.prefs.ignoring)
 			continue
@@ -134,18 +139,15 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set category = "Server"
 	if(IsAdminAdvancedProcCall())
 		return
-	var/newColor = input(src, "Please select the new player OOC color.", "OOC color") as color|null
+
+ADMIN_VERB(set_ooc_color, R_FUN, "Set Player OOC Color", "Modifies the global OOC color.", ADMIN_CATEGORY_SERVER)
+	var/newColor = input(user, "Please select the new player OOC color.", "OOC color") as color|null
 	if(isnull(newColor))
 		return
-	if(!check_rights(R_FUN))
-		message_admins("[usr.key] has attempted to use the Set Player OOC Color verb!")
-		log_admin("[key_name(usr)] tried to set player ooc color without authorization.")
-		return
 	var/new_color = sanitize_color(newColor)
-	message_admins("[key_name_admin(usr)] has set the players' ooc color to [new_color].")
-	log_admin("[key_name_admin(usr)] has set the player ooc color to [new_color].")
+	message_admins("[key_name_admin(user)] has set the players' ooc color to [new_color].")
+	log_admin("[key_name_admin(user)] has set the player ooc color to [new_color].")
 	GLOB.OOC_COLOR = new_color
-
 
 /client/proc/reset_ooc()
 	set name = "Reset Player OOC Color"
@@ -153,14 +155,12 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set category = "Server"
 	if(IsAdminAdvancedProcCall())
 		return
-	if(tgui_alert(usr, "Are you sure you want to reset the OOC color of all players?", "Reset Player OOC Color", list("Yes", "No")) != "Yes")
+
+ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC color to default.", ADMIN_CATEGORY_SERVER)
+	if(tgui_alert(user, "Are you sure you want to reset the OOC color of all players?", "Reset Player OOC Color", list("Yes", "No")) != "Yes")
 		return
-	if(!check_rights(R_FUN))
-		message_admins("[usr.key] has attempted to use the Reset Player OOC Color verb!")
-		log_admin("[key_name(usr)] tried to reset player ooc color without authorization.")
-		return
-	message_admins("[key_name_admin(usr)] has reset the players' ooc color.")
-	log_admin("[key_name_admin(usr)] has reset player ooc color.")
+	message_admins("[key_name_admin(user)] has reset the players' ooc color.")
+	log_admin("[key_name_admin(user)] has reset player ooc color.")
 	GLOB.OOC_COLOR = null
 
 //Checks admin notice
@@ -417,9 +417,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if (!prefs.read_preference(/datum/preference/toggle/auto_fit_viewport))
 		return
 	if(fully_created)
-		INVOKE_ASYNC(src, .verb/fit_viewport)
+		INVOKE_ASYNC(src, VERB_REF(fit_viewport))
 	else //Delayed to avoid wingets from Login calls.
-		addtimer(CALLBACK(src, .verb/fit_viewport, 1 SECONDS))
+		addtimer(CALLBACK(src, VERB_REF(fit_viewport), 1 SECONDS))
 
 /client/verb/policy()
 	set name = "Show Policy"
@@ -447,3 +447,12 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set hidden = TRUE
 
 	init_verbs()
+
+/client/proc/export_preferences()
+	set name = "Export Preferences"
+	set desc = "Export your current preferences to a file."
+	set category = "OOC"
+
+	ASSERT(prefs, "User attempted to export preferences while preferences were null!") // what the fuck
+
+	prefs.savefile.export_json_to_client(usr, ckey)

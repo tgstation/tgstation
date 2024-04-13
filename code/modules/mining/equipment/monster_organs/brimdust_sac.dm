@@ -33,7 +33,7 @@
 	qdel(src)
 
 // Every x seconds, if on lavaland, add one stack
-/obj/item/organ/internal/monster_core/brimdust_sac/on_life(delta_time, times_fired)
+/obj/item/organ/internal/monster_core/brimdust_sac/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, brimdust_auto_apply_cooldown))
 		return
@@ -141,7 +141,7 @@
 	return COMPONENT_CLEANED
 
 /// When you take brute damage, schedule an explosion
-/datum/status_effect/stacking/brimdust_coating/proc/on_take_damage(datum/source, damage, damagetype)
+/datum/status_effect/stacking/brimdust_coating/proc/on_take_damage(datum/source, damage, damagetype, ...)
 	SIGNAL_HANDLER
 	if(damagetype != BRUTE)
 		return
@@ -171,6 +171,7 @@
 		var/armor = target.run_armor_check(attack_flag = BOMB)
 		target.apply_damage(damage_dealt, damagetype = BURN, blocked = armor, spread_damage = TRUE)
 
+	SEND_SIGNAL(owner, COMSIG_BRIMDUST_EXPLOSION)
 	add_stacks(-1)
 
 /// Slowdown applied when you are detonated on the space station

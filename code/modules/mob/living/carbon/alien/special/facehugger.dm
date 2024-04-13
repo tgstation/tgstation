@@ -1,6 +1,6 @@
 
 
-//TODO: Make these simple_animals
+//TODO: Make these basic mobs
 
 #define MIN_IMPREGNATION_TIME 100 //time it takes to impregnate someone
 #define MAX_IMPREGNATION_TIME 150
@@ -22,7 +22,6 @@
 	tint = 3
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	layer = MOB_LAYER
-	plane = GAME_PLANE_FOV_HIDDEN
 	max_integrity = 100
 	item_flags = XENOMORPH_HOLDABLE
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
@@ -103,13 +102,13 @@
 	if(CanHug(AM) && Adjacent(AM))
 		return Leap(AM)
 
-/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, quickstart = TRUE)
+/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle, quickstart = TRUE)
 	. = ..()
 	if(!.)
 		return
 	if(stat == CONSCIOUS)
 		icon_state = "[base_icon_state]_thrown"
-		addtimer(CALLBACK(src, PROC_REF(clear_throw_icon_state)), 15)
+		addtimer(CALLBACK(src, PROC_REF(clear_throw_icon_state)), 1.5 SECONDS)
 
 /obj/item/clothing/mask/facehugger/proc/clear_throw_icon_state()
 	if(icon_state == "[base_icon_state]_thrown")
@@ -210,7 +209,7 @@
 		worn_icon_state = "[base_icon_state]_impregnated"
 
 		var/obj/item/bodypart/chest/LC = target.get_bodypart(BODY_ZONE_CHEST)
-		if((!LC || IS_ORGANIC_LIMB(LC)) && !target.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
+		if((!LC || IS_ORGANIC_LIMB(LC)) && !target.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo))
 			new /obj/item/organ/internal/body_egg/alien_embryo(target)
 			target.log_message("was impregnated by a facehugger", LOG_GAME)
 			target.log_message("was impregnated by a facehugger", LOG_VICTIM, log_globally = FALSE)
@@ -255,7 +254,7 @@
 		return FALSE
 	if(M.stat == DEAD)
 		return FALSE
-	if(M.getorgan(/obj/item/organ/internal/alien/hivenode))
+	if(M.get_organ_by_type(/obj/item/organ/internal/alien/hivenode))
 		return FALSE
 	var/mob/living/carbon/C = M
 	if(ishuman(C) && !(C.dna.species.no_equip_flags & ITEM_SLOT_MASK))

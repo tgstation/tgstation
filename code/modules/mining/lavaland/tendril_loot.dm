@@ -9,7 +9,7 @@
 
 /obj/item/disk/design_disk/modkit_disc/Initialize(mapload)
 	. = ..()
-	blueprints[1] = new modkit_design
+	blueprints += new modkit_design
 
 /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe
 	name = "Offensive Mining Explosion Mod Disk"
@@ -38,29 +38,28 @@
 	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
 	desc = "A device which causes kinetic accelerators to fire AoE blasts that destroy rock and damage creatures."
 	id = "hyperaoemod"
-	materials = list(/datum/material/iron = 7000, /datum/material/glass = 3000, /datum/material/silver = 3000, /datum/material/gold = 3000, /datum/material/diamond = 4000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/silver =SHEET_MATERIAL_AMOUNT*1.5, /datum/material/gold =SHEET_MATERIAL_AMOUNT*1.5, /datum/material/diamond = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs
 
 /datum/design/unique_modkit/rapid_repeater
 	name = "Kinetic Accelerator Rapid Repeater Mod"
 	desc = "A device which greatly reduces a kinetic accelerator's cooldown on striking a living target or rock, but greatly increases its base cooldown."
 	id = "repeatermod"
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/uranium = 8000, /datum/material/bluespace = 2000)
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT*4, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/borg/upgrade/modkit/cooldown/repeater
 
 /datum/design/unique_modkit/resonator_blast
 	name = "Kinetic Accelerator Resonator Blast Mod"
 	desc = "A device which causes kinetic accelerators to fire shots that leave and detonate resonator blasts."
 	id = "resonatormod"
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/silver = 5000, /datum/material/uranium = 5000)
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/uranium =SHEET_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/borg/upgrade/modkit/resonator_blasts
 
 /datum/design/unique_modkit/bounty
 	name = "Kinetic Accelerator Death Syphon Mod"
 	desc = "A device which causes kinetic accelerators to permanently gain damage against creature types killed with it."
 	id = "bountymod"
-	materials = list(/datum/material/iron = 4000, /datum/material/silver = 4000, /datum/material/gold = 4000, /datum/material/bluespace = 4000)
-	reagents_list = list(/datum/reagent/blood = 40)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*2, /datum/material/gold = SHEET_MATERIAL_AMOUNT*2, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/borg/upgrade/modkit/bounty
 
 //Spooky special loot
@@ -69,7 +68,7 @@
 /obj/item/rod_of_asclepius
 	name = "\improper Rod of Asclepius"
 	desc = "A wooden rod about the size of your forearm with a snake carved around it, winding its way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon_state = "asclepius_dormant"
@@ -106,22 +105,22 @@
 		return
 	var/failText = span_warning("The snake seems unsatisfied with your incomplete oath and returns to its previous place on the rod, returning to its dormant, wooden state. You must stand still while completing your oath!")
 	to_chat(itemUser, span_notice("The wooden snake that was carved into the rod seems to suddenly come alive and begins to slither down your arm! The compulsion to help others grows abnormally strong..."))
-	if(do_after(itemUser, 40, target = itemUser))
+	if(do_after(itemUser, 4 SECONDS, target = itemUser))
 		itemUser.say("I swear to fulfill, to the best of my ability and judgment, this covenant:", forced = "hippocratic oath")
 	else
 		to_chat(itemUser, failText)
 		return
-	if(do_after(itemUser, 20, target = itemUser))
+	if(do_after(itemUser, 2 SECONDS, target = itemUser))
 		itemUser.say("I will apply, for the benefit of the sick, all measures that are required, avoiding those twin traps of overtreatment and therapeutic nihilism.", forced = "hippocratic oath")
 	else
 		to_chat(itemUser, failText)
 		return
-	if(do_after(itemUser, 30, target = itemUser))
+	if(do_after(itemUser, 3 SECONDS, target = itemUser))
 		itemUser.say("I will remember that I remain a member of society, with special obligations to all my fellow human beings, those sound of mind and body as well as the infirm.", forced = "hippocratic oath")
 	else
 		to_chat(itemUser, failText)
 		return
-	if(do_after(itemUser, 30, target = itemUser))
+	if(do_after(itemUser, 3 SECONDS, target = itemUser))
 		itemUser.say("If I do not violate this oath, may I enjoy life and art, respected while I live and remembered with affection thereafter. May I always act so as to preserve the finest traditions of my calling and may I long experience the joy of healing those who seek my help.", forced = "hippocratic oath")
 	else
 		to_chat(itemUser, failText)
@@ -141,7 +140,7 @@
 /obj/item/clothing/neck/necklace/memento_mori
 	name = "Memento Mori"
 	desc = "A mysterious pendant. An inscription on it says: \"Certain death tomorrow means certain life today.\""
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "memento_mori"
 	worn_icon_state = "memento"
 	actions_types = list(/datum/action/item_action/hands_free/memento_mori)
@@ -164,11 +163,9 @@
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/memento(mob/living/carbon/human/user)
 	to_chat(user, span_warning("You feel your life being drained by the pendant..."))
-	if(do_after(user, 40, target = user))
+	if(do_after(user, 4 SECONDS, target = user))
 		to_chat(user, span_notice("Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die."))
-		ADD_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)
-		ADD_TRAIT(user, TRAIT_NOHARDCRIT, CLOTHING_TRAIT)
-		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, CLOTHING_TRAIT)
+		user.add_traits(list(TRAIT_NODEATH, TRAIT_NOHARDCRIT, TRAIT_NOCRITDAMAGE), CLOTHING_TRAIT)
 		RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_health))
 		icon_state = "memento_mori_active"
 		active_owner = user
@@ -200,14 +197,14 @@
 				continue
 			regurgitate_guardian(guardian)
 
-/obj/item/clothing/neck/necklace/memento_mori/proc/consume_guardian(mob/living/simple_animal/hostile/guardian/guardian)
+/obj/item/clothing/neck/necklace/memento_mori/proc/consume_guardian(mob/living/basic/guardian/guardian)
 	new /obj/effect/temp_visual/guardian/phase/out(get_turf(guardian))
 	guardian.locked = TRUE
 	guardian.forceMove(src)
 	to_chat(guardian, span_userdanger("You have been locked away in your summoner's pendant!"))
 	guardian.playsound_local(get_turf(guardian), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 
-/obj/item/clothing/neck/necklace/memento_mori/proc/regurgitate_guardian(mob/living/simple_animal/hostile/guardian/guardian)
+/obj/item/clothing/neck/necklace/memento_mori/proc/regurgitate_guardian(mob/living/basic/guardian/guardian)
 	guardian.locked = FALSE
 	guardian.recall(forced = TRUE)
 	to_chat(guardian, span_notice("You have been returned back from your summoner's pendant!"))
@@ -230,8 +227,8 @@
 	name = "spooky lantern"
 	desc = "This lantern gives off no light, but is home to a friendly wisp."
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "lantern-blue"
-	inhand_icon_state = "lantern"
+	icon_state = "lantern-blue-on"
+	inhand_icon_state = "lantern-blue-on"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	var/obj/effect/wisp/wisp
@@ -239,18 +236,21 @@
 /obj/item/wisp_lantern/attack_self(mob/user)
 	if(!wisp)
 		to_chat(user, span_warning("The wisp has gone missing!"))
-		icon_state = "lantern"
+		icon_state = "lantern-blue"
+		inhand_icon_state = "lantern-blue"
 		return
 
 	if(wisp.loc == src)
 		to_chat(user, span_notice("You release the wisp. It begins to bob around your head."))
-		icon_state = "lantern"
+		icon_state = "lantern-blue"
+		inhand_icon_state = "lantern-blue"
 		wisp.orbit(user, 20)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed")
 
 	else
 		to_chat(user, span_notice("You return the wisp to the lantern."))
-		icon_state = "lantern-blue"
+		icon_state = "lantern-blue-on"
+		inhand_icon_state = "lantern-blue-on"
 		wisp.forceMove(src)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
@@ -271,8 +271,10 @@
 	desc = "Happy to light your way."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "orb"
-	light_system = MOVABLE_LIGHT
-	light_range = 7
+	light_system = OVERLAY_LIGHT
+	light_range = 6
+	light_power = 1.2
+	light_color = "#79f1ff"
 	light_flags = LIGHT_ATTACHED
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -303,7 +305,7 @@
 /obj/item/warp_cube
 	name = "blue cube"
 	desc = "A mysterious blue cube."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "blue_cube"
 	var/teleport_color = "#3FBAFD"
 	var/obj/item/warp_cube/linked
@@ -371,7 +373,7 @@
 /obj/item/immortality_talisman
 	name = "\improper Immortality Talisman"
 	desc = "A dread talisman that can render you completely invulnerable."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "talisman"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	actions_types = list(/datum/action/item_action/immortality)
@@ -420,7 +422,7 @@
 		return
 
 	user.status_flags &= ~GODMODE
-	user.notransform = FALSE
+	REMOVE_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
 	user.forceMove(get_turf(src))
 	user.visible_message(span_danger("[user] pops back into reality!"))
 
@@ -431,7 +433,7 @@
 	setDir(user.dir)
 
 	user.forceMove(src)
-	user.notransform = TRUE
+	ADD_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
 	user.status_flags |= GODMODE
 
 	user_ref = WEAKREF(user)
@@ -445,8 +447,8 @@
 	return
 
 /obj/effect/immortality_talisman/relaymove(mob/living/user, direction)
-	// Won't really come into play since our mob has notransform and cannot move,
-	// but regardless block all relayed moves, becuase no, you cannot move in the void.
+	// Won't really come into play since our mob has TRAIT_NO_TRANSFORM and cannot move,
+	// but regardless block all relayed moves, because no, you cannot move in the void.
 	return
 
 /obj/effect/immortality_talisman/singularity_pull()
@@ -460,15 +462,13 @@
 /obj/item/shared_storage
 	name = "paradox bag"
 	desc = "Somehow, it's in two places at once."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "paradox_bag"
 	worn_icon_state = "paradoxbag"
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/item/shared_storage/red
-	name = "paradox bag"
-	desc = "Somehow, it's in two places at once."
 
 /obj/item/shared_storage/red/Initialize(mapload)
 	. = ..()
@@ -490,7 +490,7 @@
 /obj/item/book_of_babel
 	name = "Book of Babel"
 	desc = "An ancient tome written in countless tongues."
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "book1"
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -502,18 +502,19 @@
 		return FALSE
 	to_chat(user, span_notice("You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops."))
 	cure_curse_of_babel(user) // removes tower of babel if we have it
-	user.grant_all_languages(source=LANGUAGE_BABEL)
+	user.grant_all_languages(source = LANGUAGE_BABEL)
 	user.remove_blocked_language(GLOB.all_languages, source = LANGUAGE_ALL)
-	ADD_TRAIT(user, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT) // this makes you immune to babel effects
+	if(user.mind)
+		ADD_TRAIT(user.mind, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT) // this makes you immune to babel effects
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 
 
 //Potion of Flight
 /obj/item/reagent_containers/cup/bottle/potion
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "potionflask"
-	fill_icon = 'icons/obj/lavaland/artefacts.dmi'
+	fill_icon = 'icons/obj/mining_zones/artefacts.dmi'
 	fill_icon_state = "potion_fill"
 	fill_icon_thresholds = list(0, 1)
 
@@ -537,25 +538,28 @@
 	. = ..()
 	if(!ishuman(exposed_mob) || exposed_mob.stat == DEAD)
 		return
+	if(!(methods & (INGEST | TOUCH)))
+		return
 	var/mob/living/carbon/human/exposed_human = exposed_mob
-	if(!HAS_TRAIT(exposed_human, TRAIT_CAN_USE_FLIGHT_POTION) || reac_volume < 5 || !exposed_human.dna)
+	var/obj/item/bodypart/chest/chest = exposed_human.get_bodypart(BODY_ZONE_CHEST)
+	if(!chest.wing_types || reac_volume < 5 || !exposed_human.dna)
 		if((methods & INGEST) && show_message)
 			to_chat(exposed_human, span_notice("<i>You feel nothing but a terrible aftertaste.</i>"))
 		return
-	if(exposed_human.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS))
+	if(exposed_human.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS))
 		to_chat(exposed_human, span_userdanger("A terrible pain travels down your back as your wings change shape!"))
 	else
 		to_chat(exposed_human, span_userdanger("A terrible pain travels down your back as wings burst out!"))
-	var/obj/item/organ/external/wings/functional/wings = get_wing_choice(exposed_human)
+	var/obj/item/organ/external/wings/functional/wings = get_wing_choice(exposed_human, chest)
 	wings = new wings()
 	wings.Insert(exposed_human)
 	exposed_human.dna.species.handle_mutant_bodyparts(exposed_human)
 	playsound(exposed_human.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
-	exposed_human.adjustBruteLoss(20)
+	exposed_human.apply_damage(20, def_zone = BODY_ZONE_CHEST, forced = TRUE, wound_bonus = CANT_WOUND)
 	exposed_human.emote("scream")
 
-/datum/reagent/flightpotion/proc/get_wing_choice(mob/living/carbon/human/needs_wings)
-	var/list/wing_types = needs_wings.dna.species.wing_types.Copy()
+/datum/reagent/flightpotion/proc/get_wing_choice(mob/needs_wings, obj/item/bodypart/chest/chest)
+	var/list/wing_types = chest.wing_types.Copy()
 	if(wing_types.len == 1 || !needs_wings.client)
 		return wing_types[1]
 	var/list/radial_wings = list()
@@ -630,7 +634,7 @@
 	. = ..()
 	if(slot & ITEM_SLOT_GLOVES)
 		tool_behaviour = TOOL_MINING
-		RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(rocksmash))
+		RegisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(rocksmash))
 		RegisterSignal(user, COMSIG_MOVABLE_BUMP, PROC_REF(rocksmash))
 	else
 		stopmining(user)
@@ -641,13 +645,15 @@
 
 /obj/item/clothing/gloves/gauntlets/proc/stopmining(mob/user)
 	tool_behaviour = initial(tool_behaviour)
-	UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	UnregisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK)
 	UnregisterSignal(user, COMSIG_MOVABLE_BUMP)
 
 /obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/user, atom/rocks, proximity)
 	SIGNAL_HANDLER
+	if(!proximity)
+		return NONE
 	if(!ismineralturf(rocks) && !isasteroidturf(rocks))
-		return
+		return NONE
 	rocks.attackby(src, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -725,9 +731,9 @@
 	. = ..()
 	. += span_notice("Berserk mode is [berserk_charge]% charged.")
 
-/obj/item/clothing/head/hooded/berserker/process(delta_time)
+/obj/item/clothing/head/hooded/berserker/process(seconds_per_tick)
 	if(berserk_active)
-		berserk_charge = clamp(berserk_charge - CHARGE_DRAINED_PER_SECOND * delta_time, 0, MAX_BERSERK_CHARGE)
+		berserk_charge = clamp(berserk_charge - CHARGE_DRAINED_PER_SECOND * seconds_per_tick, 0, MAX_BERSERK_CHARGE)
 	if(!berserk_charge)
 		if(ishuman(loc))
 			end_berserk(loc)
@@ -736,7 +742,7 @@
 	. = ..()
 	end_berserk(user)
 
-/obj/item/clothing/head/hooded/berserker/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/head/hooded/berserker/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(berserk_active)
 		return
 	var/berserk_value = damage * DAMAGE_TO_CHARGE_SCALE
@@ -794,11 +800,12 @@
 	icon_state = "godeye"
 	inhand_icon_state = null
 	vision_flags = SEE_TURFS
+	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
 	// Blue, light blue
 	color_cutoffs = list(15, 30, 40)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	custom_materials = null
-	var/datum/action/cooldown/scan/scan_ability
+	var/datum/action/cooldown/spell/pointed/scan/scan_ability
 
 /obj/item/clothing/glasses/godeye/Initialize(mapload)
 	. = ..()
@@ -829,49 +836,60 @@
 	victim.emote("scream")
 	victim.flash_act()
 
-/datum/action/cooldown/scan
+/datum/action/cooldown/spell/pointed/scan
 	name = "Scan"
-	desc = "Scan an enemy, to get their location and stagger them, increasing their time between attacks."
+	desc = "Scan an enemy, to get their location and rebuke them, increasing their time between attacks."
 	background_icon_state = "bg_clock"
 	overlay_icon_state = "bg_clock_border"
 	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "scan"
+	school = SCHOOL_HOLY
+	cooldown_time = 35 SECONDS
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
+	antimagic_flags = MAGIC_RESISTANCE_MIND //Even god cannot penetrate the tin foil hat
 
-	click_to_activate = TRUE
-	cooldown_time = 45 SECONDS
 	ranged_mousepointer = 'icons/effects/mouse_pointers/scan_target.dmi'
 
-/datum/action/cooldown/scan/IsAvailable(feedback = FALSE)
-	return ..() && isliving(owner)
-
-/datum/action/cooldown/scan/Activate(atom/scanned)
-	StartCooldown(15 SECONDS)
-
-	if(owner.stat != CONSCIOUS)
+/datum/action/cooldown/spell/pointed/scan/is_valid_target(atom/cast_on)
+	if(!isliving(cast_on))
+		owner.balloon_alert(owner, "not a valid target!")
 		return FALSE
-	if(!isliving(scanned) || scanned == owner)
-		owner.balloon_alert(owner, "invalid scanned!")
+	var/mob/living/living_cast_on = cast_on
+	if(living_cast_on.stat == DEAD)
+		owner.balloon_alert(owner, "target is dead!")
 		return FALSE
+
+	return TRUE
+
+/datum/action/cooldown/spell/pointed/scan/cast(mob/living/cast_on)
+	. = ..()
+
+	if(cast_on.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+		to_chat(owner, span_warning("As we apply our dissecting vision, we are abruptly cut short. \
+			They have some kind of enigmatic mental defense. It seems we've been foiled."))
+		return
+
+	if(cast_on == owner)
+		to_chat(owner, span_warning("The last time a god stared too closely into their own reflection, they became transfixed for all of time. Do not let us become like them."))
+		return
 
 	var/mob/living/living_owner = owner
-	var/mob/living/living_scanned = scanned
-	living_scanned.apply_status_effect(/datum/status_effect/stagger)
+	var/mob/living/living_scanned = cast_on
+	living_scanned.apply_status_effect(/datum/status_effect/rebuked)
 	var/datum/status_effect/agent_pinpointer/scan_pinpointer = living_owner.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
 	scan_pinpointer.scan_target = living_scanned
 
-	living_scanned.set_jitter_if_lower(100 SECONDS)
-	to_chat(living_scanned, span_warning("You've been staggered!"))
-	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
+	to_chat(living_scanned, span_warning("You briefly see a flash of [living_owner]'s face before being knocked off-balance by an unseen force!"))
+	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_RED, "size" = 1))
 	addtimer(CALLBACK(living_scanned, TYPE_PROC_REF(/datum, remove_filter), "scan"), 30 SECONDS)
+
+	healthscan(living_owner, living_scanned, 1, TRUE)
 
 	owner.playsound_local(get_turf(owner), 'sound/magic/smoke.ogg', 50, TRUE)
 	owner.balloon_alert(owner, "[living_scanned] scanned")
 	addtimer(CALLBACK(src, PROC_REF(send_cooldown_end_message), cooldown_time))
 
-	StartCooldown()
-	return TRUE
-
-/datum/action/cooldown/scan/proc/send_cooldown_end_message()
+/datum/action/cooldown/spell/pointed/scan/proc/send_cooldown_end_message()
 	owner?.balloon_alert(owner, "scan recharged")
 
 /datum/status_effect/agent_pinpointer/scan
@@ -890,18 +908,17 @@
 	name = "Scan Target"
 	desc = "Contact may or may not be close."
 
-/obj/item/organ/internal/cyberimp/arm/katana
-	name = "dark shard"
-	desc = "An eerie metal shard surrounded by dark energies."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+/obj/item/organ/internal/cyberimp/arm/shard
+	name = "dark spoon shard"
+	desc = "An eerie metal shard surrounded by dark energies...of soup drinking. You probably don't think you should have been able to find this."
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "cursed_katana_organ"
-	status = ORGAN_ORGANIC
-	organ_flags = ORGAN_FROZEN|ORGAN_UNREMOVABLE
-	items_to_create = list(/obj/item/cursed_katana)
+	organ_flags = ORGAN_ORGANIC | ORGAN_FROZEN | ORGAN_UNREMOVABLE
+	items_to_create = list(/obj/item/kitchen/spoon)
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'
 
-/obj/item/organ/internal/cyberimp/arm/katana/attack_self(mob/user, modifiers)
+/obj/item/organ/internal/cyberimp/arm/shard/attack_self(mob/user, modifiers)
 	. = ..()
 	to_chat(user, span_userdanger("The mass goes up your arm and goes inside it!"))
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
@@ -911,10 +928,15 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-/obj/item/organ/internal/cyberimp/arm/katana/screwdriver_act(mob/living/user, obj/item/screwtool)
+/obj/item/organ/internal/cyberimp/arm/shard/screwdriver_act(mob/living/user, obj/item/screwtool)
 	return
 
-/obj/item/organ/internal/cyberimp/arm/katana/Retract()
+/obj/item/organ/internal/cyberimp/arm/shard/katana
+	name = "dark shard"
+	desc = "An eerie metal shard surrounded by dark energies."
+	items_to_create = list(/obj/item/cursed_katana)
+
+/obj/item/organ/internal/cyberimp/arm/shard/katana/Retract()
 	var/obj/item/cursed_katana/katana = active_item
 	if(!katana || katana.shattered)
 		return FALSE
@@ -928,10 +950,6 @@
 	katana.wash(CLEAN_TYPE_BLOOD)
 	return ..()
 
-#define LEFT_SLASH "Left Slash"
-#define RIGHT_SLASH "Right Slash"
-#define COMBO_STEPS "steps"
-#define COMBO_PROC "proc"
 #define ATTACK_STRIKE "Hilt Strike"
 #define ATTACK_SLICE "Wide Slice"
 #define ATTACK_DASH "Dash Attack"
@@ -943,13 +961,14 @@
 	name = "cursed katana"
 	desc = "A katana used to seal something vile away long ago. \
 	Even with the weapon destroyed, all the pieces containing the creature have coagulated back together to find a new host."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "cursed_katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 15
 	armour_penetration = 30
 	block_chance = 30
+	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
@@ -958,86 +977,49 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | FREEZE_PROOF
 	var/shattered = FALSE
 	var/drew_blood = FALSE
-	var/timerid
-	var/list/input_list = list()
-	var/list/combo_strings = list()
 	var/static/list/combo_list = list(
-		ATTACK_STRIKE = list(COMBO_STEPS = list(LEFT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = PROC_REF(strike)),
-		ATTACK_SLICE = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, LEFT_SLASH), COMBO_PROC = PROC_REF(slice)),
-		ATTACK_DASH = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, RIGHT_SLASH), COMBO_PROC = PROC_REF(dash)),
-		ATTACK_CUT = list(COMBO_STEPS = list(RIGHT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = PROC_REF(cut)),
-		ATTACK_CLOAK = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = PROC_REF(cloak)),
-		ATTACK_SHATTER = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = PROC_REF(shatter)),
+		ATTACK_STRIKE = list(COMBO_STEPS = list(LEFT_ATTACK, LEFT_ATTACK, RIGHT_ATTACK), COMBO_PROC = PROC_REF(strike)),
+		ATTACK_SLICE = list(COMBO_STEPS = list(RIGHT_ATTACK, LEFT_ATTACK, LEFT_ATTACK), COMBO_PROC = PROC_REF(slice)),
+		ATTACK_DASH = list(COMBO_STEPS = list(LEFT_ATTACK, RIGHT_ATTACK, RIGHT_ATTACK), COMBO_PROC = PROC_REF(dash)),
+		ATTACK_CUT = list(COMBO_STEPS = list(RIGHT_ATTACK, RIGHT_ATTACK, LEFT_ATTACK), COMBO_PROC = PROC_REF(cut)),
+		ATTACK_CLOAK = list(COMBO_STEPS = list(LEFT_ATTACK, RIGHT_ATTACK, LEFT_ATTACK, RIGHT_ATTACK), COMBO_PROC = PROC_REF(cloak)),
+		ATTACK_SHATTER = list(COMBO_STEPS = list(RIGHT_ATTACK, LEFT_ATTACK, RIGHT_ATTACK, LEFT_ATTACK), COMBO_PROC = PROC_REF(shatter)),
 	)
 
 /obj/item/cursed_katana/Initialize(mapload)
 	. = ..()
-	for(var/combo in combo_list)
-		var/list/combo_specifics = combo_list[combo]
-		var/step_string = english_list(combo_specifics[COMBO_STEPS])
-		combo_strings += span_notice("<b>[combo]</b> - [step_string]")
+	AddComponent( \
+		/datum/component/combo_attacks, \
+		combos = combo_list, \
+		max_combo_length = 4, \
+		examine_message = span_notice("<i>There seem to be inscriptions on it... you could examine them closer?</i>"), \
+		reset_message = "you return to neutral stance", \
+		can_attack_callback = CALLBACK(src, PROC_REF(can_combo_attack)) \
+	)
 
 /obj/item/cursed_katana/examine(mob/user)
 	. = ..()
 	. += drew_blood ? span_nicegreen("It's sated... for now.") : span_danger("It will not be sated until it tastes blood.")
-	. += span_notice("<i>There seem to be inscriptions on it... you could examine them closer?</i>")
-
-/obj/item/cursed_katana/examine_more(mob/user)
-	. = ..()
-	. += combo_strings
 
 /obj/item/cursed_katana/dropped(mob/user)
 	. = ..()
-	reset_inputs(null, TRUE)
 	if(isturf(loc))
 		qdel(src)
 
-/obj/item/cursed_katana/attack_self(mob/user)
-	. = ..()
-	reset_inputs(user, TRUE)
-
 /obj/item/cursed_katana/attack(mob/living/target, mob/user, click_parameters)
-	if(target.stat == DEAD || target == user)
-		return ..()
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		balloon_alert(user, "you don't want to harm!")
-		return
-	drew_blood = TRUE
-	var/list/modifiers = params2list(click_parameters)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		input_list += RIGHT_SLASH
-	if(LAZYACCESS(modifiers, LEFT_CLICK))
-		input_list += LEFT_SLASH
-	if(ishostile(target))
-		user.changeNext_move(CLICK_CD_RAPID)
-	if(length(input_list) > 4)
-		reset_inputs(user, TRUE)
-	if(check_input(target, user))
-		reset_inputs(null, TRUE)
-		return TRUE
-	else
-		timerid = addtimer(CALLBACK(src, PROC_REF(reset_inputs), user, FALSE), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
-		return ..()
-
-/obj/item/cursed_katana/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight
+	if(target.stat < DEAD && target != user)
+		drew_blood = TRUE
+		if(ismining(target))
+			user.changeNext_move(CLICK_CD_RAPID)
 	return ..()
 
-/obj/item/cursed_katana/proc/check_input(mob/living/target, mob/user)
-	for(var/combo in combo_list)
-		var/list/combo_specifics = combo_list[combo]
-		if(compare_list(input_list,combo_specifics[COMBO_STEPS]))
-			INVOKE_ASYNC(src, combo_specifics[COMBO_PROC], target, user)
-			return TRUE
-	return FALSE
+/obj/item/cursed_katana/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword
+	return ..()
 
-/obj/item/cursed_katana/proc/reset_inputs(mob/user, deltimer)
-	input_list.Cut()
-	if(user)
-		balloon_alert(user, "you return to neutral stance")
-	if(deltimer && timerid)
-		deltimer(timerid)
+/obj/item/cursed_katana/proc/can_combo_attack(mob/user, mob/living/target)
+	return target.stat != DEAD && target != user
 
 /obj/item/cursed_katana/proc/strike(mob/living/target, mob/user)
 	user.visible_message(span_warning("[user] strikes [target] with [src]'s hilt!"),
@@ -1083,10 +1065,11 @@
 
 /obj/item/cursed_katana/proc/cloak(mob/living/target, mob/user)
 	user.alpha = 150
-	user.invisibility = INVISIBILITY_OBSERVER // so hostile mobs cant see us or target us
+	user.SetInvisibility(INVISIBILITY_OBSERVER, id=type) // so hostile mobs cant see us or target us
 	user.add_sight(SEE_SELF) // so we can see us
 	user.visible_message(span_warning("[user] vanishes into thin air!"),
 		span_notice("You enter the dark cloak."))
+	new /obj/effect/temp_visual/mook_dust(get_turf(src))
 	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/hostile_target = target
@@ -1096,11 +1079,12 @@
 
 /obj/item/cursed_katana/proc/uncloak(mob/user)
 	user.alpha = 255
-	user.invisibility = 0
+	user.RemoveInvisibility(type)
 	user.clear_sight(SEE_SELF)
 	user.visible_message(span_warning("[user] appears from thin air!"),
 		span_notice("You exit the dark cloak."))
 	playsound(src, 'sound/magic/summonitems_generic.ogg', 50, TRUE)
+	new /obj/effect/temp_visual/mook_dust(get_turf(src))
 
 /obj/item/cursed_katana/proc/cut(mob/living/target, mob/user)
 	user.visible_message(span_warning("[user] cuts [target]'s tendons!"),
@@ -1150,10 +1134,6 @@
 	shattered = FALSE
 	playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
 
-#undef LEFT_SLASH
-#undef RIGHT_SLASH
-#undef COMBO_STEPS
-#undef COMBO_PROC
 #undef ATTACK_STRIKE
 #undef ATTACK_SLICE
 #undef ATTACK_DASH

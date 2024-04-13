@@ -2,7 +2,7 @@
 /obj/item/petri_dish
 	name = "petri dish"
 	desc = "This makes you feel well-cultured."
-	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
+	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "petri_dish"
 	w_class = WEIGHT_CLASS_TINY
 	///The sample stored on the dish

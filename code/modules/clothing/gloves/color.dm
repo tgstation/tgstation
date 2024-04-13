@@ -9,10 +9,20 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/fingerless
+	clothing_traits = list(TRAIT_FAST_CUFFING)
+
+/obj/item/clothing/gloves/color/black/Initialize(mapload)
+	. = ..()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/radiogloves)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/clothing/gloves/fingerless
 	name = "fingerless gloves"
-	desc = "Plain black gloves without fingertips for the hard working."
+	desc = "Plain black gloves without fingertips for the hard-working."
 	icon_state = "fingerless"
 	greyscale_colors = "#2f2e31"
 	strip_delay = 40
@@ -23,18 +33,26 @@
 	undyeable = TRUE
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
+/obj/item/clothing/gloves/color/fingerless/Initialize(mapload)
+	. = ..()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gripperoffbrand)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 /obj/item/clothing/gloves/color/orange
 	name = "orange gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "orange"
-	greyscale_colors = "#ff9300"
+	greyscale_colors = COLOR_CRAYON_ORANGE
 
 /obj/item/clothing/gloves/color/red
 	name = "red gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "red"
-	greyscale_colors = "#da0000"
-
+	greyscale_colors = COLOR_CRAYON_RED
 
 /obj/item/clothing/gloves/color/red/insulated
 	name = "insulated gloves"
@@ -57,7 +75,7 @@
 	name = "blue gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "blue"
-	greyscale_colors = "#00b7ef"
+	greyscale_colors = COLOR_CRAYON_BLUE
 
 /obj/item/clothing/gloves/color/purple
 	name = "purple gloves"
@@ -69,7 +87,7 @@
 	name = "green gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "green"
-	greyscale_colors = "#a8e61d"
+	greyscale_colors = COLOR_CRAYON_GREEN
 
 /obj/item/clothing/gloves/color/grey
 	name = "grey gloves"
@@ -103,5 +121,5 @@
 	name = "white gloves"
 	desc = "These look pretty fancy."
 	icon_state = "white"
-	greyscale_colors = "#ffffff"
+	greyscale_colors = COLOR_WHITE
 	custom_price = PAYCHECK_CREW

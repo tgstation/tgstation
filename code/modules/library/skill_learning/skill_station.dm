@@ -5,11 +5,12 @@
 	name = "\improper Skillsoft station"
 	desc = "Learn skills with only minimal chance for brain damage."
 
-	icon = 'icons/obj/machines/implantchair.dmi'
+	icon = 'icons/obj/machines/implant_chair.dmi'
 	icon_state = "implantchair"
 	occupant_typecache = list(/mob/living/carbon) //todo make occupant_typecache per type
 	state_open = TRUE
-	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND //Don't call ui_interac by default - we only want that when inside
+	// Only opens UI when inside; also, you can use the machine while lying down (for paraplegics and the like)
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 	circuit = /obj/item/circuitboard/machine/skill_station
 	/// Currently implanting/removing
 	var/working = FALSE
@@ -48,7 +49,7 @@
 /obj/machinery/skill_station/relaymove(mob/living/user, direction)
 	open_machine()
 
-/obj/machinery/skill_station/open_machine()
+/obj/machinery/skill_station/open_machine(drop = TRUE, density_to_set = FALSE)
 	. = ..()
 	interrupt_operation()
 
@@ -63,7 +64,7 @@
 	if(working)
 		interrupt_operation()
 
-/obj/machinery/skill_station/close_machine(atom/movable/target)
+/obj/machinery/skill_station/close_machine(atom/movable/target, density_to_set = TRUE)
 	. = ..()
 	if(occupant)
 		ui_interact(occupant)
@@ -228,7 +229,7 @@
 		.["slots_max"] = null
 		return
 
-	var/obj/item/organ/internal/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/occupant_brain = carbon_occupant.get_organ_slot(ORGAN_SLOT_BRAIN)
 
 	// If there's no brain, we don't need to worry either.
 	if(QDELETED(occupant_brain))
@@ -271,7 +272,7 @@
 				return TRUE
 			var/chipref = params["ref"]
 			var/mob/living/carbon/carbon_occupant = occupant
-			var/obj/item/organ/internal/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
+			var/obj/item/organ/internal/brain/occupant_brain = carbon_occupant.get_organ_slot(ORGAN_SLOT_BRAIN)
 			if(QDELETED(carbon_occupant) || QDELETED(occupant_brain))
 				return TRUE
 			var/obj/item/skillchip/to_be_removed = locate(chipref) in occupant_brain.skillchips
@@ -296,7 +297,7 @@
 				stack_trace("[usr] tried to toggle skillchip activation when [src] was in an invalid state.")
 				return TRUE
 			var/mob/living/carbon/carbon_occupant = occupant
-			var/obj/item/organ/internal/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
+			var/obj/item/organ/internal/brain/occupant_brain = carbon_occupant.get_organ_slot(ORGAN_SLOT_BRAIN)
 			if(QDELETED(carbon_occupant) || QDELETED(occupant_brain))
 				return TRUE
 			var/obj/item/skillchip/to_be_removed = locate(chipref) in occupant_brain.skillchips
@@ -305,3 +306,5 @@
 			toggle_chip_active(to_be_removed)
 			return TRUE
 
+#undef SKILLCHIP_IMPLANT_TIME
+#undef SKILLCHIP_REMOVAL_TIME

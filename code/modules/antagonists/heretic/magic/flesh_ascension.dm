@@ -13,7 +13,8 @@
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
-	possible_shapes = list(/mob/living/simple_animal/hostile/heretic_summon/armsy/prime)
+	convert_damage = FALSE // Functionally meaningless on Armsy, we track how many segments it had instead
+	possible_shapes = list(/mob/living/basic/heretic_summon/armsy)
 
 	/// The length of our new wormy when we shed.
 	var/segment_length = 10
@@ -35,32 +36,11 @@
 
 	return ..()
 
-/datum/action/cooldown/spell/shapeshift/shed_human_form/do_unshapeshift(mob/living/simple_animal/hostile/heretic_summon/armsy/caster)
+/datum/action/cooldown/spell/shapeshift/shed_human_form/do_unshapeshift(mob/living/basic/heretic_summon/armsy/caster)
 	if(istype(caster))
-		segment_length = caster.get_length()
+		segment_length = caster.get_length() - 1 // Don't count the head
 
 	return ..()
 
 /datum/action/cooldown/spell/shapeshift/shed_human_form/create_shapeshift_mob(atom/loc)
 	return new shapeshift_type(loc, TRUE, segment_length)
-
-/datum/action/cooldown/spell/worm_contract
-	name = "Force Contract"
-	desc = "Forces your body to contract onto a single tile."
-	background_icon_state = "bg_heretic"
-	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/mob/actions/actions_ecult.dmi'
-	button_icon_state = "worm_contract"
-
-	school = SCHOOL_FORBIDDEN
-	cooldown_time = 30 SECONDS
-
-	invocation_type = INVOCATION_NONE
-	spell_requirements = NONE
-
-/datum/action/cooldown/spell/worm_contract/is_valid_target(atom/cast_on)
-	return istype(cast_on, /mob/living/simple_animal/hostile/heretic_summon/armsy)
-
-/datum/action/cooldown/spell/worm_contract/cast(mob/living/simple_animal/hostile/heretic_summon/armsy/cast_on)
-	. = ..()
-	cast_on.contract_next_chain_into_single_tile()

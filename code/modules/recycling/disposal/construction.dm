@@ -4,7 +4,7 @@
 /obj/structure/disposalconstruct
 	name = "disposal pipe segment"
 	desc = "A huge pipe segment used for constructing disposal systems."
-	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
+	icon = 'icons/obj/pipes_n_cables/disposal.dmi'
 	icon_state = "conpipe"
 	anchored = FALSE
 	density = FALSE
@@ -33,12 +33,12 @@
 
 	pipename = initial(pipe_type.name)
 
-	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, PROC_REF(AfterRotation)))
+	AddComponent(/datum/component/simple_rotation, post_rotation = CALLBACK(src, PROC_REF(post_rotation)))
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 	if(flip)
 		var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
-		rotcomp.Rotate(usr, ROTATION_FLIP) // this only gets used by pipes created by RPDs or pipe dispensers
+		rotcomp.rotate(usr, ROTATION_FLIP) // this only gets used by pipes created by RPDs or pipe dispensers
 
 	update_appearance(UPDATE_ICON)
 
@@ -83,10 +83,10 @@
 		if(initialize_dirs & DISP_DIR_RIGHT)
 			dpdir |= turn(dir, -90)
 		if(initialize_dirs & DISP_DIR_FLIP)
-			dpdir |= turn(dir, 180)
+			dpdir |= REVERSE_DIR(dir)
 	return dpdir
 
-/obj/structure/disposalconstruct/proc/AfterRotation(mob/user, degrees)
+/obj/structure/disposalconstruct/proc/post_rotation(mob/user, degrees)
 	if(degrees == ROTATION_FLIP)
 		var/obj/structure/disposalpipe/temp = pipe_type
 		if(initial(temp.flip_type))
@@ -154,7 +154,7 @@
 			to_chat(user, span_warning("A disposals machine already exists here!"))
 			return TRUE
 
-		if(!I.tool_start_check(user, amount=0))
+		if(!I.tool_start_check(user, amount=1))
 			return TRUE
 
 		to_chat(user, span_notice("You start welding the [pipename] in place..."))

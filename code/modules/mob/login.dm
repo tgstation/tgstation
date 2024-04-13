@@ -29,11 +29,12 @@
 /mob/Login()
 	if(!client)
 		return FALSE
+
 	canon_client = client
 	add_to_player_list()
 	lastKnownIP = client.address
 	computer_id = client.computer_id
-	log_access("Mob Login: [key_name(src)] was assigned to a [type]")
+	log_access("Mob Login: [key_name(src)] was assigned to a [type] ([tag])")
 	world.update_status()
 	client.clear_screen() //remove hud items just in case
 	client.images = list()
@@ -98,6 +99,8 @@
 
 	update_client_colour()
 	update_mouse_pointer()
+	refresh_looping_ambience()
+
 	if(client)
 		if(client.view_size)
 			client.view_size.resetToDefault() // Resets the client.view in case it was changed.
@@ -111,11 +114,17 @@
 		for(var/foo in client.player_details.post_login_callbacks)
 			var/datum/callback/CB = foo
 			CB.Invoke()
-		log_played_names(client.ckey,name,real_name)
+		log_played_names(
+			client.ckey,
+			list(
+				"[name]" = tag,
+				"[real_name]" = tag,
+			),
+		)
 		auto_deadmin_on_login()
 
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
-	log_mob_tag("NEW OWNER: [key_name(src)]")
+	log_mob_tag("TAG: [tag] NEW OWNER: [key_name(src)]")
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
 	SEND_SIGNAL(client, COMSIG_CLIENT_MOB_LOGIN, src)
 	client.init_verbs()

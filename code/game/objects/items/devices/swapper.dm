@@ -1,7 +1,7 @@
 /obj/item/swapper
 	name = "quantum spin inverter"
 	desc = "An experimental device that is able to swap the locations of two entities by switching their particles' spin values. Must be linked to another device to function."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "swapper"
 	inhand_icon_state = "electronic"
 	w_class = WEIGHT_CLASS_SMALL
@@ -55,7 +55,7 @@
 		var/mob/holder = linked_swapper.loc
 		to_chat(holder, span_notice("[linked_swapper] starts buzzing."))
 	next_use = world.time + cooldown //only the one used goes on cooldown
-	addtimer(CALLBACK(src, PROC_REF(swap), user), 25)
+	addtimer(CALLBACK(src, PROC_REF(swap), user), 2.5 SECONDS)
 
 /obj/item/swapper/examine(mob/user)
 	. = ..()

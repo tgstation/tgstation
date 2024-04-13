@@ -134,7 +134,7 @@
 		maximum_progression
 	)
 
-/datum/traitor_objective/Destroy(force, ...)
+/datum/traitor_objective/Destroy(force)
 	handler = null
 	return ..()
 
@@ -191,7 +191,7 @@
 	handle_cleanup()
 	log_traitor("[key_name(handler.owner)] [objective_state == OBJECTIVE_STATE_INACTIVE? "missed" : "failed"] [to_debug_string()]")
 	if(penalty_cost)
-		handler.telecrystals -= penalty_cost
+		handler.add_telecrystals(-penalty_cost)
 		objective_state = OBJECTIVE_STATE_FAILED
 	else
 		objective_state = OBJECTIVE_STATE_INVALID
@@ -227,7 +227,7 @@
 /// Called when rewards should be given to the user.
 /datum/traitor_objective/proc/completion_payout()
 	handler.progression_points += progression_reward
-	handler.telecrystals += telecrystal_reward
+	handler.add_telecrystals(telecrystal_reward)
 
 /// Used for sending data to the uplink UI
 /datum/traitor_objective/proc/uplink_ui_data(mob/user)

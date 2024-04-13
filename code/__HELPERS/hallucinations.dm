@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 #define HALLUCINATION_ARGLIST 3
 
 /// Biotypes which cannot hallucinate for balance and logic reasons (not code)
-#define NO_HALLUCINATION_BIOTYPES (MOB_ROBOTIC|MOB_SPIRIT|MOB_EPIC)
+#define NO_HALLUCINATION_BIOTYPES (MOB_ROBOTIC|MOB_SPIRIT|MOB_SPECIAL)
 
 // Macro wrapper for _cause_hallucination so we can cheat in named arguments, like AddComponent.
 /**
@@ -71,7 +71,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
  */
 /proc/visible_hallucination_pulse(atom/center, radius = 7, hallucination_duration = 50 SECONDS, hallucination_max_duration, list/optional_messages)
 	for(var/mob/living/nearby_living in view(center, radius))
-		if(HAS_TRAIT(nearby_living, TRAIT_MADNESS_IMMUNE) || (nearby_living.mind && HAS_TRAIT(nearby_living.mind, TRAIT_MADNESS_IMMUNE)))
+		if(HAS_MIND_TRAIT(nearby_living, TRAIT_MADNESS_IMMUNE))
 			continue
 
 		if(nearby_living.mob_biotypes & NO_HALLUCINATION_BIOTYPES)
@@ -113,11 +113,7 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 	to_chat(usr, span_boldnotice("The total weight of the hallucination weighted list is [total_weight]."))
 	return total_weight
 
-/// Debug verb for getting the weight of each distinct type within the random_hallucination_weighted_list
-/client/proc/debug_hallucination_weighted_list_per_type()
-	set name = "Show Hallucination Weights"
-	set category = "Debug"
-
+ADMIN_VERB(debug_hallucination_weighted_list_per_type, R_DEBUG, "Show Hallucination Weights", "View the weight of each hallucination subtype in the random weighted list.", ADMIN_CATEGORY_DEBUG)
 	var/header = "<tr><th>Type</th> <th>Weight</th> <th>Percent</th>"
 
 	var/total_weight = debug_hallucination_weighted_list()
@@ -153,7 +149,7 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 
 	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"
 	var/page_contents = "[page_style]<table style=\"width:100%\">[header][jointext(assoc_to_keys(all_weights), "")]</table>"
-	var/datum/browser/popup = new(mob, "hallucinationdebug", "Hallucination Weights", 600, 400)
+	var/datum/browser/popup = new(user.mob, "hallucinationdebug", "Hallucination Weights", 600, 400)
 	popup.set_content(page_contents)
 	popup.open()
 

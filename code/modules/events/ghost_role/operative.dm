@@ -12,26 +12,24 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/operative/spawn_role()
-	var/list/candidates = get_candidates(ROLE_OPERATIVE, ROLE_LONE_OPERATIVE)
-	if(!candidates.len)
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_OPERATIVE, role = ROLE_LONE_OPERATIVE, alert_pic = /obj/machinery/nuclearbomb, amount_to_pick = 1)
+	if(isnull(chosen_one))
 		return NOT_ENOUGH_PLAYERS
-
-	var/mob/dead/selected = pick_n_take(candidates)
-
-	var/list/spawn_locs = list()
-	for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
-		spawn_locs += L.loc
-	if(!spawn_locs.len)
+	var/spawn_location = find_space_spawn()
+	if(isnull(spawn_location))
 		return MAP_ERROR
-
-	var/mob/living/carbon/human/operative = new(pick(spawn_locs))
+	var/mob/living/carbon/human/operative = new(spawn_location)
 	operative.randomize_human_appearance(~RANDOMIZE_SPECIES)
 	operative.dna.update_dna_identity()
-	var/datum/mind/Mind = new /datum/mind(selected.key)
+	var/datum/mind/Mind = new /datum/mind(chosen_one.key)
 	Mind.set_assigned_role(SSjob.GetJobType(/datum/job/lone_operative))
 	Mind.special_role = ROLE_LONE_OPERATIVE
 	Mind.active = TRUE
 	Mind.transfer_to(operative)
+	if(!operative.client?.prefs.read_preference(/datum/preference/toggle/nuke_ops_species))
+		var/species_type = operative.client.prefs.read_preference(/datum/preference/choiced/species)
+		operative.set_species(species_type) //Apply the preferred species to our freshly-made body.
+
 	Mind.add_antag_datum(/datum/antagonist/nukeop/lone)
 
 	message_admins("[ADMIN_LOOKUPFLW(operative)] has been made into lone operative by an event.")

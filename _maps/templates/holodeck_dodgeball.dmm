@@ -1,185 +1,113 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "b" = (
-/obj/structure/window{
-	dir = 1
-	},
-/obj/item/toy/beach_ball/holoball/dodgeball,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
+/obj/structure/window/spawner/directional/north,
+/obj/item/toy/dodgeball,
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "c" = (
-/obj/structure/window,
-/obj/item/toy/beach_ball/holoball/dodgeball,
-/obj/effect/turf_decal/tile/green{
+/obj/structure/window/spawner/directional/south,
+/obj/item/toy/dodgeball,
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "f" = (
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "h" = (
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "n" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "o" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "p" = (
-/obj/structure/window,
-/obj/item/toy/beach_ball/holoball/dodgeball,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
+/obj/structure/window/spawner/directional/south,
+/obj/item/toy/dodgeball,
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "q" = (
-/obj/structure/window{
-	dir = 1
-	},
-/obj/item/toy/beach_ball/holoball/dodgeball,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/north,
+/obj/item/toy/dodgeball,
+/obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "t" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "y" = (
-/obj/structure/window,
-/obj/item/toy/beach_ball/holoball/dodgeball,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
+/obj/structure/window/spawner/directional/south,
+/obj/item/toy/dodgeball,
+/obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "C" = (
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 4
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "F" = (
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "G" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "J" = (
 /obj/machinery/readybutton,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green/anticorner/contrasted,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "K" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "V" = (
-/obj/structure/window{
-	dir = 1
-	},
-/obj/item/toy/beach_ball/holoball/dodgeball,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/north,
+/obj/item/toy/dodgeball,
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "W" = (
 /obj/machinery/readybutton,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)

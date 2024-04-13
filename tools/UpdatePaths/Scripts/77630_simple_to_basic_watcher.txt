@@ -1,0 +1,5 @@
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random : /obj/effect/spawner/random/watcher
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/@SUBTYPES : /mob/living/basic/mining/watcher/@SUBTYPES{@OLD}
+/mob/living/simple_animal/hostile/asteroid/basilisk : /mob/living/basic/mining/basilisk{@OLD}
+
+/mob/living/basic/mining/goliath/random : /obj/effect/spawner/random/goliath

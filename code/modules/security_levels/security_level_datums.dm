@@ -9,6 +9,8 @@
 /datum/security_level
 	/// The name of this security level.
 	var/name = "not set"
+	/// The color of our announcement divider.
+	var/announcement_color = "default"
 	/// The numerical level of this security level, see defines for more information.
 	var/number_level = -1
 	/// The sound that we will play when this security level is set
@@ -22,7 +24,7 @@
 	/// Our announcement when lowering to this level
 	var/lowering_to_announcement
 	/// Our announcement when elevating to this level
-	var/elevating_to_announcemnt
+	var/elevating_to_announcement
 	/// Our configuration key for lowering to text, if set, will override the default lowering to announcement.
 	var/lowering_to_configuration_key
 	/// Our configuration key for elevating to text, if set, will override the default elevating to announcement.
@@ -33,7 +35,7 @@
 	if(lowering_to_configuration_key) // I'm not sure about you, but isn't there an easier way to do this?
 		lowering_to_announcement = global.config.Get(lowering_to_configuration_key)
 	if(elevating_to_configuration_key)
-		elevating_to_announcemnt = global.config.Get(elevating_to_configuration_key)
+		elevating_to_announcement = global.config.Get(elevating_to_configuration_key)
 
 /**
  * GREEN
@@ -42,10 +44,11 @@
  */
 /datum/security_level/green
 	name = "green"
+	announcement_color = "green"
 	sound = 'sound/misc/notice2.ogg' // Friendly beep
 	number_level = SEC_LEVEL_GREEN
 	lowering_to_configuration_key = /datum/config_entry/string/alert_green
-	shuttle_call_time_mod = 2
+	shuttle_call_time_mod = ALERT_COEFF_GREEN
 
 /**
  * BLUE
@@ -54,11 +57,12 @@
  */
 /datum/security_level/blue
 	name = "blue"
+	announcement_color = "blue"
 	sound = 'sound/misc/notice1.ogg' // Angry alarm
 	number_level = SEC_LEVEL_BLUE
 	lowering_to_configuration_key = /datum/config_entry/string/alert_blue_downto
 	elevating_to_configuration_key = /datum/config_entry/string/alert_blue_upto
-	shuttle_call_time_mod = 1
+	shuttle_call_time_mod = ALERT_COEFF_BLUE
 
 /**
  * RED
@@ -67,11 +71,12 @@
  */
 /datum/security_level/red
 	name = "red"
-	sound = 'sound/misc/notice1.ogg' // The same angry alarm
+	announcement_color = "red"
+	sound = 'sound/misc/notice3.ogg' // More angry alarm
 	number_level = SEC_LEVEL_RED
 	lowering_to_configuration_key = /datum/config_entry/string/alert_red_downto
 	elevating_to_configuration_key = /datum/config_entry/string/alert_red_upto
-	shuttle_call_time_mod = 0.5
+	shuttle_call_time_mod = ALERT_COEFF_RED
 
 /**
  * DELTA
@@ -80,7 +85,8 @@
  */
 /datum/security_level/delta
 	name = "delta"
-	sound = 'sound/misc/notice1.ogg' // The same angry alarm, again
+	announcement_color = "purple"
+	sound = 'sound/misc/airraid.ogg' // Air alarm to signify importance
 	number_level = SEC_LEVEL_DELTA
 	elevating_to_configuration_key = /datum/config_entry/string/alert_delta
-	shuttle_call_time_mod = 0.25
+	shuttle_call_time_mod = ALERT_COEFF_DELTA

@@ -1,9 +1,3 @@
-// Flags for [/obj/item/grenade/var/dud_flags]
-/// The grenade cannot detonate at all. It is innately nonfunctional.
-#define GRENADE_DUD (1<<0)
-/// The grenade has been used and as such cannot detonate.
-#define GRENADE_USED (1<<1)
-
 /**
  * Base class for all grenades.
  */
@@ -19,7 +13,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	flags_1 = CONDUCT_1 | PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
@@ -27,6 +22,8 @@
 	var/dud_flags = NONE
 	///Is this grenade currently armed?
 	var/active = FALSE
+	///Is it a cluster grenade? We dont wanna spam admin logs with these.
+	var/type_cluster = FALSE
 	///How long it takes for a grenade to explode after being armed
 	var/det_time = 5 SECONDS
 	///Will this state what it's det_time is when examined?
@@ -66,11 +63,32 @@
 	sleep(det_time)//so you dont die instantly
 	return dud_flags ? SHAME : BRUTELOSS
 
-/obj/item/grenade/deconstruct(disassembled = TRUE)
+/obj/item/grenade/atom_deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		detonate()
-	if(!QDELETED(src))
-		qdel(src)
+
+/obj/item/grenade/apply_fantasy_bonuses(bonus)
+	. = ..()
+	apply_grenade_fantasy_bonuses(bonus)
+
+/obj/item/grenade/remove_fantasy_bonuses(bonus)
+	remove_grenade_fantasy_bonuses(bonus)
+	return ..()
+
+/obj/item/grenade/proc/apply_grenade_fantasy_bonuses(quality)
+	if(ex_dev == 0 && ex_heavy == 0 && ex_light == 0 && ex_flame == 0)
+		return
+	var/devIncrease = round(quality / 10)
+	var/heavyIncrease = round(quality / 5)
+	var/lightIncrease = round(quality / 2)
+	ex_dev = modify_fantasy_variable("ex_dev", ex_dev, devIncrease, 0)
+	ex_heavy = modify_fantasy_variable("ex_heavy", ex_heavy, heavyIncrease, 0)
+	ex_light = modify_fantasy_variable("ex_light", ex_light, lightIncrease, 0)
+
+/obj/item/grenade/proc/remove_grenade_fantasy_bonuses(quality)
+	ex_dev = reset_fantasy_variable("ex_dev", ex_dev)
+	ex_heavy = reset_fantasy_variable("ex_heavy", ex_heavy)
+	ex_light = reset_fantasy_variable("ex_light", ex_light)
 
 /**
  * Checks for various ways to botch priming a grenade.
@@ -117,7 +135,8 @@
 		arm_grenade(user)
 
 /obj/item/grenade/proc/log_grenade(mob/user)
-	log_bomber(user, "has primed a", src, "for detonation", message_admins = !dud_flags)
+	if(!type_cluster)
+		log_bomber(user, "has primed a", src, "for detonation", message_admins = dud_flags != NONE)
 
 /**
  * arm_grenade (formerly preprime) refers to when a grenade with a standard time fuze is activated, making it go beepbeepbeep and then detonate a few seconds later.
@@ -230,9 +249,8 @@
 /obj/item/grenade/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/item/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	var/obj/projectile/hit_projectile = hitby
-	if(damage && attack_type == PROJECTILE_ATTACK && hit_projectile.damage_type != STAMINA && prob(15))
+/obj/item/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(damage && attack_type == PROJECTILE_ATTACK && damage_type != STAMINA && prob(15))
 		owner.visible_message(span_danger("[attack_text] hits [owner]'s [src], setting it off! What a shot!"))
 		var/turf/source_turf = get_turf(src)
 		var/logmsg = "held a grenade detonated by a projectile ([hitby]) at [COORD(source_turf)]"

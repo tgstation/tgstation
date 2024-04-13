@@ -1,54 +1,55 @@
 import { classes } from 'common/react';
+
 import { Icon } from '../../components';
 
 const MATERIAL_ICONS: Record<string, [number, string][]> = {
-  'iron': [
+  iron: [
     [0, 'sheet-metal'],
     [17, 'sheet-metal_2'],
     [34, 'sheet-metal_3'],
   ],
-  'glass': [
+  glass: [
     [0, 'sheet-glass'],
     [17, 'sheet-glass_2'],
     [34, 'sheet-glass_3'],
   ],
-  'silver': [
+  silver: [
     [0, 'sheet-silver'],
     [17, 'sheet-silver_2'],
     [34, 'sheet-silver_3'],
   ],
-  'gold': [
+  gold: [
     [0, 'sheet-gold'],
     [17, 'sheet-gold_2'],
     [34, 'sheet-gold_3'],
   ],
-  'diamond': [
+  diamond: [
     [0, 'sheet-diamond'],
     [17, 'sheet-diamond_2'],
     [34, 'sheet-diamond_3'],
   ],
-  'plasma': [
+  plasma: [
     [0, 'sheet-plasma'],
     [17, 'sheet-plasma_2'],
     [34, 'sheet-plasma_3'],
   ],
-  'uranium': [
+  uranium: [
     [0, 'sheet-uranium'],
     [17, 'sheet-uranium_2'],
     [34, 'sheet-uranium_3'],
   ],
-  'bananium': [
+  bananium: [
     [0, 'sheet-bananium'],
     [17, 'sheet-bananium_2'],
     [34, 'sheet-bananium_3'],
   ],
-  'titanium': [
+  titanium: [
     [0, 'sheet-titanium'],
     [17, 'sheet-titanium_2'],
     [34, 'sheet-titanium_3'],
   ],
   'bluespace crystal': [[0, 'bluespace_crystal']],
-  'plastic': [
+  plastic: [
     [0, 'sheet-plastic'],
     [17, 'sheet-plastic_2'],
     [34, 'sheet-plastic_3'],
@@ -62,10 +63,9 @@ export type MaterialIconProps = {
   materialName: string;
 
   /**
-   * The amount of material. One sheet is 2,000 units. By default, the icon
-   * attempts to render a full stack (200,000 units).
+   * The number of sheets of the material.
    */
-  amount?: number;
+  sheets?: number;
 };
 
 /**
@@ -73,7 +73,7 @@ export type MaterialIconProps = {
  * material.
  */
 export const MaterialIcon = (props: MaterialIconProps) => {
-  const { materialName, amount } = props;
+  const { materialName, sheets = 0 } = props;
   const icons = MATERIAL_ICONS[materialName];
 
   if (!icons) {
@@ -82,10 +82,7 @@ export const MaterialIcon = (props: MaterialIconProps) => {
 
   let activeIdx = 0;
 
-  while (
-    icons[activeIdx + 1] &&
-    icons[activeIdx + 1][0] <= (amount ?? 200_000) / 2_000
-  ) {
+  while (icons[activeIdx + 1] && icons[activeIdx + 1][0] <= sheets) {
     activeIdx += 1;
   }
 

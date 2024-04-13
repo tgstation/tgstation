@@ -2,7 +2,7 @@
 /obj/machinery/power/port_gen
 	name = "portable generator"
 	desc = "A portable generator for emergency backup power."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/engine/other.dmi'
 	icon_state = "portgen0_0"
 	base_icon_state = "portgen0"
 	density = TRUE
@@ -66,7 +66,7 @@
 			TogglePower()
 			return
 		if(powernet)
-			add_avail(power_gen * power_output)
+			add_avail(power_to_energy(power_gen * power_output))
 		UseFuel()
 	else
 		handleInactive()
@@ -114,7 +114,7 @@
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
 	. = ..()
-	. += span_notice("The generator has [sheets] units of [sheet_name] fuel left, producing [display_power(power_gen)] per cycle.")
+	. += span_notice("The generator has [sheets] units of [sheet_name] fuel left, producing [display_power(power_gen)].")
 	if(anchored)
 		. += span_notice("It is anchored to the ground.")
 
@@ -209,12 +209,13 @@
 			return
 	return ..()
 
-/obj/machinery/power/port_gen/pacman/emag_act(mob/user)
+/obj/machinery/power/port_gen/pacman/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
-	to_chat(user, span_notice("You hear a hefty clunk from inside the generator."))
+	balloon_alert(user, "maximum power output unlocked")
 	emp_act(EMP_HEAVY)
+	return TRUE
 
 /obj/machinery/power/port_gen/pacman/attack_ai(mob/user)
 	interact(user)
@@ -239,8 +240,8 @@
 	data["anchored"] = anchored
 	data["connected"] = (powernet == null ? 0 : 1)
 	data["ready_to_boot"] = anchored && HasFuel()
-	data["power_generated"] = display_power(power_gen)
-	data["power_output"] = display_power(power_gen * power_output)
+	data["power_generated"] = display_power(power_gen, convert = FALSE)
+	data["power_output"] = display_power(power_gen * power_output, convert = FALSE)
 	data["power_available"] = (powernet == null ? 0 : display_power(avail()))
 	data["current_heat"] = current_heat
 	. = data

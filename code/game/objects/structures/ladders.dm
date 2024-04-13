@@ -50,14 +50,14 @@
 	var/obj/structure/ladder/L
 
 	if (!down)
-		L = locate() in SSmapping.get_turf_below(T)
+		L = locate() in GET_TURF_BELOW(T)
 		if (L)
 			if(crafted == L.crafted)
 				down = L
 				L.up = src  // Don't waste effort looping the other way
 				L.update_appearance()
 	if (!up)
-		L = locate() in SSmapping.get_turf_above(T)
+		L = locate() in GET_TURF_ABOVE(T)
 		if (L)
 			if(crafted == L.crafted)
 				up = L
@@ -218,17 +218,6 @@
 	return TRUE
 
 /obj/structure/ladder/attack_animal_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	use(user, going_up = FALSE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/structure/ladder/attack_slime(mob/user, list/modifiers)
-	use(user)
-	return TRUE
-
-/obj/structure/ladder/attack_slime_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return

@@ -9,7 +9,7 @@
 /proc/sanitize_float(number, min=0, max=1, accuracy=1, default=0)
 	if(isnum(number))
 		number = round(number, accuracy)
-		if(min <= number && number <= max)
+		if(round(min, accuracy) <= number && number <= round(max, accuracy))
 			return number
 	return default
 
@@ -73,7 +73,7 @@
 			if(97 to 102) //letters a to f
 				. += char
 			if(65 to 70) //letters A to F
-				char = lowertext(char)
+				char = LOWER_TEXT(char)
 				. += char
 			else
 				break

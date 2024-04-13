@@ -1,0 +1,5 @@
+author: "Metekillot"
+delete-after: True
+changes:
+  - bugfix: "Being in critical condition no longer damages zombies."
+  - code_imp: "TRAIT_NODEATH will actually stop you dying in (most) cases."

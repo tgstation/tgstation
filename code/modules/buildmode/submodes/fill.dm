@@ -6,12 +6,12 @@
 	use_corner_selection = TRUE
 	var/atom/objholder = null
 
-/datum/buildmode_mode/fill/show_help(client/c)
-	to_chat(c, span_notice("***********************************************************"))
-	to_chat(c, span_notice("Left Mouse Button on turf/obj/mob      = Select corner"))
-	to_chat(c, span_notice("Left Mouse Button + Alt on turf/obj/mob = Delete region"))
-	to_chat(c, span_notice("Right Mouse Button on buildmode button = Select object type"))
-	to_chat(c, span_notice("***********************************************************"))
+/datum/buildmode_mode/fill/show_help(client/builder)
+	to_chat(builder, span_purple(examine_block(
+		"[span_bold("Select corner")] -> Left Mouse Button on turf/obj/mob\n\
+		[span_bold("Delete region")] -> Left Mouse Button + Alt on turf/obj/mob\n\
+		[span_bold("Select object type")] -> Right Mouse Button on buildmode button"))
+	)
 
 /datum/buildmode_mode/fill/change_settings(client/c)
 	var/target_path = input(c, "Enter typepath:" ,"Typepath","/obj/structure/closet")
@@ -25,6 +25,7 @@
 			objholder = null
 			tgui_alert(usr,"Area paths are not supported for this mode, use the area edit mode instead.")
 			return
+	BM.preview_selected_item(objholder)
 	deselect_region()
 
 /datum/buildmode_mode/fill/handle_click(client/c, params, obj/object)

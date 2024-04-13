@@ -10,6 +10,7 @@
 	foodtypes = VEGETABLES
 	eatverbs = list("devour", "nibble", "gnaw", "gobble", "chomp") //who the fuck gnaws and devours on a salad
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/salad/aesirsalad
 	name = "\improper Aesir salad"
@@ -18,6 +19,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 12)
 	tastes = list("leaves" = 1)
 	foodtypes = VEGETABLES | FRUIT
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/salad/herbsalad
 	name = "herb salad"
@@ -26,6 +28,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("leaves" = 1, "apple" = 1)
 	foodtypes = VEGETABLES | FRUIT
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/salad/validsalad
 	name = "valid salad"
@@ -42,6 +45,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 9, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("fruit" = 1)
 	foodtypes = FRUIT
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/salad/jungle
 	name = "jungle salad"
@@ -50,6 +54,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/banana = 5, /datum/reagent/consumable/nutriment/vitamin = 7)
 	tastes = list("fruit" = 1, "the jungle" = 1)
 	foodtypes = FRUIT
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/salad/citrusdelight
 	name = "citrus delight"
@@ -61,6 +66,7 @@
 	)
 	tastes = list("sourness" = 1, "leaves" = 1)
 	foodtypes = FRUIT | ORANGES
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/uncooked_rice
 	name = "uncooked rice"
@@ -86,6 +92,7 @@
 	)
 	tastes = list("rice" = 1)
 	foodtypes = GRAIN | BREAKFAST
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/salad/ricepudding
 	name = "rice pudding"
@@ -111,6 +118,7 @@
 	)
 	tastes = list("rice" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/salad/risotto
 	name = "risotto"
@@ -123,6 +131,7 @@
 	tastes = list("rice" = 1, "cheese" = 1)
 	foodtypes = GRAIN | DAIRY
 	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/salad/eggbowl
 	name = "egg bowl"
@@ -135,6 +144,7 @@
 	)
 	tastes = list("rice" = 1, "egg" = 1)
 	foodtypes = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/salad/edensalad
 	name = "\improper Salad of Eden"
@@ -146,6 +156,7 @@
 	)
 	tastes = list("extreme bitterness" = 3, "hope" = 1)
 	foodtypes = VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/salad/gumbo
 	name = "black eyed gumbo"
@@ -158,20 +169,73 @@
 	)
 	tastes = list("building heat" = 2, "savory meat and vegtables" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/reagent_containers/cup/bowl
 	name = "bowl"
 	desc = "A simple bowl, used for soups and salads."
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
-	reagent_flags = OPENCONTAINER
-	custom_materials = list(/datum/material/glass = 500)
+	base_icon_state = "bowl"
+	reagent_flags = OPENCONTAINER | DUNKABLE
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*5)
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_CREW * 0.6
+	fill_icon_thresholds = list(0)
+	fill_icon_state = "fullbowl"
+	fill_icon = 'icons/obj/food/soupsalad.dmi'
+
+	volume = SOUP_SERVING_SIZE + 5
+	gulp_size = 3
 
 /obj/item/reagent_containers/cup/bowl/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_REAGENT_EXAMINE, PROC_REF(reagent_special_examine))
+	AddElement(/datum/element/foodlike_drink)
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/salad/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
+	AddComponent( \
+		/datum/component/takes_reagent_appearance, \
+		on_icon_changed = CALLBACK(src, PROC_REF(on_cup_change)), \
+		on_icon_reset = CALLBACK(src, PROC_REF(on_cup_reset)), \
+		base_container_type = /obj/item/reagent_containers/cup/bowl, \
+	)
+
+/obj/item/reagent_containers/cup/bowl/on_cup_change(datum/glass_style/style)
+	. = ..()
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/cup/bowl/on_cup_reset()
+	. = ..()
+	fill_icon_thresholds ||= list(0)
+
+/**
+ * Override standard reagent examine
+ * so that anyone examining a bowl of soup sees the soup but nothing else (unless they have sci goggles)
+ */
+/obj/item/reagent_containers/cup/bowl/proc/reagent_special_examine(datum/source, mob/user, list/examine_list, can_see_insides = FALSE)
+	SIGNAL_HANDLER
+
+	if(can_see_insides || reagents.total_volume <= 0)
+		return
+
+	var/unknown_volume = 0
+	var/list/soups_found = list()
+	for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
+		if(istype(current_reagent, /datum/reagent/consumable/nutriment/soup))
+			soups_found += "&bull; [round(current_reagent.volume, 0.01)] units of [current_reagent.name]"
+		else
+			unknown_volume += current_reagent.volume
+
+	if(!length(soups_found))
+		// There was no soup in the pot, do normal examine
+		return
+
+	examine_list += "Inside, you can see:"
+	examine_list += soups_found
+	if(unknown_volume > 0)
+		examine_list += "&bull; [round(unknown_volume, 0.01)] units of unknown reagents"
+
+	return STOP_GENERIC_REAGENT_EXAMINE
 
 // empty salad for custom salads
 /obj/item/food/salad/empty
@@ -191,6 +255,7 @@
 	)
 	tastes = list("healthy greens" = 2, "olive dressing" = 1)
 	foodtypes = VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/salad/greek_salad
 	name = "Greek salad"
@@ -202,6 +267,7 @@
 	)
 	tastes = list("healthy greens" = 2, "olive dressing" = 1, "feta cheese" = 1)
 	foodtypes = VEGETABLES | DAIRY
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/salad/caesar_salad
 	name = "Caesar salad"
@@ -213,6 +279,7 @@
 	)
 	tastes = list("healthy greens" = 2, "olive dressing" = 2, "feta cheese" = 2, "pita bread" = 1)
 	foodtypes = VEGETABLES | DAIRY | GRAIN
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/salad/spring_salad
 	name = "spring salad"
@@ -224,6 +291,7 @@
 	)
 	tastes = list("crisp greens" = 2, "olive dressing" = 2, "salt" = 1)
 	foodtypes = VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/salad/potato_salad
 	name = "potato salad"
@@ -236,6 +304,7 @@
 	)
 	tastes = list("creamy potatoes" = 2, "eggs" = 2, "mayonnaise" = 1, "onions" = 1)
 	foodtypes = VEGETABLES | BREAKFAST
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/salad/spinach_fruit_salad
 	name = "spinach fruit salad"
@@ -247,6 +316,7 @@
 	)
 	tastes = list("spinach" = 2, "berries" = 2, "pineapple" = 2, "dressing" = 1)
 	foodtypes = VEGETABLES | FRUIT
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/salad/antipasto_salad
 	name = "antipasto salad"
@@ -259,3 +329,4 @@
 	)
 	tastes = list("lettuce" = 2, "salami" = 2, "mozzarella cheese" = 2, "tomatoes" = 2, "dressing" = 1)
 	foodtypes = VEGETABLES | DAIRY | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_4

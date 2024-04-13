@@ -11,7 +11,7 @@
 	yield = 5
 	instability = 15
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	mutatelist = list(/obj/item/seeds/carrot/parsnip)
 	reagents_add = list(/datum/reagent/medicine/oculine = 0.25, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 
@@ -22,16 +22,22 @@
 	icon_state = "carrot"
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
-	juice_results = list(/datum/reagent/consumable/carrotjuice = 0)
+	juice_typepath = /datum/reagent/consumable/carrotjuice
 	wine_power = 30
 
 /obj/item/food/grown/carrot/attackby(obj/item/I, mob/user, params)
 	if(I.get_sharpness())
-		to_chat(user, span_notice("You sharpen the carrot into a shiv with [I]."))
-		var/obj/item/knife/shiv/carrot/Shiv = new /obj/item/knife/shiv/carrot
+		var/carrot_blade
+		var/carrot_sword_chance = (max(0, seed.potency - 50) / 50)
+		if (prob(carrot_sword_chance))
+			carrot_blade = new /obj/item/claymore/carrot
+			to_chat(user, span_notice("You sharpen the carrot into a sword with [I]."))
+		else
+			carrot_blade = new /obj/item/knife/shiv/carrot
+			to_chat(user, span_notice("You sharpen the carrot into a shiv with [I]."))
 		remove_item_from_storage(user)
 		qdel(src)
-		user.put_in_hands(Shiv)
+		user.put_in_hands(carrot_blade)
 	else
 		return ..()
 
@@ -53,7 +59,7 @@
 	desc = "Closely related to carrots."
 	icon_state = "parsnip"
 	foodtypes = VEGETABLES
-	juice_results = list(/datum/reagent/consumable/parsnipjuice = 0)
+	juice_typepath = /datum/reagent/consumable/parsnipjuice
 	wine_power = 35
 
 
@@ -69,7 +75,7 @@
 	endurance = 50
 	yield = 6
 	instability = 10
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	mutatelist = list(/obj/item/seeds/redbeet)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/sugar = 0.2, /datum/reagent/consumable/nutriment = 0.05)
@@ -95,7 +101,7 @@
 	endurance = 50
 	yield = 5
 	instability = 15
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	genes = list(/datum/plant_gene/trait/maxchem)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.05)

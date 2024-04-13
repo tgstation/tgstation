@@ -6,53 +6,53 @@
 	name = "Bird Crate"
 	desc = "Contains five expert telecommunication birds."
 	cost = CARGO_CRATE_VALUE * 8
-	access_view = ACCESS_CE
-	contains = list(/mob/living/simple_animal/parrot)
+	contains = list(/mob/living/basic/parrot)
 	crate_name = "parrot crate"
 
 /datum/supply_pack/critter/parrot/generate()
 	. = ..()
 	for(var/i in 1 to 4)
-		new /mob/living/simple_animal/parrot(.)
+		new /mob/living/basic/parrot(.)
 
 /datum/supply_pack/critter/butterfly
 	name = "Butterflies Crate"
 	desc = "Not a very dangerous insect, but they do give off a better image than, say, flies or cockroaches."//is that a motherfucking worm reference
 	contraband = TRUE
 	cost = CARGO_CRATE_VALUE * 5
-	access_view = ACCESS_THEATRE
-	contains = list(/mob/living/simple_animal/butterfly)
+	contains = list(/mob/living/basic/butterfly)
 	crate_name = "entomology samples crate"
 
 /datum/supply_pack/critter/butterfly/generate()
 	. = ..()
 	for(var/i in 1 to 49)
-		new /mob/living/simple_animal/butterfly(.)
+		new /mob/living/basic/butterfly(.)
 
 /datum/supply_pack/critter/cat
 	name = "Cat Crate"
 	desc = "The cat goes meow! Comes with a collar and a nice cat toy! Cheeseburger not included."//i can't believe im making this reference
 	cost = CARGO_CRATE_VALUE * 10 //Cats are worth as much as corgis.
-	access_view = ACCESS_MEDICAL
-	contains = list(/mob/living/simple_animal/pet/cat,
-					/obj/item/clothing/neck/petcollar,
-					/obj/item/toy/cattoy,
-				)
+	contains = list(
+		/mob/living/basic/pet/cat,
+		/obj/item/clothing/neck/petcollar,
+		/obj/item/toy/cattoy,
+	)
 	crate_name = "cat crate"
 
 /datum/supply_pack/critter/cat/generate()
 	. = ..()
-	if(prob(50))
-		var/mob/living/simple_animal/pet/cat/C = locate() in .
-		qdel(C)
-		new /mob/living/simple_animal/pet/cat/_proc(.)
+	if(!prob(50))
+		return
+	var/mob/living/basic/pet/cat/delete_cat = locate() in .
+	if(isnull(delete_cat))
+		return
+	qdel(delete_cat)
+	new /mob/living/basic/pet/cat/_proc(.)
 
 /datum/supply_pack/critter/chick
 	name = "Chicken Crate"
 	desc = "The chicken goes bwaak!"
 	cost = CARGO_CRATE_VALUE * 4
-	access_view = ACCESS_KITCHEN
-	contains = list( /mob/living/simple_animal/chick)
+	contains = list(/mob/living/basic/chick)
 	crate_name = "chicken crate"
 
 /datum/supply_pack/critter/corgi
@@ -60,7 +60,6 @@
 	desc = "Considered the optimal dog breed by thousands of research scientists, this Corgi is but \
 		one dog from the millions of Ian's noble bloodline. Comes with a cute collar!"
 	cost = CARGO_CRATE_VALUE * 10
-	access_view = ACCESS_HOP
 	contains = list(/mob/living/basic/pet/dog/corgi,
 					/obj/item/clothing/neck/petcollar,
 				)
@@ -78,7 +77,6 @@
 	name = "Cow Crate"
 	desc = "The cow goes moo! Contains one cow."
 	cost = CARGO_CRATE_VALUE * 6
-	access_view = ACCESS_HYDROPONICS
 	contains = list(/mob/living/basic/cow)
 	crate_name = "cow crate"
 
@@ -86,7 +84,6 @@
 	name = "Sheep Crate"
 	desc = "The sheep goes BAAAA! Contains one sheep."
 	cost = CARGO_CRATE_VALUE * 6
-	access_view = ACCESS_HYDROPONICS
 	contains = list(/mob/living/basic/sheep)
 	crate_name = "sheep crate"
 
@@ -94,9 +91,15 @@
 	name = "Pig Crate"
 	desc = "The pig goes oink! Contains one pig."
 	cost = CARGO_CRATE_VALUE * 6
-	access_view = ACCESS_KITCHEN
 	contains = list(/mob/living/basic/pig)
 	crate_name = "pig crate"
+
+/datum/supply_pack/critter/pony
+	name = "Pony Crate"
+	desc = "Ponies, yay! (Just the one.)"
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/mob/living/basic/pony)
+	crate_name = "pony crate"
 
 /datum/supply_pack/critter/crab
 	name = "Crab Rocket"
@@ -108,15 +111,14 @@
 		EEEEEEEEEEEEEEEEEEEEEEEEE EEEETTTTTTTTTTTTAAAAAAAAA AAAHHHHHHHHHHHHH. CRAB ROCKET. CRAAAB \
 		ROCKEEEEEEEEEGGGGHHHHTT CRAB CRAB CRAABROCKET CRAB ROCKEEEET."//fun fact: i actually spent like 10 minutes and transcribed the entire video.
 	cost = CARGO_CRATE_VALUE * 8
-	access_view = ACCESS_HOS
-	contains = list(/mob/living/simple_animal/crab)
+	contains = list(/mob/living/basic/crab)
 	crate_name = "look sir free crabs"
 	drop_pod_only = TRUE
 
 /datum/supply_pack/critter/crab/generate()
 	. = ..()
 	for(var/i in 1 to 49)
-		new /mob/living/simple_animal/crab(.)
+		new /mob/living/basic/crab(.)
 
 /datum/supply_pack/critter/corgis/exotic
 	name = "Exotic Corgi Crate"
@@ -132,18 +134,17 @@
 	name = "Fox Crate"
 	desc = "The fox goes...? Contains one fox. Comes with a collar!"//what does the fox say
 	cost = CARGO_CRATE_VALUE * 10
-	access_view = ACCESS_CAPTAIN
-	contains = list(/mob/living/simple_animal/pet/fox,
-					/obj/item/clothing/neck/petcollar,
-				)
+	contains = list(
+		/mob/living/basic/pet/fox,
+		/obj/item/clothing/neck/petcollar,
+	)
 	crate_name = "fox crate"
 
 /datum/supply_pack/critter/goat
 	name = "Goat Crate"
 	desc = "The goat goes baa! Contains one goat. Warranty void if used as a replacement for Pete."
 	cost = CARGO_CRATE_VALUE * 5
-	access_view = ACCESS_KITCHEN
-	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
+	contains = list(/mob/living/basic/goat)
 	crate_name = "goat crate"
 
 /datum/supply_pack/critter/rabbit
@@ -193,8 +194,7 @@
 	desc = "Tired of these MOTHER FUCKING snakes on this MOTHER FUCKING space station? \
 		Then this isn't the crate for you. Contains three venomous snakes."
 	cost = CARGO_CRATE_VALUE * 6
-	access_view = ACCESS_SECURITY
-	contains = list(/mob/living/simple_animal/hostile/retaliate/snake = 3)
+	contains = list(/mob/living/basic/snake = 3)
 	crate_name = "snake crate"
 
 /datum/supply_pack/critter/amphibians
@@ -212,8 +212,7 @@
 	name = "Lizard Crate"
 	desc = "Hisss! Containssss a friendly lizard. Not to be confusssed with a lizardperssson."
 	cost = CARGO_CRATE_VALUE * 4
-	access_view = ACCESS_JANITOR
-	contains = list(/mob/living/simple_animal/hostile/lizard)
+	contains = list(/mob/living/basic/lizard)
 	crate_name = "lizard crate"
 
 /datum/supply_pack/critter/garden_gnome
@@ -223,8 +222,40 @@
 	cost = CARGO_CRATE_VALUE * 20
 	contains = list(/mob/living/basic/garden_gnome)
 	crate_name = "garden gnome crate"
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /datum/supply_pack/critter/garden_gnome/generate()
 	. = ..()
 	for(var/i in 1 to 2)
 		new /mob/living/basic/garden_gnome(.)
+
+/datum/supply_pack/critter/fish
+	crate_type = /obj/structure/closet/crate
+
+/datum/supply_pack/critter/fish/aquarium_fish
+	name = "Aquarium Fish Case"
+	desc = "An aquarium fish bundle handpicked by monkeys from our collection. Contains two random fish."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/random = 2)
+	crate_name = "aquarium fish crate"
+
+/datum/supply_pack/critter/fish/freshwater_fish
+	name = "Freshwater Fish Case"
+	desc = "Aquarium fish that have had most of their mud cleaned off."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/random/freshwater = 2)
+	crate_name = "freshwater fish crate"
+
+/datum/supply_pack/critter/fish/saltwater_fish
+	name = "Saltwater Fish Case"
+	desc = "Aquarium fish that fill the room with the smell of salt."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/random/saltwater = 2)
+	crate_name = "saltwater fish crate"
+
+/datum/supply_pack/critter/fish/tiziran_fish
+	name = "Tiziran Fish Case"
+	desc = "Tiziran saltwater fish imported from the Zagos Sea."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/tiziran = 2)
+	crate_name = "tiziran fish crate"
