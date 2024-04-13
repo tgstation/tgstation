@@ -81,6 +81,10 @@ function SS13.register_signal(datum, signal, func)
 	if not SS13.istype(datum, "/datum") then
 		return
 	end
+	if not SS13.is_valid(datum) then
+		error("Tried to register a signal on a deleted datum!", 2)
+		return
+	end
 	local datumWeakRef = dm.global_proc("WEAKREF", datum)
 	if not __SS13_signal_handlers[datumWeakRef] then
 		__SS13_signal_handlers[datumWeakRef] = {}
