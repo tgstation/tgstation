@@ -1,5 +1,0 @@
-author: "Bastian0930"
-delete-after: True
-changes:
-  - bugfix: "Bloodsuckers are unable to spam click the persuasion rack and lose all their blood, as part of the new clan training."
-  - bugfix: "Bloodsuckers will not torture basic mobs or animals, after a clan agreement involving the Animal Rights Consortium."

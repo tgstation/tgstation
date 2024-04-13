@@ -1,5 +1,0 @@
-author: "dwasint"
-delete-after: True
-changes:
-  - bugfix: "Ensure deleted slimes are properly tracked, to prevent weird errors that broke slime pen management consoles."
-  - bugfix: "Fixed some wonky logic with liquid code."

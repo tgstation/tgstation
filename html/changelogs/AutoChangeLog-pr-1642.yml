@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed the bug where your actions would be permanently slowed down after wading through liquid."

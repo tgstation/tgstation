@@ -140,3 +140,32 @@
   Rex9001:
   - rscadd: A new honeydew specific achievement
   - balance: You can now eat whilst wearing a horsemask
+2024-04-13:
+  Absolucy:
+  - bugfix: Fixed the bug where your actions would be permanently slowed down after
+      wading through liquid.
+  - bugfix: Fix invalid events (with blank names) being considered to run.
+  AlbertNanotracen:
+  - rscadd: 'Mars celebrates the 250th anniversary of the Martian Concession this
+      year, and this has brought Martian cuisine to new heights of popularity. Find
+      a new selection of Martian foods and drinks available in your crafting menu
+      today!
+
+      Port #77757'
+  - bugfix: wellcheers is now based on sanity rather than mood
+  - image: resprites martian cans
+  - image: adds inhands for martian cans and wellcheers
+  - image: minor tweaks to other cans
+  - spellcheck: 'updates wellcheers mood text
+
+      Port #77562'
+  - bugfix: a few issues with Martian food
+  Bastian0930:
+  - bugfix: Bloodsuckers are unable to spam click the persuasion rack and lose all
+      their blood, as part of the new clan training.
+  - bugfix: Bloodsuckers will not torture basic mobs or animals, after a clan agreement
+      involving the Animal Rights Consortium.
+  dwasint:
+  - bugfix: Ensure deleted slimes are properly tracked, to prevent weird errors that
+      broke slime pen management consoles.
+  - bugfix: Fixed some wonky logic with liquid code.
