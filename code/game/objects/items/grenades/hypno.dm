@@ -40,11 +40,8 @@
 	//Hearing protection check
 	if(iscarbon(living_mob))
 		var/mob/living/carbon/target = living_mob
-		var/list/reflist = list(1)
-		SEND_SIGNAL(target, COMSIG_CARBON_SOUNDBANG, reflist)
-		var/intensity = reflist[1]
 		var/ear_safety = target.get_ear_protection()
-		var/effect_amount = intensity - ear_safety
+		var/effect_amount = 1 - ear_safety
 		if(effect_amount > 0)
 			hypno_sound = TRUE
 

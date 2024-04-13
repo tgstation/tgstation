@@ -42,6 +42,8 @@
 	var/pressure = environment ? environment.return_pressure() : 0
 	if(pressure < SOUND_MINIMUM_PRESSURE) //space is empty
 		return 1
+	if(HAS_TRAIT(src, TRAIT_DEAF))
+		return INFINITY //For all my homies that can not hear in the world
 	return 0
 
 /**

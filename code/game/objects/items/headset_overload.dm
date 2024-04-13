@@ -1,7 +1,7 @@
 /// Stun everyone wearing a particular departmental headset
 /obj/item/headset_overloader
 	name = "headset disruptor"
-	desc = "A device which broadcasts an intense and sudden burst of sound to a specified frequency."
+	desc = "A device which broadcasts an intense and sudden burst of sound to a specified frequency. The effect is reduced in sound-cancelling headsets."
 	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "implantpad-1"
 	base_icon_state = "implantpad-"
@@ -61,9 +61,10 @@
 		to_chat(headset_wearer, span_boldbig("BWAAAAAAAAAAAHHH!!!"))
 		to_chat(headset_wearer, span_warning("Your head fills with an unbearable ringing..."))
 
-		headset_wearer.Paralyze(8 SECONDS)
-		headset_wearer.set_confusion_if_lower(15 SECONDS)
-		headset_wearer.apply_status_effect(/datum/status_effect/airhorn_deafness)
+		var/protection_modifier = 1 - headset_wearer.get_ear_protection() > 0 ? 1 : 0.5
+		headset_wearer.Paralyze(6 SECONDS * protection_modifier)
+		headset_wearer.set_confusion_if_lower(15 SECONDS * protection_modifier)
+		headset_wearer.apply_status_effect(/datum/status_effect/airhorn_deafness, 30 SECONDS * protection_modifier)
 
 		var/mob/living/carbon/carbon_wearer = headset_wearer
 		if (!iscarbon(carbon_wearer))
@@ -88,6 +89,10 @@
 	id = "airhorn_deafness"
 	alert_type = null
 	duration = 30 SECONDS
+
+/datum/status_effect/airhorn_deafness/on_creation(mob/living/new_owner, duration)
+	src.duration = duration
+	return ..()
 
 /datum/status_effect/airhorn_deafness/on_apply()
 	ADD_TRAIT(owner, TRAIT_DEAF, TRAIT_STATUS_EFFECT(id))

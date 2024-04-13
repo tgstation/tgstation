@@ -1,5 +1,5 @@
 /datum/component/wearertargeting/earprotection
-	signals = list(COMSIG_CARBON_SOUNDBANG)
+	signals = list(COMSIG_CARBON_SOUND_PROTECTION_CHECKED)
 	mobtype = /mob/living/carbon
 	proctype = PROC_REF(reducebang)
 
@@ -8,4 +8,4 @@
 	valid_slots = _valid_slots
 
 /datum/component/wearertargeting/earprotection/proc/reducebang(datum/source, list/reflist)
-	reflist[1]--
+	reflist[1]++
