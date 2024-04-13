@@ -1171,7 +1171,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		if(istype(replacer_item, refill_canister))
 			restocked += restock(replacer_item)
 	post_restock(user, restocked)
-	if(restocked)
+	if(restocked > 0)
 		replacer.play_rped_sound()
 	return TRUE
 
