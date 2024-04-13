@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 
 import { BoxProps, computeBoxProps } from './Box';
 
@@ -35,7 +35,7 @@ export function Image(props: Props) {
     src,
     ...rest
   } = props;
-  const attempts = useRef(0);
+  const [attempts, setAttempts] = useState(0);
 
   const computedProps = computeBoxProps(rest);
   computedProps['style'] = {
@@ -47,15 +47,12 @@ export function Image(props: Props) {
   return (
     <img
       onError={(event) => {
-        if (fixErrors && attempts.current < maxAttempts) {
+        if (fixErrors && attempts < maxAttempts) {
           const imgElement = event.currentTarget;
 
           setTimeout(() => {
-            // prevents flicker from dm icons
-            if (attempts.current > 0) {
-              imgElement.src = `${src}?attempts=${attempts.current}`;
-            }
-            attempts.current++;
+            imgElement.src = `${src}`;
+            setAttempts((attempts) => attempts + 1);
           }, 1000);
         }
       }}
