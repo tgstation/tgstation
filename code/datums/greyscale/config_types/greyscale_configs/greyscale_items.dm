@@ -340,3 +340,18 @@
 	name = "Piggy Bank"
 	icon_file = 'icons/obj/fluff/general.dmi'
 	json_config = 'code/datums/greyscale/json_configs/piggy_bank.json'
+
+
+//
+// GOLDEN BOXING GLOVES
+//
+
+/datum/greyscale_config/golden_gloves
+	name = "Base Golden Gloves"
+	icon_file = 'icons/obj/clothing/gloves.dmi'
+	json_config = 'code/datums/greyscale/json_configs/golden_gloves.json'
+
+/datum/greyscale_config/golden_gloves__worn
+	name = "Worn Golden Gloves"
+	icon_file = 'icons/mob/clothing/hands.dmi'
+	json_config = 'code/datums/greyscale/json_configs/golden_gloves_worn.json'
