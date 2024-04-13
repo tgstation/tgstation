@@ -4,11 +4,16 @@
 	desc = "A device which broadcasts an intense and sudden burst of sound to a specified frequency."
 	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "implantpad-1"
+	base_icon_state = "implantpad-"
 	w_class = WEIGHT_CLASS_SMALL
 	/// Which department are we going to antagonise?
 	var/selected_department
 	/// Did we use it all up?
 	var/expended = FALSE
+
+/obj/item/headset_overloader/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state][!expended]"
 
 /obj/item/headset_overloader/interact(mob/user)
 	. = ..()
@@ -27,7 +32,7 @@
 		)
 
 		var/picked = tgui_input_list(user, "Choose a channel to disrupt.", "Channel Selector", department_channels)
-		if (isnull(picked))
+		if (isnull(picked) || expended || !user.is_holding(src))
 			return
 		selected_department = picked
 		balloon_alert(user, "selected [picked]")
@@ -42,9 +47,10 @@
 
 	if (!LAZYLEN(all_radios_of_our_frequency))
 		balloon_alert(user, "no devices found!")
+		selected_department = null
 		return
 
-	for(var/obj/item/radio/receiver in all_radios_of_our_frequency)
+	for(var/obj/item/radio/receiver as anything in all_radios_of_our_frequency)
 		if (!receiver.can_receive(frequency, levels = SSmapping.get_connected_levels(get_turf(src))))
 			continue
 		playsound(receiver, 'sound/items/airhorn.ogg', vol = 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
@@ -54,6 +60,7 @@
 			continue
 		to_chat(headset_wearer, span_boldbig("BWAAAAAAAAAAAHHH!!!"))
 		to_chat(headset_wearer, span_warning("Your head fills with an unbearable ringing..."))
+
 		headset_wearer.Paralyze(8 SECONDS)
 		headset_wearer.set_confusion_if_lower(15 SECONDS)
 		headset_wearer.apply_status_effect(/datum/status_effect/airhorn_deafness)
@@ -65,8 +72,8 @@
 
 	playsound(src, 'sound/items/timer.ogg', 50, vary = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE)
 	do_sparks(3, cardinal_only = FALSE, source = src)
-	icon_state = "implantpad-0"
 	expended = TRUE
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/headset_overloader/examine(mob/user)
 	. = ..()
