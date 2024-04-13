@@ -143,7 +143,7 @@
 		span_notice("You struggle to break free from [src], exacerbating your wounds! (Stay still for two minutes.)"),\
 		span_hear("You hear a wet squishing noise.."))
 		buckled_mob.adjustBruteLoss(30)
-		if(!do_after(buckled_mob, 2 MINUTES, target = src))
+		if(!do_after(buckled_mob, 2 MINUTES, target = src, hidden = TRUE))
 			if(buckled_mob?.buckled)
 				to_chat(buckled_mob, span_warning("You fail to free yourself!"))
 			return

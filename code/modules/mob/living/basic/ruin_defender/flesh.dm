@@ -173,7 +173,7 @@
 /mob/living/basic/living_limb_flesh/proc/wake_up(atom/limb)
 	visible_message(span_warning("[src] begins flailing around!"))
 	Shake(6, 6, 0.5 SECONDS)
-	ai_controller.set_ai_status(AI_STATUS_ON)
+	ai_controller.set_ai_status(AI_STATUS_IDLE)
 	forceMove(limb.drop_location())
 	qdel(limb)
 

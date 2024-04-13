@@ -40,6 +40,48 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(user.combat_mode)
 		return ..(M, user)
 
+
+/obj/item/balloon_mallet
+	name = "balloon mallet"
+	desc = "It's a mallet, a weapon known for being heavy, but made from notoriously light balloons. Air inside removes any force from the swings. It'd be quite embarrassing to get hit by this."
+	icon = 'icons/obj/weapons/hammer.dmi'
+	icon_state = "balloon_mallet"
+	inhand_icon_state = "balloon_mallet"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	siemens_coefficient = 0
+	force = 1
+	throw_speed = 1
+	throwforce = 1
+	throw_range = 1
+	w_class = WEIGHT_CLASS_HUGE
+	attack_verb_continuous = list("mallets", "smoother")
+	attack_verb_simple = list("mallet", "smoother")
+	max_integrity = 20
+	armor_type = /datum/armor/item_banhammer
+	resistance_flags = FIRE_PROOF
+
+/obj/item/balloon_mallet/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT(user,TRAIT_BALLOON_SUTRA))
+		. = "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
+
+/obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
+	playsound(loc, 'sound/creatures/clown/hehe.ogg', 20)
+	if (!isliving(target))
+		return
+	switch(target.mob_mood.sanity)
+		if (SANITY_INSANE to SANITY_CRAZY)
+			force = 8
+		if (SANITY_UNSTABLE to SANITY_DISTURBED)
+			force = 4
+			target.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
+		if (SANITY_NEUTRAL to SANITY_GREAT)
+			target.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
+
+	if(user.combat_mode)
+		return ..(target, user)
+
 /obj/item/sord
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."

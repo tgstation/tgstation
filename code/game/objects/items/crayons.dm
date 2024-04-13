@@ -418,7 +418,7 @@
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
 	text = copytext(text, 1, MAX_MESSAGE_LEN)
 	var/static/regex/crayon_regex = new /regex(@"[^\w!?,.=&%#+/\-]", "ig")
-	return lowertext(crayon_regex.Replace(text, ""))
+	return LOWER_TEXT(crayon_regex.Replace(text, ""))
 
 /// Attempts to color the target. Returns how many charges were used.
 /obj/item/toy/crayon/proc/use_on(atom/target, mob/user, params)
