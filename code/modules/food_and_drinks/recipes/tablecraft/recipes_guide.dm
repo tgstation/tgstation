@@ -38,7 +38,7 @@
 
 /datum/crafting_recipe/food/reaction/New()
 	. = ..()
-	if(!reaction)
+	if(!ispath(reaction, /datum/chemical_reaction))
 		return
 
 	if(length(GLOB.chemical_reactions_list))
@@ -188,6 +188,13 @@
 
 /datum/crafting_recipe/food/reaction/moonshine
 	reaction = /datum/chemical_reaction/drink/moonshine
+
+/datum/crafting_recipe/food/reaction/martian_batter
+	reaction = /datum/chemical_reaction/food/martian_batter
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/reaction/grounding_neutralise
+	reaction = /datum/chemical_reaction/food/grounding_neutralise
 
 // Tools: Rolling pin
 
@@ -352,6 +359,21 @@
 	result = /obj/item/food/watermelonslice
 	category = CAT_SALAD
 
+/datum/crafting_recipe/food/knife/kamaboko_slice
+	reqs = list(/obj/item/food/kamaboko = 1)
+	result = /obj/item/food/kamaboko_slice
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/knife/raw_noodles
+	reqs = list(/obj/item/food/rice_dough = 1)
+	result = /obj/item/food/spaghetti/rawnoodles
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/knife/chapslice
+	reqs = list(/obj/item/food/canned/chap = 1)
+	result = /obj/item/food/chapslice
+	category = CAT_MEAT
+
 // Machinery: Grill
 
 /datum/crafting_recipe/food/grill
@@ -422,10 +444,25 @@
 	result = /obj/item/food/grilled_cheese_sandwich
 	category = CAT_BREAD
 
-/datum/crafting_recipe/food/grill/moonfish
+/datum/crafting_recipe/food/grill/grilled_cheese
 	reqs = list(/obj/item/food/cheese/firm_cheese_slice = 1)
 	result = /obj/item/food/grilled_cheese
 	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/grill/ballpark_pretzel
+	reqs = list(/obj/item/food/raw_ballpark_pretzel = 1)
+	result = /obj/item/food/ballpark_pretzel
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/grill/ballpark_tsukune
+	reqs = list(/obj/item/food/kebab/raw_ballpark_tsukune = 1)
+	result = /obj/item/food/kebab/ballpark_tsukune
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/grill/chapslice
+	reqs = list(/obj/item/food/chapslice = 1)
+	result = /obj/item/food/grilled_chapslice
+	category = CAT_MEAT
 
 /datum/crafting_recipe/food/grill/friedegg
 	reqs = list(/obj/item/food/egg = 1)
@@ -632,10 +669,10 @@
 	result = /obj/item/food/boiledegg
 	category = CAT_EGG
 
-/datum/crafting_recipe/food/microwave/boiledrice
+/* /datum/crafting_recipe/food/microwave/boiledrice Monkestation Edit: Boiled rice needs to be boiled
 	reqs = list(/obj/item/food/uncooked_rice = 1)
 	result = /obj/item/food/boiledrice
-	category = CAT_SALAD
+	category = CAT_SALAD */
 
 /datum/crafting_recipe/food/microwave/onionrings
 	reqs = list(/obj/item/food/onion_slice = 1)
@@ -761,6 +798,16 @@
 	result = /obj/item/food/yakiimo
 	category = CAT_SALAD
 
+/datum/crafting_recipe/food/oven/reispan
+	reqs = list(/obj/item/food/rice_dough = 1)
+	result = /obj/item/food/bread/reispan
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/oven/ballpark_pretzel
+	reqs = list(/obj/item/food/raw_ballpark_pretzel = 1)
+	result = /obj/item/food/ballpark_pretzel
+	category = CAT_MARTIAN
+
 // Machinery: Drying rack
 /datum/crafting_recipe/food/drying
 	machinery = list(/obj/machinery/smartfridge/drying_rack)
@@ -794,3 +841,8 @@
 /datum/crafting_recipe/food/drying/semki
 	reqs = list(/obj/item/food/grown/sunflower = 1)
 	result = /obj/item/food/semki/healthy
+
+/datum/crafting_recipe/food/drying/kamaboko
+	reqs = list(/obj/item/food/surimi = 1)
+	result = /obj/item/food/kamaboko
+	category = CAT_MARTIAN

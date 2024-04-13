@@ -586,3 +586,78 @@
 	mix_message = "Arcs of lightning fly from the mixture."
 	mix_sound = 'sound/weapons/zapbang.ogg'
 
+/datum/chemical_reaction/drink/yuyakita
+	results = list(/datum/reagent/consumable/ethanol/yuyakita = 4)
+	required_reagents = list(/datum/reagent/consumable/ethanol/tequila = 2, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/ethanol/yuyake = 1)
+
+/datum/chemical_reaction/drink/saibasan
+	results = list(/datum/reagent/consumable/ethanol/saibasan = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/shochu = 2, /datum/reagent/consumable/ethanol/yuyake = 2, /datum/reagent/consumable/triple_citrus = 3, /datum/reagent/consumable/cherryjelly = 3)
+
+/datum/chemical_reaction/drink/banzai_ti
+	results = list(/datum/reagent/consumable/ethanol/banzai_ti = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/yuyake = 1, /datum/reagent/consumable/ethanol/triple_sec = 1, /datum/reagent/consumable/ethanol/gin = 1, /datum/reagent/consumable/ethanol/rum = 1, /datum/reagent/consumable/ethanol/tequila = 1, /datum/reagent/consumable/ethanol/vodka = 1, /datum/reagent/consumable/triple_citrus = 2, /datum/reagent/consumable/sodawater = 2)
+
+/datum/chemical_reaction/drink/sanraizusoda
+	results = list(/datum/reagent/consumable/ethanol/sanraizusoda = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/yuyake = 1, /datum/reagent/consumable/sodawater = 2, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/cream = 1)
+
+/datum/chemical_reaction/drink/kumicho
+	results = list(/datum/reagent/consumable/ethanol/kumicho = 4)
+	required_reagents = list(/datum/reagent/consumable/ethanol/godfather = 2, /datum/reagent/consumable/ethanol/shochu = 1, /datum/reagent/consumable/ethanol/bitters = 1)
+
+/datum/chemical_reaction/drink/red_planet
+	results = list(/datum/reagent/consumable/ethanol/red_planet = 8)
+	required_reagents = list(/datum/reagent/consumable/ethanol/shochu = 2, /datum/reagent/consumable/ethanol/triple_sec = 2, /datum/reagent/consumable/ethanol/vermouth = 2, /datum/reagent/consumable/grenadine = 1, /datum/reagent/consumable/ethanol/bitters = 1)
+
+/datum/chemical_reaction/drink/amaterasu
+	results = list(/datum/reagent/consumable/ethanol/amaterasu = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/shochu = 1, /datum/reagent/consumable/ethanol/vodka = 1, /datum/reagent/consumable/grenadine = 1, /datum/reagent/consumable/berryjuice = 2, /datum/reagent/consumable/sodawater = 5)
+
+/datum/chemical_reaction/drink/nekomimosa
+	results = list(/datum/reagent/consumable/ethanol/nekomimosa = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/yuyake = 2, /datum/reagent/consumable/watermelonjuice = 2, /datum/reagent/consumable/ethanol/champagne = 1)
+
+/datum/chemical_reaction/drink/sentai_quencha
+	results = list(/datum/reagent/consumable/ethanol/sentai_quencha = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/shochu = 1, /datum/reagent/consumable/ethanol/curacao = 1, /datum/reagent/consumable/triple_citrus = 1, /datum/reagent/consumable/melon_soda = 2)
+
+/datum/chemical_reaction/drink/bosozoku
+	results = list(/datum/reagent/consumable/ethanol/bosozoku = 2)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rice_beer = 1, /datum/reagent/consumable/lemonade = 1)
+
+/datum/chemical_reaction/drink/ersatzche
+	results = list(/datum/reagent/consumable/ethanol/ersatzche = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rice_beer = 5, /datum/reagent/consumable/pineapplejuice = 3, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/sugar = 1)
+
+/datum/chemical_reaction/drink/red_city_am
+	results = list(/datum/reagent/consumable/ethanol/red_city_am = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rice_beer = 5, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/red_bay = 1, /datum/reagent/consumable/soysauce = 1, /datum/reagent/consumable/tomatojuice = 2)
+
+/datum/chemical_reaction/drink/kings_ransom
+	results = list(/datum/reagent/consumable/ethanol/kings_ransom = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rice_beer = 5, /datum/reagent/consumable/ethanol/gin = 2, /datum/reagent/consumable/berryjuice = 2, /datum/reagent/consumable/ethanol/bitters = 1)
+
+/datum/chemical_reaction/drink/four_bit
+	results = list(/datum/reagent/consumable/ethanol/four_bit = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/hakka_mate = 2, /datum/reagent/consumable/limejuice = 1)
+
+/datum/chemical_reaction/drink/white_hawaiian
+	results = list(/datum/reagent/consumable/ethanol/white_hawaiian = 4)
+	required_reagents = list(/datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/coconut_rum = 1, /datum/reagent/consumable/coconut_milk = 2)
+
+/datum/chemical_reaction/drink/maui_sunrise
+	results = list(/datum/reagent/consumable/ethanol/maui_sunrise = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 2, /datum/reagent/consumable/pineapplejuice = 2, /datum/reagent/consumable/ethanol/yuyake = 1, /datum/reagent/consumable/triple_citrus = 1, /datum/reagent/consumable/lemon_lime = 4)
+
+/datum/chemical_reaction/drink/imperial_mai_tai
+	results = list(/datum/reagent/consumable/ethanol/imperial_mai_tai = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 1, /datum/reagent/consumable/ethanol/rum = 1, /datum/reagent/consumable/ethanol/triple_sec = 1, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/korta_nectar = 1)
+
+/datum/chemical_reaction/drink/konococo_rumtini
+	results = list(/datum/reagent/consumable/ethanol/konococo_rumtini = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 2, /datum/reagent/consumable/ethanol/kahlua = 3, /datum/reagent/consumable/coffee = 3, /datum/reagent/consumable/sugar = 2)
+
+/datum/chemical_reaction/drink/blue_hawaiian
+	results = list(/datum/reagent/consumable/ethanol/blue_hawaiian = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 2, /datum/reagent/consumable/pineapplejuice = 1, /datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/ethanol/curacao = 1)
