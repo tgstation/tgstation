@@ -6,7 +6,7 @@
 	var/behavior_flags = NONE
 	///Cooldown between actions performances, defaults to the value of CLICK_CD_MELEE because that seemed like a nice standard for the speed of AI behavior
 	///Do not read directly or mutate, instead use get_cooldown()
-	VAR_PRIVATE/action_cooldown = CLICK_CD_MELEE
+	var/action_cooldown = CLICK_CD_MELEE
 
 /// Returns the delay to use for this behavior in the moment
 /// Override to return a conditional delay
