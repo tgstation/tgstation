@@ -40,13 +40,14 @@
 	else
 		. += span_notice("Insert [src] into an active quantum pad to link it.")
 
-/obj/item/quantum_keycard/AltClick(mob/living/user)
+/obj/item/quantum_keycard/click_alt(mob/living/user)
 	if(!istype(user) || !user.can_perform_action(src, NEED_DEXTERITY))
-		return
+		return NONE
 	to_chat(user, span_notice("You start pressing [src]'s unlink button..."))
 	if(do_after(user, 4 SECONDS, target = src))
 		to_chat(user, span_notice("The keycard beeps twice and disconnects the quantum link."))
 		set_pad()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/quantum_keycard/proc/set_pad(obj/machinery/quantumpad/new_pad)
 	qpad = new_pad

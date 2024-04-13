@@ -1,3 +1,5 @@
+/// Action has succeeded, preventing further alt click interaction
 #define CLICK_ACTION_SUCCESS (1<<0)
+/// Action failed, preventing further alt click interaction
 #define CLICK_ACTION_BLOCKING (1<<1)
-#define CLICK_ACTION_SKIP (1<<2)
+/// Use NONE for continue interaction

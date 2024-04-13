@@ -66,7 +66,7 @@
 	else
 		. += span_notice("<b>Not Linked.</b> Use on another quantum spin inverter to establish a quantum link.")
 
-/obj/item/swapper/AltClick(mob/living/user)
+/obj/item/swapper/click_alt(mob/living/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return
 	to_chat(user, span_notice("You break the current quantum link."))
@@ -75,6 +75,7 @@
 		linked_swapper.update_appearance()
 		linked_swapper = null
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 //Gets the topmost teleportable container
 /obj/item/swapper/proc/get_teleportable_container()

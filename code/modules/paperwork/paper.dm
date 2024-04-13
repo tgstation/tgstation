@@ -374,9 +374,9 @@
  *
  * Arguments:
  * * mob/living/user - who's folding
- * * obj/item/paperplane/plane_type - what it will be folded into (path)
+ * * plane_type - what it will be folded into (path)
  */
-/obj/item/paper/proc/make_plane(mob/living/user, obj/item/paperplane/plane_type = /obj/item/paperplane)
+/obj/item/paper/proc/make_plane(mob/living/user, plane_type = /obj/item/paperplane)
 	balloon_alert(user, "folded into a plane")
 	user.temporarilyRemoveItemFromInventory(src)
 	var/obj/item/paperplane/new_plane = new plane_type(loc, src)

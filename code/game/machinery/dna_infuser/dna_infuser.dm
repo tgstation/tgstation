@@ -289,7 +289,6 @@
 	return TRUE
 
 /obj/machinery/dna_infuser/click_alt(mob/user)
-	
 	if(infusing)
 		balloon_alert(user, "not while it's on!")
 		return CLICK_ACTION_BLOCKING
