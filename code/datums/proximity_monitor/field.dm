@@ -121,16 +121,16 @@
 		cleanup_field_turf(target)
 
 /datum/proximity_monitor/advanced/proc/update_new_turfs()
+	if(ignore_if_not_on_turf && !isturf(host.loc))
+		return list(FIELD_TURFS_KEY = list(), EDGE_TURFS_KEY = list())
 	var/list/local_field_turfs = list()
 	var/list/local_edge_turfs = list()
-	. = list(FIELD_TURFS_KEY = local_field_turfs, EDGE_TURFS_KEY = local_edge_turfs)
-	if(ignore_if_not_on_turf && !isturf(host.loc))
-		return
 	var/turf/center = get_turf(host)
 	if(current_range > 0)
-		local_field_turfs = RANGE_TURFS(current_range - 1, center)
+		local_field_turfs += RANGE_TURFS(current_range - 1, center)
 	if(current_range > 1)
 		local_edge_turfs = local_field_turfs - RANGE_TURFS(current_range, center)
+	return list(FIELD_TURFS_KEY = local_field_turfs, EDGE_TURFS_KEY = local_edge_turfs)
 
 //Gets edge direction/corner, only works with square radius/WDH fields!
 /datum/proximity_monitor/advanced/proc/get_edgeturf_direction(turf/T, turf/center_override = null)

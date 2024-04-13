@@ -38,6 +38,7 @@
 
 /datum/proximity_monitor/advanced/ai_target_tracking/Destroy()
 	. = ..()
+	#warn similar here
 	owning_behavior = null
 	controller = null
 	target_key = null

@@ -69,7 +69,7 @@ GLOBAL_LIST_EMPTY_TYPED(hostile_machines, /atom)
 	// Alright, here's the interesting bit
 	// We're gonna use this max range to hook into a proximity field so we can just await someone interesting to come along
 	// Rather then trying to check every few seconds
-	var/datum/proximity_monitor/detection_field = new /datum/proximity_monitor/advanced/ai_target_tracking(
+	var/datum/proximity_monitor/advanced/ai_target_tracking/detection_field = new(
 		controller.pawn,
 		aggro_range,
 		TRUE,
@@ -81,6 +81,7 @@ GLOBAL_LIST_EMPTY_TYPED(hostile_machines, /atom)
 	)
 	// We're gonna store this field in our blackboard, so we can clear it away if we end up finishing successsfully
 	controller.set_blackboard_key(BB_FIND_TARGETS_FIELD(type), detection_field)
+	#warn setup modifying cooldowns, do that here
 
 /datum/ai_behavior/find_potential_targets/proc/new_turf_found(turf/found, datum/ai_controller/controller, datum/targetting_datum/targetting_datum)
 	var/valid_found = FALSE
