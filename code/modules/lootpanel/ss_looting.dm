@@ -31,7 +31,6 @@ SUBSYSTEM_DEF(looting)
 			continue
 
 		panel.process_images()
-		processing.len--
-
 		if(MC_TICK_CHECK)
 			return
+		processing.len--
