@@ -90,7 +90,7 @@
 	)
 	cost = 1
 	route = PATH_VOID
-	research_tree_icon = icon('icons/hud/screen_alert.dmi',"cold",frame=1)
+	research_tree_icon = icon('icons/effects/effects.dmi',"the_freezer",frame=1)
 	depth = 4
 
 /datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/antagonist/heretic/our_heretic)

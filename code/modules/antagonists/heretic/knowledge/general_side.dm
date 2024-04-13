@@ -13,6 +13,7 @@
 	cost = 1
 	route = PATH_SIDE
 	depth = 8
+	research_tree_icon = icon('icons/mob/actions/actions_animal.dmi',"gaze")
 
 /datum/heretic_knowledge/reroll_targets/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 

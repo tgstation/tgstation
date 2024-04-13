@@ -114,10 +114,10 @@
 	cost = 1
 	route = PATH_BLADE
 	depth = 4
+	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"shatter",frame=1)
 	/// Whether the counter-attack is ready or not.
 	/// Used instead of cooldowns, so we can give feedback when it's ready again
 	var/riposte_ready = TRUE
-	research_tree_icon = icon('icons/obj/weapons/khopesh.dmi',"eldritch_blade")
 
 /datum/heretic_knowledge/blade_dance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_shield_reaction))
@@ -256,10 +256,9 @@
 	)
 	cost = 1
 	route = PATH_BLADE
+	depth = 8
 	/// Whether we're currently in duelist stance, gaining certain buffs (low health)
 	var/in_duelist_stance = FALSE
-	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"shatter",frame=1)
-	depth = 8
 
 /datum/heretic_knowledge/duel_stance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	ADD_TRAIT(user, TRAIT_NODISMEMBER, type)

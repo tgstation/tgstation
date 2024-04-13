@@ -16,6 +16,7 @@
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY // Should be at the top
 	route = PATH_START
+	research_tree_icon = icon('icons/mob/actions/actions_animal.dmi',"gaze")
 	/// How many targets do we generate?
 	var/num_targets_to_generate = 5
 	/// Whether we've generated a heretic sacrifice z-level yet, from any heretic.
@@ -26,7 +27,6 @@
 	var/list/datum/mind/target_blacklist
 	/// An assoc list of [ref] to [timers] - a list of all the timers of people in the shadow realm currently
 	var/list/return_timers
-	research_tree_icon = icon('icons/effects/96x96.dmi',"transmutation_rune_activate_colour",frame=11)
 
 /datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force)
 	heretic_mind = null

@@ -30,7 +30,7 @@
 	cost = 0
 	route = PATH_SIDE
 	var/rusting_range = 4
-	research_tree_icon = icon('icons/effects/rust_overlay.dmi',"rust_default")
+	research_tree_icon = icon('icons/effects/eldritch.dmi',"cloud_swirl",frame=1)
 	depth = 4
 
 /datum/heretic_knowledge/entropy_pulse/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
