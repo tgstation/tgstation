@@ -8499,6 +8499,11 @@
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
 	},
+/obj/structure/closet/crate/bin,
+/obj/item/trash/sosjerky,
+/obj/item/trash/can,
+/obj/item/trash/boritos,
+/obj/effect/spawner/random/contraband/prison,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "cGY" = (
@@ -10654,14 +10659,10 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "dpC" = (
-/obj/structure/closet/crate/bin,
-/obj/effect/spawner/random/contraband/prison,
-/obj/item/trash/sosjerky,
-/obj/item/trash/boritos,
-/obj/item/trash/can,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
 	},
+/obj/machinery/composters,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "dpH" = (

@@ -934,7 +934,7 @@
 /area/station/escapepodbay)
 "acV" = (
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron,
 /area/station/security/prison/garden)
 "acW" = (
 /obj/structure/chair{
@@ -1134,7 +1134,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron,
 /area/station/security/prison/garden)
 "adr" = (
 /obj/structure/chair{
@@ -1175,10 +1175,10 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
+/obj/structure/cable,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "adx" = (
@@ -3368,26 +3368,9 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "arI" = (
-/obj/structure/closet/crate/hydroponics,
-/obj/item/paper/guides/jobs/hydroponics,
-/obj/item/seeds/onion,
-/obj/item/seeds/garlic,
-/obj/item/seeds/potato,
-/obj/item/seeds/tomato,
-/obj/item/seeds/carrot,
-/obj/item/seeds/grass,
-/obj/item/seeds/ambrosia,
-/obj/item/seeds/wheat,
-/obj/item/seeds/pumpkin,
-/obj/effect/spawner/random/contraband/prison,
-/obj/machinery/light/directional/east,
-/obj/item/radio/intercom/prison/directional/east,
-/obj/machinery/camera{
-	c_tag = "Security - Prison Garden";
-	dir = 6;
-	network = list("ss13","Security","prison")
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
 	},
-/obj/item/seeds/tower,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "asc" = (
@@ -7396,12 +7379,10 @@
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "biS" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 6
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/effect/turf_decal/trimline/neutral/filled/line,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "bja" = (
@@ -9934,15 +9915,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/engineering)
-"bZN" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/station/security/prison/garden)
 "bZR" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
@@ -11905,6 +11877,13 @@
 /obj/item/clothing/mask/cigarette/cigar/cohiba,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
+"cFO" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 5
+	},
+/obj/machinery/seed_extractor,
+/turf/open/floor/iron/dark,
+/area/station/security/prison/garden)
 "cGc" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -12025,9 +12004,11 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
 "cIn" = (
-/obj/machinery/seed_extractor,
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 5
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
@@ -16327,10 +16308,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "ecs" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 5
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "ecu" = (
@@ -29892,6 +29873,19 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/closet/crate/hydroponics,
+/obj/item/seeds/onion,
+/obj/item/paper/guides/jobs/hydroponics,
+/obj/item/seeds/garlic,
+/obj/item/seeds/potato,
+/obj/item/seeds/tomato,
+/obj/item/seeds/carrot,
+/obj/item/seeds/grass,
+/obj/item/seeds/ambrosia,
+/obj/item/seeds/wheat,
+/obj/item/seeds/pumpkin,
+/obj/effect/spawner/random/contraband/prison,
+/obj/item/seeds/tower,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "iHH" = (
@@ -35134,6 +35128,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
+"koO" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 6
+	},
+/obj/machinery/biogenerator,
+/turf/open/floor/iron/dark,
+/area/station/security/prison/garden)
 "kpb" = (
 /obj/structure/industrial_lift/tram/white,
 /turf/open/floor/noslip/tram_plate,
@@ -35469,7 +35470,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron,
 /area/station/security/prison/garden)
 "kwo" = (
 /obj/structure/table/wood,
@@ -39946,10 +39947,10 @@
 /obj/machinery/hydroponics/soil,
 /obj/machinery/status_display/ai/directional/south,
 /obj/effect/turf_decal/trimline/green/filled/line,
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 4
-	},
 /obj/item/cultivator,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "lQC" = (
@@ -47740,6 +47741,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/effect/turf_decal/trimline/neutral/filled/line,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "ots" = (
@@ -56782,6 +56784,9 @@
 "rkP" = (
 /obj/machinery/hydroponics/soil,
 /obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "rle" = (
@@ -59087,6 +59092,7 @@
 	dir = 1
 	},
 /obj/item/shovel/spade,
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "rZU" = (
@@ -63598,6 +63604,9 @@
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/item/cultivator,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "tsE" = (
@@ -65256,9 +65265,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "tWy" = (
-/obj/machinery/biogenerator,
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 6
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
@@ -68223,6 +68232,20 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/arrivals)
+"uSF" = (
+/obj/item/radio/intercom/prison/directional/east,
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Security - Prison Garden";
+	dir = 6;
+	network = list("ss13","Security","prison")
+	},
+/obj/machinery/composters,
+/turf/open/floor/iron/dark,
+/area/station/security/prison/garden)
 "uSL" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/fluff/tram_rail/floor,
@@ -102320,7 +102343,7 @@ cAU
 duB
 otn
 ecs
-bZN
+cOv
 biS
 lQx
 duB
@@ -103090,9 +103113,9 @@ aak
 aac
 aaa
 duB
-duB
-duB
-duB
+cFO
+uSF
+koO
 duB
 aaa
 aaa
@@ -103346,11 +103369,11 @@ hFr
 aaa
 aac
 aac
-aaa
-aaa
-aaa
-aaa
-aaa
+duB
+duB
+duB
+duB
+duB
 aaa
 aac
 aac
