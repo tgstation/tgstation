@@ -20274,9 +20274,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
-"hFZ" = (
-/turf/open/space/openspace,
-/area/station/asteroid)
 "hGh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -174132,7 +174129,7 @@ sqL
 sqL
 sqL
 iSD
-hFZ
+hen
 vnb
 asp
 elX
@@ -175159,7 +175156,7 @@ hhX
 hhX
 sqL
 khP
-rlw
+iSD
 uVI
 qhG
 cxz
