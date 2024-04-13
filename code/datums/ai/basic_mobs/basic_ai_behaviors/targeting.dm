@@ -1,5 +1,9 @@
 /// List of objects that AIs will treat as targets
 GLOBAL_LIST_EMPTY_TYPED(hostile_machines, /atom)
+/// Static typecache list of things we are interested in
+/// Consider this a union of the for loop and the hearers call from below
+/// Must be kept up to date with the contents of hostile_machines
+GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/porta_turret, /obj/vehicle/sealed/mecha)))
 
 /datum/ai_behavior/find_potential_targets
 	action_cooldown = 2 SECONDS
@@ -36,7 +40,7 @@ GLOBAL_LIST_EMPTY_TYPED(hostile_machines, /atom)
 			potential_targets += hostile_machine
 
 	if(!potential_targets.len)
-		failed_to_find_anyone(controller, target_key, targetting_datum_key, hiding_location_key)
+		failed_to_find_anyone(controller, target_key, targeting_strategy_key, hiding_location_key)
 		finish_action(controller, succeeded = FALSE)
 		return
 
@@ -48,7 +52,7 @@ GLOBAL_LIST_EMPTY_TYPED(hostile_machines, /atom)
 			continue
 
 	if(!filtered_targets.len)
-		failed_to_find_anyone(controller, target_key, targetting_datum_key, hiding_location_key)
+		failed_to_find_anyone(controller, target_key, targeting_strategy_key, hiding_location_key)
 		finish_action(controller, succeeded = FALSE)
 		return
 
@@ -62,7 +66,7 @@ GLOBAL_LIST_EMPTY_TYPED(hostile_machines, /atom)
 
 	finish_action(controller, succeeded = TRUE)
 
-/datum/ai_behavior/find_potential_targets/proc/failed_to_find_anyone(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/find_potential_targets/proc/failed_to_find_anyone(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	var/aggro_range = controller.blackboard[aggro_range_key] || vision_range
 	// takes the larger between our range() input and our implicit hearers() input (world.view)
 	aggro_range = max(aggro_range, ROUND_UP(max(getviewsize(world.view)) / 2))
@@ -76,22 +80,22 @@ GLOBAL_LIST_EMPTY_TYPED(hostile_machines, /atom)
 		src,
 		controller,
 		target_key,
-		targetting_datum_key,
+		targeting_strategy_key,
 		hiding_location_key,
 	)
 	// We're gonna store this field in our blackboard, so we can clear it away if we end up finishing successsfully
 	controller.set_blackboard_key(BB_FIND_TARGETS_FIELD(type), detection_field)
 	#warn setup modifying cooldowns, do that here
 
-/datum/ai_behavior/find_potential_targets/proc/new_turf_found(turf/found, datum/ai_controller/controller, datum/targetting_datum/targetting_datum)
+/datum/ai_behavior/find_potential_targets/proc/new_turf_found(turf/found, datum/ai_controller/controller, datum/targeting_strategy/strategy)
 	var/valid_found = FALSE
 	var/mob/pawn = controller.pawn
 	for(var/maybe_target as anything in found)
 		if(maybe_target == pawn)
 			continue
-		if(!is_type_in_typecache(maybe_target, interesting_atoms))
+		if(!is_type_in_typecache(maybe_target, GLOB.target_interested_atoms))
 			continue
-		if(!targetting_datum.can_attack(pawn, maybe_target))
+		if(!strategy.can_attack(pawn, maybe_target))
 			continue
 		valid_found = TRUE
 		break
@@ -101,25 +105,25 @@ GLOBAL_LIST_EMPTY_TYPED(hostile_machines, /atom)
 	var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]
 	qdel(field) // autoclears so it's fine
 
-/datum/ai_behavior/find_potential_targets/proc/atom_allowed(atom/movable/checking, datum/targetting_datum/targetting_datum, mob/pawn)
+/datum/ai_behavior/find_potential_targets/proc/atom_allowed(atom/movable/checking, datum/targeting_strategy/strategy, mob/pawn)
 	if(checking == pawn)
 		return FALSE
-	if(!ismob(checking) && !is_type_in_typecache(checking, interesting_atoms))
+	if(!ismob(checking) && !is_type_in_typecache(checking, GLOB.target_interested_atoms))
 		return FALSE
-	if(!targetting_datum.can_attack(pawn, checking))
+	if(!strategy.can_attack(pawn, checking))
 		return FALSE
 	return TRUE
 
-/datum/ai_behavior/find_potential_targets/proc/new_atoms_found(list/atom/movable/found, datum/ai_controller/controller, target_key, datum/targetting_datum/targetting_datum, hiding_location_key)
+/datum/ai_behavior/find_potential_targets/proc/new_atoms_found(list/atom/movable/found, datum/ai_controller/controller, target_key, datum/targeting_strategy/strategy, hiding_location_key)
 	var/mob/pawn = controller.pawn
 	var/list/accepted_targets = list()
 	for(var/maybe_target as anything in found)
 		if(maybe_target == pawn)
 			continue
 		// Need to better handle viewers here
-		if(!ismob(maybe_target) && !is_type_in_typecache(maybe_target, interesting_atoms))
+		if(!ismob(maybe_target) && !is_type_in_typecache(maybe_target, GLOB.target_interested_atoms))
 			continue
-		if(!targetting_datum.can_attack(pawn, maybe_target))
+		if(!strategy.can_attack(pawn, maybe_target))
 			continue
 		accepted_targets += maybe_target
 
@@ -127,14 +131,14 @@ GLOBAL_LIST_EMPTY_TYPED(hostile_machines, /atom)
 	var/atom/target = pick_final_target(controller, accepted_targets)
 	controller.set_blackboard_key(target_key, target)
 
-	var/atom/potential_hiding_location = targetting_datum.find_hidden_mobs(pawn, target)
+	var/atom/potential_hiding_location = strategy.find_hidden_mobs(pawn, target)
 
 	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
 		controller.set_blackboard_key(hiding_location_key, potential_hiding_location)
 
 	finish_action(controller, succeeded = TRUE)
 
-/datum/ai_behavior/find_potential_targets/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/find_potential_targets/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	if (succeeded)
 		var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]

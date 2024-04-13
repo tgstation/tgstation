@@ -7,33 +7,33 @@
 	var/datum/ai_controller/controller
 	/// The target key we're trying to fill
 	var/target_key
-	/// The targeting datum KEY we're using
-	var/targetting_datum_key
+	/// The targeting strategy KEY we're using
+	var/targeting_strategy_key
 	/// The hiding location key we're using
 	var/hiding_location_key
 
-	/// The targeting datum we're using
-	var/datum/targetting_datum/filter
+	/// The targeting strategy we're using
+	var/datum/targeting_strategy/filter
 	/// If we've built our field yet
 	/// Prevents wasted work on the first build (since the behavior did it)
 	var/first_build = TRUE
 
 // Initially, run the check manually
 // If that fails, set up a field and have it manage the behavior fully
-/datum/proximity_monitor/advanced/ai_target_tracking/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, datum/ai_behavior/find_potential_targets/owning_behavior, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+/datum/proximity_monitor/advanced/ai_target_tracking/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, datum/ai_behavior/find_potential_targets/owning_behavior, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	src.owning_behavior = owning_behavior
 	src.controller = controller
 	src.target_key = target_key
-	src.targetting_datum_key = targetting_datum_key
+	src.targeting_strategy_key = targeting_strategy_key
 	src.hiding_location_key = hiding_location_key
-	src.filter = controller.blackboard[targetting_datum_key]
+	src.filter = controller.blackboard[targeting_strategy_key]
 	RegisterSignal(controller, COMSIG_QDELETING, PROC_REF(controller_deleted))
 	RegisterSignal(controller, COMSIG_AI_CONTROLLER_PICKED_BEHAVIORS, PROC_REF(controller_think))
 	RegisterSignal(controller, COMSIG_AI_CONTROLLER_POSSESSED_PAWN, PROC_REF(pawn_changed))
 	RegisterSignal(controller, AI_CONTROLLER_BEHAVIOR_QUEUED(owning_behavior.type), PROC_REF(behavior_requeued))
-	RegisterSignal(controller, COMSIG_AI_BLACKBOARD_KEY_SET(targetting_datum_key), PROC_REF(targeting_datum_changed))
-	RegisterSignal(controller, COMSIG_AI_BLACKBOARD_KEY_CLEARED(targetting_datum_key), PROC_REF(targeting_datum_cleared))
+	RegisterSignal(controller, COMSIG_AI_BLACKBOARD_KEY_SET(targeting_strategy_key), PROC_REF(targeting_datum_changed))
+	RegisterSignal(controller, COMSIG_AI_BLACKBOARD_KEY_CLEARED(targeting_strategy_key), PROC_REF(targeting_datum_cleared))
 	recalculate_field(full_recalc = TRUE)
 
 /datum/proximity_monitor/advanced/ai_target_tracking/Destroy()
@@ -42,7 +42,7 @@
 	owning_behavior = null
 	controller = null
 	target_key = null
-	targetting_datum_key = null
+	targeting_strategy_key = null
 	hiding_location_key = null
 	filter = null
 
@@ -86,12 +86,12 @@
 	check_new_args(arglist(new_arguments))
 
 /// Ensure our args and locals are up to date
-/datum/proximity_monitor/advanced/ai_target_tracking/proc/check_new_args(target_key, targetting_datum_key, hiding_location_key)
+/datum/proximity_monitor/advanced/ai_target_tracking/proc/check_new_args(target_key, targeting_strategy_key, hiding_location_key)
 	var/update_filter = FALSE
 	if(src.target_key != target_key)
 		src.target_key = target_key
-	if(src.targetting_datum_key != targetting_datum_key)
-		src.targetting_datum_key = targetting_datum_key
+	if(src.targeting_strategy_key != targeting_strategy_key)
+		src.targeting_strategy_key = targeting_strategy_key
 		update_filter = TRUE
 	if(src.hiding_location_key != hiding_location_key)
 		src.hiding_location_key = hiding_location_key
@@ -100,7 +100,7 @@
 
 /datum/proximity_monitor/advanced/ai_target_tracking/proc/targeting_datum_changed(datum/source)
 	SIGNAL_HANDLER
-	filter = controller.blackboard[targetting_datum_key]
+	filter = controller.blackboard[targeting_strategy_key]
 	// Filter changed, need to do a full reparse
 	// Fucking 9 * 9 out here I stg
 	for(var/turf/in_field as anything in field_turfs + edge_turfs)
