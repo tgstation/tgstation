@@ -30,6 +30,8 @@
 
 		index.generate_icon(owner)
 		to_image -= index
+		if(TICK_CHECK)
+			return
 
 	var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
 	if(isnull(window))
