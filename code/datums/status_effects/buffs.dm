@@ -195,6 +195,9 @@
 	if(HAS_TRAIT(new_owner, TRAIT_HULK))
 		modifier += 0.5
 
+	if(HAS_TRAIT(new_owner, TRAIT_STIMMED)) // Naturally produces stimulants to help get you PUMPED
+		modifier += 1
+
 	if(HAS_TRAIT(new_owner, TRAIT_FAT)) // less xp until you get into shape
 		modifier -= 0.5
 

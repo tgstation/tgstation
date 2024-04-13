@@ -89,7 +89,8 @@
 	var/damage = rand(lower_force, upper_force)
 	
 	if(honor_check(defender))
-		damage += round(athletics_skill * check_streak(attacker, defender))
+		var/strenght_bonus = HAS_TRAIT(attacker, TRAIT_STRENGTH) ? 2 : 0 //Investing into genetic strength improvements makes you a better boxer
+		damage += round(athletics_skill * check_streak(attacker, defender) + strength_bonus)
 		grant_experience = TRUE
 	
 	var/current_atk_verb = atk_verb

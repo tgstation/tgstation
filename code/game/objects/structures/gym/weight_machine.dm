@@ -171,6 +171,10 @@
 	var/workout_reps = total_workout_reps[user.mind.get_skill_level(/datum/skill/athletics)] * gravity_modifier
 	// total stamina drain of 1 workout calculated based on the workout length
 	var/stamina_exhaustion = FLOOR(user.maxHealth / workout_reps / WORKOUT_LENGTH, 0.1)
+	
+	if(HAS_TRAIT(user, TRAIT_STRENGTH)) //The strong get reductions to stamina damage taken while exercising
+		stamina_exhaustion *= 0.5
+	
 	user.adjustStaminaLoss(stamina_exhaustion * seconds_per_tick)
 
 	return TRUE

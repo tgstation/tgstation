@@ -57,6 +57,9 @@
 			stamina_exhaustion = 2
 	if (is_heavy_gravity)
 		stamina_exhaustion *= 1.5
+	
+	if(HAS_TRAIT(user, TRAIT_STRENGTH)) //The strong get reductions to stamina damage taken while exercising
+		stamina_exhaustion *= 0.5
 
 	user.adjustStaminaLoss(stamina_exhaustion)
 	user.mind?.adjust_experience(/datum/skill/athletics, is_heavy_gravity ? 0.2 : 0.1)
