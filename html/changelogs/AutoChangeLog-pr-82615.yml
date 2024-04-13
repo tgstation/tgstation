@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "you can put back the oven tray after you take it out"
+  - bugfix: "only oven trays are allowed in ovens preventing baked food runtimes"
