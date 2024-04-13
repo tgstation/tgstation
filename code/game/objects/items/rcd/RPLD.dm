@@ -280,7 +280,7 @@
 
 /obj/item/construction/plumbing/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
-	if(INCAPABLE_WITHOUT(source, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS))
+	if(INCAPACITATED_IGNORING(source, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS))
 		return
 	if(delta_y == 0)
 		return

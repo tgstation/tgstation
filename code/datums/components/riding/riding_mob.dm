@@ -56,10 +56,10 @@
 	if(living_parent.body_position != STANDING_UP) // if we move while on the ground, the rider falls off
 		. = FALSE
 	// for piggybacks and (redundant?) borg riding, check if the rider is stunned/restrained
-	else if((ride_check_flags & RIDER_NEEDS_ARMS) && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || INCAPABLE_WITHOUT(rider, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB)))
+	else if((ride_check_flags & RIDER_NEEDS_ARMS) && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || INCAPACITATED_IGNORING(rider, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB)))
 		. = FALSE
 	// for fireman carries, check if the ridden is stunned/restrained
-	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || INCAPABLE_WITHOUT(living_parent, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB)))
+	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || INCAPACITATED_IGNORING(living_parent, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB)))
 		. = FALSE
 	else if((ride_check_flags & JUST_FRIEND_RIDERS) && !(living_parent.faction.Find(REF(rider))))
 		. = FALSE

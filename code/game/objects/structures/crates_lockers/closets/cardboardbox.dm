@@ -72,7 +72,7 @@
 	for(var/mob/living/alerted_mob as anything in alerted)
 		if(alerted_mob.stat != CONSCIOUS || alerted_mob.is_blind())
 			continue
-		if(!INCAPABLE_WITHOUT(alerted_mob, INCAPABLE_RESTRAINTS))
+		if(!INCAPACITATED_IGNORING(alerted_mob, INCAPABLE_RESTRAINTS))
 			alerted_mob.face_atom(src)
 		alerted_mob.do_alert_animation()
 

@@ -35,7 +35,7 @@
 
 /// Checks to see if a mob would be incapacitated even while ignoring some types
 /// Does this by inverting the passed in flags and seeing if we're still incapacitated
-#define INCAPABLE_WITHOUT(mob, flags) (mob.incapacitated & ~(flags))
+#define INCAPACITATED_IGNORING(mob, flags) (mob.incapacitated & ~(flags))
 
 /// Maxamounts of fire stacks a mob can get
 #define MAX_FIRE_STACKS 20
