@@ -195,10 +195,11 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if(unique_reskin && (!current_skin || (obj_flags & INFINITE_RESKIN)))
 		. += span_notice("Alt-click it to reskin it.")
 
-/obj/click_alt(mob/user)
+/obj/base_click_alt(mob/user)
 	if(unique_reskin && (!current_skin || (obj_flags & INFINITE_RESKIN)) && user.can_perform_action(src, NEED_DEXTERITY))
 		reskin_obj(user)
 
+	return ..()
 
 /**
  * Reskins object based on a user's choice

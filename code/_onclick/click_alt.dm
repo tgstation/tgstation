@@ -1,27 +1,27 @@
 /**
- * Base proc for alt click interaction. Do not call this directly.
+ * Base proc for alt click interaction.
  *
  * If you wish to use custom alt_click behavior, use that proc.
  */
-/mob/proc/base_click_alt(atom/thing)
+/atom/proc/base_click_alt(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
 
-	var/early_sig_return = SEND_SIGNAL(src, COMSIG_CLICK_ALT, thing) & COMPONENT_CANCEL_CLICK_ALT
+	var/early_sig_return = SEND_SIGNAL(src, COMSIG_CLICK_ALT, src) & COMPONENT_CANCEL_CLICK_ALT
 	if(early_sig_return)
 		return early_sig_return
 
-	var/alt_click_return = thing.click_alt(src)
+	var/alt_click_return = click_alt(user)
 	if(alt_click_return)
 		return alt_click_return
 
-	if(!can_interact_with(thing))
+	if(!user.can_interact_with(src))
 		return
 
 	// TODO: Replace
-	var/turf/T = get_turf(thing)
-	if(T && (isturf(thing.loc) || isturf(thing)) && TurfAdjacent(T) && !HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING))
-		set_listed_turf(T)
+	var/turf/T = get_turf(src)
+	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T) && !HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING))
+		user.set_listed_turf(T)
 
 
 /**
