@@ -33,7 +33,19 @@
 	/// What is the UI interface for this module?
 	var/ui_interface_name = "ConstructionForkliftModule_Default"
 
-/datum/forklift_module/ui_data(mob/user)
+/datum/forklift_module/proc/get_build_target_icon_refs()
+	var/static/list/icon_refs = list()
+	for(var/atom/build_typepath as anything in available_builds)
+		if(icon_refs[build_typepath])
+			continue
+		var/icon/build_icon = icon(build_typepath::icon, build_typepath::icon_state)
+		// 99% of the time it's not a custom icon and will already be in the rsc
+		// however, that other 1% of the time will cause an error.
+		// fcopy_rsc on something already in the rsc will return the existing reference.
+		icon_refs[build_typepath] = REF(fcopy_rsc(build_icon))
+	return icon_refs
+
+/datum/forklift_module/proc/get_ui_data_payload(mob/user)
 	var/list/data = list()
 
 	data["name"] = name
@@ -46,24 +58,17 @@
 	data["direction"] = direction
 
 	data["available_builds"] = list()
+	var/list/icon_refs = get_build_target_icon_refs()
 	for(var/atom/typepath as anything in available_builds)
-		var/list/type_path_data = list(
+		data["available_builds"]["[typepath]"] = list(
 			"name" = typepath::name,
-			"type" = typepath,
-			"display_icon_ref" = null, // todo!
+			"display_icon_ref" = icon_refs[typepath],
 		)
-		data["available_builds"] += list(type_path_data)
 
 	return data
 
-/datum/forklift_module/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, ui_interface_name)
-		ui.open()
-
-/datum/forklift_module/ui_host(mob/user)
-	return my_forklift
+/datum/forklift_module/proc/perform_module_ui_action(mob/user, list/params)
+	return
 
 /// Ideally, you place here.
 /datum/forklift_module/proc/on_left_click(mob/source, atom/clickingon)

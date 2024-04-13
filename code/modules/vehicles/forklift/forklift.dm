@@ -48,11 +48,11 @@
 		return UI_UPDATE
 	return UI_INTERACTIVE
 
-/obj/vehicle/ridden/forklift/verb/fucking_interact()
-	set name = "Forklift Management Console"
-	set category = "Object"
-	set src in view(1)
-	ui_interact(usr)
+/obj/vehicle/ridden/forklift/alt_click_secondary(mob/user)
+	if(!user.Adjacent(src))
+		balloon_alert(user, "too far!")
+		return
+	ui_interact(user)
 
 /obj/vehicle/ridden/forklift/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -63,33 +63,35 @@
 /obj/vehicle/ridden/forklift/ui_data(mob/user)
 	var/list/data = list()
 
-	data["materials"] = list(
+	var/list/material_data = list(
 		"storage_max" = material_container.max_amount,
 		"storage_now" = material_container.total_amount(),
 		"storage" = list(),
 	)
 	for(var/datum/material/material_singleton as anything in material_container.materials)
-		data["materials"]["storage"][material_singleton.name] = material_container.materials[material_singleton]
+		material_data["storage"][material_singleton.name] = material_container.materials[material_singleton]
+	data["materials"] = material_data
 
-	data["modules"] = list(
-		"active_ref" = REF(selected_modules[user].type),
-		"available" = list(),
-	)
+	var/list/module_data = list("available" = list())
+	if(user in selected_modules)
+		module_data["active"] = REF(selected_modules[user].type)
+		data["active_module_data"] = selected_modules[user].get_ui_data_payload(user)
 	for(var/datum/forklift_module/module_type as anything in available_modules)
-		data["modules"]["available"][REF(module_type)] = module_type.name
+		module_data["available"][REF(module_type)] = module_type.name
+	data["modules"] = module_data
 
-	data["cooldowns"] = list()
-	data["cooldowns"]["build"] = COOLDOWN_TIMELEFT(src, build_cooldown)
-	data["cooldowns"]["scan"] = COOLDOWN_TIMELEFT(src, destructive_scan_cooldown)
-	data["cooldowns"]["deconstruct"] = COOLDOWN_TIMELEFT(src, deconstruction_cooldown)
-
-	data["holograms"] = length(holograms)
+	data["cooldowns"] = list(
+		"build" = COOLDOWN_TIMELEFT(src, build_cooldown),
+		"scan" = COOLDOWN_TIMELEFT(src, destructive_scan_cooldown),
+		"deconstruct" = COOLDOWN_TIMELEFT(src, deconstruction_cooldown),
+	)
+	data["hologram_count"] = length(holograms)
 
 	return data
 
 /obj/vehicle/ridden/forklift/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	if(!..())
-		return
+	if(..())
+		return TRUE
 
 	switch(action)
 		if("set-active")
@@ -100,15 +102,18 @@
 			set_active_module(ui.user, module_type)
 			return TRUE
 
-		if("interact-module")
-			selected_modules[ui.user]?.ui_interact(ui.user)
-			return TRUE
-
 		if("scan")
 			return TRUE
 
 		if("deconstruct")
 			return TRUE
+
+		if("module-action")
+			var/datum/forklift_module/active_module = selected_modules[ui.user]
+			if(isnull(active_module))
+				return
+			active_module.perform_module_ui_action(ui.user, params)
+			return
 
 		else
 			stack_trace("unknown forklift ui action '[action]'")

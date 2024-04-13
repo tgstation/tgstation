@@ -1,45 +1,46 @@
-type MaterialData = {
+type StorageData = {
   storage_max: number;
   storage_now: number;
-  storage: Record<string, number>;
-};
+  storage: StorageActual;
+}
 
-type AvailableModules = {
-  [ref: string]: string; // key is the ref, value is the name
-};
+type StorageActual = Record<string, number>;
 
 type ModuleData = {
-  active_ref: string;
+  active: string | undefined;
   available: AvailableModules;
-};
+}
+
+type AvailableModules = Record<string, string>;
 
 type CooldownData = {
   build: number;
-  deconstruct: number;
   scan: number;
-};
+  deconstruct: number;
+}
 
-type ConstructionForkliftData = {
-  materials: MaterialData;
+type ForkliftData = {
+  materials: StorageData;
   modules: ModuleData;
   cooldowns: CooldownData;
-  holograms: number;
-};
+  hologram_count: number;
+  active_module_data: ActiveModuleData | undefined;
+}
 
-type ForkliftModuleData = {
+type ActiveModuleData = {
   name: string;
   build_instantly: boolean;
-  available_builds: BuildTarget[];
-  resource_price: Record<string, number>;
+  resource_price: BuildPriceData;
   build_length: number;
   deconstruction_time: number;
-  currently_selected_typepath: string;
+  current_selected_typepath: string;
   available_directions: number[];
   direction: number;
-};
+  available_builds: BuildData[];
+}
 
-type BuildTarget = {
+type BuildPriceData = Record<string, Record<string, number>>;
+type BuildData = Record<string, {
   type: string;
-  name: string;
-  display_icon_ref: string | undefined;
-};
+  display_icon_ref: string;
+}>;
