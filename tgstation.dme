@@ -181,6 +181,7 @@
 #include "code\__DEFINES\procpath.dm"
 #include "code\__DEFINES\profile.dm"
 #include "code\__DEFINES\projectiles.dm"
+#include "code\__DEFINES\pronouns.dm"
 #include "code\__DEFINES\qdel.dm"
 #include "code\__DEFINES\quirks.dm"
 #include "code\__DEFINES\radiation.dm"

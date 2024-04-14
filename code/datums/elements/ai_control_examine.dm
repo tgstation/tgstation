@@ -46,7 +46,12 @@
 	if(noticable_organ_examines[possibly_noticable.slot])
 		make_organ_noticable(possibly_noticable.slot, possibly_noticable)
 
-/datum/element/ai_control_examine/proc/make_organ_noticable(organ_slot, obj/item/organ/noticable_organ)
+/datum/element/ai_control_examine/proc/make_organ_noticable(organ_slot, obj/item/organ/noticable_organ, mob/living/carbon/human/human_pawn)
 	var/examine_text = noticable_organ_examines[organ_slot]
 	var/body_zone = organ_slot != ORGAN_SLOT_BRAIN ? noticable_organ.zone : null
 	noticable_organ.AddElement(/datum/element/noticable_organ/ai_control, examine_text, body_zone)
+	/// The proc for actually enabling the examine is in the noticable_organ element
+	/// and only gets added on an implant signal; AI controllers don't get put on until
+	/// the body is set up during init, so they miss out on the initial signal; erego,
+	/// we give em this one.
+	SEND_SIGNAL(noticable_organ, COMSIG_ORGAN_IMPLANTED, human_pawn)

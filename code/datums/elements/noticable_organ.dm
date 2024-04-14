@@ -6,12 +6,10 @@
 /datum/element/noticable_organ
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	/// whether we wrap the examine text in a notice span.
-	var/add_span = TRUE
-	/// "[they]|[their] [desc here]", shows on examining someone with an infused organ.
-	/// Uses a possessive pronoun (His/Her/Their) if a body zone is given, or a singular pronoun (He/She/They) otherwise.
+
+	///Shows on examining someone with an infused organ.
 	var/infused_desc
-	/// Which body zone has to be exposed. If none is set, this is always noticable, and the description pronoun becomes singular instead of possesive.
+	/// Which body zone has to be exposed. If none is set, this is always noticable.
 	var/body_zone
 
 /datum/element/noticable_organ/Attach(datum/target, infused_desc, body_zone)
@@ -53,16 +51,19 @@
 
 	if(!should_show_text(examined))
 		return
-	var/examine_text = replacetext(replacetext("[body_zone ? examined.p_Their() : examined.p_They()] [infused_desc]", "%PRONOUN_ES", examined.p_es()), "%PRONOUN_S", examined.p_s())
-	if(add_span)
-		examine_text = span_notice(examine_text)
+
+	var/examine_text = infused_desc
+	/// Helper proc to iterate over whatever message and replace
+	/// pronouns where necessary
+	examine_text = REPLACE_PRONOUNS(examine_text, examined)
+
 	examine_list += examine_text
 
 /**
  * Subtype of noticable organs for AI control, that will make a few more ai status checks before forking over the examine.
  */
 /datum/element/noticable_organ/ai_control
-	add_span = FALSE
+
 
 /datum/element/noticable_organ/ai_control/should_show_text(mob/living/carbon/examined)
 	. = ..()
