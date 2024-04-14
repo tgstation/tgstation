@@ -8,25 +8,17 @@
 	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
 
-	if(!can_interact(user))
-		return
+	if(can_interact(user))
+		var/early_sig_return = SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)
+		if(early_sig_return)
+			return early_sig_return
 
-	var/early_sig_return = SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & (CLICK_ACTION_SUCCESS | CLICK_ACTION_BLOCKING)
-	if(early_sig_return)
-		return early_sig_return
-
-	var/alt_click_return = click_alt(user)
-	if(alt_click_return)
-		return alt_click_return
+		var/alt_click_return = click_alt(user)
+		if(alt_click_return)
+			return alt_click_return
 
 	var/turf/tile = get_turf(src)
-	if(isnull(tile))
-		return
-
-	if(!isturf(loc) && !isturf(src))
-		return
-
-	if(!user.TurfAdjacent(tile))
+	if(!tile.Adjacent(user))
 		return
 
 	if(HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
