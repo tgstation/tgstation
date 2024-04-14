@@ -8,13 +8,13 @@
 	can_buckle = 1
 
 /obj/structure/sacrificealtar/click_alt(mob/living/user)
-	if(!istype(user) || !user.can_perform_action(src))
+	if(!user.can_perform_action(src))
 		return NONE
 	if(!has_buckled_mobs())
-		return NONE
+		return CLICK_ACTION_BLOCKING
 	var/mob/living/L = locate() in buckled_mobs
 	if(!L)
-		return NONE
+		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("Invoking the sacred ritual, you sacrifice [L]."))
 	L.investigate_log("has been sacrificially gibbed on an altar.", INVESTIGATE_DEATHS)
 	L.gib(DROP_ALL_REMAINS)

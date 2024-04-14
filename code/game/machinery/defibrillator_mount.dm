@@ -158,7 +158,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	return TRUE
 
 /obj/machinery/defibrillator_mount/click_alt(mob/living/carbon/user)
-	if(!istype(user) || !user.can_perform_action(src))
+	if(!user.can_perform_action(src))
 		return NONE
 	if(!defib)
 		to_chat(user, span_warning("It'd be hard to remove a defib unit from a mount that has none."))
