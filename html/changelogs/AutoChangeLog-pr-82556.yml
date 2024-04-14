@@ -1,7 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Living Limbs created by Bioscrambler will be alive."
-  - bugfix: "Living Limbs can once more attach themselves to your body."
-  - balance: "Living Limbs will prioritise attacking your limbs."
-  - bugfix: "Basic Mobs will once again spread their damage across body zones instead of only attacking your chest."
