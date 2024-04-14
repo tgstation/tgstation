@@ -2,6 +2,7 @@
  * Base proc for alt click interaction.
  *
  * If you wish to use custom alt_click behavior, use that proc.
+ * Override this if you want to change all alt-click behavior for a type.
  */
 /atom/proc/base_click_alt(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
@@ -25,13 +26,28 @@
 
 
 /**
- * Called when this atom has been alt clicked.
+ * ## Custom alt click interaction
+ * Override this to change default alt click behavior. Return `CLICK_ACTION_SUCCESS`, `CLICK_ACTION_BLOCKING` or `NONE`.
  *
- * Override this proc with your custom behavior, then return a CLICK_ACTION_* flag to handle further actions
+ * ### Return flags
+ * Forgetting your return will cause the default alt click behavior to occur thereafter.
  *
- * CLICK_ACTION_SUCCESS, CLICK_ACTION_FAILURE will prevent alt click from continuing.
+ * The difference between NONE and BLOCKING can get hazy, but I like to keep NONE limited to guard clauses and "never" cases.
  *
- * `return NONE` or `return` to continue the base alt click behavior. (favor explicit)
+ * A good usage for BLOCKING over NONE is when it's situational for the item and there's some feedback indicating this.
+ *
+ * ### Examples:
+ * User is a ghost, alt clicks on item with special disk eject: NONE
+ *
+ * Machine broken, no feedback: NONE
+ *
+ * Alt click a pipe to max output but its already max: BLOCKING
+ *
+ * Alt click a gun that normally works, but is out of ammo: BLOCKING
+ *
+ * User unauthorized, machine beeps: BLOCKING
+ *
+ * @param {mob} user - The person doing the alt clicking.
  */
 /atom/proc/click_alt(mob/user)
 	SHOULD_CALL_PARENT(FALSE)
