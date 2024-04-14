@@ -274,3 +274,33 @@
 /obj/item/knife/shiv/carrot/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] forcefully drives \the [src] into [user.p_their()] eye! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
+
+/obj/item/knife/spy
+	name = "spy knife"
+	icon = 'icons/obj/weapons/stabby.dmi'
+	icon_state = "spyknife"
+	inhand_icon_state = "spyknife"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	desc = "Knife for real gentlemen."
+	force = 10
+	throwforce = 20
+	throw_range = 12
+	wound_bonus = 20
+	armour_penetration = 100
+	var/backstab_bonus = 30
+	var/thigh_hit = 4 SECONDS
+
+/obj/item/knife/spy/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!(user?.mind?.has_antag_datum(/datum/antagonist/spy))) //only a spy can use potential of a knife
+		return
+	if((isliving(target)) && (isliving(user)))
+		var/mob/living/living_target = target
+		var/mob/living/living_user = user
+		if((living_target.body_position == LYING_DOWN))
+			living_target.apply_damage(backstab_bonus/2, BRUTE)
+		if((living_user.body_position == LYING_DOWN) && (living_target.body_position != LYING_DOWN))
+			living_target.Knockdown(thigh_hit)
+		if(((user.dir == living_target.dir) || (HAS_TRAIT(living_target, TRAIT_SPINNING))) && (living_user.body_position != LYING_DOWN))
+			living_target.apply_damage(backstab_bonus, BRUTE)
