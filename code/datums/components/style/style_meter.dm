@@ -93,11 +93,12 @@
 /obj/item/style_meter/proc/on_click_alt(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(istype(loc, /obj/item/clothing/glasses))
-		clean_up()
-		forceMove(get_turf(src))
+	if(!istype(loc, /obj/item/clothing/glasses))
+		return CLICK_ACTION_BLOCKING
 
-	return COMPONENT_CANCEL_CLICK_ALT
+	clean_up()
+	forceMove(get_turf(src))
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/style_meter/multitool_act(mob/living/user, obj/item/tool)
 	multitooled = !multitooled

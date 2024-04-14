@@ -92,9 +92,9 @@
 
 
 /obj/item/modular_computer/laptop/click_alt(mob/user)
-	if(!screen_on) // Close it.
+	if(!screen_on)
 		return CLICK_ACTION_BLOCKING
-	try_toggle_open(user)
+	try_toggle_open(user) // Close it.
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/modular_computer/laptop/proc/toggle_open(mob/living/user=null)

@@ -59,7 +59,7 @@
 /datum/component/simple_rotation/proc/rotate_left(datum/source, mob/user)
 	SIGNAL_HANDLER
 	rotate(user, ROTATION_COUNTERCLOCKWISE)
-	return COMPONENT_CANCEL_CLICK_ALT
+	return CLICK_ACTION_SUCCESS
 
 /datum/component/simple_rotation/proc/rotate(mob/user, degrees)
 	if(QDELETED(user))

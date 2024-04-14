@@ -491,11 +491,6 @@
 	return ..()
 
 /obj/item/gun/ballistic/click_alt(mob/user)
-	if (unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
-		reskin_obj(user)
-		return NONE
-	if(!loc == user)
-		return CLICK_ACTION_BLOCKING
 	if(!suppressed || !can_unsuppress)
 		return CLICK_ACTION_BLOCKING
 	var/obj/item/suppressor/S = suppressed

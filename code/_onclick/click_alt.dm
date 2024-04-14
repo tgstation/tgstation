@@ -11,7 +11,7 @@
 	if(!can_interact(user))
 		return
 
-	var/early_sig_return = SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT
+	var/early_sig_return = SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & (CLICK_ACTION_SUCCESS | CLICK_ACTION_BLOCKING)
 	if(early_sig_return)
 		return early_sig_return
 
@@ -19,10 +19,25 @@
 	if(alt_click_return)
 		return alt_click_return
 
-	// TODO: Replace
-	var/turf/T = get_turf(src)
-	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T) && !HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING))
-		user.set_listed_turf(T)
+	var/turf/tile = get_turf(src)
+	if(isnull(tile))
+		return
+
+	if(!isturf(loc) && !isturf(src))
+		return
+
+	if(!user.TurfAdjacent(tile))
+		return
+
+	if(HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
+		return
+
+	var/datum/lootpanel/panel = user.client?.loot_panel
+	if(isnull(panel))
+		return
+
+	panel.open(tile)
+	return
 
 
 /**

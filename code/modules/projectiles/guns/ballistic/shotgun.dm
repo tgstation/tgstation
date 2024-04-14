@@ -289,10 +289,6 @@
 	can_be_sawn_off = TRUE
 	pb_knockback = 3 // it's a super shotgun!
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/click_alt(mob/user)
-	if(unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
-		reskin_obj(user)
-	return CLICK_ACTION_SUCCESS
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
 	. = ..()

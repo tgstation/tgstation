@@ -47,14 +47,14 @@
 
 	if(living_user.incapacitated())
 		source.balloon_alert(user, "you're incapacitated!")
-		return COMPONENT_CANCEL_CLICK_ALT
+		return CLICK_ACTION_BLOCKING
 
 	if(living_user.usable_hands <= 0)
 		source.balloon_alert(user, "you don't have hands!")
-		return COMPONENT_CANCEL_CLICK_ALT
+		return CLICK_ACTION_BLOCKING
 
 	do_icon_toggle(source, living_user)
-	return COMPONENT_CANCEL_CLICK_ALT
+	return CLICK_ACTION_SUCCESS
 
 /*
  * Signal proc for COMSIG_ATOM_EXAMINE.

@@ -73,7 +73,7 @@
 	SIGNAL_HANDLER
 
 	handle_trigger(source, user, "alternate", alt)
-	return COMPONENT_CANCEL_CLICK_ALT
+	return CLICK_ACTION_SUCCESS
 
 
 /**
