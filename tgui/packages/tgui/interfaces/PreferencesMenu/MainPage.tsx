@@ -1,5 +1,6 @@
 import { filter, map, sortBy } from 'common/collections';
 import { classes } from 'common/react';
+import { createSearch } from 'common/string';
 import { useState } from 'react';
 
 import { sendAct, useBackend } from '../../backend';
@@ -30,8 +31,6 @@ import { Gender, GENDERS } from './preferences/gender';
 import { RandomizationButton } from './RandomizationButton';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 import { useRandomToggleState } from './useRandomToggleState';
-import { createSearch } from 'common/string';
-import { flow } from 'common/fp';
 
 const CLOTHING_CELL_SIZE = 48;
 const CLOTHING_SIDEBAR_ROWS = 9;
