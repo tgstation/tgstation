@@ -48314,6 +48314,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/xenobiology/hallway)
 "shG" = (
@@ -61522,6 +61523,7 @@
 /area/station/science/lab)
 "xeh" = (
 /obj/item/instrument/musicalmoth,
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "xeo" = (
@@ -145325,7 +145327,7 @@ fYe
 fYe
 fYe
 fYe
-mEN
+fYe
 sdc
 lLr
 sdc
@@ -148920,7 +148922,7 @@ vxX
 vxX
 fYe
 fYe
-fYe
+mEN
 vxX
 vxX
 vxX
