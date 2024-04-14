@@ -307,9 +307,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "aer" = (
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
@@ -419,9 +417,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "agr" = (
@@ -842,9 +838,7 @@
 	dir = 9
 	},
 /obj/item/paper/monitorkey,
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "anZ" = (
@@ -1918,9 +1912,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
-/obj/machinery/camera/autoname/directional/east{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/east,
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
@@ -5234,6 +5226,14 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
+"bXh" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/landmark/start/bartender,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/station/service/bar)
 "bXx" = (
 /obj/machinery/restaurant_portal/bar,
 /obj/machinery/camera/autoname/directional/south,
@@ -6303,9 +6303,8 @@
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/structure/closet/secure_closet/bar,
 /obj/item/storage/photo_album/bar,
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/service/bar/backroom)
 "cut" = (
@@ -6459,7 +6458,7 @@
 	dir = 4
 	},
 /obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/robotics/lab)
@@ -6561,7 +6560,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/engine,
 /area/station/science/ordnance)
@@ -8812,9 +8811,7 @@
 	name = "Port To Turbine"
 	},
 /obj/effect/turf_decal/delivery,
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "drO" = (
@@ -8998,9 +8995,7 @@
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/machinery/duct,
 /obj/structure/cable,
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
@@ -9447,9 +9442,7 @@
 /area/station/service/hydroponics)
 "dBX" = (
 /obj/structure/railing,
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
@@ -10101,7 +10094,7 @@
 /obj/effect/turf_decal/box/red,
 /obj/machinery/light/directional/south,
 /obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
@@ -10494,9 +10487,7 @@
 	pixel_y = -2
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "dWb" = (
@@ -11191,9 +11182,7 @@
 	dir = 9
 	},
 /obj/machinery/airalarm/directional/west,
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/engineering)
 "ejH" = (
@@ -14251,9 +14240,7 @@
 "fvk" = (
 /obj/item/kirbyplants/potty,
 /obj/structure/sign/poster/random/directional/west,
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "fvo" = (
@@ -15083,9 +15070,7 @@
 /area/station/science/xenobiology)
 "fJn" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/plating,
 /area/station/engineering/storage)
 "fJz" = (
@@ -15288,9 +15273,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","engine")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "fOs" = (
@@ -15439,9 +15422,7 @@
 	dir = 9
 	},
 /obj/structure/disposalpipe/trunk,
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "fQG" = (
@@ -16499,6 +16480,19 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
+"gkI" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/purple/filled/arrow_ccw,
+/obj/effect/turf_decal/trimline/purple/filled/arrow_ccw{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/autoname/directional/north{
+	network = list("ss13","rd","xeno")
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/station/science/xenobiology/hallway)
 "gkQ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -16766,9 +16760,7 @@
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "grb" = (
@@ -17115,9 +17107,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
 "gxu" = (
@@ -18253,9 +18243,7 @@
 	dir = 4
 	},
 /obj/machinery/duct,
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -19601,9 +19589,7 @@
 "hsb" = (
 /obj/structure/cable/multilayer/multiz,
 /obj/item/assembly/mousetrap/armed,
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "hsj" = (
@@ -20700,9 +20686,7 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/security/prison/safe)
 "hPP" = (
-/obj/machinery/camera/autoname/directional/east{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/wood,
 /area/station/service/library)
 "hPS" = (
@@ -21038,7 +21022,7 @@
 /area/station/command/heads_quarters/cmo)
 "hUH" = (
 /obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/engine,
 /area/station/command/heads_quarters/rd)
@@ -21441,7 +21425,8 @@
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
 /obj/machinery/camera/directional/west{
-	c_tag = "Science Ordnance Test Lab"
+	c_tag = "Science Ordnance Test Lab";
+	network = list("ss13","rd")
 	},
 /obj/item/assembly/prox_sensor{
 	pixel_y = 2
@@ -21524,7 +21509,8 @@
 	name = "server vent"
 	},
 /obj/machinery/camera/motion/directional/south{
-	c_tag = "Research Server Room"
+	c_tag = "Research Server Room";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/dark/telecomms,
 /area/station/science/server)
@@ -22155,7 +22141,7 @@
 	req_one_access = list("genetics")
 	},
 /obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
+	network = list("ss13","rd")
 	},
 /obj/effect/turf_decal/siding/purple/corner,
 /obj/structure/sign/poster/random/directional/north,
@@ -22342,8 +22328,15 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "ivx" = (
-/turf/open/openspace,
-/area/station/science/ordnance/testlab)
+/obj/structure/flora/rock/pile/style_random,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
 "ivC" = (
 /obj/machinery/camera/autoname/directional/north{
 	network = list("ss13","engine")
@@ -23036,9 +23029,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
-/obj/machinery/camera/autoname/directional/west{
-	dir = 10
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
@@ -24541,7 +24532,7 @@
 "joD" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
+	network = list("ss13","rd")
 	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -25421,9 +25412,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/structure/table,
 /obj/item/stock_parts/cell/emproof{
 	pixel_y = 6
@@ -27598,9 +27587,6 @@
 /area/station/solars/port/aft)
 "kqB" = (
 /obj/effect/landmark/event_spawn,
-/obj/machinery/camera/autoname/directional/east{
-	network = list("ss13","rd","xeno")
-	},
 /obj/structure/toilet{
 	dir = 1
 	},
@@ -27762,9 +27748,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 8
 	},
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -28223,9 +28207,6 @@
 	req_access = list("robotics")
 	},
 /obj/effect/turf_decal/delivery,
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
 /turf/open/floor/iron/dark/textured,
 /area/station/science/robotics/lab)
 "kBw" = (
@@ -29364,9 +29345,7 @@
 "kXs" = (
 /obj/structure/railing,
 /obj/machinery/door/firedoor/border_only,
-/obj/machinery/camera/autoname/directional/east{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/glass/reinforced,
 /area/station/service/bar)
 "kXz" = (
@@ -29759,11 +29738,9 @@
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance)
 "lfu" = (
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
-/turf/open/openspace,
-/area/station/science/ordnance/testlab)
+/obj/machinery/camera/autoname/directional/north,
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "lfv" = (
 /obj/machinery/space_heater/improvised_chem_heater,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -31373,7 +31350,9 @@
 	dir = 10
 	},
 /obj/structure/closet/emcloset,
-/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ss13","rd")
+	},
 /turf/open/floor/iron/checker,
 /area/station/science/research)
 "lNe" = (
@@ -31492,6 +31471,13 @@
 /obj/machinery/power/emitter,
 /turf/open/floor/plating,
 /area/station/engineering/storage)
+"lPq" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
 "lPw" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -32479,9 +32465,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "mkN" = (
@@ -33199,7 +33183,9 @@
 /area/station/security/detectives_office)
 "mxn" = (
 /obj/machinery/module_duplicator,
-/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ss13","rd")
+	},
 /obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
@@ -34244,7 +34230,7 @@
 /area/station/engineering/atmos)
 "mSY" = (
 /obj/machinery/camera/autoname/directional/east{
-	network = list("ss13","rd","xeno")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/engine,
 /area/station/science/explab)
@@ -34270,9 +34256,6 @@
 /obj/item/pen,
 /turf/open/floor/carpet,
 /area/station/service/lawoffice)
-"mUe" = (
-/turf/closed/wall,
-/area/station/commons/lounge)
 "mUg" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
@@ -34634,7 +34617,7 @@
 	dir = 5
 	},
 /obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/dark/airless,
 /area/station/science/ordnance)
@@ -34663,9 +34646,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -34747,9 +34728,7 @@
 /turf/open/misc/grass,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "ncm" = (
-/obj/machinery/camera/autoname/directional/south{
-	network = list("ss13","engine")
-	},
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "ncv" = (
@@ -36597,9 +36576,7 @@
 /obj/structure/chair/office{
 	name = "grimy chair"
 	},
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/carpet/purple,
 /area/station/service/library)
 "nMf" = (
@@ -36765,7 +36742,7 @@
 	dir = 4
 	},
 /obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
+	network = list("ss13","rd")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -36956,9 +36933,7 @@
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
 "nWu" = (
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/yellow{
@@ -37185,7 +37160,7 @@
 /obj/machinery/vending/wardrobe/robo_wardrobe,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/camera/autoname/directional/east{
-	network = list("ss13","rd","xeno")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/science/robotics/lab)
@@ -37467,7 +37442,9 @@
 	req_access = list("medical");
 	name = "Waiting Room Desk"
 	},
-/obj/machinery/camera/autoname/directional/west,
+/obj/machinery/camera/autoname/directional/west{
+	network = list("ss13","rd")
+	},
 /turf/open/floor/engine,
 /area/station/science/auxlab/firing_range)
 "okd" = (
@@ -37881,6 +37858,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/autoname/directional/west{
+	network = list("ss13","rd","xeno")
+	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/xenobiology/hallway)
 "oss" = (
@@ -38950,9 +38930,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/explab)
 "oNo" = (
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -39286,7 +39264,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/directional/south,
 /obj/structure/fluff/broken_canister_frame,
-/obj/machinery/camera/autoname/directional/west,
+/obj/machinery/camera/autoname/directional/west{
+	network = list("ss13","rd")
+	},
 /turf/open/floor/plating,
 /area/station/science/auxlab)
 "oSJ" = (
@@ -39421,9 +39401,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 10
 	},
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "oVj" = (
@@ -40227,9 +40205,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "pjI" = (
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -40343,7 +40319,9 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ss13","rd")
+	},
 /turf/open/floor/iron/white/herringbone,
 /area/station/science/breakroom)
 "plA" = (
@@ -40515,7 +40493,9 @@
 "ppp" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/purple,
-/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ss13","rd")
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -40699,9 +40679,7 @@
 /area/station/command/heads_quarters/qm)
 "psF" = (
 /obj/effect/turf_decal/stripes,
-/obj/machinery/camera/autoname/directional/south{
-	network = list("ss13","engine")
-	},
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "psM" = (
@@ -41341,7 +41319,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "pFo" = (
-/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ss13","rd")
+	},
 /obj/item/radio/intercom/directional/west,
 /obj/machinery/computer/mechpad{
 	dir = 1
@@ -42373,9 +42353,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/qm)
 "pYu" = (
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -42880,9 +42858,7 @@
 /area/station/security/warden)
 "qiu" = (
 /obj/item/radio/intercom/directional/north,
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -43843,9 +43819,7 @@
 	dir = 10
 	},
 /obj/machinery/light_switch/directional/west,
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "qDR" = (
@@ -45410,9 +45384,8 @@
 /turf/open/floor/iron/large,
 /area/station/service/hydroponics/garden)
 "rjn" = (
-/obj/machinery/light/very_dim/directional/north,
-/turf/open/openspace,
-/area/station/science/ordnance/testlab)
+/turf/closed/wall,
+/area/station/commons/lounge)
 "rjp" = (
 /obj/structure/grille,
 /turf/open/space/openspace,
@@ -45922,9 +45895,7 @@
 	dir = 1
 	},
 /obj/machinery/photocopier,
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/wood,
 /area/station/service/library)
 "rsl" = (
@@ -46391,7 +46362,9 @@
 /turf/open/floor/iron,
 /area/station/security/evidence)
 "rAz" = (
-/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ss13","rd")
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -46568,9 +46541,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/openspace,
 /area/station/engineering/atmos)
 "rCW" = (
@@ -47629,9 +47600,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "rWL" = (
@@ -47912,7 +47881,9 @@
 /turf/open/floor/carpet/black,
 /area/station/command/heads_quarters/hos)
 "sar" = (
-/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ss13","rd")
+	},
 /turf/open/floor/catwalk_floor/iron_white,
 /area/station/science/ordnance/testlab)
 "sas" = (
@@ -47997,7 +47968,7 @@
 /obj/effect/turf_decal/box/red,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
@@ -48828,7 +48799,7 @@
 /obj/machinery/portable_atmospherics/canister/plasma,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
+	network = list("ss13","rd")
 	},
 /obj/structure/sign/warning/fire/directional/north,
 /turf/open/floor/iron/white/smooth_large,
@@ -49403,7 +49374,9 @@
 	name = "Research Director's Fax Machine"
 	},
 /obj/structure/table,
-/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ss13","rd")
+	},
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 8
@@ -50129,7 +50102,9 @@
 /area/station/engineering/supermatter)
 "sOJ" = (
 /obj/structure/flora/coconuts,
-/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/camera/autoname/directional/north{
+	network = list("ss13","rd")
+	},
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "sOS" = (
@@ -50270,7 +50245,7 @@
 	dir = 5
 	},
 /obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
+	network = list("ss13","rd")
 	},
 /obj/machinery/modular_computer/preset/civilian{
 	dir = 8
@@ -50810,9 +50785,7 @@
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister,
-/obj/machinery/camera/autoname/directional/east{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "tbH" = (
@@ -51161,7 +51134,9 @@
 	},
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/light/directional/east,
-/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ss13","rd")
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
 "tjD" = (
@@ -51461,7 +51436,9 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/clothing/glasses/science,
-/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/camera/autoname/directional/north{
+	network = list("ss13","rd")
+	},
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "tpl" = (
@@ -52525,6 +52502,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/solars/starboard/fore)
+"tKB" = (
+/obj/structure/flora/rock/style_random,
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 1
+	},
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
 "tKX" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/mechanical{
@@ -52633,9 +52617,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "tME" = (
@@ -53993,7 +53975,7 @@
 	},
 /obj/effect/spawner/random/vending/snackvend,
 /obj/machinery/camera/autoname/directional/east{
-	network = list("ss13","rd","xeno")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/research)
@@ -55885,14 +55867,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security)
-"uVB" = (
-/obj/effect/turf_decal/tile/dark_red/opposingcorners,
-/obj/effect/landmark/start/bartender,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark,
-/area/station/service/bar)
 "uVI" = (
 /obj/structure/grille,
 /turf/open/misc/asteroid/airless,
@@ -56016,9 +55990,7 @@
 /turf/open/floor/iron/large,
 /area/station/service/hydroponics/garden)
 "uXw" = (
-/obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "uXD" = (
@@ -57443,7 +57415,7 @@
 /obj/structure/table/reinforced,
 /obj/item/stock_parts/cell/high,
 /obj/machinery/camera/autoname/directional/east{
-	network = list("ss13","rd","xeno")
+	network = list("ss13","rd")
 	},
 /obj/effect/turf_decal/siding/purple/corner{
 	dir = 8
@@ -59561,7 +59533,7 @@
 /area/station/command/heads_quarters/ce)
 "wtf" = (
 /obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
+	network = list("ss13","rd")
 	},
 /obj/machinery/light/small/directional/north,
 /obj/machinery/door/firedoor/border_only{
@@ -59936,6 +59908,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/qm)
+"wAp" = (
+/turf/open/floor/glass/reinforced,
+/area/station/asteroid)
 "wAv" = (
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
@@ -60048,9 +60023,7 @@
 	dir = 4
 	},
 /obj/structure/window/spawner/directional/north,
-/obj/machinery/camera/autoname/directional/east{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "wBU" = (
@@ -60964,9 +60937,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/trunk,
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -62071,9 +62042,7 @@
 /obj/structure/table,
 /obj/item/stack/rods/twentyfive,
 /obj/item/stack/cable_coil,
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "xoT" = (
@@ -64162,9 +64131,7 @@
 /area/station/security/detectives_office/private_investigators_office)
 "yfz" = (
 /obj/machinery/vending/dinnerware,
-/obj/machinery/camera/autoname/directional/east{
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "ygb" = (
@@ -88825,7 +88792,7 @@ xlX
 bcX
 vMC
 brS
-uVB
+bXh
 jDs
 ljU
 isq
@@ -89344,12 +89311,12 @@ oqb
 oqb
 uww
 kYW
-mUe
+rjn
 fvk
 ezL
 eAx
-mUe
-mUe
+rjn
+rjn
 onW
 aly
 tOm
@@ -89605,7 +89572,7 @@ khZ
 qrl
 eQi
 eEC
-mUe
+rjn
 fux
 aUy
 kmu
@@ -89862,7 +89829,7 @@ qrl
 ncX
 eQi
 tLI
-mUe
+rjn
 vNH
 tTJ
 kmu
@@ -90119,8 +90086,8 @@ aGA
 aGA
 eQi
 qjW
-mUe
-mUe
+rjn
+rjn
 kmu
 rFV
 tOm
@@ -91404,8 +91371,8 @@ qrl
 qrl
 eQi
 dxx
-mUe
-mUe
+rjn
+rjn
 sAJ
 aly
 dxT
@@ -91661,7 +91628,7 @@ fXU
 eDV
 eQi
 vxl
-mUe
+rjn
 fux
 aUy
 kmu
@@ -91918,7 +91885,7 @@ qrl
 iGK
 eQi
 bXx
-mUe
+rjn
 vNH
 tTJ
 kmu
@@ -92174,9 +92141,9 @@ xRG
 xRG
 xRG
 jvO
-mUe
-mUe
-mUe
+rjn
+rjn
+rjn
 jcG
 kmu
 sqb
@@ -92431,7 +92398,7 @@ xRG
 xRG
 xRG
 hQJ
-mUe
+rjn
 ebP
 kmu
 kmu
@@ -113232,7 +113199,7 @@ shs
 bwC
 cLf
 jQS
-eEV
+lfu
 czY
 kOL
 jQS
@@ -170540,7 +170507,7 @@ kdg
 sqL
 sqL
 rlw
-sqL
+rlw
 rlw
 uet
 gnh
@@ -174123,12 +174090,12 @@ mNZ
 mNZ
 mNZ
 mNZ
-moe
-ivx
-ivx
-ivx
-ivx
-ivx
+mNZ
+mNZ
+wAp
+wAp
+wAp
+wAp
 wkG
 nIQ
 iFN
@@ -174138,7 +174105,7 @@ iFN
 iFN
 vxX
 eIO
-uoY
+gkI
 rlw
 sqL
 sqL
@@ -174380,9 +174347,9 @@ mNZ
 mNZ
 mNZ
 mNZ
-moe
-rjn
-ivx
+mNZ
+mNZ
+wAp
 moe
 wkG
 wkG
@@ -174637,8 +174604,8 @@ mNZ
 mNZ
 mNZ
 mNZ
-moe
-lfu
+mNZ
+mNZ
 ivx
 wkG
 jYT
@@ -174894,9 +174861,9 @@ mNZ
 mNZ
 mNZ
 mNZ
-moe
-ivx
-ivx
+mNZ
+wAp
+wAp
 wkG
 jYT
 wkG
@@ -175151,15 +175118,15 @@ mNZ
 mNZ
 mNZ
 mNZ
-moe
-ivx
-ivx
+mNZ
+wAp
+wAp
 wkG
 jYT
 wkG
-ivx
-ivx
-moe
+wAp
+wAp
+vxX
 vxX
 vxX
 hhX
@@ -175408,15 +175375,15 @@ mNZ
 mNZ
 mNZ
 mNZ
-moe
-ivx
-ivx
+mNZ
+lPq
+rGg
 wkG
 mcv
 moe
-fDj
-fDj
-moe
+rGg
+rGg
+tKB
 vxX
 vxX
 hhX
@@ -175665,9 +175632,9 @@ mNZ
 mNZ
 mNZ
 mNZ
-moe
-fDj
-fDj
+mNZ
+mNZ
+uVI
 moe
 pFy
 moe
