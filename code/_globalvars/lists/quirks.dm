@@ -12,19 +12,23 @@ GLOBAL_LIST_INIT(nearsighted_glasses, list(
 
 ///Options for the prosthetic limb quirk to choose from
 GLOBAL_LIST_INIT(limb_choice, list(
-	"Left arm" = /obj/item/bodypart/arm/left/robot/surplus,
-	"Right arm" = /obj/item/bodypart/arm/right/robot/surplus,
-	"Left leg" = /obj/item/bodypart/leg/left/robot/surplus,
-	"Right leg" = /obj/item/bodypart/leg/right/robot/surplus,
+	"Left Arm" = /obj/item/bodypart/arm/left/robot/surplus,
+	"Right Arm" = /obj/item/bodypart/arm/right/robot/surplus,
+	"Left Leg" = /obj/item/bodypart/leg/left/robot/surplus,
+	"Right Leg" = /obj/item/bodypart/leg/right/robot/surplus,
 ))
 
+
 ///Transhumanist quirk
-GLOBAL_LIST_INIT(limb_choice_transhuman, list(
+GLOBAL_LIST_INIT(part_choice_transhuman, list(
 	"Left Arm" = /obj/item/bodypart/arm/left/robot,
 	"Right Arm" = /obj/item/bodypart/arm/right/robot,
 	"Left Leg" = /obj/item/bodypart/leg/left/robot,
 	"Right Leg" = /obj/item/bodypart/leg/right/robot,
+	"Robotic Voice Box" = /obj/item/organ/internal/tongue/robot,
+	"Flashlights for Eyes" = /obj/item/organ/internal/eyes/robotic/flashlight,
 ))
+
 ///Hemiplegic Quirk
 GLOBAL_LIST_INIT(side_choice_hemiplegic, list(
 	"Left Side" = /datum/brain_trauma/severe/paralysis/hemiplegic/left,
@@ -54,7 +58,7 @@ GLOBAL_LIST_INIT(possible_smoker_addictions, setup_junkie_addictions(list(
 )))
 
 ///Options for the Alcoholic quirk to choose from
-GLOBAL_LIST_INIT(possible_alcoholic_addictions, setup_junkie_addictions(list(
+GLOBAL_LIST_INIT(possible_alcoholic_addictions, list(
 	"Beekhof Blauw Curaçao" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/curacao, "reagent" = /datum/reagent/consumable/ethanol/curacao),
 	"Buckin' Bronco's Applejack" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/applejack, "reagent" = /datum/reagent/consumable/ethanol/applejack),
 	"Voltaic Yellow Wine" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic, "reagent" = /datum/reagent/consumable/ethanol/wine_voltaic),
@@ -79,7 +83,7 @@ GLOBAL_LIST_INIT(possible_alcoholic_addictions, setup_junkie_addictions(list(
 	"Breezy Shoals Coconut Rum" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/coconut_rum, "reagent" = /datum/reagent/consumable/ethanol/coconut_rum),
 	"Moonlabor Yūyake" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/yuyake, "reagent" = /datum/reagent/consumable/ethanol/yuyake),
 	"Shu-Kouba Straight Shochu" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/shochu, "reagent" = /datum/reagent/consumable/ethanol/shochu)
-)))
+))
 
 ///Options for Prosthetic Organ
 GLOBAL_LIST_INIT(organ_choice, list(

@@ -194,13 +194,16 @@
 	customization_options = list(/datum/preference/choiced/alcoholic)
 
 /datum/quirk/item_quirk/addict/alcoholic/New()
-	drug_container_type = GLOB.possible_alcoholic_addictions[pick(GLOB.possible_alcoholic_addictions["bottlepath"])]
+	var/random_alcohol = pick(GLOB.possible_alcoholic_addictions)
+	drug_container_type = GLOB.possible_alcoholic_addictions[random_alcohol]["bottlepath"]
+	favorite_alcohol = GLOB.possible_alcoholic_addictions[random_alcohol]["reagent"]
 	return ..()
 
 /datum/quirk/item_quirk/addict/alcoholic/add_unique(client/client_source)
 	var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/alcoholic)
 	if(addiction && (addiction != "Random"))
 		drug_container_type = GLOB.possible_alcoholic_addictions[addiction]["bottlepath"]
+		favorite_alcohol = GLOB.possible_alcoholic_addictions[addiction]["reagent"]
 	return ..()
 
 /datum/quirk/item_quirk/addict/alcoholic/post_add()
@@ -210,10 +213,7 @@
 	if(isnull(brandy_container))
 		stack_trace("Alcoholic quirk added while the GLOB.alcohol_containers is (somehow) not initialized!")
 		brandy_container = new drug_container_type
-		favorite_alcohol = brandy_container["reagent"]
 		qdel(brandy_container)
-	else
-		favorite_alcohol = brandy_container["reagent"]
 
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_alcoholic, protagonist = quirk_holder, preferred_brandy = initial(favorite_alcohol.name))
 	// alcoholic livers have 25% less health and healing

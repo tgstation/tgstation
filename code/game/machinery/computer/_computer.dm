@@ -63,7 +63,7 @@
 /obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
 		return TRUE
-	if(circuit && !(obj_flags & NO_DECONSTRUCTION))
+	if(circuit)
 		balloon_alert(user, "disconnecting monitor...")
 		if(I.use_tool(src, user, time_to_unscrew, volume=50))
 			deconstruct(TRUE)
@@ -86,6 +86,16 @@
 	if(.)
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		set_light(0)
+
+/obj/machinery/computer/proc/imprint_gps(gps_tag) // Currently used by the upload computers and communications console
+	var/tracker = gps_tag
+	if(!tracker) // Don't give a null GPS signal if there is none
+		return
+	for(var/obj/item/circuitboard/computer/board in src.contents)
+		if(!contents || board.GetComponent(/datum/component/gps))
+			return
+		board.AddComponent(/datum/component/gps, "[tracker]")
+		balloon_alert_to_viewers("board tracker enabled", vision_distance = 1)
 
 /obj/machinery/computer/emp_act(severity)
 	. = ..()

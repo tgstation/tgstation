@@ -282,7 +282,7 @@
 	being_drained = TRUE
 	balloon_alert(user, "draining influence...")
 
-	if(!do_after(user, 10 SECONDS, src))
+	if(!do_after(user, 10 SECONDS, src, hidden = TRUE))
 		being_drained = FALSE
 		balloon_alert(user, "interrupted!")
 		return

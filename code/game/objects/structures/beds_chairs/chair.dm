@@ -36,16 +36,12 @@
 	SSjob.latejoin_trackers -= src //These may be here due to the arrivals shuttle
 	return ..()
 
-/obj/structure/chair/deconstruct(disassembled)
-	// If we have materials, and don't have the NOCONSTRUCT flag
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(buildstacktype)
-			new buildstacktype(loc,buildstackamount)
-		else
-			for(var/i in custom_materials)
-				var/datum/material/M = i
-				new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
-	..()
+/obj/structure/chair/atom_deconstruct(disassembled)
+	if(buildstacktype)
+		new buildstacktype(loc,buildstackamount)
+	else
+		for(var/datum/material/mat as anything in custom_materials)
+			new mat.sheet_type(loc, FLOOR(custom_materials[mat] / SHEET_MATERIAL_AMOUNT, 1))
 
 /obj/structure/chair/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -56,8 +52,6 @@
 	qdel(src)
 
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return . = ..()
 	if(istype(W, /obj/item/assembly/shock_kit) && !HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
 		electrify_self(W, user)
 		return
@@ -85,8 +79,6 @@
 
 
 /obj/structure/chair/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return TRUE
 	..()
 	weapon.play_tool_sound(src)
 	deconstruct(disassembled = TRUE)
@@ -274,7 +266,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 /obj/structure/chair/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
-		if(!item_chair || has_buckled_mobs() || src.obj_flags & NO_DECONSTRUCTION)
+		if(!item_chair || has_buckled_mobs())
 			return
 		if(!usr.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 			return
@@ -487,8 +479,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	icon_state = null
 	buildstacktype = null
 	item_chair = null
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
+	obj_flags = parent_type::obj_flags | NO_DEBRIS_AFTER_DECONSTRUCTION
 	alpha = 0
+
+/obj/structure/chair/mime/wrench_act_secondary(mob/living/user, obj/item/weapon)
+	return NONE
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)
 	M.pixel_y += 5
