@@ -54,7 +54,16 @@
 		"Nuclear Emergency": {
 		},
 
+		"Clown Operatives": {
+		},
+
 		"Revolution": {
+		},
+
+		"Malfunctioning AI": {
+		},
+
+		"Spies": {
 		}
 	},
 
@@ -105,6 +114,10 @@
 		},
 
 		"Space Pirates": {
+			"weight": 0
+		},
+
+		"Dangerous Space Pirates": {
 			"weight": 0
 		},
 
