@@ -51,7 +51,9 @@ export function Image(props: Props) {
           const imgElement = event.currentTarget;
 
           setTimeout(() => {
-            imgElement.src = `${src}`;
+            if (attempts > 0) {
+              imgElement.src = `${src}?attempt=${attempts + 1}`;
+            }
             setAttempts((attempts) => attempts + 1);
           }, 1000);
         }
