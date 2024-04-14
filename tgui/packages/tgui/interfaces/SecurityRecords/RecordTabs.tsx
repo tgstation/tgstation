@@ -1,3 +1,4 @@
+import { filter, sortBy } from 'common/collections';
 import { useState } from 'react';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
@@ -27,9 +28,10 @@ export const SecurityRecordTabs = (props) => {
 
   const [search, setSearch] = useState('');
 
-  const sorted = records
-    .filter((record) => isRecordMatch(record, search))
-    .sort((a, b) => a.name.localeCompare(b.name));
+  const sorted = sortBy(
+    filter(records, (record) => isRecordMatch(record, search)),
+    (record) => record.name,
+  );
 
   return (
     <Stack fill vertical>

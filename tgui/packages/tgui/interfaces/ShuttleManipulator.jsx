@@ -103,7 +103,7 @@ export const ShuttleManipulatorTemplates = (props) => {
       <Flex>
         <Flex.Item>
           <Tabs vertical>
-            {Object.entries(templateObject).map(([templateId, template]) => (
+            {map(templateObject, (template, templateId) => (
               <Tabs.Tab
                 key={templateId}
                 selected={selectedTemplateId === templateId}

@@ -1,3 +1,4 @@
+import { filter, sort } from 'common/collections';
 import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useState } from 'react';
@@ -66,13 +67,15 @@ const prevNextCamera = (
  * Filters cameras, applies search terms and sorts the alphabetically.
  */
 const selectCameras = (cameras: Camera[], searchText = ''): Camera[] => {
-  const testSearch = createSearch(searchText, (camera: Camera) => camera.name);
-
-  let queriedCameras = cameras.filter((camera: Camera) => !!camera.name);
+  let queriedCameras = filter(cameras, (camera: Camera) => !!camera.name);
   if (searchText) {
-    queriedCameras = queriedCameras.filter(testSearch);
+    const testSearch = createSearch(
+      searchText,
+      (camera: Camera) => camera.name,
+    );
+    queriedCameras = filter(queriedCameras, testSearch);
   }
-  queriedCameras = queriedCameras.sort();
+  queriedCameras = sort(queriedCameras);
 
   return queriedCameras;
 };

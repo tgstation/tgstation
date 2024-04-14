@@ -1,3 +1,4 @@
+import { map, sortBy } from 'common/collections';
 import { capitalize } from 'common/string';
 import { useState } from 'react';
 
@@ -122,16 +123,18 @@ const SearchAndDisplay = (props) => {
     view_raw,
     show_deleted,
   } = data;
-  const books = pages
-    .map(
+  const books = sortBy(
+    map(
+      pages,
       (book, i) =>
         ({
           ...book,
           // Generate a unique id
           key: i,
         }) as DisplayAdminBook,
-    )
-    .sort((bookA, bookB) => bookA.key - bookB.key);
+    ),
+    (book) => book.key,
+  );
   return (
     <Section>
       <Stack justify="space-between">

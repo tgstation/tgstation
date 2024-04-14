@@ -4,10 +4,12 @@
  * @license MIT
  */
 
+import { map } from 'common/collections';
+
 export const selectChat = (state) => state.chat;
 
 export const selectChatPages = (state) =>
-  state.chat.pages.map((id: string) => state.chat.pageById[id]);
+  map(state.chat.pages, (id: string) => state.chat.pageById[id]);
 
 export const selectCurrentChatPage = (state) =>
   state.chat.pageById[state.chat.currentPageId];

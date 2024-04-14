@@ -1,3 +1,5 @@
+import { filter } from 'common/collections';
+
 import { useBackend, useSharedState } from '../backend';
 import {
   AnimatedNumber,
@@ -156,16 +158,14 @@ const CargoStatus = (props) => {
 const searchForSupplies = (supplies, search) => {
   search = search.toLowerCase();
 
-  let queriedSupplies = supplies
-    .flatMap((category) => category.packs)
-    .filter(
+  const queriedSupplies = sortBy(
+    filter(
+      supplies.flatMap((category) => category.packs),
       (pack) =>
         pack.name?.toLowerCase().includes(search.toLowerCase()) ||
         pack.desc?.toLowerCase().includes(search.toLowerCase()),
-    );
-
-  queriedSupplies = queriedSupplies.sort((packA, packB) =>
-    packA.name.localeCompare(packB.name),
+    ),
+    (pack) => pack.name,
   );
 
   return queriedSupplies.slice(0, 25);

@@ -1,3 +1,4 @@
+import { map } from 'common/collections';
 import { toFixed } from 'common/math';
 
 import { useBackend } from '../backend';
@@ -22,7 +23,7 @@ export const Radio = (props) => {
   const tunedChannel = RADIO_CHANNELS.find(
     (channel) => channel.freq === frequency,
   );
-  const channels = data.channels.map((value, key) => ({
+  const channels = map(data.channels, (value, key) => ({
     name: key,
     status: !!value,
   }));

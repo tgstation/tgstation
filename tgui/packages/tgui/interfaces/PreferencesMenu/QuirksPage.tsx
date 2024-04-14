@@ -1,3 +1,4 @@
+import { filter } from 'common/collections';
 import { useState } from 'react';
 
 import { useBackend } from '../../backend';
@@ -22,7 +23,7 @@ function getCorrespondingPreferences(
   relevant_preferences: Record<string, string>,
 ) {
   return Object.fromEntries(
-    Object.entries(relevant_preferences).filter(([key, value]) =>
+    filter(Object.entries(relevant_preferences), ([key, value]) =>
       customization_options.includes(key),
     ),
   );

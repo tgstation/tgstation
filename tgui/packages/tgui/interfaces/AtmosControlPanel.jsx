@@ -1,16 +1,19 @@
+import { map, sortBy } from 'common/collections';
+
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 export const AtmosControlPanel = (props) => {
   const { act, data } = useBackend();
-  const groups = data.excited_groups
-    .map((group, i) => ({
+  const groups = sortBy(
+    map(data.excited_groups, (group, i) => ({
       ...group,
       // Generate a unique id
       id: group.area + i,
-    }))
-    .sort((a, b) => a.id.localeCompare(b.id));
+    })),
+    (group) => group.id,
+  );
   return (
     <Window title="SSAir Control Panel" width={900} height={500}>
       <Section m={1}>

@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { filter, sortBy } from 'common/collections';
 import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useState } from 'react';
@@ -182,15 +182,17 @@ export const PersonalCrafting = (props) => {
   const [activeType, setFoodType] = useState(
     Object.keys(craftability).length ? 'Can Make' : data.foodtypes[0],
   );
-  const material_occurences = data.material_occurences.sort(
-    (materialA, materialB) => materialB.occurences - materialA.occurences,
+  const material_occurences = sortBy(
+    data.material_occurences,
+    (material) => -material.occurences,
   );
   const [activeMaterial, setMaterial] = useState(
     material_occurences[0].atom_id,
   );
   const [tabMode, setTabMode] = useState(0);
   const searchName = createSearch(searchText, (item: Recipe) => item.name);
-  let recipes = data.recipes.filter(
+  let recipes = filter(
+    data.recipes,
     (recipe) =>
       // If craftable only is selected, then filter by craftability
       (!display_craftable_only || Boolean(craftability[recipe.ref])) &&
@@ -210,14 +212,14 @@ export const PersonalCrafting = (props) => {
             Boolean(craftability[recipe.ref])) ||
             recipe.category === activeCategory))),
   );
-  recipes = sortBy<Recipe>((recipe) => [
+  recipes = sortBy(recipes, (recipe) => [
     activeCategory === 'Can Make'
       ? 99 - Object.keys(recipe.reqs).length
       : Number(craftability[recipe.ref]),
     recipe.name.toLowerCase(),
-  ])(recipes);
+  ]);
   if (searchText.length > 0) {
-    recipes = recipes.filter(searchName);
+    recipes = filter(recipes, searchName);
   }
   const canMake = ['Can Make'];
   const categories = canMake

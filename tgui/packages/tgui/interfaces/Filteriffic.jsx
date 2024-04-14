@@ -1,3 +1,4 @@
+import { map } from 'common/collections';
 import { toFixed } from 'common/math';
 import { useState } from 'react';
 
@@ -154,7 +155,7 @@ const FilterFlagsEntry = (props) => {
 
   const filterInfo = data.filter_info;
   const flags = filterInfo[filterType]['flags'];
-  return Object.entries(flags).map(([flagName, bitField], i) => (
+  return map(flags, (bitField, flagName) => (
     <Button.Checkbox
       checked={value & bitField}
       onClick={() =>
@@ -165,8 +166,7 @@ const FilterFlagsEntry = (props) => {
           },
         })
       }
-      // TODO: use better key
-      key={i}
+      key={flagName}
     >
       {flagName}
     </Button.Checkbox>
@@ -342,7 +342,7 @@ export const Filteriffic = (props) => {
           {!hasFilters ? (
             <Box>No filters</Box>
           ) : (
-            Object.entries(filters).map(([key, entry]) => (
+            map(filters, (entry, key) => (
               <FilterEntry filterDataEntry={entry} name={key} key={key} />
             ))
           )}

@@ -1,4 +1,4 @@
-import { sortBy, uniq } from 'common/collections';
+import { filter, map, sortBy, uniq } from 'common/collections';
 import { createSearch } from 'common/string';
 import { useState } from 'react';
 
@@ -29,7 +29,7 @@ export const SelectEquipment = (props) => {
 
   const isFavorited = (entry) => favorites?.includes(entry.path);
 
-  const outfits = [...data.outfits, ...data.custom_outfits].map((entry) => ({
+  const outfits = map([...data.outfits, ...data.custom_outfits], (entry) => ({
     ...entry,
     favorite: isFavorited(entry),
   }));
@@ -48,14 +48,15 @@ export const SelectEquipment = (props) => {
     (entry) => entry.name + entry.path,
   );
 
-  let visibleOutfits = outfits
-    .filter((entry) => entry.category === tab)
-    .filter(searchFilter);
-  visibleOutfits = sortBy(
+  const visibleOutfits = sortBy(
+    filter(
+      filter(outfits, (entry) => entry.category === tab),
+      searchFilter,
+    ),
     (entry) => !entry.favorite,
     (entry) => !entry.priority,
     (entry) => entry.name,
-  )(outfits);
+  );
 
   const getOutfitEntry = (current_outfit) =>
     outfits.find((outfit) => getOutfitKey(outfit) === current_outfit);

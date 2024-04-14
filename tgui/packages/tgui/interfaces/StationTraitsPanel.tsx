@@ -1,3 +1,4 @@
+import { filter, map } from 'common/collections';
 import { exhaustiveCheck } from 'common/exhaustive';
 import { BooleanLike } from 'common/react';
 import { useState } from 'react';
@@ -109,9 +110,10 @@ const FutureStationTraitsPage = (props) => {
                       icon="times"
                       onClick={() => {
                         act('setup_future_traits', {
-                          station_traits: future_station_traits
-                            .map((t) => t.path)
-                            .filter((p) => p !== trait.path),
+                          station_traits: filter(
+                            map(future_station_traits, (t) => t.path),
+                            (p) => p !== trait.path,
+                          ),
                         });
                       }}
                     >

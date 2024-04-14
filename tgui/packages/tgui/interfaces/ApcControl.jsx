@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useState } from 'react';
 
@@ -161,18 +161,20 @@ const ApcControlScene = (props) => {
 
   const apcs = flow([
     (apcs) =>
-      apcs.map((apc, i) => ({
+      map(apcs, (apc, i) => ({
         ...apc,
         // Generate a unique id
         id: apc.name + i,
       })),
-    sortByField === 'name' && sortBy((apc) => apc.name),
-    sortByField === 'charge' && sortBy((apc) => -apc.charge),
+    sortByField === 'name' && ((apcs) => sortBy(apcs, (apc) => apc.name)),
+    sortByField === 'charge' && ((apcs) => sortBy(apcs, (apc) => -apc.charge)),
     sortByField === 'draw' &&
-      sortBy(
-        (apc) => -powerRank(apc.load),
-        (apc) => -parseFloat(apc.load),
-      ),
+      ((apcs) =>
+        sortBy(
+          apcs,
+          (apc) => -powerRank(apc.load),
+          (apc) => -parseFloat(apc.load),
+        )),
   ])(data.apcs);
   return (
     <Box height={30}>
@@ -256,13 +258,11 @@ const ApcControlScene = (props) => {
 const LogPanel = (props) => {
   const { data } = useBackend();
 
-  const logs = data.logs
-    .map((line, i) => ({
-      ...line,
-      // Generate a unique id
-      id: line.entry + i,
-    }))
-    .reverse();
+  const logs = map(data.logs, (line, i) => ({
+    ...line,
+    // Generate a unique id
+    id: line.entry + i,
+  })).reverse();
   return (
     <Box m={-0.5}>
       {logs.map((line) => (

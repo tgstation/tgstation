@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { clamp } from 'common/math';
 import { vecLength, vecSubtract } from 'common/vector';
@@ -7,14 +7,14 @@ import { useBackend } from '../backend';
 import { Box, Button, Icon, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
 
-const coordsToVec = (coords) => coords.split(', ').map(parseFloat);
+const coordsToVec = (coords) => map(coords.split(', '), parseFloat);
 
 export const Gps = (props) => {
   const { act, data } = useBackend();
   const { currentArea, currentCoords, globalmode, power, tag, updating } = data;
   const signals = flow([
     (signals) =>
-      signals.map((signal, index) => {
+      map(signals, (signal, index) => {
         // Calculate distance to the target. BYOND distance is capped to 127,
         // that's why we roll our own calculations here.
         const dist =
@@ -29,12 +29,14 @@ export const Gps = (props) => {
           );
         return { ...signal, dist, index };
       }),
-    sortBy(
-      // Signals with distance metric go first
-      (signal) => signal.dist === undefined,
-      // Sort alphabetically
-      (signal) => signal.entrytag,
-    ),
+    (signals) =>
+      sortBy(
+        signals,
+        // Signals with distance metric go first
+        (signal) => signal.dist === undefined,
+        // Sort alphabetically
+        (signal) => signal.entrytag,
+      ),
   ])(data.signals || []);
   return (
     <Window title="Global Positioning System" width={470} height={700}>

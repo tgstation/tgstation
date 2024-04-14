@@ -1,3 +1,5 @@
+import { map, sortBy } from 'common/collections';
+
 import { useBackend } from '../backend';
 import { Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -22,17 +24,17 @@ type DestinationInfo = {
  * @returns The alphetically sorted list of destinations.
  */
 const sortDestinations = (locations: string[]): DestinationInfo[] => {
-  let queriedLocations = locations.map(
-    (name, index) =>
-      ({
-        name: name.toUpperCase(),
-        sorting_id: index + 1,
-      }) as DestinationInfo,
+  return sortBy(
+    map(
+      locations,
+      (name, index) =>
+        ({
+          name: name.toUpperCase(),
+          sorting_id: index + 1,
+        }) as DestinationInfo,
+    ),
+    (dest) => dest.name,
   );
-  queriedLocations = queriedLocations.sort((destA, destB) =>
-    destA.name.localeCompare(destB.name),
-  );
-  return queriedLocations;
 };
 
 export const DestinationTagger = (props) => {

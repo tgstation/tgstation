@@ -1,3 +1,5 @@
+import { map, sortBy } from 'common/collections';
+
 import { useBackend } from '../backend';
 import {
   Box,
@@ -68,13 +70,14 @@ const SearchAndDisplay = (props) => {
     author,
     params_changed,
   } = data;
-  const records = data.pages
-    .map((record, i) => ({
+  const records = sortBy(
+    map(data.pages, (record, i) => ({
       ...record,
       // Generate a unique id
       key: i,
-    }))
-    .sort((recordA, recordB) => recordA.key - recordB.key);
+    })),
+    (record) => record.key,
+  );
   return (
     <Section>
       <Stack justify="space-between">

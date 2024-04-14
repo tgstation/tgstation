@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { filter, sortBy } from 'common/collections';
 import { scale, toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { createSearch } from 'common/string';
@@ -72,17 +72,18 @@ export const NtosNetDownloader = (props) => {
   let items =
     searchItem.length > 0
       ? // If we have a query, search everything for it.
-        programs.filter(search)
+        filter(programs, search)
       : // Otherwise, show respective programs for the category.
-        programs.filter((program) => program.category === selectedCategory);
+        filter(programs, (program) => program.category === selectedCategory);
   // This sorts all programs in the lists by name and compatibility
   items = sortBy(
+    items,
     (program: ProgramData) => !program.compatible,
     (program: ProgramData) => program.filedesc,
-  )(items);
+  );
   if (!emagged) {
     // This filters the list to only contain verified programs
-    items = items.filter((program) => program.verifiedsource === 1);
+    items = filter(items, (program) => program.verifiedsource === 1);
   }
   const disk_free_space = downloading
     ? disk_size - Number(toFixed(disk_used + downloadcompletion))

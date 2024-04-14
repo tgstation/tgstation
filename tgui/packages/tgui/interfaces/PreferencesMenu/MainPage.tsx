@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { filter, map, sortBy } from 'common/collections';
 import { classes } from 'common/react';
 import { useState } from 'react';
 
@@ -348,10 +348,11 @@ const createSetRandomization =
     });
   };
 
-const sortPreferences = sortBy<[string, unknown]>(([featureId, _]) => {
-  const feature = features[featureId];
-  return feature?.name;
-});
+const sortPreferences = (array: [string, unknown][]) =>
+  sortBy(array, ([featureId, _]) => {
+    const feature = features[featureId];
+    return feature?.name;
+  });
 
 export const PreferenceList = (props: {
   act: typeof sendAct;
@@ -436,12 +437,15 @@ export const getRandomization = (
   }
 
   return Object.fromEntries(
-    Object.keys(preferences)
-      .filter((key) => serverData.random.randomizable.includes(key))
-      .map((key) => [
+    map(
+      filter(Object.keys(preferences), (key) =>
+        serverData.random.randomizable.includes(key),
+      ),
+      (key) => [
         key,
         data.character_preferences.randomization[key] || RandomSetting.Disabled,
-      ]),
+      ],
+    ),
   );
 };
 

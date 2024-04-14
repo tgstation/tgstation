@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { filter, sortBy } from 'common/collections';
 
 import { HEALTH, THREAT } from './constants';
 import type { AntagGroup, Antagonist, Observable } from './types';
@@ -17,7 +17,7 @@ export const getAntagCategories = (antagonists: Antagonist[]) => {
     categories[antag_group].push(player);
   });
 
-  return sortBy<AntagGroup>(([key]) => key)(Object.entries(categories));
+  return sortBy<AntagGroup>(Object.entries(categories), ([key]) => key);
 };
 
 /** Returns a disguised name in case the person is wearing someone else's ID */
@@ -42,15 +42,17 @@ export const getMostRelevant = (
   searchQuery: string,
   observables: Observable[][],
 ): Observable => {
-  const queriedObservables = observables
-    // Makes a single Observables list for an easy search
-    .flat()
-    // Filters out anything that doesn't match search
-    .filter((observable) => isJobOrNameMatch(observable, searchQuery))
+  const queriedObservables =
     // Sorts descending by orbiters
-    .sort(
-      (observableA, observableB) =>
-        (observableB.orbiters || 0) - (observableA.orbiters || 0),
+    sortBy(
+      // Filters out anything that doesn't match search
+      filter(
+        observables
+          // Makes a single Observables list for an easy search
+          .flat(),
+        (observable) => isJobOrNameMatch(observable, searchQuery),
+      ),
+      (observable) => -(observable.orbiters || 0),
     );
   return queriedObservables[0];
 };
