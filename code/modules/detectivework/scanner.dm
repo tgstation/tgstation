@@ -219,9 +219,6 @@
 	return time2text(world.time + 432000, ":ss")
 
 /obj/item/detective_scanner/click_alt(mob/living/user)
-	// Best way for checking if a player can use while not incapacitated, etc
-	if(!user.can_perform_action(src))
-		return NONE
 	if(!LAZYLEN(log))
 		balloon_alert(user, "no logs!")
 		return CLICK_ACTION_BLOCKING

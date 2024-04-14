@@ -129,9 +129,7 @@
 	new_frame.update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/computer/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !is_operational)
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return NONE
 	return CLICK_ACTION_SUCCESS
 

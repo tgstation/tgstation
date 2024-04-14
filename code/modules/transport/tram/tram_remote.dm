@@ -108,9 +108,6 @@
 	SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, specific_transport_id, destination, options)
 
 /obj/item/assembly/control/transport/remote/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
-
 	link_tram(user)
 	return CLICK_ACTION_SUCCESS
 

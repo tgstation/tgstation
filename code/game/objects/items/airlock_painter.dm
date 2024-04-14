@@ -148,8 +148,8 @@
 		return ..()
 
 /obj/item/airlock_painter/click_alt(mob/user)
-	if(!ink || user.can_perform_action(src))
-		return NONE
+	if(!ink)
+		return CLICK_ACTION_BLOCKING
 
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	ink.forceMove(user.drop_location())

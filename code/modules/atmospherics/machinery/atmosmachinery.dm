@@ -608,7 +608,7 @@
 	our_client.move_delay = world.time + 0.05 SECONDS
 
 /obj/machinery/atmospherics/click_alt(mob/living/L)
-	if((!vent_movement & VENTCRAWL_ALLOWED) || !istype(L))
+	if(!(vent_movement & VENTCRAWL_ALLOWED) || !istype(L))
 		return NONE
 	L.handle_ventcrawl(src)
 	return CLICK_ACTION_SUCCESS

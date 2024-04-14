@@ -8,8 +8,6 @@
 	can_buckle = 1
 
 /obj/structure/sacrificealtar/click_alt(mob/living/user)
-	if(!user.can_perform_action(src))
-		return NONE
 	if(!has_buckled_mobs())
 		return CLICK_ACTION_BLOCKING
 	var/mob/living/L = locate() in buckled_mobs

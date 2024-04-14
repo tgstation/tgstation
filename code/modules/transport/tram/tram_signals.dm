@@ -170,12 +170,9 @@
 	return TRUE
 
 /obj/machinery/transport/crossing_signal/click_alt(mob/living/user)
-	if(!can_interact(user))
-		return NONE
-
 	var/obj/item/tool = user.get_active_held_item()
 	if(!panel_open || tool?.tool_behaviour != TOOL_WRENCH)
-		return NONE
+		return CLICK_ACTION_BLOCKING
 
 	tool.play_tool_sound(src, 50)
 	setDir(turn(dir,-90))

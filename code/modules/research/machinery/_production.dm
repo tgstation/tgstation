@@ -449,8 +449,6 @@
 	balloon_alert(usr, "dropping [dir2text(drop_direction)]")
 
 /obj/machinery/rnd/production/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
 	if(drop_direction == 0)
 		return CLICK_ACTION_BLOCKING
 	if(busy)

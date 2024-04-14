@@ -434,8 +434,6 @@
 			return TRUE
 
 /obj/machinery/chem_mass_spec/click_alt(mob/living/user)
-	if(!can_interact(user))
-		return NONE
 	if(processing_reagents)
 		balloon_alert(user, "still processing!")
 		return CLICK_ACTION_BLOCKING

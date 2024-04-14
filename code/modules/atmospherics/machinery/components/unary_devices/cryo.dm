@@ -645,8 +645,6 @@
 	return ..()
 
 /obj/machinery/cryo_cell/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
 	if(state_open)
 		close_machine()
 	else

@@ -181,8 +181,6 @@
 	. += span_notice("Alt-click to toggle modes.")
 
 /obj/item/grenade/barrier/click_alt(mob/living/carbon/user)
-	if(!user.can_perform_action(src))
-		return NONE
 	toggle_mode(user)
 	return CLICK_ACTION_SUCCESS
 

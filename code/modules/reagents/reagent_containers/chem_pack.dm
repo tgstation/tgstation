@@ -30,7 +30,7 @@
 	reagents.flags = reagent_flags
 	spillable = FALSE
 	sealed = TRUE
-	to_chat(user, span_notice("You seal the bag."))
+	balloon_alert(user, "sealed")
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/chem_pack/examine()

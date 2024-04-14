@@ -1228,8 +1228,6 @@
 	to_chat(user, span_notice("You [suction ? "enable" : "disable"] the board's suction function."))
 
 /obj/item/circuitboard/machine/dish_drive/click_alt(mob/living/user)
-	if(!user.Adjacent(src))
-		return NONE
 	transmit = !transmit
 	to_chat(user, span_notice("You [transmit ? "enable" : "disable"] the board's automatic disposal transmission."))
 	return CLICK_ACTION_SUCCESS

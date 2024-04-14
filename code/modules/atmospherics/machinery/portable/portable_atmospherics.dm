@@ -160,7 +160,7 @@
 	return TRUE
 
 /obj/machinery/portable_atmospherics/click_alt(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY) || !can_interact(user))
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return NONE
 	if(!holding)
 		return CLICK_ACTION_BLOCKING

@@ -111,8 +111,6 @@
 	to_chat(user, span_notice("[icon2html(src, user)] [isliving(target) ? "Subject" : "Target"] is free of radioactive contamination."))
 
 /obj/item/geiger_counter/click_alt(mob/living/user)
-	if(!user.can_perform_action(src))
-		return NONE
 	if(!scanning)
 		to_chat(usr, span_warning("[src] must be on to reset its radiation level!"))
 		return CLICK_ACTION_BLOCKING

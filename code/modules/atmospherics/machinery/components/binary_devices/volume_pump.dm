@@ -42,9 +42,6 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
-
 	if(transfer_rate == MAX_TRANSFER_RATE)
 		return CLICK_ACTION_BLOCKING
 

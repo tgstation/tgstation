@@ -92,8 +92,6 @@
 
 
 /obj/item/modular_computer/laptop/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
 	if(!screen_on) // Close it.
 		return CLICK_ACTION_BLOCKING
 	try_toggle_open(user)

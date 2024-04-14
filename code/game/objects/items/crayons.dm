@@ -961,8 +961,11 @@
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/toy/crayon/spraycan/click_alt(mob/user)
-	if(!has_cap || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return NONE
+
+	if(!has_cap)
+		return CLICK_ACTION_BLOCKING
 	is_capped = !is_capped
 	balloon_alert(user, is_capped ? "capped" : "cap removed")
 	update_appearance()

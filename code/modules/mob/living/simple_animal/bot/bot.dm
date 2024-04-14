@@ -412,8 +412,6 @@
 		ui.open()
 
 /mob/living/simple_animal/bot/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return NONE
 	unlock_with_id(user)

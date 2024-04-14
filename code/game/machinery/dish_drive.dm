@@ -142,10 +142,10 @@
 	do_the_dishes(TRUE)
 
 /obj/machinery/dish_drive/click_alt(mob/living/user)
-	if(user.can_perform_action(src, ALLOW_SILICON_REACH))
-		do_the_dishes(TRUE)
-		return CLICK_ACTION_SUCCESS
-	return CLICK_ACTION_BLOCKING
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
+		return CLICK_ACTION_BLOCKING
+	do_the_dishes(TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/dish_drive/proc/do_the_dishes(manual)
 	if(!LAZYLEN(dish_drive_contents))

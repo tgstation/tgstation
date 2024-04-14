@@ -7,6 +7,9 @@
 	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
 
+	if(!can_interact(user))
+		return
+
 	var/early_sig_return = SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT
 	if(early_sig_return)
 		return early_sig_return
@@ -14,9 +17,6 @@
 	var/alt_click_return = click_alt(user)
 	if(alt_click_return)
 		return alt_click_return
-
-	if(!user.can_interact_with(src))
-		return
 
 	// TODO: Replace
 	var/turf/T = get_turf(src)

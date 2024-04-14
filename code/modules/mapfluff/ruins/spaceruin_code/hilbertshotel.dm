@@ -345,9 +345,6 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		promptExit(user)
 
 /turf/closed/indestructible/hoteldoor/click_alt(mob/user)
-	if(!Adjacent(user))
-		return NONE
-
 	to_chat(user, span_notice("You peak through the door's bluespace peephole..."))
 	user.reset_perspective(parentSphere)
 	var/datum/action/peephole_cancel/PHC = new

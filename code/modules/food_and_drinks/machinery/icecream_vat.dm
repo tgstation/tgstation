@@ -155,8 +155,6 @@
 	return ..()
 
 /obj/machinery/icecream_vat/click_alt(mob/user)
-	if(!user.can_interact_with(src))
-		return NONE
 	if(!custom_ice_cream_beaker)
 		return CLICK_ACTION_BLOCKING
 	balloon_alert(user, "removed beaker")

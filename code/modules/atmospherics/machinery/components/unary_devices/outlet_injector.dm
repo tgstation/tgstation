@@ -63,9 +63,6 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
-
 	if(volume_rate == MAX_TRANSFER_RATE)
 		return CLICK_ACTION_BLOCKING
 

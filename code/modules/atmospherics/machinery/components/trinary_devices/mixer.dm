@@ -36,9 +36,6 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/mixer/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
-
 	if(target_pressure == MAX_OUTPUT_PRESSURE)
 		return CLICK_ACTION_BLOCKING
 

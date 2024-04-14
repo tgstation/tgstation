@@ -111,9 +111,6 @@
 		. += span_notice("You can fold it up with a Right-click.")
 
 /obj/structure/bed/medical/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
-
 	if(has_buckled_mobs() && (user in buckled_mobs))
 		return CLICK_ACTION_BLOCKING
 

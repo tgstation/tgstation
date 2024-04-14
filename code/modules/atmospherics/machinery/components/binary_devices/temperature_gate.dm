@@ -36,9 +36,6 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
-
 	if(target_temperature == max_temperature)
 		return CLICK_ACTION_BLOCKING
 

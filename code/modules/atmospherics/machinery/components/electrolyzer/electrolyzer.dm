@@ -188,8 +188,6 @@
 	return ..()
 
 /obj/machinery/electrolyzer/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
 	if(panel_open)
 		balloon_alert(user, "close panel!")
 		return CLICK_ACTION_BLOCKING

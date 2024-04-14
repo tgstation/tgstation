@@ -120,6 +120,7 @@
 	if(CPU_INTERACTABLE(user) || !can_interact(user))
 		return NONE
 	cpu.click_alt(user)
+	return CLICK_ACTION_SUCCESS
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 // On-click handling. Turns on the computer if it's off and opens the GUI.

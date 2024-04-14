@@ -103,8 +103,8 @@
 		. += span_notice("Alt-click to remove the tag!")
 
 /obj/item/pillow/click_alt(mob/user)
-	if(!can_interact(user) || !user.can_hold_items(src))
-		return NONE
+	if(!user.can_hold_items(src))
+		return CLICK_ACTION_BLOCKING
 	if(!pillow_trophy)
 		balloon_alert(user, "no tag!")
 		return CLICK_ACTION_BLOCKING

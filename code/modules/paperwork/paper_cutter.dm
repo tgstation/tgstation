@@ -142,9 +142,6 @@
 	return ..()
 
 /obj/item/papercutter/click_alt(mob/user)
-	if(!user.Adjacent(src))
-		return NONE
-
 	// can only remove one at a time; paper goes first, as its most likely what players will want to be taking out
 	if(!isnull(stored_paper))
 		user.put_in_hands(stored_paper)

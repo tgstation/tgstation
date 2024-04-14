@@ -164,8 +164,6 @@
 	return inserted_scan_id.registered_account.civilian_bounty
 
 /obj/machinery/computer/piratepad_control/civilian/click_alt(mob/user)
-	if(!Adjacent(user))
-		return NONE
 	id_eject(user, inserted_scan_id)
 	return CLICK_ACTION_SUCCESS
 

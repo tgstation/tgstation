@@ -226,8 +226,10 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/mask/facescarf/click_alt(mob/user)
-	if(user.can_perform_action(src, NEED_DEXTERITY))
-		adjustmask(user)
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
+		return NONE
+	adjustmask(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/facescarf/examine(mob/user)
 	. = ..()

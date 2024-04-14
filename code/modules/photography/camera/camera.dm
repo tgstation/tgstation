@@ -73,8 +73,6 @@
 	return TRUE
 
 /obj/item/camera/click_alt(mob/user)
-	if(!user.can_perform_action(src))
-		return NONE
 	adjust_zoom(user)
 	return CLICK_ACTION_SUCCESS
 

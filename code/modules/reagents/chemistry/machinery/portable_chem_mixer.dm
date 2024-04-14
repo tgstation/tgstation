@@ -251,7 +251,7 @@
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/storage/portable_chem_mixer/click_alt(mob/living/user)
-	if(!can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return NONE
 	if(!atom_storage.locked)
 		balloon_alert(user, "lock first to use alt eject!")

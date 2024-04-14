@@ -39,9 +39,6 @@ Passive gate is similar to the regular pump except:
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/passive_gate/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
-
 	if(target_pressure == MAX_OUTPUT_PRESSURE)
 		return CLICK_ACTION_BLOCKING
 

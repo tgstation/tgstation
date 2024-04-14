@@ -128,8 +128,6 @@
 		. += span_notice("Alt-click to rotate the output direction.")
 
 /obj/machinery/mecha_part_fabricator/click_alt(mob/user)
-	if(!user.can_perform_action(src))
-		return NONE
 	if(!panel_open)
 		return CLICK_ACTION_BLOCKING
 	dir = turn(dir, -90)

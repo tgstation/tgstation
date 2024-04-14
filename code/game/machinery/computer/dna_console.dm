@@ -211,9 +211,6 @@
 	return TRUE
 
 /obj/machinery/computer/scan_consolenew/click_alt(mob/user)
-	// Make sure the user can interact with the machine.
-	if(!can_interact(user))
-		return NONE
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return NONE
 

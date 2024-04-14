@@ -209,8 +209,6 @@
 
 
 /obj/machinery/iv_drip/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
 	set_transfer_rate(transfer_rate > MIN_IV_TRANSFER_RATE ? MIN_IV_TRANSFER_RATE : MAX_IV_TRANSFER_RATE)
 	return CLICK_ACTION_SUCCESS
 

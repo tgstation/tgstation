@@ -397,8 +397,6 @@
 		check_hit(hit_atom)
 
 /obj/item/training_toolbox/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
 	to_chat(user, span_notice("You push the 'Lap' button on the toolbox's display."))
 	lap_hits = initial(lap_hits)
 	return CLICK_ACTION_SUCCESS

@@ -62,8 +62,6 @@
 		. += "[readout()]"
 
 /obj/item/taperecorder/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
 	play()
 	return CLICK_ACTION_SUCCESS
 

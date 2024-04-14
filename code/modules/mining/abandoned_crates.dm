@@ -61,8 +61,6 @@
 	return ..()
 
 /obj/structure/closet/crate/secure/loot/click_alt(mob/living/user)
-	if(!user.can_perform_action(src))
-		return NONE
 	attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
 	return CLICK_ACTION_SUCCESS
 

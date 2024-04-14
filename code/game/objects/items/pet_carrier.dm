@@ -67,8 +67,8 @@
 	update_appearance()
 
 /obj/item/pet_carrier/click_alt(mob/living/user)
-	if(open || !user.can_perform_action(src))
-		return NONE
+	if(open)
+		return CLICK_ACTION_BLOCKING
 	locked = !locked
 	to_chat(user, span_notice("You flip the lock switch [locked ? "down" : "up"]."))
 	if(locked)

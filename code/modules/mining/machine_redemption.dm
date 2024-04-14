@@ -204,8 +204,6 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mineral/ore_redemption/click_alt(mob/living/user)
-	if(!user.can_perform_action(src))
-		return NONE
 	if(!panel_open)
 		return CLICK_ACTION_BLOCKING
 	input_dir = turn(input_dir, -90)

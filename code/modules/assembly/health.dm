@@ -38,9 +38,6 @@
 	return secured
 
 /obj/item/assembly/health/click_alt(mob/living/user)
-	if(!can_interact(user))
-		return NONE
-
 	if(alarm_health == HEALTH_THRESHOLD_CRIT)
 		alarm_health = HEALTH_THRESHOLD_DEAD
 		to_chat(user, span_notice("You toggle [src] to \"detect death\" mode."))

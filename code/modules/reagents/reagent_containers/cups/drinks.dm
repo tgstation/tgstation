@@ -251,7 +251,7 @@
 /obj/item/reagent_containers/cup/glass/waterbottle/click_alt(mob/user)
 	if(cap_lost)
 		to_chat(user, span_warning("The cap seems to be missing! Where did it go?"))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	var/fumbled = HAS_TRAIT(user, TRAIT_CLUMSY) && prob(5)
 	if(cap_on || fumbled)
@@ -269,6 +269,7 @@
 		spillable = FALSE
 		to_chat(user, span_notice("You put the cap on [src]."))
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/cup/glass/waterbottle/is_refillable()
 	if(cap_on)
@@ -464,31 +465,31 @@
 
 /obj/item/reagent_containers/cup/glass/shaker/click_alt(mob/user)
 	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
-		return
+		return NONE
 
 	if(using_custom_drinks)
 		using_custom_drinks = FALSE
 		disable_custom_drinks()
 		balloon_alert(user, "custom drinks disabled")
-		return
+		return CLICK_ACTION_BLOCKING
 
 	var/new_name = reject_bad_text(tgui_input_text(user, "Drink name", "Set drink name", custom_drink_name, 45, FALSE), 64)
 	if(!new_name)
 		balloon_alert(user, "invalid drink name!")
 		using_custom_drinks = FALSE
-		return
+		return CLICK_ACTION_BLOCKING
 
 	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	var/new_desc = reject_bad_text(tgui_input_text(user, "Drink description", "Set drink description", custom_drink_desc, 64, TRUE), 128)
 	if(!new_desc)
 		balloon_alert(user, "invalid drink description!")
 		using_custom_drinks = FALSE
-		return
+		return CLICK_ACTION_BLOCKING
 
 	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	using_custom_drinks = TRUE
 	custom_drink_name = new_name
@@ -496,6 +497,7 @@
 
 	enable_custom_drinks()
 	balloon_alert(user, "now pouring custom drinks")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/cup/glass/shaker/proc/enable_custom_drinks()
 	RegisterSignal(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, PROC_REF(handle_transfer))

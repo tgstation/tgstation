@@ -31,9 +31,6 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/click_alt(mob/user)
-	if(!can_interact(user))
-		return NONE
-
 	if(heat_transfer_rate == max_heat_transfer_rate)
 		return CLICK_ACTION_BLOCKING
 

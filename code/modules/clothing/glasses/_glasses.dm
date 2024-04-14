@@ -70,9 +70,6 @@
 		return NONE
 	var/mob/living/carbon/human/human_user = user
 
-	if (human_user.glasses != src)
-		return NONE
-
 	if (HAS_TRAIT_FROM(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT))
 		REMOVE_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
 		to_chat(human_user, span_notice("You will no longer see glasses colors."))
@@ -657,16 +654,18 @@
 			our_hud.hide_from(user)
 
 /obj/item/clothing/glasses/debug/click_alt(mob/user)
-	if(ishuman(user))
-		if(xray)
-			vision_flags &= ~SEE_MOBS|SEE_OBJS
-			REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
-		else
-			vision_flags |= SEE_MOBS|SEE_OBJS
-			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
-		xray = !xray
-		var/mob/living/carbon/human/human_user = user
-		human_user.update_sight()
+	if(!ishuman(user))
+		return CLICK_ACTION_BLOCKING
+	if(xray)
+		vision_flags &= ~SEE_MOBS|SEE_OBJS
+		REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+	else
+		vision_flags |= SEE_MOBS|SEE_OBJS
+		ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+	xray = !xray
+	var/mob/living/carbon/human/human_user = user
+	human_user.update_sight()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/glasses/regular/kim
 	name = "binoclard lenses"

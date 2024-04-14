@@ -58,8 +58,6 @@
 		open_machine()
 
 /obj/machinery/harvester/click_alt(mob/user)
-	if(!user.can_perform_action(src))
-		return NONE
 	if(panel_open)
 		output_dir = turn(output_dir, -90)
 		to_chat(user, span_notice("You change [src]'s output settings, setting the output to [dir2text(output_dir)]."))

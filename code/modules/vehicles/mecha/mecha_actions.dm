@@ -92,8 +92,6 @@
 	chassis.toggle_strafe()
 
 /obj/vehicle/sealed/mecha/click_alt(mob/living/user)
-	if(!user.can_perform_action(src))
-		return NONE
 	if(!(user in occupants))
 		return CLICK_ACTION_BLOCKING
 	if(!(user in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE)))

@@ -706,8 +706,6 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/slimepotion/slime/sentience/click_alt(mob/living/user)
-	if(!can_interact(user))
-		return NONE
 	potion_reason = tgui_input_text(user, "Enter reason for offering potion", "Intelligence Potion", potion_reason, multiline = TRUE)
 	return CLICK_ACTION_SUCCESS
 
