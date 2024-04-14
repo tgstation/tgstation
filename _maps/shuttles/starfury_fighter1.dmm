@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_fighter1)
 "h" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/end,
+/obj/effect/turf_decal/siding/thinplating/dark/end,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_fighter1)
 "i" = (
@@ -93,7 +93,7 @@
 	dir = 1;
 	name = "tactical chair"
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+/obj/effect/turf_decal/siding/thinplating/dark/end{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -110,7 +110,7 @@
 /obj/docking_port/mobile/syndicate_fighter/fighter_one,
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /turf/open/floor/plating,

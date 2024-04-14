@@ -55,7 +55,7 @@
 	pixel_y = 2
 	},
 /obj/item/lighter,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/herringbone,
@@ -165,7 +165,7 @@
 /obj/machinery/computer/atmos_alert{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -206,7 +206,7 @@
 /area/shuttle/escape)
 "eY" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
 /turf/open/floor/iron/herringbone,
@@ -287,7 +287,7 @@
 /obj/item/flashlight/lantern{
 	pixel_y = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/herringbone,
@@ -318,7 +318,7 @@
 /obj/item/flashlight/lantern{
 	pixel_y = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/herringbone,
@@ -435,7 +435,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
 /turf/open/floor/iron/herringbone,
@@ -557,7 +557,7 @@
 /turf/open/floor/iron/smooth_half,
 /area/shuttle/escape)
 "kK" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
 /turf/open/floor/iron/herringbone,
@@ -682,7 +682,7 @@
 /obj/structure/chair/pew/left{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/herringbone,
@@ -892,7 +892,7 @@
 /obj/structure/chair/pew/right{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/herringbone,
@@ -1088,7 +1088,7 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/escape)
 "vy" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/item/storage/fancy/cigarettes/cigars/cohiba,
@@ -1130,7 +1130,7 @@
 "wi" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/regular,
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -1165,7 +1165,7 @@
 /obj/structure/chair/pew/right{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/herringbone,
@@ -1191,7 +1191,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/herringbone,
@@ -1405,7 +1405,7 @@
 /area/shuttle/escape)
 "At" = (
 /obj/structure/table/wood,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/herringbone,
@@ -1507,7 +1507,7 @@
 /obj/machinery/computer/station_alert{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -1641,7 +1641,7 @@
 /obj/structure/table/reinforced{
 	color = "#c1b6a5"
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -1777,7 +1777,7 @@
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
 "GR" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
 /turf/open/floor/iron/herringbone,
@@ -2000,7 +2000,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/spirit_board,
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/herringbone,
@@ -2128,7 +2128,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Nm" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
 /mob/living/basic/bot/medbot,
@@ -2236,7 +2236,7 @@
 /obj/item/modular_computer/laptop{
 	pixel_y = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Pa" = (
@@ -2429,7 +2429,7 @@
 	pixel_x = -5;
 	pixel_y = 2
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "SR" = (

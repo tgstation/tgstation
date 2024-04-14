@@ -61,7 +61,7 @@
 	dir = 1;
 	name = "tactical chair"
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+/obj/effect/turf_decal/siding/thinplating/dark/end{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -113,7 +113,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_fighter2)
 "W" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/end,
+/obj/effect/turf_decal/siding/thinplating/dark/end,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_fighter2)
 

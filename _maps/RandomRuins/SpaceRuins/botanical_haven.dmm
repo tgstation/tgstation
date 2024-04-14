@@ -45,11 +45,11 @@
 /turf/closed/wall/rock,
 /area/ruin/space/has_grav/powered/botanical_haven)
 "k" = (
-/obj/effect/turf_decal/siding/thinplating_new/terracotta/corner{
+/obj/effect/turf_decal/siding/thinplating/terracotta/corner{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/thinplating_new/terracotta/corner,
-/obj/effect/turf_decal/siding/thinplating_new/terracotta{
+/obj/effect/turf_decal/siding/thinplating/terracotta/corner,
+/obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 1
 	},
 /turf/open/floor/iron/terracotta/small,
@@ -143,7 +143,7 @@
 /area/ruin/space/has_grav/powered/botanical_haven)
 "L" = (
 /obj/item/kirbyplants/organic/plant21,
-/obj/effect/turf_decal/siding/thinplating_new/terracotta/end{
+/obj/effect/turf_decal/siding/thinplating/terracotta/end{
 	dir = 8
 	},
 /turf/open/floor/iron/terracotta/small,
@@ -169,7 +169,7 @@
 /obj/structure/chair/sofa/bench/right{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new/terracotta/end{
+/obj/effect/turf_decal/siding/thinplating/terracotta/end{
 	dir = 4
 	},
 /turf/open/floor/iron/terracotta/small,
@@ -204,12 +204,12 @@
 /turf/open/misc/grass,
 /area/ruin/space/has_grav/powered/botanical_haven)
 "W" = (
-/obj/effect/turf_decal/siding/thinplating_new/terracotta,
+/obj/effect/turf_decal/siding/thinplating/terracotta,
 /obj/structure/chair/sofa/bench/left{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/thinplating_new/terracotta{
+/obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 1
 	},
 /turf/open/floor/iron/terracotta/small,

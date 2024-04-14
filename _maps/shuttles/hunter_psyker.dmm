@@ -317,7 +317,7 @@
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "no" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/structure/flora/bush/flowers_yw/style_random,
@@ -352,7 +352,7 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/hunter)
 "qa" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/structure/flora/bush/flowers_pp/style_random,
@@ -898,7 +898,7 @@
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "RK" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/machinery/light/floor,

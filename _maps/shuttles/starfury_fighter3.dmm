@@ -9,7 +9,7 @@
 	},
 /obj/docking_port/mobile/syndicate_fighter/fighter_three,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -60,7 +60,7 @@
 	dir = 1;
 	name = "tactical chair"
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+/obj/effect/turf_decal/siding/thinplating/dark/end{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -95,7 +95,7 @@
 /turf/template_noop,
 /area/shuttle/sbc_fighter3)
 "Q" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/end,
+/obj/effect/turf_decal/siding/thinplating/dark/end,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_fighter3)
 "T" = (

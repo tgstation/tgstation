@@ -18,7 +18,7 @@
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/cargo)
 "m" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -38,7 +38,7 @@
 /turf/template_noop,
 /area/template_noop)
 "t" = (
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -54,7 +54,7 @@
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/cargo)
 "E" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -77,7 +77,7 @@
 /area/station/maintenance/department/cargo)
 "J" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
@@ -89,7 +89,7 @@
 /area/station/maintenance/department/cargo)
 "L" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
 /turf/open/floor/iron/smooth,

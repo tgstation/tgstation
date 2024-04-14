@@ -35,7 +35,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "f" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -50,7 +50,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/maintenance/department/cargo)
 "m" = (
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 1
 	},
 /obj/structure/rack,
@@ -73,7 +73,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "p" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 9
 	},
 /obj/structure/rack,
@@ -82,7 +82,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "q" = (
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -120,7 +120,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/maintenance/department/cargo)
 "K" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,

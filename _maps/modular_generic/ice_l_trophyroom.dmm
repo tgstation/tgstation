@@ -1,8 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ah" = (
 /obj/structure/flora/grass/brown/style_random,
-/obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/structure/railing{
@@ -17,7 +17,7 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/template_noop)
 "gr" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 9
 	},
 /obj/structure/chair/office/light,
@@ -36,10 +36,10 @@
 /turf/template_noop,
 /area/template_noop)
 "jV" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 6
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
 	},
 /obj/structure/hedge,
@@ -47,8 +47,8 @@
 /area/template_noop)
 "kM" = (
 /obj/structure/flora/grass/brown/style_random,
-/obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/structure/railing{
@@ -59,10 +59,10 @@
 /area/template_noop)
 "ng" = (
 /obj/structure/flora/rock/pile/icy/style_3,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /obj/structure/railing,
 /obj/structure/flora/tree/dead/style_random{
 	pixel_y = 12
@@ -70,7 +70,7 @@
 /turf/open/misc/snow,
 /area/template_noop)
 "pV" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -85,7 +85,7 @@
 /turf/open/misc/snow,
 /area/template_noop)
 "rS" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 6
 	},
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
@@ -101,8 +101,8 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/template_noop)
 "tl" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/structure/railing{
@@ -113,7 +113,7 @@
 /area/template_noop)
 "tN" = (
 /obj/structure/flora/grass/brown/style_random,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/structure/flora/bush/flowers_pp,
@@ -128,7 +128,7 @@
 /area/template_noop)
 "vs" = (
 /obj/structure/flora/grass/brown/style_random,
-/obj/effect/turf_decal/siding/thinplating_new/dark/end,
+/obj/effect/turf_decal/siding/thinplating/dark/end,
 /obj/structure/railing{
 	dir = 6
 	},
@@ -136,7 +136,7 @@
 /turf/open/misc/snow,
 /area/template_noop)
 "vv" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+/obj/effect/turf_decal/siding/thinplating/dark/end{
 	dir = 1
 	},
 /obj/structure/railing{
@@ -147,7 +147,7 @@
 /turf/open/misc/snow,
 /area/template_noop)
 "wW" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+/obj/effect/turf_decal/siding/thinplating/dark/end{
 	dir = 1
 	},
 /obj/structure/railing{
@@ -161,22 +161,22 @@
 /turf/template_noop,
 /area/template_noop)
 "yg" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /obj/structure/railing,
 /obj/structure/hedge,
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/misc/snow,
 /area/template_noop)
 "yk" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /obj/effect/decal/cleanable/plastic,
 /turf/open/misc/snow,
 /area/template_noop)
 "yK" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/end,
+/obj/effect/turf_decal/siding/thinplating/dark/end,
 /obj/structure/railing{
 	dir = 10
 	},
@@ -185,10 +185,10 @@
 /turf/open/misc/snow,
 /area/template_noop)
 "yS" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 9
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/obj/effect/turf_decal/siding/thinplating/dark/corner,
 /obj/structure/hedge,
 /turf/open/misc/snow,
 /area/template_noop)
@@ -196,7 +196,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/effect/spawner/random/structure/crate,
@@ -211,10 +211,10 @@
 /area/template_noop)
 "Bp" = (
 /obj/structure/flora/rock/icy/style_2,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /obj/structure/railing{
@@ -229,7 +229,7 @@
 /turf/open/floor/carpet/blue,
 /area/template_noop)
 "Eb" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 8
 	},
 /obj/structure/filingcabinet,
@@ -243,7 +243,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 10
 	},
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
@@ -251,10 +251,10 @@
 /area/template_noop)
 "IF" = (
 /obj/structure/flora/grass/brown/style_random,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/structure/railing{
@@ -265,8 +265,8 @@
 /area/template_noop)
 "JF" = (
 /obj/structure/flora/grass/green/style_random,
-/obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/structure/railing{
@@ -286,17 +286,17 @@
 /area/template_noop)
 "Lj" = (
 /obj/structure/flora/grass/green/style_random,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /obj/structure/railing,
 /obj/structure/flora/bush/snow/style_random,
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/misc/snow,
 /area/template_noop)
 "Lo" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 8
 	},
 /obj/structure/chair/office/light{
@@ -307,7 +307,7 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/template_noop)
 "Ml" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
@@ -315,16 +315,16 @@
 /area/template_noop)
 "Mr" = (
 /obj/structure/flora/grass/green/style_random,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /obj/structure/railing,
 /obj/structure/flora/bush/snow/style_random,
 /turf/open/misc/snow,
 /area/template_noop)
 "MO" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
 	},
 /obj/structure/table/reinforced,
@@ -344,7 +344,7 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/template_noop)
 "Nk" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /obj/structure/hedge,
 /turf/open/misc/snow,
 /area/template_noop)
@@ -357,10 +357,10 @@
 /area/template_noop)
 "Pk" = (
 /obj/structure/flora/grass/green/style_random,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/structure/railing{
@@ -371,7 +371,7 @@
 /turf/open/misc/snow,
 /area/template_noop)
 "RA" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/obj/effect/turf_decal/siding/thinplating/dark/corner,
 /obj/structure/chair/office/light{
 	dir = 1
 	},
@@ -389,10 +389,10 @@
 /turf/open/misc/snow,
 /area/template_noop)
 "UO" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 10
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 4
 	},
 /obj/structure/flora/bush/flowers_pp,
@@ -400,7 +400,7 @@
 /turf/open/misc/snow,
 /area/template_noop)
 "VA" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -417,10 +417,10 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/template_noop)
 "Xc" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 5
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 8
 	},
 /obj/structure/flora/bush/flowers_pp,
@@ -429,10 +429,10 @@
 /area/template_noop)
 "XH" = (
 /obj/structure/flora/grass/green/style_random,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /obj/structure/railing{

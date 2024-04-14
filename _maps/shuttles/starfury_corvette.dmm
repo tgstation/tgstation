@@ -4,7 +4,7 @@
 /area/template_noop)
 "ab" = (
 /obj/structure/closet/syndicate/personal,
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /obj/effect/turf_decal/stripes/red/line,
 /obj/structure/railing,
 /turf/open/floor/mineral/plastitanium,
@@ -73,7 +73,7 @@
 /obj/docking_port/mobile/syndicate_corvette,
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -82,7 +82,7 @@
 /obj/structure/chair/comfy/shuttle{
 	name = "tactical chair"
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/red/line{
@@ -91,8 +91,8 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
 "al" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/red/line,
@@ -140,7 +140,7 @@
 /obj/item/multitool,
 /obj/item/clothing/head/utility/welding,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -164,7 +164,7 @@
 	},
 /obj/item/storage/box/zipties,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -180,7 +180,7 @@
 	dir = 1;
 	name = "tactical chair"
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/red/line{
@@ -196,7 +196,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
 "az" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/red/line{
@@ -209,10 +209,10 @@
 	dir = 8;
 	name = "tactical chair"
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
@@ -231,11 +231,11 @@
 	},
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /turf/open/floor/plating,
 /area/shuttle/sbc_corvette)
 "aF" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 5
 	},
 /obj/effect/turf_decal/stripes/red/line{
@@ -248,7 +248,7 @@
 /obj/structure/chair/comfy/shuttle{
 	name = "tactical chair"
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/red/line{
@@ -264,7 +264,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_corvette)
 "aJ" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/red/line{
@@ -326,7 +326,7 @@
 	},
 /obj/item/flashlight/seclite,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -334,10 +334,10 @@
 /area/shuttle/sbc_corvette)
 "aT" = (
 /obj/machinery/light/small/directional/west,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
@@ -347,8 +347,8 @@
 /obj/machinery/light/small/directional/west{
 	brightness = 3
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/red/line,
@@ -366,7 +366,7 @@
 	dir = 1;
 	name = "tactical chair"
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/red/line{
@@ -391,7 +391,7 @@
 /area/shuttle/sbc_corvette)
 "up" = (
 /obj/structure/closet/syndicate/personal,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/red/line{
@@ -426,7 +426,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
 "KZ" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 9
 	},
 /obj/effect/turf_decal/stripes/red/line{

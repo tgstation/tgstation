@@ -6,7 +6,7 @@
 /obj/structure/chair/stool/bar/directional/north{
 	pixel_y = 6
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/obj/effect/turf_decal/siding/thinplating/dark/corner,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -17,7 +17,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/effect/spawner/random/structure/crate,
@@ -28,7 +28,7 @@
 /turf/template_noop,
 /area/template_noop)
 "g" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -43,7 +43,7 @@
 /area/template_noop)
 "m" = (
 /obj/effect/decal/cleanable/wrapping/pinata,
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -53,7 +53,7 @@
 /turf/template_noop,
 /area/template_noop)
 "o" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -103,7 +103,7 @@
 /obj/structure/chair/stool/bar/directional/north{
 	pixel_y = 6
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -119,12 +119,12 @@
 /turf/open/floor/iron/dark,
 /area/template_noop)
 "J" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /obj/structure/railing,
 /turf/open/floor/iron/dark,
 /area/template_noop)
 "K" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /obj/structure/railing,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/melee/baseball_bat/homerun,
@@ -139,7 +139,7 @@
 /turf/open/floor/iron/dark,
 /area/template_noop)
 "N" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
 	},
 /obj/effect/spawner/random/food_or_drink,
@@ -149,7 +149,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/structure/rack,

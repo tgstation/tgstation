@@ -584,7 +584,7 @@
 /turf/open/floor/wood,
 /area/shuttle/pirate)
 "sg" = (
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 4
 	},
 /obj/structure/railing/corner{
@@ -642,7 +642,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pirate)
 "tv" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
 /obj/effect/turf_decal/caution/stand_clear/white,
@@ -1197,7 +1197,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "Ir" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
 /obj/effect/turf_decal/caution/stand_clear/white,
@@ -1710,7 +1710,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "SG" = (
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 1
 	},
 /obj/structure/railing/corner{

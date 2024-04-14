@@ -601,7 +601,7 @@
 /turf/open/space/basic,
 /area/space)
 "cK" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark/corner,
+/obj/effect/turf_decal/siding/wideplating/dark/corner,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -1193,7 +1193,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
 "fC" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -2830,7 +2830,7 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
 "nb" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -5386,7 +5386,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "yx" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -5650,7 +5650,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/tdome/observation)
 "zx" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -6580,7 +6580,7 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
 "DA" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -6720,7 +6720,7 @@
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/evacuation/ship)
 "Er" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -6759,7 +6759,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
 "EB" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -6812,7 +6812,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "EL" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7476,7 +7476,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "JE" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -7630,7 +7630,7 @@
 	},
 /area/centcom/tdome/observation)
 "KO" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark/corner{
+/obj/effect/turf_decal/siding/wideplating/dark/corner{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7656,7 +7656,7 @@
 /turf/open/space/basic,
 /area/space)
 "KV" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -7689,7 +7689,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation/ship)
 "Lc" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7761,7 +7761,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "Lp" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7775,7 +7775,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/centcom/central_command_areas/evacuation/ship)
 "Lu" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7813,7 +7813,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
 "LA" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/corner,
@@ -7824,7 +7824,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "LB" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -7846,7 +7846,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "LD" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -8960,7 +8960,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/tdome/observation)
 "QH" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/turf_decal/siding/wideplating/dark,
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -9990,7 +9990,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
 "Vv" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -10831,7 +10831,7 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/control)
 "ZA" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/corner,

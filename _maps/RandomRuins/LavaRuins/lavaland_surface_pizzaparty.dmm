@@ -87,7 +87,7 @@
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating,
 /turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "dR" = (
@@ -133,7 +133,7 @@
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
 /turf/open/floor/iron/diagonal/lavaland,
@@ -226,7 +226,7 @@
 "og" = (
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
 /turf/open/floor/iron/diagonal/lavaland,
@@ -436,7 +436,7 @@
 /area/ruin/unpowered)
 "zj" = (
 /obj/structure/mineral_door/wood,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,

@@ -2275,7 +2275,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "aQP" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /obj/effect/turf_decal/trimline/brown/line,
 /obj/effect/turf_decal/trimline/brown/line{
 	dir = 1
@@ -9310,7 +9310,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "dup" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/south,
@@ -43852,7 +43852,7 @@
 "pJp" = (
 /obj/machinery/quantum_server,
 /obj/effect/turf_decal/bot/left,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 6
 	},
 /obj/machinery/light/directional/north,
@@ -45472,7 +45472,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "qoq" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /obj/effect/turf_decal/trimline/brown/line,
 /obj/effect/turf_decal/trimline/brown/line{
 	dir = 1
@@ -47176,7 +47176,7 @@
 /area/station/science/ordnance/bomb)
 "qRU" = (
 /obj/machinery/computer/quantum_console,
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark/textured_large,
@@ -50858,7 +50858,7 @@
 /turf/open/floor/iron,
 /area/station/science/research)
 "sgJ" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /obj/effect/turf_decal/trimline/brown/line,
 /obj/effect/turf_decal/trimline/brown/line{
 	dir = 1

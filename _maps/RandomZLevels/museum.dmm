@@ -2424,7 +2424,7 @@
 /turf/open/floor/iron,
 /area/awaymission/museum)
 "tB" = (
-/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating,
 /turf/open/chasm,
 /area/awaymission/museum)
 "tC" = (

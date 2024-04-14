@@ -87,7 +87,7 @@
 	pixel_x = 8;
 	pixel_y = 9
 	},
-/obj/effect/turf_decal/siding/wideplating_new,
+/obj/effect/turf_decal/siding/wideplating,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "kY" = (
@@ -108,7 +108,7 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/wideplating_new,
+/obj/effect/turf_decal/siding/wideplating,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "lP" = (
@@ -351,7 +351,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/wideplating_new,
+/obj/effect/turf_decal/siding/wideplating,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Xs" = (

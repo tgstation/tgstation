@@ -216,7 +216,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 6
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -692,7 +692,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/abandoned/engine)
 "HD" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -761,7 +761,7 @@
 /obj/item/food/sausage,
 /obj/item/reagent_containers/cup/glass/bottle/beer,
 /obj/item/food/sandwich,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 10
 	},
 /obj/machinery/light/warm/no_nightlight/directional/north,
@@ -1081,7 +1081,7 @@
 /area/shuttle/abandoned/cargo)
 "TP" = (
 /obj/structure/closet/secure_closet/personal,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1196,7 +1196,7 @@
 /area/shuttle/abandoned/bridge)
 "ZW" = (
 /obj/machinery/washing_machine,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,

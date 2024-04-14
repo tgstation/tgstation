@@ -168,7 +168,7 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "eB" = (
-/obj/effect/turf_decal/siding/thinplating_new/light{
+/obj/effect/turf_decal/siding/thinplating/light{
 	dir = 9
 	},
 /obj/structure/chair/office/light{
@@ -189,7 +189,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "fU" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -254,7 +254,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "hB" = (
 /obj/machinery/door/window/survival_pod/left/directional/east,
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 5
 	},
 /obj/item/stack/cable_coil/cut,
@@ -262,7 +262,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "hL" = (
 /obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/siding/thinplating_new/light{
+/obj/effect/turf_decal/siding/thinplating/light{
 	dir = 9
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -392,7 +392,7 @@
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "ks" = (
-/obj/effect/turf_decal/siding/thinplating_new/light{
+/obj/effect/turf_decal/siding/thinplating/light{
 	dir = 10
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -425,14 +425,14 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "kO" = (
-/obj/effect/turf_decal/siding/thinplating_new/light,
+/obj/effect/turf_decal/siding/thinplating/light,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "le" = (
-/obj/effect/turf_decal/siding/thinplating_new/light/corner{
+/obj/effect/turf_decal/siding/thinplating/light/corner{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/thinplating_new/light{
+/obj/effect/turf_decal/siding/thinplating/light{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -487,7 +487,7 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "mo" = (
-/obj/effect/turf_decal/siding/thinplating_new/light/end,
+/obj/effect/turf_decal/siding/thinplating/light/end,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "mr" = (
@@ -633,7 +633,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "pY" = (
 /obj/machinery/light/small/broken/directional/east,
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 5
 	},
 /obj/effect/mob_spawn/corpse/human/monkey,
@@ -790,13 +790,13 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "us" = (
 /obj/machinery/door/window/survival_pod/left/directional/west,
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 10
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "uV" = (
-/obj/effect/turf_decal/siding/thinplating_new/light{
+/obj/effect/turf_decal/siding/thinplating/light{
 	dir = 5
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -928,7 +928,7 @@
 	dir = 4
 	},
 /obj/machinery/light/cold/directional/south,
-/obj/effect/turf_decal/siding/thinplating_new/light{
+/obj/effect/turf_decal/siding/thinplating/light{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -951,7 +951,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "yq" = (
 /obj/machinery/light/small/broken/directional/west,
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 9
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
@@ -972,7 +972,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "yK" = (
 /obj/machinery/door/window/survival_pod/left/directional/west,
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1160,7 +1160,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "BF" = (
 /obj/machinery/door/window/survival_pod/left/directional/west,
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 9
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
@@ -1266,7 +1266,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "DO" = (
 /obj/machinery/door/window/survival_pod/left/directional/east,
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1418,7 +1418,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Ha" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1532,7 +1532,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new/light{
+/obj/effect/turf_decal/siding/thinplating/light{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -1697,7 +1697,7 @@
 /turf/open/floor/glass,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Np" = (
-/obj/effect/turf_decal/siding/thinplating_new/light{
+/obj/effect/turf_decal/siding/thinplating/light{
 	dir = 5
 	},
 /obj/structure/chair/office/light{
@@ -1717,7 +1717,7 @@
 "NJ" = (
 /obj/effect/decal/remains/human,
 /obj/machinery/door/window/survival_pod/left/directional/east,
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 6
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
@@ -1870,7 +1870,7 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Rw" = (
-/obj/effect/turf_decal/siding/thinplating_new/light{
+/obj/effect/turf_decal/siding/thinplating/light{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -1984,7 +1984,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "SH" = (
 /obj/effect/decal/remains/human,
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2000,7 +2000,7 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "SU" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 6
 	},
 /obj/item/slimecross/industrial/bluespace,
@@ -2077,8 +2077,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Uz" = (
-/obj/effect/turf_decal/siding/thinplating_new/light/corner,
-/obj/effect/turf_decal/siding/thinplating_new/light/corner{
+/obj/effect/turf_decal/siding/thinplating/light/corner,
+/obj/effect/turf_decal/siding/thinplating/light/corner{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/greenglow,
@@ -2112,7 +2112,7 @@
 /turf/open/floor/glass,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Vk" = (
-/obj/effect/turf_decal/siding/thinplating_new/light{
+/obj/effect/turf_decal/siding/thinplating/light{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -2159,7 +2159,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "WC" = (
 /obj/machinery/door/window/survival_pod/left/directional/west,
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2316,7 +2316,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "ZH" = (
 /obj/machinery/light/small/broken/directional/east,
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2324,7 +2324,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "ZM" = (
 /obj/machinery/light/small/broken/directional/west,
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 10
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,

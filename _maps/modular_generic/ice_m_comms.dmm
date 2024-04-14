@@ -59,20 +59,20 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/template_noop)
 "o" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 8
 	},
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
 	},
 /turf/open/floor/carpet/blue,
 /area/template_noop)
 "p" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner,
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 8
 	},
 /obj/effect/turf_decal/weather/snow/corner{
@@ -100,7 +100,7 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/template_noop)
 "v" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 9
 	},
 /obj/structure/flora/grass/green/style_random,
@@ -121,7 +121,7 @@
 /turf/open/misc/snow,
 /area/template_noop)
 "A" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 6
 	},
 /obj/effect/turf_decal/weather/snow/corner{
@@ -156,13 +156,13 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 5
 	},
 /turf/open/floor/carpet/blue,
 /area/template_noop)
 "M" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/end,
+/obj/effect/turf_decal/siding/thinplating/dark/end,
 /turf/open/floor/carpet/blue,
 /area/template_noop)
 "N" = (
@@ -180,7 +180,7 @@
 /turf/open/floor/plating,
 /area/template_noop)
 "P" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+/obj/effect/turf_decal/siding/thinplating/dark/end{
 	dir = 8
 	},
 /turf/open/floor/carpet/blue,
@@ -191,7 +191,7 @@
 /turf/open/misc/snow,
 /area/template_noop)
 "S" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood/drip,
@@ -204,7 +204,7 @@
 /turf/open/misc/snow,
 /area/template_noop)
 "T" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 10
 	},
 /obj/structure/chair/office/light,

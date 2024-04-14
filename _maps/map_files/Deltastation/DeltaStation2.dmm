@@ -9096,7 +9096,7 @@
 /turf/closed/wall/r_wall,
 /area/station/security/office)
 "cjO" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -29788,7 +29788,7 @@
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/aft)
 "hrz" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -91785,7 +91785,7 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port)
 "wTL" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{

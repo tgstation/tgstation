@@ -76,7 +76,7 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/syndicate/bridge)
 "as" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_edge{
@@ -118,7 +118,7 @@
 /area/shuttle/syndicate/medical)
 "aN" = (
 /obj/machinery/status_display/evac/directional/south,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/red/line{
@@ -202,7 +202,7 @@
 	name = "external door control";
 	req_access = list("syndicate")
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -268,7 +268,7 @@
 /obj/machinery/light/directional/north,
 /obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
 /obj/structure/railing{
@@ -363,7 +363,7 @@
 /obj/machinery/sleeper/syndie{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating,
 /obj/structure/railing,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/syndicate/medical)
@@ -380,20 +380,20 @@
 /turf/open/floor/circuit/red,
 /area/shuttle/syndicate/hallway)
 "bK" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/obj/effect/turf_decal/siding/thinplating/dark/corner,
 /obj/effect/mapping_helpers/airlock/autoname,
 /obj/machinery/door/airlock/hatch,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/medical)
 "bM" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/autoname,
@@ -634,10 +634,10 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/bridge)
 "lo" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/autoname,
@@ -646,7 +646,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/eva)
 "lJ" = (
-/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/syndicate/medical)
 "lU" = (
@@ -806,7 +806,7 @@
 	},
 /area/shuttle/syndicate/eva)
 "ye" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/red/line{
@@ -829,7 +829,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/syndicate/medical)
 "zd" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating/dark,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
 "zR" = (
@@ -839,7 +839,7 @@
 /area/shuttle/syndicate/hallway)
 "Az" = (
 /obj/machinery/status_display/ai/directional/south,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_corner{
@@ -853,7 +853,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/hallway)
 "BH" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /obj/structure/sign/poster/contraband/random/directional/north,
@@ -905,10 +905,10 @@
 /area/shuttle/syndicate/hallway)
 "Hl" = (
 /obj/machinery/door/airlock/external/ruin,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/autoname,
@@ -956,7 +956,7 @@
 "Lh" = (
 /obj/structure/rack,
 /obj/item/toy/plush/nukeplushie,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 6
 	},
 /obj/structure/railing{
@@ -1022,7 +1022,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/bridge)
 "Qq" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/red/line{
@@ -1078,7 +1078,7 @@
 	},
 /area/shuttle/syndicate/eva)
 "UN" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,

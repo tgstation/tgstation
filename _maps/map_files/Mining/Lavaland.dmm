@@ -120,7 +120,7 @@
 /area/mine/laborcamp/security)
 "aO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/wideplating_new{
+/obj/effect/turf_decal/siding/wideplating{
 	dir = 8
 	},
 /turf/open/floor/iron/checker,
@@ -185,7 +185,7 @@
 /area/mine/lounge)
 "by" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/wideplating_new{
+/obj/effect/turf_decal/siding/wideplating{
 	dir = 10
 	},
 /turf/open/floor/iron/checker,
@@ -3257,7 +3257,7 @@
 "sh" = (
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/wideplating_new{
+/obj/effect/turf_decal/siding/wideplating{
 	dir = 8
 	},
 /turf/open/floor/iron/checker,
@@ -3296,7 +3296,7 @@
 "st" = (
 /obj/structure/chair/stool/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/wideplating_new,
+/obj/effect/turf_decal/siding/wideplating,
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/checker,
 /area/mine/laborcamp)
@@ -3349,7 +3349,7 @@
 "sS" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/wideplating_new{
+/obj/effect/turf_decal/siding/wideplating{
 	dir = 6
 	},
 /turf/open/floor/iron/checker,
@@ -3602,7 +3602,7 @@
 /area/mine/living_quarters)
 "uC" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/wideplating_new{
+/obj/effect/turf_decal/siding/wideplating{
 	dir = 9
 	},
 /turf/open/floor/iron/checker,
@@ -3868,7 +3868,7 @@
 "vZ" = (
 /obj/structure/chair/stool/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/wideplating_new,
+/obj/effect/turf_decal/siding/wideplating,
 /turf/open/floor/iron/checker,
 /area/mine/laborcamp)
 "wb" = (
@@ -4223,7 +4223,7 @@
 /area/mine/lounge)
 "yn" = (
 /obj/structure/chair/stool/directional/north,
-/obj/effect/turf_decal/siding/wideplating_new,
+/obj/effect/turf_decal/siding/wideplating,
 /turf/open/floor/iron/checker,
 /area/mine/laborcamp)
 "yp" = (
@@ -5526,7 +5526,7 @@
 /area/mine/laborcamp/security)
 "Ic" = (
 /obj/structure/chair/stool/directional/south,
-/obj/effect/turf_decal/siding/wideplating_new{
+/obj/effect/turf_decal/siding/wideplating{
 	dir = 1
 	},
 /turf/open/floor/iron/checker,
@@ -6068,7 +6068,7 @@
 "Lf" = (
 /obj/structure/chair/stool/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/wideplating_new{
+/obj/effect/turf_decal/siding/wideplating{
 	dir = 1
 	},
 /obj/effect/spawner/random/trash/mess,
@@ -7597,7 +7597,7 @@
 /area/mine/living_quarters)
 "UK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/wideplating_new{
+/obj/effect/turf_decal/siding/wideplating{
 	dir = 4
 	},
 /turf/open/floor/iron/checker,
@@ -7788,7 +7788,7 @@
 /area/mine/laborcamp)
 "VG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/wideplating_new{
+/obj/effect/turf_decal/siding/wideplating{
 	dir = 5
 	},
 /turf/open/floor/iron/checker,
@@ -8076,7 +8076,7 @@
 "Xy" = (
 /obj/structure/chair/stool/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/wideplating_new{
+/obj/effect/turf_decal/siding/wideplating{
 	dir = 1
 	},
 /turf/open/floor/iron/checker,

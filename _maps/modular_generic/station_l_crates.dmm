@@ -5,7 +5,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/turf_decal/siding/wideplating/dark,
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 4
 	},
@@ -134,7 +134,7 @@
 /obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/contraband/permabrig_weapon,
 /obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown/half{
@@ -274,7 +274,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown/half{
@@ -364,7 +364,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/turf_decal/siding/wideplating/dark,
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 8
 	},
@@ -385,7 +385,7 @@
 "U" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/bin,
-/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/turf_decal/siding/wideplating/dark,
 /turf/open/floor/iron/dark,
 /area/template_noop)
 "V" = (
@@ -420,7 +420,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/random/directional/north,
-/obj/effect/turf_decal/siding/wideplating_new/dark{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,

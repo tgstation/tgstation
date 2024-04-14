@@ -129,7 +129,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/golem_ship)
 "fS" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
@@ -170,7 +170,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "ir" = (
-/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating,
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered/golem_ship)
 "kx" = (
@@ -369,7 +369,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "vZ" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
@@ -495,7 +495,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "BN" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -563,7 +563,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "FD" = (
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -800,17 +800,17 @@
 	pixel_y = 12;
 	pixel_x = -5
 	},
-/obj/effect/turf_decal/siding/thinplating_new/corner,
+/obj/effect/turf_decal/siding/thinplating/corner,
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered/golem_ship)
 "ZQ" = (
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered/golem_ship)
 "ZS" = (
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,

@@ -8,10 +8,10 @@
 	pixel_x = 8;
 	pixel_y = 13
 	},
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
 /obj/structure/broken_flooring/pile/directional/east,
@@ -36,10 +36,10 @@
 /area/template_noop)
 "e" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
 /obj/effect/spawner/random/trash/garbage,
@@ -50,10 +50,10 @@
 /area/template_noop)
 "f" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
 /obj/structure/fluff/paper/corner,
@@ -61,10 +61,10 @@
 /turf/open/floor/iron/small,
 /area/template_noop)
 "g" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
 /obj/effect/spawner/random/trash,
@@ -82,20 +82,20 @@
 /obj/structure/rack,
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/sign/poster/random/directional/west,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 9
 	},
-/obj/effect/turf_decal/siding/thinplating_new/corner,
+/obj/effect/turf_decal/siding/thinplating/corner,
 /obj/effect/spawner/random/engineering/toolbox,
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/small,
 /area/template_noop)
 "j" = (
 /obj/effect/spawner/random/clothing/costume,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 6
 	},
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 1
 	},
 /obj/structure/fluff/paper{
@@ -111,10 +111,10 @@
 	pixel_x = 9;
 	pixel_y = 13
 	},
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating,
 /obj/effect/decal/cleanable/vomit,
 /obj/machinery/light/small/dim/directional/north,
 /obj/item/trash/semki/healthy,
@@ -123,18 +123,18 @@
 "m" = (
 /obj/structure/sign/poster/random/directional/north,
 /obj/effect/spawner/random/trash/graffiti,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating,
 /turf/open/floor/iron/small,
 /area/template_noop)
 "o" = (
 /obj/item/kirbyplants/random,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 10
 	},
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 4
 	},
 /obj/structure/fluff/paper{
@@ -200,8 +200,8 @@
 /turf/open/floor/iron/freezer,
 /area/template_noop)
 "v" = (
-/obj/effect/turf_decal/siding/thinplating_new,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating,
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
 /obj/machinery/light_switch/directional/south,
@@ -218,10 +218,10 @@
 "x" = (
 /obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 5
 	},
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 8
 	},
 /obj/structure/fluff/paper/corner,
@@ -229,10 +229,10 @@
 /area/template_noop)
 "y" = (
 /obj/structure/sign/poster/random/directional/east,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -247,8 +247,8 @@
 /area/template_noop)
 "z" = (
 /obj/effect/spawner/random/clothing/wardrobe_closet_colored,
-/obj/effect/turf_decal/siding/thinplating_new,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating,
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
 /obj/machinery/light/small/dim/directional/south,
@@ -266,21 +266,21 @@
 /turf/open/floor/plating,
 /area/template_noop)
 "E" = (
-/obj/effect/turf_decal/siding/thinplating_new,
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating,
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/small,
 /area/template_noop)
 "F" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 6
 	},
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 1
 	},
 /obj/item/trash/boritos/purple{
@@ -318,11 +318,11 @@
 /area/template_noop)
 "K" = (
 /obj/structure/sign/poster/random/directional/west,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new/corner,
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner,
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -348,8 +348,8 @@
 /area/template_noop)
 "O" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
-/obj/effect/turf_decal/siding/thinplating_new,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating,
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -365,10 +365,10 @@
 /turf/open/floor/iron/diagonal,
 /area/template_noop)
 "Q" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating,
 /obj/structure/chair/stool/directional/south{
 	pixel_y = 16
 	},
@@ -384,13 +384,13 @@
 /turf/open/floor/iron/small,
 /area/template_noop)
 "S" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new/corner,
+/obj/effect/turf_decal/siding/thinplating/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -423,12 +423,12 @@
 /turf/open/floor/iron/freezer,
 /area/template_noop)
 "X" = (
-/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood/old{
@@ -443,10 +443,10 @@
 /turf/open/floor/iron/small,
 /area/template_noop)
 "Y" = (
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 5
 	},
-/obj/effect/turf_decal/siding/thinplating_new/corner{
+/obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -462,8 +462,8 @@
 /obj/effect/spawner/random/structure/closet_maintenance,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/random/directional/south,
-/obj/effect/turf_decal/siding/thinplating_new,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/effect/turf_decal/siding/thinplating,
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
 /obj/structure/fluff/paper/corner{

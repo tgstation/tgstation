@@ -38,7 +38,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/unpowered)
 "cJ" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -339,7 +339,7 @@
 	name = "Exterior Blast Door"
 	},
 /obj/structure/fans/tiny,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /obj/machinery/button/door/directional/west{

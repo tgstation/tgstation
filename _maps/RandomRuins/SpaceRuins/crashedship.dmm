@@ -505,7 +505,7 @@
 /area/ruin/space/has_grav/crashedship/fore)
 "uf" = (
 /obj/machinery/suit_storage_unit/open,
-/obj/effect/turf_decal/siding/thinplating_new/light{
+/obj/effect/turf_decal/siding/thinplating/light{
 	dir = 8
 	},
 /turf/open/floor/engine,
@@ -831,7 +831,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/crashedship/aft)
 "EO" = (
-/obj/effect/turf_decal/siding/thinplating_new/light{
+/obj/effect/turf_decal/siding/thinplating/light{
 	dir = 8
 	},
 /obj/machinery/suit_storage_unit/standard_unit,

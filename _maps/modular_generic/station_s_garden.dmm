@@ -43,7 +43,7 @@
 /turf/open/floor/grass,
 /area/template_noop)
 "G" = (
-/obj/effect/turf_decal/siding/thinplating_new/terracotta{
+/obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 10
 	},
 /obj/structure/table/glass,
@@ -107,7 +107,7 @@
 /turf/open/misc/dirt/station,
 /area/template_noop)
 "Y" = (
-/obj/effect/turf_decal/siding/thinplating_new/terracotta/corner{
+/obj/effect/turf_decal/siding/thinplating/terracotta/corner{
 	dir = 8
 	},
 /obj/structure/table/glass,
@@ -122,7 +122,7 @@
 /turf/open/floor/iron/terracotta/small,
 /area/template_noop)
 "Z" = (
-/obj/effect/turf_decal/siding/thinplating_new/terracotta{
+/obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 10
 	},
 /turf/open/floor/iron/terracotta/small,
