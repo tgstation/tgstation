@@ -157,7 +157,7 @@
 	mix_message = "<span class='boldnotice'>Sparks start flying around the gunpowder!</span>"
 
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	addtimer(CALLBACK(src, PROC_REF(default_explode), holder, created_volume, modifier, strengthdiv), rand(5,10) SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(default_explode), holder, created_volume, modifier, strengthdiv), rand(5 SECONDS, 10 SECONDS))
 
 /datum/chemical_reaction/thermite
 	results = list(/datum/reagent/thermite = 3)
@@ -560,7 +560,7 @@
 	var/atom/holder_atom = holder.my_atom
 	if(QDELETED(holder_atom))
 		return
-	tesla_zap(source = holder_atom, zap_range = 7, power = power, cutoff = 1e3, zap_flags = zap_flags)
+	tesla_zap(source = holder_atom, zap_range = 7, power = power, cutoff = 1 KILO JOULES, zap_flags = zap_flags)
 	playsound(holder_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat

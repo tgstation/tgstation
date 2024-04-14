@@ -137,7 +137,6 @@
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
 		to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
 
-
 /**
  * Hooks on destructive scans to try and run an experiment (When using a handheld handler)
  */

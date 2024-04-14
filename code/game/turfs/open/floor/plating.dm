@@ -62,7 +62,7 @@
 			return
 		else
 			to_chat(user, span_notice("You begin reinforcing the floor..."))
-			if(do_after(user, 30, target = src))
+			if(do_after(user, 3 SECONDS, target = src))
 				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
 					place_on_top(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
 					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
@@ -307,6 +307,9 @@
 	if(!isnull(below_turf) && !isspaceturf(below_turf))
 		new /obj/effect/decal/cleanable/glass/plastitanium/screws(below_turf)
 		playsound(src, 'sound/effects/structure_stress/pop3.ogg', 100, vary = TRUE)
+
+/turf/open/floor/plating/reinforced/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 ///not an actual turf its used just for rcd ui purposes
 /turf/open/floor/plating/rcd

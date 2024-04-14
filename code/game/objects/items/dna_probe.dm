@@ -114,8 +114,7 @@
 
 /obj/item/dna_probe/carp_scanner/examine_more(mob/user)
 	. = ..()
-	if(IS_TRAITOR(user))
-		. = list(span_notice("Using this on a Space Carp will harvest its DNA. Use it in-hand once complete to mutate it with yourself."))
+	. = list(span_notice("Using this on a Space Carp will harvest its DNA. Use it in-hand once complete to mutate it with yourself."))
 
 /obj/item/dna_probe/carp_scanner/scan_dna(atom/target, mob/user)
 	if(istype(target, /mob/living/basic/carp))
@@ -127,8 +126,6 @@
 
 /obj/item/dna_probe/carp_scanner/attack_self(mob/user, modifiers)
 	. = ..()
-	if(!is_special_character(user))
-		return
 	if(!carp_dna_loaded)
 		to_chat(user, span_notice("Space carp DNA is required to use the self-mutation mechanism!"))
 		return
@@ -136,7 +133,7 @@
 	if(!do_after(user, CARP_MIX_DNA_TIMER))
 		return
 	var/mob/living/basic/space_dragon/new_dragon = user.change_mob_type(/mob/living/basic/space_dragon, location = loc, delete_old_mob = TRUE)
-	new_dragon.add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
+	new_dragon.add_filter("anger_glow", 3, list("type" = "outline", "color" = COLOR_CARP_RIFT_RED, "size" = 5))
 	new_dragon.add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
 	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
 	qdel(src)

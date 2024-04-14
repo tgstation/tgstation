@@ -107,9 +107,8 @@
 	RegisterSignal(SStransport, COMSIG_COMMS_STATUS, PROC_REF(comms_change))
 	SStransport.crossing_signals += src
 	register_context()
-	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/transport/crossing_signal/LateInitialize(mapload)
+/obj/machinery/transport/crossing_signal/post_machine_initialize()
 	. = ..()
 	link_tram()
 	link_sensor()
@@ -510,9 +509,8 @@
 /obj/machinery/transport/guideway_sensor/Initialize(mapload)
 	. = ..()
 	SStransport.sensors += src
-	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/transport/guideway_sensor/LateInitialize(mapload)
+/obj/machinery/transport/guideway_sensor/post_machine_initialize()
 	. = ..()
 	pair_sensor()
 	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(wake_up))

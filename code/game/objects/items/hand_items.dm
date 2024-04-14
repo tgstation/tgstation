@@ -41,7 +41,7 @@
 
 	if(!istype(sucker) || !in_range(owner, sucker))
 		return
-	addtimer(CALLBACK(src, PROC_REF(waitASecond), owner, sucker), 4)
+	addtimer(CALLBACK(src, PROC_REF(waitASecond), owner, sucker), 0.4 SECONDS)
 
 /// Stage 2: Fear sets in
 /obj/item/hand_item/circlegame/proc/waitASecond(mob/living/owner, mob/living/sucker)
@@ -50,10 +50,10 @@
 
 	if(owner == sucker) // big mood
 		to_chat(owner, span_danger("Wait a second... you just looked at your own [src.name]!"))
-		addtimer(CALLBACK(src, PROC_REF(selfGottem), owner), 10)
+		addtimer(CALLBACK(src, PROC_REF(selfGottem), owner), 1 SECONDS)
 	else
 		to_chat(sucker, span_danger("Wait a second... was that a-"))
-		addtimer(CALLBACK(src, PROC_REF(GOTTEM), owner, sucker), 6)
+		addtimer(CALLBACK(src, PROC_REF(GOTTEM), owner, sucker), 0.6 SECONDS)
 
 /// Stage 3A: We face our own failures
 /obj/item/hand_item/circlegame/proc/selfGottem(mob/living/owner)

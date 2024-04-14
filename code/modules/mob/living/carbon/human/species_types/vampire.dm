@@ -151,7 +151,7 @@
 /obj/item/organ/internal/tongue/vampire
 	name = "vampire tongue"
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
-	color = "#1C1C1C"
+	color = COLOR_CRAYON_BLACK
 	COOLDOWN_DECLARE(drain_cooldown)
 
 /datum/action/item_action/organ_action/vampire
@@ -186,7 +186,7 @@
 				victim.show_message(span_warning("[H] tries to bite you, but recoils in disgust!"))
 				to_chat(H, span_warning("[victim] reeks of garlic! you can't bring yourself to drain such tainted blood."))
 				return
-			if(!do_after(H, 3 SECONDS, target = victim))
+			if(!do_after(H, 3 SECONDS, target = victim, hidden = TRUE))
 				return
 			var/blood_volume_difference = BLOOD_VOLUME_MAXIMUM - H.blood_volume //How much capacity we have left to absorb blood
 			var/drained_blood = min(victim.blood_volume, VAMP_DRAIN_AMOUNT, blood_volume_difference)
@@ -200,7 +200,7 @@
 
 /obj/item/organ/internal/heart/vampire
 	name = "vampire heart"
-	color = "#1C1C1C"
+	color = COLOR_CRAYON_BLACK
 
 /obj/item/organ/internal/heart/vampire/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()

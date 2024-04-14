@@ -54,7 +54,7 @@
 
 /obj/item/clothing/Initialize(mapload)
 	if(clothing_flags & VOICEBOX_TOGGLABLE)
-		actions_types += /datum/action/item_action/toggle_voice_box
+		actions_types += list(/datum/action/item_action/toggle_voice_box)
 	. = ..()
 	AddElement(/datum/element/venue_price, FOOD_PRICE_CHEAP)
 	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
@@ -516,7 +516,7 @@ BLIND     // can't see anything
 		return ..()
 	if(damage_flag == BOMB)
 		//so the shred survives potential turf change from the explosion.
-		addtimer(CALLBACK(src, PROC_REF(_spawn_shreds)), 1)
+		addtimer(CALLBACK(src, PROC_REF(_spawn_shreds)), 0.1 SECONDS)
 		deconstruct(FALSE)
 	if(damage_flag == CONSUME) //This allows for moths to fully consume clothing, rather than damaging it like other sources like brute
 		var/turf/current_position = get_turf(src)

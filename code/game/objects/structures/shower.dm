@@ -184,9 +184,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
-
 	I.play_tool_sound(src)
 	deconstruct()
 	return TRUE
@@ -313,7 +310,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
 			wash_atom(movable_content) // Reagent exposure is handled in wash_atom
 
-	reagents.remove_any(SHOWER_SPRAY_VOLUME)
+	reagents.remove_all(SHOWER_SPRAY_VOLUME)
 
 /obj/machinery/shower/on_deconstruction(disassembled = TRUE)
 	new /obj/item/stack/sheet/iron(drop_location(), 2)

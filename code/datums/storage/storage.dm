@@ -207,6 +207,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(handle_extra_examination))
 	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_deconstruct))
 	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
+	RegisterSignal(parent, COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED, PROC_REF(contents_changed_w_class))
 
 /**
  * Sets where items are physically being stored in the case it shouldn't be on the parent.
@@ -347,6 +348,15 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(QDELETED(to_insert) || !istype(to_insert))
 		return FALSE
 
+	//stops you from putting stuff like off-hand thingy inside. Hologram storages can accept only hologram items
+	if(to_insert.item_flags & ABSTRACT)
+		return FALSE
+	if(parent.flags_1 & HOLOGRAM_1)
+		if(!(to_insert.flags_1 & HOLOGRAM_1))
+			return FALSE
+	else if(to_insert.flags_1 & HOLOGRAM_1)
+		return FALSE
+
 	if(locked > force)
 		if(messages && user)
 			user.balloon_alert(user, "closed!")
@@ -392,7 +402,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/datum/storage/bigger_fish = parent.loc.atom_storage
 	if(bigger_fish && bigger_fish.max_specific_storage < max_specific_storage)
 		if(messages && user)
-			user.balloon_alert(user, "[lowertext(parent.loc.name)] is in the way!")
+			user.balloon_alert(user, "[LOWER_TEXT(parent.loc.name)] is in the way!")
 		return FALSE
 
 	if(isitem(parent))
@@ -1083,3 +1093,14 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/matrix/old_matrix = parent.transform
 	animate(parent, time = 1.5, loop = 0, transform = parent.transform.Scale(1.07, 0.9))
 	animate(time = 2, transform = old_matrix)
+
+/// Signal proc for [COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED] to drop items out of our storage if they're suddenly too heavy.
+/datum/storage/proc/contents_changed_w_class(datum/source, obj/item/changed, old_w_class, new_w_class)
+	SIGNAL_HANDLER
+
+	if(new_w_class <= max_specific_storage && new_w_class + get_total_weight() <= max_total_storage)
+		return
+	if(!attempt_remove(changed, parent.drop_location()))
+		return
+
+	changed.visible_message(span_warning("[changed] falls out of [parent]!"), vision_distance = COMBAT_MESSAGE_RANGE)

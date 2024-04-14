@@ -121,7 +121,7 @@
 		return
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
+/obj/structure/closet/crate/secure/loot/atom_deconstruct(disassembled = TRUE)
 	if(locked)
 		boom()
 		return

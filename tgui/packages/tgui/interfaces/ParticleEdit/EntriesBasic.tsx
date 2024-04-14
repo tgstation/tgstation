@@ -41,7 +41,8 @@ export const EntryFloat = (props: EntryFloatProps) => {
         value={float}
         minValue={0}
         maxValue={Infinity}
-        onDrag={(e, value) =>
+        step={1}
+        onDrag={(value) =>
           act('edit', {
             var: var_name,
             new_value: value,
@@ -67,8 +68,9 @@ export const EntryCoord = (props: EntryCoordProps) => {
         animated
         minValue={-Infinity}
         maxValue={Infinity}
+        step={1}
         value={coord?.[0] || 0}
-        onDrag={(e, value) =>
+        onDrag={(value) =>
           act('edit', {
             var: var_name,
             new_value: [value, coord?.[1], coord?.[2]],
@@ -79,8 +81,9 @@ export const EntryCoord = (props: EntryCoordProps) => {
         animated
         minValue={-Infinity}
         maxValue={Infinity}
+        step={1}
         value={coord?.[1] || 0}
-        onDrag={(e, value) =>
+        onDrag={(value) =>
           act('edit', {
             var: var_name,
             new_value: [coord?.[0], value, coord?.[2]],
@@ -91,8 +94,9 @@ export const EntryCoord = (props: EntryCoordProps) => {
         animated
         minValue={-Infinity}
         maxValue={Infinity}
+        step={1}
         value={coord?.[2] || 0}
-        onDrag={(e, value) =>
+        onDrag={(value) =>
           act('edit', {
             var: var_name,
             new_value: [coord?.[0], coord?.[1], value],
@@ -241,7 +245,8 @@ export const EntryTransform = (props: EntryTransformProps) => {
               value={value}
               minValue={0}
               maxValue={1}
-              onDrag={(e, value) =>
+              step={1}
+              onDrag={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: transform!.map((x, i) =>
@@ -283,8 +288,9 @@ export const EntryIcon = (props: EntryIconStateProps) => {
                   animated
                   minValue={0}
                   maxValue={Infinity}
+                  step={1}
                   value={icon_state[icon_name]}
-                  onDrag={(e, value) =>
+                  onDrag={(value) =>
                     act('edit', {
                       var: var_name,
                       var_mod: P_DATA_ICON_WEIGHT,
@@ -373,8 +379,9 @@ export const EntryIconState = (props: EntryIconStateProps) => {
                   animated
                   minValue={0}
                   maxValue={Infinity}
+                  step={1}
                   value={icon_state[iconstate]}
-                  onDrag={(e, value) =>
+                  onDrag={(value) =>
                     act('edit', {
                       var: var_name,
                       new_value: editWeightOf(icon_state, iconstate, value),

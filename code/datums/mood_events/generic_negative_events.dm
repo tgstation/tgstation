@@ -474,6 +474,11 @@
 	mood_change = -6
 	timeout = 5 MINUTES
 
+/datum/mood_event/mallet_humiliation
+	description = "Getting hit by such a stupid weapon feels rather humiliating..."
+	mood_change = -3
+	timeout = 10 SECONDS
+
 ///Wizard cheesy grand finale - what everyone but the wizard gets
 /datum/mood_event/madness_despair
 	description = "UNWORTHY, UNWORTHY, UNWORTHY!!!"

@@ -2,9 +2,8 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_SALUTE_MESSAGES = list(
-			"salutes",
+			"performs an elaborate salute for",
 			"nods in appreciation towards",
-			"fist bumps",
 		),
 		BB_UNREACHABLE_LIST_COOLDOWN = 45 SECONDS,
 	)
@@ -28,6 +27,7 @@
 	var/current_pathing_attempts = 0
 	///if we cant reach it after this many attempts, add it to our ignore list
 	var/max_pathing_attempts = 25
+	can_idle = FALSE // we want these to be running always
 
 /datum/ai_controller/basic_controller/bot/TryPossessPawn(atom/new_pawn)
 	. = ..()
@@ -205,7 +205,7 @@
 
 /datum/ai_behavior/find_and_set/valid_authority
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	action_cooldown = 30 SECONDS
+	action_cooldown = BOT_COMMISSIONED_SALUTE_DELAY
 
 /datum/ai_behavior/find_and_set/valid_authority/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	for(var/mob/living/nearby_mob in oview(search_range, controller.pawn))
@@ -231,7 +231,7 @@
 	if(our_hat)
 		salute_list += "tips [our_hat] at "
 
-	bot_pawn.manual_emote(pick(salute_list) + " [controller.blackboard[target_key]]")
+	bot_pawn.manual_emote(pick(salute_list) + " [controller.blackboard[target_key]]!")
 	finish_action(controller, TRUE, target_key)
 	return
 
