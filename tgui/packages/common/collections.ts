@@ -132,6 +132,8 @@ export const sortBy = <T>(
   return values;
 };
 
+export const sort = <T>(array: T[]): T[] => sortBy(array);
+
 /**
  * Returns a range of numbers from start to end, exclusively.
  * For example, range(0, 5) will return [0, 1, 2, 3, 4].
