@@ -512,7 +512,7 @@
 	if(istagger)
 		wait_time *= 0.5
 
-	if(!instant && !do_after(user, wait_time, target = target))
+	if(!instant && !do_after(user, wait_time, target = target, max_interact_count = 4))
 		return
 
 	if(!use_charges(user, cost))
