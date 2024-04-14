@@ -31,7 +31,7 @@
 		/datum/gas/halon,
 	)
 
-/obj/machinery/portable_atmospherics/pump/on_deconstruction(disassembled)
+/obj/machinery/portable_atmospherics/scrubber/on_deconstruction(disassembled)
 	var/turf/local_turf = get_turf(src)
 	local_turf.assume_air(air_contents)
 	return ..()
