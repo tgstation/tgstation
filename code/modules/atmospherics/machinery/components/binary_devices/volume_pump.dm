@@ -31,7 +31,6 @@
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/atmos_volume_pump,
 	))
-	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, REF(src))
 	register_context()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
