@@ -7,7 +7,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
 
-	var/early_sig_return = SEND_SIGNAL(src, COMSIG_CLICK_ALT, src) & COMPONENT_CANCEL_CLICK_ALT
+	var/early_sig_return = SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT
 	if(early_sig_return)
 		return early_sig_return
 
