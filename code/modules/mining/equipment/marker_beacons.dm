@@ -165,6 +165,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		return NONE
 	picked_color = input_color
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 
 /* Preset marker beacon types, for mapping */
