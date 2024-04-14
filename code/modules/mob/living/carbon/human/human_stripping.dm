@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return null
 
 	var/list/actions = list()
-	if(jumpsuit.has_sensor)
+	if(jumpsuit.has_sensor == HAS_SENSORS)
 		actions += "adjust_sensor"
 	if(jumpsuit.can_adjust)
 		actions += "adjust_jumpsuit"
