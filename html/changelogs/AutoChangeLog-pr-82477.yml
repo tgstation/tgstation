@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - qol: "Cyborgs now understand door and APC wires at a glance, among others"
