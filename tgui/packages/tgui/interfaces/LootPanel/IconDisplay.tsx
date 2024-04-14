@@ -10,12 +10,14 @@ export function IconDisplay(props: Props) {
     item: { icon, icon_state },
   } = props;
 
+  const fallback = <Icon name="spinner" size={2.4} spin color="gray" />;
+
   if (!icon) {
-    return <Icon name="spinner" size={2.4} spin color="gray" />;
+    return fallback;
   }
 
   if (icon_state) {
-    return <DmIcon icon={icon} icon_state={icon_state} />;
+    return <DmIcon fallback={fallback} icon={icon} icon_state={icon_state} />;
   }
 
   return <Image fixErrors src={icon} />;

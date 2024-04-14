@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import { BoxProps, computeBoxProps } from './Box';
 
@@ -36,7 +36,6 @@ export function Image(props: Props) {
     ...rest
   } = props;
   const attempts = useRef(0);
-  const [imageSource, setImageSource] = useState(src);
 
   const computedProps = computeBoxProps(rest);
   computedProps['style'] = {
@@ -47,15 +46,17 @@ export function Image(props: Props) {
 
   return (
     <img
-      onError={() => {
+      onError={(event) => {
         if (fixErrors && attempts.current < maxAttempts) {
+          const imgElement = event.currentTarget;
+
           setTimeout(() => {
-            setImageSource(imageSource);
+            imgElement.src = `${src}?attempt=${attempts.current}`;
             attempts.current++;
           }, 1000);
         }
       }}
-      src={imageSource}
+      src={src}
       {...computedProps}
     />
   );
