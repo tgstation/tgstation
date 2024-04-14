@@ -169,3 +169,6 @@
   - bugfix: Ensure deleted slimes are properly tracked, to prevent weird errors that
       broke slime pen management consoles.
   - bugfix: Fixed some wonky logic with liquid code.
+2024-04-14:
+  KnigTheThrasher:
+  - rscadd: Added composters into every perma botany
