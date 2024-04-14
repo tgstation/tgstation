@@ -19,6 +19,7 @@
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, REF(src))
 	register_context()
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/add_context(atom/source, list/context, obj/item/held_item, mob/user)

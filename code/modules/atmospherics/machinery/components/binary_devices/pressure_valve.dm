@@ -14,6 +14,7 @@
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, REF(src))
 	register_context()
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/add_context(atom/source, list/context, obj/item/held_item, mob/user)

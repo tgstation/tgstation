@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Operating computers clears its ui display procedures if patient is moved out of the operating table in any way"
