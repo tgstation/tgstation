@@ -60,8 +60,7 @@
 
 	return .
 
-
-/obj/machinery/vending/runic_vendor/Destroy()
+/obj/machinery/vending/runic_vendor/on_deconstruction(disassembled)
 	visible_message(span_warning("[src] flickers and disappears!"))
 	playsound(src,'sound/weapons/resonator_blast.ogg',25,TRUE)
 	return ..()
