@@ -359,13 +359,15 @@
 		return TRUE
 	return ..()
 
-/obj/item/paper/AltClick(mob/living/user)
-	. = ..()
+/obj/item/paper/click_alt(mob/living/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
+		return NONE
 	if(HAS_TRAIT(user, TRAIT_PAPER_MASTER))
-		return make_plane(user, /obj/item/paperplane/syndicate)
-	return make_plane(user, /obj/item/paperplane)
+		make_plane(user, /obj/item/paperplane/syndicate)
+		return CLICK_ACTION_SUCCESS
+	make_plane(user, /obj/item/paperplane)
+	return CLICK_ACTION_SUCCESS
+
 
 
 /**

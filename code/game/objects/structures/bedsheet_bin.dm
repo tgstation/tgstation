@@ -133,11 +133,12 @@ LINEN BINS
 	else
 		return ..()
 
-/obj/item/bedsheet/AltClick(mob/living/user)
+/obj/item/bedsheet/click_alt(mob/living/user)
 	// double check the canUseTopic args to make sure it's correct
 	if(!istype(user) || !user.can_perform_action(src, NEED_DEXTERITY))
-		return
+		return NONE
 	dir = REVERSE_DIR(dir)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/bedsheet/blue
 	icon_state = "sheetblue"

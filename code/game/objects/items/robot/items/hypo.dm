@@ -244,11 +244,11 @@
 	. += "Currently loaded: [selected_reagent ? "[selected_reagent]. [selected_reagent.description]" : "nothing."]"
 	. += span_notice("<i>Alt+Click</i> to change transfer amount. Currently set to [amount_per_transfer_from_this]u.")
 
-/obj/item/reagent_containers/borghypo/AltClick(mob/living/user)
-	. = ..()
+/obj/item/reagent_containers/borghypo/click_alt(mob/living/user)
 	if(user.stat == DEAD || user != loc)
-		return //IF YOU CAN HEAR ME SET MY TRANSFER AMOUNT TO 1
+		return NONE //IF YOU CAN HEAR ME SET MY TRANSFER AMOUNT TO 1
 	change_transfer_amount(user)
+	return CLICK_ACTION_
 
 /// Default Medborg Hypospray
 /obj/item/reagent_containers/borghypo/medical

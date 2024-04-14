@@ -167,14 +167,15 @@
 
 	playsound(src, 'sound/machines/click.ogg', 10, TRUE)
 
-/obj/item/plunger/AltClick(mob/user)
+/obj/item/plunger/click_alt(mob/user)
 	if(!istype(user) || !user.can_perform_action(src))
-		return
+		return NONE
 
 	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers)
 	if(isnull(new_layer) || !user.can_perform_action(src))
-		return
+		return CLICK_ACTION_BLOCKING
 	target_layer = GLOB.plumbing_layers[new_layer]
+	return CLICK_ACTION_SUCCESS
 
 ///A faster reinforced plunger
 /obj/item/plunger/reinforced

@@ -7,19 +7,19 @@
 	density = FALSE
 	can_buckle = 1
 
-/obj/structure/sacrificealtar/AltClick(mob/living/user)
-	..()
+/obj/structure/sacrificealtar/click_alt(mob/living/user)
 	if(!istype(user) || !user.can_perform_action(src))
-		return
+		return NONE
 	if(!has_buckled_mobs())
-		return
+		return NONE
 	var/mob/living/L = locate() in buckled_mobs
 	if(!L)
-		return
+		return NONE
 	to_chat(user, span_notice("Invoking the sacred ritual, you sacrifice [L]."))
 	L.investigate_log("has been sacrificially gibbed on an altar.", INVESTIGATE_DEATHS)
 	L.gib(DROP_ALL_REMAINS)
 	message_admins("[ADMIN_LOOKUPFLW(user)] has sacrificed [key_name_admin(L)] on the sacrificial altar at [AREACOORD(src)].")
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/healingfountain
 	name = "healing fountain"

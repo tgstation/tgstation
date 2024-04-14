@@ -447,9 +447,10 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		// And grant all the languages we definitely should know now
 		grant_headset_languages(mob_loc)
 
-/obj/item/radio/headset/AltClick(mob/living/user)
+/obj/item/radio/headset/click_alt(mob/living/user)
 	if(!istype(user) || !Adjacent(user) || user.incapacitated())
-		return
+		return NONE
 	if (command)
 		use_command = !use_command
 		to_chat(user, span_notice("You toggle high-volume mode [use_command ? "on" : "off"]."))
+	return CLICK_ACTION_SUCCESS
