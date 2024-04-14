@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "chem master properly shuts down if it loses power mid printing and won't transfer reagents for the same"

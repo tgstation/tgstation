@@ -1,0 +1,4 @@
+author: "AMyriad"
+delete-after: True
+changes:
+  - image: "Updated the ability icons used by AIs and station bots"

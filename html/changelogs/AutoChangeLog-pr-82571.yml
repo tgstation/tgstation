@@ -1,4 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "Airlock electronics and other access-config type UIs should look much better."
