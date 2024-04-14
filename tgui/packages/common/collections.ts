@@ -101,35 +101,36 @@ const COMPARATOR = (objA, objB) => {
  *
  * Iteratees are called with one argument (value).
  */
-export const sortBy =
-  <T>(...iterateeFns: ((input: T) => unknown)[]) =>
-  (array: T[]): T[] => {
-    if (!Array.isArray(array)) {
-      return array;
-    }
-    let length = array.length;
-    // Iterate over the array to collect criteria to sort it by
-    let mappedArray: {
-      criteria: unknown[];
-      value: T;
-    }[] = [];
-    for (let i = 0; i < length; i++) {
-      const value = array[i];
-      mappedArray.push({
-        criteria: iterateeFns.map((fn) => fn(value)),
-        value,
-      });
-    }
-    // Sort criteria using the base comparator
-    mappedArray.sort(COMPARATOR);
+export const sortBy = <T>(
+  array: T[],
+  ...iterateeFns: ((input: T) => unknown)[]
+): T[] => {
+  if (!Array.isArray(array)) {
+    return array;
+  }
+  let length = array.length;
+  // Iterate over the array to collect criteria to sort it by
+  let mappedArray: {
+    criteria: unknown[];
+    value: T;
+  }[] = [];
+  for (let i = 0; i < length; i++) {
+    const value = array[i];
+    mappedArray.push({
+      criteria: iterateeFns.map((fn) => fn(value)),
+      value,
+    });
+  }
+  // Sort criteria using the base comparator
+  mappedArray.sort(COMPARATOR);
 
-    // Unwrap values
-    const values: T[] = [];
-    while (length--) {
-      values[length] = mappedArray[length].value;
-    }
-    return values;
-  };
+  // Unwrap values
+  const values: T[] = [];
+  while (length--) {
+    values[length] = mappedArray[length].value;
+  }
+  return values;
+};
 
 /**
  * Returns a range of numbers from start to end, exclusively.
@@ -191,15 +192,16 @@ export const reduce: ReduceFunction = (array, reducerFn, initialValue?) => {
  * is determined by the order they occur in the array. The iteratee is
  * invoked with one argument: value.
  */
-export const uniqBy =
-  <T extends unknown>(iterateeFn?: (value: T) => unknown) =>
-  (array: T[]): T[] => {
-    const { length } = array;
-    const result: T[] = [];
-    const seen: unknown[] = iterateeFn ? [] : result;
-    let index = -1;
-    // prettier-ignore
-    outer:
+export const uniqBy = <T extends unknown>(
+  array: T[],
+  iterateeFn?: (value: T) => unknown,
+): T[] => {
+  const { length } = array;
+  const result: T[] = [];
+  const seen: unknown[] = iterateeFn ? [] : result;
+  let index = -1;
+  // prettier-ignore
+  outer:
     while (++index < length) {
       let value: T | 0 = array[index];
       const computed = iterateeFn ? iterateeFn(value) : value;
@@ -221,10 +223,10 @@ export const uniqBy =
         result.push(value);
       }
     }
-    return result;
-  };
+  return result;
+};
 
-export const uniq = uniqBy();
+export const uniq = (array) => uniqBy(array);
 
 type Zip<T extends unknown[][]> = {
   [I in keyof T]: T[I] extends (infer U)[] ? U : never;
@@ -289,13 +291,15 @@ const binarySearch = <T, U = unknown>(
   return compare > insertingKey ? middle : middle + 1;
 };
 
-export const binaryInsertWith =
-  <T, U = unknown>(getKey: (value: T) => U) =>
-  (collection: readonly T[], value: T) => {
-    const copy = [...collection];
-    copy.splice(binarySearch(getKey, collection, value), 0, value);
-    return copy;
-  };
+export const binaryInsertWith = <T, U = unknown>(
+  collection: readonly T[],
+  value: T,
+  getKey: (value: T) => U,
+) => {
+  const copy = [...collection];
+  copy.splice(binarySearch(getKey, collection, value), 0, value);
+  return copy;
+};
 
 /**
  * This method takes a collection of items and a number, returning a collection
