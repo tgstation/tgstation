@@ -30,13 +30,18 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/pressure_valve/AltClick(mob/user)
-	if(can_interact(user))
-		target_pressure = MAX_OUTPUT_PRESSURE
-		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
-		balloon_alert(user, "target pressure set to [target_pressure] kPa")
-		update_appearance()
-	return ..()
+/obj/machinery/atmospherics/components/binary/pressure_valve/click_alt(mob/user)
+	if(!can_interact(user))
+		return NONE
+
+	if(target_pressure == MAX_OUTPUT_PRESSURE)
+		return CLICK_ACTION_BLOCKING
+
+	target_pressure = MAX_OUTPUT_PRESSURE
+	investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "target pressure set to [target_pressure] kPa")
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/update_icon_nopipes()
 	if(on && is_operational && is_gas_flowing)
