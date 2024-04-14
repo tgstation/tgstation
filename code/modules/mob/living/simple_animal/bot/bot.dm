@@ -411,13 +411,13 @@
 		ui = new(user, src, "SimpleBot", name)
 		ui.open()
 
-/mob/living/simple_animal/bot/AltClick(mob/user)
-	. = ..()
+/mob/living/simple_animal/bot/click_alt(mob/user)
 	if(!can_interact(user))
-		return
+		return NONE
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
+		return NONE
 	unlock_with_id(user)
+	return CLICK_ACTION_SUCCESS
 
 /mob/living/simple_animal/bot/proc/unlock_with_id(mob/user)
 	if(bot_cover_flags & BOT_COVER_EMAGGED)

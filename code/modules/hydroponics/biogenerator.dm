@@ -272,10 +272,11 @@
 		to_chat(user, span_warning("You cannot put \the [attacking_item] in \the [src]!"))
 
 
-/obj/machinery/biogenerator/AltClick(mob/living/user)
-	. = ..()
-	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH) && can_interact(user))
-		eject_beaker(user)
+/obj/machinery/biogenerator/click_alt(mob/living/user)
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return NONE
+	eject_beaker(user)
+	return CLICK_ACTION_SUCCESS
 
 
 /// Activates biomass processing and converts all inserted food products into biomass

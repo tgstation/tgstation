@@ -438,9 +438,13 @@
 						"Yellow" = "sprayer_med_yellow",
 						"Blue" = "sprayer_med_blue")
 
-/obj/item/reagent_containers/spray/medical/AltClick(mob/user)
-	if(unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
-		reskin_obj(user)
+/obj/item/reagent_containers/spray/medical/click_alt(mob/user)
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
+		return NONE
+	if(!unique_reskin || current_skin)
+		return CLICK_ACTION_BLOCKING
+	reskin_obj(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/spray/medical/reskin_obj(mob/M)
 	..()

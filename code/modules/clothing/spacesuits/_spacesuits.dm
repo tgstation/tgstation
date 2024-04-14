@@ -190,10 +190,11 @@
 		return
 
 /// Open the cell cover when ALT+Click on the suit
-/obj/item/clothing/suit/space/AltClick(mob/living/user)
+/obj/item/clothing/suit/space/click_alt(mob/living/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return ..()
+		return NONE
 	toggle_spacesuit_cell(user)
+	return CLICK_ACTION_SUCCESS
 
 /// Remove the cell whent he cover is open on CTRL+Click
 /obj/item/clothing/suit/space/CtrlClick(mob/living/user)

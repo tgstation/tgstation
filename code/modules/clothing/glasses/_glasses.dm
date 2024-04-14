@@ -65,22 +65,22 @@
 				H.set_eye_blur_if_lower(10 SECONDS)
 				eyes.apply_organ_damage(5)
 
-/obj/item/clothing/glasses/AltClick(mob/user)
-	if(glass_colour_type && !forced_glass_color && ishuman(user))
-		var/mob/living/carbon/human/human_user = user
+/obj/item/clothing/glasses/click_alt(mob/user)
+	if(isnull(glass_colour_type) || forced_glass_color || !ishuman(user))
+		return NONE
+	var/mob/living/carbon/human/human_user = user
 
-		if (human_user.glasses != src)
-			return ..()
+	if (human_user.glasses != src)
+		return NONE
 
-		if (HAS_TRAIT_FROM(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT))
-			REMOVE_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
-			to_chat(human_user, span_notice("You will no longer see glasses colors."))
-		else
-			ADD_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
-			to_chat(human_user, span_notice("You will now see glasses colors."))
-		human_user.update_glasses_color(src, TRUE)
+	if (HAS_TRAIT_FROM(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT))
+		REMOVE_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
+		to_chat(human_user, span_notice("You will no longer see glasses colors."))
 	else
-		return ..()
+		ADD_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
+		to_chat(human_user, span_notice("You will now see glasses colors."))
+	human_user.update_glasses_color(src, TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/glasses/proc/change_glass_color(mob/living/carbon/human/H, datum/client_colour/glass_colour/new_color_type)
 	var/old_colour_type = glass_colour_type
@@ -656,8 +656,7 @@
 			var/datum/atom_hud/our_hud = GLOB.huds[hud]
 			our_hud.hide_from(user)
 
-/obj/item/clothing/glasses/debug/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/glasses/debug/click_alt(mob/user)
 	if(ishuman(user))
 		if(xray)
 			vision_flags &= ~SEE_MOBS|SEE_OBJS

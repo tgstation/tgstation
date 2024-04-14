@@ -131,10 +131,11 @@
 	else
 		balloon_alert(user, "switched to tube A")
 
-/obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/click_alt(mob/living/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
+		return NONE
 	rack()
+	return CLICK_ACTION_SUCCESS
 
 // Bulldog shotgun //
 
@@ -288,8 +289,7 @@
 	can_be_sawn_off = TRUE
 	pb_knockback = 3 // it's a super shotgun!
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/AltClick(mob/user)
-	. = ..()
+/obj/item/gun/ballistic/shotgun/doublebarrel/click_alt(mob/user)
 	if(unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
 		reskin_obj(user)
 

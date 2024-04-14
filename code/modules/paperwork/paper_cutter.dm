@@ -141,9 +141,9 @@
 
 	return ..()
 
-/obj/item/papercutter/AltClick(mob/user)
+/obj/item/papercutter/click_alt(mob/user)
 	if(!user.Adjacent(src))
-		return ..()
+		return NONE
 
 	// can only remove one at a time; paper goes first, as its most likely what players will want to be taking out
 	if(!isnull(stored_paper))
@@ -151,6 +151,7 @@
 	else if(!isnull(stored_blade) && !blade_secured)
 		user.put_in_hands(stored_blade)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/papercutter/attack_hand_secondary(mob/user, list/modifiers)
 	if(!stored_blade)

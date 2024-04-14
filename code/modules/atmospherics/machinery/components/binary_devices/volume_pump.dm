@@ -45,7 +45,7 @@
 	if(!can_interact(user))
 		return NONE
 
-	if(tranfer_rate == MAX_TRANSFER_RATE)
+	if(transfer_rate == MAX_TRANSFER_RATE)
 		return CLICK_ACTION_BLOCKING
 
 	transfer_rate = MAX_TRANSFER_RATE

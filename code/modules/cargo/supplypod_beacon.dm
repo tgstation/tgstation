@@ -90,13 +90,14 @@
 		update_status(SP_READY)
 	to_chat(user, span_notice("[src] linked to [C]."))
 
-/obj/item/supplypod_beacon/AltClick(mob/user)
-	if (!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
-	if (express_console)
-		unlink_console()
-	else
+/obj/item/supplypod_beacon/click_alt(mob/user)
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
+		return NONE
+	if(!express_console)
 		to_chat(user, span_alert("There is no linked console."))
+		return CLICK_ACTION_BLOCKING
+	unlink_console()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/supplypod_beacon/attackby(obj/item/W, mob/user)
 	if(!istype(W, /obj/item/pen)) //give a tag that is visible from the linked express console

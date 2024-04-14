@@ -248,7 +248,7 @@
 	if(user.stat == DEAD || user != loc)
 		return NONE //IF YOU CAN HEAR ME SET MY TRANSFER AMOUNT TO 1
 	change_transfer_amount(user)
-	return CLICK_ACTION_
+	return CLICK_ACTION_SUCCESS
 
 /// Default Medborg Hypospray
 /obj/item/reagent_containers/borghypo/medical

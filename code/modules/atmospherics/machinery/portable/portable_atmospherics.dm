@@ -159,14 +159,14 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/portable_atmospherics/AltClick(mob/living/user)
-	. = ..()
+/obj/machinery/portable_atmospherics/click_alt(mob/living/user)
 	if(!istype(user) || !user.can_perform_action(src, NEED_DEXTERITY) || !can_interact(user))
-		return
+		return NONE
 	if(!holding)
-		return
+		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You remove [holding] from [src]."))
 	replace_tank(user, TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/portable_atmospherics/examine(mob/user)
 	. = ..()

@@ -24,10 +24,11 @@
 	flip(usr)
 
 
-/obj/item/clothing/head/soft/AltClick(mob/user)
-	..()
-	if(user.can_perform_action(src, NEED_DEXTERITY))
-		flip(user)
+/obj/item/clothing/head/soft/click_alt(mob/user)
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
+		return NONE
+	flip(user)
+	return CLICK_ACTION_SUCCESS
 
 
 /obj/item/clothing/head/soft/proc/flip(mob/user)

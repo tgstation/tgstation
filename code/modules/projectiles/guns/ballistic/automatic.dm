@@ -260,13 +260,14 @@
 		. += span_notice("It seems like you could use an <b>empty hand</b> to remove the magazine.")
 
 
-/obj/item/gun/ballistic/automatic/l6_saw/AltClick(mob/user)
+/obj/item/gun/ballistic/automatic/l6_saw/click_alt(mob/user)
 	if(!user.can_perform_action(src))
-		return
+		return NONE
 	cover_open = !cover_open
 	balloon_alert(user, "cover [cover_open ? "opened" : "closed"]")
 	playsound(src, 'sound/weapons/gun/l6/l6_door.ogg', 60, TRUE)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/gun/ballistic/automatic/l6_saw/update_icon_state()
 	. = ..()

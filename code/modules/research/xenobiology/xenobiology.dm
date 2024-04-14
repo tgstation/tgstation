@@ -705,10 +705,11 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Set potion offer reason"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/slimepotion/slime/sentience/AltClick(mob/living/user)
+/obj/item/slimepotion/slime/sentience/click_alt(mob/living/user)
 	if(!can_interact(user))
-		return
+		return NONE
 	potion_reason = tgui_input_text(user, "Enter reason for offering potion", "Intelligence Potion", potion_reason, multiline = TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/user)
 	if(being_used || !isliving(dumb_mob))

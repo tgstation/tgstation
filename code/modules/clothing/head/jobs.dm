@@ -198,17 +198,18 @@
 	. = ..()
 	. += span_notice("Alt-click to take a candy corn.")
 
-/obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/head/fedora/det_hat/click_alt(mob/user)
 	if(loc != user || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
-	if(candy_cooldown < world.time)
-		var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
-		user.put_in_hands(CC)
-		to_chat(user, span_notice("You slip a candy corn from your hat."))
-		candy_cooldown = world.time+1200
-	else
+		return NONE
+	if(candy_cooldown >= world.time)
 		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
+		return CLICK_ACTION_BLOCKING
+
+	var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
+	user.put_in_hands(CC)
+	to_chat(user, span_notice("You slip a candy corn from your hat."))
+	candy_cooldown = world.time+1200
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/fedora/det_hat/minor
 	flask_path = /obj/item/reagent_containers/cup/glass/flask/det/minor
@@ -297,14 +298,14 @@
 		return
 	user.put_in_inactive_hand(items_by_phrase[phrase])
 
-/obj/item/clothing/head/fedora/inspector_hat/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/head/fedora/inspector_hat/click_alt(mob/user)
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+		return NONE
 	var/new_prefix = tgui_input_text(user, "What should be the new prefix?", "Activation prefix", prefix, max_length = 24)
 	if(!new_prefix || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+		return CLICK_ACTION_BLOCKING
 	prefix = new_prefix
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/fedora/inspector_hat/Exited(atom/movable/gone, direction)
 	. = ..()
