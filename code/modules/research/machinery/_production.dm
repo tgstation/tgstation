@@ -451,7 +451,7 @@
 /obj/machinery/rnd/production/click_alt(mob/user)
 	if(!can_interact(user))
 		return NONE
-	if(direction == 0)
+	if(drop_direction == 0)
 		return CLICK_ACTION_BLOCKING
 	if(busy)
 		balloon_alert(user, "busy printing!")
