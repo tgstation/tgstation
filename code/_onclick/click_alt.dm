@@ -9,7 +9,7 @@
 	PROTECTED_PROC(TRUE)
 
 	if(can_interact(user))
-		var/early_sig_return = SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)
+		var/early_sig_return = SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & CLICK_ACTION_ANY
 		if(early_sig_return)
 			return early_sig_return
 
