@@ -36,11 +36,11 @@ type ActiveModuleData = {
   current_selected_typepath: string;
   available_directions: number[];
   direction: number;
-  available_builds: BuildData[];
+  available_builds: BuildData;
 }
 
 type BuildPriceData = Record<string, Record<string, number>>;
 type BuildData = Record<string, {
-  type: string;
-  display_icon_ref: string;
+  name: string;
+  display_src: string;
 }>;

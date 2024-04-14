@@ -112,7 +112,7 @@
 			var/datum/forklift_module/active_module = selected_modules[ui.user]
 			if(isnull(active_module))
 				return
-			active_module.perform_module_ui_action(ui.user, params)
+			active_module.perform_module_ui_action(ui.user, params["action"], params)
 			return
 
 		else

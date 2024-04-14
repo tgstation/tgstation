@@ -33,17 +33,11 @@
 	/// What is the UI interface for this module?
 	var/ui_interface_name = "ConstructionForkliftModule_Default"
 
-/datum/forklift_module/proc/get_build_target_icon_refs()
-	var/static/list/icon_refs = list()
-	for(var/atom/build_typepath as anything in available_builds)
-		if(icon_refs[build_typepath])
-			continue
-		var/icon/build_icon = icon(build_typepath::icon, build_typepath::icon_state)
-		// 99% of the time it's not a custom icon and will already be in the rsc
-		// however, that other 1% of the time will cause an error.
-		// fcopy_rsc on something already in the rsc will return the existing reference.
-		icon_refs[build_typepath] = REF(fcopy_rsc(build_icon))
-	return icon_refs
+/datum/forklift_module/proc/get_display_src(atom/typepath)
+	var/static/base64cache = list()
+	if(typepath in base64cache)
+		return base64cache[typepath]
+	return (base64cache[typepath] = "data:image/png;base64,[icon2base64(icon(typepath::icon, typepath::icon_state))]")
 
 /datum/forklift_module/proc/get_ui_data_payload(mob/user)
 	var/list/data = list()
@@ -58,17 +52,22 @@
 	data["direction"] = direction
 
 	data["available_builds"] = list()
-	var/list/icon_refs = get_build_target_icon_refs()
 	for(var/atom/typepath as anything in available_builds)
 		data["available_builds"]["[typepath]"] = list(
 			"name" = typepath::name,
-			"display_icon_ref" = icon_refs[typepath],
+			"display_src" = get_display_src(typepath),
 		)
 
 	return data
 
-/datum/forklift_module/proc/perform_module_ui_action(mob/user, list/params)
-	return
+/datum/forklift_module/proc/perform_module_ui_action(mob/user, action, list/params)
+	if(action != "select-build-target")
+		CRASH("unknown ui action [action] for [type]!")
+
+	current_selected_typepath = text2path(params["typepath"])
+	if(!(current_selected_typepath in available_builds))
+		my_forklift.balloon_alert(user, "invalid build target!")
+		current_selected_typepath = available_builds[1]
 
 /// Ideally, you place here.
 /datum/forklift_module/proc/on_left_click(mob/source, atom/clickingon)
