@@ -107,6 +107,8 @@
 			var/selected_reagent = tgui_input_list(ui.user, "Select reagent", "Reagent", GLOB.name2reagent)
 			if(!selected_reagent)
 				return FALSE
+			if(QDELETED(ui) || ui.status != UI_INTERACTIVE)
+				return FALSE
 
 			var/datum/reagent/input_reagent = GLOB.name2reagent[selected_reagent]
 			if(!input_reagent)

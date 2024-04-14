@@ -172,7 +172,7 @@
 		return
 
 	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers)
-	if(isnull(new_layer))
+	if(isnull(new_layer) || !user.can_perform_action(src))
 		return
 	target_layer = GLOB.plumbing_layers[new_layer]
 
