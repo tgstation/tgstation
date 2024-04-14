@@ -13,8 +13,10 @@ type PreferenceChild = {
   children: ReactNode;
 };
 
-const binaryInsertPreference = (collection, value) =>
-  binaryInsertWith<PreferenceChild>(collection, value, (child) => child.name);
+const binaryInsertPreference = (
+  collection: PreferenceChild[],
+  value: PreferenceChild,
+) => binaryInsertWith(collection, value, (child) => child.name);
 
 const sortByName = (array: [string, PreferenceChild[]][]) =>
   sortBy(array, ([name]) => name);

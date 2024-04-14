@@ -25,8 +25,8 @@ const antagsByCategory = new Map<Category, Antagonist[]>();
 
 // This will break at priorities higher than 10, but that almost definitely
 // will not happen.
-const binaryInsertAntag = (collection, value) =>
-  binaryInsertWith(collection, value, (antag: Antagonist) => {
+const binaryInsertAntag = (collection: Antagonist[], value: Antagonist) =>
+  binaryInsertWith(collection, value, (antag) => {
     return `${antag.priority}_${antag.name}`;
   });
 

@@ -124,9 +124,12 @@ export const SupermatterContent = (props: SupermatterProps) => {
   const [allGasActive, setAllGasActive] = useState(false);
   let gas_composition = Object.entries(props.gas_composition);
   if (!allGasActive) {
-    gas_composition = filter(gas_composition, ([, amount]) => amount !== 0);
+    gas_composition = filter(
+      gas_composition,
+      ([gas_path, amount]) => amount !== 0,
+    );
   }
-  gas_composition = sortBy(gas_composition, ([, amount]) => -amount);
+  gas_composition = sortBy(gas_composition, ([gas_path, amount]) => -amount);
 
   return (
     <Stack height="100%">
