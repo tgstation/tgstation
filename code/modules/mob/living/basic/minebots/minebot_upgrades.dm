@@ -78,7 +78,7 @@
 /obj/effect/overlay/minebot_top_shield
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
-	vis_flags = VIS_INHERIT_DIR
+	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "minebot_shield_top_layer"
 	layer = ABOVE_ALL_MOB_LAYER
@@ -86,7 +86,7 @@
 /obj/effect/overlay/minebot_bottom_shield
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
-	vis_flags = VIS_INHERIT_DIR
+	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "minebot_shield_bottom_layer"
 	layer = BELOW_MOB_LAYER

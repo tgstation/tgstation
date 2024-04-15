@@ -326,3 +326,192 @@
   - image: Updates the colors of various material datum to bring them closer in-line
       with their actual material stacks
   - image: Improves the sprites for the material knight armor and helmet.
+2024-04-11:
+  Absolucy:
+  - qol: Added balloon alerts whenever you start plunging something (i.e )
+  Bilbo367:
+  - bugfix: fixes ody sleeper UI not updating to new chems to inject.
+  - bugfix: fixes ody sleeper not telling user why they can't pick up a person.
+  - code_imp: gives a common method for giving reagent list data to .tsx
+  Boviro:
+  - qol: Atmospherics Overalls now can store fire extinguishers in the suit storage
+      slot
+  - balance: Increased Advanced Extinguisher capacity to 100u
+  Jacquerel:
+  - bugfix: Medbots can no longer be used as especially large golden ID cards
+  JohnFulpWillard:
+  - refactor: Blueprints now use TGUI.
+  - qol: Blueprints can now be used while lying down.
+  SethLafuente:
+  - bugfix: Fixes Radiation Hood not having FOV blockage
+  SyncIt21:
+  - qol: Adds screen tips & examines for screwdriver, wrench, crowbar & beaker insertion,
+      removal & replacing actions
+  - qol: Analyzing reagents no longer blocks other players from doing other operations.
+      Multiple players can analyze different reagents on the same machine
+  - qol: You cannot do any tool acts on the machine while printing to prevent any
+      side effects.
+  - qol: The preferred container for the master reagent in the beaker is now showed
+      in both condiment & chem master. The feature can be enabled/disabled via a check
+      box
+  - code_imp: removed defines for reagent transfer, vars for reagent analyzis to save
+      memory. Autodoc for other vars & procs
+  - bugfix: You can hit the chem master with tools like screwdriver, crowbar, wrench
+      & beaker in combat mode
+  - bugfix: You cannot insert hologram items into the chem master
+  - bugfix: Deconstructing a condiment master will give you the circuit board already
+      pre-programmed with that option
+  - bugfix: You now print the exact amount of containers requested even with upgraded
+      parts without creating empty containers. Max printable containers is 13 with
+      tier 4 parts able to print 50 containers.
+  - refactor: Optimized client side UI code & chem master as a whole.
+  - bugfix: Autolathe correctly computes the print amount of custom material items
+      like toolboxes and doesn't grey out its print button
+  Watermelon914:
+  - admin: LUA - Adds a new library called handler_group. Include it in your files
+      by doing require('handler_group')
+  YesterdaysPromise:
+  - rscadd: Added long balloon box to the clown's starting inventory, and a skill-chip
+      of long lost honk-motherian knowledge to their brain.
+  - rscadd: Added long balloons. Consequently, added balloon animals to make from
+      such balloons. Also, balloon top hat, vest, helmet, and a mallet. Don't ask
+      about the mallet.
+  - rscadd: A long balloons box harvested fresh from the farms on the clown planet
+      will be able to be shipped in a crate to the cargo department near you!
+  - rscadd: As per requests; water balloons can now be printed at service lathe, and
+      entertainment modsuit can now blow long balloons!
+  - image: Balloons will now have an unique sprite when in the inventory, compared
+      when to on the ground.
+2024-04-12:
+  00-Steven:
+  - bugfix: Standard RPEDs work on machines again.
+  Jacquerel:
+  - spellcheck: Effectively hitting furniture and machines with objects will no longer
+      be double punctuated.
+  - bugfix: Goliaths can't grab their own riders with tentacles
+  Melbert:
+  - qol: Basic Bots will use their "salute" emotes less often.
+  - rscdel: Basic bot fists.
+  Pickle-Coding:
+  - balance: Atmos resin can directly cool the floor.
+  SyncIt21:
+  - code_imp: renamed `NO_DECONSTRUCTION` to `NO_DEBRIS_AFTER_DECONSTRUCTION` so its
+      name matches its intended purpose
+  - bugfix: fixes some items that incorrectly used `NO_DECONSTRUCTION` prior to its
+      refactor, meaning makes some objects non deconstructable again
+  disappointedButNotSuprised:
+  - rscadd: Coffee machines can now carry over reagents from the beans to the coffee
+      (surely no one will inject poison into them)
+2024-04-13:
+  00-Steven:
+  - refactor: Instead of being hardcoded to the pen, renaming items is now an element.
+      Currently only pens have this, and functionality should be the same, but please
+      report it if you find any items that were renamable but now aren't.
+  DaCoolBoss:
+  - spellcheck: Fixes a typo in the cargo console.
+  Horatio22:
+  - spellcheck: grammar fixes in the roundstart advisory warnings
+  Iamgoofball:
+  - bugfix: Fixes AI lag by re-adding idle mode to all AI that was lost with the simple
+      mob to basic mob conversion.
+  - bugfix: AI controllers with no clients around for 14 tiles will move into idle
+      mode and stop planning or acting.
+  - bugfix: AI controllers will now record how much time was spent on planning or
+      un-idling AI controllers.
+  Jacquerel:
+  - balance: The Bioscrambler will now actively attempt to get closer to living targets
+      rather than chilling in a closet nobody goes into (unless you trap it in a containment
+      field).
+  - balance: Because it can now travel through walls, the Bioscrambler will no longer
+      transform you THROUGH walls.
+  JohnFulpWillard:
+  - bugfix: Advanced camera consoles now boots you off when you're moved out of reach.
+  Ketrai:
+  - qol: chef equipment can now deposit and withdraw to/from trays!
+  - qol: chef now has access to griddle and oven sized trays!
+  - qol: service can now print soup pots
+  Melbert:
+  - bugfix: You can't change the GPS tag of something unless you can actually use
+      the GPS
+  - bugfix: You can't set the teleporter to a location unless you can actually use
+      the teleporter
+  - bugfix: You can't reply to request console requests unless you can actually use
+      the console
+  - bugfix: You can't update AI lawboards unless you're actually holding them
+  - bugfix: You can't update a borg rename board unless you're actually holding it
+  - bugfix: You can't mess with plumbing machines unless you can actually use them
+  - bugfix: You can't recolor / relayer ducts unless you're actually holding them
+  - bugfix: You can't magically wire APCs and SMESs unless you're right by them
+  - bugfix: You can't use Stargazer Telepathy on people who you can't see
+  - bugfix: You can't configure the Inspector Hat unless you can actually use it
+  StrangeWeirdKitten:
+  - balance: The upload and communication boards directly have trackers installed,
+      activated only when authenticated.
+  SyncIt21:
+  - bugfix: chem master properly shuts down if it loses power mid printing and won't
+      transfer reagents for the same
+  Watermelon914:
+  - bugfix: 'LUA: Registering a signal on a deleted datum will throw a more descriptive
+      error message.'
+  ZephyrTFA:
+  - admin: Something changed, but you shouldn't be able to notice. If verbs are funky
+      report this to <@946283057915232337> on discord.
+  hyperjll:
+  - balance: Haloperidol now purges 2 units per second of itself, should the victim
+      have zero stamina. (Stamcrit)
+  jlsnow301:
+  - bugfix: 'Deviants buffed: Rogue shoelacing, pickpocketing and restraint resisting
+      no longer give cogbar icons.'
+  - bugfix: Airlock electronics and other access-config type UIs should look much
+      better.
+  wesoda25:
+  - bugfix: blood rites - will no longer delete after running out of charges
+  - bugfix: blood rites - now heal shades as well
+  - bugfix: blood rites - now charge 1.65x for self healing as opposed to the ~2x
+      they were before
+  - code_imp: blood rites code hurts my eyes a bit less now
+2024-04-14:
+  00-Steven:
+  - bugfix: Clicking the buckled alert unbuckles you again.
+  Bisar:
+  - qol: Cyborgs now understand door and APC wires at a glance, among others
+  Jacquerel:
+  - bugfix: Living Limbs created by Bioscrambler will be alive.
+  - bugfix: Living Limbs can once more attach themselves to your body.
+  - balance: Living Limbs will prioritise attacking your limbs.
+  - bugfix: Basic Mobs will once again spread their damage across body zones instead
+      of only attacking your chest.
+  JohnFulpWillard:
+  - bugfix: The HoP's photobooth button is now consistently connected to the HoP's
+      photobooth.
+  Metekillot:
+  - bugfix: Being in critical condition no longer damages zombies.
+  - code_imp: TRAIT_NODEATH will actually stop you dying in (most) cases.
+  SyncIt21:
+  - bugfix: Operating computers clears its ui display procedures if patient is moved
+      out of the operating table in any way
+  - bugfix: you can put back the oven tray after you take it out
+  - bugfix: only oven trays are allowed in ovens preventing baked food runtimes
+  - bugfix: advanced camera consoles correctly deactivate when something happens(no
+      proximity, no power etc) to its user
+  kaylexis:
+  - image: Updates old belt sprites. Mostly the bags, but some misc. ones as well
+      like the chainsword and RPED
+2024-04-15:
+  AMyriad:
+  - image: Updated the ability icons used by AIs and station bots
+  AyIong:
+  - qol: General settings tab into TGchat, looks better now, and is more convenient
+      to use. Also, each button has a font written on it.
+  Ben10Omintrix:
+  - bugfix: minebots no longer bomb each other (and other miners) through landmines
+  - bugfix: minebot shields will no longer lose color in lower z levels
+  JohnFulpWillard:
+  - bugfix: Battle arcade's higher levels no longer gives you a "Gear" gear, and counterattacks
+      can now properly kill enemies.
+  - qol: Crayons can now draw up to 4 letters at a time per tile.
+  Thunder12345:
+  - spellcheck: Pre-Approved Cyborg Candidates are no longer "Cantidates"
+  jlsnow301:
+  - rscadd: Added a loot window for alt-clicking tiles.
+  - rscdel: Removed the item browser from the stat panel.
