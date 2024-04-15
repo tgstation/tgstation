@@ -76,7 +76,7 @@
 	var/obj/machinery/door/airlock/airlock = holder
 	if(!HAS_SILICON_ACCESS(user) && !isdrone(user) && airlock.isElectrified())
 		var/mob/living/carbon/carbon_user = user
-		if (!istype(carbon_user) || carbon_user.should_electrocute(src))
+		if (!istype(carbon_user) || carbon_user.should_electrocute(get_area(airlock)))
 			return FALSE
 	if(airlock.is_secure())
 		return FALSE

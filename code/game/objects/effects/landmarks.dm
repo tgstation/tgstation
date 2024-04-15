@@ -287,6 +287,16 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	GLOB.nukeop_leader_start += loc
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/start/nukeop_overwatch
+	name = "nukeop overwatch"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "snukeop_leader_spawn"
+
+/obj/effect/landmark/start/nukeop_overwatch/Initialize(mapload)
+	..()
+	GLOB.nukeop_overwatch_start += loc
+	return INITIALIZE_HINT_QDEL
+
 // Must be immediate because players will
 // join before SSatom initializes everything.
 INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
@@ -491,7 +501,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	return ..()
 
 /obj/effect/landmark/start/hangover/LateInitialize()
-	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
 		party_debris += new /obj/effect/decal/cleanable/confetti(get_turf(src)) //a birthday celebration can also be a hangover
 		var/list/bonus_confetti = GLOB.alldirs
@@ -572,7 +581,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/landmark/navigate_destination/LateInitialize()
-	. = ..()
 	if(!location)
 		var/obj/machinery/door/airlock/A = locate(/obj/machinery/door/airlock) in loc
 		location = A ? format_text(A.name) : get_area_name(src, format_text = TRUE)

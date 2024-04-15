@@ -111,7 +111,7 @@
 
 	parts += "<span class='header'>The [name] were:</span> <br>"
 
-	if(check_captivity(progenitor))
+	if(check_captivity(progenitor.current) == CAPTIVE_XENO_PASS)
 		parts += span_greentext("The progenitor of this hive was [progenitor.key], as [progenitor], who successfully escaped captivity!") + "<br>"
 	else
 		parts += span_redtext("The progenitor of this hive was [progenitor.key], as [progenitor], who failed to escape captivity") + "<br>"

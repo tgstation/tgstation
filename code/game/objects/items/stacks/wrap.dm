@@ -29,9 +29,9 @@
 
 		//If colors are too dark, set to original colors
 		if(base_hsv[3] < 50)
-			generated_base_color = "#00FF00"
+			generated_base_color = COLOR_VIBRANT_LIME
 		if(ribbon_hsv[3] < 50)
-			generated_ribbon_color = "#FF0000"
+			generated_ribbon_color = COLOR_RED
 
 		//Set layers to these colors, base then ribbon
 		set_greyscale(colors = list(generated_base_color, generated_ribbon_color))
@@ -130,7 +130,7 @@
 			item.forceMove(parcel)
 			var/size = round(item.w_class)
 			parcel.name = "[weight_class_to_text(size)] parcel"
-			parcel.w_class = size
+			parcel.update_weight_class(size)
 			size = min(size, 5)
 			parcel.base_icon_state = "deliverypackage[size]"
 			parcel.update_icon()

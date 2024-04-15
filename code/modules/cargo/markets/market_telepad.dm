@@ -19,16 +19,16 @@
 
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 2
 
-	/// Divider for power_usage_per_teleport.
+	/// Divider for energy_usage_per_teleport.
 	var/power_efficiency = 1
 	/// Power used per teleported which gets divided by power_efficiency.
-	var/power_usage_per_teleport = 10000
+	var/energy_usage_per_teleport = 10 KILO JOULES
 	/// The time it takes for the machine to recharge before being able to send or receive items.
 	var/recharge_time = 0
 	/// Current recharge progress.
 	COOLDOWN_DECLARE(recharge_cooldown)
 	/// Base recharge time in seconds which is used to get recharge_time.
-	var/base_recharge_time = 100
+	var/base_recharge_time = 10 SECONDS
 	/// Current /datum/market_purchase being received.
 	var/datum/market_purchase/receiving
 	/// Current /datum/market_purchase being sent to the target uplink.
@@ -43,7 +43,7 @@
 /obj/machinery/ltsrbt/Destroy()
 	SSblackmarket.telepads -= src
 	// Bye bye orders.
-	if(SSblackmarket.telepads.len)
+	if(length(SSblackmarket.telepads))
 		for(var/datum/market_purchase/P in queue)
 			SSblackmarket.queue_item(P)
 	. = ..()
@@ -53,7 +53,7 @@
 	recharge_time = base_recharge_time
 	// On tier 4 recharge_time should be 20 and by default it is 80 as scanning modules should be tier 1.
 	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
-		recharge_time -= scanning_module.tier * 10
+		recharge_time -= scanning_module.tier * 1 SECONDS
 	recharge_cooldown = recharge_time
 
 	power_efficiency = 0
@@ -69,9 +69,10 @@
 		receiving = purchase
 	else
 		queue += purchase
-	RegisterSignal(receiving, COMSIG_QDELETING, PROC_REF(on_receiving_del))
 
-/obj/machinery/ltsrbt/proc/on_receiving_del(datum/market_purchase/purchase)
+	RegisterSignal(purchase, COMSIG_QDELETING, PROC_REF(on_purchase_del))
+
+/obj/machinery/ltsrbt/proc/on_purchase_del(datum/market_purchase/purchase)
 	SIGNAL_HANDLER
 	queue -= purchase
 	if(receiving == purchase)
@@ -86,14 +87,12 @@
 	if(!COOLDOWN_FINISHED(src, recharge_cooldown) && isnull(receiving) && isnull(transmitting))
 		return
 
-	COOLDOWN_START(src, recharge_cooldown, recharge_time)
-
 	var/turf/turf = get_turf(src)
 	if(receiving)
 
 		receiving.item = receiving.entry.spawn_item(turf, receiving)
 
-		use_power(power_usage_per_teleport / power_efficiency)
+		use_energy(energy_usage_per_teleport / power_efficiency)
 		var/datum/effect_system/spark_spread/sparks = new
 		sparks.set_up(5, 1, get_turf(src))
 		sparks.attach(receiving.item)
@@ -102,14 +101,14 @@
 		transmitting = receiving
 		receiving = null
 
-		recharge_cooldown = recharge_time
+		COOLDOWN_START(src, recharge_cooldown, recharge_time)
 		return
 	if(transmitting)
 		if(transmitting.item.loc == turf)
 			do_teleport(transmitting.item, get_turf(transmitting.uplink))
-			use_power(power_usage_per_teleport / power_efficiency)
+			use_energy(energy_usage_per_teleport / power_efficiency)
 		QDEL_NULL(transmitting)
 		return
 
-	if(queue.len)
+	if(length(queue))
 		receiving = pick_n_take(queue)

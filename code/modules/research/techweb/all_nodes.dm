@@ -106,6 +106,7 @@
 		"slime_scanner",
 		"solar_panel",
 		"solar_tracker",
+		"souppot",
 		"space_heater",
 		"spoon",
 		"status_display_frame",
@@ -1204,8 +1205,10 @@
 		"idcard",
 		"libraryconsole",
 		"mining",
+		"photobooth",
 		"rdcamera",
 		"seccamera",
+		"security_photobooth",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 

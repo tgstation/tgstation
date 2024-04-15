@@ -358,7 +358,7 @@ If you make a derivative work from this code, you must include this notification
 			attacker.setDir(turn(attacker.dir, 90))
 
 		attacker.forceMove(defender.loc)
-		addtimer(CALLBACK(src, PROC_REF(CheckStrikeTurf), attacker, T), 4)
+		addtimer(CALLBACK(src, PROC_REF(CheckStrikeTurf), attacker, T), 0.4 SECONDS)
 
 		defender.visible_message(span_danger("[attacker] headbutts [defender]!"), \
 						span_userdanger("You're headbutted by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)

@@ -1,5 +1,6 @@
 /datum/antagonist/slaughter
 	name = "\improper Slaughter Demon"
+	roundend_category = "demons"
 	show_name_in_check_antagonists = TRUE
 	ui_name = "AntagInfoDemon"
 	job_rank = ROLE_ALIEN
@@ -37,6 +38,30 @@
 	data["objectives"] = get_objectives()
 	data["explain_attack"] = TRUE
 	return data
+
+/datum/antagonist/slaughter/roundend_report()
+	var/list/report = list()
+
+	if(!owner)
+		CRASH("Antagonist datum without owner")
+
+	report += printplayer(owner)
+
+	if(objectives.len)
+		report += printobjectives(objectives)
+
+	var/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/consume_ability = locate() in owner.current?.actions
+	if(consume_ability?.consume_count > 0)
+		report += span_greentext("The [name] consumed a total of [consume_ability.consume_count] bodies!")
+	else
+		report += span_redtext("The [name] did not consume anyone! Shame!!")
+
+	if(owner.current?.stat != DEAD)
+		report += "<span class='greentext big'>The [name] survived!</span>"
+	else
+		report += "<span class='redtext big'>The [name] was vanquished!</span>"
+
+	return report.Join("<br>")
 
 /datum/antagonist/slaughter/laughter
 	name = "Laughter demon"

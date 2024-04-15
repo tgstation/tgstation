@@ -52,7 +52,6 @@
 	belt_icon_state = "crowbar_alien"
 	toolspeed = 0.1
 
-
 /obj/item/crowbar/large
 	name = "large crowbar"
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big."

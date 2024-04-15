@@ -277,7 +277,7 @@
 		return
 
 	var/input = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
-	if(!input)
+	if(!input || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(input in items_by_phrase)
 		balloon_alert(user, "already used!")
@@ -293,14 +293,16 @@
 /obj/item/clothing/head/fedora/inspector_hat/attack_self(mob/user)
 	. = ..()
 	var/phrase = tgui_input_list(user, "What item do you want to remove by phrase?", "Item Removal", items_by_phrase)
-	if(!phrase)
+	if(!phrase || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	user.put_in_inactive_hand(items_by_phrase[phrase])
 
 /obj/item/clothing/head/fedora/inspector_hat/AltClick(mob/user)
 	. = ..()
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
 	var/new_prefix = tgui_input_text(user, "What should be the new prefix?", "Activation prefix", prefix, max_length = 24)
-	if(!new_prefix)
+	if(!new_prefix || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	prefix = new_prefix
 
@@ -545,7 +547,7 @@
 /obj/item/clothing/head/beret/medical
 	name = "medical beret"
 	desc = "A medical-flavored beret for the doctor in you!"
-	greyscale_colors = "#FFFFFF"
+	greyscale_colors = COLOR_WHITE
 	flags_1 = NONE
 
 /obj/item/clothing/head/beret/medical/paramedic
@@ -563,6 +565,7 @@
 	icon_state = "surgicalcap"
 	desc = "A blue medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
 	flags_inv = HIDEHAIR //Cover your head doctor!
+	w_class = WEIGHT_CLASS_SMALL //surgery cap can be easily crumpled
 
 /obj/item/clothing/head/utility/surgerycap/attack_self(mob/user)
 	. = ..()

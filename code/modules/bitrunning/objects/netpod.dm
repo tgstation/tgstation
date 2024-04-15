@@ -24,12 +24,7 @@
 	/// Static list of outfits to select from
 	var/list/cached_outfits = list()
 
-/obj/machinery/netpod/Initialize(mapload)
-	. = ..()
-
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/netpod/LateInitialize()
+/obj/machinery/netpod/post_machine_initialize()
 	. = ..()
 
 	disconnect_damage = BASE_DISCONNECT_DAMAGE

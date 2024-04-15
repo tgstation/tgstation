@@ -201,7 +201,7 @@
 
 	if (regime_set == "Teleporter")
 		var/desc = tgui_input_list(usr, "Select a location to lock in", "Locking Computer", sort_list(targets))
-		if(isnull(desc))
+		if(isnull(desc) || !user.can_perform_action(src))
 			return
 		set_teleport_target(targets[desc])
 		user.log_message("set the teleporter target to [targets[desc]].]", LOG_GAME)
@@ -211,7 +211,7 @@
 			return
 
 		var/desc = tgui_input_list(usr, "Select a station to lock in", "Locking Computer", sort_list(targets))
-		if(isnull(desc))
+		if(isnull(desc)|| !user.can_perform_action(src))
 			return
 		var/obj/machinery/teleport/station/target_station = targets[desc]
 		if(!target_station || !target_station.teleporter_hub)

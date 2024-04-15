@@ -48,7 +48,7 @@ Then the player gets the profit from selling his own wasted time.
 	** ignore_typecache: typecache containing types that should be completely ignored
 */
 /proc/export_item_and_contents(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report, list/ignore_typecache)
-	external_report = init_export()
+	external_report = init_export(external_report)
 
 	var/list/contents = exported_atom.get_all_contents_ignoring(ignore_typecache)
 
@@ -69,7 +69,7 @@ Then the player gets the profit from selling his own wasted time.
 
 /// It works like export_item_and_contents(), however it ignores the contents. Meaning only `exported_atom` will be valued.
 /proc/export_single_item(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report)
-	external_report = init_export()
+	external_report = init_export(external_report)
 
 	var/sold = _export_loop(exported_atom, apply_elastic, dry_run, external_report)
 	if(!dry_run && (sold || delete_unsold) && sold != EXPORT_SOLD_DONT_DELETE)
@@ -90,7 +90,7 @@ Then the player gets the profit from selling his own wasted time.
 			if(dry_run && !export.scannable)
 				external_report.all_contents_scannable = FALSE
 				break
-			sold = export.sell_object(exported_atom, exported_atom, dry_run, apply_elastic)
+			sold = export.sell_object(exported_atom, external_report, dry_run, apply_elastic)
 			external_report.exported_atoms += " [exported_atom.name]"
 			break
 	return sold
