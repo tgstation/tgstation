@@ -607,11 +607,12 @@
 	animate(our_client, pixel_x = 0, pixel_y = 0, time = 0.05 SECONDS)
 	our_client.move_delay = world.time + 0.05 SECONDS
 
-/obj/machinery/atmospherics/click_alt(mob/living/L)
-	if(!(vent_movement & VENTCRAWL_ALLOWED) || !istype(L))
-		return NONE
-	L.handle_ventcrawl(src)
-	return CLICK_ACTION_SUCCESS
+
+/obj/machinery/atmospherics/base_click_alt(mob/living/beno)
+	if(!(vent_movement & VENTCRAWL_ALLOWED) || !istype(beno))
+		return ..()
+	beno.handle_ventcrawl(src)
+	return
 
 /**
  * Getter of a list of pipenets
