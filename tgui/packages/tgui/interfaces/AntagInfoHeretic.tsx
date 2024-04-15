@@ -234,8 +234,8 @@ const KnowledgeTree = (props) => {
     <Section title="Research Tree" fill scrollable>
       <Stack vertical>
         {(!knowledge_tiers.length && 'None!') ||
-          knowledge_tiers.map((tier) => (
-            <Stack.Item key={tier.depth}>
+          knowledge_tiers.map((tier, i) => (
+            <Stack.Item key={i}>
               <Flex
                 direction="row"
                 justify="center"

@@ -134,19 +134,9 @@
 	data["ascended"] = ascended
 
 	//setup tiers
-	var/list/tiers = list(
-		list("depth"=0,"nodes"=list()),
-		list("depth"=1,"nodes"=list()),
-		list("depth"=2,"nodes"=list()),
-		list("depth"=3,"nodes"=list()),
-		list("depth"=4,"nodes"=list()),
-		list("depth"=5,"nodes"=list()),
-		list("depth"=6,"nodes"=list()),
-		list("depth"=7,"nodes"=list()),
-		list("depth"=8,"nodes"=list()),
-		list("depth"=9,"nodes"=list()),
-		list("depth"=10,"nodes"=list()),
-	)
+	var/list/tiers = list()
+	for(var/i in 0 to 10)
+		tiers += list(list("nodes"=list()))
 
 	// This should be cached in some way, but the fact that final knowledge
 	// has to update its disabled state based on whether all objectives are complete,
