@@ -85,6 +85,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	semi_auto = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS
 	/// If defined, the secondary tube is this type, if you want different shell loads
 	var/alt_mag_type
 	/// If TRUE, we're drawing from the alternate_magazine
@@ -132,8 +133,6 @@
 		balloon_alert(user, "switched to tube A")
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/click_alt(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return NONE
 	rack()
 	return CLICK_ACTION_SUCCESS
 

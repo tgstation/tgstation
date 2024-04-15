@@ -8,9 +8,12 @@
 	item_flags = NOBLUDGEON
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-
-	var/cooldown = 300
+	interaction_flags_click = NEED_DEXTERITY
+	/// Cooldown for usage
+	var/cooldown = 30 SECONDS
+	/// Next available time
 	var/next_use = 0
+	/// Swapper linked to this obj
 	var/obj/item/swapper/linked_swapper
 
 /obj/item/swapper/Destroy()
@@ -67,8 +70,6 @@
 		. += span_notice("<b>Not Linked.</b> Use on another quantum spin inverter to establish a quantum link.")
 
 /obj/item/swapper/click_alt(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return
 	to_chat(user, span_notice("You break the current quantum link."))
 	if(!QDELETED(linked_swapper))
 		linked_swapper.linked_swapper = null

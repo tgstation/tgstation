@@ -7,6 +7,8 @@
 	throwforce = 0
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
+	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH
+	/// Amount on money on the card
 	var/credits = 0
 
 /obj/item/holochip/Initialize(mapload, amount = 1)
@@ -102,8 +104,6 @@
 		qdel(H)
 
 /obj/item/holochip/click_alt(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
-		return NONE
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the holochip to continue!"))
 		return CLICK_ACTION_BLOCKING

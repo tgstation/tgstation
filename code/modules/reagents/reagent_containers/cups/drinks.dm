@@ -436,6 +436,7 @@
 	amount_per_transfer_from_this = 10
 	volume = 100
 	isGlass = FALSE
+	interaction_flags_click = NEED_HANDS|FORBID_TELEKINESIS_REACH
 	/// Whether or not poured drinks should use custom names and descriptions
 	var/using_custom_drinks = FALSE
 	/// Name custom drinks will have
@@ -464,9 +465,6 @@
 		. += span_notice("Drinks poured from this shaker will have the following description: [custom_drink_desc]")
 
 /obj/item/reagent_containers/cup/glass/shaker/click_alt(mob/user)
-	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
-		return NONE
-
 	if(using_custom_drinks)
 		using_custom_drinks = FALSE
 		disable_custom_drinks()

@@ -5,6 +5,7 @@
 	buckle_lying = 0
 	pass_flags_self = PASSTABLE
 	COOLDOWN_DECLARE(message_cooldown)
+	interaction_flags_click = NEED_DEXTERITY
 
 /obj/vehicle/ridden/examine(mob/user)
 	. = ..()
@@ -40,8 +41,6 @@
 	inserted_key = I
 
 /obj/vehicle/ridden/click_alt(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return NONE
 	if(!inserted_key)
 		return CLICK_ACTION_BLOCKING
 	if(!is_occupant(user))

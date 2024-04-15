@@ -18,6 +18,7 @@
 	attack_verb_simple = list("slam", "whack", "bash", "thunk", "batter", "bludgeon", "thrash")
 	dog_fashion = /datum/dog_fashion/back
 	resistance_flags = FIRE_PROOF
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS
 	/// The max amount of water this extinguisher can hold.
 	var/max_water = 50
 	/// Does the welder extinguisher start with water.
@@ -271,8 +272,6 @@
 			source.delay = 3
 
 /obj/item/extinguisher/click_alt(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return NONE
 	if(!user.is_holding(src))
 		to_chat(user, span_notice("You must be holding the [src] in your hands do this!"))
 		return CLICK_ACTION_BLOCKING

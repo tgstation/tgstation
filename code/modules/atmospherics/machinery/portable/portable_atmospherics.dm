@@ -8,6 +8,7 @@
 	armor_type = /datum/armor/machinery_portable_atmospherics
 	anchored = FALSE
 	layer = ABOVE_OBJ_LAYER
+	interaction_flags_click = NEED_DEXTERITY
 
 	///Stores the gas mixture of the portable component. Don't access this directly, use return_air() so you support the temporary processing it provides
 	var/datum/gas_mixture/air_contents
@@ -160,8 +161,6 @@
 	return TRUE
 
 /obj/machinery/portable_atmospherics/click_alt(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return NONE
 	if(!holding)
 		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You remove [holding] from [src]."))

@@ -39,6 +39,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	light_power = 0.6
 	speed = 3
 	req_one_access = list(ACCESS_ROBOTICS)
+	interaction_flags_click = ALLOW_SILICON_REACH
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/arm/right/robot
 	///The inserted (if any) pAI in this bot.
@@ -361,8 +362,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 		ui.open()
 
 /mob/living/basic/bot/click_alt(mob/user)
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return NONE
 	unlock_with_id(user)
 	return CLICK_ACTION_SUCCESS
 

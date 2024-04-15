@@ -440,6 +440,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	buildstacktype = /obj/item/stack/sheet/bronze
 	buildstackamount = 1
 	item_chair = null
+	interaction_flags_click = NEED_DEXTERITY
+	/// Total rotations made
 	var/turns = 0
 
 /obj/structure/chair/bronze/Initialize(mapload)
@@ -458,8 +460,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 		STOP_PROCESSING(SSfastprocess, src)
 
 /obj/structure/chair/bronze/click_alt(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return NONE
 	turns = 0
 	if(!(datum_flags & DF_ISPROCESSING))
 		user.visible_message(span_notice("[user] spins [src] around, and the last vestiges of Ratvarian technology keeps it spinning FOREVER."), \

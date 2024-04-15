@@ -30,6 +30,7 @@
 	grind_results = list(/datum/reagent/cellulose = 3)
 	color = COLOR_WHITE
 	item_flags = SKIP_FANTASY_ON_SPAWN
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS
 
 	/// Lazylist of raw, unsanitised, unparsed text inputs that have been made to the paper.
 	var/list/datum/paper_input/raw_text_inputs
@@ -360,8 +361,6 @@
 	return ..()
 
 /obj/item/paper/click_alt(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return NONE
 	if(HAS_TRAIT(user, TRAIT_PAPER_MASTER))
 		make_plane(user, /obj/item/paperplane/syndicate)
 		return CLICK_ACTION_SUCCESS

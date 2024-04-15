@@ -5,11 +5,14 @@
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 	icon_state = "cargosoft"
 	inhand_icon_state = "greyscale_softcap" //todo wip
+	interaction_flags_click = NEED_DEXTERITY
+	/// For setting icon archetype
 	var/soft_type = "cargo"
+	/// If there is a suffix to append
 	var/soft_suffix = "soft"
 
 	dog_fashion = /datum/dog_fashion/head/cargo_tech
-
+	/// Whether this is on backwards... Woah, cool
 	var/flipped = FALSE
 
 /obj/item/clothing/head/soft/dropped()
@@ -25,8 +28,6 @@
 
 
 /obj/item/clothing/head/soft/click_alt(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return NONE
 	flip(user)
 	return CLICK_ACTION_SUCCESS
 

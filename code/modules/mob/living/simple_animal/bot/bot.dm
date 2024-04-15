@@ -29,6 +29,7 @@
 	light_power = 0.6
 	del_on_death = TRUE
 	req_one_access = list(ACCESS_ROBOTICS)
+	interaction_flags_click = ALLOW_SILICON_REACH
 
 	///Cooldown between salutations for commissioned bots
 	COOLDOWN_DECLARE(next_salute_check)
@@ -412,8 +413,6 @@
 		ui.open()
 
 /mob/living/simple_animal/bot/click_alt(mob/user)
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return NONE
 	unlock_with_id(user)
 	return CLICK_ACTION_SUCCESS
 

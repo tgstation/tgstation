@@ -165,8 +165,6 @@
 		ui.open()
 
 /obj/machinery/sleeper/click_alt(mob/user)
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return NONE
 	if(state_open)
 		close_machine()
 	else

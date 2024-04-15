@@ -54,7 +54,7 @@
 	icon_keyboard = "med_key"
 	density = TRUE
 	circuit = /obj/item/circuitboard/computer/scan_consolenew
-
+	interaction_flags_click = ALLOW_SILICON_REACH
 	light_color = LIGHT_COLOR_BLUE
 
 	/// Link to the techweb's stored research. Used to retrieve stored mutations
@@ -211,9 +211,6 @@
 	return TRUE
 
 /obj/machinery/computer/scan_consolenew/click_alt(mob/user)
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return NONE
-
 	eject_disk(user)
 	return CLICK_ACTION_SUCCESS
 

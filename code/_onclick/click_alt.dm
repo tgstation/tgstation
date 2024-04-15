@@ -8,7 +8,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
 
-	if(can_interact(user))
+	if(user.can_perform_action(src, interaction_flags_click))
 		var/early_sig_return = SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & CLICK_ACTION_ANY
 		if(early_sig_return)
 			return early_sig_return

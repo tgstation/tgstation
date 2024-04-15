@@ -10,6 +10,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
 
 	///The implant case currently inserted into the pad.
 	var/obj/item/implantcase/inserted_case
@@ -47,8 +48,6 @@
 	update_appearance(UPDATE_ICON)
 
 /obj/item/implantpad/click_alt(mob/user)
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return NONE
 	remove_implant(user)
 	return CLICK_ACTION_SUCCESS
 

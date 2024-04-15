@@ -9,9 +9,14 @@
 	w_class = WEIGHT_CLASS_SMALL
 	armor_type = /datum/armor/supplypod_beacon
 	resistance_flags = FIRE_PROOF
+	interaction_flags_click = ALLOW_SILICON_REACH
+	/// The linked console
 	var/obj/machinery/computer/cargo/express/express_console
+	/// If linked
 	var/linked = FALSE
+	/// If this is ready to launch
 	var/ready = FALSE
+	/// If it's been launched
 	var/launched = FALSE
 
 /datum/armor/supplypod_beacon
@@ -91,8 +96,6 @@
 	to_chat(user, span_notice("[src] linked to [C]."))
 
 /obj/item/supplypod_beacon/click_alt(mob/user)
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return NONE
 	if(!express_console)
 		to_chat(user, span_alert("There is no linked console."))
 		return CLICK_ACTION_BLOCKING

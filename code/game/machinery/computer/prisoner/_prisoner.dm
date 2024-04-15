@@ -2,6 +2,7 @@
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_LITERACY
 	/// ID card currently inserted into the computer.
 	VAR_FINAL/obj/item/card/id/advanced/prisoner/contained_id
+	interaction_flags_click = ALLOW_SILICON_REACH
 
 /obj/machinery/computer/prisoner/on_deconstruction(disassembled)
 	contained_id?.forceMove(drop_location())
@@ -21,9 +22,6 @@
 		. += span_notice("<b>Alt-click</b> to eject the ID card.")
 
 /obj/machinery/computer/prisoner/click_alt(mob/user)
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return NONE
-
 	id_eject(user)
 	return CLICK_ACTION_SUCCESS
 

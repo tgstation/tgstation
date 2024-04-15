@@ -31,6 +31,7 @@
 	light_color = LIGHT_COLOR_DIM_YELLOW
 	light_power = 3
 	anchored_tabletop_offset = 6
+	interaction_flags_click = ALLOW_SILICON_REACH
 	/// Is its function wire cut?
 	var/wire_disabled = FALSE
 	/// Wire cut to run mode backwards
@@ -474,8 +475,6 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/microwave/click_alt(mob/user, list/modifiers)
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return NONE
 	if(!vampire_charging_capable)
 		return NONE
 

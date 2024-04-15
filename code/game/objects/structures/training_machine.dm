@@ -20,6 +20,7 @@
 	can_buckle = TRUE
 	buckle_lying = 0
 	max_integrity = 200
+	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	///Is the machine moving? Setting this to FALSE will automatically call stop_moving()
 	var/moving = FALSE
 	///The distance the machine is allowed to roam from its starting point
@@ -175,8 +176,6 @@
 	on_attached_delete()
 
 /obj/structure/training_machine/click_alt(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
-		return NONE
 	if(has_buckled_mobs())
 		user_unbuckle_mob(buckled_mobs[1], user)
 		return CLICK_ACTION_SUCCESS

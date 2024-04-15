@@ -17,10 +17,16 @@
 	tool_behaviour = TOOL_ANALYZER
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 0.2)
 	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
+	interaction_flags_click = NEED_LITERACY|NEED_LIGHT
+	/// Boolean whether this has a CD
 	var/cooldown = FALSE
-	var/cooldown_time = 250
-	var/barometer_accuracy // 0 is the best accuracy.
+	/// The time in deciseconds
+	var/cooldown_time = 25 SECONDS
+	/// 0 is best accuracy
+	var/barometer_accuracy
+	/// Cached gasmix data from ui_interact
 	var/list/last_gasmix_data
+	/// Max scan distance
 	var/ranged_scan_distance = 1
 
 /obj/item/analyzer/Initialize(mapload)
@@ -54,9 +60,6 @@
 	return BRUTELOSS
 
 /obj/item/analyzer/click_alt(mob/user) //Barometer output for measuring when the next storm happens
-	if(!user.can_perform_action(src, NEED_LITERACY|NEED_LIGHT))
-		return NONE
-
 	if(cooldown)
 		to_chat(user, span_warning("[src]'s barometer function is preparing itself."))
 		return CLICK_ACTION_BLOCKING

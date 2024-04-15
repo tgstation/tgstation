@@ -759,6 +759,7 @@
 
 	pre_noise = TRUE
 	post_noise = FALSE
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
 	. = ..()
@@ -961,9 +962,6 @@
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/toy/crayon/spraycan/click_alt(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return NONE
-
 	if(!has_cap)
 		return CLICK_ACTION_BLOCKING
 	is_capped = !is_capped
