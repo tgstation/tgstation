@@ -63,7 +63,7 @@
 		to_chat(user, span_notice("You change [src]'s output settings, setting the output to [dir2text(output_dir)]."))
 		return CLICK_ACTION_SUCCESS
 	if(harvesting || state_open || !can_harvest())
-		return NONE
+		return CLICK_ACTION_BLOCKING
 
 	start_harvest()
 	return CLICK_ACTION_SUCCESS
