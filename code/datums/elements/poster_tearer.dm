@@ -3,13 +3,13 @@
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 	/// Interaction key to use whilst tearing down a poster.
-	var/do_after_key
+	var/interaction_key
 
-/datum/element/poster_tearer/Attach(datum/target, do_after_key = null)
+/datum/element/poster_tearer/Attach(datum/target, interaction_key = null)
 	. = ..()
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
-	src.do_after_key = do_after_key
+	src.interaction_key = interaction_key
 	RegisterSignals(target, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_UNARMED_ATTACK), PROC_REF(on_attacked_poster))
 
 /datum/element/poster_tearer/Detach(datum/source)
@@ -22,7 +22,7 @@
 	if(!istype(target, /obj/structure/sign/poster))
 		return NONE // don't care we move on
 
-	if(DOING_INTERACTION_WITH_TARGET(user, target) || (!isnull(do_after_key) && DOING_INTERACTION(user, do_after_key)))
+	if(DOING_INTERACTION_WITH_TARGET(user, target) || (!isnull(interaction_key) && DOING_INTERACTION(user, interaction_key)))
 		user.balloon_alert(target, "busy!")
 		return COMPONENT_HOSTILE_NO_ATTACK
 
@@ -35,6 +35,6 @@
 		return
 
 	target.balloon_alert(user, "tearing down the poster...")
-	if(!do_after(user, 2 SECONDS, target, interaction_key = do_after_key)) // just in case the user actually enjoys art
+	if(!do_after(user, 2 SECONDS, target, interaction_key = interaction_key)) // just in case the user actually enjoys art
 		return
 	target.tear_poster(user)
