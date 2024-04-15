@@ -62,9 +62,7 @@
 		output_dir = turn(output_dir, -90)
 		to_chat(user, span_notice("You change [src]'s output settings, setting the output to [dir2text(output_dir)]."))
 		return CLICK_ACTION_SUCCESS
-	if(!can_interact(user))
-		return NONE
-	if(harvesting || !user || !isliving(user) || state_open || can_harvest())
+	if(harvesting || state_open || !can_harvest())
 		return NONE
 
 	start_harvest()
