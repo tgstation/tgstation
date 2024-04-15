@@ -19,7 +19,7 @@
 /mob/living/carbon/get_ear_protection()
 	. = ..()
 	var/obj/item/organ/internal/ears/ear = get_organ_slot(ORGAN_SLOT_EARS)
-	if(!ear)
+	if(isnull(ear))
 		return INFINITY
 	. += ear.bang_protect
 
@@ -479,27 +479,35 @@
 	var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	if(effect_amount <= 0)
 		return 0
+
 	if(stun_pwr)
 		Paralyze((stun_pwr*effect_amount)*0.1)
 		Knockdown(stun_pwr*effect_amount)
 
-	if(ears && (deafen_pwr || damage_pwr))
-		var/ear_damage = damage_pwr * effect_amount
-		var/deaf = deafen_pwr * effect_amount
-		ears.adjustEarDamage(ear_damage,deaf)
+	if(isnull(ears) || (deafen_pwr <= 0 && damage_pwr <= 0))
+		return effect_amount
 
-		if(ears.damage >= 15)
-			to_chat(src, span_warning("Your ears start to ring badly!"))
-			if(prob(ears.damage - 5))
-				to_chat(src, span_userdanger("You can't hear anything!"))
-				// Makes you deaf, enough that you need a proper source of healing, it won't self heal
-				// you need earmuffs, inacusiate, or replacement
-				ears.set_organ_damage(ears.maxHealth)
-		else if(ears.damage >= 5)
-			to_chat(src, span_warning("Your ears start to ring!"))
-		SEND_SOUND(src, sound('sound/weapons/flash_ring.ogg',0,1,0,250))
+	var/ear_damage = damage_pwr * effect_amount
+	var/deaf = deafen_pwr * effect_amount
+	ears.adjustEarDamage(ear_damage,deaf)
+
+	SEND_SOUND(src, sound('sound/weapons/flash_ring.ogg',0,1,0,250))
+
+	if (ears.damage < 5)
+		return effect_amount
+
+	if (ears.damage < 15)
+		to_chat(src, span_warning("Your ears start to ring!"))
+		return effect_amount
+
+	to_chat(src, span_warning("Your ears start to ring badly!"))
+	if(prob(ears.damage - 5))
+		to_chat(src, span_userdanger("You can't hear anything!"))
+		// Makes you deaf, enough that you need a proper source of healing, it won't self heal
+		// you need earmuffs, inacusiate, or replacement
+		ears.set_organ_damage(ears.maxHealth)
+
 	return effect_amount //how soundbanged we are
-
 
 /mob/living/carbon/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
 	if(damage_type != BRUTE && damage_type != BURN)
