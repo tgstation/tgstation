@@ -45,7 +45,7 @@
 		exit_jaunt(cast_on)
 		return
 
-	playsound(get_turf(owner), 'sound/effects/nightmare_poof.ogg', 50, TRUE, -1)
+	playsound(get_turf(owner), 'sound/effects/nightmare_poof.ogg', 50, TRUE, -1, ignore_walls = FALSE)
 	cast_on.visible_message(span_boldwarning("[cast_on] melts into the shadows!"))
 	cast_on.SetAllImmobility(0)
 	cast_on.setStaminaLoss(0, FALSE)
