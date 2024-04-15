@@ -31057,7 +31057,6 @@
 	pixel_x = -12;
 	pixel_y = 8
 	},
-/obj/item/megaphone/clown,
 /turf/open/floor/wood/parquet,
 /area/station/service/greenroom)
 "luC" = (
@@ -70352,8 +70351,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "wHO" = (
-/obj/structure/dresser,
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/structure/closet/crate/wooden/toy,
 /turf/open/floor/wood/parquet,
 /area/station/service/greenroom)
 "wHP" = (
