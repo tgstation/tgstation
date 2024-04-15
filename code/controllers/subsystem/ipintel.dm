@@ -10,6 +10,12 @@ SUBSYSTEM_DEF(ipintel)
 	var/list/rate_limits
 	/// Cache for previously queried IP addresses and those stored in the database
 	var/list/datum/ip_intel/cached_queries = list()
+	/// Maximum number of queries per minute
+	var/max_queries_per_minute
+	/// Maximum number of queries per day
+	var/max_queries_per_day
+	/// Query base
+	var/query_base
 
 /// The ip intel for a given address
 /datum/ip_intel
@@ -22,17 +28,23 @@ SUBSYSTEM_DEF(ipintel)
 /datum/controller/subsystem/ipintel/Initialize()
 	var/config_probability = CONFIG_GET(number/ipintel_rating_bad)
 	var/config_contact = CONFIG_GET(string/ipintel_email)
-	if(config_probability < 0 || config_probability > 1 || isnull(config_contact) || !findtext(config_contact, "@"))
+	var/config_minute_rate = CONFIG_GET(number/ipintel_rate_minute)
+	var/config_day_rate = CONFIG_GET(number/ipintel_rate_day)
+	var/config_query_base = CONFIG_GET(string/ipintel_base)
+	if(isnull(config_query_base) || config_minute_rate < 0 || config_day_rate < 0 || config_probability < 0 || config_probability > 1 || isnull(config_contact) || !findtext(config_contact, "@"))
 		stack_trace("invalid probability threshold for ipintel_rating_bad")
 		message_admins("IPIntel will not be activated, invalid configuration.")
 		return SS_INIT_FAILURE
 
 	probability_threshold = config_probability
 	contact_email = config_contact
+	max_queries_per_minute = config_minute_rate
+	max_queries_per_day = config_day_rate
+	query_base = config_query_base
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ipintel/stat_entry(msg)
-	return "[..()] | D: [IPINTEL_MAX_QUERY_DAY - rate_limits[IPINTEL_RATE_LIMIT_DAY]] | M: [IPINTEL_MAX_QUERY_MINUTE - rate_limits[IPINTEL_RATE_LIMIT_MINUTE]]"
+	return "[..()] | D: [max_queries_per_day - rate_limits[IPINTEL_RATE_LIMIT_DAY]] | M: [max_queries_per_minute - rate_limits[IPINTEL_RATE_LIMIT_MINUTE]]"
 
 /datum/controller/subsystem/ipintel/proc/get_address_intel_state(address, probability_override)
 	var/datum/ip_intel/intel = query_address(address)
@@ -58,9 +70,9 @@ SUBSYSTEM_DEF(ipintel)
 		minute_key = expected_minute_key
 		rate_limits[IPINTEL_RATE_LIMIT_MINUTE] = 0
 
-	if(rate_limits[IPINTEL_RATE_LIMIT_MINUTE] >= IPINTEL_MAX_QUERY_MINUTE)
+	if(rate_limits[IPINTEL_RATE_LIMIT_MINUTE] >= max_queries_per_minute)
 		return IPINTEL_RATE_LIMITED_MINUTE
-	if(rate_limits[IPINTEL_RATE_LIMIT_DAY] >= IPINTEL_MAX_QUERY_DAY)
+	if(rate_limits[IPINTEL_RATE_LIMIT_DAY] >= max_queries_per_day)
 		return IPINTEL_RATE_LIMITED_DAY
 	return FALSE
 
@@ -76,7 +88,7 @@ SUBSYSTEM_DEF(ipintel)
 	rate_limits[IPINTEL_RATE_LIMIT_MINUTE] += 1
 	rate_limits[IPINTEL_RATE_LIMIT_DAY] += 1
 
-	var/static/query_base = "https://check.getipintel.net/check.php?ip="
+	var/query_base = "https://[query_base]/check.php?ip="
 	var/query = "[query_base][address]&contact=[contact_email]&flags=b&format=json"
 
 	var/datum/http_request/request = new

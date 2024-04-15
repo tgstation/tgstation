@@ -1,8 +1,3 @@
-/// Maximum number of queries allowed per minute
-#define IPINTEL_MAX_QUERY_MINUTE 15
-/// Maximum number of queries allowed per day
-#define IPINTEL_MAX_QUERY_DAY 500
-
 #define IPINTEL_RATE_LIMIT_MINUTE "minute"
 #define IPINTEL_RATE_LIMIT_DAY "day"
 

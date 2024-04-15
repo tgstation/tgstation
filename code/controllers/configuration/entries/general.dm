@@ -447,6 +447,9 @@
 
 /datum/config_entry/flag/irc_first_connection_alert // do we notify the irc channel when somebody is connecting for the first time?
 
+/datum/config_entry/string/ipintel_base
+	default = "check.getipintel.net"
+
 /datum/config_entry/string/ipintel_email
 
 /datum/config_entry/string/ipintel_email/ValidateAndSet(str_val)
@@ -466,6 +469,12 @@
 
 /datum/config_entry/flag/ipintel_reject_unknown
 	default = FALSE
+
+/datum/config_entry/number/ipintel_rate_minute
+	default = 15
+
+/datum/config_entry/number/ipintel_rate_day
+	default = 500
 
 /datum/config_entry/flag/aggressive_changelog
 

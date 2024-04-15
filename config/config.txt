@@ -147,6 +147,12 @@ GUEST_BAN
 #IPINTEL_RATING_BAD 0.8
 ## Contact email, (required to use the service, leaving blank or default disables IPINTEL)
 #IPINTEL_EMAIL ch@nge.me
+## Query base, if you pay for more queries this is what you want to change.
+#IPINTEL_BASE check.getipintel.net
+## Maximum number of queries in a minute
+#IPINTEL_MAX_QUERY_MINUTE 15
+## Maximum number of queries in a day
+#IPINTEL_MAX_QUERY_DAY 500
 ## Whether clients which cannot be checked due to a rate limit will be denied
 #IPINTEL_REJECT_RATE_LIMITED
 ## Whether clients which are flagged as a VPN will be denied
