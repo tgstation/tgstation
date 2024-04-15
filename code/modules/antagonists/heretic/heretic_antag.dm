@@ -158,7 +158,6 @@
 
 	for(var/datum/heretic_knowledge/knowledge as anything in get_researchable_knowledge())
 		var/list/knowledge_data = list()
-		knowledge_data["path"] = knowledge
 		knowledge_data["name"] = initial(knowledge.name)
 		knowledge_data["desc"] = initial(knowledge.desc)
 		knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
@@ -168,6 +167,8 @@
 		knowledge_data["icon"] = icon2base64(get_icon_of_knowledge(knowledge))
 		knowledge_data["finished"] = FALSE
 		knowledge_data["ascension"] = ispath(knowledge,/datum/heretic_knowledge/ultimate)
+
+		knowledge_data["path"] = knowledge
 
 		// Final knowledge can't be learned until all objectives are complete.
 		if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
