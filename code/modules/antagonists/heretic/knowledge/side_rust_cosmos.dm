@@ -29,9 +29,9 @@
 	)
 	cost = 0
 	route = PATH_SIDE
-	var/rusting_range = 4
-	research_tree_icon = icon('icons/effects/eldritch.dmi',"cloud_swirl",frame=1)
+	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"corrode",frame=10)
 	depth = 4
+	var/rusting_range = 4
 
 /datum/heretic_knowledge/entropy_pulse/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	for(var/turf/nearby_turf in view(rusting_range, loc))

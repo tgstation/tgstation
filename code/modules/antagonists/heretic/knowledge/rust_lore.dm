@@ -93,7 +93,7 @@
 	)
 	cost = 1
 	route = PATH_RUST
-	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"corrode",frame=10)
+	research_tree_icon = icon('icons/effects/eldritch.dmi',"cloud_swirl",frame=1)
 	depth = 4
 
 /datum/heretic_knowledge/rust_regen/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
