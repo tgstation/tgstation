@@ -39,7 +39,7 @@ ADMIN_VERB(admin_emp, R_ADMIN|R_FUN, "EM Pulse", ADMIN_VERB_NO_DESCRIPTION, ADMI
 		message_admins("[key_name_admin(user)] created an EM Pulse ([heavy],[light]) at [AREACOORD(orignator)]")
 		BLACKBOX_LOG_ADMIN_VERB("EM Pulse")
 
-ADMIN_VERB(gib_them, R_ADMIN, "Gib", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/victim)
+ADMIN_VERB(gib_them, R_ADMIN, "Gib", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/victim in GLOB.mob_list)
 	var/confirm = tgui_alert(user, "Drop a brain?", "Confirm", list("Yes", "No","Cancel")) || "Cancel"
 	if(confirm == "Cancel")
 		return

@@ -17,6 +17,7 @@ export { ColorBox } from './ColorBox';
 export { Dialog } from './Dialog';
 export { Dimmer } from './Dimmer';
 export { Divider } from './Divider';
+export { DmIcon } from './DmIcon';
 export { DraggableControl } from './DraggableControl';
 export { Dropdown } from './Dropdown';
 export { FitText } from './FitText';
