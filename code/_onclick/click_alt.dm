@@ -1,29 +1,28 @@
 /**
- * Base proc for alt click interaction.
+ * ### Base proc for alt click interaction.
  *
- * If you wish to use custom alt_click behavior for a single type, use that proc.
- * Generally should not be overridden.
+ * If you wish to add custom `click_alt` behavior for a single type, use that proc.
  */
-/atom/proc/base_click_alt(mob/user)
+/mob/proc/base_click_alt(atom/target)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(user.can_perform_action(src, interaction_flags_click))
-		var/early_sig_return = SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & CLICK_ACTION_ANY
+	if(can_perform_action(target, target.interaction_flags_click))
+		var/early_sig_return = SEND_SIGNAL(target, COMSIG_CLICK_ALT, src) & CLICK_ACTION_ANY
 		if(early_sig_return)
 			return early_sig_return
 
-		var/alt_click_return = click_alt(user)
-		if(alt_click_return)
-			return alt_click_return
+		var/click_alt_return = target.click_alt(src)
+		if(click_alt_return)
+			return click_alt_return
 
-	var/turf/tile = get_turf(src)
-	if(!tile.Adjacent(user))
+	var/turf/tile = get_turf(target)
+	if(!tile.Adjacent(src))
 		return
 
-	if(HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
+	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING))
 		return
 
-	var/datum/lootpanel/panel = user.client?.loot_panel
+	var/datum/lootpanel/panel = client?.loot_panel
 	if(isnull(panel))
 		return
 

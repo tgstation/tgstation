@@ -32,7 +32,7 @@
 			MiddleClickOn(A, params)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK))
-		A.base_click_alt(src)
+		base_click_alt(A)
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
