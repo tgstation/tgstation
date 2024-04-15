@@ -378,6 +378,8 @@
 		return FALSE
 
 	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !living_owner.can_speak())
+		if(HAS_TRAIT(living_owner, TRAIT_SIGN_LANG) && !HAS_MIND_TRAIT(living_owner, TRAIT_CANT_SIGN_SPELLS)) // monkestation edit: allow sign language users to cast spells
+			return TRUE
 		if(feedback)
 			to_chat(owner, span_warning("You can't get the words out to invoke [src]!"))
 		return FALSE

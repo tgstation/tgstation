@@ -1,3 +1,11 @@
+/datum/antagonist/wizard/on_gain()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_CANT_SIGN_SPELLS, REF(src))
+
+/datum/antagonist/wizard/on_removal()
+	REMOVE_TRAITS_IN(owner, REF(src))
+	return ..()
+
 /datum/antagonist/wizard/traitor // traitors that complete a final objective to become a wizard, this subtype is mainly for wizard look things
 	name = "\improper Syndicate Space Wizard"
 	roundend_category = "syndicate wizards/witches"
