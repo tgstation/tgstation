@@ -223,7 +223,7 @@ DROP TABLE IF EXISTS `ipintel_whitelist`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ipintel_whitelist` (
-	`ckey` varchar(32) unsigned NOT NULL,
+	`ckey` varchar(32) NOT NULL,
 	`admin_ckey` varchar(32) NOT NULL,
 	PRIMARY KEY (`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
