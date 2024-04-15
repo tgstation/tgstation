@@ -163,6 +163,7 @@
 		knowledge_data["color"] = "black"
 		knowledge_data["icon"] = icon2base64(get_icon_of_knowledge(found_knowledge))
 		knowledge_data["finished"] = TRUE
+		knowledge_data["ascension"] = istype(found_knowledge,/datum/heretic_knowledge/ultimate)
 
 		tiers[found_knowledge.depth]["nodes"] += list(knowledge_data)
 
@@ -178,6 +179,7 @@
 		knowledge_data["color"] = path_to_ui_color[initial(knowledge.route)] || "grey"
 		knowledge_data["icon"] = icon2base64(get_icon_of_knowledge(knowledge))
 		knowledge_data["finished"] = FALSE
+		knowledge_data["ascension"] = ispath(knowledge,/datum/heretic_knowledge/ultimate)
 
 		// Final knowledge can't be learned until all objectives are complete.
 		if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
