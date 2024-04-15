@@ -458,18 +458,14 @@
 	min_val = 0
 	max_val = 1
 
-/datum/config_entry/number/ipintel_save_good
-	default = 12
-	integer = FALSE
-	min_val = 0
+/datum/config_entry/flag/ipintel_reject_rate_limited
+	default = TRUE
 
-/datum/config_entry/number/ipintel_save_bad
-	default = 1
-	integer = FALSE
-	min_val = 0
+/datum/config_entry/flag/ipintel_reject_bad
+	default = TRUE
 
-/datum/config_entry/string/ipintel_domain
-	default = "check.getipintel.net"
+/datum/config_entry/flag/ipintel_reject_unknown
+	default = FALSE
 
 /datum/config_entry/flag/aggressive_changelog
 
