@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(ai_controllers)
 	var/list/active_list = ai_controllers_by_status[AI_STATUS_ON]
 	var/list/inactive_list = ai_controllers_by_status[AI_STATUS_OFF]
 	var/list/idle_list = ai_controllers_by_status[AI_STATUS_IDLE]
-	msg = "Active AIs:[length(active_list)]/[round(cost_on,1)]%|Inactive:[length(inactive_list)]|Idle:[length(idle_list)]/[round(cost_idle,1)]%"
+	msg = "Active AIs:[length(active_list)]/[round(cost_on,1)]%|Inactive:[length(inactive_list)]|Idle:[length(idle_list)]/[round(cost_idle,1)]%|Idle Cost:[round(cost_to_idle,1)]%"
 	return ..()
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
