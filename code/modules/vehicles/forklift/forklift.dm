@@ -41,7 +41,7 @@
 
 /obj/vehicle/ridden/forklift/ui_status(mob/living/user, datum/ui_state/state)
 	if(!istype(user)) // damn admins
-		return !user.client.holder ? UI_CLOSE : UI_INTERACTIVE
+		return isAdminGhostAI(user) ? UI_INTERACTIVE : UI_CLOSE
 	if(isnull(inserted_key))
 		return UI_CLOSE
 	if(!user.Adjacent(src))
@@ -49,7 +49,7 @@
 	return UI_INTERACTIVE
 
 /obj/vehicle/ridden/forklift/alt_click_secondary(mob/user)
-	if(!user.Adjacent(src))
+	if(!user.Adjacent(src) && !isAdminGhostAI(user))
 		balloon_alert(user, "too far!")
 		return
 	ui_interact(user)
@@ -139,9 +139,10 @@
 		/datum/material/bluespace,
 		/datum/material/plastic,
 		/datum/material/wood,
-		)
+	)
 	material_container = LoadComponent(/datum/component/material_container, materials_list, maximum_materials, MATCONTAINER_EXAMINE, allowed_items = /obj/item/stack)
 	AddElement(/datum/element/ridable, ridable_path)
+	register_context()
 
 /obj/vehicle/ridden/forklift/add_occupant(mob/M, control_flags)
 	. = ..()
@@ -154,6 +155,12 @@
 	var/datum/forklift_module/new_module = new starting_module_path
 	new_module.my_forklift = src
 	selected_modules[M] = new_module
+
+/obj/vehicle/ridden/forklift/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(ui_status(user) != UI_INTERACTIVE)
+		return
+	context[SCREENTIP_CONTEXT_ALT_RMB] = "Open Forklift UI"
+	return CONTEXTUAL_SCREENTIP_SET
 
 // Officially requested by the headcoder.
 /obj/vehicle/ridden/forklift/proc/fortnite_check(mob/living/source, list/speech_args)
