@@ -257,6 +257,7 @@
 	cost = 1
 	route = PATH_BLADE
 	depth = 8
+	research_tree_icon = icon('icons/effects/blood.dmi',"suitblood",dir=SOUTH)
 	/// Whether we're currently in duelist stance, gaining certain buffs (low health)
 	var/in_duelist_stance = FALSE
 
