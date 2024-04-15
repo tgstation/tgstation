@@ -287,7 +287,6 @@
 /obj/item/tank/assume_air(datum/gas_mixture/giver)
 	START_PROCESSING(SSobj, src)
 	air_contents.merge(giver)
-	handle_tolerances(ASSUME_AIR_DT_FACTOR)
 	return TRUE
 
 /**
@@ -382,13 +381,9 @@
 	/// Handle fragmentation
 	var/pressure = air_contents.return_pressure()
 	if(pressure > TANK_FRAGMENT_PRESSURE)
-		if(!istype(loc, /obj/item/transfer_valve))
-			log_bomber(get_mob_by_key(fingerprintslast), "was last key to touch", src, "which ruptured explosively")
-		//Give the gas a chance to build up more pressure through reacting
-		air_contents.react(src)
-		pressure = air_contents.return_pressure()
+		log_bomber(get_mob_by_key(fingerprintslast), "was last key to touch", src, "which ruptured explosively")
 
-		// As of writing this this is calibrated to maxcap at 140L and 160atm.
+		// As of writing this this is calibrated to maxcap at 140L and 440atm.
 		var/power = (air_contents.volume * (pressure - TANK_FRAGMENT_PRESSURE)) / TANK_FRAGMENT_SCALE
 		log_atmos("[type] exploded with a power of [power] and a mix of ", air_contents)
 		dyn_explosion(src, power, flash_range = 1.5, ignorecap = FALSE)
@@ -489,13 +484,6 @@
 	igniting = TRUE
 
 	var/datum/gas_mixture/our_mix = return_air()
-	our_mix.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
-	var/fuel_moles = our_mix.gases[/datum/gas/plasma][MOLES] + our_mix.gases[/datum/gas/oxygen][MOLES]/6
-	our_mix.garbage_collect()
-	var/datum/gas_mixture/bomb_mixture = our_mix.copy()
-	var/strength = 1
-
-	var/turf/ground_zero = get_turf(loc)
 
 	/// Used to determine what the temperature of the hotspot when it isn't able to explode
 	var/igniter_temperature = 0
@@ -504,47 +492,12 @@
 
 	if(!igniter_temperature)
 		CRASH("[type] called ignite() without any igniters attached")
+	
+	var/our_temperature = our_mix.temperature
+	var/our_heat_capacity = our_mix.heat_capacity()
 
-	if(bomb_mixture.temperature > (T0C + 400))
-		strength = (fuel_moles/15)
-
-		if(strength >= 2)
-			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*3,1), flash_range = round(strength*4,1), explosion_cause = src)
-		else if(strength >= 1)
-			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
-		else if(strength >= 0.5)
-			explosion(ground_zero, heavy_impact_range = 1, light_impact_range = 2, flash_range = 4, explosion_cause = src)
-		else if(strength >= 0.2)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
-		else
-			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(igniter_temperature, 125)
-
-	else if(bomb_mixture.temperature > (T0C + 250))
-		strength = (fuel_moles/20)
-
-		if(strength >= 1)
-			explosion(ground_zero, heavy_impact_range = round(strength,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
-		else if(strength >= 0.5)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
-		else
-			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(igniter_temperature, 125)
-
-	else if(bomb_mixture.temperature > (T0C + 100))
-		strength = (fuel_moles/25)
-
-		if(strength >= 1)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = round(strength,1), flash_range = round(strength*3,1), explosion_cause = src)
-		else
-			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(igniter_temperature, 125)
-
-	else
-		ground_zero.assume_air(bomb_mixture)
-		ground_zero.hotspot_expose(igniter_temperature, 125)
-
-	qdel(src)
+	our_mix.temperature = max(our_temperature + CALCULATE_CONDUCTION_ENERGY(igniter_temperature - our_temperature, our_heat_capacity, 300) / our_heat_capacity, TCMB)
+	START_PROCESSING(SSobj, src)
 
 /// Releases air stored in the tank. Called when signaled without being welded, or when ignited without enough pressure to explode.
 /obj/item/tank/proc/release()

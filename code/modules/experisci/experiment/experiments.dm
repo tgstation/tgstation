@@ -65,7 +65,7 @@
 	name = "Low-Yield Explosives"
 	description = "Low-yield explosives may prove useful for our asset protection teams. Capture a small explosion with a Doppler Array and publish the data in a paper."
 	gain = list(10,15,20)
-	target_amount = list(5,10,20)
+	target_amount = list(2,4,8)
 	experiment_proper = TRUE
 	sanitized_misc = FALSE
 	sanitized_reactions = FALSE
@@ -75,7 +75,7 @@
 	name = "High-Yield Explosives"
 	description =  "Several reactions react very energetically and can be utilized for bigger explosives. Capture any tank explosion with a Doppler Array and publish the data in a paper. Any gas reaction is allowed."
 	gain = list(10,50,100)
-	target_amount = list(50,100,300)
+	target_amount = list(20,40,200)
 	experiment_proper = TRUE
 	sanitized_misc = FALSE
 	sanitized_reactions = FALSE
@@ -84,7 +84,7 @@
 	name = "Hydrogen Explosives"
 	description = "Combustion of Hydrogen and it's derivatives can be very powerful. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only Hydrogen or Tritium Fires are allowed."
 	gain = list(15,40,60)
-	target_amount = list(50,75,150)
+	target_amount = list(14,21,42)
 	experiment_proper = TRUE
 	sanitized_misc = TRUE
 	sanitized_reactions = TRUE
@@ -95,7 +95,7 @@
 	name = "Noblium Explosives"
 	description = "The formation of Hyper-Noblium is very energetic and can be harnessed for explosives. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only Hyper-Noblium Condensation is allowed."
 	gain = list(15,60,120)
-	target_amount = list(50,100,300)
+	target_amount = list(50,100,200)
 	experiment_proper = TRUE
 	sanitized_misc = TRUE
 	sanitized_reactions = TRUE
@@ -105,7 +105,7 @@
 	name = "Reactionless Explosives"
 	description = "Gases with high specific heat can heat up those with a low one and produce a lot of pressure.Capture any tank explosion with a Doppler Array and publish the data in a paper. No gas reactions are allowed."
 	gain = list(10,50,100)
-	target_amount = list(20,50,100)
+	target_amount = list(12,30,60)
 	experiment_proper = TRUE
 	sanitized_misc = FALSE
 	sanitized_reactions = TRUE
