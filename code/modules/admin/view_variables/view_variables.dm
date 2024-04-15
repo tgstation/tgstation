@@ -14,8 +14,9 @@
 	var/datum/asset/asset_cache_datum = get_asset_datum(/datum/asset/simple/vv)
 	asset_cache_datum.send(usr)
 
+	var/isappearance = isappearance(thing)
 	var/islist = islist(thing) || (!isdatum(thing) && hascall(thing, "Cut")) // Some special lists dont count as lists, but can be detected by if they have list procs
-	if(!islist && !isdatum(thing))
+	if(!islist && !isdatum(thing) && !isappearance(thing))
 		return
 
 	var/title = ""
@@ -23,7 +24,7 @@
 	var/icon/sprite
 	var/hash
 
-	var/type = islist? /list : thing.type
+	var/type = islist? /list : (isappearance ? "/appearance" : thing.type)
 	var/no_icon = FALSE
 
 	if(isatom(thing))
@@ -31,9 +32,12 @@
 		if(!sprite)
 			no_icon = TRUE
 
-	else if(isimage(thing))
+	else if(isimage(thing) || isappearance(thing))
 		var/image/image_object = thing
-		sprite = icon(image_object.icon, image_object.icon_state)
+		// icon_state=null shows first image even if dmi has no icon_state for null name.
+		// Unless dmi has a single icon_state as null name, let's skip null-name because it's confusing
+		if(image_object.icon_state || length(icon_states(image_object.icon)) == 1)
+			sprite = icon(image_object.icon, image_object.icon_state)
 
 	var/sprite_text
 	if(sprite)
@@ -44,7 +48,7 @@
 	title = "[thing] ([REF(thing)]) = [type]"
 	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
 
-	var/list/header = islist ? list("<b>/list</b>") : thing.vv_get_header()
+	var/list/header = islist ? list("<b>/list</b>") : (isappearance ? vv_get_header_appearance(thing) : thing.vv_get_header())
 
 	var/ref_line = "@[copytext(refid, 2, -1)]" // get rid of the brackets, add a @ prefix for copy pasting in asay
 
@@ -78,11 +82,18 @@
 			var/name = dropdownoptions[i]
 			var/link = dropdownoptions[name]
 			dropdownoptions[i] = "<option value[link? "='[link]'":""]>[name]</option>"
+	else if(isappearance)
+		dropdownoptions = vv_get_dropdown_appearance(thing)
 	else
 		dropdownoptions = thing.vv_get_dropdown()
 
 	var/list/names = list()
-	if(!islist)
+	if(isappearance)
+		var/static/list/virtual_appearance_vars
+		if(!virtual_appearance_vars)
+			virtual_appearance_vars = build_virtual_appearance_vars()
+		names = virtual_appearance_vars.Copy()
+	else if(!islist)
 		for(var/varname in thing.vars)
 			names += varname
 
@@ -97,6 +108,10 @@
 			if(IS_NORMAL_LIST(list_value) && IS_VALID_ASSOC_KEY(key))
 				value = list_value[key]
 			variable_html += debug_variable(i, value, 0, list_value)
+	else if(isappearance)
+		names = sort_list(names)
+		for(var/varname in names)
+			variable_html += debug_variable_appearance(varname, thing)
 	else
 		names = sort_list(names)
 		for(var/varname in names)
