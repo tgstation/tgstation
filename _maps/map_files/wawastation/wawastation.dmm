@@ -4184,6 +4184,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/service/library)
+"bBg" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/turf/open/misc/asteroid,
+/area/station/hallway/primary/starboard)
 "bBm" = (
 /obj/structure/cable,
 /obj/structure/lattice,
@@ -11996,13 +12002,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
-"ezJ" = (
-/obj/structure/lattice,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 1
-	},
-/turf/open/misc/asteroid,
-/area/station/hallway/primary/starboard)
 "ezL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -20105,13 +20104,6 @@
 	},
 /turf/open/floor/engine/cult,
 /area/station/service/library)
-"hCg" = (
-/obj/structure/lattice,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 5
-	},
-/turf/open/misc/asteroid,
-/area/station/hallway/primary/starboard)
 "hCs" = (
 /turf/closed/wall,
 /area/station/service/hydroponics)
@@ -29435,6 +29427,12 @@
 /obj/machinery/computer/records/security,
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"kXR" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/turf/open/misc/asteroid,
+/area/station/hallway/primary/starboard)
 "kXV" = (
 /obj/structure/cable,
 /obj/structure/plaque/static_plaque/golden/commission/wawa,
@@ -51121,11 +51119,12 @@
 /turf/open/floor/iron/textured,
 /area/station/security/warden)
 "tgw" = (
-/obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/layer3,
-/obj/machinery/airalarm/directional/north,
+/obj/machinery/power/smes/full,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/satellite)
 "tgW" = (
 /obj/machinery/door/airlock/medical{
@@ -57128,6 +57127,13 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/ordnance)
+"vrH" = (
+/obj/structure/lattice,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/turf/open/misc/asteroid,
+/area/station/hallway/primary/starboard)
 "vrR" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/wood,
@@ -58476,13 +58482,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"vSk" = (
-/obj/structure/lattice,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 9
-	},
-/turf/open/misc/asteroid,
-/area/station/hallway/primary/starboard)
 "vSn" = (
 /obj/structure/noticeboard/directional/south,
 /turf/open/floor/iron/chapel{
@@ -59518,6 +59517,7 @@
 /obj/structure/sign/departments/maint/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/satellite)
 "wpc" = (
@@ -60564,6 +60564,13 @@
 "wHJ" = (
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"wId" = (
+/obj/structure/lattice,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 5
+	},
+/turf/open/misc/asteroid,
+/area/station/hallway/primary/starboard)
 "wIn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -62804,8 +62811,9 @@
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "xAd" = (
+/obj/structure/lattice,
 /obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 1
+	dir = 9
 	},
 /turf/open/misc/asteroid,
 /area/station/hallway/primary/starboard)
@@ -63138,12 +63146,6 @@
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"xFY" = (
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 4
-	},
-/turf/open/misc/asteroid,
-/area/station/hallway/primary/starboard)
 "xGe" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -64053,13 +64055,13 @@
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "xZX" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/cable/layer3,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/open/floor/plating,
 /area/station/ai_monitored/command/storage/satellite)
 "yae" = (
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
@@ -99727,7 +99729,7 @@ vxX
 dZy
 dZy
 xZX
-nes
+eMD
 aMx
 wHJ
 ozr
@@ -99984,7 +99986,7 @@ vxX
 vxX
 dZy
 tgw
-eMD
+nes
 woJ
 dZy
 dZy
@@ -164826,7 +164828,7 @@ lQL
 lQL
 lQL
 aoy
-xAd
+kXR
 mpc
 gMk
 gMk
@@ -165082,7 +165084,7 @@ xKo
 lQL
 lQL
 lQL
-vSk
+xAd
 pHr
 mpc
 wZU
@@ -165339,7 +165341,7 @@ xKo
 lQL
 lQL
 lQL
-ezJ
+vrH
 mry
 cXo
 gMk
@@ -165596,7 +165598,7 @@ obx
 lQL
 lQL
 lQL
-ezJ
+vrH
 mry
 mpc
 gMk
@@ -165853,7 +165855,7 @@ ueC
 lQL
 lQL
 lQL
-ezJ
+vrH
 mry
 mpc
 yeS
@@ -166110,8 +166112,8 @@ obx
 lQL
 lQL
 lQL
-hCg
-xFY
+wId
+bBg
 ltS
 ltS
 ltS
