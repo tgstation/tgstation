@@ -772,10 +772,6 @@
 /obj/item/proc/IsReflect(def_zone)
 	return FALSE
 
-///An extra proc to add a cost to the reflect ability
-/obj/item/proc/IsReflectCostly()
-	return FALSE
-
 /obj/item/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FOUR)

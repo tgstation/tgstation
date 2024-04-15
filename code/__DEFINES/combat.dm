@@ -254,7 +254,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 //Projectile Reflect
 #define REFLECT_NORMAL (1<<0)
 #define REFLECT_FAKEPROJECTILE (1<<1)
-#define REFLECT_STAMINA_COST (5) ///if IsReflectCostly() is true, how much stamina does a reflect cost?
 
 //His Grace.
 #define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.
