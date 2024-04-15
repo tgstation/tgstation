@@ -307,6 +307,11 @@
 #define SSWARDROBE_STOCK 1
 #define SSWARDROBE_INSPECT 2
 
+// AI Controllers Subsystem subtasks
+#define SSAI_CONTROLLERS_ACTIVE 1
+#define SSAI_CONTROLLERS_IDLE 2
+#define SSAI_CONTROLLERS_DEIDLE 3
+
 // Wardrobe cache metadata indexes
 #define WARDROBE_CACHE_COUNT 1
 #define WARDROBE_CACHE_LAST_INSPECT 2
