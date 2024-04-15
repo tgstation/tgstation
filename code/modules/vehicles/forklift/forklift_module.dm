@@ -57,13 +57,29 @@
 	return data
 
 /datum/forklift_module/proc/perform_module_ui_action(mob/user, action, list/params)
-	if(action != "select-build-target")
-		CRASH("unknown ui action [action] for [type]!")
+	switch(action)
+		if("select-build-target")
+			current_selected_typepath = text2path(params["typepath"])
+			if(!(current_selected_typepath in available_builds))
+				my_forklift.balloon_alert(user, "invalid build target!")
+				current_selected_typepath = available_builds[1]
+			return
 
-	current_selected_typepath = text2path(params["typepath"])
-	if(!(current_selected_typepath in available_builds))
-		my_forklift.balloon_alert(user, "invalid build target!")
-		current_selected_typepath = available_builds[1]
+		if("rotate")
+			var/rotate_direction = params["direction"]
+			switch(rotate_direction)
+				if("ccw")
+					direction = turn(direction, 90)
+				if("cw")
+					direction = turn(direction, -90)
+				if("north")
+					direction = NORTH
+				if("flip")
+					direction = turn(direction, 180)
+			return
+
+		else
+			CRASH("unknown module action '[action]' for '[type]'")
 
 /// Ideally, you place here.
 /datum/forklift_module/proc/on_left_click(mob/source, atom/clickingon)
