@@ -1,12 +1,11 @@
 /**
  * Base proc for alt click interaction.
  *
- * If you wish to use custom alt_click behavior, use that proc.
- * Override this if you want to change all alt-click behavior for a type.
+ * If you wish to use custom alt_click behavior for a single type, use that proc.
+ * Generally should not be overridden.
  */
 /atom/proc/base_click_alt(mob/user)
-	SHOULD_CALL_PARENT(TRUE)
-	PROTECTED_PROC(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(user.can_perform_action(src, interaction_flags_click))
 		var/early_sig_return = SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & CLICK_ACTION_ANY
@@ -35,6 +34,9 @@
 /**
  * ## Custom alt click interaction
  * Override this to change default alt click behavior. Return `CLICK_ACTION_SUCCESS`, `CLICK_ACTION_BLOCKING` or `NONE`.
+ *
+ * ### Guard clauses
+ * Consider adding `interaction_flags_click` before adding unique guard clauses.
  *
  * ### Return flags
  * Forgetting your return will cause the default alt click behavior to occur thereafter.

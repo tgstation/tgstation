@@ -31,7 +31,7 @@
 		MiddleClickOn(A, params)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
-		borg_base_click_alt(A)
+		A.borg_click_alt(src)
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
@@ -103,8 +103,6 @@
 /mob/living/silicon/robot/CtrlClickOn(atom/target)
 	target.BorgCtrlClick(src)
 
-/mob/living/silicon/robot/proc/borg_base_click_alt(atom/target)
-	target.borg_click_alt(src)
 
 /atom/proc/BorgCtrlShiftClick(mob/living/silicon/robot/user) //forward to human click if not overridden
 	CtrlShiftClick(user)

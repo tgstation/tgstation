@@ -55,7 +55,7 @@
 		ShiftClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
-		ai_base_click_alt(A)
+		A.ai_click_alt(src)
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
@@ -120,8 +120,6 @@
 /mob/living/silicon/ai/CtrlClickOn(atom/target)
 	target.AICtrlClick(src)
 
-/mob/living/silicon/ai/proc/ai_base_click_alt(atom/target)
-	target.ai_click_alt(src)
 
 /*
 	The following criminally helpful code is just the previous code cleaned up;
