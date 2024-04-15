@@ -11996,6 +11996,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
+"ezJ" = (
+/obj/structure/lattice,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/turf/open/misc/asteroid,
+/area/station/hallway/primary/starboard)
 "ezL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -20098,6 +20105,13 @@
 	},
 /turf/open/floor/engine/cult,
 /area/station/service/library)
+"hCg" = (
+/obj/structure/lattice,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 5
+	},
+/turf/open/misc/asteroid,
+/area/station/hallway/primary/starboard)
 "hCs" = (
 /turf/closed/wall,
 /area/station/service/hydroponics)
@@ -34920,6 +34934,7 @@
 /obj/item/storage/crayons,
 /obj/item/storage/crayons,
 /obj/machinery/airalarm/directional/east,
+/obj/structure/sign/poster/contraband/clown/directional/south,
 /turf/open/floor/iron/textured,
 /area/station/commons/storage/art)
 "ndR" = (
@@ -41542,6 +41557,9 @@
 /area/station/security/courtroom)
 "pHr" = (
 /obj/item/pickaxe,
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 1
+	},
 /turf/open/misc/asteroid,
 /area/station/hallway/primary/starboard)
 "pHy" = (
@@ -46462,8 +46480,8 @@
 "rzP" = (
 /obj/structure/statue/sandstone/assistant,
 /obj/machinery/firealarm/directional/west,
-/obj/structure/sign/poster/contraband/clown/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/textured,
 /area/station/commons/storage/art)
 "rAa" = (
@@ -58458,6 +58476,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
+"vSk" = (
+/obj/structure/lattice,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 9
+	},
+/turf/open/misc/asteroid,
+/area/station/hallway/primary/starboard)
 "vSn" = (
 /obj/structure/noticeboard/directional/south,
 /turf/open/floor/iron/chapel{
@@ -62779,12 +62804,11 @@
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "xAd" = (
-/obj/structure/railing{
-	dir = 8
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
 	},
-/obj/structure/table/reinforced,
-/turf/open/floor/iron/stairs/left,
-/area/station/command/corporate_showroom)
+/turf/open/misc/asteroid,
+/area/station/hallway/primary/starboard)
 "xAl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/button/door/directional/south{
@@ -63035,7 +63059,9 @@
 "xEr" = (
 /obj/machinery/computer/telecomms/monitor,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/camera/autoname/directional/west,
+/obj/machinery/camera/autoname/directional/west{
+	network = list("ss13","tcomms")
+	},
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "xEs" = (
@@ -63112,6 +63138,12 @@
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
+"xFY" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/turf/open/misc/asteroid,
+/area/station/hallway/primary/starboard)
 "xGe" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -63998,7 +64030,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/upper)
 "xZL" = (
-/obj/machinery/camera/autoname/directional/east,
+/obj/machinery/camera/autoname/directional/east{
+	network = list("ss13","tcomms")
+	},
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "xZO" = (
@@ -93542,7 +93576,7 @@ bkb
 juw
 vCI
 mXY
-xAd
+mXY
 nPQ
 tIN
 euR
@@ -164792,7 +164826,7 @@ lQL
 lQL
 lQL
 aoy
-mry
+xAd
 mpc
 gMk
 gMk
@@ -165048,7 +165082,7 @@ xKo
 lQL
 lQL
 lQL
-mry
+vSk
 pHr
 mpc
 wZU
@@ -165305,7 +165339,7 @@ xKo
 lQL
 lQL
 lQL
-mry
+ezJ
 mry
 cXo
 gMk
@@ -165562,7 +165596,7 @@ obx
 lQL
 lQL
 lQL
-mry
+ezJ
 mry
 mpc
 gMk
@@ -165819,7 +165853,7 @@ ueC
 lQL
 lQL
 lQL
-mry
+ezJ
 mry
 mpc
 yeS
@@ -166076,8 +166110,8 @@ obx
 lQL
 lQL
 lQL
-mry
-mry
+hCg
+xFY
 ltS
 ltS
 ltS
