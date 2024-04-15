@@ -304,10 +304,11 @@
 "oS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/junction/flip{
+/obj/structure/cable,
+/obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/service/bar,
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
 "qk" = (
@@ -412,16 +413,6 @@
 	},
 /turf/open/floor/bronze/filled,
 /area/station/service/bar)
-"va" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/mail_sorting/service/bar,
-/obj/structure/cable,
-/turf/open/floor/bronze,
-/area/station/commons/lounge)
 "vh" = (
 /obj/structure/chair/bronze{
 	dir = 1
@@ -993,7 +984,7 @@ Pz
 Xo
 cx
 vh
-va
+Xp
 TP
 EK
 EK
