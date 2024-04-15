@@ -6,6 +6,7 @@
 /mob/proc/base_click_alt(atom/target)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	var/turf/tile
 	if(!isturf(target))
 		if(!can_perform_action(target, (target.interaction_flags_click | SILENT_ADJACENCY)))
 			return
@@ -16,7 +17,10 @@
 		if(target.click_alt(src) & CLICK_ACTION_ANY)
 			return
 
-	var/turf/tile = target
+		tile = get_turf(target)
+	else
+		tile = target
+
 	if(!tile.Adjacent(src))
 		return
 
