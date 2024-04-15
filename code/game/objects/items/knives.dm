@@ -293,6 +293,8 @@
 
 /obj/item/knife/spy/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	if(!proximity_flag)
+		return
 	if(!(user?.mind?.has_antag_datum(/datum/antagonist/spy))) //only a spy can use potential of a knife
 		return
 	if((isliving(target)) && (isliving(user)))
