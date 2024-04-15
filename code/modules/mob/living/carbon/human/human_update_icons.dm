@@ -163,15 +163,17 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	//Bloody hands begin
-	var/mutable_appearance/bloody_lefthand_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_left", -GLOVES_LAYER)
-	var/mutable_appearance/bloody_righthand_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right", -GLOVES_LAYER)
-	cut_overlay(bloody_lefthand_overlay)
-	cut_overlay(bloody_righthand_overlay)
-	if(!gloves && blood_in_hands && (num_hands > 0))
-		if(has_left_hand(check_disabled = FALSE))
-			add_overlay(bloody_lefthand_overlay)
-		if(has_right_hand(check_disabled = FALSE))
-			add_overlay(bloody_righthand_overlay)
+	if(isnull(gloves))
+		if(blood_in_hands && num_hands > 0)
+			// When byond gives us filters that respect dirs we can just use an alpha mask for this but until then, two icons weeeee
+			var/mutable_appearance/hands_combined = mutable_appearance(layer = -GLOVES_LAYER, appearance_flags = KEEP_TOGETHER)
+			if(has_left_hand(check_disabled = FALSE))
+				hands_combined.overlays += mutable_appearance('icons/effects/blood.dmi', "bloodyhands_left")
+			if(has_right_hand(check_disabled = FALSE))
+				hands_combined.overlays += mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right")
+			overlays_standing[GLOVES_LAYER] = hands_combined
+			apply_overlay(GLOVES_LAYER)
+		return
 	// Bloody hands end
 
 	if(gloves)
@@ -873,6 +875,12 @@ generate/load female uniform sprites matching all previously decided variables
 					"params" = displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 2),
 				),
 			))
+
+	// Kinda gross but because many humans overlays do not use KEEP_TOGETHER we need to manually propogate the filter
+	// Otherwise overlays, such as worn overlays on icons, won't have the filter "applied", and the effect kinda breaks
+	if(!(appearance.appearance_flags & KEEP_TOGETHER))
+		for(var/image/overlay in list() + appearance.underlays + appearance.overlays)
+			apply_height_filters(overlay)
 
 	return appearance
 
