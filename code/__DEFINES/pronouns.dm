@@ -19,22 +19,22 @@
 
 /// A list for all the pronoun procs, if you need to iterate or search through it or something.
 #define ALL_PRONOUNS list( \
-"%PRONOUN_they" = TYPE_PROC_REF(/datum, p_they), \
-"%PRONOUN_They" = TYPE_PROC_REF(/datum, p_They), \
-"%PRONOUN_their" = TYPE_PROC_REF(/datum, p_their), \
-"%PRONOUN_Their" = TYPE_PROC_REF(/datum, p_Their), \
-"%PRONOUN_theirs" = TYPE_PROC_REF(/datum, p_theirs), \
-"%PRONOUN_Theirs" = TYPE_PROC_REF(/datum, p_Theirs), \
-"%PRONOUN_them" = TYPE_PROC_REF(/datum, p_them), \
-"%PRONOUN_Them" = TYPE_PROC_REF(/datum, p_Them), \
-"%PRONOUN_have" = TYPE_PROC_REF(/datum, p_have), \
-"%PRONOUN_are" = TYPE_PROC_REF(/datum, p_are), \
-"%PRONOUN_were" = TYPE_PROC_REF(/datum, p_were), \
-"%PRONOUN_do" = TYPE_PROC_REF(/datum, p_do), \
-"%PRONOUN_theyve" = TYPE_PROC_REF(/datum, p_theyve), \
-"%PRONOUN_Theyve" = TYPE_PROC_REF(/datum, p_Theyve), \
-"%PRONOUN_theyre" = TYPE_PROC_REF(/datum, p_theyre), \
-"%PRONOUN_Theyre" = TYPE_PROC_REF(/datum, p_Theyre), \
-"%PRONOUN_s" = TYPE_PROC_REF(/datum, p_s), \
-"%PRONOUN_es" = TYPE_PROC_REF(/datum, p_es) \
+	"%PRONOUN_they" = TYPE_PROC_REF(/datum, p_they), \
+	"%PRONOUN_They" = TYPE_PROC_REF(/datum, p_They), \
+	"%PRONOUN_their" = TYPE_PROC_REF(/datum, p_their), \
+	"%PRONOUN_Their" = TYPE_PROC_REF(/datum, p_Their), \
+	"%PRONOUN_theirs" = TYPE_PROC_REF(/datum, p_theirs), \
+	"%PRONOUN_Theirs" = TYPE_PROC_REF(/datum, p_Theirs), \
+	"%PRONOUN_them" = TYPE_PROC_REF(/datum, p_them), \
+	"%PRONOUN_Them" = TYPE_PROC_REF(/datum, p_Them), \
+	"%PRONOUN_have" = TYPE_PROC_REF(/datum, p_have), \
+	"%PRONOUN_are" = TYPE_PROC_REF(/datum, p_are), \
+	"%PRONOUN_were" = TYPE_PROC_REF(/datum, p_were), \
+	"%PRONOUN_do" = TYPE_PROC_REF(/datum, p_do), \
+	"%PRONOUN_theyve" = TYPE_PROC_REF(/datum, p_theyve), \
+	"%PRONOUN_Theyve" = TYPE_PROC_REF(/datum, p_Theyve), \
+	"%PRONOUN_theyre" = TYPE_PROC_REF(/datum, p_theyre), \
+	"%PRONOUN_Theyre" = TYPE_PROC_REF(/datum, p_Theyre), \
+	"%PRONOUN_s" = TYPE_PROC_REF(/datum, p_s), \
+	"%PRONOUN_es" = TYPE_PROC_REF(/datum, p_es) \
 )

@@ -54,7 +54,7 @@
 	if(!should_show_text(examined))
 		return
 
-	var/examine_text = 	REPLACE_PRONOUNS(infused_desc, examined)
+	var/examine_text = REPLACE_PRONOUNS(infused_desc, examined)
 
 
 	examine_list += examine_text
