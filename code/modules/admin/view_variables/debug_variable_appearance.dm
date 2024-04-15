@@ -11,29 +11,29 @@
 	var/list/unused_var_names = list(
 		"appearance", // it only does self-reference
 		"x","y","z", // these are always 0
-        "weak_reference", // it's not a good idea to make a weak_ref on this, and this won't have it
-        "vars", // inherited from /image, but /appearance hasn't this
+		"weak_reference", // it's not a good idea to make a weak_ref on this, and this won't have it
+		"vars", // inherited from /image, but /appearance hasn't this
 
-        // Even if these vars are essential for image, these only exists in an actual type
-        "filter_data", 
-        "realized_overlays",
-        "realized_underlays",
+		// Even if these vars are essential for image, these only exists in an actual type
+		"filter_data", 
+		"realized_overlays",
+		"realized_underlays",
 				
 		// we have no reason to show these, right?
 		"_active_timers",
 		"_datum_components",
 		"_listen_lookup",
-        "_signal_procs",
-        "__auxtools_weakref_id",
+		"_signal_procs",
+		"__auxtools_weakref_id",
 		"_status_traits",
-        "cooldowns",
+		"cooldowns",
 		"datum_flags",
 		"visibility",
 		"verbs",
-        "gc_destroyed",
-        "harddel_deets_dumped",
-        "open_uis",
-        "tgui_shared_states"
+		"gc_destroyed",
+		"harddel_deets_dumped",
+		"open_uis",
+		"tgui_shared_states"
 		)
 	var/image/dummy_image = image(null, null)
 	for(var/each in dummy_image.vars) // try to inherit var list from /image
@@ -196,7 +196,7 @@
 
 /proc/vv_get_dropdown_appearance(image/thing)
 	. = list()
-    // unless you have a good reason to add a vv option for /appearance,
-    // /appearance type shouldn't alloow any vv option. Even "Mark Datum" is a questionable behaviour here.
+	// unless you have a good reason to add a vv option for /appearance,
+	// /appearance type shouldn't alloow any vv option. Even "Mark Datum" is a questionable behaviour here.
 	VV_DROPDOWN_OPTION_APPEARANCE(thing, "", "---")
 	VV_DROPDOWN_OPTION_APPEARANCE(thing, "", "VV option not allowed")
