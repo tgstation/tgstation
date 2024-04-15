@@ -32,6 +32,6 @@ jobs:
         run: |
           git checkout origin/translate
           git merge origin/master --strategy-option theirs
-          git push
+          git push origin HEAD:translate
 
           
