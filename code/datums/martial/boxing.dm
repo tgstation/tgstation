@@ -265,7 +265,7 @@
 	id = MARTIALART_EVIL_BOXING
 	pacifist_style = FALSE
 	honorable_boxer = FALSE
-	boxing_traits = list(TRAIT_BOXING_READY, TRAIT_STRONG, TRAIT_STIMMED)
+	boxing_traits = list(TRAIT_BOXING_READY, TRAIT_STRENGTH, TRAIT_STIMMED)
 
 #undef LEFT_RIGHT_COMBO
 #undef RIGHT_LEFT_COMBO
