@@ -282,12 +282,11 @@
 
 
 /obj/item/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
+	. = NONE
 
-	if(unique_reskin && (!current_skin || (obj_flags & INFINITE_RESKIN)))
+	if(unique_reskin && !(current_skin && !(item_flags & INFINITE_RESKIN)))
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Reskin"
-
-	return CONTEXTUAL_SCREENTIP_SET
+		return CONTEXTUAL_SCREENTIP_SET
 
 
 /// Called when an action associated with our item is deleted

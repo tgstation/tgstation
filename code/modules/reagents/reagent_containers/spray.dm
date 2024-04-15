@@ -439,6 +439,14 @@
 						"Blue" = "sprayer_med_blue")
 
 
+/obj/item/reagent_containers/spray/medical/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(!current_skin)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Reskin"
+		return CONTEXTUAL_SCREENTIP_SET
+
+
 /obj/item/reagent_containers/spray/medical/reskin_obj(mob/M)
 	..()
 	switch(icon_state)
