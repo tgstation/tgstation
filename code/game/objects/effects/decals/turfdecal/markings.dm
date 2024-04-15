@@ -343,7 +343,7 @@
 /obj/effect/turf_decal/siding/wood/end
 	icon_state = "siding_wood_end"
 
-/obj/effect/turf_decal/siding/thinplating // Variants formerly known as /siding/thinplating_new/
+/obj/effect/turf_decal/siding/thinplating
 	icon_state = "siding_thinplating"
 	color = "#949494"
 
