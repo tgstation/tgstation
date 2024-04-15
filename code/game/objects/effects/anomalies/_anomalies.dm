@@ -78,7 +78,7 @@
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect(seconds_per_tick)
-	if(SPT_PROB(move_chance, seconds_per_tick))
+	if(!immobile && SPT_PROB(move_chance, seconds_per_tick))
 		move_anomaly()
 
 /// Move in a direction
