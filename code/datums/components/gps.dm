@@ -89,6 +89,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	SIGNAL_HANDLER
 
 	toggletracking(user)
+	return COMPONENT_CANCEL_CLICK_ALT
 
 ///Toggles the tracking for the gps
 /datum/component/gps/item/proc/toggletracking(mob/user)
@@ -153,7 +154,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	data["signals"] = signals
 	return data
 
-/datum/component/gps/item/ui_act(action, params)
+/datum/component/gps/item/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -162,7 +163,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		if("rename")
 			var/atom/parentasatom = parent
 			var/a = tgui_input_text(usr, "Enter the desired tag", "GPS Tag", gpstag, 20)
-
+			if (QDELETED(ui) || ui.status != UI_INTERACTIVE)
+				return
 			if (!a)
 				return
 

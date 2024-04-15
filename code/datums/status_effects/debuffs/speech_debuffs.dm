@@ -187,7 +187,7 @@
 /datum/status_effect/speech/slurring/apply_speech(original_char)
 
 	var/modified_char = original_char
-	var/lower_char = lowertext(modified_char)
+	var/lower_char = LOWER_TEXT(modified_char)
 	if(prob(common_prob) && (lower_char in common_replacements))
 		var/to_replace = common_replacements[lower_char]
 		if(islist(to_replace))

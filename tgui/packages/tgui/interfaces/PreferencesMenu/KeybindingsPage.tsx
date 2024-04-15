@@ -177,12 +177,6 @@ const KeybindingName = (props: { keybinding: Keybinding }) => {
   );
 };
 
-KeybindingName.defaultHooks = {
-  onComponentShouldUpdate: (lastProps, nextProps) => {
-    return lastProps.keybinding !== nextProps.keybinding;
-  },
-};
-
 const ResetToDefaultButton = (props: { keybindingId: string }) => {
   const { act } = useBackend<PreferencesMenuData>();
 

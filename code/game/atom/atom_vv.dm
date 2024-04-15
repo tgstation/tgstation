@@ -67,14 +67,10 @@
 					message_admins(span_notice("[key_name(usr)] has added [amount] units of [chosen_id] to [src]"))
 
 	if(href_list[VV_HK_TRIGGER_EXPLOSION])
-		if(!check_rights(R_FUN))
-			return
-		usr.client.cmd_admin_explosion(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_explosion, src)
 
 	if(href_list[VV_HK_TRIGGER_EMP])
-		if(!check_rights(R_FUN))
-			return
-		usr.client.cmd_admin_emp(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_emp, src)
 
 	if(href_list[VV_HK_SHOW_HIDDENPRINTS])
 		if(!check_rights(R_ADMIN))

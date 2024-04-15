@@ -388,7 +388,7 @@
 	)
 	head = /obj/item/clothing/head/utility/hardhat/welding
 	mask = /obj/item/clothing/mask/gas/atmos
-	l_hand = /obj/item/areaeditor/blueprints
+	l_hand = /obj/item/blueprints
 
 /datum/outfit/centcom/ert/clown/party
 	name = "ERP Comedian"
