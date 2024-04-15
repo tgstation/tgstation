@@ -6,16 +6,17 @@
 /mob/proc/base_click_alt(atom/target)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(!isturf(target) && !can_perform_action(target, target.interaction_flags_click))
-		return
+	if(!isturf(target))
+		if(!can_perform_action(target, (target.interaction_flags_click | SILENT_ADJACENCY)))
+			return
 
-	if(SEND_SIGNAL(target, COMSIG_CLICK_ALT, src) & CLICK_ACTION_ANY)
-		return
+		if(SEND_SIGNAL(target, COMSIG_CLICK_ALT, src) & CLICK_ACTION_ANY)
+			return
 
-	if(target.click_alt(src) & CLICK_ACTION_ANY)
-		return
+		if(target.click_alt(src) & CLICK_ACTION_ANY)
+			return
 
-	var/turf/tile = get_turf(target)
+	var/turf/tile = target
 	if(!tile.Adjacent(src))
 		return
 
