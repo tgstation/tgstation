@@ -55,7 +55,7 @@
 	AddElement(/datum/element/update_icon_updates_onmob, flags = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING, body = TRUE)
 
 /obj/item/clothing/under/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	. = NONE
+	. = ..()
 
 	if(isnull(held_item) && has_sensor == HAS_SENSORS)
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle suit sensors"
@@ -77,7 +77,6 @@
 		context[SCREENTIP_CONTEXT_ALT_LMB] =  "Wear [adjusted == ALT_STYLE ? "normally" : "casually"]"
 		. = CONTEXTUAL_SCREENTIP_SET
 
-	return .
 
 /obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
