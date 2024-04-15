@@ -11,8 +11,10 @@
 	. = ..()
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
-	src.interaction_key = interaction_key
+
 	src.tear_time = tear_time
+	src.interaction_key = interaction_key
+
 	RegisterSignals(target, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_UNARMED_ATTACK), PROC_REF(on_attacked_poster))
 
 /datum/element/poster_tearer/Detach(datum/source)
