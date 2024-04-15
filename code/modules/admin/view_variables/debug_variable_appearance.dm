@@ -45,8 +45,7 @@
 
 /// appearance type needs a manual var referencing because it doesn't have "vars" variable internally.
 /// There's no way doing this in a fancier way.
-/proc/debug_variable_appearance(var_name, image/appearance)
-	var/atom/movable/atom_appearance = appearance
+/proc/debug_variable_appearance(var_name, atom/movable/appearance) // movable can handle various variables than /image, and /appearance has more variables than /image.
 	var/value
 	try
 		switch(var_name) // Welcome to this curse
@@ -73,7 +72,7 @@
 			if("invisibility")
 				value = appearance.invisibility
 			if("infra_luminosity")
-				value = atom_appearance.infra_luminosity
+				value = appearance.infra_luminosity
 			if("filters")
 				value = appearance.filters
 			if("layer")
@@ -107,7 +106,8 @@
 			if("overlays")
 				value = appearance.overlays
 			if("override")
-				value = appearance.override
+				var/image/image_appearance = appearance
+				value = image_appearance.override
 			if("pixel_x")
 				value = appearance.pixel_x
 			if("pixel_y")
@@ -138,32 +138,32 @@
 
 			// These are not documented ones but trackable values. Maybe we'd want these.
 			if("animate_movement")
-				value = atom_appearance.animate_movement
+				value = appearance.animate_movement
 			if("dir")
-				value = atom_appearance.dir
+				value = appearance.dir
 			if("glide_size")
-				value = atom_appearance.glide_size
+				value = appearance.glide_size
 			if("pixel_step_size")
 				value = "" //atom_appearance.pixel_step_size
 				// DM compiler complains this
 
 			// I am not sure if these will be ever detected, but I made a connection just in case.
 			if("contents")
-				value = atom_appearance.contents
+				value = appearance.contents
 			if("vis_contents")
-				value = atom_appearance.vis_contents
+				value = appearance.vis_contents
 			if("vis_flags") // DM document says /appearance has this, but it throws error
-				value = atom_appearance.vis_flags
+				value = appearance.vis_flags
 			if("loc")
-				value = atom_appearance.loc
+				value = appearance.loc
 
 			// we wouldn't need these, but let's these trackable anyway...
 			if("density")
-				value = atom_appearance.density
+				value = appearance.density
 			if("screen_loc")
-				value = atom_appearance.screen_loc
+				value = appearance.screen_loc
 			if("verbs")
-				value = atom_appearance.verbs
+				value = appearance.verbs
 			if("tag")
 				value = appearance.tag
 
