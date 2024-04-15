@@ -10,6 +10,8 @@ SUBSYSTEM_DEF(looting)
 	/// Actively processing items
 	var/list/datum/lootpanel/processing = list()
 
+/datum/controller/subsystem/looting/Initialize()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/looting/stat_entry(msg)
 	msg = "P:[length(backlog)]"
@@ -32,7 +34,7 @@ SUBSYSTEM_DEF(looting)
 
 		if(!panel.process_images())
 			backlog += panel
-			
+
 		if(MC_TICK_CHECK)
 			return
 
