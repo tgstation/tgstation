@@ -105,10 +105,10 @@
 	var/list/to_damage = list()
 	if(requires_visibility)
 		for(var/mob/living/candidate in view(range, parent))
-			to_heal += candidate
+			to_damage += candidate
 	else
 		for(var/mob/living/candidate in range(range, parent))
-			to_heal += candidate
+			to_damage += candidate
 
 	for (var/mob/living/candidate as anything in to_damage)
 		var/mob/living/owner = current_owner?.resolve()
