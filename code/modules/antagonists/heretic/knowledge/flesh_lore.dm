@@ -139,7 +139,7 @@
 	limit = 2
 	cost = 1
 	route = PATH_FLESH
-	research_tree_icon = icon('icons/obj/service/hydroponics/harvest.dmi',"poppy")
+	research_tree_icon = icon('icons/ui_icons/antags/heretic/knowledge.dmi',"ghoul_voiceless")
 	depth = 4
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)

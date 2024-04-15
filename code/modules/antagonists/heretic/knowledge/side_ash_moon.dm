@@ -38,7 +38,7 @@
 	curse_color = "#f19a9a"
 	cost = 1
 	route = PATH_SIDE
-	research_tree_icon = icon('icons/mob/actions/actions_spells.dmi',"autotomy")
+	research_tree_icon = icon('icons/ui_icons/antags/heretic/knowledge.dmi',"curse_paralysis")
 	depth = 8
 
 /datum/heretic_knowledge/curse/paralysis/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)

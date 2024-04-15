@@ -23,7 +23,7 @@
 	limit = 1
 	cost = 1
 	route = PATH_SIDE
-	research_tree_icon = icon('icons/mob/actions/actions_changeling.dmi',"regenerate")
+	research_tree_icon = icon('icons/ui_icons/antags/heretic/knowledge.dmi',"ghoul_shattered")
 	depth = 4
 
 /datum/heretic_knowledge/limited_amount/risen_corpse/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)

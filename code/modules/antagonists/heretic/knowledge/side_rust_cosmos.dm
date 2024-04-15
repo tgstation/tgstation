@@ -63,7 +63,7 @@
 	curse_color = "#c1ffc9"
 	cost = 1
 	route = PATH_SIDE
-	research_tree_icon = icon('icons/obj/signs.dmi',"bio")
+	research_tree_icon = icon('icons/ui_icons/antags/heretic/knowledge.dmi',"curse_corrosion")
 	depth = 8
 
 /datum/heretic_knowledge/curse/corrosion/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
