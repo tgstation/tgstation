@@ -12,7 +12,7 @@
 	/// Which body zone has to be exposed. If none is set, this is always noticable.
 	var/body_zone
 
-/datum/element/noticable_organ/Attach(datum/target, infused_desc, body_zone)
+/datum/element/noticable_organ/Attach(obj/item/organ/target, infused_desc, body_zone)
 	. = ..()
 
 	if(!isorgan(target))
@@ -21,8 +21,10 @@
 	src.infused_desc = infused_desc
 	src.body_zone = body_zone
 
-	RegisterSignal(target, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_implanted))
+	RegisterSignal(target, COMSIG_ORGAN_IMPLANTED, PROC_REF(enable_description))
 	RegisterSignal(target, COMSIG_ORGAN_REMOVED, PROC_REF(on_removed))
+	if(target.owner)
+		enable_description(target, target.owner)
 
 /datum/element/noticable_organ/Detach(obj/item/organ/target)
 	UnregisterSignal(target, list(COMSIG_ORGAN_IMPLANTED, COMSIG_ORGAN_REMOVED))
@@ -36,7 +38,7 @@
 		return FALSE
 	return TRUE
 
-/datum/element/noticable_organ/proc/on_implanted(obj/item/organ/target, mob/living/carbon/receiver)
+/datum/element/noticable_organ/proc/enable_description(obj/item/organ/target, mob/living/carbon/receiver)
 	SIGNAL_HANDLER
 
 	RegisterSignal(receiver, COMSIG_ATOM_EXAMINE, PROC_REF(on_receiver_examine))
@@ -52,10 +54,8 @@
 	if(!should_show_text(examined))
 		return
 
-	var/examine_text = infused_desc
-	/// Helper proc to iterate over whatever message and replace
-	/// pronouns where necessary
-	examine_text = REPLACE_PRONOUNS(examine_text, examined)
+	var/examine_text = 	REPLACE_PRONOUNS(infused_desc, examined)
+
 
 	examine_list += examine_text
 

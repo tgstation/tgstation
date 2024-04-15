@@ -1,8 +1,4 @@
-#define GET_TARGET_PRONOUN(target, pronoun) call(target, ALL_PRONOUNS[pronoun])(null)
-#define GET_GENERIC_PRONOUN(pronoun) call(/datum/, ALL_PRONOUNS[pronoun])(null)
-/// Only call this in the context of REPLACE_PRONOUNS
-#define PRONOUN_REGEX regex("%PRONOUN(_(they|They|their|Their|theirs|Theirs|them|Them|have|are|were|do|theyve|Theyve|theyre|Theyre|s|es))")
-
+#define GET_TARGET_PRONOUN(target, pronoun, gender) call(target, ALL_PRONOUNS[pronoun])(gender)
 
 //pronoun procs, for getting pronouns without using the text macros that only work in certain positions
 //datums don't have gender, but most of their subtypes do!
@@ -79,10 +75,20 @@
 /// A proc to replace pronouns in a string with the appropriate pronouns for a target atom.
 /// Uses associative list access from a __DEFINE list, since associative access is slightly
 /// faster
-/datum/proc/REPLACE_PRONOUNS(target_string, target_atom = src)
-	var/regex/pronouns_to_sub = PRONOUN_REGEX
-	while(pronouns_to_sub.Find(target_string))
-		target_string = pronouns_to_sub.Replace(target_string, GET_TARGET_PRONOUN(target_atom, pronouns_to_sub.match))
+/datum/proc/REPLACE_PRONOUNS(target_string, atom/targeted_atom, targeted_gender = null)
+	/// If someone specifies targeted_gender we choose that,
+	/// otherwise we go off the gender of our object
+	var/gender
+	if(targeted_gender)
+		if(!istext(targeted_gender) || !(targeted_gender in list(MALE, FEMALE, PLURAL, NEUTER)))
+			stack_trace("REPLACE_PRONOUNS called with improper parameters.")
+			return
+		gender = targeted_gender
+	else
+		gender = targeted_atom.gender
+	var/regex/pronoun_regex = regex("%PRONOUN(_(they|They|their|Their|theirs|Theirs|them|Them|have|are|were|do|theyve|Theyve|theyre|Theyre|s|es))")
+	while(pronoun_regex.Find(target_string))
+		target_string = pronoun_regex.Replace(target_string, GET_TARGET_PRONOUN(targeted_atom, pronoun_regex.match, gender))
 	return target_string
 
 
