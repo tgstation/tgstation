@@ -235,7 +235,7 @@
 	// Set the default tgui state
 	set_default_state()
 
-/obj/machinery/computer/scan_consolenew/LateInitialize()
+/obj/machinery/computer/scan_consolenew/post_machine_initialize()
 	. = ..()
 	// Link machine with research techweb. Used for discovering and accessing
 	// already discovered mutations

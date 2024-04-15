@@ -53,6 +53,7 @@
 /obj/item/grenade/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_ODD_CUSTOMIZABLE_FOOD_INGREDIENT, type)
+	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, REF(src))
 	RegisterSignal(src, COMSIG_ITEM_USED_AS_INGREDIENT, PROC_REF(on_used_as_ingredient))
 
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
@@ -63,11 +64,9 @@
 	sleep(det_time)//so you dont die instantly
 	return dud_flags ? SHAME : BRUTELOSS
 
-/obj/item/grenade/deconstruct(disassembled = TRUE)
+/obj/item/grenade/atom_deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		detonate()
-	if(!QDELETED(src))
-		qdel(src)
 
 /obj/item/grenade/apply_fantasy_bonuses(bonus)
 	. = ..()

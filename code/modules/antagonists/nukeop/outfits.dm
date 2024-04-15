@@ -114,6 +114,17 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	tc = 0
 
+/datum/outfit/syndicate/support/plasmaman
+	name = "Nuclear Operative Overwatch Agent (Plasmaman)"
+	back = /obj/item/storage/backpack/satchel
+	head = /obj/item/clothing/head/helmet/space/plasmaman/syndie
+	uniform = /obj/item/clothing/under/plasmaman/syndicate
+	glasses = /obj/item/clothing/glasses/overwatch
+	suit = /obj/item/clothing/suit/jacket/letterman_syndie
+	r_hand = /obj/item/tank/internals/plasmaman/belt/full
+	command_radio = TRUE
+	tc = 0
+
 /datum/outfit/syndicate/reinforcement/gorlex
 	name = "Syndicate Operative - Gorlex Reinforcement"
 	suit = /obj/item/clothing/suit/armor/vest/alt
@@ -191,3 +202,13 @@
 	var/obj/item/shield/energy/shield = locate() in H.held_items
 	shield.icon_state = "[shield.base_icon_state]1"
 	H.update_held_items()
+
+/datum/outfit/syndicate/support
+	name = "Nuclear Operative Overwatch Agent"
+	back = /obj/item/storage/backpack/satchel
+	uniform = /obj/item/clothing/under/syndicate/tacticool
+	glasses = /obj/item/clothing/glasses/overwatch
+	suit = /obj/item/clothing/suit/jacket/letterman_syndie
+	shoes = /obj/item/clothing/shoes/sandal
+	command_radio = TRUE
+	tc = 0

@@ -22,13 +22,10 @@
 	if(circuit)
 		. += "It has \a [circuit] installed."
 
-/obj/structure/frame/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/atom/movable/drop_loc = drop_location()
-		new /obj/item/stack/sheet/iron(drop_loc, 5)
-		circuit?.forceMove(drop_loc)
-
-	return ..()
+/obj/structure/frame/atom_deconstruct(disassembled = TRUE)
+	var/atom/movable/drop_loc = drop_location()
+	new /obj/item/stack/sheet/iron(drop_loc, 5)
+	circuit?.forceMove(drop_loc)
 
 /// Called when circuit has been set to a new board
 /obj/structure/frame/proc/circuit_added(obj/item/circuitboard/added)
@@ -60,8 +57,6 @@
 /// Checks if the frame can be disassembled, and if so, begins the process
 /obj/structure/frame/proc/try_dissassemble(mob/living/user, obj/item/tool, disassemble_time = 8 SECONDS)
 	if(state != FRAME_STATE_EMPTY)
-		return NONE
-	if(obj_flags & NO_DECONSTRUCTION)
 		return NONE
 	if(anchored && state == FRAME_STATE_EMPTY) //when using a screwdriver on an incomplete frame(missing components) no point checking for this
 		balloon_alert(user, "must be unanchored first!")

@@ -584,38 +584,34 @@
 	limb_id = BODYPART_ID_MEAT
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/arm/left/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
+/obj/item/bodypart/arm/left/flesh/Initialize(mapload)
 	. = ..()
-	if(!dont_spawn_flesh)
-		new /mob/living/basic/living_limb_flesh(src, src)
 	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
+	AddElement(/datum/element/living_limb_initialiser)
 
 /obj/item/bodypart/arm/right/flesh
 	limb_id = BODYPART_ID_MEAT
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/arm/right/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
+/obj/item/bodypart/arm/right/flesh/Initialize(mapload)
 	. = ..()
-	if(!dont_spawn_flesh)
-		new /mob/living/basic/living_limb_flesh(src, src)
 	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
+	AddElement(/datum/element/living_limb_initialiser)
 
 /obj/item/bodypart/leg/left/flesh
 	limb_id = BODYPART_ID_MEAT
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/leg/left/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
+/obj/item/bodypart/leg/left/flesh/Initialize(mapload)
 	. = ..()
-	if(!dont_spawn_flesh)
-		new /mob/living/basic/living_limb_flesh(src, src)
 	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
+	AddElement(/datum/element/living_limb_initialiser)
 
 /obj/item/bodypart/leg/right/flesh
 	limb_id = BODYPART_ID_MEAT
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/leg/right/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
+/obj/item/bodypart/leg/right/flesh/Initialize(mapload)
 	. = ..()
-	if(!dont_spawn_flesh)
-		new /mob/living/basic/living_limb_flesh(src, src)
 	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
+	AddElement(/datum/element/living_limb_initialiser)

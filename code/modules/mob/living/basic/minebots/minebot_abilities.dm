@@ -63,7 +63,10 @@
 	var/wind_up_timer = 1 SECONDS
 
 /datum/action/cooldown/mob_cooldown/missile_launcher/IsAvailable(feedback = TRUE)
-	if(is_mining_level(owner.z))
+	. = ..()
+	if(!.)
+		return FALSE
+	if(lavaland_equipment_pressure_check(get_turf(owner)))
 		return TRUE
 	if(feedback)
 		owner.balloon_alert(owner, "cant be used here!")
@@ -101,7 +104,10 @@
 	click_to_activate = FALSE
 
 /datum/action/cooldown/mob_cooldown/drop_landmine/IsAvailable(feedback = TRUE)
-	if(is_mining_level(owner.z))
+	. = ..()
+	if(!.)
+		return FALSE
+	if(lavaland_equipment_pressure_check(get_turf(owner)))
 		return TRUE
 	if(feedback)
 		owner.balloon_alert(owner, "cant be used here!")
@@ -175,5 +181,10 @@
 
 /obj/effect/mine/minebot/can_trigger(atom/movable/on_who)
 	if(REF(on_who) in ignore_list)
+		return FALSE
+	if(!isliving(on_who))
+		return ..()
+	var/mob/living/stepped_mob = on_who
+	if(FACTION_NEUTRAL in stepped_mob.faction)
 		return FALSE
 	return ..()

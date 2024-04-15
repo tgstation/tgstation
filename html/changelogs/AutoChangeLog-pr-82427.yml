@@ -1,4 +1,0 @@
-author: "Zergspower"
-delete-after: True
-changes:
-  - bugfix: "borg panel access now requires robotics access again"

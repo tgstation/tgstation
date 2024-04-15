@@ -171,7 +171,7 @@
 		if(A_is_item.w_class < max_weight_of_contents)
 			continue
 		max_weight_of_contents = A_is_item.w_class
-	folding_bodybag.w_class = max_weight_of_contents
+	folding_bodybag.update_weight_class(max_weight_of_contents)
 	the_folder.put_in_hands(folding_bodybag)
 
 /// Environmental bags. They protect against bad weather.
