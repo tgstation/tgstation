@@ -48,9 +48,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY - 1 // Knowing how to remake your heart is important
 	route = PATH_START
+	research_tree_icon = icon('icons/obj/antags/eldritch.dmi',"living_heart",frame=1)
 	/// The typepath of the organ type required for our heart.
 	var/required_organ_type = /obj/item/organ/internal/heart
-	research_tree_icon = icon('icons/obj/antags/eldritch.dmi',"living_heart",frame=1)
 
 /datum/heretic_knowledge/living_heart/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()

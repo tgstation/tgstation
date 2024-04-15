@@ -42,7 +42,6 @@ type Knowledge = {
   gainFlavor: string;
   cost: number;
   disabled: boolean;
-  hereticPath: string;
   color: CssColor;
   icon: string;
   finished: boolean;
@@ -54,7 +53,6 @@ type KnowledgeInfo = {
 };
 
 type KnowledgeTier = {
-  depth: number;
   nodes: Knowledge[];
 };
 

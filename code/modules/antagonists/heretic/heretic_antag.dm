@@ -149,7 +149,6 @@
 		knowledge_data["gainFlavor"] = found_knowledge.gain_text
 		knowledge_data["cost"] = found_knowledge.cost
 		knowledge_data["disabled"] = FALSE
-		knowledge_data["hereticPath"] = found_knowledge.route
 		knowledge_data["color"] = "black"
 		knowledge_data["icon"] = icon2base64(get_icon_of_knowledge(found_knowledge))
 		knowledge_data["finished"] = TRUE
@@ -165,7 +164,6 @@
 		knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
 		knowledge_data["cost"] = initial(knowledge.cost)
 		knowledge_data["disabled"] = initial(knowledge.cost) > knowledge_points
-		knowledge_data["hereticPath"] = initial(knowledge.route)
 		knowledge_data["color"] = path_to_ui_color[initial(knowledge.route)] || "grey"
 		knowledge_data["icon"] = icon2base64(get_icon_of_knowledge(knowledge))
 		knowledge_data["finished"] = FALSE
