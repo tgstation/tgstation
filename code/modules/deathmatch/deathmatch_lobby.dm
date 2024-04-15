@@ -9,8 +9,6 @@
 	var/datum/lazy_template/deathmatch/map
 	/// Our turf reservation AKA where the arena is
 	var/datum/turf_reservation/location
-	/// Whether players hear deadchat and people through walls
-	var/global_chat = FALSE
 	/// Whether the lobby is currently playing
 	var/playing = DEATHMATCH_NOT_PLAYING
 	/// Number of total ready players
@@ -49,6 +47,7 @@
 		clear_reservation()
 	players = null
 	observers = null
+	map?.template_in_use = FALSE //just incase
 	map = null
 	location = null
 	loadouts = null
@@ -57,13 +56,18 @@
 /datum/deathmatch_lobby/proc/start_game()
 	if (playing)
 		return
+	if(map.template_in_use)
+		to_chat(get_mob_by_ckey(host), span_warning("This map is currently loading for another lobby. Please wait until that other map finishes loading. It would be a disaster if these two mixed up."))
+		return
 	playing = DEATHMATCH_PRE_PLAYING
 
+	map.template_in_use = TRUE
 	RegisterSignal(map, COMSIG_LAZY_TEMPLATE_LOADED, PROC_REF(find_spawns_and_start_delay))
 	location = map.lazy_load()
 	if (!location)
 		to_chat(get_mob_by_ckey(host), span_warning("Couldn't reserve/load a map location (all locations used?), try again later, or contact a coder."))
 		playing = FALSE
+		map.template_in_use = FALSE
 		UnregisterSignal(map, COMSIG_LAZY_TEMPLATE_LOADED)
 		return FALSE
 
@@ -74,6 +78,7 @@
 			player_spawns += thing
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
+	map.template_in_use = FALSE
 	addtimer(CALLBACK(src, PROC_REF(start_game_after_delay)), 8 SECONDS)
 
 /datum/deathmatch_lobby/proc/start_game_after_delay()
@@ -148,9 +153,6 @@
 
 	// register death handling.
 	RegisterSignals(new_player, list(COMSIG_LIVING_DEATH, COMSIG_MOB_GHOSTIZED, COMSIG_QDELETING), PROC_REF(player_died))
-	if (global_chat)
-		ADD_TRAIT(new_player, TRAIT_SIXTHSENSE, INNATE_TRAIT)
-		ADD_TRAIT(new_player, TRAIT_XRAY_HEARING, INNATE_TRAIT)
 
 /datum/deathmatch_lobby/proc/game_took_too_long()
 	if (!location || QDELING(src))
@@ -207,7 +209,7 @@
 
 	announce(span_reallybig("[player.real_name] HAS DIED.<br>[players.len] REMAIN."))
 
-	if(!gibbed && !QDELING(player)) // for some reason dusting or deleting in chasm storage messes up tgui bad
+	if(!gibbed && !QDELING(player))
 		if(!HAS_TRAIT(src, TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS))
 			player.dust(TRUE, TRUE, TRUE)
 	if (players.len <= 1)
@@ -346,7 +348,6 @@
 	.["self"] = user.ckey
 	.["host"] = is_host
 	.["admin"] = is_admin
-	.["global_chat"] = global_chat
 	.["playing"] = playing
 	.["loadouts"] = list("Randomize")
 	for (var/datum/outfit/deathmatch_loadout/loadout as anything in loadouts)
@@ -483,9 +484,6 @@
 						return FALSE
 					change_map(params["map"])
 					return TRUE
-				if ("global_chat")
-					global_chat = !global_chat
-					return TRUE
 		if("open_mod_menu")
 			mod_menu_open = TRUE
 			return TRUE
@@ -496,18 +494,14 @@
 			var/datum/deathmatch_modifier/modpath = text2path(params["modpath"])
 			if(!ispath(modpath))
 				return TRUE
-			var/global_mod = params["global_mod"]
-			if(global_mod)
-				if(usr.ckey != host && !check_rights(R_ADMIN))
-					return TRUE
-			else if(!(usr.ckey in players))
+			if(usr.ckey != host && !check_rights(R_ADMIN))
 				return TRUE
 			var/datum/deathmatch_modifier/chosen_modifier = GLOB.deathmatch_game.modifiers[modpath]
 			if(modpath in modifiers)
 				chosen_modifier.unselect(src)
 				modifiers -= modpath
 				return TRUE
-			else if(chosen_modifier.selectable(src))
+			if(chosen_modifier.selectable(src))
 				chosen_modifier.on_select(src)
 				modifiers += modpath
 				return TRUE

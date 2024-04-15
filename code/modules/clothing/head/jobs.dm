@@ -300,8 +300,10 @@
 		balloon_alert(user, "too big!")
 		return
 
-	var/desired_phrase = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
-	if(!desired_phrase)
+	var/input = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
+	if(!input || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
+
 		return
 
 	if(item.loc != user || !user.transferItemToLoc(item, src))
@@ -323,14 +325,16 @@
 	for(var/found_regex in items_by_regex)
 		found_items += items_by_regex[found_regex]
 	var/obj/found_item = tgui_input_list(user, "What item do you want to remove?", "Item Removal", found_items)
-	if(!found_item)
+	if(!found_item || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	user.put_in_inactive_hand(found_item)
 
 /obj/item/clothing/head/fedora/inspector_hat/AltClick(mob/user)
 	. = ..()
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
 	var/new_prefix = tgui_input_text(user, "What should be the new prefix?", "Activation prefix", prefix, max_length = 24)
-	if(!new_prefix)
+	if(!new_prefix || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	set_prefix(new_prefix)
 

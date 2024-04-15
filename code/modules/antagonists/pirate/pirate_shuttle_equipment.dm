@@ -232,7 +232,7 @@
 		pad_ref = WEAKREF(I.buffer)
 		return TRUE
 
-/obj/machinery/computer/piratepad_control/LateInitialize()
+/obj/machinery/computer/piratepad_control/post_machine_initialize()
 	. = ..()
 	if(cargo_hold_id)
 		for(var/obj/machinery/piratepad/P as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/piratepad))

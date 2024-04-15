@@ -161,7 +161,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/old_color = color
 	color = COLOR_CULT_RED
 	animate(src, color = old_color, time = 10, flags = ANIMATION_PARALLEL)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 10)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 1 SECONDS)
 
 /mob/dead/observer/Destroy()
 	if(data_huds_on)
@@ -340,7 +340,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		set_glide_size(glide_size_override)
 	if(NewLoc)
 		abstract_move(NewLoc)
-		update_parallax_contents()
 	else
 		var/turf/destination = get_turf(src)
 
@@ -462,7 +461,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	usr.abstract_move(pick(L))
-	update_parallax_contents()
 
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"
@@ -533,7 +531,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(isturf(destination_turf))
 		source_mob.abstract_move(destination_turf)
-		source_mob.update_parallax_contents()
 	else
 		to_chat(source_mob, span_danger("This mob is not located in the game world."))
 

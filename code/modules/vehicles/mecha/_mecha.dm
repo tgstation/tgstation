@@ -187,7 +187,7 @@
 	///check for phasing, if it is set to text (to describe how it is phasing: "flying", "phasing") it will let the mech walk through walls.
 	var/phasing = ""
 	///Power we use every time we phaze through something
-	var/phasing_energy_drain = 200
+	var/phasing_energy_drain = 0.2 * STANDARD_CELL_CHARGE
 	///icon_state for flick() when phazing
 	var/phase_state = ""
 
@@ -269,8 +269,12 @@
 	AddElement(/datum/element/hostile_machine)
 
 /obj/vehicle/sealed/mecha/Destroy()
-	for(var/ejectee in occupants)
-		mob_exit(ejectee, silent = TRUE)
+	/// If the former occupants get polymorphed, mutated, chestburstered,
+	/// or otherwise replaced by another mob, that mob is no longer in .occupants
+	/// and gets deleted with the mech. However, they do remain in .contents
+	var/list/potential_occupants = contents | occupants
+	for(var/mob/buggy_ejectee in potential_occupants)
+		mob_exit(buggy_ejectee, silent = TRUE)
 
 	if(LAZYLEN(flat_equipment))
 		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in flat_equipment)
@@ -554,8 +558,9 @@
 
 	if(internal_damage & MECHA_INT_SHORT_CIRCUIT && get_charge())
 		spark_system.start()
-		use_energy(min(10 * seconds_per_tick, cell.charge))
-		cell.maxcharge -= min(10 * seconds_per_tick, cell.maxcharge)
+		var/damage_energy_consumption = 0.005 * STANDARD_CELL_CHARGE * seconds_per_tick
+		use_energy(damage_energy_consumption)
+		cell.maxcharge -= min(damage_energy_consumption, cell.maxcharge)
 
 /obj/vehicle/sealed/mecha/proc/process_cabin_air(seconds_per_tick)
 	if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && cabin_air && cabin_air.return_volume() > 0)

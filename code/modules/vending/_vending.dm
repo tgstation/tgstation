@@ -1142,8 +1142,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer)
 	if(!istype(replacer))
 		return FALSE
-	if((obj_flags & NO_DECONSTRUCTION) && !replacer.works_from_distance)
-		return FALSE
 	if(!component_parts || !refill_canister)
 		return FALSE
 
@@ -1180,7 +1178,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 		if(tilted && !user.buckled && !isAdminGhostAI(user))
 			to_chat(user, span_notice("You begin righting [src]."))
-			if(do_after(user, 50, target=src))
+			if(do_after(user, 5 SECONDS, target=src))
 				untilt(user)
 			return
 

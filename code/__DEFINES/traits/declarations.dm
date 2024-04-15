@@ -389,6 +389,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_COAGULATING "coagulating"
 /// From anti-convulsant medication against seizures.
 #define TRAIT_ANTICONVULSANT "anticonvulsant"
+/// From stimulant reagents, this affects whether the all-nighter lack of sleep penalty should be countered
+#define TRAIT_STIMULATED "stimulated"
 /// The holder of this trait has antennae or whatever that hurt a ton when noogied
 #define TRAIT_ANTENNAE "antennae"
 /// Blowing kisses actually does damage to the victim
@@ -585,6 +587,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BRAINWASHING "brainwashing"
 /// Allows chef's to chefs kiss their food, to make them with love
 #define TRAIT_CHEF_KISS "chefs_kiss"
+/// Allows clowns to bend balloons into animals
+#define TRAIT_BALLOON_SUTRA "balloon_sutra"
 
 ///Movement type traits for movables. See elements/movetype_handler.dm
 #define TRAIT_MOVE_GROUND "move_ground"
@@ -731,6 +735,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
+#define TRAIT_ANOSMIA "anosmia"
 #define TRAIT_HEAVY_DRINKER "heavy_drinker"
 #define TRAIT_AGEUSIA "ageusia"
 #define TRAIT_HEAVY_SLEEPER "heavy_sleeper"
@@ -807,6 +812,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait applied to turfs when an atmos holosign is placed on them. It will stop firedoors from closing.
 #define TRAIT_FIREDOOR_STOP "firedoor_stop"
+
+///Trait applied to turf blocked by a containment field
+#define TRAIT_CONTAINMENT_FIELD "containment_field"
 
 /// Trait applied when the MMI component is added to an [/obj/item/integrated_circuit]
 #define TRAIT_COMPONENT_MMI "component_mmi"
@@ -1080,6 +1088,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait granted by janitor skillchip, allows communication with cleanbots
 #define TRAIT_CLEANBOT_WHISPERER "cleanbot_whisperer"
 
+///Trait granted by the miner skillchip, allows communication with minebots
+#define TRAIT_ROCK_STONER "rock_stoner"
+
+///Trait given by the regenerative shield component
+#define TRAIT_REGEN_SHIELD "regen_shield"
+
 /// Trait given when a mob is currently in invisimin mode
 #define TRAIT_INVISIMIN "invisimin"
 
@@ -1099,5 +1113,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
+
+/// Prevents the affected object from opening a loot window via alt click. See atom/AltClick()
+#define TRAIT_ALT_CLICK_BLOCKER "no_alt_click"
 
 // END TRAIT DEFINES

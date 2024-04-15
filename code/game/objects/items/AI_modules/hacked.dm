@@ -5,7 +5,7 @@
 
 /obj/item/ai_module/syndicate/attack_self(mob/user)
 	var/targName = tgui_input_text(user, "Enter a new law for the AI", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len), TRUE)
-	if(!targName)
+	if(!targName || !user.is_holding(src))
 		return
 	if(is_ic_filtered(targName)) // not even the syndicate can uwu
 		to_chat(user, span_warning("Error: Law contains invalid text."))
@@ -77,4 +77,3 @@
 
 /obj/item/ai_module/malf/display_laws()
 	return
-

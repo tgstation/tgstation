@@ -1,0 +1,22 @@
+@use '../colors.scss';
+
+.SearchItem {
+  align-items: center;
+  background: black;
+  border: thin solid #212121;
+  display: flex;
+  height: 3rem;
+  justify-content: center;
+  position: relative;
+  width: 3rem;
+  margin-bottom: 0;
+}
+
+.SearchItem--amount {
+  bottom: -1rem;
+  color: colors.$teal;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  position: absolute;
+  right: -4px;
+}

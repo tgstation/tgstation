@@ -26,6 +26,8 @@
 	RegisterSignal(parent, COMSIG_CLICK_ALT_SECONDARY, PROC_REF(rotate_right))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(ExamineMessage))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
+
+	ADD_TRAIT(parent, TRAIT_ALT_CLICK_BLOCKER, REF(src))
 	return ..()
 
 /datum/component/simple_rotation/PostTransfer()
@@ -41,6 +43,8 @@
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 	))
+
+	REMOVE_TRAIT(parent, TRAIT_ALT_CLICK_BLOCKER, REF(src))
 	return ..()
 
 /datum/component/simple_rotation/Destroy()

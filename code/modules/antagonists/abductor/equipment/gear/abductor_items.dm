@@ -93,7 +93,7 @@
 		to_chat(user, span_warning("You need to be next to the specimen to prepare it for transport!"))
 		return
 	to_chat(user, span_notice("You begin preparing [target] for transport..."))
-	if(do_after(user, 100, target = target))
+	if(do_after(user, 10 SECONDS, target = target))
 		marked_target_weakref = WEAKREF(target)
 		to_chat(user, span_notice("You finish preparing [target] for transport."))
 
@@ -523,7 +523,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	user.visible_message(span_notice("[user] places down [src] and activates it."), span_notice("You place down [src] and activate it."))
 	user.dropItemToGround(src)
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50)
-	addtimer(CALLBACK(src, PROC_REF(try_spawn_machine)), 30)
+	addtimer(CALLBACK(src, PROC_REF(try_spawn_machine)), 3 SECONDS)
 
 /obj/item/abductor_machine_beacon/proc/try_spawn_machine()
 	var/viable = FALSE

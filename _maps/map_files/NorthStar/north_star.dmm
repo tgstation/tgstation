@@ -7946,10 +7946,9 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/secondary/entry)
 "bWZ" = (
-/obj/structure/sign/poster/contraband/hacking_guide/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/extinguisher_cabinet/directional/west,
 /obj/machinery/duct,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/fitness)
 "bXd" = (
@@ -12180,9 +12179,7 @@
 /obj/machinery/camera/motion/directional/north{
 	c_tag = "Minisat North"
 	},
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat/service)
@@ -44187,8 +44184,9 @@
 /area/station/command/meeting_room)
 "ltH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/camera/autoname/directional/north,
 /obj/machinery/duct,
+/obj/structure/sign/poster/contraband/hacking_guide/directional/north,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/fitness)
 "ltI" = (
@@ -61912,9 +61910,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "pUB" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat/service)
@@ -63807,6 +63803,8 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/fitness)
 "qtH" = (
@@ -66542,9 +66540,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/station/tcommsat/computer)
@@ -79803,9 +79799,7 @@
 /area/station/maintenance/solars/starboard/fore)
 "uDR" = (
 /obj/machinery/firealarm/directional/west,
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -257501,7 +257495,7 @@ sSB
 sSB
 sSB
 sSB
-qrd
+sSB
 qrd
 qrd
 sNE
@@ -257759,7 +257753,7 @@ qrd
 qrd
 qrd
 qrd
-bWZ
+qrd
 vTf
 gvO
 boP
@@ -259044,7 +259038,7 @@ qrd
 oeQ
 xgb
 nWe
-mkl
+bWZ
 hwr
 oWt
 wJH

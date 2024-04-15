@@ -1,0 +1,5 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - rscadd: "Added a loot window for alt-clicking tiles."
+  - rscdel: "Removed the item browser from the stat panel."

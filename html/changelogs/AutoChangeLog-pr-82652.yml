@@ -1,0 +1,4 @@
+author: "AyIong"
+delete-after: True
+changes:
+  - qol: "General settings tab into TGchat, looks better now, and is more convenient to use. Also, each button has a font written on it."

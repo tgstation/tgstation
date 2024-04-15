@@ -137,6 +137,7 @@
 #define INIT_ORDER_BLACKBOX 94
 #define INIT_ORDER_SERVER_MAINT 93
 #define INIT_ORDER_INPUT 85
+#define INIT_ORDER_ADMIN_VERBS 84 // needs to be pretty high, admins cant do much without it
 #define INIT_ORDER_SOUNDS 83
 #define INIT_ORDER_INSTRUMENTS 82
 #define INIT_ORDER_GREYSCALE 81
@@ -184,6 +185,7 @@
 #define INIT_ORDER_MINOR_MAPPING -40
 #define INIT_ORDER_PATH -50
 #define INIT_ORDER_EXPLOSIONS -69
+#define INIT_ORDER_LOOT -70
 #define INIT_ORDER_STATPANELS -97
 #define INIT_ORDER_BAN_CACHE -98
 #define INIT_ORDER_INIT_PROFILER -99 //Near the end, logs the costs of initialize
@@ -193,7 +195,6 @@
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 
 #define FIRE_PRIORITY_PING 10
-#define FIRE_PRIORITY_IDLE_NPC 10
 #define FIRE_PRIORITY_SERVER_MAINT 10
 #define FIRE_PRIORITY_RESEARCH 10
 #define FIRE_PRIORITY_VIS 10

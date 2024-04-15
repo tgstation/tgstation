@@ -69,7 +69,7 @@
 	var/new_bible = player_client?.prefs?.read_preference(/datum/preference/name/bible) || DEFAULT_BIBLE
 
 	holy_bible.deity_name = new_deity
-	switch(lowertext(new_religion))
+	switch(LOWER_TEXT(new_religion))
 		if("homosexuality", "gay", "penis", "ass", "cock", "cocks")
 			new_bible = pick("Guys Gone Wild","Coming Out of The Closet","War of Cocks")
 			switch(new_bible)

@@ -105,8 +105,12 @@
 /obj/item/clothing/shoes/jester_shoes
 	name = "jester shoes"
 	desc = "Shoes that jingle with every step!!"
-	icon_state = "green_jester_shoes"
+	icon_state = "jester_map"
 	inhand_icon_state = null
+	greyscale_colors = "#00ff00#ff0000"
+	greyscale_config = /datum/greyscale_config/jester_shoes
+	greyscale_config_worn = /datum/greyscale_config/jester_shoes/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/jester_shoes/Initialize(mapload)
 	. = ..()

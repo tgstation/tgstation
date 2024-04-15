@@ -12,41 +12,51 @@
 	smoothing_groups = SMOOTH_GROUP_ALIEN_NEST
 	canSmoothWith = SMOOTH_GROUP_ALIEN_NEST
 	build_stack_type = null
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 	elevation = 0
 	var/static/mutable_appearance/nest_overlay = mutable_appearance('icons/mob/nonhuman-player/alien.dmi', "nestoverlay", LYING_MOB_LAYER)
 
-/obj/structure/bed/nest/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
-	if(has_buckled_mobs())
-		for(var/buck in buckled_mobs) //breaking a nest releases all the buckled mobs, because the nest isn't holding them down anymore
-			var/mob/living/M = buck
+/obj/structure/bed/nest/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		return NONE
 
-			if(user.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))
-				unbuckle_mob(M)
-				add_fingerprint(user)
-				return
+	return ..()
 
-			if(M != user)
-				M.visible_message(span_notice("[user.name] pulls [M.name] free from the sticky nest!"),\
-					span_notice("[user.name] pulls you free from the gelatinous resin."),\
-					span_hear("You hear squelching..."))
-			else
-				M.visible_message(span_warning("[M.name] struggles to break free from the gelatinous resin!"),\
-					span_notice("You struggle to break free from the gelatinous resin... (Stay still for about a minute and a half.)"),\
-					span_hear("You hear squelching..."))
-				if(!do_after(M, 100 SECONDS, target = src))
-					if(M?.buckled)
-						to_chat(M, span_warning("You fail to unbuckle yourself!"))
-					return
-				if(!M.buckled)
-					return
-				M.visible_message(span_warning("[M.name] breaks free from the gelatinous resin!"),\
-					span_notice("You break free from the gelatinous resin!"),\
-					span_hear("You hear squelching..."))
+/obj/structure/bed/nest/wrench_act_secondary(mob/living/user, obj/item/weapon)
+	return ITEM_INTERACT_BLOCKING
 
 
-			unbuckle_mob(M)
-			add_fingerprint(user)
+/obj/structure/bed/nest/user_unbuckle_mob(mob/living/captive, mob/living/hero)
+	if(!length(buckled_mobs))
+		return
+
+	if(hero.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))
+		unbuckle_mob(captive)
+		add_fingerprint(hero)
+		return
+
+	if(captive != hero)
+		captive.visible_message(span_notice("[hero.name] pulls [captive.name] free from the sticky nest!"),
+			span_notice("[hero.name] pulls you free from the gelatinous resin."),
+			span_hear("You hear squelching..."))
+		unbuckle_mob(captive)
+		add_fingerprint(hero)
+		return
+	
+	captive.visible_message(span_warning("[captive.name] struggles to break free from the gelatinous resin!"),
+		span_notice("You struggle to break free from the gelatinous resin... (Stay still for about a minute and a half.)"),
+		span_hear("You hear squelching..."))
+
+	if(!do_after(captive, 100 SECONDS, target = src, hidden = TRUE))
+		if(captive.buckled)
+			to_chat(captive, span_warning("You fail to unbuckle yourself!"))
+		return
+
+	captive.visible_message(span_warning("[captive.name] breaks free from the gelatinous resin!"),
+		span_notice("You break free from the gelatinous resin!"),
+		span_hear("You hear squelching..."))
+
+	unbuckle_mob(captive)
+	add_fingerprint(hero)
 
 /obj/structure/bed/nest/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated() || M.buckled )

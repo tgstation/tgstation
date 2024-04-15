@@ -59,7 +59,7 @@
 		else
 			padloc = "(UNKNOWN)"
 		src.log_talk(message, LOG_SAY, tag="HOLOPAD in [padloc]")
-		ai_holo.say(message, language = language)
+		ai_holo.say(message, sanitize = FALSE, language = language)
 	else
 		to_chat(src, span_alert("No holopad connected."))
 
@@ -126,7 +126,7 @@
 		words.len = 30
 
 	for(var/word in words)
-		word = lowertext(trim(word))
+		word = LOWER_TEXT(trim(word))
 		if(!word)
 			words -= word
 			continue
@@ -156,7 +156,7 @@
 
 /proc/play_vox_word(word, ai_turf, mob/only_listener)
 
-	word = lowertext(word)
+	word = LOWER_TEXT(word)
 
 	if(GLOB.vox_sounds[word])
 
