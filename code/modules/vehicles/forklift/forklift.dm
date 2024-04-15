@@ -76,8 +76,12 @@
 	if(user in selected_modules)
 		module_data["active"] = REF(selected_modules[user].type)
 		data["active_module_data"] = selected_modules[user].get_ui_data_payload(user)
+
 	for(var/datum/forklift_module/module_type as anything in available_modules)
-		module_data["available"][REF(module_type)] = module_type.name
+		module_data["available"][REF(module_type)] = list(
+			"name" = module_type.name,
+			"display_src" = get_atom_typepath_icon_as_img_src(module_type::module_ui_display_atom_typepath),
+		)
 	data["modules"] = module_data
 
 	data["cooldowns"] = list(

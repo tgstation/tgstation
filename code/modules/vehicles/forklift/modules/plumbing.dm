@@ -1,5 +1,6 @@
 /datum/forklift_module/plumbing
 	name = "Plumbing"
+	module_ui_display_atom_typepath = /obj/machinery/duct
 	current_selected_typepath = /obj/machinery/duct
 	available_builds = list(
 		/obj/machinery/duct,

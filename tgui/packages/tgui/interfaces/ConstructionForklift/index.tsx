@@ -1,31 +1,34 @@
 import { useBackend } from '../../backend';
-import { Image, NoticeBox, Section } from '../../components';
+import { Image, Section } from '../../components';
 import { Window } from '../../layouts';
 
 export const ConstructionForklift = (props: any) => {
   const { act, data } = useBackend<ForkliftData>();
-  const {
-    materials,
-    modules,
-    cooldowns,
-    hologram_count,
-    active_module_data,
-  } = data;
+  const { materials, modules, cooldowns, hologram_count, active_module_data } =
+    data;
 
-  if(active_module_data !== undefined) {
-    return (
-      <Window title="Forklift Management Console">
-        <Window.Content>
-          <BuildTargetSelect selected={active_module_data.current_selected_typepath} available_builds={active_module_data.available_builds} />
-        </Window.Content>
-      </Window>
+  let build_select: JSX.Element | undefined;
+  if (active_module_data !== undefined) {
+    build_select = (
+      <BuildTargetSelect
+        selected={active_module_data.current_selected_typepath}
+        available_builds={active_module_data.available_builds}
+      />
     );
   }
+
+  const set_active_module = (module: string) => {
+    ModuleAction('select-module', { module: module });
+  };
+  let module_select = (
+    <ModuleSelect modules={modules} set_active_module={set_active_module} />
+  );
 
   return (
     <Window title="Forklift Management Console">
       <Window.Content>
-        <NoticeBox danger>TODO!</NoticeBox>
+        {module_select}
+        {build_select}
       </Window.Content>
     </Window>
   );
@@ -40,9 +43,31 @@ const ModuleAction = (action: string, params: object) => {
   act('module-action', act_params);
 };
 
+const ModuleSelect = (props: {
+  modules: ModuleData;
+  set_active_module: (module: string) => void;
+}) => {
+  const { modules, set_active_module } = props;
+
+  return (
+    <Section title="Select Module">
+      {Object.entries(modules.available).map(([module_ref, module_data]) => (
+        <ItemSelect
+          key={module_ref}
+          name={module_data.name}
+          is_selected={module_ref === modules.active}
+          display_src={module_data.display_src}
+          item={module_ref}
+          select_item={set_active_module}
+        />
+      ))}
+    </Section>
+  );
+};
+
 const BuildTargetSelect = (props: {
-  selected: string,
-  available_builds: BuildData,
+  selected: string;
+  available_builds: BuildData;
 }) => {
   const { selected, available_builds } = props;
   const { act } = useBackend();
@@ -53,25 +78,25 @@ const BuildTargetSelect = (props: {
   return (
     <Section title="Select Construction Target">
       {Object.entries(props.available_builds).map(([typepath, build_data]) => (
-        <BuildableItem
+        <ItemSelect
           key={typepath}
           name={build_data.name}
           is_selected={typepath === selected}
           display_src={build_data.display_src}
-          typepath={typepath}
+          item={typepath}
           select_item={select_item}
-          />
+        />
       ))}
     </Section>
   );
 };
 
-const BuildableItem = (props: {
+const ItemSelect = (props: {
   name: string;
-  typepath: string;
+  item: string;
   is_selected: boolean;
   display_src: string;
-  select_item: (typepath: string) => void;
+  select_item: (item: string) => void;
 }) => {
   const style = {
     border: props.is_selected ? '2px solid blue' : 'none',
@@ -86,7 +111,7 @@ const BuildableItem = (props: {
       src={props.display_src}
       tooltip={props.name}
       style={style}
-      onClick={() => props.select_item(props.typepath)}
-      />
+      onClick={() => props.select_item(props.item)}
+    />
   );
 };

@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT(atmos_piping_layers, list(
 
 /datum/forklift_module/atmos // TODO; get an atmos coder to fix this thing, it don't work
 	name = "Atmospherics"
+	module_ui_display_atom_typepath = /obj/machinery/atmospherics/pipe/smart
 	current_selected_typepath = /obj/machinery/atmospherics/pipe/smart
 	available_builds = list(
 		/obj/machinery/atmospherics/pipe/smart,

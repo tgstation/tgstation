@@ -1,5 +1,6 @@
 /datum/forklift_module/lighting
 	name = "Lights"
+	module_ui_display_atom_typepath = /obj/machinery/light/small
 	current_selected_typepath = /obj/machinery/light/small
 	available_builds = list(
 		/obj/machinery/light/small,

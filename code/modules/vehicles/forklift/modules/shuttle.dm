@@ -1,5 +1,6 @@
 /datum/forklift_module/shuttle
 	name = "Shuttle"
+	module_ui_display_atom_typepath = /turf/open/floor/mineral/titanium
 	current_selected_typepath = /turf/open/floor/mineral/titanium
 	available_builds = list(
 		/turf/open/floor/mineral/titanium,

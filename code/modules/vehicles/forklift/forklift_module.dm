@@ -1,5 +1,7 @@
 /datum/forklift_module
 	var/name = "Generic Forklift Module"
+	/// What atom typepath is used as a preview icon for the module.
+	var/atom/module_ui_display_atom_typepath
 	///What forklift am I attached to?
 	var/obj/vehicle/ridden/forklift/my_forklift
 	///Does this module build instantly? If not, leaves a construction hologram of the atom.
@@ -33,12 +35,6 @@
 	/// What is the UI interface for this module?
 	var/ui_interface_name = "ConstructionForkliftModule_Default"
 
-/datum/forklift_module/proc/get_display_src(atom/typepath)
-	var/static/base64cache = list()
-	if(typepath in base64cache)
-		return base64cache[typepath]
-	return (base64cache[typepath] = "data:image/png;base64,[icon2base64(icon(typepath::icon, typepath::icon_state))]")
-
 /datum/forklift_module/proc/get_ui_data_payload(mob/user)
 	var/list/data = list()
 
@@ -55,7 +51,7 @@
 	for(var/atom/typepath as anything in available_builds)
 		data["available_builds"]["[typepath]"] = list(
 			"name" = typepath::name,
-			"display_src" = get_display_src(typepath),
+			"display_src" = get_atom_typepath_icon_as_img_src(typepath),
 		)
 
 	return data

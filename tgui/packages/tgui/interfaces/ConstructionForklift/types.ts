@@ -2,22 +2,28 @@ type StorageData = {
   storage_max: number;
   storage_now: number;
   storage: StorageActual;
-}
+};
 
 type StorageActual = Record<string, number>;
 
 type ModuleData = {
   active: string | undefined;
   available: AvailableModules;
-}
+};
 
-type AvailableModules = Record<string, string>;
+type AvailableModules = Record<
+  string,
+  {
+    name: string;
+    display_src: string;
+  }
+>;
 
 type CooldownData = {
   build: number;
   scan: number;
   deconstruct: number;
-}
+};
 
 type ForkliftData = {
   materials: StorageData;
@@ -25,7 +31,7 @@ type ForkliftData = {
   cooldowns: CooldownData;
   hologram_count: number;
   active_module_data: ActiveModuleData | undefined;
-}
+};
 
 type ActiveModuleData = {
   name: string;
@@ -37,10 +43,13 @@ type ActiveModuleData = {
   available_directions: number[];
   direction: number;
   available_builds: BuildData;
-}
+};
 
 type BuildPriceData = Record<string, Record<string, number>>;
-type BuildData = Record<string, {
-  name: string;
-  display_src: string;
-}>;
+type BuildData = Record<
+  string,
+  {
+    name: string;
+    display_src: string;
+  }
+>;

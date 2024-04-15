@@ -1,5 +1,6 @@
 /datum/forklift_module/department_machinery
 	name = "Departmental Machinery"
+	module_ui_display_atom_typepath = /obj/structure/frame/machine
 	current_selected_typepath = /obj/structure/frame/machine
 	available_builds = list(
 		/obj/structure/frame/machine,

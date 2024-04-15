@@ -1,5 +1,6 @@
 /datum/forklift_module/airlocks
 	name = "Airlocks"
+	module_ui_display_atom_typepath = /obj/machinery/door/airlock
 	current_selected_typepath = /obj/machinery/door/airlock
 	available_builds = list(
 		/obj/machinery/door/airlock,

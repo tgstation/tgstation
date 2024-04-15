@@ -1006,6 +1006,13 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		return SSassets.transport.get_asset_url(key)
 	return "<img class='[extra_classes] icon icon-[icon_state]' src='[SSassets.transport.get_asset_url(key)]'>"
 
+/// Given the typepath of an atom, returns a base64 encoded image of the icon for use as an img src prop.
+/proc/get_atom_typepath_icon_as_img_src(atom/typepath)
+	var/static/base64cache = list()
+	if(typepath in base64cache)
+		return base64cache[typepath]
+	return (base64cache[typepath] = "data:image/png;base64,[icon2base64(icon(typepath::icon, typepath::icon_state))]")
+
 /proc/icon2base64html(target)
 	if (!target)
 		return

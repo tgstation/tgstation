@@ -1,5 +1,6 @@
 /datum/forklift_module/floors
 	name = "Floors"
+	module_ui_display_atom_typepath = /turf/open/floor/iron
 	current_selected_typepath = /turf/open/floor/iron
 	available_builds = list(/turf/open/floor/iron) // Populated on New
 	resource_price = list(

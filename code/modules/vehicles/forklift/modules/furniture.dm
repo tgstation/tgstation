@@ -1,5 +1,6 @@
 /datum/forklift_module/furniture
 	name = "Basic Furniture"
+	module_ui_display_atom_typepath = /obj/structure/table
 	current_selected_typepath = /obj/structure/table
 	available_builds = list(
 		/obj/structure/table,

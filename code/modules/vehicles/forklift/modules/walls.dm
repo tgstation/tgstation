@@ -1,5 +1,6 @@
 /datum/forklift_module/walls
 	name = "Walls"
+	module_ui_display_atom_typepath = /turf/closed/wall/r_wall
 	current_selected_typepath = /turf/closed/wall
 	available_builds = list(
 		/turf/closed/wall,
