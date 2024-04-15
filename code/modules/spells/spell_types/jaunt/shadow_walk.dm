@@ -107,7 +107,7 @@
 			reveal_turf.visible_message(span_boldwarning("[jaunter] is revealed by the light!"))
 		else
 			reveal_turf.visible_message(span_boldwarning("[jaunter] emerges from the darkness!"))
-		playsound(reveal_turf, 'sound/effects/nightmare_reappear.ogg', 50, TRUE, -1)
+		playsound(reveal_turf, 'sound/effects/nightmare_reappear.ogg', 50, TRUE, -1, ignore_walls = FALSE)
 
 	return ..()
 
