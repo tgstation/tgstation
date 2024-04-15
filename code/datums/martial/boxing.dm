@@ -7,21 +7,25 @@
 	name = "Boxing"
 	id = MARTIALART_BOXING
 	pacifist_style = TRUE
-	//Whether we are sportsmanlike in our tussling; TRUE means we have restrictions
+	///Boolean on whether we are sportsmanlike in our tussling; TRUE means we have restrictions
 	var/honorable_boxer = TRUE
+	/// List of traits applied to users of this martial art.
+	var/list/boxing_traits = list(TRAIT_BOXING_READY)
 
 /datum/martial_art/boxing/teach(mob/living/new_holder, make_temporary)
 	if(!ishuman(new_holder))
 		return FALSE
+	new_holder.add_traits(boxing_traits, BOXING_TRAIT)
 	RegisterSignal(new_holder, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(check_block))
 	return ..()
 
 /datum/martial_art/boxing/on_remove(mob/living/remove_from)
+	remove_from.remove_traits(boxing_traits, BOXING_TRAIT)
 	UnregisterSignal(remove_from, list(COMSIG_LIVING_CHECK_BLOCK))
 	return ..()
 
-//Unlike most instances of this proc, this is actually called in _proc/tussle()
-//It returns a multiplier on our skill damage bonus.
+///Unlike most instances of this proc, this is actually called in _proc/tussle()
+///Returns a multiplier on our skill damage bonus.
 /datum/martial_art/boxing/proc/check_streak(mob/living/attacker, mob/living/defender)
 	var/combo_multiplier = 1
 	
@@ -182,7 +186,7 @@
 	
 	return TRUE
 
-// Here, we check if we're complying with the rules of boxing. Namely, don't use our scariest moves while boxing against those who aren't prepared to box (AKA the target is also a boxer)
+/// Returns whether whoever is checked by this proc is complying with the rules of boxing. The boxer cannot block non-boxers, and cannot apply their scariest moves against non-boxers.
 /datum/martial_art/boxing/proc/honor_check(mob/living/possible_boxer)
 	if(!honorable_boxer)
 		return TRUE //You scoundrel!!
@@ -190,11 +194,12 @@
 	if(!ishuman(possible_boxer))
 		return FALSE
 
-	if(!istype(possible_boxer.mind?.martial_art, /datum/martial_art/boxing))
+	if(HAS_TRAIT(possible_boxer, TRAIT_BOXING_READY))
 		return FALSE
 	
 	return TRUE
 
+/// Handles our instances of experience gain while boxing. It also applies the exercised status effect.
 /datum/martial_art/boxing/proc/skill_experience_adjustment(mob/living/boxer, experience_value)
 	//Boxing in heavier gravity gives you more experience
 	var/gravity_modifier = boxer.has_gravity() > STANDARD_GRAVITY ? 1 : 0.5
@@ -203,6 +208,7 @@
 	boxer.mind?.adjust_experience(/datum/skill/athletics, experience_value * gravity_modifier)
 	boxer.apply_status_effect(/datum/status_effect/exercised)
 
+/// Handles our blocking signals, similar to hit_reaction() on items. Only blocks while the boxer is in throw mode.
 /datum/martial_art/boxing/proc/check_block(mob/living/boxer, atom/movable/hitby, damage, attack_text, attack_type, ...)
 	SIGNAL_HANDLER
 
@@ -251,45 +257,15 @@
 		return FALSE
 	return ..()
 
-/obj/item/clothing/gloves/boxing
-	var/datum/martial_art/boxing/style
-	var/style_to_add = /datum/martial_art/boxing
-
-/obj/item/clothing/gloves/boxing/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/extendohand_l, /datum/crafting_recipe/extendohand_r)
-
-	AddComponent(
-		/datum/component/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-	)
-
-	style = new style_to_add()
-	style.allow_temp_override = FALSE
-
-/obj/item/clothing/gloves/boxing/Destroy()
-	QDEL_NULL(style)
-	return ..()
-
-/obj/item/clothing/gloves/boxing/equipped(mob/user, slot)
-	. = ..()
-	if(slot & ITEM_SLOT_GLOVES)
-		style.teach(user, TRUE)
-
-/obj/item/clothing/gloves/boxing/dropped(mob/user)
-	. = ..()
-	style.fully_remove(user)
-
-// Evil Boxing; for sick, evil scoundrels. 
+/// Evil Boxing; for sick, evil scoundrels. Has no honor, making it more lethal (therefore unable to be used by pacifists). 
+/// Grants Strength and Stimmed to speed up any experience gain.
 
 /datum/martial_art/boxing/evil
 	name = "Evil Boxing"
 	id = MARTIALART_EVIL_BOXING
 	pacifist_style = FALSE
 	honorable_boxer = FALSE
-
-/obj/item/clothing/gloves/boxing/evil
-	style_to_add =/datum/martial_art/boxing/evil
+	boxing_traits = list(TRAIT_BOXING_READY, TRAIT_STRONG, TRAIT_STIMMED)
 
 #undef LEFT_RIGHT_COMBO
 #undef RIGHT_LEFT_COMBO

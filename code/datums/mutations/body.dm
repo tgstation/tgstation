@@ -271,12 +271,14 @@
 	difficulty = 16
 
 /datum/mutation/human/strong/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	ADD_TRAIT(owner, TRAIT_STRENGTH, GENETIC_MUTATION)
 
 /datum/mutation/human/strong/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	REMOVE_TRAIT(owner, TRAIT_STRENGTH, GENETIC_MUTATION)
 
@@ -290,12 +292,14 @@
 	difficulty = 16
 
 /datum/mutation/human/stimmed/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	ADD_TRAIT(owner, TRAIT_STIMMED, GENETIC_MUTATION)
 
 /datum/mutation/human/stimmed/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	REMOVE_TRAIT(owner, TRAIT_STIMMED, GENETIC_MUTATION)
 

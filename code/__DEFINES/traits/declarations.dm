@@ -526,6 +526,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Increases the duration of having exercised
 #define TRAIT_STIMMED "stimmed"
 
+/// Indicates that the target is able to be boxed at a boxer's full power.
+#define TRAIT_BOXING_READY "boxing_ready"
+
 /// Halves the time of tying a tie.
 #define TRAIT_FAST_TYING "fast_tying"
 
