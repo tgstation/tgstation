@@ -25,6 +25,8 @@ jobs:
 
       - name: Merge with their incoming
         run: |
+        git checkout origin/translate
         git merge origin/master --strategy-option theirs
+        git push
 
           
