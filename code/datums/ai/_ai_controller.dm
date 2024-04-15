@@ -47,7 +47,7 @@ multiple modular subtrees with behaviors
 	///The idle behavior this AI performs when it has no actions.
 	var/datum/idle_behavior/idle_behavior = null
 	///our current cell grid
-	var/datum/spatial_grid_cell/our_cell
+	var/datum/cell_tracker/our_cells
 
 	// Movement related things here
 	///Reference to the movement datum we use. Is a type on initialize but becomes a ref afterwards.
@@ -132,29 +132,36 @@ multiple modular subtrees with behaviors
 	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 	RegisterSignal(pawn, COMSIG_QDELETING, PROC_REF(on_pawn_qdeleted))
-	RegisterSignal(pawn, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_enter))
-	RegisterSignal(pawn, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_exit))
 	RegisterSignal(pawn, COMSIG_GRID_UPDATED, PROC_REF(update_grid))
 
-	our_cell = SSspatial_grid.get_cell_of(pawn)
-	set_new_cell(our_cell)
+	our_cells = new(interesting_dist, interesting_dist)
+	set_new_cells()
 
 /datum/ai_controller/proc/update_grid(datum/source, datum/spatial_grid_cell/new_cell)
 	SIGNAL_HANDLER
 
-	set_new_cell(new_cell)
+	set_new_cells()
 
-/datum/ai_controller/proc/set_new_cell(datum/spatial_grid_cell/new_cell)
-	if(!isnull(our_cell))
-		UnregisterSignal(our_cell, list(SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)))
-	our_cell = new_cell
-	RegisterSignal(our_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_enter))
-	RegisterSignal(our_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_exit))
+/datum/ai_controller/proc/set_new_cells()
+
+	for(var/datum/old_grid as anything in our_cells.member_cells)
+		UnregisterSignal(old_grid, list(SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)))
+
+	our_cells.recalculate_cells(get_turf(pawn))
+
+	var/found_member
+	for(var/datum/spatial_grid_cell/new_grid as anything in our_cells.member_cells)
+		RegisterSignal(new_grid, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_enter))
+		RegisterSignal(new_grid, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_exit))
+		if(!found_member)
+			found_member = length(new_grid.client_contents)
+
 	if(ai_status == AI_STATUS_OFF)
 		return
-	if(length(SSspatial_grid.orthogonal_range_search(pawn, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, interesting_dist)))
-		set_ai_status(AI_STATUS_ON) //we've entered a new cell, is there anything interesting in there?
-	else if(can_idle)
+
+	if(found_member) //we've entered a new cell, is there anything interesting in there?
+		set_ai_status(AI_STATUS_ON)
+	else
 		set_ai_status(AI_STATUS_IDLE)
 
 /datum/ai_controller/proc/on_client_enter(datum/source, atom/target)
@@ -168,11 +175,9 @@ multiple modular subtrees with behaviors
 
 	if(!can_idle)
 		return
-	if(length(SSspatial_grid.orthogonal_range_search(pawn, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, interesting_dist)))
-		return
-	var/atom/final_target = islist(exited) ? exited[1] : exited
-	if(can_see(pawn, final_target)) //they exited our cell, but we can still see them!
-		return
+	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
+		if(length(grid.client_contents))
+			return
 	if(ai_status == AI_STATUS_ON)
 		set_ai_status(AI_STATUS_IDLE)
 
