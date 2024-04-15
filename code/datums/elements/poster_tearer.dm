@@ -29,10 +29,10 @@
 
 	if(DOING_INTERACTION_WITH_TARGET(user, target) || (!isnull(interaction_key) && DOING_INTERACTION(user, interaction_key)))
 		user.balloon_alert(target, "busy!")
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	INVOKE_ASYNC(src, PROC_REF(tear_it_down), user, target)
-	return COMPONENT_HOSTILE_NO_ATTACK
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Actually work on tearing down that poster
 /datum/element/poster_tearer/proc/tear_it_down(mob/living/user, obj/structure/sign/poster/target)
