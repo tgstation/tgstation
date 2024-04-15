@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Battle arcade's higher levels no longer gives you a \"Gear\" gear, and counterattacks can now properly kill enemies."
