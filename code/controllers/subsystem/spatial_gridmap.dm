@@ -363,6 +363,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/z_index = target_turf.z
 
 	var/datum/spatial_grid_cell/intersecting_cell = grids_by_z_level[z_index][y_index][x_index]
+	SEND_SIGNAL(new_target, COMSIG_GRID_UPDATED, intersecting_cell)
 	for(var/type in spatial_grid_categories[new_target.spatial_grid_key])
 		switch(type)
 			if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)

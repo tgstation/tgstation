@@ -46,6 +46,8 @@ multiple modular subtrees with behaviors
 
 	///The idle behavior this AI performs when it has no actions.
 	var/datum/idle_behavior/idle_behavior = null
+	///our current cell grid
+	var/datum/spatial_grid_cell/our_cell
 
 	// Movement related things here
 	///Reference to the movement datum we use. Is a type on initialize but becomes a ref afterwards.
@@ -130,6 +132,49 @@ multiple modular subtrees with behaviors
 	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 	RegisterSignal(pawn, COMSIG_QDELETING, PROC_REF(on_pawn_qdeleted))
+	RegisterSignal(pawn, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_enter))
+	RegisterSignal(pawn, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_exit))
+	RegisterSignal(pawn, COMSIG_GRID_UPDATED, PROC_REF(update_grid))
+
+	our_cell = SSspatial_grid.get_cell_of(pawn)
+	set_new_cell(our_cell)
+
+/datum/ai_controller/proc/update_grid(datum/source, datum/spatial_grid_cell/new_cell)
+	SIGNAL_HANDLER
+
+	set_new_cell(new_cell)
+
+/datum/ai_controller/proc/set_new_cell(datum/spatial_grid_cell/new_cell)
+	if(!isnull(our_cell))
+		UnregisterSignal(our_cell, list(SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)))
+	our_cell = new_cell
+	RegisterSignal(our_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_enter))
+	RegisterSignal(our_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_exit))
+	if(ai_status == AI_STATUS_OFF)
+		return
+	if(length(SSspatial_grid.orthogonal_range_search(pawn, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, interesting_dist)))
+		set_ai_status(AI_STATUS_ON) //we've entered a new cell, is there anything interesting in there?
+	else if(can_idle)
+		set_ai_status(AI_STATUS_IDLE)
+
+/datum/ai_controller/proc/on_client_enter(datum/source, atom/target)
+	SIGNAL_HANDLER
+
+	if(ai_status == AI_STATUS_IDLE)
+		set_ai_status(AI_STATUS_ON)
+
+/datum/ai_controller/proc/on_client_exit(datum/source, datum/exited)
+	SIGNAL_HANDLER
+
+	if(!can_idle)
+		return
+	if(length(SSspatial_grid.orthogonal_range_search(pawn, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, interesting_dist)))
+		return
+	var/atom/final_target = islist(exited) ? exited[1] : exited
+	if(can_see(pawn, final_target)) //they exited our cell, but we can still see them!
+		return
+	if(ai_status == AI_STATUS_ON)
+		set_ai_status(AI_STATUS_IDLE)
 
 /// Sets the AI on or off based on current conditions, call to reset after you've manually disabled it somewhere
 /datum/ai_controller/proc/reset_ai_status()
@@ -152,7 +197,7 @@ multiple modular subtrees with behaviors
 		if(ai_traits & CAN_ACT_WHILE_DEAD)
 			return AI_STATUS_ON
 		return AI_STATUS_OFF
-	
+
 	var/turf/pawn_turf = get_turf(mob_pawn)
 #ifdef TESTING
 	if(!pawn_turf)
@@ -311,7 +356,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/set_ai_status(new_ai_status)
 	if(ai_status == new_ai_status)
 		return FALSE //no change
-	
+
 	//remove old status, if we've got one
 	if(ai_status)
 		SSai_controllers.ai_controllers_by_status[ai_status] -= src
