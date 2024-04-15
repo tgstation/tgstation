@@ -2,16 +2,15 @@
 /// Queues image generation for search objects without icons
 SUBSYSTEM_DEF(looting)
 	name = "Loot Icon Generation"
-	init_order = INIT_ORDER_LOOT
+	flags = SS_NO_INIT
 	priority = FIRE_PRIORITY_PROCESS
+	runlevels = RUNLEVEL_LOBBY|RUNLEVELS_DEFAULT
 	wait = 0.5 SECONDS
 	/// Backlog of items. Gets put into processing
 	var/list/datum/lootpanel/backlog = list()
 	/// Actively processing items
 	var/list/datum/lootpanel/processing = list()
 
-/datum/controller/subsystem/looting/Initialize()
-	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/looting/stat_entry(msg)
 	msg = "P:[length(backlog)]"
