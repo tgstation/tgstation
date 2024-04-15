@@ -30,7 +30,7 @@
 	return COMPONENT_HOSTILE_NO_ATTACK
 
 /// Actually work on tearing down that poster
-/datum/element/poster_tearer/proc/tear_it_down(mob/living/user, /obj/structure/sign/poster/target)
+/datum/element/poster_tearer/proc/tear_it_down(mob/living/user, obj/structure/sign/poster/target)
 	if(!target.check_tearability(user)) // this proc will handle user feedback
 		return
 
