@@ -823,6 +823,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define ALLOW_SILICON_REACH (1<<6)
 /// If resting on the floor is allowed to perform action (pAIs can play music while resting)
 #define ALLOW_RESTING (1<<7)
+/// If this is accessible to creatures with ventcrawl capabilities
+#define ALLOW_VENTCRAWL (1<<8)
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1

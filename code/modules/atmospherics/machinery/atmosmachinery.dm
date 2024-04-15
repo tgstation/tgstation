@@ -608,12 +608,6 @@
 	our_client.move_delay = world.time + 0.05 SECONDS
 
 
-/obj/machinery/atmospherics/base_click_alt(mob/living/beno)
-	if(!(vent_movement & VENTCRAWL_ALLOWED) || !istype(beno))
-		return ..()
-	beno.handle_ventcrawl(src)
-	return
-
 /**
  * Getter of a list of pipenets
  *
