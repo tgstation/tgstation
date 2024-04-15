@@ -6,14 +6,14 @@
 /mob/proc/base_click_alt(atom/target)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(can_perform_action(target, target.interaction_flags_click))
-		var/early_sig_return = SEND_SIGNAL(target, COMSIG_CLICK_ALT, src) & CLICK_ACTION_ANY
-		if(early_sig_return)
-			return early_sig_return
+	if(!isturf(target) && !can_perform_action(target, target.interaction_flags_click))
+		return
 
-		var/click_alt_return = target.click_alt(src)
-		if(click_alt_return)
-			return click_alt_return
+	if(SEND_SIGNAL(target, COMSIG_CLICK_ALT, src) & CLICK_ACTION_ANY)
+		return
+
+	if(target.click_alt(src) & CLICK_ACTION_ANY)
+		return
 
 	var/turf/tile = get_turf(target)
 	if(!tile.Adjacent(src))
@@ -27,7 +27,6 @@
 		return
 
 	panel.open(tile)
-	return
 
 
 /**

@@ -1333,9 +1333,9 @@
 				to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 
-	if((action_bitflags & ALLOW_VENTCRAWL) && (HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS)))
-		var/obj/machinery/atmospherics/vent = target
-		return (vent.vent_movement & VENTCRAWL_ENTRANCE_ALLOWED)
+	if((action_bitflags & NEED_VENTCRAWL) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS))
+		to_chat(src, span_warning("You wouldn't fit!"))
+		return FALSE
 
 	if((action_bitflags & NEED_DEXTERITY) && !ISADVANCEDTOOLUSER(src))
 		to_chat(src, span_warning("You don't have the dexterity to do this!"))
