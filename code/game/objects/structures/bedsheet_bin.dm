@@ -20,6 +20,7 @@ LINEN BINS
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	dying_key = DYE_REGISTRY_BEDSHEET
+	interaction_flags_click = NEED_DEXTERITY
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 	/// Custom nouns to act as the subject of dreams
@@ -134,9 +135,6 @@ LINEN BINS
 		return ..()
 
 /obj/item/bedsheet/click_alt(mob/living/user)
-	// double check the canUseTopic args to make sure it's correct
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return NONE
 	dir = REVERSE_DIR(dir)
 	return CLICK_ACTION_SUCCESS
 

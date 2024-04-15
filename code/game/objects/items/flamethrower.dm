@@ -20,6 +20,7 @@
 	light_range = 2
 	light_power = 2
 	light_on = FALSE
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS
 	var/status = FALSE
 	var/lit = FALSE //on or off
 	var/operating = FALSE//cooldown
@@ -159,7 +160,7 @@
 	toggle_igniter(user)
 
 /obj/item/flamethrower/click_alt(mob/user)
-	if(!ptank || !isliving(user) || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+	if(isnull(ptank))
 		return NONE
 
 	user.put_in_hands(ptank)

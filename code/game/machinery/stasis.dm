@@ -12,6 +12,7 @@
 	circuit = /obj/item/circuitboard/machine/stasis
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
+	interaction_flags_click = ALLOW_SILICON_REACH
 	var/stasis_enabled = TRUE
 	var/last_stasis_sound = FALSE
 	var/stasis_can_toggle = 0
@@ -40,7 +41,7 @@
 		last_stasis_sound = _running
 
 /obj/machinery/stasis/click_alt(mob/user)
-	if(world.time < stasis_can_toggle || !user.can_perform_action(src, ALLOW_SILICON_REACH))
+	if(world.time < stasis_can_toggle)
 		return CLICK_ACTION_BLOCKING
 	stasis_enabled = !stasis_enabled
 	stasis_can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
