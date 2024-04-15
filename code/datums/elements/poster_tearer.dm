@@ -2,14 +2,17 @@
 /datum/element/poster_tearer
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
+	/// The amount of time it takes to tear down a poster.
+	var/tear_time
 	/// Interaction key to use whilst tearing down a poster.
 	var/interaction_key
 
-/datum/element/poster_tearer/Attach(datum/target, interaction_key = null)
+/datum/element/poster_tearer/Attach(datum/target, tear_time = 2 SECONDS, interaction_key = null)
 	. = ..()
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 	src.interaction_key = interaction_key
+	src.tear_time = tear_time
 	RegisterSignals(target, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_UNARMED_ATTACK), PROC_REF(on_attacked_poster))
 
 /datum/element/poster_tearer/Detach(datum/source)
@@ -35,6 +38,6 @@
 		return
 
 	target.balloon_alert(user, "tearing down the poster...")
-	if(!do_after(user, 2 SECONDS, target, interaction_key = interaction_key)) // just in case the user actually enjoys art
+	if(!do_after(user, tear_time, target, interaction_key = interaction_key)) // just in case the user actually enjoys art
 		return
 	target.tear_poster(user)
