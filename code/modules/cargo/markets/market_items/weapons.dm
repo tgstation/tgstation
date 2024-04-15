@@ -84,16 +84,6 @@
 	stock_max = 1
 	availability_prob = 75
 
-/datum/market_item/weapon/ablative_bat
-	name = "Ablative Baseball Bat"
-	desc = "A baseball bat made completely out of metal, its seller informs you this once belonged to a famous sportsman and won't be sold for cheap..."
-	item = /obj/item/melee/baseball_bat/ablative
-
-	price_min = CARGO_CRATE_VALUE * 4.25
-	price_max = CARGO_CRATE_VALUE * 8.75
-	stock_max = 1
-	availability_prob = 55
-
 /datum/market_item/weapon/dimensional_bomb
 	name = "Multi-Dimensional Bomb Core"
 	desc = "A special bomb core, one of a kind, for all your 'terraforming gone wrong' purposes."
