@@ -46,6 +46,7 @@ type Knowledge = {
   color: CssColor;
   icon: string;
   finished: boolean;
+  ascension: boolean;
 };
 
 type KnowledgeInfo = {
@@ -253,8 +254,8 @@ const KnowledgeTree = (props) => {
                           ${node.desc}`
                         }
                         onClick={node.finished ? (() => null) : () => act('research', { path: node.path })}
-                        width="64px"
-                        height="64px"
+                        width={node.ascension?"128px":"64px"}
+                        height={node.ascension?"128px":"64px"}
                         m="8px"
                       >
                         <Image
