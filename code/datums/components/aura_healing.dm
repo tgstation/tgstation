@@ -42,7 +42,7 @@
 	var/healing_color = COLOR_GREEN
 
 	/// A list of being healed to active alerts
-	var/list/datum/weakref/current_alerts = list()
+	var/list/mob/living/current_alerts = list()
 
 	/// Cooldown between showing the heal effect
 	COOLDOWN_DECLARE(last_heal_effect_time)
@@ -83,9 +83,8 @@
 	STOP_PROCESSING(SSaura, src)
 	var/alert_category = "aura_healing_[REF(src)]"
 
-	for(var/datum/weakref/alert_holder in current_alerts)
-		var/mob/alert_holder_real = alert_holder.resolve()
-		alert_holder_real?.clear_alert(alert_category)
+	for(var/mob/living/alert_holder as anything in current_alerts)
+		alert_holder.clear_alert(alert_category)
 	current_alerts.Cut()
 
 	return ..()
@@ -95,27 +94,25 @@
 	if (should_show_effect)
 		COOLDOWN_START(src, last_heal_effect_time, HEAL_EFFECT_COOLDOWN)
 
-	var/list/remove_alerts_from = current_alerts.Copy()
 	var/list/to_heal = list()
 	var/alert_category = "aura_healing_[REF(src)]"
 
 	if(requires_visibility)
 		for(var/mob/living/candidate in view(range, parent))
-			to_heal += candidate
+			if (!isnull(limit_to_trait) && !HAS_TRAIT(candidate, limit_to_trait))
+				continue
+			to_heal[candidate] = TRUE
 	else
 		for(var/mob/living/candidate in range(range, parent))
-			to_heal += candidate
+			if (!isnull(limit_to_trait) && !HAS_TRAIT(candidate, limit_to_trait))
+				continue
+			to_heal[candidate] = TRUE
 
 	for (var/mob/living/candidate as anything in to_heal)
-		if (!isnull(limit_to_trait) && !HAS_TRAIT(candidate, limit_to_trait))
-			continue
-
-		var/candi_ref = WEAKREF(candidate)
-		remove_alerts_from -= candi_ref
-		if (!current_alerts[candi_ref])
+		if (!current_alerts[candidate])
 			var/atom/movable/screen/alert/aura_healing/alert = candidate.throw_alert(alert_category, /atom/movable/screen/alert/aura_healing, new_master = parent)
 			alert.desc = "You are being healed by [parent]."
-			current_alerts[candi_ref] = TRUE
+			current_alerts[candidate] = TRUE
 
 		if (should_show_effect && candidate.health < candidate.maxHealth)
 			new /obj/effect/temp_visual/heal(get_turf(candidate), healing_color)
@@ -145,10 +142,9 @@
 
 		candidate.updatehealth()
 
-	for (var/datum/weakref/remove_alert_from in remove_alerts_from)
-		var/mob/living/remove_alert_from_real = remove_alert_from.resolve()
-		remove_alert_from_real?.clear_alert(alert_category)
-	current_alerts -= remove_alerts_from
+	for (var/mob/living/remove_alert_from as anything in current_alerts - to_heal)
+		remove_alert_from.clear_alert(alert_category)
+		current_alerts -= remove_alert_from
 
 /atom/movable/screen/alert/aura_healing
 	name = "Aura Healing"
