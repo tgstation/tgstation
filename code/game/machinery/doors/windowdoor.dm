@@ -65,6 +65,7 @@
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/machinery/door/window/Destroy()
+	set_density(FALSE)
 	electronics = null
 	air_update_turf(TRUE, FALSE)
 	return ..()
