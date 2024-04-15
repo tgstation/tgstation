@@ -45,7 +45,7 @@
 
 /// appearance type needs a manual var referencing because it doesn't have "vars" variable internally.
 /// There's no way doing this in a fancier way.
-/proc/debug_variable_appearance(var_name, atom/movable/appearance) // movable can handle various variables than /image, and /appearance has more variables than /image.
+/proc/debug_variable_appearance(var_name, appearance)
 	var/value
 	try
 		switch(var_name) // Welcome to this curse
@@ -54,118 +54,117 @@
 
 			// appearance vars in DM document
 			if("alpha")
-				value = appearance.alpha
+				value = appearance:alpha
 			if("appearance_flags")
-				value = appearance.appearance_flags
+				value = appearance:appearance_flags
 			if("blend_mode")
-				value = appearance.blend_mode
+				value = appearance:blend_mode
 			if("color")
-				value = appearance.color
+				value = appearance:color
 			if("desc")
-				value = appearance.desc
+				value = appearance:desc
 			if("gender")
-				value = appearance.gender
+				value = appearance:gender
 			if("icon")
-				value = appearance.icon
+				value = appearance:icon
 			if("icon_state")
-				value = appearance.icon_state
+				value = appearance:icon_state
 			if("invisibility")
-				value = appearance.invisibility
+				value = appearance:invisibility
 			if("infra_luminosity")
-				value = appearance.infra_luminosity
+				value = appearance:infra_luminosity
 			if("filters")
-				value = appearance.filters
+				value = appearance:filters
 			if("layer")
-				value = appearance.layer
+				value = appearance:layer
 			if("luminosity")
-				value = appearance.luminosity
+				value = appearance:luminosity
 			if("maptext")
-				value = appearance.maptext
+				value = appearance:maptext
 			if("maptext_width")
-				value = appearance.maptext_width
+				value = appearance:maptext_width
 			if("maptext_height")
-				value = appearance.maptext_height
+				value = appearance:maptext_height
 			if("maptext_x")
-				value = appearance.maptext_x
+				value = appearance:maptext_x
 			if("maptext_y")
-				value = appearance.maptext_y
+				value = appearance:maptext_y
 			if("mouse_over_pointer")
-				value = appearance.mouse_over_pointer
+				value = appearance:mouse_over_pointer
 			if("mouse_drag_pointer")
-				value = appearance.mouse_drag_pointer
+				value = appearance:mouse_drag_pointer
 			if("mouse_drop_pointer")
-				value = appearance.mouse_drop_pointer
+				value = appearance:mouse_drop_pointer
 			if("mouse_drop_zone")
-				value = appearance.mouse_drop_zone
+				value = appearance:mouse_drop_zone
 			if("mouse_opacity")
-				value = appearance.mouse_opacity
+				value = appearance:mouse_opacity
 			if("name")
-				value = appearance.name
+				value = appearance:name
 			if("opacity")
-				value = appearance.opacity
+				value = appearance:opacity
 			if("overlays")
-				value = appearance.overlays
+				value = appearance:overlays
 			if("override")
-				var/image/image_appearance = appearance
-				value = image_appearance.override
+				value = appearance:override
 			if("pixel_x")
-				value = appearance.pixel_x
+				value = appearance:pixel_x
 			if("pixel_y")
-				value = appearance.pixel_y
+				value = appearance:pixel_y
 			if("pixel_w")
-				value = appearance.pixel_w
+				value = appearance:pixel_w
 			if("pixel_z")
-				value = appearance.pixel_z
+				value = appearance:pixel_z
 			if("plane")
-				value = appearance.plane
+				value = appearance:plane
 			if("render_source")
-				value = appearance.render_source
+				value = appearance:render_source
 			if("render_target")
-				value = appearance.render_target
+				value = appearance:render_target
 			if("suffix")
-				value = appearance.suffix
+				value = appearance:suffix
 			if("text")
-				value = appearance.text
+				value = appearance:text
 			if("transform")
-				value = appearance.transform
+				value = appearance:transform
 			if("underlays")
-				value = appearance.underlays
+				value = appearance:underlays
 
 			if("parent_type")
-				value = appearance.parent_type
+				value = appearance:parent_type
 			if("type")
-				value = "/appearance (as [appearance.type])" // don't fool people
+				value = "/appearance (as [appearance:type])" // don't fool people
 
 			// These are not documented ones but trackable values. Maybe we'd want these.
 			if("animate_movement")
-				value = appearance.animate_movement
+				value = appearance:animate_movement
 			if("dir")
-				value = appearance.dir
+				value = appearance:dir
 			if("glide_size")
-				value = appearance.glide_size
+				value = appearance:glide_size
 			if("pixel_step_size")
-				value = "" //atom_appearance.pixel_step_size
+				value = "" //atom_appearance:pixel_step_size
 				// DM compiler complains this
 
 			// I am not sure if these will be ever detected, but I made a connection just in case.
 			if("contents")
-				value = appearance.contents
+				value = appearance:contents
 			if("vis_contents")
-				value = appearance.vis_contents
+				value = appearance:vis_contents
 			if("vis_flags") // DM document says /appearance has this, but it throws error
-				value = appearance.vis_flags
+				value = appearance:vis_flags
 			if("loc")
-				value = appearance.loc
+				value = appearance:loc
 
 			// we wouldn't need these, but let's these trackable anyway...
 			if("density")
-				value = appearance.density
+				value = appearance:density
 			if("screen_loc")
-				value = appearance.screen_loc
+				value = appearance:screen_loc
 			if("verbs")
-				value = appearance.verbs
+				value = appearance:verbs
 			if("tag")
-				value = appearance.tag
+				value = appearance:tag
 
 			else
 				return "<li style='backgroundColor:white'>(READ ONLY) [var_name] <font color='blue'>(Undefined var name in switch)</font></li>"
