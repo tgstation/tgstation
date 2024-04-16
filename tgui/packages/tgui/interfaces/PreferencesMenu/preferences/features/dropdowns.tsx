@@ -21,11 +21,7 @@ type IconnedDropdownInputProps = FeatureValueProps<
   FeatureChoicedServerData
 >;
 
-export type FeatureWithIcons<T> = Feature<
-  { value: T },
-  T,
-  FeatureChoicedServerData
->;
+export type FeatureWithIcons<T> = Feature<string, T, FeatureChoicedServerData>;
 
 export function FeatureDropdownInput(props: DropdownInputProps) {
   const { serverData, disabled, buttons, handleSetValue, value } = props;
