@@ -103,6 +103,8 @@
 
 	if(HAS_TRAIT_NOT_FROM(source, TRAIT_DEAF, EAR_DAMAGE))
 		return
+	if(HAS_TRAIT(source, TRAIT_SIGN_LANG))
+		return
 
 	var/message = speech_args[SPEECH_MESSAGE]
 	// Replace only end-of-sentence punctuation with exclamation marks (hence the empty space)
