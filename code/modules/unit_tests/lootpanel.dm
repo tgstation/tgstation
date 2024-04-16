@@ -31,4 +31,5 @@
 	panel.populate_contents()
 	TEST_ASSERT_EQUAL(length(panel.contents), 2, "Panel shouldnt dupe searchables if reopened")
 
+	new_box = null // this is effectively a do-nothing just so we can get the compiler to shut up, `allocate()` will ensure it gets qdel'd
 	mock_client.mob = null
