@@ -515,3 +515,9 @@
   jlsnow301:
   - rscadd: Added a loot window for alt-clicking tiles.
   - rscdel: Removed the item browser from the stat panel.
+2024-04-16:
+  Iajret:
+  - bugfix: wiring newly built SMESes should place new teminal under the player and
+      not under the SMES itself.
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: strip menu sensors change respects locked sensors
