@@ -333,40 +333,10 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	var/datum/martial_art/the_sleeping_carp/style
 
 /obj/item/clothing/gloves/the_sleeping_carp/Initialize(mapload)
 	. = ..()
-	style = new()
-	style.allow_temp_override = FALSE
-
-/obj/item/clothing/gloves/the_sleeping_carp/Destroy()
-	QDEL_NULL(style)
-	return ..()
-
-/obj/item/clothing/gloves/the_sleeping_carp/equipped(mob/user, slot)
-	. = ..()
-	if(slot & ITEM_SLOT_GLOVES)
-		RegisterSignals(user, list(COMSIG_MOB_MIND_TRANSFERRED_INTO, COMSIG_MOB_MIND_INITIALIZED), PROC_REF(teach_carp))
-		RegisterSignal(user, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, PROC_REF(forget_carp))
-		teach_carp(user)
-
-/obj/item/clothing/gloves/the_sleeping_carp/dropped(mob/user)
-	. = ..()
-	UnregisterSignal(user, list(COMSIG_MOB_MIND_TRANSFERRED_INTO, COMSIG_MOB_MIND_INITIALIZED, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF))
-	forget_carp(user)
-
-/obj/item/clothing/gloves/the_sleeping_carp/proc/teach_carp(mob/source)
-	SIGNAL_HANDLER
-	if(isnull(style))
-		return
-	style.teach(source, TRUE)
-
-/obj/item/clothing/gloves/the_sleeping_carp/proc/forget_carp(mob/source)
-	SIGNAL_HANDLER
-	if(isnull(style))
-		return
-	style.fully_remove(source)
+	AddComponent(/datum/component/martial_art_giver, /datum/martial_art/the_sleeping_carp)
 
 #undef STRONG_PUNCH_COMBO
 #undef LAUNCH_KICK_COMBO
