@@ -32,12 +32,30 @@
 		if(!sprite)
 			no_icon = TRUE
 
-	else if(isimage(thing) || isappearance(thing))
-		var/image/image_object = thing
+	else if(isimage(thing) || isappearance)
+		#define ICON_STATE_CHECKED 1
+		#define ICON_STATE_NULL 2
 		// icon_state=null shows first image even if dmi has no icon_state for null name.
-		// Unless dmi has a single icon_state as null name, let's skip null-name because it's confusing
-		if(image_object.icon_state || length(icon_states(image_object.icon)) == 1)
-			sprite = icon(image_object.icon, image_object.icon_state)
+		// This list remembers which dmi has null icon_state, to determine if icon_state=null should display a sprite
+		// (NOTE: icon_state="" is correct, but saying null is obvious)
+		var/static/list/dmi_nullstate_checklist = list()
+		var/image/image_object = thing
+		var/icon_filename_text = "[image_object.icon]" // "icon(null)" type can exist. textifying filters it.
+		if(icon_filename_text)
+			if(image_object.icon_state)
+				sprite = icon(image_object.icon, image_object.icon_state)
+				
+			else // it means: icon_state=""
+				if(!dmi_nullstate_checklist[icon_filename_text])
+					dmi_nullstate_checklist[icon_filename_text] = ICON_STATE_CHECKED
+					if("" in icon_states(image_object.icon))
+						// this dmi has nullstate. We'll allow "icon_state=null" to show image.
+						dmi_nullstate_checklist[icon_filename_text] = ICON_STATE_NULL
+
+				if(dmi_nullstate_checklist[icon_filename_text] == ICON_STATE_NULL)
+					sprite = icon(image_object.icon, image_object.icon_state)
+		#undef ICON_STATE_CHECKED
+		#undef ICON_STATE_NULL
 
 	var/sprite_text
 	if(sprite)
