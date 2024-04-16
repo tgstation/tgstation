@@ -446,7 +446,7 @@
 			if(path == outfit["path"])
 				return path
 
-	stack_trace("[usr.ckey] selected attempted to select an unavailable outfit from a netpod")
+	stack_trace("[usr]:[usr.ckey] attempted to select an unavailable outfit from a netpod")
 	return
 
 /// Severs the connection with the current avatar
