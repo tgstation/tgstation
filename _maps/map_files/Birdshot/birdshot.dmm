@@ -10017,6 +10017,10 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/glasses/meson,
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = -8;
+	pixel_y = 14
+	},
 /turf/open/floor/iron/grimy,
 /area/station/engineering/main)
 "erK" = (
@@ -11518,6 +11522,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/item/airlock_painter,
 /turf/open/floor/iron/grimy,
 /area/station/engineering/main)
 "eWj" = (
@@ -12001,12 +12006,12 @@
 /area/station/service/cafeteria)
 "fhX" = (
 /obj/structure/table/greyscale,
-/obj/item/folder/yellow{
-	pixel_x = 2;
-	pixel_y = 4
+/obj/item/lightreplacer{
+	pixel_y = 7
 	},
-/obj/item/pen{
-	pixel_x = -4
+/obj/item/lightreplacer{
+	pixel_y = 2;
+	pixel_x = -2
 	},
 /turf/open/floor/iron/grimy,
 /area/station/engineering/main)
@@ -36960,28 +36965,9 @@
 /turf/open/floor/iron/textured_half,
 /area/station/security)
 "nki" = (
-/obj/structure/rack,
-/obj/item/airlock_painter,
-/obj/item/lightreplacer{
-	pixel_y = 7
-	},
-/obj/item/clothing/head/utility/hardhat/welding{
-	pixel_x = -4;
-	pixel_y = -3
-	},
-/obj/item/clothing/head/utility/hardhat/welding{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/utility/hardhat/welding{
-	pixel_x = -4;
-	pixel_y = 3
-	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/cold/dim/directional/west,
-/obj/item/grenade/chem_grenade/smart_metal_foam{
-	pixel_x = 9;
-	pixel_y = 5
-	},
+/obj/machinery/vending/wardrobe/engi_wardrobe,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "nkl" = (
@@ -45700,10 +45686,6 @@
 	},
 /turf/open/floor/iron/dark/side,
 /area/station/science/xenobiology)
-"pRb" = (
-/obj/item/computer_disk/virus/mime,
-/turf/closed/mineral/random/stationside,
-/area/space/nearstation)
 "pRe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table/wood,
@@ -70351,8 +70333,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "wHO" = (
-/obj/structure/dresser,
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/structure/closet/crate/wooden/toy,
 /turf/open/floor/wood/parquet,
 /area/station/service/greenroom)
 "wHP" = (
@@ -88018,7 +88000,7 @@ aJq
 aJq
 aJq
 aJq
-pRb
+aJq
 dDB
 dDB
 dDB
@@ -88275,7 +88257,7 @@ aJq
 aJq
 aJq
 aJq
-pRb
+aJq
 aJq
 aJq
 aJq
@@ -88532,7 +88514,7 @@ aJq
 aJq
 aJq
 aJq
-pRb
+aJq
 aJq
 aJq
 aJq

@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes:
-  - balance: "Cells will only consider 0.1% of their charge for calculating shock damage."

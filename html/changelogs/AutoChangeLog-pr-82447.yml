@@ -1,6 +1,0 @@
-author: "Higgin"
-delete-after: True
-changes:
-  - balance: "Spies can now get five additional types of objective: Protect Human, Protect Nonhuman, Detain, Jailbreak, and Escape (Exile)."
-  - balance: "Spy objectives now feature a much wider array of targets and treatments."
-  - refactor: "added no_failure var to objectives. Objectives with no_failure = TRUE do not print a success at roundend. Custom objectives use this now instead of a separate string."

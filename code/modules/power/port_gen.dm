@@ -98,7 +98,7 @@
 	var/obj/S = sheet_path
 	sheet_name = initial(S.name)
 
-/obj/machinery/power/port_gen/pacman/Destroy()
+/obj/machinery/power/port_gen/pacman/on_deconstruction(disassembled)
 	DropFuel()
 	return ..()
 
