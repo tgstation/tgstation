@@ -11,6 +11,11 @@
 	req_access = list(ACCESS_CLOCKCULT)
 	damage_deflection = 10
 
+/obj/machinery/door/airlock/bronze/clock/Initialize(mapload)
+	. = ..()
+	if(on_reebe(src))
+		damage_deflection = 0
+
 /obj/machinery/door/airlock/bronze/clock/canAIControl(mob/user)
 	return (IS_CLOCK(user) && !isAllPowerCut())
 

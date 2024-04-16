@@ -32,8 +32,9 @@
 			user.client.client_token_holder.adjust_antag_tokens(LOW_THREAT, 1)
 
 		if("Loadout Item")
-			var/static/list/viable_types = list()
-			if(!length(viable_types))
+			var/static/list/viable_types
+			if(!viable_types)
+				viable_types = list()
 				for(var/datum/loadout_item/type as anything in subtypesof(/datum/loadout_item))
 					var/datum/loadout_item/listed = new type()
 					if(!istype(listed))

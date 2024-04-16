@@ -1,11 +1,6 @@
 GLOBAL_DATUM(clock_ark, /obj/structure/destructible/clockwork/the_ark) //set to be equal to the ark on creation if none
 GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 
-#define ARK_STATE_BASE 0 //base state the ark is created in, any state besides this will be a hostile environment
-#define ARK_STATE_CHARGING 1 //state for the grace period after the cult has reached its member count max and have an active anchor crystal
-#define ARK_STATE_ACTIVE 2 //state for after the cult has been annouced as well as the first half of the assault
-#define ARK_STATE_SUMMONING 3 //state for the halfway point of ark activation
-#define ARK_STATE_FINAL 4 //the ark has either finished opening or been destroyed in this state
 #define ARK_READY_PERIOD 300 SECONDS //how long until the cult is annouced after they reach max members, 5 minutes
 #define ARK_GRACE_PERIOD 210 SECONDS //how long until the portals open after the cult is annouced, 3 minutes 30 seconds
 #define ARK_ASSAULT_PERIOD 600 //how long the crew has to destroy the ark after the assault begins, 10 minutes
@@ -239,11 +234,6 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 		explosion(pick(GLOB.abscond_markers), 50, 40, 30, 30, FALSE, TRUE)
 	SSticker.force_ending = TRUE
 
-#undef ARK_STATE_BASE
-#undef ARK_STATE_CHARGING
-#undef ARK_STATE_ACTIVE
-#undef ARK_STATE_SUMMONING
-#undef ARK_STATE_FINAL
 #undef ARK_READY_PERIOD
 #undef ARK_GRACE_PERIOD
 #undef ARK_ASSAULT_PERIOD
