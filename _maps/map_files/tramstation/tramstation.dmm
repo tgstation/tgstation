@@ -19077,6 +19077,16 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
+"eXC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/central)
 "eYi" = (
 /obj/machinery/camera/directional/east,
 /mob/living/basic/chicken/brown,
@@ -126540,8 +126550,8 @@ hFC
 bwz
 xks
 qxm
-icR
-icR
+eXC
+lLW
 iix
 tuN
 tuN
@@ -127825,7 +127835,7 @@ oys
 oys
 gDw
 gDw
-nop
+bay
 nop
 hPn
 eyE
@@ -128080,8 +128090,8 @@ kHX
 gDw
 gDw
 gDw
-nop
-nop
+bay
+uJu
 nop
 oys
 oys
