@@ -7,10 +7,13 @@ import {
   Divider,
   Dropdown,
   Icon,
+  LabeledList,
   Modal,
+  NoticeBox,
   Section,
   Stack,
   Table,
+  Tooltip,
 } from '../components';
 import { ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
@@ -23,40 +26,46 @@ type PlayerInfo = {
 };
 
 type Modifier = {
-  name: string;
   desc: string;
   modpath: string;
-  selected: BooleanLike;
-  selectable: BooleanLike;
-  player_selected: BooleanLike;
+  name: string;
   player_selectable: BooleanLike;
+  player_selected: BooleanLike;
+  selectable: BooleanLike;
+  selected: BooleanLike;
+};
+
+type Map = {
+  desc: string;
+  max_players: number;
+  min_players: number;
+  name: string;
+  time: number;
 };
 
 type Data = {
-  self: string;
-  host: BooleanLike;
+  active_mods: string;
   admin: BooleanLike;
-  playing: BooleanLike;
+  host: BooleanLike;
+  loadoutdesc: string;
   loadouts: string[];
+  map: Map;
   maps: string[];
-  map: {
-    name: string;
-    desc: string;
-    time: number;
-    min_players: number;
-    max_players: number;
-  };
   mod_menu_open: BooleanLike;
   modifiers: Modifier[];
-  active_mods: string;
-  loadoutdesc: string;
-  players: Player[];
   observers: Player[];
+  players: Player[];
+  playing: BooleanLike;
+  self: string;
 };
 
 export function DeathmatchLobby(props) {
   const { act, data } = useBackend<Data>();
-  const { admin, observers = [], self } = data;
+  const { admin, observers = [], self, players } = data;
+
+  const allReady = Object.keys(players).every(
+    (player) => players[player].ready,
+  );
 
   return (
     <Window title="Deathmatch Lobby" width={560} height={480}>
@@ -65,34 +74,44 @@ export function DeathmatchLobby(props) {
         <Stack fill vertical>
           <Stack.Item grow>
             <Stack fill>
-              <Stack.Item grow={3}>
+              <Stack.Item grow={4}>
                 <PlayerColumn />
               </Stack.Item>
-              <Stack.Item grow={2}>
+              <Stack.Item grow={3}>
                 <HostControls />
               </Stack.Item>
             </Stack>
           </Stack.Item>
           <Stack.Item>
-            <Section align="center">
-              <Button color="good" onClick={() => act('start_game')}>
-                Start Game
-              </Button>
-              <Button color="bad" onClick={() => act('leave_game')}>
-                Leave Game
-              </Button>
-              <Button color="caution" onClick={() => act('observe')}>
-                {observers[self] ? 'Join' : 'Observe'}
-              </Button>
-              {!!admin && (
-                <Button
-                  icon="exclamation"
-                  color="caution"
-                  onClick={() => act('admin', { func: 'Force start' })}
-                >
-                  Force Start
-                </Button>
-              )}
+            <Section>
+              <Stack fill>
+                <Stack.Item grow>
+                  {!!admin && (
+                    <Button
+                      icon="exclamation"
+                      color="caution"
+                      onClick={() => act('admin', { func: 'Force start' })}
+                    >
+                      Force Start
+                    </Button>
+                  )}
+                </Stack.Item>
+                <Stack.Item>
+                  <Button color="caution" onClick={() => act('observe')}>
+                    {observers[self] ? 'Join' : 'Observe'}
+                  </Button>
+                  <Button color="bad" onClick={() => act('leave_game')}>
+                    Leave Game
+                  </Button>
+                  <Button
+                    color="good"
+                    disabled={!allReady}
+                    onClick={() => act('start_game')}
+                  >
+                    Start Game
+                  </Button>
+                </Stack.Item>
+              </Stack>
             </Section>
           </Stack.Item>
         </Stack>
@@ -104,22 +123,35 @@ export function DeathmatchLobby(props) {
 function PlayerColumn(props) {
   const { act, data } = useBackend<Data>();
   const {
-    players = [],
-    host,
     admin,
-    self,
-    observers = [],
+    host,
     loadouts = [],
+    observers = [],
+    players = [],
+    self,
   } = data;
 
+  const allReady = Object.keys(players).every(
+    (player) => players[player].ready,
+  );
+
   return (
-    <Section fill scrollable>
+    <Section fill scrollable={Object.keys(players).length > 30}>
       <Table>
-        <Table.Row>
+        <Table.Row header>
           <Table.Cell collapsing />
           <Table.Cell>Name</Table.Cell>
           <Table.Cell>Loadout</Table.Cell>
-          <Table.Cell collapsing>Ready</Table.Cell>
+          <Table.Cell collapsing align="center">
+            <Tooltip
+              content={!allReady ? 'Players are preparing' : 'Press start!'}
+            >
+              <Icon
+                name={!allReady ? 'check' : 'check-circle'}
+                color={allReady && 'green'}
+              />
+            </Tooltip>
+          </Table.Cell>
         </Table.Row>
         {Object.keys(players).map((player) => {
           const fullAccess = (!!host && !!players[player].host) || !admin;
@@ -150,7 +182,7 @@ function PlayerColumn(props) {
                 <Dropdown
                   width={10}
                   selected={players[player].loadout}
-                  disabled={!(host || player === self)}
+                  disabled={!host || player !== self}
                   options={loadouts}
                   onSelected={(value) =>
                     act('change_loadout', {
@@ -160,7 +192,7 @@ function PlayerColumn(props) {
                   }
                 />
               </Table.Cell>
-              <Table.Cell collapsing verticalAlign="top" pt="2px">
+              <Table.Cell align="right" verticalAlign="top" pt="2px">
                 <ButtonCheckbox
                   disabled={player !== self}
                   checked={players[player].ready}
@@ -171,7 +203,7 @@ function PlayerColumn(props) {
           );
         })}
         {Object.keys(observers).map((observer) => {
-          const fullAccess = (!!host && !!players[observer].host) || !admin;
+          const fullAccess = (!!host && !!players[observer].host) || admin;
 
           return (
             <Table.Row key={observer}>
@@ -220,35 +252,44 @@ function HostControls(props) {
   } = data;
 
   return (
-    <Section fill>
-      <Box textAlign="center">
-        {(!!host && (
-          <Dropdown
-            selected={map.name}
-            options={maps}
-            onSelected={(value) =>
-              act('host', {
-                func: 'change_map',
-                map: value,
-              })
-            }
-          />
-        )) || <b>{map.name}</b>}
-      </Box>
+    <Section fill scrollable>
+      {!host ? (
+        <NoticeBox danger>{map.name}</NoticeBox>
+      ) : (
+        <Dropdown
+          color="average"
+          width="100%"
+          selected={map.name}
+          options={maps}
+          onSelected={(value) =>
+            act('host', {
+              func: 'change_map',
+              map: value,
+            })
+          }
+        />
+      )}
       <Divider />
       {map.desc}
       <Divider />
-      <Box textAlign="center">
-        Maximum Play Time: <b>{`${map.time / 600}min`}</b>
-        <br />
-        Min players: <b>{map.min_players}</b>
-        <br />
-        Max players: <b>{map.max_players}</b>
-        <br />
-        Current players: <b>{Object.keys(players).length}</b>
-      </Box>
+      <LabeledList>
+        <LabeledList.Item label="Max Play Time">
+          {`${map.time / 600}min`}
+        </LabeledList.Item>
+        <LabeledList.Item label="Min Players">
+          {map.min_players}
+        </LabeledList.Item>
+        <LabeledList.Item label="Max Players">
+          {map.max_players}
+        </LabeledList.Item>
+        <LabeledList.Item label="Current Players">
+          {Object.keys(players).length}
+        </LabeledList.Item>
+      </LabeledList>
       <Divider />
-      <Box textAlign="center">{active_mods}</Box>
+      <Box textAlign="center" color="average">
+        {active_mods}
+      </Box>
       {(!!admin || !!host) && (
         <>
           <Divider />
@@ -258,8 +299,10 @@ function HostControls(props) {
         </>
       )}
       <Divider />
-      <Box textAlign="center">Loadout Description</Box>
-      <Divider />
+      <NoticeBox info align="center">
+        Loadout Description
+      </NoticeBox>
+
       <Box textAlign="center">{loadoutdesc}</Box>
       {!!playing && (
         <>
@@ -279,6 +322,7 @@ const ModSelector = (props) => {
   if (!mod_menu_open || !(host || admin)) {
     return null;
   }
+
   return (
     <Modal>
       <Button fluid color="bad" onClick={() => act('exit_mod_menu')}>

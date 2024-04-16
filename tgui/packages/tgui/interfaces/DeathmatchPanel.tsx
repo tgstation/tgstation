@@ -1,7 +1,16 @@
 import { BooleanLike } from 'common/react';
 
 import { useBackend } from '../backend';
-import { Button, Dropdown, NoticeBox, Section, Table } from '../components';
+import {
+  Button,
+  Dropdown,
+  Icon,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+  Tooltip,
+} from '../components';
 import { Window } from '../layouts';
 
 type Lobby = {
@@ -26,20 +35,28 @@ export function DeathmatchPanel(props) {
   return (
     <Window title="Deathmatch Lobbies" width={360} height={400}>
       <Window.Content>
-        <NoticeBox danger>
-          If you play, you can still possibly be returned to your body (No
-          Guarantees)!
-        </NoticeBox>
-        <LobbyPane />
-        <Button
-          disabled={!!hosting}
-          fluid
-          textAlign="center"
-          color="good"
-          onClick={() => act('host')}
-        >
-          Create Lobby
-        </Button>
+        <Stack fill vertical>
+          <Stack.Item>
+            <NoticeBox danger>
+              If you play, you can still possibly be returned to your body (No
+              Guarantees)!
+            </NoticeBox>
+          </Stack.Item>
+          <Stack.Item grow>
+            <LobbyPane />
+          </Stack.Item>
+          <Stack.Item>
+            <Button
+              disabled={!!hosting}
+              fluid
+              textAlign="center"
+              color="good"
+              onClick={() => act('host')}
+            >
+              Create Lobby
+            </Button>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
@@ -50,64 +67,80 @@ function LobbyPane(props) {
   const { admin, lobbies = [], playing, hosting } = data;
 
   return (
-    <Section height="80%">
+    <Section fill scrollable>
       <Table>
-        <Table.Row>
-          <Table.Cell bold>Host</Table.Cell>
-          <Table.Cell bold>Map</Table.Cell>
-          <Table.Cell bold>Players</Table.Cell>
+        <Table.Row header>
+          <Table.Cell>Host</Table.Cell>
+          <Table.Cell>Map</Table.Cell>
+          <Table.Cell>
+            <Tooltip content="Players">
+              <Icon name="users" />
+            </Tooltip>
+          </Table.Cell>
+          <Table.Cell align="center">
+            <Icon name="hammer" />
+          </Table.Cell>
         </Table.Row>
-        {lobbies.map((lobby) => (
-          <Table.Row key={lobby.name}>
-            <Table.Cell>
-              {(!admin && lobby.name) || (
-                <Dropdown
-                  width={10}
-                  selected={lobby.name}
-                  options={['Close', 'View']}
-                  onSelected={(value) =>
-                    act('admin', {
-                      id: lobby.name,
-                      func: value,
-                    })
-                  }
-                />
-              )}
-            </Table.Cell>
-            <Table.Cell>{lobby.map}</Table.Cell>
-            <Table.Cell>
-              {lobby.players}/{lobby.max_players}
-            </Table.Cell>
-            <Table.Cell>
-              {(!lobby.playing && (
-                <>
-                  <Button
-                    disabled={
-                      (!!hosting || !!playing) && playing !== lobby.name
+
+        {lobbies.length === 0 && (
+          <NoticeBox>No lobbies found. Start one!</NoticeBox>
+        )}
+        {lobbies.map((lobby) => {
+          const isActive = (!!hosting || !!playing) && playing !== lobby.name;
+
+          return (
+            <Table.Row className="candystripe" key={lobby.name}>
+              <Table.Cell>
+                {!admin ? (
+                  lobby.name
+                ) : (
+                  <Dropdown
+                    width={10}
+                    noChevron
+                    selected={lobby.name}
+                    options={['Close', 'View']}
+                    onSelected={(value) =>
+                      act('admin', {
+                        id: lobby.name,
+                        func: value,
+                      })
                     }
-                    color="good"
-                    onClick={() => act('join', { id: lobby.name })}
-                  >
-                    {playing === lobby.name ? 'View' : 'Join'}
-                  </Button>
-                  <Button
-                    color="caution"
-                    icon="eye"
-                    onClick={() => act('spectate', { id: lobby.name })}
                   />
-                </>
-              )) || (
-                <Button
-                  disabled={(!!hosting || !!playing) && playing !== lobby.name}
-                  color="good"
-                  onClick={() => act('spectate', { id: lobby.name })}
-                >
-                  Spectate
-                </Button>
-              )}
-            </Table.Cell>
-          </Table.Row>
-        ))}
+                )}
+              </Table.Cell>
+              <Table.Cell>{lobby.map}</Table.Cell>
+              <Table.Cell collapsing>
+                {lobby.players}/{lobby.max_players}
+              </Table.Cell>
+              <Table.Cell collapsing>
+                {!lobby.playing ? (
+                  <>
+                    <Button
+                      disabled={isActive}
+                      color="good"
+                      onClick={() => act('join', { id: lobby.name })}
+                    >
+                      {playing === lobby.name ? 'View' : 'Join'}
+                    </Button>
+                    <Button
+                      color="caution"
+                      icon="eye"
+                      onClick={() => act('spectate', { id: lobby.name })}
+                    />
+                  </>
+                ) : (
+                  <Button
+                    disabled={isActive}
+                    color="good"
+                    onClick={() => act('spectate', { id: lobby.name })}
+                  >
+                    Spectate
+                  </Button>
+                )}
+              </Table.Cell>
+            </Table.Row>
+          );
+        })}
       </Table>
     </Section>
   );
