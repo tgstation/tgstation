@@ -1,4 +1,0 @@
-author: "StrangeWeirdKitten"
-delete-after: True
-changes:
-  - balance: "The upload and communication boards directly have trackers installed, activated only when authenticated."

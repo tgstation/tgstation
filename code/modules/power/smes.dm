@@ -136,7 +136,7 @@
 		if(!can_place_terminal(user, item, silent = TRUE))
 			return
 		var/obj/item/stack/cable_coil/cable = item
-		var/turf/turf = get_turf(src)
+		var/turf/turf = get_turf(user)
 		var/obj/structure/cable/connected_cable = turf.get_cable_node(terminal_cable_layer) //get the connecting node cable, if there's one
 		if (prob(50) && electrocute_mob(user, connected_cable, connected_cable, 1, TRUE)) //animate the electrocution if uncautious and unlucky
 			do_sparks(5, TRUE, src)
@@ -168,12 +168,12 @@
 	if(set_dir & (set_dir - 1))//we don't want diagonal click
 		return FALSE
 
-	var/turf/smes_turf = get_turf(src)
+	var/turf/terminal_turf = get_turf(user)
 	if(!panel_open)
 		if(!silent && user)
 			balloon_alert(user, "open the maintenance panel!")
 		return FALSE
-	if(smes_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
+	if(terminal_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		if(!silent && user)
 			balloon_alert(user, "remove the floor plating!")
 		return FALSE

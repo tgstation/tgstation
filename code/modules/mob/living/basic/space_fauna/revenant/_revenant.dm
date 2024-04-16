@@ -204,7 +204,7 @@
 		ShiftClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK))
-		AltClickNoInteract(src, A)
+		A.AltClick(src)
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		ranged_secondary_attack(A, modifiers)
