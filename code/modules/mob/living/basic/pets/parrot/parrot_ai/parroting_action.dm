@@ -36,13 +36,6 @@
 			modified_speech = copytext_char(speech, 3)
 
 	else
-		// monke start - stfu poly
-		var/speak_prob = speaking_pawn.ears.use_command ? 25 : 50
-		for(var/channel in list(RADIO_KEY_COMMON, RADIO_TOKEN_COMMAND))
-			if(channel in available_channels)
-				speak_prob = max(FLOOR(speak_prob * 0.4, 5), 5)
-		use_radio = prob(speak_prob)
-		// monke end
 		if(HAS_CHANNEL_PREFIX)
 			modified_speech = "[use_radio ? pick(available_channels) : ""][copytext_char(speech, 3)]"
 		else
