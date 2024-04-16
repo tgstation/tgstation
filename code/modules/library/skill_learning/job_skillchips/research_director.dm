@@ -1,6 +1,6 @@
 #define SKILLCHIP_CATEGORY_GENERAL "general"
 
-/obj/item/skillchip/research_director
+/obj/item/skillchip/job/research_director
 	name = "R.D.S.P.L.X. skillchip"
 	desc = "Knowledge of how to solve the ancient conumdrum; what happens when an unstoppable force meets an immovable object."
 	auto_traits = list(TRAIT_ROD_SUPLEX)
