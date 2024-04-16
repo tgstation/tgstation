@@ -1,0 +1,5 @@
+author: "wraith-54321"
+delete-after: True
+changes:
+  - balance: "Clockwork airlocks lose their damage deflection when placed on reebe"
+  - balance: "Clockwork walls take half as long to deconstruct on reebe"
