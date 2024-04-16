@@ -26,6 +26,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		/datum/ai_planning_subtree/mine_walls/mook,
 		/datum/ai_planning_subtree/wander_away_from_village,
 	)
+	can_idle = FALSE // these guys are intended to operate even if nobody's around
 
 ///check for faction if not a ash walker, otherwise just attack
 /datum/targeting_strategy/basic/mook/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)

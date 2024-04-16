@@ -272,7 +272,7 @@
 	/// If the former occupants get polymorphed, mutated, chestburstered,
 	/// or otherwise replaced by another mob, that mob is no longer in .occupants
 	/// and gets deleted with the mech. However, they do remain in .contents
-	var/list/potential_occupants = contents ^ occupants
+	var/list/potential_occupants = contents | occupants
 	for(var/mob/buggy_ejectee in potential_occupants)
 		mob_exit(buggy_ejectee, silent = TRUE)
 

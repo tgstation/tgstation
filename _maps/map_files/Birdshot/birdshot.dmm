@@ -70351,8 +70351,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "wHO" = (
-/obj/structure/dresser,
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/structure/closet/crate/wooden/toy,
 /turf/open/floor/wood/parquet,
 /area/station/service/greenroom)
 "wHP" = (

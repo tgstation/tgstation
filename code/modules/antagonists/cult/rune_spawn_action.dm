@@ -42,7 +42,7 @@
 		var/chosen_keyword
 		if(initial(rune_type.req_keyword))
 			chosen_keyword = tgui_input_text(owner, "Enter a keyword for the new rune.", "Words of Power", max_length = MAX_NAME_LEN)
-			if(!chosen_keyword)
+			if(!chosen_keyword || !turf_check(T))
 				return
 	//the outer ring is always the same across all runes
 		var/obj/effect/temp_visual/cult/rune_spawn/R1 = new(T, scribe_time, rune_color)
