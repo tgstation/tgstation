@@ -234,12 +234,6 @@
 	back_spear_overlay.pixel_x = -32
 	. += back_spear_overlay
 
-
-/obj/item/gun/magic/hardlight_spear/can_trigger_gun(mob/living/user, akimbo_usage) // This isn't really a gun, so it shouldn't be checking for TRAIT_NOGUNS, a firing pin (pinless), or a trigger guard (guardless)
-	if(akimbo_usage)
-		return FALSE //this would be kinda weird while shooting someone down.
-	return TRUE
-
 /obj/item/gun/magic/hardlight_spear/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	. = ..()
 	if(!.)
@@ -247,10 +241,15 @@
 	if(spears_left)
 		var/obj/item/gun/magic/hardlight_spear/spear = new type
 		spear.spears_left = spears_left - 1
+		spear.apply_cooldown()
 		qdel(src)
 		user.put_in_hands(spear)
 	else
 		user.dropItemToGround(src, TRUE)
+
+/obj/item/gun/magic/hardlight_spear/proc/apply_cooldown()
+	semicd = TRUE
+	addtimer(CALLBACK(src, PROC_REF(reset_semicd)), 1.5 SECONDS)
 
 /obj/item/ammo_casing/magic/hardlight_spear
 	name = "please god report this"
@@ -259,34 +258,23 @@
 	projectile_type = /obj/projectile/bullet/hardlight_spear
 	heavy_metal = FALSE
 
-/obj/item/ammo_casing/magic/hardlight_spear/ready_proj(atom/target, mob/living/user, quiet, zone_override, atom/fired_from)
-	if(!loaded_projectile)
-		return
-
-	if(isliving(target))
-		loaded_projectile.homing = TRUE
-		loaded_projectile.homing_turn_speed = 40
-		loaded_projectile.set_homing_target(target)
-
-	return ..()
-
 /obj/projectile/bullet/hardlight_spear
 	name = "hardlight spear"
 	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
 	icon_state = "lightspear"
-	damage = 45
-	armour_penetration = 10
-	wound_bonus = 5
-	bare_wound_bonus = 60
-	wound_falloff_tile = 0
-	embed_falloff_tile = 0
-	speed = 0.4 //lower = faster
+	damage = 40
+	armour_penetration = 5
+	wound_bonus = -5
+	bare_wound_bonus = 50
+	wound_falloff_tile = -1
+	embed_falloff_tile = -1
+	speed = 0.7 //lower = faster
 	shrapnel_type = /obj/item/shrapnel/bullet/spear
 	light_outer_range = 1
 	light_power = 1
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	hitsound_wall = 'sound/weapons/parry.ogg'
-	embedding = list(embed_chance=100, fall_chance=2, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=5, jostle_pain_mult=6, rip_time=10)
+	embedding = list(embed_chance=70, fall_chance=6, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=2, jostle_pain_mult=3, rip_time=10)
 
 /obj/item/shrapnel/bullet/spear
 	name = "hardlight spear"
