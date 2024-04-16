@@ -58,6 +58,14 @@
 	cost = 1
 	surplus = 20
 
+/datum/uplink_item/device_tools/airshoes
+	name = "Air Shoes"
+	desc = "Popular in underground racing rings, these shoes come with built-in jets, allowing the users to reach high speeds in short bursts. \
+			Users should keep in mind that despite being superior to Jump Shoes, these will not protect you from high-speed impacts."
+	item = /obj/item/clothing/shoes/bhop/airshoes
+	cost = 4
+	surplus = 35
+
 /datum/uplink_item/device_tools/briefcase_launchpad
 	name = "Briefcase Launchpad"
 	desc = "A briefcase containing a launchpad, a device able to teleport items and people to and from targets up to eight tiles away from the briefcase. \

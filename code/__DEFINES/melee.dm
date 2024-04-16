@@ -8,6 +8,7 @@
 #define MARTIALART_PSYCHOBRAWL "psychotic brawling"
 #define MARTIALART_SLEEPINGCARP "sleeping carp"
 #define MARTIALART_WRESTLING "wrestling"
+#define MARTIALART_BUSTERSTYLE "buster arm"
 
 /// The number of hits required to crit a target
 #define HITS_TO_CRIT(damage) round(100 / damage, 0.1)

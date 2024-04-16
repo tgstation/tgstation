@@ -164,7 +164,7 @@
 	..()
 	tesla_zap(source = src, zap_range = zap_range, power = power, cutoff = 1e3, zap_flags = zap_flags)
 	return BULLET_ACT_HIT
-
+// Lower AP than phasic, but it passes through everything.
 /obj/projectile/bullet/a357/heartpiercer
 	name = ".357 Heartpiercer bullet"
 	damage = 35
@@ -182,4 +182,74 @@
 		var/atom/movable/M = target
 		var/atom/throw_target = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
 		M.safe_throw_at(throw_target, 2, 2) //Extra ten damage if they hit a wall, resolves against melee armor
+
+// Below are .357 round version of the .38 stuff
+
+/obj/projectile/bullet/a357/match/bouncy
+	name = ".357 Rubber bullet"
+	damage = 20
+	stamina = 60
+	weak_against_armour = TRUE
+	ricochets_max = 6
+	ricochet_incidence_leeway = 0
+	ricochet_chance = 130
+	ricochet_decay_damage = 0.8
+	shrapnel_type = null
+	sharpness = NONE
+	embedding = null
+
+// weak against armor, lower base damage, but excellent at embedding and causing slice wounds at close range
+/obj/projectile/bullet/a357/dumdum
+	name = ".357 DumDum bullet"
+	damage = 30
+	weak_against_armour = TRUE
+	ricochets_max = 0
+	sharpness = SHARP_EDGED
+	wound_bonus = 20
+	bare_wound_bonus = 20
+	embedding = list(embed_chance=75, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=1 SECONDS)
+	wound_falloff_tile = -5
+	embed_falloff_tile = -15
+
+/obj/projectile/bullet/a357/trac
+	name = ".357 TRAC bullet"
+	damage = 30
+	ricochets_max = 0
+
+/obj/projectile/bullet/a357/trac/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	var/mob/living/carbon/M = target
+	if(!istype(M))
+		return
+	var/obj/item/implant/tracking/c38/imp
+	for(var/obj/item/implant/tracking/c38/TI in M.implants) //checks if the target already contains a tracking implant
+		imp = TI
+		return
+	if(!imp)
+		imp = new /obj/item/implant/tracking/c38(M)
+		imp.implant(M)
+
+/obj/projectile/bullet/a357/hotshot //similar to incendiary bullets, but do not leave a flaming trail
+	name = ".357 Hot Shot bullet"
+	damage = 20
+	ricochets_max = 0
+
+/obj/projectile/bullet/a357/hotshot/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(6)
+		M.ignite_mob()
+
+/obj/projectile/bullet/a357/iceblox //see /obj/projectile/temp for the original code
+	name = ".357 Iceblox bullet"
+	damage = 20
+	var/temperature = 500
+	ricochets_max = 0
+
+/obj/projectile/bullet/a357/iceblox/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/M = target
+		M.adjust_bodytemperature(((100-blocked)/100)*(temperature - M.bodytemperature))
 

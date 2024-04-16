@@ -275,7 +275,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(unstun), owner), 1 SECONDS) // in case the throw callback fails/lags for whatever reason
 
-	playsound(owner, 'sound/effects/stealthoff.ogg', 50, TRUE, 1)
+	playsound(owner, 'sound/effects/airshoesdash.ogg', 50, TRUE, 1)
 	owner.visible_message(span_warning("[owner] dashes forward into the air!"))
 	StartCooldown()
 

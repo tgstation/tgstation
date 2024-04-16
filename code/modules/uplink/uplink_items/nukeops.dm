@@ -901,7 +901,7 @@
 			The sprayer comes loaded with 250's of: Sodium Thiopental, Coniine, Venom, Condensed Capsaicin, Initropidril, and Polonium."
 	item = /obj/item/reagent_containers/spray/chemsprayer/adv
 	surplus = 0
-	cost = 20
+	cost = 25
 	cant_discount = TRUE
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 

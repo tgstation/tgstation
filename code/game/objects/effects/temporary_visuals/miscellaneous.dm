@@ -227,6 +227,10 @@
 	. = ..()
 	animate(src, alpha = 0, time = duration)
 
+/obj/effect/temp_visual/decoy/tensecond
+	desc = "It's a decoy!"
+	duration = 100
+
 /obj/effect/temp_visual/decoy/fading/threesecond
 	duration = 40
 

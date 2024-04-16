@@ -51,6 +51,23 @@
 	cost = 7
 	illegal_tech = TRUE
 
+/datum/uplink_item/dangerous/trident
+	name = "Electrifed Trident"
+	desc = "A trident rumored to have been recovered from the city of atlantis. \
+			It deals moderate damage, and twice as much if thrown. Targets attacked by \
+			this weapon will have teslium manifested within their blood, leading to electrical shocks."
+	item = /obj/item/trident/electrified
+	progression_minimum = 25 MINUTES
+	surplus = 20
+	cost = 9
+	illegal_tech = TRUE
+
+/datum/uplink_item/dangerous/bostaff
+	name = "Bo Staff"
+	desc = "A wielded wooden staff that can be used to incapacitate opponents if you dont intent to harm them. This often results in knocking your targets unconscious for a brief period of time."
+	item = /obj/item/melee/bostaff
+	cost = 8
+
 /datum/uplink_item/dangerous/katana
 	name = "Syndicate Katana"
 	desc = "A brilliantly made katana capable of major damage against pretty much anyone. Has high damage, blocking ability, and inflicts wounds easily. \
@@ -59,6 +76,17 @@
 	progression_minimum = 25 MINUTES
 	surplus = 25
 	cost = 10
+	illegal_tech = TRUE
+
+/datum/uplink_item/dangerous/vxtvulhammer
+	name = "Vxtvul Hammer"
+	desc = "A relic sledgehammer with charge packs wired to two blast pads on its head. \
+			While wielded in two hands, the user can charge a massive blow that will shatter construction, \
+			hurl bodies, and demolish mechs. Not easily concealable."
+	item = /obj/item/melee/vxtvulhammer
+	progression_minimum = 30 MINUTES
+	surplus = 25
+	cost = 12
 	illegal_tech = TRUE
 
 /datum/uplink_item/dangerous/powerfist
@@ -163,12 +191,23 @@
 
 /datum/uplink_item/dangerous/fireyaxe
 	name = "Fire-y Axe"
-	desc = "A classic fire axe that's been augmented with advanced atmospheric incendiary technology. In addition to being a fireaxe, it'll light your victims ablaze with every hit."
+	desc = "A classic fire axe that's been augmented with advanced atmospheric incendiary technology. \
+			In addition to being a fireaxe, it'll light your victims ablaze with every hit."
 	item = /obj/item/fireaxe/firey
 	progression_minimum = 30 MINUTES
 	cost = 10
 	surplus = 25
 	illegal_tech = TRUE
+	purchasable_from = ~UPLINK_CLOWN_OPS
+
+/datum/uplink_item/dangerous/energy_fire_axe
+	name = "Energy Fire Axe"
+	desc = "A terrifying axe with a blade of pure energy, able to tear down structures with ease. \
+			Easier to store than a standard fire axe while inactive. Has high blocking ability and armor penetration while active."
+	item = /obj/item/fireaxe/energy
+	progression_minimum = 30 MINUTES
+	cost = 14
+	surplus = 0
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/guardian
@@ -219,6 +258,14 @@
 	cost = 3
 	surplus = 60
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/dangerous/watergun
+	name = "Extended Capacity Hyper-Soaker"
+	desc = "A simple yet effective way of applying chemicals to a target's skin. \
+			Comes with a high-power nozzle and larger tank. You'll have to provide your own chemicals, though."
+	item = /obj/item/gun/water/syndicate
+	cost = 3
+	surplus = 10
 
 /datum/uplink_item/dangerous/tommygun
 	name = "Tommy Gun"
@@ -299,7 +346,7 @@
 			The sprayer slowly generates it's chemicals using redspace technology."
 	item = /obj/item/reagent_containers/spray/chemsprayer/syndicate
 	surplus = 20
-	cost = 10
+	cost = 16
 	illegal_tech = TRUE
 
 /datum/uplink_item/dangerous/syndielaserrifle

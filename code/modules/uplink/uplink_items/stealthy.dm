@@ -6,6 +6,14 @@
 	category = /datum/uplink_category/stealthy
 
 
+/datum/uplink_item/stealthy_weapons/combatglovesplus
+	name = "Combat Gloves Plus"
+	desc = "A pair of gloves that are fireproof and shock resistant, however unlike the regular Combat Gloves this one uses nanotechnology \
+			to grant the wearer knowledge over Krav Maga. Not as inconspicuous as you may think. To ensure your stealth, wear before use only."
+	item = /obj/item/clothing/gloves/krav_maga/combatglovesplus
+	cost = 8
+	surplus = 0
+
 /datum/uplink_item/stealthy_weapons/dart_pistol
 	name = "Dart Pistol"
 	desc = "A miniaturized version of a normal syringe gun. It is very quiet when fired and can fit into any \
@@ -25,6 +33,13 @@
 	surplus = 30
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
+/datum/uplink_item/stealthy_weapons/derringer
+	name = "Derringer Pistol"
+	desc = "A concealable double-chamber pistol loaded with individual .357 rounds. Fits in boots."
+	item = /obj/item/gun/ballistic/revolver/derringer
+	cost = 3
+	surplus = 50
+
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
 	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Activate in \
@@ -37,6 +52,13 @@
 	desc = "A dagger made of energy that looks and functions as a pen when off."
 	item = /obj/item/pen/edagger
 	cost = 2
+
+/datum/uplink_item/stealthy_weapons/donkbat
+	name = "Donk Baseball Bat"
+	desc = "A weighted solid plastic baseball bat, perfect for knocking the wind out of people. Has a very distinct noise."
+	item = /obj/item/melee/baton/donkbat
+	cost = 4
+	surplus = 30
 
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"

@@ -49,6 +49,31 @@
 	desc = "A .357 Wallstake bullet casing."
 	projectile_type = /obj/projectile/bullet/a357/wallstake
 
+/obj/item/ammo_casing/a357/bouncy
+	name = ".357 Rubber bullet casing"
+	desc = "A .357 Rubber bullet casing."
+	projectile_type = /obj/projectile/bullet/a357/match/bouncy
+
+/obj/item/ammo_casing/a357/dumdum
+	name = ".357 DumDum bullet casing"
+	desc = "A .357 DumDum bullet casing."
+	projectile_type = /obj/projectile/bullet/a357/dumdum
+
+/obj/item/ammo_casing/a357/trac
+	name = ".357 TRAC bullet casing"
+	desc = "A .357 TRAC bullet casing."
+	projectile_type = /obj/projectile/bullet/a357/trac
+
+/obj/item/ammo_casing/a357/hotshot
+	name = ".357 HotShot bullet casing"
+	desc = "A .357 HotShot bullet casing."
+	projectile_type = /obj/projectile/bullet/a357/hotshot
+
+/obj/item/ammo_casing/a357/iceblox
+	name = ".357 Iceblox bullet casing"
+	desc = "A .357 Iceblox bullet casing."
+	projectile_type = /obj/projectile/bullet/a357/iceblox
+
 // 7.62x38mmR (Nagant Revolver)
 
 /obj/item/ammo_casing/n762

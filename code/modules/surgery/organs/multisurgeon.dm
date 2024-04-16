@@ -76,3 +76,15 @@
 
 /obj/item/multisurgeon/lifesupport //for traitors
 	starting_organ = list(/obj/item/organ/internal/cyberimp/mouth/breathing_tube/syndicate, /obj/item/organ/internal/cyberimp/chest/nutriment/plus/syndicate)
+
+/obj/item/multisurgeon/syndicate/muscle
+	starting_organ = list(/obj/item/organ/internal/cyberimp/arm/muscle/syndicate, /obj/item/organ/internal/cyberimp/arm/muscle/syndicate/l)
+
+/obj/item/multisurgeon/syndicate/muscle/single_use
+	uses = 1
+
+/obj/item/multisurgeon/syndicate/muscle/buster
+	starting_organ = list(/obj/item/organ/internal/cyberimp/arm/muscle/buster/syndicate, /obj/item/organ/internal/cyberimp/arm/muscle/buster/syndicate/l)
+
+/obj/item/multisurgeon/syndicate/muscle/buster/single_use
+	uses = 1

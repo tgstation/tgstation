@@ -45,6 +45,15 @@
 	cost = 6
 	restricted = TRUE
 
+/datum/uplink_item/explosives/trap_disks
+	name = "Box of Syndicate Trapped Disks"
+	desc = "Five bombs disguised as data disks that triggers a minute after inserting into any modular computers. \
+			Can come with some useful programs, if you're fast enough to download them and then throw the disk away."
+	item = /obj/item/storage/box/syndie_kit/trappeddisks
+	progression_minimum = 15 MINUTES
+	cost = 7
+	surplus = 10
+
 /datum/uplink_item/explosives/emp
 	name = "EMP Grenades and Implanter Kit"
 	desc = "A box that contains five EMP grenades and an EMP implant with three uses. Useful to disrupt communications, \
@@ -56,6 +65,15 @@
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		cost *= 3
+
+/datum/uplink_item/explosives/wheelchair
+	name = "Explosive Wheelchair"
+	desc = "A wheelchair with a high yield bomb strapped to it... why would anyone ever want this? \
+			Doesn't come with the bell required to set off the explosive payload."
+	item = /obj/item/wheelchair/explosive
+	cost = 6
+	surplus = 0
+	limited_stock = 1
 
 /datum/uplink_item/explosives/pizza_bomb
 	name = "Pizza Bomb"

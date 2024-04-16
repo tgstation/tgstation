@@ -594,3 +594,45 @@
 
 /datum/status_effect/jump_jet/on_remove()
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
+
+
+/datum/status_effect/doubledown
+	id = "doubledown"
+	duration = 20
+	tick_interval = 0
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/doubledown
+	var/obj/effect/temp_visual/decoy/tensecond/s_such_strength
+
+/atom/movable/screen/alert/status_effect/doubledown
+	name = "Doubling Down"
+	desc = "Taking 25% less damage, go all in!"
+	icon_state = "aura"
+
+/datum/status_effect/doubledown/on_apply()
+	. = ..()
+	if(.)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			s_such_strength = new(get_turf(H),H)
+			walk_towards(s_such_strength, H)
+			animate(s_such_strength, alpha = 100, color = "#d40a0a", transform = matrix()*1.25, time = 0.25 SECONDS)
+			H.ignore_slowdown(type)
+			H.physiology.brute_mod *= 0.75
+			H.physiology.burn_mod *= 0.75
+			H.physiology.tox_mod *= 0.75
+			H.physiology.oxy_mod *= 0.75
+			H.physiology.stamina_mod *= 0.75
+		owner.log_message("gained buster damage reduction", LOG_ATTACK)
+
+/datum/status_effect/doubledown/on_remove()
+	if(ishuman(owner))
+		qdel(s_such_strength)
+		var/mob/living/carbon/human/H = owner
+		H.unignore_slowdown(type)
+		H.physiology.brute_mod /= 0.75
+		H.physiology.burn_mod /= 0.75
+		H.physiology.tox_mod /= 0.75
+		H.physiology.oxy_mod /= 0.75
+		H.physiology.stamina_mod /= 0.75
+	owner.log_message("lost buster damage reduction", LOG_ATTACK)

@@ -1551,6 +1551,21 @@
 /obj/item/storage/box/syndie_kit/stealthmicrobomb/PopulateContents()
 	new /obj/item/implanter/stealthimplanter/explosive(src)
 
+/obj/item/storage/box/syndie_kit/goloudbundle
+	name = "NT-Annihilation 'Go Loud' Kit"
+
+/obj/item/storage/box/syndie_kit/goloudbundle/PopulateContents()
+	new /obj/item/stack/telecrystal/five(src)
+	new /obj/item/stack/telecrystal/five(src)
+	new /obj/item/stack/telecrystal/five(src)
+	new /obj/item/pen/edagger(src)
+	new /obj/item/reagent_containers/hypospray/medipen/atropine(src)
+
+/obj/item/storage/box/syndie_kit/trappeddisks/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/computer_disk/black_market/trap(src)
+
+
 
 
 

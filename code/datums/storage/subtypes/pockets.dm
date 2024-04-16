@@ -112,6 +112,7 @@
 		/obj/item/match,
 		/obj/item/holochip,
 		/obj/item/toy/crayon,
+		/obj/item/gun/ballistic/revolver/derringer, // small enough to fit
 		/obj/item/reagent_containers/cup/glass/flask),
 		list(/obj/item/screwdriver/power,
 		/obj/item/ammo_casing/rocket,

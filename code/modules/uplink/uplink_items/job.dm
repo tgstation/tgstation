@@ -55,7 +55,7 @@
 	cost = 20
 	restricted_roles = list(JOB_ASSISTANT)
 	surplus = 0
-	purchasable_from = ~UPLINK_SPY // Fuck you, baltimore!
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Fuck you, baltimore
 
 /datum/uplink_item/role_restricted/oldtoolboxclean
 	name = "Ancient Toolbox"
@@ -64,7 +64,7 @@
 	cost = 2
 	restricted_roles = list(JOB_ASSISTANT)
 	surplus = 0
-	purchasable_from = ~UPLINK_SPY // Spies can't get telecrystals?
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Spies have no telecrystals?
 
 /datum/uplink_item/role_restricted/clownpin
 	name = "Ultra Hilarious Firing Pin"
@@ -307,7 +307,7 @@
 	cost = 20
 	surplus = 0
 	restricted_roles = list(JOB_CHAPLAIN)
-	purchasable_from = ~UPLINK_SPY
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/concealed_weapon_bay
 	name = "Concealed Weapon Bay"
@@ -394,7 +394,6 @@
 	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 
-
 /datum/uplink_item/role_restricted/gondola_donk_pocket_box
 	name = "Gondola-Flavoured Donk Pockets"
 	desc = "A box with 6 gondola pockets within it. Gondola pockets contain a chemical called Tranquility, which will inflict a disease upon consumption. \
@@ -412,6 +411,7 @@
 	cost = 5
 	surplus = 12
 	restricted_roles = list(JOB_COOK)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/suspicious_plant_bag
 	name = "Assorted Plant Bag"
@@ -428,6 +428,7 @@
 	item = /obj/item/storage/bag/plants/bluespace
 	cost = 7
 	restricted_roles = list(JOB_BOTANIST)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Wouldn't be super useful for random spies.
 
 /datum/uplink_item/role_restricted/eternal_mutagen
 	name = "Eternal Flask of Unstable Mutagen"
@@ -436,6 +437,7 @@
 	item = /obj/item/reagent_containers/cup/bottle/eternal/mutagen
 	cost = 1
 	restricted_roles = list(JOB_BOTANIST)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Also wouldn't be useful for non-botanist spies.
 
 /datum/uplink_item/role_restricted/gatfruit_seed
 	name = "Gatfruit Seed Packet"
@@ -454,6 +456,7 @@
 	cost = 16
 	surplus = 3
 	restricted_roles = list(JOB_BOTANIST)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Hell no.
 
 /datum/uplink_item/role_restricted/bombanana_seed
 	name = "Bombanana Seed Packet"
@@ -463,6 +466,7 @@
 	cost = 20
 	surplus = 1
 	restricted_roles = list(JOB_BOTANIST, JOB_CLOWN)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Hell no.
 
 /datum/uplink_item/role_restricted/kudzu_seed
 	name = "Kudzu Seed Packet"
@@ -490,7 +494,7 @@
 	cant_discount = TRUE
 	limited_stock = 1
 	restricted_roles = list(JOB_PRISONER)
-	purchasable_from = ~UPLINK_SPY
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Prisoner stuff shouldn't be given randomly as bounties. They're here to spice up prisoner rounds.
 
 /datum/uplink_item/role_restricted/twoforone_freedom_implant
 	name = "Two-For-One Freedom Implant Bundle"
@@ -498,7 +502,7 @@
 	item = /obj/item/storage/box/syndie_kit/two_freedom_implant_bundle
 	cost = 5
 	restricted_roles = list(JOB_PRISONER)
-	purchasable_from = ~UPLINK_SPY
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 
 /datum/uplink_item/role_restricted/microbomb_prisoner_implanter
 	name = "Microbomb Implanter"
@@ -508,7 +512,7 @@
 	cost = 2
 	surplus = 10
 	restricted_roles = list(JOB_PRISONER)
-	purchasable_from = ~UPLINK_SPY
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/bluespace_crystal_arti_bundle
 	name = "Box of Artificial Bluespace Crystals"
@@ -517,7 +521,7 @@
 	cost = 1
 	surplus = 25
 	restricted_roles = list(JOB_PRISONER, JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST)
-	purchasable_from = ~UPLINK_SPY
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/escapist_bundle
 	name = "Escapist Bundle"
@@ -527,7 +531,7 @@
 	cost = 20
 	surplus = 1
 	restricted_roles = list(JOB_PRISONER)
-	purchasable_from = ~UPLINK_SPY
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/chemistry_machine_bundle
 	name = "Supplementary Chemical Dispensery"
@@ -537,6 +541,7 @@
 	cost = 4
 	surplus = 20
 	restricted_roles = list(JOB_CHEMIST, JOB_PSYCHOLOGIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_BARTENDER)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Doesn't make much sense as a bounty.
 
 /datum/uplink_item/role_restricted/xenobio_starter_kit
 	name = "Xenobiology Kickstarter Bundle"
@@ -545,6 +550,7 @@
 	item = /obj/item/storage/box/syndie_kit/xenobio_starter_kit
 	cost = 3
 	restricted_roles = list(JOB_SCIENTIST, JOB_RESEARCH_DIRECTOR)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Doesn't make sense as a bounty.
 
 /datum/uplink_item/role_restricted/spare_null_rod
 	name = "Spare Null Rod"
@@ -555,6 +561,7 @@
 	surplus = 10
 	illegal_tech = FALSE
 	restricted_roles = list(JOB_CHAPLAIN)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Imagine having to steal the null rod to GET a null rod?
 
 /datum/uplink_item/role_restricted/chem_storage_implant_bundle
 	name = "Chemical Storage Implant Bundle"
@@ -564,6 +571,7 @@
 	cost = 3
 	restricted_roles = list(JOB_CHEMIST, JOB_PSYCHOLOGIST, JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER)
 	surplus = 10
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Makes the regular implant moot as a bounty.
 
 /datum/uplink_item/role_restricted/chaplain_healing_bundle
 	name = "Holy Healing Bundle"
@@ -572,6 +580,7 @@
 	cost = 4
 	surplus = 15
 	restricted_roles = list(JOB_CHAPLAIN)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Makes little sense as a bounty.
 
 /datum/uplink_item/role_restricted/burning_extract_bundle
 	name = "Burning Slime Extract Bundle"
@@ -668,6 +677,7 @@
 	cost = 25
 	surplus = 1
 	restricted_roles = list(JOB_CURATOR)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Hell no.
 
 /datum/uplink_item/role_restricted/syndicate_virus_box
 	name = "Virus Box"
@@ -677,6 +687,7 @@
 	cost = 12
 	surplus = 5
 	restricted_roles = list(JOB_VIROLOGIST)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // HELL NO.
 
 /datum/uplink_item/role_restricted/manifold_autoinjector
 	name = "Hereditary Manifold Sickness Injector"
@@ -710,6 +721,7 @@
 	surplus = 10
 	limited_stock = 1
 	restricted_roles = list(JOB_PSYCHOLOGIST)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Just here to make psychologist traitors more interesting.
 
 /datum/uplink_item/role_restricted/psychologist_xray_surgery
 	name = "X-Ray Vision Implant"
@@ -718,7 +730,7 @@
 	cost = 15
 	surplus = 10
 	restricted_roles = list(JOB_PSYCHOLOGIST)
-	purchasable_from = ~UPLINK_SPY
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Hell no.
 
 /datum/uplink_item/role_restricted/surplus
 	name = "Syndicate Surplus Crate (25% off!)"
@@ -727,7 +739,7 @@
 	item = /obj/structure/closet/crate
 	cost = 15
 	restricted_roles = list(JOB_ASSISTANT)
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Super-hell-no.
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	/// Value of items inside the crate in TC
 	var/crate_tc_value = 30
@@ -791,6 +803,7 @@
 	item = /obj/item/storage/box/syndie_kit/lathe_supply_package
 	cost = 3
 	restricted_roles = list(JOB_ASSISTANT)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Getting this as a bounty is a big fuck-you.
 
 /datum/uplink_item/role_restricted/nocturine_deluxe
 	name = "Nocturine Deluxe Package"
@@ -800,6 +813,7 @@
 	surplus = 25
 	limited_stock = 1
 	restricted_roles = list(JOB_ASSISTANT)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Hell no.
 
 /datum/uplink_item/role_restricted/deluxe_bluespace_chameleon_backpack
 	name = "Deluxe Bluespace Chameleon Backpack"
@@ -815,6 +829,7 @@
 	item = /obj/item/book/granter/action/spell/mime/mimery
 	cost = 6
 	restricted_roles = list(JOB_MIME)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Hell no.
 
 /datum/uplink_item/role_restricted/mime_invis_backpack
 	name = "Invisible Backpack"
@@ -831,6 +846,7 @@
 	cost = 8
 	surplus = 10
 	restricted_roles = list(JOB_BARTENDER)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Eh, feels more substantial to have this only for barkeeps.
 
 /datum/uplink_item/role_restricted/janitor_acidnade_bundle
 	name = "Highly Acidic Foam Grenade Bundle"
@@ -858,6 +874,7 @@
 	surplus = 10
 	limited_stock = 1
 	restricted_roles = list(JOB_CORONER)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Getting this as a bounty is kinda a no-no. Makes certain steal-your-organ bounties a bit too ez.
 
 /datum/uplink_item/role_restricted/bodybaginvis
 	name = "Invisible Body Bag"
@@ -953,6 +970,7 @@
 	cost = 6
 	surplus = 0
 	restricted_roles = list(JOB_CHAPLAIN)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Doesn't make sense as a bounty.
 
 /datum/uplink_item/role_restricted/inf_cash
 	name = "Syndicate Counterfeiting Printer"
@@ -963,7 +981,7 @@
 	cost = 6
 	surplus = 10
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
-	purchasable_from = ~UPLINK_SPY
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/anomaly_releaser
 	name = "Anomaly Releaser"
@@ -990,6 +1008,7 @@
 	cost = 5
 	surplus = 45
 	restricted_roles = list(JOB_CHAPLAIN)
+	// I'll let this pass as a spy bounty to hopefully draw attention away from traitor chaplains.
 
 /datum/uplink_item/role_restricted/syndivirusbuffer
 	name = "S. Gene Culture Bottle"
@@ -998,7 +1017,7 @@
 	cost = 8
 	surplus = 0
 	restricted_roles = list(JOB_VIROLOGIST)
-	purchasable_from = ~UPLINK_SPY
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Letting virus symptoms pass as spy bounties would be hellish. Both for the spy and for the crew.
 
 /datum/uplink_item/role_restricted/syndivirusbufferstealth
 	name = "STE. Gene Culture Bottle"
@@ -1007,7 +1026,7 @@
 	cost = 4
 	surplus = 0
 	restricted_roles = list(JOB_VIROLOGIST)
-	purchasable_from = ~UPLINK_SPY
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/syndivirusbufferresist
 	name = "SRE. Gene Culture Bottle"
@@ -1016,7 +1035,7 @@
 	cost = 4
 	surplus = 0
 	restricted_roles = list(JOB_VIROLOGIST)
-	purchasable_from = ~UPLINK_SPY
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/syndivirusbufferspeed
 	name = "SPD. Gene Culture Bottle"
@@ -1025,7 +1044,7 @@
 	cost = 4
 	surplus = 0
 	restricted_roles = list(JOB_VIROLOGIST)
-	purchasable_from = ~UPLINK_SPY
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/syndivirusbuffertrans
 	name = "STR. Gene Culture Bottle"
@@ -1034,7 +1053,7 @@
 	cost = 4
 	surplus = 0
 	restricted_roles = list(JOB_VIROLOGIST)
-	purchasable_from = ~UPLINK_SPY
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/syndisauce
 	name = "Box of Syndicate Sauce"
@@ -1043,6 +1062,7 @@
 	cost = 1
 	surplus = 7
 	restricted_roles = list(JOB_COOK)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Doesn't make sense as a bounty.
 
 /datum/uplink_item/role_restricted/red_chainsaw
 	name = "Syndicate Chainsaw"
@@ -1051,6 +1071,7 @@
 	item = /obj/item/chainsaw/botany/syndicate
 	cost = 8
 	restricted_roles = list(JOB_BOTANIST)
+	// Eh, i'll let it pass as a spy bounty.
 
 /datum/uplink_item/role_restricted/syndi_donkpockets
 	name = "Syndicate Donk Pockets"

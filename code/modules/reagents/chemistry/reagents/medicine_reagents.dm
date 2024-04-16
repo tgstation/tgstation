@@ -2068,34 +2068,6 @@
 	return ..()
 
 
-/datum/reagent/medicine/ultravasculine
-	name = "Ultravasculine"
-	description = "Rapidly flushes toxins and especially histamines from the body, but places some stress on the veins. Overdose increases the stress."
-	reagent_state = LIQUID
-	metabolization_rate = 1.25 * REAGENTS_METABOLISM
-	color = "#710000"
-	overdose_threshold = 30
-
-/datum/reagent/medicine/ultravasculine/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(-6*REM, 0)
-	M.adjustBruteLoss(1*REM, 0)
-
-	if(M.reagents.has_reagent(/datum/reagent/toxin/histamine))
-		M.reagents.add_reagent(/datum/reagent/medicine/ultravasculine, 0.5)
-	..()
-	. = 1
-
-	if(M.reagents.has_reagent(/datum/reagent/toxin/histamine))
-		M.reagents.remove_reagent(/datum/reagent/toxin/histamine, 1)
-	..()
-	. = 1
-
-/datum/reagent/medicine/ultravasculine/overdose_process(mob/living/carbon/M)
-	M.adjustToxLoss(4*REM, 0)
-	M.adjustBruteLoss(5*REM, 0)
-	..()
-	. = 1
-
 /datum/reagent/medicine/juggernaut
 	name = "Juggernaut"
 	description = "A potent painkiller that negates a significant amount of walkspeed loss from being hurt, with the additional special effect of absorbing and healing a portion of brute and burn damages taken between life cycles. Overdose causes confusion, loss of breath, and spontaneous paralysis."
@@ -2238,7 +2210,7 @@
 	. = 1
 
 	if(M.reagents.has_reagent(/datum/reagent/gold) && prob(50))
-		M.reagents.add_reagent(/datum/reagent/medicine/enchantedgold, 0.1)
+		M.reagents.add_reagent(type, 0.1)
 	..()
 	. = 1
 
@@ -2276,7 +2248,7 @@
 	. = 1
 
 	if(M.reagents.has_reagent(/datum/reagent/gold) && prob(5))
-		M.reagents.add_reagent(/datum/reagent/medicine/enchantedsupergold, 0.1)
+		M.reagents.add_reagent(type, 0.1)
 	..()
 	. = 1
 

@@ -28,12 +28,12 @@
 	desc = "A pair of combat gloves. They're insulated!"
 	item = /obj/item/clothing/gloves/combat
 	cost = 1
-
+/**
 /datum/uplink_item/spy_unique/krav_maga
 	name = "Combat Gloves Plus"
 	desc = "A pair of combat gloves plus. They're insulated AND you can do martial arts with it!"
 	item = /obj/item/clothing/gloves/krav_maga/combatglovesplus
-
+**/
 /datum/uplink_item/spy_unique/tackle_gloves
 	name = "Guerrilla Gloves"
 	desc = "A pair of Guerrilla gloves. They're insulated AND you can tackle people with it!"

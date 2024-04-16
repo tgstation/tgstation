@@ -222,5 +222,10 @@
 	max_charges = 100
 	recharge_rate = 1
 
+/// Used for the buster arm.
+/obj/item/gun/magic/hook/buster
+	name = "buster hook"
+	desc = "GET OVER HERE!"
+
 #undef TRAIT_HOOKED
 #undef IMMOBILIZATION_TIMER

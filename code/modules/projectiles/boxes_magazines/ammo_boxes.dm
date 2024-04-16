@@ -65,6 +65,43 @@
 	icon_state = "357stake"
 	ammo_type = /obj/item/ammo_casing/a357/wallstake
 
+/obj/item/ammo_box/a357/bouncy
+	name = "speed loader (.357 Rubber)"
+	desc = "A seven-shot speed loader designed for .357 revolvers. \
+			These rounds trades most of it's lethality for quick weakening of foes. Ricochets quite a lot."
+	icon_state = "357bouncy"
+	ammo_type = /obj/item/ammo_casing/a357/bouncy
+
+/obj/item/ammo_box/a357/dumdum
+	name = "speed loader (.357 DumDum)"
+	desc = "A seven-shot speed loader designed for .357 revolvers. \
+			The rounds are incredibly sharp and are quick to embed into foes. \
+			They are also excellent in inflict wounds when used at point-blank range."
+	icon_state = "357dumdum"
+	ammo_type = /obj/item/ammo_casing/a357/dumdum
+
+/obj/item/ammo_box/a357/trac
+	name = "speed loader (.357 TRAC)"
+	desc = "A seven-shot speed loader designed for .357 revolvers. \
+			The rounds implant a tracker within those shot."
+	icon_state = "357trac"
+	ammo_type = /obj/item/ammo_casing/a357/trac
+
+/obj/item/ammo_box/a357/hotshot
+	name = "speed loader (.357 HotShot)"
+	desc = "A seven-shot speed loader designed for .357 revolvers. \
+			These rounds trade much of their lethality for an incredibly powerful incendiary payload."
+	icon_state = "357hotshot"
+	ammo_type = /obj/item/ammo_casing/a357/hotshot
+
+/obj/item/ammo_box/a357/iceblox
+	name = "speed loader (.357 Iceblox)"
+	desc = "A seven-shot speed loader designed for .357 revolvers. \
+			These rounds trade much of their lethality for near-instantaneous freezing of targets. \
+			Resulting in targets freezing to death quickly after being shot."
+	icon_state = "357iceblox"
+	ammo_type = /obj/item/ammo_casing/a357/iceblox
+
 /obj/item/ammo_box/c38
 	name = "speed loader (.38)"
 	desc = "Designed to quickly reload revolvers."

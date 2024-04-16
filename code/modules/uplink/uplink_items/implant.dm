@@ -71,7 +71,8 @@
 
 /datum/uplink_item/implants/weapons_auth
 	name = "Syndicate Firearm Authentication Implant"
-	desc = "A singular implant, it's required for using most advanced syndicate weaponry such as the C-20r or the Bulldog."
+	desc = "A singular implant, it's required for using most advanced syndicate weaponry such as the C-20r or the Bulldog. \
+			Only really useful if you're in close contact with some of our more heavily armed operatives, likely of the nuclear variety."
 	item = /obj/item/storage/box/syndie_kit/syndiefirearmauth
 	progression_minimum = 20 MINUTES
 	cost = 1
@@ -90,7 +91,7 @@
 /datum/uplink_item/implants/regenerative
 	name = "Regenerative Implant"
 	desc = "A surgical implant that when inserted into the body will slowly repair the host. Allowing for slow recovery of all forms of damage. \
-			Beware of health scanners, as constant supervision of your health may give you away."
+			Beware of health scanners, as constant supervision of your health may give you away. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/regenerativebetter/hidden/single_use
 	cost = 8
 	surplus = 20
@@ -107,7 +108,8 @@
 
 /datum/uplink_item/implants/syndiantidrop
 	name = "Syndicate Anti-Drop Implant"
-	desc = "An anti-drop implant which can be activated to bind whatever is in your hands TO YOUR HANDS, preventing disarms and any attempts to drop the item."
+	desc = "An anti-drop implant which can be activated to bind whatever is in your hands TO YOUR HANDS, preventing disarms and any attempts to drop the item. \
+			Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/anti_drop/hidden/single_use
 	progression_minimum = 10 MINUTES
 	cost = 4
@@ -124,7 +126,8 @@
 
 /datum/uplink_item/implants/syndiantistun
 	name = "Syndicate CNS Rebooter Implant"
-	desc = "A CNS Rebooter implant specifically designed to hide from medical scans of all kinds. When installed, it'll reduce the effectiveness of stuns upon the owner."
+	desc = "A CNS Rebooter implant specifically designed to hide from medical scans of all kinds. When installed, it'll reduce the effectiveness of stuns upon the owner. \
+			Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/anti_stun/hidden/single_use
 	progression_minimum = 10 MINUTES
 	cost = 6
@@ -133,35 +136,57 @@
 
 /datum/uplink_item/implants/syndisignaller
 	name = "Signaler Implant"
-	desc = "An hidden implant which can be activated to reveal a signaler. For the most devious of scenario-makers."
+	desc = "An hidden implant which can be activated to reveal a signaler. For the most devious of scenario-makers. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/signaler/hidden/single_use
 	cost = 1
 	surplus = 0
 
 /datum/uplink_item/implants/toolsets
 	name = "Toolset Implants"
-	desc = "A multisurgeon containing both an arm-concealed toolset implant and a surgical toolset."
+	desc = "A multisurgeon containing both an arm-concealed toolset implant and a surgical toolset. Comes with an autosurgeon."
 	item = /obj/item/multisurgeon/toolsets
 	cost = 2
 	surplus = 30
 
 /datum/uplink_item/implants/esword
 	name = "Hardlight Blade Implant"
-	desc = "An autosurgeon containing a hardlight blade implant, has the same effectiveness as a energy sword but has no defensive abilities."
+	desc = "An autosurgeon containing a hardlight blade implant, has the same effectiveness as a energy sword but has no defensive abilities. \
+			Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/esword/hidden/single_use
 	progression_minimum = 30 MINUTES
 	cost = 10
 	surplus = 40
 
 /datum/uplink_item/implants/strength
-	name = "S.A.E.M Implant"
-	desc = "An autosurgeon containing a strong-arm empowered musculature implant. \
-			This implant grants the arm it's used upon increased punching power, increasing it's damage toward body and stamina. \
+	name = "S.A.E.M Implants"
+	desc = "A multisurgeon containing two strong-arm empowered musculature implants. \
+			These implants grant the arms of it's user increased punching power, increasing it's damage toward body and stamina. \
 			Also knocks people around easily."
-	item = /obj/item/autosurgeon/syndicate/muscle/hidden/single_use
+	item = /obj/item/multisurgeon/syndicate/muscle/single_use
 	progression_minimum = 10 MINUTES
 	cost = 6
 	surplus = 30
+
+/datum/uplink_item/implants/buster
+	name = "Buster Arm Implants"
+	desc = "A multisurgeon containing two buster-arm empowered musculature implants that double as grappling hooks. \
+			These implants grant the arms of it's user increased punching power, increasing it's damage toward body and stamina greatly. \
+			Also knocks people around easily and can cause them to crash harmfully into walls and people. \
+			Activate the implant with nothing in hand to reveal a grappling hook capable of grabbing people and pulling them close, comes with two hooks."
+	item = /obj/item/multisurgeon/syndicate/muscle/buster/single_use
+	progression_minimum = 30 MINUTES
+	cost = 25
+	surplus = 10
+
+/datum/uplink_item/implants/gasharpoon
+	name = "Garsharpoon Implant"
+	desc = "A heavily modified harpoon gun that automatically synthesizes incredibly sharp harpoons for ammunition. \
+			Fits within your arm for easy concealment. Comes with an autosurgeon."
+	item = /obj/item/autosurgeon/syndicate/gasharpoon/hidden/single_use
+	progression_minimum = 20 MINUTES
+	cost = 10
+	surplus = 20
+	purchasable_from = ~UPLINK_SPY // Letting this pass as a bounty would be hellish. Bounties ain't hard enough for this to be reasonably earned.
 
 /datum/uplink_item/implants/kravmaga
 	name = "Krav Maga Implant"
@@ -174,28 +199,31 @@
 
 /datum/uplink_item/implants/lifesupport
 	name = "Life-Support Implants"
-	desc = "A breathing tube and nutriment pump PLUS implant within one multisurgeon. You'll never have to eat or wear a mask again."
+	desc = "A breathing tube and nutriment pump PLUS implant within one multisurgeon. You'll never have to eat or wear a mask again. Comes with an autosurgeon."
 	item = /obj/item/multisurgeon/lifesupport
 	cost = 3
 	surplus = 20
 
 /datum/uplink_item/implants/medicalhud
 	name = "Syndicate MedHUD Implant"
-	desc = "A cybersun industries branded MedicalHUD implant, comes with a one-use autosurgeon for quick installation. Only one HUD implant can be installed per agent."
+	desc = "A cybersun industries branded MedicalHUD implant, comes with a one-use autosurgeon for quick installation. Only one HUD implant can be installed per agent. \
+			Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/contraband_medhud
 	cost = 1
 	surplus = 0
 
 /datum/uplink_item/implants/diagnostichud
 	name = "Syndicate DiagnosticHUD Implant"
-	desc = "A cybersun industries branded DiagnosticHUD implant, comes with a one-use autosurgeon for quick installation. Only one HUD implant can be installed per agent."
+	desc = "A cybersun industries branded DiagnosticHUD implant, comes with a one-use autosurgeon for quick installation. Only one HUD implant can be installed per agent. \
+			Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/contraband_diaghud
 	cost = 1
 	surplus = 0
 
 /datum/uplink_item/implants/securityhud
 	name = "Syndicate SecHUD Implant"
-	desc = "A cybersun industries branded SecurityHUD implant, comes with a one-use autosurgeon for quick installation. Only one HUD implant can be installed per agent."
+	desc = "A cybersun industries branded SecurityHUD implant, comes with a one-use autosurgeon for quick installation. Only one HUD implant can be installed per agent. \
+			Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/contraband_sechud
 	cost = 2
 	surplus = 10
@@ -242,7 +270,8 @@
 
 /datum/uplink_item/implants/flash
 	name = "Photon Projector Implant"
-	desc = "An arm-mounted flash, perfect for those pesky silicons in a pinch. The bulb will replace itself over time."
+	desc = "An arm-mounted flash, perfect for those pesky silicons in a pinch. The bulb will replace itself over time. \
+			Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/flash/hidden/single_use
 	progression_minimum = 10 MINUTES
 	cost = 6
@@ -268,7 +297,8 @@
 /datum/uplink_item/implants/noslipall
 	name = "No-Slip Implants"
 	desc = "A pair of highly advanced cybernetics which directly attach to the host's nervous system. \
-			When the cybernetics detect the host is slipping, they'll quickly manipulate the host's muscles to avoid a fall."
+			When the cybernetics detect the host is slipping, they'll quickly manipulate the host's muscles to avoid a fall. \
+			Comes with a one-use multisurgeon."
 	item = /obj/item/multisurgeon/noslipall
 	progression_minimum = 20 MINUTES
 	cost = 12
@@ -276,8 +306,9 @@
 
 /datum/uplink_item/implants/magboots
 	name = "Magboots Implants"
-	desc = "A pair of highly experimental magnetic cybernetics which are to installed within the user's legs. \
-			When installed, the host will be able to toggle the magnetics within the cybernetics, attaching to the floor as if they were wearing magboots."
+	desc = "A pair of highly experimental magnetic cybernetics which are to be installed within the user's legs. \
+			When installed, the host will be able to toggle the magnetics within the cybernetics, attaching to the floor as if they were wearing magboots. \
+			Comes with a one-use multisurgeon."
 	item = /obj/item/multisurgeon/magboots
 	progression_minimum = 15 MINUTES
 	cost = 8
@@ -285,7 +316,7 @@
 
 /datum/uplink_item/implants/mantis
 	name = "G.O.R.L.E.X. Mantis Blade"
-	desc = "One G.O.R.L.E.X Mantis blade implant able to be retracted inside your body at will for easy storage and concealing. Two blades can be used at once."
+	desc = "One G.O.R.L.E.X Mantis blade implant able to be retracted inside your body at will for easy storage and concealing. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/syndie_mantis
 	cost = 6
 	surplus = 50
@@ -294,35 +325,35 @@
 
 /datum/uplink_item/implants/makarov_implant
 	name = "Makarov Arm implant"
-	desc = "A modified version of the Makarov pistol placed inside of the forearm to allow for easy concealment."
+	desc = "A modified version of the Makarov pistol placed inside of the forearm to allow for easy concealment. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/makarov_implant
 	cost = 9
 	surplus = 20
 
 /datum/uplink_item/implants/m1911_implant
 	name = "M1911 Arm implant"
-	desc = "A modified version of the M1911 pistol placed inside of the forearm to allow for easy concealment."
+	desc = "A modified version of the M1911 pistol placed inside of the forearm to allow for easy concealment. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/m1911_implant
 	cost = 8
 	surplus = 20
 
 /datum/uplink_item/implants/deagle_implant
 	name = "Desert Eagle Arm implant"
-	desc = "A modified version of the Desert Eagle placed inside of the forearm to allow for easy concealment."
+	desc = "A modified version of the Desert Eagle placed inside of the forearm to allow for easy concealment. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/deagle_implant
 	cost = 12
 	surplus = 20
 
 /datum/uplink_item/implants/viper_implant
 	name = "Viper Arm implant"
-	desc = "A modified version of the Viper pistol placed inside of the forearm to allow for easy concealment."
+	desc = "A modified version of the Viper pistol placed inside of the forearm to allow for easy concealment. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/viper_implant
 	cost = 10
 	surplus = 20
 
 /datum/uplink_item/implants/cobra_implant
 	name = "Cobra Arm implant"
-	desc = "A modified version of the Cobra pistol placed inside of the forearm to allow for easy concealment."
+	desc = "A modified version of the Cobra pistol placed inside of the forearm to allow for easy concealment. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/cobra_implant
 	progression_minimum = 5 MINUTES
 	cost = 9
@@ -330,7 +361,8 @@
 
 /datum/uplink_item/implants/spinaloverclock
 	name = "Neural Overclocker Implant"
-	desc = "Stimulates your central nervous system in order to enable you to perform muscle movements faster. Careful not to overuse it."
+	desc = "Stimulates your central nervous system in order to enable you to perform muscle movements faster. Careful not to overuse it. \
+			Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/spinalspeed
 	cost = 14
 	surplus = 0
@@ -351,8 +383,8 @@
 	desc = "An implant which will fold a Vxtvul hammer into your hands upon injection. \
 			This hammer can be retracted and wielded in two hands as an effective armor-piercing weapon. \
 			It can be charged by the user's concentration, which permits a single blow that will decimate construction, \
-			fling bodies, and heavily damage mechs. Vir'ln krx'tai, lost one."
-	cost = 14
+			fling bodies, and heavily damage mechs. Vir'ln krx'tai, lost one. Comes with an autosurgeon."
+	cost = 16
 	surplus = 5
 	progression_minimum = 35 MINUTES
 	item = /obj/item/autosurgeon/syndicate/syndie_hammer

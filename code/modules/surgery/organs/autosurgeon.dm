@@ -278,19 +278,6 @@
 	uses = 1
 
 
-/obj/item/autosurgeon/syndicate/muscle
-	starting_organ = /obj/item/organ/internal/cyberimp/arm/muscle
-
-/obj/item/autosurgeon/syndicate/muscle/single_use
-	uses = 1
-
-/obj/item/autosurgeon/syndicate/muscle/hidden
-	starting_organ = /obj/item/organ/internal/cyberimp/arm/muscle
-
-/obj/item/autosurgeon/syndicate/muscle/hidden/single_use
-	uses = 1
-
-
 /obj/item/autosurgeon/syndicate/thermal_eyes
 	starting_organ = /obj/item/organ/internal/eyes/robotic/thermals
 

@@ -827,30 +827,17 @@ effective or pretty fucking useless.
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
-	/// How many charges can the emag hold?
-	var/max_charges = 5
-	/// How many charges does the emag start with?
-	var/charges = 5
-	/// How fast (in seconds) does charges increase by 1?
-	var/recharge_rate = 0.1
 	/// Does usage require you to be in range?
 	prox_check = TRUE
+	var/type_whitelist //List of types
 
-/obj/item/card/emag/botemagger/afterattack(atom/target, mob/user, proximity)
+/obj/item/card/emag/botemagger/Initialize(mapload)
 	. = ..()
-	var/atom/A = target
-	if(!proximity && prox_check)
-		return
+	type_whitelist = list(typesof(/mob/living/basic/bot), typesof(/mob/living/simple_animal/bot)) //list of all acceptable typepaths that this device can affect
 
-	if(!A.emag_act(user, src) && ((charges + 1) > max_charges)) // This is here because some emag_act use sleep and that could mess things up.
-		charges++
-	if(!istype(target, /mob/living/simple_animal/bot/))
-		if(max_charges > 1)
-			to_chat(user, span_danger("\The [src] short-circuits while subverting the [target]!"))
-			max_charges--
-			return
-		if(max_charges <= 1)
-			to_chat(user, span_danger("\The [src] self-destructs while subverting the [target]!"))
-			qdel(src)
-			return
-
+/obj/item/card/emag/botemagger/can_emag(atom/target, mob/user)
+	for (var/list/subtypelist in type_whitelist)
+		if (target.type in subtypelist)
+			return TRUE
+	to_chat(user, span_warning("[src] is unable to interface with this. It only seems to fit into airlock electronics."))
+	return FALSE
