@@ -19200,16 +19200,6 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
-"hki" = (
-/obj/structure/cable,
-/obj/effect/step_trigger/sound_effect/something_wicked,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/station/maintenance/port/lesser)
 "hkm" = (
 /obj/machinery/door/airlock/medical,
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
@@ -101682,7 +101672,7 @@ tHh
 pXS
 jrY
 crU
-hki
+dht
 jUU
 ujt
 nAr

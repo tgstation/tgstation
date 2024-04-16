@@ -220,23 +220,3 @@
 
 	if(happens_once)
 		qdel(src)
-
-/obj/effect/step_trigger/sound_effect/something_wicked // funny
-	triggerer_only = TRUE
-	happens_once = TRUE
-	mobs_only = TRUE
-	volume = 40
-	sound = 'sound/misc/somethingwicked.ogg'
-	var/probability = 5
-
-/obj/effect/step_trigger/sound_effect/something_wicked/Trigger(mob/victim)
-	if(!victim.client || QDELETED(src))
-		return
-	if(!prob(probability))
-		qdel(src)
-		return
-	victim.balloon_alert(victim, "something wicked this way comes.") //its rare and creepy so uhh
-	return ..()
-
-/obj/effect/step_trigger/sound_effect/something_wicked/guaranteed
-	probability = 100
