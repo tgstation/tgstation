@@ -110,9 +110,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 
 	var/list/names = list()
 	if(isappearance)
-		var/static/list/virtual_appearance_vars
-		if(!virtual_appearance_vars)
-			virtual_appearance_vars = build_virtual_appearance_vars()
+		var/static/list/virtual_appearance_vars = build_virtual_appearance_vars()
 		names = virtual_appearance_vars.Copy()
 	else if(!islist)
 		for(var/varname in thing.vars)
