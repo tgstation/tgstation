@@ -47,14 +47,11 @@
 
 /obj/item/organ/internal/ears/apply_organ_damage(damage_amount, maximum, required_organ_flag)
 	. = ..()
-	if(organ_flags & ORGAN_FAILING)
-		deaf = max(deaf, 1)
+	update_temp_deafness()
 
 /obj/item/organ/internal/ears/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	if(deaf)
-		RegisterSignal(organ_owner, COMSIG_MOB_SAY, PROC_REF(adjust_speech))
-		ADD_TRAIT(organ_owner, TRAIT_DEAF, EAR_DAMAGE)
+	update_temp_deafness()
 
 /obj/item/organ/internal/ears/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
@@ -69,19 +66,28 @@
  */
 /obj/item/organ/internal/ears/proc/adjustEarDamage(ddmg = 0, ddeaf = 0)
 	if(owner.status_flags & GODMODE)
-		deaf = 0
-		REMOVE_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
-		UnregisterSignal(owner, COMSIG_MOB_SAY)
+		update_temp_deafness()
 		return
+
 	var/mod_damage = ddmg > 0 ? (ddmg * damage_multiplier) : ddmg
 	if(mod_damage)
-		set_organ_damage(clamp(damage + mod_damage, 0, maxHealth))
+		apply_organ_damage(mod_damage)
 	var/mod_deaf = ddeaf > 0 ? (ddeaf * damage_multiplier) : ddeaf
 	if(mod_deaf)
 		deaf = max(deaf + mod_deaf, 0)
-	// if we're failing we always have at least 1 deaf stack (and thus deafness)
+	update_temp_deafness()
+
+/// Updates status of deafness
+/obj/item/organ/internal/ears/proc/update_temp_deafness()
+	// if we're failing we always have at least some deaf stacks (and thus deafness)
 	if(organ_flags & ORGAN_FAILING)
 		deaf = max(deaf, 1 * damage_multiplier)
+
+	if(isnull(owner))
+		return
+
+	if(owner.status_flags & GODMODE)
+		deaf = 0
 
 	if(deaf)
 		if(!HAS_TRAIT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE))
