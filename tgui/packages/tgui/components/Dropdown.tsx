@@ -6,7 +6,7 @@ import { Button } from './Button';
 import { Icon } from './Icon';
 import { Popper } from './Popper';
 
-type DropdownEntry = {
+export type DropdownEntry = {
   displayText: ReactNode;
   value: string | number;
 };
@@ -33,7 +33,7 @@ type Props = {
   /** Disables the dropdown */
   disabled: boolean;
   /** Overwrites selection text with this. Good for objects etc. */
-  displayText: string;
+  displayText: ReactNode;
   /** Icon to display in dropdown button */
   icon: string;
   /** Angle of the icon */

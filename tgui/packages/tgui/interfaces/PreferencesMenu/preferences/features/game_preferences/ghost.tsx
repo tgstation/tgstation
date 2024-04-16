@@ -10,10 +10,10 @@ import {
   CheckboxInput,
   FeatureChoiced,
   FeatureChoicedServerData,
-  FeatureDropdownInput,
   FeatureToggle,
   FeatureValueProps,
 } from '../base';
+import { FeatureDropdownInput } from '../dropdowns';
 
 export const ghost_accs: FeatureChoiced = {
   name: 'Ghost accessories',
