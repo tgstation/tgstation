@@ -223,6 +223,9 @@
 	greyscale_config_inhand_right = /datum/greyscale_config/facescarf/inhands_right
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+/obj/item/clothing/mask/facescarf/attack_self(mob/user)
+	adjustmask(user)
+
 /obj/item/clothing/mask/facescarf/AltClick(mob/user)
 	..()
 	if(user.can_perform_action(src, NEED_DEXTERITY))
