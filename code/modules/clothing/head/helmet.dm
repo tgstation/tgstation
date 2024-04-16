@@ -567,6 +567,7 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/helmet_warlord
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEMASK|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	slowdown = 0.2
 
 /datum/armor/helmet_warlord
