@@ -95,6 +95,9 @@
 /obj/item/organ/internal/ears/proc/adjust_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
+	if(HAS_TRAIT_NOT_FROM(source, TRAIT_DEAF, EAR_DAMAGE))
+		return
+
 	var/message = speech_args[SPEECH_MESSAGE]
 	// Replace only end-of-sentence punctuation with exclamation marks (hence the empty space)
 	// We don't wanna mess with things like ellipses
