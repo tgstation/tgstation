@@ -8,19 +8,22 @@
 
 	var/turf/tile = isturf(target) ? target : get_turf(target)
 
-	if(!isturf(target) && !isobserver(src))
-		if(!can_perform_action(target, (target.interaction_flags_click | SILENT_ADJACENCY)))
-			return
+	if(isobserver(src) || isrevenant(src))
+		open_lootpanel(tile)
+		return
 
+	if(!isturf(target) && can_perform_action(target, (target.interaction_flags_click | SILENT_ADJACENCY)))
 		if(SEND_SIGNAL(target, COMSIG_CLICK_ALT, src) & CLICK_ACTION_ANY)
 			return
 
 		if(target.click_alt(src) & CLICK_ACTION_ANY)
 			return
 
-	if(!tile.Adjacent(src))
-		return
+	open_lootpanel(tile)
 
+
+/// Helper for opening the lootpanel
+/mob/proc/open_lootpanel(turf/target)
 	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING))
 		return
 
@@ -28,7 +31,7 @@
 	if(isnull(panel))
 		return
 
-	panel.open(tile)
+	panel.open(target)
 
 
 /**
