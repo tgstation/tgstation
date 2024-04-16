@@ -22,6 +22,7 @@ Passive gate is similar to the regular pump except:
 
 /obj/machinery/atmospherics/components/binary/passive_gate/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, REF(src))
 	register_context()
 
 /obj/machinery/atmospherics/components/binary/passive_gate/add_context(atom/source, list/context, obj/item/held_item, mob/user)

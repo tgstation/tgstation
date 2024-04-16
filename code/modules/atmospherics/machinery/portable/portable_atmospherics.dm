@@ -46,13 +46,16 @@
 	AddElement(/datum/element/climbable, climb_time = 3 SECONDS, climb_stun = 3 SECONDS)
 	AddElement(/datum/element/elevation, pixel_shift = 8)
 
+/obj/machinery/portable_atmospherics/on_deconstruction(disassembled)
+	if(nob_crystal_inserted)
+		new /obj/item/hypernoblium_crystal(src)
+
+	return ..()
+
 /obj/machinery/portable_atmospherics/Destroy()
 	disconnect()
 	air_contents = null
 	SSair.stop_processing_machine(src)
-
-	if(nob_crystal_inserted)
-		new /obj/item/hypernoblium_crystal(src)
 
 	return ..()
 

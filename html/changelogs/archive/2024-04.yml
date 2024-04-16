@@ -497,3 +497,27 @@
   kaylexis:
   - image: Updates old belt sprites. Mostly the bags, but some misc. ones as well
       like the chainsword and RPED
+2024-04-15:
+  AMyriad:
+  - image: Updated the ability icons used by AIs and station bots
+  AyIong:
+  - qol: General settings tab into TGchat, looks better now, and is more convenient
+      to use. Also, each button has a font written on it.
+  Ben10Omintrix:
+  - bugfix: minebots no longer bomb each other (and other miners) through landmines
+  - bugfix: minebot shields will no longer lose color in lower z levels
+  JohnFulpWillard:
+  - bugfix: Battle arcade's higher levels no longer gives you a "Gear" gear, and counterattacks
+      can now properly kill enemies.
+  - qol: Crayons can now draw up to 4 letters at a time per tile.
+  Thunder12345:
+  - spellcheck: Pre-Approved Cyborg Candidates are no longer "Cantidates"
+  jlsnow301:
+  - rscadd: Added a loot window for alt-clicking tiles.
+  - rscdel: Removed the item browser from the stat panel.
+2024-04-16:
+  Iajret:
+  - bugfix: wiring newly built SMESes should place new teminal under the player and
+      not under the SMES itself.
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: strip menu sensors change respects locked sensors

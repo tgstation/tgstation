@@ -89,6 +89,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	SIGNAL_HANDLER
 
 	toggletracking(user)
+	return COMPONENT_CANCEL_CLICK_ALT
 
 ///Toggles the tracking for the gps
 /datum/component/gps/item/proc/toggletracking(mob/user)
