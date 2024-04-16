@@ -75,6 +75,7 @@ multiple modular subtrees with behaviors
 
 /datum/ai_controller/Destroy(force)
 	UnpossessPawn(FALSE)
+	our_cells = null
 	set_movement_target(type, null)
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
@@ -132,10 +133,11 @@ multiple modular subtrees with behaviors
 	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 	RegisterSignal(pawn, COMSIG_QDELETING, PROC_REF(on_pawn_qdeleted))
-	RegisterSignal(pawn, COMSIG_GRID_UPDATED, PROC_REF(update_grid))
 
-	our_cells = new(interesting_dist, interesting_dist)
+	our_cells = new(interesting_dist, interesting_dist, 1)
 	set_new_cells()
+
+	RegisterSignal(pawn, COMSIG_MOVABLE_MOVED, PROC_REF(update_grid))
 
 /datum/ai_controller/proc/update_grid(datum/source, datum/spatial_grid_cell/new_cell)
 	SIGNAL_HANDLER
@@ -144,25 +146,24 @@ multiple modular subtrees with behaviors
 
 /datum/ai_controller/proc/set_new_cells()
 
-	for(var/datum/old_grid as anything in our_cells.member_cells)
+	var/list/cell_collections = our_cells.recalculate_cells(get_turf(pawn))
+
+	for(var/datum/old_grid as anything in cell_collections[2])
 		UnregisterSignal(old_grid, list(SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)))
 
-	our_cells.recalculate_cells(get_turf(pawn))
-
-	var/found_member
-	for(var/datum/spatial_grid_cell/new_grid as anything in our_cells.member_cells)
+	for(var/datum/spatial_grid_cell/new_grid as anything in cell_collections[1])
 		RegisterSignal(new_grid, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_enter))
 		RegisterSignal(new_grid, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_exit))
-		if(!found_member)
-			found_member = length(new_grid.client_contents)
 
-	if(ai_status == AI_STATUS_OFF)
+	recalculate_idle()
+
+/datum/ai_controller/proc/recalculate_idle()
+	if(!can_idle || ai_status == AI_STATUS_OFF)
 		return
-
-	if(found_member) //we've entered a new cell, is there anything interesting in there?
-		set_ai_status(AI_STATUS_ON)
-	else
-		set_ai_status(AI_STATUS_IDLE)
+	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
+		if(length(grid.client_contents))
+			return
+	set_ai_status(AI_STATUS_IDLE)
 
 /datum/ai_controller/proc/on_client_enter(datum/source, atom/target)
 	SIGNAL_HANDLER
@@ -173,13 +174,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/on_client_exit(datum/source, datum/exited)
 	SIGNAL_HANDLER
 
-	if(!can_idle)
-		return
-	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
-		if(length(grid.client_contents))
-			return
-	if(ai_status == AI_STATUS_ON)
-		set_ai_status(AI_STATUS_IDLE)
+	recalculate_idle()
 
 /// Sets the AI on or off based on current conditions, call to reset after you've manually disabled it somewhere
 /datum/ai_controller/proc/reset_ai_status()
