@@ -123,7 +123,7 @@
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/on_set_is_operational(old_value)
-	if(!is_operational)
+	if(!is_operational && !QDELETED(current_user))
 		unset_machine(current_user)
 
 /obj/machinery/computer/camera_advanced/proc/unset_machine(mob/M)
