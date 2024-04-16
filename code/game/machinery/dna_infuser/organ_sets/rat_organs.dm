@@ -103,7 +103,7 @@
 
 /obj/item/organ/internal/tongue/rat/modify_speech(datum/source, list/speech_args)
 	. = ..()
-	var/message = lowertext(speech_args[SPEECH_MESSAGE])
+	var/message = LOWER_TEXT(speech_args[SPEECH_MESSAGE])
 	if(message == "hi" || message == "hi.")
 		speech_args[SPEECH_MESSAGE] = "Cheesed to meet you!"
 	if(message == "hi?")

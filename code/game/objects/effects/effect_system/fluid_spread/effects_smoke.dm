@@ -431,7 +431,7 @@
 		contained_reagents += "[reagent.volume]u [reagent]"
 
 	var/where = "[AREACOORD(location)]"
-	var/contained = length(contained_reagents) ? "[contained_reagents.Join(", ", " \[", "\]")] @ [chemholder.chem_temp]K" : null
+	var/contained = length(contained_reagents) ? "\[[contained_reagents.Join(", ")]\] @ [chemholder.chem_temp]K" : null
 	var/area/fluid_area = get_area(location)
 	if(carry.my_atom?.fingerprintslast) //Some reagents don't have a my_atom in some cases
 		var/mob/M = get_mob_by_key(carry.my_atom.fingerprintslast)
