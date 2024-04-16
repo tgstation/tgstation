@@ -13,6 +13,7 @@ import { globalStore } from '../backend';
 import { Icon } from '../components';
 import { BoxProps } from '../components/Box';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
+import { useDebug } from '../debug';
 import { toggleKitchenSink } from '../debug/actions';
 import {
   dragStartHandler,
@@ -48,10 +49,8 @@ export const Window = (props: Props) => {
     height,
   } = props;
 
-  const { config, suspended, debug } = useBackend();
-  if (suspended) {
-    return null;
-  }
+  const { config, suspended } = useBackend();
+  const { debugLayout = false } = useDebug();
 
   useEffect(() => {
     const updateGeometry = () => {
@@ -80,11 +79,6 @@ export const Window = (props: Props) => {
     };
   }, [width, height]);
 
-  let debugLayout = false;
-  if (debug) {
-    debugLayout = debug.debugLayout;
-  }
-
   const dispatch = globalStore.dispatch;
   const fancy = config.window?.fancy;
 
@@ -95,11 +89,11 @@ export const Window = (props: Props) => {
       ? config.status < UI_DISABLED
       : config.status < UI_INTERACTIVE);
 
-  return (
+  return suspended ? null : (
     <Layout className="Window" theme={theme}>
       <TitleBar
         className="Window__titleBar"
-        title={!suspended && (title || decodeHtmlEntities(config.title))}
+        title={title || decodeHtmlEntities(config.title)}
         status={config.status}
         fancy={fancy}
         onDragStart={dragStartHandler}

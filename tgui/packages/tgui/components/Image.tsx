@@ -1,12 +1,14 @@
-import { ReactNode } from 'react';
+import { useRef } from 'react';
 
 import { BoxProps, computeBoxProps } from './Box';
-import { Tooltip } from './Tooltip';
 
 type Props = Partial<{
-  fixBlur: boolean; // true is default, this is an ie thing
-  objectFit: 'contain' | 'cover'; // fill is default
-  tooltip: ReactNode;
+  /** True is default, this fixes an ie thing */
+  fixBlur: boolean;
+  /** False by default. Good if you're fetching images on UIs that do not auto update. This will attempt to fix the 'x' icon 5 times. */
+  fixErrors: boolean;
+  /** Fill is default. */
+  objectFit: 'contain' | 'cover';
 }> &
   IconUnion &
   BoxProps;
@@ -22,16 +24,18 @@ type IconUnion =
       src?: string;
     };
 
+const maxAttempts = 5;
+
 /** Image component. Use this instead of Box as="img". */
-export const Image = (props: Props) => {
+export function Image(props: Props) {
   const {
-    className,
     fixBlur = true,
+    fixErrors = false,
     objectFit = 'fill',
     src,
-    tooltip,
     ...rest
   } = props;
+  const attempts = useRef(0);
 
   const computedProps = computeBoxProps(rest);
   computedProps['style'] = {
@@ -40,11 +44,20 @@ export const Image = (props: Props) => {
     objectFit,
   };
 
-  let content = <img className={className} src={src} {...computedProps} />;
+  return (
+    <img
+      onError={(event) => {
+        if (fixErrors && attempts.current < maxAttempts) {
+          const imgElement = event.currentTarget;
 
-  if (tooltip) {
-    content = <Tooltip content={tooltip}>{content}</Tooltip>;
-  }
-
-  return content;
-};
+          setTimeout(() => {
+            imgElement.src = `${src}?attempt=${attempts.current}`;
+            attempts.current++;
+          }, 1000);
+        }
+      }}
+      src={src}
+      {...computedProps}
+    />
+  );
+}
