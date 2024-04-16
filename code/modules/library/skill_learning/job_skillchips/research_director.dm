@@ -1,3 +1,5 @@
+#define SKILLCHIP_CATEGORY_GENERAL "general"
+
 /obj/item/skillchip/research_director
 	name = "R.D.S.P.L.X. skillchip"
 	desc = "Knowledge of how to solve the ancient conumdrum; what happens when an unstoppable force meets an immovable object."
@@ -7,3 +9,4 @@
 	skill_icon = "dumbbell"
 	activate_message = "<span class='notice'>You realise if you apply the correct force, at the correct angle, it is possible to make the immovable permanently movable.</span>"
 	deactivate_message = "<span class='notice'>You forget how to permanently anchor a paradoxical object.</span>"
+	chip_category = SKILLCHIP_CATEGORY_GENERAL
