@@ -162,13 +162,19 @@ multiple modular subtrees with behaviors
 
 	recalculate_idle()
 
-/datum/ai_controller/proc/recalculate_idle()
-	if(!can_idle || ai_status == AI_STATUS_OFF)
-		return
+/datum/ai_controller/proc/should_idle()
+	if(!can_idle)
+		return FALSE
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
 		if(length(grid.client_contents))
-			return
-	set_ai_status(AI_STATUS_IDLE)
+			return FALSE
+	return TRUE
+
+/datum/ai_controller/proc/recalculate_idle()
+	if(ai_status == AI_STATUS_OFF)
+		return
+	if(should_idle())
+		set_ai_status(AI_STATUS_IDLE)
 
 /datum/ai_controller/proc/on_client_enter(datum/source, atom/target)
 	SIGNAL_HANDLER
@@ -191,6 +197,7 @@ multiple modular subtrees with behaviors
  * Returns AI_STATUS_ON otherwise.
  */
 /datum/ai_controller/proc/get_expected_ai_status()
+
 	if (!ismob(pawn))
 		return AI_STATUS_ON
 
@@ -210,6 +217,8 @@ multiple modular subtrees with behaviors
 #endif
 	if(!length(SSmobs.clients_by_zlevel[pawn_turf.z]))
 		return AI_STATUS_OFF
+	if(should_idle())
+		return AI_STATUS_IDLE
 	return AI_STATUS_ON
 
 /datum/ai_controller/proc/get_current_turf()
