@@ -143,5 +143,3 @@ where refinery and wooping_teleport are modifications of that same electric dril
 
 paper_flip.ogg is made by gynation from Freesound.org, CC0
 https://freesound.org/people/gynation/sounds/82378/
-
-something_wicked.ogg is taken from https://store.steampowered.com/app/1229490/ULTRAKILL/
