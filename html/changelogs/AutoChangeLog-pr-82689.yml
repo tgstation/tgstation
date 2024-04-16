@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - sound: "Nightmare has a new sound effect for entering/exiting shadow jaunt. It also no longer can be heard through walls."
