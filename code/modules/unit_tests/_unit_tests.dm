@@ -116,6 +116,7 @@
 #include "client_colours.dm"
 #include "closets.dm"
 #include "clothing_under_armor_subtype_check.dm"
+#include "combat_welder.dm"
 #include "combat.dm"
 #include "component_tests.dm"
 #include "confusion.dm"
