@@ -1,3 +1,6 @@
+#define ICON_STATE_CHECKED 1 /// this dmi is checked. We don't check this one anymore.
+#define ICON_STATE_NULL 2 /// this dmi has null-named icon_state, allowing it to show a sprite on vv editor.
+
 /client/proc/debug_variables(datum/thing in world)
 	set category = "Debug"
 	set name = "View Variables"
@@ -33,8 +36,6 @@
 			no_icon = TRUE
 
 	else if(isimage(thing) || isappearance)
-		#define ICON_STATE_CHECKED 1
-		#define ICON_STATE_NULL 2
 		// icon_state=null shows first image even if dmi has no icon_state for null name.
 		// This list remembers which dmi has null icon_state, to determine if icon_state=null should display a sprite
 		// (NOTE: icon_state="" is correct, but saying null is obvious)
@@ -54,8 +55,6 @@
 
 				if(dmi_nullstate_checklist[icon_filename_text] == ICON_STATE_NULL)
 					sprite = icon(image_object.icon, image_object.icon_state)
-		#undef ICON_STATE_CHECKED
-		#undef ICON_STATE_NULL
 
 	var/sprite_text
 	if(sprite)
@@ -314,3 +313,6 @@ datumrefresh=[refid];[HrefToken()]'>Refresh</a>
 
 /client/proc/vv_update_display(datum/thing, span, content)
 	src << output("[span]:[content]", "variables[REF(thing)].browser:replace_span")
+
+#undef ICON_STATE_CHECKED
+#undef ICON_STATE_NULL
