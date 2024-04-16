@@ -473,14 +473,14 @@
 /datum/config_entry/number/ipintel_rate_minute
 	default = 15
 
+/datum/config_entry/number/ipintel_rate_day
+	default = 500
+
 /datum/config_entry/number/ipintel_cache_length
 	default = 7
 
 /datum/config_entry/number/ipintel_exempt_playtime_living
 	default = 0
-
-/datum/config_entry/number/ipintel_rate_day
-	default = 500
 
 /datum/config_entry/flag/aggressive_changelog
 
