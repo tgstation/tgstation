@@ -159,6 +159,10 @@ GUEST_BAN
 IPINTEL_REJECT_BAD
 ## Whether clients which cannot be checked due to an error of some form will be denied
 #IPINTEL_REJECT_UNKNOWN
+## How long to store results in the cache before they must be retrieved again. IN DAYS.
+#IPINTEL_CACHE_LENGTH 7
+## How many minutes of living playtime to be automatically exempt from IPIntel. 0 for never.
+#IPINTEL_EXEMPT_PLAYTIME_LIVING 0
 
 ## Uncomment to allow web client connections
 #ALLOW_WEBCLIENT

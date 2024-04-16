@@ -2,20 +2,25 @@ SUBSYSTEM_DEF(ipintel)
 	name = "XKeyScore"
 	init_order = INIT_ORDER_XKEYSCORE
 	flags = SS_INIT_NO_NEED|SS_NO_FIRE
-	/// The email used in conjuction with https://check.getipintel.net/check.php
-	var/contact_email
 	/// The threshold for probability to be considered a VPN and/or bad IP
 	var/probability_threshold
-	/// The store for rate limiting
-	var/list/rate_limits
-	/// Cache for previously queried IP addresses and those stored in the database
-	var/list/datum/ip_intel/cached_queries = list()
+	/// The email used in conjuction with https://check.getipintel.net/check.php
+	var/contact_email
 	/// Maximum number of queries per minute
 	var/max_queries_per_minute
 	/// Maximum number of queries per day
 	var/max_queries_per_day
 	/// Query base
 	var/query_base
+	/// The length of time (days) to cache IP intel
+	var/ipintel_cache_length
+	/// The living playtime (minutes) for players to be exempt from IPIntel checks
+	var/exempt_living_playtime
+
+	/// Cache for previously queried IP addresses and those stored in the database
+	var/list/datum/ip_intel/cached_queries = list()
+	/// The store for rate limiting
+	var/list/rate_limits
 
 /// The ip intel for a given address
 /datum/ip_intel
@@ -26,21 +31,40 @@ SUBSYSTEM_DEF(ipintel)
 	var/date
 
 /datum/controller/subsystem/ipintel/Initialize()
-	var/config_probability = CONFIG_GET(number/ipintel_rating_bad)
-	var/config_contact = CONFIG_GET(string/ipintel_email)
-	var/config_minute_rate = CONFIG_GET(number/ipintel_rate_minute)
-	var/config_day_rate = CONFIG_GET(number/ipintel_rate_day)
-	var/config_query_base = CONFIG_GET(string/ipintel_base)
-	if(isnull(config_query_base) || config_minute_rate < 0 || config_day_rate < 0 || config_probability < 0 || config_probability > 1 || isnull(config_contact) || !findtext(config_contact, "@"))
-		stack_trace("invalid probability threshold for ipintel_rating_bad")
-		message_admins("IPIntel will not be activated, invalid configuration.")
+	var/list/fail_messages = list()
+
+	probability_threshold = CONFIG_GET(number/ipintel_rating_bad)
+	if(probability_threshold < 0 || probability_threshold > 1)
+		fail_messages += list("invalid probability threshold")
+
+	contact_email = CONFIG_GET(string/ipintel_email)
+	if(isnull(contact_email) || !findtext(contact_email, "@"))
+		fail_messages += list("invalid contact email")
+
+	var/max_queries_per_minute = CONFIG_GET(number/ipintel_rate_minute)
+	var/max_queries_per_day = CONFIG_GET(number/ipintel_rate_day)
+	if(max_queries_per_minute < 0 || max_queries_per_day < 0)
+		fail_messages += list("invalid rate limits")
+
+	var/query_base = CONFIG_GET(string/ipintel_base)
+	if(isnull(query_base))
+		fail_messages += list("invalid query base")
+
+	var/ipintel_cache_length = CONFIG_GET(number/ipintel_cache_length)
+	if(ipintel_cache_length < 0)
+		fail_messages += list("invalid cache length")
+
+	var/exempt_living_playtime = CONFIG_GET(number/ipintel_exempt_living_playtime)
+	if(exempt_living_playtime < 0)
+		fail_messages += list("invalid exempt living playtime")
+
+	if(length(fail_messages))
+		message_admins("IPIntel: Initialization failed check logs!")
+		logger.Log(LOG_CATEGORY_GAME_ACCESS, "IPIntel failed to initialize.", list(
+			"fail_messages" = fail_messages,
+		))
 		return SS_INIT_FAILURE
 
-	probability_threshold = config_probability
-	contact_email = config_contact
-	max_queries_per_minute = config_minute_rate
-	max_queries_per_day = config_day_rate
-	query_base = config_query_base
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ipintel/stat_entry(msg)
@@ -122,8 +146,11 @@ SUBSYSTEM_DEF(ipintel)
 	qdel(query)
 
 /datum/controller/subsystem/ipintel/proc/fetch_cached_ip_intel(address)
+	var/date_restrictor
+	if(ipintel_cache_length > 0)
+		date_restrictor = " AND date > DATE_SUB(NOW(), INTERVAL [ipintel_cache_length] DAY)"
 	var/datum/db_query/query = SSdbcore.NewQuery(
-		"SELECT * FROM [format_table_name("ipintel")] WHERE ip = INET_ATON(:address)", list(
+		"SELECT * FROM [format_table_name("ipintel")] WHERE ip = INET_ATON(:address)[date_restrictor]", list(
 			"address" = address
 		)
 	)
@@ -146,6 +173,16 @@ SUBSYSTEM_DEF(ipintel)
 	intel.address = address
 	return TRUE
 
+/datum/controller/subsystem/ipintel/proc/is_exempt(client/player)
+	if(exempt_living_playtime > 0)
+		var/list/play_records = player.prefs.exp
+		if (!play_records.len)
+			player.set_exp_from_db()
+			play_records = player.prefs.exp
+		if(length(play_records) && play_records[EXP_TYPE_LIVING] > exempt_living_playtime)
+			return TRUE
+	return FALSE
+
 /datum/controller/subsystem/ipintel/proc/is_whitelisted(ckey)
 	var/datum/db_query/query = SSdbcore.NewQuery(
 		"SELECT * FROM [format_table_name("ipintel_whitelist")] WHERE ckey = :ckey", list(
@@ -158,11 +195,13 @@ SUBSYSTEM_DEF(ipintel)
 		qdel(query)
 		return FALSE
 	query.NextRow()
-	return !!query.item
+	return !!query.item // if they have a row, they are whitelisted
 
 ADMIN_VERB(ipintel_allow, R_BAN, "Whitelist Player VPN", "Allow a player to connect even if they are using a VPN.", ADMIN_CATEGORY_IPINTEL, ckey as text)
 	if(SSipintel.is_whitelisted(ckey))
+		to_chat(user, "Player is already whitelisted.")
 		return
+
 	var/datum/db_query/query = SSdbcore.NewQuery(
 		"INSERT INTO [format_table_name("ipintel_whitelist")] ( \
 			ckey, \
@@ -182,6 +221,7 @@ ADMIN_VERB(ipintel_allow, R_BAN, "Whitelist Player VPN", "Allow a player to conn
 
 ADMIN_VERB(ipintel_revoke, R_BAN, "Revoke Player VPN Whitelist", "Revoke a player's VPN whitelist.", ADMIN_CATEGORY_IPINTEL, ckey as text)
 	if(!SSipintel.is_whitelisted(ckey))
+		to_chat(user, "Player is not whitelisted.")
 		return
 	var/datum/db_query/query = SSdbcore.NewQuery(
 		"DELETE FROM [format_table_name("ipintel_whitelist")] WHERE ckey = :ckey", list(
@@ -194,7 +234,7 @@ ADMIN_VERB(ipintel_revoke, R_BAN, "Revoke Player VPN Whitelist", "Revoke a playe
 	message_admins("IPINTEL: [key_name_admin(user)] has revoked the VPN whitelist for '[ckey]'")
 
 /client/proc/check_ip_intel()
-	if(SSipintel.is_whitelisted(ckey))
+	if(SSipintel.is_exempt_or_whitelisted(src))
 		return
 
 	var/intel_state = SSipintel.get_address_intel_state(address)
