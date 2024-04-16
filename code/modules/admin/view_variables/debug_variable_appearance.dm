@@ -44,9 +44,11 @@
 	for(var/each in dummy_image.vars) // try to inherit var list from /image
 		if(each in unused_var_names)
 			continue
-		. += each
+		used_variables += each
 	del(dummy_image)
 	dummy_image = null
+
+	return used_variables
 
 /// appearance type needs a manual var referencing because it doesn't have "vars" variable internally.
 /// There's no way doing this in a fancier way.
