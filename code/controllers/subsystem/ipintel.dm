@@ -112,7 +112,7 @@ SUBSYSTEM_DEF(ipintel)
 	rate_limits[IPINTEL_RATE_LIMIT_MINUTE] += 1
 	rate_limits[IPINTEL_RATE_LIMIT_DAY] += 1
 
-	var/query_base = "https://[query_base]/check.php?ip="
+	var/query_base = "https://[src.query_base]/check.php?ip="
 	var/query = "[query_base][address]&contact=[contact_email]&flags=b&format=json"
 
 	var/datum/http_request/request = new
