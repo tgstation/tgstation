@@ -228,8 +228,8 @@
 	attack_verb_simple = list("attack", "poke", "jab")
 	throwforce = 25
 	demolition_mod = 1
-	wound_bonus = 0
-	bare_wound_bonus = 20
+	wound_bonus = 5
+	bare_wound_bonus = 25
 	throw_range = 9
 	throw_speed = 5
 	sharpness = NONE // we break bones instead of cutting flesh
