@@ -226,9 +226,14 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	interaction_flags_click = NEED_DEXTERITY
 
+/obj/item/clothing/mask/facescarf/attack_self(mob/user)
+	adjustmask(user)
+
+
 /obj/item/clothing/mask/facescarf/click_alt(mob/user)
 	adjustmask(user)
 	return CLICK_ACTION_SUCCESS
+
 
 /obj/item/clothing/mask/facescarf/examine(mob/user)
 	. = ..()

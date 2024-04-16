@@ -68,10 +68,9 @@
 			coinvalues["[cointype]"] = C.get_item_credit_value()
 			qdel(C) //Sigh
 
-/obj/machinery/computer/slot_machine/Destroy()
+/obj/machinery/computer/slot_machine/on_deconstruction(disassembled)
 	if(balance)
 		give_payout(balance)
-	return ..()
 
 /obj/machinery/computer/slot_machine/process(seconds_per_tick)
 	. = ..() //Sanity checks.

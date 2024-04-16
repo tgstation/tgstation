@@ -34,6 +34,13 @@
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
 	RegisterSignal(new_pawn, COMSIG_BOT_RESET, PROC_REF(reset_bot))
+	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_BOT_SUMMON_TARGET), PROC_REF(clear_summon))
+
+/datum/ai_controller/basic_controller/bot/proc/clear_summon()
+	SIGNAL_HANDLER
+
+	var/mob/living/basic/bot/bot_pawn = pawn
+	bot_pawn.bot_reset()
 
 /datum/ai_controller/basic_controller/bot/able_to_run()
 	var/mob/living/basic/bot/bot_pawn = pawn

@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - admin: "Reactivating an anomaly core via the anomaly releaser is now logged."
+  - bugfix: "Fixes various bugs related to dimensional/spectral anomalies moving when they should not."

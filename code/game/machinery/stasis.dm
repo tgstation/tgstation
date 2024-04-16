@@ -23,9 +23,6 @@
 	. = ..()
 	AddElement(/datum/element/elevation, pixel_shift = 6)
 
-/obj/machinery/stasis/Destroy()
-	. = ..()
-
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.")
