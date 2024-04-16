@@ -34,7 +34,7 @@ const FutureStationTraitsPage = (props) => {
   const { act, data } = useBackend<StationTraitsData>();
   const { future_station_traits } = data;
 
-  const [selectedTrait, setSelectedTrait] = useState<string | undefined>();
+  const [selectedTrait, setSelectedTrait] = useState<string>('');
 
   const traitsByName = Object.fromEntries(
     data.valid_station_traits.map((trait) => {
@@ -50,9 +50,9 @@ const FutureStationTraitsPage = (props) => {
       <Stack fill>
         <Stack.Item grow>
           <Dropdown
-            displayText={!selectedTrait && 'Select trait to add...'}
             onSelected={setSelectedTrait}
             options={traitNames}
+            placeholder="Select trait to add..."
             selected={selectedTrait}
             width="100%"
           />
