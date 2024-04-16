@@ -541,11 +541,11 @@
 
 /obj/item/clothing/head/helmet/military
 	name = "Crude Helmet"
-	desc = "A cheaply made kettle helmet with an added plate to protect the face."
+	desc = "A cheaply made kettle helmet with an added faceplate to protect your eyes and mouth."
 	icon_state = "military"
 	inhand_icon_state = "knight_helmet"
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	strip_delay = 80
 	dog_fashion = null
 	armor_type = /datum/armor/helmet_military
@@ -559,6 +559,10 @@
 	fire = 10
 	acid = 50
 	wound = 20
+
+/obj/item/clothing/head/helmet/military/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
 
 /obj/item/clothing/head/helmet/knight/warlord
 	name = "golden barbute helmet"
