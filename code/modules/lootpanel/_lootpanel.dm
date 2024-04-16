@@ -58,7 +58,7 @@
 	if(!source_turf.Adjacent(user))
 		return UI_CLOSE
 
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return UI_DISABLED
 
 	return UI_INTERACTIVE
