@@ -33,10 +33,10 @@
 	var/succeeded = do_after(living_user, 8 SECONDS, src)
 	occupied = FALSE
 	if (!succeeded)
-		return 
+		return
 	living_user.mind?.adjust_experience(/datum/skill/fitness, 10)
 	living_user.apply_status_effect(/datum/status_effect/exercised)
-	new /obj/item/boulder/gulag(get_turf(living_user))
+	new spawned_boulder(get_turf(living_user))
 	living_user.visible_message(span_notice("[living_user] hauls a boulder out of [src]."))
 	living_user.apply_damage(120, STAMINA)
 	playsound(src, 'sound/weapons/genhit.ogg', vol = 50, vary = TRUE)
