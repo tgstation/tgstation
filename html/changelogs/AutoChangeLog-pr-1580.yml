@@ -1,0 +1,8 @@
+author: "KittyNoodle"
+delete-after: True
+changes:
+  - balance: "Hardlight spears can no longer be used with scarp."
+  - balance: "Hardlight spear damage and wounding reduced."
+  - balance: "Hardlight spear homing removed."
+  - balance: "Hardlight spear embed chance halved"
+  - balance: "Hardlight spears now have cooldown after firing before you can use another spear."
