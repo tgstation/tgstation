@@ -1227,8 +1227,8 @@
 			var/particle_chance = ((PARTICLE_CHANCE_CONSTANT)/(reaction_energy-PARTICLE_CHANCE_CONSTANT)) + 1//Asymptopically approaches 100% as the energy of the reaction goes up.
 			if(prob(PERCENT(particle_chance)))
 				location.fire_nuclear_particle()
-			var/rad_power = max((FUSION_RAD_COEFFICIENT/instability) + 5000, 0)
-			radiation_pulse(location,rad_power)
+			var/rad_power = max((FUSION_RAD_COEFFICIENT/instability) + 250, 15000) //Wow!
+			radiation_pulse(location, rand(1,30), 9, 60, 2 SECONDS, rad_power, 1) // Nonmodular. Fixes fusion going wacko mode - makes it significantly harder to irradiate people through walls, and fixes the range issue.
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY && (air.temperature <= FUSION_MAXIMUM_TEMPERATURE || reaction_energy <= 0))	//If above FUSION_MAXIMUM_TEMPERATURE, will only adjust temperature for endothermic reactions.
 			air.temperature = clamp(((air.temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB,INFINITY)
