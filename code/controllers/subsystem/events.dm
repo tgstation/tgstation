@@ -84,8 +84,8 @@ SUBSYSTEM_DEF(events)
 		else
 			event_roster[event_to_check] = event_to_check.weight
 
-	var/datum/round_event_control/event_to_run = pick_weight(event_roster)
-	if(!isnull(event_to_run))
+	if(length(event_roster) > 0)
+		var/datum/round_event_control/event_to_run = pick_weight(event_roster)
 		TriggerEvent(event_to_run)
 
 ///Does the last pre-flight checks for the passed event, and runs it if the event is ready.
