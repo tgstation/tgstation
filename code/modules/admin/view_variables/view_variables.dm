@@ -16,7 +16,7 @@
 
 	var/isappearance = isappearance(thing)
 	var/islist = islist(thing) || (!isdatum(thing) && hascall(thing, "Cut")) // Some special lists dont count as lists, but can be detected by if they have list procs
-	if(!islist && !isdatum(thing) && !isappearance(thing))
+	if(!islist && !isdatum(thing) && !isappearance)
 		return
 
 	var/title = ""

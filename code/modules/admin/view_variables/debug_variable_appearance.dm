@@ -196,6 +196,7 @@
 /proc/vv_get_dropdown_appearance(image/thing)
 	. = list()
 	// unless you have a good reason to add a vv option for /appearance,
-	// /appearance type shouldn't alloow any vv option. Even "Mark Datum" is a questionable behaviour here.
+	// /appearance type shouldn't allow any vv option. Even "Mark Datum" is a questionable behaviour here.
 	VV_DROPDOWN_OPTION_APPEARANCE(thing, "", "---")
 	VV_DROPDOWN_OPTION_APPEARANCE(thing, "", "VV option not allowed")
+	return .
