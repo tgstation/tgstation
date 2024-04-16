@@ -13688,7 +13688,9 @@
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "fkh" = (
-/obj/effect/spawner/random/structure/grille,
+/obj/effect/spawner/random/structure/grille{
+	loot = list(/obj/structure/grille = 4, /obj/structure/grille/broken = 1)
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/department/bridge)
@@ -29047,6 +29049,7 @@
 /area/station/science/xenobiology)
 "kQj" = (
 /obj/item/radio/intercom/directional/east,
+/obj/structure/closet/firecloset,
 /turf/open/floor/iron/textured,
 /area/station/hallway/primary/central)
 "kQt" = (
