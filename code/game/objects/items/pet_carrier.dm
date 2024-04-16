@@ -66,9 +66,9 @@
 		open = TRUE
 	update_appearance()
 
-/obj/item/pet_carrier/AltClick(mob/living/user)
-	if(open || !user.can_perform_action(src))
-		return
+/obj/item/pet_carrier/click_alt(mob/living/user)
+	if(open)
+		return CLICK_ACTION_BLOCKING
 	locked = !locked
 	to_chat(user, span_notice("You flip the lock switch [locked ? "down" : "up"]."))
 	if(locked)
@@ -76,6 +76,7 @@
 	else
 		playsound(user, 'sound/machines/boltsup.ogg', 30, TRUE)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/pet_carrier/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(user.combat_mode || !isliving(interacting_with))
