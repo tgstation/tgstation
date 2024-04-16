@@ -170,7 +170,7 @@
 		..()
 
 /atom/proc/borg_click_alt(mob/living/silicon/robot/user)
-	user.base_click_alt(user)
+	user.base_click_alt(src)
 	return
 
 /obj/machinery/door/airlock/borg_click_alt(mob/living/silicon/robot/user) // Eletrifies doors. Forwards to AI code.
