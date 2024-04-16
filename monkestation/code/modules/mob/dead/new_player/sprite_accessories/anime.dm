@@ -165,3 +165,13 @@
 /datum/sprite_accessory/anime_bottom/bunny
 	name = "Bunny Puff"
 	icon_state = "playbunny"
+
+/datum/sprite_accessory/anime_bottom/mouse
+	name = "Mouse Tail"
+	icon_state = "mouse"
+	color_src = null
+
+/datum/sprite_accessory/anime_bottom/plug
+	name = "Plug"
+	icon_state = "plug"
+	hasinner = TRUE
