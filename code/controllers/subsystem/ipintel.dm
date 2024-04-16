@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(ipintel)
 	if(ipintel_cache_length < 0)
 		fail_messages += list("invalid cache length")
 
-	var/exempt_living_playtime = CONFIG_GET(number/ipintel_exempt_living_playtime)
+	var/exempt_living_playtime = CONFIG_GET(number/ipintel_exempt_playtime_living)
 	if(exempt_living_playtime < 0)
 		fail_messages += list("invalid exempt living playtime")
 
@@ -234,7 +234,7 @@ ADMIN_VERB(ipintel_revoke, R_BAN, "Revoke Player VPN Whitelist", "Revoke a playe
 	message_admins("IPINTEL: [key_name_admin(user)] has revoked the VPN whitelist for '[ckey]'")
 
 /client/proc/check_ip_intel()
-	if(SSipintel.is_exempt_or_whitelisted(src))
+	if(SSipintel.is_exempt(src) || SSipintel.is_whitelisted(ckey))
 		return
 
 	var/intel_state = SSipintel.get_address_intel_state(address)
