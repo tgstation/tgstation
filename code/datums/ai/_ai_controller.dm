@@ -146,7 +146,12 @@ multiple modular subtrees with behaviors
 
 /datum/ai_controller/proc/set_new_cells()
 
-	var/list/cell_collections = our_cells.recalculate_cells(get_turf(pawn))
+	var/turf/our_turf = get_turf(pawn)
+
+	if(isnull(our_turf))
+		return
+
+	var/list/cell_collections = our_cells.recalculate_cells(our_turf)
 
 	for(var/datum/old_grid as anything in cell_collections[2])
 		UnregisterSignal(old_grid, list(SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)))
