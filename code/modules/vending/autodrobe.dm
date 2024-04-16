@@ -14,6 +14,8 @@
 			"products" = list(
 				/obj/item/clothing/under/costume/gladiator = 1,
 				/obj/item/clothing/head/helmet/gladiator = 1,
+				/obj/item/clothing/head/viking/fake_helmet = 1, //monkestation edit
+				/obj/item/clothing/under/viking/fake_tunic = 1, //monkestation edit
 				/obj/item/clothing/suit/toggle/labcoat/mad = 1,
 				/obj/item/clothing/suit/bio_suit/plaguedoctorsuit = 1,
 				/obj/item/clothing/head/bio_hood/plague = 1,

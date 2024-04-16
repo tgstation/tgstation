@@ -97,6 +97,18 @@
 	clothing_flags = STOPSPRESSUREDAMAGE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
+/obj/item/clothing/under/viking/fake_tunic
+	name = "viking pelt"
+	desc = "A faux wolf pelt made to cosplay with"
+	worn_icon_state = "pelts"
+	icon_state = "pelts"
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/clothing/head/viking/fake_helmet
+	name = "foam helmet"
+	desc = "a foam helmet that looks like that of a vikings helmet"
+	worn_icon_state = "honeless_helm_worn"
+	icon_state = "hornless_helm_item"
 /datum/armor/viking
 	melee = 45
 	bullet = 30
