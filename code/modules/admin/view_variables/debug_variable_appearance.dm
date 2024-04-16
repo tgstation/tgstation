@@ -45,7 +45,7 @@
 
 /// appearance type needs a manual var referencing because it doesn't have "vars" variable internally.
 /// There's no way doing this in a fancier way.
-/proc/debug_variable_appearance(var_name, atom/movable/appearance)
+/proc/debug_variable_appearance(var_name, atom/movable/appearance) // it isn't /movable. It had to be at it to use NAMEOF macro
 	var/value
 	try
 		switch(var_name) // Welcome to this curse
@@ -95,8 +95,8 @@
 				value = appearance.mouse_drag_pointer
 			if(NAMEOF(appearance, mouse_drop_pointer))
 				value = appearance.mouse_drop_pointer
-			if(NAMEOF(appearance, mouse_drop_zone))
-				value = appearance.mouse_drop_zone
+			if("mouse_drop_zone") // OpenDream didn't implement this yet.
+				value = appearance:mouse_drop_zone
 			if(NAMEOF(appearance, mouse_opacity))
 				value = appearance.mouse_opacity
 			if(NAMEOF(appearance, name))
@@ -105,7 +105,7 @@
 				value = appearance.opacity
 			if(NAMEOF(appearance, overlays))
 				value = appearance.overlays
-			if("override")
+			if("override") // only /image has this
 				var/image/image_appearance = appearance
 				value = image_appearance.override
 			if(NAMEOF(appearance, pixel_x))
@@ -148,14 +148,14 @@
 				// DM compiler complains this
 
 			// I am not sure if these will be ever detected, but I made a connection just in case.
-			if(NAMEOF(appearance, contents))
+			if(NAMEOF(appearance, contents)) // It's not a thing, but I don't believe how DM will change /appearance in future.
 				value = appearance.contents
-			if(NAMEOF(appearance, vis_contents))
+			if(NAMEOF(appearance, loc)) // same reason above
+				value = appearance.loc
+			if(NAMEOF(appearance, vis_contents)) // same reason above
 				value = appearance.vis_contents
 			if(NAMEOF(appearance, vis_flags)) // DM document says /appearance has this, but it throws error
 				value = appearance.vis_flags
-			if(NAMEOF(appearance, loc))
-				value = appearance.loc
 
 			// we wouldn't need these, but let's these trackable anyway...
 			if(NAMEOF(appearance, density))
