@@ -54,7 +54,7 @@
 
 	var/obj/item/I = AM
 	var/result
-	if(I.grind_results || I.reagents)
+	if(I.grind_results)
 		result = I.grind(reagents, usr)
 	else
 		result = I.juice(reagents, usr)
