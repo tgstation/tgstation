@@ -5,37 +5,42 @@
  * 		/appearance references are not capable of executing procs, because these are not real /image
  * 		This is why these global procs exist. Welcome to the curse.
  */
+#define ADD_UNUSED_VAR(varlist, thing, varname) if(NAMEOF(##thing, ##varname)) ##varlist += #varname
+
 /// Makes a var list of /appearance type actually uses. This will be only called once.
 /proc/build_virtual_appearance_vars()
-	. = list("vis_flags") // manual listing.
-	var/list/unused_var_names = list(
-		"appearance", // it only does self-reference
-		"x","y","z", // these are always 0
-		"weak_reference", // it's not a good idea to make a weak_ref on this, and this won't have it
-		"vars", // inherited from /image, but /appearance hasn't this
+	var/list/used_variables = list("vis_flags") // manual listing.
+	. = used_variables
+	var/list/unused_var_names = list()
 
-		// Even if these vars are essential for image, these only exists in an actual type
-		"filter_data", 
-		"realized_overlays",
-		"realized_underlays",
-				
-		// we have no reason to show these, right?
-		"_active_timers",
-		"_datum_components",
-		"_listen_lookup",
-		"_signal_procs",
-		"__auxtools_weakref_id",
-		"_status_traits",
-		"cooldowns",
-		"datum_flags",
-		"visibility",
-		"verbs",
-		"gc_destroyed",
-		"harddel_deets_dumped",
-		"open_uis",
-		"tgui_shared_states"
-		)
 	var/image/dummy_image = image(null, null)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, appearance) // it only does self-reference
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, x) // xyz are always 0
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, y)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, z)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, weak_reference) // it's not a good idea to make a weak_ref on this, and this won't have it
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, vars) // inherited from /image, but /appearance hasn't this
+
+	// Even if these vars are essential for image, these only exists in an actual type
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, filter_data)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, realized_overlays)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, realized_underlays)
+
+	// we have no reason to show these, right?
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, _active_timers)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, _datum_components)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, _listen_lookup)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, _signal_procs)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, __auxtools_weakref_id)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, _status_traits)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, cooldowns)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, datum_flags)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, verbs)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, gc_destroyed)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, harddel_deets_dumped)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, open_uis)
+	ADD_UNUSED_VAR(unused_var_names, dummy_image, tgui_shared_states)
+
 	for(var/each in dummy_image.vars) // try to inherit var list from /image
 		if(each in unused_var_names)
 			continue
@@ -201,3 +206,5 @@
 	VV_DROPDOWN_OPTION_APPEARANCE(thing, "", "---")
 	VV_DROPDOWN_OPTION_APPEARANCE(thing, "", "VV option not allowed")
 	return .
+
+#undef ADD_UNUSED_VAR
