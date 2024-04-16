@@ -178,3 +178,6 @@
   - qol: Mute people who can still use sign language are now capable of using sign
       language to invoke spells. Wizards are still too egotistical to even consider
       doing so, tho.
+2024-04-16:
+  KnigTheThrasher:
+  - bugfix: Fixed Icebox tests
