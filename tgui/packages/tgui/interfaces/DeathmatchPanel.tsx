@@ -84,8 +84,10 @@ function LobbyPane(props) {
 
         {lobbies.length === 0 && (
           <Table.Row>
-            <Table.Cell colSpan={3}>
-              <NoticeBox>No lobbies found. Start one!</NoticeBox>
+            <Table.Cell colSpan={4}>
+              <NoticeBox textAlign="center">
+                No lobbies found. Start one!
+              </NoticeBox>
             </Table.Cell>
           </Table.Row>
         )}
