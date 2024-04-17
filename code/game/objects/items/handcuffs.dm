@@ -113,7 +113,7 @@
 
 	if(!do_after(user, handcuff_time * handcuff_time_mod, victim, timed_action_flags = IGNORE_SLOWDOWNS) || !victim.canBeHandcuffed())
 		target_mob.balloon_alert(user, "failed to handcuff!")
-		to_chat(user, span_warning("You fail to handcuff [C]!"))
+		to_chat(user, span_warning("You fail to handcuff [victim]!"))
 		log_combat(user, victim, "failed to handcuff")
 		return
 
