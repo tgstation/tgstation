@@ -76,7 +76,7 @@
 	if(!iscarbon(target_mob))
 		return
 
-	INVOKE_ASYNC(src, PROC_REF(attempt_to_cuff), target_mob, user) // avoid locking up the attack chain with sleeps
+	attempt_to_cuff(target_mob, user) // avoid locking up the attack chain with sleeps
 
 /// Handles all of the checks and application in a typical situation where someone attacks a carbon victim with the handcuff item.
 /obj/item/restraints/handcuffs/proc/attempt_to_cuff(mob/living/carbon/victim, mob/living/user)
