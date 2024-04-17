@@ -1114,7 +1114,4 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
 
-/// Prevents the affected object from opening a loot window via alt click. See atom/AltClick()
-#define TRAIT_ALT_CLICK_BLOCKER "no_alt_click"
-
 // END TRAIT DEFINES

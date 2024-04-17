@@ -173,6 +173,8 @@
 	armor_type = /datum/armor/fedora_det_hat
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS
+	/// Cooldown for retrieving precious candy corn on alt click
 	var/candy_cooldown = 0
 	dog_fashion = /datum/dog_fashion/head/detective
 	///Path for the flask that spawns inside their hat roundstart
@@ -198,17 +200,16 @@
 	. = ..()
 	. += span_notice("Alt-click to take a candy corn.")
 
-/obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
-	. = ..()
-	if(loc != user || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
-	if(candy_cooldown < world.time)
-		var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
-		user.put_in_hands(CC)
-		to_chat(user, span_notice("You slip a candy corn from your hat."))
-		candy_cooldown = world.time+1200
-	else
+/obj/item/clothing/head/fedora/det_hat/click_alt(mob/user)
+	if(candy_cooldown >= world.time)
 		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
+		return CLICK_ACTION_BLOCKING
+
+	var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
+	user.put_in_hands(CC)
+	to_chat(user, span_notice("You slip a candy corn from your hat."))
+	candy_cooldown = world.time+1200
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/fedora/det_hat/minor
 	flask_path = /obj/item/reagent_containers/cup/glass/flask/det/minor
@@ -221,6 +222,7 @@
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
 	dog_fashion = /datum/dog_fashion/head/detective
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	///prefix our phrases must begin with
 	var/prefix = "go go gadget"
 	///an assoc list of regex = item (like regex datum = revolver item)
@@ -320,23 +322,21 @@
 /obj/item/clothing/head/fedora/inspector_hat/attack_self(mob/user)
 	. = ..()
 	if(!length(items_by_regex))
-		return
+		return CLICK_ACTION_BLOCKING
 	var/list/found_items = list()
 	for(var/found_regex in items_by_regex)
 		found_items += items_by_regex[found_regex]
 	var/obj/found_item = tgui_input_list(user, "What item do you want to remove?", "Item Removal", found_items)
 	if(!found_item || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+		return CLICK_ACTION_BLOCKING
 	user.put_in_inactive_hand(found_item)
 
-/obj/item/clothing/head/fedora/inspector_hat/AltClick(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+/obj/item/clothing/head/fedora/inspector_hat/click_alt(mob/user)
 	var/new_prefix = tgui_input_text(user, "What should be the new prefix?", "Activation prefix", prefix, max_length = 24)
 	if(!new_prefix || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+		return CLICK_ACTION_BLOCKING
 	set_prefix(new_prefix)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/fedora/inspector_hat/Exited(atom/movable/gone, direction)
 	. = ..()

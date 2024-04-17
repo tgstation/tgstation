@@ -223,19 +223,18 @@
 /obj/item/modular_computer/get_cell()
 	return internal_cell
 
-/obj/item/modular_computer/AltClick(mob/user)
-	. = ..()
+/obj/item/modular_computer/click_alt(mob/user)
 	if(issilicon(user))
-		return FALSE
-	if(!user.can_perform_action(src))
-		return FALSE
+		return NONE
 
 	if(RemoveID(user))
-		return TRUE
+		return CLICK_ACTION_SUCCESS
 
 	if(istype(inserted_pai)) // Remove pAI
 		remove_pai(user)
-		return TRUE
+		return CLICK_ACTION_SUCCESS
+
+	return CLICK_ACTION_BLOCKING
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
 /obj/item/modular_computer/GetAccess()

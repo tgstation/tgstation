@@ -1,5 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - bugfix: "minebots no longer bomb each other (and other miners) through landmines"
-  - bugfix: "minebot shields will no longer lose color in lower z levels"
