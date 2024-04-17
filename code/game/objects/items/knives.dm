@@ -301,18 +301,15 @@
 	if(isliving(target) && isliving(user))
 		var/mob/living/living_target = target
 		var/mob/living/living_user = user
-		if((living_target.body_position == LYING_DOWN))
+		if(living_target.body_position == LYING_DOWN)
 			living_target.apply_damage(backstab_bonus/2, BRUTE)
-		if((living_user.body_position == LYING_DOWN) && (living_target.body_position != LYING_DOWN))
+		else if(living_user.body_position == LYING_DOWN)
 			living_target.Knockdown(thigh_hit)
 			to_chat(living_target, span_userdanger("You feel a sharp pain in your thigh!"))
-		if(((user.dir == living_target.dir) || (HAS_TRAIT(living_target, TRAIT_SPINNING))) && (living_user.body_position != LYING_DOWN))
+		else if(user.dir == living_target.dir || HAS_TRAIT(living_target, TRAIT_SPINNING))
 			living_target.apply_damage(backstab_bonus, BRUTE)
-			to_chat(living_target, span_danger("you feel severe pain in your back!"))
+			to_chat(living_target, span_userdanger("You feel severe pain in your back!"))
 		if((living_target.stat == SOFT_CRIT) && check_holidays(APRIL_FOOLS) && epic_say_ready)
 			living_user.say("You got blood on my suit!", forced = "spy knife backstab")
 			epic_say_ready = FALSE
-			addtimer(CALLBACK(src, PROC_REF(epic_say_ready)), 5 SECONDS)
-
-/obj/item/knife/spy/proc/epic_say_ready()
-	epic_say_ready = TRUE
+			addtimer(VARSET_CALLBACK(src, epic_say_ready, TRUE), 5 SECONDS)
