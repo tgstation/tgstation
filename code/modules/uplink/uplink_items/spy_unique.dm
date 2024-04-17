@@ -13,7 +13,7 @@
 
 /datum/uplink_item/spy_unique/spy_knife
 	name = "Spy Knife"
-	desc = "Knife for real gentlemen."
+	desc = "A special knife which can deal extra damage while stabbing to the back."
 	item = /obj/item/knife/spy
 
 /datum/uplink_item/spy_unique/syndie_bowman
