@@ -15,7 +15,7 @@
 export const filter = <T>(
   collection: T[],
   iterateeFn: (input: T, index: number, collection: T[]) => boolean,
-) => {
+): T[] => {
   if (collection === null || collection === undefined) {
     return collection;
   }
@@ -228,7 +228,7 @@ export const uniqBy = <T extends unknown>(
   return result;
 };
 
-export const uniq = (array) => uniqBy(array);
+export const uniq = <T>(array: T[]): T[] => uniqBy(array);
 
 type Zip<T extends unknown[][]> = {
   [I in keyof T]: T[I] extends (infer U)[] ? U : never;
@@ -297,7 +297,7 @@ export const binaryInsertWith = <T, U = unknown>(
   collection: readonly T[],
   value: T,
   getKey: (value: T) => U,
-) => {
+): T[] => {
   const copy = [...collection];
   copy.splice(binarySearch(getKey, collection, value), 0, value);
   return copy;
@@ -327,7 +327,8 @@ export const paginate = <T>(collection: T[], maxPerPage: number): T[][] => {
   return pages;
 };
 
-const isObject = (obj: unknown) => typeof obj === 'object' && obj !== null;
+const isObject = (obj: unknown): obj is object =>
+  typeof obj === 'object' && obj !== null;
 
 // Does a deep merge of two objects. DO NOT FEED CIRCULAR OBJECTS!!
 export const deepMerge = (...objects: any[]): any => {
