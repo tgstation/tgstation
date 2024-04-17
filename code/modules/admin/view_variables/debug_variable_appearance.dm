@@ -184,8 +184,7 @@
 			return appearance.verbs
 		if(NAMEOF(appearance, tag))
 			return appearance.tag
-		else
-			return RESULT_VARIABLE_NOT_FOUND
+	return RESULT_VARIABLE_NOT_FOUND
 
 /// Shows a header name on top when you investigate an appearance
 /proc/vv_get_header_appearance(image/thing)
