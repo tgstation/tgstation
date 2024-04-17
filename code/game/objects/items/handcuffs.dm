@@ -79,6 +79,7 @@
 	var/mob/living/carbon/victim = target_mob
 
 	if(SEND_SIGNAL(victim, COMSIG_CARBON_CUFF_ATTEMPTED, user) & COMSIG_CARBON_CUFF_PREVENT)
+		target_mob.balloon_alert(user, "can't be handcuffed!")
 		return
 
 	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))) //Clumsy people have a 50% chance to handcuff themselves instead of their target.
