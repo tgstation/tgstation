@@ -154,7 +154,6 @@
 
 	id = null
 	glasses = null
-	ears = null
 	uniform = /obj/item/clothing/under/costume/gamberson/military
 	suit = /obj/item/clothing/suit/armor/vest/military
 	suit_store = /obj/item/spear/military
@@ -174,6 +173,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/helmet/knight/warlord
 	mask = /obj/item/clothing/mask/breath
+	shoes = /obj/item/clothing/shoes/bronze
 	belt = /obj/item/gun/magic/hook
 	l_pocket = /obj/item/tank/internals/emergency_oxygen
 	r_pocket = /obj/item/flashlight/lantern
