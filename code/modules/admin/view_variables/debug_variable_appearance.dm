@@ -6,6 +6,7 @@
  * 		This is why these global procs exist. Welcome to the curse.
  */
 #define ADD_UNUSED_VAR(varlist, thing, varname) if(NAMEOF(##thing, ##varname)) ##varlist += #varname
+#define RESULT_VARIABLE_NOT_FOUND "_switch_result_variable_not_found"
 
 /// Makes a var list of /appearance type actually uses. This will be only called once.
 /proc/build_virtual_appearance_vars()
@@ -50,135 +51,141 @@
 
 	return used_variables
 
-/// appearance type needs a manual var referencing because it doesn't have "vars" variable internally.
-/// There's no way doing this in a fancier way.
-/proc/debug_variable_appearance(var_name, atom/movable/appearance) // it isn't /movable. It had to be at it to use NAMEOF macro
+/// debug_variable() proc but made for /appearance type specifically
+/proc/debug_variable_appearance(var_name, appearance)
 	var/value
 	try
-		switch(var_name) // Welcome to this curse
-			// appearance doesn't have "vars" variable.
-			// This means you need to target a variable manually through this way.
-
-			// appearance vars in DM document
-			if(NAMEOF(appearance, alpha))
-				value = appearance.alpha
-			if(NAMEOF(appearance, appearance_flags))
-				value = appearance.appearance_flags
-			if(NAMEOF(appearance, blend_mode))
-				value = appearance.blend_mode
-			if(NAMEOF(appearance, color))
-				value = appearance.color
-			if(NAMEOF(appearance, desc))
-				value = appearance.desc
-			if(NAMEOF(appearance, gender))
-				value = appearance.gender
-			if(NAMEOF(appearance, icon))
-				value = appearance.icon
-			if(NAMEOF(appearance, icon_state))
-				value = appearance.icon_state
-			if(NAMEOF(appearance, invisibility))
-				value = appearance.invisibility
-			if(NAMEOF(appearance, infra_luminosity))
-				value = appearance.infra_luminosity
-			if(NAMEOF(appearance, filters))
-				value = appearance.filters
-			if(NAMEOF(appearance, layer))
-				value = appearance.layer
-			if(NAMEOF(appearance, luminosity))
-				value = appearance.luminosity
-			if(NAMEOF(appearance, maptext))
-				value = appearance.maptext
-			if(NAMEOF(appearance, maptext_width))
-				value = appearance.maptext_width
-			if(NAMEOF(appearance, maptext_height))
-				value = appearance.maptext_height
-			if(NAMEOF(appearance, maptext_x))
-				value = appearance.maptext_x
-			if(NAMEOF(appearance, maptext_y))
-				value = appearance.maptext_y
-			if(NAMEOF(appearance, mouse_over_pointer))
-				value = appearance.mouse_over_pointer
-			if(NAMEOF(appearance, mouse_drag_pointer))
-				value = appearance.mouse_drag_pointer
-			if(NAMEOF(appearance, mouse_drop_pointer))
-				value = appearance.mouse_drop_pointer
-			if("mouse_drop_zone") // OpenDream didn't implement this yet.
-				value = appearance:mouse_drop_zone
-			if(NAMEOF(appearance, mouse_opacity))
-				value = appearance.mouse_opacity
-			if(NAMEOF(appearance, name))
-				value = appearance.name
-			if(NAMEOF(appearance, opacity))
-				value = appearance.opacity
-			if(NAMEOF(appearance, overlays))
-				value = appearance.overlays
-			if("override") // only /image has this
-				var/image/image_appearance = appearance
-				value = image_appearance.override
-			if(NAMEOF(appearance, pixel_x))
-				value = appearance.pixel_x
-			if(NAMEOF(appearance, pixel_y))
-				value = appearance.pixel_y
-			if(NAMEOF(appearance, pixel_w))
-				value = appearance.pixel_w
-			if(NAMEOF(appearance, pixel_z))
-				value = appearance.pixel_z
-			if(NAMEOF(appearance, plane))
-				value = appearance.plane
-			if(NAMEOF(appearance, render_source))
-				value = appearance.render_source
-			if(NAMEOF(appearance, render_target))
-				value = appearance.render_target
-			if(NAMEOF(appearance, suffix))
-				value = appearance.suffix
-			if(NAMEOF(appearance, text))
-				value = appearance.text
-			if(NAMEOF(appearance, transform))
-				value = appearance.transform
-			if(NAMEOF(appearance, underlays))
-				value = appearance.underlays
-
-			if(NAMEOF(appearance, parent_type))
-				value = appearance.parent_type
-			if(NAMEOF(appearance, type))
-				value = "/appearance (as [appearance.type])" // don't fool people
-
-			// These are not documented ones but trackable values. Maybe we'd want these.
-			if(NAMEOF(appearance, animate_movement))
-				value = appearance.animate_movement
-			if(NAMEOF(appearance, dir))
-				value = appearance.dir
-			if(NAMEOF(appearance, glide_size))
-				value = appearance.glide_size
-			if("pixel_step_size")
-				value = "" //atom_appearance.pixel_step_size
-				// DM compiler complains this
-
-			// I am not sure if these will be ever detected, but I made a connection just in case.
-			if(NAMEOF(appearance, contents)) // It's not a thing, but I don't believe how DM will change /appearance in future.
-				value = appearance.contents
-			if(NAMEOF(appearance, loc)) // same reason above
-				value = appearance.loc
-			if(NAMEOF(appearance, vis_contents)) // same reason above
-				value = appearance.vis_contents
-			if(NAMEOF(appearance, vis_flags)) // DM document says /appearance has this, but it throws error
-				value = appearance.vis_flags
-
-			// we wouldn't need these, but let's these trackable anyway...
-			if(NAMEOF(appearance, density))
-				value = appearance.density
-			if(NAMEOF(appearance, screen_loc))
-				value = appearance.screen_loc
-			if(NAMEOF(appearance, verbs))
-				value = appearance.verbs
-			if(NAMEOF(appearance, tag))
-				value = appearance.tag
-
-			else
-				return "<li style='backgroundColor:white'>(READ ONLY) [var_name] <font color='blue'>(Undefined var name in switch)</font></li>"
+		value = locate_appearance_variable(var_name, appearance)
 	catch
 		return "<li style='backgroundColor:white'>(READ ONLY) <font color='blue'>[var_name] = (untrackable)</font></li>"
+	if(value == RESULT_VARIABLE_NOT_FOUND)
+		return "<li style='backgroundColor:white'>(READ ONLY) [var_name] <font color='blue'>(Undefined var name in switch)</font></li>"
 	return "<li style='backgroundColor:white'>(READ ONLY) [var_name] = [_debug_variable_value(var_name, value, 0, appearance, sanitize = TRUE, display_flags = NONE)]</li>"
+
+/// manually locate a variable through string value.
+/// appearance type needs a manual var referencing because it doesn't have "vars" variable internally.
+/// There's no way doing this in a fancier way.
+/proc/locate_appearance_variable(var_name, atom/movable/appearance) // it isn't /movable. It had to be at it to use NAMEOF macro
+	switch(var_name) // Welcome to this curse
+		// appearance doesn't have "vars" variable.
+		// This means you need to target a variable manually through this way.
+
+		// appearance vars in DM document
+		if(NAMEOF(appearance, alpha))
+			return appearance.alpha
+		if(NAMEOF(appearance, appearance_flags))
+			return appearance.appearance_flags
+		if(NAMEOF(appearance, blend_mode))
+			return appearance.blend_mode
+		if(NAMEOF(appearance, color))
+			return appearance.color
+		if(NAMEOF(appearance, desc))
+			return appearance.desc
+		if(NAMEOF(appearance, gender))
+			return appearance.gender
+		if(NAMEOF(appearance, icon))
+			return appearance.icon
+		if(NAMEOF(appearance, icon_state))
+			return appearance.icon_state
+		if(NAMEOF(appearance, invisibility))
+			return appearance.invisibility
+		if(NAMEOF(appearance, infra_luminosity))
+			return appearance.infra_luminosity
+		if(NAMEOF(appearance, filters))
+			return appearance.filters
+		if(NAMEOF(appearance, layer))
+			return appearance.layer
+		if(NAMEOF(appearance, luminosity))
+			return appearance.luminosity
+		if(NAMEOF(appearance, maptext))
+			return appearance.maptext
+		if(NAMEOF(appearance, maptext_width))
+			return appearance.maptext_width
+		if(NAMEOF(appearance, maptext_height))
+			return appearance.maptext_height
+		if(NAMEOF(appearance, maptext_x))
+			return appearance.maptext_x
+		if(NAMEOF(appearance, maptext_y))
+			return appearance.maptext_y
+		if(NAMEOF(appearance, mouse_over_pointer))
+			return appearance.mouse_over_pointer
+		if(NAMEOF(appearance, mouse_drag_pointer))
+			return appearance.mouse_drag_pointer
+		if(NAMEOF(appearance, mouse_drop_pointer))
+			return appearance.mouse_drop_pointer
+		if("mouse_drop_zone") // OpenDream didn't implement this yet.
+			return appearance:mouse_drop_zone
+		if(NAMEOF(appearance, mouse_opacity))
+			return appearance.mouse_opacity
+		if(NAMEOF(appearance, name))
+			return appearance.name
+		if(NAMEOF(appearance, opacity))
+			return appearance.opacity
+		if(NAMEOF(appearance, overlays))
+			return appearance.overlays
+		if("override") // only /image has this
+			var/image/image_appearance = appearance
+			return image_appearance.override
+		if(NAMEOF(appearance, pixel_x))
+			return appearance.pixel_x
+		if(NAMEOF(appearance, pixel_y))
+			return appearance.pixel_y
+		if(NAMEOF(appearance, pixel_w))
+			return appearance.pixel_w
+		if(NAMEOF(appearance, pixel_z))
+			return appearance.pixel_z
+		if(NAMEOF(appearance, plane))
+			return appearance.plane
+		if(NAMEOF(appearance, render_source))
+			return appearance.render_source
+		if(NAMEOF(appearance, render_target))
+			return appearance.render_target
+		if(NAMEOF(appearance, suffix))
+			return appearance.suffix
+		if(NAMEOF(appearance, text))
+			return appearance.text
+		if(NAMEOF(appearance, transform))
+			return appearance.transform
+		if(NAMEOF(appearance, underlays))
+			return appearance.underlays
+
+		if(NAMEOF(appearance, parent_type))
+			return appearance.parent_type
+		if(NAMEOF(appearance, type))
+			return "/appearance (as [appearance.type])" // don't fool people
+
+		// These are not documented ones but trackable values. Maybe we'd want these.
+		if(NAMEOF(appearance, animate_movement))
+			return appearance.animate_movement
+		if(NAMEOF(appearance, dir))
+			return appearance.dir
+		if(NAMEOF(appearance, glide_size))
+			return appearance.glide_size
+		if("pixel_step_size")
+			return "" //atom_appearance.pixel_step_size
+			// DM compiler complains this
+
+		// I am not sure if these will be ever detected, but I made a connection just in case.
+		if(NAMEOF(appearance, contents)) // It's not a thing, but I don't believe how DM will change /appearance in future.
+			return appearance.contents
+		if(NAMEOF(appearance, loc)) // same reason above
+			return appearance.loc
+		if(NAMEOF(appearance, vis_contents)) // same reason above
+			return appearance.vis_contents
+		if(NAMEOF(appearance, vis_flags)) // DM document says /appearance has this, but it throws error
+			return appearance.vis_flags
+
+		// we wouldn't need these, but let's these trackable anyway...
+		if(NAMEOF(appearance, density))
+			return appearance.density
+		if(NAMEOF(appearance, screen_loc))
+			return appearance.screen_loc
+		if(NAMEOF(appearance, verbs))
+			return appearance.verbs
+		if(NAMEOF(appearance, tag))
+			return appearance.tag
+		else
+			return RESULT_VARIABLE_NOT_FOUND
 
 /// Shows a header name on top when you investigate an appearance
 /proc/vv_get_header_appearance(image/thing)
@@ -210,3 +217,4 @@
 	return .
 
 #undef ADD_UNUSED_VAR
+#undef RESULT_VARIABLE_NOT_FOUND
