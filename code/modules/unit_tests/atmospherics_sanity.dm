@@ -34,6 +34,7 @@
 	var/static/list/area/default_starting_areas = list(
 		/area/station/ai_monitored/turret_protected/ai,
 		/area/station/engineering/atmos,
+		/area/station/medical/virology,
 		/area/station/science/xenobiology,
 		)
 
