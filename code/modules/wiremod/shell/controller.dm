@@ -71,9 +71,9 @@
  */
 /obj/item/circuit_component/controller/proc/send_alternate_signal(atom/source, mob/user)
 	SIGNAL_HANDLER
-	if(!user.Adjacent(source))
-		return
+
 	handle_trigger(source, user, "alternate", alt)
+	return CLICK_ACTION_SUCCESS
 
 
 /**

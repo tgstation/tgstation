@@ -127,14 +127,12 @@
 	if(panel_open)
 		. += span_notice("Alt-click to rotate the output direction.")
 
-/obj/machinery/mecha_part_fabricator/AltClick(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src))
-		return
-	if(panel_open)
-		dir = turn(dir, -90)
-		balloon_alert(user, "rotated to [dir2text(dir)].")
-		return TRUE
+/obj/machinery/mecha_part_fabricator/click_alt(mob/user)
+	if(!panel_open)
+		return CLICK_ACTION_BLOCKING
+	dir = turn(dir, -90)
+	balloon_alert(user, "rotated to [dir2text(dir)].")
+	return CLICK_ACTION_SUCCESS
 
 /**
  * Updates the `final_sets` and `buildable_parts` for the current mecha fabricator.

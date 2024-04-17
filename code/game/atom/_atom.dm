@@ -136,6 +136,9 @@
 	///whether ghosts can see screentips on it
 	var/ghost_screentips = FALSE
 
+	/// Flags to check for in can_perform_action. Used in alt-click checks
+	var/interaction_flags_click = NONE
+
 /**
  * Top level of the destroy chain for most atoms
  *

@@ -163,11 +163,9 @@
 	inserted_scan_id.registered_account.bounties = null
 	return inserted_scan_id.registered_account.civilian_bounty
 
-/obj/machinery/computer/piratepad_control/civilian/AltClick(mob/user)
-	. = ..()
-	if(!Adjacent(user))
-		return FALSE
+/obj/machinery/computer/piratepad_control/civilian/click_alt(mob/user)
 	id_eject(user, inserted_scan_id)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/computer/piratepad_control/civilian/ui_data(mob/user)
 	var/list/data = list()

@@ -221,6 +221,11 @@
 	/// A lazylist used for applying fantasy values, contains the actual modification applied to a variable.
 	var/list/fantasy_modifications = null
 
+	/// Has the item been reskinned?
+	var/current_skin
+	///// List of options to reskin.
+	var/list/unique_reskin
+
 /obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
 		attack_verb_continuous = string_list(attack_verb_continuous)
@@ -257,6 +262,11 @@
 	if(LAZYLEN(embedding))
 		updateEmbedding()
 
+	if(unique_reskin)
+		RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
+		register_context()
+
+
 /obj/item/Destroy(force)
 	// This var exists as a weird proxy "owner" ref
 	// It's used in a few places. Stop using it, and optimially replace all uses please
@@ -270,6 +280,20 @@
 		remove_item_action(action)
 
 	return ..()
+
+
+/obj/item/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(!unique_reskin)
+		return
+
+	if(current_skin && !(item_flags & INFINITE_RESKIN))
+		return
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Reskin"
+	return CONTEXTUAL_SCREENTIP_SET
+
 
 /// Called when an action associated with our item is deleted
 /obj/item/proc/on_action_deleted(datum/source)
