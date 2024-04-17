@@ -13,23 +13,40 @@
 	var/list/model_type = null
 	/// Bitflags listing model compatibility. Used in the exosuit fabricator for creating sub-categories.
 	var/list/model_flags = NONE
+	/// List of items to add with the module, if any
+	var/list/items_to_add = list()
 	// if true, is not stored in the robot to be ejected
 	// if model is reset
 	var/one_use = FALSE
 
-/obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/borg, user = usr)
 	if(R.stat == DEAD)
 		to_chat(user, span_warning("[src] will not function on a deceased cyborg!"))
 		return FALSE
-	if(model_type && !is_type_in_list(R.model, model_type))
-		to_chat(R, span_alert("Upgrade mounting error! No suitable hardpoint detected."))
+	if(model_type && !is_type_in_list(borg.model, model_type))
+		to_chat(borg, span_alert("Upgrade mounting error! No suitable hardpoint detected."))
 		to_chat(user, span_warning("There's no mounting point for the module!"))
+		return FALSE
+	if(length(items_to_add))
+		if(!install_items(borg))
+			return FALSE
+	return TRUE
+
+/obj/item/borg/upgrade/proc/deactivate(mob/living/silicon/robot/borg, user = usr)
+	if (!(src in borg.upgrades))
 		return FALSE
 	return TRUE
 
-/obj/item/borg/upgrade/proc/deactivate(mob/living/silicon/robot/R, user = usr)
-	if (!(src in R.upgrades))
-		return FALSE
+/obj/item/borg/upgrade/proc/install_items(mob/living/silicon/robot/borg, user = usr)
+	SHOULD_NOT_OVERRIDE
+	for(var/item_to_add in items_to_add)
+		if(locate(item_to_add) in borg.model.modules)
+			borg.balloon_alert_to_viewers("already installed!")
+			return FALSE
+		else
+			var/obj/item/module_item = new item_to_add(borg.model.modules)
+			borg.model.basic_modules += module_item
+			borg.model.add_module(module_item, FALSE, TRUE)
 	return TRUE
 
 /obj/item/borg/upgrade/rename
