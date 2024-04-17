@@ -90,21 +90,19 @@ const CrewTable = (props) => {
   const sensors = data.sensors ?? [];
 
   const [shownSensors, setShownSensors] = useState(sensors.slice());
-  const [sortColumn, setSortColumn] = useState("ijob");
+  const [sortColumn, setSortColumn] = useState('ijob');
   const [sortAsc, setSortAsc] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
 
   const updateSortMode = (column) => {
-    if(column === sortColumn) {
-      if(!sortAsc) {
-        setSortColumn("ijob");
+    if (column === sortColumn) {
+      if (!sortAsc) {
+        setSortColumn('ijob');
         setSortAsc(true);
-      }
-      else {
+      } else {
         setSortAsc(false);
       }
-    }
-    else {
+    } else {
       setSortColumn(column);
       setSortAsc(true);
     }
@@ -112,22 +110,26 @@ const CrewTable = (props) => {
 
   useEffect(() => {
     let unsorted = sensors.slice();
-    if(sortColumn === "ijob") {
-      let sorted = (sortBy((s) => s[sortColumn])(unsorted)).filter((crew) => crew.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    if (sortColumn === 'ijob') {
+      let sorted = sortBy((s) => s[sortColumn])(unsorted).filter((crew) =>
+        crew.name.toLowerCase().includes(searchQuery.toLowerCase()),
+      );
       setShownSensors(sorted);
       return;
     }
 
     unsorted.sort((a, b) => {
-      a[sortColumn] ??= "~";
-      b[sortColumn] ??= "~";
-      if(a[sortColumn] < b[sortColumn]) return -1;
-      if(a[sortColumn] > b[sortColumn]) return 1;
+      a[sortColumn] ??= '~';
+      b[sortColumn] ??= '~';
+      if (a[sortColumn] < b[sortColumn]) return -1;
+      if (a[sortColumn] > b[sortColumn]) return 1;
       return 0;
     });
 
-    let sorted = unsorted.filter((crew) => crew.name.toLowerCase().includes(searchQuery.toLowerCase()));
-    if(!sortAsc) {
+    let sorted = unsorted.filter((crew) =>
+      crew.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+    if (!sortAsc) {
       sorted.reverse();
     }
     setShownSensors(sorted);
@@ -137,28 +139,38 @@ const CrewTable = (props) => {
     <Table>
       <Table.Row>
         <Table.Cell bold>
-          <Button onClick={() => updateSortMode("name")}>
+          <Button onClick={() => updateSortMode('name')}>
             Name
-            {sortColumn === "name" ?
-              <Icon style={{ marginLeft: "2px" }} name={sortAsc? "chevron-up" : "chevron-down"} />
-              :
-              <Icon style={{ marginLeft: "2px" }} name="minus" />
-            }
+            {sortColumn === 'name' ? (
+              <Icon
+                style={{ marginLeft: '2px' }}
+                name={sortAsc ? 'chevron-up' : 'chevron-down'}
+              />
+            ) : (
+              <Icon style={{ marginLeft: '2px' }} name="minus" />
+            )}
           </Button>
-          <Input type="text" placeholder="Search for name..." onInput={(e) => setSearchQuery(e.target.value)} />
+          <Input
+            type="text"
+            placeholder="Search for name..."
+            onInput={(e) => setSearchQuery(e.target.value)}
+          />
         </Table.Cell>
         <Table.Cell bold collapsing />
         <Table.Cell bold collapsing textAlign="center">
-            Vitals
+          Vitals
         </Table.Cell>
         <Table.Cell bold textAlign="center">
-          <Button onClick={() => updateSortMode("area")}>
+          <Button onClick={() => updateSortMode('area')}>
             Position
-            {sortColumn === "area" ?
-              <Icon style={{ marginLeft: "2px" }} name={sortAsc? "chevron-up" : "chevron-down"} />
-              :
-              <Icon style={{ marginLeft: "2px" }} name="minus" />
-            }
+            {sortColumn === 'area' ? (
+              <Icon
+                style={{ marginLeft: '2px' }}
+                name={sortAsc ? 'chevron-up' : 'chevron-down'}
+              />
+            ) : (
+              <Icon style={{ marginLeft: '2px' }} name="minus" />
+            )}
           </Button>
         </Table.Cell>
         {!!data.link_allowed && (
@@ -234,7 +246,7 @@ const CrewTableEntry = (props) => {
         )}
       </Table.Cell>
       <Table.Cell>
-        {(area !== "~" && area !== undefined) ? (
+        {area !== '~' && area !== undefined ? (
           area
         ) : (
           <Icon name="question" color="#ffffff" size={1} />
