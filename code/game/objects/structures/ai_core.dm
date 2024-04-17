@@ -309,14 +309,14 @@
 					tool.play_tool_sound(src)
 					balloon_alert(user, "removed [AI_CORE_BRAIN(core_mmi)]")
 					if(remote_ai)
-						remote_ai.break_core_link()
-						if(!IS_MALF_AI(remote_ai))
+						var/mob/living/silicon/ai/remoted_ai = remote_ai
+						remoted_ai.break_core_link()
+						if(!IS_MALF_AI(remoted_ai))
 							//don't pull back shunted malf AIs
-							remote_ai.death(gibbed = TRUE, drop_mmi = FALSE)
+							remoted_ai.death(gibbed = TRUE, drop_mmi = FALSE)
 							///the drop_mmi param determines whether the MMI is dropped at their current location
 							///which in this case would be somewhere else, so we drop their MMI at the core instead
-							remote_ai.make_mmi_drop_and_transfer(core_mmi, src)
-						remote_ai = null
+							remoted_ai.make_mmi_drop_and_transfer(core_mmi, src)
 					core_mmi.forceMove(loc) //if they're malf, just drops a blank MMI, or if it's an incomplete shell
 					return					//it drops the mmi that was put in before it was finished
 

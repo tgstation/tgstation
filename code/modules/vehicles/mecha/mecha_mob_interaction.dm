@@ -119,13 +119,16 @@
 		//stop listening to this signal, as the static update is now handled by the eyeobj's setLoc
 		AI.eyeobj?.UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 		AI.eyeobj?.forceMove(newloc) //kick the eye out as well
-		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
+		if(forced)
 			AI.controlled_equipment = null
 			AI.remote_control = null
 			if(!AI.linked_core) //if the victim AI has no core
 				if (!AI.can_shunt || !length(AI.hacked_apcs))
 					AI.investigate_log("has been gibbed by being forced out of their mech.", INVESTIGATE_DEATHS)
-					AI.gib(DROP_ALL_REMAINS)  //If one Malf decides to steal a mech from another AI (even other Malfs!), and they have no hacked APCs or core, they are destroyed
+					/// If an AI with no core (and no shunting abilities) gets forced out of their mech
+					/// (in a way that isn't handled by the normal handling of their mech being destroyed)
+					/// we gib 'em here, too.
+					AI.gib(DROP_ALL_REMAINS)
 					AI = null
 					mecha_flags &= ~SILICON_PILOT
 					return
