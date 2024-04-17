@@ -76,21 +76,18 @@
 	if(!iscarbon(target_mob))
 		return
 
-	var/mob/living/carbon/victim = target_mob
+	INVOKE_ASYNC(src, PROC_REF(attempt_to_cuff), target_mob, user) // avoid locking up the attack chain with sleeps in case that matters one day
 
+/// Handles all of the checks and application in a typical situation where someone attacks a carbon victim with the handcuff item.
+/obj/item/restraints/handcuffs/proc/attempt_to_cuff(mob/living/carbon/victim, mob/living/user)
 	if(SEND_SIGNAL(victim, COMSIG_CARBON_CUFF_ATTEMPTED, user) & COMSIG_CARBON_CUFF_PREVENT)
 		target_mob.balloon_alert(user, "can't be handcuffed!")
 		return
 
 	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))) //Clumsy people have a 50% chance to handcuff themselves instead of their target.
 		to_chat(user, span_warning("Uh... how do those things work?!"))
-		apply_cuffs(user,user)
+		apply_cuffs(user, user)
 		return
-
-	if(HAS_TRAIT(user, TRAIT_FAST_CUFFING))
-		handcuff_time_mod = 0.75
-	else
-		handcuff_time_mod = 1
 
 	if(!isnull(victim.handcuffed))
 		target_mob.balloon_alert(user, "already handcuffed!")
@@ -112,6 +109,11 @@
 	playsound(loc, cuffsound, 30, TRUE, -2)
 	log_combat(user, victim, "attempted to handcuff")
 
+	if(HAS_TRAIT(user, TRAIT_FAST_CUFFING))
+		handcuff_time_mod = 0.75
+	else
+		handcuff_time_mod = 1
+
 	if(!do_after(user, handcuff_time * handcuff_time_mod, victim, timed_action_flags = IGNORE_SLOWDOWNS) || !victim.canBeHandcuffed())
 		target_mob.balloon_alert(user, "failed to handcuff!")
 		to_chat(user, span_warning("You fail to handcuff [victim]!"))
@@ -128,10 +130,10 @@
 	log_combat(user, victim, "successfully handcuffed")
 	SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
+
 /**
- * This handles handcuffing people
+ * When called, this instantly puts handcuffs on someone (if actually possible)
  *
- * When called, this instantly puts handcuffs on someone (if possible)
  * Arguments:
  * * mob/living/carbon/target - Who is being handcuffed
  * * mob/user - Who or what is doing the handcuffing
@@ -154,7 +156,6 @@
 
 	if(trashtype && !dispense)
 		qdel(src)
-	return
 
 /**
  * # Alien handcuffs
