@@ -35,6 +35,7 @@
 		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
 
 /obj/machinery/atmospherics/pipe/on_deconstruction(disassembled)
+	//we delete the parent here so it initializes air_temporary for us. See /datum/pipeline/Destroy()
 	QDEL_NULL(parent)
 
 	if(air_temporary)
