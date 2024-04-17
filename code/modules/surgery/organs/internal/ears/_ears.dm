@@ -89,7 +89,7 @@
 	if(owner.status_flags & GODMODE)
 		deaf = 0
 
-	if(deaf)
+	if(deaf > 0)
 		if(!HAS_TRAIT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE))
 			RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(adjust_speech))
 			ADD_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
