@@ -76,12 +76,12 @@
 	if(!iscarbon(target_mob))
 		return
 
-	INVOKE_ASYNC(src, PROC_REF(attempt_to_cuff), target_mob, user) // avoid locking up the attack chain with sleeps in case that matters one day
+	INVOKE_ASYNC(src, PROC_REF(attempt_to_cuff), target_mob, user) // avoid locking up the attack chain with sleeps
 
 /// Handles all of the checks and application in a typical situation where someone attacks a carbon victim with the handcuff item.
 /obj/item/restraints/handcuffs/proc/attempt_to_cuff(mob/living/carbon/victim, mob/living/user)
 	if(SEND_SIGNAL(victim, COMSIG_CARBON_CUFF_ATTEMPTED, user) & COMSIG_CARBON_CUFF_PREVENT)
-		target_mob.balloon_alert(user, "can't be handcuffed!")
+		victim.balloon_alert(user, "can't be handcuffed!")
 		return
 
 	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))) //Clumsy people have a 50% chance to handcuff themselves instead of their target.
@@ -90,11 +90,11 @@
 		return
 
 	if(!isnull(victim.handcuffed))
-		target_mob.balloon_alert(user, "already handcuffed!")
+		victim.balloon_alert(user, "already handcuffed!")
 		return
 
 	if(victim.canBeHandcuffed())
-		target_mob.balloon_alert(user, "can't be handcuffed!")
+		victim.balloon_alert(user, "can't be handcuffed!")
 		to_chat(user, span_warning("[victim] doesn't have two hands..."))
 		return
 
@@ -115,7 +115,7 @@
 		handcuff_time_mod = 1
 
 	if(!do_after(user, handcuff_time * handcuff_time_mod, victim, timed_action_flags = IGNORE_SLOWDOWNS) || !victim.canBeHandcuffed())
-		target_mob.balloon_alert(user, "failed to handcuff!")
+		victim.balloon_alert(user, "failed to handcuff!")
 		to_chat(user, span_warning("You fail to handcuff [victim]!"))
 		log_combat(user, victim, "failed to handcuff")
 		return
