@@ -111,6 +111,7 @@ const ButtonDisplay = (props) => {
             fluid
             onClick={() => act('choose', { choice: button })}
             py={large_buttons ? 0.5 : 0}
+            px={2}
             selected={selected === index}
             textAlign="center"
             overflowX="hidden"
