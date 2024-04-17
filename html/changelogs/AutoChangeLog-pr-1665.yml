@@ -1,4 +1,0 @@
-author: "KnigTheThrasher"
-delete-after: True
-changes:
-  - bugfix: "Tram disposals should work now"
