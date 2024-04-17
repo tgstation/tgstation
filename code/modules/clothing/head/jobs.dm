@@ -302,10 +302,8 @@
 		balloon_alert(user, "too big!")
 		return
 
-	var/input = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
-	if(!input || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-
+	var/desired_phrase = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
+	if(!desired_phrase || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
 	if(item.loc != user || !user.transferItemToLoc(item, src))
@@ -316,8 +314,6 @@
 	set_phrase(desired_phrase,item)
 
 	return TRUE
-
-
 
 /obj/item/clothing/head/fedora/inspector_hat/attack_self(mob/user)
 	. = ..()
