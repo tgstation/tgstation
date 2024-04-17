@@ -1,6 +1,6 @@
 /datum/quirk/strong_stomach
 	name = "Strong Stomach"
-	desc = "You can eat food discarded on the ground without getting sick, and vommiting affects you less."
+	desc = "You can eat food discarded on the ground without getting sick, and vomiting affects you less."
 	icon = FA_ICON_FACE_GRIN_BEAM_SWEAT
 	value = 4
 	mob_trait = TRAIT_STRONG_STOMACH
