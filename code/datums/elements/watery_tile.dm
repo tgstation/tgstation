@@ -1,4 +1,5 @@
 /datum/element/watery_tile
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 
 /datum/element/watery_tile/Attach(turf/target)
 	. = ..()
@@ -12,6 +13,8 @@
 	return ..()
 
 /datum/element/watery_tile/proc/extinguish_atom(atom/source, atom/movable/entered)
+	SIGNAL_HANDLER
+
 	if(!isatom(entered))
 		return
 	entered.extinguish()
