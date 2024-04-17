@@ -40,7 +40,6 @@
 	style.teach(source, TRUE)
 
 /datum/component/martial_art_giver/proc/forget(mob/source)
-	SIGNAL_HANDLER
 	if(isnull(style))
 		return
 	style.fully_remove(source)
