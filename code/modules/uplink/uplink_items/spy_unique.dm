@@ -15,7 +15,6 @@
 	name = "Spy Knife"
 	desc = "Knife for real gentlemen."
 	item = /obj/item/knife/spy
-	cost = 1
 
 /datum/uplink_item/spy_unique/syndie_bowman
 	name = "Syndicate Bowman"

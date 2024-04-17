@@ -282,7 +282,7 @@
 	inhand_icon_state = "spyknife"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	desc = "Knife for real gentlemen."
+	desc = "A knife for real gentlemen."
 	force = 10
 	throwforce = 20
 	throw_range = 12
@@ -298,18 +298,18 @@
 		return
 	if(!(user?.mind?.has_antag_datum(/datum/antagonist/spy))) //only a spy can use potential of a knife
 		return
-	if((isliving(target)) && (isliving(user)))
+	if(isliving(target) && isliving(user))
 		var/mob/living/living_target = target
 		var/mob/living/living_user = user
 		if((living_target.body_position == LYING_DOWN))
 			living_target.apply_damage(backstab_bonus/2, BRUTE)
 		if((living_user.body_position == LYING_DOWN) && (living_target.body_position != LYING_DOWN))
 			living_target.Knockdown(thigh_hit)
-			to_chat(living_target, span_danger("you feel like something sharp has wounded your thigh!"))
+			to_chat(living_target, span_userdanger("You feel a sharp pain in your thigh!"))
 		if(((user.dir == living_target.dir) || (HAS_TRAIT(living_target, TRAIT_SPINNING))) && (living_user.body_position != LYING_DOWN))
 			living_target.apply_damage(backstab_bonus, BRUTE)
 			to_chat(living_target, span_danger("you feel severe pain in your back!"))
-		if((living_target.stat == SOFT_CRIT) && epic_say_ready)
+		if((living_target.stat == SOFT_CRIT) && check_holidays(APRIL_FOOLS) && epic_say_ready)
 			living_user.say("You got blood on my suit!", forced = "spy knife backstab")
 			epic_say_ready = FALSE
 			addtimer(CALLBACK(src, PROC_REF(epic_say_ready)), 5 SECONDS)
