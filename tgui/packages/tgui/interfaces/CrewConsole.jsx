@@ -112,7 +112,21 @@ const CrewTable = (props) => {
 
   useEffect(() => {
     let unsorted = sensors.slice();
-    let sorted = (sortBy((s) => s[sortColumn])(unsorted)).filter((crew) => crew.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    if(sortColumn === "ijob") {
+      let sorted = (sortBy((s) => s[sortColumn])(unsorted)).filter((crew) => crew.name.toLowerCase().includes(searchQuery.toLowerCase()));
+      setShownSensors(sorted);
+      return;
+    }
+
+    unsorted.sort((a, b) => {
+      a[sortColumn] ??= "~";
+      b[sortColumn] ??= "~";
+      if(a[sortColumn] > b[sortColumn]) return -1;
+      if(a[sortColumn] < b[sortColumn]) return 1;
+      return 0;
+    });
+
+    let sorted = unsorted.filter((crew) => crew.name.toLowerCase().includes(searchQuery.toLowerCase()));
     if(!sortAsc) {
       sorted.reverse();
     }
@@ -220,7 +234,7 @@ const CrewTableEntry = (props) => {
         )}
       </Table.Cell>
       <Table.Cell>
-        {area !== undefined ? (
+        {(area !== "~" && area !== undefined) ? (
           area
         ) : (
           <Icon name="question" color="#ffffff" size={1} />
