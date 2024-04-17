@@ -11,6 +11,7 @@
 #include "communication/_communication.dme"
 //#include "crawl_speed/_crawl_speed.dme" // Fixing floored melee brawl, or first steps to remove RP speed
 #include "cyrillic_fixes/_cyrillic_fixes.dme"
+#include "database220/_database220.dme"
 #include "discord/_discord.dme"
 //#include "emote_panel/_emote_panel.dme" // Waiting for upstream merge
 //#include "events/_events.dme" // Going for pure TG right now...
@@ -20,4 +21,5 @@
 #include "pixel_shift/_pixel_shift.dme"
 #include "translations/_translations.dme"
 #include "tts/_tts.dme"
+#include "whitelist220/_whitelist220.dme"
 #include "world_topics/_world_topics.dme"
