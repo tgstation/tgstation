@@ -1,6 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - rscadd: "The lootpanel now works at range."
-  - rscadd: "Screentips for reskinnable items."
-  - bugfix: "Alt click interactions have been refactored, which may lead to unintentional changes to gameplay. Report any issues, please."

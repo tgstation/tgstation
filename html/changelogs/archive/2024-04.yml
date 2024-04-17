@@ -521,3 +521,54 @@
       not under the SMES itself.
   TheRyeGuyWhoWillNowDie:
   - bugfix: strip menu sensors change respects locked sensors
+2024-04-17:
+  00-Steven:
+  - bugfix: RPEDs can be used on vendors again. Note that only bluespace RPEDs can
+      carry vendor refills as of writing.
+  - bugfix: RPEDs can display vendor parts again.
+  - bugfix: Restocking vendors gives credits whether done manually or by RPEDs.
+  - bugfix: Vendors reset their contained credits when restocked.
+  AMyriad:
+  - bugfix: Probably fixed directional tinted windows looking like directional frosted
+      windows
+  - image: Deleted a bunch of unused structure sprites
+  - image: Fixed the lobby menu's collapse button being offset by a pixel
+  Ben10Omintrix:
+  - bugfix: basic bots no longer start with all access
+  Jacquerel:
+  - bugfix: Anomalous Research ruin Bioscrambler anomalies won't home in on targets
+  - bugfix: Bioscrambler won't randomly drop its target for no reason
+  - admin: Reactivating an anomaly core via the anomaly releaser is now logged.
+  - bugfix: Fixes various bugs related to dimensional/spectral anomalies moving when
+      they should not.
+  JohnFulpWillard:
+  - bugfix: Medipens can no longer be deepfried, closing an exploit that allowed people
+      to drain/inject chems into it with saltshakers and IV drips.
+  Melbert:
+  - refactor: Staff of Healing should perform slightly better.
+  - bugfix: Blobs may rejoice, welding torches now consume fuel when attacking objects
+      again after two years.
+  Rhials:
+  - sound: Nightmare has a new sound effect for entering/exiting shadow jaunt. It
+      also no longer can be heard through walls.
+  SyncIt21:
+  - bugfix: Ordinance lab igniter in Icebox works again
+  - bugfix: facescarf ui toggle button works again
+  - bugfix: closets & crates will dump all contents out first before deleting itself
+      regardless of `NO_DEBRIS_AFTER_DECONSTRUCTION` thus not for e.g. hard deleting
+      mobs inside it
+  Vect0r:
+  - bugfix: 'BIRDSHOT: the clown now has a megaphone. Go honk!'
+  Xackii:
+  - bugfix: Birdshot now have engi wardrope
+  Zytolg:
+  - bugfix: Cleans up some rocks on Birdshot
+  jlsnow301:
+  - rscadd: The lootpanel now works at range.
+  - rscadd: Screentips for reskinnable items.
+  - bugfix: Alt click interactions have been refactored, which may lead to unintentional
+      changes to gameplay. Report any issues, please.
+  - bugfix: CentCom dispatched a team of interns to fix the loot panel's loading message.
+      It should now load properly. It did before too, but now the message is fixed.
+  mc-oofert:
+  - bugfix: tramstation AI sat starts full

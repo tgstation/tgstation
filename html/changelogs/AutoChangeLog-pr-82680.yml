@@ -1,4 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "CentCom dispatched a team of interns to fix the loot panel's loading message. It should now load properly. It did before too, but now the message is fixed."
