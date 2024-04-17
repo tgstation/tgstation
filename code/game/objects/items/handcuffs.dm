@@ -122,7 +122,7 @@
 		span_userdanger("[user] handcuffs you."),
 	)
 
-	log_combat(user, victim, "handcuffed")
+	log_combat(user, victim, "successfully handcuffed")
 	SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
 /**
