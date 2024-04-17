@@ -290,27 +290,39 @@
 	var/upgrade
 
 /obj/item/rcd_upgrade/frames
+	name = "RCD advanced upgrade: frames"
 	desc = "It contains the design for machine frames and computer frames."
+	icon_state = "datadisk6"
 	upgrade = RCD_UPGRADE_FRAMES
 
 /obj/item/rcd_upgrade/simple_circuits
+	name = "RCD advanced upgrade: simple circuits"
 	desc = "It contains the design for firelock, air alarm, fire alarm, apc circuits and crap power cells."
+	icon_state = "datadisk4"
 	upgrade = RCD_UPGRADE_SIMPLE_CIRCUITS
 
 /obj/item/rcd_upgrade/anti_interrupt
+	name = "RCD advanced upgrade: anti disruption"
 	desc = "It contains the upgrades necessary to prevent interruption of RCD construction and deconstruction."
+	icon_state = "datadisk2"
 	upgrade = RCD_UPGRADE_ANTI_INTERRUPT
 
 /obj/item/rcd_upgrade/cooling
+	name = "RCD advanced upgrade: enhanced cooling"
 	desc = "It contains the upgrades necessary to allow more frequent use of the RCD."
+	icon_state = "datadisk7"
 	upgrade = RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
 
 /obj/item/rcd_upgrade/silo_link
+	name = "RCD advanced upgrade: silo link"
 	desc = "It contains direct silo connection RCD upgrade."
+	icon_state = "datadisk8"
 	upgrade = RCD_UPGRADE_SILO_LINK
 
 /obj/item/rcd_upgrade/furnishing
+	name = "RCD advanced upgrade: furnishings"
 	desc = "It contains the design for chairs, stools, tables, and glass tables."
+	icon_state = "datadisk5"
 	upgrade = RCD_UPGRADE_FURNISHING
 
 /datum/action/item_action/rcd_scan
