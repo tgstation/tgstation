@@ -121,8 +121,8 @@ const CrewTable = (props) => {
     unsorted.sort((a, b) => {
       a[sortColumn] ??= "~";
       b[sortColumn] ??= "~";
-      if(a[sortColumn] > b[sortColumn]) return -1;
-      if(a[sortColumn] < b[sortColumn]) return 1;
+      if(a[sortColumn] < b[sortColumn]) return -1;
+      if(a[sortColumn] > b[sortColumn]) return 1;
       return 0;
     });
 
