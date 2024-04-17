@@ -30,7 +30,6 @@
 		AddElement(/datum/element/lazy_fishing_spot, fishing_datum)
 
 /turf/open/water/jungle
-	fishing_datum = null // Will you add your own fishes here, coder?
 
 /turf/open/water/beach
 	planetary_atmos = FALSE
