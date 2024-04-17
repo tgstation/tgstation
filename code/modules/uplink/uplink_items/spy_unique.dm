@@ -11,6 +11,12 @@
 	// By default, these fall into easy-medium spy bounty loot pool
 	cost = SPY_LOWER_COST_THRESHOLD
 
+/datum/uplink_item/spy_unique/spy_knife
+	name = "Spy Knife"
+	desc = "Knife for real gentlemen."
+	item = /obj/item/knife/spy
+	cost = 1
+
 /datum/uplink_item/spy_unique/syndie_bowman
 	name = "Syndicate Bowman"
 	desc = "A bowman headset for members of the Syndicate. Not very conspicuous."

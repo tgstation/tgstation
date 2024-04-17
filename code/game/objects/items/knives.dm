@@ -290,6 +290,7 @@
 	armour_penetration = 100
 	var/backstab_bonus = 30
 	var/thigh_hit = 4 SECONDS
+	var/epic_say_ready = TRUE
 
 /obj/item/knife/spy/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -304,5 +305,14 @@
 			living_target.apply_damage(backstab_bonus/2, BRUTE)
 		if((living_user.body_position == LYING_DOWN) && (living_target.body_position != LYING_DOWN))
 			living_target.Knockdown(thigh_hit)
+			to_chat(living_target, span_danger("you feel like something sharp has wounded your thigh!"))
 		if(((user.dir == living_target.dir) || (HAS_TRAIT(living_target, TRAIT_SPINNING))) && (living_user.body_position != LYING_DOWN))
 			living_target.apply_damage(backstab_bonus, BRUTE)
+			to_chat(living_target, span_danger("you feel severe pain in your back!"))
+		if((living_target.stat == SOFT_CRIT) && epic_say_ready)
+			living_user.say("You got blood on my suit!", forced = "spy knife backstab")
+			epic_say_ready = FALSE
+			addtimer(CALLBACK(src, PROC_REF(epic_say_ready)), 5 SECONDS)
+
+/obj/item/knife/spy/proc/epic_say_ready()
+	epic_say_ready = TRUE

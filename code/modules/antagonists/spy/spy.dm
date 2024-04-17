@@ -27,8 +27,6 @@
 		auto_create_spy_uplink(owner.current)
 	if(spawn_with_objectives)
 		give_random_objectives()
-	if(istype(owner.current, /mob/living/carbon/human))
-		give_knife()
 	. = ..()
 	SEND_SOUND(owner.current, sound('sound/ambience/antag/spy.ogg'))
 
@@ -44,22 +42,6 @@
 	.["Refresh Bounties (For all spies)"] = CALLBACK(src, PROC_REF(refresh_bounties))
 	.["Give Spy Uplink"] = CALLBACK(src, PROC_REF(admin_create_spy_uplink))
 	.["Bounty Handler VV"] = CALLBACK(src, PROC_REF(bounty_handler_vv))
-
-/datum/antagonist/spy/proc/give_knife()
-	var/mob/living/carbon/human/human_spy = owner.current
-	if(!istype(human_spy))
-		return
-	var/knife = new /obj/item/knife/spy(human_spy)
-
-	var/list/slots_to_equip = list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_LPOCKET = ITEM_SLOT_LPOCKET, LOCATION_RPOCKET = ITEM_SLOT_RPOCKET)
-
-	var/where = human_spy.equip_in_one_of_slots(knife, slots_to_equip, qdel_on_fail = TRUE, indirect_action = TRUE)
-
-	if(where == LOCATION_BACKPACK)
-		if(human_spy.back)
-			human_spy.back.atom_storage.show_contents(human_spy)
-	if(isnull(where))
-		to_chat(human_spy, span_userdanger("Having packed a bunch of things with you, you completely forgot to take your knife"))
 
 /datum/antagonist/spy/proc/see_bounties()
 	if(!check_rights(R_ADMIN|R_DEBUG))
