@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(symptom_randomness)
 	if(isnull(GLOB.symptom_randomness[type]))
 		GLOB.symptom_randomness[type] = list("stealth" = randomize_stats(), "resistance" = randomize_stats(), "stage_speed" = randomize_stats(), "transmittable" = randomize_stats(), "power" = randomize_stats() / 2)
 		if(power + GLOB.symptom_randomness[type]["power"] < 0.5)
-			GLOB.symptom_randomness[type]["power"] = 0
+			GLOB.symptom_randomness[type]["power"] = max(0, (GLOB.symptom_randomness[type]["power"]))
 	//inherit random symptom behavior
 	stealth += GLOB.symptom_randomness[type]["stealth"]
 	resistance += GLOB.symptom_randomness[type]["resistance"]
