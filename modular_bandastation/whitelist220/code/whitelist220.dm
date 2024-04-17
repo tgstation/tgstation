@@ -2,7 +2,7 @@
 	default = FALSE
 	protection = CONFIG_ENTRY_LOCKED
 
-/datum/controller/configuration/Load(_directory)
+/datum/controller/subsystem/dbcore/Initialize()
 	. = ..()
 	if(CONFIG_GET(flag/whitelist220))
 		load_whitelist220()
