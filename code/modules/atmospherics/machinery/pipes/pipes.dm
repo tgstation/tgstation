@@ -35,10 +35,11 @@
 		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
 
 /obj/machinery/atmospherics/pipe/on_deconstruction(disassembled)
-	var/datum/gas_mixture/air = return_air()
-	if(air)
+	QDEL_NULL(parent)
+
+	if(air_temporary)
 		var/turf/T = loc
-		T.assume_air(air)
+		T.assume_air(air_temporary)
 
 	return ..()
 
