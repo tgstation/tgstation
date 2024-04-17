@@ -23,6 +23,7 @@
 /turf/open/water/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
+	AddElement(/datum/element/extinguisher_tile)
 
 /turf/open/water/jungle
 
