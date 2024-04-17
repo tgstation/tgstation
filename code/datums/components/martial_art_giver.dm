@@ -35,7 +35,6 @@
 	UnregisterSignal(user, list(COMSIG_MOB_MIND_TRANSFERRED_INTO, COMSIG_MOB_MIND_INITIALIZED, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF))
 
 /datum/component/martial_art_giver/proc/teach(mob/source)
-	SIGNAL_HANDLER
 	if(isnull(style))
 		return
 	style.teach(source, TRUE)
