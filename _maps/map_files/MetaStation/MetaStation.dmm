@@ -23142,6 +23142,9 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/structure/railing{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "ivc" = (
@@ -26948,10 +26951,8 @@
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "jGE" = (
-/obj/structure/window/spawner/directional/west,
-/obj/structure/window/spawner/directional/north,
-/turf/open/floor/grass,
-/area/station/service/hydroponics/garden)
+/turf/open/space/basic,
+/area/station/engineering/main)
 "jGG" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/box/white{
@@ -29025,6 +29026,9 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
+/obj/structure/railing{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "krL" = (
@@ -31021,6 +31025,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
+/obj/structure/railing/corner,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "lds" = (
@@ -32398,9 +32403,6 @@
 /obj/structure/chair/comfy/brown,
 /turf/open/floor/engine/cult,
 /area/station/service/library)
-"lJa" = (
-/turf/open/floor/grass,
-/area/station/service/hydroponics/garden)
 "lJh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -40186,8 +40188,7 @@
 /area/station/science/lab)
 "otG" = (
 /obj/item/radio/intercom/directional/east,
-/obj/structure/window/spawner/directional/north,
-/turf/open/floor/grass,
+/turf/open/water,
 /area/station/service/hydroponics/garden)
 "otI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -44354,6 +44355,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/railing,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "pSa" = (
@@ -66318,10 +66320,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "xyI" = (
-/obj/machinery/door/window/left/directional/west{
-	name = "Animal Pen B"
-	},
-/turf/open/floor/grass,
+/turf/open/water,
 /area/station/service/hydroponics/garden)
 "xyM" = (
 /obj/structure/cable,
@@ -67424,6 +67423,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/railing,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "xUH" = (
@@ -105826,9 +105826,9 @@ wRF
 jzC
 oCO
 xUE
-jGE
 xyI
-wRF
+xyI
+xyI
 qXB
 kbo
 qXB
@@ -106080,12 +106080,12 @@ cUP
 mil
 lqQ
 lbH
-lJa
+jYu
 mie
 pRM
 otG
-jYu
-lJa
+xyI
+xyI
 qXB
 psZ
 qXB
@@ -107876,7 +107876,7 @@ gLK
 joo
 sHT
 rBe
-uXd
+jGE
 dVc
 bYp
 gXu
