@@ -16,7 +16,7 @@
 #define AI_BOT_PATH_LENGTH 150
 
 // How far should we, by default, be looking for interesting things to de-idle?
-#define AI_DEFAULT_INTERESTING_DIST 14
+#define AI_DEFAULT_INTERESTING_DIST 10
 
 ///Cooldown on planning if planning failed last time
 

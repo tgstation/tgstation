@@ -360,9 +360,9 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 // Alternate clicks for slime, monkey and open turf if using a xenobio console
 
 
-/mob/living/basic/slime/AltClick(mob/user)
+/mob/living/basic/slime/click_alt(mob/user)
 	SEND_SIGNAL(user, COMSIG_XENO_SLIME_CLICK_ALT, src)
-	..()
+	return CLICK_ACTION_SUCCESS
 
 /mob/living/basic/slime/ShiftClick(mob/user)
 	SEND_SIGNAL(user, COMSIG_XENO_SLIME_CLICK_SHIFT, src)

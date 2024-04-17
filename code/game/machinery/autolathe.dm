@@ -388,15 +388,15 @@
 	drop_direction = direction
 	balloon_alert(usr, "dropping [dir2text(drop_direction)]")
 
-/obj/machinery/autolathe/AltClick(mob/user)
-	. = ..()
-	if(!drop_direction || !can_interact(user))
-		return
+/obj/machinery/autolathe/click_alt(mob/user)
+	if(!drop_direction)
+		return CLICK_ACTION_BLOCKING
 	if(busy)
 		balloon_alert(user, "busy printing!")
-		return
+		return CLICK_ACTION_SUCCESS
 	balloon_alert(user, "drop direction reset")
 	drop_direction = 0
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(user.combat_mode) //so we can hit the machine

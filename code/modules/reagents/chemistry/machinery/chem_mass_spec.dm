@@ -433,14 +433,12 @@
 			replace_beaker(ui.user, FALSE)
 			return TRUE
 
-/obj/machinery/chem_mass_spec/AltClick(mob/living/user)
-	. = ..()
-	if(!can_interact(user))
-		return
+/obj/machinery/chem_mass_spec/click_alt(mob/living/user)
 	if(processing_reagents)
 		balloon_alert(user, "still processing!")
-		return ..()
+		return CLICK_ACTION_BLOCKING
 	replace_beaker(user, TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/chem_mass_spec/alt_click_secondary(mob/living/user)
 	. = ..()

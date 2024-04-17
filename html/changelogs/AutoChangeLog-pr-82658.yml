@@ -1,5 +1,0 @@
-author: "AMyriad"
-delete-after: True
-changes:
-  - bugfix: "Probably fixed directional tinted windows looking like directional frosted windows"
-  - image: "Deleted a bunch of unused structure sprites"

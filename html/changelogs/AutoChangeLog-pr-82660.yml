@@ -1,4 +1,0 @@
-author: "AMyriad"
-delete-after: True
-changes:
-  - image: "Fixed the lobby menu's collapse button being offset by a pixel"

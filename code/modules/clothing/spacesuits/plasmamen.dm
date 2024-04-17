@@ -87,9 +87,9 @@
 	else
 		. += span_notice("There's nothing placed on the helmet.")
 
-/obj/item/clothing/head/helmet/space/plasmaman/AltClick(mob/user)
-	if(user.can_perform_action(src))
-		toggle_welding_screen(user)
+/obj/item/clothing/head/helmet/space/plasmaman/click_alt(mob/user)
+	toggle_welding_screen(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/space/plasmaman/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_welding_screen))
