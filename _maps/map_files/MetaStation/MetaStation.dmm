@@ -26950,9 +26950,6 @@
 /obj/structure/table/wood/poker,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
-"jGE" = (
-/turf/open/space/basic,
-/area/station/engineering/main)
 "jGG" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/box/white{
@@ -107877,7 +107874,7 @@ gLK
 joo
 sHT
 rBe
-jGE
+uXd
 dVc
 bYp
 gXu
