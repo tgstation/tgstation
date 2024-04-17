@@ -95,7 +95,7 @@
 
 	if(victim.canBeHandcuffed())
 		target_mob.balloon_alert(user, "can't be handcuffed!")
-		to_chat(user, span_warning("[C] doesn't have two hands..."))
+		to_chat(user, span_warning("[victim] doesn't have two hands..."))
 		return
 
 	victim.visible_message(
