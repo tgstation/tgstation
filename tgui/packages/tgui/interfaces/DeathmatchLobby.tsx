@@ -182,7 +182,7 @@ function PlayerColumn(props) {
                 <Dropdown
                   width={10}
                   selected={players[player].loadout}
-                  disabled={!host || player !== self}
+                  disabled={!host && player !== self}
                   options={loadouts}
                   onSelected={(value) =>
                     act('change_loadout', {

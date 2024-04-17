@@ -63,8 +63,8 @@ export function DeathmatchPanel(props) {
 }
 
 function LobbyPane(props) {
-  const { act, data } = useBackend<Data>();
-  const { admin, lobbies = [], playing, hosting } = data;
+  const { data } = useBackend<Data>();
+  const { lobbies = [] } = data;
 
   return (
     <Section fill scrollable>
@@ -83,65 +83,78 @@ function LobbyPane(props) {
         </Table.Row>
 
         {lobbies.length === 0 && (
-          <NoticeBox>No lobbies found. Start one!</NoticeBox>
+          <Table.Row>
+            <Table.Cell colSpan={3}>
+              <NoticeBox>No lobbies found. Start one!</NoticeBox>
+            </Table.Cell>
+          </Table.Row>
         )}
-        {lobbies.map((lobby) => {
-          const isActive = (!!hosting || !!playing) && playing !== lobby.name;
 
-          return (
-            <Table.Row className="candystripe" key={lobby.name}>
-              <Table.Cell>
-                {!admin ? (
-                  lobby.name
-                ) : (
-                  <Dropdown
-                    width={10}
-                    noChevron
-                    selected={lobby.name}
-                    options={['Close', 'View']}
-                    onSelected={(value) =>
-                      act('admin', {
-                        id: lobby.name,
-                        func: value,
-                      })
-                    }
-                  />
-                )}
-              </Table.Cell>
-              <Table.Cell>{lobby.map}</Table.Cell>
-              <Table.Cell collapsing>
-                {lobby.players}/{lobby.max_players}
-              </Table.Cell>
-              <Table.Cell collapsing>
-                {!lobby.playing ? (
-                  <>
-                    <Button
-                      disabled={isActive}
-                      color="good"
-                      onClick={() => act('join', { id: lobby.name })}
-                    >
-                      {playing === lobby.name ? 'View' : 'Join'}
-                    </Button>
-                    <Button
-                      color="caution"
-                      icon="eye"
-                      onClick={() => act('spectate', { id: lobby.name })}
-                    />
-                  </>
-                ) : (
-                  <Button
-                    disabled={isActive}
-                    color="good"
-                    onClick={() => act('spectate', { id: lobby.name })}
-                  >
-                    Spectate
-                  </Button>
-                )}
-              </Table.Cell>
-            </Table.Row>
-          );
-        })}
+        {lobbies.map((lobby, index) => (
+          <LobbyDisplay key={index} lobby={lobby} />
+        ))}
       </Table>
     </Section>
+  );
+}
+
+function LobbyDisplay(props) {
+  const { act, data } = useBackend<Data>();
+  const { admin, playing, hosting } = data;
+  const { lobby } = props;
+
+  const isActive = (!!hosting || !!playing) && playing !== lobby.name;
+
+  return (
+    <Table.Row className="candystripe" key={lobby.name}>
+      <Table.Cell>
+        {!admin ? (
+          lobby.name
+        ) : (
+          <Dropdown
+            width={10}
+            noChevron
+            selected={lobby.name}
+            options={['Close', 'View']}
+            onSelected={(value) =>
+              act('admin', {
+                id: lobby.name,
+                func: value,
+              })
+            }
+          />
+        )}
+      </Table.Cell>
+      <Table.Cell>{lobby.map}</Table.Cell>
+      <Table.Cell collapsing>
+        {lobby.players}/{lobby.max_players}
+      </Table.Cell>
+      <Table.Cell collapsing>
+        {!lobby.playing ? (
+          <>
+            <Button
+              disabled={isActive}
+              color="good"
+              onClick={() => act('join', { id: lobby.name })}
+            >
+              {playing === lobby.name ? 'View' : 'Join'}
+            </Button>
+            <Button
+              color="caution"
+              icon="eye"
+              onClick={() => act('spectate', { id: lobby.name })}
+            />
+          </>
+        ) : (
+          <Button
+            disabled={isActive}
+            color="good"
+            onClick={() => act('spectate', { id: lobby.name })}
+          >
+            Spectate
+          </Button>
+        )}
+      </Table.Cell>
+    </Table.Row>
   );
 }
