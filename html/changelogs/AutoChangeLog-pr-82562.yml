@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Adds the Strong Stomach quirk, which allows you to eat grimy food without worry about disease, and makes you a bit more resilient to the effects of vomiting."
+  - rscdel: "Deviant Tastes no longer prevents you from getting a negative moodlet from eating dirty food. Strong Stomach does that now."
