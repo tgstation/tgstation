@@ -104,7 +104,7 @@ const ButtonDisplay = (props) => {
   const { selected } = props;
 
   return (
-    <Stack fill reverse={!!swapped_buttons} justify="space-around">
+    <Stack fill reverse={!swapped_buttons} justify="space-around">
       {buttons.map((button, index) => (
         <Stack.Item grow={large_buttons ? 1 : undefined} key={index}>
           <Button
