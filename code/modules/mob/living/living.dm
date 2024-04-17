@@ -1979,7 +1979,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			return
 
 		fully_replace_character_name(real_name, new_name)
-		var/replace_preferences = !!client && (tgui_alert(usr, "Would you like to update the client's preference with the new name?", "Pref Overwrite", list("Yes", "No")) == "Yes")
+		var/replace_preferences = !isnull(client) && (tgui_alert(usr, "Would you like to update the client's preference with the new name?", "Pref Overwrite", list("Yes", "No")) == "Yes")
 		if(replace_preferences)
 			client.prefs.write_preference(GLOB.preference_entries[/datum/preference/name/real_name], new_name)
 
