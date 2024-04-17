@@ -29029,6 +29029,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/item/storage/toolbox/fishing,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "krL" = (
