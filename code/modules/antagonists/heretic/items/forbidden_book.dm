@@ -39,11 +39,11 @@
 	if(book_open)
 		close_animation()
 		RemoveElement(/datum/element/heretic_focus)
-		w_class = WEIGHT_CLASS_SMALL
+		update_weight_class(WEIGHT_CLASS_SMALL)
 	else
 		open_animation()
 		AddElement(/datum/element/heretic_focus)
-		w_class = WEIGHT_CLASS_NORMAL
+		update_weight_class(WEIGHT_CLASS_NORMAL)
 
 /obj/item/codex_cicatrix/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()

@@ -1,10 +1,6 @@
-/client/proc/cmd_select_equipment(mob/target in GLOB.mob_list)
-	set category = "Admin.Events"
-	set name = "Select equipment"
-
-
-	var/datum/select_equipment/ui = new(usr, target)
-	ui.ui_interact(usr)
+ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, "Select Equipment", mob/target in world)
+	var/datum/select_equipment/ui = new(user, target)
+	ui.ui_interact(user.mob)
 
 /*
  * This is the datum housing the select equipment UI.
@@ -152,7 +148,7 @@
 			return custom_outfit
 
 
-/datum/select_equipment/ui_act(action, params)
+/datum/select_equipment/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
 	. = TRUE
@@ -181,7 +177,7 @@
 			user.admin_apply_outfit(target_mob, new_outfit)
 
 		if("customoutfit")
-			user.outfit_manager()
+			return SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/outfit_manager)
 
 		if("togglefavorite")
 			var/datum/outfit/outfit_path = resolve_outfit(params["path"])

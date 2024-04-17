@@ -53,9 +53,9 @@
 	addtimer(CALLBACK(src, PROC_REF(finish_loading)), 1 SECONDS)
 	return TRUE
 
-/obj/machinery/rnd/destructive_analyzer/AltClick(mob/user)
-	. = ..()
+/obj/machinery/rnd/destructive_analyzer/click_alt(mob/user)
 	unload_item()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/rnd/destructive_analyzer/update_icon_state()
 	icon_state = "[base_icon_state][loaded_item ? "_l" : null]"

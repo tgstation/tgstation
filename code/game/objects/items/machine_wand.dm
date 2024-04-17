@@ -63,14 +63,15 @@
 	if(controlling_machine_or_bot)
 		return controlling_machine_or_bot.ui_act(action, params, ui, state)
 
-/obj/item/machine_remote/AltClick(mob/user)
-	. = ..()
+/obj/item/machine_remote/click_alt(mob/user)
 	if(moving_bug) //we have a bug in transit, so let's kill it.
 		QDEL_NULL(moving_bug)
+		return CLICK_ACTION_BLOCKING
 	if(!controlling_machine_or_bot)
-		return
+		return CLICK_ACTION_BLOCKING
 	say("Remote control over [controlling_machine_or_bot] stopped.")
 	remove_old_machine()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/machine_remote/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()

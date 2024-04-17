@@ -38,6 +38,7 @@
 	req_one_access = list(ACCESS_SECURITY)
 	color = COLOR_LIGHT_GRAYISH_RED
 	add_height_chart = TRUE
+	button_id = "photobooth_machine_security"
 
 /obj/machinery/photobooth/Initialize(mapload)
 	. = ..()

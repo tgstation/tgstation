@@ -157,15 +157,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	to_chat(user, span_notice("You remove [src] from the wall."))
 	return TRUE
 
-/obj/machinery/defibrillator_mount/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/machinery/defibrillator_mount/click_alt(mob/living/carbon/user)
 	if(!defib)
 		to_chat(user, span_warning("It'd be hard to remove a defib unit from a mount that has none."))
-		return
+		return CLICK_ACTION_BLOCKING
 	if(clamps_locked)
 		to_chat(user, span_warning("You try to tug out [defib], but the mount's clamps are locked tight!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	if(!user.put_in_hands(defib))
 		to_chat(user, span_warning("You need a free hand!"))
 		user.visible_message(span_notice("[user] unhooks [defib] from [src], dropping it on the floor."), \
@@ -174,6 +172,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 		user.visible_message(span_notice("[user] unhooks [defib] from [src]."), \
 		span_notice("You slide out [defib] from [src] and unhook the charging cables."))
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/defibrillator_mount/charging
 	name = "PENLITE defibrillator mount"

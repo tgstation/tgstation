@@ -413,3 +413,20 @@ Turf and target are separate in case you want to teleport some distance from a t
 	if(locate(type_to_find) in location)
 		return TRUE
 	return FALSE
+
+/**
+ * get_blueprint_data
+ * Gets a list of turfs around a central turf and gets the blueprint data in a list
+ * Args:
+ * - central_turf: The center turf we're getting data from.
+ * - viewsize: The viewsize we're getting the turfs around central_turf of.
+ */
+/proc/get_blueprint_data(turf/central_turf, viewsize)
+	var/list/blueprint_data_returned = list()
+	var/list/dimensions = getviewsize(viewsize)
+	var/horizontal_radius = dimensions[1] / 2
+	var/vertical_radius = dimensions[2] / 2
+	for(var/turf/nearby_turf as anything in RECT_TURFS(horizontal_radius, vertical_radius, central_turf))
+		if(nearby_turf.blueprint_data)
+			blueprint_data_returned += nearby_turf.blueprint_data
+	return blueprint_data_returned

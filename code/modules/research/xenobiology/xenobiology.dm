@@ -274,7 +274,7 @@
 				to_chat(user, span_warning("Your glow is already enhanced!"))
 				return
 			species.update_glow(user, 5)
-			addtimer(CALLBACK(species, TYPE_PROC_REF(/datum/species/jelly/luminescent, update_glow), user, LUMINESCENT_DEFAULT_GLOW), 600)
+			addtimer(CALLBACK(species, TYPE_PROC_REF(/datum/species/jelly/luminescent, update_glow), user, LUMINESCENT_DEFAULT_GLOW), 1 MINUTES)
 			to_chat(user, span_notice("You start glowing brighter."))
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -705,10 +705,9 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Set potion offer reason"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/slimepotion/slime/sentience/AltClick(mob/living/user)
-	if(!can_interact(user))
-		return
+/obj/item/slimepotion/slime/sentience/click_alt(mob/living/user)
 	potion_reason = tgui_input_text(user, "Enter reason for offering potion", "Intelligence Potion", potion_reason, multiline = TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/user)
 	if(being_used || !isliving(dumb_mob))
@@ -1082,17 +1081,3 @@
 	turf_type = /turf/open/floor/sepia
 	merge_type = /obj/item/stack/tile/sepia
 
-/obj/item/areaeditor/blueprints/slime
-	name = "cerulean prints"
-	desc = "A one use yet of blueprints made of jelly like organic material. Extends the reach of the management console."
-	color = "#2956B2"
-
-/obj/item/areaeditor/blueprints/slime/edit_area()
-	..()
-	var/area/area = get_area(src)
-	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
-		for(var/turf/area_turf as anything in zlevel_turfs)
-			area_turf.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			area_turf.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
-	area.area_flags |= XENOBIOLOGY_COMPATIBLE
-	qdel(src)

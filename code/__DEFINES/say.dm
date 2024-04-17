@@ -107,6 +107,7 @@
 #define MAX_CHARTER_LEN 80
 #define MAX_PLAQUE_LEN 144
 #define MAX_LABEL_LEN 64
+#define MAX_DESC_LEN 280
 
 // Audio/Visual Flags. Used to determine what sense are required to notice a message.
 #define MSG_VISUAL (1<<0)

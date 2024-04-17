@@ -419,11 +419,11 @@
 		return
 	return ..()
 
-/obj/item/stack/medical/mesh/AltClick(mob/living/user)
+/obj/item/stack/medical/mesh/click_alt(mob/living/user)
 	if(!is_open)
 		balloon_alert(user, "open it first!")
-		return
-	return ..()
+		return CLICK_ACTION_BLOCKING
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/stack/medical/mesh/attack_hand(mob/user, list/modifiers)
 	if(!is_open && user.get_inactive_held_item() == src)

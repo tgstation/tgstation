@@ -4,6 +4,8 @@
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
 	light_color = COLOR_SOFT_RED
+	processing_flags = START_PROCESSING_MANUALLY
+
 	var/list/z_lock = list() // Lock use to these z levels
 	var/lock_override = NONE
 	var/mob/camera/ai_eye/remote/eyeobj
@@ -30,7 +32,7 @@
 	. = ..()
 	for(var/i in networks)
 		networks -= i
-		networks += lowertext(i)
+		networks += LOWER_TEXT(i)
 	if(lock_override)
 		if(lock_override & CAMERA_LOCK_STATION)
 			z_lock |= SSmapping.levels_by_trait(ZTRAIT_STATION)
@@ -49,6 +51,20 @@
 	//Camera action button to move down a Z level
 	if(move_down_action)
 		actions += new move_down_action(src)
+
+/obj/machinery/computer/camera_advanced/Destroy()
+	if(!QDELETED(current_user))
+		unset_machine(current_user)
+	if(eyeobj)
+		QDEL_NULL(eyeobj)
+	QDEL_LIST(actions)
+	current_user = null
+	return ..()
+
+/obj/machinery/computer/camera_advanced/process()
+	if(!can_use(current_user) || (issilicon(current_user) && !current_user.has_unlimited_silicon_privilege))
+		unset_machine(current_user)
+		return PROCESS_KILL
 
 /obj/machinery/computer/camera_advanced/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in networks)
@@ -73,6 +89,20 @@
 /obj/machinery/proc/remove_eye_control(mob/living/user)
 	CRASH("[type] does not implement ai eye handling")
 
+/obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
+	if(isnull(user?.client))
+		return
+	GrantActions(user)
+	current_user = user
+	eyeobj.eye_user = user
+	eyeobj.name = "Camera Eye ([user.name])"
+	user.remote_control = eyeobj
+	user.reset_perspective(eyeobj)
+	eyeobj.setLoc(eyeobj.loc)
+	if(should_supress_view_changes)
+		user.client.view_size.supress()
+	begin_processing()
+
 /obj/machinery/computer/camera_advanced/remove_eye_control(mob/living/user)
 	if(isnull(user?.client))
 		return
@@ -90,23 +120,16 @@
 	eyeobj.eye_user = null
 	user.remote_control = null
 	current_user = null
-	unset_machine(user)
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
-/obj/machinery/computer/camera_advanced/check_eye(mob/user)
-	if(!can_use(user) || (issilicon(user) && !user.has_unlimited_silicon_privilege))
-		unset_machine(user)
-
-/obj/machinery/computer/camera_advanced/Destroy()
-	if(eyeobj)
-		QDEL_NULL(eyeobj)
-	QDEL_LIST(actions)
-	current_user = null
-	return ..()
+/obj/machinery/computer/camera_advanced/on_set_is_operational(old_value)
+	if(!is_operational)
+		unset_machine(current_user)
 
 /obj/machinery/computer/camera_advanced/proc/unset_machine(mob/M)
 	if(M == current_user)
 		remove_eye_control(M)
+		end_processing()
 
 /obj/machinery/computer/camera_advanced/proc/can_use(mob/living/user)
 	return can_interact(user)
@@ -166,19 +189,6 @@
 
 /obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 	return //AIs would need to disable their own camera procs to use the console safely. Bugs happen otherwise.
-
-/obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
-	if(isnull(user?.client))
-		return
-	GrantActions(user)
-	current_user = user
-	eyeobj.eye_user = user
-	eyeobj.name = "Camera Eye ([user.name])"
-	user.remote_control = eyeobj
-	user.reset_perspective(eyeobj)
-	eyeobj.setLoc(eyeobj.loc)
-	if(should_supress_view_changes)
-		user.client.view_size.supress()
 
 /mob/camera/ai_eye/remote
 	name = "Inactive Camera Eye"
