@@ -46,11 +46,13 @@
 	throw_range = 5
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5)
 	breakouttime = 1 MINUTES
+	armor_type = /datum/armor/restraints_handcuffs
+	custom_price = PAYCHECK_COMMAND * 0.35
+
+	///How long it takes to handcuff someone
 	var/handcuff_time = 4 SECONDS
 	///Multiplier for handcuff time
 	var/handcuff_time_mod = 1
-	armor_type = /datum/armor/restraints_handcuffs
-	custom_price = PAYCHECK_COMMAND * 0.35
 	///Sound that plays when starting to put handcuffs on someone
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
