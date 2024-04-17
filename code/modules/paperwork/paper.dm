@@ -30,6 +30,7 @@
 	grind_results = list(/datum/reagent/cellulose = 3)
 	color = COLOR_WHITE
 	item_flags = SKIP_FANTASY_ON_SPAWN
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS
 
 	/// Lazylist of raw, unsanitised, unparsed text inputs that have been made to the paper.
 	var/list/datum/paper_input/raw_text_inputs
@@ -359,13 +360,13 @@
 		return TRUE
 	return ..()
 
-/obj/item/paper/AltClick(mob/living/user)
-	. = ..()
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
+/obj/item/paper/click_alt(mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_PAPER_MASTER))
-		return make_plane(user, /obj/item/paperplane/syndicate)
-	return make_plane(user, /obj/item/paperplane)
+		make_plane(user, /obj/item/paperplane/syndicate)
+		return CLICK_ACTION_SUCCESS
+	make_plane(user, /obj/item/paperplane)
+	return CLICK_ACTION_SUCCESS
+
 
 
 /**
@@ -374,9 +375,9 @@
  *
  * Arguments:
  * * mob/living/user - who's folding
- * * obj/item/paperplane/plane_type - what it will be folded into (path)
+ * * plane_type - what it will be folded into (path)
  */
-/obj/item/paper/proc/make_plane(mob/living/user, obj/item/paperplane/plane_type = /obj/item/paperplane)
+/obj/item/paper/proc/make_plane(mob/living/user, plane_type = /obj/item/paperplane)
 	balloon_alert(user, "folded into a plane")
 	user.temporarilyRemoveItemFromInventory(src)
 	var/obj/item/paperplane/new_plane = new plane_type(loc, src)

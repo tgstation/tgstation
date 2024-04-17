@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Height now applies less weird to certain worn items, bare-handed bloody hands, and damage overlays."

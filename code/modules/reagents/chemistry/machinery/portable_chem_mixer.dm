@@ -9,6 +9,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_price = PAYCHECK_CREW * 10
 	custom_premium_price = PAYCHECK_CREW * 14
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
 
 	///Creating an empty slot for a beaker that can be added to dispense into
 	var/obj/item/reagent_containers/beaker
@@ -250,15 +251,14 @@
 			var/atom/movable/screen/inventory/hand/H = over_object
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
-/obj/item/storage/portable_chem_mixer/AltClick(mob/living/user)
+/obj/item/storage/portable_chem_mixer/click_alt(mob/living/user)
 	if(!atom_storage.locked)
 		balloon_alert(user, "lock first to use alt eject!")
-		return ..()
-	if(!can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	replace_beaker(user)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/portable_chem_mixer/CtrlClick(mob/living/user)
 	if(atom_storage.locked == STORAGE_FULLY_LOCKED)

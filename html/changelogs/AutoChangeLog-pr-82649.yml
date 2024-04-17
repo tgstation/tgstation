@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Anomalous Research ruin Bioscrambler anomalies won't home in on targets"
-  - bugfix: "Bioscrambler won't randomly drop its target for no reason"

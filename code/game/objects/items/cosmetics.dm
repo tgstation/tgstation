@@ -10,6 +10,7 @@
 	icon_state = "lipstick"
 	inhand_icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	var/open = FALSE
 	/// Actual color of the lipstick, also gets applied to the human
 	var/lipstick_color = COLOR_RED
@@ -45,15 +46,9 @@
 	colored_overlay.color = lipstick_color
 	. += colored_overlay
 
-/obj/item/lipstick/AltClick(mob/user)
-	. = ..()
-	if(.)
-		return TRUE
-
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))
-		return FALSE
-
-	return display_radial_menu(user)
+/obj/item/lipstick/click_alt(mob/user)
+	display_radial_menu(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/lipstick/proc/display_radial_menu(mob/living/carbon/human/user)
 	var/style_options = list(

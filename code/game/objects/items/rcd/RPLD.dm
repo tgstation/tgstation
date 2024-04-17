@@ -275,8 +275,9 @@
 
 	create_machine(target, user)
 
-/obj/item/construction/plumbing/AltClick(mob/user)
+/obj/item/construction/plumbing/click_alt(mob/user)
 	ui_interact(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/construction/plumbing/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
