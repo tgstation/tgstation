@@ -115,7 +115,7 @@
 		log_combat(user, victim, "failed to handcuff")
 		return
 
-	apply_cuffs(victim, user, iscyborg(user))
+	apply_cuffs(victim, user, dispense = iscyborg(user))
 
 	victim.visible_message(
 		span_notice("[user] handcuffs [victim]."),
