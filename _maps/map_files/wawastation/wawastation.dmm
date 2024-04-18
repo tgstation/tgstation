@@ -646,6 +646,9 @@
 	name = "Bridge"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "bridgec"
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "alf" = (
@@ -5701,6 +5704,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "bridgec"
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "cgr" = (
@@ -5879,6 +5885,13 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"ckb" = (
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 2
+	},
+/obj/machinery/holopad,
+/turf/open/floor/iron/textured_large,
+/area/station/command/bridge)
 "ckc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/grass,
@@ -7924,6 +7937,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "bridgec"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "dbN" = (
@@ -11501,6 +11517,8 @@
 	},
 /obj/effect/turf_decal/tile/dark_blue,
 /obj/effect/landmark/start/hangover,
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "epA" = (
@@ -26785,6 +26803,8 @@
 "kbT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/event_spawn,
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "kbW" = (
@@ -31497,10 +31517,10 @@
 /turf/open/floor/carpet/red,
 /area/station/security/warden)
 "lLU" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "lLW" = (
@@ -31548,7 +31568,10 @@
 	dir = 9
 	},
 /obj/machinery/light/directional/west,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/item/pipe_dispenser,
+/obj/item/pipe_dispenser,
+/obj/item/pipe_dispenser,
+/obj/structure/rack,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "lNr" = (
@@ -33163,6 +33186,9 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "bridgec"
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
@@ -43664,6 +43690,7 @@
 "qtg" = (
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
+/obj/machinery/holopad,
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/captain/private)
 "qtx" = (
@@ -58854,6 +58881,9 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "bridgec"
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "vVs" = (
@@ -62355,6 +62385,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "bridgec"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "xne" = (
@@ -91970,7 +92003,7 @@ yhk
 fUR
 rUi
 typ
-lCK
+ckb
 jlw
 iRB
 gkQ
@@ -107200,7 +107233,7 @@ boT
 djU
 wFG
 lLU
-nPW
+utV
 cPG
 bUA
 bUh
