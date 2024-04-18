@@ -41,6 +41,7 @@
 	victim_dummy.set_haircolor("#bb9966", update = FALSE)
 	victim_dummy.set_hairstyle("Messy", update = TRUE)
 
+	var/icon/obsessed_icon = render_preview_outfit(preview_outfit)
 	var/icon/final_icon = finish_preview_icon(obsessed_icon)
 
 	final_icon.Blend(
