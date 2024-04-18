@@ -34,18 +34,13 @@
 	if(hide)
 		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
 
-/obj/machinery/atmospherics/pipe/Destroy()
-	QDEL_NULL(parent)
-
+/obj/machinery/atmospherics/pipe/on_deconstruction(disassembled)
 	releaseAirToTurf()
 
-	var/turf/local_turf = loc
-	for(var/obj/machinery/meter/meter in local_turf)
-		if(meter.target != src)
-			continue
-		var/obj/item/pipe_meter/meter_object = new (local_turf)
-		meter.transfer_fingerprints_to(meter_object)
-		qdel(meter)
+	return ..()
+
+/obj/machinery/atmospherics/pipe/Destroy()
+	QDEL_NULL(parent)
 	return ..()
 
 //-----------------
