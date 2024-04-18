@@ -175,7 +175,7 @@ export const VoicePage = (props) => {
               donator_level < seed.donator_level &&
               'Требуется более высокий уровень подписки'
             }
-            onClick={() => act('select', { seed: seed.name })}
+            onClick={() => act('select_voice', { seed: seed.name })}
           />
         </Table.Cell>
         <Table.Cell collapsing textAlign="center">
