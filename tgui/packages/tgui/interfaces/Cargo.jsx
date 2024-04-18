@@ -1,4 +1,4 @@
-import { filter } from 'common/collections';
+import { filter, sortBy } from 'common/collections';
 
 import { useBackend, useSharedState } from '../backend';
 import {
