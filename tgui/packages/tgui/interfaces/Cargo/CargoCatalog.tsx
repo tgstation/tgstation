@@ -125,23 +125,25 @@ function CatalogTabs(props: CatalogTabsProps) {
         </Stack>
       </Tabs.Tab>
 
-      {supplies.map((supply) => (
-        <Tabs.Tab
-          className="candystripe"
-          color={supply.name === activeSupplyName ? 'green' : undefined}
-          key={supply.name}
-          selected={supply.name === activeSupplyName}
-          onClick={() => {
-            setActiveSupplyName(supply.name);
-            setSearchText('');
-          }}
-        >
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>{supply.name}</span>
-            <span> {supply.packs.length}</span>
-          </div>
-        </Tabs.Tab>
-      ))}
+      {supplies
+        .sort((a, b) => (a.name > b.name ? 1 : -1))
+        .map((supply) => (
+          <Tabs.Tab
+            className="candystripe"
+            color={supply.name === activeSupplyName ? 'green' : undefined}
+            key={supply.name}
+            selected={supply.name === activeSupplyName}
+            onClick={() => {
+              setActiveSupplyName(supply.name);
+              setSearchText('');
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>{supply.name}</span>
+              <span> {supply.packs.length}</span>
+            </div>
+          </Tabs.Tab>
+        ))}
     </Tabs>
   );
 }
@@ -158,44 +160,55 @@ function CatalogList(props: CatalogListProps) {
   return (
     <Section fill scrollable>
       <Table>
-        {activeSupply?.packs.map((pack) => {
-          const tags: string[] = [];
-          if (pack.small_item) {
-            tags.push('Small');
-          }
-          if (pack.access) {
-            tags.push('Restricted');
-          }
-          return (
-            <Table.Row key={pack.name} className="candystripe">
-              <Table.Cell color="label">{pack.name}</Table.Cell>
-              <Table.Cell collapsing color="average" textAlign="right">
-                {tags.join(', ')}
-              </Table.Cell>
-              <Table.Cell collapsing textAlign="right">
-                <Button
-                  fluid
-                  tooltip={pack.desc}
-                  tooltipPosition="left"
-                  disabled={(amount_by_name[pack.name] || 0) >= max_order}
-                  onClick={() =>
-                    act('add', {
-                      id: pack.id,
-                    })
-                  }
-                  mb={0.5}
-                >
-                  {formatMoney(
-                    (self_paid && !pack.goody) || app_cost
-                      ? Math.round(pack.cost * 1.1)
-                      : pack.cost,
-                  )}{' '}
-                  cr
-                </Button>
-              </Table.Cell>
-            </Table.Row>
-          );
-        })}
+        {activeSupply?.packs
+          .sort((a, b) => (a.name > b.name ? 1 : -1))
+          .map((pack) => {
+            const tags: string[] = [];
+            if (pack.small_item) {
+              tags.push('Small');
+            }
+            if (pack.access) {
+              tags.push('Restricted');
+            }
+            let color = '';
+            const digits = Math.floor(Math.log10(pack.cost) + 1);
+            if (digits >= 5 && digits <= 6) {
+              color = 'yellow';
+            } else if (digits > 6) {
+              color = 'bad';
+            }
+
+            return (
+              <Table.Row key={pack.name} className="candystripe">
+                <Table.Cell color="label">{pack.name}</Table.Cell>
+                <Table.Cell collapsing color="average" textAlign="right">
+                  {tags.join(', ')}
+                </Table.Cell>
+                <Table.Cell collapsing textAlign="right">
+                  <Button
+                    color={color}
+                    tooltip={pack.desc}
+                    tooltipPosition="left"
+                    disabled={(amount_by_name[pack.name] || 0) >= max_order}
+                    onClick={() =>
+                      act('add', {
+                        id: pack.id,
+                      })
+                    }
+                    minWidth={5}
+                    mb={0.5}
+                  >
+                    {formatMoney(
+                      (self_paid && !pack.goody) || app_cost
+                        ? Math.round(pack.cost * 1.1)
+                        : pack.cost,
+                    )}{' '}
+                    cr
+                  </Button>
+                </Table.Cell>
+              </Table.Row>
+            );
+          })}
       </Table>
     </Section>
   );

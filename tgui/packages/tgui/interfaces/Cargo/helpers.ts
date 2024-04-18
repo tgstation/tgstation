@@ -1,4 +1,4 @@
-import { filter, sortBy } from 'common/collections';
+import { filter } from 'common/collections';
 import { flow } from 'common/fp';
 
 import { Supply, SupplyCategory } from './types';
@@ -22,10 +22,9 @@ export function searchForSupplies(
       categories.flatMap((category) => category.packs),
     filter(
       (pack: Supply) =>
-        pack.name?.toLowerCase().includes(search?.toLowerCase()) ||
-        pack.desc?.toLowerCase().includes(search?.toLowerCase()),
+        pack.name?.toLowerCase().includes(search.toLowerCase()) ||
+        pack.desc?.toLowerCase().includes(search.toLowerCase()),
     ),
-    sortBy((pack: Supply) => pack.name),
     (packs) => packs.slice(0, 25),
   ])(supplies);
 }

@@ -7,7 +7,13 @@ export function CargoCartButtons(props) {
   const { act, data } = useBackend<CargoData>();
   const { cart = [], requestonly, can_send, can_approve_requests } = data;
 
-  const total = cart.reduce((total, entry) => total + entry.cost, 0);
+  let total = 0;
+  for (let i = 0; i < cart.length; i++) {
+    total += cart[i].cost;
+  }
+
+  const canClear =
+    !requestonly && !!can_send && !!can_approve_requests && cart.length > 0;
 
   return (
     <>
@@ -17,11 +23,15 @@ export function CargoCartButtons(props) {
         {cart.length >= 2 && cart.length + ' items'}{' '}
         {total > 0 && `(${formatMoney(total)} cr)`}
       </Box>
-      {!requestonly && !!can_send && !!can_approve_requests && (
-        <Button icon="times" color="transparent" onClick={() => act('clear')}>
-          Clear
-        </Button>
-      )}
+
+      <Button
+        disabled={!canClear}
+        icon="times"
+        color="transparent"
+        onClick={() => act('clear')}
+      >
+        Clear
+      </Button>
     </>
   );
 }
