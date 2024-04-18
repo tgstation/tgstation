@@ -8,6 +8,7 @@ import {
   Collapsible,
   Dropdown,
   Input,
+  LabeledList,
   Section,
   Stack,
 } from '../components';
@@ -77,19 +78,23 @@ const SubsystemView = (props: { data: SubsystemData }) => {
         />
       }
     >
-      <Stack vertical>
-        <Stack.Item>Init Order: {init_order}</Stack.Item>
-        <Stack.Item>Last Fire: {last_fire}</Stack.Item>
-        <Stack.Item>Next Fire: {next_fire}</Stack.Item>
-        <Stack.Item>Cost: {cost_ms}ms</Stack.Item>
-        <Stack.Item>Tick Usage: {(tick_usage * 0.01).toFixed(2)}%</Stack.Item>
-        <Stack.Item>
-          Tick Overrun: {(tick_overrun * 0.01).toFixed(2)}%
-        </Stack.Item>
+      <LabeledList>
+        <LabeledList.Item label="Init Order">{init_order}</LabeledList.Item>
+        <LabeledList.Item label="Last Fire">{last_fire}</LabeledList.Item>
+        <LabeledList.Item label="Next Fire">{next_fire}</LabeledList.Item>
+        <LabeledList.Item label="Cost">{cost_ms}ms</LabeledList.Item>
+        <LabeledList.Item label="Tick Usage">
+          {(tick_usage * 0.01).toFixed(2)}%
+        </LabeledList.Item>
+        <LabeledList.Item label="Tick Overrun">
+          {(tick_overrun * 0.01).toFixed(2)}%
+        </LabeledList.Item>
         {initialization_failure_message ? (
-          <Stack.Item color="bad">{initialization_failure_message}</Stack.Item>
+          <LabeledList.Item color="bad">
+            {initialization_failure_message}
+          </LabeledList.Item>
         ) : undefined}
-      </Stack>
+      </LabeledList>
     </Collapsible>
   );
 };
@@ -101,6 +106,7 @@ enum SubsystemSortBy {
   NEXT_FIRE = 'Next Fire',
   TICK_USAGE = 'Tick Usage',
   TICK_OVERRUN = 'Tick Overrun',
+  COST = 'Cost',
 }
 
 const sortSubsystemBy = (
@@ -122,6 +128,8 @@ const sortSubsystemBy = (
         return left.tick_usage - right.tick_usage;
       case SubsystemSortBy.TICK_OVERRUN:
         return left.tick_overrun - right.tick_overrun;
+      case SubsystemSortBy.COST:
+        return left.cost_ms - right.cost_ms;
     }
   });
   if (!asending) {
@@ -163,7 +171,7 @@ export const ControllerOverview = () => {
 
   return (
     <Window>
-      <Window.Content scrollable>
+      <Window.Content>
         <Section title="Master Overview">
           <Stack vertical>
             <Stack.Item>World Time: {world_time}</Stack.Item>
@@ -224,7 +232,7 @@ export const ControllerOverview = () => {
             </Stack.Item>
           </Stack>
         </Section>
-        <Section title="Subsystem Overview">
+        <Section title="Subsystem Overview" scrollable>
           <Stack vertical>
             {sortedSubsystems.map((subsystem) => (
               <SubsystemView key={subsystem.ref} data={subsystem} />
