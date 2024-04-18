@@ -302,9 +302,9 @@
 			return 'sound/voice/human/womanlaugh.ogg'
 		else
 			return pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg')
-	if(islizard && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
+	if(islizard(human_user) && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
 		return 'sound/voice/lizard_laugh1'
-	if(ismoth && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
+	if(ismoth(human_user) && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
 		return 'sound/voice/moth/moth_laugh1'
 
 /datum/emote/living/look
@@ -424,7 +424,7 @@
 
 /datum/emote/living/sneeze/get_sound(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
-	if !HAS_MIND_TRAIT(human_user, TRAIT_MIMING)
+	if (!HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
 		if(human_user.gender == FEMALE)
 			return 'sound/voice/human/female_sneeze1.ogg'
 		else return 'sound/voice/human/male_sneeze1.ogg'
