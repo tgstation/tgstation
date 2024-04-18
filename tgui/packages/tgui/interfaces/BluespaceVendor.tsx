@@ -1,5 +1,4 @@
 import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
@@ -50,10 +49,10 @@ export const BluespaceVendor = (props) => {
     tank_full,
   } = data;
 
-  const gases: Gas[] = flow([
-    filter<Gas>((gas) => gas.amount >= 0.01),
-    sortBy<Gas>((gas) => -gas.amount),
-  ])(bluespace_network_gases);
+  const gases: Gas[] = sortBy(
+    filter(bluespace_network_gases, (gas) => gas.amount >= 0.01),
+    (gas) => -gas.amount,
+  );
 
   const gasMax = Math.max(1, ...gases.map((gas) => gas.amount));
 

@@ -125,15 +125,15 @@
 			grill_fuel += boost
 	update_appearance(UPDATE_ICON_STATE)
 
-/obj/machinery/grill/item_interaction(mob/living/user, obj/item/weapon, list/modifiers, is_right_clicking)
+/obj/machinery/grill/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
 	if(user.combat_mode || (weapon.item_flags & ABSTRACT) || (weapon.flags_1 & HOLOGRAM_1) || (weapon.resistance_flags & INDESTRUCTIBLE))
-		return ..()
+		return NONE
 
 	if(istype(weapon, /obj/item/stack/sheet/mineral/coal) || istype(weapon, /obj/item/stack/sheet/mineral/wood))
 		if(!QDELETED(grilled_item))
-			return ..()
+			return NONE
 		if(!anchored)
-			balloon_alert(user, "anchor first!")
+			balloon_alert(user, "anchor it first!")
 			return ITEM_INTERACT_BLOCKING
 
 		//required for amount subtypes
@@ -150,7 +150,7 @@
 			if(!istype(stored, target_type))
 				continue
 			if(stored.amount == MAX_STACK_SIZE)
-				to_chat(user, span_warning("No space for [weapon]"))
+				balloon_alert(user, "no space!")
 				return ITEM_INTERACT_BLOCKING
 			target.merge(stored)
 			merged = TRUE
@@ -158,7 +158,7 @@
 		if(!merged)
 			weapon.forceMove(src)
 
-		to_chat(user, span_notice("You add [src] to the fuel stack"))
+		to_chat(user, span_notice("You add [src] to the fuel stack."))
 		if(!grill_fuel)
 			burn_stack()
 			begin_processing()
@@ -167,9 +167,9 @@
 	if(is_reagent_container(weapon) && weapon.is_open_container())
 		var/obj/item/reagent_containers/container = weapon
 		if(!QDELETED(grilled_item))
-			return ..()
+			return NONE
 		if(!anchored)
-			balloon_alert(user, "anchor first!")
+			balloon_alert(user, "anchor it first!")
 			return ITEM_INTERACT_BLOCKING
 
 		var/transfered_amount = weapon.reagents.trans_to(src, container.amount_per_transfer_from_this)
@@ -202,11 +202,11 @@
 			update_appearance(UPDATE_ICON_STATE)
 
 			//feedback
-			to_chat(user, span_notice("You transfer [transfered_amount]u to the fuel source"))
+			to_chat(user, span_notice("You transfer [transfered_amount]u to the fuel source."))
 			return ITEM_INTERACT_SUCCESS
-		else
-			to_chat(user, span_warning("No fuel was transfered"))
-			return ITEM_INTERACT_BLOCKING
+
+		balloon_alert(user, "no fuel transfered!")
+		return ITEM_INTERACT_BLOCKING
 
 	if(IS_EDIBLE(weapon))
 		//sanity checks
@@ -218,10 +218,10 @@
 		if(!QDELETED(grilled_item))
 			balloon_alert(user, "remove item first!")
 			return ITEM_INTERACT_BLOCKING
-		else if(grill_fuel <= 0)
+		if(grill_fuel <= 0)
 			balloon_alert(user, "no fuel!")
 			return ITEM_INTERACT_BLOCKING
-		else if(!user.transferItemToLoc(weapon, src))
+		if(!user.transferItemToLoc(weapon, src))
 			balloon_alert(user, "[weapon] is stuck in your hand!")
 			return ITEM_INTERACT_BLOCKING
 
@@ -236,7 +236,7 @@
 		grill_loop.start()
 		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/machinery/grill/wrench_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)

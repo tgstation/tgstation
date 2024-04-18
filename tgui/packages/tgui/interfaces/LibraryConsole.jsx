@@ -1,5 +1,4 @@
 import { map, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { useState } from 'react';
 
@@ -136,14 +135,14 @@ export const Inventory = (props) => {
 
 export const InventoryDetails = (props) => {
   const { act, data } = useBackend();
-  const inventory = flow([
-    map((book, i) => ({
+  const inventory = sortBy(
+    map(data.inventory, (book, i) => ({
       ...book,
       // Generate a unique id
       key: i,
     })),
-    sortBy((book) => book.key),
-  ])(data.inventory);
+    (book) => book.key,
+  );
   return (
     <Section>
       <Table>
@@ -261,14 +260,14 @@ export const CheckoutEntries = (props) => {
 
 const CheckoutModal = (props) => {
   const { act, data } = useBackend();
-  const inventory = flow([
-    map((book, i) => ({
+  const inventory = sortBy(
+    map(data.inventory, (book, i) => ({
       ...book,
       // Generate a unique id
       key: i,
     })),
-    sortBy((book) => book.key),
-  ])(data.inventory);
+    (book) => book.key,
+  );
 
   const [checkoutBook, setCheckoutBook] = useLocalState('CheckoutBook', false);
   const [bookName, setBookName] = useState('Insert Book name...');
@@ -387,14 +386,14 @@ export const SearchAndDisplay = (props) => {
     params_changed,
     can_db_request,
   } = data;
-  const records = flow([
-    map((record, i) => ({
+  const records = sortBy(
+    map(data.pages, (record, i) => ({
       ...record,
       // Generate a unique id
       key: i,
     })),
-    sortBy((record) => record.key),
-  ])(data.pages);
+    (record) => record.key,
+  );
 
   return (
     <Box>

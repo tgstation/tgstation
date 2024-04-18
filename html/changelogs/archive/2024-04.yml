@@ -572,3 +572,24 @@
       It should now load properly. It did before too, but now the message is fixed.
   mc-oofert:
   - bugfix: tramstation AI sat starts full
+2024-04-18:
+  Ben10Omintrix:
+  - code_imp: The way mobs idle has been refactored, please report any issues with
+      non-reactive mobs
+  - rscadd: miners can now purchase grapple guns
+  Melbert:
+  - rscadd: Adds the Strong Stomach quirk, which allows you to eat grimy food without
+      worry about disease, and makes you a bit more resilient to the effects of vomiting.
+  - rscdel: Deviant Tastes no longer prevents you from getting a negative moodlet
+      from eating dirty food. Strong Stomach does that now.
+  - bugfix: Height now applies less weird to certain worn items, bare-handed bloody
+      hands, and damage overlays.
+  jlsnow301:
+  - bugfix: Bit avatars no longer have access to free binary comms with the AI outfit
+  - bugfix: Netpods have had their security against exploits increased.
+  mc-oofert:
+  - bugfix: you no longer need to put your sleeping carp gloves off and on in Deathmatch
+      to get the martial art
+  san7890:
+  - rscadd: Regal Rats are now able to tear down those colorful posters those weird
+      grey creatures keep spackling up on the walls of their rightful domain.
