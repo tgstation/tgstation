@@ -392,6 +392,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, span_warning("You're already stuck out of your body!"))
 		return FALSE
 
+	var/helpful_message = "Are you sure you want to prevent (almost) all means of resuscitation? This cannot be undone."
+	if(IS_CULTIST(src))
+		helpful_message += " Cultists will be unable to revive you."
+	if(IS_CHANGELING(src))
+		helpful_message += " Reviving stasis will not revive you."
+	if(istype(get_organ_by_type(src, ORGAN_SLOT_HEART), /obj/item/organ/internal/heart/nightmare))
+		helpful_message += " Your heart will not revive you."
+
+	var/response = tgui_alert(usr, helpful_message, "Are you sure you want to stay dead?", list("DNR","Save Me"))
+	if(response != "DNR")
+		return
+
 	var/response = tgui_alert(usr, "Are you sure you want to prevent (almost) all means of resuscitation? This cannot be undone.", "Are you sure you want to stay dead?", list("DNR","Save Me"))
 	if(response != "DNR")
 		return
