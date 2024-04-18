@@ -72,11 +72,11 @@
 /area/shuttle/pirate)
 "k" = (
 /obj/structure/table/wood,
-/obj/item/shield/buckler,
-/obj/item/shield/buckler,
 /obj/item/restraints/legcuffs/bola/tactical,
 /obj/item/restraints/legcuffs/bola/tactical,
 /obj/item/restraints/legcuffs/bola/tactical,
+/obj/item/shield/kite,
+/obj/item/shield/kite,
 /turf/open/floor/stone,
 /area/shuttle/pirate)
 "l" = (

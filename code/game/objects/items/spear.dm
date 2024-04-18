@@ -226,7 +226,7 @@
 	desc = "A stick with a seemingly blunt spearhead on its end. Looks like it might break bones easily."
 	attack_verb_continuous = list("attacks", "pokes", "jabs")
 	attack_verb_simple = list("attack", "poke", "jab")
-	throwforce = 25
+	throwforce = 30
 	demolition_mod = 1
 	wound_bonus = 5
 	bare_wound_bonus = 25

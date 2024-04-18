@@ -157,6 +157,7 @@
 	uniform = /obj/item/clothing/under/costume/gamberson/military
 	suit = /obj/item/clothing/suit/armor/vest/military
 	suit_store = /obj/item/spear/military
+	back = /obj/item/storage/backpack/satchel/leather
 	gloves = /obj/item/clothing/gloves/color/brown
 	head = /obj/item/clothing/head/helmet/military
 	mask = /obj/item/clothing/mask/balaclava
