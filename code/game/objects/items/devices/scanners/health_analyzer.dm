@@ -55,7 +55,7 @@
 		if(SCANMODE_WOUND)
 			to_chat(user, span_notice("You switch the health analyzer to report extra info on wounds."))
 
-/obj/item/healthanalyzer/interact_with_atom(atom/interacting_with, mob/living/user)
+/obj/item/healthanalyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
 	if(!user.can_read(src) || user.is_blind())
@@ -93,7 +93,7 @@
 
 	add_fingerprint(user)
 
-/obj/item/healthanalyzer/interact_with_atom_secondary(atom/interacting_with, mob/living/user)
+/obj/item/healthanalyzer/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
 	if(!user.can_read(src) || user.is_blind())
@@ -576,7 +576,7 @@
 /obj/item/healthanalyzer/simple/proc/violence_damage(mob/living/user)
 	user.adjustBruteLoss(4)
 
-/obj/item/healthanalyzer/simple/interact_with_atom(atom/interacting_with, mob/living/user)
+/obj/item/healthanalyzer/simple/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
 	if(!user.can_read(src) || user.is_blind())

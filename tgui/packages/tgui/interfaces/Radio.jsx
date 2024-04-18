@@ -23,10 +23,10 @@ export const Radio = (props) => {
   const tunedChannel = RADIO_CHANNELS.find(
     (channel) => channel.freq === frequency,
   );
-  const channels = map((value, key) => ({
+  const channels = map(data.channels, (value, key) => ({
     name: key,
     status: !!value,
-  }))(data.channels);
+  }));
   // Calculate window height
   let height = 106;
   if (subspace) {
