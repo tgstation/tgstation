@@ -16,3 +16,6 @@
 	SIGNAL_HANDLER
 
 	entered.extinguish()
+	if(isliving(entered))
+		var/mob/living/our_mob = entered
+		our_mob.adjust_wet_stacks(3)
