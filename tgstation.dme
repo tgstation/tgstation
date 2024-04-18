@@ -2710,6 +2710,7 @@
 #include "code\game\objects\structures\gym\weight_machine_action.dm"
 #include "code\game\objects\structures\icemoon\cave_entrance.dm"
 #include "code\game\objects\structures\lavaland\geyser.dm"
+#include "code\game\objects\structures\lavaland\gulag_vent.dm"
 #include "code\game\objects\structures\lavaland\necropolis_tendril.dm"
 #include "code\game\objects\structures\lavaland\ore_vent.dm"
 #include "code\game\objects\structures\plaques\_plaques.dm"
