@@ -78,7 +78,7 @@ There are several things that need to be remembered:
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
-/mob/living/carbon/human/update_worn_undersuit()
+/mob/living/carbon/human/update_worn_undersuit(update_obscured = TRUE)
 	remove_overlay(UNIFORM_LAYER)
 
 	if(client && hud_used)
@@ -137,7 +137,7 @@ There are several things that need to be remembered:
 
 	update_mutant_bodyparts()
 
-/mob/living/carbon/human/update_worn_id()
+/mob/living/carbon/human/update_worn_id(update_obscured = TRUE)
 	remove_overlay(ID_LAYER)
 
 	if(client && hud_used)
@@ -214,7 +214,7 @@ There are several things that need to be remembered:
 	apply_overlay(GLOVES_LAYER)
 
 
-/mob/living/carbon/human/update_worn_glasses()
+/mob/living/carbon/human/update_worn_glasses(update_obscured = TRUE)
 	remove_overlay(GLASSES_LAYER)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
@@ -243,7 +243,7 @@ There are several things that need to be remembered:
 	apply_overlay(GLASSES_LAYER)
 
 
-/mob/living/carbon/human/update_worn_ears()
+/mob/living/carbon/human/update_worn_ears(update_obscured = TRUE)
 	remove_overlay(EARS_LAYER)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
@@ -271,7 +271,7 @@ There are several things that need to be remembered:
 		overlays_standing[EARS_LAYER] = ears_overlay
 	apply_overlay(EARS_LAYER)
 
-/mob/living/carbon/human/update_worn_neck()
+/mob/living/carbon/human/update_worn_neck(update_obscured = TRUE)
 	remove_overlay(NECK_LAYER)
 
 	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1])
@@ -297,7 +297,7 @@ There are several things that need to be remembered:
 
 	apply_overlay(NECK_LAYER)
 
-/mob/living/carbon/human/update_worn_shoes()
+/mob/living/carbon/human/update_worn_shoes(update_obscured = TRUE)
 	remove_overlay(SHOES_LAYER)
 
 	if(num_legs < 2)
@@ -340,7 +340,7 @@ There are several things that need to be remembered:
 	update_body_parts()
 
 
-/mob/living/carbon/human/update_suit_storage()
+/mob/living/carbon/human/update_suit_storage(update_obscured = TRUE)
 	remove_overlay(SUIT_STORE_LAYER)
 
 	if(client && hud_used)
@@ -363,7 +363,7 @@ There are several things that need to be remembered:
 		overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
 	apply_overlay(SUIT_STORE_LAYER)
 
-/mob/living/carbon/human/update_worn_head()
+/mob/living/carbon/human/update_worn_head(update_obscured = TRUE)
 	remove_overlay(HEAD_LAYER)
 	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1]
@@ -388,7 +388,7 @@ There are several things that need to be remembered:
 
 	apply_overlay(HEAD_LAYER)
 
-/mob/living/carbon/human/update_worn_belt()
+/mob/living/carbon/human/update_worn_belt(update_obscured = TRUE)
 	remove_overlay(BELT_LAYER)
 
 	if(client && hud_used)
@@ -414,7 +414,7 @@ There are several things that need to be remembered:
 
 	apply_overlay(BELT_LAYER)
 
-/mob/living/carbon/human/update_worn_oversuit()
+/mob/living/carbon/human/update_worn_oversuit(update_obscured = TRUE)
 	remove_overlay(SUIT_LAYER)
 
 	if(client && hud_used)
@@ -461,7 +461,7 @@ There are several things that need to be remembered:
 				client.screen += r_store
 			update_observer_view(r_store)
 
-/mob/living/carbon/human/update_worn_mask()
+/mob/living/carbon/human/update_worn_mask(update_obscured = TRUE)
 	remove_overlay(FACEMASK_LAYER)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)

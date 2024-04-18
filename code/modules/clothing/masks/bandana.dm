@@ -228,11 +228,10 @@
 	interaction_flags_click = NEED_DEXTERITY
 
 /obj/item/clothing/mask/facescarf/attack_self(mob/user)
-	adjustmask(user)
-
+	adjust_visor(user)
 
 /obj/item/clothing/mask/facescarf/click_alt(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 	return CLICK_ACTION_SUCCESS
 
 

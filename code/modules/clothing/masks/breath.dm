@@ -25,7 +25,7 @@
 	adjust_visor(user)
 
 /obj/item/clothing/mask/breath/click_alt(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/breath/examine(mob/user)

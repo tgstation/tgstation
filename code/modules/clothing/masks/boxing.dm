@@ -25,7 +25,7 @@
 	actions_types = list(/datum/action/item_action/adjust)
 
 /obj/item/clothing/mask/floortilebalaclava/attack_self(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 
 /obj/item/clothing/mask/luchador
 	name = "Luchador Mask"
