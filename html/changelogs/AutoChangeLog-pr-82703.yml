@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Being deafnened from a loud sound (flashbang, explosions) will now force people not naturally deaf to shout"
+  - rscadd: "Ear damage multiplier now only applies to taking damage, not healing damage, meaning Felinids (who take 2x the ear damage) will no longer heal ear damage 2x faster."
+  - refactor: "Ears have been refactored slightly, ear deafness should now update more snappily"
