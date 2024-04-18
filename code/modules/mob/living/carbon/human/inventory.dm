@@ -193,11 +193,6 @@
 		if(equipping.body_parts_covered & FEET || (equipping.flags_inv | equipping.transparent_protection) & HIDESHOES)
 			SEND_SIGNAL(src, COMSIG_CARBON_EQUIP_SHOECOVER, equipping, slot, initial, redraw_mob)
 
-		if(isclothing(equipping))
-			var/obj/item/clothing/clothing = equipping
-			if(clothing.tint)
-				update_tint()
-
 	return not_handled //For future deeper overrides
 
 /mob/living/carbon/human/get_equipped_speed_mod_items()
@@ -286,11 +281,6 @@
 
 	update_equipment_speed_mods()
 	update_obscured_slots(I)
-
-	if(isclothing(I))
-		var/obj/item/clothing/clothing = I
-		if(clothing.tint)
-			update_tint()
 
 /mob/living/carbon/human/toggle_internals(obj/item/tank, is_external = FALSE)
 	// Just close the tank if it's the one the mob already has open.

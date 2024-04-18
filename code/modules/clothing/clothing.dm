@@ -252,6 +252,9 @@
 			RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(bristle), override = TRUE)
 		for(var/trait in clothing_traits)
 			ADD_CLOTHING_TRAIT(user, trait)
+		if(iscarbon(user) && tint)
+			var/mob/living/carbon/carbon_user = user
+			carbon_user.update_tint()
 		if (LAZYLEN(user_vars_to_edit))
 			for(var/variable in user_vars_to_edit)
 				if(variable in user.vars)

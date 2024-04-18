@@ -509,7 +509,7 @@
 	if(!I)
 		to_chat(src, span_warning("You are not holding anything to equip!"))
 		return
-	if (temporarilyRemoveItemFromInventory(I) && !QDELETED(I))
+	if(!QDELETED(I))
 		if(I.equip_to_best_slot(src))
 			return
 		if(put_in_active_hand(I))

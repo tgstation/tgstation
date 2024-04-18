@@ -149,11 +149,6 @@
 	if(!not_handled)
 		has_equipped(equipping, slot, initial)
 
-		if(isclothing(equipping))
-			var/obj/item/clothing/clothing = equipping
-			if(clothing.tint)
-				update_tint()
-
 	return not_handled
 
 /mob/living/carbon/get_equipped_speed_mod_items()
@@ -210,11 +205,6 @@
 
 	update_equipment_speed_mods()
 	update_obscured_slots(I)
-
-	if(isclothing(I))
-		var/obj/item/clothing/clothing = I
-		if(clothing.tint)
-			update_tint()
 
 /// Returns TRUE if an air tank compatible helmet is equipped.
 /mob/living/carbon/proc/can_breathe_helmet()
