@@ -23142,9 +23142,11 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
-/obj/structure/railing{
-	dir = 4
+/obj/structure/disposalpipe/segment{
+	dir = 5
 	},
+/obj/structure/cable,
+/obj/structure/railing/corner,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "ivc" = (
@@ -28043,11 +28045,16 @@
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
 "jYu" = (
-/mob/living/basic/cow{
-	name = "Betsy";
-	real_name = "Betsy"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/turf/open/floor/grass,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/structure/railing,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "jYv" = (
 /obj/machinery/meter,
@@ -29027,6 +29034,7 @@
 	dir = 4
 	},
 /obj/item/storage/toolbox/fishing,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "krL" = (
@@ -31014,16 +31022,14 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "ldg" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
-/obj/structure/railing/corner,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "lds" = (
@@ -33761,7 +33767,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "mie" = (
-/obj/structure/window/spawner/directional/south,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "mig" = (
@@ -40185,8 +40190,18 @@
 /turf/open/floor/iron,
 /area/station/science/lab)
 "otG" = (
-/obj/item/radio/intercom/directional/east,
-/turf/open/water,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/bin,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/camera/directional/east{
+	c_tag = "Garden"
+	},
+/obj/structure/railing,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "otI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -40652,7 +40667,6 @@
 /area/station/hallway/primary/port)
 "oCO" = (
 /obj/structure/window/spawner/directional/west,
-/obj/structure/window/spawner/directional/south,
 /mob/living/basic/chicken{
 	name = "Kentucky";
 	real_name = "Kentucky"
@@ -44343,18 +44357,12 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "pRM" = (
-/obj/machinery/disposal/bin,
-/obj/machinery/camera/directional/east{
-	c_tag = "Garden"
+/obj/structure/window/spawner/directional/south,
+/mob/living/basic/cow{
+	name = "Betsy";
+	real_name = "Betsy"
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/east,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/railing,
-/turf/open/floor/iron,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "pSa" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -67413,16 +67421,9 @@
 /turf/closed/wall/r_wall,
 /area/station/hallway/primary/fore)
 "xUE" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/railing,
-/turf/open/floor/iron,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "xUH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -105824,7 +105825,7 @@ wRF
 jzC
 oCO
 xUE
-xyI
+jYu
 xyI
 xyI
 qXB
@@ -106078,7 +106079,7 @@ cUP
 mil
 lqQ
 lbH
-jYu
+mie
 mie
 pRM
 otG
