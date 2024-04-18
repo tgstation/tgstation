@@ -6,10 +6,12 @@
 /mob/proc/base_click_alt(atom/target)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	var/turf/tile = isturf(target) ? target : get_turf(target)
-
+	var/turf/tile = get_turf(target)
 	if(isobserver(src) || isrevenant(src))
 		open_lootpanel(tile)
+		return
+
+	if(target.IsObscured() || !can_see(src, target))
 		return
 
 	if(!isturf(target) && can_perform_action(target, (target.interaction_flags_click | SILENT_ADJACENCY)))
