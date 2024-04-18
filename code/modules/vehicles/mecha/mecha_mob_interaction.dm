@@ -174,7 +174,6 @@
 		COMSIG_MOVABLE_KEYBIND_FACE_DIR,
 	))
 	REMOVE_TRAIT(driver, TRAIT_MECH_PILOT, REF(src))
-
 	driver.clear_alert(ALERT_CHARGE)
 	driver.clear_alert(ALERT_MECH_DAMAGE)
 	if(driver.client)

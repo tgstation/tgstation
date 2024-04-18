@@ -7,7 +7,8 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(HAS_TRAIT(src, TRAIT_MECH_PILOT) && istype(loc, /obj/vehicle/sealed/mecha))
-		loc.click_alt(src)
+		if(target == loc)
+			target.click_alt(src)
 		return
 
 	var/turf/tile = isturf(target) ? target : get_turf(target)
