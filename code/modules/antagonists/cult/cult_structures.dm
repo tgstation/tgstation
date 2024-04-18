@@ -15,6 +15,11 @@
 	/// Assigned cult team, set when cultistism is checked.
 	var/datum/team/cult/cult_team
 
+/obj/structure/destructible/cult/on_constructed(mob/builder)
+	var/datum/antagonist/cult/cultist = builder.mind?.has_antag_datum(/datum/antagonist/cult, TRUE)
+	cult_team = cultist?.get_team()
+	return
+
 /obj/structure/destructible/cult/proc/is_cultist_check(mob/fool)
 
 	if(!IS_CULTIST(fool))
@@ -98,7 +103,7 @@
 /obj/structure/destructible/cult/item_dispenser
 	/// An associated list of options this structure can make. See setup_options() for format.
 	var/list/options
-	/// The dispenser will create this item and then delete itself if it is mansus grasped or rust converted.
+	/// The dispenser will create this item and then delete itself if it is rust converted.
 	var/obj/mansus_conversion_path = /obj/item/skub
 
 /obj/structure/destructible/cult/item_dispenser/Initialize(mapload)
@@ -125,6 +130,8 @@
 	if(!COOLDOWN_FINISHED(src, use_cooldown))
 		to_chat(user, span_cultitalic("The magic in [src] is too weak, it will be ready to use again in <b>[DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown))]</b>."))
 		return
+
+	setup_options()
 
 	var/list/spawned_items = get_items_to_spawn(user)
 	if(!length(spawned_items))

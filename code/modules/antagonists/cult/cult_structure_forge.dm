@@ -31,10 +31,14 @@
 			),
 	)
 
-	options = forge_items + extra_options()
+	var/extra_item = extra_options() // extra items no work!
+
+	options = forge_items
+	if(!isnull(extra_item))
+		options += extra_item
 
 /obj/structure/destructible/cult/item_dispenser/forge/extra_options()
-	if(cult_team?.unlocked_heretic_items[CURSED_BLADE_UNLOCKED] == FALSE)
+	if(cult_team?.unlocked_heretic_items[CURSED_BLADE_UNLOCKED] != TRUE)
 		return
 	return list(CURSED_BLADE = list(
 			PREVIEW_IMAGE = image(icon = 'icons/obj/weapons/khopesh.dmi', icon_state = "cursed_blade"),

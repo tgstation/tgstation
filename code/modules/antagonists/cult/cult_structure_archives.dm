@@ -31,13 +31,17 @@
 			),
 	)
 
-	options = archive_items + extra_options()
+	var/extra_item = extra_options()
+
+	options = archive_items
+	if(!isnull(extra_item))
+		options += extra_item
 
 /obj/structure/destructible/cult/item_dispenser/archives/extra_options()
-	if(cult_team?.unlocked_heretic_items[CRIMSON_FOCUS_UNLOCKED] == FALSE)
+	if(cult_team?.unlocked_heretic_items[CRIMSON_FOCUS_UNLOCKED] != TRUE)
 		return
 	return list(CRIMSON_FOCUS = list(
-			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/neck.dmi', icon_state = "bleeding_necklace"),
+			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/neck.dmi', icon_state = "crimson_focus"),
 			OUTPUT_ITEMS = list(/obj/item/clothing/neck/heretic_focus/crimson_focus),
 			),
 	)

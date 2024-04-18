@@ -432,6 +432,7 @@
 
 	if(created)
 		created.setDir(builder.dir)
+		created.on_constructed(builder)
 		on_item_crafted(builder, created)
 
 	// Use up the material
@@ -462,6 +463,10 @@
 	//BubbleWrap END
 
 	return TRUE
+
+/// Called after an item is constructed.
+/atom/proc/on_constructed(mob/builder)
+	return
 
 /// Run special logic on created items after they've been successfully crafted.
 /obj/item/stack/proc/on_item_crafted(mob/builder, atom/created)

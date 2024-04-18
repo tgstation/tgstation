@@ -4,7 +4,9 @@
 	icon_state = "eldritch_necklace"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF
-
+// didnt add venom
+// sprite offcenter
+// 1.5 windup
 /obj/item/clothing/neck/heretic_focus/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/heretic_focus)
@@ -13,50 +15,62 @@
 	name = "Crimson Focus"
 	desc = "A blood-red focusing glass that provides a link to the world beyond, and worse. Its eye is constantly twitching and gazing in all directions. It almost seems to be silently screaming..."
 	icon_state = "crimson_focus"
+	var/component
 
-#define COMSIG_CULT_EMPOWER "gingus1"
 //#define TRAIT_WEARING_FOCUS "gingus2"
-
-#define COMSIG_ACTION_START_COOLDOWN "gingus3"
-
-#define TRAIT_MANSUS_TOUCHED "gingus4"
 
 /obj/item/clothing/neck/heretic_focus/crimson_focus/equipped(mob/living/user, slot)
 	. = ..()
-	if(!(slot & ITEM_SLOT_NECK))
+	if(slot != ITEM_SLOT_NECK)
 		return
-	ADD_TRAIT(user, list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOODY_MESS), REF(src))
+
+	var/team_color = COLOR_ADMIN_PINK
+	if(IS_CULTIST(user))
+		RegisterSignal(user, COMSIG_LIVING_CULT_EMPOWER, PROC_REF(buff_empower))
+		team_color = COLOR_CULT_RED
+	if(IS_HERETIC_OR_MONSTER(user))
+		RegisterSignal(user, COMSIG_ACTION_START_COOLDOWN, PROC_REF(halve_cooldowns))
+		team_color = COLOR_GREEN
+	else
+		team_color = pick(COLOR_CULT_RED, COLOR_GREEN)
+
+	user.add_traits(list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOODY_MESS), REF(src))
 	to_chat(user, span_alert("Your heart takes on a strange yet soothing irregular rhythm, and your blood feels significantly less viscous than it used to be. You're not sure if that's a good thing."))
-	user.AddComponent( \
+	component = user.AddComponent( \
 		/datum/component/aura_healing, \
 		range = 3, \
 		brute_heal = 0.1, \
 		burn_heal = 0.1, \
-		blood_heal = 0.1, \
-		suffocation_heal = 1, \
+		blood_heal = 2, \
+		suffocation_heal = 5, \
 		simple_heal = 0.6, \
 		requires_visibility = FALSE, \
 		limit_to_trait = TRAIT_MANSUS_TOUCHED, \
-		healing_color = COLOR_CULT_RED, \
+		healing_color = team_color, \
 		)
-	if(IS_CULTIST(user))
-		RegisterSignal(user, COMSIG_CULT_EMPOWER, PROC_REF(buff_empower))
-	if(IS_HERETIC_OR_MONSTER(user))
-		RegisterSignal(user, COMSIG_ACTION_START_COOLDOWN, PROC_REF(halve_cooldowns))
 
 /obj/item/clothing/neck/heretic_focus/crimson_focus/dropped(mob/living/user)
 	. = ..()
-	UnregisterSignal(user, list(COMSIG_CULT_EMPOWER, COMSIG_ACTION_START_COOLDOWN))
-	user.RemoveComponentSource(REF(src), /datum/component/aura_healing)
-	REMOVE_TRAIT(user, list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOODY_MESS), REF(src))
-	to_chat(user, span_notice("Your heart and blood return to their regular boring rhythm and flow."))
+
+	if(!istype(user))
+		return
+
+	if(HAS_TRAIT_FROM(user, TRAIT_MANSUS_TOUCHED, REF(src)))
+		to_chat(user, span_notice("Your heart and blood return to their regular old rhythm and flow."))
+
+	UnregisterSignal(user, list(COMSIG_LIVING_CULT_EMPOWER, COMSIG_ACTION_START_COOLDOWN))
+	if(component)
+		QDEL_NULL(component)
+	user.remove_traits(list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOODY_MESS), REF(src))
+
 	if(!IS_CULTIST(user))
 		return
 	// Remove the fifth spell slot, if any.
 	var/datum/action/innate/cult/blood_magic/magic_holder = locate() in user.actions
 	if(!magic_holder)
 		CRASH("cultist with no blood magic holder?")
-	QDEL_NULL(magic_holder.spells[5])
+	if(length(magic_holder.spells) > 4)
+		QDEL_NULL(magic_holder.spells[5])
 
 /obj/item/clothing/neck/heretic_focus/crimson_focus/proc/buff_empower(mob/user, signal_return_list)
 	SIGNAL_HANDLER
@@ -69,13 +83,36 @@
 
 	signal_return_list["cd_data"] = signal_return_list["override_data"] ? signal_return_list["override_data"] * 0.5 : signal_return_list["cd_data"] * 0.5
 
+/obj/item/clothing/neck/heretic_focus/crimson_focus/attack_self(mob/living/user, modifiers)
+	. = ..()
+	to_chat(user, span_danger("You start tightly squeezing [src]..."))
+	if(!do_after(user, 1.25 SECONDS))
+		return
+	to_chat(user, span_danger("[src] explodes into a shower of gore and blood, drenching your arm. You can feel the blood seeping into your skin. You inmediately feel better, but soon, the feeling turns hollow as your veins itch."))
+	new /obj/effect/gibspawner/generic(get_turf(src))
+	var/heal_amt = user.adjustBruteLoss(-50)
+	user.adjustFireLoss( -(50 - heal_amt) ) // no double dipping
+
+	// I want it to poison the user but I also think it'd be neat if they got their juice as well. But that cancels most of the damage out. So I dunno.
+	user.reagents?.add_reagent(/datum/reagent/fuel/unholywater, rand(6, 10))
+	user.reagents?.add_reagent(/datum/reagent/eldritch, rand(6, 10))
+	// doesnt work!!
+	qdel(src)
+
 /obj/item/clothing/neck/heretic_focus/crimson_focus/examine(mob/user)
 	. = ..()
 
+	var/magic_dude
 	if(IS_CULTIST(user))
 		. += span_cultbold("This focus will allow you to store one extra spell and halve the empowering time, alongside providing a small regenerative effect.")
+		magic_dude = TRUE
 	if(IS_HERETIC_OR_MONSTER(user))
-		. += span_notice("This focus will halve your spell cooldowns, alongside granting a small regenerative effect.")
+		. += span_notice("This focus will halve your spell cooldowns, alongside granting a small regenerative effect to any nearby heretics or monsters, including you.")
+		magic_dude = TRUE
+
+	if(magic_dude)
+		. += span_red("You can also squeeze it to recover a large amount of health quickly, at a cost...")
+
 /obj/item/clothing/neck/eldritch_amulet
 	name = "Warm Eldritch Medallion"
 	desc = "A strange medallion. Peering through the crystalline surface, the world around you melts away. You see your own beating heart, and the pulsing of a thousand others."

@@ -41,7 +41,7 @@
 	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
 	if(check_usability(user))
 		if(do_teleport(user, safe_turf, channel = TELEPORT_CHANNEL_MAGIC))
-			to_chat(user, span_warning("As you shatter [src], you feel a gust of energy flow through your body. [after_use_message]"))
+			to_chat(user, span_warning("As you shatter [src], you feel a gust of energy flow through your body. [after_use_message ? after_use_message : ""]"))
 		else
 			to_chat(user, span_warning("You shatter [src], but your plea goes unanswered."))
 	else
@@ -154,24 +154,21 @@
 
 	var/examine_text = {"Allows the scribing of blood runes of the cult of Nar'Sie.
 	The combination of eldritch power and Nar'Sie's might allows for vastly increased rune drawing speed,
-	alongside the vicious strength of the blade being more powerful than usual. It can also be shattered in-hand by cultists, teleporting them to relative safety."}
+	alongside the vicious strength of the blade being more powerful than usual.\n
+	<b>It can also be shattered in-hand by cultists (via right-click), teleporting them to relative safety.<b>"}
 
 	AddComponent(/datum/component/cult_ritual_item, span_cult(examine_text), turfs_that_boost_us = /turf) // Always fast to draw!
 
-/obj/item/melee/sickly_blade/cursed/get_examine_string(mob/user, thats)
-	. = ..()
-	. += span_cultbold("To break the blade as a cultist, you need to right-click it.")
-
 /obj/item/melee/sickly_blade/cursed/attack_self(mob/user)
-	if(IS_CULTIST(user))
-		return
-	seek_safety(user)
+	seek_safety(user, TRUE)
 
 /obj/item/melee/sickly_blade/cursed/attack_self_secondary(mob/user)
-	. = ..()
-	if(!IS_CULTIST(user))
+	seek_safety(user, FALSE)
+
+/obj/item/melee/sickly_blade/cursed/seek_safety(mob/user, primary_attack_self = FALSE)
+	if(IS_CULTIST(user) && primary_attack_self)
 		return
-	seek_safety(user)
+	..()
 
 /obj/item/melee/sickly_blade/cursed/check_usability(mob/living/user)
 	if(IS_HERETIC_OR_MONSTER(user) || IS_CULTIST(user))
@@ -198,7 +195,7 @@
 	else if(IS_CULTIST(user))
 		after_use_message = "Nar'Sie hears your call..."
 	else
-		after_use_message = "As you break [src] over your knee, you appear in a different room!"
+		after_use_message = null
 
 /obj/item/melee/sickly_blade/cursed/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
 	. = ..()

@@ -21,7 +21,6 @@
 		if(istype(held_item, /obj/item/melee))
 			held_item.attack_self(owner)
 			return
-			return
 	var/obj/item/target_item = target
 	if(owner.can_equip(target_item, ITEM_SLOT_HANDS))
 		owner.temporarilyRemoveItemFromInventory(target_item)

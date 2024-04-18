@@ -11,7 +11,7 @@
 	cult_examine_tip = "Can be used to create eldritch whetstones, construct shells, and flasks of unholy water."
 	icon_state = "talismanaltar"
 	break_message = "<span class='warning'>The altar shatters, leaving only the wailing of the damned!</span>"
-	mansus_conversion_path = /obj/effect/heretic_rune
+	mansus_conversion_path = /obj/effect/heretic_rune // why it is invisiible
 
 /obj/structure/destructible/cult/item_dispenser/altar/setup_options()
 	var/static/list/altar_items = list(
@@ -29,10 +29,14 @@
 			),
 	)
 
-	options = altar_items + extra_options()
+	var/extra_item = extra_options()
+
+	options = altar_items
+	if(!isnull(extra_item))
+		options += extra_item
 
 /obj/structure/destructible/cult/item_dispenser/altar/extra_options()
-	if(cult_team?.unlocked_heretic_items[PROTEON_ORB_UNLOCKED] == FALSE)
+	if(cult_team?.unlocked_heretic_items[PROTEON_ORB_UNLOCKED] != TRUE)
 		return
 	return list(PROTEON_ORB = list(
 			PREVIEW_IMAGE = image(icon = 'icons/obj/antags/cult/items.dmi', icon_state = "summoning_orb"),

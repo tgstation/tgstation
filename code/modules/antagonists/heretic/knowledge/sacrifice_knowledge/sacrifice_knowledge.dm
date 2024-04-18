@@ -215,7 +215,9 @@
 	sacrifice.gib()
 	addtimer(CALLBACK(src, PROC_REF(deposit_reward), user, loc), 5 SECONDS)
 
-/datum/heretic_knowledge/hunt_and_sacrifice/proc/deposit_reward(mob/user, turf/loc)
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/deposit_reward(mob/user, turf/loc, loop = 0)
+	if(loop > 5) // Max limit for retrying a reward
+		return
 	playsound(loc, 'sound/magic/repulse.ogg', 75, TRUE)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	if(!heretic_datum)
@@ -228,15 +230,23 @@
 		rewards[possible_reward] = min(5 - (amount_already_awarded * 2), 1)
 
 	var/atom/reward = pick_weight(rewards)
+	reward = new reward(loc)
 
 	if(istype(reward, /mob/living))
-		summon_ritual_mob(user, loc, reward)
+		if(summon_ritual_mob(user, loc, reward) == FALSE)
+			qdel(reward)
+			deposit_reward(user, loc, loop++) // If no ghosts, try again until limit is hit
 		return
+
+	else if(isitem(reward))
+		var/obj/item/item_reward = reward
+		ASYNC
+			item_reward.gender_reveal(outline_color = COLOR_GREEN)
 
 	if(!reward)
 		CRASH("no reward")
 
-	return new reward(loc)
+	return reward
 
 
 /**

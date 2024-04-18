@@ -17,7 +17,16 @@
 	aoe_radius = 3
 
 /datum/action/cooldown/spell/aoe/rust_conversion/get_things_to_cast_on(atom/center)
-	return RANGE_TURFS(aoe_radius, center)
+
+	var/list/things_to_convert = RANGE_TURFS(aoe_radius, center)
+
+	// Also converts things right next to you.
+	for(var/atom/movable/nearby_movable in view(1, center))
+		if(nearby_movable == owner)
+			continue
+		things_to_convert += nearby_movable
+
+	return things_to_convert
 
 /datum/action/cooldown/spell/aoe/rust_conversion/cast_on_thing_in_aoe(turf/victim, atom/caster)
 	// We have less chance of rusting stuff that's further

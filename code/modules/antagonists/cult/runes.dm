@@ -363,14 +363,18 @@ structure_check() searches for nearby cultist structures required for the invoca
 		sacriborg.mmi = null
 		qdel(sacrificial)
 		return TRUE
-	var/obj/item/soulstone/stone = new /obj/item/soulstone(get_turf(src))
-	if(sacrificial.mind && !HAS_TRAIT(sacrificial, TRAIT_SUICIDED))
-		stone.capture_soul(sacrificial, first_invoker, TRUE)
-
-	if(sacrificial)
+	if(sacrificial && (signal_result & DUST_SACRIFICE)) // No soulstone when dusted
+		playsound(sacrificial, 'sound/magic/teleport_diss.ogg', 100, TRUE)
+		sacrificial.investigate_log("has been sacrificially dusted by the cult.", INVESTIGATE_DEATHS)
+		sacrificial.dust(TRUE, TRUE, TRUE)
+	else if (sacrificial)
+		var/obj/item/soulstone/stone = new /obj/item/soulstone(get_turf(src))
+		if(sacrificial.mind && !HAS_TRAIT(sacrificial, TRAIT_SUICIDED))
+			stone.capture_soul(sacrificial, first_invoker, TRUE)
 		playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
 		sacrificial.investigate_log("has been sacrificially gibbed by the cult.", INVESTIGATE_DEATHS)
 		sacrificial.gib()
+
 	return TRUE
 
 /obj/effect/rune/empower

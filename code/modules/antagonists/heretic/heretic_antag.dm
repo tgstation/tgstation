@@ -80,7 +80,7 @@
 	// List that keeps track of which items have been gifted to the heretic after a cultist was sacrificed. Used to alter drop chances to reduce dupes.
 	var/list/unlocked_heretic_items = list(
 		/obj/item/melee/sickly_blade/cursed = 0,
-		/obj/item/clothing/neck/heretic_focus/crimson_focus = 0,
+		/obj/item/clothing/neck/heretic_focus/crimson_focus = 0
 		/mob/living/simple_animal/hostile/construct/harvester/heretic = 0,
 	)
 
@@ -201,8 +201,6 @@
 	if(!silent)
 		to_chat(owner.current, span_userdanger("Your mind begins to flare as the otherwordly knowledge escapes your grasp!"))
 	return ..()
-
-#define TRAIT_MANSUS_TOUCHED "gingus4"
 
 /datum/antagonist/heretic/on_gain()
 	if(give_objectives)
@@ -404,7 +402,10 @@
 	//new /obj/item/cult_bastard(source.loc)
 	//var/obj/item/melee/cultblade/haunted/evil_in_a_jar = GLOB.heretic_paths_to_haunted_sword_typepaths[heretic_path]
 
-	new /obj/item/melee/cultblade/haunted(get_turf(source), source, pick(invokers))
+	var/obj/item/melee/cultblade/haunted/haunted_blade = new(get_turf(source), source, pick(invokers))
+
+	ASYNC
+		haunted_blade.gender_reveal(outline_color = COLOR_CULT_RED)
 
 	//evil_in_a_jar.trapped_heretic_soul = new(evil_in_a_jar)
 	//source.mind.transfer_to(evil_in_a_jar.trapped_heretic_soul)
@@ -416,9 +417,51 @@
 
 	//make it dust heretic
 
-	for(var/mob/living/cultist as anything in invokers)
-		to_chat(cultist, span_cultlarge("\"A follower of the forgotten gods! You must be rewarded for such a valuable sacrifice.\""))
-	return SILENCE_SACRIFICE_MESSAGE
+	for(var/mob/living/culto as anything in invokers)
+		to_chat(culto, span_cultlarge("\"A follower of the forgotten gods! You must be rewarded for such a valuable sacrifice.\""))
+
+	var/mob/living/random_cultist = pick(invokers)
+
+	var/datum/antagonist/cult/antag = random_cultist.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
+	if(!antag)
+		CRASH("offer invoker has no mind or cult datum")
+	var/datum/team/cult/cult_team = antag.get_team()
+
+	var/list/possible_unlocks
+	for(var/i in cult_team.unlocked_heretic_items)
+		if(cult_team.unlocked_heretic_items[i] == TRUE)
+			continue
+		LAZYADD(possible_unlocks, i)
+	if(length(possible_unlocks))
+		var/result = pick(possible_unlocks)
+		cult_team.unlocked_heretic_items[result] = TRUE
+
+		for(var/datum/mind/mind as anything in cult_team.members)
+			if(mind.current)
+				SEND_SOUND(mind.current, 'sound/magic/clockwork/narsie_attack.ogg')
+				to_chat(mind.current, span_cultlarge(span_warning("Arcane and forbidden knowledge floods your forges and archives. The cult has learned how to create the ")) + span_cultlarge(span_hypnophrase("[result]!")))
+
+	source.dust(TRUE, TRUE, TRUE)
+
+	return SILENCE_SACRIFICE_MESSAGE|DUST_SACRIFICE
+
+/obj/item/proc/gender_reveal(outline_color = pick(COLOR_ADMIN_PINK, COLOR_BLUE_LIGHT), anim_time = 10 SECONDS)
+
+	// First half. We increase the layer to appear on top of all, add a cool outline, and make it fly up into the air.
+	var/og_layer = layer
+	layer = ABOVE_MOB_LAYER
+	add_filter("ready_outline", 3, list("type" = "outline", "color" = outline_color, "size" = 2))
+	animate(src, pixel_y = 12, time = anim_time * 0.5, easing = QUAD_EASING | EASE_OUT)
+	stoplag(anim_time * 0.5)
+
+	// Once the first animation ends, we animate the thing going down, with a lesser glow.
+	animate(src, pixel_y = 0, time = anim_time * 0.5, easing = QUAD_EASING | EASE_IN)
+	modify_filter("ready_outline", 3, list("size" = 1))
+	stoplag(anim_time * 0.5)
+
+	// // The item has lowered back onto the ground, remove the filter and refresh the layer.
+	remove_filter("ready_outline")
+	layer = og_layer
 
 /**
  * Create our objectives for our heretic.

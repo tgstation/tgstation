@@ -65,6 +65,10 @@
 	if(!iscarbon(target))
 		return ..()
 
+	if(target == src)
+		to_chat(src, span_warning("That's probably a bad idea."))
+		return FALSE
+
 	var/mob/living/carbon/victim = target
 	if(HAS_TRAIT(victim, TRAIT_NODISMEMBER))
 		return ..() //ATTACK!
@@ -174,7 +178,7 @@
 /mob/living/simple_animal/hostile/construct/harvester/heretic
 	name = "Rusted Harvester"
 	real_name = "Rusted Harvester"
-	desc = "A long, thin, decrepit construct originally built to herald Nar'Sie's rise, corrupted and rusted by the forces of the Mansus to spread its will instead."
+	desc = "A long, thin, decrepit construct originally built to herald Nar'Sie's rise, corrupted and rusted by the forces of the Mansus to spread their will instead."
 	icon_state = "harvester"
 	icon_living = "harvester"
 	maxHealth = 40
@@ -184,7 +188,7 @@
 	melee_damage_upper = 20
 	attack_verb_continuous = "butchers"
 	attack_verb_simple = "butcher"
-	// Dim purple
+	// Dim green
 	lighting_cutoff_red = 10
 	lighting_cutoff_green = 5
 	lighting_cutoff_blue = 20
@@ -201,9 +205,11 @@
 /mob/living/simple_animal/hostile/construct/harvester/Initialize(mapload)
 	. = ..()
 	qdel(seek)
+	ADD_TRAIT(src, TRAIT_MANSUS_TOUCHED, REF(src))
+	add_filter("rusted_harvester", 3, list("type" = "outline", "color" = COLOR_GREEN, "size" = 2, "alpha" = 40))
 
 /mob/living/simple_animal/hostile/construct/harvester/heretic/snowflake_check(atom/thing)
-	if(HAS_TRAIT(thing, TRAIT_RUSTY))
+	if(HAS_TRAIT(thing, TRAIT_RUSTY) && isturf(thing))
 		return TRUE
 
 	//thing.AddElement(/datum/element/rust)

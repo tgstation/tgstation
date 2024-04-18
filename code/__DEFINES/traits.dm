@@ -1303,3 +1303,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait given by /datum/element/relay_attacker
 #define TRAIT_RELAYING_ATTACKER "relaying_attacker"
+
+/// Given to any mob that's somehow linked to the Mansus. Not necessarily heretic-allied.
+#define TRAIT_MANSUS_TOUCHED "mansus_touched"

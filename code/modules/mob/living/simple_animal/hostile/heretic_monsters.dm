@@ -37,8 +37,6 @@
 	/// Innate spells that are added when a beast is created.
 	var/list/actions_to_add
 
-#define TRAIT_MANSUS_TOUCHED "gingus4"
-
 /mob/living/simple_animal/hostile/heretic_summon/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_MANSUS_TOUCHED, REF(src))
