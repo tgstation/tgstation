@@ -751,3 +751,17 @@
 	message = "says a swear word!"
 	message_mime = "makes a rude gesture!"
 	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/whistle
+	key = "whistle"
+	key_third_person = "whistles"
+	message = "whistles."
+	message_mime = "whistles silently!"
+	audio_cooldown = 5
+	EMOTE_AUDIBLE | EMOTE_VISIBLE
+
+/datum/emote/living/carbon/human/whistle/get_sound(mob/living/user)
+	var/mob/living/carbon/human/human_user = user
+	if (!HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
+		return 'sound/voice/human/whistle1.ogg'
+

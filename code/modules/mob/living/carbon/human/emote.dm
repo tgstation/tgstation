@@ -6,6 +6,7 @@
 	key_third_person = "cries"
 	message = "cries."
 	message_mime = "sobs silently."
+		audio_cooldown = 5
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	stat_allowed = SOFT_CRIT
 
@@ -14,7 +15,6 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/human_user = user
-	audio_cooldown = 5
 	QDEL_IN(human_user.give_emote_overlay(/datum/bodypart_overlay/simple/emote/cry), 12.8 SECONDS)
 
 /datum/emote/living/carbon/human/cry/get_sound(mob/living/user)
