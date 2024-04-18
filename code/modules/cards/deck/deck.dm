@@ -11,6 +11,7 @@
 	hitsound = null
 	attack_verb_continuous = list("attacks")
 	attack_verb_simple = list("attack")
+	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH
 	/// The amount of time it takes to shuffle
 	var/shuffle_time = DECK_SHUFFLE_TIME
 	/// Deck shuffling cooldown.
@@ -143,13 +144,13 @@
 	attack_hand(user, modifiers, flip_card = TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/toy/cards/deck/AltClick(mob/living/user)
-	if(user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
-		if(HAS_TRAIT(src, TRAIT_WIELDED))
-			shuffle_cards(user)
-		else
-			to_chat(user, span_notice("You must hold the [src] with both hands to shuffle."))
-	return ..()
+/obj/item/toy/cards/deck/click_alt(mob/living/user)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		to_chat(user, span_notice("You must hold the [src] with both hands to shuffle."))
+		return CLICK_ACTION_BLOCKING
+
+	shuffle_cards(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/toy/cards/deck/update_icon_state()
 	switch(count_cards())

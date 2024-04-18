@@ -74,7 +74,6 @@
 	return ..()
 
 /obj/item/clothing/gloves/boxing
-	var/datum/martial_art/boxing/style
 
 /obj/item/clothing/gloves/boxing/Initialize(mapload)
 	. = ..()
@@ -85,18 +84,4 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
-	style = new()
-	style.allow_temp_override = FALSE
-
-/obj/item/clothing/gloves/boxing/Destroy()
-	QDEL_NULL(style)
-	return ..()
-
-/obj/item/clothing/gloves/boxing/equipped(mob/user, slot)
-	. = ..()
-	if(slot & ITEM_SLOT_GLOVES)
-		style.teach(user, TRUE)
-
-/obj/item/clothing/gloves/boxing/dropped(mob/user)
-	. = ..()
-	style.fully_remove(user)
+	AddComponent(/datum/component/martial_art_giver, /datum/martial_art/boxing)
