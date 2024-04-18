@@ -163,7 +163,7 @@
 	RegisterSignal(driver, COMSIG_MOB_CLICKON, PROC_REF(on_mouseclick), TRUE)
 	RegisterSignal(driver, COMSIG_MOB_SAY, PROC_REF(display_speech_bubble), TRUE)
 	RegisterSignal(driver, COMSIG_MOVABLE_KEYBIND_FACE_DIR, PROC_REF(on_turn), TRUE)
-	ADD_TRAIT(driver, TRAIT_MECH_PILOT, REF(src))
+	RegisterSignal(driver, COMSIG_MOB_ALTCLICKON, PROC_REF(on_click_alt))
 	. = ..()
 	update_appearance()
 
@@ -172,8 +172,8 @@
 		COMSIG_MOB_CLICKON,
 		COMSIG_MOB_SAY,
 		COMSIG_MOVABLE_KEYBIND_FACE_DIR,
+		COMSIG_MOB_ALTCLICKON
 	))
-	REMOVE_TRAIT(driver, TRAIT_MECH_PILOT, REF(src))
 	driver.clear_alert(ALERT_CHARGE)
 	driver.clear_alert(ALERT_MECH_DAMAGE)
 	if(driver.client)

@@ -6,12 +6,10 @@
 /mob/proc/base_click_alt(atom/target)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(HAS_TRAIT(src, TRAIT_MECH_PILOT) && istype(loc, /obj/vehicle/sealed/mecha))
-		if(target == loc)
-			target.click_alt(src)
+	if(SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, target) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 
-	var/turf/tile = isturf(target) ? target : get_turf(target)
+	var/turf/tile = get_turf(target)
 
 	if(isobserver(src) || isrevenant(src))
 		open_lootpanel(tile)

@@ -707,6 +707,13 @@
 	target.mech_melee_attack(src, user)
 	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
 
+
+/// Driver alt clicks a turf, cancel lootpanel alt click
+/obj/vehicle/sealed/mecha/proc/on_click_alt(mob/user, atom/target, params)
+	SIGNAL_HANDLER
+
+	return COMSIG_MOB_CANCEL_CLICKON
+
 /// middle mouse click signal wrapper for AI users
 /obj/vehicle/sealed/mecha/proc/on_middlemouseclick(mob/user, atom/target, params)
 	SIGNAL_HANDLER
