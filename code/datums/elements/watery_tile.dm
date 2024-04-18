@@ -15,6 +15,4 @@
 /datum/element/watery_tile/proc/extinguish_atom(atom/source, atom/movable/entered)
 	SIGNAL_HANDLER
 
-	if(!isatom(entered))
-		return
 	entered.extinguish()
