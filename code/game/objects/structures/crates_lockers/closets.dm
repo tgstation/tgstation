@@ -125,6 +125,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		"Science" = list("icon_state" = "rd"),
 		"Security" = list("icon_state" = "cap"),
 		"Mining" = list("icon_state" = "mining"),
+		"Virology" = list("icon_state" = "bio_viro"),
 		)
 	if(paint_jobs)
 		paint_jobs = closet_paint_jobs
