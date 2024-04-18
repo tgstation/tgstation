@@ -123,9 +123,10 @@
 /obj/machinery/computer/camera_advanced/on_set_is_operational(old_value)
 	if(!is_operational)
 		unset_machine()
-	
+
 /obj/machinery/computer/camera_advanced/proc/unset_machine()
-	remove_eye_control(current_user)
+	if(!QDELETED(current_user))
+		remove_eye_control(current_user)
 	end_processing()
 
 /obj/machinery/computer/camera_advanced/proc/can_use(mob/living/user)
