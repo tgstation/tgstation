@@ -28,7 +28,6 @@
 	. = ..()
 	locate_machinery()
 
-
 /obj/machinery/slime_pen_controller/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
@@ -69,13 +68,13 @@
 				var/list/mutation_info = list()
 				var/mob_string
 				for(var/mob/living/mob as anything in mutation_data.latch_needed)
-					mob_string += "[mutation_data.latch_needed[mob]] units of genetic data from [initial(mob.name)]. \n"
+					mob_string += "[mutation_data.latch_needed[mob]] units of genetic data from [mob::name]. \n"
 				var/item_string
 				for(var/obj/item/item as anything in mutation_data.needed_items)
-					item_string += "[initial(item.name)]. \n"
+					item_string += "[item:name]. \n"
 
 				mutation_info += list(
-					"color" = capitalize(initial(mutation_data.output.name)),
+					"color" = capitalize(mutation_data.output::name),
 					"weight" = mutation_data.weight,
 					"mutate_chance" = mutation_data.mutate_probability,
 					"mobs_needed" = mob_string,
@@ -135,7 +134,6 @@
 	. = ..()
 	if(.)
 		return
-
 	switch(action)
 		if("buy")
 			for(var/datum/corral_upgrade/item as anything in subtypesof(/datum/corral_upgrade))
@@ -146,7 +144,7 @@
 /obj/machinery/slime_pen_controller/proc/try_buy(datum/corral_upgrade/item)
 	if(!linked_data)
 		return
-	if(SSresearch.xenobio_points < initial(item.cost))
+	if(SSresearch.xenobio_points < item::cost)
 		return
 
 	var/datum/corral_upgrade/new_upgrade = new item
@@ -165,25 +163,23 @@
 		return
 
 /obj/machinery/slime_pen_controller/attack_hand_secondary(mob/user, list/modifiers)
-	if(linked_sucker)
-		visible_message(span_notice("[user] fiddles with the [src] toggling the pens ooze sucker."))
-		linked_sucker.toggle_state()
-		return TRUE
 	. = ..()
-
-/obj/machinery/slime_pen_controller/attackby(obj/item/weapon, mob/user, params)
-	if(weapon.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, weapon))
-			return
-		var/obj/item/multitool/M = weapon
-		if(!M.buffer)
-			return
-		var/obj/machinery/corral_corner/pad = M.buffer
-		if(!istype(pad))
-			return
-		if(!pad.connected_data)
-			return
-		linked_data = pad.connected_data
-		to_chat(user, span_notice("You link the [pad] to the [src]."))
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	if(!QDELETED(linked_sucker))
+		linked_sucker.toggle_state()
+		balloon_alert_to_viewers("[linked_sucker.turned_on ? "enabled" : "disabled"] ooze sucker")
+		visible_message(span_notice("[user] fiddles with the [src], [linked_sucker.turned_on ? "enabling" : "disabling"] the pens ooze sucker."))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/slime_pen_controller/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	. = ..()
+	if(!multitool_check_buffer(user, multitool) || QDELETED(multitool.buffer))
+		return
+	var/obj/machinery/corral_corner/pad = multitool.buffer
+	if(!istype(pad) || !pad.connected_data)
+		return
+	linked_data = pad.connected_data
+	balloon_alert_to_viewers("linked pad")
+	pad.balloon_alert_to_viewers("linked to controller")
+	to_chat(user, span_notice("You link the [pad] to the [src]."))

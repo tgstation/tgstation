@@ -6759,6 +6759,7 @@
 #include "monkestation\code\modules\slimecore\machines\slime_market_computer.dm"
 #include "monkestation\code\modules\slimecore\machines\slime_pen_controller.dm"
 #include "monkestation\code\modules\slimecore\machines\ooze_compressor\ooze_compressor.dm"
+#include "monkestation\code\modules\slimecore\machines\ooze_compressor\ooze_compressor_hud.dm"
 #include "monkestation\code\modules\slimecore\machines\ooze_compressor\ooze_compressor_plumbing.dm"
 #include "monkestation\code\modules\slimecore\machines\ooze_compressor\shitcode.dm"
 #include "monkestation\code\modules\slimecore\machines\ooze_compressor\recipes\_base_recipe.dm"

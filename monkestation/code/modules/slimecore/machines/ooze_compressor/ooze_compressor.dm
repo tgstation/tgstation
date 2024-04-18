@@ -18,12 +18,13 @@
 	icon = 'monkestation/code/modules/slimecore/icons/machinery.dmi'
 	base_icon_state = "cross_compressor"
 	icon_state = "cross_compressor"
-	category="Distribution"
+	category = "Distribution"
 
 	anchored = TRUE
 
-	idle_power_usage = 10
-	active_power_usage = 1000
+	use_power = IDLE_POWER_USE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 
 	buffer = 5000
 	reagent_flags = NO_REACT
@@ -74,9 +75,12 @@
 
 /obj/machinery/plumbing/ooze_compressor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Toggle Repeated Extract Compression"
-	context[SCREENTIP_CONTEXT_LMB] = "Select a normal extract to make"
-	context[SCREENTIP_CONTEXT_RMB] = "Select a crossbreed to make"
+	if(current_recipe)
+		context[SCREENTIP_CONTEXT_RMB] = "Cancel current recipe"
+	else
+		context[SCREENTIP_CONTEXT_LMB] = "Select a normal extract to make"
+		context[SCREENTIP_CONTEXT_RMB] = "Select a crossbreed to make"
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "[repeat_recipe ? "Disable" : "Enable"] repeated extract compression"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/plumbing/ooze_compressor/create_reagents(max_vol, flags)
@@ -86,10 +90,7 @@
 
 /obj/machinery/plumbing/ooze_compressor/update_icon_state()
 	. = ..()
-	if(compressing)
-		icon_state = "cross_compressor_running"
-	else
-		icon_state = base_icon_state
+	icon_state = compressing ? "cross_compressor_running" : base_icon_state
 
 /obj/machinery/plumbing/ooze_compressor/examine(mob/user)
 	. = ..()
@@ -152,44 +153,73 @@
 	update_appearance()
 	if(holder.total_volume == 0 && !compressing) //we were emptying, but now we aren't
 		holder.flags |= NO_REACT
+	manage_hud_as_needed()
 	return NONE
-
-/obj/machinery/plumbing/ooze_compressor/process(seconds_per_tick)
-	if(!compressing)
-		use_power(active_power_usage * seconds_per_tick)
 
 /obj/machinery/plumbing/ooze_compressor/proc/compress_recipe()
 	compressing = TRUE
 	update_appearance()
 	if(!repeat_recipe)
 		reagents_for_recipe = list()
+	manage_hud_as_needed()
+	update_power_usage()
 	addtimer(CALLBACK(src, PROC_REF(finish_compressing)), 3 SECONDS)
 
 /obj/machinery/plumbing/ooze_compressor/proc/finish_compressing()
 	for(var/i in 1 to current_recipe.created_amount)
-		new current_recipe.output_item(loc)
+		new current_recipe.output_item(drop_location())
 	compressing = FALSE
 	update_appearance()
 	reagents.clear_reagents()
 	if(!repeat_recipe)
 		current_recipe = null
+	update_power_usage()
+	manage_hud_as_needed()
+
+/obj/machinery/plumbing/ooze_compressor/proc/update_power_usage()
+	if(compressing)
+		update_use_power(ACTIVE_POWER_USE)
+	else if(current_recipe)
+		update_use_power(IDLE_POWER_USE)
+	else
+		update_use_power(NO_POWER_USE)
 
 /obj/machinery/plumbing/ooze_compressor/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
+	if(. || !can_interact(user))
+		return
+	if(!anchored)
+		balloon_alert(user, "unanchored!")
+		return TRUE
 	if(change_recipe(user))
 		reagents.clear_reagents()
+		return TRUE
 
 /obj/machinery/plumbing/ooze_compressor/attack_hand_secondary(mob/living/user, list/modifiers)
 	. = ..()
-	if(change_recipe(user, TRUE))
-		reagents.clear_reagents()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !can_interact(user))
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!anchored)
+		balloon_alert(user, "unanchored!")
+		return
+	if(current_recipe)
+		repeat_recipe = FALSE
+		if(!compressing)
+			current_recipe = null
+			reagents.clear_reagents()
+		update_power_usage()
+		balloon_alert_to_viewers("cancelled recipe")
+	else
+		if(change_recipe(user, TRUE))
+			reagents.clear_reagents()
 
-/obj/machinery/plumbing/ooze_compressor/AltClick(mob/user)
-	if(anchored)
-		visible_message(span_notice("[user] presses a button turning the repeat recipe system [repeat_recipe ? "Off" : "On"]"))
+/obj/machinery/plumbing/ooze_compressor/CtrlClick(mob/user)
+	if(anchored && can_interact(user))
 		repeat_recipe = !repeat_recipe
-		return TRUE
-	. = ..()
+		balloon_alert_to_viewers("[repeat_recipe ? "enabled" : "disabled"] repeating")
+		visible_message(span_notice("[user] presses a button turning the repeat recipe system [repeat_recipe ? span_green("on") : span_red("off")]"))
+	return ..()
 
 /obj/machinery/plumbing/ooze_compressor/proc/change_recipe(mob/user, cross_breed = FALSE)
 	var/choice
@@ -201,14 +231,14 @@
 	else
 		choice = show_radial_menu(user, src, recipe_choices, require_near = TRUE, tooltips = TRUE)
 
-	if(!(choice in choice_to_datum))
-		return
-
-	if(compressing)
+	if(compressing || !(choice in choice_to_datum))
 		return
 
 	current_recipe = choice_to_datum[choice]
 	reagents_for_recipe = list()
 	reagents_for_recipe += current_recipe.required_oozes
+	balloon_alert_to_viewers("set extract recipe")
+	manage_hud_as_needed()
+	update_power_usage()
 
 #undef CROSSBREED_BASE_PATHS

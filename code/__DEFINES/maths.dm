@@ -7,6 +7,9 @@
 
 #define IS_FINITE__UNSAFE(a) (a-a == a-a)
 #define IS_FINITE(a) (isnum(a) && IS_FINITE__UNSAFE(a))
+
+#define IS_SAFE_NUM(a) (isnum(a) && !IS_INF__UNSAFE(a) && IS_FINITE__UNSAFE(a))
+
 // ------------------------------------
 // Aight dont remove the rest
 

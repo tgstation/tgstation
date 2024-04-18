@@ -162,6 +162,7 @@
 /mob/living/basic/slime/mob_try_pickup(mob/living/user, instant)
 	if(!SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHECK_LEVEL, user, FRIENDSHIP_FRIEND))
 		to_chat(user, span_notice("[src] doesn't trust you enough to let you pick them up"))
+		balloon_alert(user, "not enough trust!")
 		return FALSE
 	. = ..()
 
@@ -188,9 +189,8 @@
 
 /mob/living/basic/slime/proc/recompile_ai_tree()
 	var/list/new_planning_subtree = list()
+	RemoveElement(/datum/element/basic_eating, food_types = compiled_liked_foods)
 	rebuild_foods()
-
-	RemoveElement(/datum/element/basic_eating)
 
 	new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/pet_planning)
 
@@ -310,6 +310,7 @@
 	slime_flags |= SPLITTING_SLIME
 
 	visible_message(span_notice("[name] starts to flatten, it looks to be splitting."))
+	balloon_alert_to_viewers("splitting...")
 
 	addtimer(CALLBACK(src, PROC_REF(finish_splitting)), 15 SECONDS)
 
@@ -331,6 +332,7 @@
 
 	ai_controller.set_ai_status(AI_STATUS_OFF)
 	visible_message(span_notice("[name] starts to undulate, it looks to be mutating."))
+	balloon_alert_to_viewers("mutating...")
 	slime_flags |= MUTATING_SLIME
 
 	ungulate()
@@ -414,8 +416,9 @@
 	. = ..()
 	if(worn_accessory)
 		visible_message("[user] takes the [worn_accessory] off the [src].")
+		balloon_alert_to_viewers("removed accessory")
+		worn_accessory.forceMove(user.drop_location())
 		worn_accessory = null
-		worn_accessory.forceMove(get_turf(user))
 		update_appearance()
 
 /mob/living/basic/slime/Life(seconds_per_tick, times_fired)

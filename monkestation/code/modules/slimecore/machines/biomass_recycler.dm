@@ -34,37 +34,38 @@ GLOBAL_LIST_INIT(biomass_unlocks, list())
 		power_change()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/biomass_recycler/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
+/obj/machinery/biomass_recycler/attackby(obj/item/item, mob/user, params)
+	. = ..()
+	if(. || default_deconstruction_screwdriver(user, "grinder_open", "grinder", item) || default_pry_open(item) || default_deconstruction_crowbar(item) || machine_stat)
 		return
-
-	if(default_pry_open(O))
+	if(istype(item, /obj/item/storage/bag/xeno))
+		var/total_biomass = 0
+		for(var/obj/item/stack/biomass/biomass in item)
+			total_biomass += biomass.amount
+			stored_matter += biomass.amount
+			qdel(biomass)
+		if(total_biomass > 0)
+			to_chat(user, span_notice("You dump [total_biomass] cube\s of biomass from [item] into [src]."))
+			user.balloon_alert_to_viewers("inserted biomass")
 		return
-
-	if(default_deconstruction_crowbar(O))
+	else if(HAS_TRAIT(item, TRAIT_NODROP))
 		return
-
-	if(machine_stat) //NOPOWER etc
-		return
-
-	if(HAS_TRAIT(O, TRAIT_NODROP))
-		return
-
-	if(istype(O, /obj/item/stack/biomass))
-		var/obj/item/stack/biomass/biomass = O
+	else if(istype(item, /obj/item/stack/biomass))
+		var/obj/item/stack/biomass/biomass = item
 		to_chat(user, span_notice("You insert [biomass.amount] cube\s of biomass into [src]."))
+		user.balloon_alert_to_viewers("inserted biomass")
 		stored_matter += biomass.amount
 		qdel(biomass)
 		return
 
 	var/can_recycle
 	for(var/recycable_type in recyclable_types)
-		if(istype(O, recycable_type))
+		if(istype(item, recycable_type))
 			can_recycle = recycable_type
 			break
 
 	if(can_recycle)
-		recycle(O, user, can_recycle)
+		recycle(item, user, can_recycle)
 
 /obj/machinery/biomass_recycler/MouseDrop_T(mob/living/target, mob/living/user)
 	if(!istype(target))
@@ -125,6 +126,7 @@ GLOBAL_LIST_INIT(biomass_unlocks, list())
 	var/spawn_type = item_names[pick]
 	if(stored_matter < printable_types[spawn_type])
 		to_chat(user, span_warning("[src] does not have enough stored biomass for that! It currently has [stored_matter] out of [printable_types[spawn_type]] unit\s required."))
+		balloon_alert(user, "not enough biomass")
 		return
 
 	var/spawned = new spawn_type(user.loc)
@@ -139,7 +141,7 @@ GLOBAL_LIST_INIT(biomass_unlocks, list())
 	icon = 'monkestation/code/modules/slimecore/icons/stack_objects.dmi'
 	icon_state = "biomass"
 	base_icon_state = "biomass"
-	max_amount = 5
+	max_amount = 15
 	singular_name = "biomass cube"
 	merge_type = /obj/item/stack/biomass
 	flags_1 = CONDUCT_1

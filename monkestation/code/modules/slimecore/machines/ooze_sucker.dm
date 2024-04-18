@@ -7,10 +7,13 @@
 	icon_state = "ooze_sucker"
 	anchored = FALSE
 	density = FALSE
-	idle_power_usage = 10
-	active_power_usage = 1000
+
+	use_power = IDLE_POWER_USE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.15
+
 	buffer = 3000
-	category="Distribution"
+	category = "Distribution"
 	reagent_flags = NO_REACT
 
 	/// Pump is turned on by engineer, etc.
@@ -30,6 +33,9 @@
 	var/drain_flat = 20
 	/// Additional ratio of liquid volume to drain
 	var/drain_percent = 1
+
+	/// Whether draining was performed last process or not.
+	var/drained_last_process = FALSE
 
 /obj/machinery/plumbing/ooze_sucker/Initialize(mapload, bolt, layer)
 	. = ..()
@@ -68,6 +74,22 @@
 		turned_on = FALSE
 		update_icon_state()
 
+/obj/machinery/plumbing/ooze_sucker/create_reagents(max_vol, flags)
+	. = ..()
+	RegisterSignals(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED), PROC_REF(on_reagent_change))
+	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
+
+/// Handles properly detaching signal hooks.
+/obj/machinery/plumbing/ooze_sucker/proc/on_reagents_del(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED, COMSIG_QDELETING))
+	return NONE
+
+/// Handles ensuring power usage becomes idle when reagents are full.
+/obj/machinery/plumbing/ooze_sucker/proc/on_reagent_change(datum/reagents/holder, ...)
+	SIGNAL_HANDLER
+	update_power_usage()
+	return NONE
 
 /obj/machinery/plumbing/ooze_sucker/proc/toggle_state()
 	turned_on = !turned_on
@@ -109,12 +131,25 @@
 	// We're good, actually pump.
 	for(var/turf/affected_turf as anything in affected_turfs)
 		pump_turf(affected_turf, seconds_per_tick, multiplier)
+	update_power_usage()
+
+/obj/machinery/plumbing/ooze_sucker/proc/update_power_usage()
+	if(!turned_on)
+		update_use_power(NO_POWER_USE)
+	else if(reagents && reagents.total_volume >= reagents.maximum_volume)
+		update_use_power(IDLE_POWER_USE)
+	else if(drained_last_process)
+		update_use_power(ACTIVE_POWER_USE)
+	else
+		update_use_power(IDLE_POWER_USE)
 
 /obj/machinery/plumbing/ooze_sucker/proc/pump_turf(turf/affected_turf, seconds_per_tick, multiplier)
 	if(processes < processes_required)
 		processes++
 		return
 	processes = 0
+	drained_last_process = FALSE
+
 	if(!affected_turf.liquids || !affected_turf.liquids.liquid_group)
 		return
 
@@ -128,3 +163,12 @@
 	if(!targeted_group.reagents_per_turf)
 		return
 	targeted_group.transfer_specific_reagents(reagents, target_value, reagents_to_check = typesof(/datum/reagent/slime_ooze), merge = TRUE)
+	drained_last_process = TRUE
+
+/obj/machinery/plumbing/ooze_sucker/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	toggle_state()
+	balloon_alert_to_viewers("[turned_on ? "enabled" : "disabled"] ooze sucker")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

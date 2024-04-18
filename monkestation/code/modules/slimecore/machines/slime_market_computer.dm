@@ -66,7 +66,7 @@ GLOBAL_DATUM(default_slime_market, /obj/machinery/computer/slime_market)
 
 /obj/machinery/computer/slime_market/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/xenobio_market),
+		get_asset_datum(/datum/asset/spritesheet/xenobio_market)
 	)
 
 /obj/machinery/computer/slime_market/ui_interact(mob/user, datum/tgui/ui)
@@ -110,19 +110,21 @@ GLOBAL_DATUM(default_slime_market, /obj/machinery/computer/slime_market)
 			iter += 1
 
 		var/obj/item/slime_extract/core = core_type
-		var/list/core_data = list("icon" = "[initial(core.icon_state)]",
-								  "price" = SSresearch.slime_core_prices[core_type],
-								  "key" = iter % 4,
-								  )
+		var/list/core_data = list(
+			"icon" = "[initial(core.icon_state)]",
+			"price" = SSresearch.slime_core_prices[core_type],
+			"key" = iter % 4
+		)
 		price_row.Add(list(core_data))
 		iter += 1
 
 		if(core_type == /obj/item/slime_extract/grey)
 			core = /obj/item/slime_extract/rainbow
-			var/list/rainbow_core_data = list("icon" = "[initial(core.icon_state)]",
-									"price" = SSresearch.slime_core_prices[/obj/item/slime_extract/rainbow],
-									"key" = iter % 4,
-									)
+			var/list/rainbow_core_data = list(
+				"icon" = "[initial(core.icon_state)]",
+				"price" = SSresearch.slime_core_prices[/obj/item/slime_extract/rainbow],
+				"key" = iter % 4
+			)
 			price_row.Add(list(rainbow_core_data))
 			iter += 1
 			price_row.Add(list(list("key" = iter % 4)))

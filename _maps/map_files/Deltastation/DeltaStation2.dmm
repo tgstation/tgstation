@@ -42678,6 +42678,8 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 9
 	},
+/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "kpy" = (
@@ -89711,6 +89713,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"vUy" = (
+/obj/machinery/duct,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "vUz" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
@@ -121069,7 +121076,7 @@ feF
 gcr
 pTC
 iLv
-gvX
+vUy
 duq
 fMl
 fMl
@@ -121079,7 +121086,7 @@ taA
 fMl
 fMl
 xsN
-gvX
+vUy
 iLv
 mAt
 aAx
@@ -122868,7 +122875,7 @@ woj
 rrU
 pTC
 iLv
-gvX
+vUy
 pQz
 fMl
 fMl
@@ -122878,7 +122885,7 @@ taA
 fMl
 fMl
 esm
-gvX
+vUy
 iLv
 mAt
 cZl

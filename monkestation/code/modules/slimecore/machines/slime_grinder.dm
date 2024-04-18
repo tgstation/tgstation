@@ -7,8 +7,11 @@
 	icon = 'monkestation/code/modules/slimecore/icons/slime_grinder.dmi'
 	icon_state = "slime_grinder_backdrop"
 	base_icon_state = "slime_grinder_backdrop"
-	idle_power_usage = 10
-	active_power_usage = 1000
+
+	use_power = IDLE_POWER_USE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
+
 	buffer = 3000
 	category="Distribution"
 
