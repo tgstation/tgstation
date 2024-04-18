@@ -1,3 +1,5 @@
+import { decodeHtmlEntities } from 'common/string';
+
 import { useBackend } from '../../backend';
 import { Button, NoticeBox, Section, Table } from '../../components';
 import { TableCell, TableRow } from '../../components/Table';
@@ -47,7 +49,7 @@ export function CargoRequests(props) {
                 <b>{request.orderer}</b>
               </Table.Cell>
               <Table.Cell color="lightgray" width="25%">
-                <i>{request.reason}</i>
+                <i>{decodeHtmlEntities(request.reason)}</i>
               </Table.Cell>
               <Table.Cell collapsing color="gold">
                 {formatMoney(request.cost)} cr
