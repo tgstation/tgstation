@@ -170,9 +170,8 @@
 		"Do you want to play as [owner.real_name]'s [chosen_guardian.theme.name]?",
 		check_jobban = ROLE_PAI,
 		poll_time = 10 SECONDS,
-		target_mob = src,
+		target_mob = owner,
 		ignore_category = POLL_IGNORE_HOLOPARASITE,
-		pic_source = src,
 		role_name_text = chosen_guardian.theme.name
 	)
 	if (!LAZYLEN(ghost_candidates))

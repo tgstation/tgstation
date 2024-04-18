@@ -181,6 +181,9 @@ SUBSYSTEM_DEF(polling)
 /datum/controller/subsystem/polling/proc/poll_ghost_candidates_for_mob(question, role, check_jobban, poll_time = 30 SECONDS, mob/target_mob, ignore_category = null, flashwindow = TRUE, pic_source, role_name_text)
 	var/static/list/mob/currently_polling_mobs = list()
 
+	if(!isnull(target_mob) && !ismob(target_mob))
+		stack_trace("attempted to use a non-mob as the target mob ([target_mob] | [target_mob.type])")
+
 	if(currently_polling_mobs.Find(target_mob))
 		return list()
 
