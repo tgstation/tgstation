@@ -1,9 +1,45 @@
 #include "_aesthetics.dm"
 
+// AirAlarm
+#include "airalarm/code/airalarm.dm"
+
 // Airlocks
 #include "airlocks/code/airlock.dm"
 #include "airlocks/code/airlock_types.dm"
 #include "airlocks/code/airlock_assembly_types.dm"
+
+// APC
+#include "apc/code/apc.dm"
+
+// Blastdoor
+#include "blastdoor/code/blastdoor.dm"
+
+// Camera
+#include "cameras/code/cameras.dm"
+
+// Disposal
+#include "disposal/code/disposal.dm"
+
+// Extinguisher
+#include "extinguisher/code/extinguisher.dm"
+
+// Floors
+#include "floors/code/floors.dm"
+
+// Keycard Authenticator
+#include "keycard_auth/code/keycard_auth.dm"
+
+// Light Switch
+#include "lightswitch/code/lightswitch.dm"
+
+// Lights
+#include "lights/code/lights.dm"
+
+// Lobby Menu
+#include "lobby/code/lobby.dm"
+
+// Radio
+#include "radio/code/radio.dm"
 
 // Walls
 #include "walls/code/walls.dm"
@@ -14,6 +50,3 @@
 
 // WinDoors
 #include "windoors/code/windoors.dm"
-
-// Floors
-#include "floors/code/floors.dm"
