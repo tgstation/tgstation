@@ -701,6 +701,7 @@
 		/obj/item/claymore/shortsword,
 		/obj/item/nullrod,
 		/obj/item/spear,
+		/obj/item/gun/ballistic/bow
 	)
 
 /datum/armor/military
@@ -715,7 +716,7 @@
 
 /obj/item/clothing/suit/armor/riot/knight/warlord
 	name = "golden plate armor"
-	desc = "This bulky set of armor is coated with a shiny layer of gold. it seems to almost reflect all light sources."
+	desc = "This bulky set of armor is coated with a shiny layer of gold. It seems to almost reflect all light sources."
 	icon_state = "warlord"
 	inhand_icon_state = null
 	armor_type = /datum/armor/armor_warlord
