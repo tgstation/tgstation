@@ -38,46 +38,56 @@ type ControllerData = {
 const SubsystemView = (props: { data: SubsystemData }) => {
   const { act } = useBackend();
   const { data } = props;
+  const {
+    name,
+    ref,
+    init_order,
+    last_fire,
+    next_fire,
+    can_fire,
+    doesnt_fire,
+    cost_ms,
+    tick_usage,
+    tick_overrun,
+    initialized,
+    initialization_failure_message,
+  } = data;
 
   let icon = 'play';
-  if (!data.initialized) {
+  if (!initialized) {
     icon = 'circle-exclamation';
-  } else if (data.doesnt_fire) {
+  } else if (doesnt_fire) {
     icon = 'check';
-  } else if (!data.can_fire) {
+  } else if (!can_fire) {
     icon = 'pause';
   }
 
   return (
     <Collapsible
-      title={data.name}
-      key={data.ref}
+      title={name}
+      key={ref}
       icon={icon}
       buttons={
         <Button
           icon="wrench"
           tooltip="View Variables"
           onClick={() => {
-            act('view_variables', { ref: data.ref });
+            act('view_variables', { ref: ref });
           }}
         />
       }
     >
       <Stack vertical>
-        <Stack.Item>Init Order: {data.init_order}</Stack.Item>
-        <Stack.Item>Last Fire: {data.last_fire}</Stack.Item>
-        <Stack.Item>Next Fire: {data.next_fire}</Stack.Item>
-        <Stack.Item>Cost: {data.cost_ms}ms</Stack.Item>
+        <Stack.Item>Init Order: {init_order}</Stack.Item>
+        <Stack.Item>Last Fire: {last_fire}</Stack.Item>
+        <Stack.Item>Next Fire: {next_fire}</Stack.Item>
+        <Stack.Item>Cost: {cost_ms}ms</Stack.Item>
+        <Stack.Item>Tick Usage: {(tick_usage * 0.01).toFixed(2)}%</Stack.Item>
         <Stack.Item>
-          Tick Usage: {(data.tick_usage * 0.01).toFixed(2)}%
+          Tick Overrun: {(tick_overrun * 0.01).toFixed(2)}%
         </Stack.Item>
-        <Stack.Item>
-          Tick Overrun: {(data.tick_overrun * 0.01).toFixed(2)}%
-        </Stack.Item>
-        {data.initialization_failure_message ? (
-          <Stack.Item color="bad">
-            {data.initialization_failure_message}
-          </Stack.Item>
+        {initialization_failure_message ? (
+          <Stack.Item color="bad">{initialization_failure_message}</Stack.Item>
         ) : undefined}
       </Stack>
     </Collapsible>
@@ -122,7 +132,7 @@ const sortSubsystemBy = (
 
 export const ControllerOverview = () => {
   const { act, data } = useBackend<ControllerData>();
-  const { world_time, map_cpu, subsystems } = data;
+  const { world_time, map_cpu, subsystems, fast_update } = data;
 
   const [filterName, setFilterName] = useState('');
   const [sortBy, setSortBy] = useState(SubsystemSortBy.NAME);
@@ -172,7 +182,7 @@ export const ControllerOverview = () => {
             <Button
               tooltip="Fast Update"
               icon="fast-forward"
-              color={data.fast_update ? 'good' : 'bad'}
+              color={fast_update ? 'good' : 'bad'}
               onClick={() => {
                 act('toggle_fast_update');
               }}
