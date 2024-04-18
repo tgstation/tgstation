@@ -93,3 +93,6 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+
+// BANDASTATION EDIT ADDITION
+@include meta.load-css('./components/NanoMap.scss');

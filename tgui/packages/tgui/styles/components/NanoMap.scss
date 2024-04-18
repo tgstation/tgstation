@@ -1,0 +1,35 @@
+// BANDASTATION ADDITION
+
+$background-color: rgba(0, 0, 0, 0.33) !default;
+
+.NanoMap__container {
+  overflow: hidden;
+  width: 100%;
+  z-index: 1;
+}
+
+.NanoMap__marker {
+  z-index: 10;
+  padding: 0px;
+  margin: 0px;
+}
+
+.NanoMap__button {
+  padding: 3px 3px;
+  font-size: 12px;
+  border: 2px solid black;
+}
+
+.NanoMap__button:hover {
+  background-color: greenyellow;
+}
+
+.NanoMap__zoomer {
+  z-index: 20;
+  background-color: $background-color;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  padding: 0.5rem;
+  width: 20%;
+}

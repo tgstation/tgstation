@@ -49,3 +49,6 @@ export { TimeDisplay } from './TimeDisplay';
 export { Tooltip } from './Tooltip';
 export { TrackOutsideClicks } from './TrackOutsideClicks';
 export { VirtualList } from './VirtualList';
+
+// BANDASTATION EDIT ADDITION
+export { NanoMap } from './NanoMap';
