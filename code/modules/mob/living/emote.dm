@@ -303,9 +303,9 @@
 		else
 			return pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg')
 	if(islizard(human_user) && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
-		return 'sound/voice/lizard_laugh1'
+		return 'sound/voice/lizard/lizard_laugh1.ogg'
 	if(ismoth(human_user) && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
-		return 'sound/voice/moth/moth_laugh1'
+		return 'sound/voice/moth/moth_laugh1.ogg'
 
 /datum/emote/living/look
 	key = "look"
