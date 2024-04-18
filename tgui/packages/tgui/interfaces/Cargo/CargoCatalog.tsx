@@ -43,13 +43,14 @@ export function CargoCatalog(props) {
         !express && (
           <>
             <CargoCartButtons />
-            <Button.Checkbox
+            <Button
+              color={self_paid ? 'average' : 'transparent'}
+              icon={self_paid ? 'check-square-o' : 'square-o'}
               ml={2}
-              checked={self_paid}
               onClick={() => act('toggleprivate')}
             >
               Buy Privately
-            </Button.Checkbox>
+            </Button>
           </>
         )
       }
