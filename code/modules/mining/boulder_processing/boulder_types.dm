@@ -44,7 +44,7 @@
 		/datum/material/uranium = 3,
 	)
 
-	set_custom_materials(list(pick_weight(gulag_minerals) = SHEET_MATERIAL_AMOUNT * rand(1, 3)))
+	set_custom_materials(list(pick_weight(gulag_minerals) = SHEET_MATERIAL_AMOUNT))
 
 ///Boulders usually spawned in lavaland labour camp area but with bluespace material
 /obj/item/boulder/gulag_expanded
@@ -66,7 +66,7 @@
 		/datum/material/uranium = 3,
 	)
 
-	set_custom_materials(list(pick_weight(expanded_gulag_minerals) = SHEET_MATERIAL_AMOUNT * rand(1, 3)))
+	set_custom_materials(list(pick_weight(expanded_gulag_minerals) = SHEET_MATERIAL_AMOUNT))
 
 ///lowgrade boulder, most commonly spawned
 /obj/item/boulder/shabby

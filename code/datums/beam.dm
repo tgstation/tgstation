@@ -40,6 +40,8 @@
 	var/override_target_pixel_x = null
 	/// If set will be used instead of targets's pixel_y in offset calculations
 	var/override_target_pixel_y = null
+	///the layer of our beam
+	var/beam_layer
 
 /datum/beam/New(
 	origin,
@@ -55,6 +57,7 @@
 	override_origin_pixel_y = null,
 	override_target_pixel_x = null,
 	override_target_pixel_y = null,
+	beam_layer = ABOVE_ALL_MOB_LAYER
 )
 	src.origin = origin
 	src.target = target
@@ -68,6 +71,7 @@
 	src.override_origin_pixel_y = override_origin_pixel_y
 	src.override_target_pixel_x = override_target_pixel_x
 	src.override_target_pixel_y = override_target_pixel_y
+	src.beam_layer = beam_layer
 	if(time < INFINITY)
 		QDEL_IN(src, time)
 
@@ -81,6 +85,7 @@
 	visuals.color = beam_color
 	visuals.vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_LAYER
 	visuals.emissive = emissive
+	visuals.layer = beam_layer
 	visuals.update_appearance()
 	Draw()
 	RegisterSignal(origin, COMSIG_MOVABLE_MOVED, PROC_REF(redrawing))
@@ -278,7 +283,18 @@
  * maxdistance: how far the beam will go before stopping itself. Used mainly for two things: preventing lag if the beam may go in that direction and setting a range to abilities that use beams.
  * beam_type: The type of your custom beam. This is for adding other wacky stuff for your beam only. Most likely, you won't (and shouldn't) change it.
  */
-/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=INFINITY,maxdistance=INFINITY,beam_type=/obj/effect/ebeam, beam_color = null, emissive = TRUE, override_origin_pixel_x = null, override_origin_pixel_y = null, override_target_pixel_x = null, override_target_pixel_y = null)
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y )
+/atom/proc/Beam(atom/BeamTarget,
+	icon_state="b_beam",
+	icon='icons/effects/beam.dmi',
+	time=INFINITY,maxdistance=INFINITY,
+	beam_type=/obj/effect/ebeam,
+	beam_color = null, emissive = TRUE,
+	override_origin_pixel_x = null,
+	override_origin_pixel_y = null,
+	override_target_pixel_x = null,
+	override_target_pixel_y = null,
+	layer = ABOVE_ALL_MOB_LAYER
+)
+	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer)
 	INVOKE_ASYNC(newbeam, TYPE_PROC_REF(/datum/beam/, Start))
 	return newbeam

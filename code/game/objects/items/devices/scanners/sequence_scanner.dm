@@ -29,7 +29,7 @@
 	if(LAZYLEN(genetic_makeup_buffer) > 0)
 		. += span_notice("It has the genetic makeup of \"[genetic_makeup_buffer["name"]]\" stored inside its buffer")
 
-/obj/item/sequence_scanner/interact_with_atom(atom/interacting_with, mob/living/user)
+/obj/item/sequence_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
 
@@ -46,7 +46,7 @@
 	user.visible_message(span_notice("[user] fails to analyze [interacting_with]'s genetic sequence."), span_warning("[interacting_with] has no readable genetic sequence!"))
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/sequence_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user)
+/obj/item/sequence_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
 

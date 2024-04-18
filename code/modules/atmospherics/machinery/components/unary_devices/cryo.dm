@@ -644,14 +644,13 @@
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 	return ..()
 
-/obj/machinery/cryo_cell/AltClick(mob/user)
-	if(can_interact(user))
-		if(state_open)
-			close_machine()
-		else
-			open_machine()
-		balloon_alert(user, "door [state_open ? "opened" : "closed"]")
-	return ..()
+/obj/machinery/cryo_cell/click_alt(mob/user)
+	if(state_open)
+		close_machine()
+	else
+		open_machine()
+	balloon_alert(user, "door [state_open ? "opened" : "closed"]")
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/cryo_cell/get_remote_view_fullscreens(mob/user)
 	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)

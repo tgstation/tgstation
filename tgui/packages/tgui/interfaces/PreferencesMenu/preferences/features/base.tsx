@@ -21,7 +21,8 @@ import {
 import { createSetPreference, PreferencesMenuData } from '../../data';
 import { ServerPreferencesFetcher } from '../../ServerPreferencesFetcher';
 
-export const sortChoices = sortBy<[string, ReactNode]>(([name]) => name);
+export const sortChoices = (array: [string, ReactNode][]) =>
+  sortBy(array, ([name]) => name);
 
 export type Feature<
   TReceiving,

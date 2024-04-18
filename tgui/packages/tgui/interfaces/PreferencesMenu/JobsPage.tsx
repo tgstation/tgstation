@@ -14,10 +14,11 @@ import {
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 const sortJobs = (entries: [string, Job][], head?: string) =>
-  sortBy<[string, Job]>(
+  sortBy(
+    entries,
     ([key, _]) => (key === head ? -1 : 1),
     ([key, _]) => key,
-  )(entries);
+  );
 
 const PRIORITY_BUTTON_SIZE = '18px';
 

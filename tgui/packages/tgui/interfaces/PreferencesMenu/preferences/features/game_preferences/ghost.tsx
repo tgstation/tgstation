@@ -22,10 +22,13 @@ export const ghost_accs: FeatureChoiced = {
   component: FeatureDropdownInput,
 };
 
-const insertGhostForm = binaryInsertWith<{
+type GhostForm = {
   displayText: ReactNode;
   value: string;
-}>(({ value }) => value);
+};
+
+const insertGhostForm = (collection: GhostForm[], value: GhostForm) =>
+  binaryInsertWith(collection, value, ({ value }) => value);
 
 const GhostFormInput = (
   props: FeatureValueProps<string, string, FeatureChoicedServerData>,
