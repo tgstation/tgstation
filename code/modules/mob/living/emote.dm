@@ -72,6 +72,7 @@
 	key_third_person = "coughs"
 	message = "coughs!"
 	message_mime = "acts out an exaggerated cough!"
+	audio_cooldown = 5
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
@@ -79,6 +80,12 @@
 	if(HAS_TRAIT(user, TRAIT_SOOTHED_THROAT))
 		return FALSE
 
+/datum/emote/living/cough/get_sound(mob/living/user)
+	var/mob/living/carbon/human/human_user = user
+	if !HAS_MIND_TRAIT(human_user, TRAIT_MIMING)
+		if(human_user.gender == FEMALE)
+			return pick('sound/voice/human/female_cough1.ogg' , 'sound/voice/human/female_cough2.ogg')
+		else return 'sound/voice/human/male_cough1.ogg'
 /datum/emote/living/dance
 	key = "dance"
 	key_third_person = "dances"
@@ -287,7 +294,7 @@
 	return ..() && user.can_speak(allow_mimes = TRUE)
 
 /datum/emote/living/laugh/get_sound(mob/living/user)
-	if(!ishuman(user))
+	if(!ishuman(user) || !islizard(user) || !ismoth(user))
 		return
 	var/mob/living/carbon/human/human_user = user
 	if((ishumanbasic(human_user) || isfelinid(human_user)) && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
@@ -295,6 +302,10 @@
 			return 'sound/voice/human/womanlaugh.ogg'
 		else
 			return pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg')
+	if(islizard && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
+		return 'sound/voice/lizard_laugh'
+	if(ismoth && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
+		return 'sound/voice/moth/moth_laugh'
 
 /datum/emote/living/look
 	key = "look"
@@ -407,8 +418,16 @@
 	key = "sneeze"
 	key_third_person = "sneezes"
 	message = "sneezes."
+	audio_cooldown = 5
 	message_mime = "acts out an exaggerated silent sneeze."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
+/datum/emote/living/sneeze/get_sound(mob/living/user)
+	var/mob/living/carbon/human/human_user = user
+	if !HAS_MIND_TRAIT(human_user, TRAIT_MIMING)
+		if(human_user.gender == FEMALE)
+			return 'sound/voice/human/female_sneeze1.ogg'
+		else return 'sound/voice/human/male_sneeze1.ogg'
 
 /datum/emote/living/smug
 	key = "smug"

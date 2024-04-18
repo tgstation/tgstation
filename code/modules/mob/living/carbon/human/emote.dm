@@ -14,7 +14,15 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/human_user = user
+	audio_cooldown = 5
 	QDEL_IN(human_user.give_emote_overlay(/datum/bodypart_overlay/simple/emote/cry), 12.8 SECONDS)
+
+/datum/emote/living/carbon/human/cry/get_sound(mob/living/user)
+	var/mob/living/carbon/human/human_user = user
+	if !HAS_MIND_TRAIT(human_user, TRAIT_MIMING)
+		if(human_user.gender == FEMALE)
+			return pick('sound/voice/human/female_cry1.ogg' , 'sound/voice/human/female_cry2.ogg')
+		else return pick('sound/voice/human/male_cry1.ogg' , 'sound/voice/human/male_cry2.ogg' , 'sound/voice/human/male_cry3.ogg')
 
 /datum/emote/living/carbon/human/dap
 	key = "dap"
