@@ -105,7 +105,7 @@
 	icon_state = "kite"
 	inhand_icon_state = "kite"
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 15)
-	resistance_flags = FLAMMABLE
+	shield_break_sound = 'sound/effects/grillehit.ogg'
 	max_integrity = 60
 
 /obj/item/shield/roman
