@@ -41,7 +41,7 @@ export function Stack(props: Props) {
         fill && 'Stack--fill',
         vertical ? 'Stack--vertical' : 'Stack--horizontal',
         zebra && 'Stack--zebra',
-        reverse && 'Stack--reverse',
+        reverse && `Stack--reverse${vertical ? '--vertical' : ''}`,
         className,
         computeFlexClassName(props),
       ])}
