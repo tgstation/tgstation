@@ -1,7 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "RPEDs can be used on vendors again. Note that only bluespace RPEDs can carry vendor refills as of writing."
-  - bugfix: "RPEDs can display vendor parts again."
-  - bugfix: "Restocking vendors gives credits whether done manually or by RPEDs."
-  - bugfix: "Vendors reset their contained credits when restocked."

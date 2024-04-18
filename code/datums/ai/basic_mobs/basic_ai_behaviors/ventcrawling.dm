@@ -8,8 +8,10 @@
 /datum/ai_behavior/crawl_through_vents
 	action_cooldown = 10 SECONDS
 
+/datum/ai_behavior/crawl_through_vents/get_cooldown(datum/ai_controller/cooldown_for)
+	return cooldown_for.blackboard[BB_VENTCRAWL_COOLDOWN] || initial(action_cooldown)
+
 /datum/ai_behavior/crawl_through_vents/setup(datum/ai_controller/controller, target_key)
-	action_cooldown = controller.blackboard[BB_VENTCRAWL_COOLDOWN] || initial(action_cooldown)
 	. = ..()
 	var/obj/machinery/atmospherics/components/unary/vent_pump/target = controller.blackboard[target_key] || controller.blackboard[BB_ENTRY_VENT_TARGET]
 	return istype(target) && isliving(controller.pawn) // only mobs can vent crawl in the current framework

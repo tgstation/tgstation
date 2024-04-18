@@ -37,16 +37,14 @@
 	update_appearance()
 	return secured
 
-/obj/item/assembly/health/AltClick(mob/living/user)
-	if(!can_interact(user))
-		return
-
+/obj/item/assembly/health/click_alt(mob/living/user)
 	if(alarm_health == HEALTH_THRESHOLD_CRIT)
 		alarm_health = HEALTH_THRESHOLD_DEAD
 		to_chat(user, span_notice("You toggle [src] to \"detect death\" mode."))
 	else
 		alarm_health = HEALTH_THRESHOLD_CRIT
 		to_chat(user, span_notice("You toggle [src] to \"detect critical state\" mode."))
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/assembly/health/process()
 	//not ready yet

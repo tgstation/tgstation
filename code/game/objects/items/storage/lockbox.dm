@@ -120,13 +120,11 @@
 	if(!atom_storage.locked)
 		. += span_notice("Alt-click to [open ? "close":"open"] it.")
 
-/obj/item/storage/lockbox/medal/AltClick(mob/user)
-	if(!user.can_perform_action(src))
-		return
+/obj/item/storage/lockbox/medal/click_alt(mob/user)
 	if(!atom_storage.locked)
 		open = (open ? FALSE : TRUE)
 		update_appearance()
-	..()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/lockbox/medal/PopulateContents()
 	new /obj/item/clothing/accessory/medal/gold/captain(src)
