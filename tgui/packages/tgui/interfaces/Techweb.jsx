@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { map, sortBy } from 'common/collections';
 import { useState } from 'react';
 
 import { useBackend, useLocalState } from '../backend';
