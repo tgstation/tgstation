@@ -57,20 +57,16 @@
 	else if(!harvesting)
 		open_machine()
 
-/obj/machinery/harvester/AltClick(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src))
-		return
+/obj/machinery/harvester/click_alt(mob/user)
 	if(panel_open)
 		output_dir = turn(output_dir, -90)
 		to_chat(user, span_notice("You change [src]'s output settings, setting the output to [dir2text(output_dir)]."))
-		return
-	if(!can_interact(user))
-		return
-	if(harvesting || !user || !isliving(user) || state_open)
-		return
-	if(can_harvest())
-		start_harvest()
+		return CLICK_ACTION_SUCCESS
+	if(harvesting || state_open || !can_harvest())
+		return CLICK_ACTION_BLOCKING
+
+	start_harvest()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/harvester/proc/can_harvest()
 	if(!powered() || state_open || !occupant || !iscarbon(occupant))

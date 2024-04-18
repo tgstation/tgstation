@@ -21,8 +21,6 @@
 	var/drops_core = TRUE
 	///Do we keep on living forever?
 	var/immortal = FALSE
-	///Do we stay in one place?
-	var/immobile = FALSE
 	///Chance per second that we will move
 	var/move_chance = ANOMALY_MOVECHANCE
 
@@ -122,4 +120,5 @@
 	if(!has_core)
 		drops_core = FALSE
 		QDEL_NULL(aSignal)
-	immobile = anchor
+	if (anchor)
+		move_chance = 0

@@ -2,8 +2,9 @@
 /// Queues image generation for search objects without icons
 SUBSYSTEM_DEF(looting)
 	name = "Loot Icon Generation"
-	init_order = INIT_ORDER_LOOT
+	flags = SS_NO_INIT
 	priority = FIRE_PRIORITY_PROCESS
+	runlevels = RUNLEVEL_LOBBY|RUNLEVELS_DEFAULT
 	wait = 0.5 SECONDS
 	/// Backlog of items. Gets put into processing
 	var/list/datum/lootpanel/backlog = list()
@@ -32,7 +33,7 @@ SUBSYSTEM_DEF(looting)
 
 		if(!panel.process_images())
 			backlog += panel
-			
+
 		if(MC_TICK_CHECK)
 			return
 
