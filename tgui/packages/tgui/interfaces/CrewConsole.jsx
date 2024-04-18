@@ -119,7 +119,7 @@ const CrewTable = (props) => {
   useEffect(() => {
     let unsorted = sensors.slice();
     if (sortColumn === 'ijob') {
-      let sorted = sortBy((s) => s[sortColumn])(unsorted).filter((crew) =>
+      let sorted = sortBy(data.sensors ?? [], (s) => s.ijob).filter((crew) =>
         crew.name.toLowerCase().includes(searchQuery.toLowerCase()),
       );
       setShownSensors(sorted);

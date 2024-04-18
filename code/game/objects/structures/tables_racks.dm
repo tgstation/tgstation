@@ -858,12 +858,12 @@
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/rack/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	. = ..()
-	if(. || (tool.item_flags & ABSTRACT) || user.combat_mode)
-		return .
+/obj/structure/rack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if((tool.item_flags & ABSTRACT) || user.combat_mode)
+		return NONE
 	if(user.transferItemToLoc(tool, drop_location(), silent = FALSE))
 		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/structure/rack/attack_paw(mob/living/user, list/modifiers)
 	attack_hand(user, modifiers)

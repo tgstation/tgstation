@@ -17,8 +17,9 @@ export const Restock = (props) => {
 
 export const RestockTracker = (props) => {
   const { data } = useBackend();
-  const vending_list = sortBy((vend) => vend.percentage)(
+  const vending_list = sortBy(
     data.vending_list ?? [],
+    (vend) => vend.percentage,
   );
   return (
     <Section fill title="Vendor Stocking Status">
