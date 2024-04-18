@@ -457,7 +457,7 @@
 	if(!is_operational || panel_open || !anchored || (machine_stat & (BROKEN | NOPOWER)))
 		return
 
-	if(!use_energy(active_power_usage * seconds_per_tick))
+	if(!use_energy(active_power_usage * seconds_per_tick, force = FALSE))
 		return
 
 	progress_time += seconds_per_tick
