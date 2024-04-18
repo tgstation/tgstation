@@ -287,7 +287,7 @@
 	throwforce = 20
 	throw_range = 12
 	wound_bonus = 20
-	armour_penetration = 100
+	armour_penetration = 50
 	var/backstab_bonus = 30
 	var/thigh_hit = 4 SECONDS
 	var/epic_say_ready = TRUE
