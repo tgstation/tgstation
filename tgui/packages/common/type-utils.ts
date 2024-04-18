@@ -1,4 +1,11 @@
-/** Type data grabber for very complex ui data. */
+/**
+ * Helps visualize highly complex ui data on the fly.
+ * @example
+ * ```tsx
+ * const { data } = useBackend<CargoData>();
+ * logger.log(shallowCopyWithTypes(data));
+ * ```
+ */
 export function shallowCopyWithTypes(
   data: Record<string, any>,
 ): Record<string, any> {
