@@ -397,7 +397,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		helpful_message += " Cultists will be unable to revive you."
 	if(IS_CHANGELING(src))
 		helpful_message += " Reviving stasis will not revive you."
-	if(mind) /// We shouldn't get this far into the verb if they don't have a mind but existence is mysterious
+	if(mind) /// We shouldn't get this far into the proc if they don't have a mind but existence is mysterious
 		if(istype(mind.current))
 			var/obj/item/organ/internal/heart = mind.current.get_organ_slot(ORGAN_SLOT_HEART)
 			if(istype(heart, /obj/item/organ/internal/heart/ethereal) || istype(heart, /obj/item/organ/internal/heart/nightmare))
