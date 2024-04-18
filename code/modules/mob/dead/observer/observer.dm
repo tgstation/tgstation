@@ -404,10 +404,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(response != "DNR")
 		return
 
-	var/response = tgui_alert(usr, "Are you sure you want to prevent (almost) all means of resuscitation? This cannot be undone.", "Are you sure you want to stay dead?", list("DNR","Save Me"))
-	if(response != "DNR")
-		return
-
 	can_reenter_corpse = FALSE
 	var/mob/living/current_mob = mind.current
 	if(istype(current_mob))
