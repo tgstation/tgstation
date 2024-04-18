@@ -53,3 +53,14 @@
 
 /datum/preference/text/tts_seed/apply_to_human(mob/living/carbon/human/target, value)
 	target.AddComponent(/datum/component/tts_component, SStts220.tts_seeds[value])
+
+/datum/preference/numeric/sound_tts_volume_radio
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_tts_volume_radio"
+	savefile_identifier = PREFERENCE_PLAYER
+
+	minimum = 0
+	maximum = 100
+
+/datum/preference/numeric/sound_tts_volume_radio/create_default_value()
+	return maximum

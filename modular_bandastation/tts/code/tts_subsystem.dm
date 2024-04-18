@@ -352,7 +352,12 @@ SUBSYSTEM_DEF(tts220)
 	queue_sound_effect_processing(pure_filename, effect, filename2play, output_tts_cb)
 
 /datum/controller/subsystem/tts220/proc/output_tts(atom/speaker, mob/listener, filename2play, is_local = TRUE, preSFX = null, postSFX = null)
-	var/volume = listener?.client?.prefs?.read_preference(/datum/preference/numeric/sound_tts_volume)
+	var/volume
+	if(findtext(filename2play, "radio"))
+		volume = listener?.client?.prefs?.read_preference(/datum/preference/numeric/sound_tts_volume_radio)
+	else
+		volume = listener?.client?.prefs?.read_preference(/datum/preference/numeric/sound_tts_volume)
+
 	if(!volume)
 		return
 
@@ -362,7 +367,7 @@ SUBSYSTEM_DEF(tts220)
 	output.status = SOUND_STREAM
 	if(!is_local || isnull(speaker))
 		output.wait = TRUE
-		output.volume = volume * 0.75 // non-local is slightly less loud // TODO220: Make volume different
+		output.volume = volume
 		output.environment = SOUND_ENVIRONMENT_NONE
 
 		if(output.volume <= 0)
