@@ -86,7 +86,7 @@
 	relocate_airs()
 
 /**
- * Called when the machine has been deconstructed
+ * Called when the machine has been destroyed
  */
 /datum/gas_machine_connector/proc/destroy_connected_machine()
 	SIGNAL_HANDLER
