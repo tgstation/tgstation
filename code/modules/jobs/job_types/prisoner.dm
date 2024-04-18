@@ -69,9 +69,9 @@
 	. = ..()
 
 	var/crime_name = new_prisoner.client?.prefs?.read_preference(/datum/preference/choiced/prisoner_crime)
-	if(!crime_name)
-		return
 	var/datum/prisoner_crime/crime = GLOB.prisoner_crimes[crime_name]
+	if (isnull(crime))
+		return
 	var/list/limbs_to_tat = new_prisoner.bodyparts.Copy()
 	for(var/i in 1 to crime.tattoos)
 		if(!length(SSpersistence.prison_tattoos_to_use) || visualsOnly)

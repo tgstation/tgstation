@@ -109,7 +109,7 @@ export const ExperimentConfigure = (props) => {
   const { always_active, has_start_callback } = data;
   let techwebs = data.techwebs ?? [];
 
-  const experiments = sortBy((exp) => exp.name)(data.experiments ?? []);
+  const experiments = sortBy(data.experiments ?? [], (exp) => exp.name);
 
   // Group servers together by web
   let webs = new Map();
