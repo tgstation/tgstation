@@ -32,7 +32,10 @@ export function CargoContent(props) {
 
   const [tab, setTab] = useSharedState('cargotab', TAB.Catalog);
 
-  const cart_length = cart.reduce((total, entry) => total + entry.amount, 0);
+  let amount = 0;
+  for (let i = 0; i < cart.length; i++) {
+    amount += cart[i].amount;
+  }
 
   return (
     <Stack fill vertical>
@@ -60,11 +63,11 @@ export function CargoContent(props) {
             <>
               <Tabs.Tab
                 icon="shopping-cart"
-                textColor={tab !== TAB.Cart && cart_length > 0 && 'yellow'}
+                textColor={tab !== TAB.Cart && amount > 0 && 'yellow'}
                 selected={tab === TAB.Cart}
                 onClick={() => setTab(TAB.Cart)}
               >
-                Checkout ({cart_length})
+                Checkout ({amount})
               </Tabs.Tab>
               <Tabs.Tab
                 icon="question"

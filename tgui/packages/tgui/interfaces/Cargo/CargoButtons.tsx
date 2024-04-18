@@ -8,7 +8,9 @@ export function CargoCartButtons(props) {
   const { cart = [], requestonly, can_send, can_approve_requests } = data;
 
   let total = 0;
+  let amount = 0;
   for (let i = 0; i < cart.length; i++) {
+    amount += cart[i].amount;
     total += cart[i].cost;
   }
 
@@ -18,9 +20,9 @@ export function CargoCartButtons(props) {
   return (
     <>
       <Box inline mx={1}>
-        {cart.length === 0 && 'Cart is empty'}
-        {cart.length === 1 && '1 item'}
-        {cart.length >= 2 && cart.length + ' items'}{' '}
+        {amount === 0 && 'Cart is empty'}
+        {amount === 1 && '1 item'}
+        {amount >= 2 && amount + ' items'}{' '}
         {total > 0 && `(${formatMoney(total)} cr)`}
       </Box>
 
