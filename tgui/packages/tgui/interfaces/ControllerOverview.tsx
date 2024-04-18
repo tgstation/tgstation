@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { BooleanLike } from 'common/react';
+import { createSearch } from 'common/string';
+import { useMemo, useState } from 'react';
 
 import { useBackend } from '../backend';
 import {
@@ -12,29 +14,30 @@ import {
 import { Window } from '../layouts';
 
 type SubsystemData = {
+  name: string;
   ref: string;
   init_order: number;
   last_fire: number;
   next_fire: number;
-  can_fire: boolean;
-  doesnt_fire: boolean;
+  can_fire: BooleanLike;
+  doesnt_fire: BooleanLike;
   cost_ms: number;
   tick_usage: number;
   tick_overrun: number;
-  initialized: boolean;
+  initialized: BooleanLike;
   initialization_failure_message: string | undefined;
 };
 
 type ControllerData = {
   world_time: number;
-  fast_update: boolean;
+  fast_update: BooleanLike;
   map_cpu: number;
-  subsystems: Record<string, SubsystemData>;
+  subsystems: SubsystemData[];
 };
 
-const SubsystemView = (props: { name: string; data: SubsystemData }) => {
+const SubsystemView = (props: { data: SubsystemData }) => {
   const { act } = useBackend();
-  const { name, data } = props;
+  const { data } = props;
 
   let icon = 'play';
   if (!data.initialized) {
@@ -47,7 +50,7 @@ const SubsystemView = (props: { name: string; data: SubsystemData }) => {
 
   return (
     <Collapsible
-      title={name}
+      title={data.name}
       key={data.ref}
       icon={icon}
       buttons={
@@ -91,61 +94,59 @@ enum SubsystemSortBy {
 }
 
 const sortSubsystemBy = (
-  subsystems: Record<string, SubsystemData>,
+  subsystems: SubsystemData[],
   sortBy: SubsystemSortBy,
   asending: boolean = true,
 ) => {
-  let sorted = Object.entries(subsystems).sort(
-    ([nameA, subsystemA], [nameB, subsystemB]) => {
-      switch (sortBy) {
-        case SubsystemSortBy.INIT_ORDER:
-          return subsystemA.init_order - subsystemB.init_order;
-        case SubsystemSortBy.NAME:
-          return nameA.localeCompare(nameB);
-        case SubsystemSortBy.LAST_FIRE:
-          return subsystemA.last_fire - subsystemB.last_fire;
-        case SubsystemSortBy.NEXT_FIRE:
-          return subsystemA.next_fire - subsystemB.next_fire;
-        case SubsystemSortBy.TICK_USAGE:
-          return subsystemA.tick_usage - subsystemB.tick_usage;
-        case SubsystemSortBy.TICK_OVERRUN:
-          return subsystemA.tick_overrun - subsystemB.tick_overrun;
-      }
-    },
-  );
+  let sorted = subsystems.sort((left, right) => {
+    switch (sortBy) {
+      case SubsystemSortBy.INIT_ORDER:
+        return left.init_order - right.init_order;
+      case SubsystemSortBy.NAME:
+        return left.name.localeCompare(right.name);
+      case SubsystemSortBy.LAST_FIRE:
+        return left.last_fire - right.last_fire;
+      case SubsystemSortBy.NEXT_FIRE:
+        return left.next_fire - right.next_fire;
+      case SubsystemSortBy.TICK_USAGE:
+        return left.tick_usage - right.tick_usage;
+      case SubsystemSortBy.TICK_OVERRUN:
+        return left.tick_overrun - right.tick_overrun;
+    }
+  });
   if (!asending) {
-    sorted = sorted.reverse();
+    sorted.reverse();
   }
-  return Object.fromEntries(sorted);
+  return sorted;
 };
 
 export const ControllerOverview = () => {
   const { act, data } = useBackend<ControllerData>();
   const { world_time, map_cpu, subsystems } = data;
 
-  const [filterName, setFilterName] = useState<string | undefined>(undefined);
-  const [sortBy, setSortBy] = useState<SubsystemSortBy>(SubsystemSortBy.NAME);
+  const [filterName, setFilterName] = useState('');
+  const [sortBy, setSortBy] = useState(SubsystemSortBy.NAME);
   const [sortAscending, setSortAscending] = useState<boolean>(true);
 
-  let filteredSubsystems = subsystems;
-  if (filterName !== undefined) {
-    filteredSubsystems = Object.fromEntries(
-      Object.entries(subsystems).filter(([name, subsystem]) =>
-        name.toLowerCase().includes(filterName.toLowerCase()),
-      ),
-    );
-  }
-  filteredSubsystems = sortSubsystemBy(
-    filteredSubsystems,
-    sortBy,
-    sortAscending,
-  );
+  let filteredSubsystems = useMemo(() => {
+    if (!filterName) {
+      return subsystems;
+    }
 
-  const overallUsage = Object.values(subsystems).reduce(
+    return subsystems.filter(() =>
+      createSearch(filterName, (subsystem: SubsystemData) => subsystem.name),
+    );
+  }, [filterName, subsystems]);
+
+  let sortedSubsystems = useMemo(() => {
+    return sortSubsystemBy(filteredSubsystems, sortBy, sortAscending);
+  }, [sortBy, sortAscending, filteredSubsystems]);
+
+  const overallUsage = subsystems.reduce(
     (acc, subsystem) => acc + subsystem.tick_usage,
     0,
   );
-  const overallOverrun = Object.values(subsystems).reduce(
+  const overallOverrun = subsystems.reduce(
     (acc, subsystem) => acc + subsystem.tick_overrun,
     0,
   );
@@ -181,14 +182,12 @@ export const ControllerOverview = () => {
           <Input
             placeholder="Filter by name"
             value={filterName}
-            onChange={(e, value) =>
-              setFilterName(value.length > 0 ? value : undefined)
-            }
+            onChange={(e, value) => setFilterName(value)}
           />
           <Button
             icon="trash"
             tooltip="Reset filter"
-            onClick={() => setFilterName(undefined)}
+            onClick={() => setFilterName('')}
             disabled={filterName === undefined}
           />
           <Dropdown
@@ -217,8 +216,8 @@ export const ControllerOverview = () => {
         </Section>
         <Section title="Subsystem Overview">
           <Stack vertical>
-            {Object.entries(filteredSubsystems).map(([name, data]) => (
-              <SubsystemView key={name} name={name} data={data} />
+            {sortedSubsystems.map((subsystem) => (
+              <SubsystemView key={subsystem.ref} data={subsystem} />
             ))}
           </Stack>
         </Section>

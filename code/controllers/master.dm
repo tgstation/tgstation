@@ -158,19 +158,20 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 
 	var/list/subsystem_data = list()
 	for(var/datum/controller/subsystem/subsystem as anything in subsystems)
-		subsystem_data[subsystem.name] = list(
+		subsystem_data += list(list(
+			"name" = subsystem.name,
 			"ref" = REF(subsystem),
 			"init_order" = subsystem.init_order,
 			"last_fire" = subsystem.last_fire,
 			"next_fire" = subsystem.next_fire,
 			"can_fire" = subsystem.can_fire,
-			"doesnt_fire" = !!(subsystems.flags & SS_NO_FIRE),
+			"doesnt_fire" = !!(subsystem.flags & SS_NO_FIRE),
 			"cost_ms" = subsystem.cost,
 			"tick_usage" = subsystem.tick_usage,
 			"tick_overrun" = subsystem.tick_overrun,
 			"initialized" = subsystem.initialized,
 			"initialization_failure_message" = subsystem.initialization_failure_message,
-		)
+		))
 	data["subsystems"] = subsystem_data
 	data["world_time"] = world.time
 	data["map_cpu"] = world.map_cpu
