@@ -50,7 +50,7 @@
 
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	flags_1 = SUPERMATTER_IGNORES_1
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF | SHUTTLE_CRUSH_PROOF
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
 /obj/singularity/Initialize(mapload, starting_energy = 50)
@@ -79,13 +79,10 @@
 		notify_ghosts(
 			ghost_notification_message,
 			source = src,
-			action = NOTIFY_ORBIT,
-			flashwindow = FALSE,
-			ghost_sound = 'sound/machines/warning-buzzer.ogg',
 			header = ghost_notification_message,
-			notify_volume = 75
+			ghost_sound = 'sound/machines/warning-buzzer.ogg',
+			notify_volume = 75,
 		)
-
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSsinguloprocess, src)
@@ -267,6 +264,11 @@
 			new_consume_range = 5
 			dissipate = FALSE
 
+	if(temp_allowed_size == STAGE_SIX)
+		AddComponent(/datum/component/vision_hurting)
+	else
+		qdel(GetComponent(/datum/component/vision_hurting))
+
 	var/datum/component/singularity/resolved_singularity = singularity_component.resolve()
 	if (!isnull(resolved_singularity))
 		resolved_singularity.consume_range = new_consume_range
@@ -384,16 +386,8 @@
 /obj/singularity/proc/can_move(turf/considered_turf)
 	if(!considered_turf)
 		return FALSE
-	if((locate(/obj/machinery/field/containment) in considered_turf) || (locate(/obj/machinery/shieldwall) in considered_turf))
+	if (HAS_TRAIT(considered_turf, TRAIT_CONTAINMENT_FIELD))
 		return FALSE
-	else if(locate(/obj/machinery/field/generator) in considered_turf)
-		var/obj/machinery/field/generator/check_generator = locate(/obj/machinery/field/generator) in considered_turf
-		if(check_generator?.active)
-			return FALSE
-	else if(locate(/obj/machinery/power/shieldwallgen) in considered_turf)
-		var/obj/machinery/power/shieldwallgen/check_shield = locate(/obj/machinery/power/shieldwallgen) in considered_turf
-		if(check_shield?.active)
-			return FALSE
 	return TRUE
 
 /obj/singularity/proc/event()
@@ -480,3 +474,16 @@
 /// Special singularity that spawns for shuttle events only
 /obj/singularity/shuttle_event
 	anchored = FALSE
+
+/// Special singularity spawned by being sucked into a black hole during emagged orion trail.
+/obj/singularity/orion
+	move_self = FALSE
+
+/obj/singularity/orion/Initialize(mapload)
+	. = ..()
+	var/datum/component/singularity/singularity = singularity_component.resolve()
+	singularity?.grav_pull = 1
+
+/obj/singularity/orion/process(seconds_per_tick)
+	if(SPT_PROB(0.5, seconds_per_tick))
+		mezzer()

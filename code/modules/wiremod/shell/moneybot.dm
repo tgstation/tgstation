@@ -9,15 +9,14 @@
 	icon_state = "setup_large"
 
 	density = FALSE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_on = FALSE
 
 	var/stored_money = 0
 	var/locked = FALSE
 
-/obj/structure/money_bot/deconstruct(disassembled)
+/obj/structure/money_bot/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/holochip(drop_location(), stored_money)
-	return ..()
 
 /obj/structure/money_bot/proc/add_money(to_add)
 	stored_money += to_add
@@ -95,7 +94,7 @@
 /obj/item/circuit_component/money_bot/populate_ports()
 	total_money = add_output_port("Total Money", PORT_TYPE_NUMBER)
 	money_input = add_output_port("Last Input Money", PORT_TYPE_NUMBER)
-	entity = add_output_port("User", PORT_TYPE_ATOM)
+	entity = add_output_port("User", PORT_TYPE_USER)
 	money_trigger = add_output_port("Money Input", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/money_bot/register_shell(atom/movable/shell)

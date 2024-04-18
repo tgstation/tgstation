@@ -13,7 +13,7 @@
 	icon_state = "eradicationlock"
 	module_type = MODULE_USABLE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/eradication_lock, /obj/item/mod/module/dna_lock)
 	cooldown_time = 0.5 SECONDS
 	/// The ckey we lock with, to allow all alternate versions of the user.
@@ -33,7 +33,7 @@
 		return
 	true_owner_ckey = mod.wearer.ckey
 	balloon_alert(mod.wearer, "user remembered")
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 ///Signal fired when the modsuit tries activating
 /obj/item/mod/module/eradication_lock/proc/on_mod_activation(datum/source, mob/user)
@@ -62,7 +62,7 @@
 	icon_state = "rewinder"
 	module_type = MODULE_USABLE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/rewinder)
 	cooldown_time = 20 SECONDS
 
@@ -106,7 +106,7 @@
 	icon_state = "timestop"
 	module_type = MODULE_USABLE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/timestopper)
 	cooldown_time = 60 SECONDS
 	///The current timestop in progress.
@@ -153,7 +153,7 @@
 	icon_state = "timeline_jumper"
 	module_type = MODULE_USABLE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/timeline_jumper)
 	cooldown_time = 5 SECONDS
 	allow_flags = MODULE_ALLOW_PHASEOUT
@@ -207,7 +207,7 @@
 	icon_state = "chronogun"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/tem)
 	cooldown_time = 0.5 SECONDS
 	///Reference to the chrono field being controlled by this module
@@ -297,11 +297,14 @@
 	///Reference to the tem... given by the tem! weakref because back in the day we didn't know about harddels- or maybe we didn't care.
 	var/datum/weakref/tem_weakref
 
-/obj/projectile/energy/chrono_beam/on_hit(atom/target)
+/obj/projectile/energy/chrono_beam/on_hit(atom/target, blocked = 0, pierce_hit)
 	var/obj/item/mod/module/tem/tem = tem_weakref.resolve()
 	if(target && tem && isliving(target))
 		var/obj/structure/chrono_field/field = new(target.loc, target, tem)
 		tem.field_connect(field)
+		return BULLET_ACT_HIT
+
+	return ..()
 
 /obj/structure/chrono_field
 	name = "eradication field"
@@ -403,8 +406,9 @@
 		var/obj/item/mod/module/tem/linked_tem = beam.tem_weakref.resolve()
 		if(linked_tem && istype(linked_tem))
 			linked_tem.field_connect(src)
-	else
 		return BULLET_ACT_HIT
+
+	return ..()
 
 /obj/structure/chrono_field/assume_air()
 	return FALSE

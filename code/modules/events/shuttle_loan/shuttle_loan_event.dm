@@ -8,7 +8,8 @@
 	description = "If cargo accepts the offer, fills the shuttle with loot and/or enemies."
 	///The types of loan events already run (and to be excluded if the event triggers).
 	admin_setup = list(/datum/event_admin_setup/listed_options/shuttle_loan)
-	var/list/run_situations = list()
+	///A list of normally unavailable (or already run) situations datums
+	var/list/unavailable_situations = list(/datum/shuttle_loan_situation/mail_strike)
 
 /datum/round_event_control/shuttle_loan/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
@@ -28,22 +29,26 @@
 	var/datum/round_event_control/shuttle_loan/loan_control = control
 	//by this point if situation is admin picked, it is a type, not an instance.
 	if(!situation)
-		var/list/valid_situations = subtypesof(/datum/shuttle_loan_situation) - loan_control.run_situations
+		var/list/valid_situations = subtypesof(/datum/shuttle_loan_situation) - loan_control.unavailable_situations
 		if(!valid_situations.len)
 			//If we somehow run out of loans (fking campbell), they all become available again
-			loan_control.run_situations.Cut()
+			loan_control.unavailable_situations.Cut()
 			valid_situations = subtypesof(/datum/shuttle_loan_situation)
 		situation = pick(valid_situations)
 
-	loan_control.run_situations.Add(situation)
+	loan_control.unavailable_situations.Add(situation)
 	situation = new situation()
 
 /datum/round_event/shuttle_loan/announce(fake)
-	priority_announce("Cargo: [situation.announcement_text]", situation.sender)
+	var/announcement_text = situation?.announcement_text
+	if(isnull(announcement_text) || fake)
+		var/datum/shuttle_loan_situation/fake_situation = pick(subtypesof(/datum/shuttle_loan_situation))
+		announcement_text = initial(fake_situation.announcement_text)
+	priority_announce("Cargo: [announcement_text]", situation.sender)
 	SSshuttle.shuttle_loan = src
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
-	priority_announce(situation.thanks_msg, "Cargo shuttle commandeered by CentCom.")
+	priority_announce(situation.thanks_msg, "Cargo shuttle commandeered by [command_name()].")
 
 	dispatched = TRUE
 	var/datum/bank_account/dep_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
@@ -72,10 +77,12 @@
 
 	//get empty turfs
 	var/list/empty_shuttle_turfs = list()
+	var/list/blocked_shutte_turfs = list()
 	var/list/area/shuttle/shuttle_areas = SSshuttle.supply.shuttle_areas
 	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
-		for(var/turf/open/floor/shuttle_turf in shuttle_area)
+		for(var/turf/open/floor/shuttle_turf in shuttle_area.get_turfs_from_all_zlevels())
 			if(shuttle_turf.is_blocked_turf())
+				blocked_shutte_turfs += shuttle_turf
 				continue
 			empty_shuttle_turfs += shuttle_turf
 	if(!empty_shuttle_turfs.len)
@@ -83,7 +90,7 @@
 
 	//let the situation spawn its items
 	var/list/spawn_list = list()
-	situation.spawn_items(spawn_list, empty_shuttle_turfs)
+	situation.spawn_items(spawn_list, empty_shuttle_turfs, blocked_shutte_turfs)
 
 	var/false_positive = 0
 	while(spawn_list.len && empty_shuttle_turfs.len)
@@ -99,7 +106,7 @@
 
 /datum/event_admin_setup/listed_options/shuttle_loan/get_list()
 	var/datum/round_event_control/shuttle_loan/loan_event = event_control
-	var/list/valid_situations = subtypesof(/datum/shuttle_loan_situation) - loan_event.run_situations
+	var/list/valid_situations = subtypesof(/datum/shuttle_loan_situation) - loan_event.unavailable_situations
 	return valid_situations
 
 /datum/event_admin_setup/listed_options/shuttle_loan/apply_to_event(datum/round_event/shuttle_loan/event)

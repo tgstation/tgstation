@@ -1,6 +1,6 @@
 
 // The proc you should always use to set the light of this atom.
-/atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE, l_angle, l_dir, l_on)
+/atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE, l_angle, l_dir, l_height, l_on)
 	// We null everything but l_dir, because we don't want to allow for modifications while frozen
 	if(light_flags & LIGHT_FROZEN)
 		l_range = null
@@ -8,6 +8,7 @@
 		l_color = null
 		l_on = null
 		l_angle = null
+		l_height = null
 
 	if(l_range > 0 && l_range < MINIMUM_USEFUL_LIGHT_RANGE)
 		l_range = MINIMUM_USEFUL_LIGHT_RANGE //Brings the range up to 1.4, which is just barely brighter than the soft lighting that surrounds players.
@@ -33,6 +34,9 @@
 	if(!isnull(l_on))
 		set_light_on(l_on)
 
+	if(!isnull(l_height))
+		set_light_height(l_height)
+
 	update_light()
 
 /// Will update the light (duh).
@@ -40,7 +44,7 @@
 /atom/proc/update_light()
 	SHOULD_NOT_SLEEP(TRUE)
 
-	if(light_system != STATIC_LIGHT)
+	if(light_system != COMPLEX_LIGHT)
 		CRASH("update_light() for [src] with following light_system value: [light_system]")
 
 	if (!light_power || !light_range || !light_on) // We won't emit light anyways, destroy the light source.
@@ -165,6 +169,17 @@
 	. = light_on
 	light_on = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_ON, .)
+	return .
+
+/// Setter for the height of our light
+/atom/proc/set_light_height(new_value)
+	if(new_value == light_height || light_flags & LIGHT_FROZEN)
+		return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_HEIGHT, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
+	. = light_height
+	light_height = new_value
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_HEIGHT, .)
 	return .
 
 /// Setter for the light flags of this atom.

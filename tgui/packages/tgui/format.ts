@@ -36,7 +36,7 @@ const SI_BASE_INDEX = SI_SYMBOLS.indexOf(' ');
 export const formatSiUnit = (
   value: number,
   minBase1000 = -SI_BASE_INDEX,
-  unit = ''
+  unit = '',
 ): string => {
   if (!isFinite(value)) {
     return value.toString();
@@ -63,6 +63,10 @@ export const formatSiUnit = (
 // Formats a number to a human readable form, with power (W) as the unit
 export const formatPower = (value: number, minBase1000 = 0) => {
   return formatSiUnit(value, minBase1000, 'W');
+};
+
+export const formatEnergy = (value: number, minBase1000 = 0) => {
+  return formatSiUnit(value, minBase1000, 'J');
 };
 
 // Formats a number as a currency string
@@ -123,7 +127,7 @@ const SI_BASE_TEN_UNITS = [
 export const formatSiBaseTenUnit = (
   value: number,
   minBase1000 = 0,
-  unit = ''
+  unit = '',
 ): string => {
   if (!isFinite(value)) {
     return 'NaN';
@@ -147,7 +151,7 @@ export const formatSiBaseTenUnit = (
  */
 export const formatTime = (
   val: number,
-  formatType: 'short' | 'default' = 'default'
+  formatType: 'short' | 'default' = 'default',
 ): string => {
   const totalSeconds = Math.floor(val / 10);
   const hours = Math.floor(totalSeconds / 3600);

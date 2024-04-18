@@ -101,14 +101,14 @@
 	)
 	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
-	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, PROC_REF(consume_bullets))
+	RegisterSignal(parent, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(consume_bullets))
 
 	if (notify_admins)
 		admin_investigate_setup()
 
 	GLOB.singularities |= src
 
-/datum/component/singularity/Destroy(force, silent)
+/datum/component/singularity/Destroy(force)
 	GLOB.singularities -= src
 	consume_callback = null
 	target = null
@@ -127,7 +127,7 @@
 		COMSIG_ATOM_ATTACK_PAW,
 		COMSIG_ATOM_BLOB_ACT,
 		COMSIG_ATOM_BSA_BEAM,
-		COMSIG_ATOM_BULLET_ACT,
+		COMSIG_ATOM_PRE_BULLET_ACT,
 		COMSIG_ATOM_BUMPED,
 		COMSIG_MOVABLE_PRE_MOVE,
 		COMSIG_ATOM_ATTACKBY,
@@ -180,6 +180,7 @@
 	SIGNAL_HANDLER
 
 	qdel(projectile)
+	return COMPONENT_BULLET_BLOCKED
 
 /// Calls singularity_act on the thing passed, usually destroying the object
 /datum/component/singularity/proc/default_singularity_act(atom/thing)
@@ -359,8 +360,9 @@
 			target = potentially_closer
 	//if we lost that target get a new one
 	if(!target || QDELETED(target))
-		target = find_new_target()
-		foreboding_nosebleed(target)
+		var/mob/living/new_target = find_new_target()
+		new_target?.ominous_nosebleed()
+		target = new_target
 	return ..()
 
 ///Searches the living list for the closest target, and begins chasing them down.
@@ -378,22 +380,6 @@
 			closest_distance = distance_from_target
 			closest_target = target
 	return closest_target
-
-/// gives a little fluff warning that someone is being hunted.
-/datum/component/singularity/bloodthirsty/proc/foreboding_nosebleed(mob/living/target)
-	if(!iscarbon(target))
-		to_chat(target, span_warning("You feel a bit nauseous for just a moment."))
-		return
-	var/mob/living/carbon/carbon_target = target
-	var/obj/item/bodypart/head = carbon_target.get_bodypart(BODY_ZONE_HEAD)
-	if(head)
-		if(HAS_TRAIT(carbon_target, TRAIT_NOBLOOD))
-			to_chat(carbon_target, span_notice("You get a headache."))
-			return
-		head.adjustBleedStacks(5)
-		carbon_target.visible_message(span_notice("[carbon_target] gets a nosebleed."), span_warning("You get a nosebleed."))
-		return
-	to_chat(target, span_warning("You feel a bit nauseous for just a moment."))
 
 #undef CHANCE_TO_MOVE_TO_TARGET
 #undef CHANCE_TO_MOVE_TO_TARGET_BLOODTHIRSTY

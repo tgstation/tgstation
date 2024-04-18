@@ -5,7 +5,7 @@
 
 // Fuel types and travel time per unit of distance on that fuel.
 #define FUEL_BASIC "basic"
-#define BASIC_FUEL_TIME_COST 300
+#define BASIC_FUEL_TIME_COST 250
 
 #define FUEL_ADVANCED "advanced"
 #define ADVANCED_FUEL_TIME_COST 200
@@ -70,9 +70,8 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	else
 		name_counter[name] = 1
 	GLOB.exodrones += src
-	/// Cargo storage
-	create_storage(max_slots = EXODRONE_CARGO_SLOTS)
-	atom_storage.set_holdable(cant_hold_list = GLOB.blacklisted_cargo_types)
+	// Cargo storage
+	create_storage(max_slots = EXODRONE_CARGO_SLOTS, canthold = GLOB.blacklisted_cargo_types)
 
 /obj/item/exodrone/Destroy()
 	. = ..()
@@ -334,9 +333,9 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	drone_log("Sustained [amount] damage.")
 
 /obj/item/exodrone/proc/drone_log(message)
-	drone_log.Insert(1,message)
 	if(length(drone_log) > EXODRONE_LOG_SIZE)
-		drone_log.Cut(EXODRONE_LOG_SIZE)
+		drone_log = list()
+	drone_log.Insert(1,message)
 
 /obj/item/exodrone/proc/has_tool(tool_type)
 	return tools.Find(tool_type)
@@ -353,6 +352,11 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /obj/machinery/exodrone_launcher/Initialize(mapload)
 	. = ..()
 	GLOB.exodrone_launchers += src
+
+/obj/machinery/exodrone_launcher/examine(user)
+	. = ..()
+	if(fuel_canister)
+		. += span_notice("You can remove the [fuel_canister] with a <b>prying tool</b>.")
 
 /obj/machinery/exodrone_launcher/attackby(obj/item/weapon, mob/living/user, params)
 	if(istype(weapon, /obj/item/fuel_pellet))
@@ -374,7 +378,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	if(!fuel_canister)
 		return
 
-	to_chat(user, span_notice("You remove the [fuel_canister] from the [src]."))
+	to_chat(user, span_notice("You remove [fuel_canister] from [src]."))
 	fuel_canister.forceMove(drop_location())
 	fuel_canister = null
 	update_icon()

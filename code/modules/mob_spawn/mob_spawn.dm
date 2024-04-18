@@ -11,8 +11,6 @@
 	var/mob_name
 	///the type of the mob, you best inherit this
 	var/mob_type = /mob/living/basic/cockroach
-	///Lazy string list of factions that the spawned mob will be in upon spawn
-	var/list/faction
 
 	////Human specific stuff. Don't set these if you aren't using a human, the unit tests will put a stop to your sinful hand.
 
@@ -281,6 +279,11 @@
 	///burn damage this corpse will spawn with
 	var/burn_damage = 0
 
+	///what environmental storytelling script should this corpse have
+	var/corpse_description = ""
+	///optionally different text to display if the target is a clown
+	var/naive_corpse_description = ""
+
 /obj/effect/mob_spawn/corpse/Initialize(mapload, no_spawn)
 	. = ..()
 	if(no_spawn)
@@ -298,6 +301,8 @@
 	spawned_mob.adjustOxyLoss(oxy_damage)
 	spawned_mob.adjustBruteLoss(brute_damage)
 	spawned_mob.adjustFireLoss(burn_damage)
+	if (corpse_description)
+		spawned_mob.AddComponent(/datum/component/temporary_description, corpse_description, naive_corpse_description)
 
 /obj/effect/mob_spawn/corpse/create(mob/mob_possessor, newname)
 	. = ..()

@@ -23,7 +23,7 @@
 	if(!fug_antag)
 		to_chat(fugitive_hunter, span_warning("This is not a wanted fugitive!"))
 		return
-	if(do_after(fugitive_hunter, 50, target = fugitive))
+	if(do_after(fugitive_hunter, 5 SECONDS, target = fugitive))
 		add_prisoner(fugitive, fug_antag)
 
 /obj/machinery/fugitive_capture/proc/add_prisoner(mob/living/carbon/human/fugitive, datum/antagonist/fugitive/antag)
@@ -31,7 +31,7 @@
 	antag.is_captured = TRUE
 	to_chat(fugitive, span_userdanger("You are thrown into a vast void of bluespace, and as you fall further into oblivion the comparatively small entrance to reality gets smaller and smaller until you cannot see it anymore. You have failed to avoid capture."))
 	fugitive.ghostize(TRUE) //so they cannot suicide, round end stuff.
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/computer/shuttle/hunter
 	name = "shuttle console"
@@ -51,6 +51,8 @@
 
 /obj/structure/closet/crate/eva
 	name = "EVA crate"
+	icon_state = "o2crate"
+	base_icon_state = "o2crate"
 
 /obj/structure/closet/crate/eva/PopulateContents()
 	..()
@@ -69,7 +71,7 @@
 	name = "psyker navigation warper"
 	desc = "Uses amplified brainwaves to designate and map a precise transit location for the psyker shuttle."
 	icon_screen = "recharge_comp_on"
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE //blind friendly
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON //blind friendly
 	x_offset = 0
 	y_offset = 11
 
@@ -138,6 +140,19 @@
 	. = ..()
 	if(gored)
 		name = gored.real_name
+
+	AddComponent(
+		/datum/component/blood_walk,\
+		blood_type = /obj/effect/decal/cleanable/blood,\
+		blood_spawn_chance = 66.6,\
+		max_blood = INFINITY,\
+	)
+
+	AddComponent(/datum/component/bloody_spreader,\
+		blood_left = INFINITY,\
+		blood_dna = list("meaty DNA" = "MT-"),\
+		diseases = null,\
+	)
 
 /obj/structure/bouncy_castle/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

@@ -8,8 +8,10 @@
 /datum/ai_behavior/crawl_through_vents
 	action_cooldown = 10 SECONDS
 
+/datum/ai_behavior/crawl_through_vents/get_cooldown(datum/ai_controller/cooldown_for)
+	return cooldown_for.blackboard[BB_VENTCRAWL_COOLDOWN] || initial(action_cooldown)
+
 /datum/ai_behavior/crawl_through_vents/setup(datum/ai_controller/controller, target_key)
-	action_cooldown = controller.blackboard[BB_VENTCRAWL_COOLDOWN] || initial(action_cooldown)
 	. = ..()
 	var/obj/machinery/atmospherics/components/unary/vent_pump/target = controller.blackboard[target_key] || controller.blackboard[BB_ENTRY_VENT_TARGET]
 	return istype(target) && isliving(controller.pawn) // only mobs can vent crawl in the current framework
@@ -18,7 +20,7 @@
 	. = ..()
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent = controller.blackboard[target_key] || controller.blackboard[BB_ENTRY_VENT_TARGET]
 	var/mob/living/cached_pawn = controller.pawn
-	if(HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING) || !controller.blackboard[BB_CURRENTLY_TARGETTING_VENT] || !is_vent_valid(entry_vent))
+	if(HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING) || !controller.blackboard[BB_CURRENTLY_TARGETING_VENT] || !is_vent_valid(entry_vent))
 		return
 
 	if(!cached_pawn.can_enter_vent(entry_vent, provide_feedback = FALSE)) // we're an AI we scoff at feedback
@@ -30,7 +32,7 @@
 		finish_action(controller, FALSE, target_key)
 		return
 
-	controller.set_blackboard_key(BB_CURRENTLY_TARGETTING_VENT, FALSE) // must be done here because we have a do_after sleep in handle_ventcrawl unfortunately and double dipping could lead to erroneous suicide pill calls.
+	controller.set_blackboard_key(BB_CURRENTLY_TARGETING_VENT, FALSE) // must be done here because we have a do_after sleep in handle_ventcrawl unfortunately and double dipping could lead to erroneous suicide pill calls.
 	cached_pawn.handle_ventcrawl(entry_vent)
 	if(!HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING)) //something failed and we ARE NOT IN THE VENT even though the earlier check said we were good to go! odd.
 		finish_action(controller, FALSE, target_key)
@@ -134,5 +136,5 @@
 	controller.clear_blackboard_key(target_key)
 	controller.clear_blackboard_key(BB_ENTRY_VENT_TARGET)
 	controller.clear_blackboard_key(BB_EXIT_VENT_TARGET)
-	controller.set_blackboard_key(BB_CURRENTLY_TARGETTING_VENT, FALSE) // just in case
+	controller.set_blackboard_key(BB_CURRENTLY_TARGETING_VENT, FALSE) // just in case
 

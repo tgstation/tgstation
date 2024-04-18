@@ -1,4 +1,5 @@
 #define PKBORG_DAMPEN_CYCLE_DELAY (2 SECONDS)
+#define POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER (0.4 KILO WATTS)
 
 /obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
 	name = "plating repair tool"
@@ -15,7 +16,7 @@
 /obj/item/borg/projectile_dampen
 	name = "\improper Hyperkinetic Dampening projector"
 	desc = "A device that projects a dampening field that weakens kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second while active, that will weaken and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "shield0"
 	base_icon_state = "shield"
 	/// Max energy this dampener can hold
@@ -24,8 +25,6 @@
 	var/energy = 1500
 	/// Recharging rate in energy per second
 	var/energy_recharge = 37.5
-	/// Charge draining right
-	var/energy_recharge_cyborg_drain_coefficient = 0.4
 	/// Critical power level percentage
 	var/cyborg_cell_critical_percentage = 0.05
 	/// The owner of the dampener
@@ -156,7 +155,7 @@
 			energy = clamp(energy + energy_recharge * seconds_per_tick, 0, maxenergy)
 			return
 	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
-		host.cell.use(energy_recharge * seconds_per_tick * energy_recharge_cyborg_drain_coefficient)
+		host.cell.use(energy_recharge * seconds_per_tick * POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER)
 		energy += energy_recharge * seconds_per_tick
 
 /obj/item/borg/projectile_dampen/proc/dampen_projectile(datum/source, obj/projectile/projectile)
@@ -176,3 +175,4 @@
 	projectile.cut_overlay(projectile_effect)
 
 #undef PKBORG_DAMPEN_CYCLE_DELAY
+#undef POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER

@@ -14,7 +14,6 @@
 	generic_canpass = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	layer = MOB_LAYER
-	plane = GAME_PLANE_FOV_HIDDEN
 	//The sound this plays on impact.
 	var/hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
@@ -146,7 +145,7 @@
 	var/homing_offset_y = 0
 
 	var/damage = 10
-	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
+	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY are the only things that should be in here
 
 	///Defines what armor to use when it hits things.  Must be set to bullet, laser, energy, or bomb
 	var/armor_flag = BULLET
@@ -159,13 +158,15 @@
 	var/decayedRange //stores original range
 	var/reflect_range_decrease = 5 //amount of original range that falls off when reflecting, so it doesn't go forever
 	var/reflectable = NONE // Can it be reflected or not?
+
 	// Status effects applied on hit
-	var/stun = 0
-	var/knockdown = 0
-	var/paralyze = 0
-	var/immobilize = 0
-	var/unconscious = 0
-	var/eyeblur = 0
+	var/stun = 0 SECONDS
+	var/knockdown = 0 SECONDS
+	var/paralyze = 0 SECONDS
+	var/immobilize = 0 SECONDS
+	var/unconscious = 0 SECONDS
+	/// Seconds of blurry eyes applied on projectile hit
+	var/eyeblur = 0 SECONDS
 	/// Drowsiness applied on projectile hit
 	var/drowsy = 0 SECONDS
 	/// Jittering applied on projectile hit
@@ -181,6 +182,8 @@
 	var/catastropic_dismemberment = FALSE //If TRUE, this projectile deals its damage to the chest if it dismembers a limb.
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
+	/// If true, the projectile won't cause any logging. Used for hallucinations and shit.
+	var/do_not_log = FALSE
 	/// We ignore mobs with these factions.
 	var/list/ignored_factions
 
@@ -192,6 +195,10 @@
 	var/hit_prone_targets = FALSE
 	///For what kind of brute wounds we're rolling for, if we're doing such a thing. Lasers obviously don't care since they do burn instead.
 	var/sharpness = NONE
+	///How much we want to drop damage per tile as it travels through the air
+	var/damage_falloff_tile
+	///How much we want to drop stamina damage (defined by the stamina variable) per tile as it travels through the air
+	var/stamina_falloff_tile
 	///How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
 	var/wound_falloff_tile
 	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
@@ -219,8 +226,16 @@
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
 	if(embedding)
 		embedding["embed_chance"] += embed_falloff_tile
+	if(damage_falloff_tile && damage >= 0)
+		damage += damage_falloff_tile
+	if(stamina_falloff_tile && stamina >= 0)
+		stamina += stamina_falloff_tile
+
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE)
 	if(range <= 0 && loc)
+		on_range()
+
+	if(damage_falloff_tile && damage <= 0 || stamina_falloff_tile && stamina <= 0)
 		on_range()
 
 /obj/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
@@ -241,12 +256,22 @@
 /**
  * Called when the projectile hits something
  *
- * @params
- * target - thing hit
- * blocked - percentage of hit blocked
- * pierce_hit - are we piercing through or regular hitting
+ * By default parent call will always return [BULLET_ACT_HIT] (unless qdeleted)
+ * so it is save to assume a successful hit in children (though not necessarily successfully damaged - it could've been blocked)
+ *
+ * Arguments
+ * * target - thing hit
+ * * blocked - percentage of hit blocked (0 to 100)
+ * * pierce_hit - boolean, are we piercing through or regular hitting
+ *
+ * Returns
+ * * Returns [BULLET_ACT_HIT] if we hit something. Default return value.
+ * * Returns [BULLET_ACT_BLOCK] if we were hit but sustained no effects (blocked it). Note, Being "blocked" =/= "blocked is 100".
+ * * Returns [BULLET_ACT_FORCE_PIERCE] to have the projectile keep going instead of "hitting", as if we were not hit at all.
  */
-/obj/projectile/proc/on_hit(atom/target, blocked = FALSE, pierce_hit)
+/obj/projectile/proc/on_hit(atom/target, blocked = 0, pierce_hit)
+	SHOULD_CALL_PARENT(TRUE)
+
 	// i know that this is probably more with wands and gun mods in mind, but it's a bit silly that the projectile on_hit signal doesn't ping the projectile itself.
 	// maybe we care what the projectile thinks! See about combining these via args some time when it's not 5AM
 	var/hit_limb_zone
@@ -254,11 +279,11 @@
 		var/mob/living/L = target
 		hit_limb_zone = L.check_hit_limb_zone_name(def_zone)
 	if(fired_from)
-		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle, hit_limb_zone)
-	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb_zone)
+		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle, hit_limb_zone, blocked)
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb_zone, blocked)
 
 	if(QDELETED(src)) // in case one of the above signals deleted the projectile for whatever reason
-		return
+		return BULLET_ACT_BLOCK
 	var/turf/target_turf = get_turf(target)
 
 	var/hitx
@@ -293,8 +318,8 @@
 
 	if(blocked != 100) // not completely blocked
 		var/obj/item/bodypart/hit_bodypart = living_target.get_bodypart(hit_limb_zone)
-		if (damage)
-			if (living_target.blood_volume && damage_type == BRUTE && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
+		if (damage && damage_type == BRUTE)
+			if (living_target.blood_volume && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
 				var/splatter_dir = dir
 				if(starting)
 					splatter_dir = get_dir(starting, target_turf)
@@ -304,7 +329,7 @@
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_turf, splatter_dir)
 				if(prob(33))
 					living_target.add_splatter_floor(target_turf)
-			else if (!isnull(hit_bodypart) && (hit_bodypart.biological_state & (BIO_METAL|BIO_WIRED)))
+			else if (hit_bodypart?.biological_state & (BIO_METAL|BIO_WIRED))
 				var/random_damage_mult = RANDOM_DECIMAL(0.85, 1.15) // SOMETIMES you can get more or less sparks
 				var/damage_dealt = ((damage / (1 - (blocked / 100))) * random_damage_mult)
 
@@ -331,13 +356,12 @@
 					span_userdanger("You're hit by \a [src][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
 			if(living_target.is_blind())
 				to_chat(living_target, span_userdanger("You feel something hit you[organ_hit_text]!"))
-		living_target.on_hit(src)
 
 	var/reagent_note
 	if(reagents?.reagent_list)
 		reagent_note = "REAGENTS: [pretty_string_from_reagent_list(reagents.reagent_list)]"
 
-	if(ismob(firer))
+	if(ismob(firer) && !do_not_log)
 		log_combat(firer, living_target, "shot", src, reagent_note)
 		return BULLET_ACT_HIT
 
@@ -347,11 +371,12 @@
 		var/list/logging_mobs = firing_vehicle.return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)
 		if(!LAZYLEN(logging_mobs))
 			logging_mobs = firing_vehicle.return_drivers()
-		for(var/mob/logged_mob as anything in logging_mobs)
-			log_combat(logged_mob, living_target, "shot", src, "from inside [firing_vehicle][logging_mobs.len > 1 ? " with multiple occupants" : null][reagent_note ? " and contained [reagent_note]" : null]")
+		if(!do_not_log)
+			for(var/mob/logged_mob as anything in logging_mobs)
+				log_combat(logged_mob, living_target, "shot", src, "from inside [firing_vehicle][logging_mobs.len > 1 ? " with multiple occupants" : null][reagent_note ? " and contained [reagent_note]" : null]")
 		return BULLET_ACT_HIT
-
-	living_target.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_ATTACK, color="orange")
+	if(!do_not_log)
+		living_target.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_ATTACK, color="orange")
 	return BULLET_ACT_HIT
 
 /obj/projectile/proc/vol_by_damage()
@@ -569,6 +594,8 @@
 	// if pass_flags match, pass through entirely - unless direct target is set.
 	if((target.pass_flags_self & pass_flags) && !direct_target)
 		return FALSE
+	if(HAS_TRAIT(target, TRAIT_UNHITTABLE_BY_PROJECTILES))
+		return FALSE
 	if(!ignore_source_check && firer)
 		var/mob/M = firer
 		if((target == firer) || ((target == firer.loc) && ismecha(firer.loc)) || (target in firer.buckled_mobs) || (istype(M) && (M.buckled == target)))
@@ -682,7 +709,7 @@
 	if(ismovable(A))
 		var/atom/movable/AM = A
 		if(AM.throwing)
-			return (projectile_phasing & LETPASSTHROW)? PROJECTILE_PIERCE_PHASE : ((projectile_piercing & LETPASSTHROW)? PROJECTILE_PIERCE_HIT : PROJECTILE_PIERCE_NONE)
+			return (projectile_phasing & LETPASSTHROW) ? PROJECTILE_PIERCE_PHASE : ((projectile_piercing & LETPASSTHROW)? PROJECTILE_PIERCE_HIT : PROJECTILE_PIERCE_NONE)
 	return PROJECTILE_PIERCE_NONE
 
 /obj/projectile/proc/check_ricochet(atom/A)
@@ -749,7 +776,7 @@
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	if(firer)
 		SEND_SIGNAL(firer, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, src, fired_from, original)
-	if(!log_override && firer && original)
+	if(!log_override && firer && original && !do_not_log)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
 			//note: mecha projectile logging is handled in /obj/item/mecha_parts/mecha_equipment/weapon/action(). try to keep these messages roughly the sameish just for consistency's sake.
 	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1)) // point blank shots
@@ -770,9 +797,7 @@
 		set_angle(get_angle(src, target))
 	original_angle = Angle
 	if(!nondirectional_sprite)
-		var/matrix/matrix = new
-		matrix.Turn(Angle)
-		transform = matrix
+		transform = transform.Turn(Angle)
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
 	trajectory_ignore_forcemove = FALSE
@@ -789,11 +814,9 @@
 	pixel_move(pixel_speed_multiplier, FALSE) //move it now!
 
 /obj/projectile/proc/set_angle(new_angle) //wrapper for overrides.
-	Angle = new_angle
 	if(!nondirectional_sprite)
-		var/matrix/matrix = new
-		matrix.Turn(Angle)
-		transform = matrix
+		transform = transform.TurnTo(Angle, new_angle)
+	Angle = new_angle
 	if(trajectory)
 		trajectory.set_angle(new_angle)
 	if(fired && hitscan && isloc(loc) && (loc != last_angle_set_hitscan_store))
@@ -805,11 +828,9 @@
 
 /// Same as set_angle, but the reflection continues from the center of the object that reflects it instead of the side
 /obj/projectile/proc/set_angle_centered(new_angle)
-	Angle = new_angle
 	if(!nondirectional_sprite)
-		var/matrix/matrix = new
-		matrix.Turn(Angle)
-		transform = matrix
+		transform = transform.TurnTo(Angle, new_angle)
+	Angle = new_angle
 	if(trajectory)
 		trajectory.set_angle(new_angle)
 
@@ -887,10 +908,6 @@
 	if(!loc || !trajectory)
 		return
 	last_projectile_move = world.time
-	if(!nondirectional_sprite && !hitscanning)
-		var/matrix/matrix = new
-		matrix.Turn(Angle)
-		transform = matrix
 	if(homing)
 		process_homing()
 	var/forcemoved = FALSE
@@ -1139,17 +1156,40 @@
 /obj/projectile/proc/can_embed_into(atom/hit)
 	return embedding && shrapnel_type && iscarbon(hit) && !HAS_TRAIT(hit, TRAIT_PIERCEIMMUNE)
 
+/// Reflects the projectile off of something
+/obj/projectile/proc/reflect(atom/hit_atom)
+	if(!starting)
+		return
+	var/new_x = starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+	var/new_y = starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+	var/turf/current_tile = get_turf(hit_atom)
+
+	// redirect the projectile
+	original = locate(new_x, new_y, z)
+	starting = current_tile
+	firer = hit_atom
+	yo = new_y - current_tile.y
+	xo = new_x - current_tile.x
+	var/new_angle_s = Angle + rand(120,240)
+	while(new_angle_s > 180) // Translate to regular projectile degrees
+		new_angle_s -= 360
+	set_angle(new_angle_s)
+
 #undef MOVES_HITSCAN
 #undef MUZZLE_EFFECT_PIXEL_INCREMENT
 
 /// Fire a projectile from this atom at another atom
-/atom/proc/fire_projectile(projectile_type, atom/target, sound, firer)
+/atom/proc/fire_projectile(projectile_type, atom/target, sound, firer, list/ignore_targets = list())
 	if (!isnull(sound))
 		playsound(src, sound, vol = 100, vary = TRUE)
 
 	var/turf/startloc = get_turf(src)
 	var/obj/projectile/bullet = new projectile_type(startloc)
 	bullet.starting = startloc
+	var/list/ignore = list()
+	for (var/atom/thing as anything in ignore_targets)
+		ignore[thing] = TRUE
+	bullet.impacted += ignore
 	bullet.firer = firer || src
 	bullet.fired_from = src
 	bullet.yo = target.y - startloc.y
@@ -1157,3 +1197,4 @@
 	bullet.original = target
 	bullet.preparePixelProjectile(target, src)
 	bullet.fire()
+	return bullet

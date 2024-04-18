@@ -4,7 +4,6 @@
  * Definitions for /mob/living/silicon/robot and its children, including AI shells.
  *
  */
-
 /mob/living/silicon/robot
 	name = "Cyborg"
 	real_name = "Cyborg"
@@ -23,7 +22,7 @@
 	radio = /obj/item/radio/borg
 
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
 
 
@@ -53,6 +52,8 @@
 	var/lamp_doom = FALSE
 	///Lamp brightness. Starts at 3, but can be 1 - 5.
 	var/lamp_intensity = 3
+	////Power consumption of the light per lamp_intensity.
+	var/lamp_power_consumption = BORG_LAMP_POWER_CONSUMPTION
 
 	var/mutable_appearance/eye_lights
 
@@ -105,7 +106,7 @@
 	///Random serial number generated for each cyborg upon its initialization
 	var/ident = 0
 	var/locked = TRUE
-	var/list/req_access = list(ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_ROBOTICS)
 
 	///Whether the robot has no charge left.
 	var/low_power_mode = FALSE
@@ -227,7 +228,7 @@
 	icon_state = "synd_medical"
 	playstyle_string = "<span class='big bold'>You are a Syndicate medical cyborg!</span><br>\
 		<b>You are armed with powerful medical tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
-		Your hypospray will produce Restorative Nanites, a wonder-drug that will heal most types of bodily damages, including clone and brain damage. It also produces morphine for offense. \
+		Your hypospray will produce Restorative Nanites, a wonder-drug that will heal most types of bodily damages, including brain damage. It also produces morphine for offense. \
 		Your defibrillator paddles can revive operatives through their suits, or can be used on harm intent to shock enemies! \
 		Your energy saw functions as a circular saw, but can be activated to deal more damage, and your operative pinpointer will find and locate fellow nuclear operatives. \
 		<i>Help the operatives secure the disk at all costs!</i></b>"

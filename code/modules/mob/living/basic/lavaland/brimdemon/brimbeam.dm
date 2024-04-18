@@ -9,7 +9,6 @@
 	click_to_activate = TRUE
 	cooldown_time = 5 SECONDS
 	melee_cooldown_time = 0
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	/// How far does our beam go?
 	var/beam_range = 10
 	/// How long does our beam last?
@@ -67,9 +66,10 @@
 				break
 		if(blocked)
 			break
-		var/atom/new_brimbeam = new /obj/effect/brimbeam(affected_turf)
+		var/obj/effect/brimbeam/new_brimbeam = new(affected_turf)
 		new_brimbeam.dir = owner.dir
 		beam_parts += new_brimbeam
+		new_brimbeam.assign_creator(owner)
 		for(var/mob/living/hit_mob in affected_turf.contents)
 			hit_mob.apply_damage(damage = 25, damagetype = BURN)
 			to_chat(hit_mob, span_userdanger("You're blasted by [owner]'s brimbeam!"))
@@ -102,6 +102,8 @@
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_power = 3
 	light_range = 2
+	/// Who made us?
+	var/datum/weakref/creator
 
 /obj/effect/brimbeam/Initialize(mapload)
 	. = ..()
@@ -112,13 +114,20 @@
 	return ..()
 
 /obj/effect/brimbeam/process()
+	var/atom/ignore = creator?.resolve()
 	for(var/mob/living/hit_mob in get_turf(src))
+		if(hit_mob == ignore)
+			continue
 		damage(hit_mob)
 
 /// Hurt the passed mob
 /obj/effect/brimbeam/proc/damage(mob/living/hit_mob)
 	hit_mob.apply_damage(damage = 5, damagetype = BURN)
 	to_chat(hit_mob, span_danger("You're damaged by [src]!"))
+
+/// Ignore damage dealt to this mob
+/obj/effect/brimbeam/proc/assign_creator(mob/living/maker)
+	creator = WEAKREF(maker)
 
 /// Disappear
 /obj/effect/brimbeam/proc/disperse()

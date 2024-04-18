@@ -13,6 +13,9 @@
  * Mark of the Blade
  * Ritual of Knowledge
  * Realignment
+ * > Sidepaths:
+ *   Lionhunter Rifle
+ *
  * Stance of the Scarred Duelist
  * > Sidepaths:
  *   Carving Knife
@@ -22,20 +25,20 @@
  * Furious Steel
  * > Sidepaths:
  *   Maid in the Mirror
- *   Lionhunter Rifle
+ *   Rust Charge
  *
  * Maelstrom of Silver
  */
 /datum/heretic_knowledge/limited_amount/starting/base_blade
 	name = "The Cutting Edge"
 	desc = "Opens up the Path of Blades to you. \
-		Allows you to transmute a knife with two bars of silver to create a Sundered Blade. \
+		Allows you to transmute a knife with two bars of silver or titanium to create a Sundered Blade. \
 		You can create up to five at a time."
 	gain_text = "Our great ancestors forged swords and practiced sparring on the eve of great battles."
 	next_knowledge = list(/datum/heretic_knowledge/blade_grasp)
 	required_atoms = list(
 		/obj/item/knife = 1,
-		/obj/item/stack/sheet/mineral/silver = 2,
+		list(/obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/mineral/titanium) = 2,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/dark)
 	limit = 5 // It's the blade path, it's a given
@@ -67,7 +70,7 @@
 
 	var/are_we_behind = FALSE
 	// No tactical spinning allowed
-	if(target.flags_1 & IS_SPINNING_1)
+	if(HAS_TRAIT(target, TRAIT_SPINNING))
 		are_we_behind = TRUE
 
 	// We'll take "same tile" as "behind" for ease
@@ -104,7 +107,6 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/limited_amount/risen_corpse,
 		/datum/heretic_knowledge/mark/blade_mark,
-		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/armor,
 	)
 	cost = 1
@@ -114,10 +116,10 @@
 	var/riposte_ready = TRUE
 
 /datum/heretic_knowledge/blade_dance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_shield_reaction))
+	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_shield_reaction))
 
 /datum/heretic_knowledge/blade_dance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS)
+	UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
 
 /datum/heretic_knowledge/blade_dance/proc/on_shield_reaction(
 	mob/living/carbon/human/source,
@@ -225,10 +227,7 @@
 		During this process, you will rapidly regenerate stamina and quickly recover from stuns, however, you will be unable to attack. \
 		This spell can be cast in rapid succession, but doing so will increase the cooldown."
 	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
-	next_knowledge = list(
-		/datum/heretic_knowledge/duel_stance,
-		/datum/heretic_knowledge/rifle,
-	)
+	next_knowledge = list(/datum/heretic_knowledge/duel_stance)
 	spell_to_add = /datum/action/cooldown/spell/realignment
 	cost = 1
 	route = PATH_BLADE
@@ -248,6 +247,7 @@
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/rune_carver,
 		/datum/heretic_knowledge/crucible,
+		/datum/heretic_knowledge/rifle,
 	)
 	cost = 1
 	route = PATH_BLADE
@@ -384,7 +384,7 @@
 /datum/heretic_knowledge/ultimate/blade_final
 	name = "Maelstrom of Silver"
 	desc = "The ascension ritual of the Path of Blades. \
-		Bring 3 headless corpses to a transmutation rune to complete the ritual. \
+		Bring 3 corpses with either no head or a split skull to a transmutation rune to complete the ritual. \
 		When completed, you will be surrounded in a constant, regenerating orbit of blades. \
 		These blades will protect you from all attacks, but are consumed on use. \
 		Your Furious Steel spell will also have a shorter cooldown. \
@@ -399,11 +399,16 @@
 	if(!.)
 		return FALSE
 
-	return !sacrifice.get_bodypart(BODY_ZONE_HEAD)
+	return !sacrifice.get_bodypart(BODY_ZONE_HEAD) || HAS_TRAIT(sacrifice, TRAIT_HAS_CRANIAL_FISSURE)
 
 /datum/heretic_knowledge/ultimate/blade_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] Master of blades, the Torn Champion's disciple, [user.real_name] has ascended! Their steel is that which will cut reality in a maelstom of silver! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce(
+		text = "[generate_heretic_text()] Master of blades, the Torn Champion's disciple, [user.real_name] has ascended! Their steel is that which will cut reality in a maelstom of silver! [generate_heretic_text()]",
+		title = "[generate_heretic_text()]",
+		sound = ANNOUNCER_SPANOMALIES,
+		color_override = "pink",
+	)
 	user.client?.give_award(/datum/award/achievement/misc/blade_ascension, user)
 	ADD_TRAIT(user, TRAIT_NEVER_WOUNDED, name)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))

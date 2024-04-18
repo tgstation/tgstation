@@ -1,23 +1,26 @@
-/datum/action/cooldown/mob_cooldown/ice_breath
+/// Breathe "fire" in a line (it's freezing cold)
+/datum/action/cooldown/mob_cooldown/fire_breath/ice
 	name = "Ice Breath"
 	desc = "Fire a cold line of fire towards the enemy!"
 	button_icon = 'icons/effects/magic.dmi'
 	button_icon_state = "fireball"
 	cooldown_time = 3 SECONDS
 	melee_cooldown_time = 0 SECONDS
-	click_to_activate = TRUE
-	///the range of fire
-	var/fire_range = 4
+	fire_range = 4
+	fire_damage = 10
 
-/datum/action/cooldown/mob_cooldown/ice_breath/Activate(atom/target_atom)
-	var/turf/target_fire_turf = get_ranged_target_turf_direct(owner, target_atom, fire_range)
-	var/list/burn_turfs = get_line(owner, target_fire_turf) - get_turf(owner)
-	// This proc sleeps
-	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(dragon_fire_line), owner, /* burn_turfs = */ burn_turfs, /* frozen = */ TRUE)
-	StartCooldown()
-	return TRUE
+/datum/action/cooldown/mob_cooldown/fire_breath/ice/burn_turf(turf/fire_turf, list/hit_list, atom/source)
+	var/obj/effect/hotspot/fire_hotspot = ..()
+	fire_hotspot.add_atom_colour(COLOR_BLUE_LIGHT, FIXED_COLOUR_PRIORITY) // You're blue now, that's my attack
+	return fire_hotspot
 
-/datum/action/cooldown/mob_cooldown/ice_breathe_all_directions
+/datum/action/cooldown/mob_cooldown/fire_breath/ice/on_burn_mob(mob/living/barbecued, mob/living/source)
+	barbecued.apply_status_effect(/datum/status_effect/ice_block_talisman, 2 SECONDS)
+	to_chat(barbecued, span_userdanger("You're frozen solid by [source]'s icy breath!"))
+	barbecued.adjustFireLoss(fire_damage)
+
+/// Breathe really cold fire in a plus shape, like bomberman
+/datum/action/cooldown/mob_cooldown/fire_breath/ice/cross
 	name = "Fire all directions"
 	desc = "Unleash lines of cold fire in all directions"
 	button_icon = 'icons/effects/fire.dmi'
@@ -25,13 +28,10 @@
 	cooldown_time = 4 SECONDS
 	melee_cooldown_time = 0 SECONDS
 	click_to_activate = FALSE
-	///the range of fire
-	var/fire_range = 6
+	fire_range = 6
 
-/datum/action/cooldown/mob_cooldown/ice_breathe_all_directions/Activate(atom/target_atom)
+/datum/action/cooldown/mob_cooldown/fire_breath/ice/cross/attack_sequence(atom/target)
+	playsound(owner.loc, fire_sound, 200, TRUE)
 	for(var/direction in GLOB.cardinals)
 		var/turf/target_fire_turf = get_ranged_target_turf(owner, direction, fire_range)
-		var/list/burn_turfs = get_line(owner, target_fire_turf) - get_turf(owner)
-		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(dragon_fire_line), owner, burn_turfs, frozen = TRUE)
-	StartCooldown()
-	return TRUE
+		fire_line(target_fire_turf)

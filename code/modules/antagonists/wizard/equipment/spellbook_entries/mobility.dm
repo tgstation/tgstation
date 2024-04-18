@@ -50,3 +50,10 @@
 	item_path = /obj/item/gun/magic/staff/door
 	cost = 1
 	category = "Mobility"
+
+/datum/spellbook_entry/item/teleport_rod
+	name = /obj/item/teleport_rod::name
+	desc = /obj/item/teleport_rod::desc
+	item_path = /obj/item/teleport_rod
+	cost = 2 // Puts it at 3 cost if you go for safety instant summons, but teleporting anywhere on screen is pretty good.
+	category = "Mobility"

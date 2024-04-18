@@ -3,13 +3,13 @@
 
 /obj/item/ai_module
 	name = "\improper AI module"
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "std_mod"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	desc = "An AI Module for programming laws to an AI."
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
@@ -165,7 +165,7 @@
 	name = "ai default lawset spawner"
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
-	color = "#00FF00"
+	color = COLOR_VIBRANT_LIME
 
 /obj/effect/spawner/round_default_module/Initialize(mapload)
 	. = ..()

@@ -5,19 +5,8 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/organ/internal/Destroy()
-	if(owner)
-		// The special flag is important, because otherwise mobs can die
-		// while undergoing transformation into different mobs.
-		Remove(owner, special=TRUE)
-	else
-		STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/organ/internal/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	if(!. || !owner)
-		return
 
 	// organs_slot must ALWAYS be ordered in the same way as organ_process_order
 	// Otherwise life processing breaks down
@@ -25,17 +14,15 @@
 
 	STOP_PROCESSING(SSobj, src)
 
-/obj/item/organ/internal/Remove(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/internal/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE)
 	. = ..()
 
-	if(organ_owner)
-		if((organ_flags & ORGAN_VITAL) && !special && !(organ_owner.status_flags & GODMODE))
-			if(organ_owner.stat != DEAD)
-				organ_owner.investigate_log("has been killed by losing a vital organ ([src]).", INVESTIGATE_DEATHS)
-			organ_owner.death()
+	if((organ_flags & ORGAN_VITAL) && !special && !(organ_owner.status_flags & GODMODE))
+		if(organ_owner.stat != DEAD)
+			organ_owner.investigate_log("has been killed by losing a vital organ ([src]).", INVESTIGATE_DEATHS)
+		organ_owner.death()
 
 	START_PROCESSING(SSobj, src)
-
 
 /obj/item/organ/internal/process(seconds_per_tick, times_fired)
 	on_death(seconds_per_tick, times_fired) //Kinda hate doing it like this, but I really don't want to call process directly.
@@ -43,7 +30,16 @@
 /obj/item/organ/internal/on_death(seconds_per_tick, times_fired) //runs decay when outside of a person
 	if(organ_flags & (ORGAN_ROBOTIC | ORGAN_FROZEN))
 		return
-	apply_organ_damage(decay_factor * maxHealth * seconds_per_tick)
+
+	if(owner)
+		if(owner.bodytemperature > T0C)
+			var/air_temperature_factor = min((owner.bodytemperature - T0C) / 20, 1)
+			apply_organ_damage(decay_factor * maxHealth * seconds_per_tick * air_temperature_factor)
+	else
+		var/datum/gas_mixture/exposed_air = return_air()
+		if(exposed_air && exposed_air.temperature > T0C)
+			var/air_temperature_factor = min((exposed_air.temperature - T0C) / 20, 1)
+			apply_organ_damage(decay_factor * maxHealth * seconds_per_tick * air_temperature_factor)
 
 /// Called once every life tick on every organ in a carbon's body
 /// NOTE: THIS IS VERY HOT. Be careful what you put in here

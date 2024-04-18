@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	var/ship_template_id = "ERROR"
 	///the key to the json list of pirate names
 	var/ship_name_pool = "some_json_key"
-	///inbound message title the station recieves
+	///inbound message title the station receives
 	var/threat_title = "Pay away the Space Bugs"
 	///the contents of the message sent to the station.
 	///%SHIPNAME in the content will be replaced with the pirate ship's name
@@ -40,6 +40,8 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 	///station responds to message and pays the pirates
 	var/response_received = "Yum! Bungopoints!"
+	///station responds to message and pays the pirates
+	var/response_rejected = "Foo! No Bungopoints!"
 	///station pays the pirates, but after the ship spawned
 	var/response_too_late = "Your Bungopoints arrived too late, rebooting world..."
 	///station pays the pirates... but doesn't have enough cash.
@@ -47,6 +49,8 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 	/// Have the pirates been paid off?
 	var/paid_off = FALSE
+	/// The colour of their announcements when sent to players
+	var/announcement_color = "red"
 
 /datum/pirate_gang/New()
 	. = ..()
@@ -79,6 +83,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	possible_answers = list("Purchase Insurance.","Reject Offer.")
 
 	response_received = "Sweet, free cash. Let's get outta here, boys."
+	response_rejected = "Not paying was a mistake, now you need to take an economics class."
 	response_too_late = "Payment or not, ignoring us was a matter of pride. Now it's time for us to teach some respect."
 	response_not_enough = "You thought we wouldn't notice if you underpaid? Funny. We'll be seeing you soon."
 
@@ -96,6 +101,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	possible_answers = list("We'll pay.","Tribute? Really? Go away.")
 
 	response_received = "A most generous donation. May the claws of Tizira reach into the furthest points of the cosmos."
+	response_rejected = "That's for nothing, the first rule of hunting is don't leave without booty."
 	response_too_late = "I see you're trying to pay, but the hunt is already on."
 	response_not_enough = "You've sent an insulting \"donation\". The hunt is on for you."
 
@@ -113,6 +119,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	possible_answers = list("We'll pay.","We will not be extorted.")
 
 	response_received = "Thanks for the credits, landlubbers."
+	response_rejected = "Blimey! All hands on deck, we're going to get their riches!"
 	response_too_late = "Too late to beg for mercy!"
 	response_not_enough = "Trying to cheat us? You'll regret this!"
 
@@ -131,8 +138,10 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	possible_answers = list("Very well.","Get a job!")
 
 	response_received = "Thank you for your generosity. Your money will not be wasted."
+	response_rejected = "Oh, you're not a station, you're a tumor. Well, we're gonna have to cut it out."
 	response_too_late = "We hope you like skin cancer!"
 	response_not_enough = "This is not nearly enough for our operations. I'm afraid we'll have to borrow some."
+	announcement_color = "purple"
 
 ///Previous Nanotrasen Assitant workers fired for many reasons now looking for revenge and your bank account.
 /datum/pirate_gang/grey
@@ -148,8 +157,10 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	possible_answers = list("Please don't hurt me.","YOU WILL ANSWER TO THE LAW!!")
 
 	response_received = "Wait, you ACTUALLY gave us the money? Thanks, but we're coming for the rest anyways!"
+	response_rejected = "The answer to the law? We are the law! And you will be held responsible!"
 	response_too_late = "Nothing, huh? Looks like the Tide's coming aboard!"
 	response_not_enough = "You trying to cheat us? That's fine, we'll take your station as collateral."
+	announcement_color = "yellow"
 
 ///Agents from the space I.R.S. heavily armed to stea- I mean, collect the station's tax dues
 /datum/pirate_gang/irs
@@ -169,9 +180,11 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	possible_answers = list("You know, I was just about to pay that. Thanks for the reminder!","I don't care WHO the IRS sends, I'm not paying for my taxes!")
 
 	response_received = "Payment received, We salute you for being law-abiding tax-paying citizens"
+	response_rejected = "We understand, I'm sending a team to your station to resolve the matter."
 	response_too_late = "Too late, A team has already been sent out resolve this matter directly."
 	response_not_enough = "You filed your taxes incorrectly, A team has been sent to assist in liquidating assets and arrest you for tax fraud. \
 		Nothing personel kid."
+	announcement_color = "yellow"
 
 //Mutated Ethereals who have adopted bluespace technology in all the wrong ways.
 /datum/pirate_gang/lustrous
@@ -188,5 +201,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 
 	response_received = "An excellent haul, the synthesis shall resume."
+	response_rejected = "The rudeness in your speech needs to be neutralized. And we can help you with that right now."
 	response_too_late = "You were not ready then, and now that time has passed. We can only go forward, never back."
 	response_not_enough = "You have insulted us, but there shall be no feud, only swift justice!"
+	announcement_color = "purple"

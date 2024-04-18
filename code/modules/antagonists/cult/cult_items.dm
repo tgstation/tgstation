@@ -64,7 +64,7 @@ Striking a noncultist, however, will tear their flesh."}
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	force = 30 // whoever balanced this got beat in the head by a bible too many times good lord
@@ -99,10 +99,10 @@ Striking a noncultist, however, will tear their flesh."}
 		user.Paralyze(100)
 		user.dropItemToGround(src, TRUE)
 		user.visible_message(span_warning("A powerful force shoves [user] away from [target]!"), \
-				span_cultlarge("\"You shouldn't play with sharp things. You'll poke someone's eye out.\""))
+				span_cult_large("\"You shouldn't play with sharp things. You'll poke someone's eye out.\""))
 		if(ishuman(user))
 			var/mob/living/carbon/human/miscreant = user
-			miscreant.apply_damage(rand(force/2, force), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+			miscreant.apply_damage(rand(force/2, force), BRUTE, pick(GLOB.arm_zones))
 		else
 			user.adjustBruteLoss(rand(force/2,force))
 		return
@@ -237,7 +237,7 @@ B. Proteon hole turns into a monser when rusted // later
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
 	if(!IS_CULTIST(user))
-		to_chat(user, span_cultlarge("\"I wouldn't advise that.\""))
+		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
 
 /datum/action/innate/dash/cult
 	name = "Rend the Veil"
@@ -272,7 +272,7 @@ B. Proteon hole turns into a monser when rusted // later
 		return
 	var/mob/living/carbon/carbon_user = user
 	if(user.num_legs < 2 || carbon_user.legcuffed) //if they can't be ensnared, stun for the same time as it takes to breakout of bola
-		to_chat(user, span_cultlarge("\"I wouldn't advise that.\""))
+		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
 		user.dropItemToGround(src, TRUE)
 		user.Paralyze(CULT_BOLA_PICKUP_STUN)
 	else
@@ -493,8 +493,15 @@ B. Proteon hole turns into a monser when rusted // later
 	fire = 50
 	acid = 60
 
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/setup_shielding()
-	AddComponent(/datum/component/shielded, recharge_start_delay = 0 SECONDS, shield_icon_file = 'icons/effects/cult/effects.dmi', shield_icon = "shield-cult", run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)))
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/Initialize(mapload)
+	. = ..()
+	AddComponent( \
+		/datum/component/shielded, \
+		recharge_start_delay = 0 SECONDS, \
+		shield_icon_file = 'icons/effects/cult/effects.dmi', \
+		shield_icon = "shield-cult", \
+		run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)), \
+	)
 
 /// A proc for callback when the shield breaks, since cult robes are stupid and have different effects
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/proc/shield_damaged(mob/living/wearer, attack_text, new_current_charges)
@@ -522,7 +529,7 @@ B. Proteon hole turns into a monser when rusted // later
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/living/user, slot)
 	..()
 	if(!IS_CULTIST(user))
-		to_chat(user, span_cultlarge("\"I wouldn't advise that.\""))
+		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
 		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
 		user.dropItemToGround(src, TRUE)
 		user.set_dizzy_if_lower(1 MINUTES)
@@ -559,7 +566,7 @@ B. Proteon hole turns into a monser when rusted // later
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
 	..()
 	if(!IS_CULTIST(user))
-		to_chat(user, span_cultlarge("\"I wouldn't advise that.\""))
+		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
 		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
 		user.dropItemToGround(src, TRUE)
 		user.set_dizzy_if_lower(1 MINUTES)
@@ -567,6 +574,7 @@ B. Proteon hole turns into a monser when rusted // later
 
 /obj/item/clothing/glasses/hud/health/night/cultblind
 	desc = "May Nar'Sie guide you through the darkness and shield you from the light."
+	flags_cover = GLASSESCOVERSEYES
 	name = "zealot's blindfold"
 	icon_state = "blindfold"
 	inhand_icon_state = "blindfold"
@@ -575,7 +583,7 @@ B. Proteon hole turns into a monser when rusted // later
 /obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
 	..()
 	if(user.stat != DEAD && !IS_CULTIST(user) && (slot & ITEM_SLOT_EYES))
-		to_chat(user, span_cultlarge("\"You want to be blind, do you?\""))
+		to_chat(user, span_cult_large("\"You want to be blind, do you?\""))
 		user.dropItemToGround(src, TRUE)
 		user.set_dizzy_if_lower(1 MINUTES)
 		user.Paralyze(100)
@@ -807,8 +815,8 @@ B. Proteon hole turns into a monser when rusted // later
 	color = "#ff0000"
 	on_damage = 15
 	slot_flags = null
-	on = TRUE
 	var/charges = 5
+	start_on = TRUE
 
 /obj/item/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
@@ -1003,9 +1011,9 @@ B. Proteon hole turns into a monser when rusted // later
 		var/mob/living/carbon/carbon_cultist = our_target
 		carbon_cultist.reagents.add_reagent(/datum/reagent/fuel/unholywater, 4)
 	if(isshade(our_target) || isconstruct(our_target))
-		var/mob/living/simple_animal/undead_abomination = our_target
-		if(undead_abomination.health+5 < undead_abomination.maxHealth)
-			undead_abomination.adjustHealth(-5)
+		var/mob/living/basic/construct/undead_abomination = our_target
+		if(undead_abomination.health + 5 < undead_abomination.maxHealth)
+			undead_abomination.adjust_health(-5)
 	return PROJECTILE_DELETE_WITHOUT_HITTING
 
 /obj/item/blood_beam
@@ -1105,11 +1113,11 @@ B. Proteon hole turns into a monser when rusted // later
 						if(H.stat != DEAD)
 							H.reagents.add_reagent(/datum/reagent/fuel/unholywater, 7)
 					if(isshade(target) || isconstruct(target))
-						var/mob/living/simple_animal/M = target
-						if(M.health+15 < M.maxHealth)
-							M.adjustHealth(-15)
+						var/mob/living/basic/construct/healed_guy = target
+						if(healed_guy.health + 15 < healed_guy.maxHealth)
+							healed_guy.adjust_health(-15)
 						else
-							M.health = M.maxHealth
+							healed_guy.health = healed_guy.maxHealth
 				else
 					var/mob/living/L = target
 					if(L.density)
@@ -1160,7 +1168,7 @@ B. Proteon hole turns into a monser when rusted // later
 		if(.)
 			if(illusions > 0)
 				illusions--
-				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 450)
+				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 45 SECONDS)
 				if(prob(60))
 					var/mob/living/simple_animal/hostile/illusion/M = new(owner.loc)
 					M.faction = list(FACTION_CULT)
@@ -1194,8 +1202,7 @@ B. Proteon hole turns into a monser when rusted // later
 	return FALSE
 
 /obj/item/shield/mirror/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	var/turf/T = get_turf(hit_atom)
-	var/datum/thrownthing/D = throwingdatum
+	var/turf/impact_turf = get_turf(hit_atom)
 	if(isliving(hit_atom))
 		var/mob/living/target = hit_atom
 
@@ -1208,13 +1215,14 @@ B. Proteon hole turns into a monser when rusted // later
 			return
 		if(!..())
 			target.Paralyze(30)
-			if(D?.thrower)
-				for(var/mob/living/Next in orange(2, T))
+			var/mob/thrower = throwingdatum?.get_thrower()
+			if(thrower)
+				for(var/mob/living/Next in orange(2, impact_turf))
 					if(!Next.density || IS_CULTIST(Next))
 						continue
-					throw_at(Next, 3, 1, D.thrower)
+					throw_at(Next, 3, 1, thrower)
 					return
-				throw_at(D.thrower, 7, 1, null)
+				throw_at(thrower, 7, 1, null)
 	else
 		..()
 

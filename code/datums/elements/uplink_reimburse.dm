@@ -22,7 +22,7 @@
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE, PROC_REF(reimburse))
 	RegisterSignal(target,COMSIG_TRAITOR_ITEM_USED(target.type), PROC_REF(used))
-	
+
 /datum/element/uplink_reimburse/Detach(datum/target)
 	UnregisterSignal(target, list(COMSIG_ATOM_EXAMINE, COMSIG_TRAITOR_ITEM_USED(target.type), COMSIG_ITEM_ATTEMPT_TC_REIMBURSE))
 
@@ -47,10 +47,11 @@
 
 	to_chat(user, span_notice("You tap [uplink_comp.uplink_handler] with [refund_item], and a moment after [refund_item] disappears in a puff of red smoke!"))
 	do_sparks(2, source = uplink_comp.uplink_handler)
-	uplink_comp.add_telecrystals(refundable_tc)
+	uplink_comp.uplink_handler.add_telecrystals(refundable_tc)
 	qdel(refund_item)
+
 /// If the item is used, it needs to no longer be refundable
 /datum/element/uplink_reimburse/proc/used(datum/target)
 	SIGNAL_HANDLER
-	
+
 	Detach(target)

@@ -13,13 +13,10 @@
 	role_name = "morphling"
 
 /datum/round_event/ghost_role/morph/spawn_role()
-	var/list/candidates = get_candidates(ROLE_ALIEN, ROLE_ALIEN)
-	if(!candidates.len)
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_ALIEN, role = ROLE_ALIEN, alert_pic = /mob/living/basic/morph, role_name_text = "morph", amount_to_pick = 1)
+	if(isnull(chosen_one))
 		return NOT_ENOUGH_PLAYERS
-
-	var/mob/dead/selected = pick_n_take(candidates)
-
-	var/datum/mind/player_mind = new /datum/mind(selected.key)
+	var/datum/mind/player_mind = new /datum/mind(chosen_one.key)
 	player_mind.active = TRUE
 
 	var/turf/spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)

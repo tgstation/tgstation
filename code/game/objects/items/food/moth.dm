@@ -239,7 +239,7 @@
 	tastes = list("rice" = 1, "potato" = 1, "veggies" = 1)
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_NORMAL
-	crafting_complexity = FOOD_COMPLEXITY_1
+	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/big_baked_rice/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/lil_baked_rice, 6, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
@@ -256,7 +256,7 @@
 	tastes = list("rice" = 1, "potato" = 1, "veggies" = 1)
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = FOOD_COMPLEXITY_1
+	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/oven_baked_corn
 	name = "oven-baked corn"
@@ -419,6 +419,7 @@
 		they do eventually go bad- prompting them to be sold as surplus by the fleet. This particular one is, like most artificially-flavoured moth food, mixed-herb flavoured."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "sustenance_bar"
+	trash_type = /obj/item/trash/fleet_ration
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20)
 	tastes = list("herbs" = 1)
 	foodtypes = VEGETABLES | GRAIN
@@ -522,7 +523,7 @@
 	desc = "A salad with added cotton and a basic dressing. Presumably either moths are around, or the South's risen again."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "cotton_salad"
-	food_reagents = list(,
+	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 8,
 		/datum/reagent/consumable/nutriment/vitamin = 14,
 	)
@@ -756,7 +757,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	tastes = list("crust" = 1, "pesto" = 1, "cheese" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS | RAW
+	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS
 	slice_type = /obj/item/food/pizzaslice/mothic_pesto
 	boxtag = "Presto Pesto"
 	crafting_complexity = FOOD_COMPLEXITY_5

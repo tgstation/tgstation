@@ -44,7 +44,7 @@
 	name = "Curse of Corrosion"
 	desc = "Allows you to transmute wirecutters, a pool of vomit, and a heart to cast a curse of sickness on a crew member. \
 		While cursed, the victim will repeatedly vomit while their organs will take constant damage. You can additionally supply an item \
-		that a victim has touched or is covered in the victim's blood to empower the curse."
+		that a victim has touched or is covered in the victim's blood to make the curse last longer."
 	gain_text = "The body of humanity is temporary. Their weaknesses cannot be stopped, like iron falling to rust. Show them all."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/area_conversion,
@@ -88,7 +88,7 @@
 		/obj/item/book = 1,
 		/obj/item/bodypart/head = 1,
 	)
-	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/rust_spirit
+	mob_to_summon = /mob/living/basic/heretic_summon/rust_walker
 	cost = 1
 	route = PATH_SIDE
 	poll_ignore_define = POLL_IGNORE_RUST_SPIRIT

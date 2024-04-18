@@ -18,7 +18,7 @@
 	anchored = TRUE
 	density = TRUE // dense for receiving bumbs
 	layer = HIGH_OBJ_LAYER
-	light_system = STATIC_LIGHT
+	light_system = COMPLEX_LIGHT
 	light_range = 3
 	light_power = 1
 	light_on = TRUE
@@ -43,6 +43,8 @@
 	var/force_teleport = FALSE
 	/// Does this portal create spark effect when teleporting?
 	var/sparkless = FALSE
+	/// If FALSE, the wibble filter will not be applied to this portal (only a visual effect).
+	var/wibbles = TRUE
 
 /obj/effect/portal/anom
 	name = "wormhole"
@@ -53,6 +55,7 @@
 	mech_sized = TRUE
 	teleport_channel = TELEPORT_CHANNEL_WORMHOLE
 	light_on = FALSE
+	wibbles = FALSE
 
 /obj/effect/portal/Move(newloc)
 	for(var/T in newloc)
@@ -100,6 +103,8 @@
 	hardlinked = automatic_link
 	if(isturf(hard_target_override))
 		hard_target = hard_target_override
+	if(wibbles)
+		apply_wibbly_filters(src)
 
 /obj/effect/portal/singularity_pull()
 	return

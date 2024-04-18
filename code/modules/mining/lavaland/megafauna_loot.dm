@@ -120,7 +120,7 @@
 		if(isturf(user.loc))
 			user.visible_message(span_hierophant_warning("[user] starts fiddling with [src]'s pommel..."), \
 			span_notice("You start detaching the hierophant beacon..."))
-			if(do_after(user, 50, target = user) && !beacon)
+			if(do_after(user, 5 SECONDS, target = user) && !beacon)
 				var/turf/user_turf = get_turf(user)
 				playsound(user_turf,'sound/magic/blind.ogg', 200, TRUE, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(user_turf, user)
@@ -149,7 +149,7 @@
 	beacon.icon_state = "hierophant_tele_on"
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/user_telegraph = new /obj/effect/temp_visual/hierophant/telegraph/edge(user.loc)
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/beacon_telegraph = new /obj/effect/temp_visual/hierophant/telegraph/edge(beacon.loc)
-	if(do_after(user, 40, target = user) && user && beacon)
+	if(do_after(user, 4 SECONDS, target = user) && user && beacon)
 		var/turf/destination = get_turf(beacon)
 		var/turf/source = get_turf(user)
 		if(destination.is_blocked_turf(TRUE))
@@ -162,7 +162,7 @@
 		new /obj/effect/temp_visual/hierophant/telegraph(source, user)
 		playsound(destination,'sound/magic/wand_teleport.ogg', 200, TRUE)
 		playsound(source,'sound/machines/airlockopen.ogg', 200, TRUE)
-		if(!do_after(user, 3, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
+		if(!do_after(user, 0.3 SECONDS, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
 			if(user)
 				user.update_mob_action_buttons()
@@ -285,13 +285,15 @@
 	AddElement(/datum/element/gags_recolorable)
 
 /obj/item/clothing/suit/hooded/hostile_environment/process(seconds_per_tick)
-	. = ..()
 	var/mob/living/carbon/wearer = loc
 	if(istype(wearer) && SPT_PROB(1, seconds_per_tick)) //cursed by bubblegum
 		if(prob(7.5))
 			wearer.cause_hallucination(/datum/hallucination/oh_yeah, "H.E.C.K suit", haunt_them = TRUE)
 		else
-			to_chat(wearer, span_warning("[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]"))
+			if(HAS_TRAIT(wearer, TRAIT_ANOSMIA)) //Anosmia quirk holder cannot fell any smell
+				to_chat(wearer, span_warning("[pick("You hear faint whispers.","You feel hot.","You hear a roar in the distance.")]"))
+			else
+				to_chat(wearer, span_warning("[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]"))
 
 /obj/item/clothing/head/hooded/hostile_environment
 	name = "H.E.C.K. helmet"
@@ -399,7 +401,7 @@
 		give_blood(10)
 
 /obj/item/soulscythe/attack_hand(mob/user, list/modifiers)
-	if(soul.ckey && !soul.faction_check_mob(user))
+	if(soul.ckey && !soul.faction_check_atom(user))
 		to_chat(user, span_warning("You can't pick up [src]!"))
 		return
 	return ..()
@@ -423,19 +425,34 @@
 	using = TRUE
 	balloon_alert(user, "you hold the scythe up...")
 	ADD_TRAIT(src, TRAIT_NODROP, type)
-	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as [user.real_name]'s soulscythe?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/picked_ghost = pick(candidates)
-		soul.ckey = picked_ghost.ckey
-		soul.copy_languages(user, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the user.
-		soul.faction = list("[REF(user)]")
-		balloon_alert(user, "the scythe glows up")
-		add_overlay("soulscythe_gem")
-		density = TRUE
-		if(!ismob(loc))
-			reset_spin()
-	else
-		balloon_alert(user, "the scythe is dormant!")
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		check_jobban = ROLE_PAI,
+		poll_time = 20 SECONDS,
+		checked_target = src,
+		ignore_category = POLL_IGNORE_POSSESSED_BLADE,
+		alert_pic = src,
+		role_name_text = "soulscythe soul",
+		chat_text_border_icon = src,
+	)
+	on_poll_concluded(user, chosen_one)
+
+/// Ghost poll has concluded and a candidate has been chosen.
+/obj/item/soulscythe/proc/on_poll_concluded(mob/living/master, mob/dead/observer/ghost)
+	if(isnull(ghost))
+		balloon_alert(master, "the scythe is dormant!")
+		REMOVE_TRAIT(src, TRAIT_NODROP, type)
+		using = FALSE
+		return
+
+	soul.ckey = ghost.ckey
+	soul.copy_languages(master, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the master.
+	soul.faction = list("[REF(master)]")
+	balloon_alert(master, "the scythe glows")
+	add_overlay("soulscythe_gem")
+	density = TRUE
+	if(!ismob(loc))
+		reset_spin()
+
 	REMOVE_TRAIT(src, TRAIT_NODROP, type)
 	using = FALSE
 
@@ -606,7 +623,7 @@
 	light_power = 1
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 
-/obj/projectile/soulscythe/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/soulscythe/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(ishostile(target))
 		damage *= 2
 	return ..()
@@ -623,7 +640,7 @@
 	inhand_icon_state = "spectral"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	force = 1
@@ -649,7 +666,7 @@
 
 /obj/item/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
-		G.invisibility = GLOB.observer_default_invisibility
+		G.RemoveInvisibility(type)
 	spirits.Cut()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
@@ -660,17 +677,14 @@
 		return
 	to_chat(user, span_notice("You call out for aid, attempting to summon spirits to your side."))
 
-	notify_ghosts("[user] is raising [user.p_their()] [name], calling for your help!",
-		enter_link="<a href=?src=[REF(src)];orbit=1>(Click to help)</a>",
-		source = user, ignore_key = POLL_IGNORE_SPECTRAL_BLADE, header = "Spectral blade")
+	notify_ghosts(
+		"[user] is raising [user.p_their()] [name], calling for your help!",
+		source = user,
+		ignore_key = POLL_IGNORE_SPECTRAL_BLADE,
+		header = "Spectral blade",
+	)
 
 	summon_cooldown = world.time + 600
-
-/obj/item/melee/ghost_sword/Topic(href, href_list)
-	if(href_list["orbit"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			ghost.ManualFollow(src)
 
 /obj/item/melee/ghost_sword/process()
 	ghost_check()
@@ -688,10 +702,10 @@
 			continue
 		var/mob/dead/observer/G = i
 		ghost_counter++
-		G.invisibility = 0
+		G.SetInvisibility(INVISIBILITY_NONE, id=type, priority=INVISIBILITY_PRIORITY_BASIC_ANTI_INVISIBILITY)
 		current_spirits |= G
 	for(var/mob/dead/observer/G in spirits - current_spirits)
-		G.invisibility = GLOB.observer_default_invisibility
+		G.RemoveInvisibility(type)
 	spirits = current_spirits
 	return ghost_counter
 

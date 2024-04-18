@@ -19,7 +19,7 @@
 	action = new(src)
 	action.Grant(organ_parent.owner)
 
-/datum/component/living_heart/Destroy(force, silent)
+/datum/component/living_heart/Destroy(force)
 	QDEL_NULL(action)
 	return ..()
 
@@ -99,7 +99,7 @@
 
 	return TRUE
 
-/datum/action/cooldown/track_target/Trigger(trigger_flags)
+/datum/action/cooldown/track_target/Trigger(trigger_flags, atom/target)
 	right_clicked = !!(trigger_flags & TRIGGER_SECONDARY_ACTION)
 	return ..()
 

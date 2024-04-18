@@ -1,6 +1,6 @@
 #define GOLIATH_ORGAN_COLOR "#875652"
 #define GOLIATH_SCLERA_COLOR "#ac0f32"
-#define GOLIATH_PUPIL_COLOR "#FF0000"
+#define GOLIATH_PUPIL_COLOR COLOR_RED
 #define GOLIATH_COLORS GOLIATH_ORGAN_COLOR + GOLIATH_SCLERA_COLOR + GOLIATH_PUPIL_COLOR
 
 ///bonus of the goliath: you can swim through space!
@@ -21,8 +21,8 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 
-	eye_color_left = "#FF0000"
-	eye_color_right = "#FF0000"
+	eye_color_left = COLOR_RED
+	eye_color_right = COLOR_RED
 
 	low_light_cutoff = list(15, 0, 8)
 	medium_light_cutoff = list(35, 15, 25)
@@ -66,7 +66,7 @@
 	AddElement(/datum/element/noticable_organ, "arm is just a mass of plate and tendrils.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
-/obj/item/organ/internal/brain/goliath/on_insert(mob/living/carbon/brain_owner)
+/obj/item/organ/internal/brain/goliath/on_mob_insert(mob/living/carbon/brain_owner)
 	. = ..()
 	if(!ishuman(brain_owner))
 		return
@@ -78,7 +78,7 @@
 	hammer = new/obj/item/goliath_infuser_hammer
 	brain_owner.put_in_hands(hammer)
 
-/obj/item/organ/internal/brain/goliath/on_remove(mob/living/carbon/brain_owner)
+/obj/item/organ/internal/brain/goliath/on_mob_remove(mob/living/carbon/brain_owner)
 	. = ..()
 	UnregisterSignal(brain_owner)
 	if(!ishuman(brain_owner))

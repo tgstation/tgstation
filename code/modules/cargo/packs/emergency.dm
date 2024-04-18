@@ -1,15 +1,18 @@
 /datum/supply_pack/emergency
 	group = "Emergency"
+	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
 
 /datum/supply_pack/emergency/bio
 	name = "Biological Emergency Crate"
-	desc = "This crate holds 2 full bio suits which will protect you from viruses."
+	desc = "This crate includes 2 complete bio suits, along with a box containing sterile masks and latex gloves, providing effective protection against viruses."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/clothing/head/bio_hood = 2,
 					/obj/item/clothing/suit/bio_suit = 2,
 					/obj/item/storage/bag/bio,
 					/obj/item/reagent_containers/syringe/antiviral = 2,
 					/obj/item/clothing/gloves/latex/nitrile = 2,
+					/obj/item/storage/box/masks,
+					/obj/item/storage/box/gloves,
 				)
 	crate_name = "bio suit crate"
 
@@ -19,11 +22,12 @@
 		in stations and people alike! Comes with two floorbots, two medbots, five oxygen \
 		masks and five small oxygen tanks."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/mob/living/simple_animal/bot/floorbot = 2,
-					/mob/living/simple_animal/bot/medbot = 2,
-					/obj/item/tank/internals/emergency_oxygen = 5,
-					/obj/item/clothing/mask/breath = 5,
-				)
+	contains = list(
+		/mob/living/basic/bot/medbot = 2,
+		/mob/living/simple_animal/bot/floorbot = 2,
+		/obj/item/tank/internals/emergency_oxygen = 5,
+		/obj/item/clothing/mask/breath = 5,
+	)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
@@ -62,7 +66,7 @@
 	access = ACCESS_ATMOSPHERICS
 	contains = list(/obj/item/watertank/atmos)
 	crate_name = "firefighting backpack crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
 
 /datum/supply_pack/emergency/internals
 	name = "Internals Crate"

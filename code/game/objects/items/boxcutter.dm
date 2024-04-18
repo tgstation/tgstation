@@ -17,6 +17,8 @@
 	var/snap_time_weak_handcuffs = 0 SECONDS
 	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
 	var/snap_time_strong_handcuffs = null
+	/// Starts open if true
+	var/start_extended = FALSE
 
 /obj/item/boxcutter/get_all_tool_behaviours()
 	return list(TOOL_KNIFE)
@@ -31,6 +33,7 @@
 
 	AddComponent( \
 		/datum/component/transforming, \
+		start_transformed = start_extended, \
 		force_on = 10, \
 		throwforce_on = 4, \
 		throw_speed_on = throw_speed, \
@@ -53,3 +56,6 @@
 	else
 		RemoveElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/boxcutter/extended
+	start_extended = TRUE

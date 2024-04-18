@@ -8,7 +8,7 @@
 	var/attempting_awakening = FALSE
 	var/allow_renaming
 	///mob contained in the item.
-	var/mob/living/simple_animal/shade/bound_spirit
+	var/mob/living/basic/shade/bound_spirit
 
 /datum/component/spirit_holding/Initialize(mob/soul_to_bind, mob/awakener, allow_renaming = TRUE)
 	if(!ismovable(parent)) //you may apply this to mobs, i take no responsibility for how that works out
@@ -17,7 +17,7 @@
 	if(soul_to_bind)
 		bind_the_soule(soul_to_bind, awakener, soul_to_bind.real_name)
 
-/datum/component/spirit_holding/Destroy(force, silent)
+/datum/component/spirit_holding/Destroy(force)
 	. = ..()
 	if(bound_spirit)
 		QDEL_NULL(bound_spirit)
@@ -41,37 +41,45 @@
 ///signal fired on self attacking parent
 /datum/component/spirit_holding/proc/on_attack_self(datum/source, mob/user)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(attempt_spirit_awaken), user)
+	INVOKE_ASYNC(src, PROC_REF(get_ghost), user)
 
-/**
- * attempt_spirit_awaken: called from on_attack_self, polls ghosts to possess the item in the form
- * of a mob sitting inside the item itself
- *
- * Arguments:
- * * awakener: user who interacted with the blade
- */
-/datum/component/spirit_holding/proc/attempt_spirit_awaken(mob/awakener)
+/datum/component/spirit_holding/proc/get_ghost(mob/user)
+	var/atom/thing = parent
 	if(attempting_awakening)
-		to_chat(awakener, span_warning("You are already trying to awaken [parent]!"))
+		thing.balloon_alert(user, "already channeling!")
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		to_chat(awakener, span_warning("Anomalous otherworldly energies block you from awakening [parent]!"))
+		thing.balloon_alert(user, "spirits are unwilling!")
+		to_chat(user, span_warning("Anomalous otherworldly energies block you from awakening [parent]!"))
 		return
-
 	attempting_awakening = TRUE
-	to_chat(awakener, span_notice("You attempt to wake the spirit of [parent]..."))
+	thing.balloon_alert(user, "channeling...")
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "Do you want to play as [span_notice("Spirit of [span_danger("[user.real_name]'s")] blade")]?",
+		check_jobban = ROLE_PAI,
+		poll_time = 20 SECONDS,
+		checked_target = thing,
+		ignore_category = POLL_IGNORE_POSSESSED_BLADE,
+		alert_pic = thing,
+		role_name_text = "possessed blade",
+		chat_text_border_icon = thing,
+	)
+	affix_spirit(user, chosen_one)
 
-	var/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the spirit of [awakener.real_name]'s blade?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
-	if(!LAZYLEN(candidates))
-		to_chat(awakener, span_warning("[parent] is dormant. Maybe you can try again later."))
+/// On conclusion of the ghost poll
+/datum/component/spirit_holding/proc/affix_spirit(mob/awakener, mob/dead/observer/ghost)
+
+	var/atom/thing = parent
+
+	if(isnull(ghost))
+		thing.balloon_alert(awakener, "silence...")
 		attempting_awakening = FALSE
 		return
 
-	//Immediately unregister to prevent making a new spirit
+	// Immediately unregister to prevent making a new spirit
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
-	var/mob/dead/observer/chosen_spirit = pick(candidates)
 	if(QDELETED(parent)) //if the thing that we're conjuring a spirit in has been destroyed, don't create a spirit
-		to_chat(chosen_spirit, span_userdanger("The new vessel for your spirit has been destroyed! You remain an unbound ghost."))
+		to_chat(ghost, span_userdanger("The new vessel for your spirit has been destroyed! You remain an unbound ghost."))
 		return
 
 	bind_the_soule(chosen_spirit, awakener)

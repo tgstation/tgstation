@@ -3,7 +3,8 @@
  */
 /datum/ai_controller/basic_controller/brimdemon
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/brimdemon,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
 	ai_traits = PAUSE_DURING_DO_AFTER
@@ -16,9 +17,6 @@
 		/datum/ai_planning_subtree/targeted_mob_ability/brimbeam,
 	)
 
-/datum/targetting_datum/basic/brimdemon
-	stat_attack = HARD_CRIT
-
 /datum/ai_planning_subtree/move_to_cardinal/brimdemon
 	move_behaviour = /datum/ai_behavior/move_to_cardinal/brimdemon
 
@@ -27,11 +25,11 @@
 
 /datum/ai_behavior/move_to_cardinal/brimdemon/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
-	if (!succeeded)
+	if(!succeeded)
 		return
 	var/mob/living/target = controller.blackboard[target_key]
-	var/datum/action/cooldown/ability = controller.blackboard[BB_TARGETTED_ACTION]
-	if(!ability?.IsAvailable())
+	var/datum/action/cooldown/ability = controller.blackboard[BB_TARGETED_ACTION]
+	if(QDELETED(target) || QDELETED(controller.pawn) || !ability?.IsAvailable())
 		return
 	ability.InterceptClickOn(caller = controller.pawn, target = target)
 

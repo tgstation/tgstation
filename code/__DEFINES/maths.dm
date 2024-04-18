@@ -16,7 +16,6 @@
 
 #define NUM_E 2.71828183
 
-
 #define PI 3.1416
 #define INFINITY 1e31 //closer then enough
 
@@ -42,6 +41,10 @@
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 
 #define ROUND_UP(x) ( -round(-(x)))
+
+/// Returns the number of digits in a number. Only works on whole numbers.
+/// This is marginally faster than string interpolation -> length
+#define DIGITS(x) (ROUND_UP(log(10, x)))
 
 // round() acts like floor(x, 1) by default but can't handle other values
 #define FLOOR(x, y) ( round((x) / (y)) * (y) )
@@ -247,7 +250,7 @@
 
 //We used to use linear regression to approximate the answer, but Mloc realized this was actually faster.
 //And lo and behold, it is, and it's more accurate to boot.
-#define CHEAP_HYPOTENUSE(Ax, Ay, Bx, By) (sqrt(abs(Ax - Bx) ** 2 + abs(Ay - By) ** 2)) //A squared + B squared = C squared
+#define CHEAP_HYPOTENUSE(Ax, Ay, Bx, By) (sqrt((Ax - Bx) ** 2 + (Ay - By) ** 2)) //A squared + B squared = C squared
 
 /// The number of cells in a taxicab circle (rasterized diamond) of radius X.
 #define DIAMOND_AREA(X) (1 + 2*(X)*((X)+1))

@@ -6,6 +6,7 @@
 
 import http from 'http';
 import { inspect } from 'util';
+
 import { createLogger, directLog } from '../logging.js';
 import { require } from '../require.js';
 import { loadSourceMaps, retrace } from './retrace.js';

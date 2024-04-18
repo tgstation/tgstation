@@ -45,7 +45,7 @@
 	)
 
 /obj/structure/destructible/cult/item_dispenser/altar/succcess_message(mob/living/user, obj/item/spawned_item)
-	to_chat(user, span_cultitalic("You kneel before [src] and your faith is rewarded with [spawned_item]!"))
+	to_chat(user, span_cult_italic("You kneel before [src] and your faith is rewarded with [spawned_item]!"))
 
 #undef ELDRITCH_WHETSTONE
 #undef CONSTRUCT_SHELL

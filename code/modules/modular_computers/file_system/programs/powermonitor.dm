@@ -3,13 +3,13 @@
 /datum/computer_file/program/power_monitor
 	filename = "ampcheck"
 	filedesc = "AmpCheck"
-	category = PROGRAM_CATEGORY_ENGI
-	program_icon_state = "power_monitor"
+	downloader_category = PROGRAM_CATEGORY_ENGINEERING
+	program_open_overlay = "power_monitor"
 	extended_desc = "This program connects to sensors around the station to provide information about electrical systems"
 	ui_header = "power_norm.gif"
-	transfer_access = list(ACCESS_ENGINEERING)
-	usage_flags = PROGRAM_CONSOLE
-	requires_ntnet = FALSE
+	download_access = list(ACCESS_ENGINEERING)
+	can_run_on_flags = PROGRAM_CONSOLE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 8
 	tgui_id = "NtosPowerMonitor"
 	program_icon = "plug"
@@ -67,13 +67,13 @@
 
 		var/list/supply = history["supply"]
 		if(connected_powernet)
-			supply += connected_powernet.viewavail
+			supply += energy_to_power(connected_powernet.avail)
 		if(supply.len > record_size)
 			supply.Cut(1, 2)
 
 		var/list/demand = history["demand"]
 		if(connected_powernet)
-			demand += connected_powernet.viewload
+			demand += energy_to_power(connected_powernet.load)
 		if(demand.len > record_size)
 			demand.Cut(1, 2)
 
@@ -84,8 +84,8 @@
 	data["interval"] = record_interval / 10
 	data["attached"] = connected_powernet ? TRUE : FALSE
 	if(connected_powernet)
-		data["supply"] = display_power(connected_powernet.viewavail)
-		data["demand"] = display_power(connected_powernet.viewload)
+		data["supply"] = display_power(connected_powernet.avail)
+		data["demand"] = display_power(connected_powernet.load)
 	data["history"] = history
 
 	data["areas"] = list()

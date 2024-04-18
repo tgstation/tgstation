@@ -1,43 +1,43 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ag" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/garbage,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"by" = (
-/obj/effect/turf_decal/weather/sand{
-	dir = 5
-	},
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"bz" = (
-/obj/structure/flora/bush/grassy{
-	pixel_y = 8
-	},
-/obj/structure/flora/bush/lavendergrass{
-	pixel_y = -10
-	},
-/turf/open/misc/grass,
-/area/virtual_domain/powered)
-"bP" = (
-/obj/structure/flora/bush/flowers_br/style_random,
-/turf/open/misc/grass,
-/area/virtual_domain/powered)
-"cl" = (
-/obj/structure/flora/rock/style_3,
+"af" = (
+/obj/structure/flora/rock/pile/style_2,
 /turf/open/water/beach,
-/area/virtual_domain/powered)
-"ct" = (
-/obj/structure/closet/cabinet,
-/obj/item/clothing/head/costume/pirate/armored,
-/obj/item/clothing/suit/costume/pirate/captain/armored,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood/parquet,
-/area/virtual_domain/powered)
-"cx" = (
-/turf/closed/indestructible/binary,
-/area/virtual_domain/powered)
-"cJ" = (
+/area/virtual_domain/fullbright)
+"al" = (
+/obj/structure/flora/bush/sunny,
+/turf/open/misc/grass,
+/area/virtual_domain/fullbright)
+"bb" = (
+/obj/effect/turf_decal/weather/sand,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"bc" = (
+/turf/open/misc/beach/coast{
+	dir = 10
+	},
+/area/virtual_domain/fullbright)
+"be" = (
+/obj/effect/turf_decal/weather/dirt,
+/obj/structure/flora/rock/pile,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"bI" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/gun/energy/laser/musket{
+	pixel_y = 7
+	},
+/obj/item/gun/energy/laser/musket{
+	pixel_y = 2
+	},
+/obj/item/gun/energy/laser/musket{
+	pixel_y = -3
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"cr" = (
 /obj/item/stack/cannonball/shellball{
 	pixel_x = 13;
 	pixel_y = 11
@@ -48,8 +48,350 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
-"cQ" = (
+/area/virtual_domain/fullbright)
+"cX" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/claymore/cutlass,
+/obj/item/clothing/head/costume/pirate/bandana/armored{
+	pixel_x = -9;
+	pixel_y = 7
+	},
+/obj/structure/table/wood,
+/obj/item/gun/energy/laser{
+	pixel_y = -3
+	},
+/turf/open/floor/wood{
+	icon_state = "wood_large"
+	},
+/area/virtual_domain/fullbright)
+"db" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"dc" = (
+/turf/open/misc/beach/coast/corner,
+/area/virtual_domain/fullbright)
+"dN" = (
+/obj/machinery/door/airlock/vault{
+	color = "#825427";
+	name = "Ye Olde Strong Door"
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"eO" = (
+/obj/structure/flora/rock/pile,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"eP" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/misc/beach/coast{
+	dir = 6
+	},
+/area/virtual_domain/fullbright)
+"eS" = (
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"fd" = (
+/obj/structure/flora/grass/jungle/b,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"fh" = (
+/obj/structure/flora/bush/sparsegrass,
+/obj/structure/flora/bush/lavendergrass,
+/turf/open/misc/grass,
+/area/virtual_domain/fullbright)
+"fk" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/grass,
+/area/virtual_domain/fullbright)
+"fw" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"fR" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"gf" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"gu" = (
+/obj/structure/flora/bush/stalky,
+/turf/open/misc/beach/coast,
+/area/virtual_domain/fullbright)
+"gx" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/wood{
+	icon_state = "wood_large"
+	},
+/area/virtual_domain/fullbright)
+"gB" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/turf/open/floor/wood{
+	icon_state = "wood_large"
+	},
+/area/virtual_domain/fullbright)
+"gK" = (
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/ferny,
+/turf/open/misc/grass,
+/area/virtual_domain/fullbright)
+"hb" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"hn" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"hq" = (
+/obj/structure/closet/crate/grave,
+/obj/structure/flora/grass/jungle/b,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"jp" = (
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"jE" = (
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"jH" = (
+/obj/structure/headpike/bone,
+/turf/open/misc/beach/coast,
+/area/virtual_domain/fullbright)
+"jN" = (
+/obj/structure/flora/tree/jungle,
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/misc/grass,
+/area/virtual_domain/fullbright)
+"lF" = (
+/obj/structure/table/wood,
+/obj/item/melee/energy/sword/pirate{
+	pixel_y = 10
+	},
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_x = 4
+	},
+/obj/item/lighter{
+	pixel_x = 10;
+	pixel_y = -8
+	},
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/carpet/blue,
+/area/virtual_domain)
+"lK" = (
+/obj/item/stack/cannonball{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/stack/cannonball{
+	pixel_x = 11;
+	pixel_y = -4
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"mp" = (
+/turf/open/misc/beach/coast{
+	dir = 4
+	},
+/area/virtual_domain/fullbright)
+"mR" = (
+/obj/machinery/smartfridge/drying_rack,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"nb" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/structure/fermenting_barrel{
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/obj/effect/mob_spawn/ghost_role/human/pirate/skeleton,
+/turf/open/floor/wood{
+	icon_state = "wood_large"
+	},
+/area/virtual_domain/fullbright)
+"nr" = (
+/mob/living/basic/trooper/pirate/melee,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"nN" = (
+/obj/structure/flora/rock,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"oB" = (
+/obj/structure/flora/grass/jungle,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"oL" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/bed/maint,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"oM" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"pi" = (
+/obj/structure/flora/rock/style_3,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"pn" = (
+/obj/structure/flora/bush/flowers_br/style_random,
+/turf/open/misc/grass,
+/area/virtual_domain/fullbright)
+"qk" = (
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"qE" = (
+/obj/structure/table/wood,
+/obj/item/book/manual/wiki/ordnance,
+/turf/open/floor/carpet/blue,
+/area/virtual_domain)
+"qS" = (
+/obj/effect/decal/cleanable/ants,
+/turf/open/misc/grass,
+/area/virtual_domain/fullbright)
+"ri" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/basic/trooper/pirate/ranged/space,
+/turf/open/floor/carpet/blue,
+/area/virtual_domain)
+"rm" = (
+/obj/structure/closet/crate/goldcrate,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"rn" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/flashlight/flare/torch{
+	pixel_y = 10;
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_y = -16;
+	pixel_x = 12
+	},
+/obj/machinery/recharger{
+	pixel_y = 6;
+	pixel_x = -5
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"ru" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/bed/maint{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/toy/plush/beeplushie,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"sj" = (
+/obj/effect/mine/explosive/light,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"td" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/carpet/blue,
+/area/virtual_domain)
+"tw" = (
+/obj/structure/bookcase/random/adult,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"tH" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/head/costume/pirate/armored,
+/obj/item/clothing/suit/costume/pirate/captain/armored,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"tQ" = (
+/obj/structure/barricade/sandbags,
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/turf/open/floor/wood{
+	icon_state = "wood_large"
+	},
+/area/virtual_domain/fullbright)
+"ub" = (
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"uk" = (
+/obj/structure/flora/rock{
+	pixel_x = 7
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"uG" = (
+/obj/structure/barricade/sandbags,
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/turf/open/floor/wood{
+	icon_state = "wood_large"
+	},
+/area/virtual_domain/fullbright)
+"uH" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/wood,
+/obj/item/flashlight/flare/torch{
+	pixel_y = 10
+	},
+/obj/item/flashlight/flare/torch{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/turf/open/floor/wood{
+	icon_state = "wood_large"
+	},
+/area/virtual_domain/fullbright)
+"vR" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"wj" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"wu" = (
 /obj/structure/flora/grass/jungle/b{
 	pixel_x = -15;
 	pixel_y = 9
@@ -59,62 +401,365 @@
 	pixel_y = -1
 	},
 /turf/open/misc/dirt/jungle,
-/area/virtual_domain/powered)
-"dp" = (
-/turf/closed/wall/mineral/wood/nonmetal,
-/area/virtual_domain/powered)
-"dA" = (
-/obj/structure/bonfire/prelit,
-/turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"dQ" = (
-/obj/structure/flora/rock/style_4,
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"eb" = (
-/obj/structure/flora/bush/sparsegrass,
-/turf/open/misc/grass,
-/area/virtual_domain/powered)
-"eD" = (
-/obj/structure/flora/coconuts{
-	pixel_x = 9;
-	pixel_y = -14
-	},
-/obj/structure/flora/tree/palm/style_2,
-/turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"eQ" = (
-/turf/open/floor/carpet/blue,
-/area/virtual_domain/powered)
-"eW" = (
-/obj/effect/turf_decal/weather/sand{
-	dir = 6
-	},
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"fx" = (
+/area/virtual_domain/fullbright)
+"wH" = (
 /obj/structure/fluff/beach_umbrella{
 	pixel_x = -7;
 	pixel_y = -10
 	},
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"gk" = (
+/area/virtual_domain/fullbright)
+"wP" = (
+/obj/structure/railing{
+	color = "#4C3117";
+	name = "wooden railing"
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"xg" = (
+/turf/template_noop,
+/area/template_noop)
+"xp" = (
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"zc" = (
+/obj/item/gun/energy/laser/hellgun{
+	pixel_y = 10
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"zj" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/garbage,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"zk" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/item/melee/sabre{
+	pixel_y = 12;
+	pixel_x = -10
+	},
+/obj/item/gun/energy/laser/retro,
 /obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"zR" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"zU" = (
+/obj/structure/flora/coconuts{
+	pixel_x = 12
+	},
+/obj/structure/flora/tree/palm,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"zW" = (
+/obj/structure/flora/bush/grassy{
+	pixel_y = 8
+	},
+/obj/structure/flora/bush/lavendergrass{
+	pixel_y = -10
+	},
+/turf/open/misc/grass,
+/area/virtual_domain/fullbright)
+"AB" = (
+/obj/structure/headpike/bone{
+	pixel_y = 24
+	},
+/turf/open/misc/beach/coast,
+/area/virtual_domain/fullbright)
+"AF" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/item/storage/bag/money/dutchmen{
+	pixel_y = 13
+	},
+/obj/structure/rack/skeletal,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"AP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"Bu" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/bed/maint{
+	pixel_x = 2;
+	pixel_y = 13
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"BU" = (
+/turf/open/floor/carpet/blue,
+/area/virtual_domain)
+"BV" = (
+/obj/structure/bonfire/prelit,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"BX" = (
+/obj/structure/flora/bush/sunny/style_3{
+	pixel_y = 22
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"Ci" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/virtual_domain/fullbright)
+"Cu" = (
+/obj/item/kirbyplants/organic/plant21{
+	pixel_x = -8
+	},
+/obj/structure/filingcabinet{
+	pixel_x = 11
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"CL" = (
+/obj/structure/flora/rock/pile/jungle/large,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"Dd" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"DM" = (
+/turf/closed/mineral/random/jungle,
+/area/virtual_domain/fullbright)
+"Eb" = (
+/obj/structure/flora/tree/palm,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"EL" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/basic/trooper/pirate/melee/space,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"ER" = (
+/obj/effect/turf_decal/siding/wood,
+/mob/living/basic/trooper/pirate/ranged,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"Fl" = (
+/obj/structure/barricade/sandbags,
+/obj/effect/turf_decal/weather/sand,
+/turf/open/floor/wood{
+	icon_state = "wood_large"
+	},
+/area/virtual_domain/fullbright)
+"FP" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/jukebox,
+/turf/open/floor/wood{
+	icon_state = "wood_large"
+	},
+/area/virtual_domain/fullbright)
+"Gl" = (
+/obj/structure/flora/rock/pile/style_3,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"Gy" = (
+/obj/structure/flora/rock/style_2,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"Hn" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/virtual_domain)
+"HO" = (
+/obj/structure/table/wood,
+/mob/living/basic/parrot{
+	name = "pepper"
+	},
+/turf/open/floor/carpet/blue,
+/area/virtual_domain)
+"ID" = (
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"IW" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"Jf" = (
+/obj/structure/flora/bush/sparsegrass,
+/turf/open/misc/grass,
+/area/virtual_domain/fullbright)
+"Jq" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/bed/maint{
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/obj/effect/decal/cleanable/wrapping,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"Jx" = (
+/obj/item/bedsheet/rainbow/double,
+/obj/structure/bed/double,
+/turf/open/floor/carpet/blue,
+/area/virtual_domain)
+"JK" = (
+/obj/structure/flora/bush/stalky{
+	pixel_y = 13;
+	pixel_x = -8
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"JX" = (
+/turf/open/misc/beach/coast/corner{
+	dir = 1
+	},
+/area/virtual_domain/fullbright)
+"KS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/south,
 /obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/carpet/blue,
-/area/virtual_domain/powered)
-"gw" = (
+/area/virtual_domain)
+"KV" = (
+/obj/structure/flora/rock/pile/jungle/style_3{
+	pixel_x = -15;
+	pixel_y = -4
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"LC" = (
+/mob/living/basic/trooper/pirate/melee,
+/turf/open/misc/grass,
+/area/virtual_domain/fullbright)
+"LK" = (
+/obj/structure/fermenting_barrel/gunpowder{
+	pixel_x = -4;
+	pixel_y = 17
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"LP" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"Mf" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood{
 	icon_state = "wood_large"
 	},
-/area/virtual_domain/powered)
-"ht" = (
-/obj/structure/bookcase/random/fiction,
-/turf/open/floor/wood/parquet,
-/area/virtual_domain/powered)
-"hH" = (
+/area/virtual_domain/fullbright)
+"MG" = (
+/obj/structure/barricade/sandbags,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"MP" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"NE" = (
+/obj/effect/mob_spawn/corpse/human/damaged,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"NN" = (
+/obj/structure/flora/bush/fullgrass,
+/turf/open/misc/grass,
+/area/virtual_domain/fullbright)
+"NP" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/mob/living/basic/trooper/pirate/ranged,
+/obj/structure/chair/wood,
+/turf/open/floor/wood{
+	icon_state = "wood_large"
+	},
+/area/virtual_domain/fullbright)
+"NU" = (
+/obj/structure/flora/grass/jungle/b/style_random{
+	pixel_x = -13;
+	pixel_y = 18
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"Oi" = (
+/obj/effect/mob_spawn/corpse/human/pirate,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"Ov" = (
+/turf/open/misc/beach/coast{
+	dir = 6
+	},
+/area/virtual_domain/fullbright)
+"Ox" = (
+/obj/structure/chair/comfy/carp{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/blue,
+/area/virtual_domain)
+"Oz" = (
+/obj/structure/flora/rock/pile/jungle/style_2,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"OD" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"OW" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"Qc" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood{
+	icon_state = "wood_large"
+	},
+/area/virtual_domain/fullbright)
+"QF" = (
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"QG" = (
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"QN" = (
+/obj/structure/barricade/sandbags,
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/item/binoculars{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/turf/open/floor/wood{
+	icon_state = "wood_large"
+	},
+/area/virtual_domain/fullbright)
+"QU" = (
+/obj/effect/mob_spawn/corpse/human/pirate/melee,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"QX" = (
 /obj/item/clothing/suit/armor/militia{
 	pixel_x = -5;
 	pixel_y = 12
@@ -144,295 +789,95 @@
 	},
 /obj/structure/closet/cabinet,
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
-"hM" = (
-/obj/structure/closet/crate/goldcrate,
-/turf/open/misc/dirt/jungle,
-/area/virtual_domain/powered)
-"hW" = (
-/obj/structure/chair/comfy/carp{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/blue,
-/area/virtual_domain/powered)
-"iM" = (
+/area/virtual_domain/fullbright)
+"RJ" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/mob/living/simple_animal/hostile/pirate/ranged/space,
-/turf/open/floor/carpet/blue,
-/area/virtual_domain/powered)
-"iO" = (
-/obj/effect/turf_decal/weather/sand{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"jl" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/table/wood,
-/obj/item/flashlight/flare/torch{
-	pixel_y = 10;
-	pixel_x = 7
-	},
-/obj/item/reagent_containers/cup/bucket/wooden{
-	pixel_y = -16;
-	pixel_x = 12
-	},
-/obj/machinery/recharger{
-	pixel_y = 6;
-	pixel_x = -5
-	},
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"jz" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
-/area/virtual_domain/powered)
-"jB" = (
-/obj/effect/turf_decal/weather/sand{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/jukebox,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
-/area/virtual_domain/powered)
-"jC" = (
-/obj/structure/table/wood,
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/item/reagent_containers/cup/glass/bottle/rum{
-	desc = "Rum with ghostly properties that can help the drinker enter the spirit realm. It has fermented under the sea of space for ages.";
-	name = "Ghost Pirate Rum";
-	pixel_x = -4;
-	pixel_y = 12
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
-	pixel_x = -7;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
-	pixel_x = 3;
-	pixel_y = 7
-	},
-/turf/open/floor/carpet/blue,
-/area/virtual_domain/powered)
-"jQ" = (
-/obj/item/gun/energy/laser/hellgun{
-	pixel_y = 10
-	},
-/turf/open/misc/dirt/jungle,
-/area/virtual_domain/powered)
-"kg" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"kl" = (
-/obj/structure/cannon,
-/obj/effect/turf_decal/siding/wood,
-/obj/effect/decal/cleanable/ash/large{
-	pixel_y = -5;
-	pixel_x = 8
-	},
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"lC" = (
-/obj/item/stack/cannonball{
-	pixel_x = 7;
-	pixel_y = 8
-	},
-/obj/item/stack/cannonball{
-	pixel_x = 11;
-	pixel_y = -4
-	},
-/obj/effect/turf_decal/weather/sand{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/oil/streak,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"me" = (
-/obj/effect/turf_decal/siding/wood,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"mw" = (
-/obj/structure/flora/grass/jungle/b/style_random{
-	pixel_x = -13;
-	pixel_y = 18
-	},
-/turf/open/misc/dirt/jungle,
-/area/virtual_domain/powered)
-"mP" = (
-/obj/structure/flora/bush/fullgrass,
-/turf/open/misc/grass,
-/area/virtual_domain/powered)
-"nz" = (
-/obj/effect/mob_spawn/corpse/human/pirate,
-/turf/open/misc/beach/coast{
-	dir = 8
-	},
-/area/virtual_domain/powered)
-"nQ" = (
-/obj/machinery/loot_locator,
-/turf/open/floor/carpet/blue,
-/area/virtual_domain/powered)
-"nS" = (
-/obj/structure/flora/rock/pile/jungle/large,
-/turf/open/misc/dirt/jungle,
-/area/virtual_domain/powered)
-"nX" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/mob/living/simple_animal/hostile/pirate/melee/space,
-/turf/open/floor/wood/parquet,
-/area/virtual_domain/powered)
-"oo" = (
-/obj/machinery/smartfridge/drying_rack,
+/mob/living/basic/trooper/pirate/ranged,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"RO" = (
+/obj/structure/flora/coconuts{
+	pixel_x = 9;
+	pixel_y = -14
+	},
+/obj/structure/flora/tree/palm/style_2,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"oU" = (
-/turf/open/misc/beach/coast{
+/area/virtual_domain/fullbright)
+"Sc" = (
+/obj/structure/flora/bush/jungle,
+/turf/open/misc/grass,
+/area/virtual_domain/fullbright)
+"SD" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/weather/sand{
 	dir = 10
 	},
-/area/virtual_domain/powered)
-"pq" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"px" = (
-/obj/structure/headpike/bone{
-	pixel_y = 24
-	},
-/turf/open/misc/beach/coast,
-/area/virtual_domain/powered)
-"pP" = (
-/turf/open/misc/beach/coast,
-/area/virtual_domain/powered)
-"pU" = (
-/obj/effect/mob_spawn/corpse/human/pirate,
-/turf/open/misc/dirt/jungle,
-/area/virtual_domain/powered)
-"qj" = (
-/obj/structure/barricade/wooden,
-/turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"qm" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/item/melee/sabre{
-	pixel_y = 12;
-	pixel_x = -10
-	},
-/obj/item/gun/energy/laser/retro,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"qx" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/dirt/dust,
-/mob/living/simple_animal/hostile/pirate/ranged,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"qN" = (
-/obj/structure/flora/bush/sunny/style_3{
-	pixel_y = 22
-	},
-/turf/open/misc/dirt/jungle,
-/area/virtual_domain/powered)
-"qX" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 9
 	},
-/obj/structure/fermenting_barrel{
-	pixel_x = 6;
-	pixel_y = 11
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"SK" = (
+/turf/open/misc/beach/coast,
+/area/virtual_domain/fullbright)
+"ST" = (
+/obj/structure/bed/maint{
+	pixel_x = -5;
+	pixel_y = 9
 	},
-/obj/effect/mob_spawn/ghost_role/human/pirate/skeleton,
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"Ta" = (
+/obj/structure/flora/bush/flowers_pp,
+/turf/open/misc/grass,
+/area/virtual_domain/fullbright)
+"Th" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
 /turf/open/floor/wood{
 	icon_state = "wood_large"
 	},
-/area/virtual_domain/powered)
-"sn" = (
-/obj/structure/table/wood,
-/obj/item/book/manual/wiki/ordnance,
-/turf/open/floor/carpet/blue,
-/area/virtual_domain/powered)
-"so" = (
+/area/virtual_domain/fullbright)
+"To" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"Ul" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/virtual_domain)
+"Uw" = (
+/obj/structure/cannon{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"Vx" = (
+/obj/structure/flora/rock/style_4,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"VE" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"VG" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/blue,
-/area/virtual_domain/powered)
-"th" = (
-/obj/effect/turf_decal/weather/sand,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"tk" = (
-/obj/structure/flora/bush/flowers_pp,
-/turf/open/misc/grass,
-/area/virtual_domain/powered)
-"to" = (
-/mob/living/simple_animal/hostile/pirate/melee,
-/turf/open/misc/grass,
-/area/virtual_domain/powered)
-"ub" = (
-/turf/template_noop,
-/area/virtual_domain/safehouse)
-"uw" = (
-/obj/structure/barricade/sandbags,
-/obj/effect/turf_decal/weather/sand{
-	dir = 4
-	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
-/area/virtual_domain/powered)
-"uM" = (
-/obj/structure/flora/bush/stalky{
-	pixel_y = 13;
-	pixel_x = -8
-	},
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"uT" = (
-/obj/structure/closet/crate/grave,
-/obj/structure/flora/grass/jungle/b,
-/turf/open/misc/dirt/jungle,
-/area/virtual_domain/powered)
-"wb" = (
-/obj/structure/flora/rock,
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"we" = (
-/obj/effect/mine/explosive/light,
-/turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"xc" = (
-/turf/open/misc/beach/coast{
-	dir = 4
-	},
-/area/virtual_domain/powered)
-"xg" = (
-/turf/template_noop,
-/area/template_noop)
-"xm" = (
-/obj/structure/barricade/wooden/crude,
-/turf/closed/wall/mineral/wood/nonmetal,
-/area/virtual_domain/powered)
-"xB" = (
+/area/virtual_domain)
+"Wu" = (
 /obj/structure/fermenting_barrel/gunpowder{
 	pixel_x = -4;
 	pixel_y = 17
@@ -452,225 +897,68 @@
 	pixel_y = -10
 	},
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"xC" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 1
+/area/virtual_domain/fullbright)
+"Wx" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"WW" = (
+/turf/template_noop,
+/area/virtual_domain/fullbright)
+"Xn" = (
+/obj/modular_map_root/safehouse{
+	key = "wood"
 	},
-/obj/effect/turf_decal/weather/dirt,
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"xI" = (
-/obj/structure/flora/rock/pile/style_2,
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"yc" = (
-/obj/effect/turf_decal/weather/dirt,
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"ye" = (
-/turf/open/misc/dirt/jungle,
-/area/virtual_domain/powered)
-"yi" = (
-/mob/living/simple_animal/hostile/pirate/melee,
-/turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"yq" = (
-/obj/structure/barricade/sandbags,
-/turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"yw" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/mob/living/simple_animal/hostile/pirate/ranged,
-/obj/structure/chair/wood,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
-/area/virtual_domain/powered)
-"yA" = (
-/obj/item/bedsheet/rainbow/double,
-/obj/structure/bed/double,
-/turf/open/floor/carpet/blue,
-/area/virtual_domain/powered)
-"zf" = (
-/obj/structure/flora/bush/flowers_br/style_random,
-/obj/structure/flora/bush/ferny,
-/turf/open/misc/grass,
-/area/virtual_domain/powered)
-"zg" = (
-/obj/structure/flora/rock/pile/style_3,
-/turf/open/misc/dirt/jungle,
-/area/virtual_domain/powered)
-"zR" = (
-/obj/effect/baseturf_helper/virtual_domain,
 /turf/template_noop,
 /area/virtual_domain/safehouse)
-"Ax" = (
-/obj/effect/turf_decal/weather/dirt,
-/obj/effect/turf_decal/weather/dirt,
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"AU" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 1
-	},
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"BC" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"BO" = (
-/obj/structure/bookcase/random/adult,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/wood/parquet,
-/area/virtual_domain/powered)
-"Cc" = (
-/obj/structure/flora/tree/palm,
-/turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"Ct" = (
-/turf/open/misc/beach/coast/corner,
-/area/virtual_domain/powered)
-"Dm" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/table/wood,
-/obj/item/flashlight/flare/torch{
-	pixel_y = 10
-	},
-/obj/item/flashlight/flare/torch{
-	pixel_x = 8;
-	pixel_y = 6
-	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
-/area/virtual_domain/powered)
-"DJ" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/structure/bed/maint{
-	pixel_x = -10;
-	pixel_y = 9
-	},
-/obj/effect/decal/cleanable/wrapping,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"DL" = (
-/obj/structure/flora/bush/sunny,
-/turf/open/misc/grass,
-/area/virtual_domain/powered)
-"ED" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/effect/turf_decal/weather/sand{
-	dir = 10
-	},
-/obj/effect/turf_decal/weather/sand{
-	dir = 9
-	},
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"EZ" = (
-/obj/effect/turf_decal/weather/sand{
-	dir = 9
-	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
-/area/virtual_domain/powered)
-"FG" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/claymore/cutlass,
-/obj/item/clothing/head/costume/pirate/bandana/armored{
-	pixel_x = -9;
-	pixel_y = 7
-	},
-/obj/structure/table/wood,
-/obj/item/gun/energy/laser{
-	pixel_y = -3
-	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
-/area/virtual_domain/powered)
-"FT" = (
-/turf/closed/mineral/random/jungle,
-/area/virtual_domain/powered)
-"GF" = (
-/obj/effect/turf_decal/weather/dirt,
-/obj/structure/flora/rock/pile,
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"GG" = (
-/obj/structure/barricade/sandbags,
-/obj/effect/turf_decal/weather/sand{
-	dir = 6
-	},
-/obj/item/binoculars{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
-/area/virtual_domain/powered)
-"Hp" = (
-/obj/effect/turf_decal/siding/wood,
-/mob/living/simple_animal/hostile/pirate/ranged,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"HY" = (
+"XP" = (
+/obj/structure/barricade/wooden/crude,
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/virtual_domain/fullbright)
+"XW" = (
+/obj/effect/mob_spawn/corpse/human/pirate,
 /turf/open/misc/beach/coast{
-	dir = 6
+	dir = 8
 	},
-/area/virtual_domain/powered)
-"It" = (
-/obj/structure/flora/bush/sparsegrass,
-/obj/structure/flora/bush/lavendergrass,
-/turf/open/misc/grass,
-/area/virtual_domain/powered)
-"Iz" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/bed/maint,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"IF" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 4
-	},
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"IG" = (
+/area/virtual_domain/fullbright)
+"Yf" = (
+/obj/machinery/loot_locator,
+/turf/open/floor/carpet/blue,
+/area/virtual_domain)
+"Yr" = (
 /obj/effect/mob_spawn/corpse/human/pirate,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"IM" = (
-/obj/effect/turf_decal/weather/sand{
-	dir = 10
-	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
-/area/virtual_domain/powered)
-"Jo" = (
-/obj/effect/landmark/bitrunning/cache_spawn,
-/turf/open/misc/dirt/jungle,
-/area/virtual_domain/powered)
-"Jr" = (
-/obj/structure/headpike/bone,
-/turf/open/misc/beach/coast,
-/area/virtual_domain/powered)
-"Jv" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/effect/mapping_helpers/broken_floor,
+/area/virtual_domain/fullbright)
+"Yy" = (
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
-"JT" = (
-/obj/effect/decal/cleanable/ants,
-/turf/open/misc/grass,
-/area/virtual_domain/powered)
-"Kb" = (
+/area/virtual_domain/fullbright)
+"YJ" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/reagent_containers/cup/glass/bottle/rum{
+	desc = "Rum with ghostly properties that can help the drinker enter the spirit realm. It has fermented under the sea of space for ages.";
+	name = "Ghost Pirate Rum";
+	pixel_x = -4;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/turf/open/floor/carpet/blue,
+/area/virtual_domain)
+"Za" = (
+/obj/structure/barricade/wooden,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Zq" = (
 /obj/structure/railing{
 	color = "#4C3117";
 	name = "wooden railing"
@@ -680,296 +968,16 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
-"Kl" = (
-/turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"Kw" = (
-/obj/machinery/door/airlock/vault{
-	color = "#825427";
-	name = "Ye Olde Strong Door"
-	},
-/turf/open/floor/wood/parquet,
-/area/virtual_domain/powered)
-"KC" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 5
-	},
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"KG" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/table/wood,
-/obj/item/gun/energy/laser/musket{
-	pixel_y = 7
-	},
-/obj/item/gun/energy/laser/musket{
-	pixel_y = 2
-	},
-/obj/item/gun/energy/laser/musket{
-	pixel_y = -3
+/area/virtual_domain/fullbright)
+"Zt" = (
+/obj/structure/cannon,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/ash/large{
+	pixel_y = -5;
+	pixel_x = 8
 	},
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
-"KQ" = (
-/obj/structure/flora/rock/style_2,
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"Ld" = (
-/obj/structure/flora/rock/pile,
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"Ma" = (
-/obj/structure/flora/bush/sparsegrass/style_random,
-/turf/open/misc/grass,
-/area/virtual_domain/powered)
-"Mi" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"MW" = (
-/obj/effect/turf_decal/weather/sand{
-	dir = 5
-	},
-/obj/effect/decal/cleanable/glass,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"Nh" = (
-/obj/structure/flora/rock/pile/jungle/style_3{
-	pixel_x = -15;
-	pixel_y = -4
-	},
-/turf/open/misc/dirt/jungle,
-/area/virtual_domain/powered)
-"Nk" = (
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"Nz" = (
-/obj/structure/flora/bush/jungle,
-/turf/open/misc/grass,
-/area/virtual_domain/powered)
-"NI" = (
-/obj/structure/railing{
-	color = "#4C3117";
-	name = "wooden railing"
-	},
-/obj/effect/turf_decal/weather/sand{
-	dir = 9
-	},
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"ON" = (
-/obj/item/kirbyplants/organic/plant21{
-	pixel_x = -8
-	},
-/obj/structure/filingcabinet{
-	pixel_x = 11
-	},
-/turf/open/floor/wood/parquet,
-/area/virtual_domain/powered)
-"OP" = (
-/obj/structure/flora/bush/stalky,
-/turf/open/misc/beach/coast,
-/area/virtual_domain/powered)
-"Pq" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/bed/maint{
-	pixel_x = 2;
-	pixel_y = 13
-	},
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"Pz" = (
-/obj/structure/table/wood,
-/mob/living/simple_animal/parrot{
-	name = "pepper"
-	},
-/turf/open/floor/carpet/blue,
-/area/virtual_domain/powered)
-"PQ" = (
-/obj/structure/flora/grass/jungle/b,
-/turf/open/misc/dirt/jungle,
-/area/virtual_domain/powered)
-"Qb" = (
-/obj/structure/flora/rock{
-	pixel_x = 7
-	},
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"Rr" = (
-/obj/structure/bed/maint{
-	pixel_x = -5;
-	pixel_y = 9
-	},
-/obj/effect/turf_decal/weather/sand{
-	dir = 6
-	},
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"RR" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
-/area/virtual_domain/powered)
-"Sm" = (
-/obj/structure/flora/tree/jungle,
-/obj/structure/flora/bush/fullgrass/style_random,
-/turf/open/misc/grass,
-/area/virtual_domain/powered)
-"St" = (
-/obj/structure/table/wood,
-/obj/item/melee/energy/sword/pirate{
-	pixel_y = 10
-	},
-/obj/item/clothing/mask/cigarette/cigar{
-	pixel_x = 4
-	},
-/obj/item/lighter{
-	pixel_x = 10;
-	pixel_y = -8
-	},
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/carpet/blue,
-/area/virtual_domain/powered)
-"Tp" = (
-/turf/open/misc/beach/coast/corner{
-	dir = 1
-	},
-/area/virtual_domain/powered)
-"Tt" = (
-/obj/structure/cannon{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"TO" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/machinery/light/small/directional/south,
-/obj/effect/landmark/bitrunning/cache_spawn,
-/turf/open/floor/carpet/blue,
-/area/virtual_domain/powered)
-"TP" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 4
-	},
-/turf/open/misc/beach/coast{
-	dir = 6
-	},
-/area/virtual_domain/powered)
-"TQ" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/bed/maint{
-	pixel_x = 2;
-	pixel_y = 1
-	},
-/obj/effect/decal/cleanable/cobweb,
-/obj/item/toy/plush/beeplushie,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"Uy" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/indestructible/binary,
-/area/virtual_domain/powered)
-"UE" = (
-/obj/structure/barricade/sandbags,
-/obj/effect/turf_decal/weather/sand{
-	dir = 10
-	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
-/area/virtual_domain/powered)
-"Vg" = (
-/obj/effect/mob_spawn/corpse/human/pirate/melee,
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"Vk" = (
-/obj/structure/barricade/sandbags,
-/obj/effect/turf_decal/weather/sand,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
-/area/virtual_domain/powered)
-"VC" = (
-/obj/effect/mob_spawn/corpse/human/damaged,
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"VF" = (
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"VX" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/structure/rack{
-	icon = 'icons/obj/fluff/general.dmi';
-	icon_state = "minibar";
-	name = "skeletal minibar"
-	},
-/obj/item/storage/bag/money/dutchmen{
-	pixel_y = 13
-	},
-/turf/open/floor/wood/parquet,
-/area/virtual_domain/powered)
-"WM" = (
-/obj/structure/flora/rock/pile/jungle/style_2,
-/turf/open/misc/dirt/jungle,
-/area/virtual_domain/powered)
-"WP" = (
-/turf/open/floor/wood/parquet,
-/area/virtual_domain/powered)
-"Xn" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
-/turf/template_noop,
-/area/virtual_domain/safehouse)
-"XG" = (
-/obj/structure/fermenting_barrel/gunpowder{
-	pixel_x = -4;
-	pixel_y = 17
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"Yj" = (
-/obj/effect/landmark/bitrunning/cache_spawn,
-/turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"Yk" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood/parquet,
-/area/virtual_domain/powered)
-"Yq" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 10
-	},
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
-"Zk" = (
-/obj/structure/flora/coconuts{
-	pixel_x = 12
-	},
-/obj/structure/flora/tree/palm,
-/turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"ZZ" = (
-/obj/structure/flora/grass/jungle,
-/turf/open/misc/dirt/jungle,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 
 (1,1,1) = {"
 xg
@@ -986,14 +994,14 @@ xg
 xg
 xg
 xg
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
+hb
+hb
+hb
+hb
+hb
+hb
+hb
+hb
 xg
 xg
 xg
@@ -1029,17 +1037,17 @@ xg
 xg
 xg
 xg
-cx
-cx
-FT
-FT
-FT
-FT
-FT
-FT
-cx
-cx
-cx
+hb
+hb
+DM
+DM
+DM
+DM
+DM
+DM
+hb
+hb
+hb
 xg
 xg
 xg
@@ -1071,19 +1079,19 @@ xg
 xg
 xg
 xg
-cx
-cx
-cx
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-cx
+hb
+hb
+hb
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+hb
 xg
 xg
 xg
@@ -1114,20 +1122,20 @@ xg
 xg
 xg
 xg
-cx
-cx
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-cx
+hb
+hb
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+hb
 xg
 xg
 xg
@@ -1158,20 +1166,20 @@ xg
 xg
 xg
 xg
-cx
-FT
-FT
-FT
-FT
-FT
-FT
-zf
-eb
-we
-FT
-FT
-FT
-cx
+hb
+DM
+DM
+DM
+DM
+DM
+DM
+gK
+Jf
+sj
+DM
+DM
+DM
+hb
 xg
 xg
 xg
@@ -1200,28 +1208,28 @@ xg
 xg
 xg
 xg
-cx
-cx
-cx
-FT
-FT
-FT
-Sm
-Ma
-bz
-JT
-Kl
-Kl
-Kl
-FT
-FT
-cx
-cx
-cx
-cx
-cx
-cx
-cx
+hb
+hb
+hb
+DM
+DM
+DM
+jN
+fk
+zW
+qS
+eS
+eS
+eS
+DM
+DM
+hb
+hb
+hb
+hb
+hb
+hb
+hb
 xg
 xg
 xg
@@ -1241,31 +1249,31 @@ xg
 xg
 xg
 xg
-cx
-cx
-cx
-cx
-FT
-FT
-FT
-FT
-It
-tk
-DL
-Kl
-Kl
-Kl
-Cc
-Kl
-IG
-FT
-cx
-cx
-FT
-FT
-FT
-FT
-cx
+hb
+hb
+hb
+hb
+DM
+DM
+DM
+DM
+fh
+Ta
+al
+eS
+eS
+eS
+Eb
+eS
+Yr
+DM
+hb
+hb
+DM
+DM
+DM
+DM
+hb
 xg
 xg
 xg
@@ -1284,32 +1292,32 @@ xg
 xg
 xg
 xg
-cx
-cx
-FT
-FT
-FT
-FT
-FT
-Nz
-bP
-mP
-to
-Kl
-Kl
-we
-Kl
-Kl
-Kl
-Kl
-we
-cx
-cx
-FT
-FT
-FT
-FT
-cx
+hb
+hb
+DM
+DM
+DM
+DM
+DM
+Sc
+pn
+NN
+LC
+eS
+eS
+sj
+eS
+eS
+eS
+eS
+sj
+hb
+hb
+DM
+DM
+DM
+DM
+hb
 xg
 xg
 xg
@@ -1327,36 +1335,36 @@ xg
 xg
 xg
 xg
-cx
-cx
-FT
-dp
-dp
-dp
-dp
-xB
-yq
-yq
-Kl
-Kl
-Ct
-xc
-xc
-xc
-xc
-xc
-xc
-xc
-HY
-VF
-VF
-VF
-VF
-VF
-cx
-cx
-cx
-cx
+hb
+hb
+DM
+Ci
+Ci
+Ci
+Ci
+Wu
+MG
+MG
+eS
+eS
+dc
+mp
+mp
+mp
+mp
+mp
+mp
+mp
+Ov
+xp
+xp
+xp
+xp
+xp
+hb
+hb
+hb
+hb
 xg
 xg
 xg
@@ -1371,38 +1379,38 @@ xg
 xg
 xg
 xg
-cx
-FT
-dp
-dp
-Pq
-qx
-Mi
-th
-Kl
-yq
-Kl
-IG
-OP
-uM
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VC
-VF
-VF
-VF
-VF
-VF
-dp
-cx
-cx
-cx
+hb
+DM
+Ci
+Ci
+Bu
+RJ
+wj
+bb
+eS
+MG
+eS
+Yr
+gu
+JK
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+NE
+xp
+xp
+xp
+xp
+xp
+Ci
+hb
+hb
+hb
 xg
 xg
 xg
@@ -1414,705 +1422,705 @@ xg
 (11,1,1) = {"
 xg
 xg
-cx
-cx
-FT
-dp
-TQ
-Iz
-DJ
-ag
-eW
-Kl
-Kl
-ED
-Kl
-Jr
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-KQ
-VF
-VF
-VF
-VF
-VF
-dp
-KG
-pq
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-Uy
+hb
+hb
+DM
+Ci
+ru
+oL
+Jq
+zj
+OD
+eS
+eS
+SD
+eS
+jH
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+Gy
+xp
+xp
+xp
+xp
+xp
+Ci
+bI
+VE
+hb
+hb
+hb
+hb
+hb
+hb
+hb
+fR
 "}
 (12,1,1) = {"
 xg
 xg
-cx
-FT
-FT
-dp
-Yj
-MW
-iO
-Rr
-qj
-Kl
-NI
-xm
-Ct
-HY
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-wb
-dp
-jl
-pq
-BC
+hb
+DM
+DM
+Ci
+jp
+gf
+MP
+ST
+Za
+eS
+wP
+XP
+dc
+Ov
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+nN
+Ci
+rn
+VE
+fw
 ub
 ub
 ub
 ub
 ub
 Xn
-cx
+hb
 "}
 (13,1,1) = {"
-cx
-cx
-cx
-FT
-FT
-FT
-qj
-Kl
-Kl
-Kl
-Kl
-Kl
-lC
-kl
-pP
-VF
-VF
-VF
-VF
-VF
-VF
-Vg
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-cl
-dp
-hH
-Nk
-qm
+hb
+hb
+hb
+DM
+DM
+DM
+Za
+eS
+eS
+eS
+eS
+eS
+lK
+Zt
+SK
+xp
+xp
+xp
+xp
+xp
+xp
+QU
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+pi
+Ci
+QX
+Yy
+zk
 ub
 ub
 ub
 ub
 ub
 ub
-cx
+hb
 "}
 (14,1,1) = {"
-cx
-dp
-dp
-dp
-dp
-dp
-dp
-oo
-Kl
-Kl
-Kl
-Kl
-Kb
-dp
-px
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-dp
-dp
-Nk
-Jv
+hb
+Ul
+Ul
+Ul
+Ul
+Ul
+Hn
+mR
+eS
+eS
+eS
+eS
+Zq
+Ci
+AB
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+Ci
+Ci
+Yy
+Dd
 ub
 ub
 ub
 ub
 ub
 ub
-cx
+hb
 "}
 (15,1,1) = {"
-cx
-dp
-BO
-ht
-VX
-ct
-dp
-yi
-Kl
-dA
-Kl
-Kl
-by
-Hp
-pP
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-me
+hb
+Ul
+tw
+To
+AF
+tH
+Ul
+nr
+eS
+BV
+eS
+eS
+LP
+ER
+SK
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+Wx
 ub
 ub
 ub
 ub
 ub
 ub
-cx
+hb
 "}
 (16,1,1) = {"
-cx
-dp
-ON
-WP
-nX
-Yk
-Kw
-Kl
-Kl
-Kl
-Kl
-Kl
-Kl
-dp
-px
-VF
-VF
-VF
-VF
-Qb
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
+hb
+Ul
+Cu
+jE
+EL
+AP
+dN
+eS
+eS
+eS
+eS
+eS
+eS
+Ci
+AB
+xp
+xp
+xp
+xp
+uk
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
 ub
 ub
 ub
 ub
 ub
 ub
-cx
+hb
 "}
 (17,1,1) = {"
-cx
-dp
-jC
-iM
-so
-TO
-dp
-Kl
-Kl
-EZ
-IM
-Kl
-Kl
-Kl
-pP
-VF
-VF
-VF
-VF
-cl
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
+hb
+Ul
+YJ
+ri
+VG
+KS
+Ul
+eS
+eS
+gB
+Th
+eS
+eS
+eS
+SK
+xp
+xp
+xp
+xp
+pi
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
 ub
 ub
 ub
 ub
 ub
 ub
-cx
+hb
 "}
 (18,1,1) = {"
-cx
-dp
-sn
-hW
-eQ
-gk
-dp
-dp
-qX
-gw
-jz
-UE
-Kl
-Zk
-pP
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-me
-VF
+hb
+Ul
+qE
+Ox
+BU
+td
+Ul
+Ci
+nb
+Mf
+gx
+tQ
+eS
+zU
+SK
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+Wx
+xp
 ub
 ub
 ub
 ub
 ub
 zR
-cx
+hb
 "}
 (19,1,1) = {"
-cx
-dp
-St
-Pz
-nQ
-yA
-dp
-dp
-Dm
-jz
-jz
-Vk
-Kl
-Kl
-pP
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-dp
-BC
-VF
-VF
-VF
-VF
-VF
-VF
-cx
-cx
+hb
+Ul
+lF
+HO
+Yf
+Jx
+Ul
+Ci
+uH
+gx
+gx
+Fl
+eS
+eS
+SK
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+Ci
+fw
+xp
+xp
+xp
+xp
+xp
+xp
+hb
+hb
 "}
 (20,1,1) = {"
-cx
-dp
-dp
-dp
-dp
-dp
-dp
-xm
-FG
-RR
-yw
-Vk
-Kl
-Kl
-pP
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-Tt
-cJ
-Yq
-VF
-VF
-VF
-VF
-VF
-cx
+hb
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+XP
+cX
+Qc
+NP
+Fl
+eS
+eS
+SK
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+Uw
+cr
+vR
+xp
+xp
+xp
+xp
+xp
+hb
 xg
 "}
 (21,1,1) = {"
-cx
-cx
-cx
-FT
-FT
-Kl
-Kl
-dp
-dp
-jB
-uw
-GG
-Kl
-Kl
-pP
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-xI
-dp
-XG
-BC
-VF
-VF
-VF
-VF
-VF
-cx
+hb
+hb
+hb
+DM
+DM
+eS
+eS
+Ci
+Ci
+FP
+uG
+QN
+eS
+eS
+SK
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+af
+Ci
+LK
+fw
+xp
+xp
+xp
+xp
+xp
+hb
 xg
 "}
 (22,1,1) = {"
 xg
 xg
-cx
-FT
-FT
-fx
-Kl
-Kl
-dp
-dp
-Kl
-Kl
-Kl
-Kl
-pP
-VF
-VF
-VF
-VF
-VF
-VF
-dQ
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-kg
-pq
-Ld
-VF
-VF
-VF
-VF
-VF
-cx
+hb
+DM
+DM
+wH
+eS
+eS
+Ci
+Ci
+eS
+eS
+eS
+eS
+SK
+xp
+xp
+xp
+xp
+xp
+xp
+Vx
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+oM
+VE
+eO
+xp
+xp
+xp
+xp
+xp
+hb
 xg
 "}
 (23,1,1) = {"
 xg
 xg
-cx
-FT
-FT
-FT
-Kl
-Kl
-Kl
-Kl
-Kl
-Kl
-Kl
-Kl
-Tp
-oU
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-FT
-FT
-cx
+hb
+DM
+DM
+DM
+eS
+eS
+eS
+eS
+eS
+eS
+eS
+eS
+JX
+bc
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+DM
+DM
+hb
 xg
 "}
 (24,1,1) = {"
 xg
 xg
-cx
-FT
-FT
-FT
-FT
-dp
-Kl
-eD
-Kl
-Kl
-Kl
-Kl
-Kl
-Tp
-nz
-oU
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-FT
-FT
-cx
+hb
+DM
+DM
+DM
+DM
+Ci
+eS
+RO
+eS
+eS
+eS
+eS
+eS
+JX
+XW
+bc
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+DM
+DM
+hb
 xg
 "}
 (25,1,1) = {"
 xg
 xg
-cx
-cx
-FT
-FT
-FT
-FT
-Kl
-Kl
-Kl
-Kl
-Kl
-Kl
-yi
-Kl
-Kl
-pP
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-FT
-FT
-FT
-cx
+hb
+hb
+DM
+DM
+DM
+DM
+eS
+eS
+eS
+eS
+eS
+eS
+nr
+eS
+eS
+SK
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+DM
+DM
+DM
+hb
 xg
 "}
 (26,1,1) = {"
 xg
 xg
 xg
-cx
-cx
-cx
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-TP
-VF
-FT
-FT
-cx
-cx
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-cx
-FT
-FT
-FT
-FT
-cx
+hb
+hb
+hb
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+eP
+xp
+DM
+DM
+hb
+hb
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+hb
+DM
+DM
+DM
+DM
+hb
 xg
 "}
 (27,1,1) = {"
@@ -2120,43 +2128,43 @@ xg
 xg
 xg
 xg
-xg
-cx
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-PQ
-AU
-FT
-FT
-FT
-cx
-cx
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-cx
-cx
-FT
-FT
-FT
-cx
-cx
+WW
+hb
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+fd
+OW
+DM
+DM
+DM
+hb
+hb
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+hb
+hb
+DM
+DM
+DM
+hb
+hb
 xg
 "}
 (28,1,1) = {"
@@ -2165,41 +2173,41 @@ xg
 xg
 xg
 xg
-cx
-cx
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-Nh
-AU
-FT
-FT
-FT
-FT
-cx
-cx
-cx
-cx
-VF
-VF
-VF
-VF
-VF
-VF
-cx
-cx
-cx
-cx
-cx
-cx
-cx
+hb
+hb
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+KV
+OW
+DM
+DM
+DM
+DM
+hb
+hb
+hb
+hb
+xp
+xp
+xp
+xp
+xp
+xp
+hb
+hb
+hb
+hb
+hb
+hb
+hb
 xg
 xg
 "}
@@ -2210,34 +2218,34 @@ xg
 xg
 xg
 xg
-cx
-cx
-cx
-cx
-cx
-cx
-FT
-FT
-FT
-FT
-FT
-ye
-KC
-VF
-FT
-FT
-FT
-FT
-FT
-FT
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
+hb
+hb
+hb
+hb
+hb
+hb
+DM
+DM
+DM
+DM
+DM
+qk
+IW
+xp
+DM
+DM
+DM
+DM
+DM
+DM
+hb
+hb
+hb
+hb
+hb
+hb
+hb
+hb
 xg
 xg
 xg
@@ -2258,25 +2266,25 @@ xg
 xg
 xg
 xg
-cx
-cx
-FT
-FT
-FT
-FT
-FT
-zg
-ye
-KC
-IF
-VF
-FT
-FT
-FT
-FT
-FT
-cx
-cx
+hb
+hb
+DM
+DM
+DM
+DM
+DM
+Gl
+qk
+IW
+hn
+xp
+DM
+DM
+DM
+DM
+DM
+hb
+hb
 xg
 xg
 xg
@@ -2303,25 +2311,25 @@ xg
 xg
 xg
 xg
-cx
-cx
-FT
-FT
-FT
-FT
-FT
-ye
-ye
-pU
-AU
-VF
-GF
-WM
-FT
-FT
-FT
-cx
-cx
+hb
+hb
+DM
+DM
+DM
+DM
+DM
+qk
+qk
+Oi
+OW
+xp
+be
+Oz
+DM
+DM
+DM
+hb
+hb
 xg
 xg
 xg
@@ -2348,24 +2356,24 @@ xg
 xg
 xg
 xg
-cx
-cx
-FT
-FT
-FT
-FT
-FT
-ye
-nS
-KC
-VF
-Ax
-ye
-hM
-FT
-FT
-FT
-cx
+hb
+hb
+DM
+DM
+DM
+DM
+DM
+qk
+CL
+IW
+xp
+QG
+qk
+rm
+DM
+DM
+DM
+hb
 xg
 xg
 xg
@@ -2393,23 +2401,23 @@ xg
 xg
 xg
 xg
-cx
-cx
-FT
-FT
-FT
-FT
-ZZ
-ye
-cQ
-KC
-yc
-qN
-ye
-hM
-FT
-FT
-cx
+hb
+hb
+DM
+DM
+DM
+DM
+oB
+qk
+wu
+IW
+QF
+BX
+qk
+rm
+DM
+DM
+hb
 xg
 xg
 xg
@@ -2438,22 +2446,22 @@ xg
 xg
 xg
 xg
-cx
-cx
-FT
-FT
-FT
-FT
-ye
-ye
-mw
-xC
-uT
-jQ
-Jo
-FT
-FT
-cx
+hb
+hb
+DM
+DM
+DM
+DM
+qk
+qk
+NU
+db
+hq
+zc
+ID
+DM
+DM
+hb
 xg
 xg
 xg
@@ -2483,21 +2491,21 @@ xg
 xg
 xg
 xg
-cx
-cx
-cx
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-cx
+hb
+hb
+hb
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+hb
 xg
 xg
 xg
@@ -2529,19 +2537,19 @@ xg
 xg
 xg
 xg
-cx
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-FT
-cx
+hb
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+DM
+hb
 xg
 xg
 xg
@@ -2573,19 +2581,19 @@ xg
 xg
 xg
 xg
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
-cx
+hb
+hb
+hb
+hb
+hb
+hb
+hb
+hb
+hb
+hb
+hb
+hb
+hb
 xg
 xg
 xg

@@ -7,8 +7,6 @@
 	background_icon_state = "bg_changeling"
 	overlay_icon_state = "bg_changeling_border"
 	button_icon = 'icons/mob/actions/actions_changeling.dmi'
-	/// For passive abilities like hivemind that dont need an action button
-	var/needs_button = TRUE
 	/// Details displayed in fine print within the changling emporium
 	var/helptext = ""
 	/// How many changeling chems it costs to use
@@ -42,14 +40,11 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 */
 
 /datum/action/changeling/proc/on_purchase(mob/user, is_respec)
-	if(!is_respec)
-		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, name)
-	if(needs_button)
-		Grant(user)//how powers are added rather than the checks in mob.dm
+	Grant(user)//how powers are added rather than the checks in mob.dm
 
 /datum/action/changeling/Trigger(trigger_flags)
 	var/mob/user = owner
-	if(!user || !user.mind || !user.mind.has_antag_datum(/datum/antagonist/changeling))
+	if(!user || !IS_CHANGELING(user))
 		return
 	try_to_sting(user)
 
@@ -66,7 +61,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 /datum/action/changeling/proc/try_to_sting(mob/living/user, mob/living/target)
 	if(!can_sting(user, target))
 		return FALSE
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	if(sting_action(user, target))
 		sting_feedback(user, target)
 		changeling.adjust_chemicals(-chemical_cost)
@@ -75,6 +70,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 	return FALSE
 
 /datum/action/changeling/proc/sting_action(mob/living/user, mob/living/target)
+	SHOULD_CALL_PARENT(TRUE)
 	SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]"))
 	return FALSE
 
@@ -85,7 +81,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 /datum/action/changeling/proc/can_sting(mob/living/user, mob/living/target)
 	if(!can_be_used_by(user))
 		return FALSE
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	if(changeling.chem_charges < chemical_cost)
 		user.balloon_alert(user, "needs [chemical_cost] chemicals!")
 		return FALSE

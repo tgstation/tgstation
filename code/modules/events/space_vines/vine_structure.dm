@@ -7,7 +7,6 @@
 	anchored = TRUE
 	density = FALSE
 	layer = SPACEVINE_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	mouse_opacity = MOUSE_OPACITY_OPAQUE //Clicking anywhere on the turf is good enough
 	pass_flags = PASSTABLE | PASSGRILLE
 	max_integrity = 50
@@ -37,6 +36,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	AddComponent(/datum/component/storm_hating)
 
 /obj/structure/spacevine/examine(mob/user)
 	. = ..()
@@ -143,7 +143,7 @@
 			break //only capture one mob at a time
 
 /obj/structure/spacevine/proc/entangle(mob/living/victim)
-	if(!victim || isvineimmune(victim))
+	if(isnull(victim) || isvineimmune(victim))
 		return
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		mutation.on_buckle(src, victim)
@@ -153,7 +153,7 @@
 
 /// Finds a target tile to spread to. If checks pass it will spread to it and also proc on_spread on target.
 /obj/structure/spacevine/proc/spread()
-	if(!master) //If we've lost our controller, something has gone terribly wrong.
+	if(isnull(master)) //If we've lost our controller, something has gone terribly wrong.
 		return
 
 	var/direction = pick(GLOB.cardinals)
@@ -161,20 +161,29 @@
 	if(!istype(stepturf))
 		return
 
-	if(!isspaceturf(stepturf) && stepturf.Enter(src))
-		var/obj/structure/spacevine/spot_taken = locate() in stepturf //Locates any vine on target turf. Calls that vine "spot_taken".
-		var/datum/spacevine_mutation/vine_eating/eating = locate() in mutations //Locates the vine eating trait in our own seed and calls it E.
-		if(!spot_taken || (eating && (spot_taken && !spot_taken.mutations?.Find(eating)))) //Proceed if there isn't a vine on the target turf, OR we have vine eater AND target vine is from our seed and doesn't. Vines from other seeds are eaten regardless.
-			for(var/datum/spacevine_mutation/mutation in mutations)
-				mutation.on_spread(src, stepturf) //Only do the on_spread proc if it actually spreads.
-				stepturf = get_step(src,direction) //in case turf changes, to make sure no runtimes happen
-			var/obj/structure/spacevine/spawning_vine = master.spawn_spacevine_piece(stepturf, src) //Let's do a cool little animate
-			if(NSCOMPONENT(direction))
-				spawning_vine.pixel_y = direction == NORTH ? -32 : 32
-				animate(spawning_vine, pixel_y = 0, time = 1 SECONDS)
-			else
-				spawning_vine.pixel_x = direction == EAST ? -32 : 32
-				animate(spawning_vine, pixel_x = 0, time = 1 SECONDS)
+	if(isspaceturf(stepturf) || isopenspaceturf(stepturf) || !stepturf.Enter(src))
+		return
+	if(ischasm(stepturf) && !HAS_TRAIT(stepturf, TRAIT_CHASM_STOPPED))
+		return
+	if(islava(stepturf) && !HAS_TRAIT(stepturf, TRAIT_LAVA_STOPPED))
+		return
+	var/obj/structure/spacevine/spot_taken = locate() in stepturf
+	var/datum/spacevine_mutation/vine_eating/eating = locate() in mutations
+	if(!isnull(spot_taken)) //Proceed if there isn't a vine on the target turf, OR we have vine eater AND target vine is from our seed and doesn't.
+		if (isnull(eating))
+			return
+		if (spot_taken.mutations?.Find(eating))
+			return
+	for(var/datum/spacevine_mutation/mutation in mutations)
+		mutation.on_spread(src, stepturf)
+		stepturf = get_step(src, direction)
+	var/obj/structure/spacevine/spawning_vine = master.spawn_spacevine_piece(stepturf, src)
+	if(NSCOMPONENT(direction))
+		spawning_vine.pixel_y = direction == NORTH ? -32 : 32
+		animate(spawning_vine, pixel_y = 0, time = 1 SECONDS)
+	else
+		spawning_vine.pixel_x = direction == EAST ? -32 : 32
+		animate(spawning_vine, pixel_x = 0, time = 1 SECONDS)
 
 /// Destroying an explosive vine sets off a chain reaction
 /obj/structure/spacevine/ex_act(severity, target)

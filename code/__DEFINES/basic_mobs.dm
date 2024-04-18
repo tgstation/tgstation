@@ -12,6 +12,10 @@
 #define FLAMMABLE_MOB (1<<3)
 /// Mob never takes damage from unarmed attacks
 #define IMMUNE_TO_FISTS (1<<4)
+/// Mob is immune to getting wet
+#define IMMUNE_TO_GETTING_WET (1<<5)
+/// Disables the function of attacking random body zones
+#define PRECISE_ATTACK_ZONES (1<<6)
 
 /// Temporary trait applied when an attack forecast animation has completed
 #define TRAIT_BASIC_ATTACK_FORECAST "trait_basic_attack_forecast"
@@ -19,3 +23,12 @@
 
 /// Above this speed we stop gliding because it looks silly
 #define END_GLIDE_SPEED 10
+
+///mook attack status flags
+#define MOOK_ATTACK_NEUTRAL 0
+#define MOOK_ATTACK_WARMUP 1
+#define MOOK_ATTACK_ACTIVE 2
+#define MOOK_ATTACK_STRIKE 3
+
+///keeps track of how many gutlunches are born
+GLOBAL_VAR_INIT(gutlunch_count, 0)

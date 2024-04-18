@@ -11,7 +11,7 @@
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	nondirectional_sprite = TRUE
 
-/obj/projectile/seedling/on_hit(atom/target)
+/obj/projectile/seedling/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(!isliving(target))
 		return ..()
 

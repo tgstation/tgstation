@@ -30,7 +30,7 @@
 	/// If false, we will only check to see if a limb has ALL our biostates, instead of just any.
 	var/check_any_biostates
 
-/datum/scar/Destroy(force, ...)
+/datum/scar/Destroy(force)
 	if(limb)
 		LAZYREMOVE(limb.scars, src)
 	if(victim)
@@ -181,7 +181,7 @@
 		if((human_victim.wear_mask && (human_victim.wear_mask.flags_inv & HIDEFACE)) || (human_victim.head && (human_victim.head.flags_inv & HIDEFACE)))
 			return FALSE
 	else if(limb.scars_covered_by_clothes)
-		var/num_covers = LAZYLEN(human_victim.clothingonpart(limb))
+		var/num_covers = LAZYLEN(human_victim.get_clothing_on_part(limb))
 		if(num_covers + get_dist(viewer, victim) >= visibility)
 			return FALSE
 

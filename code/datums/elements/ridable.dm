@@ -133,7 +133,7 @@
 	ridable_atom.AddElement(/datum/element/ridable, component_type = riding_component_type, potion_boost = TRUE)
 	to_chat(user, span_notice("You slather the red gunk over [ridable_atom], making it faster."))
 	ridable_atom.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	ridable_atom.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
+	ridable_atom.add_atom_colour(COLOR_RED, FIXED_COLOUR_PRIORITY)
 	qdel(speed_potion)
 	return SPEED_POTION_STOP
 
@@ -197,3 +197,15 @@
 		to_chat(user, span_notice("You gently let go of [rider]."))
 		return
 	return rider
+
+/obj/item/riding_offhand/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with) || !interacting_with.can_buckle)
+		return NONE
+	if(rider == user) // Piggyback user
+		return ITEM_INTERACT_BLOCKING
+
+	// Handles de-fireman carrying a mob and buckling them onto something (tables, etc)
+	var/mob/living/former_rider = rider
+	user.unbuckle_mob(former_rider)
+	former_rider.forceMove(get_turf(interacting_with))
+	return interacting_with.mouse_buckle_handling(former_rider, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING

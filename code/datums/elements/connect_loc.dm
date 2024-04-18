@@ -24,7 +24,7 @@
 
 /datum/element/connect_loc/proc/update_signals(atom/movable/listener)
 	var/atom/listener_loc = listener.loc
-	if(isnull(listener_loc))
+	if(QDELETED(listener) || QDELETED(listener_loc))
 		return
 
 	for (var/signal in connections)

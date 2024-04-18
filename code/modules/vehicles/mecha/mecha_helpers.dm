@@ -7,8 +7,11 @@
 /obj/vehicle/sealed/mecha/proc/get_charge()
 	return cell?.charge
 
-/obj/vehicle/sealed/mecha/proc/use_power(amount)
-	return (get_charge() && cell.use(amount))
+/obj/vehicle/sealed/mecha/proc/use_energy(amount)
+	var/output = cell.use(amount)
+	if (output)
+		diag_hud_set_mechcell()
+	return output
 
 /obj/vehicle/sealed/mecha/proc/give_power(amount)
 	if(!isnull(get_charge()))

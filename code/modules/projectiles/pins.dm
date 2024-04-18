@@ -1,11 +1,11 @@
 /obj/item/firing_pin
 	name = "electronic firing pin"
 	desc = "A small authentication device, to be inserted into a firearm receiver to allow operation. NT safety regulations require all new designs to incorporate one."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/gunmod.dmi'
 	icon_state = "firing_pin"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("pokes")
 	attack_verb_simple = list("poke")
@@ -30,19 +30,19 @@
 	if(proximity_flag)
 		if(isgun(target))
 			. |= AFTERATTACK_PROCESSED_ITEM
-			var/obj/item/gun/targetted_gun = target
-			var/obj/item/firing_pin/old_pin = targetted_gun.pin
+			var/obj/item/gun/targeted_gun = target
+			var/obj/item/firing_pin/old_pin = targeted_gun.pin
 			if(old_pin?.pin_removable && (force_replace || old_pin.pin_hot_swappable))
 				if(Adjacent(user))
 					user.put_in_hands(old_pin)
 				else
-					old_pin.forceMove(targetted_gun.drop_location())
+					old_pin.forceMove(targeted_gun.drop_location())
 				old_pin.gun_remove(user)
 
-			if(!targetted_gun.pin)
+			if(!targeted_gun.pin)
 				if(!user.temporarilyRemoveItemFromInventory(src))
 					return .
-				if(gun_insert(user, targetted_gun))
+				if(gun_insert(user, targeted_gun))
 					if(old_pin)
 						balloon_alert(user, "swapped firing pin")
 					else
@@ -137,7 +137,7 @@
 /obj/item/firing_pin/clown
 	name = "hilarious firing pin"
 	desc = "Advanced clowntech that can convert any firearm into a far more useful object."
-	color = "#FFFF00"
+	color = COLOR_YELLOW
 	fail_message = "honk!"
 	force_replace = TRUE
 
@@ -221,7 +221,7 @@
 /obj/item/firing_pin/paywall
 	name = "paywall firing pin"
 	desc = "A firing pin with a built-in configurable paywall."
-	color = "#FFD700"
+	color = COLOR_GOLD
 	fail_message = ""
 	///list of account IDs which have accepted the license prompt. If this is the multi-payment pin, then this means they accepted the waiver that each shot will cost them money
 	var/list/gun_owners = list()
@@ -373,7 +373,19 @@
 	suit_requirement = /obj/item/clothing/suit/bluetag
 	tagcolor = "blue"
 
+/obj/item/firing_pin/monkey
+	name = "monkeylock firing pin"
+	desc = "This firing pin prevents non-monkeys from firing a gun."
+	fail_message = "not a monkey!"
+
+/obj/item/firing_pin/monkey/pin_auth(mob/living/user)
+	if(!is_simian(user))
+		playsound(get_turf(src), "sound/creatures/monkey/monkey_screech_[rand(1,7)].ogg", 75, TRUE)
+		return FALSE
+	return TRUE
+
 /obj/item/firing_pin/Destroy()
 	if(gun)
 		gun.pin = null
+		gun = null
 	return ..()

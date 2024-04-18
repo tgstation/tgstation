@@ -121,7 +121,7 @@
 
 /// Gets the ban cache of the passed in client
 /// If the cache has not been generated, we start off a query
-/// If we still have a query going for this request, we just sleep until it's recieved back
+/// If we still have a query going for this request, we just sleep until it's received back
 /proc/retrieve_ban_cache(client/player_client)
 	if(QDELETED(player_client))
 		return
@@ -577,7 +577,7 @@
 	duration = text2num(duration)
 	if (!(interval in list("SECOND", "MINUTE", "HOUR", "DAY", "WEEK", "MONTH", "YEAR")))
 		interval = "MINUTE"
-	var/time_message = "[duration] [lowertext(interval)]" //no DisplayTimeText because our duration is of variable interval type
+	var/time_message = "[duration] [LOWER_TEXT(interval)]" //no DisplayTimeText because our duration is of variable interval type
 	if(duration > 1) //pluralize the interval if necessary
 		time_message += "s"
 	var/is_server_ban = (roles_to_ban[1] == "Server")

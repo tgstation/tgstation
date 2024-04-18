@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/construct
+/*mob/living/simple_animal/hostile/construct
 	name = "Construct"
 	real_name = "Construct"
 	desc = ""
@@ -132,4 +132,4 @@
 
 /mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	return FALSE
-
+*/

@@ -14,7 +14,7 @@
 /obj/item/paper/fluff/ruins/clericsden/warning
 	default_raw_text = "FATHER ODIVALLUS DO NOT GO FORWARD WITH THE RITUAL. THE ASTEROID WE'RE ANCHORED TO IS UNSTABLE, YOU WILL DESTROY THE STATION. I HOPE THIS REACHES YOU IN TIME. FATHER AURELLION."
 
-/mob/living/simple_animal/hostile/construct/proteon
+/*mob/living/simple_animal/hostile/construct/proteon
 	name = "Proteon"
 	real_name = "Proteon"
 	desc = "A weaker construct meant to scour ruins for objects of Nar'Sie's affection. Those barbed claws are no joke."
@@ -33,3 +33,5 @@
 
 /mob/living/simple_animal/hostile/construct/proteon/hostile //Style of mob spawned by trapped cult runes in the cleric ruin.
 	AIStatus = AI_ON
+
+*/

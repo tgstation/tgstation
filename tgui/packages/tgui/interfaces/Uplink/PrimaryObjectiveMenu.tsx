@@ -8,11 +8,8 @@ type PrimaryObjectiveMenuProps = {
   can_renegotiate;
 };
 
-export const PrimaryObjectiveMenu = (
-  props: PrimaryObjectiveMenuProps,
-  context
-) => {
-  const { act } = useBackend(context);
+export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
+  const { act } = useBackend();
   const { primary_objectives, final_objective, can_renegotiate } = props;
   return (
     <Section fill>
@@ -35,7 +32,8 @@ export const PrimaryObjectiveMenu = (
             fontFamily={'Bahnschrift'}
             fontSize={3}
             align={'top'}
-            as="span">
+            as="span"
+          >
             PRIORITY MESSAGE
             <br />
             SOURCE: xxx.xxx.xxx.224:41394
@@ -59,7 +57,7 @@ export const PrimaryObjectiveMenu = (
                 key={prim_obj.id}
                 name={prim_obj['task_name']}
                 description={prim_obj['task_text']}
-                reputation={{
+                dangerLevel={{
                   minutesLessThan: 0,
                   title: 'none',
                   gradient:

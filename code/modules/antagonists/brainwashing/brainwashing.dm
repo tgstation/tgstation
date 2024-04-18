@@ -33,7 +33,7 @@
 	roundend_category = "brainwashed victims"
 	show_in_antagpanel = TRUE
 	antag_hud_name = "brainwashed"
-	antagpanel_category = "Other"
+	antagpanel_category = ANTAG_GROUP_CREW
 	show_name_in_check_antagonists = TRUE
 	count_against_dynamic_roll_chance = FALSE
 	ui_name = "AntagInfoBrainwashed"
@@ -53,10 +53,6 @@
 		owner_mob.log_message("is no longer brainwashed with the objectives: [english_list(objectives)].", LOG_ATTACK)
 	owner.announce_objectives()
 	return ..()
-
-/datum/antagonist/brainwashed/on_mindshield(mob/implanter)
-	owner.remove_antag_datum(/datum/antagonist/brainwashed)
-	return COMPONENT_MINDSHIELD_DECONVERTED
 
 /datum/antagonist/brainwashed/admin_add(datum/mind/new_owner,mob/admin)
 	var/mob/living/carbon/C = new_owner.current

@@ -27,7 +27,7 @@
 /obj/item/debug/omnitool
 	name = "omnitool"
 	desc = "The original hypertool, born before them all. Use it in hand to unleash its true power."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/weapons/club.dmi'
 	icon_state = "hypertool"
 	inhand_icon_state = "hypertool"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -74,12 +74,12 @@
 		return
 	var/list/tool_list = list(
 		"Crowbar" = image(icon = 'icons/obj/tools.dmi', icon_state = "crowbar"),
-		"Multitool" = image(icon = 'icons/obj/device.dmi', icon_state = "multitool"),
+		"Multitool" = image(icon = 'icons/obj/devices/tool.dmi', icon_state = "multitool"),
 		"Screwdriver" = image(icon = 'icons/obj/tools.dmi', icon_state = "screwdriver_map"),
 		"Wirecutters" = image(icon = 'icons/obj/tools.dmi', icon_state = "cutters_map"),
 		"Wrench" = image(icon = 'icons/obj/tools.dmi', icon_state = "wrench"),
 		"Welding Tool" = image(icon = 'icons/obj/tools.dmi', icon_state = "miniwelder"),
-		"Analyzer" = image(icon = 'icons/obj/device.dmi', icon_state = "analyzer"),
+		"Analyzer" = image(icon = 'icons/obj/devices/scanner.dmi', icon_state = "analyzer"),
 		"Pickaxe" = image(icon = 'icons/obj/mining.dmi', icon_state = "minipick"),
 		"Shovel" = image(icon = 'icons/obj/mining.dmi', icon_state = "shovel"),
 		"Retractor" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "retractor"),
@@ -163,7 +163,7 @@
 			playsound(src, 'sound/voice/borg_deathsound.ogg')
 			sleep(3 SECONDS)
 			living_user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-			living_user.gib()
+			living_user.gib(DROP_ALL_REMAINS)
 			return
 	var/turf/loc_turf = get_turf(src)
 	for(var/spawn_atom in (choice == "No" ? typesof(path) : subtypesof(path)))

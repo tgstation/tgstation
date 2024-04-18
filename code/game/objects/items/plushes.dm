@@ -44,7 +44,8 @@
 /obj/item/toy/plush/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, squeak_override)
-	AddElement(/datum/element/bed_tuckable, 6, -5, 90)
+	AddElement(/datum/element/bed_tuckable, mapload, 6, -5, 90)
+	AddElement(/datum/element/toy_talk)
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
 	if(gender == NEUTER)
@@ -516,14 +517,14 @@
 	if(!greyscale_colors)
 		// Generate a random valid lizard color for our plushie friend
 		var/generated_lizard_color = "#" + random_color()
-		var/temp_hsv = RGBtoHSV(generated_lizard_color)
+		var/list/lizard_hsv = rgb2hsv(generated_lizard_color)
 
 		// If our color is too dark, use the classic green lizard plush color
-		if(ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3])
+		if(lizard_hsv[3] < 50)
 			generated_lizard_color = "#66ff33"
 
 		// Set our greyscale colors to the lizard color we made + black eyes
-		set_greyscale(colors = list(generated_lizard_color, "#000000"))
+		set_greyscale(colors = list(generated_lizard_color, COLOR_BLACK))
 
 // Preset lizard plushie that uses the original lizard plush green. (Or close to it)
 /obj/item/toy/plush/lizard_plushie/green
@@ -584,6 +585,7 @@
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE //given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
 
+// This is supposed to be only in the bus ruin, don't spawn it elsewhere
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"
 	desc = "An ancient plushie that has grown enlightened to the true nature of reality."

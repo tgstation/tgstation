@@ -8,20 +8,47 @@
 	foodtypes = MEAT | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
-	var/faction
+	/// Mob typepath to spawn when expanding
 	var/spawned_mob = /mob/living/carbon/human/species/monkey
+	/// Whether we've been wetted and are expanding
+	var/expanding = FALSE
+
+/obj/item/food/monkeycube/attempt_pickup(mob/user)
+	if(expanding)
+		return FALSE
+	return ..()
 
 /obj/item/food/monkeycube/proc/Expand()
+	if(expanding)
+		return
+
+	expanding = TRUE
+
+	if(ismob(loc))
+		var/mob/holder = loc
+		holder.dropItemToGround(src)
+
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
-	var/mob/living/bananas = new spawned_mob(drop_location(), TRUE, spammer)
-	if(faction)
-		bananas.faction = faction
+	var/mob/living/bananas = new spawned_mob(drop_location(), TRUE, spammer) // funny that we pass monkey init args to non-monkey mobs, that's totally a future issue
 	if (!QDELETED(bananas))
+		if(faction)
+			bananas.faction = faction
+
 		visible_message(span_notice("[src] expands!"))
 		bananas.log_message("spawned via [src], Last attached mob: [key_name(spammer)].", LOG_ATTACK)
+
+		var/alpha_to = bananas.alpha
+		var/matrix/scale_to = matrix(bananas.transform)
+		bananas.alpha = 0
+		bananas.transform = bananas.transform.Scale(0.1)
+		animate(bananas, 0.5 SECONDS, alpha = alpha_to, transform = scale_to, easing = QUAD_EASING|EASE_OUT)
+
 	else if (!spammer) // Visible message in case there are no fingerprints
 		visible_message(span_notice("[src] fails to expand!"))
-	qdel(src)
+		return
+
+	animate(src, 0.4 SECONDS, alpha = 0, transform = transform.Scale(0), easing = QUAD_EASING|EASE_IN)
+	QDEL_IN(src, 0.5 SECONDS)
 
 /obj/item/food/monkeycube/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is putting [src] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -48,7 +75,7 @@
 		return
 	Expand()
 	user.visible_message(span_danger("[user]'s torso bursts open as a primate emerges!"))
-	user.gib(null, TRUE, null, TRUE)
+	user.gib(DROP_BRAIN|DROP_BODYPARTS|DROP_ITEMS) // just remove the organs
 
 /obj/item/food/monkeycube/syndicate
 	faction = list(FACTION_NEUTRAL, ROLE_SYNDICATE)
@@ -62,7 +89,7 @@
 		/datum/reagent/medicine/strange_reagent = 5,
 	)
 	tastes = list("the jungle" = 1, "bananas" = 1, "jimmies" = 1)
-	spawned_mob = /mob/living/simple_animal/hostile/gorilla
+	spawned_mob = /mob/living/basic/gorilla
 
 /obj/item/food/monkeycube/chicken
 	name = "chicken cube"

@@ -46,7 +46,7 @@
 	if(prob(15/disease.spreading_modifier))
 		return
 
-	if(satiety>0 && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
+	if(satiety>0 && prob(satiety/2)) // positive satiety makes it harder to contract the disease.
 		return
 
 	if(!target_zone)
@@ -98,7 +98,7 @@
 	if(HAS_TRAIT(src, TRAIT_VIRUS_RESISTANCE) && prob(75))
 		return
 
-	if(((disease.spread_flags & DISEASE_SPREAD_AIRBORNE) || force_spread) && prob((50*disease.spreading_modifier) - 1))
+	if(((disease.spread_flags & DISEASE_SPREAD_AIRBORNE) || force_spread) && prob(min((50*disease.spreading_modifier - 1), 50)))
 		ForceContractDisease(disease)
 
 /mob/living/carbon/AirborneContractDisease(datum/disease/disease, force_spread)

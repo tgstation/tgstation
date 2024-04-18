@@ -52,12 +52,14 @@
 	var/datum/callback/can_replace_objectives
 	/// Callback which performs that operation
 	var/datum/callback/replace_objectives
+	///Reference to a contractor hub that the infiltrator can run, if they purchase it.
+	var/datum/contractor_hub/contractor_hub
 
 /datum/uplink_handler/New()
 	. = ..()
 	maximum_potential_objectives = CONFIG_GET(number/maximum_potential_objectives)
 
-/datum/uplink_handler/Destroy(force, ...)
+/datum/uplink_handler/Destroy(force)
 	can_replace_objectives = null
 	replace_objectives = null
 	return ..()
@@ -73,6 +75,8 @@
 
 /// Checks for uplink flags as well as items restricted to roles and species
 /datum/uplink_handler/proc/check_if_restricted(datum/uplink_item/to_purchase)
+	if(!to_purchase.can_be_bought(src))
+		return FALSE
 	if((to_purchase in extra_purchasable))
 		return TRUE
 	if(!(to_purchase.purchasable_from & uplink_flag))
@@ -99,7 +103,7 @@
 		return FALSE
 
 	var/current_stock = item_stock[to_purchase.stock_key]
-	var/stock = current_stock != null? current_stock : INFINITY
+	var/stock = current_stock != null ? current_stock : INFINITY
 	if(telecrystals < to_purchase.cost || stock <= 0 || not_enough_reputation(to_purchase))
 		return FALSE
 
@@ -250,3 +254,12 @@
 		return
 
 	to_act_on.ui_perform_action(user, action)
+
+///Helper to add telecrystals to the uplink handler, calling set_telecrystals.
+/datum/uplink_handler/proc/add_telecrystals(amount)
+	set_telecrystals(telecrystals + amount)
+
+///Sets how many telecrystals the uplink handler has, then updates the UI for any players watching.
+/datum/uplink_handler/proc/set_telecrystals(amount)
+	telecrystals = amount
+	on_update()

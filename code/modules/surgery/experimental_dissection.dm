@@ -10,16 +10,19 @@
 		/datum/surgery_step/experimental_dissection,
 		/datum/surgery_step/close,
 	)
-	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_MORBID_CURIOSITY
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_MORBID_CURIOSITY
 	possible_locs = list(BODY_ZONE_CHEST)
 	target_mobtypes = list(/mob/living)
 
 /datum/surgery/advanced/experimental_dissection/can_start(mob/user, mob/living/target)
 	. = ..()
+	if(!.)
+		return .
 	if(HAS_TRAIT_FROM(target, TRAIT_DISSECTED, EXPERIMENTAL_SURGERY_TRAIT))
 		return FALSE
 	if(target.stat != DEAD)
 		return FALSE
+	return .
 
 /datum/surgery_step/experimental_dissection
 	name = "dissection"
@@ -44,8 +47,7 @@
 		var/obj/item/research_notes/hand_dossier = user.get_inactive_held_item()
 		hand_dossier.merge(the_dossier)
 
-	var/obj/item/bodypart/target_chest = target.get_bodypart(BODY_ZONE_CHEST)
-	target.apply_damage(80, BRUTE, target_chest)
+	target.apply_damage(80, BRUTE, BODY_ZONE_CHEST)
 	ADD_TRAIT(target, TRAIT_DISSECTED, EXPERIMENTAL_SURGERY_TRAIT)
 	return ..()
 
@@ -61,8 +63,7 @@
 		var/obj/item/research_notes/hand_dossier = user.get_inactive_held_item()
 		hand_dossier.merge(the_dossier)
 
-	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
-	target.apply_damage(80, BRUTE, L)
+	target.apply_damage(80, BRUTE, BODY_ZONE_CHEST)
 	return TRUE
 
 ///Calculates how many research points dissecting 'target' is worth.

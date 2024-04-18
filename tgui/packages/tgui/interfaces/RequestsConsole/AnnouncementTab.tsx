@@ -2,21 +2,16 @@ import { useBackend, useLocalState } from '../../backend';
 import { Button, NoticeBox, Section, TextArea } from '../../components';
 import { RequestsData } from './types';
 
-export const AnnouncementTab = (props, context) => {
-  const { act, data } = useBackend<RequestsData>(context);
+export const AnnouncementTab = (props) => {
+  const { act, data } = useBackend<RequestsData>();
   const { authentication_data, is_admin_ghost_ai } = data;
-  const [messageText, setMessageText] = useLocalState(
-    context,
-    'messageText',
-    ''
-  );
+  const [messageText, setMessageText] = useLocalState('messageText', '');
   return (
     <Section>
       <TextArea
         fluid
         height={20}
         maxLength={1025}
-        multiline
         value={messageText}
         onChange={(_, value) => setMessageText(value)}
         placeholder="Type your announcement..."
@@ -59,14 +54,12 @@ export const AnnouncementTab = (props, context) => {
   );
 };
 
-const AuthenticationNoticeBox = (props, context) => {
-  const { act, data } = useBackend<RequestsData>(context);
+const AuthenticationNoticeBox = (props) => {
+  const { act, data } = useBackend<RequestsData>();
   const { authentication_data, is_admin_ghost_ai } = data;
   return (
     (!authentication_data.announcement_authenticated && !is_admin_ghost_ai && (
-      <NoticeBox warning>
-        {'Swipe your card to authenticate yourself'}
-      </NoticeBox>
-    )) || <NoticeBox info>{'Succesfully authenticated'}</NoticeBox>
+      <NoticeBox>Swipe your card to authenticate yourself</NoticeBox>
+    )) || <NoticeBox info>Succesfully authenticated</NoticeBox>
   );
 };

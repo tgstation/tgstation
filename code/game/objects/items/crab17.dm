@@ -106,7 +106,7 @@
 	add_overlay("flaps")
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
-	addtimer(CALLBACK(src, PROC_REF(startUp)), 50)
+	addtimer(CALLBACK(src, PROC_REF(startUp)), 5 SECONDS)
 	QDEL_IN(src, 8 MINUTES) //Self-destruct after 8 min
 	ADD_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, REF(src))
 
@@ -197,12 +197,12 @@
 		if(!(B?.being_dumped))
 			accounts_to_rob -= B
 			continue
-		var/amount = B.account_balance * percentage_lost
+		var/amount = round(B.account_balance * percentage_lost) // We don't want fractions of a credit stolen. That's just agony for everyone.
 		var/datum/bank_account/account = bogdanoff?.get_bank_account()
 		if (account) // get_bank_account() may return FALSE
 			account.transfer_money(B, amount, "?VIVA¿: !LA CRABBE¡")
 			B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src)].")
-	addtimer(CALLBACK(src, PROC_REF(dump)), 150) //Drain every 15 seconds
+	addtimer(CALLBACK(src, PROC_REF(dump)), 15 SECONDS) //Drain every 15 seconds
 
 /obj/structure/checkoutmachine/process()
 	var/anydir = pick(GLOB.cardinals)
@@ -238,7 +238,7 @@
 /obj/effect/dumpeet_target/Initialize(mapload, user)
 	. = ..()
 	bogdanoff = user
-	addtimer(CALLBACK(src, PROC_REF(startLaunch)), 100)
+	addtimer(CALLBACK(src, PROC_REF(startLaunch)), 10 SECONDS)
 	sound_to_playing_players('sound/items/dump_it.ogg', 20)
 	deadchat_broadcast("Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!", turf_target = get_turf(src), message_type=DEADCHAT_ANNOUNCEMENT)
 

@@ -1,4 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - bugfix: "Stun immune people should no longer have issues with gripper gloves and other tackle gloves."

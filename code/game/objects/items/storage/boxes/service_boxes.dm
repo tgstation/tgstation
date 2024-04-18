@@ -63,7 +63,7 @@
 
 /obj/item/storage/box/snappops/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/toy/snappop))
+	atom_storage.set_holdable(/obj/item/toy/snappop)
 	atom_storage.max_slots = 8
 
 /obj/item/storage/box/snappops/PopulateContents()
@@ -90,7 +90,7 @@
 /obj/item/storage/box/matches/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 10
-	atom_storage.set_holdable(list(/obj/item/match))
+	atom_storage.set_holdable(/obj/item/match)
 
 /obj/item/storage/box/matches/PopulateContents()
 	for(var/i in 1 to 10)
@@ -204,21 +204,42 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/spray/chemsprayer/party(src)
 
+/obj/item/storage/box/balloons
+	name = "box of long balloons"
+	desc = "A completely randomized and wacky box of long balloons, harvested straight from balloon farms on the clown planet."
+	illustration = "balloon"
+
+/obj/item/storage/box/balloons/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 24
+	atom_storage.set_holdable(list(/obj/item/toy/balloon/long))
+	atom_storage.max_total_storage = 24
+	atom_storage.allow_quick_gather = FALSE
+
+/obj/item/storage/box/balloons/PopulateContents()
+	for(var/i in 1 to 24)
+		new /obj/item/toy/balloon/long(src)
+
 /obj/item/storage/box/stickers
 	name = "box of stickers"
 	desc = "A box full of random stickers. Do give to the clown."
 
 /obj/item/storage/box/stickers/proc/generate_non_contraband_stickers_list()
-	. = list()
+	var/list/allowed_stickers = list()
+
 	for(var/obj/item/sticker/sticker_type as anything in subtypesof(/obj/item/sticker))
-		if(!initial(sticker_type.contraband))
-			. += sticker_type
-	return .
+		if(!sticker_type::contraband)
+			allowed_stickers += sticker_type
+
+	return allowed_stickers
+
 /obj/item/storage/box/stickers/PopulateContents()
 	var/static/list/non_contraband
-	if(!non_contraband)
+
+	if(isnull(non_contraband))
 		non_contraband = generate_non_contraband_stickers_list()
-	for(var/i in 1 to rand(4,8))
+
+	for(var/i in 1 to rand(4, 8))
 		var/type = pick(non_contraband)
 		new type(src)
 

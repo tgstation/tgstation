@@ -31,7 +31,7 @@
 
 /datum/chemical_reaction/glycerol
 	results = list(/datum/reagent/glycerol = 1)
-	required_reagents = list(/datum/reagent/consumable/nutriment/fat/oil = 3, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/consumable/nutriment/fat/oil/corn = 3, /datum/reagent/toxin/acid = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_EXPLOSIVE
 
 /datum/chemical_reaction/sodiumchloride
@@ -584,7 +584,7 @@
 	var/location = get_turf(M)
 	if(iscarbon(M))
 		if(ismonkey(M))
-			M.gib()
+			M.gib(DROP_ALL_REMAINS)
 		else
 			M.vomit(VOMIT_CATEGORY_BLOOD)
 	new /mob/living/carbon/human/species/monkey(location, TRUE)
@@ -730,7 +730,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/metalgen_imprint/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/datum/reagent/metalgen/MM = holder.get_reagent(/datum/reagent/metalgen)
+	var/datum/reagent/metalgen/MM = holder.has_reagent(/datum/reagent/metalgen)
 	for(var/datum/reagent/R in holder.reagent_list)
 		if(R.material && R.volume >= 40)
 			MM.data["material"] = R.material

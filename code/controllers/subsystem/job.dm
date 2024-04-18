@@ -1,5 +1,3 @@
-#define VERY_LATE_ARRIVAL_TOAST_PROB 20
-
 SUBSYSTEM_DEF(job)
 	name = "Jobs"
 	init_order = INIT_ORDER_JOBS
@@ -96,6 +94,18 @@ SUBSYSTEM_DEF(job)
 	set_overflow_role(CONFIG_GET(string/overflow_job)) // this must always go after load_jobs_from_config() due to how the legacy systems operate, this always takes precedent.
 	return SS_INIT_SUCCESS
 
+/// Returns a list of jobs that we are allowed to fuck with during random events
+/datum/controller/subsystem/job/proc/get_valid_overflow_jobs()
+	var/static/list/overflow_jobs
+	if (!isnull(overflow_jobs))
+		return overflow_jobs
+
+	overflow_jobs = list()
+	for (var/datum/job/check_job in joinable_occupations)
+		if (!check_job.allow_bureaucratic_error)
+			continue
+		overflow_jobs += check_job
+	return overflow_jobs
 
 /datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role)
 	var/datum/job/new_overflow = ispath(new_overflow_role) ? GetJobType(new_overflow_role) : GetJob(new_overflow_role)
@@ -150,7 +160,10 @@ SUBSYSTEM_DEF(job)
 			continue
 		new_all_occupations += job
 		name_occupations[job.title] = job
+		for(var/alt_title in job.alternate_titles)
+			name_occupations[alt_title] = job
 		type_occupations[job_type] = job
+
 		if(job.job_flags & JOB_NEW_PLAYER_JOINABLE)
 			new_joinable_occupations += job
 			if(!LAZYLEN(job.departments_list))
@@ -186,6 +199,8 @@ SUBSYSTEM_DEF(job)
 	joinable_departments = new_joinable_departments
 	joinable_departments_by_type = new_joinable_departments_by_type
 	experience_jobs_map = new_experience_jobs_map
+
+	SEND_SIGNAL(src, COMSIG_OCCUPATIONS_SETUP)
 
 	return TRUE
 
@@ -299,8 +314,10 @@ SUBSYSTEM_DEF(job)
 		player.mind.special_role = null
 	SetupOccupations()
 	unassigned = list()
-	if(overflow_role)
-		set_overflow_role(overflow_role)
+	if(CONFIG_GET(flag/load_jobs_from_txt))
+		// Any errors with the configs has already been said, we don't need to repeat them here.
+		load_jobs_from_config(silent = TRUE)
+	set_overflow_role(overflow_role)
 	return
 
 
@@ -372,7 +389,6 @@ SUBSYSTEM_DEF(job)
 	//Setup new player list and get the jobs list
 	JobDebug("Running DO, allow_all = [allow_all], pure = [pure]")
 	run_divide_occupation_pure = pure
-	SEND_SIGNAL(src, COMSIG_OCCUPATIONS_DIVIDED, pure, allow_all)
 
 	//Get the players who are ready
 	for(var/i in GLOB.new_player_list)
@@ -541,9 +557,7 @@ SUBSYSTEM_DEF(job)
 	SEND_SIGNAL(equipping, COMSIG_JOB_RECEIVED, job)
 
 	equipping.mind?.set_assigned_role_with_greeting(job, player_client)
-
 	equipping.on_job_equipping(job)
-
 	job.announce_job(equipping)
 
 	if(player_client?.holder)
@@ -552,29 +566,7 @@ SUBSYSTEM_DEF(job)
 		else
 			handle_auto_deadmin_roles(player_client, job.title)
 
-	if(player_client)
-		to_chat(player_client, "<span class='infoplain'><b>As the [job.title] you answer directly to [job.supervisors]. Special circumstances may change this.</b></span>")
-
-	job.radio_help_message(equipping)
-
-	if(player_client)
-		if(job.req_admin_notify)
-			to_chat(player_client, span_infoplain("<b>You are playing a job that is important for Game Progression. \
-				If you have to disconnect, please notify the admins via adminhelp.</b>"))
-		if(CONFIG_GET(number/minimal_access_threshold))
-			to_chat(player_client, span_boldnotice("As this station was initially staffed with a \
-				[CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] \
-				have been added to your ID card."))
-
-	if(ishuman(equipping))
-		var/mob/living/carbon/human/wageslave = equipping
-		wageslave.add_mob_memory(/datum/memory/key/account, remembered_id = wageslave.account_id)
-
-		if(EMERGENCY_PAST_POINT_OF_NO_RETURN && prob(VERY_LATE_ARRIVAL_TOAST_PROB))
-			equipping.equip_to_slot_or_del(new /obj/item/food/griddle_toast(equipping), ITEM_SLOT_MASK)
-
 	job.after_spawn(equipping, player_client)
-
 
 /datum/controller/subsystem/job/proc/handle_auto_deadmin_roles(client/C, rank)
 	if(!C?.holder)
@@ -721,34 +713,23 @@ SUBSYSTEM_DEF(job)
 
 
 /datum/controller/subsystem/job/proc/get_last_resort_spawn_points()
-	//bad mojo
 	var/area/shuttle/arrival/arrivals_area = GLOB.areas_by_type[/area/shuttle/arrival]
-	if(arrivals_area)
-		//first check if we can find a chair
-		var/obj/structure/chair/shuttle_chair = locate() in arrivals_area
-		if(shuttle_chair)
-			return shuttle_chair
-
-		//last hurrah
+	if(!isnull(arrivals_area))
 		var/list/turf/available_turfs = list()
-		for(var/turf/arrivals_turf in arrivals_area)
-			if(!arrivals_turf.is_blocked_turf(TRUE))
+		for (var/list/zlevel_turfs as anything in arrivals_area.get_zlevel_turf_lists())
+			for (var/turf/arrivals_turf as anything in zlevel_turfs)
+				var/obj/structure/chair/shuttle_chair = locate() in arrivals_turf
+				if(!isnull(shuttle_chair))
+					return shuttle_chair
+				if(arrivals_turf.is_blocked_turf(TRUE))
+					continue
 				available_turfs += arrivals_turf
+
 		if(length(available_turfs))
 			return pick(available_turfs)
 
-	//pick an open spot on arrivals and dump em
-	var/list/arrivals_turfs = shuffle(get_area_turfs(/area/shuttle/arrival))
-	if(length(arrivals_turfs))
-		for(var/turf/arrivals_turf in arrivals_turfs)
-			if(!arrivals_turf.is_blocked_turf(TRUE))
-				return arrivals_turf
-		//last chance, pick ANY spot on arrivals and dump em
-		return pick(arrivals_turfs)
-
 	stack_trace("Unable to find last resort spawn point.")
 	return GET_ERROR_ROOM
-
 
 ///Lands specified mob at a random spot in the hallways
 /datum/controller/subsystem/job/proc/DropLandAtRandomHallwayPoint(mob/living/living_mob)
@@ -765,7 +746,7 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/get_living_heads()
 	. = list()
 	for(var/datum/mind/head as anything in get_crewmember_minds())
-		if(!(head.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+		if(!(head.assigned_role.job_flags & JOB_HEAD_OF_STAFF))
 			continue
 		if(isnull(head.current) || head.current.stat == DEAD)
 			continue
@@ -775,7 +756,7 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/get_all_heads()
 	. = list()
 	for(var/datum/mind/head as anything in get_crewmember_minds())
-		if(head.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+		if(head.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 			. += head
 
 /// Returns a list of minds of all security members who are alive
@@ -943,5 +924,3 @@ SUBSYSTEM_DEF(job)
 		return TRUE
 
 	return FALSE
-
-#undef VERY_LATE_ARRIVAL_TOAST_PROB

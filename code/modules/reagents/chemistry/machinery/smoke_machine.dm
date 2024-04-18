@@ -13,7 +13,6 @@
 	var/efficiency = 20
 	var/on = FALSE
 	var/cooldown = 0
-	var/screen = "home"
 	var/useramount = 30 // Last used amount
 	var/setting = 1 // displayed range is 3 * setting
 	var/max_range = 3 // displayed max range is 3 * max range
@@ -23,7 +22,7 @@
 	src.location = get_turf(location)
 	src.amount = amount
 	carry?.copy_to(chemholder, 20)
-	carry?.remove_any(amount / efficiency)
+	carry?.remove_all(amount / efficiency)
 
 /// A factory which produces clouds of smoke for the smoke machine.
 /datum/effect_system/fluid_spread/smoke/chem/smoke_machine
@@ -38,6 +37,7 @@
 	. = ..()
 	create_reagents(REAGENTS_BASE_VOLUME, INJECTABLE)
 	AddComponent(/datum/component/plumbing/simple_demand)
+	AddComponent(/datum/component/simple_rotation)
 	for(var/datum/stock_part/matter_bin/B in component_parts)
 		reagents.maximum_volume += REAGENTS_BASE_VOLUME * B.tier
 	if(is_operational)
@@ -78,7 +78,6 @@
 
 
 /obj/machinery/smoke_machine/process()
-	..()
 	if(reagents.total_volume == 0)
 		on = FALSE
 		update_appearance()
@@ -90,13 +89,13 @@
 		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/smoke = new()
 		smoke.set_up(setting * 3, holder = src, location = location, carry = reagents, efficiency = efficiency)
 		smoke.start()
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 
 /obj/machinery/smoke_machine/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(default_unfasten_wrench(user, tool, time = 4 SECONDS))
 		on = FALSE
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return FALSE
 
 /obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, params)
@@ -113,10 +112,9 @@
 		return
 	return ..()
 
-/obj/machinery/smoke_machine/deconstruct()
+/obj/machinery/smoke_machine/on_deconstruction(disassembled)
 	reagents.expose(loc, TOUCH)
 	reagents.clear_reagents()
-	return ..()
 
 /obj/machinery/smoke_machine/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -126,18 +124,16 @@
 
 /obj/machinery/smoke_machine/ui_data(mob/user)
 	var/data = list()
-	var/TankContents[0]
-	var/TankCurrentVolume = 0
+	var/tank_contents = list()
+	var/tank_current_volume = 0
 	for(var/datum/reagent/R in reagents.reagent_list)
-		TankContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
-		TankCurrentVolume += R.volume
-	data["TankContents"] = TankContents
-	data["isTankLoaded"] = reagents.total_volume ? TRUE : FALSE
-	data["TankCurrentVolume"] = reagents.total_volume ? reagents.total_volume : null
-	data["TankMaxVolume"] = reagents.maximum_volume
+		tank_contents += list(list("name" = R.name, "volume" = R.volume)) // list in a list because Byond merges the first list...
+		tank_current_volume += R.volume
+	data["tankContents"] = tank_contents
+	data["tankCurrentVolume"] = reagents.total_volume ? reagents.total_volume : null
+	data["tankMaxVolume"] = reagents.maximum_volume
 	data["active"] = on
 	data["setting"] = setting
-	data["screen"] = screen
 	data["maxSetting"] = max_range
 	return data
 
@@ -163,8 +159,5 @@
 				message_admins("[ADMIN_LOOKUPFLW(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_VERBOSEJMP(src)].")
 				usr.log_message("activated a smoke machine that contains [english_list(reagents.reagent_list)]", LOG_GAME)
 				log_combat(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
-		if("goScreen")
-			screen = params["screen"]
-			. = TRUE
 
 #undef REAGENTS_BASE_VOLUME

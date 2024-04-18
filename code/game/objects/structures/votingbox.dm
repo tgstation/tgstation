@@ -133,7 +133,7 @@
 /obj/structure/votebox/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool, time = 4 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/votebox/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -149,9 +149,8 @@
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(droppoint)
 
-/obj/structure/votebox/deconstruct(disassembled)
+/obj/structure/votebox/atom_deconstruct(disassembled)
 	dump_contents()
-	. = ..()
 
 /obj/structure/votebox/proc/raffle(mob/user)
 	var/list/options = list()

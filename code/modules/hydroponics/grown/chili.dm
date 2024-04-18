@@ -39,7 +39,7 @@
 	lifespan = 25
 	maturation = 4
 	production = 4
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 	genes = list(/datum/plant_gene/trait/chem_cooling)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/frostoil = 0.25, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
@@ -66,7 +66,7 @@
 	maturation = 10
 	production = 10
 	yield = 3
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 	genes = list(/datum/plant_gene/trait/chem_heating, /datum/plant_gene/trait/backfire/chili_heat)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.3, /datum/reagent/consumable/capsaicin = 0.55, /datum/reagent/consumable/nutriment = 0.04)
@@ -93,7 +93,7 @@
 	maturation = 10
 	production = 10
 	yield = 3
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.08, /datum/reagent/consumable/nutriment = 0.04)

@@ -87,7 +87,7 @@
 	var/obj/item/tool = user.get_active_held_item()
 	if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 		return TRUE
-	if(tool && tool.item_flags) //Mechanic organ manipulation isn't done with just surgery tools
+	if(tool && tool.tool_behaviour) //Mechanic organ manipulation isn't done with just surgery tools
 		to_chat(user, span_warning("This step requires a different tool!"))
 		return TRUE
 
@@ -252,6 +252,7 @@
 				span_notice("[user] inserts something into [target]'s [parse_zone(target_zone)]!"),
 			)
 			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain as your new [tool.name] comes to life!")
+			target_organ.on_surgical_insertion(user, target, target_zone, tool)
 		else
 			target_organ.forceMove(target.loc)
 

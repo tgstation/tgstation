@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/heretic_summon
+/*mob/living/simple_animal/hostile/heretic_summon
 	name = "Eldritch Demon"
 	real_name = "Eldritch Demon"
 	desc = "A horror from beyond this realm."
@@ -427,3 +427,4 @@
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
 		/datum/action/cooldown/spell/emp/eldritch,
 	)
+*/

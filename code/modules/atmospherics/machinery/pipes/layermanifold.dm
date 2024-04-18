@@ -12,6 +12,7 @@
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "manifoldlayer"
 	paintable = TRUE
+	has_gas_visuals = FALSE
 
 	///Reference to all the nodes in the front
 	var/list/front_nodes
@@ -98,7 +99,7 @@
 	normalize_cardinal_directions()
 	find_all_connections()
 
-/obj/machinery/atmospherics/pipe/layer_manifold/set_piping_layer()
+/obj/machinery/atmospherics/pipe/layer_manifold/set_piping_layer(new_layer)
 	piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/atmospherics/pipe/layer_manifold/pipeline_expansion()

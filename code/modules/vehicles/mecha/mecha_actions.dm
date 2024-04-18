@@ -91,17 +91,18 @@
 
 	chassis.toggle_strafe()
 
-/obj/vehicle/sealed/mecha/AltClick(mob/living/user)
-	if(!(user in occupants) || !user.can_perform_action(src))
-		return
+/obj/vehicle/sealed/mecha/click_alt(mob/living/user)
+	if(!(user in occupants))
+		return CLICK_ACTION_BLOCKING
 	if(!(user in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE)))
 		to_chat(user, span_warning("You're in the wrong seat to control movement."))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	toggle_strafe()
+	return CLICK_ACTION_SUCCESS
 
 /obj/vehicle/sealed/mecha/proc/toggle_strafe()
-	if(!(mecha_flags & CANSTRAFE))
+	if(!(mecha_flags & CAN_STRAFE))
 		to_chat(occupants, "this mecha doesn't support strafing!")
 		return
 
@@ -152,6 +153,5 @@
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 	chassis.toggle_overclock(forced_state)
-	chassis.balloon_alert(owner, chassis.overclock_mode ? "started overclocking" : "stopped overclocking")
 	button_icon_state = "mech_overload_[chassis.overclock_mode ? "on" : "off"]"
 	build_all_button_icons()

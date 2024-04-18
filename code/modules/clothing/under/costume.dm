@@ -239,6 +239,7 @@
 						"Black" = "black_mech_suit",
 						)
 
+
 /obj/item/clothing/under/costume/russian_officer
 	name = "\improper Russian officer's uniform"
 	desc = "The latest in fashionable russian outfits."
@@ -359,6 +360,11 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
+// For the nuke-ops cowboy fit. Sadly no Lone Ranger fit & I don't wanna bloat costume files further.
+/obj/item/clothing/under/costume/dutch/syndicate
+	desc = "You can feel a <b>god damn plan</b> coming on, and the armor lining in this suit'll do wonders in makin' it work."
+	armor_type = /datum/armor/clothing_under/syndicate
+
 /obj/item/clothing/under/costume/osi
 	name = "O.S.I. jumpsuit"
 	icon_state = "osi_jumpsuit"
@@ -375,9 +381,24 @@
 	name = "Martial Artist Gi"
 	desc = "Assistant, nukie, whatever. You can beat anyone; it's called hard work!"
 	icon_state = "martial_arts_gi"
+	greyscale_config = /datum/greyscale_config/gi
+	greyscale_config_worn = /datum/greyscale_config/gi/worn
+	greyscale_colors = "#f1eeee#000000"
+	flags_1 = IS_PLAYER_COLORABLE_1
 	inhand_icon_state = null
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/gi/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
+
+/obj/item/clothing/under/costume/gi/goku
+	name = "Sacred Gi"
+	desc = "Created by a man who touched the hearts and lives of many."
+	icon_state = "martial_arts_gi_goku"
+	greyscale_colors = "#f89925#3e6dd7"
 
 /obj/item/clothing/under/costume/traditional
 	name = "Traditional Suit"

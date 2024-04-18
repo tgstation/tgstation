@@ -278,15 +278,21 @@
 	update_held_items()
 	update_worn_handcuffs()
 	update_worn_legcuffs()
-	update_fire()
 	update_body()
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/carbon/update_held_items()
+	. = ..()
 	remove_overlay(HANDS_LAYER)
 	if (handcuffed)
 		drop_all_held_items()
 		return
 
+	overlays_standing[HANDS_LAYER] = get_held_overlays()
+	apply_overlay(HANDS_LAYER)
+
+/// Generate held item overlays
+/mob/living/carbon/proc/get_held_overlays()
 	var/list/hands = list()
 	for(var/obj/item/I in held_items)
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
@@ -307,57 +313,54 @@
 			icon_file = I.righthand_file
 
 		hands += I.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+	return hands
 
-	overlays_standing[HANDS_LAYER] = hands
-	apply_overlay(HANDS_LAYER)
-
-/mob/living/carbon/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
-	var/fire_icon = "[dna?.species.fire_overlay || "human"]_[stacks > MOB_BIG_FIRE_STACK_THRESHOLD ? "big_fire" : "small_fire"][suffix]"
+/mob/living/carbon/get_fire_overlay(stacks, on_fire)
+	var/fire_icon = "[dna?.species.fire_overlay || "human"]_[stacks > MOB_BIG_FIRE_STACK_THRESHOLD ? "big_fire" : "small_fire"]"
 
 	if(!GLOB.fire_appearances[fire_icon])
-		GLOB.fire_appearances[fire_icon] = mutable_appearance('icons/mob/effects/onfire.dmi', fire_icon, -FIRE_LAYER, appearance_flags = RESET_COLOR)
+		GLOB.fire_appearances[fire_icon] = mutable_appearance(
+			'icons/mob/effects/onfire.dmi',
+			fire_icon,
+			-HIGHEST_LAYER,
+			appearance_flags = RESET_COLOR,
+		)
 
-	if((stacks > 0 && on_fire) || HAS_TRAIT(src, TRAIT_PERMANENTLY_ONFIRE))
-		if(fire_icon == last_icon_state)
-			return last_icon_state
-
-		remove_overlay(FIRE_LAYER)
-		overlays_standing[FIRE_LAYER] = GLOB.fire_appearances[fire_icon]
-		apply_overlay(FIRE_LAYER)
-		return fire_icon
-
-	if(!last_icon_state)
-		return last_icon_state
-
-	remove_overlay(FIRE_LAYER)
-	apply_overlay(FIRE_LAYER)
-	return null
+	return GLOB.fire_appearances[fire_icon]
 
 /mob/living/carbon/update_damage_overlays()
 	remove_overlay(DAMAGE_LAYER)
 
-	var/mutable_appearance/damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "blank", -DAMAGE_LAYER)
-	overlays_standing[DAMAGE_LAYER] = damage_overlay
-
+	var/mutable_appearance/damage_overlay
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
-		if(iter_part.dmg_overlay_type)
-			if(iter_part.brutestate)
-				damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0") //we're adding icon_states of the base image as overlays
-			if(iter_part.burnstate)
-				damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_0[iter_part.burnstate]")
+		if(!iter_part.dmg_overlay_type)
+			continue
+		if(isnull(damage_overlay) && (iter_part.brutestate || iter_part.burnstate))
+			damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "blank", -DAMAGE_LAYER, appearance_flags = KEEP_TOGETHER)
+		if(iter_part.brutestate)
+			damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0") //we're adding icon_states of the base image as overlays
+		if(iter_part.burnstate)
+			damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_0[iter_part.burnstate]")
 
+	if(isnull(damage_overlay))
+		return
+
+	overlays_standing[DAMAGE_LAYER] = damage_overlay
 	apply_overlay(DAMAGE_LAYER)
 
 /mob/living/carbon/update_wound_overlays()
 	remove_overlay(WOUND_LAYER)
 
-	var/mutable_appearance/wound_overlay = mutable_appearance('icons/mob/effects/bleed_overlays.dmi', "blank", -WOUND_LAYER)
-	overlays_standing[WOUND_LAYER] = wound_overlay
-
+	var/mutable_appearance/wound_overlay
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		if(iter_part.bleed_overlay_icon)
+			wound_overlay ||= mutable_appearance('icons/mob/effects/bleed_overlays.dmi', "blank", -WOUND_LAYER, appearance_flags = KEEP_TOGETHER)
 			wound_overlay.add_overlay(iter_part.bleed_overlay_icon)
 
+	if(isnull(wound_overlay))
+		return
+
+	overlays_standing[WOUND_LAYER] = wound_overlay
 	apply_overlay(WOUND_LAYER)
 
 /mob/living/carbon/update_worn_mask()
@@ -403,6 +406,14 @@
 		update_hud_back(back)
 
 	apply_overlay(BACK_LAYER)
+
+/mob/living/carbon/update_worn_legcuffs()
+	remove_overlay(LEGCUFF_LAYER)
+	clear_alert("legcuffed")
+	if(legcuffed)
+		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/simple/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
+		apply_overlay(LEGCUFF_LAYER)
+		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
 /mob/living/carbon/update_worn_head()
 	remove_overlay(HEAD_LAYER)
@@ -482,7 +493,7 @@
 		var/old_key = icon_render_keys?[limb.body_zone] //Checks the mob's icon render key list for the bodypart
 		icon_render_keys[limb.body_zone] = (limb.is_husked) ? limb.generate_husk_key().Join() : limb.generate_icon_key().Join() //Generates a key for the current bodypart
 
-		if(icon_render_keys[limb.body_zone] != old_key || get_top_offset() != last_top_offset) //If the keys match, that means the limb doesn't need to be redrawn
+		if(icon_render_keys[limb.body_zone] != old_key) //If the keys match, that means the limb doesn't need to be redrawn
 			needs_update += limb
 
 	var/list/missing_bodyparts = get_missing_limbs()
@@ -499,15 +510,10 @@
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		if(limb in needs_update)
 			var/bodypart_icon = limb.get_limb_icon()
-			if(!istype(limb, /obj/item/bodypart/leg))
-				var/top_offset = get_top_offset()
-				for(var/image/image as anything in bodypart_icon)
-					image.pixel_y += top_offset
 			new_limbs += bodypart_icon
 			limb_icon_cache[icon_render_keys[limb.body_zone]] = bodypart_icon //Caches the icon with the bodypart key, as it is new
 		else
 			new_limbs += limb_icon_cache[icon_render_keys[limb.body_zone]] //Pulls existing sprites from the cache
-		last_top_offset = get_top_offset()
 
 
 	remove_overlay(BODYPARTS_LAYER)
@@ -516,19 +522,6 @@
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
 
 	apply_overlay(BODYPARTS_LAYER)
-
-/// This looks at the chest and legs of the mob and decides how much our chest, arms, and head should be adjusted. This is useful for limbs that are larger or smaller than the scope of normal human height while keeping the feet anchored to the bottom of the tile
-/mob/living/carbon/proc/get_top_offset()
-	var/from_chest
-	var/from_leg
-	for(var/obj/item/bodypart/leg/leg_checked in bodyparts)
-		if(leg_checked.top_offset > from_leg || isnull(from_leg)) // We find the tallest leg available
-			from_leg = leg_checked.top_offset
-	if(isnull(from_leg))
-		from_leg = 0 // If we have no legs, we set this to zero to avoid any math issues that might stem from it being NULL
-	for(var/obj/item/bodypart/chest/chest_checked in bodyparts) // Take the height from the chest
-		from_chest = chest_checked.top_offset
-	return (from_chest + from_leg) // The total hight of the chest and legs together
 
 /////////////////////////
 // Limb Icon Cache 2.0 //
@@ -567,6 +560,7 @@
 /obj/item/bodypart/proc/generate_husk_key()
 	RETURN_TYPE(/list)
 	. = list()
+	. += "[limb_id]-"
 	. += "[husk_type]"
 	. += "-husk"
 	. += "-[body_zone]"

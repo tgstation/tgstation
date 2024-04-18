@@ -167,16 +167,16 @@
 				var/area/area = get_area(beacon)
 				targets[avoid_assoc_duplicate_keys(format_text(area.name), area_index)] = beacon
 
-		for (var/obj/item/implant/tracking/tracking_implant in GLOB.tracked_implants)
-			if (!tracking_implant.imp_in || !isliving(tracking_implant.loc) || !tracking_implant.allow_teleport)
+		for (var/obj/item/implant/beacon/tracking_beacon in GLOB.tracked_implants)
+			if (isnull(tracking_beacon.imp_in) || !isliving(tracking_beacon.loc))
 				continue
 
-			var/mob/living/implanted = tracking_implant.loc
-			if (implanted.stat == DEAD && implanted.timeofdeath + tracking_implant.lifespan_postmortem < world.time)
+			var/mob/living/implanted = tracking_beacon.loc
+			if (implanted.stat == DEAD && implanted.timeofdeath + tracking_beacon.lifespan_postmortem < world.time)
 				continue
 
-			if (is_eligible(tracking_implant))
-				targets[avoid_assoc_duplicate_keys("[implanted.real_name] ([format_text(get_area(implanted))])", area_index)] = tracking_implant
+			if (is_eligible(tracking_beacon))
+				targets[avoid_assoc_duplicate_keys("[implanted.real_name] ([format_text(get_area(implanted))])", area_index)] = tracking_beacon
 	else
 		for (var/obj/machinery/teleport/station/station as anything in power_station.linked_stations)
 			if (is_eligible(station) && station.teleporter_hub)
@@ -201,7 +201,7 @@
 
 	if (regime_set == "Teleporter")
 		var/desc = tgui_input_list(usr, "Select a location to lock in", "Locking Computer", sort_list(targets))
-		if(isnull(desc))
+		if(isnull(desc) || !user.can_perform_action(src))
 			return
 		set_teleport_target(targets[desc])
 		user.log_message("set the teleporter target to [targets[desc]].]", LOG_GAME)
@@ -211,7 +211,7 @@
 			return
 
 		var/desc = tgui_input_list(usr, "Select a station to lock in", "Locking Computer", sort_list(targets))
-		if(isnull(desc))
+		if(isnull(desc)|| !user.can_perform_action(src))
 			return
 		var/obj/machinery/teleport/station/target_station = targets[desc]
 		if(!target_station || !target_station.teleporter_hub)

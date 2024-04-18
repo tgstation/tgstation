@@ -1,5 +1,15 @@
-import { useBackend, useLocalState } from '../backend';
-import { Button, Dropdown, Input, Section, Stack, TextArea } from '../components';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Input,
+  Section,
+  Stack,
+  TextArea,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -8,6 +18,9 @@ type Data = {
   command_name: string;
   command_name_presets: string[];
   command_report_content: string;
+  announcement_color: string;
+  announcement_colors: string[];
+  subheader: string;
   custom_name: string;
   played_sound: string;
   print_report: string;
@@ -18,15 +31,18 @@ export const CommandReport = () => {
     <Window
       title="Create Command Report"
       width={325}
-      height={525}
-      theme="admin">
+      height={685}
+      theme="admin"
+    >
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
             <CentComName />
+            <AnnouncementColor />
+            <AnnouncementSound />
           </Stack.Item>
           <Stack.Item>
-            <AnnouncementSound />
+            <SubHeader />
           </Stack.Item>
           <Stack.Item>
             <ReportText />
@@ -38,9 +54,15 @@ export const CommandReport = () => {
 };
 
 /** Allows the user to set the "sender" of the message via dropdown */
-const CentComName = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const CentComName = (props) => {
+  const { act, data } = useBackend<Data>();
   const { command_name, command_name_presets = [], custom_name } = data;
+
+  const sendName = (value) => {
+    act('update_command_name', {
+      updated_name: value,
+    });
+  };
 
   return (
     <Section title="Set Central Command name" textAlign="center">
@@ -48,11 +70,7 @@ const CentComName = (props, context) => {
         width="100%"
         selected={command_name}
         options={command_name_presets}
-        onSelected={(value) =>
-          act('update_command_name', {
-            updated_name: value,
-          })
-        }
+        onSelected={(value) => sendName(value)}
       />
       {!!custom_name && (
         <Input
@@ -60,20 +78,60 @@ const CentComName = (props, context) => {
           mt={1}
           value={command_name}
           placeholder={command_name}
-          onChange={(_, value) =>
-            act('update_command_name', {
-              updated_name: value,
-            })
-          }
+          onChange={(_, value) => sendName(value)}
         />
       )}
     </Section>
   );
 };
 
+/** Allows the user to set the "sender" of the message via dropdown */
+const SubHeader = (props) => {
+  const { act, data } = useBackend<Data>();
+  const { subheader } = data;
+
+  return (
+    <Section title="Set report subheader" textAlign="center">
+      <Box>Keep blank to not include a subheader</Box>
+      <Input
+        width="100%"
+        mt={1}
+        value={subheader}
+        placeholder={subheader}
+        onChange={(_, value) =>
+          act('set_subheader', {
+            new_subheader: value,
+          })
+        }
+      />
+    </Section>
+  );
+};
+
+/** Features a section with dropdown for the announcement colour. */
+const AnnouncementColor = (props) => {
+  const { act, data } = useBackend<Data>();
+  const { announcement_colors = [], announcement_color } = data;
+
+  return (
+    <Section title="Set announcement color" textAlign="center">
+      <Dropdown
+        width="100%"
+        displayText={announcement_color}
+        options={announcement_colors}
+        onSelected={(value) =>
+          act('update_announcement_color', {
+            updated_announcement_color: value,
+          })
+        }
+      />
+    </Section>
+  );
+};
+
 /** Features a section with dropdown for sounds. */
-const AnnouncementSound = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const AnnouncementSound = (props) => {
+  const { act, data } = useBackend<Data>();
   const { announcer_sounds = [], played_sound } = data;
 
   return (
@@ -93,41 +151,39 @@ const AnnouncementSound = (props, context) => {
 };
 
 /** Creates the report textarea with a submit button. */
-const ReportText = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const ReportText = (props) => {
+  const { act, data } = useBackend<Data>();
   const { announce_contents, print_report, command_report_content } = data;
-  const [commandReport, setCommandReport] = useLocalState<string>(
-    context,
-    'textArea',
-    command_report_content
-  );
+  const [commandReport, setCommandReport] = useState(command_report_content);
 
   return (
     <Section title="Set report text" textAlign="center">
       <TextArea
         height="200px"
         mb={1}
-        onInput={(_, value) => setCommandReport(value)}
+        onChange={(_, value) => setCommandReport(value)}
         value={commandReport}
       />
       <Stack vertical>
         <Stack.Item>
           <Button.Checkbox
             fluid
-            checked={announce_contents}
-            onClick={() => act('toggle_announce')}>
+            checked={!!announce_contents}
+            onClick={() => act('toggle_announce')}
+          >
             Announce Contents
           </Button.Checkbox>
           <Button.Checkbox
             fluid
-            checked={print_report || !announce_contents}
+            checked={!!print_report || !announce_contents}
             disabled={!announce_contents}
             onClick={() => act('toggle_printing')}
             tooltip={
               !announce_contents &&
               "Printing the report is required since we aren't announcing its contents."
             }
-            tooltipPosition="top">
+            tooltipPosition="top"
+          >
             Print Report
           </Button.Checkbox>
         </Stack.Item>

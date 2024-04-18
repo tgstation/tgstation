@@ -1,7 +1,8 @@
 /datum/action/cooldown/spell/touch/star_touch
 	name = "Star Touch"
-	desc = "Marks someone with a star mark or puts someone with a star mark to sleep for 4 seconds, removing the star mark. \
-		You and your target are linked with a cosmic ray, burning them for up to a minute, or \
+	desc = "Manifests cosmic fields on tiles next to you while marking the victim with a star mark \
+		or consuming an already present star mark to put them to sleep for 4 seconds. \
+		They will then be linked to you with a cosmic ray, burning them for up to a minute, or \
 		until they can escape your sight. Star Touch can also remove Cosmic Runes, or teleport you \
 		to your Star Gazer when used on yourself."
 	background_icon_state = "bg_heretic"
@@ -73,11 +74,13 @@
 
 /obj/item/melee/touch_attack/star_touch/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/effect_remover, \
+	AddComponent(\
+		/datum/component/effect_remover, \
 		success_feedback = "You remove %THEEFFECT.", \
 		tip_text = "Clear rune", \
 		on_clear_callback = CALLBACK(src, PROC_REF(after_clear_rune)), \
-		effects_we_clear = list(/obj/effect/cosmic_rune))
+		effects_we_clear = list(/obj/effect/cosmic_rune), \
+	)
 
 /*
  * Callback for effect_remover component.
@@ -231,16 +234,13 @@
 /datum/status_effect/cosmic_beam/proc/on_beam_hit(mob/living/target)
 	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
 		target.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
-	return
 
 /// What to process when the beam is connected to a target
 /datum/status_effect/cosmic_beam/proc/on_beam_tick(mob/living/target)
-	target.adjustFireLoss(3)
-	target.adjustCloneLoss(1)
-	return
+	if(target.adjustFireLoss(3, updating_health = FALSE))
+		target.updatehealth()
 
 /// What to remove when the beam disconnects from a target
 /datum/status_effect/cosmic_beam/proc/on_beam_release(mob/living/target)
 	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
 		target.RemoveElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
-	return

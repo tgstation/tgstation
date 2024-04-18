@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/pointed/projectile/star_blast
 	name = "Star Blast"
-	desc = "This spell fires a disk with cosmic energies at a target."
+	desc = "This spell fires a disk with cosmic energies at a target, spreading the star mark."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -37,7 +37,7 @@
 	. = ..()
 	AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 
-/obj/projectile/magic/star_ball/on_hit(atom/target, blocked = FALSE, pierce_hit)
+/obj/projectile/magic/star_ball/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/mob/living/cast_on = firer
 	for(var/mob/living/nearby_mob in range(star_mark_range, target))

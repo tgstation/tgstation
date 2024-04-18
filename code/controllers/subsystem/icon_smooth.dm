@@ -9,6 +9,7 @@ SUBSYSTEM_DEF(icon_smooth)
 	var/list/blueprint_queue = list()
 	var/list/smooth_queue = list()
 	var/list/deferred = list()
+	var/list/deferred_by_source = list()
 
 /datum/controller/subsystem/icon_smooth/fire()
 	// We do not want to smooth icons of atoms whose neighbors are not initialized yet,
@@ -61,16 +62,30 @@ SUBSYSTEM_DEF(icon_smooth)
 
 	return SS_INIT_SUCCESS
 
+/// Releases a pool of delayed smooth attempts from a particular source
+/datum/controller/subsystem/icon_smooth/proc/free_deferred(source_to_free)
+	smooth_queue += deferred_by_source[source_to_free]
+	deferred_by_source -= source_to_free
+	if(!can_fire)
+		can_fire = TRUE
 
 /datum/controller/subsystem/icon_smooth/proc/add_to_queue(atom/thing)
 	if(thing.smoothing_flags & SMOOTH_QUEUED)
 		return
 	thing.smoothing_flags |= SMOOTH_QUEUED
+	// If we're currently locked into mapload BY something
+	// Then put us in a deferred list that we release when this mapload run is finished
+	if(initialized && length(SSatoms.initialized_state) && SSatoms.initialized == INITIALIZATION_INNEW_MAPLOAD)
+		var/source = SSatoms.get_initialized_source()
+		LAZYADD(deferred_by_source[source], thing)
+		return
 	smooth_queue += thing
 	if(!can_fire)
 		can_fire = TRUE
 
 /datum/controller/subsystem/icon_smooth/proc/remove_from_queues(atom/thing)
+	// Lack of removal from deferred_by_source is safe because the lack of SMOOTH_QUEUED will just free it anyway
+	// Hopefully this'll never cause a harddel (dies)
 	thing.smoothing_flags &= ~SMOOTH_QUEUED
 	smooth_queue -= thing
 	if(blueprint_queue)

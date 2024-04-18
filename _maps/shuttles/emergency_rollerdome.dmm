@@ -1,51 +1,61 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "cc" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/turf/open/floor/wood,
+/obj/structure/railing,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/shuttle/escape)
 "ce" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/eighties,
+/area/shuttle/escape)
+"cs" = (
+/obj/structure/railing/corner{
+	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 "cP" = (
 /obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/eighties,
 /area/shuttle/escape)
 "dJ" = (
-/obj/effect/turf_decal/siding/wood,
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"eR" = (
-/obj/structure/table,
-/obj/item/reagent_containers/cup/glass/shaker,
-/obj/item/storage/box/drinkingglasses,
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"fX" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/structure/railing/corner/end/flip,
+/obj/structure/railing/corner/end{
 	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/shuttle/escape)
+"eR" = (
+/obj/item/kirbyplants/potty{
+	name = "Cake plant"
+	},
+/turf/open/floor/wood/parquet,
+/area/shuttle/escape)
+"fX" = (
+/obj/structure/chair/stool/bar/directional/east,
+/turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "hD" = (
 /obj/machinery/door/airlock/gold/glass,
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
-/turf/open/floor/wood,
+/turf/open/floor/eighties,
 /area/shuttle/escape)
 "hF" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
+"hM" = (
+/obj/machinery/jukebox/disco/indestructible,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/shuttle/escape)
+"hZ" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
+/turf/open/floor/wood/parquet,
+/area/shuttle/escape)
 "im" = (
-/obj/machinery/computer/emergency_shuttle,
-/turf/open/floor/wood,
+/obj/structure/chair/comfy/lime,
+/turf/open/floor/eighties,
 /area/shuttle/escape)
 "jD" = (
 /obj/structure/rack,
@@ -70,195 +80,270 @@
 /obj/machinery/vending/games,
 /turf/open/floor/eighties,
 /area/shuttle/escape)
+"mP" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/eighties,
+/area/shuttle/escape)
 "ns" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/effect/fun_balloon/sentience/emergency_shuttle{
-	group_name = "snack bar drone at Uncle Pete's Rollerdome"
-	},
-/turf/open/floor/wood,
+/obj/structure/etherealball,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 "nw" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks{
-	dir = 1
-	},
-/turf/open/floor/wood,
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/eighties,
 /area/shuttle/escape)
 "nN" = (
-/obj/structure/railing{
-	dir = 5
+/obj/structure/railing/corner/end{
+	dir = 4
 	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 5
+/obj/structure/railing/corner/end{
+	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 "nT" = (
 /obj/machinery/computer/atmos_alert{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "od" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "pa" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/wood,
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 "pj" = (
 /turf/template_noop,
 /area/template_noop)
 "pI" = (
 /obj/machinery/light/directional/west,
-/turf/open/floor/wood,
+/turf/open/floor/eighties,
 /area/shuttle/escape)
 "qU" = (
 /obj/machinery/light/directional/east,
-/turf/open/floor/wood,
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
+/turf/open/floor/wood/parquet,
+/area/shuttle/escape)
+"rX" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/obj/machinery/light/directional/north,
+/turf/open/floor/eighties,
 /area/shuttle/escape)
 "ss" = (
 /obj/docking_port/mobile/emergency{
 	name = "Uncle Pete's Rollerdome"
 	},
-/obj/machinery/door/airlock/gold/glass,
-/turf/open/floor/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/door/airlock/grunge,
+/turf/open/floor/eighties,
 /area/shuttle/escape)
 "tG" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "uN" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/item/storage/bag/tray,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "vq" = (
-/obj/structure/railing{
-	dir = 9
+/obj/machinery/computer/emergency_shuttle{
+	dir = 4
 	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/turf/open/floor/wood,
+/turf/open/floor/eighties,
 /area/shuttle/escape)
 "wf" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating/elevatorshaft,
 /area/shuttle/escape)
 "wn" = (
-/obj/structure/chair/comfy/brown{
-	dir = 1
+/obj/structure/table/wood,
+/obj/item/clothing/head/soft/green{
+	flipped = 1;
+	pixel_x = 7;
+	pixel_y = 6
 	},
-/turf/open/floor/wood,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/suit/costume/hawaiian,
+/turf/open/floor/eighties,
 /area/shuttle/escape)
 "xK" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"ze" = (
-/obj/structure/railing,
-/obj/effect/turf_decal/siding/wood,
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"zs" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"zt" = (
-/obj/structure/table/wood,
-/obj/item/storage/fancy/cigarettes/cigars/havana,
-/obj/item/lighter{
-	pixel_x = -4;
-	pixel_y = 6
-	},
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"zx" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"zZ" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
+/area/shuttle/escape)
+"ys" = (
+/obj/structure/railing/corner/end/flip{
+	dir = 4
+	},
+/obj/structure/railing/corner/end/flip{
+	dir = 8
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/shuttle/escape)
+"ze" = (
+/obj/structure/railing/corner,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/shuttle/escape)
+"zs" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/shuttle/escape)
+"zt" = (
+/obj/structure/table/wood,
+/obj/item/storage/fancy/cigarettes/cigars/havana{
+	pixel_y = 11
+	},
+/obj/item/lighter{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/parquet,
+/area/shuttle/escape)
+"zx" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"zZ" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/shuttle/escape)
+"Au" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/drinkingglasses{
+	pixel_y = 13
+	},
+/obj/item/storage/box/drinkingglasses{
+	pixel_y = 5;
+	pixel_x = 7
+	},
+/turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "AT" = (
 /obj/structure/etherealball,
-/turf/open/floor/light,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/shuttle/escape)
 "Cg" = (
 /turf/open/floor/eighties,
 /area/shuttle/escape)
+"Cx" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/wood/parquet,
+/area/shuttle/escape)
 "Dh" = (
-/obj/effect/spawner/random/vending/snackvend,
-/turf/open/floor/wood,
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_y = 14;
+	pixel_x = 11
+	},
+/turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "DR" = (
 /obj/structure/railing{
 	dir = 6
 	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
-/turf/open/floor/wood,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 "Hi" = (
 /obj/structure/table/wood,
-/obj/item/flashlight/lamp/green,
-/turf/open/floor/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_y = 14;
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
+	pixel_y = 10;
+	pixel_x = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "HA" = (
-/obj/effect/spawner/random/vending/colavend,
-/turf/open/floor/wood,
+/obj/structure/table,
+/obj/item/pizzabox/meat{
+	pixel_y = 11
+	},
+/obj/item/pizzabox/meat{
+	pixel_y = 17
+	},
+/turf/open/floor/wood/parquet,
+/area/shuttle/escape)
+"HB" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/shuttle/escape)
 "HS" = (
-/turf/open/floor/light,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/shuttle/escape)
 "Jq" = (
 /obj/machinery/computer/security{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "JR" = (
-/obj/machinery/vending/boozeomat,
-/turf/open/floor/wood,
+/obj/structure/table/reinforced,
+/obj/item/storage/bag/tray{
+	pixel_y = 5
+	},
+/turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "Ky" = (
-/turf/open/floor/wood,
+/obj/structure/table/reinforced,
+/obj/item/pizzabox/mushroom{
+	pixel_y = 11;
+	pixel_x = -7
+	},
+/turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "KJ" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"Ms" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/shuttle/escape)
 "Ow" = (
-/obj/structure/table,
-/obj/item/storage/box/drinkingglasses,
-/turf/open/floor/wood,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/shuttle/escape)
 "Ox" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/item/pizzabox/meat,
-/obj/item/pizzabox/meat,
-/obj/item/pizzabox/meat,
-/obj/item/pizzabox/mushroom,
-/obj/item/pizzabox/margherita,
-/obj/item/pizzabox/pineapple,
-/obj/item/pizzabox/vegetable,
-/turf/open/floor/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/eighties,
 /area/shuttle/escape)
 "OG" = (
 /obj/machinery/computer/communications{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "ON" = (
 /obj/machinery/vending/donksofttoyvendor,
@@ -268,66 +353,88 @@
 /obj/machinery/computer/crew{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "Qv" = (
-/mob/living/simple_animal/drone/snowflake/bardrone,
-/turf/open/floor/wood,
+/obj/structure/table/reinforced,
+/obj/item/pizzabox/meat{
+	pixel_y = -1
+	},
+/obj/item/pizzabox/pineapple{
+	pixel_y = 7;
+	pixel_x = 6
+	},
+/turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "QO" = (
-/obj/machinery/door/airlock/gold/glass,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/door/airlock/grunge,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Ry" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/railing,
-/turf/open/floor/wood,
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 "RN" = (
-/obj/machinery/jukebox/disco/indestructible,
-/turf/open/floor/light,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/shuttle/escape)
+"SR" = (
+/obj/structure/table/reinforced,
+/obj/effect/fun_balloon/sentience/emergency_shuttle{
+	group_name = "snack bar drone at Uncle Pete's Rollerdome"
+	},
+/obj/item/food/cake/birthday{
+	pixel_y = 7
+	},
+/turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "TU" = (
 /obj/structure/railing{
 	dir = 10
 	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 10
-	},
-/turf/open/floor/wood,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 "We" = (
 /obj/structure/chair/comfy/brown{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "Wg" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/item/storage/bag/tray,
-/obj/item/food/cake/birthday,
-/obj/item/knife/kitchen,
-/turf/open/floor/wood,
+/obj/effect/spawner/random/vending/colavend,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/eighties,
 /area/shuttle/escape)
 "Yr" = (
-/obj/structure/table/wood/poker,
-/obj/item/storage/box/drinkingglasses,
-/obj/item/reagent_containers/cup/glass/bottle/whiskey,
 /obj/machinery/light/directional/south,
-/turf/open/floor/wood,
+/turf/open/floor/eighties,
+/area/shuttle/escape)
+"Zf" = (
+/mob/living/basic/drone/snowflake/bardrone,
+/turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "Zo" = (
-/obj/structure/table/wood/shuttle_bar,
-/turf/open/floor/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/eighties,
 /area/shuttle/escape)
 "ZN" = (
-/obj/effect/turf_decal/siding/wood{
+/obj/structure/railing/corner/end/flip{
 	dir = 1
 	},
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/wood,
+/obj/structure/railing/corner/end,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -361,6 +468,7 @@ tG
 tG
 hF
 AT
+mP
 Cg
 Cg
 Cg
@@ -370,11 +478,10 @@ Cg
 Cg
 Cg
 Cg
-AT
-ce
-Ky
+ns
+Cg
 pI
-Ky
+nw
 tG
 tG
 "}
@@ -386,17 +493,17 @@ Qf
 zx
 ln
 Cg
-vq
+Cg
+Cg
+Ry
 zZ
-zZ
-zZ
-zZ
+ZN
 zZ
 TU
 Cg
 Cg
-ce
-uN
+Cg
+mP
 Ox
 Wg
 KJ
@@ -410,42 +517,42 @@ We
 zx
 cP
 Cg
-cc
-pa
-Ky
-Ky
-Ky
-pa
-ze
 Cg
+Ry
+Ms
+RN
+HS
+RN
+HB
+TU
 Cg
-ce
+mP
 Zo
-Ky
+uN
 eR
 KJ
 od
 "}
 (5,1,1) = {"
 wf
-wn
-Ky
-Ky
+vq
+Cg
+Cg
 zx
 cP
 Cg
-ZN
-pa
-HS
-HS
-HS
-pa
-Ry
-jD
 Cg
+Ow
+RN
+HS
+RN
+HS
+RN
+cc
+jD
 ce
 uN
-Ky
+fX
 fX
 KJ
 od
@@ -453,22 +560,22 @@ od
 (6,1,1) = {"
 wf
 im
-Ky
+Cg
 Yr
 zx
-cP
+rX
 Cg
-ce
-pa
+Cg
+nN
 HS
 RN
+hM
+RN
 HS
-pa
-dJ
-Cg
+ys
 Cg
 ce
-ns
+fX
 Qv
 JR
 KJ
@@ -477,24 +584,24 @@ od
 (7,1,1) = {"
 wf
 wn
-Ky
-Ky
+Cg
+Cg
 hD
 Cg
 Cg
-ZN
-pa
-HS
-HS
-HS
-pa
-Ry
-jD
 Cg
+Ow
+RN
+HS
+RN
+HS
+RN
+cc
+jD
 ce
-Zo
+JR
 Ky
-nw
+uN
 KJ
 od
 "}
@@ -506,19 +613,19 @@ xK
 zx
 ON
 Cg
-cc
-pa
-Ky
-Ky
-Ky
-pa
-ze
 Cg
+pa
+cs
+RN
+HS
+RN
+ze
+DR
 Cg
 ce
+SR
+Zf
 uN
-Ky
-Ow
 KJ
 od
 "}
@@ -530,17 +637,17 @@ OG
 zx
 ln
 Cg
-nN
+Cg
+Cg
+pa
 zs
-zs
-zs
-zs
+dJ
 zs
 DR
 Cg
 Cg
 ce
-Zo
+Au
 Dh
 HA
 KJ
@@ -552,21 +659,21 @@ tG
 tG
 tG
 hF
+ns
+Cg
+Cg
+Cg
+Cg
+Cg
+Cg
+Cg
+Cg
+Cg
+Cg
 AT
-Cg
-Cg
-Cg
-Cg
-Cg
-Cg
-Cg
-Cg
-Cg
-AT
-ce
-Ky
+Cx
 qU
-Ky
+hZ
 tG
 tG
 "}

@@ -3,6 +3,7 @@
  */
 
 /datum/component/shielded
+	dupe_mode = COMPONENT_DUPE_UNIQUE
 	/// The person currently wearing us
 	var/mob/living/wearer
 	/// How many charges we can have max, and how many we start with
@@ -56,7 +57,7 @@
 	if(recharge_start_delay)
 		START_PROCESSING(SSdcs, src)
 
-/datum/component/shielded/Destroy(force, silent)
+/datum/component/shielded/Destroy(force)
 	if(wearer)
 		shield_icon = "broken"
 		UnregisterSignal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS)
@@ -110,10 +111,10 @@
 /datum/component/shielded/proc/on_equipped(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
-	if((slot & ITEM_SLOT_HANDS) && !shield_inhand)
+	if(user.is_holding(parent) && !shield_inhand)
 		lost_wearer(source, user)
 		return
-	set_wearer(source, user)
+	set_wearer(user)
 
 /// Either we've been dropped or our wearer has been QDEL'd. Either way, they're no longer our problem
 /datum/component/shielded/proc/lost_wearer(datum/source, mob/user)
@@ -125,6 +126,11 @@
 		wearer = null
 
 /datum/component/shielded/proc/set_wearer(mob/user)
+	if(wearer == user)
+		return
+	if(!isnull(wearer))
+		CRASH("[type] called set_wearer with [user] but [wearer] was already the wearer!")
+
 	wearer = user
 	RegisterSignal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignal(wearer, COMSIG_QDELETING, PROC_REF(lost_wearer))
@@ -148,6 +154,14 @@
 	SIGNAL_HANDLER
 
 	COOLDOWN_START(src, recently_hit_cd, recharge_start_delay)
+
+	//No wearer? No block.
+	if(isnull(wearer))
+		return
+
+	//if our wearer isn't the owner of the block, don't block
+	if(owner != wearer)
+		return
 
 	if(current_charges <= 0)
 		return

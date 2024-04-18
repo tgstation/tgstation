@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "\"Spooky\" meteors will now properly spawn during halloween."

@@ -23,7 +23,9 @@
 		if(!tool)
 			success = TRUE
 		if(iscyborg(user))
-			success = TRUE
+			var/mob/living/silicon/robot/borg = user
+			if(istype(borg.module_active, /obj/item/borg/cyborghug))
+				success = TRUE
 
 	if(accept_any_item)
 		if(tool && tool_check(user, tool))
@@ -63,11 +65,13 @@
 
 	return FALSE
 
-#define SURGERY_SLOWDOWN_CAP_MULTIPLIER 2 //increase to make surgery slower but fail less, and decrease to make surgery faster but fail more
+#define SURGERY_SLOWDOWN_CAP_MULTIPLIER 2.5 //increase to make surgery slower but fail less, and decrease to make surgery faster but fail more
 ///Modifier given to surgery speed for dissected bodies.
 #define SURGERY_SPEED_DISSECTION_MODIFIER 0.8
 ///Modifier given to users with TRAIT_MORBID on certain surgeries
 #define SURGERY_SPEED_MORBID_CURIOSITY 0.7
+///Modifier given to patients with TRAIT_ANALGESIA
+#define SURGERY_SPEED_TRAIT_ANALGESIA 0.8
 
 /datum/surgery_step/proc/initiate(mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	// Only followers of Asclepius have the ability to use Healing Touch and perform miracle feats of surgery.
@@ -92,6 +96,9 @@
 
 	if(check_morbid_curiosity(user, tool, surgery))
 		speed_mod *= SURGERY_SPEED_MORBID_CURIOSITY
+
+	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
+		speed_mod *= SURGERY_SPEED_TRAIT_ANALGESIA
 
 	var/implement_speed_mod = 1
 	if(implement_type) //this means it isn't a require hand or any item step.
@@ -258,10 +265,14 @@
  */
 /datum/surgery_step/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)
 	if(target.stat < UNCONSCIOUS)
-		to_chat(target, span_userdanger(pain_message))
-		if(prob(30) && !mechanical_surgery)
-			target.emote("scream")
+		if(HAS_TRAIT(target, TRAIT_ANALGESIA))
+			to_chat(target, span_notice("You feel a dull, numb sensation as your body is surgically operated on."))
+		else
+			to_chat(target, span_userdanger(pain_message))
+			if(prob(30) && !mechanical_surgery)
+				target.emote("scream")
 
+#undef SURGERY_SPEED_TRAIT_ANALGESIA
 #undef SURGERY_SPEED_DISSECTION_MODIFIER
 #undef SURGERY_SPEED_MORBID_CURIOSITY
 #undef SURGERY_SLOWDOWN_CAP_MULTIPLIER

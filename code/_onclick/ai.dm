@@ -11,7 +11,7 @@
 		return
 
 	if(ismob(A))
-		ai_tracking_tool.set_tracked_mob(src, A.name)
+		ai_tracking_tool.track_mob(src, A)
 	else
 		A.move_camera_by_click()
 
@@ -55,7 +55,7 @@
 		ShiftClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
-		AltClickOn(A)
+		A.ai_click_alt(src)
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
@@ -73,10 +73,6 @@
 	if(world.time <= next_move)
 		return
 
-	if(aicamera.in_camera_mode)
-		aicamera.toggle_camera_mode(sound = FALSE)
-		aicamera.captureimage(pixel_turf, usr)
-		return
 	if(waypoint_mode)
 		waypoint_mode = 0
 		set_waypoint(A)
@@ -124,8 +120,6 @@
 /mob/living/silicon/ai/CtrlClickOn(atom/target)
 	target.AICtrlClick(src)
 
-/mob/living/silicon/ai/AltClickOn(atom/target)
-	target.AIAltClick(src)
 
 /*
 	The following criminally helpful code is just the previous code cleaned up;
@@ -137,8 +131,7 @@
 /atom/proc/AICtrlClick(mob/living/silicon/ai/user)
 	return
 
-/atom/proc/AIAltClick(mob/living/silicon/ai/user)
-	AltClick(user)
+/atom/proc/ai_click_alt(mob/living/silicon/ai/user)
 	return
 
 /atom/proc/AIShiftClick(mob/living/silicon/ai/user)
@@ -155,7 +148,7 @@
 	toggle_bolt(user)
 	add_hiddenprint(user)
 
-/obj/machinery/door/airlock/AIAltClick(mob/living/silicon/ai/user) // Eletrifies doors.
+/obj/machinery/door/airlock/ai_click_alt(mob/living/silicon/ai/user)
 	if(obj_flags & EMAGGED)
 		return
 
@@ -224,7 +217,7 @@
 	update()
 
 /// Toggle APC equipment settings
-/obj/machinery/power/apc/AIAltClick(mob/living/silicon/ai/user)
+/obj/machinery/power/apc/ai_click_alt(mob/living/silicon/ai/user)
 	if(!can_use(user, loud = TRUE))
 		return
 
@@ -248,7 +241,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /* AI Turrets */
-/obj/machinery/turretid/AIAltClick(mob/living/silicon/ai/user) //toggles lethal on turrets
+/obj/machinery/turretid/ai_click_alt(mob/living/silicon/ai/user) //toggles lethal on turrets
 	if(ailock)
 		return
 	toggle_lethal(user)
@@ -259,7 +252,7 @@
 	toggle_on(user)
 
 /* Holopads */
-/obj/machinery/holopad/AIAltClick(mob/living/silicon/ai/user)
+/obj/machinery/holopad/ai_click_alt(mob/living/silicon/ai/user)
 	if (user)
 		balloon_alert(user, "disrupted all active calls")
 		add_hiddenprint(user)

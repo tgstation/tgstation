@@ -232,7 +232,7 @@
 	var/hornsound = 'sound/items/carhorn.ogg'
 
 /datum/action/vehicle/sealed/horn/Trigger(trigger_flags)
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_CAR_HONK))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_CAR_HONK))
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_CAR_HONK, 2 SECONDS)
 	vehicle_entered_target.visible_message(span_danger("[vehicle_entered_target] loudly honks!"))
@@ -301,9 +301,11 @@
 		return
 	COOLDOWN_START(src, thank_time_cooldown, 6 SECONDS)
 	var/obj/vehicle/sealed/car/clowncar/clown_car = vehicle_entered_target
-	var/mob/living/carbon/human/clown = pick(clown_car.return_drivers())
-	if(!clown)
+	var/list/mob/drivers = clown_car.return_drivers()
+	if(!length(drivers))
+		to_chat(owner, span_danger("You prepare to thank the driver, only to realize that they don't exist."))
 		return
+	var/mob/clown = pick(drivers)
 	owner.say("Thank you for the fun ride, [clown.name]!")
 	clown_car.increment_thanks_counter()
 
@@ -316,7 +318,7 @@
 	var/bell_cooldown
 
 /datum/action/vehicle/ridden/wheelchair/bell/Trigger(trigger_flags)
-	if(TIMER_COOLDOWN_CHECK(src, bell_cooldown))
+	if(TIMER_COOLDOWN_RUNNING(src, bell_cooldown))
 		return
 	TIMER_COOLDOWN_START(src, bell_cooldown, 0.5 SECONDS)
 	playsound(vehicle_ridden_target, 'sound/machines/microwave/microwave-end.ogg', 70)
@@ -351,7 +353,7 @@
 			rider.client.give_award(/datum/award/achievement/misc/tram_surfer, rider)
 		vehicle.grinding = TRUE
 		vehicle.icon_state = "[initial(vehicle.icon_state)]-grind"
-		addtimer(CALLBACK(vehicle, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard/, grind)), 2)
+		addtimer(CALLBACK(vehicle, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard/, grind)), 0.2 SECONDS)
 	else
 		vehicle.obj_flags &= ~BLOCK_Z_OUT_DOWN
 	rider.spin(spintime = 4, speed = 1)

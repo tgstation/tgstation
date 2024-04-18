@@ -10,14 +10,15 @@ type SpawnersMenuContext = {
 type spawner = {
   name: string;
   amount_left: number;
+  infinite: boolean;
   desc?: string;
   you_are_text?: string;
   flavor_text?: string;
   important_text?: string;
 };
 
-export const SpawnersMenu = (props, context) => {
-  const { act, data } = useBackend<SpawnersMenuContext>(context);
+export const SpawnersMenu = (props) => {
+  const { act, data } = useBackend<SpawnersMenuContext>();
   const spawners = data.spawners || [];
   return (
     <Window title="Spawners Menu" width={700} height={525}>
@@ -31,9 +32,15 @@ export const SpawnersMenu = (props, context) => {
                 title={capitalizeAll(spawner.name)}
                 buttons={
                   <Stack>
-                    <Stack.Item fontSize="14px" color="green">
-                      {spawner.amount_left} left
-                    </Stack.Item>
+                    {spawner.infinite ? (
+                      <Stack.Item fontSize="14px" color="green">
+                        Infinite
+                      </Stack.Item>
+                    ) : (
+                      <Stack.Item fontSize="14px" color="green">
+                        {spawner.amount_left} left
+                      </Stack.Item>
+                    )}
                     <Stack.Item>
                       <Button
                         content="Jump"
@@ -53,7 +60,8 @@ export const SpawnersMenu = (props, context) => {
                       />
                     </Stack.Item>
                   </Stack>
-                }>
+                }
+              >
                 <LabeledList>
                   {spawner.desc ? (
                     <LabeledList.Item label="Description">

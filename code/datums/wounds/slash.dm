@@ -134,7 +134,7 @@
 
 /datum/wound/slash/flesh/handle_process(seconds_per_tick, times_fired)
 
-	if (!victim || IS_IN_STASIS(victim))
+	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
 	// in case the victim has the NOBLOOD trait, the wound will simply not clot on it's own
@@ -215,7 +215,7 @@
 
 	user.visible_message(span_notice("[user] begins licking the wounds on [victim]'s [limb.plaintext_zone]."), span_notice("You begin licking the wounds on [victim]'s [limb.plaintext_zone]..."), ignored_mobs=victim)
 	to_chat(victim, span_notice("[user] begins to lick the wounds on your [limb.plaintext_zone]."))
-	if(!do_after(user, base_treat_time, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+	if(!do_after(user, base_treat_time, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 
 	user.visible_message(span_notice("[user] licks the wounds on [victim]'s [limb.plaintext_zone]."), span_notice("You lick some of the wounds on [victim]'s [limb.plaintext_zone]"), ignored_mobs=victim)
@@ -241,7 +241,7 @@
 /datum/wound/slash/flesh/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.25 : 1)
 	user.visible_message(span_warning("[user] begins aiming [lasgun] directly at [victim]'s [limb.plaintext_zone]..."), span_userdanger("You begin aiming [lasgun] directly at [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]..."))
-	if(!do_after(user, base_treat_time  * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+	if(!do_after(user, base_treat_time  * self_penalty_mult, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 	var/damage = lasgun.chambered.loaded_projectile.damage
 	lasgun.chambered.loaded_projectile.wound_bonus -= 30

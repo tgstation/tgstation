@@ -5,12 +5,14 @@
 
 /// Global typecache of things which should never be fried.
 GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
-	/obj/item/reagent_containers/cup,
-	/obj/item/reagent_containers/syringe,
-	/obj/item/reagent_containers/condiment,
+	/obj/item/bodybag/bluespace,
 	/obj/item/delivery,
 	/obj/item/his_grace,
-	/obj/item/bodybag/bluespace,
+	/obj/item/mod/control,
+	/obj/item/reagent_containers/condiment,
+	/obj/item/reagent_containers/cup,
+	/obj/item/reagent_containers/syringe,
+	/obj/item/reagent_containers/hypospray/medipen, //letting medipens become edible opens them to being injected/drained with IV drip & saltshakers
 )))
 
 /obj/machinery/deepfryer
@@ -60,11 +62,10 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	QDEL_NULL(frying)
 	return ..()
 
-/obj/machinery/deepfryer/deconstruct(disassembled)
+/obj/machinery/deepfryer/on_deconstruction(disassembled)
 	// This handles nulling out frying via exited
 	if(frying)
 		frying.forceMove(drop_location())
-	return ..()
 
 /obj/machinery/deepfryer/RefreshParts()
 	. = ..()
@@ -84,7 +85,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 /obj/machinery/deepfryer/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/deepfryer/attackby(obj/item/weapon, mob/user, params)
 	// Dissolving pills into the frier
@@ -146,9 +147,13 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		audible_message(span_notice("[src] dings!"))
 	else if (cook_time >= DEEPFRYER_BURNTIME && !frying_burnt)
 		frying_burnt = TRUE
-		visible_message(span_warning("[src] emits an acrid smell!"))
+		var/list/asomnia_hadders = list()
+		for(var/mob/smeller in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src))
+			if(HAS_TRAIT(smeller, TRAIT_ANOSMIA))
+				asomnia_hadders += smeller
+		visible_message(span_warning("[src] emits an acrid smell!"), ignored_mobs = asomnia_hadders)
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/deepfryer/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -216,7 +221,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		if(target_temp < TCMB + 10) // a tiny bit of leeway
 			dunking_target.visible_message(span_userdanger("[dunking_target] explodes from the entropic difference! Holy fuck!"))
 			dunking_target.investigate_log("has been gibbed by entropic difference (being dunked into [src]).", INVESTIGATE_DEATHS)
-			dunking_target.gib()
+			dunking_target.gib(DROP_ALL_REMAINS)
 			log_combat(user, dunking_target, "blew up", null, "by dunking them into [src]")
 			return
 
@@ -224,7 +229,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 			cold_multiplier += round(target_temp * 1.5 / T0C, 0.01)
 		dunking_target.apply_damage(min(30 * bio_multiplier * cold_multiplier, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		if(reagents.reagent_list) //This can runtime if reagents has nothing in it.
-			reagents.remove_any((reagents.total_volume/2))
+			reagents.remove_all((reagents.total_volume/2))
 		dunking_target.Paralyze(60)
 		user.changeNext_move(CLICK_CD_MELEE)
 	return ..()

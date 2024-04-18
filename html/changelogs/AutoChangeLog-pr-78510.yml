@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - admin: "Successful restart votes will now restart on the current map"
-  - code_imp: "End round and persistence data will be saved before executing successful restart vote"

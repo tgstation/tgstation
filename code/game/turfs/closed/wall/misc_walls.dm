@@ -18,16 +18,6 @@
 /turf/closed/wall/mineral/cult/devastate_wall()
 	new sheet_type(get_turf(src), sheet_amount)
 
-/turf/closed/wall/mineral/cult/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(istype(gone, /mob/living/simple_animal/hostile/construct/harvester)) //harvesters can go through cult walls, dragging something with
-		var/mob/living/simple_animal/hostile/construct/harvester/H = gone
-		var/atom/movable/stored_pulling = H.pulling
-		if(stored_pulling)
-			stored_pulling.setDir(direction)
-			stored_pulling.forceMove(src)
-			H.start_pulling(stored_pulling, supress_message = TRUE)
-
 /turf/closed/wall/mineral/cult/artificer
 	name = "runed stone wall"
 	desc = "A cold stone wall engraved with indecipherable symbols. Studying them causes your head to pound."
@@ -55,21 +45,20 @@
 /turf/closed/wall/rust
 	//SDMM supports colors, this is simply for easier mapping
 	//and should be removed on initialize
-	color = COLOR_ORANGE_BROWN
+	color = MAP_SWITCH(null, COLOR_ORANGE_BROWN)
 
 /turf/closed/wall/rust/Initialize(mapload)
 	. = ..()
-	color = null
 	AddElement(/datum/element/rust)
 
 /turf/closed/wall/r_wall/rust
 	//SDMM supports colors, this is simply for easier mapping
 	//and should be removed on initialize
-	color = COLOR_ORANGE_BROWN
+	color = MAP_SWITCH(null, COLOR_ORANGE_BROWN)
+	base_decon_state = "rusty_r_wall"
 
 /turf/closed/wall/r_wall/rust/Initialize(mapload)
 	. = ..()
-	color = null
 	AddElement(/datum/element/rust)
 
 /turf/closed/wall/mineral/bronze
