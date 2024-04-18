@@ -82,7 +82,7 @@
 
 /datum/emote/living/cough/get_sound(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
-	if !HAS_MIND_TRAIT(human_user, TRAIT_MIMING)
+	if (!HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
 		if(human_user.gender == FEMALE)
 			return pick('sound/voice/human/female_cough1.ogg' , 'sound/voice/human/female_cough2.ogg')
 		else return 'sound/voice/human/male_cough1.ogg'
