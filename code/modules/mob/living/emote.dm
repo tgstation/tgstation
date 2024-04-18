@@ -758,7 +758,7 @@
 	message = "whistles."
 	message_mime = "whistles silently!"
 	audio_cooldown = 5
-	EMOTE_AUDIBLE | EMOTE_VISIBLE
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/whistle/get_sound(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
