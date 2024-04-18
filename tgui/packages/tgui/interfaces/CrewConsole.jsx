@@ -108,6 +108,14 @@ const CrewTable = (props) => {
     }
   };
 
+  const healthSort = (a, b) => {
+    if (a.life_status < b.life_status) return -1;
+    if (a.life_status > b.life_status) return 1;
+    if (a.health > b.health) return -1;
+    if (a.health < b.health) return 1;
+    return 0;
+  };
+
   useEffect(() => {
     let unsorted = sensors.slice();
     if (sortColumn === 'ijob') {
@@ -116,15 +124,17 @@ const CrewTable = (props) => {
       );
       setShownSensors(sorted);
       return;
+    } else if (sortColumn === 'health') {
+      unsorted.sort(healthSort);
+    } else {
+      unsorted.sort((a, b) => {
+        a[sortColumn] ??= '~';
+        b[sortColumn] ??= '~';
+        if (a[sortColumn] < b[sortColumn]) return -1;
+        if (a[sortColumn] > b[sortColumn]) return 1;
+        return 0;
+      });
     }
-
-    unsorted.sort((a, b) => {
-      a[sortColumn] ??= '~';
-      b[sortColumn] ??= '~';
-      if (a[sortColumn] < b[sortColumn]) return -1;
-      if (a[sortColumn] > b[sortColumn]) return 1;
-      return 0;
-    });
 
     let sorted = unsorted.filter((crew) =>
       crew.name.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -158,7 +168,17 @@ const CrewTable = (props) => {
         </Table.Cell>
         <Table.Cell bold collapsing />
         <Table.Cell bold collapsing textAlign="center">
-          Vitals
+          <Button onClick={() => updateSortMode('health')}>
+            Vitals
+            {sortColumn === 'health' ? (
+              <Icon
+                style={{ marginLeft: '2px' }}
+                name={sortAsc ? 'chevron-up' : 'chevron-down'}
+              />
+            ) : (
+              <Icon style={{ marginLeft: '2px' }} name="minus" />
+            )}
+          </Button>
         </Table.Cell>
         <Table.Cell bold textAlign="center">
           <Button onClick={() => updateSortMode('area')}>
