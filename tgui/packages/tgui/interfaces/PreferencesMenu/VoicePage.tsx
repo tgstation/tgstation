@@ -3,23 +3,24 @@ import { useState } from 'react';
 import { useBackend } from '../../backend';
 import {
   BlockQuote,
-  Box,
   Button,
   Dropdown,
   Icon,
   Input,
   LabeledList,
   Section,
+  Stack,
   Table,
 } from '../../components';
 import { PreferencesMenuData } from './data';
 
 const donatorTiers = {
-  0: 'Бесплатные',
+  0: 'Free',
   1: 'Tier I',
   2: 'Tier II',
   3: 'Tier III',
   4: 'Tier IV',
+  5: 'Tier V',
 };
 
 const gendersIcons = {
@@ -69,9 +70,16 @@ const getCheckboxGroup = (
 export const VoicePage = (props) => {
   const { act, data } = useBackend<PreferencesMenuData>();
 
-  const { providers, seeds, phrases, tts_seed } = data;
+  const {
+    providers,
+    seeds,
+    tts_seed,
+    phrases,
+    // donator_level,
+    // character_gender,
+  } = data;
 
-  const donator_level = 5;
+  const donator_level = 5; // Remove after tiers implementation
 
   const categories = seeds
     .map((seed) => seed.category)
@@ -82,6 +90,7 @@ export const VoicePage = (props) => {
   const donatorLevels = seeds
     .map((seed) => seed.donator_level)
     .filter((level, i, a) => a.indexOf(level) === i)
+    .sort((a, b) => a - b)
     .map((level) => donatorTiers[level]);
 
   const [selectedProviders, setSelectedProviders] = useState(providers);
@@ -117,8 +126,7 @@ export const VoicePage = (props) => {
   let phrasesSelect = (
     <Dropdown
       options={phrases}
-      selected={selectedPhrase.replace(/(.{25})..+/, '$1...')}
-      width="220px"
+      selected={selectedPhrase.replace(/(.{60})..+/, '$1...')}
       onSelected={(value) => setSelectedPhrase(value)}
     />
   );
@@ -126,7 +134,7 @@ export const VoicePage = (props) => {
   let searchBar = (
     <Input
       placeholder="Название..."
-      fluid
+      width="100%"
       onInput={(e, value) => setSearchtext(value)}
     />
   );
@@ -167,18 +175,16 @@ export const VoicePage = (props) => {
               donator_level < seed.donator_level &&
               'Требуется более высокий уровень подписки'
             }
-            tooltipPosition="right"
-            textAlign="left"
-            onClick={() => act('select_voice', { seed: seed.name })}
+            onClick={() => act('select', { seed: seed.name })}
           />
         </Table.Cell>
         <Table.Cell collapsing textAlign="center">
           <Button
             fluid
             icon="music"
+            color={tts_seed === seed.name ? 'green' : 'transparent'}
             content=""
             tooltip="Прослушать пример"
-            color="transparent"
             onClick={() =>
               act('listen', { seed: seed.name, phrase: selectedPhrase })
             }
@@ -186,6 +192,7 @@ export const VoicePage = (props) => {
         </Table.Cell>
         <Table.Cell
           bold
+          collapsing
           textColor={
             seed.donator_level > 0 && tts_seed !== seed.name
               ? 'orange'
@@ -195,7 +202,6 @@ export const VoicePage = (props) => {
           {seed.name}
         </Table.Cell>
         <Table.Cell
-          collapsing
           opacity={tts_seed === seed.name ? 0.5 : 0.25}
           textAlign="left"
         >
@@ -229,36 +235,78 @@ export const VoicePage = (props) => {
   });
 
   return (
-    <>
-      <Section title="Фильтры">
-        <LabeledList>
-          <LabeledList.Item label="Провайдеры">
-            {providerCheckboxes}
-          </LabeledList.Item>
-          <LabeledList.Item label="Пол">{genderesCheckboxes}</LabeledList.Item>
-          <LabeledList.Item label="Категории">
-            {categoriesCheckboxes}
-          </LabeledList.Item>
-          <LabeledList.Item label="Уровень подписки">
-            {donatorLevelsCheckboxes}
-          </LabeledList.Item>
-          <LabeledList.Item label="Фраза">{phrasesSelect}</LabeledList.Item>
-          <LabeledList.Item label="Поиск">{searchBar}</LabeledList.Item>
-        </LabeledList>
-      </Section>
-      <Section title={`Голоса (${availableSeeds.length}/${seeds.length})`}>
-        <Table>{seedsRow}</Table>
-      </Section>
-      <Section>
-        <BlockQuote>
-          <Box>
-            {`Для поддержания и развития сообщества в условиях растущих расходов часть голосов пришлось сделать доступными только за материальную поддержку сообщества.`}
-          </Box>
-          <Box mt={2} italic>
-            {`Подробнее об этом можно узнать в нашем Discord-сообществе.`}
-          </Box>
-        </BlockQuote>
-      </Section>
-    </>
+    <Stack fill>
+      <Stack.Item basis={'40%'}>
+        <Stack fill vertical>
+          <Stack.Item>
+            <Section title="Фильтры">
+              <LabeledList>
+                <LabeledList.Item label="Провайдеры">
+                  {providerCheckboxes}
+                </LabeledList.Item>
+                <LabeledList.Item label="Пол">
+                  {genderesCheckboxes}
+                </LabeledList.Item>
+                <LabeledList.Item label="Тир">
+                  {donatorLevelsCheckboxes}
+                </LabeledList.Item>
+                <LabeledList.Item label="Фраза">
+                  {phrasesSelect}
+                </LabeledList.Item>
+                <LabeledList.Item label="Поиск">{searchBar}</LabeledList.Item>
+              </LabeledList>
+            </Section>
+          </Stack.Item>
+          <Stack.Item grow>
+            <Section
+              fill
+              scrollable
+              title="Категории"
+              buttons={
+                <>
+                  <Button
+                    icon="times"
+                    content="Убрать всё"
+                    disabled={selectedCategories.length === 0}
+                    onClick={() => setSelectedCategories([])}
+                  />
+                  <Button
+                    icon="check"
+                    content="Выбрать всё"
+                    disabled={selectedCategories.length === categories.length}
+                    onClick={() => setSelectedCategories(categories)}
+                  />
+                </>
+              }
+            >
+              {categoriesCheckboxes}
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section>
+              <BlockQuote>
+                <Stack.Item>
+                  {`Для поддержания и развития сообщества в условиях растущих расходов часть голосов пришлось сделать доступными только за материальную поддержку сообщества.`}
+                </Stack.Item>
+                <Stack.Item mt={1} italic>
+                  {`Подробнее об этом можно узнать в нашем Discord-сообществе.`}
+                </Stack.Item>
+              </BlockQuote>
+            </Section>
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+      <Stack.Item grow>
+        <Stack fill vertical>
+          <Section
+            fill
+            scrollable
+            title={`Голоса (${availableSeeds.length}/${seeds.length})`}
+          >
+            <Table>{seedsRow}</Table>
+          </Section>
+        </Stack>
+      </Stack.Item>
+    </Stack>
   );
 };

@@ -88,7 +88,7 @@ export const CharacterPreferenceWindow = (props) => {
 
   return (
     <Window title="Character Preferences" width={920} height={770}>
-      <Window.Content scrollable>
+      <Window.Content scrollable style={{ overflowY: 'auto' }}>
         <Stack vertical fill>
           <Stack.Item>
             <CharacterProfiles
@@ -173,7 +173,7 @@ export const CharacterPreferenceWindow = (props) => {
 
           <Stack.Divider />
 
-          <Stack.Item>{pageContents}</Stack.Item>
+          <Stack.Item grow>{pageContents}</Stack.Item>
         </Stack>
       </Window.Content>
     </Window>
