@@ -150,7 +150,6 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(isnull(ui))
 		ui = new /datum/tgui(user, src, "ControllerOverview")
-		ui.set_autoupdate(TRUE)
 		ui.open()
 
 /datum/controller/master/ui_data(mob/user)
