@@ -164,7 +164,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 			"last_fire" = subsystem.last_fire,
 			"next_fire" = subsystem.next_fire,
 			"can_fire" = subsystem.can_fire,
-			"doesnt_fire" = !!(subsystems.flags & SS_NO_FIRE)
+			"doesnt_fire" = !!(subsystems.flags & SS_NO_FIRE),
 			"cost_ms" = subsystem.cost,
 			"tick_usage" = subsystem.tick_usage,
 			"tick_overrun" = subsystem.tick_overrun,
