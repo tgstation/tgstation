@@ -1,5 +1,6 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Section, Table } from '../../components';
+import { Button, NoticeBox, Section, Table } from '../../components';
+import { TableCell, TableRow } from '../../components/Table';
 import { formatMoney } from '../../format';
 import { CargoData } from './types';
 
@@ -7,9 +8,10 @@ export function CargoRequests(props) {
   const { act, data } = useBackend<CargoData>();
   const { requests = [], requestonly, can_send, can_approve_requests } = data;
 
-  // Labeled list reimplementation to squeeze extra columns out of it
   return (
     <Section
+      fill
+      scrollable
       title="Active Requests"
       buttons={
         !requestonly && (
@@ -23,22 +25,31 @@ export function CargoRequests(props) {
         )
       }
     >
-      {requests.length === 0 && <Box color="good">No Requests</Box>}
+      {requests.length === 0 && <NoticeBox success>No Requests</NoticeBox>}
       {requests.length > 0 && (
         <Table>
+          <TableRow header color="gray">
+            <TableCell>ID</TableCell>
+            <TableCell>Object</TableCell>
+            <TableCell>Orderer</TableCell>
+            <TableCell>Reason</TableCell>
+            <TableCell>Cost</TableCell>
+            {(!requestonly || !!can_send) && !!can_approve_requests && (
+              <TableCell>Actions</TableCell>
+            )}
+          </TableRow>
+
           {requests.map((request) => (
-            <Table.Row key={request.id} className="candystripe">
-              <Table.Cell collapsing color="label">
-                #{request.id}
-              </Table.Cell>
+            <Table.Row key={request.id} className="candystripe" color="label">
+              <Table.Cell collapsing>#{request.id}</Table.Cell>
               <Table.Cell>{request.object}</Table.Cell>
               <Table.Cell>
                 <b>{request.orderer}</b>
               </Table.Cell>
-              <Table.Cell width="25%">
+              <Table.Cell color="lightgray" width="25%">
                 <i>{request.reason}</i>
               </Table.Cell>
-              <Table.Cell collapsing textAlign="right">
+              <Table.Cell collapsing color="gold">
                 {formatMoney(request.cost)} cr
               </Table.Cell>
               {(!requestonly || !!can_send) && !!can_approve_requests && (

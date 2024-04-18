@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../../backend';
-import { Box, Section, Tabs } from '../../components';
+import { Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { CargoCart } from './CargoCart';
 import { CargoCatalog } from './CargoCatalog';
@@ -18,7 +18,7 @@ enum TAB {
 export function Cargo(props) {
   return (
     <Window width={800} height={750}>
-      <Window.Content scrollable>
+      <Window.Content>
         <CargoContent />
       </Window.Content>
     </Window>
@@ -35,10 +35,12 @@ export function CargoContent(props) {
   const cart_length = cart.reduce((total, entry) => total + entry.amount, 0);
 
   return (
-    <Box>
-      <CargoStatus />
-      <Section fitted>
-        <Tabs>
+    <Stack fill vertical>
+      <Stack.Item>
+        <CargoStatus />
+      </Stack.Item>
+      <Stack.Item>
+        <Tabs fluid>
           <Tabs.Tab
             icon="list"
             selected={tab === TAB.Catalog}
@@ -74,11 +76,13 @@ export function CargoContent(props) {
             </>
           )}
         </Tabs>
-      </Section>
-      {tab === TAB.Catalog && <CargoCatalog />}
-      {tab === TAB.Requests && <CargoRequests />}
-      {tab === TAB.Cart && <CargoCart />}
-      {tab === TAB.Help && <CargoHelp />}
-    </Box>
+      </Stack.Item>
+      <Stack.Item grow mt={0}>
+        {tab === TAB.Catalog && <CargoCatalog />}
+        {tab === TAB.Requests && <CargoRequests />}
+        {tab === TAB.Cart && <CargoCart />}
+        {tab === TAB.Help && <CargoHelp />}
+      </Stack.Item>
+    </Stack>
   );
 }
