@@ -23,7 +23,7 @@
 		qdel(src)
 		return
 	if(!friend.client && friend_initialized)
-		addtimer(CALLBACK(src, PROC_REF(reroll_friend)), 600)
+		addtimer(CALLBACK(src, PROC_REF(reroll_friend)), 1 MINUTES)
 
 /datum/brain_trauma/special/imaginary_friend/on_death()
 	..()
@@ -45,15 +45,18 @@
 /datum/brain_trauma/special/imaginary_friend/proc/make_friend()
 	friend = new(get_turf(owner), owner)
 
-/// Tries an orbit poll for the imaginary friend
+/// Tries a poll for the imaginary friend
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(add_friend))
-	owner.AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_IMAGINARYFRIEND, \
-		job_bans = ROLE_PAI, \
-		title = "[owner.real_name]'s imaginary friend", \
-		to_call = to_call, \
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice("imaginary friend")]?",
+		check_jobban = ROLE_PAI,
+		poll_time = 20 SECONDS,
+		checked_target = owner,
+		ignore_category = POLL_IGNORE_IMAGINARYFRIEND,
+		alert_pic = owner,
+		role_name_text = "imaginary friend",
 	)
+	add_friend(chosen_one)
 
 /// Yay more friends!
 /datum/brain_trauma/special/imaginary_friend/proc/add_friend(mob/dead/observer/ghost)
@@ -214,11 +217,11 @@
 	message = capitalize(message)
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		client?.cmd_admin_say(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		client?.dsay(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, message)
 		return
 
 	if(check_emote(message, forced))

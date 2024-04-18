@@ -11,6 +11,8 @@
 
 /**
  * Checks if this mob is in a valid state to punch someone.
+ *
+ * (Potentially) gives feedback to the mob if they cannot.
  */
 /mob/living/proc/can_unarmed_attack()
 	return !HAS_TRAIT(src, TRAIT_HANDS_BLOCKED)
@@ -34,7 +36,7 @@
 /mob/living/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	// The sole reason for this signal needing to exist is making FotNS incompatible with Hulk.
 	// Note that it is send before [proc/can_unarmed_attack] is called, keep this in mind.
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, attack_target, modifiers)
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, attack_target, proximity_flag, modifiers)
 	if(sigreturn & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	if(sigreturn & COMPONENT_SKIP_ATTACK)
@@ -115,7 +117,7 @@
 			return FALSE
 	return TRUE
 
-/atom/ui_status(mob/user)
+/atom/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
 	//Check if both user and atom are at the same location
 	if(!can_interact(user))
@@ -227,6 +229,9 @@
 /mob/living/carbon/alien/larva/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_larva_secondary(src, modifiers)
 
+/mob/living/carbon/alien/larva/can_unarmed_attack() //We bite stuff, and our head is always free.
+	return TRUE
+
 /atom/proc/attack_larva(mob/user, list/modifiers)
 	return
 
@@ -235,31 +240,6 @@
  * Returns a SECONDARY_ATTACK_* value.
  */
 /atom/proc/attack_larva_secondary(mob/user, list/modifiers)
-	return SECONDARY_ATTACK_CALL_NORMAL
-
-
-/*
-	Slimes
-	Nothing happening here
-*/
-/mob/living/simple_animal/slime/resolve_unarmed_attack(atom/attack_target, proximity_flag, list/modifiers)
-	if(isturf(attack_target))
-		return ..()
-	attack_target.attack_slime(src, modifiers)
-
-/mob/living/simple_animal/slime/resolve_right_click_attack(atom/target, list/modifiers)
-	if(isturf(target))
-		return ..()
-	return target.attack_slime_secondary(src, modifiers)
-
-/atom/proc/attack_slime(mob/user, list/modifiers)
-	return
-
-/**
- * Called when a slime mob right clicks an atom (that is not a turf).
- * Returns a SECONDARY_ATTACK_* value.
- */
-/atom/proc/attack_slime_secondary(mob/user, list/modifiers)
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /*

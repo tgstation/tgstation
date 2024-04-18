@@ -12,7 +12,6 @@ export const AnnouncementTab = (props) => {
         fluid
         height={20}
         maxLength={1025}
-        multiline
         value={messageText}
         onChange={(_, value) => setMessageText(value)}
         placeholder="Type your announcement..."
@@ -60,9 +59,7 @@ const AuthenticationNoticeBox = (props) => {
   const { authentication_data, is_admin_ghost_ai } = data;
   return (
     (!authentication_data.announcement_authenticated && !is_admin_ghost_ai && (
-      <NoticeBox warning>
-        {'Swipe your card to authenticate yourself'}
-      </NoticeBox>
-    )) || <NoticeBox info>{'Succesfully authenticated'}</NoticeBox>
+      <NoticeBox>Swipe your card to authenticate yourself</NoticeBox>
+    )) || <NoticeBox info>Succesfully authenticated</NoticeBox>
   );
 };

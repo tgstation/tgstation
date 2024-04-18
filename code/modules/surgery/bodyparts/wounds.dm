@@ -75,7 +75,7 @@
 	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
 	var/list/series_wounding_mods = check_series_wounding_mods()
 
-	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && prob(get_damage() / max_damage * 100))
+	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && prob(get_damage() / max_damage * 100) && can_dismember())
 		var/datum/wound/loss/dismembering = new
 		dismembering.apply_dismember(src, woundtype, outright = TRUE, attack_direction = attack_direction)
 		return
@@ -123,10 +123,13 @@
 						possible_wounds -= other_path
 						continue
 
-	while (length(possible_wounds))
+	while (TRUE)
 		var/datum/wound/possible_wound = pick_weight(possible_wounds)
-		var/datum/wound_pregen_data/possible_pregen_data = GLOB.all_wound_pregen_data[possible_wound]
+		if (isnull(possible_wound))
+			break
+
 		possible_wounds -= possible_wound
+		var/datum/wound_pregen_data/possible_pregen_data = GLOB.all_wound_pregen_data[possible_wound]
 
 		var/datum/wound/replaced_wound
 		for(var/datum/wound/existing_wound as anything in wounds)

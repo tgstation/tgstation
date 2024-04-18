@@ -2,10 +2,10 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_SALUTE_MESSAGES = list(
-			"salutes",
+			"performs an elaborate salute for",
 			"nods in appreciation towards",
-			"fist bumps",
-		)
+		),
+		BB_UNREACHABLE_LIST_COOLDOWN = 45 SECONDS,
 	)
 
 	ai_movement = /datum/ai_movement/jps/bot
@@ -23,12 +23,24 @@
 		BB_PREVIOUS_BEACON_TARGET,
 		BB_BOT_SUMMON_TARGET,
 	)
+	///how many times we tried to reach the target
+	var/current_pathing_attempts = 0
+	///if we cant reach it after this many attempts, add it to our ignore list
+	var/max_pathing_attempts = 25
+	can_idle = FALSE // we want these to be running always
 
 /datum/ai_controller/basic_controller/bot/TryPossessPawn(atom/new_pawn)
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
 	RegisterSignal(new_pawn, COMSIG_BOT_RESET, PROC_REF(reset_bot))
+	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_BOT_SUMMON_TARGET), PROC_REF(clear_summon))
+
+/datum/ai_controller/basic_controller/bot/proc/clear_summon()
+	SIGNAL_HANDLER
+
+	var/mob/living/basic/bot/bot_pawn = pawn
+	bot_pawn.bot_reset()
 
 /datum/ai_controller/basic_controller/bot/able_to_run()
 	var/mob/living/basic/bot/bot_pawn = pawn
@@ -49,10 +61,12 @@
 		clear_blackboard_key(key)
 
 ///set the target if we can reach them
-/datum/ai_controller/basic_controller/bot/proc/set_if_can_reach(key, target, distance = 10)
+/datum/ai_controller/basic_controller/bot/proc/set_if_can_reach(key, target, distance = 10, bypass_add_to_blacklist = FALSE)
 	if(can_reach_target(target, distance))
 		set_blackboard_key(key, target)
 		return TRUE
+	if(!bypass_add_to_blacklist)
+		set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(target), TRUE)
 	return FALSE
 
 /datum/ai_controller/basic_controller/bot/proc/can_reach_target(target, distance = 10)
@@ -65,26 +79,16 @@
 		return FALSE
 	return TRUE
 
-///check if the target is too far away, and delete them if so and add them to the unreachables list
-/datum/ai_controller/basic_controller/bot/proc/reachable_key(key, distance = 10)
-	var/datum/target = blackboard[key]
-	if(QDELETED(target))
-		return FALSE
-	if(!can_reach_target(target, distance))
-		clear_blackboard_key(key)
-		set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
-		return FALSE
-	return TRUE
-
 /// subtree to manage our list of unreachables, we reset it every 15 seconds
 /datum/ai_planning_subtree/manage_unreachable_list
 
 /datum/ai_planning_subtree/manage_unreachable_list/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(isnull(controller.blackboard[BB_UNREACHABLE_LIST_COOLDOWN]) || controller.blackboard[BB_CLEAR_LIST_READY] > world.time)
+		return
 	controller.queue_behavior(/datum/ai_behavior/manage_unreachable_list, BB_TEMPORARY_IGNORE_LIST)
 
 /datum/ai_behavior/manage_unreachable_list
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	action_cooldown = 15 SECONDS
 
 /datum/ai_behavior/manage_unreachable_list/perform(seconds_per_tick, datum/ai_controller/controller, list_key)
 	. = ..()
@@ -92,8 +96,13 @@
 		controller.clear_blackboard_key(list_key)
 	finish_action(controller, TRUE)
 
+/datum/ai_behavior/manage_unreachable_list/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	controller.set_blackboard_key(BB_CLEAR_LIST_READY, controller.blackboard[BB_UNREACHABLE_LIST_COOLDOWN] + world.time)
 
 /datum/ai_planning_subtree/find_patrol_beacon
+	///travel towards beacon behavior
+	var/travel_behavior = /datum/ai_behavior/travel_towards/beacon
 
 /datum/ai_planning_subtree/find_patrol_beacon/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
@@ -102,7 +111,7 @@
 
 	if(controller.blackboard_key_exists(BB_BEACON_TARGET))
 		bot_pawn.update_bot_mode(new_mode = BOT_PATROL)
-		controller.queue_behavior(/datum/ai_behavior/travel_towards/beacon, BB_BEACON_TARGET)
+		controller.queue_behavior(travel_behavior, BB_BEACON_TARGET)
 		return
 
 	if(controller.blackboard_key_exists(BB_PREVIOUS_BEACON_TARGET))
@@ -120,9 +129,9 @@
 	var/atom/final_target
 	var/atom/previous_target = controller.blackboard[BB_PREVIOUS_BEACON_TARGET]
 	for(var/obj/machinery/navbeacon/beacon as anything in GLOB.navbeacons["[bot_pawn.z]"])
-		if(beacon == previous_target)
-			continue
 		var/dist = get_dist(bot_pawn, beacon)
+		if(beacon == previous_target || dist <= 1)
+			continue
 		if(dist > closest_distance)
 			continue
 		closest_distance = dist
@@ -158,6 +167,7 @@
 
 /datum/ai_behavior/travel_towards/beacon
 	clear_target = TRUE
+	new_movement_type = /datum/ai_movement/jps/bot/travel_to_beacon
 
 /datum/ai_behavior/travel_towards/beacon/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	var/atom/target = controller.blackboard[target_key]
@@ -176,6 +186,7 @@
 
 /datum/ai_behavior/travel_towards/bot_summon
 	clear_target = TRUE
+	new_movement_type = /datum/ai_movement/jps/bot/travel_to_beacon
 
 /datum/ai_behavior/travel_towards/bot_summon/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
@@ -201,17 +212,13 @@
 
 /datum/ai_behavior/find_and_set/valid_authority
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	action_cooldown = 30 SECONDS
+	action_cooldown = BOT_COMMISSIONED_SALUTE_DELAY
 
 /datum/ai_behavior/find_and_set/valid_authority/search_tactic(datum/ai_controller/controller, locate_path, search_range)
-	for(var/mob/living/robot in oview(search_range, controller.pawn))
-		if(istype(robot, /mob/living/simple_animal/bot/secbot))
-			return robot
-		if(!istype(robot, /mob/living/basic/bot/cleanbot))
+	for(var/mob/living/nearby_mob in oview(search_range, controller.pawn))
+		if(!HAS_TRAIT(nearby_mob, TRAIT_COMMISSIONED))
 			continue
-		var/mob/living/basic/bot/cleanbot/potential_bot = robot
-		if(potential_bot.comissioned)
-			return potential_bot
+		return nearby_mob
 	return null
 
 /datum/ai_behavior/salute_authority
@@ -231,7 +238,7 @@
 	if(our_hat)
 		salute_list += "tips [our_hat] at "
 
-	bot_pawn.manual_emote(pick(salute_list) + " [controller.blackboard[target_key]]")
+	bot_pawn.manual_emote(pick(salute_list) + " [controller.blackboard[target_key]]!")
 	finish_action(controller, TRUE, target_key)
 	return
 

@@ -47,8 +47,8 @@
 	/// Used to determine the y position of the component within the UI
 	var/rel_y = 0
 
-	/// The power usage whenever this component receives an input
-	var/power_usage_per_input = 1
+	/// The energy usage whenever this component receives an input.
+	var/energy_usage_per_input = 0.001 * STANDARD_CELL_CHARGE
 
 	/// Whether the component is removable or not. Only affects user UI
 	var/removable = TRUE
@@ -77,7 +77,7 @@
 /obj/item/circuit_component/Initialize(mapload)
 	. = ..()
 	if(name == COMPONENT_DEFAULT_NAME)
-		name = "[lowertext(display_name)] [COMPONENT_DEFAULT_NAME]"
+		name = "[LOWER_TEXT(display_name)] [COMPONENT_DEFAULT_NAME]"
 	populate_options()
 	populate_ports()
 	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !trigger_input)
@@ -174,6 +174,7 @@
 	qdel(input_port)
 	if(parent)
 		SStgui.update_uis(parent)
+	return null //explicitly set the port to null if used like this: `port = remove_input_port(port)`
 
 /**
  * Adds an output port and returns it
@@ -203,6 +204,7 @@
 	qdel(output_port)
 	if(parent)
 		SStgui.update_uis(parent)
+	return null //explicitly set the port to null if used like this: `port = remove_output_port(port)`
 
 
 /**
@@ -264,10 +266,10 @@
 			message_admins("[display_name] tried to execute on [parent.get_creator_admin()] that has admin_only set to 0")
 			return FALSE
 
-		var/flags = SEND_SIGNAL(parent, COMSIG_CIRCUIT_PRE_POWER_USAGE, power_usage_per_input)
+		var/flags = SEND_SIGNAL(parent, COMSIG_CIRCUIT_PRE_POWER_USAGE, energy_usage_per_input)
 		if(!(flags & COMPONENT_OVERRIDE_POWER_USAGE))
 			var/obj/item/stock_parts/cell/cell = parent.get_cell()
-			if(!cell?.use(power_usage_per_input))
+			if(!cell?.use(energy_usage_per_input))
 				return FALSE
 
 	if((!port || port.trigger == PROC_REF(input_received)) && (circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
@@ -338,7 +340,8 @@
 			. += create_ui_notice(initial(shell.name), "green", "plus-square")
 
 	if(length(input_ports))
-		. += create_ui_notice("Power Usage Per Input: [power_usage_per_input]", "orange", "bolt")
+		. += create_ui_notice("Energy Usage Per Input: [display_energy(energy_usage_per_input)]", "orange", "bolt")
+
 
 /**
  * Called when a special button is pressed on this component in the UI.

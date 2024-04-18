@@ -26,15 +26,21 @@
 
 	temperature = TCMB
 	var/turf/open/floor/plating/turf_type = /turf/open/misc/asteroid/airless
+	/// The path of the ore stack we spawn when we're mined.
 	var/obj/item/stack/ore/mineralType = null
+	/// If we spawn a boulder like on the gulag, we use this in lou of mineralType
+	var/obj/item/boulder/spawned_boulder = null
+	/// How much ore we spawn when we're mining a mineralType.
 	var/mineralAmt = 3
-	var/scan_state = "" //Holder for the image we display when we're pinged by a mining scanner
-	var/defer_change = 0
-	// If true you can mine the mineral turf without tools.
+	///Holder for the image we display when we're pinged by a mining scanner
+	var/scan_state = ""
+	///If true, this turf will not call AfterChange during change_turf calls.
+	var/defer_change = FALSE
+	/// If true you can mine the mineral turf without tools.
 	var/weak_turf = FALSE
-	///How long it takes to mine this turf with tools, before the tool's speed and the user's skill modifier are factored in.
+	/// How long it takes to mine this turf with tools, before the tool's speed and the user's skill modifier are factored in.
 	var/tool_mine_speed = 4 SECONDS
-	///How long it takes to mine this turf without tools, if it's weak.
+	/// How long it takes to mine this turf without tools, if it's weak.
 	var/hand_mine_speed = 15 SECONDS
 
 
@@ -83,6 +89,68 @@
 		var/obj/item/stack/ore/the_ore = ore_type
 		scan_state = initial(the_ore.scan_state) // I SAID. SWITCH. TO. IT.
 		mineralType = ore_type // Everything else assumes that this is typed correctly so don't set it to non-ores thanks.
+	if(ispath(ore_type, /obj/item/boulder))
+		scan_state = "rock_Boulder" //Yes even the lowly boulder has a scan state
+		spawned_boulder = /obj/item/boulder/gulag_expanded
+
+/**
+ * Returns the distance to the nearest ore vent, where ore vents are tracked in SSore_generation's possible vents list.
+ * Returns 0 if we're not on lavaland, and as we're using get_dist, our range is limited to 127 tiles.
+ */
+/turf/closed/mineral/proc/prox_to_vent()
+	if(!is_mining_level(z))
+		return 0
+
+	var/distance = 128 // Max distance for a get_dist is 127
+	for(var/obj/structure/ore_vent/vent as anything in SSore_generation.possible_vents)
+		if(vent.z != src.z)
+			continue //Silly
+		var/temp_distance = get_dist(src, vent)
+		if(temp_distance < distance)
+			distance = temp_distance
+	return distance
+
+/**
+ * Returns the chance of ore spawning in this turf, based on proximity to a vent.
+ * See mining defines for the chances and distance defines.
+ */
+/turf/closed/mineral/proc/proximity_ore_chance()
+	var/distance = prox_to_vent()
+	if(distance == 0) //We asked for a random chance but we could not successfully find a vent, so 0.
+		return 0
+
+	if(distance < VENT_PROX_VERY_HIGH)
+		return VENT_CHANCE_VERY_HIGH
+	if(distance < VENT_PROX_HIGH)
+		return VENT_CHANCE_HIGH
+	if(distance < VENT_PROX_MEDIUM)
+		return VENT_CHANCE_MEDIUM
+	if(distance < VENT_PROX_LOW)
+		return VENT_CHANCE_LOW
+	if(distance < VENT_PROX_FAR)
+		return VENT_CHANCE_FAR
+	return 0
+
+/**
+ * Returns the amount of ore to spawn in this turf, based on proximity to a vent.
+ * If for some reason we have a distance of zero (like being off mining Z levels), we return a random amount between 1 and 5 instead.
+ */
+/turf/closed/mineral/proc/scale_ore_to_vent()
+	var/distance = prox_to_vent()
+	if(distance == 0) // We're not on lavaland or similar failure condition
+		return rand(1,5)
+
+	if(distance < VENT_PROX_VERY_HIGH)
+		return ORE_WALL_VERY_HIGH
+	if(distance < VENT_PROX_HIGH)
+		return ORE_WALL_HIGH
+	if(distance < VENT_PROX_MEDIUM)
+		return ORE_WALL_MEDIUM
+	if(distance < VENT_PROX_LOW)
+		return ORE_WALL_LOW
+	if(distance < VENT_PROX_FAR)
+		return ORE_WALL_FAR
+	return 0
 
 /turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	if(turf_type)
@@ -143,9 +211,11 @@
 /turf/closed/mineral/proc/gets_drilled(mob/user, give_exp = FALSE)
 	if(istype(user))
 		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
-	if (mineralType && (mineralAmt > 0))
+	if(mineralType && (mineralAmt > 0))
 		new mineralType(src, mineralAmt)
 		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, mineralType)
+	if(spawned_boulder)
+		new spawned_boulder(src)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(give_exp)
@@ -173,7 +243,7 @@
 
 /turf/closed/mineral/attack_hulk(mob/living/carbon/human/H)
 	..()
-	if(do_after(H, 50, target = src))
+	if(do_after(H, 5 SECONDS, target = src))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		H.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		gets_drilled(H)
@@ -204,7 +274,10 @@
 		gets_drilled(give_exp = FALSE)
 
 /turf/closed/mineral/random
+	/// What are the base odds that this turf spawns a mineral in the wall on initialize?
 	var/mineralChance = 13
+	/// Does this mineral determine it's random chance and mineral contents based on proximity to a vent? Overrides mineralChance and mineralAmt.
+	var/proximity_based = FALSE
 
 /// Returns a list of the chances for minerals to spawn.
 /// Will only run once, and will then be cached.
@@ -226,7 +299,10 @@
 	var/static/list/mineral_chances_by_type = list()
 
 	. = ..()
-	if (prob(mineralChance))
+	var/dynamic_prob = mineralChance
+	if(proximity_based)
+		dynamic_prob = proximity_ore_chance() // We assign the chance of ore spawning based on probability.
+	if (prob(dynamic_prob))
 		var/list/spawn_chance_list = mineral_chances_by_type[type]
 		if (isnull(spawn_chance_list))
 			mineral_chances_by_type[type] = expand_weights(mineral_chances())
@@ -242,7 +318,8 @@
 			if(ismineralturf(T))
 				var/turf/closed/mineral/M = T
 				M.turf_type = src.turf_type
-				M.mineralAmt = rand(1, 5)
+				M.mineralAmt = scale_ore_to_vent()
+				GLOB.post_ore_random["[M.mineralAmt]"] += 1
 				src = M
 				M.levelupdate()
 			else
@@ -250,12 +327,15 @@
 				T.levelupdate()
 
 		else
-			Change_Ore(path, 1)
+			Change_Ore(path, FALSE)
 			Spread_Vein(path)
+			mineralAmt = scale_ore_to_vent()
+			GLOB.post_ore_manual["[mineralAmt]"] += 1
 
 /turf/closed/mineral/random/high_chance
 	icon_state = "rock_highchance"
 	mineralChance = 25
+	proximity_based = FALSE
 
 /turf/closed/mineral/random/high_chance/mineral_chances()
 	return list(
@@ -273,6 +353,7 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = TRUE
+	proximity_based = FALSE
 
 /turf/closed/mineral/random/high_chance/volcanic/mineral_chances()
 	return list(
@@ -323,8 +404,8 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = TRUE
-
-	mineralChance = 10
+	proximity_based = TRUE
+	mineralChance = 5
 
 /turf/closed/mineral/random/volcanic/mineral_chances()
 	return list(
@@ -339,12 +420,6 @@
 		/turf/closed/mineral/gibtonite/volcanic = 4,
 	)
 
-/// A turf that can't we can't build openspace chasms on or spawn ruins in.
-/turf/closed/mineral/random/volcanic/do_not_chasm
-	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
-	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
-	turf_flags = NO_RUINS
-
 /turf/closed/mineral/random/snow
 	name = "snowy mountainside"
 	icon = MAP_SWITCH('icons/turf/walls/mountain_wall.dmi', 'icons/turf/mining.dmi')
@@ -357,6 +432,7 @@
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	weak_turf = TRUE
+	proximity_based = TRUE
 
 /turf/closed/mineral/random/snow/Change_Ore(ore_type, random = 0)
 	. = ..()
@@ -380,7 +456,7 @@
 	)
 
 /// Near exact same subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
-/turf/closed/mineral/random/snow/do_not_chasm
+/turf/closed/mineral/snowmountain/do_not_chasm
 	turf_type = /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
 	turf_flags = NO_RUINS
@@ -405,6 +481,7 @@
 	)
 
 /turf/closed/mineral/random/snow/high_chance
+	proximity_based = FALSE
 
 /turf/closed/mineral/random/snow/high_chance/mineral_chances()
 	return list(
@@ -422,13 +499,7 @@
 
 /turf/closed/mineral/random/labormineral/mineral_chances()
 	return list(
-		/obj/item/stack/ore/diamond = 1,
-		/obj/item/stack/ore/gold = 8,
-		/obj/item/stack/ore/iron = 95,
-		/obj/item/stack/ore/plasma = 30,
-		/obj/item/stack/ore/silver = 20,
-		/obj/item/stack/ore/titanium = 8,
-		/obj/item/stack/ore/uranium = 3,
+		/obj/item/boulder/gulag = 165,
 		/turf/closed/mineral/gibtonite = 2,
 	)
 
@@ -440,14 +511,7 @@
 
 /turf/closed/mineral/random/labormineral/volcanic/mineral_chances()
 	return list(
-		/obj/item/stack/ore/bluespace_crystal = 1,
-		/obj/item/stack/ore/diamond = 1,
-		/obj/item/stack/ore/gold = 8,
-		/obj/item/stack/ore/iron = 95,
-		/obj/item/stack/ore/plasma = 30,
-		/obj/item/stack/ore/silver = 20,
-		/obj/item/stack/ore/titanium = 8,
-		/obj/item/stack/ore/uranium = 3,
+		/obj/item/boulder/gulag_expanded = 166,
 		/turf/closed/mineral/gibtonite/volcanic = 2,
 	)
 
@@ -467,15 +531,8 @@
 
 /turf/closed/mineral/random/labormineral/ice/mineral_chances()
 	return list(
-		/obj/item/stack/ore/bluespace_crystal = 1,
-		/obj/item/stack/ore/diamond = 1,
-		/obj/item/stack/ore/gold = 8,
-		/obj/item/stack/ore/iron = 95,
-		/obj/item/stack/ore/plasma = 30,
-		/obj/item/stack/ore/silver = 20,
-		/obj/item/stack/ore/titanium = 8,
-		/obj/item/stack/ore/uranium = 3,
-		/turf/closed/mineral/gibtonite/volcanic = 2,
+		/obj/item/boulder/gulag = 168,
+		/turf/closed/mineral/gibtonite/ice/icemoon = 2,
 	)
 
 /turf/closed/mineral/random/labormineral/ice/Change_Ore(ore_type, random = 0)

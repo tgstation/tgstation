@@ -317,8 +317,8 @@
 	var/atom/movable/plane_master_controller/game_plane_master_controller = owner.hud_used?.plane_master_controllers[PLANE_MASTERS_GAME]
 	if(!game_plane_master_controller)
 		return FALSE
-	game_plane_master_controller.add_filter("psychic_wave", 10, wave_filter(240, 240, 3, 0, WAVE_SIDEWAYS))
 	game_plane_master_controller.add_filter("psychic_blur", 10, angular_blur_filter(0, 0, 3))
+	game_plane_master_controller.add_filter("psychic_wave", 10, wave_filter(240, 240, 3, 0, WAVE_SIDEWAYS))
 	return TRUE
 
 /datum/status_effect/psychic_projection/on_remove()
@@ -341,7 +341,7 @@
 	else
 		times_dry_fired = 0
 	var/turf/target_turf = get_offset_target_turf(get_ranged_target_turf(owner, owner.dir, 7), dx = rand(-1, 1), dy = rand(-1, 1))
-	held_gun.process_fire(target_turf, owner, TRUE, null, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
+	held_gun.process_fire(target_turf, owner, TRUE, null, pick(GLOB.all_body_zones))
 	held_gun.semicd = FALSE
 
 /datum/action/cooldown/spell/charged/psychic_booster

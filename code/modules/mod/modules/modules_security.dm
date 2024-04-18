@@ -6,7 +6,7 @@
 	desc = "Based off old TerraGov harness kits, this magnetic harness automatically attaches dropped guns back to the wearer."
 	icon_state = "mag_harness"
 	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/magnetic_harness)
 	/// Time before we activate the magnet.
 	var/magnet_delay = 0.8 SECONDS
@@ -51,7 +51,7 @@
 		return
 	playsound(src, 'sound/items/modsuit/magnetic_harness.ogg', 50, TRUE)
 	balloon_alert(mod.wearer, "[item] reattached")
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 ///Pepper Shoulders - When hit, reacts with a spray of pepper spray around the user.
 /obj/item/mod/module/pepper_shoulders
@@ -60,7 +60,7 @@
 	icon_state = "pepper_shoulder"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/pepper_shoulders)
 	cooldown_time = 5 SECONDS
 	overlay_state_inactive = "module_pepper"
@@ -89,7 +89,7 @@
 
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		return
-	if(!check_power(use_power_cost))
+	if(!check_power(use_energy_cost))
 		return
 	mod.wearer.visible_message(span_warning("[src] reacts to the attack with a smoke of pepper spray!"), span_notice("Your [src] releases a cloud of pepper spray!"))
 	on_use()
@@ -152,7 +152,7 @@
 	icon_state = "megaphone"
 	module_type = MODULE_TOGGLE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/megaphone)
 	cooldown_time = 0.5 SECONDS
 	/// List of spans we add to the speaker.
@@ -174,7 +174,7 @@
 	SIGNAL_HANDLER
 
 	speech_args[SPEECH_SPANS] |= voicespan
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 ///Criminal Capture - Generates hardlight bags you can put people in and sinch.
 /obj/item/mod/module/criminalcapture
@@ -187,7 +187,7 @@
 	icon_state = "criminal_capture"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/criminalcapture)
 	cooldown_time = 0.5 SECONDS
 	/// Time to capture a prisoner.
@@ -366,7 +366,7 @@
 	icon_state = "active_sonar"
 	module_type = MODULE_USABLE
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
 	complexity = 2
 	incompatible_modules = list(/obj/item/mod/module/active_sonar)
 	cooldown_time = 15 SECONDS
@@ -424,7 +424,7 @@
 
 		if(oldgroup == newgroup)
 			return
-			
+
 		sorted_creatures[oldgroup] -= creature
 
 	sorted_creatures[newgroup] += creature
@@ -578,3 +578,36 @@
 #undef SHOOTING_ASSISTANT_OFF
 #undef STORMTROOPER_MODE
 #undef SHARPSHOOTER_MODE
+
+/obj/item/mod/module/shove_blocker
+	name = "MOD bulwark module"
+	desc = "Layers upon layers of shock dampening plates, just to stop you from getting shoved into a wall by an angry mob."
+	icon_state = "bulwark"
+	complexity = 3
+	incompatible_modules = list(/obj/item/mod/module/shove_blocker)
+
+/obj/item/mod/module/shove_blocker/on_suit_activation()
+	mod.wearer.add_traits(list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), MOD_TRAIT)
+
+/obj/item/mod/module/shove_blocker/on_suit_deactivation(deleting = FALSE)
+	mod.wearer.remove_traits(list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), MOD_TRAIT)
+
+/obj/item/mod/module/shove_blocker/locked
+	name = "superglued MOD bulwark module"
+	desc = "Layers upon layers of shock dampening plates, just to stop you from getting shoved into a wall by an angry mob. Good luck removing this one."
+	removable = FALSE
+	complexity = 0
+
+/obj/item/mod/module/quick_cuff
+	name = "MOD restraint assist module"
+	desc = "Enhanced gauntlent grip pads that help with placing individuals in restraints more quickly. Doesn't look like they'll come off."
+	removable = FALSE
+	complexity = 0
+
+/obj/item/mod/module/quick_cuff/on_suit_activation()
+	. = ..()
+	ADD_TRAIT(mod.wearer, TRAIT_FAST_CUFFING, MOD_TRAIT)
+
+/obj/item/mod/module/quick_cuff/on_suit_deactivation(deleting = FALSE)
+	. = ..()
+	REMOVE_TRAIT(mod.wearer, TRAIT_FAST_CUFFING, MOD_TRAIT)

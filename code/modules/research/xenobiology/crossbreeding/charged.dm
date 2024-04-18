@@ -199,7 +199,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/gold/do_effect(mob/user)
 	user.visible_message(span_warning("[src] starts shuddering violently!"))
-	addtimer(CALLBACK(src, PROC_REF(startTimer)), 50)
+	addtimer(CALLBACK(src, PROC_REF(startTimer)), 5 SECONDS)
 
 /obj/item/slimecross/charged/gold/proc/startTimer()
 	START_PROCESSING(SSobj, src)
@@ -224,7 +224,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/oil/do_effect(mob/user)
 	user.visible_message(span_danger("[src] begins to shake with rapidly increasing force!"))
-	addtimer(CALLBACK(src, PROC_REF(boom)), 50)
+	addtimer(CALLBACK(src, PROC_REF(boom)), 5 SECONDS)
 
 /obj/item/slimecross/charged/oil/proc/boom()
 	explosion(src, devastation_range = 2, heavy_impact_range = 3, light_impact_range = 4, explosion_cause = src) //Much smaller effect than normal oils, but devastatingly strong where it does hit.
@@ -278,6 +278,6 @@ Charged extracts:
 /obj/item/slimecross/charged/rainbow/do_effect(mob/user)
 	user.visible_message(span_warning("[src] swells and splits into three new slimes!"))
 	for(var/i in 1 to 3)
-		var/mob/living/simple_animal/slime/new_slime = new(get_turf(user))
+		var/mob/living/basic/slime/new_slime = new (get_turf(user))
 		new_slime.random_colour()
 	return ..()

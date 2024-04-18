@@ -1,3 +1,4 @@
+#define MAX_PAINTING_ZOOM_OUT 3
 
 ///////////
 // EASEL //
@@ -67,10 +68,13 @@
 	var/framed_offset_y = 10
 
 	/**
-	 * How big the grid cells that compose the painting are in the UI.
+	 * How big the grid cells that compose the painting are in the UI (multiplied by zoom).
 	 * This impacts the size of the UI, so smaller values are generally better for bigger canvases and viceversa
 	 */
-	var/pixels_per_unit = 24
+	var/pixels_per_unit = 9
+
+	///A list that keeps track of the current zoom value for each current viewer.
+	var/list/zoom_by_observer
 
 	SET_BASE_PIXEL(11, 10)
 
@@ -118,10 +122,12 @@
 /obj/item/canvas/ui_static_data(mob/user)
 	. = ..()
 	.["px_per_unit"] = pixels_per_unit
+	.["max_zoom"] = MAX_PAINTING_ZOOM_OUT
 
 /obj/item/canvas/ui_data(mob/user)
 	. = ..()
 	.["grid"] = grid
+	.["zoom"] = LAZYACCESS(zoom_by_observer, user.key) || (finalized ? 1 : MAX_PAINTING_ZOOM_OUT)
 	.["name"] = painting_metadata.title
 	.["author"] = painting_metadata.creator_name
 	.["patron"] = painting_metadata.patron_name
@@ -202,6 +208,24 @@
 		if("patronage")
 			. = TRUE
 			patron(user)
+		if("zoom_in")
+			. = TRUE
+			LAZYINITLIST(zoom_by_observer)
+			if(!zoom_by_observer[user.key])
+				zoom_by_observer[user.key] = 2
+			else
+				zoom_by_observer[user.key] = min(zoom_by_observer[user.key] + 1, MAX_PAINTING_ZOOM_OUT)
+		if("zoom_out")
+			. = TRUE
+			LAZYINITLIST(zoom_by_observer)
+			if(!zoom_by_observer[user.key])
+				zoom_by_observer[user.key] = MAX_PAINTING_ZOOM_OUT - 1
+			else
+				zoom_by_observer[user.key] = max(zoom_by_observer[user.key] - 1, 1)
+
+/obj/item/canvas/ui_close(mob/user)
+	. = ..()
+	LAZYREMOVE(zoom_by_observer, user.key)
 
 /obj/item/canvas/proc/finalize(mob/user)
 	if(painting_metadata.loaded_from_json || finalized)
@@ -218,6 +242,9 @@
 
 	SStgui.update_uis(src)
 
+#define CURATOR_PERCENTILE_CUT 0.225
+#define SERVICE_PERCENTILE_CUT 0.125
+
 /obj/item/canvas/proc/patron(mob/user)
 	if(!finalized || !isliving(user))
 		return
@@ -229,7 +256,7 @@
 	if(!id_card)
 		to_chat(user, span_warning("You don't even have a id and you want to be an art patron?"))
 		return
-	if(!id_card.registered_account || !id_card.registered_account.account_job)
+	if(!id_card.can_be_used_in_payment(user))
 		to_chat(user, span_warning("No valid non-departmental account found."))
 		return
 	var/datum/bank_account/account = id_card.registered_account
@@ -245,6 +272,20 @@
 	if(!account.adjust_money(-offer_amount, "Painting: Patron of [painting_metadata.title]"))
 		to_chat(user, span_warning("Transaction failure. Please try again."))
 		return
+
+	var/datum/bank_account/service_account = SSeconomy.get_dep_account(ACCOUNT_SRV)
+	service_account.adjust_money(offer_amount * SERVICE_PERCENTILE_CUT)
+	///We give the curator(s) a cut (unless they're themselves the patron), as it's their job to curate and promote art among other things.
+	if(SSeconomy.bank_accounts_by_job[/datum/job/curator])
+		var/list/curator_accounts = SSeconomy.bank_accounts_by_job[/datum/job/curator] - account
+		var/curators_length = length(curator_accounts)
+		if(curators_length)
+			var/curator_cut = round(offer_amount * CURATOR_PERCENTILE_CUT / curators_length)
+			if(curator_cut)
+				for(var/datum/bank_account/curator as anything in curator_accounts)
+					curator.adjust_money(curator_cut, "Painting: Patronage cut")
+					curator.bank_card_talk("Cut on patronage received, account now holds [curator.account_balance] cr.")
+
 	painting_metadata.patron_ckey = user.ckey
 	painting_metadata.patron_name = user.real_name
 	painting_metadata.credit_value = offer_amount
@@ -259,6 +300,9 @@
 		return
 	SStgui.close_uis(src) // Close the examine ui so that the radial menu doesn't end up covered by it and people don't get confused.
 	select_new_frame(user, possible_frames)
+
+#undef CURATOR_PERCENTILE_CUT
+#undef SERVICE_PERCENTILE_CUT
 
 /obj/item/canvas/proc/select_new_frame(mob/user, list/candidates)
 	var/possible_frames = candidates || SSpersistent_paintings.get_available_frames(painting_metadata.credit_value)
@@ -306,7 +350,7 @@
 	var/result = rustg_dmi_create_png(png_filename, "[width]", "[height]", image_data)
 	if(result)
 		CRASH("Error generating painting png : [result]")
-	painting_metadata.md5 = md5(lowertext(image_data))
+	painting_metadata.md5 = md5(LOWER_TEXT(image_data))
 	generated_icon = new(png_filename)
 	icon_generated = TRUE
 	update_appearance()
@@ -386,6 +430,7 @@
 	SET_BASE_PIXEL(5, 7)
 	framed_offset_x = 5
 	framed_offset_y = 7
+	pixels_per_unit = 8
 
 /obj/item/canvas/twentythree_twentythree
 	name = "canvas (23x23)"
@@ -395,6 +440,7 @@
 	SET_BASE_PIXEL(5, 5)
 	framed_offset_x = 5
 	framed_offset_y = 5
+	pixels_per_unit = 8
 
 /obj/item/canvas/twentyfour_twentyfour
 	name = "canvas (24x24) (AI Universal Standard)"
@@ -405,6 +451,7 @@
 	SET_BASE_PIXEL(4, 4)
 	framed_offset_x = 4
 	framed_offset_y = 4
+	pixels_per_unit = 8
 
 /obj/item/canvas/thirtysix_twentyfour
 	name = "canvas (36x24)"
@@ -415,7 +462,7 @@
 	SET_BASE_PIXEL(-4, 4)
 	framed_offset_x = 14
 	framed_offset_y = 4
-	pixels_per_unit = 20
+	pixels_per_unit = 7
 	w_class = WEIGHT_CLASS_BULKY
 
 	custom_price = PAYCHECK_CREW * 1.25
@@ -435,7 +482,7 @@
 	SET_BASE_PIXEL(-8, 2)
 	framed_offset_x = 9
 	framed_offset_y = 4
-	pixels_per_unit = 18
+	pixels_per_unit = 6
 	w_class = WEIGHT_CLASS_BULKY
 
 	custom_price = PAYCHECK_CREW * 1.75
@@ -522,10 +569,12 @@
 		current_canvas = null
 		update_appearance()
 
-/obj/structure/sign/painting/AltClick(mob/user)
-	. = ..()
-	if(current_canvas?.can_select_frame(user))
-		INVOKE_ASYNC(current_canvas, TYPE_PROC_REF(/obj/item/canvas, select_new_frame), user)
+/obj/structure/sign/painting/click_alt(mob/user)
+	if(!current_canvas?.can_select_frame(user))
+		return CLICK_ACTION_BLOCKING
+
+	INVOKE_ASYNC(current_canvas, TYPE_PROC_REF(/obj/item/canvas, select_new_frame), user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/sign/painting/proc/frame_canvas(mob/user, obj/item/canvas/new_canvas)
 	if(!(new_canvas.type in accepted_canvas_types))
@@ -616,7 +665,7 @@
 		stack_trace("Invalid persistence_id - [persistence_id]")
 		return
 	var/data = current_canvas.get_data_string()
-	var/md5 = md5(lowertext(data))
+	var/md5 = md5(LOWER_TEXT(data))
 	var/list/current = SSpersistent_paintings.paintings[persistence_id]
 	if(!current)
 		current = list()
@@ -783,7 +832,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/palette_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	///Chosen paint color
-	var/current_color = "#000000"
+	var/current_color = COLOR_BLACK
 
 /obj/item/paint_palette/Initialize(mapload)
 	. = ..()
@@ -798,3 +847,4 @@
 	current_color = chosen_color
 
 #undef AVAILABLE_PALETTE_SPACE
+#undef MAX_PAINTING_ZOOM_OUT

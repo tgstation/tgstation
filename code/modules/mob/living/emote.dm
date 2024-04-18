@@ -201,7 +201,7 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/human_user = user
-	if(human_user.dna.species.id == SPECIES_HUMAN && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
+	if(ishumanbasic(human_user) || isfelinid(human_user) && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
 		if(human_user.physique == FEMALE)
 			return pick('sound/voice/human/gasp_female1.ogg', 'sound/voice/human/gasp_female2.ogg', 'sound/voice/human/gasp_female3.ogg')
 		else
@@ -341,6 +341,11 @@
 	message_mime = "acts out a scream!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	mob_type_blacklist_typecache = list(/mob/living/carbon/human) //Humans get specialized scream.
+
+/datum/emote/living/scream/run_emote(mob/user, params, type_override, intentional = FALSE)
+	if(!intentional && HAS_TRAIT(user, TRAIT_ANALGESIA))
+		return
+	return ..()
 
 /datum/emote/living/scream/select_message_type(mob/user, message, intentional)
 	. = ..()
@@ -537,9 +542,9 @@
 	message = "smiles weakly."
 
 /// The base chance for your yawn to propagate to someone else if they're on the same tile as you
-#define YAWN_PROPAGATE_CHANCE_BASE 40
-/// The base chance for your yawn to propagate to someone else if they're on the same tile as you
-#define YAWN_PROPAGATE_CHANCE_DECAY 8
+#define YAWN_PROPAGATE_CHANCE_BASE 20
+/// The amount the base chance to propagate yawns falls for each tile of distance
+#define YAWN_PROPAGATE_CHANCE_DECAY 4
 
 /datum/emote/living/yawn
 	key = "yawn"
@@ -628,20 +633,20 @@
 		to_chat(user, span_warning("\"[input]\""))
 		REPORT_CHAT_FILTER_TO_USER(user, filter_result)
 		log_filter("IC Emote", input, filter_result)
-		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
+		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, LOWER_TEXT(config.ic_filter_regex.match))
 		return FALSE
 
 	filter_result = is_soft_ic_filtered(input)
 
 	if(filter_result)
 		if(tgui_alert(user,"Your emote contains \"[filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to emote it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
-			SSblackbox.record_feedback("tally", "soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
+			SSblackbox.record_feedback("tally", "soft_ic_blocked_words", 1, LOWER_TEXT(config.soft_ic_filter_regex.match))
 			log_filter("Soft IC Emote", input, filter_result)
 			return FALSE
 
 		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for emote \"[filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Emote: \"[input]\"")
 		log_admin_private("[key_name(user)] has passed the soft filter for emote \"[filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Emote: \"[input]\"")
-		SSblackbox.record_feedback("tally", "passed_soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
+		SSblackbox.record_feedback("tally", "passed_soft_ic_blocked_words", 1, LOWER_TEXT(config.soft_ic_filter_regex.match))
 		log_filter("Soft IC Emote (Passed)", input, filter_result)
 
 	return TRUE
@@ -706,7 +711,7 @@
 	message = "beeps."
 	message_param = "beeps at %t."
 	sound = 'sound/machines/twobeep.ogg'
-	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
+	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon, /mob/living/basic/orbie)
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/inhale

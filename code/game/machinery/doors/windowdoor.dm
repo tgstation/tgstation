@@ -14,7 +14,7 @@
 	visible = FALSE
 	flags_1 = ON_BORDER_1
 	opacity = FALSE
-	pass_flags_self = PASSGLASS
+	pass_flags_self = PASSGLASS | PASSWINDOW
 	can_atmos_pass = ATMOS_PASS_PROC
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	set_dir_on_move = FALSE
@@ -66,11 +66,8 @@
 
 /obj/machinery/door/window/Destroy()
 	set_density(FALSE)
-	if(atom_integrity == 0)
-		playsound(src, SFX_SHATTER, 70, TRUE)
 	electronics = null
-	var/turf/floor = get_turf(src)
-	floor.air_update_turf(TRUE, FALSE)
+	air_update_turf(TRUE, FALSE)
 	return ..()
 
 /obj/machinery/door/window/update_icon_state()
@@ -300,23 +297,25 @@
 		if(BURN)
 			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
+/obj/machinery/door/window/on_deconstruction(disassembled)
+	if(disassembled)
+		return
 
-/obj/machinery/door/window/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION) && !disassembled)
-		for(var/i in 1 to shards)
-			drop_debris(new /obj/item/shard(src))
-		if(rods)
-			drop_debris(new /obj/item/stack/rods(src, rods))
-		if(cable)
-			drop_debris(new /obj/item/stack/cable_coil(src, cable))
-	qdel(src)
+	playsound(src, SFX_SHATTER, 70, TRUE)
+
+	for(var/i in 1 to shards)
+		drop_debris(new /obj/item/shard(src))
+	if(rods)
+		drop_debris(new /obj/item/stack/rods(src, rods))
+	if(cable)
+		drop_debris(new /obj/item/stack/cable_coil(src, cable))
 
 /obj/machinery/door/window/proc/drop_debris(obj/item/debris)
 	debris.forceMove(loc)
 	transfer_fingerprints_to(debris)
 
 /obj/machinery/door/window/narsie_act()
-	add_atom_colour("#7D1919", FIXED_COLOUR_PRIORITY)
+	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
 /obj/machinery/door/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > T0C + (reinf ? 1600 : 800))
@@ -346,8 +345,6 @@
 
 /obj/machinery/door/window/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
 	if(density || operating)
 		to_chat(user, span_warning("You need to open the door to access the maintenance panel!"))
 		return
@@ -359,8 +356,6 @@
 
 /obj/machinery/door/window/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
 	if(!panel_open || density || operating)
 		return
 	add_fingerprint(user)

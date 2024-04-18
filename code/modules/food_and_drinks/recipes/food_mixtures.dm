@@ -276,7 +276,13 @@
 	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/martian_batter
-	results = list(/datum/reagent/consumable/martian_batter = 2)
-	required_reagents = list(/datum/reagent/consumable/flour = 1, /datum/reagent/consumable/nutriment/soup/dashi = 1)
+	results = list(/datum/reagent/consumable/martian_batter = 10)
+	required_reagents = list(/datum/reagent/consumable/flour = 5, /datum/reagent/consumable/nutriment/soup/dashi = 5)
 	mix_message = "A smooth batter forms."
 	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/vinegar
+	results = list(/datum/reagent/consumable/vinegar = 5)
+	required_reagents = list(/datum/reagent/consumable/grapejuice = 5)
+	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
+	mix_message = "The smell of the mixture reminds you of how you lost access to the country club..."

@@ -19,7 +19,7 @@
 		param = copytext(act, custom_param + length(act[custom_param]))
 		act = copytext(act, 1, custom_param)
 
-	act = lowertext(act)
+	act = LOWER_TEXT(act)
 	var/list/key_emotes = GLOB.emote_list[act]
 
 	if(!length(key_emotes))
@@ -79,7 +79,7 @@
 /datum/emote/flip/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
 	if(.)
-		user.SpinAnimation(7,1)
+		user.SpinAnimation(FLIP_EMOTE_DURATION,1)
 
 /datum/emote/flip/check_cooldown(mob/user, intentional)
 	. = ..()

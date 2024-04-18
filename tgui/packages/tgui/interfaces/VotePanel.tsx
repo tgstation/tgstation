@@ -35,6 +35,7 @@ type ActiveVote = {
   vote: Vote;
   question: string | null;
   timeRemaining: number;
+  displayStatistics: boolean;
   choices: Option[];
   countMethod: number;
 };
@@ -203,13 +204,15 @@ const ChoicesPanel = (props) => {
                   {user.singleSelection &&
                     choice.name === user.singleSelection && (
                       <Icon
-                        alignSelf="right"
+                        align="right"
                         mr={2}
                         color="green"
                         name="vote-yea"
                       />
                     )}
-                  {choice.votes} Votes
+                  {currentVote.displayStatistics
+                    ? choice.votes + ' Votes'
+                    : null}
                 </LabeledList.Item>
                 <LabeledList.Divider />
               </Box>
@@ -240,12 +243,7 @@ const ChoicesPanel = (props) => {
                 >
                   {user.multiSelection &&
                   user.multiSelection[user.ckey.concat(choice.name)] === 1 ? (
-                    <Icon
-                      alignSelf="right"
-                      mr={2}
-                      color="blue"
-                      name="vote-yea"
-                    />
+                    <Icon align="right" mr={2} color="blue" name="vote-yea" />
                   ) : null}
                   {choice.votes} Votes
                 </LabeledList.Item>

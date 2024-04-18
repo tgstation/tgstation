@@ -96,8 +96,6 @@
 	if(multitooled)
 		src.multitooled = multitooled
 
-	RegisterSignal(src, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_parent_multitool))
-
 /datum/component/style/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_ITEM_AFTERATTACK, PROC_REF(hotswap))
 	RegisterSignal(parent, COMSIG_MOB_MINED, PROC_REF(on_mine))
@@ -144,7 +142,7 @@
 		qdel(projectile_parry.resolve())
 
 
-/datum/component/style/Destroy(force, silent)
+/datum/component/style/Destroy(force)
 	STOP_PROCESSING(SSdcs, src)
 	var/mob/mob_parent = parent
 	if(mob_parent.hud_used)
@@ -341,12 +339,6 @@
 	atom_storage.attempt_insert(weapon, source, override = TRUE)
 	INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, put_in_hands), target)
 	source.visible_message(span_notice("[source] quickly swaps [weapon] out with [target]!"), span_notice("You quickly swap [weapon] with [target]."))
-
-
-/datum/component/style/proc/on_parent_multitool(datum/source, mob/living/user, obj/item/tool, list/recipes)
-	multitooled = !multitooled
-	user.balloon_alert(user, "meter [multitooled ? "" : "un"]hacked")
-
 
 // Point givers
 /datum/component/style/proc/on_punch(mob/living/carbon/human/punching_person, atom/attacked_atom, proximity)

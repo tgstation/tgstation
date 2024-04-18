@@ -65,7 +65,7 @@
 	var/datum/wires/wires = null
 
 	///Light systems, both shouldn't be active at the same time.
-	var/light_system = STATIC_LIGHT
+	var/light_system = COMPLEX_LIGHT
 	///Range of the light in tiles. Zero means no light.
 	var/light_range = 0
 	///Intensity of the light. The stronger, the less shadows you will see on the lit area.
@@ -135,6 +135,9 @@
 	var/can_astar_pass = CANASTARPASS_DENSITY
 	///whether ghosts can see screentips on it
 	var/ghost_screentips = FALSE
+
+	/// Flags to check for in can_perform_action. Used in alt-click checks
+	var/interaction_flags_click = NONE
 
 /**
  * Top level of the destroy chain for most atoms
@@ -296,7 +299,7 @@
 		if(mobile_docking_port.launch_status != check_for_launch_status)
 			continue
 		for(var/area/shuttle/shuttle_area as anything in mobile_docking_port.shuttle_areas)
-			if(current_turf in shuttle_area.get_contained_turfs())
+			if(shuttle_area == current_turf.loc)
 				return TRUE
 
 	return FALSE
@@ -367,11 +370,6 @@
 ///Return the air if we can analyze it
 /atom/proc/return_analyzable_air()
 	return null
-
-///Check if this atoms eye is still alive (probably)
-/atom/proc/check_eye(mob/user)
-	SIGNAL_HANDLER
-	return
 
 /atom/proc/Bumped(atom/movable/bumped_atom)
 	set waitfor = FALSE
@@ -792,6 +790,10 @@
  * Override this if you want an atom to be usable as a supplypod.
  */
 /atom/proc/setClosed()
+	return
+
+///Called after the atom is 'tamed' for type-specific operations, Usually called by the tameable component but also other things.
+/atom/proc/tamed(mob/living/tamer, obj/item/food)
 	return
 
 /**

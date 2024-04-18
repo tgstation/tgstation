@@ -52,7 +52,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	data["bsa_unlock"] = GLOB.bsa_unlock
 	return data
 
-/obj/machinery/keycard_auth/ui_status(mob/user)
+/obj/machinery/keycard_auth/ui_status(mob/user, datum/ui_state/state)
 	if(isdrone(user))
 		return UI_CLOSE
 	if(!isanimal_or_basicmob(user))
@@ -125,7 +125,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	event = event_type
 	waiting = TRUE
 	GLOB.keycard_events.fireEvent("triggerEvent", src)
-	addtimer(CALLBACK(src, PROC_REF(eventSent)), 20)
+	addtimer(CALLBACK(src, PROC_REF(eventSent)), 2 SECONDS)
 
 /obj/machinery/keycard_auth/proc/eventSent()
 	triggerer = null
@@ -135,7 +135,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 /obj/machinery/keycard_auth/proc/triggerEvent(source)
 	event_source = source
 	update_appearance()
-	addtimer(CALLBACK(src, PROC_REF(eventTriggered)), 20)
+	addtimer(CALLBACK(src, PROC_REF(eventTriggered)), 2 SECONDS)
 
 /obj/machinery/keycard_auth/proc/eventTriggered()
 	event_source = null
@@ -160,21 +160,25 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 
 GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/make_maint_all_access()
-	for(var/area/station/maintenance/A in GLOB.areas)
-		for(var/turf/in_area as anything in A.get_contained_turfs())
-			for(var/obj/machinery/door/airlock/D in in_area)
-				D.emergency = TRUE
-				D.update_icon(ALL, 0)
+	for(var/area/station/maintenance/area in GLOB.areas)
+		for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+			for(var/turf/area_turf as anything in zlevel_turfs)
+				for(var/obj/machinery/door/airlock/airlock in area_turf)
+					airlock.emergency = TRUE
+					airlock.update_icon(ALL, 0)
+
 	minor_announce("Access restrictions on maintenance and external airlocks have been lifted.", "Attention! Station-wide emergency declared!",1)
 	GLOB.emergency_access = TRUE
 	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("emergency maintenance access", "enabled"))
 
 /proc/revoke_maint_all_access()
-	for(var/area/station/maintenance/A in GLOB.areas)
-		for(var/turf/in_area as anything in A.get_contained_turfs())
-			for(var/obj/machinery/door/airlock/D in in_area)
-				D.emergency = FALSE
-				D.update_icon(ALL, 0)
+	for(var/area/station/maintenance/area in GLOB.areas)
+		for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+			for(var/turf/area_turf as anything in zlevel_turfs)
+				for(var/obj/machinery/door/airlock/airlock in area_turf)
+					airlock.emergency = FALSE
+					airlock.update_icon(ALL, 0)
+
 	minor_announce("Access restrictions in maintenance areas have been restored.", "Attention! Station-wide emergency rescinded:")
 	GLOB.emergency_access = FALSE
 	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("emergency maintenance access", "disabled"))

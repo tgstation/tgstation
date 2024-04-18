@@ -1,4 +1,4 @@
-//These procs handle putting s tuff in your hands
+//These procs handle putting stuff in your hands
 //as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
 
 ///Returns the thing we're currently holding
@@ -467,7 +467,12 @@
 	if(M.active_storage?.attempt_insert(src, M))
 		return TRUE
 
-	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_by_slot(ITEM_SLOT_BELT), M.get_item_by_slot(ITEM_SLOT_DEX_STORAGE), M.get_item_by_slot(ITEM_SLOT_BACK))
+	var/list/obj/item/possible = list(
+		M.get_inactive_held_item(),
+		M.get_item_by_slot(ITEM_SLOT_BELT),
+		M.get_item_by_slot(ITEM_SLOT_DEX_STORAGE),
+		M.get_item_by_slot(ITEM_SLOT_BACK),
+	)
 	for(var/i in possible)
 		if(!i)
 			continue
@@ -562,9 +567,7 @@
 	while(i < length(processing_list))
 		var/atom/A = processing_list[++i]
 		if(A.atom_storage)
-			var/list/item_stuff = list()
-			A.atom_storage.return_inv(item_stuff)
-			processing_list += item_stuff
+			processing_list += A.atom_storage.return_inv()
 	return processing_list
 
 /// Returns a list of things that the provided mob has, including any storage-capable implants.

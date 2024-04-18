@@ -174,7 +174,6 @@
 #define DOOR_HELPER_LAYER 2.72 //keep this above DOOR_ACCESS_HELPER_LAYER and OPEN_DOOR_LAYER since the others tend to have tiny sprites that tend to be covered up.
 #define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //projectiles won't hit objects at or below this layer if possible
 #define TABLE_LAYER 2.8
-#define GATEWAY_UNDERLAY_LAYER 2.85
 #define BELOW_OBJ_LAYER 2.9
 #define LOW_ITEM_LAYER 2.95
 //#define OBJ_LAYER 3 //For easy recordkeeping; this is a byond define
@@ -197,7 +196,7 @@
 #define MOB_SHIELD_LAYER 4.01
 #define MOB_ABOVE_PIGGYBACK_LAYER 4.06
 #define MOB_UPPER_LAYER 4.07
-#define HITSCAN_PROJECTILE_LAYER 4.09 //above all mob but still hidden by FoV
+#define HITSCAN_PROJECTILE_LAYER 4.09
 #define ABOVE_MOB_LAYER 4.1
 #define WALL_OBJ_LAYER 4.25
 #define TRAM_SIGNAL_LAYER 4.26
@@ -240,7 +239,6 @@
 /// Stuff that needs to draw above everything else on this plane
 #define LIGHTING_ABOVE_ALL 20
 
-
 //---------- EMISSIVES -------------
 //Layering order of these is not particularly meaningful.
 //Important part is the seperation of the planes for control via plane_master
@@ -279,9 +277,6 @@
 
 /// Layer for light overlays
 #define LIGHT_DEBUG_LAYER 6
-
-#define LOBBY_BACKGROUND_LAYER 3
-#define LOBBY_BUTTON_LAYER 4
 
 ///Layer for lobby menu collapse button
 #define LOBBY_BELOW_MENU_LAYER 2

@@ -12,7 +12,7 @@
 	var/atom/movable/screen/drop_preview
 	var/obj/last_held_item
 
-/datum/tutorial/drop/Destroy(force, ...)
+/datum/tutorial/drop/Destroy(force)
 	last_held_item = null
 	user.client?.screen -= drop_preview
 	QDEL_NULL(drop_preview)

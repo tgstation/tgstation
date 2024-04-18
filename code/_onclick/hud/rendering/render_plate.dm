@@ -80,10 +80,6 @@
 /atom/movable/screen/plane_master/rendering_plate/game_plate/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	add_filter("displacer", 1, displacement_map_filter(render_source = OFFSET_RENDER_TARGET(GRAVITY_PULSE_RENDER_TARGET, offset), size = 10))
-	if(check_holidays(HALLOWEEN))
-		// Makes things a tad greyscale (leaning purple) and drops low colors for vibes
-		// We're basically using alpha as better constant here btw
-		add_filter("spook_color", 2, color_matrix_filter(list(0.75,0.13,0.13,0, 0.13,0.7,0.13,0, 0.13,0.13,0.75,0, -0.06,-0.09,-0.08,1, 0,0,0,0)))
 
 /atom/movable/screen/plane_master/rendering_plate/game_plate/show_to(mob/mymob)
 	. = ..()
@@ -216,7 +212,7 @@
 		<br>That's how lighting functions at base. Because it uses BLEND_MULTIPLY and occasionally color matrixes, it needs a backdrop of blackness.\
 		<br>See <a href=\"https://secure.byond.com/forum/?post=2141928\">This byond post</a>\
 		<br>Lemme see uh, we're masked by the emissive plane so it can actually function (IE: make things glow in the dark).\
-		<br>We're also masked by the overlay lighting plane, which contains all the movable lights in the game. It draws to us and also the game plane.\
+		<br>We're also masked by the overlay lighting plane, which contains all the well overlay lights in the game. It draws to us and also the game plane.\
 		<br>Masks us out so it has the breathing room to apply its effect.\
 		<br>Oh and we quite often have our alpha changed to achive night vision effects, or things of that sort."
 	plane = RENDER_PLANE_LIGHTING
@@ -396,7 +392,7 @@
  * Other vars such as alpha will automatically be applied with the render source
  */
 /atom/movable/screen/plane_master/proc/generate_render_relays()
-	var/relay_loc = "CENTER"
+	var/relay_loc = home?.relay_loc || "CENTER"
 	// If we're using a submap (say for a popup window) make sure we draw onto it
 	if(home?.map)
 		relay_loc = "[home.map]:[relay_loc]"

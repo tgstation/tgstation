@@ -32,9 +32,9 @@
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		if(encode)
 			if(multiline)
-				return stripped_multiline_input(user, message, title, default, max_length)
+				return stripped_multiline_input(user, message, title, default, PREVENT_CHARACTER_TRIM_LOSS(max_length))
 			else
-				return stripped_input(user, message, title, default, max_length)
+				return stripped_input(user, message, title, default, PREVENT_CHARACTER_TRIM_LOSS(max_length))
 		else
 			if(multiline)
 				return input(user, message, title, default) as message|null
@@ -90,7 +90,7 @@
 		start_time = world.time
 		QDEL_IN(src, timeout)
 
-/datum/tgui_input_text/Destroy(force, ...)
+/datum/tgui_input_text/Destroy(force)
 	SStgui.close_uis(src)
 	state = null
 	return ..()
@@ -162,4 +162,4 @@
 /datum/tgui_input_text/proc/set_entry(entry)
 	if(!isnull(entry))
 		var/converted_entry = encode ? html_encode(entry) : entry
-		src.entry = trim(converted_entry, max_length)
+		src.entry = trim(converted_entry, PREVENT_CHARACTER_TRIM_LOSS(max_length))

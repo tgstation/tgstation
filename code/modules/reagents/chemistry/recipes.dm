@@ -60,21 +60,6 @@
 	///A bitflag var for tagging reagents for the reagent loopup functon
 	var/reaction_tags = NONE
 
-/datum/chemical_reaction/New()
-	. = ..()
-	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(update_info)))
-
-/**
- * Updates information during the roundstart
- *
- * This proc is mainly used by explosives but can be used anywhere else
- * You should generally use the special reactions in [/datum/chemical_reaction/randomized]
- * But for simple variable edits, like changing the temperature or adding/subtracting required reagents it is better to use this.
- */
-/datum/chemical_reaction/proc/update_info()
-	return
-
-
 ///REACTION PROCS
 
 /**
@@ -182,7 +167,8 @@
 		var/datum/reagent/reagent = holder.has_reagent(id)
 		if(!reagent)
 			return
-		reagent.volume = round((reagent.volume * 0.98), CHEMICAL_QUANTISATION_LEVEL) //Slowly lower yield per tick
+		reagent.volume *= 0.98 //Slowly lower yield per tick
+	holder.update_total()
 
 /**
  * Occurs when a reation is too impure (i.e. it's below purity_min)
@@ -275,10 +261,10 @@
 		else
 			if(setting_type)
 				if(step_away(X, T) && moving_power > 1) //Can happen twice at most. So this is fine.
-					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), X, T), 2)
+					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), X, T), 0.2 SECONDS)
 			else
 				if(step_towards(X, T) && moving_power > 1)
-					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_towards), X, T), 2)
+					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_towards), X, T), 0.2 SECONDS)
 
 //////////////////Generic explosions/failures////////////////////
 // It is HIGHLY, HIGHLY recomended that you consume all/a good volume of the reagents/products in an explosion - because it will just keep going forever until the reaction stops

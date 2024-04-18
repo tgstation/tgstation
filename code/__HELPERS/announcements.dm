@@ -16,21 +16,19 @@
  * * play_sound - if TRUE, play a sound with the announcement (based on player option)
  * * sound_override - optional, override the default announcement sound
  * * sender_override - optional, modifies the sender of the announcement
- * * encode_title - if TRUE, the title will be HTML encoded
- * * encode_text - if TRUE, the text will be HTML encoded
- * * color_override - optional, set a color for the announcement box
+ * * encode_title - if TRUE, the title will be HTML encoded (escaped)
+ * * encode_text - if TRUE, the text will be HTML encoded (escaped)
  */
 
-/proc/send_formatted_announcement(
+/proc/send_ooc_announcement(
 	text,
 	title = "",
 	players,
 	play_sound = TRUE,
-	sound_override = 'sound/ai/default/attention.ogg',
+	sound_override = 'sound/misc/bloop.ogg',
 	sender_override = "Server Admin Announcement",
 	encode_title = TRUE,
-	encode_text = TRUE,
-	color_override = "grey",
+	encode_text = FALSE,
 )
 	if(isnull(text))
 		return
@@ -44,24 +42,25 @@
 			if(!length(text))
 				return
 
-		announcement_strings += span_announcement_header(generate_unique_announcement_header(title, sender_override))
-		announcement_strings += span_major_announcement_text(text)
-		var/finalized_announcement = create_announcement_div(jointext(announcement_strings, ""), color_override)
+	announcement_strings += span_major_announcement_title(sender_override)
+	announcement_strings += span_subheader_announcement_text(title)
+	announcement_strings += span_ooc_announcement_text(text)
+	var/finalized_announcement = create_ooc_announcement_div(jointext(announcement_strings, ""))
 
-		if(islist(players))
-			for(var/mob/target in players)
-				to_chat(target, finalized_announcement)
-				if(play_sound && target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-					SEND_SOUND(target, sound(sound_override))
-		else
-			to_chat(world, finalized_announcement)
+	if(islist(players))
+		for(var/mob/target in players)
+			to_chat(target, finalized_announcement)
+			if(play_sound && target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
+				SEND_SOUND(target, sound(sound_override))
+	else
+		to_chat(world, finalized_announcement)
 
-			if(!play_sound)
-				return
+		if(!play_sound)
+			return
 
-			for(var/mob/player in GLOB.player_list)
-				if(player.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-					SEND_SOUND(player, sound(sound_override))
+		for(var/mob/player in GLOB.player_list)
+			if(player.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
+				SEND_SOUND(player, sound(sound_override))
 
 /**
  * Inserts a span styled message into an alert box div
@@ -72,5 +71,14 @@
  * * color - optional, set a div color other than default
  */
 /proc/create_announcement_div(message, color = "default")
-	var/processed_message = "<div class='chat_alert_[color]'>[message]</div>"
-	return processed_message
+	return "<div class='chat_alert_[color]'>[message]</div>"
+
+/**
+ * Inserts a span styled message into an OOC alert style div
+ *
+ *
+ * Arguments
+ * * message - required, the message contents
+ */
+/proc/create_ooc_announcement_div(message)
+	return "<div class='ooc_alert'>[message]</div>"

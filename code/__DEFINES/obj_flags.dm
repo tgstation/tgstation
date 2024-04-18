@@ -2,20 +2,19 @@
 
 
 #define EMAGGED (1<<0)
-#define IN_USE (1<<1) // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
-#define CAN_BE_HIT (1<<2) //can this be bludgeoned by items?
-#define DANGEROUS_POSSESSION (1<<3) //Admin possession yes/no
-#define UNIQUE_RENAME (1<<4) // can you customize the description/name of the thing?
-#define BLOCK_Z_OUT_DOWN (1<<5)  // Should this object block z falling from loc?
-#define BLOCK_Z_OUT_UP (1<<6) // Should this object block z uprise from loc?
-#define BLOCK_Z_IN_DOWN (1<<7) // Should this object block z falling from above?
-#define BLOCK_Z_IN_UP (1<<8) // Should this object block z uprise from below?
-#define BLOCKS_CONSTRUCTION (1<<9) //! Does this object prevent things from being built on it?
-#define BLOCKS_CONSTRUCTION_DIR (1<<10) //! Does this object prevent same-direction things from being built on it?
-#define IGNORE_DENSITY (1<<11) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
-#define INFINITE_RESKIN (1<<12) // We can reskin this item infinitely
-#define CONDUCTS_ELECTRICITY (1<<13) //! Can this object conduct electricity?
-#define NO_DECONSTRUCTION (1<<14) //! Prevent deconstruction of this object.
+#define CAN_BE_HIT (1<<1) //can this be bludgeoned by items?
+#define DANGEROUS_POSSESSION (1<<2) //Admin possession yes/no
+#define UNIQUE_RENAME (1<<3) // can you customize the description/name of the thing?
+#define BLOCK_Z_OUT_DOWN (1<<4)  // Should this object block z falling from loc?
+#define BLOCK_Z_OUT_UP (1<<5) // Should this object block z uprise from loc?
+#define BLOCK_Z_IN_DOWN (1<<6) // Should this object block z falling from above?
+#define BLOCK_Z_IN_UP (1<<7) // Should this object block z uprise from below?
+#define BLOCKS_CONSTRUCTION (1<<8) //! Does this object prevent things from being built on it?
+#define BLOCKS_CONSTRUCTION_DIR (1<<9) //! Does this object prevent same-direction things from being built on it?
+#define IGNORE_DENSITY (1<<10) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
+#define INFINITE_RESKIN (1<<11) // We can reskin this item infinitely
+#define CONDUCTS_ELECTRICITY (1<<12) //! Can this object conduct electricity?
+#define NO_DEBRIS_AFTER_DECONSTRUCTION (1<<13) //! Atoms don't spawn anything when deconstructed. They just vanish
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -68,28 +67,26 @@
 #define VOICEBOX_TOGGLABLE (1<<6)
 /// The voicebox is currently turned off.
 #define VOICEBOX_DISABLED (1<<7)
-/// Prevents shovies against a dense object from knocking the wearer down.
-#define BLOCKS_SHOVE_KNOCKDOWN (1<<8)
 /// Prevents knock-off from things like hat-throwing.
-#define SNUG_FIT (1<<9)
+#define SNUG_FIT (1<<8)
 /// Hats with negative effects when worn (i.e the tinfoil hat).
-#define ANTI_TINFOIL_MANEUVER (1<<10)
+#define ANTI_TINFOIL_MANEUVER (1<<9)
 /// Clothes that cause a larger notification when placed on a person.
-#define DANGEROUS_OBJECT (1<<11)
+#define DANGEROUS_OBJECT (1<<10)
 /// Clothes that use large icons, for applying the proper overlays like blood
-#define LARGE_WORN_ICON (1<<12)
+#define LARGE_WORN_ICON (1<<11)
 /// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
-#define BLOCKS_SPEECH (1<<13)
+#define BLOCKS_SPEECH (1<<12)
 /// prevents from placing on plasmaman helmet or modsuit hat holder
-#define STACKABLE_HELMET_EXEMPT (1<<14)
+#define STACKABLE_HELMET_EXEMPT (1<<13)
 /// Prevents plasmamen from igniting when wearing this
-#define PLASMAMAN_PREVENT_IGNITION (1<<15)
+#define PLASMAMAN_PREVENT_IGNITION (1<<14)
 /// Usable as casting clothes by wizards (matters for suits, glasses and headwear)
-#define CASTING_CLOTHES (1<<16)
+#define CASTING_CLOTHES (1<<15)
 ///Moths can't eat the clothing that has this flag.
-#define INEDIBLE_CLOTHING (1<<17)
+#define INEDIBLE_CLOTHING (1<<16)
 /// Headgear/helmet allows internals
-#define HEADINTERNALS (1<<18)
+#define HEADINTERNALS (1<<17)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing

@@ -7,12 +7,15 @@
 #define WEIGHT_CLASS_SMALL 2
 /// Standard backpacks can carry tiny, small & normal items, (e.g. fire extinguisher, stun baton, gas mask, metal sheets)
 #define WEIGHT_CLASS_NORMAL 3
-/// Items that can be weilded or equipped but not stored in an inventory, (e.g. defibrillator, backpack, space suits)
+/// Items that can be wielded or equipped but not stored in an inventory, (e.g. defibrillator, backpack, space suits)
 #define WEIGHT_CLASS_BULKY 4
 /// Usually represents objects that require two hands to operate, (e.g. shotgun, two-handed melee weapons)
 #define WEIGHT_CLASS_HUGE 5
 /// Essentially means it cannot be picked up or placed in an inventory, (e.g. mech parts, safe)
 #define WEIGHT_CLASS_GIGANTIC 6
+
+/// Weight class that can fit in pockets
+#define POCKET_WEIGHT_CLASS WEIGHT_CLASS_SMALL
 
 //Inventory depth: limits how many nested storage items you can access directly.
 //1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
@@ -63,6 +66,20 @@
 
 /// Total amount of slots
 #define SLOTS_AMT 20 // Keep this up to date!
+
+///Inventory slots that can be blacklisted by a species from being equipped into
+DEFINE_BITFIELD(no_equip_flags, list(
+	"EXOSUIT" = ITEM_SLOT_OCLOTHING,
+	"JUMPSUIT" = ITEM_SLOT_ICLOTHING,
+	"GLOVES" = ITEM_SLOT_GLOVES,
+	"GLASSES" = ITEM_SLOT_EYES,
+	"EARPIECES" = ITEM_SLOT_EARS,
+	"MASKS" = ITEM_SLOT_MASK,
+	"HATS" = ITEM_SLOT_HEAD,
+	"SHOES" = ITEM_SLOT_FEET,
+	"BACKPACKS" = ITEM_SLOT_BACK,
+	"TIES" = ITEM_SLOT_NECK,
+))
 
 //SLOT GROUP HELPERS
 #define ITEM_SLOT_POCKETS (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET)
@@ -135,8 +152,6 @@
 #define CLOTHING_DIGITIGRADE_VARIATION (1<<1)
 ///The sprite works fine for digitigrade legs as-is.
 #define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<2)
-///has a sprite for monkeys
-#define CLOTHING_MONKEY_VARIATION (1<<3)
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES (1<<0)

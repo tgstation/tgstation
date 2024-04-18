@@ -25,7 +25,6 @@
 /obj/machinery/door/password/voice
 	voice_activated = TRUE
 
-
 /datum/armor/door_password
 	melee = 100
 	bullet = 100
@@ -40,6 +39,10 @@
 	. = ..()
 	if(voice_activated)
 		become_hearing_sensitive()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
+
+/obj/machinery/door/password/get_save_vars()
+	return ..() + NAMEOF(src, password)
 
 /obj/machinery/door/password/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
@@ -82,9 +85,6 @@
 	if(guess == password)
 		return TRUE
 	return FALSE
-
-/obj/machinery/door/password/emp_act(severity)
-	return
 
 /obj/machinery/door/password/ex_act(severity, target)
 	return FALSE

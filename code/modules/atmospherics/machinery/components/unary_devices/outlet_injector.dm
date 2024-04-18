@@ -10,6 +10,7 @@
 	hide = TRUE
 	layer = GAS_SCRUBBER_LAYER
 	pipe_state = "injector"
+	has_cap_visuals = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.25
@@ -61,19 +62,23 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/AltClick(mob/user)
-	if(can_interact(user))
-		volume_rate = MAX_TRANSFER_RATE
-		investigate_log("was set to [volume_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
-		balloon_alert(user, "volume output set to [volume_rate] L/s")
-		update_appearance()
-	return ..()
+/obj/machinery/atmospherics/components/unary/outlet_injector/click_alt(mob/user)
+	if(volume_rate == MAX_TRANSFER_RATE)
+		return CLICK_ACTION_BLOCKING
+
+	volume_rate = MAX_TRANSFER_RATE
+	investigate_log("was set to [volume_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "volume output set to [volume_rate] L/s")
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
 		// everything is already shifted so don't shift the cap
 		add_overlay(get_pipe_image(icon, "inje_cap", initialize_directions, pipe_color))
+	else
+		PIPING_LAYER_SHIFT(src, PIPING_LAYER_DEFAULT)
 
 	if(!nodes[1] || !on || !is_operational)
 		icon_state = "inje_off"

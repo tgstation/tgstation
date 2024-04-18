@@ -193,6 +193,12 @@
 	icon_state = "backpack-virology"
 	inhand_icon_state = "viropack"
 
+/obj/item/storage/backpack/floortile
+	name = "floortile backpack"
+	desc = "It's a backpack especially designed for use in floortiles..."
+	icon_state = "floortile_backpack"
+	inhand_icon_state = "backpack"
+
 /obj/item/storage/backpack/ert
 	name = "emergency response team commander backpack"
 	desc = "A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team."
@@ -385,7 +391,7 @@
 	. = ..()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER, use_anchor = TRUE)
 	atom_storage.max_total_storage = 15
-	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks)
+	atom_storage.set_holdable(cant_hold_list = /obj/item/storage/backpack/satchel/flat) //muh recursive backpacks
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
 	for(var/items in 1 to 4)

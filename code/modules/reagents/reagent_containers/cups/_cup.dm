@@ -23,7 +23,7 @@
 	. = ..()
 	if(drink_type)
 		var/list/types = bitfield_to_list(drink_type, FOOD_FLAGS)
-		. += span_notice("It is [lowertext(english_list(types))].")
+		. += span_notice("It is [LOWER_TEXT(english_list(types))].")
 
 /**
  * Checks if the mob actually liked drinking this cup.
@@ -125,6 +125,8 @@
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
+		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, target)
+		target.update_appearance()
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
 		if(!target.reagents.total_volume)
@@ -137,8 +139,8 @@
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
-
-	target.update_appearance()
+		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
+		target.update_appearance()
 
 /obj/item/reagent_containers/cup/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	if((!proximity_flag) || !check_allowed_items(target, target_self = TRUE))
@@ -451,11 +453,13 @@
 	spillable = TRUE
 	var/obj/item/grinded
 
-/obj/item/reagent_containers/cup/mortar/AltClick(mob/user)
-	if(grinded)
-		grinded.forceMove(drop_location())
-		grinded = null
-		to_chat(user, span_notice("You eject the item inside."))
+/obj/item/reagent_containers/cup/mortar/click_alt(mob/user)
+	if(!grinded)
+		return CLICK_ACTION_BLOCKING
+	grinded.forceMove(drop_location())
+	grinded = null
+	balloon_alert(user, "ejected")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/cup/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
 	..()
@@ -471,7 +475,7 @@
 			var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
 			if(grinded && in_range(src, user) && user.is_holding(I) && picked_option)
 				to_chat(user, span_notice("You start grinding..."))
-				if(do_after(user, 25, target = src))
+				if(do_after(user, 2.5 SECONDS, target = src))
 					user.adjustStaminaLoss(40)
 					switch(picked_option)
 						if("Juice")

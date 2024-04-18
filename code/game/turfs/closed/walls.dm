@@ -1,4 +1,3 @@
-#define MAX_DENT_DECALS 15
 #define LEANING_OFFSET 11
 
 /turf/closed/wall
@@ -73,7 +72,7 @@
 	)
 	RegisterSignals(src, list(
 		COMSIG_MOB_CLIENT_PRE_MOVE,
-		COMSIG_HUMAN_DISARM_HIT,
+		COMSIG_LIVING_DISARM_HIT,
 		COMSIG_LIVING_GET_PULLED,
 		COMSIG_MOVABLE_TELEPORTING,
 		COMSIG_ATOM_DIR_CHANGE,
@@ -84,7 +83,7 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(src, list(
 		COMSIG_MOB_CLIENT_PRE_MOVE,
-		COMSIG_HUMAN_DISARM_HIT,
+		COMSIG_LIVING_DISARM_HIT,
 		COMSIG_LIVING_GET_PULLED,
 		COMSIG_MOVABLE_TELEPORTING,
 		COMSIG_ATOM_DIR_CHANGE,
@@ -141,7 +140,7 @@
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O, /obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
-			P.roll_and_drop(src)
+			INVOKE_ASYNC(P, TYPE_PROC_REF(/obj/structure/sign/poster, roll_and_drop), src)
 	if(decon_type)
 		ChangeTurf(decon_type, flags = CHANGETURF_INHERIT_AIR)
 	else
@@ -387,5 +386,4 @@
 	. = ..()
 	SEND_SIGNAL(gone, COMSIG_LIVING_WALL_EXITED, src)
 
-#undef MAX_DENT_DECALS
 #undef LEANING_OFFSET

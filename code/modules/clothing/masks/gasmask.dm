@@ -29,6 +29,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	///Cigarette in the mask
 	var/obj/item/clothing/mask/cigarette/cig
 	voice_filter = "lowpass=f=750,volume=2"
+
 /datum/armor/mask_gas
 	bio = 100
 

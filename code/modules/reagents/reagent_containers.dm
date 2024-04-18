@@ -148,7 +148,7 @@
 	if (ismob(target))
 		var/mob/target_mob = target
 		target_mob.show_message(
-			span_userdanger("[user] splash the contents of [src] onto you!"),
+			span_userdanger("[user] splashes the contents of [src] onto you!"),
 			MSG_VISUAL,
 			span_userdanger("You feel drenched!"),
 		)

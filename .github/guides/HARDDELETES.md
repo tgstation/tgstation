@@ -243,7 +243,7 @@ So then, we want to temporarily remember to clear a reference when it's deleted
 
 This is where I might lose you, but we're gonna use signals
 
-`qdel()`, the proc that sets off this whole deletion business, sends a signal called `COMSIG_PARENT_QDELETING`
+`qdel()`, the proc that sets off this whole deletion business, sends a signal called `COMSIG_QDELETING`
 
 We can listen for that signal, and if we hear it clear whatever reference we may have
 
@@ -255,10 +255,10 @@ Here's an example
 
 /somemob/proc/set_target(new_target)
     if(target)
-        UnregisterSignal(target, COMSIG_PARENT_QDELETING) //We need to make sure any old signals are cleared
+        UnregisterSignal(target, COMSIG_QDELETING) //We need to make sure any old signals are cleared
     target = new_target
     if(target)
-        RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(clear_target)) //Call clear_target if target is ever qdel()'d
+        RegisterSignal(target, COMSIG_QDELETING, PROC_REF(clear_target)) //Call clear_target if target is ever qdel()'d
 
 /somemob/proc/clear_target(datum/source)
     SIGNAL_HANDLER

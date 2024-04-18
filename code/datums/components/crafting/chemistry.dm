@@ -1,14 +1,14 @@
 /datum/crafting_recipe/improv_explosive
-	name = "IED"
-	result = /obj/item/grenade/iedcasing
+	name = "Improvised Explosive"
+	result = /obj/item/grenade/iedcasing/spawned
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER)
 	reqs = list(
-		/datum/reagent/fuel = 50,
-		/obj/item/stack/cable_coil = 1,
-		/obj/item/assembly/igniter = 1,
-		/obj/item/reagent_containers/cup/soda_cans = 1,
+		/datum/reagent/fuel = 20,
+		/obj/item/stack/cable_coil = 15,
+		/obj/item/assembly/timer = 1,
+		/obj/item/pipe/quaternary/pipe = 1,
 	)
-	parts = list(/obj/item/reagent_containers/cup/soda_cans = 1)
-	time = 1.5 SECONDS
+	time = 6 SECONDS
 	category = CAT_CHEMISTRY
 
 /datum/crafting_recipe/molotov

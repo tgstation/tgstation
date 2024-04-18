@@ -207,20 +207,13 @@
 	else
 		return ..()
 
-/// Checks whether the IV drip transfer rate can be modified with AltClick
-/obj/machinery/iv_drip/proc/can_use_alt_click(mob/user)
-	if(!can_interact(user))
-		return FALSE
 
-/obj/machinery/iv_drip/AltClick(mob/user)
-	if(!can_use_alt_click(user))
-		return ..()
+/obj/machinery/iv_drip/click_alt(mob/user)
 	set_transfer_rate(transfer_rate > MIN_IV_TRANSFER_RATE ? MIN_IV_TRANSFER_RATE : MAX_IV_TRANSFER_RATE)
+	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(loc)
-	qdel(src)
+/obj/machinery/iv_drip/on_deconstruction(disassembled = TRUE)
+	new /obj/item/stack/sheet/iron(loc)
 
 /obj/machinery/iv_drip/process(seconds_per_tick)
 	if(!attached)

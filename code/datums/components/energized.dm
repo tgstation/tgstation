@@ -76,7 +76,7 @@
 	if(prob(100 - toast_prob))
 		if(prob(25))
 			do_sparks(1, FALSE, source)
-			playsound(src, SFX_SPARKS, 40, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(parent, SFX_SPARKS, 40, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			source.audible_message(span_danger("[parent] makes an electric crackle..."))
 		return FALSE
 
@@ -110,16 +110,11 @@
 		return FALSE
 
 	// Finally the interesting part where they ACTUALLY get hit!
-	notify_ghosts(
-		"[future_tram_victim] has fallen in the path of an oncoming tram!",
-		source = future_tram_victim,
-		header = "Electrifying!",
-	)
 	do_sparks(4, FALSE, source)
-	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(parent, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	source.audible_message(span_danger("[parent] makes a loud electric crackle!"))
 	to_chat(future_tram_victim, span_userdanger("You hear a loud electric crackle!"))
-	future_tram_victim.electrocute_act(15, src, 1)
+	future_tram_victim.electrocute_act(15, parent, 1)
 	return TRUE
 
 #undef NORMAL_TOAST_PROB

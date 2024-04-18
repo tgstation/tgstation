@@ -54,6 +54,7 @@ Difficulty: Hard
 	attack_action_types = list(/datum/action/innate/megafauna_attack/heavy_stomp,
 							   /datum/action/innate/megafauna_attack/teleport,
 							   /datum/action/innate/megafauna_attack/shockwave_scream)
+	summon_line = "GwaHOOOOOOOOOOOOOOOOOOOOO"
 	/// Saves the turf the megafauna was created at (spawns exit portal here)
 	var/turf/starting
 	/// Range for wendigo stomping when it moves
@@ -87,8 +88,8 @@ Difficulty: Hard
 
 /datum/action/innate/megafauna_attack/shockwave_scream
 	name = "Shockwave Scream"
-	button_icon = 'icons/turf/walls/wall.dmi'
-	button_icon_state = "wall-0"
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon_state = "expand"
 	chosen_message = "<span class='colossus'>You are now screeching, disorienting targets around you.</span>"
 	chosen_attack_num = 3
 
@@ -114,6 +115,10 @@ Difficulty: Hard
 				try_teleport()
 			if(3)
 				shockwave_scream()
+		return
+
+	var/mob/living/living_target = target
+	if(istype(living_target) && living_target.stat == DEAD)
 		return
 
 	if(COOLDOWN_FINISHED(src, scream_cooldown))

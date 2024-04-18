@@ -40,7 +40,10 @@
 	one_use = TRUE
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user)
-	heldname = sanitize_name(tgui_input_text(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN), allow_numbers = TRUE)
+	var/new_heldname = sanitize_name(tgui_input_text(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN), allow_numbers = TRUE)
+	if(!new_heldname || !user.is_holding(src))
+		return
+	heldname = new_heldname
 	user.log_message("set \"[heldname]\" as a name in a cyborg reclassification board at [loc_name(user)]", LOG_GAME)
 
 /obj/item/borg/upgrade/rename/action(mob/living/silicon/robot/R, user = usr)
@@ -295,7 +298,7 @@
 	/// Minimum time between repairs in seconds
 	var/repair_cooldown = 4
 	var/on = FALSE
-	var/powercost = 10
+	var/energy_cost = 10 KILO JOULES
 	var/datum/action/toggle_action
 
 /obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/R, user = usr)
@@ -355,7 +358,7 @@
 			deactivate_sr()
 			return
 
-		if(cyborg.cell.charge < powercost * 2)
+		if(cyborg.cell.charge < energy_cost * 2)
 			to_chat(cyborg, span_alert("Self-repair module deactivated. Please recharge."))
 			deactivate_sr()
 			return
@@ -363,16 +366,16 @@
 		if(cyborg.health < cyborg.maxHealth)
 			if(cyborg.health < 0)
 				repair_amount = -2.5
-				powercost = 30
+				energy_cost = 30 KILO JOULES
 			else
 				repair_amount = -1
-				powercost = 10
+				energy_cost = 10 KILO JOULES
 			cyborg.adjustBruteLoss(repair_amount)
 			cyborg.adjustFireLoss(repair_amount)
 			cyborg.updatehealth()
-			cyborg.cell.use(powercost)
+			cyborg.cell.use(energy_cost)
 		else
-			cyborg.cell.use(5)
+			cyborg.cell.use(5 KILO JOULES)
 		next_repair = world.time + repair_cooldown * 10 // Multiply by 10 since world.time is in deciseconds
 
 		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_BORG_SELF_REPAIR))
@@ -612,30 +615,39 @@
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
 
-/obj/item/borg/upgrade/inducer/action(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/inducer/action(mob/living/silicon/robot/silicon_friend, user = usr)
 	. = ..()
 	if(.)
-		var/obj/item/inducer/cyborg/inter_inducer = locate() in R
+		var/obj/item/inducer/cyborg/inter_inducer = locate() in silicon_friend
 		if(inter_inducer)
+			silicon_friend.balloon_alert(user, "already has one!")
 			return FALSE
-		inter_inducer = new(R.model)
-		R.model.basic_modules += inter_inducer
-		R.model.add_module(inter_inducer, FALSE, TRUE)
-		inter_inducer.cell = R.cell
 
-/obj/item/borg/upgrade/inducer/deactivate(mob/living/silicon/robot/R, user = usr)
+		inter_inducer = new(silicon_friend.model)
+		silicon_friend.model.basic_modules += inter_inducer
+		silicon_friend.model.add_module(inter_inducer, FALSE, TRUE)
+
+/obj/item/borg/upgrade/inducer/deactivate(mob/living/silicon/robot/silicon_friend, user = usr)
 	. = ..()
-	if (.)
-		var/obj/item/inducer/cyborg/inter_inducer = locate() in R.model
-		if (inter_inducer)
-			R.model.remove_module(inter_inducer, TRUE)
-			inter_inducer.cell = null
+	if(.)
+		var/obj/item/inducer/cyborg/inter_inducer = locate() in silicon_friend.model
+		if(inter_inducer)
+			silicon_friend.model.remove_module(inter_inducer, TRUE)
 
 /obj/item/inducer/cyborg
 	name = "Internal inducer"
-	powertransfer = 1500
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
+	cell_type = null
+
+/obj/item/inducer/cyborg/get_cell()
+	var/obj/item/robot_model/possible_model = loc
+	var/mob/living/silicon/robot/silicon_friend = istype(possible_model) ? possible_model.robot : possible_model
+	if(istype(silicon_friend))
+		. = silicon_friend.cell
+
+/obj/item/inducer/cyborg/screwdriver_act(mob/living/user, obj/item/tool)
+	return FALSE
 
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"

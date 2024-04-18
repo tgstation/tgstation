@@ -15,6 +15,26 @@
 	new /obj/structure/closet/crate/secure/bitrunning/encrypted(chosen_turf)
 	return TRUE
 
+/// Attempts to spawn a lootbox
+/obj/machinery/quantum_server/proc/attempt_spawn_curiosity(list/possible_turfs)
+	if(!length(possible_turfs)) // Out of turfs to place a curiosity
+		return FALSE
+
+	if(generated_domain.secondary_loot_generated >= assoc_value_sum(generated_domain.secondary_loot)) // Out of curiosities to place
+		return FALSE
+
+	shuffle_inplace(possible_turfs)
+	var/turf/chosen_turf = validate_turf(pick(possible_turfs))
+
+	if(isnull(chosen_turf))
+		possible_turfs.Remove(chosen_turf)
+		chosen_turf = validate_turf(pick(possible_turfs))
+		if(isnull(chosen_turf))
+			CRASH("vdom: after two attempts, could not find a valid turf for curiosity")
+
+	new /obj/item/storage/lockbox/bitrunning/encrypted(chosen_turf)
+	return chosen_turf
+
 /// Generates a new avatar for the bitrunner.
 /obj/machinery/quantum_server/proc/generate_avatar(obj/structure/hololadder/wayout, datum/outfit/netsuit)
 	var/mob/living/carbon/human/avatar = new(wayout.loc)
@@ -23,6 +43,7 @@
 	var/datum/outfit/to_wear = new outfit_path()
 
 	to_wear.belt = /obj/item/bitrunning_host_monitor
+	to_wear.ears = null
 	to_wear.glasses = null
 	to_wear.gloves = null
 	to_wear.l_pocket = null
@@ -63,6 +84,13 @@
 
 		SSid_access.apply_trim_to_card(outfit_id, /datum/id_trim/bit_avatar)
 
+	avatar.AddComponent( \
+		/datum/component/simple_bodycam, \
+		camera_name = "bitrunner bodycam", \
+		c_tag = "Avatar [avatar.real_name]", \
+		network = BITRUNNER_CAMERA_NET, \
+		emp_proof = TRUE, \
+	)
 	return avatar
 
 /// Generates a new hololadder for the bitrunner. Effectively a respawn attempt.
@@ -167,3 +195,11 @@
 
 	if(failed)
 		to_chat(neo, span_warning("One of your disks failed to load. Check for duplicate or inactive disks."))
+
+	var/obj/item/organ/internal/brain/neo_brain = neo.get_organ_slot(ORGAN_SLOT_BRAIN)
+	for(var/obj/item/skillchip/skill_chip as anything in neo_brain?.skillchips)
+		if(!skill_chip.active)
+			continue
+		var/obj/item/skillchip/clone_chip = new skill_chip.type
+		avatar.implant_skillchip(clone_chip, force = TRUE)
+		clone_chip.try_activate_skillchip(silent = TRUE, force = TRUE)

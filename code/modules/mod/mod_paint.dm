@@ -16,7 +16,7 @@
 
 /obj/item/mod/paint/Initialize(mapload)
 	. = ..()
-	current_color = color_matrix_identity()
+	current_color = COLOR_MATRIX_IDENTITY
 
 /obj/item/mod/paint/examine(mob/user)
 	. = ..()
@@ -66,9 +66,9 @@
 	. = ..()
 	editing_mod = null
 	QDEL_NULL(proxy_view)
-	current_color = color_matrix_identity()
+	current_color = COLOR_MATRIX_IDENTITY
 
-/obj/item/mod/paint/ui_status(mob/user)
+/obj/item/mod/paint/ui_status(mob/user, datum/ui_state/state)
 	if(check_menu(editing_mod, user))
 		return ..()
 	return UI_CLOSE

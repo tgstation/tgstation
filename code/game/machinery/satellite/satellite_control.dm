@@ -44,10 +44,9 @@
 		))
 	data["notice"] = notice
 
-
-	var/datum/station_goal/station_shield/goal = locate() in GLOB.station_goals
-	if(goal)
-		data["meteor_shield"] = 1
+	var/datum/station_goal/station_shield/goal = SSstation.get_station_goal(/datum/station_goal/station_shield)
+	if(!isnull(goal))
+		data["meteor_shield"] = TRUE
 		data["meteor_shield_coverage"] = goal.get_coverage()
 		data["meteor_shield_coverage_max"] = goal.coverage_goal
 	return data

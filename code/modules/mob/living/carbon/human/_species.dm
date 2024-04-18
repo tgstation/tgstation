@@ -32,8 +32,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///The maximum number of bodyparts this species can have.
 	var/max_bodypart_count = 6
-	///This allows races to have specific hair colors. If null, it uses the H's hair/facial hair colors. If "mutcolor", it uses the H's mutant_color. If "fixedmutcolor", it uses fixedmutcolor
-	var/hair_color
+	/// This allows races to have specific hair colors.
+	/// If null, it uses the mob's hair/facial hair colors.
+	/// If USE_MUTANT_COLOR, it uses the mob's mutant_color.
+	/// If USE_FIXED_MUTANT_COLOR, it uses fixedmutcolor
+	var/hair_color_mode
 	///The alpha used by the hair. 255 is completely solid, 0 is invisible.
 	var/hair_alpha = 255
 	///The alpha used by the facial hair. 255 is completely solid, 0 is invisible.
@@ -44,7 +47,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///If your race bleeds something other than bog standard blood, change this to reagent id. For example, ethereals bleed liquid electricity.
 	var/datum/reagent/exotic_blood
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
-	var/exotic_bloodtype = ""
+	var/exotic_bloodtype
 	///The rate at which blood is passively drained by having the blood deficiency quirk. Some races such as slimepeople can regen their blood at different rates so this is to account for that
 	var/blood_deficiency_drain_rate = BLOOD_REGEN_FACTOR + BLOOD_DEFICIENCY_MODIFIER // slightly above the regen rate so it slowly drains instead of regenerates.
 	///What the species drops when gibbed by a gibber machine.
@@ -114,8 +117,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/siemens_coeff = 1
 	///To use MUTCOLOR with a fixed color that's independent of the mcolor feature in DNA.
 	var/fixed_mut_color = ""
-	///A fixed hair color that's independent of the mcolor feature in DNA.
-	var/fixed_hair_color = ""
 	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
 	var/inert_mutation = /datum/mutation/human/dwarfism
 	///Used to set the mob's death_sound upon species change
@@ -161,9 +162,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///Unique cookie given by admins through prayers
 	var/species_cookie = /obj/item/food/cookie
-
-	///For custom overrides for species ass images
-	var/icon/ass_image
 
 	/// List of family heirlooms this species can get with the family heirloom quirk. List of types.
 	var/list/family_heirlooms
@@ -213,6 +211,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		GLOB.roundstart_races = generate_selectable_species_and_languages()
 
 	return GLOB.roundstart_races
+
 /**
  * Generates species available to choose in character setup at roundstart
  *
@@ -348,9 +347,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				qdel(existing_organ)
 			continue
 
-		if(!isnull(old_species) && !isnull(existing_organ))
-			if(existing_organ.type != old_species.get_mutant_organ_type_for_slot(slot))
-				continue // we don't want to remove organs that are not the default for this species
+		// we don't want to remove organs that are not the default for this species
+		if(!isnull(existing_organ))
+			if(!isnull(old_species) && existing_organ.type != old_species.get_mutant_organ_type_for_slot(slot))
+				continue
+			else if(!replace_current && existing_organ.type != get_mutant_organ_type_for_slot(slot))
+				continue
 
 		// at this point we already know new_organ is not null
 		if(existing_organ?.type == new_organ)
@@ -564,45 +566,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
 /**
- * Proc called when mail goodies need to be updated for this species.
- *
- * Updates the mail goodies if that is required. e.g. for the blood deficiency quirk, which sends bloodbags to quirk holders, update the sent bloodpack to match the species' exotic blood.
- * This is currently only used for the blood deficiency quirk but more can be added as needed.
- * Arguments:
- * * mob/living/carbon/human/recipient - the mob receiving the mail goodies
- */
-/datum/species/proc/update_mail_goodies(mob/living/carbon/human/recipient)
-	update_quirk_mail_goodies(recipient, recipient.get_quirk(/datum/quirk/blooddeficiency))
-
-/**
- * Updates the mail goodies of a specific quirk.
- *
- * Updates the mail goodies belonging to a specific quirk.
- * Add implementation as needed for each individual species. The base species proc should give the species the 'default' version of whatever mail goodies are required.
- * Arguments:
- * * mob/living/carbon/human/recipient - the mob receiving the mail goodies
- * * datum/quirk/quirk - the quirk to update the mail goodies of. Use get_quirk(datum/quirk/some_quirk) to get the actual mob's quirk to pass.
- * * list/mail_goodies - a list of mail goodies. Generally speaking you should not be using this argument on the initial function call. You should instead add to the species' implementation of this proc.
- */
-/datum/species/proc/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies)
-	if(isnull(quirk))
-		return
-	if(length(mail_goodies))
-		quirk.mail_goodies = mail_goodies
-		return
-	if(istype(quirk, /datum/quirk/blooddeficiency))
-		if(HAS_TRAIT(recipient, TRAIT_NOBLOOD) && isnull(recipient.dna.species.exotic_blood))  // TRAIT_NOBLOOD and no exotic blood (yes we have to check for both, jellypeople exist)
-			quirk.mail_goodies = list() // means no blood pack gets sent to them.
-			return
-
-
-	// The default case if no species implementation exists. Set quirk's mail_goodies to initial.
-	var/datum/quirk/readable_quirk = new quirk.type
-	quirk.mail_goodies = readable_quirk.mail_goodies
-	qdel(readable_quirk) // We have to do it this way because initial will not work on lists in this version of DM
-	return
-
-/**
  * Handles the body of a human
  *
  * Handles lipstick, having no eyes, eye color, undergarnments like underwear, undershirts, and socks, and body layers.
@@ -612,7 +575,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/handle_body(mob/living/carbon/human/species_human)
 	species_human.remove_overlay(BODY_LAYER)
-	var/height_offset = species_human.get_top_offset() // From high changed by varying limb height
 	if(HAS_TRAIT(species_human, TRAIT_INVISIBLE_MAN))
 		return handle_mutant_bodyparts(species_human)
 	var/list/standing = list()
@@ -624,9 +586,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/obj/item/organ/internal/eyes/eye_organ = species_human.get_organ_slot(ORGAN_SLOT_EYES)
 			if(eye_organ)
 				eye_organ.refresh(call_update = FALSE)
-				for(var/mutable_appearance/eye_overlay in eye_organ.generate_body_overlay(species_human))
-					eye_overlay.pixel_y += height_offset
-					standing += eye_overlay
+				standing += eye_organ.generate_body_overlay(species_human)
 
 		// organic body markings (oh my god this is terrible please rework this to be done on the limbs themselves i beg you)
 		if(HAS_TRAIT(species_human, TRAIT_HAS_MARKINGS))
@@ -636,33 +596,32 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/obj/item/bodypart/leg/right/right_leg = species_human.get_bodypart(BODY_ZONE_R_LEG)
 			var/obj/item/bodypart/leg/left/left_leg = species_human.get_bodypart(BODY_ZONE_L_LEG)
 			var/datum/sprite_accessory/markings = GLOB.moth_markings_list[species_human.dna.features["moth_markings"]]
+			var/mutable_appearance/marking = mutable_appearance(layer = -BODY_LAYER, appearance_flags = KEEP_TOGETHER)
 			if(noggin && (IS_ORGANIC_LIMB(noggin)))
-				var/mutable_appearance/markings_head_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_head", -BODY_LAYER)
-				markings_head_overlay.pixel_y += height_offset
-				standing += markings_head_overlay
+				var/mutable_appearance/markings_head_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_head")
+				marking.overlays += markings_head_overlay
 
 			if(chest && (IS_ORGANIC_LIMB(chest)))
-				var/mutable_appearance/markings_chest_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_chest", -BODY_LAYER)
-				markings_chest_overlay.pixel_y += height_offset
-				standing += markings_chest_overlay
+				var/mutable_appearance/markings_chest_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_chest")
+				marking.overlays += markings_chest_overlay
 
 			if(right_arm && (IS_ORGANIC_LIMB(right_arm)))
-				var/mutable_appearance/markings_r_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_arm", -BODY_LAYER)
-				markings_r_arm_overlay.pixel_y += height_offset
-				standing += markings_r_arm_overlay
+				var/mutable_appearance/markings_r_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_arm")
+				marking.overlays += markings_r_arm_overlay
 
 			if(left_arm && (IS_ORGANIC_LIMB(left_arm)))
-				var/mutable_appearance/markings_l_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_arm", -BODY_LAYER)
-				markings_l_arm_overlay.pixel_y += height_offset
-				standing += markings_l_arm_overlay
+				var/mutable_appearance/markings_l_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_arm")
+				marking.overlays += markings_l_arm_overlay
 
 			if(right_leg && (IS_ORGANIC_LIMB(right_leg)))
-				var/mutable_appearance/markings_r_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_leg", -BODY_LAYER)
-				standing += markings_r_leg_overlay
+				var/mutable_appearance/markings_r_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_leg")
+				marking.overlays += markings_r_leg_overlay
 
 			if(left_leg && (IS_ORGANIC_LIMB(left_leg)))
-				var/mutable_appearance/markings_l_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_leg", -BODY_LAYER)
-				standing += markings_l_leg_overlay
+				var/mutable_appearance/markings_l_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_leg")
+				marking.overlays += markings_l_leg_overlay
+
+			standing += marking
 
 	//Underwear, Undershirts & Socks
 	if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
@@ -676,7 +635,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 				if(!underwear.use_static)
 					underwear_overlay.color = species_human.underwear_color
-				underwear_overlay.pixel_y += height_offset
 				standing += underwear_overlay
 
 		if(species_human.undershirt)
@@ -687,10 +645,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					working_shirt = wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
 				else
 					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
-				working_shirt.pixel_y += height_offset
 				standing += working_shirt
 
-		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodytype & BODYTYPE_DIGITIGRADE))
+		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodyshape & BODYSHAPE_DIGITIGRADE))
 			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[species_human.socks]
 			if(socks)
 				standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
@@ -746,8 +703,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					accessory = GLOB.body_markings_list[source.dna.features["body_markings"]]
 				if("legs")
 					accessory = GLOB.legs_list[source.dna.features["legs"]]
-				if("caps")
-					accessory = GLOB.caps_list[source.dna.features["caps"]]
 
 			if(!accessory || accessory.icon_state == "none")
 				continue
@@ -769,19 +724,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if(!forced_colour)
 					switch(accessory.color_src)
 						if(MUTANT_COLOR)
-							if(fixed_mut_color)
-								accessory_overlay.color = fixed_mut_color
-							else
-								accessory_overlay.color = source.dna.features["mcolor"]
+							accessory_overlay.color = fixed_mut_color || source.dna.features["mcolor"]
 						if(HAIR_COLOR)
-							if(hair_color == "mutcolor")
-								accessory_overlay.color = source.dna.features["mcolor"]
-							else if(hair_color == "fixedmutcolor")
-								accessory_overlay.color = fixed_hair_color
-							else
-								accessory_overlay.color = source.hair_color
+							accessory_overlay.color = get_fixed_hair_color(source) || source.hair_color
 						if(FACIAL_HAIR_COLOR)
-							accessory_overlay.color = source.facial_hair_color
+							accessory_overlay.color = get_fixed_hair_color(source) || source.facial_hair_color
 						if(EYE_COLOR)
 							accessory_overlay.color = source.eye_color_left
 				else
@@ -881,7 +828,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!(I.slot_flags & slot))
 		var/excused = FALSE
 		// Anything that's small or smaller can fit into a pocket by default
-		if((slot & (ITEM_SLOT_RPOCKET|ITEM_SLOT_LPOCKET)) && I.w_class <= WEIGHT_CLASS_SMALL)
+		if((slot & (ITEM_SLOT_RPOCKET|ITEM_SLOT_LPOCKET)) && I.w_class <= POCKET_WEIGHT_CLASS)
 			excused = TRUE
 		else if(slot & (ITEM_SLOT_SUITSTORE|ITEM_SLOT_BACKPACK|ITEM_SLOT_HANDS))
 			excused = TRUE
@@ -910,7 +857,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_FEET)
 			if(H.num_legs < 2)
 				return FALSE
-			if((H.bodytype & BODYTYPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
+			if((H.bodyshape & BODYSHAPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
 				if(!(I.supports_variations_flags & (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON)))
 					if(!disable_warning)
 						to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))
@@ -940,12 +887,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ICLOTHING)
-			var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
-			if(chest && (chest.bodytype & BODYTYPE_MONKEY))
-				if(!(I.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
-					if(!disable_warning)
-						to_chat(H, span_warning("[I] doesn't fit your [chest.name]!"))
-					return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ID)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
@@ -1107,9 +1048,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(SEND_SIGNAL(target, COMSIG_CARBON_PRE_HELP, user, attacker_style) & COMPONENT_BLOCK_HELP_ACT)
 		return TRUE
 
-	if(attacker_style?.help_act(user, target) == MARTIAL_ATTACK_SUCCESS)
-		return TRUE
-
 	if(target.body_position == STANDING_UP || (target.appears_alive() && target.stat != SOFT_CRIT && target.stat != HARD_CRIT))
 		target.help_shake_act(user)
 		if(target != user)
@@ -1118,111 +1056,89 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	user.do_cpr(target)
 
-/datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(attacker_style?.grab_act(user, target) == MARTIAL_ATTACK_SUCCESS)
-		return TRUE
-	target.grabbedby(user)
-	return TRUE
-
 ///This proc handles punching damage. IMPORTANT: Our owner is the TARGET and not the USER in this proc. For whatever reason...
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && !attacker_style?.pacifist_style)
 		to_chat(user, span_warning("You don't want to harm [target]!"))
 		return FALSE
-	if(attacker_style?.harm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
-		return TRUE
-	else
 
-		var/obj/item/organ/internal/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
-		var/obj/item/bodypart/attacking_bodypart
-		if(brain)
-			attacking_bodypart = brain.get_attacking_limb(target)
-		if(!attacking_bodypart)
-			attacking_bodypart = user.get_active_hand()
-		var/atk_verb = attacking_bodypart.unarmed_attack_verb
-		var/atk_effect = attacking_bodypart.unarmed_attack_effect
+	var/obj/item/organ/internal/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/bodypart/attacking_bodypart
+	if(brain)
+		attacking_bodypart = brain.get_attacking_limb(target)
+	if(!attacking_bodypart)
+		attacking_bodypart = user.get_active_hand()
+	var/atk_verb = attacking_bodypart.unarmed_attack_verb
+	var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
-		if(atk_effect == ATTACK_EFFECT_BITE)
-			if(user.is_mouth_covered(ITEM_SLOT_MASK))
-				to_chat(user, span_warning("You can't [atk_verb] with your mouth covered!"))
-				return FALSE
-		user.do_attack_animation(target, atk_effect)
-
-		//has our target been shoved recently? If so, they're staggered and we get an easy hit.
-		var/staggered = FALSE
-
-		//Someone in a grapple is much more vulnerable to being harmed by punches.
-		var/grappled = FALSE
-
-		if(target.get_timed_status_effect_duration(/datum/status_effect/staggered))
-			staggered = TRUE
-
-		if(target.pulledby && target.pulledby.grab_state >= GRAB_AGGRESSIVE)
-			grappled = TRUE
-
-		var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
-		var/limb_accuracy = attacking_bodypart.unarmed_effectiveness
-
-		var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
-
-		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
-		if(attacking_bodypart.unarmed_damage_low)
-			if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || staggered) //kicks and attacks against staggered targets never miss (provided your species deals more than 0 damage)
-				miss_chance = 0
-			else
-				miss_chance = clamp(UNARMED_MISS_CHANCE_BASE - limb_accuracy + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 0, UNARMED_MISS_CHANCE_MAX) //Limb miss chance + various damage. capped at 80 so there is at least a chance to land a hit.
-
-		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
-			playsound(target.loc, attacking_bodypart.unarmed_miss_sound, 25, TRUE, -1)
-			target.visible_message(span_danger("[user]'s [atk_verb] misses [target]!"), \
-							span_danger("You avoid [user]'s [atk_verb]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_warning("Your [atk_verb] misses [target]!"))
-			log_combat(user, target, "attempted to punch")
+	if(atk_effect == ATTACK_EFFECT_BITE)
+		if(user.is_mouth_covered(ITEM_SLOT_MASK))
+			to_chat(user, span_warning("You can't [atk_verb] with your mouth covered!"))
 			return FALSE
+	user.do_attack_animation(target, atk_effect)
 
-		var/armor_block = target.run_armor_check(affecting, MELEE)
+	//has our target been shoved recently? If so, they're staggered and we get an easy hit.
+	var/staggered = FALSE
 
-		playsound(target.loc, attacking_bodypart.unarmed_attack_sound, 25, TRUE, -1)
+	//Someone in a grapple is much more vulnerable to being harmed by punches.
+	var/grappled = FALSE
 
-		if(grappled && attacking_bodypart.grappled_attack_verb)
-			atk_verb = attacking_bodypart.grappled_attack_verb
-		target.visible_message(span_danger("[user] [atk_verb]ed [target]!"), \
-						span_userdanger("You're [atk_verb]ed by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You [atk_verb] [target]!"))
+	if(target.get_timed_status_effect_duration(/datum/status_effect/staggered))
+		staggered = TRUE
 
-		target.lastattacker = user.real_name
-		target.lastattackerckey = user.ckey
+	if(target.pulledby && target.pulledby.grab_state >= GRAB_AGGRESSIVE)
+		grappled = TRUE
 
-		if(user.limb_destroyer)
-			target.dismembering_strike(user, affecting.body_zone)
+	var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
+	var/limb_accuracy = attacking_bodypart.unarmed_effectiveness
 
-		var/attack_direction = get_dir(user, target)
-		var/attack_type = attacking_bodypart.attack_type
-		if(atk_effect == ATTACK_EFFECT_KICK || grappled) //kicks and punches when grappling bypass armor slightly.
-			if(damage >= 9)
-				target.force_say()
-			log_combat(user, target, grappled ? "grapple punched" : "kicked")
-			target.apply_damage(damage, attack_type, affecting, armor_block - limb_accuracy, attack_direction = attack_direction)
-			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block - limb_accuracy)
-		else // Normal attacks do not gain the benefit of armor penetration.
-			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
-			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
-			if(damage >= 9)
-				target.force_say()
-			log_combat(user, target, "punched")
+	var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
 
-		//If we rolled a punch high enough to hit our stun threshold, or our target is staggered and they have at least 40 damage+stamina loss, we knock them down
-		if((target.stat != DEAD) && prob(limb_accuracy) || (target.stat != DEAD) && staggered && (target.getStaminaLoss() + user.getBruteLoss()) >= 40)
-			target.visible_message(span_danger("[user] knocks [target] down!"), \
-							span_userdanger("You're knocked down by [user]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_danger("You knock [target] down!"))
-			var/knockdown_duration = 4 SECONDS + (target.getStaminaLoss() + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 4 second base stun + 4 second stun modifier = 8 second knockdown duration
-			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
-			log_combat(user, target, "got a stun punch with their previous punch")
+	var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
+	if(attacking_bodypart.unarmed_damage_low)
+		if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || staggered) //kicks and attacks against staggered targets never miss (provided your species deals more than 0 damage)
+			miss_chance = 0
+		else
+			miss_chance = clamp(UNARMED_MISS_CHANCE_BASE - limb_accuracy + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 0, UNARMED_MISS_CHANCE_MAX) //Limb miss chance + various damage. capped at 80 so there is at least a chance to land a hit.
+
+	if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
+		playsound(target.loc, attacking_bodypart.unarmed_miss_sound, 25, TRUE, -1)
+		target.visible_message(span_danger("[user]'s [atk_verb] misses [target]!"), \
+						span_danger("You avoid [user]'s [atk_verb]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_warning("Your [atk_verb] misses [target]!"))
+		log_combat(user, target, "attempted to punch")
+		return FALSE
+
+	var/armor_block = target.run_armor_check(affecting, MELEE)
+
+	playsound(target.loc, attacking_bodypart.unarmed_attack_sound, 25, TRUE, -1)
+
+	if(grappled && attacking_bodypart.grappled_attack_verb)
+		atk_verb = attacking_bodypart.grappled_attack_verb
+	target.visible_message(span_danger("[user] [atk_verb]ed [target]!"), \
+					span_userdanger("You're [atk_verb]ed by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
+	to_chat(user, span_danger("You [atk_verb] [target]!"))
+
+	target.lastattacker = user.real_name
+	target.lastattackerckey = user.ckey
+
+	if(user.limb_destroyer)
+		target.dismembering_strike(user, affecting.body_zone)
+
+	var/attack_direction = get_dir(user, target)
+	var/attack_type = attacking_bodypart.attack_type
+	if(atk_effect == ATTACK_EFFECT_KICK || grappled) //kicks and punches when grappling bypass armor slightly.
+		if(damage >= 9)
+			target.force_say()
+		log_combat(user, target, grappled ? "grapple punched" : "kicked")
+		target.apply_damage(damage, attack_type, affecting, armor_block - limb_accuracy, attack_direction = attack_direction)
+	else // Normal attacks do not gain the benefit of armor penetration.
+		target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
+		if(damage >= 9)
+			target.force_say()
+		log_combat(user, target, "punched")
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(attacker_style?.disarm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
-		return TRUE
 	if(user.body_position != STANDING_UP)
 		return FALSE
 	if(user == target)
@@ -1398,7 +1314,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 3)
 
 	// Body temperature is too cold, and we do not have resist traits
-	else if(bodytemp < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
+	else if(bodytemp < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD) && !humi.has_status_effect(/datum/status_effect/inebriated))
 		// clear any hot moods and apply cold mood
 		humi.clear_mood_event("hot")
 		humi.add_mood_event("cold", /datum/mood_event/cold)
@@ -1462,6 +1378,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		// Apply the damage to all body parts
 		humi.apply_damage(burn_damage, BURN, spread_damage = TRUE)
+
+	// For cold damage, we cap at the threshold if you're dead
+	if(humi.getFireLoss() >= abs(HEALTH_THRESHOLD_DEAD) && humi.stat == DEAD)
+		return
 
 	// Apply some burn / brute damage to the body (Dependent if the person is hulk or not)
 	var/is_hulk = HAS_TRAIT(humi, TRAIT_HULK)
@@ -2042,6 +1962,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/create_pref_liver_perks()
 	RETURN_TYPE(/list)
 
+	if(isnull(mutantliver) || (TRAIT_LIVERLESS_METABOLISM in inherent_traits))
+		return null
+
 	var/list/to_add = list()
 
 	var/alcohol_tolerance = initial(mutantliver.alcohol_tolerance)
@@ -2081,6 +2004,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /datum/species/proc/create_pref_lung_perks()
 	RETURN_TYPE(/list)
+
+	if(isnull(mutantlungs) || (TRAIT_NOBREATH in inherent_traits))
+		return null
 
 	var/list/to_add = list()
 
@@ -2177,3 +2103,21 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 	harddel_deets_dumped = TRUE
 	return "Gained / Owned: [properly_gained ? "Yes" : "No"]"
+
+/**
+ * Get what hair color is used by this species for a mob.
+ *
+ * Arguments
+ * * for_mob - The mob to get the hair color for. Required.
+ *
+ * Returns a color string or null.
+ */
+/datum/species/proc/get_fixed_hair_color(mob/living/carbon/human/for_mob)
+	ASSERT(!isnull(for_mob))
+	switch(hair_color_mode)
+		if(USE_MUTANT_COLOR)
+			return for_mob.dna.features["mcolor"]
+		if(USE_FIXED_MUTANT_COLOR)
+			return fixed_mut_color
+
+	return null

@@ -1,6 +1,7 @@
 import { classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
-import { useBackend, useLocalState } from 'tgui/backend';
+import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -60,6 +61,7 @@ type UserData = {
 
 type StockItem = {
   name: string;
+  path: string;
   amount: number;
   colorable: boolean;
 };
@@ -82,8 +84,7 @@ export const Vending = (props) => {
     stock,
   } = data;
 
-  const [selectedCategory, setSelectedCategory] = useLocalState<string>(
-    'selectedCategory',
+  const [selectedCategory, setSelectedCategory] = useState(
     Object.keys(data.categories)[0],
   );
 
@@ -218,12 +219,12 @@ const ProductDisplay = (props: {
               return true;
             }
           })
-          .map((product, index) => (
+          .map((product) => (
             <VendingRow
               key={product.path}
               custom={custom}
               product={product}
-              productStock={stock[index]}
+              productStock={stock[product.path]}
             />
           ))}
       </Table>
@@ -388,21 +389,17 @@ const CategorySelector = (props: {
 
   return (
     <Section>
-      <Stack grow>
-        <Stack.Item>
-          {Object.entries(categories).map(([name, category]) => (
-            <Button
-              key={name}
-              selected={name === selectedCategory}
-              color={CATEGORY_COLORS[name]}
-              icon={category.icon}
-              onClick={() => onSelect(name)}
-            >
-              {name}
-            </Button>
-          ))}
-        </Stack.Item>
-      </Stack>
+      {Object.entries(categories).map(([name, category]) => (
+        <Button
+          key={name}
+          selected={name === selectedCategory}
+          color={CATEGORY_COLORS[name]}
+          icon={category.icon}
+          onClick={() => onSelect(name)}
+        >
+          {name}
+        </Button>
+      ))}
     </Section>
   );
 };

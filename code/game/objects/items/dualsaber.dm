@@ -17,7 +17,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = SFX_SWING_HIT
 	armour_penetration = 35
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	light_color = LIGHT_COLOR_ELECTRIC_GREEN
 	light_on = FALSE
@@ -60,7 +60,7 @@
 		if(user.dna.check_mutation(/datum/mutation/human/hulk))
 			to_chat(user, span_warning("You lack the grace to wield this!"))
 			return COMPONENT_TWOHANDED_BLOCK_WIELD
-	w_class = w_class_on
+	update_weight_class(w_class_on)
 	hitsound = 'sound/weapons/blade1.ogg'
 	START_PROCESSING(SSobj, src)
 	set_light_on(TRUE)
@@ -68,7 +68,7 @@
 /// Triggered on unwield of two handed item
 /// switch hitsounds
 /obj/item/dualsaber/proc/on_unwield(obj/item/source, mob/living/carbon/user)
-	w_class = initial(w_class)
+	update_weight_class(initial(w_class))
 	hitsound = SFX_SWING_HIT
 	STOP_PROCESSING(SSobj, src)
 	set_light_on(FALSE)
@@ -172,7 +172,7 @@
 			set_light_color(pick(COLOR_SOFT_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER))
 		open_flame()
 	else
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 /obj/item/dualsaber/IsReflect()
 	if(HAS_TRAIT(src, TRAIT_WIELDED) && prob(block_chance))

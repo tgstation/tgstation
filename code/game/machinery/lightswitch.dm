@@ -87,7 +87,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	area.lightswitch = status
 	area.update_appearance()
 
-	for(var/obj/machinery/light_switch/light_switch in area)
+	for(var/obj/machinery/light_switch/light_switch as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light_switch))
+		if(light_switch.area != area)
+			continue
 		light_switch.update_appearance()
 		SEND_SIGNAL(light_switch, COMSIG_LIGHT_SWITCH_SET, status)
 
@@ -105,10 +107,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	if(!(machine_stat & (BROKEN|NOPOWER)))
 		power_change()
 
-/obj/machinery/light_switch/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/wallframe/light_switch(loc)
-	qdel(src)
+/obj/machinery/light_switch/on_deconstruction(disassembled)
+	new /obj/item/wallframe/light_switch(loc)
 
 /obj/item/wallframe/light_switch
 	name = "light switch"

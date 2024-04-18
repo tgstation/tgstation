@@ -57,7 +57,7 @@
 	var/mob/living/living_mob = controller.pawn
 
 	for(var/atom/possible_dinner as anything in typecache_filter_list(range(hunt_range, living_mob), types_to_hunt))
-		if(!valid_dinner(living_mob, possible_dinner, hunt_range))
+		if(!valid_dinner(living_mob, possible_dinner, hunt_range, controller, seconds_per_tick))
 			continue
 		controller.set_blackboard_key(hunting_target_key, possible_dinner)
 		finish_action(controller, TRUE, hunting_target_key)
@@ -65,7 +65,7 @@
 
 	finish_action(controller, FALSE, hunting_target_key)
 
-/datum/ai_behavior/find_hunt_target/proc/valid_dinner(mob/living/source, atom/dinner, radius)
+/datum/ai_behavior/find_hunt_target/proc/valid_dinner(mob/living/source, atom/dinner, radius, datum/ai_controller/controller, seconds_per_tick)
 	if(isliving(dinner))
 		var/mob/living/living_target = dinner
 		if(living_target.stat == DEAD) //bitch is dead
@@ -160,3 +160,19 @@
 	var/datum/action/cooldown/ability = hunter.ai_controller.blackboard[ability_key]
 	ability.InterceptClickOn(hunter, null, hunted)
 
+
+/datum/ai_behavior/hunt_target/latch_onto
+
+/datum/ai_behavior/hunt_target/latch_onto/setup(datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
+	. = ..()
+	var/mob/living/living_pawn = controller.pawn
+	if(living_pawn.buckled)
+		return FALSE
+
+/datum/ai_behavior/hunt_target/latch_onto/target_caught(mob/living/hunter, obj/hunted)
+	if(hunter.buckled)
+		return FALSE
+	if(!hunted.buckle_mob(hunter, force = TRUE))
+		return FALSE
+	hunted.visible_message(span_notice("[hunted] has been latched onto by [hunter]!"))
+	return TRUE

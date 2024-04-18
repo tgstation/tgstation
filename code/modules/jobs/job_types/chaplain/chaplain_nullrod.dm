@@ -20,6 +20,8 @@
 	var/chaplain_spawnable = TRUE
 	/// Short description of what this item is capable of, for radial menu uses.
 	var/menu_description = "A standard chaplain's weapon. Fits in pockets. Can be worn on the belt."
+	/// Lazylist, tracks refs()s to all cultists which have been crit or killed by this nullrod.
+	var/list/cultists_slain
 
 /obj/item/nullrod/Initialize(mapload)
 	. = ..()
@@ -65,6 +67,27 @@
 /obj/item/nullrod/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
 	return (BRUTELOSS|FIRELOSS)
+
+/obj/item/nullrod/attack(mob/living/target_mob, mob/living/user, params)
+	if(!user.mind?.holy_role)
+		return ..()
+	if(!IS_CULTIST(target_mob) || istype(target_mob, /mob/living/carbon/human/cult_ghost))
+		return ..()
+
+	var/old_stat = target_mob.stat
+	. = ..()
+	if(old_stat < target_mob.stat)
+		LAZYOR(cultists_slain, REF(target_mob))
+	return .
+
+/obj/item/nullrod/examine(mob/user)
+	. = ..()
+	if(!IS_CULTIST(user) || !GET_ATOM_BLOOD_DNA_LENGTH(src))
+		return
+
+	var/num_slain = LAZYLEN(cultists_slain)
+	. += span_cult_italic("It has the blood of [num_slain] fallen cultist[num_slain == 1 ? "" : "s"] on it. \
+		<b>Offering</b> it to Nar'sie will transform it into a [num_slain >= 3 ? "powerful" : "standard"] cult weapon.")
 
 /obj/item/nullrod/godhand
 	name = "god hand"

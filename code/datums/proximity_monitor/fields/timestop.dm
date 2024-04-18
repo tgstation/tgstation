@@ -82,7 +82,7 @@
 	src.immune = immune
 	src.antimagic_flags = antimagic_flags
 	src.channelled = channelled
-	recalculate_field()
+	recalculate_field(full_recalc = TRUE)
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/proximity_monitor/advanced/timestop/Destroy()
@@ -93,7 +93,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
-/datum/proximity_monitor/advanced/timestop/field_turf_crossed(atom/movable/movable, turf/location)
+/datum/proximity_monitor/advanced/timestop/field_turf_crossed(atom/movable/movable, turf/old_location, turf/new_location)
 	freeze_atom(movable)
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_atom(atom/movable/A)
@@ -238,7 +238,7 @@
 
 //you don't look quite right, is something the matter?
 /datum/proximity_monitor/advanced/timestop/proc/into_the_negative_zone(atom/A)
-	A.add_atom_colour(list(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,1, 1,1,1,0), TEMPORARY_COLOUR_PRIORITY)
+	A.add_atom_colour(COLOR_MATRIX_INVERT, TEMPORARY_COLOUR_PRIORITY)
 
 //let's put some colour back into your cheeks
 /datum/proximity_monitor/advanced/timestop/proc/escape_the_negative_zone(atom/A)

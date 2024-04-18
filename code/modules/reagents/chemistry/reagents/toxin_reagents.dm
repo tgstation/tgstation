@@ -39,7 +39,7 @@
 /datum/reagent/toxin/mutagen
 	name = "Unstable Mutagen"
 	description = "Might cause unpredictable mutations. Keep away from children."
-	color = "#00FF00"
+	color = COLOR_VIBRANT_LIME
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 0
@@ -295,14 +295,7 @@
 	taste_description = "death"
 	ph = 14.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/toxin/ghoulpowder/on_mob_metabolize(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_FAKEDEATH, type)
-
-/datum/reagent/toxin/ghoulpowder/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_FAKEDEATH, type)
+	metabolized_traits = list(TRAIT_FAKEDEATH)
 
 /datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -321,14 +314,7 @@
 	inverse_chem = /datum/reagent/impurity/rosenol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 18)  //7.2 per 2 seconds
-
-/datum/reagent/toxin/mindbreaker/on_mob_metabolize(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_RDS_SUPPRESSED, type)
-
-/datum/reagent/toxin/mindbreaker/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_RDS_SUPPRESSED, type)
+	metabolized_traits = list(TRAIT_RDS_SUPPRESSED)
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -525,6 +511,7 @@
 	toxpwr = 0.5
 	ph = 4.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/toxin/teapowder
 	name = "Ground Tea Leaves"
@@ -535,6 +522,7 @@
 	taste_description = "green tea"
 	ph = 4.9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/toxin/mushroom_powder
 	name = "Mushroom Powder"
@@ -765,19 +753,20 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	var/need_mob_update = FALSE
-	if(SPT_PROB(8, seconds_per_tick))
-		to_chat(affected_mob, span_danger("You scratch at your head."))
-		need_mob_update += affected_mob.adjustBruteLoss(0.2*REM, FALSE, required_bodytype = affected_bodytype)
-	if(SPT_PROB(8, seconds_per_tick))
-		to_chat(affected_mob, span_danger("You scratch at your leg."))
-		need_mob_update += affected_mob.adjustBruteLoss(0.2*REM, FALSE, required_bodytype = affected_bodytype)
-	if(SPT_PROB(8, seconds_per_tick))
-		to_chat(affected_mob, span_danger("You scratch at your arm."))
-		need_mob_update += affected_mob.adjustBruteLoss(0.2*REM, FALSE, required_bodytype = affected_bodytype)
+	var/scratched = FALSE
+	var/scratch_damage = 0.2 * REM
 
-	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+	var/obj/item/bodypart/head = affected_mob.get_bodypart(BODY_ZONE_HEAD)
+	if(!isnull(head) && SPT_PROB(8, seconds_per_tick))
+		scratched = affected_mob.itch(damage = scratch_damage, target_part = head)
+
+	var/obj/item/bodypart/leg = affected_mob.get_bodypart(pick(BODY_ZONE_L_LEG,BODY_ZONE_R_LEG))
+	if(!isnull(leg) && SPT_PROB(8, seconds_per_tick))
+		scratched = affected_mob.itch(damage = scratch_damage, target_part = leg, silent = scratched) || scratched
+
+	var/obj/item/bodypart/arm = affected_mob.get_bodypart(pick(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM))
+	if(!isnull(arm) && SPT_PROB(8, seconds_per_tick))
+		scratched = affected_mob.itch(damage = scratch_damage, target_part = arm, silent = scratched) || scratched
 
 	if(SPT_PROB(1.5, seconds_per_tick))
 		holder.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
@@ -844,18 +833,11 @@
 	description = "Sodium Thiopental induces heavy weakness in its target as well as unconsciousness."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
-	color = "#6496FA"
+	color = LIGHT_COLOR_BLUE
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-
-/datum/reagent/toxin/sodium_thiopental/on_mob_add(mob/living/affected_mob, amount)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_ANTICONVULSANT, name)
-
-/datum/reagent/toxin/sodium_thiopental/on_mob_delete(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_ANTICONVULSANT, name)
+	added_traits = list(TRAIT_ANTICONVULSANT)
 
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -887,7 +869,7 @@
 	description = "A very powerful delayed toxin. Upon full metabolization, a massive amount of toxin damage will be dealt depending on how long it has been in the victim's bloodstream."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 	toxpwr = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1000,19 +982,12 @@
 	toxpwr = 0
 	ph = 11.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_BLOODY_MESS)
 
 /datum/reagent/toxin/heparin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(holder.has_reagent(/datum/reagent/medicine/coagulant)) //Directly purges coagulants from the system. Get rid of the heparin BEFORE attempting to use coagulants.
 		holder.remove_reagent(/datum/reagent/medicine/coagulant, 2 * REM * seconds_per_tick)
 	return ..()
-
-/datum/reagent/toxin/heparin/on_mob_metabolize(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_BLOODY_MESS, /datum/reagent/toxin/heparin)
-
-/datum/reagent/toxin/heparin/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_BLOODY_MESS, /datum/reagent/toxin/heparin)
 
 /datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
 	name = "Rotatium"
@@ -1073,11 +1048,11 @@
 	description = "A strong mineral acid with the molecular formula H2SO4."
 	color = "#00FF32"
 	toxpwr = 1
-	var/acidpwr = 10 //the amount of protection removed from the armour
 	taste_description = "acid"
 	self_consuming = TRUE
 	ph = 2.75
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/acidpwr = 10 //the amount of protection removed from the armour
 
 // ...Why? I mean, clearly someone had to have done this and thought, well,
 // acid doesn't hurt plants, but what brought us here, to this point?
@@ -1089,6 +1064,9 @@
 /datum/reagent/toxin/acid/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
 	. = ..()
 	if(!istype(exposed_carbon))
+		return
+	var/obj/item/organ/internal/liver/liver = exposed_carbon.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(liver && HAS_TRAIT(liver, TRAIT_HUMAN_AI_METABOLISM))
 		return
 	reac_volume = round(reac_volume,0.1)
 	if(methods & INGEST)
@@ -1184,14 +1162,7 @@
 	ph = 1.7
 	taste_description = "stillness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/toxin/mimesbane/on_mob_metabolize(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_EMOTEMUTE, type)
-
-/datum/reagent/toxin/mimesbane/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_EMOTEMUTE, type)
+	metabolized_traits = list(TRAIT_EMOTEMUTE)
 
 /datum/reagent/toxin/bonehurtingjuice //oof ouch
 	name = "Bone Hurting Juice"
@@ -1307,7 +1278,7 @@
 	description = "A colorless, oderless, tasteless neurotoxin usually carried by livers of animals of the Tetraodontiformes order."
 	silent_toxin = TRUE
 	reagent_state = SOLID
-	color = "#EEEEEE"
+	color = COLOR_VERY_LIGHT_GRAY
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	toxpwr = 0
 	taste_mult = 0

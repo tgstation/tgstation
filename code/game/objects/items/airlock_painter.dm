@@ -147,14 +147,16 @@
 	else
 		return ..()
 
-/obj/item/airlock_painter/AltClick(mob/user)
-	. = ..()
-	if(ink && user.can_perform_action(src))
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		ink.forceMove(user.drop_location())
-		user.put_in_hands(ink)
-		to_chat(user, span_notice("You remove [ink] from [src]."))
-		ink = null
+/obj/item/airlock_painter/click_alt(mob/user)
+	if(!ink)
+		return CLICK_ACTION_BLOCKING
+
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	ink.forceMove(user.drop_location())
+	user.put_in_hands(ink)
+	to_chat(user, span_notice("You remove [ink] from [src]."))
+	ink = null
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/airlock_painter/decal
 	name = "decal painter"
@@ -327,7 +329,6 @@
 
 /datum/asset/spritesheet/decals
 	name = "floor_decals"
-	cross_round_cachable = TRUE
 
 	/// The floor icon used for blend_preview_floor()
 	var/preview_floor_icon = 'icons/turf/floors.dmi'

@@ -94,6 +94,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	/// Volume of the internal air
 	var/air_volume = TANK_STANDARD_VOLUME * 3
 
+	/// How many pixels the closet can shift on the x axis when shaking
+	var/x_shake_pixel_shift = 2
+	/// how many pixels the closet can shift on the y axes when shaking
+	var/y_shake_pixel_shift = 1
+
 /datum/armor/structure_closet
 	melee = 20
 	bullet = 10
@@ -145,7 +150,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 	populate_contents_immediate()
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(locker_carbon),
+		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(locker_living),
 		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -158,7 +163,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	update_appearance()
 
 /obj/structure/closet/LateInitialize()
-	. = ..()
 	if(!opened && is_maploaded)
 		take_contents()
 
@@ -333,7 +337,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(anchorable && !anchored)
 		. += span_notice("It can be [EXAMINE_HINT("bolted")] to the ground.")
 	if(anchored)
-		. += span_notice("Its [EXAMINE_HINT("bolted")] to the ground.")
+		. += span_notice("It's [anchorable ? EXAMINE_HINT("bolted") : "attached firmly"] to the ground.")
 	if(length(paint_jobs))
 		. += span_notice("It can be [EXAMINE_HINT("painted")] another texture.")
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
@@ -362,9 +366,10 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			context[SCREENTIP_CONTEXT_LMB] = opened ? "Close" : "Open"
 		screentip_change = TRUE
 
-	if(istype(held_item) && held_item.tool_behaviour == TOOL_WELDER)
+	if(istype(held_item, cutting_tool))
 		if(opened)
 			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+			screentip_change = TRUE
 		else
 			if(!welded && can_weld_shut)
 				context[SCREENTIP_CONTEXT_LMB] = "Weld"
@@ -373,7 +378,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 				context[SCREENTIP_CONTEXT_LMB] = "Unweld"
 				screentip_change = TRUE
 
-	if(istype(held_item) && held_item.tool_behaviour == TOOL_WRENCH)
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_WRENCH && anchorable)
 		context[SCREENTIP_CONTEXT_RMB] = anchored ? "Unanchor" : "Anchor"
 		screentip_change = TRUE
 
@@ -575,25 +580,26 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	else
 		return open(user)
 
-/obj/structure/closet/deconstruct(disassembled = TRUE)
-	if (!(obj_flags & NO_DECONSTRUCTION))
-		if(ispath(material_drop) && material_drop_amount)
-			new material_drop(loc, material_drop_amount)
-		if (secure)
-			var/obj/item/electronics/airlock/electronics = new(drop_location())
-			if(length(req_one_access))
-				electronics.one_access = TRUE
-				electronics.accesses = req_one_access
-			else
-				electronics.accesses = req_access
-		if(card_reader_installed)
-			new /obj/item/stock_parts/card_reader(drop_location())
+/obj/structure/closet/handle_deconstruct(disassembled)
 	dump_contents()
-	qdel(src)
+	if(obj_flags & NO_DEBRIS_AFTER_DECONSTRUCTION)
+		return
+
+	if(ispath(material_drop) && material_drop_amount)
+		new material_drop(loc, material_drop_amount)
+	if (secure)
+		var/obj/item/electronics/airlock/electronics = new(drop_location())
+		if(length(req_one_access))
+			electronics.one_access = TRUE
+			electronics.accesses = req_one_access
+		else
+			electronics.accesses = req_access
+	if(card_reader_installed)
+		new /obj/item/stock_parts/card_reader(drop_location())
 
 /obj/structure/closet/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
+	if(!broken)
 		bust_open()
 
 /obj/structure/closet/CheckParts(list/parts_list)
@@ -1030,6 +1036,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	user.visible_message(span_warning("[src] begins to shake violently!"), \
 		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
 		span_hear("You hear banging from [src]."))
+
+	addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 1 SECONDS)
+
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
 			return
@@ -1044,6 +1053,23 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet/relay_container_resist_act(mob/living/user, obj/container)
 	container.container_resist_act()
 
+/// Check if someone is still resisting inside, and choose to either keep shaking or stop shaking the closet
+/obj/structure/closet/proc/check_if_shake()
+	// Assuming we decide to shake again, how long until we check to shake again
+	var/next_check_time = 1 SECONDS
+
+	// How long we shake between different calls of Shake(), so that it starts shaking and stops, instead of a steady shake
+	var/shake_duration =  0.3 SECONDS
+
+	for(var/mob/living/mob in contents)
+		if(DOING_INTERACTION_WITH_TARGET(mob, src))
+			// Shake and queue another check_if_shake
+			Shake(x_shake_pixel_shift, y_shake_pixel_shift, shake_duration, shake_interval = 0.1 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(check_if_shake)), next_check_time)
+			return TRUE
+
+	// If we reach here, nobody is resisting, so dont shake
+	return FALSE
 
 /obj/structure/closet/proc/bust_open()
 	SIGNAL_HANDLER
@@ -1159,11 +1185,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet/return_temperature()
 	return
 
-/obj/structure/closet/proc/locker_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
+/obj/structure/closet/proc/locker_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
 	SIGNAL_HANDLER
 	if(!opened && (locked || welded)) //Yes this could be less code, no I don't care
 		return
-	if(!opened && !shove_blocked)
+	if(!opened && ((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED)))
 		return
 	var/was_opened = opened
 	if(!toggle())
@@ -1173,18 +1199,12 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	update_icon()
-	if(target == shover)
-		target.visible_message(span_danger("[target.name] shoves [target.p_them()]self into [src]!"),
-			null,
-			span_hear("You hear shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
-		to_chat(shover, span_notice("You shove yourself into [src]!"))
-	else
-		target.visible_message(span_danger("[shover.name] shoves [target.name] into [src]!"),
-			span_userdanger("You're shoved into [src] by [shover.name]!"),
-			span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
-		to_chat(src, span_danger("You shove [target.name] into [src]!"))
-	log_combat(shover, target, "shoved", "into [src] (locker/crate)")
-	return COMSIG_CARBON_SHOVE_HANDLED
+	target.visible_message(span_danger("[shover.name] shoves [target.name] into [src]!"),
+		span_userdanger("You're shoved into [src] by [shover.name]!"),
+		span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
+	to_chat(src, span_danger("You shove [target.name] into [src]!"))
+	log_combat(shover, target, "shoved", "into [src] (locker/crate)[weapon ? " with [weapon]" : ""]")
+	return COMSIG_LIVING_SHOVE_HANDLED
 
 /// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Unlock and open up when we get knock casted.
 /obj/structure/closet/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, atom/caster)

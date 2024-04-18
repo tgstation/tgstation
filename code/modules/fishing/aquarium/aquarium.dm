@@ -1,7 +1,13 @@
 #define AQUARIUM_LAYER_STEP 0.01
 /// Aquarium content layer offsets
-#define AQUARIUM_MIN_OFFSET 0.01
+#define AQUARIUM_MIN_OFFSET 0.02
 #define AQUARIUM_MAX_OFFSET 1
+/// The layer of the glass overlay
+#define AQUARIUM_GLASS_LAYER 0.01
+/// The layer of the aquarium pane borders
+#define AQUARIUM_BORDERS_LAYER AQUARIUM_MAX_OFFSET + AQUARIUM_LAYER_STEP
+/// Layer for stuff rendered below the glass overlay
+#define AQUARIUM_BELOW_GLASS_LAYER 0.01
 
 /obj/structure/aquarium
 	name = "aquarium"
@@ -10,7 +16,7 @@
 	anchored = TRUE
 
 	icon = 'icons/obj/aquarium.dmi'
-	icon_state = "aquarium_base"
+	icon_state = "aquarium_map"
 
 	integrity_failure = 0.3
 
@@ -26,9 +32,6 @@
 
 	/// Can fish reproduce in this quarium.
 	var/allow_breeding = FALSE
-
-	var/glass_icon_state = "aquarium_glass"
-	var/broken_glass_icon_state = "aquarium_glass_broken"
 
 	//This is the area where fish can swim
 	var/aquarium_zone_min_px = 2
@@ -55,6 +58,7 @@
 	create_reagents(6, SEALED_CONTAINER)
 	RegisterSignal(reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
 	AddComponent(/datum/component/plumbing/aquarium)
+	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 
 /obj/structure/aquarium/proc/track_if_fish(atom/source, atom/initialized)
 	SIGNAL_HANDLER
@@ -108,16 +112,18 @@
 	 */
 	//optional todo: hook up sending surface changed on aquarium changing layers
 	switch(layer_type)
+		if(AQUARIUM_LAYER_MODE_BEHIND_GLASS)
+			return layer + AQUARIUM_BELOW_GLASS_LAYER
 		if(AQUARIUM_LAYER_MODE_BOTTOM)
 			return layer + AQUARIUM_MIN_OFFSET
 		if(AQUARIUM_LAYER_MODE_TOP)
 			return layer + AQUARIUM_MAX_OFFSET
 		if(AQUARIUM_LAYER_MODE_AUTO)
-			var/chosen_layer = layer + AQUARIUM_MIN_OFFSET + AQUARIUM_LAYER_STEP
-			while((chosen_layer in used_layers) && (chosen_layer <= layer + AQUARIUM_MAX_OFFSET))
+			var/chosen_layer = AQUARIUM_MIN_OFFSET + AQUARIUM_LAYER_STEP
+			while((chosen_layer in used_layers) && (chosen_layer <= AQUARIUM_MAX_OFFSET))
 				chosen_layer += AQUARIUM_LAYER_STEP
 			used_layers += chosen_layer
-			return chosen_layer
+			return layer + chosen_layer
 
 /obj/structure/aquarium/proc/free_layer(value)
 	used_layers -= value
@@ -129,14 +135,23 @@
 	.[AQUARIUM_PROPERTIES_PY_MIN] = aquarium_zone_min_py
 	.[AQUARIUM_PROPERTIES_PY_MAX] = aquarium_zone_max_py
 
+/obj/structure/aquarium/update_icon()
+	. = ..()
+	///"aquarium_map" is used for mapping, so mappers can tell what it's.
+	icon_state = "aquarium_base"
+
 /obj/structure/aquarium/update_overlays()
 	. = ..()
 	if(panel_open)
 		. += "panel"
 
-	//Glass overlay goes on top of everything else.
-	var/mutable_appearance/glass_overlay = mutable_appearance(icon,broken ? broken_glass_icon_state : glass_icon_state,layer=AQUARIUM_MAX_OFFSET-1)
-	. += glass_overlay
+	///The glass overlay
+	var/suffix = fluid_type == AQUARIUM_FLUID_AIR ? "air" : "water"
+	if(broken)
+		suffix += "_broken"
+		. += mutable_appearance(icon, "aquarium_glass_cracks", layer = layer + AQUARIUM_BORDERS_LAYER)
+	. += mutable_appearance(icon, "aquarium_glass_[suffix]", layer = layer + AQUARIUM_GLASS_LAYER)
+	. += mutable_appearance(icon, "aquarium_borders", layer = layer + AQUARIUM_BORDERS_LAYER)
 
 /obj/structure/aquarium/examine(mob/user)
 	. = ..()
@@ -144,10 +159,7 @@
 	if(panel_open && reagents.total_volume)
 		. += span_notice("You can use a plunger to empty the feed storage.")
 
-/obj/structure/aquarium/AltClick(mob/living/user)
-	. = ..()
-	if(!user.can_perform_action(src))
-		return
+/obj/structure/aquarium/click_alt(mob/living/user)
 	panel_open = !panel_open
 	balloon_alert(user, "panel [panel_open ? "open" : "closed"]")
 	if(panel_open)
@@ -155,6 +167,7 @@
 	else
 		reagents.flags &= ~(TRANSPARENT|REFILLABLE)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/aquarium/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -164,9 +177,9 @@
 /obj/structure/aquarium/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	if(!panel_open)
 		return
-	to_chat(user, span_notice("You start plunging [name]."))
+	user.balloon_alert_to_viewers("plunging...")
 	if(do_after(user, 3 SECONDS, target = src))
-		to_chat(user, span_notice("You finish plunging the [name]."))
+		user.balloon_alert_to_viewers("finished plunging")
 		reagents.expose(get_turf(src), TOUCH) //splash on the floor
 		reagents.clear_reagents()
 
@@ -338,11 +351,14 @@
 #undef AQUARIUM_LAYER_STEP
 #undef AQUARIUM_MIN_OFFSET
 #undef AQUARIUM_MAX_OFFSET
+#undef AQUARIUM_GLASS_LAYER
+#undef AQUARIUM_BORDERS_LAYER
+#undef AQUARIUM_BELOW_GLASS_LAYER
 
 /obj/structure/aquarium/prefilled/Initialize(mapload)
 	. = ..()
 
-	new /obj/item/aquarium_prop/rocks(src)
+	new /obj/item/aquarium_prop/sand(src)
 	new /obj/item/aquarium_prop/seaweed(src)
 
 	new /obj/item/fish/goldfish(src)

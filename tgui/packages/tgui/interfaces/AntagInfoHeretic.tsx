@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import { useBackend } from '../backend';
 import { BlockQuote, Box, Button, Section, Stack, Tabs } from '../components';
+import { CssColor } from '../constants';
 import { Window } from '../layouts';
 import {
   Objective,
@@ -42,7 +43,7 @@ type Knowledge = {
   cost: number;
   disabled: boolean;
   hereticPath: string;
-  color: string;
+  color: CssColor;
 };
 
 type KnowledgeInfo = {

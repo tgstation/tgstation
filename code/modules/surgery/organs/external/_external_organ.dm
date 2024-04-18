@@ -25,6 +25,8 @@
 	var/use_mob_sprite_as_obj_sprite = FALSE
 	///Does this organ have any bodytypes to pass to it's bodypart_owner?
 	var/external_bodytypes = NONE
+	///Does this organ have any bodyshapes to pass to it's bodypart_owner?
+	var/external_bodyshapes = NONE
 	///Which flags does a 'modification tool' need to have to restyle us, if it all possible (located in code/_DEFINES/mobs)
 	var/restyle_flags = NONE
 
@@ -80,12 +82,15 @@
 
 	if(external_bodytypes)
 		receiver.synchronize_bodytypes()
+	if(external_bodyshapes)
+		receiver.synchronize_bodyshapes()
 
 	receiver.update_body_parts()
 
 /obj/item/organ/external/mob_remove(mob/living/carbon/organ_owner, special, moving)
 	if(!special)
 		organ_owner.synchronize_bodytypes()
+		organ_owner.synchronize_bodyshapes()
 		organ_owner.update_body_parts()
 	return ..()
 
@@ -216,7 +221,7 @@
 	slot = ORGAN_SLOT_EXTERNAL_SNOUT
 
 	preference = "feature_lizard_snout"
-	external_bodytypes = BODYTYPE_SNOUTED
+	external_bodyshapes = BODYSHAPE_SNOUTED
 
 	dna_block = DNA_SNOUT_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH

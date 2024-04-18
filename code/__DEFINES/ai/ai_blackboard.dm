@@ -6,8 +6,6 @@
 #define BB_NEXT_HUNGRY "BB_NEXT_HUNGRY"
 ///what we're going to eat next
 #define BB_FOOD_TARGET "bb_food_target"
-///Path we should use next time we use the JPS movement datum
-#define BB_PATH_TO_USE "BB_path_to_use"
 ///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
 #define BB_AGGRO_RANGE "BB_aggro_range"
 ///are we hungry? determined by the udder compnent
@@ -141,5 +139,13 @@
 /// The next time at which this mob can call for reinforcements
 #define BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN "BB_basic_mob_reinforcements_cooldown"
 
+/// the direction we started when executing stare at things
+#define BB_STARTING_DIRECTION "BB_startdir"
+
 ///Text we display when we befriend someone
 #define BB_FRIENDLY_MESSAGE "friendly_message"
+
+// Keys used by one and only one behavior
+// Used to hold state without making bigass lists
+/// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
+#define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"

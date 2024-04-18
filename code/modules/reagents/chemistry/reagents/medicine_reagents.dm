@@ -41,6 +41,7 @@
 	color = "#E0BB00" //golden for the gods
 	taste_description = "badmins"
 	chemical_flags = REAGENT_DEAD_PROCESS
+	metabolized_traits = list(TRAIT_ANALGESIA)
 	/// Flags to fullheal every metabolism tick
 	var/full_heal_flags = ~(HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_REFRESH_ORGANS)
 
@@ -80,18 +81,15 @@
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
 	description = "Increases resistance to stuns as well as reducing drowsiness and hallucinations."
-	color = "#FF00FF"
+	color = COLOR_MAGENTA
 	ph = 4
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.adjust_drowsiness(-10 SECONDS * REM * seconds_per_tick)
-	affected_mob.AdjustStun(-20 * REM * seconds_per_tick)
-	affected_mob.AdjustKnockdown(-20 * REM * seconds_per_tick)
-	affected_mob.AdjustUnconscious(-20 * REM * seconds_per_tick)
-	affected_mob.AdjustImmobilized(-20 * REM * seconds_per_tick)
-	affected_mob.AdjustParalyzed(-20 * REM * seconds_per_tick)
+	affected_mob.AdjustAllImmobility(-20 * REM * seconds_per_tick)
+
 	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
 		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5 * REM * seconds_per_tick)
 	affected_mob.adjust_hallucinations(-20 SECONDS * REM * seconds_per_tick)
@@ -104,7 +102,7 @@
 	description = "Reduces drowsiness, hallucinations, and Histamine from body."
 	color = "#EC536D" // rgb: 236, 83, 109
 	ph = 5.2
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/synaphydramine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -252,14 +250,7 @@
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	ph = 8.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/medicine/spaceacillin/on_mob_add(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE, type)
-
-/datum/reagent/medicine/spaceacillin/on_mob_delete(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE, type)
+	added_traits = list(TRAIT_VIRUS_RESISTANCE)
 
 //Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
 
@@ -279,9 +270,9 @@
 	. = ..()
 	var/need_mob_update
 	if(affected_mob.getFireLoss() > 25)
-		need_mob_update = affected_mob.adjustFireLoss(-4 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype) //Twice as effective as AIURI for severe burns
+		need_mob_update = affected_mob.adjustFireLoss(-4 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype) //Twice as effective as AIURI for severe burns
 	else
-		need_mob_update = affected_mob.adjustFireLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype) //But only a quarter as effective for more minor ones
+		need_mob_update = affected_mob.adjustFireLoss(-0.5 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype) //But only a quarter as effective for more minor ones
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -349,6 +340,7 @@
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	ph = 2.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
+	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/reagent/medicine/mine_salve/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -496,14 +488,7 @@
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	ph = 12 //It's a reducing agent
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/medicine/potass_iodide/on_mob_metabolize(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
-
-/datum/reagent/medicine/potass_iodide/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
+	metabolized_traits = list(TRAIT_HALT_RADIATION_EFFECTS)
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -521,14 +506,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	inverse_chem_val = 0.4
 	inverse_chem = /datum/reagent/inverse/pen_acid
-
-/datum/reagent/medicine/pen_acid/on_mob_metabolize(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
-
-/datum/reagent/medicine/pen_acid/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
+	metabolized_traits = list(TRAIT_HALT_RADIATION_EFFECTS)
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -554,9 +532,9 @@
 	. = ..()
 	var/need_mob_update
 	if(affected_mob.getBruteLoss() > 25)
-		need_mob_update = affected_mob.adjustBruteLoss(-4 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = affected_mob.adjustBruteLoss(-4 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
 	else
-		need_mob_update = affected_mob.adjustBruteLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = affected_mob.adjustBruteLoss(-0.5 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -570,7 +548,7 @@
 	name = "Salbutamol"
 	description = "Rapidly restores oxygen deprivation as well as preventing more of it to an extent."
 	reagent_state = LIQUID
-	color = "#00FFFF"
+	color = COLOR_CYAN
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -603,27 +581,29 @@
 	addiction_types = list(/datum/addiction/stimulants = 4) //1.6 per 2 seconds
 	inverse_chem = /datum/reagent/inverse/corazargh
 	inverse_chem_val = 0.4
+	metabolized_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_STIMULATED)
 
 /datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
 	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
-	ADD_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
+	var/purity_movespeed_accounting = -0.375 * normalise_creation_purity()
+	affected_mob.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine, TRUE, purity_movespeed_accounting)
 
 /datum/reagent/medicine/ephedrine/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
-	REMOVE_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(SPT_PROB(10 * (1.5-creation_purity), seconds_per_tick) && iscarbon(affected_mob))
-		var/obj/item/I = affected_mob.get_active_held_item()
-		if(I && affected_mob.dropItemToGround(I))
+	var/obj/item/active_held_item = affected_mob.get_active_held_item()
+	if(SPT_PROB(10 * (1.5-creation_purity), seconds_per_tick) && iscarbon(affected_mob) && active_held_item?.w_class > WEIGHT_CLASS_SMALL)
+		if(active_held_item && affected_mob.dropItemToGround(active_held_item))
 			to_chat(affected_mob, span_notice("Your hands spaz out and you drop what you were holding!"))
 			affected_mob.set_jitter_if_lower(20 SECONDS)
 
 	affected_mob.AdjustAllImmobility(-20 * REM * seconds_per_tick * normalise_creation_purity())
 	affected_mob.adjustStaminaLoss(-1 * REM * seconds_per_tick * normalise_creation_purity(), updating_stamina = FALSE)
+
 	return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/ephedrine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -668,6 +648,7 @@
 	ph = 8.96
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/opioids = 10)
+	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/reagent/medicine/morphine/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -820,14 +801,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	inverse_chem_val = 0.35
 	inverse_chem = /datum/reagent/inverse/atropine
-
-/datum/reagent/medicine/atropine/on_mob_add(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION, "[type]")
-
-/datum/reagent/medicine/atropine/on_mob_delete(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION, "[type]")
+	added_traits = list(TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION)
 
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -863,14 +837,7 @@
 	overdose_threshold = 30
 	ph = 10.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/medicine/epinephrine/on_mob_metabolize(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_NOCRITDAMAGE, type)
-
-/datum/reagent/medicine/epinephrine/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_NOCRITDAMAGE, type)
+	metabolized_traits = list(TRAIT_NOCRITDAMAGE)
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1039,20 +1006,12 @@
 	purity = REAGENT_STANDARD_PURITY
 	inverse_chem = /datum/reagent/inverse
 	inverse_chem_val = 0.45
+	metabolized_traits = list(TRAIT_TUMOR_SUPPRESSED) //Having mannitol in you will pause the brain damage from brain tumor (so it heals an even 2 brain damage instead of 1.8)
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
-
-//Having mannitol in you will pause the brain damage from brain tumor (so it heals an even 2 brain damage instead of 1.8)
-/datum/reagent/medicine/mannitol/on_mob_metabolize(mob/living/carbon/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
-
-/datum/reagent/medicine/mannitol/on_mob_end_metabolize(mob/living/carbon/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
 
 /datum/reagent/medicine/mannitol/overdose_start(mob/living/affected_mob)
 	. = ..()
@@ -1075,17 +1034,17 @@
 /datum/reagent/medicine/neurine
 	name = "Neurine"
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
-	color = "#C0C0C0" //ditto
+	color = COLOR_SILVER //ditto
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_DEAD_PROCESS
 	purity = REAGENT_STANDARD_PURITY
 	inverse_chem_val = 0.5
 	inverse_chem = /datum/reagent/inverse/neurine
+	added_traits = list(TRAIT_ANTICONVULSANT)
 	///brain damage level when we first started taking the chem
 	var/initial_bdamage = 200
 
 /datum/reagent/medicine/neurine/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_ANTICONVULSANT, name)
 	if(!iscarbon(affected_mob))
 		return
 	var/mob/living/carbon/affected_carbon = affected_mob
@@ -1094,7 +1053,6 @@
 
 /datum/reagent/medicine/neurine/on_mob_delete(mob/living/affected_mob)
 	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_ANTICONVULSANT, name)
 	if(!iscarbon(affected_mob))
 		return
 	var/mob/living/carbon/affected_carbon = affected_mob
@@ -1172,16 +1130,15 @@
 	ph = 8.7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	addiction_types = list(/datum/addiction/stimulants = 4) //0.8 per 2 seconds
+	metabolized_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_ANALGESIA, TRAIT_STIMULATED)
 
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
 	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
-	ADD_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
 
 /datum/reagent/medicine/stimulants/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
-	REMOVE_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1278,7 +1235,7 @@
 	need_mob_update = affected_mob.adjustBruteLoss(-5 * REM * seconds_per_tick, updating_health = FALSE) //A ton of healing - this is a 50 telecrystal investment.
 	need_mob_update += affected_mob.adjustFireLoss(-5 * REM * seconds_per_tick, updating_health = FALSE)
 	need_mob_update += affected_mob.adjustOxyLoss(-15 * REM * seconds_per_tick, updating_health = FALSE)
-	need_mob_update += affected_mob.adjustToxLoss(-5 * REM * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += affected_mob.adjustToxLoss(-5 * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype)
 	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15 * REM * seconds_per_tick)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -1298,6 +1255,7 @@
 	ph = 11
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 14)
+	metabolized_traits = list(TRAIT_PACIFISM)
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1322,14 +1280,6 @@
 	affected_mob.adjust_drugginess_up_to(20 SECONDS * REM * seconds_per_tick, 30 SECONDS * REM * seconds_per_tick)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
-
-/datum/reagent/medicine/earthsblood/on_mob_metabolize(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_PACIFISM, type)
-
-/datum/reagent/medicine/earthsblood/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_PACIFISM, type)
 
 /datum/reagent/medicine/earthsblood/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1379,6 +1329,9 @@
 
 	if (affected_mob.get_timed_status_effect_duration(/datum/status_effect/hallucination) >= 10 SECONDS)
 		affected_mob.adjust_hallucinations(-10 SECONDS * REM * seconds_per_tick)
+
+	if(affected_mob.getStaminaLoss() >= 100)
+		affected_mob.reagents.remove_reagent(type, 2 * REM * seconds_per_tick)
 
 	var/need_mob_update = FALSE
 	if(SPT_PROB(10, seconds_per_tick))
@@ -1446,19 +1399,12 @@
 	color = "#FF3542"
 	self_consuming = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/medicine/higadrite/on_mob_metabolize(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_STABLELIVER, type)
-
-/datum/reagent/medicine/higadrite/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_STABLELIVER, type)
+	metabolized_traits = list(TRAIT_STABLELIVER)
 
 /datum/reagent/medicine/cordiolis_hepatico
 	name = "Cordiolis Hepatico"
 	description = "A strange, pitch-black reagent that seems to absorb all light. Effects unknown."
-	color = "#000000"
+	color = COLOR_BLACK
 	self_consuming = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
@@ -1474,6 +1420,7 @@
 	name = "Muscle Stimulant"
 	description = "A potent chemical that allows someone under its influence to be at full physical ability even when under massive amounts of pain."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/reagent/medicine/muscle_stimulant/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -1494,14 +1441,7 @@
 	var/overdose_progress = 0 // to track overdose progress
 	ph = 7.89
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/medicine/modafinil/on_mob_metabolize(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_SLEEPIMMUNE, type)
-
-/datum/reagent/medicine/modafinil/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_SLEEPIMMUNE, type)
+	metabolized_traits = list(TRAIT_SLEEPIMMUNE)
 
 /datum/reagent/medicine/modafinil/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
 	. = ..()
@@ -1565,14 +1505,7 @@
 	overdose_threshold = 30
 	ph = 9.12
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/medicine/psicodine/on_mob_metabolize(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_FEARLESS, type)
-
-/datum/reagent/medicine/psicodine/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_FEARLESS, type)
+	metabolized_traits = list(TRAIT_FEARLESS)
 
 /datum/reagent/medicine/psicodine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1694,19 +1627,16 @@
 	/// For tracking when we tell the person we're no longer bleeding
 	var/was_working
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_COAGULATING)
 
 /datum/reagent/medicine/coagulant/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_COAGULATING, /datum/reagent/medicine/coagulant)
-
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/blood_boy = affected_mob
 		blood_boy.physiology?.bleed_mod *= passive_bleed_modifier
 
 /datum/reagent/medicine/coagulant/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_COAGULATING, /datum/reagent/medicine/coagulant)
-
 	if(was_working)
 		to_chat(affected_mob, span_warning("The medicine thickening your blood loses its effect!"))
 	if(ishuman(affected_mob))

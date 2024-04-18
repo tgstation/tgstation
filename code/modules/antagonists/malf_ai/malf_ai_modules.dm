@@ -166,7 +166,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/nuke_station
 	name = "Doomsday Device"
 	desc = "Activates the doomsday device. This is not reversible."
-	button_icon_state = "doomsday_device"
+	button_icon = 'icons/obj/machines/nuke_terminal.dmi'
+	button_icon_state = "nuclearbomb_timing"
 	auto_use_uses = FALSE
 
 /datum/action/innate/ai/nuke_station/Activate()
@@ -598,6 +599,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/honk
 	name = "Percussive Intercomm Interference"
 	desc = "Rock the station's intercom system with an obnoxious HONK!"
+	button_icon = 'icons/obj/machines/wallmounts.dmi'
 	button_icon_state = "intercom"
 	uses = 2
 
@@ -686,7 +688,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		I.loc = T
 		client.images += I
 		I.icon_state = "[success ? "green" : "red"]Overlay" //greenOverlay and redOverlay for success and failure respectively
-		addtimer(CALLBACK(src, PROC_REF(remove_transformer_image), client, I, T), 30)
+		addtimer(CALLBACK(src, PROC_REF(remove_transformer_image), client, I, T), 3 SECONDS)
 	if(!success)
 		to_chat(src, span_warning("[alert_msg]"))
 	return success
@@ -705,7 +707,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/break_air_alarms
 	name = "Override Air Alarm Safeties"
 	desc = "Enables extremely dangerous settings on all air alarms."
-	button_icon_state = "break_air_alarms"
+	button_icon = 'icons/obj/machines/wallmounts.dmi'
+	button_icon_state = "alarmx"
 	uses = 1
 
 /datum/action/innate/ai/break_air_alarms/Activate()
@@ -761,7 +764,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/emergency_lights
 	name = "Disable Emergency Lights"
 	desc = "Disables all emergency lighting. Note that emergency lights can be restored through reboot at an APC."
-	button_icon_state = "emergency_lights"
+	button_icon = 'icons/obj/lighting.dmi'
+	button_icon_state = "floor_emergency"
 	uses = 1
 
 /datum/action/innate/ai/emergency_lights/Activate()
@@ -801,7 +805,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		if(!uses)
 			break
-		if(!C.status || C.view_range != initial(C.view_range))
+		if(!C.camera_enabled || C.view_range != initial(C.view_range))
 			C.toggle_cam(owner_AI, 0) //Reactivates the camera based on status. Badly named proc.
 			C.view_range = initial(C.view_range)
 			fixed_cameras++
@@ -831,10 +835,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 	var/upgraded_cameras = 0
 	for(var/obj/machinery/camera/camera as anything in GLOB.cameranet.cameras)
-		var/obj/structure/camera_assembly/assembly = camera.assembly_ref?.resolve()
-		if(!assembly)
-			continue
-
 		var/upgraded = FALSE
 
 		if(!camera.isXRay())
@@ -867,7 +867,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /datum/ai_module/upgrade/upgrade_turrets/upgrade(mob/living/silicon/ai/AI)
 	for(var/obj/machinery/porta_turret/ai/turret as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/porta_turret/ai))
-		turret.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES | EMP_PROTECT_CONTENTS)
+		turret.AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 		turret.max_integrity = 200
 		turret.repair_damage(200)
 		turret.lethal_projectile = /obj/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
@@ -891,7 +891,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/ai_module/upgrade/mecha_domination
 	name = "Unlock Mech Domination"
 	description = "Allows you to hack into a mech's onboard computer, shunting all processes into it and ejecting any occupants. \
-		Once uploaded to the mech, it is impossible to leave. Do not allow the mech to leave the station's vicinity or allow it to be destroyed. \
+		Do not allow the mech to leave the station's vicinity or allow it to be destroyed. \
 		Upgrade is done immediately upon purchase."
 	cost = 30
 	upgrade = TRUE

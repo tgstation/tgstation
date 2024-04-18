@@ -72,16 +72,13 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/status_display/deconstruct(disassembled = TRUE)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
+/obj/machinery/status_display/on_deconstruction(disassembled)
 	if(!disassembled)
 		new /obj/item/stack/sheet/iron(drop_location(), 2)
 		new /obj/item/shard(drop_location())
 		new /obj/item/shard(drop_location())
 	else
 		new /obj/item/wallframe/status_display(drop_location())
-	qdel(src)
 
 /// Immediately change the display to the given picture.
 /obj/machinery/status_display/proc/set_picture(state)
@@ -544,6 +541,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 			status_signal.data["picture_state"] = picture_map[picture.value]
 
 	connected_display.receive_signal(status_signal)
+
+/obj/machinery/status_display/random_message
+	current_mode = SD_MESSAGE
+	/// list to pick the first line from
+	var/list/firstline_to_secondline = list()
+
+/obj/machinery/status_display/random_message/Initialize(mapload, ndir, building)
+	if(firstline_to_secondline?.len)
+		message1 = pick(firstline_to_secondline)
+		message2 = firstline_to_secondline[message1]
+	return ..() // status displays call update appearance on init so i suppose we should set the messages before calling parent as to not call it twice
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 
 #undef MAX_STATIC_WIDTH
 #undef FONT_STYLE

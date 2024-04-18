@@ -1,4 +1,4 @@
-///Called on user, from base of /datum/strippable_item/alternate_action() (atom/target)
+///Called on user, from base of /datum/strippable_item/perform_alternate_action() (atom/target, action_key)
 #define COMSIG_TRY_ALT_ACTION "try_alt_action"
 	#define COMPONENT_CANT_ALT_ACTION (1<<0)
 ///Called on /basic when updating its speed, from base of /mob/living/basic/update_basic_mob_varspeed(): ()
@@ -70,6 +70,8 @@
 
 ///from mind/transfer_to. Sent to the receiving mob.
 #define COMSIG_MOB_MIND_TRANSFERRED_INTO "mob_mind_transferred_into"
+///from mind/transfer_from. Sent to the mob the mind is being transferred out of.
+#define COMSIG_MOB_MIND_TRANSFERRED_OUT_OF "mob_mind_transferred_out_of"
 /// From /mob/proc/ghostize() Called when a mob sucessfully ghosts
 #define COMSIG_MOB_GHOSTIZED "mob_ghostized"
 
@@ -180,8 +182,6 @@
 #define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"
 ///from base of obj/item/afterattack_secondary(): (atom/target, obj/item/weapon, proximity_flag, click_parameters)
 #define COMSIG_MOB_ITEM_AFTERATTACK_SECONDARY "mob_item_afterattack_secondary"
-///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, proximity_flag, click_parameters)
-#define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"
 ///from base of mob/RangedAttack(): (atom/A, modifiers)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
 ///from base of mob/ranged_secondary_attack(): (atom/target, modifiers)
@@ -238,3 +238,9 @@
 	#define COMPONENT_BLOCK_MOB_CHANGE (1<<0)
 /// from /mob/proc/change_mob_type_unchecked() : ()
 #define COMSIG_MOB_CHANGED_TYPE "mob_changed_type"
+
+/// from /mob/proc/slip(): (knockdown_amonut, obj/slipped_on, lube_flags [mobs.dm], paralyze, force_drop)
+#define COMSIG_MOB_SLIPPED "mob_slipped"
+
+/// from /mob/proc/key_down(): (key, client/client, full_key)
+#define COMSIG_MOB_KEYDOWN "mob_key_down"

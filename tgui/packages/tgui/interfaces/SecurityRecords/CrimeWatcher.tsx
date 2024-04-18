@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
   BlockQuote,
@@ -210,9 +211,9 @@ const CrimeAuthor = (props) => {
   const { crew_ref } = foundRecord;
   const { act } = useBackend<SecurityRecordsData>();
 
-  const [crimeName, setCrimeName] = useLocalState('crimeName', '');
-  const [crimeDetails, setCrimeDetails] = useLocalState('crimeDetails', '');
-  const [crimeFine, setCrimeFine] = useLocalState('crimeFine', 0);
+  const [crimeName, setCrimeName] = useState('');
+  const [crimeDetails, setCrimeDetails] = useState('');
+  const [crimeFine, setCrimeFine] = useState(0);
   const [selectedTab, setSelectedTab] = useLocalState<SECURETAB>(
     'selectedTab',
     SECURETAB.Crimes,
@@ -257,7 +258,6 @@ const CrimeAuthor = (props) => {
           fluid
           height={4}
           maxLength={1025}
-          multiline
           onChange={(_, value) => setCrimeDetails(value)}
           placeholder="Type some details..."
         />
