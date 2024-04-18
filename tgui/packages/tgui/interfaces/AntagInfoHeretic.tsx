@@ -1,8 +1,8 @@
-import { BooleanLike } from 'common/react';
+import { BooleanLike, classes } from 'common/react';
 import { useState } from 'react';
 
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Image, Section, Stack, Tabs } from '../components';
+import { Box, Button, Flex, Section, Stack, Tabs } from '../components';
 import { CssColor } from '../constants';
 import { Window } from '../layouts';
 import {
@@ -37,13 +37,13 @@ const hereticYellow = {
 
 type Knowledge = {
   path: string;
+  icon_id: string;
   name: string;
   desc: string;
   gainFlavor: string;
   cost: number;
   disabled: boolean;
   color: CssColor;
-  icon: string;
   finished: boolean;
   ascension: boolean;
 };
@@ -256,13 +256,13 @@ const KnowledgeTree = (props) => {
                         height={node.ascension?"128px":"64px"}
                         m="8px"
                       >
-                        <Image
-                        src={`data:image/jpeg;base64,${node.icon}`}
-                        height="100%"
-                        width="100%"
-                        position="absolute"
-                        top="0px"
-                        left="0px"
+                        <Box
+                          className={classes([(node.ascension ? 'heretic_knowledge76x76' : 'heretic_knowledge32x32'), node.icon_id])}
+                          height={node.ascension?"128px":"64px"}
+                          width={node.ascension?"128px":"64px"}
+                          position="absolute"
+                          top="0px"
+                          left="0px"
                         />
                         <Box
                           position="absolute"

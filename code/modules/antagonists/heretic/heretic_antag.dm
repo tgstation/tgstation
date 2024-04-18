@@ -84,7 +84,20 @@
 	LAZYNULL(sac_targets)
 	return ..()
 
-/datum/antagonist/heretic/proc/get_icon_of_knowledge(datum/heretic_knowledge/knowledge)
+/datum/antagonist/heretic/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/heretic_knowledge),
+	)
+
+/datum/asset/spritesheet/heretic_knowledge
+	name = "heretic_knowledge"
+
+/datum/asset/spritesheet/heretic_knowledge/create_spritesheets()
+	for(var/datum/heretic_knowledge/path as anything in subtypesof(/datum/heretic_knowledge))
+		Insert(sanitize_css_class_name("[path]"), get_icon_of_knowledge(path))
+
+
+/datum/asset/spritesheet/heretic_knowledge/proc/get_icon_of_knowledge(datum/heretic_knowledge/knowledge)
 	if(ispath(knowledge))
 		//if the argument is a typepath, we need to make a dummy so we can access some of its properties
 		knowledge = new knowledge()
@@ -145,13 +158,13 @@
 		var/list/knowledge_data = list()
 		var/datum/heretic_knowledge/found_knowledge = researched_knowledge[path]
 		knowledge_data["path"] = path
+		knowledge_data["icon_id"] = sanitize_css_class_name("[path]")
 		knowledge_data["name"] = found_knowledge.name
 		knowledge_data["desc"] = found_knowledge.desc
 		knowledge_data["gainFlavor"] = found_knowledge.gain_text
 		knowledge_data["cost"] = found_knowledge.cost
 		knowledge_data["disabled"] = FALSE
 		knowledge_data["color"] = "black"
-		knowledge_data["icon"] = icon2base64(icon('icons/mob/actions/actions_ecult.dmi',"eye"))
 		knowledge_data["finished"] = TRUE
 		knowledge_data["ascension"] = istype(found_knowledge,/datum/heretic_knowledge/ultimate)
 
@@ -160,13 +173,13 @@
 	for(var/datum/heretic_knowledge/knowledge as anything in get_researchable_knowledge())
 		var/list/knowledge_data = list()
 		knowledge_data["path"] = knowledge
+		knowledge_data["icon_id"] = sanitize_css_class_name("[knowledge]")
 		knowledge_data["name"] = initial(knowledge.name)
 		knowledge_data["desc"] = initial(knowledge.desc)
 		knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
 		knowledge_data["cost"] = initial(knowledge.cost)
 		knowledge_data["disabled"] = initial(knowledge.cost) > knowledge_points
 		knowledge_data["color"] = path_to_ui_color[initial(knowledge.route)] || "grey"
-		knowledge_data["icon"] = icon2base64(icon('icons/mob/actions/actions_ecult.dmi',"eye"))
 		knowledge_data["finished"] = FALSE
 		knowledge_data["ascension"] = ispath(knowledge,/datum/heretic_knowledge/ultimate)
 
