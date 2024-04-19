@@ -7,7 +7,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	// Is it visible?
-	if(!(src in viewers(6, target)))
+	if(!can_interact_with(target) && !(src in viewers(6, target)))
 		return
 
 	var/turf/tile = get_turf(target)
