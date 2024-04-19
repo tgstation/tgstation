@@ -57,6 +57,6 @@
 		return
 	var/mob/living/living_pawn = controller.pawn
 	living_pawn.voice = initial(living_pawn.voice)
-	living_pawn.voice = initial(living_pawn.pitch)
+	living_pawn.pitch = initial(living_pawn.pitch)
 
 #undef MAXIMUM_PARROT_PITCH
