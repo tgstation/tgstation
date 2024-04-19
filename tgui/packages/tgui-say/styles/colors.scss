@@ -15,8 +15,6 @@ $_channel_map: (
   'Engi': #f37746,
   'Hive': #855d85,
   'io': #1e90ff,
-  // BANDASTATION EDIT ADDITION
-  'LOOC': #ffceb6,
   'Me': #5975da,
   'Med': #57b8f0,
   'OOC': #cca300,
@@ -27,8 +25,26 @@ $_channel_map: (
   'Supp': #b88646,
   'Svc': #6ca729,
   'Synd': #8f4a4b,
-  // BANDASTATION EDIT ADDITION
+  // BANDASTATION ADDITION START
+  'LOOC': #ffceb6,
   'Whis': #7c7fd9,
+  'ИИ': #d65d95,
+  'ЦК': #2681a5,
+  'Ген': #4c701f,
+  'Ком': #fcdf03,
+  'Инж': #f37746,
+  'Рой': #855d85,
+  'вв': #1e90ff,
+  'Эмоц': #5975da,
+  'Мед': #57b8f0,
+  'Рац': #1ecc43,
+  'Гов': #a4bad6,
+  'Науч': #c68cfa,
+  'СБ': #dd3535,
+  'Снаб': #b88646,
+  'Серв': #6ca729,
+  'Синд': #8f4a4b,
+  // BANDASTATION EDIT END
 );
 
 $channel_keys: map.keys($_channel_map) !default;
