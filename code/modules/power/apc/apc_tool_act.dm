@@ -1,10 +1,7 @@
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 
-/obj/machinery/power/apc/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	. = ..()
-	if(.)
-		return .
-
+/obj/machinery/power/apc/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
 	if(HAS_TRAIT(tool, TRAIT_APC_SHOCKING))
 		. = fork_outlet_act(user, tool)
 		if(.)
@@ -17,7 +14,7 @@
 	if(istype(tool, /obj/item/stock_parts/cell))
 		. = cell_act(user, tool)
 	else if(istype(tool, /obj/item/stack/cable_coil))
-		. = cable_act(user, tool, is_right_clicking)
+		. = cable_act(user, tool, LAZYACCESS(modifiers, RIGHT_CLICK))
 	else if(istype(tool, /obj/item/electronics/apc))
 		. = electronics_act(user, tool)
 	else if(istype(tool, /obj/item/electroadaptive_pseudocircuit))
@@ -171,7 +168,7 @@
 		if(machine_stat & BROKEN)
 			balloon_alert(user, "frame is too damaged!")
 			return ITEM_INTERACT_BLOCKING
-		if(!pseudocircuit.adapt_circuit(user, circuit_cost = 50 KILO JOULES))
+		if(!pseudocircuit.adapt_circuit(user, circuit_cost = 0.05 * STANDARD_CELL_CHARGE))
 			return ITEM_INTERACT_BLOCKING
 		user.visible_message(
 			span_notice("[user] fabricates a circuit and places it into [src]."),
@@ -185,7 +182,7 @@
 		if(machine_stat & MAINT)
 			balloon_alert(user, "no board for a cell!")
 			return ITEM_INTERACT_BLOCKING
-		if(!pseudocircuit.adapt_circuit(user, circuit_cost = 500 KILO JOULES))
+		if(!pseudocircuit.adapt_circuit(user, circuit_cost = 0.5 * STANDARD_CELL_CHARGE))
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/stock_parts/cell/crap/empty/bad_cell = new(src)
 		bad_cell.forceMove(src)
