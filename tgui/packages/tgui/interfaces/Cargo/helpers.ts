@@ -15,16 +15,21 @@ export function searchForSupplies(
   supplies: SupplyCategory[],
   search: string,
 ): Supply[] {
-  search = search.toLowerCase();
+  const lowerSearch = search.toLowerCase();
 
   return flow([
-    (categories: SupplyCategory[]) =>
-      categories.flatMap((category) => category.packs),
-    filter(
-      (pack: Supply) =>
-        pack.name?.toLowerCase().includes(search.toLowerCase()) ||
-        pack.desc?.toLowerCase().includes(search.toLowerCase()),
-    ),
-    (packs) => packs.slice(0, 25),
+    // Flat categories
+    (initialSupplies: SupplyCategory[]) =>
+      initialSupplies.flatMap((category) => category.packs),
+    // Filter by name or desc
+    (flatMapped: Supply[]) =>
+      filter(
+        flatMapped,
+        (pack: Supply) =>
+          pack.name?.toLowerCase().includes(lowerSearch) ||
+          pack.desc?.toLowerCase().includes(lowerSearch),
+      ),
+    // Just the first page
+    (filtered: Supply[]) => filtered.slice(0, 25),
   ])(supplies);
 }

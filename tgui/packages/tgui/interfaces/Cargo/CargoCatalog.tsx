@@ -1,3 +1,4 @@
+import { sortBy } from 'common/collections';
 import { useMemo } from 'react';
 
 import { useBackend, useSharedState } from '../../backend';
@@ -9,11 +10,12 @@ import {
   Stack,
   Table,
   Tabs,
+  Tooltip,
 } from '../../components';
 import { formatMoney } from '../../format';
 import { CargoCartButtons } from './CargoButtons';
 import { searchForSupplies } from './helpers';
-import { CargoData, SupplyCategory } from './types';
+import { CargoData, Supply, SupplyCategory } from './types';
 
 export function CargoCatalog(props) {
   const { express } = props;
@@ -29,10 +31,22 @@ export function CargoCatalog(props) {
 
   const [searchText, setSearchText] = useSharedState('search_text', '');
 
-  const activeSupply = useMemo(() => {
-    return activeSupplyName === 'search_results'
-      ? ({ packs: searchForSupplies(supplies, searchText) } as SupplyCategory)
-      : supplies.find((supply) => supply.name === activeSupplyName);
+  const packs = useMemo(() => {
+    let fetched: Supply[] | undefined;
+
+    if (activeSupplyName === 'search_results') {
+      fetched = searchForSupplies(supplies, searchText);
+    } else {
+      fetched = supplies.find(
+        (supply) => supply.name === activeSupplyName,
+      )?.packs;
+    }
+
+    if (!fetched) return [];
+
+    fetched = sortBy(fetched, (pack: Supply) => pack.name);
+
+    return fetched;
   }, [activeSupplyName, supplies, searchText]);
 
   return (
@@ -44,10 +58,11 @@ export function CargoCatalog(props) {
           <>
             <CargoCartButtons />
             <Button
-              color={self_paid ? 'average' : 'transparent'}
+              color={self_paid ? 'caution' : 'transparent'}
               icon={self_paid ? 'check-square-o' : 'square-o'}
               ml={2}
               onClick={() => act('toggleprivate')}
+              tooltip="Use your own funds to purchase items."
             >
               Buy Privately
             </Button>
@@ -59,15 +74,15 @@ export function CargoCatalog(props) {
         <Stack.Item grow>
           <CatalogTabs
             activeSupplyName={activeSupplyName}
+            categories={supplies}
             searchText={searchText}
             setActiveSupplyName={setActiveSupplyName}
             setSearchText={setSearchText}
-            supplies={supplies}
           />
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow={3}>
-          <CatalogList activeSupply={activeSupply} />
+          <CatalogList packs={packs} />
         </Stack.Item>
       </Stack>
     </Section>
@@ -76,20 +91,22 @@ export function CargoCatalog(props) {
 
 type CatalogTabsProps = {
   activeSupplyName: string;
+  categories: SupplyCategory[];
   searchText: string;
   setActiveSupplyName: (name: string) => void;
   setSearchText: (text: string) => void;
-  supplies: SupplyCategory[];
 };
 
 function CatalogTabs(props: CatalogTabsProps) {
   const {
     activeSupplyName,
+    categories,
     searchText,
     setActiveSupplyName,
     setSearchText,
-    supplies,
   } = props;
+
+  const sorted = sortBy(categories, (supply) => supply.name);
 
   return (
     <Tabs vertical>
@@ -116,7 +133,7 @@ function CatalogTabs(props: CatalogTabsProps) {
                   setActiveSupplyName('search_results');
                 } else if (activeSupplyName === 'search_results') {
                   // return to normal category
-                  setActiveSupplyName(supplies[0]?.name);
+                  setActiveSupplyName(sorted[0]?.name);
                 }
                 setSearchText(value);
               }}
@@ -125,90 +142,92 @@ function CatalogTabs(props: CatalogTabsProps) {
         </Stack>
       </Tabs.Tab>
 
-      {supplies
-        .sort((a, b) => (a.name > b.name ? 1 : -1))
-        .map((supply) => (
-          <Tabs.Tab
-            className="candystripe"
-            color={supply.name === activeSupplyName ? 'green' : undefined}
-            key={supply.name}
-            selected={supply.name === activeSupplyName}
-            onClick={() => {
-              setActiveSupplyName(supply.name);
-              setSearchText('');
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span>{supply.name}</span>
-              <span> {supply.packs.length}</span>
-            </div>
-          </Tabs.Tab>
-        ))}
+      {sorted.map((supply) => (
+        <Tabs.Tab
+          className="candystripe"
+          color={supply.name === activeSupplyName ? 'green' : undefined}
+          key={supply.name}
+          selected={supply.name === activeSupplyName}
+          onClick={() => {
+            setActiveSupplyName(supply.name);
+            setSearchText('');
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>{supply.name}</span>
+            <span> {supply.packs.length}</span>
+          </div>
+        </Tabs.Tab>
+      ))}
     </Tabs>
   );
 }
 
 type CatalogListProps = {
-  activeSupply: SupplyCategory | undefined;
+  packs: SupplyCategory['packs'];
 };
 
 function CatalogList(props: CatalogListProps) {
   const { act, data } = useBackend<CargoData>();
   const { amount_by_name, max_order, self_paid, app_cost } = data;
-  const { activeSupply } = props;
+  const { packs = [] } = props;
 
   return (
     <Section fill scrollable>
       <Table>
-        {activeSupply?.packs
-          .sort((a, b) => (a.name > b.name ? 1 : -1))
-          .map((pack) => {
-            const tags: string[] = [];
-            if (pack.small_item) {
-              tags.push('Small');
-            }
-            if (pack.access) {
-              tags.push('Restricted');
-            }
-            let color = '';
-            const digits = Math.floor(Math.log10(pack.cost) + 1);
-            if (digits >= 5 && digits <= 6) {
-              color = 'yellow';
-            } else if (digits > 6) {
-              color = 'bad';
-            }
+        {packs.map((pack) => {
+          let color = '';
+          const digits = Math.floor(Math.log10(pack.cost) + 1);
+          if (self_paid) {
+            color = 'caution';
+          } else if (digits >= 5 && digits <= 6) {
+            color = 'yellow';
+          } else if (digits > 6) {
+            color = 'bad';
+          }
 
-            return (
-              <Table.Row key={pack.name} className="candystripe">
-                <Table.Cell color="label">{pack.name}</Table.Cell>
-                <Table.Cell collapsing color="average" textAlign="right">
-                  {tags.join(', ')}
-                </Table.Cell>
-                <Table.Cell collapsing textAlign="right">
-                  <Button
-                    color={color}
-                    tooltip={pack.desc}
-                    tooltipPosition="left"
-                    disabled={(amount_by_name[pack.name] || 0) >= max_order}
-                    onClick={() =>
-                      act('add', {
-                        id: pack.id,
-                      })
-                    }
-                    minWidth={5}
-                    mb={0.5}
-                  >
-                    {formatMoney(
-                      (self_paid && !pack.goody) || app_cost
-                        ? Math.round(pack.cost * 1.1)
-                        : pack.cost,
-                    )}{' '}
-                    cr
-                  </Button>
-                </Table.Cell>
-              </Table.Row>
-            );
-          })}
+          return (
+            <Table.Row key={pack.name} className="candystripe">
+              <Table.Cell color="label">{pack.name}</Table.Cell>
+              <Table.Cell collapsing>
+                {!!pack.small_item && (
+                  <Tooltip content="Small Item">
+                    <Icon color="purple" name="compress-alt" />
+                  </Tooltip>
+                )}
+              </Table.Cell>
+              <Table.Cell collapsing>
+                {!!pack.access && (
+                  <Tooltip content="Restricted">
+                    <Icon color="average" name="lock" />
+                  </Tooltip>
+                )}
+              </Table.Cell>
+              <Table.Cell collapsing textAlign="right">
+                <Button
+                  color={color}
+                  tooltip={pack.desc}
+                  tooltipPosition="left"
+                  disabled={(amount_by_name[pack.name] || 0) >= max_order}
+                  onClick={() =>
+                    act('add', {
+                      id: pack.id,
+                    })
+                  }
+                  minWidth={5}
+                  mb={0.5}
+                >
+                  {formatMoney(
+                    (self_paid && !pack.goody) || app_cost
+                      ? Math.round(pack.cost * 1.1)
+                      : pack.cost,
+                  )}{' '}
+                  cr
+                </Button>
+              </Table.Cell>
+            </Table.Row>
+          );
+        })}
       </Table>
     </Section>
   );
