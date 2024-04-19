@@ -27,13 +27,24 @@ export function ControllerContent(props) {
     sortType: SortType.Name,
   });
 
-  const selected = SORTING_TYPES?.[state.sortType] || SORTING_TYPES[0];
-  const { label, useBars } = selected;
+  const { label, useBars } =
+    SORTING_TYPES?.[state.sortType] || SORTING_TYPES[0];
 
   useEffect(() => {
-    if (useBars && state.ascending) {
-      dispatch({ type: FilterAction.Ascending, payload: false });
-    } else if (!useBars && !state.ascending) {
+    // Quantifiable items default to descending view
+    if (useBars) {
+      if (state.ascending) {
+        dispatch({ type: FilterAction.Ascending, payload: false });
+      }
+      return;
+    }
+
+    // Disable smallvalue search
+    if (state.smallValues) {
+      dispatch({ type: FilterAction.SmallValues, payload: false });
+    }
+    // Default to ascending view
+    if (!state.ascending) {
       dispatch({ type: FilterAction.Ascending, payload: true });
     }
   }, [state.sortType]);
@@ -48,7 +59,7 @@ export function ControllerContent(props) {
           <Stack justify="space-between">
             <Stack.Item grow mb={4}>
               <Stack fill vertical>
-                <Stack.Item>
+                <Stack.Item height="50%">
                   <Input
                     onInput={(e, value) =>
                       dispatch({ type: FilterAction.Query, payload: value })
@@ -68,6 +79,7 @@ export function ControllerContent(props) {
                 </Stack.Item>
                 <Stack.Item>
                   <Button
+                    disabled={!useBars}
                     selected={state.smallValues}
                     tooltip="Hide small values"
                     icon={state.smallValues ? 'eye-slash' : 'eye'}

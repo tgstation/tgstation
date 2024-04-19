@@ -1,20 +1,20 @@
+import { useBackend } from '../../backend';
 import { Button, ProgressBar, Stack } from '../../components';
-import { logger } from '../../logging';
 import { SubsystemData } from './types';
 
 type Props = {
+  filterSmall: boolean;
+  max: number;
   subsystem: SubsystemData;
   value: number;
-  max: number;
-  filterSmall: boolean;
-  filterInactive: boolean;
 };
 
 export function SubsystemBar(props: Props) {
-  const { subsystem, max, value, filterSmall, filterInactive } = props;
+  const { act } = useBackend();
+  const { filterSmall, max, subsystem, value } = props;
+  const { ref } = subsystem;
 
   if (filterSmall && value < 1) return;
-  if (filterInactive && subsystem.doesnt_fire) return;
 
   return (
     <Stack>
@@ -31,7 +31,13 @@ export function SubsystemBar(props: Props) {
         </ProgressBar>
       </Stack.Item>
       <Stack.Item>
-        <Button icon="wrench" onClick={() => logger.log('ok')} />
+        <Button
+          icon="wrench"
+          tooltip="View Variables"
+          onClick={() => {
+            act('view_variables', { ref: ref });
+          }}
+        />
       </Stack.Item>
     </Stack>
   );

@@ -1,5 +1,3 @@
-import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { createSearch } from 'common/string';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -9,7 +7,7 @@ import { SORTING_TYPES } from './contants';
 import { FilterState } from './filters';
 import { SubsystemBar } from './SubsystemBar';
 import { SubsystemCollapsible } from './SubsystemCollapsible';
-import { ControllerData, SubsystemData } from './types';
+import { ControllerData } from './types';
 
 type Props = {
   filterOpts: FilterState;
@@ -20,30 +18,21 @@ export function SubsystemViews(props: Props) {
   const { subsystems } = data;
   const { filterOpts } = props;
 
-  const selected = SORTING_TYPES[filterOpts.sortType];
-  const { propName, useBars } = selected;
+  const { propName, useBars } = SORTING_TYPES[filterOpts.sortType];
 
   const [bars, setBars] = useState(useBars);
 
+  // Subsystems sorted and filtered if applicable
   const toDisplay = useMemo(() => {
-    const subsystemsToSort = flow([
-      // If there's a query, filter by it
-      filterOpts.query &&
-        ((toFilter) =>
-          filter(
-            toFilter,
-            createSearch(
-              filterOpts.query,
-              (subsystem: SubsystemData) => subsystem.name,
-            ),
-          )),
-      // Apply our sort type
-      (toSort) => sortBy(toSort, (input: SubsystemData) => input[propName]),
-    ])(subsystems);
-
-    if (!filterOpts.ascending) {
-      subsystemsToSort.reverse();
-    }
+    const subsystemsToSort = subsystems
+      .filter(createSearch(filterOpts.query, (subsystem) => subsystem.name))
+      .sort((a, b) => {
+        if (filterOpts.ascending) {
+          return a[propName] - b[propName];
+        } else {
+          return b[propName] - a[propName];
+        }
+      });
 
     return subsystemsToSort;
   }, [filterOpts.ascending, filterOpts.query, filterOpts.sortType]);
@@ -88,15 +77,16 @@ export function SubsystemViews(props: Props) {
       }
     >
       {toDisplay.map((subsystem) => {
+        if (filterOpts.inactive && subsystem.doesnt_fire) return;
+
         if (bars && useBars) {
           return (
             <SubsystemBar
-              filterInactive={filterOpts.inactive}
-              filterSmall={filterOpts.smallValues}
               key={subsystem.ref}
               max={currentMax}
               subsystem={subsystem}
               value={subsystem[propName]}
+              filterSmall={filterOpts.smallValues}
             />
           );
         }

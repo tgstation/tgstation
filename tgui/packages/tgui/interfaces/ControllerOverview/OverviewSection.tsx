@@ -20,8 +20,8 @@ export function OverviewSection(props) {
       buttons={
         <Button
           tooltip="Fast Update"
-          selected={fast_update}
-          icon={fast_update ? 'check' : 'times'}
+          icon={fast_update ? 'check-square-o' : 'square-o'}
+          color={fast_update && 'average'}
           onClick={() => {
             act('toggle_fast_update');
           }}
