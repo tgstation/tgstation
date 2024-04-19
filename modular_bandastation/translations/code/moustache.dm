@@ -17,9 +17,7 @@
 	speech_args[SPEECH_MESSAGE] = trim(message)
 
 /proc/italian_words_replace(word)
-	var/static/list/italian_words
-	if(!italian_words)
-		italian_words = strings("italian_replacement_ru.json", "italian")
+	var/static/list/italian_words = strings("italian_replacement_ru.json", "italian")
 
 	var/match = italian_words[lowertext(word)]
 	if(!match)
