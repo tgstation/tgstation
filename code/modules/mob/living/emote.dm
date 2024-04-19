@@ -418,7 +418,7 @@
 	key = "sneeze"
 	key_third_person = "sneezes"
 	message = "sneezes."
-	audio_cooldown = 5
+	audio_cooldown = 0.5 SECONDS
 	message_mime = "acts out an exaggerated silent sneeze."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
