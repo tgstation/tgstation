@@ -5,9 +5,9 @@ import {
   Feature,
   FeatureChoiced,
   FeatureColorInput,
-  FeatureDropdownInput,
   FeatureToggle,
 } from '../base';
+import { FeatureDropdownInput } from '../dropdowns';
 
 export const screentip_color: Feature<string> = {
   name: 'Screentips: Screentips color',

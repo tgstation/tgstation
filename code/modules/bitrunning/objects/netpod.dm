@@ -438,8 +438,16 @@
 /// Resolves a path to an outfit.
 /obj/machinery/netpod/proc/resolve_outfit(text)
 	var/path = text2path(text)
-	if(ispath(path, /datum/outfit))
-		return path
+	if(!ispath(path, /datum/outfit))
+		return
+
+	for(var/wardrobe in cached_outfits)
+		for(var/outfit in wardrobe["outfits"])
+			if(path == outfit["path"])
+				return path
+
+	message_admins("[usr]:[usr.ckey] attempted to select an unavailable outfit from a netpod")
+	return
 
 /// Severs the connection with the current avatar
 /obj/machinery/netpod/proc/sever_connection()

@@ -240,7 +240,7 @@ const TemplateDropdown = (props) => {
       <Stack.Item grow>
         <Dropdown
           width="100%"
-          displayText={'Select a template...'}
+          placeholder="Select a template..."
           options={templateKeys.map((path) => {
             return templates[path];
           })}
@@ -249,6 +249,7 @@ const TemplateDropdown = (props) => {
               name: sel,
             })
           }
+          selected="None"
         />
       </Stack.Item>
     </Stack>
