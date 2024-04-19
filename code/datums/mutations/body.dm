@@ -278,10 +278,10 @@
 
 /datum/mutation/human/insulated
 	name = "Insulated"
-	desc = "The affected person does not conduct electricity."
+	desc = "The affected person's hands swell up and no longer conduct electricity."
 	quality = POSITIVE
-	text_gain_indication = "<span class='notice'>Your fingertips go numb.</span>"
-	text_lose_indication = "<span class='notice'>Your fingertips regain feeling.</span>"
+	text_gain_indication = "<span class='notice'>Your fingertips swell and go numb.</span>"
+	text_lose_indication = "<span class='notice'>Your fingertips deflate and regain feeling.</span>"
 	difficulty = 16
 	instability = 25
 
@@ -289,11 +289,13 @@
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_CHUNKYFINGERS, GENETIC_MUTATION)
 
 /datum/mutation/human/insulated/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_CHUNKYFINGERS, GENETIC_MUTATION)
 
 /datum/mutation/human/fire
 	name = "Fiery Sweat"
