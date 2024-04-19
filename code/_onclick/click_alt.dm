@@ -7,7 +7,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	// Is it visible (and we're not wearing it (our clothes are invisible))?
-	if(!(src in viewers(7, target)) && !Adjacent(target))
+	if(!(src in viewers(7, target)) && !CanReach(target))
 		return
 
 	var/turf/tile = get_turf(target)
