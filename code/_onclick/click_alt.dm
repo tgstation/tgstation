@@ -10,7 +10,7 @@
 	if(!(src in viewers(7, target)) && !Adjacent(target))
 		return
 
-q	var/turf/tile = get_turf(target)
+	var/turf/tile = get_turf(target)
 
 	// Ghosties just see loot
 	if(isobserver(src) || isrevenant(src))
