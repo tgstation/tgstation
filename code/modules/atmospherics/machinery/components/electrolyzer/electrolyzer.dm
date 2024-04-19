@@ -127,7 +127,7 @@
 	if(anchored)
 		use_energy(power_to_use)
 	else
-		cell.use(power_to_use KILO JOULES)
+		cell.use(power_to_use)
 
 /obj/machinery/electrolyzer/proc/call_reactions(datum/gas_mixture/env)
 	for(var/reaction in GLOB.electrolyzer_reactions)
@@ -187,14 +187,12 @@
 		return
 	return ..()
 
-/obj/machinery/electrolyzer/AltClick(mob/user)
-	. = ..()
+/obj/machinery/electrolyzer/click_alt(mob/user)
 	if(panel_open)
 		balloon_alert(user, "close panel!")
-		return
-	if(!can_interact(user))
-		return
+		return CLICK_ACTION_BLOCKING
 	toggle_power(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/electrolyzer/proc/toggle_power(mob/user)
 	if(!anchored && !cell)

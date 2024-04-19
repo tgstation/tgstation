@@ -1,8 +1,8 @@
 /obj/machinery/rnd/production
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
-	// Energy cost per full stack of materials spent. Material insertion is 40% of this.
-	active_power_usage = 50 * BASE_MACHINE_ACTIVE_CONSUMPTION
+	/// Energy cost per full stack of materials spent. Material insertion is 40% of this.
+	active_power_usage = 0.05 * STANDARD_CELL_RATE
 
 	/// The efficiency coefficient. Material costs and print times are multiplied by this number;
 	var/efficiency_coeff = 1
@@ -448,12 +448,12 @@
 	drop_direction = direction
 	balloon_alert(usr, "dropping [dir2text(drop_direction)]")
 
-/obj/machinery/rnd/production/AltClick(mob/user)
-	. = ..()
-	if(!drop_direction || !can_interact(user))
-		return
+/obj/machinery/rnd/production/click_alt(mob/user)
+	if(drop_direction == 0)
+		return CLICK_ACTION_BLOCKING
 	if(busy)
 		balloon_alert(user, "busy printing!")
-		return
+		return CLICK_ACTION_BLOCKING
 	balloon_alert(user, "drop direction reset")
 	drop_direction = 0
+	return CLICK_ACTION_SUCCESS
