@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fix holoparasite resetting not working."
-  - code_imp: "Added a safety check that'll emit a (harmless) runtime if something tries to pass an invalid target mob to `SSpolling.poll_ghost_candidates_for_mob`."

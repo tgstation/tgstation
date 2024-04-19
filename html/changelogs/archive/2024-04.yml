@@ -202,3 +202,26 @@
   wraith-54321:
   - balance: Clockwork airlocks lose their damage deflection when placed on reebe
   - balance: Clockwork walls take half as long to deconstruct on reebe
+2024-04-19:
+  Absolucy:
+  - rscadd: Added a HUD that appears when hovering your mouse over ooze compressors,
+      showing the current extract it is making, and the progress on making said extract.
+  - bugfix: Fixed the normal slime extract menu coming up on ooze compressors after
+      selecting a crossbreed.
+  - bugfix: Fixed xenobiology machinery taking up absurd amounts of power while doing
+      nothing.
+  - balance: Increased range of stabilized grey extract from 1 to 3.
+  - qol: Increased biomass cube stack size (5 -> 15).
+  - qol: Biocubes now fit in science bags.
+  - qol: You can dump biocubes from a science bag into the biomass recycler.
+  - qol: You can right click the slime market with a science bag to sell all the extracts
+      without the confirmation prompt.
+  - rscadd: Added balloon alerts to lots of xenobio-related actions.
+  - qol: You can toggle ooze suckers directly via right click.
+  - qol: You can now right click an active ooze compressor to cancel the current recipe.
+  - qol: Slime mutation syringes now show whether they've been used or not in the
+      examine text.
+  - bugfix: Removing accessories from slimes now works properly.
+  - bugfix: Fix holoparasite resetting not working.
+  - code_imp: Added a safety check that'll emit a (harmless) runtime if something
+      tries to pass an invalid target mob to `SSpolling.poll_ghost_candidates_for_mob`.
