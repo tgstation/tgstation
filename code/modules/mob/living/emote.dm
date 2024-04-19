@@ -757,7 +757,7 @@
 	key_third_person = "whistles"
 	message = "whistles."
 	message_mime = "whistles silently!"
-	audio_cooldown = 5
+	audio_cooldown = 0.5 SECONDS
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/whistle/get_sound(mob/living/user)
