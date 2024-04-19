@@ -8,21 +8,21 @@
 // Emote Living
 
 /datum/emote/flip
-	name = "кувырнуться"
+	name = "кувырок"
 
 /datum/emote/spin
-	name = "покрутиться"
+	name = "крутиться"
 
 /datum/emote/living/blush
-	name = "покраснеть"
+	name = "краснеть"
 	message = "краснеет."
 
 /datum/emote/living/sing_tune
-	name = "подпеть мелодию"
+	name = "подпевать"
 	message = "подпевает мелодию."
 
 /datum/emote/living/bow
-	name = "покланиться"
+	name = "поклон"
 	message = "кланяется."
 	message_param = "кланяется %t."
 
@@ -41,7 +41,7 @@
 	message = "скрещивает свои руки."
 
 /datum/emote/living/chuckle
-	name = "усмехнуться"
+	name = "усмехаться"
 	message = "усмехается."
 	message_mime = "изображает смешок."
 
@@ -55,7 +55,7 @@
 	message_mime = "изображает преувеличенный кашель!"
 
 /datum/emote/living/dance
-	name = "потанцевать"
+	name = "танцевать"
 	message = "радостно танцует."
 
 /datum/emote/living/deathgasp
@@ -69,7 +69,7 @@
 	message_animal_or_basic = "перестает двигаться..."
 
 /datum/emote/living/drool
-	name = "пустить слюни"
+	name = "пускать слюни"
 	message = "пускает слюни."
 
 /datum/emote/living/faint
@@ -77,11 +77,11 @@
 	message = "теряет сознание."
 
 /datum/emote/living/flap
-	name = "хлопнуть крыльями"
+	name = "крылья (хлопать)"
 	message = "хлопает крыльями."
 
 /datum/emote/living/flap/aflap
-	name = "сердито хлопнуть крыльями"
+	name = "крылья (сердито хлопать)"
 	message = "сердито хлопает крыльями!"
 
 /datum/emote/living/frown
@@ -99,9 +99,9 @@
 	message_mime = "бесшумно задыхается!"
 
 /datum/emote/living/gasp_shock
-	name = "gaspshock"
-	message = "gasps in shock!"
-	message_mime = "gasps in silent shock!"
+	name = "вздох (шок)"
+	message = "вздыхает в шоке!"
+	message_mime = "вздыхает в молчаливом шоке!"
 
 /datum/emote/living/giggle
 	name = "похихикать"
@@ -109,7 +109,7 @@
 	message_mime = "бесшумно хихикает!"
 
 /datum/emote/living/glare
-	name = "просверлить взглядом"
+	name = "сверление взглядом"
 	message = "сверлит взглядом."
 	message_param = "сверлит взглядом %t."
 
@@ -118,12 +118,12 @@
 	message = "ухмыляется."
 
 /datum/emote/living/groan
-	name = "болезненно простонать"
+	name = "простонать от боли"
 	message = "болезненно стонет!"
 	message_mime = "изображает болезненный стон!"
 
 /datum/emote/living/grimace
-	name = "построить гримасу"
+	name = "гримасничать"
 	message = "строит гримасу."
 
 /datum/emote/living/jump
@@ -131,15 +131,15 @@
 	message = "прыгает!"
 
 /datum/emote/living/kiss
-	name = "подготовить поцелуй"
+	name = "поцелуй"
 
 /datum/emote/living/laugh
-	name = "посмеяться"
+	name = "смеяться"
 	message = "смеется."
 	message_mime = "бесшумно смеется!"
 
 /datum/emote/living/look
-	name = "посмотреть"
+	name = "смотреть"
 	message = "смотрит."
 	message_param = "смотрит на %t."
 
@@ -159,24 +159,24 @@
 	message_mime = "бесшумно надувает губы."
 
 /datum/emote/living/scream
-	name = "покричать"
+	name = "кричать"
 	message = "кричит!"
 	message_mime = "изображает крик!"
 
 /datum/emote/living/scowl
-	name = "сердито посмотреть"
+	name = "смотреть (сердито)"
 	message = "сердито смотрит."
 
 /datum/emote/living/shake
-	name = "покачать головой"
+	name = "качать головой"
 	message = "качает своей головой."
 
 /datum/emote/living/shiver
-	name = "подрожать"
+	name = "дрожь"
 	message = "дрожит."
 
 /datum/emote/living/sigh
-	name = "вздохнуть"
+	name = "вздох"
 	message = "вздыхает."
 	message_mime = "изображает преувеличенный бесшумный вздох."
 
@@ -194,16 +194,16 @@
 	message_mime = "изображает преувеличенный бесшумный чих."
 
 /datum/emote/living/smug
-	name = "самодовольно улыбнуться"
+	name = "улыбнуться (самодовольно)"
 	message = "самодовольно улыбается."
 
 /datum/emote/living/sniff
-	name = "понюхать"
+	name = "нюхать"
 	message = "нюхает."
 	message_mime = "бесшумно нюхает."
 
 /datum/emote/living/snore
-	name = "похрапеть"
+	name = "храпеть"
 	message = "храпеть."
 	message_mime = "бесшумно храпит."
 
@@ -233,11 +233,11 @@
 	message = "наклоняет голову на бок."
 
 /datum/emote/living/tremble
-	name = "подрожать в страхе"
+	name = "дрожь (страх)"
 	message = "дрожит в страхе!"
 
 /datum/emote/living/twitch
-	name = "сильно дернуться"
+	name = "дернуться (сильно)"
 	message = "сильно дергается."
 
 /datum/emote/living/twitch_s
@@ -249,12 +249,12 @@
 	message = "машет рукой."
 
 /datum/emote/living/whimper
-	name = "поскулить"
+	name = "скулить"
 	message = "скулит."
 	message_mime = "изображает скуление."
 
 /datum/emote/living/wsmile
-	name = "слабо улыбнуться"
+	name = "улыбнуться (слабо)"
 	message = "слабо улыбается."
 
 /datum/emote/living/yawn
@@ -263,25 +263,25 @@
 	message_mime = "изображает преувеличенный бесшумный зевок."
 
 /datum/emote/living/gurgle
-	name = "побулькать"
+	name = "булькать"
 	message = "издает неприятное бульканье."
 	message_mime = "бесшумно и неприятно булькает."
 
 /datum/emote/living/beep
-	name = "издать сигнал"
+	name = "сигналить"
 	message = "издает сигнал."
 	message_param = "издает сигнал в сторону %t."
 
 /datum/emote/living/inhale
-	name = "вдохнуть"
+	name = "вдох"
 	message = "делает вдох."
 
 /datum/emote/living/exhale
-	name = "выдохнуть"
+	name = "выдох"
 	message = "выдыхает."
 
 /datum/emote/living/swear
-	name = "поругаться"
+	name = "ругаться"
 	message = "ругается!"
 	message_mime = "делает грубый жест!"
 
@@ -310,7 +310,7 @@
 // Emote Carbon
 
 /datum/emote/living/carbon/airguitar
-	name = "поиграть на воображаемой гитаре"
+	name = "гитарист"
 	message = "невероятно играет на воображаемой гитаре."
 
 /datum/emote/living/carbon/blink
@@ -318,34 +318,34 @@
 	message = "моргает."
 
 /datum/emote/living/carbon/blink_r
-	name = "быстро моргать"
+	name = "моргнуть (быстро)"
 	message = "быстро моргает."
 
 /datum/emote/living/carbon/clap
-	name = "похлопать"
+	name = "хлопать"
 	message = "хлопает."
 
 /datum/emote/living/carbon/crack
-	name = "похрустеть пальцами"
+	name = "хрустеть пальцами"
 	message = "хрустит пальцами."
 
 /datum/emote/living/carbon/circle
-	name = "подготовить колечко"
+	name = "рука (кольцо)"
 
 /datum/emote/living/carbon/moan
-	name = "постонать"
+	name = "стонать"
 	message = "стонет!"
 	message_mime = "кажется, стонет!"
 
 /datum/emote/living/carbon/noogie
-	name = "подготовить терку"
+	name = "рука (терка)"
 
 /datum/emote/living/carbon/roll
-	name = "покатиться"
+	name = "катиться"
 	message = "катится."
 
 /datum/emote/living/carbon/scratch
-	name = "почесаться"
+	name = "чесаться"
 	message = "чешится."
 
 /datum/emote/living/carbon/sign
@@ -357,10 +357,10 @@
 	message_param = "показывает %t пальцев."
 
 /datum/emote/living/carbon/slap
-	name = "подготовить шлепок"
+	name = "рука (шлепок)"
 
 /datum/emote/living/carbon/hand
-	name = "подготовить руку"
+	name = "рука"
 
 /datum/emote/living/carbon/snap
 	name = "щелкнуть пальцами"
@@ -368,10 +368,10 @@
 	message_param = "щелкает пальцами в сторону %t."
 
 /datum/emote/living/carbon/shoesteal
-	name = "подготовить кражу ботинок"
+	name = "рука (ботинкокрад)"
 
 /datum/emote/living/carbon/tail
-	name = "помахать хвостом"
+	name = "махать хвостом"
 	message = "машет хвостом."
 
 /datum/emote/living/carbon/wink
@@ -385,19 +385,19 @@
 	message = "оскаливается и показывает зубы..."
 
 /datum/emote/living/alien/hiss
-	name = "пошипеть"
+	name = "шипеть"
 	message_alien = "шипит."
 	message_larva = "тихо шипит."
 
 /datum/emote/living/alien/roar
-	name = "прорычать"
+	name = "рычать"
 	message_alien = "рычит."
 	message_larva = "тихо рычит."
 
 // Emote Human
 
 /datum/emote/living/carbon/human/cry
-	name = "поплакать"
+	name = "плакать"
 	message = "плачет."
 	message_mime = "бесшумно плачет."
 
@@ -411,12 +411,12 @@
 	message = "приподнимает брови."
 
 /datum/emote/living/carbon/human/grumble
-	name = "поворчать"
+	name = "ворчать"
 	message = "ворчит!"
 	message_mime = "бесшумно ворчит!"
 
 /datum/emote/living/carbon/human/handshake
-	name = "дать рукопожатие"
+	name = "рукопожатие"
 	message = "дает рукопожатие себе."
 	message_param = "дает рукопожатие %t."
 
@@ -426,22 +426,22 @@
 	message_param = "обнимает %t."
 
 /datum/emote/living/carbon/human/mumble
-	name = "пробормотать"
+	name = "бормотать"
 	message = "бормочет!"
 	message_mime = "бесшумно бормочет!"
 
 /datum/emote/living/carbon/human/scream
-	name = "покричать"
+	name = "кричать"
 	message = "кричит!"
 	message_mime = "изображает крик!"
 
 /datum/emote/living/carbon/human/scream/screech
-	name = "повизжать"
+	name = "визжать"
 	message = "визжит!"
 	message_mime = "бесшумно визжит."
 
 /datum/emote/living/carbon/human/pale
-	name = "побледнеть"
+	name = "бледнеть"
 	message = "на мгновение бледнеет."
 
 /datum/emote/living/carbon/human/raise
@@ -462,8 +462,8 @@
 	message = "хвостом."
 
 /datum/emote/living/carbon/human/wing
-	name = "махать крыльями"
-	message = "крыльями."
+	name = "крылья"
+	message = "their wings."
 
 /datum/emote/living/carbon/human/clear_throat
 	name = "прочистить горло"
@@ -475,20 +475,20 @@
 	message_mime = "бесшумно оскаливается, показывая зубы..."
 
 /datum/emote/living/carbon/human/monkey/roll
-	name = "покатиться"
+	name = "катиться"
 	message = "катится."
 
 /datum/emote/living/carbon/human/monkey/scratch
-	name = "почесаться"
+	name = "чесаться"
 	message = "чешется."
 
 /datum/emote/living/carbon/human/monkey/screech/roar
-	name = "прорычать"
+	name = "рычать"
 	message = "рычит!"
 	message_mime = "изображает рык."
 
 /datum/emote/living/carbon/human/monkey/tail
-	name = "помахать хвостом"
+	name = "махать хвостом"
 	message = "машет хвостом."
 
 /datum/emote/living/carbon/human/monkey/sign
@@ -498,52 +498,52 @@
 // Emote AI
 
 /datum/emote/ai/emotion_display
-	name = "Эмоция: пусто"
+	name = "Э.: пусто"
 
 /datum/emote/ai/emotion_display/very_happy
-	name = "Эмоция: очень радостно"
+	name = "Э.: радостно (очень)"
 
 /datum/emote/ai/emotion_display/happy
-	name = "Эмоция: радостно"
+	name = "Э.: радостно"
 
 /datum/emote/ai/emotion_display/neutral
-	name = "Эмоция: нейтральность"
+	name = "Э.: нейтральность"
 
 /datum/emote/ai/emotion_display/unsure
-	name = "Эмоция: неуверенность"
+	name = "Э.: неуверенность"
 
 /datum/emote/ai/emotion_display/confused
-	name = "Эмоция: в замешательстве"
+	name = "Э.: замешательство"
 
 /datum/emote/ai/emotion_display/sad
-	name = "Эмоция: грусть"
+	name = "Э.: грусть"
 
 /datum/emote/ai/emotion_display/bsod
-	name = "Эмоция: BSoD"
+	name = "Э.: BSoD"
 
 /datum/emote/ai/emotion_display/trollface
-	name = "Эмоция: Trollface"
+	name = "Э.: Trollface"
 
 /datum/emote/ai/emotion_display/awesome
-	name = "Эмоция: крутость"
+	name = "Э.: крутость"
 
 /datum/emote/ai/emotion_display/dorfy
-	name = "Эмоция: Dorfy"
+	name = "Э.: Dorfy"
 
 /datum/emote/ai/emotion_display/thinking
-	name = "Эмоция: задуматься"
+	name = "Э.: задумчивость"
 
 /datum/emote/ai/emotion_display/facepalm
-	name = "Эмоция: Facepalm"
+	name = "Э.: Facepalm"
 
 /datum/emote/ai/emotion_display/friend_computer
-	name = "Эмоция: дружелюбный компьютер"
+	name = "Э.: дружелюбный компьютер"
 
 /datum/emote/ai/emotion_display/blue_glow
-	name = "Эмоция: синее свечение"
+	name = "Э.: синее свечение"
 
 /datum/emote/ai/emotion_display/red_glow
-	name = "Эмоция: красное свечение"
+	name = "Э.: красное свечение"
 
 // Emote Silicon
 
@@ -592,37 +592,37 @@
 	message = "подпрыгивает на месте."
 
 /datum/emote/slime/jiggle
-	name = "потрястись"
+	name = "трястись"
 	message = "трясется!"
 
 /datum/emote/slime/light
-	name = "посветиться"
+	name = "светиться"
 	message = "на мгновение светится."
 
 /datum/emote/slime/vibrate
-	name = "повибрировать"
+	name = "вибрировать"
 	message = "вибрирует!"
 
 /datum/emote/slime/mood
-	name = "Настроение: никакое"
+	name = "Н.: никакое"
 
 /datum/emote/slime/mood/sneaky
-	name = "Настроение: хитрое"
+	name = "Н.: хитрое"
 
 /datum/emote/slime/mood/smile
-	name = "Настроение: улыбающееся"
+	name = "Н.: улыбающееся"
 
 /datum/emote/slime/mood/cat
-	name = "Настроение: кот"
+	name = "Н.: кот"
 
 /datum/emote/slime/mood/pout
-	name = "Настроение: надутый"
+	name = "Н.: надутый"
 
 /datum/emote/slime/mood/sad
-	name = "Настроение: грустный"
+	name = "Н.: грустный"
 
 /datum/emote/slime/mood/angry
-	name = "Настроение: злой"
+	name = "Н.: злой"
 
 // Emote Other
 

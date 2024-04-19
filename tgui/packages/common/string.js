@@ -115,7 +115,7 @@ export const capitalizeAll = (str) => {
  * @example capitalizeFirst('heLLo woRLd') === 'HeLLo woRLd'
  */
 export const capitalizeFirst = (str) => {
-  return str.replace(/^\w/, (letter) => letter.toUpperCase());
+  return str.replace(/^[\wа-яА-ЯёЁ]/, (letter) => letter.toUpperCase()); // BANDASTATION EDIT - Original: return str.replace(/^\w/, (letter) => letter.toUpperCase());
 };
 
 export const toTitleCase = (str) => {

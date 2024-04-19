@@ -160,8 +160,13 @@ export const EmotePanelContent = (props) => {
                   width={showIcons ? 16 : 8}
                   key={emote.name}
                   tooltip={
-                    showIcons ? undefined : (
+                    showIcons ? (
+                      emote.name.length > 12 ? (
+                        emote.name
+                      ) : undefined
+                    ) : (
                       <EmoteIcons
+                        name={emote.name}
                         visible={emote.visible}
                         audible={emote.audible}
                         sound={emote.sound}
@@ -180,7 +185,12 @@ export const EmotePanelContent = (props) => {
                 >
                   <Box inline width="50%">
                     {showNames
-                      ? capitalizeFirst(emote.name.toLowerCase())
+                      ? capitalizeFirst(
+                          (emote.name.length > 12
+                            ? emote.name.slice(0, 10) + '...'
+                            : emote.name
+                          ).toLowerCase(),
+                        )
                       : emote.key}
                   </Box>
                   {showIcons ? (
@@ -205,40 +215,43 @@ export const EmotePanelContent = (props) => {
 };
 
 const EmoteIcons = (props) => {
-  const { visible, audible, sound, hands, use_params, margin } = props;
+  const { name, visible, audible, sound, hands, use_params, margin } = props;
 
   return (
-    <Box inline align="right">
-      <Icon
-        name="eye"
-        m={margin}
-        color={!visible ? 'red' : ''}
-        opacity={!visible ? 0.5 : 1}
-      />
-      <Icon
-        name="comment"
-        m={margin}
-        color={!audible ? 'red' : ''}
-        opacity={!audible ? 0.5 : 1}
-      />
-      <Icon
-        name="volume-up"
-        m={margin}
-        color={!sound ? 'red' : ''}
-        opacity={!sound ? 0.5 : 1}
-      />
-      <Icon
-        name="hand-paper"
-        m={margin}
-        color={!hands ? 'red' : ''}
-        opacity={!hands ? 0.5 : 1}
-      />
-      <Icon
-        name="crosshairs"
-        m={margin}
-        color={!use_params ? 'red' : ''}
-        opacity={!use_params ? 0.5 : 1}
-      />
+    <Box inline>
+      <Box>{String(name).length > 12 ? name : undefined}</Box>
+      <Box inline align="left">
+        <Icon
+          name="eye"
+          m={margin}
+          color={!visible ? 'red' : ''}
+          opacity={!visible ? 0.5 : 1}
+        />
+        <Icon
+          name="comment"
+          m={margin}
+          color={!audible ? 'red' : ''}
+          opacity={!audible ? 0.5 : 1}
+        />
+        <Icon
+          name="volume-up"
+          m={margin}
+          color={!sound ? 'red' : ''}
+          opacity={!sound ? 0.5 : 1}
+        />
+        <Icon
+          name="hand-paper"
+          m={margin}
+          color={!hands ? 'red' : ''}
+          opacity={!hands ? 0.5 : 1}
+        />
+        <Icon
+          name="crosshairs"
+          m={margin}
+          color={!use_params ? 'red' : ''}
+          opacity={!use_params ? 0.5 : 1}
+        />
+      </Box>
     </Box>
   );
 };
