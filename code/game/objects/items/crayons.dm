@@ -759,7 +759,7 @@
 
 	pre_noise = TRUE
 	post_noise = FALSE
-	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
 	. = ..()
