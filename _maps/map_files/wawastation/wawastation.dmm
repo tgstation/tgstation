@@ -14372,7 +14372,6 @@
 /obj/structure/closet/crate/science{
 	name = "MOD core crate"
 	},
-/obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/robotics/lab)
 "fwJ" = (
@@ -43602,9 +43601,6 @@
 /obj/machinery/reagentgrinder{
 	pixel_y = 8
 	},
-/obj/item/toy/figure/virologist{
-	pixel_x = -8
-	},
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
@@ -46396,7 +46392,6 @@
 /obj/structure/chair/office/light,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/effect/landmark/start/virologist,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "rwt" = (
@@ -51517,7 +51512,6 @@
 	dir = 4
 	},
 /obj/item/radio/intercom/directional/east,
-/obj/effect/landmark/start/virologist,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "tki" = (
