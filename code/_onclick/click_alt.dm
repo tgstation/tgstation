@@ -6,7 +6,11 @@
 /mob/proc/base_click_alt(atom/target)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	var/turf/tile = isturf(target) ? target : get_turf(target)
+	// Check if they've hooked in to prevent src from alt clicking anything
+	if(SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, target) & COMSIG_MOB_CANCEL_CLICKON)
+		return
+
+	var/turf/tile = get_turf(target)
 
 	if(isobserver(src) || isrevenant(src))
 		open_lootpanel(tile)
