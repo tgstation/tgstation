@@ -20,16 +20,19 @@
 	view_info[2] *= world.icon_size
 	return view_info
 
+/**
+* Frustrated with bugs in can_see(), this instead uses viewers for a much more effective approach.
+* Adjacent objects are always considered visible.
+* Default distance is 8.
+*/
 
-/// Frustrated with bugs in can_see(), this instead uses viewers for a much more effective approach.
-
-/// Basic check to see if the src object can see the target object. Default distance is 8.
-#define CAN_I_SEE(target) (src in viewers(7, target))
+/// Basic check to see if the src object can see the target object.
+#define CAN_I_SEE(target) ((src in viewers(7, target)) || in_range(target, src))
 
 
-/// Checks if the source can see the target object. Ie, can X object be seen by Y user.
-#define CAN_THEY_SEE(target, source) (source in viewers(7, target))
+/// Checks the visibility between two other objects.
+#define CAN_THEY_SEE(target, source) ((source in viewers(7, target)) || in_range(target, source))
 
 
 /// Further checks distance between source and target.
-#define CAN_SEE_RANGED(target, source, dist) (source in viewers(dist, target))
+#define CAN_SEE_RANGED(target, source, dist) ((source in viewers(dist, target)) || in_range(target, source))
