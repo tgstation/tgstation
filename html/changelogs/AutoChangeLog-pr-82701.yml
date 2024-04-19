@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "smart pipes release their gases into the air when unwrenched"
+  - bugfix: "cryo pipe connector component has no side effects of gas reallocation when deleted"
