@@ -1,14 +1,15 @@
-import { filter } from 'common/collections';
+import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
 import { createSearch } from 'common/string';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useBackend } from '../../backend';
 import { Button, Section } from '../../components';
+import { SORTING_TYPES } from './contants';
 import { FilterState } from './filters';
-import { sortSubsystemBy } from './helpers';
 import { SubsystemBar } from './SubsystemBar';
 import { SubsystemCollapsible } from './SubsystemCollapsible';
-import { ControllerData, SubsystemData, SubsystemSortBy } from './types';
+import { ControllerData, SubsystemData } from './types';
 
 type Props = {
   filterOpts: FilterState;
@@ -19,51 +20,73 @@ export function SubsystemViews(props: Props) {
   const { subsystems } = data;
   const { filterOpts } = props;
 
-  const [bars, setBars] = useState(false);
+  const selected = SORTING_TYPES[filterOpts.sortType];
+  const { propName, useBars } = selected;
+
+  const [bars, setBars] = useState(useBars);
 
   // Filter and sort subsystems
   const toDisplay = useMemo(() => {
-    let subsystemsToSort = subsystems;
-
-    if (filterOpts.name) {
-      subsystemsToSort = filter(
-        subsystems,
-        createSearch(
-          filterOpts.name,
-          (subsystem: SubsystemData) => subsystem.name,
+    const subsystemsToSort = flow([
+      (toFilter) =>
+        filterOpts.query &&
+        filter(
+          subsystems,
+          createSearch(
+            filterOpts.query,
+            (subsystem: SubsystemData) => subsystem.name,
+          ),
         ),
-      );
+      (toSort) => sortBy(toSort, (input: SubsystemData) => input[propName]),
+    ])(subsystems);
+
+    if (!filterOpts.ascending) {
+      subsystemsToSort.reverse();
     }
 
-    return sortSubsystemBy(
-      subsystemsToSort,
-      filterOpts.sortType,
-      filterOpts.ascending,
-    );
-  }, [filterOpts.ascending, filterOpts.name, filterOpts.sortType, subsystems]);
+    return subsystemsToSort;
+  }, [filterOpts.ascending, filterOpts.query, filterOpts.sortType]);
 
   const totals: number[] = [];
   let currentMax = 0;
-  if (filterOpts.sortType === SubsystemSortBy.COST) {
+  if (useBars) {
     for (let i = 0; i < toDisplay.length; i++) {
-      totals.push(toDisplay[i].cost_ms);
+      const value = toDisplay[i][propName];
+      if (typeof value !== 'number') {
+        continue;
+      }
+      totals.push(value);
     }
 
     currentMax = Math.max(...totals);
   }
 
+  useEffect(() => {
+    if (useBars && !bars) {
+      setBars(true);
+    } else if (!useBars && bars) {
+      setBars(false);
+    }
+  }, [useBars]);
+
   return (
     <Section
       fill
+      scrollable
       title="Subsystem Overview"
       buttons={
-        <Button icon="bars" onClick={() => setBars(!bars)}>
+        <Button
+          disabled={!useBars}
+          icon="bars"
+          onClick={() => setBars(!bars)}
+          selected={bars}
+        >
           Bars
         </Button>
       }
     >
       {toDisplay.map((subsystem) => {
-        if (bars) {
+        if (bars && useBars) {
           return (
             <SubsystemBar
               filterInactive={filterOpts.inactive}
@@ -71,7 +94,7 @@ export function SubsystemViews(props: Props) {
               key={subsystem.ref}
               max={currentMax}
               subsystem={subsystem}
-              value={subsystem.cost_ms}
+              value={subsystem[propName]}
             />
           );
         }

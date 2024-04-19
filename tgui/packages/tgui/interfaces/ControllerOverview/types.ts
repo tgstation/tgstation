@@ -22,12 +22,12 @@ export type ControllerData = {
   subsystems: SubsystemData[];
 };
 
-export enum SubsystemSortBy {
-  NAME = 'Alphabetical',
-  COST = 'Cost',
-  INIT_ORDER = 'Init Order',
-  LAST_FIRE = 'Last Fire',
-  NEXT_FIRE = 'Next Fire',
-  TICK_USAGE = 'Tick Usage',
-  TICK_OVERRUN = 'Tick Overrun',
+export enum SortType {
+  Name,
+  Cost,
+  InitOrder,
+  LastFire,
+  NextFire,
+  TickUsage,
+  TickOverrun,
 }
