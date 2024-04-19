@@ -6,7 +6,7 @@
 	key_third_person = "cries"
 	message = "cries."
 	message_mime = "sobs silently."
-	audio_cooldown = 5
+	audio_cooldown = 0.5 SECONDS
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	stat_allowed = SOFT_CRIT
 
