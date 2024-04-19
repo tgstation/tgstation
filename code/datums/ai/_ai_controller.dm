@@ -145,6 +145,8 @@ multiple modular subtrees with behaviors
 	set_new_cells()
 
 /datum/ai_controller/proc/set_new_cells()
+	if(isnull(our_cells))
+		return
 
 	var/turf/our_turf = get_turf(pawn)
 
@@ -163,7 +165,7 @@ multiple modular subtrees with behaviors
 	recalculate_idle()
 
 /datum/ai_controller/proc/should_idle()
-	if(!can_idle)
+	if(!can_idle || isnull(our_cells))
 		return FALSE
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
 		if(length(grid.client_contents))
