@@ -21,7 +21,7 @@
 	TEST_ASSERT_EQUAL(length(panel.contents), 1, "Contents should update on searchobj deleted")
 	TEST_ASSERT_EQUAL(length(panel.to_image), 1, "to_image should update on searchobj deleted")
 
-	var/obj/item/storage/toolbox/new_box = allocate(/obj/item/storage/toolbox, one_over)
+	allocate(/obj/item/storage/toolbox, one_over)
 	TEST_ASSERT_EQUAL(length(panel.contents), 1, "Contents shouldn't update, we're dumb")
 	TEST_ASSERT_EQUAL(length(panel.to_image), 1, "to_image shouldn't update, we're dumb")
 
@@ -32,3 +32,4 @@
 	TEST_ASSERT_EQUAL(length(panel.contents), 2, "Panel shouldnt dupe searchables if reopened")
 
 	mock_client.mob = null
+

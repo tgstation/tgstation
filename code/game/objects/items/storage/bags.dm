@@ -467,9 +467,6 @@
 		/obj/item/reagent_containers/syringe,
 	))
 
-/*
- *  Biowaste bag (mostly for virologists)
- */
 
 /obj/item/storage/bag/bio
 	name = "bio bag"
