@@ -25,7 +25,7 @@
 * ### Things to note:
 * - Src/source must be a mob. `viewers()` returns mobs.
 * - Adjacent objects are always considered visible.
-* - Default distance is 8.
+* - Default distance is 7.
 */
 
 /// Basic check to see if the src object can see the target object.
