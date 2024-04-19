@@ -72,7 +72,7 @@
 	key_third_person = "coughs"
 	message = "coughs!"
 	message_mime = "acts out an exaggerated cough!"
-	audio_cooldown = 5
+	audio_cooldown = 0.5 SECONDS
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
@@ -418,7 +418,7 @@
 	key = "sneeze"
 	key_third_person = "sneezes"
 	message = "sneezes."
-	audio_cooldown = 5
+	audio_cooldown = 0.5 SECONDS
 	message_mime = "acts out an exaggerated silent sneeze."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
@@ -757,7 +757,7 @@
 	key_third_person = "whistles"
 	message = "whistles."
 	message_mime = "whistles silently!"
-	audio_cooldown = 5
+	audio_cooldown = 0.5 SECONDS
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/whistle/get_sound(mob/living/user)
