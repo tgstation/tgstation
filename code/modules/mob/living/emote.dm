@@ -294,7 +294,7 @@
 	return ..() && user.can_speak(allow_mimes = TRUE)
 
 /datum/emote/living/laugh/get_sound(mob/living/user)
-	if(!ishuman(user) || !islizard(user) || !ismoth(user))
+	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/human_user = user
 	if((ishumanbasic(human_user) || isfelinid(human_user)) && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
