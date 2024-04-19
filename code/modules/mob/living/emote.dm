@@ -422,7 +422,7 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/sneeze/get_sound(mob/living/user)
-	var/mob/living/carbon/human/human_user = user
+	var/mob/living/carbon/human_user = user
 	if(human_user.gender == FEMALE)
 		return 'sound/voice/human/female_sneeze1.ogg'
 	else return 'sound/voice/human/male_sneeze1.ogg'
