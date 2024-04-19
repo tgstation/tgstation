@@ -125,10 +125,6 @@ SUBSYSTEM_DEF(tts220)
 
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/tts220/pause()
-	. = ..()
-	is_enabled = FALSE
-
 /datum/controller/subsystem/tts220/fire()
 	if(last_network_fire + 1 SECONDS <= world.time)
 		fire_networking()
