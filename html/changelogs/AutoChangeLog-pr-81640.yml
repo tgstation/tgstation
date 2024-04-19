@@ -1,0 +1,5 @@
+author: "Motho"
+delete-after: True
+changes:
+  - rscadd: "Added wizard-themed deathmatch map."
+  - rscadd: "Added mystery wand box."
