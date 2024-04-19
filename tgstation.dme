@@ -2084,6 +2084,7 @@
 #include "code\game\machinery\computer\records\records.dm"
 #include "code\game\machinery\computer\records\security.dm"
 #include "code\game\machinery\dna_infuser\dna_infuser.dm"
+#include "code\game\machinery\dna_infuser\dna_infusion.dm"
 #include "code\game\machinery\dna_infuser\infuser_book.dm"
 #include "code\game\machinery\dna_infuser\infuser_entry.dm"
 #include "code\game\machinery\dna_infuser\infuser_entries\infuser_tier_one_entries.dm"
