@@ -460,14 +460,13 @@
 
 /datum/component/personal_crafting/proc/make_action(datum/crafting_recipe/recipe, mob/user)
 	var/atom/movable/result = construct_item(user, recipe)
-	if(!istext(result)) //We made an item and didn't get a fail message
+	if(istext(result)) //We failed to make an item and got a fail message
 		to_chat(user, span_warning("Construction failed[result]"))
 		return FALSE
 	if(ismob(user) && isitem(result)) //In case the user is actually possessing a non mob like a machine
 		user.put_in_hands(result)
-	else
-		if(!istype(result, /obj/effect/spawner))
-			result.forceMove(user.drop_location())
+	else if(!istype(result, /obj/effect/spawner))
+		result.forceMove(user.drop_location())
 	to_chat(user, span_notice("[recipe.name] crafted."))
 	user.investigate_log("crafted [recipe]", INVESTIGATE_CRAFTING)
 	recipe.on_craft_completion(user, result)
