@@ -50,9 +50,9 @@
 	maptext = MAPTEXT(circuits)
 	icon_state = "[initial(icon_state)]_recharging"
 	var/recharge_time = (circuit_cost - MIN_ENERGY_COST) / (MAX_ENERGY_COST - MIN_ENERGY_COST)
-	recharge_time = ROUND_UP(clamp(recharge_time, 0, 1))
+	recharge_time = clamp(recharge_time, 0, 1)
 	recharge_time = (5 SECONDS) + (55 SECONDS) * recharge_time //anywhere between 5 seconds to 1 minute
-	addtimer(CALLBACK(src, PROC_REF(recharge)), recharge_time)
+	addtimer(CALLBACK(src, PROC_REF(recharge)), ROUND_UP(recharge_time))
 	return TRUE //The actual circuit magic itself is done on a per-object basis
 
 /obj/item/electroadaptive_pseudocircuit/afterattack(atom/target, mob/living/user, proximity)
