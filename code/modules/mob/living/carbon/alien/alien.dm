@@ -135,8 +135,8 @@ Des: Removes all infected images from the alien.
 /// Changes the name of the xeno we are evolving into in order to keep the same numerical identifier the old xeno had.
 /mob/living/carbon/alien/proc/change_name(old_name, old_real_name, old_number)
 	if(!alien_name_regex.Find(old_name)) // check to make sure there's no admins doing funny stuff with naming these aliens
-		new_xeno.name = old_name
-		new_xeno.real_name = old_real_name
+		name = old_name
+		real_name = old_real_name
 		return
 
 	if(!unique_name)
