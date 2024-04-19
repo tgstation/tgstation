@@ -31,18 +31,3 @@ export enum SubsystemSortBy {
   TICK_USAGE = 'Tick Usage',
   TICK_OVERRUN = 'Tick Overrun',
 }
-
-      // case SubsystemSortBy.INIT_ORDER:
-      //   return input.init_order;
-      // case SubsystemSortBy.NAME:
-      //   return input.name.toLowerCase();
-      // case SubsystemSortBy.LAST_FIRE:
-      //   return input.last_fire;
-      // case SubsystemSortBy.NEXT_FIRE:
-      //   return input.next_fire;
-      // case SubsystemSortBy.TICK_USAGE:
-      //   return input.tick_usage;
-      // case SubsystemSortBy.TICK_OVERRUN:
-      //   return input.tick_overrun;
-      // case SubsystemSortBy.COST:
-      //   return input.cost_ms;
