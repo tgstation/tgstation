@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Atom-Item interactions have been refactored once more. Report any oddities."

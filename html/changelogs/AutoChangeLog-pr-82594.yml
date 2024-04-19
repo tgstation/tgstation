@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "most cell power usages are scaled with defined constants to help adapt to future changes"

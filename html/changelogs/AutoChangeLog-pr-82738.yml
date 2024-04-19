@@ -1,4 +1,0 @@
-author: "TheRyeGuyWhoWillNowDie"
-delete-after: True
-changes:
-  - bugfix: "being revived with a cyber-heart now properly restarts the cyber heart"

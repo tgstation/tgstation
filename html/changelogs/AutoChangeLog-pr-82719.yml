@@ -1,4 +1,0 @@
-author: "Iajret"
-delete-after: True
-changes:
-  - bugfix: "cooling and anti-disruption RCD upgrades can now be printed in ancient protolathes"
