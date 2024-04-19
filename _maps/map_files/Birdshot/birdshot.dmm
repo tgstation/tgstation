@@ -264,7 +264,6 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
-/obj/effect/landmark/start/virologist,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "agy" = (
@@ -19331,7 +19330,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/effect/landmark/start/virologist,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "hGE" = (
@@ -25667,10 +25665,6 @@
 "jKU" = (
 /turf/closed/wall,
 /area/station/engineering/atmos/storage/gas)
-"jLi" = (
-/obj/effect/landmark/start/virologist,
-/turf/open/floor/iron/showroomfloor,
-/area/station/medical/virology)
 "jLl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -35271,13 +35265,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/hidden,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/server)
-"mIa" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/virologist,
-/turf/open/floor/iron/white/small,
-/area/station/medical/virology)
 "mIg" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -107022,7 +107009,7 @@ bUv
 cSk
 gLb
 nlS
-mIa
+eRX
 gpM
 sSQ
 hrF
@@ -108560,7 +108547,7 @@ jrk
 gIF
 wYA
 bpS
-jLi
+hOp
 nYk
 vVP
 xAA
