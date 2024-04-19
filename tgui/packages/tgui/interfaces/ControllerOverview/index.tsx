@@ -21,18 +21,18 @@ export function ControllerOverview(props) {
 export function ControllerContent(props) {
   const [state, dispatch] = useReducer(filterReducer, {
     ascending: true,
-    inactive: false,
+    inactive: true,
     query: '',
     smallValues: false,
     sortType: SortType.Name,
   });
 
-  const { label, useBars } =
+  const { label, inDeciseconds } =
     SORTING_TYPES?.[state.sortType] || SORTING_TYPES[0];
 
   useEffect(() => {
     // Quantifiable items default to descending view
-    if (useBars) {
+    if (inDeciseconds) {
       if (state.ascending) {
         dispatch({ type: FilterAction.Ascending, payload: false });
       }
@@ -79,9 +79,9 @@ export function ControllerContent(props) {
                 </Stack.Item>
                 <Stack.Item>
                   <Button
-                    disabled={!useBars}
+                    disabled={!inDeciseconds}
                     selected={state.smallValues}
-                    tooltip="Hide small values"
+                    tooltip="Hide values under 1"
                     icon={state.smallValues ? 'eye-slash' : 'eye'}
                     onClick={() =>
                       dispatch({

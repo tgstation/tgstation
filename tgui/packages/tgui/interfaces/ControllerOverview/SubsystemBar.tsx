@@ -3,7 +3,6 @@ import { Button, ProgressBar, Stack } from '../../components';
 import { SubsystemData } from './types';
 
 type Props = {
-  filterSmall: boolean;
   max: number;
   subsystem: SubsystemData;
   value: number;
@@ -11,10 +10,8 @@ type Props = {
 
 export function SubsystemBar(props: Props) {
   const { act } = useBackend();
-  const { filterSmall, max, subsystem, value } = props;
+  const { max, subsystem, value } = props;
   const { ref } = subsystem;
-
-  if (filterSmall && value < 1) return;
 
   return (
     <Stack>

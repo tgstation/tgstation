@@ -1,15 +1,43 @@
 type SortType = {
   label: string;
   propName: string;
-  useBars: boolean;
+  inDeciseconds: boolean;
 };
 
 export const SORTING_TYPES: readonly SortType[] = [
-  { label: 'Alphabetical', propName: 'name', useBars: false },
-  { label: 'Cost', propName: 'cost_ms', useBars: true },
-  { label: 'Init Order', propName: 'init_order', useBars: false },
-  { label: 'Last Fire', propName: 'last_fire', useBars: false },
-  { label: 'Next Fire', propName: 'next_fire', useBars: false },
-  { label: 'Tick Usage', propName: 'tick_usage', useBars: true },
-  { label: 'Tick Overrun', propName: 'tick_overrun', useBars: true },
+  {
+    label: 'Alphabetical',
+    propName: 'name',
+    inDeciseconds: false,
+  },
+  {
+    label: 'Cost',
+    propName: 'cost_ms',
+    inDeciseconds: true,
+  },
+  {
+    label: 'Init Order',
+    propName: 'init_order',
+    inDeciseconds: false,
+  },
+  {
+    label: 'Last Fire',
+    propName: 'last_fire',
+    inDeciseconds: false,
+  },
+  {
+    label: 'Next Fire',
+    propName: 'next_fire',
+    inDeciseconds: false,
+  },
+  {
+    label: 'Tick Usage',
+    propName: 'tick_usage',
+    inDeciseconds: true,
+  },
+  {
+    label: 'Tick Overrun',
+    propName: 'tick_overrun',
+    inDeciseconds: true,
+  },
 ];
