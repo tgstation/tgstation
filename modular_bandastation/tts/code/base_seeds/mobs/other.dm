@@ -20,3 +20,6 @@
 
 /mob/living/carbon/human/species/monkey/punpun/add_tts_component()
 	AddComponent(/datum/component/tts_component, /datum/tts_seed/silero/chen)
+
+/mob/living/basic/bot/add_tts_component()
+	return
