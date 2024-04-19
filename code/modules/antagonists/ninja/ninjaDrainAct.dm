@@ -1,3 +1,8 @@
+/// Minimum amount of energy we can drain in a single drain action
+#define NINJA_MIN_DRAIN (0.2 * STANDARD_CELL_CHARGE)
+/// Maximum amount of energy we can drain in a single drain action
+#define NINJA_MAX_DRAIN (0.4 * STANDARD_CELL_CHARGE)
+
 /**
  * Atom level proc for space ninja's glove interactions.
  *
@@ -26,7 +31,7 @@
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 		while(cell.charge> 0 && !maxcapacity)
-			drain = rand(hacking_module.mindrain, hacking_module.maxdrain)
+			drain = rand(NINJA_MIN_DRAIN, NINJA_MAX_DRAIN)
 			if(cell.charge < drain)
 				drain = cell.charge
 			if(hacking_module.mod.get_charge() + drain > hacking_module.mod.get_max_charge())
@@ -62,7 +67,7 @@
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, loc)
 	while(charge > 0 && !maxcapacity)
-		drain = rand(hacking_module.mindrain, hacking_module.maxdrain)
+		drain = rand(NINJA_MIN_DRAIN, NINJA_MAX_DRAIN)
 		if(charge < drain)
 			drain = charge
 		if(hacking_module.mod.get_charge() + drain > hacking_module.mod.get_max_charge())
@@ -228,7 +233,7 @@
 	var/drain_total = 0
 	var/datum/powernet/wire_powernet = powernet
 	while(!maxcapacity && src)
-		drain = (round((rand(hacking_module.mindrain, hacking_module.maxdrain))/2))
+		drain = (round((rand(NINJA_MIN_DRAIN, NINJA_MAX_DRAIN))/2))
 		var/drained = 0
 		if(wire_powernet && do_after(ninja, 1 SECONDS, target = src, hidden = TRUE))
 			drained = min(drain, delayed_surplus())
@@ -264,7 +269,7 @@
 	var/drain_total = 0
 	if(get_charge())
 		while(cell.charge > 0 && !maxcapacity)
-			drain = rand(hacking_module.mindrain, hacking_module.maxdrain)
+			drain = rand(NINJA_MIN_DRAIN, NINJA_MAX_DRAIN)
 			if(cell.charge < drain)
 				drain = cell.charge
 			if(hacking_module.mod.get_charge() + drain > hacking_module.mod.get_max_charge())
@@ -466,3 +471,6 @@
 //FIRELOCKS//
 /obj/machinery/door/firedoor/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	crack_open()
+
+#undef NINJA_MIN_DRAIN
+#undef NINJA_MAX_DRAIN

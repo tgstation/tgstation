@@ -134,7 +134,7 @@
 	LAZYREMOVE(update_overlays_on_z, sparks)
 	target.cut_overlay(sparks)
 
-/obj/item/weldingtool/interact_with_atom(atom/interacting_with, mob/living/user)
+/obj/item/weldingtool/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ishuman(interacting_with))
 		return NONE
 	if(user.combat_mode)
