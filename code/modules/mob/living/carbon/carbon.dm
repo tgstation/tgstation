@@ -419,6 +419,9 @@
 	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
 		return TRUE
 
+	if(!force && HAS_TRAIT(src, TRAIT_STRONG_STOMACH))
+		lost_nutrition *= 0.5
+
 	SEND_SIGNAL(src, COMSIG_CARBON_VOMITED, distance, force)
 
 	// cache some stuff that we'll need later (at least multiple times)
@@ -435,7 +438,10 @@
 				span_userdanger("You try to throw up, but there's nothing in your stomach!"),
 			)
 		if(stun)
-			Stun(20 SECONDS)
+			var/stun_time = 20 SECONDS
+			if(HAS_TRAIT(src, TRAIT_STRONG_STOMACH))
+				stun_time *= 0.5
+			Stun(stun_time)
 		if(knockdown)
 			Knockdown(20 SECONDS)
 		return TRUE
@@ -458,11 +464,14 @@
 				add_mood_event("vomit", /datum/mood_event/vomit)
 
 	if(stun)
-		Stun(8 SECONDS)
+		var/stun_time = 8 SECONDS
+		if(!blood && HAS_TRAIT(src, TRAIT_STRONG_STOMACH))
+			stun_time *= 0.5
+		Stun(stun_time)
 	if(knockdown)
 		Knockdown(8 SECONDS)
 
-	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 
 	var/need_mob_update = FALSE
 	var/turf/location = get_turf(src)

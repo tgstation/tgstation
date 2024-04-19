@@ -178,7 +178,7 @@ const Blanks = (props) => {
   const { act, data } = useBackend();
   const { blanks, categories, category } = data;
 
-  const sortedBlanks = sortBy((blank) => blank.name)(blanks || []);
+  const sortedBlanks = sortBy(blanks || [], (blank) => blank.name);
 
   const selectedCategory = category ?? categories[0];
   const visibleBlanks = sortedBlanks.filter(

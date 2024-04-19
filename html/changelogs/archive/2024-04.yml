@@ -572,3 +572,68 @@
       It should now load properly. It did before too, but now the message is fixed.
   mc-oofert:
   - bugfix: tramstation AI sat starts full
+2024-04-18:
+  Ben10Omintrix:
+  - code_imp: The way mobs idle has been refactored, please report any issues with
+      non-reactive mobs
+  - rscadd: miners can now purchase grapple guns
+  Melbert:
+  - rscadd: Adds the Strong Stomach quirk, which allows you to eat grimy food without
+      worry about disease, and makes you a bit more resilient to the effects of vomiting.
+  - rscdel: Deviant Tastes no longer prevents you from getting a negative moodlet
+      from eating dirty food. Strong Stomach does that now.
+  - bugfix: Height now applies less weird to certain worn items, bare-handed bloody
+      hands, and damage overlays.
+  jlsnow301:
+  - bugfix: Bit avatars no longer have access to free binary comms with the AI outfit
+  - bugfix: Netpods have had their security against exploits increased.
+  mc-oofert:
+  - bugfix: you no longer need to put your sleeping carp gloves off and on in Deathmatch
+      to get the martial art
+  san7890:
+  - rscadd: Regal Rats are now able to tear down those colorful posters those weird
+      grey creatures keep spackling up on the walls of their rightful domain.
+2024-04-19:
+  Iajret:
+  - bugfix: cooling and anti-disruption RCD upgrades can now be printed in ancient
+      protolathes
+  Jacquerel:
+  - balance: Gulag mining has been rebalanced so that every boulder is worth the same
+      amount of points to mine for a prisoner regardless of what it contains, and
+      should be more consistent.
+  - rscadd: A vent which boulders can be hauled out of by hand has been added to the
+      gulag which you can use if there's nothing left to mine. It is very slow, but
+      at least it gives you a workout...
+  Melbert:
+  - refactor: Atom-Item interactions have been refactored once more. Report any oddities.
+  - rscadd: Being deafnened from a loud sound (flashbang, explosions) will now force
+      people not naturally deaf to shout
+  - rscadd: Ear damage multiplier now only applies to taking damage, not healing damage,
+      meaning Felinids (who take 2x the ear damage) will no longer heal ear damage
+      2x faster.
+  - refactor: Ears have been refactored slightly, ear deafness should now update more
+      snappily
+  Rhials:
+  - qol: Water tiles now extinguish fires on items and people.
+  SyncIt21:
+  - code_imp: most cell power usages are scaled with defined constants to help adapt
+      to future changes
+  - bugfix: smart pipes release their gases into the air when unwrenched
+  - bugfix: cryo pipe connector component has no side effects of gas reallocation
+      when deleted
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: being revived with a cyber-heart now properly restarts the cyber heart
+  Watermelon914:
+  - bugfix: Fixed RnD consoles not being able to be opened.
+  jlsnow301:
+  - rscdel: Due to a need for company restructuring, virologists have been laid off
+      by CentCom and doctors can optionally take their place.
+  - bugfix: TGUI Alerts shouldn't have such wonky buttons any more
+  - bugfix: Fixed a bluescreen in cargo console
+  - bugfix: 'Lootpanel additions: Condensed item names for the quick of draw'
+  san7890:
+  - qol: There's a bit more user feedback when it comes to attempting to handcuff
+      someone.
+  starrm4nn:
+  - qol: Replaced the surgical tools in the Primary Surgery Theatre with 2 Surgery
+      Trays.

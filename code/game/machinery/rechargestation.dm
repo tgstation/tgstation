@@ -178,7 +178,7 @@
 	if(!occupant)
 		return
 
-	if(!use_energy(active_power_usage * seconds_per_tick))
+	if(!use_energy(active_power_usage * seconds_per_tick, force = FALSE))
 		return
 
 	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, charge_cell, seconds_per_tick, repairs, sendmats)
