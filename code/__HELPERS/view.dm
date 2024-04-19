@@ -22,8 +22,10 @@
 
 /**
 * Frustrated with bugs in can_see(), this instead uses viewers for a much more effective approach.
-* Adjacent objects are always considered visible.
-* Default distance is 8.
+* ### Things to note:
+* - Src/source must be a mob. `viewers()` returns mobs.
+* - Adjacent objects are always considered visible.
+* - Default distance is 8.
 */
 
 /// Basic check to see if the src object can see the target object.
