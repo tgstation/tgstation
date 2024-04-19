@@ -128,11 +128,11 @@
 	force = 0
 	var/random_color = TRUE
 	/// the string of the dmi state the balloon has while on the floor.
-	var/world_state 
+	var/world_state
 	/// the string of the dmi state the balloon has while in your inventory.
-	var/storage_state 
+	var/storage_state
 	/// the string describing the name of balloon's current colour.
-	var/current_color 
+	var/current_color
 
 /obj/item/toy/balloon/long
 	name = "long balloon"
@@ -183,9 +183,9 @@
 	)
 	for(var/list/pair_of_colors in balloon_combos)
 		if((hit_by.current_color == pair_of_colors[1] && current_color == pair_of_colors[2]) || (current_color == pair_of_colors[1] && hit_by.current_color == pair_of_colors[2]))
-			var/path_to_spawn = balloon_combos[pair_of_colors] 
+			var/path_to_spawn = balloon_combos[pair_of_colors]
 			user.put_in_hands(new path_to_spawn)
-			break 
+			break
 	qdel(hit_by)
 	qdel(src)
 	return TRUE
@@ -1381,10 +1381,6 @@
 	toysay = "I am the law!"
 	toysound = 'sound/runtime/complionator/dredd.ogg'
 
-/obj/item/toy/figure/virologist
-	name = "\improper Virologist action figure"
-	icon_state = "virologist"
-	toysay = "The cure is potassium!"
 
 /obj/item/toy/figure/warden
 	name = "\improper Warden action figure"

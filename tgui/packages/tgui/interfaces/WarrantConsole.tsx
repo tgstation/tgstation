@@ -63,7 +63,7 @@ export const WarrantConsole = (props) => {
 const RecordList = (props) => {
   const { act, data } = useBackend<Data>();
   const { records = [] } = data;
-  const sorted = sortBy((record: WarrantRecord) => record.crew_name)(records);
+  const sorted = sortBy(records, (record) => record.crew_name);
 
   const [selectedRecord, setSelectedRecord] = useLocalState<
     WarrantRecord | undefined

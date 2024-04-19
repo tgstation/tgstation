@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "You can handcuff people with 2 arms and you can no longer handcuff people with 0 arms"
