@@ -75,8 +75,9 @@
 /obj/item/restraints/legcuffs/bola/tactical,
 /obj/item/restraints/legcuffs/bola/tactical,
 /obj/item/restraints/legcuffs/bola/tactical,
-/obj/item/shield/kite,
-/obj/item/shield/kite,
+/obj/item/restraints/legcuffs/bola,
+/obj/item/restraints/legcuffs/bola,
+/obj/item/restraints/legcuffs/bola,
 /turf/open/floor/stone,
 /area/shuttle/pirate)
 "l" = (
@@ -158,6 +159,7 @@
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /obj/effect/decal/cleanable/blood/gibs/body,
 /obj/item/food/meat/slab/human/mutant/zombie,
+/obj/item/kitchen/fork,
 /turf/open/floor/stone,
 /area/shuttle/pirate)
 "v" = (
@@ -281,7 +283,10 @@
 /area/shuttle/pirate)
 "O" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/kitchen/fork,
+/obj/structure/fermenting_barrel/thermite,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
 /turf/open/floor/stone,
 /area/shuttle/pirate)
 "P" = (
@@ -289,8 +294,11 @@
 /turf/open/floor/stone,
 /area/shuttle/pirate)
 "Q" = (
-/obj/item/reagent_containers/cup/bucket/wooden,
-/obj/structure/fermenting_barrel/thermite,
+/obj/structure/closet/cabinet,
+/obj/item/claymore,
+/obj/item/shield/kite,
+/obj/item/shield/kite,
+/obj/item/shield/kite,
 /turf/open/floor/stone,
 /area/shuttle/pirate)
 "R" = (

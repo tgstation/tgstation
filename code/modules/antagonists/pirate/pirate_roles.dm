@@ -205,9 +205,11 @@
 	outfit = /datum/outfit/pirate/medieval
 	rank = "Footsoldier"
 
-/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/special(mob/living/spawned_mob)
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/special(mob/living/carbon/spawned_mob)
 	. = ..()
 	ADD_TRAIT(spawned_mob, TRAIT_NOGUNS, INNATE_TRAIT)
+	var/datum/action/cooldown/mob_cooldown/dash/dodge = new(spawned_mob)
+	dodge.Grant(spawned_mob)
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord
 	rank = "Warlord"
