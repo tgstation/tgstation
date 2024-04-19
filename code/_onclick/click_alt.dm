@@ -6,11 +6,11 @@
 /mob/proc/base_click_alt(atom/target)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	// Is it visible?
-	if(!can_interact_with(target) && !(src in viewers(6, target)))
+	// Is it visible (and we're not wearing it (our clothes are invisible))?
+	if(!(src in viewers(7, target)) && !Adjacent(target))
 		return
 
-	var/turf/tile = get_turf(target)
+q	var/turf/tile = get_turf(target)
 
 	// Ghosties just see loot
 	if(isobserver(src) || isrevenant(src))
