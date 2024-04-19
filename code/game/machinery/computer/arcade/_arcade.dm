@@ -12,11 +12,7 @@
 	///Like prize pool, it must be a list of the prize and the weight of being selected.
 	var/list/prize_override
 
-/obj/machinery/computer/arcade/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
-
+/obj/machinery/computer/arcade/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/stack/arcadeticket))
 		var/obj/item/stack/arcadeticket/tickets = tool
 		if(!tickets.use(2))
@@ -43,6 +39,8 @@
 		balloon_alert(user, "cabinet reset")
 		reset_cabinet(user)
 		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/machinery/computer/arcade/screwdriver_act(mob/living/user, obj/item/I)
 	//you can't stop playing when you start.
@@ -100,5 +98,3 @@
 		var/atom/movable/the_prize = new prizeselect(get_turf(src))
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 		visible_message(span_notice("[src] dispenses [the_prize]!"), span_notice("You hear a chime and a clunk."))
-
-

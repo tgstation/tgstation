@@ -1,5 +1,5 @@
 #define PKBORG_DAMPEN_CYCLE_DELAY (2 SECONDS)
-#define POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER (0.4 KILO WATTS)
+#define POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER (0.0004 * STANDARD_CELL_RATE)
 
 /obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
 	name = "plating repair tool"
