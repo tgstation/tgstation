@@ -28,7 +28,6 @@
 #define FOOTSTEP_MOB_RUST "footstep_rust"
 #define FOOTSTEP_OBJ_MACHINE "footstep_machine"
 #define FOOTSTEP_OBJ_ROBOT "footstep_robot"
-#define FOOTSTEP_OBJ_CYBORG_FLY "footstep_cyborg_fly"
 #define FOOTSTEP_OBJ_CYBORG_TRACK "footstep_cyborg_track"
 
 //priority defines for the footstep_override element
