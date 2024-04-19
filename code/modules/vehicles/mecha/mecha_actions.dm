@@ -91,16 +91,6 @@
 
 	chassis.toggle_strafe()
 
-/obj/vehicle/sealed/mecha/click_alt(mob/living/user)
-	if(!(user in occupants))
-		return NONE
-
-	if(!(user in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE)))
-		to_chat(user, span_warning("You're in the wrong seat to control movement."))
-		return CLICK_ACTION_BLOCKING
-
-	toggle_strafe()
-	return CLICK_ACTION_SUCCESS
 
 /obj/vehicle/sealed/mecha/proc/toggle_strafe()
 	if(!(mecha_flags & CAN_STRAFE))
