@@ -24409,6 +24409,7 @@
 /obj/effect/spawner/random/bedsheet{
 	dir = 1
 	},
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "jke" = (
@@ -37822,6 +37823,7 @@
 /obj/structure/bed,
 /obj/effect/spawner/random/bedsheet,
 /obj/machinery/airalarm/directional/south,
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "omy" = (
@@ -48110,6 +48112,7 @@
 /obj/effect/spawner/random/bedsheet{
 	dir = 1
 	},
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "rYZ" = (
@@ -64505,6 +64508,7 @@
 /obj/structure/bed{
 	dir = 1
 	},
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "yei" = (
