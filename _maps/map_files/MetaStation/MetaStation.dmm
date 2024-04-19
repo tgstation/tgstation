@@ -67581,7 +67581,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "xWJ" = (
-/obj/machinery/drone_dispenser,
+/obj/machinery/drone_dispenser/preloaded,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/central)
 "xWQ" = (
