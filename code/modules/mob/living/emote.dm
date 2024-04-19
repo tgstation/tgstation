@@ -750,7 +750,7 @@
 	message_mime = "makes a rude gesture!"
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/carbon/human/whistle
+/datum/emote/living/carbon/whistle
 	key = "whistle"
 	key_third_person = "whistles"
 	message = "whistles."
@@ -758,7 +758,7 @@
 	audio_cooldown = 0.5 SECONDS
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
-/datum/emote/living/carbon/human/whistle/get_sound(mob/living/user)
-	var/mob/living/carbon/human/human_user = user
+/datum/emote/living/carbon/whistle/get_sound(mob/living/user)
+	var/mob/living/carbon/human_user = user
 	return 'sound/voice/human/whistle1.ogg'
 
