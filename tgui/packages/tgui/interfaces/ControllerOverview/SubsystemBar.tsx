@@ -14,7 +14,7 @@ export function SubsystemBar(props: Props) {
   const { subsystem, max, value, filterSmall, filterInactive } = props;
 
   if (filterSmall && value < 1) return;
-  if (filterInactive && !subsystem.can_fire) return;
+  if (filterInactive && subsystem.doesnt_fire) return;
 
   return (
     <Stack>

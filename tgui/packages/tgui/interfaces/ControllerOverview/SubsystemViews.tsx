@@ -25,18 +25,19 @@ export function SubsystemViews(props: Props) {
 
   const [bars, setBars] = useState(useBars);
 
-  // Filter and sort subsystems
   const toDisplay = useMemo(() => {
     const subsystemsToSort = flow([
-      (toFilter) =>
-        filterOpts.query &&
-        filter(
-          subsystems,
-          createSearch(
-            filterOpts.query,
-            (subsystem: SubsystemData) => subsystem.name,
-          ),
-        ),
+      // If there's a query, filter by it
+      filterOpts.query &&
+        ((toFilter) =>
+          filter(
+            toFilter,
+            createSearch(
+              filterOpts.query,
+              (subsystem: SubsystemData) => subsystem.name,
+            ),
+          )),
+      // Apply our sort type
       (toSort) => sortBy(toSort, (input: SubsystemData) => input[propName]),
     ])(subsystems);
 
@@ -47,6 +48,7 @@ export function SubsystemViews(props: Props) {
     return subsystemsToSort;
   }, [filterOpts.ascending, filterOpts.query, filterOpts.sortType]);
 
+  // Gets our totals for bar display
   const totals: number[] = [];
   let currentMax = 0;
   if (useBars) {
