@@ -42,7 +42,7 @@
 		else
 			modified_speech = "[use_radio ? pick(available_channels) : ""][modified_speech]"
 
-	if(SStts.tts_enabled && Stts.available_speakers.Find(speech["voice"]))
+	if(SStts.tts_enabled && SStts.available_speakers.Find(speech["voice"]))
 		speaking_pawn.voice = speech["voice"]
 	if(speech["pitch"] && SStts.pitch_enabled)
 		speaking_pawn.pitch = min(speech["pitch"] + rand(12, 24), MAXIMUM_PARROT_PITCH)
