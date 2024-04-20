@@ -223,3 +223,6 @@
 
 	/// What our current gravity state is. Used to avoid duplicate animates and such
 	var/gravity_state = null
+
+	/// How many stamina will mob regen when walking.
+	var/stamina_regen_per_walk = 2

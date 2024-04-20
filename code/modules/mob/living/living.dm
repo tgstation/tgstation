@@ -998,6 +998,10 @@
 
 	. = ..()
 
+	if(move_intent == MOVE_INTENT_WALK)
+		if(staminaloss > 0)
+			adjustStaminaLoss(-stamina_regen_per_walk)
+
 	if(moving_diagonally != FIRST_DIAG_STEP && isliving(pulledby))
 		var/mob/living/L = pulledby
 		L.set_pull_offsets(src, pulledby.grab_state)
