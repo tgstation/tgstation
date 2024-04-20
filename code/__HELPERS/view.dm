@@ -25,15 +25,17 @@
 * ### Things to note:
 * - Src/source must be a mob. `viewers()` returns mobs.
 * - Adjacent objects are always considered visible.
-* - Default distance is 7.
 */
 
+/// The default tile-distance between two atoms for one to consider the other as visible.
+#define DEFAULT_SIGHT_DISTANCE 7
+
 /// Basic check to see if the src object can see the target object.
-#define CAN_I_SEE(target) ((src in viewers(7, target)) || in_range(target, src))
+#define CAN_I_SEE(target) ((src in viewers(DEFAULT_SIGHT_DISTANCE, target)) || in_range(target, src))
 
 
 /// Checks the visibility between two other objects.
-#define CAN_THEY_SEE(target, source) ((source in viewers(7, target)) || in_range(target, source))
+#define CAN_THEY_SEE(target, source) ((source in viewers(DEFAULT_SIGHT_DISTANCE, target)) || in_range(target, source))
 
 
 /// Further checks distance between source and target.
