@@ -21,3 +21,6 @@
 
 /obj/item/taperecorder/add_tts_component()
 	AddComponent(/datum/component/tts_component, /datum/tts_seed/silero/xenia)
+
+/obj/machinery/newscaster/add_tts_component()
+	return
