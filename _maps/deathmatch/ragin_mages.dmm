@@ -125,12 +125,6 @@
 /obj/item/trash/sosjerky,
 /turf/open/indestructible/stone,
 /area/deathmatch)
-"nl" = (
-/obj/structure/table/wood,
-/obj/structure/table/wood,
-/obj/item/pen,
-/turf/open/indestructible/hotelwood,
-/area/deathmatch)
 "os" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/gun/magic/wand/fireball,
@@ -972,7 +966,7 @@ PG
 WO
 Eo
 Wf
-nl
+eu
 pN
 Wf
 Wf
