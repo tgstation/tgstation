@@ -9,7 +9,6 @@
 	icon_state = "reaction_chamber"
 	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 
 	/**
 	* list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
@@ -49,6 +48,9 @@
 	return NONE
 
 /obj/machinery/plumbing/reaction_chamber/process(seconds_per_tick)
+	if(!is_operational)
+		return
+
 	//half the power for getting reagents in
 	var/power_usage = active_power_usage * 0.5
 
