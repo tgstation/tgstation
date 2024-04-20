@@ -17,7 +17,7 @@
 /datum/action/cooldown/spell/summon_dancefloor/cast(atom/target)
 	. = ..()
 	var/datum/effect_system/smoke = new /datum/effect_system/smoke_spread/transparent/extrashort()
-	smoke.set_up(1, get_turf(owner))
+	smoke.set_up(1, FALSE, get_turf(owner))
 	smoke.start()
 
 	if(dance_floors.len)
