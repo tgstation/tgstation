@@ -359,6 +359,15 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"afp" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/ce)
 "afz" = (
 /obj/effect/landmark/generic_maintenance_landmark,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -393,12 +402,17 @@
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "afR" = (
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 9
 	},
 /turf/open/floor/iron,
-/area/station/hallway/primary/fore)
+/area/station/security)
 "afV" = (
 /obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -410,15 +424,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/textured_large,
 /area/station/hallway/primary/central)
-"afX" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
-	},
-/obj/structure/disposalpipe/trunk/multiz/down{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/security)
 "agq" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -1584,6 +1589,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
+"azQ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/station/engineering/storage)
 "azV" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/cable,
@@ -5111,18 +5122,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/art)
-"bTZ" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/turf/open/floor/iron,
-/area/station/security)
 "bUh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -17950,15 +17949,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/service/chapel/funeral)
-"gKc" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/turf/open/floor/iron,
-/area/station/command/heads_quarters/ce)
 "gKe" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/airalarm/directional/north,
@@ -20641,6 +20631,15 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
+"hIv" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "hIV" = (
 /obj/machinery/recharge_station,
 /obj/effect/turf_decal/siding/purple{
@@ -23489,6 +23488,10 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"iNh" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/engineering/storage)
 "iNj" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/openspace,
@@ -26439,15 +26442,14 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "jRJ" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Fore Primary Hallway"
-	},
-/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/structure/disposalpipe/trunk/multiz/down{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/hallway/primary/fore)
+/area/station/security)
 "jRK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/service/theatre,
@@ -27916,6 +27918,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
+"kqE" = (
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/fore)
 "kqQ" = (
 /turf/open/floor/iron/half{
 	dir = 1
@@ -35593,7 +35602,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/disposalpipe/trunk/multiz/down{
+/obj/structure/disposalpipe/trunk/multiz{
 	dir = 8
 	},
 /turf/open/floor/iron/white,
@@ -36012,7 +36021,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
@@ -56830,10 +56839,6 @@
 "vcs" = (
 /turf/open/floor/fakespace,
 /area/station/maintenance/port/lesser)
-"vcD" = (
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/iron,
-/area/station/engineering/storage)
 "vcV" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Chapel Morgue"
@@ -59070,11 +59075,15 @@
 /turf/open/floor/iron/white/herringbone,
 /area/station/science/breakroom)
 "vVl" = (
-/obj/structure/disposalpipe/segment{
-	dir = 10
+/obj/machinery/door/airlock/public/glass{
+	name = "Fore Primary Hallway"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/engineering/storage)
+/area/station/hallway/primary/fore)
 "vVp" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -60259,15 +60268,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/black,
 /area/station/command/heads_quarters/hos)
-"wuL" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "wuS" = (
 /obj/machinery/door/window/right/directional/east{
 	name = "Engineering Deliveries";
@@ -85339,8 +85339,8 @@ rTV
 wTu
 oMf
 oMf
-nrp
-wuL
+vVl
+hIv
 dRy
 kmu
 dxT
@@ -85853,7 +85853,7 @@ gSD
 gSD
 gSD
 gSD
-jRJ
+nrp
 gls
 aQS
 aly
@@ -86103,7 +86103,7 @@ ygw
 ygw
 txK
 sjl
-afR
+kqE
 rjX
 rjX
 hbM
@@ -86360,7 +86360,7 @@ wDy
 nFT
 jQf
 duy
-afR
+kqE
 rjX
 ovr
 bZa
@@ -106470,9 +106470,9 @@ rhS
 nMV
 cpG
 rDI
-vVl
-vcD
-vcD
+azQ
+iNh
+iNh
 kHp
 cpG
 cLf
@@ -145716,7 +145716,7 @@ gNP
 hdq
 vjA
 tIr
-afX
+jRJ
 uEg
 xhb
 xey
@@ -145973,7 +145973,7 @@ wjJ
 vUn
 weR
 pLd
-bTZ
+afR
 mEy
 dTE
 rai
@@ -171995,7 +171995,7 @@ sCp
 wje
 vno
 lAE
-gKc
+afp
 wsW
 hYP
 wje
