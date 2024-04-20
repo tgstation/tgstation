@@ -256,7 +256,7 @@
 	if(isnull(item.atom_storage))
 		return NONE
 
-	for(var/obj/tray_item in src)
+	for(var/obj/tray_item in src.contents)
 		item.atom_storage.attempt_insert(tray_item, user, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
