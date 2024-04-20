@@ -84,4 +84,7 @@
 
   // tgchat styles
   @include meta.load-css('../tgchat/chat-light.scss');
+
+  // Chat formats (color, size, font, etc)
+  @include meta.load-css('../chat-format/chat-light-theme.scss');
 }

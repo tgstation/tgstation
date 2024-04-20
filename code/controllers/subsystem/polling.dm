@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(polling)
 	pic_source,
 	role_name_text,
 	list/custom_response_messages,
-	start_signed_up = FALSE,
+	start_signed_up = FALSE
 )
 	RETURN_TYPE(/list/mob)
 	if(group.len == 0)
@@ -121,7 +121,6 @@ SUBSYSTEM_DEF(polling)
 			if((candidate_mob in other_poll.signed_up) && new_poll.sign_up(candidate_mob, TRUE))
 				break
 
-		// Image to display
 		var/image/poll_image
 		if(pic_source)
 			if(isatom(pic_source))
@@ -135,9 +134,8 @@ SUBSYSTEM_DEF(polling)
 				the_pic_source.plane = old_plane
 			else if(ispath(pic_source, /datum/antagonist))
 				var/datum/antagonist/antagonist = new pic_source
-				var/icon/preview_icon = antagonist.preview_outfit ? antagonist.render_preview_outfit(antagonist.preview_outfit) : null
+				poll_image = antagonist.render_poll_preview() || image('icons/effects/effects.dmi', icon_state = "static", layer = FLOAT_LAYER)
 				qdel(antagonist)
-				poll_image = preview_icon ? image(preview_icon) : image('icons/effects/effects.dmi', icon_state = "static", layer = FLOAT_LAYER)
 			else
 				poll_image = image(pic_source, layer = FLOAT_LAYER)
 		else

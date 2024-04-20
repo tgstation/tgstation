@@ -58,3 +58,6 @@
 
 // tgchat styles
 @include meta.load-css('./tgchat/chat-dark.scss');
+
+// Chat formats (color, size, font, etc)
+@include meta.load-css('./chat-format/chat-dark-theme.scss');
