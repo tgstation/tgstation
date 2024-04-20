@@ -1,4 +1,0 @@
-author: "Iamgoofball"
-delete-after: True
-changes:
-  - bugfix: "Carps migrating through the station no longer idle so they don't get stuck after spawning until someone walks by."

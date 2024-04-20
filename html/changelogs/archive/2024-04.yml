@@ -637,3 +637,43 @@
   starrm4nn:
   - qol: Replaced the surgical tools in the Primary Surgery Theatre with 2 Surgery
       Trays.
+2024-04-20:
+  Ben10Omintrix:
+  - qol: slimes will stay active without needing any one to watch over
+  Bmon:
+  - bugfix: Fixed on-mob sprite alightment for the NT SWAT helmet.
+  Iamgoofball:
+  - bugfix: Carps migrating through the station no longer idle so they don't get stuck
+      after spawning until someone walks by.
+  Melbert:
+  - bugfix: Primal Instincts and Living Flesh should be a tad more reactive
+  - bugfix: You can handcuff people with 2 arms and you can no longer handcuff people
+      with 0 arms
+  Motho:
+  - rscadd: Added wizard-themed deathmatch map.
+  - rscadd: Added mystery wand box.
+  Sightld2:
+  - bugfix: Ants are no longer picky eaters. Low Purity sugar will no longer result
+      in less Ants than you started with.
+  SyncIt21:
+  - bugfix: plumbing machinery begins processing only when wrenched & ends when unwrenched
+  - bugfix: plumbing machinery uses energy only when wrenched & doing work, will stop/use
+      less energy when idle
+  - bugfix: plumbing grinder chemical will grinds & juice stuff correctly i.e. prefer
+      grinding over juicing for most stuff
+  Vishenka0704:
+  - qol: added mass craft for personal crafting
+  ZephyrTFA:
+  - admin: Controller Overview UI. Check the Server Tab.
+  grungussuss:
+  - sound: cyborgs now have sounds to indicate they are moving
+  iliyaxox:
+  - spellcheck: '''inisimin'' verb corrected to ''invisimin'''
+  jlsnow301:
+  - bugfix: Mecha pilots are no longer bothered by incessant loot panels while holding
+      ALT for strafe disable.
+  - bugfix: Dropdowns received some much-needed QoL, like having the scrollbar follow
+      your selection.
+  - bugfix: AI voice changer now shows its current voice selection.
+  - bugfix: Deathmatch screen has been touched up.
+  - bugfix: Prefs menu has their dropdowns simplified, hopefully fixing issues

@@ -1,4 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "Mecha pilots are no longer bothered by incessant loot panels while holding ALT for strafe disable."
