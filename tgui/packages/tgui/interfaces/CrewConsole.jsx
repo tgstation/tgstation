@@ -89,25 +89,24 @@ export const CrewConsole = () => {
 
 const CrewTable = (props) => {
   const { act, data } = useBackend();
-  const sensors = data.sensors ?? [];
+  const sensors = data.sensors;
 
   const [shownSensors, setShownSensors] = useState(sensors.slice());
-  const [sortColumn, setSortColumn] = useState('ijob');
   const [sortAsc, setSortAsc] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortColumns, setSortColumns] = useState(['ijob', 'health', 'area']);
 
-  const updateSortMode = (column) => {
-    if (column === sortColumn) {
-      if (!sortAsc) {
-        setSortColumn('ijob');
-        setSortAsc(true);
-      } else {
-        setSortAsc(false);
-      }
-    } else {
-      setSortColumn(column);
-      setSortAsc(true);
-    }
+  const sortNames = {
+    ijob: 'Job',
+    name: 'Name',
+    area: 'Position',
+    health: 'Vitals',
+  };
+
+  const cycleSortMode = () => {
+    let newColumns = sortColumns.slice();
+    newColumns.push(newColumns.shift());
+    setSortColumns(newColumns);
   };
 
   const healthSort = (a, b) => {
@@ -120,7 +119,7 @@ const CrewTable = (props) => {
 
   useEffect(() => {
     let unsorted = sensors.slice();
-    if (sortColumn === 'ijob') {
+    if (sortColumns[0] === 'ijob') {
       let sorted = flow([
         (sorted) => {
           return sortBy(data.sensors, (s) => s.ijob);
@@ -130,16 +129,19 @@ const CrewTable = (props) => {
           return filter(sorted, nameSearch);
         },
       ])();
+      if (!sortAsc) {
+        sorted.reverse();
+      }
       setShownSensors(sorted);
       return;
-    } else if (sortColumn === 'health') {
+    } else if (sortColumns[0] === 'health') {
       unsorted.sort(healthSort);
     } else {
       unsorted.sort((a, b) => {
-        a[sortColumn] ??= '~';
-        b[sortColumn] ??= '~';
-        if (a[sortColumn] < b[sortColumn]) return -1;
-        if (a[sortColumn] > b[sortColumn]) return 1;
+        a[sortColumns[0]] ??= '~';
+        b[sortColumns[0]] ??= '~';
+        if (a[sortColumns[0]] < b[sortColumns[0]]) return -1;
+        if (a[sortColumns[0]] > b[sortColumns[0]]) return 1;
         return 0;
       });
     }
@@ -151,65 +153,50 @@ const CrewTable = (props) => {
       sorted.reverse();
     }
     setShownSensors(sorted);
-  }, [searchQuery, sensors, sortColumn, sortAsc]);
+  }, [searchQuery, sensors, sortColumns, sortAsc]);
 
   return (
-    <Table>
-      <Table.Row>
-        <Table.Cell bold>
-          <Button onClick={() => updateSortMode('name')}>
-            Name
-            {sortColumn === 'name' ? (
-              <Icon
-                style={{ marginLeft: '2px' }}
-                name={sortAsc ? 'chevron-up' : 'chevron-down'}
-              />
-            ) : (
-              <Icon style={{ marginLeft: '2px' }} name="minus" />
-            )}
+    <Section
+      scrollable
+      title={
+        <>
+          <Button onClick={() => cycleSortMode()}>
+            {sortNames[sortColumns[0]] || sortColumns[0]}
+          </Button>
+          <Button onClick={() => setSortAsc(!sortAsc)}>
+            <Icon
+              style={{ marginLeft: '2px' }}
+              name={sortAsc ? 'chevron-up' : 'chevron-down'}
+            />
           </Button>
           <Input
             placeholder="Search for name..."
             onInput={(e) => setSearchQuery(e.target.value)}
           />
-        </Table.Cell>
-        <Table.Cell bold collapsing />
-        <Table.Cell bold collapsing textAlign="center">
-          <Button onClick={() => updateSortMode('health')}>
-            Vitals
-            {sortColumn === 'health' ? (
-              <Icon
-                style={{ marginLeft: '2px' }}
-                name={sortAsc ? 'chevron-up' : 'chevron-down'}
-              />
-            ) : (
-              <Icon style={{ marginLeft: '2px' }} name="minus" />
-            )}
-          </Button>
-        </Table.Cell>
-        <Table.Cell bold textAlign="center">
-          <Button onClick={() => updateSortMode('area')}>
-            Position
-            {sortColumn === 'area' ? (
-              <Icon
-                style={{ marginLeft: '2px' }}
-                name={sortAsc ? 'chevron-up' : 'chevron-down'}
-              />
-            ) : (
-              <Icon style={{ marginLeft: '2px' }} name="minus" />
-            )}
-          </Button>
-        </Table.Cell>
-        {!!data.link_allowed && (
+        </>
+      }
+    >
+      <Table>
+        <Table.Row>
+          <Table.Cell bold>Name</Table.Cell>
+          <Table.Cell bold collapsing />
           <Table.Cell bold collapsing textAlign="center">
-            Tracking
+            Vitals
           </Table.Cell>
-        )}
-      </Table.Row>
-      {shownSensors.map((sensor) => (
-        <CrewTableEntry sensor_data={sensor} key={sensor.ref} />
-      ))}
-    </Table>
+          <Table.Cell bold textAlign="center">
+            Position
+          </Table.Cell>
+          {!!data.link_allowed && (
+            <Table.Cell bold collapsing textAlign="center">
+              Tracking
+            </Table.Cell>
+          )}
+        </Table.Row>
+        {shownSensors.map((sensor) => (
+          <CrewTableEntry sensor_data={sensor} key={sensor.ref} />
+        ))}
+      </Table>
+    </Section>
   );
 };
 
