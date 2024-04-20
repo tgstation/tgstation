@@ -1,0 +1,7 @@
+author: "Uristthedorf"
+delete-after: True
+changes:
+  - rscadd: "Clown dagger is now as slippery as maximum potency banana peel."
+  - rscadd: "Clown dagger forces victim to laugh."
+  - rscadd: "Clown dagger gives both victim and attacker positive moodlet."
+  - rscadd: "Choosing clown bible makes the bible slippery."
