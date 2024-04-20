@@ -7,6 +7,9 @@
 	var/atom/movable/target = controller.blackboard[target_key]
 	return ismovable(target) && isturf(target.loc) && ismob(controller.pawn)
 
+/datum/ai_behavior/stop_and_stare/get_cooldown(datum/ai_controller/cooldown_for)
+	return cooldown_for.blackboard[BB_STATIONARY_COOLDOWN]
+
 /datum/ai_behavior/stop_and_stare/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/atom/movable/target = controller.blackboard[target_key]
 	if(!ismovable(target) || !isturf(target.loc)) // just to make sure that nothing funky happened between setup and perform

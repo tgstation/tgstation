@@ -66,7 +66,7 @@
 	mood_change = -12
 
 /datum/mood_event/disgust/dirty_food
-	description = "It was too dirty to eat..."
+	description = "That was too dirty to eat..."
 	mood_change = -6
 	timeout = 4 MINUTES
 

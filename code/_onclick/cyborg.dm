@@ -31,7 +31,7 @@
 		MiddleClickOn(A, params)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
-		AltClickOn(A)
+		A.borg_click_alt(src)
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
@@ -89,7 +89,7 @@
 
 				if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
 					W.afterattack(A, src, FALSE, params)
-			else 
+			else
 				W.afterattack(A, src, FALSE, params)
 
 //Give cyborgs hotkey clicks without breaking existing uses of hotkey clicks
@@ -103,8 +103,6 @@
 /mob/living/silicon/robot/CtrlClickOn(atom/target)
 	target.BorgCtrlClick(src)
 
-/mob/living/silicon/robot/AltClickOn(atom/target)
-	target.BorgAltClick(src)
 
 /atom/proc/BorgCtrlShiftClick(mob/living/silicon/robot/user) //forward to human click if not overridden
 	CtrlShiftClick(user)
@@ -152,9 +150,9 @@
 	else
 		..()
 
-/obj/machinery/power/apc/BorgAltClick(mob/living/silicon/robot/user)
+/obj/machinery/power/apc/borg_click_alt(mob/living/silicon/robot/user)
 	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
-		AIAltClick(user)
+		ai_click_alt(user)
 	else
 		..()
 
@@ -171,19 +169,19 @@
 	else
 		..()
 
-/atom/proc/BorgAltClick(mob/living/silicon/robot/user)
-	AltClick(user)
+/atom/proc/borg_click_alt(mob/living/silicon/robot/user)
+	user.base_click_alt(src)
 	return
 
-/obj/machinery/door/airlock/BorgAltClick(mob/living/silicon/robot/user) // Eletrifies doors. Forwards to AI code.
+/obj/machinery/door/airlock/borg_click_alt(mob/living/silicon/robot/user) // Eletrifies doors. Forwards to AI code.
 	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
-		AIAltClick(user)
+		ai_click_alt(user)
 	else
 		..()
 
-/obj/machinery/turretid/BorgAltClick(mob/living/silicon/robot/user) //turret lethal on/off. Forwards to AI code.
+/obj/machinery/turretid/borg_click_alt(mob/living/silicon/robot/user) //turret lethal on/off. Forwards to AI code.
 	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
-		AIAltClick(user)
+		ai_click_alt(user)
 	else
 		..()
 

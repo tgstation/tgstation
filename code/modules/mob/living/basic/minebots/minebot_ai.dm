@@ -15,10 +15,10 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/launch_missiles,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/befriend_miners,
 		/datum/ai_planning_subtree/defend_node,
-		/datum/ai_planning_subtree/launch_missiles,
 		/datum/ai_planning_subtree/minebot_maintain_distance,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/minebot,
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/minebot,
