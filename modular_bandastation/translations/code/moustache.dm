@@ -10,13 +10,13 @@
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		var/static/regex/words = new(@"(?<![a-zA-Zа-яёА-ЯЁ])[a-zA-Zа-яёА-ЯЁ]+?(?![a-zA-Zа-яёА-ЯЁ])", "g")
-		message = replacetext(message, words, TYPE_PROC_REF(/obj/item/clothing/mask/fakemoustache/italian, words_replace))
+		message = replacetext(message, words, GLOBAL_PROC_REF(italian_words_replace))
 
-		if(prob(3))
-			message += pick(" Равиоли, равиоли, подскажи мне формуоли!"," Мамма-мия!"," Мамма-мия! Какая острая фрикаделька!", " Ла ла ла ла ла фуникули+ фуникуля+!")
+		if(prob(5))
+			message += pick(" Равиоли, равиоли, подскажи мне формуоли!"," Мамма-мия!"," Мамма-мия! Какая острая фрикаделька!", " Ла ла ла ла ла фуникули+ фуникуля+!", " Вордс Реплаке!")
 	speech_args[SPEECH_MESSAGE] = trim(message)
 
-/obj/item/clothing/mask/fakemoustache/italian/proc/words_replace(word)
+/proc/italian_words_replace(word)
 	var/static/list/italian_words
 	if(!italian_words)
 		italian_words = strings("italian_replacement_ru.json", "italian")
