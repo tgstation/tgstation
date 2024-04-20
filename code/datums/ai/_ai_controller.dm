@@ -364,7 +364,7 @@ multiple modular subtrees with behaviors
 		var/list/stored_arguments = behavior_args[type]
 		if(stored_arguments)
 			arguments += stored_arguments
-		forgotten_behavior .finish_action(arglist(arguments))
+		forgotten_behavior.finish_action(arglist(arguments))
 
 ///This proc handles changing ai status, and starts/stops processing if required.
 /datum/ai_controller/proc/set_ai_status(new_ai_status)

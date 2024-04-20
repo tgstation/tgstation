@@ -26,6 +26,7 @@
 	return !QDELETED(target)
 
 /datum/ai_behavior/ranged_skirmish/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key, max_range, min_range)
+	var/atom/target = controller.blackboard[target_key]
 	if (QDELETED(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
