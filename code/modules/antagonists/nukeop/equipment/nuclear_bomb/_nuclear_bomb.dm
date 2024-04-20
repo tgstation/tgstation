@@ -550,6 +550,10 @@ GLOBAL_VAR(station_nuke_source)
 
 			detonation_status = DETONATION_NEAR_MISSED_STATION
 
+		// monkestation edit: if it's in a "safe" z level
+		else if(is_safe_level(bomb_location.z))
+			detonation_status = DETONATION_NEAR_MISSED_STATION
+
 		// Confirming good hits, the nuke hit the station
 		else
 			SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, TRUE)
@@ -577,7 +581,7 @@ GLOBAL_VAR(station_nuke_source)
 	var/turf/bomb_location = get_turf(src)
 	var/list/z_levels_to_blow = list()
 	if(detonation_status == DETONATION_HIT_STATION)
-		z_levels_to_blow |= SSmapping.levels_by_trait(ZTRAIT_STATION)
+		z_levels_to_blow |= SSmapping.levels_by_trait(ZTRAIT_STATION) - SSmapping.levels_by_trait(ZTRAIT_FORCED_SAFETY) // monkesation edit: allow escaping nuke by going to safe z-levels
 
 	// Don't kill people in the station if the nuke missed, even if we are technically on the same z-level
 	else if(detonation_status != DETONATION_NEAR_MISSED_STATION)

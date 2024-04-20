@@ -24,7 +24,8 @@
 			"Daycycle": true,
 			"Ice Ruins Underground": true,
 			"Baseturf": "/turf/open/lava/plasma/ice_moon",
-			"No Parallax": true
+			"No Parallax": true,
+			"Forced Safety": true
 		},
 		{
 			"Down": true,
