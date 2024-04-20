@@ -6,7 +6,7 @@
 	inhand_icon_state = "dropper"
 	worn_icon_state = "pen"
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = list(1, 2, 3, 4, 5)
+	possible_transfer_amounts = list(1, 2, 5) // monkestation edit: get rid of the useless 3 and 4 options
 	volume = 5
 	reagent_flags = TRANSPARENT
 	custom_price = PAYCHECK_CREW
