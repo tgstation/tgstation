@@ -168,6 +168,7 @@
 /datum/outfit/pirate/medieval/warlord
 	name = "Medieval Warlord"
 
+	neck = /obj/item/bedsheet/pirate
 	suit = /obj/item/clothing/suit/armor/riot/knight/warlord
 	suit_store = null
 	back = /obj/item/fireaxe/boardingaxe
