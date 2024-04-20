@@ -478,6 +478,7 @@ SUBSYSTEM_DEF(tts220)
 /datum/controller/subsystem/tts220/proc/pick_tts_seed_by_gender(gender)
 	var/tts_gender = SStts220.get_tts_gender(gender)
 	var/tts_by_gender = LAZYACCESS(SStts220.tts_seeds_by_gender, tts_gender)
+	tts_by_gender |= LAZYACCESS(SStts220.tts_seeds_by_gender, TTS_GENDER_ANY)
 	if(!length(tts_by_gender))
 		logger.Log(LOG_CATEGORY_DEBUG, "No tts for gender `[gender]`, tts_gender: `[tts_gender]`")
 		return null
