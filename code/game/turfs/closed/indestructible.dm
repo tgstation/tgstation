@@ -306,6 +306,9 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	canSmoothWith = SMOOTH_GROUP_IRON_WALLS
 	opacity = FALSE
 
+/turf/closed/indestructible/iron/opaque
+	opacity = TRUE //idk wtf this was false by default but
+
 /turf/closed/indestructible/riveted/boss
 	name = "necropolis wall"
 	desc = "A thick, seemingly indestructible stone wall."

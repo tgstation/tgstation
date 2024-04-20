@@ -1,1880 +1,2172 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ay" = (
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
-/obj/machinery/door/airlock/wood,
-/obj/structure/railing/corner/end/flip{
-	dir = 4
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"aT" = (
-/obj/item/cardboard_cutout/adaptive{
-	pixel_y = 14;
-	pixel_x = 8
-	},
-/obj/effect/decal/cleanable/cobweb,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"bb" = (
-/obj/structure/chair/wood/wings{
-	dir = 8
-	},
-/obj/effect/light_emitter{
-	set_cap = 2;
-	light_color = "#DEEFFF";
-	set_luminosity = 4
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"bg" = (
-/obj/effect/spawner/random/entertainment/arcade,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"bv" = (
-/obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/floor/plating/airless,
-/area/deathmatch/teleport)
-"co" = (
-/obj/structure/table/reinforced,
-/obj/item/paper_bin/carbon{
-	pixel_y = 12;
-	pixel_x = 7
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"ct" = (
-/obj/structure/flora/bush/grassy/style_random,
-/mob/living/simple_animal/pet/gondola{
-	name = "Jommy";
-	faction = list("gondola", "Wizard")
-	},
-/turf/open/floor/grass,
-/area/deathmatch/teleport)
-"cU" = (
-/obj/structure/chair/wood/wings{
-	dir = 1
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"dj" = (
-/obj/machinery/door/airlock/wood,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"ds" = (
-/turf/open/floor/carpet/purple,
-/area/deathmatch/teleport)
-"ez" = (
-/obj/structure/closet/crate,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"fH" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/griddle,
-/obj/item/food/burger/spell{
-	pixel_y = 11;
-	pixel_x = -3
-	},
-/obj/item/stack/medical/ointment{
-	pixel_y = -2;
-	pixel_x = 9
-	},
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"fI" = (
-/turf/open/lava,
-/area/deathmatch/teleport)
-"gn" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"gr" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/chair/wood,
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"hg" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 8
-	},
-/obj/machinery/door/airlock/wood,
-/obj/structure/railing/corner/end{
-	dir = 8
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"hk" = (
-/obj/item/kirbyplants/organic/plant10{
-	pixel_y = 21;
-	pixel_x = -7
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"hK" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/light_emitter{
-	set_cap = 2;
-	light_color = "#DEEFFF";
-	set_luminosity = 4
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"ig" = (
-/obj/structure/table/wood,
-/obj/item/stack/medical/bruise_pack{
-	pixel_x = -12
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"iz" = (
-/obj/structure/chair/comfy/brown{
-	dir = 1
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"iL" = (
-/obj/effect/light_emitter{
-	set_cap = 2;
-	light_color = "#DEEFFF";
-	set_luminosity = 4
-	},
-/turf/open/floor/carpet/red,
-/area/deathmatch/teleport)
-"iQ" = (
-/obj/structure/table,
-/obj/structure/bedsheetbin{
-	pixel_y = 4;
-	pixel_x = 3
-	},
-/turf/open/floor/plastic,
-/area/deathmatch/teleport)
-"iZ" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/sink/directional/west,
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"jb" = (
-/obj/machinery/door/airlock/wood,
-/obj/structure/railing/corner/end/flip,
-/obj/structure/railing/corner/end,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"jg" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/landmark/deathmatch_player_spawn,
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"jm" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/mystery_box/wands,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"js" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"jM" = (
-/obj/structure/table/reinforced,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"jV" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/door/airlock/wood,
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"kl" = (
-/obj/structure/flora/bush/grassy/style_random,
-/obj/machinery/light/floor,
-/obj/effect/light_emitter{
-	set_cap = 2;
-	light_color = "#DEEFFF";
-	set_luminosity = 4
-	},
-/turf/open/floor/grass,
-/area/deathmatch/teleport)
-"li" = (
-/obj/structure/table,
-/obj/item/extinguisher{
-	pixel_x = 7;
-	pixel_y = -6
-	},
-/obj/item/clothing/suit/wizrobe/red{
-	pixel_y = 3;
-	pixel_x = -6
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"lM" = (
-/obj/structure/bed{
-	dir = 1
-	},
-/obj/item/bedsheet/wiz{
-	dir = 1
-	},
-/obj/effect/light_emitter{
-	set_cap = 2;
-	light_color = "#DEEFFF";
-	set_luminosity = 4
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"lO" = (
-/obj/structure/closet/crate,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"mu" = (
-/obj/effect/turf_decal/stripes,
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"mV" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/mystery_box/tdome,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"nk" = (
-/obj/item/gun/magic/wand/death,
-/obj/structure/window/reinforced/plasma/spawner/directional/east,
-/obj/structure/window/reinforced/plasma/spawner/directional/north,
-/obj/structure/window/reinforced/plasma/spawner/directional/west,
-/turf/open/floor/grass,
-/area/deathmatch/teleport)
-"nx" = (
-/obj/effect/landmark/deathmatch_player_spawn,
-/turf/open/floor/carpet/red,
-/area/deathmatch/teleport)
-"nQ" = (
-/obj/machinery/door/airlock/wood,
-/turf/open/floor/plastic,
-/area/deathmatch/teleport)
-"on" = (
-/obj/structure/table/wood,
-/turf/open/floor/carpet/red,
-/area/deathmatch/teleport)
-"oP" = (
-/obj/structure/destructible/cult/item_dispenser/archives/library,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"pe" = (
-/obj/item/kirbyplants/organic/plant10{
-	pixel_y = 21;
-	pixel_x = -7
-	},
-/turf/open/floor/carpet/red,
-/area/deathmatch/teleport)
-"ph" = (
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"pv" = (
-/obj/effect/light_emitter{
-	set_cap = 2;
-	light_color = "#DEEFFF";
-	set_luminosity = 4
-	},
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"pL" = (
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/obj/structure/mystery_box/wands,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"pV" = (
-/obj/structure/flora/bush/flowers_br/style_random,
-/turf/open/floor/grass,
-/area/deathmatch/teleport)
-"qx" = (
-/obj/effect/light_emitter{
-	set_cap = 2;
-	light_color = "#DEEFFF";
-	set_luminosity = 4
-	},
-/turf/open/floor/carpet/purple,
-/area/deathmatch/teleport)
-"qY" = (
-/obj/structure/closet/crate/bin,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"rj" = (
-/obj/machinery/door/window/right/directional/east,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"rD" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"sf" = (
-/obj/structure/mirror/directional/east,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"tL" = (
-/obj/structure/flora/bush/fullgrass/style_random,
-/mob/living/simple_animal/hostile/ooze/gelatinous{
-	name = "Jimmy";
-	faction = list("slime", "Wizard")
-	},
-/turf/open/floor/grass,
-/area/deathmatch/teleport)
-"ue" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/item/food/burger/yellow{
-	pixel_x = -11;
-	pixel_y = 8
-	},
-/obj/item/food/burger/red{
-	pixel_y = 13;
-	pixel_x = 6
-	},
-/obj/item/food/burger/purple{
-	pixel_y = 3
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"ui" = (
-/obj/effect/turf_decal/stripes,
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"uz" = (
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"uR" = (
-/obj/item/clothing/shoes/sandal/magic{
-	pixel_y = 16
-	},
-/obj/effect/light_emitter{
-	set_cap = 2;
-	light_color = "#DEEFFF";
-	set_luminosity = 4
-	},
-/turf/open/floor/plastic,
-/area/deathmatch/teleport)
-"vh" = (
-/obj/structure/mystery_box/wands,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"vv" = (
-/obj/vehicle/ridden/scooter/skateboard{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"vR" = (
-/obj/structure/bookcase/random,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"wd" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/mystery_box/wands,
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"wl" = (
-/obj/item/kirbyplants/organic/plant10{
-	pixel_y = 1;
-	pixel_x = -6
-	},
-/turf/open/floor/carpet/purple,
-/area/deathmatch/teleport)
-"wL" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/gibber/autogibber,
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"xk" = (
-/obj/structure/sink/directional/south,
-/obj/structure/mirror/directional/north{
-	pixel_y = 36
-	},
-/turf/open/floor/plastic,
-/area/deathmatch/teleport)
-"xs" = (
-/obj/structure/flora/bush/grassy/style_random,
-/turf/open/floor/grass,
-/area/deathmatch/teleport)
-"yA" = (
-/obj/structure/chair/wood/wings,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"zN" = (
-/obj/structure/mystery_box/wands,
-/obj/structure/sign/poster/contraband/the_big_gas_giant_truth/directional/north,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"zO" = (
-/obj/structure/closet,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Au" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"AD" = (
-/obj/structure/sign/departments/restroom/directional/west,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Bm" = (
-/obj/effect/landmark/deathmatch_player_spawn,
-/turf/open/floor/plastic,
-/area/deathmatch/teleport)
-"Cb" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table/wood,
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"Cj" = (
-/obj/structure/table,
-/obj/item/clothing/ears/earmuffs{
-	pixel_y = 14;
-	pixel_x = 4
-	},
-/obj/item/toy/gun{
-	pixel_y = 2;
-	pixel_x = -3
-	},
-/obj/item/clothing/head/wizard/red{
-	pixel_x = 6;
-	pixel_y = -10
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Cq" = (
-/turf/open/floor/carpet/red,
-/area/deathmatch/teleport)
-"CM" = (
-/obj/structure/railing/corner,
-/obj/structure/railing/corner{
-	dir = 8
-	},
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/obj/structure/railing/corner{
-	dir = 1
-	},
-/obj/effect/light_emitter{
-	set_cap = 2;
-	light_color = "#DEEFFF";
-	set_luminosity = 4
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"DK" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"DW" = (
-/obj/machinery/computer,
-/turf/open/floor/carpet/red,
-/area/deathmatch/teleport)
-"Eh" = (
-/obj/effect/light_emitter{
-	set_cap = 2;
-	light_color = "#DEEFFF";
-	set_luminosity = 4
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Fb" = (
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Fm" = (
-/obj/structure/chair/comfy/black{
-	dir = 1
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Fv" = (
-/obj/structure/chair/wood/wings{
-	dir = 4
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Fx" = (
-/obj/item/target,
-/obj/structure/sign/flag/nanotrasen/directional/north,
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"FL" = (
-/turf/open/floor/plastic,
-/area/deathmatch/teleport)
-"Ge" = (
-/obj/item/flashlight/flare{
-	pixel_x = -5;
-	pixel_y = -12
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Gv" = (
-/obj/item/kirbyplants/organic/plant10{
-	pixel_y = 2;
-	pixel_x = 5
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"GC" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"GZ" = (
-/obj/structure/curtain,
-/obj/machinery/shower/directional/north,
-/obj/item/soap/syndie,
-/turf/open/floor/noslip,
-/area/deathmatch/teleport)
-"Hf" = (
-/obj/item/kirbyplants/organic/plant10{
-	pixel_y = 1;
-	pixel_x = -6
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Hs" = (
+"ab" = (
 /turf/template_noop,
 /area/template_noop)
-"HM" = (
-/obj/structure/rack,
-/obj/item/knife/ritual{
-	pixel_y = 5
-	},
-/obj/item/staff{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"HP" = (
-/obj/structure/chair/comfy/black{
-	dir = 1
-	},
-/turf/open/floor/carpet/red,
-/area/deathmatch/teleport)
-"HS" = (
-/obj/structure/table/wood/fancy,
-/turf/open/floor/plastic,
-/area/deathmatch/teleport)
-"IE" = (
+"aN" = (
+/obj/item/book/granter/action/spell/blind,
+/turf/open/floor/carpet,
+/area/deathmatch)
+"bV" = (
+/mob/living/basic/creature,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"bY" = (
+/obj/structure/bookcase/random/adult,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"cc" = (
+/obj/item/trash/boritos,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"cs" = (
+/obj/item/toy/cattoy,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"cB" = (
+/obj/effect/decal/remains/human,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"dD" = (
+/turf/open/lava/smooth,
+/area/deathmatch)
+"dF" = (
 /obj/structure/table/wood,
-/obj/item/clothing/suit/wizrobe/black{
-	pixel_y = 3;
-	pixel_x = -1
+/obj/item/pen/fountain,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"dH" = (
+/obj/item/food/meat/bacon,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"eu" = (
+/obj/structure/table/wood,
+/obj/item/pen,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"eA" = (
+/obj/item/clothing/under/costume/gondola,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"fN" = (
+/obj/item/stack/sheet/mineral/plasma,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"gf" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/carpet/green,
+/area/deathmatch)
+"jk" = (
+/obj/item/paper/crumpled/fluff,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"jQ" = (
+/obj/structure/chair/wood{
+	dir = 8
 	},
-/obj/item/clothing/head/wizard/black{
-	pixel_y = 13;
-	pixel_x = 6
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"jY" = (
+/obj/item/trash/chips,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"kA" = (
+/obj/structure/table/wood/fancy/green,
+/obj/item/gun/magic/wand/door,
+/obj/machinery/light/floor,
+/turf/open/floor/carpet/green,
+/area/deathmatch)
+"kD" = (
+/obj/structure/table/wood/fancy/cyan,
+/obj/item/book/granter/chuunibyou,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"kP" = (
+/obj/item/pen,
+/obj/structure/table/wood,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"kT" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/flare/candle/infinite{
+	light_on = 1
 	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"IM" = (
-/obj/item/kirbyplants/organic/plant10{
-	pixel_y = 2;
-	pixel_x = 5
-	},
-/turf/open/floor/carpet/purple,
-/area/deathmatch/teleport)
-"Jm" = (
-/turf/closed/wall/mineral/wood,
-/area/deathmatch/teleport)
-"Jo" = (
-/obj/structure/toilet{
+/obj/effect/decal/cleanable/grand_remains,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"lw" = (
+/mob/living/basic/pet/dog/corgi,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"lE" = (
+/obj/structure/table/wood/fancy/blue,
+/obj/item/gun/magic/wand/polymorph,
+/obj/machinery/light/floor,
+/turf/open/floor/carpet/blue,
+/area/deathmatch)
+"lH" = (
+/obj/structure/chair/wood{
 	dir = 4
 	},
-/turf/open/floor/plastic,
-/area/deathmatch/teleport)
-"Kr" = (
+/obj/machinery/light/warm/dim/directional/west,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"lW" = (
+/turf/open/floor/carpet/green,
+/area/deathmatch)
+"mI" = (
+/turf/open/chasm/true,
+/area/deathmatch)
+"na" = (
+/obj/machinery/light/warm/directional/south,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"nk" = (
+/obj/item/trash/sosjerky,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"nl" = (
+/obj/structure/table/wood,
+/obj/structure/table/wood,
+/obj/item/pen,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"os" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/gun/magic/wand/fireball,
+/obj/machinery/light/floor,
+/turf/open/floor/carpet,
+/area/deathmatch)
+"oF" = (
+/turf/open/floor/carpet/cyan,
+/area/deathmatch)
+"oM" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/carpet,
+/area/deathmatch)
+"pc" = (
+/obj/item/book/granter/action/spell/knock,
+/turf/open/floor/carpet,
+/area/deathmatch)
+"pt" = (
+/obj/structure/barricade/wooden,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"pN" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/grand_remains,
+/obj/item/paper,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"qh" = (
+/obj/item/dice/d4,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"qT" = (
+/obj/structure/lattice/catwalk/mining,
+/turf/open/chasm/true,
+/area/deathmatch)
+"qU" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"re" = (
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"rm" = (
+/obj/machinery/light/warm/dim/directional/east,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"sB" = (
+/obj/structure/mineral_door/wood,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"sE" = (
+/turf/open/indestructible/grass,
+/area/deathmatch)
+"tB" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/flare/candle/infinite{
+	light_on = 1
+	},
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"ug" = (
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"ux" = (
+/obj/item/trash/ready_donk,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"vh" = (
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"wb" = (
+/obj/structure/table/wood,
+/obj/item/dice/d4,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"wE" = (
 /obj/effect/landmark/deathmatch_player_spawn,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"KW" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Le" = (
-/obj/structure/filingcabinet,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Mg" = (
-/obj/machinery/computer,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Nl" = (
-/obj/machinery/power/shuttle_engine/heater{
-	resistance_flags = 3
-	},
-/obj/structure/window/reinforced/spawner/directional/north{
-	resistance_flags = 3
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Nm" = (
-/obj/item/kirbyplants/organic/plant10{
-	pixel_y = 21;
-	pixel_x = 6
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Nt" = (
-/obj/item/target{
-	pixel_y = 11
-	},
-/obj/effect/turf_decal/stripes,
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"NW" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Ok" = (
-/obj/machinery/vending/cigarette,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"OD" = (
-/obj/structure/filingcabinet,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"OK" = (
-/obj/item/kirbyplants/organic/plant10{
-	pixel_y = 21;
-	pixel_x = 6
-	},
-/turf/open/floor/carpet/red,
-/area/deathmatch/teleport)
-"PD" = (
+/turf/open/floor/carpet,
+/area/deathmatch)
+"yg" = (
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/carpet/blue,
+/area/deathmatch)
+"yk" = (
 /obj/structure/table/wood,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Qj" = (
-/obj/structure/dresser,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"QH" = (
-/obj/structure/table,
-/obj/item/clothing/head/wizard{
-	pixel_y = 14;
-	pixel_x = 4
-	},
-/turf/open/floor/plastic,
-/area/deathmatch/teleport)
-"QT" = (
-/obj/structure/mystery_box/wands,
-/turf/open/floor/plastic,
-/area/deathmatch/teleport)
-"RB" = (
-/obj/machinery/vending/snack,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"RI" = (
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"RT" = (
-/obj/machinery/power/shuttle_engine/heater{
-	resistance_flags = 3
-	},
-/obj/structure/window/reinforced/spawner/directional/north{
-	resistance_flags = 3
-	},
-/turf/open/lava,
-/area/deathmatch/teleport)
-"Sa" = (
-/turf/open/floor/grass,
-/area/deathmatch/teleport)
-"SK" = (
-/obj/structure/flora/bush/fullgrass/style_random,
-/turf/open/floor/grass,
-/area/deathmatch/teleport)
-"Th" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table/reinforced,
-/obj/item/food/burger/rat{
-	pixel_y = 9;
-	pixel_x = -2
-	},
-/obj/item/food/bun{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/effect/light_emitter{
-	set_cap = 2;
-	light_color = "#DEEFFF";
-	set_luminosity = 4
-	},
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
-"Vk" = (
-/obj/machinery/door/window/left/directional/east,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"VM" = (
-/obj/structure/table/wood/poker,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Wl" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/light_emitter{
-	set_cap = 2;
-	light_color = "#DEEFFF";
-	set_luminosity = 4
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"WX" = (
-/obj/machinery/vending/magivend,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Xv" = (
-/obj/structure/railing{
-	layer = 3.1
-	},
-/obj/structure/railing{
-	layer = 3.1;
+/obj/item/storage/dice,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"yA" = (
+/obj/effect/decal/remains/human,
+/turf/open/indestructible/grass,
+/area/deathmatch)
+"zC" = (
+/turf/closed/indestructible/fakeglass,
+/area/deathmatch)
+"zE" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/carpet,
+/area/deathmatch)
+"Ag" = (
+/obj/item/toy/reality_pierce,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"Ax" = (
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/carpet/green,
+/area/deathmatch)
+"AE" = (
+/obj/item/gun/magic/wand/death,
+/obj/structure/table/wood/fancy/red,
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/indestructible/necropolis/air,
+/area/deathmatch)
+"AH" = (
+/obj/effect/decal/remains/plasma,
+/turf/open/floor/carpet,
+/area/deathmatch)
+"AW" = (
+/turf/open/floor/carpet,
+/area/deathmatch)
+"Bp" = (
+/obj/item/trash/popcorn,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Bu" = (
+/obj/item/clothing/mask/gondola,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"BP" = (
+/obj/item/trash/candy,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Ca" = (
+/obj/item/staff/broom,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"CA" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"YP" = (
-/obj/structure/closet/crate/coffin,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"YS" = (
-/obj/effect/decal/cleanable/cobweb,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/engine/cult,
-/area/deathmatch/teleport)
-"Zo" = (
-/obj/structure/flora/bush/flowers_pp/style_random,
-/turf/open/floor/grass,
-/area/deathmatch/teleport)
-"ZS" = (
-/obj/structure/railing/corner/end/flip,
-/turf/open/floor/iron,
-/area/deathmatch/teleport)
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"CD" = (
+/obj/item/flashlight/flare/candle/infinite{
+	light_on = 1
+	},
+/turf/open/floor/carpet,
+/area/deathmatch)
+"Do" = (
+/obj/item/trash/chips,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"DE" = (
+/obj/item/clothing/suit/chaplainsuit/whiterobe,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"Eo" = (
+/turf/closed/indestructible/iron/opaque,
+/area/deathmatch)
+"Ew" = (
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/carpet,
+/area/deathmatch)
+"Ex" = (
+/obj/item/flashlight/flare/candle/infinite{
+	light_on = 1
+	},
+/obj/structure/table/wood,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"EK" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/carpet/blue,
+/area/deathmatch)
+"EV" = (
+/obj/structure/table/wood,
+/obj/item/pen/fountain,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Fe" = (
+/turf/open/floor/carpet/blue,
+/area/deathmatch)
+"FO" = (
+/mob/living/basic/pet/dog/corgi/puppy/slime,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"Gs" = (
+/obj/structure/sacrificealtar,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Hs" = (
+/mob/living/basic/pet/dog/corgi/puppy/void,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"Hy" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/obj/machinery/light/warm/dim/directional/east,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Is" = (
+/obj/machinery/door/airlock/cult,
+/turf/open/floor/cult,
+/area/deathmatch)
+"IF" = (
+/obj/effect/decal/remains/robot,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"IV" = (
+/obj/structure/table/wood,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Ji" = (
+/obj/structure/chair/wood,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Js" = (
+/mob/living/basic/pet/dog/corgi/puppy,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"Ky" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/structure/mirror/magic{
+	pixel_y = -28
+	},
+/turf/open/floor/carpet,
+/area/deathmatch)
+"Ma" = (
+/mob/living/basic/alien/maid,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"Mf" = (
+/obj/machinery/light/warm/dim/directional/west,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Mw" = (
+/obj/structure/bookcase/random/adult,
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Ne" = (
+/obj/item/storage/dice,
+/obj/item/paper,
+/obj/structure/table/wood,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Nq" = (
+/obj/item/dice/d4,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"NW" = (
+/obj/structure/bed,
+/obj/item/bedsheet/wiz,
+/turf/open/floor/carpet,
+/area/deathmatch)
+"Ol" = (
+/obj/item/stack/sheet/mineral/plasma,
+/obj/machinery/light/floor,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"Om" = (
+/obj/structure/table/wood,
+/obj/item/gun/magic/wand/nothing,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"PC" = (
+/obj/item/trash/boritos/red,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"PG" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/carpet/cyan,
+/area/deathmatch)
+"PW" = (
+/obj/item/toy/reality_pierce,
+/obj/item/toy/braintoy,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"Qy" = (
+/mob/living/simple_animal/pet/gondola,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"QC" = (
+/obj/structure/dresser,
+/turf/open/floor/carpet,
+/area/deathmatch)
+"QR" = (
+/obj/effect/decal/cleanable/grand_remains,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Su" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/book/granter/chuunibyou,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Sv" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Sx" = (
+/obj/structure/table/wood,
+/obj/item/paper,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"SG" = (
+/mob/living/basic/alien/drone,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"SJ" = (
+/obj/structure/lattice/catwalk/mining,
+/turf/open/lava/smooth,
+/area/deathmatch)
+"ST" = (
+/obj/item/toy/beach_ball,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"Tm" = (
+/obj/machinery/light/warm/directional/north,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"TB" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/highfrequencyblade/wizard,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Ub" = (
+/obj/item/mjollnir,
+/obj/structure/table/wood/fancy/blue,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"UV" = (
+/obj/item/toy/plush/narplush,
+/obj/machinery/light/floor,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"Vx" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/structure/mirror/magic{
+	pixel_y = 28
+	},
+/turf/open/floor/carpet,
+/area/deathmatch)
+"VV" = (
+/obj/structure/bed,
+/obj/item/bedsheet/wiz,
+/obj/structure/mirror/magic{
+	pixel_y = -28
+	},
+/turf/open/floor/carpet,
+/area/deathmatch)
+"VZ" = (
+/obj/item/toy/reality_pierce,
+/obj/machinery/light/floor,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"Wf" = (
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"WO" = (
+/obj/structure/table/wood/fancy/cyan,
+/obj/item/gun/magic/wand/resurrection,
+/obj/machinery/light/floor,
+/turf/open/floor/carpet/cyan,
+/area/deathmatch)
+"Yp" = (
+/mob/living/basic/pet/dog/corgi/exoticcorgi,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"Yu" = (
+/obj/machinery/light/floor,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"ZH" = (
+/obj/item/toy/basketball,
+/turf/open/floor/grass/fairy,
+/area/deathmatch)
+"ZK" = (
+/obj/item/trash/boritos/red,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"ZO" = (
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/carpet/cyan,
+/area/deathmatch)
 
 (1,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+Eo
+Eo
+Eo
+Eo
+Eo
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}
 (2,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+Eo
+dD
+dD
+dD
+Eo
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}
 (3,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+Eo
+dD
+Ub
+dD
+Eo
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}
 (4,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+Eo
+dD
+SJ
+dD
+Eo
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}
 (5,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Jm
-Jm
-Jm
-Jm
-Jm
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+Eo
+Eo
+Eo
+re
+Eo
+Eo
+Eo
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}
 (6,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Jm
-Jm
-vR
-lM
-Qj
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Hs
-Hs
-Hs
-Hs
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+Eo
+cB
+ug
+ug
+ug
+cB
+Eo
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}
 (7,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Jm
-Jm
-vR
-ph
-ph
-ph
-Jm
-QT
-Jo
-HS
-iQ
-GZ
-Jm
-Fx
-uz
-ui
-Fb
-ph
-ph
-ph
-ph
-RT
-bv
-Hs
-Hs
-Hs
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+Eo
+re
+Gs
+cB
+Gs
+re
+Eo
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}
 (8,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-gn
-PD
-iz
-ph
-ph
-ph
-dj
-FL
-FL
-Bm
-QH
-uR
-Jm
-Fx
-pv
-Nt
-Fb
-Kr
-ph
-Eh
-ph
-RT
-bv
-Hs
-Hs
-Hs
+ab
+ab
+ab
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+pt
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+ab
+ab
+ab
 "}
 (9,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-gn
-ig
-ph
-Kr
-qY
-Jm
-Jm
-Jm
-Jm
-xk
-FL
-FL
-Jm
-Fx
-ZS
-mu
-NW
-Wl
-Au
-Vk
-rj
-RT
-bv
-Hs
-Hs
-Hs
+ab
+ab
+ab
+Eo
+Ol
+vh
+Ma
+vh
+fN
+Yu
+Eo
+re
+re
+Nq
+kD
+re
+ux
+dF
+PC
+re
+Nq
+re
+Eo
+VZ
+vh
+cs
+bV
+DE
+VZ
+Eo
+ab
+ab
+ab
 "}
 (10,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Jm
-HM
-ph
-Eh
-Jm
-Jm
-qx
-wl
-Jm
-Jm
-nQ
-Jm
-Jm
-dj
-Jm
-Jm
-pL
-ph
-ph
-ph
-Gv
-Jm
-Hs
-Hs
-Hs
-Hs
+ab
+ab
+ab
+Eo
+vh
+PW
+vh
+SG
+vh
+Ag
+Eo
+nk
+Eo
+Eo
+pt
+Eo
+Eo
+Eo
+pt
+Eo
+Eo
+re
+Eo
+ZH
+vh
+bV
+vh
+cs
+vh
+Eo
+ab
+ab
+ab
 "}
 (11,1,1) = {"
-Hs
-Hs
-Hs
-gn
-gn
-gn
-Jm
-zN
-ph
-ph
-Jm
-WX
-ds
-ds
-Hf
-Jm
-ph
-AD
-Eh
-ph
-vR
-Jm
-Jm
-Cj
-li
-ph
-Jm
-Jm
-Hs
-Hs
-Hs
-Hs
+ab
+ab
+ab
+Eo
+SG
+vh
+zC
+zC
+zC
+zC
+Eo
+bY
+Eo
+yg
+Fe
+Fe
+Eo
+oF
+oF
+ZO
+Eo
+bY
+Eo
+zC
+zC
+zC
+zC
+Ag
+bV
+Eo
+ab
+ab
+ab
 "}
 (12,1,1) = {"
-Hs
-Hs
-gn
-gn
-IE
-PD
-Jm
-oP
-ph
-ph
-dj
-ph
-ds
-ds
-ph
-dj
-ph
-ph
-ph
-ph
-ph
-vR
-Jm
-Jm
-Jm
-ay
-Jm
-Hs
-Hs
-Hs
-Hs
-Hs
+ab
+ab
+ab
+Eo
+vh
+Ma
+zC
+BP
+Sv
+Wf
+Ca
+Wf
+Eo
+yg
+EK
+Fe
+Eo
+oF
+PG
+ZO
+Eo
+Wf
+Wf
+Sv
+Wf
+Wf
+zC
+dH
+vh
+Eo
+ab
+ab
+ab
 "}
 (13,1,1) = {"
-Hs
-Hs
-gn
-Mg
-Fm
-Hf
-Jm
-Jm
-sf
-Gv
-Jm
-vR
-ds
-ds
-ph
-Jm
-Jm
-Jm
-Jm
-Nm
-ph
-ph
-vR
-Jm
-fI
-Xv
-Jm
-Jm
-Hs
-Hs
-Hs
-Hs
+ab
+ab
+ab
+Eo
+fN
+vh
+zC
+Wf
+Sx
+yk
+Wf
+Wf
+Eo
+lE
+EK
+Fe
+Eo
+oF
+PG
+WO
+Eo
+Wf
+nl
+pN
+Wf
+Wf
+zC
+vh
+bV
+Eo
+ab
+ab
+ab
 "}
 (14,1,1) = {"
-Hs
-Hs
-gn
-Mg
-ph
-ph
-vh
-Jm
-Jm
-Jm
-Jm
-vR
-ds
-ds
-ph
-Jm
-xs
-tL
-Jm
-Jm
-ph
-ph
-vR
-Jm
-fI
-Xv
-fI
-Jm
-Jm
-Hs
-Hs
-Hs
+ab
+ab
+ab
+Eo
+Yu
+Ag
+zC
+Wf
+wb
+eu
+QR
+Wf
+Eo
+yg
+EK
+Fe
+Eo
+oF
+PG
+ZO
+Eo
+Do
+wb
+yk
+Wf
+Wf
+zC
+Ag
+Yu
+Eo
+ab
+ab
+ab
 "}
 (15,1,1) = {"
-Hs
-Hs
-gn
-on
-Cq
-Cq
-Cq
-Cq
-Cq
-Cq
-Cq
-Cq
-ds
-ds
-Cq
-GC
-Zo
-Sa
-xs
-Jm
-OK
-Cq
-Cq
-Jm
-fI
-Xv
-fI
-fI
-RT
-bv
-Hs
-Hs
+ab
+ab
+Eo
+Eo
+Eo
+Eo
+Eo
+Wf
+Wf
+Wf
+rm
+cc
+Eo
+yg
+Fe
+Fe
+Eo
+oF
+oF
+ZO
+Eo
+Ca
+Hy
+Wf
+Wf
+Wf
+Eo
+Eo
+Eo
+Eo
+Eo
+ab
+ab
 "}
 (16,1,1) = {"
-Hs
-Hs
-gn
-DW
-HP
-iL
-nx
-Cq
-Cq
-Cq
-iL
-Cq
-ds
-ds
-Cq
-GC
-Sa
-kl
-nk
-Jm
-nx
-iL
-Cq
-jb
-DK
-CM
-rD
-mV
-Nl
-bv
-Hs
-Hs
+ab
+ab
+Eo
+QC
+Ky
+Eo
+Eo
+qU
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Is
+Eo
+Eo
+Eo
+Is
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+qU
+Eo
+Eo
+Vx
+QC
+Eo
+ab
+ab
 "}
 (17,1,1) = {"
-Hs
-Hs
-gn
-on
-Cq
-Cq
-Cq
-Cq
-Cq
-Cq
-Cq
-Cq
-ds
-ds
-Cq
-GC
-Sa
-pV
-SK
-Jm
-pe
-Cq
-Cq
-Jm
-fI
-Xv
-fI
-fI
-RT
-bv
-Hs
-Hs
+ab
+ab
+Eo
+NW
+CD
+zE
+Wf
+Wf
+yk
+Sv
+Wf
+bY
+Eo
+sE
+sE
+sE
+sE
+sE
+sE
+sE
+Eo
+bY
+Wf
+Sv
+Om
+Wf
+Wf
+sB
+CD
+NW
+Eo
+ab
+ab
 "}
 (18,1,1) = {"
-Hs
-Hs
-gn
-Mg
-ph
-ph
-Ok
-Jm
-Jm
-Jm
-Jm
-vR
-ds
-ds
-ph
-Jm
-SK
-ct
-Jm
-Jm
-ph
-ph
-vR
-Jm
-fI
-Xv
-fI
-Jm
-Jm
-Hs
-Hs
-Hs
+ab
+ab
+Eo
+Eo
+Eo
+Eo
+Tm
+Ji
+wb
+tB
+Wf
+bY
+Eo
+sE
+bY
+AW
+bY
+AW
+bY
+sE
+Eo
+bY
+Wf
+Ne
+tB
+Wf
+na
+Eo
+Eo
+Eo
+Eo
+ab
+ab
 "}
 (19,1,1) = {"
-Hs
-Hs
-gn
-Mg
-Fm
-Gv
-Jm
-Jm
-PD
-vh
-Jm
-vR
-ds
-ds
-ph
-Jm
-Jm
-Jm
-Jm
-hk
-ph
-ph
-vR
-Jm
-fI
-Xv
-Jm
-Jm
-Hs
-Hs
-Hs
-Hs
+ab
+ab
+Eo
+NW
+CD
+zE
+Wf
+Wf
+QR
+Wf
+Wf
+Wf
+CA
+sE
+bY
+aN
+Mw
+AW
+bY
+sE
+CA
+Wf
+QR
+qh
+Wf
+Wf
+Wf
+sB
+CD
+NW
+Eo
+ab
+ab
 "}
 (20,1,1) = {"
-Hs
-Hs
-gn
-gn
-PD
-PD
-Jm
-PD
-ph
-ph
-dj
-ph
-ds
-ds
-ph
-dj
-ph
-ph
-ph
-ph
-ph
-vR
-Jm
-Jm
-Jm
-hg
-Jm
-Hs
-Hs
-Hs
-Hs
-Hs
+ab
+ab
+Eo
+QC
+Ky
+Eo
+Wf
+Wf
+Wf
+Wf
+Wf
+Wf
+Eo
+sE
+bY
+AW
+bY
+AW
+bY
+sE
+Eo
+Wf
+Wf
+Wf
+Wf
+Wf
+Wf
+Eo
+Vx
+QC
+Eo
+ab
+ab
 "}
 (21,1,1) = {"
-Hs
-Hs
-Hs
-gn
-gn
-gn
-Jm
-PD
-ph
-ph
-Jm
-RB
-ds
-ds
-Gv
-Jm
-ph
-ph
-Eh
-ph
-vh
-Jm
-Jm
-YS
-KW
-Ge
-Jm
-Jm
-Hs
-Hs
-Hs
-Hs
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Wf
+Wf
+Wf
+Eo
+Eo
+Eo
+Eo
+sE
+sE
+yA
+sE
+sE
+sE
+sE
+Eo
+Eo
+Eo
+Eo
+Bp
+Wf
+Wf
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
 "}
 (22,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Jm
-PD
-ph
-Eh
-Jm
-Jm
-qx
-IM
-Jm
-Jm
-jV
-Jm
-Jm
-dj
-Jm
-Jm
-RI
-ph
-vR
-ph
-lO
-Jm
-Hs
-Hs
-Hs
-Hs
+Eo
+NW
+CD
+zE
+Wf
+Sv
+Wf
+Wf
+Wf
+zE
+CD
+NW
+Eo
+sE
+mI
+mI
+qT
+mI
+mI
+yA
+Eo
+wE
+CD
+sB
+Wf
+Wf
+Sv
+Wf
+Wf
+sB
+CD
+NW
+Eo
 "}
 (23,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-gn
-zO
-ph
-Kr
-ph
-Jm
-Jm
-Jm
-Jm
-wL
-js
-fH
-Jm
-aT
-ph
-KW
-ph
-hK
-vR
-KW
-ez
-RT
-bv
-Hs
-Hs
-Hs
+Eo
+QC
+Ky
+Eo
+Wf
+IV
+IV
+Wf
+bY
+Eo
+Vx
+QC
+Eo
+sE
+mI
+mI
+qT
+mI
+mI
+sE
+Eo
+QC
+VV
+Eo
+bY
+Wf
+Sx
+IV
+Wf
+Eo
+Vx
+QC
+Eo
 "}
 (24,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-gn
-bg
-ph
-ph
-Fv
-ph
-dj
-js
-js
-jg
-js
-Th
-Jm
-jm
-Eh
-vR
-KW
-Kr
-KW
-Eh
-vv
-RT
-bv
-Hs
-Hs
-Hs
+Eo
+Eo
+Eo
+Eo
+Tm
+tB
+IV
+cc
+bY
+Eo
+Eo
+Eo
+Eo
+yA
+qT
+qT
+AE
+qT
+qT
+sE
+Eo
+Eo
+Eo
+Eo
+bY
+Wf
+kT
+yk
+na
+Eo
+Eo
+Eo
+Eo
 "}
 (25,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Jm
-Jm
-ph
-yA
-VM
-cU
-Jm
-wd
-gr
-Cb
-iZ
-ue
-Jm
-YP
-KW
-KW
-ph
-Le
-OD
-co
-jM
-RT
-bv
-Hs
-Hs
-Hs
+Eo
+QC
+Ky
+Eo
+Wf
+IV
+EV
+Ca
+bY
+Eo
+Vx
+QC
+Eo
+sE
+mI
+mI
+qT
+mI
+mI
+sE
+Eo
+QC
+VV
+Eo
+bY
+Wf
+wb
+IV
+Wf
+Eo
+Vx
+QC
+Eo
 "}
 (26,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Jm
-Jm
-ph
-bb
-Gv
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Jm
-Hs
-Hs
-Hs
-Hs
+Eo
+NW
+CD
+zE
+Wf
+Wf
+Ji
+Wf
+Wf
+zE
+CD
+NW
+Eo
+sE
+mI
+mI
+qT
+mI
+mI
+sE
+Eo
+wE
+CD
+sB
+Wf
+Wf
+Ji
+jQ
+Wf
+sB
+CD
+NW
+Eo
 "}
 (27,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Jm
-Jm
-Jm
-Jm
-Jm
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Wf
+Wf
+Wf
+Eo
+Eo
+Eo
+Eo
+sE
+sE
+yA
+sE
+sE
+yA
+sE
+Eo
+Eo
+Eo
+Eo
+Wf
+Wf
+Wf
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
 "}
 (28,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
+ab
+ab
+Eo
+QC
+Ky
+Eo
+Wf
+Wf
+Wf
+Sv
+IV
+IV
+Eo
+sE
+bY
+AW
+bY
+AW
+bY
+sE
+Eo
+IV
+IV
+Sv
+Wf
+Wf
+Wf
+Eo
+Vx
+QC
+Eo
+ab
+ab
 "}
 (29,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
+ab
+ab
+Eo
+NW
+CD
+zE
+Wf
+QR
+Wf
+Wf
+Wf
+Wf
+CA
+sE
+bY
+AW
+Mw
+pc
+bY
+sE
+CA
+Wf
+qh
+Wf
+Wf
+QR
+Wf
+sB
+CD
+NW
+Eo
+ab
+ab
 "}
 (30,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
+ab
+ab
+Eo
+Eo
+Eo
+Eo
+Tm
+Wf
+Wf
+Ex
+Wf
+bY
+Eo
+sE
+bY
+AW
+bY
+AW
+bY
+sE
+Eo
+bY
+Wf
+Ex
+kP
+Wf
+na
+Eo
+Eo
+Eo
+Eo
+ab
+ab
 "}
 (31,1,1) = {"
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
+ab
+ab
+Eo
+NW
+CD
+zE
+Wf
+Wf
+Wf
+wb
+ZK
+bY
+Eo
+sE
+sE
+sE
+sE
+sE
+sE
+sE
+Eo
+bY
+Ji
+yk
+IV
+Wf
+Wf
+sB
+CD
+NW
+Eo
+ab
+ab
 "}
 (32,1,1) = {"
+ab
+ab
+Eo
+QC
+Ky
+Eo
+Eo
+qU
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Is
+Eo
+Eo
+Eo
+Is
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+qU
+Eo
+Eo
+Vx
+QC
+Eo
+ab
+ab
+"}
+(33,1,1) = {"
+ab
+ab
+Eo
+Eo
+Eo
+Eo
+Eo
+Wf
+Wf
+Sv
+Mf
+Wf
+Eo
+Ax
+lW
+lW
+Eo
+AH
+AW
+Ew
+Eo
+Wf
+lH
+Wf
+Wf
+Wf
+Eo
+Eo
+Eo
+Eo
+Eo
+ab
+ab
+"}
+(34,1,1) = {"
+ab
+ab
+ab
+Eo
+Yu
+vh
+zC
+Do
+eu
+pN
+Wf
+Wf
+Eo
+Ax
+gf
+lW
+Eo
+AW
+oM
+Ew
+Eo
+Ca
+EV
+yk
+Wf
+Wf
+zC
+Ag
+Yu
+Eo
+ab
+ab
+ab
+"}
+(35,1,1) = {"
+ab
+ab
+ab
+Eo
+Ag
+vh
+zC
+Wf
+wb
+yk
+Ca
+Wf
+Eo
+kA
+gf
+lW
+Eo
+AW
+oM
+os
+Eo
+Wf
+Sx
+wb
+QR
+Wf
+zC
+vh
+vh
+Eo
+ab
+ab
+ab
+"}
+(36,1,1) = {"
+ab
+ab
+ab
+Eo
+lw
+FO
+zC
+Wf
+jQ
+Wf
+Wf
+Wf
+Eo
+Ax
+gf
+lW
+Eo
+AW
+oM
+Ew
+Eo
+Wf
+ZK
+jQ
+Wf
+Wf
+zC
+Qy
+vh
+Eo
+ab
+ab
+ab
+"}
+(37,1,1) = {"
+ab
+ab
+ab
+Eo
 Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
+vh
+zC
+zC
+zC
+zC
+Eo
+bY
+Eo
+Ax
+lW
+lW
+Eo
+AW
+AW
+Ew
+Eo
+bY
+Eo
+zC
+zC
+zC
+zC
+vh
+vh
+Eo
+ab
+ab
+ab
+"}
+(38,1,1) = {"
+ab
+ab
+ab
+Eo
+vh
+Ag
+Js
+vh
+vh
+vh
+Eo
+re
+Eo
+Eo
+pt
+Eo
+Eo
+Eo
+pt
+Eo
+Eo
+re
+pt
+eA
+Bu
+vh
+ST
+Ag
+Qy
+Eo
+ab
+ab
+ab
+"}
+(39,1,1) = {"
+ab
+ab
+ab
+Eo
+UV
+Yp
+vh
+vh
+lw
+VZ
+Eo
+re
+re
+Nq
+jY
+re
+jk
+re
+Su
+PC
+Nq
+re
+Eo
+VZ
+Qy
+vh
+vh
+vh
+UV
+Eo
+ab
+ab
+ab
+"}
+(40,1,1) = {"
+ab
+ab
+ab
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+pt
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+Eo
+ab
+ab
+ab
+"}
+(41,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+Eo
+IF
+Gs
+re
+Gs
+re
+Eo
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(42,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+Eo
+re
+ug
+ug
+ug
+IF
+Eo
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(43,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+Eo
+Eo
+Eo
+re
+Eo
+Eo
+Eo
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(44,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+Eo
+dD
+SJ
+dD
+Eo
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(45,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+Eo
+dD
+TB
+dD
+Eo
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(46,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+Eo
+dD
+dD
+dD
+Eo
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(47,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+Eo
+Eo
+Eo
+Eo
+Eo
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}

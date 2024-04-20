@@ -274,6 +274,29 @@
 	icon_state = /turf/open/floor/stone::icon_state
 	name = /turf/open/floor/stone::name
 
+/turf/open/indestructible/grass
+	name = /turf/open/misc/grass::name
+	desc = /turf/open/misc/grass::desc
+	icon = MAP_SWITCH(/turf/open/misc/grass::smooth_icon , /turf/open/misc/grass::icon)
+	icon_state = /turf/open/misc/grass::icon_state
+	base_icon_state = /turf/open/misc/grass::base_icon_state
+	bullet_bounce_sound = /turf/open/misc/grass::bullet_bounce_sound
+	footstep = /turf/open/misc/grass::footstep
+	barefootstep = /turf/open/misc/grass::barefootstep
+	clawfootstep = /turf/open/misc/grass::clawfootstep
+	heavyfootstep = /turf/open/misc/grass::heavyfootstep
+	smoothing_flags = /turf/open/misc/grass::smoothing_flags
+	smoothing_groups = /turf/open/misc/grass::smoothing_groups
+	canSmoothWith = /turf/open/misc/grass::canSmoothWith
+	layer = /turf/open/misc/grass::layer
+	damaged_dmi = /turf/open/misc/grass::damaged_dmi
+
+/turf/open/indestructible/grass/Initialize(mapload)
+	. = ..()
+	var/matrix/translation = new
+	translation.Translate(-9, -9)
+	transform = translation
+
 /turf/open/Initalize_Atmos(time)
 	excited = FALSE
 	update_visuals()

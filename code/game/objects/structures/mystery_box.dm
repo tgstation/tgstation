@@ -89,7 +89,6 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 	/obj/item/gun/magic/staff/flying,
 	/obj/item/gun/magic/staff/babel,
 	/obj/item/singularityhammer,
-	/obj/item/mod/control/pre_equipped/enchanted,
 	/obj/item/runic_vendor_scepter,
 ))
 

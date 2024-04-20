@@ -383,163 +383,116 @@
 /// wizards
 
 /datum/outfit/deathmatch_loadout/wizard
-	name = "Deathmatch: Wizard"
-	display_name = "Wizard"
-	desc = "It's wizard time, motherfucker! FIREBALL!!"
-
-	l_hand = /obj/item/staff
+	name = "Deathmatch: Arcane Wizard"
+	display_name = "Arcane Wizard"
+	desc = "Magic missile."
 	uniform = /datum/outfit/wizard::uniform
 	suit = /datum/outfit/wizard::suit
 	head = /datum/outfit/wizard::head
 	shoes = /datum/outfit/wizard::shoes
+	r_hand = /obj/item/staff/broom
 	granted_spells = list(
 		/datum/action/cooldown/spell/aoe/magic_missile,
-		/datum/action/cooldown/spell/forcewall,
-		/datum/action/cooldown/spell/jaunt/ethereal_jaunt,
-	)
-
-/datum/outfit/deathmatch_loadout/wizard/pyro
-	name = "Deathmatch: Pyromancer"
-	display_name = "Pyromancer"
-	desc = "Burninating the station-side! Burninating all the wizards!"
-
-	suit = /obj/item/clothing/suit/wizrobe/red
-	head = /obj/item/clothing/head/wizard/red
-	mask = /obj/item/clothing/mask/cigarette
-	granted_spells = list(
-		/datum/action/cooldown/spell/pointed/projectile/fireball,
-		/datum/action/cooldown/spell/smoke,
-	)
-
-/datum/outfit/deathmatch_loadout/wizard/electro
-	name = "Deathmatch: Electromancer"
-	display_name = "Electromancer"
-	desc = "Batons are so last century."
-
-	suit = /obj/item/clothing/suit/wizrobe/magusred
-	head = /obj/item/clothing/head/wizard/magus
-	granted_spells = list(
-		/datum/action/cooldown/spell/pointed/projectile/lightningbolt,
-		/datum/action/cooldown/spell/charged/beam/tesla,
-	)
-
-/datum/outfit/deathmatch_loadout/wizard/necromancer
-	name = "Deathmatch: Necromancer"
-	display_name = "Necromancer"
-	desc = "I've got a BONE to pick- Yeah, sorry."
-
-	species_override = /datum/species/skeleton
-	suit = /obj/item/clothing/suit/wizrobe/black
-	head = /obj/item/clothing/head/wizard/black
-	granted_spells = list(
-		/datum/action/cooldown/spell/touch/scream_for_me,
-		/datum/action/cooldown/spell/teleport/radius_turf/blink,
-	)
-
-/datum/outfit/deathmatch_loadout/wizard/larp
-	name = "Deathmatch: LARPer"
-	display_name = "LARPer"
-	desc = "Lightning bolt! Lightning bolt! Lightning bolt!"
-
-	l_hand = /obj/item/staff/stick
-	suit = /obj/item/clothing/suit/wizrobe/fake
-	head = /obj/item/clothing/head/wizard/fake
-	shoes = /obj/item/clothing/shoes/sandal
-	granted_spells = list(
-		/datum/action/cooldown/spell/conjure_item/spellpacket,
 		/datum/action/cooldown/spell/aoe/repulse/wizard,
-	)
+		)
 
-/datum/outfit/deathmatch_loadout/wizard/chuuni
-	name = "Deathmatch: Chuuni"
-	display_name = "Chuunibyou"
-	desc = "Darkness blacker than black and darker than dark, I beseech thee..."
+/datum/outfit/deathmatch_loadout/wizard/fire
+	name = "Deathmatch: Fire Wizard"
+	display_name = "Fire Wizard"
+	desc = "Too hot to handle."
+	head = /obj/item/clothing/head/wizard/red
+	suit = /obj/item/clothing/suit/wizrobe/red
 
-	l_hand = /obj/item/staff/broom
-	suit = /obj/item/clothing/suit/wizrobe/marisa
-	head = /obj/item/clothing/head/wizard/marisa
-	shoes = /obj/item/clothing/shoes/sneakers/marisa
 	granted_spells = list(
-		/datum/action/cooldown/spell/chuuni_invocations,
-		/datum/action/cooldown/spell/pointed/projectile/spell_cards,
-	)
+		/datum/action/cooldown/spell/aoe/sacred_flame,
+		/datum/action/cooldown/spell/pointed/projectile/fireball,
+		)
 
-/datum/outfit/deathmatch_loadout/wizard/battle
-	name = "Deathmatch: Battlemage"
-	display_name = "Battlemage"
-	desc = "Have you heard of the High Elves?"
+/datum/outfit/deathmatch_loadout/wizard/lightning
+	name = "Deathmatch: Lightning Wizard"
+	display_name = "Lightning Wizard"
+	desc = "Unlimited power!"
+	head = /obj/item/clothing/head/wizard/yellow
+	suit = /obj/item/clothing/suit/wizrobe/yellow
 
-	l_hand = /obj/item/mjollnir
-	suit = /obj/item/clothing/suit/wizrobe/magusblue
-	head = /obj/item/clothing/head/wizard/magus
 	granted_spells = list(
-		/datum/action/cooldown/spell/summonitem,
-	)
+		/datum/action/cooldown/spell/charged/beam/tesla,
+		/datum/action/cooldown/spell/pointed/projectile/lightningbolt,
+		)
 
-/datum/outfit/deathmatch_loadout/wizard/apprentice
-	name = "Deathmatch: Apprentice"
-	display_name = "Apprentice"
-	desc = "You feel severely under-leveled for this encounter..."
+/datum/outfit/deathmatch_loadout/wizard/holy
+	name = "Deathmatch: Holy Wizard"
+	display_name = "Holy Wizard"
+	desc = "Outheal the competition."
+	head = /obj/item/clothing/head/cowboy/white
+	suit = /obj/item/clothing/suit/chaplainsuit/whiterobe
+	r_hand = /obj/item/gun/magic/wand/resurrection
 
-	l_hand = null
 	granted_spells = list(
 		/datum/action/cooldown/spell/charge,
-	)
-
-/datum/outfit/deathmatch_loadout/wizard/gunmancer
-	name = "Deathmatch: Gunmancer"
-	display_name = "Gunmancer"
-	desc = "Magic is lame."
-
-	l_hand = /obj/item/gun/ballistic/automatic/pistol/m1911
-	suit = /obj/item/clothing/suit/wizrobe/tape
-	head = /obj/item/clothing/head/wizard/tape
-	shoes = /obj/item/clothing/shoes/jackboots
-	granted_spells = list(
-		/datum/action/cooldown/spell/conjure_item/infinite_guns/gun,
-		/datum/action/cooldown/spell/aoe/knock,
-	)
+		/datum/action/cooldown/spell/forcewall,
+		)
 
 /datum/outfit/deathmatch_loadout/wizard/chaos
-	name = "Deathmatch: Chaos"
-	display_name = "Chaosmancer"
-	desc = "Hardcore Random Body ONLY!"
+	name = "Deathmatch: Chaos Wizard"
+	display_name = "Chaos Wizard"
+	desc = "The touch of death."
+	head = /obj/item/clothing/head/wizard/black
+	suit = /obj/item/clothing/suit/wizrobe/black
+	r_hand = /obj/item/gun/magic/staff/chaos
 
-	l_hand = /obj/item/gun/magic/staff/chaos
-	uniform = /obj/item/clothing/under/color/rainbow
-	suit = /obj/item/clothing/suit/costume/hawaiian
-	head = /obj/item/clothing/head/wizard/red
-	shoes = /obj/item/clothing/shoes/sneakers/marisa
 	granted_spells = list(
-		/datum/action/cooldown/spell/rod_form,
-		/datum/action/cooldown/spell/conjure/the_traps,
-	)
+		/datum/action/cooldown/spell/tap,
+		/datum/action/cooldown/spell/touch/smite,
+		)
 
-/datum/outfit/deathmatch_loadout/wizard/clown
-	name = "Deathmatch: Clown"
-	display_name = "Funnymancer"
-	desc = "Honk NATH!"
+/datum/outfit/deathmatch_loadout/wizard/bee
+	name = "Deathmatch: Bee Wizard"
+	display_name = "Bee Wizard"
+	desc = "OH NO, NOT THE BEES!"
+	suit = /obj/item/clothing/suit/wizrobe/yellow
+	head = /obj/item/clothing/head/wizard/yellow
+	mask = /obj/item/clothing/mask/animal/small/bee/cursed
+	r_hand = /obj/item/bee_smoker
 
-	l_hand = /obj/item/gun/magic/staff/honk
-	uniform = /obj/item/clothing/under/rank/civilian/clown
-	suit = /obj/item/clothing/suit/chaplainsuit/clownpriest
-	head = /obj/item/clothing/head/chaplain/clownmitre
-	mask = /obj/item/clothing/mask/gas/clown_hat
-	back = /obj/item/storage/backpack/clown
-	shoes = /obj/item/clothing/shoes/clown_shoes
-	granted_spells = null
+	granted_spells = list(
+		/datum/action/cooldown/spell/conjure/bee,
+		)
 
 /datum/outfit/deathmatch_loadout/wizard/monkey
-	name = "Deathmatch: Monkey"
-	display_name = "Monkeymancer"
-	desc = "Ook eek aaa ooo eee!"
-
-	species_override = /datum/species/monkey
-	l_hand = /obj/item/food/grown/banana
-	uniform = null
-	suit = null
-	head = /obj/item/clothing/head/wizard
+	name = "Deathmatch: Monkey Wizard"
+	display_name = "Monkey Wizard"
+	desc = "Chee ook."
 	shoes = null
+	suit = null
+	r_hand = /obj/item/gun/magic/staff/honk
+	l_hand = /obj/item/food/grown/banana
+	species_override = /datum/species/monkey
+
 	granted_spells = list(
 		/datum/action/cooldown/spell/conjure/simian,
-	)
+		)
+
+/datum/outfit/deathmatch_loadout/wizard/disco
+	name = "Deathmatch: Disco Wizard"
+	display_name = "Disco Wizard"
+	desc = "The wizard with the most swag."
+	uniform = /obj/item/clothing/under/suit/navy
+	glasses = /obj/item/clothing/glasses/sunglasses
+	suit = null
+
+	granted_spells = list(
+		/datum/action/cooldown/spell/smoke,
+		/datum/action/cooldown/spell/summon_dancefloor,
+		)
+
+/datum/outfit/deathmatch_loadout/chaplain
+	name = "Deathmatch: The Chaplain"
+	display_name = "The Chaplain"
+	desc = "WIZARDS! FACE ME, COWARDS!"
+	head = /obj/item/clothing/head/hooded/chaplain_hood
+	suit = /obj/item/clothing/suit/hooded/chaplain_hoodie
+	shoes = /obj/item/clothing/shoes/sandal
+	l_hand = /obj/item/book/bible
+	r_hand = /obj/item/nullrod
+

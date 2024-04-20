@@ -15,7 +15,7 @@
 	var/list/allowed_loadouts = list()
 	/// whether we are currently being loaded by a lobby
 	var/template_in_use = FALSE
-		
+
 
 /datum/lazy_template/deathmatch/ragecage
 	name = "Ragecage"
@@ -155,23 +155,20 @@
 	key = "backalley"
 
 /datum/lazy_template/deathmatch/raginmages
-	name = "Ragin' Mages"
-	desc = "Greetings! We're the wizards of the wizard federation!"
-	max_players = 8
-	automatic_gameend_time = 4 MINUTES // ill be surprised if this lasts more than two minutes
+	name = "Wizard Proving Grounds"
+	desc = "An arcane battlefield to determine the most powerful wizard."
+	max_players = 16
+	automatic_gameend_time = 5 MINUTES
 	allowed_loadouts = list(
 		/datum/outfit/deathmatch_loadout/wizard,
-		/datum/outfit/deathmatch_loadout/wizard/pyro,
-		/datum/outfit/deathmatch_loadout/wizard/electro,
-		/datum/outfit/deathmatch_loadout/wizard/necromancer,
-		/datum/outfit/deathmatch_loadout/wizard/larp,
-		/datum/outfit/deathmatch_loadout/wizard/chuuni,
-		/datum/outfit/deathmatch_loadout/wizard/battle,
-		/datum/outfit/deathmatch_loadout/wizard/apprentice,
-		/datum/outfit/deathmatch_loadout/wizard/gunmancer,
-		/datum/outfit/deathmatch_loadout/wizard/monkey,
+		/datum/outfit/deathmatch_loadout/wizard/fire,
+		/datum/outfit/deathmatch_loadout/wizard/lightning,
+		/datum/outfit/deathmatch_loadout/wizard/holy,
 		/datum/outfit/deathmatch_loadout/wizard/chaos,
-		/datum/outfit/deathmatch_loadout/wizard/clown,
+		/datum/outfit/deathmatch_loadout/wizard/bee,
+		/datum/outfit/deathmatch_loadout/wizard/monkey,
+		/datum/outfit/deathmatch_loadout/wizard/disco,
+		/datum/outfit/deathmatch_loadout/chaplain,
 	)
 	map_name = "ragin_mages"
 	key = "ragin_mages"
