@@ -2162,7 +2162,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/sign/directions/engineering/directional/east,
+/obj/structure/sign/departments/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "aKP" = (
@@ -4949,6 +4949,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"bQx" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "bQT" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -12476,7 +12485,7 @@
 	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
-/obj/structure/sign/directions/security/directional/north,
+/obj/structure/sign/departments/security/directional/north,
 /turf/open/floor/wood,
 /area/station/service/cafeteria)
 "eGJ" = (
@@ -16595,6 +16604,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "glA" = (
@@ -19509,7 +19521,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/directions/medical/directional/west,
+/obj/structure/sign/departments/med_alt/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "hpT" = (
@@ -28323,6 +28335,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
+"kAC" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Fore Primary Hallway"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/fore)
 "kAI" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
@@ -35836,6 +35858,9 @@
 	name = "Fore Primary Hallway"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "nrL" = (
@@ -44493,6 +44518,7 @@
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "qMC" = (
@@ -85090,7 +85116,7 @@ wTu
 oMf
 oMf
 nrp
-kmu
+bQx
 dRy
 kmu
 dxT
@@ -85603,7 +85629,7 @@ gSD
 gSD
 gSD
 gSD
-nrp
+kAC
 gls
 aQS
 aly
