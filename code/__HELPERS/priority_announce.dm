@@ -200,7 +200,7 @@
 			SEND_SOUND(target, sound(sound_to_play))
 
 			/// SS220 TTS START
-			var/mob/living/silicon/ai/active_ai = pick(active_ais(TRUE, null))
+			var/mob/living/silicon/ai/active_ai = DEFAULTPICK(active_ais(TRUE, null), null)
 			var/datum/tts_seed/announcement_tts_seed = active_ai ? active_ai.get_tts_seed() :  /datum/tts_seed/silero/glados
 			INVOKE_ASYNC(
 				SStts220, \
