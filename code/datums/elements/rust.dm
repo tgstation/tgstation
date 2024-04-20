@@ -8,7 +8,7 @@
 	/// The rust image itself, since the icon and icon state are only used as an argument
 	var/image/rust_overlay
 
-/datum/element/rust/Attach(atom/target, rust_icon = 'icons/effects/rust_overlay.dmi', rust_icon_state = "rust_default")
+/datum/element/rust/Attach(atom/target, rust_icon = 'modular_bandastation/aesthetics/walls/icons/rust_overlay.dmi', rust_icon_state = "rust_default") // SS220 EDIT - AESTHETICS
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE

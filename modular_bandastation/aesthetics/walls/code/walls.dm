@@ -24,7 +24,6 @@
 	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE + SMOOTH_GROUP_TITANIUM_WALLS
 
 // Falsewalls
-
 /obj/structure/falsewall
 	icon = 'modular_bandastation/aesthetics/walls/icons/false_walls.dmi'
 	base_icon_state = "wall"

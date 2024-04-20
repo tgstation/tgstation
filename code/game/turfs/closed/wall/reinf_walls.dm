@@ -201,10 +201,10 @@
 // We don't react to smoothing changing here because this else exists only to "revert" intact changes
 /turf/closed/wall/r_wall/update_icon_state()
 	if(d_state != INTACT)
-		icon = 'icons/turf/walls/reinforced_states.dmi'
+		icon = 'modular_bandastation/aesthetics/walls/icons/reinforced_states.dmi' // SS220 EDIT - AESTHETICS
 		icon_state = "[base_decon_state]-[d_state]"
 	else
-		icon = 'icons/turf/walls/reinforced_wall.dmi'
+		icon = 'modular_bandastation/aesthetics/walls/icons/reinforced_wall.dmi' // SS220 EDIT - AESTHETICS
 		icon_state = "[base_icon_state]-[smoothing_junction]"
 	return ..()
 
