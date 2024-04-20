@@ -112,7 +112,6 @@
 /area/station/service/theater)
 "fR" = (
 /obj/effect/landmark/start/mime,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood/tile,
 /area/station/service/theater)
@@ -120,7 +119,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/wood,
 /obj/effect/mapping_helpers/airlock/access/all/service/theatre,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/tile,
@@ -609,12 +607,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/service/theater)
-"xK" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood/tile,
-/area/station/service/theater)
 "xX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
@@ -749,13 +741,6 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/station/commons/lounge)
-"Cs" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood/tile,
-/area/station/service/theater)
 "Cz" = (
 /obj/structure/table/wood,
 /obj/item/instrument/violin,
@@ -1057,10 +1042,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/mineral/iron,
 /area/station/commons/lounge)
-"Os" = (
-/obj/structure/cable,
-/turf/open/floor/wood/tile,
-/area/station/service/theater)
 "Pe" = (
 /obj/machinery/vending/sustenance,
 /turf/open/floor/stone,
@@ -1099,13 +1080,6 @@
 /obj/structure/sink/kitchen/directional/south,
 /turf/open/floor/iron/white/diagonal,
 /area/station/service/kitchen)
-"QE" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/misc/asteroid,
-/area/station/asteroid)
 "QQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -1185,11 +1159,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood/tile,
 /area/station/service/theater)
-"SN" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood/tile,
-/area/station/service/theater)
 "SP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -1266,7 +1235,6 @@
 "VF" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/table/wood,
-/obj/structure/cable,
 /turf/open/floor/wood/tile,
 /area/station/service/theater)
 "VK" = (
@@ -1280,13 +1248,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/service/bar/atrium)
-"Wg" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/misc/asteroid,
-/area/station/asteroid)
 "Wq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1395,7 +1356,7 @@ Ue
 Ue
 tR
 tR
-Wg
+tR
 Ue
 jh
 jh
@@ -1476,7 +1437,7 @@ zk
 zk
 zk
 Ue
-QE
+tR
 jh
 jh
 nq
@@ -1503,7 +1464,7 @@ Ue
 Ue
 Ue
 Ue
-Wg
+tR
 jh
 GC
 NQ
@@ -2120,14 +2081,14 @@ zk
 Ue
 Ue
 uL
-Os
-SN
-xK
+mE
+Vi
+SJ
 fR
-Cs
-Cs
+Fv
+Fv
 fU
-Cs
+Fv
 Ts
 Ts
 Zr
