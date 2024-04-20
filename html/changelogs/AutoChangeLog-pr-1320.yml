@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Re-added the Blood Brothers antagonist into the game, and made them available to storytellers, both roundstart and midround."
+  - rscadd: "Instead of teaming up random people together, Blood Brothers will now start out with one player and let them convert a single other person over to blood brother using a flash."
+  - qol: "Blood Brothers can now identify each other by HUD."
