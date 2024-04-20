@@ -407,7 +407,20 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	menu_description = "A sharp dagger. Fits in pockets. Can be worn on the belt. Honk."
+	menu_description = "A sharp dagger. Fits in pockets. Slippery. Can be worn on the belt. Honk."
+
+/obj/item/nullrod/clown/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/slippery, 140) //Same as maximum potency banana peel.
+	
+/obj/item/nullrod/clown/afterattack(atom/target, mob/living/user)
+	. = ..()
+	if(!isliving(target))
+		return
+	var/mob/living/living_target = target
+	living_target.emote("laugh")
+	living_target.add_mood_event("chemical_laughter", /datum/mood_event/chemical_laughter)
+	user.add_mood_event("chemical_laughter", /datum/mood_event/chemical_laughter) //Hitting people with it makes you feel good.
 
 #define CHEMICAL_TRANSFER_CHANCE 30
 
