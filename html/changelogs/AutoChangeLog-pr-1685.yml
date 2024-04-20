@@ -1,4 +1,0 @@
-author: "DexeeXI"
-delete-after: True
-changes:
-  - bugfix: "restores prefilled drone fab on meta."

@@ -225,3 +225,6 @@
   - bugfix: Fix holoparasite resetting not working.
   - code_imp: Added a safety check that'll emit a (harmless) runtime if something
       tries to pass an invalid target mob to `SSpolling.poll_ghost_candidates_for_mob`.
+2024-04-20:
+  DexeeXI:
+  - bugfix: restores prefilled drone fab on meta.
