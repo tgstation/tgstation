@@ -1127,3 +1127,8 @@ $border-width-px: $border-width * 1px;
     background-color: darken(map.get($alert-stripe-colors, $color-name), 5);
   }
 }
+
+// BANDASTATION ADDITION START
+.looc {
+  color: #6699cc;
+}
