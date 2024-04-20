@@ -272,6 +272,7 @@ SUBSYSTEM_DEF(gamemode)
 			if(!ready_players && !isliving(candidate))
 				continue
 			if(no_antags && candidate.mind.special_role)
+				log_storyteller("Candidate([candidate]) removed from rolling poll due to special_role([candidate.mind.special_role])")
 				continue
 			if(restricted_roles && (candidate.mind.assigned_role.title in restricted_roles))
 				continue
