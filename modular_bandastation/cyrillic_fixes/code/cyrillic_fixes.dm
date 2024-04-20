@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(ru_key_to_en_key, list(
 
 #define MAX_HOTKEY_SLOTS 3
 
-/datum/preference_middleware/keybindings/set_keybindings(list/params)
+/datum/preference_middleware/keybindings/set_keybindings(list/params, mob/user)
 	var/keybind_name = params["keybind_name"]
 
 	if (isnull(GLOB.keybindings_by_name[keybind_name]))
@@ -42,6 +42,12 @@ GLOBAL_LIST_INIT(ru_key_to_en_key, list(
 	preferences.key_bindings[keybind_name] = hotkeys
 	preferences.key_bindings_by_key = preferences.get_key_bindings_by_key(preferences.key_bindings)
 
+	user.client.update_special_keybinds()
+
 	return TRUE
 
 #undef MAX_HOTKEY_SLOTS
+
+/datum/tgui_input_keycombo/set_entry(entry)
+	entry = convert_ru_key_to_en_key(entry) || entry
+	. = ..()
