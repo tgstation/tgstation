@@ -199,6 +199,21 @@
 		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
 			SEND_SOUND(target, sound(sound_to_play))
 
+			/// SS220 TTS START
+			var/mob/living/silicon/ai/active_ai = pick(active_ais(TRUE, null))
+			var/datum/tts_seed/announcement_tts_seed = active_ai ? active_ai.get_tts_seed() :  /datum/tts_seed/silero/glados
+			INVOKE_ASYNC(
+				SStts220, \
+				TYPE_PROC_REF(/datum/controller/subsystem/tts220, get_tts), \
+				null, \
+				target, \
+				announcement, \
+				announcement_tts_seed, \
+				FALSE, \
+				/datum/singleton/sound_effect/radio_robot, \
+			)
+			/// SS220 TTS END
+
 #undef MAJOR_ANNOUNCEMENT_TITLE
 #undef MAJOR_ANNOUNCEMENT_TEXT
 #undef MINOR_ANNOUNCEMENT_TITLE
