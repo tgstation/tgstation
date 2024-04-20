@@ -107,15 +107,10 @@
 			return ITEM_INTERACT_BLOCKING
 	return .
 
-/obj/structure/frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
-
+/obj/structure/frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/circuitboard)) // Install board will fail if passed an invalid circuitboard and give feedback
 		return install_board(user, tool, by_hand = TRUE) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-
-	return .
+	return NONE
 
 /**
  * Installs the passed circuit board into the frame

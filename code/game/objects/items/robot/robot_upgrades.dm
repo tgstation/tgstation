@@ -298,7 +298,7 @@
 	/// Minimum time between repairs in seconds
 	var/repair_cooldown = 4
 	var/on = FALSE
-	var/energy_cost = 10 KILO JOULES
+	var/energy_cost = 0.01 * STANDARD_CELL_CHARGE
 	var/datum/action/toggle_action
 
 /obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/R, user = usr)
@@ -366,16 +366,16 @@
 		if(cyborg.health < cyborg.maxHealth)
 			if(cyborg.health < 0)
 				repair_amount = -2.5
-				energy_cost = 30 KILO JOULES
+				energy_cost = 0.03 * STANDARD_CELL_CHARGE
 			else
 				repair_amount = -1
-				energy_cost = 10 KILO JOULES
+				energy_cost = 0.01 * STANDARD_CELL_CHARGE
 			cyborg.adjustBruteLoss(repair_amount)
 			cyborg.adjustFireLoss(repair_amount)
 			cyborg.updatehealth()
 			cyborg.cell.use(energy_cost)
 		else
-			cyborg.cell.use(5 KILO JOULES)
+			cyborg.cell.use(0.005 * STANDARD_CELL_CHARGE)
 		next_repair = world.time + repair_cooldown * 10 // Multiply by 10 since world.time is in deciseconds
 
 		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_BORG_SELF_REPAIR))

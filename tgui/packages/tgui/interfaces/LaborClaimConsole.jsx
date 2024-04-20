@@ -35,25 +35,14 @@ export const LaborClaimConsole = (props) => {
             </LabeledList.Item>
           </LabeledList>
         </Section>
-        <Section title="Material values">
-          <Table>
-            <Table.Row header>
-              <Table.Cell>Material</Table.Cell>
-              <Table.Cell collapsing textAlign="right">
-                Value
-              </Table.Cell>
-            </Table.Row>
-            {ores.map((ore) => (
-              <Table.Row key={ore.ore}>
-                <Table.Cell>{toTitleCase(ore.ore)}</Table.Cell>
-                <Table.Cell collapsing textAlign="right">
-                  <Box color="label" inline>
-                    {ore.value}
-                  </Box>
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table>
+        <Section title="Directions">
+          The nearby stacking machine will unload crates and collect smelted
+          materials, points will be calculated based on volume of delivered
+          materials.
+          <br />
+          Please note that only sheets printed with our manufacturer's seal of
+          quality, such as those produced from the work camp furnace, will be
+          accepted as proof of labour.
         </Section>
       </Window.Content>
     </Window>
