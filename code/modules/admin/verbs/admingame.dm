@@ -1,4 +1,7 @@
-ADMIN_VERB_AND_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", "Get the player panel for the target mob.", ADMIN_CATEGORY_MAIN, mob/player in world)
+ADMIN_VERB(cmd_player_panel, R_ADMIN, "Player Panel", "See all players and their Player Panel.", ADMIN_CATEGORY_GAME)
+	user.holder.player_panel_new()
+
+ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mob/player in world)
 	log_admin("[key_name(user)] checked the individual player panel for [key_name(player)][isobserver(user.mob)?"":" while in game"].")
 
 	if(!player)
