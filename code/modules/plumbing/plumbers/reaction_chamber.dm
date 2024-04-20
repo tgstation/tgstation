@@ -53,13 +53,9 @@
 
 	if(!emptying || reagents.is_reacting)
 		//adjust temperature of final solution
-		var/temp_diff = target_temperature - reagents.chem_temp
-		if(abs(temp_diff) > 0.01) //if we are not close enough keep going
-			//heat reagents
-			reagents.adjust_thermal_energy(temp_diff * HEATER_COEFFICIENT * seconds_per_tick * reagents.heat_capacity())
-
-			//use energy
-			use_energy(active_power_usage * seconds_per_tick)
+		var/energy = (target_temperature - reagents.chem_temp) * HEATER_COEFFICIENT * seconds_per_tick * reagents.heat_capacity()
+		reagents.adjust_thermal_energy(energy)
+		use_energy(active_power_usage + abs(ROUND_UP(energy) / 120))
 
 		//do other stuff with final solution
 		handle_reagents(seconds_per_tick)

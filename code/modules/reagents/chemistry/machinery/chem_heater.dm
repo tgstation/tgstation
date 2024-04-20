@@ -178,12 +178,13 @@
 	PRIVATE_PROC(TRUE)
 
 	//must be on and beaker must have something inside to heat
-	if(!on || (machine_stat & NOPOWER) || QDELETED(beaker) || !beaker.reagents.total_volume)
+	if(!on || !is_operational || QDELETED(beaker) || !beaker.reagents.total_volume)
 		return FALSE
 
 	//heat the beaker and use some power. we want to use only a small amount of power since this proc gets called frequently
-	beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * beaker.reagents.heat_capacity())
-	use_energy(active_power_usage * seconds_per_tick)
+	var/energy = (target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * beaker.reagents.heat_capacity()
+	beaker.reagents.adjust_thermal_energy(energy)
+	use_energy(active_power_usage + abs(ROUND_UP(energy) / 120))
 	return TRUE
 
 /obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions, seconds_per_tick)
