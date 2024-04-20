@@ -1,4 +1,6 @@
-import { sortBy } from 'common/collections';
+import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { createSearch } from 'common/string';
 import { useEffect, useState } from 'react';
 
 import { useBackend } from '../backend';
@@ -119,9 +121,15 @@ const CrewTable = (props) => {
   useEffect(() => {
     let unsorted = sensors.slice();
     if (sortColumn === 'ijob') {
-      let sorted = sortBy(data.sensors ?? [], (s) => s.ijob).filter((crew) =>
-        crew.name.toLowerCase().includes(searchQuery.toLowerCase()),
-      );
+      let sorted = flow([
+        (sorted) => {
+          return sortBy(data.sensors, (s) => s.ijob);
+        },
+        (sorted) => {
+          const nameSearch = createSearch(searchQuery, (crew) => crew.name);
+          return filter(sorted, nameSearch);
+        },
+      ])();
       setShownSensors(sorted);
       return;
     } else if (sortColumn === 'health') {
@@ -136,8 +144,8 @@ const CrewTable = (props) => {
       });
     }
 
-    let sorted = unsorted.filter((crew) =>
-      crew.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    let sorted = unsorted.filter(
+      createSearch(searchQuery, (crew) => crew.name),
     );
     if (!sortAsc) {
       sorted.reverse();
@@ -161,7 +169,6 @@ const CrewTable = (props) => {
             )}
           </Button>
           <Input
-            type="text"
             placeholder="Search for name..."
             onInput={(e) => setSearchQuery(e.target.value)}
           />
