@@ -553,7 +553,7 @@
 /datum/armor/helmet_military
 	melee = 45
 	bullet = 25
-	laser = 20
+	laser = 25
 	energy = 25
 	bomb = 25
 	fire = 10
