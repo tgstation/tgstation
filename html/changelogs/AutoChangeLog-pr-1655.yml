@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Droppers can now only transfer 1u, 2u, or 5u."
