@@ -14,6 +14,8 @@
 //KEEP IT UPDATED
 #define CHANNEL_HIGHEST_AVAILABLE 1013
 
+#define MAX_INSTRUMENT_CHANNELS (128 * 6)
+
 ///Default range of a sound.
 #define SOUND_RANGE 17
 #define MEDIUM_RANGE_SOUND_EXTRARANGE -5
@@ -25,8 +27,6 @@
 #define SOUND_DEFAULT_FALLOFF_DISTANCE 1 //For a normal sound this would be 1 tile of no falloff
 ///The default exponent of sound falloff
 #define SOUND_FALLOFF_EXPONENT 6
-
-#define MAX_INSTRUMENT_CHANNELS (128 * 6)
 
 #define SOUND_MINIMUM_PRESSURE 10
 
