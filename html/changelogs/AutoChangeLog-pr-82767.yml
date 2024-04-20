@@ -1,0 +1,5 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Fixed the targeting capability of mobs with full auto"
+  - bugfix: "You can now fire the marksman revolver at things you can see"
