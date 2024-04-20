@@ -89,7 +89,7 @@ export const CrewConsole = () => {
 
 const CrewTable = (props) => {
   const { act, data } = useBackend();
-  const sensors = data.sensors;
+  const { sensors = [] } = data;
 
   const [shownSensors, setShownSensors] = useState(sensors.slice());
   const [sortAsc, setSortAsc] = useState(true);
