@@ -59,6 +59,12 @@
 /obj/item/paper/crumpled/fluff,
 /turf/open/indestructible/stone,
 /area/deathmatch)
+"jl" = (
+/obj/item/storage/dice,
+/obj/item/paper,
+/obj/structure/table/wood,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
 "jQ" = (
 /obj/structure/chair/wood{
 	dir = 8
@@ -79,11 +85,6 @@
 /obj/structure/table/wood/fancy/cyan,
 /obj/item/book/granter/chuunibyou,
 /turf/open/indestructible/stone,
-/area/deathmatch)
-"kP" = (
-/obj/item/pen,
-/obj/structure/table/wood,
-/turf/open/indestructible/hotelwood,
 /area/deathmatch)
 "kT" = (
 /obj/structure/table/wood,
@@ -158,7 +159,10 @@
 /turf/open/indestructible/hotelwood,
 /area/deathmatch)
 "qh" = (
-/obj/item/dice/d4,
+/obj/item/flashlight/flare/candle/infinite{
+	light_on = 1
+	},
+/obj/structure/table/wood,
 /turf/open/indestructible/hotelwood,
 /area/deathmatch)
 "qT" = (
@@ -228,6 +232,11 @@
 /obj/effect/decal/remains/human,
 /turf/open/indestructible/grass,
 /area/deathmatch)
+"yX" = (
+/obj/item/pen,
+/obj/structure/table/wood,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
 "zC" = (
 /turf/closed/indestructible/fakeglass,
 /area/deathmatch)
@@ -272,6 +281,10 @@
 /obj/item/staff/broom,
 /turf/open/indestructible/hotelwood,
 /area/deathmatch)
+"Cj" = (
+/obj/structure/mystery_box/wands,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
 "CA" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -299,13 +312,6 @@
 "Ew" = (
 /obj/structure/bookcase/random/adult,
 /turf/open/floor/carpet,
-/area/deathmatch)
-"Ex" = (
-/obj/item/flashlight/flare/candle/infinite{
-	light_on = 1
-	},
-/obj/structure/table/wood,
-/turf/open/indestructible/hotelwood,
 /area/deathmatch)
 "EK" = (
 /obj/structure/barricade/wooden,
@@ -374,14 +380,12 @@
 /turf/open/indestructible/hotelwood,
 /area/deathmatch)
 "Mw" = (
-/obj/structure/bookcase/random/adult,
+/obj/structure/mystery_box/wands,
 /obj/effect/light_emitter/fake_outdoors,
 /turf/open/indestructible/hotelwood,
 /area/deathmatch)
 "Ne" = (
-/obj/item/storage/dice,
-/obj/item/paper,
-/obj/structure/table/wood,
+/obj/item/dice/d4,
 /turf/open/indestructible/hotelwood,
 /area/deathmatch)
 "Nq" = (
@@ -1144,7 +1148,7 @@ sE
 Eo
 bY
 Wf
-Ne
+jl
 tB
 Wf
 na
@@ -1179,7 +1183,7 @@ sE
 CA
 Wf
 QR
-qh
+Ne
 Wf
 Wf
 Wf
@@ -1200,9 +1204,9 @@ Eo
 Wf
 Wf
 Wf
-Wf
-Wf
-Wf
+jQ
+IV
+IV
 Eo
 sE
 bY
@@ -1212,7 +1216,7 @@ AW
 bY
 sE
 Eo
-Wf
+Cj
 Wf
 Wf
 Wf
@@ -1480,9 +1484,9 @@ Eo
 Wf
 Wf
 Wf
-Sv
-IV
-IV
+Wf
+Wf
+Cj
 Eo
 sE
 bY
@@ -1528,7 +1532,7 @@ bY
 sE
 CA
 Wf
-qh
+Ne
 Wf
 Wf
 QR
@@ -1550,7 +1554,7 @@ Eo
 Tm
 Wf
 Wf
-Ex
+qh
 Wf
 bY
 Eo
@@ -1564,8 +1568,8 @@ sE
 Eo
 bY
 Wf
-Ex
-kP
+qh
+yX
 Wf
 na
 Eo
