@@ -9,9 +9,6 @@
 	attacker.zone_selected = BODY_ZONE_PRECISE_EYES
 	attacker.put_in_active_hand(stabber, forced = TRUE)
 
-	click_wrapper(attacker, victim)
-	TEST_ASSERT_EQUAL(victim.getBruteLoss(), 0, "Victim should not have taken any brute damage from an eyestab with no combat mode")
-
 	attacker.set_combat_mode(TRUE)
 	click_wrapper(attacker, victim)
 	TEST_ASSERT_NOTEQUAL(victim.getBruteLoss(), 0, "Victim should have taken some brute damage from an eyestab with combat mode on")

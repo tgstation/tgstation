@@ -10,6 +10,7 @@
 
 	attacker.put_in_active_hand(rag, forced = TRUE)
 	attacker.zone_selected = BODY_ZONE_PRECISE_MOUTH
+	attacker.set_combat_mode(TRUE)
 	rag.reagents.add_reagent(/datum/reagent/water, rag.reagents.maximum_volume)
 	click_wrapper(attacker, victim)
 	TEST_ASSERT_EQUAL(victim_stomach.reagents.get_reagent_amount(/datum/reagent/water), rag.reagents.maximum_volume, \

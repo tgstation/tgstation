@@ -8,7 +8,7 @@
 
 	suture = get_suture()
 	healer.put_in_active_hand(suture, forced = TRUE)
-	victim.setBruteLoss(suture.heal_brute)
+	victim.apply_damage(suture.heal_brute, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
 	click_wrapper(healer, victim)
 	TEST_ASSERT_EQUAL(victim.getBruteLoss(), 0, "Failed heal a mob with sutures while not on combat mode.")
 	TEST_ASSERT(QDELETED(suture), "Suture was not consumed on use.")
@@ -16,7 +16,7 @@
 	suture = get_suture()
 	healer.put_in_active_hand(suture, forced = TRUE)
 	healer.set_combat_mode(TRUE)
-	victim.setBruteLoss(suture.heal_brute)
+	victim.apply_damage(suture.heal_brute, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
 	click_wrapper(healer, victim)
 	TEST_ASSERT_EQUAL(victim.getBruteLoss(), 0, "Failed heal a mob with sutures while on combat mode.")
 

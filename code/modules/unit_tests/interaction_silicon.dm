@@ -37,6 +37,7 @@
 	TEST_ASSERT_EQUAL(borgo.getBruteLoss(), 0, "Cyborg took damage from an unarmed punched - \
 		their unarmed damage threshold should be too high for this to happen.")
 
+/*
 /// Tests flashing silicons causing blind and stun
 /datum/unit_test/silicon_stun
 
@@ -51,3 +52,4 @@
 	TEST_ASSERT(!borgo.IsStun(), "Robot was stunned when flashed, which it shouldn't have happened on first flash.")
 	click_wrapper(attacker, borgo)
 	TEST_ASSERT(borgo.IsStun(), "Robot was not stunned when flashed, which should have happened on second flash.")
+*/

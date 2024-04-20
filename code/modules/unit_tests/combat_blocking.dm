@@ -1,6 +1,5 @@
 /// Abstract test type for use in easily testing blocking setups.
 /datum/unit_test/unarmed_blocking
-	abstract_type = /datum/unit_test/blocking
 
 /datum/unit_test/unarmed_blocking/Run()
 	var/mob/living/carbon/human/consistent/attacker = EASY_ALLOCATE()

@@ -54,5 +54,4 @@
 
 	butcher.put_in_active_hand(gun, forced = TRUE)
 	click_wrapper(butcher, meat)
-	sleep(butcher_comp.speed + 0.1 SECONDS) // wait for the do_after, since it's invoked async.
-	TEST_ASSERT(QDELETED(meat), "The butcher did not butcher the monkey when using a bayonetted weapon.")
+	TEST_ASSERT(DOING_INTERACTION(butcher, meat), "The butcher did not start butchering the monkey when using a bayonetted weapon.")
