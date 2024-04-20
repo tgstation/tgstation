@@ -180,7 +180,7 @@
 /mob/living/simple_animal/bot/secbot/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)//shocks only make him angry
 	if(base_speed < initial(base_speed) + 3)
 		base_speed += 3
-		addtimer(VARSET_CALLBACK(src, base_speed, base_speed - 3), 60)
+		addtimer(VARSET_CALLBACK(src, base_speed, base_speed - 3), 6 SECONDS)
 		playsound(src, 'sound/machines/defib_zap.ogg', 50)
 		visible_message(span_warning("[src] shakes and speeds up!"))
 

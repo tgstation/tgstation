@@ -12,9 +12,8 @@
 /obj/machinery/ctf/spawner/medisim/Initialize(mapload)
 	. = ..()
 	ctf_game.setup_rules(victory_rejoin_text = "Teams have been cleared. The next game is starting automatically. Rejoin a team if you wish!", auto_restart = TRUE)
-	return INITIALIZE_HINT_LATELOAD //Start CTF needs to run after both medisim spawners have initalized.
 
-/obj/machinery/ctf/spawner/medisim/LateInitialize()
+/obj/machinery/ctf/spawner/medisim/post_machine_initialize()
 	. = ..()
 	ctf_game.start_ctf()
 

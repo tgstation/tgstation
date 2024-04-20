@@ -394,8 +394,6 @@ Buildable meters
 	balloon_alert(user, "pipe layer set to [piping_layer]")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/pipe/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/item/pipe/trinary/flippable/examine(mob/user)
 	. = ..()

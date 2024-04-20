@@ -1,3 +1,4 @@
+
 // SUIT STORAGE UNIT /////////////////
 /obj/machinery/suit_storage_unit
 	name = "suit storage unit"
@@ -55,9 +56,9 @@
 	/// How long it takes to break out of the SSU.
 	var/breakout_time = 30 SECONDS
 	/// Power contributed by this machine to charge the mod suits cell without any capacitors
-	var/base_charge_rate = 200 KILO WATTS
+	var/base_charge_rate = 0.2 * STANDARD_CELL_RATE
 	/// Final charge rate which is base_charge_rate + contribution by capacitors
-	var/final_charge_rate = 250 KILO WATTS
+	var/final_charge_rate = 0.25 * STANDARD_CELL_RATE
 	/// is the card reader installed in this machine
 	var/card_reader_installed = FALSE
 	/// physical reference of the players id card to check for PERSONAL access level
@@ -287,7 +288,7 @@
 	. = ..()
 
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		final_charge_rate = base_charge_rate + (capacitor.tier * 50 KILO WATTS)
+		final_charge_rate = base_charge_rate + (capacitor.tier * 0.05 * STANDARD_CELL_RATE)
 
 	set_access()
 
@@ -501,7 +502,7 @@
 			if(iscarbon(mob_occupant) && mob_occupant.stat < UNCONSCIOUS)
 				//Awake, organic and screaming
 				mob_occupant.emote("scream")
-		addtimer(CALLBACK(src, PROC_REF(cook)), 50)
+		addtimer(CALLBACK(src, PROC_REF(cook)), 5 SECONDS)
 	else
 		uv_cycles = initial(uv_cycles)
 		uv = FALSE
@@ -608,7 +609,7 @@
 	if(locked)
 		visible_message(span_notice("You see [user] kicking against the doors of [src]!"), \
 			span_notice("You start kicking against the doors..."))
-		addtimer(CALLBACK(src, PROC_REF(resist_open), user), 300)
+		addtimer(CALLBACK(src, PROC_REF(resist_open), user), 30 SECONDS)
 	else
 		open_machine()
 		dump_inventory_contents()

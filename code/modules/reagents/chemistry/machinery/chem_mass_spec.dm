@@ -147,9 +147,9 @@
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		cms_coefficient /= laser.tier
 
-/obj/machinery/chem_mass_spec/item_interaction(mob/living/user, obj/item/item, list/modifiers, is_right_clicking)
+/obj/machinery/chem_mass_spec/item_interaction(mob/living/user, obj/item/item, list/modifiers)
 	if((item.item_flags & ABSTRACT) || (item.flags_1 & HOLOGRAM_1) || !can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return ..()
+		return NONE
 
 	if(is_reagent_container(item) && item.is_open_container())
 		if(processing_reagents)
@@ -160,13 +160,14 @@
 		if(!user.transferItemToLoc(beaker, src))
 			return ITEM_INTERACT_BLOCKING
 
+		var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 		replace_beaker(user, !is_right_clicking, beaker)
 		to_chat(user, span_notice("You add [beaker] to [is_right_clicking ? "output" : "input"] slot."))
 		update_appearance()
 		ui_interact(user)
 		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/machinery/chem_mass_spec/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
@@ -433,14 +434,12 @@
 			replace_beaker(ui.user, FALSE)
 			return TRUE
 
-/obj/machinery/chem_mass_spec/AltClick(mob/living/user)
-	. = ..()
-	if(!can_interact(user))
-		return
+/obj/machinery/chem_mass_spec/click_alt(mob/living/user)
 	if(processing_reagents)
 		balloon_alert(user, "still processing!")
-		return ..()
+		return CLICK_ACTION_BLOCKING
 	replace_beaker(user, TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/chem_mass_spec/alt_click_secondary(mob/living/user)
 	. = ..()
@@ -458,7 +457,7 @@
 	if(!is_operational || panel_open || !anchored || (machine_stat & (BROKEN | NOPOWER)))
 		return
 
-	if(!use_energy(active_power_usage * seconds_per_tick))
+	if(!use_energy(active_power_usage * seconds_per_tick, force = FALSE))
 		return
 
 	progress_time += seconds_per_tick

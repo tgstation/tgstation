@@ -80,6 +80,19 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/log_mob_tag(text)
 	return
 
+// To speed up the preference menu, we apply 1 filter to the entire mob
+/mob/living/carbon/human/dummy/regenerate_icons()
+	. = ..()
+	apply_height_filters(src, TRUE)
+
+/mob/living/carbon/human/dummy/apply_height_filters(image/appearance, only_apply_in_prefs = FALSE)
+	if(only_apply_in_prefs)
+		return ..()
+
+// Not necessary with above
+/mob/living/carbon/human/dummy/apply_height_offsets(image/appearance, upper_torso)
+	return
+
 /// Takes in an accessory list and returns the first entry from that list, ensuring that we dont return SPRITE_ACCESSORY_NONE in the process.
 /proc/get_consistent_feature_entry(list/accessory_feature_list)
 	var/consistent_entry = (accessory_feature_list- SPRITE_ACCESSORY_NONE)[1]
@@ -100,6 +113,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["spines"] = get_consistent_feature_entry(GLOB.spines_list)
 	target.dna.features["tail_cat"] = get_consistent_feature_entry(GLOB.tails_list_human) // it's a lie
 	target.dna.features["tail_lizard"] = get_consistent_feature_entry(GLOB.tails_list_lizard)
+	target.dna.features["tail_monkey"] = get_consistent_feature_entry(GLOB.tails_list_monkey)
 	target.dna.features["pod_hair"] = get_consistent_feature_entry(GLOB.pod_hair_list)
 	target.dna.initialize_dna(create_mutation_blocks = FALSE, randomize_features = FALSE)
 	// UF and UI are nondeterministic, even though the features are the same some blocks will randomize slightly

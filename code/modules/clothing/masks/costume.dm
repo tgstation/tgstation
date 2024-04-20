@@ -12,14 +12,6 @@
 			"Pleading" = "pleading"
 	)
 
-/obj/item/clothing/mask/joy/Initialize(mapload)
-	. = ..()
-	register_context()
-
-/obj/item/clothing/mask/joy/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Change Emotion"
-	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/clothing/mask/joy/reskin_obj(mob/user)
 	. = ..()

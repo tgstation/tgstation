@@ -49,7 +49,7 @@
 			opening = FALSE
 			return
 	update_appearance()
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/structure/falsewall, toggle_open)), 5)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/structure/falsewall, toggle_open)), 0.5 SECONDS)
 
 /obj/structure/falsewall/proc/toggle_open()
 	if(!QDELETED(src))
@@ -91,9 +91,9 @@
 		qdel(src)
 	return T
 
-/obj/structure/falsewall/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+/obj/structure/falsewall/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!opening || !tool.tool_behaviour)
-		return ..()
+		return NONE
 	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
 	return ITEM_INTERACT_BLOCKING
 

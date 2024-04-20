@@ -180,8 +180,6 @@
 	var/unarmed_damage_high = 1
 	///Determines the accuracy bonus, armor penetration and knockdown probability.
 	var/unarmed_effectiveness = 10
-	/// How many pixels this bodypart will offset the top half of the mob, used for abnormally sized torsos and legs
-	var/top_offset = 0
 
 	/// Traits that are given to the holder of the part. If you want an effect that changes this, don't add directly to this. Use the add_bodypart_trait() proc
 	var/list/bodypart_traits = list()
@@ -344,13 +342,13 @@
 	for(var/datum/wound/wound as anything in wounds)
 		switch(wound.severity)
 			if(WOUND_SEVERITY_TRIVIAL)
-				check_list += "\t [span_danger("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)].")]"
+				check_list += "\t [span_danger("Your [name] is suffering [wound.a_or_from] [LOWER_TEXT(wound.name)].")]"
 			if(WOUND_SEVERITY_MODERATE)
-				check_list += "\t [span_warning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!")]"
+				check_list += "\t [span_warning("Your [name] is suffering [wound.a_or_from] [LOWER_TEXT(wound.name)]!")]"
 			if(WOUND_SEVERITY_SEVERE)
-				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!!")]"
+				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [LOWER_TEXT(wound.name)]!!")]"
 			if(WOUND_SEVERITY_CRITICAL)
-				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!!!")]"
+				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [LOWER_TEXT(wound.name)]!!!")]"
 
 	for(var/obj/item/embedded_thing in embedded_objects)
 		var/stuck_word = embedded_thing.isEmbedHarmless() ? "stuck" : "embedded"
@@ -748,13 +746,13 @@
 	if(owner == new_owner)
 		return FALSE //`null` is a valid option, so we need to use a num var to make it clear no change was made.
 
-	SEND_SIGNAL(src, COMSIG_BODYPART_CHANGED_OWNER, new_owner, owner)
-
 	if(owner)
 		. = owner //return value is old owner
 		clear_ownership(owner)
 	if(new_owner)
 		apply_ownership(new_owner)
+
+	SEND_SIGNAL(src, COMSIG_BODYPART_CHANGED_OWNER, new_owner, owner)
 
 	refresh_bleed_rate()
 	return .
