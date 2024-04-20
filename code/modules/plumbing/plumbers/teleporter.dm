@@ -77,7 +77,7 @@
 	return TRUE
 
 /obj/machinery/plumbing/receiver/process(seconds_per_tick)
-	if(machine_stat & NOPOWER || panel_open)
+	if(!is_operational || panel_open)
 		return
 
 	if(senders.len)
