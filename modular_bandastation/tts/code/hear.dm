@@ -4,6 +4,10 @@
     msg = replacetext_char(msg, "+", null)
     . = ..()
 
+/datum/chatmessage/New(text, atom/target, mob/owner, datum/language/language, list/extra_classes, lifespan)
+    text = replacetext_char(text, "+", null)
+    . = ..()
+
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
     . = ..()
     if(!.)
