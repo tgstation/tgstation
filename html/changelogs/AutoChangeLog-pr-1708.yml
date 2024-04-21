@@ -1,0 +1,4 @@
+author: "DexeeXI"
+delete-after: True
+changes:
+  - rscdel: "Slasher removed from storyteller. Code retained for improvement/fixes before next halloween!"
