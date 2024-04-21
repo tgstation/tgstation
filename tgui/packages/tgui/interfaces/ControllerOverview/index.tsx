@@ -73,14 +73,6 @@ export function ControllerContent(props) {
                     value={state.query}
                     width="85%"
                   />
-                  <Button
-                    icon="trash"
-                    tooltip="Reset filter"
-                    onClick={() =>
-                      dispatch({ type: FilterAction.Query, payload: '' })
-                    }
-                    disabled={!state.query}
-                  />
                 </Stack.Item>
                 <Stack.Item>
                   <Button
