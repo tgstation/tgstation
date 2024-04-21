@@ -3,8 +3,9 @@
 /turf/template_noop,
 /area/template_noop)
 "aN" = (
-/obj/item/book/granter/action/spell/blind,
-/turf/open/floor/carpet,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/hotelwood,
 /area/deathmatch)
 "bV" = (
 /mob/living/basic/creature,
@@ -38,6 +39,12 @@
 /obj/item/food/meat/bacon,
 /turf/open/floor/grass/fairy,
 /area/deathmatch)
+"dZ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
 "eu" = (
 /obj/structure/table/wood,
 /obj/item/pen,
@@ -55,6 +62,13 @@
 /obj/structure/barricade/wooden,
 /turf/open/floor/carpet/green,
 /area/deathmatch)
+"iH" = (
+/obj/item/book/granter/action/spell/blind,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/deathmatch)
 "jk" = (
 /obj/item/paper/crumpled/fluff,
 /turf/open/indestructible/stone,
@@ -62,6 +76,11 @@
 "jl" = (
 /obj/item/storage/dice,
 /obj/item/paper,
+/obj/structure/table/wood,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"jn" = (
+/obj/effect/decal/cleanable/grand_remains,
 /obj/structure/table/wood,
 /turf/open/indestructible/hotelwood,
 /area/deathmatch)
@@ -87,12 +106,11 @@
 /turf/open/indestructible/stone,
 /area/deathmatch)
 "kT" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/flare/candle/infinite{
-	light_on = 1
+/obj/structure/bookcase/random/adult,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
 	},
-/obj/effect/decal/cleanable/grand_remains,
-/turf/open/indestructible/hotelwood,
+/turf/open/indestructible/grass,
 /area/deathmatch)
 "lw" = (
 /mob/living/basic/pet/dog/corgi,
@@ -114,6 +132,12 @@
 "lW" = (
 /turf/open/floor/carpet/green,
 /area/deathmatch)
+"mz" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/deathmatch)
 "mI" = (
 /turf/open/chasm/true,
 /area/deathmatch)
@@ -124,6 +148,16 @@
 "nk" = (
 /obj/item/trash/sosjerky,
 /turf/open/indestructible/stone,
+/area/deathmatch)
+"on" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/basic/axolotl{
+	name = "the harbringer of doom";
+	health = 1000000000;
+	melee_damage_upper = 2500
+	},
+/turf/open/indestructible/hotelwood,
 /area/deathmatch)
 "os" = (
 /obj/structure/table/wood/fancy/red,
@@ -139,17 +173,23 @@
 /turf/open/floor/carpet,
 /area/deathmatch)
 "pc" = (
-/obj/item/book/granter/action/spell/knock,
-/turf/open/floor/carpet,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/barricade/wooden,
+/turf/open/indestructible/stone,
 /area/deathmatch)
 "pt" = (
 /obj/structure/barricade/wooden,
 /turf/open/indestructible/stone,
 /area/deathmatch)
 "pN" = (
-/obj/structure/table/wood,
 /obj/effect/decal/cleanable/grand_remains,
-/obj/item/paper,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/indestructible/hotelwood,
 /area/deathmatch)
 "qh" = (
@@ -186,12 +226,24 @@
 "sE" = (
 /turf/open/indestructible/grass,
 /area/deathmatch)
+"tv" = (
+/obj/machinery/light/warm/directional/south,
+/obj/structure/table/wood,
+/obj/item/storage/dice,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
 "tB" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/flare/candle/infinite{
 	light_on = 1
 	},
 /turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"tX" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet,
 /area/deathmatch)
 "ug" = (
 /obj/effect/spawner/random/trash/graffiti,
@@ -203,6 +255,14 @@
 /area/deathmatch)
 "vh" = (
 /turf/open/floor/grass/fairy,
+/area/deathmatch)
+"vK" = (
+/obj/machinery/light/warm/directional/north,
+/obj/structure/table/wood,
+/obj/item/flashlight/flare/candle/infinite{
+	light_on = 1
+	},
+/turf/open/indestructible/hotelwood,
 /area/deathmatch)
 "wb" = (
 /obj/structure/table/wood,
@@ -279,6 +339,12 @@
 /obj/structure/mystery_box/wands,
 /turf/open/indestructible/hotelwood,
 /area/deathmatch)
+"Cr" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
 "CA" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -327,15 +393,28 @@
 /obj/structure/sacrificealtar,
 /turf/open/indestructible/stone,
 /area/deathmatch)
+"Gu" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"GQ" = (
+/obj/structure/table/wood,
+/obj/item/dice/fourdd6,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
 "Hs" = (
 /mob/living/basic/pet/dog/corgi/puppy/void,
 /turf/open/floor/grass/fairy,
 /area/deathmatch)
 "Hy" = (
-/obj/structure/chair/wood{
-	dir = 8
-	},
+/obj/item/chair/wood,
 /obj/machinery/light/warm/dim/directional/east,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/indestructible/hotelwood,
 /area/deathmatch)
 "Is" = (
@@ -365,18 +444,26 @@
 	},
 /turf/open/floor/carpet,
 /area/deathmatch)
+"La" = (
+/obj/item/book/granter/action/spell/knock,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/deathmatch)
 "Ma" = (
 /mob/living/basic/alien/maid,
 /turf/open/floor/grass/fairy,
 /area/deathmatch)
 "Mf" = (
 /obj/machinery/light/warm/dim/directional/west,
+/obj/structure/table/wood,
+/obj/item/pen,
 /turf/open/indestructible/hotelwood,
 /area/deathmatch)
 "Mw" = (
-/obj/structure/mystery_box/wands,
 /obj/effect/light_emitter/fake_outdoors,
-/turf/open/indestructible/hotelwood,
+/turf/open/indestructible/grass,
 /area/deathmatch)
 "Ne" = (
 /obj/item/dice/d4,
@@ -437,6 +524,12 @@
 	},
 /turf/open/indestructible/hotelwood,
 /area/deathmatch)
+"Sw" = (
+/obj/item/trash/chips,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
 "Sx" = (
 /obj/structure/table/wood,
 /obj/item/paper,
@@ -458,15 +551,32 @@
 /obj/machinery/light/warm/directional/north,
 /turf/open/indestructible/hotelwood,
 /area/deathmatch)
+"Tr" = (
+/obj/structure/bookcase/random/adult,
+/turf/open/indestructible/grass,
+/area/deathmatch)
 "TB" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/highfrequencyblade/wizard,
 /turf/open/indestructible/stone,
 /area/deathmatch)
+"TN" = (
+/obj/structure/bookcase/random/adult,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/indestructible/grass,
+/area/deathmatch)
 "Ub" = (
 /obj/item/mjollnir,
 /obj/structure/table/wood/fancy/blue,
 /turf/open/indestructible/stone,
+/area/deathmatch)
+"UG" = (
+/obj/item/staff/broom,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/hotelwood,
 /area/deathmatch)
 "UV" = (
 /obj/item/toy/plush/narplush,
@@ -920,7 +1030,7 @@ BP
 Sv
 Wf
 Ca
-Wf
+cc
 Eo
 yg
 EK
@@ -930,11 +1040,11 @@ oF
 PG
 ZO
 Eo
-Wf
-Wf
-Sv
-Wf
-Wf
+aN
+aN
+Gu
+aN
+aN
 zC
 dH
 vh
@@ -954,7 +1064,7 @@ zC
 Wf
 Sx
 yk
-Wf
+IV
 Wf
 Eo
 lE
@@ -965,11 +1075,11 @@ oF
 PG
 WO
 Eo
-Wf
-eu
+aN
+aN
 pN
-Wf
-Wf
+aN
+aN
 zC
 vh
 bV
@@ -989,7 +1099,7 @@ zC
 Wf
 wb
 eu
-QR
+jn
 Wf
 Eo
 yg
@@ -1000,11 +1110,11 @@ oF
 PG
 ZO
 Eo
-Do
-wb
-yk
-Wf
-Wf
+Sw
+aN
+on
+aN
+aN
 zC
 Ag
 Yu
@@ -1025,7 +1135,7 @@ Wf
 Wf
 Wf
 rm
-cc
+Wf
 Eo
 yg
 Fe
@@ -1035,11 +1145,11 @@ oF
 oF
 ZO
 Eo
-Ca
+UG
 Hy
-Wf
-Wf
-Wf
+aN
+aN
+aN
 Eo
 Eo
 Eo
@@ -1074,7 +1184,7 @@ Eo
 Eo
 Eo
 Eo
-qU
+pc
 Eo
 Eo
 Vx
@@ -1097,13 +1207,13 @@ Sv
 Wf
 bY
 Eo
-sE
-sE
-sE
-sE
-sE
-sE
-sE
+Tr
+Wf
+Ew
+Cj
+Ew
+Wf
+Tr
 Eo
 bY
 Wf
@@ -1132,13 +1242,13 @@ tB
 Wf
 bY
 Eo
-sE
-bY
-AW
-bY
-AW
-bY
-sE
+TN
+dZ
+iH
+dZ
+mz
+dZ
+TN
 Eo
 bY
 Wf
@@ -1162,17 +1272,17 @@ CD
 zE
 Wf
 Wf
-QR
+Wf
 Wf
 Wf
 Wf
 CA
 sE
-bY
-aN
+sE
+sE
 Mw
-AW
-bY
+sE
+sE
 sE
 CA
 Wf
@@ -1196,18 +1306,18 @@ QC
 Ky
 Eo
 Wf
-Wf
+QR
 Wf
 jQ
 IV
 IV
 Eo
 sE
-bY
-AW
-bY
-AW
-bY
+sE
+sE
+sE
+sE
+sE
 sE
 Eo
 Cj
@@ -1264,7 +1374,7 @@ NW
 CD
 zE
 Wf
-Sv
+Wf
 Wf
 Wf
 Wf
@@ -1285,7 +1395,7 @@ CD
 sB
 Wf
 Wf
-Sv
+Wf
 Wf
 Wf
 sB
@@ -1298,9 +1408,9 @@ Eo
 QC
 Ky
 Eo
+IV
+Sv
 Wf
-IV
-IV
 Wf
 bY
 Eo
@@ -1320,9 +1430,9 @@ VV
 Eo
 bY
 Wf
-Sx
-IV
 Wf
+Wf
+Sv
 Eo
 Vx
 QC
@@ -1333,9 +1443,9 @@ Eo
 Eo
 Eo
 Eo
-Tm
-tB
-IV
+vK
+Wf
+Wf
 cc
 bY
 Eo
@@ -1355,9 +1465,9 @@ Eo
 Eo
 bY
 Wf
-kT
-yk
-na
+QR
+tB
+tv
 Eo
 Eo
 Eo
@@ -1368,9 +1478,9 @@ Eo
 QC
 Ky
 Eo
-Wf
-IV
 EV
+Ji
+Wf
 Ca
 bY
 Eo
@@ -1390,9 +1500,9 @@ VV
 Eo
 bY
 Wf
-wb
-IV
 Wf
+Ji
+jQ
 Eo
 Vx
 QC
@@ -1405,7 +1515,7 @@ CD
 zE
 Wf
 Wf
-Ji
+Wf
 Wf
 Wf
 zE
@@ -1425,8 +1535,8 @@ CD
 sB
 Wf
 Wf
-Ji
-jQ
+Wf
+Wf
 Wf
 sB
 CD
@@ -1483,11 +1593,11 @@ Wf
 Cj
 Eo
 sE
-bY
-AW
-bY
-AW
-bY
+sE
+sE
+sE
+sE
+sE
 sE
 Eo
 IV
@@ -1518,11 +1628,11 @@ Wf
 Wf
 CA
 sE
-bY
-AW
+sE
+sE
 Mw
-pc
-bY
+sE
+sE
 sE
 CA
 Wf
@@ -1552,13 +1662,13 @@ qh
 Wf
 bY
 Eo
-sE
-bY
-AW
-bY
-AW
-bY
-sE
+kT
+Cr
+tX
+Cr
+La
+Cr
+kT
 Eo
 bY
 Wf
@@ -1587,13 +1697,13 @@ wb
 ZK
 bY
 Eo
-sE
-sE
-sE
-sE
-sE
-sE
-sE
+Tr
+Wf
+Ew
+Cj
+Ew
+Wf
+Tr
 Eo
 bY
 Ji
@@ -1655,7 +1765,7 @@ Wf
 Wf
 Sv
 Mf
-Wf
+GQ
 Eo
 Ax
 lW
@@ -1687,10 +1797,10 @@ Yu
 vh
 zC
 Do
-eu
-pN
 Wf
 Wf
+wb
+yk
 Eo
 Ax
 gf
@@ -1722,10 +1832,10 @@ Ag
 vh
 zC
 Wf
-wb
-yk
-Ca
+QR
 Wf
+Ca
+jQ
 Eo
 kA
 gf
@@ -1757,7 +1867,7 @@ lw
 FO
 zC
 Wf
-jQ
+Wf
 Wf
 Wf
 Wf
