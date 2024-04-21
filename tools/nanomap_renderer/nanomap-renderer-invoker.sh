@@ -5,7 +5,7 @@ tools/nanomap_renderer/nanomap-renderer minimap -w 2040 -h 2040 "./_maps/map_fil
 tools/nanomap_renderer/nanomap-renderer minimap -w 2040 -h 2040 "./_maps/map_files/Deltastation/DeltaStation2.dmm"
 tools/nanomap_renderer/nanomap-renderer minimap -w 2040 -h 2040 "./_maps/map_files/IceBoxStation/IceBoxStation.dmm"
 tools/nanomap_renderer/nanomap-renderer minimap -w 2040 -h 2040 "./_maps/map_files/MetaStation/MetaStation.dmm"
-tools/nanomap_renderer/nanomap-renderer minimap -w 2040 -h 2040 "./_maps/map_files/Northstar/north_star.dmm"
+tools/nanomap_renderer/nanomap-renderer minimap -w 2040 -h 2040 "./_maps/map_files/NorthStar/north_star.dmm"
 tools/nanomap_renderer/nanomap-renderer minimap -w 2040 -h 2040 "./_maps/map_files/tramstation/tramstation.dmm"
 # Move and rename files so the game understands them
 cd "data/nanomaps"
