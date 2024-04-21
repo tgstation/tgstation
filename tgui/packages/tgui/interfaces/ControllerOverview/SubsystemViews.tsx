@@ -1,22 +1,22 @@
-import { useEffect, useMemo, useState } from 'react';
+import { Dispatch, useEffect, useMemo, useState } from 'react';
 
 import { useBackend } from '../../backend';
-import { Button, Section, Stack } from '../../components';
+import { Box, Button, Section, Stack } from '../../components';
 import { SORTING_TYPES } from './contants';
 import { FilterState } from './filters';
-import { SubsystemBar } from './SubsystemBar';
-import { SubsystemCollapsible } from './SubsystemCollapsible';
-import { ControllerData } from './types';
+import { SubsystemRow } from './SubsystemRow';
+import { ControllerData, SubsystemData } from './types';
 
 type Props = {
   filterOpts: FilterState;
+  setSelected: Dispatch<SubsystemData | undefined>;
 };
 
 export function SubsystemViews(props: Props) {
   const { data } = useBackend<ControllerData>();
   const { subsystems } = data;
 
-  const { filterOpts } = props;
+  const { filterOpts, setSelected } = props;
   const { ascending, inactive, query, smallValues, sortType } = filterOpts;
   const { propName, inDeciseconds } = SORTING_TYPES[sortType];
 
@@ -58,7 +58,6 @@ export function SubsystemViews(props: Props) {
   // Gets our totals for bar display
   const totals: number[] = [];
   let currentMax = 0;
-  let sum = 0;
   if (inDeciseconds) {
     for (let i = 0; i < toDisplay.length; i++) {
       let value = toDisplay[i][propName];
@@ -66,14 +65,10 @@ export function SubsystemViews(props: Props) {
         continue;
       }
 
-      sum += value;
       totals.push(value);
     }
 
-    let max = Math.max(...totals);
-    if (max !== sum) {
-      currentMax = max;
-    }
+    currentMax = Math.max(...totals);
   }
 
   useEffect(() => {
@@ -107,21 +102,20 @@ export function SubsystemViews(props: Props) {
         </Stack>
       }
     >
-      {toDisplay.map((subsystem) => {
-        if (bars && inDeciseconds) {
-          return (
-            <SubsystemBar
-              key={subsystem.ref}
-              max={currentMax}
-              subsystem={subsystem}
-              value={subsystem[propName]}
-            />
-          );
-        }
-        return (
-          <SubsystemCollapsible key={subsystem.ref} subsystem={subsystem} />
-        );
-      })}
+      {toDisplay.map((subsystem) => (
+        <Box
+          key={subsystem.ref}
+          mb={0.5}
+          onClick={() => setSelected(subsystem)}
+        >
+          <SubsystemRow
+            max={currentMax}
+            showBars={bars && inDeciseconds}
+            subsystem={subsystem}
+            value={subsystem[propName]}
+          />
+        </Box>
+      ))}
     </Section>
   );
 }

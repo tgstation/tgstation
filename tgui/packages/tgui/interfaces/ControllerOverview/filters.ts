@@ -14,6 +14,7 @@ export enum FilterAction {
   SmallValues = 'SET_FILTER_SMALL_VALUES',
   SortType = 'SET_SORT_TYPE',
   Query = 'SET_FILTER_QUERY',
+  Update = 'UPDATE_FILTER',
 }
 
 type Action =
@@ -21,7 +22,8 @@ type Action =
   | { type: FilterAction.Inactive; payload: boolean }
   | { type: FilterAction.SmallValues; payload: boolean }
   | { type: FilterAction.SortType; payload: SortType }
-  | { type: FilterAction.Query; payload: string };
+  | { type: FilterAction.Query; payload: string }
+  | { type: FilterAction.Update; payload: Partial<FilterState> };
 
 export function filterReducer(state: FilterState, action: Action): FilterState {
   switch (action.type) {
@@ -35,6 +37,8 @@ export function filterReducer(state: FilterState, action: Action): FilterState {
       return { ...state, sortType: action.payload };
     case FilterAction.Query:
       return { ...state, query: action.payload };
+    case FilterAction.Update: // Add this case
+      return { ...state, ...action.payload };
     default:
       return state;
   }

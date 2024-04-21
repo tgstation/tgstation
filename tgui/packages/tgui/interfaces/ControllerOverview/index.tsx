@@ -1,12 +1,13 @@
-import { useEffect, useReducer } from 'react';
+import { useReducer, useState } from 'react';
 
 import { Button, Dropdown, Input, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { SORTING_TYPES } from './contants';
-import { FilterAction, filterReducer } from './filters';
+import { FilterAction, filterReducer, FilterState } from './filters';
 import { OverviewSection } from './OverviewSection';
+import { SubsystemDialog } from './SubsystemDialog';
 import { SubsystemViews } from './SubsystemViews';
-import { SortType } from './types';
+import { SortType, SubsystemData } from './types';
 
 export function ControllerOverview(props) {
   return (
@@ -27,30 +28,34 @@ export function ControllerContent(props) {
     sortType: SortType.Name,
   });
 
+  const [selected, setSelected] = useState<SubsystemData | undefined>();
+
   const { label, inDeciseconds } =
     SORTING_TYPES?.[state.sortType] || SORTING_TYPES[0];
 
-  useEffect(() => {
-    // Quantifiable items default to descending view
-    if (inDeciseconds) {
-      if (state.ascending) {
-        dispatch({ type: FilterAction.Ascending, payload: false });
-      }
-      return;
-    }
+  function onSelectionHandler(value: string) {
+    const updates: Partial<FilterState> = {
+      sortType: SORTING_TYPES.findIndex((type) => type.label === value),
+    };
 
-    // Disable smallvalue search
-    if (state.smallValues) {
-      dispatch({ type: FilterAction.SmallValues, payload: false });
-    }
-    // Default to ascending view
-    if (!state.ascending) {
-      dispatch({ type: FilterAction.Ascending, payload: true });
-    }
-  }, [state.sortType]);
+    if (updates.sortType === undefined) return;
+
+    const { inDeciseconds } = SORTING_TYPES[updates.sortType];
+
+    updates.ascending = !inDeciseconds;
+    updates.smallValues = inDeciseconds;
+
+    dispatch({ type: FilterAction.Update, payload: updates });
+  }
 
   return (
     <Stack fill vertical>
+      {selected && (
+        <SubsystemDialog
+          onClose={() => setSelected(undefined)}
+          subsystem={selected}
+        />
+      )}
       <Stack.Item height="15%">
         <OverviewSection />
       </Stack.Item>
@@ -115,14 +120,7 @@ export function ControllerContent(props) {
                     options={SORTING_TYPES.map((type) => type.label)}
                     selected={label}
                     displayText={label}
-                    onSelected={(value) =>
-                      dispatch({
-                        type: FilterAction.SortType,
-                        payload: SORTING_TYPES.findIndex(
-                          (type) => type.label === value,
-                        ),
-                      })
-                    }
+                    onSelected={onSelectionHandler}
                   />
                 </Stack.Item>
                 <Stack.Item>
@@ -155,7 +153,7 @@ export function ControllerContent(props) {
         </Section>
       </Stack.Item>
       <Stack.Item grow>
-        <SubsystemViews filterOpts={state} />
+        <SubsystemViews setSelected={setSelected} filterOpts={state} />
       </Stack.Item>
     </Stack>
   );
