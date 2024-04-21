@@ -5795,6 +5795,7 @@
 #include "monkestation\code\modules\aesthetics\walls\iron.dm"
 #include "monkestation\code\modules\antagonists\_common\antag_datum.dm"
 #include "monkestation\code\modules\antagonists\_common\antag_hud.dm"
+#include "monkestation\code\modules\antagonists\battlecruiser\battlecruiser.dm"
 #include "monkestation\code\modules\antagonists\brainwashing\brainwashing.dm"
 #include "monkestation\code\modules\antagonists\brainwashing\brainwashing_alert.dm"
 #include "monkestation\code\modules\antagonists\brainwashing\brainwashing_helpers.dm"
