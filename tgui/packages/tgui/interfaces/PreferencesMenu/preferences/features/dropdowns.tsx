@@ -43,16 +43,17 @@ export function FeatureDropdownInput(props: DropdownInputProps) {
     };
   });
 
+  let display_text = value;
+  if (display_names) {
+    display_text = display_names[value];
+  }
+
   return (
     <Dropdown
       buttons={buttons}
       disabled={disabled}
       onSelected={handleSetValue}
-      displayText={
-        display_names
-          ? display_names[value] && capitalizeFirst(display_names[value])
-          : value && capitalizeFirst(value)
-      }
+      displayText={capitalizeFirst(display_text)}
       options={dropdownOptions}
       selected={value}
       width="100%"
@@ -94,14 +95,15 @@ export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
     };
   });
 
+  let display_text = value;
+  if (display_names) {
+    display_text = display_names[value];
+  }
+
   return (
     <Dropdown
       buttons
-      displayText={
-        display_names
-          ? display_names[value] && capitalizeFirst(display_names[value])
-          : value && capitalizeFirst(value)
-      }
+      displayText={capitalizeFirst(display_text)}
       onSelected={handleSetValue}
       options={dropdownOptions}
       selected={value}
