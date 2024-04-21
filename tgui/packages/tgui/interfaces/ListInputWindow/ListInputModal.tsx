@@ -7,22 +7,11 @@ import {
   KEY_ESCAPE,
   KEY_UP,
   KEY_Z,
-} from '../../common/keycodes';
-import { useBackend } from '../backend';
-import { Autofocus, Button, Input, Section, Stack } from '../components';
-import { Window } from '../layouts';
-import { logger } from '../logging';
-import { InputButtons } from './common/InputButtons';
-import { Loader } from './common/Loader';
-
-type ListInputData = {
-  init_value: string;
-  items: string[];
-  large_buttons: boolean;
-  message: string;
-  timeout: number;
-  title: string;
-};
+} from '../../../common/keycodes';
+import { useBackend } from '../../backend';
+import { Autofocus, Button, Input, Section, Stack } from '../../components';
+import { logger } from '../../logging';
+import { InputButtons } from '../common/InputButtons';
 
 type ListInputModalProps = {
   items: string[];
@@ -177,45 +166,12 @@ export const ListInputModal = (props: ListInputModalProps) => {
   );
 };
 
-export const ListInputWindow = () => {
-  const { act, data } = useBackend<ListInputData>();
-  const {
-    items = [],
-    message = '',
-    init_value,
-    large_buttons,
-    timeout,
-    title,
-  } = data;
-
-  logger.info('ListInputWindow', { items, message, init_value });
-
-  // Dynamically changes the window height based on the message.
-  const windowHeight =
-    325 + Math.ceil(message.length / 3) + (large_buttons ? 5 : 0);
-
-  return (
-    <Window title={title} width={325} height={windowHeight}>
-      {timeout && <Loader value={timeout} />}
-      <Window.Content>
-        <ListInputModal
-          items={items}
-          default_item={init_value}
-          message={message}
-          on_selected={(entry) => act('submit', { entry })}
-          on_cancel={() => act('cancel')}
-        />
-      </Window.Content>
-    </Window>
-  );
-};
-
 /**
  * Displays the list of selectable items.
  * If a search query is provided, filters the items.
  */
 const ListDisplay = (props) => {
-  const { act } = useBackend<ListInputData>();
+  const { act } = useBackend();
   const { filteredItems, onClick, onFocusSearch, searchBarVisible, selected } =
     props;
 
@@ -259,7 +215,7 @@ const ListDisplay = (props) => {
  * Closing the bar defaults input to an empty string.
  */
 const SearchBar = (props) => {
-  const { act } = useBackend<ListInputData>();
+  const { act } = useBackend();
   const { filteredItems, onSearch, searchQuery, selected } = props;
 
   return (
