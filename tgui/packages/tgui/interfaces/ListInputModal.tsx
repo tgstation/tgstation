@@ -183,7 +183,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
   );
 };
 
-export const ListInputWindow = (props) => {
+export const ListInputWindow = () => {
   const { act, data } = useBackend<ListInputData>();
   const {
     items = [],
