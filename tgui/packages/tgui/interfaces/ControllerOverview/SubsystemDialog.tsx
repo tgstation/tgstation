@@ -49,11 +49,11 @@ export function SubsystemDialog(props: Props) {
           <LabeledList.Item label="Tick Overrun">
             {(tick_overrun * 0.01).toFixed(2)}%
           </LabeledList.Item>
-          {initialization_failure_message ? (
+          {initialization_failure_message && (
             <LabeledList.Item color="bad">
               {initialization_failure_message}
             </LabeledList.Item>
-          ) : undefined}
+          )}
         </LabeledList>
       </Box>
       <Stack fill justify="space-between">
