@@ -318,7 +318,6 @@
 	)
 
 /obj/item/borg/cyborg_omnitool/medical/reference_item_for_parameters()
-	SHOULD_CALL_PARENT(FALSE)
 	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = tool_behaviour == (TOOL_SCALPEL && TOOL_SAW)
 	RemoveElement(/datum/element/eyestab)
@@ -370,7 +369,6 @@
 	)
 
 /obj/item/borg/cyborg_omnitool/engineering/reference_item_for_parameters()
-	SHOULD_CALL_PARENT(FALSE)
 	RemoveElement(/datum/element/eyestab)
 	switch(tool_behaviour)
 		if(TOOL_SCREWDRIVER)
