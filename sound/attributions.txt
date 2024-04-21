@@ -147,9 +147,3 @@ https://freesound.org/people/gynation/sounds/82378/
 nightmare_poof.ogg and nightmare_reappear.ogg are comprised of breath_01.wav by Nightflame (CC0) and slide-click.wav by Qat (CC0)
 https://freesound.org/people/Qat/sounds/108332/
 https://freesound.org/people/Nightflame/sounds/368615/
-
-cyborg_track.ogg is made by grungussuss From the following sounds: https://freesound.org/people/Ubehag/sounds/235350/ ; https://freesound.org/people/walthamstow_walker/sounds/559491/ ; https://freesound.org/people/Artninja/sounds/701459/ ; https://freesound.org/people/Garuda1982/sounds/541240/
-under this license: https://creativecommons.org/licenses/by/4.0/
-
-
-
