@@ -149,7 +149,7 @@
 /datum/station_trait/overflow_job_bureaucracy/proc/set_overflow_job_override(datum/source)
 	SIGNAL_HANDLER
 	var/datum/job/picked_job = pick(SSjob.get_valid_overflow_jobs())
-	chosen_job_name = lowertext(picked_job.title) // like Chief Engineers vs like chief engineers
+	chosen_job_name = LOWER_TEXT(picked_job.title) // like Chief Engineers vs like chief engineers
 	SSjob.set_overflow_role(picked_job.type)
 
 /datum/station_trait/slow_shuttle
@@ -591,7 +591,7 @@
 		//if engineering isnt valid, just send it to the bridge
 		send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/command/bridge, /obj/structure/closet/supplypod/centcompod)
 
-	// Let the viro know resistence is futile
+	// Let medical know resistence is futile
 	send_fax_to_area(new /obj/item/paper/fluff/radiation_nebula_virologist(), /area/station/medical/virology, "NT Virology Department", \
 	force = TRUE, force_pod_type = /obj/structure/closet/supplypod/centcompod)
 

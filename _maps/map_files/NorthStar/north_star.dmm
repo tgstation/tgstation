@@ -7946,10 +7946,9 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/secondary/entry)
 "bWZ" = (
-/obj/structure/sign/poster/contraband/hacking_guide/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/extinguisher_cabinet/directional/west,
 /obj/machinery/duct,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/fitness)
 "bXd" = (
@@ -44185,8 +44184,9 @@
 /area/station/command/meeting_room)
 "ltH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/camera/autoname/directional/north,
 /obj/machinery/duct,
+/obj/structure/sign/poster/contraband/hacking_guide/directional/north,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/fitness)
 "ltI" = (
@@ -63803,6 +63803,8 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/fitness)
 "qtH" = (
@@ -72965,7 +72967,6 @@
 	specialfunctions = 4
 	},
 /obj/effect/turf_decal/tile/green/opposingcorners,
-/obj/effect/landmark/start/virologist,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "sPs" = (
@@ -76628,14 +76629,6 @@
 	},
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor3/port/aft)
-"tKr" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/green/opposingcorners,
-/obj/effect/landmark/start/virologist,
-/turf/open/floor/iron/white,
-/area/station/medical/virology)
 "tKs" = (
 /obj/structure/curtain,
 /obj/structure/fans/tiny{
@@ -196074,7 +196067,7 @@ iOA
 utl
 doh
 gJz
-tKr
+rPC
 hwQ
 piz
 aWO
@@ -196588,7 +196581,7 @@ iOA
 dfU
 pZm
 wJy
-tKr
+rPC
 dVV
 bLm
 yhv
@@ -257493,7 +257486,7 @@ sSB
 sSB
 sSB
 sSB
-qrd
+sSB
 qrd
 qrd
 sNE
@@ -257751,7 +257744,7 @@ qrd
 qrd
 qrd
 qrd
-bWZ
+qrd
 vTf
 gvO
 boP
@@ -259036,7 +259029,7 @@ qrd
 oeQ
 xgb
 nWe
-mkl
+bWZ
 hwr
 oWt
 wJH

@@ -12,6 +12,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
+	interaction_flags_click = NEED_DEXTERITY
 
 /datum/armor/mask_breath
 	bio = 50
@@ -23,10 +24,9 @@
 /obj/item/clothing/mask/breath/attack_self(mob/user)
 	adjustmask(user)
 
-/obj/item/clothing/mask/breath/AltClick(mob/user)
-	..()
-	if(user.can_perform_action(src, NEED_DEXTERITY))
-		adjustmask(user)
+/obj/item/clothing/mask/breath/click_alt(mob/user)
+	adjustmask(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/breath/examine(mob/user)
 	. = ..()

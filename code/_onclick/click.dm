@@ -96,7 +96,7 @@
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			alt_click_on_secondary(A)
 		else
-			AltClickOn(A)
+			base_click_alt(A)
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
@@ -385,24 +385,6 @@
 		A.CtrlClick(src)
 	return
 
-/**
- * Alt click
- * Unused except for AI
- */
-/mob/proc/AltClickOn(atom/A)
-	. = SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, A)
-	if(. & COMSIG_MOB_CANCEL_CLICKON)
-		return
-	A.AltClick(src)
-
-/atom/proc/AltClick(mob/user)
-	if(!user.can_interact_with(src))
-		return FALSE
-	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
-		return
-	var/turf/T = get_turf(src)
-	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T) && !HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
-		user.set_listed_turf(T)
 
 ///The base proc of when something is right clicked on when alt is held - generally use alt_click_secondary instead
 /atom/proc/alt_click_on_secondary(atom/A)
@@ -421,14 +403,8 @@
 		user.client.toggle_tag_datum(src)
 		return
 
-/// Use this instead of [/mob/proc/AltClickOn] where you only want turf content listing without additional atom alt-click interaction
-/atom/proc/AltClickNoInteract(mob/user, atom/A)
-	var/turf/T = get_turf(A)
-	if(T && user.TurfAdjacent(T))
-		user.set_listed_turf(T)
-
-/mob/proc/TurfAdjacent(turf/T)
-	return T.Adjacent(src)
+/mob/proc/TurfAdjacent(turf/tile)
+	return tile.Adjacent(src)
 
 /**
  * Control+Shift click

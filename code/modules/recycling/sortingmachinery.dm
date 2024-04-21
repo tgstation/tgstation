@@ -51,10 +51,9 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += contents
 
-/obj/item/delivery/deconstruct()
+/obj/item/delivery/atom_deconstruct(dissambled = TRUE)
 	unwrap_contents()
 	post_unwrap_contents()
-	return ..()
 
 /obj/item/delivery/examine(mob/user)
 	. = ..()
@@ -80,7 +79,7 @@
 		movable_loc.relay_container_resist_act(user, object)
 		return
 	to_chat(user, span_notice("You lean on the back of [object] and start pushing to rip the wrapping around it."))
-	if(do_after(user, 50, target = object))
+	if(do_after(user, 5 SECONDS, target = object))
 		if(!user || user.stat != CONSCIOUS || user.loc != object || object.loc != src)
 			return
 		to_chat(user, span_notice("You successfully removed [object]'s wrapping!"))
@@ -401,10 +400,10 @@
 	payments_acc = null
 	to_chat(user, span_notice("You clear the registered account."))
 
-/obj/item/sales_tagger/AltClick(mob/user)
-	. = ..()
+/obj/item/sales_tagger/click_alt(mob/user)
 	var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null
 	if(!potential_cut)
 		cut_multiplier = initial(cut_multiplier)
 	cut_multiplier = clamp(round(potential_cut/100, cut_min), cut_min, cut_max)
 	to_chat(user, span_notice("[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold."))
+	return CLICK_ACTION_SUCCESS

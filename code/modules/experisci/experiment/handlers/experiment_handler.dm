@@ -236,6 +236,7 @@
 /datum/component/experiment_handler/proc/configure_experiment(datum/source, mob/user)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
+	return CLICK_ACTION_SUCCESS
 
 /**
  * Attempts to show the user the experiment configuration panel

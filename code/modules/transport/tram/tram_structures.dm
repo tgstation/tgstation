@@ -212,14 +212,12 @@
 
 	return ..()
 
-/obj/structure/tram/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(disassembled)
-			new girder_type(loc)
-		if(mineral_amount)
-			for(var/i in 1 to mineral_amount)
-				new mineral(loc)
-	qdel(src)
+/obj/structure/tram/atom_deconstruct(disassembled = TRUE)
+	if(disassembled)
+		new girder_type(loc)
+	if(mineral_amount)
+		for(var/i in 1 to mineral_amount)
+			new mineral(loc)
 
 /obj/structure/tram/attackby(obj/item/item, mob/user, params)
 	. = ..()
@@ -488,7 +486,6 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/tram/spoiler/LateInitialize()
-	. = ..()
 	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(set_spoiler))
 
 /obj/structure/tram/spoiler/add_context(atom/source, list/context, obj/item/held_item, mob/user)

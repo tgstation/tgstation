@@ -397,3 +397,6 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define SPY_DIFFICULTY_MEDIUM "Medium"
 /// Very difficult to accomplish, almost guaranteed to require crew conflict
 #define SPY_DIFFICULTY_HARD "Hard"
+
+/// Camera net used by battle royale objective
+#define BATTLE_ROYALE_CAMERA_NET "battle_royale_camera_net"

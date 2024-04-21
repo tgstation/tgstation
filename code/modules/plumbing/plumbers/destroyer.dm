@@ -3,7 +3,6 @@
 	desc = "Breaks down chemicals and annihilates them."
 	icon_state = "disposal"
 	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 
 	///we remove 5 reagents per second
 	var/disposal_rate = 5
@@ -13,7 +12,7 @@
 	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 
 /obj/machinery/plumbing/disposer/process(seconds_per_tick)
-	if(machine_stat & NOPOWER)
+	if(!is_operational)
 		return
 	if(reagents.total_volume)
 		if(icon_state != initial(icon_state) + "_working") //threw it here instead of update icon since it only has two states

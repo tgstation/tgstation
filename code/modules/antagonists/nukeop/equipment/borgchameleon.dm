@@ -1,5 +1,5 @@
-#define ACTIVATION_COST (300 KILO JOULES)
-#define ACTIVATION_UP_KEEP (25 KILO WATTS)
+#define ACTIVATION_COST (0.3 * STANDARD_CELL_CHARGE)
+#define ACTIVATION_UP_KEEP (0.025 * STANDARD_CELL_RATE)
 
 /obj/item/borg_chameleon
 	name = "cyborg chameleon projector"
@@ -66,7 +66,7 @@
 		to_chat(user, span_notice("You activate \the [src]."))
 		playsound(src, 'sound/effects/seedling_chargeup.ogg', 100, TRUE, -6)
 		apply_wibbly_filters(user)
-		if (do_after(user, 50, target=user) && user.cell.use(ACTIVATION_COST))
+		if (do_after(user, 5 SECONDS, target = user, hidden = TRUE) && user.cell.use(ACTIVATION_COST))
 			playsound(src, 'sound/effects/bamf.ogg', 100, TRUE, -6)
 			to_chat(user, span_notice("You are now disguised as the Nanotrasen engineering borg \"[friendlyName]\"."))
 			activate(user)

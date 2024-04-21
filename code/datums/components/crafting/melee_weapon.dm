@@ -44,6 +44,21 @@
 	time = 4 SECONDS
 	category = CAT_WEAPON_MELEE
 
+
+/datum/crafting_recipe/balloon_mallet
+	name = "Balloon Mallet"
+	result = /obj/item/balloon_mallet
+	reqs = list(
+		/obj/item/toy/balloon/long = 18,
+	)
+	time = 10 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/balloon_mallet/check_requirements(mob/user, list/collected_requirements)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
+		return TRUE
+
 /datum/crafting_recipe/tailwhip
 	name = "Liz O' Nine Tails"
 	result = /obj/item/melee/chainofcommand/tailwhip
