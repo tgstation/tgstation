@@ -150,7 +150,7 @@ Difficulty: Extremely Hard
 	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
 		prism_to_set.set_prism_light(LIGHT_COLOR_PURPLE, 5)
 	SLEEP_CHECK_DEATH(8, src)
-	for(var/mob/living/L in viewers(src))
+	for(var/mob/living/L in viewers(DEFAULT_SIGHT_DISTANCE, src))
 		shake_camera(L, 3, 2)
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	ADD_TRAIT(src, TRAIT_MOVE_FLYING, FROSTMINER_ENRAGE_TRAIT)

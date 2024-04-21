@@ -299,7 +299,7 @@
 
 		if(SLIME_ACTIVATE_MAJOR)
 			user.visible_message(span_warning("[user]'s skin flashes red for a moment..."), span_warning("Your skin flashes red as you emit rage-inducing pheromones..."))
-			for(var/mob/living/basic/slime/slime in viewers(get_turf(user), null))
+			for(var/mob/living/basic/slime/slime in viewers(DEFAULT_SIGHT_DISTANCE, get_turf(user)))
 				slime.ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE)
 				slime.visible_message(span_danger("The [slime] is driven into a frenzy!"))
 			return 600

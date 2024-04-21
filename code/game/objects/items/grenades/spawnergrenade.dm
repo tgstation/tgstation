@@ -23,7 +23,7 @@
 		// Make a quick flash
 		var/turf/target_turf = get_turf(src)
 		playsound(target_turf, 'sound/effects/phasein.ogg', 100, TRUE)
-		for(var/mob/living/carbon/target_carbon in viewers(target_turf, null))
+		for(var/mob/living/carbon/target_carbon in viewers(2, target_turf))
 			target_carbon.flash_act()
 
 		// Spawn some hostile syndicate critters and spread them out

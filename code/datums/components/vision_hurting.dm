@@ -13,7 +13,7 @@
 	START_PROCESSING(SSdcs, src)
 
 /datum/component/vision_hurting/process(seconds_per_tick)
-	for(var/mob/living/carbon/viewer in viewers(parent))
+	for(var/mob/living/carbon/viewer in viewers(DEFAULT_SIGHT_DISTANCE, parent))
 		if(viewer.is_blind() || viewer.get_eye_protection() >= damage_per_second)
 			continue
 		var/obj/item/organ/internal/eyes/burning_orbs = locate() in viewer.organs

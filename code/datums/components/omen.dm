@@ -105,7 +105,9 @@
 	// This way, we allow for people to be able to get into hilarious situations without making the game nigh unplayable most of the time.
 
 	var/has_watchers = FALSE
-	for(var/mob/viewer in viewers(our_guy, world.view))
+	for(var/mob/viewer in viewers(DEFAULT_SIGHT_DISTANCE, our_guy))
+		if(viewer == our_guy)
+			continue
 		if(viewer.client)
 			has_watchers = TRUE
 			break

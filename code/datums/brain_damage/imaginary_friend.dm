@@ -325,7 +325,7 @@
 		for(var/mob/ghost as anything in GLOB.dead_mob_list)
 			if(!ghost.client || isnewplayer(ghost))
 				continue
-			if(get_chat_toggles(ghost.client) & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
+			if(get_chat_toggles(ghost.client) & CHAT_GHOSTSIGHT && !CAN_THEY_SEE(user_turf, ghost))
 				ghost.show_message("[FOLLOW_LINK(ghost, user)] [dchatmsg]")
 
 	for(var/mob/person in friend.owner.imaginary_group)

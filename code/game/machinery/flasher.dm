@@ -116,10 +116,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	use_energy(1 KILO JOULES)
 
 	var/flashed = FALSE
-	for(var/mob/living/living_mob in viewers(src, null))
-		if (get_dist(src, living_mob) > flash_range)
-			continue
-
+	for(var/mob/living/living_mob in viewers(flash_range, src))
 		if(living_mob.flash_act(affect_silicon = TRUE))
 			living_mob.log_message("was AOE flashed by an automated portable flasher", LOG_ATTACK)
 			living_mob.Paralyze(strength)

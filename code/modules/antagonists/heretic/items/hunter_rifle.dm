@@ -74,7 +74,7 @@
 	)
 	reticle.alpha = 0
 
-	var/list/mob/viewers = viewers(target)
+	var/list/mob/viewers = viewers(DEFAULT_SIGHT_DISTANCE, target)
 	// The shooter might be out of view, but they should be included
 	viewers |= user
 

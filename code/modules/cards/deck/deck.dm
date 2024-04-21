@@ -110,7 +110,7 @@
 /// This checks if nearby mobs are playing a cardgame and triggers a mood and memory
 /obj/item/toy/cards/deck/proc/CardgameEvent(mob/living/dealer)
 	var/card_players = list()
-	for(var/mob/living/carbon/person in viewers(loc, COMBAT_MESSAGE_RANGE))
+	for(var/mob/living/carbon/person in viewers(COMBAT_MESSAGE_RANGE, loc))
 		var/obj/item/toy/held_card_item = person.is_holding_item_of_type(/obj/item/toy/singlecard) || person.is_holding_item_of_type(/obj/item/toy/cards/deck) || person.is_holding_item_of_type(/obj/item/toy/cards/cardhand)
 		if(held_card_item)
 			card_players[person] = held_card_item

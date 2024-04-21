@@ -196,7 +196,7 @@ at the cost of risking a vicious bite.**/
 	status = ALTAR_STAGETWO
 	update_icon()
 	visible_message(span_warning("You start feeling nauseous..."))
-	for(var/mob/living/viewing_mob in viewers(7, src))
+	for(var/mob/living/viewing_mob in viewers(DEFAULT_SIGHT_DISTANCE, src))
 		viewing_mob.set_eye_blur_if_lower(20 SECONDS)
 		viewing_mob.adjust_confusion(10 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(pants_stagethree)), ALTAR_TIME)
@@ -206,7 +206,7 @@ at the cost of risking a vicious bite.**/
 	status = ALTAR_STAGETHREE
 	update_icon()
 	visible_message(span_warning("You start feeling horrible..."))
-	for(var/mob/living/viewing_mob in viewers(7, src))
+	for(var/mob/living/viewing_mob in viewers(DEFAULT_SIGHT_DISTANCE, src))
 		viewing_mob.set_dizzy_if_lower(20 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(pants_create)), ALTAR_TIME)
 
@@ -215,7 +215,7 @@ at the cost of risking a vicious bite.**/
 	status = ALTAR_INACTIVE
 	update_icon()
 	visible_message(span_danger("[src] emits a flash of light and creates... pants?"))
-	for(var/mob/living/viewing_mob in viewers(7, src))
+	for(var/mob/living/viewing_mob in viewers(DEFAULT_SIGHT_DISTANCE, src))
 		viewing_mob.flash_act()
 	var/obj/item/clothing/under/pants/slacks/altar/pants = new(get_turf(src))
 	pants.add_atom_colour(pants_color, ADMIN_COLOUR_PRIORITY)

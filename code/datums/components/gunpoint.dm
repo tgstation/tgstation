@@ -213,13 +213,13 @@
 ///Shows if the parent is holding someone at gunpoint
 /datum/component/gunpoint/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	if(user in viewers(target))
+	if(CAN_THEY_SEE(parent, user))
 		examine_list += span_boldwarning("[parent] [parent.p_are()] holding [target] at gunpoint with [weapon]!")
 
 ///Shows if the examine target is being held at gunpoint
 /datum/component/gunpoint/proc/examine_target(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	if(user in viewers(parent))
+	if(CAN_THEY_SEE(target, user))
 		examine_list += span_boldwarning("[target] [target.p_are()] being held at gunpoint by [parent]!")
 
 ///Prevents bumping the shooter to break gunpoint since shove does that

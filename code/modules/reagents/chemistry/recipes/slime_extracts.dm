@@ -139,7 +139,7 @@
 
 	playsound(T, 'sound/effects/phasein.ogg', 100, TRUE)
 
-	for(var/mob/living/carbon/C in viewers(T, null))
+	for(var/mob/living/carbon/C in viewers(2, T))
 		C.flash_act()
 
 	for(var/i in 1 to 4 + rand(1,2))
@@ -313,7 +313,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_SLIME | REACTION_TAG_DANGEROUS
 
 /datum/chemical_reaction/slime/slimebloodlust/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	for(var/mob/living/basic/slime/slime in viewers(get_turf(holder.my_atom), null))
+	for(var/mob/living/basic/slime/slime in viewers(DEFAULT_SIGHT_DISTANCE, get_turf(holder.my_atom)))
 		if(slime.hunger_disabled) //Undoes docility, but doesn't make rabid.
 			slime.visible_message(span_danger("[slime] forgets its training, becoming wild once again!"))
 			slime.set_default_behaviour()

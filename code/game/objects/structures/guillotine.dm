@@ -169,7 +169,9 @@
 				// The crowd is pleased
 				// The delay is to make large crowds have a longer lasting applause
 				var/delay_offset = 0
-				for(var/mob/living/carbon/human/spectator in viewers(src, 7))
+				for(var/mob/living/carbon/human/spectator in viewers(DEFAULT_SIGHT_DISTANCE, src))
+					if(spectator == user)
+						continue
 					addtimer(CALLBACK(spectator, TYPE_PROC_REF(/mob/, emote), "clap"), delay_offset * 0.3)
 					delay_offset++
 			else

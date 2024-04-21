@@ -893,7 +893,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	visible_message(span_warning("[src] turns a bright, glowing orange!"))
 	color = "#FC9B54"
 	set_light(6, 1, color)
-	for(var/mob/living/target in viewers(T))
+	for(var/mob/living/target in viewers(DEFAULT_SIGHT_DISTANCE, T))
 		if(!IS_CULTIST(target) && target.blood_volume)
 			if(target.can_block_magic(charge_cost = 0))
 				continue
@@ -918,7 +918,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 
 /obj/effect/rune/blood_boil/proc/do_area_burn(turf/T, multiplier)
 	set_light(6, 1, color)
-	for(var/mob/living/target in viewers(T))
+	for(var/mob/living/target in viewers(DEFAULT_SIGHT_DISTANCE, T))
 		if(!IS_CULTIST(target) && target.blood_volume)
 			if(target.can_block_magic(charge_cost = 0))
 				continue
