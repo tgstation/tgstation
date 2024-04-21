@@ -27,9 +27,6 @@ jobs:
       with:
         token: ${{ steps.create_token.outputs.token }}
 
-    - name: Install dmm-tools
-      run: bash tools/ci/install_spaceman_dmm.sh dmm-tools
-
     - name: Branch
       run: |
         git branch -f nanomap-render
