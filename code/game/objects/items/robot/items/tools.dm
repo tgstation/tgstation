@@ -218,13 +218,13 @@
 		tool_behaviour = new_tool_behaviour
 
 	reference_item_for_parameters()
-	SHOULD_CALL_PARENT(FALSE)
 	update_tool_parameters(reference)
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
 
 /// Used to get reference item for the tools
 /obj/item/borg/cyborg_omnitool/proc/reference_item_for_parameters()
+	SHOULD_CALL_PARENT(FALSE)
 	switch(tool_behaviour)
 		if(TOOL_SCALPEL)
 			reference = /obj/item/scalpel
@@ -270,7 +270,6 @@
 	upgraded = TRUE
 	tool_behaviour = null
 	reference_item_for_parameters()
-	SHOULD_CALL_PARENT(FALSE)
 	update_tool_parameters(reference)
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
@@ -288,7 +287,6 @@
 	upgraded = FALSE
 	tool_behaviour = null
 	reference_item_for_parameters()
-	SHOULD_CALL_PARENT(FALSE)
 	update_tool_parameters(reference)
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
@@ -320,6 +318,7 @@
 	)
 
 /obj/item/borg/cyborg_omnitool/medical/reference_item_for_parameters()
+	SHOULD_CALL_PARENT(FALSE)
 	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = tool_behaviour == (TOOL_SCALPEL && TOOL_SAW)
 	RemoveElement(/datum/element/eyestab)
@@ -371,6 +370,7 @@
 	)
 
 /obj/item/borg/cyborg_omnitool/engineering/reference_item_for_parameters()
+	SHOULD_CALL_PARENT(FALSE)
 	RemoveElement(/datum/element/eyestab)
 	switch(tool_behaviour)
 		if(TOOL_SCREWDRIVER)
