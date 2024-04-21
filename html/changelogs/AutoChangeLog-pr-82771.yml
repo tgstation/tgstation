@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "pseudo circuit adapter computes recharge delay durations correctly & won't use power when on cooldown"
+  - code_imp: "uses standard cell defines for N-spect scanner"

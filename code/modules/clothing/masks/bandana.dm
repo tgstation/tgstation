@@ -224,7 +224,7 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/facescarf/inhands_left
 	greyscale_config_inhand_right = /datum/greyscale_config/facescarf/inhands_right
 	flags_1 = IS_PLAYER_COLORABLE_1
-	interaction_flags_click = NEED_DEXTERITY
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 
 /obj/item/clothing/mask/facescarf/attack_self(mob/user)
 	adjustmask(user)

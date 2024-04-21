@@ -1,0 +1,5 @@
+author: "Singul0"
+delete-after: True
+changes:
+  - rscadd: "Adds an omnitoolset for both engineering and medical cyborgs, containing various basic tools"
+  - qol: "Engineer and Medical module inventory space is now significantly decluttered"
