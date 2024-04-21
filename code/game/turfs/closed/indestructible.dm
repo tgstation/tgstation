@@ -241,7 +241,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	smoothing_groups = null
 
 /turf/closed/indestructible/fakedoor/maintenance
-	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/hatch/maintenance.dmi'
 
 /turf/closed/indestructible/fakedoor/glass_airlock
 	icon = 'icons/obj/doors/airlocks/tall/external/external.dmi'

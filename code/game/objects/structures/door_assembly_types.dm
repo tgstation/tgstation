@@ -99,17 +99,17 @@
 
 /obj/structure/door_assembly/door_assembly_hatch
 	name = "airtight hatch assembly"
-	icon = 'icons/obj/doors/airlocks/hatch/centcom.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/hatch/centcom.dmi'
 	base_name = "airtight hatch"
-	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
+	//overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/hatch
 	noglass = TRUE
 
 /obj/structure/door_assembly/door_assembly_mhatch
 	name = "maintenance hatch assembly"
-	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/hatch/maintenance.dmi'
 	base_name = "maintenance hatch"
-	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
+	//overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/maintenance_hatch
 	noglass = TRUE
 

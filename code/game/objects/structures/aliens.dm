@@ -115,6 +115,7 @@
 	return attack_hand(user, modifiers)
 
 ///Used in the big derelict ruin exclusively.
+#warn fuckin dies
 /obj/structure/alien/resin/membrane/creature
 	name = "gelatinous membrane"
 	desc = "A strange combination of thin, gelatinous material."

@@ -2331,18 +2331,18 @@
 
 /obj/machinery/door/airlock/hatch
 	name = "airtight hatch"
-	icon = 'icons/obj/doors/airlocks/hatch/centcom.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
-	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/hatch/centcom.dmi'
+	//overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
+	//note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_hatch
 	greyscale_config = null
 	greyscale_colors = null
 
 /obj/machinery/door/airlock/maintenance_hatch //Please dear fucking LORD make this a subtype of the above, they're the SAME GOD DAMN THING
 	name = "maintenance hatch"
-	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
-	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/hatch/maintenance.dmi'
+	//overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
+	//note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mhatch
 	greyscale_config = null
 	greyscale_colors = null
