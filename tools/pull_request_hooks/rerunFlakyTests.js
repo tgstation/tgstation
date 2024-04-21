@@ -9,7 +9,7 @@ const CONSIDERED_JOBS = [
 
 async function getFailedJobsForRun(github, context, workflowRunId, runAttempt) {
 	const jobs = await github.paginate(
-		github.actions.listJobsForWorkflowRunAttempt,
+		github.rest.actions.listJobsForWorkflowRunAttempt,
 		{
 			owner: context.repo.owner,
 			repo: context.repo.repo,
