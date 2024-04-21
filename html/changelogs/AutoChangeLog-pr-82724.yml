@@ -1,0 +1,6 @@
+author: "Iajret"
+delete-after: True
+changes:
+  - rscadd: "added ventpointer that points toward nearby ore vents and can be bought with mining points"
+  - balance: "scanned ore vents can now be found with GPS"
+  - bugfix: "fixed ore vents missing overlay icon for uranium"
