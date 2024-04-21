@@ -387,7 +387,7 @@ multiple modular subtrees with behaviors
 	paused_until = world.time + time
 
 /datum/ai_controller/proc/modify_cooldown(datum/ai_behavior/behavior, new_cooldown)
-	behavior_cooldowns[behavior.type] = new_cooldown
+	behavior_cooldowns[behavior] = new_cooldown
 
 ///Call this to add a behavior to the stack.
 /datum/ai_controller/proc/queue_behavior(behavior_type, ...)
@@ -420,7 +420,7 @@ multiple modular subtrees with behaviors
 
 	var/process_flags = behavior.perform(arglist(arguments))
 	if(process_flags & AI_BEHAVIOR_DELAY)
-		behavior_cooldowns[behavior.type] = world.time + behavior.get_cooldown(src)
+		behavior_cooldowns[behavior] = world.time + behavior.get_cooldown(src)
 	if(process_flags & AI_BEHAVIOR_FAILED)
 		arguments[1] = src
 		arguments[2] = FALSE
