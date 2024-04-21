@@ -16,16 +16,16 @@ type InputButtonsProps = {
 export const InputButtons = (props: InputButtonsProps) => {
   const { act, data } = useBackend<InputButtonsData>();
   const { large_buttons, swapped_buttons } = data;
-  const { input, message, on_submit } = props;
+  const { input, message, on_submit, on_cancel } = props;
 
-  let on_submit_actual = props.on_submit;
+  let on_submit_actual = on_submit;
   if (!on_submit_actual) {
     on_submit_actual = () => {
       act('submit', { entry: input });
     };
   }
 
-  let on_cancel_actual = props.on_cancel;
+  let on_cancel_actual = on_cancel;
   if (!on_cancel_actual) {
     on_cancel_actual = () => {
       act('cancel');

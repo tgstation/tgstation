@@ -11,6 +11,7 @@ import {
 import { useBackend } from '../backend';
 import { Autofocus, Button, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
+import { logger } from '../logging';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
 
@@ -27,20 +28,13 @@ type ListInputModalProps = {
   items: string[];
   default_item: string;
   message: string;
-  large_buttons?: boolean;
   on_selected: (entry: string) => void;
   on_cancel: () => void;
 };
 
 export const ListInputModal = (props: ListInputModalProps) => {
-  const {
-    items,
-    default_item,
-    message,
-    large_buttons = false,
-    on_selected,
-    on_cancel,
-  } = props;
+  const { items = [], default_item, message, on_selected, on_cancel } = props;
+  logger.info('ListInputModal', { items, default_item, message });
 
   const [selected, setSelected] = useState(items.indexOf(default_item));
   const [searchBarVisible, setSearchBarVisible] = useState(items.length > 9);
@@ -194,6 +188,8 @@ export const ListInputWindow = () => {
     title,
   } = data;
 
+  logger.info('ListInputWindow', { items, message, init_value });
+
   // Dynamically changes the window height based on the message.
   const windowHeight =
     325 + Math.ceil(message.length / 3) + (large_buttons ? 5 : 0);
@@ -206,7 +202,6 @@ export const ListInputWindow = () => {
           items={items}
           default_item={init_value}
           message={message}
-          large_buttons={large_buttons}
           on_selected={(entry) => act('submit', { entry })}
           on_cancel={() => act('cancel')}
         />
