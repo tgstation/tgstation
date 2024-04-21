@@ -1,8 +1,8 @@
 /datum/round_event_control/slasher
 	name = "Slasher"
 	typepath = /datum/round_event/ghost_role/slasher
-	weight = 14 // for now
-	max_occurrences = 2
+	weight = 0 // for now, disabled. prev weight of 14. max occurrances set to 0 to disable the storyteller from running the event. can still be manually done by admins as requested.
+	max_occurrences = 0
 	track = EVENT_TRACK_MODERATE
 	tags = list(TAG_SPOOKY, TAG_COMBAT, TAG_EXTERNAL)
 	checks_antag_cap = TRUE
