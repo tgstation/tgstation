@@ -277,7 +277,7 @@
 /turf/open/indestructible/grass
 	name = /turf/open/misc/grass::name
 	desc = /turf/open/misc/grass::desc
-	icon = MAP_SWITCH(/turf/open/misc/grass::smooth_icon , /turf/open/misc/grass::icon)
+	icon = /turf/open/misc/grass::icon
 	icon_state = /turf/open/misc/grass::icon_state
 	base_icon_state = /turf/open/misc/grass::base_icon_state
 	bullet_bounce_sound = /turf/open/misc/grass::bullet_bounce_sound
@@ -296,6 +296,7 @@
 	var/matrix/translation = new
 	translation.Translate(-9, -9)
 	transform = translation
+	icon = /turf/open/misc/grass::smooth_icon
 
 /turf/open/Initalize_Atmos(time)
 	excited = FALSE
