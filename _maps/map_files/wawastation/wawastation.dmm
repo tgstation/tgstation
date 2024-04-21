@@ -5128,11 +5128,12 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "bUj" = (
-/obj/structure/table,
+/obj/machinery/vending/cart{
+	req_access = list("hop")
+	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
-/obj/item/storage/box/stickers,
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
@@ -63682,6 +63683,9 @@
 	dir = 1
 	},
 /obj/machinery/airalarm/directional/south,
+/obj/item/storage/box/stickers{
+	pixel_y = 16
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "xGY" = (
