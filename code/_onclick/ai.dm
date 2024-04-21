@@ -136,9 +136,7 @@
 		if(target.ai_click_alt(src) & CLICK_ACTION_ANY)
 			return
 
-	var/turf/tile = get_turf(target)
-
-	client.loot_panel.open(tile)
+	client.loot_panel.open(get_turf(target))
 
 
 /*
