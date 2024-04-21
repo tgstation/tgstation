@@ -1,7 +1,7 @@
-import { Dispatch, useEffect, useMemo, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 
 import { useBackend } from '../../backend';
-import { Button, Section, Stack } from '../../components';
+import { Button, Section, Stack, Table } from '../../components';
 import { SORTING_TYPES } from './contants';
 import { FilterState } from './filters';
 import { SubsystemRow } from './SubsystemRow';
@@ -22,45 +22,36 @@ export function SubsystemViews(props: Props) {
 
   const [bars, setBars] = useState(inDeciseconds);
 
-  // Subsystems sorted and filtered if applicable
-  const toDisplay = useMemo(() => {
-    const subsystemsToSort = subsystems
-      // Why not use the collections functions?
-      // They dont work in reverse and thus lose their performance benefit
-      // It also ends up looking insane
+  const sorted = subsystems
+    .filter((subsystem) => {
+      const nameMatchesQuery = subsystem.name
+        .toLowerCase()
+        .includes(query?.toLowerCase());
 
-      .filter((subsystem) => {
-        const nameMatchesQuery = subsystem.name
-          .toLowerCase()
-          .includes(query?.toLowerCase());
+      if (inactive && (!!subsystem.doesnt_fire || !subsystem.can_fire)) {
+        return false;
+      }
 
-        if (inactive && !!subsystem.doesnt_fire) {
-          return false;
-        }
+      if (smallValues && subsystem[propName] < 1) {
+        return false;
+      }
 
-        if (smallValues && subsystem[propName] < 1) {
-          return false;
-        }
-
-        return nameMatchesQuery;
-      })
-      .sort((a, b) => {
-        if (ascending) {
-          return a[propName] - b[propName];
-        } else {
-          return b[propName] - a[propName];
-        }
-      });
-
-    return subsystemsToSort;
-  }, [filterOpts]);
+      return nameMatchesQuery;
+    })
+    .sort((a, b) => {
+      if (ascending) {
+        return a[propName] > b[propName] ? 1 : -1;
+      } else {
+        return b[propName] > a[propName] ? 1 : -1;
+      }
+    });
 
   // Gets our totals for bar display
   const totals: number[] = [];
   let currentMax = 0;
   if (inDeciseconds) {
-    for (let i = 0; i < toDisplay.length; i++) {
-      let value = toDisplay[i][propName];
+    for (let i = 0; i < sorted.length; i++) {
+      let value = sorted[i][propName];
       if (typeof value !== 'number') {
         continue;
       }
@@ -87,7 +78,7 @@ export function SubsystemViews(props: Props) {
       buttons={
         <Stack align="center">
           <Stack.Item color="label">
-            ({toDisplay.length} / {subsystems.length})
+            ({sorted.length} / {subsystems.length})
           </Stack.Item>
           <Stack.Item>
             <Button
@@ -102,17 +93,18 @@ export function SubsystemViews(props: Props) {
         </Stack>
       }
     >
-      {toDisplay.map((subsystem) => (
-        <SubsystemRow
-          key={subsystem.ref}
-          max={currentMax}
-          setSelected={setSelected}
-          showBars={bars && inDeciseconds}
-          sortType={sortType}
-          subsystem={subsystem}
-          value={subsystem[propName]}
-        />
-      ))}
+      <Table>
+        {sorted.map((subsystem) => (
+          <SubsystemRow
+            key={subsystem.ref}
+            max={currentMax}
+            setSelected={setSelected}
+            showBars={bars && inDeciseconds}
+            sortType={sortType}
+            subsystem={subsystem}
+          />
+        ))}
+      </Table>
     </Section>
   );
 }

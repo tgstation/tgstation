@@ -91,7 +91,7 @@ export function ControllerContent(props) {
                   </Button>
                   <Button
                     icon={state.inactive ? 'eye-slash' : 'eye'}
-                    tooltip="Hide inactive"
+                    tooltip="Hide offline/paused"
                     selected={state.inactive}
                     onClick={() =>
                       dispatch({
