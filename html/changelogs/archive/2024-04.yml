@@ -228,3 +228,22 @@
 2024-04-20:
   DexeeXI:
   - bugfix: restores prefilled drone fab on meta.
+2024-04-21:
+  Absolucy:
+  - qol: Droppers can now only transfer 1u, 2u, or 5u.
+  - rscadd: Re-added the Blood Brothers antagonist into the game, and made them available
+      to storytellers, both roundstart and midround.
+  - rscadd: Instead of teaming up random people together, Blood Brothers will now
+      start out with one player and let them convert a single other person over to
+      blood brother using a flash.
+  - qol: Blood Brothers can now identify each other by HUD.
+  - qol: You can now escape the nuke by going to the deepest level of Icebox.
+  CannibalHunter:
+  - rscadd: Added Henchmen Outfits to the monkeshop
+  KnigTheThrasher:
+  - bugfix: Fixed tram tests (again)
+  Uristthedorf:
+  - rscadd: Clown dagger is now as slippery as maximum potency banana peel.
+  - rscadd: Clown dagger forces victim to laugh.
+  - rscadd: Clown dagger gives both victim and attacker positive moodlet.
+  - rscadd: Choosing clown bible makes the bible slippery.
