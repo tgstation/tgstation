@@ -184,8 +184,7 @@
 	icon_state = "toolkit_medborg"
 	///our tools
 	var/list/radial_menu_options = list()
-	///The toolspeed for our tools
-	toolspeed = 1
+	///object we are referencing to for force, sharpness and sound
 	var/obj/item/reference
 	//is the toolset upgraded or not
 	var/upgraded = FALSE
@@ -193,7 +192,7 @@
 	var/upgraded_toolspeed = 0.7
 
 /obj/item/borg/cyborg_omnitool/get_all_tool_behaviours()
-	return list(TOOL_SCALPEL)
+	return list(TOOL_SCALPEL, TOOL_HEMOSTAT)
 
 /obj/item/borg/cyborg_omnitool/Initialize(mapload)
 	. = ..()
@@ -205,6 +204,7 @@
 	radial_menu_options = list(
 		NO_TOOL = image(icon = 'icons/mob/silicon/robot_items.dmi', icon_state = initial(icon_state)),
 		TOOL_SCALPEL = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_SCALPEL]"),
+		TOOL_HEMOSTAT = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_HEMOSTAT]"),
 	)
 
 /obj/item/borg/cyborg_omnitool/attack_self(mob/user)
@@ -227,6 +227,8 @@
 	switch(tool_behaviour)
 		if(TOOL_SCALPEL)
 			reference = /obj/item/scalpel
+		if(TOOL_HEMOSTAT)
+			reference = /obj/item/hemostat
 
 /// Used to update sounds and tool parameters during switching
 /obj/item/borg/cyborg_omnitool/proc/update_tool_parameters(/obj/item/reference)
@@ -254,6 +256,12 @@
 
 	return ..()
 
+/**
+ * proc that's used when cyborg is upgraded with an omnitool upgrade board
+ *
+ * adds name and desc changes. also changes tools to default configuration to indicate it's been sucessfully upgraded
+ * changes the toolspeed to the upgraded_toolspeed variable
+ */
 /obj/item/borg/cyborg_omnitool/proc/upgrade_omnitool()
 	name = "advanced [name]"
 	desc += "\nIt seems that this one has been upgraded to perform tasks faster."
@@ -265,6 +273,12 @@
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
 
+/**
+ * proc that's used when a cyborg with an upgraded omnitool is downgraded
+ *
+ * reverts all name and desc changes to it's initial variables. also changes tools to default configuration to indicate it's been downgraded
+ * changes the toolspeed to default variable
+ */
 /obj/item/borg/cyborg_omnitool/proc/downgrade_omnitool()
 	name = initial(name)
 	desc = initial(desc)
