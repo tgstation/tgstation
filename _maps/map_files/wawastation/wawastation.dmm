@@ -7760,7 +7760,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -7818,7 +7817,6 @@
 /turf/open/openspace,
 /area/station/engineering/main)
 "cYB" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -12513,7 +12511,6 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -21071,6 +21068,9 @@
 "hRE" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/ladder,
+/obj/structure/railing/corner{
+	dir = 1
+	},
 /turf/open/openspace,
 /area/station/engineering/atmospherics_engine)
 "hRH" = (
@@ -25460,6 +25460,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
+/area/station/engineering/atmospherics_engine)
+"jAE" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/openspace,
 /area/station/engineering/atmospherics_engine)
 "jAG" = (
 /turf/closed/wall,
@@ -31959,7 +31966,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -32874,6 +32880,13 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/station/command/gateway)
+"mkX" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/openspace,
+/area/station/engineering/atmospherics_engine)
 "mkZ" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -38660,7 +38673,6 @@
 	name = "Engine Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -49576,7 +49588,6 @@
 /area/station/science/xenobiology)
 "suq" = (
 /obj/effect/landmark/start/station_engineer,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/junction/flip{
@@ -105947,10 +105958,10 @@ xCf
 xCf
 bzQ
 xCf
-bzQ
-bzQ
-bzQ
-bzQ
+xCf
+xCf
+xCf
+xCf
 suq
 bzQ
 ciE
@@ -106204,7 +106215,7 @@ rhS
 pfV
 sgG
 dAe
-mjf
+rhS
 rhS
 rhS
 rhS
@@ -106450,18 +106461,18 @@ rat
 wex
 aWD
 eFM
-bzQ
-bzQ
-bzQ
+xCf
+xCf
+xCf
 cYB
-mjf
-mjf
-mjf
-mjf
-mjf
+rhS
+rhS
+rhS
+rhS
+rhS
 iio
-mjf
-mjf
+rhS
+rhS
 rhS
 wBH
 rhS
@@ -175324,7 +175335,7 @@ eES
 eES
 eES
 eES
-vWh
+mkX
 kUX
 hhX
 hhX
@@ -175580,7 +175591,7 @@ vWh
 vWh
 vWh
 vWh
-vWh
+jAE
 hRE
 kUX
 hhX
