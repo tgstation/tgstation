@@ -1,7 +1,7 @@
 import { Dispatch, useEffect, useMemo, useState } from 'react';
 
 import { useBackend } from '../../backend';
-import { Box, Button, Section, Stack } from '../../components';
+import { Button, Section, Stack } from '../../components';
 import { SORTING_TYPES } from './contants';
 import { FilterState } from './filters';
 import { SubsystemRow } from './SubsystemRow';
@@ -103,18 +103,15 @@ export function SubsystemViews(props: Props) {
       }
     >
       {toDisplay.map((subsystem) => (
-        <Box
+        <SubsystemRow
           key={subsystem.ref}
-          mb={0.5}
-          onClick={() => setSelected(subsystem)}
-        >
-          <SubsystemRow
-            max={currentMax}
-            showBars={bars && inDeciseconds}
-            subsystem={subsystem}
-            value={subsystem[propName]}
-          />
-        </Box>
+          max={currentMax}
+          setSelected={setSelected}
+          showBars={bars && inDeciseconds}
+          sortType={sortType}
+          subsystem={subsystem}
+          value={subsystem[propName]}
+        />
       ))}
     </Section>
   );
