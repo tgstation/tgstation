@@ -37,7 +37,7 @@
 	faction = list(FACTION_MONKEY, FACTION_JUNGLE)
 	butcher_results = list(/obj/item/food/meat/slab/gorilla = 4, /obj/effect/gibspawner/generic/animal = 1)
 	/// How likely our meaty fist is to stun someone
-	var/paralyze_chance = 20
+	var/paralyze_chance = 18
 	/// A counter for when we can scream again
 	var/oogas = 0
 	/// Types of things we want to find and eat
@@ -61,7 +61,7 @@
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = gorilla_food)
 	AddElement(
 		/datum/element/amputating_limbs, \
-		surgery_time = 0 SECONDS, \
+		surgery_time = 2 SECONDS, \
 		surgery_verb = "punches",\
 	)
 	AddComponent(/datum/component/personal_crafting)
