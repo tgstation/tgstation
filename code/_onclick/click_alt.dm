@@ -11,7 +11,7 @@
 		return
 
 	// Is it visible (and we're not wearing it (our clothes are invisible))?
-	if(!CAN_I_SEE(target) && !CanReach(target))
+	if(!CAN_I_SEE(target))
 		return
 
 	var/turf/tile = get_turf(target)
