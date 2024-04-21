@@ -177,36 +177,3 @@
 	surplus = 15
 	illegal_tech = TRUE
 
-/datum/uplink_item/armor/vitality
-	name = "Vitality Mutation Injector"
-	desc = "A mutator containing a rare mutation that increases it's targets maximum health capacity by 50. This is considered a genetic mutation and can be removed as such."
-	item = /obj/item/dnainjector/vitality
-	cost = 11
-	surplus = 15
-	illegal_tech = FALSE
-	progression_minimum = 15 MINUTES
-
-/datum/uplink_item/armor/metallineskin
-	name = "Metalline Gelatine Injector"
-	desc = "An injector of a metalline gelatin, you may inject yourself to increase your resistance to all forms of Blunt Damage by 25%, this is considered a genetic mutation and can be removed as such."
-	item = /obj/item/dnainjector/metallineskin
-	cost = 5
-	surplus = 20
-	illegal_tech = FALSE
-
-/datum/uplink_item/armor/reflectiveskin
-	name = "Reflective Gelatine Injector"
-	desc = "An injector of a reflective gelatin, you may inject yourself to increase your resistance to all forms of Burn Damage by 25%, this is considered a genetic mutation and can be removed as such."
-	item = /obj/item/dnainjector/reflectiveskin
-	cost = 5
-	surplus = 20
-	illegal_tech = FALSE
-
-/datum/uplink_item/armor/superradproof
-	name = "Superior Radproofing Mutation"
-	desc = "An mutator containing a superior version of the 'radproof' mutation, you may inject yourself to render yourself immune to radiation, this mutation cannot be cured by mutadone."
-	item = /obj/item/dnainjector/superradproof
-	cost = 4
-	surplus = 20
-	illegal_tech = FALSE
-

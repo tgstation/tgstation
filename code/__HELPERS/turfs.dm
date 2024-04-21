@@ -413,3 +413,4 @@ Turf and target are separate in case you want to teleport some distance from a t
 	if(locate(type_to_find) in location)
 		return TRUE
 	return FALSE
+

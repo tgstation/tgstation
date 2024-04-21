@@ -604,7 +604,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/doubledown
 	var/obj/effect/temp_visual/decoy/tensecond/s_such_strength
 
-/atom/movable/screen/alert/status_effect/doubledown
+/atom/movable/screen/alert/status_effect/doubledown // This is just here incase someone ever makes the buster arms give their buff like in yogstation. - hyperjll
 	name = "Doubling Down"
 	desc = "Taking 25% less damage, go all in!"
 	icon_state = "aura"
@@ -636,3 +636,19 @@
 		H.physiology.oxy_mod /= 0.75
 		H.physiology.stamina_mod /= 0.75
 	owner.log_message("lost buster damage reduction", LOG_ATTACK)
+
+
+/datum/status_effect/catchup // used by the mirage drive
+	id = "catchup"
+	duration = 1 SECONDS
+	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+
+/datum/status_effect/catchup/on_apply()
+	. = ..()
+	if(.)
+		owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/catchup)
+		owner.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
+
+/datum/status_effect/catchup/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/catchup)
+	owner.remove_atom_colour(FIXED_COLOUR_PRIORITY)

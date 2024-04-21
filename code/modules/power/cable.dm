@@ -64,6 +64,12 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(isobserver(user))
 		. += get_power_info()
 
+/obj/structure/cable/proc/can_wirecrawl_in() // This will always return true. Why? Fuck you. That's why. :D
+	return TRUE
+
+/obj/structure/cable/proc/get_wire_color() // Todo: Make custom colors for this later.
+	return rgb(255, 255, 0)
+
 /obj/structure/cable/proc/on_rat_eat(datum/source, mob/living/basic/regal_rat/king)
 	SIGNAL_HANDLER
 

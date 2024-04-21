@@ -1057,7 +1057,7 @@
 
 /datum/uplink_item/role_restricted/syndisauce
 	name = "Box of Syndicate Sauce"
-	desc = "A box with 6 sauce packets containing 10 units of Amanitin, a silent but delayed poison."
+	desc = "A box with 6 sauce packets containing 10 units of Amanitin, a silent but deadly delayed poison."
 	item = /obj/item/storage/box/syndie_kit/syndisauce
 	cost = 1
 	surplus = 7
@@ -1071,7 +1071,6 @@
 	item = /obj/item/chainsaw/botany/syndicate
 	cost = 8
 	restricted_roles = list(JOB_BOTANIST)
-	// Eh, i'll let it pass as a spy bounty.
 
 /datum/uplink_item/role_restricted/syndi_donkpockets
 	name = "Syndicate Donk Pockets"
@@ -1080,3 +1079,63 @@
 	cost = 4
 	restricted_roles = list(JOB_COOK)
 
+/datum/uplink_item/role_restricted/deadlydonuts
+	name = "Box of Singulonuts"
+	desc = "A box with six Waffle Co. brand Singulonuts. Banned in four sectors for their sheer calorie content. \
+			Caution: Product known to the safety board of Nanotrasen to increase risks of stomach cancer and cause instant obesity. \ Disguised as a regular box of regular donuts."
+	item = /obj/item/storage/fancy/donut_box/deadly
+	cost = 3
+	restricted_roles = list(JOB_COOK, JOB_ASSISTANT, JOB_CURATOR)
+
+/datum/uplink_item/role_restricted/chemical_art
+	name = "Psychotic Brawl Notes"
+	desc = "Notes taken from an experienced user of bath salts, written in their own blood. Reading it will \
+			greatly randomize the effectiveness of your punches. Best when combined with several narcotics."
+	item = /obj/item/book/granter/martial/psychotic_brawling
+	cost = 10
+	restricted_roles = list(JOB_CHEMIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_PSYCHOLOGIST)
+
+/datum/uplink_item/role_restricted/gibtonite_refiner
+	name = "Gibtonite Refiner"
+	desc = "Looks and functions like an advanced mining scanner, but with the added functionality of one of our exclusive explosive charge manufacturing devices. \
+			Use it on a defused gibtonite chunk to begin refining it into an explosive charge. Gibtonite charges are comparable to that of an X-4 Charge."
+	cost = 7
+	item = /obj/item/t_scanner/adv_mining_scanner/gibrefinery
+	restricted_roles = list("Shaft Miner", JOB_QUARTERMASTER)
+
+/datum/uplink_item/role_restricted/randomnadesviamail
+	name = "Syndicate Grenade Mail"
+	desc = "5 smuggled grenades we usually send through Nanotrasen's mail to hopefully aid our agents and cause chaos. \
+			Due to an increase in security, we're willing to offload some directly to you via the uplink for a price."
+	cost = 5
+	surplus = 0
+	limited_stock = 1
+	item = /obj/item/storage/box/syndie_kit/smugglednades
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Doesn't make sense as a bounty.
+
+/datum/uplink_item/role_restricted/explosiveletter
+	name = "Explosive Letter"
+	desc = "A single, unmarked letter filled with instant explosives. Can be modified to have someone's name and occupation."
+	cost = 2
+	surplus = 0
+	item = /obj/item/mail/explosive
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
+
+/datum/uplink_item/role_restricted/jestercard
+	name = "Jestographic Sequencer"
+	desc = "The jestographic sequencer, often referred to as the 'clownmag' or 'cmag' is a small card that inverts the access on any airlock or windoor it's used on. \
+			Perfect for locking command out of their own departments and allowing everyone else inside. The effects only last for 30 seconds, has three charges that recharge over time. \
+			Anyone in-the-know will likely just stash their ID's temporarily to bypass it's effects. Go Honking Crazy!"
+	item = /obj/item/card/emag/doorjack/jester
+	cost = 3 // A temporary doorjacker that also temporarily halts authorized personnel.
+	restricted_roles = list(JOB_CLOWN)
+
+/datum/uplink_item/race_restricted/xeno_organ_kit
+	name = "Xenomorph Organ Kit"
+	desc = "A kit containing some organs that we've recovered from clearing out xenomorph hives. Contains a plasma vessel, a resin spinner, and an acid gland. \
+			You'll either have to purchase an autosurgeon or have these surgically implanted by someone you can trust."
+	cost = 10
+	surplus = 0
+	item = /obj/item/storage/box/syndie_kit/xeno_organ_kit
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_SCIENTIST, JOB_RESEARCH_DIRECTOR)

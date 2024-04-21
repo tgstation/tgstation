@@ -4,6 +4,7 @@
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You suddenly feel like your enclosed in a metal box...</span>"
 	text_lose_indication = "<span class='notice'>You feel like you can breath again as your body no longer feels like a metal box.</span>"
+	locked = TRUE
 	difficulty = 18
 	instability = 20
 	energy_coeff = 1
@@ -25,6 +26,7 @@
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your skin looks rather reflective!</span>"
 	text_lose_indication = "<span class='notice'>The pigments in your skin turn dull.</span>"
+	locked = TRUE
 	difficulty = 18
 	instability = 20
 	energy_coeff = 1

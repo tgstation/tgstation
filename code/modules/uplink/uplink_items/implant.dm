@@ -177,6 +177,7 @@
 	progression_minimum = 30 MINUTES
 	cost = 25
 	surplus = 10
+	purchasable_from = ~UPLINK_SPY // Letting this pass as a bounty would be hellish. Bounties ain't hard enough for this to be reasonably earned.
 
 /datum/uplink_item/implants/gasharpoon
 	name = "Garsharpoon Implant"
@@ -186,7 +187,6 @@
 	progression_minimum = 20 MINUTES
 	cost = 10
 	surplus = 20
-	purchasable_from = ~UPLINK_SPY // Letting this pass as a bounty would be hellish. Bounties ain't hard enough for this to be reasonably earned.
 
 /datum/uplink_item/implants/kravmaga
 	name = "Krav Maga Implant"

@@ -4,6 +4,7 @@
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your muscles bulk up for a moment and your heart skips a beat!</span>"
 	text_lose_indication = "<span class='notice'>You feel your muscles receed for a moment as your heart sinks within your chest.</span>"
+	locked = TRUE
 	difficulty = 20
 	instability = 25
 	energy_coeff = 1

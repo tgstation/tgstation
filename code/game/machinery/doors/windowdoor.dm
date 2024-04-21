@@ -129,9 +129,15 @@
 			for(var/O in mecha.occupants)
 				var/mob/living/occupant = O
 				if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
+					if(jestergraphed)
+						do_animate("deny")
+						return
 					open()
 					return
 				if(allowed(occupant))
+					if(jestergraphed)
+						do_animate("deny")
+						return
 					open_and_close()
 					return
 			do_animate("deny")
@@ -155,11 +161,12 @@
 		open()
 
 	else if(allowed(user))
-		open_and_close()
-
+		if(!jestergraphed) // Flip the access requirements.
+			open_and_close()
+		else
+			do_animate("deny")
 	else
 		do_animate("deny")
-
 	return
 
 /obj/machinery/door/window/CanAllowThrough(atom/movable/mover, border_dir)
@@ -339,6 +346,23 @@
 /obj/machinery/door/window/proc/finish_emag_act()
 	operating = FALSE
 	open(BYPASS_DOOR_CHECKS)
+
+// For the jestographic sequencer, temporarily reverses access functionality.
+/obj/machinery/door/window/proc/jester_act(mob/user, obj/item/card/emag/emag_card)
+	if(!operating && density && hasPower() && !(obj_flags & EMAGGED))
+		if(istype(emag_card, /obj/item/card/emag/doorjack/jester))
+			var/obj/item/card/emag/doorjack/jester/jester_card = emag_card
+			jester_card.use_charge(user)
+		jestergraphed = TRUE
+		flick("[base_state]spark", src)
+		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		addtimer(CALLBACK(src, PROC_REF(finish_jester_act)), 30 SECONDS)
+		return TRUE
+	return FALSE
+
+/// What fixes the door's operation after getting jestergraph'd
+/obj/machinery/door/window/proc/finish_jester_act()
+	jestergraphed = FALSE
 
 /obj/machinery/door/window/examine(mob/user)
 	. = ..()

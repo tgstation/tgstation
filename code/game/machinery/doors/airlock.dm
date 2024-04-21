@@ -150,6 +150,8 @@
 	var/shockedby
 	/// How many seconds remain until the door is no longer electrified. -1/MACHINE_ELECTRIFIED_PERMANENT = permanently electrified until someone fixes it.
 	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
+	/// If a charge is on it, explode when the door is opened
+	var/obj/item/doorCharge/charge
 
 	flags_1 = HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
@@ -1038,6 +1040,24 @@
 		modify_max_integrity(max_integrity * AIRLOCK_SEAL_MULTIPLIER)
 		update_appearance()
 
+	else if(istype(C, /obj/item/doorCharge))
+		if(!panel_open || security_level)
+			to_chat(user, span_warning("The maintenance panel must be open to apply [C]!"))
+			return
+		if(obj_flags & EMAGGED)
+			return
+		if(charge && !detonated)
+			to_chat(user, span_warning("There's already a charge hooked up to this door!"))
+			return
+		if(detonated)
+			to_chat(user, span_warning("The maintenance panel is destroyed!"))
+			return
+		to_chat(user, span_warning("You apply [C]. Next time someone opens the door, it will explode."))
+		panel_open = FALSE
+		update_appearance(UPDATE_ICON)
+		user.transferItemToLoc(C, src, TRUE)
+		charge = C
+
 	else if(istype(C, /obj/item/paper) || istype(C, /obj/item/photo))
 		if(note)
 			to_chat(user, span_warning("There's already something pinned to this airlock! Use wirecutters to remove it."))
@@ -1151,6 +1171,17 @@
 		if(I.use_tool(src, user, 40, volume=100))
 			deconstruct(TRUE, user)
 			return
+	if(panel_open && charge)
+		to_chat(user, span_notice("You carefully start removing [charge] from [src]..."))
+		if(!I.use_tool(src, user, 150, volume=50))
+			to_chat(user, span_warning("You slip and [charge] detonates!"))
+			user.Paralyze(60)
+			return blow_charge()
+		user.visible_message(span_notice("[user] removes [charge] from [src]."), \
+							 span_notice("You gently pry out [charge] from [src] and unhook its wires."))
+		charge.forceMove(get_turf(user))
+		charge = null
+		return
 	if(seal)
 		to_chat(user, span_warning("Remove the seal first!"))
 		return
@@ -1198,6 +1229,9 @@
 
 	if(!density)
 		return TRUE
+
+	if(charge && !detonated)
+		return blow_charge()
 
 	// Since we aren't physically held shut, do extra checks to see if we should open.
 	if(!try_to_force_door_open(forced))
@@ -1414,6 +1448,38 @@
 	locked = TRUE
 	loseMainPower()
 	loseBackupPower()
+
+// For the jestographic sequencer, temporarily reverses access functionality.
+/obj/machinery/door/airlock/proc/jester_act(mob/user, obj/item/card/emag/emag_card)
+	if(!operating && density && hasPower() && !(obj_flags & EMAGGED))
+		if(istype(emag_card, /obj/item/card/emag/doorjack/jester))
+			var/obj/item/card/emag/doorjack/jester/jester_card = emag_card
+			jester_card.use_charge(user)
+		jestergraphed = TRUE
+		addtimer(CALLBACK(src, PROC_REF(finish_jester_act)), 30 SECONDS)
+		return TRUE
+	return FALSE
+
+/// What fixes the door's operation after getting jestergraph'd
+/obj/machinery/door/airlock/proc/finish_jester_act()
+	if(QDELETED(src))
+		return FALSE
+	jestergraphed = FALSE
+
+/// When a airlock is opened with a explosive charge is installed
+/obj/machinery/door/airlock/proc/blow_charge()
+	panel_open = TRUE
+	update_icon(state = AIRLOCK_OPENING)
+	visible_message(span_warning("[src]'s panel is blown off in a spray of deadly shrapnel!"))
+	charge.forceMove(drop_location())
+	charge.ex_act(EXPLODE_DEVASTATE)
+	detonated = TRUE
+	charge = null
+	for(var/mob/living/carbon/human/H in orange(2,src))
+		H.Unconscious(160)
+		H.adjust_fire_stacks(20)
+		H.ignite_mob() //Guaranteed knockout and ignition for nearby people
+		H.apply_damage(40, BRUTE, BODY_ZONE_CHEST)
 
 /obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(isElectrified() && shock(user, 100)) //Mmm, fried xeno!

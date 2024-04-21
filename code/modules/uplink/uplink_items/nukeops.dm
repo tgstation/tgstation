@@ -746,7 +746,7 @@
 
 /datum/uplink_item/device_tools/syndie_forcefields
 	name = "Syndicate Forcefield Generator"
-	desc = "Manufacturing by Cybersun Industries, this powerful tool projects impassable walls of pure energy for a lengthy time. Forcefields can only sustain so much damage before dispersing. \
+	desc = "Manufactured by Cybersun Industries, this powerful tool projects impassable walls of pure energy for a lengthy time. Forcefields can only sustain so much damage before dispersing. \
 			Can project up to 6 forcefields at any time and will only be sustained should the projector be nearby. Perfect for holding off the hordes."
 	item = /obj/item/forcefield_projector/syndicate
 	cost = 12

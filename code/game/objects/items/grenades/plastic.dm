@@ -185,3 +185,9 @@
 	worn_icon_state = "x4"
 	directional = TRUE
 	boom_sizes = list(0, 2, 5)
+
+/obj/item/grenade/c4/x4/gibtonite
+	name = "gibtonite charge"
+	desc = "A refined chunk of Gibtonite. It's designed to detonate shortly after being stuck against an object or person."
+	icon_state = "plasticgib0"
+	inhand_icon_state = "plasticgib"

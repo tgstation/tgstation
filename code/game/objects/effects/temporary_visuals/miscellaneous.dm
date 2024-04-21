@@ -237,6 +237,9 @@
 /obj/effect/temp_visual/decoy/fading/fivesecond
 	duration = 50
 
+/obj/effect/temp_visual/decoy/fading/onesecond
+	duration = 10
+
 /obj/effect/temp_visual/decoy/fading/halfsecond
 	duration = 5
 

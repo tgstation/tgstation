@@ -1565,6 +1565,14 @@
 	for(var/i in 1 to 5)
 		new /obj/item/computer_disk/black_market/trap(src)
 
+/obj/item/storage/box/syndie_kit/smugglednades/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/mail/traitor/mail_strike(src)
+
+/obj/item/storage/box/syndie_kit/xeno_organ_kit/PopulateContents()
+	new /obj/item/organ/internal/alien/plasmavessel(src)
+	new /obj/item/organ/internal/alien/resinspinner(src)
+	new /obj/item/organ/internal/alien/acid(src)
 
 
 

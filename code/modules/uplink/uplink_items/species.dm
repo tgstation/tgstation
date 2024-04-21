@@ -206,3 +206,118 @@
 	surplus = 0
 	progression_minimum = 10 MINUTES
 	restricted_species = list(SPECIES_JELLYPERSON)
+
+/datum/uplink_item/species_restricted/radiantburst
+	name = "Radiant Burst Mutator"
+	desc = "A DNA Mutator containing a rare ethereal mutation allowing your kind to burst large quantities of bright light outward. \
+			Bursting with light will blind everyone nearby including YOU, and damage the eyes of those blinded. \
+			The light is so brilliant, even sunglasses won't save you or them."
+	cost = 10
+	surplus = 0
+	progression_minimum = 10 MINUTES
+	item = /obj/item/dnainjector/radiantburst
+	restricted_species = list(SPECIES_ETHEREAL)
+
+/datum/uplink_item/species_restricted/firebreath
+	name = "Fire Breath Mutator"
+	desc = "A DNA Mutator containing a rare lizard mutation, invoking ancient genetic powers within your kind. \
+			Those with this mutation may breath fire outward about 3 meters away in a cone, leaving massive burns in those caught and lighting them ablaze. \
+			Best used as a follow-up to your assault, as using your fire breath will knock you backward."
+	cost = 8
+	surplus = 0
+	progression_minimum = 10 MINUTES
+	item = /obj/item/dnainjector/firebreath
+	restricted_species = list(SPECIES_LIZARD)
+
+/datum/uplink_item/species_restricted/plasmafist
+	name = "Frayed Scroll"
+	desc = "An aged scroll written in shifting runes only plasmamen can properly decipher. \
+			Those who study the scroll learn the ancient martial art known as the 'Plasma Fist' \
+			It allows you to perform martial art techniques capable of making your foes explode violently."
+	cost = 20
+	surplus = 0
+	progression_minimum = 30 MINUTES
+	item = /obj/item/book/granter/martial/plasma_fist
+	restricted_species = list(SPECIES_PLASMAMAN)
+
+/datum/uplink_item/race_restricted/wirecrawl
+	name = "Modified Yellow Slime Extract"
+	desc = "An experimental yellow slime extract that when absorbed by an Ethereal, causes their form to become unstable. \
+			Unstable ethereals can transform into pure electricity, allowing them to travel along power wires."
+	cost = 16
+	item = /obj/item/book/granter/action/wirecrawl
+	restricted_species = list(SPECIES_ETHEREAL)
+
+// Hey, if you're reading this, you're probably asking why these aren't listed under species restricted.
+// Don't worry, that's intentional. These items below are only to ensure plasmamen cant purchase them.
+// Thanks for your time and understanding. - hyperjll
+
+/datum/uplink_item/dangerous/acidspit
+	name = "Acidic Spit Mutator"
+	desc = "A single DNA mutator containing an incredibly rare mutation acquired from extensive xenomorph DNA manipulation. \
+			Those under it's effects may build up and spit out potent acids capable of melting objects and people alike. \
+			The acid will take some time and constant effort to remove reinforced structures."
+	item = /obj/item/dnainjector/acidspit
+	progression_minimum = 10 MINUTES
+	surplus = 0
+	cost = 7
+	illegal_tech = FALSE
+	restricted_species = list(SPECIES_HUMAN, SPECIES_MOTH, SPECIES_LIZARD, SPECIES_PODPERSON, SPECIES_ETHEREAL, SPECIES_FELINE, SPECIES_JELLYPERSON)
+
+/datum/uplink_item/dangerous/lasereyes
+	name = "Laser Eyes Mutator"
+	desc = "A single DNA mutator containing an incredibly rare and valuable mutation known simply as 'Laser Vision'. \
+			Those under it's effects may shoot deadly lasers from their eyes at will. \
+			Incredibly powerful, but beware of medical staff who will likely attempt to spray you with mutadone to leave you defenseless."
+	item = /obj/item/dnainjector/lasereyesmut
+	progression_minimum = 30 MINUTES
+	surplus = 0
+	cost = 20
+	illegal_tech = FALSE // Just a mutator, not necessarily high tech.
+	restricted_species = list(SPECIES_HUMAN, SPECIES_MOTH, SPECIES_LIZARD, SPECIES_PODPERSON, SPECIES_ETHEREAL, SPECIES_FELINE, SPECIES_JELLYPERSON)
+
+/datum/uplink_item/medical/regenerative
+	name = "Regenerative Mutator"
+	desc = "A mutator containing a helpful mutation called 'Regenerative', you may inject yourself to grant yourself a slow regeneration effect against all forms of damage, this mutation can be cured by mutadone."
+	item = /obj/item/dnainjector/regenerative
+	cost = 3
+	surplus = 0
+	illegal_tech = FALSE
+	restricted_species = list(SPECIES_HUMAN, SPECIES_MOTH, SPECIES_LIZARD, SPECIES_PODPERSON, SPECIES_ETHEREAL, SPECIES_FELINE, SPECIES_JELLYPERSON)
+
+/datum/uplink_item/armor/vitality
+	name = "Vitality Mutation Injector"
+	desc = "A mutator containing a rare mutation that increases it's targets maximum health capacity by 50. This is considered a genetic mutation and can be removed as such."
+	item = /obj/item/dnainjector/vitality
+	cost = 11
+	surplus = 15
+	illegal_tech = FALSE
+	progression_minimum = 15 MINUTES
+	restricted_species = list(SPECIES_HUMAN, SPECIES_MOTH, SPECIES_LIZARD, SPECIES_PODPERSON, SPECIES_ETHEREAL, SPECIES_FELINE, SPECIES_JELLYPERSON)
+
+/datum/uplink_item/armor/metallineskin
+	name = "Metalline Gelatine Injector"
+	desc = "An injector of a metalline gelatin, you may inject yourself to increase your resistance to all forms of Blunt Damage by 25%, this is considered a genetic mutation and can be removed as such."
+	item = /obj/item/dnainjector/metallineskin
+	cost = 5
+	surplus = 20
+	illegal_tech = FALSE
+	restricted_species = list(SPECIES_HUMAN, SPECIES_MOTH, SPECIES_LIZARD, SPECIES_PODPERSON, SPECIES_ETHEREAL, SPECIES_FELINE, SPECIES_JELLYPERSON)
+
+/datum/uplink_item/armor/reflectiveskin
+	name = "Reflective Gelatine Injector"
+	desc = "An injector of a reflective gelatin, you may inject yourself to increase your resistance to all forms of Burn Damage by 25%, this is considered a genetic mutation and can be removed as such."
+	item = /obj/item/dnainjector/reflectiveskin
+	cost = 5
+	surplus = 20
+	illegal_tech = FALSE
+	restricted_species = list(SPECIES_HUMAN, SPECIES_MOTH, SPECIES_LIZARD, SPECIES_PODPERSON, SPECIES_ETHEREAL, SPECIES_FELINE, SPECIES_JELLYPERSON)
+
+/datum/uplink_item/armor/superradproof
+	name = "Superior Radproofing Mutation"
+	desc = "An mutator containing a superior version of the 'radproof' mutation, you may inject yourself to render yourself immune to radiation, this mutation cannot be cured by mutadone."
+	item = /obj/item/dnainjector/superradproof
+	cost = 4
+	surplus = 20
+	illegal_tech = FALSE
+	restricted_species = list(SPECIES_HUMAN, SPECIES_MOTH, SPECIES_LIZARD, SPECIES_PODPERSON, SPECIES_ETHEREAL, SPECIES_FELINE, SPECIES_JELLYPERSON)

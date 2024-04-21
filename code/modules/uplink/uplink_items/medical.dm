@@ -200,14 +200,6 @@
 	surplus = 35
 	illegal_tech = FALSE
 
-/datum/uplink_item/medical/regenerative
-	name = "Regenerative Mutator"
-	desc = "A mutator containing a helpful mutation called 'Regenerative', you may inject yourself to grant yourself a slow regeneration effect against all forms of damage, this mutation can be cured by mutadone."
-	item = /obj/item/dnainjector/regenerative
-	cost = 3
-	surplus = 25
-	illegal_tech = FALSE
-
 /datum/uplink_item/medical/enchantedgoldenapple
 	name = "Enchanted Golden Apple"
 	desc = "An extremely potent magical apple, rumored to have originated from another universe. It grants the one who eats it incredible regeneration, increased health, extreme resistance to fire, and resistance against all damage for 4 minutes."

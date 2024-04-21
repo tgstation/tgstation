@@ -264,7 +264,7 @@
 	surplus = 0
 	progression_minimum = 40 MINUTES
 	limited_stock = 1
-	cost = 20
+	cost = 30
 	cant_discount = TRUE
 	restricted = TRUE
 	restricted_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_QUARTERMASTER, JOB_CHIEF_ENGINEER, JOB_CHIEF_MEDICAL_OFFICER, JOB_RESEARCH_DIRECTOR)
@@ -281,7 +281,7 @@
 	surplus = 0
 	progression_minimum = 30 MINUTES
 	limited_stock = 1
-	cost = 10
+	cost = 20
 	cant_discount = TRUE
 	restricted = TRUE
 	restricted_roles = list(JOB_QUARTERMASTER)
@@ -297,7 +297,7 @@
 	surplus = 0
 	progression_minimum = 30 MINUTES
 	limited_stock = 1
-	cost = 10
+	cost = 20
 	cant_discount = TRUE
 	restricted = TRUE
 	restricted_roles = list(JOB_CHIEF_MEDICAL_OFFICER)

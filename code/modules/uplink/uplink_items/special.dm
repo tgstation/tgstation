@@ -60,6 +60,7 @@
 /datum/uplink_item/special/bluespacestoragetie/New()
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_SCARVES))
+		purchasable_from |= UPLINK_TRAITORS
 		limited_stock = 1
 
 /datum/uplink_item/special/riggedglitterbombs
@@ -118,6 +119,7 @@
 /datum/uplink_item/special/boxed_dehydrated_carp/New()
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CARP_INFESTATION))
+		purchasable_from |= UPLINK_TRAITORS
 		limited_stock = -1
 
 /datum/uplink_item/special/synditaser
@@ -186,6 +188,7 @@
 /datum/uplink_item/special/syndicaterewinder/New()
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_REVOLUTIONARY_TRASHING)) // Cuz i can't think of anything better to use.
+		purchasable_from |= UPLINK_TRAITORS
 		limited_stock = -1
 
 /datum/uplink_item/special/magicdehydratedcarp
@@ -199,6 +202,7 @@
 /datum/uplink_item/special/magicdehydratedcarp/New()
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_RAD_STORMS)) // Radiation magic powers? Guess that's not far-fetched as far as cartoons go.
+		purchasable_from |= UPLINK_TRAITORS
 		limited_stock = -1
 
 /datum/uplink_item/special/spacepiratekit
@@ -212,6 +216,7 @@
 /datum/uplink_item/special/spacepiratekit/New()
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_DISTANT_SUPPLYLINES))
+		purchasable_from |= UPLINK_TRAITORS
 		limited_stock = 1
 
 /datum/uplink_item/special/chameleonmutator

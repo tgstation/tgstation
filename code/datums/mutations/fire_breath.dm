@@ -7,6 +7,7 @@
 	text_gain_indication = "<span class='notice'>Your throat is burning!</span>"
 	text_lose_indication = "<span class='notice'>Your throat is cooling down.</span>"
 	power_path = /datum/action/cooldown/spell/cone/staggered/fire_breath
+	species_allowed = list(SPECIES_LIZARD)
 	instability = 30
 	energy_coeff = 1
 	power_coeff = 1

@@ -612,3 +612,18 @@
 	name = "\improper DNA injector (Vitality)"
 	desc = "To give you the proper boost you need. Won't do anything to your genitals, though."
 	add_mutations = list(/datum/mutation/human/vitality)
+
+/obj/item/dnainjector/firebreath
+	name = "\improper DNA injector (Fire Breath)"
+	desc = "Restores the dragon ancestry."
+	add_mutations = list(/datum/mutation/human/firebreath)
+
+/obj/item/dnainjector/acidspit
+	name = "\improper DNA injector (Acid Spit)"
+	desc = "Lets you spit acid."
+	add_mutations = list(/datum/mutation/human/acidspit)
+
+/obj/item/dnainjector/radiantburst
+	name = "\improper DNA injector (Radiant Burst)"
+	desc = "Gives you radiant burst."
+	add_mutations = list(/datum/mutation/human/radiantburst)

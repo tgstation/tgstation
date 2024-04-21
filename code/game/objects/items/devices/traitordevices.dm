@@ -819,25 +819,3 @@ effective or pretty fucking useless.
 	to_chat(user, span_danger("The cargo shuttle navigation corruptor self-destructs!"))
 	qdel(src)
 
-/obj/item/card/emag/botemagger
-	desc = "It's a card with a magnetic strip attached to some circuitry. It looks... off, somehow."
-	name = "bot behavior sequencer"
-	icon_state = "emag"
-	inhand_icon_state = "card-id"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
-	/// Does usage require you to be in range?
-	prox_check = TRUE
-	var/type_whitelist //List of types
-
-/obj/item/card/emag/botemagger/Initialize(mapload)
-	. = ..()
-	type_whitelist = list(typesof(/mob/living/basic/bot), typesof(/mob/living/simple_animal/bot)) //list of all acceptable typepaths that this device can affect
-
-/obj/item/card/emag/botemagger/can_emag(atom/target, mob/user)
-	for (var/list/subtypelist in type_whitelist)
-		if (target.type in subtypelist)
-			return TRUE
-	to_chat(user, span_warning("[src] is unable to interface with this. It only seems to fit into airlock electronics."))
-	return FALSE

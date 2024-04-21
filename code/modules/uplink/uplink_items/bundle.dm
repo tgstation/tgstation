@@ -11,7 +11,7 @@
 
 /datum/uplink_item/bundles_tc/goloudbundle
 	name = "NT-Annihilation 'Go Loud' Kit"
-	desc = "For any reason, if you find stealth to be an unviable strategy, we'll understand. Be warned that using the beacon WILL ALERT EVERYONE TO YOUR TRAITOROUS NATURE. \
+	desc = "For any reason, if you find stealth to be an unviable strategy, we'll understand. Be warned that claiming this kit WILL ALERT EVERYONE TO YOUR TRAITOROUS NATURE. \
 			We're ready to provide an additional 15 Telecrystals, an energy dagger, and an atropine autoinjector to ensure you'll have the gear to go loud and get your objectives done."
 	item = /obj/item/storage/box/syndie_kit/goloudbundle
 	cost = 0

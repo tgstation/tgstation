@@ -165,6 +165,23 @@
 	cost = 1
 	illegal_tech = FALSE
 
+/datum/uplink_item/device_tools/toolboxdeluxe
+	name = "Deluxe Syndicate Toolbox"
+	desc = "A syndicate toolbox that comes stocked with ultra-fast syndicate tools. Be careful, as \
+			these tools are more obviously marked and will be easily spotted by anyone observant. \
+			Comes with a hand drill and experimental welding tool instead of the usual tools we provide."
+	item = /obj/item/storage/toolbox/syndicate/deluxe
+	cost = 2
+	illegal_tech = FALSE
+
+/datum/uplink_item/device_tools/tactical_gloves
+	name = "Tactical Fingerless Gloves"
+	desc = "A pair of simple insulated gloves without fingertips that greatly assist in carrying bodies, \
+			cuffing people, holding dangerous plants, construction, wound-tending, shooting, and even allow \
+			you to use sign language over telecommunications!"
+	item = /obj/item/clothing/gloves/fingerless/bigboss
+	cost = 2
+
 /datum/uplink_item/device_tools/rad_laser
 	name = "Radioactive Microlaser"
 	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it emits a \
@@ -184,6 +201,13 @@
 	cost = 7
 	limited_stock = 1
 
+/datum/uplink_item/device_tools/syndie_bodybag
+	name = "Syndicate Prisoner Transport Bag"
+	desc = "An alteration of Nanotrasen's environmental protection bag which has been used in several high-profile kidnappings. \
+			Designed to keep a victim unconscious, alive, and secured until they are transported to a required location."
+	item = /obj/item/bodybag/environmental/prisoner/syndicate
+	cost = 2
+
 /datum/uplink_item/device_tools/binary
 	name = "Binary Translator Key"
 	desc = "A key that, when inserted into a radio headset, allows you to listen to and talk with silicon-based lifeforms, \
@@ -193,6 +217,15 @@
 	cost = 5
 	surplus = 75
 	restricted = TRUE
+
+/datum/uplink_item/device_tools/magboots
+	name = "Advanced Blood-Red Magboots"
+	desc = "A pair of magnetic boots with a Syndicate paintjob that assist with freer movement in space or on-station \
+			especially during gravitational generator failures. These reverse-engineered prototypes of Nanotrasen's \
+			'Advanced Magboots' won't slow you down in simulated-gravity environments much like the standard issue variety. \
+			Additionally, these magboots may invert gravity upon the wearer, allowing for jetpack usage."
+	item = /obj/item/clothing/shoes/magboots/syndie/advanced
+	cost = 6
 
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
@@ -226,6 +259,14 @@
 	name = "Hypnotic Grenade"
 	desc = "A modified flashbang grenade able to hypnotize targets. The sound portion of the flashbang causes hallucinations, and will allow the flash to induce a hypnotic trance to viewers."
 	item = /obj/item/grenade/hypnotic
+	cost = 12
+
+/datum/uplink_item/device_tools/mdrive
+	name = "Mirage Drive"
+	desc = "An experimental device created as a byproduct of research into faster than light travel. Utilizing magnetic coils, the mirage drive is able to generate \
+			kinetic energy and use it in a way that moves the user to their destination at a speed comparable to teleportation, so long as an unobstructed path between the \
+			user and the target exists. Can also be used to deliver rapid-fire attacks onto targets you pass through."
+	item = /obj/item/mdrive
 	cost = 12
 
 /datum/uplink_item/device_tools/singularity_beacon
@@ -356,3 +397,18 @@
 	cost = 3
 	surplus = 0
 	illegal_tech = TRUE
+
+/datum/uplink_item/device_tools/extraarm
+	name = "Additional Arm"
+	desc = "An additional arm, automatically added to your body upon purchase, allows you to use more items at once"
+	item = /obj/item/bodypart/arm/left //doesn't actually spawn an arm, but it needs an object to show up in the menu :^)
+	cost = 5
+	surplus = 0
+	limited_stock = 2 // It's probably best to not break the UI any further.
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_SPY)
+	illegal_tech = FALSE // It's just another arm.
+
+/datum/uplink_item/device_tools/extraarm/spawn_item(spawn_item, mob/user)
+	var/limbs = user.held_items.len
+	user.change_number_of_hands(limbs+1)
+	to_chat(user, "You feel more dexterous")

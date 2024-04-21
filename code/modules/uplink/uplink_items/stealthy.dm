@@ -11,7 +11,7 @@
 	desc = "A pair of gloves that are fireproof and shock resistant, however unlike the regular Combat Gloves this one uses nanotechnology \
 			to grant the wearer knowledge over Krav Maga. Not as inconspicuous as you may think. To ensure your stealth, wear before use only."
 	item = /obj/item/clothing/gloves/krav_maga/combatglovesplus
-	cost = 8
+	cost = 5
 	surplus = 0
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
@@ -171,6 +171,16 @@
 	progression_minimum = 20 MINUTES
 	cost = 4
 	surplus = 15
+
+/datum/uplink_item/stealthy_weapons/door_charge
+	name = "Explosive Airlock Charge"
+	desc = "A small, easily concealable device. It can be applied to an open airlock panel, booby-trapping it. \
+			The next person to open that airlock will trigger an explosion, knocking them down and destroying \
+			the airlock maintenance panel."
+	item = /obj/item/doorCharge
+	cost = 2
+	surplus = 10
+	purchasable_from = ~UPLINK_NUKE_OPS
 
 /datum/uplink_item/stealthy_weapons/knifevenom
 	name = "Reagent Knife (Venom)"

@@ -121,7 +121,7 @@
 
 /datum/uplink_item/dangerous/m1911pistol
 	name = "M1911"
-	desc = "A single M1911 Pistol that fires .45 bullets. Loaded with 8 lethal shots."
+	desc = "A single M1911 Pistol that fires .45 bullets. Loaded with 9 lethal shots."
 	item = /obj/item/gun/ballistic/automatic/pistol/m1911
 	cost = 6
 	surplus = 45
@@ -312,7 +312,7 @@
 			Shoots shards of molten nanites that cause cold targets to explode. \
 			This version has been modified to recharge automatically."
 	item = /obj/item/gun/energy/laser/thermal/inferno/syndicate
-	cost = 5
+	cost = 7
 	surplus = 30
 	illegal_tech = TRUE
 	purchasable_from = ~UPLINK_CLOWN_OPS
@@ -323,7 +323,7 @@
 			Shoots shards of freezing nanites that deal extra damage to hot targets, and will knock them prone. \
 			This version has been modified to recharge automatically."
 	item = /obj/item/gun/energy/laser/thermal/cryo/syndicate
-	cost = 5
+	cost = 7
 	surplus = 30
 	illegal_tech = TRUE
 	purchasable_from = ~UPLINK_CLOWN_OPS
@@ -361,10 +361,10 @@
 
 /datum/uplink_item/dangerous/demolecularisor
 	name = "Biological Demolecularisor"
-	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements. Deals moderate amounts of toxin damage per shot and may irradiate targets. Recharges automatically but very slowly."
+	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements. Deals small amounts of toxin damage per shot and may irradiate targets. Recharges automatically but very slowly."
 	item = /obj/item/gun/energy/decloner/syndicate
 	surplus = 8
-	cost = 15
+	cost = 10
 	illegal_tech = TRUE
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
@@ -420,6 +420,4 @@
 	progression_minimum = 30 MINUTES
 	cant_discount = TRUE
 	illegal_tech = TRUE
-	purchasable_from = ~UPLINK_SPY
-
-
+	purchasable_from = ~UPLINK_SPY // Def shouldn't let spies try and earn this.

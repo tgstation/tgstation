@@ -158,21 +158,21 @@
 
 /// Provides power to the connected powernet, if any.
 /obj/item/powerlake/proc/provide_power()
-	var/datum/powernet/powernet = attached.powernet
-	var/provided = 200000
+	//var/datum/powernet/powernet = attached.powernet
+	var/provided = 500000 // Loads of power
 	set_light(5)
 
-	// Provide as much as we can from the powernet.
-	//provided = attached.newavail()
+	// Provide as much as we can to the powernet.
 	attached.add_avail(provided)
-
+	/**
 	// If tried to provide more than maximum on powernet, now look for APCs and recharge their cells
 	for(var/obj/machinery/power/terminal/terminal in powernet.nodes)
 		if(istype(terminal.master, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/apc = terminal.master
 			if(apc.operating && apc.cell)
-				provided /= 2 //apc.cell.give(50 KILO JOULES)
-	internal_heat += (provided / 2) // Just to compensate for the big blast radius. Would like to give people more time to combat it.
+				provided /= 2 //apc.cell.give(150 KILO JOULES)
+	**/
+	internal_heat += (provided / 3) // Just to compensate for the big blast radius. Would like to give people more time to combat it.
 
 /obj/item/powerlake/process()
 	if(!attached)

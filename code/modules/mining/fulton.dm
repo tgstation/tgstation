@@ -18,6 +18,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	var/safe_for_living_creatures = TRUE
 	/// Maximum force that can be used to extract
 	var/max_force_fulton = MOVE_FORCE_STRONG
+	/// If false, the object or entity is stored within nullspace.
+	var/uses_beacon = TRUE
 
 /obj/item/extraction_pack/examine()
 	. = ..()
@@ -33,6 +35,9 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	. += span_infoplain("It is linked to [beacon.name].")
 
 /obj/item/extraction_pack/attack_self(mob/user)
+	if(!uses_beacon)
+		return FALSE
+
 	var/list/possible_beacons = list()
 	for(var/datum/weakref/point_ref as anything in GLOB.total_extraction_beacons)
 		var/obj/structure/extraction_point/extraction_point = point_ref.resolve()
@@ -51,12 +56,18 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	beacon_ref = WEAKREF(chosen_beacon)
 	balloon_alert(user, "linked!")
 
+/obj/item/extraction_pack/proc/can_extract(atom/movable/A)
+	return TRUE
+
+/obj/item/extraction_pack/proc/post_extract(atom/movable/A)
+	return
+
 /obj/item/extraction_pack/afterattack(atom/movable/thing, mob/living/carbon/human/user, proximity_flag, params)
 	. = ..()
 	. |= AFTERATTACK_PROCESSED_ITEM
 
 	var/obj/structure/extraction_point/beacon = beacon_ref?.resolve()
-	if(isnull(beacon))
+	if(isnull(beacon) && uses_beacon)
 		balloon_alert(user, "not linked")
 		beacon_ref = null
 		return
@@ -67,7 +78,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			balloon_alert(user, "not outdoors")
 			return
 
-	if(!proximity_flag || !istype(thing))
+	if(!proximity_flag || !istype(thing) || !can_extract(thing))
 		return
 
 	if(!safe_for_living_creatures && check_for_living_mobs(thing))
@@ -87,6 +98,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		if(creature.mind)
 			to_chat(thing, span_userdanger("You are being extracted! Stand still to proceed."))
 
+	if(!can_extract(thing))
+		return
 	if(!do_after(user, 5 SECONDS, target = thing))
 		return
 
@@ -145,40 +158,41 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		creature.SetSleeping(0)
 
 	sleep(3 SECONDS)
+	if(uses_beacon)
+		var/turf/flooring_near_beacon = list()
+		var/turf/beacon_turf = get_turf(beacon)
+		for(var/turf/floor as anything in RANGE_TURFS(1, beacon_turf))
+			if(!floor.is_blocked_turf())
+				flooring_near_beacon += floor
 
-	var/turf/flooring_near_beacon = list()
-	var/turf/beacon_turf = get_turf(beacon)
-	for(var/turf/floor as anything in RANGE_TURFS(1, beacon_turf))
-		if(!floor.is_blocked_turf())
-			flooring_near_beacon += floor
+		if(!length(flooring_near_beacon))
+			flooring_near_beacon += beacon_turf
 
-	if(!length(flooring_near_beacon))
-		flooring_near_beacon += beacon_turf
+		holder_obj.forceMove(pick(flooring_near_beacon))
 
-	holder_obj.forceMove(pick(flooring_near_beacon))
+		animate(holder_obj, pixel_z = -990, time = 5 SECONDS, flags = ANIMATION_RELATIVE)
+		animate(pixel_z = 5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+		animate(pixel_z = -5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+		sleep(7 SECONDS)
 
-	animate(holder_obj, pixel_z = -990, time = 5 SECONDS, flags = ANIMATION_RELATIVE)
-	animate(pixel_z = 5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
-	animate(pixel_z = -5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
-	sleep(7 SECONDS)
+		balloon3 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_retract")
+		balloon3.pixel_y = 10
+		balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		holder_obj.cut_overlay(balloon)
+		holder_obj.add_overlay(balloon3)
+		sleep(0.4 SECONDS)
 
-	balloon3 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_retract")
-	balloon3.pixel_y = 10
-	balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-	holder_obj.cut_overlay(balloon)
-	holder_obj.add_overlay(balloon3)
-	sleep(0.4 SECONDS)
+		holder_obj.cut_overlay(balloon3)
+		thing.set_anchored(FALSE) // An item has to be unanchored to be extracted in the first place.
+		thing.set_density(initial(thing.density))
+		animate(holder_obj, pixel_z = -10, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
+		sleep(0.5 SECONDS)
 
-	holder_obj.cut_overlay(balloon3)
-	thing.set_anchored(FALSE) // An item has to be unanchored to be extracted in the first place.
-	thing.set_density(initial(thing.density))
-	animate(holder_obj, pixel_z = -10, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
-	sleep(0.5 SECONDS)
-
-	thing.forceMove(holder_obj.loc)
-	qdel(holder_obj)
-	if(uses_left <= 0)
-		qdel(src)
+		thing.forceMove(holder_obj.loc)
+		qdel(holder_obj)
+		post_extract(thing)
+		if(uses_left <= 0)
+			qdel(src)
 
 /obj/item/extraction_pack/non_contractor
 	can_use_indoors = TRUE

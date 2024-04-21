@@ -132,6 +132,9 @@
 
 	. += image(icon = initial(icon), icon_state = "[base_icon_state]_top")
 
+/obj/item/storage/fancy/donut_box/deadly
+	spawn_type = /obj/item/food/donut/deadly
+
 #undef DONUT_INBOX_SPRITE_WIDTH
 
 /*
