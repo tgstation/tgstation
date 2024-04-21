@@ -23,7 +23,6 @@ type ListInputModalProps = {
 
 export const ListInputModal = (props: ListInputModalProps) => {
   const { items = [], default_item, message, on_selected, on_cancel } = props;
-  logger.info('ListInputModal', { items, default_item, message });
 
   const [selected, setSelected] = useState(items.indexOf(default_item));
   const [searchBarVisible, setSearchBarVisible] = useState(items.length > 9);
