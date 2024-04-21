@@ -218,6 +218,7 @@
 		tool_behaviour = new_tool_behaviour
 
 	reference_item_for_parameters()
+	SHOULD_CALL_PARENT(FALSE)
 	update_tool_parameters(reference)
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
@@ -269,6 +270,7 @@
 	upgraded = TRUE
 	tool_behaviour = null
 	reference_item_for_parameters()
+	SHOULD_CALL_PARENT(FALSE)
 	update_tool_parameters(reference)
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
@@ -286,6 +288,7 @@
 	upgraded = FALSE
 	tool_behaviour = null
 	reference_item_for_parameters()
+	SHOULD_CALL_PARENT(FALSE)
 	update_tool_parameters(reference)
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
