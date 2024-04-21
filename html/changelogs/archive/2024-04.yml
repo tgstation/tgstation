@@ -677,3 +677,10 @@
   - bugfix: AI voice changer now shows its current voice selection.
   - bugfix: Deathmatch screen has been touched up.
   - bugfix: Prefs menu has their dropdowns simplified, hopefully fixing issues
+2024-04-21:
+  ZephyrTFA:
+  - admin: New dropdown to force change a mob's name and the attached client's preferences.
+  - admin: Player Panel is back
+  jlsnow301:
+  - bugfix: Fixed the targeting capability of mobs with full auto
+  - bugfix: You can now fire the marksman revolver at things you can see
