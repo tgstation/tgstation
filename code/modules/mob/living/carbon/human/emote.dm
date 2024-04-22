@@ -8,6 +8,7 @@
 	message_mime = "sobs silently."
 	audio_cooldown = 0.5 SECONDS
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	vary = TRUE
 	stat_allowed = SOFT_CRIT
 
 /datum/emote/living/carbon/human/cry/run_emote(mob/user, params, type_override, intentional)
