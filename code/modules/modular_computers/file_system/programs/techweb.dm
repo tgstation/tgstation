@@ -218,7 +218,7 @@
 						logname = "[id_card_of_human_user.registered_name]"
 			stored_research.research_logs += list(list(
 				"node_name" = tech_node.display_name,
-				"node_cost" = price["General Research"],
+				"node_cost" = price[TECHWEB_POINT_TYPE_GENERIC],
 				"node_researcher" = logname,
 				"node_research_location" = "[get_area(computer)] ([user.x],[user.y],[user.z])",
 			))

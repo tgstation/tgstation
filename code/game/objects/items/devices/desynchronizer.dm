@@ -9,7 +9,7 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
-	interaction_flags_click = NEED_DEXTERITY
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	/// Max time this can be set
 	var/max_duration = 300 SECONDS
 	/// Currently set time

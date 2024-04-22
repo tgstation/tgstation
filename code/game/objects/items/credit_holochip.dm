@@ -7,7 +7,7 @@
 	throwforce = 0
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
-	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH
+	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	/// Amount on money on the card
 	var/credits = 0
 

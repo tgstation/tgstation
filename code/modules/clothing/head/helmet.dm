@@ -142,6 +142,7 @@
 
 
 /obj/item/clothing/head/helmet/toggleable
+	visor_vars_to_toggle = NONE
 	dog_fashion = null
 	///chat message when the visor is toggled down.
 	var/toggle_message
@@ -149,26 +150,11 @@
 	var/alt_toggle_message
 
 /obj/item/clothing/head/helmet/toggleable/attack_self(mob/user)
+	adjust_visor(user)
+
+/obj/item/clothing/head/helmet/toggleable/update_icon_state()
 	. = ..()
-	if(.)
-		return
-	if(user.incapacitated() || !try_toggle())
-		return
-	up = !up
-	flags_1 ^= visor_flags
-	flags_inv ^= visor_flags_inv
-	flags_cover ^= visor_flags_cover
 	icon_state = "[initial(icon_state)][up ? "up" : ""]"
-	to_chat(user, span_notice("[up ? alt_toggle_message : toggle_message] \the [src]."))
-
-	user.update_worn_head()
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		carbon_user.head_update(src, forced = TRUE)
-
-///Attempt to toggle the visor. Returns true if it does the thing.
-/obj/item/clothing/head/helmet/toggleable/proc/try_toggle()
-	return TRUE
 
 /obj/item/clothing/head/helmet/toggleable/riot
 	name = "riot helmet"
@@ -223,11 +209,18 @@
 	///Looping sound datum for the siren helmet
 	var/datum/looping_sound/siren/weewooloop
 
-/obj/item/clothing/head/helmet/toggleable/justice/try_toggle()
+/obj/item/clothing/head/helmet/toggleable/justice/adjust_visor(mob/living/user)
 	if(!COOLDOWN_FINISHED(src, visor_toggle_cooldown))
 		return FALSE
 	COOLDOWN_START(src, visor_toggle_cooldown, 2 SECONDS)
-	return TRUE
+	return ..()
+
+/obj/item/clothing/head/helmet/toggleable/justice/visor_toggling()
+	. = ..()
+	if(up)
+		weewooloop.start()
+	else
+		weewooloop.stop()
 
 /obj/item/clothing/head/helmet/toggleable/justice/Initialize(mapload)
 	. = ..()
@@ -236,13 +229,6 @@
 /obj/item/clothing/head/helmet/toggleable/justice/Destroy()
 	QDEL_NULL(weewooloop)
 	return ..()
-
-/obj/item/clothing/head/helmet/toggleable/justice/attack_self(mob/user)
-	. = ..()
-	if(up)
-		weewooloop.start()
-	else
-		weewooloop.stop()
 
 /obj/item/clothing/head/helmet/toggleable/justice/escape
 	name = "alarm helmet"

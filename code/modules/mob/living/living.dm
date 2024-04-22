@@ -1321,7 +1321,8 @@
 	if(!Adjacent(target) && (target.loc != src) && !recursive_loc_check(src, target))
 		if(HAS_SILICON_ACCESS(src) && !ispAI(src))
 			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks (except pAIs)
-				to_chat(src, span_warning("You are too far away!"))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 		else // just a normal carbon mob
 			if((action_bitflags & FORBID_TELEKINESIS_REACH))
@@ -1815,7 +1816,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	user.put_in_hands(holder)
 
 /mob/living/proc/set_name()
-	if(!numba)
+	if(numba == 0)
 		numba = rand(1, 1000)
 	name = "[name] ([numba])"
 	real_name = name

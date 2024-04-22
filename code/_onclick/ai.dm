@@ -55,7 +55,7 @@
 		ShiftClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
-		A.ai_click_alt(src)
+		ai_base_click_alt(A)
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
@@ -119,6 +119,24 @@
 
 /mob/living/silicon/ai/CtrlClickOn(atom/target)
 	target.AICtrlClick(src)
+
+
+/// Reimplementation of base_click_alt for AI
+/mob/living/silicon/ai/proc/ai_base_click_alt(atom/target)
+	// If for some reason we can't alt click
+	if(SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, target) & COMSIG_MOB_CANCEL_CLICKON)
+		return
+
+	if(!isturf(target) && can_perform_action(target, (target.interaction_flags_click | SILENT_ADJACENCY)))
+		// Signal intercept
+		if(SEND_SIGNAL(target, COMSIG_CLICK_ALT, src) & CLICK_ACTION_ANY)
+			return
+
+		// AI alt click interaction succeeds
+		if(target.ai_click_alt(src) & CLICK_ACTION_ANY)
+			return
+
+	client.loot_panel.open(get_turf(target))
 
 
 /*
