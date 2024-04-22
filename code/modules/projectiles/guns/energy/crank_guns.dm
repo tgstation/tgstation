@@ -125,3 +125,11 @@
 		ammunition by manually spinning the weapon's nanite canister."
 	icon_state = "cryopistol"
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)
+
+/obj/item/gun/energy/laser/thermal/inferno/syndicate
+	selfcharge = 1
+	charge_delay = 2
+
+/obj/item/gun/energy/laser/thermal/cryo/syndicate
+	selfcharge = 1
+	charge_delay = 2

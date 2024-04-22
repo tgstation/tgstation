@@ -137,3 +137,33 @@
 	else
 		to_chat(user, span_notice("..and falls into view. Whew, that was a close one."))
 		user.dropItemToGround(src)
+
+/obj/item/gun/ballistic/automatic/pistol/viper
+	name = "\improper Viper"
+	desc = "A classic 10mm handgun with a small magazine capacity. It's capable of automatic fire."
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon_state = "Viper"
+	inhand_icon_state = "viper"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m10mm
+	mag_display = TRUE
+	can_suppress = FALSE
+	bolt_type = BOLT_TYPE_LOCKING
+	fire_delay = 0
+	fire_sound = 'sound/weapons/gun/pistol/shot_alt.ogg'
+	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
+	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
+	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
+
+/obj/item/gun/ballistic/automatic/pistol/viper/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
+
+/obj/item/gun/ballistic/automatic/pistol/viper/no_mag
+	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/pistol/viper/implant
+	name = "viper implant"
+	desc = "A modified version of the viper pistol placed inside of the forearm, allows for easy concealment."

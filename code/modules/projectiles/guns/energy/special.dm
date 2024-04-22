@@ -69,6 +69,34 @@
 	w_class = WEIGHT_CLASS_TINY
 	automatic_charge_overlays = FALSE
 
+/obj/item/gun/energy/decloner
+	name = "biological demolecularisor"
+	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
+	icon_state = "decloner"
+	ammo_type = list(/obj/item/ammo_casing/energy/radiation)
+	pin = null
+	ammo_x_offset = 1
+
+/obj/item/gun/energy/decloner/update_overlays()
+	. = ..()
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
+		. += "decloner_spin"
+
+/obj/item/gun/energy/decloner/unrestricted
+	pin = /obj/item/firing_pin
+	ammo_type = list(/obj/item/ammo_casing/energy/radiation)
+
+/obj/item/gun/energy/decloner/syndicate
+	name = "biological demolecularisor"
+	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
+	icon_state = "decloner"
+	ammo_type = list(/obj/item/ammo_casing/energy/radiation/weak)
+	pin = /obj/item/firing_pin
+	ammo_x_offset = 1
+	selfcharge = 1
+	charge_delay = 10
+
 /obj/item/gun/energy/mindflayer
 	name = "\improper Mind Flayer"
 	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
@@ -77,6 +105,18 @@
 	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
 	ammo_x_offset = 2
+
+/obj/item/gun/energy/mindflayer/syndicate
+	name = "mind flayer"
+	desc = "A vicious weapon with the ability to lock up the motor neurons of the respiratory system and take advantage of the increasing suffocation of the brain to destroy it."
+	icon_state = "mindflayer"
+	inhand_icon_state = "mindflayer"
+	w_class = WEIGHT_CLASS_SMALL
+	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
+	pin = /obj/item/firing_pin
+	ammo_x_offset = 2
+	selfcharge = 1
+	charge_delay = 10
 
 /// amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
 #define PLASMA_CUTTER_CHARGE_WELD (0.025 * STANDARD_CELL_CHARGE)
@@ -354,6 +394,9 @@
 	if(!firing_core)
 		return FALSE
 	return ..()
+
+/obj/item/gun/energy/gravity_gun/withcore
+	firing_core = TRUE
 
 /obj/item/gun/energy/tesla_cannon
 	name = "tesla cannon"

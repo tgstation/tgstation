@@ -198,3 +198,27 @@
 	name = "luxurious laser gun"
 	desc = "A laser gun modified to cost 20 credits to fire. Point towards poor people."
 	pin = /obj/item/firing_pin/paywall/luxury
+
+/obj/item/gun/energy/disabler/syndicate
+	name = "disabler"
+	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
+	icon_state = "disabler"
+	inhand_icon_state = null
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/lasergun)
+	selfcharge = 1
+	ammo_x_offset = 2
+
+/obj/item/gun/energy/syndicatelaserrifle
+	name = "\improper laser rifle"
+	desc = "A powerful laser rifle repurposed and maintained by foreign corporations. Originally based off old laser gun models created by Nanotrasen."
+	icon = 'icons/obj/weapons/guns/energy.dmi'
+	icon_state = "oldrifle"
+	inhand_icon_state = "arg"
+	fire_delay = 2
+	can_suppress = FALSE
+	burst_size = 0
+	actions_types = list()
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
+	fire_sound = 'sound/weapons/laser.ogg'
+	selfcharge = 1
+	charge_delay = 4

@@ -49,6 +49,9 @@
 	if(thrower != src)
 		extra_speed = min(max(0, throwingdatum.speed - initial(throw_speed)), CARBON_MAX_IMPACT_SPEED_BONUS)
 
+	if(HAS_TRAIT(src, TRAIT_IMPACTIMMUNE))
+		return
+
 	if(istype(throwingdatum))
 		hurt = !throwingdatum.gentle
 	if(hurt && hit_atom.density)
@@ -248,7 +251,7 @@
 		var/obj/item/restraints/cuffs = src.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
 		buckle_cd = cuffs.breakouttime
 
-	visible_message(span_warning("[src] attempts to unbuckle [p_them()]self!"), 
+	visible_message(span_warning("[src] attempts to unbuckle [p_them()]self!"),
 				span_notice("You attempt to unbuckle yourself... \
 				(This will take around [DisplayTimeText(buckle_cd)] and you must stay still.)"))
 
@@ -256,7 +259,7 @@
 		if(buckled)
 			to_chat(src, span_warning("You fail to unbuckle yourself!"))
 		return
-	
+
 	if(QDELETED(src) || isnull(buckled))
 		return
 

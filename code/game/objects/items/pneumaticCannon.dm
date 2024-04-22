@@ -337,6 +337,57 @@
 	maxWeightClass = 6 //2 pies
 	charge_ticks = 2 //4 second/pie
 
+/obj/item/pneumatic_cannon/speargun
+	name = "kinetic speargun"
+	desc = "A weapon favored by carp hunters. Fires specialized spears using kinetic energy."
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon_state = "speargun"
+	inhand_icon_state = "speargun"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 10
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	gasPerThrow = 0
+	checktank = FALSE
+	range_multiplier = 3
+	throw_amount = 1
+	maxWeightClass = 2 //a single magspear
+	spin_item = FALSE
+	var/static/list/magspear_typecache = typecacheof(/obj/item/throwing_star/magspear)
+
+/obj/item/pneumatic_cannon/speargun/Initialize(mapload)
+	. = ..()
+	allowed_typecache = magspear_typecache
+
+/obj/item/storage/magspear_quiver
+	name = "quiver"
+	desc = "A quiver for holding magspears."
+	icon = 'icons/obj/storage/storage.dmi'
+	slot_flags = ITEM_SLOT_POCKETS
+	icon_state = "quiver"
+	inhand_icon_state = "quiver"
+
+/obj/item/storage/magspear_quiver/Initialize(mapload)
+	. = ..()
+	atom_storage.max_total_storage = 27
+	atom_storage.set_holdable(list(
+		/obj/item/throwing_star/magspear,
+	))
+
+/obj/item/storage/magspear_quiver/PopulateContents()
+	for(var/i in 1 to 20)
+		new /obj/item/throwing_star/magspear(src)
+
+/obj/item/throwing_star/magspear // placed this here for convienence sake.
+	name = "magnetic spear"
+	desc = "A reusable spear that is typically loaded into kinetic spearguns. It's too heavy to toss around."
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "magspear"
+	throwforce = 25 //kills regular carps in one hit
+	force = 7
+	throw_range = 0 //throwing these invalidates the speargun
+	attack_verb_simple = list("stabbed", "ripped", "gored", "impaled")
+	embedding = list("embedded_pain_multiplier" = 8, "embed_chance" = 100, "embedded_fall_chance" = 0.05, "embedded_impact_pain_multiplier" = 15) //55 damage+embed on hit
+
 #undef PCANNON_FIREALL
 #undef PCANNON_FILO
 #undef PCANNON_FIFO

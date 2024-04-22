@@ -244,6 +244,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Applied into wounds when they're scanned with the wound analyzer, halves time to treat them manually.
 #define TRAIT_WOUND_SCANNED "wound_scanned"
 
+// Protects from the damage of getting launched into a wall hard
+#define TRAIT_IMPACTIMMUNE	"impact_immunity"
+
 #define TRAIT_NODEATH "nodeath"
 #define TRAIT_NOHARDCRIT "nohardcrit"
 #define TRAIT_NOSOFTCRIT "nosoftcrit"
