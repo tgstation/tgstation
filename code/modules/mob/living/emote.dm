@@ -81,10 +81,10 @@
 		return FALSE
 
 /datum/emote/living/cough/get_sound(mob/living/user)
-	var/mob/living/carbon/human/human_user = user
+	var/mob/living/carbon/human_user = user
 	if(human_user.gender == FEMALE)
 		return pick('sound/voice/human/female_cough1.ogg' , 'sound/voice/human/female_cough2.ogg')
-	else return 'sound/voice/human/male_cough1.ogg'
+	return 'sound/voice/human/male_cough1.ogg'
 /datum/emote/living/dance
 	key = "dance"
 	key_third_person = "dances"
@@ -301,9 +301,9 @@
 			return 'sound/voice/human/womanlaugh.ogg'
 		else
 			return pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg')
-	if(islizard(human_user) && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
+	if(islizard(human_user))
 		return 'sound/voice/lizard/lizard_laugh1.ogg'
-	if(ismoth(human_user) && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
+	if(ismoth(human_user))
 		return 'sound/voice/moth/moth_laugh1.ogg'
 
 /datum/emote/living/look
@@ -425,7 +425,7 @@
 	var/mob/living/carbon/human_user = user
 	if(human_user.gender == FEMALE)
 		return 'sound/voice/human/female_sneeze1.ogg'
-	else return 'sound/voice/human/male_sneeze1.ogg'
+	return 'sound/voice/human/male_sneeze1.ogg'
 
 /datum/emote/living/smug
 	key = "smug"
@@ -759,6 +759,5 @@
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/whistle/get_sound(mob/living/user)
-	var/mob/living/carbon/human_user = user
 	return 'sound/voice/human/whistle1.ogg'
 
