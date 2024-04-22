@@ -4,21 +4,20 @@
  */
 /datum/component/sisyphus_awarder
 	/// What poor sap is hauling this rock?
-	var/datum/weakref/sisyphus
+	var/mob/living/sisyphus
 
 /datum/component/sisyphus_awarder/Initialize()
-	. = ..()
 	if (!istype(parent, /obj/item/boulder))
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/sisyphus_awarder/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(on_picked_up))
+	RegisterSignal(parent, COMSIG_ITEM_POST_EQUIPPED, PROC_REF(on_picked_up))
 
 /datum/component/sisyphus_awarder/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED))
-	var/mob/living/struggler = sisyphus?.resolve()
-	if (!isnull(struggler))
-		UnregisterSignal(struggler, COMSIG_ENTER_AREA)
+	UnregisterSignal(parent, list(COMSIG_ITEM_POST_EQUIPPED, COMSIG_MOVABLE_MOVED))
+	if (!isnull(sisyphus))
+		UnregisterSignal(sisyphus, list(COMSIG_ENTER_AREA, COMSIG_QDELETING))
+	sisyphus = null
 
 /// Called when we're picked up, check if we're in the right place to start our epic journey
 /datum/component/sisyphus_awarder/proc/on_picked_up(atom/source, mob/living/the_taker)
@@ -26,10 +25,11 @@
 	if (!istype(get_area(the_taker), /area/lavaland))
 		qdel(src)
 		return
-	UnregisterSignal(parent, COMSIG_ITEM_PICKUP)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
+	UnregisterSignal(parent, COMSIG_ITEM_POST_EQUIPPED)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_dropped))
 	RegisterSignal(the_taker, COMSIG_ENTER_AREA, PROC_REF(on_bearer_changed_area))
-	sisyphus = WEAKREF(the_taker)
+	RegisterSignal(the_taker, COMSIG_QDELETING, PROC_REF(on_dropped))
+	sisyphus = the_taker
 
 /// If you ever drop this shit you fail the challenge
 /datum/component/sisyphus_awarder/proc/on_dropped()
