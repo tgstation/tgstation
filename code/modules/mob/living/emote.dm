@@ -296,7 +296,8 @@
 /datum/emote/living/laugh/get_sound(mob/living/carbon/user)
 	if(!ishuman(user))
 		return
-	return user.dna.species.get_laugh_sound(user)
+	var/mob/living/carbon/human/human_user = user
+	return human_user.dna.species.get_laugh_sound(user)
 
 /datum/emote/living/look
 	key = "look"
@@ -416,6 +417,8 @@
 
 /datum/emote/living/sneeze/get_sound(mob/living/user)
 	var/mob/living/carbon/human_user = user
+	if(!human(user))
+		return
 	if(human_user.physique == FEMALE)
 		return 'sound/voice/human/female_sneeze1.ogg'
 	return 'sound/voice/human/male_sneeze1.ogg'
@@ -753,5 +756,7 @@
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/whistle/get_sound(mob/living/user)
+    if(!istype(user))
+        return
 	return 'sound/voice/human/whistle1.ogg'
 
