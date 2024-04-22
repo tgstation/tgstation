@@ -483,7 +483,7 @@
 		var/energy_consumed = energy_factor * 250 * seconds_per_tick
 		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
 			use_energy(energy_consumed, channel = AREA_USAGE_EQUIP)
-		else if(!internal_cell?.use(energy_consumed * 0.025 KILO JOULES))
+		else if(!internal_cell?.use(energy_consumed * 0.025))
 			shielding_powered = FALSE
 			SSair.start_processing_machine(src)
 			investigate_log("shielding turned off due to power loss")

@@ -521,3 +521,197 @@
       not under the SMES itself.
   TheRyeGuyWhoWillNowDie:
   - bugfix: strip menu sensors change respects locked sensors
+2024-04-17:
+  00-Steven:
+  - bugfix: RPEDs can be used on vendors again. Note that only bluespace RPEDs can
+      carry vendor refills as of writing.
+  - bugfix: RPEDs can display vendor parts again.
+  - bugfix: Restocking vendors gives credits whether done manually or by RPEDs.
+  - bugfix: Vendors reset their contained credits when restocked.
+  AMyriad:
+  - bugfix: Probably fixed directional tinted windows looking like directional frosted
+      windows
+  - image: Deleted a bunch of unused structure sprites
+  - image: Fixed the lobby menu's collapse button being offset by a pixel
+  Ben10Omintrix:
+  - bugfix: basic bots no longer start with all access
+  Jacquerel:
+  - bugfix: Anomalous Research ruin Bioscrambler anomalies won't home in on targets
+  - bugfix: Bioscrambler won't randomly drop its target for no reason
+  - admin: Reactivating an anomaly core via the anomaly releaser is now logged.
+  - bugfix: Fixes various bugs related to dimensional/spectral anomalies moving when
+      they should not.
+  JohnFulpWillard:
+  - bugfix: Medipens can no longer be deepfried, closing an exploit that allowed people
+      to drain/inject chems into it with saltshakers and IV drips.
+  Melbert:
+  - refactor: Staff of Healing should perform slightly better.
+  - bugfix: Blobs may rejoice, welding torches now consume fuel when attacking objects
+      again after two years.
+  Rhials:
+  - sound: Nightmare has a new sound effect for entering/exiting shadow jaunt. It
+      also no longer can be heard through walls.
+  SyncIt21:
+  - bugfix: Ordinance lab igniter in Icebox works again
+  - bugfix: facescarf ui toggle button works again
+  - bugfix: closets & crates will dump all contents out first before deleting itself
+      regardless of `NO_DEBRIS_AFTER_DECONSTRUCTION` thus not for e.g. hard deleting
+      mobs inside it
+  Vect0r:
+  - bugfix: 'BIRDSHOT: the clown now has a megaphone. Go honk!'
+  Xackii:
+  - bugfix: Birdshot now have engi wardrope
+  Zytolg:
+  - bugfix: Cleans up some rocks on Birdshot
+  jlsnow301:
+  - rscadd: The lootpanel now works at range.
+  - rscadd: Screentips for reskinnable items.
+  - bugfix: Alt click interactions have been refactored, which may lead to unintentional
+      changes to gameplay. Report any issues, please.
+  - bugfix: CentCom dispatched a team of interns to fix the loot panel's loading message.
+      It should now load properly. It did before too, but now the message is fixed.
+  mc-oofert:
+  - bugfix: tramstation AI sat starts full
+2024-04-18:
+  Ben10Omintrix:
+  - code_imp: The way mobs idle has been refactored, please report any issues with
+      non-reactive mobs
+  - rscadd: miners can now purchase grapple guns
+  Melbert:
+  - rscadd: Adds the Strong Stomach quirk, which allows you to eat grimy food without
+      worry about disease, and makes you a bit more resilient to the effects of vomiting.
+  - rscdel: Deviant Tastes no longer prevents you from getting a negative moodlet
+      from eating dirty food. Strong Stomach does that now.
+  - bugfix: Height now applies less weird to certain worn items, bare-handed bloody
+      hands, and damage overlays.
+  jlsnow301:
+  - bugfix: Bit avatars no longer have access to free binary comms with the AI outfit
+  - bugfix: Netpods have had their security against exploits increased.
+  mc-oofert:
+  - bugfix: you no longer need to put your sleeping carp gloves off and on in Deathmatch
+      to get the martial art
+  san7890:
+  - rscadd: Regal Rats are now able to tear down those colorful posters those weird
+      grey creatures keep spackling up on the walls of their rightful domain.
+2024-04-19:
+  Iajret:
+  - bugfix: cooling and anti-disruption RCD upgrades can now be printed in ancient
+      protolathes
+  Jacquerel:
+  - balance: Gulag mining has been rebalanced so that every boulder is worth the same
+      amount of points to mine for a prisoner regardless of what it contains, and
+      should be more consistent.
+  - rscadd: A vent which boulders can be hauled out of by hand has been added to the
+      gulag which you can use if there's nothing left to mine. It is very slow, but
+      at least it gives you a workout...
+  Melbert:
+  - refactor: Atom-Item interactions have been refactored once more. Report any oddities.
+  - rscadd: Being deafnened from a loud sound (flashbang, explosions) will now force
+      people not naturally deaf to shout
+  - rscadd: Ear damage multiplier now only applies to taking damage, not healing damage,
+      meaning Felinids (who take 2x the ear damage) will no longer heal ear damage
+      2x faster.
+  - refactor: Ears have been refactored slightly, ear deafness should now update more
+      snappily
+  Rhials:
+  - qol: Water tiles now extinguish fires on items and people.
+  SyncIt21:
+  - code_imp: most cell power usages are scaled with defined constants to help adapt
+      to future changes
+  - bugfix: smart pipes release their gases into the air when unwrenched
+  - bugfix: cryo pipe connector component has no side effects of gas reallocation
+      when deleted
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: being revived with a cyber-heart now properly restarts the cyber heart
+  Watermelon914:
+  - bugfix: Fixed RnD consoles not being able to be opened.
+  jlsnow301:
+  - rscdel: Due to a need for company restructuring, virologists have been laid off
+      by CentCom and doctors can optionally take their place.
+  - bugfix: TGUI Alerts shouldn't have such wonky buttons any more
+  - bugfix: Fixed a bluescreen in cargo console
+  - bugfix: 'Lootpanel additions: Condensed item names for the quick of draw'
+  san7890:
+  - qol: There's a bit more user feedback when it comes to attempting to handcuff
+      someone.
+  starrm4nn:
+  - qol: Replaced the surgical tools in the Primary Surgery Theatre with 2 Surgery
+      Trays.
+2024-04-20:
+  Ben10Omintrix:
+  - qol: slimes will stay active without needing any one to watch over
+  Bmon:
+  - bugfix: Fixed on-mob sprite alightment for the NT SWAT helmet.
+  Iamgoofball:
+  - bugfix: Carps migrating through the station no longer idle so they don't get stuck
+      after spawning until someone walks by.
+  Melbert:
+  - bugfix: Primal Instincts and Living Flesh should be a tad more reactive
+  - bugfix: You can handcuff people with 2 arms and you can no longer handcuff people
+      with 0 arms
+  Motho:
+  - rscadd: Added wizard-themed deathmatch map.
+  - rscadd: Added mystery wand box.
+  Sightld2:
+  - bugfix: Ants are no longer picky eaters. Low Purity sugar will no longer result
+      in less Ants than you started with.
+  SyncIt21:
+  - bugfix: plumbing machinery begins processing only when wrenched & ends when unwrenched
+  - bugfix: plumbing machinery uses energy only when wrenched & doing work, will stop/use
+      less energy when idle
+  - bugfix: plumbing grinder chemical will grinds & juice stuff correctly i.e. prefer
+      grinding over juicing for most stuff
+  Vishenka0704:
+  - qol: added mass craft for personal crafting
+  ZephyrTFA:
+  - admin: Controller Overview UI. Check the Server Tab.
+  grungussuss:
+  - sound: cyborgs now have sounds to indicate they are moving
+  iliyaxox:
+  - spellcheck: '''inisimin'' verb corrected to ''invisimin'''
+  jlsnow301:
+  - bugfix: Mecha pilots are no longer bothered by incessant loot panels while holding
+      ALT for strafe disable.
+  - bugfix: Dropdowns received some much-needed QoL, like having the scrollbar follow
+      your selection.
+  - bugfix: AI voice changer now shows its current voice selection.
+  - bugfix: Deathmatch screen has been touched up.
+  - bugfix: Prefs menu has their dropdowns simplified, hopefully fixing issues
+2024-04-21:
+  ZephyrTFA:
+  - admin: New dropdown to force change a mob's name and the attached client's preferences.
+  - admin: Player Panel is back
+  jlsnow301:
+  - bugfix: Fixed the targeting capability of mobs with full auto
+  - bugfix: You can now fire the marksman revolver at things you can see
+2024-04-22:
+  FlufflesTheDog:
+  - bugfix: loading oven trays from serving trays and other containers works again
+  Iajret:
+  - rscadd: added ventpointer that points toward nearby ore vents and can be bought
+      with mining points
+  - balance: scanned ore vents can now be found with GPS
+  - bugfix: fixed ore vents missing overlay icon for uranium
+  Melbert:
+  - bugfix: You can open bags with alt click while resting again
+  - qol: Many items which previously required you to stand to alt-click now don't,
+      such as bedsheets and spray cans
+  Rhials:
+  - qol: Lava and plasma rivers now immerse you in them.
+  Singul0:
+  - rscadd: Adds an omnitoolset for both engineering and medical cyborgs, containing
+      various basic tools
+  - qol: Engineer and Medical module inventory space is now significantly decluttered
+  SyncIt21:
+  - bugfix: HPLC can purify inverted chems and are now coloured green(clean) in the
+      UI
+  - bugfix: pseudo circuit adapter computes recharge delay durations correctly & won't
+      use power when on cooldown
+  - code_imp: uses standard cell defines for N-spect scanner
+  - bugfix: off station & round start lathes with local storage don't have infinite
+      storage size.
+  jlsnow301:
+  - bugfix: Fixes the sight range on lootpanel.
+  vinylspiders:
+  - bugfix: dropdowns that use display_names as an alias for numeric values will no
+      longer cause tgui bluescreens

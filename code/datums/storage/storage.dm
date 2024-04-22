@@ -916,7 +916,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(open_storage), to_show)
-	return COMPONENT_NO_AFTERATTACK
+	if(display_contents)
+		return COMPONENT_NO_AFTERATTACK
 
 /// Opens the storage to the mob, showing them the contents to their UI.
 /datum/storage/proc/open_storage(mob/to_show)

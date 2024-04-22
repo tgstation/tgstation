@@ -154,13 +154,12 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-/obj/machinery/icecream_vat/AltClick(mob/user)
-	if(!user.can_interact_with(src))
-		return FALSE
-	if(custom_ice_cream_beaker)
-		balloon_alert(user, "removed beaker")
-		try_put_in_hand(custom_ice_cream_beaker, user)
-	return ..()
+/obj/machinery/icecream_vat/click_alt(mob/user)
+	if(!custom_ice_cream_beaker)
+		return CLICK_ACTION_BLOCKING
+	balloon_alert(user, "removed beaker")
+	try_put_in_hand(custom_ice_cream_beaker, user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/icecream_vat/interact(mob/living/user)
 	. = ..()

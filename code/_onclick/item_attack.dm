@@ -11,7 +11,7 @@
 	var/list/modifiers = params2list(params)
 	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 
-	var/item_interact_result = target.item_interaction(user, src, modifiers, is_right_clicking)
+	var/item_interact_result = target.base_item_interaction(user, src, modifiers)
 	if(item_interact_result & ITEM_INTERACT_SUCCESS)
 		return TRUE
 	if(item_interact_result & ITEM_INTERACT_BLOCKING)
@@ -50,10 +50,6 @@
 		attackby_result = target.attackby(src, user, params)
 
 	if (attackby_result)
-		return TRUE
-
-	if(QDELETED(src) || QDELETED(target))
-		attack_qdeleted(target, user, TRUE, params)
 		return TRUE
 
 	if (is_right_clicking)
@@ -163,7 +159,7 @@
 		return FALSE
 	return attacking_item.attack_atom(src, user, params)
 
-/mob/living/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+/mob/living/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// Surgery and such happens very high up in the interaction chain, before parent call
 	var/attempt_tending = item_tending(user, tool, modifiers)
 	if(attempt_tending & ITEM_INTERACT_ANY_BLOCKER)
@@ -471,11 +467,6 @@
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 	return SECONDARY_ATTACK_CALL_NORMAL
-
-/// Called if the target gets deleted by our attack
-/obj/item/proc/attack_qdeleted(atom/target, mob/user, proximity_flag, click_parameters)
-	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_QDELETED, target, user, proximity_flag, click_parameters)
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK_QDELETED, target, user, proximity_flag, click_parameters)
 
 /obj/item/proc/get_clamped_volume()
 	if(w_class)
