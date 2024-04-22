@@ -429,7 +429,7 @@
 	var/obscured = NONE
 	var/hidden_slots = NONE
 
-	for(var/obj/item/I in get_all_worn_items())
+	for(var/obj/item/I in get_equipped_items())
 		hidden_slots |= I.flags_inv
 		if(transparent_protection)
 			hidden_slots |= I.transparent_protection
@@ -467,7 +467,12 @@
 	if(M.active_storage?.attempt_insert(src, M))
 		return TRUE
 
-	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_by_slot(ITEM_SLOT_BELT), M.get_item_by_slot(ITEM_SLOT_DEX_STORAGE), M.get_item_by_slot(ITEM_SLOT_BACK))
+	var/list/obj/item/possible = list(
+		M.get_inactive_held_item(),
+		M.get_item_by_slot(ITEM_SLOT_BELT),
+		M.get_item_by_slot(ITEM_SLOT_DEX_STORAGE),
+		M.get_item_by_slot(ITEM_SLOT_BACK),
+	)
 	for(var/i in possible)
 		if(!i)
 			continue
@@ -504,7 +509,7 @@
 	if(!I)
 		to_chat(src, span_warning("You are not holding anything to equip!"))
 		return
-	if (temporarilyRemoveItemFromInventory(I) && !QDELETED(I))
+	if(!QDELETED(I))
 		if(I.equip_to_best_slot(src))
 			return
 		if(put_in_active_hand(I))

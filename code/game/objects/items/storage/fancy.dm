@@ -240,13 +240,13 @@
 	. = ..()
 	quick_remove_item(/obj/item/clothing/mask/cigarette, user)
 
-/obj/item/storage/fancy/cigarettes/AltClick(mob/user)
-	. = ..()
+/obj/item/storage/fancy/cigarettes/click_alt(mob/user)
 	var/obj/item/lighter = locate(/obj/item/lighter) in contents
 	if(lighter)
 		quick_remove_item(lighter, user)
 	else
 		quick_remove_item(/obj/item/clothing/mask/cigarette, user)
+	return CLICK_ACTION_SUCCESS
 
 /// Removes an item from the packet if there is one
 /obj/item/storage/fancy/cigarettes/proc/quick_remove_item(obj/item/grabbies, mob/user)
@@ -424,7 +424,7 @@
 	base_icon_state = "cigarcase"
 	w_class = WEIGHT_CLASS_NORMAL
 	contents_tag = "premium cigar"
-	spawn_type = /obj/item/clothing/mask/cigarette/cigar
+	spawn_type = /obj/item/clothing/mask/cigarette/cigar/premium
 	spawn_count = 5
 	spawn_coupon = FALSE
 	display_cigs = FALSE

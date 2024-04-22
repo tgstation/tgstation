@@ -438,9 +438,14 @@
 						"Yellow" = "sprayer_med_yellow",
 						"Blue" = "sprayer_med_blue")
 
-/obj/item/reagent_containers/spray/medical/AltClick(mob/user)
-	if(unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
-		reskin_obj(user)
+
+/obj/item/reagent_containers/spray/medical/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(!current_skin)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Reskin"
+		return CONTEXTUAL_SCREENTIP_SET
+
 
 /obj/item/reagent_containers/spray/medical/reskin_obj(mob/M)
 	..()

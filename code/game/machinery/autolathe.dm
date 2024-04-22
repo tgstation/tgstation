@@ -4,8 +4,8 @@
 	icon = 'icons/obj/machines/lathes.dmi'
 	icon_state = "autolathe"
 	density = TRUE
-	//Energy cost per full stack of sheets worth of materials used. Material insertion is 40% of this.
-	active_power_usage = 25 * BASE_MACHINE_ACTIVE_CONSUMPTION
+	///Energy cost per full stack of sheets worth of materials used. Material insertion is 40% of this.
+	active_power_usage = 0.025 * STANDARD_CELL_RATE
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
 	processing_flags = NONE
@@ -321,8 +321,19 @@
 		finalize_build()
 		return
 
-	if(!is_operational || !directly_use_energy(charge_per_item))
+	if(!is_operational)
 		say("Unable to continue production, power failure.")
+		finalize_build()
+		return
+
+	if(!directly_use_energy(charge_per_item)) // provide the wait time until lathe is ready
+		var/area/my_area = get_area(src)
+		var/obj/machinery/power/apc/my_apc = my_area.apc
+		var/charging_wait = my_apc.time_to_charge(charge_per_item)
+		if(!isnull(charging_wait))
+			say("Unable to continue production, APC overload. Wait [DisplayTimeText(charging_wait, round_seconds_to = 1)] and try again.")
+		else
+			say("Unable to continue production, power grid overload.")
 		finalize_build()
 		return
 
@@ -377,15 +388,15 @@
 	drop_direction = direction
 	balloon_alert(usr, "dropping [dir2text(drop_direction)]")
 
-/obj/machinery/autolathe/AltClick(mob/user)
-	. = ..()
-	if(!drop_direction || !can_interact(user))
-		return
+/obj/machinery/autolathe/click_alt(mob/user)
+	if(!drop_direction)
+		return CLICK_ACTION_BLOCKING
 	if(busy)
 		balloon_alert(user, "busy printing!")
-		return
+		return CLICK_ACTION_SUCCESS
 	balloon_alert(user, "drop direction reset")
 	drop_direction = 0
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(user.combat_mode) //so we can hit the machine

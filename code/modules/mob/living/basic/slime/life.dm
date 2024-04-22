@@ -2,7 +2,10 @@
 /mob/living/basic/slime/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 
-	handle_nutrition(seconds_per_tick)
+	if(!HAS_TRAIT(src, TRAIT_STASIS)) //No hunger in stasis
+		handle_nutrition(seconds_per_tick)
+
+	handle_slime_stasis(seconds_per_tick)
 
 /mob/living/basic/slime/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	..()
@@ -10,6 +13,10 @@
 		apply_status_effect(/datum/status_effect/freon, SLIME_COLD)
 	else
 		remove_status_effect(/datum/status_effect/freon, SLIME_COLD)
+
+///Handles if a slime's environment would cause it to enter stasis. Ignores TRAIT_STASIS
+/mob/living/basic/slime/proc/handle_slime_stasis(seconds_per_tick)
+	var/datum/gas_mixture/environment = loc.return_air()
 
 	var/bz_percentage = 0
 
@@ -36,17 +43,17 @@
 		adjust_nutrition((life_stage == SLIME_LIFE_STAGE_ADULT ? -1 : -0.5) * seconds_per_tick)
 
 	if(nutrition < SLIME_STARVE_NUTRITION)
-		ai_controller.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_STARVING)
+		ai_controller?.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_STARVING)
 
 		if(SPT_PROB(0.5, seconds_per_tick) && LAZYLEN(ai_controller?.blackboard[BB_FRIENDS_LIST]))
 			var/your_fault = pick(ai_controller?.blackboard[BB_FRIENDS_LIST])
 			unfriend(your_fault)
 
 	else if(nutrition < SLIME_HUNGER_NUTRITION || (nutrition < SLIME_GROW_NUTRITION && SPT_PROB(25, seconds_per_tick)) )
-		ai_controller.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_HUNGRY)
+		ai_controller?.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_HUNGRY)
 
 	else
-		ai_controller.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_NONE)
+		ai_controller?.set_blackboard_key(BB_SLIME_HUNGER_LEVEL, SLIME_HUNGER_NONE)
 
 	if(nutrition == 0) //adjust nutrition ensures it can't go below 0
 		if(SPT_PROB(50, seconds_per_tick))

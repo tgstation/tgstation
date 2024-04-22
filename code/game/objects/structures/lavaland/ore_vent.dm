@@ -270,6 +270,7 @@
 		balloon_alert_to_viewers("vent tapped!")
 		icon_state = icon_state_tapped
 		update_appearance(UPDATE_ICON_STATE)
+		qdel(GetComponent(/datum/component/gps))
 	else
 		visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, and the vent closes back up."))
 		icon_state = initial(icon_state)
@@ -308,6 +309,7 @@
 			discovered = TRUE
 			generate_description(user)
 			balloon_alert_to_viewers("vent scanned!")
+			AddComponent(/datum/component/gps, name)
 			return
 
 		if(DOING_INTERACTION_WITH_TARGET(user, src))
@@ -321,6 +323,7 @@
 		discovered = TRUE
 		balloon_alert(user, "vent scanned!")
 		generate_description(user)
+		AddComponent(/datum/component/gps, name)
 		var/obj/item/card/id/user_id_card = user.get_idcard(TRUE)
 		if(isnull(user_id_card))
 			return

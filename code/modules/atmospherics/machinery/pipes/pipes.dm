@@ -34,18 +34,18 @@
 	if(hide)
 		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
 
-/obj/machinery/atmospherics/pipe/Destroy()
+/obj/machinery/atmospherics/pipe/on_deconstruction(disassembled)
+	//we delete the parent here so it initializes air_temporary for us. See /datum/pipeline/Destroy() which calls temporarily_store_air()
 	QDEL_NULL(parent)
 
-	releaseAirToTurf()
+	if(air_temporary)
+		var/turf/T = loc
+		T.assume_air(air_temporary)
 
-	var/turf/local_turf = loc
-	for(var/obj/machinery/meter/meter in local_turf)
-		if(meter.target != src)
-			continue
-		var/obj/item/pipe_meter/meter_object = new (local_turf)
-		meter.transfer_fingerprints_to(meter_object)
-		qdel(meter)
+	return ..()
+
+/obj/machinery/atmospherics/pipe/Destroy()
+	QDEL_NULL(parent)
 	return ..()
 
 //-----------------
@@ -65,11 +65,6 @@
 		return
 	replace_pipenet(parent, new /datum/pipeline)
 	return list(parent)
-
-/obj/machinery/atmospherics/pipe/proc/releaseAirToTurf()
-	if(air_temporary)
-		var/turf/T = loc
-		T.assume_air(air_temporary)
 
 /obj/machinery/atmospherics/pipe/return_air()
 	if(air_temporary)

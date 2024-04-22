@@ -31,7 +31,7 @@
 		return
 
 	//Checks if the item passes through the slime first. Safe items can be used simply
-	if(check_item_passthrough(attacking_item))
+	if(check_item_passthrough(attacking_item, user))
 		return
 
 	try_discipline_slime(attacking_item)
