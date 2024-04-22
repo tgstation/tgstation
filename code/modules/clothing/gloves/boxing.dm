@@ -6,7 +6,7 @@
 	equip_delay_other = 60
 	species_exception = list(/datum/species/golem) // now you too can be a golem boxing champion
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
-	var/datum/martial_art/boxing/style
+	var/datum/martial_art/boxing/style_to_give
 
 /obj/item/clothing/gloves/boxing/Initialize(mapload)
 	. = ..()
@@ -17,27 +17,13 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
-	style = new()
-	style.allow_temp_override = FALSE
-
-/obj/item/clothing/gloves/boxing/Destroy()
-	QDEL_NULL(style)
-	return ..()
-
-/obj/item/clothing/gloves/boxing/equipped(mob/user, slot)
-	. = ..()
-	if(slot & ITEM_SLOT_GLOVES)
-		style.teach(user, TRUE)
-
-/obj/item/clothing/gloves/boxing/dropped(mob/user)
-	. = ..()
-	style.fully_remove(user)
+	AddComponent(/datum/component/martial_art_giver, style_to_give)
 
 /obj/item/clothing/gloves/boxing/evil
 	name = "evil boxing gloves"
 	desc = "These strange gloves radiate an unsually evil aura."
 	greyscale_colors = "#21211f"
-	style = /datum/martial_art/boxing/evil
+	style_to_give = /datum/martial_art/boxing/evil
 
 /obj/item/clothing/gloves/boxing/green
 	icon_state = "boxinggreen"

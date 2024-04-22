@@ -34,7 +34,7 @@
 	occupied = FALSE
 	if (!succeeded)
 		return
-	living_user.mind?.adjust_experience(/datum/skill/fitness, 10)
+	living_user.mind?.adjust_experience(/datum/skill/athletics, 10)
 	living_user.apply_status_effect(/datum/status_effect/exercised)
 	new spawned_boulder(get_turf(living_user))
 	living_user.visible_message(span_notice("[living_user] hauls a boulder out of [src]."))
