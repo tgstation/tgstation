@@ -54,6 +54,8 @@
 
 //Helpers for vv_get_dropdown()
 #define VV_DROPDOWN_OPTION(href_key, name) . += "<option value='?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(src)]'>[name]</option>"
+//Same with VV_DROPDOWN_OPTION, but global proc doesn't have src
+#define VV_DROPDOWN_OPTION_APPEARANCE(thing, href_key, name) . += "<option value='?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(thing)]'>[name]</option>"
 
 // VV HREF KEYS
 #define VV_HK_TARGET "target"
@@ -136,6 +138,7 @@
 
 // /mob/living
 #define VV_HK_GIVE_SPEECH_IMPEDIMENT "impede_speech"
+#define VV_HK_ADMIN_RENAME "admin_rename"
 #define VV_HK_ADD_MOOD "addmood"
 #define VV_HK_REMOVE_MOOD "removemood"
 #define VV_HK_GIVE_HALLUCINATION "give_hallucination"

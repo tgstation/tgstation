@@ -47,8 +47,8 @@
 	if (!is_vulnerable)
 		controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, FALSE)
 	if (!controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
-		finish_action(controller = controller, succeeded = TRUE, target_key = target_key) // We don't want to clear our target
-		return
+		// We don't want to clear our target
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 	return ..()
 
 /datum/ai_planning_subtree/flee_target/lobster
@@ -72,8 +72,7 @@
 		if (!HAS_TRAIT(target, trait))
 			continue
 		controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, TRUE)
-		finish_action(controller, succeeded = FALSE)
-		return
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	var/mob/living/us = controller.pawn
 	if (us.pulling == target)
@@ -132,14 +131,12 @@
 	set_movement_target(controller, current_target)
 
 /datum/ai_behavior/grab_fingers/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
-
 	var/atom/current_target = controller.blackboard[target_key]
 	if (QDELETED(current_target))
-		return
+		return AI_BEHAVIOR_DELAY
 	var/mob/living/living_pawn = controller.pawn
 	living_pawn.start_pulling(current_target)
-	finish_action(controller, succeeded = TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /// How far we'll try to go before eating an arm
 #define FLEE_TO_RANGE 9
@@ -159,14 +156,18 @@
 	if (QDELETED(current_target))
 		set_movement_target(controller, get_turf(controller.pawn))
 		return
-	target_step_away(controller, current_target, target_key)
+	var/perform_flags = target_step_away(controller, current_target, target_key)
+	if (perform_flags & AI_BEHAVIOR_SUCCEEDED)
+		finish_action(controller, TRUE, target_key)
+	else if(perform_flags & AI_BEHAVIOR_FAILED)
+		finish_action(controller, FALSE, target_key)
 
 /// Find the next step to take away from the current target
 /datum/ai_behavior/hoard_fingers/proc/target_step_away(datum/ai_controller/controller, atom/current_target, target_key)
 	var/turf/next_step = get_step_away(controller.pawn, current_target)
 	if (!isnull(next_step) && !next_step.is_blocked_turf(exclude_mobs = TRUE))
 		set_movement_target(controller, next_step)
-		return
+		return NONE
 	var/list/all_dirs = GLOB.alldirs.Copy()
 	all_dirs -= get_dir(controller.pawn, next_step)
 	all_dirs -= get_dir(controller.pawn, current_target)
@@ -175,37 +176,37 @@
 		next_step = get_step(controller.pawn, dir)
 		if (!isnull(next_step) && !next_step.is_blocked_turf(exclude_mobs = TRUE))
 			set_movement_target(controller, next_step)
-			return
-	finish_action(controller, succeeded = FALSE, target_key = target_key)
-	return
+			return NONE
+	return AI_BEHAVIOR_FAILED
 
 /datum/ai_behavior/hoard_fingers/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/current_patience = controller.blackboard[patience_key] + 1
 	if (current_patience >= MAX_LOBSTROSITY_PATIENCE)
-		eat_fingers(controller, target_key)
-		return
+		if(eat_fingers(controller, target_key))
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	controller.set_blackboard_key(patience_key, current_patience)
 	var/mob/living/living_pawn = controller.pawn
 	if (isnull(living_pawn.pulling))
-		finish_action(controller, succeeded = FALSE, target_key = target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/atom/current_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	if (QDELETED(current_target) || !can_see(controller.pawn, current_target, FLEE_TO_RANGE))
-		eat_fingers(controller, target_key)
-		return
-	target_step_away(controller, current_target, target_key)
+		if(eat_fingers(controller, target_key))
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	if(target_step_away(controller, current_target, target_key))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 /// Finally consume those delicious digits
 /datum/ai_behavior/hoard_fingers/proc/eat_fingers(datum/ai_controller/controller, target_key)
 	var/mob/living/basic/living_pawn = controller.pawn
 	var/atom/fingers = controller.blackboard[target_key]
 	if (QDELETED(fingers) || living_pawn.pulling != fingers)
-		finish_action(controller, succeeded = FALSE, target_key = target_key)
-		return
+		return AI_BEHAVIOR_FAILED
 	living_pawn.melee_attack(fingers)
-	finish_action(controller, succeeded = TRUE, target_key = target_key)
+	return AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/hoard_fingers/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()

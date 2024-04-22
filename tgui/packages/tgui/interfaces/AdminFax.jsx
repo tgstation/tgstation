@@ -63,10 +63,9 @@ export const FaxMainPanel = (props) => {
         <Box fontSize="13px">
           <Dropdown
             textAlign="center"
-            selected="Choose fax machine..."
+            placeholder="Choose fax machine..."
             width="100%"
-            noChevron
-            nowrap
+            selected={fax}
             options={data.faxes}
             onSelected={(value) => setFax(value)}
           />

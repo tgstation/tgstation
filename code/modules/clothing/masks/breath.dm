@@ -12,7 +12,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
-	interaction_flags_click = NEED_DEXTERITY
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 
 /datum/armor/mask_breath
 	bio = 50
@@ -22,10 +22,10 @@
 	return OXYLOSS
 
 /obj/item/clothing/mask/breath/attack_self(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 
 /obj/item/clothing/mask/breath/click_alt(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/breath/examine(mob/user)
