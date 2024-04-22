@@ -17,16 +17,14 @@
  *
  * You can find the logic for this control in this file
  *
- * Specifics of how different loops operate can be found in the movement_types.dm file, alongside the [add to loop][/datum/controller/subsystem/move_manager/proc/add_to_loop] helper procs that use them
+ * Specifics of how different loops operate can be found in the movement_types.dm file, alongside the [add to loop][/datum/system/move_manager/proc/add_to_loop] helper procs that use them
  *
 **/
-SUBSYSTEM_DEF(move_manager)
+DATASYSTEM_DEF(move_manager)
 	name = "Movement Handler"
-	flags = SS_NO_INIT | SS_NO_FIRE
-	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 ///Adds a movable thing to a movement subsystem. Returns TRUE if it all worked, FALSE if it failed somehow
-/datum/controller/subsystem/move_manager/proc/add_to_loop(atom/movable/thing_to_add, datum/controller/subsystem/movement/subsystem = SSmovement, datum/move_loop/loop_type, priority = MOVEMENT_DEFAULT_PRIORITY, flags, datum/extra_info)
+/datum/system/move_manager/proc/add_to_loop(atom/movable/thing_to_add, datum/controller/subsystem/movement/subsystem = SSmovement, datum/move_loop/loop_type, priority = MOVEMENT_DEFAULT_PRIORITY, flags, datum/extra_info)
 	var/datum/movement_packet/our_data = thing_to_add.move_packet
 	if(!our_data)
 		our_data = new(thing_to_add)
@@ -35,7 +33,7 @@ SUBSYSTEM_DEF(move_manager)
 	return our_data.add_loop(arglist(arguments))
 
 ///Returns the subsystem's loop if we're processing on it, null otherwise
-/datum/controller/subsystem/move_manager/proc/processing_on(atom/movable/packet_owner, datum/controller/subsystem/movement/subsystem)
+/datum/system/move_manager/proc/processing_on(atom/movable/packet_owner, datum/controller/subsystem/movement/subsystem)
 	var/datum/movement_packet/packet = packet_owner.move_packet
 	if(!packet)
 		return
