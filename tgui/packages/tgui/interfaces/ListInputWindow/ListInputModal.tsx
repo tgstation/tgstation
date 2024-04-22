@@ -10,7 +10,6 @@ import {
 } from '../../../common/keycodes';
 import { useBackend } from '../../backend';
 import { Autofocus, Button, Input, Section, Stack } from '../../components';
-import { logger } from '../../logging';
 import { InputButtons } from '../common/InputButtons';
 
 type ListInputModalProps = {
