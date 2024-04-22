@@ -240,7 +240,6 @@
 	. = ..()
 	if(SPT_PROB(5, seconds_per_tick))
 		affected_carbon.emote("cough")
-		return
 
 	var/datum/hallucination/fake_health_doll/hallucination = health_doll_ref?.resolve()
 	if(!QDELETED(hallucination) && SPT_PROB(5, seconds_per_tick))
