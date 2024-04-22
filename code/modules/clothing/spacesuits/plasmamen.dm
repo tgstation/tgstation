@@ -88,26 +88,25 @@
 		. += span_notice("There's nothing placed on the helmet.")
 
 /obj/item/clothing/head/helmet/space/plasmaman/click_alt(mob/user)
-	toggle_welding_screen(user)
-	return CLICK_ACTION_SUCCESS
+	if(user.can_perform_action(src))
+		adjust_visor(user)
 
 /obj/item/clothing/head/helmet/space/plasmaman/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_welding_screen))
-		toggle_welding_screen(user)
+		adjust_visor(user)
 		return
 
 	return ..()
 
-/obj/item/clothing/head/helmet/space/plasmaman/proc/toggle_welding_screen(mob/living/user)
-	if(weldingvisortoggle(user))
-		if(helmet_on)
-			to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
-			helmet_on = FALSE
-			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
-			update_appearance()
-		else
-			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
-			update_appearance()
+/obj/item/clothing/head/helmet/space/plasmaman/adjust_visor(mob/living/user)
+	. = ..()
+	if(!.)
+		return
+	if(helmet_on)
+		to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
+		helmet_on = FALSE
+	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
+	update_appearance()
 
 /obj/item/clothing/head/helmet/space/plasmaman/update_icon_state()
 	. = ..()
@@ -116,7 +115,8 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/update_overlays()
 	. = ..()
-	. += visor_icon
+	if(!up)
+		. += visor_icon
 
 /obj/item/clothing/head/helmet/space/plasmaman/attackby(obj/item/hitting_item, mob/living/user)
 	. = ..()

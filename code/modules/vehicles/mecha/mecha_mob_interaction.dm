@@ -159,24 +159,26 @@
 	setDir(SOUTH)
 	return ..()
 
-/obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
-	RegisterSignal(M, COMSIG_MOB_CLICKON, PROC_REF(on_mouseclick), TRUE)
-	RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(display_speech_bubble), TRUE)
-	RegisterSignal(M, COMSIG_MOVABLE_KEYBIND_FACE_DIR, PROC_REF(on_turn), TRUE)
+/obj/vehicle/sealed/mecha/add_occupant(mob/driver, control_flags)
+	RegisterSignal(driver, COMSIG_MOB_CLICKON, PROC_REF(on_mouseclick), TRUE)
+	RegisterSignal(driver, COMSIG_MOB_SAY, PROC_REF(display_speech_bubble), TRUE)
+	RegisterSignal(driver, COMSIG_MOVABLE_KEYBIND_FACE_DIR, PROC_REF(on_turn), TRUE)
+	RegisterSignal(driver, COMSIG_MOB_ALTCLICKON, PROC_REF(on_click_alt))
 	. = ..()
 	update_appearance()
 
-/obj/vehicle/sealed/mecha/remove_occupant(mob/M)
-	UnregisterSignal(M, list(
+/obj/vehicle/sealed/mecha/remove_occupant(mob/driver)
+	UnregisterSignal(driver, list(
 		COMSIG_MOB_CLICKON,
 		COMSIG_MOB_SAY,
 		COMSIG_MOVABLE_KEYBIND_FACE_DIR,
+		COMSIG_MOB_ALTCLICKON,
 	))
-	M.clear_alert(ALERT_CHARGE)
-	M.clear_alert(ALERT_MECH_DAMAGE)
-	if(M.client)
-		M.update_mouse_pointer()
-		M.client.view_size.resetToDefault()
+	driver.clear_alert(ALERT_CHARGE)
+	driver.clear_alert(ALERT_MECH_DAMAGE)
+	if(driver.client)
+		driver.update_mouse_pointer()
+		driver.client.view_size.resetToDefault()
 		zoom_mode = FALSE
 	. = ..()
 	update_appearance()

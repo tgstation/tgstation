@@ -57,11 +57,11 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	cig?.equipped(equipee, slot)
 	return ..()
 
-/obj/item/clothing/mask/gas/adjustmask(mob/living/carbon/user)
-	if(isnull(cig))
-		return ..()
-	balloon_alert(user, "there's a cig in the way!")
-
+/obj/item/clothing/mask/gas/adjust_visor(mob/living/user)
+	if(!isnull(cig))
+		balloon_alert(user, "cig in the way!")
+		return FALSE
+	return ..()
 
 /obj/item/clothing/mask/gas/examine(mob/user)
 	. = ..()
@@ -227,11 +227,14 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	fire = 100
 	acid = 55
 
-/obj/item/clothing/mask/gas/welding/attack_self(mob/user)
-	if(weldingvisortoggle(user))
+/obj/item/clothing/mask/gas/welding/adjust_visor(mob/living/user)
+	. = ..()
+	if(.)
 		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
-/obj/item/clothing/mask/gas/welding/up
+/obj/item/clothing/mask/gas/welding/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 
 /obj/item/clothing/mask/gas/welding/up/Initialize(mapload)
 	. = ..()

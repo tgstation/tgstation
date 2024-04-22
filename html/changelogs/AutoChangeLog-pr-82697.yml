@@ -1,7 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "Dropdowns received some much-needed QoL, like having the scrollbar follow your selection."
-  - bugfix: "AI voice changer now shows its current voice selection."
-  - bugfix: "Deathmatch screen has been touched up."
-  - bugfix: "Prefs menu has their dropdowns simplified, hopefully fixing issues"
