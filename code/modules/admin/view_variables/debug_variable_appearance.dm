@@ -19,7 +19,7 @@
 	var/mouse_drop_zone
 #endif
 
-/image/appearance/New(icon, loc, icon_state, layer, dir)
+/image/appearance/New(loc, ...)
 	. = ..()
 	CRASH("something tried to use '/image/appearance', but this isn't actual type we use. Do not fucking do this.")
 
