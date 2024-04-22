@@ -50,6 +50,14 @@
 	features["ears"] = pick("None", "Cat")
 	return features
 
+/datum/species/felinid/get_laugh_sound(mob/living/carbon/human/felinid)
+	if(felinid.gender == FEMALE)
+		return 'sound/voice/human/womanlaugh.ogg'
+	return pick(
+		'sound/voice/human/manlaugh1.ogg',
+		'sound/voice/human/manlaugh2.ogg',
+	)
+
 /proc/mass_purrbation()
 	for(var/mob in GLOB.human_list)
 		purrbation_apply(mob)

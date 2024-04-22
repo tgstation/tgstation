@@ -295,16 +295,7 @@
 /datum/emote/living/laugh/get_sound(mob/living/user)
 	if(!ishuman(user))
 		return
-	var/mob/living/carbon/human/human_user = user
-	if((ishumanbasic(human_user) || isfelinid(human_user)) && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
-		if(human_user.gender == FEMALE)
-			return 'sound/voice/human/womanlaugh.ogg'
-		else
-			return pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg')
-	if(islizard(human_user))
-		return 'sound/voice/lizard/lizard_laugh1.ogg'
-	if(ismoth(human_user))
-		return 'sound/voice/moth/moth_laugh1.ogg'
+	return user.dna.species.get_laugh_sound(user)
 
 /datum/emote/living/look
 	key = "look"

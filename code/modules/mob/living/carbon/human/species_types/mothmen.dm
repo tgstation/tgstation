@@ -64,8 +64,11 @@
 	features["moth_markings"] = pick(GLOB.moth_markings_list)
 	return features
 
-/datum/species/moth/get_scream_sound(mob/living/carbon/human/human)
+/datum/species/moth/get_scream_sound(mob/living/carbon/human)
 	return 'sound/voice/moth/scream_moth.ogg'
+
+/datum/species/moth/get_laugh_sound(mob/living/carbon/human)
+	return 'sound/voice/moth/moth_laugh1.ogg'
 
 /datum/species/moth/get_physical_attributes()
 	return "Moths have large and fluffy wings, which help them navigate the station if gravity is offline by pushing the air around them. \
