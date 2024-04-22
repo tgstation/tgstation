@@ -147,6 +147,9 @@
 	var/volume = 40
 	var/true_instability = fart_instability
 
+	if(istype(Location, /turf/open/floor/iron/kitchen_coldroom/freezerfloor))
+		new /obj/item/stack/sheet/mineral/frozen_fart(Location)
+
 	//TRAIT CHECKS
 	if(Person.has_quirk(/datum/quirk/loud_ass))
 		volume = volume*2

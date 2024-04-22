@@ -50,6 +50,7 @@
 		/obj/item/stack/ore/titanium = 1,
 		/obj/item/stack/ore/uranium = 1,
 		/turf/closed/mineral/artifact = 15,
+		/turf/closed/mineral/mineral_sample = 15,
 	)
 
 /datum/controller/subsystem/mapping/proc/generate_asteroid(datum/mining_template/template, datum/callback/asteroid_generator)

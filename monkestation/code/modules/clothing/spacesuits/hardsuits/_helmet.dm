@@ -6,7 +6,7 @@
 	icon_state = "hardsuit0-engineering"
 	max_integrity = 300
 	armor_type = /datum/armor/hardsuit
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_outer_range = 4
 	light_power = 1
 	light_on = FALSE

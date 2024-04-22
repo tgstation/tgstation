@@ -248,7 +248,9 @@
 			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain, you can't feel your [target_organ.name] anymore!")
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext((user.istate & ISTATE_HARM))]")
 			target_organ.Remove(target)
-			target_organ.forceMove(get_turf(target))
+			var/turf/drop_turf = get_turf(target)
+			if(drop_turf)
+				target_organ.forceMove(drop_turf)
 			target.regenerate_icons()
 		else
 			display_results(

@@ -103,7 +103,7 @@ LOG_WHISPER
 LOG_ZONE_SWITCH
 
 ## Enable the demo subsystem
-DEMOS_ENABLED
+#DEMOS_ENABLED
 
 ## log storyteller
 # LOG_STORYTELLER

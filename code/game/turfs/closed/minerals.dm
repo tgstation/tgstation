@@ -883,4 +883,21 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = TRUE
 
+/turf/closed/mineral/mineral_sample
+	mineralAmt = 1
+	//icon_state = "rock_Gibtonite_inactive"
+	scan_state = "rock_Artifact"
+
+/turf/closed/mineral/mineral_sample/gets_drilled(mob/user, give_exp = FALSE, triggered_by_explosion = FALSE)
+	if(istype(user))
+		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
+
+	new /obj/item/merged_material/mineral_sample(src)
+
+	var/flags = NONE
+	if(defer_change)
+		flags = CHANGETURF_DEFER_CHANGE
+	var/turf/open/mined = ScrapeAway(null, flags)
+	mined.update_visuals()
+
 #undef MINING_MESSAGE_COOLDOWN

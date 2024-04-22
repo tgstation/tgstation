@@ -6,4 +6,5 @@ GLOBAL_PROTECT(mentors)
 GLOBAL_LIST_INIT(mentor_verbs, list(
 	/client/proc/cmd_mentor_say,
 	/client/proc/mentor_requests,
+	/client/proc/toggle_mentor_states,
 ))

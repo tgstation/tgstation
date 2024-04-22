@@ -128,18 +128,3 @@
 	// If we're changing into an area with no lighting, and we're lit, light ourselves
 	if(!new_area.lighting_effects && old_area.lighting_effects && space_lit)
 		overlays += GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
-
-/turf/proc/generate_missing_corners()
-	if (!lighting_corner_NE)
-		lighting_corner_NE = new/datum/lighting_corner(src, NORTH|EAST)
-
-	if (!lighting_corner_SE)
-		lighting_corner_SE = new/datum/lighting_corner(src, SOUTH|EAST)
-
-	if (!lighting_corner_SW)
-		lighting_corner_SW = new/datum/lighting_corner(src, SOUTH|WEST)
-
-	if (!lighting_corner_NW)
-		lighting_corner_NW = new/datum/lighting_corner(src, NORTH|WEST)
-
-	lighting_corners_initialised = TRUE

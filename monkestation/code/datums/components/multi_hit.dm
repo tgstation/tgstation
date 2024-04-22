@@ -44,6 +44,7 @@
 	if(stamina_cost)
 		src.stamina_cost = stamina_cost
 	item_parent = parent
+
 /datum/component/multi_hit/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(pre_hit_callback))
 
@@ -64,7 +65,7 @@
 
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
-		if(carbon_user.stamina.current > 100)
+		if(carbon_user.stamina.current > STAMINA_MAXIMUM_TO_SWING)
 			carbon_user.stamina.adjust(-stamina_cost)
 
 	///list of targeted turfs in order of apperance
@@ -134,7 +135,7 @@
 
 	QDEL_IN(hit_effect, 3)
 
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.changeNext_move(item_parent.attack_speed * 1.2)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 

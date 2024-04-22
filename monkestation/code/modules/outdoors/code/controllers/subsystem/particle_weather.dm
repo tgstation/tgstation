@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(particle_weather)
 
 	var/particles/weather/particle_effect
 	var/datum/weather_effect/weather_special_effect
-	var/obj/weather_effect
+	var/obj/weather_effect/weather_effect
 
 /datum/controller/subsystem/particle_weather/stat_entry(msg)
 	if(running_weather?.running)
@@ -57,7 +57,7 @@ SUBSYSTEM_DEF(particle_weather)
 			elligble_weathers[i] = particle_weather.probability
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/particle_weather/proc/run_weather(datum/particle_weather/weather_datum_type, force = 0)
+/datum/controller/subsystem/particle_weather/proc/run_weather(datum/particle_weather/weather_datum_type, force = FALSE)
 	if(running_weather)
 		if(force)
 			running_weather.end()
@@ -93,3 +93,6 @@ SUBSYSTEM_DEF(particle_weather)
 	QDEL_NULL(particle_effect)
 	QDEL_NULL(weather_effect)
 	QDEL_NULL(weather_special_effect)
+
+/obj/weather_effect
+	plane = LIGHTING_PLANE

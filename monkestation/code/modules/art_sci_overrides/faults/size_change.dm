@@ -19,10 +19,14 @@
 	visible_message = "starts to grow."
 
 /datum/artifact_fault/grow/on_trigger(datum/component/artifact/component)
-	component.holder.transform = matrix(component.holder.transform, 1.1, 1.1, MATRIX_SCALE)
 	if(!isitem(component.holder))
 		return
 	var/obj/item/item = component.holder
+	if(item.w_class > WEIGHT_CLASS_HUGE)
+		return
+
+	component.holder.transform = matrix(component.holder.transform, 1.1, 1.1, MATRIX_SCALE)
+
 	item.w_class++
 	if(item.w_class > WEIGHT_CLASS_HUGE)
 		component.holder.visible_message("[component.holder] becomes to cumbersome to carry!")

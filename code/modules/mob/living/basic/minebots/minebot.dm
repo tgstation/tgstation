@@ -22,7 +22,7 @@
 	speak_emote = list("states")
 	mob_biotypes = MOB_ROBOTIC
 	death_message = "blows apart!"
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_outer_range = 6
 	light_on = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/minebot

@@ -42,10 +42,13 @@
 	for(var/mob/living/watcher in viewers(9, target))
 		if(watcher == target)
 			continue
+
 		if(!watcher.mind) //only mobs with minds stop you from jaunting
 			continue
+
 		if(isdead(watcher))
 			continue
+
 		if(isaicamera(watcher))
 			var/mob/camera/ai_eye/ai_eye = watcher
 			var/mob/living/silicon/ai/true_ai = ai_eye.ai

@@ -45,3 +45,13 @@
 /client/proc/is_mentor()
 	if(mentor_datum || check_rights_for(src, R_ADMIN,0))
 		return TRUE
+
+/proc/dementor(client/owner)
+	if(owner.is_mentor())
+		owner.mentor_datum.not_active = TRUE
+
+/proc/rementor(client/owner)
+	if(owner.is_mentor())
+		owner.mentor_datum.not_active = FALSE
+
+

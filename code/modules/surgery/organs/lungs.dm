@@ -996,12 +996,6 @@
 	breath_out.gases[/datum/gas/oxygen][MOLES] += gas_breathed
 	breath_out.gases[/datum/gas/hydrogen][MOLES] += gas_breathed * 2
 
-/obj/item/organ/internal/lungs/oozeling
-	name = "oozeling vacuole"
-	desc = "A large organelle designed to store oxygen and filter toxins."
-
-	safe_oxygen_min = 4 //We don't need much oxygen to subsist.
-
 #undef BREATH_RELATIONSHIP_INITIAL_GAS
 #undef BREATH_RELATIONSHIP_CONVERT
 #undef BREATH_RELATIONSHIP_MULTIPLIER

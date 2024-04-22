@@ -15,6 +15,8 @@
 #define ORGAN_UNREMOVABLE (1<<6)
 /// Can't be seen by scanners, doesn't anger body purists
 #define ORGAN_HIDDEN (1<<7)
+/// Synthetic organ granted by a species (for use for organ replacements between species)
+#define ORGAN_SYNTHETIC_FROM_SPECIES (1<<8)
 
 // Flags for the bodypart_flags var on /obj/item/bodypart
 /// Bodypart cannot be dismembered or amputated

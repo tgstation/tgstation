@@ -784,7 +784,7 @@
 
 /obj/item/slimepotion/slime/steroid
 	name = "slime steroid"
-	desc = "A potent chemical mix that will cause a baby slime to generate more extract."
+	desc = "A potent chemical mix that will cause slimes to make more ooze."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potred"
 

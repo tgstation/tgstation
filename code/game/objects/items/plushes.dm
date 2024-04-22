@@ -716,7 +716,7 @@
 	var/has_creepy_icons = FALSE //for updating icons
 
 	// only used for the base moth plush light
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_outer_range = 4
 	light_power = 1
 
@@ -767,7 +767,7 @@
 		update_brightness()
 
 		set_light_on(on)
-		if(light_system == STATIC_LIGHT)
+		if(light_system == COMPLEX_LIGHT)
 			update_light()
 
 		return TRUE

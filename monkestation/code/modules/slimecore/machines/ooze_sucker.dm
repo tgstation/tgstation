@@ -1,5 +1,4 @@
 ///this cannablizes floor_pump code but rips specific reagents and and such just does stuff itself so it can be expanded easier in the future
-
 /obj/machinery/plumbing/ooze_sucker
 	name = "ooze sucker"
 	icon = 'monkestation/code/modules/slimecore/icons/machinery.dmi'

@@ -9,7 +9,7 @@
 	icon_state = "setup_large"
 
 	density = FALSE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_on = FALSE
 
 	var/stored_money = 0

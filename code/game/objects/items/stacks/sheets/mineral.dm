@@ -415,6 +415,7 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	novariants = TRUE
 	mats_per_unit = list(/datum/material/mythril=SHEET_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/mythril
+	material_type = /datum/material/mythril
 
 /*
  * Alien Alloy

@@ -1,6 +1,6 @@
 /// Generate a game-world time value in deciseconds.
 /proc/station_time(reference_time = world.time)
-	return (((reference_time - SSticker.round_start_time) + SSticker.gametime_offset) % (24 HOURS))
+	return ((((reference_time - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % (24 HOURS))
 
 /proc/stationtime2text(format = "hh:mm:ss", reference_time = world.time)
 	return time2text(station_time(reference_time), format, 0)

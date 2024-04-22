@@ -30,6 +30,7 @@
 		msg = "<b><font color = #8A2BE2><span class='prefix'>STAFF:</span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message linkify'>[msg]</span></font></b>"
 	else
 		msg = "<b><font color = #E236D8><span class='prefix'>MENTOR:</span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message linkify'>[msg]</span></font></b>"
+
 	to_chat(GLOB.admins | GLOB.mentors,
 		type = MESSAGE_TYPE_MODCHAT,
 		html = msg,
@@ -70,3 +71,16 @@
 
 /client/proc/remove_mentor_verbs()
 	remove_verb(src, GLOB.mentor_verbs)
+
+/// Verb for opening the requests manager panel
+/client/proc/toggle_mentor_states()
+	set name = "Toggle Mentor State"
+	set desc = "Swaps between mentor pings and no mentor pings."
+	set category = "Mentor"
+	if(mentor_datum)
+		if(mentor_datum.not_active)
+			mentor_datum.not_active = FALSE
+			to_chat(src, span_notice("You will now recieve mentor helps again!"))
+		else
+			mentor_datum.not_active = TRUE
+			to_chat(src, span_notice("You will no longer recieve mentor helps!"))

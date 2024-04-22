@@ -207,7 +207,7 @@
 		if(!trait_check)
 			target.stamina.adjust(-stamina_damage)
 		else
-			var/stamina_to_min = (target.stamina.maximum * 0.35)
+			var/stamina_to_min = (target.stamina.maximum * 0.29)
 			target.stamina.adjust_to(-stamina_damage, stamina_to_min)
 		if(!trait_check)
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))

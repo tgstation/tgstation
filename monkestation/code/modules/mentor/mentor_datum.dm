@@ -15,6 +15,7 @@ GLOBAL_PROTECT(mentor_href_token)
 	var/mob/following
 	/// Are we a Contributor?
 	var/is_contributor = FALSE
+	var/not_active = FALSE
 
 /datum/mentors/New(ckey)
 	if(!ckey)

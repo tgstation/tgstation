@@ -37,7 +37,7 @@
 
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
-	if(melee_attacks)
+	if(melee_attacks || !ismob(target))
 		if(hiding_target) //Slap it!
 			basic_mob.melee_attack(hiding_target)
 		else

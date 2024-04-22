@@ -96,7 +96,6 @@
 
 	/// Commands you can give this carp once it is tamed, not static because subtypes can modify it
 	var/friendship_commands = list(
-		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targeting/attack/latch,
@@ -155,6 +154,7 @@
 	UnregisterSignal(src, COMSIG_MOB_OVERATE)
 
 	for(var/datum/slime_mutation_data/mutation as anything in possible_color_mutations)
+		possible_color_mutations -= mutation
 		qdel(mutation)
 
 	QDEL_NULL(current_color)

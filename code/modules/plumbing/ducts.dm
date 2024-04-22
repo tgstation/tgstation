@@ -19,7 +19,7 @@ All the important duct code:
 	///our ductnet, wich tracks what we're connected to
 	var/datum/ductnet/duct
 	///amount we can transfer per process. note that the ductnet can carry as much as the lowest capacity duct
-	var/capacity = 10
+	var/capacity = 100
 
 	///the color of our duct
 	var/duct_color = COLOR_VERY_LIGHT_GRAY

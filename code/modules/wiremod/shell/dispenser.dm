@@ -9,7 +9,7 @@
 	icon_state = "setup_drone_arms"
 
 	density = FALSE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_on = FALSE
 
 	var/max_weight = WEIGHT_CLASS_NORMAL

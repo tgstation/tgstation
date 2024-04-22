@@ -947,6 +947,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return failed
 
 /client/Click(atom/object, atom/location, control, params)
+	SEND_SIGNAL(src, COMSIG_CLIENT_CLICK_DIRTY, object, location, control, params, usr)
 	if(click_intercept_time)
 		if(click_intercept_time >= world.time)
 			click_intercept_time = 0 //Reset and return. Next click should work, but not this one.

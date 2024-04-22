@@ -24,7 +24,7 @@
 	return "[hour]:[minute]:[second]"
 
 /proc/station_time_timestamp(format = "hh:mm:ss", wtime)
-	return time2text(station_time(TRUE, wtime), format)
+	return time2text(station_time(wtime), format)
 
 /proc/station_time_debug(force_set)
 	if(isnum(force_set))

@@ -102,6 +102,8 @@
 
 	///	Keeps track of the currently selected profile.
 	var/datum/changeling_profile/current_profile
+	/// the amount of oozeling revives we have left
+	var/oozeling_revives = 3
 
 /datum/antagonist/changeling/New()
 	. = ..()
@@ -158,10 +160,11 @@
 		RegisterSignal(living_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 	// Brains are optional for lings.
-	var/obj/item/organ/internal/brain/our_ling_brain = living_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(our_ling_brain)
-		our_ling_brain.organ_flags &= ~ORGAN_VITAL
-		our_ling_brain.decoy_override = TRUE
+	if(!isoozeling(living_mob))
+		var/obj/item/organ/internal/brain/our_ling_brain = living_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
+		if(our_ling_brain)
+			our_ling_brain.organ_flags &= ~ORGAN_VITAL
+			our_ling_brain.decoy_override = TRUE
 
 /datum/antagonist/changeling/proc/generate_name()
 	var/honorific

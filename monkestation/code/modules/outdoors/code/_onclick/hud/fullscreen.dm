@@ -7,9 +7,11 @@
 	screen_loc = "CENTER"
 	transform = null
 	plane = LIGHTING_PLANE
+	layer = LIGHTING_PRIMARY_LAYER
 	blend_mode = BLEND_ADD
 	show_when_dead = TRUE
 	needs_offsetting = FALSE
+
 
 /atom/movable/screen/fullscreen/lighting_backdrop/sunlight/Initialize()
 	. = ..()

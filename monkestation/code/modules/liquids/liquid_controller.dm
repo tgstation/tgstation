@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(liquids)
 	name = "Liquid Turfs"
 	wait = 0.5 SECONDS
-	flags = SS_POST_FIRE_TIMING | SS_NO_INIT
+	flags = SS_KEEP_TIMING | SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	var/list/active_groups = list()
 
@@ -27,6 +27,13 @@ SUBSYSTEM_DEF(liquids)
 	var/member_counter = 0
 
 	var/list/arrayed_groups = list()
+
+	///list of groups to work on for cached edges
+	var/list/cached_edge_work_queue = list()
+	///list of groups we are going to work on in group process
+	var/list/group_process_work_queue = list()
+	///list of all work queue for turf processing
+	var/list/active_turf_group_queue = list()
 
 
 /datum/controller/subsystem/liquids/stat_entry(msg)
@@ -62,22 +69,24 @@ SUBSYSTEM_DEF(liquids)
 			temperature_queue += turfs
 
 	if(run_type == SSLIQUIDS_RUN_TYPE_GROUPS)
-		if(active_groups.len)
+		if(!length(group_process_work_queue))
+			group_process_work_queue |= active_groups
+		if(length(group_process_work_queue))
 			var/populate_evaporation = FALSE
-			if(!evaporation_queue.len)
+			if(!length(evaporation_queue))
 				populate_evaporation = TRUE
-			for(var/g in active_groups)
+			for(var/g in group_process_work_queue)
 				if(MC_TICK_CHECK)
 					return
 				var/datum/liquid_group/LG = g
 
-				LG.build_turf_reagent()
-				LG.process_cached_edges()
 				LG.process_group(TRUE)
-				if(populate_evaporation && LG.expected_turf_height < LIQUID_STATE_ANKLES && LG.evaporates)
+				if(populate_evaporation && (LG.expected_turf_height < LIQUID_STATE_ANKLES) && LG.evaporates)
 					for(var/tur in LG.members)
 						var/turf/listed_turf = tur
 						evaporation_queue |= listed_turf
+				group_process_work_queue -= g
+
 
 		run_type = SSLIQUIDS_RUN_TYPE_TEMPERATURE
 
@@ -155,12 +164,19 @@ SUBSYSTEM_DEF(liquids)
 
 	if(run_type == SSLIQUIDS_RUN_TYPE_TURFS)
 		member_counter++
+		if(!length(active_turf_group_queue))
+			active_turf_group_queue += active_groups
 		if(member_counter > REQUIRED_MEMBER_PROCESSES)
-			for(var/g in active_groups)
+			for(var/g in active_turf_group_queue)
 				if(MC_TICK_CHECK)
 					return
 				var/datum/liquid_group/LG = g
+				if(!LG)
+					active_turf_group_queue -= g
+					continue
+
 				LG.build_turf_reagent()
+				active_turf_group_queue -= g
 				if(!LG.exposure)
 					continue
 				for(var/turf/member in LG.members)
@@ -168,6 +184,27 @@ SUBSYSTEM_DEF(liquids)
 						return
 					LG.process_member(member)
 			member_counter = 0
+		run_type = SSLIQUIDS_RUN_TYPE_CACHED_EDGES
+
+	if(run_type == SSLIQUIDS_RUN_TYPE_CACHED_EDGES)
+		if(!length(cached_edge_work_queue))
+			cached_edge_work_queue |= active_groups
+
+		if(length(cached_edge_work_queue))
+			for(var/g in cached_edge_work_queue)
+				if(MC_TICK_CHECK)
+					return
+				var/datum/liquid_group/LG = g
+				if(!LG)
+					cached_edge_work_queue -= g
+					continue
+
+				LG.build_turf_reagent()
+				if(LG.reagents_per_turf > LIQUID_HEIGHT_DIVISOR)
+					LG.process_cached_edges()
+				cached_edge_work_queue -= g
+
+
 		run_type = SSLIQUIDS_RUN_TYPE_GROUPS
 
 

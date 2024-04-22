@@ -11,7 +11,7 @@
 	flags_inv = HIDEEARS|HIDEHAIR
 	armor_type = /datum/armor/none
 	light_outer_range = 2 //luminosity when on
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	flags_cover = HEADCOVERSEYES
 	heat = 999
 

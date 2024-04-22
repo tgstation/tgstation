@@ -40,7 +40,7 @@ GLOBAL_DATUM_INIT(mentor_requests, /datum/request_manager/mentor, new)
 		return
 
 	// Get the request this relates to
-	var/id = params["id"] != null ? text2num(params["id"]) : null
+	var/id = params["id"] != null ? num2text(params["id"]) : null
 	if (!id)
 		to_chat(usr, "Failed to find a request ID in your action, please report this", confidential = TRUE)
 		CRASH("Received an action without a request ID, this shouldn't happen!")

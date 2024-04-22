@@ -1005,8 +1005,6 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	if (!text)
 		return
 
-	// If we're using a semi colon, we can do this as splittext rather then constant calls to find_next_delimiter_position
-	// This does make the code a bit harder to read, but saves a good bit of time so suck it up
 	var/position
 	var/old_position = 1
 	while(position != 0)

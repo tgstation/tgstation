@@ -486,10 +486,12 @@
 /**
  * heal ONE external organ, organ gets randomly selected from damaged ones.
  *
- * needs to return amount healed in order to calculate things like tend wounds xp gain
+ * returns the net change in damage
  */
-/mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype)
+/mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype = NONE, target_zone = null)
 	. = (adjustBruteLoss(-brute, FALSE) + adjustFireLoss(-burn, FALSE)) //zero as argument for no instant health update
+	if(!.) // no change, no need to update
+		return FALSE
 	if(updating_health)
 		updatehealth()
 

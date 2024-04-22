@@ -352,7 +352,7 @@
 	name = "hyperfocused disabler beam"
 	icon_state = "gauss_silenced"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	damage = 0
 	damage_type = STAMINA
 	stamina = 40
@@ -368,7 +368,7 @@
 	ricochet_shoots_firer = FALSE //something something biometrics
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	reflectable = REFLECT_NORMAL
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_outer_range = 1
 	light_power = 1
 	light_color = LIGHT_COLOR_BLUE
@@ -570,7 +570,7 @@
 	hitsound = 'sound/weapons/tap.ogg'
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	reflectable = REFLECT_NORMAL
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_outer_range = 1
 	light_power = 1
 	light_color = LIGHT_COLOR_HALOGEN

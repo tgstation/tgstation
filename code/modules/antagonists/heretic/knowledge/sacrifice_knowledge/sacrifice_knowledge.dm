@@ -178,6 +178,13 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/sacrifice_process(mob/living/user, list/selected_atoms)
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/obj/item/organ/internal/brain/slime/slime = locate() in selected_atoms
+
+	if(slime)
+		slime.rebuild_body()
+		slime.coredeath = FALSE
+		addtimer(CALLBACK(slime, TYPE_PROC_REF(/obj/item/organ/internal/brain/slime, enable_coredeath)), 20 SECONDS)
+
 	var/mob/living/carbon/human/sacrifice = locate() in selected_atoms
 	if(!sacrifice)
 		CRASH("[type] sacrifice_process didn't have a human in the atoms list. How'd it make it so far?")

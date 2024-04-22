@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Divider, Section } from '../components';
+import { Box, Chart, Divider, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -7,6 +7,7 @@ type Data = {
   last_power_output: string | null;
   cold_data: CirculatorData[];
   hot_data: CirculatorData[];
+  past_power_info;
 };
 
 type CirculatorData = {
@@ -23,7 +24,11 @@ export const ThermoElectricGenerator = (props, context) => {
     last_power_output,
     cold_data = [],
     hot_data = [],
+    past_power_info,
   } = data;
+  const powerHistory = past_power_info.map((value, i) => [i, value]);
+  const powerMax = Math.max(...past_power_info);
+
   if (error_message) {
     return (
       <Window width={320} height={100}>
@@ -34,8 +39,18 @@ export const ThermoElectricGenerator = (props, context) => {
     );
   }
   return (
-    <Window width={350} height={195}>
+    <Window width={350} height={280}>
       <Window.Content>
+        <Box>
+          <Chart.Line
+            height="5em"
+            data={powerHistory}
+            rangeX={[0, powerHistory.length - 1]}
+            rangeY={[0, powerMax]}
+            strokeColor="rgba(0, 181, 173, 1)"
+            fillColor="rgba(0, 181, 173, 0.25)"
+          />
+        </Box>
         <Section>
           <Box>
             <Box>Last Output: {last_power_output}</Box>

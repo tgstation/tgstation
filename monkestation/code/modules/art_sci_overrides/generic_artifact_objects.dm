@@ -44,7 +44,7 @@ ARTIFACT_SETUP(/obj/structure/artifact, SSobj)
 
 /obj/structure/artifact/lamp
 	assoc_comp = /datum/component/artifact/lamp
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_on = FALSE
 
 /obj/structure/artifact/repulsor

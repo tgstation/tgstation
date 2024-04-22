@@ -8,16 +8,32 @@
 	vis_flags = VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	blend_mode = BLEND_INSET_OVERLAY
 
+
+/obj/effect/abstract/blank/overlay
+	name = ""
+	alpha = 150
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	icon ='monkestation/code/modules/slimecore/icons/filters.dmi'
+	icon_state = "diag"
+	vis_flags = NONE
+	blend_mode = 0
+
+	var/id
+
+
 /atom/movable/proc/rainbow_effect() // this just animates between the primary colors of a rainbow
 	var/obj/effect/abstract/blank/rainbow_effect = new
 
 	appearance_flags &= ~KEEP_APART
 	appearance_flags |= KEEP_TOGETHER
 	vis_contents += rainbow_effect
+	ADD_TRAIT(src, TRAIT_RAINBOWED, "rainbow")
 
 /atom/movable/proc/remove_rainbow_effect()
 	var/obj/effect/abstract/blank/rainbow_effect = locate() in vis_contents
 	qdel(rainbow_effect)
+	REMOVE_TRAIT(src, TRAIT_RAINBOWED, "rainbow")
 
 /image/proc/rainbow_effect() // this just animates between the primary colors of a rainbow
 	var/obj/effect/abstract/blank/rainbow_effect = new
@@ -36,3 +52,18 @@
 	animate(pixel_y = -1, time = 0.1 SECONDS, easing = EASE_OUT)
 	animate(transform = base_matrix, time = 0.1 SECONDS, easing = EASE_IN)
 	animate(pixel_y = base_pixel_y, time = 0.1 SECONDS, easing = EASE_IN)
+
+/mob/proc/remove_overlay_rainbow_effect(id)
+	for(var/obj/effect/abstract/blank/overlay/overlay in vis_contents)
+		if(id != overlay.id)
+			continue
+		qdel(overlay)
+
+/mutable_appearance/proc/apply_rainbow_effect(id, mob/tied_to)
+	render_target = id
+	var/obj/effect/abstract/blank/overlay/overlay = new
+	overlay.id = id
+	overlay.layer = layer
+	overlay.plane = plane
+	overlay.add_filter("rainbow", 1, alpha_mask_filter(render_source = id))
+	tied_to.vis_contents += overlay

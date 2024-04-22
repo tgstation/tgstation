@@ -200,6 +200,11 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	handle_visual_changes()
 	reagents.my_atom = pick(members) /// change the location of explosions and sounds every group process
 
+	for(var/turf/turf as anything in members)
+		if(isopenturf(turf))
+			continue
+		remove_from_group(turf)
+
 	var/turf/open/open_turf = pick(members)
 	var/datum/gas_mixture/math_cache = open_turf.air
 
@@ -230,8 +235,13 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 			group_overlay_state = LIQUID_STATE_SHOULDERS
 		if(LIQUID_FULLTILE_LEVEL_HEIGHT to INFINITY)
 			group_overlay_state = LIQUID_STATE_FULLTILE
+
 	if(old_overlay != group_overlay_state)
 		for(var/turf/member in members)
+			if(!member.liquids)
+				remove_from_group(member)
+				continue
+
 			member.liquids.set_new_liquid_state(group_overlay_state)
 			member.liquid_height = expected_turf_height + member.turf_height
 
@@ -368,6 +378,11 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	process_group()
 
 /datum/liquid_group/proc/transfer_reagents_to_secondary_group(obj/effect/abstract/liquid_turf/member, obj/effect/abstract/liquid_turf/transfer)
+	if(!total_reagent_volume && !reagents.total_volume)
+		return
+	else if(!total_reagent_volume)
+		total_reagent_volume = reagents.total_volume
+
 	var/total_removed = length(members) + 1 / total_reagent_volume
 	var/remove_amount = total_removed / length(reagents.reagent_list)
 	if(!transfer)
@@ -621,6 +636,10 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 			var/turf/directional_turf = get_step(cached_turf, direction)
 			if(isclosedturf(directional_turf))
 				continue
+			if(!(directional_turf in cached_turf.atmos_adjacent_turfs)) //i hate that this is needed
+				continue
+			if(!cached_turf.atmos_adjacent_turfs[directional_turf])
+				continue
 			if(spread_liquid(directional_turf, cached_turf))
 				cached_edge_turfs[cached_turf] -= direction
 				if(!length(cached_edge_turfs[cached_turf]))
@@ -726,7 +745,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/obj/effect/abstract/liquid_turf/current_head
 
 	var/generated_key = "[world.time]_activemembers[members.len]"
-	var/adjacent_liquid_count = 0
+	var/adjacent_liquid_count = -1
 	for(var/turf/adjacent_turf in get_adjacent_open_turfs(head_turf))
 		if(!adjacent_turf.liquids || !members[adjacent_turf]) //empty turf or not our group just skip this
 			continue
@@ -735,7 +754,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		current_head.temporary_split_key = generated_key
 		adjacent_liquid_count++
 
-	if(adjacent_liquid_count <= 1) ///if there is only 1 adjacent liquid it physically can't split
+	if(adjacent_liquid_count > 0) ///if there is only 1 adjacent liquid it physically can't split
 		return FALSE
 
 	if(current_head)

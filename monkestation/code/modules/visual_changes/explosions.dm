@@ -228,7 +228,7 @@
 	name = "boom"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "explosion"
-	light_system = STATIC_LIGHT
+	light_system = COMPLEX_LIGHT
 	duration = 25
 	///smoke wave particle holder
 	var/obj/effect/abstract/particle_holder/smoke_wave

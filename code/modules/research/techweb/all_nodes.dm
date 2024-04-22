@@ -297,6 +297,13 @@
 		"syringe",
 		"xlarge_beaker",
 		"vial",
+		"synth_eyes",
+		"synth_tongue",
+		"synth_liver",
+		"synth_lungs",
+		"synth_stomach",
+		"synth_ears",
+		"synth_heart",
 	)
 
 /datum/techweb_node/basic_circuitry
@@ -621,6 +628,8 @@
 		"thermomachine",
 		"w-recycler",
 		"welding_goggles",
+		"teg",
+		"teg-circ",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/easy = 7500)
@@ -1421,6 +1430,7 @@
 		"superresonator",
 		"triggermod",
 		"mining_scanner",
+		"mat_analyzer",
 	)//e a r l y    g a  m e)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
