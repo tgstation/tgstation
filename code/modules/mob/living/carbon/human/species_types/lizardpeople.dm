@@ -72,6 +72,8 @@
 	)
 
 /datum/species/lizard/get_laugh_sound(mob/living/carbon/human)
+	if(!istype(user))
+		return
 	return 'sound/voice/lizard/lizard_laugh1.ogg'
 
 /datum/species/lizard/get_physical_attributes()

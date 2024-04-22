@@ -1563,11 +1563,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/prepare_human_for_preview(mob/living/carbon/human/human)
 	return
 
-/// Returns the species's scream sound.
+/// Returns the species' scream sound.
 /datum/species/proc/get_scream_sound(mob/living/carbon/human/human)
 	return
 
-/// Returns the species's laugh sound
+/// Returns the species' laugh sound
 /datum/species/proc/get_laugh_sound(mob/living/carbon/human/human)
 	return
 
