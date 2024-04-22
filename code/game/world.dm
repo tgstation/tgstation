@@ -84,6 +84,9 @@ GLOBAL_VAR(restart_counter)
 	// Create the logger
 	logger = new
 
+	// Initialize all the data systems
+	SysMgr = new
+
 	// THAT'S IT, WE'RE DONE, THE. FUCKING. END.
 	Master = new
 

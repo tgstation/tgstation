@@ -1849,6 +1849,7 @@
 #include "code\datums\storage\subtypes\surgery_tray.dm"
 #include "code\datums\storage\subtypes\trash.dm"
 #include "code\datums\systems\_system.dm"
+#include "code\datums\systems\manager.dm"
 #include "code\datums\systems\ds\battle_royale.dm"
 #include "code\datums\systems\ds\communications.dm"
 #include "code\datums\systems\ds\materials.dm"
