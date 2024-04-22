@@ -51,7 +51,7 @@
 	return features
 
 /datum/species/felinid/get_laugh_sound(mob/living/carbon/human/felinid)
-	if(felinid.gender == FEMALE)
+	if(felinid.physique == FEMALE)
 		return 'sound/voice/human/womanlaugh.ogg'
 	return pick(
 		'sound/voice/human/manlaugh1.ogg',

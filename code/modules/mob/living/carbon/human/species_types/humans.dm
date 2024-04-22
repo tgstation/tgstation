@@ -35,7 +35,7 @@
 	)
 
 /datum/species/human/get_laugh_sound(mob/living/carbon/human)
-	if(human.gender == FEMALE)
+	if(human.physique == FEMALE)
 		return 'sound/voice/human/womanlaugh.ogg'
 	return pick(
 		'sound/voice/human/manlaugh1.ogg',
