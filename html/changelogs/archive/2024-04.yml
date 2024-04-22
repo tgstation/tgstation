@@ -247,3 +247,10 @@
   - rscadd: Clown dagger forces victim to laugh.
   - rscadd: Clown dagger gives both victim and attacker positive moodlet.
   - rscadd: Choosing clown bible makes the bible slippery.
+2024-04-22:
+  Absolucy:
+  - qol: Battlecruiser Allies now get the Syndicate faction, allowing them to go back
+      with the battlecruiser crew to their base without being gunned down by turrets.
+  DexeeXI:
+  - rscdel: Slasher removed from storyteller. Code retained for improvement/fixes
+      before next halloween!
