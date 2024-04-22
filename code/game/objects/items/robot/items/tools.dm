@@ -319,8 +319,7 @@
 
 /obj/item/borg/cyborg_omnitool/medical/reference_item_for_parameters()
 	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
-	if(tool_behaviour == (TOOL_SCALPEL && TOOL_SAW))
-		butchering.butchering_enabled = TRUE
+	butchering.butchering_enabled = (tool_behaviour == TOOL_SCALPEL || tool_behaviour == TOOL_SAW)
 	RemoveElement(/datum/element/eyestab)
 	qdel(GetComponent(/datum/component/surgery_initiator))
 	item_flags = SURGICAL_TOOL
