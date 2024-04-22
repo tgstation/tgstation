@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Getting up from prone, moving up or down a z-level (not via ladders, naturally. Like flight), and de/activating your modsuit no longer shows cogwheel effect"
