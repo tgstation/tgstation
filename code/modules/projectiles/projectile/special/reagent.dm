@@ -1,5 +1,5 @@
 /obj/projectile/reagent
-	name = "reagents"
+	name = "/proper reagents"
 	icon = 'icons/obj/medical/chempuff.dmi'
 	icon_state = ""
 	damage_type = TOX
@@ -29,12 +29,12 @@
 	if(blocked < 100 && BULLET_ACT_HIT)
 		reagents.trans_to(target, reagents.total_volume, methods = transfer_methods)
 	reagents.trans_to(get_turf(target), reagents.total_volume, methods = transfer_methods)
-	return BULLET_ACT_HIT
+	return ..()
 
 
 /// Water - for water guns! Just some harmless fun... right??
 /obj/projectile/reagent/water
-	name = "water"
+	name = "/proper water"
 	reagents_list = list(/datum/reagent/water = 10)
 
 /obj/projectile/reagent/water/update_reagents()
@@ -43,4 +43,4 @@
 	for(var/datum/reagent/R as anything in reagents.reagent_list)
 		if(R.volume > last_volume)
 			last_volume = R.volume
-			name = "\proper [lowertext(R.name)]"
+			name = "[R.name]"
