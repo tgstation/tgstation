@@ -56,6 +56,7 @@ compatibility_sets = [
 exclusionary_set = {
     "/diagonal_centre",
     "/diagonal_edge",
+    "/tram",
 }
 
 compiled_regex = re.compile(r"\/obj\/effect\/turf_decal\/tile\/?([A-Za-z_]+)?([A-Za-z_\/]+)?(\{[\s\S]*(dir = (\d+))[\s\S]*\})?")
