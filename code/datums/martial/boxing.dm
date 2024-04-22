@@ -11,6 +11,8 @@
 	var/honorable_boxer = TRUE
 	/// List of traits applied to users of this martial art.
 	var/list/boxing_traits = list(TRAIT_BOXING_READY)
+	/// Balloon alert cooldown for warning our boxer to alternate their blows to get more damage
+	COOLDOWN_DECLARE(warning_cooldown)
 
 /datum/martial_art/boxing/teach(mob/living/new_holder, make_temporary)
 	if(!ishuman(new_holder))
@@ -31,10 +33,12 @@
 	
 	if(findtext(streak, LEFT_LEFT_COMBO) || findtext(streak, RIGHT_RIGHT_COMBO))
 		reset_streak()
-		attacker.balloon_alert(attacker, "weak combo, alternate your hits!")
+		if(COOLDOWN_FINISHED(src, warning_cooldown))
+			COOLDOWN_START(src, warning_cooldown, 2 SECONDS)
+			attacker.balloon_alert(attacker, "weak combo, alternate your hits!")
 		return combo_multiplier * 0.5
 	
-	if(findtext(streak, LEFT_LEFT_COMBO) || findtext(streak, RIGHT_RIGHT_COMBO))
+	if(findtext(streak, LEFT_RIGHT_COMBO) || findtext(streak, RIGHT_LEFT_COMBO))
 		reset_streak()
 		return combo_multiplier * 1.5
 	
@@ -85,7 +89,7 @@
 	var/grant_experience = FALSE
 
 	// What type of damage does our kind of boxing do? Defaults to STAMINA, unless you're performing EVIL BOXING
-	var/damage_type = STAMINA
+	var/damage_type = honorable_boxer ? STAMINA : attacker.get_attack_type()
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 
@@ -108,7 +112,7 @@
 	if(!lower_force)
 		playsound(defender.loc, active_arm.unarmed_miss_sound, 25, TRUE, -1)
 		defender.visible_message(span_warning("[attacker]'s [current_atk_verb] misses [defender]!"), \
-						span_danger("You avoid [attacker]'s [current_atk_verb]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, attacker)
+			span_danger("You avoid [attacker]'s [current_atk_verb]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, attacker)
 		to_chat(attacker, span_warning("Your [current_atk_verb] misses [defender]!"))
 		log_combat(attacker, defender, "attempted to hit", current_atk_verb)
 		return FALSE
@@ -130,9 +134,6 @@
 	)
 
 	to_chat(attacker, span_danger("You [current_atk_verbed] [defender]!"))
-
-	if(!honorable_boxer) //shameless display of violence
-		damage_type = attacker.get_attack_type()
 
 	defender.apply_damage(damage, damage_type, affecting, armor_block)
 
@@ -190,11 +191,8 @@
 /datum/martial_art/boxing/proc/honor_check(mob/living/possible_boxer)
 	if(!honorable_boxer)
 		return TRUE //You scoundrel!!
-	
-	if(!ishuman(possible_boxer))
-		return FALSE
 
-	if(HAS_TRAIT(possible_boxer, TRAIT_BOXING_READY))
+	if(!HAS_TRAIT(possible_boxer, TRAIT_BOXING_READY))
 		return FALSE
 	
 	return TRUE
