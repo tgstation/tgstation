@@ -145,6 +145,18 @@
 	. = ..()
 	AddComponent(/datum/component/gunhud)
 
+/obj/item/gun/energy/recharge_newshot(no_cyborg_drain)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_UPDATE_GUNHUD)
+
 /obj/item/weldingtool/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gunhud)
+
+/obj/item/weldingtool/set_welding(new_value)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_UPDATE_GUNHUD)
+
+/obj/item/weldingtool/use(used)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_UPDATE_GUNHUD)
