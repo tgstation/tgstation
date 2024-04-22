@@ -364,12 +364,12 @@
 	cost = 2
 	illegal_tech = FALSE
 
-/datum/uplink_item/dangerous/speargun
-	name = "Kinetic Speargun"
-	desc = "A weapon favored by carp hunters, and manufactured by the Animal Rights Consortium after many complaints about the previously favored weapon at the time. \
-			This speargun fires devastating magspears which deal high amounts of damage and causes quite a lot of bleeding in the target. \
-			Does NOT come loaded or with any extra ammunition. Ammunition can be purchased in bulk under the ammunition tab."
-	item = /obj/item/pneumatic_cannon/speargun
+/datum/uplink_item/dangerous/harpoongun
+	name = "Ballistic Harpoon Gun"
+	desc = "A weapon favored by carp hunters, and infamously used by agents of the Animal Rights Consortium against human aggressors. \
+			This speargun fires devastating harpoons which deal high amounts of damage and causes quite a lot of bleeding in the target. \
+			Comes loaded with one harpoon. Ammunition can be purchased in bulk under the ammunition tab."
+	item = /obj/item/gun/ballistic/rifle/boltaction/harpoon
 	surplus = 15
-	cost = 10
+	cost = 14
 	illegal_tech = TRUE

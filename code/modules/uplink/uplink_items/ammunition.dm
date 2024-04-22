@@ -170,9 +170,9 @@
 	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/magspears
-	name = "Magspear Quiver"
-	desc = "A quiver containing 20 magspears for use with the kinetic speargun."
-	item = /obj/item/storage/magspear_quiver
+	name = "Harpoon Quiver"
+	desc = "A quiver containing 7 harpoons for use with the Ballistic Harpoon Gun."
+	item = /obj/item/storage/harpoon_quiver
 	cost = 4
 	surplus = 0
 	illegal_tech = FALSE // Just a pouch filled with giant hunks of metal.
