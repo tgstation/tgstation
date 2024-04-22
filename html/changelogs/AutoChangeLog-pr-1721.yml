@@ -1,0 +1,4 @@
+author: "KnigTheThrasher"
+delete-after: True
+changes:
+  - bugfix: "fixed tram slum bar failing tests (again)"
