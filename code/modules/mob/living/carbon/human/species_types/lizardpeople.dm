@@ -105,9 +105,9 @@
 
 
 /datum/species/lizard/get_sneeze_sound(mob/living/carbon/human/lizard)
-		if(lizard.gender == FEMALE)
-			return 'sound/voice/human/female_sneeze1.ogg'
-		return 'sound/voice/human/male_sneeze1.ogg'
+	if(lizard.gender == FEMALE)
+		return 'sound/voice/human/female_sneeze1.ogg'
+	return 'sound/voice/human/male_sneeze1.ogg'
 
 /datum/species/lizard/get_laugh_sound(mob/living/carbon/human)
 	if(!istype(human))

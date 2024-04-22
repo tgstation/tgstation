@@ -101,9 +101,9 @@
 
 
 /datum/species/moth/get_sneeze_sound(mob/living/carbon/human/moth)
-		if(moth.gender == FEMALE)
-			return 'sound/voice/human/female_sneeze1.ogg'
-		return 'sound/voice/human/male_sneeze1.ogg'
+	if(moth.gender == FEMALE)
+		return 'sound/voice/human/female_sneeze1.ogg'
+	return 'sound/voice/human/male_sneeze1.ogg'
 
 
 /datum/species/moth/get_laugh_sound(mob/living/carbon/human)

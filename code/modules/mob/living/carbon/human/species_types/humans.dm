@@ -67,9 +67,9 @@
 
 
 /datum/species/human/get_sneeze_sound(mob/living/carbon/human/human)
-		if(human.physique == FEMALE)
-			return 'sound/voice/human/female_sneeze1.ogg'
-		return 'sound/voice/human/male_sneeze1.ogg'
+	if(human.physique == FEMALE)
+		return 'sound/voice/human/female_sneeze1.ogg'
+	return 'sound/voice/human/male_sneeze1.ogg'
 
 /datum/species/human/get_laugh_sound(mob/living/carbon/human/human)
 	if(!ishuman(human))

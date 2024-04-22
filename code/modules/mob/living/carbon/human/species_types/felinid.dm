@@ -93,9 +93,9 @@
 
 
 /datum/species/felinid/get_sneeze_sound(mob/living/carbon/human/felinid)
-		if(felinid.physique == FEMALE)
-			return 'sound/voice/human/female_sneeze1.ogg'
-		return 'sound/voice/human/male_sneeze1.ogg'
+	if(felinid.physique == FEMALE)
+		return 'sound/voice/human/female_sneeze1.ogg'
+	return 'sound/voice/human/male_sneeze1.ogg'
 
 
 /proc/mass_purrbation()

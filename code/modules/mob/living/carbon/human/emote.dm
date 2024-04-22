@@ -19,7 +19,7 @@
 	var/mob/living/carbon/human/human_user = user
 	QDEL_IN(human_user.give_emote_overlay(/datum/bodypart_overlay/simple/emote/cry), 12.8 SECONDS)
 
-/datum/emote/living/carbon/human/cry/get_sound(mob/living/user)
+/datum/emote/living/carbon/human/cry/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
 	return user.dna.species.get_cry_sound(user)
