@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "Fixes runtime in advanced camera console when power is turned off"

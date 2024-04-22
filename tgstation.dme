@@ -2914,6 +2914,7 @@
 #include "code\modules\admin\verbs\SDQL2\SDQL_2_wrappers.dm"
 #include "code\modules\admin\view_variables\admin_delete.dm"
 #include "code\modules\admin\view_variables\color_matrix_editor.dm"
+#include "code\modules\admin\view_variables\debug_variable_appearance.dm"
 #include "code\modules\admin\view_variables\debug_variables.dm"
 #include "code\modules\admin\view_variables\filterrific.dm"
 #include "code\modules\admin\view_variables\get_variables.dm"
