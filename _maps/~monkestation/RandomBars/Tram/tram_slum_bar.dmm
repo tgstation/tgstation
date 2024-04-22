@@ -1233,7 +1233,6 @@
 /turf/open/floor/stone,
 /area/station/commons/lounge)
 "VF" = (
-/obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/table/wood,
 /turf/open/floor/wood/tile,
 /area/station/service/theater)
