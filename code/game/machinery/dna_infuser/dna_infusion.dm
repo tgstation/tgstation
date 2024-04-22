@@ -1,28 +1,29 @@
 
-///returns a boolean whether a human can be infused
+///returns a boolean whether a machine occupant can be infused
 /atom/movable/proc/can_infuse(mob/feedback_target)
-	if(!isliving(src))
-		if(feedback_target)
-			feedback_target.balloon_alert(feedback_target, "no dna!")
-		return FALSE
-	if(!ishuman(src))
-		if(feedback_target)
-			feedback_target.balloon_alert(feedback_target, "dna too simple!")
-		return FALSE
-	var/mob/living/carbon/human/human_infusing = src
-	// Checked by can_mutate but a special message is good
-	if(HAS_TRAIT(human_infusing, TRAIT_BADDNA))
+	if(feedback_target)
+		feedback_target.balloon_alert(feedback_target, "no dna!")
+	return FALSE
+
+/mob/living/can_infuse(mob/feedback_target)
+	if(feedback_target)
+		feedback_target.balloon_alert(feedback_target, "dna too simple!")
+	return FALSE
+
+/mob/living/carbon/human/can_infuse(mob/feedback_target)
+	// Checked by can_mutate but explicit feedback for this issue is good
+	if(HAS_TRAIT(src, TRAIT_BADDNA))
 		if(feedback_target)
 			feedback_target.balloon_alert(feedback_target, "dna is corrupted!")
 		return FALSE
-	if(!human_infusing.can_mutate())
+	if(!can_mutate())
 		if(feedback_target)
 			feedback_target.balloon_alert(feedback_target, "dna is missing!")
 		return FALSE
 	return TRUE
 
-///returns /datum/infuser_entry that matches an item being used for infusion, returns a fly mutation
-/atom/movable/proc/get_infusion_entry()
+///returns /datum/infuser_entry that matches an item being used for infusion, returns a fly mutation on failure
+/atom/movable/proc/get_infusion_entry() as /datum/infuser_entry
 	var/datum/infuser_entry/found
 	for(var/datum/infuser_entry/entry as anything in flatten_list(GLOB.infuser_entries))
 		if(entry.tier == DNA_MUTANT_UNOBTAINABLE)
@@ -40,8 +41,6 @@
 // TODO: In the future, this should have more logic:
 // - Replace non-mutant organs before mutant ones.
 /mob/living/carbon/human/proc/infuse_organ(datum/infuser_entry/entry)
-	if(!ishuman(src))
-		return FALSE
 	var/obj/item/organ/new_organ = pick_infusion_organ(entry)
 	if(!new_organ)
 		return FALSE
