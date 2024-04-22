@@ -2,10 +2,6 @@
 /// just clarifying that no threshold does some special stuff, since only meme mutants have it
 #define DNA_INFUSION_NO_THRESHOLD ""
 
-/// index pointing to the fly index
-#define INFUSION_FLY_INDEX 0
-
-
 /// doesn't show up in the entry book, isn't a valid infusion
 #define DNA_MUTANT_UNOBTAINABLE -1
 /// tier 0 mutants, roundstart, cosmetic, or bonus-less infusions

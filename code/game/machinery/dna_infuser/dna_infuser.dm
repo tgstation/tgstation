@@ -84,7 +84,7 @@
 		fail_title = "Unknown DNA"
 		fail_explanation = "Unknown DNA. Consult the \"DNA infusion book\"."
 	if(infusing_into.tier > max_tier_allowed)
-		infusing_into = GLOB.infuser_entries[INFUSION_FLY_INDEX]
+		infusing_into = GLOB.infuser_entries[/datum/infuser_entry/fly]
 		fail_title = "Overcomplexity"
 		fail_explanation = "DNA too complicated to infuse. The machine needs to infuse simpler DNA first."
 	playsound(src, 'sound/machines/blender.ogg', 50, vary = TRUE)
