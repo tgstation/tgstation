@@ -68,11 +68,13 @@
 	if(levels <= 1 && can_help_themselves)
 		var/obj/item/organ/external/wings/gliders = get_organ_by_type(/obj/item/organ/external/wings)
 		if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
+			var/graceful_landing = HAS_TRAIT(src, TRAIT_CATLIKE_GRACE) ? TRUE : FALSE
+			if(!graceful_landing)
+				Knockdown(levels * 4 SECONDS)
 			visible_message(
-				span_notice("[src] makes a hard landing on [impacted_turf] but remains unharmed from the fall."),
-				span_notice("You brace for the fall. You make a hard landing on [impacted_turf], but remain unharmed."),
+				span_notice("[src] makes a hard landing on [impacted_turf] but remains unharmed from the fall[graceful_landing ? " and stays on [p_their()] feet" : null]."),
+				span_notice("You brace for the fall. You make a hard landing on [impacted_turf], but remain unharmed[graceful_landing ? " and stay on your feet" : null]."),
 			)
-			Knockdown(levels * 4 SECONDS)
 			return . | ZIMPACT_NO_MESSAGE
 
 	var/incoming_damage = (levels * 5) ** 1.5
