@@ -1,9 +1,3 @@
-//stack recipe placement check types
-/// Checks if there is an object of the result type in any of the cardinal directions
-#define STACK_CHECK_CARDINALS (1<<0)
-/// Checks if there is an object of the result type within one tile
-#define STACK_CHECK_ADJACENT (1<<1)
-
 /datum/component/personal_crafting/Initialize()
 	if(ismob(parent))
 		RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(create_mob_button))
