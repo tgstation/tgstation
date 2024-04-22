@@ -116,7 +116,7 @@
 	illegal_tech = TRUE
 
 /datum/uplink_item/dangerous/trident
-	name = "Electrifed Trident"
+	name = "Electrified Trident"
 	desc = "A trident rumored to have been recovered from the city of atlantis. \
 			It deals moderate damage, and twice as much if thrown. Targets attacked by \
 			this weapon will have teslium manifested within their blood, leading to electrical shocks."
