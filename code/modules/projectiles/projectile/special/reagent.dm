@@ -24,7 +24,8 @@
 	update_reagents()
 	return ..()
 
-/obj/projectile/reagent/on_hit(atom/target, blocked = FALSE, pierce_hit)
+/obj/projectile/reagent/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
 	if(blocked < 100 && BULLET_ACT_HIT)
 		reagents.trans_to(target, reagents.total_volume, methods = transfer_methods)
 	reagents.trans_to(get_turf(target), reagents.total_volume, methods = transfer_methods)
