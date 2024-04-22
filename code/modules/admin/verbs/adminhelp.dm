@@ -210,6 +210,14 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
  * * is_bwoink - Boolean operator, TRUE if this ticket was started by an admin PM
  */
 /datum/admin_help/New(msg_raw, client/C, is_bwoink, urgent = FALSE)
+	//check message length
+	if(length(msg_raw) > MAX_MESSAGE_LEN)
+		if(C)
+			to_chat(C, span_redtext("Failed to send your adminhelp. The maximum length of a message is [MAX_MESSAGE_LEN] characters, please reduce the length and try again. You attempted to send the following message:\n[sanitize(msg_raw)]"))
+		message_admins("[C ? C.ckey : "An unknown client"] attempted to send an adminhelp that was too long.")
+		qdel(src)
+		return
+
 	//clean the input msg
 	var/msg = sanitize(copytext_char(msg_raw, 1, MAX_MESSAGE_LEN))
 	if(!msg || !C || !C.mob)
