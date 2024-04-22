@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "dropdowns that use display_names as an alias for numeric values will no longer cause tgui bluescreens"

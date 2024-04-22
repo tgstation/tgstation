@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "off station & round start lathes with local storage don't have infinite storage size."
