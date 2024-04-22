@@ -7,9 +7,8 @@
 	slot_flags = ITEM_SLOT_MASK
 	strip_delay = 40
 	equip_delay_other = 40
+	visor_vars_to_toggle = NONE
 	var/modifies_speech = FALSE
-	///Whether the mask is pushed out of the food hole or not.
-	var/mask_adjusted = FALSE
 	var/adjusted_flags = null
 	///Did we install a filtering cloth?
 	var/has_filter = FALSE
@@ -69,33 +68,17 @@
 		M.update_worn_mask()
 
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
-/obj/item/clothing/mask/proc/adjustmask(mob/living/carbon/user)
-	if(user?.incapacitated())
-		return
-	mask_adjusted = !mask_adjusted
-	if(!mask_adjusted)
-		icon_state = initial(icon_state)
-		clothing_flags |= visor_flags
-		flags_inv |= visor_flags_inv
-		flags_cover |= visor_flags_cover
-		to_chat(user, span_notice("You push \the [src] back into place."))
-		slot_flags = initial(slot_flags)
-	else
-		icon_state += "_up"
-		to_chat(user, span_notice("You push \the [src] out of the way."))
-		clothing_flags &= ~visor_flags
-		flags_inv &= ~visor_flags_inv
-		flags_cover &= ~visor_flags_cover
+/obj/item/clothing/mask/visor_toggling(mob/living/user)
+	. = ..()
+	if(up)
 		if(adjusted_flags)
 			slot_flags = adjusted_flags
-	if(!istype(user))
-		return
-	// Update the mob if it's wearing the mask.
-	if(user.wear_mask == src)
-		user.wear_mask_update(src, toggle_off = mask_adjusted)
-	if(loc == user)
-		// Update action button icon for adjusted mask, if someone is holding it.
-		user.update_mob_action_buttons()
+	else
+		slot_flags = initial(slot_flags)
+
+/obj/item/clothing/mask/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][up ? "_up" : ""]"
 
 /**
  * Proc called in lungs.dm to act if wearing a mask with filters, used to reduce the filters durability, return a changed gas mixture depending on the filter status
