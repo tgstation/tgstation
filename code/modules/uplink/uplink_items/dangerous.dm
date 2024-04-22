@@ -185,7 +185,7 @@
 /datum/uplink_item/dangerous/normalrevolver
 	name = ".357 Revolver"
 	desc = "A modernized, .357 revolver. Grown straight from our gatfruit farms. Fires 7 brutal rounds of .357 magnum. \
-			Less obvious than our modernized revolvers, for plausible deniability."
+			Less obvious than our upgraded revolvers, for plausible deniability."
 	item = /obj/item/gun/ballistic/revolver
 	cost = 9
 	surplus = 70

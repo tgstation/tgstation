@@ -89,7 +89,7 @@
 	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/handgun45/hp
-	name = ".45mm Hollow Point Magazines"
+	name = ".45mm Hollow Point Magazine"
 	desc = "A single 8-round Hollow Point .45mm magazines, compatible with the M1911 pistol. \
 			Ineffective against armored targets, but very good again non-armored targets."
 	item = /obj/item/ammo_box/magazine/m45/hp
@@ -97,7 +97,7 @@
 	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/handgun45/inc
-	name = ".45mm Incendiary Magazines"
+	name = ".45mm Incendiary Magazine"
 	desc = "A single 8-round Incendiary .45mm magazines, compatible with the M1911 pistol. \
 			These bullets will lit your targets ablaze, though they don't leave behind a trail of fire."
 	item = /obj/item/ammo_box/magazine/m45/inc

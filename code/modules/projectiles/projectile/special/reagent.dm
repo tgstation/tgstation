@@ -1,5 +1,5 @@
 /obj/projectile/reagent
-	name = "\proper reagents"
+	name = "reagents"
 	icon = 'icons/obj/medical/chempuff.dmi'
 	icon_state = ""
 	damage_type = TOX
@@ -33,7 +33,7 @@
 
 /// Water - for water guns! Just some harmless fun... right??
 /obj/projectile/reagent/water
-	name = "\proper water"
+	name = "water"
 	reagents_list = list(/datum/reagent/water = 10)
 
 /obj/projectile/reagent/water/update_reagents()
