@@ -13,14 +13,6 @@
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron,
 /area/template_noop)
-"d" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/yellow/anticorner{
-	dir = 1
-	},
-/obj/machinery/light/cold/directional/west,
-/turf/open/floor/iron/corner,
-/area/template_noop)
 "e" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -71,36 +63,26 @@
 /obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/iron,
 /area/template_noop)
-"p" = (
+"q" = (
+/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/yellow/anticorner,
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/turf/open/floor/iron/corner{
-	dir = 1
-	},
-/area/template_noop)
-"t" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
-/obj/effect/turf_decal/tile/yellow/anticorner{
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/turf_decal/tile/yellow/half{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/corner{
-	dir = 8
+/turf/open/floor/iron/edge{
+	dir = 4
 	},
 /area/template_noop)
-"u" = (
+"s" = (
 /obj/effect/spawner/random/structure/table_or_rack,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/cold/directional/west,
 /obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 8
 	},
-/obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron/corner{
 	dir = 4
 	},
@@ -126,17 +108,13 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"A" = (
-/obj/structure/reagent_dispensers/fueltank,
+"B" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
+/obj/machinery/light/cold/directional/west,
+/obj/effect/turf_decal/tile/yellow/anticorner{
+	dir = 1
 	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/decal/cleanable/fuel_pool,
-/turf/open/floor/iron/edge{
-	dir = 4
-	},
+/turf/open/floor/iron/corner,
 /area/template_noop)
 "E" = (
 /obj/structure/rack,
@@ -172,6 +150,17 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/iron,
+/area/template_noop)
+"K" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/yellow/anticorner{
+	dir = 4
+	},
+/turf/open/floor/iron/corner{
+	dir = 8
+	},
 /area/template_noop)
 "M" = (
 /obj/structure/disposalpipe/segment{
@@ -221,6 +210,17 @@
 /obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/plating,
 /area/template_noop)
+"X" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow/anticorner,
+/turf/open/floor/iron/corner{
+	dir = 1
+	},
+/area/template_noop)
 
 (1,1,1) = {"
 U
@@ -247,11 +247,11 @@ U
 (3,1,1) = {"
 U
 g
-d
+B
 F
 E
 H
-u
+s
 l
 U
 "}
@@ -269,11 +269,11 @@ U
 (5,1,1) = {"
 U
 g
-t
+K
 h
-A
+q
 e
-p
+X
 l
 U
 "}

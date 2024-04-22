@@ -894,17 +894,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood/large,
 /area/awaymission/beach)
-"lk" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/obj/effect/turf_decal/tile/dark/half{
-	pixel_y = -1;
-	pixel_x = 5;
-	dir = 8
-	},
-/turf/open/water/beach,
-/area/awaymission/beach)
 "ll" = (
 /obj/machinery/door/airlock/wood{
 	name = "Room 11";
@@ -988,17 +977,6 @@
 	},
 /obj/structure/table/glass,
 /turf/open/floor/iron/dark/diagonal,
-/area/awaymission/beach)
-"mG" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/dark/half{
-	pixel_y = -1;
-	pixel_x = 5;
-	dir = 8
-	},
-/turf/open/water/beach,
 /area/awaymission/beach)
 "mJ" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -1350,6 +1328,15 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/awaymission/beach)
+"rx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/turf/open/water/beach,
+/area/awaymission/beach)
 "rA" = (
 /obj/item/reagent_containers/cup/soda_cans/cola{
 	pixel_x = -8;
@@ -1594,16 +1581,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood/large,
 /area/awaymission/beach)
-"uv" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/dark/half{
-	pixel_x = 5;
-	dir = 8
-	},
-/turf/open/water/beach,
-/area/awaymission/beach)
 "uz" = (
 /turf/open/floor/carpet/red,
 /area/awaymission/beach)
@@ -1690,17 +1667,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/landmark/awaystart,
 /turf/open/floor/plating,
-/area/awaymission/beach)
-"vx" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 10
-	},
-/obj/effect/turf_decal/tile/dark/half{
-	pixel_y = -1;
-	pixel_x = 5;
-	dir = 8
-	},
-/turf/open/water/beach,
 /area/awaymission/beach)
 "vF" = (
 /obj/structure/table/bronze,
@@ -3044,11 +3010,6 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
-"LQ" = (
-/obj/effect/turf_decal/tile/dark_red/full,
-/obj/machinery/vending/cola/red,
-/turf/open/floor/iron/smooth_large,
-/area/awaymission/beach)
 "LS" = (
 /obj/machinery/space_heater,
 /obj/machinery/light/directional/north,
@@ -3300,13 +3261,11 @@
 /obj/effect/turf_decal/siding/dark_red/corner,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
-"OK" = (
+"OH" = (
 /obj/effect/turf_decal/siding/wood{
-	dir = 8
+	dir = 10
 	},
 /obj/effect/turf_decal/tile/dark/half{
-	pixel_y = -2;
-	pixel_x = 5;
 	dir = 8
 	},
 /turf/open/water/beach,
@@ -3540,6 +3499,15 @@
 /obj/item/toy/plush/shark,
 /turf/open/floor/eighties,
 /area/awaymission/beach)
+"RW" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/turf/open/water/beach,
+/area/awaymission/beach)
 "Sg" = (
 /obj/structure/table/bronze,
 /obj/item/reagent_containers/cup/rag{
@@ -3557,26 +3525,6 @@
 	dir = 8
 	},
 /turf/open/misc/beach/sand,
-/area/awaymission/beach)
-"Sr" = (
-/obj/structure/table/wood/fancy,
-/obj/effect/turf_decal/tile/dark_red/full,
-/obj/item/reagent_containers/cup/soda_cans/cola{
-	pixel_x = -5;
-	pixel_y = 14
-	},
-/obj/item/reagent_containers/cup/soda_cans/cola{
-	pixel_y = 13;
-	pixel_x = 6
-	},
-/obj/item/reagent_containers/cup/soda_cans/cola{
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/cup/soda_cans/cola{
-	pixel_y = 6;
-	pixel_x = 11
-	},
-/turf/open/floor/iron/smooth_large,
 /area/awaymission/beach)
 "St" = (
 /turf/open/floor/iron/stairs/old,
@@ -3817,6 +3765,26 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/awaymission/beach)
+"Wg" = (
+/obj/structure/table/wood/fancy,
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_x = -5;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_y = 13;
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_y = 6;
+	pixel_x = 11
+	},
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/beach)
 "Wi" = (
 /obj/effect/turf_decal/sand{
 	density = 1
@@ -3884,6 +3852,11 @@
 /obj/item/clothing/head/soft/black,
 /turf/open/floor/wood/parquet,
 /area/awaymission/beach)
+"WP" = (
+/obj/machinery/vending/cola/red,
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/beach)
 "Xd" = (
 /obj/structure/table/optable,
 /turf/open/floor/wood/large,
@@ -3894,9 +3867,8 @@
 	},
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
-"Xt" = (
+"Xr" = (
 /obj/structure/table/wood/fancy,
-/obj/effect/turf_decal/tile/dark_red/full,
 /obj/item/reagent_containers/cup/soda_cans/cola{
 	pixel_x = -13;
 	pixel_y = 14
@@ -3905,6 +3877,7 @@
 	pixel_x = 7;
 	pixel_y = 8
 	},
+/obj/effect/turf_decal/tile/dark_red/full,
 /turf/open/floor/iron/smooth_large,
 /area/awaymission/beach)
 "XB" = (
@@ -16283,11 +16256,11 @@ Tr
 On
 aB
 XB
-vx
+OH
 Bq
 Xd
 Ej
-lk
+rx
 LC
 XB
 XB
@@ -16541,9 +16514,9 @@ xv
 xv
 XB
 HV
-OK
-mG
-uv
+RW
+RW
+RW
 LC
 XB
 XB
@@ -21197,7 +21170,7 @@ Hn
 Wl
 Wl
 Wk
-LQ
+WP
 nC
 DH
 VY
@@ -21454,7 +21427,7 @@ VY
 Wl
 Wl
 KK
-Sr
+Wg
 nC
 DH
 VY
@@ -21711,7 +21684,7 @@ VY
 Wl
 Wl
 KK
-Xt
+Xr
 nC
 DH
 VY

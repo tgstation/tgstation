@@ -438,14 +438,6 @@
 /obj/effect/turf_decal/tile/dark/half/contrasted,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
-"Am" = (
-/obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/effect/turf_decal/tile/dark{
-	dir = 4
-	},
-/obj/machinery/light/floor,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
 "AV" = (
 /obj/structure/chair/stool/directional/east,
 /obj/structure/fluff/beach_umbrella,
@@ -839,6 +831,14 @@
 "UW" = (
 /turf/template_noop,
 /area/template_noop)
+"Vl" = (
+/obj/machinery/light/floor,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "Vo" = (
 /obj/machinery/vending/wallmed/directional/west,
 /obj/item/kirbyplants/random,
@@ -1131,7 +1131,7 @@ Tn
 Tn
 PQ
 jw
-Am
+Vl
 gX
 Pd
 Ie

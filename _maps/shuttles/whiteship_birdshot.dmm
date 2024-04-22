@@ -4,21 +4,30 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/grimy,
 /area/shuttle/abandoned/crew)
+"aw" = (
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/spray/pepper{
+	pixel_x = 9;
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron,
+/area/shuttle/abandoned/pod)
 "aF" = (
 /obj/machinery/griddle,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/abandoned/bar)
-"aX" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/shuttle/abandoned/pod)
 "bk" = (
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible{
 	dir = 6
@@ -71,6 +80,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/grimy,
 /area/shuttle/abandoned/crew)
+"cC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/broken/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/turf/open/floor/iron,
+/area/shuttle/abandoned/pod)
 "cJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -132,16 +150,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/crew)
-"fa" = (
-/obj/effect/turf_decal/tile/red/anticorner/contrasted,
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/directional/south,
-/obj/effect/mapping_helpers/airalarm/all_access,
-/turf/open/floor/iron,
-/area/shuttle/abandoned/pod)
 "fl" = (
 /obj/structure/table,
 /obj/item/reagent_containers/blood/o_minus{
@@ -169,14 +177,6 @@
 "fT" = (
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/crew)
-"fU" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/shuttle/abandoned/bar)
 "fW" = (
 /obj/machinery/porta_turret/centcom_shuttle/weak{
 	dir = 4
@@ -279,6 +279,15 @@
 	},
 /turf/open/floor/iron/white/small,
 /area/shuttle/abandoned/crew)
+"jp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/shuttle/abandoned/pod)
 "jv" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/effect/decal/cleanable/dirt,
@@ -291,19 +300,6 @@
 /obj/machinery/light/small/built/directional/east,
 /turf/open/floor/iron/smooth,
 /area/shuttle/abandoned/crew)
-"ku" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table,
-/obj/item/storage/fancy/donut_box{
-	pixel_y = 14
-	},
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/turf/open/floor/iron,
-/area/shuttle/abandoned/bar)
 "kw" = (
 /obj/machinery/computer/monitor{
 	name = "Bridge Power Monitoring Console"
@@ -353,6 +349,16 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/white/small,
 /area/shuttle/abandoned/crew)
+"mV" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/effect/turf_decal/tile/red/anticorner/contrasted,
+/turf/open/floor/iron,
+/area/shuttle/abandoned/pod)
 "nc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -415,26 +421,18 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
-"pg" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table,
-/obj/item/reagent_containers/cup/glass/drinkingglass{
-	pixel_x = 9;
-	pixel_y = 15
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass{
-	pixel_x = 5;
-	pixel_y = 8
-	},
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 8
-	},
+"oN" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm/directional/south,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 8
+	},
 /turf/open/floor/iron,
-/area/shuttle/abandoned/bar)
+/area/shuttle/abandoned/pod)
 "pt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -455,17 +453,6 @@
 "pC" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/medbay)
-"pZ" = (
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/structure/chair{
-	pixel_y = 10
-	},
-/obj/machinery/door/window/brigdoor/security/cell/right/directional/south{
-	name = "Brig Cell"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/shuttle/abandoned/pod)
 "qg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -504,24 +491,19 @@
 	},
 /turf/open/floor/carpet/green,
 /area/shuttle/abandoned/bar)
-"qO" = (
+"qz" = (
 /obj/structure/table,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/machinery/recharger{
-	pixel_x = 6;
-	pixel_y = 11
+/obj/item/storage/fancy/donut_box{
+	pixel_y = 14
 	},
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = -6;
-	pixel_y = 3
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/spray/pepper{
-	pixel_x = 9;
-	pixel_y = 4
-	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
-/area/shuttle/abandoned/pod)
+/area/shuttle/abandoned/bar)
 "rl" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
@@ -593,6 +575,26 @@
 	},
 /turf/open/floor/iron/small,
 /area/shuttle/abandoned/crew)
+"tU" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = 9;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/abandoned/bar)
 "uj" = (
 /obj/structure/closet/emcloset/anchored,
 /obj/structure/sign/poster/official/random/directional/north,
@@ -629,6 +631,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/cargo)
+"uQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/abandoned/bar)
 "ve" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -638,16 +645,6 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/shuttle/abandoned/bridge)
-"vp" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table,
-/obj/machinery/reagentgrinder{
-	pixel_x = 5;
-	pixel_y = -8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/shuttle/abandoned/bar)
 "vZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/official/random/directional/north,
@@ -696,21 +693,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/abandoned/bar)
-"xr" = (
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/structure/closet/secure_closet/personal{
-	name = "Security Closet"
-	},
-/obj/item/gun/energy/laser/retro,
-/obj/item/restraints/handcuffs/cable,
-/obj/item/restraints/handcuffs/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/north,
-/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
-/obj/item/inspector,
-/obj/item/flashlight/seclite,
-/turf/open/floor/iron,
-/area/shuttle/abandoned/pod)
 "xG" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt,
@@ -723,17 +705,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/medbay)
-"xZ" = (
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/structure/chair{
-	pixel_y = 10
-	},
-/obj/machinery/door/window/brigdoor/security/cell/left/directional/south{
-	name = "Brig Cell"
-	},
+"ya" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
-/area/shuttle/abandoned/pod)
+/area/shuttle/abandoned/bar)
 "yp" = (
 /obj/structure/bed{
 	dir = 4
@@ -834,6 +813,17 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/crew)
+"BD" = (
+/obj/structure/chair{
+	pixel_y = 10
+	},
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/south{
+	name = "Brig Cell"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron,
+/area/shuttle/abandoned/pod)
 "BH" = (
 /obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 8
@@ -871,18 +861,6 @@
 /obj/machinery/light/small/broken/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/engine)
-"Dr" = (
-/obj/effect/turf_decal/tile/red/anticorner/contrasted{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm/directional/south,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/shuttle/abandoned/pod)
 "Dt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
@@ -958,33 +936,6 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/crew)
-"FT" = (
-/obj/effect/turf_decal/tile/red/half/contrasted,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/broken/directional/south,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/shuttle/abandoned/pod)
-"Ga" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table,
-/obj/item/plate{
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/obj/item/plate{
-	pixel_x = 5
-	},
-/obj/item/plate{
-	pixel_x = 5;
-	pixel_y = 2
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/broken/directional/east,
-/turf/open/floor/iron,
-/area/shuttle/abandoned/bar)
 "Ge" = (
 /obj/machinery/power/smes/ship,
 /obj/structure/cable,
@@ -1011,11 +962,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/engine)
-"GP" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/shuttle/abandoned/bar)
 "GS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1078,6 +1024,16 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
+"Ja" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder{
+	pixel_x = 5;
+	pixel_y = -8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/abandoned/bar)
 "Je" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
@@ -1153,19 +1109,6 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/engine)
-"KW" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/south,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/shuttle/abandoned/bar)
 "Lj" = (
 /obj/machinery/porta_turret/centcom_shuttle/weak{
 	dir = 4
@@ -1179,6 +1122,44 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/crew)
+"LR" = (
+/obj/structure/closet/secure_closet/personal{
+	name = "Security Closet"
+	},
+/obj/item/gun/energy/laser/retro,
+/obj/item/restraints/handcuffs/cable,
+/obj/item/restraints/handcuffs/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
+/obj/item/inspector,
+/obj/item/flashlight/seclite,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron,
+/area/shuttle/abandoned/pod)
+"Ma" = (
+/obj/structure/table,
+/obj/machinery/coffeemaker{
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = 10;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = 2;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/obj/structure/sign/poster/official/random/directional/north,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/abandoned/bar)
 "Mq" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -1209,12 +1190,43 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/engine)
+"NH" = (
+/obj/structure/chair{
+	pixel_y = 10
+	},
+/obj/machinery/door/window/brigdoor/security/cell/right/directional/south{
+	name = "Brig Cell"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron,
+/area/shuttle/abandoned/pod)
 "NK" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/crew)
+"NM" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/abandoned/bar)
 "Om" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
+"OC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/shuttle/abandoned/pod)
 "OE" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
@@ -1223,29 +1235,6 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/textured,
 /area/shuttle/abandoned/cargo)
-"OG" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table,
-/obj/machinery/coffeemaker{
-	pixel_y = 12
-	},
-/obj/item/reagent_containers/cup/glass/mug{
-	pixel_x = 10;
-	pixel_y = 1
-	},
-/obj/item/reagent_containers/cup/glass/mug{
-	pixel_x = 2;
-	pixel_y = -1
-	},
-/obj/item/reagent_containers/cup/glass/mug{
-	pixel_x = 7;
-	pixel_y = -5
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/east,
-/obj/structure/sign/poster/official/random/directional/north,
-/turf/open/floor/iron,
-/area/shuttle/abandoned/bar)
 "OH" = (
 /obj/structure/cable,
 /obj/machinery/light/small/directional/north,
@@ -1418,6 +1407,24 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/small,
 /area/shuttle/abandoned/crew)
+"VT" = (
+/obj/structure/table,
+/obj/item/plate{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/plate{
+	pixel_x = 5
+	},
+/obj/item/plate{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/broken/directional/east,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/abandoned/bar)
 "VU" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -1451,13 +1458,6 @@
 "WG" = (
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/abandoned/bridge)
-"WW" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/shuttle/abandoned/pod)
 "Xk" = (
 /obj/structure/table,
 /obj/item/defibrillator/loaded,
@@ -1934,9 +1934,9 @@ pv
 pv
 Je
 DT
-ku
-pg
-KW
+qz
+tU
+NM
 pC
 pC
 pC
@@ -1953,13 +1953,13 @@ lt
 lt
 lt
 PN
-pZ
-aX
-Dr
+NH
+jp
+oN
 DT
-GP
-GP
-fU
+uQ
+uQ
+ya
 Gg
 GS
 wY
@@ -1978,11 +1978,11 @@ lt
 PN
 pv
 Ql
-FT
+cC
 DT
-OG
-vp
-Ga
+Ma
+Ja
+VT
 DT
 aF
 uu
@@ -1999,9 +1999,9 @@ lt
 lt
 lt
 PN
-xZ
-WW
-fa
+BD
+OC
+mV
 DT
 DT
 PC
@@ -2023,8 +2023,8 @@ lt
 lt
 uk
 pv
-xr
-qO
+LR
+aw
 pv
 ry
 lt

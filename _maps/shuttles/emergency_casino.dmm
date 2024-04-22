@@ -706,18 +706,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"vQ" = (
-/obj/machinery/chem_master/condimaster{
-	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
-	name = "HoochMaster Deluxe"
-	},
-/obj/machinery/status_display/evac/directional/north,
-/obj/item/storage/box/drinkingglasses,
-/obj/item/reagent_containers/cup/glass/shaker,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "vT" = (
 /obj/machinery/computer/emergency_shuttle{
 	dir = 8
@@ -1320,6 +1308,18 @@
 /obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"Tc" = (
+/obj/machinery/chem_master/condimaster{
+	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
+	name = "HoochMaster Deluxe"
+	},
+/obj/machinery/status_display/evac/directional/north,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/reagent_containers/cup/glass/shaker,
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "Ty" = (
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
@@ -1819,7 +1819,7 @@ mz
 "}
 (17,1,1) = {"
 Uu
-vQ
+Tc
 Xr
 jH
 Cz

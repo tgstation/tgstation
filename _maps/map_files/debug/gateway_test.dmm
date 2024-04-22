@@ -2,19 +2,20 @@
 "a" = (
 /turf/closed/indestructible/reinforced,
 /area/misc/testroom/gateway_room)
-"c" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+"b" = (
 /obj/effect/turf_decal/stripes/white/full,
-/turf/open/indestructible/dark,
-/area/misc/testroom/gateway_room)
-"d" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/stripes/red/line{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
+/obj/structure/sign/flag/terragov/directional/north,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/indestructible/dark,
+/area/misc/testroom/gateway_room)
+"e" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/indestructible/dark,
 /area/misc/testroom/gateway_room)
 "f" = (
@@ -37,13 +38,24 @@
 /obj/machinery/vending/wallmed/directional/west,
 /turf/open/indestructible,
 /area/misc/testroom/gateway_room)
-"j" = (
+"i" = (
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/indestructible/dark,
+/area/misc/testroom/gateway_room)
+"k" = (
 /obj/effect/turf_decal/stripes/white/full,
 /obj/effect/turf_decal/stripes/red/line{
-	dir = 6
+	dir = 4
 	},
-/obj/structure/sign/flag/ssc/directional/north,
+/obj/structure/sign/warning/radiation/directional/east,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/indestructible/dark,
 /area/misc/testroom/gateway_room)
 "l" = (
@@ -64,35 +76,15 @@
 	},
 /turf/open/indestructible,
 /area/misc/testroom/gateway_room)
-"n" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/stripes/white/full,
-/obj/effect/turf_decal/stripes/red/line{
-	dir = 4
-	},
-/turf/open/indestructible/dark,
-/area/misc/testroom/gateway_room)
-"p" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/stripes/white/full,
-/obj/effect/turf_decal/stripes/red/line{
-	dir = 10
-	},
-/obj/structure/sign/flag/nanotrasen/directional/north,
-/turf/open/indestructible/dark,
-/area/misc/testroom/gateway_room)
-"q" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/stripes/white/full,
-/obj/effect/turf_decal/stripes/red/line{
-	dir = 8
-	},
-/turf/open/indestructible/dark,
-/area/misc/testroom/gateway_room)
 "r" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/shutters/indestructible,
 /turf/open/floor/iron,
+/area/misc/testroom/gateway_room)
+"s" = (
+/obj/effect/turf_decal/stripes/white/full,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/indestructible/dark,
 /area/misc/testroom/gateway_room)
 "t" = (
 /obj/effect/turf_decal/stripes/red/line{
@@ -100,30 +92,18 @@
 	},
 /turf/open/indestructible,
 /area/misc/testroom/gateway_room)
-"u" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/stripes/white/full,
-/obj/effect/turf_decal/stripes/red/line{
-	dir = 1
-	},
-/obj/structure/sign/flag/terragov/directional/north,
-/turf/open/indestructible/dark,
-/area/misc/testroom/gateway_room)
 "v" = (
 /obj/machinery/gateway/centerstation,
 /obj/effect/turf_decal/stripes/white/box,
 /obj/effect/turf_decal/trimline/blue,
 /turf/open/indestructible/dark,
 /area/misc/testroom/gateway_room)
-"y" = (
-/obj/machinery/light/directional/east,
+"x" = (
+/obj/effect/turf_decal/stripes/white/full,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/stripes/red/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/red/line{
-	dir = 1
-	},
 /turf/open/indestructible/dark,
 /area/misc/testroom/gateway_room)
 "z" = (
@@ -180,13 +160,6 @@
 /obj/effect/turf_decal/stripes/full,
 /turf/open/indestructible,
 /area/misc/testroom/gateway_room)
-"J" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/stripes/red/line{
-	dir = 1
-	},
-/turf/open/indestructible/dark,
-/area/misc/testroom/gateway_room)
 "K" = (
 /obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/rglass{
@@ -210,6 +183,14 @@
 /obj/structure/sign/calendar/directional/north,
 /turf/open/indestructible,
 /area/misc/testroom/gateway_room)
+"L" = (
+/obj/effect/turf_decal/stripes/white/full,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/indestructible/dark,
+/area/misc/testroom/gateway_room)
 "M" = (
 /obj/structure/chair/stool/directional/east,
 /obj/effect/turf_decal/stripes/line{
@@ -222,15 +203,6 @@
 	pixel_y = -7
 	},
 /turf/open/indestructible,
-/area/misc/testroom/gateway_room)
-"N" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/stripes/white/full,
-/obj/effect/turf_decal/stripes/red/line{
-	dir = 4
-	},
-/obj/structure/sign/warning/radiation/directional/east,
-/turf/open/indestructible/dark,
 /area/misc/testroom/gateway_room)
 "O" = (
 /obj/effect/turf_decal/stripes/line{
@@ -266,8 +238,36 @@
 /obj/item/radio/intercom/directional/north,
 /turf/open/indestructible,
 /area/misc/testroom/gateway_room)
+"U" = (
+/obj/effect/turf_decal/stripes/white/full,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 10
+	},
+/obj/structure/sign/flag/nanotrasen/directional/north,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/indestructible/dark,
+/area/misc/testroom/gateway_room)
 "W" = (
 /turf/closed/indestructible/fakeglass,
+/area/misc/testroom/gateway_room)
+"X" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/indestructible/dark,
+/area/misc/testroom/gateway_room)
+"Z" = (
+/obj/effect/turf_decal/stripes/white/full,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 6
+	},
+/obj/structure/sign/flag/ssc/directional/north,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/indestructible/dark,
 /area/misc/testroom/gateway_room)
 
 (1,1,1) = {"
@@ -333,10 +333,10 @@ H
 (6,1,1) = {"
 H
 a
-j
-q
-q
-d
+Z
+x
+x
+X
 C
 t
 r
@@ -345,10 +345,10 @@ H
 (7,1,1) = {"
 H
 a
-u
+b
 v
-c
-J
+s
+e
 Q
 z
 r
@@ -357,10 +357,10 @@ H
 (8,1,1) = {"
 H
 a
-p
-N
-n
-y
+U
+k
+L
+i
 m
 f
 r

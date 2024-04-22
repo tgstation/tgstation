@@ -1,23 +1,19 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ai" = (
-/obj/effect/turf_decal/tile/brown/half,
-/obj/item/stack/package_wrap,
-/turf/open/indestructible/large,
-/area/deathmatch)
 "ay" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/indestructible/large,
 /area/deathmatch)
+"aF" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/indestructible,
+/area/deathmatch)
 "aM" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/indestructible/large,
-/area/deathmatch)
-"aY" = (
-/obj/effect/turf_decal/tile/blue/full,
-/obj/item/reagent_containers/syringe,
-/turf/open/indestructible/white/smooth_large,
 /area/deathmatch)
 "bE" = (
 /obj/structure/lattice,
@@ -34,18 +30,14 @@
 /obj/structure/tank_holder/extinguisher,
 /turf/open/indestructible/large,
 /area/deathmatch)
-"cj" = (
-/obj/effect/turf_decal/tile/red/anticorner{
-	dir = 1
+"cm" = (
+/obj/machinery/computer{
+	dir = 4
 	},
-/obj/structure/barricade/security/murderdome,
-/turf/open/indestructible/dark/smooth_large,
-/area/deathmatch)
-"cp" = (
-/obj/effect/turf_decal/tile/red/opposingcorners{
+/obj/effect/turf_decal/tile/dark_red/half{
 	dir = 8
 	},
-/turf/open/indestructible/dark/smooth_large,
+/turf/open/indestructible/large,
 /area/deathmatch)
 "cs" = (
 /obj/effect/decal/cleanable/dirt,
@@ -64,89 +56,60 @@
 /obj/effect/turf_decal/bot,
 /turf/open/indestructible/large,
 /area/deathmatch)
-"dc" = (
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 1
-	},
-/obj/machinery/computer,
-/turf/open/indestructible/large,
-/area/deathmatch)
 "dg" = (
 /obj/effect/turf_decal/tile/brown/half,
 /turf/open/indestructible/large,
 /area/deathmatch)
-"dw" = (
-/obj/structure/closet/crate/cardboard,
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/item/mail/junkmail,
-/obj/item/ammo_casing/a357,
-/obj/item/reagent_containers/syringe/plasma,
-/turf/open/indestructible,
-/area/deathmatch)
-"dF" = (
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/effect/turf_decal/delivery,
-/turf/open/indestructible,
-/area/deathmatch)
-"dV" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/table/glass,
-/obj/item/stack/medical/mesh,
+"dA" = (
+/obj/vehicle/ridden/wheelchair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 4
+	},
 /turf/open/indestructible/white,
 /area/deathmatch)
-"ep" = (
-/obj/effect/turf_decal/tile/dark_red/anticorner{
-	dir = 4
-	},
-/obj/machinery/computer{
-	dir = 4
-	},
-/turf/open/indestructible/large,
+"eq" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/indestructible/white,
 /area/deathmatch)
 "ew" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/fake_scrubber,
 /turf/open/indestructible/plating,
 /area/deathmatch)
+"ez" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/syringe/epinephrine,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/indestructible/white,
+/area/deathmatch)
 "eH" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/indestructible/large,
 /area/deathmatch)
-"eJ" = (
-/obj/effect/turf_decal/tile/red/full,
-/obj/machinery/door/poddoor/shutters/indestructible/preopen{
-	id = "Starwars"
-	},
-/turf/open/indestructible/dark/smooth_large,
-/area/deathmatch)
-"eV" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/table/glass,
-/obj/item/reagent_containers/syringe/epinephrine,
-/turf/open/indestructible/white,
-/area/deathmatch)
-"fe" = (
-/obj/effect/turf_decal/tile/red/anticorner{
-	dir = 8
-	},
-/obj/effect/landmark/deathmatch_player_spawn,
-/turf/open/indestructible/dark/smooth_large,
+"eU" = (
+/obj/item/reagent_containers/syringe,
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/indestructible/white/smooth_large,
 /area/deathmatch)
 "fs" = (
 /obj/structure/ore_box,
 /turf/open/indestructible/large,
 /area/deathmatch)
+"fv" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/syringe/contraband/space_drugs,
+/obj/effect/turf_decal/tile/blue/anticorner{
+	dir = 1
+	},
+/turf/open/indestructible/white/smooth_large,
+/area/deathmatch)
 "fy" = (
 /obj/structure/table/glass,
 /obj/item/retractor,
 /turf/open/indestructible/white/smooth_large,
-/area/deathmatch)
-"fD" = (
-/obj/effect/turf_decal/tile/dark_red/half{
-	dir = 1
-	},
-/obj/machinery/computer,
-/turf/open/indestructible/large,
 /area/deathmatch)
 "fN" = (
 /turf/open/indestructible/dark/smooth_large,
@@ -155,14 +118,14 @@
 /obj/structure/chair,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
-"gf" = (
-/obj/structure/closet/crate/cardboard,
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/effect/turf_decal/delivery,
-/obj/item/mail/junkmail,
-/obj/effect/spawner/random/maintenance,
-/obj/item/assembly/igniter,
-/turf/open/indestructible,
+"gx" = (
+/obj/machinery/computer{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/turf/open/indestructible/large,
 /area/deathmatch)
 "gE" = (
 /obj/effect/turf_decal/box,
@@ -181,19 +144,17 @@
 /obj/structure/window/spawner/directional/north,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
-"gR" = (
-/obj/structure/closet/crate/large,
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/effect/turf_decal/delivery,
-/obj/item/mail/junkmail,
-/obj/item/stack/cable_coil,
-/turf/open/indestructible,
-/area/deathmatch)
 "ht" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
 /turf/open/indestructible/large,
+/area/deathmatch)
+"hI" = (
+/obj/structure/table/glass,
+/obj/effect/spawner/random/medical/surgery_tool,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/indestructible/white,
 /area/deathmatch)
 "hJ" = (
 /obj/structure/table/reinforced,
@@ -215,11 +176,6 @@
 /obj/effect/spawner/random/medical/surgery_tool,
 /turf/open/indestructible/white/smooth_large,
 /area/deathmatch)
-"in" = (
-/obj/effect/turf_decal/tile/red/full,
-/obj/effect/turf_decal/bot,
-/turf/open/indestructible/dark/smooth_large,
-/area/deathmatch)
 "iq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs/core,
@@ -237,20 +193,26 @@
 /obj/item/shield/riot,
 /turf/open/indestructible/vault,
 /area/deathmatch)
-"iH" = (
-/obj/effect/turf_decal/tile/blue/full,
-/obj/machinery/light/directional/west,
-/obj/structure/table/glass,
-/obj/item/stack/medical/suture,
+"iP" = (
+/obj/vehicle/ridden/wheelchair{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
 /turf/open/indestructible/white,
 /area/deathmatch)
-"jh" = (
-/obj/machinery/stasis{
+"iR" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/syringe,
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/indestructible/white,
+/area/deathmatch)
+"jx" = (
+/obj/effect/turf_decal/tile/red/opposingcorners{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue/full,
-/obj/item/reagent_containers/cup/beaker/large,
-/turf/open/indestructible/white/smooth_large,
+/turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "jK" = (
 /obj/effect/turf_decal/tile/dark_red/anticorner,
@@ -272,6 +234,15 @@
 /obj/structure/table,
 /turf/open/indestructible/plating,
 /area/deathmatch)
+"kB" = (
+/obj/structure/closet/crate/cardboard,
+/obj/effect/turf_decal/delivery,
+/obj/item/mail/junkmail,
+/obj/effect/spawner/random/maintenance,
+/obj/item/assembly/igniter,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/indestructible,
+/area/deathmatch)
 "kC" = (
 /obj/structure/rack,
 /obj/item/gun/energy/e_gun/mini,
@@ -291,26 +262,28 @@
 	},
 /turf/open/indestructible/large,
 /area/deathmatch)
+"me" = (
+/obj/machinery/computer{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 1
+	},
+/turf/open/indestructible/large,
+/area/deathmatch)
 "mu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/glass,
 /turf/open/indestructible/plating,
 /area/deathmatch)
-"my" = (
-/obj/effect/turf_decal/tile/blue/full,
-/obj/structure/table/glass,
-/obj/item/reagent_containers/syringe/contraband/krokodil,
-/turf/open/indestructible/white,
-/area/deathmatch)
-"mz" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/table/glass,
-/obj/item/reagent_containers/syringe/contraband/morphine,
-/turf/open/indestructible/white,
-/area/deathmatch)
 "mK" = (
 /obj/structure/tank_holder/extinguisher,
 /turf/open/indestructible/white,
+/area/deathmatch)
+"nd" = (
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "nl" = (
 /obj/effect/decal/cleanable/dirt,
@@ -321,6 +294,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/indestructible/plating,
+/area/deathmatch)
+"nO" = (
+/obj/machinery/light/directional/west,
+/obj/structure/table/glass,
+/obj/item/stack/medical/suture,
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/indestructible/white,
 /area/deathmatch)
 "nT" = (
 /obj/structure/fluff/fake_scrubber,
@@ -337,46 +317,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/indestructible/plating,
-/area/deathmatch)
-"oq" = (
-/obj/effect/turf_decal/tile/blue/anticorner{
-	dir = 1
-	},
-/obj/structure/table/glass,
-/obj/item/reagent_containers/syringe/contraband/space_drugs,
-/turf/open/indestructible/white/smooth_large,
-/area/deathmatch)
-"oC" = (
-/obj/effect/turf_decal/tile/red/anticorner,
-/obj/effect/landmark/deathmatch_player_spawn,
-/turf/open/indestructible/dark/smooth_large,
-/area/deathmatch)
-"oL" = (
-/obj/structure/table/glass,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/spawner/random/medical/surgery_tool,
-/turf/open/indestructible/white,
-/area/deathmatch)
-"pU" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/structure/table/glass,
-/obj/item/reagent_containers/syringe/multiver,
-/turf/open/indestructible/white,
-/area/deathmatch)
-"pX" = (
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 8
-	},
-/obj/machinery/computer{
-	dir = 4
-	},
-/turf/open/indestructible/large,
 /area/deathmatch)
 "qf" = (
 /obj/effect/turf_decal/tile/brown/half{
@@ -400,6 +340,15 @@
 /obj/structure/window/spawner/directional/north,
 /obj/structure/window/spawner/directional/west,
 /turf/open/indestructible/dark/smooth_large,
+/area/deathmatch)
+"qC" = (
+/obj/machinery/computer{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_red/anticorner{
+	dir = 4
+	},
+/turf/open/indestructible/large,
 /area/deathmatch)
 "qR" = (
 /obj/machinery/computer{
@@ -431,23 +380,13 @@
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/indestructible,
 /area/deathmatch)
-"rk" = (
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/item/knife/kitchen,
-/turf/open/indestructible,
-/area/deathmatch)
-"rw" = (
-/obj/effect/turf_decal/tile/blue{
+"rr" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/syringe/contraband/morphine,
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/vehicle/ridden/wheelchair{
-	dir = 1
-	},
-/turf/open/indestructible/white,
+/turf/open/indestructible/white/smooth_large,
 /area/deathmatch)
 "rA" = (
 /obj/effect/turf_decal/tile/red/anticorner{
@@ -459,14 +398,6 @@
 /obj/structure/table/glass,
 /obj/item/reagent_containers/dropper,
 /turf/open/indestructible/white/smooth_large,
-/area/deathmatch)
-"rR" = (
-/obj/structure/closet/crate/large,
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/item/mail/junkmail,
-/obj/item/mail/junkmail,
-/obj/item/stack/medical/mesh,
-/turf/open/indestructible,
 /area/deathmatch)
 "rU" = (
 /obj/item/storage/medkit/brute,
@@ -484,19 +415,6 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/indestructible/plating,
 /area/deathmatch)
-"sl" = (
-/obj/structure/table/glass,
-/obj/effect/turf_decal/tile/blue/anticorner{
-	dir = 1
-	},
-/obj/item/reagent_containers/syringe/contraband/morphine,
-/turf/open/indestructible/white/smooth_large,
-/area/deathmatch)
-"sx" = (
-/obj/effect/turf_decal/tile/red/full,
-/obj/machinery/light/directional/west,
-/turf/open/indestructible/dark/smooth_large,
-/area/deathmatch)
 "sM" = (
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
@@ -508,6 +426,12 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/indestructible/plating,
+/area/deathmatch)
+"sR" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/syringe/calomel,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/indestructible/white,
 /area/deathmatch)
 "sZ" = (
 /turf/open/indestructible/white/smooth_large,
@@ -527,15 +451,16 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/indestructible/plating,
 /area/deathmatch)
-"to" = (
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/light/directional/east,
-/turf/open/indestructible,
-/area/deathmatch)
 "ty" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/indestructible/plating,
+/area/deathmatch)
+"tP" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "Starwars"
+	},
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "tS" = (
 /obj/effect/turf_decal/bot,
@@ -549,16 +474,16 @@
 "tV" = (
 /turf/template_noop,
 /area/template_noop)
-"ub" = (
-/obj/effect/turf_decal/tile/blue/full,
-/obj/structure/table/glass,
-/obj/item/stack/medical/bone_gel,
-/turf/open/indestructible/white/smooth_large,
-/area/deathmatch)
 "ul" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/indestructible/plating,
+/area/deathmatch)
+"uA" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/syringe/contraband/krokodil,
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/indestructible/white,
 /area/deathmatch)
 "uC" = (
 /obj/machinery/computer{
@@ -566,6 +491,13 @@
 	},
 /obj/structure/window/spawner/directional/east,
 /turf/open/indestructible/dark/smooth_large,
+/area/deathmatch)
+"uP" = (
+/obj/machinery/computer,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 1
+	},
+/turf/open/indestructible/large,
 /area/deathmatch)
 "vl" = (
 /obj/effect/decal/cleanable/dirt,
@@ -584,25 +516,22 @@
 /obj/structure/table/glass,
 /turf/open/indestructible/white,
 /area/deathmatch)
-"vH" = (
-/obj/effect/turf_decal/tile/dark_red/half{
+"ws" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/turf_decal/tile/red/anticorner{
 	dir = 8
 	},
-/obj/machinery/computer{
-	dir = 4
-	},
-/turf/open/indestructible/large,
+/turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
-"vS" = (
-/obj/effect/turf_decal/tile/blue/full,
-/obj/structure/table/glass,
-/obj/item/reagent_containers/syringe/contraband/bath_salts,
-/turf/open/indestructible/white,
+"xh" = (
+/obj/structure/barricade/security/murderdome,
+/obj/effect/turf_decal/tile/red/anticorner,
+/turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
-"wd" = (
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/structure/reagent_dispensers/beerkeg,
-/turf/open/indestructible,
+"xG" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "yA" = (
 /obj/effect/decal/cleanable/glass,
@@ -611,6 +540,12 @@
 "yH" = (
 /obj/machinery/computer,
 /turf/open/indestructible/large,
+/area/deathmatch)
+"yY" = (
+/obj/structure/table/glass,
+/obj/item/circular_saw,
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/indestructible/white/smooth_large,
 /area/deathmatch)
 "zn" = (
 /obj/effect/turf_decal/delivery,
@@ -636,21 +571,30 @@
 /obj/effect/turf_decal/bot_red,
 /turf/open/indestructible/large,
 /area/deathmatch)
-"zH" = (
-/obj/effect/turf_decal/tile/red/anticorner{
-	dir = 4
-	},
-/obj/structure/barricade/security/murderdome,
-/turf/open/indestructible/dark/smooth_large,
-/area/deathmatch)
 "zK" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/indestructible/white,
+/area/deathmatch)
+"zX" = (
+/obj/machinery/computer{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_red/half{
+	dir = 4
+	},
+/turf/open/indestructible/large,
 /area/deathmatch)
 "Ax" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/can/food,
 /turf/open/indestructible/plating,
+/area/deathmatch)
+"AJ" = (
+/obj/machinery/computer,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 4
+	},
+/turf/open/indestructible/large,
 /area/deathmatch)
 "AT" = (
 /turf/open/indestructible/plating,
@@ -688,6 +632,13 @@
 "BC" = (
 /turf/open/floor/glass/reinforced/plasma,
 /area/deathmatch)
+"Ca" = (
+/obj/structure/barricade/security/murderdome,
+/obj/effect/turf_decal/tile/red/anticorner{
+	dir = 1
+	},
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch)
 "Cf" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/computer{
@@ -710,12 +661,15 @@
 /obj/machinery/light/directional/north,
 /turf/open/indestructible/plating,
 /area/deathmatch)
-"CX" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/bed/medical/emergency,
-/turf/open/indestructible/white,
-/area/deathmatch)
 "Df" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/indestructible,
+/area/deathmatch)
+"Dr" = (
+/obj/structure/closet/crate/large,
+/obj/effect/turf_decal/delivery,
+/obj/item/mail/junkmail,
+/obj/item/stack/cable_coil,
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/indestructible,
 /area/deathmatch)
@@ -725,12 +679,17 @@
 	},
 /turf/open/indestructible/large,
 /area/deathmatch)
-"DD" = (
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/light/directional/south,
-/obj/structure/tank_holder/extinguisher,
-/turf/open/indestructible,
+"DI" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/syringe/multiver,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/turf/open/indestructible/white,
+/area/deathmatch)
+"Ea" = (
+/obj/structure/table/glass,
+/obj/item/stack/medical/bone_gel,
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/indestructible/white/smooth_large,
 /area/deathmatch)
 "Ef" = (
 /obj/structure/closet/crate/cardboard,
@@ -738,19 +697,10 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/glass/reinforced/plasma,
 /area/deathmatch)
-"Et" = (
+"El" = (
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/indestructible/white,
-/area/deathmatch)
-"Ew" = (
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 1
-	},
-/obj/machinery/computer{
-	dir = 8
-	},
-/turf/open/indestructible/large,
 /area/deathmatch)
 "Ey" = (
 /obj/effect/decal/cleanable/dirt,
@@ -768,15 +718,25 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/indestructible/plating,
 /area/deathmatch)
-"EZ" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/item/reagent_containers/syringe/plasma,
+"Fe" = (
+/obj/machinery/computer{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/turf/open/indestructible/large,
+/area/deathmatch)
+"Fv" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/syringe/contraband/bath_salts,
+/obj/effect/turf_decal/tile/blue/full,
 /turf/open/indestructible/white,
 /area/deathmatch)
-"Fg" = (
-/obj/effect/turf_decal/tile/blue/full,
+"FH" = (
 /obj/structure/table/glass,
-/obj/item/circular_saw,
+/obj/item/reagent_containers/syringe/contraband/saturnx,
+/obj/effect/turf_decal/tile/blue/full,
 /turf/open/indestructible/white/smooth_large,
 /area/deathmatch)
 "Gv" = (
@@ -784,6 +744,11 @@
 	dir = 4
 	},
 /turf/open/indestructible/large,
+/area/deathmatch)
+"Gx" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/indestructible,
 /area/deathmatch)
 "GT" = (
 /obj/effect/turf_decal/bot,
@@ -795,6 +760,18 @@
 /obj/structure/closet/crate/trashcart/filled,
 /obj/item/reagent_containers/cup/glass/drinkingglass,
 /turf/open/indestructible/plating,
+/area/deathmatch)
+"Hu" = (
+/obj/machinery/computer{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_red/half,
+/turf/open/indestructible/large,
+/area/deathmatch)
+"Hx" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/turf_decal/tile/red/anticorner,
+/turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "HE" = (
 /obj/structure/closet/crate/large,
@@ -812,12 +789,6 @@
 /obj/machinery/light/floor,
 /turf/open/indestructible/vault,
 /area/deathmatch)
-"Iw" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/bed/medical/emergency,
-/obj/effect/landmark/deathmatch_player_spawn,
-/turf/open/indestructible/white,
-/area/deathmatch)
 "IC" = (
 /obj/effect/spawner/structure/window/reinforced/indestructible,
 /turf/open/indestructible/plating,
@@ -830,6 +801,12 @@
 "Js" = (
 /obj/effect/turf_decal/bot_red/left,
 /turf/open/indestructible/large,
+/area/deathmatch)
+"Ju" = (
+/obj/structure/table/glass,
+/obj/item/stack/medical/mesh,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/indestructible/white,
 /area/deathmatch)
 "Jv" = (
 /obj/effect/decal/cleanable/dirt,
@@ -868,34 +845,14 @@
 /obj/effect/turf_decal/tile/red/anticorner,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
-"Ky" = (
-/obj/structure/table/glass,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/item/reagent_containers/syringe/calomel,
-/turf/open/indestructible/white,
-/area/deathmatch)
 "Kz" = (
 /obj/effect/spawner/random/trash/box,
 /obj/item/ammo_box/a357,
 /turf/open/indestructible/plating,
 /area/deathmatch)
-"KC" = (
-/obj/structure/closet/crate/cardboard,
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/item/mail/junkmail,
-/obj/item/mail/junkmail,
-/obj/effect/spawner/random/maintenance,
-/turf/open/indestructible,
-/area/deathmatch)
 "KJ" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/floor/glass/reinforced/plasma,
-/area/deathmatch)
-"KM" = (
-/obj/effect/turf_decal/tile/blue/full,
-/obj/structure/table/glass,
-/obj/item/reagent_containers/syringe,
-/turf/open/indestructible/white,
 /area/deathmatch)
 "KS" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -905,6 +862,11 @@
 /area/deathmatch)
 "KX" = (
 /turf/closed/indestructible/reinforced,
+/area/deathmatch)
+"La" = (
+/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "LE" = (
 /obj/effect/turf_decal/tile/dark_red{
@@ -919,19 +881,15 @@
 /obj/item/throwing_star,
 /turf/open/indestructible/large,
 /area/deathmatch)
-"LS" = (
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 8
-	},
-/obj/machinery/computer{
-	dir = 1
-	},
-/turf/open/indestructible/large,
-/area/deathmatch)
 "LY" = (
 /obj/structure/closet/secure_closet,
 /obj/item/gun/energy/beam_rifle,
 /turf/open/indestructible/vault,
+/area/deathmatch)
+"Ma" = (
+/obj/item/stack/package_wrap,
+/obj/effect/turf_decal/tile/brown/half,
+/turf/open/indestructible/large,
 /area/deathmatch)
 "Mc" = (
 /obj/effect/decal/cleanable/dirt,
@@ -956,12 +914,6 @@
 	},
 /turf/open/indestructible/plating,
 /area/deathmatch)
-"MN" = (
-/obj/structure/ore_box,
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/effect/turf_decal/delivery,
-/turf/open/indestructible,
-/area/deathmatch)
 "MT" = (
 /obj/structure/grille/broken,
 /turf/open/indestructible/plating,
@@ -971,6 +923,11 @@
 /obj/structure/grille/broken,
 /obj/item/extinguisher,
 /turf/open/indestructible/plating,
+/area/deathmatch)
+"No" = (
+/obj/item/knife/kitchen,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/indestructible,
 /area/deathmatch)
 "Nv" = (
 /obj/item/reagent_containers/syringe/syriniver,
@@ -986,6 +943,13 @@
 /obj/structure/ore_box,
 /obj/effect/turf_decal/box,
 /turf/open/indestructible/large,
+/area/deathmatch)
+"NM" = (
+/obj/structure/barricade/security/murderdome,
+/obj/effect/turf_decal/tile/red/anticorner{
+	dir = 4
+	},
+/turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "NP" = (
 /obj/effect/turf_decal/bot,
@@ -1007,12 +971,24 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/indestructible/plating,
 /area/deathmatch)
-"Ot" = (
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 4
-	},
-/obj/machinery/computer,
-/turf/open/indestructible/large,
+"Oi" = (
+/obj/structure/barricade/security/murderdome,
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch)
+"OA" = (
+/obj/structure/ore_box,
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/indestructible,
+/area/deathmatch)
+"Pe" = (
+/obj/structure/closet/crate/large,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/stack/medical/mesh,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/indestructible,
 /area/deathmatch)
 "Pj" = (
 /obj/effect/turf_decal/bot,
@@ -1020,11 +996,6 @@
 	dir = 8
 	},
 /turf/open/indestructible/large,
-/area/deathmatch)
-"Po" = (
-/obj/effect/turf_decal/tile/red/full,
-/obj/machinery/light/directional/south,
-/turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "Pp" = (
 /obj/structure/ore_box,
@@ -1039,15 +1010,6 @@
 "PK" = (
 /obj/structure/holosign/barrier,
 /turf/open/indestructible/vault,
-/area/deathmatch)
-"PV" = (
-/obj/effect/turf_decal/tile/dark_red/half{
-	dir = 4
-	},
-/obj/machinery/computer{
-	dir = 8
-	},
-/turf/open/indestructible/large,
 /area/deathmatch)
 "Qd" = (
 /turf/open/indestructible/large,
@@ -1074,6 +1036,15 @@
 /obj/item/trash/boritos,
 /turf/open/indestructible/plating,
 /area/deathmatch)
+"QL" = (
+/obj/structure/closet/crate/large,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/indestructible,
+/area/deathmatch)
 "QO" = (
 /obj/structure/closet,
 /obj/item/toy/plush/lizard_plushie/green,
@@ -1096,39 +1067,43 @@
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/indestructible/plating,
 /area/deathmatch)
+"Re" = (
+/obj/machinery/computer,
+/obj/effect/turf_decal/tile/dark_red/half{
+	dir = 1
+	},
+/turf/open/indestructible/large,
+/area/deathmatch)
+"Rj" = (
+/obj/item/reagent_containers/syringe/plasma,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/indestructible/white,
+/area/deathmatch)
 "Rt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/cable_coil,
 /turf/open/indestructible/plating,
+/area/deathmatch)
+"RC" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/syringe/contraband/morphine,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/indestructible/white,
 /area/deathmatch)
 "RJ" = (
 /obj/effect/decal/cleanable/greenglow,
 /obj/item/stack/medical/suture,
 /turf/open/indestructible/plating,
 /area/deathmatch)
-"Sh" = (
-/obj/effect/turf_decal/tile/dark_red/half,
-/obj/machinery/computer{
-	dir = 1
-	},
-/turf/open/indestructible/large,
+"Tj" = (
+/turf/open/indestructible/white,
 /area/deathmatch)
-"SI" = (
-/obj/effect/turf_decal/tile/brown/fourcorners,
+"Tw" = (
 /obj/structure/closet/crate/mail,
 /obj/item/clothing/under/misc/mailman,
 /obj/item/clothing/head/costume/mailman,
-/turf/open/indestructible,
-/area/deathmatch)
-"SV" = (
-/obj/structure/closet/crate/cardboard,
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/item/mail/junkmail,
-/obj/effect/spawner/random/maintenance,
 /turf/open/indestructible,
-/area/deathmatch)
-"Tj" = (
-/turf/open/indestructible/white,
 /area/deathmatch)
 "TB" = (
 /obj/effect/turf_decal/tile/dark_red/anticorner{
@@ -1141,11 +1116,6 @@
 	dir = 4
 	},
 /turf/open/indestructible/large,
-/area/deathmatch)
-"Ve" = (
-/obj/effect/turf_decal/tile/red/full,
-/obj/structure/barricade/security/murderdome,
-/turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "Vz" = (
 /obj/machinery/stasis{
@@ -1160,10 +1130,29 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/indestructible/plating,
 /area/deathmatch)
+"WC" = (
+/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/indestructible,
+/area/deathmatch)
 "WG" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance/four,
 /turf/open/indestructible/plating,
+/area/deathmatch)
+"WI" = (
+/obj/item/stack/package_wrap,
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 1
+	},
+/turf/open/indestructible/large,
+/area/deathmatch)
+"Xc" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light/directional/south,
+/obj/structure/tank_holder/extinguisher,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/indestructible,
 /area/deathmatch)
 "Xf" = (
 /obj/effect/turf_decal/bot,
@@ -1187,6 +1176,20 @@
 /obj/item/stack/medical/mesh,
 /turf/open/indestructible/white,
 /area/deathmatch)
+"Xs" = (
+/obj/structure/bed/medical/emergency,
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/indestructible/white,
+/area/deathmatch)
+"Xx" = (
+/obj/structure/closet/crate/cardboard,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/effect/spawner/random/maintenance,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/indestructible,
+/area/deathmatch)
 "XG" = (
 /obj/effect/spawner/structure/window,
 /turf/open/indestructible/plating,
@@ -1195,26 +1198,6 @@
 /obj/effect/spawner/random/structure/closet_maintenance,
 /obj/item/stack/cable_coil,
 /turf/open/indestructible/plating,
-/area/deathmatch)
-"Ye" = (
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/structure/closet/crate/large,
-/obj/item/mail/junkmail,
-/obj/item/mail/junkmail,
-/obj/item/mail/junkmail,
-/obj/item/reagent_containers/medigel/synthflesh,
-/turf/open/indestructible,
-/area/deathmatch)
-"Yf" = (
-/obj/effect/turf_decal/tile/red/anticorner,
-/obj/structure/barricade/security/murderdome,
-/turf/open/indestructible/dark/smooth_large,
-/area/deathmatch)
-"Yg" = (
-/obj/structure/table/glass,
-/obj/effect/turf_decal/tile/blue/full,
-/obj/item/reagent_containers/syringe/contraband/saturnx,
-/turf/open/indestructible/white/smooth_large,
 /area/deathmatch)
 "Yk" = (
 /turf/open/indestructible/vault,
@@ -1225,31 +1208,34 @@
 /obj/machinery/light/directional/east,
 /turf/open/indestructible/plating,
 /area/deathmatch)
+"Yy" = (
+/obj/machinery/stasis{
+	dir = 1
+	},
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/indestructible/white/smooth_large,
+/area/deathmatch)
 "Yz" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/structure/fluff/fake_scrubber,
 /turf/open/indestructible/plating,
 /area/deathmatch)
-"Za" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/vehicle/ridden/wheelchair{
-	dir = 8
-	},
-/turf/open/indestructible/white,
+"YT" = (
+/obj/structure/closet/crate/cardboard,
+/obj/item/mail/junkmail,
+/obj/item/ammo_casing/a357,
+/obj/item/reagent_containers/syringe/plasma,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/indestructible,
 /area/deathmatch)
-"ZC" = (
-/obj/effect/turf_decal/tile/brown/half{
-	dir = 1
-	},
-/obj/item/stack/package_wrap,
-/turf/open/indestructible/large,
+"YX" = (
+/obj/structure/closet/crate/cardboard,
+/obj/item/mail/junkmail,
+/obj/effect/spawner/random/maintenance,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/indestructible,
 /area/deathmatch)
 
 (1,1,1) = {"
@@ -1290,16 +1276,16 @@ tV
 IC
 KX
 KX
-vS
-iH
+Fv
+nO
 mK
 vz
-mz
+RC
 KX
-Ve
-Ve
+Oi
+Oi
 kF
-sx
+La
 kF
 KX
 KX
@@ -1329,7 +1315,7 @@ sM
 tb
 sM
 tb
-Ve
+Oi
 kF
 tU
 KX
@@ -1347,7 +1333,7 @@ IC
 IC
 rU
 KX
-ub
+Ea
 sZ
 Jc
 fy
@@ -1356,10 +1342,10 @@ zK
 kF
 rA
 Ku
-zH
-cp
+NM
+jx
 tb
-Ve
+Oi
 KX
 kC
 KX
@@ -1375,16 +1361,16 @@ IC
 IC
 kz
 Xk
-Fg
-sl
+yY
+rr
 sZ
 sZ
 sZ
 Tj
-Et
+eq
 KX
 kF
-cj
+Ca
 tb
 rA
 Ku
@@ -1410,12 +1396,12 @@ sZ
 Nv
 sZ
 Xq
-eV
+ez
 KX
 kF
 rA
-oC
-cj
+Hx
+Ca
 tb
 KX
 Yk
@@ -1431,19 +1417,19 @@ bE
 KX
 KX
 KX
-aY
+eU
 Co
 sZ
 sZ
 il
-Za
-CX
+iP
+El
 XG
 XG
 KX
 KX
 KX
-Ve
+Oi
 rA
 Ku
 kF
@@ -1458,13 +1444,13 @@ tV
 (8,1,1) = {"
 KX
 KX
-jh
-Yg
-oq
+Yy
+FH
+fv
 sZ
 sZ
 sZ
-pU
+DI
 XG
 XG
 XG
@@ -1486,7 +1472,7 @@ KX
 "}
 (9,1,1) = {"
 KX
-my
+uA
 sZ
 sZ
 sZ
@@ -1502,44 +1488,44 @@ Qd
 Qd
 bR
 bR
-in
+xG
 rA
 Ku
 sM
 tb
-cj
+Ca
 tb
-Ve
+Oi
 kF
 KX
 "}
 (10,1,1) = {"
 KX
-KM
+iR
 kD
 Mx
 il
 sZ
-rw
+dA
 XG
 XG
 eH
 yH
 Qd
-pX
-vH
+Fe
+cm
 LE
 QU
 GT
 Js
-in
+xG
 kF
 rA
-Yf
+xh
 rA
-cp
-fe
-Ve
+jx
+ws
+Oi
 KX
 "}
 (11,1,1) = {"
@@ -1549,7 +1535,7 @@ sZ
 sZ
 sZ
 sZ
-Iw
+Xs
 XG
 QF
 Qd
@@ -1558,7 +1544,7 @@ jK
 BC
 BC
 BC
-ep
+qC
 UQ
 cM
 PH
@@ -1595,22 +1581,22 @@ KX
 KX
 rA
 Ku
-cj
+Ca
 tb
-Po
+nd
 KX
 "}
 (13,1,1) = {"
 KX
-oL
-EZ
+hI
+Rj
 zK
-dV
-Ky
+Ju
+sR
 XG
 QF
 ay
-Ot
+AJ
 BC
 qs
 fN
@@ -1623,7 +1609,7 @@ Qd
 ch
 KX
 kF
-Ve
+Oi
 rA
 Ku
 kF
@@ -1639,7 +1625,7 @@ KX
 KX
 NF
 aM
-fD
+Re
 BC
 gN
 fN
@@ -1647,14 +1633,14 @@ qm
 fN
 hJ
 BC
-Sh
+Hu
 aM
 NP
 KX
 KX
 KX
-eJ
-eJ
+tP
+tP
 KX
 KX
 "}
@@ -1668,7 +1654,7 @@ RJ
 KX
 ch
 Qd
-dc
+uP
 BC
 fN
 fN
@@ -1676,15 +1662,15 @@ fN
 fU
 qR
 BC
-LS
+gx
 Qd
 zn
 XG
-SV
+YX
 Df
 Df
 Df
-gR
+Dr
 KX
 "}
 (16,1,1) = {"
@@ -1713,7 +1699,7 @@ fs
 dg
 BC
 BC
-MN
+OA
 KX
 "}
 (17,1,1) = {"
@@ -1727,22 +1713,22 @@ ES
 KX
 yH
 zF
-pX
+Fe
 EG
 BC
 BC
 BC
 DA
-Ew
+me
 Qd
 eH
 XG
-SI
+Tw
 fs
-ai
+Ma
 BC
 BC
-MN
+OA
 KX
 "}
 (18,1,1) = {"
@@ -1759,7 +1745,7 @@ Bf
 QE
 zF
 Cj
-PV
+zX
 UQ
 Qd
 Qd
@@ -1771,7 +1757,7 @@ HE
 dg
 BC
 BC
-DD
+Xc
 KX
 "}
 (19,1,1) = {"
@@ -1794,13 +1780,13 @@ JE
 JE
 XG
 XG
-wd
+WC
 Qd
 Qd
 kG
 ir
 ir
-gf
+kB
 KX
 "}
 (20,1,1) = {"
@@ -1822,7 +1808,7 @@ JE
 XG
 XG
 XG
-KC
+Xx
 Qd
 gE
 BC
@@ -1849,7 +1835,7 @@ KX
 KX
 XG
 XG
-rR
+Pe
 Qd
 Qd
 NL
@@ -1885,7 +1871,7 @@ Pp
 Pp
 zp
 gE
-rk
+No
 IC
 IC
 bE
@@ -1941,7 +1927,7 @@ BC
 qf
 fs
 fs
-dw
+YT
 IC
 IC
 tV
@@ -1967,9 +1953,9 @@ Df
 JF
 Pp
 BC
-ZC
+WI
 rj
-Ye
+QL
 IC
 IC
 tV
@@ -1992,11 +1978,11 @@ ty
 nG
 Hq
 KX
-dF
-MN
-MN
-to
-dF
+Gx
+OA
+OA
+aF
+Gx
 KX
 KX
 IC

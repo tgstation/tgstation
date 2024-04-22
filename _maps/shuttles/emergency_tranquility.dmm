@@ -111,16 +111,6 @@
 "cM" = (
 /turf/open/floor/iron/chapel,
 /area/shuttle/escape)
-"dd" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/machinery/stasis,
-/obj/structure/sign/poster/official/moth_epi/directional/north,
-/obj/structure/extinguisher_cabinet/directional/east,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "dA" = (
 /obj/structure/sign/poster/official/fruit_bowl/directional/north,
 /obj/structure/bookcase/random,
@@ -142,11 +132,35 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"dR" = (
+/obj/machinery/stasis,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "dW" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"eo" = (
+/obj/structure/rack,
+/obj/item/storage/medkit{
+	pixel_y = 10
+	},
+/obj/item/storage/medkit/brute{
+	pixel_y = 5
+	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/toxin{
+	pixel_y = -6
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "er" = (
 /obj/effect/turf_decal/siding/wood,
@@ -379,16 +393,6 @@
 /obj/machinery/light/floor,
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"hG" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Escape Shuttle Brig"
-	},
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/iron/dark/small,
-/area/shuttle/escape)
 "hP" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -469,14 +473,6 @@
 	dir = 10
 	},
 /turf/open/floor/grass,
-/area/shuttle/escape)
-"jp" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/machinery/stasis,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
 /area/shuttle/escape)
 "ju" = (
 /obj/structure/table/reinforced,
@@ -580,6 +576,16 @@
 /obj/structure/sign/poster/contraband/blood_geometer/directional/north,
 /turf/open/water,
 /area/shuttle/escape)
+"kT" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Escape Shuttle Brig"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
 "kU" = (
 /obj/effect/turf_decal/plaque,
 /turf/open/floor/wood/large,
@@ -617,6 +623,17 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"mB" = (
+/obj/structure/table/optable,
+/obj/machinery/defibrillator_mount/loaded{
+	pixel_x = -28
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "mQ" = (
 /obj/structure/table/wood,
@@ -854,6 +871,13 @@
 	},
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
+"pC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
 "pK" = (
 /obj/structure/reagent_dispensers/foamtank,
 /obj/effect/turf_decal/delivery,
@@ -928,6 +952,16 @@
 /obj/structure/sign/poster/official/high_class_martini/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"rJ" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Escape Shuttle Brig"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
 "rK" = (
 /obj/machinery/vending/wallmed/directional/south,
 /turf/open/floor/iron/chapel,
@@ -968,13 +1002,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/stone,
-/area/shuttle/escape)
-"sI" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "sK" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1083,6 +1110,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/stone,
 /area/shuttle/escape)
+"vv" = (
+/obj/machinery/stasis,
+/obj/structure/sign/poster/official/moth_epi/directional/north,
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "vx" = (
 /obj/machinery/vending/wallmed/directional/north,
 /turf/open/floor/catwalk_floor,
@@ -1145,17 +1182,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"wm" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/table/optable,
-/obj/machinery/defibrillator_mount/loaded{
-	pixel_x = -28
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "wp" = (
 /obj/machinery/light/directional/east,
 /obj/structure/flora/bush/fullgrass,
@@ -1180,6 +1206,23 @@
 	dir = 1
 	},
 /turf/open/floor/wood/large,
+/area/shuttle/escape)
+"xa" = (
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/machinery/recharger{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/storage/box/handcuffs{
+	pixel_y = 2
+	},
+/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
 "xF" = (
 /obj/machinery/computer/crew,
@@ -1345,23 +1388,6 @@
 "zj" = (
 /obj/effect/turf_decal/siding/wood/end,
 /turf/open/floor/glass,
-/area/shuttle/escape)
-"zw" = (
-/obj/structure/table,
-/obj/machinery/recharger{
-	pixel_x = -7;
-	pixel_y = 4
-	},
-/obj/machinery/recharger{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/storage/box/handcuffs{
-	pixel_y = 2
-	},
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
 "zB" = (
 /obj/machinery/vending/games,
@@ -1592,6 +1618,19 @@
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
+"EL" = (
+/obj/structure/table,
+/obj/item/lazarus_injector,
+/obj/item/surgery_tray/full,
+/obj/item/clothing/gloves/latex/nitrile{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "EW" = (
 /obj/structure/railing{
 	dir = 8
@@ -1717,23 +1756,6 @@
 /obj/machinery/keycard_auth/directional/south,
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
-"Gh" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/rack,
-/obj/item/storage/medkit{
-	pixel_y = 10
-	},
-/obj/item/storage/medkit/brute{
-	pixel_y = 5
-	},
-/obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/toxin{
-	pixel_y = -6
-	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "Gl" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -1838,6 +1860,13 @@
 	dir = 5
 	},
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"IC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "IG" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2080,8 +2109,7 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
-"Mk" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
+"MC" = (
 /obj/machinery/computer/operating{
 	dir = 4
 	},
@@ -2089,6 +2117,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "MO" = (
@@ -2193,16 +2222,6 @@
 "Or" = (
 /obj/machinery/light/floor,
 /turf/open/floor/wood/tile,
-/area/shuttle/escape)
-"OB" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Escape Shuttle Brig"
-	},
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "OC" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -2558,19 +2577,6 @@
 	dir = 1
 	},
 /area/shuttle/escape)
-"VZ" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/table,
-/obj/item/lazarus_injector,
-/obj/item/surgery_tray/full,
-/obj/item/clothing/gloves/latex/nitrile{
-	pixel_y = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "Wi" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -2659,13 +2665,6 @@
 "Yc" = (
 /obj/structure/sign/departments/medbay/alt/directional,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"Yh" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "YO" = (
 /obj/structure/table/wood,
@@ -3398,7 +3397,7 @@ fL
 fL
 fL
 ux
-zw
+xa
 GM
 GM
 Sz
@@ -3406,9 +3405,9 @@ hP
 jI
 TV
 Sz
-Gh
-wm
-Mk
+eo
+mB
+MC
 ux
 fL
 fL
@@ -3424,9 +3423,9 @@ fL
 fL
 Sz
 Hj
-Yh
-Yh
-OB
+pC
+pC
+kT
 hP
 jI
 TV
@@ -3448,10 +3447,10 @@ fL
 fL
 fL
 Sz
-sI
-sI
+IC
+IC
 vI
-hG
+rJ
 hP
 jI
 TV
@@ -3481,9 +3480,9 @@ Sz
 KV
 Sz
 ux
-dd
-VZ
-jp
+vv
+EL
+dR
 ux
 fL
 fL

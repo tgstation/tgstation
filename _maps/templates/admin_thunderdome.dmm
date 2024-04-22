@@ -10,13 +10,6 @@
 /obj/effect/light_emitter/thunderdome,
 /turf/open/floor/iron,
 /area/template_noop)
-"ac" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/light_emitter/thunderdome,
-/turf/open/floor/iron,
-/area/template_noop)
 "ad" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomehea";
@@ -36,19 +29,6 @@
 /area/template_noop)
 "af" = (
 /turf/open/floor/circuit/green,
-/area/template_noop)
-"ag" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Red Team";
-	network = list("thunder");
-	pixel_x = 11;
-	pixel_y = -9;
-	resistance_flags = 64
-	},
-/obj/effect/landmark/thunderdome/two,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/light_emitter/thunderdome,
-/turf/open/floor/iron,
 /area/template_noop)
 "ah" = (
 /obj/structure/rack,
@@ -114,12 +94,6 @@
 /obj/effect/light_emitter/thunderdome,
 /turf/open/floor/iron,
 /area/template_noop)
-"aq" = (
-/obj/effect/landmark/thunderdome/one,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/light_emitter/thunderdome,
-/turf/open/floor/iron,
-/area/template_noop)
 "ar" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomegen";
@@ -128,16 +102,6 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
-/obj/effect/light_emitter/thunderdome,
-/turf/open/floor/iron,
-/area/template_noop)
-"as" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/light_emitter/thunderdome,
-/turf/open/floor/iron,
-/area/template_noop)
-"at" = (
-/obj/effect/turf_decal/tile/green,
 /obj/effect/light_emitter/thunderdome,
 /turf/open/floor/iron,
 /area/template_noop)
@@ -234,19 +198,6 @@
 /obj/effect/light_emitter/thunderdome,
 /turf/open/floor/iron,
 /area/template_noop)
-"aF" = (
-/obj/effect/landmark/thunderdome/two,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/light_emitter/thunderdome,
-/turf/open/floor/iron,
-/area/template_noop)
-"aH" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/light_emitter/thunderdome,
-/turf/open/floor/iron,
-/area/template_noop)
 "aI" = (
 /obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
@@ -323,19 +274,6 @@
 /obj/effect/light_emitter/thunderdome,
 /turf/open/floor/iron,
 /area/template_noop)
-"aU" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Green Team";
-	network = list("thunder");
-	pixel_x = 12;
-	pixel_y = -10;
-	resistance_flags = 64
-	},
-/obj/effect/landmark/thunderdome/one,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/light_emitter/thunderdome,
-/turf/open/floor/iron,
-/area/template_noop)
 "aV" = (
 /obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
@@ -370,39 +308,101 @@
 /obj/effect/light_emitter/thunderdome,
 /turf/open/floor/iron,
 /area/template_noop)
-"aZ" = (
-/obj/effect/turf_decal/tile/red{
+"fi" = (
+/obj/effect/landmark/thunderdome/one,
+/obj/effect/light_emitter/thunderdome,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/template_noop)
+"iu" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "Green Team";
+	network = list("thunder");
+	pixel_x = 12;
+	pixel_y = -10;
+	resistance_flags = 64
+	},
+/obj/effect/landmark/thunderdome/one,
+/obj/effect/light_emitter/thunderdome,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/template_noop)
+"rw" = (
+/obj/effect/light_emitter/thunderdome,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
-/obj/effect/light_emitter/thunderdome,
 /turf/open/floor/iron,
 /area/template_noop)
-"ib" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
+"DM" = (
+/obj/effect/landmark/thunderdome/two,
+/obj/effect/light_emitter/thunderdome,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/template_noop)
+"Fy" = (
+/obj/effect/light_emitter/thunderdome,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/template_noop)
+"GC" = (
+/obj/effect/light_emitter/thunderdome,
+/obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/effect/light_emitter/thunderdome,
 /turf/open/floor/iron,
 /area/template_noop)
-"nu" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+"Ku" = (
 /obj/effect/light_emitter/thunderdome,
-/turf/open/floor/iron,
-/area/template_noop)
-"SV" = (
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 4
-	},
-/obj/effect/light_emitter/thunderdome,
-/turf/open/floor/iron,
-/area/template_noop)
-"XQ" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/turf/open/floor/iron,
+/area/template_noop)
+"Lf" = (
 /obj/effect/light_emitter/thunderdome,
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/iron,
+/area/template_noop)
+"Od" = (
+/obj/effect/light_emitter/thunderdome,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"PI" = (
+/obj/effect/light_emitter/thunderdome,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"TU" = (
+/obj/effect/light_emitter/thunderdome,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"UR" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "Red Team";
+	network = list("thunder");
+	pixel_x = 11;
+	pixel_y = -9;
+	resistance_flags = 64
+	},
+/obj/effect/landmark/thunderdome/two,
+/obj/effect/light_emitter/thunderdome,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/template_noop)
+"VL" = (
+/obj/effect/light_emitter/thunderdome,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/template_noop)
 
@@ -463,8 +463,8 @@ aa
 av
 aA
 aN
-aF
-aF
+DM
+DM
 aN
 ao
 ad
@@ -475,10 +475,10 @@ av
 aa
 av
 aA
-aF
-ag
-aF
-aF
+DM
+UR
+DM
+DM
 ao
 ad
 aw
@@ -489,8 +489,8 @@ aa
 av
 aA
 aN
-aF
-aF
+DM
+DM
 aN
 ao
 ad
@@ -526,12 +526,12 @@ av
 (10,1,1) = {"
 al
 aO
-XQ
-ac
+Ku
+Od
 ak
 ak
-aZ
-XQ
+PI
+Ku
 aO
 al
 aa
@@ -565,12 +565,12 @@ aa
 (13,1,1) = {"
 al
 aR
-ib
-ib
-ib
-ib
-ib
-ib
+VL
+VL
+VL
+VL
+VL
+VL
 aR
 al
 aa
@@ -578,12 +578,12 @@ aa
 (14,1,1) = {"
 al
 aR
-as
-as
-as
-as
-as
-as
+Fy
+Fy
+Fy
+Fy
+Fy
+Fy
 aR
 al
 aa
@@ -591,12 +591,12 @@ aa
 (15,1,1) = {"
 al
 aR
-as
-as
-as
-as
-as
-as
+Fy
+Fy
+Fy
+Fy
+Fy
+Fy
 aR
 al
 aa
@@ -604,12 +604,12 @@ aa
 (16,1,1) = {"
 al
 aR
-as
-as
+Fy
+Fy
 af
 af
-as
-as
+Fy
+Fy
 aR
 al
 aa
@@ -617,12 +617,12 @@ aa
 (17,1,1) = {"
 al
 aR
-as
-as
+Fy
+Fy
 aX
 aQ
-as
-as
+Fy
+Fy
 aR
 al
 aa
@@ -630,12 +630,12 @@ aa
 (18,1,1) = {"
 al
 aR
-as
-as
+Fy
+Fy
 af
 af
-as
-as
+Fy
+Fy
 aR
 al
 aa
@@ -643,12 +643,12 @@ aa
 (19,1,1) = {"
 al
 aR
-as
-as
-as
-as
-as
-as
+Fy
+Fy
+Fy
+Fy
+Fy
+Fy
 aR
 al
 aa
@@ -656,12 +656,12 @@ aa
 (20,1,1) = {"
 al
 aR
-as
-as
-as
-as
-as
-as
+Fy
+Fy
+Fy
+Fy
+Fy
+Fy
 aR
 al
 aa
@@ -669,12 +669,12 @@ aa
 (21,1,1) = {"
 al
 aR
-nu
-nu
-nu
-nu
-nu
-nu
+rw
+rw
+rw
+rw
+rw
+rw
 aR
 al
 aa
@@ -708,12 +708,12 @@ aa
 (24,1,1) = {"
 al
 aO
-SV
-aH
+TU
+GC
 an
 an
-at
-SV
+Lf
+TU
 aO
 al
 aa
@@ -749,8 +749,8 @@ aa
 av
 aK
 aJ
-aq
-aq
+fi
+fi
 aJ
 au
 ad
@@ -761,10 +761,10 @@ av
 aa
 av
 aK
-aq
-aU
-aq
-aq
+fi
+iu
+fi
+fi
 au
 ad
 ah
@@ -775,8 +775,8 @@ aa
 av
 aK
 aJ
-aq
-aq
+fi
+fi
 aJ
 au
 ad

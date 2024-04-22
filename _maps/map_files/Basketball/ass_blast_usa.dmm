@@ -5,13 +5,22 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/basketball)
-"aE" = (
-/obj/effect/turf_decal/tile/dark_blue/full,
-/obj/effect/landmark/basketball/team_spawn/home,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "star"
+"ay" = (
+/obj/structure/table,
+/obj/item/storage/bag/tray,
+/obj/item/food/cheesyfries{
+	pixel_x = -4;
+	pixel_y = 9
 	},
-/turf/open/floor/iron/large,
+/obj/item/food/cheesyfries,
+/obj/item/food/cheesyfries{
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "be" = (
 /obj/structure/railing/corner{
@@ -29,6 +38,16 @@
 /obj/structure/rack,
 /obj/item/gun/ballistic/rifle/sniper_rifle,
 /turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"cT" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/bag/tray,
+/obj/item/food/bbqribs{
+	pixel_y = 11
+	},
+/obj/item/food/bbqribs,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
 /area/centcom/basketball)
 "dr" = (
 /obj/structure/chair/sofa/right/maroon,
@@ -64,20 +83,15 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/centcom/basketball)
-"fj" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
+"fo" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/condiment/bbqsauce{
-	pixel_x = 6;
-	pixel_y = 6
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_x = -3
 	},
-/obj/item/reagent_containers/condiment/bbqsauce{
-	pixel_x = -3;
-	pixel_y = 6
+/obj/item/reagent_containers/condiment/peppermill{
+	pixel_x = 3
 	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/centcom/basketball)
 "fu" = (
@@ -179,6 +193,10 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/centcom/basketball)
+"os" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/centcom/basketball)
 "oR" = (
 /obj/structure/chair/stool/directional/east,
 /turf/open/floor/carpet,
@@ -208,15 +226,6 @@
 "tX" = (
 /turf/open/floor/iron/grimy,
 /area/centcom/basketball)
-"vb" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/table/reinforced,
-/obj/item/storage/cans/sixbeer,
-/turf/open/floor/iron,
-/area/centcom/basketball)
 "vo" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/bottle/beer{
@@ -238,6 +247,20 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"wf" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/cans/sixbeer,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/centcom/basketball)
+"wg" = (
+/obj/effect/landmark/basketball/team_spawn/home,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "star"
+	},
+/obj/effect/turf_decal/tile/dark_blue/full,
+/turf/open/floor/iron/large,
 /area/centcom/basketball)
 "xP" = (
 /obj/structure/table,
@@ -340,13 +363,6 @@
 /obj/effect/turf_decal/tile/neutral/half,
 /turf/open/floor/iron/white/smooth_half,
 /area/centcom/basketball)
-"Ev" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/turf/open/floor/iron,
-/area/centcom/basketball)
 "EW" = (
 /obj/structure/sign/poster/contraband/revolver,
 /turf/closed/indestructible/fakeglass,
@@ -411,19 +427,6 @@
 	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/centcom/basketball)
-"LU" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/table/reinforced,
-/obj/item/storage/bag/tray,
-/obj/item/food/bbqribs{
-	pixel_y = 11
-	},
-/obj/item/food/bbqribs,
-/turf/open/floor/iron,
-/area/centcom/basketball)
 "LV" = (
 /obj/structure/sign/poster/contraband/syndicate_pistol,
 /turf/closed/indestructible/fakeglass,
@@ -433,11 +436,24 @@
 /obj/item/clothing/head/costume/foilhat,
 /turf/open/floor/iron/grimy,
 /area/centcom/basketball)
-"MW" = (
-/obj/effect/turf_decal/tile/dark_blue/full,
+"Nb" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/condiment/bbqsauce{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/condiment/bbqsauce{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/centcom/basketball)
+"Nj" = (
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "star"
 	},
+/obj/effect/turf_decal/tile/dark_blue/full,
 /turf/open/floor/iron/large,
 /area/centcom/basketball)
 "Oj" = (
@@ -453,43 +469,12 @@
 /obj/machinery/grill,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/centcom/basketball)
-"PU" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
-/obj/item/storage/bag/tray,
-/obj/item/food/cheesyfries{
-	pixel_x = -4;
-	pixel_y = 9
-	},
-/obj/item/food/cheesyfries,
-/obj/item/food/cheesyfries{
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/basketball)
 "PW" = (
 /obj/machinery/door/poddoor/shutters/window{
 	id = "armory";
 	name = "Freedom Shutters"
 	},
 /turf/open/floor/iron/dark,
-/area/centcom/basketball)
-"Qh" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/condiment/saltshaker{
-	pixel_x = -3
-	},
-/obj/item/reagent_containers/condiment/peppermill{
-	pixel_x = 3
-	},
-/turf/open/floor/iron,
 /area/centcom/basketball)
 "Qi" = (
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
@@ -527,6 +512,14 @@
 	},
 /turf/open/floor/carpet,
 /area/centcom/basketball)
+"WI" = (
+/obj/structure/table/reinforced,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/centcom/basketball)
 "WK" = (
 /obj/structure/rack,
 /obj/item/storage/box/lethalshot,
@@ -538,17 +531,6 @@
 "Xm" = (
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/iron/dark,
-/area/centcom/basketball)
-"Xn" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/table/reinforced,
-/obj/structure/desk_bell{
-	pixel_x = 7
-	},
-/turf/open/floor/iron,
 /area/centcom/basketball)
 "YX" = (
 /obj/item/toy/basketball,
@@ -699,14 +681,14 @@ Hu
 tO
 dS
 dr
-PU
+ay
 Oj
 Vr
 Ql
 Cw
-MW
+Nj
 BJ
-MW
+Nj
 Cv
 gk
 gk
@@ -732,7 +714,7 @@ Vr
 Ql
 Cw
 Ic
-aE
+wg
 Ic
 gk
 gk
@@ -758,9 +740,9 @@ Xm
 be
 Ql
 Cw
-MW
+Nj
 Ic
-aE
+wg
 IA
 IA
 gk
@@ -782,11 +764,11 @@ nE
 nE
 nE
 Uv
-Ev
-Ev
+os
+os
 mM
 Ic
-MW
+Nj
 Ic
 gk
 gk
@@ -808,13 +790,13 @@ WM
 Tc
 Dt
 Dt
-vb
-Ev
-Ev
+wf
+os
+os
 Cw
-MW
+Nj
 Ic
-MW
+Nj
 gk
 gk
 gk
@@ -835,12 +817,12 @@ dS
 LS
 Dt
 Dt
-LU
-Ev
-Ev
+cT
+os
+os
 Cw
 Ic
-MW
+Nj
 Ic
 gk
 gk
@@ -862,9 +844,9 @@ kc
 OB
 Dt
 jj
-Xn
-Ev
-Ev
+WI
+os
+os
 Cw
 gk
 gk
@@ -889,9 +871,9 @@ WM
 Rl
 Dt
 Dt
-fj
-Ev
-Ev
+Nb
+os
+os
 Cw
 gk
 gk
@@ -916,9 +898,9 @@ dS
 Gi
 Dt
 Dt
-Qh
-Ev
-Ev
+fo
+os
+os
 Cw
 gk
 gk
@@ -944,8 +926,8 @@ nE
 nE
 nE
 Uv
-Ev
-Ev
+os
+os
 mM
 gk
 gk

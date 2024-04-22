@@ -20,18 +20,6 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/icemoon_phone_booth)
-"q" = (
-/obj/machinery/airalarm/directional/south,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 8;
-	piping_layer = 4
-	},
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/plating/icemoon,
-/area/ruin/powered/icemoon_phone_booth)
 "v" = (
 /obj/structure/lattice,
 /obj/structure/billboard/Phone_booth,
@@ -45,17 +33,16 @@
 	dir = 4
 	},
 /area/ruin/powered/icemoon_phone_booth)
-"J" = (
+"H" = (
+/obj/machinery/airalarm/directional/south,
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 8;
+	piping_layer = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
-/obj/item/gps/spaceruin{
-	gpstag = "Public Holophone"
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/icemoon_phone_booth)
 "M" = (
@@ -76,6 +63,19 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/icemoon_phone_booth)
+"Z" = (
+/obj/item/gps/spaceruin{
+	gpstag = "Public Holophone"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/icemoon_phone_booth)
 
 (1,1,1) = {"
 v
@@ -94,7 +94,7 @@ c
 (3,1,1) = {"
 V
 M
-J
-q
+Z
+H
 M
 "}

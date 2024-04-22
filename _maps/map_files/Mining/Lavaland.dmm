@@ -739,6 +739,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security/maintenance)
+"eY" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark,
+/area/mine/production)
 "fb" = (
 /obj/structure/railing/corner{
 	dir = 4
@@ -1830,16 +1836,6 @@
 	},
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
-"kR" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/bar/opposingcorners{
-	dir = 1
-	},
-/obj/machinery/mining_weather_monitor/directional/west,
-/turf/open/floor/iron/checker,
-/area/mine/cafeteria)
 "kV" = (
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 8
@@ -2477,12 +2473,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
-"nk" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark,
-/area/mine/production)
 "nl" = (
 /obj/structure/fence{
 	dir = 8
@@ -3615,6 +3605,14 @@
 /obj/effect/turf_decal/sand/plating/volcanic,
 /turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
+"uF" = (
+/obj/structure/chair/sofa/middle/brown,
+/obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron/checker,
+/area/mine/cafeteria)
 "uI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -8247,6 +8245,16 @@
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron/dark,
 /area/mine/production)
+"Ym" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/mining_weather_monitor/directional/west,
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron/checker,
+/area/mine/cafeteria)
 "Yn" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -8348,14 +8356,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
-/turf/open/floor/iron/checker,
-/area/mine/cafeteria)
-"Zj" = (
-/obj/structure/chair/sofa/middle/brown,
-/obj/effect/turf_decal/tile/bar/opposingcorners{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
 "Zl" = (
@@ -37734,7 +37734,7 @@ kY
 kY
 kY
 kY
-kR
+Ym
 jS
 KL
 DW
@@ -39019,7 +39019,7 @@ kY
 Mc
 wJ
 kY
-Zj
+uF
 US
 DW
 ui
@@ -46727,7 +46727,7 @@ Yl
 XT
 NU
 ld
-nk
+eY
 ld
 NU
 WB

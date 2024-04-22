@@ -8,6 +8,18 @@
 /obj/machinery/door/window/left/directional/south,
 /turf/open/floor/iron/dark/smooth_edge,
 /area/ruin/space/has_grav/powered/space_phone_booth)
+"d" = (
+/obj/machinery/airalarm/directional/south,
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 8;
+	piping_layer = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/space_phone_booth)
 "e" = (
 /turf/template_noop,
 /area/ruin/space/has_grav/powered/space_phone_booth)
@@ -16,18 +28,6 @@
 	onstation_override = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/space_phone_booth)
-"q" = (
-/obj/machinery/airalarm/directional/south,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 8;
-	piping_layer = 4
-	},
-/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/space_phone_booth)
 "v" = (
@@ -40,19 +40,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/powered/space_phone_booth)
-"J" = (
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
-	},
-/obj/item/gps/spaceruin{
-	gpstag = "Public Holophone"
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/space_phone_booth)
 "M" = (
 /turf/closed/wall,
@@ -70,6 +57,19 @@
 	onstation_override = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/space_phone_booth)
+"Z" = (
+/obj/item/gps/spaceruin{
+	gpstag = "Public Holophone"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/space_phone_booth)
 
@@ -90,7 +90,7 @@ c
 (3,1,1) = {"
 V
 M
-J
-q
+Z
+d
 M
 "}

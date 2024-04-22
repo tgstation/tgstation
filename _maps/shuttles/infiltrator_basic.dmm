@@ -276,18 +276,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/syndicate/medical)
-"bt" = (
-/obj/structure/table/reinforced,
-/obj/machinery/status_display/ai/directional/north,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/item/healthanalyzer,
-/obj/item/healthanalyzer{
-	pixel_y = 10
-	},
-/turf/open/floor/iron/edge,
-/area/shuttle/syndicate/medical)
 "bu" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/medical/gauze,
@@ -449,17 +437,6 @@
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/eva)
-"bY" = (
-/obj/structure/closet,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/item/clothing/under/syndicate/scrubs,
-/obj/item/clothing/gloves/latex/nitrile,
-/obj/item/clothing/mask/breath/medical,
-/obj/item/tank/internals/anesthetic,
-/turf/open/floor/iron,
-/area/shuttle/syndicate/medical)
 "ce" = (
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high{
@@ -670,14 +647,16 @@
 /obj/structure/sign/departments/engineering/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
-"mZ" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
+"nF" = (
+/obj/structure/closet,
+/obj/item/clothing/under/syndicate/scrubs,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/clothing/mask/breath/medical,
+/obj/item/tank/internals/anesthetic,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
 	},
-/mob/living/basic/bot/medbot/nukie,
-/turf/open/floor/iron/corner{
-	dir = 1
-	},
+/turf/open/floor/iron,
 /area/shuttle/syndicate/medical)
 "nN" = (
 /obj/structure/chair/comfy/shuttle/tactical{
@@ -686,34 +665,23 @@
 /obj/effect/turf_decal/bot_red,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
-"nZ" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/computer/operating{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/syndicate/medical)
 "pd" = (
 /obj/machinery/porta_turret/syndicate/shuttle{
 	dir = 5
 	},
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/bridge)
-"pQ" = (
-/obj/effect/turf_decal/tile/blue,
+"pe" = (
 /obj/structure/table/reinforced,
-/obj/item/bodypart/arm/left/robot{
-	pixel_x = -4;
-	pixel_y = 8
-	},
-/obj/item/bodypart/arm/right/robot{
-	pixel_x = -10;
-	pixel_y = 9
-	},
+/obj/machinery/status_display/ai/directional/north,
 /obj/item/healthanalyzer,
-/turf/open/floor/iron/white,
+/obj/item/healthanalyzer{
+	pixel_y = 10
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/iron/edge,
 /area/shuttle/syndicate/medical)
 "st" = (
 /obj/effect/turf_decal/syndicateemblem/top/right,
@@ -921,6 +889,15 @@
 	},
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/hallway)
+"Ix" = (
+/obj/machinery/computer/operating{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/syndicate/medical)
 "Jo" = (
 /turf/open/floor/iron/dark/textured_corner,
 /area/shuttle/syndicate/engineering)
@@ -964,14 +941,19 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/syndicate/medical)
-"Ln" = (
-/obj/machinery/light/small/directional/west,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
+"Lj" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/syndie/surgery,
-/turf/open/floor/iron/white/side,
+/obj/item/bodypart/arm/left/robot{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/bodypart/arm/right/robot{
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/obj/item/healthanalyzer,
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/iron/white,
 /area/shuttle/syndicate/medical)
 "Ma" = (
 /turf/open/floor/iron/dark/smooth_corner{
@@ -1077,6 +1059,15 @@
 	dir = 4
 	},
 /area/shuttle/syndicate/eva)
+"TT" = (
+/mob/living/basic/bot/medbot/nukie,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/iron/corner{
+	dir = 1
+	},
+/area/shuttle/syndicate/medical)
 "UN" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -1114,6 +1105,15 @@
 	dir = 4
 	},
 /area/shuttle/syndicate/bridge)
+"Za" = (
+/obj/machinery/light/small/directional/west,
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/syndie/surgery,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white/side,
+/area/shuttle/syndicate/medical)
 "ZL" = (
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/corner,
@@ -1163,9 +1163,9 @@ zc
 bC
 bq
 bR
-bY
-Ln
-nZ
+nF
+Za
+Ix
 cu
 cz
 "}
@@ -1212,10 +1212,10 @@ aJ
 bs
 Lh
 bQ
-mZ
+TT
 br
 JQ
-pQ
+Lj
 cu
 cB
 "}
@@ -1234,7 +1234,7 @@ TD
 wK
 aZ
 aJ
-bt
+pe
 br
 Ro
 br

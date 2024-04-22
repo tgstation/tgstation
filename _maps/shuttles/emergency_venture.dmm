@@ -115,22 +115,6 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"dT" = (
-/obj/structure/table,
-/obj/machinery/recharger{
-	pixel_x = 7;
-	pixel_y = 2
-	},
-/obj/item/paper_bin{
-	pixel_x = -6;
-	pixel_y = 8
-	},
-/obj/effect/turf_decal/tile/dark_blue/anticorner{
-	dir = 1
-	},
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "dU" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Airlock"
@@ -193,6 +177,22 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"jp" = (
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/item/paper_bin{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/dark_blue/anticorner{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "jv" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
@@ -318,12 +318,26 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/large,
 /area/shuttle/escape)
+"qn" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light/cold/directional/north,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "qo" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
+/area/shuttle/escape)
+"qP" = (
+/obj/structure/closet/crate/bin,
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/tile/green/anticorner/contrasted,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "qZ" = (
 /obj/structure/table/reinforced/rglass,
@@ -358,14 +372,6 @@
 "tg" = (
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/iron,
-/area/shuttle/escape)
-"tE" = (
-/obj/structure/bed/medical/emergency,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 1
-	},
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "tY" = (
 /obj/structure/table,
@@ -407,14 +413,18 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"vQ" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "vX" = (
 /turf/open/floor/iron/herringbone,
-/area/shuttle/escape)
-"wc" = (
-/obj/structure/closet/crate/bin,
-/obj/effect/turf_decal/tile/green/anticorner/contrasted,
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron,
 /area/shuttle/escape)
 "xD" = (
 /obj/effect/turf_decal/stripes/line{
@@ -551,6 +561,17 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
+"EZ" = (
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box,
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/structure/sign/poster/official/random/directional/east,
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/tile/dark_blue/anticorner{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "Fk" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -591,17 +612,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron/white,
-/area/shuttle/escape)
-"Gr" = (
-/obj/structure/table,
-/obj/item/storage/fancy/donut_box,
-/obj/structure/extinguisher_cabinet/directional/north,
-/obj/structure/sign/poster/official/random/directional/east,
-/obj/effect/turf_decal/tile/dark_blue/anticorner{
-	dir = 4
-	},
-/obj/machinery/light/directional/east,
-/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Gt" = (
 /obj/structure/chair/comfy/shuttle,
@@ -659,16 +669,6 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"Lc" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
-	dir = 8
-	},
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron,
 /area/shuttle/escape)
 "Lw" = (
 /obj/structure/table,
@@ -786,6 +786,14 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"Tw" = (
+/obj/structure/bed/medical/emergency,
+/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "TK" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/security_space_law{
@@ -844,14 +852,6 @@
 "UL" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"Vx" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 1
-	},
-/obj/machinery/light/cold/directional/north,
-/turf/open/floor/iron,
 /area/shuttle/escape)
 "VQ" = (
 /obj/effect/turf_decal/delivery,
@@ -998,7 +998,7 @@ mD
 mD
 UL
 AC
-Vx
+qn
 ij
 fX
 AC
@@ -1064,7 +1064,7 @@ mD
 mD
 Fk
 AC
-dT
+jp
 SG
 YG
 uR
@@ -1224,7 +1224,7 @@ AC
 FF
 Fm
 Dv
-wc
+qP
 Uf
 TK
 lB
@@ -1232,7 +1232,7 @@ lB
 lB
 NR
 Uf
-Gr
+EZ
 lE
 hn
 uR
@@ -1241,7 +1241,7 @@ uR
 (12,1,1) = {"
 Qq
 Qq
-tE
+Tw
 Hq
 Ru
 Uz
@@ -1280,7 +1280,7 @@ AC
 WF
 kw
 Uj
-Lc
+vQ
 Uf
 iq
 lB

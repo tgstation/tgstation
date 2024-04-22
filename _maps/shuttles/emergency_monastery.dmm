@@ -505,15 +505,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/mineral,
 /area/shuttle/escape)
-"ig" = (
-/obj/machinery/light/small/directional/west,
-/obj/effect/turf_decal/tile/red/half/contrasted,
-/obj/machinery/door/window/left/directional/south{
-	name = "Curator Desk Door";
-	req_access = list("library")
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "it" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -746,6 +737,15 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"kU" = (
+/obj/machinery/light/small/directional/west,
+/obj/machinery/door/window/left/directional/south{
+	name = "Curator Desk Door";
+	req_access = list("library")
+	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "lc" = (
@@ -5795,7 +5795,7 @@ Om
 ar
 TR
 jx
-ig
+kU
 QH
 zE
 nr

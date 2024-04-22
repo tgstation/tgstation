@@ -1536,6 +1536,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"yK" = (
+/obj/machinery/light/floor,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "zT" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/chair/comfy/shuttle{
@@ -1554,6 +1559,13 @@
 	},
 /obj/effect/turf_decal/raven/two,
 /obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"EF" = (
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Jx" = (
@@ -1576,6 +1588,14 @@
 /obj/structure/table/reinforced,
 /obj/item/multitool,
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"Lv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Mm" = (
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -1613,32 +1633,12 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"Pd" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "Rw" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"SA" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"Ub" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ZA" = (
@@ -1778,7 +1778,7 @@ ax
 ax
 cH
 cJ
-SA
+Lv
 ax
 ax
 cd
@@ -1850,7 +1850,7 @@ bP
 bP
 da
 dh
-Ub
+yK
 bP
 dA
 dJ
@@ -2008,7 +2008,7 @@ bc
 ZA
 ax
 bH
-Ub
+yK
 bP
 bP
 bQ
@@ -2190,7 +2190,7 @@ bP
 bP
 de
 dn
-Ub
+yK
 bP
 dA
 dJ
@@ -2254,7 +2254,7 @@ ax
 ax
 cI
 cN
-Pd
+EF
 ax
 ax
 cd

@@ -184,6 +184,11 @@
 "ve" = (
 /turf/closed/indestructible/fakedoor,
 /area/centcom/ctf)
+"vr" = (
+/obj/item/ctf_flag/blue,
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
 "wk" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -489,11 +494,6 @@
 /obj/machinery/door/poddoor/shutters/indestructible/preopen,
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
-"Qn" = (
-/obj/effect/turf_decal/tile/blue/full,
-/obj/item/ctf_flag/blue,
-/turf/open/floor/iron/large,
-/area/centcom/ctf)
 "Qp" = (
 /obj/effect/turf_decal/stripes,
 /obj/effect/turf_decal/tile/dark{
@@ -570,6 +570,11 @@
 	},
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
+"Sh" = (
+/obj/item/ctf_flag/red,
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
 "Tc" = (
 /obj/structure/chair/sofa/bench/left{
 	resistance_flags = 115
@@ -588,11 +593,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/anticorner,
-/turf/open/floor/iron/large,
-/area/centcom/ctf)
-"Ub" = (
-/obj/effect/turf_decal/tile/red/full,
-/obj/item/ctf_flag/red,
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
 "UD" = (
@@ -1051,7 +1051,7 @@ tr
 tr
 MG
 Fj
-Qn
+vr
 VK
 Zp
 QU
@@ -2443,7 +2443,7 @@ ys
 PP
 qH
 zB
-Ub
+Sh
 gT
 MG
 tr

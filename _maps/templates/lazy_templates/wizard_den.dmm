@@ -26,10 +26,30 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/carpet/red,
 /area/centcom/wizard_station)
+"cB" = (
+/obj/machinery/door/airlock/wood{
+	name = "Kitchen"
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/centcom/wizard_station)
 "cF" = (
 /obj/structure/table/wood,
 /obj/item/radio/intercom,
 /turf/open/floor/carpet/red,
+/area/centcom/wizard_station)
+"cQ" = (
+/obj/structure/table/reinforced,
+/obj/item/food/burger/spell{
+	pixel_y = 11;
+	pixel_x = -3
+	},
+/obj/item/stack/medical/ointment{
+	pixel_y = -2;
+	pixel_x = 9
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
 /area/centcom/wizard_station)
 "dk" = (
 /obj/machinery/power/shuttle_engine/heater{
@@ -119,6 +139,27 @@
 	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
+"hr" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_x = 12;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/condiment/peppermill{
+	pixel_x = 12;
+	pixel_y = 4
+	},
+/obj/item/plate{
+	pixel_y = 4;
+	pixel_x = -2
+	},
+/obj/item/trash/candle{
+	pixel_x = 7;
+	pixel_y = 1
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/centcom/wizard_station)
 "hT" = (
 /obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
@@ -139,20 +180,6 @@
 	dir = 1
 	},
 /turf/open/floor/engine/cult,
-/area/centcom/wizard_station)
-"jn" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table/reinforced,
-/obj/item/food/burger/rat{
-	pixel_y = 9;
-	pixel_x = -2
-	},
-/obj/item/food/bun{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron,
 /area/centcom/wizard_station)
 "jp" = (
 /obj/machinery/door/airlock/wood{
@@ -215,16 +242,15 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
+"mu" = (
+/obj/structure/chair/wood,
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/centcom/wizard_station)
 "nc" = (
 /obj/structure/table/wood,
 /turf/open/floor/engine/cult,
-/area/centcom/wizard_station)
-"nN" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/door/airlock/wood{
-	name = "Kitchen"
-	},
-/turf/open/floor/iron,
 /area/centcom/wizard_station)
 "nV" = (
 /obj/structure/flora/bush/fullgrass/style_random,
@@ -289,11 +315,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
-"pq" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/bookcase/random/reference/wizard,
-/turf/open/floor/iron,
-/area/centcom/wizard_station)
 "pt" = (
 /obj/item/kirbyplants/organic/plant10{
 	pixel_y = 21;
@@ -321,11 +342,6 @@
 	pixel_x = 5
 	},
 /turf/open/floor/engine/cult,
-/area/centcom/wizard_station)
-"qe" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/griddle,
-/turf/open/floor/iron,
 /area/centcom/wizard_station)
 "qg" = (
 /obj/structure/railing{
@@ -440,6 +456,36 @@
 	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
+"vT" = (
+/obj/structure/table/reinforced,
+/obj/item/food/burger/rat{
+	pixel_y = 9;
+	pixel_x = -2
+	},
+/obj/item/food/bun{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/centcom/wizard_station)
+"we" = (
+/obj/item/food/burger/yellow{
+	pixel_x = -11;
+	pixel_y = 8
+	},
+/obj/item/food/burger/red{
+	pixel_y = 13;
+	pixel_x = 6
+	},
+/obj/item/food/burger/purple{
+	pixel_y = 3
+	},
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/centcom/wizard_station)
 "wk" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
@@ -546,12 +592,6 @@
 "Cm" = (
 /turf/open/floor/grass,
 /area/centcom/wizard_station)
-"Df" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/chair/wood,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron,
-/area/centcom/wizard_station)
 "Do" = (
 /obj/structure/railing/corner/end/flip{
 	dir = 8
@@ -631,39 +671,15 @@
 /obj/structure/filingcabinet,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
+"Jg" = (
+/obj/structure/bookcase/random/reference/wizard,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/centcom/wizard_station)
 "Jn" = (
 /obj/structure/closet/crate/bin,
 /obj/item/trash/boritos/purple,
 /turf/open/floor/engine/cult,
-/area/centcom/wizard_station)
-"JN" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/item/food/burger/yellow{
-	pixel_x = -11;
-	pixel_y = 8
-	},
-/obj/item/food/burger/red{
-	pixel_y = 13;
-	pixel_x = 6
-	},
-/obj/item/food/burger/purple{
-	pixel_y = 3
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/iron,
-/area/centcom/wizard_station)
-"JQ" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table/reinforced,
-/obj/item/food/burger/spell{
-	pixel_y = 11;
-	pixel_x = -3
-	},
-/obj/item/stack/medical/ointment{
-	pixel_y = -2;
-	pixel_x = 9
-	},
-/turf/open/floor/iron,
 /area/centcom/wizard_station)
 "JW" = (
 /obj/machinery/door/window/left/directional/east,
@@ -834,6 +850,11 @@
 /obj/item/storage/crayons,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
+"UA" = (
+/obj/structure/sink/directional/west,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/centcom/wizard_station)
 "UC" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin/carbon{
@@ -860,11 +881,6 @@
 /area/centcom/wizard_station)
 "VB" = (
 /turf/closed/indestructible/wood,
-/area/centcom/wizard_station)
-"VO" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/sink/directional/west,
-/turf/open/floor/iron,
 /area/centcom/wizard_station)
 "VV" = (
 /obj/structure/flora/bush/grassy/style_random,
@@ -896,6 +912,12 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
+"Xd" = (
+/obj/structure/closet/crate/bin,
+/obj/item/trash/shok_roks/berry,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/centcom/wizard_station)
 "Xt" = (
 /obj/item/kirbyplants/organic/plant10{
 	pixel_y = 21;
@@ -926,25 +948,9 @@
 /obj/structure/chair/wood/wings,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
-"Yv" = (
+"YS" = (
+/obj/machinery/griddle,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table/wood,
-/obj/item/reagent_containers/condiment/saltshaker{
-	pixel_x = 12;
-	pixel_y = 11
-	},
-/obj/item/reagent_containers/condiment/peppermill{
-	pixel_x = 12;
-	pixel_y = 4
-	},
-/obj/item/plate{
-	pixel_y = 4;
-	pixel_x = -2
-	},
-/obj/item/trash/candle{
-	pixel_x = 7;
-	pixel_y = 1
-	},
 /turf/open/floor/iron,
 /area/centcom/wizard_station)
 "YT" = (
@@ -956,12 +962,6 @@
 /obj/item/banhammer,
 /obj/item/toy/eldritch_book,
 /turf/open/floor/engine/cult,
-/area/centcom/wizard_station)
-"ZI" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/closet/crate/bin,
-/obj/item/trash/shok_roks/berry,
-/turf/open/floor/iron,
 /area/centcom/wizard_station)
 "ZR" = (
 /obj/item/kirbyplants/organic/plant10{
@@ -1961,7 +1961,7 @@ ut
 Tl
 VB
 VB
-nN
+cB
 VB
 VB
 VB
@@ -2006,9 +2006,9 @@ VB
 VB
 VB
 VB
-ZI
+Xd
 Ar
-qe
+YS
 VB
 oh
 kZ
@@ -2050,11 +2050,11 @@ kZ
 WQ
 Lt
 VB
-JQ
+cQ
 Ar
 Ar
 Ar
-jn
+vT
 VB
 mc
 kZ
@@ -2096,11 +2096,11 @@ Yq
 tQ
 uT
 VB
-pq
-Df
-Yv
-VO
-JN
+Jg
+mu
+hr
+UA
+we
 VB
 WY
 wY

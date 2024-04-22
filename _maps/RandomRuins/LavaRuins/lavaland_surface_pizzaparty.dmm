@@ -32,17 +32,20 @@
 /obj/structure/sign/clock/directional/south,
 /turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
-"bg" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/flora/ash/leaf_shroom,
-/turf/open/floor/iron/lavaland,
-/area/ruin/unpowered)
 "bj" = (
 /obj/structure/chair/sofa/right/brown,
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"br" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/plate,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "bz" = (
 /obj/structure/table/wood,
@@ -63,14 +66,6 @@
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
-"cb" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 10
-	},
-/turf/open/floor/iron/lavaland,
-/area/ruin/unpowered)
 "cF" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
@@ -82,6 +77,17 @@
 /obj/item/paper_bin,
 /obj/effect/spawner/random/bureaucracy/pen,
 /turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"dD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/remains/human{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/shoes/cookflops,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "dI" = (
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
@@ -109,26 +115,6 @@
 	},
 /turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
-"fk" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/remains/human{
-	pixel_x = 5;
-	pixel_y = 10
-	},
-/obj/effect/decal/cleanable/blood/old,
-/obj/item/clothing/shoes/cookflops,
-/turf/open/floor/iron/lavaland,
-/area/ruin/unpowered)
-"fx" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/plate,
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 9
-	},
-/turf/open/floor/iron/lavaland,
-/area/ruin/unpowered)
 "fD" = (
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
@@ -143,6 +129,17 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/lipstick/random,
 /turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"gX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "hL" = (
 /obj/structure/table,
@@ -169,9 +166,12 @@
 "iF" = (
 /turf/open/floor/grass/lavaland,
 /area/lavaland/surface/outdoors)
-"jt" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
+"kh" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "kD" = (
@@ -182,29 +182,28 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
-"lB" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/grill,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/broken/directional/east,
-/turf/open/floor/iron/lavaland,
-/area/ruin/unpowered)
-"lE" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 1
-	},
-/turf/open/floor/iron/lavaland,
-/area/ruin/unpowered)
 "mc" = (
 /obj/structure/flora/tree/stump,
 /turf/open/floor/grass/lavaland,
 /area/lavaland/surface/outdoors)
+"ml" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/ash/leaf_shroom,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
 "my" = (
 /obj/structure/flora/grass/brown/style_random,
 /turf/open/floor/grass/lavaland,
 /area/lavaland/surface/outdoors)
+"mD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
 "nq" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/light/small/directional/north,
@@ -231,6 +230,15 @@
 	},
 /turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
+"oo" = (
+/obj/structure/mineral_door/wood,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
 "oO" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
@@ -250,14 +258,6 @@
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /turf/open/floor/iron/diagonal/lavaland,
-/area/ruin/unpowered)
-"pD" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 8
-	},
-/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "qU" = (
 /obj/structure/table/wood/fancy/red,
@@ -359,6 +359,13 @@
 /obj/machinery/light/small/broken/directional/north,
 /turf/open/floor/iron/freezer/lavaland,
 /area/ruin/unpowered)
+"wW" = (
+/obj/machinery/grill,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/broken/directional/east,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
 "xf" = (
 /obj/item/kirbyplants/fern,
 /turf/open/floor/carpet/blue/lavaland,
@@ -396,13 +403,6 @@
 /obj/item/food/pizzaslice/mushroom,
 /turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
-"yA" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/flora/ash/leaf_shroom,
-/obj/effect/turf_decal/siding/thinplating,
-/turf/open/floor/iron/lavaland,
-/area/ruin/unpowered)
 "yJ" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
@@ -434,15 +434,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
-"zj" = (
-/obj/structure/mineral_door/wood,
-/obj/effect/turf_decal/siding/thinplating_new{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/lavaland,
-/area/ruin/unpowered)
 "zl" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/blue/lavaland,
@@ -454,22 +445,17 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
+"zW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/thinplating,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
 "Ae" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/glowshroom/single,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
-/area/ruin/unpowered)
-"Bt" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/plastic{
-	dir = 4
-	},
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 8
-	},
-/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "Cn" = (
 /obj/structure/grille/broken,
@@ -503,6 +489,20 @@
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"Gl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
+"Gr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "HZ" = (
 /obj/item/plate{
@@ -577,6 +577,14 @@
 /obj/structure/sign/poster/party_game/directional/north,
 /obj/item/tail_pin,
 /turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"Oi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 10
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "Pl" = (
 /obj/structure/table,
@@ -662,17 +670,18 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
-"Uf" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/thinplating,
-/turf/open/floor/iron/lavaland,
-/area/ruin/unpowered)
 "VB" = (
 /turf/open/misc/dirt{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
+"VU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/ash/leaf_shroom,
+/obj/effect/turf_decal/siding/thinplating,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
 "Ww" = (
 /obj/item/chair/wood/wings{
 	pixel_x = 16
@@ -715,15 +724,6 @@
 	contains_type = /obj/item/toy/figure/wizard
 	},
 /turf/open/floor/iron/diagonal/lavaland,
-/area/ruin/unpowered)
-"Zy" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 8
-	},
-/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 
 (1,1,1) = {"
@@ -890,11 +890,11 @@ iF
 iF
 my
 VB
-fx
-pD
-Zy
-Bt
-cb
+br
+mD
+Gr
+gX
+Oi
 iF
 VB
 ab
@@ -915,11 +915,11 @@ VB
 my
 my
 iF
-lE
-lB
-fk
-jt
-Uf
+kh
+wW
+dD
+Gl
+zW
 VB
 iF
 ab
@@ -942,9 +942,9 @@ en
 ad
 ad
 ad
-jt
-bg
-yA
+Gl
+ml
+VU
 ab
 ab
 ab
@@ -968,7 +968,7 @@ hL
 YV
 ad
 ad
-zj
+oo
 Cn
 ad
 ab

@@ -165,6 +165,22 @@
 /obj/structure/bookcase/random/reference,
 /turf/open/floor/wood,
 /area/ruin/powered/golem_ship)
+"hn" = (
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/dark_red/anticorner/contrasted,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/golem_ship)
 "hy" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/mineral/titanium/purple,
@@ -260,19 +276,6 @@
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"pS" = (
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/powered/golem_ship)
 "qk" = (
 /obj/structure/light_construct/directional/north,
 /turf/open/floor/mineral/titanium,
@@ -284,6 +287,27 @@
 	pixel_x = 7
 	},
 /turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"rC" = (
+/obj/effect/turf_decal/trimline/purple/arrow_ccw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/arrow_ccw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/arrow_ccw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/arrow_ccw{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/golem_ship)
 "sa" = (
 /obj/structure/table/reinforced,
@@ -307,17 +331,23 @@
 /obj/structure/light_construct/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"tA" = (
-/obj/effect/turf_decal/tile/dark_red,
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
+"tK" = (
+/obj/effect/turf_decal/trimline/purple/arrow_ccw{
 	dir = 8
 	},
+/obj/effect/turf_decal/trimline/purple/arrow_ccw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/arrow_ccw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/arrow_ccw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
+/obj/effect/turf_decal/tile/dark_red/fourcorners,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/golem_ship)
 "tY" = (
@@ -334,6 +364,16 @@
 	pixel_x = -10
 	},
 /turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"ud" = (
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
+/obj/effect/turf_decal/tile/dark_red/anticorner/contrasted,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/golem_ship)
 "un" = (
 /obj/structure/table/wood,
@@ -447,28 +487,6 @@
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"yG" = (
-/obj/effect/turf_decal/tile/dark_red,
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
-	dir = 6
-	},
-/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
-	dir = 6
-	},
-/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
-	dir = 6
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/powered/golem_ship)
 "zN" = (
 /obj/machinery/vending/games,
 /turf/open/floor/mineral/titanium/purple,
@@ -512,6 +530,15 @@
 /area/ruin/powered/golem_ship)
 "Df" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/powered/golem_ship)
+"DM" = (
+/obj/effect/turf_decal/tile/dark_red/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/golem_ship)
 "DU" = (
 /obj/structure/light_construct/directional/north,
@@ -581,31 +608,6 @@
 	pixel_x = 12
 	},
 /turf/open/floor/plating,
-/area/ruin/powered/golem_ship)
-"Iu" = (
-/obj/effect/turf_decal/tile/dark_red,
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/purple/arrow_ccw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/purple/arrow_ccw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/purple/arrow_ccw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/purple/arrow_ccw{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/golem_ship)
 "ID" = (
 /obj/machinery/door/airlock/titanium,
@@ -683,6 +685,15 @@
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
+"Ri" = (
+/obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/golem_ship)
 "Ro" = (
 /obj/structure/table/wood,
 /obj/item/bedsheet/rd/royal_cape{
@@ -700,22 +711,6 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"Tn" = (
-/obj/effect/turf_decal/tile/dark_red,
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
-/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
-/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/golem_ship)
 "Ul" = (
 /obj/item/storage/medkit/fire{
@@ -762,34 +757,6 @@
 "WM" = (
 /obj/machinery/autolathe,
 /turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"Xy" = (
-/obj/effect/turf_decal/tile/dark_red,
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/purple/arrow_ccw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/purple/arrow_ccw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/purple/arrow_ccw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/purple/arrow_ccw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
-/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
-/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/golem_ship)
 "XK" = (
 /obj/structure/closet/crate/bin,
@@ -1039,8 +1006,8 @@ wN
 lF
 bO
 ir
-Tn
-tA
+ud
+Ri
 vZ
 pE
 Df
@@ -1057,8 +1024,8 @@ wN
 lF
 cy
 ir
-Xy
-Iu
+tK
+rC
 vZ
 te
 Df
@@ -1075,8 +1042,8 @@ wN
 Df
 ok
 ir
-yG
-pS
+hn
+DM
 vZ
 pE
 Ni

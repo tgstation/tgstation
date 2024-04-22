@@ -332,16 +332,6 @@
 /obj/structure/marker_beacon/cerulean,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
-"tm" = (
-/obj/machinery/airalarm/directional/east,
-/obj/machinery/computer/message_monitor{
-	dir = 8
-	},
-/obj/item/paper/monitorkey,
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/effect/mapping_helpers/airalarm/syndicate_access,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/listeningstation)
 "uI" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/decal/cleanable/blood/old,
@@ -469,6 +459,16 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation)
+"zN" = (
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/computer/message_monitor{
+	dir = 8
+	},
+/obj/item/paper/monitorkey,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "zV" = (
 /obj/structure/sign/nanotrasen{
@@ -1413,7 +1413,7 @@ JB
 xp
 SK
 lk
-tm
+zN
 TK
 rG
 MA

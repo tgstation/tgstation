@@ -462,6 +462,12 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
+"eX" = (
+/obj/structure/closet/cardboard/metal,
+/obj/machinery/light/cold/directional/west,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/centcom/syndicate_mothership/control)
 "fa" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -874,12 +880,6 @@
 "iX" = (
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/catwalk_floor/titanium,
-/area/centcom/syndicate_mothership/control)
-"jc" = (
-/obj/structure/closet/cardboard/metal,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/light/cold/directional/west,
-/turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
 "je" = (
 /obj/effect/turf_decal/siding/wideplating{
@@ -9519,7 +9519,7 @@ qw
 qw
 qw
 VK
-jc
+eX
 ay
 so
 uX

@@ -502,6 +502,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
+"rh" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/computer/terminal/sulaco/map,
+/obj/machinery/light/dim/directional/north,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/ruin/space/has_grav/derelictsulaco)
 "ri" = (
 /obj/item/circuitboard/machine/telecomms/processor,
 /turf/open/floor/circuit,
@@ -854,16 +864,6 @@
 	},
 /obj/effect/mapping_helpers/apc/unlocked,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/derelictsulaco)
-"DD" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/machinery/computer/terminal/sulaco/map,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/machinery/light/dim/directional/north,
-/turf/open/floor/iron/smooth_edge{
-	dir = 1
-	},
 /area/ruin/space/has_grav/derelictsulaco)
 "DJ" = (
 /obj/item/storage/medkit,
@@ -1517,6 +1517,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/template_noop,
 /area/template_noop)
+"VM" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/lockbox/dueling,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/smooth_edge,
+/area/ruin/space/has_grav/derelictsulaco)
 "VO" = (
 /obj/structure/alien/weeds,
 /obj/structure/barricade/sandbags,
@@ -1566,12 +1572,6 @@
 	},
 /turf/template_noop,
 /area/template_noop)
-"WQ" = (
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/item/storage/lockbox/dueling,
-/turf/open/floor/iron/smooth_edge,
-/area/ruin/space/has_grav/derelictsulaco)
 "Xg" = (
 /obj/structure/cable,
 /obj/machinery/power/floodlight{
@@ -2146,7 +2146,7 @@ Hj
 lr
 rW
 SW
-WQ
+VM
 VT
 Ki
 lf
@@ -2348,7 +2348,7 @@ lf
 hi
 hi
 VT
-DD
+rh
 mi
 tq
 eU

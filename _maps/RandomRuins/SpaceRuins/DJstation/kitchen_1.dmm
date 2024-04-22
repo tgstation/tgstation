@@ -28,11 +28,11 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/ruin/space/djstation)
-"t" = (
+"p" = (
 /obj/structure/closet/secure_closet/freezer/fridge/all_access,
 /obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/ruin/space/djstation)
 "u" = (
@@ -153,7 +153,7 @@ a
 L
 W
 P
-t
+p
 L
 V
 b

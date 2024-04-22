@@ -11,17 +11,6 @@
 	},
 /turf/open/floor/plating,
 /area/virtual_domain)
-"ax" = (
-/obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/structure/frame/computer{
-	anchored = 1;
-	dir = 4
-	},
-/obj/item/shard{
-	icon_state = "medium"
-	},
-/turf/open/floor/iron,
-/area/virtual_domain)
 "aK" = (
 /turf/open/space/basic,
 /area/virtual_domain)
@@ -65,21 +54,6 @@
 /obj/structure/closet/crate/preopen,
 /obj/structure/railing,
 /turf/open/chasm,
-/area/virtual_domain)
-"bS" = (
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
-	dir = 1
-	},
-/obj/structure/table/reinforced,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/item/folder/yellow,
-/obj/item/folder/blue{
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/turf/open/floor/iron,
 /area/virtual_domain)
 "cw" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -127,11 +101,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/virtual_domain)
-"dP" = (
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
-/area/virtual_domain)
 "eg" = (
 /turf/closed/wall,
 /area/virtual_domain)
@@ -169,13 +138,6 @@
 "eY" = (
 /turf/closed/wall/r_wall,
 /area/virtual_domain)
-"fe" = (
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
-	dir = 8
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/iron,
-/area/virtual_domain)
 "fg" = (
 /turf/open/floor/iron/stairs/left{
 	dir = 8
@@ -197,6 +159,16 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/virtual_domain)
+"fB" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/bin,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
 "fK" = (
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/iron/cafeteria,
@@ -209,13 +181,6 @@
 	dir = 5
 	},
 /obj/structure/sign/poster/official/random/directional/west,
-/turf/open/floor/iron,
-/area/virtual_domain)
-"fZ" = (
-/obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/structure/chair/office{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/virtual_domain)
 "gc" = (
@@ -254,14 +219,6 @@
 /turf/open/floor/iron,
 /area/virtual_domain)
 "hi" = (
-/turf/open/floor/iron,
-/area/virtual_domain)
-"hk" = (
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/broken{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/virtual_domain)
 "ho" = (
@@ -325,6 +282,21 @@
 "jW" = (
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/plating,
+/area/virtual_domain)
+"jX" = (
+/obj/structure/table/reinforced,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/folder/yellow,
+/obj/item/folder/blue{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
 /area/virtual_domain)
 "kh" = (
 /obj/structure/disposalpipe/segment{
@@ -441,11 +413,6 @@
 /obj/structure/disposalpipe/trunk/multiz,
 /turf/open/floor/plating,
 /area/virtual_domain)
-"nL" = (
-/obj/effect/turf_decal/tile/dark/half,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
-/area/virtual_domain)
 "nS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -503,26 +470,11 @@
 	},
 /turf/open/floor/plating,
 /area/virtual_domain)
-"pI" = (
-/obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/machinery/light/small/red/dim{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/virtual_domain)
 "pJ" = (
 /obj/structure/broken_flooring/pile{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
-"qc" = (
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
-	dir = 8
-	},
-/obj/structure/table/reinforced,
-/obj/effect/spawner/random/bureaucracy/briefcase,
-/turf/open/floor/iron,
 /area/virtual_domain)
 "qk" = (
 /obj/structure/disposalpipe/segment{
@@ -612,6 +564,18 @@
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"sH" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"sP" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "sW" = (
@@ -745,13 +709,6 @@
 /obj/item/shard,
 /turf/open/space/basic,
 /area/virtual_domain)
-"wm" = (
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
-	},
-/obj/structure/sign/clock/directional/north,
-/turf/open/floor/iron,
-/area/virtual_domain)
 "wq" = (
 /obj/structure/table/wood,
 /obj/machinery/button/door{
@@ -782,11 +739,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/turf/open/floor/iron,
-/area/virtual_domain)
-"wW" = (
-/obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "xa" = (
@@ -892,6 +844,23 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/broken,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Ae" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/broken{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"At" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/virtual_domain)
 "Av" = (
@@ -1013,6 +982,11 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
+"De" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/dark/half,
+/turf/open/floor/plating,
+/area/virtual_domain)
 "Dr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -1034,6 +1008,13 @@
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/food_or_drink/snack,
 /turf/open/floor/iron/cafeteria,
+/area/virtual_domain)
+"DZ" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron,
 /area/virtual_domain)
 "Ex" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1061,6 +1042,14 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
+/area/virtual_domain)
+"EN" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/bureaucracy/briefcase,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron,
 /area/virtual_domain)
 "Fa" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1154,6 +1143,15 @@
 	dir = 9
 	},
 /obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"GW" = (
+/obj/machinery/light/dim{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/virtual_domain)
 "Hn" = (
@@ -1272,6 +1270,13 @@
 /obj/machinery/light/broken,
 /turf/open/floor/iron,
 /area/virtual_domain)
+"Lw" = (
+/obj/structure/filingcabinet,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
 "LN" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 4
@@ -1320,13 +1325,6 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
-"Mx" = (
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
-	dir = 1
-	},
-/obj/structure/filingcabinet,
-/turf/open/floor/iron,
-/area/virtual_domain)
 "My" = (
 /obj/machinery/conveyor/auto{
 	dir = 1
@@ -1340,14 +1338,6 @@
 /turf/open/floor/carpet/royalblue{
 	icon_state = "carpet_royalblue-74"
 	},
-/area/virtual_domain)
-"MN" = (
-/obj/effect/turf_decal/tile/dark,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/turf/open/floor/plating,
 /area/virtual_domain)
 "Nc" = (
 /obj/structure/chair/plastic{
@@ -1518,16 +1508,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron,
 /area/virtual_domain)
-"Ry" = (
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
-	dir = 4
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/machinery/disposal/bin,
-/turf/open/floor/iron,
-/area/virtual_domain)
 "RJ" = (
 /turf/closed/indestructible/binary,
 /area/virtual_domain)
@@ -1535,13 +1515,15 @@
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/iron,
 /area/virtual_domain)
-"RZ" = (
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
+"RO" = (
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 6
+/obj/item/shard{
+	icon_state = "medium"
 	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "Sg" = (
@@ -1606,10 +1588,22 @@
 	},
 /turf/open/floor/plating,
 /area/virtual_domain)
+"Tw" = (
+/obj/structure/sign/clock/directional/north,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
 "TH" = (
 /obj/structure/broken_flooring/corner/directional/south,
 /obj/item/ammo_casing/shotgun/buckshot/spent,
 /turf/open/floor/plating,
+/area/virtual_domain)
+"TK" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "Ue" = (
 /obj/structure/table/reinforced,
@@ -1627,6 +1621,14 @@
 /area/virtual_domain)
 "UO" = (
 /obj/structure/broken_flooring/side/directional/north,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"UR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/dark,
 /turf/open/floor/plating,
 /area/virtual_domain)
 "UV" = (
@@ -1796,15 +1798,6 @@
 	},
 /turf/open/floor/plating,
 /area/virtual_domain)
-"XQ" = (
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
-	dir = 4
-	},
-/obj/machinery/light/dim{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/virtual_domain)
 "XR" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
@@ -1865,6 +1858,13 @@
 "Zb" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
+/area/virtual_domain)
+"Zf" = (
+/obj/machinery/light/small/red/dim{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "Zg" = (
 /turf/open/floor/carpet/royalblue{
@@ -2371,7 +2371,7 @@ mu
 AJ
 mu
 eJ
-MN
+UR
 BW
 hi
 Sg
@@ -2571,7 +2571,7 @@ lW
 pi
 kU
 kU
-nL
+De
 BW
 hi
 hg
@@ -2917,11 +2917,11 @@ vQ
 mu
 mu
 eg
-Mx
-qc
-ax
-bS
-fe
+Lw
+EN
+RO
+jX
+DZ
 pf
 hi
 hi
@@ -2967,9 +2967,9 @@ pi
 kU
 rO
 eg
-wm
+Tw
 xA
-fZ
+sP
 OL
 aL
 Ip
@@ -3017,11 +3017,11 @@ rO
 rO
 rO
 eg
-RZ
+At
 vQ
-wW
+TK
 wU
-dP
+sH
 tr
 hi
 hi
@@ -3067,10 +3067,10 @@ rO
 RJ
 RJ
 eg
-Ry
-hk
-pI
-XQ
+fB
+Ae
+Zf
+GW
 YL
 eg
 bq

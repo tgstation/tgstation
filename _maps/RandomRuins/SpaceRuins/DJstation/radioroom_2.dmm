@@ -159,12 +159,6 @@
 	},
 /turf/open/floor/iron/dark/smooth_edge,
 /area/ruin/space/djstation)
-"M" = (
-/obj/modular_map_connector,
-/obj/effect/turf_decal/tile/green/half/contrasted,
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/dark,
-/area/ruin/space/djstation)
 "N" = (
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
@@ -214,6 +208,12 @@
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark/smooth_large,
+/area/ruin/space/djstation)
+"V" = (
+/obj/modular_map_connector,
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/green/half/contrasted,
+/turf/open/floor/iron/dark,
 /area/ruin/space/djstation)
 "W" = (
 /turf/open/floor/wood/parquet,
@@ -283,7 +283,7 @@ I
 U
 q
 d
-M
+V
 "}
 (5,1,1) = {"
 s

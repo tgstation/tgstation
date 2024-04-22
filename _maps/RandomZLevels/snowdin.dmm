@@ -6097,14 +6097,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern2)
-"se" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron,
-/area/awaymission/snowdin/post)
 "sf" = (
 /obj/machinery/computer/monitor,
 /obj/structure/cable,
@@ -8451,6 +8443,14 @@
 	},
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/cave)
+"Ci" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/awaymission/snowdin/post)
 "Cj" = (
 /obj/structure/fence{
 	dir = 4
@@ -21558,7 +21558,7 @@ iu
 jm
 jT
 kF
-se
+Ci
 md
 xw
 QB

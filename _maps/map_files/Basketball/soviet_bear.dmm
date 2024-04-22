@@ -33,6 +33,13 @@
 /obj/item/lead_pipe,
 /turf/open/floor/plating,
 /area/centcom/basketball)
+"bN" = (
+/obj/effect/decal/hammerandsickle{
+	pixel_y = -42
+	},
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/large,
+/area/centcom/basketball)
 "cz" = (
 /obj/structure/chair/stool/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -128,11 +135,6 @@
 /obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /turf/open/floor/iron,
 /area/centcom/basketball)
-"jr" = (
-/obj/effect/turf_decal/tile/dark_red/full,
-/obj/effect/landmark/basketball/team_spawn/away,
-/turf/open/floor/iron/large,
-/area/centcom/basketball)
 "kc" = (
 /turf/open/floor/engine,
 /area/centcom/basketball)
@@ -194,6 +196,11 @@
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
+/area/centcom/basketball)
+"nv" = (
+/obj/effect/landmark/basketball/team_spawn/home,
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/large,
 /area/centcom/basketball)
 "nE" = (
 /obj/effect/turf_decal/box,
@@ -288,6 +295,11 @@
 /obj/item/shard,
 /turf/open/floor/plating,
 /area/centcom/basketball)
+"vt" = (
+/obj/item/toy/basketball,
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/large,
+/area/centcom/basketball)
 "wt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -297,13 +309,6 @@
 "wZ" = (
 /obj/machinery/pipedispenser,
 /turf/open/floor/catwalk_floor,
-/area/centcom/basketball)
-"xP" = (
-/obj/effect/turf_decal/tile/dark_red/full,
-/obj/effect/decal/hammerandsickle{
-	pixel_y = -42
-	},
-/turf/open/floor/iron/large,
 /area/centcom/basketball)
 "zr" = (
 /obj/effect/turf_decal/plaque{
@@ -402,6 +407,11 @@
 /obj/effect/turf_decal/stripes/full,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
+"EL" = (
+/obj/effect/landmark/basketball/team_spawn/away,
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/large,
+/area/centcom/basketball)
 "Gh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -431,11 +441,6 @@
 "Ic" = (
 /obj/structure/stairs/east,
 /turf/open/floor/iron,
-/area/centcom/basketball)
-"IA" = (
-/obj/effect/turf_decal/tile/dark_red/full,
-/obj/effect/landmark/basketball/team_spawn/home,
-/turf/open/floor/iron/large,
 /area/centcom/basketball)
 "JM" = (
 /obj/effect/turf_decal/stripes/line{
@@ -677,11 +682,6 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
-"YX" = (
-/obj/effect/turf_decal/tile/dark_red/full,
-/obj/item/toy/basketball,
-/turf/open/floor/iron/large,
-/area/centcom/basketball)
 "ZM" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/right/directional/east{
@@ -866,11 +866,11 @@ gq
 Vr
 Cw
 mp
-IA
+nv
 mp
 mp
 mp
-IA
+nv
 mp
 Cw
 eU
@@ -893,10 +893,10 @@ Ev
 nE
 Cw
 mp
-xP
-IA
-IA
-IA
+bN
+nv
+nv
+nv
 mp
 mp
 Cw
@@ -1003,7 +1003,7 @@ Cw
 mp
 mp
 mp
-YX
+vt
 mp
 mp
 mp
@@ -1110,9 +1110,9 @@ Ev
 Cw
 mp
 mp
-jr
-jr
-jr
+EL
+EL
+EL
 mp
 mp
 Cw
@@ -1136,11 +1136,11 @@ Vr
 pu
 Cw
 mp
-jr
+EL
 mp
 mp
 mp
-jr
+EL
 mp
 Cw
 eU

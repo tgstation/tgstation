@@ -92,6 +92,19 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"kD" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/directional/east,
+/obj/machinery/status_display/evac/directional/east,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 4
+	},
+/turf/open/floor/iron/white/smooth_half{
+	dir = 1
+	},
+/area/shuttle/escape)
 "li" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -123,20 +136,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron/white/smooth_corner,
-/area/shuttle/escape)
-"nC" = (
-/obj/structure/table/reinforced/rglass,
-/obj/item/defibrillator/loaded,
-/obj/item/surgery_tray/full{
-	pixel_y = 13
-	},
-/obj/effect/turf_decal/tile/blue/anticorner{
-	dir = 8
-	},
-/obj/item/radio/intercom/directional/south,
-/turf/open/floor/iron/white/smooth_corner{
-	dir = 4
-	},
 /area/shuttle/escape)
 "os" = (
 /obj/structure/closet/crate/internals,
@@ -217,6 +216,20 @@
 /obj/effect/turf_decal/tile/blue/half,
 /turf/open/floor/iron/white/smooth_half,
 /area/shuttle/escape)
+"sN" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/storage/medkit/toxin{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/advanced{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/tile/blue/half,
+/turf/open/floor/iron/white/smooth_half,
+/area/shuttle/escape)
 "tq" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -245,6 +258,20 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/escape)
+"vm" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/defibrillator/loaded,
+/obj/item/surgery_tray/full{
+	pixel_y = 13
+	},
+/obj/item/radio/intercom/directional/south,
+/obj/effect/turf_decal/tile/blue/anticorner{
+	dir = 8
+	},
+/turf/open/floor/iron/white/smooth_corner{
+	dir = 4
+	},
 /area/shuttle/escape)
 "vO" = (
 /turf/open/floor/pod/dark,
@@ -569,33 +596,6 @@
 /obj/effect/turf_decal/trimline/white/filled/end,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"WL" = (
-/obj/structure/table/reinforced/rglass,
-/obj/item/storage/medkit/toxin{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/storage/medkit/regular,
-/obj/effect/turf_decal/tile/blue/half,
-/obj/item/storage/medkit/advanced{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/turf/open/floor/iron/white/smooth_half,
-/area/shuttle/escape)
-"Xw" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue/half{
-	dir = 4
-	},
-/obj/machinery/light/directional/east,
-/obj/machinery/status_display/evac/directional/east,
-/turf/open/floor/iron/white/smooth_half{
-	dir = 1
-	},
-/area/shuttle/escape)
 "XU" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/iron/smooth_large,
@@ -753,7 +753,7 @@ QF
 FQ
 nt
 li
-nC
+vm
 FQ
 Oo
 Ns
@@ -778,7 +778,7 @@ Bk
 OI
 dQ
 qf
-WL
+sN
 OI
 HG
 vO
@@ -852,7 +852,7 @@ Pa
 uJ
 FQ
 xe
-Xw
+kD
 qK
 FQ
 HE

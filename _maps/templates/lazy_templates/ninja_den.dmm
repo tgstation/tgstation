@@ -16,39 +16,6 @@
 	},
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
-"au" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/rack,
-/obj/item/toy/gun{
-	pixel_y = 2
-	},
-/obj/item/toy/balloon/syndicate{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/item/toy/balloon/syndicate{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/item/toy/balloon/syndicate{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/item/clothing/under/misc/syndicate_souvenir{
-	pixel_y = -5
-	},
-/obj/item/clothing/under/misc/syndicate_souvenir{
-	pixel_y = -5
-	},
-/obj/item/clothing/under/misc/syndicate_souvenir{
-	pixel_y = -5
-	},
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/sepia,
-/area/centcom/central_command_areas/holding)
 "ay" = (
 /obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/wood/corner,
@@ -564,16 +531,6 @@
 /turf/open/water{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
-/area/centcom/central_command_areas/holding)
-"od" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/storage/basket,
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "oh" = (
 /obj/machinery/light/directional/south,
@@ -1885,6 +1842,49 @@
 "Sc" = (
 /turf/open/floor/stone,
 /area/centcom/central_command_areas/holding)
+"Sv" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/storage/basket,
+/obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/tile/dark/fourcorners,
+/turf/open/floor/iron/sepia,
+/area/centcom/central_command_areas/holding)
+"ST" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/rack,
+/obj/item/toy/gun{
+	pixel_y = 2
+	},
+/obj/item/toy/balloon/syndicate{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/toy/balloon/syndicate{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/toy/balloon/syndicate{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/clothing/under/misc/syndicate_souvenir{
+	pixel_y = -5
+	},
+/obj/item/clothing/under/misc/syndicate_souvenir{
+	pixel_y = -5
+	},
+/obj/item/clothing/under/misc/syndicate_souvenir{
+	pixel_y = -5
+	},
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/tile/dark/fourcorners,
+/turf/open/floor/iron/sepia,
+/area/centcom/central_command_areas/holding)
 "Tc" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair/sofa/corp/right{
@@ -3089,7 +3089,7 @@ dg
 QJ
 mw
 mw
-od
+Sv
 Gw
 XP
 xw
@@ -3163,7 +3163,7 @@ dg
 QJ
 mw
 mw
-au
+ST
 GX
 XP
 xw

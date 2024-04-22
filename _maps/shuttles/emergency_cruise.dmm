@@ -133,13 +133,6 @@
 /mob/living/basic/bot/medbot/stationary,
 /turf/open/floor/iron/white/smooth_large,
 /area/shuttle/escape)
-"dw" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "dE" = (
 /obj/machinery/computer/communications,
 /obj/effect/turf_decal/trimline/dark_blue/filled/corner{
@@ -181,6 +174,13 @@
 "es" = (
 /turf/open/floor/iron/kitchen/herringbone,
 /area/shuttle/escape)
+"eu" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "ez" = (
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
@@ -217,6 +217,19 @@
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/carpet/executive,
 /area/shuttle/escape)
+"fO" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/machinery/door/window/brigdoor/right/directional/south{
+	name = "Treatment Room";
+	req_access = list("medical")
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "fY" = (
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 4
@@ -230,29 +243,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/shuttle/escape)
-"gm" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"gq" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8
-	},
-/obj/machinery/door/window/brigdoor/right/directional/south{
-	name = "Treatment Room";
-	req_access = list("medical")
-	},
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "gJ" = (
 /obj/structure/table/reinforced,
@@ -428,6 +418,17 @@
 /obj/structure/closet/emcloset/anchored,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"jM" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/structure/table/optable,
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "jU" = (
 /obj/machinery/button{
 	name = "Lift Call Button";
@@ -455,21 +456,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"kn" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+"km" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/moth_epi/directional/west,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"ku" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 1
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
 	},
-/obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ky" = (
@@ -543,15 +536,6 @@
 "lw" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
-/area/shuttle/escape)
-"lz" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "lF" = (
 /obj/structure/disposalpipe/segment,
@@ -712,6 +696,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"pq" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "px" = (
 /obj/machinery/vending/coffee,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -791,6 +785,14 @@
 /obj/structure/chair/sofa/middle/maroon,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
+"re" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/medical_kiosk,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "rz" = (
 /obj/machinery/computer/records/security{
 	dir = 4
@@ -806,17 +808,6 @@
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"rG" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8
-	},
-/obj/structure/table/optable,
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "rJ" = (
 /obj/effect/turf_decal/caution/red{
@@ -1135,6 +1126,16 @@
 "yC" = (
 /turf/open/floor/carpet/executive,
 /area/shuttle/escape)
+"yO" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "yS" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Outdoor Play Area"
@@ -1428,15 +1429,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"DU" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/computer/operating,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "DV" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{
@@ -1509,6 +1501,13 @@
 	dir = 1
 	},
 /turf/template_noop,
+/area/shuttle/escape)
+"Gn" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "GA" = (
 /obj/structure/disposalpipe/segment{
@@ -1692,6 +1691,16 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"KM" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/structure/sign/poster/official/moth_epi/directional/west,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "KR" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/barricade/sandbags,
@@ -1754,14 +1763,6 @@
 	},
 /obj/structure/railing,
 /turf/open/floor/iron,
-/area/shuttle/escape)
-"LD" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/machinery/medical_kiosk,
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "LU" = (
 /obj/machinery/door/airlock/shuttle,
@@ -1829,6 +1830,18 @@
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Ni" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/machinery/vending/wallmed/directional/east{
+	name = "\improper NanoMed"
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "NA" = (
 /obj/structure/chair/stool/bar/directional/east,
@@ -1990,26 +2003,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"Si" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"Sm" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
-	dir = 6
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "SW" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
@@ -2077,18 +2070,6 @@
 	cycle_id = "cruisene2"
 	},
 /turf/open/floor/noslip,
-/area/shuttle/escape)
-"Um" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8
-	},
-/obj/machinery/vending/wallmed/directional/east{
-	name = "\improper NanoMed"
-	},
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Up" = (
 /obj/machinery/light/directional/west,
@@ -2306,6 +2287,15 @@
 /obj/structure/railing/corner,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
+"Ze" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/computer/operating,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "Zn" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/siding/wood{
@@ -2338,6 +2328,16 @@
 /area/shuttle/escape)
 "ZE" = (
 /turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"ZG" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -3052,10 +3052,10 @@ OJ
 ni
 qt
 jt
-ku
-lz
-kn
-Si
+eu
+km
+KM
+yO
 jt
 jt
 jt
@@ -3098,10 +3098,10 @@ ni
 OJ
 qt
 jt
-LD
+re
 du
 ab
-dw
+Gn
 jt
 Bb
 DV
@@ -3144,10 +3144,10 @@ qt
 qt
 lw
 jt
-DU
+Ze
 Mg
 lu
-Sm
+ZG
 WK
 dp
 mk
@@ -3190,10 +3190,10 @@ Jl
 qt
 Jl
 jt
-rG
-Um
-gq
-gm
+jM
+Ni
+fO
+pq
 jt
 ki
 HK

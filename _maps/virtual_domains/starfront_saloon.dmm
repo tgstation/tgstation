@@ -138,25 +138,15 @@
 /obj/effect/turf_decal/tile/dark_red/half,
 /turf/open/floor/sepia,
 /area/virtual_domain)
-"zU" = (
-/obj/machinery/light/directional/south,
-/obj/effect/spawner/random/structure/table,
+"zy" = (
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/dark_red/half,
-/obj/machinery/recharger{
-	pixel_x = 8;
-	pixel_y = 4
-	},
 /turf/open/floor/sepia,
 /area/virtual_domain)
 "Au" = (
 /obj/effect/spawner/random/trash/garbage,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/catwalk_floor,
-/area/virtual_domain)
-"AF" = (
-/obj/effect/turf_decal/tile/dark_red/half,
-/obj/effect/turf_decal/tile/dark_red/half,
-/turf/open/floor/sepia,
 /area/virtual_domain)
 "Bi" = (
 /obj/effect/spawner/random/structure/chair_maintenance{
@@ -183,10 +173,28 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/sepia,
 /area/virtual_domain)
-"Gz" = (
-/obj/effect/spawner/random/structure/crate,
+"EO" = (
+/obj/structure/table/greyscale,
+/obj/machinery/recharger{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/machinery/recharger{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/dark_red/half,
-/obj/effect/spawner/random/armory/shotgun,
+/turf/open/floor/sepia,
+/area/virtual_domain)
+"Gh" = (
+/obj/machinery/light/directional/south,
+/obj/effect/spawner/random/structure/table,
+/obj/machinery/recharger{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/tile/dark_red/half,
 /turf/open/floor/sepia,
 /area/virtual_domain)
 "GY" = (
@@ -195,11 +203,6 @@
 /area/virtual_domain)
 "Ib" = (
 /obj/effect/spawner/random/trash/bin,
-/turf/open/floor/sepia,
-/area/virtual_domain)
-"Il" = (
-/obj/effect/turf_decal/tile/dark_red/half,
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/sepia,
 /area/virtual_domain)
 "Ix" = (
@@ -223,20 +226,6 @@
 "KN" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/virtual_domain)
-"Lu" = (
-/obj/structure/table/greyscale,
-/obj/machinery/recharger{
-	pixel_x = 8;
-	pixel_y = 4
-	},
-/obj/machinery/recharger{
-	pixel_x = -8;
-	pixel_y = 4
-	},
-/obj/effect/turf_decal/tile/dark_red/half,
-/obj/machinery/light/directional/south,
-/turf/open/floor/sepia,
 /area/virtual_domain)
 "MG" = (
 /obj/effect/spawner/random/trash/graffiti,
@@ -309,6 +298,12 @@
 /area/virtual_domain)
 "Wp" = (
 /obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/sepia,
+/area/virtual_domain)
+"Xq" = (
+/obj/effect/spawner/random/structure/crate,
+/obj/effect/spawner/random/armory/shotgun,
+/obj/effect/turf_decal/tile/dark_red/half,
 /turf/open/floor/sepia,
 /area/virtual_domain)
 
@@ -553,7 +548,7 @@ il
 il
 il
 il
-Il
+zy
 KN
 Tn
 Tn
@@ -705,7 +700,7 @@ il
 il
 il
 il
-AF
+Wd
 KN
 Tn
 Tn
@@ -971,7 +966,7 @@ il
 il
 OZ
 il
-zU
+Gh
 mu
 Tn
 Tn
@@ -1104,7 +1099,7 @@ it
 uW
 il
 Wp
-Gz
+Xq
 KN
 Tn
 Tn
@@ -1123,7 +1118,7 @@ il
 uW
 il
 il
-Lu
+EO
 mu
 Tn
 Tn

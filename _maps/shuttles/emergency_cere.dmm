@@ -886,6 +886,17 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/recharge_floor,
 /area/shuttle/escape)
+"iv" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/o2,
+/obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "ja" = (
 /obj/item/kirbyplants/organic/plant22,
 /obj/item/radio/intercom/directional/south,
@@ -927,6 +938,14 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"tx" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/emergency,
+/obj/item/crowbar,
+/obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "uF" = (
 /obj/structure/table,
 /obj/machinery/recharger,
@@ -938,14 +957,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"wQ" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/emergency,
-/obj/item/crowbar,
-/obj/effect/turf_decal/tile/purple/fourcorners,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "CO" = (
@@ -997,24 +1008,6 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"ME" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron,
-/area/shuttle/escape)
-"Ng" = (
-/obj/structure/table,
-/obj/item/storage/medkit/regular{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/storage/medkit/o2,
-/obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "NP" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
@@ -1049,6 +1042,13 @@
 	dir = 1
 	},
 /turf/open/floor/iron/white,
+/area/shuttle/escape)
+"To" = (
+/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "UA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
@@ -1309,7 +1309,7 @@ dz
 aa
 aa
 ab
-wQ
+tx
 ap
 ap
 aH
@@ -1584,7 +1584,7 @@ aZ
 aZ
 aZ
 aZ
-ME
+To
 bL
 bc
 bT
@@ -1705,7 +1705,7 @@ dz
 aa
 aa
 ab
-Ng
+iv
 rv
 rv
 uN

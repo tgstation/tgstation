@@ -1239,12 +1239,6 @@
 /obj/structure/glowshroom/single,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
-"ye" = (
-/obj/structure/filingcabinet,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/derelictoutpost)
 "yl" = (
 /obj/effect/decal/cleanable/blood/old{
 	dir = 8;
@@ -1264,6 +1258,12 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
+"zc" = (
+/obj/structure/filingcabinet,
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/derelictoutpost)
 "zf" = (
 /obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
@@ -2310,7 +2310,7 @@ aa
 aY
 aK
 iK
-ye
+zc
 bC
 cj
 cO

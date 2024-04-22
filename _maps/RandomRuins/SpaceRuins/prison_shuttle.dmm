@@ -96,14 +96,14 @@
 /obj/effect/mapping_helpers/airlock/access/all/security,
 /turf/open/floor/mineral/titanium/tiled/airless,
 /area/ruin/space/prison_shuttle)
-"A" = (
-/obj/effect/spawner/random/contraband/narcotics,
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/machinery/light/dim/directional/east,
-/turf/open/floor/iron/dark/airless,
-/area/ruin/space/prison_shuttle)
 "B" = (
 /turf/open/floor/plating/airless,
+/area/ruin/space/prison_shuttle)
+"C" = (
+/obj/effect/spawner/random/contraband/narcotics,
+/obj/machinery/light/dim/directional/east,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/prison_shuttle)
 "D" = (
 /obj/structure/closet/secure_closet/security,
@@ -309,7 +309,7 @@ B
 l
 h
 P
-A
+C
 X
 Z
 F

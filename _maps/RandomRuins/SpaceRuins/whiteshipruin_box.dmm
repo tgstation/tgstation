@@ -57,12 +57,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large,
 /area/ruin/space/has_grav/whiteship/box)
-"cm" = (
-/obj/effect/turf_decal/tile/blue/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/red/box,
-/obj/structure/table/optable,
+"cf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "cn" = (
@@ -73,6 +71,11 @@
 /obj/structure/closet/crate,
 /obj/item/mod/module/clamp,
 /turf/open/floor/iron/large,
+/area/ruin/space/has_grav/whiteship/box)
+"cR" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "cY" = (
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
@@ -121,9 +124,22 @@
 	dir = 4
 	},
 /area/ruin/space/has_grav/whiteship/box)
+"dI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron/showroomfloor/airless,
+/area/ruin/space/has_grav/whiteship/box)
 "dZ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/whiteship/box)
+"eB" = (
+/obj/effect/turf_decal/trimline/dark_red/warning{
+	dir = 10
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "eD" = (
 /turf/open/floor/engine,
@@ -133,21 +149,20 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
-"eN" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
-/obj/item/defibrillator/loaded,
+"eO" = (
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/glass/plastitanium,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "eV" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/whiteship/box)
-"fc" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/dark_red/warning,
-/turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "fd" = (
 /obj/effect/decal/cleanable/dirt,
@@ -168,6 +183,21 @@
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
+"gt" = (
+/obj/machinery/vending/medical{
+	onstation = 0
+	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor/airless,
+/area/ruin/space/has_grav/whiteship/box)
+"gF" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron/showroomfloor/airless,
+/area/ruin/space/has_grav/whiteship/box)
 "gK" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
@@ -185,11 +215,6 @@
 "gO" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/whiteship/box)
-"gQ" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "gS" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
@@ -246,13 +271,6 @@
 	},
 /turf/open/floor/iron/textured_corner,
 /area/ruin/space/has_grav/whiteship/box)
-"hT" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 8
-	},
-/obj/structure/rack,
-/turf/open/floor/iron/dark/airless,
-/area/ruin/space/has_grav/whiteship/box)
 "in" = (
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 1
@@ -277,6 +295,14 @@
 /obj/effect/turf_decal/trimline/dark_red/corner,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/white/airless,
+/area/ruin/space/has_grav/whiteship/box)
+"iE" = (
+/obj/machinery/sleeper{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "iK" = (
 /obj/machinery/light/broken/directional/north,
@@ -339,16 +365,6 @@
 "kd" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/textured,
-/area/ruin/space/has_grav/whiteship/box)
-"kr" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 1
-	},
-/obj/structure/rack,
-/obj/item/healthanalyzer{
-	pixel_y = 3
-	},
-/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "ku" = (
 /turf/open/floor/mineral/titanium/white/airless,
@@ -569,12 +585,6 @@
 /obj/item/stack/sheet/glass,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/whiteship/box)
-"oR" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/showroomfloor/airless,
-/area/ruin/space/has_grav/whiteship/box)
 "oW" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
@@ -598,16 +608,6 @@
 /obj/effect/turf_decal/siding/wideplating/corner,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/white,
-/area/ruin/space/has_grav/whiteship/box)
-"ql" = (
-/obj/effect/turf_decal/tile/blue/half{
-	dir = 8
-	},
-/obj/structure/bed/pod{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "qz" = (
 /obj/effect/decal/cleanable/dirt,
@@ -748,11 +748,6 @@
 /obj/machinery/light/broken/directional/west,
 /turf/open/floor/iron/smooth_large,
 /area/ruin/space/has_grav/whiteship/box)
-"vx" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/showroomfloor/airless,
-/area/ruin/space/has_grav/whiteship/box)
 "vz" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/titanium/white/airless,
@@ -769,13 +764,6 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 4
 	},
-/area/ruin/space/has_grav/whiteship/box)
-"xi" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 10
-	},
-/turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "xr" = (
 /obj/effect/decal/cleanable/dirt,
@@ -810,18 +798,22 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/whiteship/box)
-"zO" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table/reinforced,
-/turf/open/floor/iron/showroomfloor/airless,
-/area/ruin/space/has_grav/whiteship/box)
 "zY" = (
 /obj/effect/turf_decal/siding/wideplating/corner{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/white,
+/area/ruin/space/has_grav/whiteship/box)
+"Aa" = (
+/obj/structure/bed/pod{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "Al" = (
 /obj/effect/turf_decal/siding/wideplating{
@@ -872,6 +864,14 @@
 /obj/item/trash/syndi_cakes,
 /obj/item/trash/tray,
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/whiteship/box)
+"BA" = (
+/obj/effect/turf_decal/stripes/red/box,
+/obj/structure/table/optable,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "BB" = (
 /obj/machinery/power/port_gen/pacman/super,
@@ -939,9 +939,39 @@
 /obj/item/shard,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/whiteship/box)
+"CZ" = (
+/obj/effect/turf_decal/trimline/blue/arrow_cw{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/blue/arrow_cw{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor/airless,
+/area/ruin/space/has_grav/whiteship/box)
+"Di" = (
+/obj/machinery/sleeper{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/turf/open/floor/iron/showroomfloor/airless,
+/area/ruin/space/has_grav/whiteship/box)
 "Dl" = (
 /obj/machinery/light/broken/directional/north,
 /turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/whiteship/box)
+"Dp" = (
+/obj/structure/rack,
+/obj/item/healthanalyzer{
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "DG" = (
 /obj/effect/decal/cleanable/dirt,
@@ -981,6 +1011,20 @@
 	dir = 1
 	},
 /area/ruin/space/has_grav/whiteship/box)
+"Fs" = (
+/obj/structure/bed/pod{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/has_grav/whiteship/box)
+"FD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron/showroomfloor/airless,
+/area/ruin/space/has_grav/whiteship/box)
 "FN" = (
 /obj/machinery/power/shuttle_engine/large{
 	dir = 8;
@@ -988,14 +1032,6 @@
 	},
 /turf/template_noop,
 /area/template_noop)
-"FX" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/machinery/sleeper{
-	dir = 1
-	},
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/iron/showroomfloor/airless,
-/area/ruin/space/has_grav/whiteship/box)
 "FZ" = (
 /obj/effect/turf_decal/siding/wideplating{
 	dir = 6
@@ -1043,17 +1079,6 @@
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/whiteship/box)
-"HW" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/dark_red/corner{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/glass/plastitanium,
-/turf/open/floor/iron/showroomfloor/airless,
-/area/ruin/space/has_grav/whiteship/box)
 "Ie" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
@@ -1072,11 +1097,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor/iron_white,
-/area/ruin/space/has_grav/whiteship/box)
-"IV" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
-/obj/structure/closet/crate/medical,
-/turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "Jj" = (
 /obj/effect/turf_decal/siding/yellow{
@@ -1213,6 +1233,11 @@
 /obj/effect/turf_decal/siding/wideplating,
 /turf/open/floor/iron/textured_edge,
 /area/ruin/space/has_grav/whiteship/box)
+"Nm" = (
+/obj/item/defibrillator/loaded,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/turf/open/floor/iron/showroomfloor/airless,
+/area/ruin/space/has_grav/whiteship/box)
 "NH" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/blue/arrow_cw{
@@ -1231,19 +1256,6 @@
 	dir = 6
 	},
 /turf/open/floor/carpet,
-/area/ruin/space/has_grav/whiteship/box)
-"NR" = (
-/obj/effect/turf_decal/tile/blue/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/arrow_cw{
-	dir = 6
-	},
-/obj/effect/turf_decal/trimline/blue/arrow_cw{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "Oa" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1311,6 +1323,16 @@
 "Px" = (
 /turf/open/floor/iron/smooth_edge,
 /area/ruin/space/has_grav/whiteship/box)
+"Pz" = (
+/obj/structure/closet/crate/medical,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/turf/open/floor/iron/showroomfloor/airless,
+/area/ruin/space/has_grav/whiteship/box)
+"PF" = (
+/obj/effect/decal/cleanable/glass/plastitanium,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron/showroomfloor/airless,
+/area/ruin/space/has_grav/whiteship/box)
 "PG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/glass/plastitanium,
@@ -1326,15 +1348,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/broken/directional/west,
 /turf/open/floor/carpet,
-/area/ruin/space/has_grav/whiteship/box)
-"PT" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 8
-	},
-/obj/machinery/vending/medical{
-	onstation = 0
-	},
-/turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "PV" = (
 /obj/item/mod/module/holster,
@@ -1371,6 +1384,13 @@
 /obj/structure/lattice,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav/whiteship/box)
+"RK" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "RN" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1449,15 +1469,6 @@
 /obj/item/stack/sheet/glass,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
-"Vm" = (
-/obj/effect/turf_decal/tile/blue/half{
-	dir = 8
-	},
-/obj/structure/bed/pod{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/airless,
-/area/ruin/space/has_grav/whiteship/box)
 "Vn" = (
 /obj/machinery/vending/snack,
 /obj/machinery/light/broken/directional/west,
@@ -1470,13 +1481,6 @@
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/whiteship/box)
-"VG" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/machinery/sleeper{
-	dir = 1
-	},
-/turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "VN" = (
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
@@ -1492,10 +1496,11 @@
 "Wc" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space/has_grav/whiteship/box)
-"WK" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
+"We" = (
+/obj/effect/turf_decal/trimline/dark_red/warning,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "WL" = (
@@ -1518,15 +1523,6 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
-/area/ruin/space/has_grav/whiteship/box)
-"Xr" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/dark_red/warning,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/shard,
-/turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "Xt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
@@ -1580,9 +1576,13 @@
 /obj/effect/turf_decal/stripes/white/end,
 /turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/whiteship/box)
-"Zu" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/decal/cleanable/glass/plastitanium,
+"ZG" = (
+/obj/effect/turf_decal/trimline/dark_red/warning,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/shard,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 
@@ -2262,10 +2262,10 @@ mt
 ku
 Bb
 HR
-kr
-ql
-Vm
-hT
+Dp
+Aa
+Fs
+RK
 kK
 "}
 (32,1,1) = {"
@@ -2285,7 +2285,7 @@ qF
 LZ
 NH
 Tj
-NR
+CZ
 lR
 fK
 kK
@@ -2309,7 +2309,7 @@ gp
 hG
 Jv
 ds
-PT
+gt
 kK
 "}
 (34,1,1) = {"
@@ -2328,10 +2328,10 @@ MR
 nK
 Gc
 oN
-fc
-WK
-vx
-VG
+We
+dI
+FD
+Di
 kK
 "}
 (35,1,1) = {"
@@ -2350,10 +2350,10 @@ Jy
 Xg
 Sp
 lX
-Xr
-oR
-gQ
-FX
+ZG
+gF
+cR
+iE
 kK
 "}
 (36,1,1) = {"
@@ -2372,10 +2372,10 @@ Jy
 Jy
 OT
 OS
-HW
-xi
-Zu
-IV
+eO
+eB
+PF
+Pz
 kK
 "}
 (37,1,1) = {"
@@ -2397,7 +2397,7 @@ If
 BJ
 MA
 Vj
-eN
+Nm
 kK
 "}
 (38,1,1) = {"
@@ -2417,8 +2417,8 @@ Jy
 Jy
 kL
 CV
-cm
-zO
+BA
+cf
 kK
 kK
 "}
