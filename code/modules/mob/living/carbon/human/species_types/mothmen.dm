@@ -68,6 +68,8 @@
 	return 'sound/voice/moth/scream_moth.ogg'
 
 /datum/species/moth/get_laugh_sound(mob/living/carbon/human)
+	if(!istype(human))
+		return
 	return 'sound/voice/moth/moth_laugh1.ogg'
 
 /datum/species/moth/get_physical_attributes()

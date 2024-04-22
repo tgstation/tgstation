@@ -82,6 +82,8 @@
 		return FALSE
 
 /datum/emote/living/cough/get_sound(mob/living/user)
+	if(!ishuman(user))
+		return
 	var/mob/living/carbon/human_user = user
 	if(human_user.physique == FEMALE)
 		return pick('sound/voice/human/female_cough1.ogg' , 'sound/voice/human/female_cough2.ogg')

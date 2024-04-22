@@ -19,10 +19,19 @@
 	QDEL_IN(human_user.give_emote_overlay(/datum/bodypart_overlay/simple/emote/cry), 12.8 SECONDS)
 
 /datum/emote/living/carbon/cry/get_sound(mob/living/user)
+	if(!ishuman(user))
+		return
 	var/mob/living/carbon/human_user = user
 	if(human_user.physique == FEMALE)
-		return pick('sound/voice/human/female_cry1.ogg' , 'sound/voice/human/female_cry2.ogg')
-	return pick('sound/voice/human/male_cry1.ogg' , 'sound/voice/human/male_cry2.ogg' , 'sound/voice/human/male_cry3.ogg')
+		return pick(
+			'sound/voice/human/female_cry1.ogg' ,
+			'sound/voice/human/female_cry2.ogg',
+		)
+	return pick(
+		'sound/voice/human/male_cry1.ogg',
+		'sound/voice/human/male_cry2.ogg',
+		 'sound/voice/human/male_cry3.ogg',
+		)
 
 /datum/emote/living/carbon/human/dap
 	key = "dap"
