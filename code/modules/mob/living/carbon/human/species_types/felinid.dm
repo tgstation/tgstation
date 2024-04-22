@@ -50,7 +50,7 @@
 	features["ears"] = pick("None", "Cat")
 	return features
 
-/datum/species/felinid/get_laugh_sound(mob/living/carbon/human/felinid)
+/datum/species/human/felinid/get_laugh_sound(mob/living/carbon/human/felinid)
 	if(felinid.physique == FEMALE)
 		return 'sound/voice/human/womanlaugh.ogg'
 	return pick(
@@ -59,7 +59,7 @@
 	)
 
 
-/datum/species/felinid/get_cough_sound(mob/living/carbon/human/felinid)
+/datum/species/human/felinid/get_cough_sound(mob/living/carbon/human/felinid)
 	if(felinid.physique == FEMALE)
 		return pick(
 			'sound/voice/human/female_cough1.ogg',
@@ -79,7 +79,7 @@
 	)
 
 
-/datum/species/felinid/get_cry_sound(mob/living/carbon/human/felinid)
+/datum/species/human/felinid/get_cry_sound(mob/living/carbon/human/felinid)
 	if(felinid.physique == FEMALE)
 		return pick(
 			'sound/voice/human/female_cry1.ogg',
@@ -92,7 +92,7 @@
 	)
 
 
-/datum/species/felinid/get_sneeze_sound(mob/living/carbon/human/felinid)
+/datum/species/human/felinid/get_sneeze_sound(mob/living/carbon/human/felinid)
 	if(felinid.physique == FEMALE)
 		return 'sound/voice/human/female_sneeze1.ogg'
 	return 'sound/voice/human/male_sneeze1.ogg'
