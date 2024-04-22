@@ -1184,6 +1184,7 @@
 #include "code\datums\components\simple_access.dm"
 #include "code\datums\components\simple_bodycam.dm"
 #include "code\datums\components\singularity.dm"
+#include "code\datums\components\sisyphus_awarder.dm"
 #include "code\datums\components\sitcomlaughter.dm"
 #include "code\datums\components\sizzle.dm"
 #include "code\datums\components\slippery.dm"
