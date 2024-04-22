@@ -721,6 +721,6 @@
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/whistle/get_sound(mob/living/user)
-    if(!istype(user))
-    	return
+	if(!istype(user))
+		return
 	return 'sound/voice/human/whistle1.ogg'

@@ -19,20 +19,9 @@
 	QDEL_IN(human_user.give_emote_overlay(/datum/bodypart_overlay/simple/emote/cry), 12.8 SECONDS)
 
 /datum/emote/living/carbon/cry/get_sound(mob/living/user)
-	if(!ishuman(user))
+	if(!istype(user))
 		return
-	var/mob/living/carbon/human_user = user
-	if(human_user.physique == FEMALE)
-		return pick(
-			'sound/voice/human/female_cry1.ogg' ,
-			'sound/voice/human/female_cry2.ogg',
-		)
-	return pick(
-		'sound/voice/human/male_cry1.ogg',
-		'sound/voice/human/male_cry2.ogg',
-		 'sound/voice/human/male_cry3.ogg',
-		)
-
+	return user.dna.species.get_cry_sound(user)
 /datum/emote/living/carbon/human/dap
 	key = "dap"
 	key_third_person = "daps"
@@ -71,26 +60,9 @@
 		return FALSE
 
 /datum/emote/living/carbon/human/cough/get_sound(mob/living/user)
-	if(!ishuman(user))
+	if(!istype(user))
 		return
-	var/mob/living/carbon/human_user = user
-	if(human_user.physique == FEMALE)
-		return pick(
-			'sound/voice/human/female_cough1.ogg',
-			'sound/voice/human/female_cough2.ogg',
-			'sound/voice/human/female_cough3.ogg',
-			'sound/voice/human/female_cough4.ogg',
-			'sound/voice/human/female_cough5.ogg',
-			'sound/voice/human/female_cough6.ogg',
-			)
-	return pick(
-		'sound/voice/human/male_cough1.ogg',
-		'sound/voice/human/male_cough2.ogg',
-		'sound/voice/human/male_cough3.ogg',
-		'sound/voice/human/male_cough4.ogg',
-		'sound/voice/human/male_cough5.ogg',
-		'sound/voice/human/male_cough6.ogg',
-	)
+	return user.dna.species.get_cough_sound(user)
 /datum/emote/living/sneeze
 	key = "sneeze"
 	key_third_person = "sneezes"
@@ -102,11 +74,9 @@
 
 /datum/emote/living/sneeze/get_sound(mob/living/user)
 	var/mob/living/carbon/human_user = user
-	if(!ishuman(user))
+	if(!istype(user))
 		return
-	if(human_user.physique == FEMALE)
-		return 'sound/voice/human/female_sneeze1.ogg'
-	return 'sound/voice/human/male_sneeze1.ogg'
+	return user.dna.species.get_sneeze_sound(user)
 
 /datum/emote/living/carbon/human/glasses/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
