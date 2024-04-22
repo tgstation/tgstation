@@ -225,6 +225,8 @@
 	var/current_skin
 	///// List of options to reskin.
 	var/list/unique_reskin
+	/// Do we apply a click cooldown when resisting this object if it is restraining them?
+	var/breakout_cooldown = TRUE
 
 /obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
