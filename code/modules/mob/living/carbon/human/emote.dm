@@ -102,7 +102,7 @@
 
 /datum/emote/living/sneeze/get_sound(mob/living/user)
 	var/mob/living/carbon/human_user = user
-	if(!human(user))
+	if(!ishuman(user))
 		return
 	if(human_user.physique == FEMALE)
 		return 'sound/voice/human/female_sneeze1.ogg'

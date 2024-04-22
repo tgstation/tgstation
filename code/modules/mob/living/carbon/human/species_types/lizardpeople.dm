@@ -72,7 +72,7 @@
 	)
 
 /datum/species/lizard/get_laugh_sound(mob/living/carbon/human)
-	if(!istype(user))
+	if(!istype(human))
 		return
 	return 'sound/voice/lizard/lizard_laugh1.ogg'
 

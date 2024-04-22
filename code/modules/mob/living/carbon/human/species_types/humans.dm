@@ -34,9 +34,10 @@
 		'sound/voice/human/femalescream_5.ogg',
 	)
 
-/datum/species/human/get_laugh_sound(mob/living/carbon/human)
+/datum/species/human/get_laugh_sound(mob/living/carbon/human/human)
 	if(!ishuman(user))
 		return
+
 	if(human.physique == FEMALE)
 		return 'sound/voice/human/womanlaugh.ogg'
 	return pick(
