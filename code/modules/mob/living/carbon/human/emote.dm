@@ -20,7 +20,7 @@
 
 /datum/emote/living/carbon/cry/get_sound(mob/living/user)
 	var/mob/living/carbon/human_user = user
-	if(human_user.gender == FEMALE)
+	if(human_user.physique == FEMALE)
 		return pick('sound/voice/human/female_cry1.ogg' , 'sound/voice/human/female_cry2.ogg')
 	return pick('sound/voice/human/male_cry1.ogg' , 'sound/voice/human/male_cry2.ogg' , 'sound/voice/human/male_cry3.ogg')
 

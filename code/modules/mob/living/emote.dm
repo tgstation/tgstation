@@ -83,7 +83,7 @@
 
 /datum/emote/living/cough/get_sound(mob/living/user)
 	var/mob/living/carbon/human_user = user
-	if(human_user.gender == FEMALE)
+	if(human_user.physique == FEMALE)
 		return pick('sound/voice/human/female_cough1.ogg' , 'sound/voice/human/female_cough2.ogg')
 	return 'sound/voice/human/male_cough1.ogg'
 /datum/emote/living/dance
@@ -416,7 +416,7 @@
 
 /datum/emote/living/sneeze/get_sound(mob/living/user)
 	var/mob/living/carbon/human_user = user
-	if(human_user.gender == FEMALE)
+	if(human_user.physique == FEMALE)
 		return 'sound/voice/human/female_sneeze1.ogg'
 	return 'sound/voice/human/male_sneeze1.ogg'
 
