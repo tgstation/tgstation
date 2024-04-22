@@ -115,7 +115,7 @@ DATASYSTEM_DEF(materials)
 	key = GetIdFromArguments(arguments)
 	return materials[key] || InitializeMaterial(arguments)
 
-/** I'm not going to lie, this was swiped from [SSdcs][/datum/system/processing/dcs].
+/** I'm not going to lie, this was swiped from [SSdcs][/datum/controller/subsystem/processing/dcs].
  * Credit does to ninjanomnom
  *
  * Generates an id for bespoke ~~elements~~ materials when given the argument list
