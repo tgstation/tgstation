@@ -6,7 +6,7 @@
 	equip_delay_other = 60
 	species_exception = list(/datum/species/golem) // now you too can be a golem boxing champion
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
-	var/datum/martial_art/boxing/style_to_give
+	var/style_to_give = /datum/martial_art/boxing
 
 /obj/item/clothing/gloves/boxing/Initialize(mapload)
 	. = ..()
