@@ -27,7 +27,9 @@
 	/// Number of containers to be printed
 	var/printing_total
 	/// The amount of containers that can be printed in 1 cycle
-	var/printing_amount = 1
+	var/printing_amount = 50
+	/// The time it takes to print a container
+	var/printing_speed = 0.75 SECONDS
 
 /obj/machinery/chem_master/Initialize(mapload)
 	create_reagents(100)
@@ -76,7 +78,7 @@
 /obj/machinery/chem_master/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads:<br>Reagent buffer capacity: <b>[reagents.maximum_volume]</b> units.<br>Number of containers printed per cycle <b>[printing_amount]</b>.")
+		. += span_notice("The status display reads:<br>Reagent buffer capacity: <b>[reagents.maximum_volume]</b> units.<br>Printing speed: <b>[0.75 SECONDS / printing_speed * 100]%</b>.")
 		if(!QDELETED(beaker))
 			. += span_notice("[beaker] of <b>[beaker.reagents.maximum_volume]u</b> capacity inserted")
 			. += span_notice("Right click with empty hand to remove beaker")
@@ -149,10 +151,11 @@
 	for(var/obj/item/reagent_containers/cup/beaker/beaker in component_parts)
 		reagents.maximum_volume += beaker.reagents.maximum_volume
 
-	printing_amount = 0
+	//Servo tier determines printing speed
+	printing_speed = 1 SECONDS
 	for(var/datum/stock_part/servo/servo in component_parts)
-		printing_amount += servo.tier * 12.5
-	printing_amount = min(50, ROUND_UP(printing_amount))
+		printing_speed -= servo.tier * 0.25 SECONDS
+	printing_speed = max(printing_speed, 0.25 SECONDS)
 
 ///Return a map of category->list of containers this machine can print
 /obj/machinery/chem_master/proc/load_printable_containers()
@@ -529,7 +532,7 @@
 	//print more items
 	item_count --
 	if(item_count > 0)
-		addtimer(CALLBACK(src, PROC_REF(create_containers), user, item_count, item_name, volume_in_each), 0.75 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(create_containers), user, item_count, item_name, volume_in_each), printing_speed)
 	else
 		is_printing = FALSE
 		update_appearance(UPDATE_OVERLAYS)
