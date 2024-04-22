@@ -439,6 +439,60 @@
 		for(var/obj/item/reagent_containers/borghypo/H in R.model.modules)
 			H.bypass_protection = initial(H.bypass_protection)
 
+/obj/item/borg/upgrade/surgery_omnitool
+	name = "cyborg surgical omni-tool upgrade"
+	desc = "An upgrade to the Medical model, upgrading the built-in \
+		surgical omnitool, to be on par with advanced surgical tools"
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/medical,  /obj/item/robot_model/syndicate_medical)
+	model_flags = BORG_MODEL_MEDICAL
+
+/obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/cyborg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade in cyborg.model.modules)
+		if(omnitool_upgrade.upgraded)
+			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
+			return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.model.modules)
+		omnitool.upgrade_omnitool()
+
+/obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
+		omnitool.downgrade_omnitool()
+
+/obj/item/borg/upgrade/engineering_omnitool
+	name = "cyborg engineering omni-tool upgrade"
+	desc = "An upgrade to the Engineering model, upgrading the built-in \
+		engineering omnitool, to be on par with advanced engineering tools"
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering,  /obj/item/robot_model/saboteur)
+	model_flags = BORG_MODEL_ENGINEERING
+
+/obj/item/borg/upgrade/engineering_omnitool/action(mob/living/silicon/robot/cyborg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool_upgrade in cyborg.model.modules)
+		if(omnitool_upgrade.upgraded)
+			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
+			return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool in cyborg.model.modules)
+		omnitool.upgrade_omnitool()
+
+/obj/item/borg/upgrade/engineering_omnitool/deactivate(mob/living/silicon/robot/cyborg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
+		omnitool.downgrade_omnitool()
+
 /obj/item/borg/upgrade/defib
 	name = "medical cyborg defibrillator"
 	desc = "An upgrade to the Medical model, installing a built-in \

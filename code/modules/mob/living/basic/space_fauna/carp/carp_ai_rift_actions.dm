@@ -52,21 +52,19 @@
 	return controller.blackboard[ability_key] && controller.blackboard[target_key]
 
 /datum/ai_behavior/make_carp_rift/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
-	. = ..()
 	var/datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability = controller.blackboard[ability_key]
 	var/atom/target = controller.blackboard[target_key]
 
 	if (!validate_target(controller, target, ability))
-		finish_action(controller, FALSE, ability_key, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/turf/target_destination = find_target_turf(controller, target, ability)
 	if (!target_destination)
-		finish_action(controller, FALSE, ability_key, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	var/result = ability.InterceptClickOn(controller.pawn, null, target_destination)
-	finish_action(controller, result, ability_key, target_key)
+	if(ability.InterceptClickOn(controller.pawn, null, target_destination))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 /// Return true if your target is valid for the action
 /datum/ai_behavior/make_carp_rift/proc/validate_target(datum/ai_controller/controller, atom/target, datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability)

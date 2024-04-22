@@ -1,0 +1,6 @@
+author: "EvilDragonfiend"
+delete-after: True
+changes:
+  - code_imp: "/appearance type references are now investigatable in vv editor."
+  - code_imp: "/image references display a summarised name with its dmi file name and icon_state when it's investigated from a datum where it uses. Format is: \"mob_hud_image = /image (hud.dmi:medical) [0x00000]\""
+  - code_imp: "/image types no longer show first image incorrectly when its icon_state is null"

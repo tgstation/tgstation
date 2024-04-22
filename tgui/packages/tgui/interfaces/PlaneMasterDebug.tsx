@@ -885,7 +885,6 @@ const GroupDropdown = (props) => {
         <Dropdown
           options={present_groups}
           selected={our_group}
-          displayText={our_group}
           onSelected={(value) =>
             act('set_group', {
               target_group: value,
