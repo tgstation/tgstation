@@ -506,7 +506,6 @@
 	if(!drain_power(use_energy_cost * levels))
 		return NONE
 	new /obj/effect/temp_visual/mook_dust(fell_on)
-	mod.wearer.Stun(levels * 1 SECONDS)
 	mod.wearer.visible_message(
 		span_notice("[mod.wearer] lands on [fell_on] safely."),
 		span_notice("[src] protects you from the damage!"),
