@@ -30,18 +30,18 @@
 ///Returns a multiplier on our skill damage bonus.
 /datum/martial_art/boxing/proc/check_streak(mob/living/attacker, mob/living/defender)
 	var/combo_multiplier = 1
-	
+
 	if(findtext(streak, LEFT_LEFT_COMBO) || findtext(streak, RIGHT_RIGHT_COMBO))
 		reset_streak()
 		if(COOLDOWN_FINISHED(src, warning_cooldown))
 			COOLDOWN_START(src, warning_cooldown, 2 SECONDS)
 			attacker.balloon_alert(attacker, "weak combo, alternate your hits!")
 		return combo_multiplier * 0.5
-	
+
 	if(findtext(streak, LEFT_RIGHT_COMBO) || findtext(streak, RIGHT_LEFT_COMBO))
 		reset_streak()
 		return combo_multiplier * 1.5
-	
+
 	return combo_multiplier
 
 /datum/martial_art/boxing/disarm_act(mob/living/attacker, mob/living/defender)
@@ -64,21 +64,21 @@
 
 // Our only boxing move, which occurs on literally all attacks; the tussle. However, quite a lot morphs the results of this proc. Combos, unlike most martial arts attacks, are checked in this proc rather than our standard unarmed procs
 /datum/martial_art/boxing/proc/tussle(mob/living/attacker, mob/living/defender, atk_verb = "blind jab", atk_verbed = "blind jabbed")
-	
+
 	if(honorable_boxer) //Being a good sport, you never hit someone on the ground or already knocked down. It shows you're the better person.
 		if(defender.body_position == LYING_DOWN && defender.getStaminaLoss() >= 100 || defender.IsUnconscious()) //If they're in stamcrit or unconscious, don't bloody punch them
 			attacker.balloon_alert(attacker, "unsportsmanlike behaviour!")
 			return FALSE
-	
+
 	var/obj/item/bodypart/arm/active_arm = attacker.get_active_hand()
-	
+
 	//The values between which damage is rolled for punches
 	var/lower_force = active_arm.unarmed_damage_low
 	var/upper_force = active_arm.unarmed_damage_high
-	
+
 	//Determines knockout potential and armor penetration (if that matters)
 	var/base_unarmed_effectiveness = active_arm.unarmed_effectiveness
-	
+
 	//Determines attack sound based on attacker arm
 	var/attack_sound = active_arm.unarmed_attack_sound
 
@@ -95,12 +95,12 @@
 
 	//Determines damage dealt on a punch. Against a boxing defender, we apply our skill bonus.
 	var/damage = rand(lower_force, upper_force)
-	
+
 	if(honor_check(defender))
 		var/strength_bonus = HAS_TRAIT(attacker, TRAIT_STRENGTH) ? 2 : 0 //Investing into genetic strength improvements makes you a better boxer
 		damage += round(athletics_skill * check_streak(attacker, defender) + strength_bonus)
 		grant_experience = TRUE
-	
+
 	var/current_atk_verb = atk_verb
 	var/current_atk_verbed = atk_verbed
 
@@ -138,7 +138,7 @@
 	defender.apply_damage(damage, damage_type, affecting, armor_block)
 
 	log_combat(attacker, defender, "punched (boxing) ")
-	
+
 	if(grant_experience)
 		skill_experience_adjustment(attacker, (damage/lower_force))
 
@@ -147,16 +147,16 @@
 
 	//Determine our attackers athletics level as a knockout probability bonus
 	var/attacker_athletics_skill =  (attacker.mind?.get_skill_modifier(/datum/skill/athletics, SKILL_RANDS_MODIFIER) + base_unarmed_effectiveness)
-		
+
 	// Defender boxing skill and armor block are used as a defense here. This has already factored in base_unarmed_effectiveness from the attacker
 	var/defender_athletics_skill =  clamp(defender.mind?.get_skill_modifier(/datum/skill/athletics, SKILL_RANDS_MODIFIER), 0, 100)
-		
+
 	//Determine our final probability, using a clamp to stop any prob() weirdness.
 	var/final_knockout_probability = clamp(round(attacker_athletics_skill - defender_athletics_skill), 0 , 100)
-	
+
 	if(!prob(final_knockout_probability))
 		return TRUE
-	
+
 	if(defender.get_timed_status_effect_duration(/datum/status_effect/staggered))
 		defender.visible_message(
 			span_danger("[attacker] knocks [defender] out with a haymaker!"),
@@ -180,11 +180,11 @@
 		defender.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
 		to_chat(attacker, span_danger("You stagger [defender] with a haymaker!"))
 		log_combat(attacker, defender, "staggered (boxing) ")
-	
+
 	playsound(defender, 'sound/effects/coin2.ogg', 40, TRUE)
 	new /obj/effect/temp_visual/crit(get_turf(defender))
 	skill_experience_adjustment(attacker, (damage/lower_force)) //double experience for a successful crit
-	
+
 	return TRUE
 
 /// Returns whether whoever is checked by this proc is complying with the rules of boxing. The boxer cannot block non-boxers, and cannot apply their scariest moves against non-boxers.
@@ -194,14 +194,14 @@
 
 	if(!HAS_TRAIT(possible_boxer, TRAIT_BOXING_READY))
 		return FALSE
-	
+
 	return TRUE
 
 /// Handles our instances of experience gain while boxing. It also applies the exercised status effect.
 /datum/martial_art/boxing/proc/skill_experience_adjustment(mob/living/boxer, experience_value)
 	//Boxing in heavier gravity gives you more experience
 	var/gravity_modifier = boxer.has_gravity() > STANDARD_GRAVITY ? 1 : 0.5
-	
+
 	//You gotta sleep before you get any experience!
 	boxer.mind?.adjust_experience(/datum/skill/athletics, experience_value * gravity_modifier)
 	boxer.apply_status_effect(/datum/status_effect/exercised)
@@ -215,14 +215,14 @@
 
 	if(attack_type != UNARMED_ATTACK)
 		return NONE
-	
+
 	//Determines unarmed defense against boxers using our current active arm.
 	var/obj/item/bodypart/arm/active_arm = boxer.get_active_hand()
 	var/base_unarmed_effectiveness = active_arm.unarmed_effectiveness
 
 	// Out athletics skill is added to our block potential
 	var/athletics_skill_rands =  boxer.mind?.get_skill_modifier(/datum/skill/athletics, SKILL_RANDS_MODIFIER)
-	
+
 	var/block_chance = base_unarmed_effectiveness + athletics_skill_rands
 
 	var/block_text = pick("block", "evade")
@@ -245,7 +245,7 @@
 	)
 	if(block_text == "evade")
 		playsound(boxer.loc, active_arm.unarmed_miss_sound, 25, TRUE, -1)
-	
+
 	skill_experience_adjustment(boxer, 1) //just getting hit a bunch doesn't net you much experience
 
 	return SUCCESSFUL_BLOCK
@@ -255,7 +255,7 @@
 		return FALSE
 	return ..()
 
-/// Evil Boxing; for sick, evil scoundrels. Has no honor, making it more lethal (therefore unable to be used by pacifists). 
+/// Evil Boxing; for sick, evil scoundrels. Has no honor, making it more lethal (therefore unable to be used by pacifists).
 /// Grants Strength and Stimmed to speed up any experience gain.
 
 /datum/martial_art/boxing/evil

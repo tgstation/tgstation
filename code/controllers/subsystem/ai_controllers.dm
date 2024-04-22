@@ -13,9 +13,15 @@ SUBSYSTEM_DEF(ai_controllers)
 	var/list/ai_controllers_by_status = list(
 		AI_STATUS_ON = list(),
 		AI_STATUS_OFF = list(),
+		AI_STATUS_IDLE = list(),
 	)
 	///Assoc List of all AI controllers and the Z level they are on, which we check when someone enters/leaves a Z level to turn them on/off.
 	var/list/ai_controllers_by_zlevel = list()
+	/// The tick cost of all active AI, calculated on fire.
+	var/cost_on
+	/// The tick cost of all idle AI, calculated on fire.
+	var/cost_idle
+
 
 /datum/controller/subsystem/ai_controllers/Initialize()
 	setup_subtrees()
@@ -24,10 +30,15 @@ SUBSYSTEM_DEF(ai_controllers)
 /datum/controller/subsystem/ai_controllers/stat_entry(msg)
 	var/list/active_list = ai_controllers_by_status[AI_STATUS_ON]
 	var/list/inactive_list = ai_controllers_by_status[AI_STATUS_OFF]
-	msg = "Active AIs:[length(active_list)]|Inactive:[length(inactive_list)]"
+	var/list/idle_list = ai_controllers_by_status[AI_STATUS_IDLE]
+	msg = "Active AIs:[length(active_list)]/[round(cost_on,1)]%|Inactive:[length(inactive_list)]|Idle:[length(idle_list)]/[round(cost_idle,1)]%"
 	return ..()
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
+	var/timer = TICK_USAGE_REAL
+	cost_idle = MC_AVERAGE(cost_idle, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+
+	timer = TICK_USAGE_REAL
 	for(var/datum/ai_controller/ai_controller as anything in ai_controllers_by_status[AI_STATUS_ON])
 		if(!COOLDOWN_FINISHED(ai_controller, failed_planning_cooldown))
 			continue
@@ -37,6 +48,8 @@ SUBSYSTEM_DEF(ai_controllers)
 		ai_controller.SelectBehaviors(wait * 0.1)
 		if(!LAZYLEN(ai_controller.current_behaviors)) //Still no plan
 			COOLDOWN_START(ai_controller, failed_planning_cooldown, AI_FAILED_PLANNING_COOLDOWN)
+
+	cost_on = MC_AVERAGE(cost_on, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 ///Creates all instances of ai_subtrees and assigns them to the ai_subtrees list.
 /datum/controller/subsystem/ai_controllers/proc/setup_subtrees()

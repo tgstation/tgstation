@@ -27,12 +27,20 @@
 	var/current_pathing_attempts = 0
 	///if we cant reach it after this many attempts, add it to our ignore list
 	var/max_pathing_attempts = 25
+	can_idle = FALSE // we want these to be running always
 
 /datum/ai_controller/basic_controller/bot/TryPossessPawn(atom/new_pawn)
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
 	RegisterSignal(new_pawn, COMSIG_BOT_RESET, PROC_REF(reset_bot))
+	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_BOT_SUMMON_TARGET), PROC_REF(clear_summon))
+
+/datum/ai_controller/basic_controller/bot/proc/clear_summon()
+	SIGNAL_HANDLER
+
+	var/mob/living/basic/bot/bot_pawn = pawn
+	bot_pawn.bot_reset()
 
 /datum/ai_controller/basic_controller/bot/able_to_run()
 	var/mob/living/basic/bot/bot_pawn = pawn

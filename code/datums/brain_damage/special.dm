@@ -491,6 +491,7 @@
 
 	owner.ai_controller = new /datum/ai_controller/monkey(owner)
 	owner.ai_controller.continue_processing_when_client = TRUE
+	owner.ai_controller.can_idle = FALSE
 	owner.ai_controller.set_ai_status(AI_STATUS_OFF)
 
 /datum/brain_trauma/special/primal_instincts/on_lose(silent)

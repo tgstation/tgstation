@@ -168,9 +168,9 @@
 		)
 	return containers
 
-/obj/machinery/chem_master/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+/obj/machinery/chem_master/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode || (tool.item_flags & ABSTRACT) || (tool.flags_1 & HOLOGRAM_1) || !can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
-		return ..()
+		return NONE
 
 	if(is_reagent_container(tool) && tool.is_open_container())
 		replace_beaker(user, tool)
@@ -180,7 +180,7 @@
 		else
 			return ITEM_INTERACT_BLOCKING
 
-	return ..()
+	return NONE
 
 /obj/machinery/chem_master/wrench_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
@@ -400,7 +400,7 @@
 		return FALSE
 
 	//use energy
-	if(!use_energy(active_power_usage))
+	if(!use_energy(active_power_usage, force = FALSE))
 		return FALSE
 
 	//do the operation
@@ -512,7 +512,9 @@
 		return
 
 	//use power
-	if(!use_energy(active_power_usage))
+	if(!use_energy(active_power_usage, force = FALSE))
+		is_printing = FALSE
+		update_appearance(UPDATE_OVERLAYS)
 		return
 
 	//print the stuff

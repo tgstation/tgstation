@@ -59,16 +59,15 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		var/obj/structure/marker_beacon/M = new(user.loc, picked_color)
 		transfer_fingerprints_to(M)
 
-/obj/item/stack/marker_beacon/AltClick(mob/living/user)
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/item/stack/marker_beacon/click_alt(mob/living/user)
 	var/input_color = tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
 	if(isnull(input_color))
-		return
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+		return CLICK_ACTION_BLOCKING
+	if(!user.can_perform_action(src))
+		return CLICK_ACTION_BLOCKING
 	picked_color = input_color
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/marker_beacon
 	name = "marker beacon"
@@ -154,17 +153,15 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		return
 	return ..()
 
-/obj/structure/marker_beacon/AltClick(mob/living/user)
-	..()
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/structure/marker_beacon/click_alt(mob/living/user)
 	var/input_color = tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
 	if(isnull(input_color))
-		return
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+		return CLICK_ACTION_BLOCKING
+	if(!user.can_perform_action(src))
+		return NONE
 	picked_color = input_color
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 
 /* Preset marker beacon types, for mapping */
