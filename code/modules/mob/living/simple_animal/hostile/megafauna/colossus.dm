@@ -135,10 +135,9 @@
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER
 
-	telegraph()
 	if(activated == spiral_shots)
 		spiral_shots.enraged = COLOSSUS_ENRAGED
-		// telegraph()
+		telegraph()
 		icon_state = "eva_attack"
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Judgement.", null, list("colossus", "yell"))
 	else if(activated == random_shots)
