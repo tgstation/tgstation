@@ -318,17 +318,19 @@
 	if(!self_message)
 		return
 	var/raw_self_message = self_message
+	var/self_runechat = FALSE
 	if(visible_message_flags & EMOTE_MESSAGE)
 		self_message = "<span class='emote'><b>[src]</b> [self_message]</span>" // May make more sense as "You do x"
 
 	if(visible_message_flags & ALWAYS_SHOW_SELF_MESSAGE)
 		to_chat(src, self_message)
-		if((visible_message_flags & EMOTE_MESSAGE) && runechat_prefs_check(src, visible_message_flags))
-			create_chat_message(src, raw_message = raw_self_message, runechat_flags = visible_message_flags)
+		self_runechat = TRUE
 
-	else if(show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE))
-		if((visible_message_flags & EMOTE_MESSAGE) && runechat_prefs_check(src, visible_message_flags))
-			create_chat_message(src, raw_message = raw_self_message, runechat_flags = visible_message_flags)
+	else
+		self_runechat = show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE)
+
+	if(self_runechat && (visible_message_flags & EMOTE_MESSAGE) && runechat_prefs_check(src, visible_message_flags))
+		create_chat_message(src, raw_message = raw_self_message, runechat_flags = visible_message_flags)
 
 /**
  * Show a message to all mobs in earshot of this atom
@@ -370,16 +372,17 @@
 	if(!self_message)
 		return
 	var/raw_self_message = self_message
+	var/self_runechat = FALSE
 	if(audible_message_flags & EMOTE_MESSAGE)
 		self_message = "<span class='emote'><b>[src]</b> [self_message]</span>"
 	if(audible_message_flags & ALWAYS_SHOW_SELF_MESSAGE)
 		to_chat(src, self_message)
-		if((audible_message_flags & EMOTE_MESSAGE) && runechat_prefs_check(src, audible_message_flags))
-			create_chat_message(src, raw_message = raw_self_message, runechat_flags = audible_message_flags)
+		self_runechat = TRUE
+	else
+		self_runechat = show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
-	else if(show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL))
-		if((audible_message_flags & EMOTE_MESSAGE) && runechat_prefs_check(src, audible_message_flags))
-			create_chat_message(src, raw_message = raw_self_message, runechat_flags = audible_message_flags)
+	if(self_runechat && (audible_message_flags & EMOTE_MESSAGE) && runechat_prefs_check(src, audible_message_flags))
+		create_chat_message(src, raw_message = raw_self_message, runechat_flags = audible_message_flags)
 
 ///Returns the client runechat visible messages preference according to the message type.
 /atom/proc/runechat_prefs_check(mob/target, visible_message_flags = NONE)
