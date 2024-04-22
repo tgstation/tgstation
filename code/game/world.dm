@@ -17,6 +17,7 @@ GLOBAL_VAR(restart_counter)
  *     - world.init_byond_tracy()
  *     - (Start native profiling)
  *     - world.init_debugger()
+ *     - SysMgr (all data systems)
  *     - Master =>
  *       - config *unloaded
  *       - (all subsystems) PreInit()
