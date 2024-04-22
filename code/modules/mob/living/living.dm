@@ -1816,7 +1816,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	user.put_in_hands(holder)
 
 /mob/living/proc/set_name()
-	if(!numba)
+	if(numba == 0)
 		numba = rand(1, 1000)
 	name = "[name] ([numba])"
 	real_name = name
