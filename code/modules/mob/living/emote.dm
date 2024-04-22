@@ -86,8 +86,22 @@
 		return
 	var/mob/living/carbon/human_user = user
 	if(human_user.physique == FEMALE)
-		return pick('sound/voice/human/female_cough1.ogg' , 'sound/voice/human/female_cough2.ogg')
-	return 'sound/voice/human/male_cough1.ogg'
+		return pick(
+			'sound/voice/human/female_cough1.ogg',
+			'sound/voice/human/female_cough2.ogg',
+			'sound/voice/human/female_cough3.ogg',
+			'sound/voice/human/female_cough4.ogg',
+			'sound/voice/human/female_cough5.ogg',
+			'sound/voice/human/female_cough6.ogg',
+			)
+	return pick(
+		'sound/voice/human/male_cough1.ogg',
+		'sound/voice/human/male_cough2.ogg',
+		'sound/voice/human/male_cough3.ogg',
+		'sound/voice/human/male_cough4.ogg',
+		'sound/voice/human/male_cough5.ogg',
+		'sound/voice/human/male_cough6.ogg',
+	)
 /datum/emote/living/dance
 	key = "dance"
 	key_third_person = "dances"
