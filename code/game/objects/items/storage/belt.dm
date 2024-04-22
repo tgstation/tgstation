@@ -811,7 +811,7 @@
 	inhand_icon_state = "sheath"
 	worn_icon_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY
-	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS
+	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
 
 /obj/item/storage/belt/sabre/Initialize(mapload)
 	. = ..()

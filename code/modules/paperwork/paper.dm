@@ -30,7 +30,7 @@
 	grind_results = list(/datum/reagent/cellulose = 3)
 	color = COLOR_WHITE
 	item_flags = SKIP_FANTASY_ON_SPAWN
-	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 
 	/// Lazylist of raw, unsanitised, unparsed text inputs that have been made to the paper.
 	var/list/datum/paper_input/raw_text_inputs

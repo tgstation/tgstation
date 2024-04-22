@@ -428,7 +428,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			replacement.Insert(organ_holder, special=TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /datum/species/proc/worn_items_fit_body_check(mob/living/carbon/wearer)
-	for(var/obj/item/equipped_item in wearer.get_all_worn_items())
+	for(var/obj/item/equipped_item in wearer.get_equipped_items(include_pockets = TRUE))
 		var/equipped_item_slot = wearer.get_slot_by_item(equipped_item)
 		if(!equipped_item.mob_can_equip(wearer, equipped_item_slot, bypass_equip_delay_self = TRUE, ignore_equipped = TRUE))
 			wearer.dropItemToGround(equipped_item, force = TRUE)
