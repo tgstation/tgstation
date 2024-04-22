@@ -125,17 +125,20 @@
 			dir_shots.Trigger(target = target)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
-	for(var/mob/viewer as anything in viewers(DEFAULT_SIGHT_DISTANCE, src))
-		if(viewer.client)
-			flash_color(viewer.client, "#C80000", 1)
-			shake_camera(viewer, 4, 3)
+	for(var/mob/viewer as anything in viewers(10, src))
+		if(viewer == src || isnull(viewer.client))
+			continue
+		flash_color(viewer.client, "#C80000", 1)
+		shake_camera(viewer, 4, 3)
 	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER
+
+	telegraph()
 	if(activated == spiral_shots)
 		spiral_shots.enraged = COLOSSUS_ENRAGED
-		telegraph()
+		// telegraph()
 		icon_state = "eva_attack"
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Judgement.", null, list("colossus", "yell"))
 	else if(activated == random_shots)
