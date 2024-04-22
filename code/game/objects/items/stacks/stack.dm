@@ -1,9 +1,3 @@
-//stack recipe placement check types
-/// Checks if there is an object of the result type in any of the cardinal directions
-#define STACK_CHECK_CARDINALS (1<<0)
-/// Checks if there is an object of the result type within one tile
-#define STACK_CHECK_ADJACENT (1<<1)
-
 /* Stack type objects!
  * Contains:
  * Stacks
@@ -742,6 +736,3 @@
 	add_hiddenprint_list(GET_ATOM_HIDDENPRINTS(from))
 	fingerprintslast = from.fingerprintslast
 	//TODO bloody overlay
-
-#undef STACK_CHECK_CARDINALS
-#undef STACK_CHECK_ADJACENT
