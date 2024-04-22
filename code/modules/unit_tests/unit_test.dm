@@ -223,7 +223,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	// The following are just generic, singular types.
 	returnable_list = list(
 		//this is somehow a subtype of /atom/movable, because of its purpose...
-		/image/appearance
+		/image/appearance,
 		//Never meant to be created, errors out the ass for mobcode reasons
 		/mob/living/carbon,
 		//And another
