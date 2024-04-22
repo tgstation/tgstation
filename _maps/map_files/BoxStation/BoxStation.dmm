@@ -21851,6 +21851,7 @@
 	dir = 1
 	},
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/machinery/lapvend,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "hux" = (
@@ -27580,6 +27581,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
+"jsu" = (
+/obj/machinery/vending/mechcomp,
+/turf/open/floor/plating,
+/area/station/maintenance/department/engine)
 "jsw" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Security - Visitation Observation";
@@ -28433,15 +28438,27 @@
 /area/station/hallway/primary/fore)
 "jHa" = (
 /obj/structure/closet/crate/trashcart/laundry,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/shoes/sneakers/orange,
 /obj/item/clothing/shoes/sneakers/orange,
 /obj/item/clothing/shoes/sneakers/orange,
 /obj/item/clothing/shoes/sneakers/orange,
 /obj/machinery/firealarm/directional/south,
+/obj/item/clothing/under/rank/prisoner/skirt{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/obj/item/clothing/under/rank/prisoner/skirt{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/obj/item/clothing/under/rank/prisoner/skirt{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/obj/item/clothing/under/rank/prisoner/skirt{
+	pixel_x = 9;
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/shower)
 "jHh" = (
@@ -69616,6 +69633,13 @@
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/iron/cafeteria,
 /area/station/maintenance/starboard/aft)
+"xOL" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/security/execution/transfer)
 "xOV" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 8
@@ -96851,7 +96875,7 @@ vCp
 qgq
 cqR
 uKf
-uKf
+xOL
 ddT
 sIG
 uKf
@@ -102629,7 +102653,7 @@ mDv
 uGA
 tqT
 iiE
-bCy
+jsu
 mDv
 ksa
 ksa

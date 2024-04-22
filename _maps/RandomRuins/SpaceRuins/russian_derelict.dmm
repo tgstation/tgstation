@@ -7919,6 +7919,9 @@
 /obj/item/stack/sheet/mineral/gold{
 	amount = 50
 	},
+/obj/item/stack/sheet/mineral/silver,
+/obj/item/stack/sheet/mineral/silver,
+/obj/item/stack/sheet/mineral/silver,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/ai/vault)
 "WO" = (

@@ -13,6 +13,7 @@
 	contains = list(/obj/item/clothing/head/cone = 6)
 	crate_name = "engineering hat crate"
 
+/* // Commented out to remove from cargo orders as no maps in rotation require this. This will remain until it is changed. -Dexee 4/21/24
 /datum/supply_pack/engineering/stompers
 	name = "Hotspot Stomping Kit"
 	desc = "Everything you need to stomp hotspots."
@@ -26,7 +27,7 @@
 	cost = CARGO_CRATE_VALUE * 10
 	contains = list(/obj/item/vent_package = 5)
 	crate_name = "engineering vent crate"
-
+*/
 /datum/supply_pack/engineering/servicefab
 	name = "Service Techfab Replacement"
 	desc = "You're telling me botany broke it with a lemon?"
@@ -112,7 +113,7 @@
 					)
 	crate_name = "Replacement Science Protolathe"
 	crate_type = /obj/structure/closet/crate/secure/engineering
-
+/*
 /datum/supply_pack/engineering/trench_explorer
 	name = "Trench Explorer Kit"
 	desc = "A pack of 5 ladders and breaching charges to explore the pit."
@@ -122,7 +123,7 @@
 		/obj/item/trench_ladder_kit = 5
 	)
 	crate_name = "engineering vent crate"
-
+*/
 /datum/supply_pack/engine/am_jar
 	name = "Antimatter Containment Jar Crate"
 	desc = "Two Antimatter containment jars stuffed into a single crate."
@@ -143,3 +144,14 @@
 	cost = CARGO_CRATE_VALUE * 9
 	contains = list(/obj/item/am_shielding_container = 9)
 	crate_name = "antimatter shielding crate"
+
+// TEG Crate for when it works!
+/datum/supply_pack/engine/teg
+	name = "Thermoelectric Generator Crate"
+	desc = "Contains machine boards to construct a functional thermoelectric generator system. Some assembly required. At least it includes an RPD!"
+	cost = CARGO_CRATE_VALUE * 12
+	contains = list(/obj/item/circuitboard/machine/thermoelectric_generator,
+					/obj/item/circuitboard/machine/circulator = 2,
+					/obj/item/pipe_dispenser)
+	crate_name = "Thermoelectric Generator Crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
