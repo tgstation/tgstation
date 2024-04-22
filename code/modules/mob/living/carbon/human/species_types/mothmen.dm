@@ -68,7 +68,7 @@
 	return 'sound/voice/moth/scream_moth.ogg'
 
 /datum/species/moth/get_cough_sound(mob/living/carbon/human/moth)
-	if(lizard.gender == FEMALE)
+	if(moth.gender == FEMALE)
 		return pick(
 			'sound/voice/human/female_cough1.ogg',
 			'sound/voice/human/female_cough2.ogg',
@@ -88,7 +88,7 @@
 
 
 /datum/species/moth/get_cry_sound(mob/living/carbon/human/moth)
-	if(lizard.gender == FEMALE)
+	if(moth.gender == FEMALE)
 		return pick(
 			'sound/voice/human/female_cry1.ogg',
 			'sound/voice/human/female_cry2.ogg',
@@ -101,7 +101,7 @@
 
 
 /datum/species/moth/get_sneeze_sound(mob/living/carbon/human/moth)
-		if(lizard.gender == FEMALE)
+		if(moth.gender == FEMALE)
 			return 'sound/voice/human/female_sneeze1.ogg'
 		return 'sound/voice/human/male_sneeze1.ogg'
 
