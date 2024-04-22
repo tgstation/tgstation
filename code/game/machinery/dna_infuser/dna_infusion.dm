@@ -24,7 +24,7 @@
 ///returns /datum/infuser_entry that matches an item being used for infusion, returns a fly mutation
 /atom/movable/proc/get_infusion_entry()
 	var/datum/infuser_entry/found
-	for(var/datum/infuser_entry/entry as anything in GLOB.infuser_entries)
+	for(var/datum/infuser_entry/entry as anything in flatten_list(GLOB.infuser_entries))
 		if(entry.tier == DNA_MUTANT_UNOBTAINABLE)
 			continue
 		if(is_type_in_list(src, entry.input_obj_or_mob))
