@@ -61,12 +61,12 @@
 	embedding = list(embed_chance=60, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=2, rip_time=10)
 	embed_falloff_tile = -5
 	wound_falloff_tile = -2
-	shrapnel_type = /obj/item/stack/rods
+	shrapnel_type = /obj/item/ammo_casing/rebar
 
 /obj/projectile/bullet/rebarsyndie
 	name = "rebar"
 	icon_state = "rebar"
-	damage = 35
+	damage = 55
 	speed = 0.4
 	dismemberment = 2 //It's a budget sniper rifle.
 	armour_penetration = 20 //A bit better versus armor. Gets past anti laser armor or a vest, but doesnt wound proc on sec armor.
@@ -74,4 +74,13 @@
 	bare_wound_bonus = 10
 	embedding = list(embed_chance=80, fall_chance=1, jostle_chance=3, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=2, rip_time=14)
 	embed_falloff_tile = -3
-	shrapnel_type = /obj/item/stack/rods
+	shrapnel_type = /obj/item/ammo_casing/rebar/syndie
+	var/modified = FALSE
+	var/obj/item/pen/pen = null
+
+/obj/projectile/bullet/rebar/Initialize(mapload)
+	. = ..()
+	RegisterSignals(src, list(COMSIG_PROJECTILE_ON_SPAWN_DROP, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED), PROC_REF(handle_drop))
+
+/obj/projectile/bullet/rebar/proc/handle_drop(datum/source, obj/item/ammo_casing/rebar/newcasing)
+	SIGNAL_HANDLER
