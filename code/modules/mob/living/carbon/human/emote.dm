@@ -65,7 +65,7 @@
 	if(!istype(user))
 		return
 	return user.dna.species.get_cough_sound(user)
-/datum/emote/living/sneeze
+/datum/emote/living/carbon/human/sneeze
 	key = "sneeze"
 	key_third_person = "sneezes"
 	message = "sneezes."
@@ -75,7 +75,6 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/carbon/human/sneeze/get_sound(mob/living/carbon/human/user)
-	var/mob/living/carbon/human_user = user
 	if(!istype(user))
 		return
 	return user.dna.species.get_sneeze_sound(user)
