@@ -226,10 +226,10 @@
 
 /proc/vv_get_dropdown_appearance(image/thing)
 	. = list()
-	// unless you have a good reason to add a vv option for /appearance,
-	// /appearance type shouldn't allow any vv option. Even "Mark Datum" is a questionable behaviour here.
+	// Don't add any vv option carelessly unless you have a good reason to add one for /appearance.
+	// /appearance type shouldn't allow general options. Even "Mark Datum" is a questionable behaviour here.
 	VV_DROPDOWN_OPTION_APPEARANCE(thing, "", "---")
-	VV_DROPDOWN_OPTION_APPEARANCE(thing, "", "VV option not allowed")
+	VV_DROPDOWN_OPTION_APPEARANCE(thing, VV_HK_EXPOSE, "Show VV To Player") // only legit option
 	return .
 
 #undef ADD_UNUSED_VAR
