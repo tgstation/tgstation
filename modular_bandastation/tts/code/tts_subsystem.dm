@@ -361,14 +361,11 @@ SUBSYSTEM_DEF(tts220)
 
 	var/sound/output = sound(filename2play)
 	output.status = SOUND_STREAM
+	output.volume = volume
 	if(!is_local || isnull(speaker))
 		output.wait = TRUE
-		output.volume = volume
 		output.environment = SOUND_ENVIRONMENT_NONE
 		output.channel = CHANNEL_TTS_RADIO
-
-		if(output.volume <= 0)
-			return
 
 		play_sfx_if_exists(listener, preSFX, output)
 		SEND_SOUND(listener, output)
@@ -384,7 +381,7 @@ SUBSYSTEM_DEF(tts220)
 		if(speaking_mob.client)
 			output.channel = get_local_channel_by_owner(speaker)
 			output.wait = TRUE
-	output = listener.playsound_local(turf_source, output, volume, wait = TRUE)
+	output = listener.playsound_local(turf_source, vol = output.volume, channel = output.channel, sound_to_use = output, wait = output.wait)
 
 	if(!output || output.volume <= 0)
 		return
