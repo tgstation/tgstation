@@ -1,0 +1,7 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - rscadd: "Replaces Fitness with Athletics; same skill, but now more specifically applicable to boxing."
+  - rscadd: "Athletics does not increase sprite size."
+  - balance: "Overhauls Boxing to add a lot more depth to the interactions. Only applicable to other boxers, however. You can still punch the snot out of non-boxers though. But only up to stamcrit or unconsciousness. No hitting someone who can't fight back!"
+  - balance: "Adds Evil Boxing, which is the evil and fucked up version of boxing that you kill people with and are allowed to flout the sacred rules of boxing as you please. Everyone is a victim!"
