@@ -49,9 +49,12 @@
 		return "/icon (<span class='value'>[value]</span>)"
 		#endif
 
-	if(isappearance(value))
-		var/image/actually_an_appearance = value
-		return "/appearance (<span class='value'>[actually_an_appearance.icon]</span>)"
+
+	if(isappearance(value)) // Reminder: Do not replace this into /image/debug_variable_value() proc. /appearance can't do that.
+		return "<a href='?_src_=vars;[HrefToken()];Vars=[REF(value)]'>/appearance (<span class='value'>[get_appearance_vv_summary_name(value)]</span>) [REF(value)]</a>"
+
+	if(isimage(value))
+		return "<a href='?_src_=vars;[HrefToken()];Vars=[REF(value)]'>[value:type] (<span class='value'>[get_appearance_vv_summary_name(value)]</span>) [REF(value)]</a>"
 
 	if(isfilter(value))
 		var/datum/filter_value = value

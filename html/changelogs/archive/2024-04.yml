@@ -684,3 +684,34 @@
   jlsnow301:
   - bugfix: Fixed the targeting capability of mobs with full auto
   - bugfix: You can now fire the marksman revolver at things you can see
+2024-04-22:
+  FlufflesTheDog:
+  - bugfix: loading oven trays from serving trays and other containers works again
+  Iajret:
+  - rscadd: added ventpointer that points toward nearby ore vents and can be bought
+      with mining points
+  - balance: scanned ore vents can now be found with GPS
+  - bugfix: fixed ore vents missing overlay icon for uranium
+  Melbert:
+  - bugfix: You can open bags with alt click while resting again
+  - qol: Many items which previously required you to stand to alt-click now don't,
+      such as bedsheets and spray cans
+  Rhials:
+  - qol: Lava and plasma rivers now immerse you in them.
+  Singul0:
+  - rscadd: Adds an omnitoolset for both engineering and medical cyborgs, containing
+      various basic tools
+  - qol: Engineer and Medical module inventory space is now significantly decluttered
+  SyncIt21:
+  - bugfix: HPLC can purify inverted chems and are now coloured green(clean) in the
+      UI
+  - bugfix: pseudo circuit adapter computes recharge delay durations correctly & won't
+      use power when on cooldown
+  - code_imp: uses standard cell defines for N-spect scanner
+  - bugfix: off station & round start lathes with local storage don't have infinite
+      storage size.
+  jlsnow301:
+  - bugfix: Fixes the sight range on lootpanel.
+  vinylspiders:
+  - bugfix: dropdowns that use display_names as an alias for numeric values will no
+      longer cause tgui bluescreens
