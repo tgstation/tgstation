@@ -56,6 +56,58 @@
 		return ..()
 	return FALSE
 
+/datum/emote/living/carbon/human/cough
+	key = "cough"
+	key_third_person = "coughs"
+	message = "coughs!"
+	message_mime = "acts out an exaggerated cough!"
+	audio_cooldown = 5 SECONDS
+	vary = TRUE
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
+/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_SOOTHED_THROAT))
+		return FALSE
+
+/datum/emote/living/carbon/human/cough/get_sound(mob/living/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human_user = user
+	if(human_user.physique == FEMALE)
+		return pick(
+			'sound/voice/human/female_cough1.ogg',
+			'sound/voice/human/female_cough2.ogg',
+			'sound/voice/human/female_cough3.ogg',
+			'sound/voice/human/female_cough4.ogg',
+			'sound/voice/human/female_cough5.ogg',
+			'sound/voice/human/female_cough6.ogg',
+			)
+	return pick(
+		'sound/voice/human/male_cough1.ogg',
+		'sound/voice/human/male_cough2.ogg',
+		'sound/voice/human/male_cough3.ogg',
+		'sound/voice/human/male_cough4.ogg',
+		'sound/voice/human/male_cough5.ogg',
+		'sound/voice/human/male_cough6.ogg',
+	)
+/datum/emote/living/sneeze
+	key = "sneeze"
+	key_third_person = "sneezes"
+	message = "sneezes."
+	audio_cooldown = 5 SECONDS
+	message_mime = "acts out an exaggerated silent sneeze."
+	vary = TRUE
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
+/datum/emote/living/sneeze/get_sound(mob/living/user)
+	var/mob/living/carbon/human_user = user
+	if(!human(user))
+		return
+	if(human_user.physique == FEMALE)
+		return 'sound/voice/human/female_sneeze1.ogg'
+	return 'sound/voice/human/male_sneeze1.ogg'
+
 /datum/emote/living/carbon/human/glasses/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', user, "glasses")
