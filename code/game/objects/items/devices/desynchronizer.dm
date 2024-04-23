@@ -9,11 +9,18 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
-	var/max_duration = 3000
-	var/duration = 300
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
+	/// Max time this can be set
+	var/max_duration = 300 SECONDS
+	/// Currently set time
+	var/duration = 30 SECONDS
+	/// Last world time
 	var/last_use = 0
+	/// world.time + (world.time - last_use)
 	var/next_use = 0
+	/// The current space time rift
 	var/obj/effect/abstract/sync_holder/sync_holder
+	/// Timer obj for calling resync
 	var/resync_timer
 
 /obj/item/desynchronizer/attack_self(mob/living/user)
@@ -32,14 +39,13 @@
 	. += span_notice("Alt-click to customize the duration. Current duration: [DisplayTimeText(duration)].")
 	. += span_notice("Can be used again to interrupt the effect early. The recharge time is the same as the time spent in desync.")
 
-/obj/item/desynchronizer/AltClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return
+/obj/item/desynchronizer/click_alt(mob/living/user)
 	var/new_duration = tgui_input_number(user, "Set the duration", "Desynchronizer", duration / 10, max_duration, 5)
 	if(!new_duration || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, NEED_DEXTERITY))
-		return
+		return CLICK_ACTION_BLOCKING
 	duration = new_duration
 	to_chat(user, span_notice("You set the duration to [DisplayTimeText(duration)]."))
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/desynchronizer/proc/desync(mob/living/user)
 	if(sync_holder)

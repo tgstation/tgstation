@@ -51,33 +51,37 @@
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_LIVING, SENSOR_LIVING, SENSOR_COORDS, SENSOR_COORDS, SENSOR_OFF)
-	register_context()
+	if(!unique_reskin) // Already registered via unique reskin
+		register_context()
 	AddElement(/datum/element/update_icon_updates_onmob, flags = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING, body = TRUE)
 
-/obj/item/clothing/under/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	. = NONE
 
+/obj/item/clothing/under/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	var/changed = FALSE
 	if(isnull(held_item) && has_sensor == HAS_SENSORS)
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle suit sensors"
-		. = CONTEXTUAL_SCREENTIP_SET
+		changed = TRUE
 
 	if(istype(held_item, /obj/item/clothing/accessory) && length(attached_accessories) < max_number_of_accessories)
 		context[SCREENTIP_CONTEXT_LMB] = "Attach accessory"
-		. = CONTEXTUAL_SCREENTIP_SET
+		changed = TRUE
 
 	if(LAZYLEN(attached_accessories))
 		context[SCREENTIP_CONTEXT_ALT_RMB] = "Remove accessory"
-		. = CONTEXTUAL_SCREENTIP_SET
+		changed = TRUE
 
 	if(istype(held_item, /obj/item/stack/cable_coil) && has_sensor == BROKEN_SENSORS)
 		context[SCREENTIP_CONTEXT_LMB] = "Repair suit sensors"
-		. = CONTEXTUAL_SCREENTIP_SET
+		changed = TRUE
 
 	if(can_adjust && adjusted != DIGITIGRADE_STYLE)
 		context[SCREENTIP_CONTEXT_ALT_LMB] =  "Wear [adjusted == ALT_STYLE ? "normally" : "casually"]"
-		. = CONTEXTUAL_SCREENTIP_SET
+		changed = TRUE
 
-	return .
+	return changed ? CONTEXTUAL_SCREENTIP_SET : NONE
+
 
 /obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
@@ -347,17 +351,14 @@
 
 	return TRUE
 
-/obj/item/clothing/under/AltClick(mob/user)
-	. = ..()
-	if(.)
-		return
-
+/obj/item/clothing/under/click_alt(mob/user)
 	if(!can_adjust)
 		balloon_alert(user, "can't be adjusted!")
-		return
+		return CLICK_ACTION_BLOCKING
 	if(!can_use(user))
-		return
+		return NONE
 	rolldown()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/under/alt_click_secondary(mob/user)
 	. = ..()
