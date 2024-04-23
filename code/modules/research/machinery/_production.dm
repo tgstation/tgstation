@@ -1,8 +1,8 @@
 /obj/machinery/rnd/production
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
-	// Energy cost per full stack of materials spent. Material insertion is 40% of this.
-	active_power_usage = 50 * BASE_MACHINE_ACTIVE_CONSUMPTION
+	/// Energy cost per full stack of materials spent. Material insertion is 40% of this.
+	active_power_usage = 0.05 * STANDARD_CELL_RATE
 
 	/// The efficiency coefficient. Material costs and print times are multiplied by this number;
 	var/efficiency_coeff = 1
@@ -22,10 +22,6 @@
 	var/drop_direction = 0
 
 /obj/machinery/rnd/production/Initialize(mapload)
-	. = ..()
-
-	cached_designs = list()
-
 	materials = AddComponent(
 		/datum/component/remote_materials, \
 		mapload, \
@@ -33,6 +29,10 @@
 			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/rnd/production, local_material_insert)
 		) \
 	)
+
+	. = ..()
+
+	cached_designs = list()
 
 	RegisterSignal(src, COMSIG_SILO_ITEM_CONSUMED, TYPE_PROC_REF(/obj/machinery/rnd/production, silo_material_insert))
 
@@ -182,11 +182,10 @@
 /obj/machinery/rnd/production/RefreshParts()
 	. = ..()
 
-	if(materials)
-		var/total_storage = 0
-		for(var/datum/stock_part/matter_bin/bin in component_parts)
-			total_storage += bin.tier * 37.5 * SHEET_MATERIAL_AMOUNT
-		materials.set_local_size(total_storage)
+	var/total_storage = 0
+	for(var/datum/stock_part/matter_bin/bin in component_parts)
+		total_storage += bin.tier * 37.5 * SHEET_MATERIAL_AMOUNT
+	materials.set_local_size(total_storage)
 
 	efficiency_coeff = compute_efficiency()
 

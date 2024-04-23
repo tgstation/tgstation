@@ -264,7 +264,7 @@
 	if(isnull(item.atom_storage))
 		return NONE
 
-	if(length(contents >= max_items))
+	if(length(contents) >= max_items)
 		balloon_alert(user, "it's full!")
 		return ITEM_INTERACT_BLOCKING
 

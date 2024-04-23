@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "Gulag mining has been rebalanced so that every boulder is worth the same amount of points to mine for a prisoner regardless of what it contains, and should be more consistent."
-  - rscadd: "A vent which boulders can be hauled out of by hand has been added to the gulag which you can use if there's nothing left to mine. It is very slow, but at least it gives you a workout..."
