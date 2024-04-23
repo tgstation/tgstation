@@ -197,7 +197,7 @@
 
 ///Safety-First Head Protection - Protects your brain matter from sudden impacts.
 /obj/item/mod/module/headprotector
-	name = "MOD Safety-First Head Protection module"
+	name = "MOD safety-first head protection module"
 	desc = "A series of dampening plates are installed along the back and upper areas of \
 		the helmet. These plates absorb abrupt kinetic shocks delivered to the skull. \
 		The bulk of this module prevents it from being installed in any suit that is capable \
