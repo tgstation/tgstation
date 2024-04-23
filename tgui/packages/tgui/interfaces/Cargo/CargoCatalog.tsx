@@ -17,7 +17,11 @@ import { CargoCartButtons } from './CargoButtons';
 import { searchForSupplies } from './helpers';
 import { CargoData, Supply, SupplyCategory } from './types';
 
-export function CargoCatalog(props) {
+type Props = {
+  express?: boolean;
+};
+
+export function CargoCatalog(props: Props) {
   const { express } = props;
   const { act, data } = useBackend<CargoData>();
   const { self_paid } = data;
@@ -81,7 +85,7 @@ export function CargoCatalog(props) {
           />
         </Stack.Item>
         <Stack.Divider />
-        <Stack.Item grow={3}>
+        <Stack.Item grow={express ? 2 : 3}>
           <CatalogList packs={packs} />
         </Stack.Item>
       </Stack>
@@ -169,7 +173,7 @@ type CatalogListProps = {
 
 function CatalogList(props: CatalogListProps) {
   const { act, data } = useBackend<CargoData>();
-  const { amount_by_name, max_order, self_paid, app_cost } = data;
+  const { amount_by_name = {}, max_order, self_paid, app_cost } = data;
   const { packs = [] } = props;
 
   return (

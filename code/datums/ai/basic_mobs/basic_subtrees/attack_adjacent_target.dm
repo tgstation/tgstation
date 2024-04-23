@@ -29,4 +29,4 @@
 	if(!atom_pawn.CanReach(controller.blackboard[target_key]))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 	. = ..()
-	return . | AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

@@ -1,0 +1,6 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - rscadd: "Adds a higher capacity SMES unit to lower maintenance areas and maps."
+  - bugfix: "Miners can actually access and fix their engineering issues on the lavaland base via the engineering section of the base."
+  - bugfix: "The gulag SMES unit is no longer needlessly draining the entire power grid of the main mining base."
