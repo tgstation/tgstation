@@ -48,9 +48,6 @@ DATASYSTEM_DEF(accessories) // just 'accessories' for brevity
 	var/list/caps_list = list()
 	var/list/pod_hair_list = list()
 
-/datum/system/accessories/New()
-	setup_lists()
-
 /// Sets up all of the lists for later utilization. We keep this stuff out of GLOB due to the size of the data.
 /// In an ideal world we could just do this on our subsystem Initialize() but there are too many things that are immediately dependent on this in the roundstart initialization
 /// which means that we have to time it so that it invokes with the rest of the GLOB datumized lists. Great apologies.
