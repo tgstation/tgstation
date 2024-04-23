@@ -8,10 +8,6 @@ DATASYSTEM_DEF(security)
 	var/warcrimes = 0
 	var/list/criminals_apprehended = list()
 
-	var/list/datum/crime/crimes = list()
-	var/list/datum/crime/citation/citations = list()
-
-
 /datum/system/security/proc/add_new_criminal(mob/living/baddie)
 	criminals_apprehended += baddie
 

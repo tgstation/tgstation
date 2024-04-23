@@ -19,16 +19,6 @@
 	src.name = name
 	src.time = station_time_timestamp()
 
-
-/datum/crime/Destroy(force)
-	. = ..()
-
-	if(!istype(src, /datum/crime/citation))
-		DSsecurity.crimes -= src
-	else
-		DSsecurity.citations -= src
-
-
 /datum/crime/citation
 	/// Fine for the crime
 	var/fine
