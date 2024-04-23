@@ -7,7 +7,7 @@
 	worn_icon_state = "wrench"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	throwforce = 7
@@ -87,7 +87,7 @@
 	name = "hydraulic wrench"
 	desc = "An advanced robotic wrench, powered by internal hydraulics. Twice as fast as the handheld version."
 	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "wrench_cyborg"
+	icon_state = "toolkit_engiborg_wrench"
 	toolspeed = 0.5
 
 /obj/item/wrench/combat

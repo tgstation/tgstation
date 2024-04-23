@@ -3,7 +3,7 @@
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/remote.dmi'
 	name = "tram remote"
 	desc = "A remote control that can be linked to a tram. This can only go well."
 	w_class = WEIGHT_CLASS_TINY
@@ -107,8 +107,9 @@
 
 	SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, specific_transport_id, destination, options)
 
-/obj/item/assembly/control/transport/remote/AltClick(mob/user)
+/obj/item/assembly/control/transport/remote/click_alt(mob/user)
 	link_tram(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/assembly/control/transport/remote/proc/link_tram(mob/user)
 	specific_transport_id = null

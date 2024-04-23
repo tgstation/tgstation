@@ -97,6 +97,19 @@
 	LAZYINITLIST(lazy_list[key]); \
 	lazy_list[key] |= value;
 
+///Ensures the length of a list is at least I, prefilling it with V if needed. if V is a proc call, it is repeated for each new index so that list() can just make a new list for each item.
+#define LISTASSERTLEN(L, I, V...) \
+	if (length(L) < I) { \
+		var/_OLD_LENGTH = length(L); \
+		L.len = I; \
+		/* Convert the optional argument to a if check */ \
+		for (var/_USELESS_VAR in list(V)) { \
+			for (var/_INDEX_TO_ASSIGN_TO in _OLD_LENGTH+1 to I) { \
+				L[_INDEX_TO_ASSIGN_TO] = V; \
+			} \
+		} \
+	}
+
 #define reverseList(L) reverse_range(L.Copy())
 
 /// Passed into BINARY_INSERT to compare keys
@@ -403,10 +416,8 @@
  * Returns TRUE if the list had nulls, FALSE otherwise
 **/
 /proc/list_clear_nulls(list/list_to_clear)
-	var/start_len = list_to_clear.len
-	var/list/new_list = new(start_len)
-	list_to_clear -= new_list
-	return list_to_clear.len < start_len
+	return (list_to_clear.RemoveAll(null) > 0)
+	
 
 /**
  * Removes any empty weakrefs from the list

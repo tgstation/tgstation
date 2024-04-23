@@ -40,11 +40,6 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/corgi
 
-GLOBAL_LIST_INIT(gondola_recipes, list ( \
-	new/datum/stack_recipe("gondola mask", /obj/item/clothing/mask/gondola, 1, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/costume/gondola, 2, check_density = FALSE, category = CAT_CLOTHING), \
-	))
-
 /obj/item/stack/sheet/animalhide/corgi/five
 	amount = 5
 
@@ -58,6 +53,12 @@ GLOBAL_LIST_INIT(gondola_recipes, list ( \
 
 /obj/item/stack/sheet/animalhide/mothroach/five
 	amount = 5
+
+GLOBAL_LIST_INIT(gondola_recipes, list ( \
+	new/datum/stack_recipe("gondola mask", /obj/item/clothing/mask/gondola, 1, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/costume/gondola, 2, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("gondola bedsheet", /obj/item/bedsheet/gondola, 1, check_density = FALSE, category = CAT_FURNITURE), \
+	))
 
 /obj/item/stack/sheet/animalhide/gondola
 	name = "gondola hide"
@@ -179,12 +180,6 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 	desc = "The claw of a terrible creature."
 	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	icon_state = "claw"
-
-/obj/item/weed_extract
-	name = "weed extract"
-	desc = "A piece of slimy, purplish weed."
-	icon = 'icons/mob/nonhuman-player/alien.dmi'
-	icon_state = "weed_extract"
 
 /*
  * Leather SHeet
@@ -327,7 +322,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	if(W.get_sharpness())
 		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
 		user.visible_message(span_notice("[user] starts cutting hair off \the [src]."), span_notice("You start cutting the hair off \the [src]..."), span_hear("You hear the sound of a knife rubbing against flesh."))
-		if(do_after(user, 50, target = src))
+		if(do_after(user, 5 SECONDS, target = src))
 			to_chat(user, span_notice("You cut the hair from [src.name]."))
 			new /obj/item/stack/sheet/hairlesshide(user.drop_location(), amount)
 			use(amount)

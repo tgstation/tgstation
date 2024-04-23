@@ -168,11 +168,11 @@
 	to_chat(wearer, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
 	for(var/obj/item/part as anything in get_parts())
 		var/datum/mod_part/part_datum = get_part_datum(part)
-		if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer))))
+		if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer)), hidden = TRUE))
 			to_chat(wearer, span_notice("[part] [active ? part_datum.unsealed_message : part_datum.sealed_message]."))
 			playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			seal_part(part, is_sealed = !active)
-	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer))))
+	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer)), hidden = TRUE))
 		to_chat(wearer, span_notice("Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer]."))
 		if(ai_assistant)
 			to_chat(ai_assistant, span_notice("<b>SYSTEMS [active ? "DEACTIVATED. GOODBYE" : "ACTIVATED. WELCOME"]: \"[ai_assistant]\"</b>"))
@@ -221,7 +221,8 @@
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_suit_deactivation()
 	update_speed()
-	update_icon_state()
+	update_appearance(UPDATE_ICON_STATE)
+	update_charge_alert()
 	wearer.update_clothing(slot_flags)
 
 /// Quickly deploys all the suit parts and if successful, seals them and turns on the suit. Intended mostly for outfits.

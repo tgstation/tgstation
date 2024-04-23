@@ -42,13 +42,13 @@
 		var/datum/action/innate/cult/blood_magic/magic = new(owner)
 		magic.Grant(current)
 
-	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
+	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color=COLOR_CULT_RED)
 
 /datum/antagonist/cult/on_removal()
 	if(!silent)
 		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!"), ignored_mobs = owner.current)
 		to_chat(owner.current, span_userdanger("An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant."))
-		owner.current.log_message("has renounced the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
+		owner.current.log_message("has renounced the cult of Nar'Sie!", LOG_ATTACK, color=COLOR_CULT_RED)
 
 	if(vote_ability)
 		QDEL_NULL(vote_ability)
@@ -151,20 +151,13 @@
 
 ///Attempts to make a new item and put it in a potential inventory slot in the provided mob.
 /datum/antagonist/cult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
-	var/list/slots = list(
-		"backpack" = ITEM_SLOT_BACKPACK,
-		"left pocket" = ITEM_SLOT_LPOCKET,
-		"right pocket" = ITEM_SLOT_RPOCKET,
-	)
-
-	var/T = new item_path(mob)
-	var/item_name = initial(item_path.name)
-	var/where = mob.equip_in_one_of_slots(T, slots)
+	var/item = new item_path(mob)
+	var/where = mob.equip_conspicuous_item(item)
 	if(!where)
-		to_chat(mob, span_userdanger("Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1)."))
+		to_chat(mob, span_userdanger("Unfortunately, you weren't able to get [item]. This is very bad and you should adminhelp immediately (press F1)."))
 		return FALSE
 	else
-		to_chat(mob, span_danger("You have a [item_name] in your [where]."))
+		to_chat(mob, span_danger("You have [item] in your [where]."))
 		if(where == "backpack")
 			mob.back.atom_storage?.show_contents(mob)
 		return TRUE
@@ -207,11 +200,12 @@
 	owner.current.update_mob_action_buttons()
 
 	for(var/datum/mind/cult_mind as anything in cult_team.members)
-		vote_ability.Remove(cult_mind.current)
-		to_chat(cult_mind.current, span_cultlarge("[owner.current] has won the cult's support and is now their master. \
+		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(/datum/antagonist/cult)
+		cult_datum.vote_ability.Remove(cult_mind.current)
+		to_chat(cult_mind.current, span_cult_large("[owner.current] has won the cult's support and is now their master. \
 			Follow [owner.current.p_their()] orders to the best of your ability!"))
 
-	to_chat(owner.current, span_cultlarge("<span class='warningplain'>You are the cult's Master</span>. \
+	to_chat(owner.current, span_cult_large("<span class='warningplain'>You are the cult's Master</span>. \
 		As the cult's Master, you have a unique title and loud voice when communicating, are capable of marking \
 		targets, such as a location or a noncultist, to direct the cult to them, and, finally, you are capable of \
 		summoning the entire living cult to your location <b><i>once</i></b>. Use these abilities to direct the cult \
@@ -241,9 +235,10 @@
 		throwing.Remove(owner.current)
 	owner.current.update_mob_action_buttons()
 	for(var/datum/mind/cult_mind as anything in cult_team.members)
-		vote_ability.Grant(cult_mind.current)
+		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(/datum/antagonist/cult)
+		cult_datum.vote_ability.Grant(cult_mind.current)
 
-	to_chat(owner.current, span_cultlarge("You have been demoted from being the cult's Master, you are now an acolyte once more!"))
+	to_chat(owner.current, span_cult_large("You have been demoted from being the cult's Master, you are now an acolyte once more!"))
 
 	return TRUE
 
@@ -261,7 +256,7 @@
 	var/area/current_area = get_area(owner.current)
 	for(var/datum/mind/cult_mind as anything in cult_team.members)
 		SEND_SOUND(cult_mind, sound('sound/hallucinations/veryfar_noise.ogg'))
-		to_chat(cult_mind, span_cultlarge("The Cult's Master, [owner.current.name], has fallen in \the [current_area]!"))
+		to_chat(cult_mind, span_cult_large("The Cult's Master, [owner.current.name], has fallen in \the [current_area]!"))
 
 /datum/antagonist/cult/get_preview_icon()
 	var/icon/icon = render_preview_outfit(preview_outfit)

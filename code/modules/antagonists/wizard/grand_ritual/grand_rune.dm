@@ -15,8 +15,9 @@
 	desc = "A flowing circle of shapes and runes is etched into the floor, the lines twist and move before your eyes."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "wizard_rune"
-	pixel_x = -28
-	pixel_y = -33
+	pixel_x = -33
+	pixel_y = 16
+	pixel_z = -48
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -186,7 +187,7 @@
 	tear_reality()
 	SEND_SIGNAL(src, COMSIG_GRAND_RUNE_COMPLETE, cheese_sacrificed)
 	flick("[icon_state]_activate", src)
-	addtimer(CALLBACK(src, PROC_REF(remove_rune)), 6)
+	addtimer(CALLBACK(src, PROC_REF(remove_rune)), 0.6 SECONDS)
 	SSblackbox.record_feedback("amount", "grand_runes_invoked", 1)
 
 /obj/effect/grand_rune/proc/remove_rune()

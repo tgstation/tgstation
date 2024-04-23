@@ -79,6 +79,15 @@
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_1
 
+/obj/item/food/virtual_chocolate
+	name = "virtual chocolate bar"
+	desc = "Digital food only gives off the sensation of eating... without any of the nutritional benefits."
+	icon_state = "virtual_chocolate"
+	tastes = list("nothing" = 1)
+	foodtypes = NONE
+	w_class = WEIGHT_CLASS_TINY
+
+
 /obj/item/food/chococoin
 	name = "chocolate coin"
 	desc = "A completely edible but non-flippable festive coin."
@@ -232,7 +241,6 @@
 	metabolization_amount = REAGENTS_METABOLISM
 
 /obj/item/food/bubblegum/bubblegum/process()
-	. = ..()
 	if(iscarbon(loc))
 		hallucinate(loc)
 
@@ -344,5 +352,26 @@
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/spiderlollipop/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/chewable)
+
+/obj/item/food/swirl_lollipop
+	name = "swirl lollipop"
+	desc = "A massive rainbow swirlled lollipop. Said to contain extra sugar."
+	icon_state = "swirl_lollipop"
+	worn_icon_state = "lollipop_stick"
+	inhand_icon_state = "swirl_lollipop"
+	food_reagents = list(
+		/datum/reagent/consumable/sugar = 30,
+		/datum/reagent/drug/happiness = 5, //swirl lollipops make everyone happy!
+		/datum/reagent/medicine/omnizine = 2,
+	)
+	tastes = list("whimsical joy" = 1, "sugar" = 2)
+	foodtypes = JUNKFOOD | SUGAR
+	food_flags = FOOD_FINGER_FOOD
+	slot_flags = ITEM_SLOT_MASK
+	crafting_complexity = FOOD_COMPLEXITY_1
+
+/obj/item/food/swirl_lollipop/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/chewable)

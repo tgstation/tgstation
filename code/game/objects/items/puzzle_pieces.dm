@@ -16,6 +16,9 @@
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	var/puzzle_id = null
 
+/obj/item/keycard/get_save_vars()
+	return ..() + NAMEOF(src, puzzle_id)
+
 //Two test keys for use alongside the two test doors.
 /obj/item/keycard/yellow
 	name = "yellow keycard"
@@ -53,6 +56,9 @@
 	/// Message that occurs when the door is opened
 	var/open_message = "The door beeps, and slides opens."
 
+/obj/machinery/door/puzzle/get_save_vars()
+	return ..() + NAMEOF(src, puzzle_id)
+
 //Standard Expressions to make keycard doors basically un-cheeseable
 /datum/armor/door_puzzle
 	melee = 100
@@ -68,6 +74,7 @@
 	. = ..()
 	if(!isnull(puzzle_id) && uses_queuelinks)
 		SSqueuelinks.add_to_queue(src, puzzle_id)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/machinery/door/puzzle/MatchedLinks(id, list/partners)
 	for(var/partner in partners)
@@ -81,9 +88,6 @@
 
 /obj/machinery/door/puzzle/Bumped(atom/movable/AM)
 	return !density && ..()
-
-/obj/machinery/door/puzzle/emp_act(severity)
-	return
 
 /obj/machinery/door/puzzle/ex_act(severity, target)
 	return FALSE
@@ -162,6 +166,9 @@
 	var/reward = /obj/item/food/cookie
 	var/claimed = FALSE
 
+/obj/item/pressure_plate/hologrid/get_save_vars()
+	return ..() + NAMEOF(src, reward)
+
 /obj/item/pressure_plate/hologrid/Initialize(mapload)
 	. = ..()
 	if(undertile_pressureplate)
@@ -211,6 +218,9 @@
 	var/static/list/banned_combinations = list(-1, 47, 95, 203, 311, 325, 422, 473, 488, 500, 511)
 	/// queue size, must match count of objects this activates!
 	var/queue_size = 2
+
+/obj/structure/light_puzzle/get_save_vars()
+	return ..() + list(NAMEOF(src, queue_size), NAMEOF(src, puzzle_id))
 
 /datum/armor/structure_light_puzzle
 	melee = 100
@@ -289,28 +299,50 @@
 // literally just buttons
 //
 
-/obj/machinery/puzzle_button
-	name = "control panel"
-	desc = "A panel that controls something nearby. I'm sure it being covered in hazard stripes is fine."
+/obj/machinery/puzzle
+	name = "abstract puzzle gizmo"
 	icon = 'icons/obj/machines/wallmounts.dmi'
-	icon_state = "lockdown0"
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
-	base_icon_state = "lockdown"
 	/// have we been pressed already?
 	var/used = FALSE
 	/// can we be pressed only once?
 	var/single_use = TRUE
 	/// puzzle id we send on press
-	var/id = "0" //null would literally open every puzzle door without an id
+	var/id //null would literally open every puzzle door without an id
 	/// queue size, must match count of objects this activates!
 	var/queue_size = 2
+	/// should the puzzle machinery perform the final step of the queue link on LateInitialize? An alternative to queue size
+	var/late_initialize_pop = FALSE
 
-/obj/machinery/puzzle_button/Initialize(mapload)
+/obj/machinery/puzzle/get_save_vars()
+	return ..() + list(NAMEOF(src, queue_size), NAMEOF(src, id))
+
+/obj/machinery/puzzle/Initialize(mapload)
 	. = ..()
 	if(!isnull(id))
-		SSqueuelinks.add_to_queue(src, id, queue_size)
+		SSqueuelinks.add_to_queue(src, id, late_initialize_pop ? 0 : queue_size)
+		return late_initialize_pop ? INITIALIZE_HINT_LATELOAD : .
 
-/obj/machinery/puzzle_button/attack_hand(mob/user, list/modifiers)
+/obj/machinery/puzzle/post_machine_initialize()
+	. = ..()
+	if(late_initialize_pop && id && SSqueuelinks.queues[id])
+		SSqueuelinks.pop_link(id)
+
+/obj/machinery/puzzle/proc/on_puzzle_complete() //incase someone wants to make this do something else for some reason
+	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
+
+/obj/machinery/puzzle/update_icon_state()
+	icon_state = "[base_icon_state][used]"
+	return ..()
+
+/obj/machinery/puzzle/button
+	name = "control panel"
+	desc = "A panel that controls something nearby. I'm sure it being covered in hazard stripes is fine."
+	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_state = "lockdown0"
+	base_icon_state = "lockdown"
+
+/obj/machinery/puzzle/button/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -320,37 +352,17 @@
 	update_icon_state()
 	visible_message(span_notice("[user] presses a button on [src]."), span_notice("You press a button on [src]."))
 	playsound(src, 'sound/machines/terminal_button07.ogg', 45, TRUE)
-	open_doors()
+	on_puzzle_complete()
 
-/obj/machinery/puzzle_button/proc/open_doors() //incase someone wants to make this do something else for some reason
-	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/button, 32)
 
-/obj/machinery/puzzle_button/update_icon_state()
-	icon_state = "[base_icon_state][used]"
-	return ..()
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_button, 32)
-
-/obj/machinery/puzzle_keycardpad
+/obj/machinery/puzzle/keycardpad
 	name = "keycard panel"
 	desc = "A panel that controls something nearby. Accepts keycards."
-	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "keycardpad0"
-	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	base_icon_state = "keycardpad"
-	/// were we used successfully?
-	var/used = FALSE
-	/// puzzle id we send if the correct card is swiped
-	var/id = "0"
-	/// queue size, must match count of objects this activates!
-	var/queue_size = 2
 
-/obj/machinery/puzzle_keycardpad/Initialize(mapload)
-	. = ..()
-	if(!isnull(id))
-		SSqueuelinks.add_to_queue(src, id, queue_size)
-
-/obj/machinery/puzzle_keycardpad/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/puzzle/keycardpad/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/keycard) || used)
 		return
@@ -363,13 +375,81 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_button, 32)
 	used = TRUE
 	update_icon_state()
 	playsound(src, 'sound/machines/beep.ogg', 45, TRUE)
-	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
+	on_puzzle_complete()
 
-/obj/machinery/puzzle_keycardpad/update_icon_state()
-	icon_state = "[base_icon_state][used]"
-	return ..()
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
+/obj/machinery/puzzle/password
+	name = "password panel"
+	desc = "A panel that controls something nearby. This one requires a (case-sensitive) password, and it's not \"Swordfish\"."
+	icon_state = "passpad0"
+	base_icon_state = "passpad"
+	///The password to this door.
+	var/password = ""
+	///The text shown in the tgui input popup
+	var/tgui_text = "Please enter the password."
+	///The title of the tgui input popup
+	var/tgui_title = "What's the password?"
+	///Decides whether the max length of the input is MAX_NAME_LEN or the length of the password.
+	var/input_max_len_is_pass = FALSE
+
+/obj/machinery/puzzle/password/get_save_vars()
+	return ..() + list(NAMEOF(src, password), NAMEOF(src, tgui_text), NAMEOF(src, tgui_title), NAMEOF(src, input_max_len_is_pass))
+
+/obj/machinery/puzzle/password/interact(mob/user, list/modifiers)
+	if(used && single_use)
+		return
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !user.can_interact_with(src))
+		return
+	var/pass_input = tgui_input_text(user, tgui_text, tgui_title, max_length = input_max_len_is_pass ? length(password) : MAX_NAME_LEN)
+	if(isnull(pass_input) || !user.can_perform_action(src, ALLOW_SILICON_REACH) || !user.can_interact_with(src))
+		return
+	var/correct = pass_input == password
+	balloon_alert_to_viewers("[correct ? "correct" : "wrong"] password[correct ? "" : "!"]")
+	if(!correct)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 45, TRUE)
+		return
+	used = single_use
+	update_icon_state()
+	playsound(src, 'sound/machines/terminal_button07.ogg', 45, TRUE)
+	on_puzzle_complete()
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password, 32)
+
+/obj/machinery/puzzle/password/pin
+	desc = "A panel that controls something nearby. This one requires a PIN password, so let's start by typing in 1234..."
+	tgui_text = "Please enter the PIN code."
+	tgui_title = "What's the PIN code?"
+	input_max_len_is_pass = TRUE
+	///The length of the PIN. Suggestion: something between 4 and 12.
+	var/pin_length = 6
+	///associate a color to each digit that may be found in the password.
+	var/list/digit_to_color = list()
+
+/obj/machinery/puzzle/password/pin/get_save_vars()
+	return ..() + NAMEOF(src, pin_length)
+
+/obj/machinery/puzzle/password/pin/Initialize(mapload)
+	. = ..()
+
+	for(var/iteration in 1 to pin_length)
+		password += "[rand(1, 9)]"
+
+	var/list/possible_colors = list(
+			"white",
+			"black",
+			"red",
+			"green",
+			"blue",
+			"yellow",
+			"orange",
+			"brown",
+			"gray",
+		)
+	for(var/digit in 0 to 9)
+		digit_to_color["[digit]"] = pick_n_take(possible_colors)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 
 //
 // blockade
@@ -389,6 +469,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 	/// if we receive a puzzle signal with this id we get destroyed
 	var/id
 
+/obj/structure/puzzle_blockade/get_save_vars()
+	return ..() + NAMEOF(src, id)
+
 /obj/structure/puzzle_blockade/Initialize(mapload)
 	. = ..()
 	if(!isnull(id))
@@ -403,3 +486,169 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	do_sparks(3, cardinal_only = FALSE, source = src)
 	qdel(src)
+
+/obj/structure/puzzle_blockade/oneway
+	name = "one-way gate"
+	desc = "A wall of solid light, likely defending something important. Virtually indestructible."
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "oneway"
+	base_icon_state = "oneway"
+	light_color = COLOR_BIOLUMINESCENCE_BLUE
+	light_range = 1
+	density = FALSE
+
+/obj/structure/puzzle_blockade/oneway/update_icon_state()
+	icon_state = "[base_icon_state][density ? "" : "-off"]"
+	return ..()
+
+/obj/structure/puzzle_blockade/oneway/CanAllowThrough(atom/movable/mover, border_dir)
+	return ..() && (REVERSE_DIR(border_dir) == dir || get_turf(mover) == get_turf(src))
+
+/obj/structure/puzzle_blockade/oneway/CanAStarPass(border_dir, datum/can_pass_info/pass_info)
+	return REVERSE_DIR(border_dir) == dir
+
+/obj/structure/puzzle_blockade/oneway/try_signal(datum/source)
+	density = FALSE
+	update_appearance(UPDATE_ICON)
+
+/obj/effect/puzzle_poddoor_open
+	name = "puzzle-poddoor relay"
+	desc = "activates poddoors if activated with a puzzle signal."
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = ""
+	anchored = TRUE
+	invisibility = INVISIBILITY_MAXIMUM
+	/// if we receive a puzzle signal with this we do our thing
+	var/queue_id
+	/// door id
+	var/id
+
+/obj/effect/puzzle_poddoor_open/get_save_vars()
+	return ..() + list(NAMEOF(src, queue_id), NAMEOF(src, id))
+
+/obj/effect/puzzle_poddoor_open/Initialize(mapload)
+	. = ..()
+	if(isnull(id) || isnull(queue_id))
+		log_mapping("[src] id:[id] has no id or door id and has been deleted")
+		return INITIALIZE_HINT_QDEL
+
+	SSqueuelinks.add_to_queue(src, queue_id)
+
+/obj/effect/puzzle_poddoor_open/MatchedLinks(id, list/partners)
+	for(var/partner in partners)
+		RegisterSignal(partner, COMSIG_PUZZLE_COMPLETED, PROC_REF(try_signal))
+
+/obj/effect/puzzle_poddoor_open/proc/try_signal(datum/source)
+	SIGNAL_HANDLER
+	var/openclose
+	for(var/obj/machinery/door/poddoor/door as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
+		if(door.id != id)
+			continue
+		if(isnull(openclose))
+			openclose = door.density
+		INVOKE_ASYNC(door, openclose ? TYPE_PROC_REF(/obj/machinery/door/poddoor, open) : TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
+
+#define MAX_PUZZLE_DOTS_PER_ROW 4
+#define PUZZLE_DOTS_VERTICAL_OFFSET 7
+#define PUZZLE_DOTS_HORIZONTAL_OFFSET 7
+
+///A dotted board that can be used as clue for PIN puzzle machinery
+/obj/effect/decal/puzzle_dots
+	name = "dotted board"
+	desc = "A board filled with colored dots. What could this mean?"
+	icon = 'icons/obj/fluff/puzzle_small.dmi'
+	icon_state = "puzzle_dots"
+	plane = GAME_PLANE //visible over walls
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | UNACIDABLE | LAVA_PROOF
+	flags_1 = UNPAINTABLE_1
+	///The id of the puzzle we're linked to.
+	var/id
+
+/obj/effect/decal/puzzle_dots/get_save_vars()
+	return ..() + NAMEOF(src, id)
+
+/obj/effect/decal/puzzle_dots/Initialize(mapload)
+	. = ..()
+	if(id)
+		SSqueuelinks.add_to_queue(src, id)
+
+/obj/effect/decal/puzzle_dots/MatchedLinks(id, partners)
+	var/obj/machinery/puzzle/password/pin/pad = locate() in partners
+	var/list/pass_digits = splittext(pad.password, "")
+	var/pass_len = length(pass_digits)
+	var/extra_rows = CEILING((pass_len/MAX_PUZZLE_DOTS_PER_ROW)-1, 1)
+	if(extra_rows)
+		pixel_y += round(extra_rows*(PUZZLE_DOTS_VERTICAL_OFFSET*0.5))
+		for(var/i in 1 to extra_rows)
+			var/mutable_appearance/row = mutable_appearance(icon, icon_state)
+			row.pixel_y = -i*PUZZLE_DOTS_VERTICAL_OFFSET
+			add_overlay(row)
+	for(var/i in 1 to pass_len)
+		var/mutable_appearance/colored_dot = mutable_appearance(icon, "puzzle_dot_single")
+		colored_dot.color = pad.digit_to_color[pass_digits[i]]
+		colored_dot.pixel_x = PUZZLE_DOTS_HORIZONTAL_OFFSET * ((i-1)%MAX_PUZZLE_DOTS_PER_ROW)
+		colored_dot.pixel_y -= CEILING((i/MAX_PUZZLE_DOTS_PER_ROW)-1, 1)*PUZZLE_DOTS_VERTICAL_OFFSET
+		add_overlay(colored_dot)
+
+#undef MAX_PUZZLE_DOTS_PER_ROW
+#undef PUZZLE_DOTS_VERTICAL_OFFSET
+#undef PUZZLE_DOTS_HORIZONTAL_OFFSET
+
+
+/obj/effect/decal/cleanable/crayon/puzzle
+	name = "Password character"
+	icon_state = "0"
+	///The id of the puzzle we're linked to.
+	var/puzzle_id
+
+/obj/effect/decal/cleanable/crayon/puzzle/get_save_vars()
+	return ..() + NAMEOF(src, puzzle_id)
+
+/obj/effect/decal/cleanable/crayon/puzzle/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null)
+	. = ..()
+	name = "number"
+	if(puzzle_id)
+		SSqueuelinks.add_to_queue(src, puzzle_id)
+
+/obj/effect/decal/cleanable/crayon/puzzle/MatchedLinks(id, partners)
+	var/obj/machinery/puzzle/password/pad = locate() in partners
+	var/list/pass_character = splittext(pad.password, "")
+	var/chosen_character = icon_state
+	if(!findtext(chosen_character, GLOB.is_alphanumeric))
+		qdel(src)
+		return FALSE
+	icon_state = pick(pass_character)
+	if(!text2num(icon_state))
+		name = "letter"
+		desc = "A letter vandalizing the station."
+	return TRUE
+
+/obj/effect/decal/cleanable/crayon/puzzle/pin
+	name = "PIN number"
+
+/obj/effect/decal/cleanable/crayon/puzzle/pin/MatchedLinks(id, partners)
+	. = ..()
+	var/obj/machinery/puzzle/password/pin/pad = locate() in partners
+	add_atom_colour(pad.digit_to_color[icon_state], FIXED_COLOUR_PRIORITY)
+
+/obj/item/paper/fluff/scrambled_pass
+	name = "gibberish note"
+	icon_state = "scrap"
+	///The ID associated to the puzzle we're part of.
+	var/puzzle_id
+
+/obj/item/paper/fluff/scrambled_pass/get_save_vars()
+	return ..() + NAMEOF(src, puzzle_id)
+
+/obj/item/paper/fluff/scrambled_pass/Initialize(mapload)
+	. = ..()
+	if(mapload && puzzle_id)
+		SSqueuelinks.add_to_queue(src, puzzle_id)
+
+/obj/item/paper/fluff/scrambled_pass/MatchedLinks(id, partners)
+	var/obj/machinery/puzzle/password/pad = locate() in partners
+	var/scrambled_text = ""
+	var/list/pass_characters = splittext(pad.password, "")
+	for(var/i in 1 to rand(200, 300))
+		scrambled_text += pick(pass_characters)
+	add_raw_text(scrambled_text)

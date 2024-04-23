@@ -19,6 +19,7 @@
 	melee_damage_upper = 25
 	gold_core_spawnable = HOSTILE_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider
+	bite_injection_flags = INJECT_CHECK_PENETRATE_THICK
 	/// Actions to grant on Initialize
 	var/list/innate_actions = null
 
@@ -108,6 +109,11 @@
 	. = ..()
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/fast_web)
 
+///Used in the caves away mission.
+/mob/living/basic/spider/giant/hunter/away_caves
+	minimum_survivable_temperature = 0
+	gold_core_spawnable = NO_SPAWN
+
 /**
  * ### Scout Spider
  * A subtype of the giant spider which is faster, has thermal vision, but less health and damage.
@@ -164,6 +170,11 @@
 	menu_description = "Avarage speed spider able to heal other spiders and itself together with a fast web laying capability, has low damage and health."
 	///The health HUD applied to the mob.
 	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
+
+///Used in the caves away mission.
+/mob/living/basic/spider/giant/nurse/away_caves
+	minimum_survivable_temperature = 0
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/basic/spider/giant/nurse/Initialize(mapload)
 	. = ..()
@@ -253,7 +264,7 @@
 	icon_dead = "tank_dead"
 	maxHealth = 500
 	health = 500
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	obj_damage = 15
@@ -349,7 +360,7 @@
 	melee_damage_lower = 35
 	melee_damage_upper = 40
 	obj_damage = 100
-	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, STAMINA = 0, OXY = 1)
 	speed = 6
 	player_speed_modifier = -5.5 // Doesn't seem that slow but it gets a debuff off web
 	mob_size = MOB_SIZE_LARGE
@@ -463,7 +474,7 @@
  */
 /mob/living/basic/spider/giant/ice
 	name = "giant ice spider"
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
 	color = rgb(114,228,250)
@@ -477,7 +488,7 @@
  */
 /mob/living/basic/spider/giant/nurse/ice
 	name = "giant ice spider"
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
 	poison_type = /datum/reagent/consumable/frostoil
@@ -491,7 +502,7 @@
  */
 /mob/living/basic/spider/giant/hunter/ice
 	name = "giant ice spider"
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
 	poison_type = /datum/reagent/consumable/frostoil
@@ -561,7 +572,7 @@
 	web_speed = 0.4
 	maxHealth = 80
 	health = 80
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 	unsuitable_cold_damage = 1
 	unsuitable_heat_damage = 1
 	menu_description = "Stronger assassin spider variant with an unmatched speed, high amount of health and very deadly poison, but deals very low amount of damage. It also has ability to ventcrawl."

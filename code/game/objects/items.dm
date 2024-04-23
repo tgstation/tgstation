@@ -221,6 +221,11 @@
 	/// A lazylist used for applying fantasy values, contains the actual modification applied to a variable.
 	var/list/fantasy_modifications = null
 
+	/// Has the item been reskinned?
+	var/current_skin
+	///// List of options to reskin.
+	var/list/unique_reskin
+
 /obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
 		attack_verb_continuous = string_list(attack_verb_continuous)
@@ -257,6 +262,11 @@
 	if(LAZYLEN(embedding))
 		updateEmbedding()
 
+	if(unique_reskin)
+		RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
+		register_context()
+
+
 /obj/item/Destroy(force)
 	// This var exists as a weird proxy "owner" ref
 	// It's used in a few places. Stop using it, and optimially replace all uses please
@@ -270,6 +280,20 @@
 		remove_item_action(action)
 
 	return ..()
+
+
+/obj/item/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(!unique_reskin)
+		return
+
+	if(current_skin && !(item_flags & INFINITE_RESKIN))
+		return
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Reskin"
+	return CONTEXTUAL_SCREENTIP_SET
+
 
 /// Called when an action associated with our item is deleted
 /obj/item/proc/on_action_deleted(datum/source)
@@ -469,8 +493,9 @@
 	if(!.)
 		return
 
-	if(href_list[VV_HK_ADD_FANTASY_AFFIX] && check_rights(R_FUN))
-
+	if(href_list[VV_HK_ADD_FANTASY_AFFIX])
+		if(!check_rights(R_FUN))
+			return
 		//gathering all affixes that make sense for this item
 		var/list/prefixes = list()
 		var/list/suffixes = list()
@@ -483,13 +508,11 @@
 					prefixes[affix_choice.name] = affix_choice
 				else
 					suffixes[affix_choice.name] = affix_choice
-
 		//making it more presentable here
 		var/list/affixes = list("---PREFIXES---")
 		affixes.Add(prefixes)
 		affixes.Add("---SUFFIXES---")
 		affixes.Add(suffixes)
-
 		//admin picks, cleanup the ones we didn't do and handle chosen
 		var/picked_affix_name = tgui_input_list(usr, "Affix to add to [src]", "Enchant [src]", affixes)
 		if(isnull(picked_affix_name))
@@ -503,7 +526,6 @@
 			fantasy_quality++
 		else
 			fantasy_quality--
-
 		//name gets changed by the component so i want to store it for feedback later
 		var/before_name = name
 		//naming these vars that i'm putting into the fantasy component to make it more readable
@@ -513,7 +535,6 @@
 		if(AddComponent(/datum/component/fantasy, fantasy_quality, list(affix), canFail, announce) == COMPONENT_INCOMPATIBLE)
 			to_chat(usr, span_warning("Fantasy component not compatible with [src]."))
 			CRASH("fantasy component incompatible with object of type: [type]")
-
 		to_chat(usr, span_notice("[before_name] now has [picked_affix_name]!"))
 		log_admin("[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]")
 		message_admins(span_notice("[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]"))
@@ -524,20 +545,20 @@
 		return
 	return attempt_pickup(user)
 
-/obj/item/proc/attempt_pickup(mob/user)
+/obj/item/proc/attempt_pickup(mob/user, skip_grav = FALSE)
 	. = TRUE
 
 	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP)) //See if we're supposed to auto pickup.
 		return
 
-	//Heavy gravity makes picking up things very slow.
-	var/grav = user.has_gravity()
-	if(grav > STANDARD_GRAVITY)
-		var/grav_power = min(3,grav - STANDARD_GRAVITY)
-		to_chat(user,span_notice("You start picking up [src]..."))
-		if(!do_after(user, 30 * grav_power, src))
-			return
-
+	if(!skip_grav)
+		//Heavy gravity makes picking up things very slow.
+		var/grav = user.has_gravity()
+		if(grav > STANDARD_GRAVITY)
+			var/grav_power = min(3,grav - STANDARD_GRAVITY)
+			to_chat(user,span_notice("You start picking up [src]..."))
+			if(!do_after(user, 30 * grav_power, src))
+				return
 
 	//If the item is in a storage item, take it out
 	var/outside_storage = !loc.atom_storage
@@ -609,8 +630,23 @@
 		playsound(src, block_sound, BLOCK_SOUND_VOLUME, vary = TRUE)
 		return TRUE
 
-/obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language, list/message_mods)
-	return ITALICS | REDUCE_RANGE
+/**
+ * Handles someone talking INTO an item
+ *
+ * Commonly used by someone holding it and using .r or .l
+ * Also used by radios
+ *
+ * * speaker - the atom that is doing the talking
+ * * message - the message being spoken
+ * * channel - the channel the message is being spoken on, only really used for radios
+ * * spans - the spans of the message
+ * * language - the language the message is in
+ * * message_mods - any message mods that should be applied to the message
+ *
+ * Return a flag that modifies the original message
+ */
+/obj/item/proc/talk_into(atom/movable/speaker, message, channel, list/spans, datum/language/language, list/message_mods)
+	return SEND_SIGNAL(src, COMSIG_ITEM_TALK_INTO, speaker, message, channel, spans, language, message_mods) || (ITALICS|REDUCE_RANGE)
 
 /// Called when a mob drops an item.
 /obj/item/proc/dropped(mob/user, silent = FALSE)
@@ -769,16 +805,17 @@
 
 /obj/item/on_exit_storage(datum/storage/master_storage)
 	. = ..()
-	var/atom/location = master_storage.real_location?.resolve()
-	do_drop_animation(location)
+	do_drop_animation(master_storage.parent)
 
 /obj/item/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(QDELETED(hit_atom))
 		return
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum) & COMPONENT_MOVABLE_IMPACT_NEVERMIND)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_IMPACT, hit_atom, throwingdatum) & COMPONENT_MOVABLE_IMPACT_NEVERMIND)
 		return
 	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_PREHITBY, src, throwingdatum) & COMSIG_HIT_PREVENTED)
 		return
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
 	if(get_temperature() && isliving(hit_atom))
 		var/mob/living/L = hit_atom
 		L.ignite_mob()
@@ -860,7 +897,7 @@
 	if(flags & ITEM_SLOT_EYES)
 		owner.update_worn_glasses()
 	if(flags & ITEM_SLOT_EARS)
-		owner.update_inv_ears()
+		owner.update_worn_ears()
 	if(flags & ITEM_SLOT_MASK)
 		owner.update_worn_mask()
 	if(flags & ITEM_SLOT_HEAD)
@@ -947,8 +984,8 @@
 
 	return SEND_SIGNAL(src, COMSIG_ITEM_MICROWAVE_ACT, microwave_source, microwaver, randomize_pixel_offset)
 
-
-/obj/item/proc/grind_requirements(obj/machinery/reagentgrinder/R) //Used to check for extra requirements for grinding an object
+//Used to check for extra requirements for blending(grinding or juicing) an object
+/obj/item/proc/blend_requirements(obj/machinery/reagentgrinder/R)
 	return TRUE
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
@@ -959,10 +996,12 @@
 /obj/item/proc/grind(datum/reagents/target_holder, mob/user)
 	if(on_grind() == -1)
 		return FALSE
-	if(target_holder)
+
+	if(length(grind_results))
 		target_holder.add_reagent_list(grind_results)
-		if(reagents)
-			reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+	if(reagents?.total_volume)
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+
 	return TRUE
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
@@ -973,12 +1012,13 @@
 
 ///Juice item, converting nutriments into juice_typepath and transfering to target_holder if specified
 /obj/item/proc/juice(datum/reagents/target_holder, mob/user)
-	if(on_juice() == -1)
+	if(on_juice() == -1 || !reagents?.total_volume)
 		return FALSE
-	if(reagents)
+
+	if(ispath(juice_typepath))
 		reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
-		if(target_holder)
-			reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+	reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+
 	return TRUE
 
 /obj/item/proc/set_force_string()
@@ -1032,7 +1072,7 @@
 /obj/item/proc/apply_outline(outline_color = null)
 	if(((get(src, /mob) != usr) && !loc?.atom_storage && !(item_flags & IN_STORAGE)) || QDELETED(src) || isobserver(usr)) //cancel if the item isn't in an inventory, is being deleted, or if the person hovering is a ghost (so that people spectating you don't randomly make your items glow)
 		return FALSE
-	var/theme = lowertext(usr.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
+	var/theme = LOWER_TEXT(usr.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 	if(!outline_color) //if we weren't provided with a color, take the theme's color
 		switch(theme) //yeah it kinda has to be this way
 			if("midnight")
@@ -1070,7 +1110,7 @@
 			skill_modifier = user.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
 
 			if(user.mind.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_JOURNEYMAN && prob(user.mind.get_skill_modifier(/datum/skill/mining, SKILL_PROBS_MODIFIER))) // we check if the skill level is greater than Journeyman and then we check for the probality for that specific level.
-				mineral_scan_pulse(get_turf(user), SKILL_LEVEL_JOURNEYMAN - 2) //SKILL_LEVEL_JOURNEYMAN = 3 So to get range of 1+ we have to subtract 2 from it,.
+				mineral_scan_pulse(get_turf(user), SKILL_LEVEL_JOURNEYMAN - 2, scanner = src) //SKILL_LEVEL_JOURNEYMAN = 3 So to get range of 1+ we have to subtract 2 from it,.
 
 	delay *= toolspeed * skill_modifier
 
@@ -1155,7 +1195,8 @@
 	return ..()
 
 /obj/item/proc/embedded(atom/embedded_target, obj/item/bodypart/part)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_EMBEDDED, embedded_target, part)
 
 /obj/item/proc/unembedded()
 	if(item_flags & DROPDEL && !QDELETED(src))
@@ -1176,6 +1217,8 @@
 
 ///In case we want to do something special (like self delete) upon failing to embed in something.
 /obj/item/proc/failedEmbed()
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_FAILED_EMBED)
 	if(item_flags & DROPDEL && !QDELETED(src))
 		qdel(src)
 
@@ -1634,3 +1677,27 @@
 	if (!isnull(tool_behaviour))
 		return list(tool_behaviour)
 	return null
+
+/obj/item/animate_atom_living(mob/living/owner)
+	new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)
+
+/**
+ * Used to update the weight class of the item in a way that other atoms can react to the change.
+ *
+ * Arguments:
+ * * new_w_class - The new weight class of the item.
+ *
+ * Returns:
+ * * TRUE if weight class was successfully updated
+ * * FALSE otherwise
+ */
+/obj/item/proc/update_weight_class(new_w_class)
+	if(w_class == new_w_class)
+		return FALSE
+
+	var/old_w_class = w_class
+	w_class = new_w_class
+	SEND_SIGNAL(src, COMSIG_ITEM_WEIGHT_CLASS_CHANGED, old_w_class, new_w_class)
+	if(!isnull(loc))
+		SEND_SIGNAL(loc, COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED, src, old_w_class, new_w_class)
+	return TRUE

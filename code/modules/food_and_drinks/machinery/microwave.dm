@@ -15,7 +15,7 @@
 #define MAX_MICROWAVE_DIRTINESS 100
 
 /// For the wireless version, and display fluff
-#define TIER_1_CELL_CHARGE_RATE 250
+#define TIER_1_CELL_CHARGE_RATE (0.25 * STANDARD_CELL_CHARGE)
 
 /obj/machinery/microwave
 	name = "microwave oven"
@@ -31,6 +31,7 @@
 	light_color = LIGHT_COLOR_DIM_YELLOW
 	light_power = 3
 	anchored_tabletop_offset = 6
+	interaction_flags_click = ALLOW_SILICON_REACH
 	/// Is its function wire cut?
 	var/wire_disabled = FALSE
 	/// Wire cut to run mode backwards
@@ -105,7 +106,7 @@
 				itemized_ingredient.pixel_y = itemized_ingredient.base_pixel_y + rand(-5, 6)
 	return ..()
 
-/obj/machinery/microwave/on_deconstruction()
+/obj/machinery/microwave/on_deconstruction(disassembled)
 	eject()
 	return ..()
 
@@ -312,21 +313,21 @@
 /obj/machinery/microwave/wrench_act(mob/living/user, obj/item/tool)
 	if(default_unfasten_wrench(user, tool))
 		update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/crowbar_act(mob/living/user, obj/item/tool)
 	if(!default_deconstruction_crowbar(tool))
 		return
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/screwdriver_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/wirecutter_act(mob/living/user, obj/item/tool)
 	if(broken != REALLY_BROKEN)
-		return
+		return NONE
 
 	user.visible_message(
 		span_notice("[user] starts to fix part of [src]."),
@@ -334,7 +335,7 @@
 	)
 
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
 		span_notice("[user] fixes part of [src]."),
@@ -342,11 +343,11 @@
 	)
 	broken = KINDA_BROKEN // Fix it a bit
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/welder_act(mob/living/user, obj/item/tool)
 	if(broken != KINDA_BROKEN)
-		return
+		return NONE
 
 	user.visible_message(
 		span_notice("[user] starts to fix part of [src]."),
@@ -354,7 +355,7 @@
 	)
 
 	if(!tool.use_tool(src, user, 2 SECONDS, amount = 1, volume = 50))
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
 		span_notice("[user] fixes [src]."),
@@ -362,21 +363,17 @@
 	)
 	broken = NOT_BROKEN
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/microwave/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/obj/machinery/microwave/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(operating)
-		return
+		return ITEM_INTERACT_SKIP_TO_ATTACK // Don't use tools if we're dirty
 	if(dirty >= MAX_MICROWAVE_DIRTINESS)
-		return
-
-	. = ..()
-	if(. & TOOL_ACT_MELEE_CHAIN_BLOCKING)
-		return
-
+		return ITEM_INTERACT_SKIP_TO_ATTACK // Don't insert items if we're dirty
 	if(panel_open && is_wire_tool(tool))
 		wires.interact(user)
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/machinery/microwave/attackby(obj/item/item, mob/living/user, params)
 	if(operating)
@@ -392,7 +389,7 @@
 		var/swapped = FALSE
 		if(!isnull(cell))
 			cell.forceMove(drop_location())
-			if(!issilicon(user) && Adjacent(user))
+			if(!HAS_SILICON_ACCESS(user) && Adjacent(user))
 				user.put_in_hands(cell)
 			cell = null
 			swapped = TRUE
@@ -416,8 +413,8 @@
 			return TRUE
 		return ..()
 
-	if(vampire_charging_capable && istype(item, /obj/item/modular_computer/pda) && ingredients.len > 0)
-		balloon_alert(user, "max 1 pda!")
+	if(vampire_charging_capable && istype(item, /obj/item/modular_computer) && ingredients.len > 0)
+		balloon_alert(user, "max 1 device!")
 		return FALSE
 
 	if(istype(item, /obj/item/storage))
@@ -471,20 +468,20 @@
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/microwave/AltClick(mob/user, list/modifiers)
-	if(user.can_perform_action(src, ALLOW_SILICON_REACH))
-		if(!vampire_charging_capable)
-			return
+/obj/machinery/microwave/click_alt(mob/user, list/modifiers)
+	if(!vampire_charging_capable)
+		return NONE
 
-		vampire_charging_enabled = !vampire_charging_enabled
-		balloon_alert(user, "set to [vampire_charging_enabled ? "charge" : "cook"]")
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, FALSE)
-		if(issilicon(user))
-			visible_message(span_notice("[user] sets \the [src] to [vampire_charging_enabled ? "charge" : "cook"]."), blind_message = span_notice("You hear \the [src] make an informative beep!"))
+	vampire_charging_enabled = !vampire_charging_enabled
+	balloon_alert(user, "set to [vampire_charging_enabled ? "charge" : "cook"]")
+	playsound(src, 'sound/machines/twobeep_high.ogg', 50, FALSE)
+	if(HAS_SILICON_ACCESS(user))
+		visible_message(span_notice("[user] sets \the [src] to [vampire_charging_enabled ? "charge" : "cook"]."), blind_message = span_notice("You hear \the [src] make an informative beep!"))
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/microwave/CtrlClick(mob/user)
 	. = ..()
-	if(cell_powered && !isnull(cell) && anchored)
+	if(user.can_perform_action(src) && cell_powered && !isnull(cell) && anchored)
 		user.put_in_hands(cell)
 		balloon_alert(user, "removed cell")
 		cell = null
@@ -498,22 +495,22 @@
 		return
 	if(operating || panel_open || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
-	if(isAI(user) && (machine_stat & NOPOWER))
+	if(HAS_AI_ACCESS(user) && (machine_stat & NOPOWER))
 		return
 
 	if(!length(ingredients))
-		if(isAI(user))
+		if(HAS_AI_ACCESS(user))
 			examine(user)
 		else
 			balloon_alert(user, "it's empty!")
 		return
 
-	var/choice = show_radial_menu(user, src, isAI(user) ? ai_radial_options : radial_options, require_near = !issilicon(user))
+	var/choice = show_radial_menu(user, src, HAS_AI_ACCESS(user) ? ai_radial_options : radial_options, require_near = !HAS_SILICON_ACCESS(user))
 
 	// post choice verification
 	if(operating || panel_open || (!vampire_charging_capable && !anchored) || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
-	if(isAI(user) && (machine_stat & NOPOWER))
+	if(HAS_AI_ACCESS(user) && (machine_stat & NOPOWER))
 		return
 
 	switch(choice)
@@ -575,7 +572,7 @@
 
 	if(cell_powered && cell?.charge < TIER_1_CELL_CHARGE_RATE * efficiency)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
-		balloon_alert(cooker, "replace cell!")
+		balloon_alert(cooker, "no power draw!")
 		return
 
 	if(cooker && HAS_TRAIT(cooker, TRAIT_CURSED) && prob(7))
@@ -591,7 +588,7 @@
 	for(var/atom/movable/potential_fooditem as anything in ingredients)
 		if(IS_EDIBLE(potential_fooditem))
 			non_food_ingedients--
-		if(istype(potential_fooditem, /obj/item/modular_computer/pda) && prob(75))
+		if(istype(potential_fooditem, /obj/item/modular_computer) && prob(75))
 			pda_failure = TRUE
 			notify_ghosts(
 				"[cooker] has overheated their PDA!",
@@ -608,11 +605,13 @@
 	start(cooker)
 
 /obj/machinery/microwave/proc/wzhzhzh()
+	if(cell_powered && !isnull(cell))
+		if(!cell.use(TIER_1_CELL_CHARGE_RATE * efficiency))
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+			return
+
 	visible_message(span_notice("\The [src] turns on."), null, span_hear("You hear a microwave humming."))
 	operating = TRUE
-	if(cell_powered && !isnull(cell))
-		cell.use(TIER_1_CELL_CHARGE_RATE * efficiency)
-
 	set_light(l_range = 1.5, l_power = 1.2, l_on = TRUE)
 	soundloop.start()
 	update_appearance()
@@ -671,7 +670,7 @@
 				pre_success(cooker)
 		return
 	cycles--
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(cook_loop), type, cycles, wait, cooker), wait)
 
 /obj/machinery/microwave/power_change()
@@ -762,7 +761,7 @@
  * * cooker - The mob that initiated the cook cycle, can be null if no apparent mob triggered it (such as via emp)
  */
 /obj/machinery/microwave/proc/vampire(mob/cooker)
-	var/obj/item/modular_computer/pda/vampire_pda = LAZYACCESS(ingredients, 1)
+	var/obj/item/modular_computer/vampire_pda = LAZYACCESS(ingredients, 1)
 	if(isnull(vampire_pda))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		after_finish_loop()
@@ -794,7 +793,7 @@
 
 	// We should only be charging PDAs
 	for(var/atom/movable/potential_item as anything in ingredients)
-		if(!istype(potential_item, /obj/item/modular_computer/pda))
+		if(!istype(potential_item, /obj/item/modular_computer))
 			balloon_alert(cooker, "pda only!")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 			eject()
@@ -815,7 +814,7 @@
 		pre_fail()
 		return
 
-	if(!vampire_charge_amount || !length(ingredients) || (!isnull(cell) && !cell.charge) || vampire_charge_amount < 25)
+	if(!vampire_charge_amount || !length(ingredients) || isnull(cell) || !cell.charge || vampire_charge_amount < 25)
 		vampire_cell = null
 		charge_loop_finish(cooker)
 		return
@@ -827,8 +826,9 @@
 	if(cell_powered && !cell.use(charge_rate))
 		charge_loop_finish(cooker)
 
-	vampire_cell.give(charge_rate * (0.85 + (efficiency * 0.5))) // we lose a tiny bit of power in the transfer as heat
-	use_power(charge_rate)
+	use_energy(charge_rate * (0.5 - efficiency * 0.12)) //Some of the power gets lost as heat.
+	charge_cell(charge_rate * (0.5 + efficiency * 0.12), vampire_cell) //Cell gets charged, which further uses power.
+
 
 	vampire_charge_amount = vampire_cell.maxcharge - vampire_cell.charge
 

@@ -15,8 +15,6 @@
 	var/list/obj/item/organ/organs = list()
 	///Same as [above][/mob/living/carbon/var/organs], but stores "slot ID" - "organ" pairs for easy access.
 	var/list/organs_slot = list()
-	///How many dream images we have left to send
-	var/dreaming = 0
 
 	///Whether or not the mob is handcuffed
 	var/obj/item/handcuffed = null
@@ -120,6 +118,9 @@
 	var/last_top_offset
 
 	/// A bitfield of "bodytypes", updated by /obj/item/bodypart/proc/synchronize_bodytypes()
-	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
+	var/bodytype = BODYTYPE_ORGANIC
+
+	/// A bitfield of "bodyshapes", updated by /obj/item/bodypart/proc/synchronize_bodyshapes()
+	var/bodyshape = BODYSHAPE_HUMANOID
 
 	COOLDOWN_DECLARE(bleeding_message_cd)

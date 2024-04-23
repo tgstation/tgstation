@@ -30,14 +30,10 @@
 			message_admins("Event attempted to spawn a revenant, but there were only [deadMobs]/[REVENANT_SPAWN_THRESHOLD] dead mobs.")
 			return WAITING_FOR_SOMETHING
 
-	var/list/candidates = get_candidates(ROLE_REVENANT, ROLE_REVENANT)
-	if(!candidates.len)
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_REVENANT, role = ROLE_REVENANT, alert_pic = /mob/living/basic/revenant, amount_to_pick = 1)
+	if(isnull(chosen_one))
 		return NOT_ENOUGH_PLAYERS
-
-	var/mob/dead/observer/selected = pick_n_take(candidates)
-
 	var/list/spawn_locs = list()
-
 	for(var/mob/living/L in GLOB.dead_mob_list) //look for any dead bodies
 		var/turf/T = get_turf(L)
 		if(T && is_station_level(T.z))
@@ -50,16 +46,16 @@
 	if(!spawn_locs.len) //If we can't find any valid spawnpoints, try the carp spawns
 		spawn_locs += find_space_spawn()
 	if(!spawn_locs.len) //If we can't find either, just spawn the revenant at the player's location
-		spawn_locs += get_turf(selected)
+		spawn_locs += get_turf(chosen_one)
 	if(!spawn_locs.len) //If we can't find THAT, then just give up and cry
 		return MAP_ERROR
 
 	var/mob/living/basic/revenant/revvie = new(pick(spawn_locs))
-	revvie.key = selected.key
+	revvie.key = chosen_one.key
 	message_admins("[ADMIN_LOOKUPFLW(revvie)] has been made into a revenant by an event.")
 	revvie.log_message("was spawned as a revenant by an event.", LOG_GAME)
 	spawned_mobs += revvie
-	qdel(selected)
+	qdel(chosen_one)
 	return SUCCESSFUL_SPAWN
 
 #undef REVENANT_SPAWN_THRESHOLD

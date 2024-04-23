@@ -18,15 +18,29 @@ SUBSYSTEM_DEF(queuelinks)
 	if(isnull(id))
 		CRASH("Attempted to add to queue with no ID; [what]")
 
-	var/datum/queue_link/link
-	if(isnull(queues[id]))
+	var/datum/queue_link/link = queues[id]
+	if(isnull(link))
 		link = new /datum/queue_link(id)
 		queues[id] = link
-	else
-		link = queues[id]
 
 	if(link.add(what, queue_max))
 		queues -= id
+
+/**
+ * Pop a queue link without waiting for it to reach its max size.
+ * This is useful for those links that do not have a fixed size and thus may not pop.
+ */
+/datum/controller/subsystem/queuelinks/proc/pop_link(id)
+	if(isnull(id))
+		CRASH("Attempted to pop a queue with no ID")
+
+	var/datum/queue_link/link = queues[id]
+	if(isnull(queues[id]))
+		CRASH("Attempted to pop a non-existant queue: [id]")
+
+	link.pop()
+	queues -= id
+
 
 /datum/queue_link
 	/// atoms in our queue
@@ -50,17 +64,17 @@ SUBSYSTEM_DEF(queuelinks)
 	if(queue_max != 0 && max != 0 && max != queue_max)
 		CRASH("Tried to change queue size to [max] from [queue_max]!")
 	else if(!queue_max)
-		queue_max = max	
-	
+		queue_max = max
+
 	if(!queue_max || length(partners) < queue_max)
 		return
-	
+
 	pop()
 	return TRUE
 
 /datum/queue_link/proc/pop()
 	for(var/atom/item as anything in partners)
-		item.MatchedLinks(id, partners)
+		item.MatchedLinks(id, partners - item)
 	qdel(src)
 
 /datum/queue_link/Destroy()

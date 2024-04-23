@@ -301,9 +301,11 @@
 		return
 	COOLDOWN_START(src, thank_time_cooldown, 6 SECONDS)
 	var/obj/vehicle/sealed/car/clowncar/clown_car = vehicle_entered_target
-	var/mob/living/carbon/human/clown = pick(clown_car.return_drivers())
-	if(!clown)
+	var/list/mob/drivers = clown_car.return_drivers()
+	if(!length(drivers))
+		to_chat(owner, span_danger("You prepare to thank the driver, only to realize that they don't exist."))
 		return
+	var/mob/clown = pick(drivers)
 	owner.say("Thank you for the fun ride, [clown.name]!")
 	clown_car.increment_thanks_counter()
 
@@ -351,7 +353,7 @@
 			rider.client.give_award(/datum/award/achievement/misc/tram_surfer, rider)
 		vehicle.grinding = TRUE
 		vehicle.icon_state = "[initial(vehicle.icon_state)]-grind"
-		addtimer(CALLBACK(vehicle, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard/, grind)), 2)
+		addtimer(CALLBACK(vehicle, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard/, grind)), 0.2 SECONDS)
 	else
 		vehicle.obj_flags &= ~BLOCK_Z_OUT_DOWN
 	rider.spin(spintime = 4, speed = 1)

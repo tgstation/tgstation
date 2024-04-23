@@ -40,6 +40,8 @@
 #define COMSIG_KB_HUMAN_QUICKEQUIPBELT_DOWN "keybinding_human_quickequipbelt_down"
 #define COMSIG_KB_HUMAN_BAGEQUIP_DOWN "keybinding_human_bagequip_down"
 #define COMSIG_KB_HUMAN_SUITEQUIP_DOWN "keybinding_human_suitequip_down"
+#define COMSIG_KB_HUMAN_LPOCKETEQUIP_DOWN "keybinding_human_lpocketequip_down"
+#define COMSIG_KB_HUMAN_RPOCKETEQUIP_DOWN "keybinding_human_rpocketequip_down"
 
 //Living
 #define COMSIG_KB_LIVING_RESIST_DOWN "keybinding_living_resist_down"
@@ -64,6 +66,7 @@
 #define COMSIG_KB_MOB_ACTIVATEINHAND_DOWN "keybinding_mob_activateinhand_down"
 #define COMSIG_KB_MOB_DROPITEM_DOWN "keybinding_mob_dropitem_down"
 #define COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN "keybinding_mob_targetcyclehead_down"
+#define COMSIG_KB_MOB_TARGETHEAD_DOWN "keybinding_mob_targethead_down"
 #define COMSIG_KB_MOB_TARGETEYES_DOWN "keybinding_mob_targeteyes_down"
 #define COMSIG_KB_MOB_TARGETMOUTH_DOWN "keybinding_mob_targetmouth_down"
 #define COMSIG_KB_MOB_TARGETRIGHTARM_DOWN "keybinding_mob_targetrightarm_down"

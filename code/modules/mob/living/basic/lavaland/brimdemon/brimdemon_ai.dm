@@ -25,11 +25,11 @@
 
 /datum/ai_behavior/move_to_cardinal/brimdemon/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
-	if (!succeeded)
+	if(!succeeded)
 		return
 	var/mob/living/target = controller.blackboard[target_key]
 	var/datum/action/cooldown/ability = controller.blackboard[BB_TARGETED_ACTION]
-	if(!ability?.IsAvailable())
+	if(QDELETED(target) || QDELETED(controller.pawn) || !ability?.IsAvailable())
 		return
 	ability.InterceptClickOn(caller = controller.pawn, target = target)
 
@@ -43,6 +43,5 @@
 /datum/ai_behavior/targeted_mob_ability/brimbeam/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
 	var/mob/living/target = controller.blackboard[target_key]
 	if (QDELETED(target) || !(get_dir(controller.pawn, target) in GLOB.cardinals) || get_dist(controller.pawn, target) > max_target_distance)
-		finish_action(controller, succeeded = FALSE, ability_key = ability_key, target_key = target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	return ..()

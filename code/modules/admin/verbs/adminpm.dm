@@ -13,36 +13,19 @@
 // We also make SURE to fail loud, IE: if something stops the message from reaching the recipient, the sender HAS to know
 // If you "refactor" this to make it "cleaner" I will send you to hell
 
-/// Allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
-/client/proc/cmd_admin_pm_context(mob/M in GLOB.mob_list)
-	set category = null
-	set name = "Admin PM Mob"
-	if(!holder)
-		to_chat(src,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("Error: Admin-PM-Context: Only administrators may use this command."),
-			confidential = TRUE)
-		return
-	if(!ismob(M))
-		to_chat(src,
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_pm_context, R_NONE, "Admin PM Mob", mob/target in world)
+	if(!ismob(target))
+		to_chat(
+			src,
 			type = MESSAGE_TYPE_ADMINPM,
 			html = span_danger("Error: Admin-PM-Context: Target mob is not a mob, somehow."),
-			confidential = TRUE)
+			confidential = TRUE,
+		)
 		return
-	cmd_admin_pm(M.client, null)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM Mob") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	user.cmd_admin_pm(target.client, null)
+	BLACKBOX_LOG_ADMIN_VERB("Admin PM Mob")
 
-/// Shows a list of clients we could send PMs to, then forwards our choice to cmd_admin_pm
-/client/proc/cmd_admin_pm_panel()
-	set category = "Admin"
-	set name = "Admin PM"
-	if(!holder)
-		to_chat(src,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("Error: Admin-PM-Panel: Only administrators may use this command."),
-			confidential = TRUE)
-		return
-
+ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM", ADMIN_CATEGORY_MAIN)
 	var/list/targets = list()
 	for(var/client/client in GLOB.clients)
 		var/nametag = ""
@@ -62,8 +45,8 @@
 	var/target = input(src,"To whom shall we send a message?", "Admin PM", null) as null|anything in sort_list(targets)
 	if (isnull(target))
 		return
-	cmd_admin_pm(targets[target], null)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	user.cmd_admin_pm(targets[target], null)
+	BLACKBOX_LOG_ADMIN_VERB("Admin PM")
 
 /// Replys to some existing ahelp, reply to whom, which can be a client or ckey
 /client/proc/cmd_ahelp_reply(whom)
@@ -98,7 +81,7 @@
 	var/datum/admin_help/recipient_ticket = recipient?.current_ticket
 	// Any past interactions with the recipient ticket
 	var/datum/admin_help/recipient_interactions = recipient_ticket?.ticket_interactions
-	// Any opening interactions with the recipient ticket, IE: interactions started before the ticket first recieves a response
+	// Any opening interactions with the recipient ticket, IE: interactions started before the ticket first receives a response
 	var/datum/admin_help/opening_interactions = recipient_ticket?.opening_responders
 	// Our recipient's admin holder, if one exists
 	var/datum/admins/recipient_holder = recipient?.holder
@@ -629,7 +612,7 @@
 	// The ticket's id
 	var/ticket_id = ticket?.id
 
-	var/compliant_msg = trim(lowertext(message))
+	var/compliant_msg = trim(LOWER_TEXT(message))
 	var/tgs_tagged = "[sender](TGS/External)"
 	var/list/splits = splittext(compliant_msg, " ")
 	var/split_size = length(splits)

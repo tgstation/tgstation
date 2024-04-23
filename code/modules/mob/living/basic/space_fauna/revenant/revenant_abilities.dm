@@ -123,7 +123,7 @@
 		light_sparks.set_up(4, 0, light)
 		light_sparks.start()
 		new /obj/effect/temp_visual/revenant(get_turf(light))
-		addtimer(CALLBACK(src, PROC_REF(overload_shock), light, caster), 20)
+		addtimer(CALLBACK(src, PROC_REF(overload_shock), light, caster), 2 SECONDS)
 
 /datum/action/cooldown/spell/aoe/revenant/overload/proc/overload_shock(obj/machinery/light/to_shock, mob/living/basic/revenant/caster)
 	flick("[to_shock.base_state]2", to_shock)
@@ -204,7 +204,13 @@
 		if(!(bot.bot_cover_flags & BOT_COVER_EMAGGED))
 			new /obj/effect/temp_visual/revenant(bot.loc)
 			bot.bot_cover_flags &= ~BOT_COVER_LOCKED
-			bot.bot_cover_flags |= BOT_COVER_OPEN
+			bot.bot_cover_flags |= BOT_COVER_MAINTS_OPEN
+			bot.emag_act(caster)
+	for(var/mob/living/basic/bot/bot in victim)
+		if(!(bot.bot_access_flags & BOT_COVER_EMAGGED))
+			new /obj/effect/temp_visual/revenant(bot.loc)
+			bot.bot_access_flags &= ~BOT_COVER_LOCKED
+			bot.bot_access_flags |= BOT_COVER_MAINTS_OPEN
 			bot.emag_act(caster)
 	for(var/mob/living/carbon/human/human in victim)
 		if(human == caster)

@@ -47,7 +47,7 @@
 		if(relay_information(signal, send))
 			break
 
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
 
 // Preset Buses
 

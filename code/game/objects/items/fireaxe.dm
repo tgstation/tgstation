@@ -13,7 +13,7 @@
 	throwforce = 15
 	demolition_mod = 1.25
 	w_class = WEIGHT_CLASS_BULKY
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("attacks", "chops", "cleaves", "tears", "lacerates", "cuts")
 	attack_verb_simple = list("attack", "chop", "cleave", "tear", "lacerate", "cut")
@@ -86,3 +86,13 @@
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
 	usesound = 'sound/items/crowbar.ogg'
+
+//boarding axe
+/obj/item/fireaxe/boardingaxe
+	icon_state = "boarding_axe0"
+	base_icon_state = "boarding_axe"
+	name = "boarding axe"
+	desc = "A hulking cleaver that feels like a burden just looking at it. Seems excellent at halving obstacles like windows, airlocks, barricades and people."
+	force_unwielded = 5
+	force_wielded = 30
+	demolition_mod = 3

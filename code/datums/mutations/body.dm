@@ -20,7 +20,7 @@
 	owner.Unconscious(200 * GET_MUTATION_POWER(src))
 	owner.set_jitter(2000 SECONDS * GET_MUTATION_POWER(src)) //yes this number looks crazy but the jitter animations are amplified based on the duration.
 	owner.add_mood_event("epilepsy", /datum/mood_event/epilepsy)
-	addtimer(CALLBACK(src, PROC_REF(jitter_less)), 90)
+	addtimer(CALLBACK(src, PROC_REF(jitter_less)), 9 SECONDS)
 
 /datum/mutation/human/epilepsy/proc/jitter_less()
 	if(QDELETED(owner))
@@ -194,6 +194,7 @@
 	text_gain_indication = "You feel unusually monkey-like."
 	text_lose_indication = "You feel like your old self."
 	quality = NEGATIVE
+	remove_on_aheal = FALSE
 	locked = TRUE //Species specific, keep out of actual gene pool
 	var/datum/species/original_species = /datum/species/human
 	var/original_name
@@ -208,7 +209,7 @@
 	. = owner.monkeyize()
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/human/owner)
-	if(owner && owner.stat != DEAD && (owner.dna.mutations.Remove(src)) && ismonkey(owner))
+	if(!QDELETED(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)) && ismonkey(owner))
 		owner.fully_replace_character_name(null, original_name)
 		. = owner.humanize(original_species)
 
@@ -220,7 +221,7 @@
 	instability = 5
 	power_coeff = 1
 	conflicts = list(/datum/mutation/human/glow/anti)
-	var/glow_power = 2.5
+	var/glow_power = 2
 	var/glow_range = 2.5
 	var/glow_color
 	var/obj/effect/dummy/lighting_obj/moblight/glow
@@ -266,14 +267,41 @@
 	desc = "The user's muscles slightly expand."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You feel strong.</span>"
+	instability = 5
 	difficulty = 16
+
+/datum/mutation/human/strong/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	ADD_TRAIT(owner, TRAIT_STRENGTH, GENETIC_MUTATION)
+
+/datum/mutation/human/strong/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	REMOVE_TRAIT(owner, TRAIT_STRENGTH, GENETIC_MUTATION)
+
 
 /datum/mutation/human/stimmed
 	name = "Stimmed"
 	desc = "The user's chemical balance is more robust."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You feel stimmed.</span>"
+	instability = 5
 	difficulty = 16
+
+/datum/mutation/human/stimmed/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	ADD_TRAIT(owner, TRAIT_STIMMED, GENETIC_MUTATION)
+
+/datum/mutation/human/stimmed/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	REMOVE_TRAIT(owner, TRAIT_STIMMED, GENETIC_MUTATION)
 
 /datum/mutation/human/insulated
 	name = "Insulated"
@@ -500,14 +528,16 @@
 
 	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
+		brain.Remove(owner, special = TRUE)
 		brain.zone = BODY_ZONE_CHEST
+		brain.Insert(owner, special = TRUE)
 
 	var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
 		owner.visible_message(span_warning("[owner]'s head splatters with a sickening crunch!"), ignored_mobs = list(owner))
 		new /obj/effect/gibspawner/generic(get_turf(owner), owner)
-		head.dismember(dam_type = BRUTE, silent = TRUE)
 		head.drop_organs()
+		head.dismember(dam_type = BRUTE, silent = TRUE)
 		qdel(head)
 	RegisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB, PROC_REF(abort_attachment))
 
@@ -515,14 +545,18 @@
 	. = ..()
 	if(.)
 		return TRUE
-	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(brain) //so this doesn't instantly kill you. we could delete the brain, but it lets people cure brain issues they /really/ shouldn't be
-		brain.zone = initial(brain.zone)
+
 	UnregisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB)
 	var/successful = owner.regenerate_limb(BODY_ZONE_HEAD)
 	if(!successful)
 		stack_trace("HARS mutation head regeneration failed! (usually caused by headless syndrome having a head)")
 		return TRUE
+	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(brain)
+		brain.Remove(owner, special = TRUE)
+		brain.zone = initial(brain.zone)
+		brain.Insert(owner, special = TRUE)
+
 	owner.dna.species.regenerate_organs(owner, replace_current = FALSE, excluded_zones = list(BODY_ZONE_CHEST)) //replace_current needs to be FALSE to prevent weird adding and removing mutation healing
 	owner.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD) //and this to DISCOURAGE organ farming, or at least not make it free.
 	owner.visible_message(span_warning("[owner]'s head returns with a sickening crunch!"), span_warning("Your head regrows with a sickening crack! Ouch."))

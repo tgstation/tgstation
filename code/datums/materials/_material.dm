@@ -10,7 +10,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/name = "material"
 	/// A short description of the material. Not used anywhere, yet...
 	var/desc = "its..stuff."
-	/// What the material is indexed by in the SSmaterials.materials list. Defaults to the type of the material.
+	/// What the material is indexed by in the DSmaterials.materials list. Defaults to the type of the material.
 	var/id
 
 	///Base color of the material, is used for greyscale. Item isn't changed in color if this is null.
@@ -23,12 +23,14 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///Starlight color of the material
 	///This is the color of light it'll emit if its turf is transparent and over space. Defaults to COLOR_STARLIGHT if not set
 	var/starlight_color
-	///Bitflags that influence how SSmaterials handles this material.
+	///Bitflags that influence how DSmaterials handles this material.
 	var/init_flags = MATERIAL_INIT_MAPLOAD
 	///Materials "Traits". its a map of key = category | Value = Bool. Used to define what it can be used for
 	var/list/categories = list()
 	///The type of sheet this material creates. This should be replaced as soon as possible by greyscale sheets
 	var/sheet_type
+	/// What type of ore is this material associated with? Used for mining, and not every material has one.
+	var/obj/item/ore_type
 	///This is a modifier for force, and resembles the strength of the material
 	var/strength_modifier = 1
 	///This is a modifier for integrity, and resembles the strength of the material
@@ -59,6 +61,10 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/obj/item/shard_type
 	///What type of debris the tile will leave behind when shattered.
 	var/obj/effect/decal/debris_type
+	/// How likely this mineral is to be found in a boulder during mining.
+	var/mineral_rarity = MATERIAL_RARITY_COMMON
+	/// How many points per units of ore does this grant?
+	var/points_per_unit = 1
 
 /** Handles initializing the material.
  *
@@ -245,7 +251,7 @@ Simple datum which is instanced once per type and is used for every object of sa
  *
  * Arguments:
  * - amount: The amount of the material to break down.
- * - breakdown_flags: Some flags dictating how exactly this material is being broken down.
  */
-/datum/material/proc/return_composition(amount=1, breakdown_flags=NONE)
-	return list((src) = amount) // Yes we need the parenthesis, without them BYOND stringifies src into "src" and things break.
+/datum/material/proc/return_composition(amount = 1)
+	// Yes we need the parenthesis, without them BYOND stringifies src into "src" and things break.
+	return list((src) = amount)

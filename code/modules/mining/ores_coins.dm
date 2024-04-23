@@ -298,7 +298,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		attacher = key_name(user)
 		user.balloon_alert_to_viewers("attached rig")
 		return
-	
+
 	if(I.tool_behaviour == TOOL_WRENCH && rig)
 		rig.on_found()
 		if(QDELETED(src))
@@ -410,7 +410,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
 	icon_state = "coin"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 1
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
@@ -453,7 +453,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if (!attack_self(user))
 		user.visible_message(span_suicide("[user] couldn't flip \the [src]!"))
 		return SHAME
-	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 10)//10 = time takes for flip animation
+	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 1 SECONDS)//10 = time takes for flip animation
 	return MANUAL_SUICIDE_NONLETHAL
 
 /obj/item/coin/proc/manual_suicide(mob/living/user)
@@ -614,7 +614,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/eldritch
 	name = "eldritch coin"
-	desc = "Everytime it lands it bolts or opens doors, except for you."
+	desc = "A surprisingly heavy, ornate coin. Its sides seem to depict a different image each time you look."
 	icon_state = "coin_heretic"
 	custom_materials = list(/datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT)
 	sideslist = list("heretic", "blade")

@@ -16,7 +16,7 @@
 	/// Power use when active
 	var/active_power_cost = DEFAULT_CHARGE_DRAIN * 0
 	/// Power use when used, we call it manually
-	var/use_power_cost = DEFAULT_CHARGE_DRAIN * 0
+	var/use_energy_cost = DEFAULT_CHARGE_DRAIN * 0
 	/// ID used by their TGUI
 	var/tgui_id
 	/// Linked MODsuit
@@ -175,7 +175,7 @@
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		balloon_alert(mod.wearer, "on cooldown!")
 		return FALSE
-	if(!check_power(use_power_cost))
+	if(!check_power(use_energy_cost))
 		balloon_alert(mod.wearer, "not enough charge!")
 		return FALSE
 	if(!(allow_flags & MODULE_ALLOW_PHASEOUT) && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
@@ -262,7 +262,6 @@
 	if(!check_power(amount))
 		return FALSE
 	mod.subtract_charge(amount)
-	mod.update_charge_alert()
 	return TRUE
 
 /// Checks if there is enough power in the suit
@@ -274,7 +273,7 @@
 	return list()
 
 /// Creates a list of configuring options for this module
-/obj/item/mod/module/proc/get_configuration()
+/obj/item/mod/module/proc/get_configuration(mob/user)
 	return list()
 
 /// Generates an element of the get_configuration list with a display name, type and value
@@ -345,12 +344,12 @@
 	if(module_type == MODULE_PASSIVE)
 		return
 
-	var/datum/action/item_action/mod/pinned_module/existing_action = pinned_to[REF(user)]
+	var/datum/action/item_action/mod/pinnable/module/existing_action = pinned_to[REF(user)]
 	if(existing_action)
 		mod.remove_item_action(existing_action)
 		return
 
-	var/datum/action/item_action/mod/pinned_module/new_action = new(mod, src, user)
+	var/datum/action/item_action/mod/pinnable/module/new_action = new(mod, user, src)
 	mod.add_item_action(new_action)
 
 /// On drop key, concels a device item.

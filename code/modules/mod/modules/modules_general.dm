@@ -31,11 +31,10 @@
 //	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_chestplate_unequip))
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
-	var/datum/storage/modstorage = mod.atom_storage
 	atom_storage.locked = STORAGE_FULLY_LOCKED
-	qdel(modstorage)
+	QDEL_NULL(mod.atom_storage)
 	if(!deleting)
-		atom_storage.remove_all(get_turf(src))
+		atom_storage.remove_all(mod.drop_location())
 //	UnregisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP)
 
 /obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
@@ -98,7 +97,7 @@
 	module_type = MODULE_TOGGLE
 	complexity = 3
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/jetpack)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_jetpack"
@@ -157,8 +156,8 @@
 
 /obj/item/mod/module/jetpack/proc/allow_thrust(use_fuel = TRUE)
 	if(!use_fuel)
-		return check_power(use_power_cost)
-	if(!drain_power(use_power_cost))
+		return check_power(use_energy_cost)
+	if(!drain_power(use_energy_cost))
 		return FALSE
 	return TRUE
 
@@ -183,7 +182,7 @@
 	module_type = MODULE_USABLE
 	complexity = 3
 	cooldown_time = 30 SECONDS
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/jump_jet)
 
 /obj/item/mod/module/jump_jet/on_use()
@@ -222,7 +221,7 @@
 		to alert anyone nearby that someone has, in fact, died."
 	icon_state = "status"
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.1
 	incompatible_modules = list(/obj/item/mod/module/status_readout)
 	tgui_id = "status_readout"
 	/// Does this show damage types, body temp, satiety
@@ -331,10 +330,10 @@
 	incompatible_modules = list(/obj/item/mod/module/emp_shield)
 
 /obj/item/mod/module/emp_shield/on_install()
-	mod.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
+	mod.AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/mod/module/emp_shield/on_uninstall(deleting = FALSE)
-	mod.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
+	mod.RemoveElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/mod/module/emp_shield/advanced
 	name = "MOD advanced EMP shield module"
@@ -362,7 +361,7 @@
 	incompatible_modules = list(/obj/item/mod/module/flashlight)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_light"
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_color = COLOR_WHITE
 	light_range = 4
 	light_power = 1
@@ -374,6 +373,12 @@
 	/// Maximum range we can set.
 	var/max_range = 5
 
+/obj/item/mod/module/flashlight/on_suit_activation()
+	RegisterSignal(mod.wearer, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
+
+/obj/item/mod/module/flashlight/on_suit_deactivation(deleting = FALSE)
+	UnregisterSignal(mod.wearer, COMSIG_HIT_BY_SABOTEUR)
+
 /obj/item/mod/module/flashlight/on_activation()
 	set_light_flags(light_flags | LIGHT_ATTACHED)
 	set_light_on(active)
@@ -382,6 +387,12 @@
 /obj/item/mod/module/flashlight/on_deactivation(display_message = TRUE, deleting = FALSE)
 	set_light_flags(light_flags & ~LIGHT_ATTACHED)
 	set_light_on(active)
+
+/obj/item/mod/module/flashlight/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(active)
+		on_deactivation()
+		return COMSIG_SABOTEUR_SUCCESS
 
 /obj/item/mod/module/flashlight/on_process(seconds_per_tick)
 	active_power_cost = base_power * light_range
@@ -415,6 +426,21 @@
 		if("light_range")
 			set_light_range(clamp(value, min_range, max_range))
 
+///Like the flashlight module, except the light color is stuck to black and cannot be changed.
+/obj/item/mod/module/flashlight/darkness
+	name = "MOD flashdark module"
+	desc = "A quirky pair of configurable flashdarks installed on the sides of the helmet, \
+		useful for providing darkness at a configurable range."
+	light_color = COLOR_BLACK
+	light_system = OVERLAY_LIGHT
+	light_range = 2
+	min_range = 1
+	max_range = 3
+
+/obj/item/mod/module/flashlight/darkness/get_configuration()
+	. = ..()
+	. -= "light_color"
+
 ///Dispenser - Dispenses an item after a time passes.
 /obj/item/mod/module/dispenser
 	name = "MOD burger dispenser module"
@@ -425,7 +451,7 @@
 	icon_state = "dispenser"
 	module_type = MODULE_USABLE
 	complexity = 3
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/dispenser)
 	cooldown_time = 5 SECONDS
 	/// Path we dispense.
@@ -441,7 +467,7 @@
 	mod.wearer.put_in_hands(dispensed)
 	balloon_alert(mod.wearer, "[dispensed] dispensed")
 	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 	return dispensed
 
 ///Longfall - Nullifies fall damage, removing charge instead.
@@ -453,7 +479,7 @@
 		Useful for mining, monorail tracks, or even skydiving!"
 	icon_state = "longfall"
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/longfall)
 
 /obj/item/mod/module/longfall/on_suit_activation()
@@ -463,12 +489,16 @@
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT)
 
 /obj/item/mod/module/longfall/proc/z_impact_react(datum/source, levels, turf/fell_on)
-	if(!drain_power(use_power_cost*levels))
-		return
+	SIGNAL_HANDLER
+	if(!drain_power(use_energy_cost * levels))
+		return NONE
 	new /obj/effect/temp_visual/mook_dust(fell_on)
 	mod.wearer.Stun(levels * 1 SECONDS)
-	to_chat(mod.wearer, span_notice("[src] protects you from the damage!"))
-	return NO_Z_IMPACT_DAMAGE
+	mod.wearer.visible_message(
+		span_notice("[mod.wearer] lands on [fell_on] safely."),
+		span_notice("[src] protects you from the damage!"),
+	)
+	return ZIMPACT_CANCEL_DAMAGE|ZIMPACT_NO_MESSAGE|ZIMPACT_NO_SPIN
 
 ///Thermal Regulator - Regulates the wearer's core temperature.
 /obj/item/mod/module/thermal_regulator
@@ -510,7 +540,7 @@
 	icon_state = "dnalock"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/dna_lock, /obj/item/mod/module/eradication_lock)
 	cooldown_time = 0.5 SECONDS
 	/// The DNA we lock with.
@@ -531,7 +561,7 @@
 /obj/item/mod/module/dna_lock/on_use()
 	dna = mod.wearer.dna.unique_enzymes
 	balloon_alert(mod.wearer, "dna updated")
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/item/mod/module/dna_lock/emp_act(severity)
 	. = ..()
@@ -769,19 +799,7 @@
 		/obj/item/cigbutt,
 	)
 	/// Materials that will be extracted.
-	var/list/accepted_mats = list(
-		/datum/material/iron,
-		/datum/material/glass,
-		/datum/material/silver,
-		/datum/material/plasma,
-		/datum/material/gold,
-		/datum/material/diamond,
-		/datum/material/plastic,
-		/datum/material/uranium,
-		/datum/material/bananium,
-		/datum/material/titanium,
-		/datum/material/bluespace,
-	)
+	var/list/accepted_mats
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_obj_entered),
 		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(on_atom_initialized_on),
@@ -791,10 +809,15 @@
 
 /obj/item/mod/module/recycler/Initialize(mapload)
 	. = ..()
+
+	if(!length(accepted_mats))
+		accepted_mats = DSmaterials.materials_by_category[MAT_CATEGORY_SILO]
+
 	container = AddComponent( \
 		/datum/component/material_container, \
-		accepted_mats, 50 * SHEET_MATERIAL_AMOUNT, \
-		MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, \
+		accepted_mats, \
+		50 * SHEET_MATERIAL_AMOUNT, \
+		MATCONTAINER_EXAMINE | MATCONTAINER_NO_INSERT, \
 		container_signals = list( \
 			COMSIG_MATCONTAINER_SHEETS_RETRIEVED = TYPE_PROC_REF(/obj/item/mod/module/recycler, InsertSheets) \
 		) \
@@ -846,7 +869,7 @@
 		insert_trash(new_atom)
 
 /obj/item/mod/module/recycler/proc/insert_trash(obj/item/item)
-	var/retrieved = container.insert_item(item, multiplier = efficiency, breakdown_flags = BREAKDOWN_FLAGS_RECYCLER)
+	var/retrieved = container.insert_item(item, multiplier = efficiency)
 	if(retrieved == MATERIAL_INSERT_ITEM_NO_MATS) //even if it doesn't have any material to give, trash is trash.
 		qdel(item)
 	playsound(src, SFX_RUSTLE, 50, TRUE, -5)

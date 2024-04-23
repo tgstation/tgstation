@@ -1,9 +1,9 @@
 /datum/computer_file/program/mafia
 	filename = "mafia"
 	filedesc = "Mafia"
-	program_icon_state = "mafia"
+	program_open_overlay = "mafia"
 	extended_desc = "A program that allows you to play the infamous Mafia game, straight from your Modular PC."
-	requires_ntnet = FALSE
+	downloader_category = PROGRAM_CATEGORY_GAMES
 	size = 6
 	tgui_id = "NtosMafiaPanel"
 	program_icon = "user-secret"
@@ -50,6 +50,7 @@
 	return data
 
 /datum/computer_file/program/mafia/ui_act(mob/user, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	var/datum/mafia_controller/game = GLOB.mafia_game
 	if(!game)
 		game = create_mafia_game()

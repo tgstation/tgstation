@@ -42,8 +42,8 @@
 #define MEDAL_BLADE_ASCENSION "Blade"
 #define MEDAL_COSMOS_ASCENSION "Cosmos"
 #define MEDAL_LOCK_ASCENSION "Knock"
+#define MEDAL_MOON_ASCENSION "Moon"
 #define MEDAL_TOOLBOX_SOUL "Toolsoul"
-#define MEDAL_CHEM_TUT "Beginner Chemist"
 #define MEDAL_HOT_DAMN "Hot Damn!"
 #define MEDAL_CAYENNE_DISK "Very Important Piscis"
 #define MEDAL_TRAM_SURFER "Tram Surfer"
@@ -55,6 +55,7 @@
 #define MEDAL_GODS_WRATH "God's Wrath"
 #define MEDAL_EARTHQUAKE_VICTIM "Earthquake Victim"
 #define MEDAL_DEBT_EXTINGUISHED "Debt Extinguished"
+#define MEDAL_SISYPHUS "Sisyphus"
 #define MEDAL_ARCHMAGE "Archmage"
 #define MEDAL_THEORETICAL_LIMITS "All Within Theoretical Limits"
 

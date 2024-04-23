@@ -577,6 +577,7 @@
 				result += span_notice("<i>You examine [examinify] closer, but find nothing of interest...</i>")
 		else
 			result = examinify.examine(src)
+			SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
 			client.recent_examines[ref_to_atom] = world.time // set to when we last normal examine'd them
 			addtimer(CALLBACK(src, PROC_REF(clear_from_recent_examines), ref_to_atom), RECENT_EXAMINE_MAX_WINDOW)
 			handle_eye_contact(examinify)
@@ -589,7 +590,6 @@
 
 	to_chat(src, examine_block("<span class='infoplain'>[result.Join()]</span>"))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
-
 
 /mob/proc/blind_examine_check(atom/examined_thing)
 	return TRUE //The non-living will always succeed at this check.
@@ -688,7 +688,7 @@
 
 	if(!imagined_eye_contact && is_face_visible() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("[src] makes eye contact with you.")
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), examined_mob, msg), 3)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), examined_mob, msg), 0.3 SECONDS)
 
 /**
  * Called by using Activate Held Object with an empty hand/limb
@@ -704,6 +704,8 @@
 /mob/proc/can_resist()
 	return FALSE //overridden in living.dm
 
+#define SPIN_PROC_TRAIT "trait_from_spin()"
+
 ///Spin this mob around it's central axis
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
@@ -711,7 +713,7 @@
 	if((spintime < 1) || (speed < 1) || !spintime || !speed)
 		return
 
-	flags_1 |= IS_SPINNING_1
+	ADD_TRAIT(src, TRAIT_SPINNING, SPIN_PROC_TRAIT)
 	while(spintime >= speed)
 		sleep(speed)
 		switch(D)
@@ -725,7 +727,9 @@
 				D = NORTH
 		setDir(D)
 		spintime -= speed
-	flags_1 &= ~IS_SPINNING_1
+	REMOVE_TRAIT(src, TRAIT_SPINNING, SPIN_PROC_TRAIT)
+
+#undef SPIN_PROC_TRAIT
 
 ///Update the pulling hud icon
 /mob/proc/update_pull_hud_icon()
@@ -842,7 +846,6 @@
 	set name = "Cancel Camera View"
 	set category = "OOC"
 	reset_perspective(null)
-	unset_machine()
 
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
 /mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
@@ -856,18 +859,6 @@
 	set hidden = TRUE
 	set category = null
 	return
-/**
- * Topic call back for any mob
- *
- * * Unset machines if "mach_close" sent
- * * refresh the inventory of machines in range if "refresh" sent
- * * handles the strip panel equip and unequip as well if "item" sent
- */
-/mob/Topic(href, href_list)
-	if(href_list["mach_close"])
-		var/t1 = "window=[href_list["mach_close"]]"
-		unset_machine()
-		src << browse(null, t1)
 
 /**
  * Controls if a mouse drop succeeds (return null if it doesnt)
@@ -966,7 +957,7 @@
 		selected_hand = (active_hand_index % held_items.len)+1
 
 	if(istext(selected_hand))
-		selected_hand = lowertext(selected_hand)
+		selected_hand = LOWER_TEXT(selected_hand)
 		if(selected_hand == "right" || selected_hand == "r")
 			selected_hand = 2
 		if(selected_hand == "left" || selected_hand == "l")
@@ -990,11 +981,11 @@
 	if(mind)
 		return mind.grab_ghost(force = force)
 
-///Notify a ghost that it's body is being cloned
-/mob/proc/notify_ghost_cloning(message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", sound = 'sound/effects/genetics.ogg', atom/source = null, flashwindow)
+///Notify a ghost that its body is being revived
+/mob/proc/notify_revival(message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", sound = 'sound/effects/genetics.ogg', atom/source = null, flashwindow = TRUE)
 	var/mob/dead/observer/ghost = get_ghost()
 	if(ghost)
-		ghost.notify_cloning(message, sound, source, flashwindow)
+		ghost.send_revival_notification(message, sound, source, flashwindow)
 		return ghost
 
 /**
@@ -1076,7 +1067,7 @@
 		antimagic_color = LIGHT_COLOR_DARK_BLUE
 		playsound(src, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
 
-	mob_light(range = 2, color = antimagic_color, duration = 5 SECONDS)
+	mob_light(range = 2, power = 2, color = antimagic_color, duration = 5 SECONDS)
 	add_overlay(antimagic_effect)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), antimagic_effect), 5 SECONDS)
 
@@ -1121,6 +1112,9 @@
 	var/datum/dna/mob_dna = has_dna()
 	if(mob_dna?.check_mutation(/datum/mutation/human/telekinesis) && tkMaxRangeCheck(src, A))
 		return TRUE
+	var/obj/item/item_in_hand = get_active_held_item()
+	if(istype(item_in_hand, /obj/item/machine_remote))
+		return TRUE
 
 	//range check
 	if(!interaction_range) // If you don't have extra length, GO AWAY
@@ -1148,6 +1142,10 @@
  * * FORBID_TELEKINESIS_REACH - If telekinesis is forbidden to perform action from a distance (ex. canisters are blacklisted from telekinesis manipulation)
  * * ALLOW_SILICON_REACH - If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
  * * ALLOW_RESTING - If resting on the floor is allowed to perform action ()
+ * * ALLOW_VENTCRAWL - Mobs with ventcrawl traits can alt-click this to vent
+ *
+ * silence_adjacency: Sometimes we want to use this proc to check interaction without allowing it to throw errors for base case adjacency
+ * Alt click uses this, as otherwise you can detect what is interactable from a distance via the error message
 **/
 /mob/proc/can_perform_action(atom/movable/target, action_bitflags)
 	return
@@ -1194,14 +1192,24 @@
 
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 
-	log_played_names(ckey, newname)
+	log_played_names(
+		ckey,
+		list(
+			"[newname]" = tag,
+		),
+	)
 
 	real_name = newname
 	name = newname
 	if(mind)
 		mind.name = newname
 		if(mind.key)
-			log_played_names(mind.key,newname) //Just in case the mind is unsynced at the moment.
+			log_played_names(
+				ckey(mind.key),
+				list(
+					"[newname]" = tag,
+				),
+			) //Just in case the mind is unsynced at the moment.
 
 	if(oldname)
 		//update the datacore records! This is goig to be a bit costly.
@@ -1323,10 +1331,6 @@
 			to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
 		return FALSE
 
-	if(HAS_MIND_TRAIT(src, TRAIT_MIMING) && !istype(writing_instrument, /obj/item/toy/crayon/mime))
-		to_chat(src, span_warning("Your vow of silence is preventing you from talking with text."))
-		return FALSE
-
 	if(!is_literate())
 		to_chat(src, span_warning("You try to write, but don't know how to spell anything!"))
 		return FALSE
@@ -1404,62 +1408,60 @@
 
 /mob/vv_do_topic(list/href_list)
 	. = ..()
+
+	if(!.)
+		return
+
 	if(href_list[VV_HK_REGEN_ICONS])
 		if(!check_rights(NONE))
 			return
 		regenerate_icons()
+
 	if(href_list[VV_HK_PLAYER_PANEL])
-		if(!check_rights(NONE))
-			return
-		usr.client.holder.show_player_panel(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_player_panel, src)
+
 	if(href_list[VV_HK_GODMODE])
 		if(!check_rights(R_ADMIN))
 			return
 		usr.client.cmd_admin_godmode(src)
+
 	if(href_list[VV_HK_GIVE_MOB_ACTION])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_mob_action(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_mob_action, src)
+
 	if(href_list[VV_HK_REMOVE_MOB_ACTION])
-		if(!check_rights(NONE))
-			return
-		usr.client.remove_mob_action(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/remove_mob_action, src)
+
 	if(href_list[VV_HK_GIVE_SPELL])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_spell(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_spell, src)
+
 	if(href_list[VV_HK_REMOVE_SPELL])
-		if(!check_rights(NONE))
-			return
-		usr.client.remove_spell(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/remove_spell, src)
+
 	if(href_list[VV_HK_GIVE_DISEASE])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_disease(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_disease, src)
+
 	if(href_list[VV_HK_GIB])
-		if(!check_rights(R_FUN))
-			return
-		usr.client.cmd_admin_gib(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/gib_them, src)
+
 	if(href_list[VV_HK_BUILDMODE])
 		if(!check_rights(R_BUILD))
 			return
 		togglebuildmode(src)
+
 	if(href_list[VV_HK_DROP_ALL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_admin_drop_everything(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/drop_everything, src)
+
 	if(href_list[VV_HK_DIRECT_CONTROL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_assume_direct_control(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_assume_direct_control, src)
+
 	if(href_list[VV_HK_GIVE_DIRECT_CONTROL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_give_direct_control(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_give_direct_control, src)
+
 	if(href_list[VV_HK_OFFER_GHOSTS])
 		if(!check_rights(NONE))
 			return
 		offer_control(src)
+
 	if(href_list[VV_HK_VIEW_PLANES])
 		if(!check_rights(R_DEBUG))
 			return
@@ -1485,28 +1487,65 @@
 	get_language_holder().open_language_menu(usr)
 
 ///Adjust the nutrition of a mob
-/mob/proc/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
+/mob/proc/adjust_nutrition(change, forced = FALSE) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER) && !forced)
+		return
+
 	nutrition = max(0, nutrition + change)
+	hud_used?.hunger?.update_appearance()
+
+/mob/living/adjust_nutrition(change, forced)
+	. = ..()
+	mob_mood?.update_nutrition_moodlets()
 
 ///Force set the mob nutrition
-/mob/proc/set_nutrition(change) //Seriously fuck you oldcoders.
-	nutrition = max(0, change)
+/mob/proc/set_nutrition(set_to, forced = FALSE) //Seriously fuck you oldcoders.
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER) && !forced)
+		return
 
+	nutrition = max(0, set_to)
+	hud_used?.hunger?.update_appearance()
+
+/mob/living/set_nutrition(set_to, forced)
+	. = ..()
+	mob_mood?.update_nutrition_moodlets()
+
+///Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()
-	var/speedies = equipped_speed_mods()
-	if(speedies > 0 && HAS_TRAIT(src, TRAIT_SETTLER)) //if our movespeed mod is in the negatives, we don't modify it since that's a benefit
-		speedies *= 0.2
-	if(!speedies)
-		remove_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod)
-	else
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod, multiplicative_slowdown = speedies)
+	var/speedies = 0
+	var/immutable_speedies = 0
+	for(var/obj/item/thing in get_equipped_speed_mod_items())
+		if(thing.item_flags & IMMUTABLE_SLOW)
+			immutable_speedies += thing.slowdown
+		else
+			speedies += thing.slowdown
 
-/// Gets the combined speed modification of all worn items
-/// Except base mob type doesnt really wear items
-/mob/proc/equipped_speed_mods()
-	for(var/obj/item/I in held_items)
-		if(I.item_flags & SLOWS_WHILE_IN_HAND)
-			. += I.slowdown
+	//if our movespeed mod is in the negatives, we don't modify it since that's a benefit
+	if(speedies > 0 && HAS_TRAIT(src, TRAIT_SETTLER))
+		speedies *= 0.2
+
+	if(immutable_speedies)
+		add_or_update_variable_movespeed_modifier(
+			/datum/movespeed_modifier/equipment_speedmod/immutable,
+			multiplicative_slowdown = immutable_speedies,
+		)
+	else
+		remove_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod/immutable)
+
+	if(speedies)
+		add_or_update_variable_movespeed_modifier(
+			/datum/movespeed_modifier/equipment_speedmod,
+			multiplicative_slowdown = speedies,
+		)
+	else
+		remove_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod)
+
+///Get all items in our possession that should affect our movespeed
+/mob/proc/get_equipped_speed_mod_items()
+	. = list()
+	for(var/obj/item/thing in held_items)
+		if(thing.item_flags & SLOWS_WHILE_IN_HAND)
+			. += thing
 
 /mob/proc/set_stat(new_stat)
 	if(new_stat == stat)
@@ -1522,13 +1561,6 @@
 
 /mob/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if(NAMEOF(src, control_object))
-			var/obj/O = var_value
-			if(!istype(O) || (O.obj_flags & DANGEROUS_POSSESSION))
-				return FALSE
-		if(NAMEOF(src, machine))
-			set_machine(var_value)
-			. = TRUE
 		if(NAMEOF(src, focus))
 			set_focus(var_value)
 			. = TRUE
@@ -1631,3 +1663,7 @@
 	set name = "View Skills"
 
 	mind?.print_levels(src)
+
+/mob/key_down(key, client/client, full_key)
+	..()
+	SEND_SIGNAL(src, COMSIG_MOB_KEYDOWN, key, client, full_key)

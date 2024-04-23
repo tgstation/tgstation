@@ -10,8 +10,15 @@
 	/// A reference to the shell component, used to access the shell and its attached circuit
 	var/datum/component/shell/shell
 
+	/// List of installed action components
+	var/list/obj/item/circuit_component/equipment_action/action_comps = list()
+
 /obj/item/mod/module/circuit/Initialize(mapload)
 	. = ..()
+
+	RegisterSignal(src, COMSIG_CIRCUIT_ACTION_COMPONENT_REGISTERED, PROC_REF(action_comp_registered))
+	RegisterSignal(src, COMSIG_CIRCUIT_ACTION_COMPONENT_UNREGISTERED, PROC_REF(action_comp_unregistered))
+
 	shell = AddComponent(/datum/component/shell, \
 		list(new /obj/item/circuit_component/mod_adapter_core()), \
 		capacity = SHELL_CAPACITY_LARGE, \
@@ -22,6 +29,17 @@
 	if(drain_power(amount))
 		. = COMPONENT_OVERRIDE_POWER_USAGE
 
+/obj/item/mod/module/circuit/proc/action_comp_registered(datum/source, obj/item/circuit_component/equipment_action/action_comp)
+	SIGNAL_HANDLER
+	action_comps += action_comp
+
+/obj/item/mod/module/circuit/proc/action_comp_unregistered(datum/source, obj/item/circuit_component/equipment_action/action_comp)
+	SIGNAL_HANDLER
+	action_comps -= action_comp
+	for(var/ref in action_comp.granted_to)
+		unpin_action(action_comp, locate(ref))
+	QDEL_LIST_ASSOC_VAL(action_comp.granted_to)
+
 /obj/item/mod/module/circuit/on_install()
 	if(!shell?.attached_circuit)
 		return
@@ -30,6 +48,9 @@
 /obj/item/mod/module/circuit/on_uninstall(deleting = FALSE)
 	if(!shell?.attached_circuit)
 		return
+	for(var/obj/item/circuit_component/equipment_action/action_comp in action_comps)
+		for(var/ref in action_comp.granted_to)
+			unpin_action(action_comp, locate(ref))
 	UnregisterSignal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE)
 
 /obj/item/mod/module/circuit/on_use()
@@ -38,38 +59,79 @@
 		return
 	if(!shell.attached_circuit)
 		return
-	var/list/action_components = shell.attached_circuit.get_all_contents_type(/obj/item/circuit_component/equipment_action/mod)
-	if(!action_components.len)
-		shell.attached_circuit.interact(mod.wearer)
-		return
-	var/list/repeat_name_counts = list("Access Circuit" = 1)
-	var/list/display_names = list()
-	var/list/radial_options = list()
-	for(var/obj/item/circuit_component/equipment_action/mod/action_component in action_components)
-		var/action_name = action_component.button_name.value
-		if(!repeat_name_counts[action_name])
-			repeat_name_counts[action_name] = 0
-		repeat_name_counts[action_name]++
-		if(repeat_name_counts[action_name] > 1)
-			action_name += " ([repeat_name_counts[action_name]])"
-		display_names[action_name] = REF(action_component)
-		var/option_icon_state = "bci_[replacetextEx(lowertext(action_component.icon_options.value), " ", "_")]"
-		radial_options += list("[action_name]" = image('icons/mob/actions/actions_items.dmi', option_icon_state))
-	radial_options += list("Access Circuit" = image(shell.attached_circuit))
-	var/selected_option = show_radial_menu(mod.wearer, src, radial_options, custom_check = FALSE, require_near = TRUE)
-	if(!selected_option)
-		return
-	if(!mod || !mod.wearer || !mod.active || mod.activating)
-		return
-	if(selected_option == "Access Circuit")
-		shell.attached_circuit?.interact(mod.wearer)
-	else
-		var/component_reference = display_names[selected_option]
-		var/obj/item/circuit_component/equipment_action/mod/selected_component = locate(component_reference) in shell.attached_circuit.contents
-		if(!istype(selected_component))
-			return
-		selected_component.signal.set_output(COMPONENT_SIGNAL)
+	shell.attached_circuit?.interact(mod.wearer)
 
+/obj/item/mod/module/circuit/get_configuration(mob/user)
+	. = ..()
+	var/unnamed_action_index = 1
+	for(var/obj/item/circuit_component/equipment_action/action_comp in action_comps)
+		.[REF(action_comp)] = add_ui_configuration(action_comp.button_name.value || "Unnamed Action [unnamed_action_index++]", "pin", !!action_comp.granted_to[REF(user)])
+
+/obj/item/mod/module/circuit/configure_edit(key, value)
+	. = ..()
+	var/obj/item/circuit_component/equipment_action/action_comp = locate(key) in action_comps
+	if(!istype(action_comp))
+		return
+	if(text2num(value))
+		pin_action(action_comp, usr)
+	else
+		unpin_action(action_comp, usr)
+
+/obj/item/mod/module/circuit/proc/pin_action(obj/item/circuit_component/equipment_action/action_comp, mob/user)
+	if(!istype(user))
+		return
+	if(action_comp.granted_to[REF(user)]) // Sanity check - don't pin an action for a mob that has already pinned it
+		return
+	mod.add_item_action(new/datum/action/item_action/mod/pinnable/circuit(mod, user, src, action_comp))
+
+/obj/item/mod/module/circuit/proc/unpin_action(obj/item/circuit_component/equipment_action/action_comp, mob/user)
+	var/datum/action/item_action/mod/pinnable/circuit/action = action_comp.granted_to[REF(user)]
+	if(!istype(action))
+		return
+	qdel(action)
+
+/datum/action/item_action/mod/pinnable/circuit
+	button_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "bci_blank"
+
+	/// A reference to the module containing this action's component
+	var/obj/item/mod/module/circuit/module
+
+	/// A reference to the component this action triggers.
+	var/obj/item/circuit_component/equipment_action/circuit_component
+
+/datum/action/item_action/mod/pinnable/circuit/New(Target, mob/user, obj/item/mod/module/circuit/linked_module, obj/item/circuit_component/equipment_action/action_comp)
+	. = ..()
+	module = linked_module
+	action_comp.granted_to[REF(user)] = src
+	circuit_component = action_comp
+	name = action_comp.button_name.value
+	button_icon_state = "bci_[replacetextEx(LOWER_TEXT(action_comp.icon_options.value), " ", "_")]"
+
+/datum/action/item_action/mod/pinnable/circuit/Destroy()
+	circuit_component.granted_to -= REF(pinner)
+	circuit_component = null
+
+	return ..()
+
+/datum/action/item_action/mod/pinnable/circuit/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/mod/control/mod = module.mod
+	if(!istype(mod))
+		return
+	if(!mod.active || mod.activating)
+		if(mod.wearer)
+			module.balloon_alert(mod.wearer, "not active!")
+		return
+	circuit_component.user.set_output(owner)
+	circuit_component.signal.set_output(COMPONENT_SIGNAL)
+
+/// If the guy whose UI we are pinned to got deleted
+/datum/action/item_action/mod/pinnable/circuit/pinner_deleted()
+	module?.action_comps[circuit_component] -= REF(pinner)
+	. = ..()
 
 /obj/item/circuit_component/mod_adapter_core
 	display_name = "MOD circuit adapter core"
@@ -237,8 +299,3 @@
 	if(!attached_module.mod?.wearer)
 		return
 	wearer.set_output(attached_module.mod.wearer)
-
-/obj/item/circuit_component/equipment_action/mod
-	display_name = "MOD action"
-	desc = "Represents an action the user can take when wearing the MODsuit."
-	required_shells = list(/obj/item/mod/module/circuit)

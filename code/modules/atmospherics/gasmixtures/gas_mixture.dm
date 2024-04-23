@@ -184,7 +184,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(amount <= 0)
 		return null
 	var/ratio = amount / sum
-	var/datum/gas_mixture/removed = new type
+	var/datum/gas_mixture/removed = new type(volume)
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
@@ -206,7 +206,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	ratio = min(ratio, 1)
 
 	var/list/cached_gases = gases
-	var/datum/gas_mixture/removed = new type
+	var/datum/gas_mixture/removed = new type(volume)
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature

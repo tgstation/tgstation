@@ -1,11 +1,11 @@
 /obj/item/firing_pin
 	name = "electronic firing pin"
 	desc = "A small authentication device, to be inserted into a firearm receiver to allow operation. NT safety regulations require all new designs to incorporate one."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/gunmod.dmi'
 	icon_state = "firing_pin"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("pokes")
 	attack_verb_simple = list("poke")
@@ -137,7 +137,7 @@
 /obj/item/firing_pin/clown
 	name = "hilarious firing pin"
 	desc = "Advanced clowntech that can convert any firearm into a far more useful object."
-	color = "#FFFF00"
+	color = COLOR_YELLOW
 	fail_message = "honk!"
 	force_replace = TRUE
 
@@ -221,7 +221,7 @@
 /obj/item/firing_pin/paywall
 	name = "paywall firing pin"
 	desc = "A firing pin with a built-in configurable paywall."
-	color = "#FFD700"
+	color = COLOR_GOLD
 	fail_message = ""
 	///list of account IDs which have accepted the license prompt. If this is the multi-payment pin, then this means they accepted the waiver that each shot will cost them money
 	var/list/gun_owners = list()
@@ -387,4 +387,5 @@
 /obj/item/firing_pin/Destroy()
 	if(gun)
 		gun.pin = null
+		gun = null
 	return ..()

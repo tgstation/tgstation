@@ -1,11 +1,10 @@
 /datum/computer_file/program/card_mod
 	filename = "plexagonidwriter"
 	filedesc = "Plexagon Access Management"
-	category = PROGRAM_CATEGORY_CREW
-	program_icon_state = "id"
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
+	program_open_overlay = "id"
 	extended_desc = "Program for programming employee ID cards to access parts of the station."
 	download_access = list(ACCESS_COMMAND)
-	requires_ntnet = 0
 	size = 8
 	tgui_id = "NtosCard"
 	program_icon = "id-card"
@@ -52,7 +51,7 @@
 		authenticated_user = auth_card.registered_name ? auth_card.registered_name : "Unknown"
 		job_templates = is_centcom ? SSid_access.centcom_job_templates.Copy() : SSid_access.station_job_templates.Copy()
 		valid_access = is_centcom ? SSid_access.get_region_access_list(list(REGION_CENTCOM)) : SSid_access.get_region_access_list(list(REGION_ALL_STATION))
-		update_static_data(user)
+		computer.update_static_data_for_all_viewers()
 		return TRUE
 
 	// Otherwise, we're minor and now we have to build a list of restricted departments we can change access for.
@@ -68,7 +67,7 @@
 		minor = TRUE
 		valid_access |= SSid_access.get_region_access_list(region_access)
 		authenticated_card = "[auth_card.name] \[LIMITED ACCESS\]"
-		update_static_data(user)
+		computer.update_static_data_for_all_viewers()
 		return TRUE
 
 	return FALSE
@@ -88,6 +87,7 @@
 	return ..()
 
 /datum/computer_file/program/card_mod/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	var/mob/user = usr
 	var/obj/item/card/id/inserted_auth_card = computer.computer_id_slot
 

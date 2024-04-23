@@ -29,7 +29,7 @@
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/datum/lua_editor/Destroy(force, ...)
+/datum/lua_editor/Destroy(force)
 	. = ..()
 	if(current_state)
 		LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)
@@ -105,6 +105,11 @@
 		return
 	if(!check_rights_for(usr.client, R_DEBUG))
 		return
+	if(action == "runCodeFile")
+		params["code"] = file2text(input(usr, "Input File") as null|file)
+		if(isnull(params["code"]))
+			return
+		action = "runCode"
 	switch(action)
 		if("newState")
 			var/state_name = params["name"]
@@ -228,10 +233,6 @@
 	. = ..()
 	qdel(src)
 
-/client/proc/open_lua_editor()
-	set name = "Open Lua Editor"
-	set category = "Debug"
-	if(!check_rights_for(src, R_DEBUG))
-		return
-	var/datum/lua_editor/editor = new()
-	editor.ui_interact(usr)
+ADMIN_VERB(lua_editor, R_DEBUG, "Open Lua Editor", "Its codin' time.", ADMIN_CATEGORY_DEBUG)
+	var/datum/lua_editor/editor = new
+	editor.ui_interact(user.mob)

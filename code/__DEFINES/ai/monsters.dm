@@ -116,6 +116,10 @@
 #define BB_ORE_TARGET "BB_ore_target"
 /// which ore types we will not eat
 #define BB_ORE_IGNORE_TYPES "BB_ore_ignore_types"
+/// key that holds the boulder we will break
+#define BB_BOULDER_TARGET "BB_boulder_target"
+/// key that holds the ore_vent we will harvest boulders from
+#define BB_VENT_TARGET "BB_vent_target"
 
 // minebot keys
 /// key that stores our toggle light ability
@@ -124,6 +128,10 @@
 #define BB_MINEBOT_DUMP_ABILITY "minebot_dump_ability"
 /// key that stores our target turf
 #define BB_TARGET_MINERAL_TURF "target_mineral_turf"
+///key that holds our missile ability
+#define BB_MINEBOT_MISSILE_ABILITY "minebot_missile_ability"
+///key that holds our landmine ability
+#define BB_MINEBOT_LANDMINE_ABILITY "minebot_landmine_ability"
 /// key that stores list of the turfs we ignore
 #define BB_BLACKLIST_MINERAL_TURFS "blacklist_mineral_turfs"
 /// key that stores the previous blocked wall
@@ -132,6 +140,20 @@
 #define BB_AUTOMATED_MINING "automated_mining"
 /// key that stores the nearest dead human
 #define BB_NEARBY_DEAD_MINER "nearby_dead_miner"
+///key that holds the drone we defend
+#define BB_DRONE_DEFEND "defend_drone"
+///key that holds the minimum distance before we flee
+#define BB_MINIMUM_SHOOTING_DISTANCE "minimum_shooting_distance"
+///key that holds the miner we must befriend
+#define BB_MINER_FRIEND "miner_friend"
+///key that holds the missile target
+#define BB_MINEBOT_MISSILE_TARGET "minebot_missile_target"
+///should we auto protect?
+#define BB_MINEBOT_AUTO_DEFEND "minebot_auto_defend"
+///should we repair drones?
+#define BB_MINEBOT_REPAIR_DRONE "minebot_repair_drone"
+///should we plant mines?
+#define BB_MINEBOT_PLANT_MINES "minebot_plant_mines"
 
 //seedling keys
 /// the water can we will pick up
@@ -220,6 +242,34 @@
 /// Key for the next time we can cast a spell
 #define BB_WIZARD_SPELL_COOLDOWN "BB_wizard_spell_cooldown"
 
+
+//cat AI keys
+/// key that holds the target we will battle over our turf
+#define BB_TRESSPASSER_TARGET "tresspasser_target"
+/// key that holds angry meows
+#define BB_HOSTILE_MEOWS "hostile_meows"
+/// key that holds the mouse target
+#define BB_MOUSE_TARGET "mouse_target"
+/// key that holds our dinner target
+#define BB_CAT_FOOD_TARGET "cat_food_target"
+/// key that holds the food we must deliver
+#define BB_FOOD_TO_DELIVER "food_to_deliver"
+/// key that holds things we can hunt
+#define BB_HUNTABLE_PREY "huntable_prey"
+/// key that holds target kitten to feed
+#define BB_KITTEN_TO_FEED "kitten_to_feed"
+/// key that holds our hungry meows
+#define BB_HUNGRY_MEOW "hungry_meows"
+/// key that holds maximum distance food is to us so we can pursue it
+#define BB_MAX_DISTANCE_TO_FOOD "max_distance_to_food"
+/// key that holds the stove we must turn off
+#define BB_STOVE_TARGET "stove_target"
+/// key that holds the donut we will decorate
+#define BB_DONUT_TARGET "donut_target"
+/// key that holds our home...
+#define BB_CAT_HOME "cat_home"
+/// key that holds the human we will beg
+#define BB_HUMAN_BEG_TARGET "human_beg_target"
 //netguardians
 /// rocket launcher
 #define BB_NETGUARDIAN_ROCKET_ABILITY "netguardian_rocket"

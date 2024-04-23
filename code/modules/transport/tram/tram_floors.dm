@@ -135,6 +135,9 @@
 			return
 	return ..()
 
+/turf/open/floor/tram/plate/energized/broken
+	broken = TRUE
+
 // Resetting the tram contents to its original state needs the turf to be there
 /turf/open/indestructible/tram
 	name = "tram guideway"
@@ -239,7 +242,7 @@
 			secured = TRUE
 			to_chat(user, span_notice("The tile is securely screwed in place."))
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/thermoplastic/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -252,17 +255,17 @@
 		span_notice("You wedge \the [tool] into the tram panel's gap in the frame and start prying..."))
 		if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 			to_chat(user, span_notice("The panel pops out of the frame."))
-			var/obj/item/stack/thermoplastic/pulled_tile = new()
+			var/obj/item/stack/thermoplastic/pulled_tile = new floor_tile()
 			pulled_tile.update_integrity(atom_integrity)
 			user.put_in_hands(pulled_tile)
 			qdel(src)
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/thermoplastic/welder_act(mob/living/user, obj/item/tool)
 	if(atom_integrity >= max_integrity)
 		to_chat(user, span_warning("[src] is already in good condition!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(!tool.tool_start_check(user, amount = 0))
 		return FALSE
 	to_chat(user, span_notice("You begin repairing [src]..."))
@@ -271,7 +274,7 @@
 		atom_integrity = max_integrity
 		to_chat(user, span_notice("You repair [src]."))
 		update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/thermoplastic
 	name = "thermoplastic tram tile"
@@ -280,8 +283,8 @@
 	icon = 'icons/obj/tiles.dmi'
 	lefthand_file = 'icons/mob/inhands/items/tiles_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/tiles_righthand.dmi'
-	icon_state = "tile_textured_white_large"
-	inhand_icon_state = "tile-neon-glow"
+	icon_state = "tile_tram_dark"
+	inhand_icon_state = "tile-tram"
 	color = COLOR_TRAM_BLUE
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 1
@@ -294,7 +297,9 @@
 	var/tile_type = /obj/structure/thermoplastic
 
 /obj/item/stack/thermoplastic/light
+	icon_state = "tile_tram_light"
 	color = COLOR_TRAM_LIGHT_BLUE
+	merge_type = /obj/item/stack/thermoplastic/light
 	tile_type = /obj/structure/thermoplastic/light
 
 /obj/item/stack/thermoplastic/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)

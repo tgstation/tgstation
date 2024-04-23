@@ -18,12 +18,39 @@
 	var/list/department_jobs = list()
 	/// For separatists, what independent name prefix does their nation get named?
 	var/list/nation_prefixes = list()
+	/// List of /area types that are considered part of this department's "delivery" area.
+	/// Acts as a priority system, where first items are picked first.
+	var/list/department_delivery_areas = list()
+	/// List of categories in the cargo console that are associated with this department.
+	var/list/associated_cargo_groups = list()
+	/// The single access associated with the head of staff of this department.
+	var/head_of_staff_access
+	/// A list of generic access flags people in this department generally have.
+	var/list/department_access = list()
 
+/datum/job_department/New()
+	. = ..()
+	for(var/delivery_area_type in department_delivery_areas)
+		if(GLOB.areas_by_type[delivery_area_type])
+			return
+	//every area fallback didn't exist on this map so throw a mapping error and set some generic area that uuuh please exist okay
+	log_mapping("[type] has no valid areas to deliver to on this map, add some more fallback areas to its \"department_delivery_areas\" var.")
+	department_delivery_areas = list(/area/station/hallway/primary/central) //if this doesn't exist like honestly fuck your map man
 
 /// Handles adding jobs to the department and setting up the job bitflags.
 /datum/job_department/proc/add_job(datum/job/job)
 	department_jobs += job
 	job.departments_bitflags |= department_bitflags
+
+/// Handles removing jobs from the department and removing job bitflags.
+/datum/job_department/proc/remove_job(datum/job/job_type)
+	for(var/datum/job/job_datum as anything in department_jobs)
+		if(job_datum.type == job_type)
+			department_jobs -= job_datum
+			job_datum.departments_bitflags -= department_bitflags
+			job_datum.job_flags &= ~JOB_NEW_PLAYER_JOINABLE
+			job_datum.spawn_positions = 0
+			job_datum.total_positions = 0
 
 /// Returns a nation name for this department.
 /datum/job_department/proc/generate_nation_name()
@@ -66,6 +93,14 @@
 	label_class = "security"
 	ui_color = "#d46a78"
 	nation_prefixes = list("Securi", "Beepski", "Shitcuri", "Red", "Stunba", "Flashbango", "Flasha", "Stanfordi")
+	department_delivery_areas = list(
+		/area/station/security/office,
+		/area/station/security/brig,
+		/area/station/security/brig/upper,
+	)
+	associated_cargo_groups = list("Security", "Armory")
+	head_of_staff_access = ACCESS_HOS
+	department_access = REGION_ACCESS_SECURITY
 
 /datum/job_department/engineering
 	department_name = DEPARTMENT_ENGINEERING
@@ -76,7 +111,10 @@
 	label_class = "engineering"
 	ui_color = "#dfb567"
 	nation_prefixes = list("Atomo", "Engino", "Power", "Teleco")
-
+	department_delivery_areas = list(/area/station/engineering/main)
+	associated_cargo_groups = list("Engineering", "Engine Construction", "Canisters & Materials")
+	head_of_staff_access = ACCESS_CE
+	department_access = REGION_ACCESS_ENGINEERING
 
 /datum/job_department/medical
 	department_name = DEPARTMENT_MEDICAL
@@ -87,7 +125,15 @@
 	label_class = "medical"
 	ui_color = "#65b2bd"
 	nation_prefixes = list("Mede", "Healtha", "Recova", "Chemi", "Viro", "Psych")
-
+	department_delivery_areas = list(
+		/area/station/medical/medbay/central,
+		/area/station/medical/medbay,
+		/area/station/medical/treatment_center,
+		/area/station/medical/storage,
+	)
+	associated_cargo_groups = list("Medical")
+	head_of_staff_access = ACCESS_CMO
+	department_access = REGION_ACCESS_MEDBAY
 
 /datum/job_department/science
 	department_name = DEPARTMENT_SCIENCE
@@ -98,6 +144,10 @@
 	label_class = "science"
 	ui_color = "#c973c9"
 	nation_prefixes = list("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
+	department_delivery_areas = list(/area/station/science/research)
+	associated_cargo_groups = list("Science", "Livestock", "Canisters & Materials")
+	head_of_staff_access = ACCESS_RD
+	department_access = REGION_ACCESS_RESEARCH
 
 
 /datum/job_department/cargo
@@ -109,7 +159,8 @@
 	label_class = "supply"
 	ui_color = "#cf9c6c"
 	nation_prefixes = list("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
-
+	head_of_staff_access = ACCESS_QM
+	department_access = REGION_ACCESS_SUPPLY
 
 /datum/job_department/service
 	department_name = DEPARTMENT_SERVICE
@@ -120,7 +171,10 @@
 	label_class = "service"
 	ui_color = "#7cc46a"
 	nation_prefixes = list("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
-
+	department_delivery_areas = list(/area/station/hallway/secondary/service, /area/station/service/bar/atrium)
+	associated_cargo_groups = list("Service", "Food & Hydroponics", "Livestock", "Costumes & Toys")
+	head_of_staff_access = ACCESS_HOP
+	department_access = list(ACCESS_SERVICE)
 
 /datum/job_department/silicon
 	department_name = DEPARTMENT_SILICON

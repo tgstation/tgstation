@@ -9,10 +9,11 @@
 	movedelay = 0.6
 	car_traits = CAN_KIDNAP
 	key_type = /obj/item/bikehorn
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
-	light_range = 8
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
+	light_range = 6
 	light_power = 2
 	light_on = FALSE
+	access_provider_flags = VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_KIDNAPPED
 	///list of headlight colors we use to pick through when we have party mode due to emag
 	var/headlight_colors = list(COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_LIME, COLOR_BRIGHT_BLUE, COLOR_CYAN, COLOR_PURPLE)
 	///Cooldown time inbetween [/obj/vehicle/sealed/car/clowncar/proc/roll_the_dice()] usages
@@ -178,7 +179,7 @@
 	to_chat(user, span_danger("You scramble [src]'s child safety lock, and a panel with six colorful buttons appears!"))
 	initialize_controller_action_type(/datum/action/vehicle/sealed/roll_the_dice, VEHICLE_CONTROL_DRIVE)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/cannon, VEHICLE_CONTROL_DRIVE)
-	AddElement(/datum/element/waddling)
+	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	return TRUE
 
 /obj/vehicle/sealed/car/clowncar/atom_destruction(damage_flag)

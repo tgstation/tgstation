@@ -173,41 +173,12 @@
 
 /obj/projectile/magic/animate/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	target.animate_atom_living(firer)
+	if(!is_type_in_typecache(target, GLOB.animatable_blacklist))
+		target.animate_atom_living(firer)
 
-/atom/proc/animate_atom_living(mob/living/owner = null)
-	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.animatable_blacklist))
-		if(istype(src, /obj/structure/statue/petrified))
-			var/obj/structure/statue/petrified/P = src
-			if(P.petrified_mob)
-				var/mob/living/L = P.petrified_mob
-				var/mob/living/basic/statue/S = new(P.loc, owner)
-				S.name = "statue of [L.name]"
-				if(owner)
-					S.faction = list("[REF(owner)]")
-				S.icon = P.icon
-				S.icon_state = P.icon_state
-				S.copy_overlays(P, TRUE)
-				S.color = P.color
-				S.atom_colours = P.atom_colours.Copy()
-				if(L.mind)
-					L.mind.transfer_to(S)
-					if(owner)
-						to_chat(S, span_userdanger("You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [owner], your creator."))
-				P.forceMove(S)
-				return
-		else
-			var/obj/O = src
-			if(isgun(O))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(drop_location(), src, owner)
-			else
-				new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)
-
-	else if(istype(src, /mob/living/simple_animal/hostile/mimic/copy))
-		// Change our allegiance!
-		var/mob/living/simple_animal/hostile/mimic/copy/C = src
-		if(owner)
-			C.ChangeOwner(owner)
+///proc to animate the target into a living creature
+/atom/proc/animate_atom_living(mob/living/owner)
+	return
 
 /obj/projectile/magic/spellblade
 	name = "blade energy"
@@ -391,24 +362,23 @@
 
 /obj/projectile/magic/wipe/proc/possession_test(mob/living/carbon/target)
 	var/datum/brain_trauma/special/imaginary_friend/trapped_owner/trauma = target.gain_trauma(/datum/brain_trauma/special/imaginary_friend/trapped_owner)
-	var/poll_message = "Do you want to play as [target.real_name]?"
+	var/poll_message = "Do you want to play as [span_danger(target.real_name)]?"
 	if(target.mind)
-		poll_message = "[poll_message] Job:[target.mind.assigned_role.title]."
+		poll_message = "[poll_message] Job:[span_notice(target.mind.assigned_role.title)]."
 	if(target.mind && target.mind.special_role)
-		poll_message = "[poll_message] Status:[target.mind.special_role]."
+		poll_message = "[poll_message] Status:[span_boldnotice(target.mind.special_role)]."
 	else if(target.mind)
 		var/datum/antagonist/A = target.mind.has_antag_datum(/datum/antagonist/)
 		if(A)
-			poll_message = "[poll_message] Status:[A.name]."
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob(poll_message, ROLE_PAI, FALSE, 10 SECONDS, target)
+			poll_message = "[poll_message] Status:[span_boldnotice(A.name)]."
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(poll_message, check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = target, alert_pic = target, role_name_text = "bolt of possession")
 	if(target.stat == DEAD)//boo.
 		return
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/ghost = pick(candidates)
+	if(chosen_one)
 		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
 		var/oldkey = target.key
 		target.ghostize(FALSE)
-		target.key = ghost.key
+		target.key = chosen_one.key
 		trauma.friend.key = oldkey
 		trauma.friend.reset_perspective(null)
 		trauma.friend.Show()

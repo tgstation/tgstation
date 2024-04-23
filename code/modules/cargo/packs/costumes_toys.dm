@@ -30,6 +30,7 @@
 				)
 	crate_name = "collectable hats crate"
 	crate_type = /obj/structure/closet/crate/wooden
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /datum/supply_pack/costumes_toys/formalwear
 	name = "Formalwear Crate"
@@ -70,6 +71,7 @@
 	contains = list(/obj/item/firing_pin/clown)
 	crate_name = "toy crate" // It's /technically/ a toy. For the clown, at least.
 	crate_type = /obj/structure/closet/crate/wooden
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /datum/supply_pack/costumes_toys/lasertag
 	name = "Laser Tag Crate"
@@ -232,6 +234,7 @@
 	cost = 1000
 	contains = list()
 	crate_name = "booster pack pack"
+	discountable = SUPPLY_PACK_STD_DISCOUNTABLE
 
 /datum/supply_pack/costumes_toys/randomised/tcg/fill(obj/structure/closet/crate/C)
 	var/cardpacktype
@@ -244,10 +247,12 @@
 	desc = "This crate contains a random assortment of stickers."
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list()
+	discountable = SUPPLY_PACK_STD_DISCOUNTABLE
 
 /datum/supply_pack/costumes_toys/stickers/fill(obj/structure/closet/crate/crate)
-	for(var/i in 1 to rand(1,2))
+	for(var/i in 1 to rand(1, 2))
 		new /obj/item/storage/box/stickers(crate)
+
 	if(prob(30)) // a pair of googly eyes because funny
 		new /obj/item/storage/box/stickers/googly(crate)
 
@@ -262,3 +267,16 @@
 	)
 	crate_name = "corgi pinata kit"
 	crate_type = /obj/structure/closet/crate/wooden
+	discountable = SUPPLY_PACK_STD_DISCOUNTABLE
+
+/datum/supply_pack/costumes_toys/balloons
+	name = "Long Balloons Kit"
+	desc = "This crate contains a box of long balloons, plus a skillchip for non-clowns to join the fun! Extra layer of safety so clowns at CentCom won't get to them."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(
+		/obj/item/storage/box/balloons,
+		/obj/item/skillchip/job/clown,
+	)
+	crate_name = "long balloons kit"
+	crate_type = /obj/structure/closet/crate/wooden
+	discountable = SUPPLY_PACK_STD_DISCOUNTABLE

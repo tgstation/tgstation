@@ -19,7 +19,7 @@
 /obj/machinery/fishing_portal_generator/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/fishing_portal_generator/examine(mob/user)
 	. = ..()
@@ -33,7 +33,7 @@
 	playsound(src, SFX_SPARKS, 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
-/obj/machinery/fishing_portal_generator/interact(mob/user, special_state)
+/obj/machinery/fishing_portal_generator/interact(mob/user)
 	. = ..()
 	if(active)
 		deactivate()

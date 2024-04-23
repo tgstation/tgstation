@@ -79,6 +79,7 @@
 /datum/id_trim/job/assistant
 	assignment = "Assistant"
 	trim_state = "trim_assistant"
+	intern_alt_name = "Intern"
 	sechud_icon_state = SECHUD_ASSISTANT
 	minimal_access = list()
 	extra_access = list(
@@ -201,6 +202,28 @@
 		ACCESS_HOP,
 		)
 	job = /datum/job/botanist
+
+/datum/id_trim/job/bridge_assistant
+	assignment = "Bridge Assistant"
+	trim_state = "trim_assistant"
+	department_color = COLOR_COMMAND_BLUE
+	subdepartment_color = COLOR_COMMAND_BLUE
+	sechud_icon_state = SECHUD_BRIDGE_ASSISTANT
+	minimal_access = list(
+		ACCESS_COMMAND,
+		ACCESS_EVA,
+		ACCESS_GATEWAY,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_RC_ANNOUNCE,
+		ACCESS_TELEPORTER,
+		ACCESS_WEAPONS,
+	)
+	extra_access = list()
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+	)
+	job = /datum/job/bridge_assistant
 
 /datum/id_trim/job/captain
 	assignment = "Captain"
@@ -440,6 +463,7 @@
 	extra_access = list(
 		ACCESS_PSYCHOLOGY,
 		ACCESS_PHARMACY,
+		ACCESS_VIROLOGY,
 	)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -695,7 +719,6 @@
 	sechud_icon_state = SECHUD_MEDICAL_DOCTOR
 	extra_access = list(
 		ACCESS_PLUMBING,
-		ACCESS_VIROLOGY,
 		)
 	minimal_access = list(
 		ACCESS_MECH_MEDICAL,
@@ -704,6 +727,7 @@
 		ACCESS_MORGUE,
 		ACCESS_PHARMACY,
 		ACCESS_SURGERY,
+		ACCESS_VIROLOGY,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -754,6 +778,7 @@
 		)
 	extra_access = list(
 		ACCESS_SURGERY,
+		ACCESS_VIROLOGY,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -775,6 +800,7 @@
 		ACCESS_HOS,
 		)
 	job = /datum/job/prisoner
+	threat_modifier = 1 // I'm watching you
 
 /datum/id_trim/job/prisoner/one
 	trim_state = "trim_prisoner_1"
@@ -830,7 +856,8 @@
 
 /datum/id_trim/job/quartermaster
 	assignment = "Quartermaster"
-	trim_state = "trim_quartermaster"
+	intern_alt_name = "Quartermaster-in-Training"
+	trim_state = "trim_cargotechnician"
 	department_color = COLOR_COMMAND_BLUE
 	subdepartment_color = COLOR_CARGO_BROWN
 	department_state = "departmenthead"
@@ -1156,29 +1183,36 @@
 		)
 	job = /datum/job/station_engineer
 
-/datum/id_trim/job/virologist
-	assignment = "Virologist"
-	trim_state = "trim_virologist"
-	department_color = COLOR_MEDICAL_BLUE
-	subdepartment_color = COLOR_MEDICAL_BLUE
-	sechud_icon_state = SECHUD_VIROLOGIST
+/datum/id_trim/job/veteran_advisor
+	assignment = "Veteran Security Advisor"
+	trim_state = "trim_veteranadvisor"
+	department_color = COLOR_SECURITY_RED
+	subdepartment_color = COLOR_COMMAND_BLUE
+	sechud_icon_state = SECHUD_VETERAN_ADVISOR
 	minimal_access = list(
-		ACCESS_MECH_MEDICAL,
-		ACCESS_MEDICAL,
+		ACCESS_COMMAND,
+		ACCESS_BRIG,
+		ACCESS_BRIG_ENTRANCE,
+		ACCESS_COURT,
+		ACCESS_MECH_SECURITY,
 		ACCESS_MINERAL_STOREROOM,
-		ACCESS_VIROLOGY,
-		)
-	extra_access = list(
-		ACCESS_PLUMBING,
-		ACCESS_MORGUE,
-		ACCESS_SURGERY,
-		)
-	template_access = list(
-		ACCESS_CAPTAIN,
-		ACCESS_CHANGE_IDS,
-		ACCESS_CMO,
-		)
-	job = /datum/job/virologist
+		ACCESS_SECURITY,
+		ACCESS_WEAPONS,
+	)
+	extra_access = list()
+	template_access = list()
+	job = /datum/job/veteran_advisor
+
+/datum/id_trim/job/veteran_advisor/refresh_trim_access()
+	. = ..()
+
+	if(!.)
+		return
+
+	// Config check for if sec has maint access.
+	if(CONFIG_GET(flag/security_has_maint_access))
+		access |= list(ACCESS_MAINT_TUNNELS)
+
 
 /datum/id_trim/job/warden
 	assignment = "Warden"
@@ -1220,3 +1254,20 @@
 
 #undef POPULATION_SCALED_ACCESS
 #undef ALWAYS_GETS_ACCESS
+
+/datum/id_trim/job/human_ai
+	assignment = JOB_HUMAN_AI
+	trim_state = "trim_recluse"
+	department_color = COLOR_BLUE_GRAY
+	subdepartment_color = COLOR_MODERATE_BLUE
+	sechud_icon_state = SECHUD_HUMAN_AI
+	minimal_access = list(
+		ACCESS_ROBOTICS, // to access robotic controls
+		ACCESS_NETWORK, //to access NTOS
+		ACCESS_KEYCARD_AUTH, //to access holopads
+		ACCESS_MINISAT,
+		ACCESS_AI_UPLOAD,
+	)
+	extra_access = list()
+	template_access = list()
+	job = /datum/job/human_ai

@@ -9,7 +9,6 @@
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
 	/// armor is a little bit less than a grille. max_integrity about half that of a grille.
 	armor_type = /datum/armor/structure_railing
 	max_integrity = 25
@@ -89,8 +88,6 @@
 			to_chat(user, span_warning("[src] is already in good condition!"))
 		return
 
-/obj/structure/railing/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/structure/railing/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -99,19 +96,14 @@
 	deconstruct()
 	return TRUE
 
-/obj/structure/railing/deconstruct(disassembled)
-	if((flags_1 & NODECONSTRUCT_1))
-		return ..()
+/obj/structure/railing/atom_deconstruct(disassembled)
 	var/rods_to_make = istype(src,/obj/structure/railing/corner) ? 1 : 2
 	var/obj/rod = new item_deconstruct(drop_location(), rods_to_make)
 	transfer_fingerprints_to(rod)
-	return ..()
 
 ///Implements behaviour that makes it possible to unanchor the railing.
 /obj/structure/railing/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(flags_1&NODECONSTRUCT_1)
-		return
 	to_chat(user, span_notice("You begin to [anchored ? "unfasten the railing from":"fasten the railing to"] the floor..."))
 	if(I.use_tool(src, user, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_anchored), anchored)))
 		set_anchored(!anchored)
@@ -121,7 +113,7 @@
 /obj/structure/railing/CanPass(atom/movable/mover, border_dir)
 	. = ..()
 	if(border_dir & dir)
-		return . || mover.throwing || mover.movement_type & (FLYING | FLOATING)
+		return . || mover.throwing || (mover.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 	return TRUE
 
 /obj/structure/railing/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
@@ -144,7 +136,7 @@
 	if (leaving.throwing)
 		return
 
-	if (leaving.movement_type & (PHASING | FLYING | FLOATING))
+	if (leaving.movement_type & (PHASING|MOVETYPES_NOT_TOUCHING_GROUND))
 		return
 
 	if (leaving.move_force >= MOVE_FORCE_EXTREMELY_STRONG)
@@ -164,7 +156,6 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "wooden_railing"
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
-	plane = GAME_PLANE_FOV_HIDDEN
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/railing/wooden_fence/Initialize(mapload)

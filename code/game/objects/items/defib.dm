@@ -28,7 +28,7 @@
 	/// If the cell can be removed via screwdriver
 	var/cell_removable = TRUE
 	var/obj/item/shockpaddles/paddles
-	var/obj/item/stock_parts/cell/high/cell
+	var/obj/item/stock_parts/cell/cell
 	/// If true, revive through space suits, allow for combat shocking
 	var/combat = FALSE
 	/// How long does it take to recharge
@@ -187,7 +187,7 @@
 /obj/item/defibrillator/emp_act(severity)
 	. = ..()
 	if(cell && !(. & EMP_PROTECT_CONTENTS))
-		deductcharge(1000 / severity)
+		deductcharge(STANDARD_CELL_CHARGE / severity)
 	if (. & EMP_PROTECT_SELF)
 		return
 
@@ -239,15 +239,15 @@
 	return ..()
 
 /obj/item/defibrillator/proc/deductcharge(chrgdeductamt)
-	if(cell)
-		if(cell.charge < (paddles.revivecost+chrgdeductamt))
-			powered = FALSE
-			update_power()
-		if(cell.use(chrgdeductamt))
-			update_power()
-			return TRUE
-		else
-			return FALSE
+	if(QDELETED(cell))
+		return
+
+	if(cell.charge < (paddles.revivecost + chrgdeductamt))
+		powered = FALSE
+	if(!cell.use(chrgdeductamt))
+		powered = FALSE
+
+	update_power()
 
 /obj/item/defibrillator/proc/cooldowncheck()
 		addtimer(CALLBACK(src, PROC_REF(finish_charging)), cooldown_duration)
@@ -295,7 +295,7 @@
 
 /obj/item/defibrillator/compact/combat
 	name = "combat defibrillator"
-	desc = "A belt-equipped blood-red defibrillator. Can revive through thick clothing, has an experimental self-recharging battery, and can be utilized in combat via applying the paddles in a disarming or aggressive manner."
+	desc = "A belt-equipped blood-red defibrillator. Can revive through thick clothing, has an experimental self-recharging battery, and can be utilized as a weapon via applying the paddles while in a combat stance."
 	icon_state = "defibcombat" //needs defib inhand sprites
 	inhand_icon_state = null
 	worn_icon_state = "defibcombat"
@@ -322,7 +322,7 @@
 
 /obj/item/defibrillator/compact/combat/loaded/nanotrasen
 	name = "elite Nanotrasen defibrillator"
-	desc = "A belt-equipped state-of-the-art defibrillator. Can revive through thick clothing, has an experimental self-recharging battery, and can be utilized in combat via applying the paddles in a disarming or aggressive manner."
+	desc = "A belt-equipped state-of-the-art defibrillator. Can revive through thick clothing, has an experimental self-recharging battery, and can be utilized as a weapon via applying the paddles while in a combat stance."
 	icon_state = "defibnt" //needs defib inhand sprites
 	inhand_icon_state = null
 	worn_icon_state = "defibnt"
@@ -346,7 +346,7 @@
 	resistance_flags = INDESTRUCTIBLE
 	base_icon_state = "defibpaddles"
 
-	var/revivecost = 1000
+	var/revivecost = STANDARD_CELL_CHARGE * 0.1
 	var/cooldown = FALSE
 	var/busy = FALSE
 	var/obj/item/defibrillator/defib
@@ -489,7 +489,7 @@
 		return
 
 	if(H.can_defib() == DEFIB_POSSIBLE)
-		H.notify_ghost_cloning("Your heart is being defibrillated!")
+		H.notify_revival("Your heart is being defibrillated!")
 		H.grab_ghost() // Shove them back in their body.
 
 	do_help(H, user)

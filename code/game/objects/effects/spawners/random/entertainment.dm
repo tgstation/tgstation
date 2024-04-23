@@ -51,14 +51,13 @@
 	loot = list(
 		/obj/item/coin/iron = 5,
 		/obj/item/coin/plastic = 5,
-		/obj/item/coin/silver = 3,
-		/obj/item/coin/plasma = 3,
+		/obj/item/coin/silver = 4,
+		/obj/item/coin/plasma = 4,
 		/obj/item/coin/uranium = 3,
 		/obj/item/coin/titanium = 3,
 		/obj/item/coin/diamond = 2,
 		/obj/item/coin/bananium = 2,
 		/obj/item/coin/adamantine = 2,
-		/obj/item/coin/mythril = 2,
 		/obj/item/coin/runite = 2,
 		/obj/item/food/chococoin = 2,
 		/obj/item/coin/twoheaded = 1,
@@ -280,4 +279,13 @@
 		/obj/item/toy/plush/bubbleplush = 2,
 		/obj/item/toy/plush/ratplush = 2,
 		/obj/item/toy/plush/narplush = 2,
+	)
+
+/obj/effect/spawner/random/entertainment/colorful_grenades
+	name = "colorful/glitter grenades spawner"
+	loot = list(
+		/obj/item/grenade/chem_grenade/glitter/pink,
+		/obj/item/grenade/chem_grenade/glitter/blue,
+		/obj/item/grenade/chem_grenade/glitter/white,
+		/obj/item/grenade/chem_grenade/colorful
 	)

@@ -8,7 +8,8 @@
 	belt_icon_state = "screwdriver"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	flags_1 = CONDUCT_1 | IS_PLAYER_COLORABLE_1
+	flags_1 = IS_PLAYER_COLORABLE_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	demolition_mod = 0.5
@@ -147,7 +148,7 @@
 	name = "automated screwdriver"
 	desc = "A powerful automated screwdriver, designed to be both precise and quick."
 	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "screwdriver_cyborg"
+	icon_state = "toolkit_engiborg_screwdriver"
 	hitsound = 'sound/items/drill_hit.ogg'
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.5

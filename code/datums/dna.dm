@@ -58,7 +58,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/datum/species/species = new /datum/species/human
 	/// Assoc list of feature keys to their value
 	/// Note if you set these manually, and do not update [unique_features] afterwards, it will likely be reset.
-	var/list/features = list("mcolor" = "#FFFFFF")
+	var/list/features = list("mcolor" = COLOR_WHITE)
 	///Stores the hashed values of the person's non-human features
 	var/unique_features
 	///Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
@@ -86,6 +86,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /datum/dna/Destroy()
 	if(iscarbon(holder))
 		var/mob/living/carbon/cholder = holder
+		remove_all_mutations() // mutations hold a reference to the dna
 		if(cholder.dna == src)
 			cholder.dna = null
 	holder = null
@@ -207,6 +208,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		L[DNA_TAIL_BLOCK] = construct_block(GLOB.tails_list_human.Find(features["tail_cat"]), GLOB.tails_list_human.len)
 	if(features["tail_lizard"])
 		L[DNA_LIZARD_TAIL_BLOCK] = construct_block(GLOB.tails_list_lizard.Find(features["tail_lizard"]), GLOB.tails_list_lizard.len)
+	if(features["tail_monkey"])
+		L[DNA_MONKEY_TAIL_BLOCK] = construct_block(GLOB.tails_list_monkey.Find(features["tail_monkey"]), GLOB.tails_list_monkey.len)
 	if(features["snout"])
 		L[DNA_SNOUT_BLOCK] = construct_block(GLOB.snouts_list.Find(features["snout"]), GLOB.snouts_list.len)
 	if(features["horns"])
@@ -343,6 +346,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			set_uni_feature_block(blocknumber, construct_block(GLOB.tails_list_human.Find(features["tail_cat"]), GLOB.tails_list_human.len))
 		if(DNA_LIZARD_TAIL_BLOCK)
 			set_uni_feature_block(blocknumber, construct_block(GLOB.tails_list_lizard.Find(features["tail_lizard"]), GLOB.tails_list_lizard.len))
+		if(DNA_MONKEY_TAIL_BLOCK)
+			set_uni_feature_block(blocknumber, construct_block(GLOB.tails_list_monkey.Find(features["tail_monkey"]), GLOB.tails_list_monkey.len))
 		if(DNA_SNOUT_BLOCK)
 			set_uni_feature_block(blocknumber, construct_block(GLOB.snouts_list.Find(features["snout"]), GLOB.snouts_list.len))
 		if(DNA_HORNS_BLOCK)
@@ -365,20 +370,21 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			set_uni_feature_block(blocknumber, construct_block(GLOB.pod_hair_list.Find(features["pod_hair"]), GLOB.pod_hair_list.len))
 
 //Please use add_mutation or activate_mutation instead
-/datum/dna/proc/force_give(datum/mutation/human/HM)
-	if(holder && HM)
-		if(HM.class == MUT_NORMAL)
-			set_se(1, HM)
-		. = HM.on_acquiring(holder)
+/datum/dna/proc/force_give(datum/mutation/human/human_mutation)
+	if(holder && human_mutation)
+		if(human_mutation.class == MUT_NORMAL)
+			set_se(1, human_mutation)
+		. = human_mutation.on_acquiring(holder)
 		if(.)
-			qdel(HM)
+			qdel(human_mutation)
 		update_instability()
 
 //Use remove_mutation instead
-/datum/dna/proc/force_lose(datum/mutation/human/HM)
-	if(holder && (HM in mutations))
-		set_se(0, HM)
-		. = HM.on_losing(holder)
+/datum/dna/proc/force_lose(datum/mutation/human/human_mutation)
+	if(holder && (human_mutation in mutations))
+		set_se(0, human_mutation)
+		. = human_mutation.on_losing(holder)
+		qdel(human_mutation) // qdel mutations on removal
 		update_instability(FALSE)
 		return
 
@@ -459,7 +465,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	update_dna_identity()
 
-/datum/dna/stored //subtype used by brain mob's stored_dna
+/datum/dna/stored //subtype used by brain mob's stored_dna and the crew manifest
 
 /datum/dna/stored/add_mutation(mutation_name) //no mutation changes on stored dna.
 	return
@@ -524,7 +530,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(icon_update)
 		update_body(is_creating = TRUE)
 		update_mutations_overlay()// no lizard with human hulk overlay please.
-
 
 /mob/proc/has_dna()
 	return
@@ -645,6 +650,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		dna.features["tail_cat"] = GLOB.tails_list_human[deconstruct_block(get_uni_feature_block(features, DNA_TAIL_BLOCK), GLOB.tails_list_human.len)]
 	if(dna.features["tail_lizard"])
 		dna.features["tail_lizard"] = GLOB.tails_list_lizard[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_TAIL_BLOCK), GLOB.tails_list_lizard.len)]
+	if(dna.features["tail_monkey"])
+		dna.features["tail_monkey"] = GLOB.tails_list_monkey[deconstruct_block(get_uni_feature_block(features, DNA_MONKEY_TAIL_BLOCK), GLOB.tails_list_monkey.len)]
 	if(dna.features["ears"])
 		dna.features["ears"] = GLOB.ears_list[deconstruct_block(get_uni_feature_block(features, DNA_EARS_BLOCK), GLOB.ears_list.len)]
 	if(dna.features["moth_wings"])
@@ -921,10 +928,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 				spawn_gibs()
 				set_species(/datum/species/skeleton)
 				if(prob(90))
-					addtimer(CALLBACK(src, PROC_REF(death)), 30)
+					addtimer(CALLBACK(src, PROC_REF(death)), 3 SECONDS)
 			if(5)
 				to_chat(src, span_phobia("LOOK UP!"))
-				addtimer(CALLBACK(src, PROC_REF(something_horrible_mindmelt)), 30)
+				addtimer(CALLBACK(src, PROC_REF(something_horrible_mindmelt)), 3 SECONDS)
 			if(6)
 				slow_psykerize()
 
@@ -936,4 +943,4 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		eyes.Remove(src)
 		qdel(eyes)
 		visible_message(span_notice("[src] looks up and their eyes melt away!"), span_userdanger("I understand now."))
-		addtimer(CALLBACK(src, PROC_REF(adjustOrganLoss), ORGAN_SLOT_BRAIN, 200), 20)
+		addtimer(CALLBACK(src, PROC_REF(adjustOrganLoss), ORGAN_SLOT_BRAIN, 200), 2 SECONDS)

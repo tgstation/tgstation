@@ -54,7 +54,7 @@
 	playsound(src,'sound/effects/refill.ogg',50,TRUE)
 	icon_state = "lazarus_empty"
 
-/obj/item/lazarus_injector/emp_act()
+/obj/item/lazarus_injector/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return

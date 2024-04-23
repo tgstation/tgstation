@@ -47,6 +47,10 @@
 		generate_loot(arrived, chosen_forge)
 		return
 
+	if(istype(arrived, /obj/item/storage/lockbox/bitrunning/encrypted))
+		generate_secondary_loot(arrived, chosen_forge, generated_domain)
+		return
+
 /// Handles examining the server. Shows cooldown time and efficiency.
 /obj/machinery/quantum_server/proc/on_goal_turf_examined(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
@@ -78,6 +82,16 @@
 			var/obj/effect/mob_spawn/corpse/spawner = thing
 
 			mutation_candidate_refs.Add(spawner.spawned_mob_ref)
+			continue
+
+		if(istype(thing, /obj/machinery/suit_storage_unit))
+			var/obj/machinery/suit_storage_unit/storage = thing
+			storage.disable_modlink()
+			continue
+
+		if(istype(thing, /obj/item/mod/control))
+			var/obj/item/mod/control/modsuit = thing
+			modsuit.disable_modlink()
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
 

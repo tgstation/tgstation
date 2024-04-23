@@ -252,8 +252,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "ja" = (
-/obj/machinery/door/window{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Spare Equipment";
 	req_access = list("syndicate")
 	},
@@ -310,7 +309,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "kJ" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "shuttle_space"
+	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "li" = (
@@ -368,14 +369,6 @@
 "nG" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"nO" = (
-/obj/machinery/mineral/ore_redemption{
-	name = "Syndicate ore redemption machine";
-	ore_multiplier = 4;
-	req_access = list("syndicate")
-	},
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "nU" = (
 /obj/structure/sign/poster/contraband/syndicate_pistol,
@@ -478,7 +471,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "sq" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "Control Room";
 	req_access = list("syndicate")
 	},
@@ -895,8 +888,7 @@
 /area/space)
 "Lo" = (
 /obj/structure/filingcabinet,
-/obj/machinery/door/window{
-	dir = 8;
+/obj/machinery/door/window/left/directional/west{
 	name = "Syndicate Interior Door";
 	req_access = list("syndicate")
 	},
@@ -2738,7 +2730,7 @@ nB
 ru
 eB
 uP
-nO
+uP
 uP
 ru
 nB

@@ -10,7 +10,8 @@
 	)
 
 /datum/surgery/autopsy/can_start(mob/user, mob/living/patient)
-	. = ..()
+	if(!..())
+		return FALSE
 	if(patient.stat != DEAD)
 		return FALSE
 	if(HAS_TRAIT_FROM(patient, TRAIT_DISSECTED, AUTOPSY_TRAIT))

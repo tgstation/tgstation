@@ -381,7 +381,7 @@
 	else
 		return ..()
 
-/obj/item/robot_suit/ui_status(mob/user)
+/obj/item/robot_suit/ui_status(mob/user, datum/ui_state/state)
 	if(isobserver(user))
 		return ..()
 	var/obj/item/held_item = user.get_active_held_item()

@@ -26,6 +26,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/helbital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	var/death_is_coming = (affected_mob.getToxLoss() + affected_mob.getOxyLoss() + affected_mob.getFireLoss() + affected_mob.getBruteLoss())*normalise_creation_purity()
 	var/thou_shall_heal = 0
 	var/good_kind_of_healing = FALSE
@@ -48,9 +49,7 @@
 		notify_ghosts(
 			"[affected_mob] has entered a game of rock-paper-scissors with death!",
 			source = affected_mob,
-			action = NOTIFY_ORBIT,
 			header = "Who Will Win?",
-			notify_flags = NOTIFY_CATEGORY_DEFAULT,
 		)
 		reaping = TRUE
 		if(affected_mob.apply_status_effect(/datum/status_effect/necropolis_curse, CURSE_BLINDING))
@@ -80,7 +79,6 @@
 				affected_mob.revive(HEAL_ALL)
 				holder.del_reagent(type)
 				return
-	return ..() || .
 
 /datum/reagent/medicine/c2/helbital/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -100,6 +98,8 @@
 	ph = 8.2
 	taste_description = "bitter with a hint of alcohol"
 	reagent_state = SOLID
+	inverse_chem_val = 0.3
+	inverse_chem = /datum/reagent/inverse/libitoil
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/libital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -163,13 +163,16 @@
 /*Suffix: -uri*/
 /datum/reagent/medicine/c2/lenturi
 	name = "Lenturi"
-	description = "Used to treat burns. Makes you move slower while it is in your system. Applies stomach damage when it leaves your system."
+	description = "Used to treat burns. Applies stomach damage when it leaves your system."
 	reagent_state = LIQUID
 	color = "#6171FF"
 	ph = 4.7
 	var/resetting_probability = 0 //What are these for?? Can I remove them?
 	var/spammer = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	inverse_chem_val = 0.4
+	inverse_chem = /datum/reagent/inverse/lentslurri
+
 
 /datum/reagent/medicine/c2/lenturi/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -188,6 +191,8 @@
 	var/resetting_probability = 0 //same with this? Old legacy vars that should be removed?
 	var/message_cd = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	inverse_chem_val = 0.35
+	inverse_chem = /datum/reagent/inverse/aiuri
 
 /datum/reagent/medicine/c2/aiuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -447,7 +452,7 @@
 	overdose_threshold = 25
 	ph = 9.1
 	var/datum/brain_trauma/mild/muscle_weakness/trauma
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/c2/musiver/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -579,8 +584,10 @@
 
 	if(affected_mob.health <= (affected_mob.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*(2*normalise_creation_purity()))) //certain death below this threshold
 		REMOVE_TRAIT(affected_mob, TRAIT_STABLEHEART, type) //we have to remove the stable heart trait before we give them a heart attack
-		to_chat(affected_mob,span_danger("You feel something rupturing inside your chest!"))
-		affected_mob.emote("scream")
+		affected_mob.remove_traits(subject_traits, type)
+		to_chat(affected_mob, span_danger("You feel something rupturing inside your chest!"))
+		if(!HAS_TRAIT(affected_mob, TRAIT_ANALGESIA))
+			affected_mob.emote("scream")
 		affected_mob.set_heartattack(TRUE)
 		volume = 0
 	if(need_mob_update)

@@ -4,7 +4,7 @@
 	desc = "Play a prerecorded message for the benefit of those around you."
 	background_icon_state = "bg_tech_blue"
 	overlay_icon_state = "bg_tech_blue_border"
-	button_icon = 'icons/mob/actions/actions_AI.dmi'
+	button_icon = 'icons/obj/machines/wallmounts.dmi'
 	button_icon_state = "intercom"
 	cooldown_time = 10 SECONDS
 	melee_cooldown_time = 0 SECONDS
@@ -53,3 +53,12 @@
 
 	if (length(automated_announcements) && !isnull(automated_announcements[line]))
 		playsound(bot_owner, automated_announcements[line], vol = 50, vary = FALSE)
+
+
+/datum/action/cooldown/bot_announcement/medbot
+
+/datum/action/cooldown/bot_announcement/medbot/announce(line, channel)
+	var/mob/living/basic/bot/medbot/bot_owner = owner
+	if(!(bot_owner.medical_mode_flags & MEDBOT_SPEAK_MODE))
+		return
+	return ..()

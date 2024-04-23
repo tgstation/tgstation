@@ -62,9 +62,9 @@
 			return
 		else
 			to_chat(user, span_notice("You begin reinforcing the floor..."))
-			if(do_after(user, 30, target = src))
+			if(do_after(user, 3 SECONDS, target = src))
 				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
-					PlaceOnTop(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
+					place_on_top(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
 					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
 					R.use(2)
 					to_chat(user, span_notice("You reinforce the floor."))
@@ -100,7 +100,7 @@
 					return
 				sheets.use(PLATE_REINFORCE_COST)
 				playsound(src, 'sound/machines/creak.ogg', 100, vary = TRUE)
-				PlaceOnTop(/turf/open/floor/plating/reinforced)
+				place_on_top(/turf/open/floor/plating/reinforced)
 		else
 			if(!iscyborg(user))
 				balloon_alert(user, "too damaged, use a welding tool!")
@@ -177,8 +177,8 @@
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
-/turf/open/floor/plating/foam/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
-	return
+/turf/open/floor/plating/foam/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return user.combat_mode ? ITEM_INTERACT_SKIP_TO_ATTACK : ITEM_INTERACT_BLOCKING // Fuck you
 
 //reinforced plating deconstruction states
 #define PLATE_INTACT 0
@@ -307,12 +307,14 @@
 		new /obj/effect/decal/cleanable/glass/plastitanium/screws(below_turf)
 		playsound(src, 'sound/effects/structure_stress/pop3.ogg', 100, vary = TRUE)
 
+/turf/open/floor/plating/reinforced/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 ///not an actual turf its used just for rcd ui purposes
 /turf/open/floor/plating/rcd
 	name = "Floor/Wall"
 	icon = 'icons/hud/radial.dmi'
 	icon_state = "wallfloor"
-
 
 #undef PLATE_INTACT
 #undef PLATE_BOLTS_LOOSENED

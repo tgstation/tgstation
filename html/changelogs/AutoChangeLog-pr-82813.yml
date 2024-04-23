@@ -1,0 +1,5 @@
+author: "Jacquerel and Melbert"
+delete-after: True
+changes:
+  - rscadd: "A new achievement for moving a boulder from one place to another, at great effort."
+  - balance: "Hauling a boulder around makes you move slower, as it does when dragging it."

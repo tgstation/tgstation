@@ -104,7 +104,7 @@
 
 	return new trash_type(location || drop_location())
 
-/obj/item/food/grown/grind_requirements()
+/obj/item/food/grown/blend_requirements()
 	if(dry_grind && !HAS_TRAIT(src, TRAIT_DRIED))
 		to_chat(usr, span_warning("[src] needs to be dry before it can be ground up!"))
 		return
@@ -146,7 +146,7 @@
 	var/grind_results_num = LAZYLEN(grind_results)
 	if(grind_results_num)
 		var/average_purity = reagents.get_average_purity()
-		var/total_nutriment_amount = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment, include_subtypes = TRUE)
+		var/total_nutriment_amount = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment, type_check = REAGENT_SUB_TYPE)
 		var/single_reagent_amount = grind_results_num > 1 ? round(total_nutriment_amount / grind_results_num, CHEMICAL_QUANTISATION_LEVEL) : total_nutriment_amount
 		reagents.remove_reagent(/datum/reagent/consumable/nutriment, total_nutriment_amount, include_subtypes = TRUE)
 		for(var/reagent in grind_results)

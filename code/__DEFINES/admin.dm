@@ -23,6 +23,8 @@
 #define BANTYPE_ANY_JOB 9
 
 //Admin Permissions
+/// Used for signifying that all admins can use this regardless of actual permissions
+#define R_NONE NONE
 #define R_BUILD (1<<0)
 #define R_ADMIN (1<<1)
 #define R_BAN (1<<2)
@@ -170,3 +172,7 @@ GLOBAL_VAR_INIT(ghost_role_flags, ALL)
 #define INTERVIEW_DENIED "interview_denied"
 /// State when an interview has had no action on it yet
 #define INTERVIEW_PENDING "interview_pending"
+
+/// Used in logging uses of admin verbs (and sometimes some non-admin or debug verbs) to the blackbox
+/// Only pass it a string key, the verb being used.
+#define BLACKBOX_LOG_ADMIN_VERB(the_verb) SSblackbox.record_feedback("tally", "admin_verb", 1, the_verb)

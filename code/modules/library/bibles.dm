@@ -77,30 +77,24 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	unique = TRUE
 	/// Deity this bible is related to
 	var/deity_name = "Space Jesus"
-	/// Component which catches bullets for us
-	var/datum/component/bullet_catcher
 
 /obj/item/book/bible/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_HOLY)
-	bullet_catcher = AddComponent(\
+	AddComponent(\
 		/datum/component/bullet_intercepting,\
 		active_slots = ITEM_SLOT_SUITSTORE,\
 		on_intercepted = CALLBACK(src, PROC_REF(on_intercepted_bullet)),\
+		block_charges = 1,\
 	)
-	carve_out()
-
-/obj/item/book/bible/Destroy(force)
-	QDEL_NULL(bullet_catcher)
-	return ..()
 
 /// Destroy the bible when it's shot by a bullet
 /obj/item/book/bible/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.add_mood_event("blessing", /datum/mood_event/blessing)
 	playsound(victim, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
-	victim.visible_message(span_warning("\The [src] takes \the [bullet] in [victim]'s place!"))
+	victim.visible_message(span_warning("[src] takes [bullet] in [victim]'s place!"))
 	var/obj/structure/fluff/paper/stack/pages = new(get_turf(src))
-	pages.dir = pick(GLOB.alldirs)
+	pages.setDir(pick(GLOB.alldirs))
 	name = "punctured bible"
 	desc = "A memento of good luck, or perhaps divine intervention?"
 	icon_state = "shot"
@@ -108,7 +102,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		GLOB.bible_icon_state = "shot" // New symbol of your religion if you hadn't picked one
 	atom_storage?.remove_all(get_turf(src))
 	QDEL_NULL(atom_storage)
-	QDEL_NULL(bullet_catcher)
 
 /obj/item/book/bible/examine(mob/user)
 	. = ..()
@@ -251,27 +244,30 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		return ..()
 
 	if(target_mob.stat == DEAD)
-		target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
-		playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
+		if(!GLOB.religious_sect?.sect_dead_bless(target_mob, user))
+			target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
+			playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
 		return
 
 	if(user == target_mob)
 		balloon_alert(user, "can't heal yourself!")
 		return
 
-	var/smack = TRUE
-	if(prob(60) && bless(target_mob, user))
-		smack = FALSE
-	else if(iscarbon(target_mob))
+	var/smack_chance = DEFAULT_SMACK_CHANCE
+	if(GLOB.religious_sect)
+		smack_chance = GLOB.religious_sect.smack_chance
+	var/success = !prob(smack_chance) && bless(target_mob, user)
+	if(success)
+		return
+	if(iscarbon(target_mob))
 		var/mob/living/carbon/carbon_target = target_mob
 		if(!istype(carbon_target.head, /obj/item/clothing/head/helmet))
 			carbon_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 60)
 			carbon_target.balloon_alert(carbon_target, "you feel dumber!")
-	if(smack)
-		target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
-				span_userdanger("[user] beats [target_mob] over the head with [src]!"))
-		playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
-		log_combat(user, target_mob, "attacked", src)
+	target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
+			span_userdanger("[user] beats [target_mob] over the head with [src]!"))
+	playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
+	log_combat(user, target_mob, "attacked", src)
 
 /obj/item/book/bible/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	return !istype(storage_holder, /obj/item/book/bible)
@@ -328,6 +324,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 					if(cultist)
 						cultist.silent = TRUE
 						cultist.on_removal()
+						SSblackbox.record_feedback("tally", "cult_shade_purified", 1)
 					shade.theme = THEME_HOLY
 					shade.name = "Purified [shade.real_name]"
 					shade.update_appearance(UPDATE_ICON_STATE)
@@ -342,6 +339,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 
 /obj/item/book/bible/booze/Initialize(mapload)
 	. = ..()
+	carve_out()
 	new /obj/item/reagent_containers/cup/glass/bottle/whiskey(src)
 
 /obj/item/book/bible/syndicate

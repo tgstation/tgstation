@@ -67,7 +67,7 @@
 	QDEL_NULL(stored_id_card)
 	return ..()
 
-/obj/machinery/pdapainter/on_deconstruction()
+/obj/machinery/pdapainter/on_deconstruction(disassembled)
 	// Don't use ejection procs as we're gonna be destroyed anyway, so no need to update icons or anything.
 	if(stored_pda)
 		stored_pda.forceMove(loc)
@@ -107,7 +107,7 @@
 	. = ..()
 	if(default_unfasten_wrench(user, tool))
 		power_change()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/living/user, params)
 	if(machine_stat & BROKEN)

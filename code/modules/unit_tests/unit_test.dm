@@ -222,6 +222,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/list/returnable_list = list()
 	// The following are just generic, singular types.
 	returnable_list = list(
+		//this is somehow a subtype of /atom/movable, because of its purpose...
+		/image/appearance,
 		//Never meant to be created, errors out the ass for mobcode reasons
 		/mob/living/carbon,
 		//And another
@@ -245,6 +247,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		//Both are abstract types meant to scream bloody murder if spawned in raw
 		/obj/item/organ/external,
 		/obj/item/organ/external/wings,
+		//Not meant to spawn without the machine wand
+		/obj/effect/bug_moving,
 	)
 
 	// Everything that follows is a typesof() check.
@@ -292,6 +296,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/item/hilbertshotel)
 	//this boi spawns turf changing stuff, and it stacks and causes pain. Let's just not
 	returnable_list += typesof(/obj/effect/sliding_puzzle)
+	//these can explode and cause the turf to be destroyed at unexpected moments
+	returnable_list += typesof(/obj/effect/mine)
+	returnable_list += typesof(/obj/effect/spawner/random/contraband/landmine)
+	returnable_list += typesof(/obj/item/minespawner)
 	//Stacks baseturfs, can't be tested here
 	returnable_list += typesof(/obj/effect/temp_visual/lava_warning)
 	//Stacks baseturfs, can't be tested here

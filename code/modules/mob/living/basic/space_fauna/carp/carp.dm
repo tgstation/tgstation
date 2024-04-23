@@ -41,7 +41,7 @@
 	butcher_results = list(/obj/item/food/fishmeat/carp = 2, /obj/item/stack/sheet/animalhide/carp = 1)
 	greyscale_config = /datum/greyscale_config/carp
 	ai_controller = /datum/ai_controller/basic_controller/carp
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
 
@@ -95,10 +95,10 @@
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("gnashes")))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	if (tamer)
-		on_tamed(tamer, feedback = FALSE)
+		tamed(tamer, feedback = FALSE)
 		befriend(tamer)
 	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(on_tamed)))
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5)
 
 	teleport = new(src)
 	teleport.Grant(src)
@@ -119,7 +119,7 @@
 	set_greyscale(colors = list(pick_weight(GLOB.carp_colors)))
 
 /// Called when another mob has forged a bond of friendship with this one, passed the taming mob as 'tamer'
-/mob/living/basic/carp/proc/on_tamed(mob/tamer, feedback = TRUE)
+/mob/living/basic/carp/tamed(mob/living/tamer, atom/food, feedback = TRUE)
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, ridable_data)
 	AddComponent(/datum/component/obeys_commands, tamed_commands)
@@ -134,6 +134,8 @@
 
 /// Gives the carp a list of weakrefs of destinations to try and travel between when it has nothing better to do
 /mob/living/basic/carp/proc/migrate_to(list/datum/weakref/migration_points)
+	ai_controller.can_idle = FALSE
+	ai_controller.set_ai_status(AI_STATUS_ON) // We need htem to actually walk to the station
 	var/list/actual_points = list()
 	for(var/datum/weakref/point_ref as anything in migration_points)
 		var/turf/point_resolved = point_ref.resolve()

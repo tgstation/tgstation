@@ -388,7 +388,7 @@
 	)
 	head = /obj/item/clothing/head/utility/hardhat/welding
 	mask = /obj/item/clothing/mask/gas/atmos
-	l_hand = /obj/item/areaeditor/blueprints
+	l_hand = /obj/item/blueprints
 
 /datum/outfit/centcom/ert/clown/party
 	name = "ERP Comedian"
@@ -442,7 +442,7 @@
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	shoes = /obj/item/clothing/shoes/combat/swat
 	l_pocket = /obj/item/melee/energy/sword/saber
-	r_pocket = /obj/item/shield/energy
+	r_pocket = /obj/item/shield/energy/advanced
 	l_hand = /obj/item/gun/energy/pulse/loyalpin
 
 	skillchips = list(

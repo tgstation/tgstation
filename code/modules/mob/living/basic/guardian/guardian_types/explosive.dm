@@ -3,7 +3,7 @@
 	guardian_type = GUARDIAN_EXPLOSIVE
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, CLONE = 0.6, STAMINA = 0, OXY = 0.6)
+	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, STAMINA = 0, OXY = 0.6)
 	range = 13
 	playstyle_string = span_holoparasite("As an <b>explosive</b> type, you have moderate close combat abilities and are capable of converting nearby items and objects into disguised bombs via right-click.")
 	creator_name = "Explosive"
@@ -22,7 +22,7 @@
 	return ..()
 
 /mob/living/basic/guardian/explosive/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) && proximity_flag && isobj(attack_target))
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) && proximity_flag && isobj(attack_target) && can_unarmed_attack())
 		bomb.Trigger(target = attack_target)
 		return
 	return ..()

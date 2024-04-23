@@ -4,7 +4,7 @@
 	icon_state = "ectoplasm"
 	aSignal = /obj/item/assembly/signaler/anomaly/ectoplasm
 	lifespan = ANOMALY_COUNTDOWN_TIMER + 2 SECONDS //This one takes slightly longer, because it can run away.
-	immobile = TRUE //prevents it from moving around so ghosts can actually move it with decent accuracy
+	move_chance = 0 //prevents it from moving around so ghosts can actually move it with decent accuracy
 
 	///Blocks the anomaly from updating ghost count. Used in case an admin wants to rig the anomaly to be a certain size or intensity.
 	var/override_ghosts = FALSE
@@ -62,9 +62,7 @@
 
 	if(effect_power >= 10) //Performs something akin to a revenant defile spell.
 		var/effect_range = ghosts_orbiting + 3
-		var/effect_area = range(effect_range, src)
-
-		for(var/impacted_thing in effect_area)
+		for(var/impacted_thing in range(effect_range, src))
 			if(isfloorturf(impacted_thing))
 				if(prob(5))
 					new /obj/effect/decal/cleanable/blood(get_turf(impacted_thing))
@@ -180,7 +178,7 @@
 		candidate_list += GLOB.current_observers_list
 		candidate_list += GLOB.dead_player_list
 
-	var/list/candidates = poll_candidates("Would you like to participate in a spooky ghost swarm? (Warning: you will not be able to return to your body!)", ROLE_SENTIENCE, FALSE, 10 SECONDS, group = candidate_list)
+	var/list/candidates = SSpolling.poll_candidates("Would you like to participate in a spooky ghost swarm? (Warning: you will not be able to return to your body!)", check_jobban = ROLE_SENTIENCE, poll_time = 10 SECONDS, group = candidate_list, alert_pic = src, role_name_text = "ghost swarm")
 	for(var/mob/dead/observer/candidate_ghost as anything in candidates)
 		var/mob/living/basic/ghost/swarm/new_ghost = new(get_turf(src))
 		ghosts_spawned += new_ghost

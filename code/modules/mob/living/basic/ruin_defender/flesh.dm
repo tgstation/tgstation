@@ -38,9 +38,16 @@
 	if(!isnull(limb))
 		register_to_limb(limb)
 
+/mob/living/basic/living_limb_flesh/apply_target_randomisation()
+	AddElement(/datum/element/attack_zone_randomiser, GLOB.limb_zones)
+
 /mob/living/basic/living_limb_flesh/Destroy(force)
 	. = ..()
-	QDEL_NULL(current_bodypart)
+	if(current_bodypart)
+		var/obj/item/bodypart/bodypart = current_bodypart
+		unregister_from_limb(current_bodypart.owner)
+		if(!QDELETED(bodypart))
+			qdel(bodypart)
 
 /mob/living/basic/living_limb_flesh/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
@@ -49,12 +56,12 @@
 	if(isnull(current_bodypart) || isnull(current_bodypart.owner))
 		return
 	var/mob/living/carbon/human/victim = current_bodypart.owner
-	if(prob(SPT_PROB(3, SSMOBS_DT)))
+	if(SPT_PROB(3, SSMOBS_DT))
 		to_chat(victim, span_warning("The thing posing as your limb makes you feel funny...")) //warn em
 	//firstly as a sideeffect we drain nutrition from our host
 	victim.adjust_nutrition(-1.5)
 
-	if(!prob(SPT_PROB(1.5, SSMOBS_DT)))
+	if(!SPT_PROB(1.5, SSMOBS_DT))
 		return
 
 	if(istype(current_bodypart, /obj/item/bodypart/arm))
@@ -67,6 +74,8 @@
 			if(!victim.CanReach(movable))
 				continue
 			candidates += movable
+		if(!length(candidates))
+			return
 		var/atom/movable/candidate = pick(candidates)
 		if(isnull(candidate))
 			return
@@ -119,18 +128,12 @@
 			part_type = /obj/item/bodypart/leg/right/flesh
 
 	target.visible_message(span_danger("[src] [target_part ? "tears off and attaches itself" : "attaches itself"] to where [target][target.p_s()] limb used to be!"))
-	current_bodypart = new part_type(TRUE) //dont_spawn_flesh, we cant use named arguments here
-	current_bodypart.replace_limb(target, TRUE)
-	forceMove(current_bodypart)
-	register_to_limb(current_bodypart)
+	var/obj/item/bodypart/new_bodypart = new part_type()
+	forceMove(new_bodypart)
+	new_bodypart.replace_limb(target, TRUE)
+	register_to_limb(new_bodypart)
 
-/mob/living/basic/living_limb_flesh/proc/register_to_limb(obj/item/bodypart/part)
-	ai_controller.set_ai_status(AI_STATUS_OFF)
-	RegisterSignal(part, COMSIG_BODYPART_REMOVED, PROC_REF(on_limb_lost))
-	RegisterSignal(part.owner, COMSIG_LIVING_DEATH, PROC_REF(owner_died))
-	RegisterSignal(part.owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(owner_shocked)) //detach if we are shocked, not beneficial for the host but hey its a sideeffect
-
-/mob/living/basic/living_limb_flesh/proc/owner_shocked(datum/source, shock_damage, source, siemens_coeff, flags)
+/mob/living/basic/living_limb_flesh/proc/owner_shocked(datum/source, shock_damage, shock_source, siemens_coeff, flags)
 	SIGNAL_HANDLER
 	if(shock_damage < 10)
 		return
@@ -152,17 +155,29 @@
 	current_bodypart.dismember()
 	return TRUE//on_limb_lost should be called after that
 
-/mob/living/basic/living_limb_flesh/proc/on_limb_lost(atom/movable/source, mob/living/carbon/old_owner, dismembered)
+/mob/living/basic/living_limb_flesh/proc/on_limb_lost(atom/movable/source, mob/living/carbon/old_owner, special, dismembered)
 	SIGNAL_HANDLER
-	UnregisterSignal(source, COMSIG_BODYPART_REMOVED)
-	UnregisterSignal(old_owner, COMSIG_LIVING_ELECTROCUTE_ACT)
-	UnregisterSignal(old_owner, COMSIG_LIVING_DEATH)
+	unregister_from_limb(old_owner)
 	addtimer(CALLBACK(src, PROC_REF(wake_up), source), 2 SECONDS)
 
-/mob/living/basic/living_limb_flesh/proc/wake_up(atom/limb)
-	ai_controller.set_ai_status(AI_STATUS_ON)
-	forceMove(limb.drop_location())
+/mob/living/basic/living_limb_flesh/proc/register_to_limb(obj/item/bodypart/part)
+	current_bodypart = part
+	ai_controller.set_ai_status(AI_STATUS_OFF)
+	RegisterSignal(current_bodypart, COMSIG_BODYPART_REMOVED, PROC_REF(on_limb_lost))
+	if(current_bodypart.owner)
+		RegisterSignal(current_bodypart.owner, COMSIG_LIVING_DEATH, PROC_REF(owner_died))
+		RegisterSignal(current_bodypart.owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(owner_shocked)) //detach if we are shocked, not beneficial for the host but hey its a sideeffect
+
+/mob/living/basic/living_limb_flesh/proc/unregister_from_limb(mob/living/carbon/removing_owner)
+	UnregisterSignal(current_bodypart, COMSIG_BODYPART_REMOVED)
+	if(removing_owner)
+		UnregisterSignal(removing_owner, COMSIG_LIVING_ELECTROCUTE_ACT)
+		UnregisterSignal(removing_owner, COMSIG_LIVING_DEATH)
 	current_bodypart = null
-	qdel(limb)
+
+/mob/living/basic/living_limb_flesh/proc/wake_up(atom/limb)
 	visible_message(span_warning("[src] begins flailing around!"))
 	Shake(6, 6, 0.5 SECONDS)
+	ai_controller.set_ai_status(AI_STATUS_ON)
+	forceMove(limb.drop_location())
+	qdel(limb)

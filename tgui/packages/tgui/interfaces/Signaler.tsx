@@ -1,6 +1,7 @@
 import { toFixed } from 'common/math';
+
 import { useBackend } from '../backend';
-import { Button, Stack, NumberInput, Section } from '../components';
+import { Button, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -11,8 +12,8 @@ type Data = {
   maxFrequency: number;
 };
 
-export const Signaler = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Signaler = (props) => {
+  const { act, data } = useBackend();
   return (
     <Window width={280} height={128}>
       <Window.Content>
@@ -22,8 +23,8 @@ export const Signaler = (props, context) => {
   );
 };
 
-export const SignalerContent = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const SignalerContent = (props) => {
+  const { act, data } = useBackend<Data>();
   const { code, frequency, cooldown, minFrequency, maxFrequency } = data;
 
   const color = 'rgba(13, 13, 213, 0.7)';
@@ -34,7 +35,7 @@ export const SignalerContent = (props, context) => {
         <Stack.Item color="label">Frequency:</Stack.Item>
         <Stack.Item>
           <NumberInput
-            animate
+            animated
             unit="kHz"
             step={0.2}
             stepPixelSize={6}
@@ -43,7 +44,7 @@ export const SignalerContent = (props, context) => {
             value={frequency / 10}
             format={(value) => toFixed(value, 1)}
             width="80px"
-            onDrag={(e, value) =>
+            onDrag={(value) =>
               act('freq', {
                 freq: value,
               })
@@ -69,14 +70,14 @@ export const SignalerContent = (props, context) => {
         </Stack.Item>
         <Stack.Item>
           <NumberInput
-            animate
+            animated
             step={1}
             stepPixelSize={6}
             minValue={1}
             maxValue={100}
             value={code}
             width="80px"
-            onDrag={(e, value) =>
+            onDrag={(value) =>
               act('code', {
                 code: value,
               })

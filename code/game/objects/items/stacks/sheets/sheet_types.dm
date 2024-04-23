@@ -48,6 +48,11 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		new /datum/stack_recipe("bench (left)", /obj/structure/chair/sofa/bench/left, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 		new /datum/stack_recipe("bench (right)", /obj/structure/chair/sofa/bench/right, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 		new /datum/stack_recipe("bench (corner)", /obj/structure/chair/sofa/bench/corner, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("tram bench (solo)", /obj/structure/chair/sofa/bench/tram/solo, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("tram bench (middle)", /obj/structure/chair/sofa/bench/tram, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("tram bench (left)", /obj/structure/chair/sofa/bench/tram/left, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("tram bench (right)", /obj/structure/chair/sofa/bench/tram/right, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("tram bench (corner)", /obj/structure/chair/sofa/bench/tram/corner, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 		)), \
 	new /datum/stack_recipe_list("chess pieces", list( \
 		new /datum/stack_recipe("White Pawn", /obj/structure/chess/whitepawn, 2, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ENTERTAINMENT), \
@@ -74,6 +79,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 1.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	null, \
 	new/datum/stack_recipe("atmos canister", /obj/machinery/portable_atmospherics/canister, 10, time = 3 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ATMOSPHERIC), \
+	new/datum/stack_recipe("pipe", /obj/item/pipe/quaternary/pipe/crafted, 1, time = 4 SECONDS, check_density = FALSE, category = CAT_ATMOSPHERIC), \
 	null, \
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/iron/base, 1, 4, 20, category = CAT_TILES), \
 	new/datum/stack_recipe("iron rod", /obj/item/stack/rods, 1, 2, 60, category = CAT_MISC), \
@@ -140,11 +146,11 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	inhand_icon_state = "sheet-metal"
 	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	throwforce = 10
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/iron
 	grind_results = list(/datum/reagent/iron = 20)
-	point_value = 2
+	gulag_valid = TRUE
 	tableVariant = /obj/structure/table
 	material_type = /datum/material/iron
 	matter_amount = 4
@@ -202,7 +208,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		)
 		use(1)
 		user.put_in_inactive_hand(new_item)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/sheet/iron/welder_act_secondary(mob/living/user, obj/item/tool)
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
@@ -215,7 +221,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		)
 		use(1)
 		user.put_in_inactive_hand(new_item)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/sheet/iron/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	if(isopenturf(target))
@@ -266,12 +272,12 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	mats_per_unit = list(/datum/material/alloy/plasteel=SHEET_MATERIAL_AMOUNT)
 	material_type = /datum/material/alloy/plasteel
 	throwforce = 10
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	armor_type = /datum/armor/sheet_plasteel
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
 	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
-	point_value = 23
+	gulag_valid = TRUE
 	tableVariant = /obj/structure/table/reinforced
 	material_flags = NONE
 	matter_amount = 12
@@ -304,6 +310,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 2 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
 	new/datum/stack_recipe("wooden stairs frame", /obj/structure/stairs_frame/wood, 10, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("wooden fence", /obj/structure/railing/wooden_fence, 2, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("cat house", /obj/structure/cat_house, 5, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/crate/coffin, 5, time = 1.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("book case", /obj/structure/bookcase, 4, time = 1.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("drying rack", /obj/machinery/smartfridge/drying_rack, 10, time = 1.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_TOOLS), \
@@ -777,7 +784,8 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	)
 GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("plastic floor tile", /obj/item/stack/tile/plastic, 1, 4, 20, time = 2 SECONDS, check_density = FALSE, category = CAT_TILES), \
-	new /datum/stack_recipe("thermoplastic tram tile", /obj/item/stack/thermoplastic, 1, 2, time = 4 SECONDS, check_density = FALSE, placement_checks = STACK_CHECK_TRAM_EXCLUSIVE, category = CAT_TILES), \
+	new /datum/stack_recipe("light tram tile", /obj/item/stack/thermoplastic/light, 1, 4, 20, time = 2 SECONDS, check_density = FALSE, category = CAT_TILES), \
+	new /datum/stack_recipe("dark tram tile", /obj/item/stack/thermoplastic, 1, 4, 20, time = 2 SECONDS, check_density = FALSE, category = CAT_TILES), \
 	new /datum/stack_recipe("folding plastic chair", /obj/structure/chair/plastic, 2, check_density = FALSE, category = CAT_FURNITURE), \
 	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = TRUE, on_solid_ground = TRUE, time = 4 SECONDS, category = CAT_FURNITURE), \
 	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/cup/glass/waterbottle/empty, check_density = FALSE, category = CAT_CONTAINERS), \
@@ -786,7 +794,8 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("mannequin", /obj/structure/mannequin/plastic, 25, time = 5 SECONDS, one_per_turf = TRUE, check_density = FALSE, category = CAT_ENTERTAINMENT), \
 	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2, check_density = FALSE, category = CAT_EQUIPMENT), \
 	new /datum/stack_recipe("warning cone", /obj/item/clothing/head/cone, 2, check_density = FALSE, category = CAT_EQUIPMENT), \
-	new /datum/stack_recipe("blank wall sign", /obj/item/sign, 1, check_density = FALSE, category = CAT_FURNITURE)))
+	new /datum/stack_recipe("blank wall sign", /obj/item/sign, 1, check_density = FALSE, category = CAT_FURNITURE), \
+	new /datum/stack_recipe("rebellion mask", /obj/item/clothing/mask/rebellion, 1, check_density = FALSE, category = CAT_CLOTHING)))
 
 /obj/item/stack/sheet/plastic
 	name = "plastic"

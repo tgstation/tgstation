@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
@@ -18,8 +19,8 @@ type Drawable = {
   name: string;
 };
 
-export const Crayon = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const Crayon = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     has_cap,
     can_change_colour,

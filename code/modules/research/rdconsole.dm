@@ -45,7 +45,7 @@ Nothing else in the console has ID requirements.
 		return reagent.name
 	return ID
 
-/obj/machinery/computer/rdconsole/LateInitialize()
+/obj/machinery/computer/rdconsole/post_machine_initialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
@@ -112,7 +112,7 @@ Nothing else in the console has ID requirements.
 		if(stored_research.research_node_id(id))
 			say("Successfully researched [TN.display_name].")
 			var/logname = "Unknown"
-			if(isAI(user))
+			if(HAS_AI_ACCESS(user))
 				logname = "AI [user.name]"
 			if(iscyborg(user))
 				logname = "CYBORG [user.name]"
@@ -129,7 +129,7 @@ Nothing else in the console has ID requirements.
 						logname = "[ID.registered_name]"
 			stored_research.research_logs += list(list(
 				"node_name" = TN.display_name,
-				"node_cost" = price["General Research"],
+				"node_cost" = price[TECHWEB_POINT_TYPE_GENERIC],
 				"node_researcher" = logname,
 				"node_research_location" = "[get_area(src)] ([src.x],[src.y],[src.z])",
 			))
@@ -236,7 +236,8 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/ui_static_data(mob/user)
 	. = list(
-		"static_data" = list()
+		"static_data" = list(),
+		"point_types_abbreviations" = SSresearch.point_types,
 	)
 
 	// Build node cache...

@@ -16,7 +16,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/max_amount = 90
 	var/active = FALSE
-	actions_types = list(/datum/action/item_action/rcl_col,/datum/action/item_action/rcl_gui,)
+	actions_types = list(/datum/action/item_action/rcl_col,/datum/action/item_action/rcl_gui)
 	var/list/colors = list("red", "yellow", "green", "blue", "pink", "orange", "cyan", "white")
 	var/current_color_index = 1
 	var/ghetto = FALSE

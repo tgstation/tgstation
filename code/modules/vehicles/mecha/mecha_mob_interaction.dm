@@ -35,13 +35,14 @@
 		return FALSE
 	return ..()
 
-///proc called when a new non-mmi/AI mob enters this mech
+///proc called when a new non-mmi mob enters this mech
 /obj/vehicle/sealed/mecha/proc/moved_inside(mob/living/newoccupant)
 	if(!(newoccupant?.client))
 		return FALSE
 	if(ishuman(newoccupant) && !Adjacent(newoccupant))
 		return FALSE
 	add_occupant(newoccupant)
+	mecha_flags &= ~PANEL_OPEN //Close panel if open
 	newoccupant.forceMove(src)
 	newoccupant.update_mouse_pointer()
 	add_fingerprint(newoccupant)
@@ -92,6 +93,7 @@
 
 	brain_obj.set_mecha(src)
 	add_occupant(brain_mob)//Note this forcemoves the brain into the mech to allow relaymove
+	mecha_flags &= ~PANEL_OPEN //Close panel if open
 	mecha_flags |= SILICON_PILOT
 	brain_mob.reset_perspective(src)
 	brain_mob.remote_control = src
@@ -137,6 +139,8 @@
 			mob_container = AI
 			newloc = get_turf(AI.linked_core)
 			qdel(AI.linked_core)
+	else if(isliving(M))
+		mob_container = M
 	else
 		return ..()
 	var/mob/living/ejector = M
@@ -155,20 +159,26 @@
 	setDir(SOUTH)
 	return ..()
 
-/obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
-	RegisterSignal(M, COMSIG_MOB_CLICKON, PROC_REF(on_mouseclick), TRUE)
-	RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(display_speech_bubble), TRUE)
+/obj/vehicle/sealed/mecha/add_occupant(mob/driver, control_flags)
+	RegisterSignal(driver, COMSIG_MOB_CLICKON, PROC_REF(on_mouseclick), TRUE)
+	RegisterSignal(driver, COMSIG_MOB_SAY, PROC_REF(display_speech_bubble), TRUE)
+	RegisterSignal(driver, COMSIG_MOVABLE_KEYBIND_FACE_DIR, PROC_REF(on_turn), TRUE)
+	RegisterSignal(driver, COMSIG_MOB_ALTCLICKON, PROC_REF(on_click_alt))
 	. = ..()
 	update_appearance()
 
-/obj/vehicle/sealed/mecha/remove_occupant(mob/M)
-	UnregisterSignal(M, COMSIG_MOB_CLICKON)
-	UnregisterSignal(M, COMSIG_MOB_SAY)
-	M.clear_alert(ALERT_CHARGE)
-	M.clear_alert(ALERT_MECH_DAMAGE)
-	if(M.client)
-		M.update_mouse_pointer()
-		M.client.view_size.resetToDefault()
+/obj/vehicle/sealed/mecha/remove_occupant(mob/driver)
+	UnregisterSignal(driver, list(
+		COMSIG_MOB_CLICKON,
+		COMSIG_MOB_SAY,
+		COMSIG_MOVABLE_KEYBIND_FACE_DIR,
+		COMSIG_MOB_ALTCLICKON,
+	))
+	driver.clear_alert(ALERT_CHARGE)
+	driver.clear_alert(ALERT_MECH_DAMAGE)
+	if(driver.client)
+		driver.update_mouse_pointer()
+		driver.client.view_size.resetToDefault()
 		zoom_mode = FALSE
 	. = ..()
 	update_appearance()

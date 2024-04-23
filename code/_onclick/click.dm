@@ -96,7 +96,7 @@
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			alt_click_on_secondary(A)
 		else
-			AltClickOn(A)
+			base_click_alt(A)
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
@@ -115,7 +115,7 @@
 
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
-		UnarmedAttack(A, FALSE, modifiers)
+		UnarmedAttack(A, Adjacent(A), modifiers)
 		return
 
 	if(throw_mode)
@@ -144,7 +144,7 @@
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
 
-			UnarmedAttack(A, FALSE, modifiers)
+			UnarmedAttack(A, TRUE, modifiers)
 		return
 
 	//Can't reach anything else in lockers or other weirdness
@@ -164,7 +164,7 @@
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A,1,modifiers)
+			UnarmedAttack(A, TRUE, modifiers)
 	else
 		if(W)
 			if(LAZYACCESS(modifiers, RIGHT_CLICK))
@@ -173,12 +173,12 @@
 				if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
 					W.afterattack(A, src, FALSE, params)
 			else
-				W.afterattack(A,src,0,params)
+				W.afterattack(A, src, FALSE, params)
 		else
 			if(LAZYACCESS(modifiers, RIGHT_CLICK))
 				ranged_secondary_attack(A, modifiers)
 			else
-				RangedAttack(A,modifiers)
+				RangedAttack(A, modifiers)
 
 /// Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()
@@ -358,44 +358,24 @@
 /atom/proc/CtrlClick(mob/user)
 	SEND_SIGNAL(src, COMSIG_CLICK_CTRL, user)
 	SEND_SIGNAL(user, COMSIG_MOB_CTRL_CLICKED, src)
+
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
 	if(!can_interact(user))
 		return FALSE
 
-/mob/living/CtrlClick(mob/user)
+/mob/living/CtrlClick(mob/living/user)
 	if(!isliving(user) || !user.CanReach(src) || user.incapacitated())
 		return ..()
 
 	if(world.time < user.next_move)
 		return FALSE
 
-	var/mob/living/user_living = user
-	if(user_living.apply_martial_art(src, null, is_grab=TRUE) == MARTIAL_ATTACK_SUCCESS)
-		user_living.changeNext_move(CLICK_CD_MELEE)
+	if(user.grab(src))
+		user.changeNext_move(CLICK_CD_MELEE)
 		return TRUE
 
-	return ..()
-
-
-/mob/living/carbon/human/CtrlClick(mob/user)
-	if(!iscarbon(user) || !user.CanReach(src) || user.incapacitated())
-		return ..()
-
-	if(world.time < user.next_move)
-		return FALSE
-
-	if (ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		if(human_user.dna.species.grab(human_user, src, human_user.mind.martial_art))
-			human_user.changeNext_move(CLICK_CD_MELEE)
-			return TRUE
-	else if(isalien(user))
-		var/mob/living/carbon/alien/adult/alien_boy = user
-		if(alien_boy.grab(src))
-			alien_boy.changeNext_move(CLICK_CD_MELEE)
-			return TRUE
 	return ..()
 
 /mob/proc/CtrlMiddleClickOn(atom/A)
@@ -405,24 +385,6 @@
 		A.CtrlClick(src)
 	return
 
-/**
- * Alt click
- * Unused except for AI
- */
-/mob/proc/AltClickOn(atom/A)
-	. = SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, A)
-	if(. & COMSIG_MOB_CANCEL_CLICKON)
-		return
-	A.AltClick(src)
-
-/atom/proc/AltClick(mob/user)
-	if(!user.can_interact_with(src))
-		return FALSE
-	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
-		return
-	var/turf/T = get_turf(src)
-	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T) && !HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
-		user.set_listed_turf(T)
 
 ///The base proc of when something is right clicked on when alt is held - generally use alt_click_secondary instead
 /atom/proc/alt_click_on_secondary(atom/A)
@@ -441,14 +403,8 @@
 		user.client.toggle_tag_datum(src)
 		return
 
-/// Use this instead of [/mob/proc/AltClickOn] where you only want turf content listing without additional atom alt-click interaction
-/atom/proc/AltClickNoInteract(mob/user, atom/A)
-	var/turf/T = get_turf(A)
-	if(T && user.TurfAdjacent(T))
-		user.set_listed_turf(T)
-
-/mob/proc/TurfAdjacent(turf/T)
-	return T.Adjacent(src)
+/mob/proc/TurfAdjacent(turf/tile)
+	return tile.Adjacent(src)
 
 /**
  * Control+Shift click

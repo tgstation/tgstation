@@ -14,7 +14,7 @@
 	icon_state = "health"
 	module_type = MODULE_ACTIVE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/health_analyzer)
 	cooldown_time = 0.5 SECONDS
 	tgui_id = "health_analyzer"
@@ -48,7 +48,7 @@
 			woundscan(mod.wearer, target)
 		if(CHEM_SCAN)
 			chemscan(mod.wearer, target)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/item/mod/module/health_analyzer/get_configuration()
 	. = ..()
@@ -74,25 +74,23 @@
 	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
+	var/quick_carry_trait = TRAIT_QUICK_CARRY
 
 /obj/item/mod/module/quick_carry/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
+	. = ..()
+	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, quick_carry_trait, MOD_TRAIT)
 
 /obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
+	. = ..()
+	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, quick_carry_trait, MOD_TRAIT)
 
 /obj/item/mod/module/quick_carry/advanced
 	name = "MOD advanced quick carry module"
 	removable = FALSE
 	complexity = 0
-
-/obj/item/mod/module/quick_carry/on_suit_activation()
-	. = ..()
-	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
-
-/obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
-	. = ..()
-	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
+	quick_carry_trait = TRAIT_QUICKER_CARRY
 
 ///Injector - Gives the suit an extendable large-capacity piercing syringe.
 /obj/item/mod/module/injector
@@ -130,7 +128,7 @@
 	icon_state = "organ_thrower"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/organ_thrower, /obj/item/mod/module/microwave_beam)
 	cooldown_time = 0.5 SECONDS
 	/// How many organs the module can hold.
@@ -154,7 +152,7 @@
 		organ.forceMove(src)
 		balloon_alert(mod.wearer, "picked up [organ]")
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
-		drain_power(use_power_cost)
+		drain_power(use_energy_cost)
 		return
 	if(!length(organ_list))
 		return
@@ -164,7 +162,7 @@
 	projectile.firer = mod.wearer
 	playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 	INVOKE_ASYNC(projectile, TYPE_PROC_REF(/obj/projectile, fire))
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/projectile/organ
 	name = "organ"
@@ -243,7 +241,7 @@
 	icon_state = "defibrillator"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 25
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 25
 	device = /obj/item/shockpaddles/mod
 	overlay_state_inactive = "module_defibrillator"
 	overlay_state_active = "module_defibrillator_active"
@@ -256,7 +254,7 @@
 	RegisterSignal(device, COMSIG_DEFIBRILLATOR_SUCCESS, PROC_REF(on_defib_success))
 
 /obj/item/mod/module/defibrillator/proc/on_defib_success(obj/item/shockpaddles/source)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 	source.recharge(defib_cooldown)
 	return COMPONENT_DEFIB_STOP
 
@@ -306,7 +304,7 @@
 	icon_state = "thread_ripper"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/thread_ripper)
 	cooldown_time = 1.5 SECONDS
 	overlay_state_inactive = "module_threadripper"
@@ -330,7 +328,7 @@
 		balloon_alert(mod.wearer, "interrupted!")
 		return
 	var/target_zones = body_zone2cover_flags(mod.wearer.zone_selected)
-	for(var/obj/item/clothing as anything in carbon_target.get_all_worn_items())
+	for(var/obj/item/clothing as anything in carbon_target.get_equipped_items())
 		if(!clothing)
 			continue
 		var/shared_flags = target_zones & clothing.body_parts_covered

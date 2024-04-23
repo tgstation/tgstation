@@ -102,7 +102,7 @@
 	// If the plant's not in either state, we can't do much else, so early return.
 	if(isnull(held_item))
 		// Silicons can't interact with trays :frown:
-		if(issilicon(user))
+		if(HAS_SILICON_ACCESS(user))
 			return NONE
 
 		switch(plant_status)
@@ -326,9 +326,9 @@
 			// Nutrients deplete at a constant rate, since new nutrients can boost stats far easier.
 			apply_chemicals(lastuser?.resolve())
 			if(self_sustaining)
-				reagents.remove_any(min(0.5, nutridrain))
+				reagents.remove_all(min(0.5, nutridrain))
 			else
-				reagents.remove_any(nutridrain)
+				reagents.remove_all(nutridrain)
 
 			// Lack of nutrients hurts non-weeds
 			if(reagents.total_volume <= 0 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
@@ -837,7 +837,7 @@
 /obj/machinery/hydroponics/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
 	//Called when mob user "attacks" it with object O
@@ -900,7 +900,7 @@
 			reagent_source.update_appearance()
 		return 1
 
-	else if(istype(O, /obj/item/seeds) && !istype(O, /obj/item/seeds/sample))
+	else if(istype(O, /obj/item/seeds))
 		if(!myseed)
 			if(istype(O, /obj/item/seeds/kudzu))
 				investigate_log("had Kudzu planted in it by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_BOTANY)
@@ -1074,7 +1074,7 @@
 	. = ..()
 	if(.)
 		return
-	if(issilicon(user)) //How does AI know what plant is?
+	if(HAS_SILICON_ACCESS(user)) //How does AI know what plant is?
 		return
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
 		return myseed.harvest(user)
@@ -1099,8 +1099,6 @@
 	set_self_sustaining(!self_sustaining)
 	to_chat(user, span_notice("You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""]."))
 
-/obj/machinery/hydroponics/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/machinery/hydroponics/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -1159,10 +1157,15 @@
 	circuit = null
 	density = FALSE
 	use_power = NO_POWER_USE
-	flags_1 = NODECONSTRUCT_1
 	unwrenchable = FALSE
 	self_sustaining_overlay_icon_state = null
 	maxnutri = 15
+
+/obj/machinery/hydroponics/soil/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
+	return NONE
+
+/obj/machinery/hydroponics/soil/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
+	return NONE
 
 /obj/machinery/hydroponics/soil/update_icon(updates=ALL)
 	. = ..()
@@ -1184,9 +1187,8 @@
 /obj/machinery/hydroponics/soil/CtrlClick(mob/user)
 	return //Soil has no electricity.
 
-/obj/machinery/hydroponics/soil/deconstruct(disassembled)
+/obj/machinery/hydroponics/soil/on_deconstruction(disassembled)
 	new /obj/item/stack/ore/glass(drop_location(), 3)
-	return ..()
 
 ///The usb port circuit
 

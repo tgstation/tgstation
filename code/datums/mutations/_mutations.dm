@@ -49,6 +49,7 @@
 	 * make sure to enter it both ways (so that A conflicts with B, and B with A)
 	 */
 	var/list/conflicts
+	var/remove_on_aheal = TRUE
 
 	/**
 	 * can we take chromosomes?
@@ -85,6 +86,12 @@
 	if(copymut && istype(copymut, /datum/mutation/human))
 		copy_mutation(copymut)
 	update_valid_chromosome_list()
+
+/datum/mutation/human/Destroy()
+	power_path = null
+	dna = null
+	owner = null
+	return ..()
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/acquirer)
 	if(!acquirer || !istype(acquirer) || acquirer.stat == DEAD || (src in acquirer.dna.mutations))
@@ -137,11 +144,6 @@
 		mut_overlay.Remove(get_visual_indicator())
 		owner.overlays_standing[layer_used] = mut_overlay
 		owner.apply_overlay(layer_used)
-	if(power_path)
-		// Any powers we made are linked to our mutation datum,
-		// so deleting ourself will also delete it and remove it
-		// ...Why don't all mutations delete on loss? Not sure.
-		qdel(src)
 
 /mob/living/carbon/proc/update_mutations_overlay()
 	return
@@ -173,7 +175,7 @@
  * returns an instance of a power if modification was complete
  */
 /datum/mutation/human/proc/modify()
-	if(modified || !power_path || !owner)
+	if(modified || !power_path || QDELETED(owner))
 		return
 	var/datum/action/cooldown/modified_power = locate(power_path) in owner.actions
 	if(!modified_power)

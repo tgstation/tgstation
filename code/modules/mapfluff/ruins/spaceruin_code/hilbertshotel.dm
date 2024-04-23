@@ -179,10 +179,15 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	currentArea.storageTurf = storageTurf
 	currentArea.roomnumber = currentRoomnumber
 	currentArea.reservation = currentReservation
-	for(var/turf/closed/indestructible/hoteldoor/door in currentArea)
+
+	for(var/turf/closed/indestructible/hoteldoor/door in currentReservation.reserved_turfs)
 		door.parentSphere = src
-		door.desc = "The door to this hotel room. The placard reads 'Room [currentRoomnumber]'. Strangely, this door doesn't even seem openable. The doorknob, however, seems to buzz with unusual energy...<br />[span_info("Alt-Click to look through the peephole.")]"
-	for(var/turf/open/space/bluespace/BSturf in currentArea)
+		door.desc = "The door to this hotel room. \
+			The placard reads 'Room [currentRoomnumber]'. \
+			Strangely, this door doesn't even seem openable. \
+			The doorknob, however, seems to buzz with unusual energy...<br/>\
+			[span_info("Alt-Click to look through the peephole.")]"
+	for(var/turf/open/space/bluespace/BSturf in currentReservation.reserved_turfs)
 		BSturf.parentSphere = src
 
 /obj/item/hilbertshotel/proc/ejectRooms()
@@ -335,27 +340,25 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /turf/closed/indestructible/hoteldoor/attack_larva(mob/user, list/modifiers)
 	promptExit(user)
 
-/turf/closed/indestructible/hoteldoor/attack_slime(mob/user, list/modifiers)
-	promptExit(user)
-
 /turf/closed/indestructible/hoteldoor/attack_robot(mob/user)
 	if(get_dist(get_turf(src), get_turf(user)) <= 1)
 		promptExit(user)
 
-/turf/closed/indestructible/hoteldoor/AltClick(mob/user)
-	. = ..()
-	if(get_dist(get_turf(src), get_turf(user)) <= 1)
-		to_chat(user, span_notice("You peak through the door's bluespace peephole..."))
-		user.reset_perspective(parentSphere)
-		var/datum/action/peephole_cancel/PHC = new
-		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
-		PHC.Grant(user)
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/atom/, check_eye), user)
+/turf/closed/indestructible/hoteldoor/click_alt(mob/user)
+	to_chat(user, span_notice("You peak through the door's bluespace peephole..."))
+	user.reset_perspective(parentSphere)
+	var/datum/action/peephole_cancel/PHC = new
+	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
+	PHC.Grant(user)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(check_eye))
+	return CLICK_ACTION_SUCCESS
 
-/turf/closed/indestructible/hoteldoor/check_eye(mob/user)
-	if(get_dist(get_turf(src), get_turf(user)) >= 2)
-		for(var/datum/action/peephole_cancel/PHC in user.actions)
-			INVOKE_ASYNC(PHC, TYPE_PROC_REF(/datum/action/peephole_cancel, Trigger))
+/turf/closed/indestructible/hoteldoor/proc/check_eye(mob/user, atom/oldloc, direction)
+	SIGNAL_HANDLER
+	if(get_dist(get_turf(src), get_turf(user)) < 2)
+		return
+	for(var/datum/action/peephole_cancel/PHC in user.actions)
+		INVOKE_ASYNC(PHC, TYPE_PROC_REF(/datum/action/peephole_cancel, Trigger))
 
 /datum/action/peephole_cancel
 	name = "Cancel View"
@@ -415,12 +418,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 			targetturf = get_turf(pick(GLOB.blobstart))
 		else
 			CRASH("Unable to find a blobstart landmark")
-	var/turf/T = get_turf(H)
-	var/area/A = T.loc
+
 	log_game("[H] entered itself. Moving it to [loc_name(targetturf)].")
 	message_admins("[H] entered itself. Moving it to [ADMIN_VERBOSEJMP(targetturf)].")
-	for(var/mob/M in A)
-		to_chat(M, span_danger("[H] almost implodes in upon itself, but quickly rebounds, shooting off into a random point in space!"))
+	H.visible_message(span_danger("[H] almost implodes in upon itself, but quickly rebounds, shooting off into a random point in space!"))
 	H.forceMove(targetturf)
 
 /area/misc/hilbertshotel/Exited(atom/movable/gone, direction)

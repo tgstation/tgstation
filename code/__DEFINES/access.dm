@@ -193,6 +193,11 @@
 /// HUNTERS
 #define ACCESS_HUNTER "hunter"
 
+/// - - - MISC - - -
+	// These don't really fit anywhere else
+/// For things that aren't ever supposed to be accessed
+#define ACCESS_INACCESSIBLE "inaccessible"
+
 /// - - - END ACCESS IDS - - -
 
 /// A list of access levels that, when added to an ID card, will warn admins.
@@ -294,6 +299,7 @@
 	ACCESS_DETECTIVE, \
 	ACCESS_ENGINE_EQUIP, \
 	ACCESS_ENGINEERING, \
+	ACCESS_EVA, \
 	ACCESS_EXTERNAL_AIRLOCKS, \
 	ACCESS_GATEWAY, \
 	ACCESS_GENETICS, \
@@ -537,7 +543,6 @@
 	/obj/item/modular_computer/pda/clown = list(REGION_GENERAL), \
 	/obj/item/modular_computer/pda/mime = list(REGION_GENERAL), \
 	/obj/item/modular_computer/pda/medical = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/pda/viro = list(REGION_MEDBAY), \
 	/obj/item/modular_computer/pda/coroner = list(REGION_MEDBAY), \
 	/obj/item/modular_computer/pda/engineering = list(REGION_ENGINEERING), \
 	/obj/item/modular_computer/pda/security = list(REGION_SECURITY), \

@@ -1,5 +1,13 @@
 import { multiline } from 'common/string';
-import { CheckboxInput, FeatureColorInput, FeatureToggle, Feature, FeatureChoiced, FeatureDropdownInput } from '../base';
+
+import {
+  CheckboxInput,
+  Feature,
+  FeatureChoiced,
+  FeatureColorInput,
+  FeatureToggle,
+} from '../base';
+import { FeatureDropdownInput } from '../dropdowns';
 
 export const screentip_color: Feature<string> = {
   name: 'Screentips: Screentips color',

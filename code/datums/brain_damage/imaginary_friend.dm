@@ -23,7 +23,7 @@
 		qdel(src)
 		return
 	if(!friend.client && friend_initialized)
-		addtimer(CALLBACK(src, PROC_REF(reroll_friend)), 600)
+		addtimer(CALLBACK(src, PROC_REF(reroll_friend)), 1 MINUTES)
 
 /datum/brain_trauma/special/imaginary_friend/on_death()
 	..()
@@ -45,15 +45,18 @@
 /datum/brain_trauma/special/imaginary_friend/proc/make_friend()
 	friend = new(get_turf(owner), owner)
 
-/// Tries an orbit poll for the imaginary friend
+/// Tries a poll for the imaginary friend
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(add_friend))
-	owner.AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_IMAGINARYFRIEND, \
-		job_bans = ROLE_PAI, \
-		title = "[owner.real_name]'s imaginary friend", \
-		to_call = to_call, \
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice("imaginary friend")]?",
+		check_jobban = ROLE_PAI,
+		poll_time = 20 SECONDS,
+		checked_target = owner,
+		ignore_category = POLL_IGNORE_IMAGINARYFRIEND,
+		alert_pic = owner,
+		role_name_text = "imaginary friend",
 	)
+	add_friend(chosen_one)
 
 /// Yay more friends!
 /datum/brain_trauma/special/imaginary_friend/proc/add_friend(mob/dead/observer/ghost)
@@ -214,11 +217,11 @@
 	message = capitalize(message)
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		client?.cmd_admin_say(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		client?.dsay(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, message)
 		return
 
 	if(check_emote(message, forced))
@@ -390,7 +393,7 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 /mob/camera/imaginary_friend/create_thinking_indicator()
-	if(active_thinking_indicator || active_typing_indicator || !thinking_IC)
+	if(active_thinking_indicator || active_typing_indicator || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
 	active_thinking_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]3", TYPING_LAYER)
 	add_image_to_clients(active_thinking_indicator, group_clients())
@@ -402,7 +405,7 @@
 	active_thinking_indicator = null
 
 /mob/camera/imaginary_friend/create_typing_indicator()
-	if(active_typing_indicator || active_thinking_indicator || !thinking_IC)
+	if(active_typing_indicator || active_thinking_indicator || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
 	active_typing_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]0", TYPING_LAYER)
 	add_image_to_clients(active_typing_indicator, group_clients())
@@ -414,7 +417,7 @@
 	active_typing_indicator = null
 
 /mob/camera/imaginary_friend/remove_all_indicators()
-	thinking_IC = FALSE
+	REMOVE_TRAIT(src, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
 	remove_thinking_indicator()
 	remove_typing_indicator()
 

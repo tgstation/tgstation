@@ -42,7 +42,7 @@
 
 /turf/open/chasm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
-		PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+		place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
 	return FALSE
 
@@ -119,3 +119,19 @@
 
 /turf/open/chasm/true/apply_components(mapload)
 	AddComponent(/datum/component/chasm, null, mapload) //Don't pass anything for below_turf.
+
+/turf/open/chasm/true/no_smooth
+	smoothing_flags = NONE
+
+/turf/open/chasm/true/no_smooth/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	return FALSE
+
+/turf/open/chasm/true/no_smooth/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	return FALSE
+
+/turf/open/chasm/true/no_smooth/attackby(obj/item/item, mob/user, params, area/area_restriction)
+	if(istype(item, /obj/item/stack/rods))
+		return
+	else if(istype(item, /obj/item/stack/tile/iron))
+		return
+	return ..()

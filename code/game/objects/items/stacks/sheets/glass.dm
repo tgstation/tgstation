@@ -27,7 +27,6 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/glass
 	grind_results = list(/datum/reagent/silicon = 20)
 	material_type = /datum/material/glass
-	point_value = 1
 	tableVariant = /obj/structure/table/glass
 	matter_amount = 4
 	cost = SHEET_MATERIAL_AMOUNT
@@ -159,7 +158,6 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/rglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/iron = 10)
-	point_value = 4
 	matter_amount = 6
 	tableVariant = /obj/structure/table/reinforced/rglass
 
@@ -197,7 +195,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	material_flags = NONE
 	merge_type = /obj/item/stack/sheet/plasmarglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
-	point_value = 23
+	gulag_valid = TRUE
 	matter_amount = 8
 	tableVariant = /obj/structure/table/reinforced/plasmarglass
 
@@ -382,13 +380,13 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		to_chat(user, span_notice("You melt [src] down into [new_glass.name]."))
 		new_glass.forceMove((Adjacent(user) ? user.drop_location() : loc)) //stack merging is handled automatically.
 		qdel(src)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/shard/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(isliving(AM))
 		var/mob/living/L = AM
-		if(!(L.movement_type & (FLYING|FLOATING)) || L.buckled)
+		if(!(L.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || L.buckled)
 			playsound(src, 'sound/effects/footstep/glass_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 
 /obj/item/shard/plasma

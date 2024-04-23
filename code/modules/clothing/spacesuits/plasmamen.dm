@@ -52,12 +52,14 @@
 	tint = 2
 	armor_type = /datum/armor/space_plasmaman
 	resistance_flags = FIRE_PROOF
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_range = 4
+	light_power = 0.8
+	light_color = "#ffcc99"
 	light_on = FALSE
 	var/helmet_on = FALSE
 	var/smile = FALSE
-	var/smile_color = "#FF0000"
+	var/smile_color = COLOR_RED
 	var/visor_icon = "envisor"
 	var/smile_state = "envirohelm_smile"
 	var/obj/item/clothing/head/attached_hat
@@ -76,6 +78,7 @@
 	. = ..()
 	visor_toggling()
 	update_appearance()
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/clothing/head/helmet/space/plasmaman/examine()
 	. = ..()
@@ -84,31 +87,36 @@
 	else
 		. += span_notice("There's nothing placed on the helmet.")
 
-/obj/item/clothing/head/helmet/space/plasmaman/AltClick(mob/user)
+/obj/item/clothing/head/helmet/space/plasmaman/click_alt(mob/user)
 	if(user.can_perform_action(src))
-		toggle_welding_screen(user)
+		adjust_visor(user)
 
 /obj/item/clothing/head/helmet/space/plasmaman/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_welding_screen))
-		toggle_welding_screen(user)
+		adjust_visor(user)
 		return
 
 	return ..()
 
-/obj/item/clothing/head/helmet/space/plasmaman/proc/toggle_welding_screen(mob/living/user)
-	if(weldingvisortoggle(user))
-		if(helmet_on)
-			to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
-			helmet_on = FALSE
-			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
-			update_appearance()
-		else
-			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
-			update_appearance()
+/obj/item/clothing/head/helmet/space/plasmaman/adjust_visor(mob/living/user)
+	. = ..()
+	if(!.)
+		return
+	if(helmet_on)
+		to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
+		helmet_on = FALSE
+	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
+	update_appearance()
+
+/obj/item/clothing/head/helmet/space/plasmaman/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][helmet_on ? "-light":""]"
+	inhand_icon_state = icon_state
 
 /obj/item/clothing/head/helmet/space/plasmaman/update_overlays()
 	. = ..()
-	. += visor_icon
+	if(!up)
+		. += visor_icon
 
 /obj/item/clothing/head/helmet/space/plasmaman/attackby(obj/item/hitting_item, mob/living/user)
 	. = ..()
@@ -116,7 +124,7 @@
 		if(smile == FALSE)
 			var/obj/item/toy/crayon/CR = hitting_item
 			to_chat(user, span_notice("You start drawing a smiley face on the helmet's visor.."))
-			if(do_after(user, 25, target = src))
+			if(do_after(user, 2.5 SECONDS, target = src))
 				smile = TRUE
 				smile_color = CR.paint_color
 				to_chat(user, "You draw a smiley on the helmet visor.")
@@ -137,6 +145,7 @@
 		hitting_clothing.forceMove(src)
 		update_appearance()
 
+///By the by, helmets have the update_icon_updates_onmob element, so we don't have to call mob.update_worn_head()
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	if(!isinhands && smile)
@@ -159,9 +168,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
 	helmet_on = !helmet_on
-	icon_state = "[initial(icon_state)][helmet_on ? "-light":""]"
-	inhand_icon_state = icon_state
-	user.update_worn_head() //So the mob overlay updates
+	update_appearance()
 
 	if(helmet_on)
 		if(!up)
@@ -173,6 +180,14 @@
 		set_light_on(FALSE)
 
 	update_item_action_buttons()
+
+/obj/item/clothing/head/helmet/space/plasmaman/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(!helmet_on)
+		return
+	helmet_on = FALSE
+	update_appearance()
+	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_hand_secondary(mob/user)
 	..()
