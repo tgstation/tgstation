@@ -268,6 +268,24 @@ ADMIN_VERB(ipintel_revoke, R_BAN, "Revoke Player VPN Whitelist", "Revoke a playe
 				connection_rejected = TRUE
 			else
 				message_admins("IPINTEL: [key_name_admin(src)] was unable to be checked due to an error.")
-	if(connection_rejected)
-		qdel(src)
+
+	if(!connection_rejected)
 		return
+
+	var/list/contact_where = list()
+	var/forum_url = CONFIG_GET(string/forumurl)
+	if(forum_url)
+		contact_where += list("<a href='[forum_url]'>Forums</a>")
+	var/appeal_url = CONFIG_GET(string/banappeals)
+	if(appeal_url)
+		contact_where += list("<a href='[appeal_url]'>Ban Appeals</a>")
+
+	var/message_string = "Your connection has been rejected at this time. If you believe this is in error or have any questions please contact an admin"
+	if(length(contact_where))
+		message_string += " at [english_list(contact_where)]"
+	else
+		message_string += " somehow."
+	message_string += "."
+
+	to_chat_immediate(src, span_userdanger(message_string))
+	qdel(src)
