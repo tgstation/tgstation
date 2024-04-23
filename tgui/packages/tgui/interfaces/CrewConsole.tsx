@@ -1,8 +1,6 @@
-import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { BooleanLike } from 'common/react';
 import { createSearch } from 'common/string';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useBackend } from '../backend';
 import { Box, Button, Icon, Input, Section, Table } from '../components';
@@ -119,14 +117,53 @@ type CrewConsoleData = {
   link_allowed: BooleanLike;
 };
 
-const CrewTable = () => {
-  const { act, data } = useBackend<CrewConsoleData>();
-  const { sensors } = data;
+const healthSort = (a: CrewSensor, b: CrewSensor) => {
+  if (a.life_status < b.life_status) return -1;
+  if (a.life_status > b.life_status) return 1;
+  if (a.health > b.health) return -1;
+  if (a.health < b.health) return 1;
+  return 0;
+};
 
-  const [shownSensors, setShownSensors] = useState(sensors.slice());
+const areaSort = (a: CrewSensor, b: CrewSensor) => {
+  a.area ??= '~';
+  b.area ??= '~';
+  if (a.area < b.area) return -1;
+  if (a.area > b.area) return 1;
+  return 0;
+};
+
+const CrewTable = () => {
+  const { data } = useBackend<CrewConsoleData>();
+  const { sensors } = data;
+  const sortOptions = ['ijob', 'name', 'area', 'health'];
+
   const [sortAsc, setSortAsc] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortColumns, setSortColumns] = useState(['ijob', 'health', 'area']);
+  const [sortBy, setSortBy] = useState(sortOptions[0]);
+
+  const cycleSortBy = () => {
+    let idx = sortOptions.indexOf(sortBy) + 1;
+    if (idx === sortOptions.length) idx = 0;
+    setSortBy(sortOptions[idx]);
+  };
+
+  const nameSearch = createSearch(searchQuery, (crew: CrewSensor) => crew.name);
+
+  const sorted = sensors.filter(nameSearch).sort((a, b) => {
+    switch (sortBy) {
+      case 'name':
+        return sortAsc ? +(a.name > b.name) : +(b.name > a.name);
+      case 'ijob':
+        return sortAsc ? a.ijob - b.ijob : b.ijob - a.ijob;
+      case 'health':
+        return sortAsc ? healthSort(a, b) : healthSort(b, a);
+      case 'area':
+        return sortAsc ? areaSort(a, b) : areaSort(b, a);
+      default:
+        return 0;
+    }
+  });
 
   const sortNames = {
     ijob: 'Job',
@@ -135,67 +172,12 @@ const CrewTable = () => {
     health: 'Vitals',
   };
 
-  const cycleSortMode = () => {
-    let newColumns = sortColumns.slice();
-    newColumns.push(newColumns.shift() || '');
-    setSortColumns(newColumns);
-  };
-
-  const healthSort = (a: CrewSensor, b: CrewSensor) => {
-    if (a.life_status < b.life_status) return -1;
-    if (a.life_status > b.life_status) return 1;
-    if (a.health > b.health) return -1;
-    if (a.health < b.health) return 1;
-    return 0;
-  };
-
-  useEffect(() => {
-    let unsorted = sensors.slice();
-    if (sortColumns[0] === 'ijob') {
-      let sorted = flow([
-        () => {
-          return sortBy(data.sensors, (s) => s.ijob);
-        },
-        (sorted: CrewSensor[]) => {
-          const nameSearch = createSearch(
-            searchQuery,
-            (crew: CrewSensor) => crew.name,
-          );
-          return filter(sorted, nameSearch);
-        },
-      ])();
-      if (!sortAsc) {
-        sorted.reverse();
-      }
-      setShownSensors(sorted);
-      return;
-    } else if (sortColumns[0] === 'health') {
-      unsorted.sort(healthSort);
-    } else {
-      unsorted.sort((a, b) => {
-        a[sortColumns[0]] ??= '~';
-        b[sortColumns[0]] ??= '~';
-        if (a[sortColumns[0]] < b[sortColumns[0]]) return -1;
-        if (a[sortColumns[0]] > b[sortColumns[0]]) return 1;
-        return 0;
-      });
-    }
-
-    let sorted = unsorted.filter(
-      createSearch(searchQuery, (crew) => crew.name),
-    );
-    if (!sortAsc) {
-      sorted.reverse();
-    }
-    setShownSensors(sorted);
-  }, [searchQuery, sensors, sortColumns, sortAsc]);
-
   return (
     <Section
       scrollable
       title={
         <>
-          <Button onClick={cycleSortMode}>{sortNames[sortColumns[0]]}</Button>
+          <Button onClick={cycleSortBy}>{sortNames[sortBy]}</Button>
           <Button onClick={() => setSortAsc(!sortAsc)}>
             <Icon
               style={{ marginLeft: '2px' }}
@@ -227,7 +209,7 @@ const CrewTable = () => {
             </Table.Cell>
           )}
         </Table.Row>
-        {shownSensors.map((sensor) => (
+        {sorted.map((sensor) => (
           <CrewTableEntry sensor_data={sensor} key={sensor.ref} />
         ))}
       </Table>
