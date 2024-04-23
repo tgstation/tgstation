@@ -13,7 +13,7 @@ GLOBAL_REAL(SysMgr, /datum/system_manager)
 /datum/system_manager/New()
 	var/list/datasystems = init_subtypes(/datum/system)
 	for(var/datum/system/datasystem as anything in datasystems)
-		if(datasystem.requires_initialization)
+		if(datasystem.system_flags & DS_FLAG_REQUIRES_INITIALIZATION)
 			datasystem.Initialize()
 
 		managed += datasystem

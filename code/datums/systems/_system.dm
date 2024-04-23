@@ -6,6 +6,8 @@
 }\
 /datum/system/##X
 
+/// This flag, when set, will cause the system to be initialized with the SystemManager, for use when systems aren't "lazyloaded" or do their work on-demand.
+#define DS_FLAG_REQUIRES_INITIALIZATION (1<<0)
 
 /**
  * Global systems which are distinct from subsystems in that they do not process by the MC.
@@ -14,8 +16,8 @@
 /datum/system
 	/// Name of the system
 	var/name = "Datum System"
-	/// Do we need to intialize this system? Defaults to FALSE as most datasystems are "lazyloading", or only store data on demand. This is for stuff that needs to go with the SysMgr
-	var/requires_initialization = FALSE
+	/// Flags that pertain to the operation of a datasystem
+	var/system_flags = NONE
 
 /datum/system/proc/Initialize()
 	SHOULD_CALL_PARENT(FALSE)

@@ -9,7 +9,7 @@
 /// A sprite accessory is something that we add to a human sprite to make them look different. This is hair, facial hair, underwear, mutant bits, etc.
 DATASYSTEM_DEF(accessories) // just 'accessories' for brevity
 	name = "Sprite Accessories"
-	requires_initialization = TRUE
+	system_flags = DS_FLAG_REQUIRES_INITIALIZATION
 
 	//Hairstyles
 	var/list/hairstyles_list = list() //! stores /datum/sprite_accessory/hair indexed by name
