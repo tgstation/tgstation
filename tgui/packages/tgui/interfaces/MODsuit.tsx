@@ -504,7 +504,7 @@ const ModParts = (props) => {
     <>
       {parts.map((part) => {
         return (
-          <LabeledList.Item key={part.slot} label={part.slot}>
+          <LabeledList.Item key={part.slot} label={part.slot + ' Slot'}>
             {part.name}
           </LabeledList.Item>
         );

@@ -67,7 +67,7 @@
 	var/part_info = list()
 	for(var/obj/item/part as anything in get_parts())
 		part_info += list(list(
-			"slot" = english_list(parse_slot_flags(part.slot_flags)) + " Slot",
+			"slot" = english_list(parse_slot_flags(part.slot_flags)),
 			"name" = part.name,
 		))
 	data["parts"] = part_info

@@ -67,6 +67,12 @@
 
 /obj/item/mod/module/examine(mob/user)
 	. = ..()
+	if(length(required_slots))
+		var/list/slot_strings = list()
+		for(var/slot in required_slots)
+			var/list/slot_list = parse_slot_flags(slot)
+			slot_strings += (length(slot_list) == 1 ? "" : "one of ") + english_list(slot_list, and_text = " or ")
+		. += span_notice("Requires the MOD unit to have the following slots: [english_list(slot_strings)]")
 	if(HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
 		. += span_notice("Complexity level: [complexity]")
 
