@@ -333,6 +333,25 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/toys/quilark
+	name = "Quilark Plush"
+	item_path = /obj/item/toy/plush/quilark
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/quilava
+	name = "Pet Delivery Beacon - Quil Maid"
+	item_path = /obj/item/choice_beacon/pet/donator/quilava
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("quilark")
+
+/datum/loadout_item/effects/quilava
+	ckeywhitelist = list("quilark")
+	name = "Quil Maid Transformation"
+	item_path = /obj/item/effect_granter/donator/quilava
+	requires_purchase = FALSE
+
 /datum/loadout_item/suit/org_thirteen
 	name = "Organization 13 Cloak"
 	item_path = /obj/item/clothing/suit/hooded/org_thirteen

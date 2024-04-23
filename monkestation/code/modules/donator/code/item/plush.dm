@@ -62,3 +62,8 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "lief_flos"
 
+/obj/item/toy/plush/quilark
+	name = "quilark plush"
+	desc = "A plush of the Lizard Basil. ~Handcrafted lovingly for quilark"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "quilark"

@@ -135,3 +135,15 @@
 	icon_living = "crab_plant"
 	icon_dead = "crab_plant_dead"
 	gold_core_spawnable = NO_SPAWN
+
+/mob/living/basic/pet/quilmaid
+	name = "\improper Quil' Maid"
+	desc = "Someone dressed up this Space-e-mon in a maid outfit."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "quil_maid"
+	icon_living = "quil_maid"
+	icon_dead = "quil_maid"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+
