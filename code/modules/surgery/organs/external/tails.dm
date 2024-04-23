@@ -161,9 +161,6 @@
 	feature_key = "tail_cat"
 	color_source = ORGAN_COLOR_HAIR
 
-/datum/bodypart_overlay/mutant/tail/cat/get_global_feature_list()
-	return DSaccessories.tails_list_human
-
 /obj/item/organ/external/tail/monkey
 	name = "monkey tail"
 	preference = "feature_monkey_tail"
