@@ -19,6 +19,8 @@ const HEALTH_COLOR_BY_LEVEL = [
 const STAT_LIVING = 0;
 const STAT_DEAD = 4;
 
+const SORT_OPTIONS = ['ijob', 'name', 'area', 'health'];
+
 const jobIsHead = (jobId: number) => jobId % 10 === 0;
 
 const jobToColor = (jobId: number) => {
@@ -57,6 +59,22 @@ const statToIcon = (life_status: number) => {
       return 'skull';
   }
   return 'heartbeat';
+};
+
+const healthSort = (a: CrewSensor, b: CrewSensor) => {
+  if (a.life_status < b.life_status) return -1;
+  if (a.life_status > b.life_status) return 1;
+  if (a.health > b.health) return -1;
+  if (a.health < b.health) return 1;
+  return 0;
+};
+
+const areaSort = (a: CrewSensor, b: CrewSensor) => {
+  a.area ??= '~';
+  b.area ??= '~';
+  if (a.area < b.area) return -1;
+  if (a.area > b.area) return 1;
+  return 0;
 };
 
 const healthToAttribute = (
@@ -117,35 +135,18 @@ type CrewConsoleData = {
   link_allowed: BooleanLike;
 };
 
-const healthSort = (a: CrewSensor, b: CrewSensor) => {
-  if (a.life_status < b.life_status) return -1;
-  if (a.life_status > b.life_status) return 1;
-  if (a.health > b.health) return -1;
-  if (a.health < b.health) return 1;
-  return 0;
-};
-
-const areaSort = (a: CrewSensor, b: CrewSensor) => {
-  a.area ??= '~';
-  b.area ??= '~';
-  if (a.area < b.area) return -1;
-  if (a.area > b.area) return 1;
-  return 0;
-};
-
 const CrewTable = () => {
   const { data } = useBackend<CrewConsoleData>();
   const { sensors } = data;
-  const sortOptions = ['ijob', 'name', 'area', 'health'];
 
   const [sortAsc, setSortAsc] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState(sortOptions[0]);
+  const [sortBy, setSortBy] = useState(SORT_OPTIONS[0]);
 
   const cycleSortBy = () => {
-    let idx = sortOptions.indexOf(sortBy) + 1;
-    if (idx === sortOptions.length) idx = 0;
-    setSortBy(sortOptions[idx]);
+    let idx = SORT_OPTIONS.indexOf(sortBy) + 1;
+    if (idx === SORT_OPTIONS.length) idx = 0;
+    setSortBy(SORT_OPTIONS[idx]);
   };
 
   const nameSearch = createSearch(searchQuery, (crew: CrewSensor) => crew.name);
