@@ -60,10 +60,10 @@ DATASYSTEM_DEF(accessories) // just 'accessories' for brevity
 	setup_lists()
 	init_hair_gradients()
 
-/// Sets up all of the lists for later utilization. We keep this stuff out of GLOB due to the size of the data.
-/// In an ideal world we could just do this on our datasystem New() but there are too many things that are immediately dependent on this in the roundstart initialization
-/// which means that we have to time it so that it invokes with the rest of the GLOB datumized lists. Great apologies.
-/// This proc lives on the datasystem instead of being a global proc so we don't have to prepend DSaccessories to the list every time it really gets annoying
+/// Sets up all of the lists for later utilization in the round and building sprites.
+/// In an ideal world we could tack everything that just needed `DEFAULT_SPRITE_LIST` into static variables on the top, but due to the initialization order
+/// where this datasystem will initialize BEFORE statics, it's just not feasible since this all needs to be ready for actual subsystems to use.
+/// Sorry.
 /datum/system/accessories/proc/setup_lists()
 	var/hair_lists = init_sprite_accessory_subtypes(/datum/sprite_accessory/hair)
 	hairstyles_list = hair_lists[DEFAULT_SPRITE_LIST]
