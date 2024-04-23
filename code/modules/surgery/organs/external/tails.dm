@@ -151,7 +151,7 @@
 	wag_flags = WAG_ABLE
 
 /datum/bodypart_overlay/mutant/tail/get_global_feature_list()
-	return GLOB.tails_list_human
+	return DSaccessories.tails_list_human
 
 /obj/item/organ/external/tail/cat/get_butt_sprite()
 	return BUTT_SPRITE_CAT
@@ -160,6 +160,9 @@
 /datum/bodypart_overlay/mutant/tail/cat
 	feature_key = "tail_cat"
 	color_source = ORGAN_COLOR_HAIR
+
+/datum/bodypart_overlay/mutant/tail/cat/get_global_feature_list()
+	return DSaccessories.tails_list_human
 
 /obj/item/organ/external/tail/monkey
 	name = "monkey tail"
@@ -175,7 +178,7 @@
 	feature_key = "tail_monkey"
 
 /datum/bodypart_overlay/mutant/tail/monkey/get_global_feature_list()
-	return GLOB.tails_list_monkey
+	return DSaccessories.tails_list_monkey
 
 /obj/item/organ/external/tail/lizard
 	name = "lizard tail"
@@ -192,7 +195,7 @@
 	feature_key = "tail_lizard"
 
 /datum/bodypart_overlay/mutant/tail/lizard/get_global_feature_list()
-	return GLOB.tails_list_lizard
+	return DSaccessories.tails_list_lizard
 
 /obj/item/organ/external/tail/lizard/fake
 	name = "fabricated lizard tail"
@@ -208,7 +211,7 @@
 	var/tail_spine_key = NONE
 
 /datum/bodypart_overlay/mutant/tail_spines/get_global_feature_list()
-	return GLOB.tail_spines_list
+	return DSaccessories.tail_spines_list
 
 /datum/bodypart_overlay/mutant/tail_spines/get_base_icon_state()
 	return (!isnull(tail_spine_key) ? "[tail_spine_key]_" : "") + (wagging ? "wagging_" : "") + sprite_datum.icon_state // Select the wagging state if appropriate

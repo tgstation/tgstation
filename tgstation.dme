@@ -1855,6 +1855,7 @@
 #include "code\datums\systems\ds\communications.dm"
 #include "code\datums\systems\ds\materials.dm"
 #include "code\datums\systems\ds\move_handler.dm"
+#include "code\datums\systems\ds\sprite_accessories.dm"
 #include "code\datums\votes\_vote_datum.dm"
 #include "code\datums\votes\custom_vote.dm"
 #include "code\datums\votes\map_vote.dm"
