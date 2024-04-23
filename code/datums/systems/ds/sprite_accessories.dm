@@ -1,3 +1,10 @@
+/// The non gender specific list that we get from init_sprite_accessory_subtypes()
+#define DEFAULT_SPRITE_LIST "default_sprites"
+/// The male specific list that we get from init_sprite_accessory_subtypes()
+#define MALE_SPRITE_LIST "male_sprites"
+/// The female specific list that we get from init_sprite_accessory_subtypes()
+#define FEMALE_SPRITE_LIST "female_sprites"
+
 /// Datasystem that just holds lists of sprite accessories for accession in generating said sprites.
 /// A sprite accessory is something that we add to a human sprite to make them look different. This is hair, facial hair, underwear, mutant bits, etc.
 DATASYSTEM_DEF(accessories) // just 'accessories' for brevity
@@ -53,27 +60,33 @@ DATASYSTEM_DEF(accessories) // just 'accessories' for brevity
 /// which means that we have to time it so that it invokes with the rest of the GLOB datumized lists. Great apologies.
 /// This proc lives on the datasystem instead of being a global proc so we don't have to prepend DSaccessories to the list every time it really gets annoying
 /datum/system/accessories/proc/setup_lists()
-	//hair
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, hairstyles_list, hairstyles_male_list, hairstyles_female_list)
+	var/hair_lists = init_sprite_accessory_subtypes(/datum/sprite_accessory/hair)
+	hairstyles_list = hair_lists[DEFAULT_SPRITE_LIST]
+	hairstyles_male_list = hair_lists[MALE_SPRITE_LIST]
+	hairstyles_female_list = hair_lists[FEMALE_SPRITE_LIST]
 
-	//facial hair
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, facial_hairstyles_list, facial_hairstyles_male_list, facial_hairstyles_female_list)
+	var/facial_hair_lists = init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair)
+	facial_hairstyles_list = facial_hair_lists[DEFAULT_SPRITE_LIST]
+	facial_hairstyles_male_list = facial_hair_lists[MALE_SPRITE_LIST]
+	facial_hairstyles_female_list = facial_hair_lists[FEMALE_SPRITE_LIST]
 
-	//underwear
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, underwear_list, underwear_m, underwear_f)
+	var/underwear_lists = init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear)
+	underwear_list = underwear_lists[DEFAULT_SPRITE_LIST]
+	underwear_m = underwear_lists[MALE_SPRITE_LIST]
+	underwear_f = underwear_lists[FEMALE_SPRITE_LIST]
 
-	//undershirt
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, undershirt_list, undershirt_m, undershirt_f)
+	var/undershirt_lists = init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, undershirt_list, undershirt_m, undershirt_f)
+	undershirt_list = undershirt_lists[DEFAULT_SPRITE_LIST]
+	undershirt_m = undershirt_lists[MALE_SPRITE_LIST]
+	undershirt_f = undershirt_lists[FEMALE_SPRITE_LIST]
 
-	//socks
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list)
+	socks_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/socks)
 
 
-	//bodypart accessories (blizzard intensifies)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human, add_blank = TRUE)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, tails_list_lizard, add_blank = TRUE)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, tails_list_monkey, add_blank = TRUE)
+	body_markings_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings)[DEFAULT_SPRITE_LIST]
+	tails_list_human = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
+	tails_list_lizard = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
+	tails_list_monkey = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, add_blank = TRUE)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, snouts_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, horns_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, ears_list)
@@ -99,25 +112,36 @@ DATASYSTEM_DEF(accessories) // just 'accessories' for brevity
 
 /// This reads the applicable sprite accessory datum's subtypes and adds it to the datasystem's list of sprite accessories.
 /// The boolean `add_blank` argument just adds a "None" option to the list of sprite accessories, like if a felinid doesn't want a tail or something, typically good for gated-off things.
-/datum/system/accessories/proc/init_sprite_accessory_subtypes(prototype, list/main, list/male, list/female, add_blank = FALSE)
+/datum/system/accessories/proc/init_sprite_accessory_subtypes(prototype, add_blank = FALSE)
+	RETURN_TYPE(/list)
+	var/returnable_list = list(
+		DEFAULT_SPRITE_LIST = list(),
+		MALE_SPRITE_LIST = list(),
+		FEMALE_SPRITE_LIST = list(),
+	)
+
 	for(var/path in subtypesof(prototype))
 		var/datum/sprite_accessory/accessory = new path
 
 		if(accessory.icon_state)
-			main[accessory.name] = accessory
+			returnable_list[DEFAULT_SPRITE_LIST][accessory.name] = accessory
 		else
-			main += accessory.name
+			returnable_list[DEFAULT_SPRITE_LIST] += accessory.name
 
 		switch(accessory.gender)
 			if(MALE)
-				male += accessory.name
+				returnable_list[MALE_SPRITE_LIST] += accessory.name
 			if(FEMALE)
-				female += accessory.name
+				returnable_list[FEMALE_SPRITE_LIST] += accessory.name
 			else
-				male += accessory.name
-				female += accessory.name
+				returnable_list[MALE_SPRITE_LIST] += accessory.name
+				returnable_list[FEMALE_SPRITE_LIST] += accessory.name
 
 	if(add_blank)
-		main[SPRITE_ACCESSORY_NONE] = new /datum/sprite_accessory/blank
+		returnable_list[DEFAULT_SPRITE_LIST][SPRITE_ACCESSORY_NONE] = new /datum/sprite_accessory/blank
 
-	return main
+	return returnable_list
+
+#undef DEFAULT_SPRITE_LIST
+#undef MALE_SPRITE_LIST
+#undef FEMALE_SPRITE_LIST
