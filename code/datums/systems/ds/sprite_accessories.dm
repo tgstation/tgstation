@@ -80,27 +80,27 @@ DATASYSTEM_DEF(accessories) // just 'accessories' for brevity
 	undershirt_m = undershirt_lists[MALE_SPRITE_LIST]
 	undershirt_f = undershirt_lists[FEMALE_SPRITE_LIST]
 
-	socks_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/socks)
+	socks_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/socks)[DEFAULT_SPRITE_LIST]
 
 
 	body_markings_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings)[DEFAULT_SPRITE_LIST]
 	tails_list_human = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
 	tails_list_lizard = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
-	tails_list_monkey = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, add_blank = TRUE)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, snouts_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, horns_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, ears_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open, wings_open_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, frills_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tail_spines, tail_spines_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, legs_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/caps, caps_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, moth_wings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae, moth_antennae_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, moth_markings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, pod_hair_list)
+	tails_list_monkey = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
+	snouts_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts)[DEFAULT_SPRITE_LIST]
+	horns_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/horns)[DEFAULT_SPRITE_LIST]
+	ears_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears)[DEFAULT_SPRITE_LIST]
+	wings_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/wings)[DEFAULT_SPRITE_LIST]
+	wings_open_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open)[DEFAULT_SPRITE_LIST]
+	frills_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/frills)[DEFAULT_SPRITE_LIST]
+	spines_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/spines)[DEFAULT_SPRITE_LIST]
+	tail_spines_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/tail_spines)[DEFAULT_SPRITE_LIST]
+	legs_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/legs)[DEFAULT_SPRITE_LIST]
+	caps_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/caps)[DEFAULT_SPRITE_LIST]
+	moth_wings_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings)[DEFAULT_SPRITE_LIST]
+	moth_antennae_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae)[DEFAULT_SPRITE_LIST]
+	moth_markings_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings)[DEFAULT_SPRITE_LIST]
+	pod_hair_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair)[DEFAULT_SPRITE_LIST]
 
 	// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
 	for(var/path in subtypesof(/datum/sprite_accessory/gradient))
