@@ -1,3 +1,5 @@
+#define MAX_CONTAINER_PRINT_AMOUNT 50
+
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
@@ -26,8 +28,6 @@
 	var/printing_progress
 	/// Number of containers to be printed
 	var/printing_total
-	/// The amount of containers that can be printed in 1 cycle
-	var/printing_amount = 50
 	/// The time it takes to print a container
 	var/printing_speed = 0.75 SECONDS
 
@@ -296,7 +296,7 @@
 	.["isPrinting"] = is_printing
 	.["printingProgress"] = printing_progress
 	.["printingTotal"] = printing_total
-	.["maxPrintable"] = printing_amount
+	.["maxPrintable"] = MAX_CONTAINER_PRINT_AMOUNT
 
 	//contents of source beaker
 	var/list/beaker_data = null
@@ -472,7 +472,7 @@
 			item_count = text2num(item_count)
 			if(isnull(item_count) || item_count <= 0)
 				return FALSE
-			item_count = min(item_count, printing_amount)
+			item_count = min(item_count, MAX_CONTAINER_PRINT_AMOUNT)
 			var/volume_in_each = round(reagents.total_volume / item_count, CHEMICAL_VOLUME_ROUNDING)
 
 			// Generate item name
@@ -547,3 +547,5 @@
 	if(!length(containers))
 		containers = list(CAT_CONDIMENTS = GLOB.reagent_containers[CAT_CONDIMENTS])
 	return containers
+
+#undef MAX_CONTAINER_PRINT_AMOUNT
