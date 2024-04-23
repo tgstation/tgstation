@@ -24,14 +24,17 @@ export function SubsystemViews(props: Props) {
 
   const sorted = subsystems
     .filter((subsystem) => {
+      // Matches search
       const nameMatchesQuery = subsystem.name
         .toLowerCase()
         .includes(query?.toLowerCase());
 
+      // Filters out based on inactive
       if (inactive && (!!subsystem.doesnt_fire || !subsystem.can_fire)) {
         return false;
       }
 
+      // Filters out based on small values
       if (smallValues && subsystem[propName] < 1) {
         return false;
       }
@@ -62,6 +65,7 @@ export function SubsystemViews(props: Props) {
     currentMax = Math.max(...totals);
   }
 
+  // Toggles default bar view for valid cases
   useEffect(() => {
     if (inDeciseconds && !bars) {
       setBars(true);

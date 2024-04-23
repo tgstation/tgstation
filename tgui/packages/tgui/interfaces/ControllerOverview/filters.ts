@@ -37,7 +37,7 @@ export function filterReducer(state: FilterState, action: Action): FilterState {
       return { ...state, sortType: action.payload };
     case FilterAction.Query:
       return { ...state, query: action.payload };
-    case FilterAction.Update: // Add this case
+    case FilterAction.Update:
       return { ...state, ...action.payload };
     default:
       return state;

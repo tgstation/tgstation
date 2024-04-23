@@ -95,7 +95,6 @@ export function SubsystemRow(props: Props) {
       </Table.Cell>
       <Table.Cell collapsing verticalAlign="top">
         <Button
-          // compact
           icon="wrench"
           tooltip="View Variables"
           onClick={() => {

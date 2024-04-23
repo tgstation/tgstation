@@ -28,7 +28,7 @@ export function ControllerContent(props) {
     sortType: SortType.Name,
   });
 
-  const [selected, setSelected] = useState<SubsystemData | undefined>();
+  const [selected, setSelected] = useState<SubsystemData>();
 
   const { label, inDeciseconds } =
     SORTING_TYPES?.[state.sortType] || SORTING_TYPES[0];
