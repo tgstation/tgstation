@@ -1,0 +1,4 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - bugfix: "brimdemons (and other mobs) will act normally"
