@@ -108,6 +108,8 @@ DATASYSTEM_DEF(accessories) // just 'accessories' for brevity
 
 /// This proc just intializes all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
 /datum/system/accessories/proc/init_hair_gradients()
+	hair_gradients_list = list()
+	facial_hair_gradients_list = list()
 	for(var/path in subtypesof(/datum/sprite_accessory/gradient))
 		var/datum/sprite_accessory/gradient/gradient = new path
 		if(gradient.gradient_category & GRADIENT_APPLIES_TO_HAIR)
