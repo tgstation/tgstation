@@ -578,7 +578,7 @@ GLOBAL_LIST_INIT(phobia_species, list(
 	var/words_match = ""
 	for(var/word in words)
 		words_match += "[REGEX_QUOTE(word)]|"
-	words_match = copytext(words_match, 1, -1)
-	return regex("(\\b|\\A)([words_match])('?s*)(\\b|\\|)", "ig")
+	words_match = copytext_char(words_match, 1, -1) // BANDASTATION EDIT
+	return regex("(\\b|\\A)([words_match])()", "igu") // BANDASTATION EDIT - Original: return regex("(\\b|\\A)([words_match])('?s*)(\\b|\\|)", "ig")
 
 #undef PHOBIA_FILE
