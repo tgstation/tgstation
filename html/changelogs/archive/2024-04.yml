@@ -254,3 +254,12 @@
   DexeeXI:
   - rscdel: Slasher removed from storyteller. Code retained for improvement/fixes
       before next halloween!
+2024-04-23:
+  DexeeXI:
+  - rscadd: TEG crate.
+  - rscdel: Geothermal power crates are now gone
+  - rscadd: Box; Prison Skirts in Prison Laundry, Fire Alarm for Transfer Center,
+      Lapvend near sci, Mechcomp between Engine and Atmos.
+  - qol: KC13 (which doesnt exist) now has some silver.
+  KnigTheThrasher:
+  - bugfix: fixed tram slum bar failing tests (again)
