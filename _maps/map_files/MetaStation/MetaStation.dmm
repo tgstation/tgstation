@@ -22810,9 +22810,6 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "Brig - Labor Shuttle Dock"
 	},
-/obj/machinery/gulag_item_reclaimer{
-	pixel_y = 24
-	},
 /obj/machinery/flasher/directional/east{
 	id = "PRelease";
 	pixel_y = 20

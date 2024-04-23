@@ -3,7 +3,7 @@ DATASYSTEM_DEF(security)
 
 	var/total_points = 0
 	var/points_spent = 0
-	var/points_available = 0
+	var/available_points = 0
 
 	var/warcrimes = 0
 	var/list/criminals_apprehended = list()
@@ -16,4 +16,4 @@ DATASYSTEM_DEF(security)
 		return
 
 	total_points += 500
-	points_available += 500
+	available_points += 500

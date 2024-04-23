@@ -1611,13 +1611,3 @@
 		/datum/stock_part/micro_laser/tier2 = 2,
 		/obj/item/stack/sheet/plasteel = 2,
 	)
-
-/obj/item/circuitboard/machine/redeemer
-	name = "Redeemer"
-	greyscale_colors = CIRCUIT_COLOR_SECURITY
-	build_path = /obj/machinery/sec_redeemer
-	req_components = list(
-		/datum/stock_part/servo = 1,
-		/datum/stock_part/matter_bin = 2,
-		/datum/stock_part/micro_laser = 2,
-		)

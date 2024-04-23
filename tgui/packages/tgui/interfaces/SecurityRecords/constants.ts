@@ -1,11 +1,3 @@
-export const CRIMESTATUS2COLOR = {
-  Arrest: 'bad',
-  Discharged: 'blue',
-  Incarcerated: 'average',
-  Parole: 'good',
-  Suspected: 'teal',
-} as const;
-
 export const CRIMESTATUS2DESC = {
   Arrest: 'Arrest. Target must have valid crimes to set this status.',
   Discharged: 'Discharged. Individual has been acquitted from wrongdoing.',

@@ -3222,7 +3222,6 @@
 "rS" = (
 /obj/structure/sign/warning/docking/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/gulag_beacon,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp)
 "rU" = (

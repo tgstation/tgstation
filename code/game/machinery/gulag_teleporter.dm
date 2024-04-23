@@ -1,75 +1,69 @@
-/*
-The gulag teleporter teleports a prisoner to the gulag outpost.
-It automatically strips the prisoner and equips a prisoner ID, prisoner jumpsuit and oranges sneakers.
-You can set the amount of points in the console
-The console is located at computer/gulag_teleporter.dm
-*/
 
-//Gulag teleporter
+#define BREAKOUT_MESSAGE_DELAY 5 SECONDS
+
 /obj/machinery/gulag_teleporter
 	name = "labor camp teleporter"
 	desc = "A bluespace teleporter used for teleporting prisoners to the labor camp."
 	icon = 'icons/obj/machines/implant_chair.dmi'
 	icon_state = "implantchair"
 	base_icon_state = "implantchair"
-	state_open = FALSE
-	density = TRUE
+	state_open = TRUE
+	density = FALSE
 	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
 	circuit = /obj/item/circuitboard/machine/gulag_teleporter
+	/// Door cannot be opened by hand
 	var/locked = FALSE
-	var/message_cooldown
-	var/breakout_time = 600
-	var/jumpsuit_type = /obj/item/clothing/under/rank/prisoner
-	var/jumpskirt_type = /obj/item/clothing/under/rank/prisoner/skirt
-	var/shoes_type = /obj/item/clothing/shoes/sneakers/orange
-	var/emergency_plasglove_type = /obj/item/clothing/gloves/color/plasmaman
-	var/obj/machinery/gulag_item_reclaimer/linked_reclaimer
-	var/static/list/telegulag_required_items = typecacheof(list(
-		/obj/item/implant,
-		/obj/item/clothing/suit/space/eva/plasmaman,
-		/obj/item/clothing/under/plasmaman,
-		/obj/item/clothing/head/helmet/space/plasmaman,
-		/obj/item/clothing/gloves/color/plasmaman,
-		/obj/item/tank/internals,
-		/obj/item/clothing/mask/breath,
-		/obj/item/clothing/mask/gas,
-	))
+	/// Required time for do_after to break out of the door
+	var/breakout_time = 60 SECONDS
+	/// Currently processing someone
+	var/processing = FALSE
+	/// CD for attempting to break out
+	COOLDOWN_DECLARE(breakout_message_cd)
 
-/obj/machinery/gulag_teleporter/Initialize(mapload)
-	. = ..()
-	locate_reclaimer()
-
-/obj/machinery/gulag_teleporter/Destroy()
-	if(linked_reclaimer)
-		linked_reclaimer.linked_teleporter = null
-	linked_reclaimer = null
-	return ..()
 
 /obj/machinery/gulag_teleporter/interact(mob/user)
 	. = ..()
+
 	if(locked)
-		to_chat(user, span_warning("[src] is locked!"))
+		balloon_alert(user, "locked")
 		return
 	toggle_open()
 
-/obj/machinery/gulag_teleporter/attackby(obj/item/I, mob/user)
-	if(!occupant && default_deconstruction_screwdriver(user, "[icon_state]", "[icon_state]",I))
+
+/obj/machinery/gulag_teleporter/attackby(obj/item/tool, mob/user)
+	if(!occupant && default_deconstruction_screwdriver(user, "[icon_state]", "[icon_state]", tool))
 		update_appearance()
 		return
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(tool))
 		return
 
-	if(default_pry_open(I))
+	if(default_pry_open(tool))
 		return
 
 	return ..()
 
+
+/obj/machinery/gulag_teleporter/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
+	if(is_operational && occupant)
+		open_machine()
+
+
+/obj/machinery/gulag_teleporter/MouseDrop_T(mob/target, mob/user)
+	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
+		return
+
+	close_machine(target)
+
+
 /obj/machinery/gulag_teleporter/update_icon_state()
 	icon_state = "[base_icon_state][state_open ? "_open" : null]"
-	//no power or maintenance
-	if(machine_stat & (NOPOWER|BROKEN))
+
+	if(!is_operational)
 		icon_state += "_unpowered"
 		if((machine_stat & MAINT) || panel_open)
 			icon_state += "_maintenance"
@@ -79,7 +73,6 @@ The console is located at computer/gulag_teleporter.dm
 		icon_state += "_maintenance"
 		return ..()
 
-	//running and someone in there
 	if(occupant)
 		icon_state += "_occupied"
 	return ..()
@@ -88,12 +81,17 @@ The console is located at computer/gulag_teleporter.dm
 /obj/machinery/gulag_teleporter/relaymove(mob/living/user, direction)
 	if(user.stat != CONSCIOUS)
 		return
-	if(locked)
-		if(message_cooldown <= world.time)
-			message_cooldown = world.time + 50
-			to_chat(user, span_warning("[src]'s door won't budge!"))
+
+	if(!locked)
+		open_machine()
 		return
-	open_machine()
+
+	if(COOLDOWN_FINISHED(src, breakout_message_cd))
+		balloon_alert(user, "won't budge")
+		return
+
+	COOLDOWN_START(src, breakout_message_cd, BREAKOUT_MESSAGE_DELAY)
+
 
 /obj/machinery/gulag_teleporter/container_resist_act(mob/living/user)
 	var/resist_time = breakout_time
@@ -111,19 +109,19 @@ The console is located at computer/gulag_teleporter.dm
 		span_hear("You hear a metallic creaking from [src]."),
 	)
 
-	if(do_after(user, resist_time, target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
-			return
-		locked = FALSE
-		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
-			span_notice("You successfully break out of [src]!"))
-		open_machine()
+	if(!do_after(user, resist_time, target = src))
+		to_chat(user, span_warning("You failed to break out of [src]."))
 
-/obj/machinery/gulag_teleporter/proc/locate_reclaimer()
-	linked_reclaimer = locate(/obj/machinery/gulag_item_reclaimer)
-	if(linked_reclaimer)
-		linked_reclaimer.linked_teleporter = src
+	if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
+		return
 
+	locked = FALSE
+	user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
+		span_notice("You successfully break out of [src]!"))
+	open_machine()
+
+
+/// Opens the machine and sets the state to open.
 /obj/machinery/gulag_teleporter/proc/toggle_open()
 	if(panel_open)
 		to_chat(usr, span_notice("Close the maintenance panel first."))
@@ -132,47 +130,57 @@ The console is located at computer/gulag_teleporter.dm
 	if(state_open)
 		close_machine()
 		return
+
 	if(!locked)
 		open_machine()
 
-/// Strips the occupant of any items that are not allowed to be teleported to the gulag.
-/// Will either place those items in the linked_reclaimer or on the ground if the reclaimer is deleted.
-/obj/machinery/gulag_teleporter/proc/strip_prisoner(mob/living/carbon/human/victim)
-	if(!QDELETED(linked_reclaimer))
-		linked_reclaimer.stored_items[victim] = list()
 
-	for(var/obj/item/thing in victim)
-		if(is_type_in_typecache(thing, telegulag_required_items))
-			continue
-
-		if(!victim.temporarilyRemoveItemFromInventory(thing))
-			continue
-
-		if(QDELETED(linked_reclaimer) || istype(thing, /obj/item/restraints/handcuffs))
-			thing.forceMove(get_turf(src))
-			continue
-
-		linked_reclaimer.stored_items[victim] += thing
-		thing.forceMove(linked_reclaimer)
-
-/obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/record/crew/target)
+/// Shake a bit and call process_occupant() after a delay.
+/obj/machinery/gulag_teleporter/proc/handle_prisoner(mob/living/processor)
 	if(!ishuman(occupant))
 		return
-	strip_prisoner(occupant)
-	var/mob/living/carbon/human/prisoner = occupant
-	if(!isplasmaman(prisoner) && jumpsuit_type)
-		var/suit_or_skirt = prisoner.jumpsuit_style == PREF_SKIRT ? jumpskirt_type : jumpsuit_type //Check player prefs for jumpsuit or jumpskirt toggle, then give appropriate prison outfit.
-		prisoner.equip_to_appropriate_slot(new suit_or_skirt, qdel_on_fail = TRUE)
-	if(isplasmaman(prisoner) && !prisoner.gloves && emergency_plasglove_type)
-		prisoner.equip_to_appropriate_slot(new emergency_plasglove_type, qdel_on_fail = TRUE)
-	if(shoes_type)
-		prisoner.equip_to_appropriate_slot(new shoes_type, qdel_on_fail = TRUE)
-	if(id)
-		prisoner.equip_to_appropriate_slot(id, qdel_on_fail = TRUE)
-	if(target)
-		target.wanted_status = WANTED_PRISONER
 
-	use_energy(active_power_usage)
+	processor.log_message("is teleporting [key_name(occupant)] to the labor camp.", LOG_GAME)
+
+	locked = TRUE
+	processing = TRUE
+
+	var/mob/living/victim = occupant
+
+	update_use_power(ACTIVE_POWER_USE)
+	audible_message(span_hear("You hear a loud squelchy grinding sound."))
+	playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
+
+	victim.Paralyze(5)
+	if(prob(10))
+		INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob/living, emote), "scream")
+
+	var/offset = prob(50) ? -5 : 5
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 250)
+
+	addtimer(CALLBACK(src, PROC_REF(process_occupant)), 2 SECONDS)
+
+
+/// Teleport the occupant to "the labor camp".
+/obj/machinery/gulag_teleporter/proc/process_occupant()
+	if(!is_operational || QDELETED(occupant) || QDELETED(src))
+		return
+
+	var/mob/living/victim = occupant
+
+	DSsecurity.add_new_criminal(victim)
+	victim.drop_all_held_items()
+	update_use_power(IDLE_POWER_USE)
+
+	victim.investigate_log("has been teleported at [src] to the labor camp.", INVESTIGATE_DEATHS)
+	victim.ghostize()
+	victim.death(TRUE)
+	qdel(victim)
+
+	locked = FALSE
+	processing = FALSE
+	toggle_open()
+
 
 /obj/item/circuitboard/machine/gulag_teleporter
 	name = "labor camp teleporter (Machine Board)"
@@ -184,11 +192,6 @@ The console is located at computer/gulag_teleporter.dm
 	)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
-/*  beacon that receives the teleported prisoner */
-/obj/structure/gulag_beacon
-	name = "labor camp bluespace beacon"
-	desc = "A receiving beacon for bluespace teleportations."
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "light_on-8"
-	resistance_flags = INDESTRUCTIBLE
-	anchored = TRUE
+
+
+#undef BREAKOUT_MESSAGE_DELAY

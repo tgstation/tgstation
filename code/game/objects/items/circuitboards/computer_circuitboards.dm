@@ -471,11 +471,6 @@
 	greyscale_colors = CIRCUIT_COLOR_SECURITY
 	build_path = /obj/machinery/computer/warrant
 
-/obj/item/circuitboard/computer/redemption
-	name = "Redemption Console"
-	greyscale_colors = CIRCUIT_COLOR_SECURITY
-	build_path = /obj/machinery/computer/redemption
-
 /obj/item/circuitboard/computer/security
 	name = "Security Cameras"
 	greyscale_colors = CIRCUIT_COLOR_SECURITY

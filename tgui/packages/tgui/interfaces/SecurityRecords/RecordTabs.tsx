@@ -13,7 +13,7 @@ import {
 } from 'tgui/components';
 
 import { JOB2ICON } from '../common/JobToIcon';
-import { CRIMESTATUS2COLOR } from './constants';
+import { CRIMESTATUS2COLOR } from '../common/StatusToIcon';
 import { isRecordMatch } from './helpers';
 import { SecurityRecord, SecurityRecordsData } from './types';
 

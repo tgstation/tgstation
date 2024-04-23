@@ -12,7 +12,8 @@ import {
 
 import { CharacterPreview } from '../common/CharacterPreview';
 import { EditableText } from '../common/EditableText';
-import { CRIMESTATUS2COLOR, CRIMESTATUS2DESC } from './constants';
+import { CRIMESTATUS2COLOR } from '../common/StatusToIcon';
+import { CRIMESTATUS2DESC } from './constants';
 import { CrimeWatcher } from './CrimeWatcher';
 import { getSecurityRecord } from './helpers';
 import { RecordPrint } from './RecordPrint';
