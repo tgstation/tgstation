@@ -704,8 +704,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					accessory = DSaccessories.body_markings_list[source.dna.features["body_markings"]]
 				if("legs")
 					accessory = DSaccessories.legs_list[source.dna.features["legs"]]
-				if("caps")
-					accessory = DSaccessories.caps_list[source.dna.features["caps"]]
 
 			if(!accessory || accessory.icon_state == "none")
 				continue
