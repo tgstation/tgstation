@@ -70,7 +70,7 @@ There are several things that need to be remembered:
 		//damage overlays
 		update_damage_overlays()
 
-/mob/living/carbon/human/update_obscured_slots(obj/item/worn_item)
+/mob/living/carbon/human/update_obscured_slots(obj/item/worn_item, override)
 	..()
 	if(worn_item.flags_inv & HIDEFACE)
 		sec_hud_set_security_status()

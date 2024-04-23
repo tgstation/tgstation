@@ -1,4 +1,4 @@
-/mob/living/carbon/update_obscured_slots(obj/item/worn_item)
+/mob/living/carbon/update_obscured_slots(obj/item/worn_item, override)
 	..()
 	if(worn_item.flags_inv & (HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEMUTWINGS))
 		update_body()

@@ -42,9 +42,9 @@
 	if(slot_flags & ITEM_SLOT_HANDS)
 		update_held_items()
 
-///Updates item slots obscured by this item
-/mob/proc/update_obscured_slots(obj/item/worn_item)
-	var/obscured_slots = worn_item.flags_inv
+///Updates item slots obscured by this item (or using an override of flags to check)
+/mob/proc/update_obscured_slots(obj/item/worn_item, override)
+	var/obscured_slots = override || worn_item.flags_inv
 	if(obscured_slots & HIDEGLOVES)
 		update_worn_gloves(update_obscured = FALSE)
 	if(obscured_slots & HIDESUITSTORAGE)
