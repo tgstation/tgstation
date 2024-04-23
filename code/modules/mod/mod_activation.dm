@@ -213,7 +213,7 @@
 		part.cold_protection = NONE
 		part.alternate_worn_layer = mod_parts[part]
 	wearer.update_clothing(part.slot_flags)
-	wearer.update_obscured_slots(override = part.visor_flags_inv)
+	wearer.update_obscured_slots(part.visor_flags_inv)
 	if((part.clothing_flags & (MASKINTERNALS|HEADINTERNALS)) && wearer.invalid_internals())
 		wearer.cutoff_internals()
 

@@ -485,7 +485,7 @@ BLIND     // can't see anything
 		user.update_held_items()
 		return TRUE
 	if(up)
-		user.update_obscured_slots(override = visor_flags_inv)
+		user.update_obscured_slots(visor_flags_inv)
 	user.update_clothing(slot_flags)
 	if(!iscarbon(user))
 		return TRUE
