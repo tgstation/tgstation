@@ -123,7 +123,7 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/NukeDiskCheck()
-	for (var/obj/item/disk/nuclear/N in SSpoints_of_interest.real_nuclear_disks)
+	for (var/obj/item/disk/nuclear/N in DSpoints_of_interest.real_nuclear_disks)
 		if (get_area(N) in areas)
 			return TRUE
 	return FALSE

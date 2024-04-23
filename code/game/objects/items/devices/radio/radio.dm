@@ -590,7 +590,7 @@
 		return
 
 	for(var/ch_name in channels)
-		SSradio.remove_object(src, GLOB.radiochannels[ch_name])
+		DSradio.remove_object(src, GLOB.radiochannels[ch_name])
 		secure_radio_connections[ch_name] = null
 
 	if(keyslot)

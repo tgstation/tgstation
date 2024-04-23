@@ -9,8 +9,8 @@
 
 /obj/docking_port/mobile/infiltrator/Initialize(mapload)
 	. = ..()
-	SSpoints_of_interest.make_point_of_interest(src)
+	DSpoints_of_interest.make_point_of_interest(src)
 
 /obj/docking_port/mobile/infiltrator/Destroy(force)
-	SSpoints_of_interest.remove_point_of_interest(src)
+	DSpoints_of_interest.remove_point_of_interest(src)
 	return ..()

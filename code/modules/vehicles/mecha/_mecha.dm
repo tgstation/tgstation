@@ -238,7 +238,7 @@
 	update_access()
 	set_wires(new /datum/wires/mecha(src))
 	START_PROCESSING(SSobj, src)
-	SSpoints_of_interest.make_point_of_interest(src)
+	DSpoints_of_interest.make_point_of_interest(src)
 	log_message("[src.name] created.", LOG_MECHA)
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()

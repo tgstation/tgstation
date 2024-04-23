@@ -406,7 +406,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 				specificTarget = null
 				return
 
-			var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
+			var/list/possible_destinations = DSpoints_of_interest.get_mob_pois()
 			var/target = tgui_input_list(usr, "Select a mob! (Smiting does this automatically)", "Target", possible_destinations)
 
 			if (isnull(target))
@@ -415,7 +415,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 			var/mob/mob_target = possible_destinations[target]
 
 			// During the break between opening the input menu and selecting our target, has this become an invalid option?
-			if(!SSpoints_of_interest.is_valid_poi(mob_target))
+			if(!DSpoints_of_interest.is_valid_poi(mob_target))
 				return
 
 			specificTarget = mob_target

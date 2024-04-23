@@ -446,7 +446,7 @@
 
 /obj/machinery/anomalous_crystal/helpers/ActivationReaction(mob/user, method)
 	if(..() && !ready_to_deploy)
-		SSpoints_of_interest.make_point_of_interest(src)
+		DSpoints_of_interest.make_point_of_interest(src)
 		ready_to_deploy = TRUE
 		notify_ghosts(
 			"An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.",

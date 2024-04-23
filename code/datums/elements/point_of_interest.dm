@@ -12,9 +12,9 @@
 	if(isnewplayer(target))
 		return ELEMENT_INCOMPATIBLE
 
-	SSpoints_of_interest.on_poi_element_added(target)
+	DSpoints_of_interest.on_poi_element_added(target)
 	return ..()
 
 /datum/element/point_of_interest/Detach(datum/target)
-	SSpoints_of_interest.on_poi_element_removed(target)
+	DSpoints_of_interest.on_poi_element_removed(target)
 	return ..()

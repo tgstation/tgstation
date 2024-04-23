@@ -149,7 +149,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	show_data_huds()
 	data_huds_on = 1
 
-	SSpoints_of_interest.make_point_of_interest(src)
+	DSpoints_of_interest.make_point_of_interest(src)
 	ADD_TRAIT(src, TRAIT_HEAR_THROUGH_DARKNESS, ref(src))
 	ADD_TRAIT(src, TRAIT_SECURITY_HUD, ref(src))
 
@@ -511,7 +511,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!isobserver(usr)) //Make sure they're an observer!
 		return
 
-	var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
+	var/list/possible_destinations = DSpoints_of_interest.get_mob_pois()
 	var/target = null
 
 	target = tgui_input_list(usr, "Please, select a player!", "Jump to Mob", possible_destinations)
@@ -523,7 +523,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/mob/destination_mob = possible_destinations[target] //Destination mob
 
 	// During the break between opening the input menu and selecting our target, has this become an invalid option?
-	if(!SSpoints_of_interest.is_valid_poi(destination_mob))
+	if(!DSpoints_of_interest.is_valid_poi(destination_mob))
 		return
 
 	var/mob/source_mob = src  //Source mob
@@ -908,7 +908,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	reset_perspective(null)
 
-	var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
+	var/list/possible_destinations = DSpoints_of_interest.get_mob_pois()
 	var/target = null
 
 	target = tgui_input_list(usr, "Please, select a player!", "Jump to Mob", possible_destinations)
@@ -922,7 +922,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/mob/chosen_target = possible_destinations[target]
 
 	// During the break between opening the input menu and selecting our target, has this become an invalid option?
-	if(!SSpoints_of_interest.is_valid_poi(chosen_target))
+	if(!DSpoints_of_interest.is_valid_poi(chosen_target))
 		return
 
 	do_observe(chosen_target)
@@ -969,7 +969,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/proc/register_pai()
 	if(isobserver(src))
-		SSpai.recruit_window(src)
+		DSpai.recruit_window(src)
 	else
 		to_chat(usr, span_warning("Can't become a pAI candidate while not dead!"))
 

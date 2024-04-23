@@ -391,7 +391,7 @@ SUBSYSTEM_DEF(shuttle)
 		red_alert = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
 	)
 
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	var/datum/radio_frequency/frequency = DSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 
 	if(frequency)
 		// Start processing shuttle-mode displays to display the timer

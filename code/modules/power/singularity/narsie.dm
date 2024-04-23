@@ -54,7 +54,7 @@
 /// This is only meant to be invoked after this instance is initialized in specific pro-sumer procs, as it WILL derail the entire round.
 /obj/narsie/proc/start_ending_the_round()
 	GLOB.cult_narsie = src
-	SSpoints_of_interest.make_point_of_interest(src)
+	DSpoints_of_interest.make_point_of_interest(src)
 
 	singularity = WEAKREF(AddComponent(
 		/datum/component/singularity, \

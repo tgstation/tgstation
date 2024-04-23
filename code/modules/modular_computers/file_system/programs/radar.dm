@@ -349,7 +349,7 @@
 	return ..()
 
 /datum/computer_file/program/radar/fission360/find_atom()
-	return ..() || SSpoints_of_interest.get_poi_atom_by_ref(selected)
+	return ..() || DSpoints_of_interest.get_poi_atom_by_ref(selected)
 
 /datum/computer_file/program/radar/fission360/scan()
 	objects = list()
@@ -363,7 +363,7 @@
 		objects += list(nuke_info)
 
 	// Dat fukken disk
-	var/obj/item/disk/nuclear/disk = locate() in SSpoints_of_interest.real_nuclear_disks
+	var/obj/item/disk/nuclear/disk = locate() in DSpoints_of_interest.real_nuclear_disks
 	var/list/disk_info = list(
 		ref = REF(disk),
 		name = "Nuke Auth. Disk",
@@ -522,7 +522,7 @@
 /obj/item/circuit_component/mod_program/radar/nukie/can_track(datum/source, atom/signal, signal_turf, computer_turf)
 	if(target.value in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb))
 		return NONE
-	if(target.value in SSpoints_of_interest.real_nuclear_disks)
+	if(target.value in DSpoints_of_interest.real_nuclear_disks)
 		return NONE
 	if(target.value == SSshuttle.getShuttle("syndicate"))
 		return NONE

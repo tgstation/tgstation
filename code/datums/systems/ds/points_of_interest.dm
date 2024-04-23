@@ -1,8 +1,5 @@
-/// Subsystem for managing all POIs.
-SUBSYSTEM_DEF(points_of_interest)
+DATASYSTEM_DEF(points_of_interest)
 	name = "Points of Interest"
-
-	flags = SS_NO_FIRE | SS_NO_INIT
 
 	/// List of mob POIs. This list is automatically sorted.
 	var/list/datum/point_of_interest/mob_poi/mob_points_of_interest = list()
@@ -20,19 +17,19 @@ SUBSYSTEM_DEF(points_of_interest)
 /**
  * Turns new_poi into a new point of interest by adding the /datum/element/point_of_interest element to it.
  */
-/datum/controller/subsystem/points_of_interest/proc/make_point_of_interest(atom/new_poi)
+/datum/system/points_of_interest/proc/make_point_of_interest(atom/new_poi)
 	new_poi.AddElement(/datum/element/point_of_interest)
 
 /**
  * Stops old_poi from being a point of interest by removing the /datum/element/point_of_interest element from it.
  */
-/datum/controller/subsystem/points_of_interest/proc/remove_point_of_interest(atom/old_poi)
+/datum/system/points_of_interest/proc/remove_point_of_interest(atom/old_poi)
 	old_poi.RemoveElement(/datum/element/point_of_interest)
 
 /**
  * Called by [/datum/element/point_of_interest] when it gets removed from old_poi.
  */
-/datum/controller/subsystem/points_of_interest/proc/on_poi_element_added(atom/new_poi)
+/datum/system/points_of_interest/proc/on_poi_element_added(atom/new_poi)
 	var/datum/point_of_interest/new_poi_datum
 	if(ismob(new_poi))
 		new_poi_datum = new /datum/point_of_interest/mob_poi(new_poi)
@@ -57,7 +54,7 @@ SUBSYSTEM_DEF(points_of_interest)
 /**
  * Called by [/datum/element/point_of_interest] when it gets removed from old_poi.
  */
-/datum/controller/subsystem/points_of_interest/proc/on_poi_element_removed(atom/old_poi)
+/datum/system/points_of_interest/proc/on_poi_element_removed(atom/old_poi)
 	var/poi_ref = REF(old_poi)
 	var/datum/point_of_interest/poi_to_remove = points_of_interest_by_target_ref[poi_ref]
 
@@ -87,7 +84,7 @@ SUBSYSTEM_DEF(points_of_interest)
 /**
  * If there is a valid POI for a given reference, it returns that POI's associated atom. Otherwise, it returns null.
  */
-/datum/controller/subsystem/points_of_interest/proc/get_poi_atom_by_ref(reference)
+/datum/system/points_of_interest/proc/get_poi_atom_by_ref(reference)
 	return points_of_interest_by_target_ref[reference]?.target
 
 /**
@@ -100,7 +97,7 @@ SUBSYSTEM_DEF(points_of_interest)
  * * poi_validation_override - [OPTIONAL] Callback to a proc that takes a single argument for the POI and returns TRUE if this POI should be included. Overrides standard POI validation.
  * * append_dead_role - [OPTIONAL] If TRUE, adds a ghost tag to the end of observer names and a dead tag to the end of any other mob which is not alive.
  */
-/datum/controller/subsystem/points_of_interest/proc/get_mob_pois(datum/callback/poi_validation_override = null, append_dead_role = TRUE)
+/datum/system/points_of_interest/proc/get_mob_pois(datum/callback/poi_validation_override = null, append_dead_role = TRUE)
 	var/list/pois = list()
 	var/list/used_name_list = list()
 
@@ -134,7 +131,7 @@ SUBSYSTEM_DEF(points_of_interest)
  * Arguments:
  * * poi_validation_override - [OPTIONAL] Callback to a proc that takes a single argument for the POI and returns TRUE if this POI should be included. Overrides standard POI validation.
  */
-/datum/controller/subsystem/points_of_interest/proc/get_other_pois(datum/callback/poi_validation_override = null)
+/datum/system/points_of_interest/proc/get_other_pois(datum/callback/poi_validation_override = null)
 	var/list/pois = list()
 	var/list/used_name_list = list()
 
@@ -152,7 +149,7 @@ SUBSYSTEM_DEF(points_of_interest)
 	return pois
 
 /// Returns TRUE if potential_poi has an associated poi_datum that validates.
-/datum/controller/subsystem/points_of_interest/proc/is_valid_poi(atom/potential_poi, datum/callback/poi_validation_override = null)
+/datum/system/points_of_interest/proc/is_valid_poi(atom/potential_poi, datum/callback/poi_validation_override = null)
 	var/datum/point_of_interest/poi_datum = points_of_interest_by_target_ref[REF(potential_poi)]
 
 	if(!poi_datum)

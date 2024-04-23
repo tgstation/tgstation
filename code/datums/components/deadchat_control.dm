@@ -44,8 +44,8 @@
 		source = parent,
 		header = "Ghost Possession!",
 	)
-	if(!ismob(parent) && !SSpoints_of_interest.is_valid_poi(parent))
-		SSpoints_of_interest.make_point_of_interest(parent)
+	if(!ismob(parent) && !DSpoints_of_interest.is_valid_poi(parent))
+		DSpoints_of_interest.make_point_of_interest(parent)
 		generated_point_of_interest = TRUE
 
 /datum/component/deadchat_control/Destroy(force)
@@ -54,7 +54,7 @@
 	orbiters = null
 	ckey_to_cooldown = null
 	if(generated_point_of_interest)
-		SSpoints_of_interest.remove_point_of_interest(parent)
+		DSpoints_of_interest.remove_point_of_interest(parent)
 	on_removal = null
 	return ..()
 

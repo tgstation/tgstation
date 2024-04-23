@@ -25,10 +25,10 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		if("orbit")
 			var/ref = params["ref"]
 			var/auto_observe = params["auto_observe"]
-			var/atom/poi = SSpoints_of_interest.get_poi_atom_by_ref(ref)
+			var/atom/poi = DSpoints_of_interest.get_poi_atom_by_ref(ref)
 
-			if((ismob(poi) && !SSpoints_of_interest.is_valid_poi(poi, CALLBACK(src, PROC_REF(validate_mob_poi)))) \
-				|| !SSpoints_of_interest.is_valid_poi(poi)
+			if((ismob(poi) && !DSpoints_of_interest.is_valid_poi(poi, CALLBACK(src, PROC_REF(validate_mob_poi)))) \
+				|| !DSpoints_of_interest.is_valid_poi(poi)
 			)
 				to_chat(usr, span_notice("That point of interest is no longer valid."))
 				return TRUE
@@ -44,8 +44,8 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			return TRUE
 
 /datum/orbit_menu/ui_static_data(mob/user)
-	var/list/new_mob_pois = SSpoints_of_interest.get_mob_pois(CALLBACK(src, PROC_REF(validate_mob_poi)), append_dead_role = FALSE)
-	var/list/new_other_pois = SSpoints_of_interest.get_other_pois()
+	var/list/new_mob_pois = DSpoints_of_interest.get_mob_pois(CALLBACK(src, PROC_REF(validate_mob_poi)), append_dead_role = FALSE)
+	var/list/new_other_pois = DSpoints_of_interest.get_other_pois()
 
 	var/list/alive = list()
 	var/list/antagonists = list()
@@ -160,7 +160,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	ui_interact(user)
 
 /**
- * Helper POI validation function passed as a callback to various SSpoints_of_interest procs.
+ * Helper POI validation function passed as a callback to various DSpoints_of_interest procs.
  *
  * Provides extended validation above and beyond standard, limiting mob POIs without minds or ckeys
  * unless they're mobs, camera mobs or megafauna. Also allows exceptions for mobs that are deadchat controlled.

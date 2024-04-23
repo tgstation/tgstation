@@ -537,8 +537,8 @@ ADMIN_VERB(del_log, R_DEBUG, "Display del() Log", "Display del's log of everythi
 
 	user << browse(dellog.Join(), "window=dellog")
 
-ADMIN_VERB(display_overlay_log, R_DEBUG, "Display Overlay Log", "Display SSoverlays log of everything that's passed through it.", ADMIN_CATEGORY_DEBUG)
-	render_stats(SSoverlays.stats, user)
+ADMIN_VERB(display_overlay_log, R_DEBUG, "Display Overlay Log", "Display DSoverlays log of everything that's passed through it.", ADMIN_CATEGORY_DEBUG)
+	render_stats(DSoverlays.stats, user)
 
 ADMIN_VERB(init_log, R_DEBUG, "Display Initialize() Log", "Displays a list of things that didn't handle Initialize() properly.", ADMIN_CATEGORY_DEBUG)
 	user << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")

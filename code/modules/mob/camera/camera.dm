@@ -14,7 +14,7 @@
 
 /mob/camera/Initialize(mapload)
 	. = ..()
-	SSpoints_of_interest.make_point_of_interest(src)
+	DSpoints_of_interest.make_point_of_interest(src)
 
 /mob/camera/experience_pressure_difference()
 	return

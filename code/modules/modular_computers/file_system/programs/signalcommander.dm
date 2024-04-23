@@ -27,7 +27,7 @@
 
 /datum/computer_file/program/signal_commander/kill_program(mob/user)
 	. = ..()
-	SSradio.remove_object(computer, signal_frequency)
+	DSradio.remove_object(computer, signal_frequency)
 
 /datum/computer_file/program/signal_commander/ui_data(mob/user)
 	var/list/data = list()
@@ -93,9 +93,9 @@
 	radio_connection.post_signal(computer, signal)
 
 /datum/computer_file/program/signal_commander/proc/set_frequency(new_frequency)
-	SSradio.remove_object(computer, signal_frequency)
+	DSradio.remove_object(computer, signal_frequency)
 	signal_frequency = new_frequency
-	radio_connection = SSradio.add_object(computer, signal_frequency, RADIO_SIGNALER)
+	radio_connection = DSradio.add_object(computer, signal_frequency, RADIO_SIGNALER)
 
 /obj/item/circuit_component/mod_program/signaler
 	associated_program = /datum/computer_file/program/signal_commander

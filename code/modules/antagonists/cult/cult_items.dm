@@ -510,7 +510,7 @@ Striking a noncultist, however, will tear their flesh."}
 		to_chat(user, span_warning("You try to shatter the orb, but it remains as solid as a rock!"))
 		to_chat(user, span_danger(span_big("It seems that the blood cult has exhausted its ability to curse the emergency escape shuttle. It would be unwise to create more cursed orbs or to continue to try to shatter this one.")))
 		return
-	if(locate(/obj/narsie) in SSpoints_of_interest.narsies)
+	if(locate(/obj/narsie) in DSpoints_of_interest.narsies)
 		to_chat(user, span_warning("Nar'Sie is already on this plane, there is no delaying the end of all things."))
 		return
 

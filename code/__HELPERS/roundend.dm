@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 /datum/controller/subsystem/ticker/proc/record_nuke_disk_location()
 	var/disk_count = 1
-	for(var/obj/item/disk/nuclear/nuke_disk as anything in SSpoints_of_interest.real_nuclear_disks)
+	for(var/obj/item/disk/nuclear/nuke_disk as anything in DSpoints_of_interest.real_nuclear_disks)
 		var/list/data = list()
 		var/turf/disk_turf = get_turf(nuke_disk)
 		if(disk_turf)

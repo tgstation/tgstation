@@ -25,7 +25,7 @@
 	. = ..()
 
 	update_appearance()
-	SSpai.pai_card_list += src
+	DSpai.pai_card_list += src
 	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
@@ -46,7 +46,7 @@
 
 /obj/item/pai_card/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
-	SSpai.pai_card_list.Remove(src)
+	DSpai.pai_card_list.Remove(src)
 	if(!QDELETED(pai))
 		QDEL_NULL(pai)
 	return ..()
@@ -197,7 +197,7 @@
 	visible_message(span_notice("[src] flashes a message across its screen: New personalities available for download!"), blind_message = span_notice("[src] vibrates with an alert."))
 
 /**
- * Downloads a candidate from the list and removes them from SSpai.candidates
+ * Downloads a candidate from the list and removes them from DSpai.candidates
  *
  * @param {string} ckey The ckey of the candidate to download
  *
@@ -206,7 +206,7 @@
 /obj/item/pai_card/proc/download_candidate(mob/user, ckey)
 	if(pai)
 		return FALSE
-	var/datum/pai_candidate/candidate = SSpai.candidates[ckey]
+	var/datum/pai_candidate/candidate = DSpai.candidates[ckey]
 	if(!candidate?.check_ready())
 		balloon_alert(user, "download interrupted")
 		return FALSE
@@ -215,7 +215,7 @@
 	new_pai.real_name = new_pai.name
 	new_pai.key = candidate.ckey
 	set_personality(new_pai)
-	SSpai.candidates -= ckey
+	DSpai.candidates -= ckey
 	return TRUE
 
 /**
@@ -260,10 +260,10 @@
  */
 /obj/item/pai_card/proc/pool_candidates()
 	var/list/candidates = list()
-	if(pai || !length(SSpai?.candidates))
+	if(pai || !length(DSpai?.candidates))
 		return candidates
-	for(var/key in SSpai.candidates)
-		var/datum/pai_candidate/candidate = SSpai.candidates[key]
+	for(var/key in DSpai.candidates)
+		var/datum/pai_candidate/candidate = DSpai.candidates[key]
 		if(!candidate?.check_ready())
 			continue
 		candidates += list(list(

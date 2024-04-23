@@ -671,7 +671,7 @@
 	priority_announce(announcement, sound = 'sound/misc/notice1.ogg')
 
 	//Set the display screens to the radiation alert
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	var/datum/radio_frequency/frequency = DSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 	if(!frequency)
 		return
 

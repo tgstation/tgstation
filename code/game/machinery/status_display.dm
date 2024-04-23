@@ -311,7 +311,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 /obj/machinery/status_display/evac/Initialize(mapload)
 	. = ..()
 	// register for radio system
-	SSradio.add_object(src, frequency)
+	DSradio.add_object(src, frequency)
 	// Circuit USB
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/status_display,
@@ -319,7 +319,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	find_and_hang_on_wall()
 
 /obj/machinery/status_display/evac/Destroy()
-	SSradio.remove_object(src,frequency)
+	DSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/machinery/status_display/evac/process()

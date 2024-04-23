@@ -53,7 +53,7 @@
 
 	RegisterSignal(obj_parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
-	SSpoints_of_interest.make_point_of_interest(obj_parent)
+	DSpoints_of_interest.make_point_of_interest(obj_parent)
 
 /datum/component/phylactery/Destroy()
 	var/obj/obj_parent = parent

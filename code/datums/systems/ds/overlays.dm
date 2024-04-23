@@ -1,16 +1,11 @@
-SUBSYSTEM_DEF(overlays)
+DATASYSTEM_DEF(overlays)
 	name = "Overlay"
-	flags = SS_NO_FIRE|SS_NO_INIT
-	var/list/stats
+	/// Associative list of stats for overlay data
+	var/list/stats = list()
 
-/datum/controller/subsystem/overlays/PreInit()
-	stats = list()
-
-/datum/controller/subsystem/overlays/Shutdown()
+/datum/system/overlays/Destroy()
 	text2file(render_stats(stats), "[GLOB.log_directory]/overlay.log")
-
-/datum/controller/subsystem/overlays/Recover()
-	stats = SSoverlays.stats
+	return ..()
 
 /// Converts an overlay list into text for debug printing
 /// Of note: overlays aren't actually mutable appearances, they're just appearances
@@ -65,7 +60,7 @@ SUBSYSTEM_DEF(overlays)
 	overlays = null
 	POST_OVERLAY_CHANGE(src)
 	STAT_STOP_STOPWATCH
-	STAT_LOG_ENTRY(SSoverlays.stats, type)
+	STAT_LOG_ENTRY(DSoverlays.stats, type)
 
 /atom/proc/cut_overlay(list/remove_overlays)
 	if(!overlays)
@@ -74,7 +69,7 @@ SUBSYSTEM_DEF(overlays)
 	overlays -= build_appearance_list(remove_overlays)
 	POST_OVERLAY_CHANGE(src)
 	STAT_STOP_STOPWATCH
-	STAT_LOG_ENTRY(SSoverlays.stats, type)
+	STAT_LOG_ENTRY(DSoverlays.stats, type)
 
 /atom/proc/add_overlay(list/add_overlays)
 	if(!overlays)
@@ -84,7 +79,7 @@ SUBSYSTEM_DEF(overlays)
 	VALIDATE_OVERLAY_LIMIT(src)
 	POST_OVERLAY_CHANGE(src)
 	STAT_STOP_STOPWATCH
-	STAT_LOG_ENTRY(SSoverlays.stats, type)
+	STAT_LOG_ENTRY(DSoverlays.stats, type)
 
 /atom/proc/copy_overlays(atom/other, cut_old) //copys our_overlays from another atom
 	if(!other)
@@ -102,13 +97,13 @@ SUBSYSTEM_DEF(overlays)
 		VALIDATE_OVERLAY_LIMIT(src)
 		POST_OVERLAY_CHANGE(src)
 		STAT_STOP_STOPWATCH
-		STAT_LOG_ENTRY(SSoverlays.stats, type)
+		STAT_LOG_ENTRY(DSoverlays.stats, type)
 	else if(cached_other)
 		overlays += cached_other
 		VALIDATE_OVERLAY_LIMIT(src)
 		POST_OVERLAY_CHANGE(src)
 		STAT_STOP_STOPWATCH
-		STAT_LOG_ENTRY(SSoverlays.stats, type)
+		STAT_LOG_ENTRY(DSoverlays.stats, type)
 
 //TODO: Better solution for these?
 /image/proc/add_overlay(x)

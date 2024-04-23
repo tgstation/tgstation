@@ -71,7 +71,7 @@
 	mutant.domutcheck()
 
 /datum/weather/rad_storm/proc/status_alarm(active) //Makes the status displays show the radiation warning for those who missed the announcement.
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	var/datum/radio_frequency/frequency = DSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 	if(!frequency)
 		return
 

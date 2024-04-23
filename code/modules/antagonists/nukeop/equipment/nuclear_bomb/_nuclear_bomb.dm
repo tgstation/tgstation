@@ -60,7 +60,7 @@ GLOBAL_VAR(station_nuke_source)
 	core = new /obj/item/nuke_core(src)
 	STOP_PROCESSING(SSobj, core)
 	update_appearance()
-	SSpoints_of_interest.make_point_of_interest(src)
+	DSpoints_of_interest.make_point_of_interest(src)
 	previous_level = SSsecurity_level.get_current_level_as_text()
 
 /obj/machinery/nuclearbomb/Destroy()

@@ -59,7 +59,7 @@
 	energy = starting_energy
 
 	START_PROCESSING(SSsinguloprocess, src)
-	SSpoints_of_interest.make_point_of_interest(src)
+	DSpoints_of_interest.make_point_of_interest(src)
 
 	var/datum/component/singularity/new_component = AddComponent(
 		singularity_component_type, \

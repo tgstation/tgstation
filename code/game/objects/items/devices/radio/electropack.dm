@@ -21,7 +21,7 @@
 	set_frequency(frequency)
 
 /obj/item/electropack/Destroy()
-	SSradio.remove_object(src, frequency)
+	DSradio.remove_object(src, frequency)
 	return ..()
 
 /obj/item/electropack/suicide_act(mob/living/user)
@@ -82,9 +82,9 @@
 		master.receive_signal()
 
 /obj/item/electropack/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
+	DSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	SSradio.add_object(src, frequency, RADIO_SIGNALER)
+	DSradio.add_object(src, frequency, RADIO_SIGNALER)
 
 /obj/item/electropack/ui_state(mob/user)
 	return GLOB.hands_state

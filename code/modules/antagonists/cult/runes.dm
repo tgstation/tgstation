@@ -591,7 +591,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/narsie/Initialize(mapload, set_keyword)
 	. = ..()
-	SSpoints_of_interest.make_point_of_interest(src)
+	DSpoints_of_interest.make_point_of_interest(src)
 
 /obj/effect/rune/narsie/conceal() //can't hide this, and you wouldn't want to
 	return
@@ -657,7 +657,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	if(!(place in summon_objective.summon_spots))
 		to_chat(user, span_cult_large("The Geometer can only be summoned where the veil is weak - in [english_list(summon_objective.summon_spots)]!"))
 		return
-	if(locate(/obj/narsie) in SSpoints_of_interest.narsies)
+	if(locate(/obj/narsie) in DSpoints_of_interest.narsies)
 		for(var/invoker in invokers)
 			to_chat(invoker, span_warning("Nar'Sie is already on this plane!"))
 		log_game("Nar'Sie rune activated by [user] at [COORD(src)] failed - already summoned.")

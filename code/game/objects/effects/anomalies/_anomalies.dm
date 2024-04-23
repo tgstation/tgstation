@@ -28,7 +28,7 @@
 	. = ..()
 
 	if(!mapload)
-		SSpoints_of_interest.make_point_of_interest(src)
+		DSpoints_of_interest.make_point_of_interest(src)
 
 	START_PROCESSING(SSobj, src)
 	impact_area = get_area(src)

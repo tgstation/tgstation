@@ -81,7 +81,7 @@
 	if(!length(spawnerlist))
 		return
 	var/atom/mob_spawner = pick(spawnerlist)
-	if(!SSpoints_of_interest.is_valid_poi(mob_spawner))
+	if(!DSpoints_of_interest.is_valid_poi(mob_spawner))
 		return
 
 	switch(action)

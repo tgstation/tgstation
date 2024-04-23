@@ -310,7 +310,7 @@
 
 /datum/computer_file/program/budgetorders/proc/post_signal(command)
 
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	var/datum/radio_frequency/frequency = DSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 
 	if(!frequency)
 		return

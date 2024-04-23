@@ -23,7 +23,7 @@
  * * data2 - the data2 value, as defined by status displays
  */
 /datum/computer_file/program/status/proc/post_status(command, data1, data2)
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	var/datum/radio_frequency/frequency = DSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 	if(!frequency)
 		return
 

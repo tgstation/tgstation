@@ -141,7 +141,7 @@
 
 /obj/effect/mob_spawn/ghost_role/Initialize(mapload)
 	. = ..()
-	SSpoints_of_interest.make_point_of_interest(src)
+	DSpoints_of_interest.make_point_of_interest(src)
 	LAZYADD(GLOB.mob_spawners[name], src)
 
 /obj/effect/mob_spawn/Destroy()

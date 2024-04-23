@@ -26,8 +26,8 @@
 	pai.real_name = pai.name
 	pai.key = choice.key
 	card.set_personality(pai)
-	if(SSpai.candidates[key])
-		SSpai.candidates -= key
+	if(DSpai.candidates[key])
+		DSpai.candidates -= key
 	BLACKBOX_LOG_ADMIN_VERB("Make pAI")
 
 /**

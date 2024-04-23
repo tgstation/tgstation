@@ -32,7 +32,7 @@
 	if(!isnull(ascendant_mind))
 		ascendee = ascendant_mind
 		RegisterSignals(ascendant_mind.current, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(end_madness))
-	SSpoints_of_interest.make_point_of_interest(src)
+	DSpoints_of_interest.make_point_of_interest(src)
 	INVOKE_ASYNC(src, PROC_REF(poll_ghosts))
 
 /// Ask ghosts if they want to make some noise

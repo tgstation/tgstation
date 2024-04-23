@@ -40,7 +40,7 @@
 
 	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
 
-	SSpoints_of_interest.make_point_of_interest(src)
+	DSpoints_of_interest.make_point_of_interest(src)
 
 	RegisterSignal(src, COMSIG_ATOM_ENTERING, PROC_REF(on_entering_atom))
 

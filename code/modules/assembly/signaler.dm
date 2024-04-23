@@ -54,7 +54,7 @@
 	set_frequency(frequency)
 
 /obj/item/assembly/signaler/Destroy()
-	SSradio.remove_object(src,frequency)
+	DSradio.remove_object(src,frequency)
 	suicider = null
 	. = ..()
 
@@ -175,9 +175,9 @@
 	return TRUE
 
 /obj/item/assembly/signaler/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
+	DSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
+	radio_connection = DSradio.add_object(src, frequency, RADIO_SIGNALER)
 	return
 
 /obj/item/assembly/signaler/cyborg

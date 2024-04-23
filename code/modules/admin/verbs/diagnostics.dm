@@ -33,9 +33,9 @@ ADMIN_VERB(fix_next_move, R_DEBUG, "Fix Next Move", "Unfreezes all frozen mobs."
 ADMIN_VERB_VISIBILITY(radio_report, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(radio_report, R_DEBUG, "Radio Report", "Shows a report of all radio devices and their filters.", ADMIN_CATEGORY_DEBUG)
 	var/output = "<b>Radio Report</b><hr>"
-	for (var/fq in SSradio.frequencies)
+	for (var/fq in DSradio.frequencies)
 		output += "<b>Freq: [fq]</b><br>"
-		var/datum/radio_frequency/fqs = SSradio.frequencies[fq]
+		var/datum/radio_frequency/fqs = DSradio.frequencies[fq]
 		if (!fqs)
 			output += "&nbsp;&nbsp;<b>ERROR</b><br>"
 			continue

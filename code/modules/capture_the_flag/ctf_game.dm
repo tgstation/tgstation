@@ -43,7 +43,7 @@
 /obj/machinery/ctf/spawner/Initialize(mapload)
 	. = ..()
 	ctf_game.add_team(src)
-	SSpoints_of_interest.make_point_of_interest(src)
+	DSpoints_of_interest.make_point_of_interest(src)
 	default_gear = ctf_gear
 
 /obj/machinery/ctf/spawner/Destroy()
