@@ -55,7 +55,7 @@ export function CargoCart(props) {
 
 function CheckoutItems(props) {
   const { act, data } = useBackend<CargoData>();
-  const { amount_by_name, can_send, cart = [], max_order } = data;
+  const { amount_by_name = {}, can_send, cart = [], max_order } = data;
 
   if (cart.length === 0) {
     return <NoticeBox>Nothing in cart</NoticeBox>;
