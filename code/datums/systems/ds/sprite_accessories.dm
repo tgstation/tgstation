@@ -9,6 +9,7 @@
 /// A sprite accessory is something that we add to a human sprite to make them look different. This is hair, facial hair, underwear, mutant bits, etc.
 DATASYSTEM_DEF(accessories) // just 'accessories' for brevity
 	name = "Sprite Accessories"
+	requires_initialization = TRUE
 
 	//Hairstyles
 	var/list/hairstyles_list = list() //! stores /datum/sprite_accessory/hair indexed by name
@@ -55,8 +56,9 @@ DATASYSTEM_DEF(accessories) // just 'accessories' for brevity
 	var/list/caps_list = list()
 	var/list/pod_hair_list = list()
 
-/datum/system/accessories/New()
+/datum/system/accessories/Initialize()
 	setup_lists()
+	init_hair_gradients()
 
 /// Sets up all of the lists for later utilization. We keep this stuff out of GLOB due to the size of the data.
 /// In an ideal world we could just do this on our datasystem New() but there are too many things that are immediately dependent on this in the roundstart initialization
@@ -103,9 +105,6 @@ DATASYSTEM_DEF(accessories) // just 'accessories' for brevity
 	moth_antennae_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae)[DEFAULT_SPRITE_LIST]
 	moth_markings_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings)[DEFAULT_SPRITE_LIST]
 	pod_hair_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair)[DEFAULT_SPRITE_LIST]
-
-	init_hair_gradients()
-
 
 /// This proc just intializes all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
 /datum/system/accessories/proc/init_hair_gradients()

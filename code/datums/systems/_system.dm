@@ -14,3 +14,9 @@
 /datum/system
 	/// Name of the system
 	var/name = "Datum System"
+	/// Do we need to intialize this system? Defaults to FALSE as most datasystems are "lazyloading", or only store data on demand. This is for stuff that needs to go with the SysMgr
+	var/requires_initialization = FALSE
+
+/datum/system/proc/Initialize()
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("This datasystem is trying to initialize without having an Initialize() proc defined!")

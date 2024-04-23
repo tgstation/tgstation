@@ -11,4 +11,9 @@ GLOBAL_REAL(SysMgr, /datum/system_manager)
 
 
 /datum/system_manager/New()
-	init_subtypes(/datum/system, managed)
+	var/list/datasystems = init_subtypes(/datum/system)
+	for(var/datum/system/datasystem as anything in datasystems)
+		if(datasystem.requires_initialization)
+			datasystem.Initialize()
+
+		managed += datasystem
