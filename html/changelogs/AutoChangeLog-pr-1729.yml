@@ -1,0 +1,4 @@
+author: "DimWhat"
+delete-after: True
+changes:
+  - bugfix: "Fixed alternate clothing styles (alt clicking) not working on lizards"
