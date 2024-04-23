@@ -1,5 +1,6 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
+import { BooleanLike } from 'common/react';
 import { createSearch } from 'common/string';
 import { useEffect, useState } from 'react';
 
@@ -109,13 +110,13 @@ type CrewSensor = {
   brutedam: number;
   area: string | undefined;
   health: number;
-  can_track: boolean;
+  can_track: BooleanLike;
   ref: string;
 };
 
 type CrewConsoleData = {
   sensors: CrewSensor[];
-  link_allowed: boolean;
+  link_allowed: BooleanLike;
 };
 
 const CrewTable = () => {
