@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Tuberculosis makes you cough more"
+  - qol: "Nicotine Addiciton makes you cough less"
+  - qol: "Medicine Addiction maybe makes you cough more, maybe makes you cough less"
