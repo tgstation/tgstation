@@ -18,9 +18,19 @@
 	var/breakout_time = 60 SECONDS
 	/// Currently processing someone
 	var/processing = FALSE
+	///The radio the console can speak into
+	var/obj/item/radio/radio
 	/// CD for attempting to break out
 	COOLDOWN_DECLARE(breakout_message_cd)
 
+/obj/machinery/gulag_teleporter/Initialize(mapload)
+	. = ..()
+
+	radio = new(src)
+	component_parts += radio
+	radio.keyslot = new /obj/item/encryptionkey/headset_sec()
+	radio.set_listening(FALSE)
+	radio.recalculateChannels()
 
 /obj/machinery/gulag_teleporter/interact(mob/user)
 	. = ..()
@@ -152,11 +162,10 @@
 	playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
 
 	victim.Paralyze(5)
+	Shake(duration = 2 SECONDS)
+
 	if(prob(10))
 		INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob/living, emote), "scream")
-
-	var/offset = prob(50) ? -5 : 5
-	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 250)
 
 	addtimer(CALLBACK(src, PROC_REF(process_occupant)), 2 SECONDS)
 
@@ -168,17 +177,22 @@
 
 	var/mob/living/victim = occupant
 
-	DSsecurity.add_new_criminal(victim)
 	victim.drop_all_held_items()
-	update_use_power(IDLE_POWER_USE)
-
 	victim.investigate_log("has been teleported at [src] to the labor camp.", INVESTIGATE_DEATHS)
 	victim.ghostize()
 	victim.death(TRUE)
+
+	if(DSsecurity.add_new_criminal(victim))
+		playsound(src, 'sound/machines/chime.ogg', 75, TRUE)
+		radio.talk_into(src, "Dissident logged. New points are available at security consoles.", RADIO_CHANNEL_SECURITY)
+	else
+		playsound(src, 'sound/machines/buzz-two.ogg', 75, TRUE)
+
 	qdel(victim)
 
 	locked = FALSE
 	processing = FALSE
+	update_use_power(IDLE_POWER_USE)
 	toggle_open()
 
 

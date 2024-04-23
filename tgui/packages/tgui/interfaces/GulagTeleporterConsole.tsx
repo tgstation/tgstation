@@ -73,6 +73,7 @@ export function GulagTeleporterConsole(props) {
               disabled={!canTeleport}
               fluid
               onClick={() => act('teleport')}
+              selected={!!processing}
               textAlign="center"
               tooltip={
                 !canTeleport &&
@@ -90,7 +91,7 @@ export function GulagTeleporterConsole(props) {
 
 function OccupantDisplay(props) {
   const { data } = useBackend<Data>();
-  const { occupant = 'Unknown', wanted_status } = data;
+  const { occupant = 'Unknown', wanted_status = '' } = data;
 
   const status = (wanted_status && ` (${wanted_status})`) || '';
 
@@ -98,7 +99,9 @@ function OccupantDisplay(props) {
     <>
       <Box color="label">Occupant:</Box>
       <Box fontSize="17px">{occupant}</Box>
-      <Box color={CRIMESTATUS2COLOR[status]}>{status}</Box>
+      <Box bold color={CRIMESTATUS2COLOR[wanted_status]}>
+        {status}
+      </Box>
     </>
   );
 }

@@ -78,6 +78,7 @@
 			if(teleporter.state_open)
 				to_chat(usr, span_alert("The teleporter must be closed first."))
 				return TRUE
+			playsound(teleporter, 'sound/machines/eject.ogg', 50, TRUE)
 			teleporter.locked = !teleporter.locked
 			return TRUE
 
