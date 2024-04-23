@@ -20,9 +20,9 @@ const HEALTH_COLOR_BY_LEVEL = [
 const STAT_LIVING = 0;
 const STAT_DEAD = 4;
 
-const jobIsHead = (jobId) => jobId % 10 === 0;
+const jobIsHead = (jobId: number) => jobId % 10 === 0;
 
-const jobToColor = (jobId) => {
+const jobToColor = (jobId: number) => {
   if (jobId === 0) {
     return COLORS.department.captain;
   }
@@ -50,7 +50,7 @@ const jobToColor = (jobId) => {
   return COLORS.department.other;
 };
 
-const statToIcon = (life_status) => {
+const statToIcon = (life_status: number) => {
   switch (life_status) {
     case STAT_LIVING:
       return 'heart';
@@ -60,13 +60,24 @@ const statToIcon = (life_status) => {
   return 'heartbeat';
 };
 
-const healthToAttribute = (oxy, tox, burn, brute, attributeList) => {
+const healthToAttribute = (
+  oxy: number,
+  tox: number,
+  burn: number,
+  brute: number,
+  attributeList: string[],
+) => {
   const healthSum = oxy + tox + burn + brute;
   const level = Math.min(Math.max(Math.ceil(healthSum / 25), 0), 5);
   return attributeList[level];
 };
 
-const HealthStat = (props) => {
+type HealthStatProps = {
+  type: string;
+  value: number;
+};
+
+const HealthStat = (props: HealthStatProps) => {
   const { type, value } = props;
   return (
     <Box inline width={2} color={COLORS.damageType[type]} textAlign="center">
@@ -87,9 +98,29 @@ export const CrewConsole = () => {
   );
 };
 
-const CrewTable = (props) => {
-  const { act, data } = useBackend();
-  const { sensors = [] } = data;
+type CrewSensor = {
+  name: string;
+  assignment: string | undefined;
+  ijob: number;
+  life_status: number;
+  oxydam: number;
+  toxdam: number;
+  burndam: number;
+  brutedam: number;
+  area: string | undefined;
+  health: number;
+  can_track: boolean;
+  ref: string;
+};
+
+type CrewConsoleData = {
+  sensors: CrewSensor[];
+  link_allowed: boolean;
+};
+
+const CrewTable = () => {
+  const { act, data } = useBackend<CrewConsoleData>();
+  const { sensors } = data;
 
   const [shownSensors, setShownSensors] = useState(sensors.slice());
   const [sortAsc, setSortAsc] = useState(true);
@@ -105,11 +136,11 @@ const CrewTable = (props) => {
 
   const cycleSortMode = () => {
     let newColumns = sortColumns.slice();
-    newColumns.push(newColumns.shift());
+    newColumns.push(newColumns.shift() || '');
     setSortColumns(newColumns);
   };
 
-  const healthSort = (a, b) => {
+  const healthSort = (a: CrewSensor, b: CrewSensor) => {
     if (a.life_status < b.life_status) return -1;
     if (a.life_status > b.life_status) return 1;
     if (a.health > b.health) return -1;
@@ -121,11 +152,14 @@ const CrewTable = (props) => {
     let unsorted = sensors.slice();
     if (sortColumns[0] === 'ijob') {
       let sorted = flow([
-        (sorted) => {
+        () => {
           return sortBy(data.sensors, (s) => s.ijob);
         },
-        (sorted) => {
-          const nameSearch = createSearch(searchQuery, (crew) => crew.name);
+        (sorted: CrewSensor[]) => {
+          const nameSearch = createSearch(
+            searchQuery,
+            (crew: CrewSensor) => crew.name,
+          );
           return filter(sorted, nameSearch);
         },
       ])();
@@ -160,9 +194,6 @@ const CrewTable = (props) => {
       scrollable
       title={
         <>
-          <Button onClick={() => cycleSortMode()}>
-            {sortNames[sortColumns[0]] || sortColumns[0]}
-          </Button>
           <Button onClick={() => setSortAsc(!sortAsc)}>
             <Icon
               style={{ marginLeft: '2px' }}
@@ -171,7 +202,9 @@ const CrewTable = (props) => {
           </Button>
           <Input
             placeholder="Search for name..."
-            onInput={(e) => setSearchQuery(e.target.value)}
+            onInput={(e) =>
+              setSearchQuery((e.target as HTMLTextAreaElement).value)
+            }
           />
         </>
       }
@@ -200,8 +233,12 @@ const CrewTable = (props) => {
   );
 };
 
-const CrewTableEntry = (props) => {
-  const { act, data } = useBackend();
+type CrewTableEntryProps = {
+  sensor_data: CrewSensor;
+};
+
+const CrewTableEntry = (props: CrewTableEntryProps) => {
+  const { act, data } = useBackend<CrewConsoleData>();
   const { link_allowed } = data;
   const { sensor_data } = props;
   const {
