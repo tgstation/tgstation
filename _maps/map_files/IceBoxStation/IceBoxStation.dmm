@@ -58483,8 +58483,8 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "rPu" = (
-/obj/machinery/power/smes,
 /obj/structure/cable,
+/obj/machinery/power/smes/engineering,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "rPL" = (
