@@ -1,4 +1,0 @@
-author: "FlufflesTheDog"
-delete-after: True
-changes:
-  - bugfix: "Stone tiles (and things on them) no longer get immersed in lava"
