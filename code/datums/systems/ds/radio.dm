@@ -5,6 +5,7 @@ DATASYSTEM_DEF(radio)
 	var/list/saymodes = list()
 
 /datum/system/radio/New()
+	. = ..()
 	for(var/_SM in subtypesof(/datum/saymode))
 		var/datum/saymode/SM = new _SM()
 		saymodes[SM.key] = SM
