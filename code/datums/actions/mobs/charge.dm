@@ -44,7 +44,7 @@
 
 	if(charger in charging)
 		// Stop any existing charging, this'll clean things up properly
-		SSmove_manager.stop_looping(charger)
+		DSmove_manager.stop_looping(charger)
 
 	charging += charger
 	actively_moving = FALSE
@@ -60,7 +60,7 @@
 
 	var/time_to_hit = min(get_dist(charger, target), charge_distance) * charge_speed
 
-	var/datum/move_loop/new_loop = SSmove_manager.home_onto(charger, target, delay = charge_speed, timeout = time_to_hit, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	var/datum/move_loop/new_loop = DSmove_manager.home_onto(charger, target, delay = charge_speed, timeout = time_to_hit, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	if(!new_loop)
 		return
 	RegisterSignal(new_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move), override = TRUE)
@@ -96,7 +96,7 @@
 /datum/action/cooldown/mob_cooldown/charge/update_status_on_signal(mob/source, new_stat, old_stat)
 	. = ..()
 	if(new_stat == DEAD)
-		SSmove_manager.stop_looping(source) //This will cause the loop to qdel, triggering an end to our charging
+		DSmove_manager.stop_looping(source) //This will cause the loop to qdel, triggering an end to our charging
 
 /datum/action/cooldown/mob_cooldown/charge/proc/do_charge_indicator(atom/charger, atom/charge_target)
 	var/turf/target_turf = get_turf(charge_target)
