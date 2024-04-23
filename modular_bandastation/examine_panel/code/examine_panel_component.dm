@@ -112,7 +112,7 @@
 		obscured = (holder_human.wear_mask && (holder_human.wear_mask.flags_inv & HIDEFACE)) || (holder_human.head && (holder_human.head.flags_inv & HIDEFACE))
 		tgui_flavor_text = obscured ? "Obscured" : flavor_text
 
-	var/name = obscured ? "Unknown" : user.name
+	var/name = obscured ? "Unknown" : holder
 
 	data["obscured"] = obscured ? TRUE : FALSE
 	data["character_name"] = name
