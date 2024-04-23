@@ -80,7 +80,7 @@ DATASYSTEM_DEF(accessories) // just 'accessories' for brevity
 	underwear_m = underwear_lists[MALE_SPRITE_LIST]
 	underwear_f = underwear_lists[FEMALE_SPRITE_LIST]
 
-	var/undershirt_lists = init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, undershirt_list, undershirt_m, undershirt_f)
+	var/undershirt_lists = init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt)
 	undershirt_list = undershirt_lists[DEFAULT_SPRITE_LIST]
 	undershirt_m = undershirt_lists[MALE_SPRITE_LIST]
 	undershirt_f = undershirt_lists[FEMALE_SPRITE_LIST]
