@@ -195,6 +195,7 @@ const CrewTable = () => {
       scrollable
       title={
         <>
+          <Button onClick={cycleSortMode}>{sortNames[sortColumns[0]]}</Button>
           <Button onClick={() => setSortAsc(!sortAsc)}>
             <Icon
               style={{ marginLeft: '2px' }}
