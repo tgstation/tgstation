@@ -1,3 +1,7 @@
+// If you use a file(...) object, instead of caching the asset it will be loaded from disk every time it's requested.
+// This is useful for development, but not recommended for production.
+// And if TGS is defined, we're being run in a production environment.
+
 #ifdef TGS
 /datum/asset/simple/tgui
 	keep_local_name = FALSE
