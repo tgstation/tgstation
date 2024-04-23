@@ -140,7 +140,11 @@ SUBSYSTEM_DEF(ipintel)
 		) VALUES ( \
 			INET_ATON(:address) \
 			:result, \
-		)", intel.serialize_list(list(), list()))
+		)", list(
+			"address" = intel.address,
+			"result" = intel.result,
+		)
+	)
 	query.warn_execute()
 	query.sync()
 	qdel(query)
