@@ -7,26 +7,35 @@ import {
   KEY_ESCAPE,
   KEY_UP,
   KEY_Z,
-} from '../../../common/keycodes';
-import { useBackend } from '../../backend';
-import { Autofocus, Button, Input, Section, Stack } from '../../components';
-import { InputButtons } from '../common/InputButtons';
+} from '../../common/keycodes';
+import { useBackend } from '../backend';
+import { Autofocus, Button, Input, Section, Stack } from '../components';
+import { Window } from '../layouts';
+import { InputButtons } from './common/InputButtons';
+import { Loader } from './common/Loader';
 
-type ListInputModalProps = {
+type ListInputData = {
+  init_value: string;
   items: string[];
-  default_item: string;
+  large_buttons: boolean;
   message: string;
-  on_selected: (entry: string) => void;
-  on_cancel: () => void;
+  timeout: number;
+  title: string;
 };
 
-export const ListInputModal = (props: ListInputModalProps) => {
-  const { items = [], default_item, message, on_selected, on_cancel } = props;
-
-  const [selected, setSelected] = useState(items.indexOf(default_item));
+export const ListInputModal = (props) => {
+  const { act, data } = useBackend<ListInputData>();
+  const {
+    items = [],
+    message = '',
+    init_value,
+    large_buttons,
+    timeout,
+    title,
+  } = data;
+  const [selected, setSelected] = useState(items.indexOf(init_value));
   const [searchBarVisible, setSearchBarVisible] = useState(items.length > 9);
   const [searchQuery, setSearchQuery] = useState('');
-
   // User presses up or down on keyboard
   // Simulates clicking an item
   const onArrowKey = (key: number) => {
@@ -90,77 +99,82 @@ export const ListInputModal = (props: ListInputModalProps) => {
   const filteredItems = items.filter((item) =>
     item?.toLowerCase().includes(searchQuery.toLowerCase()),
   );
+  // Dynamically changes the window height based on the message.
+  const windowHeight =
+    325 + Math.ceil(message.length / 3) + (large_buttons ? 5 : 0);
   // Grabs the cursor when no search bar is visible.
   if (!searchBarVisible) {
     setTimeout(() => document!.getElementById(selected.toString())?.focus(), 1);
   }
 
   return (
-    <Section
-      onKeyDown={(event) => {
-        const keyCode = window.event ? event.which : event.keyCode;
-        if (keyCode === KEY_DOWN || keyCode === KEY_UP) {
-          event.preventDefault();
-          onArrowKey(keyCode);
-        }
-        if (keyCode === KEY_ENTER) {
-          event.preventDefault();
-          on_selected(filteredItems[selected]);
-        }
-        if (!searchBarVisible && keyCode >= KEY_A && keyCode <= KEY_Z) {
-          event.preventDefault();
-          onLetterSearch(keyCode);
-        }
-        if (keyCode === KEY_ESCAPE) {
-          event.preventDefault();
-          on_cancel();
-        }
-      }}
-      buttons={
-        <Button
-          compact
-          icon={searchBarVisible ? 'search' : 'font'}
-          selected
-          tooltip={
-            searchBarVisible
-              ? 'Search Mode. Type to search or use arrow keys to select manually.'
-              : 'Hotkey Mode. Type a letter to jump to the first match. Enter to select.'
+    <Window title={title} width={325} height={windowHeight}>
+      {timeout && <Loader value={timeout} />}
+      <Window.Content
+        onKeyDown={(event) => {
+          const keyCode = window.event ? event.which : event.keyCode;
+          if (keyCode === KEY_DOWN || keyCode === KEY_UP) {
+            event.preventDefault();
+            onArrowKey(keyCode);
           }
-          tooltipPosition="left"
-          onClick={() => onSearchBarToggle()}
-        />
-      }
-      className="ListInput__Section"
-      fill
-      title={message}
-    >
-      <Stack fill vertical>
-        <Stack.Item grow>
-          <ListDisplay
-            filteredItems={filteredItems}
-            onClick={onClick}
-            onFocusSearch={onFocusSearch}
-            searchBarVisible={searchBarVisible}
-            selected={selected}
-          />
-        </Stack.Item>
-        {searchBarVisible && (
-          <SearchBar
-            filteredItems={filteredItems}
-            onSearch={onSearch}
-            searchQuery={searchQuery}
-            selected={selected}
-          />
-        )}
-        <Stack.Item>
-          <InputButtons
-            input={filteredItems[selected]}
-            on_submit={() => on_selected(filteredItems[selected])}
-            on_cancel={on_cancel}
-          />
-        </Stack.Item>
-      </Stack>
-    </Section>
+          if (keyCode === KEY_ENTER) {
+            event.preventDefault();
+            act('submit', { entry: filteredItems[selected] });
+          }
+          if (!searchBarVisible && keyCode >= KEY_A && keyCode <= KEY_Z) {
+            event.preventDefault();
+            onLetterSearch(keyCode);
+          }
+          if (keyCode === KEY_ESCAPE) {
+            event.preventDefault();
+            act('cancel');
+          }
+        }}
+      >
+        <Section
+          buttons={
+            <Button
+              compact
+              icon={searchBarVisible ? 'search' : 'font'}
+              selected
+              tooltip={
+                searchBarVisible
+                  ? 'Search Mode. Type to search or use arrow keys to select manually.'
+                  : 'Hotkey Mode. Type a letter to jump to the first match. Enter to select.'
+              }
+              tooltipPosition="left"
+              onClick={() => onSearchBarToggle()}
+            />
+          }
+          className="ListInput__Section"
+          fill
+          title={message}
+        >
+          <Stack fill vertical>
+            <Stack.Item grow>
+              <ListDisplay
+                filteredItems={filteredItems}
+                onClick={onClick}
+                onFocusSearch={onFocusSearch}
+                searchBarVisible={searchBarVisible}
+                selected={selected}
+              />
+            </Stack.Item>
+            {searchBarVisible && (
+              <SearchBar
+                filteredItems={filteredItems}
+                onSearch={onSearch}
+                searchQuery={searchQuery}
+                selected={selected}
+              />
+            )}
+            <Stack.Item>
+              <InputButtons input={filteredItems[selected]} />
+            </Stack.Item>
+          </Stack>
+        </Section>
+      </Window.Content>
+    </Window>
   );
 };
 
@@ -169,7 +183,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
  * If a search query is provided, filters the items.
  */
 const ListDisplay = (props) => {
-  const { act } = useBackend();
+  const { act } = useBackend<ListInputData>();
   const { filteredItems, onClick, onFocusSearch, searchBarVisible, selected } =
     props;
 
@@ -213,7 +227,7 @@ const ListDisplay = (props) => {
  * Closing the bar defaults input to an empty string.
  */
 const SearchBar = (props) => {
-  const { act } = useBackend();
+  const { act } = useBackend<ListInputData>();
   const { filteredItems, onSearch, searchQuery, selected } = props;
 
   return (
