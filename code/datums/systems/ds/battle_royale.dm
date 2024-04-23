@@ -1,33 +1,32 @@
-/// Global list of areas which are considered to be inside the same department for our purposes
-GLOBAL_LIST_INIT(battle_royale_regions, list(
-	"Medical Bay" = list(
-		/area/station/command/heads_quarters/cmo,
-		/area/station/medical,
-		/area/station/security/checkpoint/medical,
-	),
-	"Research Division" = list(
-		/area/station/command/heads_quarters/rd,
-		/area/station/security/checkpoint/science,
-		/area/station/science,
-	),
-	"Engineering Bay" = list(
-		/area/station/command/heads_quarters/ce,
-		/area/station/engineering,
-		/area/station/maintenance/disposal/incinerator,
-		/area/station/security/checkpoint/engineering,
-	),
-	"Cargo Bay" = list(
-		/area/station/cargo,
-		/area/station/command/heads_quarters/qm,
-		/area/station/security/checkpoint/supply,
-	),
-))
 
-/// Basically just exists to hold references to datums so that they don't GC
 DATASYSTEM_DEF(battle_royale)
 	name = "Battle Royale"
 	/// List of battle royale datums currently running
 	var/list/active_battles
+	/// Static list of available regions that are considered the same department
+	var/static/list/regions = list(list(
+		"Medical Bay" = list(
+			/area/station/command/heads_quarters/cmo,
+			/area/station/medical,
+			/area/station/security/checkpoint/medical,
+		),
+		"Research Division" = list(
+			/area/station/command/heads_quarters/rd,
+			/area/station/security/checkpoint/science,
+			/area/station/science,
+		),
+		"Engineering Bay" = list(
+			/area/station/command/heads_quarters/ce,
+			/area/station/engineering,
+			/area/station/maintenance/disposal/incinerator,
+			/area/station/security/checkpoint/engineering,
+		),
+		"Cargo Bay" = list(
+			/area/station/cargo,
+			/area/station/command/heads_quarters/qm,
+			/area/station/security/checkpoint/supply,
+		),
+	))
 
 /// Start a new battle royale using a passed list of implants
 /datum/system/battle_royale/proc/start_battle(list/competitors)
@@ -102,9 +101,9 @@ DATASYSTEM_DEF(battle_royale)
 
 /// Start a battle royale with the list of provided implants
 /datum/battle_royale_controller/proc/start(list/implants, battle_time = 10 MINUTES)
-	chosen_area = pick(GLOB.battle_royale_regions)
+	chosen_area = pick(DSbattle_royale.regions)
 	for (var/obj/item/implant/explosive/battle_royale/contestant_implant in implants)
-		contestant_implant.start_battle(chosen_area, GLOB.battle_royale_regions[chosen_area])
+		contestant_implant.start_battle(chosen_area, DSbattle_royale.regions[chosen_area])
 		if (isnull(contestant_implant))
 			continue // Might have exploded if it was removed from a person
 		RegisterSignal(contestant_implant, COMSIG_QDELETING, PROC_REF(implant_destroyed))
