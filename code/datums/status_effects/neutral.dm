@@ -568,6 +568,7 @@
 /datum/status_effect/tinlux_light/on_remove()
 	QDEL_NULL(mob_light_obj)
 
+/// status effect applied after being devoured by a megafauna... so you don't get devoured again until revived.
 /datum/status_effect/gutted
 	id = "gutted"
 	alert_type = null

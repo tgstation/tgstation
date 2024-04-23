@@ -212,6 +212,7 @@
 		L.client.give_award(score_achievement_type, L) //Score progression for specific boss killed
 	return TRUE
 
+///by the way, this is deprecated. do not bring it to basic mobs, instead see how bileworms and infernal gigasnappers work
 /datum/action/innate/megafauna_attack
 	name = "Megafauna Attack"
 	button_icon = 'icons/mob/actions/actions_animal.dmi'

@@ -1,7 +1,7 @@
 /**
  * Crusher Loot; which makes the attached mob drop a crusher trophy of some type if the majority damage was from a crusher!
  *
- * Used for all the mobs droppin' crusher trophies
+ * Used for all the mobs droppin' crusher trophies, except for megafauna which handle it in a special manner
  */
 /datum/element/crusher_loot
 	element_flags = ELEMENT_BESPOKE

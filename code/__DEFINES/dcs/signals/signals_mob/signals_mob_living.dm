@@ -97,6 +97,16 @@
 ///Note that it is fired regardless of whether the mob was dead beforehand or not.
 #define COMSIG_LIVING_GIBBED "living_gibbed"
 
+///from base of mob/living/gib(): (drop_bitflags)
+#define COMSIG_LIVING_PRE_GIBBED "living_pre_gibbed"
+	//cancel gib.
+	#define COMPONENT_NO_GIB (1<<0)
+
+///from base of mob/living/gib(): (just_ash, drop_items, force)
+#define COMSIG_LIVING_PRE_DUSTED "living_pre_dust"
+	//cancel dust.
+	#define COMPONENT_NO_DUST (1<<0)
+
 ///from base of mob/living/Write_Memory(): (dead, gibbed)
 #define COMSIG_LIVING_WRITE_MEMORY "living_write_memory"
 	#define COMPONENT_DONT_WRITE_MEMORY (1<<0)
