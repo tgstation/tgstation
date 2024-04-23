@@ -688,3 +688,48 @@
 	fire = 40
 	acid = 50
 	wound = 30
+
+/obj/item/clothing/suit/armor/vest/military
+	name = "Crude chestplate"
+	desc = "It may look rough, rusty and battered, but it's also made out of junk and uncomfortable to wear."
+	icon_state = "military"
+	inhand_icon_state = "armor"
+	dog_fashion = null
+	armor_type = /datum/armor/military
+	allowed = list(
+		/obj/item/banner,
+		/obj/item/claymore/shortsword,
+		/obj/item/nullrod,
+		/obj/item/spear,
+		/obj/item/gun/ballistic/bow
+	)
+
+/datum/armor/military
+	melee = 45
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 25
+	fire = 10
+	acid = 50
+	wound = 20
+
+/obj/item/clothing/suit/armor/riot/knight/warlord
+	name = "golden plate armor"
+	desc = "This bulky set of armor is coated with a shiny layer of gold. It seems to almost reflect all light sources."
+	icon_state = "warlord"
+	inhand_icon_state = null
+	armor_type = /datum/armor/armor_warlord
+	w_class = WEIGHT_CLASS_BULKY
+	clothing_flags = THICKMATERIAL
+	slowdown = 0.8
+
+/datum/armor/armor_warlord
+	melee = 70
+	bullet = 60
+	laser = 70
+	energy = 70
+	bomb = 40
+	fire = 50
+	acid = 50
+	wound = 30
