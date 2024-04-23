@@ -24949,7 +24949,7 @@
 /area/station/ai_monitored/security/armory)
 "jBA" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/super/full,
 /obj/machinery/camera/directional/north{
 	c_tag = "AI Chamber - SMES";
 	network = list("aicore")
@@ -27014,7 +27014,7 @@
 /area/station/hallway/primary/central/fore)
 "kiQ" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/super/full,
 /obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/turret_protected/aisat/equipment)
