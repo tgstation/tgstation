@@ -16,6 +16,13 @@ const HEALTH_COLOR_BY_LEVEL = [
   '#801308',
 ];
 
+const SORT_NAMES = {
+  ijob: 'Job',
+  name: 'Name',
+  area: 'Position',
+  health: 'Vitals',
+};
+
 const STAT_LIVING = 0;
 const STAT_DEAD = 4;
 
@@ -166,19 +173,12 @@ const CrewTable = () => {
     }
   });
 
-  const sortNames = {
-    ijob: 'Job',
-    name: 'Name',
-    area: 'Position',
-    health: 'Vitals',
-  };
-
   return (
     <Section
       scrollable
       title={
         <>
-          <Button onClick={cycleSortBy}>{sortNames[sortBy]}</Button>
+          <Button onClick={cycleSortBy}>{SORT_NAMES[sortBy]}</Button>
           <Button onClick={() => setSortAsc(!sortAsc)}>
             <Icon
               style={{ marginLeft: '2px' }}
