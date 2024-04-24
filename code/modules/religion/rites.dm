@@ -128,19 +128,31 @@
 /datum/religion_rites/machine_blessing/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
 	var/altar_turf = get_turf(religious_tool)
-	var/blessing = pick(
-		prob(0.0001);/obj/item/organ/internal/cyberimp/arm/combat,
-		/obj/item/organ/internal/cyberimp/arm/surgery,
-		prob(150);/obj/item/organ/internal/cyberimp/arm/toolset,
+	arm = list(
+		/obj/item/organ/internal/cyberimp/arm/combat,
+		/obj/item/organ/internal/cyberimp/arm/surgery = 1000000,
+		/obj/item/organ/internal/cyberimp/arm/toolset = 1500000
+	)
+	eyes = list(
 		/obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
 		/obj/item/organ/internal/cyberimp/eyes/hud/medical,
-		prob(80);/obj/item/organ/internal/cyberimp/mouth/breathing_tube,
-		prob(50);/obj/item/organ/internal/cyberimp/chest/reviver,
-		/obj/item/organ/internal/cyberimp/chest/thrusters,
-		/obj/item/organ/internal/cyberimp/brain/anti_drop,
-		prob(10);/obj/item/organ/internal/cyberimp/brain/anti_stun,
-		/obj/item/organ/internal/eyes/robotic/shield,
-		/obj/item/organ/internal/eyes/robotic/glow,
+		/obj/item/organ/internal/eyes/robotic/shield = 2,
+		/obj/item/organ/internal/eyes/robotic/glow
+	)
+	chest = list(
+		/obj/item/organ/internal/cyberimp/chest/reviver,
+		/obj/item/organ/internal/cyberimp/chest/thrusters = 2
+	)
+	head = list(
+		/obj/item/organ/internal/cyberimp/brain/anti_drop = 100,
+		/obj/item/organ/internal/cyberimp/brain/anti_stun = 10
+	)
+	var/blessing = pick_weight_recursive(
+	arm = 15,
+	eyes = 15,
+	chest = 9,
+	head = 10,
+	/obj/item/organ/internal/cyberimp/mouth/breathing_tube = 5
 	)
 	new blessing(altar_turf)
 	return TRUE
