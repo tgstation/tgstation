@@ -67,16 +67,6 @@
 		var/mob/living/L = user
 		L.Unconscious(40)
 
-/datum/emote/living/cough
-	key = "cough"
-	key_third_person = "coughs"
-	message = "coughs!"
-	message_mime = "acts out an exaggerated cough!"
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_RUNECHAT
-
-/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
-	return !HAS_TRAIT(user, TRAIT_SOOTHED_THROAT) && ..()
-
 /datum/emote/living/dance
 	key = "dance"
 	key_third_person = "dances"
@@ -327,7 +317,6 @@
 	key_third_person = "cries"
 	message = "cries."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	vary = TRUE
 	stat_allowed = SOFT_CRIT
 	mob_type_blacklist_typecache = list(/mob/living/carbon/human) //Humans get specialized cry emote with sound and animation.
 
@@ -336,25 +325,24 @@
 	key_third_person = "sneezes"
 	message = "sneezes."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	mob_type_blacklist_typecache = list(/mob/living/carbon/human) //Humans get specialized sneeze emote with sound and animation.
+	mob_type_blacklist_typecache = list(/mob/living/carbon/human) //Humans get specialized sneeze emote with sound.
 
 /datum/emote/living/carbon/human/glasses/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', user, "glasses")
 	flick_overlay_global(emote_animation, GLOB.clients, 1.6 SECONDS)
 
-/datum/emote/living/carbon/human/cough
+/datum/emote/living/carbon/cough
 	key = "cough"
 	key_third_person = "coughs"
 	message = "coughs!"
 	message_mime = "acts out an exaggerated cough!"
-	vary = TRUE
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_RUNECHAT
+	mob_type_blacklist_typecache = list(/mob/living/carbon/human) //Humans get specialized cough emote with sound.
 
 /datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_SOOTHED_THROAT))
-		return FALSE
+	return !HAS_TRAIT(user, TRAIT_SOOTHED_THROAT) && ..()
+
 
 /datum/emote/living/pout
 	key = "pout"
