@@ -13,16 +13,35 @@
 	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
 	circuit = /obj/item/circuitboard/machine/gulag_teleporter
-	/// Door cannot be opened by hand
-	var/locked = FALSE
+	/// Message CD for attempting to break out
+	COOLDOWN_DECLARE(breakout_message_cd)
 	/// Required time for do_after to break out of the door
 	var/breakout_time = 60 SECONDS
-	/// Currently processing someone
-	var/processing = FALSE
+	/// Prisoner jumpskirt type
+	var/jumpskirt_type = /obj/item/clothing/under/rank/prisoner/skirt
+	/// Prisoner jumpsuit type
+	var/jumpsuit_type = /obj/item/clothing/under/rank/prisoner
+	/// Door cannot be opened by hand
+	var/locked = FALSE
 	///The radio the console can speak into
 	var/obj/item/radio/radio
-	/// CD for attempting to break out
-	COOLDOWN_DECLARE(breakout_message_cd)
+	/// Gloves type for plasmemes
+	var/plasglove_type = /obj/item/clothing/gloves/color/plasmaman
+	/// Currently processing someone
+	var/processing = FALSE
+	/// Prisoner shoes type
+	var/shoes_type = /obj/item/clothing/shoes/sneakers/orange
+	/// Items to reassign prisoners
+	var/static/list/telegulag_required_items = typecacheof(list(
+		/obj/item/clothing/gloves/color/plasmaman,
+		/obj/item/clothing/head/helmet/space/plasmaman,
+		/obj/item/clothing/mask/breath,
+		/obj/item/clothing/mask/gas,
+		/obj/item/clothing/suit/space/eva/plasmaman,
+		/obj/item/clothing/under/plasmaman,
+		/obj/item/tank/internals,
+	))
+
 
 /obj/machinery/gulag_teleporter/Initialize(mapload)
 	. = ..()
@@ -33,6 +52,7 @@
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
 
+
 /obj/machinery/gulag_teleporter/interact(mob/user)
 	. = ..()
 
@@ -41,11 +61,13 @@
 
 /obj/machinery/gulag_teleporter/open_machine(drop, density_to_set)
 	. = ..()
+
 	playsound(src, 'sound/machines/door_open.ogg', 50, TRUE)
 
 
 /obj/machinery/gulag_teleporter/close_machine(atom/movable/target, density_to_set)
 	. = ..()
+
 	playsound(src, 'sound/machines/doorclick.ogg', 50, TRUE)
 
 
@@ -65,8 +87,10 @@
 
 /obj/machinery/gulag_teleporter/emp_act(severity)
 	. = ..()
+
 	if (. & EMP_PROTECT_SELF)
 		return
+
 	if(is_operational && occupant)
 		open_machine()
 
@@ -191,23 +215,25 @@
 		reset()
 		return
 
-	var/mob/living/victim = occupant
+	if(!ishuman(occupant))
+		qdel(occupant)
+		reset()
+		return
 
+	var/mob/living/victim = occupant
 	var/datum/record/crew/record = get_occupant_record()
 	record?.wanted_status = WANTED_PRISONER
 
-	victim.investigate_log("has been teleported at [src] to the labor camp.", INVESTIGATE_DEATHS)
-	victim.drop_everything()
-	victim.ghostize()
-	victim.death(TRUE)
+	victim.ghostize(can_reenter_corpse = FALSE)
+	victim.investigate_log("has been teleported to the labor camp from [src].", INVESTIGATE_DEATHS)
+	strip_occupant()
+	teleport_occupant()
 
 	if(DSsecurity.add_new_criminal(victim))
 		playsound(src, 'sound/machines/chime.ogg', 75, TRUE)
 		radio.talk_into(src, "Dissident logged. New points are available at security consoles.", RADIO_CHANNEL_SECURITY)
 	else
 		playsound(src, 'sound/machines/buzz-two.ogg', 75, TRUE)
-
-	qdel(victim)
 
 	reset()
 
@@ -218,6 +244,47 @@
 	locked = FALSE
 	processing = FALSE
 	open_machine()
+
+
+/// Strips item from prisoner and redresses them in prison attire.
+/obj/machinery/gulag_teleporter/proc/strip_occupant()
+	var/mob/living/carbon/human/prisoner = occupant
+
+	// Strip all that isnt in the typecache
+	for(var/obj/item/thing in prisoner)
+		if(is_type_in_typecache(thing, telegulag_required_items))
+			continue
+
+		prisoner.dropItemToGround(thing, silent = TRUE)
+
+	if(!isplasmaman(prisoner))
+		// Check player prefs for jumpsuit or jumpskirt toggle, then give appropriate prison outfit.
+		var/suit_or_skirt = prisoner.jumpsuit_style == PREF_SKIRT ? jumpskirt_type : jumpsuit_type
+
+		prisoner.equip_to_appropriate_slot(new suit_or_skirt, qdel_on_fail = TRUE)
+	else
+		if(isnull(prisoner.gloves))
+			prisoner.equip_to_appropriate_slot(new plasglove_type, qdel_on_fail = TRUE)
+
+	prisoner.equip_to_appropriate_slot(new shoes_type, qdel_on_fail = TRUE)
+
+	var/obj/item/card/id/advanced/prisoner/id = new()
+	var/subtype_cards = length(subtypesof(/obj/item/card/id/advanced/prisoner))
+	var/chosen_name = "Prisoner #13-[rand(subtype_cards, 999)]"
+	id.name = chosen_name
+	id.registered_name = chosen_name
+	prisoner.equip_to_appropriate_slot(id, qdel_on_fail = TRUE)
+
+
+/// Teleports the occupant to one of the labor camp areas
+/obj/machinery/gulag_teleporter/proc/teleport_occupant()
+	var/area/teleport_destination = pick(DSsecurity.labor_camp_warps)
+	if(isnull(teleport_destination))
+		return
+
+	DSsecurity.labor_camp_warps -= teleport_destination
+
+	do_teleport(occupant, teleport_destination, no_effects = TRUE)
 
 
 /// Toggles the door open or closed.

@@ -11,6 +11,9 @@ DATASYSTEM_DEF(security)
 	var/total_points = 0
 	/// Non-antagonist criminals apprehended.
 	var/warcrimes = 0
+	/// Labor camp teleport zones
+	var/list/labor_camp_warps = list()
+
 
 /// Adds a weakref of the criminal to the list and awards points if the criminal is an antagonist.
 /datum/system/security/proc/add_new_criminal(mob/living/baddie)

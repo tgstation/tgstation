@@ -365,6 +365,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.prisonwarp += loc
 	return INITIALIZE_HINT_QDEL
 
+// players that get gulagged show up here
+/obj/effect/landmark/labor_camp_warp
+	name = "labor_camp_warp"
+	icon = 'icons/mob/landmarks.dmi'
+	icon_state = "Prisoner"
+
+/obj/effect/landmark/labor_camp_warp/Initialize(mapload)
+	..()
+	DSsecurity.labor_camp_warps += loc
+	return INITIALIZE_HINT_QDEL
+
 /obj/effect/landmark/ert_spawn
 	name = "Emergencyresponseteam"
 	icon_state = "ert_spawn"
@@ -714,3 +725,4 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/navigate_destination/disposals
 	location = "Disposals"
+

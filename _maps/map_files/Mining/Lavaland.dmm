@@ -1324,6 +1324,14 @@
 /obj/item/kitchen/spoon,
 /turf/open/floor/iron/checker,
 /area/mine/laborcamp)
+"hX" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/labor_camp_warp,
+/turf/open/floor/iron/freezer,
+/area/mine/laborcamp)
 "hY" = (
 /obj/machinery/door/airlock/public/glass{
 	id_tag = "gulag1";
@@ -2526,9 +2534,6 @@
 "nA" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/ore_box,
-/obj/machinery/mineral/labor_points_checker{
-	pixel_y = 25
-	},
 /turf/open/floor/iron/smooth_edge,
 /area/mine/laborcamp/production)
 "nB" = (
@@ -2600,6 +2605,7 @@
 /obj/machinery/camera/autoname/directional/north{
 	network = list("labor")
 	},
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/smooth_edge,
 /area/mine/laborcamp/production)
 "nY" = (
@@ -2724,6 +2730,7 @@
 	network = list("labor")
 	},
 /obj/item/cigbutt,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/quarters)
 "oJ" = (
@@ -2743,6 +2750,10 @@
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
+"oR" = (
+/obj/effect/landmark/labor_camp_warp,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "oS" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "Mining External Airlock"
@@ -2828,6 +2839,7 @@
 "pr" = (
 /obj/structure/bed,
 /obj/effect/spawner/random/trash/mess,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/white,
 /area/mine/laborcamp/production)
 "ps" = (
@@ -2845,6 +2857,7 @@
 /area/lavaland/surface/outdoors)
 "pw" = (
 /obj/effect/turf_decal/loading_area,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
 "px" = (
@@ -2912,12 +2925,14 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/official/cleanliness/directional/north,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp/quarters)
 "pO" = (
 /obj/machinery/shower/directional/south,
 /obj/machinery/door/window/left/directional/south,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
 "pP" = (
@@ -3046,6 +3061,7 @@
 /obj/structure/bed,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/official/work_for_a_future/directional/east,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/quarters)
 "qx" = (
@@ -3340,6 +3356,7 @@
 /obj/structure/sign/departments/medbay/alt/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/smooth_edge,
 /area/mine/laborcamp/production)
 "sH" = (
@@ -3366,6 +3383,7 @@
 /area/mine/laborcamp)
 "sU" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "sV" = (
@@ -3539,7 +3557,7 @@
 /area/mine/cafeteria)
 "tZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/sustenance/labor_camp,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
@@ -3879,6 +3897,7 @@
 /obj/structure/chair/stool/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/wideplating_new,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/checker,
 /area/mine/laborcamp)
 "wb" = (
@@ -4238,6 +4257,7 @@
 "yn" = (
 /obj/structure/chair/stool/directional/north,
 /obj/effect/turf_decal/siding/wideplating_new,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/checker,
 /area/mine/laborcamp)
 "yp" = (
@@ -4267,6 +4287,7 @@
 /obj/machinery/camera/autoname/directional/west{
 	network = list("labor")
 	},
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/quarters)
 "yG" = (
@@ -4588,6 +4609,7 @@
 /area/mine/laborcamp/security)
 "AN" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/smooth_edge,
 /area/mine/laborcamp/production)
 "AQ" = (
@@ -4640,6 +4662,7 @@
 "BA" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
@@ -4656,6 +4679,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "BK" = (
@@ -4940,6 +4964,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/airalarm/directional/south,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp)
 "DW" = (
@@ -5035,6 +5060,7 @@
 "Ez" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/smooth_large,
 /area/mine/laborcamp/production)
 "EB" = (
@@ -5272,6 +5298,7 @@
 /obj/effect/spawner/random/trash/botanical_waste,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "Gx" = (
@@ -5543,6 +5570,7 @@
 /obj/effect/turf_decal/siding/wideplating_new{
 	dir = 1
 	},
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/checker,
 /area/mine/laborcamp)
 "If" = (
@@ -6220,6 +6248,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
@@ -7682,6 +7711,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/effect/spawner/random/trash/graffiti,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
@@ -8113,6 +8143,7 @@
 /obj/effect/turf_decal/siding/wideplating_new{
 	dir = 1
 	},
+/obj/effect/landmark/labor_camp_warp,
 /turf/open/floor/iron/checker,
 /area/mine/laborcamp)
 "XA" = (
@@ -22850,7 +22881,7 @@ aj
 aj
 aj
 aj
-aj
+oR
 aj
 pU
 pU
@@ -23622,7 +23653,7 @@ aj
 aj
 aj
 aj
-aj
+oR
 aj
 aj
 pU
@@ -24138,7 +24169,7 @@ aj
 aj
 aj
 aj
-aj
+oR
 aj
 eR
 Iy
@@ -24911,7 +24942,7 @@ pU
 pU
 pU
 aj
-aj
+oR
 aj
 uU
 uU
@@ -25187,7 +25218,7 @@ HZ
 oI
 Te
 aj
-aj
+oR
 pU
 pU
 uU
@@ -27740,7 +27771,7 @@ mc
 Kz
 pU
 aj
-aj
+oR
 aj
 Zt
 nI
@@ -27752,7 +27783,7 @@ PG
 Zt
 ee
 hr
-hr
+hX
 Je
 hx
 uI
@@ -28770,7 +28801,7 @@ pU
 ad
 ad
 pU
-aj
+oR
 aj
 rX
 rX
@@ -29287,7 +29318,7 @@ pU
 aj
 aj
 aj
-aj
+oR
 aj
 aj
 kg
