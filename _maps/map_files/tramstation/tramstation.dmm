@@ -11227,7 +11227,6 @@
 	},
 /area/station/command/bridge)
 "cOo" = (
-/obj/machinery/vending/sustenance,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},

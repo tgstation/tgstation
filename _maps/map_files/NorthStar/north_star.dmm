@@ -20950,9 +20950,6 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/gulag_item_reclaimer{
-	pixel_y = 24
-	},
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
 "fwb" = (
@@ -44245,7 +44242,6 @@
 /area/station/maintenance/floor1/port/fore)
 "lum" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/sustenance,
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron/dark/side{
 	dir = 9
