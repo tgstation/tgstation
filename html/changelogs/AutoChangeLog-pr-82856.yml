@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - bugfix: "brimbeams no longer make a cog appear above the mob"
