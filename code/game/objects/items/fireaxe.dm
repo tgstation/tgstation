@@ -86,3 +86,13 @@
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
 	usesound = 'sound/items/crowbar.ogg'
+
+//boarding axe
+/obj/item/fireaxe/boardingaxe
+	icon_state = "boarding_axe0"
+	base_icon_state = "boarding_axe"
+	name = "boarding axe"
+	desc = "A hulking cleaver that feels like a burden just looking at it. Seems excellent at halving obstacles like windows, airlocks, barricades and people."
+	force_unwielded = 5
+	force_wielded = 30
+	demolition_mod = 3

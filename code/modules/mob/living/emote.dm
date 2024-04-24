@@ -67,6 +67,15 @@
 		var/mob/living/L = user
 		L.Unconscious(40)
 
+/datum/emote/living/cough
+	key = "cough"
+	key_third_person = "coughs"
+	message = "coughs!"
+	message_mime = "acts out an exaggerated cough!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_RUNECHAT
+
+/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
+	return !HAS_TRAIT(user, TRAIT_SOOTHED_THROAT) && ..()
 
 /datum/emote/living/dance
 	key = "dance"

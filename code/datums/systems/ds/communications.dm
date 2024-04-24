@@ -2,9 +2,8 @@
 #define COMMUNICATION_COOLDOWN_AI (30 SECONDS)
 #define COMMUNICATION_COOLDOWN_MEETING (5 MINUTES)
 
-SUBSYSTEM_DEF(communications)
+DATASYSTEM_DEF(communications)
 	name = "Communications"
-	flags = SS_NO_INIT | SS_NO_FIRE
 
 	COOLDOWN_DECLARE(silicon_message_cooldown)
 	COOLDOWN_DECLARE(nonsilicon_message_cooldown)
@@ -21,7 +20,7 @@ SUBSYSTEM_DEF(communications)
 	/// The location where the special xenomorph egg was planted
 	var/area/captivity_area
 
-/datum/controller/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
+/datum/system/communications/proc/can_announce(mob/living/user, is_silicon)
 	if(is_silicon && COOLDOWN_FINISHED(src, silicon_message_cooldown))
 		return TRUE
 	else if(!is_silicon && COOLDOWN_FINISHED(src, nonsilicon_message_cooldown))
@@ -29,7 +28,7 @@ SUBSYSTEM_DEF(communications)
 	else
 		return FALSE
 
-/datum/controller/subsystem/communications/proc/make_announcement(mob/living/user, is_silicon, input, syndicate, list/players)
+/datum/system/communications/proc/make_announcement(mob/living/user, is_silicon, input, syndicate, list/players)
 	if(!can_announce(user, is_silicon))
 		return FALSE
 	if(is_silicon)
@@ -45,7 +44,7 @@ SUBSYSTEM_DEF(communications)
 	user.log_talk(input, LOG_SAY, tag="priority announcement")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has made a priority announcement.")
 
-/datum/controller/subsystem/communications/proc/send_message(datum/comm_message/sending,print = TRUE,unique = FALSE)
+/datum/system/communications/proc/send_message(datum/comm_message/sending,print = TRUE,unique = FALSE)
 	for(var/obj/machinery/computer/communications/C in GLOB.shuttle_caller_list)
 		if(!(C.machine_stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 			if(unique)
