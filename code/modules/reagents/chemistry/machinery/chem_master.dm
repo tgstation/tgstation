@@ -267,6 +267,7 @@
 /obj/machinery/chem_master/ui_static_data(mob/user)
 	var/list/data = list()
 
+	data["maxPrintable"] = MAX_CONTAINER_PRINT_AMOUNT
 	data["categories"] = list()
 	for(var/category in printable_containers)
 		//make the category
@@ -296,7 +297,6 @@
 	.["isPrinting"] = is_printing
 	.["printingProgress"] = printing_progress
 	.["printingTotal"] = printing_total
-	.["maxPrintable"] = MAX_CONTAINER_PRINT_AMOUNT
 
 	//contents of source beaker
 	var/list/beaker_data = null
