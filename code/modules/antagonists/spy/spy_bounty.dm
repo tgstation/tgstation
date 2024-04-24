@@ -418,7 +418,7 @@
 		/obj/machinery/computer/camera_advanced/xenobio,
 		/obj/machinery/computer/cargo, // This includes request-only ones in the public lobby
 		/obj/machinery/computer/crew,
-		/obj/machinery/computer/prisoner/management,
+		/obj/machinery/computer/prisoner_management,
 		/obj/machinery/computer/rdconsole,
 		/obj/machinery/computer/records/security,
 		/obj/machinery/computer/scan_consolenew,

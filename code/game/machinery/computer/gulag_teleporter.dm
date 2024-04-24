@@ -40,9 +40,13 @@
 	data["teleporter_lock"] = teleporter.locked
 	data["teleporter_open"] = teleporter.state_open
 	data["processing"] = teleporter.processing
+
 	if(teleporter.occupant)
 		data["occupant"] = teleporter.occupant.name
-		data["wanted_status"] = get_wanted_status(teleporter.occupant)
+
+		var/datum/record/crew/record = teleporter.get_occupant_record()
+		if(record)
+			data["wanted_status"] = record.wanted_status
 
 	return data
 
@@ -87,13 +91,13 @@
 
 
 /// Gets wanted status of the teleporter occupant.
-/obj/machinery/computer/gulag_teleporter_computer/proc/get_wanted_status(mob/prisoner)
+/obj/machinery/computer/gulag_teleporter_computer/proc/get_record(mob/prisoner) as /datum/record/crew
 	if(!ishuman(prisoner) || isnull(GLOB.manifest.general))
 		return
 
 	for(var/datum/record/crew/record as anything in GLOB.manifest.general)
 		if(record.name == prisoner.name)
-			return record.wanted_status
+			return record
 
 
 /// Resets the teleporter ref if needed.

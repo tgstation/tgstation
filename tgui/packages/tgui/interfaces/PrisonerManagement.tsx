@@ -15,12 +15,6 @@ import { Window } from '../layouts';
 
 type byondRef = string;
 
-type IDInfo = {
-  name: string;
-  points: number;
-  goal: number;
-};
-
 type DMButton = {
   name?: string;
   icon?: string;
@@ -39,7 +33,6 @@ type ImplantInfo = {
 
 type Data = {
   authorized: BooleanLike;
-  inserted_id: IDInfo | null;
   implants: ImplantInfo[];
 };
 
@@ -143,67 +136,11 @@ const AllImplantDisplay = (props: { implants: ImplantInfo[] }) => {
   );
 };
 
-const IdShowcase = (props: { id: IDInfo | null }) => {
-  const { act } = useBackend<IDInfo>();
-  const { id } = props;
-
-  return (
-    <Stack fill vertical>
-      <Stack.Item>
-        <LabeledList>
-          {id ? (
-            <>
-              <LabeledList.Item label="ID">
-                <Button onClick={() => act('eject_id')} icon="eject" mr={1} />
-                {id.name}
-              </LabeledList.Item>
-              <LabeledList.Item label="Points">
-                <Button
-                  onClick={() => act('reset_id')}
-                  icon="times"
-                  color="bad"
-                  mr={1}
-                />
-                {id.points}
-              </LabeledList.Item>
-              <LabeledList.Item label="Goal">
-                <Button
-                  onClick={() => act('set_id_goal')}
-                  icon="check"
-                  mr={1}
-                />
-                {id.goal}
-              </LabeledList.Item>
-            </>
-          ) : (
-            <LabeledList.Item label="ID">
-              <Button onClick={() => act('insert_id')}>No ID Inserted</Button>
-            </LabeledList.Item>
-          )}
-        </LabeledList>
-      </Stack.Item>
-      {!!id && (
-        <Stack.Item>
-          <NoticeBox>
-            Space Law recommends quotas of 100 points per minute they would
-            normally serve in the brig.
-          </NoticeBox>
-        </Stack.Item>
-      )}
-    </Stack>
-  );
-};
-
 const ManagementConsole = () => {
   const { act, data } = useBackend<Data>();
 
   return (
     <Stack fill vertical>
-      <Stack.Item>
-        <Section title="ID Management">
-          <IdShowcase id={data.inserted_id} />
-        </Section>
-      </Stack.Item>
       <Stack.Item grow>
         <Section title="Security Implants" scrollable fill>
           <AllImplantDisplay implants={data.implants} />

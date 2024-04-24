@@ -18,7 +18,7 @@
 		<b>Function:</b> Acts as a teleportation beacon that can be tracked by any standard bluespace transponder. \
 		Using this, you can teleport directly to whoever has this implant inside of them."
 
-/obj/item/implant/beacon/is_shown_on_console(obj/machinery/computer/prisoner/management/console)
+/obj/item/implant/beacon/is_shown_on_console(obj/machinery/computer/prisoner_management/console)
 	return TRUE
 
 /obj/item/implant/beacon/get_management_console_data()

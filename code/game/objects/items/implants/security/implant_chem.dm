@@ -21,7 +21,7 @@
 		Can only be loaded while still in its original case.<BR> \
 		<b>Integrity:</b> Implant will last so long as the subject is alive, breaking down and releasing all contents on death."
 
-/obj/item/implant/chem/is_shown_on_console(obj/machinery/computer/prisoner/management/console)
+/obj/item/implant/chem/is_shown_on_console(obj/machinery/computer/prisoner_management/console)
 	return is_valid_z_level(get_turf(console), get_turf(imp_in))
 
 /obj/item/implant/chem/get_management_console_data()
@@ -40,7 +40,7 @@
 		))
 	return buttons
 
-/obj/item/implant/chem/handle_management_console_action(mob/user, list/params, obj/machinery/computer/prisoner/management/console)
+/obj/item/implant/chem/handle_management_console_action(mob/user, list/params, obj/machinery/computer/prisoner_management/console)
 	. = ..()
 	if(.)
 		return

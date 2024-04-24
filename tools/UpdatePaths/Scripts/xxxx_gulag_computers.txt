@@ -1,0 +1,2 @@
+/obj/machinery/computer/prisoner/gulag_teleporter : /obj/machinery/computer/gulag_teleporter{@OLD}
+/obj/machinery/computer/prisoner/management : /obj/machinery/computer/prisoner_management{@OLD}

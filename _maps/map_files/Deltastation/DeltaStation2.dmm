@@ -1183,7 +1183,7 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "aod" = (
-/obj/machinery/computer/prisoner/management,
+/obj/machinery/computer/prisoner_management,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
@@ -36157,7 +36157,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "iYq" = (
-/obj/machinery/computer/prisoner/management{
+/obj/machinery/computer/prisoner_management{
 	dir = 4
 	},
 /obj/machinery/status_display/evac/directional/west,
@@ -60749,7 +60749,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/theater/abandoned)
 "pkX" = (
-/obj/machinery/computer/prisoner/management{
+/obj/machinery/computer/prisoner_management{
 	dir = 8
 	},
 /obj/machinery/camera/directional/east{
@@ -93703,7 +93703,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "xtj" = (
-/obj/machinery/computer/prisoner/management{
+/obj/machinery/computer/prisoner_management{
 	dir = 8
 	},
 /turf/open/floor/iron/grimy,

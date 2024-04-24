@@ -152,7 +152,7 @@
 
 /// Determines if the implant is visible on the implant management console.
 /// Note that this would only ever be called on implants currently inserted into a mob.
-/obj/item/implant/proc/is_shown_on_console(obj/machinery/computer/prisoner/management/console)
+/obj/item/implant/proc/is_shown_on_console(obj/machinery/computer/prisoner_management/console)
 	return FALSE
 
 /**
@@ -200,7 +200,7 @@
  * (which should correspond to a button returned by get_management_console_buttons)
  * * console - the console the button was clicked on
  */
-/obj/item/implant/proc/handle_management_console_action(mob/user, list/params, obj/machinery/computer/prisoner/management/console)
+/obj/item/implant/proc/handle_management_console_action(mob/user, list/params, obj/machinery/computer/prisoner_management/console)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(params["implant_action"] == "self_destruct")

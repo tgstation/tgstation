@@ -1270,10 +1270,6 @@
 
 	wildcard_slots = WILDCARD_LIMIT_PRISONER
 
-	/// Number of gulag points required to earn freedom.
-	var/goal = 0
-	/// Number of gulag points earned.
-	var/points = 0
 	/// If the card has a timer set on it for temporary stay.
 	var/timed = FALSE
 	/// Time to assign to the card when they pass through the security gate.
@@ -1326,8 +1322,6 @@
 		say("Sentence time has been served. Thank you for your cooperation in our corporate rehabilitation program!")
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/card/id/advanced/prisoner/attack_self(mob/user)
-	to_chat(usr, span_notice("You have accumulated [points] out of the [goal] points you need for freedom."))
 
 /obj/item/card/id/advanced/prisoner/one
 	name = "Prisoner #13-001"

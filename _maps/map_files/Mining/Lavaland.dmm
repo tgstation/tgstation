@@ -1519,7 +1519,7 @@
 /turf/open/floor/plating,
 /area/mine/maintenance/living/north)
 "ji" = (
-/obj/machinery/computer/prisoner/management,
+/obj/machinery/computer/prisoner_management,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5

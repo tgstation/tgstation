@@ -459,7 +459,7 @@
 /obj/item/circuitboard/computer/prisoner
 	name = "Prisoner Management Console"
 	greyscale_colors = CIRCUIT_COLOR_SECURITY
-	build_path = /obj/machinery/computer/prisoner/management
+	build_path = /obj/machinery/computer/prisoner_management
 
 /obj/item/circuitboard/computer/secure_data
 	name = "Security Records Console"

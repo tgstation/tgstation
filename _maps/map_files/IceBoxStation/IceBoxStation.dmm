@@ -15598,7 +15598,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "eGA" = (
-/obj/machinery/computer/prisoner/management{
+/obj/machinery/computer/prisoner_management{
 	dir = 1
 	},
 /obj/machinery/airalarm/directional/south,
@@ -19661,7 +19661,7 @@
 /area/station/commons/vacant_room/commissary)
 "fXy" = (
 /obj/structure/cable,
-/obj/machinery/computer/prisoner/management,
+/obj/machinery/computer/prisoner_management,
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
@@ -54683,7 +54683,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "qHD" = (
-/obj/machinery/computer/prisoner/management,
+/obj/machinery/computer/prisoner_management,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},

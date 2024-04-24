@@ -1,33 +1,28 @@
 /// List of all implants currently implanted into a mob
 GLOBAL_LIST_EMPTY_TYPED(tracked_implants, /obj/item/implant)
 
-/obj/machinery/computer/prisoner/management
+/obj/machinery/computer/prisoner_management
 	name = "prisoner management console"
-	desc = "Used to modify prisoner IDs, as well as manage security implants placed inside convicts and parolees."
+	desc = "Used to manage security implants placed inside convicts and parolees."
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_BRIG)
 	light_color = COLOR_SOFT_RED
-	circuit = /obj/item/circuitboard/computer/prisoner
+	circuit = /obj/item/circuitboard/computer
 
-/obj/machinery/computer/prisoner/management/ui_interact(mob/user, datum/tgui/ui)
+
+/obj/machinery/computer/prisoner_management/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "PrisonerManagement")
 		ui.open()
 
-/obj/machinery/computer/prisoner/management/ui_data(mob/user)
+
+/obj/machinery/computer/prisoner_management/ui_data(mob/user)
 	var/list/data = list()
 
 	data["authorized"] = (authenticated && isliving(user)) || isAdminGhostAI(user) || issilicon(user)
-	data["inserted_id"] = null
-	if(!isnull(contained_id))
-		data["inserted_id"] = list(
-			"name" = contained_id.name,
-			"points" = contained_id.points,
-			"goal" = contained_id.goal,
-		)
 
 	var/list/implants = list()
 	for(var/obj/item/implant/implant as anything in GLOB.tracked_implants)
@@ -43,7 +38,8 @@ GLOBAL_LIST_EMPTY_TYPED(tracked_implants, /obj/item/implant)
 
 	return data
 
-/obj/machinery/computer/prisoner/management/ui_act(action, list/params)
+
+/obj/machinery/computer/prisoner_management/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
@@ -66,28 +62,6 @@ GLOBAL_LIST_EMPTY_TYPED(tracked_implants, /obj/item/implant)
 		if("logout")
 			authenticated = FALSE
 			playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
-			return TRUE
-
-		if("insert_id")
-			id_insert(usr, usr.get_active_held_item())
-			return TRUE
-
-		if("eject_id")
-			id_eject(usr)
-			return TRUE
-
-		if("set_id_goal")
-			var/num = tgui_input_number(usr, "Enter the prisoner's goal", "Prisoner Management", 100, 1000, 1)
-			if(!isnum(num) || QDELETED(src) || QDELETED(contained_id) || QDELETED(usr))
-				return TRUE
-			if(!is_operational || !usr.can_perform_action(src, NEED_DEXTERITY|ALLOW_SILICON_REACH))
-				return TRUE
-
-			contained_id.goal = num
-			return TRUE
-
-		if("reset_id")
-			contained_id.points = 0
 			return TRUE
 
 		if("handle_implant")

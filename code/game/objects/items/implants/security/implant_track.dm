@@ -20,7 +20,7 @@
 		a malfunction occurs thereby securing safety of subject. The implant will melt and \
 		disintegrate into bio-safe elements.<BR>"
 
-/obj/item/implant/tracking/is_shown_on_console(obj/machinery/computer/prisoner/management/console)
+/obj/item/implant/tracking/is_shown_on_console(obj/machinery/computer/prisoner_management/console)
 	if(imp_in.stat == DEAD && imp_in.timeofdeath + lifespan_postmortem < world.time)
 		return FALSE
 	if(!is_valid_z_level(get_turf(console), get_turf(imp_in)))
@@ -42,7 +42,7 @@
 	))
 	return buttons
 
-/obj/item/implant/tracking/handle_management_console_action(mob/user, list/params, obj/machinery/computer/prisoner/management/console)
+/obj/item/implant/tracking/handle_management_console_action(mob/user, list/params, obj/machinery/computer/prisoner_management/console)
 	. = ..()
 	if(.)
 		return

@@ -9634,7 +9634,7 @@
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 1
 	},
-/obj/machinery/computer/prisoner/management{
+/obj/machinery/computer/prisoner_management{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/cobweb,
@@ -15599,7 +15599,7 @@
 /obj/effect/turf_decal/tile/dark_red{
 	dir = 1
 	},
-/obj/machinery/computer/prisoner/management{
+/obj/machinery/computer/prisoner_management{
 	dir = 8
 	},
 /obj/machinery/camera/autoname/directional/south,
@@ -48010,7 +48010,7 @@
 /area/space/nearstation)
 "qwq" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
-/obj/machinery/computer/prisoner/management{
+/obj/machinery/computer/prisoner_management{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -55907,7 +55907,7 @@
 /turf/open/floor/iron/dark/small,
 /area/station/medical/medbay/central)
 "sCu" = (
-/obj/machinery/computer/prisoner/management{
+/obj/machinery/computer/prisoner_management{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,

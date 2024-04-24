@@ -639,7 +639,6 @@
 		/obj/machinery/vending/security = "SecTech",
 		/obj/machinery/vending/snack = "Getmore Chocolate Corp",
 		/obj/machinery/vending/sovietsoda = "BODA",
-		/obj/machinery/vending/sustenance = "Sustenance Vendor",
 		/obj/machinery/vending/tool = "YouTool",
 		/obj/machinery/vending/wallmed = "NanoMed",
 		/obj/machinery/vending/wardrobe/atmos_wardrobe = "AtmosDrobe",

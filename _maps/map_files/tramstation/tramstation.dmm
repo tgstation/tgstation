@@ -11215,7 +11215,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
 "cOl" = (
-/obj/machinery/computer/prisoner/management{
+/obj/machinery/computer/prisoner_management{
 	dir = 8
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -24238,7 +24238,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/machinery/computer/prisoner/management,
+/obj/machinery/computer/prisoner_management,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
@@ -53740,7 +53740,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
-/obj/machinery/computer/prisoner/management{
+/obj/machinery/computer/prisoner_management{
 	dir = 4
 	},
 /obj/machinery/requests_console/directional/west{

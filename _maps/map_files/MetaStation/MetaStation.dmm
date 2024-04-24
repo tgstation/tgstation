@@ -937,7 +937,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "asM" = (
-/obj/machinery/computer/prisoner/management{
+/obj/machinery/computer/prisoner_management{
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/west,
@@ -43969,7 +43969,7 @@
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "pMy" = (
-/obj/machinery/computer/prisoner/management{
+/obj/machinery/computer/prisoner_management{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/dark_red/filled/line{

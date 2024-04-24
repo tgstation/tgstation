@@ -63,8 +63,7 @@
 	name = "Imported Vending Machines"
 	desc = "Vending machines famous in other parts of the galaxy."
 	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/item/vending_refill/sustenance,
-					/obj/item/vending_refill/robotics,
+	contains = list(/obj/item/vending_refill/robotics,
 					/obj/item/vending_refill/sovietsoda,
 					/obj/item/vending_refill/engineering,
 				)

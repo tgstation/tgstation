@@ -139,9 +139,32 @@
 	open_machine()
 
 
+/// Handler for the prisoner making noises (how grim)
+/obj/machinery/gulag_teleporter/proc/do_emote()
+	if(!is_operational || QDELETED(occupant) || occupant.loc != src)
+		return
+
+	var/mob/living/victim = occupant
+	if(!isliving(victim))
+		return
+
+	victim.emote(prob(95) ? "scream" : "laugh")
+
+
+/// Gets wanted status of the teleporter occupant.
+/obj/machinery/gulag_teleporter/proc/get_occupant_record() as /datum/record/crew
+	if(!ishuman(occupant) || isnull(GLOB.manifest.general))
+		return
+
+	for(var/datum/record/crew/record as anything in GLOB.manifest.general)
+		if(record.name == occupant.name)
+			return record
+
+
 /// Shake a bit and call process_occupant() after a delay.
 /obj/machinery/gulag_teleporter/proc/handle_prisoner()
-	if(!ishuman(occupant))
+	if(!isliving(occupant))
+		reset()
 		return
 
 	locked = TRUE
@@ -153,10 +176,10 @@
 	playsound(src, 'sound/machines/juicer.ogg', 50, TRUE)
 	victim.Paralyze(7)
 	Shake(duration = BRRR_TIME)
-	if(prob(100))
-		addtimer((CALLBACK(src, PROC_REF(do_emote))), rand(1 SECONDS, 3.5 SECONDS), TIMER_DELETE_ME|TIMER_UNIQUE)
+	if(prob(10))
+		addtimer((CALLBACK(src, PROC_REF(do_emote))), rand(1 SECONDS, 3.5 SECONDS), TIMER_DELETE_ME|TIMER_UNIQUE|TIMER_STOPPABLE)
 
-	addtimer(CALLBACK(src, PROC_REF(process_occupant)), BRRR_TIME, TIMER_DELETE_ME|TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(process_occupant)), BRRR_TIME, TIMER_DELETE_ME|TIMER_UNIQUE|TIMER_STOPPABLE)
 
 
 /// Teleport the occupant to "the labor camp".
@@ -169,6 +192,9 @@
 		return
 
 	var/mob/living/victim = occupant
+
+	var/datum/record/crew/record = get_occupant_record()
+	record?.wanted_status = WANTED_PRISONER
 
 	victim.investigate_log("has been teleported at [src] to the labor camp.", INVESTIGATE_DEATHS)
 	victim.drop_everything()
@@ -186,24 +212,12 @@
 	reset()
 
 
-/// Handler for the prisoner making noises (how grim)
-/obj/machinery/gulag_teleporter/proc/do_emote()
-	if(!is_operational || QDELETED(occupant) || occupant.loc != src)
-		return
-
-	var/mob/living/victim = occupant
-	if(!isliving(victim))
-		return
-
-	victim.emote(prob(95) ? "scream" : "laugh")
-
-
 /// Reset the machine to its default state.
 /obj/machinery/gulag_teleporter/proc/reset()
 	update_use_power(IDLE_POWER_USE)
 	locked = FALSE
-	open_machine()
 	processing = FALSE
+	open_machine()
 
 
 /// Toggles the door open or closed.
@@ -217,7 +231,7 @@
 		return
 
 	if(locked)
-		balloon_alert(user, "locked")
+		balloon_alert(viewer, "locked")
 		return
 
 	open_machine()
