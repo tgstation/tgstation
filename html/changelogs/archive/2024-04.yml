@@ -263,3 +263,8 @@
   - qol: KC13 (which doesnt exist) now has some silver.
   KnigTheThrasher:
   - bugfix: fixed tram slum bar failing tests (again)
+2024-04-24:
+  DimWhat:
+  - bugfix: Fixed alternate clothing styles (alt clicking) not working on lizards
+  lmenvs:
+  - rscadd: Adds Quilark's Syndie tier donator items
