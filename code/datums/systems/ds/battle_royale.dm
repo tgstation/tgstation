@@ -4,7 +4,7 @@ DATASYSTEM_DEF(battle_royale)
 	/// List of battle royale datums currently running
 	var/list/active_battles
 	/// Static list of available regions that are considered the same department
-	var/static/list/regions = list(list(
+	var/list/regions = list(list(
 		"Medical Bay" = list(
 			/area/station/command/heads_quarters/cmo,
 			/area/station/medical,
