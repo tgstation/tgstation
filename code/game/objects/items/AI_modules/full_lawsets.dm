@@ -22,6 +22,7 @@
  * /obj/item/ai_module/core/full/nutimov
  * /obj/item/ai_module/core/full/dungeon_master
  * /obj/item/ai_module/core/full/painter
+ * /obj/item/ai_module/core/full/yesman
 **/
 
 /* When adding a new lawset please make sure you add it to the following locations:
@@ -161,3 +162,8 @@
 /obj/item/ai_module/core/full/painter
 	name = "'Painter' Core AI Module"
 	law_id = "painter"
+
+/obj/item/ai_module/core/full/yesman
+	name = "'Y.E.S.M.A.N.' Core AI Module"
+	law_id = "yesman"
+
