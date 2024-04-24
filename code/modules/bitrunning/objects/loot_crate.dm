@@ -64,6 +64,9 @@
 		new /obj/item/stack/ore/diamond(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_DIAMOND))
 		new /obj/item/stack/ore/bluespace_crystal(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_BLUESPACE_CRYSTAL))
 
+	if(reward_points > 1 && LAZYLEN(SSresearch.techweb_nodes_experimental) && prob(min(100, reward_points * 10)))
+		new /obj/item/disk/design_disk/bepis/remove_tech(src)
+
 /// Handles generating random numbers & calculating loot totals
 /obj/structure/closet/crate/secure/bitrunning/decrypted/proc/calculate_loot(reward_points, rewards_multiplier, ore_multiplier)
 	var/base = rewards_multiplier + reward_points
