@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Coughing will now no longer print to chat, IE, it is runechat only. If you have runechat emotes disabled, however, it will still print to chat."
-  - qol: "Snapping now has a visual component."
-  - bugfix: "All emotes are no longer considered audible, meaning blind people go back to not being able to see people do flips and jumps"
-  - bugfix: "However, blind people are now told when they do a visible emote like flipping (because they can, obviously, feel themselves flipping). Likewise, deaf people are told when they do some audible emotes, like coughing or screaming."

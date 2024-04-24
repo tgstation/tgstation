@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Only brute damage causes brain damage when applied to the forehead, rather than all damage types"
