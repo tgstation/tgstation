@@ -91,7 +91,6 @@
 	. = ..()
 	// adjusted = out of the way = smaller = can fit in boxes
 	update_weight_class(up ? WEIGHT_CLASS_SMALL : WEIGHT_CLASS_NORMAL)
-	inhand_icon_state = up ? "[initial(inhand_icon_state)]_up" : initial(inhand_icon_state)
 
 /obj/item/clothing/mask/gas/explorer/update_icon_state()
 	. = ..()
