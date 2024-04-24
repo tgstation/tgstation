@@ -381,10 +381,19 @@ SUBSYSTEM_DEF(tts220)
 		if(speaking_mob.client)
 			output.channel = get_local_channel_by_owner(speaker)
 			output.wait = TRUE
-	output = listener.playsound_local(turf_source, vol = output.volume, channel = output.channel, sound_to_use = output, wait = output.wait)
-
-	if(!output || output.volume <= 0)
-		return
+	listener.playsound_local(
+		turf_source,
+		vol = output.volume,
+		falloff_exponent = SOUND_FALLOFF_EXPONENT,
+		channel = output.channel,
+		pressure_affected = TRUE,
+		sound_to_use = output,
+		max_distance = SOUND_RANGE,
+		falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE,
+		distance_multiplier = 1,
+		use_reverb = TRUE,
+		wait = output.wait
+	)
 
 	play_sfx_if_exists(listener, postSFX, output)
 
@@ -405,7 +414,13 @@ SUBSYSTEM_DEF(tts220)
 	if(isnull(channel))
 		channel = SSsounds.reserve_sound_channel()
 		tts_local_channels_by_owner[owner] = channel
+		RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(clear_channel))
 	return channel
+
+/datum/controller/subsystem/tts220/proc/clear_channel(owner)
+	SIGNAL_HANDLER
+
+	tts_local_channels_by_owner -= owner
 
 /datum/controller/subsystem/tts220/proc/cleanup_tts_file(filename)
 	fdel(filename)
