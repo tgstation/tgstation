@@ -27270,16 +27270,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/mix)
-"isc" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/mineral/labor_points_checker{
-	pixel_y = 25
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/mine/laborcamp)
 "ise" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
@@ -29068,10 +29058,6 @@
 /obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
-"iVN" = (
-/obj/machinery/vending/sustenance,
-/turf/open/floor/iron/dark/textured,
-/area/station/security/prison)
 "iVT" = (
 /obj/machinery/computer/camera_advanced/xenobio,
 /turf/open/floor/iron,
@@ -33652,11 +33638,6 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/station/engineering/atmos)
-"kqs" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/sustenance/labor_camp,
-/turf/open/floor/iron,
-/area/mine/laborcamp)
 "kqw" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/tile/red{
@@ -58707,10 +58688,6 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
-"rTV" = (
-/obj/structure/gulag_beacon,
-/turf/open/floor/iron,
-/area/mine/laborcamp)
 "rTX" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Labor Shuttle Dock"
@@ -73032,12 +73009,6 @@
 /obj/structure/sign/warning/cold_temp,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
-"wug" = (
-/obj/machinery/gulag_item_reclaimer{
-	pixel_y = 24
-	},
-/turf/open/floor/carpet,
-/area/station/security/processing)
 "wun" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -106394,7 +106365,7 @@ xhK
 ikb
 swf
 vVH
-iVN
+bol
 wPg
 fHg
 tVf
@@ -112283,7 +112254,7 @@ bJx
 njJ
 ciN
 njJ
-rTV
+hDK
 njJ
 blk
 vjh
@@ -113304,7 +113275,7 @@ vjh
 aYQ
 bLL
 njJ
-kqs
+dqx
 dqx
 rVX
 dqx
@@ -116133,7 +116104,7 @@ dqx
 kpH
 dqx
 njJ
-isc
+rVX
 dqx
 njJ
 bsd
@@ -243900,7 +243871,7 @@ kYI
 vyh
 ufm
 eyb
-wug
+uLF
 uLF
 nSH
 hqi

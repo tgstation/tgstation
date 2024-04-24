@@ -398,11 +398,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
-"aht" = (
-/obj/machinery/vending/sustenance,
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/turf/open/floor/iron/white,
-/area/station/security/prison/mess)
 "ahD" = (
 /obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
@@ -88278,7 +88273,7 @@ aXa
 jMx
 azZ
 fdl
-aht
+oZL
 ivu
 jJl
 iAR
