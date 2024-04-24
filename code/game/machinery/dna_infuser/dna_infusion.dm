@@ -2,23 +2,23 @@
 ///returns a boolean whether a machine occupant can be infused
 /atom/movable/proc/can_infuse(mob/feedback_target)
 	if(feedback_target)
-		feedback_target.balloon_alert(feedback_target, "no dna!")
+		balloon_alert(feedback_target, "no dna!")
 	return FALSE
 
 /mob/living/can_infuse(mob/feedback_target)
 	if(feedback_target)
-		feedback_target.balloon_alert(feedback_target, "dna too simple!")
+		balloon_alert(feedback_target, "dna too simple!")
 	return FALSE
 
 /mob/living/carbon/human/can_infuse(mob/feedback_target)
 	// Checked by can_mutate but explicit feedback for this issue is good
 	if(HAS_TRAIT(src, TRAIT_BADDNA))
 		if(feedback_target)
-			feedback_target.balloon_alert(feedback_target, "dna is corrupted!")
+			balloon_alert(feedback_target, "dna is corrupted!")
 		return FALSE
 	if(!can_mutate())
 		if(feedback_target)
-			feedback_target.balloon_alert(feedback_target, "dna is missing!")
+			balloon_alert(feedback_target, "dna is missing!")
 		return FALSE
 	return TRUE
 
