@@ -93833,7 +93833,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
 "xvM" = (
-/obj/machinery/computer/prisoner/gulag_teleporter_computer{
+/obj/machinery/computer/gulag_teleporter_computer{
 	dir = 1
 	},
 /obj/structure/cable,

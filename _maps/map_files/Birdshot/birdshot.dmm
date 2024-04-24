@@ -30690,7 +30690,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/autoname/directional/south,
 /obj/structure/cable,
-/obj/machinery/computer/prisoner/gulag_teleporter_computer{
+/obj/machinery/computer/gulag_teleporter_computer{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,

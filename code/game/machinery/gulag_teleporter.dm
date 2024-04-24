@@ -1,5 +1,6 @@
 
 #define BREAKOUT_MESSAGE_DELAY 5 SECONDS
+#define BRRR_TIME 5 SECONDS
 
 /obj/machinery/gulag_teleporter
 	name = "labor camp teleporter"
@@ -35,10 +36,17 @@
 /obj/machinery/gulag_teleporter/interact(mob/user)
 	. = ..()
 
-	if(locked)
-		balloon_alert(user, "locked")
-		return
-	toggle_open()
+	toggle_open(user)
+
+
+/obj/machinery/gulag_teleporter/open_machine(drop, density_to_set)
+	. = ..()
+	playsound(src, 'sound/machines/door_open.ogg', 50, TRUE)
+
+
+/obj/machinery/gulag_teleporter/close_machine(atom/movable/target, density_to_set)
+	. = ..()
+	playsound(src, 'sound/machines/doorclick.ogg', 50, TRUE)
 
 
 /obj/machinery/gulag_teleporter/attackby(obj/item/tool, mob/user)
@@ -64,7 +72,7 @@
 
 
 /obj/machinery/gulag_teleporter/MouseDrop_T(mob/target, mob/user)
-	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
+	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(src) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
 		return
 
 	close_machine(target)
@@ -122,7 +130,7 @@
 	if(!do_after(user, resist_time, target = src))
 		to_chat(user, span_warning("You failed to break out of [src]."))
 
-	if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
+	if(QDELETED(user) || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 		return
 
 	locked = FALSE
@@ -131,26 +139,10 @@
 	open_machine()
 
 
-/// Opens the machine and sets the state to open.
-/obj/machinery/gulag_teleporter/proc/toggle_open()
-	if(panel_open)
-		to_chat(usr, span_notice("Close the maintenance panel first."))
-		return
-
-	if(state_open)
-		close_machine()
-		return
-
-	if(!locked)
-		open_machine()
-
-
 /// Shake a bit and call process_occupant() after a delay.
-/obj/machinery/gulag_teleporter/proc/handle_prisoner(mob/living/processor)
+/obj/machinery/gulag_teleporter/proc/handle_prisoner()
 	if(!ishuman(occupant))
 		return
-
-	processor.log_message("is teleporting [key_name(occupant)] to the labor camp.", LOG_GAME)
 
 	locked = TRUE
 	processing = TRUE
@@ -158,27 +150,28 @@
 	var/mob/living/victim = occupant
 
 	update_use_power(ACTIVE_POWER_USE)
-	audible_message(span_hear("You hear a loud squelchy grinding sound."))
-	playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/juicer.ogg', 50, TRUE)
+	victim.Paralyze(7)
+	Shake(duration = BRRR_TIME)
+	if(prob(100))
+		addtimer((CALLBACK(src, PROC_REF(do_emote))), rand(1 SECONDS, 3.5 SECONDS), TIMER_DELETE_ME|TIMER_UNIQUE)
 
-	victim.Paralyze(5)
-	Shake(duration = 2 SECONDS)
-
-	if(prob(10))
-		INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob/living, emote), "scream")
-
-	addtimer(CALLBACK(src, PROC_REF(process_occupant)), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(process_occupant)), BRRR_TIME, TIMER_DELETE_ME|TIMER_UNIQUE)
 
 
 /// Teleport the occupant to "the labor camp".
 /obj/machinery/gulag_teleporter/proc/process_occupant()
-	if(!is_operational || QDELETED(occupant) || QDELETED(src))
+	if(QDELETED(src))
+		return
+
+	if(!is_operational || QDELETED(occupant) || occupant.loc != src)
+		reset()
 		return
 
 	var/mob/living/victim = occupant
 
-	victim.drop_all_held_items()
 	victim.investigate_log("has been teleported at [src] to the labor camp.", INVESTIGATE_DEATHS)
+	victim.drop_everything()
 	victim.ghostize()
 	victim.death(TRUE)
 
@@ -190,22 +183,44 @@
 
 	qdel(victim)
 
-	locked = FALSE
-	processing = FALSE
+	reset()
+
+
+/// Handler for the prisoner making noises (how grim)
+/obj/machinery/gulag_teleporter/proc/do_emote()
+	if(!is_operational || QDELETED(occupant) || occupant.loc != src)
+		return
+
+	var/mob/living/victim = occupant
+	if(!isliving(victim))
+		return
+
+	victim.emote(prob(95) ? "scream" : "laugh")
+
+
+/// Reset the machine to its default state.
+/obj/machinery/gulag_teleporter/proc/reset()
 	update_use_power(IDLE_POWER_USE)
-	toggle_open()
+	locked = FALSE
+	open_machine()
+	processing = FALSE
 
 
-/obj/item/circuitboard/machine/gulag_teleporter
-	name = "labor camp teleporter (Machine Board)"
-	build_path = /obj/machinery/gulag_teleporter
-	req_components = list(
-		/obj/item/stack/ore/bluespace_crystal = 2,
-		/datum/stock_part/scanning_module = 1,
-		/obj/item/stock_parts/servo = 1,
-	)
-	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
+/// Toggles the door open or closed.
+/obj/machinery/gulag_teleporter/proc/toggle_open(mob/viewer)
+	if(panel_open)
+		to_chat(usr, span_notice("Close the maintenance panel first."))
+		return
 
+	if(state_open)
+		close_machine()
+		return
+
+	if(locked)
+		balloon_alert(user, "locked")
+		return
+
+	open_machine()
 
 
 #undef BREAKOUT_MESSAGE_DELAY

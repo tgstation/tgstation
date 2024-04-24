@@ -1,13 +1,18 @@
 DATASYSTEM_DEF(security)
 	name = "Security"
 
-	var/total_points = 0
-	var/points_spent = 0
+	/// Points that are available to be spent.
 	var/available_points = 0
-
-	var/warcrimes = 0
+	/// List of criminals apprehended.
 	var/list/datum/weakref/criminals_apprehended = list()
+	/// Points that have been spent on upgrades.
+	var/points_spent = 0
+	/// Total points accumulated by the security department.
+	var/total_points = 0
+	/// Non-antagonist criminals apprehended.
+	var/warcrimes = 0
 
+/// Adds a weakref of the criminal to the list and awards points if the criminal is an antagonist.
 /datum/system/security/proc/add_new_criminal(mob/living/baddie)
 	criminals_apprehended += WEAKREF(baddie)
 

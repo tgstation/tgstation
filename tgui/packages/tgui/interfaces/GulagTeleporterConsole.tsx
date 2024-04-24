@@ -4,6 +4,7 @@ import { useBackend } from '../backend';
 import {
   Box,
   Button,
+  Icon,
   LabeledList,
   NoticeBox,
   Section,
@@ -113,10 +114,12 @@ function SecurityStats(props) {
   return (
     <Section title="Security Stats">
       <LabeledList>
-        <LabeledList.Item label="Available Points">
-          {available_points}
+        <LabeledList.Item color="green" label="Available Points">
+          {available_points} cr <Icon name="coins" color="gold" />
         </LabeledList.Item>
-        <LabeledList.Item label="Total Points">{total_points}</LabeledList.Item>
+        <LabeledList.Item label="Total Points">
+          {total_points} cr
+        </LabeledList.Item>
       </LabeledList>
     </Section>
   );

@@ -1,5 +1,4 @@
-
-/obj/machinery/computer/prisoner/gulag_teleporter_computer
+/obj/machinery/computer/gulag_teleporter_computer
 	name = "labor camp teleporter console"
 	desc = "Used to send criminals to the Labor Camp."
 	icon_screen = "explosive"
@@ -11,13 +10,13 @@
 	var/datum/weakref/teleporter_ref
 
 
-/obj/machinery/computer/prisoner/gulag_teleporter_computer/Initialize(mapload)
+/obj/machinery/computer/gulag_teleporter_computer/Initialize(mapload)
 	. = ..()
 
 	find_teleporter()
 
 
-/obj/machinery/computer/prisoner/gulag_teleporter_computer/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/computer/gulag_teleporter_computer/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
@@ -28,18 +27,18 @@
 		ui.open()
 
 
-/obj/machinery/computer/prisoner/gulag_teleporter_computer/ui_data(mob/user)
+/obj/machinery/computer/gulag_teleporter_computer/ui_data(mob/user)
 	var/list/data = list()
 
-	var/obj/machinery/gulag_teleporter/teleporter = teleporter_ref?.resolve()
-	if(QDELETED(teleporter))
-		teleporter_ref = null
-		return
-
 	data["available_points"] = DSsecurity.available_points
+	data["total_points"] = DSsecurity.total_points
+
+	var/obj/machinery/gulag_teleporter/teleporter = find_teleporter()
+	if(isnull(teleporter))
+		return data
+
 	data["teleporter_lock"] = teleporter.locked
 	data["teleporter_open"] = teleporter.state_open
-	data["total_points"] = DSsecurity.total_points
 	data["processing"] = teleporter.processing
 	if(teleporter.occupant)
 		data["occupant"] = teleporter.occupant.name
@@ -48,30 +47,27 @@
 	return data
 
 
-/obj/machinery/computer/prisoner/gulag_teleporter_computer/ui_act(action, list/params)
+/obj/machinery/computer/gulag_teleporter_computer/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
 
 	if(!allowed(usr))
-		to_chat(usr, span_warning("Access denied."))
+		balloon_alert(usr, "access denied")
+		playsound(src, 'sound/machines/terminal_error.ogg', 50, TRUE)
 		return TRUE
 
 	if(action == "scan_teleporter")
 		find_teleporter()
 		return TRUE
 
-	var/obj/machinery/gulag_teleporter/teleporter = teleporter_ref?.resolve()
-	if(QDELETED(teleporter))
+	var/obj/machinery/gulag_teleporter/teleporter = find_teleporter()
+	if(isnull(teleporter))
 		return FALSE
 
 	switch(action)
 		if("toggle_open")
-			if(teleporter.locked)
-				to_chat(usr, span_alert("The teleporter must be unlocked first."))
-				return
-			teleporter.toggle_open()
-
+			teleporter.toggle_open(usr)
 			return TRUE
 
 		if("toggle_lock")
@@ -83,6 +79,7 @@
 			return TRUE
 
 		if("teleport")
+			usr.log_message("is teleporting [key_name(teleporter.occupant)] to the labor camp.", LOG_GAME)
 			teleporter.handle_prisoner(usr)
 			return TRUE
 
@@ -90,7 +87,7 @@
 
 
 /// Gets wanted status of the teleporter occupant.
-/obj/machinery/computer/prisoner/gulag_teleporter_computer/proc/get_wanted_status(mob/prisoner)
+/obj/machinery/computer/gulag_teleporter_computer/proc/get_wanted_status(mob/prisoner)
 	if(!ishuman(prisoner) || isnull(GLOB.manifest.general))
 		return
 
@@ -100,15 +97,13 @@
 
 
 /// Resets the teleporter ref if needed.
-/obj/machinery/computer/prisoner/gulag_teleporter_computer/proc/find_teleporter()
+/obj/machinery/computer/gulag_teleporter_computer/proc/find_teleporter() as /obj/machinery/gulag_teleporter
 	var/obj/machinery/gulag_teleporter/teleporter = teleporter_ref?.resolve()
 	if(!QDELETED(teleporter))
-		return FALSE
+		return teleporter
 
 	for(var/direction in GLOB.cardinals)
 		teleporter = locate(/obj/machinery/gulag_teleporter, get_step(src, direction))
 		if(teleporter?.is_operational)
 			teleporter_ref = WEAKREF(teleporter)
-
-	return TRUE
-
+			return teleporter

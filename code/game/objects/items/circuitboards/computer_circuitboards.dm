@@ -454,7 +454,7 @@
 /obj/item/circuitboard/computer/gulag_teleporter_console
 	name = "Labor Camp teleporter console"
 	greyscale_colors = CIRCUIT_COLOR_SECURITY
-	build_path = /obj/machinery/computer/prisoner/gulag_teleporter_computer
+	build_path = /obj/machinery/computer/gulag_teleporter_computer
 
 /obj/item/circuitboard/computer/prisoner
 	name = "Prisoner Management Console"

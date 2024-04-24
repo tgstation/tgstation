@@ -18874,7 +18874,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "gWc" = (
-/obj/machinery/computer/prisoner/gulag_teleporter_computer{
+/obj/machinery/computer/gulag_teleporter_computer{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{

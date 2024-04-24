@@ -38044,7 +38044,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "jSt" = (
-/obj/machinery/computer/prisoner/gulag_teleporter_computer,
+/obj/machinery/computer/gulag_teleporter_computer,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
 	},

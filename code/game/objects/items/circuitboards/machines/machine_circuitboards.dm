@@ -1611,3 +1611,13 @@
 		/datum/stock_part/micro_laser/tier2 = 2,
 		/obj/item/stack/sheet/plasteel = 2,
 	)
+
+/obj/item/circuitboard/machine/gulag_teleporter
+	name = "labor camp teleporter (Machine Board)"
+	build_path = /obj/machinery/gulag_teleporter
+	req_components = list(
+		/obj/item/stack/ore/bluespace_crystal = 2,
+		/datum/stock_part/scanning_module = 1,
+		/obj/item/stock_parts/servo = 1,
+	)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
