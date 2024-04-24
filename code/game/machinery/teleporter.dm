@@ -97,15 +97,66 @@
 /obj/machinery/teleport/hub/proc/is_ready()
 	. = !panel_open && !(machine_stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.machine_stat & (BROKEN|NOPOWER))
 
+/obj/machinery/teleport/hub/syndicate
+	///When a painting targets us as their signal, we save them as our return target
+	var/atom/return_target
+	///Internal timer to prevent audio spam.
+	var/next_beep = 0
+
+/obj/machinery/teleport/hub/syndicate/Destroy()
+	if(src in GLOB.active_syndicate_beacons)
+		GLOB.active_syndicate_beacons -= src
+	return ..()
+
 /obj/machinery/teleport/hub/syndicate/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, PAINTING_SET_TARGET, PROC_REF(on_target_set))
+	RegisterSignals(src, list(COMSIG_QDELETING,	COMSIG_MACHINERY_BROKEN, PAINTING_CUT_CONNECTIONS), PROC_REF(remove_connections))
 	var/obj/item/stock_parts/matter_bin/super/super_bin = new(src)
 	LAZYADD(component_parts, super_bin)
 	RefreshParts()
 
+/obj/machinery/teleport/hub/syndicate/Bumped(mob/user)
+	if(!ishuman(user))
+		return //Otherwise the sparks keep making the sound spam
+	if(!IS_TRAITOR(user) || !return_target)
+		if(next_beep <= world.time)
+			next_beep = world.time + (2 SECONDS)
+			playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
+		return
+	do_teleport(user, return_target)
+
+///When a painting sets us as their teleport target, we save them as a reference so we may return to it
+/obj/machinery/teleport/hub/syndicate/proc/on_target_set(datum/source, atom/return_portal)
+	SIGNAL_HANDLER
+	return_target = return_portal
+	update_appearance(UPDATE_ICON)
+
+///Removes any active return_target
+/obj/machinery/teleport/hub/syndicate/proc/remove_connections(datum/source)
+	SIGNAL_HANDLER
+	if(return_target)
+		var/atom/old_return_target = return_target
+		return_target = null
+		SEND_SIGNAL(old_return_target, TELEPORTER_SET_TARGET, src)
+		update_appearance(UPDATE_ICON)
+
 /obj/machinery/teleport/hub/syndicate/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	GLOB.active_syndicate_beacons += src
+	if(!(src in GLOB.active_syndicate_beacons))
+		GLOB.active_syndicate_beacons += src
+		user.balloon_alert(user, "Activated")
+		return
+	GLOB.active_syndicate_beacons -= src
+	user.balloon_alert(user, "De-activated")
+	remove_connections(src)
+
+/obj/machinery/teleport/hub/syndicate/update_icon_state()
+	. = ..()
+	if(return_target)
+		icon_state = "tele1"
+	else
+		icon_state = "tele0"
 
 /obj/machinery/teleport/station
 	name = "teleporter station"

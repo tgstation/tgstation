@@ -462,33 +462,6 @@
 
 #undef BEAM_FADE_TIME
 
-/obj/item/storage/briefcase/launchpad/multiz //Briefcase subtype that allows you to teleport to specific beacons (if they are enabled)
-	w_class = 3
-	///Where our launchpad will teleport us to when we use our "Key"
-	var/teleport_target
-
-/obj/item/storage/briefcase/launchpad/multiz/PopulateContents()
-	new /obj/item/pen/multiz(src)
-	new /obj/item/launchpad_remote/multiz(src, pad)
-
-/obj/item/pen/multiz //Special pen that acts as a key to teleport
-
-/obj/item/storage/briefcase/launchpad/multiz/attackby(obj/item/I, mob/user, params)
-	. = ..()
-	if(istype(I, /obj/item/pen/multiz))
-		pad.doteleport(forced_target = teleport_target)
-
-
-GLOBAL_LIST_EMPTY(active_syndicate_beacons)
-
-/obj/item/launchpad_remote/multiz/ui_interact(mob/user, datum/tgui/ui)
-	var/teleport_target = tgui_input_list(user, "Where to launch to?", "Set Teleporter?", GLOB.active_syndicate_beacons)
-	if(!teleport_target)
-		return
-	var/obj/machinery/launchpad/briefcase/our_pad = pad.resolve()
-	our_pad.set_target(teleport_target)
-
-
 /obj/item/circuit_component/bluespace_launchpad
 	display_name = "Bluespace Launchpad"
 	desc = "Teleports anything to and from any location on the station. Doesn't use actual GPS coordinates, but rather offsets from the launchpad itself. Can only go as far as the launchpad can go, which depends on its parts."
