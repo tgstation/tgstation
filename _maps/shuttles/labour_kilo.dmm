@@ -50,10 +50,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "h" = (
-/obj/machinery/mineral/stacking_unit_console{
-	pixel_x = 30;
-	pixel_y = 30
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -86,17 +82,13 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/labor)
 "k" = (
-/obj/machinery/mineral/stacking_machine/laborstacker{
-	input_dir = 2;
-	output_dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/labor)
 "l" = (
 /obj/effect/turf_decal/stripes/line{
@@ -117,9 +109,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "n" = (
-/obj/machinery/mineral/labor_claim_console{
-	pixel_x = 30
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},

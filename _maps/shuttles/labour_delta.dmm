@@ -43,13 +43,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
-"i" = (
-/obj/machinery/mineral/stacking_unit_console{
-	pixel_x = 30;
-	pixel_y = 30
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/labor)
 "j" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Labor Shuttle Airlock"
@@ -75,12 +68,8 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/labor)
 "m" = (
-/obj/machinery/mineral/stacking_machine/laborstacker{
-	input_dir = 2;
-	output_dir = 1
-	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron/white,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/labor)
 "n" = (
 /obj/effect/turf_decal/stripes/line{
@@ -97,9 +86,6 @@
 /turf/open/floor/iron,
 /area/shuttle/labor)
 "p" = (
-/obj/machinery/mineral/labor_claim_console{
-	pixel_x = 30
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -290,7 +276,7 @@ y
 (4,1,1) = {"
 b
 e
-i
+g
 m
 p
 s
