@@ -15,6 +15,7 @@ import { CRIMESTATUS2COLOR } from './common/StatusToIcon';
 
 type Data = {
   available_points: number;
+  last_bounty: number;
   total_points: number;
 } & Partial<{
   occupant: string;
@@ -26,13 +27,13 @@ type Data = {
 
 export function GulagTeleporterConsole(props) {
   const { act, data } = useBackend<Data>();
-  const { teleporter_lock, teleporter_open, processing, occupant } = data;
+  const { occupant, processing, teleporter_lock, teleporter_open } = data;
 
   let canTeleport =
     !processing && !!teleporter_lock && !teleporter_open && occupant;
 
   return (
-    <Window width={350} height={270} title="Labor Camp Teleporter">
+    <Window width={350} height={275} title="Labor Camp Teleporter">
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>
@@ -109,15 +110,28 @@ function OccupantDisplay(props) {
 
 function SecurityStats(props) {
   const { data } = useBackend<Data>();
-  const { available_points, total_points } = data;
+  const { available_points, last_bounty, total_points } = data;
+
+  let lastBounty = 'None';
+  let color = '';
+  if (last_bounty > 0) {
+    lastBounty = `+${last_bounty} cr`;
+    color = 'good';
+  } else if (last_bounty < 0) {
+    lastBounty = `${last_bounty} cr`;
+    color = 'bad';
+  }
 
   return (
     <Section title="Security Stats">
       <LabeledList>
-        <LabeledList.Item color="green" label="Available Points">
+        <LabeledList.Item label="Department Funds">
           {available_points} cr <Icon name="coins" color="gold" />
         </LabeledList.Item>
-        <LabeledList.Item label="Total Points">
+        <LabeledList.Item color={color} label="Last Bounty">
+          {lastBounty}
+        </LabeledList.Item>
+        <LabeledList.Item label="Bounties Awarded">
           {total_points} cr
         </LabeledList.Item>
       </LabeledList>

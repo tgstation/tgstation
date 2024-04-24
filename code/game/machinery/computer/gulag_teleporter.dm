@@ -30,7 +30,9 @@
 /obj/machinery/computer/gulag_teleporter_computer/ui_data(mob/user)
 	var/list/data = list()
 
-	data["available_points"] = DSsecurity.available_points
+	var/datum/bank_account/sec_account = SSeconomy.get_dep_account(ACCOUNT_SEC)
+	data["available_points"] = sec_account.account_balance
+	data["last_bounty"] = DSsecurity.last_bounty
 	data["total_points"] = DSsecurity.total_points
 
 	var/obj/machinery/gulag_teleporter/teleporter = find_teleporter()
@@ -41,9 +43,10 @@
 	data["teleporter_open"] = teleporter.state_open
 	data["processing"] = teleporter.processing
 
+	data["occupant"] = null
+	data["wanted_status"] = null
 	if(teleporter.occupant)
 		data["occupant"] = teleporter.occupant.name
-
 		var/datum/record/crew/record = teleporter.get_occupant_record()
 		if(record)
 			data["wanted_status"] = record.wanted_status

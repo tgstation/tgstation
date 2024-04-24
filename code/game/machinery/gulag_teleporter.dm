@@ -3,16 +3,16 @@
 #define BRRR_TIME 5 SECONDS
 
 /obj/machinery/gulag_teleporter
-	name = "labor camp teleporter"
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
+	base_icon_state = "implantchair"
+	circuit = /obj/item/circuitboard/machine/gulag_teleporter
+	density = FALSE
 	desc = "A bluespace teleporter used for teleporting prisoners to the labor camp."
 	icon = 'icons/obj/machines/implant_chair.dmi'
 	icon_state = "implantchair"
-	base_icon_state = "implantchair"
-	state_open = TRUE
-	density = FALSE
+	name = "labor camp teleporter"
 	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
-	circuit = /obj/item/circuitboard/machine/gulag_teleporter
+	state_open = TRUE
 	/// Message CD for attempting to break out
 	COOLDOWN_DECLARE(breakout_message_cd)
 	/// Required time for do_after to break out of the door
@@ -231,7 +231,7 @@
 
 	if(DSsecurity.add_new_criminal(victim))
 		playsound(src, 'sound/machines/chime.ogg', 75, TRUE)
-		radio.talk_into(src, "Dissident logged. New points are available at security consoles.", RADIO_CHANNEL_SECURITY)
+		radio.talk_into(src, "Dissident processed. Bounty awarded to the department: [DSsecurity.last_bounty] cr.", RADIO_CHANNEL_SECURITY)
 	else
 		playsound(src, 'sound/machines/buzz-two.ogg', 75, TRUE)
 
@@ -278,13 +278,16 @@
 
 /// Teleports the occupant to one of the labor camp areas
 /obj/machinery/gulag_teleporter/proc/teleport_occupant()
+	var/mob/living/prisoner = occupant
+
 	var/area/teleport_destination = pick(DSsecurity.labor_camp_warps)
 	if(isnull(teleport_destination))
 		return
 
 	DSsecurity.labor_camp_warps -= teleport_destination
 
-	do_teleport(occupant, teleport_destination, no_effects = TRUE)
+	do_teleport(prisoner, teleport_destination, no_effects = TRUE)
+	prisoner.setDir(pick(GLOB.cardinals))
 
 
 /// Toggles the door open or closed.
