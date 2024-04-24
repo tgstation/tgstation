@@ -44,7 +44,7 @@
 		StartCooldown()
 		return TRUE
 
-	do_after(owner, delay = beam_duration, target = owner)
+	do_after(owner, delay = beam_duration, target = owner, hidden = TRUE)
 	extinguish_laser()
 	StartCooldown()
 	return TRUE
