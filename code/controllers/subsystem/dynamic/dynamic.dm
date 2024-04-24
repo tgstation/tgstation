@@ -317,7 +317,7 @@ SUBSYSTEM_DEF(dynamic)
 		SSticker.news_report = SSshuttle.emergency?.is_hijacked() ? SHUTTLE_HIJACK : STATION_EVACUATED
 
 /datum/controller/subsystem/dynamic/proc/send_intercept()
-	if(SScommunications.block_command_report) //If we don't want the report to be printed just yet, we put it off until it's ready
+	if(DScommunications.block_command_report) //If we don't want the report to be printed just yet, we put it off until it's ready
 		addtimer(CALLBACK(src, PROC_REF(send_intercept)), 10 SECONDS)
 		return
 
@@ -349,10 +349,10 @@ SUBSYSTEM_DEF(dynamic)
 	if(trait_list_strings.len > 0)
 		. += "<hr><b>Identified shift divergencies:</b><BR>" + trait_list_strings.Join()
 
-	if(length(SScommunications.command_report_footnotes))
+	if(length(DScommunications.command_report_footnotes))
 		var/footnote_pile = ""
 
-		for(var/datum/command_footnote/footnote in SScommunications.command_report_footnotes)
+		for(var/datum/command_footnote/footnote in DScommunications.command_report_footnotes)
 			footnote_pile += "[footnote.message]<BR>"
 			footnote_pile += "<i>[footnote.signature]</i><BR>"
 			footnote_pile += "<BR>"

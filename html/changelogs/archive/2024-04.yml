@@ -715,3 +715,83 @@
   vinylspiders:
   - bugfix: dropdowns that use display_names as an alias for numeric values will no
       longer cause tgui bluescreens
+2024-04-23:
+  EvilDragonfiend:
+  - code_imp: /appearance type references are now investigatable in vv editor.
+  - code_imp: '/image references display a summarised name with its dmi file name
+      and icon_state when it''s investigated from a datum where it uses. Format is:
+      "mob_hud_image = /image (hud.dmi:medical) [0x00000]"'
+  - code_imp: /image types no longer show first image incorrectly when its icon_state
+      is null
+  FlufflesTheDog:
+  - bugfix: Stone tiles (and things on them) no longer get immersed in lava
+  Melbert:
+  - qol: Getting up from prone, moving up or down a z-level (not via ladders, naturally.
+      Like flight), and de/activating your modsuit no longer shows cogwheel effect
+  Pickle-Coding:
+  - bugfix: Fixes mechanical sect gaining 1,000 times the favor from a cell sacrifice.
+  SyncIt21:
+  - bugfix: Fixes runtime in advanced camera console when power is turned off
+  jlsnow301:
+  - bugfix: Cargo's supply console has been upgraded visually.
+  necromanceranne:
+  - rscadd: Replaces Fitness with Athletics; same skill, but now more specifically
+      applicable to boxing.
+  - rscadd: Athletics does not increase sprite size.
+  - balance: Overhauls Boxing to add a lot more depth to the interactions. Only applicable
+      to other boxers, however. You can still punch the snot out of non-boxers though.
+      But only up to stamcrit or unconsciousness. No hitting someone who can't fight
+      back!
+  - balance: Adds Evil Boxing, which is the evil and fucked up version of boxing that
+      you kill people with and are allowed to flout the sacred rules of boxing as
+      you please. Everyone is a victim!
+  san7890:
+  - bugfix: Evolved aliens should no longer have two numbers in their name.
+2024-04-24:
+  Ben10Omintrix:
+  - bugfix: brimdemons (and other mobs) will act normally
+  Jacquerel and Melbert:
+  - rscadd: A new achievement for moving a boulder from one place to another, at great
+      effort.
+  - balance: Hauling a boulder around makes you move slower, as it does when dragging
+      it.
+  Melbert:
+  - qol: Tuberculosis makes you cough more
+  - qol: Nicotine Addiciton makes you cough less
+  - qol: Medicine Addiction maybe makes you cough more, maybe makes you cough less
+  - bugfix: Only brute damage causes brain damage when applied to the forehead, rather
+      than all damage types
+  - bugfix: Playing Cards memory now reads better
+  - qol: Coughing will now no longer print to chat, IE, it is runechat only. If you
+      have runechat emotes disabled, however, it will still print to chat.
+  - qol: Snapping now has a visual component.
+  - bugfix: All emotes are no longer considered audible, meaning blind people go back
+      to not being able to see people do flips and jumps
+  - bugfix: However, blind people are now told when they do a visible emote like flipping
+      (because they can, obviously, feel themselves flipping). Likewise, deaf people
+      are told when they do some audible emotes, like coughing or screaming.
+  Rhials:
+  - bugfix: Fake handcuffs/Zipties no longer block clicks for a few seconds after
+      being resisted out of.
+  SyncIt21:
+  - bugfix: plumbing & chem reaction chamber heating effects accurately reflect the
+      beakers heat capacity & power usage
+  - bugfix: plumbing reaction will not use power when emptying or when there are no
+      reagents to heat
+  - bugfix: you can hit the chem reaction chamber with items like beakers, screwdrivers,
+      crowbars and what not
+  jlsnow301:
+  - rscadd: Admin tools buffed, check the Controller Overview
+  - rscadd: Controller Overview moved to debug tab
+  - bugfix: 'Cargo express console fixed: No more bluescreen'
+  necromanceranne:
+  - rscadd: Adds a higher capacity SMES unit to lower maintenance areas and maps.
+  - bugfix: Miners can actually access and fix their engineering issues on the lavaland
+      base via the engineering section of the base.
+  - bugfix: The gulag SMES unit is no longer needlessly draining the entire power
+      grid of the main mining base.
+  uaioy:
+  - rscadd: New heavy weight pirates, medieval warmongers
+  - rscadd: Adds military spear, shortsword, boarding axe, kite shields
+  - rscadd: Adds warlord and crude armor
+  - rscadd: Adds medieval shuttle (made by striders18)

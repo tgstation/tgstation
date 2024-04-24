@@ -267,14 +267,41 @@
 	desc = "The user's muscles slightly expand."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You feel strong.</span>"
+	instability = 5
 	difficulty = 16
+
+/datum/mutation/human/strong/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	ADD_TRAIT(owner, TRAIT_STRENGTH, GENETIC_MUTATION)
+
+/datum/mutation/human/strong/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	REMOVE_TRAIT(owner, TRAIT_STRENGTH, GENETIC_MUTATION)
+
 
 /datum/mutation/human/stimmed
 	name = "Stimmed"
 	desc = "The user's chemical balance is more robust."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You feel stimmed.</span>"
+	instability = 5
 	difficulty = 16
+
+/datum/mutation/human/stimmed/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	ADD_TRAIT(owner, TRAIT_STIMMED, GENETIC_MUTATION)
+
+/datum/mutation/human/stimmed/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	REMOVE_TRAIT(owner, TRAIT_STIMMED, GENETIC_MUTATION)
 
 /datum/mutation/human/insulated
 	name = "Insulated"

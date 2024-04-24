@@ -78,7 +78,7 @@
 /// Starts the movement process, persists while the holder is moving through pipes
 /obj/structure/disposalholder/proc/start_moving()
 	var/delay = world.tick_lag
-	var/datum/move_loop/our_loop = SSmove_manager.move_disposals(src, delay = delay, timeout = delay * count)
+	var/datum/move_loop/our_loop = DSmove_manager.move_disposals(src, delay = delay, timeout = delay * count)
 	if(our_loop)
 		RegisterSignal(our_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
 		RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(try_expel))

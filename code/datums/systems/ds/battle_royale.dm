@@ -7,7 +7,7 @@ GLOBAL_LIST_INIT(battle_royale_regions, list(
 	),
 	"Research Division" = list(
 		/area/station/command/heads_quarters/rd,
-		/area/station/security/checkpoint/science, 
+		/area/station/security/checkpoint/science,
 		/area/station/science,
 	),
 	"Engineering Bay" = list(
@@ -24,14 +24,13 @@ GLOBAL_LIST_INIT(battle_royale_regions, list(
 ))
 
 /// Basically just exists to hold references to datums so that they don't GC
-SUBSYSTEM_DEF(battle_royale)
+DATASYSTEM_DEF(battle_royale)
 	name = "Battle Royale"
-	flags = SS_NO_INIT | SS_NO_FIRE
 	/// List of battle royale datums currently running
 	var/list/active_battles
 
 /// Start a new battle royale using a passed list of implants
-/datum/controller/subsystem/battle_royale/proc/start_battle(list/competitors)
+/datum/system/battle_royale/proc/start_battle(list/competitors)
 	var/datum/battle_royale_controller/controller = new()
 	if (!controller.start(competitors))
 		return FALSE
@@ -42,7 +41,7 @@ SUBSYSTEM_DEF(battle_royale)
 	return TRUE
 
 /// Drop reference when it kills itself
-/datum/controller/subsystem/battle_royale/proc/battle_ended(datum/source)
+/datum/system/battle_royale/proc/battle_ended(datum/source)
 	SIGNAL_HANDLER
 	LAZYREMOVE(active_battles, source)
 	if (!LAZYLEN(active_battles))
@@ -52,7 +51,7 @@ SUBSYSTEM_DEF(battle_royale)
 /// Datum which controls the conflict
 /datum/battle_royale_controller
 	/// Where is our battle taking place?
-	var/chosen_area 
+	var/chosen_area
 	/// Is the battle currently in progress?
 	var/battle_running = TRUE
 	/// Should we let everyone know that someone has died?

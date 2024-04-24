@@ -1,0 +1,7 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - bugfix: "you can no longer take off someones glasses or mask through atmos hardhat"
+  - bugfix: "once you adjust a welding helmet or something it no longer makes your cigarette or sunglasses invisible"
+  - bugfix: "welding gas mask works once again"
+  - bugfix: "quick equips dont drop the item if you cant equip it"
