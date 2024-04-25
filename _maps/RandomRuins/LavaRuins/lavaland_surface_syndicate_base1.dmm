@@ -120,12 +120,6 @@
 /obj/effect/turf_decal/sand/plating/volcanic,
 /turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
-"bB" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 10
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/syndicate_lava_base/virology)
 "bC" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/table,
@@ -795,12 +789,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
-"gJ" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 10
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/syndicate_lava_base/arrivals)
 "gO" = (
 /obj/structure/sign/departments/cargo,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -2560,12 +2548,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
-"yL" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 10
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/syndicate_lava_base/chemistry)
 "za" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3041,12 +3023,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/cargo)
-"Ee" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 10
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/syndicate_lava_base/engineering)
 "Ev" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/rag{
@@ -5022,7 +4998,7 @@ ab
 ab
 ab
 ab
-bB
+hW
 eh
 eh
 eh
@@ -5084,7 +5060,7 @@ aj
 eh
 eh
 eh
-bB
+hW
 ab
 ab
 ab
@@ -6129,7 +6105,7 @@ Nh
 JF
 nX
 mT
-gJ
+hW
 ab
 ab
 ab
@@ -6259,7 +6235,7 @@ ab
 ab
 ab
 ab
-yL
+hW
 as
 PW
 dI
@@ -6563,7 +6539,7 @@ uv
 ju
 ju
 ju
-Ee
+hW
 ab
 ab
 ab
@@ -6865,7 +6841,7 @@ Zw
 dy
 nj
 nj
-lj
+hW
 si
 si
 ab
@@ -6924,7 +6900,7 @@ si
 ab
 ab
 ab
-Ee
+hW
 ju
 ju
 ju
@@ -7049,7 +7025,7 @@ ju
 ju
 ju
 ju
-Ee
+hW
 ab
 ab
 ab
@@ -7147,8 +7123,8 @@ ab
 ju
 ju
 ju
+hW
 ju
-Ee
 ju
 ju
 ju
