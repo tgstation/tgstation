@@ -17,7 +17,7 @@
 	scars_covered_by_clothes = FALSE
 	grind_results = null
 	is_dimorphic = TRUE
-	unarmed_attack_verb = "bite"
+	unarmed_attack_verbs = list("bite", "chomp")
 	unarmed_attack_effect = ATTACK_EFFECT_BITE
 	unarmed_attack_sound = 'sound/weapons/bite.ogg'
 	unarmed_miss_sound = 'sound/weapons/bite.ogg'
