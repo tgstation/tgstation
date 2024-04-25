@@ -381,9 +381,6 @@ GLOBAL_LIST_INIT(virusDB, list())
 	if(mob.immune_system)
 		if(prob(8))
 			mob.immune_system.NaturalImmune()
-			//Slowly decay back to regular strength immune system while you are sick
-			if(mob.immune_system.strength > 1)
-				mob.immune_system.strength = max(1, mob.immune_system.strength - 0.01)
 
 	if(!mob.immune_system.CanInfect(src))
 		cure(mob)

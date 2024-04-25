@@ -124,6 +124,7 @@
 	access = ACCESS_MEDICAL
 	contains = list(/obj/machinery/iv_drip/saline)
 
+/* Monkestation Removal: Old Virology
 /datum/supply_pack/medical/virus
 	name = "Virus Crate"
 	desc = "Contains twelve different bottles of several viral samples for virology \
@@ -143,6 +144,7 @@
 	crate_name = "virus crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
+End Monkestation Removal*/
 
 /datum/supply_pack/medical/cmoturtlenecks
 	name = "Chief Medical Officer Turtlenecks"

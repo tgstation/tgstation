@@ -130,6 +130,10 @@
 						V.incubate(src, 1)
 						//effect mutations won't occur unless the mob also has ingested mutagen
 						//and even if they occur, the new effect will have a badness similar to the old one, so helpful pathogen won't instantly become deadly ones.
+	else
+		//Slowly decay back to regular strength immune system while you are sick
+		if(immune_system.strength > 1)
+			immune_system.strength = max(immune_system.strength - 0.01, 1)
 
 /mob/living/proc/try_contact_infect(datum/disease/advanced/D, zone = BODY_ZONE_EVERYTHING, note = "Try Contact Infect")
 	if(!(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))

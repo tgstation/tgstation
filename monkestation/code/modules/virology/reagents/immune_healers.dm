@@ -3,9 +3,9 @@
 	description = "A powerful immune enhancing drug, often used in small doses to counteract immunodeficiency."
 	color = "#667056"
 	ph = 7.4
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = REAGENTS_METABOLISM
 	data = list(
-		"level" = 0.1,//fast at bringing your immune strength back to your initial level
+		"level" = 0.05,
 		"threshold" = 1,
 		) //level is in precentage
 
@@ -43,9 +43,9 @@
 	description = "An immune system enhancement drug, able to increase the power of a person's immune system up to 5 times its starting level."
 	color = "#16eedc"
 	ph = 6.3
-	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	metabolization_rate = REAGENTS_METABOLISM
 	data = list(
-		"level" = 0.01,//very slow, meaning it will do little when you are already sick
+		"level" = 0.04, //a little slower than Aluxive
 		"threshold" = 3,
 		) //level is in precentage
 

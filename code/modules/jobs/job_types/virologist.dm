@@ -29,11 +29,19 @@
 	family_heirlooms = list(/obj/item/reagent_containers/syringe)
 
 	mail_goodies = list(
+		/* Monkestation Removal
 		/obj/item/reagent_containers/cup/bottle/random_virus = 15,
 		/obj/item/reagent_containers/cup/bottle/formaldehyde = 10,
 		/obj/item/reagent_containers/cup/bottle/synaptizine = 10,
 		/obj/item/stack/sheet/mineral/plasma = 10,
 		/obj/item/stack/sheet/mineral/uranium = 5,
+		End Monkestaion Removal*/
+		// Monkestation Addition
+		/obj/item/reagent_containers/cup/bottle/radium = 15,
+		/obj/item/reagent_containers/cup/bottle/mutagen = 15,
+		/obj/item/reagent_containers/cup/bottle/protein = 15,
+		/obj/item/reagent_containers/syringe/antiviral = 15,
+		// End Monkestation Addition
 	)
 	rpg_title = "Plague Doctor"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
