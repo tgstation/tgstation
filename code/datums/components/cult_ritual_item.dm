@@ -21,7 +21,7 @@
 /datum/component/cult_ritual_item/Initialize(
 	examine_message,
 	action = /datum/action/item_action/cult_dagger,
-	turfs_that_boost_us = /turf/open/floor/engine/cult
+	turfs_that_boost_us = /turf/open/floor/engine/cult,
 	)
 
 	if(!isitem(parent))

@@ -250,7 +250,6 @@
 		assumed_control_message = src.assumed_control_message,\
 		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
 	)
-	return
 
 /obj/structure/spawner/sentient/proc/became_player_controlled(mob/proteon)
 	return
@@ -297,7 +296,6 @@
 /obj/structure/spawner/sentient/proteon_spawner/proc/remove_wake_outline(mob/proteon)
 	proteon.remove_filter("awoken_proteon")
 	proteon.add_filter("sentient_proteon", 3, list("type" = "outline", "color" = COLOR_CULT_RED, "size" = 2, "alpha" = 40))
-	return
 
 /obj/structure/spawner/sentient/proteon_spawner/handle_deconstruct(disassembled)
 	playsound('sound/hallucinations/veryfar_noise.ogg', 125)

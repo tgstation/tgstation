@@ -23,16 +23,12 @@
 		pulling can pass through runed walls effortlessly.</B>"
 	can_repair = TRUE
 	slowed_by_drag = FALSE
-	var/datum/action/innate/seek_prey/seek
 
 /mob/living/basic/construct/harvester/Initialize(mapload)
 	. = ..()
-	add_elements()
-	seek = new(src)
-	seek.Grant(src)
-	seek.Activate()
+	grant_abilities()
 
-/mob/living/basic/construct/harvester/proc/add_elements()
+/mob/living/basic/construct/harvester/proc/grant_abilities()
 	AddElement(/datum/element/wall_walker, /turf/closed/wall/mineral/cult)
 	AddComponent(\
 		/datum/component/amputating_limbs,\
@@ -40,6 +36,9 @@
 		surgery_verb = "slicing",\
 		minimum_stat = CONSCIOUS,\
 	)
+	var/datum/action/innate/seek_prey/seek = new(src)
+	seek.Grant(src)
+	seek.Activate()
 
 /// If the attack is a limbless carbon, abort the attack, paralyze them, and get a special message from Nar'Sie.
 /mob/living/basic/construct/harvester/resolve_unarmed_attack(atom/attack_target, list/modifiers)
@@ -150,7 +149,7 @@
 	playstyle_string = "<B>You are a Rusted Harvester, built to serve the Sanguine Apostate, but twisted to work the will of the Mansus. You are fragile and weak, but you rend cultists (only) apart on each attack. Follow your Master's orders!<B>"
 	theme = THEME_HERETIC
 
-/mob/living/basic/construct/harvester/heretic/add_elements()
+/mob/living/basic/construct/harvester/heretic/grant_abilities()
 	AddElement(/datum/element/wall_walker, or_trait = TRAIT_RUSTY)
 	AddElement(/datum/element/leeching_walk)
 	AddComponent(\
@@ -166,6 +165,5 @@
 
 /mob/living/basic/construct/harvester/heretic/Initialize(mapload)
 	. = ..()
-	qdel(seek)
 	ADD_TRAIT(src, TRAIT_MANSUS_TOUCHED, REF(src))
 	add_filter("rusted_harvester", 3, list("type" = "outline", "color" = COLOR_GREEN, "size" = 2, "alpha" = 40))

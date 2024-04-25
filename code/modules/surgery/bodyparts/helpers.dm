@@ -48,6 +48,7 @@
 		which_hand = BODY_ZONE_PRECISE_R_HAND
 	return get_bodypart(check_zone(which_hand))
 
+// Gets the inactive hand of the mob. Returns FALSE on non-carbons, otherwise returns the /obj/item/bodypart.
 /mob/proc/get_inactive_hand()
 	return FALSE
 

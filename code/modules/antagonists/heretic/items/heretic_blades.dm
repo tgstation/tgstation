@@ -37,14 +37,15 @@
 	return ..()
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
-	if(!seek_safety(user))
-		return ..()
+	if(seek_safety(user))
+		return TRUE
+	return ..()
 
 /obj/item/melee/sickly_blade/proc/seek_safety(mob/user)
 	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
 	if(check_usability(user))
 		if(do_teleport(user, safe_turf, channel = TELEPORT_CHANNEL_MAGIC))
-			to_chat(user, span_warning("As you shatter [src], you feel a gust of energy flow through your body. [after_use_message ? after_use_message : ""]"))
+			to_chat(user, span_warning("As you shatter [src], you feel a gust of energy flow through your body. [after_use_message]"))
 		else
 			to_chat(user, span_warning("You shatter [src], but your plea goes unanswered."))
 	else
@@ -192,14 +193,13 @@
 	seek_safety(user, TRUE)
 
 /obj/item/melee/sickly_blade/cursed/seek_safety(mob/user, secondary_attack = FALSE)
-	if(IS_CULTIST(user) && secondary_attack == FALSE)
+	if(IS_CULTIST(user) && !secondary_attack)
 		return FALSE
 	..()
 
 /obj/item/melee/sickly_blade/cursed/check_usability(mob/living/user)
 	if(IS_HERETIC_OR_MONSTER(user) || IS_CULTIST(user))
 		return TRUE
-	var/mob/living/carbon/human/human_user = user
 	if(prob(15))
 		to_chat(user, span_cult_large(pick("\"An untouched mind? Amusing.\"", "\" I suppose it isn't worth the effort to stop you.\"", "\"Go ahead. I don't care.\"", "\"You'll be mine soon enough.\"")))
 		var/obj/item/bodypart/affecting = user.get_active_hand()
@@ -211,7 +211,7 @@
 	else if(prob(15))
 		to_chat(user, span_big(span_hypnophrase("LW'NAFH'NAHOR UH'ENAH'YMG EPGOKA AH NAFL MGEMPGAH'EHYE")))
 		to_chat(user, span_danger("Horrible, unintelligible utterances flood your mind!"))
-		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15) // This can kill you if you ignore it
+		user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15) // This can kill you if you ignore it
 	return TRUE
 
 /obj/item/melee/sickly_blade/cursed/equipped(mob/user, slot)
@@ -233,6 +233,6 @@
 		return
 
 	// Can only carve runes with it if off combat mode.
-	if(isopenturf(target) && (user.combat_mode == FALSE))
+	if(isopenturf(target) && !user.combat_mode)
 		heretic_datum.try_draw_rune(user, target, drawing_time = 14 SECONDS) // Faster than pen, slower than cicatrix
 		return TRUE

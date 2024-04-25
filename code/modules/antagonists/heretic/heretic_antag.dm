@@ -80,7 +80,7 @@
 		PATH_MOON = COLOR_BLUE_LIGHT,
 	)
 
-	// List that keeps track of which items have been gifted to the heretic after a cultist was sacrificed. Used to alter drop chances to reduce dupes.
+	/// List that keeps track of which items have been gifted to the heretic after a cultist was sacrificed. Used to alter drop chances to reduce dupes.
 	var/list/unlocked_heretic_items = list(
 		/obj/item/melee/sickly_blade/cursed = 0,
 		/obj/item/clothing/neck/heretic_focus/crimson_focus = 0,
@@ -209,9 +209,6 @@
 	if(give_objectives)
 		forge_primary_objectives()
 
-	ADD_TRAIT(owner.current, TRAIT_MANSUS_TOUCHED, REF(src))
-	RegisterSignal(owner.current, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
-
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 
 	for(var/starting_knowledge in GLOB.heretic_start_knowledge)
@@ -221,13 +218,20 @@
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
 	return ..()
 
+/datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	ADD_TRAIT(owner.current, TRAIT_MANSUS_TOUCHED, REF(src))
+	RegisterSignal(owner.current, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
+
+/datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_MANSUS_TOUCHED, REF(src))
+	UnregisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED)
+
 /datum/antagonist/heretic/on_removal()
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		knowledge.on_lose(owner.current, src)
-
-	REMOVE_TRAIT(owner, TRAIT_MANSUS_TOUCHED, REF(src))
-	UnregisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED)
 
 	QDEL_LIST_ASSOC_VAL(researched_knowledge)
 	return ..()
@@ -421,15 +425,14 @@
 
 	// Locate a cultist team (Is there a better way??)
 	var/mob/living/random_cultist = pick(invokers)
-	var/datum/antagonist/cult/antag = random_cultist.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
-	if(!antag)
-		CRASH("offer invoker has no mind or cult datum")
+	var/datum/antagonist/cult/antag = random_cultist.mind.has_antag_datum(/datum/antagonist/cult)
+	ASSERT(antag)
 	var/datum/team/cult/cult_team = antag.get_team()
 
 	// Unlock one of 3 special items!
 	var/list/possible_unlocks
 	for(var/i in cult_team.unlocked_heretic_items)
-		if(cult_team.unlocked_heretic_items[i] == TRUE)
+		if(cult_team.unlocked_heretic_items[i])
 			continue
 		LAZYADD(possible_unlocks, i)
 	if(length(possible_unlocks))
@@ -443,6 +446,12 @@
 
 	return SILENCE_SACRIFICE_MESSAGE|DUST_SACRIFICE
 
+/**
+ * Creates an animation of the item slowly lifting up from the floor with a colored outline, then slowly drifting back down.
+ * Arguments:
+ * outline_color: Default is between pink and light blue, is the color of the outline filter.
+ * anim_time: Total time of the animation. Split into two different calls.
+ */
 /obj/item/proc/gender_reveal(outline_color = pick(COLOR_ADMIN_PINK, COLOR_BLUE_LIGHT), anim_time = 10 SECONDS)
 
 	// First half. We increase the layer to appear on top of all, add a cool outline, and make it fly up into the air.

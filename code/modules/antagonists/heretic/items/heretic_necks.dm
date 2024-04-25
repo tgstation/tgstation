@@ -13,12 +13,13 @@
 	name = "Crimson Focus"
 	desc = "A blood-red focusing glass that provides a link to the world beyond, and worse. Its eye is constantly twitching and gazing in all directions. It almost seems to be silently screaming..."
 	icon_state = "crimson_focus"
-	var/component
+	// The aura healing component. Used to delete it when taken off.
+	var/datum/component/component
 
 
 /obj/item/clothing/neck/heretic_focus/crimson_focus/equipped(mob/living/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_NECK)
+	if(!(slot & ITEM_SLOT_NECK))
 		return
 
 	var/team_color = COLOR_ADMIN_PINK
@@ -44,7 +45,7 @@
 		requires_visibility = FALSE, \
 		limit_to_trait = TRAIT_MANSUS_TOUCHED, \
 		healing_color = team_color, \
-		)
+	)
 
 /obj/item/clothing/neck/heretic_focus/crimson_focus/dropped(mob/living/user)
 	. = ..()
@@ -56,16 +57,13 @@
 		to_chat(user, span_notice("Your heart and blood return to their regular old rhythm and flow."))
 
 	UnregisterSignal(user, list(COMSIG_LIVING_CULT_EMPOWER, COMSIG_ACTION_START_COOLDOWN))
-	if(component)
-		QDEL_NULL(component)
+	QDEL_NULL(component)
 	user.remove_traits(list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOODY_MESS), REF(src))
 
 	if(!IS_CULTIST(user))
 		return
 	// Remove the fifth spell slot, if any.
 	var/datum/action/innate/cult/blood_magic/magic_holder = locate() in user.actions
-	if(!magic_holder)
-		CRASH("cultist with no blood magic holder?")
 	if(length(magic_holder.spells) > 4)
 		QDEL_NULL(magic_holder.spells[5])
 
@@ -88,7 +86,7 @@
 	to_chat(user, span_danger("[src] explodes into a shower of gore and blood, drenching your arm. You can feel the blood seeping into your skin. You inmediately feel better, but soon, the feeling turns hollow as your veins itch."))
 	new /obj/effect/gibspawner/generic(get_turf(src))
 	var/heal_amt = user.adjustBruteLoss(-50)
-	user.adjustFireLoss( -(50 - heal_amt) ) // no double dipping
+	user.adjustFireLoss( -(50 - abs(heal_amt)) ) // no double dipping
 
 	// I want it to poison the user but I also think it'd be neat if they got their juice as well. But that cancels most of the damage out. So I dunno.
 	user.reagents?.add_reagent(/datum/reagent/fuel/unholywater, rand(6, 10))

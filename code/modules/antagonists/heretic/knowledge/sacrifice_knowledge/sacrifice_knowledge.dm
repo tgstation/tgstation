@@ -192,7 +192,7 @@
 
 	var/feedback = "Your patrons accept your offer"
 	var/sac_job_flag = sacrifice.mind?.assigned_role?.job_flags | sacrifice.last_mind?.assigned_role?.job_flags
-	if(sac_job_flag & JOB_HEAD_OF_STAFF || IS_CULTIST(sacrifice))
+	if((sac_job_flag & JOB_HEAD_OF_STAFF) || IS_CULTIST(sacrifice))
 		heretic_datum.knowledge_points++
 		heretic_datum.high_value_sacrifices++
 		feedback += " <i>graciously</i>"
@@ -220,8 +220,7 @@
 		return
 	playsound(loc, 'sound/magic/repulse.ogg', 75, TRUE)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	if(!heretic_datum)
-		CRASH("how did this happen")
+	ASSERT(heretic_datum)
 	// This list will be almost identical to unlocked_heretic_items, with the same keys, the difference being the values will be 1 to 5.
 	var/list/rewards = heretic_datum.unlocked_heretic_items.Copy()
 	// We will make it increasingly less likely to get a reward if you've already got it
@@ -232,7 +231,7 @@
 	var/atom/reward = pick_weight(rewards)
 	reward = new reward(loc)
 
-	if(istype(reward, /mob/living))
+	if(isliving(reward))
 		if(summon_ritual_mob(user, loc, reward) == FALSE)
 			qdel(reward)
 			deposit_reward(user, loc, loop++) // If no ghosts, try again until limit is hit
@@ -243,8 +242,7 @@
 		ASYNC
 			item_reward.gender_reveal(outline_color = COLOR_GREEN)
 
-	if(!reward)
-		CRASH("no reward")
+	ASSERT(reward)
 
 	return reward
 

@@ -571,9 +571,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/unanchored/spawner,
 // You can't rust glass! So only reinforced glass can be impacted.
 /obj/structure/window/reinforced/rust_heretic_act()
 	add_atom_colour("#917c65", FIXED_COLOUR_PRIORITY)
-	armor = null
-	max_integrity *= 0.5
-	atom_integrity *= 0.5
+	set_armor(/datum/armor/none)
+	take_damage(get_integrity() * 0.5)
+	modify_max_integrity(max_integrity * 0.5)
 	if(!HAS_TRAIT(src, TRAIT_RUSTY))
 		AddElement(/datum/element/rust)
 

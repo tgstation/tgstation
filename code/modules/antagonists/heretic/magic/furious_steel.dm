@@ -106,6 +106,7 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = 15
 	pass_flags = PASSTABLE | PASSFLAPS
+	/// Outline color.
 	var/outline_color = "#f8f8ff"
 
 /obj/projectile/floating_blade/Initialize(mapload)

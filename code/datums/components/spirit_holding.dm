@@ -6,6 +6,7 @@
 /datum/component/spirit_holding
 	///bool on if this component is currently polling for observers to inhabit the item
 	var/attempting_awakening = FALSE
+	/// Allows renaming the bound item
 	var/allow_renaming
 	///mob contained in the item.
 	var/mob/living/basic/shade/bound_spirit

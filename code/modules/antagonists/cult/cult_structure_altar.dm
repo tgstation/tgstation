@@ -36,7 +36,7 @@
 		options += extra_item
 
 /obj/structure/destructible/cult/item_dispenser/altar/extra_options()
-	if(cult_team?.unlocked_heretic_items[PROTEON_ORB_UNLOCKED] != TRUE)
+	if(!cult_team?.unlocked_heretic_items[PROTEON_ORB_UNLOCKED])
 		return
 	return list(PROTEON_ORB = list(
 			PREVIEW_IMAGE = image(icon = 'icons/obj/antags/cult/items.dmi', icon_state = "summoning_orb"),

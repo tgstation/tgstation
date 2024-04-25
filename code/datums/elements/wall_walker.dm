@@ -4,12 +4,13 @@
 	argument_hash_start_idx = 2
 	/// What kind of walls can we pass through?
 	var/wall_type
+	/// What trait on turfs allows us to pass through? Can be used as OR if wall_type is null, or AND if it's set.
 	var/or_trait
 
 /datum/element/wall_walker/Attach(
 	datum/target,
 	wall_type = /turf/closed/wall,
-	or_trait
+	or_trait,
 )
 	. = ..()
 	if (!isliving(target))

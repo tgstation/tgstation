@@ -55,3 +55,8 @@ GLOBAL_LIST(sacrificed)
 #define CULT_VICTORY 1
 #define CULT_LOSS 0
 #define CULT_NARSIE_KILLED -1
+
+// Used to keep track of items rewarded after a heretic is sacked.
+#define CURSED_BLADE_UNLOCKED "Cursed Blade"
+#define CRIMSON_FOCUS_UNLOCKED "Crimson Focus"
+#define PROTEON_ORB_UNLOCKED "Proteon Orb"

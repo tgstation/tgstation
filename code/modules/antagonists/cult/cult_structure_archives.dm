@@ -38,7 +38,7 @@
 		options += extra_item
 
 /obj/structure/destructible/cult/item_dispenser/archives/extra_options()
-	if(cult_team?.unlocked_heretic_items[CRIMSON_FOCUS_UNLOCKED] != TRUE)
+	if(!cult_team?.unlocked_heretic_items[CRIMSON_FOCUS_UNLOCKED])
 		return
 	return list(CRIMSON_FOCUS = list(
 			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/neck.dmi', icon_state = "crimson_focus"),

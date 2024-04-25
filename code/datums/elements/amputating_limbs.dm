@@ -1,6 +1,5 @@
 /// This component will intercept bare-handed attacks by the owner on sufficiently injured carbons and amputate random limbs instead
 /datum/component/amputating_limbs
-	//argument_hash_start_idx = 2
 	/// How long does it take?
 	var/surgery_time
 	/// What is the means by which we describe the act of amputation?
@@ -11,6 +10,7 @@
 	var/snip_chance
 	/// The types of limb we can remove
 	var/list/target_zones
+	/// Callback for a proc right before confirming the attack. If it returns FALSE, cancel
 	var/datum/callback/pre_hit_callback
 
 /datum/component/amputating_limbs/Initialize(
@@ -19,11 +19,11 @@
 	minimum_stat = SOFT_CRIT,
 	snip_chance = 100,
 	list/target_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_ARM, BODY_ZONE_R_LEG),
-	pre_hit_callback = null
+	datum/callback/pre_hit_callback,
 )
 	. = ..()
 	if (!isliving(parent))
-		return ELEMENT_INCOMPATIBLE
+		return COMPONENT_INCOMPATIBLE
 	if (!length(target_zones))
 		CRASH("[src] for [parent] was not provided a valid list of body zones to target.")
 
@@ -39,7 +39,6 @@
 
 /datum/component/amputating_limbs/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
-	return
 
 /// Called when you click on literally anything with your hands, see if it is an injured carbon and then try to cut it up
 /datum/component/amputating_limbs/proc/try_amputate(mob/living/surgeon, atom/victim, proximity, modifiers)
@@ -55,7 +54,7 @@
 		surgeon.balloon_alert(surgeon, "already busy!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(pre_hit_callback && pre_hit_callback.Invoke(victim) == FALSE)
+	if(pre_hit_callback && !pre_hit_callback.Invoke(victim))
 		return
 
 	var/list/valid_targets = list()
