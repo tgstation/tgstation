@@ -12,3 +12,6 @@ https://freesound.org/people/schreibsel/sounds/540162/
 
 snake_hissing2.ogg adapted from xoiziox on Freesound (CC 0)
 https://freesound.org/people/xoiziox/sounds/553374/
+
+crab_clicks.ogg and deep_crab_clicks.ogg adapted by Satoration (Attribution 4.0 License)
+https://freesound.org/s/57299/
