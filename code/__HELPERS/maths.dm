@@ -154,27 +154,46 @@
 	var/prefix = prefixes[prefix_index]
 	. = list(SI_COEFFICIENT = coefficient, SI_UNIT = " [prefix][unit]")
 
-///Format a power value in prefixed watts.
-/proc/display_power(powerused)
-	return siunit(powerused, "W", 3)
+/**Format a power value in prefixed watts.
+ * Converts from energy if convert is true.
+ * Args:
+ * - power: The value of power to format.
+ * - convert: Whether to convert this from joules.
+ * - datum/controller/subsystem/scheduler: used in the conversion
+ * Returns: The string containing the formatted power.
+ */
+/proc/display_power(power, convert = TRUE, datum/controller/subsystem/scheduler = SSmachines)
+	power = convert ? energy_to_power(power, scheduler) : power
+	return siunit(power, "W", 3)
 
-///Format an energy value in prefixed joules.
-/proc/display_joules(units)
+/**
+ * Format an energy value in prefixed joules.
+ * Arguments
+ *
+ * * units - the value t convert
+ */
+/proc/display_energy(units)
 	return siunit(units, "J", 3)
 
-/proc/joules_to_energy(joules)
-	return joules * (1 SECONDS) / SSmachines.wait
+/**
+ * Converts the joule to the watt, assuming SSmachines tick rate.
+ * Arguments
+ *
+ * * joules - the value in joules to convert
+ * * datum/controller/subsystem/scheduler - the subsystem whos wait time is used in the conversion
+ */
+/proc/energy_to_power(joules, datum/controller/subsystem/scheduler = SSmachines)
+	return joules * (1 SECONDS) / scheduler.wait
 
-/proc/energy_to_joules(energy_units)
-	return energy_units * SSmachines.wait / (1 SECONDS)
-
-///Format an energy value measured in Power Cell units.
-/proc/display_energy(units)
-	// APCs process every (SSmachines.wait * 0.1) seconds, and turn 1 W of
-	// excess power into watts when charging cells.
-	// With the current configuration of wait=20 and CELLRATE=0.002, this
-	// means that one unit is 1 kJ.
-	return display_joules(energy_to_joules(units) WATTS)
+/**
+ * Converts the watt to the joule, assuming SSmachines tick rate.
+ * * Arguments
+ *
+ * * joules - the value in joules to convert
+ * * datum/controller/subsystem/scheduler - the subsystem whos wait time is used in the conversion
+ */
+/proc/power_to_energy(watts, datum/controller/subsystem/scheduler = SSmachines)
+	return watts * scheduler.wait / (1 SECONDS)
 
 ///chances are 1:value. anyprob(1) will always return true
 /proc/anyprob(value)

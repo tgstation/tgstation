@@ -30,7 +30,9 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	inherent_factions = list(FACTION_SLIME)
 	species_language_holder = /datum/language_holder/jelly
-
+	hair_color_mode = USE_MUTANT_COLOR
+	hair_alpha = 150
+	facial_hair_alpha = 150
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/jelly,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/jelly,
@@ -46,54 +48,42 @@
 	if(ishuman(new_jellyperson))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(new_jellyperson)
-		update_mail_goodies(new_jellyperson)
 	new_jellyperson.AddElement(/datum/element/soft_landing)
+	RegisterSignal(new_jellyperson, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(slime_blood))
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/former_jellyperson, datum/species/new_species, pref_load)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(former_jellyperson)
 	former_jellyperson.RemoveElement(/datum/element/soft_landing)
-
+	UnregisterSignal(former_jellyperson, COMSIG_HUMAN_ON_HANDLE_BLOOD)
 	return ..()
 
-/datum/species/jelly/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
-	if(istype(quirk, /datum/quirk/blooddeficiency))
-		mail_goodies += list(
-			/obj/item/reagent_containers/blood/toxin
-		)
-	return ..()
+/datum/species/jelly/proc/slime_blood(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
 
-/datum/species/jelly/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
-	. = ..()
-	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
-		return
+	if(slime.stat == DEAD)
+		return HANDLE_BLOOD_HANDLED
 
-	if(!H.blood_volume)
-		H.blood_volume += JELLY_REGEN_RATE_EMPTY * seconds_per_tick
-		H.adjustBruteLoss(2.5 * seconds_per_tick)
-		to_chat(H, span_danger("You feel empty!"))
+	if(slime.blood_volume <= 0)
+		slime.blood_volume += JELLY_REGEN_RATE_EMPTY * seconds_per_tick
+		slime.adjustBruteLoss(2.5 * seconds_per_tick)
+		to_chat(slime, span_danger("You feel empty!"))
 
-	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
-		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
-			H.blood_volume += JELLY_REGEN_RATE * seconds_per_tick
-			if(H.blood_volume <= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
-				H.adjust_nutrition(-1.25 * seconds_per_tick)
+	if(slime.blood_volume < BLOOD_VOLUME_NORMAL)
+		if(slime.nutrition >= NUTRITION_LEVEL_STARVING)
+			slime.blood_volume += JELLY_REGEN_RATE * seconds_per_tick
+			if(slime.blood_volume <= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
+				slime.adjust_nutrition(-1.25 * seconds_per_tick)
 
-	// we call lose_blood() here rather than quirk/process() to make sure that the blood loss happens in sync with life()
-	if(HAS_TRAIT(H, TRAIT_BLOOD_DEFICIENCY))
-		var/datum/quirk/blooddeficiency/blooddeficiency = H.get_quirk(/datum/quirk/blooddeficiency)
-		if(!isnull(blooddeficiency))
-			blooddeficiency.lose_blood(seconds_per_tick)
-
-	if(H.blood_volume < BLOOD_VOLUME_OKAY)
+	if(slime.blood_volume < BLOOD_VOLUME_OKAY)
 		if(SPT_PROB(2.5, seconds_per_tick))
-			to_chat(H, span_danger("You feel drained!"))
+			to_chat(slime, span_danger("You feel drained!"))
 
-	if(H.blood_volume < BLOOD_VOLUME_BAD)
-		Cannibalize_Body(H)
+	if(slime.blood_volume < BLOOD_VOLUME_BAD)
+		Cannibalize_Body(slime)
 
-	if(regenerate_limbs)
-		regenerate_limbs.build_all_button_icons()
+	regenerate_limbs?.build_all_button_icons(UPDATE_BUTTON_STATUS)
+	return HANDLE_BLOOD_NO_NUTRITION_DRAIN|HANDLE_BLOOD_NO_EFFECTS
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
 	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
@@ -108,6 +98,20 @@
 	to_chat(H, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
 	qdel(consumed_limb)
 	H.blood_volume += 20
+
+/datum/species/jelly/get_species_description()
+	return "Jellypeople are a strange and alien species with three eyes, made entirely out of gel."
+
+/datum/species/jelly/get_species_lore()
+	return list(
+		"Jellypeople are actively being experimented on my Nanotrasen scientists, who are trying to unlock the secrets of their unique biology.",
+	)
+
+/datum/species/jelly/prepare_human_for_preview(mob/living/carbon/human/human)
+	human.dna.features["mcolor"] = COLOR_PINK
+	human.hairstyle = "Bob Hair 2"
+	human.hair_color = COLOR_PINK
+	human.update_body(is_creating = TRUE)
 
 // Slimes have both TRAIT_NOBLOOD and an exotic bloodtype set, so they need to be handled uniquely here.
 // They may not be roundstart but in the unlikely event they become one might as well not leave a glaring issue open.
@@ -173,9 +177,6 @@
 	name = "\improper Slimeperson"
 	plural_form = "Slimepeople"
 	id = SPECIES_SLIMEPERSON
-	hair_color = "mutcolor"
-	hair_alpha = 150
-	facial_hair_alpha = 150
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	mutanteyes = /obj/item/organ/internal/eyes
 	var/datum/action/innate/split_body/slime_split
@@ -183,12 +184,12 @@
 	var/datum/action/innate/swap_body/swap_body
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/slime,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/slime,
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/slime,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/slime,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/slime,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/slime,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/jelly/slime,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/jelly/slime,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/jelly/slime,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/jelly/slime,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/jelly/slime,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/jelly/slime,
 	)
 
 /datum/species/jelly/slime/get_physical_attributes()
@@ -483,12 +484,12 @@
 	id = SPECIES_LUMINESCENT
 	examine_limb_id = SPECIES_LUMINESCENT
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/luminescent,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/luminescent,
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/luminescent,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/luminescent,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/luminescent,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/luminescent,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/jelly/luminescent,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/jelly/luminescent,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/jelly/luminescent,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/jelly/luminescent,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/jelly/luminescent,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/jelly/luminescent,
 	)
 	mutanteyes = /obj/item/organ/internal/eyes
 	/// How strong is our glow
@@ -721,10 +722,13 @@
 		to_chat(telepath, span_warning("You don't see anyone to send your thought to."))
 		return
 	var/mob/living/recipient = tgui_input_list(telepath, "Choose a telepathic message recipient", "Telepathy", sort_names(recipient_options))
-	if(isnull(recipient))
+	if(isnull(recipient) || telepath.stat == DEAD || !is_species(telepath, /datum/species/jelly/stargazer))
 		return
 	var/msg = tgui_input_text(telepath, title = "Telepathy")
-	if(isnull(msg))
+	if(isnull(msg) || telepath.stat == DEAD || !is_species(telepath, /datum/species/jelly/stargazer))
+		return
+	if(!(recipient in oview(telepath)))
+		to_chat(telepath, span_warning("You can't see [recipient] anymore!"))
 		return
 	if(recipient.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 		to_chat(telepath, span_warning("As you reach into [recipient]'s mind, you are stopped by a mental blockage. It seems you've been foiled."))

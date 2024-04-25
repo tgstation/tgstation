@@ -20,7 +20,7 @@
 
 	materials = AddComponent( \
 		/datum/component/material_container, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
+		DSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		INFINITY, \
 		MATCONTAINER_EXAMINE, \
 		container_signals = list( \

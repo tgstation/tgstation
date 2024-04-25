@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - balance: "ChemMaster can again print a maximum of 50 pills/patches per run"
+  - balance: "Higher tier servos increase ChemMaster printing speed"

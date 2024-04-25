@@ -57,7 +57,7 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 	var/datum/element/eletype = arguments[1]
 	var/list/fullid = list(eletype)
 	var/list/named_arguments
-	for(var/i in initial(eletype.argument_hash_start_idx) to length(arguments))
+	for(var/i in initial(eletype.argument_hash_start_idx) to (initial(eletype.argument_hash_end_idx) || length(arguments)))
 		var/key = arguments[i]
 
 		if(istext(key))

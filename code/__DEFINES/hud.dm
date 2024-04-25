@@ -110,12 +110,6 @@
 #define ui_living_pull "EAST-1:28,CENTER-3:15"
 #define ui_living_healthdoll "EAST-1:28,CENTER-1:15"
 
-//Monkeys
-#define ui_monkey_head "CENTER-5:13,SOUTH:5"
-#define ui_monkey_mask "CENTER-4:14,SOUTH:5"
-#define ui_monkey_neck "CENTER-3:15,SOUTH:5"
-#define ui_monkey_back "CENTER-2:16,SOUTH:5"
-
 //Drones
 #define ui_drone_drop "CENTER+1:18,SOUTH:5"
 #define ui_drone_pull "CENTER+1.5:2,SOUTH:5"
@@ -170,7 +164,8 @@
 #define ui_ai_multicam "BOTTOM+1:6,LEFT+1"
 #define ui_ai_add_multicam "BOTTOM+1:6,LEFT"
 #define ui_ai_take_picture "BOTTOM+2:6,LEFT"
-
+#define ui_ai_floor_indicator "BOTTOM+5,RIGHT"
+#define ui_ai_godownup "BOTTOM+5,RIGHT-1"
 
 //pAI
 #define ui_pai_software "SOUTH:6,WEST"

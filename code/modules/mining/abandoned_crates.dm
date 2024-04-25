@@ -60,10 +60,9 @@
 
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
-	if(!user.can_perform_action(src))
-		return
-	return attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
+/obj/structure/closet/crate/secure/loot/click_alt(mob/living/user)
+	attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)
@@ -121,7 +120,7 @@
 		return
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
+/obj/structure/closet/crate/secure/loot/atom_deconstruct(disassembled = TRUE)
 	if(locked)
 		boom()
 		return

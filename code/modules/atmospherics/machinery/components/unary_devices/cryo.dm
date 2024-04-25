@@ -429,7 +429,7 @@
 	user.visible_message(span_notice("You see [user] kicking against the glass of [src]!"), \
 		span_notice("You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(CRYO_BREAKOUT_TIME)].)"), \
 		span_hear("You hear a thump from [src]."))
-	if(do_after(user, CRYO_BREAKOUT_TIME, target = src))
+	if(do_after(user, CRYO_BREAKOUT_TIME, target = src, hidden = TRUE))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
@@ -644,14 +644,13 @@
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 	return ..()
 
-/obj/machinery/cryo_cell/AltClick(mob/user)
-	if(can_interact(user))
-		if(state_open)
-			close_machine()
-		else
-			open_machine()
-		balloon_alert(user, "door [state_open ? "opened" : "closed"]")
-	return ..()
+/obj/machinery/cryo_cell/click_alt(mob/user)
+	if(state_open)
+		close_machine()
+	else
+		open_machine()
+	balloon_alert(user, "door [state_open ? "opened" : "closed"]")
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/cryo_cell/get_remote_view_fullscreens(mob/user)
 	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)

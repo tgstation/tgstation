@@ -6,208 +6,347 @@ import {
   Button,
   Divider,
   Dropdown,
-  Flex,
   Icon,
+  LabeledList,
+  Modal,
+  NoticeBox,
   Section,
+  Stack,
   Table,
+  Tooltip,
 } from '../components';
 import { ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
 
-type PlayerLike = {
-  [key: string]: {
-    host: number;
-    ready: BooleanLike;
-  };
+type Player = Record<string, PlayerInfo>;
+
+type PlayerInfo = {
+  host: number;
+  ready: BooleanLike;
+};
+
+type Modifier = {
+  desc: string;
+  modpath: string;
+  name: string;
+  player_selectable: BooleanLike;
+  player_selected: BooleanLike;
+  selectable: BooleanLike;
+  selected: BooleanLike;
+};
+
+type Map = {
+  desc: string;
+  max_players: number;
+  min_players: number;
+  name: string;
+  time: number;
 };
 
 type Data = {
-  self: string;
-  host: BooleanLike;
+  active_mods: string;
   admin: BooleanLike;
-  global_chat: BooleanLike;
-  playing: BooleanLike;
-  loadouts: string[];
-  maps: string[];
-  map: {
-    name: string;
-    desc: string;
-    time: number;
-    min_players: number;
-    max_players: number;
-  };
+  host: BooleanLike;
   loadoutdesc: string;
-  players: PlayerLike[];
-  observers: PlayerLike[];
+  loadouts: string[];
+  map: Map;
+  maps: string[];
+  mod_menu_open: BooleanLike;
+  modifiers: Modifier[];
+  observers: Player[];
+  players: Player[];
+  playing: BooleanLike;
+  self: string;
 };
 
-export const DeathmatchLobby = (props) => {
+export function DeathmatchLobby(props) {
   const { act, data } = useBackend<Data>();
+  const { admin, observers = [], self, players } = data;
+
+  const allReady = Object.keys(players).every(
+    (player) => players[player].ready,
+  );
+
   return (
-    <Window title="Deathmatch Lobby" width={560} height={420}>
+    <Window title="Deathmatch Lobby" width={560} height={480}>
+      <ModSelector />
       <Window.Content>
-        <Flex height="94%">
-          <Flex.Item width="63%">
-            <Section fill scrollable>
-              <Table>
-                <Table.Row>
-                  <Table.Cell collapsing />
-                  <Table.Cell>Name</Table.Cell>
-                  <Table.Cell grow>Loadout</Table.Cell>
-                  <Table.Cell collapsing>Ready</Table.Cell>
-                </Table.Row>
-                {Object.keys(data.players).map((player) => (
-                  <Table.Row className="candystripe" key={player}>
-                    <Table.Cell collapsing>
-                      {!!data.players[player].host && <Icon name="star" />}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {(!(
-                        (data.host && !data.players[player].host) ||
-                        data.admin
-                      ) && <b>{player}</b>) || (
-                        <Dropdown
-                          displayText={player}
-                          options={['Kick', 'Transfer host', 'Toggle observe']}
-                          onSelected={(value) =>
-                            act('host', {
-                              id: player,
-                              func: value,
-                            })
-                          }
-                        />
-                      )}
-                    </Table.Cell>
-                    <Table.Cell grow>
-                      <Dropdown
-                        displayText={data.players[player].loadout}
-                        disabled={!(data.host || player === data.self)}
-                        options={data.loadouts}
-                        onSelected={(value) =>
-                          act('change_loadout', {
-                            player: player,
-                            loadout: value,
-                          })
-                        }
-                      />
-                    </Table.Cell>
-                    <Table.Cell collapsing>
-                      <ButtonCheckbox
-                        disabled={player !== data.self}
-                        checked={data.players[player].ready}
-                        onClick={() => act('ready')}
-                      />
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-                {Object.keys(data.observers).map((observer) => (
-                  <Table.Row key={observer}>
-                    <Table.Cell collapsing>
-                      {(!!data.observers[observer].host && (
-                        <Icon name="star" />
-                      )) || <Icon name="eye" />}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {(!(
-                        (data.host && !data.observers[observer].host) ||
-                        data.admin
-                      ) && <b>{observer}</b>) || (
-                        <Dropdown
-                          displayText={observer}
-                          options={['Kick', 'Transfer host', 'Toggle observe']}
-                          onSelected={(value) =>
-                            act('host', {
-                              id: observer,
-                              func: value,
-                            })
-                          }
-                        />
-                      )}
-                    </Table.Cell>
-                    <Table.Cell grow>Observing</Table.Cell>
-                  </Table.Row>
-                ))}
-              </Table>
-            </Section>
-          </Flex.Item>
-          <Flex.Item width="210px">
+        <Stack fill vertical>
+          <Stack.Item grow>
+            <Stack fill>
+              <Stack.Item grow={4}>
+                <PlayerColumn />
+              </Stack.Item>
+              <Stack.Item grow={3}>
+                <HostControls />
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+          <Stack.Item>
             <Section>
-              <Box textAlign="center">
-                {(!!data.host && (
+              <Stack fill>
+                <Stack.Item grow>
+                  {!!admin && (
+                    <Button
+                      icon="exclamation"
+                      color="caution"
+                      onClick={() => act('admin', { func: 'Force start' })}
+                    >
+                      Force Start
+                    </Button>
+                  )}
+                </Stack.Item>
+                <Stack.Item>
+                  <Button color="caution" onClick={() => act('observe')}>
+                    {observers[self] ? 'Join' : 'Observe'}
+                  </Button>
+                  <Button color="bad" onClick={() => act('leave_game')}>
+                    Leave Game
+                  </Button>
+                  <Button
+                    color="good"
+                    disabled={!allReady}
+                    onClick={() => act('start_game')}
+                  >
+                    Start Game
+                  </Button>
+                </Stack.Item>
+              </Stack>
+            </Section>
+          </Stack.Item>
+        </Stack>
+      </Window.Content>
+    </Window>
+  );
+}
+
+function PlayerColumn(props) {
+  const { act, data } = useBackend<Data>();
+  const {
+    admin,
+    host,
+    loadouts = [],
+    observers = [],
+    players = [],
+    self,
+  } = data;
+
+  const allReady = Object.keys(players).every(
+    (player) => players[player].ready,
+  );
+
+  return (
+    <Section fill scrollable={Object.keys(players).length > 30}>
+      <Table>
+        <Table.Row header>
+          <Table.Cell collapsing />
+          <Table.Cell>Name</Table.Cell>
+          <Table.Cell>Loadout</Table.Cell>
+          <Table.Cell collapsing align="center">
+            <Tooltip
+              content={!allReady ? 'Players are preparing' : 'Press start!'}
+            >
+              <Icon
+                name={!allReady ? 'check' : 'check-circle'}
+                color={allReady && 'green'}
+              />
+            </Tooltip>
+          </Table.Cell>
+        </Table.Row>
+        {Object.keys(players).map((player) => {
+          const fullAccess = (!!host && !!players[player].host) || !admin;
+
+          return (
+            <Table.Row className="candystripe" key={player}>
+              <Table.Cell collapsing verticalAlign="top" pt="2px">
+                {!!players[player].host && <Icon name="star" />}
+              </Table.Cell>
+              <Table.Cell verticalAlign="top" pt={!fullAccess && '2px'}>
+                {!fullAccess ? (
+                  <b>{player}</b>
+                ) : (
                   <Dropdown
-                    displayText={data.map.name}
-                    options={data.maps}
+                    width={9}
+                    selected={player}
+                    options={['Kick', 'Transfer host', 'Toggle observe']}
                     onSelected={(value) =>
                       act('host', {
-                        func: 'change_map',
-                        map: value,
+                        id: player,
+                        func: value,
                       })
                     }
                   />
-                )) || <b>{data.map.name}</b>}
-              </Box>
-              <Divider />
-              {data.map.desc}
-              <Divider />
-              <Box textAlign="center">
-                Maximum Play Time: <b>{`${data.map.time / 600}min`}</b>
-                <br />
-                Min players: <b>{data.map.min_players}</b>
-                <br />
-                Max players: <b>{data.map.max_players}</b>
-                <br />
-                Current players: <b>{Object.keys(data.players).length}</b>
-              </Box>
-              <Button.Checkbox
-                checked={data.global_chat}
-                disabled={!(data.host || data.admin)}
-                content="Heightened Hearing"
-                tooltip="Players can hear ghosts and hear through walls."
-                onClick={() =>
-                  act('host', {
-                    func: 'global_chat',
-                  })
-                }
-              />
-              <Divider />
-              <Box textAlign="center">Loadout Description</Box>
-              <Divider />
-              <Box textAlign="center">{data.loadoutdesc}</Box>
-              {!!data.playing && (
-                <>
-                  <Divider />
-                  <Box textAlign="center">
-                    The game is currently in progress, or loading.
-                  </Box>
-                </>
-              )}
-            </Section>
-          </Flex.Item>
-        </Flex>
-        <Button
-          color="good"
-          content="Start Game"
-          onClick={() => act('start_game')}
+                )}
+              </Table.Cell>
+              <Table.Cell>
+                <Dropdown
+                  width={10}
+                  selected={players[player].loadout}
+                  disabled={!host && player !== self}
+                  options={loadouts}
+                  onSelected={(value) =>
+                    act('change_loadout', {
+                      player: player,
+                      loadout: value,
+                    })
+                  }
+                />
+              </Table.Cell>
+              <Table.Cell align="right" verticalAlign="top" pt="2px">
+                <ButtonCheckbox
+                  disabled={player !== self}
+                  checked={players[player].ready}
+                  onClick={() => act('ready')}
+                />
+              </Table.Cell>
+            </Table.Row>
+          );
+        })}
+        {Object.keys(observers).map((observer) => {
+          const fullAccess = (!!host && !!players[observer].host) || admin;
+
+          return (
+            <Table.Row key={observer}>
+              <Table.Cell collapsing>
+                {(!!observers[observer].host && <Icon name="star" />) || (
+                  <Icon name="eye" />
+                )}
+              </Table.Cell>
+              <Table.Cell>
+                {!fullAccess ? (
+                  <b>{observer}</b>
+                ) : (
+                  <Dropdown
+                    width={8}
+                    selected={observer}
+                    options={['Kick', 'Transfer host', 'Toggle observe']}
+                    onSelected={(value) =>
+                      act('host', {
+                        id: observer,
+                        func: value,
+                      })
+                    }
+                  />
+                )}
+              </Table.Cell>
+              <Table.Cell>Observing</Table.Cell>
+            </Table.Row>
+          );
+        })}
+      </Table>
+    </Section>
+  );
+}
+
+function HostControls(props) {
+  const { act, data } = useBackend<Data>();
+  const {
+    active_mods = [],
+    admin,
+    host,
+    loadoutdesc,
+    map,
+    maps = [],
+    players = [],
+    playing,
+  } = data;
+
+  return (
+    <Section fill scrollable>
+      {!host ? (
+        <NoticeBox danger>{map.name}</NoticeBox>
+      ) : (
+        <Dropdown
+          color="average"
+          width="100%"
+          selected={map.name}
+          options={maps}
+          onSelected={(value) =>
+            act('host', {
+              func: 'change_map',
+              map: value,
+            })
+          }
         />
-        <Button
-          color="bad"
-          content="Leave Game"
-          onClick={() => act('leave_game')}
-        />
-        <Button
-          color="caution"
-          content={data.observers[data.self] ? 'Join' : 'Observe'}
-          onClick={() => act('observe')}
-        />
-        {!!data.admin && (
-          <Button
-            icon="exclamation"
-            color="caution"
-            content="Force Start"
-            onClick={() => act('admin', { func: 'Force start' })}
-          />
-        )}
-      </Window.Content>
-    </Window>
+      )}
+      <Divider />
+      {map.desc}
+      <Divider />
+      <LabeledList>
+        <LabeledList.Item label="Max Play Time">
+          {`${map.time / 600}min`}
+        </LabeledList.Item>
+        <LabeledList.Item label="Min Players">
+          {map.min_players}
+        </LabeledList.Item>
+        <LabeledList.Item label="Max Players">
+          {map.max_players}
+        </LabeledList.Item>
+        <LabeledList.Item label="Current Players">
+          {Object.keys(players).length}
+        </LabeledList.Item>
+      </LabeledList>
+      <Divider />
+      <Box textAlign="center" color="average">
+        {active_mods}
+      </Box>
+      {(!!admin || !!host) && (
+        <>
+          <Divider />
+          <Button textAlign="center" fluid onClick={() => act('open_mod_menu')}>
+            Toggle Modifiers
+          </Button>
+        </>
+      )}
+      <Divider />
+      <NoticeBox info align="center">
+        Loadout Description
+      </NoticeBox>
+
+      <Box textAlign="center">{loadoutdesc}</Box>
+      {!!playing && (
+        <>
+          <Divider />
+          <Box textAlign="center">
+            The game is currently in progress, or loading.
+          </Box>
+        </>
+      )}
+    </Section>
+  );
+}
+
+const ModSelector = (props) => {
+  const { act, data } = useBackend<Data>();
+  const { admin, host, mod_menu_open, modifiers = [] } = data;
+  if (!mod_menu_open || !(host || admin)) {
+    return null;
+  }
+
+  return (
+    <Modal>
+      <Button fluid color="bad" onClick={() => act('exit_mod_menu')}>
+        Go Back
+      </Button>
+      {modifiers.map((mod, index) => {
+        return (
+          <Button.Checkbox
+            key={index}
+            mb={2}
+            checked={mod.selected}
+            tooltip={mod.desc}
+            color={mod.selected ? 'green' : 'blue'}
+            disabled={!mod.selected && !mod.selectable}
+            onClick={() =>
+              act('toggle_modifier', {
+                modpath: mod.modpath,
+              })
+            }
+          >
+            {mod.name}
+          </Button.Checkbox>
+        );
+      })}
+    </Modal>
   );
 };

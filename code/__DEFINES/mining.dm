@@ -39,6 +39,17 @@
 /// The chance of ore spawning in a wall that is VENT_PROX_FAR tiles to a vent.
 #define VENT_CHANCE_FAR 1
 
+/// The amount of ore that is mined from a wall that is VENT_PROX_VERY_HIGH tiles to a vent.
+#define ORE_WALL_VERY_HIGH 5
+/// The amount of ore that is mined from a wall that is VENT_PROX_HIGH tiles to a vent.
+#define ORE_WALL_HIGH 4
+/// The amount of ore that is mined from a wall that is VENT_PROX_MEDIUM tiles to a vent.
+#define ORE_WALL_MEDIUM 3
+/// The amount of ore that is mined from a wall that is VENT_PROX_LOW tiles to a vent.
+#define ORE_WALL_LOW 2
+/// The amount of ore that is mined from a wall that is VENT_PROX_FAR tiles to a vent.
+#define ORE_WALL_FAR 1
+
 /// The number of points a miner gets for discovering a vent, multiplied by BOULDER_SIZE when completing a wave defense minus the discovery bonus.
 #define MINER_POINT_MULTIPLIER 100
 /// The multiplier that gets applied for automatically generated mining points.

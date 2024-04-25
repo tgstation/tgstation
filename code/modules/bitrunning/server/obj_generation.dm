@@ -43,6 +43,7 @@
 	var/datum/outfit/to_wear = new outfit_path()
 
 	to_wear.belt = /obj/item/bitrunning_host_monitor
+	to_wear.ears = null
 	to_wear.glasses = null
 	to_wear.gloves = null
 	to_wear.l_pocket = null
@@ -83,6 +84,13 @@
 
 		SSid_access.apply_trim_to_card(outfit_id, /datum/id_trim/bit_avatar)
 
+	avatar.AddComponent( \
+		/datum/component/simple_bodycam, \
+		camera_name = "bitrunner bodycam", \
+		c_tag = "Avatar [avatar.real_name]", \
+		network = BITRUNNER_CAMERA_NET, \
+		emp_proof = TRUE, \
+	)
 	return avatar
 
 /// Generates a new hololadder for the bitrunner. Effectively a respawn attempt.
@@ -187,3 +195,11 @@
 
 	if(failed)
 		to_chat(neo, span_warning("One of your disks failed to load. Check for duplicate or inactive disks."))
+
+	var/obj/item/organ/internal/brain/neo_brain = neo.get_organ_slot(ORGAN_SLOT_BRAIN)
+	for(var/obj/item/skillchip/skill_chip as anything in neo_brain?.skillchips)
+		if(!skill_chip.active)
+			continue
+		var/obj/item/skillchip/clone_chip = new skill_chip.type
+		avatar.implant_skillchip(clone_chip, force = TRUE)
+		clone_chip.try_activate_skillchip(silent = TRUE, force = TRUE)

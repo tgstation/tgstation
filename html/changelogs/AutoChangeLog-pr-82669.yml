@@ -1,0 +1,7 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - bugfix: "AI controlled monkeys are no longer catatonic, and they have primal eyes again when turned into humans."
+  - spellcheck: "Noticable organs now have more modular grammar, and their current grammar is fixed."
+  - refactor: "Refactored the code for displaying the messages for noticable organs."
+  - config: "Added a documented define of all our pronouns"

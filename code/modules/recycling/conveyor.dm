@@ -37,12 +37,28 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	//Direction -> if we have a conveyor belt in that direction
 	var/list/neighbors
 
-/obj/machinery/conveyor/Initialize(mapload)
+/obj/machinery/conveyor/Initialize(mapload, new_dir, new_id)
 	. = ..()
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_CONVEYOR_PRIORITY)
 	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN)
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	register_context()
+
+	if(new_dir)
+		setDir(new_dir)
+	if(new_id)
+		id = new_id
+	neighbors = list()
+	///Leaving onto conveyor detection won't work at this point, but that's alright since it's an optimization anyway
+	///Should be fine without it
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_EXITED = PROC_REF(conveyable_exit),
+		COMSIG_ATOM_ENTERED = PROC_REF(conveyable_enter),
+		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(conveyable_enter)
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+	update_move_direction()
+	LAZYADD(GLOB.conveyors_by_id[id], src)
 
 /obj/machinery/conveyor/examine(mob/user)
 	. = ..()
@@ -96,27 +112,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	icon_state = "conveyor_map_inverted"
 	flipped = TRUE
 
-// create a conveyor
-/obj/machinery/conveyor/Initialize(mapload, new_dir, new_id)
-	..()
-	if(new_dir)
-		setDir(new_dir)
-	if(new_id)
-		id = new_id
-	neighbors = list()
-	///Leaving onto conveyor detection won't work at this point, but that's alright since it's an optimization anyway
-	///Should be fine without it
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXITED = PROC_REF(conveyable_exit),
-		COMSIG_ATOM_ENTERED = PROC_REF(conveyable_enter),
-		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(conveyable_enter)
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-	update_move_direction()
-	LAZYADD(GLOB.conveyors_by_id[id], src)
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/conveyor/LateInitialize()
+/obj/machinery/conveyor/post_machine_initialize()
 	. = ..()
 	build_neighbors()
 
@@ -245,7 +241,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/proc/conveyable_enter(datum/source, atom/convayable)
 	SIGNAL_HANDLER
 	if(operating == CONVEYOR_OFF)
-		SSmove_manager.stop_looping(convayable, SSconveyors)
+		DSmove_manager.stop_looping(convayable, SSconveyors)
 		return
 	start_conveying(convayable)
 
@@ -253,12 +249,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	SIGNAL_HANDLER
 	var/has_conveyor = neighbors["[direction]"]
 	if(convayable.z != z || !has_conveyor || !isturf(convayable.loc)) //If you've entered something on us, stop moving
-		SSmove_manager.stop_looping(convayable, SSconveyors)
+		DSmove_manager.stop_looping(convayable, SSconveyors)
 
 /obj/machinery/conveyor/proc/start_conveying(atom/movable/moving)
 	if(QDELETED(moving))
 		return
-	var/datum/move_loop/move/moving_loop = SSmove_manager.processing_on(moving, SSconveyors)
+	var/datum/move_loop/move/moving_loop = DSmove_manager.processing_on(moving, SSconveyors)
 	if(moving_loop)
 		moving_loop.direction = movedir
 		moving_loop.delay = speed * 1 SECONDS
@@ -272,7 +268,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/proc/stop_conveying(atom/movable/thing)
 	if(!ismovable(thing))
 		return
-	SSmove_manager.stop_looping(thing, SSconveyors)
+	DSmove_manager.stop_looping(thing, SSconveyors)
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/attacking_item, mob/living/user, params)
@@ -619,9 +615,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(!attached_switch)
 		return
 
-	INVOKE_ASYNC(src, PROC_REF(update_conveyers), port)
+	INVOKE_ASYNC(src, PROC_REF(update_conveyors), port)
 
-/obj/item/circuit_component/conveyor_switch/proc/update_conveyers(datum/port/input/port)
+/obj/item/circuit_component/conveyor_switch/proc/update_conveyors(datum/port/input/port)
 	if(!attached_switch)
 		return
 

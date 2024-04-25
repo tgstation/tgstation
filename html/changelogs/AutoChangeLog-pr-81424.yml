@@ -1,7 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - balance: "Nerfs the burn times of flares and glowsticks, from 25/35 to 10/15 and 50/60! to 20/25."
-  - balance: "Glowsticks now dim as they burn"
-  - rscadd: "Glowsticks no longer leave an unusable action button sitting around then they're lit"
-  - bugfix: "Glowsticks actually burn down now (The code was broken)"

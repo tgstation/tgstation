@@ -8,70 +8,56 @@
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood(seconds_per_tick, times_fired)
-
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+	// Under these circumstances blood handling is not necessary
+	if(bodytemperature < BLOOD_STOP_TEMP || HAS_TRAIT(src, TRAIT_FAKEDEATH) || HAS_TRAIT(src, TRAIT_HUSK))
 		return
-
-	if(bodytemperature < BLOOD_STOP_TEMP || (HAS_TRAIT(src, TRAIT_HUSK))) //cold or husked people do not pump the blood.
+	// Run the signal, still allowing mobs with noblood to "handle blood" in their own way
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_HUMAN_ON_HANDLE_BLOOD, seconds_per_tick, times_fired)
+	if((sigreturn & HANDLE_BLOOD_HANDLED) || HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return
 
 	//Blood regeneration if there is some space
-	if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
-		var/nutrition_ratio = 0
-		switch(nutrition)
-			if(0 to NUTRITION_LEVEL_STARVING)
-				nutrition_ratio = 0.2
-			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-				nutrition_ratio = 0.4
-			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-				nutrition_ratio = 0.6
-			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-				nutrition_ratio = 0.8
-			else
-				nutrition_ratio = 1
-		if(satiety > 80)
-			nutrition_ratio *= 1.25
-		adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * seconds_per_tick)
-		blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * seconds_per_tick), BLOOD_VOLUME_NORMAL)
-
-	// we call lose_blood() here rather than quirk/process() to make sure that the blood loss happens in sync with life()
-	if(HAS_TRAIT(src, TRAIT_BLOOD_DEFICIENCY))
-		var/datum/quirk/blooddeficiency/blooddeficiency = get_quirk(/datum/quirk/blooddeficiency)
-		if(!isnull(blooddeficiency))
-			blooddeficiency.lose_blood(seconds_per_tick)
+	if(!(sigreturn & HANDLE_BLOOD_NO_NUTRITION_DRAIN))
+		if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
+			var/nutrition_ratio = round(nutrition / NUTRITION_LEVEL_WELL_FED, 0.2)
+			if(satiety > 80)
+				nutrition_ratio *= 1.25
+			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * seconds_per_tick)
+			blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * seconds_per_tick), BLOOD_VOLUME_NORMAL)
 
 	//Effects of bloodloss
-	var/word = pick("dizzy","woozy","faint")
-	switch(blood_volume)
-		if(BLOOD_VOLUME_MAX_LETHAL to INFINITY)
-			if(SPT_PROB(7.5, seconds_per_tick))
-				to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
-				investigate_log("has been gibbed by having too much blood.", INVESTIGATE_DEATHS)
-				inflate_gib()
-		if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
-			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(src, span_warning("You feel your skin swelling."))
-		if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
-			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(src, span_warning("You feel terribly bloated."))
-		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(src, span_warning("You feel [word]."))
-			adjustOxyLoss(round(0.005 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 1))
-		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-			adjustOxyLoss(round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 1))
-			if(SPT_PROB(2.5, seconds_per_tick))
-				set_eye_blur_if_lower(12 SECONDS)
-				to_chat(src, span_warning("You feel very [word]."))
-		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-			adjustOxyLoss(2.5 * seconds_per_tick)
-			if(SPT_PROB(7.5, seconds_per_tick))
-				Unconscious(rand(20,60))
-				to_chat(src, span_warning("You feel extremely [word]."))
-		if(-INFINITY to BLOOD_VOLUME_SURVIVE)
-			if(!HAS_TRAIT(src, TRAIT_NODEATH))
-				investigate_log("has died of bloodloss.", INVESTIGATE_DEATHS)
-				death()
+	if(!(sigreturn & HANDLE_BLOOD_NO_EFFECTS))
+		var/word = pick("dizzy","woozy","faint")
+		switch(blood_volume)
+			if(BLOOD_VOLUME_MAX_LETHAL to INFINITY)
+				if(SPT_PROB(7.5, seconds_per_tick))
+					to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
+					investigate_log("has been gibbed by having too much blood.", INVESTIGATE_DEATHS)
+					inflate_gib()
+			if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
+				if(SPT_PROB(5, seconds_per_tick))
+					to_chat(src, span_warning("You feel your skin swelling."))
+			if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
+				if(SPT_PROB(5, seconds_per_tick))
+					to_chat(src, span_warning("You feel terribly bloated."))
+			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
+				if(SPT_PROB(2.5, seconds_per_tick))
+					to_chat(src, span_warning("You feel [word]."))
+				adjustOxyLoss(round(0.005 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 1))
+			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
+				adjustOxyLoss(round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 1))
+				if(SPT_PROB(2.5, seconds_per_tick))
+					set_eye_blur_if_lower(12 SECONDS)
+					to_chat(src, span_warning("You feel very [word]."))
+			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
+				adjustOxyLoss(2.5 * seconds_per_tick)
+				if(SPT_PROB(7.5, seconds_per_tick))
+					Unconscious(rand(20,60))
+					to_chat(src, span_warning("You feel extremely [word]."))
+			if(-INFINITY to BLOOD_VOLUME_SURVIVE)
+				if(!HAS_TRAIT(src, TRAIT_NODEATH))
+					investigate_log("has died of bloodloss.", INVESTIGATE_DEATHS)
+					death()
 
 	var/temp_bleed = 0
 	//Bleeding out

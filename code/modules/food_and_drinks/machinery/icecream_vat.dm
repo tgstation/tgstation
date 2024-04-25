@@ -154,13 +154,12 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-/obj/machinery/icecream_vat/AltClick(mob/user)
-	if(!user.can_interact_with(src))
-		return FALSE
-	if(custom_ice_cream_beaker)
-		balloon_alert(user, "removed beaker")
-		try_put_in_hand(custom_ice_cream_beaker, user)
-	return ..()
+/obj/machinery/icecream_vat/click_alt(mob/user)
+	if(!custom_ice_cream_beaker)
+		return CLICK_ACTION_BLOCKING
+	balloon_alert(user, "removed beaker")
+	try_put_in_hand(custom_ice_cream_beaker, user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/icecream_vat/interact(mob/living/user)
 	. = ..()
@@ -248,6 +247,12 @@
 		for(var/reagents_used in flavor.ingredients)
 			reagents.remove_reagent(reagents_used, CONE_REAGENET_NEEDED)
 		balloon_alert_to_viewers("scoops [selected_flavour]", "scoops [selected_flavour]")
+
+	if(istype(cone))
+		if(isnull(cone.crafted_food_buff))
+			cone.crafted_food_buff = /datum/status_effect/food/chilling
+		if(user.mind)
+			ADD_TRAIT(cone, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
 
 ///Swaps the mode to the next one meant to be selected, then tells the user who changed it.
 /obj/machinery/icecream_vat/proc/swap_modes(mob/user)

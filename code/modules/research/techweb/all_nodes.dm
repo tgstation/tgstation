@@ -106,6 +106,7 @@
 		"slime_scanner",
 		"solar_panel",
 		"solar_tracker",
+		"souppot",
 		"space_heater",
 		"spoon",
 		"status_display_frame",
@@ -1020,6 +1021,7 @@
 		"borg_upgrade_rped",
 		"borg_upgrade_hypermod",
 		"borg_upgrade_inducer",
+		"borg_upgrade_engineeringomnitool",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
@@ -1035,6 +1037,7 @@
 		"borg_upgrade_piercinghypospray",
 		"borg_upgrade_pinpointer",
 		"borg_upgrade_surgicalprocessor",
+		"borg_upgrade_surgicalomnitool",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
@@ -1204,8 +1207,10 @@
 		"idcard",
 		"libraryconsole",
 		"mining",
+		"photobooth",
 		"rdcamera",
 		"seccamera",
+		"security_photobooth",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 

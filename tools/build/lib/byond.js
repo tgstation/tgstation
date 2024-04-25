@@ -158,7 +158,7 @@ export const DreamMaker = async (dmeFile, options = {}) => {
     const major = Number(version[1]);
     const minor = Number(version[2]);
     if(major < requiredMajorVersion || major == requiredMajorVersion && minor < requiredMinorVersion){
-      Juke.logger.error(`${requiredMajorVersion}.${requiredMinorVersion} DM version required`)
+      Juke.logger.error(`${requiredMajorVersion}.${requiredMinorVersion} or later DM version required. Version ${major}.${minor} found at: ${dmPath}`)
       throw new Juke.ExitCode(1);
     }
   }

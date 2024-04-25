@@ -239,6 +239,7 @@
 						"Black" = "black_mech_suit",
 						)
 
+
 /obj/item/clothing/under/costume/russian_officer
 	name = "\improper Russian officer's uniform"
 	desc = "The latest in fashionable russian outfits."
@@ -380,9 +381,24 @@
 	name = "Martial Artist Gi"
 	desc = "Assistant, nukie, whatever. You can beat anyone; it's called hard work!"
 	icon_state = "martial_arts_gi"
+	greyscale_config = /datum/greyscale_config/gi
+	greyscale_config_worn = /datum/greyscale_config/gi/worn
+	greyscale_colors = "#f1eeee#000000"
+	flags_1 = IS_PLAYER_COLORABLE_1
 	inhand_icon_state = null
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/gi/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
+
+/obj/item/clothing/under/costume/gi/goku
+	name = "Sacred Gi"
+	desc = "Created by a man who touched the hearts and lives of many."
+	icon_state = "martial_arts_gi_goku"
+	greyscale_colors = "#f89925#3e6dd7"
 
 /obj/item/clothing/under/costume/traditional
 	name = "Traditional Suit"
@@ -411,4 +427,18 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR
+
+/obj/item/clothing/under/costume/gamberson
+	name = "re-enactor's Gamberson"
+	desc = "A colorful set of clothes made to look like a medieval gamberson."
+	icon_state = "gamberson"
+	inhand_icon_state = null
+	female_sprite_flags = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/gamberson/military
+	name = "swordsman's Gamberson"
+	desc = "A padded medieval gamberson. Has enough woolen layers to dull a strike from any small weapon."
+	armor_type = /datum/armor/clothing_under/rank_security
+	has_sensor = NO_SENSORS
 

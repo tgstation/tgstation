@@ -38,7 +38,7 @@
 
 	register_context()
 
-/obj/machinery/bouldertech/LateInitialize()
+/obj/machinery/bouldertech/post_machine_initialize()
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -195,8 +195,11 @@
 	if(!can_process_golem(rockman))
 		return
 
+	if(!use_energy(active_power_usage * 1.5, force = FALSE))
+		say("Not enough energy!")
+		return
+
 	maim_golem(rockman)
-	use_power(active_power_usage * 1.5)
 	playsound(src, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 	COOLDOWN_START(src, accept_cooldown, 3 SECONDS)
@@ -241,9 +244,9 @@
 
 	return FALSE
 
-/obj/machinery/bouldertech/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+/obj/machinery/bouldertech/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(panel_open || user.combat_mode)
-		return ..()
+		return NONE
 
 	if(istype(tool, /obj/item/boulder))
 		var/obj/item/boulder/my_boulder = tool
@@ -273,7 +276,7 @@
 		to_chat(user, span_notice("You claim [amount] mining points from \the [src] to [id_card]."))
 		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/machinery/bouldertech/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
@@ -332,6 +335,9 @@
 		return
 	if(chosen_boulder.loc != src)
 		return
+	if(!use_energy(active_power_usage, force = FALSE))
+		say("Not enough energy!")
+		return
 
 	//if boulders are kept inside because there is no space to eject them, then they could be reprocessed, lets avoid that
 	if(!chosen_boulder.processed_by)
@@ -347,7 +353,6 @@
 			points_held = round(points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER)) // put point total here into machine
 			if(!silo_materials.mat_container.insert_amount_mat(quantity, possible_mat))
 				rejected_mats[possible_mat] = quantity
-		use_power(active_power_usage)
 
 		//puts back materials that couldn't be processed
 		chosen_boulder.set_custom_materials(rejected_mats, refining_efficiency)

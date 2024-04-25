@@ -85,8 +85,8 @@
 			pixel_y = stamp_offset_y + bonus_stamp_offset
 		)
 		stamp_image.appearance_flags |= RESET_COLOR
-		add_overlay(stamp_image)
 		bonus_stamp_offset -= 5
+		. += stamp_image
 
 	if(postmarked == TRUE)
 		var/image/postmark_image = image(
@@ -96,7 +96,7 @@
 			pixel_y = stamp_offset_y + rand(bonus_stamp_offset + 3, 1)
 		)
 		postmark_image.appearance_flags |= RESET_COLOR
-		add_overlay(postmark_image)
+		. += postmark_image
 
 /obj/item/mail/attackby(obj/item/W, mob/user, params)
 	// Destination tagging
@@ -512,7 +512,7 @@
 		return FALSE
 	if(loc != user)
 		return FALSE
-	mail_type = lowertext(mail_type)
+	mail_type = LOWER_TEXT(mail_type)
 
 	var/mail_armed = tgui_alert(user, "Arm it?", "Mail Counterfeiting", list("Yes", "No")) == "Yes"
 	if(isnull(mail_armed))

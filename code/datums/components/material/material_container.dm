@@ -102,7 +102,7 @@
 		var/datum/material/M = I
 		var/amt = materials[I] / SHEET_MATERIAL_AMOUNT
 		if(amt)
-			examine_texts += span_notice("It has [amt] sheets of [lowertext(M.name)] stored.")
+			examine_texts += span_notice("It has [amt] sheets of [LOWER_TEXT(M.name)] stored.")
 
 /datum/component/material_container/vv_edit_var(var_name, var_value)
 	var/old_flags = mat_container_flags
@@ -678,6 +678,7 @@
 	while(sheet_amt > 0)
 		//don't merge yet. we need to do stuff with it first
 		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, min(sheet_amt, MAX_STACK_SIZE), FALSE)
+		new_sheets.manufactured = TRUE
 		count += new_sheets.amount
 		//use material & deduct work needed
 		use_amount_mat(new_sheets.amount * SHEET_MATERIAL_AMOUNT, material)

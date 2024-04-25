@@ -29,7 +29,7 @@
 	if(LAZYLEN(genetic_makeup_buffer) > 0)
 		. += span_notice("It has the genetic makeup of \"[genetic_makeup_buffer["name"]]\" stored inside its buffer")
 
-/obj/item/sequence_scanner/interact_with_atom(atom/interacting_with, mob/living/user)
+/obj/item/sequence_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
 
@@ -46,7 +46,7 @@
 	user.visible_message(span_notice("[user] fails to analyze [interacting_with]'s genetic sequence."), span_warning("[interacting_with] has no readable genetic sequence!"))
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/sequence_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user)
+/obj/item/sequence_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
 
@@ -55,7 +55,7 @@
 	//no scanning if its a husk, DNA-less Species or DNA that isn't able to be copied by a changeling/disease
 	if (!HAS_TRAIT(interacting_with, TRAIT_GENELESS) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA) && !HAS_TRAIT(interacting_with, TRAIT_NO_DNA_COPY))
 		user.visible_message(span_warning("[user] is scanning [interacting_with]'s genetic makeup."))
-		if(!do_after(user, 3 SECONDS))
+		if(!do_after(user, 3 SECONDS, interacting_with))
 			balloon_alert(user, "scan failed!")
 			user.visible_message(span_warning("[user] fails to scan [interacting_with]'s genetic makeup."))
 			return ITEM_INTERACT_BLOCKING

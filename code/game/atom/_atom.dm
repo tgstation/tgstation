@@ -136,6 +136,9 @@
 	///whether ghosts can see screentips on it
 	var/ghost_screentips = FALSE
 
+	/// Flags to check for in can_perform_action. Used in alt-click checks
+	var/interaction_flags_click = NONE
+
 /**
  * Top level of the destroy chain for most atoms
  *
@@ -367,11 +370,6 @@
 ///Return the air if we can analyze it
 /atom/proc/return_analyzable_air()
 	return null
-
-///Check if this atoms eye is still alive (probably)
-/atom/proc/check_eye(mob/user)
-	SIGNAL_HANDLER
-	return
 
 /atom/proc/Bumped(atom/movable/bumped_atom)
 	set waitfor = FALSE
@@ -792,6 +790,10 @@
  * Override this if you want an atom to be usable as a supplypod.
  */
 /atom/proc/setClosed()
+	return
+
+///Called after the atom is 'tamed' for type-specific operations, Usually called by the tameable component but also other things.
+/atom/proc/tamed(mob/living/tamer, obj/item/food)
 	return
 
 /**
