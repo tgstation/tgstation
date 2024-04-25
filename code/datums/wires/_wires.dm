@@ -262,7 +262,7 @@
 		if(user.is_holding_item_of_type(/obj/item/blueprints))
 			return TRUE
 		for(var/obj/item/photo/photo in user.held_items)
-			if(!photo.picture.has_blueprints)
+			if(!photo.picture || !photo.picture.has_blueprints)
 				continue
 			return TRUE
 
