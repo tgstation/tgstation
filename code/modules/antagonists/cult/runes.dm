@@ -401,7 +401,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(2)
 				animate_spawn_sword(rod, /obj/item/melee/cultblade)
 			else
-				animate_spawn_sword(rod, /obj/item/cult_bastard)
+				animate_spawn_sword(rod, /obj/item/melee/cultblade/halberd)
 		return TRUE
 
 	return FALSE

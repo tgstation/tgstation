@@ -104,14 +104,6 @@
 /obj/structure/window/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
-/obj/structure/window/rust_heretic_act()
-	add_atom_colour("#917c65", FIXED_COLOUR_PRIORITY)
-	armor = null
-	max_integrity *= 0.5
-	atom_integrity *= 0.5
-	if(!HAS_TRAIT(src, TRAIT_RUSTY))
-		AddElement(/datum/element/rust)
-
 /obj/structure/window/singularity_pull(S, current_size)
 	..()
 	if(anchored && current_size >= STAGE_TWO)
@@ -575,6 +567,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/spawner, 0)
 	state = WINDOW_OUT_OF_FRAME
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/unanchored/spawner, 0)
+
+// You can't rust glass! So only reinforced glass can be impacted.
+/obj/structure/window/reinforced/rust_heretic_act()
+	add_atom_colour("#917c65", FIXED_COLOUR_PRIORITY)
+	armor = null
+	max_integrity *= 0.5
+	atom_integrity *= 0.5
+	if(!HAS_TRAIT(src, TRAIT_RUSTY))
+		AddElement(/datum/element/rust)
 
 /obj/structure/window/plasma
 	name = "plasma window"

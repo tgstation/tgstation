@@ -310,26 +310,13 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			other_bible.inhand_icon_state = inhand_icon_state
 			other_bible.deity_name = deity_name
 
-	if(istype(bible_smacked, /obj/item/cult_bastard) && !IS_CULTIST(user))
+	if(istype(bible_smacked, /obj/item/melee/weapon/cultblade/haunted) && !IS_CULTIST(user))
 		. |= AFTERATTACK_PROCESSED_ITEM
-		var/obj/item/cult_bastard/sword = bible_smacked
-		bible_smacked.balloon_alert(user, "exorcising...")
+		var/obj/item/melee/weapon/cultblade/haunted/sword = bible_smacked
+		sword.balloon_alert(user, "exorcising...")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
 		if(do_after(user, 4 SECONDS, target = sword))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
-			for(var/obj/item/soulstone/stone in sword.contents)
-				stone.required_role = null
-				for(var/mob/living/basic/shade/shade in stone)
-					var/datum/antagonist/cult/cultist = shade.mind.has_antag_datum(/datum/antagonist/cult)
-					if(cultist)
-						cultist.silent = TRUE
-						cultist.on_removal()
-						SSblackbox.record_feedback("tally", "cult_shade_purified", 1)
-					shade.theme = THEME_HOLY
-					shade.name = "Purified [shade.real_name]"
-					shade.update_appearance(UPDATE_ICON_STATE)
-				stone.release_shades(user)
-				qdel(stone)
 			new /obj/item/nullrod/claymore(get_turf(sword))
 			user.visible_message(span_notice("[user] exorcises [sword]!"))
 			qdel(sword)

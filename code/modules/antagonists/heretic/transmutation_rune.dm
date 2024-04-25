@@ -2,7 +2,8 @@
 /obj/effect/heretic_rune
 	name = "transmutation rune"
 	desc = "A flowing circle of shapes and runes is etched into the floor, filled with a thick black tar-like fluid. This one looks pretty small."
-	icon_state = ""
+	icon = 'icons/obj/antags/cult/runes.dmi'
+	icon_state = "main1"
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF

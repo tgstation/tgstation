@@ -223,7 +223,7 @@
 	if(!heretic_datum)
 		CRASH("how did this happen")
 	// This list will be almost identical to unlocked_heretic_items, with the same keys, the difference being the values will be 1 to 5.
-	var/list/rewards = heretic_datum.unlocked_heretic_items
+	var/list/rewards = heretic_datum.unlocked_heretic_items.Copy()
 	// We will make it increasingly less likely to get a reward if you've already got it
 	for(var/possible_reward in heretic_datum.unlocked_heretic_items)
 		var/amount_already_awarded = heretic_datum.unlocked_heretic_items[possible_reward]

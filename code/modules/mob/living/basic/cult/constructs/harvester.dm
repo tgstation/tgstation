@@ -131,10 +131,6 @@
 	button_icon_state = "sintouch"
 	the_construct.seeking = TRUE
 
-// Add real rusted sprite
-// Delimbs noncultists
-// Goes through normal walls
-
 /mob/living/basic/construct/harvester/heretic
 	name = "Rusted Harvester"
 	real_name = "Rusted Harvester"
@@ -142,8 +138,8 @@
 	icon_state = "harvester"
 	icon_living = "harvester"
 	construct_spells = list(
-		/datum/action/cooldown/spell/aoe/area_conversion,
-		/datum/action/cooldown/spell/forcewall/cult,
+		/datum/action/cooldown/spell/aoe/rust_conversion,
+		/datum/action/cooldown/spell/pointed/rust_construction,
 	)
 	can_repair = TRUE
 	slowed_by_drag = FALSE
@@ -151,13 +147,8 @@
 	lighting_cutoff_red = 10
 	lighting_cutoff_green = 5
 	lighting_cutoff_blue = 20
-	construct_spells = list(
-		/datum/action/cooldown/spell/aoe/rust_conversion,
-		/datum/action/cooldown/spell/pointed/rust_construction,
-	)
-	playstyle_string = "<B>You are a Rusted Harvester, built to serve the Sanguine Apostate, twisted to work the will of the Mansus. You are fragile and weak, but you rend cultists (only) apart on each attack. Follow your Master's orders!<B>"
+	playstyle_string = "<B>You are a Rusted Harvester, built to serve the Sanguine Apostate, but twisted to work the will of the Mansus. You are fragile and weak, but you rend cultists (only) apart on each attack. Follow your Master's orders!<B>"
 	theme = THEME_HERETIC
-	//amputate_callback = CALLBACK(PROC_REF(jank_wrapper), antagdatum = /datum/antagonist/cult)
 
 /mob/living/basic/construct/harvester/heretic/add_elements()
 	AddElement(/datum/element/wall_walker, or_trait = TRAIT_RUSTY)

@@ -118,10 +118,10 @@ GLOBAL_LIST_INIT(heretic_paths_to_haunted_sword_abilities,list(
 	SWORD_SPELL = /datum/action/cooldown/spell/charged/beam/fire_blast, SWORD_PREFIX = "ashen"), \
 	// Flesh
 	PATH_FLESH = list(WIELDER_SPELL = /datum/action/cooldown/spell/pointed/blood_siphon, \
-	SWORD_SPELL = /datum/action/cooldown/spell/pointed/cleave, SWORD_PREFIX = "bleeding"), \
+	SWORD_SPELL = /datum/action/cooldown/spell/pointed/cleave, SWORD_PREFIX = "sanguine"), \
 	// Void
 	PATH_VOID = list(WIELDER_SPELL = /datum/action/cooldown/spell/pointed/void_phase, \
-	SWORD_SPELL = /datum/action/cooldown/spell/cone/staggered/cone_of_cold/void, SWORD_PREFIX = "icy"), \
+	SWORD_SPELL = /datum/action/cooldown/spell/cone/staggered/cone_of_cold/void, SWORD_PREFIX = "tenebrous"), \
 	// Blade
 	PATH_BLADE = list(WIELDER_SPELL = /datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted, \
 	SWORD_SPELL = /datum/action/cooldown/spell/pointed/projectile/furious_steel/solo, SWORD_PREFIX = "keen"), \
@@ -140,23 +140,6 @@ GLOBAL_LIST_INIT(heretic_paths_to_haunted_sword_abilities,list(
 	// Starter
 	PATH_START = list(WIELDER_SPELL = null, SWORD_SPELL = null, SWORD_PREFIX = "nascent") // lol loser
 ))
-
-/* List of issues to fix0
-
-7. check to make sure you cant spawn holes next to eachother doesnt work (fixed?)
-
-B. Proteon hole turns into a monser when rusted // later
-
-*/
-
-/mob/living/carbon/human/proc/test(hooman = pick(TRUE,FALSE))
-	var/datum/antagonist/heretic/heredat = mind.add_antag_datum(/datum/antagonist/heretic)
-	heredat.heretic_path = tgui_input_list(src, "x", "y", list(PATH_RUST,PATH_FLESH,PATH_ASH,PATH_VOID,PATH_BLADE,PATH_COSMIC,PATH_LOCK,PATH_MOON))
-	var/obj/item/melee/cultblade/haunted/evil = new(loc, src)
-	//evil.bind_soul(src,null)
-	if(hooman)
-		var/mob/living/carbon/human/homan = new(loc)
-		homan.put_in_hands(evil)
 
 /obj/item/melee/cultblade/haunted
 	name = "haunted longsword"
@@ -181,7 +164,7 @@ B. Proteon hole turns into a monser when rusted // later
 /obj/item/melee/cultblade/haunted/Initialize(mapload, mob/soul_to_bind, mob/awakener, no_binding)
 	. = ..()
 
-	if(!no_binding)
+	if(!no_binding || mapload)
 		bind_soul(soul_to_bind, awakener)
 	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 	AddElement(/datum/element/heretic_focus)
@@ -213,8 +196,8 @@ B. Proteon hole turns into a monser when rusted // later
 	// Add the fallen antag datum, give them a heads-up of what's happening.
 	var/datum/antagonist/soultrapped_heretic/fallen = trapped_entity.mind.add_antag_datum(/datum/antagonist/soultrapped_heretic)
 	fallen.objectives = copied_objectives
+	to_chat(trapped_entity, span_alert("You've been sacrificed to the Enemy, and trapped inside a haunted blade! While you cannot escape, you may decide by yourself to be a nuisance with the few abilities you still have, or aid whoever wields it."))
 	// Unrelated bug: Objectives dont show up on the you are X thing as they are varsetted post-facto
-	to_chat(trapped_entity, span_alert("You've been sacrificed to the Enemy, and trapped inside a haunted blade! While you cannot escape, you may decide by yourself to be a nuisance with the few abilities you still have, or if you wish to aid whoever wields it."))
 
 	// Assigning the spells to give to the wielder and spirit.
 	// Let them cast the given spell.
@@ -247,9 +230,6 @@ B. Proteon hole turns into a monser when rusted // later
 	. = ..()
 	if(slot != ITEM_SLOT_HANDS)
 		path_wielder_action?.Remove(user)
-
-/obj/item/melee/cultblade/haunted/proc/cebug(mob/dude,mob/man)
-	bind_soul(dude, man)
 
 /obj/item/melee/cultblade/ghost
 	name = "eldritch sword"
@@ -708,6 +688,8 @@ B. Proteon hole turns into a monser when rusted // later
 
 #undef MAX_SHUTTLE_CURSES
 
+#define GATEWAY_TURF_SCAN_RANGE 40
+
 /obj/item/proteon_orb
 	name = "summoning orb"
 	desc = "An eerie translucent orb that feels impossibly light. Legends say summoning orbs are created from corrupted scrying orbs. If you hold it close to your ears, you can hear the screams of the damned."
@@ -727,7 +709,7 @@ B. Proteon hole turns into a monser when rusted // later
 
 /obj/item/proteon_orb/attack_self(mob/living/user)
 
-	var/list/turfs_to_scan = detect_room(get_turf(user), max_size = 40)
+	var/list/turfs_to_scan = detect_room(get_turf(user), max_size = GATEWAY_TURF_SCAN_RANGE)
 
 	if(!IS_CULTIST(user))
 		to_chat(user, span_cult_large("\"You want to enter my domain? Go ahead.\""))
@@ -770,6 +752,8 @@ B. Proteon hole turns into a monser when rusted // later
 	var/mob/living/basic/construct/proteon/hostile/remnant = new(get_step_rand(src))
 	remnant.name = "[user]" // no, they do not become it
 	remnant.transform *= 1.5
+
+#undef GATEWAY_TURF_SCAN_RANGE
 
 /obj/item/cult_shift
 	name = "veil shifter"

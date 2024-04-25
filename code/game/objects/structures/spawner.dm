@@ -257,7 +257,7 @@
 
 /obj/structure/spawner/sentient/proteon_spawner
 	name = "eldritch gateway"
-	desc = "A dizzying structure that somehow links into Nar'Sie's own domain. The screams of the damned echo continously..."
+	desc = "A dizzying structure that somehow links into Nar'Sie's own domain. The screams of the damned echo continously."
 	icon = 'icons/obj/antags/cult/structures.dmi'
 	icon_state = "hole"
 	light_power = 2
@@ -272,7 +272,6 @@
 	role_name = "A proteon cult construct"
 	assumed_control_message = null
 
- // not AI
 /obj/structure/spawner/sentient/proteon_spawner/examine_status(mob/user)
 	if(IS_CULTIST(user) || !isliving(user))
 		return span_cult("It's at <b>[round(atom_integrity * 100 / max_integrity)]%</b> stability.")
@@ -282,17 +281,15 @@
 	. = ..()
 	if(!IS_CULTIST(user) && isliving(user))
 		var/mob/living/luser = user
-		luser.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25)
-		. += span_danger("The voices of the damned echo relentlessly in your mind, rebounding on the walls of your self ever stronger the more you focus on [src]. Best keep away...")
+		luser.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15)
+		. += span_danger("The voices of the damned echo relentlessly in your mind, continously rebounding on the walls of your self the more you focus on [src]. Your head pounds, better keep away...")
 	else
 		. += span_cult("The gateway will create one weak proteon construct every [spawn_time * 0.1] seconds, up to a total of [max_mobs], that may be controlled by the spirits of the dead.")
-		. += span_cult_bold("You may use a ritual knife to slice your palm open, sending the gateway into a powerful frenzy that doubles its capacity and halves its cooldown, but this will eventually destroy it.")
-		// logic for above handled in cult_ritual_item component
 
 /obj/structure/spawner/sentient/proteon_spawner/became_player_controlled(mob/living/basic/construct/proteon/proteon)
 	proteon.mind.add_antag_datum(/datum/antagonist/cult)
 	proteon.add_filter("awoken_proteon", 3, list("type" = "outline", "color" = COLOR_CULT_RED, "size" = 2))
-	visible_message(span_cult_bold("[proteon] awakens, glowing an eerie red as it stirs from its stupor!")) // only this owrks
+	visible_message(span_cult_bold("[proteon] awakens, glowing an eerie red as it stirs from its stupor!"))
 	playsound(proteon, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
 	proteon.balloon_alert_to_viewers("awoken!")
 	addtimer(CALLBACK(src, PROC_REF(remove_wake_outline), proteon), 8 SECONDS)
@@ -304,4 +301,4 @@
 
 /obj/structure/spawner/sentient/proteon_spawner/handle_deconstruct(disassembled)
 	playsound('sound/hallucinations/veryfar_noise.ogg', 125)
-	visible_message(span_cult_bold("[src] completely falls apart, the screams of the damned peaking before slowly fading away..."))
+	visible_message(span_cult_bold("[src] completely falls apart, the screams of the damned reaching a feverous pitch before slowly fading away into nothing."))

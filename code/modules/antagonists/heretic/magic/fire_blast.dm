@@ -23,12 +23,8 @@
 	var/beam_duration = 2 SECONDS
 
 /datum/action/cooldown/spell/charged/beam/fire_blast/cast(atom/cast_on)
-	var/mob/living/caster
-	if(isliving(cast_on))
-		caster = cast_on
-	if(isliving(cast_on.loc))
-		caster = cast_on.loc
-	if(caster)
+	var/mob/living/caster = get_caster_from_target(cast_on)
+	if(caster && istype(caster))
 		// Caster becomes fireblasted, but in a good way - heals damage over time
 		caster.apply_status_effect(/datum/status_effect/fire_blasted, beam_duration, -2)
 	return ..()

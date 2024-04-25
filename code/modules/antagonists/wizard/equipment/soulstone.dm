@@ -269,21 +269,6 @@
 	if(IS_CULTIST(user) || HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) || user.stat == DEAD)
 		. += extra_desc
 
-/obj/structure/constructshell/proc/get_construct(mob/user, obj/item/soulstone/stone)
-	return show_radial_menu(user, src, GLOB.construct_radial_images, custom_check = CALLBACK(stone, TYPE_PROC_REF(/obj/item/soulstone, check_menu), user, src), require_near = TRUE, tooltips = TRUE)
-
-/obj/structure/constructshell/harvester
-	name = "harvest shell"
-	icon = 'icons/mob/shells.dmi'
-	icon_state = "construct_cult"
-	desc = "A wicked machine used by those skilled in magical arts, enhanced with the unwilling power of the eldritch. It is inactive."
-	extra_desc = {"<span class='cult'>A construct shell, used to house bound souls from a soulstone.\n
-		Placing a soulstone with a soul into this shell allows you to produce an uniquely powerful construct:\n
-		A <b>Harvester</b>, which is very fragile, but shears limbs off with each blow and can freely convert areas and create forcewalls.</span>"}
-
-/obj/structure/constructshell/harvester/get_construct(mob/user)
-	return CONSTRUCT_HARVESTER
-
 /obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/soulstone))
 		var/obj/item/soulstone/SS = O

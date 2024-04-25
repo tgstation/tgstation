@@ -72,11 +72,6 @@
 	base_icon_state = "deathwand"
 	max_charges = 3 //3, 2, 2, 1
 
-/obj/item/gun/magic/wand/death/Initialize(mapload)
-	. = ..()
-	new /obj/item/gun/magic/wand/antag/heretic(loc)
-	new /obj/item/gun/magic/wand/antag/cult(loc)
-
 /obj/item/gun/magic/wand/death/zap_self(mob/living/user)
 	..()
 	charges--

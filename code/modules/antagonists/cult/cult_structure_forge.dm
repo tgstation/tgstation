@@ -31,7 +31,7 @@
 			),
 	)
 
-	var/extra_item = extra_options() // extra items no work!
+	var/extra_item = extra_options()
 
 	options = forge_items
 	if(!isnull(extra_item))

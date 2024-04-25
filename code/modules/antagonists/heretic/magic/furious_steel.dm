@@ -152,7 +152,6 @@
 	button_icon_state = "cursed_steel"
 	sound = 'sound/weapons/guillotine.ogg'
 
-	school = SCHOOL_FORBIDDEN
 	cooldown_time = 40 SECONDS
 	invocation = "IA!"
 	invocation_type = INVOCATION_SHOUT
@@ -161,6 +160,5 @@
 
 	active_msg = "You summon forth two cursed blades."
 	deactive_msg = "You conceal the cursed blades."
-	cast_range = 20
 	projectile_amount = 2
 	projectile_type = /obj/projectile/floating_blade/haunted

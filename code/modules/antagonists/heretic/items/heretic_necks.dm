@@ -4,9 +4,7 @@
 	icon_state = "eldritch_necklace"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF
-// didnt add venom
-// sprite offcenter
-// 1.5 windup
+
 /obj/item/clothing/neck/heretic_focus/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/heretic_focus)
@@ -17,7 +15,6 @@
 	icon_state = "crimson_focus"
 	var/component
 
-//#define TRAIT_WEARING_FOCUS "gingus2"
 
 /obj/item/clothing/neck/heretic_focus/crimson_focus/equipped(mob/living/user, slot)
 	. = ..()
@@ -96,7 +93,6 @@
 	// I want it to poison the user but I also think it'd be neat if they got their juice as well. But that cancels most of the damage out. So I dunno.
 	user.reagents?.add_reagent(/datum/reagent/fuel/unholywater, rand(6, 10))
 	user.reagents?.add_reagent(/datum/reagent/eldritch, rand(6, 10))
-	// doesnt work!!
 	qdel(src)
 
 /obj/item/clothing/neck/heretic_focus/crimson_focus/examine(mob/user)

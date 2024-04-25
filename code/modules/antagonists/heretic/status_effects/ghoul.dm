@@ -4,7 +4,7 @@
 	duration = -1
 	alert_type = /atom/movable/screen/alert/status_effect/ghoul
 	/// The new max health value set for the ghoul, if supplied
-	var/new_max_health = 25
+	var/new_max_health
 	/// What, if any, stamina modifier we applied to the ghoul mob
 	var/stamina_mod_applied
 	/// Reference to the master of the ghoul's mind
@@ -22,7 +22,7 @@
 
 /datum/status_effect/ghoul/on_creation(
 	mob/living/new_owner,
-	new_max_health = 25,
+	new_max_health,
 	datum/mind/master_mind,
 	datum/callback/on_made_callback,
 	datum/callback/on_lost_callback,
