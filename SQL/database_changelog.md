@@ -30,9 +30,6 @@ CREATE TABLE `ipintel` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 ```
-
------------------------------------------------------
-
 -----------------------------------------------------
 Version 5.26, 03 December 2023, by distributivgesetz
 Set the default value of cloneloss to 0, as it's obsolete and it won't be set by blackbox anymore.
