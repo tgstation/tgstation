@@ -104,14 +104,13 @@
 	var/next_beep = 0
 
 /obj/machinery/teleport/hub/syndicate/Destroy()
-	if(src in GLOB.active_syndicate_beacons)
-		GLOB.active_syndicate_beacons -= src
+	GLOB.active_syndicate_beacons -= src
 	return ..()
 
 /obj/machinery/teleport/hub/syndicate/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, PAINTING_SET_TARGET, PROC_REF(on_target_set))
-	RegisterSignals(src, list(COMSIG_QDELETING,	COMSIG_MACHINERY_BROKEN, PAINTING_CUT_CONNECTIONS), PROC_REF(remove_connections))
+	RegisterSignal(src, COMSIG_PAINTING_SET_TARGET, PROC_REF(on_target_set))
+	RegisterSignals(src, list(COMSIG_QDELETING, COMSIG_MACHINERY_BROKEN, COMSIG_PAINTING_CUT_CONNECTIONS), PROC_REF(remove_connections))
 	var/obj/item/stock_parts/matter_bin/super/super_bin = new(src)
 	LAZYADD(component_parts, super_bin)
 	RefreshParts()
@@ -140,17 +139,17 @@
 	if(return_target)
 		var/atom/old_return_target = return_target
 		return_target = null
-		SEND_SIGNAL(old_return_target, TELEPORTER_SET_TARGET, src)
+		SEND_SIGNAL(old_return_target, COMSIG_TELEPORTER_SET_TARGET, src)
 		update_appearance(UPDATE_ICON)
 
 /obj/machinery/teleport/hub/syndicate/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!(src in GLOB.active_syndicate_beacons))
 		GLOB.active_syndicate_beacons += src
-		user.balloon_alert(user, "Activated")
+		user.balloon_alert(user, "activated")
 		return
 	GLOB.active_syndicate_beacons -= src
-	user.balloon_alert(user, "De-activated")
+	user.balloon_alert(user, "deactivated")
 	remove_connections(src)
 
 /obj/machinery/teleport/hub/syndicate/update_icon_state()

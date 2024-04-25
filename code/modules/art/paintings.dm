@@ -517,14 +517,30 @@
 /obj/structure/sign/painting/syndicate_teleporter/Initialize(mapload, dir, building)
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(on_damage_taken))
-	RegisterSignals(src, list(COMSIG_QDELETING,	COMSIG_MACHINERY_BROKEN, TELEPORTER_SET_TARGET), PROC_REF(remove_connections))
+	RegisterSignals(src, list(COMSIG_QDELETING,	COMSIG_MACHINERY_BROKEN, COMSIG_TELEPORTER_SET_TARGET), PROC_REF(remove_connections))
 
 /obj/structure/sign/painting/syndicate_teleporter/Destroy()
 	if(current_canvas)
 		current_canvas.forceMove(drop_location())
-	if(teleport_target)
-		teleport_target = null
+	teleport_target = null
 	return ..()
+
+/obj/structure/sign/painting/syndicate_teleporter/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(!IS_TRAITOR(user))
+		return NONE
+	if(integrity_compromised)
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/sign/painting/syndicate_teleporter/atom_deconstruct(disassembled = TRUE)
+	var/obj/item/removed_painting = new /obj/item/wallframe/painting/syndicate_teleporter(user)
+	if(!user.put_in_hands(removed_painting))
+		removed_painting.dropped(user)
 
 /obj/structure/sign/painting/syndicate_teleporter/attack_hand(mob/user, list/modifiers)
 	if(!teleport_target || !ishuman(user) || !IS_TRAITOR(user) || integrity_compromised)
@@ -539,7 +555,7 @@
 
 	if(teleport_target)
 		remove_connections(src)
-		user.balloon_alert(user, "Target cleared")
+		user.balloon_alert(user, "target cleared")
 		update_appearance(UPDATE_ICON)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -547,9 +563,9 @@
 	if(!set_target)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	teleport_target = set_target
-	SEND_SIGNAL(teleport_target, PAINTING_SET_TARGET, src)
+	SEND_SIGNAL(teleport_target, COMSIG_PAINTING_SET_TARGET, src)
 	update_appearance(UPDATE_ICON)
-	user.balloon_alert(user, "Target set")
+	user.balloon_alert(user, "target set")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/sign/painting/syndicate_teleporter/update_icon_state(updates)
@@ -562,22 +578,6 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/structure/sign/painting/syndicate_teleporter/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(!IS_TRAITOR(user))
-		return
-	if(integrity_compromised)
-		qdel(src)
-		return
-	remove_from_wall(user)
-
-///Removes the painting frame from the wall so that we can re-use it
-/obj/structure/sign/painting/syndicate_teleporter/proc/remove_from_wall(mob/living/user)
-	var/obj/item/removed_painting = new /obj/item/wallframe/painting/syndicate_teleporter(user)
-	if(!user.put_in_hands(removed_painting))
-		removed_painting.dropped(user)
-	qdel(src)
-
 ///Once we take enough damage, we can no longer be recovered
 /obj/structure/sign/painting/syndicate_teleporter/proc/on_damage_taken(datum/source, damage_amount)
 	SIGNAL_HANDLER
@@ -587,8 +587,7 @@
 	if(integrity > 50)
 		return
 
-	if(current_canvas)
-		current_canvas.forceMove(drop_location())
+	current_canvas?.forceMove(drop_location())
 	integrity_compromised = TRUE
 	remove_connections(src)
 	update_appearance(UPDATE_ICON)
@@ -599,7 +598,7 @@
 	if(teleport_target)
 		var/atom/old_teleport_target = teleport_target
 		teleport_target = null
-		SEND_SIGNAL(old_teleport_target, PAINTING_CUT_CONNECTIONS, src)
+		SEND_SIGNAL(old_teleport_target, COMSIG_PAINTING_CUT_CONNECTIONS, src)
 		update_appearance(UPDATE_ICON)
 
 /obj/structure/sign/painting
