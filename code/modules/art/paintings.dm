@@ -520,8 +520,7 @@
 	RegisterSignals(src, list(COMSIG_QDELETING,	COMSIG_MACHINERY_BROKEN, COMSIG_TELEPORTER_SET_TARGET), PROC_REF(remove_connections))
 
 /obj/structure/sign/painting/syndicate_teleporter/Destroy()
-	if(current_canvas)
-		current_canvas.forceMove(drop_location())
+	QDEL_NULL(current_canvas)
 	teleport_target = null
 	return ..()
 
@@ -538,9 +537,8 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/sign/painting/syndicate_teleporter/atom_deconstruct(disassembled = TRUE)
-	var/obj/item/removed_painting = new /obj/item/wallframe/painting/syndicate_teleporter(user)
-	if(!user.put_in_hands(removed_painting))
-		removed_painting.dropped(user)
+	if(disassembled)
+		new /obj/item/wallframe/painting/syndicate_teleporter(loc)
 
 /obj/structure/sign/painting/syndicate_teleporter/attack_hand(mob/user, list/modifiers)
 	if(!teleport_target || !ishuman(user) || !IS_TRAITOR(user) || integrity_compromised)
