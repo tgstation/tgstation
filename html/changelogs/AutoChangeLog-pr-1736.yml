@@ -1,0 +1,4 @@
+author: "Yawet330"
+delete-after: True
+changes:
+  - bugfix: "Fusion should now actually partially ignore plasmaglass instead of being puppy-tier harmless you can stand next to."
