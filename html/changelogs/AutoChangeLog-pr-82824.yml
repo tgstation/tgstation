@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "Longfall modules no logner stun you when they activate."
-  - balance: "Falling from a height greater than one z-level while using the longfall module will still stagger you."

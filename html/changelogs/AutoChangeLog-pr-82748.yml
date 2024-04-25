@@ -1,6 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - rscadd: "whistle emote"
-  - refactor: "Refactored how laugh, sneeze, cough and cry sound is called in the code, report strange behavior with these emotes."
-  - sound: "added sounds for whistle, cry, cough, sneeze, laugh for moths and lizards emotes"
