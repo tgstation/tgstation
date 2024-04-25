@@ -65,18 +65,16 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/interact_with_playmate/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/mob/living/basic/living_pawn = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
 
 	if(QDELETED(target))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	living_pawn.manual_emote("plays with [target]!")
 	living_pawn.spin(spintime = 4, speed = 1)
 	living_pawn.ClickOn(target)
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/interact_with_playmate/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
@@ -92,16 +90,14 @@
 	controller.queue_behavior(/datum/ai_behavior/relay_pda_message, BB_LAST_RECIEVED_MESSAGE)
 
 /datum/ai_behavior/relay_pda_message/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/mob/living/basic/living_pawn = controller.pawn
 	var/text_to_say = controller.blackboard[target_key]
 	if(isnull(text_to_say))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	living_pawn.say(text_to_say, forced = "AI controller")
 	living_pawn.spin(spintime = 4, speed = 1)
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/relay_pda_message/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()

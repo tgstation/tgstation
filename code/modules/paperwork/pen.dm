@@ -180,6 +180,7 @@
 	if(current_skin)
 		desc = "It's an expensive [current_skin] fountain pen. The nib is quite sharp."
 
+
 /obj/item/pen/fountain/captain/proc/reskin_dart_insert(datum/component/dart_insert/insert_comp)
 	if(!istype(insert_comp)) //You really shouldn't be sending this signal from anything other than a dart_insert component
 		return

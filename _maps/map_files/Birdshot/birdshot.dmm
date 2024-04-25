@@ -264,7 +264,6 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
-/obj/effect/landmark/start/virologist,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "agy" = (
@@ -10017,6 +10016,10 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/glasses/meson,
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = -8;
+	pixel_y = 14
+	},
 /turf/open/floor/iron/grimy,
 /area/station/engineering/main)
 "erK" = (
@@ -11518,6 +11521,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/item/airlock_painter,
 /turf/open/floor/iron/grimy,
 /area/station/engineering/main)
 "eWj" = (
@@ -12001,12 +12005,12 @@
 /area/station/service/cafeteria)
 "fhX" = (
 /obj/structure/table/greyscale,
-/obj/item/folder/yellow{
-	pixel_x = 2;
-	pixel_y = 4
+/obj/item/lightreplacer{
+	pixel_y = 7
 	},
-/obj/item/pen{
-	pixel_x = -4
+/obj/item/lightreplacer{
+	pixel_y = 2;
+	pixel_x = -2
 	},
 /turf/open/floor/iron/grimy,
 /area/station/engineering/main)
@@ -19326,7 +19330,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/effect/landmark/start/virologist,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "hGE" = (
@@ -24946,7 +24949,7 @@
 /area/station/ai_monitored/security/armory)
 "jBA" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/super/full,
 /obj/machinery/camera/directional/north{
 	c_tag = "AI Chamber - SMES";
 	network = list("aicore")
@@ -25662,10 +25665,6 @@
 "jKU" = (
 /turf/closed/wall,
 /area/station/engineering/atmos/storage/gas)
-"jLi" = (
-/obj/effect/landmark/start/virologist,
-/turf/open/floor/iron/showroomfloor,
-/area/station/medical/virology)
 "jLl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -27015,7 +27014,7 @@
 /area/station/hallway/primary/central/fore)
 "kiQ" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/super/full,
 /obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/turret_protected/aisat/equipment)
@@ -35266,13 +35265,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/hidden,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/server)
-"mIa" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/virologist,
-/turf/open/floor/iron/white/small,
-/area/station/medical/virology)
 "mIg" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -36960,28 +36952,9 @@
 /turf/open/floor/iron/textured_half,
 /area/station/security)
 "nki" = (
-/obj/structure/rack,
-/obj/item/airlock_painter,
-/obj/item/lightreplacer{
-	pixel_y = 7
-	},
-/obj/item/clothing/head/utility/hardhat/welding{
-	pixel_x = -4;
-	pixel_y = -3
-	},
-/obj/item/clothing/head/utility/hardhat/welding{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/utility/hardhat/welding{
-	pixel_x = -4;
-	pixel_y = 3
-	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/cold/dim/directional/west,
-/obj/item/grenade/chem_grenade/smart_metal_foam{
-	pixel_x = 9;
-	pixel_y = 5
-	},
+/obj/machinery/vending/wardrobe/engi_wardrobe,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "nkl" = (
@@ -45700,10 +45673,6 @@
 	},
 /turf/open/floor/iron/dark/side,
 /area/station/science/xenobiology)
-"pRb" = (
-/obj/item/computer_disk/virus/mime,
-/turf/closed/mineral/random/stationside,
-/area/space/nearstation)
 "pRe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table/wood,
@@ -70351,8 +70320,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "wHO" = (
-/obj/structure/dresser,
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/structure/closet/crate/wooden/toy,
 /turf/open/floor/wood/parquet,
 /area/station/service/greenroom)
 "wHP" = (
@@ -88018,7 +87987,7 @@ aJq
 aJq
 aJq
 aJq
-pRb
+aJq
 dDB
 dDB
 dDB
@@ -88275,7 +88244,7 @@ aJq
 aJq
 aJq
 aJq
-pRb
+aJq
 aJq
 aJq
 aJq
@@ -88532,7 +88501,7 @@ aJq
 aJq
 aJq
 aJq
-pRb
+aJq
 aJq
 aJq
 aJq
@@ -107040,7 +107009,7 @@ bUv
 cSk
 gLb
 nlS
-mIa
+eRX
 gpM
 sSQ
 hrF
@@ -108578,7 +108547,7 @@ jrk
 gIF
 wYA
 bpS
-jLi
+hOp
 nYk
 vVP
 xAA

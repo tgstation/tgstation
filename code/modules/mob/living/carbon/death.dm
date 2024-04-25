@@ -1,5 +1,5 @@
 /mob/living/carbon/death(gibbed)
-	if(stat == DEAD || HAS_TRAIT(src, TRAIT_NODEATH) && !gibbed)
+	if(stat == DEAD)
 		return
 
 	losebreath = 0

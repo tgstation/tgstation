@@ -72,6 +72,7 @@
 		return // Not our friend, can't boss us around
 
 	INVOKE_ASYNC(src, PROC_REF(display_radial_menu), clicker)
+	return CLICK_ACTION_SUCCESS
 
 /// Actually display the radial menu and then do something with the result
 /datum/component/obeys_commands/proc/display_radial_menu(mob/living/clicker)

@@ -159,10 +159,7 @@
 	if(panel_open && reagents.total_volume)
 		. += span_notice("You can use a plunger to empty the feed storage.")
 
-/obj/structure/aquarium/AltClick(mob/living/user)
-	. = ..()
-	if(!user.can_perform_action(src))
-		return
+/obj/structure/aquarium/click_alt(mob/living/user)
 	panel_open = !panel_open
 	balloon_alert(user, "panel [panel_open ? "open" : "closed"]")
 	if(panel_open)
@@ -170,6 +167,7 @@
 	else
 		reagents.flags &= ~(TRANSPARENT|REFILLABLE)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/aquarium/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

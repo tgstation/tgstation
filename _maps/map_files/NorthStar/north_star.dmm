@@ -12179,7 +12179,7 @@
 /obj/machinery/camera/motion/directional/north{
 	c_tag = "Minisat North"
 	},
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/super/full,
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat/service)
@@ -61910,7 +61910,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "pUB" = (
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/super/full,
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat/service)
@@ -72967,7 +72967,6 @@
 	specialfunctions = 4
 	},
 /obj/effect/turf_decal/tile/green/opposingcorners,
-/obj/effect/landmark/start/virologist,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "sPs" = (
@@ -76630,14 +76629,6 @@
 	},
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor3/port/aft)
-"tKr" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/green/opposingcorners,
-/obj/effect/landmark/start/virologist,
-/turf/open/floor/iron/white,
-/area/station/medical/virology)
 "tKs" = (
 /obj/structure/curtain,
 /obj/structure/fans/tiny{
@@ -79799,7 +79790,7 @@
 /area/station/maintenance/solars/starboard/fore)
 "uDR" = (
 /obj/machinery/firealarm/directional/west,
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/super/full,
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -196076,7 +196067,7 @@ iOA
 utl
 doh
 gJz
-tKr
+rPC
 hwQ
 piz
 aWO
@@ -196590,7 +196581,7 @@ iOA
 dfU
 pZm
 wJy
-tKr
+rPC
 dVV
 bLm
 yhv

@@ -157,12 +157,6 @@
 	inserted_item = attacking_item
 	playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
-/obj/item/modular_computer/pda/AltClick(mob/user)
-	. = ..()
-	if(.)
-		return
-
-	remove_pen(user)
 
 /obj/item/modular_computer/pda/CtrlClick(mob/user)
 	. = ..()
