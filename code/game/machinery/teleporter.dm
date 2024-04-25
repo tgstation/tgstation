@@ -129,6 +129,8 @@
 ///When a painting sets us as their teleport target, we save them as a reference so we may return to it
 /obj/machinery/teleport/hub/syndicate/proc/on_target_set(datum/source, atom/return_portal)
 	SIGNAL_HANDLER
+	if(return_target) //So we don't end up with multiple paintings linked to 1 hub
+		remove_connections(source)
 	return_target = return_portal
 	update_appearance(UPDATE_ICON)
 
