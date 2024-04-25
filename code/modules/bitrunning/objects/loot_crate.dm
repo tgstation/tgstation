@@ -7,6 +7,7 @@
 #define ORE_MULTIPLIER_URANIUM 0.4
 #define ORE_MULTIPLIER_DIAMOND 0.3
 #define ORE_MULTIPLIER_BLUESPACE_CRYSTAL 0.2
+#define BEPIS_CHANCE_PER_REWARD_TIER 5
 
 /obj/structure/closet/crate/secure/bitrunning // Base class. Do not spawn this.
 	name = "base class cache"
@@ -64,7 +65,7 @@
 		new /obj/item/stack/ore/diamond(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_DIAMOND))
 		new /obj/item/stack/ore/bluespace_crystal(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_BLUESPACE_CRYSTAL))
 
-	if(reward_points > 1 && LAZYLEN(SSresearch.techweb_nodes_experimental) && prob(min(100, reward_points * 10)))
+	if(reward_points > 1 && LAZYLEN(SSresearch.techweb_nodes_experimental) && prob(min(100, reward_points * BEPIS_CHANCE_PER_REWARD_TIER)))
 		new /obj/item/disk/design_disk/bepis/remove_tech(src)
 
 /// Handles generating random numbers & calculating loot totals
@@ -96,3 +97,4 @@
 #undef ORE_MULTIPLIER_URANIUM
 #undef ORE_MULTIPLIER_DIAMOND
 #undef ORE_MULTIPLIER_BLUESPACE_CRYSTAL
+#undef BEPIS_CHANCE_PER_REWARD_TIER
