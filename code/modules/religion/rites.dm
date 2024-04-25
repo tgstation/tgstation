@@ -128,22 +128,22 @@
 /datum/religion_rites/machine_blessing/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
 	var/altar_turf = get_turf(religious_tool)
-	arm = list(
+	var/arm = list(
 		/obj/item/organ/internal/cyberimp/arm/combat,
 		/obj/item/organ/internal/cyberimp/arm/surgery = 1000000,
 		/obj/item/organ/internal/cyberimp/arm/toolset = 1500000
 	)
-	eyes = list(
+	var/eyes = list(
 		/obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
 		/obj/item/organ/internal/cyberimp/eyes/hud/medical,
 		/obj/item/organ/internal/eyes/robotic/shield = 2,
 		/obj/item/organ/internal/eyes/robotic/glow
 	)
-	chest = list(
+	var/chest = list(
 		/obj/item/organ/internal/cyberimp/chest/reviver,
 		/obj/item/organ/internal/cyberimp/chest/thrusters = 2
 	)
-	head = list(
+	var/head = list(
 		/obj/item/organ/internal/cyberimp/brain/anti_drop = 100,
 		/obj/item/organ/internal/cyberimp/brain/anti_stun = 10
 	)
