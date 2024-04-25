@@ -37,7 +37,8 @@
 	return ..()
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
-	seek_safety(user)
+	if(!seek_safety(user))
+		return ..()
 
 /obj/item/melee/sickly_blade/proc/seek_safety(mob/user)
 	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
@@ -187,15 +188,12 @@
 
 	AddComponent(/datum/component/cult_ritual_item, span_cult(examine_text), turfs_that_boost_us = /turf) // Always fast to draw!
 
-/obj/item/melee/sickly_blade/cursed/attack_self(mob/user)
+/obj/item/melee/sickly_blade/cursed/attack_self_secondary(mob/user)
 	seek_safety(user, TRUE)
 
-/obj/item/melee/sickly_blade/cursed/attack_self_secondary(mob/user)
-	seek_safety(user, FALSE)
-
-/obj/item/melee/sickly_blade/cursed/seek_safety(mob/user, primary_attack_self = FALSE)
-	if(IS_CULTIST(user) && primary_attack_self)
-		return
+/obj/item/melee/sickly_blade/cursed/seek_safety(mob/user, secondary_attack = FALSE)
+	if(IS_CULTIST(user) && secondary_attack == FALSE)
+		return FALSE
 	..()
 
 /obj/item/melee/sickly_blade/cursed/check_usability(mob/living/user)
@@ -203,7 +201,7 @@
 		return TRUE
 	var/mob/living/carbon/human/human_user = user
 	if(prob(15))
-		to_chat(user, span_cultlarge(pick("\"An untouched mind? Amusing.\"", "\" I suppose it isn't worth the effort to stop you.\"", "\"Go ahead. I don't care.\"", "\"You'll be mine soon enough.\"")))
+		to_chat(user, span_cult_large(pick("\"An untouched mind? Amusing.\"", "\" I suppose it isn't worth the effort to stop you.\"", "\"Go ahead. I don't care.\"", "\"You'll be mine soon enough.\"")))
 		var/obj/item/bodypart/affecting = user.get_active_hand()
 		if(!affecting)
 			return

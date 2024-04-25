@@ -4,16 +4,19 @@
 	argument_hash_start_idx = 2
 	/// What kind of walls can we pass through?
 	var/wall_type
+	var/or_trait
 
 /datum/element/wall_walker/Attach(
 	datum/target,
 	wall_type = /turf/closed/wall,
+	or_trait
 )
 	. = ..()
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
 	src.wall_type = wall_type
+	src.or_trait = or_trait
 	RegisterSignal(target, COMSIG_LIVING_WALL_BUMP, PROC_REF(try_pass_wall))
 	RegisterSignal(target, COMSIG_LIVING_WALL_EXITED, PROC_REF(exit_wall))
 
@@ -23,7 +26,10 @@
 
 /// If the wall is of the proper type, pass into it and keep hold on whatever you're pulling
 /datum/element/wall_walker/proc/try_pass_wall(mob/living/passing_mob, turf/closed/bumped_wall)
-	if(!istype(bumped_wall, wall_type))
+	if(wall_type && !istype(bumped_wall, wall_type))
+		return
+
+	if(or_trait && !HAS_TRAIT(bumped_wall, or_trait))
 		return
 
 	var/atom/movable/stored_pulling = passing_mob.pulling

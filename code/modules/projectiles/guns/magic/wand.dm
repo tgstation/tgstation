@@ -128,7 +128,7 @@
 	icon_state = "ion"
 	var/antag = /datum/antagonist/traitor
 
-/obj/projectile/magic/antag/on_hit(atom/target)
+/obj/projectile/magic/antag/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
 
 	if(isliving(target))

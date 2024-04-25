@@ -88,13 +88,13 @@
 
 		SEND_SIGNAL(src, COMSIG_SPAWNER_SPAWNED, created)
 		RegisterSignal(created, COMSIG_QDELETING, PROC_REF(on_deleted))
+		spawn_callback?.Invoke(created)
 
 
 	if (spawn_text)
 		spawner.visible_message(span_danger("A creature [spawn_text] [spawner]."))
 
 
-	spawn_callback?.Invoke(created)
 
 /// Remove weakrefs to atoms which have been killed or deleted without us picking it up somehow
 /datum/component/spawner/proc/validate_references()

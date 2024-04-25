@@ -524,7 +524,9 @@
 	/// Typepath of a mob to summon when we finish the recipe.
 	var/mob/living/mob_to_summon
 	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
-	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
+	//var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
+
+/datum/heretic_knowledge/var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
 
 /datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	summon_ritual_mob(user, loc, mob_to_summon)

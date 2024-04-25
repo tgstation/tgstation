@@ -506,9 +506,9 @@
 					make_new_construct(/mob/living/basic/construct/artificer/noncult, target, creator, cultoverride, loc_override)
 		if(CONSTRUCT_HARVESTER)
 			if(IS_HERETIC_OR_MONSTER(creator))
-				makeNewConstruct(/mob/living/basic/hostile/construct/harvester/heretic, target, creator, cultoverride, loc_override)
+				make_new_construct(/mob/living/basic/construct/harvester/heretic, target, creator, cultoverride, loc_override)
 			else
-				makeNewConstruct(/mob/living/basic/hostile/construct/harvester, target, creator, cultoverride, loc_override)
+				make_new_construct(/mob/living/basic/construct/harvester, target, creator, cultoverride, loc_override)
 
 /proc/make_new_construct(mob/living/basic/construct/ctype, mob/target, mob/stoner = null, cultoverride = FALSE, loc_override = null)
 	if(QDELETED(target))

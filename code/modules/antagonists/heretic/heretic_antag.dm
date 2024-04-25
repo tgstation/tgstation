@@ -83,15 +83,8 @@
 	// List that keeps track of which items have been gifted to the heretic after a cultist was sacrificed. Used to alter drop chances to reduce dupes.
 	var/list/unlocked_heretic_items = list(
 		/obj/item/melee/sickly_blade/cursed = 0,
-		/obj/item/clothing/neck/heretic_focus/crimson_focus = 0
-		/mob/living/simple_animal/hostile/construct/harvester/heretic = 0,
-	)
-
-	// List that keeps track of which items have been gifted to the heretic after a cultist was sacrificed. Used to alter drop chances to reduce dupes.
-	var/list/unlocked_heretic_items = list(
-		/obj/item/melee/sickly_blade/cursed = 0,
-		/obj/item/clothing/neck/heretic_focus/crimson_focus = 0
-		/mob/living/simple_animal/hostile/construct/harvester/heretic = 0,
+		/obj/item/clothing/neck/heretic_focus/crimson_focus = 0,
+		/mob/living/basic/construct/harvester/heretic = 0,
 	)
 
 /datum/antagonist/heretic/Destroy()
@@ -216,7 +209,8 @@
 	if(give_objectives)
 		forge_primary_objectives()
 
-	ADD_TRAIT(owner, TRAIT_MANSUS_TOUCHED, REF(src))
+	ADD_TRAIT(owner.current, TRAIT_MANSUS_TOUCHED, REF(src))
+	RegisterSignal(owner.current, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 
@@ -233,6 +227,7 @@
 		knowledge.on_lose(owner.current, src)
 
 	REMOVE_TRAIT(owner, TRAIT_MANSUS_TOUCHED, REF(src))
+	UnregisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED)
 
 	QDEL_LIST_ASSOC_VAL(researched_knowledge)
 	return ..()
@@ -415,34 +410,23 @@
 /datum/antagonist/heretic/proc/on_cult_sacrificed(mob/living/source, list/invokers)
 	SIGNAL_HANDLER
 
-	//new /obj/item/cult_bastard(source.loc)
-	//var/obj/item/melee/cultblade/haunted/evil_in_a_jar = GLOB.heretic_paths_to_haunted_sword_typepaths[heretic_path]
-
+	// Create the blade, give it the heretic and a randomly-chosen master for the soul sword component
 	var/obj/item/melee/cultblade/haunted/haunted_blade = new(get_turf(source), source, pick(invokers))
 
 	ASYNC
 		haunted_blade.gender_reveal(outline_color = COLOR_CULT_RED)
 
-	//evil_in_a_jar.trapped_heretic_soul = new(evil_in_a_jar)
-	//source.mind.transfer_to(evil_in_a_jar.trapped_heretic_soul)
-	//evil_in_a_jar.trapped_heretic_soul.mind?.antag_datums |= source.mind?.antag_datums
-	//evil_in_a_jar.activate_path_abilities()
-
-	//evil_in_a_jar.trapped_heretic_soul.faction = source.faction.Copy()
-	//evil_in_a_jar.trapped_heretic_soul.copy_languages(source, LANGUAGE_MIND)
-
-	//make it dust heretic
-
 	for(var/mob/living/culto as anything in invokers)
-		to_chat(culto, span_cultlarge("\"A follower of the forgotten gods! You must be rewarded for such a valuable sacrifice.\""))
+		to_chat(culto, span_cult_large("\"A follower of the forgotten gods! You must be rewarded for such a valuable sacrifice.\""))
 
+	// Locate a cultist team (Is there a better way??)
 	var/mob/living/random_cultist = pick(invokers)
-
 	var/datum/antagonist/cult/antag = random_cultist.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
 	if(!antag)
 		CRASH("offer invoker has no mind or cult datum")
 	var/datum/team/cult/cult_team = antag.get_team()
 
+	// Unlock one of 3 special items!
 	var/list/possible_unlocks
 	for(var/i in cult_team.unlocked_heretic_items)
 		if(cult_team.unlocked_heretic_items[i] == TRUE)
@@ -455,9 +439,7 @@
 		for(var/datum/mind/mind as anything in cult_team.members)
 			if(mind.current)
 				SEND_SOUND(mind.current, 'sound/magic/clockwork/narsie_attack.ogg')
-				to_chat(mind.current, span_cultlarge(span_warning("Arcane and forbidden knowledge floods your forges and archives. The cult has learned how to create the ")) + span_cultlarge(span_hypnophrase("[result]!")))
-
-	source.dust(TRUE, TRUE, TRUE)
+				to_chat(mind.current, span_cult_large(span_warning("Arcane and forbidden knowledge floods your forges and archives. The cult has learned how to create the ")) + span_cult_large(span_hypnophrase("[result]!")))
 
 	return SILENCE_SACRIFICE_MESSAGE|DUST_SACRIFICE
 
@@ -472,7 +454,7 @@
 
 	// Once the first animation ends, we animate the thing going down, with a lesser glow.
 	animate(src, pixel_y = 0, time = anim_time * 0.5, easing = QUAD_EASING | EASE_IN)
-	modify_filter("ready_outline", 3, list("size" = 1))
+	modify_filter("ready_outline", list("size" = 1))
 	stoplag(anim_time * 0.5)
 
 	// // The item has lowered back onto the ground, remove the filter and refresh the layer.

@@ -143,17 +143,13 @@
 	if (extra_control_checks && !extra_control_checks.Invoke(harbinger))
 		return
 	harbinger.log_message("took control of [new_body].", LOG_GAME)
-	new_body.key = harbinger.key
-	to_chat(new_body, span_boldnotice(assumed_control_message))
+	harbinger.mind.transfer_to(new_body)
+	// Already qdels due to below proc but just in case
+	qdel(src)
+
+/// When someone assumes control, get rid of our component
+/datum/component/ghost_direct_control/proc/on_login(mob/harbinger)
+	SIGNAL_HANDLER
+	to_chat(harbinger, span_boldnotice(assumed_control_message))
 	after_assumed_control?.Invoke(harbinger)
-	qdel(src)
-
-/// When someone else assumes control via some other means, get rid of our component
-/datum/component/ghost_direct_control/proc/on_login()
-	SIGNAL_HANDLER
-	qdel(src)
-
-/// When someone else assumes control via some other means, get rid of our component
-/datum/component/ghost_direct_control/proc/on_login()
-	SIGNAL_HANDLER
 	qdel(src)

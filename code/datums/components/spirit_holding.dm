@@ -10,12 +10,12 @@
 	///mob contained in the item.
 	var/mob/living/basic/shade/bound_spirit
 
-/datum/component/spirit_holding/Initialize(mob/soul_to_bind, mob/awakener, allow_renaming = TRUE)
+/datum/component/spirit_holding/Initialize(datum/mind/soul_to_bind, mob/awakener, allow_renaming = TRUE)
 	if(!ismovable(parent)) //you may apply this to mobs, i take no responsibility for how that works out
 		return COMPONENT_INCOMPATIBLE
 	src.allow_renaming = allow_renaming
 	if(soul_to_bind)
-		bind_the_soule(soul_to_bind, awakener, soul_to_bind.real_name)
+		bind_the_soule(soul_to_bind, awakener, soul_to_bind.name)
 
 /datum/component/spirit_holding/Destroy(force)
 	. = ..()
@@ -82,7 +82,7 @@
 		to_chat(ghost, span_userdanger("The new vessel for your spirit has been destroyed! You remain an unbound ghost."))
 		return
 
-	bind_the_soule(chosen_spirit, awakener)
+	bind_the_soule(ghost, awakener)
 
 	//Add new signals for parent and stop attempting to awaken
 	RegisterSignal(parent, COMSIG_ATOM_RELAYMOVE, PROC_REF(block_buckle_message))
@@ -97,12 +97,10 @@
 	if(valid_input_name)
 		bound_spirit.fully_replace_character_name(null, "The spirit of [valid_input_name]")
 
-/datum/component/spirit_holding/proc/bind_the_soule(mob/chosen_spirit, mob/awakener, name_override)
+/datum/component/spirit_holding/proc/bind_the_soule(datum/mind/chosen_spirit, mob/awakener, name_override)
 	bound_spirit = new(parent)
-	bound_spirit.ckey = chosen_spirit.ckey
+	chosen_spirit.transfer_to(bound_spirit)
 	bound_spirit.fully_replace_character_name(null, "The spirit of [name_override ? name_override : parent]")
-	bound_spirit.status_flags |= GODMODE
-	bound_spirit.copy_languages(awakener, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the awakener.
 	bound_spirit.get_language_holder().omnitongue = TRUE //Grants omnitongue
 
 /**

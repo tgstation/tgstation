@@ -23,19 +23,23 @@
 		pulling can pass through runed walls effortlessly.</B>"
 	can_repair = TRUE
 	slowed_by_drag = FALSE
+	var/datum/action/innate/seek_prey/seek
 
 /mob/living/basic/construct/harvester/Initialize(mapload)
 	. = ..()
-	AddElement(\
-		/datum/element/amputating_limbs,\
+	add_elements()
+	seek = new(src)
+	seek.Grant(src)
+	seek.Activate()
+
+/mob/living/basic/construct/harvester/proc/add_elements()
+	AddElement(/datum/element/wall_walker, /turf/closed/wall/mineral/cult)
+	AddComponent(\
+		/datum/component/amputating_limbs,\
 		surgery_time = 0,\
 		surgery_verb = "slicing",\
 		minimum_stat = CONSCIOUS,\
 	)
-	AddElement(/datum/element/wall_walker, /turf/closed/wall/mineral/cult)
-	var/datum/action/innate/seek_prey/seek = new(src)
-	seek.Grant(src)
-	seek.Activate()
 
 /// If the attack is a limbless carbon, abort the attack, paralyze them, and get a special message from Nar'Sie.
 /mob/living/basic/construct/harvester/resolve_unarmed_attack(atom/attack_target, list/modifiers)
@@ -126,3 +130,50 @@
 	desc = "Activate to track Nar'Sie!"
 	button_icon_state = "sintouch"
 	the_construct.seeking = TRUE
+
+// Add real rusted sprite
+// Delimbs noncultists
+// Goes through normal walls
+
+/mob/living/basic/construct/harvester/heretic
+	name = "Rusted Harvester"
+	real_name = "Rusted Harvester"
+	desc = "A long, thin, decrepit construct originally built to herald Nar'Sie's rise, corrupted and rusted by the forces of the Mansus to spread its will instead."
+	icon_state = "harvester"
+	icon_living = "harvester"
+	construct_spells = list(
+		/datum/action/cooldown/spell/aoe/area_conversion,
+		/datum/action/cooldown/spell/forcewall/cult,
+	)
+	can_repair = TRUE
+	slowed_by_drag = FALSE
+	// Dim green
+	lighting_cutoff_red = 10
+	lighting_cutoff_green = 5
+	lighting_cutoff_blue = 20
+	construct_spells = list(
+		/datum/action/cooldown/spell/aoe/rust_conversion,
+		/datum/action/cooldown/spell/pointed/rust_construction,
+	)
+	playstyle_string = "<B>You are a Rusted Harvester, built to serve the Sanguine Apostate, twisted to work the will of the Mansus. You are fragile and weak, but you rend cultists (only) apart on each attack. Follow your Master's orders!<B>"
+	theme = THEME_HERETIC
+	//amputate_callback = CALLBACK(PROC_REF(jank_wrapper), antagdatum = /datum/antagonist/cult)
+
+/mob/living/basic/construct/harvester/heretic/add_elements()
+	AddElement(/datum/element/wall_walker, or_trait = TRAIT_RUSTY)
+	AddComponent(\
+		/datum/component/amputating_limbs,\
+		surgery_time = 0,\
+		surgery_verb = "slicing",\
+		minimum_stat = CONSCIOUS,\
+		pre_hit_callback = CALLBACK(src, PROC_REF(is_cultist_handler)),\
+	)
+
+/mob/living/basic/construct/harvester/heretic/proc/is_cultist_handler(mob/victim)
+	return IS_CULTIST(victim)
+
+/mob/living/basic/construct/harvester/heretic/Initialize(mapload)
+	. = ..()
+	qdel(seek)
+	ADD_TRAIT(src, TRAIT_MANSUS_TOUCHED, REF(src))
+	add_filter("rusted_harvester", 3, list("type" = "outline", "color" = COLOR_GREEN, "size" = 2, "alpha" = 40))

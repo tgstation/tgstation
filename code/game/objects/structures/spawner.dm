@@ -70,7 +70,8 @@
 		spawn_time = spawn_time, \
 		max_spawned = max_mobs, \
 		faction = faction, \
-		spawn_text = spawn_text, CALLBACK(src, PROC_REF(on_mob_spawn)), \
+		spawn_text = spawn_text,\
+		spawn_callback = CALLBACK(src, PROC_REF(on_mob_spawn)), \
 	)
 
 /obj/structure/spawner/attack_animal(mob/living/simple_animal/user, list/modifiers)
@@ -233,6 +234,15 @@
 	var/role_name = "A sentient mob"
 	var/assumed_control_message = "You are a sentient mob from a badly coded spawner"
 
+/obj/structure/spawner/sentient/Initialize(mapload)
+	. = ..()
+	notify_ghosts(
+		"A [name] has been created in \the [get_area(src)]!",
+		source = src,
+		header = "Sentient Spawner Created",
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+	)
+
 /obj/structure/spawner/sentient/on_mob_spawn(atom/created_atom)
 	created_atom.AddComponent(\
 		/datum/component/ghost_direct_control,\
@@ -256,7 +266,7 @@
 	density = FALSE
 	max_mobs = 2
 	spawn_time = 1 MINUTES
-	mob_types = list(/mob/living/simple_animal/hostile/construct/proteon/hostile)
+	mob_types = list(/mob/living/basic/construct/proteon/hostile)
 	spawn_text = "arises from"
 	faction = list(FACTION_CULT)
 	role_name = "A proteon cult construct"
@@ -268,26 +278,6 @@
 		return span_cult("It's at <b>[round(atom_integrity * 100 / max_integrity)]%</b> stability.")
 	return ..()
 
-/obj/structure/spawner/sentient/proteon_spawner/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(!isconstruct(user))
-		return ..()
-
-	var/mob/living/simple_animal/hostile/construct/healer = user
-	if(!healer.can_repair)
-		return ..()
-
-	if(atom_integrity >= max_integrity)
-		to_chat(user, span_cult("You cannot repair [src], as it's undamaged!"))
-		return
-
-	user.changeNext_move(CLICK_CD_MELEE)
-	atom_integrity = min(max_integrity, atom_integrity + 5)
-	Beam(user, icon_state = "sendbeam", time = 0.4 SECONDS)
-	user.visible_message(
-		span_danger("[user] repairs [src]."),
-		span_cult("You repair [src], leaving it at <b>[round(atom_integrity * 100 / max_integrity)]%</b> stability.")
-		)
-
 /obj/structure/spawner/sentient/proteon_spawner/examine(mob/user)
 	. = ..()
 	if(!IS_CULTIST(user) && isliving(user))
@@ -296,14 +286,13 @@
 		. += span_danger("The voices of the damned echo relentlessly in your mind, rebounding on the walls of your self ever stronger the more you focus on [src]. Best keep away...")
 	else
 		. += span_cult("The gateway will create one weak proteon construct every [spawn_time * 0.1] seconds, up to a total of [max_mobs], that may be controlled by the spirits of the dead.")
-		. += span_cultbold("You may use a ritual knife to slice your palm open, sending the gateway into a powerful frenzy that doubles its capacity and halves its cooldown, but this will eventually destroy it.")
+		. += span_cult_bold("You may use a ritual knife to slice your palm open, sending the gateway into a powerful frenzy that doubles its capacity and halves its cooldown, but this will eventually destroy it.")
 		// logic for above handled in cult_ritual_item component
 
-/obj/structure/spawner/sentient/proteon_spawner/became_player_controlled(mob/living/simple_animal/proteon)
-	proteon.AIStatus = AI_OFF
+/obj/structure/spawner/sentient/proteon_spawner/became_player_controlled(mob/living/basic/construct/proteon/proteon)
 	proteon.mind.add_antag_datum(/datum/antagonist/cult)
 	proteon.add_filter("awoken_proteon", 3, list("type" = "outline", "color" = COLOR_CULT_RED, "size" = 2))
-	visible_message(span_cultbold("[proteon] awakens, glowing an eerie red as it stirs from its stupor!")) // only this owrks
+	visible_message(span_cult_bold("[proteon] awakens, glowing an eerie red as it stirs from its stupor!")) // only this owrks
 	playsound(proteon, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
 	proteon.balloon_alert_to_viewers("awoken!")
 	addtimer(CALLBACK(src, PROC_REF(remove_wake_outline), proteon), 8 SECONDS)
@@ -313,7 +302,6 @@
 	proteon.add_filter("sentient_proteon", 3, list("type" = "outline", "color" = COLOR_CULT_RED, "size" = 2, "alpha" = 40))
 	return
 
-/obj/structure/spawner/sentient/proteon_spawner/deconstruct(disassembled)
+/obj/structure/spawner/sentient/proteon_spawner/handle_deconstruct(disassembled)
 	playsound('sound/hallucinations/veryfar_noise.ogg', 125)
-	visible_message(span_cultbold("[src] completely falls apart, the screams of the damned peaking before slowly fading away..."))
-	return ..()
+	visible_message(span_cult_bold("[src] completely falls apart, the screams of the damned peaking before slowly fading away..."))

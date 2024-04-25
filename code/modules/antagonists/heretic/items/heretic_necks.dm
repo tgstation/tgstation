@@ -104,7 +104,7 @@
 
 	var/magic_dude
 	if(IS_CULTIST(user))
-		. += span_cultbold("This focus will allow you to store one extra spell and halve the empowering time, alongside providing a small regenerative effect.")
+		. += span_cult_bold("This focus will allow you to store one extra spell and halve the empowering time, alongside providing a small regenerative effect.")
 		magic_dude = TRUE
 	if(IS_HERETIC_OR_MONSTER(user))
 		. += span_notice("This focus will halve your spell cooldowns, alongside granting a small regenerative effect to any nearby heretics or monsters, including you.")

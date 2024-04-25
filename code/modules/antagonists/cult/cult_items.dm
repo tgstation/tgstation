@@ -113,41 +113,54 @@ Striking a noncultist, however, will tear their flesh."}
 #define SWORD_PREFIX "sword_prefix"
 
 GLOBAL_LIST_INIT(heretic_paths_to_haunted_sword_abilities,list(
-	PATH_ASH = list(WIELDER_SPELL = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash, SWORD_SPELL = /datum/action/cooldown/spell/charged/beam/fire_blast, SWORD_PREFIX = "ashen"),
-	PATH_FLESH = list(WIELDER_SPELL = /datum/action/cooldown/spell/pointed/blood_siphon, SWORD_SPELL = /datum/action/cooldown/spell/pointed/cleave, SWORD_PREFIX = "bleeding"),
-	PATH_VOID = list(WIELDER_SPELL = /datum/action/cooldown/spell/pointed/void_phase, SWORD_SPELL = /datum/action/cooldown/spell/cone/staggered/cone_of_cold/void, SWORD_PREFIX = "icy"),
-	PATH_BLADE = list(WIELDER_SPELL = /datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted, SWORD_SPELL = /datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted, SWORD_PREFIX = "keen"),
-	PATH_RUST = list(WIELDER_SPELL = /datum/action/cooldown/spell/cone/staggered/entropic_plume, SWORD_SPELL = list(/datum/action/cooldown/spell/aoe/rust_conversion, /datum/action/cooldown/spell/pointed/rust_construction), SWORD_PREFIX = "rusted"),
-	PATH_COSMIC = list(WIELDER_SPELL = /datum/action/cooldown/spell/conjure/cosmic_expansion, SWORD_SPELL = /datum/action/cooldown/spell/pointed/projectile/star_blast, SWORD_PREFIX = "astral"),
-	PATH_KNOCK = list(WIELDER_SPELL = /datum/action/cooldown/spell/pointed/burglar_finesse, SWORD_SPELL = /datum/action/cooldown/spell/pointed/apetra_vulnera, SWORD_PREFIX = "incisive"),
+	// Ash
+	PATH_ASH = list(WIELDER_SPELL = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash, \
+	SWORD_SPELL = /datum/action/cooldown/spell/charged/beam/fire_blast, SWORD_PREFIX = "ashen"), \
+	// Flesh
+	PATH_FLESH = list(WIELDER_SPELL = /datum/action/cooldown/spell/pointed/blood_siphon, \
+	SWORD_SPELL = /datum/action/cooldown/spell/pointed/cleave, SWORD_PREFIX = "bleeding"), \
+	// Void
+	PATH_VOID = list(WIELDER_SPELL = /datum/action/cooldown/spell/pointed/void_phase, \
+	SWORD_SPELL = /datum/action/cooldown/spell/cone/staggered/cone_of_cold/void, SWORD_PREFIX = "icy"), \
+	// Blade
+	PATH_BLADE = list(WIELDER_SPELL = /datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted, \
+	SWORD_SPELL = /datum/action/cooldown/spell/pointed/projectile/furious_steel/solo, SWORD_PREFIX = "keen"), \
+	// Rust
+	PATH_RUST = list(WIELDER_SPELL = /datum/action/cooldown/spell/cone/staggered/entropic_plume, \
+	SWORD_SPELL = list(/datum/action/cooldown/spell/aoe/rust_conversion/small, /datum/action/cooldown/spell/pointed/rust_construction), SWORD_PREFIX = "rusted"), \
+	// Cosmic
+	PATH_COSMIC = list(WIELDER_SPELL = /datum/action/cooldown/spell/conjure/cosmic_expansion, \
+	SWORD_SPELL = /datum/action/cooldown/spell/pointed/projectile/star_blast, SWORD_PREFIX = "astral"), \
+	// Lock
+	PATH_LOCK = list(WIELDER_SPELL = /datum/action/cooldown/spell/pointed/burglar_finesse, \
+	SWORD_SPELL = /datum/action/cooldown/spell/pointed/apetra_vulnera, SWORD_PREFIX = "incisive"), \
+	// Moon
+	PATH_MOON = list(WIELDER_SPELL = /datum/action/cooldown/spell/pointed/projectile/moon_parade, \
+	SWORD_SPELL = /datum/action/cooldown/spell/pointed/moon_smile, SWORD_PREFIX = "shimmering"), \
+	// Starter
 	PATH_START = list(WIELDER_SPELL = null, SWORD_SPELL = null, SWORD_PREFIX = "nascent") // lol loser
 ))
 
 /* List of issues to fix0
 
-1. The heretic soul haunt is completely fucked. Turn soulscythe into a component, only proper solution. Delayed?
-
-2. Heretivester needs a sprite.
-
-3. Heretivester needs 2 delimb only cultists. Done!
-
-4. Seek the harvest action on heretivester. Done!
-
-5. Heretic soul haunt furious steel uses normal knife sprites. Done?
-
-6. Spawned proteons can't be joined as with 'ghost candidate selec in prgores' even thoguh poll is disabled
-
 7. check to make sure you cant spawn holes next to eachother doesnt work (fixed?)
-
-A. When item appears, make it hover, glowverlay, be on top of all
 
 B. Proteon hole turns into a monser when rusted // later
 
 */
 
+/mob/living/carbon/human/proc/test(hooman = pick(TRUE,FALSE))
+	var/datum/antagonist/heretic/heredat = mind.add_antag_datum(/datum/antagonist/heretic)
+	heredat.heretic_path = tgui_input_list(src, "x", "y", list(PATH_RUST,PATH_FLESH,PATH_ASH,PATH_VOID,PATH_BLADE,PATH_COSMIC,PATH_LOCK,PATH_MOON))
+	var/obj/item/melee/cultblade/haunted/evil = new(loc, src)
+	//evil.bind_soul(src,null)
+	if(hooman)
+		var/mob/living/carbon/human/homan = new(loc)
+		homan.put_in_hands(evil)
+
 /obj/item/melee/cultblade/haunted
 	name = "haunted longsword"
-	desc = "An eerie sword with a red hilt and a blade that is less 'black' than it is 'absolute nothingness', covered in strange glowing white runes. It glows with furious, restrained green energy."
+	desc = "An eerie sword with a blade that is less 'black' than it is 'absolute nothingness'. It glows with furious, restrained green energy."
 	icon_state = "hauntedblade"
 	inhand_icon_state = "hauntedblade"
 	worn_icon_state = "hauntedblade"
@@ -157,36 +170,55 @@ B. Proteon hole turns into a monser when rusted // later
 	wound_bonus = -25
 	bare_wound_bonus = 30
 	free_use = TRUE
-	light_system = STATIC_LIGHT //The overlay light component is not yet ready to produce darkness.
+	light_color = COLOR_BLACK
+	light_system = OVERLAY_LIGHT
+	light_range = 4
 	// holder for the actual action when created.
 	var/datum/action/cooldown/spell/path_wielder_action
-	var/dark_light_range = 2.5
-	var/dark_light_power = -0.75
+	var/mob/living/trapped_entity
 	var/heretic_path
 
-/obj/item/melee/cultblade/haunted/Initialize(mapload, mob/soul_to_bind, mob/awakener)
+/obj/item/melee/cultblade/haunted/Initialize(mapload, mob/soul_to_bind, mob/awakener, no_binding)
 	. = ..()
 
-	bind_soul(soul_to_bind, awakener)
+	if(!no_binding)
+		bind_soul(soul_to_bind, awakener)
+	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
+	AddElement(/datum/element/heretic_focus)
 
 /obj/item/melee/cultblade/haunted/proc/bind_soul(mob/soul_to_bind, mob/awakener)
 
-	set_light(dark_light_range, dark_light_power)
-	AddComponent(/datum/component/spirit_holding,\
-		soul_to_bind = soul_to_bind,\
-		awakener = awakener,\
-		allow_renaming = FALSE,\
-	)
+	var/datum/mind/trapped_mind = soul_to_bind.mind
 
-	// Let's do this below in case it breaks somewhere.
+	if(soul_to_bind)
+		AddComponent(/datum/component/spirit_holding,\
+			soul_to_bind = soul_to_bind.mind,\
+			awakener = awakener,\
+			allow_renaming = FALSE,\
+		)
 
-	var/datum/component/spirit_holding/spirit_component = GetComponent(/datum/component/spirit_holding)
-	var/mob/living/simple_animal/shade/subject = spirit_component.bound_spirit
-	var/datum/antagonist/heretic/heretic_holder = IS_HERETIC(soul_to_bind)
+	// Get the heretic's new body and antag datum.
+	trapped_entity = trapped_mind.current
+	var/datum/antagonist/heretic/heretic_holder = IS_HERETIC(trapped_entity)
 	if(!heretic_holder)
 		CRASH("[soul_to_bind] not a heretic on the heretic soul blade.")
 
+	// Set the sword's path for spell selection.
 	heretic_path = heretic_holder.heretic_path
+
+	// Copy the objectives to keep for roundend, remove the datum as neither us nor the heretic need it anymore
+	var/list/copied_objectives = heretic_holder.objectives.Copy()
+	trapped_entity.mind.remove_antag_datum(/datum/antagonist/heretic)
+
+	// Add the fallen antag datum, give them a heads-up of what's happening.
+	var/datum/antagonist/soultrapped_heretic/fallen = trapped_entity.mind.add_antag_datum(/datum/antagonist/soultrapped_heretic)
+	fallen.objectives = copied_objectives
+	// Unrelated bug: Objectives dont show up on the you are X thing as they are varsetted post-facto
+	to_chat(trapped_entity, span_alert("You've been sacrificed to the Enemy, and trapped inside a haunted blade! While you cannot escape, you may decide by yourself to be a nuisance with the few abilities you still have, or if you wish to aid whoever wields it."))
+
+	// Assigning the spells to give to the wielder and spirit.
+	// Let them cast the given spell.
+	ADD_TRAIT(trapped_entity, TRAIT_ALLOW_HERETIC_CASTING, INNATE_TRAIT)
 
 	var/list/path_spells = GLOB.heretic_paths_to_haunted_sword_abilities[heretic_path]
 
@@ -195,10 +227,12 @@ B. Proteon hole turns into a monser when rusted // later
 
 	name = path_spells[SWORD_PREFIX] + " " + name
 
+	// Granting the spells. The sword spirit gains it outright, while it's just defined for wielders to be added on pickup.
+
 	if(length(sword_spells))
 		for(var/datum/action/cooldown/spell/sword_spell as anything in sword_spells)
-			sword_spell = new sword_spell(subject)
-			sword_spell.Grant(subject)
+			sword_spell = new sword_spell(trapped_entity)
+			sword_spell.Grant(trapped_entity)
 
 	if(length(wielder_spells))
 		for(var/datum/action/cooldown/spell/wielder_spell as anything in wielder_spells)
@@ -213,11 +247,6 @@ B. Proteon hole turns into a monser when rusted // later
 	. = ..()
 	if(slot != ITEM_SLOT_HANDS)
 		path_wielder_action?.Remove(user)
-
-/obj/item/melee/cultblade/haunted/proc/bebug(cekey = "carlarc")
-	var/datum/component/spirit_holding/spirit_component = GetComponent(/datum/component/spirit_holding)
-	spirit_component.bound_spirit = new(src)
-	spirit_component.bound_spirit.ckey = cekey
 
 /obj/item/melee/cultblade/haunted/proc/cebug(mob/dude,mob/man)
 	bind_soul(dude, man)
@@ -236,7 +265,7 @@ B. Proteon hole turns into a monser when rusted // later
 
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
-	if(!IS_CULTIST(user))
+	if(!IS_CULTIST(user) && !free_use)
 		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
 
 /datum/action/innate/dash/cult
@@ -701,14 +730,14 @@ B. Proteon hole turns into a monser when rusted // later
 	var/list/turfs_to_scan = detect_room(get_turf(user), max_size = 40)
 
 	if(!IS_CULTIST(user))
-		to_chat(user, span_cultlarge("\"You want to enter my domain? Go ahead.\""))
+		to_chat(user, span_cult_large("\"You want to enter my domain? Go ahead.\""))
 		turfs_to_scan = null // narsie wants to have some fun and the veil wont stop her
 
 	for(var/turf/hole_candidate as anything in turfs_to_scan)
 		if(locate(/obj/structure/spawner/sentient/proteon_spawner) in hole_candidate)
-			to_chat(user, span_cultbold("There's a gateway too close nearby. The veil is not yet weak enough to allow such close rips in its fabric."))
+			to_chat(user, span_cult_bold("There's a gateway too close nearby. The veil is not yet weak enough to allow such close rips in its fabric."))
 			return
-	to_chat(user, span_cultboldtalic("You focus on [src] and direct it into the ground. It rumbles..."))
+	to_chat(user, span_cult_bold_italic("You focus on [src] and direct it into the ground. It rumbles..."))
 
 	var/turf/open/hole_spot = get_turf(user)
 	if(!istype(hole_spot) || istype(hole_spot, /turf/open/space))
@@ -726,19 +755,19 @@ B. Proteon hole turns into a monser when rusted // later
 		fucked = TRUE
 		ADD_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src)) // keep em in place
 		user.add_atom_colour(COLOR_CULT_RED, TEMPORARY_COLOUR_PRIORITY)
-		user.visible_message(span_cultbold("Dark tendrils appear from the ground and root [user] in place!"))
+		user.visible_message(span_cult_bold("Dark tendrils appear from the ground and root [user] in place!"))
 	sleep(5 SECONDS) // can we still use these or. i mean its async
 	new /obj/structure/spawner/sentient/proteon_spawner(src)
-	visible_message(span_cultbold("A mysterious hole appears out of nowhere!"))
+	visible_message(span_cult_bold("A mysterious hole appears out of nowhere!"))
 	if(!fucked)
 		return
 	if(get_turf(user) != src) // they get away. for now
 		REMOVE_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
 		return
-	user.visible_message(span_cultbold("[user] is pulled into the portal through an infinitesmally minuscule hole, shredding [user.p_their()] body!"))
-	user.visible_message(span_cultitalic("An unusually large construct appears through the portal..."))
-	user.gib(TRUE, TRUE, TRUE) // total destruction
-	var/mob/living/simple_animal/hostile/construct/proteon/remnant = new(get_step_rand(src))
+	user.visible_message(span_cult_bold("[user] is pulled into the portal through an infinitesmally minuscule hole, shredding [user.p_their()] body!"))
+	user.visible_message(span_cult_italic("An unusually large construct appears through the portal..."))
+	user.gib() // total destruction
+	var/mob/living/basic/construct/proteon/hostile/remnant = new(get_step_rand(src))
 	remnant.name = "[user]" // no, they do not become it
 	remnant.transform *= 1.5
 

@@ -51,6 +51,7 @@
 		THEME_CULT = list(/obj/item/ectoplasm/construct),
 		THEME_HOLY = list(/obj/item/ectoplasm/angelic),
 		THEME_WIZARD = list(/obj/item/ectoplasm/mystic),
+		THEME_HERETIC = list(/obj/item/ectoplasm/construct),
 	)
 
 /mob/living/basic/construct/Initialize(mapload)

@@ -96,10 +96,6 @@
 	blade_effect = null
 	on_deactivation()
 
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted
-	projectile_amount = 1
-	projectile_type = /obj/projectile/floating_blade/haunted
-
 /obj/projectile/floating_blade
 	name = "blade"
 	icon = 'icons/obj/service/kitchen.dmi'
@@ -141,3 +137,30 @@
 	damage = 35
 	wound_bonus = 25
 	outline_color = "#D7CBCA"
+
+/datum/action/cooldown/spell/pointed/projectile/furious_steel/solo
+	projectile_amount = 1
+
+/datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted
+	name = "Cursed Steel"
+	desc = "Summon two cursed blades which orbit you. \
+		While orbiting you, these blades will protect you from from attacks, but will be consumed on use. \
+		Additionally, you can click to fire the blades at a target, dealing damage and causing bleeding."
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_cult_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "cursed_steel"
+	sound = 'sound/weapons/guillotine.ogg'
+
+	school = SCHOOL_FORBIDDEN
+	cooldown_time = 40 SECONDS
+	invocation = "IA!"
+	invocation_type = INVOCATION_SHOUT
+
+	spell_requirements = NONE
+
+	active_msg = "You summon forth two cursed blades."
+	deactive_msg = "You conceal the cursed blades."
+	cast_range = 20
+	projectile_amount = 2
+	projectile_type = /obj/projectile/floating_blade/haunted
