@@ -161,6 +161,7 @@
 
 /mob/living/basic/construct/harvester/heretic/add_elements()
 	AddElement(/datum/element/wall_walker, or_trait = TRAIT_RUSTY)
+	AddElement(/datum/element/leeching_walk)
 	AddComponent(\
 		/datum/component/amputating_limbs,\
 		surgery_time = 0,\
