@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(ipintel)
 	/// Cache for previously queried IP addresses and those stored in the database
 	var/list/datum/ip_intel/cached_queries = list()
 	/// The store for rate limiting
-	var/list/rate_limits
+	var/list/rate_limit_minute
 
 /// The ip intel for a given address
 /datum/ip_intel
@@ -68,7 +68,7 @@ SUBSYSTEM_DEF(ipintel)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ipintel/stat_entry(msg)
-	return "[..()] | D: [max_queries_per_day - rate_limits[IPINTEL_RATE_LIMIT_DAY]] | M: [max_queries_per_minute - rate_limits[IPINTEL_RATE_LIMIT_MINUTE]]"
+	return "[..()] | M: [max_queries_per_minute - rate_limit_minute]"
 
 /datum/controller/subsystem/ipintel/proc/get_address_intel_state(address, probability_override)
 	var/datum/ip_intel/intel = query_address(address)
@@ -109,8 +109,7 @@ SUBSYSTEM_DEF(ipintel)
 	if(!initialized)
 		return IPINTEL_UNKNOWN_INTERNAL_ERROR
 
-	rate_limits[IPINTEL_RATE_LIMIT_MINUTE] += 1
-	rate_limits[IPINTEL_RATE_LIMIT_DAY] += 1
+	rate_limit_minute += 1
 
 	var/query_base = "https://[src.query_base]/check.php?ip="
 	var/query = "[query_base][address]&contact=[contact_email]&flags=b&format=json"
@@ -150,7 +149,7 @@ SUBSYSTEM_DEF(ipintel)
 	qdel(query)
 
 /datum/controller/subsystem/ipintel/proc/fetch_cached_ip_intel(address)
-	var/date_restrictor
+	var/date_restrictor = ''
 	if(ipintel_cache_length > 0)
 		date_restrictor = " AND date > DATE_SUB(NOW(), INTERVAL [ipintel_cache_length] DAY)"
 	var/datum/db_query/query = SSdbcore.NewQuery(

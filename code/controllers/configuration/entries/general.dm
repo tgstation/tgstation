@@ -462,10 +462,10 @@
 	max_val = 1
 
 /datum/config_entry/flag/ipintel_reject_rate_limited
-	default = TRUE
+	default = FALSE
 
 /datum/config_entry/flag/ipintel_reject_bad
-	default = TRUE
+	default = FALSE
 
 /datum/config_entry/flag/ipintel_reject_unknown
 	default = FALSE
@@ -480,7 +480,7 @@
 	default = 7
 
 /datum/config_entry/number/ipintel_exempt_playtime_living
-	default = 0
+	default = 5
 
 /datum/config_entry/flag/aggressive_changelog
 
