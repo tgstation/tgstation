@@ -21,7 +21,7 @@
 /obj/machinery/recycler/Initialize(mapload)
 	materials = AddComponent(
 		/datum/component/material_container, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
+		DSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		INFINITY, \
 		MATCONTAINER_NO_INSERT \
 	)
@@ -35,7 +35,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/recycler/LateInitialize()
+/obj/machinery/recycler/post_machine_initialize()
 	. = ..()
 	update_appearance(UPDATE_ICON)
 	req_one_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION, REGION_CENTCOM))
@@ -239,8 +239,14 @@
 
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"
-	obj_flags = CAN_BE_HIT | EMAGGED | NO_DECONSTRUCTION
+	obj_flags = CAN_BE_HIT | EMAGGED
 	crush_damage = 120
+
+/obj/machinery/recycler/deathtrap/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
+	return NONE
+
+/obj/machinery/recycler/deathtrap/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
+	return NONE
 
 /obj/item/paper/guides/recycler
 	name = "paper - 'garbage duty instructions'"

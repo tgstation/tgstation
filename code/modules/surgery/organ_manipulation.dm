@@ -252,6 +252,7 @@
 				span_notice("[user] inserts something into [target]'s [parse_zone(target_zone)]!"),
 			)
 			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain as your new [tool.name] comes to life!")
+			target_organ.on_surgical_insertion(user, target, target_zone, tool)
 		else
 			target_organ.forceMove(target.loc)
 

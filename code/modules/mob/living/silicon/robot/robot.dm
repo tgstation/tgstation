@@ -3,7 +3,7 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-	add_traits(list(TRAIT_CAN_STRIP, TRAIT_FORCED_STANDING), INNATE_TRAIT)
+	add_traits(list(TRAIT_CAN_STRIP, TRAIT_FORCED_STANDING, TRAIT_KNOW_ENGI_WIRES), INNATE_TRAIT)
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
 		untip_time = 2 SECONDS, \
@@ -226,7 +226,7 @@
 	if(!ionpulse_on)
 		return
 
-	if(!cell.use(10 KILO JOULES))
+	if(!cell.use(0.01 * STANDARD_CELL_CHARGE))
 		toggle_ionpulse()
 		return
 	return TRUE

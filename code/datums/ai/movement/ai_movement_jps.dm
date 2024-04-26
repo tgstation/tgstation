@@ -12,7 +12,7 @@
 	var/atom/movable/moving = controller.pawn
 	var/delay = controller.movement_delay
 
-	var/datum/move_loop/has_target/jps/loop = SSmove_manager.jps_move(moving,
+	var/datum/move_loop/has_target/jps/loop = DSmove_manager.jps_move(moving,
 		current_movement_target,
 		delay,
 		repath_delay = 0.5 SECONDS,

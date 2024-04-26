@@ -163,7 +163,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	update_appearance()
 
 /obj/structure/closet/LateInitialize()
-	. = ..()
 	if(!opened && is_maploaded)
 		take_contents()
 
@@ -581,7 +580,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	else
 		return open(user)
 
-/obj/structure/closet/atom_deconstruct(disassembled = TRUE)
+/obj/structure/closet/handle_deconstruct(disassembled)
+	dump_contents()
+	if(obj_flags & NO_DEBRIS_AFTER_DECONSTRUCTION)
+		return
+
 	if(ispath(material_drop) && material_drop_amount)
 		new material_drop(loc, material_drop_amount)
 	if (secure)
@@ -593,7 +596,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			electronics.accesses = req_access
 	if(card_reader_installed)
 		new /obj/item/stock_parts/card_reader(drop_location())
-	dump_contents()
 
 /obj/structure/closet/atom_break(damage_flag)
 	. = ..()

@@ -350,7 +350,7 @@
 	var/result = rustg_dmi_create_png(png_filename, "[width]", "[height]", image_data)
 	if(result)
 		CRASH("Error generating painting png : [result]")
-	painting_metadata.md5 = md5(lowertext(image_data))
+	painting_metadata.md5 = md5(LOWER_TEXT(image_data))
 	generated_icon = new(png_filename)
 	icon_generated = TRUE
 	update_appearance()
@@ -569,10 +569,12 @@
 		current_canvas = null
 		update_appearance()
 
-/obj/structure/sign/painting/AltClick(mob/user)
-	. = ..()
-	if(current_canvas?.can_select_frame(user))
-		INVOKE_ASYNC(current_canvas, TYPE_PROC_REF(/obj/item/canvas, select_new_frame), user)
+/obj/structure/sign/painting/click_alt(mob/user)
+	if(!current_canvas?.can_select_frame(user))
+		return CLICK_ACTION_BLOCKING
+
+	INVOKE_ASYNC(current_canvas, TYPE_PROC_REF(/obj/item/canvas, select_new_frame), user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/sign/painting/proc/frame_canvas(mob/user, obj/item/canvas/new_canvas)
 	if(!(new_canvas.type in accepted_canvas_types))
@@ -663,7 +665,7 @@
 		stack_trace("Invalid persistence_id - [persistence_id]")
 		return
 	var/data = current_canvas.get_data_string()
-	var/md5 = md5(lowertext(data))
+	var/md5 = md5(LOWER_TEXT(data))
 	var/list/current = SSpersistent_paintings.paintings[persistence_id]
 	if(!current)
 		current = list()

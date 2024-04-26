@@ -110,9 +110,9 @@
 		for(var/category in what_are_we_made_of.categories)
 			switch(category)
 				if(MAT_CATEGORY_BASE_RECIPES)
-					recipes |= SSmaterials.base_stack_recipes.Copy()
+					recipes |= DSmaterials.base_stack_recipes.Copy()
 				if(MAT_CATEGORY_RIGID)
-					recipes |= SSmaterials.rigid_stack_recipes.Copy()
+					recipes |= DSmaterials.rigid_stack_recipes.Copy()
 
 	update_weight()
 	update_appearance()
@@ -131,7 +131,7 @@
  * - multiplier: The amount to multiply the mats per unit by. Defaults to 1.
  */
 /obj/item/stack/proc/set_mats_per_unit(list/mats, multiplier=1)
-	mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats, multiplier)
+	mats_per_unit = DSmaterials.FindOrCreateMaterialCombo(mats, multiplier)
 	update_custom_materials()
 
 /** Updates the custom materials list of this stack.
@@ -196,11 +196,11 @@
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1/3)))
-		w_class = clamp(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class)
+		update_weight_class(clamp(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class))
 	else if (amount <= (max_amount * (2/3)))
-		w_class = clamp(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class)
+		update_weight_class(clamp(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class))
 	else
-		w_class = full_w_class
+		update_weight_class(full_w_class)
 
 /obj/item/stack/update_icon_state()
 	if(novariants)

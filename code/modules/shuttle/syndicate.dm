@@ -11,7 +11,9 @@
 	shuttleId = "syndicate"
 	possible_destinations = "syndicate_away;syndicate_z5;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s;syndicate_custom"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
+
+/obj/machinery/computer/shuttle/syndicate/screwdriver_act(mob/living/user, obj/item/I)
+	return NONE
 
 /obj/machinery/computer/shuttle/syndicate/launch_check(mob/user)
 	. = ..()

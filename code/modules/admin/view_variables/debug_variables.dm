@@ -30,6 +30,9 @@
 
 // This is split into a seperate proc mostly to make errors that happen not break things too much
 /proc/_debug_variable_value(name, value, level, datum/owner, sanitize, display_flags)
+	if(isappearance(value))
+		value = get_vv_appearance(value)
+
 	. = "<font color='red'>DISPLAY_ERROR:</font> ([value] [REF(value)])" // Make sure this line can never runtime
 
 	if(isnull(value))
@@ -48,10 +51,6 @@
 		#else
 		return "/icon (<span class='value'>[value]</span>)"
 		#endif
-
-	if(isappearance(value))
-		var/image/actually_an_appearance = value
-		return "/appearance (<span class='value'>[actually_an_appearance.icon]</span>)"
 
 	if(isfilter(value))
 		var/datum/filter_value = value

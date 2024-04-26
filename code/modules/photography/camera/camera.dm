@@ -72,10 +72,9 @@
 	picture_size_y = min(clamp(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	return TRUE
 
-/obj/item/camera/AltClick(mob/user)
-	if(!user.can_perform_action(src))
-		return
+/obj/item/camera/click_alt(mob/user)
 	adjust_zoom(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -206,7 +205,7 @@
 			turfs += placeholder
 			for(var/mob/M in placeholder)
 				mobs += M
-			if(locate(/obj/item/areaeditor/blueprints) in placeholder)
+			if(locate(/obj/item/blueprints) in placeholder)
 				blueprints = TRUE
 
 	// do this before picture is taken so we can reveal revenants for the photo
@@ -251,11 +250,11 @@
 			to_chat(user, span_notice("[pictures_left] photos left."))
 
 		if(can_customise)
-			var/customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
+			var/customise = user.is_holding(new_photo) && tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
 			if(customise == "Yes")
-				var/name1 = tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
-				var/desc1 = tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
-				var/caption = tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
+				var/name1 = user.is_holding(new_photo) && tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
+				var/desc1 = user.is_holding(new_photo) && tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
+				var/caption = user.is_holding(new_photo) && tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
 				if(name1)
 					picture.picture_name = name1
 				if(desc1)

@@ -87,11 +87,6 @@
 
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(href_list["item"]) //canUseTopic check for this is handled by mob/Topic()
-		var/slot = text2num(href_list["item"])
-		if(check_obscured_slots(TRUE) & slot)
-			to_chat(usr, span_warning("You can't reach that! Something is covering it."))
-			return
 
 ///////HUDs///////
 	if(href_list["hud"])
@@ -584,7 +579,7 @@
 	// Check and wash stuff that can be covered
 	var/obscured = check_obscured_slots()
 
-	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && w_uniform.wash(clean_types))
+	if(!(obscured & ITEM_SLOT_ICLOTHING) && w_uniform?.wash(clean_types))
 		update_worn_undersuit()
 		. = TRUE
 
@@ -728,6 +723,10 @@
 
 /mob/living/carbon/human/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, mob_height))
+		var/static/list/monkey_heights = list(
+			MONKEY_HEIGHT_DWARF,
+			MONKEY_HEIGHT_MEDIUM,
+		)
 		var/static/list/heights = list(
 			HUMAN_HEIGHT_SHORTEST,
 			HUMAN_HEIGHT_SHORT,
@@ -736,7 +735,10 @@
 			HUMAN_HEIGHT_TALLER,
 			HUMAN_HEIGHT_TALLEST
 		)
-		if(!(var_value in heights))
+		if(ismonkey(src))
+			if(!(var_value in monkey_heights))
+				return
+		else if(!(var_value in heights))
 			return
 
 		. = set_mob_height(var_value)
@@ -913,7 +915,7 @@
 
 	var/carrydelay = 5 SECONDS //if you have latex you are faster at grabbing
 	var/skills_space
-	var/fitness_level = mind.get_skill_level(/datum/skill/fitness) - 1
+	var/fitness_level = mind.get_skill_level(/datum/skill/athletics) - 1
 	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
 		carrydelay -= 2 SECONDS
 	else if(HAS_TRAIT(src, TRAIT_QUICK_CARRY))

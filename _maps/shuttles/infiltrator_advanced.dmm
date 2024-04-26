@@ -1935,7 +1935,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
 "tP" = (
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/super/full,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/warning/electric_shock/directional/north,

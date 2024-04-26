@@ -669,7 +669,7 @@
 
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
-	if(!instant && !do_after(src, 1 SECONDS, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
+	if(!instant && !do_after(src, 1 SECONDS, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP, hidden = TRUE))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
@@ -1078,6 +1078,20 @@
 	else
 		return pick("trails_1", "trails_2")
 
+/// Print a message about an annoying sensation you are feeling. Returns TRUE if successful.
+/mob/living/proc/itch(obj/item/bodypart/target_part = null, damage = 0.5, can_scratch = TRUE, silent = FALSE)
+	if ((mob_biotypes & (MOB_ROBOTIC | MOB_SPIRIT)))
+		return FALSE
+	var/will_scratch = can_scratch && !incapacitated()
+	var/applied_damage = 0
+	if (will_scratch && damage)
+		applied_damage = apply_damage(damage, damagetype = BRUTE, def_zone = target_part)
+	if (silent)
+		return applied_damage > 0
+	var/visible_part = isnull(target_part) ? "side" : target_part.plaintext_zone
+	visible_message("[can_scratch ? span_warning("[src] scratches [p_their()] [visible_part].") : ""]", span_warning("Your [visible_part] itches. [can_scratch ? "You scratch it." : ""]"))
+	return TRUE
+
 /mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
 	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
 	if(buckled || mob_negates_gravity())
@@ -1307,7 +1321,8 @@
 	if(!Adjacent(target) && (target.loc != src) && !recursive_loc_check(src, target))
 		if(HAS_SILICON_ACCESS(src) && !ispAI(src))
 			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks (except pAIs)
-				to_chat(src, span_warning("You are too far away!"))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 		else // just a normal carbon mob
 			if((action_bitflags & FORBID_TELEKINESIS_REACH))
@@ -1316,8 +1331,13 @@
 
 			var/datum/dna/mob_DNA = has_dna()
 			if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/human/telekinesis) || !tkMaxRangeCheck(src, target))
-				to_chat(src, span_warning("You are too far away!"))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
+
+	if((action_bitflags & NEED_VENTCRAWL) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS))
+		to_chat(src, span_warning("You wouldn't fit!"))
+		return FALSE
 
 	if((action_bitflags & NEED_DEXTERITY) && !ISADVANCEDTOOLUSER(src))
 		to_chat(src, span_warning("You don't have the dexterity to do this!"))
@@ -1748,32 +1768,34 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 
 /mob/living/proc/update_z(new_z) // 1+ to register, null to unregister
-	if (registered_z != new_z)
-		if (registered_z)
-			SSmobs.clients_by_zlevel[registered_z] -= src
-		if (client)
-			if (new_z)
-				//Figure out how many clients were here before
-				var/oldlen = SSmobs.clients_by_zlevel[new_z].len
-				SSmobs.clients_by_zlevel[new_z] += src
-				for (var/I in length(SSidlenpcpool.idle_mobs_by_zlevel[new_z]) to 1 step -1) //Backwards loop because we're removing (guarantees optimal rather than worst-case performance), it's fine to use .len here but doesn't compile on 511
-					var/mob/living/simple_animal/SA = SSidlenpcpool.idle_mobs_by_zlevel[new_z][I]
-					if (SA)
-						if(oldlen == 0)
-							//Start AI idle if nobody else was on this z level before (mobs will switch off when this is the case)
-							SA.toggle_ai(AI_IDLE)
+	if(registered_z == new_z)
+		return
+	if(registered_z)
+		SSmobs.clients_by_zlevel[registered_z] -= src
+	if(isnull(client))
+		registered_z = null
+		return
 
-						//If they are also within a close distance ask the AI if it wants to wake up
-						if(get_dist(get_turf(src), get_turf(SA)) < MAX_SIMPLEMOB_WAKEUP_RANGE)
-							SA.consider_wakeup() // Ask the mob if it wants to turn on it's AI
-					//They should clean up in destroy, but often don't so we get them here
-					else
-						SSidlenpcpool.idle_mobs_by_zlevel[new_z] -= SA
+	//Check the amount of clients exists on the Z level we're leaving from,
+	//this excludes us as we haven't added ourselves to the new z level yet.
+	var/old_level_new_clients = (registered_z ? SSmobs.clients_by_zlevel[registered_z].len : null)
+	//No one is left after we're gone, shut off inactive ones
+	if(registered_z && old_level_new_clients == 0)
+		for(var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[registered_z])
+			controller.set_ai_status(AI_STATUS_OFF)
 
+	//Check the amount of clients exists on the Z level we're moving towards, excluding ourselves.
+	var/new_level_old_clients = SSmobs.clients_by_zlevel[new_z].len
 
-			registered_z = new_z
-		else
-			registered_z = null
+	registered_z = new_z
+	//We'll add ourselves to the list now so get_expected_ai_status() will know we're on the z level.
+	SSmobs.clients_by_zlevel[registered_z] += src
+
+	if(new_level_old_clients == 0) //No one was here before, wake up all the AIs.
+		for (var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[new_z])
+			//We don't set them directly on, for instances like AIs acting while dead and other cases that may exist in the future.
+			//This isn't a problem for AIs with a client since the client will prevent this from being called anyway.
+			controller.set_ai_status(controller.get_expected_ai_status())
 
 /mob/living/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	..()
@@ -1794,7 +1816,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	user.put_in_hands(holder)
 
 /mob/living/proc/set_name()
-	if(!numba)
+	if(numba == 0)
 		numba = rand(1, 1000)
 	name = "[name] ([numba])"
 	real_name = name
@@ -1915,6 +1937,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_HALLUCINATION, "Give Hallucination")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_DELUSION_HALLUCINATION, "Give Delusion Hallucination")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_GUARDIAN_SPIRIT, "Give Guardian Spirit")
+	VV_DROPDOWN_OPTION(VV_HK_ADMIN_RENAME, "Force Change Name")
 
 /mob/living/vv_do_topic(list/href_list)
 	. = ..()
@@ -1951,6 +1974,29 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(!check_rights(NONE))
 			return
 		admin_give_guardian(usr)
+
+	if(href_list[VV_HK_ADMIN_RENAME])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/old_name = real_name
+		var/new_name = sanitize_name(tgui_input_text(usr, "Enter the new name.", "Admin Rename", real_name))
+		if(!new_name || new_name == real_name)
+			return
+
+		fully_replace_character_name(real_name, new_name)
+		var/replace_preferences = !isnull(client) && (tgui_alert(usr, "Would you like to update the client's preference with the new name?", "Pref Overwrite", list("Yes", "No")) == "Yes")
+		if(replace_preferences)
+			client.prefs.write_preference(GLOB.preference_entries[/datum/preference/name/real_name], new_name)
+
+		log_admin("forced rename", list(
+			"admin" = key_name(usr),
+			"player" = key_name(src),
+			"old_name" = old_name,
+			"new_name" = new_name,
+			"updated_prefs" = replace_preferences,
+		))
+		message_admins("[key_name_admin(usr)] has forcibly changed the real name of [key_name(src)] from '[old_name]' to '[real_name]'[(replace_preferences ? " and their preferences" : "")]")
 
 /mob/living/proc/move_to_error_room()
 	var/obj/effect/landmark/error/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
@@ -2409,6 +2455,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			span_userdanger("You're thrown violently into [lattice], smashing through it and punching straight through!"))
 		apply_damage(rand(5,10), BRUTE, BODY_ZONE_CHEST)
 		lattice.deconstruct(FALSE)
+
+/// Prints an ominous message if something bad is going to happen to you
+/mob/living/proc/ominous_nosebleed()
+	to_chat(src, span_warning("You feel a bit nauseous for just a moment."))
 
 /**
  * Proc used by different station pets such as Ian and Poly so that some of their data can persist between rounds.
