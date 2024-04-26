@@ -147,7 +147,7 @@ SUBSYSTEM_DEF(ipintel)
 	qdel(query)
 
 /datum/controller/subsystem/ipintel/proc/fetch_cached_ip_intel(address)
-	var/date_restrictor = ''
+	var/date_restrictor = ""
 	if(ipintel_cache_length > 0)
 		date_restrictor = " AND date > DATE_SUB(NOW(), INTERVAL [ipintel_cache_length] DAY)"
 	var/datum/db_query/query = SSdbcore.NewQuery(
