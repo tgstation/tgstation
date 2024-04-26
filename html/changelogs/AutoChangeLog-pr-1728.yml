@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed imposter wizards breaking the roundend report."
+  - code_imp: "Added sanity checks to some team-related code, which will runtime if they get invalid input, instead of breaking things further down the line."
