@@ -506,9 +506,16 @@
 	if(!drain_power(use_energy_cost * levels))
 		return NONE
 	new /obj/effect/temp_visual/mook_dust(fell_on)
-	mod.wearer.Stun(levels * 1 SECONDS)
+
+	/// Boolean that tracks whether we fell more than one z-level. If TRUE, we stagger our wearer.
+	var/extreme_fall = FALSE
+
+	if(levels >= 2)
+		extreme_fall = TRUE
+		mod.wearer.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * levels, 10 SECONDS)
+
 	mod.wearer.visible_message(
-		span_notice("[mod.wearer] lands on [fell_on] safely."),
+		span_notice("[mod.wearer] lands on [fell_on] safely[extreme_fall ? ", but barely manages to stay on [p_their()] feet." : ", and quite stylishly on [p_their()] feet" ]."),
 		span_notice("[src] protects you from the damage!"),
 	)
 	return ZIMPACT_CANCEL_DAMAGE|ZIMPACT_NO_MESSAGE|ZIMPACT_NO_SPIN
@@ -827,7 +834,7 @@
 	. = ..()
 
 	if(!length(accepted_mats))
-		accepted_mats = SSmaterials.materials_by_category[MAT_CATEGORY_SILO]
+		accepted_mats = DSmaterials.materials_by_category[MAT_CATEGORY_SILO]
 
 	container = AddComponent( \
 		/datum/component/material_container, \

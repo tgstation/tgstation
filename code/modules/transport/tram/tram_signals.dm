@@ -169,20 +169,16 @@
 	obj_flags |= EMAGGED
 	return TRUE
 
-/obj/machinery/transport/crossing_signal/AltClick(mob/living/user)
-	. = ..()
-	if(!can_interact(user))
-		return
-
+/obj/machinery/transport/crossing_signal/click_alt(mob/living/user)
 	var/obj/item/tool = user.get_active_held_item()
 	if(!panel_open || tool?.tool_behaviour != TOOL_WRENCH)
-		return FALSE
+		return CLICK_ACTION_BLOCKING
 
 	tool.play_tool_sound(src, 50)
 	setDir(turn(dir,-90))
-	to_chat(user, span_notice("You rotate [src]."))
+	balloon_alert(user, "rotated")
 	find_uplink()
-	return TRUE
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/transport/crossing_signal/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()

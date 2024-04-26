@@ -298,7 +298,7 @@
 	/// Minimum time between repairs in seconds
 	var/repair_cooldown = 4
 	var/on = FALSE
-	var/energy_cost = 10 KILO JOULES
+	var/energy_cost = 0.01 * STANDARD_CELL_CHARGE
 	var/datum/action/toggle_action
 
 /obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/R, user = usr)
@@ -366,16 +366,16 @@
 		if(cyborg.health < cyborg.maxHealth)
 			if(cyborg.health < 0)
 				repair_amount = -2.5
-				energy_cost = 30 KILO JOULES
+				energy_cost = 0.03 * STANDARD_CELL_CHARGE
 			else
 				repair_amount = -1
-				energy_cost = 10 KILO JOULES
+				energy_cost = 0.01 * STANDARD_CELL_CHARGE
 			cyborg.adjustBruteLoss(repair_amount)
 			cyborg.adjustFireLoss(repair_amount)
 			cyborg.updatehealth()
 			cyborg.cell.use(energy_cost)
 		else
-			cyborg.cell.use(5 KILO JOULES)
+			cyborg.cell.use(0.005 * STANDARD_CELL_CHARGE)
 		next_repair = world.time + repair_cooldown * 10 // Multiply by 10 since world.time is in deciseconds
 
 		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_BORG_SELF_REPAIR))
@@ -401,6 +401,10 @@
 
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
+	var/obj/item/borg/upgrade/hypospray/U = locate() in R
+	if(U)
+		to_chat(user, span_warning("This unit is already equipped with an expanded hypospray synthesiser!")) //check to see if we already have this module
+		return FALSE
 	if(.)
 		for(var/obj/item/reagent_containers/borghypo/medical/H in R.model.modules)
 			H.upgrade_hypo()
@@ -431,6 +435,7 @@
 			found_hypo = TRUE
 
 		if(!found_hypo)
+			to_chat(user, span_warning("This unit is already equipped with a piercing hypospray upgrade!")) //check to see if we already have this module
 			return FALSE
 
 /obj/item/borg/upgrade/piercing_hypospray/deactivate(mob/living/silicon/robot/R, user = usr)
@@ -438,6 +443,60 @@
 	if (.)
 		for(var/obj/item/reagent_containers/borghypo/H in R.model.modules)
 			H.bypass_protection = initial(H.bypass_protection)
+
+/obj/item/borg/upgrade/surgery_omnitool
+	name = "cyborg surgical omni-tool upgrade"
+	desc = "An upgrade to the Medical model, upgrading the built-in \
+		surgical omnitool, to be on par with advanced surgical tools"
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/medical,  /obj/item/robot_model/syndicate_medical)
+	model_flags = BORG_MODEL_MEDICAL
+
+/obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/cyborg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade in cyborg.model.modules)
+		if(omnitool_upgrade.upgraded)
+			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
+			return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.model.modules)
+		omnitool.upgrade_omnitool()
+
+/obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
+		omnitool.downgrade_omnitool()
+
+/obj/item/borg/upgrade/engineering_omnitool
+	name = "cyborg engineering omni-tool upgrade"
+	desc = "An upgrade to the Engineering model, upgrading the built-in \
+		engineering omnitool, to be on par with advanced engineering tools"
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering,  /obj/item/robot_model/saboteur)
+	model_flags = BORG_MODEL_ENGINEERING
+
+/obj/item/borg/upgrade/engineering_omnitool/action(mob/living/silicon/robot/cyborg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool_upgrade in cyborg.model.modules)
+		if(omnitool_upgrade.upgraded)
+			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
+			return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool in cyborg.model.modules)
+		omnitool.upgrade_omnitool()
+
+/obj/item/borg/upgrade/engineering_omnitool/deactivate(mob/living/silicon/robot/cyborg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
+		omnitool.downgrade_omnitool()
 
 /obj/item/borg/upgrade/defib
 	name = "medical cyborg defibrillator"
@@ -451,6 +510,10 @@
 /obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
+		var/obj/item/borg/upgrade/defib/U = locate() in R
+		if(U)
+			to_chat(user, span_warning("This unit is already equipped with a defibrillator module!")) //check to see if we already have this module
+			return FALSE
 		var/obj/item/borg/upgrade/defib/backpack/BP = locate() in R //If a full defib unit was used to upgrade prior, we can just pop it out now and replace
 		if(BP)
 			BP.deactivate(R, user)
@@ -507,6 +570,10 @@
 /obj/item/borg/upgrade/processor/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
+		var/obj/item/borg/upgrade/processor/U = locate() in R
+		if(U)
+			to_chat(user, span_warning("This unit is already equipped with a surgical processor module!")) //check to see if we already have this module
+			return FALSE
 		var/obj/item/surgical_processor/SP = new(R.model)
 		R.model.basic_modules += SP
 		R.model.add_module(SP, FALSE, TRUE)

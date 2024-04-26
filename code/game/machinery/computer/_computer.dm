@@ -87,6 +87,16 @@
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		set_light(0)
 
+/obj/machinery/computer/proc/imprint_gps(gps_tag) // Currently used by the upload computers and communications console
+	var/tracker = gps_tag
+	if(!tracker) // Don't give a null GPS signal if there is none
+		return
+	for(var/obj/item/circuitboard/computer/board in src.contents)
+		if(!contents || board.GetComponent(/datum/component/gps))
+			return
+		board.AddComponent(/datum/component/gps, "[tracker]")
+		balloon_alert_to_viewers("board tracker enabled", vision_distance = 1)
+
 /obj/machinery/computer/emp_act(severity)
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
@@ -118,12 +128,6 @@
 		new_frame.state = FRAME_COMPUTER_STATE_GLASSED
 	new_frame.update_appearance(UPDATE_ICON_STATE)
 
-/obj/machinery/computer/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !is_operational)
-		return
 
 /obj/machinery/computer/ui_interact(mob/user, datum/tgui/ui)
 	SHOULD_CALL_PARENT(TRUE)

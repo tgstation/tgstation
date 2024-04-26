@@ -7,7 +7,7 @@
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
 	var/obj/item/stock_parts/cell/charging = null
-	var/charge_rate = 250 KILO WATTS
+	var/charge_rate = 0.25 * STANDARD_CELL_RATE
 
 /obj/machinery/cell_charger/update_overlays()
 	. = ..()
@@ -125,7 +125,7 @@
 
 /obj/machinery/cell_charger/RefreshParts()
 	. = ..()
-	charge_rate = 250 KILO WATTS
+	charge_rate = 0.25 * STANDARD_CELL_RATE
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		charge_rate *= capacitor.tier
 
@@ -140,7 +140,8 @@
 	if(!main_draw)
 		return
 
-	use_energy(main_draw * 0.01) //use a small bit for the charger itself, but power usage scales up with the part tier
+	//use a small bit for the charger itself, but power usage scales up with the part tier
+	use_energy(main_draw * 0.01)
 	charge_cell(main_draw, charging, grid_only = TRUE)
 
 	update_appearance()

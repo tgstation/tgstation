@@ -219,6 +219,10 @@
 	bolt_locked = FALSE
 	update_appearance()
 
+/obj/item/gun/ballistic/rifle/rebarxbow/shoot_live_shot(mob/living/user)
+	..()
+	rack()
+
 /obj/item/gun/ballistic/rifle/rebarxbow/can_shoot()
 	if (bolt_locked)
 		return FALSE

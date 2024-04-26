@@ -37,9 +37,9 @@
 	..()
 	chamber_round()
 
-/obj/item/gun/ballistic/revolver/AltClick(mob/user)
-	..()
+/obj/item/gun/ballistic/revolver/click_alt(mob/user)
 	spin()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/gun/ballistic/revolver/fire_sounds()
 	var/frequency_to_use = sin((90/magazine?.max_ammo) * get_ammo(TRUE, FALSE)) // fucking REVOLVERS

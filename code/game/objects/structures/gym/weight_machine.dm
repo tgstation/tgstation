@@ -109,7 +109,7 @@
 
 	if(do_after(user, 8 SECONDS, src) && user.has_gravity())
 		// with enough dedication, even clowns can overcome their handicaps
-		var/clumsy_chance = 30 - (user.mind.get_skill_level(/datum/skill/fitness) * 5)
+		var/clumsy_chance = 30 - (user.mind.get_skill_level(/datum/skill/athletics) * 5)
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(clumsy_chance))
 			playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 			to_chat(user, span_warning("Your hand slips, causing the [name] to smash you!"))
@@ -135,7 +135,7 @@
 		if(iscarbon(user))
 			var/gravity_modifier = user.has_gravity() > STANDARD_GRAVITY ? 2 : 1
 			// remember the real xp gain is from sleeping after working out
-			user.mind.adjust_experience(/datum/skill/fitness, WORKOUT_XP * gravity_modifier)
+			user.mind.adjust_experience(/datum/skill/athletics, WORKOUT_XP * gravity_modifier)
 			user.apply_status_effect(/datum/status_effect/exercised, EXERCISE_STATUS_DURATION)
 
 	end_workout()
@@ -168,9 +168,13 @@
 		return TRUE // No weight? I could do this all day
 	var/gravity_modifier = affected_gravity > STANDARD_GRAVITY ? 0.75 : 1
 	// the amount of workouts you can do before you hit stamcrit
-	var/workout_reps = total_workout_reps[user.mind.get_skill_level(/datum/skill/fitness)] * gravity_modifier
+	var/workout_reps = total_workout_reps[user.mind.get_skill_level(/datum/skill/athletics)] * gravity_modifier
 	// total stamina drain of 1 workout calculated based on the workout length
 	var/stamina_exhaustion = FLOOR(user.maxHealth / workout_reps / WORKOUT_LENGTH, 0.1)
+	
+	if(HAS_TRAIT(user, TRAIT_STRENGTH)) //The strong get reductions to stamina damage taken while exercising
+		stamina_exhaustion *= 0.5
+	
 	user.adjustStaminaLoss(stamina_exhaustion * seconds_per_tick)
 
 	return TRUE

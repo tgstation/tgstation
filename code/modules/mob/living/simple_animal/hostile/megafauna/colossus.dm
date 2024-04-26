@@ -330,7 +330,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	
+
 	for(var/atom/thing as anything in range(1, src))
 		if(isturf(thing))
 			new /obj/effect/decal/cleanable/confetti(thing)
@@ -340,7 +340,7 @@
 			continue
 
 		var/mob/living/carbon/human/new_clown = thing
-			
+
 		if(new_clown.stat != DEAD)
 			continue
 
@@ -349,12 +349,12 @@
 		var/clown_ref = REF(new_clown)
 		if(clown_ref in clowned_mob_refs) //one clowning per person
 			continue
-			
+
 		for(var/obj/item/to_strip in new_clown.get_equipped_items())
 			new_clown.dropItemToGround(to_strip)
 		new_clown.dress_up_as_job(SSjob.GetJobType(/datum/job/clown))
 		clowned_mob_refs += clown_ref
-	
+
 	return TRUE
 
 /// Transforms the area to look like a new one
@@ -370,7 +370,7 @@
 
 /obj/machinery/anomalous_crystal/theme_warp/Initialize(mapload)
 	. = ..()
-	terrain_theme = SSmaterials.dimensional_themes[pick(subtypesof(/datum/dimension_theme))]
+	terrain_theme = DSmaterials.dimensional_themes[pick(subtypesof(/datum/dimension_theme))]
 	observer_desc = "This crystal changes the area around it to match the theme of \"[terrain_theme.name]\"."
 
 /obj/machinery/anomalous_crystal/theme_warp/ActivationReaction(mob/user, method)
@@ -423,18 +423,18 @@
 
 		if(!ishuman(thing))
 			continue
-		
+
 		var/mob/living/carbon/human/to_revive = thing
-		
+
 		if(to_revive.stat != DEAD)
 			continue
-		
+
 		to_revive.set_species(/datum/species/shadow, TRUE)
 		to_revive.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
 		//Free revives, but significantly limits your options for reviving except via the crystal
 		//except JK who cares about BADDNA anymore. this even heals suicides.
 		ADD_TRAIT(to_revive, TRAIT_BADDNA, MAGIC_TRAIT)
-	
+
 	return TRUE
 
 /obj/machinery/anomalous_crystal/helpers //Lets ghost spawn as helpful creatures that can only heal people slightly. Incredibly fragile and they can't converse with humans
