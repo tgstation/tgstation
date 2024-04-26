@@ -61,6 +61,8 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 	qdel(src)
 
 /mob/living/carbon/human/ghost/proc/life_or_death()
+	if(dueling)
+		linked_button?.end_duel(src)
 	if(QDELING(src) || QDELETED(client) || client.is_afk())
 		disolve_ghost()
 	else
