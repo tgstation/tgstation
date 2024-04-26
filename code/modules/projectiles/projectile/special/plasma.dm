@@ -15,7 +15,8 @@
 	. = ..()
 	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
-		M.gets_drilled(firer, FALSE)
+		var/turf/below = M.gets_drilled(firer, FALSE)
+		impacted[WEAKREF(below)] = TRUE
 		if(mine_range)
 			mine_range--
 			range++
