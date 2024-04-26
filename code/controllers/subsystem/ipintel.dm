@@ -98,7 +98,6 @@ SUBSYSTEM_DEF(ipintel)
 		return IPINTEL_RATE_LIMITED_MINUTE
 	return FALSE
 
-/datum/controller/subsystem/ipintel/proc/query_address(address, allow_cached = TRUE)
 	if(allow_cached && fetch_cached_ip_intel(address))
 		return cached_queries[address]
 	var/is_rate_limited = is_rate_limited()
@@ -117,6 +116,8 @@ SUBSYSTEM_DEF(ipintel)
 	request.execute_blocking()
 	var/datum/http_response/response = request.into_response()
 	var/list/data = response.body
+	// Log the response
+	logger.Log(LOG_CATEGORY_DEBUG, "ip check response body", data)
 
 	var/datum/ip_intel/intel = new
 	intel.query_status = data["status"]
