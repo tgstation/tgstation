@@ -667,9 +667,15 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	var/list/all_antagonists = list()
 
 	for(var/datum/team/team as anything in GLOB.antagonist_teams)
+		if(!istype(team))
+			stack_trace("Non-team ([team?.type]) found in GLOB.antagonist_teams!")
+			continue
 		all_teams |= team
 
 	for(var/datum/antagonist/antagonists as anything in GLOB.antagonists)
+		if(!istype(antagonists))
+			stack_trace("Non-antagonist ([antagonists?.type]) found in GLOB.antagonists!")
+			continue
 		if(!antagonists.owner)
 			continue
 		all_antagonists |= antagonists
@@ -678,9 +684,11 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		//check if we should show the team
 		if(!active_teams.show_roundend_report)
 			continue
-
 		//remove the team's individual antag reports, if the team actually shows up in the report.
 		for(var/datum/mind/team_minds as anything in active_teams.members)
+			if(!istype(team_minds))
+				stack_trace("Non-mind ([team_minds?.type]) found in team.members!")
+				continue
 			if(!isnull(team_minds.antag_datums)) // is_special_character passes if they have a special role instead of an antag
 				all_antagonists -= team_minds.antag_datums
 
@@ -708,8 +716,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		result += "<br><br>"
 		CHECK_TICK
 
-	if(all_antagonists.len)
-		var/datum/antagonist/last = all_antagonists[all_antagonists.len]
+	if(length(all_antagonists))
+		var/datum/antagonist/last = all_antagonists[length(all_antagonists)]
 		result += last.roundend_report_footer()
 		result += "</div>"
 

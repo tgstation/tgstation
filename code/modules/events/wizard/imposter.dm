@@ -33,7 +33,7 @@
 		var/datum/antagonist/wizard/apprentice/imposter/imposter = new()
 		imposter.master = M
 		imposter.wiz_team = master.wiz_team
-		master.wiz_team.add_member(imposter)
+		master.wiz_team.add_member(I.mind)
 		I.mind.add_antag_datum(imposter)
 		I.mind.special_role = "imposter"
 		I.log_message("is an imposter!", LOG_ATTACK, color="red") //?

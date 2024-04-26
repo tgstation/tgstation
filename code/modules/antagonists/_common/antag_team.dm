@@ -33,6 +33,8 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 	return ..()
 
 /datum/team/proc/add_member(datum/mind/new_member)
+	if(!istype(new_member))
+		CRASH("Attempted to add non-mind ([new_member?.type]) as a team member!")
 	members |= new_member
 
 /datum/team/proc/remove_member(datum/mind/member)
