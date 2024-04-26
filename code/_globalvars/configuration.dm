@@ -5,7 +5,7 @@ GLOBAL_DATUM_INIT(revdata, /datum/getrev, new)
 
 GLOBAL_VAR(host)
 GLOBAL_VAR(station_name)
-GLOBAL_VAR_INIT(game_version, "/tg/Station 13")
+GLOBAL_VAR_INIT(game_version, "MonkeStation 2.0") // monkestation edit: rebranding
 GLOBAL_VAR_INIT(changelog_hash, "")
 GLOBAL_VAR_INIT(hub_visibility, FALSE)
 
