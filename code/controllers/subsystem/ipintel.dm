@@ -98,6 +98,7 @@ SUBSYSTEM_DEF(ipintel)
 		return IPINTEL_RATE_LIMITED_MINUTE
 	return FALSE
 
+/datum/controller/subsystem/ipintel/proc/query_address(address, allow_cached = TRUE)
 	if(allow_cached && fetch_cached_ip_intel(address))
 		return cached_queries[address]
 	var/is_rate_limited = is_rate_limited()
