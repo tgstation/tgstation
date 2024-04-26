@@ -49,11 +49,6 @@
 	name = "упасть"
 	message = "падает!"
 
-/datum/emote/living/cough
-	name = "покашлять"
-	message = "кашляет!"
-	message_mime = "изображает преувеличенный кашель!"
-
 /datum/emote/living/dance
 	name = "танцевать"
 	message = "радостно танцует."
@@ -331,6 +326,11 @@
 
 /datum/emote/living/carbon/circle
 	name = "рука (кольцо)"
+
+/datum/emote/living/carbon/cough
+	name = "покашлять"
+	message = "кашляет!"
+	message_mime = "изображает преувеличенный кашель!"
 
 /datum/emote/living/carbon/moan
 	name = "стонать"
