@@ -28,16 +28,20 @@
 	modstorage.set_real_location(src)
 	modstorage.allow_big_nesting = big_nesting
 	atom_storage.locked = STORAGE_NOT_LOCKED
-//	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_chestplate_unequip))
+	var/obj/item/clothing/suit = mod.get_part_from_slot(ITEM_SLOT_OCLOTHING)
+	if(istype(suit))
+		RegisterSignal(suit, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_suit_unequip))
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
 	atom_storage.locked = STORAGE_FULLY_LOCKED
 	QDEL_NULL(mod.atom_storage)
 	if(!deleting)
 		atom_storage.remove_all(mod.drop_location())
-//	UnregisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP)
+	var/obj/item/clothing/suit = mod.get_part_from_slot(ITEM_SLOT_OCLOTHING)
+	if(istype(suit))
+		UnregisterSignal(suit, COMSIG_ITEM_PRE_UNEQUIP)
 
-/obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
+/obj/item/mod/module/storage/proc/on_suit_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
 	if(QDELETED(source) || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
 		return
 	if(!atom_storage?.attempt_insert(mod.wearer.s_store, mod.wearer, override = TRUE))
@@ -302,21 +306,39 @@
 	incompatible_modules = list(/obj/item/mod/module/mouthhole)
 	overlay_state_inactive = "module_apparatus"
 	/// Former flags of the helmet.
-	var/former_flags = NONE
+	var/former_helmet_flags = NONE
 	/// Former visor flags of the helmet.
-	var/former_visor_flags = NONE
+	var/former_visor_helmet_flags = NONE
+	/// Former flags of the mask.
+	var/former_mask_flags = NONE
+	/// Former visor flags of the mask.
+	var/former_visor_mask_flags = NONE
 
 /obj/item/mod/module/mouthhole/on_install()
-//	former_flags = mod.helmet.flags_cover
-//	former_visor_flags = mod.helmet.visor_flags_cover
-//	mod.helmet.flags_cover &= ~(HEADCOVERSMOUTH|PEPPERPROOF)
-//	mod.helmet.visor_flags_cover &= ~(HEADCOVERSMOUTH|PEPPERPROOF)
+	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
+	if(istype(helmet))
+		former_helmet_flags = helmet.flags_cover
+		former_visor_helmet_flags = helmet.visor_flags_cover
+		helmet.flags_cover &= ~(HEADCOVERSMOUTH|PEPPERPROOF)
+		helmet.visor_flags_cover &= ~(HEADCOVERSMOUTH|PEPPERPROOF)
+	var/obj/item/clothing/mask = mod.get_part_from_slot(ITEM_SLOT_MASK)
+	if(istype(mask))
+		former_mask_flags = mask.flags_cover
+		former_visor_mask_flags = mask.visor_flags_cover
+		mask.flags_cover &= ~(MASKCOVERSMOUTH |PEPPERPROOF)
+		mask.visor_flags_cover &= ~(MASKCOVERSMOUTH |PEPPERPROOF)
 
 /obj/item/mod/module/mouthhole/on_uninstall(deleting = FALSE)
 	if(deleting)
 		return
-//	mod.helmet.flags_cover |= former_flags
-//	mod.helmet.visor_flags_cover |= former_visor_flags
+	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
+	if(istype(helmet))
+		helmet.flags_cover |= former_helmet_flags
+		helmet.visor_flags_cover |= former_visor_helmet_flags
+	var/obj/item/clothing/mask = mod.get_part_from_slot(ITEM_SLOT_MASK)
+	if(istype(mask))
+		mask.flags_cover |= former_mask_flags
+		mask.visor_flags_cover |= former_visor_mask_flags
 
 ///EMP Shield - Protects the suit from EMPs.
 /obj/item/mod/module/emp_shield
@@ -656,18 +678,24 @@
 	var/former_visor_flags
 
 /obj/item/mod/module/hat_stabilizer/on_suit_activation()
-	// RegisterSignal(mod.helmet, COMSIG_ATOM_EXAMINE, PROC_REF(add_examine))
-	// RegisterSignal(mod.helmet, COMSIG_ATOM_ATTACKBY, PROC_REF(place_hat))
-	// RegisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(remove_hat))
+	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
+	if(!istype(helmet))
+		return
+	RegisterSignal(helmet, COMSIG_ATOM_EXAMINE, PROC_REF(add_examine))
+	RegisterSignal(helmet, COMSIG_ATOM_ATTACKBY, PROC_REF(place_hat))
+	RegisterSignal(helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(remove_hat))
 
 /obj/item/mod/module/hat_stabilizer/on_suit_deactivation(deleting = FALSE)
 	if(deleting)
 		return
 	if(attached_hat)	//knock off the helmet if its on their head. Or, technically, auto-rightclick it for them; that way it saves us code, AND gives them the bubble
 		remove_hat(src, mod.wearer)
-	// UnregisterSignal(mod.helmet, COMSIG_ATOM_EXAMINE)
-	// UnregisterSignal(mod.helmet, COMSIG_ATOM_ATTACKBY)
-	// UnregisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY)
+	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
+	if(!istype(helmet))
+		return
+	UnregisterSignal(helmet, COMSIG_ATOM_EXAMINE)
+	UnregisterSignal(helmet, COMSIG_ATOM_ATTACKBY)
+	UnregisterSignal(helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY)
 
 /obj/item/mod/module/hat_stabilizer/proc/add_examine(datum/source, mob/user, list/base_examine)
 	SIGNAL_HANDLER
@@ -692,10 +720,12 @@
 		return
 	if(mod.wearer.transferItemToLoc(hitting_item, src, force = FALSE, silent = TRUE))
 		attached_hat = hat
-		// former_flags = mod.helmet.flags_cover
-		// former_visor_flags = mod.helmet.visor_flags_cover
-		// mod.helmet.flags_cover |= attached_hat.flags_cover
-		// mod.helmet.visor_flags_cover |= attached_hat.visor_flags_cover
+		var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
+		if(istype(helmet))
+			former_flags = helmet.flags_cover
+			former_visor_flags = helmet.visor_flags_cover
+			helmet.flags_cover |= attached_hat.flags_cover
+			helmet.visor_flags_cover |= attached_hat.visor_flags_cover
 		balloon_alert(user, "hat attached, right-click to remove")
 		mod.wearer.update_clothing(mod.slot_flags)
 
@@ -715,8 +745,10 @@
 	else
 		balloon_alert_to_viewers("the hat falls to the floor!")
 	attached_hat = null
-	// mod.helmet.flags_cover = former_flags
-	// mod.helmet.visor_flags_cover = former_visor_flags
+	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
+	if(istype(helmet))
+		helmet.flags_cover = former_flags
+		helmet.visor_flags_cover = former_visor_flags
 	mod.wearer.update_clothing(mod.slot_flags)
 
 ///Sign Language Translator - allows people to sign over comms using the modsuit's gloves.

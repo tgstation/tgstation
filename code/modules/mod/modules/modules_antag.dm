@@ -39,12 +39,16 @@
 	energy = 15
 
 /obj/item/mod/module/armor_booster/on_suit_activation()
-//	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
+	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
+	if(istype(head_cover))
+		head_cover.flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/mod/module/armor_booster/on_suit_deactivation(deleting = FALSE)
 	if(deleting)
 		return
-//	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
+	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
+	if(istype(head_cover))
+		head_cover.flash_protect = initial(head_cover.flash_protect)
 
 /obj/item/mod/module/armor_booster/on_activation()
 	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -266,10 +270,10 @@
 	use_energy_cost = initial(the_dna_lock_behind_the_slaughter.use_energy_cost)
 
 /obj/item/mod/module/springlock/bite_of_87/on_install()
-	// mod.activation_time *= 0.1
+	mod.activation_step_time *= 0.1
 
 /obj/item/mod/module/springlock/bite_of_87/on_uninstall(deleting = FALSE)
-	// mod.activation_time *= 10
+	mod.activation_step_time *= 10
 
 /obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
 	..()
@@ -502,19 +506,17 @@
 
 /obj/item/mod/module/infiltrator/on_suit_activation()
 	mod.wearer.add_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), MOD_TRAIT)
-	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
-	if(!istype(helmet))
-		return
-	helmet.flash_protect = FLASH_PROTECTION_WELDER
+	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
+	if(istype(head_cover))
+		head_cover.flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/mod/module/infiltrator/on_suit_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(traits_to_add, MOD_TRAIT)
 	if(deleting)
 		return
-	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
-	if(!istype(helmet))
-		return
-	helmet.flash_protect = FLASH_PROTECTION_WELDER
+	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
+	if(istype(head_cover))
+		head_cover.flash_protect = initial(head_cover.flash_protect)
 
 ///Medbeam - Medbeam but built into a modsuit
 /obj/item/mod/module/medbeam
