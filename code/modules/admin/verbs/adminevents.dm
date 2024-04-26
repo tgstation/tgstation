@@ -155,7 +155,7 @@
 	var/datum/round_event/ion_storm/add_law_only/ion = new()
 	ion.announce_chance = announce_ion_laws
 	ion.ionMessage = input
-
+	ion.start() // Monkeystation Edit: Fixes AI law additions.
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Custom AI Law") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/admin_call_shuttle()

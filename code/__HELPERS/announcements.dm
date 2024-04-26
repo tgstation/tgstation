@@ -29,7 +29,7 @@
 	sound_override = 'sound/ai/default/attention.ogg',
 	sender_override = "Server Admin Announcement",
 	encode_title = TRUE,
-	encode_text = TRUE,
+	encode_text = FALSE, //Monkeystation Edit: Admin abuse is mandatory
 	color_override = "grey",
 )
 	if(isnull(text))
