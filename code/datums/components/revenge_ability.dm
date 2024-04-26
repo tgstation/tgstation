@@ -1,7 +1,7 @@
 /**
  * Automatically triggers a linked ability at a target who attacks us.
  * The ability might not necessarily be on our mob.
- * Make sure that /datum/element/relay_attackers is also present or you'll never receive the triggering signal.
+ * Make sure that /datum/component/relay_attackers is also present or you'll never receive the triggering signal.
  */
 /datum/component/revenge_ability
 	dupe_mode = COMPONENT_DUPE_ALLOWED

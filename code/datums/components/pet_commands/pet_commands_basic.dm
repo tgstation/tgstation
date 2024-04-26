@@ -225,11 +225,11 @@
 
 /datum/pet_command/protect_owner/add_new_friend(mob/living/tamer)
 	RegisterSignal(tamer, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(set_attacking_target))
-	if(!HAS_TRAIT(tamer, TRAIT_RELAYING_ATTACKER))
-		tamer.AddElement(/datum/element/relay_attackers)
+	tamer.AddComponentFrom(REF(src), /datum/component/relay_attackers)
 
 /datum/pet_command/protect_owner/remove_friend(mob/living/unfriended)
 	UnregisterSignal(unfriended, COMSIG_ATOM_WAS_ATTACKED)
+	unfriended.RemoveComponentSource(REF(src), /datum/component/relay_attackers)
 
 /datum/pet_command/protect_owner/execute_action(datum/ai_controller/controller)
 	var/mob/living/victim = controller.blackboard[BB_CURRENT_PET_TARGET]

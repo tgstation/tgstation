@@ -20,8 +20,7 @@
 	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, PROC_REF(staff_check))
 
 	//adds the relay_attackers element to the owner so whoever attacks him becomes guilty.
-	if(!HAS_TRAIT(owner, TRAIT_RELAYING_ATTACKER))
-		owner.AddElement(/datum/element/relay_attackers)
+	owner.AddComponentFrom(REF(src), /datum/component/relay_attackers)
 	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
 	//signal that checks for dishonorable attacks
@@ -32,6 +31,7 @@
 
 /datum/brain_trauma/special/honorbound/on_lose(silent)
 	owner.clear_mood_event("honorbound")
+	owner.RemoveComponentSource(REF(src), /datum/component/relay_attackers)
 	UnregisterSignal(owner, list(
 		COMSIG_ATOM_WAS_ATTACKED,
 		COMSIG_MOB_CLICKON,

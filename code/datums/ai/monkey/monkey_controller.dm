@@ -76,8 +76,7 @@ have ways of interacting with a specific mob and control it.
 		return AI_CONTROLLER_INCOMPATIBLE
 
 	var/mob/living/living_pawn = new_pawn
-	if(!HAS_TRAIT(living_pawn, TRAIT_RELAYING_ATTACKER))
-		living_pawn.AddElement(/datum/element/relay_attackers)
+	living_pawn.AddComponentFrom(REF(src), /datum/component/relay_attackers)
 	RegisterSignal(new_pawn, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	RegisterSignal(new_pawn, COMSIG_LIVING_START_PULL, PROC_REF(on_startpulling))
 	RegisterSignal(new_pawn, COMSIG_LIVING_TRY_SYRINGE, PROC_REF(on_try_syringe))
@@ -88,7 +87,7 @@ have ways of interacting with a specific mob and control it.
 	return ..() //Run parent at end
 
 /datum/ai_controller/monkey/UnpossessPawn(destroy)
-
+	pawn.RemoveComponentSource(REF(src), /datum/component/relay_attackers)
 	UnregisterSignal(pawn, list(
 		COMSIG_ATOM_WAS_ATTACKED,
 		COMSIG_LIVING_START_PULL,

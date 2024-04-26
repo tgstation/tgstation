@@ -109,7 +109,7 @@
 
 /mob/living/basic/paper_wizard/copy/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/relay_attackers)
+	AddComponentFrom(INNATE_TRAIT, /datum/component/relay_attackers)
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
 /mob/living/basic/paper_wizard/copy/grant_abilities()

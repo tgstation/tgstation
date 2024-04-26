@@ -9,13 +9,14 @@
 	if(!ismob(target))
 		return ELEMENT_INCOMPATIBLE
 
-	target.AddElement(/datum/element/relay_attackers)
+	target.AddComponentFrom(REF(src), /datum/component/relay_attackers)
 	RegisterSignal(target, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
 	ADD_TRAIT(target, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
 
 /datum/element/ai_retaliate/Detach(datum/source, ...)
 	. = ..()
+	source.RemoveComponentSource(REF(src), /datum/component/relay_attackers)
 	UnregisterSignal(source, COMSIG_ATOM_WAS_ATTACKED)
 
 /// Add an attacking atom to a blackboard list of things which attacked us

@@ -53,7 +53,7 @@
 	. = ..()
 	update_appearance()
 	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(track_if_fish))
-	AddElement(/datum/element/relay_attackers)
+	AddComponentFrom(INNATE_TRAIT, /datum/component/relay_attackers)
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	create_reagents(6, SEALED_CONTAINER)
 	RegisterSignal(reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))

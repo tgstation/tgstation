@@ -12,7 +12,6 @@
 		return ELEMENT_INCOMPATIBLE
 
 	src.post_retaliate_callback = post_retaliate_callback
-	parent.AddElement(/datum/element/relay_attackers)
 
 	ADD_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
 
@@ -21,9 +20,11 @@
 	return ..()
 
 /datum/component/ai_retaliate_advanced/RegisterWithParent()
+	parent.AddComponentFrom(REF(src), /datum/component/relay_attackers)
 	RegisterSignal(parent, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
 /datum/component/ai_retaliate_advanced/UnregisterFromParent()
+	parent.RemoveComponentSource(REF(src), /datum/component/relay_attackers)
 	UnregisterSignal(parent, COMSIG_ATOM_WAS_ATTACKED)
 
 /// Add an attacking atom to a blackboard list of things which attacked us

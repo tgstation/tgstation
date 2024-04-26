@@ -33,7 +33,7 @@
 /datum/traitor_objective/target_player/assault/on_objective_taken(mob/user)
 	. = ..()
 
-	target.AddElement(/datum/element/relay_attackers)
+	target.AddComponentFrom(REF(src), /datum/component/relay_attackers)
 	RegisterSignal(target, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
 /datum/traitor_objective/target_player/assault/proc/on_attacked(mob/source, mob/living/attacker, attack_flags)
@@ -53,6 +53,7 @@
 		succeed_objective()
 
 /datum/traitor_objective/target_player/assault/ungenerate_objective()
+	target.RemoveComponentSource(REF(src), /datum/component/relay_attackers)
 	UnregisterSignal(target, COMSIG_ATOM_WAS_ATTACKED)
 	UnregisterSignal(target, COMSIG_LIVING_DEATH)
 	set_target(null)

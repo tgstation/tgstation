@@ -22,7 +22,7 @@
 /datum/ai_controller/robot_customer/TryPossessPawn(atom/new_pawn)
 	if(!istype(new_pawn, /mob/living/basic/robot_customer))
 		return AI_CONTROLLER_INCOMPATIBLE
-	new_pawn.AddElement(/datum/element/relay_attackers)
+	new_pawn.AddComponentFrom(REF(src), /datum/component/relay_attackers)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(new_pawn, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	RegisterSignal(new_pawn, COMSIG_LIVING_GET_PULLED, PROC_REF(on_get_pulled))
@@ -36,6 +36,7 @@
 #endif
 		return
 
+	pawn.RemoveComponentSource(REF(src), /datum/component/relay_attackers)
 	UnregisterSignal(pawn, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_WAS_ATTACKED, COMSIG_LIVING_GET_PULLED, COMSIG_ATOM_ATTACK_HAND))
 	return ..() //Run parent at end
 

@@ -36,7 +36,7 @@
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, INNATE_TRAIT)
 	var/static/list/death_loot = list(/obj/effect/temp_visual/meteor_heart_death)
 	AddElement(/datum/element/death_drops, death_loot)
-	AddElement(/datum/element/relay_attackers)
+	AddComponentFrom(INNATE_TRAIT, /datum/component/relay_attackers)
 
 	var/static/list/innate_actions = list(
 		SPIKES_ABILITY_TYPEPATH = BB_METEOR_HEART_GROUND_SPIKES,
