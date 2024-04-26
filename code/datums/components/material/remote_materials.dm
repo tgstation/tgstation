@@ -86,7 +86,7 @@ handles linking back and forth.
 
 	mat_container = parent.AddComponent( \
 		/datum/component/material_container, \
-		DSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
+		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		local_size, \
 		mat_container_flags, \
 		container_signals = mat_container_signals, \
