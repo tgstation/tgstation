@@ -148,11 +148,13 @@
 		/obj/item/organ/internal/cyberimp/brain/anti_stun = 10
 	)
 	var/blessing = pick_weight_recursive(
-	arm = 15,
-	eyes = 15,
-	chest = 9,
-	head = 10,
-	/obj/item/organ/internal/cyberimp/mouth/breathing_tube = 5
+	list(
+		arm = 15,
+		eyes = 15,
+		chest = 9,
+		head = 10,
+		/obj/item/organ/internal/cyberimp/mouth/breathing_tube = 5,
+	)
 	)
 	new blessing(altar_turf)
 	return TRUE
