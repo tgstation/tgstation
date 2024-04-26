@@ -92,12 +92,10 @@ SUBSYSTEM_DEF(ipintel)
 
 	if(minute_key != expected_minute_key)
 		minute_key = expected_minute_key
-		rate_limits[IPINTEL_RATE_LIMIT_MINUTE] = 0
+		rate_limit_minute = 0
 
-	if(rate_limits[IPINTEL_RATE_LIMIT_MINUTE] >= max_queries_per_minute)
+	if(rate_limit_minute >= max_queries_per_minute)
 		return IPINTEL_RATE_LIMITED_MINUTE
-	if(rate_limits[IPINTEL_RATE_LIMIT_DAY] >= max_queries_per_day)
-		return IPINTEL_RATE_LIMITED_DAY
 	return FALSE
 
 /datum/controller/subsystem/ipintel/proc/query_address(address, allow_cached = TRUE)
