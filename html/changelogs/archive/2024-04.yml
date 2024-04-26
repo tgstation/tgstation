@@ -815,3 +815,29 @@
   - balance: Longfall modules no logner stun you when they activate.
   - balance: Falling from a height greater than one z-level while using the longfall
       module will still stagger you.
+2024-04-26:
+  Ben10Omintrix:
+  - bugfix: all bots have their normal accesses restored
+  Bisar:
+  - bugfix: AI controlled monkeys are no longer catatonic, and they have primal eyes
+      again when turned into humans.
+  - spellcheck: Noticable organs now have more modular grammar, and their current
+      grammar is fixed.
+  - refactor: Refactored the code for displaying the messages for noticable organs.
+  - config: Added a documented define of all our pronouns
+  KingkumaArt:
+  - bugfix: The rebar crossbows now properly loosen their bowstring upon firing.
+  LT3:
+  - balance: ChemMaster can again print a maximum of 50 pills/patches per run
+  - balance: Higher tier servos increase ChemMaster printing speed
+  Singul0:
+  - bugfix: fixed cyborg bonesetter not working for compound fractures
+  - bugfix: butchering not disabling in cyborg omnitool
+  - bugfix: fixes a bug where if you select the omnitool it would be stuck in surgery
+      initiator mode
+  - bugfix: cautery in off hand for cyborg omnitools not working
+  jlsnow301:
+  - bugfix: Restored silicon alt-clicking capability
+  necromanceranne:
+  - bugfix: The plasma flower modsuit core now actually contains a reasonable quantity
+      of power.
