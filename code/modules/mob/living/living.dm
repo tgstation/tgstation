@@ -75,6 +75,7 @@
 				addtimer(CALLBACK(src, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/landed_on_feet), levels * 3 SECONDS)
 			else
 				Knockdown(levels * 4 SECONDS)
+				emote("spin")
 
 			visible_message(
 				span_notice("[src] makes a hard landing on [impacted_turf] but remains unharmed from the fall[graceful_landing ? " and stays on [p_their()] feet" : " by tucking in rolling into the landing"]."),
