@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "The game window should no longer be titled \"/tg/station 13\" during early initialization."

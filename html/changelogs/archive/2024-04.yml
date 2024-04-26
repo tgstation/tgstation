@@ -268,3 +268,26 @@
   - bugfix: Fixed alternate clothing styles (alt clicking) not working on lizards
   lmenvs:
   - rscadd: Adds Quilark's Syndie tier donator items
+2024-04-26:
+  Absolucy:
+  - bugfix: Fixed a runtime error whenever someone examined an air alarm.
+  - bugfix: Fixed imposter wizards breaking the roundend report.
+  - code_imp: Added sanity checks to some team-related code, which will runtime if
+      they get invalid input, instead of breaking things further down the line.
+  - bugfix: The game window should no longer be titled "/tg/station 13" during early
+      initialization.
+  AlbertNanotracen:
+  - balance: Immune strength higher than normal decays while not in use.
+  - balance: Aetericilide is a stronger immune healer, not preventative medication.
+  - balance: Returns Aluxive to its initial values.
+  - qol: Pathologist specific mail is now useable with your work.
+  - rscadd: Pathologists now have bounties that they can do.
+  - rscdel: There is no longer a crate pathologists can order that contains old virology
+      materials.
+  - rscadd: (Re)Added the mind restoration symptom.
+  Flleeppyy, Absolucy:
+  - sound: Added unique announcement jingles to each heretic path's ascension, replacing
+      the old "space-time anomalies detected" announcement.
+  Yawet330:
+  - bugfix: Fusion should now actually partially ignore plasmaglass instead of being
+      puppy-tier harmless you can stand next to.
