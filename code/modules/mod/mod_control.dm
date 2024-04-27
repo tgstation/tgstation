@@ -410,7 +410,13 @@
 
 /obj/item/mod/control/proc/get_part_datum(obj/item/part)
 	RETURN_TYPE(/datum/mod_part)
-	return mod_parts["[part.slot_flags]"]
+	var/datum/mod_part/potential_part = mod_parts["[part.slot_flags]"]
+	if(potential_part?.part_item == part)
+		return potential_part
+	for(var/datum/mod_part/mod_part in get_part_datums())
+		if(mod_part.part_item == part)
+			return mod_part
+	CRASH("get_part_datum called with incorrect item [part] passed.")
 
 /obj/item/mod/control/proc/get_part_from_slot(slot)
 	slot = "[slot]"
