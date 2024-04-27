@@ -444,6 +444,7 @@
 
 /obj/item/mod/control/proc/clean_up()
 	if(QDELING(src))
+		unset_wearer()
 		return
 	if(active || activating)
 		for(var/obj/item/mod/module/module as anything in modules)
