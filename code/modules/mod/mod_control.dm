@@ -112,17 +112,18 @@
 	STOP_PROCESSING(SSobj, src)
 	for(var/obj/item/mod/module/module as anything in modules)
 		uninstall(module, deleting = TRUE)
-	for(var/datum/mod_part/part_datum as anything in get_part_datums(all = TRUE))
-		part_datum.part_item = null
-		part_datum.overslotting = null
 	if(core)
 		QDEL_NULL(core)
 	QDEL_NULL(wires)
 	QDEL_NULL(mod_link)
+	for(var/datum/mod_part/part_datum as anything in get_part_datums(all = TRUE))
+		part_datum.part_item = null
+		part_datum.overslotting = null
 	return ..()
 
 /obj/item/mod/control/atom_destruction(damage_flag)
-	clean_up()
+	if(wearer)
+		clean_up()
 	for(var/obj/item/mod/module/module as anything in modules)
 		uninstall(module)
 	if(ai_assistant)
@@ -448,9 +449,11 @@
 				continue
 			module.deactivate(display_message = FALSE)
 		for(var/obj/item/part as anything in get_parts())
+			if(QDELETED(part))
+				continue
 			seal_part(part, is_sealed = FALSE)
 	for(var/obj/item/part as anything in get_parts())
-		if(QDELING(part))
+		if(QDELETED(part))
 			continue
 		retract(null, part)
 	if(active)
