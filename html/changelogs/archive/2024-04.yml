@@ -291,3 +291,11 @@
   Yawet330:
   - bugfix: Fusion should now actually partially ignore plasmaglass instead of being
       puppy-tier harmless you can stand next to.
+2024-04-27:
+  Absolucy:
+  - bugfix: Fix duels being broken. (Ah eto, bleh?)
+  Yawet330:
+  - bugfix: Admins can now abuse announcements again. (requires perms needed to restart
+      server/start round early to use HTML)
+  - bugfix: Add Admin AI law now actually works (thanks /tg/), admins can now also
+      insert unsanitised HTML as they wish.

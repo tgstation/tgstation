@@ -1,5 +1,0 @@
-author: "Yawet330"
-delete-after: True
-changes:
-  - bugfix: "Admins can now abuse announcements again. (requires perms needed to restart server/start round early to use HTML)"
-  - bugfix: "Add Admin AI law now actually works (thanks /tg/), admins can now also insert unsanitised HTML as they wish."
