@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Fixes clipping in the ESC menu between buttons and long station names."
