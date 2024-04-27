@@ -123,11 +123,8 @@
 		skin_parts += list(assoc_to_keys(variants[variant]))
 	for(var/skin in skin_parts)
 		for(var/compared_skin in skin_parts)
-			if(length(skin) != length(compared_skin))
+			if(skin ~! compared_skin)
 				stack_trace("[type] variants [skin] and [compared_skin] aren't made of the same parts.")
-			for(var/i in 1 to length(skin))
-				if(skin[i] != compared_skin[i])
-					stack_trace("[type] variants [skin] and [compared_skin] aren't made of the same parts.")
 		skin_parts -= skin
 #endif
 

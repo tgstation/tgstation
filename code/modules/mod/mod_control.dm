@@ -112,6 +112,9 @@
 	STOP_PROCESSING(SSobj, src)
 	for(var/obj/item/mod/module/module as anything in modules)
 		uninstall(module, deleting = TRUE)
+	for(var/datum/mod_part/part_datum as anything in get_part_datums(all = TRUE))
+		part_datum.part_item = null
+		part_datum.overslotting = null
 	if(core)
 		QDEL_NULL(core)
 	QDEL_NULL(wires)
