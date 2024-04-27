@@ -48,10 +48,6 @@
 			footstep_sounds = 'sound/effects/bang.ogg'
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(play_simplestep_machine))
 			return
-		if(FOOTSTEP_OBJ_CYBORG_TRACK)
-			footstep_sounds = 'sound/effects/footstep/cyborg_track.ogg'
-			RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(play_simplestep_machine))
-			return
 		if(FOOTSTEP_OBJ_ROBOT)
 			footstep_sounds = 'sound/effects/tank_treads.ogg'
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(play_simplestep_machine))

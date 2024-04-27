@@ -175,6 +175,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	block_chance = 10
 	resistance_flags = NONE
 
+//bootleg claymore
+/obj/item/claymore/shortsword
+	name = "shortsword"
+	desc = "A mercenary's sword, chipped and worn from battles long gone. You could say it is a swordsman's shortsword short sword."
+	icon_state = "shortsword"
+	inhand_icon_state = "shortsword"
+	worn_icon_state = "shortsword"
+	slot_flags = ITEM_SLOT_BELT
+	force = 20
+	demolition_mod = 0.75
+	block_chance = 30
+
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
 	obj_flags = CONDUCTS_ELECTRICITY

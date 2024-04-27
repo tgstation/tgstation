@@ -100,25 +100,21 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/activate_rune/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 
 	if(QDELETED(target))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/datum/team/cult/cult_team = controller.blackboard[BB_CULT_TEAM]
 	var/mob/living/revive_mob = locate(/mob/living) in get_turf(target)
 
 	if(isnull(revive_mob) || revive_mob.stat != DEAD || !(revive_mob.mind in cult_team.members))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/mob/living/basic/living_pawn = controller.pawn
 	living_pawn.melee_attack(target)
 
-	finish_action(controller, TRUE, target_key)
-	return
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/activate_rune/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
@@ -211,12 +207,10 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/drag_target_to_rune/perform(seconds_per_tick, datum/ai_controller/controller, target_key, cultist_key)
-	. = ..()
 	var/mob/living/our_pawn = controller.pawn
 	var/atom/cultist_target = controller.blackboard[cultist_key]
 	if(isnull(cultist_target))
-		finish_action(controller, FALSE, target_key, cultist_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/list/possible_dirs = GLOB.alldirs.Copy()
 	possible_dirs -= get_dir(our_pawn, cultist_target)
 	for(var/direction in possible_dirs)
@@ -225,7 +219,7 @@
 			possible_dirs -= direction
 	step(our_pawn, pick(possible_dirs))
 	our_pawn.stop_pulling()
-	finish_action(controller, TRUE, target_key, cultist_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 
 /datum/ai_behavior/drag_target_to_rune/finish_action(datum/ai_controller/controller, success, target_key, cultist_key)

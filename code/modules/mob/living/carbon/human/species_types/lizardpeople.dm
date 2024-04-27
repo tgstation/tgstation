@@ -71,6 +71,49 @@
 		'sound/voice/lizard/lizard_scream_3.ogg',
 	)
 
+/datum/species/lizard/get_cough_sound(mob/living/carbon/human/lizard)
+	if(lizard.gender == FEMALE)
+		return pick(
+			'sound/voice/human/female_cough1.ogg',
+			'sound/voice/human/female_cough2.ogg',
+			'sound/voice/human/female_cough3.ogg',
+			'sound/voice/human/female_cough4.ogg',
+			'sound/voice/human/female_cough5.ogg',
+			'sound/voice/human/female_cough6.ogg',
+		)
+	return pick(
+		'sound/voice/human/male_cough1.ogg',
+		'sound/voice/human/male_cough2.ogg',
+		'sound/voice/human/male_cough3.ogg',
+		'sound/voice/human/male_cough4.ogg',
+		'sound/voice/human/male_cough5.ogg',
+		'sound/voice/human/male_cough6.ogg',
+	)
+
+
+/datum/species/lizard/get_cry_sound(mob/living/carbon/human/lizard)
+	if(lizard.gender == FEMALE)
+		return pick(
+			'sound/voice/human/female_cry1.ogg',
+			'sound/voice/human/female_cry2.ogg',
+		)
+	return pick(
+		'sound/voice/human/male_cry1.ogg',
+		'sound/voice/human/male_cry2.ogg',
+		'sound/voice/human/male_cry3.ogg',
+	)
+
+
+/datum/species/lizard/get_sneeze_sound(mob/living/carbon/human/lizard)
+	if(lizard.gender == FEMALE)
+		return 'sound/voice/human/female_sneeze1.ogg'
+	return 'sound/voice/human/male_sneeze1.ogg'
+
+/datum/species/lizard/get_laugh_sound(mob/living/carbon/human)
+	if(!istype(human))
+		return
+	return 'sound/voice/lizard/lizard_laugh1.ogg'
+
 /datum/species/lizard/get_physical_attributes()
 	return "Lizardpeople can withstand slightly higher temperatures than most species, but they are very vulnerable to the cold \
 		and can't regulate their body-temperature internally, making the vacuum of space extremely deadly to them."

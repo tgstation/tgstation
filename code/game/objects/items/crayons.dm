@@ -759,7 +759,7 @@
 
 	pre_noise = TRUE
 	post_noise = FALSE
-	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
 	. = ..()
@@ -775,7 +775,7 @@
 /obj/item/toy/crayon/spraycan/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|SILENT_ADJACENCY))
 		return .
 
 	if(has_cap)
@@ -786,7 +786,7 @@
 /obj/item/toy/crayon/spraycan/add_item_context(datum/source, list/context, atom/target, mob/living/user)
 	. = ..()
 
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|SILENT_ADJACENCY))
 		return .
 
 	context[SCREENTIP_CONTEXT_LMB] = "Paint"

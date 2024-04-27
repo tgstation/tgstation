@@ -25,6 +25,16 @@
 ///Flags for ai_behavior new()
 #define AI_CONTROLLER_INCOMPATIBLE (1<<0)
 
+//Return flags for ai_behavior/perform()
+///Update this behavior's cooldown
+#define AI_BEHAVIOR_DELAY (1<<0)
+///Finish the behavior successfully
+#define AI_BEHAVIOR_SUCCEEDED (1<<1)
+///Finish the behavior unsuccessfully
+#define AI_BEHAVIOR_FAILED (1<<2)
+
+#define AI_BEHAVIOR_INSTANT (NONE)
+
 ///Does this task require movement from the AI before it can be performed?
 #define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)
 ///Does this require the current_movement_target to be adjacent and in reach?
