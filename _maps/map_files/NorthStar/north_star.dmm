@@ -9157,7 +9157,7 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/north,
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/structure/pacman_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -14338,7 +14338,7 @@
 "dFq" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal,
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -20341,7 +20341,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/structure/pacman_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -51913,7 +51913,7 @@
 	},
 /obj/machinery/power/terminal,
 /obj/structure/cable,
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /turf/open/floor/plating,
 /area/station/tcommsat/computer)
 "nou" = (
@@ -76089,7 +76089,7 @@
 /turf/open/floor/iron/checker,
 /area/station/service/bar)
 "tDE" = (
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /turf/open/floor/iron/textured_large,
 /area/station/engineering/lobby)
 "tDG" = (
@@ -79268,7 +79268,7 @@
 "uwP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/port/fore)
 "uwQ" = (

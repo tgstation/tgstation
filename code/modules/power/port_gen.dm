@@ -280,3 +280,9 @@
 
 /obj/machinery/power/port_gen/pacman/pre_loaded
 	sheets = 15
+
+/obj/machinery/power/port_gen/pacman/pre_loaded/half_stacked
+	sheets = 25
+
+/obj/machinery/power/port_gen/pacman/pre_loaded/full
+	sheets = 50

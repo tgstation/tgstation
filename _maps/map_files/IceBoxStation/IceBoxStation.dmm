@@ -635,7 +635,7 @@
 /area/station/hallway/secondary/entry)
 "alK" = (
 /obj/machinery/power/apc/auto_name/directional/east,
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -40285,7 +40285,7 @@
 	},
 /area/station/security/brig/entrance)
 "mqO" = (
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "mqR" = (
@@ -64056,7 +64056,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
@@ -75824,7 +75824,7 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "xjO" = (
-/obj/machinery/power/port_gen/pacman{
+/obj/effect/spawner/random/structure/pacman_random{
 	anchored = 1
 	},
 /turf/open/floor/iron/smooth,

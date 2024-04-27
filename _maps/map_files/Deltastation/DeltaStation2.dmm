@@ -5874,7 +5874,7 @@
 	dir = 1
 	},
 /obj/structure/sign/poster/random/directional/south,
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/structure/pacman_random,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "bwl" = (
@@ -6974,7 +6974,7 @@
 "bID" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "bIG" = (
@@ -12698,7 +12698,7 @@
 "ddC" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/structure/pacman_random,
 /obj/effect/turf_decal/delivery/red,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -18149,7 +18149,7 @@
 /area/station/service/cafeteria)
 "exM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/structure/pacman_random,
 /obj/effect/turf_decal/bot_red,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
@@ -19028,7 +19028,7 @@
 /area/station/service/abandoned_gambling_den)
 "eJG" = (
 /obj/effect/turf_decal/delivery/red,
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/structure/pacman_random,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 1
 	},
@@ -21901,7 +21901,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
 "ftw" = (
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /obj/effect/turf_decal/bot_red,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/textured,
@@ -29908,7 +29908,7 @@
 /area/station/science/lobby)
 "htg" = (
 /obj/structure/cable,
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/structure/pacman_random,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "hth" = (
@@ -39907,7 +39907,7 @@
 /area/station/maintenance/solars/port/fore)
 "jRk" = (
 /obj/machinery/light_switch/directional/north,
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
@@ -41344,7 +41344,7 @@
 "kjk" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/bot_red,
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/structure/pacman_random,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 1
 	},
@@ -46464,7 +46464,7 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "lAA" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/structure/pacman_random,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "lAH" = (
@@ -53197,7 +53197,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "nmQ" = (
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /obj/structure/sign/warning/electric_shock/directional/north,
 /obj/machinery/power/terminal{
 	dir = 8
@@ -69484,7 +69484,7 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "rrL" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/structure/pacman_random,
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
 "rrU" = (
@@ -73157,7 +73157,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "slZ" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/structure/pacman_random,
 /obj/effect/turf_decal/bot_red,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
@@ -92025,7 +92025,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "wZu" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/structure/pacman_random,
 /obj/effect/turf_decal/delivery/red,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port)
@@ -92859,7 +92859,7 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "xiG" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/spawner/random/structure/pacman_random,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
 "xiJ" = (

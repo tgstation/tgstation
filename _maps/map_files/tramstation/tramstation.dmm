@@ -16912,7 +16912,7 @@
 /turf/closed/wall,
 /area/station/cargo/bitrunning/den)
 "eSU" = (
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
 "eTl" = (
@@ -33622,7 +33622,7 @@
 /turf/open/openspace,
 /area/station/maintenance/department/medical)
 "kSp" = (
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /turf/open/floor/plating,
 /area/station/engineering/engine_smes)
 "kSA" = (
@@ -45733,7 +45733,7 @@
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
 "plz" = (
-/obj/machinery/power/port_gen/pacman{
+/obj/effect/spawner/random/structure/pacman_random{
 	anchored = 1
 	},
 /obj/structure/cable,
@@ -60154,7 +60154,7 @@
 /area/station/science/robotics/lab)
 "ukY" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "ulb" = (

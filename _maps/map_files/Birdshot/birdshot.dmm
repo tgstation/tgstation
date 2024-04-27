@@ -9500,7 +9500,7 @@
 /turf/open/floor/carpet/purple,
 /area/station/commons/dorms)
 "eip" = (
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
@@ -15251,7 +15251,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 10
 	},
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /turf/open/floor/iron/dark/small,
 /area/station/engineering/storage_shared)
 "gub" = (
@@ -18183,7 +18183,7 @@
 "hnY" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/machinery/power/port_gen/pacman,
+/obj/effect/spawner/random/structure/pacman_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},

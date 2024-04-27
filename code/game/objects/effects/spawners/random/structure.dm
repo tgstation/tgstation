@@ -144,6 +144,15 @@
 		/obj/structure/closet/secure_closet/personal/cabinet,
 	)
 
+/obj/effect/spawner/random/structure/pacman_random
+	name = "Pacman spawner"
+	loot = list(
+		/obj/machinery/power/port_gen/pacman = 5,
+		/obj/machinery/power/port_gen/pacman/pre_loaded = 2,
+		/obj/machinery/power/port_gen/pacman/pre_loaded/half_stacked = 2,
+		/obj/machinery/power/port_gen/pacman/pre_loaded/full = 1,
+	)
+
 /obj/effect/spawner/random/structure/closet_maintenance
 	name = "maintenance closet spawner"
 	icon_state = "locker"
