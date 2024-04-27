@@ -1,4 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - bugfix: "fixed being able to install multiple of the same upgrade to medical cyborgs"

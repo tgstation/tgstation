@@ -841,3 +841,15 @@
   necromanceranne:
   - bugfix: The plasma flower modsuit core now actually contains a reasonable quantity
       of power.
+2024-04-27:
+  Maurukas:
+  - bugfix: Removed a power loop on icebox
+  - bugfix: Disconnected aux power smes from icebox grid at roundstart
+  - bugfix: Removed some power cables connecting Deltastation's aux power
+  - bugfix: Fixed tramstation's gravity generator SMES, now functions and charged
+      at roundstart.
+  - bugfix: NorthStar's gravity generator SMES is now properly charged at roundstart
+  ZephyrTFA:
+  - admin: The return of IPIntel
+  grungussuss:
+  - bugfix: fixed being able to install multiple of the same upgrade to medical cyborgs
