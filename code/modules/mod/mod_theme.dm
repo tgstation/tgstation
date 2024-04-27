@@ -120,11 +120,14 @@
 /datum/mod_theme/New()
 	var/list/skin_parts = list()
 	for(var/variant in variants)
-		skin_parts += assoc_to_keys(variants[variant])
+		skin_parts += list(assoc_to_keys(variants[variant]))
 	for(var/skin in skin_parts)
 		for(var/compared_skin in skin_parts)
-			if(skin != compared_skin)
+			if(length(skin) != length(compared_skin))
 				stack_trace("[type] variants [skin] and [compared_skin] aren't made of the same parts.")
+			for(var/i in 1 to length(skin))
+				if(skin[i] != compared_skin[i])
+					stack_trace("[type] variants [skin] and [compared_skin] aren't made of the same parts.")
 		skin_parts -= skin
 #endif
 
@@ -144,6 +147,9 @@
 	mod.mod_parts["[mod.slot_flags]"] = control_part_datum
 	for(var/path in variants[default_skin])
 		var/obj/item/mod_part = new path(mod)
+		if(mod_part.slot_flags == ITEM_SLOT_OCLOTHING && isclothing(mod_part))
+			var/obj/item/clothing/chestplate = mod_part
+			chestplate.allowed |= allowed_suit_storage
 		var/datum/mod_part/part_datum = new()
 		part_datum.part_item = mod_part
 		mod.mod_parts["[mod_part.slot_flags]"] = part_datum
