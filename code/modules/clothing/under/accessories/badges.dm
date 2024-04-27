@@ -194,7 +194,7 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	obj_flags = UNIQUE_RENAME | INFINITE_RESKIN
 
 /obj/item/clothing/accessory/pride/Initialize(mapload)
-	unique_reskin = GLOB.pride_pin_reskins // Set before parent initialize checks for it.
+	unique_reskin = GLOB.pride_pin_reskins // Set before parent proc checks for it.
 	. = ..()
 
 /obj/item/clothing/accessory/deaf_pin
