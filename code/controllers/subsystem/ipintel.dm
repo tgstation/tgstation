@@ -177,7 +177,7 @@ SUBSYSTEM_DEF(ipintel)
 	return TRUE
 
 /datum/controller/subsystem/ipintel/proc/is_exempt(client/player)
-	if(client.holder)
+	if(palyer.holder)
 		return TRUE
 	if(exempt_living_playtime > 0)
 		var/list/play_records = player.prefs.exp
