@@ -85,7 +85,7 @@ SUBSYSTEM_DEF(polling)
 		// Opt-out for admins whom are currently adminned.
 		if(role && (!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin)) && candidate_mob.client.holder)
 			continue
-		if(role && !is_eligible(candidate_mob, role, check_jobban, ignore_category))
+		if(!is_eligible(candidate_mob, role, check_jobban, ignore_category))
 			continue
 
 		if(start_signed_up)
