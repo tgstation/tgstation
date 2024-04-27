@@ -706,13 +706,33 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                           ? 'utensils'
                           : 'hammer'
                     }
-                    iconSpin={busy ? 1 : 0}
+                    iconSpin={!!busy}
                     onClick={() =>
                       act('make', {
                         recipe: item.ref,
                       })
                     }
                   />
+                  {!!item.mass_craftable && (
+                    <Button
+                      my={0.3}
+                      lineHeight={2.5}
+                      width={'32px'}
+                      align="center"
+                      tooltip={
+                        'Repeat this craft until you run out of ingredients.'
+                      }
+                      tooltipPosition={'top'}
+                      disabled={!craftable || busy}
+                      icon={'repeat'}
+                      iconSpin={!!busy}
+                      onClick={() =>
+                        act('make_mass', {
+                          recipe: item.ref,
+                        })
+                      }
+                    />
+                  )}
                 </Box>
               ) : (
                 item.steps && (
@@ -753,7 +773,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
         </Stack.Item>
         <Stack.Item grow>
           <Stack>
-            <Stack.Item grow>
+            <Stack.Item grow={5}>
               <Box mb={0.5} bold style={{ textTransform: 'capitalize' }}>
                 {item.name}
               </Box>
@@ -828,46 +848,77 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
                 </Box>
               )}
             </Stack.Item>
-            <Stack.Item pl={1}>
-              {!item.non_craftable && (
-                <Button
-                  width="104px"
-                  lineHeight={2.5}
-                  align="center"
-                  content="Make"
-                  disabled={!craftable || busy}
-                  icon={
-                    busy
-                      ? 'circle-notch'
-                      : mode === MODE.cooking
-                        ? 'utensils'
-                        : 'hammer'
-                  }
-                  iconSpin={busy ? 1 : 0}
-                  onClick={() =>
-                    act('make', {
-                      recipe: item.ref,
-                    })
-                  }
-                />
-              )}
-              {!!item.complexity && (
-                <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
-                  Complexity: {item.complexity}
-                </Box>
-              )}
-              {item.foodtypes?.length > 0 && (
-                <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
-                  <Divider />
-                  {item.foodtypes.map((foodtype) => (
-                    <FoodtypeContent
-                      key={item.ref}
-                      type={foodtype}
-                      diet={diet}
-                    />
-                  ))}
-                </Box>
-              )}
+            <Stack.Item pl={1} grow={2}>
+              <Stack vertical>
+                <Stack.Item>
+                  {!item.non_craftable && (
+                    <Stack>
+                      <Stack.Item grow>
+                        <Button
+                          lineHeight={2.5}
+                          align="center"
+                          content="Make"
+                          fluid
+                          disabled={!craftable || busy}
+                          icon={
+                            busy
+                              ? 'circle-notch'
+                              : mode === MODE.cooking
+                                ? 'utensils'
+                                : 'hammer'
+                          }
+                          iconSpin={!!busy}
+                          onClick={() =>
+                            act('make', {
+                              recipe: item.ref,
+                            })
+                          }
+                        />
+                      </Stack.Item>
+                      <Stack.Item>
+                        {!!item.mass_craftable && (
+                          <Button
+                            minWidth="30px"
+                            lineHeight={2.5}
+                            align="center"
+                            tooltip={
+                              'Repeat this craft until you run out of ingredients.'
+                            }
+                            tooltipPosition={'top'}
+                            disabled={!craftable || busy}
+                            icon={'repeat'}
+                            iconSpin={!!busy}
+                            onClick={() =>
+                              act('make_mass', {
+                                recipe: item.ref,
+                              })
+                            }
+                          />
+                        )}
+                      </Stack.Item>
+                    </Stack>
+                  )}
+                </Stack.Item>
+                <Stack.Item>
+                  {!!item.complexity && (
+                    <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
+                      Complexity: {item.complexity}
+                    </Box>
+                  )}
+                  {item.foodtypes?.length > 0 && (
+                    <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
+                      <Divider />
+                      {item.foodtypes.map((foodtype) => (
+                        <FoodtypeContent
+                          key={item.ref}
+                          type={foodtype}
+                          diet={diet}
+                        />
+                      ))}
+                    </Box>
+                  )}
+                </Stack.Item>
+              </Stack>
             </Stack.Item>
           </Stack>
         </Stack.Item>

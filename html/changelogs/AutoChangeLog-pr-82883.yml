@@ -1,0 +1,4 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - bugfix: "Spraycan no longer spams your chat when you mouse over it."

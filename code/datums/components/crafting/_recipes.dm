@@ -41,6 +41,8 @@
 	var/result_amount
 	/// Whether we should delete the contents of the crafted storage item (Only works with storage items, used for ammo boxes, donut boxes, internals boxes, etc)
 	var/delete_contents = TRUE
+	/// Allows you to craft so that you don't have to click the craft button many times.
+	var/mass_craftable = FALSE
 
 /datum/crafting_recipe/New()
 	if(!name && result)

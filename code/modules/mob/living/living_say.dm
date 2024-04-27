@@ -412,7 +412,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			var/mob/living/carbon/human/human_speaker = src
 			if(istype(human_speaker.wear_mask, /obj/item/clothing/mask))
 				var/obj/item/clothing/mask/worn_mask = human_speaker.wear_mask
-				if(!worn_mask.mask_adjusted)
+				if(!worn_mask.up)
 					if(worn_mask.voice_override)
 						voice_to_use = worn_mask.voice_override
 					if(worn_mask.voice_filter)

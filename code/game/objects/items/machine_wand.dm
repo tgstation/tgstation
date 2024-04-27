@@ -150,7 +150,7 @@
 		CRASH("a moving bug has been created but isn't moving towards anything!")
 	src.controller = controller
 	src.thing_moving_towards = thing_moving_towards
-	var/datum/move_loop/loop = SSmove_manager.home_onto(src, thing_moving_towards, delay = 5, flags = MOVEMENT_LOOP_NO_DIR_UPDATE)
+	var/datum/move_loop/loop = DSmove_manager.home_onto(src, thing_moving_towards, delay = 5, flags = MOVEMENT_LOOP_NO_DIR_UPDATE)
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(reached_destination_check))
 	RegisterSignal(thing_moving_towards, COMSIG_QDELETING, PROC_REF(on_machine_del))
 

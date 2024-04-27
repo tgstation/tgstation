@@ -315,7 +315,7 @@
 		if(rebound.last_pushoff == world.time)
 			continue
 		if(continuous_move && !pass_allowed)
-			var/datum/move_loop/move/rebound_engine = SSmove_manager.processing_on(rebound, SSspacedrift)
+			var/datum/move_loop/move/rebound_engine = DSmove_manager.processing_on(rebound, SSspacedrift)
 			// If you're moving toward it and you're both going the same direction, stop
 			if(moving_direction == get_dir(src, pushover) && rebound_engine && moving_direction == rebound_engine.direction)
 				continue
@@ -540,7 +540,7 @@
 			to_chat(src, span_warning("You are not Superman."))
 		return
 	balloon_alert(src, "moving up...")
-	if(!do_after(src, 1 SECONDS))
+	if(!do_after(src, 1 SECONDS, hidden = TRUE))
 		return
 	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move upwards."))
@@ -566,7 +566,7 @@
 
 	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
 	balloon_alert(src, "moving down...")
-	if(!do_after(src, 1 SECONDS))
+	if(!do_after(src, 1 SECONDS, hidden = TRUE))
 		return
 	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move down."))
