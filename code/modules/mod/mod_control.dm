@@ -443,18 +443,16 @@
 	wearer = null
 
 /obj/item/mod/control/proc/clean_up()
+	if(QDELING(src))
+		return
 	if(active || activating)
 		for(var/obj/item/mod/module/module as anything in modules)
 			if(!module.active)
 				continue
 			module.deactivate(display_message = FALSE)
 		for(var/obj/item/part as anything in get_parts())
-			if(QDELETED(part))
-				continue
 			seal_part(part, is_sealed = FALSE)
 	for(var/obj/item/part as anything in get_parts())
-		if(QDELETED(part))
-			continue
 		retract(null, part)
 	if(active)
 		finish_activation(is_on = FALSE)
