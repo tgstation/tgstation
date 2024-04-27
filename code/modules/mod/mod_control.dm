@@ -123,6 +123,7 @@
 
 /obj/item/mod/control/atom_destruction(damage_flag)
 	if(wearer)
+		wearer.visible_message(span_danger("[src] fall[p_s()] apart, completely destroyed!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		clean_up()
 	for(var/obj/item/mod/module/module as anything in modules)
 		uninstall(module)
