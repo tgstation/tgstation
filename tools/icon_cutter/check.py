@@ -72,7 +72,12 @@ def hash_file(path):
 pass_count = 0
 fail_count = 0
 output_hash = {}
-for cutter_template in glob.glob("..\\..\\icons\\**\*.toml", recursive = True):
+files = []
+if platform.system() == "Windows":
+    files = glob.glob("..\\..\\icons\\**\*.toml", recursive = True)
+else:
+    files = glob.glob("../../icons/**/*.toml", recursive = True)
+for cutter_template in files:
     resource_name = re.sub(chop_extension, r"\1", cutter_template, count = 1)
     if not os.path.isfile(resource_name):
         print(f"::error template={cutter_template} exists but lacks a matching resource file ({resource_name})")
@@ -91,7 +96,7 @@ for cutter_template in glob.glob("..\\..\\icons\\**\*.toml", recursive = True):
 if platform.system() == "Windows":
     subprocess.run("..\\build\\build.bat --force-recut --ci icon-cutter")
 else:
-    subprocess.run("../build/build --force-recut --ci icon-cutter", shell = True)
+    os.system("bash ../build/build --force-recut --ci icon-cutter")
 
 for output_name in output_hash:
     old_hash, old_metadata, old_icon_hash = output_hash[output_name]
