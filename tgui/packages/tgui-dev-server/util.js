@@ -19,6 +19,7 @@ export const resolveGlob = (...sections) => {
   const unsafePaths = globPkg.sync(path.resolve(...sections), {
     strict: false,
     silent: true,
+    windowsPathsNoEscape: true,
   });
   const safePaths = [];
   for (let path of unsafePaths) {
