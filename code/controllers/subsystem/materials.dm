@@ -1,10 +1,12 @@
 /*! How material datums work
-Materials are now instanced datums, with an associative list of them being kept in GLOB.materials. We only instance the materials once and then re-use these instances for everything.
+Materials are now instanced datums, with an associative list of them being kept in SSmaterials. We only instance the materials once and then re-use these instances for everything.
 
 These materials call on_applied() on whatever item they are applied to, common effects are adding components, changing color and changing description. This allows us to differentiate items based on the material they are made out of.area
 
 */
-/datum/materials_controller
+SUBSYSTEM_DEF(materials)
+	name = "Materials"
+	flags = SS_NO_FIRE | SS_NO_INIT
 	///Dictionary of material.id || material ref
 	var/list/materials
 	///Dictionary of type || list of material refs
@@ -33,10 +35,8 @@ These materials call on_applied() on whatever item they are applied to, common e
 	///A list of dimensional themes used by the dimensional anomaly and other things, most of which require materials to function.
 	var/list/datum/dimension_theme/dimensional_themes
 
-GLOBAL_DATUM_INIT(materials, /datum/materials_controller, new)
-
 ///Ran on initialize, populated the materials and materials_by_category dictionaries with their appropiate vars (See these variables for more info)
-/datum/materials_controller/proc/InitializeMaterials()
+/datum/controller/subsystem/materials/proc/InitializeMaterials()
 	materials = list()
 	materials_by_type = list()
 	materialids_by_type = list()
@@ -57,7 +57,7 @@ GLOBAL_DATUM_INIT(materials, /datum/materials_controller, new)
  * - [arguments][/list]: The arguments to use to create the material datum
  *   - The first element is the type of material to initialize.
  */
-/datum/materials_controller/proc/InitializeMaterial(list/arguments)
+/datum/controller/subsystem/materials/proc/InitializeMaterial(list/arguments)
 	var/datum/material/mat_type = arguments[1]
 	if(initial(mat_type.init_flags) & MATERIAL_INIT_BESPOKE)
 		arguments[1] = GetIdFromArguments(arguments)
@@ -89,13 +89,13 @@ GLOBAL_DATUM_INIT(materials, /datum/materials_controller, new)
  *       - If the material type is bespoke a text ID is generated from the arguments list and used to load a material datum from the cache.
  *   - The following elements are used to generate bespoke IDs
  */
-/datum/materials_controller/proc/_GetMaterialRef(list/arguments)
+/datum/controller/subsystem/materials/proc/_GetMaterialRef(list/arguments)
 	if(!materials)
 		InitializeMaterials()
 
 	var/datum/material/key = arguments[1]
 	if(istype(key))
-		return key // We are assuming here that the only thing allowed to create material datums is [/datum/materials_controller/proc/InitializeMaterial]
+		return key // We are assuming here that the only thing allowed to create material datums is [/datum/controller/subsystem/materials/proc/InitializeMaterial]
 
 	if(istext(key)) // Handle text id
 		. = materials[key]
@@ -123,7 +123,7 @@ GLOBAL_DATUM_INIT(materials, /datum/materials_controller, new)
  * Named arguments can appear in any order and we need them to appear after ordered arguments
  * We assume that no one will pass in a named argument with a value of null
  **/
-/datum/materials_controller/proc/GetIdFromArguments(list/arguments)
+/datum/controller/subsystem/materials/proc/GetIdFromArguments(list/arguments)
 	var/datum/material/mattype = arguments[1]
 	var/list/fullid = list("[initial(mattype.id) || mattype]")
 	var/list/named_arguments = list()
@@ -149,7 +149,7 @@ GLOBAL_DATUM_INIT(materials, /datum/materials_controller, new)
 
 
 /// Returns a list to be used as an object's custom_materials. Lists will be cached and re-used based on the parameters.
-/datum/materials_controller/proc/FindOrCreateMaterialCombo(list/materials_declaration, multiplier)
+/datum/controller/subsystem/materials/proc/FindOrCreateMaterialCombo(list/materials_declaration, multiplier)
 	if(!LAZYLEN(materials_declaration))
 		return null // If we get a null we pass it right back, we don't want to generate stack traces just because something is clearing out its materials list.
 
