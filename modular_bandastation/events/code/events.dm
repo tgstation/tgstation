@@ -1,2 +1,3 @@
-/datum/round_event_control/wall_fungus
-	min_players = 20
+/datum/controller/subsystem/events
+	frequency_lower = 7 MINUTES
+	frequency_upper = 12 MINUTES
