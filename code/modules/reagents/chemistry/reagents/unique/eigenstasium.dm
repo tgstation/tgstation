@@ -29,6 +29,12 @@
 	var/obj/effect/overlay/holo_pad_hologram/eigenstate
 	///The point you're returning to after the reagent is removed
 	var/turf/open/location_return = null
+	///List of all lockers on a turf
+	var/num_of_closets = 0
+	///Number of closets counted so far from a turf
+	var/closets_counted = 0
+	///The turf we last exposed this reagent to
+	var/turf/open/location_exposed = null
 
 /datum/reagent/eigenstate/on_new(list/data)
 	. = ..()
@@ -108,6 +114,40 @@
 
 //FOR ADDICTION-LIKE EFFECTS, SEE datum/status_effect/eigenstasium
 
+///For sprays & smoke puffs
+/datum/reagent/eigenstate/expose_obj(obj/exposed_obj, reac_volume)
+	SHOULD_CALL_PARENT(FALSE)
+
+	if(!istype(exposed_obj, /obj/structure/closet))
+		return
+
+	//objects like sprays expose objects on a turf 1 at a time instead of calling expose_turf()
+	//so we wait for the last object on that turf to be sprayed down & then link them altogether
+	//this assumes all objects we have counted so far are on the same turf cause that is the requirment.
+
+	var/turf/open/location = get_turf(exposed_obj)
+	if(!isnull(location_exposed))
+		if(location != location_exposed)
+			num_of_closets = 0
+			closets_counted = 0
+			location_exposed = null
+			return
+	else
+		location_exposed = location
+
+	//count total number of closets on the turf and wait for this number to arrive in this proc
+	if(!num_of_closets)
+		for(var/obj/structure/closet/closet in location_exposed)
+			num_of_closets += 1
+
+	//count each closet as it comes. once we are sure this is the last closet accounted for we link everything
+	closets_counted += 1
+	if(closets_counted == num_of_closets)
+		num_of_closets = 0
+		closets_counted = 0
+		location_exposed = null
+		expose_turf(get_turf(exposed_obj))
+
 ///Lets you link lockers together
 /datum/reagent/eigenstate/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -116,6 +156,6 @@
 	var/list/lockers = list()
 	for(var/obj/structure/closet/closet in exposed_turf.contents)
 		lockers += closet
-	if(!length(lockers))
+	if(!lockers.len)
 		return
-	GLOB.eigenstate_manager.create_new_link(lockers)
+	GLOB.eigenstate_manager.create_new_link(lockers, subtle = FALSE)
