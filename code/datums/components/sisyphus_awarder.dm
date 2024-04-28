@@ -5,6 +5,8 @@
 /datum/component/sisyphus_awarder
 	/// What poor sap is hauling this rock?
 	var/mob/living/sisyphus
+	/// Reference to a place where it all started.
+	var/turf/bottom_of_the_hill
 
 /datum/component/sisyphus_awarder/Initialize()
 	if (!istype(parent, /obj/item/boulder))
@@ -17,10 +19,6 @@
 	UnregisterSignal(parent, list(COMSIG_ITEM_POST_EQUIPPED, COMSIG_MOVABLE_MOVED))
 	if (!isnull(sisyphus))
 		UnregisterSignal(sisyphus, list(COMSIG_ENTER_AREA, COMSIG_QDELETING))
-
-		sisyphus.client.set_eye(sisyphus.client.mob)
-		sisyphus.client.perspective = MOB_PERSPECTIVE
-
 	sisyphus = null
 
 /// Called when we're picked up, check if we're in the right place to start our epic journey
@@ -34,6 +32,7 @@
 	RegisterSignal(the_taker, COMSIG_ENTER_AREA, PROC_REF(on_bearer_changed_area))
 	RegisterSignal(the_taker, COMSIG_QDELETING, PROC_REF(on_dropped))
 	sisyphus = the_taker
+	bottom_of_the_hill = get_turf(the_taker)
 
 /// If you ever drop this shit you fail the challenge
 /datum/component/sisyphus_awarder/proc/on_dropped()
@@ -50,34 +49,20 @@
 	if (entered_area.type != /area/centcom/central_command_areas/evacuation)
 		return // Don't istype because taking pods doesn't count
 
-	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(sisyphus, COMSIG_ENTER_AREA)
-
 	chosen_one.client?.give_award(/datum/award/achievement/misc/sisyphus, chosen_one)
-	start_reward_scene()
+	play_reward_scene()
 
-/datum/component/sisyphus_awarder/proc/start_reward_scene()
-	var/list/turf/area_turfs = get_area_turfs(/area/lavaland/surface/outdoors)
-	var/list/target_turf
+	qdel(src)
 
-	while (isnull(target_turf))
-		var/turf/possible_pick = pick(area_turfs)
+/// Sends the player back to the Lavaland and plays a funny sound
+/datum/component/sisyphus_awarder/proc/play_reward_scene()
+	if(isnull(bottom_of_the_hill))
+		return // This probably shouldn't happen, but...
 
-		if(possible_pick.density)
-			continue
-
-		target_turf = possible_pick
-
-	var/obj/structure/closet/supplypod/our_pod = podspawn(list(
-		"target" = target_turf,
-		"path" = /obj/structure/closet/supplypod/centcompod,
+	podspawn(list(
+		"path" = /obj/structure/closet/supplypod/centcompod/sisyphus,
+		"target" = get_turf(sisyphus),
+		"reverse_dropoff_coords" = list(bottom_of_the_hill.x, bottom_of_the_hill.y, bottom_of_the_hill.z),
 	))
 
-	sisyphus.client.set_eye(target_turf)
-	sisyphus.client.perspective = EYE_PERSPECTIVE
-
-	var/atom/movable/parent_atom = parent
-	parent_atom.forceMove(our_pod)
-
 	SEND_SOUND(sisyphus, 'sound/ambience/music/sisyphus/sisyphus.ogg')
-	QDEL_IN(src, 11 SECONDS)
