@@ -167,7 +167,7 @@ function PlayerColumn(props) {
         {players.map((player) => {
           const isHost = !!player.host;
           const isSelf = player.key === self;
-          const canModify = fullAccess || isSelf;
+          const canBoot = fullAccess && !isSelf;
 
           return (
             <Table.Row className="candystripe" key={player.key}>
@@ -185,7 +185,7 @@ function PlayerColumn(props) {
               </Table.Cell>
 
               <Table.Cell verticalAlign="top" pt={!isHost && '2px'}>
-                {!canModify ? (
+                {!canBoot ? (
                   <Box color="label">{player.key}</Box>
                 ) : (
                   <Dropdown
@@ -203,7 +203,7 @@ function PlayerColumn(props) {
               </Table.Cell>
 
               <Table.Cell>
-                {!canModify ? (
+                {!isSelf ? (
                   <Box color="label">{player.loadout}</Box>
                 ) : (
                   <Dropdown
@@ -237,6 +237,8 @@ function PlayerColumn(props) {
         })}
         {observers.map((observer) => {
           const isHost = !!observer.host;
+          const isSelf = observer.key === self;
+          const canBoot = fullAccess && !isSelf;
 
           return (
             <Table.Row key={observer.key}>
@@ -254,7 +256,7 @@ function PlayerColumn(props) {
                 )}
               </Table.Cell>
               <Table.Cell>
-                {!fullAccess ? (
+                {!canBoot ? (
                   <b>{observer.key}</b>
                 ) : (
                   <Dropdown
