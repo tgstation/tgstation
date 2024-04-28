@@ -21,7 +21,6 @@
  *
 **/
 /datum/move_manager
-	name = "Movement Handler"
 
 GLOBAL_DATUM_INIT(move_manager, /datum/move_manager, new)
 

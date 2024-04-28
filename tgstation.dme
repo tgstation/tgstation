@@ -787,7 +787,7 @@
 #include "code\datums\json_savefile.dm"
 #include "code\datums\lazy_template.dm"
 #include "code\datums\map_config.dm"
-#include "code\datums\materials.dm"
+#include "code\datums\materials_controller.dm"
 #include "code\datums\minigames_menu.dm"
 #include "code\datums\mood.dm"
 #include "code\datums\move_manager.dm"

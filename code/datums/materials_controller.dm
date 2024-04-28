@@ -5,7 +5,6 @@ These materials call on_applied() on whatever item they are applied to, common e
 
 */
 /datum/materials_controller
-	name = "Materials"
 	///Dictionary of material.id || material ref
 	var/list/materials
 	///Dictionary of type || list of material refs
