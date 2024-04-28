@@ -15,7 +15,7 @@
 	var/list/allowed_loadouts = list()
 	/// whether we are currently being loaded by a lobby
 	var/template_in_use = FALSE
-		
+
 
 /datum/lazy_template/deathmatch/ragecage
 	name = "Ragecage"
@@ -76,14 +76,6 @@
 	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/assistant/instagib)
 	map_name = "instagib"
 	key = "instagib"
-
-/datum/lazy_template/deathmatch/mech_madness
-	name = "Mech Madness"
-	desc = "Do you hate mechs? Yeah? Dont care! Go fight eachother!"
-	max_players = 4
-	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/operative)
-	map_name = "mech_madness"
-	key = "mech_madness"
 
 /datum/lazy_template/deathmatch/sniper_elite
 	name = "Sniper Elite"
@@ -175,3 +167,22 @@
 	)
 	map_name = "ragin_mages"
 	key = "ragin_mages"
+
+/datum/lazy_template/deathmatch/finaldestination
+	name = "Final Destination"
+	desc = "1v1v1v1, 1 Stock, Final Destination."
+	max_players = 8
+	allowed_loadouts = list(
+		/datum/outfit/deathmatch_loadout/captain,
+		/datum/outfit/deathmatch_loadout/head_of_security,
+		/datum/outfit/deathmatch_loadout/traitor,
+		/datum/outfit/deathmatch_loadout/nukie,
+		/datum/outfit/deathmatch_loadout/tider,
+		/datum/outfit/deathmatch_loadout/abductor,
+		/datum/outfit/deathmatch_loadout/chef,
+		/datum/outfit/deathmatch_loadout/battler/clown/upgraded,
+		/datum/outfit/deathmatch_loadout/mime,
+		/datum/outfit/deathmatch_loadout/pete,
+	)
+	map_name = "finaldestination"
+	key = "finaldestination"
