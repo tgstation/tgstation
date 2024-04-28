@@ -71,6 +71,7 @@
 /obj/machinery/computer/slot_machine/on_deconstruction(disassembled)
 	if(balance)
 		give_payout(balance)
+		(balance=0)
 
 /obj/machinery/computer/slot_machine/process(seconds_per_tick)
 	. = ..() //Sanity checks.
