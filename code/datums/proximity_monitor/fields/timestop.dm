@@ -214,7 +214,7 @@
 	frozen_mobs += victim
 	victim.Stun(20, ignore_canstun = TRUE)
 	victim.add_traits(list(TRAIT_MUTE, TRAIT_EMOTEMUTE), TIMESTOP_TRAIT)
-	DSmove_manager.stop_looping(victim) //stops them mid pathing even if they're stunimmune //This is really dumb
+	GLOB.move_manager.stop_looping(victim) //stops them mid pathing even if they're stunimmune //This is really dumb
 	if(isanimal(victim))
 		var/mob/living/simple_animal/animal_victim = victim
 		animal_victim.toggle_ai(AI_OFF)
