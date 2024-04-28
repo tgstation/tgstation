@@ -2981,14 +2981,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "brC" = (
-/obj/machinery/atmospherics/components/binary/pump/off/general/visible/layer1{
-	dir = 4;
-	name = "Plasma to Pure";
-	color = "#BF40BF";
-	piping_layer = 3;
-	icon_state = "pump_map-3"
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible{
+	dir = 4
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/station/engineering/atmos)
 "brD" = (
 /obj/machinery/airalarm/directional/west,
@@ -8448,7 +8445,7 @@
 "dMg" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
-	name = "Helium Outlet Pump"
+	name = "Neurotoxin Outlet Pump"
 	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
@@ -8856,13 +8853,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark/small,
 /area/station/science/xenobiology)
-"dVg" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer4{
-	dir = 5
-	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "dVW" = (
 /obj/structure/chair{
 	dir = 8
@@ -15812,9 +15802,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "gCR" = (
@@ -18470,12 +18458,8 @@
 /turf/open/floor/plating,
 /area/station/cargo/miningoffice)
 "hsL" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible/layer1{
-	dir = 5
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "hsO" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window,
@@ -20849,12 +20833,12 @@
 /turf/open/floor/iron/textured_large,
 /area/station/hallway/primary/central/fore)
 "ijP" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible/layer5{
-	dir = 4
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4;
+	name = "N2O to Pure"
 	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "ijV" = (
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/engine)
@@ -21661,7 +21645,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "ivX" = (
@@ -35434,11 +35420,14 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/cafeteria)
 "mKK" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible{
-	dir = 4
+/obj/machinery/atmospherics/components/binary/pump/off/general/visible/layer1{
+	dir = 4;
+	name = "Plasma to Pure";
+	color = "#BF40BF";
+	piping_layer = 3;
+	icon_state = "pump_map-3"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "mKV" = (
 /obj/effect/turf_decal/siding/blue{
@@ -36143,8 +36132,11 @@
 /area/station/medical/storage)
 "mXx" = (
 /obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible/layer5{
-	dir = 6
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible/layer1{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 5
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -42266,7 +42258,7 @@
 /area/station/science/genetics)
 "oTY" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible/layer1{
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible/layer5{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -43240,6 +43232,13 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"piW" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible/layer1{
+	dir = 5
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "piZ" = (
 /obj/structure/chair/sofa/right/maroon{
 	dir = 1
@@ -46695,6 +46694,13 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
+"qep" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible/layer1{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "qeq" = (
 /obj/structure/fluff/broken_canister_frame,
 /turf/open/misc/asteroid,
@@ -47561,18 +47567,6 @@
 	dir = 4;
 	name = "O2 to pure"
 	},
-/obj/machinery/atmospherics/components/binary/pump/off/general/visible{
-	dir = 4;
-	name = "O2 to pure"
-	},
-/obj/machinery/atmospherics/components/binary/pump/off/general/visible{
-	dir = 4;
-	name = "O2 to pure"
-	},
-/obj/machinery/atmospherics/components/binary/pump/off/general/visible{
-	dir = 4;
-	name = "O2 to Pure"
-	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "qqx" = (
@@ -48344,7 +48338,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/helium_output{
 	dir = 8;
-	name = "neurotoxin tank output inlet"
+	name = "N2O tank output inlet"
 	},
 /turf/open/floor/engine/n2o,
 /area/station/ai_monitored/turret_protected/ai)
@@ -49064,6 +49058,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth_large,
 /area/station/engineering/storage_shared)
+"qKz" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible/layer5{
+	dir = 6
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "qKE" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -53564,16 +53565,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"rVh" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible/layer1{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
-	dir = 5
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "rVj" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/cold/directional/north,
@@ -59363,13 +59354,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood/parquet,
 /area/station/service/theater)
-"tEe" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
-	name = "N2O to Pure"
-	},
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos)
 "tEg" = (
 /obj/structure/transport/linear/tram,
 /obj/effect/turf_decal/stripes/white/line{
@@ -66296,7 +66280,8 @@
 "vzK" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/helium_output{
-	dir = 4
+	dir = 4;
+	chamber_id = "helium"
 	},
 /turf/open/floor/engine/helium,
 /area/station/ai_monitored/turret_protected/ai)
@@ -67717,8 +67702,12 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "vUh" = (
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer4{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "vUq" = (
 /obj/machinery/restaurant_portal/bar,
 /obj/machinery/firealarm/directional/west,
@@ -85811,8 +85800,8 @@ tYT
 dDB
 dDB
 jul
-rVh
-hsL
+mXx
+piW
 dDB
 dDB
 tYT
@@ -85830,7 +85819,7 @@ tYT
 tYT
 dDB
 dDB
-mXx
+qKz
 pJT
 rqV
 dDB
@@ -86069,7 +86058,7 @@ wBo
 vmL
 apj
 kwH
-oTY
+qep
 vmL
 ybO
 tYT
@@ -86087,10 +86076,10 @@ aJq
 tYT
 ybO
 vmL
-ijP
+oTY
 kwH
 lLE
-dVg
+vUh
 ybO
 aJq
 aJq
@@ -86324,9 +86313,9 @@ drw
 gvB
 wBo
 ybO
-mKK
-mKK
-mKK
+brC
+brC
+brC
 ybO
 ybO
 aJq
@@ -86344,9 +86333,9 @@ aJq
 aJq
 ybO
 ybO
-mKK
-mKK
-mKK
+brC
+brC
+brC
 pfx
 ybO
 akZ
@@ -86582,8 +86571,8 @@ qBD
 gKs
 hXt
 mXm
-tEe
-brC
+ijP
+mKK
 bJN
 hYC
 pwv
@@ -86839,7 +86828,7 @@ vDD
 gKs
 ydI
 dqV
-gCP
+ivT
 hZf
 sWE
 hYC
@@ -86859,7 +86848,7 @@ vnz
 hYC
 dYY
 dqV
-ivT
+gCP
 hZf
 nkp
 kvb
@@ -87353,7 +87342,7 @@ vtw
 gKs
 mFZ
 exE
-vUh
+hsL
 wWP
 dlk
 qUN
