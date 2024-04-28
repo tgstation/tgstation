@@ -51991,7 +51991,8 @@
 "tht" = (
 /obj/machinery/button/door/directional/east{
 	id = "gateshutter";
-	name = "Gateway Shutter Control"
+	name = "Gateway Shutter Control";
+	req_access = list("command")
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
