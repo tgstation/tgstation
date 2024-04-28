@@ -709,3 +709,10 @@
 		flags = ANIMATION_RELATIVE,
 	)
 	return ..()
+
+/obj/effect/temp_visual/fire_fizzle
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "fire_fizzle"
+	light_range = LIGHT_RANGE_FIRE
+	light_color = LIGHT_COLOR_FIRE
+	duration = 0.4 SECONDS

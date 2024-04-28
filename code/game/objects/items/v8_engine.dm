@@ -70,6 +70,10 @@
 	AddComponent(/datum/component/two_handed, force_unwielded = 12, force_wielded = 22, attacksound = active_hitsound)
 	RegisterSignals(src, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_PRE_THROW, COMSIG_ITEM_ATTACK_SELF), PROC_REF(reset_charges))
 
+/obj/item/house_edge/examine_more(mob/user)
+	. = ..()
+	. += "[src] will fly to a target location when revved up and burning, which will teleport you to the target location."
+
 /obj/item/house_edge/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!ismob(target))
@@ -91,14 +95,30 @@
 	if(fire_charges <= 0)
 		balloon_alert(user, "no fire charges!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	user.throw_at(target = get_turf(target), range = 2 * fire_charges, speed = 5, thrower = user, spin = FALSE, gentle = FALSE, quickstart = TRUE)
-	COOLDOWN_START(src, fire_charge_cooldown, DASH_COOLDOWN)
-	reset_charges(on_dash = TRUE)
+	var/saved_fire_charges = fire_charges
+	addtimer(CALLBACK(src, PROC_REF(teleport_dash), user), 0.5 SECONDS * saved_fire_charges)
+	if(user.dropItemToGround(src))
+		throw_at(target = target, range = 2 * saved_fire_charges, speed = 5, thrower = user, spin = TRUE, gentle = FALSE, quickstart = TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/house_edge/update_icon_state()
 	inhand_icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "house_edge1" : "house_edge0"
 	return ..()
+
+/**
+ * Teleport dash for the House Edge. Teleports the user to the sword and puts the sword back in the user's hand.
+ */
+/obj/item/house_edge/proc/teleport_dash(mob/living/user)
+	if(QDELETED(src) || user.incapacitated())
+		return FALSE
+	if(isnull(user) || ismob(loc))
+		reset_charges(on_dash = TRUE)
+		return FALSE
+	new /obj/effect/temp_visual/fire_fizzle(get_turf(user))
+	user.forceMove(drop_location())
+	user.put_in_hands(src)
+	COOLDOWN_START(src, fire_charge_cooldown, DASH_COOLDOWN)
+	reset_charges(on_dash = TRUE)
 
 /obj/item/house_edge/proc/reset_charges(on_dash = FALSE)
 	if(!COOLDOWN_FINISHED(src, fire_charge_cooldown) && !on_dash)
