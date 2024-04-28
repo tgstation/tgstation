@@ -61,15 +61,18 @@ type Data = {
 
 export function DeathmatchLobby(props) {
   const { act, data } = useBackend<Data>();
-  const { admin, observers = [], self, players } = data;
+  const { admin, observers = [], self, mod_menu_open, host, players } = data;
 
   const allReady = Object.keys(players).every(
     (player) => players[player].ready,
   );
 
+  const fullAccess = !!host || !!admin;
+  const showMenu = fullAccess && !!mod_menu_open;
+
   return (
     <Window title="Deathmatch Lobby" width={560} height={480}>
-      <ModSelector />
+      {showMenu && <ModSelector />}
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>
@@ -135,6 +138,8 @@ function PlayerColumn(props) {
     (player) => players[player].ready,
   );
 
+  const fullAccess = !!host || !!admin;
+
   return (
     <Section fill scrollable={Object.keys(players).length > 30}>
       <Table>
@@ -154,14 +159,19 @@ function PlayerColumn(props) {
           </Table.Cell>
         </Table.Row>
         {Object.keys(players).map((player) => {
-          const fullAccess = (!!host && !!players[player].host) || !admin;
+          const isHost = !!players[player].host;
 
           return (
             <Table.Row className="candystripe" key={player}>
               <Table.Cell collapsing verticalAlign="top" pt="2px">
-                {!!players[player].host && <Icon name="star" />}
+                {isHost && (
+                  <Tooltip content="Host">
+                    <Icon name="star" />
+                  </Tooltip>
+                )}
               </Table.Cell>
-              <Table.Cell verticalAlign="top" pt={!fullAccess && '2px'}>
+
+              <Table.Cell verticalAlign="top" pt={!isHost && '2px'}>
                 {!fullAccess ? (
                   <b>{player}</b>
                 ) : (
@@ -178,6 +188,7 @@ function PlayerColumn(props) {
                   />
                 )}
               </Table.Cell>
+
               <Table.Cell>
                 <Dropdown
                   width={10}
@@ -192,6 +203,7 @@ function PlayerColumn(props) {
                   }
                 />
               </Table.Cell>
+
               <Table.Cell align="right" verticalAlign="top" pt="2px">
                 <ButtonCheckbox
                   disabled={player !== self}
@@ -203,12 +215,20 @@ function PlayerColumn(props) {
           );
         })}
         {Object.keys(observers).map((observer) => {
-          const fullAccess = (!!host && !!players[observer].host) || admin;
+          const isHost = !!observers[observer].host;
 
           return (
             <Table.Row key={observer}>
-              <Table.Cell collapsing>
-                {(!!observers[observer].host && <Icon name="star" />) || (
+              <Table.Cell
+                collapsing
+                verticalAlign="top"
+                pt={fullAccess && '2px'}
+              >
+                {isHost ? (
+                  <Tooltip content="host">
+                    <Icon name="star" />
+                  </Tooltip>
+                ) : (
                   <Icon name="eye" />
                 )}
               </Table.Cell>
@@ -217,7 +237,7 @@ function PlayerColumn(props) {
                   <b>{observer}</b>
                 ) : (
                   <Dropdown
-                    width={8}
+                    width={9}
                     selected={observer}
                     options={['Kick', 'Transfer host', 'Toggle observe']}
                     onSelected={(value) =>
@@ -229,7 +249,7 @@ function PlayerColumn(props) {
                   />
                 )}
               </Table.Cell>
-              <Table.Cell>Observing</Table.Cell>
+              <Table.Cell color="label">Observing</Table.Cell>
             </Table.Row>
           );
         })}
@@ -247,7 +267,6 @@ function HostControls(props) {
     loadoutdesc,
     map,
     maps = [],
-    players = [],
     playing,
   } = data;
 
@@ -270,22 +289,7 @@ function HostControls(props) {
         />
       )}
       <Divider />
-      {map.desc}
-      <Divider />
-      <LabeledList>
-        <LabeledList.Item label="Max Play Time">
-          {`${map.time / 600}min`}
-        </LabeledList.Item>
-        <LabeledList.Item label="Min Players">
-          {map.min_players}
-        </LabeledList.Item>
-        <LabeledList.Item label="Max Players">
-          {map.max_players}
-        </LabeledList.Item>
-        <LabeledList.Item label="Current Players">
-          {Object.keys(players).length}
-        </LabeledList.Item>
-      </LabeledList>
+      {!map.name ? <NoticeBox>Map not selected</NoticeBox> : <MapInfo />}
       <Divider />
       <Box textAlign="center" color="average">
         {active_mods}
@@ -318,10 +322,7 @@ function HostControls(props) {
 
 const ModSelector = (props) => {
   const { act, data } = useBackend<Data>();
-  const { admin, host, mod_menu_open, modifiers = [] } = data;
-  if (!mod_menu_open || !(host || admin)) {
-    return null;
-  }
+  const { modifiers = [] } = data;
 
   return (
     <Modal>
@@ -350,3 +351,28 @@ const ModSelector = (props) => {
     </Modal>
   );
 };
+
+function MapInfo(props) {
+  const { data } = useBackend<Data>();
+  const { map, players } = data;
+  return (
+    <>
+      {map.desc}
+      <Divider />
+      <LabeledList>
+        <LabeledList.Item label="Max Play Time">
+          {`${map.time / 600}min`}
+        </LabeledList.Item>
+        <LabeledList.Item label="Min Players">
+          {map.min_players}
+        </LabeledList.Item>
+        <LabeledList.Item label="Max Players">
+          {map.max_players}
+        </LabeledList.Item>
+        <LabeledList.Item label="Current Players">
+          {Object.keys(players).length}
+        </LabeledList.Item>
+      </LabeledList>
+    </>
+  );
+}
