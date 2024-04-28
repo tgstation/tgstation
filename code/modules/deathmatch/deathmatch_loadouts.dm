@@ -620,7 +620,7 @@
 		/obj/item/ammo_box/c10mm,
 		/obj/item/ammo_box/magazine/smgm45 = 2,
 		/obj/item/pen/edagger,
-   	)
+	)
 
 /datum/outfit/deathmatch_loadout/pete
 	name = "Deathmatch: Cuban Pete"
@@ -640,7 +640,7 @@
 	implants = list(/obj/item/implanter/explosive_macro)
 	backpack_contents = list(
 		/obj/item/assembly/signaler = 10,
-   	)
+	)
 
 /datum/outfit/deathmatch_loadout/tider
 	name = "Deathmatch: Tider"
