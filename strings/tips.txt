@@ -45,7 +45,7 @@ As a Ghost, you can both start and join capture the flag games through the minig
 As a Ghost, you can double click on just about anything to follow it. Or just warp around!
 As a Ghost, you can see the inside of a container on the ground by clicking on it.
 As a Heretic, the Path of Ash focuses on stealth and disorientation, to get shed off them in aggressibely emblazing finale.
-As a Heretic, the Path of Moon will drive people around you literally crazy - if you succeed, perhaps crazy enough to become your friends.
+As a Heretic, the Path of Moon will literally drive people around you crazy - perhaps crazy enough to become your allies should you succeed.
 As a Heretic, the Path of Lock is a tider's best friend, and can open many pathways. Including, eventually, ones beyond the veil...
 As a Heretic, the Path of Flesh allows you to make a proper army through ghouls and various summons. Through ascencion, you get to become a one-man-army yourself.
 As a Heretic, the Path of Void makes people wish they could scream in the vast emptiness of space or have a chance at escaping from you. In the end, the storm takes all.
