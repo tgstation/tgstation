@@ -218,14 +218,14 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "nb" = (
-/obj/effect/turf_decal/weather/sand{
-	dir = 9
-	},
 /obj/structure/fermenting_barrel{
 	pixel_x = 6;
 	pixel_y = 11
 	},
-/obj/effect/mob_spawn/ghost_role/human/pirate/skeleton,
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/decal/remains/human,
 /turf/open/floor/wood{
 	icon_state = "wood_large"
 	},
