@@ -95,7 +95,7 @@ DATASYSTEM_DEF(materials)
 
 	var/datum/material/key = arguments[1]
 	if(istype(key))
-		return key // We are assuming here that the only thing allowed to create material datums is [/datum/system/materials/proc/InitializeMaterial]
+		return key // We are assuming here that the only thing allowed to create material datums is [/datum/materials_controller/proc/InitializeMaterial]
 
 	if(istext(key)) // Handle text id
 		. = materials[key]
