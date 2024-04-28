@@ -195,7 +195,7 @@ As the Curator, you can be the menace of all felenids thanks to the laser pointe
 As the Curator, you are not completely defenseless. Your whip easily disarms people, your laser pointer can blind humans and cyborgs, and you can hide items in wirecut books.
 As the Coroner, you are the medicaly certified edgelord of the station, which comes with several benefits, such as liking corpses, freely drinking medicaments meant for corpses such as formaldehyde and performing corpse-related surgeries faster.
 As the Coroner, your vendor contains appropriately edgy weaponry - you just need to hack in to get it, much like peforming an organ harvest.
-As the Coroner, perform autopsies on corpses recovered from strange circumstances to discover just how they died! Teaming up with a detective, you can solve several cases together!
+As the Coroner, you can perform autopsies on corpses recovered from strange circumstances with your handheld autopsy scanner to discover how they died. By teaming up with a Detective, you can solve several cases together!
 As the Detective, people leave fingerprints everywhere and on everything. With the exception of white latex, gloves will hide them. All is not lost, however, as gloves leave fibers specific to their kind such as black or nitrile, pointing to a general department.
 As the Detective, you can use your forensics scanner from a distance. Use this to scan boxes or other storage containers.
 As the Detective, your revolver can be loaded with .357 ammunition obtained from a hacked autolathe. Firing it has a decent chance to blow up your revolver.
