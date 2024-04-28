@@ -264,9 +264,7 @@
 	if(LAZYLEN(embedding))
 		updateEmbedding()
 
-	if(unique_reskin)
-		RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
-		register_context()
+	setup_reskinning()
 
 
 /obj/item/Destroy(force)

@@ -11,6 +11,20 @@
 	INVOKE_ASYNC(src, PROC_REF(reskin_obj), user)
 	return CLICK_ACTION_SUCCESS
 
+/obj/item/proc/check_setup_reskinning()
+	SHOULD_CALL_PARENT(TRUE)
+	if(unique_reskin)
+		return TRUE
+
+	return FALSE
+
+/obj/item/proc/setup_reskinning()
+	SHOULD_CALL_PARENT(FALSE)
+	if(!check_setup_reskinning())
+		return
+
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
+	register_context()
 
 /**
  * Reskins object based on a user's choice
