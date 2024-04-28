@@ -69,11 +69,10 @@ def hash_file(path):
 
     return (md5.hexdigest(), None, None)
 
+path_to_us = os.path.realpath(os.path.dirname(__file__))
 pass_count = 0
 fail_count = 0
 output_hash = {}
-path_to_us = os.path.realpath(os.path.dirname(__file__))
-print(path_to_us)
 files = []
 if platform.system() == "Windows":
     files = glob.glob(f"{path_to_us}\..\\..\\icons\\**\*.toml", recursive = True)
