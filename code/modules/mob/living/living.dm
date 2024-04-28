@@ -1776,15 +1776,15 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		registered_z = null
 		return
 
-	if(new_z)
-		//Check the amount of clients exists on the Z level we're leaving from,
-		//this excludes us as we haven't added ourselves to the new z level yet.
-		var/old_level_new_clients = (registered_z ? SSmobs.clients_by_zlevel[registered_z].len : null)
-		//No one is left after we're gone, shut off inactive ones
-		if(registered_z && old_level_new_clients == 0)
-			for(var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[registered_z])
-				controller.set_ai_status(AI_STATUS_OFF)
+	//Check the amount of clients exists on the Z level we're leaving from,
+	//this excludes us because at this point we are not registered to any z level.
+	var/old_level_new_clients = (registered_z ? SSmobs.clients_by_zlevel[registered_z].len : null)
+	//No one is left after we're gone, shut off inactive ones
+	if(registered_z && old_level_new_clients == 0)
+		for(var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[registered_z])
+			controller.set_ai_status(AI_STATUS_OFF)
 
+	if(new_z)
 		//Check the amount of clients exists on the Z level we're moving towards, excluding ourselves.
 		var/new_level_old_clients = SSmobs.clients_by_zlevel[new_z].len
 
