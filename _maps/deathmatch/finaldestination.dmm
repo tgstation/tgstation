@@ -211,11 +211,6 @@
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
-"ud" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/chasm,
-/area/deathmatch)
 "vn" = (
 /obj/effect/turf_decal/siding/blue{
 	dir = 8
@@ -833,7 +828,7 @@ Jq
 xc
 YI
 YI
-ud
+YI
 YI
 xc
 wl
