@@ -152,7 +152,7 @@
 
 	materials = AddComponent( \
 		/datum/component/material_container, \
-		DSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
+		GLOB.materials.materials_by_category[MAT_CATEGORY_SILO], \
 		INFINITY, \
 		MATCONTAINER_EXAMINE, \
 		allowed_items = accepted_type \

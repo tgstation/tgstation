@@ -139,8 +139,8 @@
 					GLOB.crafting_recipes += recipe
 
 	var/list/material_stack_recipes = list(
-		DSmaterials.base_stack_recipes,
-		DSmaterials.rigid_stack_recipes,
+		GLOB.materials.base_stack_recipes,
+		GLOB.materials.rigid_stack_recipes,
 	)
 
 	for(var/list/recipe_list in material_stack_recipes)
