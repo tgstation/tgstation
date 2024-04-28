@@ -46,6 +46,7 @@
 		"sensor_voice_nanites",
 		"stealth_nanites",
 		"voice_nanites",
+		"research_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500, TECHWEB_POINT_TYPE_NANITES = 500)
 

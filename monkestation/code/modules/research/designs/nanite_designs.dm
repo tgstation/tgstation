@@ -33,6 +33,13 @@
 	program_type = /datum/nanite_program/monitoring
 	category = list("Utility Nanites")
 
+/datum/design/nanites/research
+	name = "Research Network Integration"
+	desc = "The nanites contribute processing power to the research network, generating useful data and heat while consuming nanites. Requires a live host."
+	id = "research_nanites"
+	program_type = /datum/nanite_program/research
+	category = list("Utility Nanites")
+
 /datum/design/nanites/self_scan
 	name = "Host Scan"
 	desc = "The nanites display a detailed readout of a body scan to the host."

@@ -46,6 +46,109 @@
 
 	host_mob.hud_set_nanite_indicator()
 
+#define NANITE_RESEARCH_CHANGE "nanite_research_change"
+#define NANITE_RESEARCH_SLOW "Slow (1x)"
+#define NANITE_RESEARCH_FAST "Fast (2x)"
+#define NANITE_RESEARCH_SUPERFAST "Bitcoin Miner (10x)"
+
+/datum/nanite_program/research
+	name = "Research Network Integration"
+	desc = "The nanites contribute processing power to the research network, generating useful data and heat. Higher usage rates will consume more nanites. Requires a live host."
+	rogue_types = list(/datum/nanite_program/spreading, /datum/nanite_program/mitosis) // it researches itself into oblivion
+	use_rate = 0.5
+
+	var/research_speed
+	var/current_research_bonus
+	var/current_mode
+	COOLDOWN_DECLARE(next_warning_time)
+
+/datum/nanite_program/research/register_extra_settings()
+	extra_settings[NES_MODE] = new /datum/nanite_extra_setting/type(NANITE_RESEARCH_SLOW, list(NANITE_RESEARCH_SLOW, NANITE_RESEARCH_FAST, NANITE_RESEARCH_SUPERFAST))
+
+/datum/nanite_program/research/check_conditions()
+	return host_mob.stat != DEAD && ..()
+
+/datum/nanite_program/research/active_effect() // yep it's basically a space heater
+	. = ..()
+	var/datum/nanite_extra_setting/mode = extra_settings[NES_MODE]
+
+	if (current_mode != mode.get_value() && passive_enabled)
+		disable_passive_effect() // toggles it so that it updates
+		enable_passive_effect()
+
+	var/turf/turf = get_turf(host_mob)
+	if (!istype(turf))
+		return
+
+	var/datum/gas_mixture/enviroment = turf.return_air()
+	if (host_mob.bodytemperature < enviroment.temperature) // sadly our bitcoin mining operations just aren't cool enough
+		return
+
+	var/difference = host_mob.bodytemperature - enviroment.temperature
+	var/heat_capacity = enviroment.heat_capacity()
+	var/required_energy = difference * heat_capacity
+	var/delta_temperature = min(required_energy, research_speed * 500) / heat_capacity
+
+	enviroment.temperature += delta_temperature
+	turf.air_update_turf()
+
+/datum/nanite_program/research/enable_passive_effect()
+	. = ..()
+	var/datum/nanite_extra_setting/mode = extra_settings[NES_MODE]
+	current_mode = mode.get_value()
+
+	var/message
+	switch (current_mode)
+		if (NANITE_RESEARCH_SLOW)
+			message = span_notice("You feel slightly warmer than usual.")
+		if (NANITE_RESEARCH_FAST)
+			message = span_warning("You feel a lot warmer than usual.")
+		if (NANITE_RESEARCH_SUPERFAST)
+			message = span_userdanger("You feel your insides radiate with dizzying heat!")
+
+	update_research_speed()
+
+	host_mob.add_body_temperature_change(NANITE_RESEARCH_CHANGE, research_speed * 15)
+	use_rate = initial(use_rate) * research_speed
+	current_research_bonus = use_rate
+	SSresearch.science_tech.nanite_bonus += current_research_bonus
+
+	if (COOLDOWN_FINISHED(src, next_warning_time))
+		to_chat(host_mob, message)
+		COOLDOWN_START(src, next_warning_time, 10 SECONDS)
+
+/datum/nanite_program/research/disable_passive_effect()
+	. = ..()
+	SSresearch.science_tech.nanite_bonus -= current_research_bonus
+	host_mob.remove_body_temperature_change(NANITE_RESEARCH_CHANGE)
+
+/datum/nanite_program/research/set_extra_setting(setting, value)
+	. = ..()
+	update_research_speed()
+
+/datum/nanite_program/research/copy_programming(datum/nanite_program/target, copy_activated)
+	. = ..()
+	var/datum/nanite_program/research/research = target
+	if (!istype(research))
+		return
+	research.update_research_speed()
+
+/datum/nanite_program/research/proc/update_research_speed()
+	var/datum/nanite_extra_setting/mode = extra_settings[NES_MODE]
+	switch (mode.get_value())
+		if (NANITE_RESEARCH_SLOW)
+			research_speed = 1
+		if (NANITE_RESEARCH_FAST)
+			research_speed = 2
+		if (NANITE_RESEARCH_SUPERFAST)
+			research_speed = 10 // oh god
+	use_rate = initial(use_rate) * research_speed
+
+#undef NANITE_RESEARCH_CHANGE
+#undef NANITE_RESEARCH_SLOW
+#undef NANITE_RESEARCH_FAST
+#undef NANITE_RESEARCH_SUPERFAST
+
 /datum/nanite_program/self_scan
 	name = "Host Scan"
 	desc = "The nanites display a detailed readout of a body scan to the host."
