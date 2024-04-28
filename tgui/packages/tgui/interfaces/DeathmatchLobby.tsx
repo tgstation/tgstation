@@ -18,11 +18,12 @@ import {
 import { ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
 
-type Player = Record<string, PlayerInfo>;
-
-type PlayerInfo = {
+type Player = {
   host: number;
+  key: string;
+  loadout: string;
   ready: BooleanLike;
+  mob: string;
 };
 
 type Modifier = {
@@ -61,14 +62,21 @@ type Data = {
 
 export function DeathmatchLobby(props) {
   const { act, data } = useBackend<Data>();
-  const { admin, observers = [], self, mod_menu_open, host, players } = data;
+  const {
+    admin,
+    host,
+    mod_menu_open,
+    observers = [],
+    players = [],
+    self,
+  } = data;
 
-  const allReady = Object.keys(players).every(
-    (player) => players[player].ready,
-  );
+  const allReady = players.every((player) => player.ready);
 
   const fullAccess = !!host || !!admin;
   const showMenu = fullAccess && !!mod_menu_open;
+
+  const isObserver = observers.find((observer) => observer.key === self);
 
   return (
     <Window title="Deathmatch Lobby" width={560} height={480}>
@@ -101,7 +109,7 @@ export function DeathmatchLobby(props) {
                 </Stack.Item>
                 <Stack.Item>
                   <Button color="caution" onClick={() => act('observe')}>
-                    {observers[self] ? 'Join' : 'Observe'}
+                    {isObserver ? 'Join' : 'Observe'}
                   </Button>
                   <Button color="bad" onClick={() => act('leave_game')}>
                     Leave Game
@@ -134,14 +142,12 @@ function PlayerColumn(props) {
     self,
   } = data;
 
-  const allReady = Object.keys(players).every(
-    (player) => players[player].ready,
-  );
+  const allReady = players.every((player) => player.ready);
 
   const fullAccess = !!host || !!admin;
 
   return (
-    <Section fill scrollable={Object.keys(players).length > 30}>
+    <Section fill scrollable={players.length > 30}>
       <Table>
         <Table.Row header>
           <Table.Cell collapsing />
@@ -158,11 +164,12 @@ function PlayerColumn(props) {
             </Tooltip>
           </Table.Cell>
         </Table.Row>
-        {Object.keys(players).map((player) => {
-          const isHost = !!players[player].host;
+        {players.map((player) => {
+          const isHost = !!player.host;
+          const isSelf = player.key === self;
 
           return (
-            <Table.Row className="candystripe" key={player}>
+            <Table.Row className="candystripe" key={player.key}>
               <Table.Cell collapsing verticalAlign="top" pt="2px">
                 {isHost && (
                   <Tooltip content="Host">
@@ -173,15 +180,15 @@ function PlayerColumn(props) {
 
               <Table.Cell verticalAlign="top" pt={!isHost && '2px'}>
                 {!fullAccess ? (
-                  <b>{player}</b>
+                  <b>{player.key}</b>
                 ) : (
                   <Dropdown
                     width={9}
-                    selected={player}
+                    selected={player.key}
                     options={['Kick', 'Transfer host', 'Toggle observe']}
                     onSelected={(value) =>
                       act('host', {
-                        id: player,
+                        id: player.key,
                         func: value,
                       })
                     }
@@ -192,12 +199,12 @@ function PlayerColumn(props) {
               <Table.Cell>
                 <Dropdown
                   width={10}
-                  selected={players[player].loadout}
-                  disabled={!host && player !== self}
+                  selected={player.loadout}
+                  disabled={!host && !isSelf}
                   options={loadouts}
                   onSelected={(value) =>
                     act('change_loadout', {
-                      player: player,
+                      player: player.key,
                       loadout: value,
                     })
                   }
@@ -206,19 +213,19 @@ function PlayerColumn(props) {
 
               <Table.Cell align="right" verticalAlign="top" pt="2px">
                 <ButtonCheckbox
-                  disabled={player !== self}
-                  checked={players[player].ready}
+                  disabled={!isSelf}
+                  checked={player.ready}
                   onClick={() => act('ready')}
                 />
               </Table.Cell>
             </Table.Row>
           );
         })}
-        {Object.keys(observers).map((observer) => {
-          const isHost = !!observers[observer].host;
+        {observers.map((observer) => {
+          const isHost = !!observer.host;
 
           return (
-            <Table.Row key={observer}>
+            <Table.Row key={observer.key}>
               <Table.Cell
                 collapsing
                 verticalAlign="top"
@@ -234,15 +241,15 @@ function PlayerColumn(props) {
               </Table.Cell>
               <Table.Cell>
                 {!fullAccess ? (
-                  <b>{observer}</b>
+                  <b>{observer.key}</b>
                 ) : (
                   <Dropdown
                     width={9}
-                    selected={observer}
+                    selected={observer.key}
                     options={['Kick', 'Transfer host', 'Toggle observe']}
                     onSelected={(value) =>
                       act('host', {
-                        id: observer,
+                        id: observer.key,
                         func: value,
                       })
                     }
@@ -260,41 +267,18 @@ function PlayerColumn(props) {
 
 function HostControls(props) {
   const { act, data } = useBackend<Data>();
-  const {
-    active_mods = [],
-    admin,
-    host,
-    loadoutdesc,
-    map,
-    maps = [],
-    playing,
-  } = data;
+  const { active_mods = [], admin, host, loadoutdesc, playing } = data;
+
+  const fullAccess = !!host || !!admin;
 
   return (
     <Section fill scrollable>
-      {!host ? (
-        <NoticeBox danger>{map.name}</NoticeBox>
-      ) : (
-        <Dropdown
-          color="average"
-          width="100%"
-          selected={map.name}
-          options={maps}
-          onSelected={(value) =>
-            act('host', {
-              func: 'change_map',
-              map: value,
-            })
-          }
-        />
-      )}
-      <Divider />
-      {!map.name ? <NoticeBox>Map not selected</NoticeBox> : <MapInfo />}
+      <MapInfo />
       <Divider />
       <Box textAlign="center" color="average">
         {active_mods}
       </Box>
-      {(!!admin || !!host) && (
+      {fullAccess && (
         <>
           <Divider />
           <Button textAlign="center" fluid onClick={() => act('open_mod_menu')}>
@@ -329,34 +313,56 @@ const ModSelector = (props) => {
       <Button fluid color="bad" onClick={() => act('exit_mod_menu')}>
         Go Back
       </Button>
-      {modifiers.map((mod, index) => {
-        return (
-          <Button.Checkbox
-            key={index}
-            mb={2}
-            checked={mod.selected}
-            tooltip={mod.desc}
-            color={mod.selected ? 'green' : 'blue'}
-            disabled={!mod.selected && !mod.selectable}
-            onClick={() =>
-              act('toggle_modifier', {
-                modpath: mod.modpath,
-              })
-            }
-          >
-            {mod.name}
-          </Button.Checkbox>
-        );
-      })}
+      {modifiers.map((mod, index) => (
+        <Button.Checkbox
+          key={index}
+          mb={2}
+          checked={mod.selected}
+          tooltip={mod.desc}
+          color={mod.selected ? 'green' : 'blue'}
+          disabled={!mod.selected && !mod.selectable}
+          onClick={() =>
+            act('toggle_modifier', {
+              modpath: mod.modpath,
+            })
+          }
+        >
+          {mod.name}
+        </Button.Checkbox>
+      ))}
     </Modal>
   );
 };
 
 function MapInfo(props) {
-  const { data } = useBackend<Data>();
-  const { map, players } = data;
+  const { act, data } = useBackend<Data>();
+  const { host, maps = [], map, players } = data;
+
+  if (!host && !map?.name) {
+    return <NoticeBox align="center">No map selected</NoticeBox>;
+  }
+
   return (
     <>
+      {!host ? (
+        <NoticeBox danger>{map.name}</NoticeBox>
+      ) : (
+        <>
+          <Dropdown
+            color="average"
+            width="100%"
+            selected={map.name}
+            options={maps}
+            onSelected={(value) =>
+              act('host', {
+                func: 'change_map',
+                map: value,
+              })
+            }
+          />
+          <Divider />
+        </>
+      )}
       {map.desc}
       <Divider />
       <LabeledList>
@@ -370,7 +376,7 @@ function MapInfo(props) {
           {map.max_players}
         </LabeledList.Item>
         <LabeledList.Item label="Current Players">
-          {Object.keys(players).length}
+          {players.length}
         </LabeledList.Item>
       </LabeledList>
     </>
