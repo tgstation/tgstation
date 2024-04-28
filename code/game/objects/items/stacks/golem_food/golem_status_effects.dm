@@ -294,7 +294,7 @@
 
 /// Make our arm do slashing effects
 /datum/status_effect/golem/diamond/proc/set_arm_fluff(obj/item/bodypart/arm/arm)
-	arm.unarmed_attack_verb = "slash"
+	arm.unarmed_attack_verbs = list("slash")
 	arm.grappled_attack_verb = "lacerate"
 	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	arm.unarmed_attack_sound = 'sound/weapons/slash.ogg'
@@ -315,7 +315,7 @@
 /datum/status_effect/golem/diamond/proc/reset_arm_fluff(obj/item/bodypart/arm/arm)
 	if (!arm)
 		return
-	arm.unarmed_attack_verb = initial(arm.unarmed_attack_verb)
+	arm.unarmed_attack_verbs = initial(arm.unarmed_attack_verbs)
 	arm.unarmed_attack_effect = initial(arm.unarmed_attack_effect)
 	arm.unarmed_attack_sound = initial(arm.unarmed_attack_sound)
 	arm.unarmed_miss_sound = initial(arm.unarmed_miss_sound)
