@@ -1,0 +1,4 @@
+author: "13spacemen"
+delete-after: True
+changes:
+  - code_imp: "Unarmed attacks (punches, etc.) now support multiple attack verbs instead of only one"
