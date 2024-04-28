@@ -1,7 +1,0 @@
-author: "Singul0"
-delete-after: True
-changes:
-  - bugfix: "fixed cyborg bonesetter not working for compound fractures"
-  - bugfix: "butchering not disabling in cyborg omnitool"
-  - bugfix: "fixes a bug where if you select the omnitool it would be stuck in surgery initiator mode"
-  - bugfix: "cautery in off hand for cyborg omnitools not working"

@@ -1,0 +1,5 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "minebot shields are now actually orderable"
+  - bugfix: "vinegar may once again be crafted with wine, water, and sugar"
