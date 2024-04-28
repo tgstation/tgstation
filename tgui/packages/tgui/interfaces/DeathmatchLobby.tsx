@@ -167,20 +167,26 @@ function PlayerColumn(props) {
         {players.map((player) => {
           const isHost = !!player.host;
           const isSelf = player.key === self;
+          const canModify = fullAccess || isSelf;
 
           return (
             <Table.Row className="candystripe" key={player.key}>
-              <Table.Cell collapsing verticalAlign="top" pt="2px">
+              <Table.Cell align="center" collapsing verticalAlign="top">
                 {isHost && (
                   <Tooltip content="Host">
-                    <Icon name="star" />
+                    <Icon color="gold" name="star" pt={isSelf && 0.5} />
+                  </Tooltip>
+                )}
+                {!host && isSelf && (
+                  <Tooltip content="You">
+                    <Icon color="green" name="arrow-right" pt={0.9} />
                   </Tooltip>
                 )}
               </Table.Cell>
 
               <Table.Cell verticalAlign="top" pt={!isHost && '2px'}>
-                {!fullAccess ? (
-                  <b>{player.key}</b>
+                {!canModify ? (
+                  <Box color="label">{player.key}</Box>
                 ) : (
                   <Dropdown
                     width={9}
@@ -197,26 +203,34 @@ function PlayerColumn(props) {
               </Table.Cell>
 
               <Table.Cell>
-                <Dropdown
-                  width={10}
-                  selected={player.loadout}
-                  disabled={!host && !isSelf}
-                  options={loadouts}
-                  onSelected={(value) =>
-                    act('change_loadout', {
-                      player: player.key,
-                      loadout: value,
-                    })
-                  }
-                />
+                {!canModify ? (
+                  <Box color="label">{player.loadout}</Box>
+                ) : (
+                  <Dropdown
+                    width={10}
+                    selected={player.loadout}
+                    disabled={!host && !isSelf}
+                    options={loadouts}
+                    onSelected={(value) =>
+                      act('change_loadout', {
+                        player: player.key,
+                        loadout: value,
+                      })
+                    }
+                  />
+                )}
               </Table.Cell>
 
-              <Table.Cell align="right" verticalAlign="top" pt="2px">
-                <ButtonCheckbox
-                  disabled={!isSelf}
-                  checked={player.ready}
-                  onClick={() => act('ready')}
-                />
+              <Table.Cell align="center" verticalAlign="middle">
+                {isSelf ? (
+                  <ButtonCheckbox
+                    disabled={!isSelf}
+                    checked={player.ready}
+                    onClick={() => act('ready')}
+                  />
+                ) : (
+                  !!player.ready && <Icon name="check" />
+                )}
               </Table.Cell>
             </Table.Row>
           );
