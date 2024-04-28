@@ -853,3 +853,15 @@
   - admin: The return of IPIntel
   grungussuss:
   - bugfix: fixed being able to install multiple of the same upgrade to medical cyborgs
+2024-04-28:
+  Ben10Omintrix:
+  - bugfix: fixes mobs getting stuck trying to reach something unreachable
+  EnterTheJake:
+  - bugfix: Spraycan no longer spams your chat when you mouse over it.
+  Melbert:
+  - bugfix: Midround malf can roll again
+  Rhials:
+  - bugfix: Overwatch Intelligence Agents no longer get their own uplinks, leading
+      to a self-replicating grey goo scenario.
+  jlsnow301:
+  - bugfix: Fixes clipping in the ESC menu between buttons and long station names.
