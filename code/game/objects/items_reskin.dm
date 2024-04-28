@@ -45,7 +45,7 @@
  * Reskins object based on a user's choice
  *
  * Arguments:
- * * M The mob choosing a reskin option
+ * * user The mob choosing a reskin option
  */
 /obj/item/proc/reskin_obj(mob/user)
 	if(!LAZYLEN(unique_reskin))
