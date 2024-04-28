@@ -1,3 +1,6 @@
+//Particle Catchers. Works by eating nuclear particles and singulo energy to produce power. Encourages fusion and more creative SM setups (like CO2 + BZ for mass particles)
+//Subject to heavy rebalancing as radiation as a whole is being adjusted ig
+
 //radiation needs to be over this amount to get power
 #define RAD_COLLECTOR_EFFICIENCY 80
 #define RAD_COLLECTOR_COEFFICIENT 100
@@ -6,9 +9,21 @@
 //Produces at least 1000 watts if it has more than that stored
 #define RAD_COLLECTOR_OUTPUT min(stored_energy, (stored_energy*RAD_COLLECTOR_STORED_OUT)+1000)
 
-/obj/machinery/power/rad_collector
-	name = "Radiation Collector Array"
-	desc = "A device which uses radiation and plasma to produce power."
+//FUSION PARTICLE "REWORK"... HERE. TODO: Make this actually subtract valid amounts of energy from the object firing them. Then again...
+/obj/projectile/energy/nuclear_particle
+	var/stored_energy
+
+/obj/projectile/energy/nuclear_particle/Initialize(mapload)
+	. = ..()
+	if(!stored_energy) //Will generate a random value on every initialise
+		stored_energy = rand(150,30000) //SUPER lethal. Eeyikes!
+		damage = max((stored_energy*0.1),80) //Yeowch-tier
+
+//replacing this dumbass machine with something more fun.
+
+/obj/machinery/power/rad_collector //Still use this for compat reasons
+	name = "Particle Capture Array"
+	desc = "A device which uses a large plasma-glass sheet to 'catch' particles, harvesting their stored energy. Do not taunt. Can be loaded with a variety of gases to produce additional power."
 	icon = 'monkestation/icons/obj/engine/singularity.dmi'
 	icon_state = "ca"
 	anchored = FALSE
@@ -30,10 +45,16 @@
 	var/drain_ratio = 0.5
 	///Multiplier for the amount of gas removed per tick
 	var/power_production_drain = 0.001
+	//Multiplier for tanks and gases insidee
+	var/power_coeff = 1
 
-/obj/machinery/power/rad_collector/anchored/Initialize(mapload)
+/obj/machinery/power/rad_collector/anchored/Initialize(mapload) 
 	. = ..()
 	set_anchored(TRUE)
+
+/obj/machinery/power/rad_collector/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(eat_some_bullets)) //Specifically handles the next part...
 
 /obj/machinery/power/rad_collector/Destroy()
 	return ..()
@@ -41,21 +62,32 @@
 /obj/machinery/power/rad_collector/should_have_node()
 	return anchored
 
-/obj/machinery/power/rad_collector/process(seconds_per_tick)
-	if(!loaded_tank)
+/obj/machinery/power/rad_collector/proc/eat_some_bullets(datum/source, obj/projectile/projectile)
+	if(istype(projectile,/obj/projectile/energy/nuclear_particle))
+		var/obj/projectile/energy/nuclear_particle/proj = projectile
+		var/final_output = (proj.stored_energy += power_coeff)
+		stored_energy += (final_output*1.4) //2.5 yields ~145KW/s avg per collector.
 		return
-	var/datum/gas_mixture/tank_mix = loaded_tank.return_air()
-	if(!tank_mix.gases[/datum/gas/plasma])
-		investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_ENGINE)
-		playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
-		eject()
-		return
-	var/gasdrained = min(power_production_drain * drain_ratio * seconds_per_tick, tank_mix.gases[/datum/gas/plasma][MOLES])
-	tank_mix.gases[/datum/gas/plasma][MOLES] -= gasdrained
-	tank_mix.assert_gas(/datum/gas/tritium)
-	tank_mix.gases[/datum/gas/tritium][MOLES] += gasdrained
-	tank_mix.garbage_collect()
 
+/obj/machinery/power/rad_collector/process(seconds_per_tick)
+	if(loaded_tank)
+		var/datum/gas_mixture/tank_mix = loaded_tank.return_air()
+		if(active)
+			for(var/id in tank_mix.gases)
+				if(tank_mix.gases[id][MOLES] >= 10) //Stops cheesing.
+					power_coeff += (GLOB.meta_gas_info[id][META_GAS_SPECIFIC_HEAT]) //250 (plasma), 2000 (hypernobi), etc etc
+					var/gasdrained = min(power_production_drain * drain_ratio * seconds_per_tick, tank_mix.gases[id][MOLES])
+					tank_mix.gases[id][MOLES] -= gasdrained
+					tank_mix.assert_gas(/datum/gas/hydrogen) //Produce Hydrogen. Mostly because it explodes.
+					tank_mix.gases[/datum/gas/hydrogen][MOLES] += gasdrained
+					tank_mix.garbage_collect()
+		if(!tank_mix && loaded_tank)
+			investigate_log("<font color='red'>out of gas.</font>.", INVESTIGATE_ENGINE)
+			playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
+			power_coeff = 0 //Should NEVER happen.
+			return //Immediately stop processing past this point to prevent atmos/MC crashes
+	if(!loaded_tank)
+		power_coeff -= 0.5 //Half power
 	var/power_produced = RAD_COLLECTOR_OUTPUT
 	add_avail(power_produced)
 	stored_energy -= power_produced
@@ -155,7 +187,7 @@
 /obj/machinery/power/rad_collector/examine(mob/user)
 	. = ..()
 	if(!active)
-		. += span_notice("<b>[src]'s display displays the words:</b> \"Power production mode. Please insert <b>Plasma</b>.\"")
+		. += span_notice("<b>[src]'s display displays the words:</b> \"Power production mode. Please insert <b>Plasma, Tritium, CO2 or Hypernobilium</b>.\"")
 	// stored_energy is converted directly to watts every SSmachines.wait * 0.1 seconds.
 	// Therefore, its units are joules per SSmachines.wait * 0.1 seconds.
 	// So joules = stored_energy * SSmachines.wait * 0.1
@@ -181,10 +213,6 @@
 	else
 		update_appearance()
 
-/obj/machinery/power/rad_collector/rad_act(intensity)
-	if(loaded_tank && active && intensity > RAD_COLLECTOR_EFFICIENCY)
-		stored_energy += (intensity-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
-
 /obj/machinery/power/rad_collector/update_overlays()
 	. = ..()
 	if(loaded_tank)
@@ -204,6 +232,12 @@
 		flick("ca_deactive", src)
 	update_appearance()
 	return
+
+//LEGACY RADIATION HANDLING CODE ! FOR SINGULO ONLY \\
+
+/obj/machinery/power/rad_collector/rad_act(intensity)
+	if(loaded_tank && active && intensity > RAD_COLLECTOR_EFFICIENCY)
+		stored_energy += ((intensity+power_coeff)-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
 
 #undef RAD_COLLECTOR_EFFICIENCY
 #undef RAD_COLLECTOR_COEFFICIENT
