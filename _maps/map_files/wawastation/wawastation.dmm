@@ -4292,7 +4292,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics_engine)
 "bBs" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/closet/secure_closet/brig/genpop,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/execution/transfer)
@@ -19490,15 +19490,12 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "hkG" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
-	id = "kitchen_counter";
-	name = "Kitchen Counter Shutters"
+/obj/machinery/atmospherics/components/tank/oxygen{
+	dir = 8
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/smartfridge/food,
-/turf/open/floor/iron/kitchen,
-/area/station/service/kitchen)
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
 "hld" = (
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/east,
@@ -37632,7 +37629,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "nVa" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/closet/secure_closet/brig/genpop,
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/dark/textured,
@@ -42693,12 +42690,15 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "pQM" = (
-/obj/machinery/atmospherics/components/tank/oxygen{
-	dir = 8
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "kitchen_counter";
+	name = "Kitchen Counter Shutters"
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/station/maintenance/department/science)
+/obj/machinery/door/firedoor,
+/obj/machinery/smartfridge/food,
+/turf/open/floor/iron/kitchen,
+/area/station/service/kitchen)
 "pQN" = (
 /obj/structure/chair/stool/directional/east,
 /turf/open/floor/wood,
@@ -46653,7 +46653,7 @@
 /turf/open/floor/plating,
 /area/station/science/ordnance/storage)
 "rpD" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/closet/secure_closet/brig/genpop,
 /obj/machinery/light/dim/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/execution/transfer)
@@ -50175,7 +50175,7 @@
 /turf/open/floor/iron/chapel,
 /area/station/service/chapel)
 "sxl" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/closet/secure_closet/brig/genpop,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/north,
@@ -91515,7 +91515,7 @@ enu
 enu
 enu
 duS
-hkG
+pQM
 pYu
 ruP
 lOE
@@ -110763,8 +110763,8 @@ jBM
 lJq
 obA
 pka
-pQM
-pQM
+hkG
+hkG
 moe
 mJU
 bpW
@@ -111020,8 +111020,8 @@ cPl
 cLf
 obA
 upd
-pQM
-pQM
+hkG
+hkG
 moe
 sbE
 dlE
