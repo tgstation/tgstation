@@ -593,6 +593,7 @@ ADMIN_VERB(debug_spell_requirements, R_DEBUG, "Debug Spell Requirements", "View 
 ADMIN_VERB(load_lazy_template, R_ADMIN, "Load/Jump Lazy Template", "Loads a lazy template and/or jumps to it.", ADMIN_CATEGORY_EVENTS)
 	var/list/choices = LAZY_TEMPLATE_KEY_LIST_ALL()
 	var/choice = tgui_input_list(user, "Key?", "Lazy Loader", choices)
+	var/teleport_to_template = tgui_input_list(user, "Jump to template after loading?", "Where to?", list("Yes", "No"))
 	if(!choice)
 		return
 
@@ -611,12 +612,13 @@ ADMIN_VERB(load_lazy_template, R_ADMIN, "Load/Jump Lazy Template", "Loads a lazy
 		to_chat(user, span_boldwarning("Failed to load template!"))
 		return
 
-	if(!isobserver(user.mob))
-		SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_ghost)
-	user.mob.forceMove(reservation.bottom_left_turfs[1])
+	if(teleport_to_template == "Yes")
+		if(!isobserver(user.mob))
+			SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_ghost)
+		user.mob.forceMove(reservation.bottom_left_turfs[1])
+		to_chat(user, span_boldnicegreen("Template loaded, you have been moved to the bottom left of the reservation."))
 
 	message_admins("[key_name_admin(user)] has loaded lazy template '[choice]'")
-	to_chat(user, span_boldnicegreen("Template loaded, you have been moved to the bottom left of the reservation."))
 
 ADMIN_VERB(library_control, R_BAN, "Library Management", "List and manage the Library.", ADMIN_CATEGORY_MAIN)
 	if(!user.holder.library_manager)

@@ -264,7 +264,7 @@
 	required_reagents = list(/datum/reagent/consumable/olivepaste = 4, /datum/reagent/water = 1)
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/vinegar
+/datum/chemical_reaction/food/wine_vinegar
 	results = list(/datum/reagent/consumable/vinegar = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/wine = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
 	reaction_flags = REACTION_INSTANT
@@ -282,7 +282,7 @@
 	mix_message = "A smooth batter forms."
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/vinegar
+/datum/chemical_reaction/food/grape_vinegar
 	results = list(/datum/reagent/consumable/vinegar = 5)
 	required_reagents = list(/datum/reagent/consumable/grapejuice = 5)
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
