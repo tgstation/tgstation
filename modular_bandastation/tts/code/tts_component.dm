@@ -132,7 +132,7 @@
 		location = parent
 	if(effect == /datum/singleton/sound_effect/radio)
 		is_local = FALSE
-		if(listener == speaker && !issilicon(parent)) // don't hear both radio and whisper from yourself
+		if(listener == speaker) // don't hear both radio and whisper from yourself
 			return
 
 	effect = get_effect(effect)
