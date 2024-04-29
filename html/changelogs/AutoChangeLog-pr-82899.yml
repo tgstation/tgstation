@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Examining someone with Med/Sec HUDs will no longer filter the message under Radio."

@@ -5,6 +5,8 @@
 /datum/component/sisyphus_awarder
 	/// What poor sap is hauling this rock?
 	var/mob/living/sisyphus
+	/// Reference to a place where it all started.
+	var/turf/bottom_of_the_hill
 
 /datum/component/sisyphus_awarder/Initialize()
 	if (!istype(parent, /obj/item/boulder))
@@ -30,6 +32,7 @@
 	RegisterSignal(the_taker, COMSIG_ENTER_AREA, PROC_REF(on_bearer_changed_area))
 	RegisterSignal(the_taker, COMSIG_QDELETING, PROC_REF(on_dropped))
 	sisyphus = the_taker
+	bottom_of_the_hill = get_turf(the_taker)
 
 /// If you ever drop this shit you fail the challenge
 /datum/component/sisyphus_awarder/proc/on_dropped()
@@ -45,5 +48,21 @@
 		return
 	if (entered_area.type != /area/centcom/central_command_areas/evacuation)
 		return // Don't istype because taking pods doesn't count
+
 	chosen_one.client?.give_award(/datum/award/achievement/misc/sisyphus, chosen_one)
+	play_reward_scene()
+
 	qdel(src)
+
+/// Sends the player back to the Lavaland and plays a funny sound
+/datum/component/sisyphus_awarder/proc/play_reward_scene()
+	if(isnull(bottom_of_the_hill))
+		return // This probably shouldn't happen, but...
+
+	podspawn(list(
+		"path" = /obj/structure/closet/supplypod/centcompod/sisyphus,
+		"target" = get_turf(sisyphus),
+		"reverse_dropoff_coords" = list(bottom_of_the_hill.x, bottom_of_the_hill.y, bottom_of_the_hill.z),
+	))
+
+	SEND_SOUND(sisyphus, 'sound/ambience/music/sisyphus/sisyphus.ogg')

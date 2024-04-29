@@ -865,3 +865,35 @@
       to a self-replicating grey goo scenario.
   jlsnow301:
   - bugfix: Fixes clipping in the ESC menu between buttons and long station names.
+2024-04-29:
+  13spacemen:
+  - bugfix: All alert polls ignore option works
+  - code_imp: Unarmed attacks (punches, etc.) now support multiple attack verbs instead
+      of only one
+  EnterTheJake:
+  - image: The Infiltrator Suit has received a new model, sleeker than ever!
+  FlufflesTheDog:
+  - bugfix: minebot shields are now actually orderable
+  - bugfix: vinegar may once again be crafted with wine, water, and sugar
+  JohnFulpWillard:
+  - bugfix: Examining someone with Med/Sec HUDs will no longer filter the message
+      under Radio.
+  - bugfix: pAI requests should no longer randomly permanently break in a round.
+  Melbert:
+  - bugfix: Plasma cutters work again
+  Metekillot:
+  - bugfix: Mech domination now properly integrates with shunting.
+  - bugfix: Combat upgraded AIs no longer get two buggy malf ability pickers if they
+      also become malfunctioning
+  - refactor: Refactored most of the functionality around malf AI shunting, mech control
+  Rhials:
+  - admin: Lazy loading map templates now gives you the option to not ghost/teleport
+      to the loaded area upon completion.
+  Sadboysuss:
+  - admin: spy can now be rolebanned
+  VexingRaven:
+  - bugfix: The debug box no longer spills its contents everywhere
+  improvedname:
+  - qol: Arrivals shuttle is now more player friendly
+  san7890:
+  - admin: Possess Object is now back in the right-click context menu.
