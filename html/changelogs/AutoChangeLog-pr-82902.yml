@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - admin: "Lazy loading map templates now gives you the option to not ghost/teleport to the loaded area upon completion."
