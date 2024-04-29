@@ -1,6 +1,0 @@
-author: "Metekillot"
-delete-after: True
-changes:
-  - bugfix: "Mech domination now properly integrates with shunting."
-  - bugfix: "Combat upgraded AIs no longer get two buggy malf ability pickers if they also become malfunctioning"
-  - refactor: "Refactored most of the functionality around malf AI shunting, mech control"

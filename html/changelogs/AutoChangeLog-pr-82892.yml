@@ -1,4 +1,0 @@
-author: "VexingRaven"
-delete-after: True
-changes:
-  - bugfix: "The debug box no longer spills its contents everywhere"

@@ -1,4 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes:
-  - bugfix: "All alert polls ignore option works"
