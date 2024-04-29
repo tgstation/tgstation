@@ -382,8 +382,8 @@
 	light_power = 1.5
 	// Slightly better than the normal plasma core.
 	// Not super sure if this should just be the same, but will see.
-	maxcharge = 15000
-	charge = 15000
+	maxcharge = 15 * STANDARD_CELL_CHARGE
+	charge = 15 * STANDARD_CELL_CHARGE
 	/// The mob to be spawned by the core
 	var/mob/living/spawned_mob_type = /mob/living/basic/butterfly/lavaland/temporary
 	/// Max number of mobs it can spawn

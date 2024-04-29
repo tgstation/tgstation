@@ -21,9 +21,10 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 	var/datum/asset/asset_cache_datum = get_asset_datum(/datum/asset/simple/vv)
 	asset_cache_datum.send(usr)
 
-	var/isappearance = isappearance(thing)
+	if(isappearance(thing))
+		thing = get_vv_appearance(thing) // this is /mutable_appearance/our_bs_subtype
 	var/islist = islist(thing) || (!isdatum(thing) && hascall(thing, "Cut")) // Some special lists dont count as lists, but can be detected by if they have list procs
-	if(!islist && !isdatum(thing) && !isappearance)
+	if(!islist && !isdatum(thing))
 		return
 
 	var/title = ""
@@ -31,7 +32,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 	var/icon/sprite
 	var/hash
 
-	var/type = islist? /list : (isappearance ? "/appearance" : thing.type)
+	var/type = islist ? /list : thing.type
 	var/no_icon = FALSE
 
 	if(isatom(thing))
@@ -39,7 +40,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 		if(!sprite)
 			no_icon = TRUE
 
-	else if(isimage(thing) || isappearance)
+	else if(isimage(thing))
 		// icon_state=null shows first image even if dmi has no icon_state for null name.
 		// This list remembers which dmi has null icon_state, to determine if icon_state=null should display a sprite
 		// (NOTE: icon_state="" is correct, but saying null is obvious)
@@ -49,7 +50,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 		if(icon_filename_text)
 			if(image_object.icon_state)
 				sprite = icon(image_object.icon, image_object.icon_state)
-				
+
 			else // it means: icon_state=""
 				if(!dmi_nullstate_checklist[icon_filename_text])
 					dmi_nullstate_checklist[icon_filename_text] = ICON_STATE_CHECKED
@@ -69,7 +70,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 	title = "[thing] ([REF(thing)]) = [type]"
 	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
 
-	var/list/header = islist ? list("<b>/list</b>") : (isappearance ? vv_get_header_appearance(thing) : thing.vv_get_header())
+	var/list/header = islist ? list("<b>/list</b>") : thing.vv_get_header()
 
 	var/ref_line = "@[copytext(refid, 2, -1)]" // get rid of the brackets, add a @ prefix for copy pasting in asay
 
@@ -103,16 +104,11 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 			var/name = dropdownoptions[i]
 			var/link = dropdownoptions[name]
 			dropdownoptions[i] = "<option value[link? "='[link]'":""]>[name]</option>"
-	else if(isappearance)
-		dropdownoptions = vv_get_dropdown_appearance(thing)
 	else
 		dropdownoptions = thing.vv_get_dropdown()
 
 	var/list/names = list()
-	if(isappearance)
-		var/static/list/virtual_appearance_vars = build_virtual_appearance_vars()
-		names = virtual_appearance_vars.Copy()
-	else if(!islist)
+	if(!islist)
 		for(var/varname in thing.vars)
 			names += varname
 
@@ -127,10 +123,6 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 			if(IS_NORMAL_LIST(list_value) && IS_VALID_ASSOC_KEY(key))
 				value = list_value[key]
 			variable_html += debug_variable(i, value, 0, list_value)
-	else if(isappearance)
-		names = sort_list(names)
-		for(var/varname in names)
-			variable_html += debug_variable_appearance(varname, thing)
 	else
 		names = sort_list(names)
 		for(var/varname in names)

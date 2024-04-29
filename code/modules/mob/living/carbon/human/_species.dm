@@ -1068,7 +1068,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		attacking_bodypart = brain.get_attacking_limb(target)
 	if(!attacking_bodypart)
 		attacking_bodypart = user.get_active_hand()
-	var/atk_verb = attacking_bodypart.unarmed_attack_verb
+	var/atk_verb = pick(attacking_bodypart.unarmed_attack_verbs)
 	var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
 	if(atk_effect == ATTACK_EFFECT_BITE)
@@ -1563,8 +1563,24 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/prepare_human_for_preview(mob/living/carbon/human/human)
 	return
 
-/// Returns the species's scream sound.
+/// Returns the species' scream sound.
 /datum/species/proc/get_scream_sound(mob/living/carbon/human/human)
+	return
+
+/// Returns the species' cry sound.
+/datum/species/proc/get_cry_sound(mob/living/carbon/human/human)
+	return
+
+/// Returns the species' cough sound.
+/datum/species/proc/get_cough_sound(mob/living/carbon/human/human)
+	return
+
+/// Returns the species' laugh sound
+/datum/species/proc/get_laugh_sound(mob/living/carbon/human/human)
+	return
+
+/// Returns the species' sneeze sound.
+/datum/species/proc/get_sneeze_sound(mob/living/carbon/human/human)
 	return
 
 /datum/species/proc/get_types_to_preload()

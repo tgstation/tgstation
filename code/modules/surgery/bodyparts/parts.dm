@@ -129,7 +129,7 @@
 	aux_layer = BODYPARTS_HIGH_LAYER
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_DEFAULT
 	can_be_disabled = TRUE
-	unarmed_attack_verb = "punch" /// The classic punch, wonderfully classic and completely random
+	unarmed_attack_verbs = list("punch") /// The classic punch, wonderfully classic and completely random
 	grappled_attack_verb = "pummel"
 	unarmed_damage_low = 5
 	unarmed_damage_high = 10
@@ -390,7 +390,7 @@
 	can_be_disabled = TRUE
 	unarmed_attack_effect = ATTACK_EFFECT_KICK
 	body_zone = BODY_ZONE_L_LEG
-	unarmed_attack_verb = "kick" // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
+	unarmed_attack_verbs = list("kick") // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
 	unarmed_damage_low = 7
 	unarmed_damage_high = 15
 	unarmed_effectiveness = 15

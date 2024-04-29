@@ -48,7 +48,7 @@
 /datum/surgery_step/repair_bone_hairline
 	name = "repair hairline fracture (bonesetter/bone gel/tape)"
 	implements = list(
-		/obj/item/bonesetter = 100,
+		TOOL_BONESET = 100,
 		/obj/item/stack/medical/bone_gel = 100,
 		/obj/item/stack/sticky_tape/surgical = 100,
 		/obj/item/stack/sticky_tape/super = 50,
@@ -98,7 +98,7 @@
 /datum/surgery_step/reset_compound_fracture
 	name = "reset bone (bonesetter)"
 	implements = list(
-		/obj/item/bonesetter = 100,
+		TOOL_BONESET = 100,
 		/obj/item/stack/sticky_tape/surgical = 60,
 		/obj/item/stack/sticky_tape/super = 40,
 		/obj/item/stack/sticky_tape = 20)

@@ -78,7 +78,7 @@
 		balloon_alert(user, "[required_contestants - contestant_count] contestants needed!")
 		return
 
-	SSbattle_royale.start_battle(implanted_implants)
+	DSbattle_royale.start_battle(implanted_implants)
 
 	for (var/obj/implanter as anything in linked_implanters)
 		do_sparks(3, cardinal_only = FALSE, source = implanter)

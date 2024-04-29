@@ -48,25 +48,17 @@
 	return NONE
 
 /obj/machinery/plumbing/reaction_chamber/process(seconds_per_tick)
-	if(!is_operational)
+	if(!is_operational || !reagents.total_volume)
 		return
-
-	//half the power for getting reagents in
-	var/power_usage = active_power_usage * 0.5
 
 	if(!emptying || reagents.is_reacting)
 		//adjust temperature of final solution
-		var/temp_diff = target_temperature - reagents.chem_temp
-		if(abs(temp_diff) > 0.01) //if we are not close enough keep going
-			reagents.adjust_thermal_energy(temp_diff * HEATER_COEFFICIENT * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
+		var/energy = (target_temperature - reagents.chem_temp) * HEATER_COEFFICIENT * seconds_per_tick * reagents.heat_capacity()
+		reagents.adjust_thermal_energy(energy)
+		use_energy(active_power_usage + abs(ROUND_UP(energy) / 120))
 
 		//do other stuff with final solution
 		handle_reagents(seconds_per_tick)
-
-		//full power for doing reactions
-		power_usage *= 2
-
-	use_energy(power_usage * seconds_per_tick)
 
 ///For subtypes that want to do additional reagent handling
 /obj/machinery/plumbing/reaction_chamber/proc/handle_reagents(seconds_per_tick)
