@@ -235,7 +235,7 @@ ADMIN_VERB(ipintel_revoke, R_BAN, "Revoke Player VPN Whitelist", "Revoke a playe
 	message_admins("IPINTEL: [key_name_admin(user)] has revoked the VPN whitelist for '[ckey]'")
 
 /client/proc/check_ip_intel()
-	if (!is_enabled())
+	if (!SSipintel.is_enabled())
 		return
 	if(SSipintel.is_exempt(src) || SSipintel.is_whitelisted(ckey))
 		return
