@@ -346,3 +346,5 @@
 #define VOTE_WINNER_METHOD_WEIGHTED_RANDOM "Weighted Random"
 /// There is no winner for this vote.
 #define VOTE_WINNER_METHOD_NONE "None"
+
+#define VOTE_AVAILABLE "Vote Available"

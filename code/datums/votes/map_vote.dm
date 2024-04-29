@@ -1,6 +1,6 @@
 /datum/vote/map_vote
 	name = "Map"
-	message = "Vote for next round's map!"
+	default_message = "Vote for next round's map!"
 	count_method = VOTE_COUNT_METHOD_SINGLE
 	winner_method = VOTE_WINNER_METHOD_WEIGHTED_RANDOM
 	display_statistics = FALSE
@@ -30,44 +30,26 @@
 		SSmapping.map_voted = TRUE // voted by not voting, very sad.
 		return FALSE
 
-/datum/vote/map_vote/toggle_votable(mob/toggler)
-	if(!toggler)
-		CRASH("[type] wasn't passed a \"toggler\" mob to toggle_votable.")
-	if(!check_rights_for(toggler.client, R_ADMIN))
-		return FALSE
-
+/datum/vote/map_vote/toggle_votable()
 	CONFIG_SET(flag/allow_vote_map, !CONFIG_GET(flag/allow_vote_map))
-	return TRUE
 
 /datum/vote/map_vote/is_config_enabled()
 	return CONFIG_GET(flag/allow_vote_map)
 
-/datum/vote/map_vote/can_be_initiated(mob/by_who, forced = FALSE)
+/datum/vote/map_vote/can_be_initiated(forced)
 	. = ..()
-	if(!.)
-		return FALSE
-
+	if(. != VOTE_AVAILABLE)
+		return .
 	if(forced)
-		return TRUE
-
+		return VOTE_AVAILABLE
 	var/number_of_choices = length(check_population())
 	if(number_of_choices < 2)
-		message = "There [number_of_choices == 1 ? "is only one map" : "are no maps"] to choose from."
-		return FALSE
-
+		return "There [number_of_choices == 1 ? "is only one map" : "are no maps"] to choose from."
 	if(SSmapping.map_vote_rocked)
-		return TRUE
-
-	if(!CONFIG_GET(flag/allow_vote_map))
-		message = "Map voting is disabled by server configuration settings."
-		return FALSE
-
+		return VOTE_AVAILABLE
 	if(SSmapping.map_voted)
-		message = "The next map has already been selected."
-		return FALSE
-
-	message = initial(message)
-	return TRUE
+		return "The next map has already been selected."
+	return VOTE_AVAILABLE
 
 /// Before we create a vote, remove all maps from our choices that are outside of our population range.
 /// Note that this can result in zero remaining choices for our vote, which is not ideal (but ultimately okay).

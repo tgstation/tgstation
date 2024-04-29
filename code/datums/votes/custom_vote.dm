@@ -3,11 +3,11 @@
 
 /datum/vote/custom_vote/single
 	name = "Custom Standard"
-	message = "Click here to start a custom vote (one selection per voter)"
+	default_message = "Click here to start a custom vote (one selection per voter)"
 
 /datum/vote/custom_vote/multi
 	name = "Custom Multi"
-	message = "Click here to start a custom multi vote (multiple selections per voter)"
+	default_message = "Click here to start a custom multi vote (multiple selections per voter)"
 	count_method = VOTE_COUNT_METHOD_MULTI
 
 // Custom votes ares always accessible.
@@ -19,14 +19,16 @@
 	override_question = null
 	return ..()
 
-/datum/vote/custom_vote/can_be_initiated(mob/by_who, forced = FALSE)
+/datum/vote/custom_vote/can_be_initiated(forced)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(. != VOTE_AVAILABLE)
+		return .
+	if(forced)
+		return .
 
 	// Custom votes can only be created if they're forced to be made.
 	// (Either an admin makes it, or otherwise.)
-	return forced
+	return "Only admins can create custom votes."
 
 /datum/vote/custom_vote/create_vote(mob/vote_creator)
 	var/custom_win_method = tgui_input_list(

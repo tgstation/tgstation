@@ -184,13 +184,13 @@
 
 /// minimum time between voting sessions (deciseconds, 10 minute default)
 /datum/config_entry/number/vote_delay
-	default = 6000
+	default = 10 MINUTES
 	integer = FALSE
 	min_val = 0
 
 /// length of voting period (deciseconds, default 1 minute)
 /datum/config_entry/number/vote_period
-	default = 600
+	default = 1 MINUTES
 	integer = FALSE
 	min_val = 0
 

@@ -16,24 +16,24 @@
 	/// Does the name of this vote contain the word "vote"?
 	var/contains_vote_in_name = FALSE
 	/// What message do we want to pass to the player-side vote panel as a tooltip?
-	var/message = "Click to initiate a vote."
-
-	// Internal values used when tracking ongoing votes.
-	// Don't mess with these, change the above values / override procs for subtypes.
-	/// An assoc list of [all choices] to [number of votes in the current running vote].
-	var/list/choices = list()
-	/// A assoc list of [ckey] to [what they voted for in the current running vote].
-	var/list/choices_by_ckey = list()
-	/// The world time this vote was started.
-	var/started_time
-	/// The time remaining in this vote's run.
-	var/time_remaining
+	var/default_message = "Click to initiate a vote."
 	/// The counting method we use for votes.
 	var/count_method = VOTE_COUNT_METHOD_SINGLE
 	/// The method for selecting a winner.
 	var/winner_method = VOTE_WINNER_METHOD_SIMPLE
 	/// Should we show details about the number of votes submitted for each option?
 	var/display_statistics = TRUE
+
+	// Internal values used when tracking ongoing votes.
+	// Don't mess with these, change the above values / override procs for subtypes.
+	/// An assoc list of [all choices] to [number of votes in the current running vote].
+	VAR_FINAL/list/choices = list()
+	/// A assoc list of [ckey] to [what they voted for in the current running vote].
+	VAR_FINAL/list/choices_by_ckey = list()
+	/// The world time this vote was started.
+	VAR_FINAL/started_time
+	/// The time remaining in this vote's run.
+	VAR_FINAL/time_remaining
 
 /**
  * Used to determine if this vote is a possible
@@ -59,10 +59,9 @@
 
 /**
  * If this vote has a config associated, toggles it between enabled and disabled.
- * Returns TRUE on a successful toggle, FALSE otherwise
  */
-/datum/vote/proc/toggle_votable(mob/toggler)
-	return FALSE
+/datum/vote/proc/toggle_votable()
+	return
 
 /**
  * If this vote has a config associated, returns its value (True or False, usually).
@@ -74,20 +73,19 @@
 /**
  * Checks if the passed mob can initiate this vote.
  *
- * Return TRUE if the mob can begin the vote, allowing anyone to actually vote on it.
- * Return FALSE if the mob cannot initiate the vote.
+ * * forced - if being invoked by someone who is an admin
+ *
+ * Return VOTE_AVAILABLE if the mob can initiate the vote.
+ * Return a string with the reason why the mob can't initiate the vote.
  */
-/datum/vote/proc/can_be_initiated(mob/by_who, forced = FALSE)
+/datum/vote/proc/can_be_initiated(forced = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
+	// SHOULD_BE_PURE(TRUE)
 
-	if(started_time)
-		var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))
-		if(next_allowed_time > world.time && !forced)
-			message = "A vote was initiated recently. You must wait [DisplayTimeText(next_allowed_time - world.time)] before a new vote can be started!"
-			return FALSE
+	if(!forced && !is_config_enabled())
+		return "This vote is currently disabled by the server configuration."
 
-	message = initial(message)
-	return TRUE
+	return VOTE_AVAILABLE
 
 /**
  * Called prior to the vote being initiated.
