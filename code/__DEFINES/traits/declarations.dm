@@ -1124,4 +1124,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
 
+/// This mob has been spawned as the denizen of a virtual domain, and has restrictions on how much they can interfere with the world.
+#define TRAIT_VIRTUAL_ENTITY "virtual_entity"
+
 // END TRAIT DEFINES

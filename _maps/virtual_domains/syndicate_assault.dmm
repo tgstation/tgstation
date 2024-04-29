@@ -185,7 +185,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "gD" = (
-/obj/structure/fluff/empty_sleeper/syndicate,
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/syndie,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "hg" = (
@@ -463,7 +463,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "rP" = (
 /obj/machinery/light/small/directional/south,
-/obj/structure/fluff/empty_sleeper/syndicate,
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/syndie,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "sg" = (
@@ -790,7 +790,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Ia" = (
-/obj/structure/fluff/empty_sleeper/syndicate/captain,
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/syndie,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Id" = (

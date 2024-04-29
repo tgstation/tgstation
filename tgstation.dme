@@ -3465,6 +3465,7 @@
 #include "code\modules\bitrunning\event.dm"
 #include "code\modules\bitrunning\job.dm"
 #include "code\modules\bitrunning\outfits.dm"
+#include "code\modules\bitrunning\spawners.dm"
 #include "code\modules\bitrunning\turfs.dm"
 #include "code\modules\bitrunning\antagonists\_parent.dm"
 #include "code\modules\bitrunning\antagonists\cyber_police.dm"

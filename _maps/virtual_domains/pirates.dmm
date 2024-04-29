@@ -225,7 +225,7 @@
 /obj/effect/turf_decal/weather/sand{
 	dir = 9
 	},
-/obj/effect/decal/remains/human,
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate,
 /turf/open/floor/wood{
 	icon_state = "wood_large"
 	},
