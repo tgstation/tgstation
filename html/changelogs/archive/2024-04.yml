@@ -299,3 +299,9 @@
       server/start round early to use HTML)
   - bugfix: Add Admin AI law now actually works (thanks /tg/), admins can now also
       insert unsanitised HTML as they wish.
+2024-04-29:
+  Absolucy:
+  - bugfix: Fixed full charge APC helpers resulting in APCs practically having no
+      roundstart power instead.
+  RikuTheKiller:
+  - rscadd: Nanites are now capable of contributing to the research network.
