@@ -57233,10 +57233,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/left)
-"tkG" = (
-/obj/structure/cable,
-/turf/open/misc/asteroid/airless,
-/area/station/asteroid)
 "tkH" = (
 /obj/machinery/firealarm/directional/west{
 	pixel_y = 3
@@ -190354,7 +190350,7 @@ pMW
 pMW
 pMW
 aac
-tkG
+aac
 uCy
 may
 uCy
