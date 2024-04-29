@@ -55,3 +55,7 @@
 	name = "Virtual Domain Safe Zone"
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | VIRTUAL_SAFE_AREA
 	icon_state = "bit_safe"
+
+/area/virtual_domain/protected_space/fullbright
+	static_lighting = FALSE
+	base_lighting_alpha = 255
