@@ -103,7 +103,7 @@ const BountyPickBox = (props) => {
         <Flex.Item shrink={0} grow={0.5}>
           <Button fluid color="green" onClick={() => act('pick', { value: 1 })}>
             <Box>{id_bounty_names[0]}</Box>
-            <Box textAlign="left" backgroundColor="darkseagreen">
+            <Box textAlign="left" color="black" backgroundColor="linen">
               {id_bounty_infos[0]}
             </Box>
             <Box>Payout: {id_bounty_values[0]} cr</Box>
@@ -112,7 +112,7 @@ const BountyPickBox = (props) => {
         <Flex.Item shrink={0} grow={0.5} px={1}>
           <Button fluid color="green" onClick={() => act('pick', { value: 2 })}>
             <Box>{id_bounty_names[1]}</Box>
-            <Box textAlign="left" backgroundColor="darkseagreen">
+            <Box textAlign="left" color="black" backgroundColor="linen">
               {id_bounty_infos[1]}
             </Box>
             <Box>Payout: {id_bounty_values[1]} cr</Box>
@@ -121,8 +121,8 @@ const BountyPickBox = (props) => {
         <Flex.Item shrink={0} grow={0.5}>
           <Button fluid color="green" onClick={() => act('pick', { value: 3 })}>
             <Box>{id_bounty_names[2]}</Box>
-            <Box textAlign="left" backgroundColor="darkseagreen">
-              {id_bounty_infos[2]}
+            <Box textAlign="left" color="black" backgroundColor="linen">
+              {id_bounty_infos[1]}
             </Box>
             <Box>Payout: {id_bounty_values[2]} cr</Box>
           </Button>
