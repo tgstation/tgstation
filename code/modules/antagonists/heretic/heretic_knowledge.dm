@@ -273,7 +273,7 @@
 			continue
 		success_check = TRUE
 		LAZYREMOVE(our_heretic.blades_list, blades_in_list)
-		var/mob/living/living_target = recursive_loc_check(src, mob/living)
+		var/mob/living/living_target = recursive_loc_check(src, /mob/living)
 		if(living_target)
 			living_target.apply_damage(15)
 			var/obj/item/bodypart/thief_hand = living_target.get_bodypart(BODY_ZONE_L_ARM)

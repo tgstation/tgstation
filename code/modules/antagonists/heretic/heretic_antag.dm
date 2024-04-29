@@ -84,7 +84,7 @@
 
 /datum/antagonist/heretic/Destroy()
 	LAZYNULL(sac_targets)
-	for(var/obj/item/melee/sickly_blade/blade as anything in our_heretic.blades_list)
+	for(var/obj/item/melee/sickly_blade/blade as anything in blades_list)
 		blade.owner = null
 	LAZYNULL(blades_list)
 	return ..()
