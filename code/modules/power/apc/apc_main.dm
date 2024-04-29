@@ -5,6 +5,9 @@
 // may be opened to change power cell
 // three different channels (lighting/equipment/environ) - may each be set to on, off, or auto
 
+///Cap for how fast cells charge, as a percentage per second (.01 means cellcharge is capped to 1% per second)
+#define CHARGELEVEL 0.01
+
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "A control terminal for the area's electrical systems."
@@ -586,7 +589,7 @@
 		// now trickle-charge the cell
 		if(chargemode && operating && excess && cell.used_charge())
 			// Max charge is capped to % per second constant.
-			lastused_total += charge_cell(min(cell.chargerate, cell.maxcharge * GLOB.CHARGELEVEL) * seconds_per_tick, cell = cell, grid_only = TRUE, channel = AREA_USAGE_APC_CHARGE)
+			lastused_total += charge_cell(min(cell.chargerate, cell.maxcharge * CHARGELEVEL) * seconds_per_tick, cell = cell, grid_only = TRUE, channel = AREA_USAGE_APC_CHARGE)
 			charging = APC_CHARGING
 
 		// show cell as fully charged if so
@@ -724,3 +727,5 @@
 		return round(energy_to_power(required_joules / trickle_charge_power) * SSmachines.wait + SSmachines.wait, SSmachines.wait)
 
 	return null
+
+#undef CHARGELEVEL
