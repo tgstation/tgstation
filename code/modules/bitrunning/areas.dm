@@ -49,3 +49,9 @@
 	icon_state = "bit_space"
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
 
+///Areas that virtual entities should not be in
+
+/area/virtual_domain/protected_space
+	name = "Virtual Domain Safe Zone"
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | VIRTUAL_SAFE_AREA
+	icon_state = "bit_safe"

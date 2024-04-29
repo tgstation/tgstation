@@ -13,7 +13,7 @@
 		stack_trace("Virtual entity entered a location with no area!")
 		return
 
-	if(location_area.area_flags & VIRTUAL_SAFE_AREA )
+	if(location_area.area_flags & VIRTUAL_SAFE_AREA)
 		source.balloon_alert(source, "out of bounds!")
 		COOLDOWN_START(src, OOB_cooldown, 1 SECONDS)
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
