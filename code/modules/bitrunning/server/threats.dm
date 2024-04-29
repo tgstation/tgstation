@@ -105,7 +105,7 @@
 	ghost_mind.add_antag_datum(chosen_role)
 	ghost_mind.special_role = ROLE_GLITCH
 	ghost_mind.set_assigned_role(SSjob.GetJobType(/datum/job/bitrunning_glitch))
-	ADD_TRAIT(antag_mob, TRAIT_VIRTUAL_ENTITY, VIRTUAL_ENTITY)
+	antag_mob.AddComponent(/datum/component/virtual_entity)
 
 	playsound(antag_mob, 'sound/magic/ethereal_exit.ogg', 50, vary = TRUE)
 	message_admins("[ADMIN_LOOKUPFLW(antag_mob)] has been made into virtual antagonist by an event.")

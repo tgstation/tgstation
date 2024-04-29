@@ -7,7 +7,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
-	ADD_TRAIT(spawned_mob, TRAIT_VIRTUAL_ENTITY, VIRTUAL_ENTITY)
+	spawned_mob.AddComponent(/datum/component/virtual_entity)
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate
 	name = "Virtual Pirate Remains"
@@ -44,4 +44,4 @@
 	implants = list(/obj/item/implant/weapons_auth)
 
 /datum/outfit/virtual_syndicate/post_equip(mob/living/carbon/human/user, visualsOnly)
-	syndie_scum.faction |= ROLE_SYNDICATE
+	user.faction |= ROLE_SYNDICATE

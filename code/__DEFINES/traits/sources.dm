@@ -292,6 +292,3 @@
 
 /// Trait when a drink was renamed by a shaker
 #define SHAKER_LABEL_TRAIT "shaker_trait"
-
-/// Trait given by being a virtual domain entity, whether it be a spawner or digital anomaly.
-#define VIRTUAL_ENTITY "virtual_entity"

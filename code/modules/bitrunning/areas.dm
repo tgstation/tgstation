@@ -26,7 +26,7 @@
 
 /area/virtual_domain/safehouse
 	name = "Virtual Domain Safehouse"
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | VIRTUAL_SAFE_AREA
 	icon_state = "bit_safe"
 	requires_power = FALSE
 	sound_environment = SOUND_ENVIRONMENT_ROOM
