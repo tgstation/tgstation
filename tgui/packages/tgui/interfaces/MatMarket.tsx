@@ -55,7 +55,7 @@ export const MatMarket = (props) => {
   const multiplier = orderingPrive ? 1.1 : 1;
 
   return (
-    <Window width={880} height={690}>
+    <Window width={1110} height={600}>
       <Window.Content scrollable>
         {!!catastrophe && <MarketCrashModal />}
         <Section
@@ -93,10 +93,10 @@ export const MatMarket = (props) => {
           <Section>
             <Stack>
               <Stack.Item width="15%">
-                Current Credit Balance: <b>{formatMoney(creditBalance)}</b> cr.
+                Balance: <b>{formatMoney(creditBalance)}</b> cr.
               </Stack.Item>
               <Stack.Item width="15%">
-                Current Order Cost: <b>{formatMoney(orderBalance)}</b> cr.
+                Order: <b>{formatMoney(orderBalance)}</b> cr.
               </Stack.Item>
               <Stack.Item
                 width="20%"
@@ -118,7 +118,7 @@ export const MatMarket = (props) => {
             </Stack>
           </Section>
         </Section>
-        {sortBy((tempmat: Material) => tempmat.rarity)(materials).map(
+        {sortBy(materials, (tempmat: Material) => tempmat.rarity).map(
           (material, i) => (
             <Section key={i}>
               <Stack fill>

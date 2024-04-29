@@ -7,6 +7,8 @@
 	/// Extra examine line to describe controls, such as right-clicking, left-clicking, etc.
 	var/desc_controls
 
+	/// The context returned when an attack against this object doesnt deal any traditional damage to the object.
+	var/no_damage_feedback = "without leaving a mark"
 	/// Icon to use as a 32x32 preview in crafting menus and such
 	var/icon_preview
 	var/icon_state_preview
@@ -24,9 +26,6 @@
 
 	/// A multiplier to an objecet's force when used against a stucture, vechicle, machine, or robot.
 	var/demolition_mod = 1
-
-	var/current_skin //Has the item been reskinned?
-	var/list/unique_reskin //List of options to reskin.
 
 	/// Custom fire overlay icon, will just use the default overlay if this is null
 	var/custom_fire_overlay
@@ -80,8 +79,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if(attacking_item.demolition_mod < 1)
 		damage_verb = "ineffectively pierce"
 
-	user.visible_message(span_danger("[user] [damage_verb][plural_s(damage_verb)] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
-		span_danger("You [damage_verb] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_danger("[user] [damage_verb][plural_s(damage_verb)] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"), \
+		span_danger("You [damage_verb] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"), null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "attacked", attacking_item)
 
 /obj/assume_air(datum/gas_mixture/giver)
@@ -115,87 +114,12 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	else
 		return null
 
-/obj/proc/updateUsrDialog()
-	if(!(obj_flags & IN_USE))
-		return
-
-	var/is_in_use = FALSE
-	var/list/nearby = viewers(1, src)
-	for(var/mob/M in nearby)
-		if ((M.client && M.machine == src))
-			is_in_use = TRUE
-			ui_interact(M)
-	if(issilicon(usr) || isAdminGhostAI(usr))
-		if (!(usr in nearby))
-			if (usr.client && usr.machine == src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
-				is_in_use = TRUE
-				ui_interact(usr)
-
-	// check for TK users
-
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		if(!(usr in nearby))
-			if(usr.client && usr.machine == src)
-				if(H.dna.check_mutation(/datum/mutation/human/telekinesis))
-					is_in_use = TRUE
-					ui_interact(usr)
-	if (is_in_use)
-		obj_flags |= IN_USE
-	else
-		obj_flags &= ~IN_USE
-
-/obj/proc/updateDialog(update_viewers = TRUE,update_ais = TRUE)
-	// Check that people are actually using the machine. If not, don't update anymore.
-	if(obj_flags & IN_USE)
-		var/is_in_use = FALSE
-		if(update_viewers)
-			for(var/mob/M in viewers(1, src))
-				if ((M.client && M.machine == src))
-					is_in_use = TRUE
-					src.interact(M)
-		var/ai_in_use = FALSE
-		if(update_ais)
-			ai_in_use = AutoUpdateAI(src)
-
-		if(update_viewers && update_ais) //State change is sure only if we check both
-			if(!ai_in_use && !is_in_use)
-				obj_flags &= ~IN_USE
-
-
 /obj/attack_ghost(mob/user)
 	. = ..()
 	if(.)
 		return
 	SEND_SIGNAL(src, COMSIG_ATOM_UI_INTERACT, user)
 	ui_interact(user)
-
-/mob/proc/unset_machine()
-	SIGNAL_HANDLER
-	if(!machine)
-		return
-	UnregisterSignal(machine, COMSIG_QDELETING)
-	machine.on_unset_machine(src)
-	machine = null
-
-//called when the user unsets the machine.
-/atom/movable/proc/on_unset_machine(mob/user)
-	return
-
-/mob/proc/set_machine(obj/O)
-	if(QDELETED(src) || QDELETED(O))
-		return
-	if(machine)
-		unset_machine()
-	machine = O
-	RegisterSignal(O, COMSIG_QDELETING, PROC_REF(unset_machine))
-	if(istype(O))
-		O.obj_flags |= IN_USE
-
-/obj/item/proc/updateSelfDialog()
-	var/mob/M = src.loc
-	if(istype(M) && M.client && M.machine == src)
-		src.attack_self(M)
 
 /obj/singularity_pull(S, current_size)
 	..()
@@ -206,9 +130,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /obj/get_dumping_location()
 	return get_turf(src)
-
-/obj/proc/check_uplink_validity()
-	return 1
 
 /obj/vv_get_dropdown()
 	. = ..()
@@ -223,9 +144,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return
 
 	if(href_list[VV_HK_OSAY])
-		if(!check_rights(R_FUN, FALSE))
-			return
-		usr.client.object_say(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/object_say, src)
 
 	if(href_list[VV_HK_MASS_DEL_TYPE])
 		if(!check_rights(R_DEBUG|R_SERVER))
@@ -270,56 +189,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		. += span_notice(desc_controls)
 	if(obj_flags & UNIQUE_RENAME)
 		. += span_notice("Use a pen on it to rename it or change its description.")
-	if(unique_reskin && (!current_skin || (obj_flags & INFINITE_RESKIN)))
-		. += span_notice("Alt-click it to reskin it.")
 
-/obj/AltClick(mob/user)
-	. = ..()
-	if(unique_reskin && (!current_skin || (obj_flags & INFINITE_RESKIN)) && user.can_perform_action(src, NEED_DEXTERITY))
-		reskin_obj(user)
-
-/**
- * Reskins object based on a user's choice
- *
- * Arguments:
- * * M The mob choosing a reskin option
- */
-/obj/proc/reskin_obj(mob/user)
-	if(!LAZYLEN(unique_reskin))
-		return
-
-	var/list/items = list()
-	for(var/reskin_option in unique_reskin)
-		var/image/item_image = image(icon = src.icon, icon_state = unique_reskin[reskin_option])
-		items += list("[reskin_option]" = item_image)
-	sort_list(items)
-
-	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, PROC_REF(check_reskin_menu), user), radius = 38, require_near = TRUE)
-	if(!pick)
-		return
-	if(!unique_reskin[pick])
-		return
-	current_skin = pick
-	icon_state = unique_reskin[pick]
-	to_chat(user, "[src] is now skinned as '[pick].'")
-	SEND_SIGNAL(src, COMSIG_OBJ_RESKIN, user, pick)
-
-/**
- * Checks if we are allowed to interact with a radial menu for reskins
- *
- * Arguments:
- * * user The mob interacting with the menu
- */
-/obj/proc/check_reskin_menu(mob/user)
-	if(QDELETED(src))
-		return FALSE
-	if(!(obj_flags & INFINITE_RESKIN) && current_skin)
-		return FALSE
-	if(!istype(user))
-		return FALSE
-	if(user.incapacitated())
-		return FALSE
-	return TRUE
 
 /obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	if(atmos_scan(user=user, target=src, silent=FALSE))
@@ -331,6 +201,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 // Should move all contained objects to it's location.
 /obj/proc/dump_contents()
+	SHOULD_CALL_PARENT(FALSE)
 	CRASH("Unimplemented.")
 
 /obj/handle_ricochet(obj/projectile/P)
@@ -365,8 +236,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /// If we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
 /obj/proc/can_be_unfasten_wrench(mob/user, silent)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return CANT_UNFASTEN
 	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
 		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
 		return FAILED_UNFASTEN

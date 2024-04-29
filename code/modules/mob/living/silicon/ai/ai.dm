@@ -1,17 +1,5 @@
 #define CALL_BOT_COOLDOWN 900
 
-//Not sure why this is necessary...
-/proc/AutoUpdateAI(obj/subject)
-	var/is_in_use = 0
-	if (subject != null)
-		for(var/A in GLOB.ai_list)
-			var/mob/living/silicon/ai/M = A
-			if ((M.client && M.machine == subject))
-				is_in_use = 1
-				subject.attack_ai(M)
-	return is_in_use
-
-
 /mob/living/silicon/ai
 	name = "AI"
 	real_name = "AI"
@@ -30,7 +18,7 @@
 	radio = /obj/item/radio/headset/silicon/ai
 	can_buckle_to = FALSE
 	var/battery = 200 //emergency power if the AI's APC is off
-	var/list/network = list("ss13")
+	var/list/network = list(CAMERANET_NETWORK_SS13)
 	var/obj/machinery/camera/current
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = POWER_RESTORATION_OFF
@@ -53,12 +41,13 @@
 	var/shunted = FALSE //1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
 	var/obj/machinery/ai_voicechanger/ai_voicechanger = null // reference to machine that holds the voicechanger
 	var/malfhacking = FALSE // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
+	/// List of hacked APCs
+	var/list/hacked_apcs = list() 
 	var/malf_cooldown = 0 //Cooldown var for malf modules, stores a worldtime + cooldown
 
 	var/obj/machinery/power/apc/malfhack
 	var/explosive = FALSE //does the AI explode when it dies?
 
-	var/mob/living/silicon/ai/parent
 	var/camera_light_on = FALSE
 	var/list/obj/machinery/camera/lit_cameras = list()
 
@@ -188,7 +177,7 @@
 	GLOB.shuttle_caller_list += src
 
 	builtInCamera = new (src)
-	builtInCamera.network = list("ss13")
+	builtInCamera.network = list(CAMERANET_NETWORK_SS13)
 
 	ai_tracking_tool = new(src)
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
@@ -451,6 +440,10 @@
 		qdel(src)
 	return ai_core
 
+/mob/living/silicon/ai/proc/break_core_link()
+	to_chat(src, span_danger("Your core has been destroyed!"))
+	linked_core = null
+
 /mob/living/silicon/ai/proc/make_mmi_drop_and_transfer(obj/item/mmi/the_mmi, the_core)
 	var/mmi_type
 	if(posibrain_inside)
@@ -644,7 +637,6 @@
 /mob/living/silicon/ai/proc/ai_network_change()
 	set category = "AI Commands"
 	set name = "Jump To Network"
-	unset_machine()
 	ai_tracking_tool.reset_tracking()
 	var/cameralist[0]
 
@@ -657,11 +649,11 @@
 		var/turf/camera_turf = get_turf(C) //get camera's turf in case it's built into something so we don't get z=0
 
 		var/list/tempnetwork = C.network
-		if(!camera_turf || !(is_station_level(camera_turf.z) || is_mining_level(camera_turf.z) || ("ss13" in tempnetwork)))
+		if(!camera_turf || !(is_station_level(camera_turf.z) || is_mining_level(camera_turf.z) || (CAMERANET_NETWORK_SS13 in tempnetwork)))
 			continue
 		if(!C.can_use())
 			continue
-		tempnetwork.Remove("rd", "ordnance", "prison")
+		tempnetwork.Remove(CAMERANET_NETWORK_RD, CAMERANET_NETWORK_ORDNANCE, CAMERANET_NETWORK_PRISON)
 		if(length(tempnetwork))
 			for(var/i in C.network)
 				cameralist[i] = i
@@ -959,6 +951,9 @@
 	module_picker.ui_interact(owner)
 
 /mob/living/silicon/ai/proc/add_malf_picker()
+	if (malf_picker)
+		stack_trace("Attempted to give malf AI malf picker to \[[src]\], who already has a malf picker.")
+		return
 	to_chat(src, "In the top left corner of the screen you will find the Malfunction Modules button, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices.")
 	to_chat(src, "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds.")
 	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
@@ -1036,13 +1031,16 @@
 			malf_ai_datum.update_static_data_for_all_viewers()
 		else //combat software AIs use a different UI
 			malf_picker.update_static_data_for_all_viewers()
-
-	apc.malfai = parent || src
+	if(apc.malfai) // another malf hacked this one; counter-hack!
+		to_chat(apc.malfai, span_warning("An adversarial subroutine has counter-hacked [apc]!"))
+		apc.malfai.hacked_apcs -= apc
+	apc.malfai = src
 	apc.malfhack = TRUE
 	apc.locked = TRUE
 	apc.coverlocked = TRUE
 	apc.flicker_hacked_icon()
 	apc.set_hacked_hud()
+	hacked_apcs += apc
 	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
 	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
 

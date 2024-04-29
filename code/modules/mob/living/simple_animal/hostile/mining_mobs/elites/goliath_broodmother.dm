@@ -143,13 +143,13 @@
 	ranged_cooldown = world.time + 100
 	playsound(src,'sound/voice/insane_low_laugh.ogg', 200, 1)
 	visible_message(span_warning("[src] starts picking up speed!"))
-	color = "#FF0000"
+	color = COLOR_RED
 	set_varspeed(0)
 	move_to_delay = 3
-	addtimer(CALLBACK(src, PROC_REF(reset_rage)), 65)
+	addtimer(CALLBACK(src, PROC_REF(reset_rage)), 6.5 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/reset_rage()
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 	set_varspeed(2)
 	move_to_delay = 5
 

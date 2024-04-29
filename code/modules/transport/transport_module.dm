@@ -96,7 +96,6 @@
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/transport/linear/LateInitialize()
-	. = ..()
 	//after everything is initialized the transport controller can order everything
 	transport_controller_datum.order_platforms_by_z_level()
 
@@ -138,7 +137,7 @@
 /obj/structure/transport/linear/proc/add_item_on_transport(datum/source, atom/movable/new_transport_contents)
 	SIGNAL_HANDLER
 	var/static/list/blacklisted_types = typecacheof(list(/obj/structure/fluff/tram_rail, /obj/effect/decal/cleanable, /obj/structure/transport/linear, /mob/camera))
-	if(is_type_in_typecache(new_transport_contents, blacklisted_types) || new_transport_contents.invisibility == INVISIBILITY_ABSTRACT) //prevents the tram from stealing things like landmarks
+	if(is_type_in_typecache(new_transport_contents, blacklisted_types) || new_transport_contents.invisibility == INVISIBILITY_ABSTRACT || HAS_TRAIT(new_transport_contents, TRAIT_UNDERFLOOR)) //prevents the tram from stealing things like landmarks
 		return FALSE
 	if(new_transport_contents in transport_contents)
 		return FALSE
@@ -908,7 +907,7 @@
 		new overlay(our_turf)
 		turfs += our_turf
 
-	addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 1)
+	addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 0.1 SECONDS)
 
 /obj/structure/transport/linear/tram/proc/clear_turfs(list/turfs_to_clear, iterations)
 	for(var/turf/our_old_turf as anything in turfs_to_clear)
@@ -928,7 +927,7 @@
 		turfs += our_turf
 
 	if(iterations)
-		addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 1)
+		addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 0.1 SECONDS)
 
 /obj/structure/transport/linear/tram/proc/estop_throw(throw_direction)
 	for(var/mob/living/passenger in transport_contents)

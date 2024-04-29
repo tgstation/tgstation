@@ -60,10 +60,7 @@
 		if(DISPENSE_LOLLIPOP_MODE)
 			food_item = new /obj/item/food/lollipop/cyborg(turf_to_dispense_to)
 		if(DISPENSE_ICECREAM_MODE)
-			food_item = new /obj/item/food/icecream(
-				loc = turf_to_dispense_to,
-				prefill_flavours = list(ICE_CREAM_VANILLA),
-			)
+			food_item = new /obj/item/food/icecream(turf_to_dispense_to, list(ICE_CREAM_VANILLA))
 			food_item.desc = "Eat the ice cream."
 
 	var/into_hands = FALSE
@@ -124,7 +121,7 @@
 	check_amount()
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
-		if(!robot_user.cell.use(12))
+		if(!robot_user.cell.use(0.012 * STANDARD_CELL_CHARGE))
 			to_chat(user, span_warning("Not enough power."))
 			return AFTERATTACK_PROCESSED_ITEM
 	switch(mode)

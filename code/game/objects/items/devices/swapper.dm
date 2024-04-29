@@ -8,9 +8,12 @@
 	item_flags = NOBLUDGEON
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-
-	var/cooldown = 300
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
+	/// Cooldown for usage
+	var/cooldown = 30 SECONDS
+	/// Next available time
 	var/next_use = 0
+	/// Swapper linked to this obj
 	var/obj/item/swapper/linked_swapper
 
 /obj/item/swapper/Destroy()
@@ -55,7 +58,7 @@
 		var/mob/holder = linked_swapper.loc
 		to_chat(holder, span_notice("[linked_swapper] starts buzzing."))
 	next_use = world.time + cooldown //only the one used goes on cooldown
-	addtimer(CALLBACK(src, PROC_REF(swap), user), 25)
+	addtimer(CALLBACK(src, PROC_REF(swap), user), 2.5 SECONDS)
 
 /obj/item/swapper/examine(mob/user)
 	. = ..()
@@ -66,15 +69,14 @@
 	else
 		. += span_notice("<b>Not Linked.</b> Use on another quantum spin inverter to establish a quantum link.")
 
-/obj/item/swapper/AltClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return
+/obj/item/swapper/click_alt(mob/living/user)
 	to_chat(user, span_notice("You break the current quantum link."))
 	if(!QDELETED(linked_swapper))
 		linked_swapper.linked_swapper = null
 		linked_swapper.update_appearance()
 		linked_swapper = null
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 //Gets the topmost teleportable container
 /obj/item/swapper/proc/get_teleportable_container()

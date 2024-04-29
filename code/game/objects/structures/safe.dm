@@ -41,6 +41,7 @@ FLOOR SAFES
 /obj/structure/safe/Initialize(mapload)
 	. = ..()
 
+	update_appearance(UPDATE_ICON)
 	// Combination generation
 	for(var/iterating in 1 to number_of_tumblers)
 		tumblers.Add(rand(0, 99))
@@ -57,7 +58,8 @@ FLOOR SAFES
 			inserting_item.forceMove(src)
 
 /obj/structure/safe/update_icon_state()
-	icon_state = "[initial(icon_state)][open ? "-open" : null]"
+	//uses the same icon as the captain's spare safe (therefore lockable storage) so keep it in line with that
+	icon_state = "[initial(icon_state)][open ? null : "_locked"]"
 	return ..()
 
 /obj/structure/safe/attackby(obj/item/attacking_item, mob/user, params)

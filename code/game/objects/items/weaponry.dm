@@ -40,6 +40,48 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(user.combat_mode)
 		return ..(M, user)
 
+
+/obj/item/balloon_mallet
+	name = "balloon mallet"
+	desc = "It's a mallet, a weapon known for being heavy, but made from notoriously light balloons. Air inside removes any force from the swings. It'd be quite embarrassing to get hit by this."
+	icon = 'icons/obj/weapons/hammer.dmi'
+	icon_state = "balloon_mallet"
+	inhand_icon_state = "balloon_mallet"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	siemens_coefficient = 0
+	force = 1
+	throw_speed = 1
+	throwforce = 1
+	throw_range = 1
+	w_class = WEIGHT_CLASS_HUGE
+	attack_verb_continuous = list("mallets", "smoother")
+	attack_verb_simple = list("mallet", "smoother")
+	max_integrity = 20
+	armor_type = /datum/armor/item_banhammer
+	resistance_flags = FIRE_PROOF
+
+/obj/item/balloon_mallet/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT(user,TRAIT_BALLOON_SUTRA))
+		. = "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
+
+/obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
+	playsound(loc, 'sound/creatures/clown/hehe.ogg', 20)
+	if (!isliving(target))
+		return
+	switch(target.mob_mood.sanity)
+		if (SANITY_INSANE to SANITY_CRAZY)
+			force = 8
+		if (SANITY_UNSTABLE to SANITY_DISTURBED)
+			force = 4
+			target.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
+		if (SANITY_NEUTRAL to SANITY_GREAT)
+			target.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
+
+	if(user.combat_mode)
+		return ..(target, user)
+
 /obj/item/sord
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
@@ -133,6 +175,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	block_chance = 10
 	resistance_flags = NONE
 
+//bootleg claymore
+/obj/item/claymore/shortsword
+	name = "shortsword"
+	desc = "A mercenary's sword, chipped and worn from battles long gone. You could say it is a swordsman's shortsword short sword."
+	icon_state = "shortsword"
+	inhand_icon_state = "shortsword"
+	worn_icon_state = "shortsword"
+	slot_flags = ITEM_SLOT_BELT
+	force = 20
+	demolition_mod = 0.75
+	block_chance = 30
+
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -161,7 +215,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/process()
 	if(ishuman(loc))
 		var/mob/living/carbon/human/holder = loc
-		layer = ABOVE_ALL_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
+		holder.layer = ABOVE_ALL_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
 		ADD_TRAIT(holder, TRAIT_NOBLOOD, HIGHLANDER_TRAIT) //AND WE WON'T BLEED OUT LIKE COWARDS
 	else
 		if(!(flags_1 & ADMIN_SPAWNED_1))
@@ -285,7 +339,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/claymore/highlander/robot/process()
-	layer = ABOVE_ALL_MOB_LAYER
+	loc.layer = ABOVE_ALL_MOB_LAYER
 
 /obj/item/katana
 	name = "katana"
@@ -791,26 +845,28 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitsound = 'sound/effects/snap.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	/// Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
-	var/list/splattable
+	var/static/list/splattable
 	/// Things in this list which take a lot more damage from the fly swatter, but not be necessarily killed by it.
-	var/list/strong_against
+	var/static/list/strong_against
 	/// How much extra damage the fly swatter does against mobs it is strong against
 	var/extra_strength_damage = 24
 
 /obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
-	splattable = typecacheof(list(
-		/mob/living/basic/ant,
-		/mob/living/basic/butterfly,
-		/mob/living/basic/cockroach,
-		/mob/living/basic/spider/growing/spiderling,
-		/mob/living/basic/bee,
-		/obj/effect/decal/cleanable/ants,
-		/obj/item/queen_bee,
-	))
-	strong_against = typecacheof(list(
-		/mob/living/basic/spider/giant,
-	))
+	if (isnull(splattable))
+		splattable = typecacheof(list(
+			/mob/living/basic/ant,
+			/mob/living/basic/butterfly,
+			/mob/living/basic/cockroach,
+			/mob/living/basic/spider/growing/spiderling,
+			/mob/living/basic/bee,
+			/obj/effect/decal/cleanable/ants,
+			/obj/item/queen_bee,
+		))
+	if (isnull(strong_against))
+		strong_against = typecacheof(list(
+			/mob/living/basic/spider,
+		))
 
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)

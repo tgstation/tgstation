@@ -1,17 +1,8 @@
-//This proc allows download of past server logs saved within the data/logs/ folder.
-/client/proc/getserverlogs()
-	set name = "Get Server Logs"
-	set desc = "View/retrieve logfiles."
-	set category = "Admin"
+ADMIN_VERB(get_server_logs, R_ADMIN, "Get Server Logs", "View or retrieve logfiles.", ADMIN_CATEGORY_MAIN)
+	user.browseserverlogs()
 
-	browseserverlogs()
-
-/client/proc/getcurrentlogs()
-	set name = "Get Current Logs"
-	set desc = "View/retrieve logfiles for the current round."
-	set category = "Admin"
-
-	browseserverlogs(current=TRUE)
+ADMIN_VERB(get_current_logs, R_ADMIN, "Get Current Logs", "View or retrieve logfiles for the current round.", ADMIN_CATEGORY_MAIN)
+	user.browseserverlogs(current=TRUE)
 
 /client/proc/browseserverlogs(current=FALSE)
 	var/path = browse_files(current ? BROWSE_ROOT_CURRENT_LOGS : BROWSE_ROOT_ALL_LOGS)
@@ -32,4 +23,3 @@
 		else
 			return
 	to_chat(src, "Attempting to send [path], this may take a fair few minutes if the file is very large.", confidential = TRUE)
-	return

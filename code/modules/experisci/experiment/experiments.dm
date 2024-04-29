@@ -323,31 +323,11 @@
 	///Damage percent that each mech needs to be at for a scan to work.
 	var/damage_percent
 
-/datum/experiment/scanning/random/mecha_damage_scan/New(datum/techweb/techweb)
-	. = ..()
-	damage_percent = rand(15, 95)
-	//updating the description with the damage_percent var set
-	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to those made with more traditional means. Damage a few exosuits to around [damage_percent]% integrity and scan them to help us determine how the armor fails under stress."
-
-/datum/experiment/scanning/random/mecha_damage_scan/final_contributing_index_checks(atom/target, typepath)
-	var/found_percent = round((target.get_integrity() / target.max_integrity) * 100)
-	return ..() && ISINRANGE(found_percent, damage_percent - 5, damage_percent + 5)
-
 /datum/experiment/scanning/random/mecha_equipped_scan
 	name = "Exosuit Materials 2: Load Strain Test"
 	description = "Exosuit equipment places unique strain upon the structure of the vehicle. Scan exosuits you have assembled from your exosuit fabricator and fully equipped to accelerate our structural stress simulations."
 	possible_types = list(/obj/vehicle/sealed/mecha)
 	total_requirement = 2
-
-/datum/experiment/scanning/random/mecha_equipped_scan/final_contributing_index_checks(atom/target, typepath)
-	var/obj/vehicle/sealed/mecha/stompy = target
-	if(!istype(stompy))
-		return FALSE //Not a mech
-	if(!HAS_TRAIT(stompy,TRAIT_MECHA_CREATED_NORMALLY))
-		return FALSE //Not hand-crafted
-	if(!(stompy.equip_by_category[MECHA_L_ARM] && stompy.equip_by_category[MECHA_R_ARM]))
-		return FALSE //Both arms need be filled
-	return ..()
 
 /// Scan for organs you didn't start the round with
 /datum/experiment/scanning/people/novel_organs

@@ -262,7 +262,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 
 	var/static/list/give_turf_traits
 	if(!give_turf_traits)
-		give_turf_traits = string_list(list(TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED))
+		give_turf_traits = string_list(list(TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_IMMERSE_STOPPED))
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 
 /obj/structure/stone_tile/singularity_pull()

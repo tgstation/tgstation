@@ -324,6 +324,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 					if(cultist)
 						cultist.silent = TRUE
 						cultist.on_removal()
+						SSblackbox.record_feedback("tally", "cult_shade_purified", 1)
 					shade.theme = THEME_HOLY
 					shade.name = "Purified [shade.real_name]"
 					shade.update_appearance(UPDATE_ICON_STATE)

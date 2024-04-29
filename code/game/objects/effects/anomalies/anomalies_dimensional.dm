@@ -4,7 +4,7 @@
 	icon_state = "dimensional"
 	aSignal = /obj/item/assembly/signaler/anomaly/dimensional
 	immortal = TRUE
-	immobile = TRUE
+	move_chance = 0
 	/// Range of effect, if left alone anomaly will convert a 2(range)+1 squared area.
 	var/range = 3
 	/// List of turfs this anomaly will try to transform before relocating
@@ -51,7 +51,7 @@
 /obj/effect/anomaly/dimensional/proc/prepare_area(new_theme_path)
 	if (!new_theme_path)
 		new_theme_path = pick(subtypesof(/datum/dimension_theme))
-	theme = SSmaterials.dimensional_themes[new_theme_path]
+	theme = DSmaterials.dimensional_themes[new_theme_path]
 	apply_theme_icon()
 
 	target_turfs = list()

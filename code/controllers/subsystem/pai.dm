@@ -17,6 +17,11 @@ SUBSYSTEM_DEF(pai)
 		ui.open()
 		ui.set_autoupdate(FALSE)
 
+/datum/controller/subsystem/pai/Recover()
+	. = ..()
+	candidates = SSpai.candidates
+	pai_card_list = SSpai.pai_card_list
+
 /datum/controller/subsystem/pai/ui_state(mob/user)
 	return GLOB.observer_state
 
@@ -35,13 +40,14 @@ SUBSYSTEM_DEF(pai)
 	. = ..()
 	if(.)
 		return TRUE
-	var/datum/pai_candidate/candidate = candidates[usr.ckey]
-	if(is_banned_from(usr.ckey, ROLE_PAI))
-		to_chat(usr, span_warning("You are banned from playing pAI!"))
+	var/mob/user = ui.user
+	var/datum/pai_candidate/candidate = candidates[user.ckey]
+	if(is_banned_from(user.ckey, ROLE_PAI))
+		to_chat(user, span_warning("You are banned from playing pAI!"))
 		ui.close()
 		return FALSE
 	if(isnull(candidate))
-		to_chat(usr, span_warning("There was an error. Please resubmit."))
+		to_chat(user, span_warning("There was an error. Please resubmit."))
 		ui.close()
 		return FALSE
 	switch(action)
@@ -49,19 +55,19 @@ SUBSYSTEM_DEF(pai)
 			candidate.comments = trim(params["comments"], MAX_BROADCAST_LEN)
 			candidate.description = trim(params["description"], MAX_BROADCAST_LEN)
 			candidate.name = trim(params["name"], MAX_NAME_LEN)
-			candidate.ckey = usr.ckey
+			candidate.ckey = user.ckey
 			candidate.ready = TRUE
 			ui.close()
-			submit_alert()
+			submit_alert(user)
 			return TRUE
 		if("save")
 			candidate.comments = params["comments"]
 			candidate.description = params["description"]
 			candidate.name = params["name"]
-			candidate.savefile_save(usr)
+			candidate.savefile_save(user)
 			return TRUE
 		if("load")
-			candidate.savefile_load(usr)
+			candidate.savefile_load(user)
 			ui.send_full_update()
 			return TRUE
 	return FALSE
@@ -84,14 +90,14 @@ SUBSYSTEM_DEF(pai)
 /**
  * Pings all pAI cards on the station that new candidates are available.
  */
-/datum/controller/subsystem/pai/proc/submit_alert()
+/datum/controller/subsystem/pai/proc/submit_alert(mob/user)
 	if(submit_spam)
-		to_chat(usr, span_warning("Your candidacy has been submitted, but pAI cards have been alerted too recently."))
+		to_chat(user, span_warning("Your candidacy has been submitted, but pAI cards have been alerted too recently."))
 		return FALSE
 	submit_spam = TRUE
 	for(var/obj/item/pai_card/pai_card as anything in pai_card_list)
 		if(!pai_card.pai)
 			pai_card.alert_update()
-	to_chat(usr, span_notice("Your pAI candidacy has been submitted!"))
-	addtimer(VARSET_CALLBACK(src, submit_spam, FALSE), PAI_SPAM_TIME, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
+	to_chat(user, span_notice("Your pAI candidacy has been submitted!"))
+	addtimer(VARSET_CALLBACK(src, submit_spam, FALSE), PAI_SPAM_TIME, TIMER_UNIQUE|TIMER_DELETE_ME)
 	return TRUE

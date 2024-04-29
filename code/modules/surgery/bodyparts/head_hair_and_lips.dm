@@ -9,25 +9,10 @@
 	hair_hidden = FALSE
 	facial_hair_hidden = FALSE
 	if(human_head_owner)
-		if(human_head_owner.head)
-			var/obj/item/hat = human_head_owner.head
-			if(hat.flags_inv & HIDEHAIR)
+		for(var/obj/item/worn_item in human_head_owner.get_equipped_items())
+			if(worn_item.flags_inv & HIDEHAIR)
 				hair_hidden = TRUE
-			if(hat.flags_inv & HIDEFACIALHAIR)
-				facial_hair_hidden = TRUE
-
-		if(human_head_owner.wear_mask)
-			var/obj/item/mask = human_head_owner.wear_mask
-			if(mask.flags_inv & HIDEHAIR)
-				hair_hidden = TRUE
-			if(mask.flags_inv & HIDEFACIALHAIR)
-				facial_hair_hidden = TRUE
-
-		if(human_head_owner.w_uniform)
-			var/obj/item/item_uniform = human_head_owner.w_uniform
-			if(item_uniform.flags_inv & HIDEHAIR)
-				hair_hidden = TRUE
-			if(item_uniform.flags_inv & HIDEFACIALHAIR)
+			if(worn_item.flags_inv & HIDEFACIALHAIR)
 				facial_hair_hidden = TRUE
 		//invisibility and husk stuff
 		if(HAS_TRAIT(human_head_owner, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(human_head_owner, TRAIT_HUSK))
@@ -70,7 +55,7 @@
 	facial_hairstyle = human_head_owner.facial_hairstyle
 	facial_hair_alpha = owner_species.facial_hair_alpha
 	facial_hair_color = human_head_owner.facial_hair_color
-	fixed_hair_color = owner_species.fixed_hair_color //Can be null
+	fixed_hair_color = owner_species.get_fixed_hair_color(human_head_owner) //Can be null
 	gradient_styles = human_head_owner.grad_style?.Copy()
 	gradient_colors = human_head_owner.grad_color?.Copy()
 

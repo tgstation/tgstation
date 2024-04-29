@@ -29,6 +29,13 @@
 	soundloop = new(src, fermenting)
 	soundloop.volume = sound_volume
 
+	RegisterSignals(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_WAS_RENAMED),
+		SIGNAL_ADDTRAIT(TRAIT_HAS_LABEL),
+		SIGNAL_REMOVETRAIT(TRAIT_WAS_RENAMED),
+		SIGNAL_REMOVETRAIT(TRAIT_HAS_LABEL),
+	), PROC_REF(update_overlay_on_sig))
+
 /obj/structure/fermenting_barrel/Destroy()
 	QDEL_NULL(soundloop)
 	return ..()
@@ -81,6 +88,10 @@
 /obj/structure/fermenting_barrel/update_icon_state()
 	icon_state = open ? "barrel_open" : "barrel"
 	return ..()
+
+/obj/structure/fermenting_barrel/proc/update_overlay_on_sig()
+	SIGNAL_HANDLER
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/fermenting_barrel/update_overlays()
 	. = ..()
@@ -152,3 +163,13 @@
 /obj/structure/fermenting_barrel/gunpowder/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/gunpowder, 500)
+
+/// Medieval pirates can have a barrel as a treat
+/obj/structure/fermenting_barrel/thermite
+	name = "thermite barrel"
+	desc = "A large wooden barrel for holding thermite. Use this to make a big flipping hole on walls."
+	can_open = FALSE
+
+/obj/structure/fermenting_barrel/thermite/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/thermite, 500)

@@ -22,13 +22,12 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/climb_tree/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/obj/structure/flora/target_tree = controller.blackboard[target_key]
 	var/mob/living/basic/living_pawn = controller.pawn
 	if(QDELETED(living_pawn)) // pawn can be null at this point
 		return
 	SEND_SIGNAL(living_pawn, COMSIG_LIVING_CLIMB_TREE, target_tree)
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/climb_tree/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()

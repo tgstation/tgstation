@@ -137,7 +137,6 @@
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
 		to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
 
-
 /**
  * Hooks on destructive scans to try and run an experiment (When using a handheld handler)
  */
@@ -237,6 +236,7 @@
 /datum/component/experiment_handler/proc/configure_experiment(datum/source, mob/user)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
+	return CLICK_ACTION_SUCCESS
 
 /**
  * Attempts to show the user the experiment configuration panel

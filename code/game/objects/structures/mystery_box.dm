@@ -67,6 +67,32 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	/obj/item/circular_saw,
 ))
 
+GLOBAL_LIST_INIT(mystery_magic, list(
+	/obj/item/gun/magic/wand/arcane_barrage,
+	/obj/item/gun/magic/wand/arcane_barrage/blood,
+	/obj/item/gun/magic/wand/fireball,
+	/obj/item/gun/magic/wand/resurrection,
+	/obj/item/gun/magic/wand/death,
+	/obj/item/gun/magic/wand/polymorph,
+	/obj/item/gun/magic/wand/teleport,
+	/obj/item/gun/magic/wand/door,
+	/obj/item/gun/magic/wand/nothing,
+	/obj/item/storage/belt/wands/full,
+	/obj/item/gun/magic/staff/healing,
+	/obj/item/gun/magic/staff/change,
+	/obj/item/gun/magic/staff/animate,
+	/obj/item/gun/magic/staff/chaos,
+	/obj/item/gun/magic/staff/door,
+	/obj/item/gun/magic/staff/honk,
+	/obj/item/gun/magic/staff/spellblade,
+	/obj/item/gun/magic/staff/locker,
+	/obj/item/gun/magic/staff/flying,
+	/obj/item/gun/magic/staff/babel,
+	/obj/item/singularityhammer,
+	/obj/item/mod/control/pre_equipped/enchanted,
+	/obj/item/runic_vendor_scepter,
+))
+
 
 /obj/structure/mystery_box
 	name = "mystery box"
@@ -207,6 +233,12 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 /obj/structure/mystery_box/tdome/generate_valid_types()
 	valid_types = GLOB.mystery_box_guns + GLOB.mystery_box_extended
 
+/obj/structure/mystery_box/wands
+	desc = "A wooden crate that seems equally magical and mysterious, capable of granting the user all kinds of different magical items."
+
+/obj/structure/mystery_box/wands/generate_valid_types()
+	valid_types = GLOB.mystery_magic
+
 
 /// This represents the item that comes out of the box and is constantly changing before the box finishes deciding. Can probably be just an /atom or /movable.
 /obj/mystery_box_item
@@ -272,7 +304,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 
 /obj/mystery_box_item/proc/present_item()
 	var/obj/item/selected_item = selected_path
-	add_filter("ready_outline", 2, list("type" = "outline", "color" = "#FBFF23", "size" = 0.2))
+	add_filter("ready_outline", 2, list("type" = "outline", "color" = COLOR_VIVID_YELLOW, "size" = 0.2))
 	name = initial(selected_item.name)
 	parent_box.present_weapon()
 	claimable = TRUE

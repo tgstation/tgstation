@@ -3,7 +3,7 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-	add_traits(list(TRAIT_CAN_STRIP, TRAIT_FORCED_STANDING), INNATE_TRAIT)
+	add_traits(list(TRAIT_CAN_STRIP, TRAIT_FORCED_STANDING, TRAIT_KNOW_ENGI_WIRES), INNATE_TRAIT)
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
 		untip_time = 2 SECONDS, \
@@ -51,10 +51,10 @@
 	if(!scrambledcodes && !builtInCamera)
 		builtInCamera = new (src)
 		builtInCamera.c_tag = real_name
-		builtInCamera.network = list("ss13")
+		builtInCamera.network = list(CAMERANET_NETWORK_SS13)
 		builtInCamera.internal_light = FALSE
 		if(wires.is_cut(WIRE_CAMERA))
-			builtInCamera.status = 0
+			builtInCamera.camera_enabled = 0
 	update_icons()
 	. = ..()
 
@@ -226,11 +226,9 @@
 	if(!ionpulse_on)
 		return
 
-	if(cell.charge <= 10)
+	if(!cell.use(0.01 * STANDARD_CELL_CHARGE))
 		toggle_ionpulse()
 		return
-
-	cell.charge -= 10
 	return TRUE
 
 /mob/living/silicon/robot/proc/toggle_ionpulse()
@@ -252,7 +250,7 @@
 /mob/living/silicon/robot/get_status_tab_items()
 	. = ..()
 	if(cell)
-		. += "Charge Left: [cell.charge]/[cell.maxcharge]"
+		. += "Charge Left: [display_energy(cell.charge)]/[display_energy(cell.maxcharge)]"
 	else
 		. += "No Cell Inserted!"
 
@@ -950,14 +948,13 @@
 		for(var/i in connected_ai.aicamera.stored)
 			aicamera.stored[i] = TRUE
 
-/mob/living/silicon/robot/proc/charge(datum/source, amount, repairs, sendmats)
+/mob/living/silicon/robot/proc/charge(datum/source, datum/callback/charge_cell, seconds_per_tick, repairs, sendmats)
 	SIGNAL_HANDLER
+	charge_cell.Invoke(cell, seconds_per_tick)
 	if(model)
-		model.respawn_consumable(src, amount * 0.005)
+		model.respawn_consumable(src, cell.use(cell.chargerate * 0.005))
 		if(sendmats)
 			model.restock_consumable()
-	if(cell)
-		cell.charge = min(cell.charge + amount, cell.maxcharge)
 	if(repairs)
 		heal_bodypart_damage(repairs, repairs)
 

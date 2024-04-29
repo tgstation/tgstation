@@ -17,6 +17,7 @@ GLOBAL_VAR(restart_counter)
  *     - world.init_byond_tracy()
  *     - (Start native profiling)
  *     - world.init_debugger()
+ *     - SysMgr (all data systems)
  *     - Master =>
  *       - config *unloaded
  *       - (all subsystems) PreInit()
@@ -84,6 +85,9 @@ GLOBAL_VAR(restart_counter)
 	// Create the logger
 	logger = new
 
+	// Initialize all the data systems
+	SysMgr = new
+
 	// THAT'S IT, WE'RE DONE, THE. FUCKING. END.
 	Master = new
 
@@ -119,7 +123,7 @@ GLOBAL_VAR(restart_counter)
 	// From a really fucking old commit (91d7150)
 	// I wanted to move it but I think this needs to be after /world/New is called but before any sleeps?
 	// - Dominion/Cyberboss
-	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
+	GLOB.timezoneOffset = world.timezone * 36000
 
 	// First possible sleep()
 	InitTgs()
@@ -448,7 +452,7 @@ GLOBAL_VAR(restart_counter)
 /world/proc/incrementMaxZ()
 	maxz++
 	SSmobs.MaxZChanged()
-	SSidlenpcpool.MaxZChanged()
+	SSai_controllers.on_max_z_changed()
 
 /world/proc/change_fps(new_value = 20)
 	if(new_value <= 0)

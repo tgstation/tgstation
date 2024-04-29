@@ -7,7 +7,7 @@
 	inhand_icon_state = "pwig"
 	worn_icon_state = "wig"
 	flags_inv = HIDEHAIR
-	color = "#000000"
+	color = COLOR_BLACK
 	var/hairstyle = "Very Long Hair"
 	var/adjustablecolor = TRUE //can color be changed manually?
 
@@ -30,18 +30,6 @@
 		icon = hair_style.icon
 		icon_state = hair_style.icon_state
 	return ..()
-
-
-/obj/item/clothing/head/wig/build_worn_icon(
-	default_layer = 0,
-	default_icon_file = null,
-	isinhands = FALSE,
-	female_uniform = NO_FEMALE_UNIFORM,
-	override_state = null,
-	override_file = null,
-	use_height_offset = TRUE,
-)
-	return ..(default_layer, default_icon_file, isinhands, female_uniform, override_state, override_file, use_height_offset = FALSE)
 
 /obj/item/clothing/head/wig/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
 	. = ..()
@@ -111,7 +99,7 @@
 /obj/item/clothing/head/wig/natural
 	name = "natural wig"
 	desc = "A bunch of hair without a head attached. This one changes color to match the hair of the wearer. Nothing natural about that."
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 	adjustablecolor = FALSE
 	custom_price = PAYCHECK_COMMAND
 

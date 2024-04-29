@@ -26,7 +26,7 @@
 		return
 	owner.add_traits(mutation_traits, GENETIC_MUTATION)
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
-		part.variable_color = "#00aa00"
+		part.variable_color = COLOR_DARK_LIME
 	owner.update_body_parts()
 	owner.add_mood_event("hulk", /datum/mood_event/hulk)
 	RegisterSignal(owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
@@ -276,5 +276,23 @@
 		TRAIT_PUSHIMMUNE,
 		TRAIT_STUNIMMUNE,
 	) // no chunk
+
+/datum/mutation/human/hulk/superhuman
+	health_req = 0
+	instability = 0
+	/// List of traits to add/remove when someone gets this mutation.
+	mutation_traits = list(
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_HULK,
+		TRAIT_IGNOREDAMAGESLOWDOWN,
+		TRAIT_NOSOFTCRIT,
+		TRAIT_NOHARDCRIT,
+		TRAIT_PUSHIMMUNE,
+		TRAIT_STUNIMMUNE,
+		TRAIT_ANALGESIA,
+	) // fight till your last breath
+
+/datum/mutation/human/hulk/superhuman/on_life(seconds_per_tick, times_fired)
+	return
 
 #undef HULK_TAILTHROW_STEPS

@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Added a persistent piggy bank to the vault, which can carry up to a modest 2000 credits worth of dosh between rounds."

@@ -525,7 +525,7 @@
 
 /datum/objective_item/steal/blueprints
 	name = "the station blueprints"
-	targetitem = /obj/item/areaeditor/blueprints
+	targetitem = /obj/item/blueprints
 	excludefromjob = list(JOB_CHIEF_ENGINEER)
 	item_owner = list(JOB_CHIEF_ENGINEER)
 	altitems = list(/obj/item/photo)
@@ -533,11 +533,11 @@
 	difficulty = 3
 	steal_hint = "The blueprints of the station, found in the Chief Engineer's locker, or on their person. A picture may suffice."
 
-/obj/item/areaeditor/blueprints/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/areaeditor/blueprints)
+/obj/item/blueprints/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/blueprints)
 
 /datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)
-	if(istype(I, /obj/item/areaeditor/blueprints))
+	if(istype(I, /obj/item/blueprints))
 		return TRUE
 	if(istype(I, /obj/item/photo))
 		var/obj/item/photo/P = I
@@ -574,7 +574,7 @@
 /datum/objective_item/steal/traitor/moth_plush
 	name = "cute moth plush toy"
 	targetitem = /obj/item/toy/plush/moth
-	excludefromjob = list(JOB_PSYCHOLOGIST, JOB_PARAMEDIC, JOB_CHEMIST, JOB_MEDICAL_DOCTOR, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_CORONER)
+	excludefromjob = list(JOB_PSYCHOLOGIST, JOB_PARAMEDIC, JOB_CHEMIST, JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_CORONER)
 	exists_on_map = TRUE
 	difficulty = 1
 	steal_hint = "A moth plush toy. The Psychologist has one to help console patients."

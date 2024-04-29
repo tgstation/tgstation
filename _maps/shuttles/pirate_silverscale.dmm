@@ -608,9 +608,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "Ln" = (
-/obj/machinery/power/smes/engineering{
-	charge = 1e+006
-	},
+/obj/machinery/power/smes/ship,
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/north,

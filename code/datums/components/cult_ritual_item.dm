@@ -221,7 +221,7 @@
 		cultist.log_message("erased a [rune.cultist_name] rune with [parent].", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(cultist)] erased a [rune.cultist_name] rune with [parent].")
 
-	to_chat(cultist, span_notice("You carefully erase the [lowertext(rune.cultist_name)] rune."))
+	to_chat(cultist, span_notice("You carefully erase the [LOWER_TEXT(rune.cultist_name)] rune."))
 	qdel(rune)
 
 /*
@@ -283,13 +283,13 @@
 		return FALSE
 
 	if(ispath(rune_to_scribe, /obj/effect/rune/summon) && (!is_station_level(our_turf.z) || istype(get_area(cultist), /area/space)))
-		to_chat(cultist, span_cultitalic("The veil is not weak enough here to summon a cultist, you must be on station!"))
+		to_chat(cultist, span_cult_italic("The veil is not weak enough here to summon a cultist, you must be on station!"))
 		return
 
 	if(ispath(rune_to_scribe, /obj/effect/rune/apocalypse))
 		if((world.time - SSticker.round_start_time) <= 6000)
 			var/wait = 6000 - (world.time - SSticker.round_start_time)
-			to_chat(cultist, span_cultitalic("The veil is not yet weak enough for this rune - it will be available in [DisplayTimeText(wait)]."))
+			to_chat(cultist, span_cult_italic("The veil is not yet weak enough for this rune - it will be available in [DisplayTimeText(wait)]."))
 			return
 		if(!check_if_in_ritual_site(cultist, user_team, TRUE))
 			return
@@ -338,8 +338,8 @@
 	var/obj/effect/rune/made_rune = new rune_to_scribe(our_turf, chosen_keyword)
 	made_rune.add_mob_blood(cultist)
 
-	to_chat(cultist, span_cult("The [lowertext(made_rune.cultist_name)] rune [made_rune.cultist_desc]"))
-	cultist.log_message("scribed \a [lowertext(made_rune.cultist_name)] rune using [parent] ([parent.type])", LOG_GAME)
+	to_chat(cultist, span_cult("The [LOWER_TEXT(made_rune.cultist_name)] rune [made_rune.cultist_desc]"))
+	cultist.log_message("scribed \a [LOWER_TEXT(made_rune.cultist_name)] rune using [parent] ([parent.type])", LOG_GAME)
 	SSblackbox.record_feedback("tally", "cult_runes_scribed", 1, made_rune.cultist_name)
 
 	return TRUE
@@ -359,7 +359,7 @@
 		to_chat(cultist, span_warning("The sacrifice is not complete. The portal would lack the power to open if you tried!"))
 		return FALSE
 	if(summon_objective.check_completion())
-		to_chat(cultist, span_cultlarge("\"I am already here. There is no need to try to summon me now.\""))
+		to_chat(cultist, span_cult_large("\"I am already here. There is no need to try to summon me now.\""))
 		return FALSE
 	var/confirm_final = tgui_alert(cultist, "This is the FINAL step to summon Nar'Sie; it is a long, painful ritual and the crew will be alerted to your presence.", "Are you prepared for the final battle?", list("My life for Nar'Sie!", "No"))
 	if(confirm_final == "No")
