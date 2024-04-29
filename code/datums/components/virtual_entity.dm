@@ -7,7 +7,10 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_parent_pre_move))
 
+///Prevents entry to a certain area if it has flags preventing virtual entities from entering.
 /datum/component/virtual_entity/proc/on_parent_pre_move(atom/movable/source, atom/new_location)
+	SIGNAL_HANDLER
+
 	var/area/location_area = get_area(new_location)
 	if(!location_area)
 		stack_trace("Virtual entity entered a location with no area!")
