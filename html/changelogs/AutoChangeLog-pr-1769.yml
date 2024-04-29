@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed full charge APC helpers resulting in APCs practically having no roundstart power instead."
