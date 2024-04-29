@@ -171,7 +171,7 @@
 "fd" = (
 /obj/structure/transit_tube/crossing,
 /turf/open/space/basic,
-/area/space)
+/area/virtual_domain/protected_space)
 "fG" = (
 /obj/structure/toilet{
 	dir = 1
@@ -374,6 +374,9 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"nn" = (
+/turf/closed/mineral/random,
+/area/virtual_domain/protected_space)
 "nB" = (
 /turf/closed/mineral/random,
 /area/space)
@@ -899,7 +902,7 @@
 "Lk" = (
 /obj/structure/transit_tube/crossing,
 /turf/closed/mineral/random,
-/area/space)
+/area/virtual_domain/protected_space)
 "Lo" = (
 /obj/structure/filingcabinet,
 /obj/machinery/door/window/left/directional/west{
@@ -1101,6 +1104,9 @@
 /obj/structure/sign/poster/contraband/syndicate_recruitment,
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"Vg" = (
+/turf/open/space/basic,
+/area/virtual_domain/protected_space)
 "Vk" = (
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 4;
@@ -2635,15 +2641,15 @@ dp
 sg
 zN
 zN
-nB
-nB
-nB
-nB
-qx
-qx
-qx
-qx
-qx
+nn
+nn
+nn
+nn
+Vg
+Vg
+Vg
+Vg
+Vg
 sM
 sM
 sM
@@ -2751,15 +2757,15 @@ dp
 dp
 dp
 zN
-nB
-qx
-qx
-qx
-qx
-qx
-qx
-qx
-qx
+nn
+Vg
+Vg
+Vg
+Vg
+Vg
+Vg
+Vg
+Vg
 sM
 sM
 sM
