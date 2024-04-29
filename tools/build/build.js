@@ -77,7 +77,7 @@ export const CiParameter = new Juke.Parameter({ type: 'boolean' });
 
 export const ForceRecutParameter = new Juke.Parameter({
   type: 'boolean',
-  name: "force_recut",
+  name: "force-recut",
 });
 
 export const WarningParameter = new Juke.Parameter({

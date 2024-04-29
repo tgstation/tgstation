@@ -159,6 +159,8 @@
 
 	to_chat(malf_ai, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
 
+	if(malf_ai.malf_picker)
+		return
 	malf_ai.add_malf_picker()
 
 

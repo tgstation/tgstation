@@ -16,6 +16,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "ae" = (
@@ -99,6 +100,7 @@
 	dir = 8
 	},
 /obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "ap" = (
@@ -298,6 +300,11 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
+"lA" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plating,
+/area/shuttle/arrival)
 "rV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -349,7 +356,7 @@ aX
 aW
 aQ
 aY
-af
+lA
 "}
 (5,1,1) = {"
 ae
@@ -367,7 +374,7 @@ rV
 ay
 aV
 aN
-af
+lA
 "}
 (7,1,1) = {"
 af
@@ -376,7 +383,7 @@ rV
 az
 aV
 aN
-af
+lA
 "}
 (8,1,1) = {"
 af
@@ -385,7 +392,7 @@ rV
 ab
 aV
 aN
-af
+lA
 "}
 (9,1,1) = {"
 ac
@@ -435,9 +442,9 @@ ag
 (14,1,1) = {"
 ag
 ac
-af
-af
-af
+lA
+lA
+lA
 ac
 ag
 "}
