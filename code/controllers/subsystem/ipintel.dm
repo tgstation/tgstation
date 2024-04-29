@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(ipintel)
 /datum/controller/subsystem/ipintel/OnConfigLoad()
 	var/list/fail_messages = list()
 	
-	contact_email = CONFIG_GET(string/ipintel_email)
+	var/contact_email = CONFIG_GET(string/ipintel_email)
 	
 	if(!length(contact_email))
 		fail_messages += "No contact email"
