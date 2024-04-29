@@ -42,3 +42,6 @@
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	shoes = /obj/item/clothing/shoes/combat
 	implants = list(/obj/item/implant/weapons_auth)
+
+/datum/outfit/virtual_syndicate/post_equip(mob/living/carbon/human/user, visualsOnly)
+	syndie_scum.faction |= ROLE_SYNDICATE
