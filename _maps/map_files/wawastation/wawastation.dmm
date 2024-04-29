@@ -9201,11 +9201,6 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
 "duS" = (
-/obj/machinery/requests_console/directional/south{
-	department = "Kitchen";
-	name = "Kitchen Requests Console"
-	},
-/obj/effect/mapping_helpers/requests_console/supplies,
 /obj/machinery/duct,
 /obj/structure/cable,
 /obj/machinery/camera/autoname/directional/north,
@@ -19495,10 +19490,15 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "hkG" = (
-/obj/machinery/atmospherics/components/tank,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/station/maintenance/department/science)
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "kitchen_counter";
+	name = "Kitchen Counter Shutters"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/smartfridge/food,
+/turf/open/floor/iron/kitchen,
+/area/station/service/kitchen)
 "hld" = (
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/east,
@@ -19561,6 +19561,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "hmj" = (
@@ -35849,12 +35850,12 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "nii" = (
-/obj/item/radio/intercom/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "niv" = (
@@ -42692,7 +42693,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "pQM" = (
-/obj/machinery/atmospherics/components/tank{
+/obj/machinery/atmospherics/components/tank/oxygen{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -43196,7 +43197,6 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/qm)
 "pYu" = (
-/obj/machinery/camera/autoname/directional/north,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -46139,6 +46139,8 @@
 /area/station/service/hydroponics)
 "rgU" = (
 /obj/machinery/deepfryer,
+/obj/machinery/requests_console/auto_name/directional/west,
+/obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "rgX" = (
@@ -91513,7 +91515,7 @@ enu
 enu
 enu
 duS
-enu
+hkG
 pYu
 ruP
 lOE
@@ -110762,7 +110764,7 @@ lJq
 obA
 pka
 pQM
-hkG
+pQM
 moe
 mJU
 bpW
@@ -111018,8 +111020,8 @@ cPl
 cLf
 obA
 upd
-hkG
-hkG
+pQM
+pQM
 moe
 sbE
 dlE
