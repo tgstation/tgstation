@@ -453,7 +453,7 @@
 /datum/config_entry/string/ipintel_email
 
 /datum/config_entry/string/ipintel_email/ValidateAndSet(str_val)
-	return str_val != "ch@nge.me" && (!length(str_var) || findtext(str_val, "@")) && ..()
+	return str_val != "ch@nge.me" && (!length(str_val) || findtext(str_val, "@")) && ..()
 
 /datum/config_entry/number/ipintel_rating_bad
 	default = 1
