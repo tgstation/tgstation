@@ -268,12 +268,13 @@
 /datum/heretic_knowledge/limited_amount/proc/blades_limit_check(mob/living/heretic)
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(heretic)
 	var/success_check = FALSE
-	for(var/obj/item/melee/sickly_blade/blades_in_list in our_heretic.blades_list)
+	for(var/obj/item/melee/sickly_blade/blades_in_list as anything in our_heretic.blades_list)
 		if(get_turf(heretic) == get_turf(blades_in_list))
 			continue
 		success_check = TRUE
 		LAZYREMOVE(our_heretic.blades_list, blades_in_list)
-		for(var/mob/living/living_target in range(0, get_turf(blades_in_list)))
+		var/mob/living/living_target = recursive_loc_check(src, mob/living)
+		if(living_target)
 			living_target.apply_damage(15)
 			var/obj/item/bodypart/thief_hand = living_target.get_bodypart(BODY_ZONE_L_ARM)
 			if(!isnull(thief_hand))	
