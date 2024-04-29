@@ -1,5 +1,8 @@
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain
 	outfit = /datum/outfit/pirate
+	prompt_name = "a virtual domain debug entity"
+	flavour_text = "You probably shouldn't be seeing this, contact a coder!"
+	you_are_text = "You are NOT supposed to be here. How did you let this happen?"
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/Initialize(mapload)
 	. = ..()
