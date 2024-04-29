@@ -136,7 +136,7 @@ SUBSYSTEM_DEF(ipintel)
 /datum/controller/subsystem/ipintel/proc/fetch_cached_ip_intel(address)
 	if (!SSdbcore.Connect())
 		return
-	ipintel_cache_length = CONFIG_GET(number/ipintel_cache_length)
+	var/ipintel_cache_length = CONFIG_GET(number/ipintel_cache_length)
 	var/date_restrictor = ""
 	var/sql_args = list("address" = address)
 	if(ipintel_cache_length > 1)
