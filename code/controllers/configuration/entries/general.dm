@@ -453,7 +453,7 @@
 /datum/config_entry/string/ipintel_email
 
 /datum/config_entry/string/ipintel_email/ValidateAndSet(str_val)
-	return str_val != "ch@nge.me" && ..()
+	return str_val != "ch@nge.me" && (!length(str_var) || findtext(str_val, "@")) && ..()
 
 /datum/config_entry/number/ipintel_rating_bad
 	default = 1
@@ -472,15 +472,15 @@
 
 /datum/config_entry/number/ipintel_rate_minute
 	default = 15
-
-/datum/config_entry/number/ipintel_rate_day
-	default = 500
+	min_val = 0
 
 /datum/config_entry/number/ipintel_cache_length
 	default = 7
+	min_val = 0
 
 /datum/config_entry/number/ipintel_exempt_playtime_living
 	default = 5
+	min_val = 0
 
 /datum/config_entry/flag/aggressive_changelog
 
