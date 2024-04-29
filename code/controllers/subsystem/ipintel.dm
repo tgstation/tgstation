@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(ipintel)
 	rate_limit_minute += 1
 
 	var/query_base = "https://[CONFIG_GET(string/ipintel_base)]/check.php?ip="
-	var/query = "[query_base][address]&contact=[contact_email]&flags=b&format=json"
+	var/query = "[query_base][address]&contact=[CONFIG_GET(string/ipintel_email)]&flags=b&format=json"
 
 	var/datum/http_request/request = new
 	request.prepare(RUSTG_HTTP_METHOD_GET, query)
