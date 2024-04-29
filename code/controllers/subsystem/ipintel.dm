@@ -195,7 +195,7 @@ SUBSYSTEM_DEF(ipintel)
 	
 
 ADMIN_VERB(ipintel_allow, R_BAN, "Whitelist Player VPN", "Allow a player to connect even if they are using a VPN.", ADMIN_CATEGORY_IPINTEL, ckey as text)
-	if (!is_enabled())
+	if (!SSipintel.is_enabled())
 		to_chat(user, "The ipintel system is not currently enabled but you can still edit the whitelists")
 	if(SSipintel.is_whitelisted(ckey))
 		to_chat(user, "Player is already whitelisted.")
