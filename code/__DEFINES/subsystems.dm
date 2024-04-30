@@ -347,4 +347,5 @@
 /// There is no winner for this vote.
 #define VOTE_WINNER_METHOD_NONE "None"
 
+/// Returned by [/datum/vote/proc/can_be_initiated] to denote the vote is valid and can be initiated.
 #define VOTE_AVAILABLE "Vote Available"

@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(vote)
 	/// A list of all ckeys currently voting for the current vote.
 	var/list/voting = list()
 	/// World.time we started our last vote
-	var/last_vote_time = -1
+	var/last_vote_time = -INFINITY
 
 /datum/controller/subsystem/vote/Initialize()
 	for(var/vote_type in subtypesof(/datum/vote))
@@ -32,16 +32,20 @@ SUBSYSTEM_DEF(vote)
 
 	return SS_INIT_SUCCESS
 
-
 // Called by master_controller
 /datum/controller/subsystem/vote/fire()
 	if(!current_vote)
 		return
 	current_vote.time_remaining = round((current_vote.started_time + CONFIG_GET(number/vote_period) - world.time) / 10)
 	if(current_vote.time_remaining < 0)
-		process_vote_result()
-		SStgui.close_uis(src)
-		reset()
+		end_vote()
+
+/// Ends the current vote.
+/datum/controller/subsystem/vote/proc/end_vote()
+	ASSERT(current_vote)
+	process_vote_result()
+	SStgui.close_uis(src)
+	reset()
 
 /// Resets all of our vars after votes conclude / are cancelled.
 /datum/controller/subsystem/vote/proc/reset()
@@ -369,7 +373,7 @@ SUBSYSTEM_DEF(vote)
 
 			voter.log_message("ended the current vote early", LOG_ADMIN)
 			message_admins("[key_name_admin(voter)] has ended the current vote.")
-			current_vote.time_remaining = -1
+			end_vote()
 			return TRUE
 
 		if("toggleVote")
@@ -409,7 +413,7 @@ SUBSYSTEM_DEF(vote)
 					this is potentially a malicious exploit and worth noting.")
 				return
 
-			last_vote_time = -1
+			last_vote_time = -INFINITY
 			return TRUE
 
 /datum/controller/subsystem/vote/ui_close(mob/user)
@@ -419,6 +423,10 @@ SUBSYSTEM_DEF(vote)
 /mob/verb/vote()
 	set category = "OOC"
 	set name = "Vote"
+
+	if(!SSvote.initialized)
+		to_chat(usr, span_notice("<i>Voting is not set up yet!</i>"))
+		return
 
 	SSvote.ui_interact(usr)
 
