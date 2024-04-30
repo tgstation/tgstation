@@ -95,7 +95,7 @@ SUBSYSTEM_DEF(ipintel)
 	request.prepare(RUSTG_HTTP_METHOD_GET, query)
 	request.execute_blocking()
 	var/datum/http_response/response = request.into_response()
-	var/list/data = response.body
+	var/list/data = json_decode(response.body)
 	// Log the response
 	logger.Log(LOG_CATEGORY_DEBUG, "ip check response body", data)
 
