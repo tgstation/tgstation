@@ -16,6 +16,7 @@
 	layer = HIGH_TURF_LAYER
 	damaged_dmi = 'icons/turf/damaged.dmi'
 	var/smooth_icon = 'icons/turf/floors/grass.dmi'
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/misc/grass/broken_states()
 	return list("grass_damaged")

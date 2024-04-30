@@ -46,7 +46,8 @@
 /datum/heretic_knowledge/rust_fist
 	name = "Grasp of Rust"
 	desc = "Your Mansus Grasp will deal 500 damage to non-living matter and rust any surface it touches. \
-		Already rusted surfaces are destroyed. Surfaces and structures can only be rusted by using Right-Click."
+		Already rusted surfaces are destroyed. Surfaces and structures can only be rusted by using Right-Click. \
+		Allows you to rust basic iron walls and floors."
 	gain_text = "On the ceiling of the Mansus, rust grows as moss does on a stone."
 	next_knowledge = list(/datum/heretic_knowledge/rust_regen)
 	cost = 1
@@ -55,6 +56,8 @@
 /datum/heretic_knowledge/rust_fist/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	our_heretic.increase_rust_strenght()
 
 /datum/heretic_knowledge/rust_fist/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY))
@@ -65,7 +68,7 @@
 	if(!issilicon(target) && !(target.mob_biotypes & MOB_ROBOTIC))
 		return
 
-	target.rust_heretic_act()
+	target.rust_heretic_act(source)
 
 /datum/heretic_knowledge/rust_fist/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
 	SIGNAL_HANDLER
@@ -76,7 +79,7 @@
 		var/obj/machinery/door/airlock/airlock = target
 		airlock.loseMainPower()
 
-	target.rust_heretic_act()
+	target.rust_heretic_act(source)
 	return COMPONENT_USE_HAND
 
 /datum/heretic_knowledge/rust_regen
@@ -145,11 +148,14 @@
 /datum/heretic_knowledge/mark/rust_mark
 	name = "Mark of Rust"
 	desc = "Your Mansus Grasp now applies the Mark of Rust. The mark is triggered from an attack with your Rusty Blade. \
-		When triggered, the victim's organs and equipment will have a 75% chance to sustain damage and may be destroyed."
+		When triggered, the victim's organs and equipment will have a 75% chance to sustain damage and may be destroyed \
+		Allows you to rust reinforced walls an floors as well as plasteel."
 	gain_text = "The Blacksmith looks away. To a place lost long ago. \"Rusted Hills help those in dire need... at a cost.\""
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/rust)
 	route = PATH_RUST
 	mark_type = /datum/status_effect/eldritch/rust
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	our_heretic.increase_rust_strength()
 
 /datum/heretic_knowledge/knowledge_ritual/rust
 	next_knowledge = list(/datum/heretic_knowledge/spell/rust_construction)
@@ -169,7 +175,7 @@
 /datum/heretic_knowledge/spell/area_conversion
 	name = "Aggressive Spread"
 	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
-		Already rusted surfaces are destroyed."
+		Already rusted surfaces are destroyed \ Also improves the rusting abilities of non rust-heretics."
 	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/rust,
@@ -182,23 +188,31 @@
 	cost = 1
 	route = PATH_RUST
 
+/datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user)
+	. = ..()
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	our_heretic.increase_rust_strenght(TRUE)
+
 /datum/heretic_knowledge/blade_upgrade/rust
 	name = "Toxic Blade"
-	desc = "Your Rusty Blade now poisons enemies on attack."
+	desc = "Your Rusty Blade now poisons enemies on attack \ Allows you to rust Titanium and Plastitanium.."
 	gain_text = "The Blacksmith hands you their blade. \"The Blade will guide you through the flesh, should you let it.\" \
 		The heavy rust weights it down. You stare deeply into it. The Rusted Hills call for you, now."
 	next_knowledge = list(/datum/heretic_knowledge/spell/entropic_plume)
 	route = PATH_RUST
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	our_heretic.increase_rust_strength()
 
 /datum/heretic_knowledge/blade_upgrade/rust/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	// No user == target check here, cause it's technically good for the heretic?
 	target.reagents?.add_reagent(/datum/reagent/eldritch, 5)
 
+
 /datum/heretic_knowledge/spell/entropic_plume
 	name = "Entropic Plume"
 	desc = "Grants you Entropic Plume, a spell that releases a vexing wave of Rust. \
 		Blinds, poisons, and inflicts Amok on any heathen it hits, causing them to strike \
-		at friend or foe wildly. Also rusts and destroys and surfaces it hits."
+		at friend or foe wildly. Also rusts and destroys and surfaces it hits and improves the rusting abilities of non-rust heretics."
 	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
 	next_knowledge = list(
@@ -210,13 +224,18 @@
 	cost = 1
 	route = PATH_RUST
 
+/datum/heretic_knowledge/spell/entropic_plume/on_gain(mob/user)
+	. = ..()
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	our_heretic.increase_rust_strength(TRUE)
+
 /datum/heretic_knowledge/ultimate/rust_final
 	name = "Rustbringer's Oath"
 	desc = "The ascension ritual of the Path of Rust. \
 		Bring 3 corpses to a transmutation rune on the bridge of the station to complete the ritual. \
 		When completed, the ritual site will endlessly spread rust onto any surface, stopping for nothing. \
 		Additionally, you will become extremely resilient on rust, healing at triple the rate \
-		and becoming immune to many effects and dangers."
+		and becoming immune to many effects and dangers \ You will be able to rust almost anything upon ascending."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark, for the RUSTBRINGER has come! \
 		The Blacksmith forges ahead! Rusted Hills, CALL MY NAME! WITNESS MY ASCENSION!"
 	route = PATH_RUST
@@ -321,7 +340,7 @@
  */
 /datum/rust_spread
 	/// The rate of spread every tick.
-	var/spread_per_sec = 6
+	var/spread_per_sec = 160
 	/// The very center of the spread.
 	var/turf/centre
 	/// List of turfs at the edge of our rust (but not yet rusted).

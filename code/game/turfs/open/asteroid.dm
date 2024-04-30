@@ -14,7 +14,7 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 	/// Base turf type to be created by the tunnel
 	var/turf_type = /turf/open/misc/asteroid
 			/// Whether this turf has different icon states
@@ -27,6 +27,7 @@
 	var/dug = FALSE
 	/// Percentage chance of receiving a bonus worm
 	var/worm_chance = 30
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/misc/asteroid/broken_states()
 	if(initial(dug))
