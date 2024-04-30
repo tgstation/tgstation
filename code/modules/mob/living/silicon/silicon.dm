@@ -480,3 +480,11 @@
 		stack_trace("Silicon [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 		create_modularInterface()
 	modularInterface.imprint_id(name = newname)
+
+/mob/living/silicon/can_track(mob/living/user)
+	//if their camera is online, it's safe to assume they are in cameranets
+	//since it takes a while for camera vis to update, this lets us bypass that so AIs can always see their borgs,
+	//without making cameras constantly update every time a borg moves.
+	if(builtInCamera && builtInCamera.can_use())
+		return TRUE
+	return ..()

@@ -1281,9 +1281,9 @@
 		return FALSE
 	if(invisibility || alpha <= 50)//cloaked
 		return FALSE
-	if(!isturf(src.loc)) //The reason why we don't just use get_turf is because they could be in a closet, disposals, or a vehicle.
+	if(!isturf(loc)) //The reason why we don't just use get_turf is because they could be in a closet, disposals, or a vehicle.
 		return FALSE
-	var/turf/T = src.loc
+	var/turf/T = loc
 	if(is_centcom_level(T.z)) //dont detect mobs on centcom
 		return FALSE
 	if(is_away_level(T.z))
