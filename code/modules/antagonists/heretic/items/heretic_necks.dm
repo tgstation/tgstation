@@ -15,6 +15,7 @@
 	icon_state = "crimson_focus"
 	// The aura healing component. Used to delete it when taken off.
 	var/datum/component/component
+	var/cult_boosted = FALSE
 
 
 /obj/item/clothing/neck/heretic_focus/crimson_focus/equipped(mob/living/user, slot)
@@ -24,10 +25,12 @@
 
 	var/team_color = COLOR_ADMIN_PINK
 	if(IS_CULTIST(user))
-		RegisterSignal(user, COMSIG_LIVING_CULT_EMPOWER, PROC_REF(buff_empower))
+		var/datum/action/innate/cult/blood_magic/magic_holder = locate() in user.actions
 		team_color = COLOR_CULT_RED
+		magic_holder.magic_enhanced = TRUE
 	if(IS_HERETIC_OR_MONSTER(user))
-		RegisterSignal(user, COMSIG_ACTION_START_COOLDOWN, PROC_REF(halve_cooldowns))
+		for(var/datum/action/cooldown/spell/spell_action in user.actions)
+			spell_action.cooldown_time *= 0.5
 		team_color = COLOR_GREEN
 	else
 		team_color = pick(COLOR_CULT_RED, COLOR_GREEN)
@@ -37,8 +40,8 @@
 	component = user.AddComponent( \
 		/datum/component/aura_healing, \
 		range = 3, \
-		brute_heal = 0.1, \
-		burn_heal = 0.1, \
+		brute_heal = 1, \
+		burn_heal = 1, \
 		blood_heal = 2, \
 		suffocation_heal = 5, \
 		simple_heal = 0.6, \
@@ -56,27 +59,23 @@
 	if(HAS_TRAIT_FROM(user, TRAIT_MANSUS_TOUCHED, REF(src)))
 		to_chat(user, span_notice("Your heart and blood return to their regular old rhythm and flow."))
 
-	UnregisterSignal(user, list(COMSIG_LIVING_CULT_EMPOWER, COMSIG_ACTION_START_COOLDOWN))
+	if(IS_HERETIC_OR_MONSTER(user))
+		for(var/datum/action/cooldown/spell/spell_action in user.actions)
+			spell_action.cooldown_time *= 1
 	QDEL_NULL(component)
 	user.remove_traits(list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOODY_MESS), REF(src))
 
-	if(!IS_CULTIST(user))
-		return
-	// Remove the fifth spell slot, if any.
+	// If boosted enable is set, to prevent false dropped() calls from repeatedly nuking the max spells.
 	var/datum/action/innate/cult/blood_magic/magic_holder = locate() in user.actions
-	if(length(magic_holder.spells) > 4)
-		QDEL_NULL(magic_holder.spells[5])
+	magic_holder?.magic_enhanced = FALSE
+	// Remove the last spell if over new limit, as we will reduce our max spell amount. Done beforehand because it breaks otherwise.
+	QDEL_NULL(magic_holder.spells[ENHANCED_BLOODCHARGE])
 
 /obj/item/clothing/neck/heretic_focus/crimson_focus/proc/buff_empower(mob/user, signal_return_list)
 	SIGNAL_HANDLER
 
 	signal_return_list["limit_data"] += 1
 	signal_return_list["speed_data"] *= 0.5
-
-/obj/item/clothing/neck/heretic_focus/crimson_focus/proc/halve_cooldowns(mob/user, signal_return_list)
-	SIGNAL_HANDLER
-
-	signal_return_list["cd_data"] = signal_return_list["override_data"] ? signal_return_list["override_data"] * 0.5 : signal_return_list["cd_data"] * 0.5
 
 /obj/item/clothing/neck/heretic_focus/crimson_focus/attack_self(mob/living/user, modifiers)
 	. = ..()

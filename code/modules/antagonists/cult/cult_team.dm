@@ -19,7 +19,7 @@
 	///Has the cult ascended, and gotten halos?
 	var/cult_ascendent = FALSE
 
-	// List that keeps track of which items have been unlocked after a heretic was sacked.
+	/// List that keeps track of which items have been unlocked after a heretic was sacked.
 	var/list/unlocked_heretic_items = list(
 		CURSED_BLADE_UNLOCKED = FALSE,
 		CRIMSON_FOCUS_UNLOCKED = FALSE,

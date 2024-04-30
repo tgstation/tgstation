@@ -10,7 +10,7 @@
 
 //blood magic
 // Cultists can get up to 5 spell slots. This define is the maximum number possible.
-#define MAX_POSSIBLE_BLOODCHARGE 5
+#define ENHANCED_BLOODCHARGE 5
 #define MAX_BLOODCHARGE 4
 #define RUNELESS_MAX_BLOODCHARGE 1
 /// percent before rise

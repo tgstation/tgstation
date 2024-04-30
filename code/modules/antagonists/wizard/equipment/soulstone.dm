@@ -354,7 +354,7 @@
 	if(!shade)
 		to_chat(user, "[span_userdanger("Creation failed!")]: [src] is empty! Go kill someone!")
 		return FALSE
-	var/construct_class = shell.get_construct(user, src)
+	var/construct_class = show_radial_menu(user, src, GLOB.construct_radial_images, custom_check = CALLBACK(src, PROC_REF(check_menu), user, shell), require_near = TRUE, tooltips = TRUE)
 	if(QDELETED(shell) || !construct_class)
 		return FALSE
 	make_new_construct_from_class(construct_class, theme, shade, user, FALSE, shell.loc)

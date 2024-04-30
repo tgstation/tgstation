@@ -3029,7 +3029,6 @@
 #include "code\modules\antagonists\cult\blood_magic.dm"
 #include "code\modules\antagonists\cult\constructs.dm"
 #include "code\modules\antagonists\cult\cult.dm"
-#include "code\modules\antagonists\cult\cult_bastard_sword.dm"
 #include "code\modules\antagonists\cult\cult_comms.dm"
 #include "code\modules\antagonists\cult\cult_items.dm"
 #include "code\modules\antagonists\cult\cult_objectives.dm"

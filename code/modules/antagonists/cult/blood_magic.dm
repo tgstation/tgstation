@@ -12,6 +12,8 @@
 	default_button_position = DEFAULT_BLOODSPELLS
 	var/list/spells = list()
 	var/channeling = FALSE
+	// If the magic has been enhanced somehow, likely due to a crimson focus.
+	var/magic_enhanced = FALSE
 
 /datum/action/innate/cult/blood_magic/Remove()
 	for(var/X in spells)
@@ -29,7 +31,7 @@
 		var/atom/movable/screen/movable/action_button/button = viewers[hud]
 		var/position = screen_loc_to_offset(button.screen_loc)
 		var/list/position_list = list()
-		for(var/possible_position in 1 to MAX_POSSIBLE_BLOODCHARGE)
+		for(var/possible_position in 1 to magic_enhanced ? ENHANCED_BLOODCHARGE : MAX_BLOODCHARGE)
 			position_list += possible_position
 		for(var/datum/action/innate/cult/blood_spell/blood_spell in spells)
 			if(blood_spell.positioned)
@@ -50,15 +52,10 @@
 		rune = TRUE
 		break
 	if(rune)
-		limit = MAX_BLOODCHARGE
-	var/empowering_channel_time = 10 SECONDS - (rune ? 6 SECONDS : 0 SECONDS)
-	var/list/signal_return_list = list("limit_data" = limit, "rune_data" = rune, "speed_data" = empowering_channel_time)
-	SEND_SIGNAL(owner, COMSIG_LIVING_CULT_EMPOWER, signal_return_list)
-	limit = signal_return_list["limit_data"]
-	empowering_channel_time = signal_return_list["speed_data"]
+		limit = magic_enhanced ? ENHANCED_BLOODCHARGE : MAX_BLOODCHARGE
 	if(length(spells) >= limit)
 		if(rune)
-			to_chat(owner, span_cult_italic("You cannot store more than [MAX_BLOODCHARGE] spells. <b>Pick a spell to remove.</b>"))
+			to_chat(owner, span_cult_italic("You cannot store more than [limit] spells. <b>Pick a spell to remove.</b>"))
 		else
 			to_chat(owner, span_cult_bold_italic("<u>You cannot store more than [RUNELESS_MAX_BLOODCHARGE] spells without an empowering rune! Pick a spell to remove.</u>"))
 		var/nullify_spell = tgui_input_list(owner, "Spell to remove", "Current Spells", spells)
@@ -91,10 +88,15 @@
 	else
 		to_chat(owner, span_cult_italic("You are already invoking blood magic!"))
 		return
-	if(do_after(owner, empowering_channel_time, target = owner))
+	var/spell_carving_timer = 10 SECONDS
+	if(rune)
+		spell_carving_timer = 4 SECONDS
+	if(magic_enhanced)
+		spell_carving_timer *= 0.5
+	if(do_after(owner, magic_enhanced, target = owner))
 		if(ishuman(owner))
 			var/mob/living/carbon/human/human_owner = owner
-			human_owner.bleed(40 - rune*32)
+			human_owner.bleed(rune ? 8 : 40)
 		var/datum/action/innate/cult/blood_spell/new_spell = new BS(owner.mind)
 		new_spell.Grant(owner, src)
 		spells += new_spell

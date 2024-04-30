@@ -310,9 +310,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			other_bible.inhand_icon_state = inhand_icon_state
 			other_bible.deity_name = deity_name
 
-	if(istype(bible_smacked, /obj/item/melee/weapon/cultblade/haunted) && !IS_CULTIST(user))
+	if(istype(bible_smacked, /obj/item/melee/cultblade/haunted) && !IS_CULTIST(user))
 		. |= AFTERATTACK_PROCESSED_ITEM
-		var/obj/item/melee/weapon/cultblade/haunted/sword = bible_smacked
+		var/obj/item/melee/cultblade/haunted/sword = bible_smacked
 		sword.balloon_alert(user, "exorcising...")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
 		if(do_after(user, 4 SECONDS, target = sword))

@@ -76,7 +76,7 @@ Striking a noncultist, however, will tear their flesh."}
 	block_sound = 'sound/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
-	// If it can be used at will by any nerd
+	/// If TRUE, it can be used at will by anyone, non-cultists included
 	var/free_use = FALSE
 
 /obj/item/melee/cultblade/Initialize(mapload)
@@ -188,7 +188,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 	if(do_bind && !mapload)
 		bind_soul(soul_to_bind, awakener)
-	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
+	add_traits(list(TRAIT_CASTABLE_LOC, TRAIT_SPELLS_TRANSFER_TO_LOC), INNATE_TRAIT)
 	AddElement(/datum/element/heretic_focus)
 
 /obj/item/melee/cultblade/haunted/proc/bind_soul(mob/soul_to_bind, mob/awakener)
