@@ -1,0 +1,6 @@
+author: "improvedname"
+delete-after: True
+changes:
+  - bugfix: "Fixes tramstation gravgen wiring"
+  - bugfix: "Fixes tramstation turbine wiring"
+  - bugfix: "Fixes northstar cmo button name"

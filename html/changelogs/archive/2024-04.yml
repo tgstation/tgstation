@@ -897,3 +897,15 @@
   - qol: Arrivals shuttle is now more player friendly
   san7890:
   - admin: Possess Object is now back in the right-click context menu.
+2024-04-30:
+  Jacquerel:
+  - balance: Netguardian Prime can see in the dark.
+  - image: You can see Netguardian Prime in the dark.
+  SyncIt21:
+  - bugfix: Eigenstasium exposed & Anomaly station trait affected closets work again.
+      Eigenstasium closets are tainted blue
+  YesterdaysPromise:
+  - bugfix: The start-of-the-round tips will no longer feature virologists, but will,
+      however, start featuring heretics and coroners.
+  intercepti0n:
+  - rscadd: Added a short scene when getting an Ordeal of Sisyphus achievement.
