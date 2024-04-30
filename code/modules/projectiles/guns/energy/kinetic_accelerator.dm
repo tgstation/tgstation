@@ -8,6 +8,7 @@
 	item_flags = NONE
 	obj_flags = UNIQUE_RENAME
 	weapon_weight = WEAPON_LIGHT
+	pin = /obj/item/firing_pin/explorer
 	can_bayonet = TRUE
 	knife_x_offset = 20
 	knife_y_offset = 12
@@ -151,9 +152,11 @@
 	icon_state = "kineticgun_b"
 	holds_charge = TRUE
 	unique_frequency = TRUE
+	pin = /obj/item/firing_pin
 	max_mod_capacity = 90
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/minebot
+	pin = /obj/item/firing_pin
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	recharge_time = 2 SECONDS
 	holds_charge = TRUE
