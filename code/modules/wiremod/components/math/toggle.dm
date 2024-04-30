@@ -30,7 +30,7 @@
 			true.set_output(COMPONENT_SIGNAL)
 		else
 			false.set_output(COMPONENT_SIGNAL)
-	. = ..()
+	return ..()
 
 /obj/item/circuit_component/compare/toggle/do_comparisons()
 	return toggle_state
