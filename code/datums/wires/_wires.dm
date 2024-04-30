@@ -41,6 +41,8 @@
 	/// If every instance of these wires should be random. Prevents wires from showing up in station blueprints.
 	var/randomize = FALSE
 
+	var/list/studied_photos
+
 /datum/wires/New(atom/holder)
 	..()
 	if(!istype(holder, holder_type))
@@ -262,9 +264,8 @@
 		if(user.is_holding_item_of_type(/obj/item/blueprints))
 			return TRUE
 		for(var/obj/item/photo/photo in user.held_items)
-			if(!photo.picture || !photo.picture.has_blueprints)
-				continue
-			return TRUE
+			if(LAZYACCESS(studied_photos, REF(photo)))
+				return TRUE
 
 	return FALSE
 
@@ -278,6 +279,23 @@
  */
 /datum/wires/proc/always_reveal_wire(color)
 	return FALSE
+
+/**
+ * Attempts to study a photo for blueprints.
+ */
+/datum/wires/proc/try_study_photo(mob/user)
+	if(randomize)
+		return
+
+	for(var/obj/item/photo/photo in user.held_items)
+		if(!photo.picture?.has_blueprints)
+			continue
+
+		to_chat(user, span_notice("<i>You squint at [photo], looking for wires hidden in the pictured blueprints.</i>"))
+		var/study_length = 1 SECONDS * (min(photo.picture.psize_x, photo.picture.psize_y) / 32)
+		if(do_after(user, study_length, holder, hidden = TRUE))
+			LAZYSET(studied_photos, REF(photo), TRUE)
+		return
 
 /datum/wires/ui_host()
 	return holder
@@ -295,6 +313,7 @@
 	if (!ui)
 		ui = new(user, src, "Wires", "[holder.name] Wires")
 		ui.open()
+		try_study_photo(user)
 
 /datum/wires/ui_data(mob/user)
 	var/list/data = list()
