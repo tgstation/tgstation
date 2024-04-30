@@ -34,5 +34,5 @@
 
 	if(message.value)
 		var/atom/movable/shell = parent.shell
-		shell.say(message.value, forced = "circuit speech | [parent.get_creator()]", message_range = !!quietmode.value ? WHISPER_RANGE : MESSAGE_RANGE)
+		shell.say(message.value, forced = "circuit speech | [parent.get_creator()]", message_range = quietmode.value > 0 ? WHISPER_RANGE : MESSAGE_RANGE)
 		TIMER_COOLDOWN_START(shell, COOLDOWN_CIRCUIT_SPEECH, speech_cooldown)
