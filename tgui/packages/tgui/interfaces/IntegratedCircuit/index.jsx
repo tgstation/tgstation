@@ -475,6 +475,7 @@ export class IntegratedCircuit extends Component {
                   position="absolute"
                   top={0}
                   color="transparent"
+                  tooltip="Variables"
                   icon="cog"
                   selected={variableMenuOpen}
                   onClick={() =>
