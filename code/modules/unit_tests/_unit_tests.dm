@@ -101,6 +101,7 @@
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
 #include "bitrunning.dm"
+#include "blackmarket.dm"
 #include "blindness.dm"
 #include "bloody_footprints.dm"
 #include "breath.dm"
