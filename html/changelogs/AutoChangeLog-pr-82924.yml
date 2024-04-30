@@ -1,0 +1,5 @@
+author: "Constellado"
+delete-after: True
+changes:
+  - qol: "Made birdshot atmos easier to use."
+  - bugfix: "The Birdshot engineering department is no longer using a second hand broken microwave."
