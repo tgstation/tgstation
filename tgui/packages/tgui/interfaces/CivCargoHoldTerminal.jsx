@@ -114,7 +114,12 @@ const BountyPickBox = (props) => {
             }}
           >
             <Box>{id_bounty_names[0]}</Box>
-            <Box textAlign="left" color="black" backgroundColor="linen">
+            <Box
+              textAlign="left"
+              color="black"
+              backgroundColor="linen"
+              lineHeight="1.2em"
+            >
               {id_bounty_infos[0]}
             </Box>
             <Box>Payout: {id_bounty_values[0]} cr</Box>
@@ -134,7 +139,12 @@ const BountyPickBox = (props) => {
             }}
           >
             <Box>{id_bounty_names[1]}</Box>
-            <Box textAlign="left" color="black" backgroundColor="linen">
+            <Box
+              textAlign="left"
+              color="black"
+              backgroundColor="linen"
+              lineHeight="1.2em"
+            >
               {id_bounty_infos[1]}
             </Box>
             <Box>Payout: {id_bounty_values[1]} cr</Box>
@@ -154,7 +164,12 @@ const BountyPickBox = (props) => {
             }}
           >
             <Box>{id_bounty_names[2]}</Box>
-            <Box textAlign="left" color="black" backgroundColor="linen">
+            <Box
+              textAlign="left"
+              color="black"
+              backgroundColor="linen"
+              lineHeight="1.2em"
+            >
               {id_bounty_infos[2]}
             </Box>
             <Box>Payout: {id_bounty_values[2]} cr</Box>
