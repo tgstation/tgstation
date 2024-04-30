@@ -272,8 +272,6 @@ ADMIN_VERB(ipintel_revoke, R_BAN, "Revoke Player VPN Whitelist", "Revoke a playe
 			else
 				message_admins("IPINTEL: [key_name_admin(src)] was unable to be checked due to an error.")
 
-	// TODO remove after test merge
-	return
 	if(!connection_rejected)
 		return
 	
