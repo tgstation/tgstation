@@ -51,7 +51,7 @@
 /obj/effect/anomaly/dimensional/proc/prepare_area(new_theme_path)
 	if (!new_theme_path)
 		new_theme_path = pick(subtypesof(/datum/dimension_theme))
-	theme = SSmaterials.dimensional_themes[new_theme_path]
+	theme = DSmaterials.dimensional_themes[new_theme_path]
 	apply_theme_icon()
 
 	target_turfs = list()

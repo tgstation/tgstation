@@ -70,7 +70,7 @@
 
 /obj/item/laser_pointer/infinite_range/Initialize(mapload)
 	. = ..()
-	diode = new /obj/item/stock_parts/micro_laser/quadultra
+	diode = new /obj/item/stock_parts/servo/femto
 
 /obj/item/laser_pointer/screwdriver_act(mob/living/user, obj/item/tool)
 	if(diode)

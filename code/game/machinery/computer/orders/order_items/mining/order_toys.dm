@@ -25,7 +25,7 @@
 	item_path = /obj/item/mine_bot_upgrade/regnerative_shield
 	cost_per_order = 500
 
-/datum/orderable_item/toys_drones/drone_remote
+/datum/orderable_item/toys_drones/drone_shield
 	item_path = /obj/item/minebot_remote_control
 	cost_per_order = 500
 

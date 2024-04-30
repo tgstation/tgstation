@@ -17,6 +17,7 @@ GLOBAL_VAR(restart_counter)
  *     - world.init_byond_tracy()
  *     - (Start native profiling)
  *     - world.init_debugger()
+ *     - SysMgr (all data systems)
  *     - Master =>
  *       - config *unloaded
  *       - (all subsystems) PreInit()
@@ -83,6 +84,9 @@ GLOBAL_VAR(restart_counter)
 
 	// Create the logger
 	logger = new
+
+	// Initialize all the data systems
+	SysMgr = new
 
 	// THAT'S IT, WE'RE DONE, THE. FUCKING. END.
 	Master = new

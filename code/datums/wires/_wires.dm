@@ -258,13 +258,8 @@
 		return TRUE
 
 	// Station blueprints do that too, but only if the wires are not randomized.
-	if(!randomize)
-		if(user.is_holding_item_of_type(/obj/item/blueprints))
-			return TRUE
-		for(var/obj/item/photo/photo in user.held_items)
-			if(!photo.picture || !photo.picture.has_blueprints)
-				continue
-			return TRUE
+	if(user.is_holding_item_of_type(/obj/item/blueprints) && !randomize)
+		return TRUE
 
 	return FALSE
 

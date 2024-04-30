@@ -18,12 +18,11 @@ import {
 import { ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
 
-type Player = {
+type Player = Record<string, PlayerInfo>;
+
+type PlayerInfo = {
   host: number;
-  key: string;
-  loadout: string;
   ready: BooleanLike;
-  mob: string;
 };
 
 type Modifier = {
@@ -62,25 +61,15 @@ type Data = {
 
 export function DeathmatchLobby(props) {
   const { act, data } = useBackend<Data>();
-  const {
-    admin,
-    host,
-    mod_menu_open,
-    observers = [],
-    players = [],
-    self,
-  } = data;
+  const { admin, observers = [], self, players } = data;
 
-  const allReady = players.every((player) => player.ready);
-
-  const fullAccess = !!host || !!admin;
-  const showMenu = fullAccess && !!mod_menu_open;
-
-  const isObserver = observers.find((observer) => observer.key === self);
+  const allReady = Object.keys(players).every(
+    (player) => players[player].ready,
+  );
 
   return (
     <Window title="Deathmatch Lobby" width={560} height={480}>
-      {showMenu && <ModSelector />}
+      <ModSelector />
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>
@@ -109,7 +98,7 @@ export function DeathmatchLobby(props) {
                 </Stack.Item>
                 <Stack.Item>
                   <Button color="caution" onClick={() => act('observe')}>
-                    {isObserver ? 'Join' : 'Observe'}
+                    {observers[self] ? 'Join' : 'Observe'}
                   </Button>
                   <Button color="bad" onClick={() => act('leave_game')}>
                     Leave Game
@@ -142,12 +131,12 @@ function PlayerColumn(props) {
     self,
   } = data;
 
-  const allReady = players.every((player) => player.ready);
-
-  const fullAccess = !!host || !!admin;
+  const allReady = Object.keys(players).every(
+    (player) => players[player].ready,
+  );
 
   return (
-    <Section fill scrollable={players.length > 30}>
+    <Section fill scrollable={Object.keys(players).length > 30}>
       <Table>
         <Table.Row header>
           <Table.Cell collapsing />
@@ -164,115 +153,83 @@ function PlayerColumn(props) {
             </Tooltip>
           </Table.Cell>
         </Table.Row>
-        {players.map((player) => {
-          const isHost = !!player.host;
-          const isSelf = player.key === self;
-          const canBoot = fullAccess && !isSelf;
+        {Object.keys(players).map((player) => {
+          const fullAccess = (!!host && !!players[player].host) || !admin;
 
           return (
-            <Table.Row className="candystripe" key={player.key}>
-              <Table.Cell align="center" collapsing verticalAlign="top">
-                {isHost && (
-                  <Tooltip content="Host">
-                    <Icon color="gold" name="star" pt={isSelf && 0.5} />
-                  </Tooltip>
-                )}
-                {!host && isSelf && (
-                  <Tooltip content="You">
-                    <Icon color="green" name="arrow-right" pt={0.9} />
-                  </Tooltip>
-                )}
+            <Table.Row className="candystripe" key={player}>
+              <Table.Cell collapsing verticalAlign="top" pt="2px">
+                {!!players[player].host && <Icon name="star" />}
               </Table.Cell>
-
-              <Table.Cell verticalAlign="top" pt={!isHost && '2px'}>
-                {!canBoot ? (
-                  <Box color="label">{player.key}</Box>
+              <Table.Cell verticalAlign="top" pt={!fullAccess && '2px'}>
+                {!fullAccess ? (
+                  <b>{player}</b>
                 ) : (
                   <Dropdown
                     width={9}
-                    selected={player.key}
+                    selected={player}
                     options={['Kick', 'Transfer host', 'Toggle observe']}
                     onSelected={(value) =>
                       act('host', {
-                        id: player.key,
+                        id: player,
                         func: value,
                       })
                     }
                   />
                 )}
               </Table.Cell>
-
               <Table.Cell>
-                {!isSelf ? (
-                  <Box color="label">{player.loadout}</Box>
-                ) : (
-                  <Dropdown
-                    width={10}
-                    selected={player.loadout}
-                    disabled={!host && !isSelf}
-                    options={loadouts}
-                    onSelected={(value) =>
-                      act('change_loadout', {
-                        player: player.key,
-                        loadout: value,
-                      })
-                    }
-                  />
-                )}
+                <Dropdown
+                  width={10}
+                  selected={players[player].loadout}
+                  disabled={!host && player !== self}
+                  options={loadouts}
+                  onSelected={(value) =>
+                    act('change_loadout', {
+                      player: player,
+                      loadout: value,
+                    })
+                  }
+                />
               </Table.Cell>
-
-              <Table.Cell align="center" verticalAlign="middle">
-                {isSelf ? (
-                  <ButtonCheckbox
-                    disabled={!isSelf}
-                    checked={player.ready}
-                    onClick={() => act('ready')}
-                  />
-                ) : (
-                  !!player.ready && <Icon name="check" />
-                )}
+              <Table.Cell align="right" verticalAlign="top" pt="2px">
+                <ButtonCheckbox
+                  disabled={player !== self}
+                  checked={players[player].ready}
+                  onClick={() => act('ready')}
+                />
               </Table.Cell>
             </Table.Row>
           );
         })}
-        {observers.map((observer) => {
-          const isHost = !!observer.host;
-          const isSelf = observer.key === self;
-          const canBoot = fullAccess && !isSelf;
+        {Object.keys(observers).map((observer) => {
+          const fullAccess = (!!host && !!players[observer].host) || admin;
 
           return (
-            <Table.Row key={observer.key}>
-              <Table.Cell
-                collapsing
-                verticalAlign="top"
-                pt={fullAccess && '2px'}
-              >
-                {isHost ? (
-                  <Tooltip content="host">
-                    <Icon name="star" />
-                  </Tooltip>
-                ) : (
+            <Table.Row key={observer}>
+              <Table.Cell collapsing>
+                {(!!observers[observer].host && <Icon name="star" />) || (
                   <Icon name="eye" />
                 )}
               </Table.Cell>
               <Table.Cell>
-                {!canBoot ? (
-                  <b>{observer.key}</b>
+                {!fullAccess ? (
+                  <b>{observer}</b>
                 ) : (
                   <Dropdown
-                    width={9}
-                    selected={observer.key}
+                    width={8}
+                    selected={observer}
                     options={['Kick', 'Transfer host', 'Toggle observe']}
                     onSelected={(value) =>
                       act('host', {
-                        id: observer.key,
+                        id: observer,
                         func: value,
                       })
                     }
                   />
                 )}
               </Table.Cell>
-              <Table.Cell color="label">Observing</Table.Cell>
+              <Table.Cell>Observing</Table.Cell>
             </Table.Row>
           );
         })}
@@ -283,18 +240,57 @@ function PlayerColumn(props) {
 
 function HostControls(props) {
   const { act, data } = useBackend<Data>();
-  const { active_mods = [], admin, host, loadoutdesc, playing } = data;
-
-  const fullAccess = !!host || !!admin;
+  const {
+    active_mods = [],
+    admin,
+    host,
+    loadoutdesc,
+    map,
+    maps = [],
+    players = [],
+    playing,
+  } = data;
 
   return (
     <Section fill scrollable>
-      <MapInfo />
+      {!host ? (
+        <NoticeBox danger>{map.name}</NoticeBox>
+      ) : (
+        <Dropdown
+          color="average"
+          width="100%"
+          selected={map.name}
+          options={maps}
+          onSelected={(value) =>
+            act('host', {
+              func: 'change_map',
+              map: value,
+            })
+          }
+        />
+      )}
+      <Divider />
+      {map.desc}
+      <Divider />
+      <LabeledList>
+        <LabeledList.Item label="Max Play Time">
+          {`${map.time / 600}min`}
+        </LabeledList.Item>
+        <LabeledList.Item label="Min Players">
+          {map.min_players}
+        </LabeledList.Item>
+        <LabeledList.Item label="Max Players">
+          {map.max_players}
+        </LabeledList.Item>
+        <LabeledList.Item label="Current Players">
+          {Object.keys(players).length}
+        </LabeledList.Item>
+      </LabeledList>
       <Divider />
       <Box textAlign="center" color="average">
         {active_mods}
       </Box>
-      {fullAccess && (
+      {(!!admin || !!host) && (
         <>
           <Divider />
           <Button textAlign="center" fluid onClick={() => act('open_mod_menu')}>
@@ -322,79 +318,35 @@ function HostControls(props) {
 
 const ModSelector = (props) => {
   const { act, data } = useBackend<Data>();
-  const { modifiers = [] } = data;
+  const { admin, host, mod_menu_open, modifiers = [] } = data;
+  if (!mod_menu_open || !(host || admin)) {
+    return null;
+  }
 
   return (
     <Modal>
       <Button fluid color="bad" onClick={() => act('exit_mod_menu')}>
         Go Back
       </Button>
-      {modifiers.map((mod, index) => (
-        <Button.Checkbox
-          key={index}
-          mb={2}
-          checked={mod.selected}
-          tooltip={mod.desc}
-          color={mod.selected ? 'green' : 'blue'}
-          disabled={!mod.selected && !mod.selectable}
-          onClick={() =>
-            act('toggle_modifier', {
-              modpath: mod.modpath,
-            })
-          }
-        >
-          {mod.name}
-        </Button.Checkbox>
-      ))}
+      {modifiers.map((mod, index) => {
+        return (
+          <Button.Checkbox
+            key={index}
+            mb={2}
+            checked={mod.selected}
+            tooltip={mod.desc}
+            color={mod.selected ? 'green' : 'blue'}
+            disabled={!mod.selected && !mod.selectable}
+            onClick={() =>
+              act('toggle_modifier', {
+                modpath: mod.modpath,
+              })
+            }
+          >
+            {mod.name}
+          </Button.Checkbox>
+        );
+      })}
     </Modal>
   );
 };
-
-function MapInfo(props) {
-  const { act, data } = useBackend<Data>();
-  const { host, maps = [], map, players } = data;
-
-  if (!host && !map?.name) {
-    return <NoticeBox align="center">No map selected</NoticeBox>;
-  }
-
-  return (
-    <>
-      {!host ? (
-        <NoticeBox danger>{map.name}</NoticeBox>
-      ) : (
-        <>
-          <Dropdown
-            color="average"
-            width="100%"
-            selected={map.name}
-            options={maps}
-            onSelected={(value) =>
-              act('host', {
-                func: 'change_map',
-                map: value,
-              })
-            }
-          />
-          <Divider />
-        </>
-      )}
-      {map.desc}
-      <Divider />
-      <LabeledList>
-        <LabeledList.Item label="Max Play Time">
-          {`${map.time / 600}min`}
-        </LabeledList.Item>
-        <LabeledList.Item label="Min Players">
-          {map.min_players}
-        </LabeledList.Item>
-        <LabeledList.Item label="Max Players">
-          {map.max_players}
-        </LabeledList.Item>
-        <LabeledList.Item label="Current Players">
-          {players.length}
-        </LabeledList.Item>
-      </LabeledList>
-    </>
-  );
-}

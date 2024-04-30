@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "If you are a freerunner, you don't end up faceplanting despite having catlike grace."

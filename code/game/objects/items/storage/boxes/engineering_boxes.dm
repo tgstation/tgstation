@@ -24,7 +24,10 @@
 
 /obj/item/storage/box/material/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC //This needs to be set here too because the parent type overrides it again
+	atom_storage.allow_big_nesting = TRUE
+	atom_storage.max_slots = 99
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
+	atom_storage.max_total_storage = 99
 
 /obj/item/storage/box/material/PopulateContents() //less uranium because radioactive
 	var/static/items_inside = list(
@@ -48,11 +51,6 @@
 		/obj/item/stack/sheet/plastic/fifty=1,
 		/obj/item/stack/sheet/runed_metal/fifty=1,
 		)
-	//This needs to be done here and not in Initialize() because the stacks get merged and fall out when their weight updates if this is set after PopulateContents()
-	atom_storage.allow_big_nesting = TRUE
-	atom_storage.max_slots = 99
-	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
-	atom_storage.max_total_storage = 99
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/debugtools

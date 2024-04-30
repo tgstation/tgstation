@@ -401,10 +401,6 @@
 
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
-	var/obj/item/borg/upgrade/hypospray/U = locate() in R
-	if(U)
-		to_chat(user, span_warning("This unit is already equipped with an expanded hypospray synthesiser!")) //check to see if we already have this module
-		return FALSE
 	if(.)
 		for(var/obj/item/reagent_containers/borghypo/medical/H in R.model.modules)
 			H.upgrade_hypo()
@@ -435,7 +431,6 @@
 			found_hypo = TRUE
 
 		if(!found_hypo)
-			to_chat(user, span_warning("This unit is already equipped with a piercing hypospray upgrade!")) //check to see if we already have this module
 			return FALSE
 
 /obj/item/borg/upgrade/piercing_hypospray/deactivate(mob/living/silicon/robot/R, user = usr)
@@ -510,10 +505,6 @@
 /obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		var/obj/item/borg/upgrade/defib/U = locate() in R
-		if(U)
-			to_chat(user, span_warning("This unit is already equipped with a defibrillator module!")) //check to see if we already have this module
-			return FALSE
 		var/obj/item/borg/upgrade/defib/backpack/BP = locate() in R //If a full defib unit was used to upgrade prior, we can just pop it out now and replace
 		if(BP)
 			BP.deactivate(R, user)
@@ -570,10 +561,6 @@
 /obj/item/borg/upgrade/processor/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		var/obj/item/borg/upgrade/processor/U = locate() in R
-		if(U)
-			to_chat(user, span_warning("This unit is already equipped with a surgical processor module!")) //check to see if we already have this module
-			return FALSE
 		var/obj/item/surgical_processor/SP = new(R.model)
 		R.model.basic_modules += SP
 		R.model.add_module(SP, FALSE, TRUE)

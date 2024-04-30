@@ -119,7 +119,8 @@ GLOBAL_DATUM_INIT(eigenstate_manager, /datum/eigenstate_manager, new)
 		spark_time = world.time
 	//Calls a special proc for the atom if needed (closets use bust_open())
 	SEND_SIGNAL(eigen_target, COMSIG_EIGENSTATE_ACTIVATE)
-	return COMPONENT_CLOSET_INSERT_INTERRUPT
+	if(!subtle)
+		return COMPONENT_CLOSET_INSERT_INTERRUPT
 
 ///Prevents tool use on the item
 /datum/eigenstate_manager/proc/tool_interact(atom/source, mob/user, obj/item/item)

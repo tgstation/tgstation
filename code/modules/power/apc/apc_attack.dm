@@ -110,17 +110,13 @@
 		return TRUE
 	if(!HAS_SILICON_ACCESS(user))
 		return TRUE
-	. = TRUE
 	var/mob/living/silicon/ai/AI = user
 	var/mob/living/silicon/robot/robot = user
-	if(istype(AI) || istype(robot))
-		if(aidisabled)
-			. = FALSE
-		else if(istype(malfai) && (malfai != AI || !(robot in malfai.connected_robots)))
-			. = FALSE 
-	if (!. && !loud)
-		balloon_alert(user, "it's disabled!")
-	return .
+	if(aidisabled || malfhack && istype(malfai) && ((istype(AI) && (malfai != AI && malfai != AI.parent)) || (istype(robot) && (robot in malfai.connected_robots))))
+		if(!loud)
+			balloon_alert(user, "it's disabled!")
+		return FALSE
+	return TRUE
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(machine_stat & BROKEN)

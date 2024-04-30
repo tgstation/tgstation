@@ -5,7 +5,7 @@
 			/* hud_owner = */ src,
 			src,
 			"Resume",
-			/* offset = */ 1,
+			/* offset = */ 0,
 			CALLBACK(src, PROC_REF(home_resume)),
 		)
 	)
@@ -16,7 +16,7 @@
 			/* hud_owner = */ null,
 			src,
 			"Settings",
-			/* offset = */ 2,
+			/* offset = */ 1,
 			CALLBACK(src, PROC_REF(home_open_settings)),
 		)
 	)
@@ -27,7 +27,7 @@
 			/* hud_owner = */ src,
 			src,
 			"Admin Help",
-			/* offset = */ 3,
+			/* offset = */ 2,
 		)
 	)
 
@@ -37,7 +37,7 @@
 			/* hud_owner = */ src,
 			src,
 			"Leave Body",
-			/* offset = */ 4,
+			/* offset = */ 3,
 			CALLBACK(src, PROC_REF(open_leave_body)),
 		)
 	)

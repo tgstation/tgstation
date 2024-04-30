@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/death(gibbed, drop_mmi = TRUE)
+/mob/living/silicon/ai/death(gibbed)
 	if(stat == DEAD)
 		return
 
@@ -33,7 +33,7 @@
 
 	ShutOffDoomsdayDevice()
 
-	if(gibbed && drop_mmi)
+	if(gibbed)
 		make_mmi_drop_and_transfer()
 
 	if(explosive)

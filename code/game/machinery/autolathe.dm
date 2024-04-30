@@ -32,7 +32,7 @@
 /obj/machinery/autolathe/Initialize(mapload)
 	materials = AddComponent( \
 		/datum/component/material_container, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
+		DSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
 		0, \
 		MATCONTAINER_EXAMINE, \
 		container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/autolathe, AfterMaterialInsert)) \
@@ -252,7 +252,7 @@
 		var/amount_needed = design.materials[material]
 		if(istext(material)) // category
 			var/list/choices = list()
-			for(var/datum/material/valid_candidate as anything in SSmaterials.materials_by_category[material])
+			for(var/datum/material/valid_candidate as anything in DSmaterials.materials_by_category[material])
 				if(materials.get_material_amount(valid_candidate) < amount_needed)
 					continue
 				choices[valid_candidate.name] = valid_candidate

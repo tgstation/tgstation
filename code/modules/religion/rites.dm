@@ -391,7 +391,7 @@
 
 /datum/religion_rites/ceremonial_weapon/perform_rite(mob/living/user, atom/religious_tool)
 	for(var/obj/item/stack/sheet/could_blade in get_turf(religious_tool))
-		if(!(GET_MATERIAL_REF(could_blade.material_type) in SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL]))
+		if(!(GET_MATERIAL_REF(could_blade.material_type) in DSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL]))
 			continue
 		if(could_blade.amount < 5)
 			continue

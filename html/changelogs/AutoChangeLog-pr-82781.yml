@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "plumbing & chem reaction chamber heating effects accurately reflect the beakers heat capacity & power usage"
+  - bugfix: "plumbing reaction will not use power when emptying or when there are no reagents to heat"
+  - bugfix: "you can hit the chem reaction chamber with items like beakers, screwdrivers, crowbars and what not"
