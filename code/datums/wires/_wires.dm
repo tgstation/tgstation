@@ -41,6 +41,7 @@
 	/// If every instance of these wires should be random. Prevents wires from showing up in station blueprints.
 	var/randomize = FALSE
 
+	/// Lazy assoc list of refs to mobs to refs to photos they have studied for wires
 	var/list/studied_photos
 
 /datum/wires/New(atom/holder)
@@ -264,7 +265,7 @@
 		if(user.is_holding_item_of_type(/obj/item/blueprints))
 			return TRUE
 		for(var/obj/item/photo/photo in user.held_items)
-			if(LAZYACCESS(studied_photos, REF(photo)))
+			if(LAZYACCESS(studied_photos, REF(user)) == REF(photo))
 				return TRUE
 
 	return FALSE
@@ -294,7 +295,7 @@
 		to_chat(user, span_notice("<i>You squint at [photo], looking for wires hidden in the pictured blueprints.</i>"))
 		var/study_length = 1 SECONDS * (min(photo.picture.psize_x, photo.picture.psize_y) / 32)
 		if(do_after(user, study_length, holder, hidden = TRUE))
-			LAZYSET(studied_photos, REF(photo), TRUE)
+			LAZYSET(studied_photos, REF(user), REF(photo))
 		return
 
 /datum/wires/ui_host()
