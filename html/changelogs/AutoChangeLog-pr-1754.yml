@@ -1,0 +1,4 @@
+author: "wraith-54321"
+delete-after: True
+changes:
+  - bugfix: "You can no longer roll 2 antags at once"
