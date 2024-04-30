@@ -281,6 +281,27 @@
 	qdel(src)
 	return new_corgi
 
+/mob/living/carbon/human/proc/crabize()
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		return
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
+	Paralyze(1, ignore_canstun = TRUE)
+	for(var/obj/item/W in src)
+		dropItemToGround(W)
+	regenerate_icons()
+	icon = null
+	SetInvisibility(INVISIBILITY_MAXIMUM)
+	for(var/t in bodyparts) //this really should not be necessary
+		qdel(t)
+
+	var/mob/living/basic/crab/new_crab = new (loc)
+	new_crab.set_combat_mode(TRUE)
+	new_crab.key = key
+
+	to_chat(new_crab, span_boldnotice("You have evolved into a crab!"))
+	qdel(src)
+	return new_crab
+
 /mob/living/carbon/proc/gorillize()
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
