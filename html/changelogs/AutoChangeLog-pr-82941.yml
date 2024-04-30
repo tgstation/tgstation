@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "QM is now excluded from getting tasked with stealing telescopic batons and the captain's spare ID, like all other command personnel are."
