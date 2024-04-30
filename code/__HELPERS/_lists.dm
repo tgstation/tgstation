@@ -473,7 +473,7 @@
  * You should only pass integers in.
  */
 /proc/pick_weight(list/list_to_pick)
-	if(!length(list_to_pick))
+	if(length(list_to_pick) == 0)
 		return null
 
 	var/total = 0
@@ -485,7 +485,7 @@
 	total = rand(1, total)
 	for(var/item in list_to_pick)
 		var/item_weight = list_to_pick[item]
-		if(!item_weight)
+		if(item_weight == 0)
 			continue
 
 		total -= item_weight
