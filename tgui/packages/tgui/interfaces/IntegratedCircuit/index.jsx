@@ -505,7 +505,7 @@ export class IntegratedCircuit extends Component {
                   position="absolute"
                   top={0}
                   color="transparent"
-                  tooltip="Grid Aligning"
+                  tooltip="Enable Grid Aligning"
                   icon="th-large"
                   selected={isGridMode}
                   onClick={() =>
