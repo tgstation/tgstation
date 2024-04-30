@@ -1068,7 +1068,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		attacking_bodypart = brain.get_attacking_limb(target)
 	if(!attacking_bodypart)
 		attacking_bodypart = user.get_active_hand()
-	var/atk_verb = attacking_bodypart.unarmed_attack_verb
+	var/atk_verb = pick(attacking_bodypart.unarmed_attack_verbs)
 	var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
 	if(atk_effect == ATTACK_EFFECT_BITE)

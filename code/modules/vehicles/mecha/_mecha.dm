@@ -274,7 +274,7 @@
 	/// and gets deleted with the mech. However, they do remain in .contents
 	var/list/potential_occupants = contents | occupants
 	for(var/mob/buggy_ejectee in potential_occupants)
-		mob_exit(buggy_ejectee, silent = TRUE)
+		mob_exit(buggy_ejectee, silent = TRUE, forced = TRUE)
 
 	if(LAZYLEN(flat_equipment))
 		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in flat_equipment)
@@ -328,7 +328,7 @@
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
 			var/mob/living/silicon/ai/ai = occupant
-			if(!ai.linked_core) // we probably shouldnt gib AIs with a core
+			if(!ai.linked_core && !ai.can_shunt) // we probably shouldnt gib AIs with a core or shunting abilities
 				unlucky_ai = occupant
 				ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
 				ai.gib(DROP_ALL_REMAINS) //No wreck, no AI to recover

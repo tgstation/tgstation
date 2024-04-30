@@ -1,0 +1,4 @@
+author: "Maurukas"
+delete-after: True
+changes:
+  - bugfix: "On examine PDAs will now inform players that the power cell can be removed for recharging or replacement, and how to do so."

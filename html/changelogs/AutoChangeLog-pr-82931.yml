@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Fixes a bluescreen in the deathmatch lobby UI."

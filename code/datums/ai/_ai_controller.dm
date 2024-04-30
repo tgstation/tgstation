@@ -279,7 +279,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/process(seconds_per_tick)
 
 	if(!able_to_run())
-		DSmove_manager.stop_looping(pawn) //stop moving
+		GLOB.move_manager.stop_looping(pawn) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
 
 	if(!LAZYLEN(current_behaviors) && idle_behavior)
