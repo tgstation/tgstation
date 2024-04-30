@@ -86,9 +86,6 @@ SUBSYSTEM_DEF(ipintel)
 	var/is_rate_limited = is_rate_limited()
 	if(is_rate_limited)
 		return is_rate_limited
-	if(!initialized)
-		return IPINTEL_UNKNOWN_INTERNAL_ERROR
-
 	rate_limit_minute += 1
 
 	var/query_base = "https://[CONFIG_GET(string/ipintel_base)]/check.php?ip="
