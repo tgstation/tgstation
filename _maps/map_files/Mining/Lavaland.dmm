@@ -68,6 +68,10 @@
 /obj/structure/sign/poster/official/random/directional/west,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"an" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "ao" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -146,15 +150,6 @@
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "bb" = (
-/obj/structure/closet/crate/internals,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -174,6 +169,10 @@
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/carpet/royalblue,
 /area/mine/living_quarters)
+"bs" = (
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "bt" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -1815,6 +1814,14 @@
 "kY" = (
 /turf/closed/wall,
 /area/mine/cafeteria)
+"la" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/radio/intercom/prison/directional/south,
+/obj/effect/mob_spawn/corpse/human/skeleton,
+/turf/open/floor/plating,
+/area/mine/maintenance/labor)
 "lb" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
@@ -2108,6 +2115,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/hydroponics)
+"mh" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/mine/laborcamp)
 "mj" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
@@ -2500,8 +2511,8 @@
 "nA" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/ore_box,
-/obj/machinery/mineral/labor_points_checker{
-	pixel_y = 25
+/obj/structure/sign/poster/official/do_not_question{
+	pixel_y = 32
 	},
 /turf/open/floor/iron/smooth_edge,
 /area/mine/laborcamp/production)
@@ -2846,13 +2857,8 @@
 /turf/open/floor/iron/dark,
 /area/mine/hydroponics)
 "pE" = (
-/obj/effect/spawner/random/trash/hobo_squat,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/seeds/ambrosia,
-/obj/item/seeds/tobacco{
-	pixel_x = 6;
-	pixel_y = -4
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "pH" = (
@@ -2940,8 +2946,8 @@
 "qb" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/ore_box,
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_y = 32
+/obj/machinery/mineral/labor_points_checker{
+	pixel_y = 25
 	},
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
@@ -3154,6 +3160,15 @@
 "rm" = (
 /obj/structure/sign/warning/gas_mask/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/internals,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
 "ro" = (
@@ -3352,6 +3367,13 @@
 /obj/structure/sign/departments/medbay/alt/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
+/obj/item/stack/sheet/glass/fifty,
+/obj/structure/closet,
+/obj/item/weldingtool,
+/obj/item/crowbar,
+/obj/item/stack/cable_coil/five,
+/obj/item/stack/sheet/iron/ten,
+/obj/item/stack/rods/ten,
 /turf/open/floor/iron/smooth_edge,
 /area/mine/laborcamp/production)
 "sH" = (
@@ -4306,6 +4328,10 @@
 /obj/structure/stone_tile,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"yB" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "yC" = (
 /obj/structure/bed{
 	dir = 4
@@ -4361,6 +4387,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
 "yV" = (
@@ -4563,6 +4590,7 @@
 /obj/item/clothing/glasses/meson,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/shovel,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
 "Ac" = (
@@ -5180,7 +5208,8 @@
 /area/mine/lounge)
 "EG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/contraband/permabrig_weapon,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/vending/cigarette,
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "EH" = (
@@ -5487,6 +5516,17 @@
 	dir = 4
 	},
 /area/mine/production)
+"GO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/contraband/permabrig_weapon,
+/obj/item/seeds/ambrosia,
+/obj/effect/spawner/random/trash/hobo_squat,
+/obj/item/seeds/tobacco{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
 "GR" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -5603,6 +5643,10 @@
 	dir = 1
 	},
 /area/mine/lounge)
+"HC" = (
+/obj/structure/falsewall,
+/turf/open/floor/plating,
+/area/mine/laborcamp)
 "HD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5614,6 +5658,7 @@
 /area/mine/laborcamp/security)
 "HE" = (
 /obj/structure/table,
+/obj/item/storage/medkit/o2,
 /turf/open/floor/iron/white,
 /area/mine/laborcamp/production)
 "HF" = (
@@ -5720,6 +5765,7 @@
 /obj/structure/cable,
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
 /area/mine/maintenance/labor)
 "Ij" = (
@@ -5758,10 +5804,9 @@
 /area/mine/laborcamp)
 "Iy" = (
 /obj/structure/table,
-/obj/item/storage/medkit/emergency{
-	pixel_x = -3
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/emergency,
 /turf/open/floor/iron/white,
 /area/mine/laborcamp/production)
 "IA" = (
@@ -6143,7 +6188,7 @@
 /area/mine/laborcamp/production)
 "Kw" = (
 /obj/structure/table,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/fire,
 /turf/open/floor/iron/white,
 /area/mine/laborcamp/production)
 "Kz" = (
@@ -6398,7 +6443,11 @@
 "LR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/structure/closet/crate,
+/obj/item/wheelchair,
+/obj/item/wheelchair,
+/obj/item/clothing/glasses/regular,
+/obj/item/clothing/glasses/regular,
 /turf/open/floor/iron/smooth_edge{
 	dir = 4
 	},
@@ -6457,6 +6506,7 @@
 /area/mine/lounge)
 "Mr" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/ore_box,
 /turf/open/floor/plating,
 /area/mine/maintenance/labor)
 "Mt" = (
@@ -6650,7 +6700,6 @@
 /area/mine/eva)
 "Nq" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/ore_box,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large,
@@ -6683,7 +6732,6 @@
 /area/mine/cafeteria)
 "Nz" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/ore_box,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large,
@@ -6878,9 +6926,22 @@
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "OS" = (
-/obj/structure/closet/secure_closet/brig,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner/skirt,
+/obj/item/clothing/under/rank/prisoner/skirt,
+/obj/item/clothing/under/rank/prisoner/skirt,
+/obj/item/clothing/under/rank/prisoner/skirt,
+/obj/item/clothing/shoes/sneakers/orange,
+/obj/item/clothing/shoes/sneakers/orange,
+/obj/item/clothing/shoes/sneakers/orange,
+/obj/item/clothing/shoes/sneakers/orange,
+/obj/item/clothing/shoes/wheelys,
 /turf/open/floor/iron/smooth_edge,
 /area/mine/laborcamp/quarters)
 "OT" = (
@@ -7035,6 +7096,7 @@
 "PY" = (
 /obj/structure/table,
 /obj/effect/spawner/random/entertainment/toy,
+/obj/item/toy/cards/deck,
 /turf/open/floor/iron/checker,
 /area/mine/laborcamp)
 "Qa" = (
@@ -7057,8 +7119,8 @@
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "Qe" = (
-/obj/structure/ore_box,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/ore_box,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
 "Qi" = (
@@ -7537,6 +7599,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/mine/maintenance/living/north)
+"Ty" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "TF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -7624,10 +7690,10 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Ub" = (
-/obj/item/kirbyplants/random,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp)
 "Uc" = (
@@ -7716,6 +7782,7 @@
 /obj/item/mining_scanner,
 /obj/item/flashlight,
 /obj/item/clothing/glasses/meson,
+/obj/item/shovel,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
 "Ux" = (
@@ -7956,6 +8023,7 @@
 /obj/structure/cable,
 /obj/effect/spawner/random/trash/grime,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/plating,
 /area/mine/maintenance/labor)
 "VS" = (
@@ -8096,6 +8164,13 @@
 	},
 /turf/open/floor/plating,
 /area/mine/maintenance/production)
+"WQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/smooth,
+/area/mine/laborcamp)
 "WU" = (
 /obj/machinery/space_heater,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -8272,6 +8347,11 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/production)
+"XN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/mine/laborcamp)
 "XP" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/block{
@@ -8403,7 +8483,17 @@
 "Yr" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/toy/cards/deck,
+/obj/item/paper_bin{
+	pixel_y = 3
+	},
+/obj/item/pen/red{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/obj/item/pen/red{
+	pixel_y = 6;
+	pixel_x = 7
+	},
 /turf/open/floor/iron/checker,
 /area/mine/laborcamp)
 "Ys" = (
@@ -8471,6 +8561,13 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/production)
+"YV" = (
+/obj/machinery/computer/arcade/battle,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating,
+/area/mine/laborcamp)
 "YY" = (
 /obj/structure/rack,
 /obj/item/storage/bag/ore,
@@ -8479,6 +8576,7 @@
 /obj/item/flashlight,
 /obj/item/clothing/glasses/meson,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/shovel,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
 "Zb" = (
@@ -23256,7 +23354,7 @@ pU
 pU
 pU
 pU
-pU
+Ty
 ff
 ff
 eR
@@ -23266,7 +23364,7 @@ gK
 ff
 eR
 ff
-pU
+yB
 pU
 uU
 uU
@@ -24301,7 +24399,7 @@ iw
 Te
 pU
 pU
-pU
+Pc
 pU
 uU
 uU
@@ -24557,7 +24655,7 @@ Ge
 Ge
 Ge
 eb
-pU
+yB
 pU
 pU
 uU
@@ -24815,7 +24913,7 @@ CB
 eT
 Te
 pU
-pU
+Pc
 pU
 uU
 uU
@@ -25054,9 +25152,9 @@ pU
 pU
 aj
 aj
-aj
-uU
-uU
+pU
+Zt
+YV
 ff
 nA
 oq
@@ -25311,9 +25409,9 @@ yY
 FZ
 fO
 aj
-aj
 pU
-uU
+Zt
+Zt
 ff
 qb
 BA
@@ -25569,7 +25667,7 @@ RP
 qE
 aj
 aj
-aj
+pU
 Zt
 Zt
 om
@@ -26613,7 +26711,7 @@ Ge
 Ge
 Ge
 Ge
-pU
+yB
 mK
 OH
 pU
@@ -26866,11 +26964,11 @@ jA
 Ix
 OK
 tr
-Zt
+HC
 pE
+GO
 Zt
-pU
-pU
+Zt
 uU
 uU
 pU
@@ -27125,9 +27223,9 @@ pH
 zr
 Zt
 EG
-rX
-pU
-uU
+mh
+XN
+Zt
 uU
 uU
 uU
@@ -27376,7 +27474,7 @@ pc
 RZ
 tZ
 EQ
-Tu
+WQ
 Zt
 Zt
 jm
@@ -27626,7 +27724,7 @@ qE
 pU
 aj
 aj
-aj
+pU
 Zt
 Vm
 mP
@@ -27883,7 +27981,7 @@ Kz
 pU
 aj
 aj
-aj
+pU
 Zt
 nI
 sU
@@ -28140,7 +28238,7 @@ pU
 aj
 aj
 aj
-aj
+pU
 rX
 wu
 VS
@@ -28414,7 +28512,7 @@ Ee
 ve
 RD
 RD
-uU
+RD
 uU
 uU
 uU
@@ -28670,8 +28768,8 @@ rF
 rF
 Hb
 RD
-uU
-uU
+la
+RD
 uU
 uU
 uU
@@ -28927,8 +29025,8 @@ CD
 Vq
 Ha
 RD
-uU
-uU
+RD
+RD
 uU
 uU
 uU
@@ -29436,7 +29534,7 @@ Od
 qx
 Od
 pU
-pU
+an
 dJ
 rF
 JE
@@ -29942,7 +30040,7 @@ aj
 aj
 aj
 aj
-pU
+bs
 aj
 aj
 aj
@@ -33563,7 +33661,7 @@ pU
 pU
 pU
 aj
-pU
+bs
 aj
 aj
 aj
