@@ -146,6 +146,8 @@
 	#define COMPONENT_LIVING_BLOCK_PRE_MOB_BUMP (1<<0)
 ///From base of mob/living/MobBump() (mob/living)
 #define COMSIG_LIVING_MOB_BUMP "living_mob_bump"
+///From base of mob/living/MobBump() (mob/living)
+#define COMSIG_LIVING_MOB_BUMPED "living_mob_bumped"
 ///From base of mob/living/Bump() (turf/closed)
 #define COMSIG_LIVING_WALL_BUMP "living_wall_bump"
 ///From base of turf/closed/Exited() (turf/closed)
