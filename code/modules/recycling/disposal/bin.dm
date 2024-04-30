@@ -305,6 +305,25 @@
 		to_dump.pixel_x = to_dump.base_pixel_x + rand(-5, 5)
 		to_dump.pixel_y = to_dump.base_pixel_y + rand(-5, 5)
 
+
+/obj/machinery/disposal/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
+	. = ..()
+	visible_message(span_warning("[src] is ripped free from the floor!"))
+	deconstruct()
+
+/obj/machinery/disposal/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
+	. = ..()
+	visible_message(span_warning("[src] is ripped free from the floor!"))
+	deconstruct()
+
+// Monkestation Addition Start
+/obj/machinery/disposal/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE, quickstart = TRUE)
+	. = ..()
+	if(target && (target != src.loc))
+		visible_message(span_warning("[src] is ripped free from the floor!"))
+		deconstruct()
+// Monkestation Addition End
+
 // Disposal bin
 // Holds items for disposal into pipe system
 // Draws air from turf, gradually charges internal reservoir
