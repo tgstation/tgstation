@@ -280,7 +280,7 @@
 		return
 
 	update_equipment_speed_mods()
-	update_obscured_slots(I)
+	update_obscured_slots(I.flags_inv)
 
 /mob/living/carbon/human/toggle_internals(obj/item/tank, is_external = FALSE)
 	// Just close the tank if it's the one the mob already has open.

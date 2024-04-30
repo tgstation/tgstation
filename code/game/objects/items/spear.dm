@@ -216,6 +216,31 @@
 			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
 			M.GiveTarget(L)
 
+//MILITARY
+/obj/item/spear/military
+	icon_state = "military_spear0"
+	base_icon_state = "military_spear0"
+	icon_prefix = "military_spear"
+	name = "military Javelin"
+	desc = "A stick with a seemingly blunt spearhead on its end. Looks like it might break bones easily."
+	attack_verb_continuous = list("attacks", "pokes", "jabs")
+	attack_verb_simple = list("attack", "poke", "jab")
+	throwforce = 30
+	demolition_mod = 1
+	wound_bonus = 5
+	bare_wound_bonus = 25
+	throw_range = 9
+	throw_speed = 5
+	sharpness = NONE // we break bones instead of cutting flesh
+
+/obj/item/spear/military/add_headpike_component()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpikemilitary)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 /*
  * Bone Spear
  */

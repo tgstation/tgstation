@@ -2,7 +2,7 @@
 #define OPTIMAL_COST(cost)(max(1, round(cost)))
 
 /// Wrapper for fetching material references. Exists exclusively so that people don't need to wrap everything in a list every time.
-#define GET_MATERIAL_REF(arguments...) DSmaterials._GetMaterialRef(list(##arguments))
+#define GET_MATERIAL_REF(arguments...) SSmaterials._GetMaterialRef(list(##arguments))
 
 // Wrapper to convert material name into its source name
 #define MATERIAL_SOURCE(mat) "[mat.name]_material"

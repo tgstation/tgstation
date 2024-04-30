@@ -43,7 +43,7 @@
 
 /obj/item/ammo_box/Initialize(mapload)
 	. = ..()
-	custom_materials = DSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.1)
+	custom_materials = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.1)
 	if(!start_empty)
 		top_off(starting=TRUE)
 	update_icon_state()
