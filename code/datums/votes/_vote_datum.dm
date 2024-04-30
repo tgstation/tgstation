@@ -31,9 +31,9 @@
 	/// A assoc list of [ckey] to [what they voted for in the current running vote].
 	VAR_FINAL/list/choices_by_ckey = list()
 	/// The world time this vote was started.
-	VAR_FINAL/started_time
+	VAR_FINAL/started_time = -1
 	/// The time remaining in this vote's run.
-	VAR_FINAL/time_remaining
+	VAR_FINAL/time_remaining = -1
 
 /**
  * Used to determine if this vote is a possible
@@ -55,7 +55,7 @@
 	choices.Cut()
 	choices_by_ckey.Cut()
 	started_time = null
-	time_remaining = null
+	time_remaining = -1
 
 /**
  * If this vote has a config associated, toggles it between enabled and disabled.

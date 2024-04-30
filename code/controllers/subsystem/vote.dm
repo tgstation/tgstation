@@ -240,17 +240,14 @@ SUBSYSTEM_DEF(vote)
 
 	return TRUE
 
-/datum/controller/subsystem/vote/ui_state()
-	return GLOB.always_state
-
-/datum/controller/subsystem/vote/ui_interact(mob/user, datum/tgui/ui)
-	// Tracks who is currently voting
-	voting |= user.client?.ckey
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "VotePanel")
-		ui.open()
-
+/**
+ * Checks if we can start a vote.
+ *
+ * * vote_initiator - The mob that initiated the vote.
+ * * forced - Whether we're forcing the vote to go through regardless of existing votes or other circumstances.
+ *
+ * Returns TRUE if we can start a vote, FALSE if we can't.
+ */
 /datum/controller/subsystem/vote/proc/can_vote_start(mob/vote_initiator, forced)
 	// Even if it's forced we can't vote before we're set up
 	if(!MC_RUNNING(init_stage))
@@ -273,6 +270,16 @@ SUBSYSTEM_DEF(vote)
 		return FALSE
 
 	return TRUE
+/datum/controller/subsystem/vote/ui_state()
+	return GLOB.always_state
+
+/datum/controller/subsystem/vote/ui_interact(mob/user, datum/tgui/ui)
+	// Tracks who is currently voting
+	voting |= user.client?.ckey
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "VotePanel")
+		ui.open()
 
 /datum/controller/subsystem/vote/ui_data(mob/user)
 	var/list/data = list()
@@ -326,7 +333,13 @@ SUBSYSTEM_DEF(vote)
 		all_vote_data += list(vote_data)
 
 	data["possibleVotes"] = all_vote_data
+	data["LastVoteTime"] = last_vote_time - world.time
 
+	return data
+
+/datum/controller/subsystem/vote/ui_static_data(mob/user)
+	var/list/data = list()
+	data["VoteCD"] = CONFIG_GET(number/vote_delay)
 	return data
 
 /datum/controller/subsystem/vote/ui_act(action, params)
@@ -339,7 +352,8 @@ SUBSYSTEM_DEF(vote)
 	switch(action)
 		if("cancel")
 			if(!voter.client?.holder)
-				message_admins("[key_name(voter)] tried to cancel the current vote while having no admin holder, this is potentially a malicious exploit and worth noting.")
+				message_admins("[key_name(voter)] tried to cancel the current vote while having no admin holder, \
+					this is potentially a malicious exploit and worth noting.")
 				return
 
 			voter.log_message("cancelled a vote.", LOG_ADMIN)
@@ -347,12 +361,24 @@ SUBSYSTEM_DEF(vote)
 			reset()
 			return TRUE
 
+		if("endNow")
+			if(!voter.client?.holder)
+				message_admins("[key_name(voter)] tried to end the current vote while having no admin holder, \
+					this is potentially a malicious exploit and worth noting.")
+				return
+
+			voter.log_message("ended the current vote early", LOG_ADMIN)
+			message_admins("[key_name_admin(voter)] has ended the current vote.")
+			current_vote.time_remaining = -1
+			return TRUE
+
 		if("toggleVote")
 			var/datum/vote/selected = possible_votes[params["voteName"]]
 			if(!istype(selected))
 				return
 			if(!check_rights_for(voter.client, R_ADMIN))
-				message_admins("[key_name(voter)] tried to cancel the current vote while having improper rights, this is potentially a malicious exploit and worth noting.")
+				message_admins("[key_name(voter)] tried to toggle vote availability while having improper rights, \
+					this is potentially a malicious exploit and worth noting.")
 				return
 
 			return selected.toggle_votable()
@@ -376,6 +402,15 @@ SUBSYSTEM_DEF(vote)
 
 		if("voteMulti")
 			return submit_multi_vote(voter, params["voteOption"])
+
+		if("resetCooldown")
+			if(!voter.client.holder)
+				message_admins("[key_name(voter)] tried to reset the vote cooldown while having no admin holder, \
+					this is potentially a malicious exploit and worth noting.")
+				return
+
+			last_vote_time = -1
+			return TRUE
 
 /datum/controller/subsystem/vote/ui_close(mob/user)
 	voting -= user.client?.ckey
