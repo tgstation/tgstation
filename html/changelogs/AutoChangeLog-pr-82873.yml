@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - rscadd: "you can use a photo with blueprints on it to read wires"
