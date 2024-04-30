@@ -382,6 +382,11 @@
 	id = "comp_bar_overlay"
 	build_path = /obj/item/circuit_component/object_overlay/bar
 
+/datum/design/component/bci/user_status
+	name = "User Status"
+	id = "comp_user_status"
+	build_path = /obj/item/circuit_component/compare/user_status
+
 /datum/design/component/bci/vox
 	name = "VOX Announcement Component"
 	id = "comp_vox"

@@ -887,6 +887,7 @@
 		"comp_reagent_injector",
 		"comp_target_intercept",
 		"comp_thought_listener",
+		"comp_user_status",
 		"comp_vox",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)

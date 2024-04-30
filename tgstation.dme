@@ -6092,6 +6092,7 @@
 #include "code\modules\wiremod\components\bci\install_detector.dm"
 #include "code\modules\wiremod\components\bci\reagent_injector.dm"
 #include "code\modules\wiremod\components\bci\thought_listener.dm"
+#include "code\modules\wiremod\components\bci\user_status.dm"
 #include "code\modules\wiremod\components\bci\vox.dm"
 #include "code\modules\wiremod\components\bci\hud\bar_overlay.dm"
 #include "code\modules\wiremod\components\bci\hud\counter_overlay.dm"
