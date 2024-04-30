@@ -362,6 +362,7 @@ SUBSYSTEM_DEF(vote)
 
 			voter.log_message("cancelled a vote.", LOG_ADMIN)
 			message_admins("[key_name_admin(voter)] has cancelled the current vote.")
+			SStgui.close_uis(src)
 			reset()
 			return TRUE
 
