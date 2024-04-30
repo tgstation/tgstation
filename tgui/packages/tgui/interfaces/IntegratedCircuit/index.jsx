@@ -31,7 +31,7 @@ export class IntegratedCircuit extends Component {
       backgroundY: 0,
       variableMenuOpen: false,
       componentMenuOpen: false,
-      gridMode: true,
+      isGridMode: true,
     };
     this.handlePortLocation = this.handlePortLocation.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -414,7 +414,7 @@ export class IntegratedCircuit extends Component {
       selectedPort,
       variableMenuOpen,
       componentMenuOpen,
-      gridMode,
+      isGridMode,
       draggingComponent,
       draggingOffsetX,
       draggingOffsetY,
@@ -506,10 +506,10 @@ export class IntegratedCircuit extends Component {
                   color="transparent"
                   tooltip="Grid Aligning"
                   icon="th-large"
-                  selected={ObjectComponent.isGridMode}
+                  selected={isGridMode}
                   onClick={() =>
-                    ObjectComponent.setState((state) => ({
-                      isGridMode: !ObjectComponent.isGridMode,
+                    this.setState((state) => ({
+                      isGridMode: !state.isGridMode,
                     }))
                   }
                 />
@@ -557,6 +557,7 @@ export class IntegratedCircuit extends Component {
                     onPortRightClick={this.handlePortRightClick}
                     onPortMouseUp={this.handlePortUp}
                     act={act}
+                    gridMode={isGridMode}
                   />
                 ),
             )}

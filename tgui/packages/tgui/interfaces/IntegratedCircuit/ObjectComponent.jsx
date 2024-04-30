@@ -13,7 +13,6 @@ export class ObjectComponent extends Component {
       dragPos: null,
       startPos: null,
       lastMousePos: null,
-      isGridMode: true,
     };
 
     this.handleStartDrag = this.handleStartDrag.bind(this);
@@ -83,8 +82,7 @@ export class ObjectComponent extends Component {
   }
 
   roundTo10(input_value) {
-    const { isGridMode } = this.state;
-    if (!isGridMode) return input_value;
+    if (!this.props.gridMode) return input_value;
     return Math.round(input_value / 10) * 10;
   }
 
@@ -106,6 +104,7 @@ export class ObjectComponent extends Component {
       onPortRightClick = noop,
       onPortMouseUp = noop,
       act = noop,
+      gridMode = true,
       ...rest
     } = this.props;
     const { startPos, dragPos } = this.state;
