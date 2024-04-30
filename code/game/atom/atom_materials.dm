@@ -23,7 +23,7 @@
 			var/datum/material/custom_material = GET_MATERIAL_REF(current_material)
 			custom_material.on_applied(src, OPTIMAL_COST(materials[current_material] * multiplier * material_modifier), material_flags)
 
-	custom_materials = DSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
+	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
 
 /**
  * Returns the material composition of the atom.

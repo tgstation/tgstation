@@ -164,7 +164,7 @@
 	target = null
 	oldtarget_name = null
 	set_anchored(FALSE)
-	DSmove_manager.stop_looping(src)
+	GLOB.move_manager.stop_looping(src)
 	last_found = world.time
 
 /mob/living/simple_animal/bot/secbot/proc/on_saboteur(datum/source, disrupt_duration)
@@ -389,7 +389,7 @@
 	switch(mode)
 
 		if(BOT_IDLE) // idle
-			DSmove_manager.stop_looping(src)
+			GLOB.move_manager.stop_looping(src)
 			look_for_perp() // see if any criminals are in range
 			if((mode == BOT_IDLE) && bot_mode_flags & BOT_MODE_AUTOPATROL) // didn't start hunting during look_for_perp, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
@@ -397,7 +397,7 @@
 		if(BOT_HUNT) // hunting for perp
 			// if can't reach perp for long enough, go idle
 			if(frustration >= 8)
-				DSmove_manager.stop_looping(src)
+				GLOB.move_manager.stop_looping(src)
 				back_to_idle()
 				return
 
@@ -415,7 +415,7 @@
 
 			// not next to perp
 			var/turf/olddist = get_dist(src, target)
-			DSmove_manager.move_to(src, target, 1, 4)
+			GLOB.move_manager.move_to(src, target, 1, 4)
 			if((get_dist(src, target)) >= (olddist))
 				frustration++
 			else

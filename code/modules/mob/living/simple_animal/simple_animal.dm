@@ -539,7 +539,7 @@
 /mob/living/simple_animal/proc/Goto(target, delay, minimum_distance)
 	if(prevent_goto_movement)
 		return FALSE
-	DSmove_manager.move_to(src, target, minimum_distance, delay)
+	GLOB.move_manager.move_to(src, target, minimum_distance, delay)
 	return TRUE
 
 //Makes this mob hunt the prey, be it living or an object. Will kill living creatures, and delete objects.
