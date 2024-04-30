@@ -1,4 +1,4 @@
-/// Ensures black market items have the right variables set.
+/// Ensures black market items have acceptable variable values.
 /datum/unit_test/blackmarket
 
 /datum/unit_test/blackmarket/Run()
@@ -13,7 +13,7 @@
 			TEST_FAIL("[prototype] doesn't have a correctly set random price (price_max should be higher than price_min)")
 		if(isnull(initial(prototype.stock)) && initial(prototype.stock_max) < initial(prototype.stock_min))
 			TEST_FAIL("[prototype] doesn't have a correctly set random stock (stock_max shouldn't be lower than stock_min)")
-		if(isnull(initial(prototype.availability_prob))
+		if(isnull(initial(prototype.availability_prob)))
 			TEST_FAIL("[prototype] doesn't have a set availability_prob (null is not allowed)")
 		if(isnull(initial(prototype.name))
 			TEST_FAIL("[prototype] doesn't have a set name (null is not allowed)")
