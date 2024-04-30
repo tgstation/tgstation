@@ -7,6 +7,9 @@
 	name = "Church Door"
 	},
 /obj/machinery/duct,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/cult,
 /area/station/service/theater)
 "ap" = (
@@ -30,6 +33,16 @@
 "aL" = (
 /turf/open/openspace,
 /area/station/service/kitchen)
+"bm" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal/bin,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/turf/open/floor/cult,
+/area/station/service/bar)
 "br" = (
 /obj/machinery/door/airlock/cult/glass/friendly{
 	name = "Church Door"
@@ -66,8 +79,12 @@
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "cm" = (
-/obj/machinery/disposal/bin{
-	pixel_x = 14
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
+	dir = 1
 	},
 /turf/open/floor/cult,
 /area/station/service/theater)
@@ -89,6 +106,11 @@
 /obj/machinery/light/warm/directional/south,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
+"cD" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/open/floor/cult,
+/area/station/service/theater)
 "cL" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/vending/autodrobe,
@@ -141,12 +163,12 @@
 "dD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/cult/friendly{
-	name = "Church Backstage"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/service/theatre,
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/service{
+	name = "Theater Backstage"
+	},
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "dF" = (
@@ -418,6 +440,9 @@
 	pixel_x = 22;
 	pixel_y = 7
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/cult,
 /area/station/service/kitchen)
 "jv" = (
@@ -490,6 +515,12 @@
 	},
 /turf/open/floor/cult,
 /area/station/service/theater)
+"lh" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/station/service/kitchen)
 "li" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -547,10 +578,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
 /obj/machinery/duct,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 8
+	},
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "mm" = (
@@ -754,6 +785,9 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "rj" = (
@@ -780,9 +814,11 @@
 /turf/open/floor/cult,
 /area/station/service/bar)
 "sf" = (
-/obj/structure/disposalpipe/segment,
 /obj/structure/table/wood/fancy/red,
 /obj/machinery/light/warm/directional/south,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/open/floor/cult,
 /area/station/service/bar)
 "sk" = (
@@ -813,6 +849,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "tK" = (
@@ -924,6 +963,11 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/template_noop)
+"xn" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/open/floor/cult,
+/area/station/service/kitchen)
 "xq" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/chair/wood{
@@ -1070,6 +1114,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
+"AU" = (
+/obj/structure/table/wood/fancy/red,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/cult,
+/area/station/service/bar)
 "Bi" = (
 /obj/structure/table/wood/fancy/red,
 /obj/structure/displaycase/forsale/kitchen{
@@ -1165,6 +1216,9 @@
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 1
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/cult,
 /area/station/service/kitchen)
 "Cp" = (
@@ -1194,6 +1248,9 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 5
 	},
 /turf/open/floor/cult,
 /area/station/service/kitchen)
@@ -1230,14 +1287,16 @@
 /turf/open/floor/cult,
 /area/station/service/kitchen)
 "Dj" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/cult/glass/friendly,
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/service{
+	name = "Kitchen"
+	},
 /turf/open/floor/cult,
 /area/station/service/kitchen)
 "Dq" = (
@@ -1317,6 +1376,9 @@
 	},
 /obj/structure/window{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 10
 	},
 /turf/open/floor/cult,
 /area/station/service/kitchen)
@@ -1532,6 +1594,14 @@
 	},
 /turf/open/floor/cult,
 /area/station/service/bar)
+"Kj" = (
+/obj/machinery/disposal/bin,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/structure/disposalpipe/trunk,
+/turf/open/floor/cult,
+/area/station/service/kitchen)
 "Kl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -1611,14 +1681,6 @@
 	},
 /turf/closed/wall/mineral/cult/artificer,
 /area/station/maintenance/department/cargo)
-"ME" = (
-/obj/structure/disposalpipe/trunk,
-/obj/machinery/disposal/bin,
-/obj/effect/turf_decal/bot{
-	dir = 1
-	},
-/turf/open/floor/cult,
-/area/station/service/kitchen)
 "MH" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 8
@@ -1646,10 +1708,10 @@
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "Na" = (
-/obj/machinery/door/airlock/cult/glass/friendly{
-	name = "Bartender Access"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/obj/machinery/door/airlock/service{
+	name = "Bar"
+	},
 /turf/open/floor/cult,
 /area/station/service/bar)
 "NH" = (
@@ -1928,11 +1990,6 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
-"VA" = (
-/obj/effect/decal/cleanable/blood/splatter/over_window,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/cult,
-/area/station/service/theater)
 "VB" = (
 /obj/machinery/stove,
 /obj/item/reagent_containers/cup/soup_pot{
@@ -1951,16 +2008,6 @@
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
-"VU" = (
-/obj/machinery/disposal/bin{
-	pixel_y = -8;
-	name = "wall-mounted disposal unit"
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/turf/closed/wall/mineral/cult,
-/area/station/service/bar)
 "VY" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/table/wood/fancy/red,
@@ -2005,6 +2052,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/duct,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/cult,
 /area/station/service/theater)
 "Xa" = (
@@ -2094,7 +2144,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/firedoor,
 /obj/machinery/duct,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
@@ -2224,7 +2273,7 @@ QC
 QC
 "}
 (2,1,1) = {"
-jF
+cu
 PH
 Bm
 ey
@@ -2245,13 +2294,13 @@ rj
 dF
 RJ
 wO
-jH
-jH
-jH
-jH
+QC
+QC
+QC
+QC
 "}
 (3,1,1) = {"
-VA
+cu
 QW
 dA
 mm
@@ -2272,13 +2321,13 @@ KN
 RJ
 Uf
 Bx
-jH
+QC
 QC
 QC
 QC
 "}
 (4,1,1) = {"
-jF
+cD
 dA
 dA
 dA
@@ -2299,7 +2348,7 @@ EG
 VL
 YR
 Ol
-jH
+QC
 QC
 QC
 QC
@@ -2326,13 +2375,13 @@ Xq
 uO
 uO
 FA
-jH
+QC
 QC
 QC
 QC
 "}
 (6,1,1) = {"
-jF
+cD
 dA
 dA
 dA
@@ -2353,13 +2402,13 @@ eG
 Vd
 Vd
 cB
-jH
+QC
 xf
 Ij
 xf
 "}
 (7,1,1) = {"
-VA
+cu
 xc
 fV
 Et
@@ -2380,13 +2429,13 @@ if
 YX
 lL
 qr
-jH
+QC
 Lq
 uL
 MH
 "}
 (8,1,1) = {"
-jF
+cu
 oq
 qN
 xc
@@ -2467,7 +2516,7 @@ EV
 jH
 "}
 (11,1,1) = {"
-OY
+xn
 hl
 up
 Bk
@@ -2494,9 +2543,9 @@ dC
 EV
 "}
 (12,1,1) = {"
-SG
-up
-up
+xn
+Kj
+lz
 VY
 RO
 ox
@@ -2521,9 +2570,9 @@ Sa
 NH
 "}
 (13,1,1) = {"
-OY
+yu
 xe
-up
+lh
 up
 up
 up
@@ -2548,7 +2597,7 @@ pa
 Pp
 "}
 (14,1,1) = {"
-OY
+yu
 lb
 Fb
 CJ
@@ -2575,7 +2624,7 @@ Vd
 Wz
 "}
 (15,1,1) = {"
-OY
+yu
 vP
 aL
 js
@@ -2602,7 +2651,7 @@ oA
 EV
 "}
 (16,1,1) = {"
-OY
+yu
 oN
 JN
 Co
@@ -2615,8 +2664,8 @@ CR
 fZ
 pa
 Xu
-ed
-LQ
+AU
+bm
 Wq
 kb
 yL
@@ -2629,10 +2678,10 @@ Vd
 Wz
 "}
 (17,1,1) = {"
-SG
+yu
 Ch
-ME
-lz
+up
+lh
 up
 up
 tc
@@ -2643,7 +2692,7 @@ Bs
 Vd
 AE
 sf
-VU
+TV
 Wq
 NP
 Wq
