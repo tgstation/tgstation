@@ -138,13 +138,11 @@
 /obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchair on in-hand use
 	deploy_wheelchair(user, user.loc)
 
-/obj/item/wheelchair/afterattack(obj/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-
-	if(isopenturf(target))
-		deploy_wheelchair(user, target)
+/obj/item/wheelchair/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isopenturf(interacting_with))
+		deploy_wheelchair(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/wheelchair/proc/deploy_wheelchair(mob/user, atom/location)
 	var/obj/vehicle/ridden/wheelchair/wheelchair_unfolded = new unfolded_type(location)
