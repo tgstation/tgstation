@@ -324,3 +324,41 @@
 	cold_protection = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor_type = /datum/armor/hooded_winterhood
+
+/obj/item/clothing/suit/jacket/kimono_kumi
+	name = "shrine keeper's kimono"
+	desc = "An ornately patterned shrine keeper's kimono, it seems a little big?"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "kimono_kumi"
+
+/obj/item/clothing/under/sarashi_kumi
+	name = "shrine keeper's sarashi"
+	desc = "Some chest wraps paired with a skirt. It digs at the waist a little."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "sarashi_kumi"
+	can_adjust = FALSE
+
+/obj/item/clothing/shoes/sandal/kumi
+	name = "shrine keeper's sandals"
+	desc = "A fancy pair of sandals made of hinoki."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "sandals_kumi"
+
+/obj/item/clothing/neck/bell
+	name = "bell necklace"
+	desc = "A bell attached to some string. We really are living in the future."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "neck_bell"
+
+/obj/item/clothing/gloves/fingerless/long
+	name = "long fingerless gloves"
+	desc = "A pair of fingerless gloves that reaches the elbow."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "fingerless_long"
+
+

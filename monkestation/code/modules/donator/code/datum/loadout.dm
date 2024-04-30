@@ -322,13 +322,13 @@
 
 //quilark
 /datum/loadout_item/suit/coat_quilark
-	name = "discontinued winter coat"
+	name = "Discontinued Winter Coat"
 	item_path = /obj/item/clothing/suit/toggle/quilark
 	donator_only = TRUE
 	requires_purchase = FALSE
 
 /datum/loadout_item/head/fur_cap_quilark
-	name = "discontinued cross hat"
+	name = "Discontinued Cross Hat"
 	item_path = /obj/item/clothing/head/costume/fur_cap_quilark
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -355,5 +355,36 @@
 /datum/loadout_item/suit/org_thirteen
 	name = "Organization 13 Cloak"
 	item_path = /obj/item/clothing/suit/hooded/org_thirteen
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//kumi
+/datum/loadout_item/suit/kimono_kumi
+	name = "Shrine Keeper's Kimono"
+	item_path = /obj/item/clothing/suit/jacket/kimono_kumi
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/sarashi_kumi
+	name = "Shrine Keeper's Sarashi"
+	item_path = /obj/item/clothing/under/sarashi_kumi
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/sandals_kumi
+	name = "Shrine Keeper's Sandals"
+	item_path = /obj/item/clothing/shoes/sandal/kumi
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/gloves/fingerless_long
+	name = "Long Fingerless Gloves"
+	item_path = /obj/item/clothing/gloves/fingerless/long
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/neck/bell
+	name = "Bell Necklace"
+	item_path = /obj/item/clothing/neck/bell
 	donator_only = TRUE
 	requires_purchase = FALSE
