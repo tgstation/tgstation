@@ -1,11 +1,11 @@
 /obj/item/organ/internal/heart/gland/trauma
 	abductor_hint = "white matter randomiser. The abductee occasionally gains a random brain trauma, up to five times. The traumas can range from basic to deep-rooted."
-	cooldown_low = 800
-	cooldown_high = 1200
+	cooldown_low = 80 SECONDS
+	cooldown_high = 2 MINUTES
 	uses = 5
 	icon_state = "emp"
 	mind_control_uses = 3
-	mind_control_duration = 1800
+	mind_control_duration = 3 MINUTES
 
 /obj/item/organ/internal/heart/gland/trauma/activate()
 	to_chat(owner, span_warning("You feel a spike of pain in your head."))

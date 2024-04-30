@@ -75,6 +75,7 @@
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
 
 // BEGIN_INCLUDE
+#include "abductor_baton_spell.dm"
 #include "ablative_hud.dm"
 #include "achievements.dm"
 #include "anchored_mobs.dm"

@@ -1,11 +1,11 @@
 /obj/item/organ/internal/heart/gland/viral
 	abductor_hint = "contamination incubator. The abductee becomes a carrier of a random advanced disease - of which they are unaffected by."
-	cooldown_low = 1800
-	cooldown_high = 2400
+	cooldown_low = 3 MINUTES
+	cooldown_high = 4 MINUTES
 	uses = 1
 	icon_state = "viral"
 	mind_control_uses = 1
-	mind_control_duration = 1800
+	mind_control_duration = 3 MINUTES
 
 /obj/item/organ/internal/heart/gland/viral/activate()
 	to_chat(owner, span_warning("You feel sick."))

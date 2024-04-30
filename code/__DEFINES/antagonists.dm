@@ -340,3 +340,23 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 
 /// For changelings, this is how many recent say lines are retained when absorbing a mob
 #define LING_ABSORB_RECENT_SPEECH 8
+
+// Various abductor equipment modes.
+
+#define VEST_STEALTH 1
+#define VEST_COMBAT 2
+
+#define GIZMO_SCAN 1
+#define GIZMO_MARK 2
+
+#define MIND_DEVICE_MESSAGE 1
+#define MIND_DEVICE_CONTROL 2
+
+#define TOOLSET_MEDICAL 1
+#define TOOLSET_HACKING 2
+
+#define BATON_STUN 0
+#define BATON_SLEEP 1
+#define BATON_CUFF 2
+#define BATON_PROBE 3
+#define BATON_MODES 4

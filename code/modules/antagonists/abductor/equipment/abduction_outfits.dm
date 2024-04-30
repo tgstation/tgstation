@@ -24,11 +24,21 @@
 			for(var/obj/item/abductor/gizmo/G in B.contents)
 				console.AddGizmo(G)
 
-/datum/outfit/abductor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	if(!visualsOnly)
-		link_to_console(H)
+/datum/outfit/abductor/post_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+	. = ..()
+	if(visualsOnly)
+		return
 
+	if(!isnull(user.mind))
+		link_to_console(user)
+
+	/* monkestation removal: get rid of the abductor batong recall
+	var/obj/item/melee/baton/abductor/batong = locate() in user
+	if(!isnull(batong))
+		var/datum/action/cooldown/spell/summonitem/abductor/ayy_summon = new(user.mind || user)
+		ayy_summon.mark_item(batong)
+		ayy_summon.Grant(user)
+	*/
 
 /datum/outfit/abductor/agent
 	name = "Abductor Agent"
@@ -40,20 +50,19 @@
 	backpack_contents = list(
 		/obj/item/gun/energy/alien = 1,
 		/obj/item/abductor/silencer = 1
-		)
+	)
 
 /datum/outfit/abductor/scientist
 	name = "Abductor Scientist"
 
-	backpack_contents = list(
-		/obj/item/abductor/gizmo = 1
-		)
+	belt = /obj/item/defibrillator/compact/combat/loaded // monke edit: give abductors defibs
+	backpack_contents = list(/obj/item/abductor/gizmo = 1)
 
-/datum/outfit/abductor/scientist/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	if(!visualsOnly)
-		var/obj/item/implant/abductor/beamplant = new /obj/item/implant/abductor(H)
-		beamplant.implant(H)
+/datum/outfit/abductor/scientist/post_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+	. = ..()
+	if(!visualsOnly && !isnull(user.mind))
+		var/obj/item/implant/abductor/beamplant = new /obj/item/implant/abductor(user)
+		beamplant.implant(user)
 
 /datum/outfit/abductor/scientist/onemanteam
 	name = "Abductor Scientist (w/ agent gear)"
@@ -63,7 +72,8 @@
 	belt = /obj/item/storage/belt/military/abductor/full
 
 	backpack_contents = list(
-	/obj/item/abductor/gizmo = 1,
-	/obj/item/gun/energy/alien = 1,
-	/obj/item/abductor/silencer = 1
+		/obj/item/abductor/gizmo = 1,
+		/obj/item/gun/energy/alien = 1,
+		/obj/item/abductor/silencer = 1,
+		/obj/item/defibrillator/compact/combat/loaded = 1 // monke edit: give abductors defibs
 	)

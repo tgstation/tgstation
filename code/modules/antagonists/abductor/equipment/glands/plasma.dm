@@ -1,16 +1,16 @@
 /obj/item/organ/internal/heart/gland/plasma
 	abductor_hint = "effluvium sanguine-synonym emitter. The abductee randomly emits clouds of plasma."
-	cooldown_low = 1200
-	cooldown_high = 1800
+	cooldown_low = 2 MINUTES
+	cooldown_high = 3 MINUTES
 	icon_state = "slime"
 	uses = -1
 	mind_control_uses = 1
-	mind_control_duration = 800
+	mind_control_duration = 80 SECONDS
 
 /obj/item/organ/internal/heart/gland/plasma/activate()
 	to_chat(owner, span_warning("You feel bloated."))
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), owner, span_userdanger("A massive stomachache overcomes you.")), 150)
-	addtimer(CALLBACK(src, PROC_REF(vomit_plasma)), 200)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), owner, span_userdanger("A massive stomachache overcomes you.")), 15 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(vomit_plasma)), 20 SECONDS)
 
 /obj/item/organ/internal/heart/gland/plasma/proc/vomit_plasma()
 	if(!owner)

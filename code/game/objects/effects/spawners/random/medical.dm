@@ -29,8 +29,8 @@
 		/obj/item/organ/internal/heart/gland/plasma = 7,
 		/obj/item/organ/internal/heart/gland/chem = 5,
 		/obj/item/organ/internal/heart/gland/mindshock = 5,
-		/obj/item/organ/internal/heart/gland/transform = 5,
-		/obj/item/organ/internal/heart/gland/spiderman = 5,
+		// /obj/item/organ/internal/heart/gland/transform = 5, /* monkestation: removed */
+		// /obj/item/organ/internal/heart/gland/spiderman = 5, /* monkestation: removed */
 		/obj/item/organ/internal/heart/gland/slime = 4,
 		/obj/item/organ/internal/heart/gland/trauma = 4,
 		/obj/item/organ/internal/heart/gland/electric = 3,

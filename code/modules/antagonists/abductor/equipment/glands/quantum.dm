@@ -1,11 +1,11 @@
 /obj/item/organ/internal/heart/gland/quantum
 	abductor_hint = "quantic de-observation matrix. Periodically links with a random person in view, then the abductee later swaps positions with that person."
-	cooldown_low = 150
-	cooldown_high = 150
+	cooldown_low = 15 SECONDS
+	cooldown_high = 15 SECONDS
 	uses = -1
 	icon_state = "emp"
 	mind_control_uses = 2
-	mind_control_duration = 1200
+	mind_control_duration = 2 MINUTES
 	var/mob/living/carbon/entangled_mob
 
 /obj/item/organ/internal/heart/gland/quantum/activate()
@@ -15,7 +15,7 @@
 		if(!iscarbon(M))
 			continue
 		entangled_mob = M
-		addtimer(CALLBACK(src, PROC_REF(quantum_swap)), rand(600, 2400))
+		addtimer(CALLBACK(src, PROC_REF(quantum_swap)), rand(1 MINUTES, 4 MINUTES))
 		return
 
 /obj/item/organ/internal/heart/gland/quantum/proc/quantum_swap()

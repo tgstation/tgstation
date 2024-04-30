@@ -1,153 +1,3 @@
-#define VEST_STEALTH 1
-#define VEST_COMBAT 2
-#define GIZMO_SCAN 1
-#define GIZMO_MARK 2
-#define MIND_DEVICE_MESSAGE 1
-#define MIND_DEVICE_CONTROL 2
-
-//AGENT VEST
-/obj/item/clothing/suit/armor/abductor/vest
-	name = "agent vest"
-	desc = "A vest outfitted with advanced stealth technology. It has two modes - combat and stealth."
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "vest_stealth"
-	inhand_icon_state = "armor"
-	blood_overlay_type = "armor"
-	armor_type = /datum/armor/abductor_vest
-	actions_types = list(/datum/action/item_action/hands_free/activate)
-	allowed = list(
-		/obj/item/abductor,
-		/obj/item/melee/baton,
-		/obj/item/gun/energy,
-		/obj/item/restraints/handcuffs
-		)
-	var/mode = VEST_STEALTH
-	var/stealth_active = FALSE
-	/// Cooldown in seconds
-	var/combat_cooldown = 20
-	var/datum/icon_snapshot/disguise
-
-/datum/armor/abductor_combat
-	melee = 50
-	bullet = 50
-	laser = 50
-	energy = 50
-	bomb = 50
-	bio = 50
-	fire = 90
-	acid = 90
-
-/datum/armor/abductor_vest
-	melee = 15
-	bullet = 15
-	laser = 15
-	energy = 25
-	bomb = 15
-	bio = 15
-	fire = 70
-	acid = 70
-
-/obj/item/clothing/suit/armor/abductor/vest/proc/toggle_nodrop()
-	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT))
-		REMOVE_TRAIT(src, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
-	else
-		ADD_TRAIT(src, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
-	if(ismob(loc))
-		to_chat(loc, span_notice("Your vest is now [HAS_TRAIT_FROM(src, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT) ? "locked" : "unlocked"]."))
-
-/obj/item/clothing/suit/armor/abductor/vest/proc/flip_mode()
-	switch(mode)
-		if(VEST_STEALTH)
-			mode = VEST_COMBAT
-			DeactivateStealth()
-			set_armor(/datum/armor/abductor_combat)
-			icon_state = "vest_combat"
-		if(VEST_COMBAT)// TO STEALTH
-			mode = VEST_STEALTH
-			set_armor(/datum/armor/abductor_vest)
-			icon_state = "vest_stealth"
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.update_worn_oversuit()
-	update_item_action_buttons()
-
-/obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
-	if(slot & ITEM_SLOT_OCLOTHING) //we only give the mob the ability to activate the vest if he's actually wearing it.
-		return TRUE
-
-/obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
-	disguise = entry
-
-/obj/item/clothing/suit/armor/abductor/vest/proc/ActivateStealth()
-	if(disguise == null)
-		return
-	stealth_active = TRUE
-	if(ishuman(loc))
-		var/mob/living/carbon/human/M = loc
-		new /obj/effect/temp_visual/dir_setting/ninja/cloak(get_turf(M), M.dir)
-		M.name_override = disguise.name
-		M.icon = disguise.icon
-		M.icon_state = disguise.icon_state
-		M.cut_overlays()
-		M.add_overlay(disguise.overlays)
-		M.update_held_items()
-
-/obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
-	if(!stealth_active)
-		return
-	stealth_active = FALSE
-	if(ishuman(loc))
-		var/mob/living/carbon/human/M = loc
-		new /obj/effect/temp_visual/dir_setting/ninja(get_turf(M), M.dir)
-		M.name_override = null
-		M.cut_overlays()
-		M.regenerate_icons()
-
-/obj/item/clothing/suit/armor/abductor/vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	DeactivateStealth()
-
-/obj/item/clothing/suit/armor/abductor/vest/IsReflect()
-	DeactivateStealth()
-
-/obj/item/clothing/suit/armor/abductor/vest/ui_action_click()
-	switch(mode)
-		if(VEST_COMBAT)
-			Adrenaline()
-		if(VEST_STEALTH)
-			if(stealth_active)
-				DeactivateStealth()
-			else
-				ActivateStealth()
-
-/obj/item/clothing/suit/armor/abductor/vest/proc/Adrenaline()
-	if(ishuman(loc))
-		if(combat_cooldown < initial(combat_cooldown))
-			to_chat(loc, span_warning("Combat injection is still recharging."))
-			return
-		var/mob/living/carbon/human/M = loc
-		M.stamina.adjust(75)
-		M.SetUnconscious(0)
-		M.SetStun(0)
-		M.SetKnockdown(0)
-		M.SetImmobilized(0)
-		M.SetParalyzed(0)
-		combat_cooldown = 0
-		START_PROCESSING(SSobj, src)
-
-/obj/item/clothing/suit/armor/abductor/vest/process(seconds_per_tick)
-	combat_cooldown += seconds_per_tick
-	if(combat_cooldown >= initial(combat_cooldown))
-		STOP_PROCESSING(SSobj, src)
-
-/obj/item/clothing/suit/armor/abductor/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	for(var/obj/machinery/abductor/console/C in GLOB.machines)
-		if(C.vest == src)
-			C.vest = null
-			break
-	. = ..()
-
-
 /obj/item/abductor
 	icon = 'icons/obj/abductor.dmi'
 	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
@@ -198,7 +48,7 @@
 		icon_state = "gizmo_scan"
 	to_chat(user, span_notice("You switch the device to [mode == GIZMO_SCAN? "SCAN": "MARK"] MODE"))
 
-/obj/item/abductor/gizmo/attack(mob/living/M, mob/user)
+/obj/item/abductor/gizmo/attack(mob/living/target, mob/user)
 	if(!ScientistCheck(user))
 		return
 	if(!console)
@@ -207,9 +57,9 @@
 
 	switch(mode)
 		if(GIZMO_SCAN)
-			scan(M, user)
+			scan(target, user)
 		if(GIZMO_MARK)
-			mark(M, user)
+			mark(target, user)
 
 
 /obj/item/abductor/gizmo/afterattack(atom/target, mob/living/user, flag, params)
@@ -268,10 +118,10 @@
 	icon_state = "silencer"
 	inhand_icon_state = "gizmo"
 
-/obj/item/abductor/silencer/attack(mob/living/M, mob/user)
+/obj/item/abductor/silencer/attack(mob/living/target, mob/user)
 	if(!AbductorCheck(user))
 		return
-	radio_off(M, user)
+	radio_off(target, user)
 
 /obj/item/abductor/silencer/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
@@ -289,15 +139,15 @@
 
 	var/turf/targloc = get_turf(target)
 
-	var/mob/living/carbon/human/M
-	for(M in view(2,targloc))
-		if(M == user)
+	var/mob/living/carbon/human/human_target
+	for(human_target in view(2,targloc))
+		if(human_target == user)
 			continue
-		to_chat(user, span_notice("You silence [M]'s radio devices."))
-		radio_off_mob(M)
+		to_chat(user, span_notice("You silence [human_target]'s radio devices."))
+		radio_off_mob(human_target)
 
-/obj/item/abductor/silencer/proc/radio_off_mob(mob/living/carbon/human/M)
-	var/list/all_items = M.get_all_contents()
+/obj/item/abductor/silencer/proc/radio_off_mob(mob/living/carbon/human/target)
+	var/list/all_items = target.get_all_contents()
 
 	for(var/obj/item/radio/radio in all_items)
 		radio.set_listening(FALSE)
@@ -338,20 +188,20 @@
 
 /obj/item/abductor/mind_device/proc/mind_control(atom/target, mob/living/user)
 	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		var/obj/item/organ/internal/heart/gland/G = C.get_organ_slot("heart")
-		if(!istype(G))
+		var/mob/living/carbon/carbon_target = target
+		var/obj/item/organ/internal/heart/gland/target_gland = carbon_target.get_organ_slot("heart")
+		if(!istype(target_gland))
 			to_chat(user, span_warning("Your target does not have an experimental gland!"))
 			return
-		if(!G.mind_control_uses)
+		if(!target_gland.mind_control_uses)
 			to_chat(user, span_warning("Your target's gland is spent!"))
 			return
-		if(G.active_mind_control)
+		if(target_gland.active_mind_control)
 			to_chat(user, span_warning("Your target is already under a mind-controlling influence!"))
 			return
 
 		var/command = tgui_input_text(user, "Enter the command for your target to follow.\
-											Uses Left: [G.mind_control_uses], Duration: [DisplayTimeText(G.mind_control_duration)]", "Enter command")
+											Uses Left: [target_gland.mind_control_uses], Duration: [DisplayTimeText(target_gland.mind_control_duration)]", "Enter command")
 
 		if(!command)
 			return
@@ -359,33 +209,33 @@
 		if(QDELETED(user) || user.get_active_held_item() != src || loc != user)
 			return
 
-		if(QDELETED(G))
+		if(QDELETED(target_gland))
 			return
 
-		if(C.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+		if(carbon_target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 			user.balloon_alert(user, "foiled!")
 			to_chat(user, span_warning("Your target seems to have some sort of mental blockage, preventing the message from being sent! It seems you've been foiled."))
 			return
 
-		G.mind_control(command, user)
+		target_gland.mind_control(command, user)
 		to_chat(user, span_notice("You send the command to your target."))
 
 /obj/item/abductor/mind_device/proc/mind_message(atom/target, mob/living/user)
 	if(isliving(target))
-		var/mob/living/L = target
-		if(L.stat == DEAD)
+		var/mob/living/living_target = target
+		if(living_target.stat == DEAD)
 			to_chat(user, span_warning("Your target is dead!"))
 			return
 		var/message = tgui_input_text(user, "Message to send to your target's brain", "Enter message")
 		if(!message)
 			return
-		if(QDELETED(L) || L.stat == DEAD)
+		if(QDELETED(living_target) || living_target.stat == DEAD)
 			return
 
-		L.balloon_alert(L, "you hear a voice")
-		to_chat(L, span_hear("You hear a voice in your head saying: </span><span class='abductor'>[message]"))
+		living_target.balloon_alert(living_target, "you hear a voice")
+		to_chat(living_target, span_hear("You hear a voice in your head saying: </span><span class='abductor'>[message]"))
 		to_chat(user, span_notice("You send the message to your target."))
-		log_directed_talk(user, L, message, LOG_SAY, "abductor whisper")
+		log_directed_talk(user, living_target, message, LOG_SAY, "abductor whisper")
 
 
 /obj/item/firing_pin/abductor
@@ -445,12 +295,6 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/paper/guides/antag/abductor/AltClick()
 	return //otherwise it would fold into a paperplane.
 
-#define BATON_STUN 0
-#define BATON_SLEEP 1
-#define BATON_CUFF 2
-#define BATON_PROBE 3
-#define BATON_MODES 4
-
 /obj/item/melee/baton/abductor
 	name = "advanced baton"
 	desc = "A quad-mode baton used for incapacitation and restraining of specimens."
@@ -471,7 +315,6 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	knockdown_time = 14 SECONDS
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	affect_cyborg = TRUE
-	chunky_finger_usable = TRUE
 
 	var/mode = BATON_STUN
 
@@ -480,7 +323,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/melee/baton/abductor/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/melee/baton/abductor/proc/toggle(mob/living/user=usr)
 	if(!AbductorCheck(user))
@@ -556,67 +399,67 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	. = ..()
 	toggle(user)
 
-/obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/L,mob/living/user)
+/obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/target, mob/living/user)
 	playsound(src, on_stun_sound, 50, TRUE, -1)
-	if(L.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
-		if(L.can_block_magic(MAGIC_RESISTANCE_MIND))
+	if(target.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
+		if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
 			to_chat(user, span_warning("The specimen has some kind of mental protection that is interfering with the sleep inducement! It seems you've been foiled."))
-			L.visible_message(span_danger("[user] tried to induced sleep in [L] with [src], but is unsuccessful!"), \
+			target.visible_message(span_danger("[user] tried to induced sleep in [target] with [src], but is unsuccessful!"), \
 			span_userdanger("You feel a strange wave of heavy drowsiness wash over you!"))
-			L.adjust_drowsiness(4 SECONDS)
+			target.adjust_drowsiness(4 SECONDS)
 			return
-		L.visible_message(span_danger("[user] induces sleep in [L] with [src]!"), \
+		target.visible_message(span_danger("[user] induces sleep in [target] with [src]!"), \
 		span_userdanger("You suddenly feel very drowsy!"))
-		L.Sleeping(sleep_time)
-		log_combat(user, L, "put to sleep")
+		target.Sleeping(sleep_time)
+		log_combat(user, target, "put to sleep")
 	else
-		if(L.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+		if(target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 			to_chat(user, span_warning("The specimen has some kind of mental protection that is completely blocking our sleep inducement methods! It seems you've been foiled."))
-			L.visible_message(span_danger("[user] tried to induce sleep in [L] with [src], but is unsuccessful!"), \
+			target.visible_message(span_danger("[user] tried to induce sleep in [target] with [src], but is unsuccessful!"), \
 			span_userdanger("Any sense of drowsiness is quickly diminished!"))
 			return
-		L.adjust_drowsiness(2 SECONDS)
+		target.adjust_drowsiness(2 SECONDS)
 		to_chat(user, span_warning("Sleep inducement works fully only on stunned specimens! "))
-		L.visible_message(span_danger("[user] tried to induce sleep in [L] with [src]!"), \
+		target.visible_message(span_danger("[user] tried to induce sleep in [target] with [src]!"), \
 							span_userdanger("You suddenly feel drowsy!"))
 
-/obj/item/melee/baton/abductor/proc/CuffAttack(mob/living/L,mob/living/user)
-	if(!iscarbon(L))
+/obj/item/melee/baton/abductor/proc/CuffAttack(mob/living/victim, mob/living/user)
+	if(!iscarbon(victim))
 		return
-	var/mob/living/carbon/C = L
-	if(!C.handcuffed)
-		if(C.canBeHandcuffed())
+	var/mob/living/carbon/carbon_victim = victim
+	if(!carbon_victim.handcuffed)
+		if(carbon_victim.canBeHandcuffed())
 			playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
-			C.visible_message(span_danger("[user] begins restraining [C] with [src]!"), \
+			carbon_victim.visible_message(span_danger("[user] begins restraining [carbon_victim] with [src]!"), \
 									span_userdanger("[user] begins shaping an energy field around your hands!"))
-			if(do_after(user, time_to_cuff, C) && C.canBeHandcuffed())
-				if(!C.handcuffed)
-					C.set_handcuffed(new /obj/item/restraints/handcuffs/energy/used(C))
-					C.update_handcuffed()
-					to_chat(user, span_notice("You restrain [C]."))
-					log_combat(user, C, "handcuffed")
+			if(do_after(user, time_to_cuff, carbon_victim) && carbon_victim.canBeHandcuffed())
+				if(!carbon_victim.handcuffed)
+					carbon_victim.set_handcuffed(new /obj/item/restraints/handcuffs/energy/used(carbon_victim))
+					carbon_victim.update_handcuffed()
+					to_chat(user, span_notice("You restrain [carbon_victim]."))
+					log_combat(user, carbon_victim, "handcuffed")
 			else
-				to_chat(user, span_warning("You fail to restrain [C]."))
+				to_chat(user, span_warning("You fail to restrain [carbon_victim]."))
 		else
-			to_chat(user, span_warning("[C] doesn't have two hands..."))
+			to_chat(user, span_warning("[carbon_victim] doesn't have two hands..."))
 
-/obj/item/melee/baton/abductor/proc/ProbeAttack(mob/living/L,mob/living/user)
-	L.visible_message(span_danger("[user] probes [L] with [src]!"), \
+/obj/item/melee/baton/abductor/proc/ProbeAttack(mob/living/victim, mob/living/user)
+	victim.visible_message(span_danger("[user] probes [victim] with [src]!"), \
 						span_userdanger("[user] probes you!"))
 
 	var/species = span_warning("Unknown species")
 	var/helptext = span_warning("Species unsuitable for experiments.")
 
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		species = span_notice("[H.dna.species.name]")
-		if(L.mind && L.mind.has_antag_datum(/datum/antagonist/changeling))
+	if(ishuman(victim))
+		var/mob/living/carbon/human/human_victim = victim
+		species = span_notice("[human_victim.dna.species.name]")
+		if(human_victim.mind && human_victim.mind.has_antag_datum(/datum/antagonist/changeling))
 			species = span_warning("Changeling lifeform")
-		var/obj/item/organ/internal/heart/gland/temp = locate() in H.organs
+		var/obj/item/organ/internal/heart/gland/temp = locate() in human_victim.organs
 		if(temp)
 			helptext = span_warning("Experimental gland detected!")
 		else
-			if (L.get_organ_slot(ORGAN_SLOT_HEART))
+			if (human_victim.get_organ_slot(ORGAN_SLOT_HEART))
 				helptext = span_notice("Subject suitable for experiments.")
 			else
 				helptext = span_warning("Subject unsuitable for experiments.")
@@ -640,9 +483,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/restraints/handcuffs/energy/used/dropped(mob/user)
 	user.visible_message(span_danger("[user]'s [name] breaks in a discharge of energy!"), \
 							span_userdanger("[user]'s [name] breaks in a discharge of energy!"))
-	var/datum/effect_system/spark_spread/S = new
-	S.set_up(4,0,user.loc)
-	S.start()
+	var/datum/effect_system/spark_spread/sparks = new
+	sparks.set_up(4,0,user.loc)
+	sparks.start()
 	. = ..()
 
 /obj/item/melee/baton/abductor/examine(mob/user)
@@ -769,150 +612,104 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	return COMPONENT_CANT_TRACK
 
-// Operating Table / Beds / Lockers
+/obj/item/abductor/alien_omnitool
+	name = "quizzandric interfacer"
+	desc = "Effectively just a Space Swiss Army Knife. Contains a multitude of integrated tools. Right-click it to switch which toolset is active."
+	icon_state = "omnitool"
+	inhand_icon_state = "silencer"
+	toolspeed = 0.25
+	tool_behaviour = null
+	usesound = 'sound/items/pshoom.ogg'
+	///A list of all the tools we offer. Stored as "Tool" for the key, and the icon/icon_state as the value.
+	var/list/tool_list = list()
+	///Which toolset do we have active currently?
+	var/active_toolset = TOOLSET_MEDICAL
 
-/obj/structure/bed/abductor
-	name = "resting contraption"
-	desc = "This looks similar to contraptions from Earth. Could aliens be stealing our technology?"
-	icon = 'icons/obj/abductor.dmi'
-	buildstacktype = /obj/item/stack/sheet/mineral/abductor
-	icon_state = "bed"
+/obj/item/abductor/alien_omnitool/Initialize(mapload)
+	. = ..()
+	set_toolset() //This populates the tool list, and sets it to the hacking configuration.
 
-/obj/structure/table_frame/abductor
-	name = "alien table frame"
-	desc = "A sturdy table frame made from alien alloy."
-	icon_state = "alien_frame"
-	framestack = /obj/item/stack/sheet/mineral/abductor
-	framestackamount = 1
+/obj/item/abductor/alien_omnitool/examine()
+	. = ..()
+	. += " The mode is: [tool_behaviour]"
 
-/obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH)
-		to_chat(user, span_notice("You start disassembling [src]..."))
-		I.play_tool_sound(src)
-		if(I.use_tool(src, user, 30))
-			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-			for(var/i in 0 to framestackamount)
-				new framestack(get_turf(src))
-			qdel(src)
-			return
-	if(istype(I, /obj/item/stack/sheet/mineral/abductor))
-		var/obj/item/stack/sheet/P = I
-		if(P.get_amount() < 1)
-			to_chat(user, span_warning("You need one alien alloy sheet to do this!"))
-			return
-		to_chat(user, span_notice("You start adding [P] to [src]..."))
-		if(do_after(user, 50, target = src))
-			P.use(1)
-			new /obj/structure/table/abductor(src.loc)
-			qdel(src)
+/obj/item/abductor/alien_omnitool/attack_self(mob/user)
+	if(!user)
 		return
-	if(istype(I, /obj/item/stack/sheet/mineral/silver))
-		var/obj/item/stack/sheet/P = I
-		if(P.get_amount() < 1)
-			to_chat(user, span_warning("You need one sheet of silver to do this!"))
-			return
-		to_chat(user, span_notice("You start adding [P] to [src]..."))
-		if(do_after(user, 50, target = src))
-			P.use(1)
-			new /obj/structure/table/optable/abductor(src.loc)
-			qdel(src)
 
-/obj/structure/table/abductor
-	name = "alien table"
-	desc = "Advanced flat surface technology at work!"
-	icon = 'icons/obj/smooth_structures/alien_table.dmi'
-	icon_state = "alien_table-0"
-	base_icon_state = "alien_table"
-	buildstack = /obj/item/stack/sheet/mineral/abductor
-	framestack = /obj/item/stack/sheet/mineral/abductor
-	buildstackamount = 1
-	framestackamount = 1
-	smoothing_groups = SMOOTH_GROUP_ABDUCTOR_TABLES
-	canSmoothWith = SMOOTH_GROUP_ABDUCTOR_TABLES
-	frame = /obj/structure/table_frame/abductor
-	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
+	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user))
+		return
+	switch(tool_result)
+		if("Retractor")
+			tool_behaviour = TOOL_RETRACTOR
+		if("Hemostat")
+			tool_behaviour = TOOL_HEMOSTAT
+		if("Cautery")
+			tool_behaviour = TOOL_CAUTERY
+		if("Drill")
+			tool_behaviour = TOOL_DRILL
+		if("Scalpel")
+			tool_behaviour = TOOL_SCALPEL
+		if("Saw")
+			tool_behaviour = TOOL_SAW
+		if("Bonesetter")
+			tool_behaviour = TOOL_BONESET
+		if("Blood Filter")
+			tool_behaviour = TOOL_BLOODFILTER
+		if("Crowbar")
+			tool_behaviour = TOOL_CROWBAR
+		if("Multitool")
+			tool_behaviour = TOOL_MULTITOOL
+		if("Screwdriver")
+			tool_behaviour = TOOL_SCREWDRIVER
+		if("Wirecutters")
+			tool_behaviour = TOOL_WIRECUTTER
+		if("Wrench")
+			tool_behaviour = TOOL_WRENCH
+		if("Welding Tool")
+			tool_behaviour = TOOL_WELDER
 
-/obj/structure/table/optable/abductor
-	name = "alien operating table"
-	desc = "Used for alien medical procedures. The surface is covered in tiny spines."
-	frame = /obj/structure/table_frame/abductor
-	buildstack = /obj/item/stack/sheet/mineral/silver
-	framestack = /obj/item/stack/sheet/mineral/abductor
-	buildstackamount = 1
-	framestackamount = 1
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "bed"
-	can_buckle = 1
-	/// Amount to inject per second
-	var/inject_am = 0.5
+	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 
-	var/static/list/injected_reagents = list(/datum/reagent/medicine/cordiolis_hepatico)
+/obj/item/abductor/alien_omnitool/attack_self_secondary(mob/user, modifiers) //ADD SFX FOR USING THE TOOL
+	if(!user)
+		return
 
-/obj/structure/table/optable/abductor/Initialize(mapload)
-	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	set_toolset(user)
+	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 
-/obj/structure/table/optable/abductor/proc/on_entered(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
-	if(iscarbon(AM))
-		START_PROCESSING(SSobj, src)
-		to_chat(AM, span_danger("You feel a series of tiny pricks!"))
+/obj/item/abductor/alien_omnitool/proc/check_menu(mob/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
 
-/obj/structure/table/optable/abductor/process(seconds_per_tick)
-	. = PROCESS_KILL
-	for(var/mob/living/carbon/C in get_turf(src))
-		. = TRUE
-		for(var/chemical in injected_reagents)
-			if(C.reagents.get_reagent_amount(chemical) < inject_am * seconds_per_tick)
-				C.reagents.add_reagent(chemical, inject_am * seconds_per_tick)
-
-/obj/structure/table/optable/abductor/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
-
-/obj/structure/closet/abductor
-	name = "alien locker"
-	desc = "Contains secrets of the universe."
-	icon_state = "abductor"
-	icon_door = "abductor"
-	can_weld_shut = FALSE
-	door_anim_time = 0
-	material_drop = /obj/item/stack/sheet/mineral/abductor
-
-/obj/structure/door_assembly/door_assembly_abductor
-	name = "alien airlock assembly"
-	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
-	base_name = "alien airlock"
-	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
-	airlock_type = /obj/machinery/door/airlock/abductor
-	material_type = /obj/item/stack/sheet/mineral/abductor
-	noglass = TRUE
-
-/obj/item/clothing/under/abductor
-	desc = "The most advanced form of jumpsuit known to reality, looks uncomfortable."
-	name = "alien jumpsuit"
-	icon = 'icons/obj/clothing/under/syndicate.dmi'
-	icon_state = "abductor"
-	inhand_icon_state = "bl_suit"
-	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
-	armor_type = /datum/armor/under_abductor
-	can_adjust = FALSE
-
-/datum/armor/under_abductor
-	bomb = 10
-	bio = 10
-
-#undef BATON_CUFF
-#undef BATON_MODES
-#undef BATON_PROBE
-#undef BATON_SLEEP
-#undef BATON_STUN
-#undef GIZMO_MARK
-#undef GIZMO_SCAN
-#undef MIND_DEVICE_CONTROL
-#undef MIND_DEVICE_MESSAGE
-#undef VEST_COMBAT
-#undef VEST_STEALTH
+/obj/item/abductor/alien_omnitool/proc/set_toolset(mob/user)
+	if(active_toolset == TOOLSET_MEDICAL)
+		tool_list = list(
+			"Crowbar" = image(icon = 'icons/obj/abductor.dmi', icon_state = "crowbar"),
+			"Multitool" = image(icon = 'icons/obj/abductor.dmi', icon_state = "multitool"),
+			"Screwdriver" = image(icon = 'icons/obj/abductor.dmi', icon_state = "screwdriver_a"),
+			"Wirecutters" = image(icon = 'icons/obj/abductor.dmi', icon_state = "cutters"),
+			"Wrench" = image(icon = 'icons/obj/abductor.dmi', icon_state = "wrench"),
+			"Welding Tool" = image(icon = 'icons/obj/abductor.dmi', icon_state = "welder"),
+		)
+		active_toolset = TOOLSET_HACKING
+		if(user)
+			balloon_alert(user, "hacking toolset selected")
+	else
+		tool_list = list(
+			"Retractor" = image(icon = 'icons/obj/abductor.dmi', icon_state = "retractor"),
+			"Hemostat" = image(icon = 'icons/obj/abductor.dmi', icon_state = "hemostat"),
+			"Cautery" = image(icon = 'icons/obj/abductor.dmi', icon_state = "cautery"),
+			"Drill" = image(icon = 'icons/obj/abductor.dmi', icon_state = "drill"),
+			"Scalpel" = image(icon = 'icons/obj/abductor.dmi', icon_state = "scalpel"),
+			"Saw" = image(icon = 'icons/obj/abductor.dmi', icon_state = "saw"),
+			"Bonesetter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bonesetter"),
+			"Blood Filter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bloodfilter"),
+		)
+		active_toolset = TOOLSET_MEDICAL
+		if(user)
+			balloon_alert(user, "medical toolset selected")

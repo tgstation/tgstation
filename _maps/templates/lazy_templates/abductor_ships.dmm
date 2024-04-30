@@ -184,7 +184,7 @@
 	},
 /area/centcom/abductor_ship)
 "Bh" = (
-/obj/machinery/abductor/gland_dispenser,
+/obj/machinery/smartfridge/abductor,
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
 "BX" = (

@@ -408,6 +408,7 @@
 
 	spell_level++
 	cooldown_time = max(cooldown_time - cooldown_reduction_per_rank, 0.25 SECONDS) // 0 second CD starts to break things.
+	name = "[get_spell_title()][initial(name)]"
 	build_all_button_icons(UPDATE_BUTTON_NAME)
 	return TRUE
 
@@ -428,12 +429,9 @@
 	else
 		cooldown_time = max(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
 
+	name = "[get_spell_title()][initial(name)]"
 	build_all_button_icons(UPDATE_BUTTON_NAME)
 	return TRUE
-
-/datum/action/cooldown/spell/update_button_name(atom/movable/screen/movable/action_button/button, force)
-	name = "[get_spell_title()][initial(name)]"
-	return ..()
 
 /// Gets the title of the spell based on its level.
 /datum/action/cooldown/spell/proc/get_spell_title()

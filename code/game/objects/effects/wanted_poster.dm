@@ -93,9 +93,10 @@
 		poster_icon.Blend(letter_icon, ICON_OVERLAY)
 		startX = startX + 4
 
-/obj/structure/sign/poster/wanted/roll_and_drop(atom/location)
+/obj/structure/sign/poster/wanted/roll_and_drop(atom/location, mob/user)
 	pixel_x = 0
 	pixel_y = 0
 	var/obj/item/poster/rolled_poster = new poster_item_type(location, original_icon, wanted_name, desc, posterHeaderText, posterHeaderColor)
-	forceMove(rolled_poster)
+	if(!user?.put_in_hands(rolled_poster))
+		forceMove(rolled_poster)
 	return rolled_poster

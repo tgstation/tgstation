@@ -1,3 +1,5 @@
+// MONKESTATION FILE REMOVAL
+/*
 /obj/item/organ/internal/heart/gland/transform
 	abductor_hint = "anthropmorphic transmorphosizer. The abductee will occasionally change appearance and species."
 	cooldown_low = 900
@@ -13,3 +15,4 @@
 	randomize_human(owner)
 	var/species = pick(list(/datum/species/human, /datum/species/lizard, /datum/species/moth, /datum/species/fly))
 	owner.set_species(species)
+*/
