@@ -31,6 +31,7 @@ export class IntegratedCircuit extends Component {
       backgroundY: 0,
       variableMenuOpen: false,
       componentMenuOpen: false,
+      gridMode: true,
     };
     this.handlePortLocation = this.handlePortLocation.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -413,6 +414,7 @@ export class IntegratedCircuit extends Component {
       selectedPort,
       variableMenuOpen,
       componentMenuOpen,
+      gridMode,
       draggingComponent,
       draggingOffsetX,
       draggingOffsetY,
@@ -487,11 +489,27 @@ export class IntegratedCircuit extends Component {
                   position="absolute"
                   top={0}
                   color="transparent"
+                  tooltip="Component Menu"
                   icon="plus"
                   selected={componentMenuOpen}
                   onClick={() =>
                     this.setState((state) => ({
                       componentMenuOpen: !state.componentMenuOpen,
+                    }))
+                  }
+                />
+              </Stack.Item>
+              <Stack.Item basis="24px">
+                <Button
+                  position="absolute"
+                  top={0}
+                  color="transparent"
+                  tooltip="Grid Aligning"
+                  icon="th-large"
+                  selected={ObjectComponent.isGridMode}
+                  onClick={() =>
+                    ObjectComponent.setState((state) => ({
+                      isGridMode: !ObjectComponent.isGridMode,
                     }))
                   }
                 />

@@ -13,6 +13,7 @@ export class ObjectComponent extends Component {
       dragPos: null,
       startPos: null,
       lastMousePos: null,
+      isGridMode: true,
     };
 
     this.handleStartDrag = this.handleStartDrag.bind(this);
@@ -39,8 +40,8 @@ export class ObjectComponent extends Component {
     if (dragPos) {
       act('set_component_coordinates', {
         component_id: index,
-        rel_x: dragPos.x,
-        rel_y: dragPos.y,
+        rel_x: this.roundTo10(dragPos.x),
+        rel_y: this.roundTo10(dragPos.y),
       });
     }
 
@@ -81,6 +82,12 @@ export class ObjectComponent extends Component {
     );
   }
 
+  roundTo10(input_value) {
+    const { isGridMode } = this.state;
+    if (!isGridMode) return input_value;
+    return Math.round(input_value / 10) * 10;
+  }
+
   render() {
     const {
       input_ports,
@@ -105,8 +112,8 @@ export class ObjectComponent extends Component {
 
     let [x_pos, y_pos] = [x, y];
     if (dragPos && startPos && startPos.x === x_pos && startPos.y === y_pos) {
-      x_pos = dragPos.x;
-      y_pos = dragPos.y;
+      x_pos = this.roundTo10(dragPos.x);
+      y_pos = this.roundTo10(dragPos.y);
     }
 
     // Assigned onto the ports
