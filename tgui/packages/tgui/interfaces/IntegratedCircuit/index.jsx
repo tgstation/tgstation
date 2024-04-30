@@ -475,7 +475,7 @@ export class IntegratedCircuit extends Component {
                   position="absolute"
                   top={0}
                   color="transparent"
-                  tooltip="Variables Menu"
+                  tooltip="Show Variables Menu"
                   icon="cog"
                   selected={variableMenuOpen}
                   onClick={() =>
@@ -490,7 +490,7 @@ export class IntegratedCircuit extends Component {
                   position="absolute"
                   top={0}
                   color="transparent"
-                  tooltip="Components Menu"
+                  tooltip="Show Components Menu"
                   icon="plus"
                   selected={componentMenuOpen}
                   onClick={() =>
