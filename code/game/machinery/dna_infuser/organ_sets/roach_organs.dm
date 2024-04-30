@@ -63,7 +63,7 @@
 
 /obj/item/organ/internal/heart/roach/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "has hardened, somewhat translucent skin.")
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_They %PRONOUN_have hardened, somewhat translucent skin.")
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/roach)
 	roach_shell = new()
 

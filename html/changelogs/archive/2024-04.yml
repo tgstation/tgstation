@@ -747,3 +747,165 @@
       you please. Everyone is a victim!
   san7890:
   - bugfix: Evolved aliens should no longer have two numbers in their name.
+2024-04-24:
+  Ben10Omintrix:
+  - bugfix: brimdemons (and other mobs) will act normally
+  Jacquerel and Melbert:
+  - rscadd: A new achievement for moving a boulder from one place to another, at great
+      effort.
+  - balance: Hauling a boulder around makes you move slower, as it does when dragging
+      it.
+  Melbert:
+  - qol: Tuberculosis makes you cough more
+  - qol: Nicotine Addiciton makes you cough less
+  - qol: Medicine Addiction maybe makes you cough more, maybe makes you cough less
+  - bugfix: Only brute damage causes brain damage when applied to the forehead, rather
+      than all damage types
+  - bugfix: Playing Cards memory now reads better
+  - qol: Coughing will now no longer print to chat, IE, it is runechat only. If you
+      have runechat emotes disabled, however, it will still print to chat.
+  - qol: Snapping now has a visual component.
+  - bugfix: All emotes are no longer considered audible, meaning blind people go back
+      to not being able to see people do flips and jumps
+  - bugfix: However, blind people are now told when they do a visible emote like flipping
+      (because they can, obviously, feel themselves flipping). Likewise, deaf people
+      are told when they do some audible emotes, like coughing or screaming.
+  Rhials:
+  - bugfix: Fake handcuffs/Zipties no longer block clicks for a few seconds after
+      being resisted out of.
+  SyncIt21:
+  - bugfix: plumbing & chem reaction chamber heating effects accurately reflect the
+      beakers heat capacity & power usage
+  - bugfix: plumbing reaction will not use power when emptying or when there are no
+      reagents to heat
+  - bugfix: you can hit the chem reaction chamber with items like beakers, screwdrivers,
+      crowbars and what not
+  jlsnow301:
+  - rscadd: Admin tools buffed, check the Controller Overview
+  - rscadd: Controller Overview moved to debug tab
+  - bugfix: 'Cargo express console fixed: No more bluescreen'
+  necromanceranne:
+  - rscadd: Adds a higher capacity SMES unit to lower maintenance areas and maps.
+  - bugfix: Miners can actually access and fix their engineering issues on the lavaland
+      base via the engineering section of the base.
+  - bugfix: The gulag SMES unit is no longer needlessly draining the entire power
+      grid of the main mining base.
+  uaioy:
+  - rscadd: New heavy weight pirates, medieval warmongers
+  - rscadd: Adds military spear, shortsword, boarding axe, kite shields
+  - rscadd: Adds warlord and crude armor
+  - rscadd: Adds medieval shuttle (made by striders18)
+2024-04-25:
+  Fikou:
+  - bugfix: brimbeams no longer make a cog appear above the mob
+  - bugfix: you can no longer take off someones glasses or mask through atmos hardhat
+  - bugfix: once you adjust a welding helmet or something it no longer makes your
+      cigarette or sunglasses invisible
+  - bugfix: welding gas mask works once again
+  - bugfix: quick equips dont drop the item if you cant equip it
+  Momo8289:
+  - rscadd: The crew monitor now has sorting options and a search bar.
+  grungussuss:
+  - rscadd: whistle emote
+  - refactor: Refactored how laugh, sneeze, cough and cry sound is called in the code,
+      report strange behavior with these emotes.
+  - sound: added sounds for whistle, cry, cough, sneeze, laugh for moths and lizards
+      emotes
+  necromanceranne:
+  - balance: Longfall modules no logner stun you when they activate.
+  - balance: Falling from a height greater than one z-level while using the longfall
+      module will still stagger you.
+2024-04-26:
+  Ben10Omintrix:
+  - bugfix: all bots have their normal accesses restored
+  Bisar:
+  - bugfix: AI controlled monkeys are no longer catatonic, and they have primal eyes
+      again when turned into humans.
+  - spellcheck: Noticable organs now have more modular grammar, and their current
+      grammar is fixed.
+  - refactor: Refactored the code for displaying the messages for noticable organs.
+  - config: Added a documented define of all our pronouns
+  KingkumaArt:
+  - bugfix: The rebar crossbows now properly loosen their bowstring upon firing.
+  LT3:
+  - balance: ChemMaster can again print a maximum of 50 pills/patches per run
+  - balance: Higher tier servos increase ChemMaster printing speed
+  Singul0:
+  - bugfix: fixed cyborg bonesetter not working for compound fractures
+  - bugfix: butchering not disabling in cyborg omnitool
+  - bugfix: fixes a bug where if you select the omnitool it would be stuck in surgery
+      initiator mode
+  - bugfix: cautery in off hand for cyborg omnitools not working
+  jlsnow301:
+  - bugfix: Restored silicon alt-clicking capability
+  necromanceranne:
+  - bugfix: The plasma flower modsuit core now actually contains a reasonable quantity
+      of power.
+2024-04-27:
+  Maurukas:
+  - bugfix: Removed a power loop on icebox
+  - bugfix: Disconnected aux power smes from icebox grid at roundstart
+  - bugfix: Removed some power cables connecting Deltastation's aux power
+  - bugfix: Fixed tramstation's gravity generator SMES, now functions and charged
+      at roundstart.
+  - bugfix: NorthStar's gravity generator SMES is now properly charged at roundstart
+  ZephyrTFA:
+  - admin: The return of IPIntel
+  grungussuss:
+  - bugfix: fixed being able to install multiple of the same upgrade to medical cyborgs
+2024-04-28:
+  Ben10Omintrix:
+  - bugfix: fixes mobs getting stuck trying to reach something unreachable
+  EnterTheJake:
+  - bugfix: Spraycan no longer spams your chat when you mouse over it.
+  Melbert:
+  - bugfix: Midround malf can roll again
+  Rhials:
+  - bugfix: Overwatch Intelligence Agents no longer get their own uplinks, leading
+      to a self-replicating grey goo scenario.
+  jlsnow301:
+  - bugfix: Fixes clipping in the ESC menu between buttons and long station names.
+2024-04-29:
+  13spacemen:
+  - bugfix: All alert polls ignore option works
+  - code_imp: Unarmed attacks (punches, etc.) now support multiple attack verbs instead
+      of only one
+  EnterTheJake:
+  - image: The Infiltrator Suit has received a new model, sleeker than ever!
+  FlufflesTheDog:
+  - bugfix: minebot shields are now actually orderable
+  - bugfix: vinegar may once again be crafted with wine, water, and sugar
+  JohnFulpWillard:
+  - bugfix: Examining someone with Med/Sec HUDs will no longer filter the message
+      under Radio.
+  - bugfix: pAI requests should no longer randomly permanently break in a round.
+  Melbert:
+  - bugfix: Plasma cutters work again
+  Metekillot:
+  - bugfix: Mech domination now properly integrates with shunting.
+  - bugfix: Combat upgraded AIs no longer get two buggy malf ability pickers if they
+      also become malfunctioning
+  - refactor: Refactored most of the functionality around malf AI shunting, mech control
+  Rhials:
+  - admin: Lazy loading map templates now gives you the option to not ghost/teleport
+      to the loaded area upon completion.
+  Sadboysuss:
+  - admin: spy can now be rolebanned
+  VexingRaven:
+  - bugfix: The debug box no longer spills its contents everywhere
+  improvedname:
+  - qol: Arrivals shuttle is now more player friendly
+  san7890:
+  - admin: Possess Object is now back in the right-click context menu.
+2024-04-30:
+  Jacquerel:
+  - balance: Netguardian Prime can see in the dark.
+  - image: You can see Netguardian Prime in the dark.
+  SyncIt21:
+  - bugfix: Eigenstasium exposed & Anomaly station trait affected closets work again.
+      Eigenstasium closets are tainted blue
+  YesterdaysPromise:
+  - bugfix: The start-of-the-round tips will no longer feature virologists, but will,
+      however, start featuring heretics and coroners.
+  intercepti0n:
+  - rscadd: Added a short scene when getting an Ordeal of Sisyphus achievement.

@@ -212,21 +212,10 @@
 		part.heat_protection = NONE
 		part.cold_protection = NONE
 		part.alternate_worn_layer = mod_parts[part]
-	if(part == boots)
-		wearer.update_worn_shoes()
-	if(part == gauntlets)
-		wearer.update_worn_gloves()
-	if(part == chestplate)
-		wearer.update_worn_oversuit()
-		wearer.update_worn_undersuit()
-	if(part == helmet)
-		wearer.update_worn_head()
-		wearer.update_worn_mask()
-		wearer.update_worn_glasses()
-		wearer.update_body_parts()
-		// Close internal air tank if MOD helmet is unsealed and was the only breathing apparatus.
-		if (!seal && wearer?.invalid_internals())
-			wearer.cutoff_internals()
+	wearer.update_clothing(part.slot_flags)
+	wearer.update_obscured_slots(part.visor_flags_inv)
+	if((part.clothing_flags & (MASKINTERNALS|HEADINTERNALS)) && wearer.invalid_internals())
+		wearer.cutoff_internals()
 
 /// Finishes the suit's activation
 /obj/item/mod/control/proc/finish_activation(on)
