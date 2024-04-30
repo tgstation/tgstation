@@ -1,3 +1,5 @@
+import '@swc/register';
+
 import { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
