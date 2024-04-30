@@ -1291,6 +1291,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/register@npm:^0.1.10":
+  version: 0.1.10
+  resolution: "@swc/register@npm:0.1.10"
+  dependencies:
+    lodash.clonedeep: "npm:^4.5.0"
+    pirates: "npm:^4.0.1"
+    source-map-support: "npm:^0.5.13"
+  peerDependencies:
+    "@swc/core": ^1.0.46
+  bin:
+    swc-node: bin/swc-node
+  checksum: 10c0/58c2517c6565f7bd28bf6d494fb2691572c29bade7a1652056549adc0646481935b700e5bc1ee6e5ac628b91abfd0a39719a7470873b38593b522de6ac26ea80
+  languageName: node
+  linkType: hard
+
 "@swc/types@npm:^0.1.5":
   version: 0.1.6
   resolution: "@swc/types@npm:0.1.6"
@@ -5986,6 +6001,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.clonedeep@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "lodash.clonedeep@npm:4.5.0"
+  checksum: 10c0/2caf0e4808f319d761d2939ee0642fa6867a4bbf2cfce43276698828380756b99d4c4fa226d881655e6ac298dd453fe12a5ec8ba49861777759494c534936985
+  languageName: node
+  linkType: hard
+
 "lodash.merge@npm:^4.6.2":
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
@@ -6901,7 +6923,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pirates@npm:^4.0.4":
+"pirates@npm:^4.0.1, pirates@npm:^4.0.4":
   version: 4.0.6
   resolution: "pirates@npm:4.0.6"
   checksum: 10c0/00d5fa51f8dded94d7429700fb91a0c1ead00ae2c7fd27089f0c5b63e6eca36197fe46384631872690a66f390c5e27198e99006ab77ae472692ab9c2ca903f36
@@ -7846,7 +7868,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-support@npm:~0.5.20":
+"source-map-support@npm:^0.5.13, source-map-support@npm:~0.5.20":
   version: 0.5.21
   resolution: "source-map-support@npm:0.5.21"
   dependencies:
@@ -8338,8 +8360,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "tgui-workspace@workspace:."
   dependencies:
+    "@jest/types": "npm:^29.6.3"
     "@swc/core": "npm:^1.4.11"
     "@swc/jest": "npm:^0.2.36"
+    "@swc/register": "npm:^0.1.10"
     "@types/jest": "npm:^29.5.12"
     "@types/node": "npm:^20.12.3"
     "@types/webpack-env": "npm:^1.18.4"

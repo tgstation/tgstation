@@ -1,4 +1,6 @@
-module.exports = {
+import { Config } from '@jest/types';
+
+const config: Config.InitialOptions = {
   roots: ['<rootDir>/packages'],
   testMatch: [
     '<rootDir>/packages/**/__tests__/*.{js,ts,tsx}',
@@ -6,10 +8,12 @@ module.exports = {
   ],
   testPathIgnorePatterns: ['<rootDir>/packages/tgui-bench'],
   testEnvironment: 'jsdom',
-  testRunner: require.resolve('jest-circus/runner'),
+  testRunner: 'jest-circus/runner',
   transform: {
-    '^.+\\.(js|cjs|ts|tsx)$': require.resolve('@swc/jest'),
+    '^.+\\.(js|cjs|ts|tsx)$': '@swc/jest',
   },
   moduleFileExtensions: ['js', 'cjs', 'ts', 'tsx', 'json'],
   resetMocks: true,
 };
+
+export default config;

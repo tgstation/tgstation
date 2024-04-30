@@ -22,8 +22,10 @@
     "tgui:eslint-fix": "eslint --fix packages --ext .js,.cjs,.ts,.tsx"
   },
   "dependencies": {
+    "@jest/types": "^29.6.3",
     "@swc/core": "^1.4.11",
     "@swc/jest": "^0.2.36",
+    "@swc/register": "^0.1.10",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.3",
     "@types/webpack-env": "^1.18.4",

@@ -4,29 +4,66 @@
  * @license MIT
  */
 
-const webpack = require('webpack');
-const path = require('path');
-const ExtractCssPlugin = require('mini-css-extract-plugin');
+import { EsbuildPlugin } from 'esbuild-loader';
+import ExtractCssPlugin from 'mini-css-extract-plugin';
+import path from 'path';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import webpack from 'webpack';
+import { type Configuration } from 'webpack';
 
-const createStats = (verbose) => ({
-  assets: verbose,
-  builtAt: verbose,
-  cached: false,
-  children: false,
-  chunks: false,
-  colors: true,
-  entrypoints: true,
-  hash: false,
-  modules: false,
-  performance: false,
-  timings: verbose,
-  version: verbose,
-});
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-module.exports = (env = {}, argv) => {
+type Env = Partial<{
+  DEV_SERVER_IP: string;
+  NODE_ENV: string;
+  TGUI_BENCH: string;
+  WEBPACK_HMR_ENABLED: string;
+}>;
+
+type Args = {
+  devServer: boolean;
+  hot: boolean;
+  mode: 'development' | 'production';
+  useTmpFolder: boolean;
+};
+
+type DevServerOptions = {
+  clientLogLevel: string;
+  noInfo: boolean;
+  progress: boolean;
+  quiet: boolean;
+  stats: Record<string, boolean>;
+};
+
+type TguiConfig = {
+  devServer?: DevServerOptions;
+  devtool: string | false;
+} & Configuration;
+
+function createStats(verbose: boolean) {
+  return {
+    assets: verbose,
+    builtAt: verbose,
+    cached: false,
+    children: false,
+    chunks: false,
+    colors: true,
+    entrypoints: true,
+    hash: false,
+    modules: false,
+    performance: false,
+    timings: verbose,
+    version: verbose,
+  };
+}
+
+export default (env: Env = {}, argv: Args): Configuration => {
   const mode = argv.mode || 'production';
   const bench = env.TGUI_BENCH;
-  const config = {
+
+  const config: TguiConfig = {
     mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),
     target: ['web', 'es5', 'browserslist:ie 11'],
@@ -54,7 +91,7 @@ module.exports = (env = {}, argv) => {
           test: /\.([tj]s(x)?|cjs)$/,
           use: [
             {
-              loader: require.resolve('swc-loader'),
+              loader: 'swc-loader',
             },
           ],
         },
@@ -68,13 +105,13 @@ module.exports = (env = {}, argv) => {
               },
             },
             {
-              loader: require.resolve('css-loader'),
+              loader: 'css-loader',
               options: {
                 esModule: false,
               },
             },
             {
-              loader: require.resolve('sass-loader'),
+              loader: 'sass-loader',
             },
           ],
         },
@@ -82,7 +119,7 @@ module.exports = (env = {}, argv) => {
           test: /\.(png|jpg|svg)$/,
           use: [
             {
-              loader: require.resolve('url-loader'),
+              loader: 'url-loader',
               options: {
                 esModule: false,
               },
@@ -130,8 +167,7 @@ module.exports = (env = {}, argv) => {
 
   // Production build specific options
   if (mode === 'production') {
-    const { EsbuildPlugin } = require('esbuild-loader');
-    config.optimization.minimizer = [
+    config.optimization!.minimizer = [
       new EsbuildPlugin({
         target: 'ie11',
         css: true,
