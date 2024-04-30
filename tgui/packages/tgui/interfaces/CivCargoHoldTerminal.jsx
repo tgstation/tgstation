@@ -101,7 +101,18 @@ const BountyPickBox = (props) => {
     <Section title="Please Select a Bounty:" textAlign="center">
       <Flex width="100%" wrap>
         <Flex.Item shrink={0} grow={0.5}>
-          <Button fluid color="green" onClick={() => act('pick', { value: 1 })}>
+          <Button
+            fluid
+            color="green"
+            onClick={() => act('pick', { value: 1 })}
+            style={{
+              display: 'flex',
+              textWrap: 'wrap',
+              whiteSpace: 'normal',
+              paddingLeft: '0',
+              paddingRight: '0',
+            }}
+          >
             <Box>{id_bounty_names[0]}</Box>
             <Box textAlign="left" color="black" backgroundColor="linen">
               {id_bounty_infos[0]}
@@ -110,7 +121,18 @@ const BountyPickBox = (props) => {
           </Button>
         </Flex.Item>
         <Flex.Item shrink={0} grow={0.5} px={1}>
-          <Button fluid color="green" onClick={() => act('pick', { value: 2 })}>
+          <Button
+            fluid
+            color="green"
+            onClick={() => act('pick', { value: 2 })}
+            style={{
+              display: 'flex',
+              textWrap: 'wrap',
+              whiteSpace: 'normal',
+              paddingLeft: '0',
+              paddingRight: '0',
+            }}
+          >
             <Box>{id_bounty_names[1]}</Box>
             <Box textAlign="left" color="black" backgroundColor="linen">
               {id_bounty_infos[1]}
@@ -119,10 +141,21 @@ const BountyPickBox = (props) => {
           </Button>
         </Flex.Item>
         <Flex.Item shrink={0} grow={0.5}>
-          <Button fluid color="green" onClick={() => act('pick', { value: 3 })}>
+          <Button
+            fluid
+            color="green"
+            onClick={() => act('pick', { value: 3 })}
+            style={{
+              display: 'flex',
+              textWrap: 'wrap',
+              whiteSpace: 'normal',
+              paddingLeft: '0',
+              paddingRight: '0',
+            }}
+          >
             <Box>{id_bounty_names[2]}</Box>
             <Box textAlign="left" color="black" backgroundColor="linen">
-              {id_bounty_infos[1]}
+              {id_bounty_infos[2]}
             </Box>
             <Box>Payout: {id_bounty_values[2]} cr</Box>
           </Button>
