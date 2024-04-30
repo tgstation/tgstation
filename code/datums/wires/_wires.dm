@@ -292,8 +292,13 @@
 		if(!photo.picture?.has_blueprints)
 			continue
 
-		to_chat(user, span_notice("<i>You squint at [photo], looking for wires hidden in the pictured blueprints.</i>"))
-		var/study_length = 1 SECONDS * (min(photo.picture.psize_x, photo.picture.psize_y) / 32)
+		var/study_length = 1 SECONDS * floor(min(photo.picture.psize_x, photo.picture.psize_y) / 32)
+		if(study_length >= 4 SECONDS)
+			to_chat(user, span_notice("<i>You squint [photo]... Hey, there's blueprints in the frame! Really wish the photo was zoomed in, though. \
+				It's rather difficult to make out the wires.</i>"))
+		else
+			to_chat(user, span_notice("<i>You glance at [photo], looking for wires in the pictured blueprints.</i>"))
+
 		if(do_after(user, study_length, holder, hidden = TRUE))
 			LAZYSET(studied_photos, REF(user), REF(photo))
 		return
@@ -314,7 +319,7 @@
 	if (!ui)
 		ui = new(user, src, "Wires", "[holder.name] Wires")
 		ui.open()
-		try_study_photo(user)
+	try_study_photo(user)
 
 /datum/wires/ui_data(mob/user)
 	var/list/data = list()
