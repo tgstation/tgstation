@@ -5,11 +5,11 @@
 /// The female specific list that we get from init_sprite_accessory_subtypes()
 #define FEMALE_SPRITE_LIST "female_sprites"
 
-/// Datasystem that just holds lists of sprite accessories for accession in generating said sprites.
+/// subsystem that just holds lists of sprite accessories for accession in generating said sprites.
 /// A sprite accessory is something that we add to a human sprite to make them look different. This is hair, facial hair, underwear, mutant bits, etc.
-DATASYSTEM_DEF(accessories) // just 'accessories' for brevity
+SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	name = "Sprite Accessories"
-	system_flags = DS_FLAG_REQUIRES_INITIALIZATION
+	flags = SS_NO_FIRE | SS_NO_INIT
 
 	//Hairstyles
 	var/list/hairstyles_list //! stores /datum/sprite_accessory/hair indexed by name
@@ -56,15 +56,15 @@ DATASYSTEM_DEF(accessories) // just 'accessories' for brevity
 	var/list/caps_list
 	var/list/pod_hair_list
 
-/datum/system/accessories/Initialize()
+/datum/controller/subsystem/accessories/PreInit()
 	setup_lists()
 	init_hair_gradients()
 
 /// Sets up all of the lists for later utilization in the round and building sprites.
 /// In an ideal world we could tack everything that just needed `DEFAULT_SPRITE_LIST` into static variables on the top, but due to the initialization order
-/// where this datasystem will initialize BEFORE statics, it's just not feasible since this all needs to be ready for actual subsystems to use.
+/// where this subsystem will initialize BEFORE statics, it's just not feasible since this all needs to be ready for actual subsystems to use.
 /// Sorry.
-/datum/system/accessories/proc/setup_lists()
+/datum/controller/subsystem/accessories/proc/setup_lists()
 	var/hair_lists = init_sprite_accessory_subtypes(/datum/sprite_accessory/hair)
 	hairstyles_list = hair_lists[DEFAULT_SPRITE_LIST]
 	hairstyles_male_list = hair_lists[MALE_SPRITE_LIST]
@@ -107,7 +107,7 @@ DATASYSTEM_DEF(accessories) // just 'accessories' for brevity
 	pod_hair_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair)[DEFAULT_SPRITE_LIST]
 
 /// This proc just intializes all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
-/datum/system/accessories/proc/init_hair_gradients()
+/datum/controller/subsystem/accessories/proc/init_hair_gradients()
 	hair_gradients_list = list()
 	facial_hair_gradients_list = list()
 	for(var/path in subtypesof(/datum/sprite_accessory/gradient))
@@ -117,9 +117,9 @@ DATASYSTEM_DEF(accessories) // just 'accessories' for brevity
 		if(gradient.gradient_category & GRADIENT_APPLIES_TO_FACIAL_HAIR)
 			facial_hair_gradients_list[gradient.name] = gradient
 
-/// This reads the applicable sprite accessory datum's subtypes and adds it to the datasystem's list of sprite accessories.
+/// This reads the applicable sprite accessory datum's subtypes and adds it to the subsystem's list of sprite accessories.
 /// The boolean `add_blank` argument just adds a "None" option to the list of sprite accessories, like if a felinid doesn't want a tail or something, typically good for gated-off things.
-/datum/system/accessories/proc/init_sprite_accessory_subtypes(prototype, add_blank = FALSE)
+/datum/controller/subsystem/accessories/proc/init_sprite_accessory_subtypes(prototype, add_blank = FALSE)
 	RETURN_TYPE(/list)
 	var/returnable_list = list(
 		DEFAULT_SPRITE_LIST = list(),
