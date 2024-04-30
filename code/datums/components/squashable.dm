@@ -37,6 +37,8 @@
 		return
 
 	var/mob/living/parent_as_living = parent
+	if((squash_flags & SQUASHED_DONT_SQUASH_IN_CONTENTS) && !isturf(parent_as_living.loc))
+		return
 
 	if(squash_flags & SQUASHED_SHOULD_BE_DOWN && parent_as_living.body_position != LYING_DOWN)
 		return

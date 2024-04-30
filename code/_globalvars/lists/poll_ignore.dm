@@ -9,6 +9,7 @@
 #define POLL_IGNORE_CARGORILLA "cargorilla"
 #define POLL_IGNORE_CONTRACTOR_SUPPORT "contractor_support"
 #define POLL_IGNORE_CONSTRUCT "construct"
+#define POLL_IGNORE_CORTICAL_BORER "cortical_borer" // MONKESTATION ADDITION -- CORTICAL_BORERS
 #define POLL_IGNORE_DRONE "drone"
 #define POLL_IGNORE_FIRE_SHARK "fire_shark"
 #define POLL_IGNORE_FUGITIVE "fugitive"
@@ -47,6 +48,7 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_CARGORILLA = "Cargorilla",
 	POLL_IGNORE_CONTRACTOR_SUPPORT = "Contractor Support Unit",
 	POLL_IGNORE_CONSTRUCT = "Construct",
+	POLL_IGNORE_CORTICAL_BORER = "Cortical Borer", // MONKESTATION ADDITION -- CORTICAL_BORERS
 	POLL_IGNORE_DRONE = "Drone shells",
 	POLL_IGNORE_FIRE_SHARK = "Fire Shark",
 	POLL_IGNORE_FUGITIVE = "Fugitive Hunter",

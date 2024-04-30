@@ -38,3 +38,11 @@
 		/obj/item/ammo_box/c35/rubber = 1,
 		)
 	crate_name = ".35 Auto Ammo crate"
+
+/datum/supply_pack/security/borer_cage
+	name = "Borer cage"
+	desc = "Ever needed capture those pesky illegal borers to put them on a trial? Well this crate if for you!"
+	cost = CARGO_CRATE_VALUE * 10
+	contraband = TRUE
+	contains = list(/obj/item/cortical_cage)
+	crate_name = "anti-borer crate"
