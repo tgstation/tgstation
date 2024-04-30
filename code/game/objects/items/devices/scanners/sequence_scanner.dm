@@ -19,7 +19,7 @@
 	var/list/discovered = list() //hit a dna console to update the scanners database
 	var/list/buffer
 	var/ready = TRUE
-	var/cooldown = 200
+	var/cooldown = (20 SECONDS)
 	/// genetic makeup data that's scanned
 	var/list/genetic_makeup_buffer = list()
 
@@ -104,7 +104,7 @@
 	buffer = LAZYLISTDUPLICATE(target.dna.mutation_index)
 	var/list/active_mutations = list()
 	for(var/datum/mutation/human/mutation in target.dna.mutations)
-		LAZYOR(buffer, mutation.type)
+		LAZYSET(buffer, mutation.type, GET_SEQUENCE(mutation.type))
 		active_mutations.Add(mutation.type)
 
 	to_chat(user, span_notice("Subject [target.name]'s DNA sequence has been saved to buffer."))
