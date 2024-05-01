@@ -455,16 +455,18 @@
 	return ..()
 
 /// Secondary right click interaction to quickly stamp things
-/obj/item/paper/attackby_secondary(obj/item/weapon, mob/user, params)
-	var/writing_stats = weapon.get_writing_implement_details()
+/obj/item/paper/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	var/list/writing_stats = tool.get_writing_implement_details()
 
+	if(!length(writing_stats))
+		return
 	if(writing_stats["interaction_mode"] == MODE_STAMPING)
 		if(!user.can_read(src) || user.is_blind()) // Just leftclick instead
 			return
 		else
 			add_stamp(writing_stats["stamp_class"], rand(0, 400), rand(0, 500), stamp_icon_state = writing_stats["stamp_icon_state"])
-			user.visible_message(span_notice("[user] quickly stamps [src] with \the [weapon]"))
-			to_chat(user, span_notice("You stamp [src] quickly with \the [weapon]"))
+			user.visible_message(span_notice("[user] quickly stamps [src] with \the [tool]"))
+			to_chat(user, span_notice("You stamp [src] quickly with \the [tool]"))
 			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 	return ..()
 
