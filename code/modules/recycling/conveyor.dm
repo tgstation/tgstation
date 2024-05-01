@@ -350,8 +350,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 	/// The current state of the switch.
 	var/position = CONVEYOR_OFF
-	/// Last direction setting.
-	var/last_pos = CONVEYOR_BACKWARDS
 	/// If the switch only operates the conveyor belts in a single direction.
 	var/oneway = FALSE
 	/// If the level points the opposite direction when it's turned on.
@@ -414,28 +412,29 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		CHECK_TICK
 
 /// Updates the switch's `position` and `last_pos` variable. Useful so that the switch can properly cycle between the forwards, backwards and neutral positions.
-/obj/machinery/conveyor_switch/proc/update_position()
+/obj/machinery/conveyor_switch/proc/update_position(direction)
 	if(position == CONVEYOR_OFF)
 		if(oneway)   //is it a oneway switch
 			position = oneway
 		else
-			if(last_pos < CONVEYOR_OFF)
+			if(direction == CONVEYOR_FORWARD)
 				position = CONVEYOR_FORWARD
-				last_pos = CONVEYOR_OFF
 			else
 				position = CONVEYOR_BACKWARDS
-				last_pos = CONVEYOR_OFF
 	else
-		last_pos = position
 		position = CONVEYOR_OFF
 
 /// Called when a user clicks on this switch with an open hand.
-/obj/machinery/conveyor_switch/interact(mob/user)
+/obj/machinery/conveyor_switch/attack_hand(mob/living/user, list/modifiers)
 	add_fingerprint(user)
-	update_position()
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		update_position(CONVEYOR_BACKWARDS)
+	else
+		update_position(CONVEYOR_FORWARD)
 	update_appearance()
 	update_linked_conveyors()
 	update_linked_switches()
+	return TRUE
 
 /obj/machinery/conveyor_switch/attackby(obj/item/attacking_item, mob/user, params)
 	if(is_wire_tool(attacking_item))
@@ -619,12 +618,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	attached_switch = null
 	return ..()
 
-/obj/item/circuit_component/conveyor_switch/input_received(datum/port/input/port)
-	if(!attached_switch)
-		return
-
-	INVOKE_ASYNC(src, PROC_REF(update_conveyors), port)
-
 /obj/item/circuit_component/conveyor_switch/proc/on_switch_changed()
 	attached_switch.update_appearance()
 	attached_switch.update_linked_conveyors()
@@ -644,13 +637,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/item/circuit_component/conveyor_switch/proc/reverse()
 	SIGNAL_HANDLER
 	attached_switch.position = CONVEYOR_BACKWARDS
-	INVOKE_ASYNC(src, PROC_REF(on_switch_changed))
-
-/obj/item/circuit_component/conveyor_switch/proc/update_conveyors(datum/port/input/port)
-	if(!attached_switch)
-		return
-
-	attached_switch.update_position()
 	INVOKE_ASYNC(src, PROC_REF(on_switch_changed))
 
 #undef CONVEYOR_BACKWARDS
