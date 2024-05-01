@@ -464,12 +464,11 @@
 		if(!user.can_read(src) || user.is_blind()) // Just leftclick instead
 			return
 		else
-			add_stamp(writing_stats["stamp_class"], rand(0, 400), rand(0, 500), stamp_icon_state = writing_stats["stamp_icon_state"])
+			add_stamp(writing_stats["stamp_class"], rand(0, 300), rand(0, 400), stamp_icon_state = writing_stats["stamp_icon_state"])
 			user.visible_message(span_notice("[user] quickly stamps [src] with \the [tool]"))
 			to_chat(user, span_notice("You stamp [src] quickly with \the [tool]"))
 			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
-	return ..()
-
+	return ITEM_INTERACT_BLOCKING
 /**
  * Attempts to ui_interact the paper to the given user, with some sanity checking
  * to make sure the camera still exists via the weakref and that this paper is still
