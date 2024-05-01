@@ -42,21 +42,25 @@
 		else
 			modified_speech = "[use_radio ? pick(available_channels) : ""][modified_speech]"
 
-	if(SStts.tts_enabled && SStts.available_speakers.Find(speech["voice"]))
-		speaking_pawn.voice = speech["voice"]
-	if(speech["pitch"] && SStts.pitch_enabled)
-		speaking_pawn.pitch = min(speech["pitch"] + rand(12, 24), MAXIMUM_PARROT_PITCH)
+	if(SStts.tts_enabled)
+		modify_voice(speaking_pawn, speech)
 	speaking_pawn.say(modified_speech, forced = "AI Controller")
 	if(speech_sound)
 		playsound(speaking_pawn, speech_sound, 80, vary = TRUE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+/datum/ai_behavior/perform_speech/parrot/proc/modify_voice(mob/living/speaking_pawn, list/speech)
+	if(SStts.available_speakers.Find(speech["voice"]))
+		speaking_pawn.voice = speech["voice"]
+	if(speech["pitch"] && SStts.pitch_enabled)
+		speaking_pawn.pitch = min(speech["pitch"] + rand(12, 24), MAXIMUM_PARROT_PITCH)
 
 /datum/ai_behavior/perform_speech/parrot/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	if(!succeeded)
 		return
 	var/mob/living/living_pawn = controller.pawn
-	living_pawn.voice = initial(living_pawn.voice)
-	living_pawn.pitch = initial(living_pawn.pitch)
+	living_pawn.voice = living_pawn::voice
+	living_pawn.pitch = living_pawn::pitch
 
 #undef MAXIMUM_PARROT_PITCH

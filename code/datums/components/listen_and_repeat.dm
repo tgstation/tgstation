@@ -9,6 +9,11 @@
 /// the tone it should be said in
 #define MESSAGE_PITCH "pitch"
 
+GLOBAL_LIST_INIT(invalid_voice, list(
+	MESSAGE_VOICE = "invalid",
+	MESSAGE_PITCH = 0,
+))
+
 /// Simple element that will deterministically set a value based on stuff that the source has heard and will then compel the source to repeat it.
 /// Requires a valid AI Blackboard.
 /datum/component/listen_and_repeat
@@ -26,8 +31,12 @@
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	if(!isnull(desired_phrases))
-		LAZYADD(speech_buffer, desired_phrases)
+
+	for(var/speech in desired_phrases)
+		if(!islist(desired_phrases[speech]) || !desired_phrases[speech][MESSAGE_VOICE] || !desired_phrases[speech][MESSAGE_PITCH])
+			LAZYSET(speech_buffer, speech, GLOB.invalid_voice)
+			continue
+		LAZYSET(speech_buffer, speech, desired_phrases[speech])
 
 	src.blackboard_key = blackboard_key
 
@@ -51,9 +60,12 @@
 	if(speaker == source) // don't parrot ourselves
 		return
 
-	var/list/speaker_sound = list()
+	var/list/speaker_sound
 
-	if(ismovable(speaker) && SStts.tts_enabled)
+	if(!SStts.tts_enabled || !ismovable(speaker))
+		speaker_sound = GLOB.invalid_voice
+	else
+		speaker_sound = list()
 		var/atom/movable/movable_speaker = speaker
 		speaker_sound[MESSAGE_VOICE] = (movable_speaker.voice ? movable_speaker.voice : "invalid")
 		speaker_sound[MESSAGE_PITCH] = (movable_speaker.pitch && SStts.pitch_enabled ? movable_speaker.pitch : 0)
