@@ -27,19 +27,22 @@
 	return "Only admins can create custom votes."
 
 /datum/vote/custom_vote/create_vote(mob/vote_creator)
-	var/choice_method = tgui_input_list(
+	var/custom_count_method = tgui_input_list(
 		user = vote_creator,
 		message = "Single or multiple choice?",
 		title = "Choice Method",
 		items = list("Single", "Multiple"),
 		default = "Single",
 	)
-	switch(choice_method)
+	switch(custom_count_method)
 		if("Single")
 			count_method = VOTE_COUNT_METHOD_SINGLE
 		if("Multiple")
 			count_method = VOTE_COUNT_METHOD_MULTI
+		if(null)
+			return FALSE
 		else
+			stack_trace("Got '[custom_count_method]' in create_vote() for custom voting.")
 			to_chat(vote_creator, span_boldwarning("Unknown choice method. Contact a coder."))
 			return FALSE
 
@@ -57,7 +60,10 @@
 			winner_method = VOTE_WINNER_METHOD_WEIGHTED_RANDOM
 		if("No Winner")
 			winner_method = VOTE_WINNER_METHOD_NONE
+		if(null)
+			return FALSE
 		else
+			stack_trace("Got '[custom_win_method]' in create_vote() for custom voting.")
 			to_chat(vote_creator, span_boldwarning("Unknown winner method. Contact a coder."))
 			return FALSE
 

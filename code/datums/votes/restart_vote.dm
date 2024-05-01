@@ -7,7 +7,8 @@
 		CHOICE_RESTART,
 		CHOICE_CONTINUE,
 	)
-	default_message = "Vote to restart the ongoing round."
+	default_message = "Vote to restart the ongoing round. \
+		Only works if there are no non-AFK admins online."
 
 /// This proc checks to see if any admins are online for the purposes of this vote to see if it can pass. Returns TRUE if there are valid admins online (Has +SERVER and is not AFK), FALSE otherwise.
 /datum/vote/restart_vote/proc/admins_present()
@@ -36,7 +37,7 @@
 /datum/vote/restart_vote/proc/async_alert_about_admins(mob/vote_creator)
 	set waitfor = FALSE
 	tgui_alert(vote_creator, "Note: Regardless of the results of this vote, \
-		the round will not automatically restart because an admin is online.")
+		the round will not automatically restart because an active admin is online.")
 
 /datum/vote/restart_vote/get_vote_result(list/non_voters)
 	if(!CONFIG_GET(flag/default_no_vote))

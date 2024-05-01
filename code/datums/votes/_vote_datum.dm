@@ -15,7 +15,7 @@
 	var/list/default_choices
 	/// Does the name of this vote contain the word "vote"?
 	var/contains_vote_in_name = FALSE
-	/// What message do we want to pass to the player-side vote panel as a tooltip?
+	/// What message do we show as the tooltip of this vote if the vote can be initiated?
 	var/default_message = "Click to initiate a vote."
 	/// The counting method we use for votes.
 	var/count_method = VOTE_COUNT_METHOD_SINGLE
@@ -80,7 +80,6 @@
  */
 /datum/vote/proc/can_be_initiated(forced = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	// SHOULD_BE_PURE(TRUE)
 
 	if(!forced && !is_config_enabled())
 		return "This vote is currently disabled by the server configuration."

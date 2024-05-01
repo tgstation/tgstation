@@ -256,7 +256,7 @@ SUBSYSTEM_DEF(vote)
 	// Even if it's forced we can't vote before we're set up
 	if(!MC_RUNNING(init_stage))
 		if(vote_initiator)
-			to_chat(vote_initiator, span_warning("You cannot start vote now, the server is not done initializing."))
+			to_chat(vote_initiator, span_warning("You cannot start a vote now, the server is not done initializing."))
 		return FALSE
 
 	if(forced)
