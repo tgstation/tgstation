@@ -241,7 +241,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/proc/conveyable_enter(datum/source, atom/convayable)
 	SIGNAL_HANDLER
 	if(operating == CONVEYOR_OFF)
-		DSmove_manager.stop_looping(convayable, SSconveyors)
+		GLOB.move_manager.stop_looping(convayable, SSconveyors)
 		return
 	start_conveying(convayable)
 
@@ -249,12 +249,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	SIGNAL_HANDLER
 	var/has_conveyor = neighbors["[direction]"]
 	if(convayable.z != z || !has_conveyor || !isturf(convayable.loc)) //If you've entered something on us, stop moving
-		DSmove_manager.stop_looping(convayable, SSconveyors)
+		GLOB.move_manager.stop_looping(convayable, SSconveyors)
 
 /obj/machinery/conveyor/proc/start_conveying(atom/movable/moving)
 	if(QDELETED(moving))
 		return
-	var/datum/move_loop/move/moving_loop = DSmove_manager.processing_on(moving, SSconveyors)
+	var/datum/move_loop/move/moving_loop = GLOB.move_manager.processing_on(moving, SSconveyors)
 	if(moving_loop)
 		moving_loop.direction = movedir
 		moving_loop.delay = speed * 1 SECONDS
@@ -268,7 +268,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/proc/stop_conveying(atom/movable/thing)
 	if(!ismovable(thing))
 		return
-	DSmove_manager.stop_looping(thing, SSconveyors)
+	GLOB.move_manager.stop_looping(thing, SSconveyors)
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/attacking_item, mob/living/user, params)
@@ -617,6 +617,15 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	attached_switch = null
 	return ..()
 
+<<<<<<< HEAD
+=======
+/obj/item/circuit_component/conveyor_switch/input_received(datum/port/input/port)
+	if(!attached_switch)
+		return
+
+	INVOKE_ASYNC(src, PROC_REF(update_conveyors), port)
+
+>>>>>>> master
 /obj/item/circuit_component/conveyor_switch/proc/on_switch_changed()
 	attached_switch.update_appearance()
 	attached_switch.update_linked_conveyors()
@@ -638,6 +647,16 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	attached_switch.position = CONVEYOR_BACKWARDS
 	INVOKE_ASYNC(src, PROC_REF(on_switch_changed))
 
+<<<<<<< HEAD
+=======
+/obj/item/circuit_component/conveyor_switch/proc/update_conveyors(datum/port/input/port)
+	if(!attached_switch)
+		return
+
+	attached_switch.update_position()
+	INVOKE_ASYNC(src, PROC_REF(on_switch_changed))
+
+>>>>>>> master
 #undef CONVEYOR_BACKWARDS
 #undef CONVEYOR_OFF
 #undef CONVEYOR_FORWARD
