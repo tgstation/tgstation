@@ -468,7 +468,7 @@
 			user.visible_message(span_notice("[user] quickly stamps [src] with \the [tool]"))
 			to_chat(user, span_notice("You stamp [src] quickly with \the [tool]"))
 			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
-	return ITEM_INTERACT_BLOCKING
+	return ITEM_INTERACT_BLOCKING // Stop the UI from opening.
 /**
  * Attempts to ui_interact the paper to the given user, with some sanity checking
  * to make sure the camera still exists via the weakref and that this paper is still
