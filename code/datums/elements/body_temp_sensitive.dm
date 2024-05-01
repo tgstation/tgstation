@@ -49,7 +49,7 @@
 	var/mob/living/living_mob = target
 	var/gave_alert = FALSE
 
-	if(living_mob.bodytemperature < min_body_temp)
+	if(living_mob.bodytemperature < min_body_temp && !HAS_TRAIT(living_mob, TRAIT_RESISTCOLD))
 		living_mob.adjustFireLoss(cold_damage * seconds_per_tick, forced = TRUE)
 		if(!living_mob.has_status_effect(/datum/status_effect/inebriated))
 			switch(cold_damage)
@@ -61,7 +61,7 @@
 					living_mob.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 3)
 			gave_alert = TRUE
 
-	else if(living_mob.bodytemperature > max_body_temp)
+	else if(living_mob.bodytemperature > max_body_temp && !HAS_TRAIT(living_mob, TRAIT_RESISTHEAT))
 		living_mob.adjustFireLoss(heat_damage * seconds_per_tick, forced = TRUE)
 		switch(heat_damage)
 			if(1 to 5)

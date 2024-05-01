@@ -67,6 +67,20 @@
 /mob/living/basic/pet/dog/tamed(mob/living/tamer, atom/food)
 	visible_message(span_notice("[src] licks at [tamer] in a friendly manner!"))
 
+/mob/living/basic/pet/dog/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+	. = ..()
+	if(!.)
+		return
+
+	if(!proximity_flag)
+		return
+
+	if(istype(attack_target, /obj/item/dog_bone))
+		if(do_after(src, attack_target, 3 SECONDS))
+			var/obj/item/dog_bone/bone = attack_target
+			bone.be_consumed(src)
+		return TRUE
+
 /// A dog bone fully heals a dog, and befriends it if it's not your friend.
 /obj/item/dog_bone
 	name = "jumbo dog bone"
@@ -86,10 +100,14 @@
 	var/mob/living/basic/pet/dog/dog_target = target
 	if (dog_target.stat != CONSCIOUS)
 		return ..()
-	dog_target.emote("spin")
-	dog_target.fully_heal()
 	if (dog_target.befriend(user))
 		dog_target.tamed(user)
-	new /obj/effect/temp_visual/heart(target.loc)
-	qdel(src)
+	dog_target.emote("spin")
+	be_consumed(dog_target)
 	return TRUE
+
+/obj/item/dog_bone/proc/be_consumed(mob/living/basic/pet/dog/dog)
+	dog.fully_heal()
+	new /obj/effect/temp_visual/heart(dog.loc)
+	playsound(dog,'sound/items/eatfood.ogg', rand(10,50), TRUE)
+	qdel(src)

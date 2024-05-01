@@ -19,22 +19,33 @@
 	var/deadchat_mode
 	/// In DEMOCRACY_MODE, this is how long players have to vote on an input. In ANARCHY_MODE, this is how long between inputs for each unique player.
 	var/input_cooldown
+	/// A list of cooldowns for specific commands. If set, some commands may be disabled for a duration after being performed. e.g. list("spin" = 20 SECONDS)
+	var/list/command_cooldowns
+	/// A list of tooltips for commands, should they need a more thorough explaination.
+	var/list/command_tooltips
 	///Set to true if a point of interest was created for an object, and needs to be removed if deadchat control is removed. Needed for preventing objects from having two points of interest.
 	var/generated_point_of_interest = FALSE
 	/// Callback invoked when this component is Destroy()ed to allow the parent to return to a non-deadchat controlled state.
 	var/datum/callback/on_removal
 
-/datum/component/deadchat_control/Initialize(_deadchat_mode, _inputs, _input_cooldown = 12 SECONDS, _on_removal)
+/datum/component/deadchat_control/Initialize(deadchat_mode, inputs, input_cooldown = 12 SECONDS, on_removal, command_cooldowns, command_tooltips)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ATOM_ORBIT_BEGIN, PROC_REF(orbit_begin))
 	RegisterSignal(parent, COMSIG_ATOM_ORBIT_STOP, PROC_REF(orbit_stop))
 	RegisterSignal(parent, COMSIG_VV_TOPIC, PROC_REF(handle_vv_topic))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	deadchat_mode = _deadchat_mode
-	inputs = _inputs
-	input_cooldown = _input_cooldown
-	on_removal = _on_removal
+	src.deadchat_mode = deadchat_mode
+	src.inputs = inputs
+	src.input_cooldown = input_cooldown
+	src.on_removal = on_removal
+	src.command_cooldowns = command_cooldowns
+	if(command_cooldowns)
+		var/list/signals = list()
+		for(var/command in command_cooldowns)
+			signals += COMSIG_CD_STOP(command)
+		RegisterSignals(parent, signals, PROC_REF(on_command_cd_end))
+		RegisterSignals(parent, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, PROC_REF(on_multi_life_revive))
 	if(deadchat_mode & DEMOCRACY_MODE)
 		if(deadchat_mode & ANARCHY_MODE) // Choose one, please.
 			stack_trace("deadchat_control component added to [parent.type] with both democracy and anarchy modes enabled.")
@@ -66,6 +77,13 @@
 	if(!inputs[message])
 		return
 
+	var/command_cd = command_cooldowns?[message]
+	if(command_cd)
+		var/active_cooldown = S_TIMER_COOLDOWN_TIMELEFT(src, COOLDOWN_DCHAT_CTRL(message))
+		if(active_cooldown)
+			to_chat(source, span_warning("The \"[message]\" command is currently unavailable for another [CEILING(active_cooldown * 0.1, 1)] second\s."))
+			return MOB_DEADSAY_SIGNAL_INTERCEPT
+
 	if(deadchat_mode & ANARCHY_MODE)
 		if(!source || !source.ckey)
 			return
@@ -76,6 +94,8 @@
 		ckey_to_cooldown[source.ckey] = world.time + input_cooldown
 		addtimer(CALLBACK(src, PROC_REF(end_cooldown), source.ckey), input_cooldown)
 		inputs[message].Invoke()
+		if(command_cd)
+			S_TIMER_COOLDOWN_START(src, COOLDOWN_DCHAT_CTRL(message), command_cd)
 		to_chat(source, span_notice("\"[message]\" input accepted. You are now on cooldown for [input_cooldown * 0.1] second\s."))
 		return MOB_DEADSAY_SIGNAL_INTERCEPT
 
@@ -91,6 +111,9 @@
 	var/result = count_democracy_votes()
 	if(!isnull(result))
 		inputs[result].Invoke()
+		var/command_cd = command_cooldowns?[result]
+		if(command_cd)
+			S_TIMER_COOLDOWN_START(src, COOLDOWN_DCHAT_CTRL(result), command_cd)
 		if(!(deadchat_mode & MUTE_DEMOCRACY_MESSAGES))
 			var/message = "<span class='deadsay italics bold'>[parent] has done action [result]!<br>New vote started. It will end in [input_cooldown * 0.1] second\s.</span>"
 			for(var/M in orbiters)
@@ -205,7 +228,19 @@
 	var/extended_examine = "<span class='notice'>Command list:"
 
 	for(var/possible_input in inputs)
-		extended_examine += " [possible_input]"
+		var/cd_duration = command_cooldowns?[possible_input]
+		var/examine_bit = possible_input
+		var/tooltip = command_tooltips?[possible_input] || ""
+		if(cd_duration)
+			var/time_left = S_TIMER_COOLDOWN_TIMELEFT(src, COOLDOWN_DCHAT_CTRL(possible_input))
+			if(time_left)
+				tooltip += " TIME LEFT: [time_left * 0.1] SECONDS"
+				examine_bit = span_warning("[examine_bit] <b>(ON COOLDOWN)</b>")
+			else
+				tooltip += " COOLDOWN: [cd_duration * 0.1] SECONDS"
+		if(tooltip)
+			examine_bit = span_tooltip(tooltip, examine_bit)
+		extended_examine += " [examine_bit]"
 
 	extended_examine += ".</span>"
 
@@ -219,13 +254,27 @@
 		return
 	to_chat(ghost, "[FOLLOW_LINK(ghost, parent)] <span class='nicegreen'>Your deadchat control inputs for [parent] are no longer on cooldown.</span>")
 
+///Announce to orbiters that this command is available once again
+/datum/component/deadchat_control/proc/on_command_cd_end(datum/source, index)
+	SIGNAL_HANDLER
+	for(var/mob/orbiter in orbiters)
+		to_chat(orbiter, span_nicegreen("the \"<b>[replacetext(index, COOLDOWN_DCHAT_PREFIX, "")]<b>\" command is no longer on cooldown."))
+
+///Reset the cooldowns if the mob was revived by the simple-ass 'multiple_lives' component. New life, new me.
+/datum/component/deadchat_control/proc/on_multi_life_revive(mob/living/source, mob/living/new_source, gibbed, lives_left)
+	SIGNAL_HANDLER
+	if(source != new_source) //respawned mobs don't need this. Maybe readd the component manually.
+		return
+	for(var/command in command_cooldowns)
+		S_TIMER_COOLDOWN_RESET(src, COOLDOWN_DCHAT_CTRL(command))
+
 /**
  * Deadchat Moves Things
  *
  * A special variant of the deadchat_control component that comes pre-baked with all the hottest inputs for a spicy
  * singularity or vomit goose.
  */
-/datum/component/deadchat_control/cardinal_movement/Initialize(_deadchat_mode, _inputs, _input_cooldown, _on_removal)
+/datum/component/deadchat_control/cardinal_movement/Initialize(deadchat_mode, inputs, input_cooldown, on_removal, command_cooldowns, command_tooltips)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -242,7 +291,7 @@
  * A special variant of the deadchat_control component that comes pre-baked with all the hottest inputs for spicy
  * immovable rod.
  */
-/datum/component/deadchat_control/immovable_rod/Initialize(_deadchat_mode, _inputs, _input_cooldown, _on_removal)
+/datum/component/deadchat_control/immovable_rod/Initialize(deadchat_mode, inputs, input_cooldown, on_removal, command_cooldowns, command_tooltips)
 	if(!istype(parent, /obj/effect/immovablerod))
 		return COMPONENT_INCOMPATIBLE
 

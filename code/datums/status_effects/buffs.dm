@@ -597,3 +597,73 @@
 
 /datum/status_effect/jump_jet/on_remove()
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
+
+///Speed buff given to player-controllable Ian (from the 'Ian's Adventure' job trait) at the discretion of observers.
+/datum/status_effect/ian_speed
+	id = "ian_speed"
+	duration = 1.5 MINUTES
+	tick_interval = -1
+
+/datum/status_effect/ian_speed/on_apply()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/ian_boon)
+	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/ian_boon)
+	to_chat(owner, span_boldnicegreen("Power surges through you, boosting your action and movement speed."))
+	return ..()
+
+/datum/status_effect/ian_speed/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/ian_boon)
+	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/ian_boon)
+	to_chat(owner, span_deadsay("You suddenly feel slower, yet again..."))
+
+///Makes Ian resistant to gases and heat for a duration.
+/datum/status_effect/ian_atmos
+	id = "ian_atmos"
+	duration = 1.5 MINUTES
+	tick_interval = -1
+
+/datum/status_effect/ian_atmos/on_apply()
+	owner.add_traits(list(TRAIT_NOBREATH, TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_SNOWSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
+	to_chat(owner, span_boldnicegreen("Power surges through you, shielding you from pressure and heat."))
+	return ..()
+
+/datum/status_effect/ian_atmos/on_remove()
+	owner.remove_traits(list(TRAIT_NOBREATH, TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_SNOWSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
+	to_chat(owner, span_deadsay("You feel no longer feel safe around fire and space..."))
+
+/// Drops damage dealt to Ian by 4/5 for a duration.
+/datum/status_effect/ian_protection
+	id = "ian_protection"
+	duration = 45 SECONDS
+	tick_interval = -1
+
+/datum/status_effect/ian_protection/on_apply()
+	var/mob/living/basic/doggo = owner
+	doggo.fully_heal()
+	for(var/protection in doggo.damage_coeff)
+		doggo.damage_coeff[protection] *= 0.2
+	to_chat(owner, span_boldnicegreen("Power surges through you. You feel tough as nail!"))
+	return ..()
+
+/datum/status_effect/ian_protection/on_remove()
+	var/mob/living/basic/doggo = owner
+	for(var/protection in doggo.damage_coeff)
+		doggo.damage_coeff[protection] *= 5
+	to_chat(owner, span_deadsay("You feel pretty squishy once again..."))
+
+/// Single-use Voice of God commands.
+/datum/status_effect/limited_buff/single_use_vog
+	id = "single_use_vog"
+
+/datum/status_effect/limited_buff/single_use_vog/on_apply()
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(invoke_voice_of_god))
+	to_chat(owner, span_revenboldnotice("You feel like you're about to loose a mighty bellow."))
+
+/datum/status_effect/limited_buff/single_use_vog/proc/invoke_voice_of_god(mob/living/source, list/speech_args)
+	SIGNAL_HANDLER
+	var/is_cultie = IS_CULTIST(source)
+	speech_args[SPEECH_SPANS] |= is_cultie ? list(SPAN_NARSIESMALL) : list(SPAN_YELL, SPAN_COLOSSUS)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(voice_of_god_effect), speech_args[SPEECH_MESSAGE], source, base_multiplier = 1.25, forced = speech_args[SPEECH_FORCED], is_cultie = is_cultie)
+	playsound(source, 'sound/magic/clockwork/invoke_general.ogg', 50, vary = TRUE)
+	stacks--
+	if(stacks <= 0)
+		qdel(src)

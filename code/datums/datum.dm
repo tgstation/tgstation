@@ -271,7 +271,7 @@
 /proc/end_cooldown(datum/source, index)
 	if(QDELETED(source))
 		return
-	SEND_SIGNAL(source, COMSIG_CD_STOP(index))
+	SEND_SIGNAL(source, COMSIG_CD_STOP(index), index)
 	TIMER_COOLDOWN_END(source, index)
 
 
@@ -287,7 +287,8 @@
 /proc/reset_cooldown(datum/source, index)
 	if(QDELETED(source))
 		return
-	SEND_SIGNAL(source, COMSIG_CD_RESET(index), S_TIMER_COOLDOWN_TIMELEFT(source, index))
+	SEND_SIGNAL(source, COMSIG_CD_RESET(index), S_TIMER_COOLDOWN_TIMELEFT(source, index), index)
+	deltimer(TIMER_COOLDOWN_RUNNING(source, index)) //prevent end_cooldown() from being called.
 	TIMER_COOLDOWN_END(source, index)
 
 ///Generate a tag for this /datum, if it implements one

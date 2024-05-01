@@ -61,15 +61,16 @@
 // admin verb cooldowns
 #define COOLDOWN_INTERNET_SOUND "internet_sound"
 
+//deadchat_control cooldown macro
+#define COOLDOWN_DCHAT_PREFIX "dchat_ctrl_"
+#define COOLDOWN_DCHAT_CTRL(command) "[COOLDOWN_DCHAT_PREFIX][command]"
+
 //Shared cooldowns for actions
 #define MOB_SHARED_COOLDOWN_1 (1<<0)
 #define MOB_SHARED_COOLDOWN_2 (1<<1)
 #define MOB_SHARED_COOLDOWN_3 (1<<2)
 
-//TIMER COOLDOWN MACROS
-
-#define COMSIG_CD_STOP(cd_index) "cooldown_[cd_index]"
-#define COMSIG_CD_RESET(cd_index) "cd_reset_[cd_index]"
+///TIMER COOLDOWN MACROS (You can find the signals in signals_cooldown.dm
 
 #define TIMER_COOLDOWN_START(cd_source, cd_index, cd_time) LAZYSET(cd_source.cooldowns, cd_index, addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(end_cooldown), cd_source, cd_index), cd_time))
 

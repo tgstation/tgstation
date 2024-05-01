@@ -41,6 +41,7 @@
 //No department
 #define JOB_ASSISTANT "Assistant"
 #define JOB_PRISONER "Prisoner"
+#define JOB_CORGI "Corgi"
 //Command
 #define JOB_CAPTAIN "Captain"
 #define JOB_HEAD_OF_PERSONNEL "Head of Personnel"
@@ -161,6 +162,7 @@
 #define JOB_DISPLAY_ORDER_DETECTIVE 37
 #define JOB_DISPLAY_ORDER_SECURITY_OFFICER 38
 #define JOB_DISPLAY_ORDER_PRISONER 39
+#define JOB_DISPLAY_ORDER_CORGI 40
 
 #define DEPARTMENT_UNASSIGNED "No Department"
 

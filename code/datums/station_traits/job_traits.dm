@@ -176,6 +176,20 @@
 	. = ..()
 	overlays += "veteran_advisor"
 
+/datum/station_trait/job/ian_adventure
+	name = "Ian's Adventure"
+	button_desc = "Sign up to play as the station's goodest boy. Seek the help and (mis)guidance of nearby observers and your multiple lives to survive the shift."
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 2
+	show_in_report = TRUE
+	report_message = "A beloved corgi has gained conscience and gone exploring the station..."
+	can_roll_antag = CAN_ROLL_NEVER
+	job_to_add = /datum/job/corgi
+
+/datum/station_trait/job/ian_adventure/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
+	. = ..()
+	overlays += "ian_adventure"
+
 /datum/station_trait/job/human_ai
 	name = "Human AI"
 	button_desc = "Sign up to become the \"AI\"."

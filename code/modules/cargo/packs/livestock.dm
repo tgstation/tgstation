@@ -67,7 +67,7 @@
 
 /datum/supply_pack/critter/corgi/generate()
 	. = ..()
-	if(prob(50))
+	if(prob(50) && !(locate(/mob/living/basic/pet/dog/corgi/lisa) in GLOB.mob_list))
 		var/mob/living/basic/pet/dog/corgi/D = locate() in .
 		if(D.gender == FEMALE)
 			qdel(D)

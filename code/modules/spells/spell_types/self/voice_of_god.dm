@@ -18,7 +18,7 @@
 	/// The modifier put onto the power of the command
 	var/power_mod = 1
 	/// A list of spans to apply to commands given
-	var/list/spans = list("colossus", "yell")
+	var/list/spans = list(SPAN_YELL, SPAN_YELL)
 
 /datum/action/cooldown/spell/voice_of_god/before_cast(atom/cast_on)
 	. = ..()

@@ -46,7 +46,7 @@
 	if(target.pulledby && target.pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
 		return FALSE
 
-	if(!isopenturf(target.loc))
+	if(!isopenturf(target.loc) || HAS_TRAIT(target, TRAIT_NOBREATH))
 		return TRUE
 
 	var/turf/open/open_turf = target.loc

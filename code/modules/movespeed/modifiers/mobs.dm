@@ -160,6 +160,9 @@
 /datum/movespeed_modifier/grown_killer_tomato
 	variable = TRUE
 
+/datum/movespeed_modifier/ian_boon
+	multiplicative_slowdown = -0.75
+
 /datum/movespeed_modifier/goliath_mount
 	multiplicative_slowdown = -26
 

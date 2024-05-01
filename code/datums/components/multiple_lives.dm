@@ -35,13 +35,21 @@
 	//Gives the old mob this trait in case it gets revived, so we won't end up eventually overriding data
 	//that would be read by the current holder when he respawns if the old corpse is ever revived.
 	ADD_TRAIT(source, TRAIT_DONT_WRITE_MEMORY, EXPIRED_LIFE_TRAIT)
-	var/mob/living/respawned_mob = new source.type (source.drop_location())
-	source.mind?.transfer_to(respawned_mob)
+	var/mob/living/new_mob
+	if(gibbed) //there's no easy, convenient way to stop a mob from getting deleted when gibbed/dusted.
+		new_mob = new source.type (source.drop_location())
+		source.mind?.transfer_to(new_mob)
+		new_mob.fully_replace_character_name(new_mob.real_name, source.real_name)
+	else
+		source.fully_heal()
 	lives_left--
 	if(lives_left <= 0)
 		qdel(src)
-	source.TransferComponents(respawned_mob)
-	SEND_SIGNAL(source, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, respawned_mob, gibbed, lives_left)
+	if(gibbed)
+		source.TransferComponents(new_mob)
+	SEND_SIGNAL(source, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, new_mob, gibbed, lives_left)
+	if(gibbed)
+		source.transfer_observers_to(new_mob)
 
 /datum/component/multiple_lives/proc/on_examine(mob/living/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER

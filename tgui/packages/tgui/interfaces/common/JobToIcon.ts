@@ -24,6 +24,7 @@ export const JOB2ICON = {
   'Chief Medical Officer': 'user-md',
   Clown: 'face-grin-tears',
   Cook: 'utensils',
+  Corgi: 'bone',
   Coroner: 'skull',
   Curator: 'book',
   'Cyber Police': 'qrcode',

@@ -22,19 +22,26 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	GLOB.all_voice_of_god_triggers = regex(all_triggers, "i")
 
 /*
- * The main proc for the voice of god power. it makes the user shout a message in an ominous way,
+ * The main container for the voice of god power. it makes the user shout a message in an ominous way,
  * The first matching command (from a list of static datums) the listeners must obey,
  * and the return value of this proc the cooldown variable of the command dictates. (only relevant for things with cooldowns i guess)
  */
 /proc/voice_of_god(message, mob/living/user, list/span_list, base_multiplier = 1, include_speaker = FALSE, forced = null, ignore_spam = FALSE)
-	var/log_message = uppertext(message)
 	var/is_cultie = IS_CULTIST(user)
 	if(LAZYLEN(span_list) && is_cultie)
-		span_list = list("narsiesmall")
+		span_list = list(SPAN_NARSIESMALL)
 
 	if(!user.say(message, spans = span_list, sanitize = FALSE, ignore_spam = ignore_spam, forced = forced))
 		return
 
+	return voice_of_god_effect(message, user, base_multiplier, include_speaker, forced, is_cultie)
+
+/**
+ * The proc that executes triggers, effects and provides messages/logs for it
+ * The actual main proc, if you want to skip having to call say()
+ */
+/proc/voice_of_god_effect(message, mob/living/user, base_multiplier = 1, include_speaker = FALSE, forced, is_cultie = FALSE)
+	var/log_message = uppertext(message)
 	message = LOWER_TEXT(message)
 
 	var/list/mob/living/listeners = list()
