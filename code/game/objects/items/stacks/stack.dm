@@ -478,16 +478,16 @@
 		return FALSE
 	var/turf/dest_turf = get_turf(builder)
 
-	if(recipe.one_per_turf && (locate(recipe.result_type) in dest_turf))
+	if((recipe.crafting_flags & CRAFT_ONE_PER_TURF) && (locate(recipe.result_type) in dest_turf))
 		builder.balloon_alert(builder, "already one here!")
 		return FALSE
 
-	if(recipe.check_direction)
-		if(!valid_build_direction(dest_turf, builder.dir, is_fulltile = recipe.is_fulltile))
+	if(recipe.crafting_flags & CRAFT_CHECK_DIRECTION)
+		if(!valid_build_direction(dest_turf, builder.dir, is_fulltile = (recipe.crafting_flags & CRAFT_IS_FULLTILE)))
 			builder.balloon_alert(builder, "won't fit here!")
 			return FALSE
 
-	if(recipe.on_solid_ground)
+	if(recipe.crafting_flags & CRAFT_ON_SOLID_GROUND)
 		if(isclosedturf(dest_turf))
 			builder.balloon_alert(builder, "cannot be made on a wall!")
 			return FALSE
@@ -497,7 +497,7 @@
 				builder.balloon_alert(builder, "must be made on solid ground!")
 				return FALSE
 
-	if(recipe.check_density)
+	if(recipe.crafting_flags & CRAFT_CHECK_DENSITY)
 		for(var/obj/object in dest_turf)
 			if(object.density && !(object.obj_flags & IGNORE_DENSITY) || object.obj_flags & BLOCKS_CONSTRUCTION)
 				builder.balloon_alert(builder, "something is in the way!")

@@ -13,6 +13,20 @@
 /// Checks if there is an object of the result type within one tile
 #define STACK_CHECK_ADJACENT (1<<1)
 
+//---- Defines for var/crafting_flags
+///If this craft must be learned before it becomes available
+#define CRAFT_MUST_BE_LEARNED (1<<0)
+///Should only one object exist on the same turf?
+#define CRAFT_ONE_PER_TURF (1<<1)
+/// Setting this to true will effectively set check_direction to true.
+#define CRAFT_IS_FULLTILE (1<<2)
+/// If this craft should run the direction check, for use when building things like directional windows where you can have more than one per turf
+#define CRAFT_CHECK_DIRECTION (1<<3)
+/// If the craft requires a floor below
+#define CRAFT_ON_SOLID_GROUND (1<<4)
+/// If the craft checks that there are objects with density in the same turf when being built
+#define CRAFT_CHECK_DENSITY (1<<5)
+
 //food/drink crafting defines
 //When adding new defines, please make sure to also add them to the encompassing list
 #define CAT_FOOD "Foods"
