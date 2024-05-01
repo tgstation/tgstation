@@ -370,6 +370,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/conveyor_switch,
 	))
+	register_context()
 
 /obj/machinery/conveyor_switch/Destroy()
 	LAZYREMOVE(GLOB.conveyors_by_id[id], src)
@@ -394,6 +395,27 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	else if(position > CONVEYOR_OFF)
 		icon_state = "[base_icon_state]-[invert_icon ? "rev" : "fwd"]"
 	return ..()
+
+/obj/machinery/conveyor_switch/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(!held_item)
+		context[SCREENTIP_CONTEXT_LMB] = "Toggle forwards"
+		if(!oneway)
+			context[SCREENTIP_CONTEXT_RMB] = "Toggle backwards"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item?.tool_behaviour == TOOL_MULTITOOL)
+		context[SCREENTIP_CONTEXT_LMB] = "Set speed"
+		context[SCREENTIP_CONTEXT_RMB] = "View wires"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "Toggle oneway"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item?.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Detach"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "Invert"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /// Updates all conveyor belts that are linked to this switch, and tells them to start processing.
 /obj/machinery/conveyor_switch/proc/update_linked_conveyors()
