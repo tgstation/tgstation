@@ -130,7 +130,7 @@
 /obj/effect/overlay/happiness_overlay
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
-	vis_flags = VIS_INHERIT_DIR
+	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE
 	layer = ABOVE_HUD_PLANE
 	///how many hearts should we display
 	VAR_PRIVATE/hearts_percentage
@@ -151,7 +151,7 @@
 	var/display_amount = round(length(heart_positions) * hearts_percentage, 1)
 	for(var/index in 1 to length(heart_positions))
 		var/heart_icon_state = display_amount >= index ? "full_heart" : "empty_heart"
-		var/image/display_icon = image(icon = heart_icon, icon_state = heart_icon_state, layer = ABOVE_HUD_PLANE)
+		var/mutable_appearance/display_icon = mutable_appearance(icon = heart_icon, icon_state = heart_icon_state, layer = ABOVE_HUD_PLANE)
 		display_icon.pixel_x = heart_positions[index]
 		. += display_icon
 

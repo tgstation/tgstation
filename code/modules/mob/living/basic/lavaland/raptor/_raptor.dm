@@ -1,3 +1,22 @@
+GLOBAL_LIST_INIT(raptor_growth_paths, list(
+	/mob/living/basic/mining/raptor/baby_raptor/red = list(RAPTOR_PURPLE, RAPTOR_WHITE),
+	/mob/living/basic/mining/raptor/baby_raptor/white = list(RAPTOR_GREEN, RAPTOR_PURPLE),
+	/mob/living/basic/mining/raptor/baby_raptor/purple = list(RAPTOR_GREEN, RAPTOR_WHITE),
+	/mob/living/basic/mining/raptor/baby_raptor/yellow = list(RAPTOR_GREEN, RAPTOR_RED),
+	/mob/living/basic/mining/raptor/baby_raptor/green = list(RAPTOR_RED, RAPTOR_YELLOW),
+	/mob/living/basic/mining/raptor/baby_raptor/blue = list(RAPTOR_RED, RAPTOR_PURPLE)
+))
+
+GLOBAL_LIST_INIT(raptor_inherit_traits, list(
+	BB_BASIC_DEPRESSED = "Depressed",
+	BB_RAPTOR_MOTHERLY = "Motherly",
+	BB_RAPTOR_PLAYFUL = "Playful",
+	BB_RAPTOR_COWARD = "Coward",
+	BB_RAPTOR_TROUBLE_MAKER = "Trouble Maker",
+))
+
+GLOBAL_LIST_EMPTY(raptor_population)
+
 #define HAPPINESS_BOOST_DAMPENER 0.3
 
 /mob/living/basic/mining/raptor
