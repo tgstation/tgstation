@@ -31,4 +31,4 @@ export AUXLUA_VERSION=1.4.4
 export CUTTER_REPO=spacestation13/hypnagogic
 
 #hypnagogic git tag
-export CUTTER_VERSION=v3.0.1
+export CUTTER_VERSION=v3.1.0
