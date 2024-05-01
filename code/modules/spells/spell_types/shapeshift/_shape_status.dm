@@ -38,6 +38,7 @@
 	RegisterSignal(owner, COMSIG_LIVING_PRE_WABBAJACKED, PROC_REF(on_pre_wabbajack))
 	RegisterSignal(owner, COMSIG_PRE_MOB_CHANGED_TYPE, PROC_REF(on_pre_type_change))
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_shape_death))
+	RegisterSignal(owner, COMSIG_LIVING_WRITE_MEMORY, PROC_REF(on_write_memory))
 	RegisterSignal(caster_mob, COMSIG_LIVING_DEATH, PROC_REF(on_caster_death))
 	RegisterSignal(caster_mob, COMSIG_QDELETING, PROC_REF(on_caster_deleted))
 
@@ -53,6 +54,10 @@
 	// Either restore_caster() or other signals should have handled this reference by now,
 	// but juuust in case make sure nothing sticks around.
 	caster_mob = null
+
+/// If you shapeshift into a pet subtype we don't want to update Poly's deathcount or something when you die
+/datum/status_effect/shapechange_mob/proc/on_write_memory(mob/living/source, dead, gibbed)
+	return COMPONENT_DONT_WRITE_MEMORY
 
 /// Called when we're shot by the Wabbajack but before we change into a different mob
 /datum/status_effect/shapechange_mob/proc/on_pre_wabbajack(mob/living/source)

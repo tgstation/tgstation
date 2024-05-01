@@ -2467,8 +2467,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  */
 /mob/living/proc/Write_Memory(dead, gibbed)
 	SHOULD_CALL_PARENT(TRUE)
-	if(HAS_TRAIT(src, TRAIT_DONT_WRITE_MEMORY)) //always prevent data from being written.
-		return FALSE
+	return can_write_memory(dead, gibbed)
+
+/// Checks if the memory should be written when Write_Memory() is called (so we don't send the same signal in two places).
+/mob/living/proc/can_write_memory(dead, gibbed)
 	// for selective behaviors that may or may not prevent data from being written.
 	if(SEND_SIGNAL(src, COMSIG_LIVING_WRITE_MEMORY, dead, gibbed) & COMPONENT_DONT_WRITE_MEMORY)
 		return FALSE

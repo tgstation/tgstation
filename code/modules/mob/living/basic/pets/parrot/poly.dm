@@ -57,17 +57,16 @@
 	return ..()
 
 /mob/living/basic/parrot/poly/death(gibbed)
-	if(HAS_TRAIT(src, TRAIT_DONT_WRITE_MEMORY))
-		return ..() // Don't read memory either.
 	if(!memory_saved)
 		Write_Memory(TRUE)
-	var/special_status = determine_special_poly()
-	if(special_status == POLY_LONGEST_SURVIVAL || special_status == POLY_BEATING_DEATHSTREAK || prob(0.666))
-		var/mob/living/basic/parrot/poly/ghost/specter = new(loc)
-		if(mind)
-			mind.transfer_to(specter)
-		else
-			specter.key = key
+	if(can_write_memory(TRUE, gibbed))
+		var/special_status = determine_special_poly()
+		if(special_status == POLY_LONGEST_SURVIVAL || special_status == POLY_BEATING_DEATHSTREAK || prob(0.666))
+			var/mob/living/basic/parrot/poly/ghost/specter = new(loc)
+			if(mind)
+				mind.transfer_to(specter)
+			else
+				specter.key = key
 	return ..()
 
 /mob/living/basic/parrot/poly/get_static_list_of_phrases() // there's only one poly, so there should only be one ongoing list of phrases. i guess

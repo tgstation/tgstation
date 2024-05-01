@@ -32,9 +32,6 @@
 	if(HAS_TRAIT(source, TRAIT_SUICIDED)) //Freed from this mortail coil.
 		qdel(src)
 		return
-	//Gives the old mob this trait in case it gets revived, so we won't end up eventually overriding data
-	//that would be read by the current holder when he respawns if the old corpse is ever revived.
-	ADD_TRAIT(source, TRAIT_DONT_WRITE_MEMORY, EXPIRED_LIFE_TRAIT)
 	var/mob/living/new_mob
 	if(gibbed) //there's no easy, convenient way to stop a mob from getting deleted when gibbed/dusted.
 		new_mob = new source.type (source.drop_location())
