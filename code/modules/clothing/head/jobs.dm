@@ -182,6 +182,7 @@
 	/// Cooldown for retrieving precious candy corn with rmb
 	COOLDOWN_DECLARE(candy_cooldown)
 
+
 /datum/armor/fedora_det_hat
 	melee = 25
 	bullet = 5
@@ -191,15 +192,16 @@
 	acid = 50
 	wound = 5
 
+
 /obj/item/clothing/head/fedora/det_hat/Initialize(mapload)
 	. = ..()
 
 	create_storage(storage_type = /datum/storage/pockets/small/fedora/detective)
 
-	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_clicked_alt))
 	register_context()
 
 	new flask_path(src)
+
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	. = ..()
@@ -215,18 +217,17 @@
 
 
 /// Now to solve where all these keep coming from
-/obj/item/clothing/head/fedora/det_hat/proc/on_clicked_alt(datum/source, mob/user)
-	SIGNAL_HANDLER
+/obj/item/clothing/head/fedora/det_hat/click_alt(mob/user)
 	if(!COOLDOWN_FINISHED(src, candy_cooldown))
 		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
-		return COMSIG_MOB_CANCEL_CLICKON
+		return CLICK_ACTION_BLOCKING
 
 	var/obj/item/food/candy_corn/sweets = new /obj/item/food/candy_corn(src)
 	user.put_in_hands(sweets)
 	to_chat(user, span_notice("You slip a candy corn from your hat."))
 	COOLDOWN_START(src, candy_cooldown, CANDY_CD_TIME)
 
-	return COMSIG_MOB_CANCEL_CLICKON
+	return CLICK_ACTION_SUCCESS
 
 
 #undef CANDY_CD_TIME
