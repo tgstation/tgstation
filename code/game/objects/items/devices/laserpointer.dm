@@ -70,7 +70,7 @@
 
 /obj/item/laser_pointer/infinite_range/Initialize(mapload)
 	. = ..()
-	diode = new /obj/item/stock_parts/servo/femto
+	diode = new /obj/item/stock_parts/micro_laser/quadultra
 
 /obj/item/laser_pointer/screwdriver_act(mob/living/user, obj/item/tool)
 	if(diode)
@@ -80,14 +80,11 @@
 		diode = null
 		return TRUE
 
-/obj/item/laser_pointer/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
+/obj/item/laser_pointer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(isnull(crystal_lens))
-		return .
+		return NONE
 	if(tool_behaviour != TOOL_WIRECUTTER && tool_behaviour != TOOL_HEMOSTAT)
-		return .
+		return NONE
 	tool.play_tool_sound(src)
 	balloon_alert(user, "removed crystal lens")
 	crystal_lens.forceMove(drop_location())

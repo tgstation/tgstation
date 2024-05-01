@@ -8,9 +8,10 @@
 	desc = "This rocks."
 	icon_state = "ore"
 	icon = 'icons/obj/ore.dmi'
-	item_flags = NO_MAT_REDEMPTION
+	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND
 	throw_range = 2
 	throw_speed = 0.5
+	slowdown = 1.5
 	drag_slowdown = 1.5 // It's still a big rock.
 
 	///When a refinery machine is working on this boulder, we'll set this. Re reset when the process is finished, but the boulder may still be refined/operated on further.
@@ -26,6 +27,7 @@
 	. = ..()
 	register_context()
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 0, force_wielded = 5) //Heavy as all hell, it's a boulder, dude.
+	AddComponent(/datum/component/sisyphus_awarder)
 
 /obj/item/boulder/Destroy(force)
 	SSore_generation.available_boulders -= src

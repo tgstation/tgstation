@@ -82,6 +82,6 @@
 	if(!parent?.cell)
 		return
 	var/obj/item/gun/energy/fired_gun = source
-	var/totransfer = min(100 KILO JOULES, parent.cell.charge)
-	var/transferred = fired_gun.cell.give(totransfer)
-	parent.cell.use(transferred)
+	var/transferred = fired_gun.cell.give(min(0.1 * STANDARD_CELL_CHARGE, parent.cell.charge))
+	if(transferred)
+		parent.cell.use(transferred, force = TRUE)

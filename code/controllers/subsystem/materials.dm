@@ -4,7 +4,6 @@ Materials are now instanced datums, with an associative list of them being kept 
 These materials call on_applied() on whatever item they are applied to, common effects are adding components, changing color and changing description. This allows us to differentiate items based on the material they are made out of.area
 
 */
-
 SUBSYSTEM_DEF(materials)
 	name = "Materials"
 	flags = SS_NO_FIRE | SS_NO_INIT

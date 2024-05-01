@@ -20,7 +20,7 @@
 	src.base_icon_state = atom_parent.base_icon_state || atom_parent.icon_state
 
 /datum/component/toggle_icon/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_alt_click))
+	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_click_alt))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/toggle_icon/UnregisterFromParent()
@@ -34,7 +34,7 @@
  * source - the atom being clicked on
  * user - the mob doing the click
  */
-/datum/component/toggle_icon/proc/on_alt_click(atom/source, mob/user)
+/datum/component/toggle_icon/proc/on_click_alt(atom/source, mob/user)
 	SIGNAL_HANDLER
 
 	if(!isliving(user))
@@ -47,13 +47,14 @@
 
 	if(living_user.incapacitated())
 		source.balloon_alert(user, "you're incapacitated!")
-		return
+		return CLICK_ACTION_BLOCKING
 
 	if(living_user.usable_hands <= 0)
 		source.balloon_alert(user, "you don't have hands!")
-		return
+		return CLICK_ACTION_BLOCKING
 
 	do_icon_toggle(source, living_user)
+	return CLICK_ACTION_SUCCESS
 
 /*
  * Signal proc for COMSIG_ATOM_EXAMINE.

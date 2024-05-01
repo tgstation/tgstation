@@ -48,7 +48,7 @@
 		var/Y = rand(FLOOR(syllable_count/syllable_divisor, 1), syllable_count)
 		for(var/x in Y to 0)
 			new_name += pick_weight_recursive(syllables)
-		full_name += " [capitalize(lowertext(new_name))]"
+		full_name += " [capitalize(LOWER_TEXT(new_name))]"
 
 	return "[trim(full_name)]"
 

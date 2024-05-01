@@ -708,7 +708,9 @@
 
 /obj/machinery/transport/tram_controller/hilbert
 	configured_transport_id = HILBERT_LINE_1
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
+
+/obj/machinery/transport/tram_controller/wrench_act_secondary(mob/living/user, obj/item/tool)
+	return NONE
 
 /obj/machinery/transport/tram_controller/Initialize(mapload)
 	. = ..()
@@ -847,7 +849,7 @@
 			return
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
 		balloon_alert(user, "unsecured")
-		deconstruct()
+		deconstruct(TRUE)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/transport/tram_controller/screwdriver_act_secondary(mob/living/user, obj/item/tool)

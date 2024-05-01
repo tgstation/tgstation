@@ -39,6 +39,7 @@
 	var/mob/living/living_mob = controller.pawn
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 	if(!targeting_strategy)
+		. = AI_BEHAVIOR_DELAY
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
 
 	var/list/shitlist = controller.blackboard[shitlist_key]
@@ -48,8 +49,7 @@
 		controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, TRUE)
 
 	if (!QDELETED(existing_target) && (locate(existing_target) in shitlist) && targeting_strategy.can_attack(living_mob, existing_target, vision_range))
-		finish_action(controller, succeeded = TRUE, check_faction = check_faction)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	var/list/enemies_list = list()
 	for(var/mob/living/potential_target as anything in shitlist)
@@ -59,8 +59,7 @@
 
 	if(!length(enemies_list))
 		controller.clear_blackboard_key(target_key)
-		finish_action(controller, succeeded = FALSE, check_faction = check_faction)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/atom/new_target = pick_final_target(controller, enemies_list)
 	controller.set_blackboard_key(target_key, new_target)
@@ -70,7 +69,7 @@
 	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
 		controller.set_blackboard_key(hiding_location_key, potential_hiding_location)
 
-	finish_action(controller, succeeded = TRUE, check_faction = check_faction)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /// Returns the desired final target from the filtered list of enemies
 /datum/ai_behavior/target_from_retaliate_list/proc/pick_final_target(datum/ai_controller/controller, list/enemies_list)

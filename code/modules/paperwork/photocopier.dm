@@ -547,7 +547,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		toner_cartridge = object
 		balloon_alert(user, "cartridge inserted")
 
-	else if(istype(object, /obj/item/areaeditor/blueprints))
+	else if(istype(object, /obj/item/blueprints))
 		to_chat(user, span_warning("\The [object] is too large to put into the copier. You need to find something else to record the document."))
 
 	else if(istype(object, /obj/item/paperwork))

@@ -203,12 +203,12 @@
 		combat_overlay.color = selected_color
 	update_appearance()
 
-/mob/living/basic/mining_drone/AltClick(mob/living/user)
-	. = ..()
+/mob/living/basic/mining_drone/click_alt(mob/living/user)
 	if(user.combat_mode)
-		return
+		return CLICK_ACTION_BLOCKING
 	set_combat_mode(!combat_mode)
 	balloon_alert(user, "now [combat_mode ? "attacking wildlife" : "collecting loose ore"]")
+	return CLICK_ACTION_SUCCESS
 
 /mob/living/basic/mining_drone/RangedAttack(atom/target)
 	if(!combat_mode)
