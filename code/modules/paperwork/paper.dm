@@ -467,7 +467,6 @@
 
 	add_stamp(writing_stats["stamp_class"], rand(1, 300), rand(1, 400), stamp_icon_state = writing_stats["stamp_icon_state"])
 	user.visible_message(span_notice("[user] quickly stamps [src] with \the [tool]"))
-	balloon_alert(user, "paper stamped")
 	playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 
 	return ITEM_INTERACT_BLOCKING // Stop the UI from opening.
