@@ -413,8 +413,6 @@
 
 /obj/effect/decal/cleanable/ants/fire_act(exposed_temperature, exposed_volume)
 	var/obj/effect/decal/cleanable/ants/fire/fire_ants = new(loc)
-	fire_ants.reagents.clear_reagents()
-	reagents.trans_to(fire_ants, fire_ants.reagents.maximum_volume)
 	qdel(src)
 
 /obj/effect/decal/cleanable/ants/fire
