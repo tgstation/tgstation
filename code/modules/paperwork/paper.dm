@@ -441,8 +441,8 @@
 	// Handle stamping items.
 	if(writing_stats["interaction_mode"] == MODE_STAMPING)
 		if(!user.can_read(src) || user.is_blind())
-			//The paper's stampable window area is assumed approx 400x500
-			add_stamp(writing_stats["stamp_class"], rand(0, 400), rand(0, 500), rand(0, 360), writing_stats["stamp_icon_state"])
+			//The paper's stampable window area is assumed approx 300x400
+			add_stamp(writing_stats["stamp_class"], rand(0, 300), rand(0, 400), rand(0, 360), writing_stats["stamp_icon_state"])
 			user.visible_message(span_notice("[user] blindly stamps [src] with \the [attacking_item]!"))
 			to_chat(user, span_notice("You stamp [src] with \the [attacking_item] the best you can!"))
 			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
@@ -459,15 +459,17 @@
 	var/list/writing_stats = tool.get_writing_implement_details()
 
 	if(!length(writing_stats))
-		return
-	if(writing_stats["interaction_mode"] == MODE_STAMPING)
-		if(!user.can_read(src) || user.is_blind()) // Just leftclick instead
-			return
-		else
-			add_stamp(writing_stats["stamp_class"], rand(0, 300), rand(0, 400), stamp_icon_state = writing_stats["stamp_icon_state"])
-			user.visible_message(span_notice("[user] quickly stamps [src] with \the [tool]"))
-			to_chat(user, span_notice("You stamp [src] quickly with \the [tool]"))
-			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
+		return NONE
+	if(writing_stats["interaction_mode"] != MODE_STAMPING)
+		return NONE
+	if(!user.can_read(src) || user.is_blind()) // Just leftclick instead
+		return NONE
+
+	add_stamp(writing_stats["stamp_class"], rand(0, 300), rand(0, 400), stamp_icon_state = writing_stats["stamp_icon_state"])
+	user.visible_message(span_notice("[user] quickly stamps [src] with \the [tool]"))
+	balloon_alert(user, "Paper Stamped")
+	playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
+
 	return ITEM_INTERACT_BLOCKING // Stop the UI from opening.
 /**
  * Attempts to ui_interact the paper to the given user, with some sanity checking
