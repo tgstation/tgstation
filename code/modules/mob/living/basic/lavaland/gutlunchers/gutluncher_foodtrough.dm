@@ -23,8 +23,6 @@
 	return ..()
 
 /obj/structure/ore_container/food_trough/atom_deconstruct(disassembled = TRUE)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 5)
 
 /obj/structure/ore_container/food_trough/update_overlays()
