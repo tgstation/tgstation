@@ -16,25 +16,20 @@
 #define MEDAL_METEOR "Your Life Before Your Eyes"
 #define MEDAL_PULSE "Jackpot"
 #define MEDAL_TIMEWASTE "Overextended The Joke"
-#define MEDAL_RODSUPLEX "Feat of Strength"
 #define MEDAL_CLOWNCARKING "Round and Full"
 #define MEDAL_THANKSALOT "The Best Driver"
-#define MEDAL_HELBITALJANKEN "Hel-bent on Winning"
 #define MEDAL_MATERIALCRAFT "Getting an Upgrade"
 #define MEDAL_DISKPLEASE "Disk, Please!"
 #define MEDAL_GAMER "I'm Not Important"
 #define MEDAL_VENDORSQUISH "Teenage Anarchist"
 #define MEDAL_SWIRLIE "Bowl-d"
 #define MEDAL_SELFOUCH "Hands???"
-#define MEDAL_SANDMAN "Mister Sandman"
 #define MEDAL_CLEANBOSS "Cleanboss"
 #define MEDAL_RULE8 "Rule 8"
 #define MEDAL_LONGSHIFT "longshift"
-#define MEDAL_SNAIL "KKKiiilll mmmeee"
 #define MEDAL_LOOKOUTSIR "Look Out, Sir!"
 #define MEDAL_GOTTEM "GOTTEM"
 #define MEDAL_ASCENSION "Ascension"
-#define MEDAL_FRENCHING "FrenchingTheBubble"
 #define MEDAL_ASH_ASCENSION "Ash"
 #define MEDAL_FLESH_ASCENSION "Flesh"
 #define MEDAL_RUST_ASCENSION "Rust"
@@ -57,11 +52,20 @@
 #define MEDAL_DEBT_EXTINGUISHED "Debt Extinguished"
 #define MEDAL_SISYPHUS "Sisyphus"
 #define MEDAL_ARCHMAGE "Archmage"
-#define MEDAL_THEORETICAL_LIMITS "All Within Theoretical Limits"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"
 #define MEDAL_LEGENDARY_FISHER "Legendary Fisher"
+
+//Job medal hub IDs
+#define MEDAL_CORGI_LOSSLESS "CorgiLossless"
+#define MEDAL_FRENCHING "FrenchingTheBubble"
+#define MEDAL_HELBITALJANKEN "Hel-bent on Winning"
+#define MEDAL_RODSUPLEX "Feat of Strength"
+#define MEDAL_SANDMAN "Mister Sandman"
+#define MEDAL_SNAIL "KKKiiilll mmmeee"
+#define MEDAL_THEORETICAL_LIMITS "All Within Theoretical Limits"
+
 
 //Mafia medal hub IDs (wins)
 #define MAFIA_MEDAL_ASSISTANT "Assistant"

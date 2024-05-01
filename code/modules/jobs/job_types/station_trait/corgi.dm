@@ -17,6 +17,8 @@
 	rpg_title = "Royal Hound"
 	allow_bureaucratic_error = FALSE
 	job_flags = STATION_TRAIT_JOB_FLAGS | JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK
+	///Make sure that players that reached CC without dying once get an achievement at the end of the round.
+	var/list/corgi_cheevo_callbacks
 
 /datum/job/corgi/get_roundstart_spawn_point()
 	return find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
@@ -50,9 +52,29 @@
 	spawned.AddComponent(/datum/component/multiple_lives, 2)
 	RegisterSignal(spawned, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, PROC_REF(do_corgi_respawn))
 
-	make_deadchat_playable(spawned)
+	add_components(spawned)
 
-/datum/job/corgi/proc/make_deadchat_playable(mob/living/basic/pet/dog/corgi/dog)
+	var/datum/callback/cheevo_callback = CALLBACK(src, PROC_REF(award_cheevo), spawned)
+	SSticker.round_end_events += cheevo_callback
+	LAZYSET(corgi_cheevo_callbacks, REF(spawned), cheevo_callback)
+	RegisterSignals(spawned, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(void_cheevo))
+
+///Award the achievement if conditions are met.
+/datum/job/corgi/proc/award_cheevo(mob/living/basic/pet/dog/corgi/dog)
+	if(dog.client && dog.onCentCom())
+		dog.client.give_award(/datum/award/achievement/jobs/corgi_lossless, dog)
+
+/datum/job/corgi/proc/void_cheevo(mob/living/basic/pet/dog/corgi/dog)
+	SIGNAL_HANDLER
+	var/corgi_ref = REF(dog)
+	SSticker.round_end_events -= corgi_cheevo_callbacks[corgi_ref]
+	LAZYREMOVE(corgi_cheevo_callbacks, corgi_ref)
+	UnregisterSignal(dog, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING))
+
+///Manages adding the deadchat component to the doggo as well as other bits like squeezing through doors.
+/datum/job/corgi/proc/add_components(mob/living/basic/pet/dog/corgi/dog)
+	dog.AddElement(/datum/element/door_squeeze_through)
+
 	var/dchat_commands
 	if(isnull(dchat_commands))
 		dchat_commands = list(
@@ -87,7 +109,6 @@
 		"voiceofgod" = "the next message spoken will be as if they've got the Voice of God",
 		"atmosres" = "grants heat and pressure resistance for 90 seconds",
 		"teleaway" = "teleport the dog away, preferably somewhere safe",
-		"extralife" = "revive the corgi if dead, or give them an extra life, to a maximum of 2",
 		"tipoftheround" = "give 'em a tip, like the ones you see in the lobby while the game is starting",
 	)
 	dog.AddComponent(/datum/component/deadchat_control, DEMOCRACY_MODE, dchat_commands, 18 SECONDS, null, dchat_cooldowns, dchat_tooltips)
@@ -109,7 +130,7 @@
 	if(!gibbed) //the doggo is the same. We don't need to reapply the equipment and stuff.s
 		return
 
-	make_deadchat_playable(new_dog)
+	add_components(new_dog)
 
 	if(lives_left)
 		RegisterSignal(new_dog, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, PROC_REF(do_corgi_respawn))

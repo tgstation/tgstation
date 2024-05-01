@@ -92,6 +92,7 @@
 /// So transparent, blue, with a scanline and an emissive glow
 /// This is acomplished using a combination of filters and render steps/overlays
 /// The degree of the opacity is optional, based off the opacity arg (0 -> 1)
+
 /atom/proc/makeHologram(opacity = 0.5)
 	// First, we'll make things blue (roughly) and sorta transparent
 	add_filter("HOLO: Color and Transparent", 1, color_matrix_filter(rgb(125,180,225, opacity * 255)))
@@ -125,3 +126,19 @@
 	var/mutable_appearance/glow_appearance = new(glow)
 	add_overlay(glow_appearance)
 	LAZYADD(update_overlays_on_z, glow_appearance)
+
+///Performs a small jiggle animation on the atom.
+/atom/proc/do_jiggle(targetangle = 25, timer = 2 SECONDS)
+	var/matrix/OM = matrix(transform)
+	var/matrix/M = matrix(transform)
+	M.Turn(pick(-targetangle, targetangle))
+	animate(src, transform = M, time = timer * 0.1, easing = BACK_EASING | EASE_IN)
+	animate(transform = OM, time = timer * 0.4, easing = ELASTIC_EASING)
+
+///Performs a small squish animation on the atom.
+/atom/proc/do_squish(squishx = 1.2, squishy = 0.6, timer = 2 SECONDS)
+	var/matrix/OM = matrix(transform)
+	var/matrix/M = matrix(transform)
+	M.Scale(squishx, squishy)
+	animate(src, transform = M, time = timer * 0.5, easing = ELASTIC_EASING)
+	animate(transform = OM, time = timer * 0.5, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)

@@ -66,4 +66,10 @@
 	database_id = MEDAL_GOOD_SERVICE
 	icon_state = "service_good"
 
-//civilian achievies! while not recognized by the code, it is recognized by our hearts
+//civilian achievies and the such!
+
+/datum/award/achievement/jobs/corgi_lossless
+	name = "So I'm a dog, so what?"
+	desc = "Good job surviving the shift all the way to CentCom without ever dying once... not like you had a job, but hey!"
+	database_id = MEDAL_CORGI_LOSSLESS
+	icon_state = "service_good" // WIP
