@@ -199,11 +199,13 @@
 	resistance_flags = parent_type::resistance_flags | SHUTTLE_CRUSH_PROOF
 
 /mob/living/basic/parrot/poly/ghost/Initialize(mapload)
-	// block anything and everything that could possibly happen with writing memory for ghosts
 	memory_saved = TRUE
-	ADD_TRAIT(src, TRAIT_DONT_WRITE_MEMORY, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	return ..()
+
+// block anything and everything that could possibly happen with writing memory for ghosts
+/mob/living/basic/parrot/poly/ghost/can_write_memory(dead, gibbed)
+	return FALSE
 
 //we perch on human souls
 /mob/living/basic/parrot/poly/ghost/perch_on_human(mob/living/carbon/human/target)
