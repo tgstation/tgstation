@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Makes it easier for heretics to click on influences without accidentally drawing a rune with their codex cicatrix because the animation shifted and made you click on the floor instead."
