@@ -5753,6 +5753,7 @@
 #include "monkestation\code\game\objects\items\recursive_gift.dm"
 #include "monkestation\code\game\objects\items\stickers.dm"
 #include "monkestation\code\game\objects\items\superglue.dm"
+#include "monkestation\code\game\objects\items\venom_knife.dm"
 #include "monkestation\code\game\objects\items\AI_modules\monke_lawsets.dm"
 #include "monkestation\code\game\objects\items\circuitboards\computer_circuitboards.dm"
 #include "monkestation\code\game\objects\items\circuitboards\holy_weapons.dm"

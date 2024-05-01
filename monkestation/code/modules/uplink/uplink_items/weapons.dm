@@ -25,3 +25,9 @@
 	cost = 12
 	surplus = 40
 	purchasable_from = ~UPLINK_CLOWN_OPS
+
+/datum/uplink_item/dangerous/venom_knife
+	name = "Poisoned Knife"
+	desc = "A knife that is made of two razor sharp blades, it has a secret compartment in the handle to store liquids which are injected when stabbing something. Can hold up to forty units of reagents but comes empty."
+	item = /obj/item/knife/venom
+	cost = 6 // all in all it's not super stealthy and you have to get some chemicals yourself
