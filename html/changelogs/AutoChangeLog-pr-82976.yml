@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Constantly fleeing in Battle Arcade will no longer give you a very large amount of decimals due to halving your gold every time."
