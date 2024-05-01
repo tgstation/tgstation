@@ -465,7 +465,7 @@
 	if(!user.can_read(src) || user.is_blind()) // Just leftclick instead
 		return NONE
 
-	add_stamp(writing_stats["stamp_class"], rand(0, 300), rand(0, 400), stamp_icon_state = writing_stats["stamp_icon_state"])
+	add_stamp(writing_stats["stamp_class"], rand(1, 300), rand(1, 400), stamp_icon_state = writing_stats["stamp_icon_state"])
 	user.visible_message(span_notice("[user] quickly stamps [src] with \the [tool]"))
 	balloon_alert(user, "Paper Stamped")
 	playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
