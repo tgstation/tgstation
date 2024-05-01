@@ -55,7 +55,9 @@
 		return
 
 	if(isopenturf(target))
-		heretic_datum.try_draw_rune(user, target, drawing_time = 8 SECONDS)
+		var/obj/effect/heretic_influence/influence = locate(/obj/effect/heretic_influence) in target
+		if(!influence?.drain_influence_with_codex(user, src))
+			heretic_datum.try_draw_rune(user, target, drawing_time = 8 SECONDS)
 		return TRUE
 
 /*

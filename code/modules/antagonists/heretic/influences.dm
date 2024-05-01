@@ -227,6 +227,11 @@
 	on_turf.interaction_flags_atom |= INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND
 	RegisterSignal(on_turf, COMSIG_TURF_CHANGE, PROC_REF(replace_our_turf))
 
+	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(verify_user_can_see)))
+
+/obj/effect/heretic_influence/proc/verify_user_can_see(mob/user)
+	return (user?.mind in minds)
+
 /obj/effect/heretic_influence/proc/replace_our_turf(datum/source, path, new_baseturfs, flags, post_change_callbacks)
 	SIGNAL_HANDLER
 	post_change_callbacks += CALLBACK(src, PROC_REF(replace_our_turf_two))
@@ -263,13 +268,16 @@
 		return
 
 	// Using a codex will give you two knowledge points for draining.
-	if(!being_drained && istype(weapon, /obj/item/codex_cicatrix))
-		var/obj/item/codex_cicatrix/codex = weapon
-		if(!codex.book_open)
-			codex.attack_self(user) // open booke
-		INVOKE_ASYNC(src, PROC_REF(drain_influence), user, 2)
+	if(drain_influence_with_codex(user, weapon))
 		return TRUE
 
+/obj/effect/heretic_influence/proc/drain_influence_with_codex(mob/user, obj/item/codex_cicatrix/codex)
+	if(!istype(codex) || being_drained)
+		return FALSE
+	if(!codex.book_open)
+		codex.attack_self(user) // open booke
+	INVOKE_ASYNC(src, PROC_REF(drain_influence), user, 2)
+	return TRUE
 
 /**
  * Begin to drain the influence, setting being_drained,
