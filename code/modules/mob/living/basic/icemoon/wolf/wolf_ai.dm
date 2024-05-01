@@ -30,7 +30,7 @@
 /datum/ai_planning_subtree/call_reinforcements/wolf/decide_to_call(datum/ai_controller/controller)
 	//only call reinforcements if the person who just smacked us isn't a friend to avoid hitting them once, then killing ourselves if we've been tamed
 	if (controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET) && istype(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET], /mob))
-		return !(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] in controller.blackboard[BB_FRIENDS_LIST])
+		return !(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] in controller.blackboard[BB_FRIENDS])
 	else
 		return FALSE
 

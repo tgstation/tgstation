@@ -48,7 +48,7 @@
 		qdel(src)
 		return
 
-	draining_slime.befriend(feeder)
+	draining_slime.ai_controller?.become_friendly(feeder)
 	new /obj/effect/temp_visual/heart(draining_slime.loc)
 	qdel(src)
 

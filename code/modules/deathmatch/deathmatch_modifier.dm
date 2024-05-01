@@ -271,8 +271,7 @@
 		/mob/living/basic/mining/goliath/deathmatch,
 		))
 	var/mob/living/basic/mount = new mount_path (player.loc)
-	mount.tamed(player, null)
-	mount.befriend(player)
+	mount.ai_controller?.become_friendly(player)
 	mount.buckle_mob(player)
 	if(HAS_TRAIT(lobby, TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS))
 		var/obj/item/implant/explosive/deathmatch/implant = new()

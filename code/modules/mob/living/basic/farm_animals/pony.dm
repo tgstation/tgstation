@@ -42,12 +42,15 @@
 	AddElement(/datum/element/ai_flee_while_injured)
 	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/apple), tame_chance = 25, bonus_tame_chance = 15, unique = unique_tamer)
+	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
 
-/mob/living/basic/pony/tamed(mob/living/tamer, atom/food)
-	can_buckle = TRUE
-	buckle_lying = 0
-	playsound(src, 'sound/creatures/pony/snort.ogg', 50)
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/pony)
+/mob/living/basic/pony/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+	SIGNAL_HANDLER
+	if(is_first_friend)
+		can_buckle = TRUE
+		buckle_lying = 0
+		playsound(src, 'sound/creatures/pony/snort.ogg', 50)
+		AddElement(/datum/element/ridable, /datum/component/riding/creature/pony)
 	visible_message(span_notice("[src] snorts happily."))
 	new /obj/effect/temp_visual/heart(loc)
 

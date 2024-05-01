@@ -17,7 +17,8 @@
 	track_duration,
 )
 	. = ..()
-	if(!ishostile(parent))
+
+	if(!isanimal_or_basicmob(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.boss_track = boss_track
 	src.track_duration = track_duration
@@ -34,23 +35,41 @@
 
 /datum/component/boss_music/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_HOSTILE_FOUND_TARGET, PROC_REF(on_target_found))
+
+	if(ishostile(parent))
+		RegisterSignal(parent, COMSIG_HOSTILE_FOUND_TARGET, PROC_REF(on_hostile_target_found))
+	else
+		RegisterSignal(parent, COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_CURRENT_TARGET), PROC_REF(on_basic_target_found))
 
 /datum/component/boss_music/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_HOSTILE_FOUND_TARGET)
+	if(ishostile(parent))
+		UnregisterSignal(parent, COMSIG_HOSTILE_FOUND_TARGET)
+
+	else
+		UnregisterSignal(parent, COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_CURRENT_TARGET))
 	return ..()
 
 ///Handles giving the boss music to a new target the fauna has received.
 ///Keeps track of them to not repeatedly overwrite its own track.
-/datum/component/boss_music/proc/on_target_found(atom/source, mob/new_target)
+/datum/component/boss_music/proc/on_hostile_target_found(atom/source, mob/new_target)
 	SIGNAL_HANDLER
 	if(QDELETED(source) || !istype(new_target))
 		return
+	register_target(new_target)
 
+///signal for the basic mob version of targetting
+/datum/component/boss_music/proc/on_basic_target_found(mob/living/basic/basic_source)
+	SIGNAL_HANDLER
+	var/mob/new_target = basic_source.ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	if(QDELETED(basic_source) || !new_target || !istype(new_target))
+		return
+	register_target(new_target)
+
+///registers a new mob to listen to boss music.
+/datum/component/boss_music/proc/register_target(mob/new_target)
 	var/datum/weakref/new_ref = WEAKREF(new_target)
 	if(new_ref in players_listening_refs)
 		return
-
 	players_listening_refs += new_ref
 	RegisterSignal(new_target, COMSIG_LIVING_DEATH, PROC_REF(on_mob_death))
 	music_callbacks += addtimer(CALLBACK(src, PROC_REF(clear_target), new_ref), track_duration, TIMER_STOPPABLE)

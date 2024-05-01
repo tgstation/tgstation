@@ -27,16 +27,25 @@
 	QDEL_NULL(available_commands)
 
 /datum/component/obeys_commands/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_LIVING_BEFRIENDED, PROC_REF(add_friend))
-	RegisterSignal(parent, COMSIG_LIVING_UNFRIENDED, PROC_REF(remove_friend))
-	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(display_menu))
+	var/mob/living/living_parent = parent
+	RegisterSignal(living_parent.ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(add_friend))
+	RegisterSignal(living_parent.ai_controller, COMSIG_AI_CONTROLLER_LOST_FRIEND, PROC_REF(remove_friend))
+	RegisterSignal(living_parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(living_parent, COMSIG_CLICK_ALT, PROC_REF(display_menu))
 
 /datum/component/obeys_commands/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_LIVING_BEFRIENDED, COMSIG_LIVING_UNFRIENDED, COMSIG_ATOM_EXAMINE, COMSIG_CLICK_ALT))
+	var/mob/living/living_parent = parent
+	UnregisterSignal(living_parent.ai_controller, list(
+		COMSIG_AI_CONTROLLER_GAINED_FRIEND,
+		COMSIG_AI_CONTROLLER_LOST_FRIEND,
+	))
+	UnregisterSignal(living_parent, list(
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_CLICK_ALT,
+	))
 
 /// Add someone to our friends list
-/datum/component/obeys_commands/proc/add_friend(datum/source, mob/living/new_friend)
+/datum/component/obeys_commands/proc/add_friend(datum/source, mob/living/new_friend, is_first_friend)
 	SIGNAL_HANDLER
 
 	for (var/command_name as anything in available_commands)
@@ -44,7 +53,7 @@
 		INVOKE_ASYNC(command, TYPE_PROC_REF(/datum/pet_command, add_new_friend), new_friend)
 
 /// Remove someone from our friends list
-/datum/component/obeys_commands/proc/remove_friend(datum/source, mob/living/old_friend)
+/datum/component/obeys_commands/proc/remove_friend(datum/source, mob/living/old_friend, has_remaining_friends)
 	SIGNAL_HANDLER
 
 	for (var/command_name as anything in available_commands)
@@ -57,7 +66,7 @@
 
 	if (IS_DEAD_OR_INCAP(source))
 		return
-	if (!(user in source.ai_controller?.blackboard[BB_FRIENDS_LIST]))
+	if (!(user in source.ai_controller?.blackboard[BB_FRIENDS]))
 		return
 	examine_list += span_notice("[source.p_They()] seem[source.p_s()] happy to see you!")
 
@@ -68,7 +77,7 @@
 	var/mob/living/living_parent = parent
 	if (IS_DEAD_OR_INCAP(living_parent))
 		return
-	if (!(clicker in living_parent.ai_controller?.blackboard[BB_FRIENDS_LIST]))
+	if (!(clicker in living_parent.ai_controller?.blackboard[BB_FRIENDS]))
 		return // Not our friend, can't boss us around
 
 	INVOKE_ASYNC(src, PROC_REF(display_radial_menu), clicker)

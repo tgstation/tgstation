@@ -63,23 +63,21 @@
 
 	if(can_tame)
 		make_tameable()
+	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
 
 /mob/living/basic/mining/wolf/proc/make_tameable()
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat/slab), tame_chance = 15, bonus_tame_chance = 5)
 
-/mob/living/basic/mining/wolf/tamed(mob/living/tamer, atom/food)
+/mob/living/basic/mining/wolf/proc/on_ai_controller_gained_friend(mob/living/new_friend, is_first_friend)
+	SIGNAL_HANDLER
 	new /obj/effect/temp_visual/heart(src.loc)
-	// ride wolf, life good
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/wolf)
-	AddComponent(/datum/component/obeys_commands, pet_commands)
-	// this is purely a convenience thing once tamed so you can drag them away from shit
-	ai_controller.ai_traits = STOP_MOVING_WHEN_PULLED
-	// makes tamed wolves run away far less
-	ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEE_DISTANCE, 7)
-
-//port the faction fix from goliath basicmob to make the wildlife hostile when tamed (and also help defuckulate reinforcements ai)
-//this should also produce interesting behavior where tamed wolves defend other tamed wolves.
-/mob/living/basic/mining/wolf/befriend(mob/living/new_friend)
-	. = ..()
-	faction = new_friend.faction.Copy()
+	if(is_first_friend)
+		// ride wolf, life good
+		AddElement(/datum/element/ridable, /datum/component/riding/creature/wolf)
+		AddComponent(/datum/component/obeys_commands, pet_commands)
+		// this is purely a convenience thing once tamed so you can drag them away from shit
+		ai_controller.ai_traits = STOP_MOVING_WHEN_PULLED
+		// makes tamed wolves run away far less
+		ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEE_DISTANCE, 7)
+		faction = new_friend.faction.Copy()
 	visible_message(span_notice("[src] lowers [src.p_their()] snout at [new_friend]'s offering and begins to wag [src.p_their()] tail."))

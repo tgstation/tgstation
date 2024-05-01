@@ -42,7 +42,7 @@
 			continue
 		if((living_pawn.faction.Find(REF(potential_friend))))
 			continue
-		living_pawn.befriend(potential_friend)
+		living_pawn.ai_controller?.become_friendly(potential_friend)
 		to_chat(potential_friend, span_nicegreen("[living_pawn] looks at you with endearing eyes!"))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 

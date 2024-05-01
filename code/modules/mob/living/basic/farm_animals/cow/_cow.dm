@@ -48,6 +48,7 @@
 	setup_eating()
 	. = ..()
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
+	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
 
 ///wrapper for the udder component addition so you can have uniquely uddered cow subtypes
 /mob/living/basic/cow/proc/setup_udder()
@@ -63,13 +64,15 @@
 	var/static/list/food_types
 	if(!food_types)
 		food_types = src.food_types.Copy()
-	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15)
 	AddElement(/datum/element/basic_eating, food_types = food_types)
+	AddComponent(/datum/component/tameable, tame_chance = 25, bonus_tame_chance = 15)
 
-/mob/living/basic/cow/tamed(mob/living/tamer, atom/food)
-	buckle_lying = 0
+/mob/living/basic/cow/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+	SIGNAL_HANDLER
+	if(is_first_friend)
+		buckle_lying = 0
+		AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 	visible_message("[src] [tame_message] as it seems to bond with [tamer].", "You [self_tame_message], recognizing [tamer] as your new pal.")
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 
 /*
  * Proc called via callback after the cow is tipped by the tippable component.

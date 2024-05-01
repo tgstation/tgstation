@@ -45,6 +45,12 @@
 /mob/living/basic/mining/megafauna/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/cheese_avoidant)
+	AddComponent( \
+		/datum/component/regenerator, \
+		regeneration_delay = 30 SECONDS, \
+		brute_per_second = maxHealth * 0.05, \
+		outline_colour = COLOR_DARK_RED \
+	)
 	if(megafauna_loot || crusher_alternate_loot)
 		AddElement(
 			/datum/element/death_drops,\

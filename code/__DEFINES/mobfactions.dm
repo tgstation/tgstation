@@ -45,6 +45,10 @@
 #define FACTION_MIMIC "mimic"
 /// Beasts found on the various mining environments
 #define FACTION_MINING "mining"
+/// Crabs! Crustaceans, more accurately, since lobstrosities and all crab-adjacent stuff is included
+#define FACTION_CRABS "crabs"
+/// Specifically gigasnapper and its minions, a bond above all crabs (to prevent possession cheese)
+#define FACTION_GIGASNAPPER "gigasnapper"
 /// Watchers don't like any creatures other than each other
 #define FACTION_WATCHER "watcher"
 /// Monkeys and gorillas

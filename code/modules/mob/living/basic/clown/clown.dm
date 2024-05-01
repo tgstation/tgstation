@@ -58,7 +58,7 @@
 	if (!istype(attacker))
 		return
 	for (var/mob/living/basic/clown/harbringer in oview(src, 7))
-		harbringer.ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
+		harbringer.ai_controller?.become_hostile(attacker)
 
 /mob/living/basic/clown/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	if(!istype(target, /obj/item/food/grown/banana/bunch))
@@ -406,6 +406,8 @@
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0)
 	AddElement(/datum/element/damage_threshold, 10) //lots of fat to cushion blows.
 
+	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
+
 /mob/living/basic/clown/mutant/glutton/attacked_by(obj/item/item, mob/living/user)
 	if(!check_edible(item))
 		return ..()
@@ -461,9 +463,11 @@
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	flick("glutton_mouth", src)
 
-/mob/living/basic/clown/mutant/glutton/tamed(mob/living/tamer, atom/food)
-	buckle_lying = 0
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/glutton)
+/mob/living/basic/clown/mutant/glutton/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+	SIGNAL_HANDLER
+	if(is_first_friend)
+		buckle_lying = 0
+		AddElement(/datum/element/ridable, /datum/component/riding/creature/glutton)
 
 /mob/living/basic/clown/mutant/glutton/Exited(atom/movable/gone, direction)
 	. = ..()

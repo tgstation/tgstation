@@ -35,7 +35,7 @@
 	if (!isliving(attacker))
 		return
 	var/mob/living/living_attacker = attacker
-	if (!owner.unfriend(living_attacker))
+	if (!owner.ai_controller.become_hostile(living_attacker))
 		return
 	if (!untamed_reaction)
 		return

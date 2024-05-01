@@ -66,7 +66,7 @@
 
 ///Handles feeding a sheet of plasma to a slime
 /mob/living/basic/slime/proc/use_sheet(obj/item/stack/sheet/mineral/plasma/delicious_sheet, mob/living/user)
-	befriend(user)
+	ai_controller?.become_friendly(user)
 	to_chat(user, span_notice("You feed the slime the plasma. It chirps happily."))
 	delicious_sheet.use(1)
 	new /obj/effect/temp_visual/heart(loc)

@@ -12,7 +12,7 @@
 
 /datum/ai_planning_subtree/target_retaliate/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
-	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list, BB_BASIC_MOB_RETALIATE_LIST, target_key, targeting_strategy_key, hiding_place_key, check_faction)
+	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list, BB_ENEMIES, target_key, targeting_strategy_key, hiding_place_key, check_faction)
 
 /datum/ai_planning_subtree/target_retaliate/check_faction
 	check_faction = TRUE

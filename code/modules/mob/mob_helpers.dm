@@ -568,9 +568,12 @@
 /// This is only useful in instances where you don't want to store the reference to the action on a variable on the mob.
 /// You can set the value to null if you don't want to add it to the blackboard (like in player controlled instances). Is also safe with null AI controllers.
 /// Assumes that the action will be initialized and held in the mob itself, which is typically standard.
-/mob/proc/grant_actions_by_list(list/input)
+/// Returns a list of ability instances with blackboard keys, with the abilities now as the value.
+/mob/proc/grant_actions_by_list(list/input) as /list
 	if(length(input) <= 0)
 		return
+
+	var/list/key_abilities = list()
 
 	for(var/action in input)
 		var/datum/action/ability = new action(src)
@@ -579,5 +582,7 @@
 		var/blackboard_key = input[action]
 		if(isnull(blackboard_key))
 			continue
+		key_abilities[blackboard_key] = ability
 
 		ai_controller?.set_blackboard_key(blackboard_key, ability)
+	return key_abilities

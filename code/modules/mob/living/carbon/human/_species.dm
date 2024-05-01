@@ -500,8 +500,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		human_who_gained_species.add_traits(inherent_traits, SPECIES_TRAIT)
 
 	if(inherent_factions)
-		for(var/i in inherent_factions)
-			human_who_gained_species.faction += i //Using +=/-= for this in case you also gain the faction from a different source.
+		human_who_gained_species |= inherent_factions
 
 	// All languages associated with this language holder are added with source [LANGUAGE_SPECIES]
 	// rather than source [LANGUAGE_ATOM], so we can track what to remove if our species changes again
@@ -549,8 +548,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.dna.default_mutation_genes[new_species.inert_mutation] = C.dna.mutation_index[new_species.inert_mutation]
 
 	if(inherent_factions)
-		for(var/i in inherent_factions)
-			C.faction -= i
+		C.faction -= inherent_factions
 
 	clear_tail_moodlets(C)
 

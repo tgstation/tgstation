@@ -9,7 +9,7 @@
 
 	var/new_mood = SLIME_MOOD_NONE
 
-	if (controller.blackboard[BB_SLIME_RABID] || LAZYLEN(controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]) > 0)
+	if (controller.blackboard[BB_SLIME_RABID] || LAZYLEN(controller.blackboard[BB_ENEMIES]) > 0)
 		new_mood = SLIME_MOOD_ANGRY
 	else if (controller.blackboard[BB_SLIME_HUNGER_DISABLED])
 		new_mood = SLIME_MOOD_SMILE

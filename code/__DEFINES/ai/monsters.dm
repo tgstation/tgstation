@@ -4,6 +4,22 @@
 #define BB_BILEWORM_RESURFACE "BB_bileworm_resurface"
 #define BB_BILEWORM_DEVOUR "BB_bileworm_devour"
 
+// gigasnapper AI keys
+
+/// holds snapper collision ability/behavior
+#define BB_GIGASNAPPER_COLLIDE "BB_gigasnapper_collide"
+/// holds snapper dig ability
+#define BB_GIGASNAPPER_DIG "BB_gigasnapper_dig"
+/// holds snapper arena toggle ability
+#define BB_GIGASNAPPER_ARENA "BB_gigasnapper_arena"
+/// holds snapper summon ability
+#define BB_GIGASNAPPER_MINIONS "BB_gigasnapper_minions"
+
+// smallsnipper AI key
+
+/// holds snipper bubble ability
+#define BB_SMALLSNIPPER_BUBBLE "BB_smallsnipper_bubble"
+
 // Meteor Heart AI keys
 /// Key where we keep the spike trail ability
 #define BB_METEOR_HEART_GROUND_SPIKES "BB_meteor_ground_spikes"

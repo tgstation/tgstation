@@ -90,16 +90,6 @@
 		return FALSE
 	return living_mob.faction_check_atom(the_target, exact_match = check_factions_exactly)
 
-/// Subtype more forgiving for items.
-/// Careful, this can go wrong and keep a mob hyper-focused on an item it can't lose aggro on
-/datum/targeting_strategy/basic/allow_items
-
-/datum/targeting_strategy/basic/allow_items/can_attack(mob/living/living_mob, atom/the_target, vision_range)
-	. = ..()
-	if(isitem(the_target))
-		// trust fall exercise
-		return TRUE
-
 /// Subtype which searches for mobs of a size relative to ours
 /datum/targeting_strategy/basic/of_size
 	/// If true, we will return mobs which are smaller than us. If false, larger.

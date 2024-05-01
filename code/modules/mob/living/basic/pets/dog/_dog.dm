@@ -52,6 +52,7 @@
 	AddElement(/datum/element/unfriend_attacker, untamed_reaction = "%SOURCE% fixes %TARGET% with a look of betrayal.")
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat/slab/human/mutant/skeleton, /obj/item/stack/sheet/bone), tame_chance = 30, bonus_tame_chance = 15, unique = FALSE)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
+	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
 	var/dog_area = get_area(src)
 	for(var/obj/structure/bed/dogbed/dog_bed in dog_area)
 		if(dog_bed.update_owner(src)) //No muscling in on my turf you fucking parrot
@@ -64,7 +65,8 @@
 	speech.emote_see = string_list(list("shakes [p_their()] head.", "chases [p_their()] tail.","shivers."))
 
 ///Proc to run on a successful taming attempt
-/mob/living/basic/pet/dog/tamed(mob/living/tamer, atom/food)
+/mob/living/basic/pet/dog/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+	SIGNAL_HANDLER
 	visible_message(span_notice("[src] licks at [tamer] in a friendly manner!"))
 
 /// A dog bone fully heals a dog, and befriends it if it's not your friend.
@@ -88,8 +90,7 @@
 		return ..()
 	dog_target.emote("spin")
 	dog_target.fully_heal()
-	if (dog_target.befriend(user))
-		dog_target.tamed(user)
+	dog_target.ai_controller?.become_friendly(user)
 	new /obj/effect/temp_visual/heart(target.loc)
 	qdel(src)
 	return TRUE

@@ -60,7 +60,7 @@
 	for(var/mob/living/basic/bee/friend in target_turf)
 		if(friend.flags_1 & HOLOGRAM_1)
 			continue
-		friend.befriend(user)
+		friend.ai_controller?.become_friendly(user)
 
 	if(!istype(attacked_atom, /obj/structure/beebox))
 		return
@@ -69,7 +69,7 @@
 	for(var/mob/living/bee as anything in hive.bees)
 		if(bee.flags_1 & HOLOGRAM_1)
 			continue
-		bee.befriend(user)
+		bee.ai_controller?.become_friendly(user)
 
 /obj/item/bee_smoker/attackby(obj/item/herb, mob/living/carbon/human/user, list/modifiers)
 	. = ..()

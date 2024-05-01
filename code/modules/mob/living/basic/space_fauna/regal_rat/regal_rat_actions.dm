@@ -116,7 +116,7 @@
 	if (isbasicmob(new_minion))
 		new_minion.AddComponent(/datum/component/obeys_commands, command_list)
 		qdel(new_minion.GetComponent(/datum/component/tameable)) // Rats don't share
-	new_minion.befriend(owner)
+	new_minion.ai_controller?.become_friendly(owner)
 	new_minion.faction = owner.faction.Copy()
 	// Give a hint in description too
 	new_minion.desc += minion_desc

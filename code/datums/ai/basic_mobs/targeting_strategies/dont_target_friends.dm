@@ -10,7 +10,7 @@
 	if(attack_closed_turf && isclosedturf(target))
 		return TRUE
 
-	if(target in living_mob.ai_controller.blackboard[BB_FRIENDS_LIST])
+	if(target in living_mob.ai_controller.blackboard[BB_FRIENDS])
 		return FALSE
 
 	return ..()

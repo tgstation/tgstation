@@ -203,7 +203,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 
 
 ///decrease the pet's hunger after it eats
-/datum/computer_file/program/virtual_pet/proc/after_pet_eat(datum/source)
+/datum/computer_file/program/virtual_pet/proc/after_pet_eat(datum/source, obj/item/food, mob/living/feeder)
 	SIGNAL_HANDLER
 
 	hunger = min(hunger + PET_EAT_BONUS, max_hunger)
@@ -550,7 +550,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 		drop_zone = possible_turf
 		break
 	var/turf/final_turf = isnull(drop_zone) ? computer.drop_location() : drop_zone
-	pet.befriend(our_user) //befriend whoever set us out
+	pet.ai_controller?.become_friendly(our_user) //befriend whoever set us out
 	animate(pet, transform = matrix(), time = 1.5 SECONDS)
 	pet.forceMove(final_turf)
 	playsound(computer.loc, 'sound/items/orbie_send_out.ogg', 20)

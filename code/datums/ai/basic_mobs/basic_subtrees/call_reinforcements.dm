@@ -40,7 +40,7 @@
 	for(var/mob/other_mob in oview(reinforcements_range, pawn_mob))
 		if(pawn_mob.faction_check_atom(other_mob) && !isnull(other_mob.ai_controller))
 			// Add our current target to their retaliate list so that they'll attack our aggressor
-			other_mob.ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+			other_mob.ai_controller.become_hostile(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
 			other_mob.ai_controller.set_blackboard_key(BB_BASIC_MOB_REINFORCEMENT_TARGET, pawn_mob)
 
 	controller.set_blackboard_key(BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN, world.time + REINFORCEMENTS_COOLDOWN)

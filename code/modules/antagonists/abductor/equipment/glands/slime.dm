@@ -22,4 +22,4 @@
 	owner.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 20)
 
 	var/mob/living/basic/slime/new_baby_slime = new(get_turf(owner), /datum/slime_type/grey)
-	new_baby_slime.befriend(owner)
+	new_baby_slime.ai_controller?.become_friendly(owner)

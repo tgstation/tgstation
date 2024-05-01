@@ -18,10 +18,10 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	ai_controller = /datum/ai_controller/basic_controller/cow/moonicorn
-	food_types = list(/obj/item/food/grown/galaxythistle)
 	tame_message = "nods with respect"
 	self_tame_message = "nod with respect"
 	milked_reagent = /datum/reagent/drug/mushroomhallucinogen
+	food_types = list(/obj/item/food/grown/galaxythistle)
 
 /mob/living/basic/cow/moonicorn/Initialize(mapload)
 	. = ..()
@@ -29,20 +29,21 @@
 	AddElement(/datum/element/movement_turf_changer, /turf/open/floor/grass/fairy)
 
 /mob/living/basic/cow/moonicorn/setup_eating()
+	//identical but different static list used
 	var/static/list/food_types
 	if(!food_types)
 		food_types = src.food_types.Copy()
 	AddElement(/datum/element/basic_eating, food_types = food_types)
-	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15)
+	AddComponent(/datum/component/tameable, tame_chance = 25, bonus_tame_chance = 15)
 
-/mob/living/basic/cow/moonicorn/tamed(mob/living/tamer, atom/food)
+/mob/living/basic/cow/moonicorn/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
 	. = ..()
 	///stop killing my FRIENDS
 	faction |= tamer.faction
 
 /datum/ai_controller/basic_controller/cow/moonicorn
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items/moonicorn,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items/friendly_for_items/food,
 		BB_BASIC_MOB_TIP_REACTING = FALSE,
 		BB_BASIC_MOB_TIPPER = null,
 	)
@@ -56,16 +57,3 @@
 		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
-
-///moonicorns will not attack people holding something that could tame them.
-/datum/targeting_strategy/basic/allow_items/moonicorn
-
-/datum/targeting_strategy/basic/allow_items/moonicorn/can_attack(mob/living/living_mob, atom/the_target, vision_range)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	if(isliving(the_target)) //Targeting vs living mobs
-		var/mob/living/living_target = the_target
-		for(var/obj/item/food/grown/galaxythistle/tame_food in living_target.held_items)
-			return FALSE //heyyy this can tame me! let's NOT fight

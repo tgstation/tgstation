@@ -208,9 +208,6 @@
 	/// Don't send a message for sacrificing this thing, we have our own
 	#define SILENCE_SACRIFICE_MESSAGE (1<<1)
 
-/// From /mob/living/befriend() : (mob/living/new_friend)
-#define COMSIG_LIVING_BEFRIENDED "living_befriended"
-
 /// From /obj/item/proc/pickup(): (/obj/item/picked_up_item)
 #define COMSIG_LIVING_PICKED_UP_ITEM "living_picked_up_item"
 

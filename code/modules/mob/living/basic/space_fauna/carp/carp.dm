@@ -94,9 +94,9 @@
 
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("gnashes")))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
+	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
 	if (tamer)
-		tamed(tamer, feedback = FALSE)
-		befriend(tamer)
+		ai_controller?.become_friendly(tamer)
 	else
 		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5)
 
@@ -119,12 +119,12 @@
 	set_greyscale(colors = list(pick_weight(GLOB.carp_colors)))
 
 /// Called when another mob has forged a bond of friendship with this one, passed the taming mob as 'tamer'
-/mob/living/basic/carp/tamed(mob/living/tamer, atom/food, feedback = TRUE)
-	buckle_lying = 0
-	AddElement(/datum/element/ridable, ridable_data)
-	AddComponent(/datum/component/obeys_commands, tamed_commands)
-	if (!feedback)
-		return
+/mob/living/basic/carp/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+	SIGNAL_HANDLER
+	if(is_first_friend)
+		buckle_lying = 0
+		AddElement(/datum/element/ridable, ridable_data)
+		AddComponent(/datum/component/obeys_commands, tamed_commands)
 	spin(spintime = 10, speed = 1)
 	visible_message("[src] spins in a circle as it seems to bond with [tamer].")
 

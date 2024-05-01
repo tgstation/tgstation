@@ -10,7 +10,6 @@
 	medhud.add_atom_to_hud(src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_atom_to_hud(src)
-	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
@@ -2550,7 +2549,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /// Proc called when TARGETED by a lazarus injector
 /mob/living/proc/lazarus_revive(mob/living/reviver, malfunctioning)
 	revive(HEAL_ALL)
-	befriend(reviver)
+	ai_controller?.become_friendly(reviver)
 	faction = (malfunctioning) ? list("[REF(reviver)]") : list(FACTION_NEUTRAL)
 	var/lazarus_policy = get_policy(ROLE_LAZARUS_GOOD) || "The lazarus injector has brought you back to life! You are now friendly to everyone."
 	if (malfunctioning)
@@ -2560,30 +2559,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		to_chat(src, span_userdanger("Serve [reviver.real_name], and assist [reviver.p_them()] in completing [reviver.p_their()] goals at any cost."))
 		lazarus_policy = get_policy(ROLE_LAZARUS_BAD) || "You have been revived by a malfunctioning lazarus injector! You are now enslaved by whoever revived you."
 	to_chat(src, span_boldnotice(lazarus_policy))
-
-/// Proc for giving a mob a new 'friend', generally used for AI control and targeting. Returns false if already friends.
-/mob/living/proc/befriend(mob/living/new_friend)
-	SHOULD_CALL_PARENT(TRUE)
-	var/friend_ref = REF(new_friend)
-	if (faction.Find(friend_ref))
-		return FALSE
-	faction |= friend_ref
-	ai_controller?.insert_blackboard_key_lazylist(BB_FRIENDS_LIST, new_friend)
-
-	SEND_SIGNAL(src, COMSIG_LIVING_BEFRIENDED, new_friend)
-	return TRUE
-
-/// Proc for removing a friend you added with the proc 'befriend'. Returns true if you removed a friend.
-/mob/living/proc/unfriend(mob/living/old_friend)
-	SHOULD_CALL_PARENT(TRUE)
-	var/friend_ref = REF(old_friend)
-	if (!faction.Find(friend_ref))
-		return FALSE
-	faction -= friend_ref
-	ai_controller?.remove_thing_from_blackboard_key(BB_FRIENDS_LIST, old_friend)
-
-	SEND_SIGNAL(src, COMSIG_LIVING_UNFRIENDED, old_friend)
-	return TRUE
 
 /**
  * Common proc used to deduct money from cargo, announce the kidnapping and add src to the black market.

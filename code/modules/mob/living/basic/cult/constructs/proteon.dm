@@ -34,6 +34,6 @@
 	addtimer(CALLBACK(src, PROC_REF(clear_retaliate_list)), random_timer)
 
 /mob/living/basic/construct/proteon/hostile/proc/clear_retaliate_list()
-	if(!ai_controller.blackboard_key_exists(BB_BASIC_MOB_RETALIATE_LIST))
+	if(!ai_controller.blackboard_key_exists(BB_ENEMIES))
 		return
-	ai_controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
+	ai_controller.clear_blackboard_key(BB_ENEMIES)

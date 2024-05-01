@@ -291,7 +291,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	if(isnull(chief))
 		return null
 	var/mob/living/living_pawn = controller.pawn
-	living_pawn.befriend(chief)
+	living_pawn.ai_controller?.become_friendly(chief)
 	return chief
 
 ///find injured miner mooks after they come home from a long day of work

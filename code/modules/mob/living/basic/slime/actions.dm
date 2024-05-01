@@ -125,7 +125,7 @@
 			step_away(baby, src)
 
 		for(var/slime_friend in slime_friends)
-			baby.befriend(slime_friend)
+			baby.ai_controller?.become_friendly(slime_friend)
 
 		babies += baby
 		baby.mutation_chance = clamp(mutation_chance+(rand(5,-5)),0,100)

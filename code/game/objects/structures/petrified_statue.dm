@@ -96,7 +96,7 @@
 	var/mob/living/basic/statue/new_statue = new(drop_location())
 	new_statue.name = "statue of [petrified_mob.name]"
 	if(owner)
-		new_statue.befriend(owner)
+		new_statue.ai_controller?.become_friendly(owner)
 	new_statue.icon = icon
 	new_statue.icon_state = icon_state
 	new_statue.copy_overlays(src, TRUE)

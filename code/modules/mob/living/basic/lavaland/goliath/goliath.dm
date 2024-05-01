@@ -68,7 +68,7 @@
 	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
 	if (tameable)
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5)
+		AddComponent(/datum/component/tameable, tame_chance = 10, bonus_tame_chance = 5, food_types = list(/obj/item/food/grown/ash_flora))
 
 	tentacles = new (src)
 	tentacles.Grant(src)
@@ -83,6 +83,7 @@
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(goliath_foods))
 	ai_controller.set_blackboard_key(BB_GOLIATH_TENTACLES, tentacles)
+	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
 
 /mob/living/basic/mining/goliath/examine(mob/user)
 	. = ..()
@@ -146,13 +147,11 @@
 	icon_state = tentacle_warning_state
 
 /// Get ready for mounting
-/mob/living/basic/mining/goliath/tamed(mob/living/tamer, atom/food)
-	tamed = TRUE
-
-// Copy entire faction rather than just placing user into faction, to avoid tentacle peril on station
-/mob/living/basic/mining/goliath/befriend(mob/living/new_friend)
-	. = ..()
-	faction = new_friend.faction.Copy()
+/mob/living/basic/mining/goliath/proc/on_ai_controller_gained_friend(mob/living/new_friend, is_first_friend)
+	SIGNAL_HANDLER
+	if(is_first_friend)
+		tamed = TRUE
+		faction = new_friend.faction.Copy()
 
 /mob/living/basic/mining/goliath/RangedAttack(atom/atom_target, modifiers)
 	tentacles?.Trigger(target = atom_target)

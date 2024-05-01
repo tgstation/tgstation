@@ -391,7 +391,7 @@
 		soulstone_spirit.copy_languages(user, LANGUAGE_MASTER)
 	soulstone_spirit.get_language_holder().omnitongue = TRUE //Grants omnitongue
 	if(user)
-		soulstone_spirit.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
+		soulstone_spirit.ai_controller?.become_friendly(user)
 		if(IS_CULTIST(user))
 			soulstone_spirit.mind.add_antag_datum(/datum/antagonist/cult)
 			SSblackbox.record_feedback("tally", "cult_shade_created", 1)
@@ -498,7 +498,7 @@
 	flick("make_[makeicon][theme]", newstruct)
 	playsound(newstruct, 'sound/effects/constructform.ogg', 50)
 	if(stoner)
-		newstruct.faction |= "[REF(stoner)]"
+		newstruct.ai_controller?.become_friendly(stoner)
 		newstruct.master = stoner
 		var/datum/action/innate/seek_master/seek_master = new
 		seek_master.Grant(newstruct)

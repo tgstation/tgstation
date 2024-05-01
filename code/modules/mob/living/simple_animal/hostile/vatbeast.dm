@@ -32,11 +32,14 @@
 
 	add_cell_sample()
 	AddComponent(/datum/component/tameable, list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries), tame_chance = 30, bonus_tame_chance = 0)
+	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
 
-/mob/living/simple_animal/hostile/vatbeast/tamed(mob/living/tamer, obj/item/food)
-	buckle_lying = 0
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/vatbeast)
-	faction = list(FACTION_NEUTRAL)
+/mob/living/simple_animal/hostile/vatbeast/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+	SIGNAL_HANDLER
+	if(is_first_friend)
+		buckle_lying = 0
+		AddElement(/datum/element/ridable, /datum/component/riding/creature/vatbeast)
+		faction = list(FACTION_NEUTRAL)
 
 /mob/living/simple_animal/hostile/vatbeast/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_VATBEAST, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

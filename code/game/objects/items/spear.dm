@@ -201,20 +201,20 @@
 	force_unwielded = 15
 	force_wielded = 25
 
-/obj/item/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
+/obj/item/spear/grey_tide/afterattack(atom/atom_target, mob/living/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
-	user.faction |= "greytide([REF(user)])"
-	if(isliving(AM))
-		var/mob/living/L = AM
-		if(istype (L, /mob/living/simple_animal/hostile/illusion))
-			return
-		if(!L.stat && prob(50))
-			var/mob/living/simple_animal/hostile/illusion/M = new(user.loc)
-			M.faction = user.faction.Copy()
-			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
-			M.GiveTarget(L)
+	if(!isliving(atom_target))
+		return
+	var/mob/living/living_target = atom_target
+	if(istype(living_target, /mob/living/simple_animal/hostile/illusion))
+		return
+	if(living_target.stat == CONSCIOUS && prob(50))
+		var/mob/living/simple_animal/hostile/illusion/new_illusion = new(user.loc)
+		new_illusion.ai_controller?.become_friendly(user)
+		new_illusion.Copy_Parent(user, 100, user.health/2.5, 12, 30)
+		new_illusion.GiveTarget(living_target)
 
 /*
  * Bone Spear

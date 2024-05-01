@@ -43,7 +43,7 @@
 		return
 	if (!prob(befriend_chance))
 		return
-	if (!owner.befriend(user))
+	if (!owner.ai_controller?.become_friendly(user))
 		return
 	if (!tamed_reaction)
 		return

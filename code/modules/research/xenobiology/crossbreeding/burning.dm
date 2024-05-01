@@ -34,7 +34,7 @@ Burning extracts:
 /obj/item/slimecross/burning/grey/do_effect(mob/user)
 	var/mob/living/basic/slime/new_slime = new(get_turf(user),/datum/slime_type/grey)
 	new_slime.visible_message(span_danger("A baby slime emerges from [src], and it nuzzles [user] before burbling hungrily!"))
-	new_slime.befriend(user) //Gas, gas, gas
+	new_slime.ai_controller?.become_friendly(user) //Gas, gas, gas
 	new_slime.bodytemperature = T0C + 400 //We gonna step on the gas.
 	new_slime.set_nutrition(SLIME_HUNGER_NUTRITION) //Tonight, we fight!
 	..()
@@ -199,9 +199,9 @@ Burning extracts:
 /obj/item/slimecross/burning/red/do_effect(mob/user)
 	user.visible_message(span_danger("[src] pulses a hazy red aura for a moment, which wraps around [user]!"))
 	for(var/mob/living/basic/slime/slime_in_view in view(7, get_turf(user)))
-		var/list/mob/living/friends = slime_in_view.ai_controller?.blackboard[BB_FRIENDS_LIST] - user
+		var/list/mob/living/friends = slime_in_view.ai_controller?.blackboard[BB_FRIENDS] - user
 		for(var/list/mob/living/ex_friend in friends)
-			slime_in_view.unfriend(ex_friend)
+			slime_in_view.ai_controller?.become_hostile(ex_friend)
 		slime_in_view.set_enraged_behaviour()
 		slime_in_view.visible_message(span_danger("The [slime_in_view] is driven into a dangerous frenzy!"))
 	..()
@@ -246,7 +246,7 @@ Burning extracts:
 	user.visible_message(span_danger("[src] shudders violently, and summons an army for [user]!"))
 	for(var/i in 1 to 3) //Less than gold normally does, since it's safer and faster.
 		var/mob/living/spawned_mob = create_random_mob(get_turf(user), HOSTILE_SPAWN)
-		spawned_mob.faction |= "[REF(user)]"
+		spawned_mob.ai_controller?.become_friendly(user)
 		if(prob(50))
 			for(var/j in 1 to rand(1, 3))
 				step(spawned_mob, pick(NORTH,SOUTH,EAST,WEST))

@@ -476,7 +476,7 @@
 		var/turf/drop_off = find_dropoff_turf(target, user)
 		var/mob/living/basic/mining/demon_afterimage/crusher/friend = new(drop_off)
 		friend.faction = list(FACTION_NEUTRAL)
-		friend.befriend(user)
+		friend.ai_controller?.become_friendly(user)
 		friend.ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
 	COOLDOWN_START(src, summon_cooldown, 30 SECONDS)
 

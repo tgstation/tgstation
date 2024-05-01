@@ -63,9 +63,10 @@
 		special_reagent = /datum/reagent/toxin
 
 	AddElement(/datum/element/venomous, special_reagent, 4)
+	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
 
-/mob/living/basic/snake/befriend(mob/living/new_friend)
-	. = ..()
+/mob/living/basic/snake/proc/on_ai_controller_gained_friend(mob/living/new_friend)
+	SIGNAL_HANDLER
 	visible_message("[src] hisses happily as it seems to bond with [new_friend].")
 
 /// Snakes are primarily concerned with getting those tasty, tasty mice, but aren't afraid to strike back at those who attack them

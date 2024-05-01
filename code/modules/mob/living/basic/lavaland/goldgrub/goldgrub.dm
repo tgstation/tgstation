@@ -67,6 +67,7 @@
 	ADD_TRAIT(src, TRAIT_BOULDER_BREAKER, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_INSTANTLY_PROCESSES_BOULDERS, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))
+	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
 
 /mob/living/basic/mining/goldgrub/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
 	SIGNAL_HANDLER
@@ -107,10 +108,12 @@
 /mob/living/basic/mining/goldgrub/proc/make_tameable()
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/stack/ore), tame_chance = 25, bonus_tame_chance = 5)
 
-/mob/living/basic/mining/goldgrub/tamed(mob/living/tamer, atom/food)
+/mob/living/basic/mining/goldgrub/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+	SIGNAL_HANDLER
+	if(is_first_friend)
+		AddElement(/datum/element/ridable, /datum/component/riding/creature/goldgrub)
+		AddComponent(/datum/component/obeys_commands, pet_commands)
 	new /obj/effect/temp_visual/heart(src.loc)
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/goldgrub)
-	AddComponent(/datum/component/obeys_commands, pet_commands)
 
 /mob/living/basic/mining/goldgrub/proc/make_egg_layer()
 	AddComponent(\

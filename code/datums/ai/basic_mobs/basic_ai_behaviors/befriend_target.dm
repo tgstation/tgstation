@@ -7,7 +7,7 @@
 	if(QDELETED(living_target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	living_pawn.befriend(living_target)
+	controller.become_friendly(living_target)
 	var/befriend_text = controller.blackboard[befriend_message]
 	if(befriend_text)
 		to_chat(living_target, span_nicegreen("[living_pawn] [befriend_text]"))

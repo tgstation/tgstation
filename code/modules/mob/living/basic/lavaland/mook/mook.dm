@@ -187,8 +187,7 @@
 	if(istype(intruder, /mob/living/basic/mining/mook))
 		return
 	for(var/mob/living/basic/mining/mook/villager in oview(src, 9))
-		villager.ai_controller?.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, intruder)
-
+		villager.ai_controller?.become_hostile(intruder)
 
 /mob/living/basic/mining/mook/worker
 	desc = "This unhealthy looking primitive is wielding a rudimentary hatchet, swinging it with wild abandon. One isn't much of a threat, but in numbers they can quickly overwhelm a superior opponent."

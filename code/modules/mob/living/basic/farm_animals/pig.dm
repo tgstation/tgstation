@@ -33,17 +33,20 @@
 	AddElement(/datum/element/pet_bonus, "oinks!")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
+	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
 	make_tameable()
 
 ///wrapper for the tameable component addition so you can have non tamable cow subtypes
 /mob/living/basic/pig/proc/make_tameable()
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 25, bonus_tame_chance = 15)
 
-/mob/living/basic/pig/tamed(mob/living/tamer, atom/food)
-	can_buckle = TRUE
-	buckle_lying = 0
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/pig)
-	visible_message(span_notice("[src] snorts respectfully."))
+/mob/living/basic/pig/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+	SIGNAL_HANDLER
+	if(is_first_friend)
+		can_buckle = TRUE
+		buckle_lying = 0
+		AddElement(/datum/element/ridable, /datum/component/riding/creature/pig)
+		visible_message(span_notice("[src] snorts respectfully."))
 
 /datum/ai_controller/basic_controller/pig
 	blackboard = list(

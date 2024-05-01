@@ -647,13 +647,6 @@
 	if(target)
 		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(handle_target_del))
 
-/mob/living/simple_animal/hostile/befriend(mob/living/new_friend)
-	. = ..()
-	if (!.)
-		return
-	friends += new_friend
-	faction = new_friend.faction.Copy()
-
 /mob/living/simple_animal/hostile/lazarus_revive(mob/living/reviver, malfunctioning)
 	. = ..()
 	if (malfunctioning)

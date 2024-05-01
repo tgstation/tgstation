@@ -9,6 +9,7 @@
 	friendly_verb_continuous = "chitters at"
 	friendly_verb_simple = "chitters at"
 	speak_emote = list("chitters")
+	faction = list(FACTION_MINING, FACTION_CRABS)
 	maxHealth = 150
 	health = 150
 	obj_damage = 15

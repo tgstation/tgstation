@@ -99,6 +99,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_injured)) // this means we got hurt and it's go time
 	RegisterSignal(src, COMSIG_ANIMAL_PET, PROC_REF(on_pet))
 	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_item_on_signal))
+	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
 
 /mob/living/basic/parrot/Destroy()
 	// should have cleaned these up on death, but let's be super safe in case that didn't happen
@@ -439,7 +440,8 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	return returnable_list
 
-/mob/living/basic/parrot/tamed(mob/living/tamer, atom/food)
+/mob/living/basic/parrot/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+	SIGNAL_HANDLER
 	new /obj/effect/temp_visual/heart(drop_location())
 
 /mob/living/basic/parrot/proc/drop_item_on_signal(mob/living/user)

@@ -15,12 +15,12 @@
 
 /datum/ai_behavior/capricious_retaliate/perform(seconds_per_tick, datum/ai_controller/controller, targeting_strategy_key, ignore_faction)
 	var/atom/pawn = controller.pawn
-	if (controller.blackboard_key_exists(BB_BASIC_MOB_RETALIATE_LIST))
+	if (controller.blackboard_key_exists(BB_ENEMIES))
 		var/deaggro_chance = controller.blackboard[BB_RANDOM_DEAGGRO_CHANCE] || 10
 		if (!SPT_PROB(deaggro_chance, seconds_per_tick))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 		pawn.visible_message(span_notice("[pawn] calms down.")) // We can blackboard key this if anyone else actually wants to customise it
-		controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
+		controller.clear_blackboard_key(BB_ENEMIES)
 		controller.CancelActions() // Otherwise they will try and get one last kick in
 		return AI_BEHAVIOR_DELAY
 
@@ -48,7 +48,7 @@
 		failed_targeting(pawn)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, final_target)
+	controller.insert_blackboard_key_lazylist(BB_ENEMIES, final_target)
 	pawn.visible_message(span_warning("[pawn] glares grumpily at [final_target]!"))
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 

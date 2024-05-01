@@ -29,7 +29,7 @@
 	if (user.combat_mode)
 		return
 
-	if (!(user in source.ai_controller.blackboard[BB_FRIENDS_LIST]))
+	if (!(user in source.ai_controller.blackboard[BB_FRIENDS]))
 		return // We don't care about this bozo
 	var/obj/item/carried_item = get_held_item(source)
 	if (!carried_item)

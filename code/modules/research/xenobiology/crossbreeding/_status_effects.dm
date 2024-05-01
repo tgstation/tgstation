@@ -476,7 +476,7 @@
 	for(var/mob/living/basic/slime/slimes_in_range in range(1, get_turf(owner)))
 		if(!(REF(owner) in slimes_in_range.faction))
 			to_chat(owner, span_notice("[linked_extract] pulses gently as it communicates with [slimes_in_range]."))
-			slimes_in_range.befriend(owner)
+			slimes_in_range.ai_controller?.become_friendly(owner)
 	return ..()
 
 /datum/status_effect/stabilized/orange
@@ -1043,7 +1043,7 @@
 		else //we are a basicmob otherwise
 			var/mob/living/basic/basic_familiar = familiar
 			basic_familiar.basic_mob_flags |= DEL_ON_DEATH
-		familiar.befriend(owner)
+		familiar.ai_controller?.become_friendly(owner)
 		familiar.copy_languages(owner, LANGUAGE_MASTER)
 		if(linked.saved_mind)
 			linked.saved_mind.transfer_to(familiar)

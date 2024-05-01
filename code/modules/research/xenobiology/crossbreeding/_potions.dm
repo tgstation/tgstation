@@ -95,7 +95,8 @@ Slimecrossing Potions
 		return
 	to_chat(user, span_notice("You feed [love_target] the love potion!"))
 	to_chat(love_target, span_notice("You develop feelings for [user], and anyone [user.p_they()] like[user.p_s()]."))
-	love_target.faction |= "[REF(user)]"
+	love_target.ai_controller?.become_friendly(user)
+	user.ai_controller?.become_friendly(love_target)
 	love_target.apply_status_effect(/datum/status_effect/in_love, user)
 	qdel(src)
 

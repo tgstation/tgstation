@@ -128,7 +128,7 @@
 	var/obj/item/frog_statue/statue = new(null)
 	var/mob/living/basic/leaper/new_frog = new(statue)
 	statue.set_new_frog(new_frog)
-	new_frog.befriend(user)
+	new_frog.ai_controller?.become_friendly(user)
 	ADD_TRAIT(new_frog, TRAIT_AI_PAUSED, MAGIC_TRAIT)
 	select_frog_name(user, new_frog)
 	select_frog_color(user, new_frog)

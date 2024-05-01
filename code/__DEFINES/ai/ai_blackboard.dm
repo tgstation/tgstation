@@ -15,6 +15,11 @@
 ///maximum kids we can have
 #define BB_MAX_CHILDREN "BB_max_children"
 
+/// generic list of things the pawn considers a friend (simplest terms, will not target when it normally wouldn't)
+#define BB_FRIENDS "BB_friends"
+/// generic list of things the pawn considers an enemy (simplest terms, will target when it normally wouldn't)
+#define BB_ENEMIES "BB_enemies"
+
 /// Store a single or list of emotes at this key
 #define BB_EMOTE_KEY "BB_emotes"
 /// Chance to perform an emote per second
@@ -96,10 +101,6 @@
 #define BB_STATIONARY_TARGETS "BB_stationary_targets"
 /// How often can we get spooked by a target?
 #define BB_STATIONARY_COOLDOWN "BB_stationary_cooldown"
-
-///List of mobs who have damaged us
-#define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
-
 /// Chance to randomly acquire a new target
 #define BB_RANDOM_AGGRO_CHANCE "BB_random_aggro_chance"
 /// Chance to randomly drop all of our targets
@@ -110,6 +111,9 @@
 
 ///list of foods this mob likes
 #define BB_BASIC_FOODS "BB_basic_foods"
+
+/// generic list of /obj/item the pawn wants for whatever reason decided by the ai
+#define BB_WANTED_ITEMS "BB_wanted_items"
 
 /// Blackboard key for a held item
 #define BB_SIMPLE_CARRY_ITEM "BB_SIMPLE_CARRY_ITEM"

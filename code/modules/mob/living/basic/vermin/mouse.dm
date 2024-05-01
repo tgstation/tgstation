@@ -58,6 +58,7 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	make_tameable()
 	AddComponent(/datum/component/swarming, 16, 16) //max_x, max_y
+	RegisterSignal(src, COMSIG_MOB_ATE, PROC_REF(on_mob_ate))
 
 /mob/living/basic/mouse/proc/make_tameable()
 	if (tame)
@@ -148,11 +149,13 @@
 		to_chat(entered, span_notice("[icon2html(src, entered)] Squeak!"))
 
 /// Called when a mouse is hand-fed some cheese, it will stop being afraid of humans
-/mob/living/basic/mouse/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
+/mob/living/basic/mouse/proc/on_mob_ate(mob/living/tamer, obj/item/cheese, mob/living/feeder)
+	try_consume_cheese(cheese)
+	if(!feeder)
+		return
 	new /obj/effect/temp_visual/heart(loc)
 	faction |= FACTION_NEUTRAL
 	tame = TRUE
-	try_consume_cheese(cheese)
 	ai_controller.CancelActions() // Interrupt any current fleeing
 
 /// Attempts to consume a piece of cheese, causing a few effects.

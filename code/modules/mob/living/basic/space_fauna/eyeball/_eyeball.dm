@@ -61,6 +61,7 @@
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 100)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
 	on_hit_overlay = mutable_appearance(icon, "[icon_state]_crying")
 
 /mob/living/basic/eyeball/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
@@ -116,10 +117,12 @@
 	to_chat(target, span_warning("[src] seems to be healing your [eyes.zone]!"))
 	eyes.apply_organ_damage(-1 * healing_factor)
 	new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
-	befriend(target)
+	ai_controller?.become_friendly(target)
 	COOLDOWN_START(src, eye_healing, 15 SECONDS)
 
-/mob/living/basic/eyeball/tamed(mob/living/tamer, atom/food)
+/mob/living/basic/eyeball/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+	SIGNAL_HANDLER
 	spin(spintime = 2 SECONDS, speed = 1)
-	//become passive to the humens
-	faction |= tamer.faction
+	if(is_first_friend)
+		//become passive to the humens
+		faction |= tamer.faction
