@@ -617,15 +617,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	attached_switch = null
 	return ..()
 
-<<<<<<< HEAD
-=======
-/obj/item/circuit_component/conveyor_switch/input_received(datum/port/input/port)
-	if(!attached_switch)
-		return
-
-	INVOKE_ASYNC(src, PROC_REF(update_conveyors), port)
-
->>>>>>> master
 /obj/item/circuit_component/conveyor_switch/proc/on_switch_changed()
 	attached_switch.update_appearance()
 	attached_switch.update_linked_conveyors()
@@ -647,16 +638,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	attached_switch.position = CONVEYOR_BACKWARDS
 	INVOKE_ASYNC(src, PROC_REF(on_switch_changed))
 
-<<<<<<< HEAD
-=======
-/obj/item/circuit_component/conveyor_switch/proc/update_conveyors(datum/port/input/port)
-	if(!attached_switch)
-		return
-
-	attached_switch.update_position()
-	INVOKE_ASYNC(src, PROC_REF(on_switch_changed))
-
->>>>>>> master
 #undef CONVEYOR_BACKWARDS
 #undef CONVEYOR_OFF
 #undef CONVEYOR_FORWARD
