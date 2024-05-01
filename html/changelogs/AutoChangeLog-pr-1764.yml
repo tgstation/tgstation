@@ -1,0 +1,6 @@
+author: "DexeeXI"
+delete-after: True
+changes:
+  - bugfix: "changed the medboard spawner in tech storage to support pathology machines. rest in piss pandemic machine."
+  - rscadd: "tram gets a crystallizer board (still a DIY project however)"
+  - bugfix: "box station pathology now has handcuffs in exchange for the useless extrapolators."
