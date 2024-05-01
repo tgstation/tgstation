@@ -437,6 +437,16 @@
 	update_appearance()
 	log_smes()
 
+// Variant of SMES that starts with super power cells for higher longevity
+/obj/machinery/power/smes/super
+	name = "super capacity power storage unit"
+	desc = "A super-capacity superconducting magnetic energy storage (SMES) unit. Relatively rare, and typically installed in long-range outposts where minimal maintenance is expected."
+	circuit = /obj/item/circuitboard/machine/smes/super
+	capacity = 100 * STANDARD_CELL_CHARGE
+
+/obj/machinery/power/smes/super/full
+	charge = 100 * STANDARD_CELL_CHARGE
+
 /obj/machinery/power/smes/full
 	charge = 50 * STANDARD_CELL_CHARGE
 

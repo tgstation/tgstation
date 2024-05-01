@@ -282,7 +282,7 @@ const CheckoutModal = (props) => {
         over
         mb={1.7}
         width="100%"
-        displayText={bookName}
+        selected={bookName}
         options={inventory.map((book) => book.title)}
         value={bookName}
         onSelected={(e) => setBookName(e)}

@@ -274,7 +274,7 @@
 	/// and gets deleted with the mech. However, they do remain in .contents
 	var/list/potential_occupants = contents | occupants
 	for(var/mob/buggy_ejectee in potential_occupants)
-		mob_exit(buggy_ejectee, silent = TRUE)
+		mob_exit(buggy_ejectee, silent = TRUE, forced = TRUE)
 
 	if(LAZYLEN(flat_equipment))
 		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in flat_equipment)
@@ -328,7 +328,7 @@
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
 			var/mob/living/silicon/ai/ai = occupant
-			if(!ai.linked_core) // we probably shouldnt gib AIs with a core
+			if(!ai.linked_core && !ai.can_shunt) // we probably shouldnt gib AIs with a core or shunting abilities
 				unlucky_ai = occupant
 				ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
 				ai.gib(DROP_ALL_REMAINS) //No wreck, no AI to recover
@@ -706,6 +706,26 @@
 	SEND_SIGNAL(user, COMSIG_MOB_USED_MECH_MELEE, src)
 	target.mech_melee_attack(src, user)
 	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
+
+
+/// Driver alt clicks anything while in mech
+/obj/vehicle/sealed/mecha/proc/on_click_alt(mob/user, atom/target, params)
+	SIGNAL_HANDLER
+
+	. = COMSIG_MOB_CANCEL_CLICKON // Cancel base_click_alt
+
+	if(target != src)
+		return
+
+	if(!(user in occupants))
+		return
+
+	if(!(user in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE)))
+		to_chat(user, span_warning("You're in the wrong seat to control movement."))
+		return
+
+	toggle_strafe()
+
 
 /// middle mouse click signal wrapper for AI users
 /obj/vehicle/sealed/mecha/proc/on_middlemouseclick(mob/user, atom/target, params)

@@ -173,7 +173,7 @@
 	armor_type = /datum/armor/fedora_det_hat
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
-	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	/// Cooldown for retrieving precious candy corn on alt click
 	var/candy_cooldown = 0
 	dog_fashion = /datum/dog_fashion/head/detective
@@ -222,7 +222,7 @@
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
 	dog_fashion = /datum/dog_fashion/head/detective
-	interaction_flags_click = FORBID_TELEKINESIS_REACH
+	interaction_flags_click = FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	///prefix our phrases must begin with
 	var/prefix = "go go gadget"
 	///an assoc list of phrase = item (like gun = revolver)

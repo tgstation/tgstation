@@ -160,7 +160,7 @@
 			newcarp.faction = dragon.owner.current.faction.Copy()
 		if(SPT_PROB(1.5, seconds_per_tick))
 			var/rand_dir = pick(GLOB.cardinals)
-			SSmove_manager.move_to(src, get_step(src, rand_dir), 1)
+			GLOB.move_manager.move_to(src, get_step(src, rand_dir), 1)
 		return
 
 	// Increase time trackers and check for any updated states.

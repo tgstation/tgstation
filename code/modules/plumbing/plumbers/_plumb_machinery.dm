@@ -8,7 +8,8 @@
 	icon = 'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi'
 	icon_state = "pump"
 	density = TRUE
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 7.5
+	processing_flags = START_PROCESSING_MANUALLY
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.75
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	///Plumbing machinery is always gonna need reagents, so we might aswell put it here
 	var/buffer = 50
@@ -26,11 +27,17 @@
 	. = ..()
 	. += span_notice("The maximum volume display reads: <b>[reagents.maximum_volume] units</b>.")
 
-
 /obj/machinery/plumbing/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	if(user.combat_mode)
+		return NONE
+
+	. = ITEM_INTERACT_BLOCKING
+	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
+		if(anchored)
+			begin_processing()
+		else
+			end_processing()
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/plumbing/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	user.balloon_alert_to_viewers("furiously plunging...")

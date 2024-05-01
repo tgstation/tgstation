@@ -409,7 +409,7 @@
 		COOLDOWN_START(src, coin_regen_cd, coin_regen_rate)
 
 /obj/item/gun/energy/marksman_revolver/afterattack_secondary(atom/target, mob/living/user, params)
-	if(!can_see(user, get_turf(target), length = 9))
+	if(!CAN_THEY_SEE(target, user))
 		return ..()
 
 	if(max_coins && coin_count <= 0)

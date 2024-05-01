@@ -107,6 +107,10 @@
 	item_path = /obj/item/radio/weather_monitor
 	cost_per_order = 320
 
+/datum/orderable_item/mining/ventpointer
+	item_path = /obj/item/pinpointer/vent
+	cost_per_order = 1150
+
 /datum/orderable_item/mining/boulder_processing
 	item_path = /obj/item/boulder_beacon
 	desc = "A Bouldertech brand all-in-one boulder processing beacon. Each use will teleport in a component of a full boulder processing assembly line. Good for when you need to process additional boulders."

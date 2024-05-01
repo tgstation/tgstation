@@ -14,7 +14,7 @@
 	throw_range = 7
 	attack_verb_continuous = list("attacks")
 	attack_verb_simple = list("attack")
-	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH
+	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	/// Artistic style of the deck
 	var/deckstyle = "nanotrasen"
 	/// If the cards in the deck have different icon states (blank and CAS decks do not)

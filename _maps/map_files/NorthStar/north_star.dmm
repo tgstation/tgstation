@@ -8543,12 +8543,12 @@
 /area/station/hallway/secondary/entry)
 "ceF" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 4;
-	id = "cmo_privacy";
-	name = "CMO Privacy Shutters"
-	},
 /obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "CMO Privacy Shutters";
+	dir = 4;
+	id = "cmoshutter"
+	},
 /turf/open/floor/plating,
 /area/station/medical/storage)
 "ceH" = (
@@ -12179,7 +12179,7 @@
 /obj/machinery/camera/motion/directional/north{
 	c_tag = "Minisat North"
 	},
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/super/full,
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat/service)
@@ -19508,12 +19508,12 @@
 /turf/open/openspace,
 /area/station/science/xenobiology/hallway)
 "fbl" = (
-/obj/machinery/power/smes,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/structure/cable,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/power/smes/full,
 /turf/open/floor/plating,
 /area/station/engineering/gravity_generator)
 "fbo" = (
@@ -26934,6 +26934,16 @@
 /obj/effect/landmark/start/atmospheric_technician,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"hab" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "cmoshutter";
+	name = "CMO Privacy Shutters"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/cmo)
 "hah" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/smooth_corner{
@@ -46237,12 +46247,12 @@
 /area/station/maintenance/floor2/port)
 "lTO" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
-	id = "cmo_privacy";
+	id = "cmoshutter";
 	name = "CMO Privacy Shutters"
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/cmo)
 "lTV" = (
@@ -51219,6 +51229,16 @@
 /obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat)
+"nge" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "cmoshutter";
+	name = "CMO Privacy Shutters"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/cmo)
 "ngf" = (
 /obj/structure/railing,
 /obj/effect/decal/cleanable/dirt,
@@ -57371,12 +57391,12 @@
 /area/station/science/xenobiology)
 "oJs" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
-	id = "cmo_privacy";
+	id = "cmoshutter";
 	name = "CMO Privacy Shutters"
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/cmo)
 "oJO" = (
@@ -61910,7 +61930,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "pUB" = (
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/super/full,
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat/service)
@@ -79790,7 +79810,7 @@
 /area/station/maintenance/solars/starboard/fore)
 "uDR" = (
 /obj/machinery/firealarm/directional/west,
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/super/full,
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -92003,11 +92023,11 @@
 	pixel_x = 9
 	},
 /obj/machinery/button/door/directional/north{
-	id = "cmo_privacy";
-	name = "Robotics Privacy Control";
-	pixel_x = -6;
+	name = "CMO Privacy Shutters";
+	id = "cmoshutter";
+	req_access = list("cmo");
 	pixel_y = 25;
-	req_access = list("cmo")
+	pixel_x = -5
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
@@ -190438,7 +190458,7 @@ syV
 wPX
 xKq
 nCG
-oJs
+nge
 goX
 oJs
 nCG
@@ -190951,7 +190971,7 @@ jRO
 eCO
 wyE
 xKq
-lTO
+hab
 dZz
 bPP
 xhJ
