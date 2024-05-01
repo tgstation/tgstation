@@ -5721,6 +5721,9 @@
 /area/station/maintenance/port/aft)
 "bYN" = (
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "bZb" = (
@@ -20530,11 +20533,9 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "hzJ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "hzL" = (
@@ -23133,6 +23134,7 @@
 	},
 /obj/structure/cable,
 /obj/structure/railing/corner,
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "ivc" = (
@@ -28031,12 +28033,12 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/structure/cable,
 /obj/structure/railing,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 0
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "jYv" = (
@@ -29009,15 +29011,16 @@
 /obj/item/storage/bag/plants/portaseeder,
 /obj/structure/table,
 /obj/item/plant_analyzer,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/machinery/light/directional/south,
 /obj/structure/railing{
 	dir = 4
 	},
 /obj/item/storage/toolbox/fishing,
 /obj/item/radio/intercom/directional/south,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "krL" = (
@@ -40184,6 +40187,9 @@
 	},
 /obj/structure/railing,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 0
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "otI" = (
@@ -48161,10 +48167,10 @@
 /obj/item/hatchet,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/item/paper/guides/jobs/hydroponics,
+/obj/effect/spawner/random/entertainment/coin,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/spawner/random/entertainment/coin,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "rkM" = (
@@ -58508,6 +58514,9 @@
 /obj/item/food/grown/cherries,
 /obj/item/food/grown/soybeans,
 /obj/item/food/grown/citrus/lime,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
