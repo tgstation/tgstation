@@ -1,0 +1,4 @@
+author: "Absolucy, That0nePerson"
+delete-after: True
+changes:
+  - rscadd: "Adds the poisoned knife (originally by That0nePerson, for BeeStation) for 6TC to the syndie uplink. This knife has a 40u capacity and can switch between injecting 5u and 10u of its content per attack."
