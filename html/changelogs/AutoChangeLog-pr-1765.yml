@@ -1,0 +1,4 @@
+author: "AlbertNanotracen"
+delete-after: True
+changes:
+  - bugfix: "Opening a necropolis gate will no longer tell ghosts that a body is being created, instead it will tell them the Legion has been released"
