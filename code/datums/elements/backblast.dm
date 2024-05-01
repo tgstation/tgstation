@@ -38,10 +38,8 @@
 
 /// For firing an actual backblast pellet
 /datum/element/backblast/proc/pew(obj/item/gun/weapon, mob/living/user, atom/target)
-	if(istype(user))
-		var/mob/living/pacifist_check = user
-		if(HAS_TRAIT(pacifist_check, TRAIT_PACIFISM))
-			return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		return
 
 	var/turf/origin = get_turf(weapon)
 	var/backblast_angle = get_angle(target, origin)
