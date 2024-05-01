@@ -103,8 +103,8 @@
 	if(adventure_turf)
 		new_dog.forceMove(adventure_turf)
 		do_smoke(location = adventure_turf)
-		playsound(adventure_turf, 'sound/magic/teleport_diss.ogg', volume = 40)
-	playsound(current_turf, 'sound/magic/teleport_diss.ogg', volume = 40)
+		playsound(adventure_turf, 'sound/magic/teleport_diss.ogg', 40)
+	playsound(current_turf, 'sound/magic/teleport_diss.ogg', 40)
 
 	if(!gibbed) //the doggo is the same. We don't need to reapply the equipment and stuff.s
 		return
@@ -178,8 +178,8 @@
 	do_smoke(location = current_turf)
 	dog.forceMove(safe_turf)
 	do_smoke(location = safe_turf)
-	playsound(current_turf, 'sound/magic/teleport_diss.ogg', volume = 40)
-	playsound(safe_turf, 'sound/magic/teleport_diss.ogg', volume = 40)
+	playsound(current_turf, 'sound/magic/teleport_diss.ogg', 40)
+	playsound(safe_turf, 'sound/magic/teleport_diss.ogg', 40)
 
 /datum/job/corgi/proc/give_tip_of_the_round(mob/living/basic/pet/dog/corgi/dog)
 	send_tip_of_the_round(dog)
