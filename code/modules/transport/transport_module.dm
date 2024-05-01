@@ -762,9 +762,9 @@
 	glass = TRUE
 
 /obj/machinery/door/poddoor/lift/Initialize(mapload)
-	. = ..()
 	if(!isnull(transport_linked_id)) //linter and stuff
 		elevator_mode = TRUE
+	. = ..()
 
 /obj/machinery/door/poddoor/lift/preopen
 	icon_state = "open"
