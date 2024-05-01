@@ -1,226 +1,314 @@
-//Added by Jack Rost
-/obj/item/trash
-	icon = 'icons/obj/service/janitor.dmi'
-	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
-	desc = "This is rubbish."
-	w_class = WEIGHT_CLASS_TINY
-	resistance_flags = FLAMMABLE
-	item_flags = NOBLUDGEON|SKIP_FANTASY_ON_SPAWN
-	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.3)
+/obj/effect/spawner/random/trash
+	name = "trash spawner"
+	desc = "Ewwwwwww gross."
+	icon_state = "trash"
 
-/obj/item/trash/Initialize(mapload)
-	var/turf/T = get_turf(src)
-	if(T && is_station_level(T.z))
-		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
-	return ..()
+/obj/effect/spawner/random/trash/garbage
+	name = "garbage spawner"
+	loot = list(
+		/obj/effect/spawner/random/trash/food_packaging = 20,
+		/obj/item/trash/can = 15,
+		/obj/item/shard = 10,
+		/obj/effect/spawner/random/trash/cigbutt = 10,
+		/obj/effect/spawner/random/trash/bacteria = 5,
+		/obj/effect/spawner/random/trash/botanical_waste = 5,
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 5,
+		/obj/item/broken_bottle = 5,
+		/obj/item/light/tube/broken = 5,
+		/obj/item/light/bulb/broken = 5,
+		/obj/item/assembly/mousetrap/armed = 5,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/food/deadmouse = 1,
+		/obj/item/trash/candle = 1,
+		/obj/item/reagent_containers/cup/rag = 1,
+		/obj/item/trash/flare = 1,
+		/obj/item/popsicle_stick = 1,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/reagent_containers/cup/glass/sillycup = 1,
+		/obj/item/shard/plasma = 1,
+	)
 
-/obj/item/trash/Destroy()
-	var/turf/T = get_turf(src)
-	if(T && is_station_level(T.z))
-		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
-	return ..()
+/obj/effect/spawner/random/trash/deluxe_garbage
+	name = "fancy deluxe garbage spawner"
+	loot = list(
+		/obj/effect/spawner/random/trash/garbage = 25,
+		/obj/effect/spawner/random/trash/food_packaging = 10,
+		/obj/effect/spawner/random/entertainment/money = 10,
+		/obj/effect/spawner/random/trash/crushed_can = 10,
+		/obj/item/shard/plasma = 5,
+		/obj/item/reagent_containers/pill/maintenance = 5,
+		/obj/item/mail/junkmail = 5,
+		/obj/effect/spawner/random/food_or_drink/snack = 5,
+		/obj/effect/spawner/random/trash/soap = 3,
+		/obj/item/reagent_containers/cup/glass/sillycup = 3,
+		/obj/item/broken_bottle = 3,
+		/obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
+		/obj/effect/spawner/random/engineering/tool = 1,
+		/mob/living/basic/mouse = 1,
+		/obj/item/food/grown/cannabis = 1,
+		/obj/item/reagent_containers/cup/rag = 1,
+		/obj/effect/spawner/random/entertainment/drugs= 1,
+		/obj/item/modular_computer/pda = 1,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/effect/spawner/random/entertainment/cigar = 1,
+		/obj/item/stack/ore/gold = 1,
+	)
 
-/obj/item/trash/raisins
-	name = "\improper 4no raisins"
-	icon_state= "4no_raisins"
 
-/obj/item/trash/candy
-	name = "candy"
-	icon_state= "candy"
+/obj/effect/spawner/random/trash/cigbutt
+	name = "cigarette butt spawner"
+	loot = list(
+		/obj/item/cigbutt = 25,
+		/obj/item/cigbutt/roach = 25,
+		/obj/effect/decal/cleanable/ash = 25,
+		/obj/item/cigbutt/cigarbutt = 15,
+		/obj/item/food/candy_trash = 5,
+		/obj/item/food/candy_trash/nicotine = 5,
+	)
 
-/obj/item/trash/cheesie
-	name = "cheesie honkers"
-	icon_state = "cheesie_honkers"
+/obj/effect/spawner/random/trash/food_packaging
+	name = "empty food packaging spawner"
+	loot = list(
+		/obj/item/trash/raisins = 2,
+		/obj/item/trash/cheesie = 2,
+		/obj/item/trash/candy = 2,
+		/obj/item/trash/chips = 2,
+		/obj/item/trash/sosjerky = 2,
+		/obj/item/trash/pistachios = 2,
+		/obj/item/trash/peanuts = 2,
+		/obj/item/trash/boritos = 1,
+		/obj/item/trash/boritos/green = 1,
+		/obj/item/trash/boritos/purple = 1,
+		/obj/item/trash/boritos/red = 1,
+		/obj/item/trash/can/food/beans = 1,
+		/obj/item/trash/can/food/peaches = 1,
+		/obj/item/trash/can/food/envirochow = 1,
+		/obj/item/trash/popcorn = 1,
+		/obj/item/trash/energybar = 1,
+		/obj/item/trash/can/food/peaches/maint = 1,
+		/obj/item/trash/semki = 1,
+		/obj/item/trash/cnds = 1,
+		/obj/item/trash/syndi_cakes = 1,
+		/obj/item/trash/shrimp_chips = 1,
+		/obj/item/trash/waffles = 1,
+		/obj/item/trash/tray = 1,
+	)
 
-/obj/item/trash/chips
-	name = "chips"
-	icon_state = "chips"
+/obj/effect/spawner/random/trash/botanical_waste
+	name = "botanical waste spawner"
+	icon_state = "peel"
+	loot = list(
+		/obj/item/grown/bananapeel = 6,
+		/obj/item/grown/corncob = 3,
+		/obj/item/food/grown/bungopit = 1,
+	)
 
-/obj/item/trash/shrimp_chips
-	name = "shrimp chips"
-	icon_state = "shrimp_chips"
+/obj/effect/spawner/random/trash/grille_or_waste
+	name = "grille or waste spawner"
+	icon_state = "grille"
+	loot = list(
+		/obj/structure/grille = 5,
+		/obj/effect/spawner/random/trash/food_packaging = 3,
+		/obj/effect/spawner/random/trash/bacteria = 1,
+		/obj/effect/spawner/random/trash/cigbutt = 1,
+		/obj/item/food/deadmouse = 1,
+	)
 
-/obj/item/trash/boritos
-	name = "boritos bag"
-	icon_state = "boritos"
-	grind_results = list(/datum/reagent/aluminium = 1) //from the mylar bag
+/obj/effect/spawner/random/trash/hobo_squat
+	name = "hobo squat spawner"
+	icon_state = "dirty_mattress"
+	spawn_all_loot = TRUE
+	loot = list(
+		/obj/structure/bed/maint,
+		/obj/effect/spawner/random/trash/grime,
+		/obj/effect/spawner/random/entertainment/drugs,
+	)
 
-/obj/item/trash/boritos/green
-	icon_state = "boritosgreen"
+/obj/effect/spawner/random/trash/moisture_trap
+	name = "moisture trap spawner"
+	icon_state = "moisture_trap"
+	spawn_all_loot = TRUE
+	loot = list(
+		/obj/effect/spawner/random/trash/moisture,
+		/obj/structure/moisture_trap,
+	)
 
-/obj/item/trash/boritos/red
-	icon_state = "boritosred"
+/obj/effect/spawner/random/trash/mess
+	name = "gross decal spawner"
+	icon_state = "vomit"
+	loot = list(
+		/obj/effect/decal/cleanable/dirt = 6,
+		/obj/effect/decal/cleanable/garbage = 3,
+		/obj/effect/decal/cleanable/vomit/old = 3,
+		/obj/effect/decal/cleanable/blood/gibs/old = 3,
+		/obj/effect/decal/cleanable/insectguts = 1,
+		/obj/effect/decal/cleanable/greenglow/ecto = 1,
+		/obj/effect/decal/cleanable/wrapping = 1,
+		/obj/effect/decal/cleanable/plastic = 1,
+		/obj/effect/decal/cleanable/glass = 1,
+		/obj/effect/decal/cleanable/ants = 1,
+	)
 
-/obj/item/trash/boritos/purple
-	icon_state = "boritospurple"
+/obj/effect/spawner/random/trash/grime
+	name = "trash and grime spawner"
+	spawn_loot_count = 5
+	spawn_scatter_radius = 2
+	loot = list( // This spawner will scatter garbage around a dirty site.
+		/obj/effect/spawner/random/trash/garbage = 6,
+		/mob/living/basic/cockroach = 5,
+		/obj/effect/decal/cleanable/garbage = 4,
+		/obj/effect/decal/cleanable/vomit/old = 3,
+		/obj/effect/spawner/random/trash/cigbutt = 2,
+	)
 
-/obj/item/trash/popcorn
-	name = "popcorn"
-	icon_state = "popcorn"
+/obj/effect/spawner/random/trash/moisture
+	name = "water hazard spawner"
+	icon_state = "caution"
+	spawn_loot_count = 2
+	spawn_scatter_radius = 1
+	loot = list( // This spawner will scatter water related items around a moist site.
+		/obj/item/clothing/head/cone = 7,
+		/obj/item/clothing/suit/caution = 3,
+		/mob/living/basic/frog = 2,
+		/obj/item/reagent_containers/cup/rag = 2,
+		/obj/item/reagent_containers/cup/bucket = 2,
+		/obj/effect/decal/cleanable/blood/old = 2,
+		/obj/structure/mop_bucket = 2,
+		/mob/living/basic/axolotl = 1,
+	)
 
-/obj/item/trash/popcorn/caramel
-	name = "empty caramel popcorn"
-	desc = "Now it's not a sweet snack, but just a sticky bag..."
-	icon_state = "empty_caramel_popcorn"
+/obj/effect/spawner/random/trash/graffiti
+	name = "random graffiti spawner"
+	icon_state = "rune"
+	loot = list(/obj/effect/decal/cleanable/crayon)
+	var/graffiti_icons = list(
+		"rune1", "rune2", "rune3", "rune4", "rune5", "rune6",
+		"amyjon", "face", "matt", "revolution", "engie", "guy",
+		"end", "dwarf", "uboa", "body", "cyka", "star",
+		"prolizard", "antilizard", "danger", "firedanger", "electricdanger",
+		"biohazard", "radiation", "safe", "evac", "space", "med", "trade", "shop",
+		"food", "peace", "like", "skull", "nay", "heart", "credit",
+		"smallbrush", "brush", "largebrush", "splatter", "snake", "stickman",
+		"carp", "ghost", "clown", "taser", "disk", "fireaxe", "toolbox",
+		"corgi", "cat", "toilet", "blueprint", "beepsky", "scroll", "bottle",
+		"shotgun", "arrow", "line", "thinline", "shortline", "body", "chevron",
+		"footprint", "clawprint", "pawprint",
+	)
+	// This sets the color of the graffiti (used for mapedits)
+	color = COLOR_WHITE
+	/// Whether the graffiti will spawn with a random color (used for mapedits)
+	var/random_color = TRUE
+	/// Whether the graffiti will spawn with this spawner's icon_state instead of a random one (used for mapedits)
+	var/random_icon = TRUE
 
-/obj/item/trash/popcorn/salty
-	name = "empty salty popcorn"
-	desc = "It looks like there are only a few grains of salt left at the bottom of the bag..."
-	icon_state = "empty_salty_popcorn"
+/obj/effect/spawner/random/trash/graffiti/make_item(spawn_loc, type_path_to_make)
+	var/obj/effect/decal/cleanable/crayon/graffiti_decal = ..()
+	if(istype(graffiti_decal))
+		color = random_color && "#[random_short_color()]" || color
+		icon_state = random_icon && pick(graffiti_icons) || icon_state
 
-/obj/item/trash/sosjerky
-	name = "\improper Scaredy's Private Reserve Beef Jerky"
-	icon_state = "sosjerky"
+		graffiti_decal.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+		graffiti_decal.icon_state = icon_state
 
-/obj/item/trash/syndi_cakes
-	name = "syndi-cakes"
-	icon_state = "syndi_cakes"
+	return graffiti_decal
 
-/obj/item/trash/energybar
-	name = "energybar wrapper"
-	icon_state = "energybar"
+/obj/effect/spawner/random/trash/mopbucket
+	name = "mop bucket spawner"
+	icon_state = "mopbucket"
+	spawn_loot_count = 2
+	spawn_loot_double = FALSE
+	loot = list(
+		/obj/structure/mop_bucket = 10,
+		/obj/item/mop = 5,
+		/obj/item/clothing/suit/caution = 3,
+		/obj/item/reagent_containers/cup/bucket = 1,
+		/obj/item/reagent_containers/cup/bucket/wooden = 1,
+	)
 
-/obj/item/trash/waffles
-	name = "waffles tray"
-	icon_state = "waffles"
+/obj/effect/spawner/random/trash/caution_sign
+	name = "caution sign spawner"
+	icon_state = "caution"
+	loot = list(
+		/obj/item/clothing/suit/caution = 40,
+		/obj/structure/holosign/wetsign = 5,
+		/obj/structure/holosign/barrier = 3,
+		/obj/structure/holosign/barrier/wetsign = 2,
+	)
 
-/obj/item/trash/pistachios
-	name = "pistachios pack"
-	icon_state = "pistachios_pack"
 
-/obj/item/trash/semki
-	name = "semki pack"
-	icon_state = "semki_pack"
+/obj/effect/spawner/random/trash/bucket
+	name = "bucket spawner"
+	icon_state = "caution"
+	loot = list(
+		/obj/item/reagent_containers/cup/bucket,
+		/obj/item/reagent_containers/cup/bucket/wooden,
+	)
 
-/obj/item/trash/semki/healthy
-	name = "nibbled sunflower seeds"
-	icon_state = "sunseeds"
+/obj/effect/spawner/random/trash/soap
+	name = "soap spawner"
+	icon_state = "soap"
+	loot = list(
+		/obj/item/soap = 25,
+		/obj/item/bikehorn/rubberducky = 20,
+		/obj/item/soap/homemade = 20,
+		/obj/item/soap/deluxe = 15,
+		/obj/item/soap/nanotrasen = 10,
+		/obj/item/food/urinalcake = 5,
+		/obj/item/bikehorn/rubberducky/plasticducky = 5,
+	)
 
-/obj/item/trash/tray
-	name = "tray"
-	icon_state = "tray"
-	resistance_flags = NONE
+/obj/effect/spawner/random/trash/box
+	name = "box spawner"
+	icon_state = "box"
+	loot = list(
+		/obj/structure/closet/cardboard = 9,
+		/obj/structure/closet/cardboard/metal = 1,
+	)
 
-/obj/item/trash/candle
-	name = "melted candle"
-	icon = 'icons/obj/candle.dmi'
-	icon_state = "candle4"
+/obj/effect/spawner/random/trash/bin
+	name = "trashbin spawner"
+	icon_state = "trash_bin"
+	loot = list(
+		/obj/structure/closet/crate/bin = 10,
+		/obj/structure/closet/crate/trashcart = 3,
+		/obj/structure/closet/crate/trashcart/filled = 3,
+		/obj/effect/spawner/random/trash/box = 3,
+		/obj/structure/closet/crate/trashcart/laundry = 1,
+	)
 
-/obj/item/trash/flare
-	name = "burnt flare"
-	icon = 'icons/obj/lighting.dmi'
-	icon_state = "flare-empty"
 
-/obj/item/trash/can
-	name = "crushed can"
-	icon_state = "cola"
-	resistance_flags = NONE
-	grind_results = list(/datum/reagent/aluminium = 10)
+/obj/effect/spawner/random/trash/janitor_supplies
+	name = "janitor supplies spawner"
+	icon_state = "box_small"
+	loot = list(
+		/obj/item/storage/box/mousetraps,
+		/obj/item/storage/box/lights/tubes,
+		/obj/item/storage/box/lights/mixed,
+		/obj/item/storage/box/lights/bulbs,
+	)
 
-/obj/item/trash/can/food
-	icon = 'icons/obj/food/canned.dmi'
-	icon_state = "peachcan_empty"
+/obj/effect/spawner/random/trash/bacteria
+	name = "moldy food spawner"
+	loot = list(
+		/obj/item/food/breadslice/moldy/bacteria,
+		/obj/item/food/pizzaslice/moldy/bacteria,
+	)
 
-/obj/item/trash/can/food/peaches
-	name = "canned peaches"
-	icon_state = "peachcan_empty"
+/obj/effect/spawner/random/trash/crushed_can
+	name = "crushed can spawner"
+	icon_state = "crushed_can"
+	loot = list(/obj/item/trash/can)
+	/// Whether the can will spawn with this spawner's icon_state instead of a random one (used for mapedits)
+	var/soda_icons = list(
+		"energy_drink", "monkey_energy", "thirteen_loko", "space_mountain_wind", "dr_gibb", "starkist",
+		"sodawater", "tonic", "cola", "purple_can", "ice_tea_can",
+		"sol_dry", "wellcheers", "space beer", "ebisu", "shimauma", "moonlabor",
+		"space_up", "lemon_lime", "shamblers", "shamblerseldritch", "air", "laughter",
+		"volt_energy", "melon_soda",
+	)
 
-/obj/item/trash/can/food/peaches/maint
-	name = "Maintenance Peaches"
-	icon_state = "peachcanmaint_empty"
-
-/obj/item/trash/can/food/beans
-	name = "tin of beans"
-	icon_state = "beans_empty"
-
-/obj/item/trash/can/Initialize(mapload)
-	. = ..()
-	pixel_x = rand(-4,4)
-	pixel_y = rand(-4,4)
-
-/obj/item/trash/peanuts
-	name = "\improper Gallery peanuts packet"
-	desc = "This thread is trash!"
-	icon_state = "peanuts"
-
-/obj/item/trash/cnds
-	name = "\improper C&Ds packet"
-	icon_state = "cnds"
-
-/obj/item/trash/can/food/envirochow
-	name = "dog eat dog envirochow"
-	icon_state = "envirochow_empty"
-
-/obj/item/trash/can/food/tomatoes
-	name = "canned San Marzano tomatoes"
-	icon_state = "tomatoescan_empty"
-
-/obj/item/trash/can/food/pine_nuts
-	name = "canned pine nuts"
-	icon_state = "pinenutscan_empty"
-
-/obj/item/trash/can/food/jellyfish
-	name = "canned gunner jellyfish"
-	icon_state = "jellyfish_empty"
-
-/obj/item/trash/can/food/desert_snails
-	name = "canned desert snails"
-	icon_state = "snails_empty"
-
-/obj/item/trash/can/food/larvae
-	name = "canned bee larva"
-	icon_state = "larvae_empty"
-
-/obj/item/trash/spacers_sidekick
-	name = "\improper Spacer's Sidekick packet"
-	icon_state = "spacers_sidekick"
-
-/obj/item/trash/ready_donk
-	name = "empty Ready-donk"
-	desc = "It's been Donk-decimated."
-	icon_state = "ready_donk"
-
-/obj/item/trash/can/food/squid_ink
-	name = "canned squid ink"
-	icon_state = "squidinkcan_empty"
-
-/obj/item/trash/can/food/chap
-	name = "can of CHAP"
-	icon_state = "chapcan_empty"
-
-/obj/item/trash/hot_shots
-	name = "\improper Hot Shots box"
-	icon_state = "hot_shots"
-
-/obj/item/trash/sticko
-	name = "\improper Sticko box"
-	icon_state = "sticko"
-
-/obj/item/trash/sticko/matcha
-	icon_state = "sticko_matcha"
-
-/obj/item/trash/sticko/nutty
-	icon_state = "sticko_nutty"
-
-/obj/item/trash/sticko/pineapple
-	icon_state = "sticko_pineapple"
-
-/obj/item/trash/sticko/yuyake
-	icon_state = "sticko_yuyake"
-
-/obj/item/trash/shok_roks
-	name = "\improper Shok-Roks packet"
-	icon_state = "shok_roks"
-
-/obj/item/trash/shok_roks/citrus
-	icon_state = "shok_roks_citrus"
-
-/obj/item/trash/shok_roks/berry
-	icon_state = "shok_roks_berry"
-
-/obj/item/trash/shok_roks/tropical
-	icon_state = "shok_roks_tropical"
-
-/obj/item/trash/shok_roks/lanternfruit
-	icon_state = "shok_roks_lanternfruit"
+/obj/effect/spawner/random/trash/crushed_can/make_item(spawn_loc, type_path_to_make)
+	var/obj/item/trash/can/crushed_can = .. ()
+	if(istype(crushed_can))
+		crushed_can.icon_state = pick(soda_icons)
+	return crushed_can
