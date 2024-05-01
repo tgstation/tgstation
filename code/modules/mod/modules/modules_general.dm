@@ -834,7 +834,7 @@
 	. = ..()
 
 	if(!length(accepted_mats))
-		accepted_mats = DSmaterials.materials_by_category[MAT_CATEGORY_SILO]
+		accepted_mats = SSmaterials.materials_by_category[MAT_CATEGORY_SILO]
 
 	container = AddComponent( \
 		/datum/component/material_container, \

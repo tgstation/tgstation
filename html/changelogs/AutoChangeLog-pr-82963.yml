@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Monkeys can no longer be knocked over by walking into a windoor on combat mode while they're behind it."

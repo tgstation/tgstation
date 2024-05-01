@@ -1,0 +1,41 @@
+2024-05-01:
+  13spacemen:
+  - bugfix: Ethereal unarmed attacks "sear" instead of "singe", which was buggy
+  Constellado:
+  - qol: Made birdshot atmos easier to use.
+  - bugfix: The Birdshot engineering department is no longer using a second hand broken
+      microwave.
+  Fikou:
+  - rscadd: you can use a photo with blueprints on it to read wires
+  Flleeppyy, Absolucy:
+  - sound: Added unique announcement jingles to each heretic path's ascension, replacing
+      the old "space-time anomalies detected" announcement.
+  JohnFulpWillard:
+  - bugfix: Genetic sequence scanners now show the sequence to mutated genes from
+      scanned individuals.
+  - bugfix: QM is now excluded from getting tasked with stealing telescopic batons
+      and the captain's spare ID, like all other command personnel are.
+  - qol: The Human AI's advanced security console can be repackaged with a screwdriver
+      if you wish to move it.
+  LT3:
+  - qol: The various RCD upgrade disks no longer look identical
+  Maurukas:
+  - bugfix: On examine PDAs will now inform players that the power cell can be removed
+      for recharging or replacement, and how to do so.
+  SyncIt21:
+  - bugfix: computers don't deconstruct themselves twice so machines like slotmachine
+      don't spawn excess chips upon deconstruction
+  improvedname:
+  - bugfix: Fixes tramstation gravgen wiring
+  - bugfix: Fixes tramstation turbine wiring
+  - bugfix: Fixes northstar cmo button name
+  jlsnow301:
+  - bugfix: Fixes a bluescreen in the deathmatch lobby UI.
+  larentoun:
+  - bugfix: Infinite-range laser pointer (for "AI" Big Brother) now has a correct
+      diode. If you accidentaly remove it then you can put it back!
+  mc-oofert:
+  - rscadd: trainship hijack deathmatch map
+  necromanceranne:
+  - bugfix: If you are a freerunner, you don't end up faceplanting despite having
+      catlike grace.

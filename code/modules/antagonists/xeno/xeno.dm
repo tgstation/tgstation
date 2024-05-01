@@ -87,7 +87,7 @@
 	explanation_text = "Escape from captivity."
 
 /datum/objective/escape_captivity/check_completion()
-	if(!istype(get_area(owner), DScommunications.captivity_area))
+	if(!istype(get_area(owner), GLOB.communications_controller.captivity_area))
 		return TRUE
 
 /datum/objective/advance_hive
@@ -146,7 +146,7 @@
 	if(!captive_alien || captive_alien.stat == DEAD)
 		return CAPTIVE_XENO_DEAD
 
-	if(istype(get_area(captive_alien), DScommunications.captivity_area))
+	if(istype(get_area(captive_alien), GLOB.communications_controller.captivity_area))
 		return CAPTIVE_XENO_FAIL
 
 	return CAPTIVE_XENO_PASS
@@ -155,7 +155,7 @@
 /mob/living/carbon/alien/mind_initialize()
 	..()
 	if(!mind.has_antag_datum(/datum/antagonist/xeno))
-		if(DScommunications.xenomorph_egg_delivered && istype(get_area(src), DScommunications.captivity_area))
+		if(GLOB.communications_controller.xenomorph_egg_delivered && istype(get_area(src), GLOB.communications_controller.captivity_area))
 			mind.add_antag_datum(/datum/antagonist/xeno/captive)
 		else
 			mind.add_antag_datum(/datum/antagonist/xeno)
