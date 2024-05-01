@@ -466,7 +466,10 @@
 		return NONE
 
 	add_stamp(writing_stats["stamp_class"], rand(1, 300), rand(1, 400), stamp_icon_state = writing_stats["stamp_icon_state"])
-	user.visible_message(span_notice("[user] quickly stamps [src] with \the [tool]"))
+	user.visible_message(
+		span_notice("[user] quickly stamps [src] with [tool] without looking."),
+		span_notice("You quickly stamp [src] with [tool] without looking."),
+	)
 	playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 
 	return ITEM_INTERACT_BLOCKING // Stop the UI from opening.
