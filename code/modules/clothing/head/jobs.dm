@@ -216,6 +216,7 @@
 
 /// Now to solve where all these keep coming from
 /obj/item/clothing/head/fedora/det_hat/proc/on_clicked_alt(datum/source, mob/user)
+	SIGNAL_HANDLER
 	if(!COOLDOWN_FINISHED(src, candy_cooldown))
 		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
 		return COMSIG_MOB_CANCEL_CLICKON
