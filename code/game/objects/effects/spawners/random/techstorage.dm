@@ -102,7 +102,12 @@
 		/obj/item/circuitboard/computer/med_data,
 		/obj/item/circuitboard/machine/smoke_machine,
 		/obj/item/circuitboard/machine/chem_master,
-		/obj/item/circuitboard/computer/pandemic,
+		/obj/item/circuitboard/machine/diseaseanalyser, // MONKESTATION EDIT START: FUCK THE PANDEMIC. -dexee, 4/26/24
+		/obj/item/circuitboard/computer/diseasesplicer,
+		/obj/item/circuitboard/machine/centrifuge,
+		/obj/item/circuitboard/computer/pathology_data,
+		/obj/item/circuitboard/machine/incubator,
+	//	/obj/item/circuitboard/computer/pandemic, // MONKESTATION EDIT END: fuck the pandemic. we have better disease machines
 	)
 
 /obj/effect/spawner/random/techstorage/ai_all

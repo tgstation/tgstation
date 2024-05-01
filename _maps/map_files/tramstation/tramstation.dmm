@@ -50970,6 +50970,7 @@
 /obj/item/hfr_box/body/interface,
 /obj/item/hfr_box/body/moderator_input,
 /obj/item/hfr_box/body/waste_output,
+/obj/item/circuitboard/machine/crystallizer,
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics_engine)
 "pxo" = (

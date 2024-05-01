@@ -7633,7 +7633,7 @@
 /obj/item/radio/headset/headset_med,
 /obj/machinery/newscaster/directional/south,
 /obj/item/clothing/glasses/science,
-/obj/item/extrapolator,
+/obj/item/restraints/handcuffs,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "cDF" = (
@@ -59061,7 +59061,7 @@
 	receive_ore_updates = 1
 	},
 /obj/item/clothing/glasses/science,
-/obj/item/extrapolator,
+/obj/item/restraints/handcuffs,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "uiu" = (
