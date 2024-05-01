@@ -29,7 +29,7 @@
 		dog = locate(/mob/living/basic/pet/dog/corgi/ian) in GLOB.mob_list
 		if(!dog) //it may be a puppy, so let's double-check
 			dog = locate(/mob/living/basic/pet/dog/corgi/puppy/ian) in GLOB.mob_list
-		if(dog && !dog.mind) //doggo.exe found and not already running
+		if(dog && !dog.mind && dog.stat == CONSCIOUS) //doggo.exe found and not already running or crashed
 			return dog
 
 	if(prob(50) && !(locate(/mob/living/basic/pet/dog/corgi/lisa) in GLOB.mob_list))
