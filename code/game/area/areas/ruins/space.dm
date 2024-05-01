@@ -33,7 +33,7 @@
 // Ruins of "onehalf" ship
 
 /area/ruin/space/has_grav/onehalf/hallway
-	name = "\improper Half-Station Hallway"
+	name = "\improper Hallway"
 
 /area/ruin/space/has_grav/onehalf/drone_bay
 	name = "\improper Mining Drone Bay"
@@ -42,7 +42,7 @@
 	name = "\improper Crew Quarters"
 
 /area/ruin/space/has_grav/onehalf/bridge
-	name = "\improper Half-Station Bridge"
+	name = "\improper Bridge"
 
 /area/ruin/space/has_grav/powered/dinner_for_two
 	name = "Dinner for Two"
@@ -638,25 +638,25 @@
 	name = "Waystation Maintenance"
 
 /area/ruin/space/has_grav/waystation/qm
-	name = "Waystation Quartermaster Office"
+	name = "Quartermaster Office"
 
 /area/ruin/space/has_grav/waystation/dorms
-	name = "Waystation Living Space"
+	name = "Living Space"
 
 /area/ruin/space/has_grav/waystation/kitchen
-	name = "Waystation Kitchen"
+	name = "Kitchen"
 
 /area/ruin/space/has_grav/waystation/cargobay
-	name = "Waystation Cargo Bay"
+	name = "Cargo Bay"
 
 /area/ruin/space/has_grav/waystation/securestorage
-	name = "Waystation Secure Storage"
+	name = "Secure Storage"
 
 /area/ruin/space/has_grav/waystation/cargooffice
-	name = "Waystation Cargo Office"
+	name = "Cargo Office"
 
 /area/ruin/space/has_grav/powered/waystation/assaultpod
-	name = "Waystation Assault Pod"
+	name = "Assault Pod"
 
 /area/ruin/space/has_grav/waystation/power
 	name = "Waystation Electrical"
@@ -699,3 +699,49 @@
 /area/ruin/space/has_grav/garbagetruck/medicalwaste
 /area/ruin/space/has_grav/garbagetruck/squat
 /area/ruin/space/has_grav/garbagetruck/toystore
+
+//Donk Co trading outpost
+/area/ruin/space/has_grav/hauntedtradingpost
+	name = "\improper Donk Co. Trading Outpost"
+	icon_state = "donk_public"
+	sound_environment = SOUND_AREA_STANDARD_STATION
+/area/ruin/space/has_grav/hauntedtradingpost/public
+	name = "\improper Donk Co. Trading Outpost Public Meeting Area And Cafeteria"
+/area/ruin/space/has_grav/hauntedtradingpost/public/corridor
+	name = "\improper Donk Co. Trading Outpost Public Docks And Corridors"
+	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+/area/ruin/space/has_grav/hauntedtradingpost/employees
+	name = "\improper Donk Co. Trading Outpost Employees Lounge"
+	icon_state = "donk_employees"
+	airlock_wires = /datum/wires/airlock/engineering
+	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
+/area/ruin/space/has_grav/hauntedtradingpost/employees/workstation
+	name = "\improper Donk Co. Trading Outpost Engineering Station"
+/area/ruin/space/has_grav/hauntedtradingpost/employees/corridor
+	name = "\improper Donk Co. Trading Outpost Secure Corridor"
+	icon_state = "donk_command"
+/area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom
+	name = "\improper Donk Co. Trading Outpost Break Room"
+/area/ruin/space/has_grav/hauntedtradingpost/maint
+	name = "\improper Donk Co. Trading Outpost Auxiliary Storage Room"
+	icon_state = "donk_maints"
+	airlock_wires = /datum/wires/airlock/maint
+	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
+	ambience_index = AMBIENCE_MAINT
+/area/ruin/space/has_grav/hauntedtradingpost/maint/toolstorage
+/area/ruin/space/has_grav/hauntedtradingpost/maint/toystorage
+/area/ruin/space/has_grav/hauntedtradingpost/maint/disposals
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+/area/ruin/space/has_grav/hauntedtradingpost/office
+	name = "\improper Donk Co. Trading Outpost Captains Office"
+	icon_state = "donk_command"
+	airlock_wires = /datum/wires/airlock/cargo
+	sound_environment = SOUND_ENVIRONMENT_ROOM
+/area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom
+	name = "\improper Donk Co. Trading Outpost Board Room"
+/area/ruin/space/has_grav/hauntedtradingpost/aicore
+	name = "\improper Cybersun AI Core"
+	icon_state = "donk_command"
+	airlock_wires = /datum/wires/airlock/security
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	ambience_index = AMBIENCE_DANGER
