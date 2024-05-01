@@ -12,6 +12,7 @@
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
 	wound_bonus = 15
+	var/lethalmode = FALSE
 
 	/// Whether this baton is active or not
 	var/active = TRUE
@@ -140,7 +141,7 @@
 			balloon_alert(potential_chunky_finger_human, "fingers are too big!")
 			return BATON_ATTACK_DONE
 
-	if(!active || LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(!active || LAZYACCESS(modifiers, RIGHT_CLICK) || lethalmode)
 		return BATON_DO_NORMAL_ATTACK
 
 	if(cooldown_check > world.time)
@@ -455,6 +456,14 @@
 	RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(convert))
 	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	update_appearance()
+	if(type != /obj/item/melee/baton/security && type != /obj/item/melee/baton/security/loaded)
+		return
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/energybaton)
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+	
 
 /obj/item/melee/baton/security/get_cell()
 	return cell
@@ -547,6 +556,7 @@
 	if(cell && can_remove_cell)
 		cell.forceMove(drop_location())
 		to_chat(user, span_notice("You remove the cell from [src]."))
+		update_appearance()
 		return TRUE
 	return FALSE
 
@@ -826,3 +836,296 @@
 	else
 		stuff_in_hand.forceMove(user.drop_location())
 		stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears!"))
+
+
+
+/obj/item/melee/baton/energy
+	name = "energy baton"
+	desc = "An energy baton that can either be used as a blunt weapon, or to stun/kill a target."
+	desc_controls = "Left or right click to use, Z to cycle modes."
+	icon = 'icons/obj/weapons/baton.dmi'
+	icon_state = "energybaton"
+	inhand_icon_state = "energybaton"
+	worn_icon_state = "energybaton"
+	force = 10
+	wound_bonus = 0
+	attack_verb_continuous = list("beats")
+	attack_verb_simple = list("beat")
+	armor_type = /datum/armor/baton_security
+	throwforce = 7
+	force_say_chance = 50
+	knockdown_time = 0.5 SECONDS
+	var/knockdown_time_stun = 5 SECONDS
+	clumsy_knockdown_time = 15 SECONDS
+	cooldown = 2.5 SECONDS
+	on_stun_sound = 'sound/weapons/egloves.ogg'
+	on_stun_volume = 50
+	active = FALSE
+	lethalmode = FALSE
+	light_range = 1.5
+	light_system = OVERLAY_LIGHT
+	light_on = FALSE
+	light_color = LIGHT_COLOR_ORANGE
+	light_power = 0.5
+
+	stamina_damage = 0
+	var/stamina_damage_stun = 55
+	var/stamina_damage_kill = 35
+
+	var/throw_stun_chance = 35
+	var/obj/item/stock_parts/cell/cell
+	var/preload_cell_type //if not empty the baton starts with this type of cell
+	var/cell_hit_cost = STANDARD_CELL_CHARGE
+	var/cell_hit_cost_stun = STANDARD_CELL_CHARGE * 1
+	var/cell_hit_cost_kill = STANDARD_CELL_CHARGE * 2
+	var/can_remove_cell = TRUE
+	var/convertible = FALSE //if it can be converted with a conversion kit
+
+
+	context_living_target_active = "Shock"
+	context_living_target_active_combat_mode = "Shock"
+	context_living_target_inactive = "Harm"
+	context_living_target_inactive_combat_mode = "Harm"
+	context_living_rmb_active = "Shock"
+	context_living_rmb_inactive = "Harm"
+
+/obj/item/melee/baton/energy/emp_act(severity)
+	. = ..()
+	if (!cell)
+		return
+	if (!(. & EMP_PROTECT_SELF))
+		deductcharge(STANDARD_CELL_CHARGE / severity)
+
+/obj/item/melee/baton/energy/Initialize(mapload)
+	. = ..()
+	if(preload_cell_type)
+		if(!ispath(preload_cell_type, /obj/item/stock_parts/cell))
+			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
+		else
+			cell = new preload_cell_type(src)
+	update_appearance()
+
+
+/obj/item/melee/baton/energy/get_cell()
+	return cell
+
+
+/obj/item/melee/baton/energy/suicide_act(mob/living/user)
+	if(!active)
+		user.visible_message(span_suicide("[user] is shoving the [name] down their throat! It looks like [user.p_theyre()] trying to commit suicide!"))
+		return OXYLOSS
+	else
+		if(!active)
+			user.visible_message(span_suicide("[user] is shoving the [name] down their throat! It looks like [user.p_theyre()] trying to commit suicide!"))
+			return OXYLOSS
+		else if(!lethalmode)
+			user.visible_message(span_suicide("[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
+			attack(user, user)
+			return FIRELOSS
+		else if(lethalmode)
+			user.visible_message(span_suicide("[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
+			attack(user, user)
+			return FIRELOSS
+
+/obj/item/melee/baton/energy/Destroy()
+	if(cell)
+		QDEL_NULL(cell)
+	UnregisterSignal(src, COMSIG_ATOM_ATTACKBY)
+	return ..()
+
+
+/obj/item/melee/baton/energy/baton_attack(mob/living/target, mob/living/user, modifiers)
+	. = ..()
+	if(. != BATON_DO_NORMAL_ATTACK)
+		return
+	if(lethalmode)
+		if(active && cooldown_check <= world.time && !check_parried(target, user))
+			finalize_baton_attack(target, user, modifiers, in_attack_chain = FALSE)
+			return BATON_DO_NORMAL_ATTACK
+		else
+			return BATON_ATTACK_DONE
+	else if(!user.combat_mode && FALSE)
+		target.visible_message(span_warning("[user] prods [target] with [src]. Luckily it was off."), \
+			span_warning("[user] prods you with [src]. Luckily it was off."))
+		return BATON_ATTACK_DONE
+
+/obj/item/melee/baton/energy/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+	if(lethalmode)
+		cell_hit_cost = cell_hit_cost_kill
+		stamina_damage = stamina_damage_kill
+	else
+		cell_hit_cost = cell_hit_cost_stun
+		stamina_damage = stamina_damage_stun
+	if(iscyborg(loc))
+		var/mob/living/silicon/robot/robot = loc
+		if(!robot || !robot.cell || !robot.cell.use(cell_hit_cost))
+			return FALSE
+	else if(!deductcharge(cell_hit_cost))
+		return FALSE
+	if(!lethalmode)
+		stun_override = 0 //Avoids knocking people down prematurely.
+	return ..()
+
+
+/obj/item/melee/baton/energy/proc/deductcharge(deducted_charge)
+	if(!cell)
+		return
+	//Note this value returned is significant, as it will determine
+	//if a stun is applied or not
+	. = cell.use(deducted_charge)
+	if(active && cell.charge < deducted_charge)
+		//we're below minimum, turn off
+		active = FALSE
+		lethalmode = FALSE
+		set_light_on(FALSE)
+		update_appearance()
+		playsound(src, SFX_SPARKS, 75, TRUE, -1)
+
+/obj/item/melee/baton/energy/additional_effects_non_cyborg(mob/living/target, mob/living/user)
+	if(!lethalmode)
+		target.set_jitter_if_lower(40 SECONDS)
+		target.set_confusion_if_lower(10 SECONDS)
+		target.set_stutter_if_lower(16 SECONDS)
+	
+		SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
+		addtimer(CALLBACK(src, PROC_REF(apply_stun_effect_end), target), 2 SECONDS)
+
+/// After the initial stun period, we check to see if the target needs to have the stun applied.
+/obj/item/melee/baton/energy/proc/apply_stun_effect_end(mob/living/target)
+	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) //var since we check it in out to_chat as well as determine stun duration
+	if(!target.IsKnockdown())
+		to_chat(target, span_warning("Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
+
+	if(!trait_check)
+		target.Knockdown(knockdown_time_stun)
+
+/obj/item/melee/baton/energy/get_wait_description()
+	return span_danger("The baton is still charging!")
+
+/obj/item/melee/baton/energy/get_stun_description(mob/living/target, mob/living/user)
+	. = list()
+
+	.["visible"] = span_danger("[user] shocks [target] with [src]!")
+	.["local"] = span_userdanger("[user] shocks you with [src]!")
+
+/obj/item/melee/baton/energy/get_unga_dunga_cyborg_stun_description(mob/living/target, mob/living/user)
+	. = list()
+
+	.["visible"] = span_danger("[user] tries to shock [target] with [src], and predictably fails!")
+	.["local"] = span_userdanger("[user] tries to... shock you with [src]?")
+
+/obj/item/melee/baton/energy/update_icon_state()
+	if(active)
+		if(lethalmode)
+			icon_state = "[initial(icon_state)]_kill"
+			return ..()
+		else
+			icon_state = "[initial(icon_state)]_stun"
+			return ..()
+	if(!cell)
+		icon_state = "[initial(icon_state)]_nocell"
+		return ..()
+	icon_state = "[initial(icon_state)]"
+	return ..()
+
+/obj/item/melee/baton/energy/loaded //this one starts with a cell pre-installed.
+	preload_cell_type = /obj/item/stock_parts/cell/high
+
+/obj/item/melee/baton/energy/examine(mob/user)
+	. = ..()
+	if(cell)
+		. += span_notice("\The [src] is [round(cell.percent())]% charged.")
+	else
+		. += span_warning("\The [src] does not have a power source installed.")
+
+/obj/item/melee/baton/energy/screwdriver_act(mob/living/user, obj/item/tool)
+	if(tryremovecell(user))
+		tool.play_tool_sound(src)
+	return TRUE
+
+/obj/item/melee/baton/energy/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/stock_parts/cell))
+		var/obj/item/stock_parts/cell/active_cell = item
+		if(cell)
+			to_chat(user, span_warning("[src] already has a cell!"))
+		else
+			if(active_cell.maxcharge < cell_hit_cost)
+				to_chat(user, span_notice("[src] requires a higher capacity cell."))
+				return
+			if(!user.transferItemToLoc(item, src))
+				return
+			cell = item
+			to_chat(user, span_notice("You install a cell in [src]."))
+			update_appearance()
+	else
+		return ..()
+
+/obj/item/melee/baton/energy/proc/tryremovecell(mob/user)
+	if(cell && can_remove_cell)
+		cell.forceMove(drop_location())
+		to_chat(user, span_notice("You remove the cell from [src]."))
+		cell = null
+		update_icon_state()
+		update_appearance()
+		return TRUE
+	return FALSE
+
+/obj/item/melee/baton/energy/attack_self(mob/user)
+	if(!active)
+		if(cell?.charge < cell_hit_cost_stun)	
+			active = FALSE
+			if(!cell)
+				balloon_alert(user, "no power source!")
+			else
+				balloon_alert(user, "out of charge!")
+		else
+			active = TRUE
+			lethalmode = FALSE
+			balloon_alert(user, "set to stun")
+			playsound(src, SFX_SPARKS, 75, TRUE, -1)
+			toggle_light(user)
+			do_sparks(1, TRUE, src)
+	else
+		if(!lethalmode)
+			if(cell?.charge < cell_hit_cost_kill)	
+				active = FALSE
+				if(!cell)
+					balloon_alert(user, "no power source!")
+				else
+					balloon_alert(user, "out of charge!")
+			else
+				active = TRUE
+				lethalmode = TRUE
+				balloon_alert(user, "set to kill")
+				playsound(src, SFX_SPARKS, 75, TRUE, -1)
+				//toggle_light(user)
+				do_sparks(1, TRUE, src)
+		else
+			active = FALSE
+			balloon_alert(user, "turned off")
+			playsound(src, SFX_SPARKS, 75, TRUE, -1)
+			toggle_light(user)
+			do_sparks(1, TRUE, src)
+	if(active)
+		if(lethalmode)
+			force = 30
+			damtype = BURN
+		else
+			force = 10
+			damtype = BRUTE
+	else
+		force = 10
+		damtype = BRUTE
+	update_appearance()
+	add_fingerprint(user)
+
+/// Toggles the stun baton's light
+/obj/item/melee/baton/energy/proc/toggle_light(mob/user)
+	set_light_on(!light_on)
+	return
+
+/obj/item/melee/baton/energy/clumsy_check(mob/living/carbon/human/user)
+	. = ..()
+	if(.)
+		SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
+		deductcharge(cell_hit_cost)

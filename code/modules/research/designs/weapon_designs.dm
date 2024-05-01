@@ -191,6 +191,19 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	autolathe_exportable = FALSE
 
+/datum/design/energy_baton
+	name = "Energy Baton Parts Kit (Lethal/Nonlethal)"
+	desc = "The kit for an energy baton with a seperate kill setting."
+	id = "energy_baton"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 5, /datum/material/diamond = SMALL_MATERIAL_AMOUNT * 2, /datum/material/gold =SMALL_MATERIAL_AMOUNT * 3)
+	build_path = /obj/item/weaponcrafting/gunkit/energybaton
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	autolathe_exportable = FALSE
+
 /datum/design/tele_shield
 	name = "Telescopic Riot Shield"
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."

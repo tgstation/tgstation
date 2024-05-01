@@ -1,3 +1,17 @@
+/datum/crafting_recipe/energybaton
+	name = "Energy Baton"
+	result = /obj/item/melee/baton/energy/loaded
+	reqs = list(
+		/obj/item/melee/baton/security = 1,
+		/obj/item/weaponcrafting/gunkit/energybaton = 1,
+	)
+	time = 5 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/obj/item/weaponcrafting/gunkit/energybaton
+	name = "energy baton parts kit (lethal/nonlethal)"
+	desc = "A suitcase containing the necessary baton parts to tranform a standard stun into an energy baton."
+
 /datum/crafting_recipe/stunprod
 	name = "Stunprod"
 	result = /obj/item/melee/baton/security/cattleprod

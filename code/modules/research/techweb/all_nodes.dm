@@ -1659,6 +1659,7 @@
 	prereq_ids = list("adv_engi", "weaponry")
 	design_ids = list(
 		"pin_loyalty",
+		"energy_baton",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 
