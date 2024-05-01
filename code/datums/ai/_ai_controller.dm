@@ -176,7 +176,7 @@ multiple modular subtrees with behaviors
 	if(ai_status == AI_STATUS_OFF)
 		return
 
-	if(exited  && (get_dist(pawn, (islist(exited) ? exited[1] : exited)) <= interesting_dist)) //is our target in between interesting cells?
+	if(exited && (get_dist(pawn, (islist(exited) ? exited[1] : exited)) <= interesting_dist)) //is our target in between interesting cells?
 		return
 
 	if(should_idle())
