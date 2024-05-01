@@ -81,12 +81,13 @@
  * Use instead of `A.loc.loc`.
  */
 #define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
+
 // Defines for turfs rust resistance
 #define RUST_RESISTANCE_BASIC 1
- #define RUST_RESISTANCE_REINFORCED 2
- #define RUST_RESISTANCE_TITANIUM 3
- #define RUST_RESISTANCE_ORGANIC 4
- #define RUST_RESISTANCE_ABSOLUTE 5
+#define RUST_RESISTANCE_REINFORCED 2
+#define RUST_RESISTANCE_TITANIUM 3
+#define RUST_RESISTANCE_ORGANIC 4
+#define RUST_RESISTANCE_ABSOLUTE 5
 
 /// Turf will be passable if density is 0
 #define TURF_PATHING_PASS_DENSITY 0

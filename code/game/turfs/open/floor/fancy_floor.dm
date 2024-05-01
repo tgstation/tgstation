@@ -197,7 +197,7 @@
 	initial_gas_mix = FROZEN_ATMOS
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
-
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 	slowdown = 1.5
 	bullet_sizzle = TRUE
 	footstep = FOOTSTEP_SAND
@@ -257,6 +257,7 @@
 	clawfootstep = FOOTSTEP_CARPET_BAREFOOT
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 /turf/open/floor/carpet/examine(mob/user)
 	. = ..()

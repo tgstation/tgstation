@@ -14,7 +14,7 @@
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
-	aoe_radius = 3
+	aoe_radius = 2
 
 /datum/action/cooldown/spell/aoe/rust_conversion/get_things_to_cast_on(atom/center)
 	return RANGE_TURFS(aoe_radius, center)

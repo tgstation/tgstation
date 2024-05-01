@@ -76,17 +76,17 @@
 
 /datum/heretic_knowledge/summon/rusty
 	name = "Rusted Ritual"
-	desc = "Allows you to transmute a pool of vomit, a book, and a head into a Rust Walker. \
+	desc = "Allows you to transmute a pool of vomit, some cable coil, and 5 sheets of iron into a Rust Walker. \
 		Rust Walkers excel at spreading rust and are moderately strong in combat."
 	gain_text = "I combined my knowledge of creation with my desire for corruption. The Marshal knew my name, and the Rusted Hills echoed out."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/entropic_plume,
-		/datum/heretic_knowledge/spell/cosmic_expansion,
+		/datum/heretic_knowledge/spell/area_conversion,
+		/datum/heretic_knowledge/spell/star_blast,
 	)
 	required_atoms = list(
 		/obj/effect/decal/cleanable/vomit = 1,
-		/obj/item/book = 1,
-		/obj/item/bodypart/head = 1,
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/cable_coil = 15,
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/rust_walker
 	cost = 1

@@ -32,7 +32,7 @@
 		return
 	victim.apply_status_effect(/datum/status_effect/amok)
 	victim.apply_status_effect(/datum/status_effect/cloudstruck, level * 1 SECONDS)
-	victim.reagents?.add_reagent(/datum/reagent/eldritch, max(1, 6 - level))
+	victim.adjust_disgust(75)
 
 /datum/action/cooldown/spell/cone/staggered/entropic_plume/calculate_cone_shape(current_level)
 	// At the first level (that isn't level 1) we will be small

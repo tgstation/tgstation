@@ -56,8 +56,7 @@
 /datum/heretic_knowledge/rust_fist/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic.increase_rust_strenght()
+	our_heretic.increase_rust_strength()
 
 /datum/heretic_knowledge/rust_fist/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY))
@@ -132,11 +131,11 @@
 
 	// Heals all damage + Stamina
 	var/need_mob_update = FALSE
-	need_mob_update += source.adjustBruteLoss(-2, updating_health = FALSE)
-	need_mob_update += source.adjustFireLoss(-2, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss(-2, updating_health = FALSE, forced = TRUE) // Slimes are people too
-	need_mob_update += source.adjustOxyLoss(-0.5, updating_health = FALSE)
-	need_mob_update += source.adjustStaminaLoss(-2, updating_stamina = FALSE)
+	need_mob_update += source.adjustBruteLoss(-3, updating_health = FALSE)
+	need_mob_update += source.adjustFireLoss(-3, updating_health = FALSE)
+	need_mob_update += source.adjustToxLoss(-3, updating_health = FALSE, forced = TRUE) // Slimes are people too
+	need_mob_update += source.adjustOxyLoss(-1.5, updating_health = FALSE)
+	need_mob_update += source.adjustStaminaLoss(-10, updating_stamina = FALSE)
 	if(need_mob_update)
 		source.updatehealth()
 	// Reduces duration of stuns/etc
@@ -144,17 +143,19 @@
 	// Heals blood loss
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
 		source.blood_volume += 2.5 * seconds_per_tick
-
+	// Slowly regulates your body temp
+	source.adjust_bodytemperature((source.get_body_temp_normal() - source.bodytemperature)/5)
 /datum/heretic_knowledge/mark/rust_mark
 	name = "Mark of Rust"
 	desc = "Your Mansus Grasp now applies the Mark of Rust. The mark is triggered from an attack with your Rusty Blade. \
-		When triggered, the victim's organs and equipment will have a 75% chance to sustain damage and may be destroyed \
+		When triggered, your victim will suffer heavy disgust and confusion. \
 		Allows you to rust reinforced walls an floors as well as plasteel."
 	gain_text = "The Blacksmith looks away. To a place lost long ago. \"Rusted Hills help those in dire need... at a cost.\""
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/rust)
 	route = PATH_RUST
 	mark_type = /datum/status_effect/eldritch/rust
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+/datum/heretic_knowledge/mark/rust_mark/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
 	our_heretic.increase_rust_strength()
 
 /datum/heretic_knowledge/knowledge_ritual/rust
@@ -181,6 +182,7 @@
 		/datum/heretic_knowledge/blade_upgrade/rust,
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/curse/corrosion,
+		/datum/heretic_knowledge/summon/rusty,
 		/datum/heretic_knowledge/crucible,
 		/datum/heretic_knowledge/rifle,
 	)
@@ -188,26 +190,30 @@
 	cost = 1
 	route = PATH_RUST
 
-/datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user)
+/datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic.increase_rust_strenght(TRUE)
+	our_heretic.increase_rust_strength(TRUE)
 
 /datum/heretic_knowledge/blade_upgrade/rust
 	name = "Toxic Blade"
-	desc = "Your Rusty Blade now poisons enemies on attack \ Allows you to rust Titanium and Plastitanium.."
+	desc = "Your Rusty Blade now disgusts enemies on attack \ Allows you to rust Titanium and Plastitanium.."
 	gain_text = "The Blacksmith hands you their blade. \"The Blade will guide you through the flesh, should you let it.\" \
 		The heavy rust weights it down. You stare deeply into it. The Rusted Hills call for you, now."
 	next_knowledge = list(/datum/heretic_knowledge/spell/entropic_plume)
 	route = PATH_RUST
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+
+/datum/heretic_knowledge/blade_upgrade/rust/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
 	our_heretic.increase_rust_strength()
 
 /datum/heretic_knowledge/blade_upgrade/rust/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	// No user == target check here, cause it's technically good for the heretic?
-	target.reagents?.add_reagent(/datum/reagent/eldritch, 5)
+	if(!iscarbon(target))
+		return ..()
+	var/mob/living/carbon/victim = target
+	victim.adjust_disgust(25)
 
-
+/datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
 /datum/heretic_knowledge/spell/entropic_plume
 	name = "Entropic Plume"
 	desc = "Grants you Entropic Plume, a spell that releases a vexing wave of Rust. \
@@ -217,7 +223,6 @@
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/rust_final,
-		/datum/heretic_knowledge/summon/rusty,
 		/datum/heretic_knowledge/spell/rust_charge,
 	)
 	spell_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
@@ -258,6 +263,9 @@
 		TRAIT_SHOCKIMMUNE,
 		TRAIT_SLEEPIMMUNE,
 		TRAIT_STUNIMMUNE,
+		TRAIT_IGNOREDAMAGESLOWDOWN,
+		TRAIT_IGNORESLOWDOWN,
+		TRAIT_CRYOGELIDIAIMMUNE
 	)
 
 /datum/heretic_knowledge/ultimate/rust_final/on_research(mob/user, datum/antagonist/heretic/our_heretic)
@@ -288,6 +296,8 @@
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	user.client?.give_award(/datum/award/achievement/misc/rust_ascension, user)
+	var/datum/action/cooldown/spell/aoe/rust_conversion/rust_spread_spell = locate() in user.actions
+	rust_spread_spell?.cooldown_time /= 2
 
 /**
  * Signal proc for [COMSIG_MOVABLE_MOVED].
@@ -323,11 +333,13 @@
 		return
 
 	var/need_mob_update = FALSE
-	need_mob_update += source.adjustBruteLoss(-4, updating_health = FALSE)
-	need_mob_update += source.adjustFireLoss(-4, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss(-4, updating_health = FALSE, forced = TRUE)
-	need_mob_update += source.adjustOxyLoss(-4, updating_health = FALSE)
+	need_mob_update += source.adjustBruteLoss(-5, updating_health = FALSE)
+	need_mob_update += source.adjustFireLoss(-5, updating_health = FALSE)
+	need_mob_update += source.adjustToxLoss(-5, updating_health = FALSE, forced = TRUE)
+	need_mob_update += source.adjustOxyLoss(-5, updating_health = FALSE)
 	need_mob_update += source.adjustStaminaLoss(-20, updating_stamina = FALSE)
+	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
+		source.blood_volume += 5 * seconds_per_tick
 	if(need_mob_update)
 		source.updatehealth()
 
@@ -340,7 +352,7 @@
  */
 /datum/rust_spread
 	/// The rate of spread every tick.
-	var/spread_per_sec = 160
+	var/spread_per_sec = 60
 	/// The very center of the spread.
 	var/turf/centre
 	/// List of turfs at the edge of our rust (but not yet rusted).

@@ -663,18 +663,18 @@
 /datum/antagonist/heretic/proc/get_knowledge(wanted)
 	return researched_knowledge[wanted]
 
-/datum/antagonist/heretic/proc/increase_rust_strenght(side_path_only=FALSE)
-	if(side_path_only && get_knowledge(/datum/heretic_knowledge/limited_amount/base_rust))
+/datum/antagonist/heretic/proc/increase_rust_strength(side_path_only=FALSE)
+	if(side_path_only && get_knowledge(/datum/heretic_knowledge/limited_amount/starting/base_rust))
 		return
 
 	rust_strength++
 
 /datum/antagonist/heretic/proc/set_rust_strength(strength)
-	if(ISNAN(strength))
-			return
+	if(!isnum(strength))
+		return
 	rust_strength = strength
 
-/*
+
 
 /**
  * Get a list of all rituals this heretic can invoke on a rune.

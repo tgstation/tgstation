@@ -17,14 +17,19 @@
 	ADD_TRAIT(target, TRAIT_RUSTY, ELEMENT_TRAIT(type))
 	RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_rust_overlay))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(handle_examine))
+	RegisterSignal(target, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+	RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
 	RegisterSignals(target, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), PROC_REF(secondary_tool_act))
 	// Unfortunately registering with parent sometimes doesn't cause an overlay update
 	target.update_appearance()
+
 
 /datum/element/rust/Detach(atom/source)
 	. = ..()
 	UnregisterSignal(source, COMSIG_ATOM_UPDATE_OVERLAYS)
 	UnregisterSignal(source, COMSIG_ATOM_EXAMINE)
+	UnregisterSignal(source, COMSIG_ATOM_ENTERED)
+	UnregisterSignal(source, COMSIG_ATOM_EXITED)
 	UnregisterSignal(source, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)))
 	REMOVE_TRAIT(source, TRAIT_RUSTY, ELEMENT_TRAIT(type))
 	source.update_appearance()
@@ -72,3 +77,20 @@
 			user.balloon_alert(user, "scraped off rust")
 			Detach(source)
 			return
+
+/datum/element/rust/proc/on_entered(turf/source, atom/movable/entered, ...)
+	SIGNAL_HANDLER
+
+	if(!isliving(entered))
+		return
+	var/mob/living/victim = entered
+	if(IS_HERETIC(victim))
+		return
+	victim.apply_status_effect(/datum/status_effect/rust_corruption)
+
+/datum/element/rust/proc/on_exited(turf/source, atom/movable/gone)
+	SIGNAL_HANDLER
+	if(!isliving(gone))
+		return
+	var/mob/living/leaver = gone
+	leaver.remove_status_effect(/datum/status_effect/rust_corruption)
