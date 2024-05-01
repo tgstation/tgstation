@@ -1,4 +1,0 @@
-author: "larentoun"
-delete-after: True
-changes:
-  - bugfix: "Infinite-range laser pointer (for \"AI\" Big Brother) now has a correct diode. If you accidentaly remove it then you can put it back!"
