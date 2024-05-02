@@ -683,6 +683,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/disk/data/debug{
+	pixel_y = 9;
+	pixel_x = 7
+	},
 /turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
 "cL" = (
