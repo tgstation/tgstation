@@ -134,6 +134,12 @@ function SS13.unregister_signal(datum, signal, callback)
 		local callbackWeakRef = dm.global_proc("WEAKREF", handler_callback)
 		if not SS13.istype(datum, "/datum/weakref") then
 			handler_callback:call_proc("UnregisterSignal", datum, signal)
+		else
+			local actualDatum = callbackWeakRef:call_proc("hard_resolve")
+			-- Turfs don't remove their signals on deletion.
+			if SS13.is_valid(actualDatum) or SS13.istype(actualDatum, "/turf") then
+				handler_callback:call_proc("UnregisterSignal", actualDatum, signal)
+			end
 		end
 		SS13.stop_tracking(handler_callback)
 	end
