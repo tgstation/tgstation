@@ -3331,6 +3331,7 @@
 /obj/machinery/computer/turbine_computer{
 	mapping_id = "main_turbine"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "auc" = (
@@ -3376,6 +3377,7 @@
 "aum" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "auo" = (
@@ -3389,6 +3391,7 @@
 	dir = 4;
 	mapping_id = "main_turbine"
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "auq" = (
@@ -7423,7 +7426,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "bAj" = (
@@ -22971,7 +22973,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "hhf" = (
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/super/full,
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
@@ -23972,6 +23974,7 @@
 	network = list("turbine")
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "hCp" = (
@@ -28808,9 +28811,14 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
 	},
-/obj/structure/table,
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/light/directional/east,
+/obj/structure/table,
+/obj/item/book/manual/wiki/engineering_guide{
+	pixel_x = -2
+	},
+/obj/item/radio/off,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "jos" = (
@@ -33886,7 +33894,10 @@
 /area/station/security/brig)
 "kWp" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "kWq" = (
@@ -42606,6 +42617,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/all_access,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "nYq" = (
@@ -46427,6 +46439,12 @@
 /obj/structure/closet/toolcloset,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"pxd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/maintenance/disposal/incinerator)
 "pxf" = (
 /obj/structure/closet/secure_closet/hos,
 /obj/structure/secure_safe/hos{
@@ -47125,6 +47143,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/light/small/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "pIF" = (
@@ -48305,10 +48324,9 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 10
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
 /obj/machinery/light/directional/west,
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "qes" = (
@@ -51802,6 +51820,7 @@
 "rnA" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "rnK" = (
@@ -62200,7 +62219,6 @@
 "uPi" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "uPo" = (
@@ -64118,11 +64136,11 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "vyD" = (
-/obj/machinery/power/smes{
-	charge = 5e+06
-	},
 /obj/machinery/airalarm/directional/east,
-/obj/structure/cable,
+/obj/structure/table,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 5
+	},
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "vyG" = (
@@ -66590,10 +66608,9 @@
 /turf/open/misc/grass/jungle,
 /area/station/science/explab)
 "wtS" = (
-/obj/machinery/power/terminal{
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "wuc" = (
@@ -103226,7 +103243,7 @@ pcO
 iKr
 ofZ
 uKK
-ajF
+wtS
 kWp
 fal
 akK
@@ -103997,7 +104014,7 @@ bKu
 bVW
 swg
 uKK
-wtS
+ajF
 bzP
 fal
 aks
@@ -110972,7 +110989,7 @@ vde
 atC
 gqV
 atP
-atP
+pxd
 pIA
 aum
 aup

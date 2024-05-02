@@ -35,5 +35,4 @@
 	controller.clear_blackboard_key(target_key)
 
 /datum/ai_behavior/find_hated_dog_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

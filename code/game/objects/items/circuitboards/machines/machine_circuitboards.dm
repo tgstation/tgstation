@@ -349,6 +349,9 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/rnd/production/techfab/department/engineering
 
+/obj/item/circuitboard/machine/smes/super
+	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/super/empty)
+
 /obj/item/circuitboard/machine/thermomachine
 	name = "Thermomachine"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

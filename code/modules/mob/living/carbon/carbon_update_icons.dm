@@ -1,6 +1,6 @@
-/mob/living/carbon/update_obscured_slots(obj/item/worn_item)
+/mob/living/carbon/update_obscured_slots(obscured_flags)
 	..()
-	if(worn_item.flags_inv & (HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEMUTWINGS))
+	if(obscured_flags & (HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEMUTWINGS))
 		update_body()
 
 /// Updates features and clothing attached to a specific limb with limb-specific offsets
@@ -344,7 +344,7 @@
 
 	if(wear_mask)
 		if(update_obscured)
-			update_obscured_slots(wear_mask)
+			update_obscured_slots(wear_mask.flags_inv)
 		if(!(check_obscured_slots() & ITEM_SLOT_MASK))
 			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
 		update_hud_wear_mask(wear_mask)
@@ -360,7 +360,7 @@
 
 	if(wear_neck)
 		if(update_obscured)
-			update_obscured_slots(wear_neck)
+			update_obscured_slots(wear_neck.flags_inv)
 		if(!(check_obscured_slots() & ITEM_SLOT_NECK))
 			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/mob/clothing/neck.dmi')
 		update_hud_neck(wear_neck)
@@ -376,7 +376,7 @@
 
 	if(back)
 		if(update_obscured)
-			update_obscured_slots(back)
+			update_obscured_slots(back.flags_inv)
 		overlays_standing[BACK_LAYER] = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi')
 		update_hud_back(back)
 
@@ -387,7 +387,7 @@
 	clear_alert("legcuffed")
 	if(legcuffed)
 		if(update_obscured)
-			update_obscured_slots(legcuffed)
+			update_obscured_slots(legcuffed.flags_inv)
 		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/simple/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
 		apply_overlay(LEGCUFF_LAYER)
 		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
@@ -404,7 +404,7 @@
 
 	if(head)
 		if(update_obscured)
-			update_obscured_slots(head)
+			update_obscured_slots(head.flags_inv)
 		if(!(check_obscured_slots() & ITEM_SLOT_HEAD))
 			overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi')
 		update_hud_head(head)
@@ -416,7 +416,7 @@
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
 		if(update_obscured)
-			update_obscured_slots(handcuffed)
+			update_obscured_slots(handcuffed.flags_inv)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance('icons/mob/simple/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
 		if(handcuffed.blocks_emissive != EMISSIVE_BLOCK_NONE)
 			handcuff_overlay.overlays += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, src, alpha = handcuff_overlay.alpha)

@@ -520,6 +520,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prevents you from twohanding weapons.
 #define TRAIT_NO_TWOHANDING "no_twohanding"
 
+/// Improves boxing damage against boxers and athletics experience gain
+#define TRAIT_STRENGTH "strength"
+
+/// Increases the duration of having exercised
+#define TRAIT_STIMMED "stimmed"
+
+/// Indicates that the target is able to be boxed at a boxer's full power.
+#define TRAIT_BOXING_READY "boxing_ready"
+
 /// Halves the time of tying a tie.
 #define TRAIT_FAST_TYING "fast_tying"
 

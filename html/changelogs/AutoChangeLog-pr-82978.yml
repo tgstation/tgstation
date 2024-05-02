@@ -1,0 +1,5 @@
+author: "Gaxeer"
+delete-after: True
+changes:
+  - bugfix: "fix runtime when no events were drafted to be picked from"
+  - config: "make events frequency configurable"
