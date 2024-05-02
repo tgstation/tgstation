@@ -57,8 +57,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 1
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
-	attack_verb_continuous = list("mallets", "smoother")
-	attack_verb_simple = list("mallet", "smoother")
+	attack_verb_continuous = list("bonks", "hammers", "honks")
+	attack_verb_simple = list("bonk", "hammer", "honk")
 	max_integrity = 20
 	armor_type = /datum/armor/item_banhammer
 	resistance_flags = FIRE_PROOF
