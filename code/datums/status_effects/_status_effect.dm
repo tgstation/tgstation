@@ -223,11 +223,12 @@
 	var/red_threshold = 10 SECONDS
 
 /atom/movable/screen/alert/status_effect/timer/Destroy()
-	switch(attached_effect.processing_speed)
-		if(STATUS_EFFECT_FAST_PROCESS)
-			STOP_PROCESSING(SSfastprocess, src)
-		if(STATUS_EFFECT_NORMAL_PROCESS)
-			STOP_PROCESSING(SSprocessing, src)
+	if(attached_effect)
+		switch(attached_effect.processing_speed)
+			if(STATUS_EFFECT_FAST_PROCESS)
+				STOP_PROCESSING(SSfastprocess, src)
+			if(STATUS_EFFECT_NORMAL_PROCESS)
+				STOP_PROCESSING(SSprocessing, src)
 	QDEL_NULL(time_left_overlay)
 	return ..()
 
