@@ -853,3 +853,59 @@
   - admin: The return of IPIntel
   grungussuss:
   - bugfix: fixed being able to install multiple of the same upgrade to medical cyborgs
+2024-04-28:
+  Ben10Omintrix:
+  - bugfix: fixes mobs getting stuck trying to reach something unreachable
+  EnterTheJake:
+  - bugfix: Spraycan no longer spams your chat when you mouse over it.
+  Melbert:
+  - bugfix: Midround malf can roll again
+  Rhials:
+  - bugfix: Overwatch Intelligence Agents no longer get their own uplinks, leading
+      to a self-replicating grey goo scenario.
+  jlsnow301:
+  - bugfix: Fixes clipping in the ESC menu between buttons and long station names.
+2024-04-29:
+  13spacemen:
+  - bugfix: All alert polls ignore option works
+  - code_imp: Unarmed attacks (punches, etc.) now support multiple attack verbs instead
+      of only one
+  EnterTheJake:
+  - image: The Infiltrator Suit has received a new model, sleeker than ever!
+  FlufflesTheDog:
+  - bugfix: minebot shields are now actually orderable
+  - bugfix: vinegar may once again be crafted with wine, water, and sugar
+  JohnFulpWillard:
+  - bugfix: Examining someone with Med/Sec HUDs will no longer filter the message
+      under Radio.
+  - bugfix: pAI requests should no longer randomly permanently break in a round.
+  Melbert:
+  - bugfix: Plasma cutters work again
+  Metekillot:
+  - bugfix: Mech domination now properly integrates with shunting.
+  - bugfix: Combat upgraded AIs no longer get two buggy malf ability pickers if they
+      also become malfunctioning
+  - refactor: Refactored most of the functionality around malf AI shunting, mech control
+  Rhials:
+  - admin: Lazy loading map templates now gives you the option to not ghost/teleport
+      to the loaded area upon completion.
+  Sadboysuss:
+  - admin: spy can now be rolebanned
+  VexingRaven:
+  - bugfix: The debug box no longer spills its contents everywhere
+  improvedname:
+  - qol: Arrivals shuttle is now more player friendly
+  san7890:
+  - admin: Possess Object is now back in the right-click context menu.
+2024-04-30:
+  Jacquerel:
+  - balance: Netguardian Prime can see in the dark.
+  - image: You can see Netguardian Prime in the dark.
+  SyncIt21:
+  - bugfix: Eigenstasium exposed & Anomaly station trait affected closets work again.
+      Eigenstasium closets are tainted blue
+  YesterdaysPromise:
+  - bugfix: The start-of-the-round tips will no longer feature virologists, but will,
+      however, start featuring heretics and coroners.
+  intercepti0n:
+  - rscadd: Added a short scene when getting an Ordeal of Sisyphus achievement.

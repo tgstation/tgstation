@@ -241,7 +241,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/proc/conveyable_enter(datum/source, atom/convayable)
 	SIGNAL_HANDLER
 	if(operating == CONVEYOR_OFF)
-		DSmove_manager.stop_looping(convayable, SSconveyors)
+		GLOB.move_manager.stop_looping(convayable, SSconveyors)
 		return
 	start_conveying(convayable)
 
@@ -249,12 +249,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	SIGNAL_HANDLER
 	var/has_conveyor = neighbors["[direction]"]
 	if(convayable.z != z || !has_conveyor || !isturf(convayable.loc)) //If you've entered something on us, stop moving
-		DSmove_manager.stop_looping(convayable, SSconveyors)
+		GLOB.move_manager.stop_looping(convayable, SSconveyors)
 
 /obj/machinery/conveyor/proc/start_conveying(atom/movable/moving)
 	if(QDELETED(moving))
 		return
-	var/datum/move_loop/move/moving_loop = DSmove_manager.processing_on(moving, SSconveyors)
+	var/datum/move_loop/move/moving_loop = GLOB.move_manager.processing_on(moving, SSconveyors)
 	if(moving_loop)
 		moving_loop.direction = movedir
 		moving_loop.delay = speed * 1 SECONDS
@@ -268,7 +268,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/proc/stop_conveying(atom/movable/thing)
 	if(!ismovable(thing))
 		return
-	DSmove_manager.stop_looping(thing, SSconveyors)
+	GLOB.move_manager.stop_looping(thing, SSconveyors)
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/attacking_item, mob/living/user, params)
@@ -590,12 +590,18 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	desc = "Allows to control connected conveyor belts."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
+	/// Direction input ports.
+	var/datum/port/input/stop
+	var/datum/port/input/active
+	var/datum/port/input/reverse
 	/// The current direction of the conveyor attached to the component.
 	var/datum/port/output/direction
 	/// The switch this conveyor switch component is attached to.
 	var/obj/machinery/conveyor_switch/attached_switch
 
 /obj/item/circuit_component/conveyor_switch/populate_ports()
+	active = add_input_port("Activate", PORT_TYPE_SIGNAL, trigger = PROC_REF(activate))
+	stop = add_input_port("Stop", PORT_TYPE_SIGNAL, trigger = PROC_REF(stop))
 	direction = add_output_port("Conveyor Direction", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/conveyor_switch/get_ui_notices()
@@ -606,6 +612,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	if(istype(shell, /obj/machinery/conveyor_switch))
 		attached_switch = shell
+		if(!attached_switch.oneway)
+			reverse = add_input_port("Reverse", PORT_TYPE_SIGNAL, trigger = PROC_REF(reverse))
 
 /obj/item/circuit_component/conveyor_switch/unregister_usb_parent(atom/movable/shell)
 	attached_switch = null
@@ -617,15 +625,33 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 	INVOKE_ASYNC(src, PROC_REF(update_conveyors), port)
 
+/obj/item/circuit_component/conveyor_switch/proc/on_switch_changed()
+	attached_switch.update_appearance()
+	attached_switch.update_linked_conveyors()
+	attached_switch.update_linked_switches()
+	direction.set_output(attached_switch.position)
+
+/obj/item/circuit_component/conveyor_switch/proc/activate()
+	SIGNAL_HANDLER
+	attached_switch.position = CONVEYOR_FORWARD
+	INVOKE_ASYNC(src, PROC_REF(on_switch_changed))
+
+/obj/item/circuit_component/conveyor_switch/proc/stop()
+	SIGNAL_HANDLER
+	attached_switch.position = CONVEYOR_OFF
+	INVOKE_ASYNC(src, PROC_REF(on_switch_changed))
+
+/obj/item/circuit_component/conveyor_switch/proc/reverse()
+	SIGNAL_HANDLER
+	attached_switch.position = CONVEYOR_BACKWARDS
+	INVOKE_ASYNC(src, PROC_REF(on_switch_changed))
+
 /obj/item/circuit_component/conveyor_switch/proc/update_conveyors(datum/port/input/port)
 	if(!attached_switch)
 		return
 
 	attached_switch.update_position()
-	attached_switch.update_appearance()
-	attached_switch.update_linked_conveyors()
-	attached_switch.update_linked_switches()
-	direction.set_output(attached_switch.position)
+	INVOKE_ASYNC(src, PROC_REF(on_switch_changed))
 
 #undef CONVEYOR_BACKWARDS
 #undef CONVEYOR_OFF

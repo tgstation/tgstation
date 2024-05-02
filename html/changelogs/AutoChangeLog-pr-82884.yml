@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Overwatch Intelligence Agents no longer get their own uplinks, leading to a self-replicating grey goo scenario."
