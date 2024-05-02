@@ -1,0 +1,6 @@
+author: "Echriser"
+delete-after: True
+changes:
+  - qol: "conveyors now use left and right click controls"
+  - qol: "add screentips for conveyor switches"
+  - rscdel: "removes circuit conveyor circuit default trigger behavior in favor in favor of the three state triggers"
