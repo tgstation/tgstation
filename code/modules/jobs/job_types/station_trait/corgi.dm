@@ -203,4 +203,7 @@
 	playsound(safe_turf, 'sound/magic/teleport_diss.ogg', 40)
 
 /datum/job/corgi/proc/give_tip_of_the_round(mob/living/basic/pet/dog/corgi/dog)
-	send_tip_of_the_round(dog)
+	var/list/tips
+	if(prob(70))
+		tips = world.file2list("strings/dogtips.txt")
+	send_tip_of_the_round(dog, tips)
