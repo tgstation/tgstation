@@ -34,7 +34,7 @@
 	return ..()
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
-	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
+	var/turf/safe_turf = find_safe_turf(zlevel = z, extended_safety_checks = TRUE)
 	if(IS_HERETIC_OR_MONSTER(user))
 		if(do_teleport(user, safe_turf, channel = TELEPORT_CHANNEL_MAGIC))
 			to_chat(user, span_warning("As you shatter [src], you feel a gust of energy flow through your body. [after_use_message]"))
