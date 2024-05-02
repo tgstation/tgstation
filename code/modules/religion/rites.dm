@@ -128,13 +128,33 @@
 /datum/religion_rites/machine_blessing/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
 	var/altar_turf = get_turf(religious_tool)
-	var/blessing = pick(
-		/obj/item/organ/internal/cyberimp/arm/surgery,
+	var/arm = list(
+		/obj/item/organ/internal/cyberimp/arm/combat,
+		/obj/item/organ/internal/cyberimp/arm/surgery = 1000000,
+		/obj/item/organ/internal/cyberimp/arm/toolset = 1500000
+	)
+	var/eyes = list(
 		/obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
 		/obj/item/organ/internal/cyberimp/eyes/hud/medical,
-		/obj/item/organ/internal/cyberimp/mouth/breathing_tube,
-		/obj/item/organ/internal/cyberimp/chest/thrusters,
-		/obj/item/organ/internal/eyes/robotic/glow,
+		/obj/item/organ/internal/eyes/robotic/shield = 2,
+		/obj/item/organ/internal/eyes/robotic/glow
+	)
+	var/chest = list(
+		/obj/item/organ/internal/cyberimp/chest/reviver,
+		/obj/item/organ/internal/cyberimp/chest/thrusters = 2
+	)
+	var/head = list(
+		/obj/item/organ/internal/cyberimp/brain/anti_drop = 100,
+		/obj/item/organ/internal/cyberimp/brain/anti_stun = 10
+	)
+	var/blessing = pick_weight_recursive(
+	list(
+		arm = 15,
+		eyes = 15,
+		chest = 9,
+		head = 10,
+		/obj/item/organ/internal/cyberimp/mouth/breathing_tube = 5,
+	)
 	)
 	new blessing(altar_turf)
 	return TRUE
