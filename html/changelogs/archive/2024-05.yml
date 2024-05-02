@@ -14,3 +14,25 @@
   - bugfix: honk mechs don't let you get to CC
   wraith-54321:
   - bugfix: You can no longer roll 2 antags at once
+2024-05-02:
+  Absolucy:
+  - qol: Makes it easier for heretics to click on influences without accidentally
+      drawing a rune with their codex cicatrix because the animation shifted and made
+      you click on the floor instead.
+  Absolucy, That0nePerson:
+  - rscadd: Adds the poisoned knife (originally by That0nePerson, for BeeStation)
+      for 6TC to the syndie uplink. This knife has a 40u capacity and can switch between
+      injecting 5u and 10u of its content per attack.
+  Absolucy, itseasytosee:
+  - balance: the Syndicate Tome traitor item now grants anti-magic while held and
+      can be used to clear cult runes.
+  AlbertNanotracen:
+  - bugfix: Opening a necropolis gate will no longer tell ghosts that a body is being
+      created, instead it will tell them the Legion has been released
+  DexeeXI:
+  - bugfix: changed the medboard spawner in tech storage to support pathology machines.
+      rest in piss pandemic machine.
+  - rscadd: tram gets a crystallizer board (still a DIY project however)
+  - bugfix: box station pathology now has handcuffs in exchange for the useless extrapolators.
+  RikuTheKiller:
+  - balance: Nanite protocols are back from the experimental tech junkyard.
