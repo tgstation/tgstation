@@ -699,6 +699,9 @@
 	. = ..()
 	. |= SHOVE_CAN_STAGGER
 	if(IsKnockdown() && !IsParalyzed())
+		if(HAS_TRAIT_FROM(src, TRAIT_IWASBATONED, REF(shover))) // so we can do a balloon alert
+			balloon_alert(shover, "tired from baton use to kick onto side!")
+			return
 		. |= SHOVE_CAN_KICK_SIDE
 
 #undef SHAKE_ANIMATION_OFFSET
