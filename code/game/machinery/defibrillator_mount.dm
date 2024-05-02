@@ -51,21 +51,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
 /obj/machinery/defibrillator_mount/update_overlays()
 	. = ..()
-
-	if(!defib)
+	if(isnull(defib))
 		return
 
-	. += "defib"
+	var/mutable_appearance/defib_overlay = mutable_appearance(icon, "defib", layer = layer+0.01, offset_spokesman = src)
 
 	if(defib.powered)
-		var/obj/item/stock_parts/cell/C = get_cell()
-		. += (defib.safety ? "online" : "emagged")
-		var/ratio = C.charge / C.maxcharge
-		ratio = CEILING(ratio * 4, 1) * 25
-		. += "charge[ratio]"
+		var/obj/item/stock_parts/cell/cell = defib.cell
+		var/mutable_appearance/safety = mutable_appearance(icon, defib.safety ? "online" : "emagged", offset_spokesman = src)
+		var/mutable_appearance/charge_overlay = mutable_appearance(icon, "charge[CEILING((cell.charge / cell.maxcharge) * 4, 1) * 25]", offset_spokesman = src)
+
+		defib_overlay.overlays += list(safety, charge_overlay)
 
 	if(clamps_locked)
-		. += "clamps"
+		var/mutable_appearance/clamps = mutable_appearance(icon, "clamps", offset_spokesman = src)
+		defib_overlay.overlays += clamps
+
+	. += defib_overlay
 
 //defib interaction
 /obj/machinery/defibrillator_mount/attack_hand(mob/living/user, list/modifiers)
