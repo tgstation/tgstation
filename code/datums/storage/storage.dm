@@ -932,7 +932,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!click_alt_open)
 		return
 
-	open_storage_on_signal(source, user)
+	return open_storage_on_signal(source, user)
 
 
 /// Opens the storage to the mob, showing them the contents to their UI.
