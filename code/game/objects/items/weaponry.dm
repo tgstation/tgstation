@@ -65,7 +65,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/balloon_mallet/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/knockback, 10, FALSE, TRUE)
+	AddElement(/datum/element/knockback, 7, FALSE, TRUE)
 	AddComponent(/datum/component/boomerang, throw_range+7, TRUE)
 	AddComponent(/datum/component/two_handed, \
 		icon_wielded = "[base_icon_state]1", \
@@ -77,7 +77,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return ..()
 
 /obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
-	..()
 	playsound(loc, 'sound/creatures/clown/hehe.ogg', 20)
 	if (!isliving(target))
 		return
