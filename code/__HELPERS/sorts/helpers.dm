@@ -1,3 +1,18 @@
+/// Sorts the list in place with timSort, default settings.
+#define SORT_TIM(to_sort, associative) \
+	if (length(to_sort) < 2) { \
+		return to_sort; \
+	} \
+	var/datum/sort_instance/sorter = GLOB.sortInstance; \
+	if (isnull(sorter)) { \
+		sorter = new; \
+	} \
+	sorter.L = to_sort; \
+	sorter.cmp = GLOBAL_PROC_REF(cmp_numeric_asc); \
+	sorter.associative = associative; \
+	sorter.timSort(1, 0); \
+
+
 /// Helper for the sorting procs. Prevents some code duplication. Creates /datum/sort_instance/sorter
 #define CREATE_SORT_INSTANCE(to_sort, cmp, associative, fromIndex, toIndex) \
 	if (length(to_sort) < 2) { \
@@ -18,6 +33,7 @@
 	sorter.L = to_sort; \
 	sorter.cmp = cmp; \
 	sorter.associative = associative;
+
 
 
 /**
