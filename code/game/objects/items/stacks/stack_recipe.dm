@@ -17,8 +17,6 @@
 	var/time = 0
 	/// Bitflag of additional placement checks required to place. (STACK_CHECK_CARDINALS|STACK_CHECK_ADJACENT|STACK_CHECK_TRAM_FORBIDDEN|STACK_CHECK_TRAM_EXCLUSIVE)
 	var/placement_checks = NONE
-	/// If TRUE, the created atom will gain custom mat datums
-	var/applies_mats = FALSE
 	/// What trait, if any, boosts the construction speed of this item
 	var/trait_booster
 	/// How much the trait above, if supplied, boosts the construct speed of this item
@@ -38,7 +36,6 @@
 	time = 0,
 	crafting_flags = CRAFT_CHECK_DENSITY,
 	placement_checks = NONE,
-	applies_mats = FALSE,
 	trait_booster,
 	trait_modifier = 1,
 	category,
@@ -51,7 +48,6 @@
 	src.max_res_amount = max_res_amount
 	src.time = time
 	src.placement_checks = placement_checks
-	src.applies_mats = applies_mats
 	src.trait_booster = trait_booster
 	src.trait_modifier = trait_modifier
 	src.category = src.category || category || CAT_MISC
@@ -71,7 +67,6 @@
 	on_solid_ground = FALSE,
 	window_checks = FALSE,
 	placement_checks = NONE,
-	applies_mats = FALSE,
 	trait_booster,
 	trait_modifier = 1,
 	desc,

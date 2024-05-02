@@ -26,6 +26,8 @@
 #define CRAFT_ON_SOLID_GROUND (1<<4)
 /// If the craft checks that there are objects with density in the same turf when being built
 #define CRAFT_CHECK_DENSITY (1<<5)
+/// If the created atom will gain custom mat datums
+#define CRAFT_APPLIES_MATS (1<<6)
 
 //food/drink crafting defines
 //When adding new defines, please make sure to also add them to the encompassing list
