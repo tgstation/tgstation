@@ -734,6 +734,6 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		GLOB.pre_setup_antags += picked_player.mind
 	return TRUE
 
-// Scaling adds half the amount of additional spies rather than the full amount.
+// Scaling adds a fraction of the amount of additional spies rather than the full amount.
 /datum/dynamic_ruleset/roundstart/spies/get_scaling_antag_cap(population)
 	return ceil(..() * 0.25)
