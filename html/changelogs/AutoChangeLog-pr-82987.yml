@@ -1,5 +1,0 @@
-author: "kawoppi"
-delete-after: True
-changes:
-  - bugfix: "the civilian bounty control terminal displays the payout of new bounty options again"
-  - qol: "the civilian bounty control terminal displays the description of new bounty options"

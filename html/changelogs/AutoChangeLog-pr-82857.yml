@@ -1,4 +1,0 @@
-author: "Echriser"
-delete-after: True
-changes:
-  - qol: "conveyor switches now have direction-specific input signals"

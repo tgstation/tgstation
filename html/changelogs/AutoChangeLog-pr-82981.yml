@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - admin: "Custom Single and Custom Multi votes are now combined into one vote"
-  - admin: "Admins can now end votes instantly, rather than cancelling them"
-  - admin: "Admins can now reset the vote cooldown"
-  - bugfix: "Vote cooldown actually applies now"

@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes:
-  - bugfix: "Fixes hypercharged slime core cells and circuit guns having 1,000 times less energy than intended."
