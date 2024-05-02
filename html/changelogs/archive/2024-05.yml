@@ -39,3 +39,38 @@
   necromanceranne:
   - bugfix: If you are a freerunner, you don't end up faceplanting despite having
       catlike grace.
+2024-05-02:
+  Echriser:
+  - qol: conveyor switches now have direction-specific input signals
+  Fluffles:
+  - qol: you can pick up wheelchairs while on the ground
+  - qol: you can place wheelchairs a tile away from you, like roller beds
+  JohnFulpWillard:
+  - bugfix: Monkey changelings that are disguised as someone can now take off their
+      flesh clothes.
+  - bugfix: You can now re-construct pod doors that had deconstruction started.
+  - qol: You can now make pod door assemblies using plasteel in-hand.
+  - bugfix: Monkeys can no longer be knocked over by walking into a windoor on combat
+      mode while they're behind it.
+  - admin: Debug uplinks now shows all categories and won't lock upon buying items
+      like his grace and the syndicate balloon.
+  - bugfix: Constantly fleeing in Battle Arcade will no longer give you a very large
+      amount of decimals due to halving your gold every time.
+  - bugfix: AIs can now track Silicon as long as their built-in camera is online.
+  Melbert:
+  - admin: Custom Single and Custom Multi votes are now combined into one vote
+  - admin: Admins can now end votes instantly, rather than cancelling them
+  - admin: Admins can now reset the vote cooldown
+  - bugfix: Vote cooldown actually applies now
+  Pickle-Coding:
+  - bugfix: Fixes hypercharged slime core cells and circuit guns having 1,000 times
+      less energy than intended.
+  Watermelon914:
+  - bugfix: Fixed the ipintel subsystem not working.
+  kawoppi:
+  - bugfix: the civilian bounty control terminal displays the payout of new bounty
+      options again
+  - qol: the civilian bounty control terminal displays the description of new bounty
+      options
+  nikothedude:
+  - bugfix: Jousting no longer bypasses pacifism
