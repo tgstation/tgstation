@@ -55,7 +55,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 1
 	throw_speed = 1
 	throwforce = 1
-	throw_range = 6
+	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("mallets", "smoother")
 	attack_verb_simple = list("mallet", "smoother")
@@ -66,7 +66,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/balloon_mallet/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/knockback, 10, FALSE, TRUE)
-	AddComponent(/datum/component/boomerang, throw_range+5, TRUE)
+	AddComponent(/datum/component/boomerang, throw_range+7, TRUE)
 	AddComponent(/datum/component/two_handed, \
 		icon_wielded = "[base_icon_state]1", \
 		attacksound = SFX_CLOWN_STEP, \
