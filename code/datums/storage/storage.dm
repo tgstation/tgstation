@@ -212,9 +212,7 @@
 	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_deconstruct))
 	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 	RegisterSignal(parent, COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED, PROC_REF(contents_changed_w_class))
-
-	if(click_alt_open)
-		RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_click_alt))
+	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_click_alt))
 
 /**
  * Sets where items are physically being stored in the case it shouldn't be on the parent.
@@ -931,7 +929,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_click_alt(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	return open_storage_on_signal(source, user)
+	if(!click_alt_open)
+		return
+
+	open_storage_on_signal(source, user)
 
 
 /// Opens the storage to the mob, showing them the contents to their UI.
