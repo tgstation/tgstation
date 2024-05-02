@@ -28651,6 +28651,12 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/atmospherics_engine)
+"kzr" = (
+/obj/effect/spawner/structure/window/hollow/directional{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/engineering/atmos/storage/gas)
 "kzC" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/purple,
@@ -34841,7 +34847,8 @@
 "mRu" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/door/poddoor/shutters/radiation/preopen{
-	id = "atmoshfr"
+	id = "atmoshfr";
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics_engine)
@@ -107721,7 +107728,7 @@ vqB
 sJh
 rJy
 vUb
-uMq
+kzr
 uFC
 jnY
 oUb
