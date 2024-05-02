@@ -76,14 +76,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "[base_icon_state]0"
 	return ..()
 
-/ob/item/balloon_mallet/proc/fling(mob/living/target)
-	target.Knockdown(2 SECONDS)
-	target.visible_message(span_danger("[target.name] is honked by [src]!"), \
-		span_userdanger("You feel a incredibly silly energy course through your body sending you flying!"), \
-		span_hear("You hear a hilarious honk!"))
-	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
-	target.throw_at(throw_target, 200, 4, throw_gentle = TRUE)
-
 /obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
 	..()
 	playsound(loc, 'sound/creatures/clown/hehe.ogg', 20)
