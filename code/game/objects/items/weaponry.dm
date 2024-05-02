@@ -43,17 +43,19 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/balloon_mallet
 	name = "balloon mallet"
-	desc = "It's a mallet, a weapon known for being heavy, but made from notoriously light balloons. Air inside removes any force from the swings. It'd be quite embarrassing to get hit by this."
+	desc = "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care. It'd be quite embarrassing to get hit by this."
 	icon = 'icons/obj/weapons/hammer.dmi'
-	icon_state = "balloon_mallet"
-	inhand_icon_state = "balloon_mallet"
+	icon_state = "balloon_mallet0"
+	base_icon_state = "balloon_mallet"
+	worn_icon_state = "balloon_mallet"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	slot_flags = ITEM_SLOT_BACK
 	siemens_coefficient = 0
 	force = 1
 	throw_speed = 1
 	throwforce = 1
-	throw_range = 1
+	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("mallets", "smoother")
 	attack_verb_simple = list("mallet", "smoother")
@@ -61,12 +63,29 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	armor_type = /datum/armor/item_banhammer
 	resistance_flags = FIRE_PROOF
 
-/obj/item/balloon_mallet/examine(mob/user)
+/obj/item/balloon_mallet/Initialize(mapload)
 	. = ..()
-	if(HAS_TRAIT(user,TRAIT_BALLOON_SUTRA))
-		. = "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
+	AddElement(/datum/element/knockback, 10, FALSE, TRUE)
+	AddComponent(/datum/component/boomerang, throw_range+0, TRUE)
+	AddComponent(/datum/component/two_handed, \
+		icon_wielded = "[base_icon_state]1", \
+		attacksound = SFX_CLOWN_STEP, \
+	)
+
+/obj/item/balloon_mallet/update_icon_state()
+	icon_state = "[base_icon_state]0"
+	return ..()
+
+/ob/item/balloon_mallet/proc/fling(mob/living/target)
+	target.Knockdown(2 SECONDS)
+	target.visible_message(span_danger("[target.name] is honked by [src]!"), \
+		span_userdanger("You feel a incredibly silly energy course through your body sending you flying!"), \
+		span_hear("You hear a hilarious honk!"))
+	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
+	target.throw_at(throw_target, 200, 4, throw_gentle = TRUE)
 
 /obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
+	..()
 	playsound(loc, 'sound/creatures/clown/hehe.ogg', 20)
 	if (!isliving(target))
 		return
@@ -81,6 +100,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	if(user.combat_mode)
 		return ..(target, user)
+
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
+		throw(target)
+
+/obj/item/balloon_mallet/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(!QDELETED(hit_atom) && isliving(hit_atom))
+		throw(hit_atom)
 
 /obj/item/sord
 	name = "\improper SORD"
