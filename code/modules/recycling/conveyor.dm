@@ -403,17 +403,17 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		if(!oneway)
 			context[SCREENTIP_CONTEXT_RMB] = "Toggle backwards"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(held_item?.tool_behaviour == TOOL_MULTITOOL)
+	if(held_item.tool_behaviour == TOOL_MULTITOOL)
 		context[SCREENTIP_CONTEXT_LMB] = "Set speed"
 		context[SCREENTIP_CONTEXT_RMB] = "View wires"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = "Toggle oneway"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(held_item?.tool_behaviour == TOOL_CROWBAR)
+	if(held_item.tool_behaviour == TOOL_CROWBAR)
 		context[SCREENTIP_CONTEXT_LMB] = "Detach"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(held_item?.tool_behaviour == TOOL_WRENCH)
+	if(held_item.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_LMB] = "Invert"
 		return CONTEXTUAL_SCREENTIP_SET
 
