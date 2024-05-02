@@ -18,8 +18,6 @@
 	var/clamps_locked = FALSE
 /// the type of wallframe it 'disassembles' into
 	var/wallframe_type = /obj/item/wallframe/defib_mount
-	/// Pixel Y of the overlays for the sake of taller defibs and stuff
-	var/overlay_height_offset = 0
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
@@ -53,24 +51,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
 /obj/machinery/defibrillator_mount/update_overlays()
 	. = ..()
-	if(isnull(defib))
+
+	if(!defib)
 		return
 
-	var/mutable_appearance/defib_overlay = mutable_appearance(icon, "defib", layer = layer+0.01, offset_spokesman = src)
-	defib_overlay.pixel_y = overlay_height_offset
+	. += "defib"
 
 	if(defib.powered)
-		var/obj/item/stock_parts/cell/cell = defib.cell
-		var/mutable_appearance/safety = mutable_appearance(icon, defib.safety ? "online" : "emagged", offset_spokesman = src)
-		var/mutable_appearance/charge_overlay = mutable_appearance(icon, "charge[CEILING((cell.charge / cell.maxcharge) * 4, 1) * 25]", offset_spokesman = src)
-
-		defib_overlay.overlays += list(safety, charge_overlay)
+		var/obj/item/stock_parts/cell/C = get_cell()
+		. += (defib.safety ? "online" : "emagged")
+		var/ratio = C.charge / C.maxcharge
+		ratio = CEILING(ratio * 4, 1) * 25
+		. += "charge[ratio]"
 
 	if(clamps_locked)
-		var/mutable_appearance/clamps = mutable_appearance(icon, "clamps", offset_spokesman = src)
-		defib_overlay.overlays += clamps
-
-	. += defib_overlay
+		. += "clamps"
 
 //defib interaction
 /obj/machinery/defibrillator_mount/attack_hand(mob/living/user, list/modifiers)
