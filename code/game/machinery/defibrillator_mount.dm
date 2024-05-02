@@ -228,7 +228,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	name = "mobile defibrillator mount"
 	icon_state = "mobile"
 	anchored = FALSE
-	overlay_height_offset = 5
+	density = TRUE
 
 /obj/machinery/defibrillator_mount/mobile/Initialize(mapload)
 	. = ..()
