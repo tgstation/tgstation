@@ -370,7 +370,7 @@
 
 /obj/machinery/anomalous_crystal/theme_warp/Initialize(mapload)
 	. = ..()
-	terrain_theme = DSmaterials.dimensional_themes[pick(subtypesof(/datum/dimension_theme))]
+	terrain_theme = SSmaterials.dimensional_themes[pick(subtypesof(/datum/dimension_theme))]
 	observer_desc = "This crystal changes the area around it to match the theme of \"[terrain_theme.name]\"."
 
 /obj/machinery/anomalous_crystal/theme_warp/ActivationReaction(mob/user, method)
