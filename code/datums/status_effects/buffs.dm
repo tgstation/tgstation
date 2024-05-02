@@ -602,7 +602,9 @@
 /datum/status_effect/ian_speed
 	id = "ian_speed"
 	duration = 1.5 MINUTES
+	alert_type = /atom/movable/screen/alert/status_effect/timer/ian_speed
 	tick_interval = -1
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 
 /datum/status_effect/ian_speed/on_apply()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/ian_boon)
@@ -615,11 +617,18 @@
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/ian_boon)
 	to_chat(owner, span_deadsay("You suddenly feel slower, yet again..."))
 
+/atom/movable/screen/alert/status_effect/timer/ian_speed
+	name = "Speedy Doggo"
+	desc = "Who let the dogs out? Woof, Woof." //Maybe this is a bit too cheesy...
+//	TODO ICON_STATE
+
 ///Makes Ian resistant to gases and heat for a duration.
 /datum/status_effect/ian_atmos
 	id = "ian_atmos"
 	duration = 1.5 MINUTES
+	alert_type = /atom/movable/screen/alert/status_effect/timer/ian_atmos
 	tick_interval = -1
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 
 /datum/status_effect/ian_atmos/on_apply()
 	owner.add_traits(list(TRAIT_NOBREATH, TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_SNOWSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
@@ -630,11 +639,18 @@
 	owner.remove_traits(list(TRAIT_NOBREATH, TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_SNOWSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	to_chat(owner, span_deadsay("You feel no longer feel safe around fire and space..."))
 
+/atom/movable/screen/alert/status_effect/timer/ian_atmos
+	name = "Atmospheric-proof Doggo"
+	desc = "No fire or lack of air can stop you."
+//	TODO ICON_STATE
+
 /// Drops damage dealt to Ian by 4/5 for a duration.
 /datum/status_effect/ian_protection
 	id = "ian_protection"
 	duration = 45 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/timer/ian_protection
 	tick_interval = -1
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 
 /datum/status_effect/ian_protection/on_apply()
 	var/mob/living/basic/doggo = owner
@@ -650,20 +666,30 @@
 		doggo.damage_coeff[protection] *= 5
 	to_chat(owner, span_deadsay("You feel pretty squishy once again..."))
 
-/// Single-use Voice of God commands.
+/atom/movable/screen/alert/status_effect/timer/ian_protection
+	name = "Sturdy Doggo"
+	desc = "Can't stop the rock."
+//	TODO ICON_STATE
+
+/// Single-use Voice of God commands. TODO: use an action button instead...
 /datum/status_effect/limited_buff/single_use_vog
 	id = "single_use_vog"
+	duration = 2 MINUTES
+	alert_type = /atom/movable/screen/alert/status_effect/timer/single_use_vog
+	tick_interval = -1
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	var/datum/action/cooldown/spell/voice_of_god/single_use/linked
 
 /datum/status_effect/limited_buff/single_use_vog/on_apply()
-	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(invoke_voice_of_god))
-	to_chat(owner, span_revenboldnotice("You feel like you're about to loose a mighty bellow."))
+	to_chat(owner, span_revenboldnotice("Speak, and they shall obey..."))
+	linked = new(owner)
+	linked.Grant(owner)
 
-/datum/status_effect/limited_buff/single_use_vog/proc/invoke_voice_of_god(mob/living/source, list/speech_args)
-	SIGNAL_HANDLER
-	var/is_cultie = IS_CULTIST(source)
-	speech_args[SPEECH_SPANS] |= is_cultie ? list(SPAN_NARSIESMALL) : list(SPAN_YELL, SPAN_COLOSSUS)
-	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(voice_of_god_effect), speech_args[SPEECH_MESSAGE], source, base_multiplier = 1.25, forced = speech_args[SPEECH_FORCED], is_cultie = is_cultie)
-	playsound(source, 'sound/magic/clockwork/invoke_general.ogg', 50, vary = TRUE)
-	stacks--
-	if(stacks <= 0)
-		qdel(src)
+/datum/status_effect/limited_buff/single_use_vog/Destroy()
+	QDEL_NULL(linked)
+	return ..()
+
+/atom/movable/screen/alert/status_effect/timer/single_use_vog
+	name = "Single-use Voice of God"
+	desc = "Speak, and they shall obey..."
+//	TODO ICON_STATE

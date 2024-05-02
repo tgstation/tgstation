@@ -55,8 +55,7 @@
 
 	if(alert_type)
 		var/atom/movable/screen/alert/status_effect/new_alert = owner.throw_alert(id, alert_type)
-		new_alert.attached_effect = src //so the alert can reference us, if it needs to
-		linked_alert = new_alert //so we can reference the alert, if we need to
+		new_alert.attach_effect(src)
 
 	if(duration > world.time || tick_interval > world.time) //don't process if we don't care
 		switch(processing_speed)
@@ -102,7 +101,11 @@
 			// tick deleted us, no need to continue
 			return
 	if(duration != -1 && duration < world.time)
-		qdel(src)
+		expire()
+
+/// Called when the world time exceeds the effect's duration.
+/datum/status_effect/proc/expire()
+	qdel(src)
 
 /// Called whenever the effect is applied in on_created
 /// Returning FALSE will cause it to delete itself during creation instead.
@@ -202,7 +205,51 @@
 	/// The status effect we're linked to
 	var/datum/status_effect/attached_effect
 
+///Link the status effect and the alert, so the two can reference each other.
+/atom/movable/screen/alert/status_effect/proc/attach_effect(datum/status_effect/effect)
+	SHOULD_CALL_PARENT(TRUE)
+	attached_effect = effect
+	effect.linked_alert = src
+
 /atom/movable/screen/alert/status_effect/Destroy()
 	attached_effect = null //Don't keep a ref now
 	return ..()
 
+///Subtype of status effect alerts that also show the remaining duration of the effect.
+/atom/movable/screen/alert/status_effect/timer
+	/// MA for maptext showing time left. Kindly borrowed from poll alerts.
+	var/mutable_appearance/time_left_overlay
+	/// Switches the color of the timer to red if lower than this threshold
+	var/red_threshold = 10 SECONDS
+
+/atom/movable/screen/alert/status_effect/timer/Destroy()
+	switch(attached_effect.processing_speed)
+		if(STATUS_EFFECT_FAST_PROCESS)
+			STOP_PROCESSING(SSfastprocess, src)
+		if(STATUS_EFFECT_NORMAL_PROCESS)
+			STOP_PROCESSING(SSprocessing, src)
+	QDEL_NULL(time_left_overlay)
+	return ..()
+
+/atom/movable/screen/alert/status_effect/timer/attach_effect(datum/status_effect/effect)
+	. = ..()
+	if(effect.duration <= world.time) //don't process if we don't care
+		return
+	switch(effect.processing_speed)
+		if(STATUS_EFFECT_FAST_PROCESS)
+			START_PROCESSING(SSfastprocess, src)
+		if(STATUS_EFFECT_NORMAL_PROCESS)
+			START_PROCESSING(SSprocessing, src)
+	update_timer()
+
+/atom/movable/screen/alert/status_effect/timer/process()
+	cut_overlay(time_left_overlay)
+	update_timer()
+
+/atom/movable/screen/alert/status_effect/timer/proc/update_timer()
+	time_left_overlay = new
+	var/timeleft = attached_effect.duration - world.time
+	var/text_color = (timeleft <= red_threshold) ? "red" : "white"
+	var/accuracy = (attached_effect.processing_speed == STATUS_EFFECT_FAST_PROCESS) ? 0.1 : 1
+	time_left_overlay.maptext = MAPTEXT("<span style='color: [text_color]'><b>[CEILING(timeleft / (accuracy SECONDS), accuracy)]</b></span>")
+	time_left_overlay.transform = time_left_overlay.transform.Translate(4, 19)

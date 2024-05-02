@@ -15,6 +15,12 @@
 	else
 		maxed_out()
 
+/datum/status_effect/limited_buff/expire()
+	stacks--
+	if(stacks <= 0)
+		return ..()
+	duration = world.time + initial(duration)
+
 /// Called whenever the buff is refreshed when there are more stacks than max_stacks.
 /datum/status_effect/limited_buff/proc/maxed_out()
 	return

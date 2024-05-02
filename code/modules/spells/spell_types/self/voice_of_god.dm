@@ -18,7 +18,7 @@
 	/// The modifier put onto the power of the command
 	var/power_mod = 1
 	/// A list of spans to apply to commands given
-	var/list/spans = list(SPAN_YELL, SPAN_YELL)
+	var/list/spans = list(SPAN_YELL, SPAN_COLOSSUS)
 
 /datum/action/cooldown/spell/voice_of_god/before_cast(atom/cast_on)
 	. = ..()
@@ -48,3 +48,24 @@
 	cooldown_mod = 0.5
 	power_mod = 0.1
 	spans = list("clown")
+
+/datum/action/cooldown/spell/voice_of_god/single_use
+	name = "Single-Use Voice of God"
+	//The single use VoG effect can have multiple stack, however each expires after 2 minutes, so cooldowns may be an issue.
+	cooldown_mod = 0.2
+	power_mod = 1.2
+	///The linked status effect that grants this spell.
+	var/datum/status_effect/limited_buff/single_use_vog/linked
+
+/datum/action/cooldown/spell/voice_of_god/single_use/Destroy()
+	linked = null
+	return ..()
+
+/datum/action/cooldown/spell/voice_of_god/single_use/cast(atom/cast_on)
+	. = ..()
+	if(isnull(linked))
+		qdel(src)
+		return
+	linked.stacks--
+	if(linked.stacks <= 0)
+		qdel(linked)
