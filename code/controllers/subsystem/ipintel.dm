@@ -20,21 +20,21 @@ SUBSYSTEM_DEF(ipintel)
 
 /datum/controller/subsystem/ipintel/OnConfigLoad()
 	var/list/fail_messages = list()
-	
+
 	var/contact_email = CONFIG_GET(string/ipintel_email)
-	
+
 	if(!length(contact_email))
 		fail_messages += "No contact email"
-	
+
 	if(!findtext(contact_email, "@"))
 		fail_messages += "Invalid contact email"
 
 	if(!length(CONFIG_GET(string/ipintel_base)))
 		fail_messages += "Invalid query base"
-	
+
 	if (!CONFIG_GET(flag/sql_enabled))
 		fail_messages += "The database is not enabled"
-	
+
 	if(length(fail_messages))
 		message_admins("IPIntel: Initialization failed check logs!")
 		logger.Log(LOG_CATEGORY_GAME_ACCESS, "IPIntel is not enabled because the configs are not valid.", list(
@@ -104,6 +104,8 @@ SUBSYSTEM_DEF(ipintel)
 	if(intel.query_status != "success")
 		return intel
 	intel.result = data["result"]
+	if(istext(intel.result))
+		intel.result = text2num(intel.result)
 	intel.date = SQLtime()
 	intel.address = address
 	cached_queries[address] = intel
@@ -140,7 +142,7 @@ SUBSYSTEM_DEF(ipintel)
 		date_restrictor = " AND date > DATE_SUB(NOW(), INTERVAL :ipintel_cache_length DAY)"
 		sql_args["ipintel_cache_length"] = ipintel_cache_length
 	var/datum/db_query/query = SSdbcore.NewQuery(
-		"SELECT * FROM [format_table_name("ipintel")] WHERE ip = INET_ATON(:address)[date_restrictor]", 
+		"SELECT * FROM [format_table_name("ipintel")] WHERE ip = INET_ATON(:address)[date_restrictor]",
 		sql_args
 	)
 	query.warn_execute()
@@ -158,6 +160,8 @@ SUBSYSTEM_DEF(ipintel)
 	var/datum/ip_intel/intel = new
 	intel.query_status = "cached"
 	intel.result = data["intel"]
+	if(istext(intel.result))
+		intel.result = text2num(intel.result)
 	intel.date = data["date"]
 	intel.address = address
 	return TRUE
@@ -189,7 +193,7 @@ SUBSYSTEM_DEF(ipintel)
 	query.NextRow()
 	. = !!query.item // if they have a row, they are whitelisted
 	qdel(query)
-	
+
 
 ADMIN_VERB(ipintel_allow, R_BAN, "Whitelist Player VPN", "Allow a player to connect even if they are using a VPN.", ADMIN_CATEGORY_IPINTEL, ckey as text)
 	if (!SSipintel.is_enabled())
@@ -271,7 +275,7 @@ ADMIN_VERB(ipintel_revoke, R_BAN, "Revoke Player VPN Whitelist", "Revoke a playe
 
 	if(!connection_rejected)
 		return
-	
+
 	var/list/contact_where = list()
 	var/forum_url = CONFIG_GET(string/forumurl)
 	if(forum_url)
