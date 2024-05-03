@@ -1,5 +1,0 @@
-author: "Zenog400"
-delete-after: True
-changes:
-  - rscadd: "increased the size of the pool that Machine Blessing draws from"
-  - balance: "weighted some of the implants that Machine Blessing can give"

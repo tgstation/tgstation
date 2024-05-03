@@ -21,6 +21,7 @@
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 		pawn.visible_message(span_notice("[pawn] calms down.")) // We can blackboard key this if anyone else actually wants to customise it
 		controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
+		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
 		controller.CancelActions() // Otherwise they will try and get one last kick in
 		return AI_BEHAVIOR_DELAY
 

@@ -166,6 +166,8 @@
 	desc = "An opulent hat that functions as a radio to God. Or as a lightning rod, depending on who you ask."
 	icon_state = "bishopmitre"
 
+#define CANDY_CD_TIME 2 MINUTES
+
 //Detective
 /obj/item/clothing/head/fedora/det_hat
 	name = "detective's fedora"
@@ -174,11 +176,12 @@
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
-	/// Cooldown for retrieving precious candy corn on alt click
-	var/candy_cooldown = 0
 	dog_fashion = /datum/dog_fashion/head/detective
-	///Path for the flask that spawns inside their hat roundstart
+	/// Path for the flask that spawns inside their hat roundstart
 	var/flask_path = /obj/item/reagent_containers/cup/glass/flask/det
+	/// Cooldown for retrieving precious candy corn with rmb
+	COOLDOWN_DECLARE(candy_cooldown)
+
 
 /datum/armor/fedora_det_hat
 	melee = 25
@@ -189,27 +192,45 @@
 	acid = 50
 	wound = 5
 
+
 /obj/item/clothing/head/fedora/det_hat/Initialize(mapload)
 	. = ..()
 
 	create_storage(storage_type = /datum/storage/pockets/small/fedora/detective)
 
+	register_context()
+
 	new flask_path(src)
+
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to take a candy corn.")
 
+
+/obj/item/clothing/head/fedora/det_hat/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Candy Time"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
+
+/// Now to solve where all these keep coming from
 /obj/item/clothing/head/fedora/det_hat/click_alt(mob/user)
-	if(candy_cooldown >= world.time)
+	if(!COOLDOWN_FINISHED(src, candy_cooldown))
 		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
 		return CLICK_ACTION_BLOCKING
 
-	var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
-	user.put_in_hands(CC)
+	var/obj/item/food/candy_corn/sweets = new /obj/item/food/candy_corn(src)
+	user.put_in_hands(sweets)
 	to_chat(user, span_notice("You slip a candy corn from your hat."))
-	candy_cooldown = world.time+1200
+	COOLDOWN_START(src, candy_cooldown, CANDY_CD_TIME)
+
 	return CLICK_ACTION_SUCCESS
+
+
+#undef CANDY_CD_TIME
 
 /obj/item/clothing/head/fedora/det_hat/minor
 	flask_path = /obj/item/reagent_containers/cup/glass/flask/det/minor

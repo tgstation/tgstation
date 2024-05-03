@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes:
+  - bugfix: "Pacifists can no longer endlessly spam the backblast functionality of loaded rocket launchers that they cannot actually fire"
