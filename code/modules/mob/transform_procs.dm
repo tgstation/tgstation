@@ -281,22 +281,26 @@
 	qdel(src)
 	return new_corgi
 
+/**
+ * Turns the source atom into a crab crab, the peak of evolutionary design.
+ * WARNING! This is IRREVERSIBLE!
+ * It adds the NO_TRANSFORM trait and should thus be reserved for admin shenanigans or effective round-enders for the most part.
+ */
 /mob/living/carbon/human/proc/crabize()
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
 	Paralyze(1, ignore_canstun = TRUE)
-	for(var/obj/item/W in src)
-		dropItemToGround(W)
+	for(var/obj/item/objeto in src)
+		dropItemToGround(objeto)
 	regenerate_icons()
 	icon = null
 	SetInvisibility(INVISIBILITY_MAXIMUM)
-	for(var/t in bodyparts) //this really should not be necessary
-		qdel(t)
 
 	var/mob/living/basic/crab/new_crab = new (loc)
-	new_crab.set_combat_mode(TRUE)
-	new_crab.key = key
+	new_crab.set_combat_mode(TRUE) // snip snip
+	if(mind)
+		mind.transfer_to(new_crab)
 
 	to_chat(new_crab, span_boldnotice("You have evolved into a crab!"))
 	qdel(src)
