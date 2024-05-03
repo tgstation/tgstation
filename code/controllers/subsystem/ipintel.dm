@@ -1,26 +1,14 @@
 SUBSYSTEM_DEF(ipintel)
 	name = "XKeyScore"
 	init_order = INIT_ORDER_XKEYSCORE
-	flags = SS_OK_TO_FAIL_INIT|SS_NO_FIRE
+	flags = SS_NO_INIT|SS_NO_FIRE
 	/// The threshold for probability to be considered a VPN and/or bad IP
 	var/probability_threshold
-	/// The email used in conjuction with https://check.getipintel.net/check.php
-	var/contact_email
-	/// Maximum number of queries per minute
-	var/max_queries_per_minute
-	/// Maximum number of queries per day
-	var/max_queries_per_day
-	/// Query base
-	var/query_base
-	/// The length of time (days) to cache IP intel
-	var/ipintel_cache_length
-	/// The living playtime (minutes) for players to be exempt from IPIntel checks
-	var/exempt_living_playtime
 
 	/// Cache for previously queried IP addresses and those stored in the database
 	var/list/datum/ip_intel/cached_queries = list()
 	/// The store for rate limiting
-	var/list/rate_limits
+	var/list/rate_limit_minute
 
 /// The ip intel for a given address
 /datum/ip_intel
@@ -30,47 +18,39 @@ SUBSYSTEM_DEF(ipintel)
 	var/address
 	var/date
 
-/datum/controller/subsystem/ipintel/Initialize()
+/datum/controller/subsystem/ipintel/OnConfigLoad()
 	var/list/fail_messages = list()
+	
+	var/contact_email = CONFIG_GET(string/ipintel_email)
+	
+	if(!length(contact_email))
+		fail_messages += "No contact email"
+	
+	if(!findtext(contact_email, "@"))
+		fail_messages += "Invalid contact email"
 
-	probability_threshold = CONFIG_GET(number/ipintel_rating_bad)
-	if(probability_threshold < 0 || probability_threshold > 1)
-		fail_messages += list("invalid probability threshold")
-
-	contact_email = CONFIG_GET(string/ipintel_email)
-	if(isnull(contact_email) || !findtext(contact_email, "@"))
-		fail_messages += list("invalid contact email")
-
-	var/max_queries_per_minute = CONFIG_GET(number/ipintel_rate_minute)
-	var/max_queries_per_day = CONFIG_GET(number/ipintel_rate_day)
-	if(max_queries_per_minute < 0 || max_queries_per_day < 0)
-		fail_messages += list("invalid rate limits")
-
-	var/query_base = CONFIG_GET(string/ipintel_base)
-	if(isnull(query_base))
-		fail_messages += list("invalid query base")
-
-	var/ipintel_cache_length = CONFIG_GET(number/ipintel_cache_length)
-	if(ipintel_cache_length < 0)
-		fail_messages += list("invalid cache length")
-
-	var/exempt_living_playtime = CONFIG_GET(number/ipintel_exempt_playtime_living)
-	if(exempt_living_playtime < 0)
-		fail_messages += list("invalid exempt living playtime")
-
+	if(!length(CONFIG_GET(string/ipintel_base)))
+		fail_messages += "Invalid query base"
+	
+	if (!CONFIG_GET(flag/sql_enabled))
+		fail_messages += "The database is not enabled"
+	
 	if(length(fail_messages))
 		message_admins("IPIntel: Initialization failed check logs!")
-		logger.Log(LOG_CATEGORY_GAME_ACCESS, "IPIntel failed to initialize.", list(
+		logger.Log(LOG_CATEGORY_GAME_ACCESS, "IPIntel is not enabled because the configs are not valid.", list(
 			"fail_messages" = fail_messages,
 		))
-		return SS_INIT_FAILURE
-
-	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ipintel/stat_entry(msg)
-	return "[..()] | D: [max_queries_per_day - rate_limits[IPINTEL_RATE_LIMIT_DAY]] | M: [max_queries_per_minute - rate_limits[IPINTEL_RATE_LIMIT_MINUTE]]"
+	return "[..()] | M: [CONFIG_GET(number/ipintel_rate_minute) - rate_limit_minute]"
+
+
+/datum/controller/subsystem/ipintel/proc/is_enabled()
+	return length(CONFIG_GET(string/ipintel_email)) && length(CONFIG_GET(string/ipintel_base)) && CONFIG_GET(flag/sql_enabled)
 
 /datum/controller/subsystem/ipintel/proc/get_address_intel_state(address, probability_override)
+	if (!is_enabled())
+		return IPINTEL_GOOD_IP
 	var/datum/ip_intel/intel = query_address(address)
 	if(isnull(intel))
 		stack_trace("query_address did not return an ip intel response")
@@ -81,7 +61,7 @@ SUBSYSTEM_DEF(ipintel)
 
 	if(!(intel.query_status in list("success", "cached")))
 		return IPINTEL_UNKNOWN_QUERY_ERROR
-	var/check_probability = probability_override || probability_threshold
+	var/check_probability = probability_override || CONFIG_GET(number/ipintel_rating_bad)
 	if(intel.result >= check_probability)
 		return IPINTEL_BAD_IP
 	return IPINTEL_GOOD_IP
@@ -92,34 +72,32 @@ SUBSYSTEM_DEF(ipintel)
 
 	if(minute_key != expected_minute_key)
 		minute_key = expected_minute_key
-		rate_limits[IPINTEL_RATE_LIMIT_MINUTE] = 0
+		rate_limit_minute = 0
 
-	if(rate_limits[IPINTEL_RATE_LIMIT_MINUTE] >= max_queries_per_minute)
+	if(rate_limit_minute >= CONFIG_GET(number/ipintel_rate_minute))
 		return IPINTEL_RATE_LIMITED_MINUTE
-	if(rate_limits[IPINTEL_RATE_LIMIT_DAY] >= max_queries_per_day)
-		return IPINTEL_RATE_LIMITED_DAY
 	return FALSE
 
 /datum/controller/subsystem/ipintel/proc/query_address(address, allow_cached = TRUE)
+	if (!is_enabled())
+		return
 	if(allow_cached && fetch_cached_ip_intel(address))
 		return cached_queries[address]
 	var/is_rate_limited = is_rate_limited()
 	if(is_rate_limited)
 		return is_rate_limited
-	if(!initialized)
-		return IPINTEL_UNKNOWN_INTERNAL_ERROR
+	rate_limit_minute += 1
 
-	rate_limits[IPINTEL_RATE_LIMIT_MINUTE] += 1
-	rate_limits[IPINTEL_RATE_LIMIT_DAY] += 1
-
-	var/query_base = "https://[src.query_base]/check.php?ip="
-	var/query = "[query_base][address]&contact=[contact_email]&flags=b&format=json"
+	var/query_base = "https://[CONFIG_GET(string/ipintel_base)]/check.php?ip="
+	var/query = "[query_base][address]&contact=[CONFIG_GET(string/ipintel_email)]&flags=b&format=json"
 
 	var/datum/http_request/request = new
 	request.prepare(RUSTG_HTTP_METHOD_GET, query)
 	request.execute_blocking()
 	var/datum/http_response/response = request.into_response()
-	var/list/data = response.body
+	var/list/data = json_decode(response.body)
+	// Log the response
+	logger.Log(LOG_CATEGORY_DEBUG, "ip check response body", data)
 
 	var/datum/ip_intel/intel = new
 	intel.query_status = data["status"]
@@ -133,6 +111,9 @@ SUBSYSTEM_DEF(ipintel)
 	return intel
 
 /datum/controller/subsystem/ipintel/proc/add_intel_to_database(datum/ip_intel/intel)
+	set waitfor = FALSE //no need to make the client connection wait for this step.
+	if (!SSdbcore.Connect())
+		return
 	var/datum/db_query/query = SSdbcore.NewQuery(
 		"INSERT INTO [format_table_name("ipintel")] ( \
 			ip, \
@@ -150,13 +131,17 @@ SUBSYSTEM_DEF(ipintel)
 	qdel(query)
 
 /datum/controller/subsystem/ipintel/proc/fetch_cached_ip_intel(address)
-	var/date_restrictor
-	if(ipintel_cache_length > 0)
-		date_restrictor = " AND date > DATE_SUB(NOW(), INTERVAL [ipintel_cache_length] DAY)"
+	if (!SSdbcore.Connect())
+		return
+	var/ipintel_cache_length = CONFIG_GET(number/ipintel_cache_length)
+	var/date_restrictor = ""
+	var/sql_args = list("address" = address)
+	if(ipintel_cache_length > 1)
+		date_restrictor = " AND date > DATE_SUB(NOW(), INTERVAL :ipintel_cache_length DAY)"
+		sql_args["ipintel_cache_length"] = ipintel_cache_length
 	var/datum/db_query/query = SSdbcore.NewQuery(
-		"SELECT * FROM [format_table_name("ipintel")] WHERE ip = INET_ATON(:address)[date_restrictor]", list(
-			"address" = address
-		)
+		"SELECT * FROM [format_table_name("ipintel")] WHERE ip = INET_ATON(:address)[date_restrictor]", 
+		sql_args
 	)
 	query.warn_execute()
 	query.sync()
@@ -178,6 +163,9 @@ SUBSYSTEM_DEF(ipintel)
 	return TRUE
 
 /datum/controller/subsystem/ipintel/proc/is_exempt(client/player)
+	if(player.holder || GLOB.deadmins[player.ckey])
+		return TRUE
+	var/exempt_living_playtime = CONFIG_GET(number/ipintel_exempt_playtime_living)
 	if(exempt_living_playtime > 0)
 		var/list/play_records = player.prefs.exp
 		if (!play_records.len)
@@ -199,9 +187,13 @@ SUBSYSTEM_DEF(ipintel)
 		qdel(query)
 		return FALSE
 	query.NextRow()
-	return !!query.item // if they have a row, they are whitelisted
+	. = !!query.item // if they have a row, they are whitelisted
+	qdel(query)
+	
 
 ADMIN_VERB(ipintel_allow, R_BAN, "Whitelist Player VPN", "Allow a player to connect even if they are using a VPN.", ADMIN_CATEGORY_IPINTEL, ckey as text)
+	if (!SSipintel.is_enabled())
+		to_chat(user, "The ipintel system is not currently enabled but you can still edit the whitelists")
 	if(SSipintel.is_whitelisted(ckey))
 		to_chat(user, "Player is already whitelisted.")
 		return
@@ -224,6 +216,8 @@ ADMIN_VERB(ipintel_allow, R_BAN, "Whitelist Player VPN", "Allow a player to conn
 	message_admins("IPINTEL: [key_name_admin(user)] has whitelisted '[ckey]'")
 
 ADMIN_VERB(ipintel_revoke, R_BAN, "Revoke Player VPN Whitelist", "Revoke a player's VPN whitelist.", ADMIN_CATEGORY_IPINTEL, ckey as text)
+	if (!SSipintel.is_enabled())
+		to_chat(user, "The ipintel system is not currently enabled but you can still edit the whitelists")
 	if(!SSipintel.is_whitelisted(ckey))
 		to_chat(user, "Player is not whitelisted.")
 		return
@@ -238,6 +232,8 @@ ADMIN_VERB(ipintel_revoke, R_BAN, "Revoke Player VPN Whitelist", "Revoke a playe
 	message_admins("IPINTEL: [key_name_admin(user)] has revoked the VPN whitelist for '[ckey]'")
 
 /client/proc/check_ip_intel()
+	if (!SSipintel.is_enabled())
+		return
 	if(SSipintel.is_exempt(src) || SSipintel.is_whitelisted(ckey))
 		return
 
@@ -275,7 +271,7 @@ ADMIN_VERB(ipintel_revoke, R_BAN, "Revoke Player VPN Whitelist", "Revoke a playe
 
 	if(!connection_rejected)
 		return
-
+	
 	var/list/contact_where = list()
 	var/forum_url = CONFIG_GET(string/forumurl)
 	if(forum_url)
