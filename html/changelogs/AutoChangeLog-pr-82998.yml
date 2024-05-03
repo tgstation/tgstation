@@ -1,0 +1,6 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - bugfix: "mobs in the same faction will no longer be at odds against one another"
+  - bugfix: "mobs can now perform behaviors alongside searching for targets"
+  - bugfix: "mobs will no longer be starting and stopping when chasing targets"

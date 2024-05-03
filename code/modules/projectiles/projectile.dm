@@ -1186,7 +1186,6 @@
 	var/turf/startloc = get_turf(src)
 	var/obj/projectile/bullet = new projectile_type(startloc)
 	bullet.starting = startloc
-	var/list/ignore = list()
 	for (var/atom/thing as anything in ignore_targets)
 		bullet.impacted[WEAKREF(thing)] = TRUE
 	bullet.firer = firer || src

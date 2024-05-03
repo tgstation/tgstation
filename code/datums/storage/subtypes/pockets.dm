@@ -45,6 +45,7 @@
 
 /datum/storage/pockets/small/fedora/detective
 	attack_hand_interact = TRUE // so the detectives would discover pockets in their hats
+	click_alt_open = FALSE
 
 /datum/storage/pockets/chefhat
 	attack_hand_interact = TRUE
