@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT_TYPED(species_prototypes, /datum/species, init_species_prototyp
 
 /proc/init_species_prototypes()
 	var/list/species_list = list()
-	for(var/species_type in typesof(/datum/species))
+	for(var/species_type in subtypesof(/datum/species))
 		species_list[species_type] = new species_type()
 	return species_list
 
