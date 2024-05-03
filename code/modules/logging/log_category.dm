@@ -31,7 +31,7 @@
 GENERAL_PROTECT_DATUM(/datum/log_category)
 
 /// Add an entry to this category. It is very important that any data you provide doesn't hold references to anything!
-/datum/log_category/proc/create_entry(message, list/data, list/semver_store)
+/datum/log_category/proc/create_entry(message, list/data, list/semver_store, severity)
 	var/datum/log_entry/entry = new(
 		// world state contains raw timestamp
 		timestamp = logger.human_readable_timestamp(),
@@ -39,6 +39,7 @@ GENERAL_PROTECT_DATUM(/datum/log_category)
 		message = message,
 		data = data,
 		semver_store = semver_store,
+		severity = severity
 	)
 
 	write_entry(entry)

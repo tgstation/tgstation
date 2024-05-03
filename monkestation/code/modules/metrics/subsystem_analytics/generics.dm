@@ -33,6 +33,14 @@
 	. = ..()
 	var/list/cust = list()
 	cust["processing_machines"] = length(processing)
+	cust["total_power_used"] = 0
+	cust["total_excess_power"] = 0
+	cust["total_power"] = 0
+	for(var/datum/powernet/powernet in powernets)
+		cust["total_excess_power"] += powernet.netexcess
+		cust["total_power_used"] += powernet.load
+		cust["total_power"] += powernet.avail
+
 	.["custom"] = cust
 
 /datum/controller/subsystem/mobs/get_metrics()

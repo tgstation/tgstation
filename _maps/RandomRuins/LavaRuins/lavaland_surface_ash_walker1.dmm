@@ -711,7 +711,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ie" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
 	},
@@ -1112,8 +1112,8 @@
 /obj/item/seeds/glowshroom,
 /obj/item/seeds/lavaland/porcini,
 /obj/item/seeds/lavaland/porcini,
-/obj/item/seeds/tower,
-/obj/item/seeds/tower,
+/obj/item/seeds/tree,
+/obj/item/seeds/tree,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "GW" = (
@@ -1131,7 +1131,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Ic" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 1
 	},
@@ -1301,7 +1301,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Tr" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/structure/stone_tile/block{
 	dir = 8
 	},

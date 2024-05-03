@@ -323,7 +323,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
 "nl" = (
-/obj/machinery/hydroponics,
+/obj/machinery/growing,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/station/security/prison/garden)
@@ -422,7 +422,7 @@
 /turf/open/floor/plating,
 /area/station/security/prison/visit)
 "qL" = (
-/obj/machinery/hydroponics,
+/obj/machinery/growing,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -437,7 +437,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
 "rA" = (
-/obj/machinery/hydroponics,
+/obj/machinery/growing,
 /turf/open/floor/iron/white,
 /area/station/security/prison/garden)
 "rN" = (
@@ -837,7 +837,7 @@
 /turf/closed/wall,
 /area/station/security/prison/rec)
 "Jk" = (
-/obj/machinery/hydroponics,
+/obj/machinery/growing,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
@@ -845,7 +845,7 @@
 /turf/closed/wall,
 /area/mine/production)
 "Kc" = (
-/obj/machinery/hydroponics,
+/obj/machinery/growing,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
@@ -890,7 +890,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison/rec)
 "Np" = (
-/obj/machinery/hydroponics,
+/obj/machinery/growing,
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/white,
 /area/station/security/prison/garden)
@@ -994,7 +994,7 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison)
 "Rx" = (
-/obj/machinery/hydroponics,
+/obj/machinery/growing,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "Sq" = (

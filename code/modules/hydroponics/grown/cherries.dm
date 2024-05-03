@@ -59,6 +59,8 @@
 /obj/item/seeds/cherry/bulb
 	name = "pack of cherry bulb pits"
 	desc = "The glowy kind of cherries."
+	//growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	//growthstages = 5
 	icon_state = "seed-cherrybulb"
 	species = "cherrybulb"
 	plantname = "Cherry Bulb Tree"

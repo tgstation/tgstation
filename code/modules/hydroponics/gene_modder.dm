@@ -330,6 +330,8 @@
 					if(disk && disk.gene && istype(disk.gene, G.type) && istype(G, /datum/plant_gene/core))
 						seed.genes -= G
 						var/datum/plant_gene/core/C = disk.gene.Copy()
+						var/datum/plant_gene/core/disk_core = disk.gene
+						C.value = disk_core.value
 						seed.genes += C
 						C.apply_stat(seed)
 						repaint_seed()

@@ -643,7 +643,7 @@
 	},
 /area/centcom/central_command_areas/holding)
 "qi" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/holding)
 "ql" = (
@@ -1014,7 +1014,7 @@
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Al" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/machinery/light/directional/east,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/holding)

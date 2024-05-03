@@ -92,7 +92,7 @@
 	species = "firelemon"
 	plantname = "Combustible Lemon Tree"
 	product = /obj/item/food/grown/firelemon
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	//growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/bomb_plant/potency_based)

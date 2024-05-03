@@ -4,6 +4,8 @@
 	icon = 'monkestation/icons/obj/hydroponics/fruit.dmi'
 	icon_state = "honeydew-seed"
 	icon_dead = "honeydew-dead"
+	icon_grow = null
+	icon_harvest = null
 	species = "honeydew"
 	plantname = "Honeydew Melon Vines"
 	product = /obj/item/food/grown/honeydew

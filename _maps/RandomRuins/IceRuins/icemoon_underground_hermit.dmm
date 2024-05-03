@@ -78,7 +78,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/hermit)
 "sj" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/machinery/light/directional/north,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/hermit)
@@ -87,7 +87,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/hermit)
 "uw" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/hermit)
 "wf" = (
@@ -157,7 +157,7 @@
 "Yi" = (
 /obj/item/seeds/plump,
 /obj/item/seeds/plump,
-/obj/item/seeds/tower,
+/obj/item/seeds/tree,
 /obj/item/seeds/reishi,
 /obj/structure/table/wood,
 /obj/item/food/grown/mushroom/glowshroom,

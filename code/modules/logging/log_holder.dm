@@ -293,7 +293,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 /// Adds an entry to the given category, if the category is disabled it will not be logged.
 /// If the category does not exist, we will CRASH and log to the error category.
 /// the data list is optional and will be recursively json serialized.
-/datum/log_holder/proc/Log(category, message, list/data)
+/datum/log_holder/proc/Log(category, message, list/data, severity = "info")
 	// This is Log because log is a byond internal proc
 	if(shutdown)
 		return
@@ -327,7 +327,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	if(length(data))
 		semver_store = list()
 		data = recursive_jsonify(data, semver_store)
-	log_category.create_entry(message, data, semver_store)
+	log_category.create_entry(message, data, semver_store, severity)
 
 /// Recursively converts an associative list of datums into their jsonified(list) form
 /datum/log_holder/proc/recursive_jsonify(list/data_list, list/semvers)

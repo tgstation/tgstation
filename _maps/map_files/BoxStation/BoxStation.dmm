@@ -8550,7 +8550,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "cSx" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/service/chapel/funeral)
 "cSz" = (
@@ -23579,6 +23579,10 @@
 	},
 /turf/open/floor/iron/dark/side,
 /area/station/commons/locker)
+"hZv" = (
+/mob/living/basic/pet/potty,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "hZS" = (
 /obj/effect/turf_decal/delivery/red,
 /obj/structure/cable,
@@ -29845,7 +29849,7 @@
 /turf/closed/wall/r_wall,
 /area/station/security/evidence)
 "kgn" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "kgv" = (
@@ -35712,9 +35716,9 @@
 /obj/machinery/camera/autoname/directional/south,
 /obj/structure/closet/crate/hydroponics,
 /obj/item/shovel/spade,
-/obj/item/seeds/tower,
-/obj/item/seeds/tower,
-/obj/item/seeds/tower,
+/obj/item/seeds/tree,
+/obj/item/seeds/tree,
+/obj/item/seeds/tree,
 /turf/open/floor/wood,
 /area/station/service/chapel/funeral)
 "mfe" = (
@@ -37161,7 +37165,7 @@
 /obj/item/seeds/wheat,
 /obj/item/seeds/pumpkin,
 /obj/effect/spawner/random/contraband/prison,
-/obj/item/seeds/tower,
+/obj/item/seeds/tree,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "mGu" = (
@@ -38994,7 +38998,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/command/teleporter)
 "nmw" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/hallway/primary/central)
 "nmY" = (
@@ -57623,7 +57627,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "tIO" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "tIU" = (
@@ -64154,7 +64158,7 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "vSd" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "vSj" = (
@@ -66328,7 +66332,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark/side,
 /area/station/service/hydroponics)
 "wGN" = (
@@ -67946,7 +67950,7 @@
 /obj/item/seeds/sugarcane,
 /obj/item/seeds/wheat,
 /obj/item/seeds/watermelon,
-/obj/item/seeds/tower,
+/obj/item/seeds/tree,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -68248,7 +68252,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark/side,
 /area/station/service/hydroponics)
 "xqW" = (
@@ -84596,7 +84600,7 @@ emg
 dSO
 juc
 juc
-juc
+hZv
 qxQ
 pig
 pff

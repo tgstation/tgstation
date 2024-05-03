@@ -289,7 +289,7 @@
 /turf/open/floor/carpet/neon/simple/lime,
 /area/ruin/bughabitat)
 "IX" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "Jr" = (

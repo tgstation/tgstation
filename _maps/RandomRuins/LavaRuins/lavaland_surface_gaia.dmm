@@ -30,9 +30,7 @@
 /turf/open/misc/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "i" = (
-/obj/machinery/hydroponics/soil{
-	self_sustaining = 1
-	},
+/obj/machinery/growing/soil,
 /turf/open/misc/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "j" = (

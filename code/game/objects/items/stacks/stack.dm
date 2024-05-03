@@ -79,7 +79,7 @@
 	var/absorption_rate
 
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
-	if(new_amount != null)
+	if(new_amount != null && isnum(new_amount))
 		amount = new_amount
 	while(amount > max_amount)
 		amount -= max_amount

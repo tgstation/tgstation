@@ -49,7 +49,7 @@
 		result.reagents?.multiply_reagents(efficiency * CRAFTED_FOOD_BASE_REAGENT_MODIFIER)
 		source.reagents?.trans_to(result, source.reagents.total_volume)
 
-		BLACKBOX_LOG_FOOD_MADE(result.type)
+		BLACKBOX_LOG_FOOD_MADE(result)
 
 	qdel(source)
 

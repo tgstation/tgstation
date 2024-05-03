@@ -80,7 +80,7 @@
 		to_chat(sniffer, span_notice(smell_string))
 
 /datum/pollution/proc/scrub_amount(amount_to_scrub, update_active = TRUE, planetary_multiplier = FALSE)
-	if(amount_to_scrub >= total_amount)
+	if(amount_to_scrub >= total_amount || !isopenturf(my_turf))
 		qdel(src)
 		return
 	if(planetary_multiplier && my_turf.planetary_atmos) //Dissipate faster on planetary atmos

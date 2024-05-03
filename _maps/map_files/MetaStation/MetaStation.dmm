@@ -1848,7 +1848,7 @@
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
 "aII" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/item/cultivator,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/grass,
@@ -4406,7 +4406,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/transit_tube)
 "byW" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
@@ -9738,7 +9738,7 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "dJo" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/bot,
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/light/directional/east,
@@ -10526,7 +10526,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "dXP" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
@@ -22119,7 +22119,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "ikw" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -22207,7 +22207,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "ilg" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/grass,
@@ -22622,7 +22622,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "irh" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/machinery/camera/directional/west{
 	c_tag = "Prison Forestry";
 	network = list("ss13","prison")
@@ -26555,7 +26555,7 @@
 /turf/open/floor/grass,
 /area/station/medical/pathology)
 "jBY" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
@@ -33398,7 +33398,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "lXl" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -40177,7 +40177,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "opF" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/item/cultivator,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -50882,7 +50882,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "sbX" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/item/plant_analyzer,
@@ -54132,7 +54132,7 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "tjf" = (
-/obj/machinery/hydroponics/soil{
+/obj/machinery/growing/soil{
 	pixel_y = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -54675,7 +54675,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/hydroponics/soil{
+/obj/machinery/growing/soil{
 	pixel_y = 8
 	},
 /obj/effect/spawner/random/food_or_drink/seed,
@@ -54822,7 +54822,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "tuG" = (
-/obj/machinery/hydroponics/soil{
+/obj/machinery/growing/soil{
 	pixel_y = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -62734,7 +62734,7 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "wlj" = (
-/obj/machinery/hydroponics/soil{
+/obj/machinery/growing/soil{
 	pixel_y = 8
 	},
 /obj/item/food/grown/harebell,
@@ -63349,7 +63349,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "wyn" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/item/shovel/spade,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/grass,
@@ -64668,6 +64668,7 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/delivery,
+/mob/living/basic/pet/potty,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "wVW" = (
@@ -64924,7 +64925,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "xaG" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,

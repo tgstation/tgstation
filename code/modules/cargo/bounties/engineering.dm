@@ -8,7 +8,7 @@
 	name = "Hydroponics Tray"
 	description = "The lab technicians are trying to figure out how to lower the power drain of hydroponics trays, but we fried our last one. Mind building one for us?"
 	reward = CARGO_CRATE_VALUE * 4
-	wanted_types = list(/obj/machinery/hydroponics/constructable = TRUE)
+	wanted_types = list(/obj/machinery/growing/tray = TRUE)
 
 /datum/bounty/item/engineering/cyborg_charger
 	name = "Recharging Station"

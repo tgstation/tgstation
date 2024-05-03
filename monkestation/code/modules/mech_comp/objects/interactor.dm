@@ -120,7 +120,8 @@
 	for(var/atom/movable/listed_atom in selected_turf)
 		if(dummy_human == listed_atom || src == listed_atom)
 			continue
-		if(listed_atom in typesof(/obj/item/mcobject))
+
+		if(listed_atom.type in typesof(/obj/item/mcobject))
 			continue
 
 		if(!held_item)
@@ -140,10 +141,6 @@
 				held_item.melee_attack_chain(dummy_human, listed_atom)
 				dummy_human.istate &= ~ISTATE_SECONDARY
 
-	for(var/atom/movable/listed_atom in src)
-		if(listed_atom == dummy_human)
-			continue
-		listed_atom.forceMove(src.loc)
 	flash()
 
 /obj/item/mcobject/interactor/update_overlays()

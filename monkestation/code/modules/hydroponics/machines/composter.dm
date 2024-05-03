@@ -126,6 +126,8 @@
 	. = ..()
 	desc = "A cube made of pure biomatter, it seems to be denser than normal making it last [DisplayTimeText(total_duration)]. Does wonders on plant trays."
 
+
+
 /obj/item/bio_cube/attackby(obj/item/attacking_item, mob/living/user)
 	. = ..()
 	if(istype(attacking_item, /obj/item/bio_cube))

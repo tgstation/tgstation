@@ -374,20 +374,6 @@
 			if(ispodperson(victim)) //Plantmen take a LOT of damage
 				victim.adjustCloneLoss(5 * multiplier)
 
-	for(var/obj/machinery/hydroponics/plantbox in range(3*multiplier,mob))
-		switch(rand(1,3))
-			if(1)
-				plantbox.adjust_waterlevel(-rand(1,10))
-				plantbox.adjust_plant_nutriments(-rand(1,5))
-			if(2)
-				plantbox.adjust_toxic(rand(1,50))
-			if(3)
-				plantbox.adjust_weedlevel(10)
-				plantbox.adjust_pestlevel(10)
-				if(prob(5))
-					plantbox.plantdies()
-
-
 	for(var/obj/item/food/grown/crop in range(2*multiplier,mob))
 		crop.visible_message("<span class = 'warning'>\The [crop] rots at an alarming rate!</span>")
 		new /obj/item/food/badrecipe(get_turf(crop))

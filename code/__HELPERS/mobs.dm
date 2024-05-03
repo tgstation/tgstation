@@ -90,6 +90,10 @@
 	if(!GLOB.pod_hair_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, GLOB.pod_hair_list)
 //Monkestation Addition Start
+	if(!GLOB.apid_antenna_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/apid_antenna, GLOB.apid_antenna_list)
+	if(!GLOB.apid_wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/apid_wings, GLOB.apid_wings_list)
 	if(!GLOB.ipc_screens_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/ipc_screens, GLOB.ipc_screens_list)
 	if(!GLOB.ipc_antennas_list.len)
@@ -133,6 +137,8 @@
 		"moth_wings" = pick(GLOB.moth_wings_list),
 		"moth_antennae" = pick(GLOB.moth_antennae_list),
 		"moth_markings" = pick(GLOB.moth_markings_list),
+		"apid_antenna" = pick(GLOB.apid_antenna_list), //Monkestation Addition
+		"apid_wings" = pick(GLOB.apid_wings_list), //Monkestation Addition
 		"ipc_screen" = pick(GLOB.ipc_screens_list), //Monkestation Addition
 		"ipc_antenna" = pick(GLOB.ipc_antennas_list), //Monkestation Addition
 		"ipc_chassis" = pick(GLOB.ipc_chassis_list), //Monkestation Addition

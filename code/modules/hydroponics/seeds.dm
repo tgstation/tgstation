@@ -71,8 +71,6 @@
 	var/list/infusion_mutations = list()
 	///infusion damage
 	var/infusion_damage = 0
-	/// How many pixels on the Y axis this plant should be shifted.
-	var/seed_offset = 0
 
 /obj/item/seeds/Initialize(mapload, nogenes = FALSE)
 	. = ..()
@@ -97,7 +95,7 @@
 	var/list/generated_infusions = list()
 	for(var/datum/hydroponics/plant_mutation/infusion/listed_item as anything in infusion_mutations)
 		var/datum/hydroponics/plant_mutation/infusion/created_list_item = new listed_item
-		generated_mutations += created_list_item
+		generated_infusions += created_list_item
 	infusion_mutations = generated_infusions
 
 	if(!nogenes) // not used on Copy()
@@ -184,7 +182,7 @@
 	copy_seed.icon_dead = icon_dead
 	copy_seed.growthstages = growthstages
 	copy_seed.growing_icon = growing_icon
-	copy_seed.seed_offset = seed_offset
+	copy_seed.plant_icon_offset = plant_icon_offset
 	copy_seed.traits_in_progress = traits_in_progress
 
 	if(istype(src, /obj/item/seeds/spliced))
@@ -233,10 +231,6 @@
 /obj/item/seeds/bullet_act(obj/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj, /obj/projectile/energy/flora/yield))
 		var/rating = 1
-		if(istype(loc, /obj/machinery/hydroponics))
-			var/obj/machinery/hydroponics/H = loc
-			rating = H.rating
-
 		if(yield == 0)//Oh god don't divide by zero you'll doom us all.
 			adjust_yield(1 * rating)
 		else if(prob(1/(yield * yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
@@ -247,21 +241,12 @@
 
 // Harvest procs
 /obj/item/seeds/proc/getYield()
-	var/return_yield = yield
-
-	var/obj/machinery/hydroponics/parent = loc
-	if(istype(loc, /obj/machinery/hydroponics))
-		if(parent.yieldmod == 0)
-			return_yield = min(return_yield, 1)//1 if above zero, 0 otherwise
-		else
-			return_yield *= (parent.yieldmod)
-
-	return return_yield
+	return yield
 
 
 /obj/item/seeds/proc/harvest(mob/user)
 	///Reference to the tray/soil the seeds are planted in.
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/atom/movable/parent = loc //for ease of access
 	///Count used for creating the correct amount of results to the harvest.
 	var/t_amount = 0
 	///List of plants all harvested from the same batch.
@@ -298,20 +283,20 @@
 					t_amount++
 					continue
 				t_prod = new product(output_loc, src)
-				if(parent.myseed.plantname != initial(parent.myseed.plantname))
-					t_prod.name = parent.myseed.plantname
-				t_prod.seed.name = parent.myseed.name
-				t_prod.seed.desc = parent.myseed.desc
-				t_prod.seed.plantname = parent.myseed.plantname
+				if(plantname != initial(plantname))
+					t_prod.name = plantname
+				if(istype(t_prod))
+					t_prod.seed.name = name
+					t_prod.seed.desc = desc
+					t_prod.seed.plantname = plantname
 			result.Add(t_prod) // User gets a consumable
 			if(!t_prod)
 				return
 			t_amount++
-			product_name = t_prod.seed.plantname
+			if(istype(t_prod))
+				product_name = t_prod.seed.plantname
 	if(product_count >= 1)
 		SSblackbox.record_feedback("tally", "food_harvested", product_count, product_name)
-	parent.update_tray(user, product_count)
-	parent.update_overlays()
 	return result
 
 /**

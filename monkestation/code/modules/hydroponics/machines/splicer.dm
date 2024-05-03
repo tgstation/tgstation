@@ -144,7 +144,7 @@
 	new_seed.icon_dead = first_seed.icon_dead
 	new_seed.growthstages = first_seed.growthstages
 	new_seed.growing_icon = first_seed.growing_icon
-	new_seed.seed_offset = first_seed.seed_offset
+	new_seed.plant_icon_offset = first_seed.plant_icon_offset
 
 	new_seed.reagents_add = first_seed.reagents_add.Copy()
 

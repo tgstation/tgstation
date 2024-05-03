@@ -642,7 +642,7 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "Cv" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/grimy,
 /area/virtual_domain/powered)
 "CA" = (
@@ -788,7 +788,7 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "IM" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/grimy,
 /area/virtual_domain/powered)

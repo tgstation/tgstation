@@ -19,13 +19,16 @@
 			visible_message(span_warning("[src] fizzles on contact with [victim]!"))
 			return PROJECTILE_DELETE_WITHOUT_HITTING
 
-	if(istype(target, /obj/machinery/hydroponics)) // even plants can block antimagic
-		var/obj/machinery/hydroponics/plant_tray = target
-		if(!plant_tray.myseed)
-			return
-		if(plant_tray.myseed.get_gene(/datum/plant_gene/trait/anti_magic))
-			visible_message(span_warning("[src] fizzles on contact with [plant_tray]!"))
-			return PROJECTILE_DELETE_WITHOUT_HITTING
+	if(target.GetComponent(/datum/component/plant_growing)) // even plants can block antimagic
+		var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
+
+		for(var/item as anything in growing.managed_seeds)
+			var/obj/item/seeds/seed = growing.managed_seeds[item]
+			if(!seed)
+				continue
+			if(seed.get_gene(/datum/plant_gene/trait/anti_magic))
+				visible_message(span_warning("[src] fizzles on contact with [target]!"))
+				return PROJECTILE_DELETE_WITHOUT_HITTING
 
 /obj/projectile/magic/death
 	name = "bolt of death"
@@ -46,12 +49,14 @@
 		victim.investigate_log("has been killed by a bolt of death.", INVESTIGATE_DEATHS)
 		victim.death()
 
-	if(istype(target, /obj/machinery/hydroponics))
-		var/obj/machinery/hydroponics/plant_tray = target
-		if(!plant_tray.myseed)
-			return
-		plant_tray.set_weedlevel(0) // even the weeds perish
-		plant_tray.plantdies()
+	if(target.GetComponent(/datum/component/plant_growing)) // even plants can block antimagic
+		var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
+
+		for(var/item as anything in growing.managed_seeds)
+			var/obj/item/seeds/seed = growing.managed_seeds[item]
+			if(!seed)
+				continue
+			SEND_SIGNAL(seed, COMSIG_ADJUST_PLANT_HEALTH, -300)
 
 /obj/projectile/magic/resurrection
 	name = "bolt of resurrection"
@@ -73,11 +78,14 @@
 		else if(victim.stat != DEAD)
 			to_chat(victim, span_notice("You feel great!"))
 
-	if(istype(target, /obj/machinery/hydroponics))
-		var/obj/machinery/hydroponics/plant_tray = target
-		if(!plant_tray.myseed)
-			return
-		plant_tray.set_plant_health(plant_tray.myseed.endurance, forced = TRUE)
+	if(target.GetComponent(/datum/component/plant_growing)) // even plants can block antimagic
+		var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
+
+		for(var/item as anything in growing.managed_seeds)
+			var/obj/item/seeds/seed = growing.managed_seeds[item]
+			if(!seed)
+				continue
+			SEND_SIGNAL(seed, COMSIG_ADJUST_PLANT_HEALTH, 1000)
 
 /obj/projectile/magic/teleport
 	name = "bolt of teleportation"
@@ -159,12 +167,6 @@
 	if(isliving(target))
 		var/mob/living/victim = target
 		victim.wabbajack(set_wabbajack_effect, set_wabbajack_changeflags)
-
-	if(istype(target, /obj/machinery/hydroponics))
-		var/obj/machinery/hydroponics/plant_tray = target
-		if(!plant_tray.myseed)
-			return
-		plant_tray.polymorph()
 
 /obj/projectile/magic/animate
 	name = "bolt of animation"

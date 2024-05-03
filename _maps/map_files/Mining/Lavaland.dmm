@@ -2306,7 +2306,7 @@
 	},
 /area/mine/medical)
 "mP" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/structure/window/spawner/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -3892,7 +3892,7 @@
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 4
 	},
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/item/seeds/tomato,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
@@ -3987,7 +3987,7 @@
 /area/mine/lounge)
 "wr" = (
 /obj/item/seeds/plump,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "wt" = (
@@ -4000,7 +4000,7 @@
 /turf/open/floor/iron/dark/smooth_edge,
 /area/mine/production)
 "wu" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
@@ -7417,7 +7417,7 @@
 /turf/open/floor/iron/large,
 /area/mine/lounge)
 "Sn" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/machinery/airalarm/directional/west,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
@@ -7458,7 +7458,7 @@
 	},
 /area/mine/laborcamp/security)
 "Sz" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
@@ -7919,7 +7919,7 @@
 	},
 /area/mine/laborcamp)
 "Vm" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/structure/window/spawner/directional/west,
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -8027,7 +8027,7 @@
 /turf/open/floor/plating,
 /area/mine/maintenance/labor)
 "VS" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
@@ -8331,7 +8331,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "XJ" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/structure/window/spawner/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/filled/line{

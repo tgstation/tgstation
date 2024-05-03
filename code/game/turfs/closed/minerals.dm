@@ -137,7 +137,7 @@
 		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
 	if (mineralType && (mineralAmt > 0))
 		new mineralType(src, mineralAmt)
-		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, mineralType)
+		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, initial(mineralType.name))
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(HAS_TRAIT(H, FOOD_JOB_MINER))
@@ -158,7 +158,7 @@
 						picked_ore = /obj/item/stack/ore/bluespace_crystal
 			if(picked_ore)
 				new picked_ore(src, 1)
-				SSblackbox.record_feedback("tally", "ore_mined", 1, picked_ore)
+				SSblackbox.record_feedback("tally", "ore_mined", 1, initial(picked_ore.name))
 
 		if(give_exp)
 			if (mineralType && (mineralAmt > 0))

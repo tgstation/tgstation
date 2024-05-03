@@ -33,7 +33,7 @@
 	target_key = BB_HYDROPLANT_TARGET
 	finding_behavior = /datum/ai_behavior/find_and_set/treatable_hydro
 	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/treat_hydroplant
-	hunt_targets = list(/obj/machinery/hydroponics)
+	hunt_targets = list(/obj/machinery/growing/tray)
 	hunt_range = 7
 
 /datum/ai_behavior/find_and_set/treatable_hydro
@@ -45,13 +45,17 @@
 	var/weedlevel_threshold = controller.blackboard[BB_WEEDLEVEL_THRESHOLD]
 	var/watering_can = locate(/obj/item/reagent_containers/cup/watering_can) in living_pawn
 
-	for(var/obj/machinery/hydroponics/hydro in oview(search_range, controller.pawn))
-		if(isnull(hydro.myseed))
+	for(var/atom/movable/hydro in oview(search_range, controller.pawn))
+		if(!hydro.GetComponent(/datum/component/plant_growing))
 			continue
-		if(hydro.waterlevel < waterlevel_threshold && watering_can)
+		if(!(locate(/obj/item/seeds) in hydro.contents))
+			continue
+
+		var/datum/component/plant_growing/grow = hydro.GetComponent(/datum/component/plant_growing)
+		if(grow.water_precent < waterlevel_threshold && watering_can)
 			possible_trays += hydro
 			continue
-		if(hydro.weedlevel > weedlevel_threshold || hydro.plant_status == HYDROTRAY_PLANT_DEAD)
+		if(grow.weed_level > weedlevel_threshold)
 			possible_trays += hydro
 			continue
 
@@ -62,12 +66,21 @@
 	hunt_cooldown = 2 SECONDS
 	always_reset_target = TRUE
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/treat_hydroplant/target_caught(mob/living/living_pawn, obj/machinery/hydroponics/hydro_target)
-	if(QDELETED(hydro_target) || QDELETED(hydro_target.myseed))
+/datum/ai_behavior/hunt_target/unarmed_attack_target/treat_hydroplant/target_caught(mob/living/living_pawn, atom/movable/hydro_target)
+	var/datum/component/plant_growing/growing = hydro_target.GetComponent(/datum/component/plant_growing)
+	if(!growing)
 		return
 
-	if(hydro_target.plant_status == HYDROTRAY_PLANT_DEAD)
-		living_pawn.manual_emote("weeps...") //weep over the dead plants
+	if(QDELETED(hydro_target))
+		return
+
+	for(var/item as anything in growing.managed_seeds)
+		var/obj/item/seeds/seed = growing.managed_seeds[item]
+		if(!seed)
+			continue
+		var/datum/component/growth_information/info = seed.GetComponent(/datum/component/growth_information)
+		if(info.plant_state == HYDROTRAY_PLANT_DEAD)
+			living_pawn.manual_emote("weeps...") //weep over the dead plants
 	return ..()
 
 
@@ -75,7 +88,7 @@
 	target_key = BB_BEAMABLE_HYDROPLANT_TARGET
 	finding_behavior = /datum/ai_behavior/find_and_set/beamable_hydroplants
 	hunting_behavior = /datum/ai_behavior/hunt_target/use_ability_on_target/solarbeam
-	hunt_targets = list(/obj/machinery/hydroponics)
+	hunt_targets = list(/obj/machinery/growing)
 	hunt_range = 7
 
 /datum/ai_planning_subtree/find_and_hunt_target/beamable_hydroplants/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
@@ -100,11 +113,21 @@
 /datum/ai_behavior/find_and_set/beamable_hydroplants/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/list/possible_trays = list()
 
-	for(var/obj/machinery/hydroponics/hydro in oview(search_range, controller.pawn))
-		if(isnull(hydro.myseed))
+	for(var/atom/movable/hydro in oview(search_range, controller.pawn))
+		if(!hydro.GetComponent(/datum/component/plant_growing))
 			continue
-		if(hydro.plant_health < hydro.myseed.endurance)
-			possible_trays += hydro
+		if(!(locate(/obj/item/seeds) in hydro.contents))
+			continue
+
+		var/datum/component/plant_growing/growing = hydro.GetComponent(/datum/component/plant_growing)
+		for(var/item as anything in growing.managed_seeds)
+			var/obj/item/seeds/seed = growing.managed_seeds[item]
+			if(!seed)
+				continue
+			var/datum/component/growth_information/info = seed.GetComponent(/datum/component/growth_information)
+			if(info.health_value < seed.endurance)
+				possible_trays |= hydro
+				break
 
 	if(possible_trays.len)
 		return pick(possible_trays)

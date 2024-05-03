@@ -159,7 +159,7 @@ Then the player gets the profit from selling his own wasted time.
 	if(!dry_run)
 		if(apply_elastic)
 			cost *= NUM_E**(-1 * k_elasticity * export_amount) //marginal cost modifier
-		SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[sold_item.type]", "[export_value]"))
+		SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[initial(sold_item.name)]", "[export_value]"))
 	return TRUE
 
 // Total printout for the cargo console.

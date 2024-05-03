@@ -277,11 +277,14 @@
 		shroom.add_atom_colour("#823abb", TEMPORARY_COLOUR_PRIORITY)
 		new /obj/effect/temp_visual/revenant(shroom.loc)
 		QDEL_IN(shroom, 10)
-	for(var/obj/machinery/hydroponics/tray in victim)
+	for(var/atom/movable/tray in victim)
+		if(!tray.GetComponent(/datum/component/plant_growing))
+			continue
+
 		new /obj/effect/temp_visual/revenant(tray.loc)
-		tray.set_pestlevel(rand(8, 10))
-		tray.set_weedlevel(rand(8, 10))
-		tray.set_toxic(rand(45, 55))
+		SEND_SIGNAL(tray, COMSIG_GROWING_ADJUST_TOXIN, rand(45, 55))
+		SEND_SIGNAL(tray, COMSIG_GROWING_ADJUST_PEST, rand(8, 10))
+		SEND_SIGNAL(tray, COMSIG_GROWING_ADJUST_WEED, rand(8, 10))
 
 /datum/action/cooldown/spell/aoe/revenant/haunt_object
 	name = "Haunt Object"

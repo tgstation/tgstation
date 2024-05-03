@@ -643,7 +643,7 @@
  * our_seed - the seed growing
  * grown_tray - the tray we were planted in
  */
-/datum/plant_gene/trait/gas_production/proc/set_home_tray(obj/item/seeds/our_seed, obj/machinery/hydroponics/grown_tray)
+/datum/plant_gene/trait/gas_production/proc/set_home_tray(obj/item/seeds/our_seed, atom/movable/grown_tray)
 	SIGNAL_HANDLER
 
 	home_tray = WEAKREF(grown_tray)
@@ -654,10 +654,11 @@
  * our_seed - the seed growing
  * grown_tray - the tray, we're currently growing within
  */
-/datum/plant_gene/trait/gas_production/proc/try_release_gas(obj/item/seeds/our_seed, obj/machinery/hydroponics/grown_tray)
+/datum/plant_gene/trait/gas_production/proc/try_release_gas(obj/item/seeds/our_seed, atom/movable/grown_tray)
 	SIGNAL_HANDLER
 
-	if(grown_tray.age < our_seed.maturation) // Start a little before it blooms
+	var/datum/component/growth_information/info = our_seed.GetComponent(/datum/component/growth_information)
+	if(info.growth_precent < 90)
 		return
 
 	START_PROCESSING(SSobj, src)
@@ -675,7 +676,7 @@
  */
 /datum/plant_gene/trait/gas_production/process(seconds_per_tick)
 	var/obj/item/seeds/seed = stinky_seed?.resolve()
-	var/obj/machinery/hydroponics/tray = home_tray?.resolve()
+	var/atom/movable/tray = home_tray?.resolve()
 
 	// If our weakrefs don't resolve, or if our seed is /somehow/ not in the tray it was planted in, stop processing.
 	if(!seed || !tray || seed.loc != tray)

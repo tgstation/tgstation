@@ -582,7 +582,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "sV" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "ta" = (
@@ -853,14 +853,14 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "CZ" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "Dg" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},

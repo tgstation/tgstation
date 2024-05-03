@@ -29,6 +29,11 @@
 	for(var/obj/item/contained_item in src.loc)
 		if(contained_item == src)
 			continue
+		if(contained_item.anchored)
+			continue
+		if(contained_item.type in typesof(/obj/item/mcobject))
+			continue
+
 		if(count >= max_transfer)
 			break
 		if(linked_storage.attempt_insert(contained_item, src))

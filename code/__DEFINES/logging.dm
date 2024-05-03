@@ -79,6 +79,7 @@
 
 // Log entry keys
 #define LOG_ENTRY_KEY_TIMESTAMP "ts"
+#define LOG_ENTRY_KEY_ROUNDID "round_id"
 #define LOG_ENTRY_KEY_CATEGORY "cat"
 #define LOG_ENTRY_KEY_MESSAGE "msg"
 #define LOG_ENTRY_KEY_DATA "data"

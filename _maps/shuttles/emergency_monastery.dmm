@@ -181,7 +181,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bK" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/item/seeds/watermelon/holy,
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -865,7 +865,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "mQ" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/machinery/light/small/directional/north,
 /obj/item/seeds/watermelon/holy,
 /turf/open/floor/grass,
@@ -2144,7 +2144,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "EL" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/item/seeds/carrot,
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -2155,7 +2155,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "EU" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/item/seeds/wheat,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/grass,
@@ -2267,7 +2267,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Gk" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/item/seeds/harebell,
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -2349,7 +2349,7 @@
 /turf/open/floor/iron/chapel,
 /area/shuttle/escape)
 "HL" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/item/seeds/poppy,
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -2951,7 +2951,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Py" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/item/seeds/sugarcane,
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -3084,7 +3084,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "Rd" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/machinery/light/small/directional/south,
 /obj/item/seeds/poppy,
 /turf/open/floor/grass,
@@ -3174,7 +3174,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "RZ" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/item/seeds/sugarcane,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/grass,
@@ -3460,7 +3460,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "UC" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/item/seeds/wheat,
 /turf/open/floor/grass,
 /area/shuttle/escape)

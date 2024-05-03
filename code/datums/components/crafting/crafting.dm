@@ -209,7 +209,7 @@
 						qdel(thing)
 			I.CheckParts(parts, R)
 			if(send_feedback)
-				SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
+				SSblackbox.record_feedback("tally", "object_crafted", 1, I.name)
 			return I //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
 		return ", missing tool."
 	return ", missing component."

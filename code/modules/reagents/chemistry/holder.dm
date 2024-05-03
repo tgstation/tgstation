@@ -314,10 +314,15 @@
 
 /// Remove an amount of reagents without caring about what they are
 /datum/reagents/proc/remove_any(amount = 1)
+	if(!amount)
+		return
+
 	var/list/cached_reagents = reagent_list
 	var/total_removed = 0
 	var/current_list_element = 1
-	var/initial_list_length = cached_reagents.len //stored here because removing can cause some reagents to be deleted, ergo length change.
+	var/initial_list_length = length(cached_reagents) //stored here because removing can cause some reagents to be deleted, ergo length change.
+	if(!initial_list_length)
+		return
 
 	current_list_element = rand(1, cached_reagents.len)
 
@@ -331,7 +336,7 @@
 			current_list_element = 1
 
 		var/datum/reagent/R = cached_reagents[current_list_element]
-		var/remove_amt = min(amount-total_removed,round(amount/rand(2,initial_list_length),round(amount/10,0.01))) //double round to keep it at a somewhat even spread relative to amount without getting funky numbers.
+		var/remove_amt = min(amount-total_removed,round(amount/max(1, rand(2,initial_list_length)),round(amount/10,0.01))) //double round to keep it at a somewhat even spread relative to amount without getting funky numbers.
 		//min ensures we don't go over amount.
 		remove_reagent(R.type, remove_amt)
 
@@ -515,6 +520,7 @@
 	var/transfer_log = list()
 	var/r_to_send = list()	// Validated list of reagents to be exposed
 	var/reagents_to_remove = list()
+	SEND_SIGNAL(R, COMSIG_REAGENT_PRE_TRANS_TO, src)
 	if(!round_robin)
 		var/part = amount / src.total_volume
 		for(var/datum/reagent/reagent as anything in cached_reagents)
@@ -525,6 +531,10 @@
 				trans_data = copy_data(reagent)
 			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
 				continue
+			if(is_reagent_container(my_atom))
+				var/obj/item/reagent_containers/container = my_atom
+				if(SEND_SIGNAL(R, COMSIG_REAGENT_CACHE_ADD_ATTEMPT, reagent, src, container.amount_per_transfer_from_this))
+					return
 			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
 				continue
 			if(methods)
@@ -557,10 +567,14 @@
 			var/transfer_amount = amount
 			if(amount > reagent.volume)
 				transfer_amount = reagent.volume
-			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
+			if(is_reagent_container(my_atom))
+				var/obj/item/reagent_containers/container = my_atom
+				if(SEND_SIGNAL(R, COMSIG_REAGENT_CACHE_ADD_ATTEMPT, reagent, src, container.amount_per_transfer_from_this))
+					return
+			if(SEND_SIGNAL(R, COMSIG_REAGENT_CACHE_ADD_ATTEMPT, reagent, src, amount))
 				continue
 			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
-				continue
+				return
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
 				if(isorgan(target_atom))
@@ -1030,7 +1044,7 @@
 			if(!text_in_list(temp_mix_message, mix_message))
 				mix_message += temp_mix_message
 			continue
-		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[equilibrium.reaction.type] total reaction steps")
+		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[equilibrium.reaction] total reaction steps")
 	if(num_reactions)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTION_STEP, num_reactions, seconds_per_tick)
 

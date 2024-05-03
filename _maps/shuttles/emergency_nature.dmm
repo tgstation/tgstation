@@ -205,7 +205,7 @@
 /area/shuttle/escape)
 "gR" = (
 /obj/effect/turf_decal/weather/dirt,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "ht" = (
@@ -1119,7 +1119,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "TH" = (
@@ -1320,7 +1320,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ZL" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/item/seeds/banana,
 /turf/open/floor/grass,
 /area/shuttle/escape)

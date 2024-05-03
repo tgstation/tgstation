@@ -69,7 +69,7 @@
 		to_delete = TRUE
 		return
 	LAZYADD(holder.reaction_list, src)
-	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] attempts")
+	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction] attempts")
 
 
 /datum/equilibrium/Destroy()
@@ -210,11 +210,11 @@
 	//Are we overheated?
 	if(reaction.is_cold_recipe)
 		if(holder.chem_temp < reaction.overheat_temp && reaction.overheat_temp != NO_OVERHEAT) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
-			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
+			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction] overheated reaction steps")
 			reaction.overheated(holder, src, step_volume_added)
 	else
 		if(holder.chem_temp > reaction.overheat_temp)
-			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
+			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction] overheated reaction steps")
 			reaction.overheated(holder, src, step_volume_added)
 
 	//is our product too impure?
@@ -223,7 +223,7 @@
 		if(!reagent) //might be missing from overheat exploding
 			continue
 		if (reagent.purity < reaction.purity_min)//If purity is below the min, call the proc
-			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overly impure reaction steps")
+			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction] overly impure reaction steps")
 			reaction.overly_impure(holder, src, step_volume_added)
 
 	//did we explode?

@@ -1587,7 +1587,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "eb" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},

@@ -14,16 +14,16 @@
 
 /obj/item/organ/internal/monster_core/regenerative_core/preserve(implanted = FALSE)
 	if (implanted)
-		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "implanted"))
+		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[initial(name)]", "implanted"))
 	else
-		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "stabilizer"))
+		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[initial(name)]]", "stabilizer"))
 	return ..()
 
 /obj/item/organ/internal/monster_core/regenerative_core/go_inert()
 	. = .. ()
 	if (!.)
 		return
-	SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "inert"))
+	SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[initial(name)]]", "inert"))
 
 /obj/item/organ/internal/monster_core/regenerative_core/on_life(seconds_per_tick, times_fired)
 	. = ..()
@@ -39,10 +39,10 @@
 	target.add_mood_event(MOOD_CATEGORY_LEGION_CORE, /datum/mood_event/healsbadman)
 	if (target != user)
 		target.visible_message(span_notice("[user] forces [target] to apply [src]... Black tendrils entangle and reinforce [target.p_them()]!"))
-		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "other"))
+		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[initial(name)]]", "used", "other"))
 	else
 		to_chat(user, span_notice("You start to smear [src] on yourself. Disgusting tendrils hold you together and allow you to keep moving, but for how long?"))
-		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "self"))
+		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[initial(name)]]", "used", "self"))
 	return ..()
 
 /// Different graphics/desc for the lavaland legion

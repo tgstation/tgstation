@@ -1,0 +1,300 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/indestructible/hive,
+/area/station/hive/four)
+"c" = (
+/obj/structure/hive_exit,
+/turf/closed/indestructible/hive,
+/area/station/hive/one)
+"k" = (
+/turf/open/space/basic,
+/area/space)
+"n" = (
+/turf/open/indestructible/hive,
+/area/station/hive/two)
+"r" = (
+/turf/closed/indestructible/hive,
+/area/station/hive/one)
+"A" = (
+/turf/open/indestructible/hive,
+/area/station/hive/four)
+"B" = (
+/obj/structure/hive_exit,
+/turf/closed/indestructible/hive,
+/area/station/hive/four)
+"C" = (
+/turf/closed/indestructible/hive,
+/area/station/hive/three)
+"F" = (
+/turf/closed/indestructible/hive,
+/area/station/hive/two)
+"K" = (
+/turf/open/indestructible/hive,
+/area/station/hive/one)
+"L" = (
+/turf/open/indestructible/hive,
+/area/station/hive/three)
+"N" = (
+/obj/structure/hive_exit,
+/turf/closed/indestructible/hive,
+/area/station/hive/two)
+"O" = (
+/obj/structure/hive_exit,
+/turf/closed/indestructible/hive,
+/area/station/hive/three)
+
+(1,1,1) = {"
+r
+r
+r
+c
+r
+r
+r
+k
+F
+F
+F
+N
+F
+F
+F
+"}
+(2,1,1) = {"
+r
+K
+K
+K
+K
+K
+r
+k
+F
+n
+n
+n
+n
+n
+F
+"}
+(3,1,1) = {"
+r
+K
+K
+K
+K
+K
+r
+k
+F
+n
+n
+n
+n
+n
+F
+"}
+(4,1,1) = {"
+r
+K
+K
+K
+K
+K
+r
+k
+F
+n
+n
+n
+n
+n
+F
+"}
+(5,1,1) = {"
+r
+K
+K
+K
+K
+K
+r
+k
+F
+n
+n
+n
+n
+n
+F
+"}
+(6,1,1) = {"
+r
+K
+K
+K
+K
+K
+r
+k
+F
+n
+n
+n
+n
+n
+F
+"}
+(7,1,1) = {"
+r
+r
+r
+r
+r
+r
+r
+k
+F
+F
+F
+F
+F
+F
+F
+"}
+(8,1,1) = {"
+k
+k
+k
+k
+k
+k
+k
+k
+k
+k
+k
+k
+k
+k
+k
+"}
+(9,1,1) = {"
+C
+C
+C
+O
+C
+C
+C
+k
+a
+a
+a
+B
+a
+a
+a
+"}
+(10,1,1) = {"
+C
+L
+L
+L
+L
+L
+C
+k
+a
+A
+A
+A
+A
+A
+a
+"}
+(11,1,1) = {"
+C
+L
+L
+L
+L
+L
+C
+k
+a
+A
+A
+A
+A
+A
+a
+"}
+(12,1,1) = {"
+C
+L
+L
+L
+L
+L
+C
+k
+a
+A
+A
+A
+A
+A
+a
+"}
+(13,1,1) = {"
+C
+L
+L
+L
+L
+L
+C
+k
+a
+A
+A
+A
+A
+A
+a
+"}
+(14,1,1) = {"
+C
+L
+L
+L
+L
+L
+C
+k
+a
+A
+A
+A
+A
+A
+a
+"}
+(15,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+k
+a
+a
+a
+a
+a
+a
+a
+"}

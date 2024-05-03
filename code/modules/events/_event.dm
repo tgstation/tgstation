@@ -203,7 +203,7 @@ Runs the event
 	if(alert_observers)
 		round_event.announce_deadchat(random, event_cause)
 
-	SSblackbox.record_feedback("tally", "event_ran", 1, "[round_event]")
+	SSblackbox.record_feedback("tally", "event_ran", 1, "[name]")
 	return round_event
 
 //Returns the component for the listener

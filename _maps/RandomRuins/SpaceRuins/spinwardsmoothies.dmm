@@ -18,7 +18,7 @@
 /obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 10
 	},
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/bamboo{
 	smoothing_flags = 0
 	},
@@ -96,7 +96,7 @@
 /obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 8
 	},
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/bamboo{
 	smoothing_flags = 0
 	},
@@ -194,7 +194,7 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "XG" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 9
 	},

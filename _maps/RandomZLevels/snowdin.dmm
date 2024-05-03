@@ -2129,7 +2129,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/hydro)
 "gG" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/hydro)
 "gH" = (
@@ -2137,7 +2137,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/hydro)
 "gI" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/hydro)
@@ -2146,7 +2146,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/hydro)
 "gK" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/hydro)
@@ -3682,11 +3682,11 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/hydro)
 "kR" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/hydro)
 "kS" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -4400,7 +4400,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/hydro)
 "ms" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,

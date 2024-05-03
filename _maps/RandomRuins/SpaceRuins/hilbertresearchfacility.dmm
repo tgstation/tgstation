@@ -1893,7 +1893,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Rj" = (
-/obj/machinery/hydroponics,
+/obj/machinery/growing,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Rk" = (

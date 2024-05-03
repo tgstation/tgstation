@@ -56,6 +56,8 @@ SUBSYSTEM_DEF(garbage)
 	#endif
 	#endif
 
+	/// Toggle for enabling/disabling hard deletes. Objects that don't explicitly request hard deletion with this disabled will leak.
+	var/enable_hard_deletes = FALSE
 
 /datum/controller/subsystem/garbage/PreInit()
 	InitQueues()
@@ -263,10 +265,29 @@ SUBSYSTEM_DEF(garbage)
 	queue[++queue.len] = list(queue_time, D, D.gc_destroyed) // not += for byond reasons
 
 //this is mainly to separate things profile wise.
-/datum/controller/subsystem/garbage/proc/HardDelete(datum/D)
+/datum/controller/subsystem/garbage/proc/HardDelete(datum/D, non_datum = FALSE, override = FALSE)
+	if(!D)
+		return
+
+	if (!override && !enable_hard_deletes)
+		return
+
 	++delslasttick
 	++totaldels
-	var/type = D.type
+	var/type
+	if (!non_datum)
+		type = D.type
+	else if (islist(D))
+		type = "/list"
+	else if (istext(D))
+		type = "string"
+	else if (isnum(D))
+		type = "number"
+	else if (isfile(D))
+		type = "file"
+	else
+		type = "unknown"
+
 	var/refID = text_ref(D)
 
 	var/tick_usage = TICK_USAGE
@@ -274,28 +295,29 @@ SUBSYSTEM_DEF(garbage)
 	tick_usage = TICK_USAGE_TO_MS(tick_usage)
 
 	var/datum/qdel_item/I = items[type]
-	I.hard_deletes++
-	I.hard_delete_time += tick_usage
-	if (tick_usage > I.hard_delete_max)
-		I.hard_delete_max = tick_usage
-	if (tick_usage > highest_del_ms)
-		highest_del_ms = tick_usage
-		highest_del_type_string = "[type]"
+	if(I)
+		I.hard_deletes++
+		I.hard_delete_time += tick_usage
+		if (tick_usage > I.hard_delete_max)
+			I.hard_delete_max = tick_usage
+		if (tick_usage > highest_del_ms)
+			highest_del_ms = tick_usage
+			highest_del_type_string = "[type]"
 
-	var/time = MS2DS(tick_usage)
+		var/time = MS2DS(tick_usage)
 
-	if (time > 0.1 SECONDS)
-		postpone(time)
-	var/threshold = CONFIG_GET(number/hard_deletes_overrun_threshold)
-	if (threshold && (time > threshold SECONDS))
-		if (!(I.qdel_flags & QDEL_ITEM_ADMINS_WARNED))
-			log_game("Error: [type]([refID]) took longer than [threshold] seconds to delete (took [round(time/10, 0.1)] seconds to delete)")
-			message_admins("Error: [type]([refID]) took longer than [threshold] seconds to delete (took [round(time/10, 0.1)] seconds to delete).")
-			I.qdel_flags |= QDEL_ITEM_ADMINS_WARNED
-		I.hard_deletes_over_threshold++
-		var/overrun_limit = CONFIG_GET(number/hard_deletes_overrun_limit)
-		if (overrun_limit && I.hard_deletes_over_threshold >= overrun_limit)
-			I.qdel_flags |= QDEL_ITEM_SUSPENDED_FOR_LAG
+		if (time > 0.1 SECONDS)
+			postpone(time)
+		var/threshold = CONFIG_GET(number/hard_deletes_overrun_threshold)
+		if (threshold && (time > threshold SECONDS))
+			if (!(I.qdel_flags & QDEL_ITEM_ADMINS_WARNED))
+				log_game("Error: [type]([refID]) took longer than [threshold] seconds to delete (took [round(time/10, 0.1)] seconds to delete)")
+				message_admins("Error: [type]([refID]) took longer than [threshold] seconds to delete (took [round(time/10, 0.1)] seconds to delete).")
+				I.qdel_flags |= QDEL_ITEM_ADMINS_WARNED
+			I.hard_deletes_over_threshold++
+			var/overrun_limit = CONFIG_GET(number/hard_deletes_overrun_limit)
+			if (overrun_limit && I.hard_deletes_over_threshold >= overrun_limit)
+				I.qdel_flags |= QDEL_ITEM_SUSPENDED_FOR_LAG
 
 /datum/controller/subsystem/garbage/Recover()
 	InitQueues() //We first need to create the queues before recovering data
@@ -327,7 +349,7 @@ SUBSYSTEM_DEF(garbage)
 /// Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
 /proc/qdel(datum/D, force=FALSE, ...)
 	if(!istype(D))
-		del(D)
+		SSgarbage.HardDelete(D, TRUE, TRUE)
 		return
 
 	var/datum/qdel_item/I = SSgarbage.items[D.type]
@@ -378,10 +400,10 @@ SUBSYSTEM_DEF(garbage)
 				SSgarbage.Queue(D, GC_QUEUE_HARDDELETE)
 			if (QDEL_HINT_HARDDEL_NOW) //qdel should assume this object won't gc, and hard del it post haste.
 				SSdemo.mark_destroyed(D) //Monkestation Edit: REPLAYS
-				SSgarbage.HardDelete(D)
+				SSgarbage.HardDelete(D, override = TRUE)
 			#ifdef REFERENCE_TRACKING
 			if (QDEL_HINT_FINDREFERENCE) //qdel will, if REFERENCE_TRACKING is enabled, display all references to this object, then queue the object for deletion.
-				SSgarbage.Queue(D)
+				SSgarbage.HardDelete(D, override = TRUE) // Need to override enable_hard_deletes, stuff like /client uses this
 				D.find_references() //This breaks ci. Consider it insurance against somehow pring reftracking on accident
 			if (QDEL_HINT_IFFAIL_FINDREFERENCE) //qdel will, if REFERENCE_TRACKING is enabled and the object fails to collect, display all references to this object.
 				SSgarbage.Queue(D)

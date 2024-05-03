@@ -16,12 +16,11 @@
 	potency = 30
 
 /obj/item/seeds/seedling/harvest(mob/harvester)
-	var/obj/machinery/hydroponics/parent = loc
+	var/atom/movable/parent = loc
 	var/list/grow_locations = get_adjacent_open_turfs(parent)
 	var/turf/final_location = length(grow_locations) ? pick(grow_locations) : get_turf(parent)
 	var/mob/living/basic/seedling/seed_pet = new product(final_location)
 	seed_pet.befriend(harvester)
-	parent.update_tray(user = harvester, product_count = 1)
 
 /obj/item/seeds/seedling/evil
 	product = /mob/living/basic/seedling/meanie

@@ -63,7 +63,7 @@
 	},
 /area/ruin/space/has_grav/powered/clownplanet)
 "ao" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/item/seeds/banana,
 /turf/open/floor/grass{
 	color = "#1eff00"

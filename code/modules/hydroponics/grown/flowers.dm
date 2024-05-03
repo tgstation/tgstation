@@ -39,6 +39,11 @@
 	icon_state = "seed-lily"
 	species = "lily"
 	plantname = "Lily Plants"
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	icon_grow = "poppy-grow"
+	icon_dead = "poppy-dead"
+	icon_harvest = null
 	product = /obj/item/food/grown/poppy/lily
 	possible_mutations = list(/datum/hydroponics/plant_mutation/trumpet)
 

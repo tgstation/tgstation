@@ -97,7 +97,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return FALSE
 		if(QDELETED(loaded_item) || QDELETED(src))
 			return FALSE
-		SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[TN.id]", "[loaded_item.type]"))
+		SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[TN.id]", "[initial(loaded_item.name)]"))
 		if(destroy_item(loaded_item))
 			stored_research.boost_with_item(SSresearch.techweb_node_by_id(TN.id), dpath)
 

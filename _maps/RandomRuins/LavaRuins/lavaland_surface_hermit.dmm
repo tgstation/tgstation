@@ -56,11 +56,11 @@
 /obj/item/seeds/plump,
 /obj/item/seeds/plump,
 /obj/item/food/grown/mushroom/glowshroom,
-/obj/item/seeds/tower,
+/obj/item/seeds/tree,
 /turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
 "n" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/floor/plating,
 /area/ruin/powered)
 "o" = (
@@ -168,7 +168,7 @@
 	},
 /area/ruin/powered)
 "L" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/item/cultivator,
 /turf/open/floor/plating,
 /area/ruin/powered)

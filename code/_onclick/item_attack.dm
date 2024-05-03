@@ -309,7 +309,8 @@
 	if(item_flags & NOBLUDGEON)
 		return
 	user.changeNext_move(attack_speed)
-	user.do_attack_animation(attacked_atom)
+	if(!is_reagent_container(src) || force)
+		user.do_attack_animation(attacked_atom)
 	attacked_atom.attacked_by(src, user)
 
 /// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds

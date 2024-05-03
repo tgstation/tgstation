@@ -81,6 +81,6 @@
 	target_key = BB_TARGET_HYDRO
 	hunting_behavior = /datum/ai_behavior/hunt_target/pollinate
 	finding_behavior = /datum/ai_behavior/find_hunt_target/pollinate
-	hunt_targets = list(/obj/machinery/hydroponics)
+	hunt_targets = list(/obj/machinery/growing)
 	hunt_range = 10
 	hunt_chance = 85

@@ -209,7 +209,7 @@
 /area/ruin/space)
 "hK" = (
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "iU" = (

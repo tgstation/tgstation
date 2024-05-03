@@ -460,7 +460,7 @@
 		actual_trauma.on_gain()
 	if(resilience)
 		actual_trauma.resilience = resilience
-	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma.type)
+	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma)
 	return actual_trauma
 
 /// Adds the passed trauma instance to our list of traumas and links it to our brain.

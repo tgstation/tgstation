@@ -21,6 +21,9 @@
 			if(!istype(slime))
 				continue
 			managed_slimes |= slime
+			RegisterSignal(slime, COMSIG_ATOM_SUCKED, PROC_REF(remove_cause_sucked))
+			RegisterSignal(slime, COMSIG_LIVING_DEATH, PROC_REF(remove_cause_sucked))
+			RegisterSignals(slime, list(COMSIG_PREQDELETED, COMSIG_QDELETING), PROC_REF(try_remove))
 
 /datum/corral_data/Destroy(force, ...)
 	QDEL_LIST(corral_connectors)

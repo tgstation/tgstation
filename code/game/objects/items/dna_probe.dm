@@ -57,22 +57,24 @@
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 50)
 		balloon_alert(user, "need database!")
 		return
-	if((allowed_scans & DNA_PROBE_SCAN_PLANTS) && istype(target, /obj/machinery/hydroponics))
-		var/obj/machinery/hydroponics/hydro_tray = target
-		if(!hydro_tray.myseed)
+	if((allowed_scans & DNA_PROBE_SCAN_PLANTS) && target.GetComponent(/datum/component/plant_growing))
+		var/obj/item/seeds/seed = locate(/obj/item/seeds) in target.contents
+		if(seed)
 			return
-		if(our_vault.plant_dna[hydro_tray.myseed.type])
+		var/datum/component/growth_information/info = seed.GetComponent(/datum/component/growth_information)
+		if(our_vault.plant_dna[seed.type])
 			to_chat(user, span_notice("Plant data is already present in vault storage."))
 			return
-		if(stored_dna_plants[hydro_tray.myseed.type])
+		if(stored_dna_plants[seed.type])
 			to_chat(user, span_notice("Plant data already present in local storage."))
 			return
-		if(hydro_tray.plant_status != HYDROTRAY_PLANT_HARVESTABLE) // So it's bit harder.
+		if(info.plant_state != HYDROTRAY_PLANT_HARVESTABLE) // So it's bit harder.
 			to_chat(user, span_alert("Plant needs to be ready to harvest to perform full data scan.")) //Because space dna is actually magic
 			return .
-		stored_dna_plants[hydro_tray.myseed.type] = TRUE
+		stored_dna_plants[seed.type] = TRUE
 		playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
 		balloon_alert(user, "data added")
+
 	else if((allowed_scans & DNA_PROBE_SCAN_HUMANS) && ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		if(our_vault.human_dna[human_target.dna.unique_identity])

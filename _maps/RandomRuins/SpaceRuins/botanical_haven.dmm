@@ -17,11 +17,11 @@
 "f" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/machinery/light/warm/directional/east,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/misc/grass,
 /area/ruin/space/has_grav/powered/botanical_haven)
 "g" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/misc/grass,
 /area/ruin/space/has_grav/powered/botanical_haven)
 "h" = (

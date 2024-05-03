@@ -121,7 +121,7 @@
 		return null
 
 /obj/item/seeds/replicapod/harvest(mob/user) //now that one is fun -- Urist
-	var/obj/machinery/hydroponics/parent = loc
+	var/atom/movable/parent = loc
 	var/make_podman = FALSE
 	var/ckey_holder = null
 	var/list/result = list()
@@ -175,7 +175,6 @@
 			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
 			result.Add(harvestseeds)
 			harvestseeds.forceMove(output_loc)
-		parent.update_tray(user, seed_count)
 		return result
 
 	// Congratulations! %Do you want to build a pod man?%
@@ -211,5 +210,4 @@
 
 	podman.dna.species.exotic_blood = most_plentiful_reagent[1]
 	investigate_log("[key_name(mind)] cloned as a podman via [src] in [parent]", INVESTIGATE_BOTANY)
-	parent.update_tray(user, 1)
 	return result

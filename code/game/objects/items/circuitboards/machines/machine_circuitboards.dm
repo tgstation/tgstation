@@ -1185,7 +1185,7 @@
 /obj/item/circuitboard/machine/hydroponics
 	name = "Hydroponics Tray"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
-	build_path = /obj/machinery/hydroponics/constructable
+	build_path = /obj/machinery/growing/tray
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/manipulator = 1,

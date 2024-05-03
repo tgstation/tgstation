@@ -37,6 +37,10 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
+"ag" = (
+/obj/structure/hive_exit,
+/turf/closed/indestructible/hive,
+/area/station/hive/one)
 "ah" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 10
@@ -216,7 +220,7 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/supply)
 "aG" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/trimline/blue,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/botany)
@@ -772,12 +776,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/hydroponics/constructable{
-	self_growing = 1;
-	self_sustaining = 1;
-	sustaining_precent = 100;
-	multi = 15
-	},
+/obj/machinery/growing/tray,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/botany)
 "cd" = (
@@ -1574,7 +1573,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/hydroponics,
+/obj/machinery/growing,
 /obj/item/seeds/pumpkin,
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/admin)
@@ -1672,7 +1671,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "ex" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/mineral/titanium/tiled,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "ey" = (
@@ -2138,10 +2137,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/hall)
-"fZ" = (
-/obj/effect/landmark/ctf,
-/turf/open/space/basic,
-/area/space)
 "ga" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/closed/indestructible/syndicate,
@@ -2820,7 +2815,7 @@
 /area/centcom/central_command_areas/admin)
 "hS" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/mineral/titanium/tiled,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "hT" = (
@@ -3241,7 +3236,7 @@
 /area/centcom/syndicate_mothership/control)
 "jf" = (
 /obj/machinery/light/floor/has_bulb,
-/obj/machinery/hydroponics/constructable/helper,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 8
 	},
@@ -3599,7 +3594,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/botany)
 "kh" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 5
 	},
@@ -4236,6 +4231,9 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
+"lV" = (
+/turf/open/indestructible/hive,
+/area/station/hive/four)
 "lW" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/machinery/camera/autoname/directional/south{
@@ -5261,6 +5259,9 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
+"oR" = (
+/turf/closed/indestructible/hive,
+/area/station/hive/three)
 "oS" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/floor/mineral/plastitanium,
@@ -6279,6 +6280,9 @@
 /obj/effect/turf_decal/trimline/red,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
+"rD" = (
+/turf/closed/indestructible/hive,
+/area/station/hive/two)
 "rE" = (
 /obj/structure/table/reinforced,
 /obj/item/radio,
@@ -6482,7 +6486,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/centcom/central_command_areas/admin)
 "si" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/machinery/light/cold/directional/west,
 /obj/item/seeds/cannabis{
 	pixel_y = 8
@@ -8864,7 +8868,7 @@
 /turf/open/floor/wood,
 /area/centcom/wizard_station)
 "yG" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 10
 	},
@@ -9964,6 +9968,10 @@
 /obj/structure/fake_stairs/wood/directional/south,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
+"BF" = (
+/obj/structure/hive_exit,
+/turf/closed/indestructible/hive,
+/area/station/hive/two)
 "BG" = (
 /obj/structure/fence{
 	dir = 4
@@ -10110,6 +10118,9 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/borbop)
+"BZ" = (
+/turf/open/indestructible/hive,
+/area/station/hive/one)
 "Cb" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/sign{
@@ -10749,6 +10760,9 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/borbop)
+"DW" = (
+/turf/open/indestructible/hive,
+/area/station/hive/three)
 "DX" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/siding/dark{
@@ -10889,6 +10903,10 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/control)
+"Et" = (
+/obj/structure/hive_exit,
+/turf/closed/indestructible/hive,
+/area/station/hive/three)
 "Eu" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/blood/gibs/body,
@@ -11164,7 +11182,7 @@
 /area/centcom/central_command_areas/evacuation/ship)
 "Fg" = (
 /obj/machinery/light/floor/has_bulb,
-/obj/machinery/hydroponics/constructable/helper,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 4
 	},
@@ -11777,12 +11795,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/obj/machinery/hydroponics/constructable{
-	self_growing = 1;
-	self_sustaining = 1;
-	sustaining_precent = 100;
-	multi = 15
-	},
+/obj/machinery/growing/tray,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/botany)
 "GS" = (
@@ -12043,6 +12056,9 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/borbop)
+"HE" = (
+/turf/open/indestructible/hive,
+/area/station/hive/two)
 "HF" = (
 /obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/airless,
@@ -12722,7 +12738,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "JF" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/botany)
 "JG" = (
@@ -14263,7 +14279,7 @@
 /turf/open/floor/stone,
 /area/centcom/central_command_areas/evacuation/ship)
 "NJ" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 6
 	},
@@ -14302,6 +14318,9 @@
 /obj/machinery/door/airlock/centcom,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/evacuation)
+"NP" = (
+/turf/closed/indestructible/hive,
+/area/station/hive/one)
 "NQ" = (
 /obj/structure/bookcase/random,
 /obj/machinery/light/directional/north,
@@ -14343,6 +14362,10 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/hall)
+"NX" = (
+/obj/structure/hive_exit,
+/turf/closed/indestructible/hive,
+/area/station/hive/four)
 "NY" = (
 /obj/effect/turf_decal/siding/wideplating/dark,
 /obj/effect/turf_decal/siding/wideplating/dark{
@@ -16387,7 +16410,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "TL" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/misc/snow/actually_safe,
 /area/centcom/central_command_areas/admin)
 "TM" = (
@@ -16684,7 +16707,7 @@
 /turf/closed/indestructible/syndicate,
 /area/centcom/syndicate_mothership/control)
 "UF" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 9
 	},
@@ -17063,6 +17086,9 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/borbop)
+"VG" = (
+/turf/closed/indestructible/hive,
+/area/station/hive/four)
 "VH" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -17410,12 +17436,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/machinery/hydroponics/constructable{
-	self_growing = 1;
-	self_sustaining = 1;
-	sustaining_precent = 100;
-	multi = 15
-	},
+/obj/machinery/growing/tray,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/botany)
 "WK" = (
@@ -66727,7 +66748,7 @@ aa
 aa
 aa
 aa
-fZ
+aa
 aa
 aa
 aa
@@ -80278,21 +80299,21 @@ aa
 aa
 "}
 (241,1,1) = {"
+NP
+NP
+NP
+ag
+NP
+NP
+NP
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+rD
+rD
+rD
+BF
+rD
+rD
+rD
 aa
 aa
 aa
@@ -80535,21 +80556,21 @@ aa
 aa
 "}
 (242,1,1) = {"
+NP
+BZ
+BZ
+BZ
+BZ
+BZ
+NP
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+rD
+HE
+HE
+HE
+HE
+HE
+rD
 aa
 aa
 aa
@@ -80792,21 +80813,21 @@ aa
 aa
 "}
 (243,1,1) = {"
+NP
+BZ
+BZ
+BZ
+BZ
+BZ
+NP
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+rD
+HE
+HE
+HE
+HE
+HE
+rD
 aa
 aa
 aa
@@ -81049,21 +81070,21 @@ aa
 aa
 "}
 (244,1,1) = {"
+NP
+BZ
+BZ
+BZ
+BZ
+BZ
+NP
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+rD
+HE
+HE
+HE
+HE
+HE
+rD
 aa
 aa
 aa
@@ -81306,21 +81327,21 @@ aa
 aa
 "}
 (245,1,1) = {"
+NP
+BZ
+BZ
+BZ
+BZ
+BZ
+NP
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+rD
+HE
+HE
+HE
+HE
+HE
+rD
 aa
 aa
 aa
@@ -81563,21 +81584,21 @@ aa
 aa
 "}
 (246,1,1) = {"
+NP
+BZ
+BZ
+BZ
+BZ
+BZ
+NP
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+rD
+HE
+HE
+HE
+HE
+HE
+rD
 aa
 aa
 aa
@@ -81820,21 +81841,21 @@ aa
 aa
 "}
 (247,1,1) = {"
+NP
+NP
+NP
+NP
+NP
+NP
+NP
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+rD
+rD
+rD
+rD
+rD
+rD
+rD
 aa
 aa
 aa
@@ -82334,21 +82355,21 @@ aa
 aa
 "}
 (249,1,1) = {"
+oR
+oR
+oR
+Et
+oR
+oR
+oR
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+VG
+VG
+VG
+NX
+VG
+VG
+VG
 aa
 aa
 aa
@@ -82591,21 +82612,21 @@ aa
 aa
 "}
 (250,1,1) = {"
+oR
+DW
+DW
+DW
+DW
+DW
+oR
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+VG
+lV
+lV
+lV
+lV
+lV
+VG
 aa
 aa
 aa
@@ -82848,21 +82869,21 @@ aa
 aa
 "}
 (251,1,1) = {"
+oR
+DW
+DW
+DW
+DW
+DW
+oR
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+VG
+lV
+lV
+lV
+lV
+lV
+VG
 aa
 aa
 aa
@@ -83105,21 +83126,21 @@ aa
 aa
 "}
 (252,1,1) = {"
+oR
+DW
+DW
+DW
+DW
+DW
+oR
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+VG
+lV
+lV
+lV
+lV
+lV
+VG
 aa
 aa
 aa
@@ -83362,21 +83383,21 @@ aa
 aa
 "}
 (253,1,1) = {"
+oR
+DW
+DW
+DW
+DW
+DW
+oR
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+VG
+lV
+lV
+lV
+lV
+lV
+VG
 aa
 aa
 aa
@@ -83619,21 +83640,21 @@ aa
 aa
 "}
 (254,1,1) = {"
+oR
+DW
+DW
+DW
+DW
+DW
+oR
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+VG
+lV
+lV
+lV
+lV
+lV
+VG
 aa
 aa
 aa
@@ -83876,21 +83897,21 @@ aa
 aa
 "}
 (255,1,1) = {"
+oR
+oR
+oR
+oR
+oR
+oR
+oR
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+VG
+VG
+VG
+VG
+VG
+VG
+VG
 aa
 aa
 aa

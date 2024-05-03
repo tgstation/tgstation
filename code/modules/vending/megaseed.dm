@@ -79,7 +79,7 @@
 				/obj/item/seeds/wheat/rice = 3,
 				/obj/item/seeds/tea = 3,
 				/obj/item/seeds/tobacco = 3,
-				/obj/item/seeds/tower = 3,
+				/obj/item/seeds/tree = 3,
 				/obj/item/seeds/wheat = 3,
 			),
 		),

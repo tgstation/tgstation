@@ -121,7 +121,7 @@
 	name = "steel-cap log"
 	desc = "It's made of metal."
 	icon_state = "steellogs"
-	plank_type = /obj/item/stack/rods
+	plank_type = /obj/item/stack/sheet/iron
 	plank_name = "rods"
 
 /obj/item/grown/log/steel/CheckAccepted(obj/item/I)

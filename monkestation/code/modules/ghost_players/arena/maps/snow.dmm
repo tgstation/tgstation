@@ -19,7 +19,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow/corner,
-/obj/machinery/hydroponics/soil{
+/obj/machinery/growing/soil{
 	pixel_y = 7;
 	color = " #DCDCDC"
 	},
@@ -147,7 +147,7 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/weather/snow/corner,
-/obj/machinery/hydroponics/soil{
+/obj/machinery/growing/soil{
 	pixel_y = 7;
 	color = " #DCDCDC"
 	},
@@ -258,7 +258,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow/corner,
-/obj/machinery/hydroponics/soil{
+/obj/machinery/growing/soil{
 	pixel_y = 7;
 	color = " #DCDCDC"
 	},

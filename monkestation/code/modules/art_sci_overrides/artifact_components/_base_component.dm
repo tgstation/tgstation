@@ -213,6 +213,7 @@
 				continue
 			checked_fault = TRUE
 			if(prob(chosen_fault.trigger_chance))
+				logger.Log(LOG_CATEGORY_ARTIFACT, "[parent]'s fault has been triggered, trigger type [chosen_fault].")
 				chosen_fault.on_trigger(src)
 				if(chosen_fault.visible_message)
 					holder.visible_message("[holder] [chosen_fault.visible_message]")
