@@ -1,5 +1,5 @@
 ///how much charge are we giving off to an APC?
-#define CHARGE_AMOUNT (80 KILO JOULES)
+#define CHARGE_AMOUNT (0.08 * STANDARD_CELL_CHARGE)
 
 /datum/action/cooldown/mob_cooldown/charge_apc
 	name = "Charge APCs"

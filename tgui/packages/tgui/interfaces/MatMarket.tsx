@@ -118,7 +118,7 @@ export const MatMarket = (props) => {
             </Stack>
           </Section>
         </Section>
-        {sortBy((tempmat: Material) => tempmat.rarity)(materials).map(
+        {sortBy(materials, (tempmat: Material) => tempmat.rarity).map(
           (material, i) => (
             <Section key={i}>
               <Stack fill>

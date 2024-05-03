@@ -81,6 +81,10 @@ function SS13.register_signal(datum, signal, func)
 	if not SS13.istype(datum, "/datum") then
 		return
 	end
+	if not SS13.is_valid(datum) then
+		error("Tried to register a signal on a deleted datum!", 2)
+		return
+	end
 	local datumWeakRef = dm.global_proc("WEAKREF", datum)
 	if not __SS13_signal_handlers[datumWeakRef] then
 		__SS13_signal_handlers[datumWeakRef] = {}
@@ -96,7 +100,8 @@ function SS13.register_signal(datum, signal, func)
 	callback:call_proc("RegisterSignal", datum, signal, "Invoke")
 	local path = { "__SS13_signal_handlers", datumWeakRef, signal, callbackWeakRef, "func" }
 	callback.vars.arguments = { path }
-	if not __SS13_signal_handlers[datumWeakRef]._cleanup then
+	-- Turfs don't remove their signals on deletion.
+	if not __SS13_signal_handlers[datumWeakRef]._cleanup and not SS13.istype(datum, "/turf") then
 		local cleanupCallback = SS13.new("/datum/callback", SS13.state, "call_function_return_first")
 		local cleanupPath = { "__SS13_signal_handlers", datumWeakRef, "_cleanup"}
 		cleanupCallback.vars.arguments = { cleanupPath }
@@ -130,6 +135,11 @@ function SS13.unregister_signal(datum, signal, callback)
 		local callbackWeakRef = dm.global_proc("WEAKREF", handler_callback)
 		if not SS13.istype(datum, "/datum/weakref") then
 			handler_callback:call_proc("UnregisterSignal", datum, signal)
+		else
+			local actualDatum = datum:call_proc("hard_resolve")
+			if SS13.is_valid(actualDatum) then
+				handler_callback:call_proc("UnregisterSignal", actualDatum, signal)
+			end
 		end
 		SS13.stop_tracking(handler_callback)
 	end

@@ -129,7 +129,7 @@ Nothing else in the console has ID requirements.
 						logname = "[ID.registered_name]"
 			stored_research.research_logs += list(list(
 				"node_name" = TN.display_name,
-				"node_cost" = price["General Research"],
+				"node_cost" = price[TECHWEB_POINT_TYPE_GENERIC],
 				"node_researcher" = logname,
 				"node_research_location" = "[get_area(src)] ([src.x],[src.y],[src.z])",
 			))

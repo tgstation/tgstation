@@ -32,10 +32,8 @@ GLOBAL_REAL(logger, /datum/log_holder)
 
 GENERAL_PROTECT_DATUM(/datum/log_holder)
 
-/client/proc/log_viewer_new()
-	set name = "View Round Logs"
-	set category = "Admin"
-	logger.ui_interact(mob)
+ADMIN_VERB(log_viewer_new, R_ADMIN|R_DEBUG, "View Round Logs", "View the rounds logs.", ADMIN_CATEGORY_MAIN)
+	logger.ui_interact(user.mob)
 
 /datum/log_holder/ui_interact(mob/user, datum/tgui/ui)
 	if(!check_rights_for(user.client, R_ADMIN))

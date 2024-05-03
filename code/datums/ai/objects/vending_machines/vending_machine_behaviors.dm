@@ -10,15 +10,15 @@
 	set_movement_target(controller, controller.blackboard[target_key])
 
 /datum/ai_behavior/vendor_crush/perform(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
 	if(controller.blackboard[BB_VENDING_BUSY_TILTING])
-		return
+		return AI_BEHAVIOR_DELAY
 
 	controller.ai_movement.stop_moving_towards(controller)
 	controller.set_blackboard_key(BB_VENDING_BUSY_TILTING, TRUE)
 	var/turf/target_turf = get_turf(controller.blackboard[BB_VENDING_CURRENT_TARGET])
 	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(target_turf)
 	addtimer(CALLBACK(src, PROC_REF(tiltonmob), controller, target_turf), time_to_tilt)
+	return AI_BEHAVIOR_DELAY
 
 /datum/ai_behavior/vendor_crush/proc/tiltonmob(datum/ai_controller/controller, turf/target_turf)
 	var/obj/machinery/vending/vendor_pawn = controller.pawn
@@ -40,10 +40,9 @@
 	var/succes_tilt_cooldown = 5 SECONDS
 
 /datum/ai_behavior/vendor_rise_up/perform(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
 	var/obj/machinery/vending/vendor_pawn = controller.pawn
 	vendor_pawn.visible_message(span_warning("[vendor_pawn] untilts itself!"))
 	if(controller.blackboard[BB_VENDING_LAST_HIT_SUCCESFUL])
 		controller.set_blackboard_key(BB_VENDING_TILT_COOLDOWN, world.time + succes_tilt_cooldown)
 	vendor_pawn.untilt()
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

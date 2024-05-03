@@ -45,7 +45,7 @@
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
 	add_fingerprint(user)
 
-/obj/item/card/emagfake/interact_with_atom(atom/interacting_with, mob/living/user)
+/obj/item/card/emagfake/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 	return ITEM_INTERACT_SKIP_TO_ATTACK // So it does the attack animation.
 
@@ -53,7 +53,7 @@
 	. = ..()
 	type_blacklist = list(typesof(/obj/machinery/door/airlock) + typesof(/obj/machinery/door/window/) +  typesof(/obj/machinery/door/firedoor) - typesof(/obj/machinery/door/airlock/tram)) //list of all typepaths that require a specialized emag to hack.
 
-/obj/item/card/emag/interact_with_atom(atom/interacting_with, mob/living/user)
+/obj/item/card/emag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!can_emag(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING
 	log_combat(user, interacting_with, "attempted to emag")

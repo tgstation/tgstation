@@ -312,6 +312,40 @@
 	acid = 50
 	wound = 10
 
+/obj/item/clothing/suit/armor/balloon_vest
+	name = "balloon vest"
+	desc = "A vest made entirely from balloons, resistant to any evil forces a mime could throw at you, including electricity and fire. Just a strike with something sharp, though..."
+	icon_state = "balloon-vest"
+	inhand_icon_state = "balloon_armor"
+	blood_overlay_type = "armor"
+	armor_type = /datum/armor/balloon_vest
+	siemens_coefficient = 0
+	strip_delay = 70
+	equip_delay_other = 50
+
+/datum/armor/balloon_vest
+	melee = 10
+	laser = 10
+	energy = 10
+	fire = 60
+	acid = 50
+
+/obj/item/clothing/suit/armor/balloon_vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(isitem(hitby))
+		var/obj/item/item_hit = hitby
+		if(item_hit.sharpness)
+			pop()
+
+	if(istype(hitby, /obj/projectile/bullet))
+		pop()
+
+	return ..()
+
+/obj/item/clothing/suit/armor/balloon_vest/proc/pop()
+	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
+	qdel(src)
+
+
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof armor"
 	desc = "A Type III heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
@@ -652,5 +686,50 @@
 	energy = 25
 	bomb = 50
 	fire = 40
+	acid = 50
+	wound = 30
+
+/obj/item/clothing/suit/armor/vest/military
+	name = "Crude chestplate"
+	desc = "It may look rough, rusty and battered, but it's also made out of junk and uncomfortable to wear."
+	icon_state = "military"
+	inhand_icon_state = "armor"
+	dog_fashion = null
+	armor_type = /datum/armor/military
+	allowed = list(
+		/obj/item/banner,
+		/obj/item/claymore/shortsword,
+		/obj/item/nullrod,
+		/obj/item/spear,
+		/obj/item/gun/ballistic/bow
+	)
+
+/datum/armor/military
+	melee = 45
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 25
+	fire = 10
+	acid = 50
+	wound = 20
+
+/obj/item/clothing/suit/armor/riot/knight/warlord
+	name = "golden plate armor"
+	desc = "This bulky set of armor is coated with a shiny layer of gold. It seems to almost reflect all light sources."
+	icon_state = "warlord"
+	inhand_icon_state = null
+	armor_type = /datum/armor/armor_warlord
+	w_class = WEIGHT_CLASS_BULKY
+	clothing_flags = THICKMATERIAL
+	slowdown = 0.8
+
+/datum/armor/armor_warlord
+	melee = 70
+	bullet = 60
+	laser = 70
+	energy = 70
+	bomb = 40
+	fire = 50
 	acid = 50
 	wound = 30

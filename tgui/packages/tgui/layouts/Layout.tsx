@@ -5,6 +5,7 @@
  */
 
 import { classes } from 'common/react';
+import { useEffect, useRef } from 'react';
 
 import {
   BoxProps,
@@ -40,6 +41,20 @@ type ContentProps = Partial<{
 
 function LayoutContent(props: ContentProps) {
   const { className, scrollable, children, ...rest } = props;
+  const node = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const self = node.current;
+
+    if (self && scrollable) {
+      addScrollableNode(self);
+    }
+    return () => {
+      if (self && scrollable) {
+        removeScrollableNode(self);
+      }
+    };
+  }, []);
 
   return (
     <div
@@ -49,16 +64,12 @@ function LayoutContent(props: ContentProps) {
         className,
         computeBoxClassName(rest),
       ])}
+      ref={node}
       {...computeBoxProps(rest)}
     >
       {children}
     </div>
   );
 }
-
-LayoutContent.defaultHooks = {
-  onComponentDidMount: (node) => addScrollableNode(node),
-  onComponentWillUnmount: (node) => removeScrollableNode(node),
-};
 
 Layout.Content = LayoutContent;

@@ -12,9 +12,6 @@
 	if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 		view_core()
 
-	if(machine)
-		machine.check_eye(src)
-
 	// Handle power damage (oxy)
 	if(aiRestorePowerRoutine)
 		// Lost power

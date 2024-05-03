@@ -64,6 +64,8 @@ type CellProps = Partial<{
   colSpan: number;
   /** Whether this is a header cell. */
   header: boolean;
+  /** Rows for this cell to expand, assuming there is room. */
+  rowSpan: number;
 }> &
   BoxProps;
 

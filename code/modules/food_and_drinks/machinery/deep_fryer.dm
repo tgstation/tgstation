@@ -12,6 +12,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	/obj/item/reagent_containers/condiment,
 	/obj/item/reagent_containers/cup,
 	/obj/item/reagent_containers/syringe,
+	/obj/item/reagent_containers/hypospray/medipen, //letting medipens become edible opens them to being injected/drained with IV drip & saltshakers
 )))
 
 /obj/machinery/deepfryer

@@ -314,6 +314,12 @@
 	list_reagents = list(/datum/reagent/gravitum = 5)
 	rename_with_volume = TRUE
 
+/obj/item/reagent_containers/pill/ondansetron
+	name = "ondansetron pill"
+	desc = "Alleviates nausea. May cause drowsiness."
+	icon_state = "pill11"
+	list_reagents = list(/datum/reagent/medicine/ondansetron = 10)
+
 // Pill styles for chem master
 
 /obj/item/reagent_containers/pill/style

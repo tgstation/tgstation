@@ -96,6 +96,9 @@
 	light_color = COLOR_SOFT_RED
 	possible_destinations = "pirate_away;pirate_home;pirate_custom"
 
+/obj/machinery/computer/shuttle/pirate/drop_pod
+	possible_destinations = "null"
+
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate
 	name = "pirate shuttle navigation computer"
 	desc = "Used to designate a precise transit location for the pirate shuttle."

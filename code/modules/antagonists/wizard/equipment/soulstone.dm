@@ -394,6 +394,7 @@
 		soulstone_spirit.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
 		if(IS_CULTIST(user))
 			soulstone_spirit.mind.add_antag_datum(/datum/antagonist/cult)
+			SSblackbox.record_feedback("tally", "cult_shade_created", 1)
 
 	soulstone_spirit.cancel_camera()
 	update_appearance()
@@ -454,6 +455,7 @@
 		if(CONSTRUCT_JUGGERNAUT)
 			if(IS_CULTIST(creator))
 				make_new_construct(/mob/living/basic/construct/juggernaut, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the make_new_construct proc
+				SSblackbox.record_feedback("tally", "cult_shade_to_jugger", 1)
 				return
 			switch(theme)
 				if(THEME_WIZARD)
@@ -465,6 +467,7 @@
 		if(CONSTRUCT_WRAITH)
 			if(IS_CULTIST(creator))
 				make_new_construct(/mob/living/basic/construct/wraith, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the make_new_construct proc
+				SSblackbox.record_feedback("tally", "cult_shade_to_wraith", 1)
 				return
 			switch(theme)
 				if(THEME_WIZARD)
@@ -476,6 +479,7 @@
 		if(CONSTRUCT_ARTIFICER)
 			if(IS_CULTIST(creator))
 				make_new_construct(/mob/living/basic/construct/artificer, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the make_new_construct proc
+				SSblackbox.record_feedback("tally", "cult_shade_to_arti", 1)
 				return
 			switch(theme)
 				if(THEME_WIZARD)

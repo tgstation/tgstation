@@ -100,7 +100,7 @@
 	name = "crude plank barricade"
 	desc = "This space is blocked off by a crude assortment of planks."
 	icon = 'icons/obj/structures.dmi'
-	icon_state = "woodenbarricade-old"
+	icon_state = "plankbarricade"
 	drop_amount = 1
 	max_integrity = 50
 	proj_pass_rate = 65
@@ -109,7 +109,7 @@
 /obj/structure/barricade/wooden/crude/snow
 	desc = "This space is blocked off by a crude assortment of planks. It seems to be covered in a layer of snow."
 	icon = 'icons/obj/structures.dmi'
-	icon_state = "woodenbarricade-snow-old"
+	icon_state = "plankbarricade_snow"
 	max_integrity = 75
 
 /obj/structure/barricade/wooden/make_debris()
@@ -182,10 +182,9 @@
 	. = ..()
 	. += span_notice("Alt-click to toggle modes.")
 
-/obj/item/grenade/barrier/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/item/grenade/barrier/click_alt(mob/living/carbon/user)
 	toggle_mode(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/grenade/barrier/proc/toggle_mode(mob/user)
 	switch(mode)

@@ -230,15 +230,6 @@
 		/datum/computer_file/program/radar/lifeline,
 	)
 
-/obj/item/modular_computer/pda/viro
-	name = "virology PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_double
-	greyscale_colors = "#FAFAFA#355FAC#57C451"
-	starting_programs = list(
-		/datum/computer_file/program/records/medical,
-		/datum/computer_file/program/robocontrol,
-	)
-
 /obj/item/modular_computer/pda/chemist
 	name = "chemist PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick

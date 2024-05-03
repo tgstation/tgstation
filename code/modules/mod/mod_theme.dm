@@ -891,6 +891,7 @@
 		/obj/item/grown/bananapeel,
 		/obj/item/reagent_containers/spray/waterflower,
 		/obj/item/instrument,
+		/obj/item/toy/balloon_animal,
 	)
 	skins = list(
 		"cosmohonk" = list(
