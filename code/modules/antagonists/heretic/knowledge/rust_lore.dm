@@ -209,7 +209,7 @@
 	our_heretic.increase_rust_strength()
 
 /datum/heretic_knowledge/blade_upgrade/rust/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	target.adjust_disgust(25)
+	target.adjust_disgust(50)
 
 /datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()

@@ -6,7 +6,7 @@
 
 /datum/status_effect/rust_corruption/tick(seconds_between_ticks)
 	if(issilicon(owner))
-		owner.adjustBruteLoss(5 * seconds_between_ticks)
+		owner.adjustBruteLoss(10 * seconds_between_ticks)
 		return
 	owner.adjust_disgust(10)
 	for(var/datum/reagent/R in owner.reagents.reagent_list)
