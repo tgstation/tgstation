@@ -98,7 +98,7 @@
 	if (tamer)
 		ai_controller?.become_friendly(tamer)
 	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5)
+		AddComponent(/datum/component/tameable, food_types = desired_food, tame_chance = 10, bonus_tame_chance = 5)
 
 	teleport = new(src)
 	teleport.Grant(src)
@@ -109,8 +109,6 @@
 /mob/living/basic/carp/proc/setup_eating()
 	AddElement(/datum/element/basic_eating, food_types = desired_food)
 	AddElement(/datum/element/basic_eating, heal_amt = 0, damage_amount = 10, damage_type = BRUTE, food_types = desired_trash) // We are killing our planet
-	var/list/foods_list = desired_food + desired_trash
-	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(foods_list))
 
 /// Set a random colour on the carp, override to do something else
 /mob/living/basic/carp/proc/apply_colour()
@@ -119,14 +117,14 @@
 	set_greyscale(colors = list(pick_weight(GLOB.carp_colors)))
 
 /// Called when another mob has forged a bond of friendship with this one, passed the taming mob as 'tamer'
-/mob/living/basic/carp/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+/mob/living/basic/carp/proc/on_ai_controller_gained_friend(datum/ai_controller/controller, mob/living/new_friend, is_first_friend)
 	SIGNAL_HANDLER
 	if(is_first_friend)
 		buckle_lying = 0
 		AddElement(/datum/element/ridable, ridable_data)
 		AddComponent(/datum/component/obeys_commands, tamed_commands)
 	spin(spintime = 10, speed = 1)
-	visible_message("[src] spins in a circle as it seems to bond with [tamer].")
+	visible_message("[src] spins in a circle as it seems to bond with [new_friend].")
 
 /// Teleport when you right click away from you
 /mob/living/basic/carp/ranged_secondary_attack(atom/atom_target, modifiers)

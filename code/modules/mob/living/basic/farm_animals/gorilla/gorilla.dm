@@ -66,7 +66,6 @@
 	)
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/basic_inhands, y_offset = -1)
-	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, typecacheof(gorilla_food))
 
 /mob/living/basic/gorilla/update_overlays()
 	. = ..()

@@ -500,7 +500,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		human_who_gained_species.add_traits(inherent_traits, SPECIES_TRAIT)
 
 	if(inherent_factions)
-		human_who_gained_species |= inherent_factions
+		human_who_gained_species.faction |= inherent_factions
 
 	// All languages associated with this language holder are added with source [LANGUAGE_SPECIES]
 	// rather than source [LANGUAGE_ATOM], so we can track what to remove if our species changes again

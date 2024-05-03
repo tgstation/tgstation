@@ -440,7 +440,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	return returnable_list
 
-/mob/living/basic/parrot/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+/mob/living/basic/parrot/proc/on_ai_controller_gained_friend(datum/ai_controller/controller, mob/living/new_friend, is_first_friend)
 	SIGNAL_HANDLER
 	new /obj/effect/temp_visual/heart(drop_location())
 

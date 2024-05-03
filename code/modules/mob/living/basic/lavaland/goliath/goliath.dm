@@ -81,7 +81,6 @@
 
 	tentacles_ready()
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
-	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(goliath_foods))
 	ai_controller.set_blackboard_key(BB_GOLIATH_TENTACLES, tentacles)
 	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
 

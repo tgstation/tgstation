@@ -403,7 +403,12 @@
 	GRANT_ACTION(/datum/action/cooldown/regurgitate)
 
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0)
+	var/static/list/food_types = list(
+		/obj/item/food/cheesiehonkers,
+		/obj/item/food/cornchips,
+	)
+	AddElement(/datum/element/basic_eating, food_types = food_types)
+	AddComponent(/datum/component/tameable, tame_chance = 30, bonus_tame_chance = 0)
 	AddElement(/datum/element/damage_threshold, 10) //lots of fat to cushion blows.
 
 	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
@@ -463,7 +468,7 @@
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	flick("glutton_mouth", src)
 
-/mob/living/basic/clown/mutant/glutton/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+/mob/living/basic/clown/mutant/glutton/proc/on_ai_controller_gained_friend(datum/ai_controller/controller, mob/living/new_friend, is_first_friend)
 	SIGNAL_HANDLER
 	if(is_first_friend)
 		buckle_lying = 0

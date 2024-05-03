@@ -58,15 +58,16 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/ai_flee_while_injured)
 	AddElement(/datum/element/ai_retaliate)
-	AddComponent(/datum/component/basic_mob_ability_telegraph)
-	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.6 SECONDS)
-
+	var/static/list/food_types = list(/obj/item/food/meat/slab)
+	AddElement(/datum/element/basic_eating, food_types = food_types)
 	if(can_tame)
 		make_tameable()
+	AddComponent(/datum/component/basic_mob_ability_telegraph)
+	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.6 SECONDS)
 	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
 
 /mob/living/basic/mining/wolf/proc/make_tameable()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat/slab), tame_chance = 15, bonus_tame_chance = 5)
+	AddComponent(/datum/component/tameable, tame_chance = 15, bonus_tame_chance = 5)
 
 /mob/living/basic/mining/wolf/proc/on_ai_controller_gained_friend(mob/living/new_friend, is_first_friend)
 	SIGNAL_HANDLER

@@ -56,6 +56,8 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	var/static/list/food_types = list(/obj/item/food/cheese)
+	AddElement(/datum/element/basic_eating, food_types = food_types)
 	make_tameable()
 	AddComponent(/datum/component/swarming, 16, 16) //max_x, max_y
 	RegisterSignal(src, COMSIG_MOB_ATE, PROC_REF(on_mob_ate))
@@ -64,7 +66,7 @@
 	if (tame)
 		faction |= FACTION_NEUTRAL
 	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100)
+		AddComponent(/datum/component/tameable, tame_chance = 100)
 
 /mob/living/basic/mouse/Destroy()
 	SSmobs.cheeserats -= src

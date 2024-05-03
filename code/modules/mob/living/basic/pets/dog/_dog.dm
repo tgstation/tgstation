@@ -44,15 +44,23 @@
 		/datum/pet_command/point_targeting/fetch,
 		/datum/pet_command/play_dead,
 	)
+	/// food that dogs like
+	var/static/list/food_types = list(
+		/obj/item/food/meat/slab/human/mutant/skeleton,
+		/obj/item/stack/sheet/bone
+	)
 
 /mob/living/basic/pet/dog/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "woofs happily!")
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
-	AddElement(/datum/element/unfriend_attacker, untamed_reaction = "%SOURCE% fixes %TARGET% with a look of betrayal.")
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat/slab/human/mutant/skeleton, /obj/item/stack/sheet/bone), tame_chance = 30, bonus_tame_chance = 15, unique = FALSE)
+	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/basic_eating, food_types = food_types)
+	AddComponent(/datum/component/tameable, tame_chance = 30, bonus_tame_chance = 15, unique = FALSE)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
+	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_LOST_FRIEND, PROC_REF(on_ai_controller_lost_friend))
+
 	var/dog_area = get_area(src)
 	for(var/obj/structure/bed/dogbed/dog_bed in dog_area)
 		if(dog_bed.update_owner(src)) //No muscling in on my turf you fucking parrot
@@ -64,10 +72,15 @@
 	speech.emote_hear = string_list(list("barks!", "woofs!", "yaps.","pants."))
 	speech.emote_see = string_list(list("shakes [p_their()] head.", "chases [p_their()] tail.","shivers."))
 
-///Proc to run on a successful taming attempt
-/mob/living/basic/pet/dog/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+///signal when a dog is befriended
+/mob/living/basic/pet/dog/proc/on_ai_controller_gained_friend(datum/ai_controller/controller, mob/living/new_friend, is_first_friend)
 	SIGNAL_HANDLER
-	visible_message(span_notice("[src] licks at [tamer] in a friendly manner!"))
+	visible_message(span_notice("[src] licks at [new_friend] in a friendly manner!"))
+
+///signal when a befriended dog was BETRAYED...
+/mob/living/basic/pet/dog/proc/on_ai_controller_lost_friend(datum/ai_controller/controller, mob/living/old_friend, has_remaining_friends)
+	SIGNAL_HANDLER
+	visible_message(span_notice("[src] fixes [old_friend] with a look of betrayal."))
 
 /// A dog bone fully heals a dog, and befriends it if it's not your friend.
 /obj/item/dog_bone

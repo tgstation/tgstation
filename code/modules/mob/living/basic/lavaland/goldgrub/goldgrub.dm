@@ -60,6 +60,8 @@
 		overlay_icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi',\
 		overlay_state = "goldgrub_alert",\
 	)
+	var/static/list/food_types = list(/obj/item/stack/ore)
+	AddElement(/datum/element/basic_eating, food_types = food_types)
 	if(can_tame)
 		make_tameable()
 	if(can_lay_eggs)
@@ -106,9 +108,9 @@
 	return ..()
 
 /mob/living/basic/mining/goldgrub/proc/make_tameable()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/stack/ore), tame_chance = 25, bonus_tame_chance = 5)
+	AddComponent(/datum/component/tameable, tame_chance = 25, bonus_tame_chance = 5)
 
-/mob/living/basic/mining/goldgrub/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+/mob/living/basic/mining/goldgrub/proc/on_ai_controller_gained_friend(datum/ai_controller/controller, mob/living/new_friend, is_first_friend)
 	SIGNAL_HANDLER
 	if(is_first_friend)
 		AddElement(/datum/element/ridable, /datum/component/riding/creature/goldgrub)

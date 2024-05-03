@@ -51,8 +51,6 @@
 	AddElement(/datum/element/basic_eating, heal_amt = 50, drinking = TRUE, food_types = good_drinks)
 	AddElement(/datum/element/basic_eating, heal_amt = 0, damage_amount = 25, damage_type = BURN, drinking = TRUE, food_types = bad_drinks)
 	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
-	var/list/foods_list = good_drinks + bad_drinks
-	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, typecacheof(foods_list))
 
 /mob/living/basic/skeleton/settler
 	name = "undead settler"

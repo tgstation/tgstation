@@ -8,14 +8,13 @@
 	var/bonus_tame_chance
 	///Current chance to tame on interaction
 	var/current_tame_chance
-	///What the mob eats, typically used for taming or animal husbandry.
-	/// if nothing is given, falls back to the BB_BASIC_FOODS blackboard key... as long as the mob handles AI!
+	///What the mob eats that will tame this mob, keep in mind this must be a food in basic_eating.
+	/// For example, you can make a mob eat wheat and apples but only get tamed by apples. the basic eating would take both in a list, this would be passed with only apples.
 	var/list/food_types
 
 /datum/component/tameable/Initialize(food_types, tame_chance, bonus_tame_chance, unique = TRUE)
 	if(!isatom(parent)) //yes, you could make a tameable toolbox.
 		return COMPONENT_INCOMPATIBLE
-	var/atom/atom_parent = parent
 
 	if(tame_chance)
 		src.tame_chance = tame_chance
@@ -24,10 +23,6 @@
 		src.bonus_tame_chance = bonus_tame_chance
 	if(food_types)
 		src.food_types = food_types
-	else
-		if(!atom_parent.ai_controller || !atom_parent.ai_controller.blackboard_key_exists(BB_BASIC_FOODS))
-			CRASH("[parent] tameable component could not get food types from ai_controller!")
-		src.food_types = atom_parent.ai_controller.blackboard[BB_BASIC_FOODS]
 	src.unique = unique
 
 	RegisterSignal(parent, COMSIG_MOB_ATE, PROC_REF(try_tame))
@@ -38,6 +33,9 @@
 	SIGNAL_HANDLER
 	/// taming is done with hand feeding
 	if(!feeder)
+		return
+	/// was a food the mob would eat, but not a food the mob would get tamed by
+	if(food_types && !is_type_in_list(food, food_types))
 		return
 
 	var/inform_tamer = FALSE

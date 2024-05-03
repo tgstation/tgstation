@@ -1505,7 +1505,6 @@
 #include "code\datums\elements\toy_talk.dm"
 #include "code\datums\elements\turf_transparency.dm"
 #include "code\datums\elements\undertile.dm"
-#include "code\datums\elements\unfriend_attacker.dm"
 #include "code\datums\elements\update_icon_blocker.dm"
 #include "code\datums\elements\update_icon_updates_onmob.dm"
 #include "code\datums\elements\uplink_reimburse.dm"

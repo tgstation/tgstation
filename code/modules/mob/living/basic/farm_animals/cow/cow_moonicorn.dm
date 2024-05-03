@@ -36,10 +36,10 @@
 	AddElement(/datum/element/basic_eating, food_types = food_types)
 	AddComponent(/datum/component/tameable, tame_chance = 25, bonus_tame_chance = 15)
 
-/mob/living/basic/cow/moonicorn/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+/mob/living/basic/cow/moonicorn/on_ai_controller_gained_friend(datum/ai_controller/controller, mob/living/new_friend, is_first_friend)
 	. = ..()
 	///stop killing my FRIENDS
-	faction |= tamer.faction
+	faction |= new_friend.faction
 
 /datum/ai_controller/basic_controller/cow/moonicorn
 	blackboard = list(

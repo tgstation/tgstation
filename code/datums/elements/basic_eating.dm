@@ -23,6 +23,8 @@
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 	var/mob/living/living_target = target
+	if(!living_target.ai_controller) ///type with no ai controller type defined instances this as a null
+		return ELEMENT_INCOMPATIBLE
 
 	src.heal_amt = heal_amt
 	src.damage_amount = damage_amount
@@ -30,7 +32,7 @@
 	src.drinking = drinking
 	src.food_types = food_types
 
-	living_target.ai_controller?.blackboard[BB_BASIC_FOODS] = typecacheof(food_types)
+	living_target.ai_controller.add_blackboard_key_lazylist(BB_BASIC_FOODS, typecacheof(food_types))
 
 	//this lets players eat
 	RegisterSignal(target, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarm_attack))

@@ -34,13 +34,11 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
 	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
-	make_tameable()
+	var/static/list/food_types = list(/obj/item/food/grown/carrot)
+	AddElement(/datum/element/basic_eating, food_types = food_types)
+	AddComponent(/datum/component/tameable, tame_chance = 25, bonus_tame_chance = 15)
 
-///wrapper for the tameable component addition so you can have non tamable cow subtypes
-/mob/living/basic/pig/proc/make_tameable()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 25, bonus_tame_chance = 15)
-
-/mob/living/basic/pig/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+/mob/living/basic/pig/proc/on_ai_controller_gained_friend(datum/ai_controller/controller, mob/living/new_friend, is_first_friend)
 	SIGNAL_HANDLER
 	if(is_first_friend)
 		can_buckle = TRUE

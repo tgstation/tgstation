@@ -31,10 +31,17 @@
 	GRANT_ACTION(/datum/action/cooldown/tentacle_slap)
 
 	add_cell_sample()
-	AddComponent(/datum/component/tameable, list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries), tame_chance = 30, bonus_tame_chance = 0)
+	var/static/list/food_types = list(
+		/obj/item/food/fries,
+		/obj/item/food/cheesyfries,
+		/obj/item/food/cornchips,
+		/obj/item/food/carrotfries,
+	)
+	AddElement(/datum/element/basic_eating, food_types = food_types)
+	AddComponent(/datum/component/tameable, tame_chance = 30, bonus_tame_chance = 0)
 	RegisterSignal(ai_controller, COMSIG_AI_CONTROLLER_GAINED_FRIEND, PROC_REF(on_ai_controller_gained_friend))
 
-/mob/living/simple_animal/hostile/vatbeast/proc/on_ai_controller_gained_friend(mob/living/tamer, is_first_friend)
+/mob/living/simple_animal/hostile/vatbeast/proc/on_ai_controller_gained_friend(datum/ai_controller/controller, mob/living/new_friend, is_first_friend)
 	SIGNAL_HANDLER
 	if(is_first_friend)
 		buckle_lying = 0
