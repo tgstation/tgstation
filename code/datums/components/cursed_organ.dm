@@ -14,13 +14,6 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/cursed_organ/RegisterWithParent()
-	var/item/organ/organ_parent = parent
-	if (!(organ_parent.organ_flags & ORGAN_UNREMOVABLE))
-		was_removeable = TRUE
-		organ_parent.organ_flags |= ORGAN_UNREMOVABLE
 
 
 /datum/component/cursed_organ/UnregisterFromParent()
-	var/item/organ/organ_parent = parent
-	if (was_removeable)
-		organ_parent.organ_flags &= ~ORGAN_UNREMOVABLE
