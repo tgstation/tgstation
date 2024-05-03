@@ -9,5 +9,4 @@
 		owner.adjustBruteLoss(10 * seconds_between_ticks)
 		return
 	owner.adjust_disgust(10)
-	for(var/datum/reagent/R in owner.reagents.reagent_list)
-		owner.reagents.remove_reagent(R.type, 1.5)
+	owner.reagents.remove_all(1.5)

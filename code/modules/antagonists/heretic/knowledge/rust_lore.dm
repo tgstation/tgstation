@@ -319,8 +319,16 @@
 		addtimer(CALLBACK(src, PROC_REF(transform_area), turfs_to_transform["[iterator]"]), (5 SECONDS) * iterator)
 
 /datum/heretic_knowledge/ultimate/rust_final/proc/transform_area(list/turfs)
-	for(var/turf/turf as anything in turfs)
+	turfs = shuffle(turfs)
+	var/first_third = turfs.Copy(1, round(length(turfs) * 0.33))
+	var/second_third = turfs.Copy(round(length(turfs) * 0.33), round(length(turfs) * 0.66))
+	var/third_third = turfs.Copy(round(length(turfs) * 0.6), length(turfs))
+	for(var/turf/turf as anything in first_third)
 		turf.rust_heretic_act(5)
+	for(var/turf/turf as anything in second_third)
+		addtimer(CALLBACK(turf, TYPE_PROC_REF(/atom, rust_heretic_act), 5), 5 SECONDS * 0.33)
+	for(var/turf/turf as anything in third_third)
+		addtimer(CALLBACK(turf, TYPE_PROC_REF(/atom, rust_heretic_act), 5), 5 SECONDS * 0.66)
 
 /**
  * Signal proc for [COMSIG_MOVABLE_MOVED].
