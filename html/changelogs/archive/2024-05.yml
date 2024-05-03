@@ -74,3 +74,19 @@
       options
   nikothedude:
   - bugfix: Jousting no longer bypasses pacifism
+2024-05-03:
+  Echriser:
+  - qol: conveyors now use left and right click controls
+  - qol: add screentips for conveyor switches
+  - rscdel: removes circuit conveyor circuit default trigger behavior in favor in
+      favor of the three state triggers
+  Gaxeer:
+  - bugfix: fix runtime when no events were drafted to be picked from
+  - config: make events frequency configurable
+  StrangeWeirdKitten:
+  - qol: You can now quickly stamp papers with a right click
+  Zenog400:
+  - rscadd: increased the size of the pool that Machine Blessing draws from
+  - balance: weighted some of the implants that Machine Blessing can give
+  mc-oofert:
+  - image: added directional sprites for radiation shutters
