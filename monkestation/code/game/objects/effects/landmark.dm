@@ -126,3 +126,6 @@
 /obj/effect/landmark/navigate_destination/centcom/dresser
 	location = "Dressing Room"
 
+/obj/effect/landmark/start/security_assistant
+	name = "Security Assistant"
+	icon_state = "Security Officer"

@@ -34,6 +34,7 @@
 		/obj/item/clothing/head/guardmanhelmet = 1, //monkestation edit: Guardman
 		/obj/item/clothing/under/guardmanuniform = 1, //monkestation edit: Guardman
 		/obj/item/clothing/suit/armor/guardmanvest = 1, //monkestation edit: Guardman
+		/obj/item/citationinator = 3 // monkestation edit: security assistants
 	)
 	refill_canister = /obj/item/vending_refill/security
 	default_price = PAYCHECK_CREW

@@ -83,6 +83,8 @@
 		/datum/job/bartender,
 		/datum/job/cook,
 		/datum/job/curator,
+		// Monkestation edit: security assistants
+		/datum/job/security_assistant,
 	)
 
 /datum/traitor_objective/destroy_heirloom/rare

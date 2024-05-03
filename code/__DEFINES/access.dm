@@ -290,8 +290,8 @@
 	ACCESS_COURT, \
 	ACCESS_CREMATORIUM, \
 	ACCESS_DETECTIVE, \
-	ACCESS_ENGINE_EQUIP, \
 	ACCESS_ENGINEERING, \
+	ACCESS_ENGINE_EQUIP, \
 	ACCESS_EXTERNAL_AIRLOCKS, \
 	ACCESS_GENETICS, \
 	ACCESS_HYDROPONICS, \
@@ -300,11 +300,11 @@
 	ACCESS_LAWYER, \
 	ACCESS_LIBRARY, \
 	ACCESS_MAINT_TUNNELS, \
-	ACCESS_MECH_MINING, \
-	ACCESS_MECH_MEDICAL, \
-	ACCESS_MECH_SECURITY, \
-	ACCESS_MECH_SCIENCE, \
 	ACCESS_MECH_ENGINE, \
+	ACCESS_MECH_MEDICAL, \
+	ACCESS_MECH_MINING, \
+	ACCESS_MECH_SCIENCE, \
+	ACCESS_MECH_SECURITY, \
 	ACCESS_MEDICAL, \
 	ACCESS_MINERAL_STOREROOM, \
 	ACCESS_MINING, \
@@ -313,6 +313,7 @@
 	ACCESS_NETWORK, \
 	ACCESS_ORDNANCE, \
 	ACCESS_ORDNANCE_STORAGE, \
+	ACCESS_PERMABRIG, \
 	ACCESS_PHARMACY, \
 	ACCESS_PLUMBING, \
 	ACCESS_PSYCHOLOGY, \
@@ -328,7 +329,7 @@
 	ACCESS_VIROLOGY, \
 	ACCESS_WEAPONS, \
 	ACCESS_XENOBIOLOGY, \
-)
+)  /* monkestation edit: add permabrig-only access */
 
 /// Command staff/secure accesses, think bridge/armoury, ai_upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)
 #define COMMAND_ACCESS list( \
@@ -434,9 +435,11 @@
 	ACCESS_DETECTIVE, \
 	ACCESS_HOS, \
 	ACCESS_MECH_SECURITY, \
+	ACCESS_PERMABRIG, \
 	ACCESS_SECURITY, \
 	ACCESS_WEAPONS, \
-)
+) /* monkestation edit: add permabrig-only access */
+
 /// Name for the Medbay region.
 #define REGION_MEDBAY "Medbay"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all medbay regional accesses that are overseen by the CMO.

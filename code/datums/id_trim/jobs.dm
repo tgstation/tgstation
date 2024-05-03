@@ -593,6 +593,7 @@
 		ACCESS_SERVICE,
 		ACCESS_SHIPPING,
 		ACCESS_WEAPONS,
+		ACCESS_PERMABRIG, // monkestation edit: add permabrig-only access
 		)
 	minimal_wildcard_access = list(
 		ACCESS_HOS,
@@ -939,6 +940,7 @@
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SECURITY,
 		ACCESS_WEAPONS,
+		ACCESS_PERMABRIG, // monkestation edit: add permabrig-only access
 		)
 	extra_access = list(
 		ACCESS_DETECTIVE,
@@ -1151,6 +1153,7 @@
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SECURITY,
 		ACCESS_WEAPONS,
+		ACCESS_PERMABRIG, // monkestation edit: add permabrig-only access
 		) // See /datum/job/warden/get_access()
 	extra_access = list(
 		ACCESS_DETECTIVE,

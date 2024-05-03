@@ -105,6 +105,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_SECURITY_OFFICER_SCIENCE = 15,
 		JOB_SECURITY_OFFICER_SUPPLY = 16,
 		JOB_DETECTIVE = 17,
+		JOB_SECURITY_ASSISTANT = 18, // monkestation edit: add security assistants
 		// 20-29: Medbay
 		JOB_CHIEF_MEDICAL_OFFICER = 20,
 		JOB_CHEMIST = 21,

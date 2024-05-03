@@ -27,3 +27,7 @@
 
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/west_offset
 	offset_dir = WEST
+
+/obj/effect/mapping_helpers/airlock/access/any/security/permabrig/get_access()
+	. = ..()
+	. += list(ACCESS_PERMABRIG, ACCESS_BRIG)

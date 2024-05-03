@@ -69,6 +69,8 @@
 		/datum/job/paramedic,
 		// Service
 		/datum/job/cook,
+		// Monkestation edit: security assistants
+		/datum/job/security_assistant,
 	)
 	alive_bonus = 4
 
