@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "Brain damage from borer abilities will no longer go above 100."
+  - qol: "Neutered borers will now \"skip over\" abilities related to reproduction."
