@@ -1,0 +1,4 @@
+author: "MichiRecRoom"
+delete-after: True
+changes:
+  - qol: "If a lootbox item fails to save, you will now receive a replacement lootbox that can be used at a later time, and will hopefully work then."
