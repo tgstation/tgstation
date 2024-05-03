@@ -14,8 +14,8 @@
 	w_class = WEIGHT_CLASS_BULKY
 	/// The vacuum hose itself
 	var/obj/item/borg_hose/cleaner
-	/// The trashbag it's connected to
-
+	/// The trashbag storage it's connected to
+	var/datum/storage/trash = null
 	/// Did the borg decide to lock their cleaner?
 	var/locked = FALSE
 	/// Are we currently active?
@@ -30,6 +30,20 @@
 
 /obj/item/borg_vacuum/proc/make_hose()
 	return new /obj/item/borg_hose(src)
+
+/obj/item/borg_vacuum/equipped(mob/user, slot)
+	var/mob/living/person = user
+	if(trash)
+		return NONE
+	for(var/obj/item/storage/bag/trash/trash_bag in person.contents) // Get the storage datum of the trashbag
+		trash = trash_bag.atom_storage
+		message_admins("[trash], [trash_bag], [person]")
+	return ..()
+
+/obj/item/borg_vacuum/dropped(mob/user, silent)
+	. = ..()
+	trash = null
+
 /**
  * Deletion code that handles the removal of both apparatus and hose if the item.
  * remove_hose() is required to ensure that the [borg_hose] follows its connected [borg_vacuum] in deletion
@@ -141,13 +155,28 @@
 	. = ..()
 	check_range()
 
+/obj/item/borg_hose/interact_with_atom(obj/thing, mob/living/user, params)
+	. = ..()
+	var/obj/item/target = thing
+	home.trash.collection_mode = COLLECT_ONE
+
+	if(!istype(target, /obj/item)) // Only vacuume actual items
+		return NONE
+	if(clean_mode == MODE_MOP || !home.trash) // Do we have a trashbag and are we vacuuming?
+		return NONE
+	for(var/obj/item/obj in get_turf(target.loc)) // Apply animations to all items in the turf
+		while(do_after(user, 3 DECISECONDS, obj, NONE, TRUE)) // Fairly quick to give enough time for the animation
+			obj.spasm_animation(3)
+			home.trash.on_preattack(src, obj, user)
+			if(!obj || !in_range(obj, user))
+				break
+
 /obj/item/borg_hose/dropped(mob/user, silent = TRUE)
 	. = ..()
 	if(!home)
 		return NONE
 	if(user)
 		home.on = FALSE
-		message_admins("signal properly removed for COMSIG_MOVABLE_MOVED")
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	to_chat(user, span_notice("The vacuum hose retracts back into [home]"))
 	return_to_borg()
@@ -159,7 +188,7 @@
 
 	if(!home)
 		return
-	if(!IN_GIVEN_RANGE(src, home, 7)) // Allows you to clean everything in the same room
+	if(!IN_GIVEN_RANGE(src, home, 5)) // Allows you to clean everything in the same room
 		if(isliving(loc))
 			var/mob/living/user = loc
 			to_chat(user, span_warning("[home]'s hose extends too much and springs out of your hands!"))
