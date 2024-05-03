@@ -347,6 +347,16 @@
 	min_val = 0
 	integer = FALSE
 
+/datum/config_entry/number/events_frequency_lower
+	default = 2.5 MINUTES
+	min_val = 0
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/number/events_frequency_upper
+	default = 7 MINUTES
+	min_val = 0
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/number/mice_roundstart
 	default = 10
 	min_val = 0

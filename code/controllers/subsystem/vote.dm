@@ -18,6 +18,8 @@ SUBSYSTEM_DEF(vote)
 	var/list/voted = list()
 	/// A list of all ckeys currently voting for the current vote.
 	var/list/voting = list()
+	/// World.time we started our last vote
+	var/last_vote_time = -INFINITY
 
 /datum/controller/subsystem/vote/Initialize()
 	for(var/vote_type in subtypesof(/datum/vote))
@@ -30,16 +32,20 @@ SUBSYSTEM_DEF(vote)
 
 	return SS_INIT_SUCCESS
 
-
 // Called by master_controller
 /datum/controller/subsystem/vote/fire()
 	if(!current_vote)
 		return
 	current_vote.time_remaining = round((current_vote.started_time + CONFIG_GET(number/vote_period) - world.time) / 10)
 	if(current_vote.time_remaining < 0)
-		process_vote_result()
-		SStgui.close_uis(src)
-		reset()
+		end_vote()
+
+/// Ends the current vote.
+/datum/controller/subsystem/vote/proc/end_vote()
+	ASSERT(current_vote)
+	process_vote_result()
+	SStgui.close_uis(src)
+	reset()
 
 /// Resets all of our vars after votes conclude / are cancelled.
 /datum/controller/subsystem/vote/proc/reset()
@@ -168,24 +174,10 @@ SUBSYSTEM_DEF(vote)
  * * vote_type - The type of vote to initiate. Can be a [/datum/vote] typepath, a [/datum/vote] instance, or the name of a vote datum.
  * * vote_initiator_name - The ckey (if player initiated) or name that initiated a vote. Ex: "UristMcAdmin", "the server"
  * * vote_initiator - If a person / mob initiated the vote, this is the mob that did it
- * * forced - Whether we're forcing the vote to go through regardless of existing votes or other circumstances. Note: If the vote is admin created, forced becomes true regardless.
+ * * forced - Whether we're forcing the vote to go through regardless of existing votes or other circumstances.
  */
 /datum/controller/subsystem/vote/proc/initiate_vote(vote_type, vote_initiator_name, mob/vote_initiator, forced = FALSE)
-
-	// Even if it's forced we can't vote before we're set up
-	if(!MC_RUNNING(init_stage))
-		if(vote_initiator)
-			to_chat(vote_initiator, span_warning("You cannot start vote now, the server is not done initializing."))
-		return FALSE
-
-	// Check if we have unlimited voting power.
-	// Admin started (or forced) voted will go through even if there's an ongoing vote,
-	// if voting is on cooldown, or regardless if a vote is config disabled (in some cases)
-	var/unlimited_vote_power = forced || !!GLOB.admin_datums[vote_initiator?.ckey]
-
-	if(current_vote && !unlimited_vote_power)
-		if(vote_initiator)
-			to_chat(vote_initiator, span_warning("There is already a vote in progress! Please wait for it to finish."))
+	if(!can_vote_start(vote_initiator, forced))
 		return FALSE
 
 	// Get our actual datum
@@ -212,7 +204,7 @@ SUBSYSTEM_DEF(vote)
 		return FALSE
 
 	// Vote can't be initiated in our circumstances? No vote
-	if(!to_vote.can_be_initiated(vote_initiator, unlimited_vote_power))
+	if(to_vote.can_be_initiated(forced) != VOTE_AVAILABLE)
 		return FALSE
 
 	// Okay, we're ready to actually create a vote -
@@ -223,8 +215,12 @@ SUBSYSTEM_DEF(vote)
 	if(!to_vote.create_vote(vote_initiator))
 		return FALSE
 
+	if(!vote_initiator_name && vote_initiator)
+		vote_initiator_name = vote_initiator.key
+
 	// Okay, the vote's happening now, for real. Set it up.
 	current_vote = to_vote
+	last_vote_time = world.time
 
 	var/duration = CONFIG_GET(number/vote_period)
 	var/to_display = current_vote.initiate_vote(vote_initiator_name, duration)
@@ -248,6 +244,36 @@ SUBSYSTEM_DEF(vote)
 
 	return TRUE
 
+/**
+ * Checks if we can start a vote.
+ *
+ * * vote_initiator - The mob that initiated the vote.
+ * * forced - Whether we're forcing the vote to go through regardless of existing votes or other circumstances.
+ *
+ * Returns TRUE if we can start a vote, FALSE if we can't.
+ */
+/datum/controller/subsystem/vote/proc/can_vote_start(mob/vote_initiator, forced)
+	// Even if it's forced we can't vote before we're set up
+	if(!MC_RUNNING(init_stage))
+		if(vote_initiator)
+			to_chat(vote_initiator, span_warning("You cannot start a vote now, the server is not done initializing."))
+		return FALSE
+
+	if(forced)
+		return TRUE
+
+	var/next_allowed_time = last_vote_time + CONFIG_GET(number/vote_delay)
+	if(next_allowed_time > world.time)
+		if(vote_initiator)
+			to_chat(vote_initiator, span_warning("A vote was initiated recently. You must wait [DisplayTimeText(next_allowed_time - world.time)] before a new vote can be started!"))
+		return FALSE
+
+	if(current_vote)
+		if(vote_initiator)
+			to_chat(vote_initiator, span_warning("There is already a vote in progress! Please wait for it to finish."))
+		return FALSE
+
+	return TRUE
 /datum/controller/subsystem/vote/ui_state()
 	return GLOB.always_state
 
@@ -282,11 +308,12 @@ SUBSYSTEM_DEF(vote)
 		if(!istype(vote))
 			continue
 
+		var/can_vote = vote.can_be_initiated(is_lower_admin)
 		var/list/vote_data = list(
 			"name" = vote_name,
-			"canBeInitiated" = vote.can_be_initiated(forced = is_lower_admin),
+			"canBeInitiated" = can_vote == VOTE_AVAILABLE,
 			"config" = vote.is_config_enabled(),
-			"message" = vote.message,
+			"message" = can_vote == VOTE_AVAILABLE ? vote.default_message : can_vote,
 		)
 
 		if(vote == current_vote)
@@ -310,7 +337,13 @@ SUBSYSTEM_DEF(vote)
 		all_vote_data += list(vote_data)
 
 	data["possibleVotes"] = all_vote_data
+	data["LastVoteTime"] = last_vote_time - world.time
 
+	return data
+
+/datum/controller/subsystem/vote/ui_static_data(mob/user)
+	var/list/data = list()
+	data["VoteCD"] = CONFIG_GET(number/vote_delay)
 	return data
 
 /datum/controller/subsystem/vote/ui_act(action, params)
@@ -323,19 +356,37 @@ SUBSYSTEM_DEF(vote)
 	switch(action)
 		if("cancel")
 			if(!voter.client?.holder)
+				message_admins("[key_name(voter)] tried to cancel the current vote while having no admin holder, \
+					this is potentially a malicious exploit and worth noting.")
 				return
 
 			voter.log_message("cancelled a vote.", LOG_ADMIN)
 			message_admins("[key_name_admin(voter)] has cancelled the current vote.")
+			SStgui.close_uis(src)
 			reset()
+			return TRUE
+
+		if("endNow")
+			if(!voter.client?.holder)
+				message_admins("[key_name(voter)] tried to end the current vote while having no admin holder, \
+					this is potentially a malicious exploit and worth noting.")
+				return
+
+			voter.log_message("ended the current vote early", LOG_ADMIN)
+			message_admins("[key_name_admin(voter)] has ended the current vote.")
+			end_vote()
 			return TRUE
 
 		if("toggleVote")
 			var/datum/vote/selected = possible_votes[params["voteName"]]
 			if(!istype(selected))
 				return
+			if(!check_rights_for(voter.client, R_ADMIN))
+				message_admins("[key_name(voter)] tried to toggle vote availability while having improper rights, \
+					this is potentially a malicious exploit and worth noting.")
+				return
 
-			return selected.toggle_votable(voter)
+			return selected.toggle_votable()
 
 		if("callVote")
 			var/datum/vote/selected = possible_votes[params["voteName"]]
@@ -344,13 +395,27 @@ SUBSYSTEM_DEF(vote)
 
 			// Whether the user actually can initiate this vote is checked in initiate_vote,
 			// meaning you can't spoof initiate a vote you're not supposed to be able to
-			return initiate_vote(selected, voter.key, voter)
+			return initiate_vote(
+				vote_type = selected,
+				vote_initiator_name = voter.key,
+				vote_initiator = voter,
+				forced = !!GLOB.admin_datums[voter.ckey],
+			)
 
 		if("voteSingle")
 			return submit_single_vote(voter, params["voteOption"])
 
 		if("voteMulti")
 			return submit_multi_vote(voter, params["voteOption"])
+
+		if("resetCooldown")
+			if(!voter.client.holder)
+				message_admins("[key_name(voter)] tried to reset the vote cooldown while having no admin holder, \
+					this is potentially a malicious exploit and worth noting.")
+				return
+
+			last_vote_time = -INFINITY
+			return TRUE
 
 /datum/controller/subsystem/vote/ui_close(mob/user)
 	voting -= user.client?.ckey
@@ -359,6 +424,10 @@ SUBSYSTEM_DEF(vote)
 /mob/verb/vote()
 	set category = "OOC"
 	set name = "Vote"
+
+	if(!SSvote.initialized)
+		to_chat(usr, span_notice("<i>Voting is not set up yet!</i>"))
+		return
 
 	SSvote.ui_interact(usr)
 

@@ -93,8 +93,8 @@ Slimecrossing Items
 	icon_state = "yellow slime extract"
 	rating = 7
 	custom_materials = null
-	maxcharge = 50000
-	chargerate = 2500
+	maxcharge = 50 * STANDARD_CELL_CHARGE
+	chargerate = 2.5 * STANDARD_CELL_RATE
 	charge_light_type = null
 	connector_type = "slimecore"
 

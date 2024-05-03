@@ -13,3 +13,15 @@
 
 /area/deathmatch/teleport //Prevent access to cross-z teleportation in the map itself (no wands of safety/teleportation scrolls). Cordons should prevent same-z teleportations outside of the arena.
 	area_flags = UNIQUE_AREA | ABDUCTOR_PROOF | EVENT_PROTECTED | QUIET_LOGS
+
+// for the illusion of a moving train
+/turf/open/chasm/true/no_smooth/fake_motion_sand
+	name = "air"
+	desc = "Dont jump off, unless you want to fall a really long distance."
+	icon_state = "sandmoving"
+	base_icon_state = "sandmoving"
+	icon = 'icons/turf/floors.dmi'
+
+/turf/open/chasm/true/no_smooth/fake_motion_sand/fast
+	icon_state = "sandmovingfast"
+	base_icon_state = "sandmovingfast"
