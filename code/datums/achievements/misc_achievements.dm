@@ -227,3 +227,8 @@
 	database_id = MEDAL_DEBT_EXTINGUISHED
 	icon_state = "outdebted"
 
+/datum/award/achievement/misc/sisyphus
+	name = "Ordeal of Sisyphus"
+	desc = "Successfully carry a boulder from Lavaland all the way to Centcom, without ever dropping it. We must imagine you're happy to unlock this."
+	database_id = MEDAL_SISYPHUS
+	icon_state = "sisyphus"

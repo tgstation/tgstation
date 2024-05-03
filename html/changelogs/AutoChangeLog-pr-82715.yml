@@ -1,4 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - admin: "New dropdown to force change a mob's name and the attached client's preferences."

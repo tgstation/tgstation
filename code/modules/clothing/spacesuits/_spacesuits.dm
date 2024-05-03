@@ -58,7 +58,7 @@
 	equip_delay_other = 80
 	resistance_flags = NONE
 	actions_types = list(/datum/action/item_action/toggle_spacesuit)
-	interaction_flags_click = NEED_DEXTERITY
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	/// The default temperature setting
 	var/temperature_setting = BODYTEMP_NORMAL
 	/// If this is a path, this gets created as an object in Initialize.
