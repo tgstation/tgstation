@@ -137,7 +137,7 @@
 	var/capitalize = TRUE
 
 	while(length_char(scrambled_text) < input_size)
-		var/next = (length(scrambled_text) && length(special_characters) && prob(50)) ? pick(special_characters) : pick_weight_recursive(syllables)
+		var/next = (length(scrambled_text) && length(special_characters) && prob(1)) ? pick(special_characters) : pick_weight_recursive(syllables)
 		if(capitalize)
 			next = capitalize(next)
 			capitalize = FALSE
