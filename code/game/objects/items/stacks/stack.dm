@@ -1,9 +1,3 @@
-//stack recipe placement check types
-/// Checks if there is an object of the result type in any of the cardinal directions
-#define STACK_CHECK_CARDINALS (1<<0)
-/// Checks if there is an object of the result type within one tile
-#define STACK_CHECK_ADJACENT (1<<1)
-
 /* Stack type objects!
  * Contains:
  * Stacks
@@ -110,9 +104,9 @@
 		for(var/category in what_are_we_made_of.categories)
 			switch(category)
 				if(MAT_CATEGORY_BASE_RECIPES)
-					recipes |= DSmaterials.base_stack_recipes.Copy()
+					recipes |= SSmaterials.base_stack_recipes.Copy()
 				if(MAT_CATEGORY_RIGID)
-					recipes |= DSmaterials.rigid_stack_recipes.Copy()
+					recipes |= SSmaterials.rigid_stack_recipes.Copy()
 
 	update_weight()
 	update_appearance()
@@ -131,7 +125,7 @@
  * - multiplier: The amount to multiply the mats per unit by. Defaults to 1.
  */
 /obj/item/stack/proc/set_mats_per_unit(list/mats, multiplier=1)
-	mats_per_unit = DSmaterials.FindOrCreateMaterialCombo(mats, multiplier)
+	mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats, multiplier)
 	update_custom_materials()
 
 /** Updates the custom materials list of this stack.
@@ -423,7 +417,7 @@
 			return
 		var/turf/created_turf = covered_turf.place_on_top(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
 		builder.balloon_alert(builder, "placed [ispath(recipe.result_type, /turf/open) ? "floor" : "wall"]")
-		if(recipe.applies_mats && LAZYLEN(mats_per_unit))
+		if((recipe.crafting_flags & CRAFT_APPLIES_MATS) && LAZYLEN(mats_per_unit))
 			created_turf.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
 
 	else
@@ -439,7 +433,7 @@
 	builder.investigate_log("crafted [recipe.title]", INVESTIGATE_CRAFTING)
 
 	// Apply mat datums
-	if(recipe.applies_mats && LAZYLEN(mats_per_unit))
+	if((recipe.crafting_flags & CRAFT_APPLIES_MATS) && LAZYLEN(mats_per_unit))
 		if(isstack(created))
 			var/obj/item/stack/crafted_stack = created
 			crafted_stack.set_mats_per_unit(mats_per_unit, recipe.req_amount / recipe.res_amount)
@@ -484,16 +478,16 @@
 		return FALSE
 	var/turf/dest_turf = get_turf(builder)
 
-	if(recipe.one_per_turf && (locate(recipe.result_type) in dest_turf))
+	if((recipe.crafting_flags & CRAFT_ONE_PER_TURF) && (locate(recipe.result_type) in dest_turf))
 		builder.balloon_alert(builder, "already one here!")
 		return FALSE
 
-	if(recipe.check_direction)
-		if(!valid_build_direction(dest_turf, builder.dir, is_fulltile = recipe.is_fulltile))
+	if(recipe.crafting_flags & CRAFT_CHECK_DIRECTION)
+		if(!valid_build_direction(dest_turf, builder.dir, is_fulltile = (recipe.crafting_flags & CRAFT_IS_FULLTILE)))
 			builder.balloon_alert(builder, "won't fit here!")
 			return FALSE
 
-	if(recipe.on_solid_ground)
+	if(recipe.crafting_flags & CRAFT_ON_SOLID_GROUND)
 		if(isclosedturf(dest_turf))
 			builder.balloon_alert(builder, "cannot be made on a wall!")
 			return FALSE
@@ -503,7 +497,7 @@
 				builder.balloon_alert(builder, "must be made on solid ground!")
 				return FALSE
 
-	if(recipe.check_density)
+	if(recipe.crafting_flags & CRAFT_CHECK_DENSITY)
 		for(var/obj/object in dest_turf)
 			if(object.density && !(object.obj_flags & IGNORE_DENSITY) || object.obj_flags & BLOCKS_CONSTRUCTION)
 				builder.balloon_alert(builder, "something is in the way!")
@@ -742,6 +736,3 @@
 	add_hiddenprint_list(GET_ATOM_HIDDENPRINTS(from))
 	fingerprintslast = from.fingerprintslast
 	//TODO bloody overlay
-
-#undef STACK_CHECK_CARDINALS
-#undef STACK_CHECK_ADJACENT

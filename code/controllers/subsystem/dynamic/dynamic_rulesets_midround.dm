@@ -297,25 +297,29 @@
 	cost = 10
 	required_type = /mob/living/silicon/ai
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/malf_ai)
+	// AIs are technically considered "Ghost roles" as far as candidate selection are concerned
+	// So we need to allow it here. We filter of actual ghost role AIs (charlie) via trim_candidates ourselves
+	restrict_ghost_roles = FALSE
 
 /datum/dynamic_ruleset/midround/malf/trim_candidates()
 	..()
-	candidates = living_players
-	for(var/mob/living/player in candidates)
-		if(!isAI(player))
-			candidates -= player
+	candidates = list()
+	for(var/mob/living/silicon/ai/player in living_players)
+		if(!is_station_level(player.z))
 			continue
-
-		if(is_centcom_level(player.z))
-			candidates -= player
+		if(isnull(player.mind))
 			continue
+		if(player.mind.special_role || length(player.mind.antag_datums))
+			continue
+		candidates += player
 
-		if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
-			candidates -= player
+/datum/dynamic_ruleset/midround/malf/ready(forced)
+	if(!check_candidates())
+		log_dynamic("FAIL: No valid AI found for the Malfunctioning AI ruleset.")
+		return FALSE
+	return ..()
 
 /datum/dynamic_ruleset/midround/malf/execute()
-	if(!candidates || !candidates.len)
-		return FALSE
 	var/mob/living/silicon/ai/new_malf_ai = pick_n_take(candidates)
 	assigned += new_malf_ai.mind
 	var/datum/antagonist/malf_ai/malf_antag_datum = new

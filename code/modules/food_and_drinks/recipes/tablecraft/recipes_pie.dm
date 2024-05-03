@@ -132,7 +132,6 @@
 
 /datum/crafting_recipe/food/mimetart
 	name = "Mime tart"
-	always_available = FALSE
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
 		/datum/reagent/consumable/sugar = 5,
@@ -141,10 +140,10 @@
 	)
 	result = /obj/item/food/pie/mimetart
 	category = CAT_PIE
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/food/berrytart
 	name = "Berry tart"
-	always_available = FALSE
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
 		/datum/reagent/consumable/sugar = 5,
@@ -153,10 +152,10 @@
 	)
 	result = /obj/item/food/pie/berrytart
 	category = CAT_PIE
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/food/cocolavatart
 	name = "Chocolate Lava tart"
-	always_available = FALSE
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
 		/datum/reagent/consumable/sugar = 5,
@@ -166,6 +165,7 @@
 	)
 	result = /obj/item/food/pie/cocolavatart
 	category = CAT_PIE
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/food/blumpkinpie
 	name = "Blumpkin pie"
