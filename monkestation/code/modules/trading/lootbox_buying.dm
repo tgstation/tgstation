@@ -34,6 +34,7 @@
 	if(!prefs.adjust_metacoins(ckey, -5000, donator_multipler = FALSE))
 		return
 	prefs.lootboxes_owned++
+	prefs.save_preferences()
 
 /client/proc/open_lootbox()
 	message_admins("[ckey] opened a lootbox!")
@@ -49,6 +50,7 @@
 	if(!prefs.lootboxes_owned)
 		return
 	prefs.lootboxes_owned--
+	prefs.save_preferences()
 	mob.trigger_lootbox_on_self()
 
 /proc/give_lootboxes_to_randoms(amount)
@@ -63,3 +65,4 @@
 		return
 	prefs.lootboxes_owned += amount
 	to_chat(mob, span_notice("You have been given [amount] lootboxes! Open it using the escape menu."))
+	prefs.save_preferences()
