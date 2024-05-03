@@ -57,6 +57,8 @@
 	for(var/path in cortical_owner.past_evolutions)
 		var/list/evo_data = list()
 		var/datum/borer_evolution/found_evolution = cortical_owner.past_evolutions[path]
+		if(cortical_owner.neutered && found_evolution.skip_for_neutered)
+			continue
 
 		evo_data["name"] = found_evolution.name
 		evo_data["desc"] = found_evolution.desc

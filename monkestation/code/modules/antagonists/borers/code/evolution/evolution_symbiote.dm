@@ -10,6 +10,7 @@
 	unlocked_evolutions = list(/datum/borer_evolution/symbiote/chem_per_level)
 	evo_cost = 1
 	added_action = /datum/action/cooldown/borer/willing_host
+	skip_for_neutered = TRUE
 
 // T2
 /datum/borer_evolution/symbiote/chem_per_level

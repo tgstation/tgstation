@@ -104,4 +104,4 @@
 		/datum/borer_evolution/synthetic_chems_negative,
 	)
 	added_action = /datum/action/cooldown/borer/empowered_offspring
-	restricted_for_neutered = TRUE
+	skip_for_neutered = TRUE

@@ -10,7 +10,7 @@
 	evo_cost = 1
 	unlocked_evolutions = list(/datum/borer_evolution/hivelord/blood_chemical)
 	added_action = /datum/action/cooldown/borer/produce_offspring
-	restricted_for_neutered = TRUE
+	skip_for_neutered = TRUE
 
 // T2
 /datum/borer_evolution/hivelord/blood_chemical
@@ -56,7 +56,7 @@
 		/datum/borer_evolution/synthetic_chems_positive,
 		/datum/borer_evolution/synthetic_chems_negative,
 	)
-	restricted_for_neutered = TRUE // we set this to TRUE purelly for the message, they dont have the reproduction action anyway
+	skip_for_neutered = TRUE // we set this to TRUE purelly for the message, they dont have the reproduction action anyway
 
 /datum/borer_evolution/hivelord/produce_offspring_alone/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()

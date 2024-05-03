@@ -53,6 +53,8 @@
 		ignore_category = POLL_IGNORE_CORTICAL_BORER,
 		pic_source = /mob/living/basic/cortical_borer/neutered,
 	)
+	if(QDELETED(src)) // prevent shenanigans with refunds
+		return
 	if(!LAZYLEN(candidates))
 		opened = FALSE
 		to_chat(user, "Yet the borer after looking at you quickly retreats back into their cage, visibly scared. Perhaps try later?")
@@ -91,5 +93,9 @@
 	log_game("[key_name(new_mob)] was spawned as a borer by [key_name(user)]")
 	visible_message("A borer wriggles out of the [src]!")
 
-	new /obj/item/cortical_cage(drop_location())
+	var/obj/item/cortical_cage/empty_cage = new(drop_location())
+	var/user_held = user.get_held_index_of_item(src)
+	if(user_held) // seems more immersive if you don't just suddenly drop the cage, and it empties while still seemingly in your hand.
+		user.dropItemToGround(src, force = TRUE, silent = TRUE)
+		user.put_in_hand(empty_cage, user_held, ignore_anim = TRUE)
 	qdel(src)
