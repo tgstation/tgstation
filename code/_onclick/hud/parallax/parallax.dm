@@ -248,11 +248,11 @@
 			update_parallax_do_animation(parallax_layer, change_x, change_y, glide_rate)
 
 
-/datum/hud/proc/update_parallax_do_animation(/atom/movable/screen/parallax_layer/parallax_layer, change_x, change_y, glide_rate)
+/datum/hud/proc/update_parallax_do_animation(atom/movable/screen/parallax_layer/parallax_layer, change_x, change_y, glide_rate)
 	parallax_layer.transform = matrix(1,0,change_x, 0,1,change_y)
 	animate(parallax_layer, transform=matrix(), time = glide_rate)
 
-/datum/hud/proc/update_parallax_set_screen_loc(/atom/movable/screen/parallax_layer/parallax_layer)
+/datum/hud/proc/update_parallax_set_screen_loc(atom/movable/screen/parallax_layer/parallax_layer)
 	parallax_layer.screen_loc = "CENTER-7:[round(parallax_layer.offset_x, 1)],CENTER-7:[round(parallax_layer.offset_y, 1)]"
 
 /atom/movable/proc/update_parallax_contents()
