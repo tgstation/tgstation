@@ -451,14 +451,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(create_mutation_blocks) //I hate this
 		generate_dna_blocks()
 	if(randomize_features)
-		var/static/list/all_species_protoypes
-		if(isnull(all_species_protoypes))
-			all_species_protoypes = list()
-			for(var/species_path in subtypesof(/datum/species))
-				all_species_protoypes += new species_path()
-
-		for(var/datum/species/random_species as anything in all_species_protoypes)
-			features |= random_species.randomize_features()
+		for(var/species_type in GLOB.species_prototypes)
+			features |= GLOB.species_prototypes[species_type].randomize_features()
 
 		features["mcolor"] = "#[random_color()]"
 
