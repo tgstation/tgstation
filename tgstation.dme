@@ -2526,6 +2526,7 @@
 #include "code\game\objects\items\robot\items\generic.dm"
 #include "code\game\objects\items\robot\items\hud.dm"
 #include "code\game\objects\items\robot\items\hypo.dm"
+#include "code\game\objects\items\robot\items\janitor_vacuum.dm"
 #include "code\game\objects\items\robot\items\storage.dm"
 #include "code\game\objects\items\robot\items\tools.dm"
 #include "code\game\objects\items\stacks\ammonia_crystals.dm"
