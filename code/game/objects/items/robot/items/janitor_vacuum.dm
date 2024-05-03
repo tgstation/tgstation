@@ -100,9 +100,9 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/borg_hose/Destroy(force)
-	. = ..()
 	home = null
 	UnregisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM)
+	return ..()
 
 /obj/item/borg_hose/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
