@@ -14,10 +14,10 @@
 	girder_type = /obj/structure/girder/reinforced
 	explosive_resistance = 2
 	rad_insulation = RAD_HEAVY_INSULATION
+	rust_resistance = RUST_RESISTANCE_REINFORCED
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
 	///Dismantled state, related to deconstruction.
 	var/d_state = INTACT
-	rust_resistance = RUST_RESISTANCE_REINFORCED
 	///Base icon state to use for deconstruction
 	var/base_decon_state = "r_wall"
 

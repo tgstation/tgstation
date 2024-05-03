@@ -16,10 +16,10 @@
 	footstep = FOOTSTEP_CATWALK
 	overfloor_placed = TRUE
 	underfloor_accessibility = UNDERFLOOR_VISIBLE
+	rust_resistance = RUST_RESISTANCE_BASIC
 	var/covered = TRUE
 	var/catwalk_type = "maint"
 	var/static/list/catwalk_underlays = list()
-	rust_resistance = RUST_RESISTANCE_BASIC
 
 /turf/open/floor/catwalk_floor/Initialize(mapload)
 	. = ..()

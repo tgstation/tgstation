@@ -67,7 +67,7 @@
 	if(!issilicon(target) && !(target.mob_biotypes & MOB_ROBOTIC))
 		return
 
-	target.rust_heretic_act(source)
+	source.do_rust_heretic_act(target)
 
 /datum/heretic_knowledge/rust_fist/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
 	SIGNAL_HANDLER
@@ -78,7 +78,7 @@
 		var/obj/machinery/door/airlock/airlock = target
 		airlock.loseMainPower()
 
-	target.rust_heretic_act(source)
+	source.do_rust_heretic_act(target)
 	return COMPONENT_USE_HAND
 
 /datum/heretic_knowledge/rust_regen
@@ -145,6 +145,7 @@
 		source.blood_volume += 2.5 * seconds_per_tick
 	// Slowly regulates your body temp
 	source.adjust_bodytemperature((source.get_body_temp_normal() - source.bodytemperature)/5)
+
 /datum/heretic_knowledge/mark/rust_mark
 	name = "Mark of Rust"
 	desc = "Your Mansus Grasp now applies the Mark of Rust. The mark is triggered from an attack with your Rusty Blade. \
@@ -154,6 +155,7 @@
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/rust)
 	route = PATH_RUST
 	mark_type = /datum/status_effect/eldritch/rust
+
 /datum/heretic_knowledge/mark/rust_mark/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	our_heretic.increase_rust_strength()
@@ -207,10 +209,7 @@
 	our_heretic.increase_rust_strength()
 
 /datum/heretic_knowledge/blade_upgrade/rust/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	if(!iscarbon(target))
-		return ..()
-	var/mob/living/carbon/victim = target
-	victim.adjust_disgust(25)
+	target.adjust_disgust(25)
 
 /datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -265,7 +264,7 @@
 		TRAIT_STUNIMMUNE,
 		TRAIT_IGNOREDAMAGESLOWDOWN,
 		TRAIT_IGNORESLOWDOWN,
-		TRAIT_CRYOGELIDIAIMMUNE
+		TRAIT_FREEZEIMMUNITY,
 	)
 
 /datum/heretic_knowledge/ultimate/rust_final/on_research(mob/user, datum/antagonist/heretic/our_heretic)
@@ -292,12 +291,36 @@
 		sound = ANNOUNCER_SPANOMALIES,
 		color_override = "pink",
 	)
-	new /datum/rust_spread(loc)
+	//new /datum/rust_spread(loc)
+	trigger(loc)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	user.client?.give_award(/datum/award/achievement/misc/rust_ascension, user)
 	var/datum/action/cooldown/spell/aoe/rust_conversion/rust_spread_spell = locate() in user.actions
 	rust_spread_spell?.cooldown_time /= 2
+
+// I sure hope this doesn't have performance implications
+/datum/heretic_knowledge/ultimate/rust_final/proc/trigger(turf/center)
+	var/greatest_dist = 0
+	var/list/turfs_to_transform = list()
+	for (var/turf/transform_turf as anything in GLOB.station_turfs)
+		if (transform_turf.turf_flags & NO_RUST)
+			continue
+		var/dist = get_dist(center, transform_turf)
+		if (dist > greatest_dist)
+			greatest_dist = dist
+		if (!turfs_to_transform["[dist]"])
+			turfs_to_transform["[dist]"] = list()
+		turfs_to_transform["[dist]"] += transform_turf
+
+	for (var/iterator in 1 to greatest_dist)
+		if(!turfs_to_transform["[iterator]"])
+			continue
+		addtimer(CALLBACK(src, PROC_REF(transform_area), turfs_to_transform["[iterator]"]), (5 SECONDS) * iterator)
+
+/datum/heretic_knowledge/ultimate/rust_final/proc/transform_area(list/turfs)
+	for(var/turf/turf as anything in turfs)
+		turf.rust_heretic_act(5)
 
 /**
  * Signal proc for [COMSIG_MOVABLE_MOVED].

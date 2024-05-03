@@ -95,11 +95,9 @@
 	effect_icon_state = "emark3"
 
 /datum/status_effect/eldritch/rust/on_effect()
-	if(!iscarbon(owner))
-		return ..()
-	var/mob/living/carbon/victim = owner
-	victim.adjust_disgust(100)
-	victim.adjust_confusion(10 SECONDS)
+	owner.adjust_disgust(100)
+	owner.adjust_confusion(10 SECONDS)
+	return ..()
 
 // MARK OF VOID
 

@@ -10,9 +10,9 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pathing_pass_method = TURF_PATHING_PASS_PROC
 	plane = TRANSPARENT_FLOOR_PLANE
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
-	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 
 /turf/open/openspace/airless
 	initial_gas_mix = AIRLESS_ATMOS

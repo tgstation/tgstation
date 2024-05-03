@@ -27,7 +27,6 @@
 	var/dug = FALSE
 	/// Percentage chance of receiving a bonus worm
 	var/worm_chance = 30
-	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/misc/asteroid/broken_states()
 	if(initial(dug))

@@ -206,6 +206,13 @@
 /atom/proc/rust_heretic_act()
 	return
 
+/mob/living/proc/do_rust_heretic_act(atom/target)
+	var/datum/antagonist/heretic/heretic_data = IS_HERETIC(src)
+	target.rust_heretic_act(heretic_data?.rust_strength)
+
+/mob/living/rust_walker/do_rust_heretic_act(atom/target)
+	target.rust_heretic_act(4)
+
 ///Called when something resists while this atom is its loc
 /atom/proc/container_resist_act(mob/living/user)
 	return

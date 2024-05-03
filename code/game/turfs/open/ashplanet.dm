@@ -15,9 +15,8 @@
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
-	var/smooth_icon = 'icons/turf/floors/ash.dmi'
 	rust_resistance = RUST_RESISTANCE_ORGANIC
-
+	var/smooth_icon = 'icons/turf/floors/ash.dmi'
 
 /turf/open/misc/ashplanet/Initialize(mapload)
 	. = ..()

@@ -17,6 +17,7 @@
 	clawfootstep = FOOTSTEP_WOOD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 /turf/open/floor/wood/broken_states()
 	return list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
@@ -204,7 +205,7 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	rust_resistance = RUST_RESISTANCE_ORGANIC
+
 
 /turf/open/floor/fake_snow/Initialize(mapload)
 	. = ..()

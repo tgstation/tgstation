@@ -612,30 +612,19 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/acid_melt()
 	return
 
-/// Check if the heretic is strong enough to rust this turf
-/turf/rust_heretic_act(mob/living/source)
-	if(turf_flags & NO_RUST)
+/// Check if the heretic is strong enough to rust this turf, and if so, rusts the turf with an added visual effect.
+/turf/rust_heretic_act(rust_strength = 1)
+	if((turf_flags & NO_RUST) || (rust_strength < rust_resistance))
 		return
-	// Rust walkers and the spreading from an ascended rust heretic rune use this value
-	var/heretic_rust_strength = 4
-	if(!isnull(source))
-		var/datum/antagonist/heretic/heretic_data = IS_HERETIC(source)
-		if(heretic_data)
-			heretic_rust_strength = heretic_data.rust_strength
-
-	if(heretic_rust_strength >= rust_resistance)
-		rust_turf()
-		if(prob(70))
-			new /obj/effect/temp_visual/glowing_rune(src)
+	rust_turf()
 
 /// Override this to change behaviour when being rusted by a heretic
 /turf/proc/rust_turf()
-	if(turf_flags & NO_RUST)
-		return
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		return
 
-	AddElement(/datum/element/rust)
+	AddElement(/datum/element/rust/heretic)
+	new /obj/effect/temp_visual/glowing_rune(src)
 
 /turf/handle_fall(mob/faller)
 	if(has_gravity(src))

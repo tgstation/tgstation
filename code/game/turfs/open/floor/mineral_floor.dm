@@ -13,9 +13,10 @@
 	name = "mineral floor"
 	icon_state = null
 	material_flags = MATERIAL_EFFECTS
+	rust_resistance = RUST_RESISTANCE_BASIC
 	var/list/icons
 	tiled_dirt = FALSE
-	rust_resistance = RUST_RESISTANCE_BASIC
+
 
 
 /turf/open/floor/mineral/Initialize(mapload)

@@ -14,9 +14,9 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_GRASS
 	canSmoothWith = SMOOTH_GROUP_FLOOR_GRASS + SMOOTH_GROUP_CLOSED_TURFS
 	layer = HIGH_TURF_LAYER
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 	damaged_dmi = 'icons/turf/damaged.dmi'
 	var/smooth_icon = 'icons/turf/floors/grass.dmi'
-	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/misc/grass/broken_states()
 	return list("grass_damaged")
