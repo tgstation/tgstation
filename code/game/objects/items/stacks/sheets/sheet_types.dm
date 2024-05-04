@@ -774,10 +774,14 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 
 	// As bone and sinew have just a little too many recipes for this, we'll just split them up.
 	// Sinew slapcrafting will mostly-sinew recipes, and bones will have mostly-bones recipes.
-	var/static/list/slapcraft_recipe_list = list(\
-		/datum/crafting_recipe/bonedagger, /datum/crafting_recipe/bonespear, /datum/crafting_recipe/boneaxe,\
-		/datum/crafting_recipe/bonearmor, /datum/crafting_recipe/skullhelm, /datum/crafting_recipe/bracers
-		)
+	var/static/list/slapcraft_recipe_list = list(
+		/datum/crafting_recipe/bonearmor,
+		/datum/crafting_recipe/boneaxe,
+		/datum/crafting_recipe/bonedagger,
+		/datum/crafting_recipe/bonespear,
+		/datum/crafting_recipe/bracers,
+		/datum/crafting_recipe/skullhelm,
+	)
 
 	AddComponent(
 		/datum/component/slapcrafting,\
