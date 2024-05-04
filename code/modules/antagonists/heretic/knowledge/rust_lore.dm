@@ -325,6 +325,7 @@
 	var/third_third = turfs.Copy(round(length(turfs) * 0.6), length(turfs))
 	for(var/turf/turf as anything in first_third)
 		turf.rust_heretic_act(5)
+		CHECK_TICK
 	for(var/turf/turf as anything in second_third)
 		addtimer(CALLBACK(turf, TYPE_PROC_REF(/atom, rust_heretic_act), 5), 5 SECONDS * 0.33)
 	for(var/turf/turf as anything in third_third)
