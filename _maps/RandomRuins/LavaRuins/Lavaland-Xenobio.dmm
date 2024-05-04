@@ -1,0 +1,89 @@
+"bR" = (/turf/open/floor/iron,/area/ruin/powered)
+"ec" = (/obj/item/storage/toolbox/mechanical,/turf/open/floor/iron,/area/ruin/powered)
+"ek" = (/obj/machinery/monkey_recycler,/turf/open/floor/iron,/area/ruin/powered)
+"eE" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/misc/basalt,/area/lavaland/surface)
+"fd" = (/obj/structure/cable,/obj/structure/table/reinforced,/obj/item/stack/sheet/iron/ten,/obj/item/stack/sheet/iron/ten,/obj/item/stack/sheet/iron/ten,/obj/item/stack/sheet/glass/fifty,/obj/item/experi_scanner,/turf/open/floor/iron,/area/ruin/powered)
+"gJ" = (/obj/machinery/power/smes/full,/turf/open/floor/iron,/area/ruin/powered)
+"jt" = (/obj/machinery/smartfridge/extract,/turf/open/floor/iron,/area/ruin/powered)
+"jT" = (/obj/machinery/power/terminal,/obj/machinery/power/apc/auto_name/directional/south,/obj/structure/cable,/turf/open/floor/iron,/area/ruin/powered)
+"kN" = (/obj/machinery/door/airlock,/obj/machinery/door/firedoor,/turf/open/floor/iron,/area/ruin/powered)
+"ls" = (/obj/structure/table/reinforced,/obj/item/reagent_containers/dropper,/obj/item/storage/box/monkeycubes,/obj/item/storage/box/monkeycubes,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron,/area/ruin/powered)
+"mB" = (/obj/machinery/power/port_gen/pacman/super,/obj/item/stack/sheet/mineral/plasma/thirty,/turf/open/floor/iron,/area/ruin/powered)
+"nm" = (/obj/machinery/camera/autoname/directional{dir = 8},/turf/open/floor/iron,/area/ruin/powered)
+"nJ" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/engineering/glass,/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron,/area/ruin/powered)
+"pe" = (/obj/machinery/power/terminal{dir = 4},/obj/machinery/power/apc/auto_name/directional/east,/obj/structure/cable,/turf/open/floor/iron,/area/ruin/powered)
+"pN" = (/obj/machinery/rnd/production/circuit_imprinter/offstation,/turf/open/floor/iron,/area/ruin/powered)
+"pV" = (/turf/open/floor/engine/xenobio,/area/ruin/powered)
+"qL" = (/turf/open/misc/basalt,/area/template_noop)
+"qM" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron,/area/ruin/powered)
+"sl" = (/obj/machinery/atmospherics/components/unary/thermomachine/freezer,/turf/open/floor/iron,/area/ruin/powered)
+"sK" = (/obj/machinery/door/window,/obj/machinery/door/window{dir = 1},/obj/machinery/door/window{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/engine/xenobio,/area/ruin/powered)
+"ul" = (/obj/structure/rack,/obj/effect/spawner/random/contraband,/turf/open/floor/iron,/area/ruin/powered)
+"uE" = (/obj/structure/cable,/turf/open/floor/iron,/area/ruin/powered)
+"wD" = (/obj/item/stack/sheet/mineral/plasma/five,/obj/structure/table/reinforced,/obj/machinery/reagentgrinder,/obj/item/reagent_containers/cup/beaker/large,/turf/open/floor/iron,/area/ruin/powered)
+"xa" = (/obj/structure/table/reinforced,/obj/item/storage/box/syringes,/turf/open/floor/iron,/area/ruin/powered)
+"xg" = (/obj/structure/flora/bush/grassy/style_random,/mob/living/basic/crab,/turf/open/floor/grass,/area/ruin/powered)
+"xn" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/structure/chair/office{dir = 1},/turf/open/floor/iron,/area/ruin/powered)
+"yP" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron,/area/ruin/powered)
+"Aj" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/hidden,/turf/open/floor/iron,/area/ruin/powered)
+"AR" = (/obj/machinery/atmospherics/components/tank/air,/turf/open/floor/iron,/area/ruin/powered)
+"BT" = (/obj/machinery/atmospherics/components/binary/pump/layer4,/turf/open/floor/iron,/area/ruin/powered)
+"CP" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/engine/xenobio,/area/ruin/powered)
+"Fq" = (/turf/closed/wall,/area/ruin/powered)
+"Fs" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/engine/xenobio,/area/ruin/powered)
+"FF" = (/obj/machinery/door/airlock/external/glass/ruin,/obj/structure/fans/tiny,/turf/open/floor/iron,/area/ruin/powered)
+"GG" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/closed/wall,/area/ruin/powered)
+"HZ" = (/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{dir = 1},/turf/open/misc/basalt,/area/lavaland/surface)
+"If" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,/turf/open/floor/iron,/area/ruin/powered)
+"Ih" = (/obj/machinery/firealarm/directional,/turf/closed/wall,/area/ruin/powered)
+"Ik" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 1},/turf/open/floor/iron,/area/ruin/powered)
+"JA" = (/obj/machinery/camera/autoname/directional{dir = 4},/turf/open/floor/iron,/area/ruin/powered)
+"Ll" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron,/area/ruin/powered)
+"Mb" = (/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron,/area/ruin/powered)
+"MU" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/iron,/area/ruin/powered)
+"MZ" = (/obj/machinery/processor/slime,/turf/open/floor/iron,/area/ruin/powered)
+"NA" = (/obj/machinery/camera/directional/south,/turf/open/floor/iron,/area/ruin/powered)
+"NO" = (/obj/machinery/door/airlock/research/glass{name = "Kill Chamber"; normalspeed = 0},/turf/open/floor/iron,/area/ruin/powered)
+"NZ" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron,/area/ruin/powered)
+"OX" = (/turf/closed/wall/r_wall,/area/ruin/powered)
+"PE" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron,/area/ruin/powered)
+"Qx" = (/obj/machinery/power/terminal,/obj/structure/cable,/turf/open/floor/iron,/area/ruin/powered)
+"QX" = (/obj/machinery/computer/camera_advanced/xenobio,/turf/open/floor/iron,/area/ruin/powered)
+"Ra" = (/obj/effect/mob_spawn/corpse/slime,/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/engine/xenobio,/area/ruin/powered)
+"SF" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 4},/turf/open/floor/iron,/area/ruin/powered)
+"SK" = (/obj/structure/flora/bush/fullgrass,/turf/open/floor/grass,/area/ruin/powered)
+"Tk" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/hidden,/turf/open/floor/iron,/area/ruin/powered)
+"Ui" = (/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{dir = 1},/turf/open/floor/iron,/area/ruin/powered)
+"Up" = (/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on/layer4,/turf/open/floor/engine/xenobio,/area/ruin/powered)
+"Vp" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron,/area/ruin/powered)
+"VJ" = (/obj/machinery/camera/autoname/directional{dir = 8},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron,/area/ruin/powered)
+"Wb" = (/obj/machinery/rnd/production/protolathe/offstation,/turf/open/floor/iron,/area/ruin/powered)
+"Xw" = (/obj/structure/closet/firecloset/full,/turf/open/floor/iron,/area/ruin/powered)
+"Xx" = (/obj/machinery/computer/rdconsole{dir = 8},/turf/open/floor/iron,/area/ruin/powered)
+"Xy" = (/obj/machinery/door/window,/obj/machinery/door/window{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/engine/xenobio,/area/ruin/powered)
+"XK" = (/obj/machinery/door/airlock/external/glass/ruin,/obj/machinery/door/firedoor,/obj/structure/cable,/turf/open/floor/iron,/area/ruin/powered)
+"YV" = (/obj/machinery/firealarm/directional{dir = 8},/turf/closed/wall,/area/ruin/powered)
+"ZV" = (/obj/structure/cable,/obj/structure/cable,/turf/open/floor/iron,/area/ruin/powered)
+
+(1,1,1) = {"
+qLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqL
+qLOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXqLqLqLqLqLqL
+qLOXpVpVpVOXpVpVpVOXpVpVpVOXpVpVpVOXpVpVpVOXqLqLqLqLqLqL
+qLOXpVUppVOXpVUppVOXpVUppVOXpVUppVOXpVUppVOXOXOXOXOXqLqL
+qLOXpVRapVOXpVCPpVOXpVRapVOXpVCPpVOXpVCPpVOXARbRWbOXqLqL
+qLOXFsXyFsOXFsXyFsOXFsXyFsOXFsXyFsOXFssKFsOXBTbRpNOXqLqL
+qLFqbRPEbRbRbRPEbRbRbRPEbRbRbRPEbRbRbRPEJAFqVJIfXxOXqLqL
+qLFqbRPEqMqMqMPEqMqMqMPEMbbRbRPEbRuEuELlLlnJLlLlpeOXqLqL
+qLFqnmyPbRwDxalsQXjtQXSFNZNZNZNZNZLlNZNZbRFqbRIkfdOXqLqL
+qLFqslyPyPyPyPyPxnyPxnyPyPMUMUMUMUuEbRbRbRYVbRbRQxOXqLqL
+qLFqTkbRbRbRbRbRbRbRbRbRyPMUxgSKMUuEbRbRbRFqmBecgJOXqLqL
+qLFqAjNOMUFqbRbRbRbRbRbRyPMUMUMUMUuEbRbRbRFqOXOXOXOXqLqL
+qLFqUibRbRFqbRbRbRbRbRuEVpuEuEuEuEZVbRbRbRFqqLqLqLqLqLqL
+qLFqbRbRbRFqekMZbRNAbRuEyPyPyPbRbRjTbRbRbRFqqLqLqLqLqLqL
+qLFqFqFqFqIhFqFqkNFqFqXKFqFqGGFqFqFqFqFqFqFqqLqLqLqLqLqL
+qLqLqLqLqLqLFqbRbRbRFqbRFqqLeEqLqLqLqLqLqLqLqLqLqLqLqLqL
+qLqLqLqLqLqLFqXwbRulFqFFFqqLHZqLqLqLqLqLqLqLqLqLqLqLqLqL
+qLqLqLqLqLqLFqFqFqFqFqqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqL
+qLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqL
+qLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqL
+"}

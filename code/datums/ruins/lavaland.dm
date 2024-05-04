@@ -316,3 +316,11 @@
 	suffix = "lavaland_surface_mookvillage.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+
+/datum/map_template/ruin/lavaland/xenobio
+	name = "Xenobioruin"
+	id = "lavaxenobio"
+	description = "This is an abandoned xenobiology facility long lost to the wastes but is recoverable"
+	suffix = "Lavaland-Xenobio.dmm"
+	always_place = TRUE
+	allow_duplicates = FALSE
