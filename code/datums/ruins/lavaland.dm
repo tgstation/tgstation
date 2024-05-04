@@ -322,5 +322,4 @@
 	id = "lavaxenobio"
 	description = "This is an abandoned xenobiology facility long lost to the wastes but is recoverable"
 	suffix = "Lavaland-Xenobio.dmm"
-	always_place = TRUE
 	allow_duplicates = FALSE
