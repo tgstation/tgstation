@@ -119,7 +119,7 @@ SUBSYSTEM_DEF(ipintel)
 	var/datum/db_query/query = SSdbcore.NewQuery(
 		"INSERT INTO [format_table_name("ipintel")] ( \
 			ip, \
-			intel, \
+			intel \
 		) VALUES ( \
 			INET_ATON(:address), \
 			:result \
