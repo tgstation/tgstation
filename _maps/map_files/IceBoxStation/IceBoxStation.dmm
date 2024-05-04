@@ -10786,9 +10786,6 @@
 	id_tag = "permaouter";
 	name = "Permabrig Transfer"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "perma-entrance"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/dark/textured,
@@ -17048,11 +17045,11 @@
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "fgJ" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark/textured,
 /area/station/security/execution/transfer)
 "fgQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -17963,8 +17960,8 @@
 /turf/open/floor/iron/grimy,
 /area/station/security/prison/work)
 "fvO" = (
-/obj/structure/closet/secure_closet/brig,
 /obj/machinery/light/directional/north,
+/obj/structure/closet/secure_closet/brig/genpop,
 /turf/open/floor/iron/smooth,
 /area/station/security/execution/transfer)
 "fvR" = (
@@ -18817,6 +18814,11 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
+"fJH" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/prisongate,
+/turf/open/floor/iron/dark/textured,
+/area/station/security/execution/transfer)
 "fJL" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/nitrogen_input{
 	dir = 1
@@ -34244,7 +34246,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
 "kyu" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/closet/secure_closet/brig/genpop,
 /turf/open/floor/iron/smooth,
 /area/station/security/execution/transfer)
 "kyy" = (
@@ -50115,15 +50117,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "poe" = (
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "permainner";
-	name = "Permabrig Transfer"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "perma-entrance"
-	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/execution/transfer)
 "pog" = (
@@ -58939,6 +58933,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
 /turf/open/floor/iron/smooth,
 /area/station/security/execution/transfer)
 "rWW" = (
@@ -61785,18 +61782,10 @@
 	},
 /area/station/security/office)
 "sNr" = (
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "permainner";
-	name = "Permabrig Transfer"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "perma-entrance"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/siding/red/corner{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/execution/transfer)
 "sNs" = (
@@ -65866,6 +65855,7 @@
 	pixel_y = 8
 	},
 /obj/item/storage/box/prisoner,
+/obj/item/paper/fluff/genpop_instructions,
 /turf/open/floor/iron/smooth,
 /area/station/security/execution/transfer)
 "ufN" = (
@@ -173221,7 +173211,7 @@ sNr
 pdz
 eic
 mLT
-dha
+fJH
 nzl
 vpi
 uME
