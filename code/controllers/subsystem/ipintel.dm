@@ -121,7 +121,7 @@ SUBSYSTEM_DEF(ipintel)
 			ip, \
 			intel, \
 		) VALUES ( \
-			INET_ATON(:address) \
+			INET_ATON(:address), \
 			:result, \
 		)", list(
 			"address" = intel.address,
