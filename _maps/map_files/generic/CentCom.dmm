@@ -697,13 +697,6 @@
 /obj/structure/railing,
 /turf/open/lava/plasma/ice_moon,
 /area/centcom/syndicate_mothership/control)
-"bS" = (
-/obj/structure/hedge,
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 4
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_spawn)
 "bT" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -1362,6 +1355,11 @@
 	},
 /turf/open/floor/carpet,
 /area/centcom/syndicate_mothership/control)
+"dG" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/ghost_spawn)
 "dH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -1442,7 +1440,7 @@
 	dir = 4
 	},
 /turf/open/floor/glass/reinforced,
-/area/centcom/central_command_areas/ghost_spawn)
+/area/centcom/central_command_areas/hall)
 "dP" = (
 /obj/machinery/dna_scannernew,
 /turf/open/floor/circuit,
@@ -2172,11 +2170,6 @@
 /obj/machinery/computer/records/security/laptop,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
-"gg" = (
-/obj/structure/hedge,
-/obj/effect/turf_decal/siding/wood/corner,
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_spawn)
 "gh" = (
 /obj/structure/sign/poster/contraband/revolver{
 	pixel_y = -32
@@ -2763,11 +2756,6 @@
 /obj/item/clipboard,
 /turf/open/indestructible/hotelwood,
 /area/centcom/central_command_areas/admin)
-"hL" = (
-/obj/structure/flora/tree/jungle/style_3,
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/grass,
-/area/centcom/central_command_areas/ghost_spawn)
 "hM" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -4086,7 +4074,7 @@
 	dir = 4
 	},
 /turf/open/floor/glass/reinforced,
-/area/centcom/central_command_areas/ghost_spawn)
+/area/centcom/central_command_areas/hall)
 "lB" = (
 /obj/effect/turf_decal/siding/wideplating{
 	dir = 1
@@ -4738,13 +4726,6 @@
 /obj/structure/closet/crate/cardboard/mothic,
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/control)
-"np" = (
-/obj/structure/hedge,
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 8
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_spawn)
 "nq" = (
 /obj/structure/stone_tile/slab,
 /turf/open/misc/snow/actually_safe,
@@ -4875,7 +4856,7 @@
 	dir = 1
 	},
 /turf/open/floor/glass/reinforced,
-/area/centcom/central_command_areas/ghost_spawn)
+/area/centcom/central_command_areas/hall)
 "nO" = (
 /obj/structure/cannon{
 	dir = 4;
@@ -6717,6 +6698,10 @@
 /obj/structure/closet/crate/cardboard,
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/control)
+"sO" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/ghost_spawn)
 "sP" = (
 /obj/structure/hedge,
 /obj/effect/turf_decal/siding/dark{
@@ -7390,7 +7375,7 @@
 "uC" = (
 /obj/structure/railing/wood,
 /turf/open/floor/glass/reinforced,
-/area/centcom/central_command_areas/ghost_spawn)
+/area/centcom/central_command_areas/hall)
 "uD" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/records/medical/laptop,
@@ -9370,7 +9355,7 @@
 	dir = 8
 	},
 /turf/open/floor/glass/reinforced,
-/area/centcom/central_command_areas/ghost_spawn)
+/area/centcom/central_command_areas/hall)
 "Ac" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
@@ -10165,7 +10150,7 @@
 	dir = 1
 	},
 /turf/open/floor/glass/reinforced,
-/area/centcom/central_command_areas/ghost_spawn)
+/area/centcom/central_command_areas/hall)
 "Cj" = (
 /obj/effect/turf_decal/siding/dark/corner{
 	dir = 8
@@ -10738,7 +10723,7 @@
 	dir = 1
 	},
 /turf/open/floor/glass/reinforced,
-/area/centcom/central_command_areas/ghost_spawn)
+/area/centcom/central_command_areas/hall)
 "DS" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -11291,7 +11276,7 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/centcom_teleporter/spawn_area,
 /turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_spawn)
+/area/centcom/central_command_areas/hall)
 "Fz" = (
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership)
@@ -12928,13 +12913,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/control)
-"Kg" = (
-/obj/structure/hedge,
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 1
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/ghost_spawn)
 "Kh" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 10
@@ -14570,7 +14548,7 @@
 	dir = 8
 	},
 /turf/open/floor/glass/reinforced,
-/area/centcom/central_command_areas/ghost_spawn)
+/area/centcom/central_command_areas/hall)
 "OC" = (
 /obj/structure/table/reinforced,
 /obj/item/toy/plush/space_lizard_plushie{
@@ -15645,7 +15623,7 @@
 /obj/machinery/light/floor/has_bulb,
 /obj/structure/flora/bush/large/style_3,
 /turf/open/floor/grass,
-/area/centcom/central_command_areas/ghost_spawn)
+/area/centcom/central_command_areas/hall)
 "RF" = (
 /obj/structure/table/reinforced,
 /obj/item/crowbar/red,
@@ -61205,13 +61183,13 @@ An
 xT
 bw
 dE
-rj
-rj
+sO
+sO
 nk
 iu
 Xc
-rj
-rj
+sO
+sO
 Of
 xu
 VF
@@ -61462,13 +61440,13 @@ An
 An
 in
 mQ
-rj
+sO
 uA
-Kg
+TW
 RE
-np
+FK
 nF
-io
+dG
 wc
 hE
 lI
@@ -61979,7 +61957,7 @@ BE
 nk
 wH
 DR
-hL
+YF
 uC
 wH
 Fx
@@ -62490,13 +62468,13 @@ An
 An
 DO
 mQ
-rj
+sO
 zJ
-bS
+Tr
 RE
-gg
+kO
 nR
-io
+dG
 wc
 hE
 lI
@@ -62747,13 +62725,13 @@ An
 xo
 nd
 dE
-rj
-rj
+sO
+sO
 nk
 iu
 Xc
-rj
-rj
+sO
+sO
 eP
 Ut
 fe
