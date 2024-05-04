@@ -1,3 +1,4 @@
+"ac" = (/obj/machinery/camera/motion/directional/north,/turf/open/floor/engine/xenobio,/area/ruin/powered)
 "bR" = (/turf/open/floor/iron,/area/ruin/powered)
 "ec" = (/obj/item/storage/toolbox/mechanical,/turf/open/floor/iron,/area/ruin/powered)
 "ek" = (/obj/machinery/monkey_recycler,/turf/open/floor/iron,/area/ruin/powered)
@@ -33,6 +34,7 @@
 "Fs" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/engine/xenobio,/area/ruin/powered)
 "FF" = (/obj/machinery/door/airlock/external/glass/ruin,/obj/structure/fans/tiny,/turf/open/floor/iron,/area/ruin/powered)
 "GG" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/closed/wall,/area/ruin/powered)
+"Ho" = (/obj/machinery/camera/motion/directional/south,/turf/open/floor/iron,/area/ruin/powered)
 "HZ" = (/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{dir = 1},/turf/open/misc/basalt,/area/lavaland/surface)
 "If" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,/turf/open/floor/iron,/area/ruin/powered)
 "Ih" = (/obj/machinery/firealarm/directional,/turf/closed/wall,/area/ruin/powered)
@@ -68,7 +70,7 @@
 (1,1,1) = {"
 qLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqLqL
 qLOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXqLqLqLqLqLqL
-qLOXpVpVpVOXpVpVpVOXpVpVpVOXpVpVpVOXpVpVpVOXqLqLqLqLqLqL
+qLOXpVacpVOXpVacpVOXpVacpVOXpVacpVOXpVacpVOXqLqLqLqLqLqL
 qLOXpVUppVOXpVUppVOXpVUppVOXpVUppVOXpVUppVOXOXOXOXOXqLqL
 qLOXpVRapVOXpVCPpVOXpVRapVOXpVCPpVOXpVCPpVOXARbRWbOXqLqL
 qLOXFsXyFsOXFsXyFsOXFsXyFsOXFsXyFsOXFssKFsOXBTbRpNOXqLqL
@@ -79,7 +81,7 @@ qLFqslyPyPyPyPyPxnyPxnyPyPMUMUMUMUuEbRbRbRYVbRbRQxOXqLqL
 qLFqTkbRbRbRbRbRbRbRbRbRyPMUxgSKMUuEbRbRbRFqmBecgJOXqLqL
 qLFqAjNOMUFqbRbRbRbRbRbRyPMUMUMUMUuEbRbRbRFqOXOXOXOXqLqL
 qLFqUibRbRFqbRbRbRbRbRuEVpuEuEuEuEZVbRbRbRFqqLqLqLqLqLqL
-qLFqbRbRbRFqekMZbRNAbRuEyPyPyPbRbRjTbRbRbRFqqLqLqLqLqLqL
+qLFqbRHobRFqekMZbRNAbRuEyPyPyPbRbRjTbRbRbRFqqLqLqLqLqLqL
 qLFqFqFqFqIhFqFqkNFqFqXKFqFqGGFqFqFqFqFqFqFqqLqLqLqLqLqL
 qLqLqLqLqLqLFqbRbRbRFqbRFqqLeEqLqLqLqLqLqLqLqLqLqLqLqLqL
 qLqLqLqLqLqLFqXwbRulFqFFFqqLHZqLqLqLqLqLqLqLqLqLqLqLqLqL
