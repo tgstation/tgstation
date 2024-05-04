@@ -210,8 +210,9 @@
 
 	var/largest_change = max(abs(offset_x), abs(offset_y))
 	var/max_allowed_dist = (glide_rate / world.tick_lag) + 1
-	// If we aren't already moving/don't allow parallax, have made some movement, and that movement was smaller then our "glide" size, animate
+	/* // If we aren't already moving/don't allow parallax, have made some movement, and that movement was smaller then our "glide" size, animate
 	var/run_parralax = (C.do_parallax_animations && glide_rate && !areaobj.parallax_movedir && C.dont_animate_parallax <= world.time && largest_change <= max_allowed_dist)
+	*/
 
 	for(var/atom/movable/screen/parallax_layer/parallax_layer as anything in C.parallax_layers)
 		var/our_speed = parallax_layer.speed
@@ -242,11 +243,13 @@
 
 		parallax_layer.screen_loc = "CENTER-7:[round(parallax_layer.offset_x, 1)],CENTER-7:[round(parallax_layer.offset_y, 1)]"
 
+		/*
 		// We're going to use a transform to "glide" that last movement out, so it looks nicer
 		// Don't do any animates if we're not actually moving enough distance yeah? thanks lad
 		if(run_parralax && (largest_change * our_speed > 1))
 			parallax_layer.transform = matrix(1,0,change_x, 0,1,change_y)
 			animate(parallax_layer, transform=matrix(), time = glide_rate)
+		*/
 
 /atom/movable/proc/update_parallax_contents()
 	for(var/mob/client_mob as anything in client_mobs_in_contents)
