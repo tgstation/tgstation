@@ -162,3 +162,16 @@
 /datum/id_trim/away/the_outlet/mad_manager
 	assignment = "The Mad Manager"
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MEDICAL, ACCESS_AWAY_SEC)
+
+//Haunted Trading Post IDs                                 //
+/datum/id_trim/away/hauntedtradingpost
+	assignment = "Donk Co. Employee"
+	department_color = COLOR_ENGINEERING_ORANGE
+	sechud_icon_state = SECHUD_SYNDICATE
+	threat_modifier = 5
+	access = list(ACCESS_SYNDICATE)
+
+/datum/id_trim/away/hauntedtradingpost/boss
+	assignment = "Donk Co. Executive"
+	access = list(ACCESS_SYNDICATE, ACCESS_AWAY_COMMAND)
+//                                                         //
