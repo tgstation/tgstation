@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed floorpills rolling random drinks that should've been filtered out (but weren't due to a bad check)."

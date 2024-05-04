@@ -1,6 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - rscadd: "Adds a new job, Security Assistants! They're basically hall monitors, with basic security and permabrig access, along with some basic tools to abuse the clown- err, help detain ner-do-wells with!"
-  - rscadd: "Added the Citationinator, a handheld device that can issue fines to people!"
-  - rscadd: "Added a new \"Permabrig\" access, used for allowing access to the permabrig without granting full brig access."
