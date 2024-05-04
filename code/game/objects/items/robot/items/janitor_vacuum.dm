@@ -53,14 +53,19 @@
 	set category = "Object"
 	set name = "Take Hose"
 
-	var/obj/item/borg/borg_vacuum/vacuum = locate() in src.contents
-	if(!iscarbon(usr))
-		return NONE
-	if(!usr.can_perform_action(src) || !isturf(loc))
-		return NONE
-	if(!vacuum)
-		return NONE
-	return vacuum.summon_hose(usr)
+	for(var/obj/item/robot_model/janitor/model in src.contents)
+		var/obj/item/borg/borg_vacuum/vacuum = locate() in model.basic_modules
+
+		if(!iscarbon(usr))
+			return NONE
+		if(!usr.can_perform_action(src) || !isturf(loc))
+			return NONE
+		if(!vacuum)
+			return NONE
+		if(!vacuum.trash)
+			vacuum.locate_trashbag(src)
+
+		return vacuum.summon_hose(usr)
 
 /obj/item/borg/borg_vacuum/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/mob/living/target = interacting_with
@@ -68,6 +73,8 @@
 		return ITEM_INTERACT_BLOCKING
 	if(on)
 		balloon_alert(user, "already deployed!")
+	if(!trash)
+		locate_trashbag(user)
 	summon_hose(target)
 	return ITEM_INTERACT_BLOCKING
 
@@ -127,16 +134,16 @@
 
 /**
  * LOCATE THE TRASHBAG
- * Used by summon_hose to ensure it always tries to find one!
+ * Used when the hose is deployed to ensure it always tries to find one!
  */
 
 /obj/item/borg/borg_vacuum/proc/locate_trashbag(mob/user)
 	var/mob/living/person = user
-	if(trash)
-		return NONE
-	for(var/obj/item/storage/bag/trash/trash_bag in person.contents) // Get the storage datum of the trashbag
-		trash = trash_bag.atom_storage
-		message_admins("[trash], [trash_bag], [person]")
+	if(issilicon(person)) // Get the storage datum of the trashbag
+		for(var/obj/item/robot_model/janitor/trash_location in person.contents)
+			for(var/obj/item/storage/bag/trash/trash_bag in trash_location.basic_modules)
+				trash = trash_bag.atom_storage
+				message_admins("[trash], [trash_bag], [person]")
 /**
  * INTERACTION CODE
  * Allows the player to recall the hose and toggle the locks with an alt click
@@ -160,7 +167,7 @@
 		cleaner.return_to_borg(sound = FALSE)
 		locked = TRUE
 		return CLICK_ACTION_SUCCESS
-	locked = !locked
+	locked = !locked // Toggle the lock
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	return CLICK_ACTION_SUCCESS
 
@@ -176,6 +183,7 @@
 	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "vacuum"
 	inhand_icon_state = "vacuum"
+	lefthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	/// Cleaning modes - MODE_VACUUM and MODE_MOP
