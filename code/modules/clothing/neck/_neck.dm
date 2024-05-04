@@ -67,7 +67,7 @@
 
 /obj/item/clothing/neck/tie/examine(mob/user)
 	. = ..()
-	. += span_notice("It can be worn above or below your suit. Alt-Right-click to toggle.")
+	. += span_notice("The tie can be worn above or below your suit. Alt-Right-click to toggle.")
 	if(clip_on)
 		. += span_notice("Looking closely, you can see that it's actually a cleverly disguised clip-on.")
 	else if(!is_tied)
@@ -137,6 +137,17 @@
 	else
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Tie"
 	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/clothing/neck/tie/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+	var/mob/living/carbon/human/wearer = loc
+	if(!ishuman(wearer) || !wearer.w_uniform)
+		return
+	var/obj/item/clothing/under/undershirt = wearer.w_uniform
+	if(!istype(undershirt) || !LAZYLEN(undershirt.attached_accessories))
+		return
+	if(alternate_worn_layer)
+		. += undershirt.accessory_overlay
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"
