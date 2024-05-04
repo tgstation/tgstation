@@ -1,4 +1,0 @@
-author: "mogeoko"
-delete-after: True
-changes:
-  - bugfix: "Ventcrawling mobs can change Z-level using multiz-decks again."

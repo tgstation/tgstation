@@ -90,3 +90,33 @@
   - balance: weighted some of the implants that Machine Blessing can give
   mc-oofert:
   - image: added directional sprites for radiation shutters
+2024-05-04:
+  Ben10Omintrix:
+  - bugfix: mobs in the same faction will no longer be at odds against one another
+  - bugfix: mobs can now perform behaviors alongside searching for targets
+  - bugfix: mobs will no longer be starting and stopping when chasing targets
+  Ghommie:
+  - rscadd: Adds an Icebox-specific station trait that brightens outdoors areas on
+      the surface level.
+  Ikalpo:
+  - bugfix: Stage 2 singularities should no longer escape containment
+  Melbert:
+  - bugfix: New machine god blessings now actually works probably
+  Profakos:
+  - balance: Bitrunners can now earn Bepis disks, once per medium domain or above,
+      if they scored at least an A.
+  - rscdel: Bitrunners can not buy Bepis disks from their vendors.
+  Ryll/Shaps:
+  - bugfix: Pacifists can no longer endlessly spam the backblast functionality of
+      loaded rocket launchers that they cannot actually fire
+  Watermelon914:
+  - bugfix: Fixed lua scripts breaking when turfs with registered signals get deleted.
+  Xander3359:
+  - bugfix: You can no longer bypass construction restrictions via the crafting menu
+  cnleth:
+  - bugfix: Fire ant colonies created by burning regular ants will now contain fire
+      ants as their reagent
+  jlsnow301:
+  - bugfix: Candy corn is once again available to detective fedoras
+  mogeoko:
+  - bugfix: Ventcrawling mobs can change Z-level using multiz-decks again.
