@@ -75,8 +75,9 @@
 			Detach(source)
 			return
 
+/// Prevents placing floor tiles on rusted turf
 /datum/element/rust/proc/on_attackby(datum/source, obj/item/item, mob/user)
-	SIGNALER_HANDLER
+	SIGNAL_HANDLER
 	if(istype(item, /obj/item/stack/tile))
 		user.balloon_alert(user, "floor too rusted")
 		return COMPONENT_NO_AFTERATTACK
