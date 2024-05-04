@@ -15,13 +15,19 @@
 
 /datum/targeting_strategy/basic
 	/// When we do our basic faction check, do we look for exact faction matches?
+	/// Factions are only considered for neutral mobs, so this doesn't apply to friends and enemies.
 	var/check_factions_exactly = FALSE
 	/// Whether we care for seeing the target or not
 	var/ignore_sight = FALSE
+
+	///what it means to us for a matching faction
+	var/faction_target_flags = NONE
+
+	///whether friends, foes, and those who are neither should be targets
+	var/relationship_target_flags = TARGET_NEUTRALS | TARGET_FOES
+
 	/// Blackboard key containing the minimum stat of a living mob to target
 	var/minimum_stat_key = BB_TARGET_MINIMUM_STAT
-	/// If this blackboard key is TRUE, makes us only target wounded mobs
-	var/target_wounded_key
 
 /datum/targeting_strategy/basic/can_attack(mob/living/living_mob, atom/the_target, vision_range)
 	var/datum/ai_controller/basic_controller/our_controller = living_mob.ai_controller
@@ -57,11 +63,9 @@
 
 	if(isliving(the_target)) //Targeting vs living mobs
 		var/mob/living/living_target = the_target
-		if(faction_check(our_controller, living_mob, living_target))
+		if(!is_relationship_target(our_controller, living_mob, living_target))
 			return FALSE
 		if(living_target.stat > our_controller.blackboard[minimum_stat_key])
-			return FALSE
-		if(target_wounded_key && our_controller.blackboard[target_wounded_key] && living_target.health == living_target.maxHealth)
 			return FALSE
 
 		return TRUE
@@ -84,11 +88,27 @@
 
 	return FALSE
 
-/// Returns true if the mob and target share factions
-/datum/targeting_strategy/basic/proc/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
-	if (controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || controller.blackboard[BB_TEMPORARILY_IGNORE_FACTION])
-		return FALSE
-	return living_mob.faction_check_atom(the_target, exact_match = check_factions_exactly)
+/// Returns a boolean for whether the mob has a targetable relationship to the controller.
+/// Neutral mobs are also checked for factions
+/datum/targeting_strategy/basic/proc/is_relationship_target(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
+	/// check for special relations
+
+	// faction members are naturally treated as friends
+	var/is_friend = \
+	(controller.blackboard_key_exists(BB_FRIENDS) && (the_target in controller.blackboard[BB_FRIENDS])) \
+	|| living_mob.faction_check_atom(the_target, exact_match = check_factions_exactly)
+
+	var/is_foe = FALSE
+
+	if(relationship_target_flags & TARGET_FRIENDS)
+		return TRUE
+	if(controller.blackboard_key_exists(BB_FOES))
+		is_foe = (the_target in controller.blackboard[BB_FOES])
+		if(relationship_target_flags & TARGET_FOES)
+			return TRUE
+	if(relationship_target_flags & TARGET_NEUTRALS && (!is_friend && !is_foe))
+		return TRUE //already failed a faction check by not being a friend
+	return FALSE
 
 /// Subtype which searches for mobs of a size relative to ours
 /datum/targeting_strategy/basic/of_size
@@ -122,8 +142,32 @@
 /datum/targeting_strategy/basic/of_size/smaller
 	inclusive = FALSE
 
-/// Makes the mob only attack their own faction. Useful mostly if their attacks do something helpful (e.g. healing touch).
-/datum/targeting_strategy/basic/same_faction
+/// Makes the mob only target their friends, which also includes faction members. Useful for supportive plans!
+/// cannot have an early return, because faction members are friends
+/datum/targeting_strategy/basic/friends
+	relationship_target_flags = TARGET_FRIENDS
 
-/datum/targeting_strategy/basic/same_faction/faction_check(mob/living/living_mob, mob/living/the_target)
-	return !..() // inverts logic to ONLY target mobs that share a faction
+/// Makes the mob only target anyone who is not a foe.
+/datum/targeting_strategy/basic/not_foes
+	relationship_target_flags = TARGET_FRIENDS | TARGET_NEUTRALS
+
+/// Makes the mob only attack their enemies instead of also including neutral mobs. Useful for retaliation!
+/datum/targeting_strategy/basic/foes
+	relationship_target_flags = TARGET_FOES
+
+/datum/targeting_strategy/basic/foes/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+	var/datum/ai_controller/basic_controller/our_controller = living_mob.ai_controller
+	if(!our_controller || !our_controller.blackboard_key_exists(BB_FOES))
+		return FALSE //saves a lot of processing to early return when we know we won't find any target
+	. = ..()
+
+/datum/targeting_strategy/basic/any_relationship
+	relationship_target_flags = TARGET_FRIENDS | TARGET_NEUTRALS | TARGET_FOES
+
+/// closed turfs are valid targets!
+/datum/targeting_strategy/basic/closed_turfs
+
+/datum/targeting_strategy/basic/closed_turfs/can_attack(mob/living/living_mob, atom/target, vision_range)
+	if(isclosedturf(target))
+		return TRUE
+	return ..()

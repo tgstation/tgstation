@@ -12,7 +12,7 @@
 /// if the pawn wants items more than fighting, this will prevent hostile mobs from attacking targets holding what they want.
 /datum/targeting_strategy/basic/allow_items/friendly_for_items
 	/// if this pawn considers some mobs as enemies it wouldn't stop fighting, this key points to that list of enemies
-	var/enemy_list_key = BB_ENEMIES
+	var/enemy_list_key = BB_FOES
 	/// types of items the mob is interested in, not attacking
 	var/wanted_items_key = BB_WANTED_ITEMS
 

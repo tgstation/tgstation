@@ -1,7 +1,7 @@
 /datum/ai_controller/basic_controller/pet_cult
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/cultist,
-		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/cultist,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FRIENDLY_MESSAGE = "eagerly awaits your command...",
 	)
 
@@ -27,12 +27,6 @@
 	if(was_pulling == blackboard[BB_DEAD_CULTIST])
 		clear_blackboard_key(BB_DEAD_CULTIST)
 
-///targeting strat to attack non cultists
-/datum/targeting_strategy/basic/cultist
-
-/datum/targeting_strategy/basic/cultist/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
-	return IS_CULTIST_OR_CULTIST_MOB(the_target)
-
 ///befriend all cultists around us!
 /datum/ai_planning_subtree/befriend_cultists
 
@@ -51,7 +45,10 @@
 /datum/ai_behavior/find_and_set/friendly_cultist/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/mob/living/living_pawn = controller.pawn
 	for(var/mob/living/carbon/possible_cultist in oview(search_range, controller.pawn))
-		if(IS_CULTIST(possible_cultist) && !(living_pawn.faction.Find(REF(possible_cultist))))
+		if(!IS_CULTIST(possible_cultist))
+			continue
+		var/isnt_friended = (!controller.blackboard_key_exists(BB_FRIENDS) || !(possible_cultist in controller.blackboard[BB_FRIENDS]))
+		if(isnt_friended)
 			return possible_cultist
 
 	return null

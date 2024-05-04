@@ -6,7 +6,7 @@
 /datum/ai_controller/basic_controller/gutlunch/gutlunch_warrior
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/mining/gutlunch/milk),
 		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/mining/gutlunch/grub),
 		BB_MAX_CHILDREN = 5,

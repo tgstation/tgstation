@@ -4,7 +4,7 @@
 /datum/ai_controller/basic_controller/bot/cleanbot
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
-		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_UNREACHABLE_LIST_COOLDOWN = 3 MINUTES,
 		BB_SALUTE_MESSAGES = list(

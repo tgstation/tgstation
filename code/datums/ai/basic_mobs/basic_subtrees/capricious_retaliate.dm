@@ -2,8 +2,6 @@
 /datum/ai_planning_subtree/capricious_retaliate
 	/// Blackboard key which tells us how to select valid targets
 	var/targeting_strategy_key = BB_TARGETING_STRATEGY
-	/// Whether we should skip checking faction for our decision
-	var/ignore_faction = TRUE
 
 /datum/ai_planning_subtree/capricious_retaliate/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
@@ -15,12 +13,12 @@
 
 /datum/ai_behavior/capricious_retaliate/perform(seconds_per_tick, datum/ai_controller/controller, targeting_strategy_key, ignore_faction)
 	var/atom/pawn = controller.pawn
-	if (controller.blackboard_key_exists(BB_ENEMIES))
+	if (controller.blackboard_key_exists(BB_FOES))
 		var/deaggro_chance = controller.blackboard[BB_RANDOM_DEAGGRO_CHANCE] || 10
 		if (!SPT_PROB(deaggro_chance, seconds_per_tick))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 		pawn.visible_message(span_notice("[pawn] calms down.")) // We can blackboard key this if anyone else actually wants to customise it
-		controller.clear_blackboard_key(BB_ENEMIES)
+		controller.clear_blackboard_key(BB_FOES)
 		controller.CancelActions() // Otherwise they will try and get one last kick in
 		return AI_BEHAVIOR_DELAY
 
@@ -37,8 +35,6 @@
 	var/datum/targeting_strategy/target_helper = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 
 	var/mob/living/final_target = null
-	if (ignore_faction)
-		controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, TRUE)
 	while (isnull(final_target) && length(potential_targets))
 		var/mob/living/test_target = pick_n_take(potential_targets)
 		if (target_helper.can_attack(pawn, test_target, vision_range = aggro_range))
@@ -48,17 +44,10 @@
 		failed_targeting(pawn)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	controller.insert_blackboard_key_lazylist(BB_ENEMIES, final_target)
+	controller.become_hostile(final_target)
 	pawn.visible_message(span_warning("[pawn] glares grumpily at [final_target]!"))
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /// Called if we try but fail to target something
 /datum/ai_behavior/capricious_retaliate/proc/failed_targeting(atom/pawn)
 	pawn.visible_message(span_notice("[pawn] grumbles.")) // We're pissed off but with no outlet to vent our frustration upon
-
-/datum/ai_behavior/capricious_retaliate/finish_action(datum/ai_controller/controller, succeeded, ignore_faction)
-	. = ..()
-	if (succeeded || !ignore_faction)
-		return
-	var/usually_ignores_faction = controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || FALSE
-	controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, usually_ignores_faction)

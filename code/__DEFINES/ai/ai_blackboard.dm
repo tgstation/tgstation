@@ -18,7 +18,7 @@
 /// generic list of things the pawn considers a friend (simplest terms, will not target when it normally wouldn't)
 #define BB_FRIENDS "BB_friends"
 /// generic list of things the pawn considers an enemy (simplest terms, will target when it normally wouldn't)
-#define BB_ENEMIES "BB_enemies"
+#define BB_FOES "BB_foes"
 
 /// Store a single or list of emotes at this key
 #define BB_EMOTE_KEY "BB_emotes"
@@ -52,7 +52,12 @@
 ///Targeting subtrees
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
 #define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
+/// Path to the main targeting strategy a mob uses
 #define BB_TARGETING_STRATEGY "targeting_strategy"
+/// Some mobs need multiple targeting strategies, this is a generic key for a secondary one.
+#define BB_PET_TARGETING_STRATEGY "BB_secondary_targeting"
+
+
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"
@@ -124,11 +129,6 @@
 #define BB_MOD_IMPLANT "BB_mod_implant"
 ///Range for a MOD AI controller.
 #define MOD_AI_RANGE 200
-
-///should we skip the faction check for the targeting strategy?
-#define BB_ALWAYS_IGNORE_FACTION "BB_always_ignore_factions"
-///are we in some kind of temporary state of ignoring factions when targeting? can result in volatile results if multiple behaviours touch this
-#define BB_TEMPORARILY_IGNORE_FACTION "BB_temporarily_ignore_factions"
 
 ///currently only used by clowns, a list of what can the mob speak randomly
 #define BB_BASIC_MOB_SPEAK_LINES "BB_speech_lines"

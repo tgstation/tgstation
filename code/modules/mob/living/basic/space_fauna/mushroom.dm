@@ -57,7 +57,7 @@
 
 /datum/ai_controller/basic_controller/mushroom
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mushroom,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/friends,
 		BB_TARGET_MINIMUM_STAT = DEAD,
 	)
 
@@ -71,17 +71,14 @@
 
 
 /datum/targeting_strategy/basic/mushroom
-
-///we only attacked another mushrooms
-/datum/targeting_strategy/basic/mushroom/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
-	return !living_mob.faction_check_atom(the_target, exact_match = check_factions_exactly)
+	/// makes sure this mob only attacks other mushrooms
+	check_factions_exactly = TRUE
 
 /datum/ai_planning_subtree/find_and_hunt_target/mushroom_food
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
 	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/mushroom_food
 	hunt_targets = list(/obj/item/food/grown/mushroom)
 	hunt_range = 6
-
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/mushroom_food
 	hunt_cooldown = 15 SECONDS

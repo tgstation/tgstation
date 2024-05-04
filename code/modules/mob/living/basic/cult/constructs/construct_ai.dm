@@ -6,9 +6,8 @@
  */
 /datum/ai_controller/basic_controller/artificer
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/same_faction/construct,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/friends_only/injured_constructs,
 		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_TARGET_WOUNDED_ONLY = TRUE,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -81,10 +80,12 @@
 	)
 
 /// Targeting strategy that will only allow mobs that constructs can heal.
-/datum/targeting_strategy/basic/same_faction/construct
-	target_wounded_key = BB_TARGET_WOUNDED_ONLY
+/datum/targeting_strategy/basic/friends_only/injured_constructs
 
-/datum/targeting_strategy/basic/same_faction/construct/can_attack(mob/living/living_mob, atom/the_target, vision_range, check_faction = TRUE)
-	if(isconstruct(the_target) || istype(the_target, /mob/living/basic/shade))
-		return ..()
-	return FALSE
+/datum/targeting_strategy/basic/friends_only/injured_constructs/can_attack(mob/living/living_mob, atom/the_target, vision_range, check_faction = TRUE)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/mob/living/living_target = the_target
+	return (isconstruct(living_target) || istype(living_target, /mob/living/basic/shade)) \
+		&& living_target.health < living_target.maxHealth

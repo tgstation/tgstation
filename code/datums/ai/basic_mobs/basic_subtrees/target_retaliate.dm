@@ -7,12 +7,10 @@
 	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
 	/// Blackboard key in which to store selected target's hiding place
 	var/hiding_place_key = BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION
-	/// do we check for faction?
-	var/check_faction = FALSE
 
 /datum/ai_planning_subtree/target_retaliate/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
-	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list, BB_ENEMIES, target_key, targeting_strategy_key, hiding_place_key, check_faction)
+	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list, BB_FOES, target_key, targeting_strategy_key, hiding_place_key, check_faction)
 
 /datum/ai_planning_subtree/target_retaliate/check_faction
 	check_faction = TRUE
@@ -27,7 +25,6 @@
 
 /**
  * Picks a target from a provided list of atoms who have been pissing you off
- * You will probably need /datum/element/ai_retaliate to take advantage of this unless you're populating the blackboard yourself
  */
 /datum/ai_behavior/target_from_retaliate_list
 	action_cooldown = 2 SECONDS
@@ -74,10 +71,3 @@
 /// Returns the desired final target from the filtered list of enemies
 /datum/ai_behavior/target_from_retaliate_list/proc/pick_final_target(datum/ai_controller/controller, list/enemies_list)
 	return pick(enemies_list)
-
-/datum/ai_behavior/target_from_retaliate_list/finish_action(datum/ai_controller/controller, succeeded, check_faction)
-	. = ..()
-	if (succeeded || check_faction)
-		return
-	var/usually_ignores_faction = controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || FALSE
-	controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, usually_ignores_faction)

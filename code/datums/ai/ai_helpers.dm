@@ -2,9 +2,9 @@
 /// Handles allegiance, making the atom friendly to someone. It will not attack in cases it normally would.
 /datum/ai_controller/proc/become_friendly(mob/living/new_friend)
 	SHOULD_CALL_PARENT(TRUE)
-	if(blackboard_key_exists(BB_ENEMIES))
-		remove_thing_from_blackboard_key(BB_ENEMIES, new_friend)
-		SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_LOST_ENEMY, new_friend, blackboard_key_exists(BB_ENEMIES))
+	if(blackboard_key_exists(BB_FOES))
+		remove_thing_from_blackboard_key(BB_FOES, new_friend)
+		SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_LOST_ENEMY, new_friend, blackboard_key_exists(BB_FOES))
 	insert_blackboard_key_lazylist(BB_FRIENDS, new_friend)
 	var/first_friend = blackboard_key_exists(BB_FRIENDS) ? FALSE : TRUE
 	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_GAINED_FRIEND, new_friend, first_friend)
@@ -15,9 +15,9 @@
 	if(blackboard_key_exists(BB_FRIENDS))
 		remove_thing_from_blackboard_key(BB_FRIENDS, going_neutral)
 		SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_LOST_FRIEND, going_neutral, blackboard_key_exists(BB_FRIENDS))
-	if(blackboard_key_exists(BB_ENEMIES))
-		remove_thing_from_blackboard_key(BB_ENEMIES, going_neutral)
-		SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_LOST_ENEMY, going_neutral, blackboard_key_exists(BB_ENEMIES))
+	if(blackboard_key_exists(BB_FOES))
+		remove_thing_from_blackboard_key(BB_FOES, going_neutral)
+		SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_LOST_ENEMY, going_neutral, blackboard_key_exists(BB_FOES))
 
 /// Handles allegiance, making the atom hostile to someone. It will attack in cases it normally would not.
 /datum/ai_controller/proc/become_hostile(mob/living/new_enemy)
@@ -25,8 +25,8 @@
 	if(blackboard_key_exists(BB_FRIENDS))
 		remove_thing_from_blackboard_key(BB_FRIENDS, new_enemy)
 		SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_LOST_FRIEND, new_enemy)
-	insert_blackboard_key_lazylist(BB_ENEMIES, new_enemy)
-	var/first_enemy = blackboard_key_exists(BB_ENEMIES) ? FALSE : TRUE
+	insert_blackboard_key_lazylist(BB_FOES, new_enemy)
+	var/first_enemy = blackboard_key_exists(BB_FOES) ? FALSE : TRUE
 	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_GAINED_ENEMY, new_enemy, first_enemy)
 
 /// Returns true if we have a blackboard key with the provided key and it is not qdeleting
