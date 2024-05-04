@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Blood Brothers should spawn knowing what their objectives are."
+  - bugfix: "Teams of 3 Blood Brothers will once more have an additional objective."
