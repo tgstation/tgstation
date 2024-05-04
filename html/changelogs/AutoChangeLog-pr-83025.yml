@@ -1,0 +1,4 @@
+author: "larentoun"
+delete-after: True
+changes:
+  - bugfix: "Materials are now correctly applied to crafted items (chairs, toilets, etc)"
