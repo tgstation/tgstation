@@ -314,3 +314,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMOTE_IMPORTANT (1<<2)
 /// Emote only prints to runechat, not to the chat window
 #define EMOTE_RUNECHAT (1<<3)
+
+// Flags for [/obj/item/borg/borg_vacuum]
+#define MODE_VACUUM (1<<0)
+#define MODE_MOP (1<<1)
