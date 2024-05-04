@@ -780,7 +780,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 		/datum/crafting_recipe/bonespear,
 		/datum/crafting_recipe/bracers,
 		/datum/crafting_recipe/skullhelm,
-		)
+	)
 
 	AddComponent(
 		/datum/component/slapcrafting,\
