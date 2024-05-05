@@ -730,6 +730,7 @@
 		/obj/item/ammo_casing/strilka310,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_casing/a357,
+		/obj/item/ammo_casing/junk,
 	))
 
 /obj/item/storage/belt/fannypack
