@@ -110,7 +110,7 @@
 	if(ismob(cleaner.loc))
 		var/mob/M = cleaner.loc
 		M.dropItemToGround(cleaner, TRUE)
-		QDELL_NULL(borg_hose)
+		QDEL_NULL(borg_hose)
 	return NONE
 
 /**
@@ -231,7 +231,7 @@
 	home = null
 	UnregisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM)
 	if(home.on)
-		QDELL_NULL(home.borg_hose)
+		QDEL_NULL(home.borg_hose)
 	return ..()
 
 /**
