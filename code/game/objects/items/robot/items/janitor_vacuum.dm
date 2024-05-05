@@ -9,7 +9,14 @@
 	icon = 'icons/obj/medical/defib.dmi' // TEMPORARY SPRITES
 	icon_state = "defibunit"
 	w_class = WEIGHT_CLASS_BULKY
+
+	var/last_check = 0
+	var/check_delay = 10
+
 	/// The vacuum hose itself
+	var/mob/living/current_target
+	var/mob/living/current_source
+
 	var/obj/item/borg_hose/cleaner
 	/// The trashbag storage it's connected to
 	var/datum/storage/trash = null
@@ -17,8 +24,9 @@
 	var/locked = FALSE
 	/// Are we currently active?
 	var/on = FALSE
-
 	var/normal_state = "defibunit-paddles"
+
+	var/datum/beam/borg_hose
 
 /**
  * INITIALIZATION CODE
@@ -65,7 +73,7 @@
 		if(!vacuum.trash)
 			vacuum.locate_trashbag(src)
 
-		return vacuum.summon_hose(usr)
+		return vacuum.summon_hose(usr, src)
 
 /obj/item/borg/borg_vacuum/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/mob/living/target = interacting_with
@@ -75,7 +83,7 @@
 		balloon_alert(user, "already deployed!")
 	if(!trash)
 		locate_trashbag(user)
-	summon_hose(target)
+	summon_hose(target, user)
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/borg/borg_vacuum/dropped(mob/user, silent)
@@ -119,7 +127,10 @@
  * This proc places the physical vacuum hose inside the player's hand.
  */
 
-/obj/item/borg/borg_vacuum/proc/summon_hose(mob/user)
+/obj/item/borg/borg_vacuum/proc/summon_hose(mob/user, mob/source)
+	if(source.stat == DEAD)
+		to_chat(user, span_warning("The vacuum is completely inoperatable!"))
+		return NONE
 	if(cleaner.loc != cleaner.home)
 		to_chat(user, span_warning("[cleaner.loc == user ? "You are already" : "Someone else is"] holding [cleaner.home]'s hose!"))
 		return NONE
@@ -129,7 +140,9 @@
 	if(locked)
 		to_chat(user, span_warning("[cleaner]'s hose is locked tight!"))
 		return NONE
+	START_PROCESSING(SSobj, src)
 	user.put_in_hands(cleaner)
+	create_vacuum_hose(user, source)
 	update_appearance(UPDATE_OVERLAYS)
 
 /**
@@ -190,7 +203,6 @@
 	var/clean_mode = MODE_VACUUM
 	/// The apparatus itself.
 	var/obj/item/borg/borg_vacuum/home
-
 /**
  * INITIALIZE AND DESTROY
  */
@@ -288,8 +300,11 @@
 /obj/item/borg_hose/proc/return_to_borg(sound = TRUE)
 	if(!home)
 		return NONE
+	if(home.borg_hose)
+		QDEL_NULL(home.borg_hose)
 	if(sound)
 		playsound(src, 'sound/machines/click.ogg', 20, FALSE)
+	STOP_PROCESSING(SSobj, home)
 	forceMove(home)
 
 /**
@@ -312,4 +327,83 @@
 		else
 			visible_message(span_notice("[src] snaps back into [home]."))
 		return_to_borg()
+
+/**
+ * VISUAL SPRITE BEAM EFFECTS
+ * Creates a visual line between the vacuum cleaner hose and the object it's connected to.
+ */
+
+/obj/item/borg/borg_vacuum/proc/create_vacuum_hose(mob/living/target, mob/living/source)
+	if(!on)
+		return
+	current_target = target
+	current_source = source
+	borg_hose = source.Beam(current_target, icon_state = "zipline_hook", maxdistance = 5)
+	RegisterSignal(borg_hose, COMSIG_QDELETING, PROC_REF(hose_lost))
+	//var/datum/beam/borg_hose
+
+/obj/item/borg/borg_vacuum/proc/hose_lost()
+	SIGNAL_HANDLER
+	borg_hose = null
+	if(on)
+		cleaner.return_to_borg()
+	current_target = null
+	current_source = null
+
+/obj/item/borg/borg_vacuum/process()
+	if(!on)
+		QDEL_NULL(borg_hose)
+		return
+	if(!current_target || !current_source)
+		cleaner.return_to_borg()
+		return
+	if(current_source.stat == DEAD)
+		cleaner.return_to_borg()
+		return
+
+	if(world.time <= last_check+check_delay)
+		return
+
+	last_check = world.time
+
+	if(!los_check(current_source, current_target))
+		cleaner.return_to_borg()
+		return
+
+/obj/item/borg/borg_vacuum/proc/los_check(mob/living/user, mob/living/target)
+	var/turf/user_turf = user.loc
+	if(!istype(user_turf))
+		return FALSE
+	var/obj/dummy = new(user_turf)
+	dummy.pass_flags |= PASSTABLE|PASSITEM|PASSMOB
+	var/turf/previous_step = user_turf
+	var/first_step = TRUE
+	for(var/turf/next_step as anything in (get_line(user_turf, target) - user_turf))
+		if(first_step)
+			for(var/obj/blocker in user_turf)
+				if(!blocker.density || !(blocker.flags_1 & ON_BORDER_1))
+					continue
+				if(blocker.CanPass(dummy, get_dir(user_turf, next_step)))
+					continue
+				return FALSE
+			first_step = FALSE
+		if(next_step.density)
+			qdel(dummy)
+			return FALSE
+		for(var/atom/movable/movable as anything in next_step)
+			if(!movable.CanPass(dummy, get_dir(next_step, previous_step)))
+				qdel(dummy)
+				return FALSE
+	qdel(dummy)
+	return TRUE
+
+/*
+/obj/item/borg/borg_vacuum/process()
+	if(!on)
+		hose_lost()
+		return
+	if(!current_target)
+		hose_lost()
+		return
+*/
 
