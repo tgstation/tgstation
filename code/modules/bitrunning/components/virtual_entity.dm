@@ -3,16 +3,15 @@
 	///The cooldown for balloon alerts, so the player isn't spammed while trying to enter a restricted area.
 	COOLDOWN_DECLARE(OOB_cooldown)
 
-/datum/component/virtual_entity/Initialize()
+/datum/component/virtual_entity/Initialize(obj/machinery/quantum_server)
 	. = ..()
 
-	for(var/obj/machinery/quantum_server/server in SSmachines.get_machines_by_type(/obj/machinery/quantum_server))
-		if(server.obj_flags & EMAGGED)
-			jailbreak_mobs() //This just sends a message and self-deletes, a bit messy but it works.
-			return
+	if(quantum_server.obj_flags & EMAGGED)
+		jailbreak_mobs() //This just sends a message and self-deletes, a bit messy but it works.
+		return
 
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_parent_pre_move))
-	RegisterSignal(parent, COMSIG_BITRUNNER_SERVER_EMAGGED, PROC_REF(jailbreak_mobs))
+	RegisterSignal(quantum_server, COMSIG_ATOM_EMAG_ACT, PROC_REF(jailbreak_mobs))
 
 ///Prevents entry to a certain area if it has flags preventing virtual entities from entering.
 /datum/component/virtual_entity/proc/on_parent_pre_move(atom/movable/source, atom/new_location)

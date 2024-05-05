@@ -8,10 +8,6 @@
 	. = ..()
 	notify_ghosts("The [name] has been created. The virtual world calls for aid!", src, "Virtual Insanity!")
 
-/obj/effect/mob_spawn/ghost_role/human/virtual_domain/special(mob/living/spawned_mob, mob/mob_possessor)
-	. = ..()
-	spawned_mob.AddComponent(/datum/component/virtual_entity)
-
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate
 	name = "Virtual Pirate Remains"
 	desc = "Some inanimate bones. They feel like they could spring to life at any moment!"
