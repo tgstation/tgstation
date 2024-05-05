@@ -62,7 +62,7 @@
 	var/obj/undeployed_object = new spawned_on_undeploy()
 	//Keeps the health the same even if you redeploy the gun
 	undeployed_object.modify_max_integrity(max_integrity)
-	if(!user?.put_in_hands(undeployed_object))
+	if(!user.put_in_hands(undeployed_object))
 		undeployed_object.forceMove(loc)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
