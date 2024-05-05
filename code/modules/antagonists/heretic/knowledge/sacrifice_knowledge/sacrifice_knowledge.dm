@@ -304,6 +304,7 @@
 /// Apply a sinister curse to some of the target's organs as an incentive to leave us alone
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/curse_organs(mob/living/carbon/human/sac_target)
 
+
 /**
  * This proc is called from [proc/after_target_sleeps] when the [sac_target] should be waking up.)
  *
