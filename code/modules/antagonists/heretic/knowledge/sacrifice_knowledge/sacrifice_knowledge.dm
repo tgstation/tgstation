@@ -288,6 +288,8 @@
 		disembowel_target(sac_target)
 		return
 
+	curse_organs(sac_target)
+
 	// Send 'em to the destination. If the teleport fails, just disembowel them and stop the chain
 	if(!destination || !do_teleport(sac_target, destination, asoundin = 'sound/magic/repulse.ogg', asoundout = 'sound/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		disembowel_target(sac_target)
@@ -301,8 +303,6 @@
 		disembowel_target(sac_target)
 		return
 
-	curse_organs(sac_target)
-
 	to_chat(sac_target, span_big(span_hypnophrase("Unnatural forces begin to claw at your every being from beyond the veil.")))
 
 	sac_target.apply_status_effect(/datum/status_effect/unholy_determination, SACRIFICE_REALM_DURATION)
@@ -313,7 +313,28 @@
 
 /// Apply a sinister curse to some of the target's organs as an incentive to leave us alone
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/curse_organs(mob/living/carbon/human/sac_target)
+	var/usable_organs = grantable_organs.Copy()
+	if (isplasmaman(sac_target))
+		usable_organs -= /obj/item/organ/internal/lungs/corrupt // Their lungs are already more cursed than anything I could give them
 
+	var/total_implant = rand(2, 4)
+	var/gave_any = FALSE
+
+	for (var/i in 1 to total_implant)
+		if (!length(usable_organs))
+			break
+		var/organ_path = pick_n_take(usable_organs)
+		var/obj/item/organ/internal/to_give = new organ_path
+		if (!to_give.Insert(sac_target))
+			qdel(to_give)
+		else
+			gave_any = TRUE
+
+	if (!gave_any)
+		return
+
+	new /obj/effect/gibspawner/human/bodypartless(get_turf(sac_target))
+	sac_target.visible_message(span_boldwarning("Several organs force themselves out of [sac_target]!"))
 
 /**
  * This proc is called from [proc/after_target_sleeps] when the [sac_target] should be waking up.)
