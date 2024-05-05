@@ -8,7 +8,7 @@
 	desc = "A quad-bladed commercial defence drone, often called an 'Ex-Drone' or 'D.E.D.bot'. It follows a simple programmed patrol route, and slashes at anyone who doesn't have a syndicate identity implant."
 	icon_state = "ded_drone0"
 	base_icon_state = "ded_drone"
-	maints_access_required = list(ACCESS_SYNDICATE)
+	req_one_access = list(ACCESS_SYNDICATE)
 	health = 50
 	maxHealth = 50
 	melee_damage_lower = 15
