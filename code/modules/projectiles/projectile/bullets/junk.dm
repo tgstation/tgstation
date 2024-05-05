@@ -39,13 +39,9 @@
 
 /obj/projectile/bullet/junk/hunter
 	name = "junk hunter bullet"
-	bane_mob_biotypes = MOB_BEAST
+	bane_mob_biotypes = MOB_ROBOTIC | MOB_BEAST | MOB_SPECIAL
 	bane_multiplier = 0
 	bane_added_damage = 50
-
-/obj/projectile/bullet/junk/hunter/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = MOB_SPECIAL, target_type = /mob/living, damage_multiplier = bane_multiplier, added_damage = bane_added_damage)
 
 /obj/projectile/bullet/junk/ripper
 	name = "junk ripper bullet"
