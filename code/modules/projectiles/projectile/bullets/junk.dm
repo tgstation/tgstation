@@ -11,7 +11,7 @@
 
 /obj/projectile/bullet/junk/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = bane_mob_biotypes, target_type = /mob/living, damage_multiplier = bane_multiplier, added_damage = bane_added_damage)
+	AddElement(/datum/element/bane, mob_biotypes = bane_mob_biotypes, target_type = /mob/living, damage_multiplier = bane_multiplier, added_damage = bane_added_damage, requires_combat_mode = FALSE)
 
 /obj/projectile/bullet/incendiary/fire/junk
 	name = "burning oil"
