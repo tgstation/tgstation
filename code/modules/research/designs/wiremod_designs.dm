@@ -226,6 +226,11 @@
 	id = "comp_health"
 	build_path = /obj/item/circuit_component/health
 
+/datum/design/component/compare/health_state
+	name = "Compare Health State Component"
+	id = "comp_health_state"
+	build_path = /obj/item/circuit_component/compare/health_state
+
 /datum/design/component/matscanner
 	name = "Material Scanner"
 	id = "comp_matscanner"
@@ -381,11 +386,6 @@
 	name = "Bar Overlay Component"
 	id = "comp_bar_overlay"
 	build_path = /obj/item/circuit_component/object_overlay/bar
-
-/datum/design/component/bci/user_status
-	name = "User Status"
-	id = "comp_user_status"
-	build_path = /obj/item/circuit_component/compare/user_status
 
 /datum/design/component/bci/vox
 	name = "VOX Announcement Component"

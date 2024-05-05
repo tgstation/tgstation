@@ -344,6 +344,7 @@
 		"comp_get_column",
 		"comp_gps",
 		"comp_health",
+		"comp_health_state",
 		"comp_hear",
 		"comp_id_access_reader",
 		"comp_id_getter",
@@ -887,7 +888,6 @@
 		"comp_reagent_injector",
 		"comp_target_intercept",
 		"comp_thought_listener",
-		"comp_user_status",
 		"comp_vox",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
