@@ -867,6 +867,7 @@
 	light_on = FALSE
 	light_color = LIGHT_COLOR_ORANGE
 	light_power = 0.5
+	demolition_mod = 1
 
 	stamina_damage = 0
 	var/stamina_damage_stun = 55
@@ -938,7 +939,7 @@
 	. = ..()
 	if(. != BATON_DO_NORMAL_ATTACK)
 		return
-	if(lethalmode)
+	if(active)
 		if(active && cooldown_check <= world.time && !check_parried(target, user))
 			finalize_baton_attack(target, user, modifiers, in_attack_chain = FALSE)
 			return BATON_DO_NORMAL_ATTACK
@@ -1065,6 +1066,11 @@
 		cell.forceMove(drop_location())
 		to_chat(user, span_notice("You remove the cell from [src]."))
 		cell = null
+		active = FALSE
+		lethalmode = FALSE
+		force = 10
+		damtype = BRUTE
+		demolition_mod = 1
 		update_icon_state()
 		update_appearance()
 		return TRUE
@@ -1108,14 +1114,17 @@
 			do_sparks(1, TRUE, src)
 	if(active)
 		if(lethalmode)
-			force = 30
+			force = 55 // Keep in mind, this does not attack faster then 2.5 times a second, meaning I think this is fair.
 			damtype = BURN
+			demolition_mod = 0.2 // Dont want people using the above damage to shred objects
 		else
 			force = 10
 			damtype = BRUTE
+			demolition_mod = 1
 	else
 		force = 10
 		damtype = BRUTE
+		demolition_mod = 1
 	update_appearance()
 	add_fingerprint(user)
 
