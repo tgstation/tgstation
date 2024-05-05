@@ -31,7 +31,6 @@ export class IntegratedCircuit extends Component {
       backgroundY: 0,
       variableMenuOpen: false,
       componentMenuOpen: false,
-      isGridMode: true,
     };
     this.handlePortLocation = this.handlePortLocation.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -402,6 +401,7 @@ export class IntegratedCircuit extends Component {
       examined_rel_y,
       screen_x,
       screen_y,
+      grid_mode,
       is_admin,
       variables,
       global_basic_types,
@@ -414,7 +414,6 @@ export class IntegratedCircuit extends Component {
       selectedPort,
       variableMenuOpen,
       componentMenuOpen,
-      isGridMode,
       draggingComponent,
       draggingOffsetX,
       draggingOffsetY,
@@ -507,12 +506,8 @@ export class IntegratedCircuit extends Component {
                   color="transparent"
                   tooltip="Enable Grid Aligning"
                   icon="th-large"
-                  selected={isGridMode}
-                  onClick={() =>
-                    this.setState((state) => ({
-                      isGridMode: !state.isGridMode,
-                    }))
-                  }
+                  selected={grid_mode}
+                  onClick={() => act('toggle_grid_mode')}
                 />
               </Stack.Item>
               {!!is_admin && (
@@ -558,7 +553,7 @@ export class IntegratedCircuit extends Component {
                     onPortRightClick={this.handlePortRightClick}
                     onPortMouseUp={this.handlePortUp}
                     act={act}
-                    gridMode={isGridMode}
+                    gridMode={grid_mode}
                   />
                 ),
             )}
