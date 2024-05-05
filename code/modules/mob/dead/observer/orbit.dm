@@ -13,6 +13,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "Orbit")
+		ui.set_autoupdate(FALSE) // /datum/element/point_of_interest handles updating the static data whenever it actually changes, and we have no non-static data to autoupdate.
 		ui.open()
 
 /datum/orbit_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

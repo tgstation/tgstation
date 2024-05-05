@@ -159,3 +159,6 @@
 	#define HANDLE_BLOOD_NO_NUTRITION_DRAIN (1<<1)
 	/// Return to skip oxyloss and similar effecst from blood level
 	#define HANDLE_BLOOD_NO_EFFECTS (1<<2)
+
+/// Called when a human's sec HUD is is set, from /mob/living/carbon/human/proc/sec_hud_set_ID()
+#define COMSIG_HUMAN_SECHUD_SET_ID "human_sechud_set_id"

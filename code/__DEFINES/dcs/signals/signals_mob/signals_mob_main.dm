@@ -244,3 +244,8 @@
 
 /// from /mob/proc/key_down(): (key, client/client, full_key)
 #define COMSIG_MOB_KEYDOWN "mob_key_down"
+
+/// Called whenever the mob's mind gains an antagonist, after the antagonist list has updated: (datum/antagonist/antagonist)
+#define COMSIG_MOB_ANTAGONIST_GAINED "mob_antagonist_gained"
+/// Called whenever the mob's mind loses an antagonist, after the antagonist list has updated: (datum/antagonist/antagonist)
+#define COMSIG_MOB_ANTAGONIST_REMOVED "mob_antagonist_removed"

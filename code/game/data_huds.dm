@@ -279,6 +279,7 @@ Security HUDs! Basic mode shows only the job.
 		sechud_icon_state = "hudno_id"
 	holder.icon_state = sechud_icon_state
 	sec_hud_set_security_status()
+	SEND_SIGNAL(src, COMSIG_HUMAN_SECHUD_SET_ID)
 
 /mob/living/proc/sec_hud_set_implants()
 	var/image/holder

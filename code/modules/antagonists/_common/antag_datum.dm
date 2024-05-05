@@ -270,6 +270,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		owner.current.add_to_current_living_antags()
 
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_GAINED, src)
+	SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAGONIST_GAINED, src)
 
 /**
  * Proc that checks the sent mob aganst the banlistfor this antagonist.
@@ -326,6 +327,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(team)
 		team.remove_member(owner)
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_REMOVED, src)
+	if(owner.current)
+		SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAGONIST_REMOVED, src)
 
 	// Remove HUDs that they should no longer see
 	var/mob/living/current = owner.current
