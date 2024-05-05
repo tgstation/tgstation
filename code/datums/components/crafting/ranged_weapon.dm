@@ -255,8 +255,8 @@
 	time = 15 SECONDS //contemplate for a bit
 	category = CAT_WEAPON_RANGED
 
-/datum/crafting_recipe/pipepistol_prime
-	name = "Regal Pipe pistol"
+/datum/crafting_recipe/pipe_pistol_prime
+	name = "Regal Pipe Pistol"
 	always_available = FALSE
 	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/prime
 	reqs = list(

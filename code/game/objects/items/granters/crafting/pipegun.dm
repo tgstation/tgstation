@@ -3,7 +3,7 @@
 	desc = "A battered journal. Looks like he had a pretty rough life."
 	crafting_recipe_types = list(
 		/datum/crafting_recipe/pipegun_prime,
-		/datum/crafting_recipe/pipepistol_prime
+		/datum/crafting_recipe/pipe_pistol_prime,
 	)
 	remarks = list(
 		"He apparently mastered some lost guncrafting technique.",
