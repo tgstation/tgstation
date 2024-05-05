@@ -269,3 +269,23 @@
 		/obj/structure/shipping_container/gorlex = 1,
 		/obj/structure/shipping_container/gorlex/red = 1,
 	)
+
+/obj/effect/spawner/random/structure/shipping_container/station_appropriate //places extra emphasis on NT containers, excludes syndicate companies (except Donk. Co.) entirely
+	name = "station-appropriate shipping container spawner"
+	icon_state = "random_container"
+	loot = list(
+		/obj/structure/shipping_container/nanotrasen = 5,
+		/obj/structure/shipping_container/nthi = 1,
+		/obj/structure/shipping_container/nthi/minor = 1,
+		/obj/structure/shipping_container/nthi/precious = 1,
+		/obj/structure/shipping_container/ntfid = 3,
+		/obj/structure/shipping_container/nakamura = 2,
+		/obj/structure/shipping_container/deforest = 2,
+		/obj/structure/shipping_container/kosmologistika = 2,
+		/obj/structure/shipping_container/donk_co = 2,
+		/obj/structure/shipping_container/conarex = 1,
+		/obj/structure/shipping_container/kahraman = 1,
+		/obj/structure/shipping_container/kahraman/alt = 1,
+		/obj/structure/shipping_container/vitezstvi = 1,
+	)
+
