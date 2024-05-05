@@ -21,6 +21,7 @@
 
 /obj/projectile/bullet/junk/phasic
 	name = "junk phasic bullet"
+	icon_state = "gaussphase"
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
 /obj/projectile/bullet/junk/shock
@@ -39,6 +40,7 @@
 
 /obj/projectile/bullet/junk/hunter
 	name = "junk hunter bullet"
+	icon_state = "gauss"
 	bane_mob_biotypes = MOB_ROBOTIC | MOB_BEAST | MOB_SPECIAL
 	bane_multiplier = 0
 	bane_added_damage = 50
