@@ -420,7 +420,7 @@
 	throwforce = 7
 	force_say_chance = 50
 	stamina_damage = 60
-	knockdown_time = 5 SECONDS
+	knockdown_time = 0
 	clumsy_knockdown_time = 15 SECONDS
 	cooldown = 2.5 SECONDS
 	on_stun_sound = 'sound/weapons/egloves.ogg'
