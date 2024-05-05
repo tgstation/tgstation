@@ -36,7 +36,7 @@
 		QDEL_NULL(current_beam)
 		active = FALSE
 		on_beam_release(current_target)
-		STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSobj, src)
 	current_target = null
 
 /**
