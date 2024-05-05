@@ -2,7 +2,8 @@
 	name = "diary of a dead assistant"
 	desc = "A battered journal. Looks like he had a pretty rough life."
 	crafting_recipe_types = list(
-		/datum/crafting_recipe/pipegun_prime
+		/datum/crafting_recipe/pipegun_prime,
+		/datum/crafting_recipe/pipepistol_prime
 	)
 	remarks = list(
 		"He apparently mastered some lost guncrafting technique.",
@@ -11,6 +12,7 @@
 		"Did he drop this into a moisture trap? Yuck.",
 		"Toolboxing techniques, huh? I kinda just want to know how to make the gun.",
 		"What the hell does he mean by 'ancient warrior tradition'?",
+		"...the true masters of this place are not those who merely inhabit it...",
 	)
 
 /obj/item/book/granter/crafting_recipe/dusting/laser_musket_prime
