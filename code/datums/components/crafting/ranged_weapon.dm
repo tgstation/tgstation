@@ -255,23 +255,6 @@
 	time = 15 SECONDS //contemplate for a bit
 	category = CAT_WEAPON_RANGED
 
-/datum/crafting_recipe/pipe_pistol_prime
-	name = "Regal Pipe Pistol"
-	always_available = FALSE
-	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/prime
-	reqs = list(
-		/obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol = 1,
-		/obj/item/food/deadmouse = 1,
-		/datum/reagent/consumable/grey_bull = 20,
-		/obj/item/spear = 1,
-		/obj/item/storage/toolbox = 1,
-		/obj/item/clothing/head/costume/crown = 1, // Any ol' crown will do
-	)
-	tool_behaviors = list(TOOL_SCREWDRIVER)
-	tool_paths = list(/obj/item/clothing/gloves/color/yellow, /obj/item/clothing/mask/gas, /obj/item/melee/baton/security/cattleprod)
-	time = 15 SECONDS //contemplate for a bit
-	category = CAT_WEAPON_RANGED
-
 /datum/crafting_recipe/deagle_prime //When you factor in the makarov (7 tc), the toolbox (1 tc), and the emag (3 tc), this comes to a total of 18 TC or thereabouts. Igorning the 20k pricetag, obviously.
 	name = "Regal Condor"
 	always_available = FALSE
