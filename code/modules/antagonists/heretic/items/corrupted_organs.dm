@@ -7,7 +7,7 @@
 
 /obj/item/organ/internal/eyes/corrupt/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/corrupted_organ)
+	AddElement(/datum/element/corrupted_organ)
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes have wide dilated pupils, and no iris. Something is moving in the darkness.", BODY_ZONE_PRECISE_EYES)
 
 /obj/item/organ/internal/eyes/corrupt/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
@@ -42,7 +42,7 @@
 
 /obj/item/organ/internal/tongue/corrupt/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/corrupted_organ)
+	AddElement(/datum/element/corrupted_organ)
 	AddElement(/datum/element/noticable_organ, "The inside of %PRONOUN_Their mouth is full of stars.", BODY_ZONE_PRECISE_MOUTH)
 
 /obj/item/organ/internal/tongue/corrupt/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
@@ -82,7 +82,7 @@
 
 /obj/item/organ/internal/liver/corrupt/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/corrupted_organ)
+	AddElement(/datum/element/corrupted_organ)
 
 /obj/item/organ/internal/liver/corrupt/on_mob_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
@@ -111,7 +111,7 @@
 
 /obj/item/organ/internal/stomach/corrupt/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/corrupted_organ)
+	AddElement(/datum/element/corrupted_organ)
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_They %PRONOUN_have an unhealthy pallor.")
 
 /obj/item/organ/internal/stomach/corrupt/handle_hunger(mob/living/carbon/human/human, seconds_per_tick, times_fired)
@@ -157,7 +157,7 @@
 
 /obj/item/organ/internal/heart/corrupt/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/corrupted_organ)
+	AddElement(/datum/element/corrupted_organ)
 
 /obj/item/organ/internal/heart/corrupt/on_life(seconds_per_tick, times_fired)
 	. = ..()
@@ -183,7 +183,7 @@
 
 /obj/item/organ/internal/lungs/corrupt/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/corrupted_organ)
+	AddElement(/datum/element/corrupted_organ)
 
 /obj/item/organ/internal/lungs/corrupt/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather)
 	. = ..()
@@ -195,6 +195,7 @@
 	mix_to_spawn.add_gas(pick(chosen_gas))
 	mix_to_spawn.gases[chosen_gas][MOLES] = gas_amount
 	mix_to_spawn.temperature = breather.bodytemperature
+	log_atmos("[owner] coughed some gas into the air due to their corrupted lungs.", mix_to_spawn)
 	var/turf/open/our_turf = get_turf(breather)
 	our_turf.assume_air(mix_to_spawn)
 
@@ -208,7 +209,7 @@
 
 /obj/item/organ/internal/appendix/corrupt/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/corrupted_organ)
+	AddElement(/datum/element/corrupted_organ)
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their abdomen is distended... and wiggling.", BODY_ZONE_PRECISE_GROIN)
 
 /obj/item/organ/internal/appendix/corrupt/on_life(seconds_per_tick, times_fired)

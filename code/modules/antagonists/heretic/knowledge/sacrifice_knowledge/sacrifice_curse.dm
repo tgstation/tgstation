@@ -47,6 +47,7 @@
 	SIGNAL_HANDLER
 	if (attacker != owner)
 		return
+	log_combat(owner, the_curser, "attacked", addition = "and lost some organs because they had previously been sacrificed by them.")
 	experience_the_consequences()
 
 /// If we are attacked by the guy who cursed us, that's also no good
@@ -54,6 +55,7 @@
 	SIGNAL_HANDLER
 	if (attacker != the_curser)
 		return
+	log_combat(the_curser, owner, "attacked", addition = "and as they had previously sacrificed them, removed some of their organs.")
 	experience_the_consequences()
 
 /// Experience something you may not enjoy which may also significantly shorten your lifespan

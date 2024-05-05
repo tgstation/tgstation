@@ -1,12 +1,15 @@
 /// Component applying shared behaviour by cursed organs granted when sacrificed by a heretic
 /// Mostly just does something spooky when it is removed
-/datum/component/corrupted_organ
+/datum/element/corrupted_organ
 
-/datum/component/corrupted_organ/Initialize()
-	if (!isinternalorgan(parent))
-		return COMPONENT_INCOMPATIBLE
+/datum/element/corrupted_organ/Attach(datum/target)
+	. = ..()
+	if (!isinternalorgan(target))
+		return ELEMENT_INCOMPATIBLE
 
-	var/atom/atom_parent = parent
+	RegisterSignal(target, COMSIG_ORGAN_SURGICALLY_REMOVED, PROC_REF(on_removed))
+
+	var/atom/atom_parent = target
 	atom_parent.color = COLOR_VOID_PURPLE
 
 	atom_parent.add_filter(name = "ray", priority = 1, params = list(
@@ -19,14 +22,12 @@
 	animate(ray_filter, offset = 100, time = 2 MINUTES, loop = -1, flags = ANIMATION_PARALLEL) // Absurdly long animate so nobody notices it hitching when it loops
 	animate(offset = 0, time = 2 MINUTES) // I sure hope duration of animate doesnt have any performance effect
 
-/datum/component/corrupted_organ/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ORGAN_SURGICALLY_REMOVED, PROC_REF(on_removed))
-
-/datum/component/corrupted_organ/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ORGAN_SURGICALLY_REMOVED))
+/datum/element/corrupted_organ/Detach(datum/source)
+	UnregisterSignal(source, list(COMSIG_ORGAN_SURGICALLY_REMOVED))
+	return ..()
 
 /// When we're taken out of someone, do something spooky
-/datum/component/corrupted_organ/proc/on_removed(atom/organ, mob/living/carbon/loser)
+/datum/element/corrupted_organ/proc/on_removed(atom/organ, mob/living/carbon/loser)
 	SIGNAL_HANDLER
 	if (loser.has_reagent(/datum/reagent/water/holywater) || HAS_TRAIT(loser, TRAIT_ANTIMAGIC) || prob(20))
 		return
