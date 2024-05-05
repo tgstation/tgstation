@@ -9,7 +9,6 @@
 	icon_living = "pug"
 	icon_dead = "pug_dead"
 	butcher_results = list(/obj/item/food/meat/slab/pug = 3)
-	cult_icon_state = "pug_cult"
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_icon_state = "pug"
 	held_state = "pug"
@@ -38,12 +37,42 @@
 	collar_icon_state = "bullterrier"
 	held_state = "bullterrier"
 
-/mob/living/basic/pet/dog/bullterrier/lavaland_party
-	name = "Saint Nick's Helpful Associate"
-	desc = "Undergraduate in 'Being a Good Boy'."
-	habitable_atmos = null
-	gold_core_spawnable = NO_SPAWN
-	unique_pet = TRUE
+/mob/living/basic/pet/dog/bullterrier/guarddog //hostile dog variant for space ruins
+	name = "\improper guard dog"
+	real_name = "guard dog"
+	desc = "A vicious bull terrier. They look aggressive and territorial."
+	collar_icon_state = "spiked"
+	//slightly weaker than a bear, but not as slow
+	health = 60
+	maxHealth = 60
+	obj_damage = 20
+	melee_damage_lower = 10
+	melee_damage_upper = 15
+	wound_bonus = -25
+	bare_wound_bonus = 45
+	sharpness = SHARP_EDGED
+	gold_core_spawnable = HOSTILE_SPAWN
+	faction = list(FACTION_HOSTILE)
+	ai_controller = /datum/ai_controller/basic_controller/guarddog
+
+/mob/living/basic/guarddog/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/ai_retaliate)
+
+/datum/ai_controller/basic_controller/guarddog
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_AGGRO_RANGE = 7,
+	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/target_retaliate,
+	)
 
 /mob/living/basic/pet/dog/breaddog //Most of the code originates from Cak
 	name = "Kobun"
