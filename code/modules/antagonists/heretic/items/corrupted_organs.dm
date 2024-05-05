@@ -108,20 +108,46 @@
 	desc = "This parasite demands an unwholesome diet in order to be satisfied."
 	/// Do we have an unholy thirst?
 	var/thirst_satiated = FALSE
+	/// Timer for when we get thirsty again
+	var/thirst_timer
 
 /obj/item/organ/internal/stomach/corrupt/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/corrupted_organ)
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_They %PRONOUN_have an unhealthy pallor.")
 
+/obj/item/organ/internal/stomach/corrupt/on_mob_insert(mob/living/carbon/organ_owner, special)
+	. = ..()
+	RegisterSignal(organ_owner, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_drank))
+
+/obj/item/organ/internal/stomach/corrupt/on_mob_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	UnregisterSignal(organ_owner, COMSIG_ATOM_EXPOSE_REAGENTS)
+
+/// Check if we drank a little blood
+/obj/item/organ/internal/stomach/corrupt/proc/on_drank(atom/source, list/reagents, datum/reagents/source_reagents, methods)
+	SIGNAL_HANDLER
+	if (!(methods & INGEST))
+		return
+
+	var/contains_blood = FALSE
+	for (var/datum/reagent in reagents)
+		if (!istype(reagent, /datum/reagent/blood))
+			continue
+		contains_blood = TRUE
+		break
+
+	if (!contains_blood)
+		return
+
+	if (!thirst_satiated)
+		to_chat(source, span_cult_italic("The thirst is satisfied... for now."))
+	thirst_satiated = TRUE
+	deltimer(thirst_timer)
+	thirst_timer = addtimer(CALLBACK(src, PROC_REF(start_thirsting)), 3 MINUTES, TIMER_STOPPABLE | TIMER_DELETE_ME)
+
 /obj/item/organ/internal/stomach/corrupt/handle_hunger(mob/living/carbon/human/human, seconds_per_tick, times_fired)
 	if (thirst_satiated || human.has_reagent(/datum/reagent/water/holywater))
-		return ..()
-
-	if (!thirst_satiated && human.has_reagent(/datum/reagent/blood))
-		thirst_satiated = TRUE
-		addtimer(CALLBACK(src, PROC_REF(start_thirsting)), 3 MINUTES, TIMER_DELETE_ME)
-		to_chat(human, span_cult_italic("The thirst is satisfied... for now."))
 		return ..()
 
 	human.adjust_nutrition(-1 * seconds_per_tick)
