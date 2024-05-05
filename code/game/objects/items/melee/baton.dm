@@ -1117,7 +1117,7 @@
 		if(lethalmode)
 			force = force_kill // Keep in mind, this does not attack faster then 2.5 times a second, meaning I think this is fair.
 			damtype = BURN
-			demolition_mod = 0.25 // Dont want people using the above damage to shred objects
+			demolition_mod = 0.33 // Dont want people using the above damage to shred objects
 		else
 			force = force_standard
 			damtype = BRUTE
