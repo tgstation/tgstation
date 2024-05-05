@@ -161,7 +161,7 @@
 
 /obj/item/organ/internal/heart/corrupt/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	if (istype(get_area(owner), /area/centcom/heretic_sacrifice) || !owner.needs_heart() || !is_beating() || owner.has_reagent(/datum/reagent/water/holywater) || !SPT_PROB(hand_chance, seconds_per_tick))
+	if (IS_IN_MANSUS(owner) || !owner.needs_heart() || !is_beating() || owner.has_reagent(/datum/reagent/water/holywater) || !SPT_PROB(hand_chance, seconds_per_tick))
 		return
 	fire_curse_hand(owner)
 
@@ -171,7 +171,7 @@
 	name = "corrupt lungs"
 	desc = "Some things SHOULD be drowned in tar."
 	/// How likely are we not to cough every time we take a breath?
-	var/cough_chance = 30
+	var/cough_chance = 15
 	/// How much gas to emit?
 	var/gas_amount = 30
 	/// What can we cough up?
@@ -187,7 +187,7 @@
 
 /obj/item/organ/internal/lungs/corrupt/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather)
 	. = ..()
-	if (!. || breather.has_reagent(/datum/reagent/water/holywater) || !prob(cough_chance))
+	if (!. || IS_IN_MANSUS(owner) || breather.has_reagent(/datum/reagent/water/holywater) || !prob(cough_chance))
 		return
 	breather.emote("cough");
 	var/chosen_gas = pick_weight(gas_types)
@@ -213,7 +213,7 @@
 
 /obj/item/organ/internal/appendix/corrupt/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	if (owner.stat != CONSCIOUS || owner.has_reagent(/datum/reagent/water/holywater) || !SPT_PROB(worm_chance, seconds_per_tick))
+	if (owner.stat != CONSCIOUS || owner.has_reagent(/datum/reagent/water/holywater) || IS_IN_MANSUS(owner) || !SPT_PROB(worm_chance, seconds_per_tick))
 		return
 	owner.vomit(MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM, vomit_type = /obj/effect/decal/cleanable/vomit/nebula/worms, distance = 0)
 	owner.Knockdown(0.5 SECONDS)

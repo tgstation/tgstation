@@ -207,6 +207,8 @@
 	heretic_datum.total_sacrifices++
 	heretic_datum.knowledge_points += 2
 
+	sacrifice.apply_status_effect(/datum/status_effect/heretic_curse, user)
+
 	if(!begin_sacrifice(sacrifice))
 		disembowel_target(sacrifice)
 
@@ -412,6 +414,7 @@
 	if(IS_HERETIC(sac_target))
 		var/datum/antagonist/heretic/victim_heretic = sac_target.mind?.has_antag_datum(/datum/antagonist/heretic)
 		victim_heretic.knowledge_points -= 3
+
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
 	sac_target.adjust_stutter(40 SECONDS)
