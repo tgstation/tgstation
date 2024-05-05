@@ -66,3 +66,5 @@
 	if(!typing_indicators || !HAS_TRAIT(client_mob, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
 	client_mob.create_thinking_indicator()
+
+#undef IC_VERBS
