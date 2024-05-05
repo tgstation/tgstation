@@ -263,7 +263,7 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun
 	name = "pipegun"
-	desc = "A symbol that the true masters of this place are not those who merely inhabits it. But the one willing to twist it towards a killing intent."
+	desc = "A symbol that the true masters of this place are not those who merely inhabit it, but the one willing to twist it towards a killing intent."
 	icon_state = "pipegun"
 	inhand_icon_state = "pipegun"
 	worn_icon_state = "pipegun"
