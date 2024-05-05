@@ -1,5 +1,0 @@
-author: "Isratosh"
-delete-after: True
-changes:
-  - bugfix: "If kidnapped and ransomed by pirates, you will now properly return to the station automatically after 6 minutes."
-  - bugfix: "You can no longer be kidnapped and held for ransom by cargo technicians posing as pirates."

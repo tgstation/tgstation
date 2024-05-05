@@ -120,3 +120,22 @@
   - bugfix: Candy corn is once again available to detective fedoras
   mogeoko:
   - bugfix: Ventcrawling mobs can change Z-level using multiz-decks again.
+2024-05-05:
+  Isratosh:
+  - bugfix: If kidnapped and ransomed by pirates, you will now properly return to
+      the station automatically after 6 minutes.
+  - bugfix: You can no longer be kidnapped and held for ransom by cargo technicians
+      posing as pirates.
+  Jacquerel:
+  - bugfix: Blood Brothers should spawn knowing what their objectives are.
+  - bugfix: Teams of 3 Blood Brothers will once more have an additional objective.
+  Melbert:
+  - refactor: Random Name Generation has been refactored. Report any instances of
+      people having weird (or "Unknown") names.
+  - qol: Felinids, Slimepeople, Podpeople, and some other species without defined
+      namelists now automatically generate names based on their primary language(s).
+  - qol: More non-human names can be generated in codewords (and other misc. areas)
+      than just lizard names.
+  larentoun:
+  - bugfix: Materials are now correctly applied to crafted items (chairs, toilets,
+      etc)

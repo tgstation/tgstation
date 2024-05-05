@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Random Name Generation has been refactored. Report any instances of people having weird (or \"Unknown\") names."
-  - qol: "Felinids, Slimepeople, Podpeople, and some other species without defined namelists now automatically generate names based on their primary language(s)."
-  - qol: "More non-human names can be generated in codewords (and other misc. areas) than just lizard names."
