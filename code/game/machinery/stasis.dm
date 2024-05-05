@@ -16,6 +16,7 @@
 	interaction_flags_click = ALLOW_SILICON_REACH
 	var/stasis_enabled = TRUE
 	var/filtering_enabled = FALSE
+	var/filtering_efficiency = 1
 	var/last_stasis_sound = FALSE
 	var/can_toggle = 0
 	var/mattress_state = "stasis_on"
@@ -25,13 +26,24 @@
 	. = ..()
 	AddElement(/datum/element/elevation, pixel_shift = 6)
 
+/obj/machinery/stasis/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	do_sparks(3, cardinal_only = FALSE, source = src)
+	obj_flags |= EMAGGED
+	to_chat(user, span_danger("You invert the filtering safeties and remove the thresholds on the stasis unit."))
+	if(occupant)
+		occupant.add_traits(list(TRAIT_INCAPACITATED, TRAIT_SOFTSPOKEN), STASIS_MACHINE_EFFECT)
+	return TRUE
+
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to [filtering_enabled ? "turn off" : "turn on"] the auxilary filtering function. A ridiculously small-print \
-		warning label beside the switch reads: \"CONSULT ENGINEERING DEPARTMENT REGARDING SUFFICIENT POWER ALLOCATION. WARNING: XENOBIOLOGY PERSONNEL STATISTICALLY AT HIGHER RISK FOR \
-		METABOLIC SIDE EFFECTS RELATED TO SLIME LIFE-FORM EXPERIMENTATION. USE OF THIS MEDICAL APPARATUS WAIVES ANY LIABILITY FOR ORGAN, CIRCULATORY, OR MILD(tm) PIERCING DAMAGE.\"")
+	. += span_notice("Alt-click to [stasis_enabled ? "turn off" : "turn on"] the stasis bed's functions.")
+	. += span_notice("Ctrl-click to [filtering_enabled ? "turn off" : "turn on"] the auxilary filtering function. A ridiculously small-print \
+		warning label beside the switch only has the words \"DANGER ... SLIME PERSONNEL ... INCREASED POWER ...\" bolded enough to be legible.")
 	if(filtering_enabled)
-		. += span_notice("Thousands of micro-needles jut up from the mattress.[prob(10) ? " They look thirsty...?" : ""]")
+		. += span_notice("Thousands of micro-needles jut up from the mattress.[obj_flags & EMAGGED ? span_danger(" They look thirsty, the filter servos whirring ominously.") : ""]")
 
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()
@@ -68,11 +80,17 @@
 		return CLICK_ACTION_BLOCKING
 	filtering_enabled = !filtering_enabled
 	can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
-	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
-	user.visible_message(span_notice("\The [src] filtering function [filtering_enabled ? "powers on. Thousands of micro-needles jut up from the mattress." : "shuts down. The micro-needles shunt back into the mattress invisibly."]."), \
-				span_notice("You [filtering_enabled ? "power on" : "shut down"] \the [src] filtering function. [filtering_enabled ? "Thousands of micro-needles jut up from the mattress." : "The micro-needles collapse back into the mattress, invisible"]."), \
-				span_hear("You hear [filtering_enabled ? " the unnerving sound of sharpened metal sliding against metal." : " a clunk of something metal"]."))
-	play_filtering_sound()
+	if(filtering_enabled)
+		var/sound/toggle_sound = sound('sound/items/unsheath.ogg')
+		toggle_sound.pitch = 2
+		playsound(src, toggle_sound, 60, TRUE,)
+	else
+		var/sound/toggle_sound = sound('sound/items/sheath.ogg')
+		toggle_sound.pitch = 2
+		playsound(src, toggle_sound, 60, TRUE,)
+	user.visible_message(span_notice("\The [src] filtering function [filtering_enabled ? "powers on. Thousands of micro-needles jut up from the mattress" : "shuts down. The micro-needles shunt back into the mattress invisibly"]."), \
+				span_notice("You [filtering_enabled ? "power on" : "shut down"] \the [src] filtering function. [filtering_enabled ? "Thousands of micro-needles jut up from the mattress" : "The micro-needles collapse back into the mattress, invisible"]."), \
+				span_hear("You hear [filtering_enabled ? " the unnerving sound of sharpened metal sliding against metal" : " a clunk of something metal"]."))
 	update_appearance()
 	if(occupant && filtering_enabled)
 		filter_jab(occupant, user)
@@ -85,6 +103,13 @@
 		if(HAS_TRAIT(L, TRAIT_STASIS))
 			thaw_them(L)
 	return ..()
+
+/obj/machinery/stasis/RefreshParts()
+	. = ..()
+	for(var/datum/stock_part/servo/servo in component_parts)
+		filtering_efficiency = servo.tier
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		filtering_efficiency += filtering_efficiency * (capacitor.tier * 0.25)
 
 /obj/machinery/stasis/proc/stasis_running()
 	return stasis_enabled && is_operational
@@ -136,29 +161,80 @@
 /obj/machinery/stasis/proc/chill_out(mob/living/target)
 	if(target != occupant)
 		return
+	var/is_emagged = obj_flags & EMAGGED
 	var/freq = rand(24750, 26550)
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = freq)
 	target.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_MACHINE_EFFECT)
 	ADD_TRAIT(target, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
+	if(is_emagged)
+		target.add_traits(list(TRAIT_INCAPACITATED, TRAIT_SOFTSPOKEN), STASIS_MACHINE_EFFECT)
 	target.extinguish_mob()
 	/// Double power usage if we have filtering enabled.
 	update_use_power(ACTIVE_POWER_USE * (filtering_enabled ? 2 : 1))
 
 /obj/machinery/stasis/proc/filter_jab(mob/living/target, mob/user)
-
+	target.visible_message(span_danger("The thousands of micro-needles in the [src]'s mattress slide into [target]'s flesh."), \
+				span_danger("You feel a sharp jabbing sensation as the needles of the [src] pierce your skin!"), \
+				span_hear("You hear a wet squelching sound."))
+	target.add_splatter_floor(get_turf(target))
+	target.apply_damage(obj_flags & EMAGGED ? 20 : 5, BRUTE, forced = TRUE, spread_damage = TRUE, wound_bonus = CANT_WOUND, attacking_item = src)
+	playsound(src, 'sound/surgery/organ2.ogg', 75, falloff_exponent = 1, falloff_distance = 7, pressure_affected = 1)
+	if(!HAS_TRAIT(target, TRAIT_ANALGESIA))
+		target.emote("scream")
 	target.log_message("has been jabbed with the needles of a stasis bed by [key_name(user)]", LOG_ATTACK)
 
 /obj/machinery/stasis/proc/passive_filter(mob/living/target)
+	var/is_emagged = obj_flags & EMAGGED
+	/// Jelly people shouldn't try to get their blood filtered,
+	/// because these things were designed by humans, for humans.
+	/// NOBODY should try to get their blood filtered if the machine
+	/// is emagged.
+	var/text/onlooker_message
+	var/text/target_message
+	if(prob(40))
+		play_filtering_sound()
+	if(isjellyperson(target) || is_emagged)
+		onlooker_message = span_notice("The [src] filters [target]'s blood, emitting an ominous whirring noise.")
+		target_message = span_danger("The [src] filters your blood-- SOMETHING IS WRONG! IT HURTS!")
+		target.blood_volume = max(target.blood_volume - (filtering_efficiency * 3), 0)
+		if(prob(15))
+			target.emote("scream")
+	else
+		onlooker_message = span_notice("The [src] filters [target]'s blood, humming softly.")
+		target_message = span_notice("You feel an odd, floaty sensation as [src] filters your blood.")
+	visible_message(onlooker_message, target_message, span_hear("You hear a wet, squelching, slurping sort of noise."),
+	for(var/datum/reagent/to_remove in target.reagents.reagent_list)
+		if(is_emagged)
+			if(istype(to_remove, /datum/reagent/medicine/))
+				target.reagents.remove_reagent(to_remove.type, filtering_efficiency)
+				/// If we're emagged, we're going to be a bit more "aggressive" with filtering.
+				/// And a bit more forgetful about actually filtering out the right things.
+				continue
+		if(filtering_efficiency < 3)
+			target.reagents.remove_reagent(to_remove.type, filtering_efficiency)
+		else
+			if(istype(to_remove, /datum/reagent/medicine/))
+				continue
+			target.reagents.remove_reagent(to_remove.type, filtering_efficiency)
+
+/obj/machinery/stasis/proc/play_filtering_sound()
+	var/sound/slurping = sound('sound/effects/wounds/splatter.ogg')
+	slurping.pitch = 0.3
+	playsound(src, slurping, 50, TRUE, falloff_exponent = 10, pressure_affected = TRUE, ignore_walls = FALSE, falloff_distance = 0)
+
 
 
 /obj/machinery/stasis/proc/thaw_them(mob/living/target)
+	var/is_emagged = obj_flags & EMAGGED
 	target.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_MACHINE_EFFECT)
 	REMOVE_TRAIT(target, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
+	if(is_emagged)
+		target.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_SOFTSPOKEN), STASIS_MACHINE_EFFECT)
 	if(target == occupant)
 		update_use_power(IDLE_POWER_USE)
 
 /obj/machinery/stasis/user_buckle_mob(mob/living/L, mob/user, check_loc = TRUE)
-	. = ..()
+	. = ..(L, user, check_loc)
 	if(. && filtering_enabled)
 		filter_jab(L, user)
 
