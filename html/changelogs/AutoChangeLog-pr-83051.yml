@@ -1,0 +1,4 @@
+author: "improvedname"
+delete-after: True
+changes:
+  - bugfix: "fixes traditional equipment crate name"
