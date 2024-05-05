@@ -68,11 +68,19 @@
 	if(levels <= 1 && can_help_themselves)
 		var/obj/item/organ/external/wings/gliders = get_organ_by_type(/obj/item/organ/external/wings)
 		if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
+			var/graceful_landing = HAS_TRAIT(src, TRAIT_CATLIKE_GRACE)
+
+			if(graceful_landing)
+				add_movespeed_modifier(/datum/movespeed_modifier/landed_on_feet)
+				addtimer(CALLBACK(src, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/landed_on_feet), levels * 3 SECONDS)
+			else
+				Knockdown(levels * 4 SECONDS)
+				emote("spin")
+
 			visible_message(
-				span_notice("[src] makes a hard landing on [impacted_turf] but remains unharmed from the fall."),
-				span_notice("You brace for the fall. You make a hard landing on [impacted_turf], but remain unharmed."),
+				span_notice("[src] makes a hard landing on [impacted_turf] but remains unharmed from the fall[graceful_landing ? " and stays on [p_their()] feet" : " by tucking in rolling into the landing"]."),
+				span_notice("You brace for the fall. You make a hard landing on [impacted_turf], but remain unharmed[graceful_landing ? " while landing on your feet" : " by tucking in and rolling into the landing"]."),
 			)
-			Knockdown(levels * 4 SECONDS)
 			return . | ZIMPACT_NO_MESSAGE
 
 	var/incoming_damage = (levels * 5) ** 1.5
@@ -148,6 +156,7 @@
 		return TRUE
 
 	SEND_SIGNAL(src, COMSIG_LIVING_MOB_BUMP, M)
+	SEND_SIGNAL(M, COMSIG_LIVING_MOB_BUMPED, src)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
 
@@ -1281,9 +1290,9 @@
 		return FALSE
 	if(invisibility || alpha <= 50)//cloaked
 		return FALSE
-	if(!isturf(src.loc)) //The reason why we don't just use get_turf is because they could be in a closet, disposals, or a vehicle.
+	if(!isturf(loc)) //The reason why we don't just use get_turf is because they could be in a closet, disposals, or a vehicle.
 		return FALSE
-	var/turf/T = src.loc
+	var/turf/T = loc
 	if(is_centcom_level(T.z)) //dont detect mobs on centcom
 		return FALSE
 	if(is_away_level(T.z))

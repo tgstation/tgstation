@@ -129,17 +129,6 @@
 	else
 		give_important_for_life(equipping)
 
-/datum/species/plasmaman/random_name(gender,unique,lastname)
-	if(unique)
-		return random_unique_plasmaman_name()
-
-	var/randname = plasmaman_name()
-
-	if(lastname)
-		randname += " [lastname]"
-
-	return randname
-
 /datum/species/plasmaman/get_scream_sound(mob/living/carbon/human)
 	return pick(
 		'sound/voice/plasmaman/plasmeme_scream_1.ogg',

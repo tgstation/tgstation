@@ -167,13 +167,15 @@
 	member_name = "blood brother"
 	var/brothers_left = 2
 
-/datum/team/brother_team/New()
+/datum/team/brother_team/New(starting_members)
 	. = ..()
 	if (prob(10))
 		brothers_left += 1
 
 /datum/team/brother_team/add_member(datum/mind/new_member)
 	. = ..()
+	if (!length(objectives))
+		forge_brother_objectives()
 	if (!new_member.has_antag_datum(/datum/antagonist/brother))
 		add_brother(new_member.current)
 
@@ -217,7 +219,7 @@
 	add_objective(new /datum/objective/convert_brother)
 
 	var/is_hijacker = prob(10)
-	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (members.len > 2) - is_hijacker))
+	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (brothers_left > 2) - is_hijacker))
 		forge_single_objective()
 	if(is_hijacker)
 		if(!locate(/datum/objective/hijack) in objectives)
