@@ -139,8 +139,10 @@
 		return NONE
 	if(locked)
 		to_chat(user, span_warning("[cleaner]'s hose is locked tight!"))
+		to_chat(source, span_warning("[cleaner]'s hose is locked!"))
 		return NONE
 	START_PROCESSING(SSobj, src)
+	playsound(cleaner, 'sound/items/vacuum/hose.ogg', 100, TRUE)
 	user.put_in_hands(cleaner)
 	create_vacuum_hose(user, source)
 	update_appearance(UPDATE_OVERLAYS)
@@ -192,13 +194,16 @@
 
 /obj/item/borg_hose
 	name = "vacuum hose"
-	desc = "A duel mode vacuum and scrubber attached to your favorite cleaning buddy!"
+	desc = "A duel mode vacuum and steamer attached to your favorite cleaning buddy!"
 	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "vacuum"
 	inhand_icon_state = "vacuum"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
+	force = 12
+	attack_verb_continuous = list("suck", "vacuum", "smack", "dust off", "beat")
+	attack_verb_simple = list("sucks", "vacuums", "smacks", "dusts off", "beats")
 	/// Cleaning modes - MODE_VACUUM and MODE_MOP
 	var/clean_mode = MODE_VACUUM
 	/// The apparatus itself.
@@ -214,11 +219,15 @@
 		w_class_on = w_class, \
 		clumsy_check = FALSE, \
 		inhand_icon_change = FALSE, \
+		hitsound_on = hitsound, \
+		attack_verb_continuous_on = list("wash", "mops", "scrub", "whack"), \
+		attack_verb_simple_on = list("washes", "mops", "scrubs", "whacks"), \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/borg_hose/Destroy(force)
 	home = null
+	QDEL_NULL(borg_hose)
 	UnregisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM)
 	return ..()
 
@@ -244,12 +253,13 @@
 
 	if(!istype(target, /obj/item)) // Only vacuume actual items
 		return NONE
-	if(clean_mode == MODE_MOP || !home.trash) // Do we have a trashbag and are we vacuuming?
+	if(!home.trash || clean_mode == MODE_MOP) // Do we have a trashbag and are we vacuuming?
 		return NONE
 	if(target.anchored || target.w_class >= WEIGHT_CLASS_BULKY)
 		return NONE
 	for(var/obj/item/I in get_turf(target))
 		I.spasm_animation(3)
+	playsound(src, 'sound/items/vacuum/vacuum_use.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(vacuum_items), target, user), 0.2 SECONDS)
 
 /obj/item/borg_hose/proc/vacuum_items(obj/thing, mob/living/user)
@@ -262,15 +272,19 @@
 	clean_mode = (active ? MODE_MOP : MODE_VACUUM)
 	if(!user)
 		return COMPONENT_NO_DEFAULT_MESSAGE
-	playsound(src, 'sound/weapons/batonextend.ogg', 20, TRUE)
+	playsound(src, 'sound/items/vacuum/clack.ogg', 50, TRUE)
 	if(clean_mode == MODE_VACUUM) // Handles the cleaner component. Don't mop if vacuuming
 		qdel(GetComponent(/datum/component/cleaner))
 	if(clean_mode == MODE_MOP)
 		AddComponent( \
 			/datum/component/cleaner, \
 			base_cleaning_duration = 1 SECONDS, \
+			pre_clean_callback = CALLBACK(src, PROC_REF(steam_sound)), \
 		)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/borg_hose/proc/steam_sound()
+	playsound(src, 'sound/items/vacuum/steam.ogg', 10, TRUE)
 
 /**
  * This handles registering unregistering [COMSIG_MOVABLE_MOVED]
@@ -303,7 +317,7 @@
 	if(home.borg_hose)
 		QDEL_NULL(home.borg_hose)
 	if(sound)
-		playsound(src, 'sound/machines/click.ogg', 20, FALSE)
+		playsound(src, 'sound/items/vacuum/ploop.ogg', 50, TRUE)
 	STOP_PROCESSING(SSobj, home)
 	forceMove(home)
 
@@ -314,7 +328,11 @@
 /obj/item/borg_hose/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	check_range()
-
+/*
+/obj/item/borg/borg_vacuum/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	cleaner.check_range()
+*/
 /obj/item/borg_hose/proc/check_range()
 	SIGNAL_HANDLER
 
@@ -369,6 +387,8 @@
 	if(!los_check(current_source, current_target))
 		cleaner.return_to_borg()
 		return
+
+/// Update the beam and interrupt it if passed through turfs
 
 /obj/item/borg/borg_vacuum/proc/los_check(mob/living/user, mob/living/target)
 	var/turf/user_turf = user.loc

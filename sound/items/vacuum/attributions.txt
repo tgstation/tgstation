@@ -1,0 +1,9 @@
+All sounds are sourced from https://www.soundsnap.com/
+
+clack.ogg and ploop.ogg https://www.soundsnap.com/dyson_vacuum_nozzle_handle_attachment_on_then_off_3
+
+vacuum_use.ogg https://www.soundsnap.com/dyson_vacuum_turn_on_run_off_close_perspective_4
+
+hose.ogg https://www.soundsnap.com/tube_accent_vacuum_hose_thin_plastic_membrane_with_wire_coil_and_dust_collapsible_and_half_expanded_5_ft_length_and_4
+
+steam.ogg https://www.soundsnap.com/espresso_machine_steam_hissing_2
