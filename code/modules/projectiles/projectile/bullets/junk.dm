@@ -5,12 +5,13 @@
 	icon_state = "trashball"
 	damage = 30
 	embedding = list(embed_chance=15, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
+	var/bane_mob_biotypes = MOB_ROBOTIC
 	var/bane_multiplier = 1.5
 	var/bane_added_damage = 0
 
-/obj/projectile/bullet/junk/shock/Initialize(mapload)
+/obj/projectile/bullet/junk/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = MOB_ROBOTIC, target_type = /mob/living, damage_multiplier = bane_multiplier, added_damage = bane_added_damage)
+	AddElement(/datum/element/bane, mob_biotypes = bane_mob_biotypes, target_type = /mob/living, damage_multiplier = bane_multiplier, added_damage = bane_added_damage)
 
 /obj/projectile/bullet/incendiary/fire/junk
 	name = "burning oil"
@@ -28,7 +29,7 @@
 	damage = 15
 	embedding = null
 	shrapnel_type = null
-	bane_multiplier = 2
+	bane_multiplier = 3
 
 /obj/projectile/bullet/junk/shock/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
@@ -38,11 +39,13 @@
 
 /obj/projectile/bullet/junk/hunter
 	name = "junk hunter bullet"
+	bane_mob_biotypes = MOB_BEAST
+	bane_multiplier = 0
+	bane_added_damage = 50
 
 /obj/projectile/bullet/junk/hunter/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = MOB_BEAST, target_type = /mob/living, damage_multiplier = 0, added_damage = 50)
-	AddElement(/datum/element/bane, mob_biotypes = MOB_SPECIAL, target_type = /mob/living, damage_multiplier = 0, added_damage = 50)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_SPECIAL, target_type = /mob/living, damage_multiplier = bane_multiplier, added_damage = bane_added_damage)
 
 /obj/projectile/bullet/junk/ripper
 	name = "junk ripper bullet"
