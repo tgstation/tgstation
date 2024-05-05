@@ -38,11 +38,11 @@
 
 /obj/item/mecha_parts/mecha_equipment/drill/detach(atom/moveto)
 	UnregisterSignal(chassis, COMSIG_MOVABLE_BUMP)
-	. = ..()
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/drill/Destroy()
 	UnregisterSignal(chassis, COMSIG_MOVABLE_BUMP)
-	. = ..()
+	return ..()
 
 ///Called whenever the mech bumps into something; action() handles checking if it is a mineable turf
 /obj/item/mecha_parts/mecha_equipment/drill/proc/bump_mine(obj/vehicle/sealed/mecha/bumper, atom/bumped_into)
