@@ -225,9 +225,9 @@
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
-/obj/item/borg_hose/Destroy(force)
+/obj/item/borg_hose/Destroy()
 	home = null
-	QDEL_NULL(home.borg_hose)
+	home.hose_lost()
 	UnregisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM)
 	return ..()
 
