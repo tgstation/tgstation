@@ -277,9 +277,9 @@
 		if(living_target)
 			living_target.apply_damage(15)
 			var/obj/item/bodypart/thief_hand = living_target.get_bodypart(BODY_ZONE_L_ARM)
-			if(!isnull(thief_hand))	
+			if(!isnull(thief_hand))
 				thief_hand.dismember(BRUTE)
-			to_chat(living_target, span_boldwarning("you feel [blades_in_list] collapse and disappeared.. maybe it never existed?"))	
+			to_chat(living_target, span_boldwarning("You feel severe pain in your hand as if otherworldly powers tore it from inside. [blades_in_list] collapse and disappeared.. maybe it never existed?"))
 		qdel(blades_in_list)
 		break
 	return success_check
