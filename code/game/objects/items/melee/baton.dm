@@ -873,7 +873,8 @@
 	var/stamina_damage_stun = 55
 	var/stamina_damage_kill = 35
 
-	var/throw_stun_chance = 35
+	var/force_standard = 10
+	var/force_kill = 47.5
 	var/obj/item/stock_parts/cell/cell
 	var/preload_cell_type //if not empty the baton starts with this type of cell
 	var/cell_hit_cost = STANDARD_CELL_CHARGE
@@ -1114,15 +1115,15 @@
 			do_sparks(1, TRUE, src)
 	if(active)
 		if(lethalmode)
-			force = 55 // Keep in mind, this does not attack faster then 2.5 times a second, meaning I think this is fair.
+			force = force_kill // Keep in mind, this does not attack faster then 2.5 times a second, meaning I think this is fair.
 			damtype = BURN
-			demolition_mod = 0.2 // Dont want people using the above damage to shred objects
+			demolition_mod = 0.25 // Dont want people using the above damage to shred objects
 		else
-			force = 10
+			force = force_standard
 			damtype = BRUTE
 			demolition_mod = 1
 	else
-		force = 10
+		force = force_standard
 		damtype = BRUTE
 		demolition_mod = 1
 	update_appearance()
