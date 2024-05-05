@@ -227,7 +227,7 @@
 
 /obj/item/borg_hose/Destroy(force)
 	home = null
-	QDEL_NULL(borg_hose)
+	QDEL_NULL(home.borg_hose)
 	UnregisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM)
 	return ..()
 
