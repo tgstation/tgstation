@@ -202,6 +202,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
+	obj_flags = INDESTRUCTIBLE // To avoid possible fuckery and a broken borg module
 	force = 12
 	attack_verb_continuous = list("suck", "vacuum", "smack", "dust off", "beat")
 	attack_verb_simple = list("sucks", "vacuums", "smacks", "dusts off", "beats")
@@ -229,7 +230,7 @@
 /obj/item/borg_hose/Destroy()
 	home = null
 	UnregisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM)
-	if(home.borg_hose)
+	if(home.on)
 		QDELL_NULL(home.borg_hose)
 	return ..()
 
