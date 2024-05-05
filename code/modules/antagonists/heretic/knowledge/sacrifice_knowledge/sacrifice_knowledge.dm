@@ -26,6 +26,16 @@
 	var/list/datum/mind/target_blacklist
 	/// An assoc list of [ref] to [timers] - a list of all the timers of people in the shadow realm currently
 	var/list/return_timers
+	/// Evil organs we can put in people
+	var/static/list/grantable_organs = list(
+		/obj/item/organ/internal/appendix/corrupt,
+		/obj/item/organ/internal/eyes/corrupt,
+		/obj/item/organ/internal/heart/corrupt,
+		/obj/item/organ/internal/liver/corrupt,
+		/obj/item/organ/internal/lungs/corrupt,
+		/obj/item/organ/internal/stomach/corrupt,
+		/obj/item/organ/internal/tongue/corrupt,
+	)
 
 /datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force)
 	heretic_mind = null

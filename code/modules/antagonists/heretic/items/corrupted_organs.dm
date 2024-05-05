@@ -34,6 +34,7 @@
 	organ_owner.client?.images -= hallucinations
 	QDEL_NULL(hallucinations)
 
+
 /// Sometimes speak in incomprehensible tongues
 /obj/item/organ/internal/tongue/corrupt
 	name = "corrupt tongue"
@@ -59,14 +60,47 @@
 		return
 	speech_args[SPEECH_LANGUAGE] = /datum/language/shadowtongue
 
+
 /// Randomly secretes alcohol or hallucinogens when you're drinking something
 /obj/item/organ/internal/liver/corrupt
 	name = "corrupt liver"
 	desc = "After what you've seen you could really go for a drink."
+	/// How much extra ingredients to add?
+	var/amount_added = 5
+	/// What extra ingredients can we add?
+	var/list/extra_ingredients = list(
+		/datum/reagent/consumable/ethanol/pina_olivada,
+		/datum/reagent/consumable/ethanol/rum,
+		/datum/reagent/consumable/ethanol/thirteenloko,
+		/datum/reagent/consumable/ethanol/vodka,
+		/datum/reagent/consumable/superlaughter,
+		/datum/reagent/drug/bath_salts,
+		/datum/reagent/drug/blastoff,
+		/datum/reagent/drug/happiness,
+		/datum/reagent/drug/mushroomhallucinogen,
+	)
 
 /obj/item/organ/internal/liver/corrupt/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/corrupted_organ)
+
+/obj/item/organ/internal/liver/corrupt/on_mob_insert(mob/living/carbon/organ_owner, special)
+	. = ..()
+	RegisterSignal(organ_owner, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_drank))
+
+/obj/item/organ/internal/liver/corrupt/on_mob_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	UnregisterSignal(organ_owner, COMSIG_ATOM_EXPOSE_REAGENTS)
+
+/// If we drank something, add a little extra
+/obj/item/organ/internal/liver/corrupt/proc/on_drank(atom/source, list/reagents, datum/reagents/source_reagents, methods)
+	SIGNAL_HANDLER
+	if (!(methods & INGEST))
+		return
+	var/datum/reagents/extra_reagents = new()
+	extra_reagents.add_reagent(pick(extra_ingredients), amount_added)
+	extra_reagents.trans_to(source, amount_added, transferred_by = src, methods = INJECT)
+
 
 /// Rapidly become hungry if you are not digesting blood
 /obj/item/organ/internal/stomach/corrupt
@@ -113,6 +147,7 @@
 /obj/item/organ/internal/stomach/corrupt/proc/start_thirsting()
 	thirst_satiated = FALSE
 
+
 /// Occasionally bombards you with spooky hands and lets everyone hear your pulse.
 /obj/item/organ/internal/heart/corrupt
 	name = "corrupt heart"
@@ -129,6 +164,7 @@
 	if (istype(get_area(owner), /area/centcom/heretic_sacrifice) || !owner.needs_heart() || !is_beating() || owner.has_reagent(/datum/reagent/water/holywater) || !SPT_PROB(hand_chance, seconds_per_tick))
 		return
 	fire_curse_hand(owner)
+
 
 /// Sometimes cough out some kind of dangerous gas
 /obj/item/organ/internal/lungs/corrupt
@@ -161,6 +197,7 @@
 	mix_to_spawn.temperature = breather.bodytemperature
 	var/turf/open/our_turf = get_turf(breather)
 	our_turf.assume_air(mix_to_spawn)
+
 
 /// It's full of worms
 /obj/item/organ/internal/appendix/corrupt
