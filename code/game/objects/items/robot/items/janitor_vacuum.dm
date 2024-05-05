@@ -110,6 +110,7 @@
 	if(ismob(cleaner.loc))
 		var/mob/M = cleaner.loc
 		M.dropItemToGround(cleaner, TRUE)
+		QDELL_NULL(borg_hose)
 	return NONE
 
 /**
@@ -227,8 +228,9 @@
 
 /obj/item/borg_hose/Destroy()
 	home = null
-	home.hose_lost()
 	UnregisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM)
+	if(home.borg_hose)
+		QDELL_NULL(home.borg_hose)
 	return ..()
 
 /**
