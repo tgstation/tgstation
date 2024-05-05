@@ -29,7 +29,7 @@
 	if(!target.get_bodypart(BODY_ZONE_HEAD))
 		return
 
-	if(NOZOMBIE in target.dna.species.species_traits)
+	if((NOZOMBIE in target.dna.species.species_traits) || HAS_TRAIT(target, TRAIT_NO_ZOMBIFY))
 		// cannot infect any NOZOMBIE subspecies (such as high functioning
 		// zombies)
 		return

@@ -40,11 +40,11 @@
 /obj/effect/client_image_holder/white_rabbit/proc/spotted(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	new /obj/item/rabbit_eye(loc)
+	new /obj/item/rabbit_eye(drop_location())
 	if(hunter?.rabbits_spotted == 0) //our first bunny
-		new /obj/item/clothing/mask/cursed_rabbit(loc)
+		new /obj/item/clothing/mask/cursed_rabbit(drop_location())
 	if(drop_gun)
-		new /obj/item/gun/ballistic/revolver/hunter_revolver(loc)
+		new /obj/item/gun/ballistic/revolver/hunter_revolver(drop_location())
 		var/datum/action/cooldown/spell/conjure_item/blood_silver/silverblood = new(user)
 		silverblood.StartCooldown()
 		silverblood.Grant(user)

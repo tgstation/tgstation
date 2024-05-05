@@ -16,7 +16,7 @@
 	. = ..()
 	StartCooldown(360 SECONDS, 360 SECONDS)
 	for(var/i in 1 to 3)
-		var/mob/living/basic/killer_rabbit/rabbit = new(owner.loc)
+		var/mob/living/basic/killer_rabbit/rabbit = new(owner.drop_location())
 		rabbit.faction = owner.faction.Copy()
 	StartCooldown()
 

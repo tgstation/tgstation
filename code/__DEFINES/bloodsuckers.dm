@@ -2,7 +2,7 @@
 //#define BLOODSUCKER_TESTING
 
 /// You have special interactions with Bloodsuckers
-#define TRAIT_BLOODSUCKER_HUNTER "bloodsucker_hunter"
+#define TRAIT_OCCULTIST "occultist"
 
 /**
  * Blood-level defines

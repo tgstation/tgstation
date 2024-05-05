@@ -4,6 +4,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
 	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	///have we claimed our weapon?
 	var/bought = FALSE
 	///the datum containing all weapons
@@ -24,12 +25,17 @@
 
 /obj/item/hunting_contract/ui_interact(mob/living/user, datum/tgui/ui)
 	if(!IS_MONSTERHUNTER(user))
-		to_chat(usr, span_notice("You are unable to decipher the symbols."))
+		to_chat(user, span_notice("You are unable to decipher the symbols."))
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "HunterContract", name)
 		ui.open()
+
+/obj/item/hunting_contract/ui_status(mob/user)
+	if(isliving(user) && !IS_MONSTERHUNTER(user))
+		return UI_CLOSE
+	return ..()
 
 /obj/item/hunting_contract/ui_data(mob/user)
 	var/list/data = list()
@@ -39,22 +45,22 @@
 	if(weapons.len)
 		for(var/datum/hunter_weapons/contraband as anything in weapons)
 			data["items"] += list(list(
-			"id" = contraband.type,
-			"name" = contraband.name,
-			"desc" = contraband.desc,
+				"id" = contraband.type,
+				"name" = contraband.name,
+				"desc" = contraband.desc
 			))
 	var/check_completed = TRUE  ///determines if all objectives have been completed
 	if(owner)
 		for(var/datum/objective/obj as anything in owner.objectives)
 			data["objectives"] += list(list(
-			"explanation" = obj.explanation_text,
-			"completed" = (obj.check_completion()),
+				"explanation" = obj.explanation_text,
+				"completed" = (obj.check_completion())
 			))
-			if(!(obj.check_completion()))
+			if(!obj.check_completion())
 				check_completed = FALSE
 		data["all_completed"] = check_completed
 		data["number_of_rabbits"] = owner.rabbits_spotted
-		data["rabbits_found"] = !(owner.rabbits.len)
+		data["rabbits_found"] = !length(owner.rabbits)
 		data["used_up"] = used_up
 	return data
 
@@ -73,8 +79,9 @@
 		if("claim_reward")
 			if(used_up)
 				return
-			if(!is_station_level(loc.z))
-				to_chat(usr,span_warning("The pull of the ice moon isn't strong enough here...."))
+			var/turf/current_turf = get_turf(src)
+			if(!is_station_level(current_turf.z))
+				to_chat(usr, span_warning("The pull of the ice moon isn't strong enough here..."))
 				return
 			SEND_SIGNAL(owner, COMSIG_BEASTIFY)
 			used_up = TRUE
@@ -95,8 +102,8 @@
 	podspawn(list(
 		"target" = get_turf(user),
 		"style" = STYLE_SYNDICATE,
-		"spawn" = purchased,
-		))
+		"spawn" = purchased
+	))
 
 /obj/item/hunting_contract/Destroy()
 	owner = null
@@ -112,18 +119,17 @@
 	var/item
 
 /datum/hunter_weapons/threaded_cane
-	name = "Threaded cane"
+	name = "Threaded Cane"
 	desc = "cane made out of heavy metal, can transform into a whip to strike foes from afar."
 	item = /obj/item/melee/trick_weapon/threaded_cane
 
-
 /datum/hunter_weapons/hunter_axe
-	name = "Hunter's axe"
+	name = "Hunter's Axe"
 	desc = "simple axe for hunters that lean towards barbarian tactics, can transform into a double bladed axe."
 	item = /obj/item/melee/trick_weapon/hunter_axe
 
 /datum/hunter_weapons/darkmoon_greatsword
-	name = "Darkmoon greatsword"
+	name = "Darkmoon Greatsword"
 	desc = "a heavy sword hilt that would knock anyone out cold, can transform into the darkmoonlight greatsword. "
 	item = /obj/item/melee/trick_weapon/darkmoon
 

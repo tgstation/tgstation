@@ -1,3 +1,8 @@
+// Monster Hunter stuff
+#define upgraded_val(x,y) ( CEILING((x * (1.07 ** y)), 1) )
+#define CALIBER_BLOODSILVER "bloodsilver"
+#define WEAPON_UPGRADE "weapon_upgrade"
+
 /// List of areas blacklisted from area based traitor objectives
 #define TRAITOR_OBJECTIVE_BLACKLISTED_AREAS list(/area/station/engineering/hallway, \
 		/area/station/engineering/lobby, \

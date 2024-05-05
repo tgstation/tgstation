@@ -15,6 +15,7 @@
 
 /mob/living/basic/killer_rabbit/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/anti_magic, ALL)
 	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(hostile_attackingtarget))
 
 /mob/living/basic/killer_rabbit/proc/hostile_attackingtarget(mob/living/basic/source, atom/target, success)

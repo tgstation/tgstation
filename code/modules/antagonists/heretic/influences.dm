@@ -190,7 +190,7 @@
 
 /obj/effect/visible_heretic_influence/examine(mob/user)
 	. = ..()
-	if(IS_HERETIC(user) || !ishuman(user))
+	if(IS_HERETIC(user) || !ishuman(user) || IS_MONSTERHUNTER(user))
 		return
 
 	var/mob/living/carbon/human/human_user = user

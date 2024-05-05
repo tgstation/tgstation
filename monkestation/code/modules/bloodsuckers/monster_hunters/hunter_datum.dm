@@ -3,8 +3,11 @@
 	roundend_category = "Monster Hunters"
 	antagpanel_category = "Monster Hunter"
 	job_rank = ROLE_MONSTERHUNTER
-	antag_hud_name = "obsessed"
+	hud_icon = 'monkestation/icons/mob/huds/antags/monster_hunter.dmi'
+	antag_hud_name = "hunter"
 	preview_outfit = /datum/outfit/monsterhunter
+	antag_moodlet = /datum/mood_event/monster_hunter
+	show_to_ghosts = TRUE
 	var/list/datum/action/powers = list()
 	var/give_objectives = TRUE
 	///how many rabbits have we found
@@ -17,20 +20,36 @@
 	var/apocalypse = FALSE
 	///a list of our prey
 	var/list/datum/mind/prey = list()
+	/// A list of traits innately granted to monster hunters.
+	var/static/list/granted_traits = list(
+		TRAIT_FEARLESS, // to ensure things like fear of heresy or blood or whatever don't fuck them over
+		TRAIT_NOCRITDAMAGE,
+		TRAIT_NOSOFTCRIT
+	)
+	/// A list of traits innately granted to the mind of monster hunters.
+	var/static/list/mind_traits = list(
+		TRAIT_OCCULTIST,
+		TRAIT_MADNESS_IMMUNE // You merely adopted the madness. I was born in it, molded by it.
+	)
+	/// A typecache of ability types that will be revealed to the monster hunter when they gain insight.
+	var/static/list/monster_abilities = typecacheof(list(
+		/datum/action/changeling,
+		/datum/action/cooldown/bloodsucker
+	))
 
 /datum/antagonist/monsterhunter/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
-	current_mob.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOCRITDAMAGE), HUNTER_TRAIT)
-	ADD_TRAIT(owner, TRAIT_BLOODSUCKER_HUNTER, HUNTER_TRAIT)
-	owner.unconvertable = TRUE
+	current_mob.add_traits(granted_traits, HUNTER_TRAIT)
+	current_mob.update_sight()
+	current_mob.faction |= FACTION_RABBITS
 
 /datum/antagonist/monsterhunter/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
 	REMOVE_TRAITS_IN(current_mob, HUNTER_TRAIT)
-	REMOVE_TRAITS_IN(owner, HUNTER_TRAIT)
-	owner.unconvertable = FALSE
+	current_mob.faction -= FACTION_RABBITS
+	current_mob.update_sight()
 
 /datum/antagonist/monsterhunter/on_gain()
 	//Give Hunter Objective
@@ -39,7 +58,10 @@
 	var/datum/map_template/wonderland/wonder = new()
 	if(!wonder.load_new_z())
 		message_admins("The wonderland failed to load.")
-		CRASH("Failed to initialize wonderland!")
+		CRASH("Failed to initialize wonderlandmind_traits, !")
+
+	owner.add_traits(mind_traits, HUNTER_TRAIT)
+	owner.unconvertable = TRUE
 
 	//Teach Stake crafting
 	owner.teach_crafting_recipe(/datum/crafting_recipe/hardened_stake)
@@ -56,7 +78,7 @@
 		grant_drop_ability(droppod_contract)
 	RegisterSignal(src, COMSIG_GAIN_INSIGHT, PROC_REF(insight_gained))
 	RegisterSignal(src, COMSIG_BEASTIFY, PROC_REF(turn_beast))
-	for(var/i in 1 to 5 )
+	for(var/i in 1 to 5)
 		var/turf/rabbit_hole = get_safe_random_station_turf()
 		var/obj/effect/client_image_holder/white_rabbit/cretin =  new(rabbit_hole, owner.current)
 		cretin.hunter = src
@@ -78,10 +100,11 @@
 		contract.owner = src
 	summon_contract.Grant(owner.current)
 
-
 /datum/antagonist/monsterhunter/on_removal()
 	UnregisterSignal(src, COMSIG_GAIN_INSIGHT)
 	UnregisterSignal(src, COMSIG_BEASTIFY)
+	REMOVE_TRAITS_IN(owner, HUNTER_TRAIT)
+	owner.unconvertable = FALSE
 	for(var/obj/effect/client_image_holder/white_rabbit/white as anything in rabbits)
 		rabbits -= white
 		qdel(white)
@@ -168,7 +191,7 @@
 	to_chat(owner.current, span_announce("While we can kill anyone in our way to destroy the monsters lurking around, <b>causing property damage is unacceptable</b>."))
 	to_chat(owner.current, span_announce("However, security WILL detain us if they discover our mission."))
 	to_chat(owner.current, span_announce("In exchange for our services, it shouldn't matter if a few items are gone missing for our... personal collection."))
-	owner.current.playsound_local(null, 'monkestation/sound/bloodsuckers/monsterhunterintro.ogg', 100, FALSE, pressure_affected = FALSE)
+	owner.current.playsound_local(null, 'monkestation/sound/bloodsuckers/monsterhunterintro.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
 	owner.announce_objectives()
 
 /datum/antagonist/monsterhunter/proc/insight_gained()
@@ -176,28 +199,28 @@
 
 	var/description
 	var/datum/objective/assassinate/hunter/obj
-	var/list/unchecked_objectives = list()
+	var/list/unchecked_objectives
 	for(var/datum/objective/assassinate/hunter/goal in objectives)
 		if(!goal.discovered)
-			unchecked_objectives += goal
-	if(unchecked_objectives.len)
+			LAZYADD(unchecked_objectives, goal)
+	if(unchecked_objectives)
 		obj = pick(unchecked_objectives)
 	if(obj)
 		obj.uncover_target()
 		var/datum/antagonist/heretic/heretic_target = IS_HERETIC(obj.target.current)
 		if(heretic_target)
-			description = "your target [heretic_target.owner.current.real_name] follows the [heretic_target.heretic_path], dear hunter."
+			description = "Your target, [heretic_target.owner.current.real_name], follows the [heretic_target.heretic_path], dear hunter."
 		else
-			description = "O' hunter, your target [obj.target.current.real_name] bears these lethal abilities:  "
-			for(var/datum/action/ability in obj.target.current.actions)
-				if(!ability)
+			description = "O' hunter, your target [obj.target.current.real_name] bears these lethal abilities: "
+			var/list/abilities = list()
+			for(var/datum/action/ability as anything in obj.target.current.actions)
+				if(!is_type_in_typecache(ability, monster_abilities))
 					continue
-				if(!istype(ability, /datum/action/changeling) && !istype(ability, /datum/action/cooldown/bloodsucker))
-					continue
-				description += "[ability.name], "
+				abilities |= "[ability.name]"
+			description += english_list(abilities)
 
 	rabbits_spotted++
-	to_chat(owner.current,span_notice("[description]"))
+	to_chat(owner.current, span_boldnotice("[description]"))
 
 /datum/objective/assassinate/hunter
 	///has our target been discovered?
@@ -209,26 +232,22 @@
 	discovered = !discovered
 	src.update_explanation_text()
 	to_chat(owner.current, span_userdanger("You have identified a monster, your objective list has been updated!"))
+	update_static_data_for_all_viewers()
 
 /datum/antagonist/monsterhunter/proc/find_monster_targets()
 	var/list/possible_targets = list()
-	for(var/datum/antagonist/victim in GLOB.antagonists)
-		if(!victim.owner)
+	for(var/datum/antagonist/victim as anything in GLOB.antagonists)
+		if(QDELETED(victim?.owner?.current) || victim.owner.current.stat == DEAD || victim.owner == owner)
 			continue
-		if(!victim.owner.current)
-			continue
-		if(victim.owner.current.stat == DEAD || victim.owner == owner)
-			continue
-		if(istype(victim, /datum/antagonist/changeling) || istype(victim, /datum/antagonist/heretic) || istype(victim, /datum/antagonist/bloodsucker))
+		if(is_type_in_typecache(victim, GLOB.monster_hunter_prey_antags))
 			possible_targets += victim.owner
 
 	for(var/i in 1 to 3) //we get 3 targets
-		if(!(possible_targets.len))
+		if(!length(possible_targets))
 			break
 		var/datum/objective/assassinate/hunter/kill_monster = new
 		kill_monster.owner = owner
-		var/datum/mind/target = pick(possible_targets)
-		possible_targets -= target
+		var/datum/mind/target = pick_n_take(possible_targets)
 		kill_monster.target = target
 		prey += target
 		kill_monster.explanation_text = "A monster target is aboard the station, identify and eliminate this threat."
@@ -239,7 +258,7 @@
 	SIGNAL_HANDLER
 
 	apocalypse = TRUE
-	force_event(/datum/round_event_control/wonderlandapocalypse, "a monsterhunter turning into a beast")
+	force_event(/datum/round_event_control/wonderlandapocalypse, "a monster hunter turning into a beast")
 
 /obj/item/clothing/mask/monster_preview_mask
 	name = "Monster Preview Mask"
@@ -277,7 +296,7 @@
 
 
 /datum/action/droppod_item
-	name = "Summon Monster Hunter tools"
+	name = "Summon Monster Hunter Tools"
 	desc = "Summon specific monster hunter tools that will aid us with our hunt."
 	button_icon = 'icons/obj/device.dmi'
 	button_icon_state = "beacon"
@@ -318,7 +337,6 @@
 
 /datum/action/cooldown/spell/track_monster/proc/remove_vision(mob/living/carbon/cast_on)
 	qdel(cast_on.GetComponent(/datum/component/echolocation))
-
 
 /datum/component/echolocation/monsterhunter
 

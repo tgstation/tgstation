@@ -1,10 +1,3 @@
-///List of antagonists that are considered 'Monsters' and their chance of being selected.
-GLOBAL_LIST_INIT(monster_antagonist_types, list(
-	/datum/antagonist/bloodsucker,
-	/datum/antagonist/heretic,
-	/datum/antagonist/changeling,
-))
-
 #define MINIMUM_MONSTERS_REQUIRED 2
 
 //gives monsterhunters an icon in the antag selection panel
@@ -40,13 +33,14 @@ GLOBAL_LIST_INIT(monster_antagonist_types, list(
 
 
 /datum/dynamic_ruleset/midround/monsterhunter/trim_candidates()
-	..()
+	. = ..()
 	for(var/mob/living/player in living_players)
+		var/turf/player_turf = get_turf(player)
 		if(issilicon(player))
 			living_players -= player
-		if(is_centcom_level(player.z))
+		if(QDELETED(player_turf) || is_centcom_level(player_turf.z))
 			living_players -= player
-		if((player.mind?.special_role || player.mind?.antag_datums?.len))
+		if((player.mind?.special_role || length(player.mind?.antag_datums)))
 			living_players -= player
 
 /datum/dynamic_ruleset/midround/monsterhunter/ready(forced = FALSE)
@@ -54,13 +48,9 @@ GLOBAL_LIST_INIT(monster_antagonist_types, list(
 		return FALSE
 	var/count = 0
 	for(var/datum/antagonist/monster as anything in GLOB.antagonists)
-		if(!monster.owner)
+		if(QDELETED(monster.owner) || QDELETED(monster.owner.current) || monster.owner.current.stat == DEAD)
 			continue
-		if(!monster.owner.current)
-			continue
-		if(monster.owner.current.stat == DEAD)
-			continue
-		if(GLOB.monster_antagonist_types.Find(monster.type))
+		if(is_type_in_typecache(monster, GLOB.monster_hunter_prey_antags))
 			count++
 
 	if(MINIMUM_MONSTERS_REQUIRED > count)
