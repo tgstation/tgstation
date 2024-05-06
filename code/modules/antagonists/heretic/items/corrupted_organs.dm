@@ -182,7 +182,7 @@
 
 /obj/item/organ/internal/heart/corrupt/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	if (IS_IN_MANSUS(owner) || !owner.needs_heart() || !is_beating() || owner.has_reagent(/datum/reagent/water/holywater) || !COOLDOWN_FINISHED(src, hand_cooldown))
+	if (!COOLDOWN_FINISHED(src, hand_cooldown) || IS_IN_MANSUS(owner) || !owner.needs_heart() || !is_beating() || owner.has_reagent(/datum/reagent/water/holywater))
 		return
 	fire_curse_hand(owner)
 	COOLDOWN_START(src, hand_cooldown, rand(6 SECONDS, 45 SECONDS)) // Wide variance to put you off guard
