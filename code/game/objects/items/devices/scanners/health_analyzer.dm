@@ -20,7 +20,7 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT *2)
-	interaction_flags_click = NEED_LITERACY|NEED_LIGHT
+	interaction_flags_click = NEED_LITERACY|NEED_LIGHT|ALLOW_RESTING
 	/// Verbose/condensed
 	var/mode = SCANNER_VERBOSE
 	/// HEALTH/WOUND

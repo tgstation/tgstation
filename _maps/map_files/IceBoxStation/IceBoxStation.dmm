@@ -11148,9 +11148,8 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/pharmacy)
 "dmL" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light_switch/directional/south,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "dmR" = (
@@ -16626,7 +16625,7 @@
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/security)
 "eYH" = (
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/super/full,
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
@@ -17280,7 +17279,6 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/structure/sign/poster/contraband/missing_gloves/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
@@ -23584,7 +23582,6 @@
 	},
 /area/station/security/office)
 "hkd" = (
-/obj/structure/cable,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
@@ -24066,7 +24063,6 @@
 /obj/structure/chair/office/light{
 	dir = 4
 	},
-/obj/effect/landmark/start/virologist,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "hsh" = (
@@ -36280,7 +36276,6 @@
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "ldn" = (
@@ -45193,7 +45188,6 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
-/obj/effect/landmark/start/virologist,
 /obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
@@ -47715,10 +47709,6 @@
 /area/station/maintenance/solars/starboard/fore)
 "oCs" = (
 /obj/structure/table,
-/obj/item/toy/figure/virologist{
-	pixel_x = -8;
-	pixel_y = 7
-	},
 /obj/item/radio/headset/headset_med{
 	pixel_x = -3;
 	pixel_y = -2
@@ -58493,8 +58483,8 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "rPu" = (
-/obj/machinery/power/smes,
 /obj/structure/cable,
+/obj/machinery/power/smes/engineering,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "rPL" = (
@@ -63522,7 +63512,6 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/mining)
 "tsR" = (
-/obj/structure/cable,
 /obj/structure/chair/stool/directional/south,
 /obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/plating,
@@ -68407,7 +68396,6 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "uXy" = (

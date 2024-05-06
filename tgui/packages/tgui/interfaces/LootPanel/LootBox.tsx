@@ -1,4 +1,4 @@
-import { capitalizeAll } from 'common/string';
+import { capitalizeAll, capitalizeFirst } from 'common/string';
 
 import { useBackend } from '../../backend';
 import { Tooltip } from '../../components';
@@ -25,28 +25,35 @@ export function LootBox(props: Props) {
     item = props.item;
   }
 
+  const name = !item.name
+    ? '???'
+    : capitalizeFirst(item.name.split(' ')[0]).slice(0, 5);
+
   return (
     <Tooltip content={capitalizeAll(item.name)}>
-      <div
-        className="SearchItem"
-        onClick={(event) =>
-          act('grab', {
-            ctrl: event.ctrlKey,
-            ref: item.ref,
-            shift: event.shiftKey,
-          })
-        }
-        onContextMenu={(event) => {
-          event.preventDefault();
-          act('grab', {
-            middle: true,
-            ref: item.ref,
-            shift: true,
-          });
-        }}
-      >
-        <IconDisplay item={item} />
-        {amount > 1 && <div className="SearchItem--amount">{amount}</div>}
+      <div className="SearchItem">
+        <div
+          className="SearchItem--box"
+          onClick={(event) =>
+            act('grab', {
+              ctrl: event.ctrlKey,
+              ref: item.ref,
+              shift: event.shiftKey,
+            })
+          }
+          onContextMenu={(event) => {
+            event.preventDefault();
+            act('grab', {
+              middle: true,
+              ref: item.ref,
+              shift: true,
+            });
+          }}
+        >
+          <IconDisplay item={item} />
+          {amount > 1 && <div className="SearchItem--amount">{amount}</div>}
+        </div>
+        <span className="SearchItem--text">{name}</span>
       </div>
     </Tooltip>
   );

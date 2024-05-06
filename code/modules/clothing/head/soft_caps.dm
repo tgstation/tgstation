@@ -5,7 +5,7 @@
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 	icon_state = "cargosoft"
 	inhand_icon_state = "greyscale_softcap" //todo wip
-	interaction_flags_click = NEED_DEXTERITY
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	/// For setting icon archetype
 	var/soft_type = "cargo"
 	/// If there is a suffix to append

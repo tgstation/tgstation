@@ -19,10 +19,12 @@
 ///The joule is the standard unit of energy for this codebase. You can use this with other defines to clarify that it will not be multiplied by time.
 #define JOULES * JOULE
 
-///The amount of energy, in joules, a standard powercell has.
-#define STANDARD_CELL_CHARGE (1 MEGA JOULES) // 1 MJ.
-
-GLOBAL_VAR_INIT(CHARGELEVEL, 0.01) // Cap for how fast cells charge, as a percentage per second (.01 means cellcharge is capped to 1% per second)
+///The capacity of a standard power cell
+#define STANDARD_CELL_VALUE (1 MEGA)
+	///The amount of energy, in joules, a standard powercell has.
+	#define STANDARD_CELL_CHARGE (STANDARD_CELL_VALUE JOULES) // 1 MJ.
+	///The amount of power, in watts, a standard powercell can give.
+	#define STANDARD_CELL_RATE (STANDARD_CELL_VALUE WATTS) // 1 MW.
 
 // Converts cable layer to its human readable name
 GLOBAL_LIST_INIT(cable_layer_to_name, list(

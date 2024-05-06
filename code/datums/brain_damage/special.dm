@@ -491,6 +491,7 @@
 
 	owner.ai_controller = new /datum/ai_controller/monkey(owner)
 	owner.ai_controller.continue_processing_when_client = TRUE
+	owner.ai_controller.can_idle = FALSE
 	owner.ai_controller.set_ai_status(AI_STATUS_OFF)
 
 /datum/brain_trauma/special/primal_instincts/on_lose(silent)
@@ -514,7 +515,7 @@
 	owner.grant_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
 	owner.ai_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, prob(75))
 	if(owner.ai_controller.ai_status == AI_STATUS_OFF)
-		owner.ai_controller.set_ai_status(AI_STATUS_IDLE)
+		owner.ai_controller.set_ai_status(AI_STATUS_ON)
 		owner.log_message("became controlled by monkey instincts ([owner.ai_controller.blackboard[BB_MONKEY_AGGRESSIVE] ? "aggressive" : "docile"])", LOG_ATTACK, color = "orange")
 		to_chat(owner, span_warning("You feel the urge to act on your primal instincts..."))
 	// extend original timer if we roll the effect while it's already ongoing

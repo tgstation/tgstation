@@ -85,7 +85,7 @@ export const MessageWriteTab = (props) => {
             width="100%"
             options={sorted_assistance}
             selected={recipient}
-            displayText={recipient || 'Pick a Recipient'}
+            placeholder="Pick a Recipient"
             onSelected={(value) => setRecipient(value)}
           />
         )}
@@ -94,7 +94,7 @@ export const MessageWriteTab = (props) => {
             width="100%"
             options={sorted_supply}
             selected={recipient}
-            displayText={recipient || 'Pick a Recipient'}
+            placeholder="Pick a Recipient"
             onSelected={(value) => setRecipient(value)}
           />
         )}
@@ -103,7 +103,7 @@ export const MessageWriteTab = (props) => {
             width="100%"
             options={sorted_information}
             selected={recipient}
-            displayText={recipient || 'Pick a Recipient'}
+            placeholder="Pick a Recipient"
             onSelected={(value) => setRecipient(value)}
           />
         )}

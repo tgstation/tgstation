@@ -312,3 +312,5 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMOTE_VISIBLE (1<<1)
 /// Is it an emote that should be shown regardless of blindness/deafness
 #define EMOTE_IMPORTANT (1<<2)
+/// Emote only prints to runechat, not to the chat window
+#define EMOTE_RUNECHAT (1<<3)

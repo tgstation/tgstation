@@ -10,10 +10,10 @@ import {
   CheckboxInput,
   FeatureChoiced,
   FeatureChoicedServerData,
-  FeatureDropdownInput,
   FeatureToggle,
   FeatureValueProps,
 } from '../base';
+import { FeatureDropdownInput } from '../dropdowns';
 
 export const ghost_accs: FeatureChoiced = {
   name: 'Ghost accessories',
@@ -81,9 +81,10 @@ const GhostFormInput = (
 
   return (
     <Dropdown
+      autoScroll={false}
       disabled={!data.content_unlocked}
       selected={props.value}
-      displayText={displayTexts[props.value]}
+      placeholder={displayTexts[props.value]}
       onSelected={props.handleSetValue}
       width="100%"
       options={options}

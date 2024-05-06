@@ -44,6 +44,8 @@
 	var/start_time
 	/// This map is specifically for unit tests. Shouldn't display in game
 	var/test_only = FALSE
+	/// Has this domain been beaten with high enough score to spawn a tech disk?
+	var/disk_reward_spawned = FALSE
 
 /// Sends a point to any loot signals on the map
 /datum/lazy_template/virtual_domain/proc/add_points(points_to_add)

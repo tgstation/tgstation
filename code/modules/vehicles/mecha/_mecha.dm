@@ -36,11 +36,11 @@
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD)
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 	///How much energy the mech will consume each time it moves. this is the current active energy consumed
-	var/step_energy_drain = 8 KILO JOULES
+	var/step_energy_drain = 0.008 * STANDARD_CELL_CHARGE
 	///How much energy we drain each time we mechpunch someone
-	var/melee_energy_drain = 15 KILO JOULES
+	var/melee_energy_drain = 0.015 * STANDARD_CELL_CHARGE
 	///Power we use to have the lights on
-	var/light_power_drain = 2 KILO WATTS
+	var/light_power_drain = 0.002 * STANDARD_CELL_RATE
 	///Modifiers for directional damage reduction
 	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 0.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 1.5)
 	///if we cant use our equipment(such as due to EMP)
@@ -274,7 +274,7 @@
 	/// and gets deleted with the mech. However, they do remain in .contents
 	var/list/potential_occupants = contents | occupants
 	for(var/mob/buggy_ejectee in potential_occupants)
-		mob_exit(buggy_ejectee, silent = TRUE)
+		mob_exit(buggy_ejectee, silent = TRUE, forced = TRUE)
 
 	if(LAZYLEN(flat_equipment))
 		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in flat_equipment)
@@ -328,7 +328,7 @@
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
 			var/mob/living/silicon/ai/ai = occupant
-			if(!ai.linked_core) // we probably shouldnt gib AIs with a core
+			if(!ai.linked_core && !ai.can_shunt) // we probably shouldnt gib AIs with a core or shunting abilities
 				unlucky_ai = occupant
 				ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
 				ai.gib(DROP_ALL_REMAINS) //No wreck, no AI to recover
@@ -706,6 +706,26 @@
 	SEND_SIGNAL(user, COMSIG_MOB_USED_MECH_MELEE, src)
 	target.mech_melee_attack(src, user)
 	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
+
+
+/// Driver alt clicks anything while in mech
+/obj/vehicle/sealed/mecha/proc/on_click_alt(mob/user, atom/target, params)
+	SIGNAL_HANDLER
+
+	. = COMSIG_MOB_CANCEL_CLICKON // Cancel base_click_alt
+
+	if(target != src)
+		return
+
+	if(!(user in occupants))
+		return
+
+	if(!(user in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE)))
+		to_chat(user, span_warning("You're in the wrong seat to control movement."))
+		return
+
+	toggle_strafe()
+
 
 /// middle mouse click signal wrapper for AI users
 /obj/vehicle/sealed/mecha/proc/on_middlemouseclick(mob/user, atom/target, params)

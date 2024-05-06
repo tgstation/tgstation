@@ -3,9 +3,9 @@ import {
   FeatureChoiced,
   FeatureChoicedServerData,
   FeatureColorInput,
-  FeatureDropdownInput,
   FeatureValueProps,
 } from './base';
+import { FeatureDropdownInput } from './dropdowns';
 
 export const eye_color: Feature<string> = {
   name: 'Eye color',

@@ -226,7 +226,7 @@
 	if(!ionpulse_on)
 		return
 
-	if(!cell.use(10 KILO JOULES))
+	if(!cell.use(0.01 * STANDARD_CELL_CHARGE))
 		toggle_ionpulse()
 		return
 	return TRUE

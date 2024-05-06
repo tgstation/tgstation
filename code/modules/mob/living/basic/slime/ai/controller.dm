@@ -19,6 +19,7 @@
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/slime,
 		/datum/ai_planning_subtree/random_speech/slime,
 	)
+	can_idle = FALSE
 
 /datum/ai_controller/basic_controller/slime/CancelActions()
 	..()

@@ -32,10 +32,10 @@
 	relevant_mutant_bodypart = "body_markings"
 
 /datum/preference/choiced/lizard_body_markings/init_possible_values()
-	return assoc_to_keys_features(GLOB.body_markings_list)
+	return assoc_to_keys_features(SSaccessories.body_markings_list)
 
 /datum/preference/choiced/lizard_body_markings/icon_for(value)
-	var/datum/sprite_accessory/sprite_accessory = GLOB.body_markings_list[value]
+	var/datum/sprite_accessory/sprite_accessory = SSaccessories.body_markings_list[value]
 
 	var/icon/final_icon = icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_chest_m")
 
@@ -65,10 +65,10 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/lizard_frills/init_possible_values()
-	return assoc_to_keys_features(GLOB.frills_list)
+	return assoc_to_keys_features(SSaccessories.frills_list)
 
 /datum/preference/choiced/lizard_frills/icon_for(value)
-	return generate_lizard_side_shot(GLOB.frills_list[value], "frills")
+	return generate_lizard_side_shot(SSaccessories.frills_list[value], "frills")
 
 /datum/preference/choiced/lizard_frills/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["frills"] = value
@@ -81,10 +81,10 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/lizard_horns/init_possible_values()
-	return assoc_to_keys_features(GLOB.horns_list)
+	return assoc_to_keys_features(SSaccessories.horns_list)
 
 /datum/preference/choiced/lizard_horns/icon_for(value)
-	return generate_lizard_side_shot(GLOB.horns_list[value], "horns")
+	return generate_lizard_side_shot(SSaccessories.horns_list[value], "horns")
 
 /datum/preference/choiced/lizard_horns/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["horns"] = value
@@ -96,7 +96,7 @@
 	relevant_mutant_bodypart = "legs"
 
 /datum/preference/choiced/lizard_legs/init_possible_values()
-	return assoc_to_keys_features(GLOB.legs_list)
+	return assoc_to_keys_features(SSaccessories.legs_list)
 
 /datum/preference/choiced/lizard_legs/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["legs"] = value
@@ -109,10 +109,10 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/lizard_snout/init_possible_values()
-	return assoc_to_keys_features(GLOB.snouts_list)
+	return assoc_to_keys_features(SSaccessories.snouts_list)
 
 /datum/preference/choiced/lizard_snout/icon_for(value)
-	return generate_lizard_side_shot(GLOB.snouts_list[value], "snout", include_snout = FALSE)
+	return generate_lizard_side_shot(SSaccessories.snouts_list[value], "snout", include_snout = FALSE)
 
 /datum/preference/choiced/lizard_snout/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["snout"] = value
@@ -124,7 +124,7 @@
 	relevant_mutant_bodypart = "spines"
 
 /datum/preference/choiced/lizard_spines/init_possible_values()
-	return assoc_to_keys_features(GLOB.spines_list)
+	return assoc_to_keys_features(SSaccessories.spines_list)
 
 /datum/preference/choiced/lizard_spines/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["spines"] = value
@@ -136,7 +136,7 @@
 	relevant_external_organ = /obj/item/organ/external/tail/lizard
 
 /datum/preference/choiced/lizard_tail/init_possible_values()
-	return assoc_to_keys_features(GLOB.tails_list_lizard)
+	return assoc_to_keys_features(SSaccessories.tails_list_lizard)
 
 /datum/preference/choiced/lizard_tail/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["tail_lizard"] = value

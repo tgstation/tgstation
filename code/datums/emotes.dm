@@ -88,43 +88,106 @@
  * Returns TRUE if it was able to run the emote, FALSE otherwise.
  */
 /datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE)
-	. = TRUE
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
 	if(SEND_SIGNAL(user, COMSIG_MOB_PRE_EMOTED, key, params, type_override, intentional) & COMPONENT_CANT_EMOTE)
-		return // We don't return FALSE because the error output would be incorrect, provide your own if necessary.
+		return TRUE // We don't return FALSE because the error output would be incorrect, provide your own if necessary.
 	var/msg = select_message_type(user, message, intentional)
 	if(params && message_param)
 		msg = select_param(user, params)
 
 	msg = replace_pronoun(user, msg)
-
 	if(!msg)
-		return
+		return TRUE
 
 	user.log_message(msg, LOG_EMOTE)
-	var/dchatmsg = "<b>[user]</b> [msg]"
 
 	var/tmp_sound = get_sound(user)
 	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, type))
 		TIMER_COOLDOWN_START(user, type, audio_cooldown)
 		playsound(user, tmp_sound, 50, vary)
 
-	var/user_turf = get_turf(user)
-	if (user.client)
-		for(var/mob/ghost as anything in GLOB.dead_mob_list)
-			if(!ghost.client || isnewplayer(ghost))
+	var/is_important = emote_type & EMOTE_IMPORTANT
+	var/is_visual = emote_type & EMOTE_VISIBLE
+	var/is_audible = emote_type & EMOTE_AUDIBLE
+
+	// Emote doesn't get printed to chat, runechat only
+	if(emote_type & EMOTE_RUNECHAT)
+		for(var/mob/viewer as anything in viewers(user))
+			if(isnull(viewer.client))
 				continue
-			if(get_chat_toggles(ghost.client) & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
-				ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
-	if(emote_type & (EMOTE_AUDIBLE | EMOTE_VISIBLE)) //emote is audible and visible
-		user.audible_message(msg, deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>", audible_message_flags = EMOTE_MESSAGE)
-	else if(emote_type & EMOTE_VISIBLE)	//emote is only visible
-		user.visible_message(msg, visible_message_flags = EMOTE_MESSAGE)
-	if(emote_type & EMOTE_IMPORTANT)
-		for(var/mob/living/viewer in viewers())
-			if(viewer.is_blind() && !viewer.can_hear())
-				to_chat(viewer, msg)
+			if(!is_important && viewer != user && (!is_visual || !is_audible))
+				if(is_audible && !viewer.can_hear())
+					continue
+				if(is_visual && viewer.is_blind())
+					continue
+			if(user.runechat_prefs_check(viewer, EMOTE_MESSAGE))
+				viewer.create_chat_message(
+					speaker = user,
+					raw_message = msg,
+					runechat_flags = EMOTE_MESSAGE,
+				)
+			else if(is_important)
+				to_chat(viewer, "<span class='emote'><b>[user]</b> [msg]</span>")
+			else if(is_audible && is_visual)
+				viewer.show_message(
+					"<span class='emote'><b>[user]</b> [msg]</span>", MSG_AUDIBLE,
+					"<span class='emote'>You see how <b>[user]</b> [msg]</span>", MSG_VISUAL,
+				)
+			else if(is_audible)
+				viewer.show_message("<span class='emote'><b>[user]</b> [msg]</span>", MSG_AUDIBLE)
+			else if(is_visual)
+				viewer.show_message("<span class='emote'><b>[user]</b> [msg]</span>", MSG_VISUAL)
+		return TRUE // Early exit so no dchat message
+
+	// The emote has some important information, and should always be shown to the user
+	else if(is_important)
+		for(var/mob/viewer as anything in viewers(user))
+			to_chat(viewer, "<span class='emote'><b>[user]</b> [msg]</span>")
+			if(user.runechat_prefs_check(viewer, EMOTE_MESSAGE))
+				viewer.create_chat_message(
+					speaker = user,
+					raw_message = msg,
+					runechat_flags = EMOTE_MESSAGE,
+				)
+	// Emotes has both an audible and visible component
+	// Prioritize audible, and provide a visible message if the user is deaf
+	else if(is_visual && is_audible)
+		user.audible_message(
+			message = msg,
+			deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>",
+			self_message = msg,
+			audible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE,
+		)
+	// Emote is entirely audible, no visible component
+	else if(is_audible)
+		user.audible_message(
+			message = msg,
+			self_message = msg,
+			audible_message_flags = EMOTE_MESSAGE,
+		)
+	// Emote is entirely visible, no audible component
+	else if(is_visual)
+		user.visible_message(
+			message = msg,
+			self_message = msg,
+			visible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE,
+		)
+	else
+		CRASH("Emote [type] has no valid emote type set!")
+
+	if(!isnull(user.client))
+		var/dchatmsg = "<b>[user]</b> [msg]"
+		for(var/mob/ghost as anything in GLOB.dead_mob_list - viewers(get_turf(user)))
+			if(isnull(ghost.client) || isnewplayer(ghost))
+				continue
+			if(!(get_chat_toggles(ghost.client) & CHAT_GHOSTSIGHT))
+				continue
+			to_chat(ghost, "<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
+
+	return TRUE
+
+
 
 /**
  * For handling emote cooldown, return true to allow the emote to happen.

@@ -1,5 +1,5 @@
 /// Charge per tick consumed by the thermal regulator
-#define THERMAL_REGULATOR_COST (18 KILO JOULES)
+#define THERMAL_REGULATOR_COST (0.018 * STANDARD_CELL_CHARGE)
 
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
 //      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!
@@ -58,7 +58,7 @@
 	equip_delay_other = 80
 	resistance_flags = NONE
 	actions_types = list(/datum/action/item_action/toggle_spacesuit)
-	interaction_flags_click = NEED_DEXTERITY
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	/// The default temperature setting
 	var/temperature_setting = BODYTEMP_NORMAL
 	/// If this is a path, this gets created as an object in Initialize.

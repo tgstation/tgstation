@@ -787,7 +787,7 @@
  * Returns TRUE if heart status was changed (heart attack -> no heart attack, or visa versa)
  */
 /mob/living/carbon/proc/set_heartattack(status)
-	if(!can_heartattack())
+	if(status && !can_heartattack())
 		return FALSE
 
 	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
