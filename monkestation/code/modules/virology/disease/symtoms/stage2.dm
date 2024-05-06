@@ -189,7 +189,7 @@
 			blood.diseases |= virus_copylist(mob.diseases)
 
 
-/*	//commented out until i can figure out how to make this work without shoving static lights on moving objects
+//commented out until i can figure out how to make this work without shoving static lights on moving objects
 /datum/symptom/lantern
 	name = "Lantern Syndrome"
 	desc = "Causes the infected to glow."
@@ -197,13 +197,21 @@
 	badness = EFFECT_DANGER_HELPFUL
 	multiplier = 4
 	max_multiplier = 10
+	chance = 10
+	max_chance = 15
 	var/uncolored = 0
 	var/flavortext = 0
 	var/color = rgb(255, 255, 255)
+	var/obj/effect/dummy/lighting_obj/moblight
 
 /datum/symptom/lantern/activate(mob/living/mob)
+	if(moblight)
+		qdel(moblight)
+	moblight = new(mob)
 	if(ismouse(mob))
-		mob.set_light(multiplier, multiplier/3, l_color = color)
+		moblight.set_light_range(multiplier)
+		moblight.set_light_power(multiplier / 3)
+		moblight.set_light_color(color)
 		return
 	if(mob.reagents.has_reagent(/datum/reagent/space_cleaner))
 		uncolored = 1	//Having spacecleaner in your system when the effect activates will permanently make the color white.
@@ -214,13 +222,15 @@
 	if(!flavortext)
 		to_chat(mob, span_notice("You are glowing!"))
 		flavortext = 1
-	mob.set_light(multiplier, multiplier, multiplier/3, l_color = color)
+	moblight.set_light_range(multiplier)
+	moblight.set_light_power(multiplier / 3)
+	moblight.set_light_color(color)
 
 /datum/symptom/lantern/deactivate(mob/living/mob)
-	mob.set_light(0, 0, 0, l_color = rgb(0,0,0))
+	QDEL_NULL(moblight)
 	to_chat(mob, span_notice("You don't feel as bright."))
 	flavortext = 0
-*/
+
 
 /datum/symptom/vitreous
 	name = "Vitreous resonance"
