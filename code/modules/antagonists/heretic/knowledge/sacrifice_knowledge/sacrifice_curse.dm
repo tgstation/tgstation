@@ -43,7 +43,7 @@
 /// If we attack the guy who cursed us, that's no good
 /datum/status_effect/heretic_curse/proc/on_curser_attacked(datum/source, mob/attacker)
 	SIGNAL_HANDLER
-	if (attacker != owner)
+	if (attacker != owner || !HAS_TRAIT(source, TRAIT_ALLOW_HERETIC_CASTING))
 		return
 	log_combat(owner, the_curser, "attacked", addition = "and lost some organs because they had previously been sacrificed by them.")
 	experience_the_consequences()
@@ -51,7 +51,7 @@
 /// If we are attacked by the guy who cursed us, that's also no good
 /datum/status_effect/heretic_curse/proc/on_owner_attacked(datum/source, mob/attacker)
 	SIGNAL_HANDLER
-	if (attacker != the_curser)
+	if (attacker != the_curser || !HAS_TRAIT(attacker, TRAIT_ALLOW_HERETIC_CASTING))
 		return
 	log_combat(the_curser, owner, "attacked", addition = "and as they had previously sacrificed them, removed some of their organs.")
 	experience_the_consequences()
