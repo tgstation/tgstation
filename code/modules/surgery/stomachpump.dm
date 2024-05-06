@@ -55,7 +55,7 @@
 		display_results(
 			user,
 			target,
-			span_warning("You screw up, brusing [target_human]'s chest!"),
+			span_warning("You screw up, bruising [target_human]'s chest!"),
 			span_warning("[user] screws up, brusing [target_human]'s chest!"),
 			span_warning("[user] screws up!"),
 		)
