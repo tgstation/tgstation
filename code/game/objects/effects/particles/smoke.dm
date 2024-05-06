@@ -41,7 +41,7 @@
 	icon_state = list("steam_1" = 2, "steam_2" = 1, "steam_3" = 1)
 	count = 1
 	spawning = 0.05 // used to pace it out roughly in time with breath ticks
-	position = list(-6, 0, 0)
+	position = list(-6, -2, 0)
 	gravity = list(0, 0.75, 0)
 	lifespan = 0.75 SECONDS
 	fade = 0.75 SECONDS

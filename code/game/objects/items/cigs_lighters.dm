@@ -363,12 +363,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	QDEL_NULL(mob_smoke)
 
 /obj/item/clothing/mask/cigarette/proc/long_exhale(mob/living/carbon/smoker)
-	var/obj/effect/abstract/particle_holder/big_smoke = new(smoker, /particles/smoke/cig/big)
-	update_partile_position(big_smoke, smoker.dir)
 	smoker.visible_message(
 		span_notice("[smoker] exhales a large cloud of smoke from [src]."),
 		span_notice("You exhale a large cloud of smoke from [src]."),
 	)
+	if(!isturf(smoker.loc))
+		return
+
+	var/obj/effect/abstract/particle_holder/big_smoke = new(smoker.loc, /particles/smoke/cig/big)
+	update_partile_position(big_smoke, smoker.dir)
 	QDEL_IN(big_smoke, big_smoke.particles.lifespan)
 
 /// Handles processing the reagents in the cigarette.
@@ -477,6 +480,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/proc/make_cig_smoke()
 	cig_smoke = new(src, /particles/smoke/cig)
+	cig_smoke.particles.scale *= 1.5
 	return cig_smoke
 
 // Cigarette brands.
