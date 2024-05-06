@@ -13,40 +13,61 @@
 	var/list/model_type = null
 	/// Bitflags listing model compatibility. Used in the exosuit fabricator for creating sub-categories.
 	var/list/model_flags = NONE
+
 	/// List of items to add with the module, if any
 	var/list/items_to_add = list()
+	/// List of items to remove with the module, if any
+	var/list/items_to_remove = list()
 	// if true, is not stored in the robot to be ejected
 	// if model is reset
 	var/one_use = FALSE
 
 /obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/borg, user = usr)
-	if(R.stat == DEAD)
+	if(borg.stat == DEAD)
 		to_chat(user, span_warning("[src] will not function on a deceased cyborg!"))
 		return FALSE
 	if(model_type && !is_type_in_list(borg.model, model_type))
 		to_chat(borg, span_alert("Upgrade mounting error! No suitable hardpoint detected."))
 		to_chat(user, span_warning("There's no mounting point for the module!"))
 		return FALSE
+	
+	// Handles adding/removing items.
 	if(length(items_to_add))
-		if(!install_items(borg))
+		if(!install_items(borg, user, items_to_add))
 			return FALSE
+	if(length(items_to_remove))
+		remove_items(borg, user, items_to_remove)
 	return TRUE
 
 /obj/item/borg/upgrade/proc/deactivate(mob/living/silicon/robot/borg, user = usr)
 	if (!(src in borg.upgrades))
 		return FALSE
+	
+	// Handles reverting the items back
+	if(length(items_to_add))
+		remove_items(borg, user, items_to_add)
+	if(length(items_to_remove))
+		install_items(borg, user, items_to_remove, TRUE)
 	return TRUE
 
-/obj/item/borg/upgrade/proc/install_items(mob/living/silicon/robot/borg, user = usr)
-	SHOULD_NOT_OVERRIDE
-	for(var/item_to_add in items_to_add)
-		if(locate(item_to_add) in borg.model.modules)
+// Handles adding items with the module
+/obj/item/borg/upgrade/proc/install_items(mob/living/silicon/robot/borg, user = usr, list/items, ignore_duplicates = FALSE)
+	for(var/item_to_add in items)
+		if(!ignore_duplicates && locate(item_to_add) in borg.model.modules)
 			borg.balloon_alert_to_viewers("already installed!")
 			return FALSE
 		else
 			var/obj/item/module_item = new item_to_add(borg.model.modules)
 			borg.model.basic_modules += module_item
 			borg.model.add_module(module_item, FALSE, TRUE)
+	return TRUE
+
+// Handles removing some items as the module is installed
+/obj/item/borg/upgrade/proc/remove_items(mob/living/silicon/robot/borg, user = usr, list/items)
+	for(var/item_to_remove in items)
+		var/obj/item/module_item = locate(item_to_remove) in borg.model.modules
+		if (module_item)
+			borg.model.remove_module(module_item, TRUE)
 	return TRUE
 
 /obj/item/borg/upgrade/rename
@@ -128,31 +149,8 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
-
-/obj/item/borg/upgrade/ddrill/action(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		for(var/obj/item/pickaxe/drill/cyborg/D in R.model)
-			R.model.remove_module(D, TRUE)
-		for(var/obj/item/shovel/S in R.model)
-			R.model.remove_module(S, TRUE)
-
-		var/obj/item/pickaxe/drill/cyborg/diamond/DD = new /obj/item/pickaxe/drill/cyborg/diamond(R.model)
-		R.model.basic_modules += DD
-		R.model.add_module(DD, FALSE, TRUE)
-
-/obj/item/borg/upgrade/ddrill/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (.)
-		for(var/obj/item/pickaxe/drill/cyborg/diamond/DD in R.model)
-			R.model.remove_module(DD, TRUE)
-
-		var/obj/item/pickaxe/drill/cyborg/D = new (R.model)
-		R.model.basic_modules += D
-		R.model.add_module(D, FALSE, TRUE)
-		var/obj/item/shovel/S = new (R.model)
-		R.model.basic_modules += S
-		R.model.add_module(S, FALSE, TRUE)
+	items_to_add = list(/obj/item/pickaxe/drill/cyborg/diamond)
+	items_to_remove = list(/obj/item/pickaxe/drill/cyborg, /obj/item/shovel)
 
 /obj/item/borg/upgrade/soh
 	name = "mining cyborg satchel of holding"
