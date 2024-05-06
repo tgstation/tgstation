@@ -229,10 +229,6 @@ CREATE TABLE `SS13_ipintel_whitelist` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `legacy_population`
---
-
---
 -- Table structure for table `SS13_legacy_population`
 --
 
