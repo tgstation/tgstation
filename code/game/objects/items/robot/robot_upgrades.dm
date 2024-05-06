@@ -137,13 +137,14 @@
 	if (.)
 		R.ionpulse = FALSE
 
-/obj/item/borg/upgrade/ddrill
+/obj/item/borg/upgrade/diamond_drill
 	name = "mining cyborg diamond drill"
 	desc = "A diamond drill replacement for the mining model's standard drill."
 	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
+
 	items_to_add = list(/obj/item/pickaxe/drill/cyborg/diamond)
 	items_to_remove = list(/obj/item/pickaxe/drill/cyborg, /obj/item/shovel)
 
@@ -155,25 +156,8 @@
 	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
 
-/obj/item/borg/upgrade/soh/action(mob/living/silicon/robot/R)
-	. = ..()
-	if(.)
-		for(var/obj/item/storage/bag/ore/cyborg/S in R.model)
-			R.model.remove_module(S, TRUE)
-
-		var/obj/item/storage/bag/ore/holding/H = new /obj/item/storage/bag/ore/holding(R.model)
-		R.model.basic_modules += H
-		R.model.add_module(H, FALSE, TRUE)
-
-/obj/item/borg/upgrade/soh/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (.)
-		for(var/obj/item/storage/bag/ore/holding/H in R.model)
-			R.model.remove_module(H, TRUE)
-
-		var/obj/item/storage/bag/ore/cyborg/S = new (R.model)
-		R.model.basic_modules += S
-		R.model.add_module(S, FALSE, TRUE)
+	items_to_add = list(/obj/item/storage/bag/ore/holding)
+	items_to_remove = list(/obj/item/storage/bag/ore/cyborg)
 
 /obj/item/borg/upgrade/tboh
 	name = "janitor cyborg trash bag of holding"
@@ -183,25 +167,8 @@
 	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
 
-/obj/item/borg/upgrade/tboh/action(mob/living/silicon/robot/R)
-	. = ..()
-	if(.)
-		for(var/obj/item/storage/bag/trash/cyborg/TB in R.model.modules)
-			R.model.remove_module(TB, TRUE)
-
-		var/obj/item/storage/bag/trash/bluespace/cyborg/B = new /obj/item/storage/bag/trash/bluespace/cyborg(R.model)
-		R.model.basic_modules += B
-		R.model.add_module(B, FALSE, TRUE)
-
-/obj/item/borg/upgrade/tboh/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		for(var/obj/item/storage/bag/trash/bluespace/cyborg/B in R.model.modules)
-			R.model.remove_module(B, TRUE)
-
-		var/obj/item/storage/bag/trash/cyborg/TB = new (R.model)
-		R.model.basic_modules += TB
-		R.model.add_module(TB, FALSE, TRUE)
+	items_to_add = list(/obj/item/storage/bag/trash/bluespace/cyborg)
+	items_to_remove = list(/obj/item/storage/bag/trash/cyborg)
 
 /obj/item/borg/upgrade/amop
 	name = "janitor cyborg advanced mop"
@@ -211,25 +178,8 @@
 	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
 
-/obj/item/borg/upgrade/amop/action(mob/living/silicon/robot/R)
-	. = ..()
-	if(.)
-		for(var/obj/item/mop/cyborg/M in R.model.modules)
-			R.model.remove_module(M, TRUE)
-
-		var/obj/item/mop/advanced/cyborg/mop = new /obj/item/mop/advanced/cyborg(R.model)
-		R.model.basic_modules += mop
-		R.model.add_module(mop, FALSE, TRUE)
-
-/obj/item/borg/upgrade/amop/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		for(var/obj/item/mop/advanced/cyborg/A in R.model.modules)
-			R.model.remove_module(A, TRUE)
-
-		var/obj/item/mop/cyborg/M = new (R.model)
-		R.model.basic_modules += M
-		R.model.add_module(M, FALSE, TRUE)
+	items_to_add = list(/obj/item/mop/advanced/cyborg)
+	items_to_remove = list(/obj/item/mop/cyborg)
 
 /obj/item/borg/upgrade/prt
 	name = "janitor cyborg plating repair tool"
@@ -239,18 +189,7 @@
 	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
 
-/obj/item/borg/upgrade/prt/action(mob/living/silicon/robot/R)
-	. = ..()
-	if(.)
-		var/obj/item/cautery/prt/P = new (R.model)
-		R.model.basic_modules += P
-		R.model.add_module(P, FALSE, TRUE)
-
-/obj/item/borg/upgrade/prt/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		for(var/obj/item/cautery/prt/P in R.model.modules)
-			R.model.remove_module(P, TRUE)
+	items_to_add = list(/obj/item/cautery/prt)
 
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
@@ -455,22 +394,15 @@
 	model_type = list(/obj/item/robot_model/medical)
 	model_flags = BORG_MODEL_MEDICAL
 
+	items_to_add = list(/obj/item/shockpaddles/cyborg)
+
 /obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
 		var/obj/item/borg/upgrade/defib/backpack/BP = locate() in R //If a full defib unit was used to upgrade prior, we can just pop it out now and replace
 		if(BP)
 			BP.deactivate(R, user)
-			to_chat(user, span_notice("You remove the defibrillator unit to make room for the compact upgrade."))
-		var/obj/item/shockpaddles/cyborg/S = new(R.model)
-		R.model.basic_modules += S
-		R.model.add_module(S, FALSE, TRUE)
-
-/obj/item/borg/upgrade/defib/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (.)
-		var/obj/item/shockpaddles/cyborg/S = locate() in R.model
-		R.model.remove_module(S, TRUE)
+			to_chat(user, span_notice("The defibrillator pops out of the chassis as the compact upgrade installs."))
 
 ///A version of the above that also acts as a holder of an actual defibrillator item used in place of the upgrade chip.
 /obj/item/borg/upgrade/defib/backpack
@@ -511,18 +443,7 @@
 	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
 	model_flags = BORG_MODEL_MEDICAL
 
-/obj/item/borg/upgrade/processor/action(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		var/obj/item/surgical_processor/SP = new(R.model)
-		R.model.basic_modules += SP
-		R.model.add_module(SP, FALSE, TRUE)
-
-/obj/item/borg/upgrade/processor/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (.)
-		var/obj/item/surgical_processor/SP = locate() in R.model
-		R.model.remove_module(SP, TRUE)
+	items_to_add = list(/obj/item/surgical_processor)
 
 /obj/item/borg/upgrade/ai
 	name = "B.O.R.I.S. module"
@@ -596,24 +517,7 @@
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
 
-/obj/item/borg/upgrade/rped/action(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		var/obj/item/storage/part_replacer/cyborg/RPED = locate() in R
-		if(RPED)
-			to_chat(user, span_warning("This unit is already equipped with a RPED module!"))
-			return FALSE
-
-		RPED = new(R.model)
-		R.model.basic_modules += RPED
-		R.model.add_module(RPED, FALSE, TRUE)
-
-/obj/item/borg/upgrade/rped/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (.)
-		var/obj/item/storage/part_replacer/cyborg/RPED = locate() in R.model
-		if (RPED)
-			R.model.remove_module(RPED, TRUE)
+	items_to_add = list(/obj/item/storage/part_replacer/cyborg)
 
 /obj/item/borg/upgrade/inducer
 	name = "engineering integrated power inducer"
@@ -622,24 +526,7 @@
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
 
-/obj/item/borg/upgrade/inducer/action(mob/living/silicon/robot/silicon_friend, user = usr)
-	. = ..()
-	if(.)
-		var/obj/item/inducer/cyborg/inter_inducer = locate() in silicon_friend
-		if(inter_inducer)
-			silicon_friend.balloon_alert(user, "already has one!")
-			return FALSE
-
-		inter_inducer = new(silicon_friend.model)
-		silicon_friend.model.basic_modules += inter_inducer
-		silicon_friend.model.add_module(inter_inducer, FALSE, TRUE)
-
-/obj/item/borg/upgrade/inducer/deactivate(mob/living/silicon/robot/silicon_friend, user = usr)
-	. = ..()
-	if(.)
-		var/obj/item/inducer/cyborg/inter_inducer = locate() in silicon_friend.model
-		if(inter_inducer)
-			silicon_friend.model.remove_module(inter_inducer, TRUE)
+	items_to_add = list(/obj/item/inducer/cyborg)
 
 /obj/item/inducer/cyborg
 	name = "Internal inducer"
@@ -664,20 +551,13 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
 	model_flags = BORG_MODEL_MEDICAL
+
+	items_to_add = list(/obj/item/pinpointer/crew)
 	var/datum/action/crew_monitor
 
 /obj/item/borg/upgrade/pinpointer/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-
-		var/obj/item/pinpointer/crew/PP = locate() in R.model
-		if(PP)
-			to_chat(user, span_warning("This unit is already equipped with a pinpointer module!"))
-			return FALSE
-
-		PP = new(R.model)
-		R.model.basic_modules += PP
-		R.model.add_module(PP, FALSE, TRUE)
 		crew_monitor = new /datum/action/item_action/crew_monitor(src)
 		crew_monitor.Grant(R)
 		icon_state = "scanner"
@@ -689,8 +569,6 @@
 		icon_state = "pinpointer_crew"
 		crew_monitor.Remove(R)
 		QDEL_NULL(crew_monitor)
-		var/obj/item/pinpointer/crew/PP = locate() in R.model
-		R.model.remove_module(PP, TRUE)
 
 /obj/item/borg/upgrade/pinpointer/ui_action_click()
 	if(..())
@@ -726,24 +604,7 @@
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
 
-/obj/item/borg/upgrade/circuit_app/action(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		var/obj/item/borg/apparatus/circuit/C = locate() in R.model.modules
-		if(C)
-			to_chat(user, span_warning("This unit is already equipped with a circuit apparatus!"))
-			return FALSE
-
-		C = new(R.model)
-		R.model.basic_modules += C
-		R.model.add_module(C, FALSE, TRUE)
-
-/obj/item/borg/upgrade/circuit_app/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (.)
-		var/obj/item/borg/apparatus/circuit/C = locate() in R.model.modules
-		if (C)
-			R.model.remove_module(C, TRUE)
+	items_to_add = list(/obj/item/borg/apparatus/circuit)
 
 /obj/item/borg/upgrade/beaker_app
 	name = "beaker storage apparatus"
@@ -753,24 +614,7 @@
 	model_type = list(/obj/item/robot_model/medical)
 	model_flags = BORG_MODEL_MEDICAL
 
-/obj/item/borg/upgrade/beaker_app/action(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		var/obj/item/borg/apparatus/beaker/extra/E = locate() in R.model.modules
-		if(E)
-			to_chat(user, span_warning("This unit has no room for additional beaker storage!"))
-			return FALSE
-
-		E = new(R.model)
-		R.model.basic_modules += E
-		R.model.add_module(E, FALSE, TRUE)
-
-/obj/item/borg/upgrade/beaker_app/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (.)
-		var/obj/item/borg/apparatus/beaker/extra/E = locate() in R.model.modules
-		if (E)
-			R.model.remove_module(E, TRUE)
+	items_to_add = list(/obj/item/borg/apparatus/beaker/extra)
 
 /obj/item/borg/upgrade/drink_app
 	name = "glass storage apparatus"
@@ -780,52 +624,7 @@
 	model_type = list(/obj/item/robot_model/service)
 	model_flags = BORG_MODEL_SERVICE
 
-/obj/item/borg/upgrade/drink_app/action(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		var/obj/item/borg/apparatus/beaker/drink/E = locate() in R.model.modules
-		if(E)
-			to_chat(user, span_warning("This unit has no room for additional drink storage!"))
-			return FALSE
-
-		E = new(R.model)
-		R.model.basic_modules += E
-		R.model.add_module(E, FALSE, TRUE)
-
-/obj/item/borg/upgrade/drink_app/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (.)
-		var/obj/item/borg/apparatus/beaker/drink/E = locate() in R.model.modules
-		if (E)
-			R.model.remove_module(E, TRUE)
-
-/obj/item/borg/upgrade/broomer
-	name = "experimental push broom"
-	desc = "An experimental push broom used for efficiently pushing refuse."
-	icon_state = "cyborg_upgrade3"
-	require_model = TRUE
-	model_type = list(/obj/item/robot_model/janitor)
-	model_flags = BORG_MODEL_JANITOR
-
-/obj/item/borg/upgrade/broomer/action(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (!.)
-		return
-	var/obj/item/pushbroom/cyborg/BR = locate() in R.model.modules
-	if (BR)
-		to_chat(user, span_warning("This janiborg is already equipped with an experimental broom!"))
-		return FALSE
-	BR = new(R.model)
-	R.model.basic_modules += BR
-	R.model.add_module(BR, FALSE, TRUE)
-
-/obj/item/borg/upgrade/broomer/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (!.)
-		return
-	var/obj/item/pushbroom/cyborg/BR = locate() in R.model.modules
-	if (BR)
-		R.model.remove_module(BR, TRUE)
+	items_to_add = list(/obj/item/borg/apparatus/beaker/drink)
 
 /obj/item/borg/upgrade/condiment_synthesizer
 	name = "Service Cyborg Condiment Synthesiser"
@@ -835,25 +634,7 @@
 	model_type = list(/obj/item/robot_model/service)
 	model_flags = BORG_MODEL_SERVICE
 
-/obj/item/borg/upgrade/condiment_synthesizer/action(mob/living/silicon/robot/install, user = usr)
-	. = ..()
-	if(!.)
-		return FALSE
-	var/obj/item/reagent_containers/borghypo/condiment_synthesizer/cynthesizer = locate() in install.model.modules
-	if(cynthesizer)
-		install.balloon_alert_to_viewers("already installed!")
-		return FALSE
-	cynthesizer = new(install.model)
-	install.model.basic_modules += cynthesizer
-	install.model.add_module(cynthesizer, FALSE, TRUE)
-
-/obj/item/borg/upgrade/condiment_synthesizer/deactivate(mob/living/silicon/robot/install, user = usr)
-	. = ..()
-	if (!.)
-		return FALSE
-	var/obj/item/reagent_containers/borghypo/condiment_synthesizer/cynthesizer = locate() in install.model.modules
-	if (cynthesizer)
-		install.model.remove_module(cynthesizer, TRUE)
+	items_to_add = list(/obj/item/reagent_containers/borghypo/condiment_synthesizer)
 
 /obj/item/borg/upgrade/silicon_knife
 	name = "Service Cyborg Kitchen Toolset"
@@ -863,25 +644,7 @@
 	model_type = list(/obj/item/robot_model/service)
 	model_flags = BORG_MODEL_SERVICE
 
-/obj/item/borg/upgrade/silicon_knife/action(mob/living/silicon/robot/install, user = usr)
-	. = ..()
-	if(!.)
-		return FALSE
-	var/obj/item/knife/kitchen/silicon/snife = locate() in install.model.modules
-	if(snife)
-		install.balloon_alert_to_viewers("already installed!")
-		return FALSE
-	snife = new(install.model)
-	install.model.basic_modules += snife
-	install.model.add_module(snife, FALSE, TRUE)
-
-/obj/item/borg/upgrade/silicon_knife/deactivate(mob/living/silicon/robot/install, user = usr)
-	. = ..()
-	if (!.)
-		return FALSE
-	var/obj/item/knife/kitchen/silicon/snife = locate() in install.model.modules
-	if (snife)
-		install.model.remove_module(snife, TRUE)
+	items_to_add = list(/obj/item/knife/kitchen/silicon)
 
 /obj/item/borg/upgrade/service_apparatus
 	name = "Service Cyborg Service Apparatus"
@@ -891,53 +654,15 @@
 	model_type = list(/obj/item/robot_model/service)
 	model_flags = BORG_MODEL_SERVICE
 
-/obj/item/borg/upgrade/service_apparatus/action(mob/living/silicon/robot/install, user = usr)
-	. = ..()
-	if(!.)
-		return FALSE
-	var/obj/item/borg/apparatus/service/saparatus = locate() in install.model.modules
-	if(saparatus)
-		install.balloon_alert_to_viewers("already installed!")
-		return FALSE
-	saparatus = new(install.model)
-	install.model.basic_modules += saparatus
-	install.model.add_module(saparatus, FALSE, TRUE)
-
-/obj/item/borg/upgrade/service_apparatus/deactivate(mob/living/silicon/robot/install, user = usr)
-	. = ..()
-	if (!.)
-		return FALSE
-	var/obj/item/borg/apparatus/service/saparatus = locate() in install.model.modules
-	if (saparatus)
-		install.model.remove_module(saparatus, TRUE)
+	items_to_add = list(/obj/item/borg/apparatus/service)
 
 /obj/item/borg/upgrade/rolling_table
 	name = "Service Cyborg Rolling Table Dock"
 	desc = "An upgrade to the service model cyborg, to help provide mobile service."
 	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/service)
+	model_type = list(/obj/item/rolling_table_dock)
 	model_flags = BORG_MODEL_SERVICE
-
-/obj/item/borg/upgrade/rolling_table/action(mob/living/silicon/robot/install, user = usr)
-	. = ..()
-	if(!.)
-		return FALSE
-	var/obj/item/rolling_table_dock/rtable = locate() in install.model.modules
-	if(rtable)
-		install.balloon_alert_to_viewers("already installed!")
-		return FALSE
-	rtable = new(install.model)
-	install.model.basic_modules += rtable
-	install.model.add_module(rtable, FALSE, TRUE)
-
-/obj/item/borg/upgrade/rolling_table/deactivate(mob/living/silicon/robot/install, user = usr)
-	. = ..()
-	if (!.)
-		return FALSE
-	var/obj/item/rolling_table_dock/rtable = locate() in install.model.modules
-	if (rtable)
-		install.model.remove_module(rtable, TRUE)
 
 /obj/item/borg/upgrade/service_cookbook
 	name = "Service Cyborg Cookbook"
@@ -947,25 +672,7 @@
 	model_type = list(/obj/item/robot_model/service)
 	model_flags = BORG_MODEL_SERVICE
 
-/obj/item/borg/upgrade/service_cookbook/action(mob/living/silicon/robot/install, user = usr)
-	. = ..()
-	if(!.)
-		return FALSE
-	var/obj/item/borg/cookbook/book = locate() in install.model.modules
-	if(book)
-		install.balloon_alert_to_viewers("already installed!")
-		return FALSE
-	book = new(install.model)
-	install.model.basic_modules += book
-	install.model.add_module(book, FALSE, TRUE)
-
-/obj/item/borg/upgrade/service_cookbook/deactivate(mob/living/silicon/robot/install, user = usr)
-	. = ..()
-	if (!.)
-		return FALSE
-	var/obj/item/borg/cookbook/book = locate() in install.model.modules
-	if(book)
-		install.model.remove_module(book, TRUE)
+	model_type = list(/obj/item/borg/cookbook)
 
 ///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 //A reusable tool that can bring borgs back to life. They gotta be repaired first, though.

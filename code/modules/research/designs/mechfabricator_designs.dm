@@ -1260,7 +1260,7 @@
 	name = "Diamond Drill"
 	id = "borg_upgrade_diamonddrill"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/ddrill
+	build_path = /obj/item/borg/upgrade/diamond_drill
 	materials = list(
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*3,
