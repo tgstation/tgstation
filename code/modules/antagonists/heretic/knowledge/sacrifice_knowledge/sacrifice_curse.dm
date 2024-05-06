@@ -20,22 +20,20 @@
 	if (isnull(the_curser) || !iscarbon(owner))
 		return FALSE
 
-	the_curser.AddComponentFrom(REF(src), /datum/component/relay_attackers)
+	the_curser.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(the_curser, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_curser_attacked))
 	RegisterSignal(the_curser, COMSIG_QDELETING, PROC_REF(on_curser_destroyed))
 
-	owner.AddComponentFrom(REF(src), /datum/component/relay_attackers)
+	owner.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_owner_attacked))
 
 	return TRUE
 
 /datum/status_effect/heretic_curse/on_remove()
-	the_curser.AddComponentFrom(REF(src), /datum/component/relay_attackers)
-	RegisterSignal(the_curser, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_curser_attacked))
+	UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)
+	UnregisterSignal(the_curser, COMSIG_ATOM_WAS_ATTACKED)
 	the_curser = null
 
-	owner.AddComponentFrom(REF(src), /datum/component/relay_attackers)
-	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_owner_attacked))
 
 /// If the heretic that cursed us is destroyed this thing is useless now
 /datum/status_effect/heretic_curse/proc/on_curser_destroyed()
