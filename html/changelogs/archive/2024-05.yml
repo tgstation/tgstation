@@ -139,3 +139,8 @@
   larentoun:
   - bugfix: Materials are now correctly applied to crafted items (chairs, toilets,
       etc)
+2024-05-06:
+  improvedname:
+  - bugfix: fixes traditional equipment crate name
+  paganiy:
+  - qol: Admin modsuit now has a radiation protect module
