@@ -117,13 +117,11 @@ export function toTitleCase(str: string): string {
   let currentStr = str.replace(/([^\W_]+[^\s-]*) */g, (str) => {
     return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
   });
-  for (let i = 0; i < WORDS_LOWER.length; i++) {
-    const word = WORDS_LOWER[i];
+  for (let word of WORDS_LOWER) {
     const regex = new RegExp('\\s' + word + '\\s', 'g');
     currentStr = currentStr.replace(regex, (str) => str.toLowerCase());
   }
-  for (let i = 0; i < WORDS_UPPER.length; i++) {
-    const word = WORDS_UPPER[i];
+  for (let word of WORDS_UPPER) {
     const regex = new RegExp('\\b' + word + '\\b', 'g');
     currentStr = currentStr.replace(regex, (str) => str.toLowerCase());
   }
