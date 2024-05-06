@@ -41,7 +41,8 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/drill/Destroy()
-	UnregisterSignal(chassis, COMSIG_MOVABLE_BUMP)
+	if(chassis)
+		UnregisterSignal(chassis, COMSIG_MOVABLE_BUMP)
 	return ..()
 
 ///Called whenever the mech bumps into something; action() handles checking if it is a mineable turf
