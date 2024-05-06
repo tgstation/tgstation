@@ -349,7 +349,7 @@
 
 /datum/design/component/list_literal/ntnet_send
 	name = "NTNet Transmitter List Literal"
-	id = "comp_ntnet_send_literal"
+	id = "comp_ntnet_send_list_literal"
 	build_path = /obj/item/circuit_component/list_literal/ntnet_send
 
 /datum/design/component/list_literal

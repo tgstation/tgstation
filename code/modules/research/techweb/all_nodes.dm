@@ -369,7 +369,7 @@
 		"comp_not",
 		"comp_ntnet_receive",
 		"comp_ntnet_send",
-		"comp_ntnet_send_literal",
+		"comp_ntnet_send_list_literal",
 		"comp_pinpointer",
 		"comp_pressuresensor",
 		"comp_radio",
