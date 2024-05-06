@@ -329,11 +329,7 @@
 
 	return clone
 
-/// Create a report string about how strong this person looks, generated in a somewhat arbitrary fashion
-/mob/living/carbon/human/proc/report_fitness()
-	if (HAS_TRAIT(src, TRAIT_UNKNOWN))
-		return span_warning("It's impossible to tell whether this person lifts.")
-
+/mob/living/carbon/human/calculate_fitness()
 	var/fitness_modifier = 1
 	if (HAS_TRAIT(src, TRAIT_HULK))
 		fitness_modifier *= 2
@@ -359,5 +355,4 @@
 
 	var/damage = ((min_damage / 4) + (max_damage / 4)) / 2 // We expect you to have 4 functional limbs- if you have fewer you're probably not going to be so good at lifting
 
-	var/fitness_level = ceil(damage * (ceil(athletics_level / 2)) * fitness_modifier * 10)
-	return span_notice("You'd estimate [p_their()] fitness level at about [fitness_level].")
+	return ceil(damage * (ceil(athletics_level / 2)) * fitness_modifier * maxHealth)
