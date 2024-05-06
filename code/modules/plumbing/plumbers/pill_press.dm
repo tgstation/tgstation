@@ -10,7 +10,6 @@
 	name = "chemical press"
 	desc = "A press that makes pills, patches and bottles."
 	icon_state = "pill_press"
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 
 	/// current operating product (pills or patches)
 	var/product = "pill"
@@ -74,7 +73,7 @@
 	return container
 
 /obj/machinery/plumbing/pill_press/process(seconds_per_tick)
-	if(machine_stat & NOPOWER)
+	if(!is_operational)
 		return
 
 	//shift & check to account for floating point inaccuracies

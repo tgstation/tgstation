@@ -72,8 +72,9 @@ export function AccessConfig(props: ConfigProps) {
     accesses.find((access) => access.name === selectedAccessName) ||
     accesses[0];
 
-  const selectedAccessEntries = sortBy((entry: Area) => entry.desc)(
+  const selectedAccessEntries = sortBy(
     selectedAccess?.accesses || [],
+    (entry: Area) => entry.desc,
   );
 
   function checkAccessIcon(accesses: Area[]) {

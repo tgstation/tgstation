@@ -331,7 +331,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	)
 		var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 
-		var/datum/species/species = new species_type
+		var/datum/species/species = GLOB.species_prototypes[species_type]
 		if (!(savefile_key in species.get_features()))
 			return FALSE
 

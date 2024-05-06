@@ -1,4 +1,4 @@
-GLOBAL_LIST(labor_sheet_values)
+#define SHEET_POINT_VALUE 33
 
 /**********************Prisoners' Console**************************/
 
@@ -22,14 +22,6 @@ GLOBAL_LIST(labor_sheet_values)
 	if(!stacking_machine)
 		return INITIALIZE_HINT_QDEL
 
-	if(!GLOB.labor_sheet_values)
-		var/sheet_list = list()
-		for(var/obj/item/stack/sheet/sheet as anything in subtypesof(/obj/item/stack/sheet))
-			if(!initial(sheet.point_value) || (initial(sheet.merge_type) && initial(sheet.merge_type) != sheet)) //ignore no-value sheets and x/fifty subtypes
-				continue
-			sheet_list += list(list("ore" = initial(sheet.name), "value" = initial(sheet.point_value)))
-		GLOB.labor_sheet_values = sort_list(sheet_list, GLOBAL_PROC_REF(cmp_sheet_list))
-
 /obj/machinery/mineral/labor_claim_console/Destroy()
 	QDEL_NULL(security_radio)
 	if(stacking_machine)
@@ -45,11 +37,6 @@ GLOBAL_LIST(labor_sheet_values)
 	if(!ui)
 		ui = new(user, src, "LaborClaimConsole", name)
 		ui.open()
-
-/obj/machinery/mineral/labor_claim_console/ui_static_data(mob/user)
-	var/list/data = list()
-	data["ores"] = GLOB.labor_sheet_values
-	return data
 
 /obj/machinery/mineral/labor_claim_console/ui_data(mob/user)
 	var/list/data = list()
@@ -155,8 +142,9 @@ GLOBAL_LIST(labor_sheet_values)
 		labor_console = null
 	return ..()
 
-/obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/inp)
-	points += inp.point_value * inp.amount
+/obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/input)
+	if (input.manufactured && input.gulag_valid)
+		points += SHEET_POINT_VALUE * input.amount
 	return ..()
 
 /obj/machinery/mineral/stacking_machine/laborstacker/attackby(obj/item/weapon, mob/user, params)
@@ -190,3 +178,5 @@ GLOBAL_LIST(labor_sheet_values)
 	say("ID: [prisoner_id.registered_name].")
 	say("Points Collected: [prisoner_id.points] / [prisoner_id.goal].")
 	say("Collect points by bringing smelted minerals to the Labor Shuttle stacking machine. Reach your quota to earn your release.")
+
+#undef SHEET_POINT_VALUE

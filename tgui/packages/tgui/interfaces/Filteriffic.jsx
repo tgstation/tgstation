@@ -155,10 +155,9 @@ const FilterFlagsEntry = (props) => {
 
   const filterInfo = data.filter_info;
   const flags = filterInfo[filterType]['flags'];
-  return map((bitField, flagName) => (
+  return map(flags, (bitField, flagName) => (
     <Button.Checkbox
       checked={value & bitField}
-      content={flagName}
       onClick={() =>
         act('modify_filter_value', {
           name: filterName,
@@ -167,8 +166,11 @@ const FilterFlagsEntry = (props) => {
           },
         })
       }
-    />
-  ))(flags);
+      key={flagName}
+    >
+      {flagName}
+    </Button.Checkbox>
+  ));
 };
 
 const FilterDataEntry = (props) => {
@@ -340,9 +342,9 @@ export const Filteriffic = (props) => {
           {!hasFilters ? (
             <Box>No filters</Box>
           ) : (
-            map((entry, key) => (
+            map(filters, (entry, key) => (
               <FilterEntry filterDataEntry={entry} name={key} key={key} />
-            ))(filters)
+            ))
           )}
         </Section>
       </Window.Content>

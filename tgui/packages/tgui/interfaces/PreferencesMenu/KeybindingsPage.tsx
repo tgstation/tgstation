@@ -67,15 +67,14 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
  */
 const DOM_KEY_LOCATION_NUMPAD = 3;
 
-const sortKeybindings = sortBy(([_, keybinding]: [string, Keybinding]) => {
-  return keybinding.name;
-});
+const sortKeybindings = (array: [string, Keybinding][]) =>
+  sortBy(array, ([_, keybinding]) => {
+    return keybinding.name;
+  });
 
-const sortKeybindingsByCategory = sortBy(
-  ([category, _]: [string, Record<string, Keybinding>]) => {
-    return category;
-  },
-);
+const sortKeybindingsByCategory = (
+  array: [string, Record<string, Keybinding>][],
+) => sortBy(array, ([category, _]) => category);
 
 const formatKeyboardEvent = (event: KeyboardEvent): string => {
   let text = '';

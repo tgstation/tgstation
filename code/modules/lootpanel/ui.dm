@@ -20,10 +20,6 @@
 	if(isnull(ref))
 		return FALSE
 
-	if(!source_turf.Adjacent(user)) // Source tile is no longer valid
-		reset_contents()
-		return FALSE
-
 	var/datum/search_object/index = locate(ref) in contents
 	var/atom/thing = index?.item
 	if(QDELETED(index) || QDELETED(thing)) // Obj is gone

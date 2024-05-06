@@ -16,7 +16,7 @@
 #define AI_BOT_PATH_LENGTH 150
 
 // How far should we, by default, be looking for interesting things to de-idle?
-#define AI_DEFAULT_INTERESTING_DIST 14
+#define AI_DEFAULT_INTERESTING_DIST 10
 
 ///Cooldown on planning if planning failed last time
 
@@ -24,6 +24,16 @@
 
 ///Flags for ai_behavior new()
 #define AI_CONTROLLER_INCOMPATIBLE (1<<0)
+
+//Return flags for ai_behavior/perform()
+///Update this behavior's cooldown
+#define AI_BEHAVIOR_DELAY (1<<0)
+///Finish the behavior successfully
+#define AI_BEHAVIOR_SUCCEEDED (1<<1)
+///Finish the behavior unsuccessfully
+#define AI_BEHAVIOR_FAILED (1<<2)
+
+#define AI_BEHAVIOR_INSTANT (NONE)
 
 ///Does this task require movement from the AI before it can be performed?
 #define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)

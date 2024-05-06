@@ -163,3 +163,13 @@
 /obj/structure/fermenting_barrel/gunpowder/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/gunpowder, 500)
+
+/// Medieval pirates can have a barrel as a treat
+/obj/structure/fermenting_barrel/thermite
+	name = "thermite barrel"
+	desc = "A large wooden barrel for holding thermite. Use this to make a big flipping hole on walls."
+	can_open = FALSE
+
+/obj/structure/fermenting_barrel/thermite/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/thermite, 500)

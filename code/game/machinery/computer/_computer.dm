@@ -117,7 +117,9 @@
 	new_frame.set_anchored(TRUE)
 	new_frame.circuit = circuit
 	// Circuit removal code is handled in /obj/machinery/Exited()
+	component_parts -= circuit
 	circuit.forceMove(new_frame)
+
 	if((machine_stat & BROKEN) || !disassembled)
 		var/atom/drop_loc = drop_location()
 		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
@@ -127,13 +129,6 @@
 	else
 		new_frame.state = FRAME_COMPUTER_STATE_GLASSED
 	new_frame.update_appearance(UPDATE_ICON_STATE)
-
-/obj/machinery/computer/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !is_operational)
-		return
 
 /obj/machinery/computer/ui_interact(mob/user, datum/tgui/ui)
 	SHOULD_CALL_PARENT(TRUE)

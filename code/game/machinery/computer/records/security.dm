@@ -49,10 +49,8 @@
 		if(prob(10/severity))
 			switch(rand(1,5))
 				if(1)
-					if(prob(10))
-						target.name = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
-					else
-						target.name = "[pick(pick(GLOB.first_names_male), pick(GLOB.first_names_female))] [pick(GLOB.last_names)]"
+					target.name = generate_random_name()
+
 				if(2)
 					target.gender = pick("Male", "Female", "Other")
 				if(3)

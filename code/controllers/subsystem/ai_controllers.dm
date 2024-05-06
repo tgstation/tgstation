@@ -36,11 +36,6 @@ SUBSYSTEM_DEF(ai_controllers)
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
 	var/timer = TICK_USAGE_REAL
-	for(var/datum/ai_controller/ai_controller as anything in ai_controllers_by_status[AI_STATUS_IDLE])
-		for(var/client/client_found in GLOB.clients)
-			if(get_dist(get_turf(client_found.mob), get_turf(ai_controller.pawn)) <= ai_controller.interesting_dist)
-				ai_controller.set_ai_status(AI_STATUS_ON)
-				break
 	cost_idle = MC_AVERAGE(cost_idle, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 	timer = TICK_USAGE_REAL
@@ -53,14 +48,7 @@ SUBSYSTEM_DEF(ai_controllers)
 		ai_controller.SelectBehaviors(wait * 0.1)
 		if(!LAZYLEN(ai_controller.current_behaviors)) //Still no plan
 			COOLDOWN_START(ai_controller, failed_planning_cooldown, AI_FAILED_PLANNING_COOLDOWN)
-		if(ai_controller.can_idle)
-			var/found_interesting = FALSE
-			for(var/client/client_found in GLOB.clients)
-				if(get_dist(get_turf(client_found.mob), get_turf(ai_controller.pawn)) <= ai_controller.interesting_dist)
-					found_interesting = TRUE
-					break
-			if(!found_interesting)
-				ai_controller.set_ai_status(AI_STATUS_IDLE)
+
 	cost_on = MC_AVERAGE(cost_on, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 ///Creates all instances of ai_subtrees and assigns them to the ai_subtrees list.

@@ -113,6 +113,10 @@
 	/// If TRUE, shows the contents of the storage in open_storage
 	var/display_contents = TRUE
 
+	/// Switch this off if you want to handle click_alt in the parent atom
+	var/click_alt_open = TRUE
+
+
 /datum/storage/New(
 	atom/parent,
 	max_slots = src.max_slots,
@@ -198,7 +202,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(on_preattack))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(mass_empty))
-	RegisterSignals(parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_ATTACK_HAND_SECONDARY), PROC_REF(open_storage_on_signal))
+	RegisterSignals(parent, list(COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_ATTACK_HAND_SECONDARY), PROC_REF(open_storage_on_signal))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY_SECONDARY, PROC_REF(open_storage_attackby_secondary))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(close_distance))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(update_actions))
@@ -208,6 +212,7 @@
 	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_deconstruct))
 	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 	RegisterSignal(parent, COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED, PROC_REF(contents_changed_w_class))
+	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_click_alt))
 
 /**
  * Sets where items are physically being stored in the case it shouldn't be on the parent.
@@ -916,7 +921,19 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(open_storage), to_show)
-	return COMPONENT_NO_AFTERATTACK
+	if(display_contents)
+		return COMPONENT_NO_AFTERATTACK
+
+
+/// Alt click on the storage item. Default: Open the storage.
+/datum/storage/proc/on_click_alt(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	if(!click_alt_open)
+		return
+
+	return open_storage_on_signal(source, user)
+
 
 /// Opens the storage to the mob, showing them the contents to their UI.
 /datum/storage/proc/open_storage(mob/to_show)

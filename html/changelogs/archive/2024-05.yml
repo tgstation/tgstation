@@ -1,0 +1,146 @@
+2024-05-01:
+  13spacemen:
+  - bugfix: Ethereal unarmed attacks "sear" instead of "singe", which was buggy
+  Constellado:
+  - qol: Made birdshot atmos easier to use.
+  - bugfix: The Birdshot engineering department is no longer using a second hand broken
+      microwave.
+  Fikou:
+  - rscadd: you can use a photo with blueprints on it to read wires
+  Flleeppyy, Absolucy:
+  - sound: Added unique announcement jingles to each heretic path's ascension, replacing
+      the old "space-time anomalies detected" announcement.
+  JohnFulpWillard:
+  - bugfix: Genetic sequence scanners now show the sequence to mutated genes from
+      scanned individuals.
+  - bugfix: QM is now excluded from getting tasked with stealing telescopic batons
+      and the captain's spare ID, like all other command personnel are.
+  - qol: The Human AI's advanced security console can be repackaged with a screwdriver
+      if you wish to move it.
+  LT3:
+  - qol: The various RCD upgrade disks no longer look identical
+  Maurukas:
+  - bugfix: On examine PDAs will now inform players that the power cell can be removed
+      for recharging or replacement, and how to do so.
+  SyncIt21:
+  - bugfix: computers don't deconstruct themselves twice so machines like slotmachine
+      don't spawn excess chips upon deconstruction
+  improvedname:
+  - bugfix: Fixes tramstation gravgen wiring
+  - bugfix: Fixes tramstation turbine wiring
+  - bugfix: Fixes northstar cmo button name
+  jlsnow301:
+  - bugfix: Fixes a bluescreen in the deathmatch lobby UI.
+  larentoun:
+  - bugfix: Infinite-range laser pointer (for "AI" Big Brother) now has a correct
+      diode. If you accidentaly remove it then you can put it back!
+  mc-oofert:
+  - rscadd: trainship hijack deathmatch map
+  necromanceranne:
+  - bugfix: If you are a freerunner, you don't end up faceplanting despite having
+      catlike grace.
+2024-05-02:
+  Echriser:
+  - qol: conveyor switches now have direction-specific input signals
+  Fluffles:
+  - qol: you can pick up wheelchairs while on the ground
+  - qol: you can place wheelchairs a tile away from you, like roller beds
+  JohnFulpWillard:
+  - bugfix: Monkey changelings that are disguised as someone can now take off their
+      flesh clothes.
+  - bugfix: You can now re-construct pod doors that had deconstruction started.
+  - qol: You can now make pod door assemblies using plasteel in-hand.
+  - bugfix: Monkeys can no longer be knocked over by walking into a windoor on combat
+      mode while they're behind it.
+  - admin: Debug uplinks now shows all categories and won't lock upon buying items
+      like his grace and the syndicate balloon.
+  - bugfix: Constantly fleeing in Battle Arcade will no longer give you a very large
+      amount of decimals due to halving your gold every time.
+  - bugfix: AIs can now track Silicon as long as their built-in camera is online.
+  Melbert:
+  - admin: Custom Single and Custom Multi votes are now combined into one vote
+  - admin: Admins can now end votes instantly, rather than cancelling them
+  - admin: Admins can now reset the vote cooldown
+  - bugfix: Vote cooldown actually applies now
+  Pickle-Coding:
+  - bugfix: Fixes hypercharged slime core cells and circuit guns having 1,000 times
+      less energy than intended.
+  Watermelon914:
+  - bugfix: Fixed the ipintel subsystem not working.
+  kawoppi:
+  - bugfix: the civilian bounty control terminal displays the payout of new bounty
+      options again
+  - qol: the civilian bounty control terminal displays the description of new bounty
+      options
+  nikothedude:
+  - bugfix: Jousting no longer bypasses pacifism
+2024-05-03:
+  Echriser:
+  - qol: conveyors now use left and right click controls
+  - qol: add screentips for conveyor switches
+  - rscdel: removes circuit conveyor circuit default trigger behavior in favor in
+      favor of the three state triggers
+  Gaxeer:
+  - bugfix: fix runtime when no events were drafted to be picked from
+  - config: make events frequency configurable
+  StrangeWeirdKitten:
+  - qol: You can now quickly stamp papers with a right click
+  Zenog400:
+  - rscadd: increased the size of the pool that Machine Blessing draws from
+  - balance: weighted some of the implants that Machine Blessing can give
+  mc-oofert:
+  - image: added directional sprites for radiation shutters
+2024-05-04:
+  Ben10Omintrix:
+  - bugfix: mobs in the same faction will no longer be at odds against one another
+  - bugfix: mobs can now perform behaviors alongside searching for targets
+  - bugfix: mobs will no longer be starting and stopping when chasing targets
+  Ghommie:
+  - rscadd: Adds an Icebox-specific station trait that brightens outdoors areas on
+      the surface level.
+  Ikalpo:
+  - bugfix: Stage 2 singularities should no longer escape containment
+  Melbert:
+  - bugfix: New machine god blessings now actually works probably
+  Profakos:
+  - balance: Bitrunners can now earn Bepis disks, once per medium domain or above,
+      if they scored at least an A.
+  - rscdel: Bitrunners can not buy Bepis disks from their vendors.
+  Ryll/Shaps:
+  - bugfix: Pacifists can no longer endlessly spam the backblast functionality of
+      loaded rocket launchers that they cannot actually fire
+  Watermelon914:
+  - bugfix: Fixed lua scripts breaking when turfs with registered signals get deleted.
+  Xander3359:
+  - bugfix: You can no longer bypass construction restrictions via the crafting menu
+  cnleth:
+  - bugfix: Fire ant colonies created by burning regular ants will now contain fire
+      ants as their reagent
+  jlsnow301:
+  - bugfix: Candy corn is once again available to detective fedoras
+  mogeoko:
+  - bugfix: Ventcrawling mobs can change Z-level using multiz-decks again.
+2024-05-05:
+  Isratosh:
+  - bugfix: If kidnapped and ransomed by pirates, you will now properly return to
+      the station automatically after 6 minutes.
+  - bugfix: You can no longer be kidnapped and held for ransom by cargo technicians
+      posing as pirates.
+  Jacquerel:
+  - bugfix: Blood Brothers should spawn knowing what their objectives are.
+  - bugfix: Teams of 3 Blood Brothers will once more have an additional objective.
+  Melbert:
+  - refactor: Random Name Generation has been refactored. Report any instances of
+      people having weird (or "Unknown") names.
+  - qol: Felinids, Slimepeople, Podpeople, and some other species without defined
+      namelists now automatically generate names based on their primary language(s).
+  - qol: More non-human names can be generated in codewords (and other misc. areas)
+      than just lizard names.
+  larentoun:
+  - bugfix: Materials are now correctly applied to crafted items (chairs, toilets,
+      etc)
+2024-05-06:
+  improvedname:
+  - bugfix: fixes traditional equipment crate name
+  paganiy:
+  - qol: Admin modsuit now has a radiation protect module
