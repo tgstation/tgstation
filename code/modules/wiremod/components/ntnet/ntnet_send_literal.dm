@@ -22,7 +22,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	/// If the server is down, don't send shit or use power
+	/// If the server is down, don't use power or attempt to send data
 	return find_functional_ntnet_relay()
 
 /obj/item/circuit_component/list_literal/ntnet_send/input_received(datum/port/input/port)
