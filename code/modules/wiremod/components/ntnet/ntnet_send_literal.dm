@@ -18,10 +18,13 @@
 	. = ..()
 	enc_key = add_input_port("Encryption Key", PORT_TYPE_STRING)
 
-/obj/item/circuit_component/list_literal/ntnet_send/input_received(datum/port/input/port)
-	if(!find_functional_ntnet_relay()) /// The server is down, don't send shit
-		return
-
+/obj/item/circuit_component/list_literal/ntnet_send/should_receive_input(datum/port/input/port)
 	. = ..()
+	if(!.)
+		return FALSE
+	/// If the server is down, don't send shit or use power
+	return find_functional_ntnet_relay()
 
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT, list("data" = list_output.value, "enc_key" = enc_key.value, "port" = WEAKREF(list_output)))
+/obj/item/circuit_component/list_literal/ntnet_send/input_received(datum/port/input/port)
+	. = ..()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT_LIST_LITERAL, list("data" = list_output.value, "enc_key" = enc_key.value, "port" = WEAKREF(list_output)))
