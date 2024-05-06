@@ -626,6 +626,16 @@
 
 	items_to_add = list(/obj/item/borg/apparatus/beaker/drink)
 
+/obj/item/borg/upgrade/broomer
+	name = "experimental push broom"
+	desc = "An experimental push broom used for efficiently pushing refuse."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/janitor)
+	model_flags = BORG_MODEL_JANITOR
+
+	items_to_add = list(/obj/item/pushbroom/cyborg)
+
 /obj/item/borg/upgrade/condiment_synthesizer
 	name = "Service Cyborg Condiment Synthesiser"
 	desc = "An upgrade to the service model cyborg, allowing it to produce solid condiments."
