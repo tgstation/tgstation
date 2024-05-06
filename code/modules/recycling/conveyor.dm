@@ -350,8 +350,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 	/// The current state of the switch.
 	var/position = CONVEYOR_OFF
-	/// Last direction setting.
-	var/last_pos = CONVEYOR_BACKWARDS
 	/// If the switch only operates the conveyor belts in a single direction.
 	var/oneway = FALSE
 	/// If the level points the opposite direction when it's turned on.
@@ -372,6 +370,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/conveyor_switch,
 	))
+	register_context()
 
 /obj/machinery/conveyor_switch/Destroy()
 	LAZYREMOVE(GLOB.conveyors_by_id[id], src)
@@ -397,6 +396,27 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		icon_state = "[base_icon_state]-[invert_icon ? "rev" : "fwd"]"
 	return ..()
 
+/obj/machinery/conveyor_switch/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(!held_item)
+		context[SCREENTIP_CONTEXT_LMB] = "Toggle forwards"
+		if(!oneway)
+			context[SCREENTIP_CONTEXT_RMB] = "Toggle backwards"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_MULTITOOL)
+		context[SCREENTIP_CONTEXT_LMB] = "Set speed"
+		context[SCREENTIP_CONTEXT_RMB] = "View wires"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "Toggle oneway"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Detach"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "Invert"
+		return CONTEXTUAL_SCREENTIP_SET
+
 /// Updates all conveyor belts that are linked to this switch, and tells them to start processing.
 /obj/machinery/conveyor_switch/proc/update_linked_conveyors()
 	for(var/obj/machinery/conveyor/belt in GLOB.conveyors_by_id[id])
@@ -414,28 +434,29 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		CHECK_TICK
 
 /// Updates the switch's `position` and `last_pos` variable. Useful so that the switch can properly cycle between the forwards, backwards and neutral positions.
-/obj/machinery/conveyor_switch/proc/update_position()
+/obj/machinery/conveyor_switch/proc/update_position(direction)
 	if(position == CONVEYOR_OFF)
 		if(oneway)   //is it a oneway switch
 			position = oneway
 		else
-			if(last_pos < CONVEYOR_OFF)
+			if(direction == CONVEYOR_FORWARD)
 				position = CONVEYOR_FORWARD
-				last_pos = CONVEYOR_OFF
 			else
 				position = CONVEYOR_BACKWARDS
-				last_pos = CONVEYOR_OFF
 	else
-		last_pos = position
 		position = CONVEYOR_OFF
 
 /// Called when a user clicks on this switch with an open hand.
-/obj/machinery/conveyor_switch/interact(mob/user)
+/obj/machinery/conveyor_switch/attack_hand(mob/living/user, list/modifiers)
 	add_fingerprint(user)
-	update_position()
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		update_position(CONVEYOR_BACKWARDS)
+	else
+		update_position(CONVEYOR_FORWARD)
 	update_appearance()
 	update_linked_conveyors()
 	update_linked_switches()
+	return TRUE
 
 /obj/machinery/conveyor_switch/attackby(obj/item/attacking_item, mob/user, params)
 	if(is_wire_tool(attacking_item))
@@ -588,14 +609,19 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/item/circuit_component/conveyor_switch
 	display_name = "Conveyor Switch"
 	desc = "Allows to control connected conveyor belts."
-	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
+	/// Direction input ports.
+	var/datum/port/input/stop
+	var/datum/port/input/active
+	var/datum/port/input/reverse
 	/// The current direction of the conveyor attached to the component.
 	var/datum/port/output/direction
 	/// The switch this conveyor switch component is attached to.
 	var/obj/machinery/conveyor_switch/attached_switch
 
 /obj/item/circuit_component/conveyor_switch/populate_ports()
+	active = add_input_port("Activate", PORT_TYPE_SIGNAL, trigger = PROC_REF(activate))
+	stop = add_input_port("Stop", PORT_TYPE_SIGNAL, trigger = PROC_REF(stop))
 	direction = add_output_port("Conveyor Direction", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/conveyor_switch/get_ui_notices()
@@ -606,26 +632,33 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	if(istype(shell, /obj/machinery/conveyor_switch))
 		attached_switch = shell
+		if(!attached_switch.oneway)
+			reverse = add_input_port("Reverse", PORT_TYPE_SIGNAL, trigger = PROC_REF(reverse))
 
 /obj/item/circuit_component/conveyor_switch/unregister_usb_parent(atom/movable/shell)
 	attached_switch = null
 	return ..()
 
-/obj/item/circuit_component/conveyor_switch/input_received(datum/port/input/port)
-	if(!attached_switch)
-		return
-
-	INVOKE_ASYNC(src, PROC_REF(update_conveyors), port)
-
-/obj/item/circuit_component/conveyor_switch/proc/update_conveyors(datum/port/input/port)
-	if(!attached_switch)
-		return
-
-	attached_switch.update_position()
+/obj/item/circuit_component/conveyor_switch/proc/on_switch_changed()
 	attached_switch.update_appearance()
 	attached_switch.update_linked_conveyors()
 	attached_switch.update_linked_switches()
 	direction.set_output(attached_switch.position)
+
+/obj/item/circuit_component/conveyor_switch/proc/activate()
+	SIGNAL_HANDLER
+	attached_switch.position = CONVEYOR_FORWARD
+	INVOKE_ASYNC(src, PROC_REF(on_switch_changed))
+
+/obj/item/circuit_component/conveyor_switch/proc/stop()
+	SIGNAL_HANDLER
+	attached_switch.position = CONVEYOR_OFF
+	INVOKE_ASYNC(src, PROC_REF(on_switch_changed))
+
+/obj/item/circuit_component/conveyor_switch/proc/reverse()
+	SIGNAL_HANDLER
+	attached_switch.position = CONVEYOR_BACKWARDS
+	INVOKE_ASYNC(src, PROC_REF(on_switch_changed))
 
 #undef CONVEYOR_BACKWARDS
 #undef CONVEYOR_OFF

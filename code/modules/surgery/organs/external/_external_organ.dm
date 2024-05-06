@@ -182,7 +182,7 @@
 	return TRUE
 
 /datum/bodypart_overlay/mutant/horns/get_global_feature_list()
-	return GLOB.horns_list
+	return SSaccessories.horns_list
 
 ///The frills of a lizard (like weird fin ears)
 /obj/item/organ/external/frills
@@ -209,7 +209,7 @@
 	return FALSE
 
 /datum/bodypart_overlay/mutant/frills/get_global_feature_list()
-	return GLOB.frills_list
+	return SSaccessories.frills_list
 
 ///Guess what part of the lizard this is?
 /obj/item/organ/external/snout
@@ -238,7 +238,7 @@
 	return FALSE
 
 /datum/bodypart_overlay/mutant/snout/get_global_feature_list()
-	return GLOB.snouts_list
+	return SSaccessories.snouts_list
 
 ///A moth's antennae
 /obj/item/organ/external/antennae
@@ -315,7 +315,7 @@
 	burn_datum = fetch_sprite_datum(burn_datum) //turn the path into the singleton instance
 
 /datum/bodypart_overlay/mutant/antennae/get_global_feature_list()
-	return GLOB.moth_antennae_list
+	return SSaccessories.moth_antennae_list
 
 /datum/bodypart_overlay/mutant/antennae/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state
@@ -347,7 +347,7 @@
 	var/color_inverse_base = 255
 
 /datum/bodypart_overlay/mutant/pod_hair/get_global_feature_list()
-	return GLOB.pod_hair_list
+	return SSaccessories.pod_hair_list
 
 /datum/bodypart_overlay/mutant/pod_hair/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
 	if(draw_layer != bitflag_to_layer(color_swapped_layer))

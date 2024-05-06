@@ -169,6 +169,7 @@
 					/obj/item/clothing/mask/whistle,
 					/obj/item/conversion_kit,
 				)
+	crate_name = "traditional equipment crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /// Armory packs

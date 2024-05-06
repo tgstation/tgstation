@@ -208,9 +208,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	spans |= speech_span
 
-	if(language)
-		var/datum/language/L = GLOB.language_datum_instances[language]
-		spans |= L.spans
+	var/datum/language/spoken_lang = GLOB.language_datum_instances[language]
+	if(LAZYLEN(spoken_lang?.spans))
+		spans |= spoken_lang.spans
 
 	if(message_mods[MODE_SING])
 		var/randomnote = pick("\u2669", "\u266A", "\u266B")
