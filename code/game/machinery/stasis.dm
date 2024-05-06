@@ -25,6 +25,7 @@
 /obj/machinery/stasis/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/elevation, pixel_shift = 6)
+	register_context()
 
 /obj/machinery/stasis/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -44,6 +45,17 @@
 		warning label beside the switch only has the words \"DANGER ... SLIME PERSONNEL ... INCREASED POWER ...\" bolded enough to be legible.")
 	if(filtering_enabled)
 		. += span_notice("Thousands of micro-needles jut up from the mattress.[obj_flags & EMAGGED ? span_danger(" They look thirsty, the filter servos whirring ominously.") : ""]")
+
+/obj/machinery/stasis/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle passive blood filtering"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Toggle power"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()
@@ -75,6 +87,8 @@
 /// this over and over while you're helplessly buckled to the bed, though the effect of you being mutilated with
 /// needles will be obvious to onlookers.
 /obj/machinery/stasis/CtrlClick(mob/user)
+	if(!can_interact(user))
+		return
 	. = ..()
 	if(world.time < can_toggle)
 		return CLICK_ACTION_BLOCKING
@@ -189,20 +203,20 @@
 	/// because these things were designed by humans, for humans.
 	/// NOBODY should try to get their blood filtered if the machine
 	/// is emagged.
-	var/text/onlooker_message
-	var/text/target_message
-	if(prob(40))
+	var/onlooker_message
+	var/target_message
+	if(prob(30))
 		play_filtering_sound()
 	if(isjellyperson(target) || is_emagged)
-		onlooker_message = span_notice("The [src] filters [target]'s blood, emitting an ominous whirring noise.")
-		target_message = span_danger("The [src] filters your blood-- SOMETHING IS WRONG! IT HURTS!")
+		onlooker_message = span_notice("[src] filters [target]'s blood, emitting an ominous whirring noise.")
+		target_message = span_danger("[src] filters your blood-- SOMETHING IS WRONG! You feel emptier!")
 		target.blood_volume = max(target.blood_volume - (filtering_efficiency * 3), 0)
 		if(prob(15))
 			target.emote("scream")
 	else
-		onlooker_message = span_notice("The [src] filters [target]'s blood, humming softly.")
+		onlooker_message = span_notice("[src] filters [target]'s blood, humming softly.")
 		target_message = span_notice("You feel an odd, floaty sensation as [src] filters your blood.")
-	visible_message(onlooker_message, target_message, span_hear("You hear a wet, squelching, slurping sort of noise."),
+	target.visible_message(onlooker_message, target_message, span_hear("You hear a wet, squelching, slurping sort of noise."), vision_distance = 1)
 	for(var/datum/reagent/to_remove in target.reagents.reagent_list)
 		if(is_emagged)
 			if(istype(to_remove, /datum/reagent/medicine/))
@@ -221,8 +235,6 @@
 	var/sound/slurping = sound('sound/effects/wounds/splatter.ogg')
 	slurping.pitch = 0.3
 	playsound(src, slurping, 50, TRUE, falloff_exponent = 10, pressure_affected = TRUE, ignore_walls = FALSE, falloff_distance = 0)
-
-
 
 /obj/machinery/stasis/proc/thaw_them(mob/living/target)
 	var/is_emagged = obj_flags & EMAGGED
