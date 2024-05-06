@@ -27,11 +27,6 @@ CREATE TABLE `ipintel_whitelist` (
 	PRIMARY KEY (`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `legacy_population`
---
-
 ```
 -----------------------------------------------------
 Version 5.26, 03 December 2023, by distributivgesetz
