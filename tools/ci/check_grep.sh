@@ -182,13 +182,6 @@ if $grep 'balloon_alert\(.*?, ?"[A-Z]' $code_files; then
 	st=1
 fi;
 
-part "pronoun helper spellcheck"
-if $grep '%PRONOUN_(?!they|They|their|Their|theirs|Theirs|them|Them|have|are|were|do|theyve|Theyve|theyre|Theyre|s|es)' $code_files; then
-	echo
-	echo -e "${RED}ERROR: Invalid pronoun helper found.${NC}"
-	st=1
-fi;
-
 part "update_icon_updates_onmob element usage"
 if $grep 'AddElement\(/datum/element/update_icon_updates_onmob.+ITEM_SLOT_HANDS' $code_files; then
 	echo
@@ -293,6 +286,12 @@ if [ "$pcre2_support" -eq 1 ]; then
 	if $grep -P '^/(obj|mob|turf|area|atom)/.+/Initialize\((?!mapload).*\)' $code_files; then
 		echo
 		echo -e "${RED}ERROR: Initialize override without 'mapload' argument.${NC}"
+		st=1
+	fi;
+	part "pronoun helper spellcheck"
+	if $grep -P '%PRONOUN_(?!they|They|their|Their|theirs|Theirs|them|Them|have|are|were|do|theyve|Theyve|theyre|Theyre|s|es)' $code_files; then
+		echo
+		echo -e "${RED}ERROR: Invalid pronoun helper found.${NC}"
 		st=1
 	fi;
 else
