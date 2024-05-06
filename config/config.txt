@@ -381,7 +381,7 @@ AUTOADMIN_RANK Game Master
 #CLIENT_WARN_VERSION 515
 #CLIENT_WARN_BUILD 1635
 #CLIENT_WARN_POPUP
-#CLIENT_WARN_MESSAGE Byond released 515 as the stable release. This comes bundled with a host of niceties, including .
+#CLIENT_WARN_MESSAGE Byond released 515 as the stable release. This comes bundled with a host of niceties, including image generation for UIs and :: operators.
 CLIENT_ERROR_VERSION 515
 CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
 ## The minimum build needed for joining the server.
