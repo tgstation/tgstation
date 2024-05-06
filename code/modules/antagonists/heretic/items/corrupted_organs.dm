@@ -17,14 +17,14 @@
 
 	var/list/human_mobs = GLOB.human_list.Copy()
 	human_mobs -= organ_owner
-	for (var/mob/living/check_human as anything in human_mobs)
+	for (var/mob/living/carbon/human/check_human as anything in human_mobs)
 		if (!IS_HERETIC(check_human) && !prob(5)) // Throw in some false positives
 			continue
 		var/image/invisible_man = image('icons/blanks/32x32.dmi', check_human, "nothing")
 		invisible_man.override = TRUE
 		LAZYADD(hallucinations, invisible_man)
 
-	if (length(hallucinations))
+	if (LAZYLEN(hallucinations))
 		organ_owner.client.images |= hallucinations
 
 /obj/item/organ/internal/eyes/corrupt/on_mob_remove(mob/living/carbon/organ_owner, special)
@@ -130,13 +130,7 @@
 	if (!(methods & INGEST))
 		return
 
-	var/contains_blood = FALSE
-	for (var/datum/reagent in reagents)
-		if (!istype(reagent, /datum/reagent/blood))
-			continue
-		contains_blood = TRUE
-		break
-
+	var/contains_blood = locate(/datum/reagent/blood) in reagents
 	if (!contains_blood)
 		return
 
@@ -144,7 +138,7 @@
 		to_chat(source, span_cult_italic("The thirst is satisfied... for now."))
 	thirst_satiated = TRUE
 	deltimer(thirst_timer)
-	thirst_timer = addtimer(CALLBACK(src, PROC_REF(start_thirsting)), 3 MINUTES, TIMER_STOPPABLE | TIMER_DELETE_ME)
+	thirst_timer = addtimer(VARSET_CALLBACK(src, thirst_satiated, FALSE), 3 MINUTES, TIMER_STOPPABLE | TIMER_DELETE_ME)
 
 /obj/item/organ/internal/stomach/corrupt/handle_hunger(mob/living/carbon/human/human, seconds_per_tick, times_fired)
 	if (thirst_satiated || human.has_reagent(/datum/reagent/water/holywater))
@@ -168,10 +162,6 @@
 	to_chat(human, span_cult_italic(pick(blood_messages)))
 
 	return ..()
-
-/// Me when I don't have enough blood
-/obj/item/organ/internal/stomach/corrupt/proc/start_thirsting()
-	thirst_satiated = FALSE
 
 
 /// Occasionally bombards you with spooky hands and lets everyone hear your pulse.
