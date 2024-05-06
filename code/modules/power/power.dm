@@ -204,9 +204,9 @@
 		return amount
 
 	var/obj/machinery/power/apc/my_apc = my_area.apc
-	if(isnull(my_apc))
+	if(isnull(my_apc) || QDELETED(my_apc.cell))
 		return FALSE
-	return my_apc.cell?.use(amount, force = force)
+	return my_apc.cell.use(amount, force = force)
 
 /**
  * Attempts to draw power directly from the APC's Powernet rather than the APC's battery. For high-draw machines, like the cell charger
