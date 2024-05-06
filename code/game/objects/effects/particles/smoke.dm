@@ -43,8 +43,8 @@
 	spawning = 0.05 // used to pace it out roughly in time with breath ticks
 	position = list(-6, 0, 0)
 	gravity = list(0, 0.75, 0)
-	lifespan = 0.5 SECONDS
-	fade = 0.5 SECONDS
+	lifespan = 0.75 SECONDS
+	fade = 0.75 SECONDS
 	velocity = list(0, 0.2, 0)
 	scale = 0.5
 	grow = 0.01
