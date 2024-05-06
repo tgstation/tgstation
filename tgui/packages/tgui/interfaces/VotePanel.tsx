@@ -5,7 +5,6 @@ import {
   Box,
   Button,
   Collapsible,
-  Dimmer,
   Icon,
   LabeledList,
   NoticeBox,
@@ -60,13 +59,11 @@ type Data = {
   possibleVotes: Vote[];
   user: UserData;
   voting: string[];
-  LastVoteTime: number;
-  VoteCD: number;
 };
 
 export const VotePanel = (props) => {
-  const { act, data } = useBackend<Data>();
-  const { currentVote, user, LastVoteTime, VoteCD } = data;
+  const { data } = useBackend<Data>();
+  const { currentVote, user } = data;
 
   /**
    * Adds the voting type to title if there is an ongoing vote.
@@ -84,19 +81,7 @@ export const VotePanel = (props) => {
     <Window title={windowTitle} width={400} height={500}>
       <Window.Content>
         <Stack fill vertical>
-          <Section
-            title="Create Vote"
-            buttons={
-              !!user.isLowerAdmin && (
-                <Button
-                  icon="refresh"
-                  content="Reset Cooldown"
-                  disabled={LastVoteTime + VoteCD <= 0}
-                  onClick={() => act('resetCooldown')}
-                />
-              )
-            }
-          >
+          <Section title="Create Vote">
             <VoteOptions />
             {!!user.isLowerAdmin && currentVote && <VotersList />}
           </Section>
@@ -108,86 +93,51 @@ export const VotePanel = (props) => {
   );
 };
 
-const VoteOptionDimmer = (props) => {
-  const { data } = useBackend<Data>();
-  const { LastVoteTime, VoteCD } = data;
-
-  return (
-    <Dimmer>
-      <Box textAlign="center">
-        <Box fontSize={2} bold>
-          Vote Cooldown
-        </Box>
-        <Box fontSize={1.5}>{Math.floor((VoteCD + LastVoteTime) / 10)}s</Box>
-      </Box>
-    </Dimmer>
-  );
-};
-
 /**
  * The create vote options menu. Only upper admins can disable voting.
  * @returns A section visible to everyone with vote options.
  */
 const VoteOptions = (props) => {
   const { act, data } = useBackend<Data>();
-  const { possibleVotes, user, LastVoteTime, VoteCD } = data;
+  const { possibleVotes, user } = data;
 
   return (
     <Stack.Item>
       <Collapsible title="Start a Vote">
-        <Section>
-          {LastVoteTime + VoteCD > 0 && <VoteOptionDimmer />}
-          <Stack vertical justify="space-between">
-            {possibleVotes.map((option) => (
-              <Stack.Item key={option.name}>
-                <Stack>
-                  {!!user.isLowerAdmin && (
-                    <Stack.Item>
-                      <Button.Checkbox
-                        width={7}
-                        color="red"
-                        checked={option.config === VoteConfig.Enabled}
-                        disabled={
-                          !user.isUpperAdmin ||
-                          option.config === VoteConfig.None
-                        }
-                        tooltip={
-                          option.config === VoteConfig.None
-                            ? 'This vote cannot be disabled.'
-                            : null
-                        }
-                        content={
-                          option.config === VoteConfig.Enabled
-                            ? 'Enabled'
-                            : 'Disabled'
-                        }
-                        onClick={() =>
-                          act('toggleVote', {
-                            voteName: option.name,
-                          })
-                        }
-                      />
-                    </Stack.Item>
-                  )}
-                  <Stack.Item>
-                    <Button
-                      width={12}
-                      textAlign={'center'}
-                      disabled={!option.canBeInitiated}
-                      tooltip={option.message}
-                      content={option.name}
-                      onClick={() =>
-                        act('callVote', {
-                          voteName: option.name,
-                        })
-                      }
-                    />
-                  </Stack.Item>
-                </Stack>
-              </Stack.Item>
-            ))}
-          </Stack>
-        </Section>
+        <Stack vertical justify="space-between">
+          {possibleVotes.map((option) => (
+            <Stack.Item key={option.name}>
+              {!!user.isLowerAdmin && option.config !== VoteConfig.None && (
+                <Button.Checkbox
+                  mr={option.config === VoteConfig.Disabled ? 1 : 1.6}
+                  color="red"
+                  checked={option.config === VoteConfig.Enabled}
+                  disabled={!user.isUpperAdmin}
+                  content={
+                    option.config === VoteConfig.Enabled
+                      ? 'Enabled'
+                      : 'Disabled'
+                  }
+                  onClick={() =>
+                    act('toggleVote', {
+                      voteName: option.name,
+                    })
+                  }
+                />
+              )}
+              <Button
+                disabled={!option.canBeInitiated}
+                tooltip={option.message}
+                content={option.name}
+                onClick={() =>
+                  act('callVote', {
+                    voteName: option.name,
+                  })
+                }
+              />
+            </Stack.Item>
+          ))}
+        </Stack>
       </Collapsible>
     </Stack.Item>
   );
@@ -203,11 +153,11 @@ const VotersList = (props) => {
   return (
     <Stack.Item>
       <Collapsible
-        title={`View Active Voters${
-          data.voting.length ? ` (${data.voting.length})` : ''
+        title={`View Voters${
+          data.voting.length ? `: ${data.voting.length}` : ''
         }`}
       >
-        <Section height={4} fill scrollable>
+        <Section height={8} fill scrollable>
           {data.voting.map((voter) => {
             return <Box key={voter}>{voter}</Box>;
           })}
@@ -325,26 +275,13 @@ const TimePanel = (props) => {
             {currentVote?.timeRemaining || 0}s
           </Box>
           {!!user.isLowerAdmin && (
-            <Stack>
-              <Stack.Item>
-                <Button
-                  color="green"
-                  disabled={!user.isLowerAdmin || !currentVote}
-                  onClick={() => act('endNow')}
-                >
-                  End Now
-                </Button>
-              </Stack.Item>
-              <Stack.Item>
-                <Button
-                  color="red"
-                  disabled={!user.isLowerAdmin || !currentVote}
-                  onClick={() => act('cancel')}
-                >
-                  Cancel Vote
-                </Button>
-              </Stack.Item>
-            </Stack>
+            <Button
+              color="red"
+              disabled={!user.isLowerAdmin || !currentVote}
+              onClick={() => act('cancel')}
+            >
+              Cancel Vote
+            </Button>
           )}
         </Stack>
       </Section>

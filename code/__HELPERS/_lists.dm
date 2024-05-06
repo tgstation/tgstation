@@ -417,7 +417,7 @@
 **/
 /proc/list_clear_nulls(list/list_to_clear)
 	return (list_to_clear.RemoveAll(null) > 0)
-
+	
 
 /**
  * Removes any empty weakrefs from the list
@@ -473,23 +473,17 @@
  * You should only pass integers in.
  */
 /proc/pick_weight(list/list_to_pick)
-	if(length(list_to_pick) == 0)
-		return null
-
 	var/total = 0
-	for(var/item in list_to_pick)
+	var/item
+	for(item in list_to_pick)
 		if(!list_to_pick[item])
 			list_to_pick[item] = 0
 		total += list_to_pick[item]
 
 	total = rand(1, total)
-	for(var/item in list_to_pick)
-		var/item_weight = list_to_pick[item]
-		if(item_weight == 0)
-			continue
-
-		total -= item_weight
-		if(total <= 0)
+	for(item in list_to_pick)
+		total -= list_to_pick[item]
+		if(total <= 0 && list_to_pick[item])
 			return item
 
 	return null

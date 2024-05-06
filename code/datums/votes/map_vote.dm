@@ -1,6 +1,6 @@
 /datum/vote/map_vote
 	name = "Map"
-	default_message = "Vote for next round's map!"
+	message = "Vote for next round's map!"
 	count_method = VOTE_COUNT_METHOD_SINGLE
 	winner_method = VOTE_WINNER_METHOD_WEIGHTED_RANDOM
 	display_statistics = FALSE
@@ -21,62 +21,77 @@
 
 /datum/vote/map_vote/create_vote()
 	. = ..()
-	if(!.)
-		return FALSE
-
-	choices -= get_choices_invalid_for_population()
+	check_population(should_key_choices = FALSE)
 	if(length(choices) == 1) // Only one choice, no need to vote. Let's just auto-rotate it to the only remaining map because it would just happen anyways.
-		var/datum/map_config/change_me_out = global.config.maplist[choices[1]]
-		finalize_vote(choices[1])// voted by not voting, very sad.
-		to_chat(world, span_boldannounce("The map vote has been skipped because there is only one map left to vote for. \
-			The map has been changed to [change_me_out.map_name]."))
-		return FALSE
-	if(length(choices) == 0)
-		to_chat(world, span_boldannounce("A map vote was called, but there are no maps to vote for! \
-			Players, complain to the admins. Admins, complain to the coders."))
+		var/de_facto_winner = choices[1]
+		var/datum/map_config/change_me_out = global.config.maplist[de_facto_winner]
+		SSmapping.changemap(change_me_out)
+		to_chat(world, span_boldannounce("The map vote has been skipped because there is only one map left to vote for. The map has been changed to [change_me_out.map_name]."))
+		SSmapping.map_voted = TRUE // voted by not voting, very sad.
 		return FALSE
 
-	return TRUE
+/datum/vote/map_vote/toggle_votable(mob/toggler)
+	if(!toggler)
+		CRASH("[type] wasn't passed a \"toggler\" mob to toggle_votable.")
+	if(!check_rights_for(toggler.client, R_ADMIN))
+		return FALSE
 
-/datum/vote/map_vote/toggle_votable()
 	CONFIG_SET(flag/allow_vote_map, !CONFIG_GET(flag/allow_vote_map))
+	return TRUE
 
 /datum/vote/map_vote/is_config_enabled()
 	return CONFIG_GET(flag/allow_vote_map)
 
-/datum/vote/map_vote/can_be_initiated(forced)
+/datum/vote/map_vote/can_be_initiated(mob/by_who, forced = FALSE)
 	. = ..()
-	if(. != VOTE_AVAILABLE)
-		return .
-	if(forced)
-		return VOTE_AVAILABLE
-	var/num_choices = length(default_choices - get_choices_invalid_for_population())
-	if(num_choices <= 1)
-		return "There [num_choices == 1 ? "is only one map" : "are no maps"] to choose from."
-	if(SSmapping.map_vote_rocked)
-		return VOTE_AVAILABLE
-	if(SSmapping.map_voted)
-		return "The next map has already been selected."
-	return VOTE_AVAILABLE
+	if(!.)
+		return FALSE
 
-/// Returns a list of all map options that are invalid for the current population.
-/datum/vote/map_vote/proc/get_choices_invalid_for_population()
+	if(forced)
+		return TRUE
+
+	var/number_of_choices = length(check_population())
+	if(number_of_choices < 2)
+		message = "There [number_of_choices == 1 ? "is only one map" : "are no maps"] to choose from."
+		return FALSE
+
+	if(SSmapping.map_vote_rocked)
+		return TRUE
+
+	if(!CONFIG_GET(flag/allow_vote_map))
+		message = "Map voting is disabled by server configuration settings."
+		return FALSE
+
+	if(SSmapping.map_voted)
+		message = "The next map has already been selected."
+		return FALSE
+
+	message = initial(message)
+	return TRUE
+
+/// Before we create a vote, remove all maps from our choices that are outside of our population range.
+/// Note that this can result in zero remaining choices for our vote, which is not ideal (but ultimately okay).
+/// Argument should_key_choices is TRUE, pass as FALSE in a context where choices are already keyed in a list.
+/datum/vote/map_vote/proc/check_population(should_key_choices = TRUE)
+	if(should_key_choices)
+		for(var/key in default_choices)
+			choices[key] = 0
+
 	var/filter_threshold = 0
 	if(SSticker.HasRoundStarted())
 		filter_threshold = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
 	else
 		filter_threshold = GLOB.clients.len
 
-	var/list/invalid_choices = list()
-	for(var/map in default_choices)
+	for(var/map in choices)
 		var/datum/map_config/possible_config = config.maplist[map]
 		if(possible_config.config_min_users > 0 && filter_threshold < possible_config.config_min_users)
-			invalid_choices += map
+			choices -= map
 
 		else if(possible_config.config_max_users > 0 && filter_threshold > possible_config.config_max_users)
-			invalid_choices += map
+			choices -= map
 
-	return invalid_choices
+	return choices
 
 /datum/vote/map_vote/get_vote_result(list/non_voters)
 	// Even if we have default no vote off,

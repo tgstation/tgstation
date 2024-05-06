@@ -150,7 +150,7 @@
 	)
 	result = /obj/item/food/croissant/throwing
 	category = CAT_BREAD
-	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+	always_available = FALSE
 
 /datum/crafting_recipe/food/breaddog
 	name = "Living dog/bread hybrid"

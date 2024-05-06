@@ -29,31 +29,31 @@
 			return COLOR_BLACK
 
 /proc/random_underwear(gender)
-	if(length(SSaccessories.underwear_list) == 0)
-		CRASH("No underwear to choose from!")
+	if(!GLOB.underwear_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
 	switch(gender)
 		if(MALE)
-			return pick(SSaccessories.underwear_m)
+			return pick(GLOB.underwear_m)
 		if(FEMALE)
-			return pick(SSaccessories.underwear_f)
+			return pick(GLOB.underwear_f)
 		else
-			return pick(SSaccessories.underwear_list)
+			return pick(GLOB.underwear_list)
 
 /proc/random_undershirt(gender)
-	if(length(SSaccessories.undershirt_list) == 0)
-		CRASH("No undershirts to choose from!")
+	if(!GLOB.undershirt_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
 	switch(gender)
 		if(MALE)
-			return pick(SSaccessories.undershirt_m)
+			return pick(GLOB.undershirt_m)
 		if(FEMALE)
-			return pick(SSaccessories.undershirt_f)
+			return pick(GLOB.undershirt_f)
 		else
-			return pick(SSaccessories.undershirt_list)
+			return pick(GLOB.undershirt_list)
 
 /proc/random_socks()
-	if(length(SSaccessories.socks_list) == 0)
-		CRASH("No socks to choose from!")
-	return pick(SSaccessories.socks_list)
+	if(!GLOB.socks_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
+	return pick(GLOB.socks_list)
 
 /proc/random_backpack()
 	return pick(GLOB.backpacklist)
@@ -61,20 +61,61 @@
 /proc/random_hairstyle(gender)
 	switch(gender)
 		if(MALE)
-			return pick(SSaccessories.hairstyles_male_list)
+			return pick(GLOB.hairstyles_male_list)
 		if(FEMALE)
-			return pick(SSaccessories.hairstyles_female_list)
+			return pick(GLOB.hairstyles_female_list)
 		else
-			return pick(SSaccessories.hairstyles_list)
+			return pick(GLOB.hairstyles_list)
 
 /proc/random_facial_hairstyle(gender)
 	switch(gender)
 		if(MALE)
-			return pick(SSaccessories.facial_hairstyles_male_list)
+			return pick(GLOB.facial_hairstyles_male_list)
 		if(FEMALE)
-			return pick(SSaccessories.facial_hairstyles_female_list)
+			return pick(GLOB.facial_hairstyles_female_list)
 		else
-			return pick(SSaccessories.facial_hairstyles_list)
+			return pick(GLOB.facial_hairstyles_list)
+
+/proc/random_unique_name(gender, attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		if(gender == FEMALE)
+			. = capitalize(pick(GLOB.first_names_female)) + " " + capitalize(pick(GLOB.last_names))
+		else
+			. = capitalize(pick(GLOB.first_names_male)) + " " + capitalize(pick(GLOB.last_names))
+
+		if(!findname(.))
+			break
+
+/proc/random_unique_lizard_name(gender, attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = capitalize(lizard_name(gender))
+
+		if(!findname(.))
+			break
+
+/proc/random_unique_plasmaman_name(attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = capitalize(plasmaman_name())
+
+		if(!findname(.))
+			break
+
+/proc/random_unique_ethereal_name(attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = capitalize(ethereal_name())
+
+		if(!findname(.))
+			break
+
+/proc/random_unique_moth_name(attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = capitalize(pick(GLOB.moth_first)) + " " + capitalize(pick(GLOB.moth_last))
+
+		if(!findname(.))
+			break
+
+/proc/random_skin_tone()
+	return pick(GLOB.skin_tones)
 
 GLOBAL_LIST_INIT(skin_tones, sort_list(list(
 	"albino",
@@ -113,6 +154,9 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	"mixed3" = "Coffee",
 	"mixed4" = "Macadamia",
 ))
+
+/// An assoc list of species IDs to type paths
+GLOBAL_LIST_EMPTY(species_list)
 
 /proc/age2agedescription(age)
 	switch(age)

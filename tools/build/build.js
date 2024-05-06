@@ -86,7 +86,7 @@ export const WarningParameter = new Juke.Parameter({
 
 export const NoWarningParameter = new Juke.Parameter({
   type: 'string[]',
-  alias: 'I',
+  alias: 'NW',
 });
 
 export const CutterTarget = new Juke.Target({

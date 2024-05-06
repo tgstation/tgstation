@@ -137,15 +137,13 @@ export class Uplink extends Component<{}, UplinkState> {
     uplinkData.items = uplinkData.items.filter((value) => {
       if (
         value.restricted_roles.length > 0 &&
-        !value.restricted_roles.includes(uplinkRole) &&
-        !data.debug
+        !value.restricted_roles.includes(uplinkRole)
       ) {
         return false;
       }
       if (
         value.restricted_species.length > 0 &&
-        !value.restricted_species.includes(uplinkSpecies) &&
-        !data.debug
+        !value.restricted_species.includes(uplinkSpecies)
       ) {
         return false;
       }
@@ -457,7 +455,7 @@ export class Uplink extends Component<{}, UplinkState> {
                         }
                       }}
                     />
-                    {(shop_locked && !data.debug && (
+                    {(shop_locked && (
                       <Dimmer>
                         <Box
                           color="red"

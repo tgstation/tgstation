@@ -48,11 +48,9 @@
 #define AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS 1
 #define AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER 2
 
-///The blast door is missing wires, first step of construction.
+//blast door (de)construction states
 #define BLASTDOOR_NEEDS_WIRES 0
-///The blast door needs electronics, second step of construction.
 #define BLASTDOOR_NEEDS_ELECTRONICS 1
-///The blast door is fully constructed.
 #define BLASTDOOR_FINISHED 2
 
 //floodlights because apparently we use defines now

@@ -21,7 +21,7 @@
 
 /obj/item/debug/human_spawner/attack_self(mob/user)
 	..()
-	var/choice = input("Select a species", "Human Spawner", null) in sortTim(GLOB.species_list, GLOBAL_PROC_REF(cmp_text_asc))
+	var/choice = input("Select a species", "Human Spawner", null) in GLOB.species_list
 	selected_species = GLOB.species_list[choice]
 
 /obj/item/debug/omnitool
@@ -168,3 +168,4 @@
 	var/turf/loc_turf = get_turf(src)
 	for(var/spawn_atom in (choice == "No" ? typesof(path) : subtypesof(path)))
 		new spawn_atom(loc_turf)
+

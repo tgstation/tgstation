@@ -10,4 +10,3 @@
 		"shiver", "timbers", "matey", "swashbuckler"
 	)
 	icon_state = "pirate"
-	always_use_default_namelist = TRUE

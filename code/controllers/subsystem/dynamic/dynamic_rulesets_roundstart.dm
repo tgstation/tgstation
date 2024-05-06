@@ -135,7 +135,10 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 
 /datum/dynamic_ruleset/roundstart/traitorbro/execute()
 	for (var/datum/mind/mind in assigned)
-		new /datum/team/brother_team(mind)
+		var/datum/team/brother_team/team = new
+		team.add_member(mind)
+		team.forge_brother_objectives()
+		mind.add_antag_datum(/datum/antagonist/brother, team)
 		GLOB.pre_setup_antags -= mind
 
 	return TRUE

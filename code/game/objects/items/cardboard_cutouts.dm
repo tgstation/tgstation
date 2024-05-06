@@ -317,7 +317,7 @@
 	outfit = /datum/outfit/ashwalker/spear
 
 /datum/cardboard_cutout/ash_walker/get_name()
-	return generate_random_name_species_based(species_type = /datum/species/lizard)
+	return lizard_name(pick(MALE, FEMALE))
 
 /datum/cardboard_cutout/death_squad
 	name = "Deathsquad Officer"

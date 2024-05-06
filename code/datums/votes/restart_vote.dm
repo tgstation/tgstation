@@ -7,8 +7,7 @@
 		CHOICE_RESTART,
 		CHOICE_CONTINUE,
 	)
-	default_message = "Vote to restart the ongoing round. \
-		Only works if there are no non-AFK admins online."
+	message = "Vote to restart the ongoing round."
 
 /// This proc checks to see if any admins are online for the purposes of this vote to see if it can pass. Returns TRUE if there are valid admins online (Has +SERVER and is not AFK), FALSE otherwise.
 /datum/vote/restart_vote/proc/admins_present()
@@ -20,24 +19,36 @@
 
 	return FALSE
 
-/datum/vote/restart_vote/toggle_votable()
+/datum/vote/restart_vote/toggle_votable(mob/toggler)
+	if(!toggler)
+		CRASH("[type] wasn't passed a \"toggler\" mob to toggle_votable.")
+
+	if(!check_rights_for(toggler.client, R_ADMIN))
+		return FALSE
+
 	CONFIG_SET(flag/allow_vote_restart, !CONFIG_GET(flag/allow_vote_restart))
+	return TRUE
 
 /datum/vote/restart_vote/is_config_enabled()
 	return CONFIG_GET(flag/allow_vote_restart)
 
-/datum/vote/restart_vote/create_vote(mob/vote_creator)
+/datum/vote/restart_vote/can_be_initiated(mob/by_who, forced)
 	. = ..()
 	if(!.)
-		return
-	if(!admins_present())
-		return
-	async_alert_about_admins(vote_creator)
+		return FALSE
 
-/datum/vote/restart_vote/proc/async_alert_about_admins(mob/vote_creator)
-	set waitfor = FALSE
-	tgui_alert(vote_creator, "Note: Regardless of the results of this vote, \
-		the round will not automatically restart because an active admin is online.")
+	if(!forced && !CONFIG_GET(flag/allow_vote_restart))
+		message = "Restart voting is disabled by server configuration settings."
+		return FALSE
+
+	// We still want players to be able to vote to restart even if valid admins are online. Let's update the message just so that the player is aware of this fact.
+	// We don't want to lock-out the vote though, so we'll return TRUE.
+	if(admins_present())
+		message = "Regardless of the results of this vote, the round will not automatically restart because an admin is online."
+		return TRUE
+
+	message = initial(message)
+	return TRUE
 
 /datum/vote/restart_vote/get_vote_result(list/non_voters)
 	if(!CONFIG_GET(flag/default_no_vote))

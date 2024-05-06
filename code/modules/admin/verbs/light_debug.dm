@@ -10,7 +10,7 @@
 		sum[source.source_atom.type] += 1
 		total += 1
 
-	sortTim(sum, associative = TRUE)
+	sum = sortTim(sum, /proc/cmp_numeric_asc, TRUE)
 	var/text = ""
 	for(var/type in sum)
 		text += "[type] = [sum[type]]\n"

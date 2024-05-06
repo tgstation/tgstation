@@ -340,7 +340,7 @@
 			if(STAGE_ONE)
 				steps = 1
 			if(STAGE_TWO)
-				steps = 2
+				steps = 3//Yes this is right
 			if(STAGE_THREE)
 				steps = 3
 			if(STAGE_FOUR)

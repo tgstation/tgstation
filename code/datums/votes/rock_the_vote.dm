@@ -10,40 +10,58 @@
 		CHOICE_TO_ROCK,
 		CHOICE_NOT_TO_ROCK,
 	)
-	default_message = "Override the current map vote."
+	message = "Override the current map vote."
 	/// The number of times we have rocked the vote thus far.
 	var/rocking_votes = 0
 
-/datum/vote/rock_the_vote/toggle_votable()
+/datum/vote/rock_the_vote/toggle_votable(mob/toggler)
+	if(!toggler)
+		CRASH("[type] wasn't passed a \"toggler\" mob to toggle_votable.")
+	if(!check_rights_for(toggler.client, R_ADMIN))
+		return FALSE
+
 	CONFIG_SET(flag/allow_rock_the_vote, !CONFIG_GET(flag/allow_rock_the_vote))
+	return TRUE
 
 /datum/vote/rock_the_vote/is_config_enabled()
 	return CONFIG_GET(flag/allow_rock_the_vote)
 
-/datum/vote/rock_the_vote/can_be_initiated(forced)
+/datum/vote/rock_the_vote/can_be_initiated(mob/by_who, forced)
 	. = ..()
-	if(. != VOTE_AVAILABLE)
-		return .
+
+	if(!.)
+		return FALSE
+
+	if(!forced && !CONFIG_GET(flag/allow_rock_the_vote))
+		message = "Rocking the vote is disabled by this server's configuration settings."
+		return FALSE
 
 	if(SSticker.current_state == GAME_STATE_FINISHED)
-		return "The game is finished, no map votes can be initiated."
+		message = "The game is finished, no map votes can be initiated."
+		return FALSE
 
 	if(rocking_votes >= CONFIG_GET(number/max_rocking_votes))
-		return "The maximum number of times to rock the vote has been reached."
+		message = "The maximum number of times to rock the vote has been reached."
+		return FALSE
 
 	if(SSmapping.map_vote_rocked)
-		return "The vote has already been rocked! Initiate a map vote!"
+		message = "The vote has already been rocked! Initiate a map vote!"
+		return FALSE
 
 	if(!SSmapping.map_voted)
-		return "Rocking the vote is disabled because no map has been voted on yet!"
+		message = "Rocking the vote is disabled because no map has been voted on yet!"
+		return FALSE
 
 	if(SSmapping.map_force_chosen)
-		return "Rocking the vote is disabled because an admin has forcibly set the map!"
+		message = "Rocking the vote is disabled because an admin has forcibly set the map!"
+		return FALSE
 
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED && SSmapping.map_voted)
-		return "The emergency shuttle has already left the station and the next map has already been chosen!"
+		message = "The emergency shuttle has already left the station and the next map has already been chosen!"
+		return FALSE
 
-	return VOTE_AVAILABLE
+	message = initial(message)
+	return TRUE
 
 /datum/vote/rock_the_vote/finalize_vote(winning_option)
 	rocking_votes++
