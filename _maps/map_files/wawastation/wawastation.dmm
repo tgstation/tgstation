@@ -439,6 +439,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/camera/autoname/directional/north,
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "agr" = (
@@ -46813,6 +46814,17 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/space/openspace,
 /area/space)
+"rmJ" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmospherics_engine)
 "rmX" = (
 /obj/machinery/light/small/dim/directional/north,
 /turf/open/misc/asteroid,
@@ -54096,6 +54108,16 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
+"tOh" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmospherics_engine)
 "tOm" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -59228,7 +59250,7 @@
 /area/station/ai_monitored/turret_protected/aisat/teleporter)
 "vKx" = (
 /obj/structure/table/wood,
-/obj/item/storage/fancy/coffee_cart_rack,
+/obj/item/storage/box/coffeepack,
 /obj/item/trash/sosjerky,
 /turf/open/floor/carpet,
 /area/station/command/corporate_showroom)
@@ -62489,6 +62511,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "wWs" = (
@@ -110409,7 +110432,7 @@ wVI
 wpM
 nbu
 kUX
-cxm
+rmJ
 kGZ
 pDx
 cHt
@@ -110666,7 +110689,7 @@ unA
 fdJ
 nbu
 kUX
-ohF
+tOh
 jjQ
 kGZ
 kGZ
