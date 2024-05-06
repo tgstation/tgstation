@@ -100,6 +100,8 @@
 	var/datum/reagents/extra_reagents = new()
 	extra_reagents.add_reagent(pick(extra_ingredients), amount_added)
 	extra_reagents.trans_to(source, amount_added, transferred_by = src, methods = INJECT)
+	if (prob(20))
+		to_chat(source, span_warning("As you take a sip, you feel something bubbling in your stomach..."))
 
 
 /// Rapidly become hungry if you are not digesting blood
@@ -171,8 +173,8 @@
 /obj/item/organ/internal/heart/corrupt
 	name = "corrupt heart"
 	desc = "What corruption is this spreading along with the blood?"
-	/// How likely are we to spawn a hand on any particular second?
-	var/hand_chance = 33
+	/// How long until the next heart?
+	COOLDOWN_DECLARE(hand_cooldown)
 
 /obj/item/organ/internal/heart/corrupt/Initialize(mapload)
 	. = ..()
@@ -180,9 +182,10 @@
 
 /obj/item/organ/internal/heart/corrupt/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	if (IS_IN_MANSUS(owner) || !owner.needs_heart() || !is_beating() || owner.has_reagent(/datum/reagent/water/holywater) || !SPT_PROB(hand_chance, seconds_per_tick))
+	if (IS_IN_MANSUS(owner) || !owner.needs_heart() || !is_beating() || owner.has_reagent(/datum/reagent/water/holywater) || !COOLDOWN_FINISHED(src, hand_cooldown))
 		return
 	fire_curse_hand(owner)
+	COOLDOWN_START(src, hand_cooldown, rand(6 SECONDS, 45 SECONDS)) // Wide variance to put you off guard
 
 
 /// Sometimes cough out some kind of dangerous gas
