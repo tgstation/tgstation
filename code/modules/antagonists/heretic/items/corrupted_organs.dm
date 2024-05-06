@@ -110,6 +110,8 @@
 	var/thirst_satiated = FALSE
 	/// Timer for when we get thirsty again
 	var/thirst_timer
+	/// How long until we prompt the player to drink blood again?
+	COOLDOWN_DECLARE(message_cooldown)
 
 /obj/item/organ/internal/stomach/corrupt/Initialize(mapload)
 	. = ..()
@@ -146,8 +148,9 @@
 
 	human.adjust_nutrition(-1 * seconds_per_tick)
 
-	if (SPT_PROB(98, seconds_per_tick))
+	if (!COOLDOWN_FINISHED(src, message_cooldown))
 		return ..()
+	COOLDOWN_START(src, message_cooldown, 30 SECONDS)
 
 	var/static/list/blood_messages = list(
 		"Blood...",
