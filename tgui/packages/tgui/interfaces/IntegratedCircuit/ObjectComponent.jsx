@@ -39,8 +39,8 @@ export class ObjectComponent extends Component {
     if (dragPos) {
       act('set_component_coordinates', {
         component_id: index,
-        rel_x: this.roundTo10(dragPos.x),
-        rel_y: this.roundTo10(dragPos.y),
+        rel_x: this.roundToGrid(dragPos.x),
+        rel_y: this.roundToGrid(dragPos.y),
       });
     }
 
@@ -81,7 +81,8 @@ export class ObjectComponent extends Component {
     );
   }
 
-  roundTo10(input_value) {
+  // Round the units to the grid (bypass if grid mode is off)
+  roundToGrid(input_value) {
     if (!this.props.gridMode) return input_value;
     return Math.round(input_value / 10) * 10;
   }
@@ -111,8 +112,8 @@ export class ObjectComponent extends Component {
 
     let [x_pos, y_pos] = [x, y];
     if (dragPos && startPos && startPos.x === x_pos && startPos.y === y_pos) {
-      x_pos = this.roundTo10(dragPos.x);
-      y_pos = this.roundTo10(dragPos.y);
+      x_pos = this.roundToGrid(dragPos.x);
+      y_pos = this.roundToGrid(dragPos.y);
     }
 
     // Assigned onto the ports
