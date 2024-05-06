@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 /datum/round_event/ghost_role/sentience/spawn_role()
 	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_SENTIENCE, role = ROLE_SENTIENCE, alert_pic = /obj/item/slimepotion/slime/sentience, role_name_text = role_name)
-	if(isnull(candidates))
+	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 
 	// find our chosen mob to breathe life into
