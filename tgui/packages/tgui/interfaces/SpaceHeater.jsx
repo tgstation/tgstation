@@ -98,7 +98,7 @@ export const SpaceHeater = (props) => {
                 data.targetTemp + '°C'}
             </LabeledList.Item>
             <LabeledList.Item label="Mode">
-              {!data.open && capitalize(data.mode) || (
+              {(!data.open && capitalize(data.mode)) || (
                 <>
                   <Button
                     icon="thermometer-half"
