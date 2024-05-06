@@ -83,7 +83,7 @@
 	else
 		movedelay = MOVEDELAY_ANGRY
 	playsound(src, 'sound/mecha/mech_blade_safty.ogg', 75, FALSE) //everyone need to hear this sound
-	balloon_alert(user, "Justice [weapons_safety ? "calm and focused" : "is ready for battle"]")
+	balloon_alert(user, "justice [weapons_safety ? "calm and focused" : "is ready for battle"]")
 	SEND_SIGNAL(src, COMSIG_MECH_SAFETIES_TOGGLE, user, weapons_safety)
 	set_mouse_pointer()
 
