@@ -126,7 +126,7 @@
 	. = ..()
 	if(over_object != usr || !Adjacent(usr) || !foldabletype)
 		return FALSE
-	if(!ishuman(usr) || !usr.can_perform_action(src))
+	if(!ishuman(usr) || !usr.can_perform_action(src, ALLOW_RESTING))
 		return FALSE
 	if(has_buckled_mobs())
 		return FALSE
@@ -137,6 +137,12 @@
 
 /obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchair on in-hand use
 	deploy_wheelchair(user, user.loc)
+
+/obj/item/wheelchair/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isopenturf(interacting_with))
+		deploy_wheelchair(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/wheelchair/proc/deploy_wheelchair(mob/user, atom/location)
 	var/obj/vehicle/ridden/wheelchair/wheelchair_unfolded = new unfolded_type(location)
