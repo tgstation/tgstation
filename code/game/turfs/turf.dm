@@ -88,6 +88,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///whether or not this turf forces movables on it to have no gravity (unless they themselves have forced gravity)
 	var/force_no_gravity = FALSE
 
+	///This turf's resistance to getting rusted
 	var/rust_resistance = RUST_RESISTANCE_ORGANIC
 
 	/// How pathing algorithm will check if this turf is passable by itself (not including content checks). By default it's just density check.

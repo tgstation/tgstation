@@ -250,6 +250,9 @@
 	/// A static list of traits we give to the heretic when on rust.
 	var/static/list/conditional_immunities = list(
 		TRAIT_BOMBIMMUNE,
+		TRAIT_FREEZEIMMUNITY,
+		TRAIT_IGNOREDAMAGESLOWDOWN,
+		TRAIT_IGNORESLOWDOWN,
 		TRAIT_NO_SLIP_ALL,
 		TRAIT_NOBREATH,
 		TRAIT_PIERCEIMMUNE,
@@ -262,9 +265,6 @@
 		TRAIT_SHOCKIMMUNE,
 		TRAIT_SLEEPIMMUNE,
 		TRAIT_STUNIMMUNE,
-		TRAIT_IGNOREDAMAGESLOWDOWN,
-		TRAIT_IGNORESLOWDOWN,
-		TRAIT_FREEZEIMMUNITY,
 	)
 
 /datum/heretic_knowledge/ultimate/rust_final/on_research(mob/user, datum/antagonist/heretic/our_heretic)
@@ -291,7 +291,6 @@
 		sound = 'sound/ambience/antag/heretic/ascend_rust.ogg',
 		color_override = "pink",
 	)
-	//new /datum/rust_spread(loc)
 	trigger(loc)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
@@ -320,15 +319,18 @@
 
 /datum/heretic_knowledge/ultimate/rust_final/proc/transform_area(list/turfs)
 	turfs = shuffle(turfs)
-	var/first_third = turfs.Copy(1, round(length(turfs) * 0.33))
-	var/second_third = turfs.Copy(round(length(turfs) * 0.33), round(length(turfs) * 0.66))
-	var/third_third = turfs.Copy(round(length(turfs) * 0.6), length(turfs))
-	for(var/turf/turf as anything in first_third)
+	var/numturfs = length(turfs)
+	var/first_third = turfs.Copy(1, round(numturfs * 0.33))
+	var/second_third = turfs.Copy(round(numturfs * 0.33), round(numturfs * 0.66))
+	var/third_third = turfs.Copy(round(numturfs * 0.66), numturfs)
+	addtimer(CALLBACK(src, PROC_REF(delay_transform_turfs), first_third), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(delay_transform_turfs), second_third), 5 SECONDS * 0.33)
+	addtimer(CALLBACK(src, PROC_REF(delay_transform_turfs), third_third), 5 SECONDS * 0.66)
+
+/datum/heretic_knowledge/ultimate/rust_final/proc/delay_transform_turfs(list/turfs)
+	for(var/turf/turf as anything in turfs)
 		turf.rust_heretic_act(5)
-	for(var/turf/turf as anything in second_third)
-		addtimer(CALLBACK(turf, TYPE_PROC_REF(/atom, rust_heretic_act), 5), 5 SECONDS * 0.33)
-	for(var/turf/turf as anything in third_third)
-		addtimer(CALLBACK(turf, TYPE_PROC_REF(/atom, rust_heretic_act), 5), 5 SECONDS * 0.66)
+		CHECK_TICK
 
 /**
  * Signal proc for [COMSIG_MOVABLE_MOVED].
@@ -373,78 +375,3 @@
 		source.blood_volume += 5 * seconds_per_tick
 	if(need_mob_update)
 		source.updatehealth()
-
-/**
- * #Rust spread datum
- *
- * Simple datum that automatically spreads rust around it.
- *
- * Simple implementation of automatically growing entity.
- */
-/datum/rust_spread
-	/// The rate of spread every tick.
-	var/spread_per_sec = 60
-	/// The very center of the spread.
-	var/turf/centre
-	/// List of turfs at the edge of our rust (but not yet rusted).
-	var/list/edge_turfs = list()
-	/// List of all turfs we've afflicted.
-	var/list/rusted_turfs = list()
-	/// Static blacklist of turfs we can't spread to.
-	var/static/list/blacklisted_turfs = typecacheof(list(
-		/turf/open/indestructible,
-		/turf/closed/indestructible,
-		/turf/open/space,
-		/turf/open/lava,
-		/turf/open/chasm
-	))
-
-/datum/rust_spread/New(loc)
-	centre = get_turf(loc)
-	centre.rust_heretic_act()
-	rusted_turfs += centre
-	START_PROCESSING(SSprocessing, src)
-
-/datum/rust_spread/Destroy(force)
-	centre = null
-	edge_turfs.Cut()
-	rusted_turfs.Cut()
-	STOP_PROCESSING(SSprocessing, src)
-	return ..()
-
-/datum/rust_spread/process(seconds_per_tick)
-	var/spread_amount = round(spread_per_sec * seconds_per_tick)
-
-	if(length(edge_turfs) < spread_amount)
-		compile_turfs()
-
-	for(var/i in 0 to spread_amount)
-		if(!length(edge_turfs))
-			break
-		var/turf/afflicted_turf = pick_n_take(edge_turfs)
-		afflicted_turf.rust_heretic_act()
-		rusted_turfs |= afflicted_turf
-
-/**
- * Compile turfs
- *
- * Recreates the edge_turfs list.
- * Updates the rusted_turfs list, in case any turfs within were un-rusted.
- */
-/datum/rust_spread/proc/compile_turfs()
-	edge_turfs.Cut()
-
-	var/max_dist = 1
-	for(var/turf/found_turf as anything in rusted_turfs)
-		if(!HAS_TRAIT(found_turf, TRAIT_RUSTY))
-			rusted_turfs -= found_turf
-		max_dist = max(max_dist, get_dist(found_turf, centre) + 1)
-
-	for(var/turf/nearby_turf as anything in spiral_range_turfs(max_dist, centre, FALSE))
-		if(nearby_turf in rusted_turfs || is_type_in_typecache(nearby_turf, blacklisted_turfs))
-			continue
-
-		for(var/turf/line_turf as anything in get_line(nearby_turf, centre))
-			if(get_dist(nearby_turf, line_turf) <= 1)
-				edge_turfs |= nearby_turf
-		CHECK_TICK

@@ -8,5 +8,5 @@
 	if(issilicon(owner))
 		owner.adjustBruteLoss(10 * seconds_between_ticks)
 		return
-	owner.adjust_disgust(10)
-	owner.reagents.remove_all(1.5)
+	owner.adjust_disgust(5 * seconds_between_ticks)
+	owner.reagents?.remove_all(0.75 * seconds_between_ticks)

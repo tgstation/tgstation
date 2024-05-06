@@ -24,6 +24,7 @@
 	gain_text = "Reality begins to whisper to me. To give it its entropic end."
 	required_atoms = list(
 		/obj/item/stack/sheet/iron = 10,
+		/obj/item/trash = 1,
 	)
 	cost = 0
 	route = PATH_SIDE
