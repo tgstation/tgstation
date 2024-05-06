@@ -93,7 +93,7 @@
 		spell_carving_timer = 4 SECONDS
 	if(magic_enhanced)
 		spell_carving_timer *= 0.5
-	if(do_after(owner, magic_enhanced, target = owner))
+	if(do_after(owner, spell_carving_timer, target = owner))
 		if(ishuman(owner))
 			var/mob/living/carbon/human/human_owner = owner
 			human_owner.bleed(rune ? 8 : 40)

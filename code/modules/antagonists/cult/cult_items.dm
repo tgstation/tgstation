@@ -193,11 +193,11 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/melee/cultblade/haunted/proc/bind_soul(mob/soul_to_bind, mob/awakener)
 
-	var/datum/mind/trapped_mind = soul_to_bind.mind
+	var/datum/mind/trapped_mind = soul_to_bind?.mind
 
-	if(soul_to_bind)
+	if(trapped_mind)
 		AddComponent(/datum/component/spirit_holding,\
-			soul_to_bind = soul_to_bind.mind,\
+			soul_to_bind = trapped_mind,\
 			awakener = awakener,\
 			allow_renaming = FALSE,\
 		)

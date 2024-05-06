@@ -142,6 +142,7 @@
 	)
 	can_repair = TRUE
 	slowed_by_drag = FALSE
+	faction = list(FACTION_HERETIC)
 	// Dim green
 	lighting_cutoff_red = 10
 	lighting_cutoff_green = 5
