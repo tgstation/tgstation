@@ -137,6 +137,15 @@
 	var/stepsound = 'sound/mecha/mechstep.ogg'
 	///Sound played when the mech walks
 	var/turnsound = 'sound/mecha/mechturn.ogg'
+	///Sounds for types of melee attack
+	var/brute_attack_sound = 'sound/weapons/punch4.ogg'
+	var/burn_attack_sound = 'sound/items/welder.ogg'
+	var/tox_attack_sound = 'sound/effects/spray2.ogg'
+	///Sound on wall destroying
+	var/destroy_wall_sound = 'sound/effects/meteorimpact.ogg'
+
+	///Melee attack verb
+	var/list/attack_verbs = list("hit", "hits", "hitting")
 
 	///Cooldown duration between melee punches
 	var/melee_cooldown = 10
@@ -909,3 +918,9 @@
 			act.button_icon_state = "mech_lights_off"
 		balloon_alert(occupant, "lights [mecha_flags & LIGHTS_ON ? "on":"off"]")
 		act.build_all_button_icons()
+
+/obj/vehicle/sealed/mecha/proc/melee_attack_effect(mob/living/victim, heavy)
+	if(heavy)
+		victim.Unconscious(20)
+	else
+		victim.Knockdown(40)
