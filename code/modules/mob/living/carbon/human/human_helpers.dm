@@ -350,15 +350,14 @@
 
 	var/min_damage = 0
 	var/max_damage = 0
-	for (var/obj/item/bodypart/part as anything in bodyparts)
-		if (part.unarmed_damage_high <= 0)
-			continue
-		if (HAS_TRAIT(part, TRAIT_PARALYSIS))
+	for (var/body_zone in GLOB.limb_zones)
+		var/obj/item/bodypart/part = get_bodypart(body_zone)
+		if (isnull(part) || part.unarmed_damage_high <= 0 || HAS_TRAIT(part, TRAIT_PARALYSIS))
 			continue
 		min_damage += part.unarmed_damage_low
 		max_damage += part.unarmed_damage_high
 
-	var/damage = ((min_damage / 6) + (max_damage / 6)) / 2 // We expect you to have 6 functional bodyparts- if you have fewer you're probably not going to be so good at lifting
+	var/damage = ((min_damage / 4) + (max_damage / 4)) / 2 // We expect you to have 4 functional limbs- if you have fewer you're probably not going to be so good at lifting
 
 	var/fitness_level = ceil(damage * (ceil(athletics_level / 2)) * fitness_modifier * 10)
 	return span_notice("You'd estimate [p_their()] fitness level at about [fitness_level].")
