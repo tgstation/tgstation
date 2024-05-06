@@ -51,3 +51,17 @@
   MichiRecRoom:
   - qol: If a lootbox item fails to save, you will now receive a replacement lootbox
       that can be used at a later time, and will hopefully work then.
+2024-05-06:
+  Absolucy:
+  - rscadd: The Damned Rabbit Mask now has a cool visual effect when worn by a hunter.
+  - rscadd: The Damned Rabbit Mask now works with internals.
+  - balance: Monster Hunter items such as the Damned Rabbit Mask, Rabbit Eye, Red
+      Queen Card, etc are now indestructible/fireproof/etc.
+  - rscadd: If a non-hunter tries to arm a jack in the box, they will botch it, resulting
+      in an early detonation.
+  - qol: Made the Red Queen Card a bit less janky to use.
+  - code_imp: Cleaned up and organized a bunch of Monster Hunter-related code.
+  - rscadd: Wonderland Apocalypse now raises the alert to delta when it starts, and
+      applies a station-wide effect that harms anyone attempting to cast magical spells.
+  - balance: Jabberwockies and killer rabbits are now antimagic.
+  - bugfix: The Cargorilla station trait works again.
