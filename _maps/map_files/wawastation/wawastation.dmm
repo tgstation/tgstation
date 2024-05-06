@@ -23454,6 +23454,16 @@
 	},
 /turf/open/floor/wood,
 /area/station/commons/lounge)
+"iGO" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmospherics_engine)
 "iHr" = (
 /obj/structure/cable,
 /obj/structure/chair/sofa/bench{
@@ -33366,6 +33376,17 @@
 	},
 /turf/open/floor/carpet/black,
 /area/station/command/heads_quarters/hos)
+"mlD" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/structure/rack,
+/obj/item/clothing/suit/space/orange,
+/obj/item/clothing/head/helmet/space/orange,
+/obj/item/tank/internals/oxygen,
+/turf/open/floor/catwalk_floor/iron_dark/telecomms,
+/area/station/ai_monitored/turret_protected/ai)
 "mlG" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger{
@@ -46814,17 +46835,6 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/space/openspace,
 /area/space)
-"rmJ" = (
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/obj/machinery/light/directional/north,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmospherics_engine)
 "rmX" = (
 /obj/machinery/light/small/dim/directional/north,
 /turf/open/misc/asteroid,
@@ -54108,16 +54118,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
-"tOh" = (
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmospherics_engine)
 "tOm" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -63636,6 +63636,17 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/science)
+"xqk" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmospherics_engine)
 "xqB" = (
 /obj/machinery/light/dim/directional/south,
 /turf/open/floor/iron/textured,
@@ -110432,7 +110443,7 @@ wVI
 wpM
 nbu
 kUX
-rmJ
+xqk
 kGZ
 pDx
 cHt
@@ -110689,7 +110700,7 @@ unA
 fdJ
 nbu
 kUX
-tOh
+iGO
 jjQ
 kGZ
 kGZ
@@ -169741,7 +169752,7 @@ kWb
 kWb
 kWb
 qWB
-vOH
+mlD
 xwz
 iIp
 qWB
