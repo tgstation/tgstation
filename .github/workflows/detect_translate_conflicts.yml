@@ -1,0 +1,53 @@
+name: Detect translation conflicts
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Fetch repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "SS220Manager"
+      - name: Try merging
+        continue-on-error: true
+        run: |
+          git merge origin/translate
+      - name: Save merge results
+        run: |
+          {
+            echo "MERGE_CONFLICTS<<EOF"
+            git diff --name-only --diff-filter=U | while read file; do
+              echo "- $file"
+              echo -e "\n\`\`\`"
+              git diff --diff-filter=U "$file" | sed -n '/<<<<<<</,/>>>>>>>/p'
+              echo -e "\n\`\`\`"
+            done
+            echo EOF
+          } >> $GITHUB_ENV
+      - name: Run script
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { MERGE_CONFLICTS } = process.env
+
+            if(!MERGE_CONFLICTS) {
+              return
+            }
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `This pr causes following conflicts on translate branch:\n ${MERGE_CONFLICTS} `
+            })
