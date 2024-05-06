@@ -449,6 +449,7 @@
 		/obj/item/storage/bag/trash = 2,
 		/obj/item/plunger = 2,
 		/obj/item/wirebrush = 2,
+		/obj/item/access_key = 2,
 		/obj/item/radio/headset/headset_srv = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
