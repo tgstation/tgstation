@@ -328,3 +328,37 @@
 	clone.domutcheck()
 
 	return clone
+
+/// Create a report string about how strong this person looks, generated in a somewhat arbitrary fashion
+/mob/living/carbon/human/proc/report_fitness()
+	if (HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return span_warning("It's impossible to tell whether this person lifts.")
+
+	var/fitness_modifier = 1
+	if (HAS_TRAIT(src, TRAIT_HULK))
+		fitness_modifier *= 2
+	if (HAS_TRAIT(src, TRAIT_STRENGTH))
+		fitness_modifier *= 1.5
+	if (HAS_TRAIT(src, TRAIT_EASILY_WOUNDED))
+		fitness_modifier /= 2
+	if (HAS_TRAIT(src, TRAIT_GAMER))
+		fitness_modifier /= 1.5
+	if (HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
+		fitness_modifier /= 1.5
+
+	var/athletics_level = mind?.get_skill_level(/datum/skill/athletics) || 1
+
+	var/min_damage = 0
+	var/max_damage = 0
+	for (var/obj/item/bodypart/part as anything in bodyparts)
+		if (part.unarmed_damage_high <= 0)
+			continue
+		if (HAS_TRAIT(part, TRAIT_PARALYSIS))
+			continue
+		min_damage += part.unarmed_damage_low
+		max_damage += part.unarmed_damage_high
+
+	var/damage = ((min_damage / 6) + (max_damage / 6)) / 2 // We expect you to have 6 functional bodyparts- if you have fewer you're probably not going to be so good at lifting
+
+	var/fitness_level = ceil(damage * (ceil(athletics_level / 2)) * fitness_modifier * 10)
+	return span_notice("You'd estimate [p_their()] fitness level at about [fitness_level].")
