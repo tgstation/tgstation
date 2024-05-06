@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// The Y position of the screen. Used for adding components.
 	var/screen_y = 0
 
-	/// The grid mode state for the circuit
+	/// The grid mode state for the circuit.
 	var/grid_mode = TRUE
 
 	/// The current size of the circuit.
