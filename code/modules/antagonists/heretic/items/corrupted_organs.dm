@@ -18,7 +18,7 @@
 	var/list/human_mobs = GLOB.human_list.Copy()
 	human_mobs -= organ_owner
 	for (var/mob/living/check_human as anything in human_mobs)
-		if (!IS_HERETIC(check_human))
+		if (!IS_HERETIC(check_human) && !prob(5)) // Throw in some false positives
 			continue
 		var/image/invisible_man = image('icons/blanks/32x32.dmi', check_human, "nothing")
 		invisible_man.override = TRUE
