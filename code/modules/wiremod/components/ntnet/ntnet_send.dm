@@ -40,4 +40,4 @@
 		data_package.set_datatype(PORT_TYPE_LIST(new_datatype))
 
 /obj/item/circuit_component/ntnet_send/input_received(datum/port/input/port)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT, list("data" = data_package.value, "enc_key" = enc_key.value, "port" = WEAKREF(data_package)))
+	send_ntnet_data(data_package, enc_key.value)

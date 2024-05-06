@@ -27,4 +27,4 @@
 
 /obj/item/circuit_component/list_literal/ntnet_send/input_received(datum/port/input/port)
 	. = ..()
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT_LIST_LITERAL, list("data" = list_output.value, "enc_key" = enc_key.value, "port" = WEAKREF(list_output)))
+	send_ntnet_data(list_output, enc_key.value)

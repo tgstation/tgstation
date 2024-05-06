@@ -76,9 +76,6 @@
 ///Called when an Ntnet sender is sending Ntnet data
 #define COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT "!circuit_ntnet_data_sent"
 
-///Called when an Ntnet sender (list literal) is sending Ntnet data
-#define COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT_LIST_LITERAL "!circuit_ntnet_data_sent_list_literal"
-
 /// Called when an equipment action component is added to a shell (/obj/item/circuit_component/equipment_action/action_comp)
 #define COMSIG_CIRCUIT_ACTION_COMPONENT_REGISTERED "circuit_action_component_registered"
 
