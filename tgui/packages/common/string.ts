@@ -5,9 +5,21 @@
  */
 
 /**
- * Creates a search terms matcher.
+ * Creates a search terms matcher. Returns true if given string matches the search text.
  *
- * Returns true if given string matches the search text.
+ * @example
+ * ```tsx
+ * type Thing = { id: string; name: string };
+ *
+ * const objects = [
+ *   { id: '123', name: 'Test' },
+ *   { id: '456', name: 'Test' },
+ * ];
+ *
+ * const search = createSearch('123', (obj: Thing) => obj.id);
+ *
+ * objects.filter(search); // returns [{ id: '123', name: 'Test' }]
+ * ```
  */
 export function createSearch<TObj>(
   searchText: string,
@@ -30,7 +42,10 @@ export function createSearch<TObj>(
 /**
  * Capitalizes a word and lowercases the rest.
  *
- * @example capitalize('heLLo') === 'Hello'
+ * @example
+ * ```tsx
+ * capitalize('heLLo') // Hello
+ * ```
  */
 export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -39,8 +54,11 @@ export function capitalize(str: string): string {
 /**
  * Similar to capitalize, this takes a string and replaces all first letters
  * of any words.
-
- * @example capitalizeAll('heLLo woRLd') === 'HeLLo WoRLd'
+ *
+ * @example
+ * ```tsx
+ * capitalizeAll('heLLo woRLd') // 'HeLLo WoRLd'
+ * ```
  */
 export function capitalizeAll(str: string): string {
   return str.replace(/(^\w{1})|(\s+\w{1})/g, (letter) => letter.toUpperCase());
@@ -49,7 +67,10 @@ export function capitalizeAll(str: string): string {
 /**
  * Capitalizes only the first letter of the str, leaving others untouched.
  *
- * @example capitalizeFirst('heLLo woRLd') === 'HeLLo woRLd'
+ * @example
+ * ```tsx
+ * capitalizeFirst('heLLo woRLd') // 'HeLLo woRLd'
+ * ```
  */
 export function capitalizeFirst(str: string): string {
   return str.replace(/^\w/, (letter) => letter.toUpperCase());
@@ -58,7 +79,10 @@ export function capitalizeFirst(str: string): string {
 /**
  * Converts a string to title case.
  *
- * @example toTitleCase('a tale of two cities') === 'A Tale of Two Cities'
+ * @example
+ * ```tsx
+ * toTitleCase('a tale of two cities') // 'A Tale of Two Cities'
+ * ```
  */
 export function toTitleCase(str: string): string {
   // Handle empty string
@@ -117,8 +141,13 @@ const translate = {
 } as const;
 
 /**
- * Decodes HTML entities, and removes unnecessary HTML tags.
+ * Decodes HTML entities and removes unnecessary HTML tags.
  *
+ * @example
+ * ```tsx
+ * decodeHtmlEntities('&amp;') // returns '&'
+ * decodeHtmlEntities('&lt;') // returns '<'
+ * ```
  */
 export function decodeHtmlEntities(str: string): string {
   if (!str) return str;
