@@ -33,8 +33,7 @@
 	
 	// Handles adding/removing items.
 	if(length(items_to_add))
-		if(!install_items(borg, user, items_to_add))
-			return FALSE
+		install_items(borg, user, items_to_add)
 	if(length(items_to_remove))
 		remove_items(borg, user, items_to_remove)
 	return TRUE
@@ -47,19 +46,15 @@
 	if(length(items_to_add))
 		remove_items(borg, user, items_to_add)
 	if(length(items_to_remove))
-		install_items(borg, user, items_to_remove, TRUE)
+		install_items(borg, user, items_to_remove)
 	return TRUE
 
 // Handles adding items with the module
-/obj/item/borg/upgrade/proc/install_items(mob/living/silicon/robot/borg, user = usr, list/items, ignore_duplicates = FALSE)
+/obj/item/borg/upgrade/proc/install_items(mob/living/silicon/robot/borg, user = usr, list/items)
 	for(var/item_to_add in items)
-		if(!ignore_duplicates && locate(item_to_add) in borg.model.modules)
-			borg.balloon_alert_to_viewers("already installed!")
-			return FALSE
-		else
-			var/obj/item/module_item = new item_to_add(borg.model.modules)
-			borg.model.basic_modules += module_item
-			borg.model.add_module(module_item, FALSE, TRUE)
+		var/obj/item/module_item = new item_to_add(borg.model.modules)
+		borg.model.basic_modules += module_item
+		borg.model.add_module(module_item, FALSE, TRUE)
 	return TRUE
 
 // Handles removing some items as the module is installed
