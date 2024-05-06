@@ -121,10 +121,18 @@
 	if(visualsOnly)
 		return
 	if(!equipped.get_quirk(/datum/quirk/body_purist))
-		var/obj/item/organ/internal/tongue/robot/cybernetic = new()
-		cybernetic.Insert(equipped, special = TRUE, movement_flags = DELETE_IF_REPLACED)
+		var/obj/item/organ/internal/tongue/robot/cybernetic_tongue = new()
+		var/obj/item/organ/internal/cyberimp/eyes/hud/medical/cybernetic_med_hud = new()
+		var/obj/item/organ/internal/cyberimp/chest/nutriment/cybernetic_food_pump = new()
+		cybernetic_tongue.Insert(equipped, special = TRUE, movement_flags = DELETE_IF_REPLACED)
+		cybernetic_med_hud.Insert(equipped, special = TRUE, movement_flags = DELETE_IF_REPLACED)
+		cybernetic_food_pump.Insert(equipped, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 		//you only get respect if you go all the way, man.
 		ADD_TRAIT(equipped, TRAIT_COMMISSIONED, INNATE_TRAIT)
+		equipped.del_and_replace_bodypart(new /obj/item/bodypart/arm/left/robot/advanced, special = TRUE)
+		equipped.del_and_replace_bodypart(new /obj/item/bodypart/arm/right/robot/advanced, special = TRUE)
+		equipped.del_and_replace_bodypart(new /obj/item/bodypart/leg/left/robot/advanced, special = TRUE)
+		equipped.del_and_replace_bodypart(new /obj/item/bodypart/leg/right/robot/advanced, special = TRUE)
 	equipped.faction |= list(FACTION_SILICON, FACTION_TURRET)
 
 	var/static/list/allowed_areas = typecacheof(list(/area/station/ai_monitored))
