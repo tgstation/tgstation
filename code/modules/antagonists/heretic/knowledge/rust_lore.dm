@@ -98,49 +98,6 @@
 /datum/heretic_knowledge/rust_regen/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	user.RemoveElement(/datum/element/leeching_walk)
 
-/*
- * Signal proc for [COMSIG_MOVABLE_MOVED].
- *
- * Checks if we should have baton resistance on the new turf.
- */
-/datum/heretic_knowledge/rust_regen/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
-	SIGNAL_HANDLER
-
-	var/turf/mover_turf = get_turf(source)
-	if(HAS_TRAIT(mover_turf, TRAIT_RUSTY))
-		ADD_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
-		return
-
-	REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
-
-/**
- * Signal proc for [COMSIG_LIVING_LIFE].
- *
- * Gradually heals the heretic ([source]) on rust,
- * including baton knockdown and stamina damage.
- */
-/datum/heretic_knowledge/rust_regen/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
-	SIGNAL_HANDLER
-
-	var/turf/our_turf = get_turf(source)
-	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
-		return
-
-	// Heals all damage + Stamina
-	var/need_mob_update = FALSE
-	need_mob_update += source.adjustBruteLoss(-2, updating_health = FALSE)
-	need_mob_update += source.adjustFireLoss(-2, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss(-2, updating_health = FALSE, forced = TRUE) // Slimes are people too
-	need_mob_update += source.adjustOxyLoss(-0.5, updating_health = FALSE)
-	need_mob_update += source.adjustStaminaLoss(-2, updating_stamina = FALSE)
-	if(need_mob_update)
-		source.updatehealth()
-	// Reduces duration of stuns/etc
-	source.AdjustAllImmobility(-0.5 SECONDS)
-	// Heals blood loss
-	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
-		source.blood_volume += 2.5 * seconds_per_tick
-
 /datum/heretic_knowledge/mark/rust_mark
 	name = "Mark of Rust"
 	desc = "Your Mansus Grasp now applies the Mark of Rust. The mark is triggered from an attack with your Rusty Blade. \

@@ -749,7 +749,10 @@ Striking a noncultist, however, will tear their flesh."}
 	INVOKE_ASYNC(hole_spot, TYPE_PROC_REF(/turf/open, quake_gateway), user)
 	qdel(src)
 
-/// Bespoke proc that happens when a proteon orb is activated, creating a gateway. If activated by a non-cultist, they get an unusual game over.
+/**
+ * Bespoke proc that happens when a proteon orb is activated, creating a gateway.
+ * If activated by a non-cultist, they get an unusual game over.
+*/
 /turf/open/proc/quake_gateway(mob/living/user)
 	Shake(2, 2, 5 SECONDS)
 	narsie_act(TRUE, TRUE, 100)
