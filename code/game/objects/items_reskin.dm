@@ -13,7 +13,7 @@
 
 /**
  * Checks if we should set up reskinning,
- * by default is unique_reskin is set.
+ * by default if unique_reskin is set.
  *
  * Called on setup_reskinning().
  * Inheritors should override this to add their own checks.
