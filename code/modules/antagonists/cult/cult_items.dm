@@ -112,7 +112,6 @@ Striking a noncultist, however, will tear their flesh."}
 #define SWORD_SPELL "sword_spell"
 #define SWORD_PREFIX "sword_prefix"
 
-
 /obj/item/melee/cultblade/haunted
 	name = "haunted longsword"
 	desc = "An eerie sword with a blade that is less 'black' than it is 'absolute nothingness'. It glows with furious, restrained green energy."
@@ -250,6 +249,10 @@ Striking a noncultist, however, will tear their flesh."}
 	. = ..()
 	if(!(slot & ITEM_SLOT_HANDS))
 		path_wielder_action?.Remove(user)
+
+#undef WIELDER_SPELL
+#undef SWORD_SPELL
+#undef SWORD_PREFIX
 
 /obj/item/melee/cultblade/ghost
 	name = "eldritch sword"
