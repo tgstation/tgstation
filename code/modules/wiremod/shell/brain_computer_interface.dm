@@ -67,13 +67,14 @@
 
 /obj/item/circuit_component/equipment_action/bci/update_action()
 	bci_action.name = button_name.value
-	bci_action.button_icon_state = "bci_[replacetextEx(lowertext(icon_options.value), " ", "_")]"
+	// Change nanite -> bci if we get a set of bci action icons instead of nanite action icons
+	bci_action.button_icon_state = "nanite_[replacetextEx(lowertext(icon_options.value), " ", "_")]"
 
 /datum/action/innate/bci_action
 	name = "Action"
 	button_icon = 'icons/mob/actions/actions_items.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "bci_power"
+	button_icon_state = "nanite_power"
 
 	var/obj/item/circuit_component/equipment_action/bci/circuit_component
 
