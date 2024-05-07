@@ -264,9 +264,10 @@
 	if(!randomize)
 		if(user.is_holding_item_of_type(/obj/item/blueprints))
 			return TRUE
-		for(var/obj/item/photo/photo in user.held_items)
-			if(LAZYACCESS(studied_photos, REF(user)) == REF(photo))
-				return TRUE
+		if(!isnull(user.mind))
+			for(var/obj/item/photo/photo in user.held_items)
+				if(LAZYACCESS(studied_photos, REF(user.mind)) == REF(photo))
+					return TRUE
 
 	return FALSE
 
@@ -281,13 +282,20 @@
 /datum/wires/proc/always_reveal_wire(color)
 	return FALSE
 
+#define STUDY_INTERACTION_KEY "studying_photo"
+
 /**
  * Attempts to study a photo for blueprints.
  */
 /datum/wires/proc/try_study_photo(mob/user)
 	if(randomize)
 		return
-
+	if(isnull(user.mind))
+		return
+	if(DOING_INTERACTION(user, STUDY_INTERACTION_KEY))
+		return
+	if(LAZYACCESS(studied_photos, REF(user.mind)))
+		return
 	for(var/obj/item/photo/photo in user.held_items)
 		if(!photo.picture?.has_blueprints)
 			continue
@@ -299,9 +307,11 @@
 		else
 			to_chat(user, span_notice("<i>You glance at [photo], looking for wires in the pictured blueprints.</i>"))
 
-		if(do_after(user, study_length, holder, hidden = TRUE))
-			LAZYSET(studied_photos, REF(user), REF(photo))
+		if(do_after(user, study_length, holder, interaction_key = STUDY_INTERACTION_KEY, hidden = TRUE))
+			LAZYSET(studied_photos, REF(user.mind), REF(photo))
 		return
+
+#undef STUDY_INTERACTION_KEY
 
 /datum/wires/ui_host()
 	return holder
