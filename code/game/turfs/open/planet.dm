@@ -66,18 +66,20 @@
 
 /turf/open/misc/grass/jungle
 	name = "jungle grass"
+	desc = "Greener on the other side."
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/misc/dirt
-	desc = "Greener on the other side."
+	smoothing_flags = SMOOTH_BITMASK
 	icon_state = "junglegrass"
 	base_icon_state = "junglegrass"
 	smooth_icon = 'icons/turf/floors/junglegrass.dmi'
+	damaged_dmi = 'icons/turf/damaged.dmi'
 
-/turf/open/misc/grass/broken_states()
+/turf/open/misc/grass/jungle/broken_states()
 	return list("jungle_damaged")
 
-/turf/open/misc/grass/burnt_states()
+/turf/open/misc/grass/jungle/burnt_states()
 	return list("jungle_damaged")
 
 /turf/open/misc/grass/jungle/lavaland
