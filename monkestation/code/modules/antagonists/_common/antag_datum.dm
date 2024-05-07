@@ -1,4 +1,6 @@
 /datum/antagonist
+	/// Allows antags to check exploitable info
+	antag_flags = FLAG_CAN_SEE_EXPOITABLE_INFO
 	///The list of keys that are valid to see our antag hud/of huds we can see
 	var/list/hud_keys
 

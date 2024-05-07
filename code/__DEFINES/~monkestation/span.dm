@@ -6,3 +6,5 @@
 #define span_ratvar(str) ("<span class='ratvar'>" + str + "</span>")
 
 #define REQUEST_MENTORHELP "request_mentorhelp"
+
+#define span_italics(str) ("<span class='italics'>" + str + "</span>")
