@@ -1,0 +1,5 @@
+author: "@MrEmre12, @Majkl-J"
+delete-after: True
+changes:
+  - rscadd: "Fishing pool introduced to metastation garden"
+  - refactor: "All water tiles now handle fishing through a unified fishing_datum variable"
