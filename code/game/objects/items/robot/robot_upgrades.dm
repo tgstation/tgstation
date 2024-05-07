@@ -36,6 +36,7 @@
 	if(!allow_duplicates && locate(src.type) in borg.contents)
 		to_chat(borg, span_alert("Upgrade mounting error! Hardpoint already occupied!"))
 		to_chat(user, span_warning("The mounting point for the module is already occupied!"))
+		return FALSE
 	// Handles adding/removing items.
 	if(length(items_to_add))
 		install_items(borg, user, items_to_add)
