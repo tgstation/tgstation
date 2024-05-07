@@ -41,5 +41,4 @@
 	base_icon_state = "water"
 	baseturfs = /turf/open/water/beach
 	immerse_overlay_color = "#7799AA"
-
 	fishing_datum = /datum/fish_source/ocean/beach
