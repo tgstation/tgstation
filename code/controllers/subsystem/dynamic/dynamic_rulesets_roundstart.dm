@@ -720,8 +720,10 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	cost = 8
 	scaling_cost = 4
 	minimum_players = 10
-	antag_cap = list("denominator" = 18, "offset" = 1)
+	antag_cap = list("denominator" = 20, "offset" = 1)
 	requirements = list(8, 8, 8, 8, 8, 8, 8, 8, 8, 8)
+	/// What fraction is added to the antag cap for each additional scale
+	var/fraction_per_scale = 0.2
 
 /datum/dynamic_ruleset/roundstart/spies/pre_execute(population)
 	for(var/i in 1 to get_antag_cap_scaling_included(population))
@@ -736,4 +738,4 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 
 // Scaling adds a fraction of the amount of additional spies rather than the full amount.
 /datum/dynamic_ruleset/roundstart/spies/get_scaling_antag_cap(population)
-	return ceil(..() * 0.25)
+	return ceil(..() * fraction_per_scale)
