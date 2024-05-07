@@ -4,7 +4,7 @@
 	max_slots = 30
 	allow_big_nesting = TRUE
 
-/datum/storage/bag_of_holding/attempt_insert(obj/item/to_insert, mob/user, override, force)
+/datum/storage/bag_of_holding/attempt_insert(obj/item/to_insert, mob/user, override, force, messages)
 	var/list/obj/item/storage/backpack/holding/matching = typecache_filter_list(to_insert.get_all_contents(), typecacheof(/obj/item/storage/backpack/holding))
 	matching -= parent
 	matching -= real_location
