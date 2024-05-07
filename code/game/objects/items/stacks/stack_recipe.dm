@@ -47,6 +47,7 @@
 	src.res_amount = res_amount
 	src.max_res_amount = max_res_amount
 	src.time = time
+	src.crafting_flags = crafting_flags
 	src.placement_checks = placement_checks
 	src.trait_booster = trait_booster
 	src.trait_modifier = trait_modifier

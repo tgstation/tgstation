@@ -41,9 +41,6 @@
 	payday_modifier = 1.5
 	ai_controlled_species = TRUE
 
-/datum/species/monkey/random_name(gender,unique,lastname)
-	return "monkey ([rand(1, 999)])"
-
 /datum/species/monkey/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
 	passtable_on(human_who_gained_species, SPECIES_TRAIT)
