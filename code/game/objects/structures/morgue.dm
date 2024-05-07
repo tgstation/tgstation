@@ -183,6 +183,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		pixel_y = animated.base_pixel_y,
 		time = SLIDE_LENGTH,
 		easing = CUBIC_EASING|EASE_OUT,
+		flags = ANIMATION_PARALLEL,
 	)
 	addtimer(VARSET_CALLBACK(animated, layer, old_layer), SLIDE_LENGTH)
 
@@ -197,6 +198,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		pixel_y = visual.base_pixel_y + (y * 32) - (visual.y * 32),
 		time = SLIDE_LENGTH,
 		easing = CUBIC_EASING|EASE_IN,
+		flags = ANIMATION_PARALLEL,
 	)
 
 /// Used to mimic the appearance of an object sliding into a morgue tray.
