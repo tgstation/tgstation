@@ -140,6 +140,7 @@
 	outline_color = "#D7CBCA"
 
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/solo
+	name = "Lesser Furious Steel"
 	projectile_amount = 1
 
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted
