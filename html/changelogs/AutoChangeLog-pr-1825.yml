@@ -1,0 +1,7 @@
+author: "MrMelbert, NikoTheDude, Ported by Hardly"
+delete-after: True
+changes:
+  - rscadd: "Added examine text, describe your character in ways that a 32x32 sprite can't!"
+  - rscadd: "Added temporary examine text alongside an indicator"
+  - rscadd: "Added character records text"
+  - admin: "Admins can see all flavor texts of a character"
