@@ -255,11 +255,6 @@
 /obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(.)
-		var/obj/item/borg/upgrade/selfrepair/U = locate() in borg
-		if(U)
-			to_chat(user, span_warning("This unit is already equipped with a self-repair module!"))
-			return FALSE
-
 		icon_state = "selfrepair_off"
 		toggle_action = new /datum/action/item_action/toggle(src)
 		toggle_action.Grant(borg)
@@ -353,14 +348,14 @@
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(.)
-		for(var/obj/item/reagent_containers/borghypo/medical/H in borg.model.modules)
-			H.upgrade_hypo()
+		for(var/obj/item/reagent_containers/borghypo/medical/hypo in borg.model.modules)
+			hypo.upgrade_hypo()
 
 /obj/item/borg/upgrade/hypospray/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if (.)
-		for(var/obj/item/reagent_containers/borghypo/medical/H in borg.model.modules)
-			H.remove_hypo_upgrade()
+		for(var/obj/item/reagent_containers/borghypo/medical/hypo in borg.model.modules)
+			hypo.remove_hypo_upgrade()
 
 /obj/item/borg/upgrade/hypospray/expanded
 	name = "medical cyborg expanded hypospray"
@@ -377,8 +372,8 @@
 	. = ..()
 	if(.)
 		var/found_hypo = FALSE
-		for(var/obj/item/reagent_containers/borghypo/H in borg.model.modules)
-			H.bypass_protection = TRUE
+		for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+			hypo.bypass_protection = TRUE
 			found_hypo = TRUE
 
 		if(!found_hypo)
@@ -387,8 +382,8 @@
 /obj/item/borg/upgrade/piercing_hypospray/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if (.)
-		for(var/obj/item/reagent_containers/borghypo/H in borg.model.modules)
-			H.bypass_protection = initial(H.bypass_protection)
+		for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+			hypo.bypass_protection = initial(hypo.bypass_protection)
 
 /obj/item/borg/upgrade/defib
 	name = "medical cyborg defibrillator"
@@ -404,25 +399,25 @@
 /obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
 	if(.)
-		var/obj/item/borg/upgrade/defib/backpack/BP = locate() in borg //If a full defib unit was used to upgrade prior, we can just pop it out now and replace
-		if(BP)
-			BP.deactivate(borg, user)
+		var/obj/item/borg/upgrade/defib/backpack/defib_pack = locate() in borg //If a full defib unit was used to upgrade prior, we can just pop it out now and replace
+		if(defib_pack)
+			defib_pack.deactivate(borg, user)
 			to_chat(user, span_notice("The defibrillator pops out of the chassis as the compact upgrade installs."))
 
 ///A version of the above that also acts as a holder of an actual defibrillator item used in place of the upgrade chip.
 /obj/item/borg/upgrade/defib/backpack
 	var/obj/item/defibrillator/defib_instance
 
-/obj/item/borg/upgrade/defib/backpack/Initialize(mapload, obj/item/defibrillator/D)
+/obj/item/borg/upgrade/defib/backpack/Initialize(mapload, obj/item/defibrillator/defib)
 	. = ..()
-	if(!D)
-		D = new /obj/item/defibrillator
-	defib_instance = D
+	if(!defib)
+		defib = new /obj/item/defibrillator
+	defib_instance = defib
 	name = defib_instance.name
 	defib_instance.moveToNullspace()
 	RegisterSignals(defib_instance, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(on_defib_instance_qdel_or_moved))
 
-/obj/item/borg/upgrade/defib/backpack/proc/on_defib_instance_qdel_or_moved(obj/item/defibrillator/D)
+/obj/item/borg/upgrade/defib/backpack/proc/on_defib_instance_qdel_or_moved(obj/item/defibrillator/defib)
 	SIGNAL_HANDLER
 	defib_instance = null
 	if(!QDELETED(src))
@@ -578,8 +573,8 @@
 /obj/item/borg/upgrade/pinpointer/ui_action_click()
 	if(..())
 		return
-	var/mob/living/silicon/robot/Cyborg = usr
-	GLOB.crewmonitor.show(Cyborg,Cyborg)
+	var/mob/living/silicon/robot/borg = usr
+	GLOB.crewmonitor.show(borg,borg)
 
 /datum/action/item_action/crew_monitor
 	name = "Interface With Crew Monitor"
