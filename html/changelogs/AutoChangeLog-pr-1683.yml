@@ -1,0 +1,8 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Bioscramblers can no longer give you buggy abstract organs, like dullahan eyes."
+  - qol: "Added some more things to the bioscrambler blacklist, such as psyker heads, fly tongues/stomachs, anime implants, and abductor glands."
+  - rscadd: "Bioscramblers can now give you wings. Moffcats, here we come!"
+  - balance: "The Bioscrambler will now actively attempt to get closer to living targets rather than chilling in a closet nobody goes into (unless you trap it in a containment field)."
+  - balance: "Because it can now travel through walls, the Bioscrambler will no longer transform you THROUGH walls."
