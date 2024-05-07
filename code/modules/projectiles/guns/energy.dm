@@ -47,7 +47,7 @@
 		var/max_shots = round(100/shot_cost_percent)
 		// How many shots left before the energy gun's current battery runs out of energy
 		var/shots_left = round((round(clamp(cell.charge / cell.maxcharge, 0, 1) * 100))/shot_cost_percent)
-		pitch_to_use = LERP(1, 0.4, (1 - (shots_left/max_shots)) ** 2) // We could go as low as 0.25 but it starts sounding pretty bad
+		pitch_to_use = LERP(1, 0.3, (1 - (shots_left/max_shots)) ** 2)
 
 	var/sound/playing_sound = sound(suppressed ? suppressed_sound : fire_sound)
 	playing_sound.pitch = pitch_to_use
