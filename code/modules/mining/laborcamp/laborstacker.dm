@@ -109,7 +109,7 @@
 						if(!isnull(GLOB.manifest.general))
 							for(var/datum/record/crew/record as anything in GLOB.manifest.general)
 								if(record.name == user_mob.real_name)
-									record.wanted_status = WANTED_DISCHARGED
+									record.wanted_status = WANTED_PAROLE
 									break
 
 						security_radio.talk_into(src, "/p [user_mob.name] returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY)
