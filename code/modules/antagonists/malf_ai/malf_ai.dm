@@ -159,6 +159,8 @@
 
 	to_chat(malf_ai, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
 
+	if(malf_ai.malf_picker)
+		return
 	malf_ai.add_malf_picker()
 
 
@@ -246,7 +248,7 @@
 
 	result += objectives_text
 
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 
 	if(malf_ai_won)
 		result += span_greentext("The [special_role_text] was successful!")

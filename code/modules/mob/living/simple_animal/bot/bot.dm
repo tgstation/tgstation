@@ -7,7 +7,8 @@
 	stop_automated_movement = TRUE
 	wander = FALSE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = null
+	unsuitable_atmos_damage = 0
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST)
 	maxbodytemp = INFINITY
 	minbodytemp = 0
@@ -28,6 +29,7 @@
 	light_power = 0.6
 	del_on_death = TRUE
 	req_one_access = list(ACCESS_ROBOTICS)
+	interaction_flags_click = ALLOW_SILICON_REACH
 
 	///Cooldown between salutations for commissioned bots
 	COOLDOWN_DECLARE(next_salute_check)
@@ -97,7 +99,7 @@
 	var/datum/atom_hud/data/bot_path/path_hud
 	var/path_image_icon = 'icons/mob/silicon/aibots.dmi'
 	var/path_image_icon_state = "path_indicator"
-	var/path_image_color = "#FFFFFF"
+	var/path_image_color = COLOR_WHITE
 	var/reset_access_timer_id
 	var/ignorelistcleanuptimer = 1 // This ticks up every automated action, at 300 we clean the ignore list
 
@@ -202,6 +204,7 @@
 
 	pa_system = new(src, automated_announcements = automated_announcements)
 	pa_system.Grant(src)
+	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
 
 /mob/living/simple_animal/bot/Destroy()
 	GLOB.bots_list -= src
@@ -379,7 +382,7 @@
 		COOLDOWN_START(src, next_salute_check, BOT_COMMISSIONED_SALUTE_DELAY)
 		for(var/mob/living/simple_animal/bot/B in view(5, src))
 			if(!HAS_TRAIT(B, TRAIT_COMMISSIONED) && B.bot_mode_flags & BOT_MODE_ON)
-				visible_message("<b>[B]</b> performs an elaborate salute for [src]!")
+				manual_emote("performs an elaborate salute for [src]!")
 				break
 
 	switch(mode) //High-priority overrides are processed first. Bots can do nothing else while under direct command.
@@ -410,13 +413,9 @@
 		ui = new(user, src, "SimpleBot", name)
 		ui.open()
 
-/mob/living/simple_animal/bot/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
+/mob/living/simple_animal/bot/click_alt(mob/user)
 	unlock_with_id(user)
+	return CLICK_ACTION_SUCCESS
 
 /mob/living/simple_animal/bot/proc/unlock_with_id(mob/user)
 	if(bot_cover_flags & BOT_COVER_EMAGGED)
@@ -759,7 +758,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/bot_patrol()
 	patrol_step()
-	addtimer(CALLBACK(src, PROC_REF(do_patrol)), 5)
+	addtimer(CALLBACK(src, PROC_REF(do_patrol)), 0.5 SECONDS)
 
 /mob/living/simple_animal/bot/proc/do_patrol()
 	if(mode == BOT_PATROL)
@@ -813,7 +812,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 		var/moved = bot_move(patrol_target)//step_towards(src, next) // attempt to move
 		if(!moved) //Couldn't proceed the next step of the path BOT_STEP_MAX_RETRIES times
-			addtimer(CALLBACK(src, PROC_REF(patrol_step_not_moved)), 2)
+			addtimer(CALLBACK(src, PROC_REF(patrol_step_not_moved)), 0.2 SECONDS)
 
 	else // no path, so calculate new one
 		mode = BOT_START_PATROL
@@ -944,7 +943,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 		var/moved = bot_move(summon_target, 3) // Move attempt
 		if(!moved)
-			addtimer(CALLBACK(src, PROC_REF(summon_step_not_moved)), 2)
+			addtimer(CALLBACK(src, PROC_REF(summon_step_not_moved)), 0.2 SECONDS)
 
 	else // no path, so calculate new one
 		calc_summon_path()
@@ -953,13 +952,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 	calc_summon_path()
 	tries = 0
 
-/mob/living/simple_animal/bot/Bump(atom/A) //Leave no door unopened!
-	. = ..()
-	if((istype(A, /obj/machinery/door/airlock) || istype(A, /obj/machinery/door/window)) && (!isnull(access_card)))
-		var/obj/machinery/door/D = A
-		if(D.check_access(access_card))
-			D.open()
-			frustration = 0
+/mob/living/simple_animal/bot/proc/attempt_access(mob/bot, obj/door_attempt)
+	SIGNAL_HANDLER
+
+	if(door_attempt.check_access(access_card))
+		frustration = 0
+		return ACCESS_ALLOWED
+	return ACCESS_DISALLOWED
 
 /mob/living/simple_animal/bot/ui_data(mob/user)
 	var/list/data = list()

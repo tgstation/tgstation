@@ -43,7 +43,7 @@
 	/// Crayon overlay to use if placed into a crayon box
 	var/crayon_color = "red"
 	/// Current paint colour
-	var/paint_color = "#FF0000"
+	var/paint_color = COLOR_RED
 
 	/// Contains chosen symbol to draw
 	var/drawtype
@@ -418,7 +418,7 @@
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
 	text = copytext(text, 1, MAX_MESSAGE_LEN)
 	var/static/regex/crayon_regex = new /regex(@"[^\w!?,.=&%#+/\-]", "ig")
-	return lowertext(crayon_regex.Replace(text, ""))
+	return LOWER_TEXT(crayon_regex.Replace(text, ""))
 
 /// Attempts to color the target. Returns how many charges were used.
 /obj/item/toy/crayon/proc/use_on(atom/target, mob/user, params)
@@ -512,7 +512,7 @@
 	if(istagger)
 		wait_time *= 0.5
 
-	if(!instant && !do_after(user, wait_time, target = target))
+	if(!instant && !do_after(user, wait_time, target = target, max_interact_count = 4))
 		return
 
 	if(!use_charges(user, cost))
@@ -759,6 +759,7 @@
 
 	pre_noise = TRUE
 	post_noise = FALSE
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
 	. = ..()
@@ -774,7 +775,7 @@
 /obj/item/toy/crayon/spraycan/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|SILENT_ADJACENCY))
 		return .
 
 	if(has_cap)
@@ -785,7 +786,7 @@
 /obj/item/toy/crayon/spraycan/add_item_context(datum/source, list/context, atom/target, mob/living/user)
 	. = ..()
 
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|SILENT_ADJACENCY))
 		return .
 
 	context[SCREENTIP_CONTEXT_LMB] = "Paint"
@@ -809,7 +810,7 @@
 	if(pre_noise || post_noise)
 		playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
 	if(can_change_colour)
-		set_painting_tool_color("#C0C0C0")
+		set_painting_tool_color(COLOR_SILVER)
 	update_appearance()
 	if(actually_paints)
 		H.update_lips("spray_face", paint_color)
@@ -960,12 +961,13 @@
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	if(!has_cap || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
+/obj/item/toy/crayon/spraycan/click_alt(mob/user)
+	if(!has_cap)
+		return CLICK_ACTION_BLOCKING
 	is_capped = !is_capped
 	balloon_alert(user, is_capped ? "capped" : "cap removed")
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/toy/crayon/spraycan/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	return is_capped
@@ -1013,7 +1015,7 @@
 	expose_turfs = TRUE
 	charges = 100
 	reagent_contents = list(/datum/reagent/clf3 = 1)
-	paint_color = "#000000"
+	paint_color = COLOR_BLACK
 
 /obj/item/toy/crayon/spraycan/hellcan/isValidSurface(surface)
 	return isfloorturf(surface)
@@ -1042,7 +1044,7 @@
 	overlay_paint_colour = FALSE
 
 	can_change_colour = FALSE
-	paint_color = "#FFFFFF" //RGB
+	paint_color = COLOR_WHITE //RGB
 
 	pre_noise = FALSE
 	post_noise = FALSE

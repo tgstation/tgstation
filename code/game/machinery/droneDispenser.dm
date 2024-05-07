@@ -23,7 +23,7 @@
 	var/starting_amount = 0
 	var/iron_cost = HALF_SHEET_MATERIAL_AMOUNT
 	var/glass_cost = HALF_SHEET_MATERIAL_AMOUNT
-	var/power_used = 1000
+	var/energy_used = 1 KILO JOULES
 
 	var/mode = DRONE_READY
 	var/timer
@@ -95,7 +95,7 @@
 	// Those holoprojectors aren't cheap
 	iron_cost = SHEET_MATERIAL_AMOUNT
 	glass_cost = SHEET_MATERIAL_AMOUNT
-	power_used = 2000
+	energy_used = 2 KILO JOULES
 	starting_amount = SHEET_MATERIAL_AMOUNT * 5
 
 // If the derelict gets lonely, make more friends.
@@ -128,7 +128,7 @@
 	icon_creating = "hivebot_fab_on"
 	iron_cost = 0
 	glass_cost = 0
-	power_used = 0
+	energy_used = 0
 	cooldownTime = 10 //Only 1 second - hivebots are extremely weak
 	dispense_type = /mob/living/basic/hivebot
 	begin_create_message = "closes and begins fabricating something within."
@@ -177,8 +177,8 @@
 
 		if(DRONE_PRODUCTION)
 			materials.use_materials(using_materials)
-			if(power_used)
-				use_power(power_used)
+			if(energy_used)
+				use_energy(energy_used)
 
 			var/atom/A = new dispense_type(loc)
 			A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)

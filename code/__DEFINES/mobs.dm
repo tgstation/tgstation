@@ -72,11 +72,6 @@
 #define RESPIRATION_N2 (1 << 1)
 #define RESPIRATION_PLASMA (1 << 2)
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human/bodyparts_greyscale.dmi'
-#define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
-
-#define MONKEY_BODYPART "monkey"
-#define ALIEN_BODYPART "alien"
-#define LARVA_BODYPART "larva"
 
 //Bodytype defines for surgery, and other misc things.
 ///The limb is organic.
@@ -121,8 +116,6 @@
 #define SPECIES_LIZARD_SILVER "silverscale"
 #define SPECIES_NIGHTMARE "nightmare"
 #define SPECIES_MONKEY "monkey"
-#define SPECIES_MONKEY_FREAK "monkey_freak"
-#define SPECIES_MONKEY_HUMAN_LEGGED "monkey_human_legged"
 #define SPECIES_MOTH "moth"
 #define SPECIES_MUSHROOM "mush"
 #define SPECIES_PLASMAMAN "plasmaman"
@@ -130,7 +123,6 @@
 #define SPECIES_SHADOW "shadow"
 #define SPECIES_SKELETON "skeleton"
 #define SPECIES_SNAIL "snail"
-#define SPECIES_TALLBOY "tallboy"
 #define SPECIES_VAMPIRE "vampire"
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
@@ -215,26 +207,11 @@
 
 #define BRAIN_DAMAGE_INTEGRITY_MULTIPLIER 0.5
 
-//Surgery Defines
-#define BIOWARE_GENERIC "generic"
-#define BIOWARE_NERVES "nerves"
-#define BIOWARE_CIRCULATION "circulation"
-#define BIOWARE_LIGAMENTS "ligaments"
-#define BIOWARE_CORTEX "cortex"
-
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
 #define SCREWYHUD_CRIT 1
 #define SCREWYHUD_DEAD 2
 #define SCREWYHUD_HEALTHY 3
-
-//Health doll screws for human mobs
-#define SCREWYDOLL_HEAD /obj/item/bodypart/head
-#define SCREWYDOLL_CHEST /obj/item/bodypart/chest
-#define SCREWYDOLL_L_ARM /obj/item/bodypart/arm/left
-#define SCREWYDOLL_R_ARM /obj/item/bodypart/arm/right
-#define SCREWYDOLL_L_LEG /obj/item/bodypart/leg/left
-#define SCREWYDOLL_R_LEG /obj/item/bodypart/leg/right
 
 //Threshold levels for beauty for humans
 #define BEAUTY_LEVEL_HORRID -66
@@ -281,6 +258,8 @@
 #define SANITY_LEVEL_UNSTABLE 4
 #define SANITY_LEVEL_CRAZY 5
 #define SANITY_LEVEL_INSANE 6
+/// Equal to the highest sanity level
+#define SANITY_LEVEL_MAX SANITY_LEVEL_INSANE
 
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
@@ -302,14 +281,14 @@
 //Used as an upper limit for species that continuously gain nutriment
 #define NUTRITION_LEVEL_ALMOST_FULL 535
 
-//Charge levels for Ethereals
+//Charge levels for Ethereals, in joules.
 #define ETHEREAL_CHARGE_NONE 0
-#define ETHEREAL_CHARGE_LOWPOWER 400
-#define ETHEREAL_CHARGE_NORMAL 1000
-#define ETHEREAL_CHARGE_ALMOSTFULL 1500
-#define ETHEREAL_CHARGE_FULL 2000
-#define ETHEREAL_CHARGE_OVERLOAD 2500
-#define ETHEREAL_CHARGE_DANGEROUS 3000
+#define ETHEREAL_CHARGE_LOWPOWER (0.4 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_CHARGE_NORMAL (1 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_CHARGE_ALMOSTFULL (1.5 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_CHARGE_FULL (2 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_CHARGE_OVERLOAD (2.5 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_CHARGE_DANGEROUS (3 * STANDARD_CELL_CHARGE)
 
 
 #define CRYSTALIZE_COOLDOWN_LENGTH (120 SECONDS)
@@ -325,6 +304,9 @@
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
+
+//Slime evolution cost in nutrition
+#define SLIME_EVOLUTION_COST 200
 
 //Slime extract crossing. Controls how many extracts is required to feed to a slime to core-cross.
 #define SLIME_EXTRACT_CROSSING_REQUIRED 10
@@ -356,7 +338,6 @@
 #define AI_ON 1
 #define AI_IDLE 2
 #define AI_OFF 3
-#define AI_Z_OFF 4
 
 //The range at which a mob should wake up if you spawn into the z level near it
 #define MAX_SIMPLEMOB_WAKEUP_RANGE 5
@@ -417,14 +398,6 @@
 #define COOLDOWN_UPDATE_ADD_RANGED "add_ranged"
 #define COOLDOWN_UPDATE_SET_ENRAGE "set_enrage"
 #define COOLDOWN_UPDATE_ADD_ENRAGE "add_enrage"
-#define COOLDOWN_UPDATE_SET_SPAWN "set_spawn"
-#define COOLDOWN_UPDATE_ADD_SPAWN "add_spawn"
-#define COOLDOWN_UPDATE_SET_HELP "set_help"
-#define COOLDOWN_UPDATE_ADD_HELP "add_help"
-#define COOLDOWN_UPDATE_SET_DASH "set_dash"
-#define COOLDOWN_UPDATE_ADD_DASH "add_dash"
-#define COOLDOWN_UPDATE_SET_TRANSFORM "set_transform"
-#define COOLDOWN_UPDATE_ADD_TRANSFORM "add_transform"
 #define COOLDOWN_UPDATE_SET_CHASER "set_chaser"
 #define COOLDOWN_UPDATE_ADD_CHASER "add_chaser"
 #define COOLDOWN_UPDATE_SET_ARENA "set_arena"
@@ -455,12 +428,11 @@
 #define WIZARD_AGE_MIN 30 //youngest a wizard can be
 #define APPRENTICE_AGE_MIN 29 //youngest an apprentice can be
 #define SHOES_SLOWDOWN 0 //How much shoes slow you down by default. Negative values speed you up
-#define SHOES_SPEED_SLIGHT SHOES_SLOWDOWN - 1 // slightest speed boost to movement
 #define POCKET_STRIP_DELAY (4 SECONDS) //time taken to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE 15 //the amount of damage that airlocks deal when they crush you
 
 #define HUNGER_FACTOR 0.05 //factor at which mob nutrition decreases
-#define ETHEREAL_CHARGE_FACTOR 0.8 //factor at which ethereal's charge decreases per second
+#define ETHEREAL_DISCHARGE_RATE (8e-4 * STANDARD_CELL_CHARGE) // Rate at which ethereal stomach charge decreases
 /// How much nutrition eating clothes as moth gives and drains
 #define CLOTHING_NUTRITION_GAIN 15
 #define REAGENTS_METABOLISM 0.2 //How many units of reagent are consumed per second, by default.
@@ -558,8 +530,6 @@
 #define RECENT_EXAMINE_MAX_WINDOW (2 SECONDS)
 /// If you examine the same atom twice in this timeframe, we call examine_more() instead of examine()
 #define EXAMINE_MORE_WINDOW (1 SECONDS)
-/// If you examine another mob who's successfully examined you during this duration of time, you two try to make eye contact. Cute!
-#define EYE_CONTACT_WINDOW (2 SECONDS)
 /// If you yawn while someone nearby has examined you within this time frame, it will force them to yawn as well. Tradecraft!
 #define YAWN_PROPAGATION_EXAMINE_WINDOW (2 SECONDS)
 
@@ -662,18 +632,22 @@
 // - They do not start at 0 for futureproofing
 // - They skip numbers for futureproofing as well
 // Otherwise they are completely arbitrary
-#define HUMAN_HEIGHT_DWARF 2
-#define HUMAN_HEIGHT_SHORTEST 4
-#define HUMAN_HEIGHT_SHORT 6
-#define HUMAN_HEIGHT_MEDIUM 8
-#define HUMAN_HEIGHT_TALL 10
-#define HUMAN_HEIGHT_TALLER 12
-#define HUMAN_HEIGHT_TALLEST 14
+#define MONKEY_HEIGHT_DWARF 2
+#define MONKEY_HEIGHT_MEDIUM 4
+#define HUMAN_HEIGHT_DWARF 6
+#define HUMAN_HEIGHT_SHORTEST 8
+#define HUMAN_HEIGHT_SHORT 10
+#define HUMAN_HEIGHT_MEDIUM 12
+#define HUMAN_HEIGHT_TALL 14
+#define HUMAN_HEIGHT_TALLER 16
+#define HUMAN_HEIGHT_TALLEST 18
 
 /// Assoc list of all heights, cast to strings, to """"tuples"""""
 /// The first """tuple""" index is the upper body offset
 /// The second """tuple""" index is the lower body offset
 GLOBAL_LIST_INIT(human_heights_to_offsets, list(
+	"[MONKEY_HEIGHT_DWARF]" = list(-9, -3),
+	"[MONKEY_HEIGHT_MEDIUM]" = list(-7, -4),
 	"[HUMAN_HEIGHT_DWARF]" = list(-5, -4),
 	"[HUMAN_HEIGHT_SHORTEST]" = list(-2, -1),
 	"[HUMAN_HEIGHT_SHORT]" = list(-1, -1),
@@ -792,6 +766,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	// to show how many filters are added at a glance
 	// BACK_LAYER (backpacks are big)
 	// BODYPARTS_HIGH_LAYER (arms)
+	// BODY_LAYER (body markings (full body), underwear (full body), eyes)
 	// BODY_ADJ_LAYER (external organs like wings)
 	// BODY_BEHIND_LAYER (external organs like wings)
 	// BODY_FRONT_LAYER (external organs like wings)
@@ -849,6 +824,10 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define ALLOW_SILICON_REACH (1<<6)
 /// If resting on the floor is allowed to perform action (pAIs can play music while resting)
 #define ALLOW_RESTING (1<<7)
+/// If this is accessible to creatures with ventcrawl capabilities
+#define NEED_VENTCRAWL (1<<8)
+/// Checks for base adjacency, but silences the error
+#define SILENT_ADJACENCY (1<<9)
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1
@@ -969,6 +948,9 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 
 /// Types of bullets that mining mobs take full damage from
 #define MINING_MOB_PROJECTILE_VULNERABILITY list(BRUTE)
+
+/// The duration of the flip emote animation
+#define FLIP_EMOTE_DURATION 0.7 SECONDS
 
 // Sprites for photocopying butts
 #define BUTT_SPRITE_HUMAN_MALE "human_male"

@@ -91,7 +91,6 @@
 	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 
 	GLOB.shuttle_caller_list += src
-	AddComponent(/datum/component/gps, "Secured Communications Signal")
 
 /// Are we NOT a silicon, AND we're logged in as the captain?
 /obj/machinery/computer/communications/proc/authenticated_as_non_silicon_captain(mob/user)
@@ -322,7 +321,7 @@
 			if (!message)
 				return
 
-			SScommunications.soft_filtering = FALSE
+			GLOB.communications_controller.soft_filtering = FALSE
 			var/list/hard_filter_result = is_ic_filtered(message)
 			if(hard_filter_result)
 				tgui_alert(usr, "Your message contains: (\"[hard_filter_result[CHAT_FILTER_INDEX_WORD]]\"), which is not allowed on this server.")
@@ -334,7 +333,7 @@
 					return
 				message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[html_encode(message)]\"")
 				log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[message]\"")
-				SScommunications.soft_filtering = TRUE
+				GLOB.communications_controller.soft_filtering = TRUE
 
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
@@ -345,13 +344,13 @@
 				GLOB.admins,
 				span_adminnotice( \
 					"<b color='orange'>CROSS-SECTOR MESSAGE (OUTGOING):</b> [ADMIN_LOOKUPFLW(usr)] is about to send \
-					the following message to <b>[destination]</b> (will autoapprove in [SScommunications.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
+					the following message to <b>[destination]</b> (will autoapprove in [GLOB.communications_controller.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
 					<b><a href='?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
 					[html_encode(message)]" \
 				)
 			)
 
-			send_cross_comms_message_timer = addtimer(CALLBACK(src, PROC_REF(send_cross_comms_message), usr, destination, message), SScommunications.soft_filtering ? EXTENDED_CROSS_SECTOR_CANCEL_TIME : CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
+			send_cross_comms_message_timer = addtimer(CALLBACK(src, PROC_REF(send_cross_comms_message), usr, destination, message), GLOB.communications_controller.soft_filtering ? EXTENDED_CROSS_SECTOR_CANCEL_TIME : CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
 
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
 		if ("setState")
@@ -419,6 +418,8 @@
 
 			state = STATE_MAIN
 			playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
+			imprint_gps(gps_tag = "Encrypted Communications Channel")
+
 		if ("toggleEmergencyAccess")
 			if(emergency_access_cooldown(usr)) //if were in cooldown, dont allow the following code
 				return
@@ -486,7 +487,7 @@
 	var/network_name = CONFIG_GET(string/cross_comms_network)
 	if(network_name)
 		payload["network"] = network_name
-	if(SScommunications.soft_filtering)
+	if(GLOB.communications_controller.soft_filtering)
 		payload["is_filtered"] = TRUE
 
 	send2otherserver(html_decode(station_name()), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
@@ -494,7 +495,7 @@
 	usr.log_talk(message, LOG_SAY, tag = "message to the other server")
 	message_admins("[ADMIN_LOOKUPFLW(usr)] has sent a message to the other server\[s].")
 	deadchat_broadcast(" has sent an outgoing message to the other station(s).</span>", "<span class='bold'>[usr.real_name]", usr, message_type = DEADCHAT_ANNOUNCEMENT)
-	SScommunications.soft_filtering = FALSE // set it to false at the end of the proc to ensure that everything prior reads as intended
+	GLOB.communications_controller.soft_filtering = FALSE // set it to false at the end of the proc to ensure that everything prior reads as intended
 
 /obj/machinery/computer/communications/ui_data(mob/user)
 	var/list/data = list(
@@ -654,7 +655,7 @@
 			return
 
 		deltimer(send_cross_comms_message_timer)
-		SScommunications.soft_filtering = FALSE
+		GLOB.communications_controller.soft_filtering = FALSE
 		send_cross_comms_message_timer = null
 
 		log_admin("[key_name(usr)] has cancelled the outgoing cross-comms message.")
@@ -727,7 +728,7 @@
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user)
 	var/is_ai = HAS_SILICON_ACCESS(user)
-	if(!SScommunications.can_announce(user, is_ai))
+	if(!GLOB.communications_controller.can_announce(user, is_ai))
 		to_chat(user, span_alert("Intercomms recharging. Please stand by."))
 		return
 	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement")
@@ -748,7 +749,7 @@
 		)
 
 	var/list/players = get_communication_players()
-	SScommunications.make_announcement(user, is_ai, input, syndicate || (obj_flags & EMAGGED), players)
+	GLOB.communications_controller.make_announcement(user, is_ai, input, syndicate || (obj_flags & EMAGGED), players)
 	deadchat_broadcast(" made a priority announcement from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
 
 /obj/machinery/computer/communications/proc/get_communication_players()

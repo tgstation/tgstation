@@ -86,7 +86,7 @@
 		return
 
 	var/num_slain = LAZYLEN(cultists_slain)
-	. += span_cultitalic("It has the blood of [num_slain] fallen cultist[num_slain == 1 ? "" : "s"] on it. \
+	. += span_cult_italic("It has the blood of [num_slain] fallen cultist[num_slain == 1 ? "" : "s"] on it. \
 		<b>Offering</b> it to Nar'sie will transform it into a [num_slain >= 3 ? "powerful" : "standard"] cult weapon.")
 
 /obj/item/nullrod/godhand

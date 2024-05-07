@@ -9,7 +9,7 @@
 	filename = "nt_messenger"
 	filedesc = "Direct Messenger"
 	downloader_category = PROGRAM_CATEGORY_DEVICE
-	program_open_overlay = "command"
+	program_open_overlay = "text"
 	extended_desc = "This program allows old-school communication with other modular devices."
 	size = 0
 	undeletable = TRUE // It comes by default in tablets, can't be downloaded, takes no space and should obviously not be able to be deleted.

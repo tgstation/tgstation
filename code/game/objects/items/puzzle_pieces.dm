@@ -16,6 +16,9 @@
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	var/puzzle_id = null
 
+/obj/item/keycard/get_save_vars()
+	return ..() + NAMEOF(src, puzzle_id)
+
 //Two test keys for use alongside the two test doors.
 /obj/item/keycard/yellow
 	name = "yellow keycard"
@@ -52,6 +55,9 @@
 	var/uses_queuelinks = TRUE
 	/// Message that occurs when the door is opened
 	var/open_message = "The door beeps, and slides opens."
+
+/obj/machinery/door/puzzle/get_save_vars()
+	return ..() + NAMEOF(src, puzzle_id)
 
 //Standard Expressions to make keycard doors basically un-cheeseable
 /datum/armor/door_puzzle
@@ -160,6 +166,9 @@
 	var/reward = /obj/item/food/cookie
 	var/claimed = FALSE
 
+/obj/item/pressure_plate/hologrid/get_save_vars()
+	return ..() + NAMEOF(src, reward)
+
 /obj/item/pressure_plate/hologrid/Initialize(mapload)
 	. = ..()
 	if(undertile_pressureplate)
@@ -209,6 +218,9 @@
 	var/static/list/banned_combinations = list(-1, 47, 95, 203, 311, 325, 422, 473, 488, 500, 511)
 	/// queue size, must match count of objects this activates!
 	var/queue_size = 2
+
+/obj/structure/light_puzzle/get_save_vars()
+	return ..() + list(NAMEOF(src, queue_size), NAMEOF(src, puzzle_id))
 
 /datum/armor/structure_light_puzzle
 	melee = 100
@@ -302,13 +314,16 @@
 	/// should the puzzle machinery perform the final step of the queue link on LateInitialize? An alternative to queue size
 	var/late_initialize_pop = FALSE
 
+/obj/machinery/puzzle/get_save_vars()
+	return ..() + list(NAMEOF(src, queue_size), NAMEOF(src, id))
+
 /obj/machinery/puzzle/Initialize(mapload)
 	. = ..()
 	if(!isnull(id))
 		SSqueuelinks.add_to_queue(src, id, late_initialize_pop ? 0 : queue_size)
 		return late_initialize_pop ? INITIALIZE_HINT_LATELOAD : .
 
-/obj/machinery/puzzle/LateInitialize()
+/obj/machinery/puzzle/post_machine_initialize()
 	. = ..()
 	if(late_initialize_pop && id && SSqueuelinks.queues[id])
 		SSqueuelinks.pop_link(id)
@@ -378,6 +393,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
 	///Decides whether the max length of the input is MAX_NAME_LEN or the length of the password.
 	var/input_max_len_is_pass = FALSE
 
+/obj/machinery/puzzle/password/get_save_vars()
+	return ..() + list(NAMEOF(src, password), NAMEOF(src, tgui_text), NAMEOF(src, tgui_title), NAMEOF(src, input_max_len_is_pass))
+
 /obj/machinery/puzzle/password/interact(mob/user, list/modifiers)
 	if(used && single_use)
 		return
@@ -407,6 +425,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password, 32)
 	var/pin_length = 6
 	///associate a color to each digit that may be found in the password.
 	var/list/digit_to_color = list()
+
+/obj/machinery/puzzle/password/pin/get_save_vars()
+	return ..() + NAMEOF(src, pin_length)
 
 /obj/machinery/puzzle/password/pin/Initialize(mapload)
 	. = ..()
@@ -447,6 +468,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	anchored = TRUE
 	/// if we receive a puzzle signal with this id we get destroyed
 	var/id
+
+/obj/structure/puzzle_blockade/get_save_vars()
+	return ..() + NAMEOF(src, id)
 
 /obj/structure/puzzle_blockade/Initialize(mapload)
 	. = ..()
@@ -499,6 +523,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	/// door id
 	var/id
 
+/obj/effect/puzzle_poddoor_open/get_save_vars()
+	return ..() + list(NAMEOF(src, queue_id), NAMEOF(src, id))
+
 /obj/effect/puzzle_poddoor_open/Initialize(mapload)
 	. = ..()
 	if(isnull(id) || isnull(queue_id))
@@ -537,6 +564,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	///The id of the puzzle we're linked to.
 	var/id
 
+/obj/effect/decal/puzzle_dots/get_save_vars()
+	return ..() + NAMEOF(src, id)
+
 /obj/effect/decal/puzzle_dots/Initialize(mapload)
 	. = ..()
 	if(id)
@@ -571,6 +601,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	///The id of the puzzle we're linked to.
 	var/puzzle_id
 
+/obj/effect/decal/cleanable/crayon/puzzle/get_save_vars()
+	return ..() + NAMEOF(src, puzzle_id)
+
 /obj/effect/decal/cleanable/crayon/puzzle/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null)
 	. = ..()
 	name = "number"
@@ -603,6 +636,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	icon_state = "scrap"
 	///The ID associated to the puzzle we're part of.
 	var/puzzle_id
+
+/obj/item/paper/fluff/scrambled_pass/get_save_vars()
+	return ..() + NAMEOF(src, puzzle_id)
 
 /obj/item/paper/fluff/scrambled_pass/Initialize(mapload)
 	. = ..()

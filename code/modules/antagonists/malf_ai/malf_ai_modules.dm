@@ -166,7 +166,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/nuke_station
 	name = "Doomsday Device"
 	desc = "Activates the doomsday device. This is not reversible."
-	button_icon_state = "doomsday_device"
+	button_icon = 'icons/obj/machines/nuke_terminal.dmi'
+	button_icon_state = "nuclearbomb_timing"
 	auto_use_uses = FALSE
 
 /datum/action/innate/ai/nuke_station/Activate()
@@ -598,6 +599,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/honk
 	name = "Percussive Intercomm Interference"
 	desc = "Rock the station's intercom system with an obnoxious HONK!"
+	button_icon = 'icons/obj/machines/wallmounts.dmi'
 	button_icon_state = "intercom"
 	uses = 2
 
@@ -686,7 +688,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		I.loc = T
 		client.images += I
 		I.icon_state = "[success ? "green" : "red"]Overlay" //greenOverlay and redOverlay for success and failure respectively
-		addtimer(CALLBACK(src, PROC_REF(remove_transformer_image), client, I, T), 30)
+		addtimer(CALLBACK(src, PROC_REF(remove_transformer_image), client, I, T), 3 SECONDS)
 	if(!success)
 		to_chat(src, span_warning("[alert_msg]"))
 	return success
@@ -705,7 +707,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/break_air_alarms
 	name = "Override Air Alarm Safeties"
 	desc = "Enables extremely dangerous settings on all air alarms."
-	button_icon_state = "break_air_alarms"
+	button_icon = 'icons/obj/machines/wallmounts.dmi'
+	button_icon_state = "alarmx"
 	uses = 1
 
 /datum/action/innate/ai/break_air_alarms/Activate()
@@ -761,7 +764,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/emergency_lights
 	name = "Disable Emergency Lights"
 	desc = "Disables all emergency lighting. Note that emergency lights can be restored through reboot at an APC."
-	button_icon_state = "emergency_lights"
+	button_icon = 'icons/obj/lighting.dmi'
+	button_icon_state = "floor_emergency"
 	uses = 1
 
 /datum/action/innate/ai/emergency_lights/Activate()
@@ -801,7 +805,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		if(!uses)
 			break
-		if(!C.status || C.view_range != initial(C.view_range))
+		if(!C.camera_enabled || C.view_range != initial(C.view_range))
 			C.toggle_cam(owner_AI, 0) //Reactivates the camera based on status. Badly named proc.
 			C.view_range = initial(C.view_range)
 			fixed_cameras++
@@ -831,10 +835,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 	var/upgraded_cameras = 0
 	for(var/obj/machinery/camera/camera as anything in GLOB.cameranet.cameras)
-		var/obj/structure/camera_assembly/assembly = camera.assembly_ref?.resolve()
-		if(!assembly)
-			continue
-
 		var/upgraded = FALSE
 
 		if(!camera.isXRay())
@@ -945,6 +945,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	var/prev_verbs
 	/// Saved span state, used to restore after a voice change
 	var/prev_span
+	/// The list of available voices
+	var/static/list/voice_options = list("normal", SPAN_ROBOT, SPAN_YELL, SPAN_CLOWN)
 
 /obj/machinery/ai_voicechanger/Initialize(mapload)
 	. = ..()
@@ -972,11 +974,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /obj/machinery/ai_voicechanger/ui_data(mob/user)
 	var/list/data = list()
-	data["voices"] = list("normal", SPAN_ROBOT, SPAN_YELL, SPAN_CLOWN) //manually adding this since i dont see other option
+	data["voices"] = voice_options
 	data["loud"] = loudvoice
 	data["on"] = changing_voice
 	data["say_verb"] = say_verb
 	data["name"] = say_name
+	data["selected"] = say_span || owner.speech_span
 	return data
 
 /obj/machinery/ai_voicechanger/ui_act(action, params)
@@ -1010,9 +1013,23 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 			if(changing_voice)
 				owner.radio.use_command = loudvoice
 		if("look")
-			say_span = params["look"]
+			var/selection = params["look"]
+			if(isnull(selection))
+				return FALSE
+
+			var/found = FALSE
+			for(var/option in voice_options)
+				if(option == selection)
+					found = TRUE
+					break
+			if(!found)
+				stack_trace("User attempted to select an unavailable voice option")
+				return FALSE
+
+			say_span = selection
 			if(changing_voice)
 				owner.speech_span = say_span
+			to_chat(usr, span_notice("Voice set to [selection]."))
 		if("verb")
 			say_verb = params["verb"]
 			if(changing_voice)

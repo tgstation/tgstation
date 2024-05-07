@@ -46,11 +46,6 @@
 "hB" = (
 /turf/closed/indestructible/fakedoor,
 /area/deathmatch)
-"hN" = (
-/obj/structure/lattice,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/template_noop,
-/area/template_noop)
 "ih" = (
 /obj/item/reagent_containers/pill/maintenance,
 /turf/open/indestructible,
@@ -512,7 +507,7 @@ FL
 FL
 ur
 ur
-hN
+ur
 ur
 ur
 ur

@@ -70,7 +70,7 @@
 
 /obj/item/laser_pointer/infinite_range/Initialize(mapload)
 	. = ..()
-	diode = new /obj/item/stock_parts/servo/femto
+	diode = new /obj/item/stock_parts/micro_laser/quadultra
 
 /obj/item/laser_pointer/screwdriver_act(mob/living/user, obj/item/tool)
 	if(diode)
@@ -80,14 +80,11 @@
 		diode = null
 		return TRUE
 
-/obj/item/laser_pointer/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
+/obj/item/laser_pointer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(isnull(crystal_lens))
-		return .
+		return NONE
 	if(tool_behaviour != TOOL_WIRECUTTER && tool_behaviour != TOOL_HEMOSTAT)
-		return .
+		return NONE
 	tool.play_tool_sound(src)
 	balloon_alert(user, "removed crystal lens")
 	crystal_lens.forceMove(drop_location())
@@ -261,7 +258,7 @@
 	//cameras: chance to EMP the camera
 	else if(istype(target, /obj/machinery/camera))
 		var/obj/machinery/camera/target_camera = target
-		if(!target_camera.status && !target_camera.emped)
+		if(!target_camera.camera_enabled && !target_camera.emped)
 			outmsg = span_notice("You point [src] at [target_camera], but it seems to be disabled.")
 		else if(prob(effectchance * diode.rating))
 			target_camera.emp_act(EMP_HEAVY)

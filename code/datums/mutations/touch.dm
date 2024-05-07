@@ -38,7 +38,7 @@
 	///This var decides if the spell should chain, dictated by presence of power chromosome
 	var/chain = FALSE
 	///Affects damage, should do about 1 per limb
-	var/zap_power = 7500
+	var/zap_power = 7.5 KILO JOULES
 	///Range of tesla shock bounces
 	var/zap_range = 7
 	///flags that dictate what the tesla shock can interact with, Can only damage mobs, Cannot damage machines or generate energy
@@ -60,7 +60,7 @@
 				span_userdanger("[caster] electrocutes you!"),
 			)
 			if(chain)
-				tesla_zap(source = victim, zap_range = zap_range, power = zap_power, cutoff = 1e3, zap_flags = zap_flags)
+				tesla_zap(source = victim, zap_range = zap_range, power = zap_power, cutoff = 1 KILO JOULES, zap_flags = zap_flags)
 				carbon_victim.visible_message(span_danger("An arc of electricity explodes out of [victim]!"))
 			return TRUE
 
@@ -72,7 +72,7 @@
 				span_userdanger("[caster] electrocutes you!"),
 			)
 			if(chain)
-				tesla_zap(source = victim, zap_range = zap_range, power = zap_power, cutoff = 1e3, zap_flags = zap_flags)
+				tesla_zap(source = victim, zap_range = zap_range, power = zap_power, cutoff = 1 KILO JOULES, zap_flags = zap_flags)
 				living_victim.visible_message(span_danger("An arc of electricity explodes out of [victim]!"))
 			return TRUE
 

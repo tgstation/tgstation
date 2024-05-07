@@ -242,7 +242,7 @@
 	stage3 = list(span_danger("Your appendages are melting away."), span_danger("Your limbs begin to lose their shape."))
 	stage4 = list(span_danger("You are turning into a slime."))
 	stage5 = list(span_danger("You have become a slime."))
-	new_form = /mob/living/simple_animal/slime
+	new_form = /mob/living/basic/slime
 
 
 /datum/disease/transformation/slime/stage_act(seconds_per_tick, times_fired)
@@ -266,7 +266,7 @@
 	if(affected_mob.client && ishuman(affected_mob)) // if they are a human who's not a monkey and are sentient, then let them have the old fun
 		var/mob/living/carbon/human/human = affected_mob
 		if(!ismonkey(human))
-			new_form = /mob/living/simple_animal/slime/random
+			new_form = /mob/living/basic/slime/random
 	return ..()
 
 /datum/disease/transformation/corgi

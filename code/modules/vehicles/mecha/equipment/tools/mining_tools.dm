@@ -10,7 +10,7 @@
 	desc = "Equipment for engineering and combat exosuits. This is the drill that'll pierce the heavens!"
 	icon_state = "mecha_drill"
 	equip_cooldown = 15
-	energy_drain = 10
+	energy_drain = 0.01 * STANDARD_CELL_CHARGE
 	force = 15
 	harmful = TRUE
 	range = MECHA_MELEE

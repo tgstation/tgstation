@@ -48,19 +48,21 @@
 /mob/living/basic/migo/proc/update_dodge_chance(health_ratio)
 	dodge_prob = LERP(50, 10, health_ratio)
 
+/mob/living/basic/migo/proc/make_migo_sound()
+	playsound(src, pick(migo_sounds), 50, TRUE)
+
 /mob/living/basic/migo/send_speech(message_raw, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods, forced, tts_message, list/tts_filter)
 	. = ..()
 	if(stat != CONSCIOUS)
 		return
-	playsound(src, pick(migo_sounds), 50, TRUE)
+	make_migo_sound()
 
 /mob/living/basic/migo/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	if(stat)
 		return
 	if(SPT_PROB(5, seconds_per_tick))
-		var/chosen_sound = pick(migo_sounds)
-		playsound(src, chosen_sound, 50, TRUE)
+		make_migo_sound()
 
 /mob/living/basic/migo/Move(atom/newloc, dir, step_x, step_y)
 	if(!ckey && prob(dodge_prob) && moving_diagonally == 0 && isturf(loc) && isturf(newloc))
@@ -82,4 +84,15 @@
 	desc = parent_type::desc + " This one is wearing a bright blue wig."
 	icon_state = "mi-go-h"
 	icon_living = "mi-go-h"
-	gold_core_spawnable = NO_SPAWN
+
+	gender = FEMALE
+	gold_core_spawnable = FRIENDLY_SPAWN
+	faction = list(FACTION_NEUTRAL)
+
+/mob/living/basic/migo/hatsune/make_migo_sound()
+	playsound(src, 'sound/creatures/tourist/tourist_talk_japanese1.ogg', 50, TRUE)
+
+/mob/living/basic/migo/hatsune/Initialize(mapload)
+	. = ..()
+	var/static/list/death_loot = list(/obj/item/instrument/piano_synth)
+	AddElement(/datum/element/death_drops, death_loot)

@@ -574,7 +574,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 // CIGARS //
 ////////////
 /obj/item/clothing/mask/cigarette/cigar
-	name = "premium cigar"
+	name = "cigar"
 	desc = "A brown roll of tobacco and... well, you're not quite sure. This thing's huge!"
 	icon_state = "cigaroff"
 	icon_on = "cigaron"
@@ -588,6 +588,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	chem_volume = 40
 	list_reagents = list(/datum/reagent/drug/nicotine = 25)
 	choke_time_max = 40 SECONDS
+
+/obj/item/clothing/mask/cigarette/cigar/premium
+	name = "premium cigar"
+	//this is the version that actually spawns in premium cigar cases, the distinction is made so that the smoker quirk can differentiate between the default cigar box and its subtypes
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "\improper Cohiba Robusto cigar"
@@ -866,7 +870,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/hitzone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
 	user.apply_damage(5, BURN, hitzone)
 	user.visible_message(
-		span_warning("After a few attempts, [user] manages to light [src] - however, [user.p_they()] burn [user.p_their()] finger in the process."),
+		span_warning("After a few attempts, [user] manages to light [src] - however, [user.p_they()] burn[user.p_s()] [user.p_their()] finger in the process."),
 		span_warning("You burn yourself while lighting the lighter!")
 	)
 	user.add_mood_event("burnt_thumb", /datum/mood_event/burnt_thumb)

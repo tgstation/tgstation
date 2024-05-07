@@ -121,7 +121,7 @@
 	check_amount()
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
-		if(!robot_user.cell.use(12))
+		if(!robot_user.cell.use(0.012 * STANDARD_CELL_CHARGE))
 			to_chat(user, span_warning("Not enough power."))
 			return AFTERATTACK_PROCESSED_ITEM
 	switch(mode)

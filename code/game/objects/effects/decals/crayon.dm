@@ -9,7 +9,7 @@
 	flags_1 = ALLOW_DARK_PAINTS_1
 	var/do_icon_rotate = TRUE
 	var/rotation = 0
-	var/paint_colour = "#FFFFFF"
+	var/paint_colour = COLOR_WHITE
 
 /obj/effect/decal/cleanable/crayon/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null)
 	. = ..()

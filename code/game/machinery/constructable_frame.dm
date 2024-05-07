@@ -22,13 +22,10 @@
 	if(circuit)
 		. += "It has \a [circuit] installed."
 
-/obj/structure/frame/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/atom/movable/drop_loc = drop_location()
-		new /obj/item/stack/sheet/iron(drop_loc, 5)
-		circuit?.forceMove(drop_loc)
-
-	return ..()
+/obj/structure/frame/atom_deconstruct(disassembled = TRUE)
+	var/atom/movable/drop_loc = drop_location()
+	new /obj/item/stack/sheet/iron(drop_loc, 5)
+	circuit?.forceMove(drop_loc)
 
 /// Called when circuit has been set to a new board
 /obj/structure/frame/proc/circuit_added(obj/item/circuitboard/added)
@@ -61,8 +58,9 @@
 /obj/structure/frame/proc/try_dissassemble(mob/living/user, obj/item/tool, disassemble_time = 8 SECONDS)
 	if(state != FRAME_STATE_EMPTY)
 		return NONE
-	if(obj_flags & NO_DECONSTRUCTION)
-		return NONE
+	if(anchored && state == FRAME_STATE_EMPTY) //when using a screwdriver on an incomplete frame(missing components) no point checking for this
+		balloon_alert(user, "must be unanchored first!")
+		return ITEM_INTERACT_BLOCKING
 	if(!tool.tool_start_check(user, amount = (tool.tool_behaviour == TOOL_WELDER ? 1 : 0)))
 		return ITEM_INTERACT_BLOCKING
 
@@ -109,15 +107,10 @@
 			return ITEM_INTERACT_BLOCKING
 	return .
 
-/obj/structure/frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
-
+/obj/structure/frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/circuitboard)) // Install board will fail if passed an invalid circuitboard and give feedback
 		return install_board(user, tool, by_hand = TRUE) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-
-	return .
+	return NONE
 
 /**
  * Installs the passed circuit board into the frame

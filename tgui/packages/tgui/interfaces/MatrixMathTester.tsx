@@ -15,7 +15,7 @@ const MatrixMathTesterInput = (props: { value: number; varName: string }) => {
       step={0.005}
       format={(value) => toFixed(value, 3)}
       fluid
-      onChange={(e, value) =>
+      onChange={(value) =>
         act('change_var', { var_name: props.varName, var_value: value })
       }
     />
@@ -119,7 +119,7 @@ export const MatrixMathTester = (props) => {
                   step={0.05}
                   format={(value) => toFixed(value, 2)}
                   fluid
-                  onChange={(e, value) => setScaleX(value)}
+                  onChange={(value) => setScaleX(value)}
                 />
               </Table.Cell>
               <Table.Cell>
@@ -130,7 +130,7 @@ export const MatrixMathTester = (props) => {
                   step={0.05}
                   format={(value) => toFixed(value, 2)}
                   fluid
-                  onChange={(e, value) => setScaleY(value)}
+                  onChange={(value) => setScaleY(value)}
                 />
               </Table.Cell>
             </Table.Row>
@@ -154,7 +154,7 @@ export const MatrixMathTester = (props) => {
                   step={1}
                   format={(value) => toFixed(value, 0)}
                   fluid
-                  onChange={(e, value) => setTranslateX(value)}
+                  onChange={(value) => setTranslateX(value)}
                 />
               </Table.Cell>
               <Table.Cell>
@@ -165,7 +165,7 @@ export const MatrixMathTester = (props) => {
                   step={1}
                   format={(value) => toFixed(value, 0)}
                   fluid
-                  onChange={(e, value) => setTranslateY(value)}
+                  onChange={(value) => setTranslateY(value)}
                 />
               </Table.Cell>
             </Table.Row>
@@ -187,7 +187,7 @@ export const MatrixMathTester = (props) => {
                   step={0.005}
                   format={(value) => toFixed(value, 3)}
                   fluid
-                  onChange={(e, value) => setShearX(value)}
+                  onChange={(value) => setShearX(value)}
                 />
               </Table.Cell>
               <Table.Cell>
@@ -198,7 +198,7 @@ export const MatrixMathTester = (props) => {
                   step={0.005}
                   format={(value) => toFixed(value, 3)}
                   fluid
-                  onChange={(e, value) => setShearY(value)}
+                  onChange={(value) => setShearY(value)}
                 />
               </Table.Cell>
             </Table.Row>
@@ -220,7 +220,7 @@ export const MatrixMathTester = (props) => {
                   minValue={-360}
                   format={(value) => toFixed(value, 1)}
                   fluid
-                  onChange={(e, value) => setAngle(value)}
+                  onChange={(value) => setAngle(value)}
                 />
               </Table.Cell>
               <Table.Cell>

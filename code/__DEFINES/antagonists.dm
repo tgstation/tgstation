@@ -219,6 +219,8 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a blood cultist
 #define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
 
+/// Checks if the mob is a sentient or non-sentient cultist
+#define IS_CULTIST_OR_CULTIST_MOB(mob) ((IS_CULTIST(mob)) || (mob.faction.Find(FACTION_CULT)))
 /// Checks if the given mob is a changeling
 #define IS_CHANGELING(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/changeling))
 
@@ -395,3 +397,6 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define SPY_DIFFICULTY_MEDIUM "Medium"
 /// Very difficult to accomplish, almost guaranteed to require crew conflict
 #define SPY_DIFFICULTY_HARD "Hard"
+
+/// Camera net used by battle royale objective
+#define BATTLE_ROYALE_CAMERA_NET "battle_royale_camera_net"

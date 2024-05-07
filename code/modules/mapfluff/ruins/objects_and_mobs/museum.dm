@@ -159,8 +159,13 @@
 	mask = /obj/item/clothing/mask/fakemoustache/italian
 
 /obj/machinery/vending/hotdog/museum
-	obj_flags = parent_type::obj_flags|NO_DECONSTRUCTION
 	onstation_override = TRUE
+
+/obj/machinery/vending/hotdog/museum/screwdriver_act(mob/living/user, obj/item/attack_item)
+	return NONE
+
+/obj/machinery/vending/hotdog/museum/crowbar_act(mob/living/user, obj/item/attack_item)
+	return NONE
 
 #define CAFE_KEYCARD_TOILETS "museum_cafe_key_toilets"
 
@@ -185,7 +190,6 @@
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/item/keycard/cafeteria/LateInitialize()
-	. = ..()
 	if(SSqueuelinks.queues[CAFE_KEYCARD_TOILETS])
 		SSqueuelinks.pop_link(CAFE_KEYCARD_TOILETS)
 

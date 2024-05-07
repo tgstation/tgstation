@@ -11,7 +11,7 @@
 	gender = NEUTER
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	speak_emote = list("roars")
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = null
 	health = 250
 	maxHealth = 250
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 1, STAMINA = 0, OXY = 1)

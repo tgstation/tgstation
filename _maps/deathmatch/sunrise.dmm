@@ -45,7 +45,7 @@
 	pixel_y = -1;
 	pixel_x = -9
 	},
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/deathmatch)
 "dr" = (
 /obj/structure/closet/crate/wooden,
@@ -254,7 +254,7 @@
 /obj/item/food/grown/wheat{
 	pixel_x = -10
 	},
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/deathmatch)
 "pG" = (
 /turf/open/floor/wood/large,
@@ -339,7 +339,7 @@
 "uP" = (
 /mob/living/basic/cow,
 /obj/machinery/light,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/deathmatch)
 "vC" = (
 /obj/structure/mineral_door/paperframe,
@@ -590,7 +590,7 @@
 /turf/open/misc/grass,
 /area/deathmatch)
 "Na" = (
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/deathmatch)
 "Nn" = (
 /obj/structure/flora/bush/flowers_br/style_random,
@@ -614,7 +614,7 @@
 /area/deathmatch)
 "OA" = (
 /obj/item/clothing/shoes/cowboy,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/deathmatch)
 "OV" = (
 /obj/structure/chair/stool/bamboo{
@@ -636,7 +636,7 @@
 /area/deathmatch)
 "PE" = (
 /obj/structure/water_source/puddle,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/deathmatch)
 "PF" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -751,7 +751,7 @@
 /obj/item/food/grown/wheat{
 	pixel_x = -10
 	},
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/deathmatch)
 "Vm" = (
 /obj/structure/table/wood,

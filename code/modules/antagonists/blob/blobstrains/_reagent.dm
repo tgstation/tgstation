@@ -27,7 +27,7 @@
 /datum/reagent/blob
 	name = "Unknown"
 	description = "shouldn't exist and you should adminhelp immediately."
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 	taste_description = "bad code and slime"
 	chemical_flags = NONE
 	penetrates_skin = NONE

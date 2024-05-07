@@ -83,7 +83,6 @@
 	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
-	top_offset = -5
 	icon_state = "default_monkey_chest"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
@@ -130,7 +129,7 @@
 	aux_layer = BODYPARTS_HIGH_LAYER
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_DEFAULT
 	can_be_disabled = TRUE
-	unarmed_attack_verb = "punch" /// The classic punch, wonderfully classic and completely random
+	unarmed_attack_verbs = list("punch") /// The classic punch, wonderfully classic and completely random
 	grappled_attack_verb = "pummel"
 	unarmed_damage_low = 5
 	unarmed_damage_high = 10
@@ -391,7 +390,7 @@
 	can_be_disabled = TRUE
 	unarmed_attack_effect = ATTACK_EFFECT_KICK
 	body_zone = BODY_ZONE_L_LEG
-	unarmed_attack_verb = "kick" // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
+	unarmed_attack_verbs = list("kick") // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
 	unarmed_damage_low = 7
 	unarmed_damage_high = 15
 	unarmed_effectiveness = 15
@@ -467,7 +466,6 @@
 	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
-	top_offset = -3
 	icon_state = "default_monkey_l_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
@@ -558,7 +556,6 @@
 	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
-	top_offset = -3
 	icon_state = "default_monkey_r_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
@@ -584,15 +581,3 @@
 	can_be_disabled = FALSE
 	max_damage = LIMB_MAX_HP_ALIEN_LIMBS
 	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/leg/right/tallboy
-	limb_id = SPECIES_TALLBOY
-	top_offset = 23
-	unarmed_damage_low = 30
-	unarmed_damage_low = 50
-
-/obj/item/bodypart/leg/left/tallboy
-	limb_id = SPECIES_TALLBOY
-	top_offset = 23
-	unarmed_damage_low = 30
-	unarmed_damage_low = 50

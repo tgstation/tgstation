@@ -1,74 +1,46 @@
 /**
- * When attached to a gun and the gun is successfully fired, this element creates a "backblast" of fire and pain, like you'd find in a rocket launcher or recoilless rifle
+ * When attached to a gun and the gun is successfully fired, this element creates a "backblast", like you'd find in a rocket launcher or recoilless rifle
  *
- * The backblast is simulated by a number of fire plumes, or invisible incendiary rounds that will torch anything they come across for a short distance, as well as knocking
- * back nearby items.
+ * The backblast is simulated by a directional explosion 180 degrees from the direction of the fired projectile.
  */
 /datum/element/backblast
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 
-	/// How many "pellets" of backblast we're shooting backwards, spread between the angle defined in angle_spread
-	var/plumes
-	/// Assuming we don't just have 1 plume, this is the total angle we'll cover with the plumes, split down the middle directly behind the angle we fired at
-	var/angle_spread
-	/// How far each plume of fire will fly, assuming it doesn't hit a mob
-	var/range
+	/// Devasatation range of the explosion
+	var/dev_range
+	/// HGeavy damage range of the explosion
+	var/heavy_range
+	/// Light damage range of the explosion
+	var/light_range
+	/// Flame range of the explosion
+	var/flame_range
+	/// What angle do we want the backblast to cover
+	var/blast_angle
 
-/datum/element/backblast/Attach(datum/target, plumes = 4, angle_spread = 48, range = 6)
+/datum/element/backblast/Attach(datum/target, dev_range = 0, heavy_range = 0, light_range = 6, flame_range = 6, blast_angle = 60)
 	. = ..()
-	if(!isgun(target) || plumes < 1 || angle_spread < 1 || range < 1)
+	if(!isgun(target) || dev_range < 0 || heavy_range < 0 || light_range < 0 || flame_range < 0 || blast_angle < 1)
 		return ELEMENT_INCOMPATIBLE
 
-	src.plumes = plumes
-	src.angle_spread = angle_spread
-	src.range = range
+	src.dev_range = dev_range
+	src.heavy_range = heavy_range
+	src.light_range = light_range
+	src.flame_range = flame_range
+	src.blast_angle = blast_angle
 
-	if(plumes == 1)
-		RegisterSignal(target, COMSIG_GUN_FIRED, PROC_REF(gun_fired_simple))
-	else
-		RegisterSignal(target, COMSIG_GUN_FIRED, PROC_REF(gun_fired))
+	RegisterSignal(target, COMSIG_GUN_FIRED, PROC_REF(pew))
 
 /datum/element/backblast/Detach(datum/source)
 	if(source)
 		UnregisterSignal(source, COMSIG_GUN_FIRED)
 	return ..()
 
-/// For firing multiple plumes behind us, we evenly spread out our projectiles based on the [angle_spread][/datum/element/backblast/var/angle_spread] and [number of plumes][/datum/element/backblast/var/plumes]
-/datum/element/backblast/proc/gun_fired(obj/item/gun/weapon, mob/living/user, atom/target, params, zone_override)
-	SIGNAL_HANDLER
-
-	if(!weapon.chambered || HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
-
-	var/backwards_angle = get_angle(target, user)
-	var/starting_angle = SIMPLIFY_DEGREES(backwards_angle-(angle_spread * 0.5))
-	var/iter_offset = angle_spread / plumes // how much we increment the angle for each plume
-
-	for(var/i in 1 to plumes)
-		var/this_angle = SIMPLIFY_DEGREES(starting_angle + ((i - 1) * iter_offset))
-		var/turf/target_turf = get_turf_in_angle(this_angle, get_turf(user), 10)
-		INVOKE_ASYNC(src, PROC_REF(pew), target_turf, weapon, user)
-
-/// If we're only firing one plume directly behind us, we don't need to bother with the loop or angles or anything
-/datum/element/backblast/proc/gun_fired_simple(obj/item/gun/weapon, mob/living/user, atom/target, params, zone_override)
-	SIGNAL_HANDLER
-
-	if(!weapon.chambered || HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
-
-	var/backwards_angle = get_angle(target, user)
-	var/turf/target_turf = get_turf_in_angle(backwards_angle, get_turf(user), 10)
-	INVOKE_ASYNC(src, PROC_REF(pew), target_turf, weapon, user)
-
 /// For firing an actual backblast pellet
-/datum/element/backblast/proc/pew(turf/target_turf, obj/item/gun/weapon, mob/living/user)
-	//Shooting Code:
-	var/obj/projectile/bullet/incendiary/fire/backblast/P = new (get_turf(user))
-	P.original = target_turf
-	P.range = range
-	P.fired_from = weapon
-	P.firer = user // don't hit ourself that would be really annoying
-	P.impacted = list(user = TRUE) // don't hit the target we hit already with the flak
-	P.preparePixelProjectile(target_turf, weapon)
-	P.fire()
+/datum/element/backblast/proc/pew(obj/item/gun/weapon, mob/living/user, atom/target)
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		return
+
+	var/turf/origin = get_turf(weapon)
+	var/backblast_angle = get_angle(target, origin)
+	explosion(weapon, devastation_range = dev_range, heavy_impact_range = heavy_range, light_impact_range = light_range, flame_range = flame_range, adminlog = FALSE, protect_epicenter = TRUE, explosion_direction = backblast_angle, explosion_arc = blast_angle)

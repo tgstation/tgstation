@@ -30,7 +30,6 @@
 	else if(ckey)
 		stack_trace("Mob without client but with associated ckey, [ckey], has been deleted.")
 
-	unset_machine()
 	remove_from_mob_list()
 	remove_from_dead_mob_list()
 	remove_from_alive_mob_list()
@@ -262,10 +261,12 @@
  * message is output to anyone who can see, e.g. `"The [src] does something!"`
  *
  * Vars:
+ * * message is the message output to anyone who can see.
  * * self_message (optional) is what the src mob sees e.g. "You do something!"
  * * blind_message (optional) is what blind people will hear e.g. "You hear something!"
  * * vision_distance (optional) define how many tiles away the message can be seen.
- * * ignored_mob (optional) doesn't show any message to a given mob if TRUE.
+ * * ignored_mobs (optional) doesn't show any message to any mob in this list.
+ * * visible_message_flags (optional) is the type of message being sent.
  */
 /atom/proc/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, visible_message_flags = NONE)
 	var/turf/T = get_turf(src)
@@ -314,8 +315,22 @@
 ///Adds the functionality to self_message.
 /mob/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, visible_message_flags = NONE)
 	. = ..()
-	if(self_message)
-		show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE)
+	if(!self_message)
+		return
+	var/raw_self_message = self_message
+	var/self_runechat = FALSE
+	if(visible_message_flags & EMOTE_MESSAGE)
+		self_message = "<span class='emote'><b>[src]</b> [self_message]</span>" // May make more sense as "You do x"
+
+	if(visible_message_flags & ALWAYS_SHOW_SELF_MESSAGE)
+		to_chat(src, self_message)
+		self_runechat = TRUE
+
+	else
+		self_runechat = show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE)
+
+	if(self_runechat && (visible_message_flags & EMOTE_MESSAGE) && runechat_prefs_check(src, visible_message_flags))
+		create_chat_message(src, raw_message = raw_self_message, runechat_flags = visible_message_flags)
 
 /**
  * Show a message to all mobs in earshot of this atom
@@ -326,6 +341,8 @@
  * * message is the message output to anyone who can hear.
  * * deaf_message (optional) is what deaf people will see.
  * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
+ * * self_message (optional) is what the src mob hears.
+ * * audible_message_flags (optional) is the type of message being sent.
  */
 /atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, audible_message_flags = NONE)
 	var/list/hearers = get_hearers_in_view(hearing_distance, src)
@@ -352,9 +369,20 @@
  */
 /mob/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, audible_message_flags = NONE)
 	. = ..()
-	if(self_message)
-		show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
+	if(!self_message)
+		return
+	var/raw_self_message = self_message
+	var/self_runechat = FALSE
+	if(audible_message_flags & EMOTE_MESSAGE)
+		self_message = "<span class='emote'><b>[src]</b> [self_message]</span>"
+	if(audible_message_flags & ALWAYS_SHOW_SELF_MESSAGE)
+		to_chat(src, self_message)
+		self_runechat = TRUE
+	else
+		self_runechat = show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
+	if(self_runechat && (audible_message_flags & EMOTE_MESSAGE) && runechat_prefs_check(src, audible_message_flags))
+		create_chat_message(src, raw_message = raw_self_message, runechat_flags = audible_message_flags)
 
 ///Returns the client runechat visible messages preference according to the message type.
 /atom/proc/runechat_prefs_check(mob/target, visible_message_flags = NONE)
@@ -689,7 +717,7 @@
 
 	if(!imagined_eye_contact && is_face_visible() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("[src] makes eye contact with you.")
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), examined_mob, msg), 3)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), examined_mob, msg), 0.3 SECONDS)
 
 /**
  * Called by using Activate Held Object with an empty hand/limb
@@ -847,7 +875,6 @@
 	set name = "Cancel Camera View"
 	set category = "OOC"
 	reset_perspective(null)
-	unset_machine()
 
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
 /mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
@@ -959,7 +986,7 @@
 		selected_hand = (active_hand_index % held_items.len)+1
 
 	if(istext(selected_hand))
-		selected_hand = lowertext(selected_hand)
+		selected_hand = LOWER_TEXT(selected_hand)
 		if(selected_hand == "right" || selected_hand == "r")
 			selected_hand = 2
 		if(selected_hand == "left" || selected_hand == "l")
@@ -1144,6 +1171,10 @@
  * * FORBID_TELEKINESIS_REACH - If telekinesis is forbidden to perform action from a distance (ex. canisters are blacklisted from telekinesis manipulation)
  * * ALLOW_SILICON_REACH - If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
  * * ALLOW_RESTING - If resting on the floor is allowed to perform action ()
+ * * ALLOW_VENTCRAWL - Mobs with ventcrawl traits can alt-click this to vent
+ *
+ * silence_adjacency: Sometimes we want to use this proc to check interaction without allowing it to throw errors for base case adjacency
+ * Alt click uses this, as otherwise you can detect what is interactable from a distance via the error message
 **/
 /mob/proc/can_perform_action(atom/movable/target, action_bitflags)
 	return
@@ -1416,9 +1447,7 @@
 		regenerate_icons()
 
 	if(href_list[VV_HK_PLAYER_PANEL])
-		if(!check_rights(NONE))
-			return
-		usr.client.holder.show_player_panel(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_player_panel, src)
 
 	if(href_list[VV_HK_GODMODE])
 		if(!check_rights(R_ADMIN))
@@ -1426,34 +1455,22 @@
 		usr.client.cmd_admin_godmode(src)
 
 	if(href_list[VV_HK_GIVE_MOB_ACTION])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_mob_action(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_mob_action, src)
 
 	if(href_list[VV_HK_REMOVE_MOB_ACTION])
-		if(!check_rights(NONE))
-			return
-		usr.client.remove_mob_action(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/remove_mob_action, src)
 
 	if(href_list[VV_HK_GIVE_SPELL])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_spell(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_spell, src)
 
 	if(href_list[VV_HK_REMOVE_SPELL])
-		if(!check_rights(NONE))
-			return
-		usr.client.remove_spell(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/remove_spell, src)
 
 	if(href_list[VV_HK_GIVE_DISEASE])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_disease(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_disease, src)
 
 	if(href_list[VV_HK_GIB])
-		if(!check_rights(R_FUN))
-			return
-		usr.client.cmd_admin_gib(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/gib_them, src)
 
 	if(href_list[VV_HK_BUILDMODE])
 		if(!check_rights(R_BUILD))
@@ -1461,19 +1478,13 @@
 		togglebuildmode(src)
 
 	if(href_list[VV_HK_DROP_ALL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_admin_drop_everything(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/drop_everything, src)
 
 	if(href_list[VV_HK_DIRECT_CONTROL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_assume_direct_control(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_assume_direct_control, src)
 
 	if(href_list[VV_HK_GIVE_DIRECT_CONTROL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_give_direct_control(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_give_direct_control, src)
 
 	if(href_list[VV_HK_OFFER_GHOSTS])
 		if(!check_rights(NONE))
@@ -1531,14 +1542,32 @@
 ///Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()
 	var/speedies = 0
+	var/immutable_speedies = 0
 	for(var/obj/item/thing in get_equipped_speed_mod_items())
-		speedies += thing.slowdown
-	if(speedies > 0 && HAS_TRAIT(src, TRAIT_SETTLER)) //if our movespeed mod is in the negatives, we don't modify it since that's a benefit
+		if(thing.item_flags & IMMUTABLE_SLOW)
+			immutable_speedies += thing.slowdown
+		else
+			speedies += thing.slowdown
+
+	//if our movespeed mod is in the negatives, we don't modify it since that's a benefit
+	if(speedies > 0 && HAS_TRAIT(src, TRAIT_SETTLER))
 		speedies *= 0.2
-	if(!speedies)
-		remove_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod)
+
+	if(immutable_speedies)
+		add_or_update_variable_movespeed_modifier(
+			/datum/movespeed_modifier/equipment_speedmod/immutable,
+			multiplicative_slowdown = immutable_speedies,
+		)
 	else
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod, multiplicative_slowdown = speedies)
+		remove_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod/immutable)
+
+	if(speedies)
+		add_or_update_variable_movespeed_modifier(
+			/datum/movespeed_modifier/equipment_speedmod,
+			multiplicative_slowdown = speedies,
+		)
+	else
+		remove_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod)
 
 ///Get all items in our possession that should affect our movespeed
 /mob/proc/get_equipped_speed_mod_items()
@@ -1561,9 +1590,6 @@
 
 /mob/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if(NAMEOF(src, machine))
-			set_machine(var_value)
-			. = TRUE
 		if(NAMEOF(src, focus))
 			set_focus(var_value)
 			. = TRUE

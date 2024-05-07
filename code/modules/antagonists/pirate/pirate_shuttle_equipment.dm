@@ -96,6 +96,9 @@
 	light_color = COLOR_SOFT_RED
 	possible_destinations = "pirate_away;pirate_home;pirate_custom"
 
+/obj/machinery/computer/shuttle/pirate/drop_pod
+	possible_destinations = "null"
+
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate
 	name = "pirate shuttle navigation computer"
 	desc = "Used to designate a precise transit location for the pirate shuttle."
@@ -232,7 +235,7 @@
 		pad_ref = WEAKREF(I.buffer)
 		return TRUE
 
-/obj/machinery/computer/piratepad_control/LateInitialize()
+/obj/machinery/computer/piratepad_control/post_machine_initialize()
 	. = ..()
 	if(cargo_hold_id)
 		for(var/obj/machinery/piratepad/P as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/piratepad))
@@ -425,7 +428,7 @@
 
 /datum/export/pirate/ransom/sell_object(mob/living/carbon/human/sold_item, datum/export_report/report, dry_run = TRUE, apply_elastic = TRUE)
 	. = ..()
-	if(. == EXPORT_NOT_SOLD)
+	if(. == EXPORT_NOT_SOLD || dry_run)
 		return
 	var/turf/picked_turf = pick(GLOB.holdingfacility)
 	sold_item.forceMove(picked_turf)
@@ -436,7 +439,7 @@
 	sold_item.flash_act()
 	sold_item.adjust_confusion(10 SECONDS)
 	sold_item.adjust_dizzy(10 SECONDS)
-	addtimer(src, CALLBACK(src, PROC_REF(send_back_to_station), sold_item), COME_BACK_FROM_CAPTURE_TIME)
+	addtimer(CALLBACK(src, PROC_REF(send_back_to_station), sold_item), COME_BACK_FROM_CAPTURE_TIME)
 	to_chat(sold_item, span_hypnophrase("A million voices echo in your head... <i>\"Yaarrr, thanks for the booty, landlubber. \
 		You will be ransomed back to your station, so it's only a matter of time before we ship you back...</i>"))
 

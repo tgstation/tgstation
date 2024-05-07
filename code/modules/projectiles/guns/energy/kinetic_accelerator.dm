@@ -191,14 +191,13 @@
 	return ..()
 
 /obj/projectile/kinetic/prehit_pierce(atom/target)
-	if(is_type_in_typecache(target, kinetic_gun.ignored_mob_types))
+	if(is_type_in_typecache(target, kinetic_gun?.ignored_mob_types))
 		return PROJECTILE_PIERCE_PHASE
 	. = ..()
 	if(. == PROJECTILE_PIERCE_PHASE)
 		return
-	if(kinetic_gun)
-		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in kinetic_gun.modkits)
-			modkit_upgrade.projectile_prehit(src, target, kinetic_gun)
+	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in kinetic_gun?.modkits)
+		modkit_upgrade.projectile_prehit(src, target, kinetic_gun)
 	if(!pressure_decrease_active && !lavaland_equipment_pressure_check(get_turf(target)))
 		name = "weakened [name]"
 		damage = damage * pressure_decrease
@@ -618,7 +617,7 @@
 	desc = "Causes kinetic accelerator bolts to have a white tracer trail and explosion."
 	cost = 0
 	denied_type = /obj/item/borg/upgrade/modkit/tracer
-	var/bolt_color = "#FFFFFF"
+	var/bolt_color = COLOR_WHITE
 
 /obj/item/borg/upgrade/modkit/tracer/modify_projectile(obj/projectile/kinetic/K)
 	K.icon_state = "ka_tracer"

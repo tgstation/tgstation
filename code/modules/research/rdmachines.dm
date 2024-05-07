@@ -24,7 +24,7 @@
 	set_wires(new /datum/wires/rnd(src))
 	register_context()
 
-/obj/machinery/rnd/LateInitialize()
+/obj/machinery/rnd/post_machine_initialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)

@@ -87,7 +87,7 @@
 
 /mob/living/basic/blob_minion/zombie/controlled/consume_corpse(mob/living/carbon/human/new_corpse)
 	. = ..()
-	if (!isnull(client))
+	if (!isnull(client) || SSticker.current_state == GAME_STATE_FINISHED)
 		return
 	AddComponent(\
 		/datum/component/ghost_direct_control,\

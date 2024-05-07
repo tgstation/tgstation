@@ -180,7 +180,7 @@
 	if(M == user)
 		return
 	if(IS_CULTIST(M) && IS_CULTIST(user))
-		to_chat(user, span_cultlarge("\"Come now, do not capture your bretheren's soul.\""))
+		to_chat(user, span_cult_large("\"Come now, do not capture your bretheren's soul.\""))
 		return
 	if(theme == THEME_HOLY && IS_CULTIST(user))
 		hot_potato(user)
@@ -394,6 +394,7 @@
 		soulstone_spirit.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
 		if(IS_CULTIST(user))
 			soulstone_spirit.mind.add_antag_datum(/datum/antagonist/cult)
+			SSblackbox.record_feedback("tally", "cult_shade_created", 1)
 
 	soulstone_spirit.cancel_camera()
 	update_appearance()
@@ -454,6 +455,7 @@
 		if(CONSTRUCT_JUGGERNAUT)
 			if(IS_CULTIST(creator))
 				make_new_construct(/mob/living/basic/construct/juggernaut, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the make_new_construct proc
+				SSblackbox.record_feedback("tally", "cult_shade_to_jugger", 1)
 				return
 			switch(theme)
 				if(THEME_WIZARD)
@@ -465,6 +467,7 @@
 		if(CONSTRUCT_WRAITH)
 			if(IS_CULTIST(creator))
 				make_new_construct(/mob/living/basic/construct/wraith, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the make_new_construct proc
+				SSblackbox.record_feedback("tally", "cult_shade_to_wraith", 1)
 				return
 			switch(theme)
 				if(THEME_WIZARD)
@@ -476,6 +479,7 @@
 		if(CONSTRUCT_ARTIFICER)
 			if(IS_CULTIST(creator))
 				make_new_construct(/mob/living/basic/construct/artificer, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the make_new_construct proc
+				SSblackbox.record_feedback("tally", "cult_shade_to_arti", 1)
 				return
 			switch(theme)
 				if(THEME_WIZARD)
@@ -503,7 +507,7 @@
 	if(newstruct.mind && !IS_CULTIST(newstruct) && ((stoner && IS_CULTIST(stoner)) || cultoverride) && SSticker.HasRoundStarted())
 		newstruct.mind.add_antag_datum(/datum/antagonist/cult/construct)
 	if(IS_CULTIST(stoner) || cultoverride)
-		to_chat(newstruct, span_cultbold("You are still bound to serve the cult[stoner ? " and [stoner]" : ""], follow [stoner?.p_their() || "their"] orders and help [stoner?.p_them() || "them"] complete [stoner?.p_their() || "their"] goals at all costs."))
+		to_chat(newstruct, span_cult_bold("You are still bound to serve the cult[stoner ? " and [stoner]" : ""], follow [stoner?.p_their() || "their"] orders and help [stoner?.p_them() || "them"] complete [stoner?.p_their() || "their"] goals at all costs."))
 	else if(stoner)
 		to_chat(newstruct, span_boldwarning("You are still bound to serve your creator, [stoner], follow [stoner.p_their()] orders and help [stoner.p_them()] complete [stoner.p_their()] goals at all costs."))
 	newstruct.clear_alert("bloodsense")

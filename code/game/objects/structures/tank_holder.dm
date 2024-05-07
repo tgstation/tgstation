@@ -63,12 +63,11 @@
 	deconstruct(TRUE)
 	return TRUE
 
-/obj/structure/tank_holder/deconstruct(disassembled = TRUE)
+/obj/structure/tank_holder/atom_deconstruct(disassembled = TRUE)
 	var/atom/Tsec = drop_location()
 	new /obj/item/stack/rods(Tsec, 2)
 	if(tank)
 		tank.forceMove(Tsec)
-	qdel(src)
 
 /obj/structure/tank_holder/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)

@@ -136,7 +136,7 @@
 		span_notice("You start scanning [stealing], preparing it for extraction."),
 	)
 
-	if(!do_after(spy, bounty.theft_time, stealing, interaction_key = REF(src)))
+	if(!do_after(spy, bounty.theft_time, stealing, interaction_key = REF(src), hidden = TRUE))
 		return FALSE
 	if(bounty.claimed)
 		to_chat(spy, span_warning("Your uplinks blinks red: The bounty for [stealing] has been claimed by another spy!"))

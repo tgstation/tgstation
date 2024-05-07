@@ -89,7 +89,7 @@
 		balloon_alert(scanner, "too far away!")
 		return
 	// Very short scan timer, keep you on your toes
-	if(!do_after(scanner, 0.5 SECONDS, scanned))
+	if(!do_after(scanner, 0.5 SECONDS, scanned, hidden = TRUE))
 		return
 
 	var/list/all_scanned_items = list()

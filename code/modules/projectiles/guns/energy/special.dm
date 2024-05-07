@@ -78,6 +78,9 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
 	ammo_x_offset = 2
 
+/// amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
+#define PLASMA_CUTTER_CHARGE_WELD (0.025 * STANDARD_CELL_CHARGE)
+
 /obj/item/gun/energy/plasmacutter
 	name = "plasma cutter"
 	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off xenos! Or, you know, mine stuff."
@@ -91,12 +94,10 @@
 	sharpness = SHARP_EDGED
 	can_charge = FALSE
 	gun_flags = NOT_A_REAL_GUN
-
 	heat = 3800
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
-	var/charge_weld = 25 //amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
 
 /obj/item/gun/energy/plasmacutter/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
@@ -125,7 +126,7 @@
 			balloon_alert(user, "already fully charged!")
 			return
 		I.use(1)
-		cell.give(500*charge_multiplier)
+		cell.give(0.5 * STANDARD_CELL_CHARGE * charge_multiplier)
 		balloon_alert(user, "cell recharged")
 	else
 		..()
@@ -147,14 +148,14 @@
 	// Amount cannot be used if drain is made continuous, e.g. amount = 5, charge_weld = 25
 	// Then it'll drain 125 at first and 25 periodically, but fail if charge dips below 125 even though it still can finish action
 	// Alternately it'll need to drain amount*charge_weld every period, which is either obscene or makes it free for other uses
-	if(amount ? cell.charge < charge_weld * amount : cell.charge < charge_weld)
+	if(amount ? cell.charge < PLASMA_CUTTER_CHARGE_WELD * amount : cell.charge < PLASMA_CUTTER_CHARGE_WELD)
 		balloon_alert(user, "not enough charge!")
 		return FALSE
 
 	return TRUE
 
 /obj/item/gun/energy/plasmacutter/use(used)
-	return (!QDELETED(cell) && cell.use(used ? used * charge_weld : charge_weld))
+	return (!QDELETED(cell) && cell.use(used ? used * PLASMA_CUTTER_CHARGE_WELD : PLASMA_CUTTER_CHARGE_WELD))
 
 /obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=0, datum/callback/extra_checks)
 
@@ -167,6 +168,8 @@
 		target.cut_overlay(sparks)
 	else
 		. = ..(amount=1)
+
+#undef PLASMA_CUTTER_CHARGE_WELD
 
 /obj/item/gun/energy/plasmacutter/adv
 	name = "advanced plasma cutter"
@@ -406,7 +409,7 @@
 		COOLDOWN_START(src, coin_regen_cd, coin_regen_rate)
 
 /obj/item/gun/energy/marksman_revolver/afterattack_secondary(atom/target, mob/living/user, params)
-	if(!can_see(user, get_turf(target), length = 9))
+	if(!CAN_THEY_SEE(target, user))
 		return ..()
 
 	if(max_coins && coin_count <= 0)

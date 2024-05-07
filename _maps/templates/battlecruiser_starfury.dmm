@@ -3723,7 +3723,7 @@
 /area/shuttle/sbc_starfury)
 "nR" = (
 /obj/machinery/power/smes/engineering{
-	charge = 4e+006
+	charge = 5e+007
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,

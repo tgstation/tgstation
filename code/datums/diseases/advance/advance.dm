@@ -1,6 +1,6 @@
 /*
 
-	Advance Disease is a system for Virologist to Engineer their own disease with symptoms that have effects and properties
+	Advance Disease is a system for medical to Engineer their own disease with symptoms that have effects and properties
 	which add onto the overall disease.
 
 	If you need help with creating new symptoms or expanding the advance disease, ask for Giacom on #coderbus.
@@ -17,7 +17,7 @@
  */
 
 /datum/disease/advance
-	name = "Unknown" // We will always let our Virologist name our disease.
+	name = "Unknown" // We will always let our creator name our disease.
 	desc = "An engineered disease which can contain a multitude of symptoms."
 	form = "Advanced Disease" // Will let med-scanners know that this disease was engineered.
 	agent = "advance microbes"
@@ -160,7 +160,8 @@
 
 	for(var/s in symptoms)
 		var/datum/symptom/symptom_datum = s
-		symptom_datum.Activate(src)
+		if(!symptom_datum.neutered)
+			symptom_datum.Activate(src)
 
 
 // Tell symptoms stage changed

@@ -68,10 +68,9 @@
 			coinvalues["[cointype]"] = C.get_item_credit_value()
 			qdel(C) //Sigh
 
-/obj/machinery/computer/slot_machine/Destroy()
+/obj/machinery/computer/slot_machine/on_deconstruction(disassembled)
 	if(balance)
 		give_payout(balance)
-	return ..()
 
 /obj/machinery/computer/slot_machine/process(seconds_per_tick)
 	. = ..() //Sanity checks.
@@ -95,50 +94,56 @@
 	return ..()
 
 
-/obj/machinery/computer/slot_machine/item_interaction(mob/living/user, obj/item/inserted, list/modifiers, is_right_clicking)
+/obj/machinery/computer/slot_machine/item_interaction(mob/living/user, obj/item/inserted, list/modifiers)
 	if(istype(inserted, /obj/item/coin))
 		var/obj/item/coin/inserted_coin = inserted
 		if(paymode == COIN)
 			if(prob(2))
 				if(!user.transferItemToLoc(inserted_coin, drop_location(), silent = FALSE))
-					return
+					return ITEM_INTERACT_BLOCKING
 				inserted_coin.throw_at(user, 3, 10)
 				if(prob(10))
 					balance = max(balance - SPIN_PRICE, 0)
 				to_chat(user, span_warning("[src] spits your coin back out!"))
-
+				return ITEM_INTERACT_BLOCKING
 			else
 				if(!user.temporarilyRemoveItemFromInventory(inserted_coin))
-					return
+					return ITEM_INTERACT_BLOCKING
 				balloon_alert(user, "coin insterted")
 				balance += inserted_coin.value
 				qdel(inserted_coin)
+				return ITEM_INTERACT_SUCCESS
 		else
 			balloon_alert(user, "holochips only!")
+		return ITEM_INTERACT_BLOCKING
 
-	else if(istype(inserted, /obj/item/holochip))
+	if(istype(inserted, /obj/item/holochip))
 		if(paymode == HOLOCHIP)
 			var/obj/item/holochip/inserted_chip = inserted
 			if(!user.temporarilyRemoveItemFromInventory(inserted_chip))
-				return
+				return ITEM_INTERACT_BLOCKING
 			balloon_alert(user, "[inserted_chip.credits] credit[inserted_chip.credits == 1 ? "" : "s"] inserted")
 			balance += inserted_chip.credits
 			qdel(inserted_chip)
+			return ITEM_INTERACT_SUCCESS
 		else
 			balloon_alert(user, "coins only!")
+		return ITEM_INTERACT_BLOCKING
 
-	else if(inserted.tool_behaviour == TOOL_MULTITOOL)
-		if(balance > 0)
-			visible_message("<b>[src]</b> says, 'ERROR! Please empty the machine balance before altering paymode'") //Prevents converting coins into holocredits and vice versa
-		else
-			if(paymode == HOLOCHIP)
-				paymode = COIN
-				balloon_alert(user, "now using coins")
-			else
-				paymode = HOLOCHIP
-				balloon_alert(user, "now using holochips")
+	return NONE
+
+/obj/machinery/computer/slot_machine/multitool_act(mob/living/user, obj/item/tool)
+	if(balance > 0)
+		visible_message("<b>[src]</b> says, 'ERROR! Please empty the machine balance before altering paymode'") //Prevents converting coins into holocredits and vice versa
+		return ITEM_INTERACT_BLOCKING
+
+	if(paymode == HOLOCHIP)
+		paymode = COIN
+		balloon_alert(user, "now using coins")
 	else
-		return ..()
+		paymode = HOLOCHIP
+		balloon_alert(user, "now using holochips")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/slot_machine/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -238,8 +243,10 @@
 	//WARNING: no sanity checking for user since it's not needed and would complicate things (machine should still spin even if user is gone), be wary of this if you're changing this code.
 
 /obj/machinery/computer/slot_machine/proc/do_spin()
+	if(!use_energy(active_power_usage, force = FALSE))
+		say("Not enough energy!")
+		return
 	randomize_reels()
-	use_power(active_power_usage)
 
 /obj/machinery/computer/slot_machine/proc/finish_spinning(spin_loop, mob/user, the_name)
 	toggle_reel_spin(0, REEL_DEACTIVATE_DELAY)

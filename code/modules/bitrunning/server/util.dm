@@ -98,3 +98,17 @@
 			return chosen_turf
 
 #undef MAX_DISTANCE
+
+/// Toggles broadcast on and off
+/obj/machinery/quantum_server/proc/toggle_broadcast()
+	if(!COOLDOWN_FINISHED(src, broadcast_toggle_cd))
+		return FALSE
+
+	broadcasting = !broadcasting
+
+	if(generated_domain)
+		// The cooldown only really matter is we're flipping TVs
+		COOLDOWN_START(src, broadcast_toggle_cd, 5 SECONDS)
+		// And we only flip TVs when there's a domain, because otherwise there's no cams to watch
+		set_network_broadcast_status(BITRUNNER_CAMERA_NET, broadcasting)
+	return TRUE

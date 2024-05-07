@@ -35,7 +35,7 @@ icon/MinColors(icon)
 icon/MaxColors(icon)
 	The icon is blended with a second icon where the maximum of each RGB pixel is the result.
 	Opacity may increase, as if the icons were blended with ICON_OR. You may supply a color in place of an icon.
-icon/Opaque(background = "#000000")
+icon/Opaque(background = COLOR_BLACK)
 	All alpha values are set to 255 throughout the icon. Transparent pixels become black, or whatever background color you specify.
 icon/BecomeAlphaMask()
 	You can convert a simple grayscale icon into an alpha mask to use with other icons very easily with this proc.
@@ -242,8 +242,8 @@ world
 	else
 		// solid color
 		new_icon = new(src)
-		new_icon.Blend("#000000", ICON_OVERLAY)
-		new_icon.SwapColor("#000000", null)
+		new_icon.Blend(COLOR_BLACK, ICON_OVERLAY)
+		new_icon.SwapColor(COLOR_BLACK, null)
 		new_icon.Blend(icon, ICON_OVERLAY)
 	var/icon/blend_icon = new(src)
 	blend_icon.Opaque()
@@ -251,7 +251,7 @@ world
 	Blend(new_icon, ICON_OR)
 
 // make this icon fully opaque--transparent pixels become black
-/icon/proc/Opaque(background = "#000000")
+/icon/proc/Opaque(background = COLOR_BLACK)
 	SwapColor(null, background)
 	MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,0, 0,0,0,1)
 
@@ -282,7 +282,7 @@ world
 /// Converts a list storing hsva into an rgb color
 /proc/hsv2rgb(hsv)
 	if(length(hsv) < 3)
-		return "#000000"
+		return COLOR_BLACK
 	if(length(hsv) == 3)
 		return rgb(hsv[1], hsv[2], hsv[3], space = COLORSPACE_HSV)
 	return rgb(hsv[1], hsv[2], hsv[3], hsv[4], space = COLORSPACE_HSV)
@@ -372,7 +372,7 @@ world
 	var/tone_gray = TONE[1]*0.3 + TONE[2]*0.59 + TONE[3]*0.11
 
 	if(gray <= tone_gray)
-		return BlendRGB("#000000", tone, gray/(tone_gray || 1))
+		return BlendRGB(COLOR_BLACK, tone, gray/(tone_gray || 1))
 	else
 		return BlendRGB(tone, "#ffffff", (gray-tone_gray)/((255-tone_gray) || 1))
 
@@ -679,7 +679,7 @@ world
 		if(uppercase == 1)
 			letter = uppertext(letter)
 		else if(uppercase == -1)
-			letter = lowertext(letter)
+			letter = LOWER_TEXT(letter)
 
 	var/image/text_image = new(loc = A)
 	text_image.maptext = MAPTEXT("<span style='font-size: 24pt'>[letter]</span>")

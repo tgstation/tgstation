@@ -46,7 +46,6 @@
 		var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
 		if (uplink)
 			uplink.uplink_handler.add_telecrystals(extra_tc)
-
 	var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
 	if(uplink)
 		var/datum/team/nuclear/nuke_team = get_team()

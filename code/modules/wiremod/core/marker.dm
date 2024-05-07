@@ -79,7 +79,7 @@
 		item_choice.image = item_appearance
 		selectable_targets[REF(item)] = item_choice
 
-	var/picked_ref = show_radial_menu(user, src, selectable_targets, uniqueid = TRUE, radius = 38, custom_check = CALLBACK(src, PROC_REF(check_menu), user, target), tooltips = TRUE)
+	var/picked_ref = show_radial_menu(user, src, selectable_targets, radius = 38, custom_check = CALLBACK(src, PROC_REF(check_menu), user, target), tooltips = TRUE)
 	if(!picked_ref)
 		return
 

@@ -33,6 +33,7 @@
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
+	cult_icon_state = "cat_cult"
 	///can this cat breed?
 	var/can_breed = TRUE
 	///can hold items?

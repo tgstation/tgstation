@@ -35,7 +35,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/recycler/LateInitialize()
+/obj/machinery/recycler/post_machine_initialize()
 	. = ..()
 	update_appearance(UPDATE_ICON)
 	req_one_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION, REGION_CENTCOM))
@@ -167,7 +167,7 @@
 					if(!is_operational) //we ran out of power after recycling a large amount to living stuff, time to stop
 						break
 					crush_living(CRUNCH)
-					use_power(active_power_usage)
+					use_energy(active_power_usage)
 		else // Stop processing right now without eating anything.
 			emergency_stop()
 			return
@@ -180,7 +180,7 @@
 	for(var/i = length(nom); i >= 1; i--)
 		if(!is_operational) //we ran out of power after recycling a large amount to items, time to stop
 			break
-		use_power(active_power_usage / (recycle_item(nom[i]) ? 1 : 2)) //recycling stuff that produces no material takes just half the power
+		use_energy(active_power_usage / (recycle_item(nom[i]) ? 1 : 2)) //recycling stuff that produces no material takes just half the power
 	if(nom.len && sound)
 		playsound(src, item_recycle_sound, (50 + nom.len * 5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
 	if(not_eaten)
@@ -239,8 +239,14 @@
 
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"
-	obj_flags = CAN_BE_HIT | EMAGGED | NO_DECONSTRUCTION
+	obj_flags = CAN_BE_HIT | EMAGGED
 	crush_damage = 120
+
+/obj/machinery/recycler/deathtrap/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
+	return NONE
+
+/obj/machinery/recycler/deathtrap/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
+	return NONE
 
 /obj/item/paper/guides/recycler
 	name = "paper - 'garbage duty instructions'"

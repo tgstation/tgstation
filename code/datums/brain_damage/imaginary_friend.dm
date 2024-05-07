@@ -23,7 +23,7 @@
 		qdel(src)
 		return
 	if(!friend.client && friend_initialized)
-		addtimer(CALLBACK(src, PROC_REF(reroll_friend)), 600)
+		addtimer(CALLBACK(src, PROC_REF(reroll_friend)), 1 MINUTES)
 
 /datum/brain_trauma/special/imaginary_friend/on_death()
 	..()
@@ -129,8 +129,8 @@
 
 /// Randomise friend name and appearance
 /mob/camera/imaginary_friend/proc/setup_friend()
-	var/gender = pick(MALE, FEMALE)
-	real_name = random_unique_name(gender)
+	gender = pick(MALE, FEMALE)
+	real_name = generate_random_name_species_based(gender, FALSE, /datum/species/human)
 	name = real_name
 	human_image = get_flat_human_icon(null, pick(SSjob.joinable_occupations))
 	Show()
@@ -217,11 +217,11 @@
 	message = capitalize(message)
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		client?.cmd_admin_say(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		client?.dsay(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, message)
 		return
 
 	if(check_emote(message, forced))

@@ -101,7 +101,7 @@
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
-///To allow boulders on a conveyer belt to move unobstructed if multiple machines are made on a single line
+///To allow boulders on a conveyor belt to move unobstructed if multiple machines are made on a single line
 /obj/machinery/brm/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!anchored)
 		return FALSE
@@ -268,7 +268,7 @@
 	random_boulder.pixel_x = rand(-2, 2)
 	random_boulder.pixel_y = rand(-2, 2)
 	balloon_alert_to_viewers("boulder appears!")
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	//try again if we have more boulders to work with
 	boulders_remaining -= 1

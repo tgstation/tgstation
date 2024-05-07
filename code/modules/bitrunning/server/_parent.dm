@@ -44,13 +44,12 @@
 	var/threat = 0
 	/// The turfs we can place a hololadder on.
 	var/turf/exit_turfs = list()
+	/// Determines if we broadcast to entertainment monitors or not
+	var/broadcasting = FALSE
+	/// Cooldown between being able to toggle broadcasting
+	COOLDOWN_DECLARE(broadcast_toggle_cd)
 
-/obj/machinery/quantum_server/Initialize(mapload)
-	. = ..()
-
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/quantum_server/LateInitialize()
+/obj/machinery/quantum_server/post_machine_initialize()
 	. = ..()
 
 	radio = new(src)
@@ -89,11 +88,14 @@
 /obj/machinery/quantum_server/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 
+	if(obj_flags & EMAGGED)
+		return
+
 	obj_flags |= EMAGGED
 	glitch_chance = 0.09
 
 	add_overlay(mutable_appearance('icons/obj/machines/bitrunning.dmi', "emag_overlay"))
-	balloon_alert(user, "bzzzt...")
+	balloon_alert(user, "system jailbroken...")
 	playsound(src, 'sound/effects/sparks1.ogg', 35, vary = TRUE)
 
 /obj/machinery/quantum_server/update_appearance(updates)

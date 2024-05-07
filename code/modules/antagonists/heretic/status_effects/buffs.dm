@@ -192,7 +192,7 @@
 
 	qdel(to_remove)
 
-	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_BEING_BLADE_SHIELDED, type), 1)
+	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_BEING_BLADE_SHIELDED, type), 0.1 SECONDS)
 
 	return SUCCESSFUL_BLOCK
 

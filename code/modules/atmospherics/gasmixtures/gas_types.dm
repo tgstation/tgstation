@@ -97,7 +97,7 @@
 	purchaseable = TRUE
 	base_value = 0.2
 	desc = "What the fuck is carbon dioxide?"
-	primary_color = "#808080"
+	primary_color = COLOR_GRAY
 
 /datum/gas/plasma
 	id = GAS_PLASMA
@@ -134,7 +134,7 @@
 	rarity = 50
 	base_value = 2.5
 	desc = "The most noble gas of them all. High quantities of hyper-noblium actively prevents reactions from occuring."
-	primary_color = "#008080"
+	primary_color = COLOR_TEAL
 
 /datum/gas/nitrous_oxide
 	id = GAS_N2O
@@ -208,7 +208,7 @@
 	rarity = 250
 	base_value = 1
 	desc = "Not necessarily a gas, miasma refers to biological pollutants found in the atmosphere."
-	primary_color = "#808000"
+	primary_color = COLOR_OLIVE
 
 /datum/gas/freon
 	id = GAS_FREON
@@ -280,7 +280,7 @@
 	rarity = 300
 	base_value = 4
 	desc = "A potent fire supressant. Removes oxygen from high temperature fires and cools down the area"
-	primary_color = "#800080"
+	primary_color = COLOR_PURPLE
 
 /datum/gas/helium
 	id = GAS_HELIUM
@@ -303,7 +303,7 @@
 	rarity = 1
 	base_value = 10
 	desc = "We still don't know what it does, but it sells for a lot."
-	primary_color = "#800000"
+	primary_color = COLOR_MAROON
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'

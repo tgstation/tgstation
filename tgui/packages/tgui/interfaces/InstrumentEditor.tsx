@@ -115,11 +115,12 @@ const InstrumentSettings = (props) => {
       <Box>
         Repeats Left:
         <NumberInput
+          step={1}
           minValue={0}
           disabled={playing}
           maxValue={max_repeats}
           value={repeat}
-          onChange={(e, value) =>
+          onChange={(value) =>
             act('set_repeat_amount', {
               amount: value,
             })
@@ -155,8 +156,9 @@ const InstrumentSettings = (props) => {
             <NumberInput
               minValue={note_shift_min}
               maxValue={note_shift_max}
+              step={1}
               value={note_shift}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_note_shift', {
                   amount: value,
                 })
@@ -182,10 +184,11 @@ const InstrumentSettings = (props) => {
           <Box>
             {sustain_mode_button}:
             <NumberInput
+              step={1}
               minValue={sustain_mode_min}
               maxValue={sustain_mode_max}
               value={sustain_mode_duration}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('edit_sustain_mode', {
                   amount: value,
                 })
@@ -209,10 +212,11 @@ const InstrumentSettings = (props) => {
           <Box>
             Volume:
             <NumberInput
+              step={1}
               minValue={min_volume}
               maxValue={max_volume}
               value={volume}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_volume', {
                   amount: value,
                 })
@@ -222,10 +226,11 @@ const InstrumentSettings = (props) => {
           <Box>
             Volume Dropoff Threshold:
             <NumberInput
+              step={1}
               minValue={1}
               maxValue={100}
               value={volume_dropoff_threshold}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_dropoff_volume', {
                   amount: value,
                 })

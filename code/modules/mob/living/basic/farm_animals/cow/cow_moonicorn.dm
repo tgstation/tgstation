@@ -21,14 +21,12 @@
 	food_types = list(/obj/item/food/grown/galaxythistle)
 	tame_message = "nods with respect"
 	self_tame_message = "nod with respect"
+	milked_reagent = /datum/reagent/drug/mushroomhallucinogen
 
 /mob/living/basic/cow/moonicorn/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/venomous, /datum/reagent/pax, 5, injection_flags = INJECT_CHECK_PENETRATE_THICK | INJECT_CHECK_IGNORE_SPECIES)
 	AddElement(/datum/element/movement_turf_changer, /turf/open/floor/grass/fairy)
-
-/mob/living/basic/cow/moonicorn/udder_component()
-	AddComponent(/datum/component/udder, /obj/item/udder, null, null, /datum/reagent/drug/mushroomhallucinogen)
 
 /mob/living/basic/cow/moonicorn/setup_eating()
 	var/static/list/food_types

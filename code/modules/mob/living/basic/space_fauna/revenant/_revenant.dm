@@ -33,7 +33,7 @@
 	response_harm_simple = "punch through"
 	unsuitable_atmos_damage = 0
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
 
@@ -102,7 +102,7 @@
 	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move))
 	RegisterSignal(src, COMSIG_LIVING_LIFE, PROC_REF(on_life))
-	set_random_revenant_name()
+	name = generate_random_mob_name()
 
 	GLOB.revenant_relay_mobs |= src
 
@@ -204,7 +204,7 @@
 		ShiftClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK))
-		AltClickNoInteract(src, A)
+		base_click_alt(A)
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		ranged_secondary_attack(A, modifiers)
@@ -357,13 +357,13 @@
 	returnable_list += span_bold("Be sure to read <a href=\"https://tgstation13.org/wiki/Revenant\">the wiki page</a> to learn more.")
 	return returnable_list
 
-/mob/living/basic/revenant/proc/set_random_revenant_name()
+/mob/living/basic/revenant/generate_random_mob_name()
 	var/list/built_name_strings = list()
 	built_name_strings += pick(strings(REVENANT_NAME_FILE, "spirit_type"))
 	built_name_strings += " of "
 	built_name_strings += pick(strings(REVENANT_NAME_FILE, "adverb"))
 	built_name_strings += pick(strings(REVENANT_NAME_FILE, "theme"))
-	name = built_name_strings.Join("")
+	return built_name_strings.Join("")
 
 /mob/living/basic/revenant/proc/on_baned(obj/item/weapon, mob/living/user)
 	SIGNAL_HANDLER

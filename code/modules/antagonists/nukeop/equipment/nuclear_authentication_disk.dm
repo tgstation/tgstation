@@ -104,7 +104,7 @@
 	user.visible_message(span_suicide("[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src, 'sound/machines/alarm.ogg', 50, -1, TRUE)
 	for(var/i in 1 to 100)
-		addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, add_atom_colour), (i % 2)? "#00FF00" : "#FF0000", ADMIN_COLOUR_PRIORITY), i)
+		addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, add_atom_colour), (i % 2)? COLOR_VIBRANT_LIME : COLOR_RED, ADMIN_COLOUR_PRIORITY), i)
 	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 101)
 	return MANUAL_SUICIDE
 

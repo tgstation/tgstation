@@ -340,7 +340,7 @@
 			if(STAGE_ONE)
 				steps = 1
 			if(STAGE_TWO)
-				steps = 3//Yes this is right
+				steps = 2
 			if(STAGE_THREE)
 				steps = 3
 			if(STAGE_FOUR)
@@ -386,16 +386,8 @@
 /obj/singularity/proc/can_move(turf/considered_turf)
 	if(!considered_turf)
 		return FALSE
-	if((locate(/obj/machinery/field/containment) in considered_turf) || (locate(/obj/machinery/shieldwall) in considered_turf))
+	if (HAS_TRAIT(considered_turf, TRAIT_CONTAINMENT_FIELD))
 		return FALSE
-	else if(locate(/obj/machinery/field/generator) in considered_turf)
-		var/obj/machinery/field/generator/check_generator = locate(/obj/machinery/field/generator) in considered_turf
-		if(check_generator?.active)
-			return FALSE
-	else if(locate(/obj/machinery/power/shieldwallgen) in considered_turf)
-		var/obj/machinery/power/shieldwallgen/check_shield = locate(/obj/machinery/power/shieldwallgen) in considered_turf
-		if(check_shield?.active)
-			return FALSE
 	return TRUE
 
 /obj/singularity/proc/event()
@@ -482,3 +474,16 @@
 /// Special singularity that spawns for shuttle events only
 /obj/singularity/shuttle_event
 	anchored = FALSE
+
+/// Special singularity spawned by being sucked into a black hole during emagged orion trail.
+/obj/singularity/orion
+	move_self = FALSE
+
+/obj/singularity/orion/Initialize(mapload)
+	. = ..()
+	var/datum/component/singularity/singularity = singularity_component.resolve()
+	singularity?.grav_pull = 1
+
+/obj/singularity/orion/process(seconds_per_tick)
+	if(SPT_PROB(0.5, seconds_per_tick))
+		mezzer()

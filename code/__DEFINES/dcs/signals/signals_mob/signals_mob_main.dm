@@ -1,4 +1,4 @@
-///Called on user, from base of /datum/strippable_item/alternate_action() (atom/target)
+///Called on user, from base of /datum/strippable_item/perform_alternate_action() (atom/target, action_key)
 #define COMSIG_TRY_ALT_ACTION "try_alt_action"
 	#define COMPONENT_CANT_ALT_ACTION (1<<0)
 ///Called on /basic when updating its speed, from base of /mob/living/basic/update_basic_mob_varspeed(): ()
@@ -182,8 +182,6 @@
 #define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"
 ///from base of obj/item/afterattack_secondary(): (atom/target, obj/item/weapon, proximity_flag, click_parameters)
 #define COMSIG_MOB_ITEM_AFTERATTACK_SECONDARY "mob_item_afterattack_secondary"
-///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, proximity_flag, click_parameters)
-#define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"
 ///from base of mob/RangedAttack(): (atom/A, modifiers)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
 ///from base of mob/ranged_secondary_attack(): (atom/target, modifiers)

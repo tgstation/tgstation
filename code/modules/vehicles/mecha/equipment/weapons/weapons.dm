@@ -370,7 +370,7 @@
 	if(!action_checks(target))
 		return
 	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), equip_cooldown)
-	chassis.use_power(energy_drain)
+	chassis.use_energy(energy_drain)
 	var/newtonian_target = turn(chassis.dir,180)
 	var/obj/O = new projectile(chassis.loc)
 	playsound(chassis, fire_sound, 50, TRUE)

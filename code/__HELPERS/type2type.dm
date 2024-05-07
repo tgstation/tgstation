@@ -389,7 +389,7 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 		if(/turf)
 			return "turf"
 		else //regex everything else (works for /proc too)
-			return lowertext(replacetext("[the_type]", "[type2parent(the_type)]/", ""))
+			return LOWER_TEXT(replacetext("[the_type]", "[type2parent(the_type)]/", ""))
 
 /// Return html to load a url.
 /// for use inside of browse() calls to html assets that might be loaded on a cdn.

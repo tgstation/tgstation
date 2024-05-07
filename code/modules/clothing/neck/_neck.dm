@@ -73,10 +73,9 @@
 	else
 		. += span_notice("The tie can be untied with Alt-Click.")
 
-/obj/item/clothing/neck/tie/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/neck/tie/click_alt(mob/user)
 	if(clip_on)
-		return
+		return NONE
 	to_chat(user, span_notice("You concentrate as you begin [is_tied ? "untying" : "tying"] [src]..."))
 	var/tie_timer_actual = tie_timer
 	// Mirrors give you a boost to your tying speed. I realize this stacks and I think that's hilarious.
@@ -88,11 +87,11 @@
 	// Tie/Untie our tie
 	if(!do_after(user, tie_timer_actual))
 		to_chat(user, span_notice("Your fingers fumble away from [src] as your concentration breaks."))
-		return
+		return CLICK_ACTION_BLOCKING
 	// Clumsy & Dumb people have trouble tying their ties.
 	if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
 		to_chat(user, span_notice("You just can't seem to get a proper grip on [src]!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	// Success!
 	is_tied = !is_tied
 	user.visible_message(
@@ -101,6 +100,7 @@
 	)
 	update_appearance(UPDATE_ICON)
 	user.update_clothing(ITEM_SLOT_NECK)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/neck/tie/update_icon()
 	. = ..()
@@ -409,7 +409,7 @@
 	icon_state = "infinity_scarf"
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW
-	greyscale_colors = "#EEEEEE"
+	greyscale_colors = COLOR_VERY_LIGHT_GRAY
 	greyscale_config = /datum/greyscale_config/infinity_scarf
 	greyscale_config_worn = /datum/greyscale_config/infinity_scarf/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -487,3 +487,23 @@
 /obj/item/clothing/neck/beads/Initialize(mapload)
 	. = ..()
 	color = color = pick("#ff0077","#d400ff","#2600ff","#00ccff","#00ff2a","#e5ff00","#ffae00","#ff0000", "#ffffff")
+
+/obj/item/clothing/neck/wreath
+	name = "\improper Watcher Wreath"
+	desc = "An elaborate crown made from the twisted flesh and sinew of a watcher. \
+		Wearing it makes you feel like you have eyes in the back of your head."
+	icon_state = "watcher_wreath"
+	worn_y_offset = 10
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/wreath/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "wreath_emissive", src, alpha = src.alpha)
+
+/obj/item/clothing/neck/wreath/icewing
+	name = "\improper Icewing Wreath"
+	desc = "An elaborate crown made from the twisted flesh and sinew of an icewing watcher. \
+		Wearing it sends shivers down your spine just from being near it."
+	icon_state = "icewing_wreath"

@@ -161,8 +161,6 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM S_OBJ(24) ///turf/closed/indestructible/opsglass, /obj/structure/window/reinforced/plasma/plastitanium
 #define SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE S_OBJ(25) ///obj/structure/window/reinforced/shuttle
 
-#define SMOOTH_GROUP_WINDOW_DIRECTIONAL_TRAM S_OBJ(26) ///obj/structure/tram
-
 #define SMOOTH_GROUP_LATTICE S_OBJ(31) ///obj/structure/lattice
 #define SMOOTH_GROUP_CATWALK S_OBJ(32) ///obj/structure/lattice/catwalk
 

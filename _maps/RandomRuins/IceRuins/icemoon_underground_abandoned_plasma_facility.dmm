@@ -2601,9 +2601,7 @@
 	pixel_x = 15;
 	pixel_y = 14
 	},
-/mob/living/basic/frog{
-	name = "Peter Jr."
-	},
+/mob/living/basic/frog/icemoon_facility,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
 "TK" = (
