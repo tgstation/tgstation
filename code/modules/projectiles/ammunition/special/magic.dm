@@ -82,3 +82,6 @@
 /obj/item/ammo_casing/magic/nothing
 	projectile_type = /obj/projectile/magic/nothing
 	harmful = FALSE
+
+/obj/item/ammo_casing/magic/shrink
+	projectile_type = /obj/projectile/beam/shrink/magic

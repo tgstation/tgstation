@@ -1,6 +1,7 @@
 /datum/component/shrink
 	var/olddens
 	var/oldopac
+	var/newsquash = null
 	dupe_mode = COMPONENT_DUPE_HIGHLANDER
 
 /datum/component/shrink/Initialize(shrink_time)
@@ -25,6 +26,13 @@
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
 				H.physiology.damage_resistance -= 100//carbons take double damage while shrunk
+		if(!L.GetComponent(/datum/component/squashable))
+			newsquash = L.AddComponent( \
+				/datum/component/squashable, \
+				squash_chance = 75, \
+				squash_damage = 10, \
+				squash_flags = SQUASHED_ALWAYS_IF_DEAD|SQUASHED_DONT_SQUASH_IN_CONTENTS, \
+			)
 	else
 		parent_atom.set_density(FALSE) // this is handled by the UNDENSE trait on mobs
 	parent_atom.visible_message(span_warning("[parent_atom] shrinks down to a tiny size!"),
@@ -36,6 +44,8 @@
 	speech_args[SPEECH_SPANS] |= SPAN_SMALL_VOICE
 
 /datum/component/shrink/Destroy()
+	if(newsquash)
+		qdel(newsquash)
 	var/atom/parent_atom = parent
 	parent_atom.transform = parent_atom.transform.Scale(2,2)
 	parent_atom.set_opacity(oldopac)

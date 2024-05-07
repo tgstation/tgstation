@@ -580,3 +580,10 @@
 	damage_type = BURN
 	damage = 2
 	antimagic_charge_cost = 0 // since the cards gets spammed like a shotgun
+
+/obj/projectile/beam/shrink/magic
+	shrink_time = 900
+
+/obj/projectile/beam/shrink/magic/on_hit(atom/target, blocked = 0, pierce_hit)
+	shrink_time = rand(600, 900)
+	. = ..()
