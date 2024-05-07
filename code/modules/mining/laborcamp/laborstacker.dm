@@ -106,11 +106,8 @@
 				else
 					if(!(obj_flags & EMAGGED))
 						security_radio.set_frequency(FREQ_SECURITY)
-						if(!isnull(GLOB.manifest.general))
-							for(var/datum/record/crew/record as anything in GLOB.manifest.general)
-								if(record.name == user_mob.real_name)
-									record.wanted_status = WANTED_PAROLE
-									break
+						var/datum/record/crew/target = find_record(user_mob.real_name)
+						target.wanted_status = WANTED_PAROLE
 
 						security_radio.talk_into(src, "/p [user_mob.name] returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY)
 					user_mob.log_message("has completed their labor points goal and is now sending the gulag shuttle back to the station.", LOG_GAME)
