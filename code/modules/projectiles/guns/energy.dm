@@ -44,10 +44,11 @@
 	// Ignore this on oversized/infinite cells or ammo without cost
 	if(shot_cost_percent > 0)
 		// The total amount of shots the fully charged energy gun can fire before running out
-		var/max_shots = round(100/shot_cost_percent)
+		var/max_shots = round(100/shot_cost_percent) - 1
 		// How many shots left before the energy gun's current battery runs out of energy
-		var/shots_left = round((round(clamp(cell.charge / cell.maxcharge, 0, 1) * 100))/shot_cost_percent)
+		var/shots_left = round((round(clamp(cell.charge / cell.maxcharge, 0, 1) * 100))/shot_cost_percent) - 1
 		pitch_to_use = LERP(1, 0.3, (1 - (shots_left/max_shots)) ** 2)
+		to_chat(world, "test [(1 - (shots_left/max_shots)) ** 2]")
 
 	var/sound/playing_sound = sound(suppressed ? suppressed_sound : fire_sound)
 	playing_sound.pitch = pitch_to_use
