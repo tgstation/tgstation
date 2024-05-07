@@ -185,14 +185,17 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/melee/cultblade/haunted/Initialize(mapload, mob/soul_to_bind, mob/awakener, do_bind = TRUE)
 	. = ..()
 
+	AddElement(/datum/element/heretic_focus)
+	add_traits(list(TRAIT_CASTABLE_LOC, TRAIT_SPELLS_TRANSFER_TO_LOC), INNATE_TRAIT)
 	if(do_bind && !mapload)
 		bind_soul(soul_to_bind, awakener)
-	add_traits(list(TRAIT_CASTABLE_LOC, TRAIT_SPELLS_TRANSFER_TO_LOC), INNATE_TRAIT)
-	AddElement(/datum/element/heretic_focus)
 
 /obj/item/melee/cultblade/haunted/proc/bind_soul(mob/soul_to_bind, mob/awakener)
 
 	var/datum/mind/trapped_mind = soul_to_bind?.mind
+
+	if(!trapped_mind)
+		return // Can't do anything further down the list
 
 	if(trapped_mind)
 		AddComponent(/datum/component/spirit_holding,\
@@ -202,10 +205,10 @@ Striking a noncultist, however, will tear their flesh."}
 		)
 
 	// Get the heretic's new body and antag datum.
-	trapped_entity = trapped_mind.current
+	trapped_entity = trapped_mind?.current
 	var/datum/antagonist/heretic/heretic_holder = IS_HERETIC(trapped_entity)
 	if(!heretic_holder)
-		CRASH("[soul_to_bind] not a heretic on the heretic soul blade.")
+		CRASH("[soul_to_bind] in but not a heretic on the heretic soul blade.")
 
 	// Set the sword's path for spell selection.
 	heretic_path = heretic_holder.heretic_path

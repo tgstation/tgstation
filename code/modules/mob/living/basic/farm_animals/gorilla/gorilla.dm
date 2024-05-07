@@ -59,7 +59,7 @@
 	AddElement(/datum/element/dextrous)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_BAREFOOT)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = gorilla_food)
-	AddElement(
+	AddComponent(
 		/datum/component/amputating_limbs, \
 		surgery_time = 0 SECONDS, \
 		surgery_verb = "punches",\
