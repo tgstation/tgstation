@@ -1,7 +1,0 @@
-author: "AlbertNanotracen"
-delete-after: True
-changes:
-  - qol: "using a syringe on a virus dish now fills the syringe at the cost of growth, rather than decreasing a hidden variable."
-  - balance: "Blood from a virus dish is now O- (Universal donor)"
-  - rscadd: "lantern syndrome is now real, drink space cleaner to keep it white if you want"
-  - rscadd: "Added Self-Respiration as a stage 4 symptom"

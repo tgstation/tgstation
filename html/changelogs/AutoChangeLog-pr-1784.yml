@@ -1,4 +1,0 @@
-author: "MichiRecRoom"
-delete-after: True
-changes:
-  - rscadd: "Mobs with synthetic voice boxes (such as IPCs) are now capable of using silicon-type emotes. As of the time of this change, this means they can now use: boop, buzz, buzz2, chime, honk, ping, sad, warn, slowclap."

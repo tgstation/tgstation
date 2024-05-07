@@ -65,3 +65,15 @@
       applies a station-wide effect that harms anyone attempting to cast magical spells.
   - balance: Jabberwockies and killer rabbits are now antimagic.
   - bugfix: The Cargorilla station trait works again.
+2024-05-07:
+  AlbertNanotracen:
+  - qol: using a syringe on a virus dish now fills the syringe at the cost of growth,
+      rather than decreasing a hidden variable.
+  - balance: Blood from a virus dish is now O- (Universal donor)
+  - rscadd: lantern syndrome is now real, drink space cleaner to keep it white if
+      you want
+  - rscadd: Added Self-Respiration as a stage 4 symptom
+  MichiRecRoom:
+  - rscadd: 'Mobs with synthetic voice boxes (such as IPCs) are now capable of using
+      silicon-type emotes. As of the time of this change, this means they can now
+      use: boop, buzz, buzz2, chime, honk, ping, sad, warn, slowclap.'
