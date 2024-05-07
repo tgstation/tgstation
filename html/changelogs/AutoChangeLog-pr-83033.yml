@@ -1,0 +1,4 @@
+author: "BurgerBB"
+delete-after: True
+changes:
+  - qol: "The inspector's Fedora now uses regex. When saying commands, it is much more generous on picking up trigger word."
