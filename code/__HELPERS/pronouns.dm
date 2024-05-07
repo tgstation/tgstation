@@ -38,9 +38,6 @@
 /datum/proc/p_theyve(capitalized, temp_gender)
 	. = p_they(capitalized, temp_gender) + "'" + copytext_char(p_have(temp_gender), 3)
 
-/datum/proc/p_Theyve(capitalized, temp_gender)
-	. = p_They(capitalized, temp_gender) + "'" + copytext_char(p_have(temp_gender), 3)
-
 /datum/proc/p_theyre(capitalized, temp_gender)
 	. = p_they(capitalized, temp_gender) + "'" + copytext_char(p_are(temp_gender), 2)
 
