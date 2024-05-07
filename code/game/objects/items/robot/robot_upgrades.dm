@@ -350,10 +350,6 @@
 
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	var/obj/item/borg/upgrade/hypospray/U = locate() in R
-	if(U)
-		to_chat(user, span_warning("This unit is already equipped with an expanded hypospray synthesiser!")) //check to see if we already have this module
-		return FALSE
 	if(.)
 		for(var/obj/item/reagent_containers/borghypo/medical/hypo in borg.model.modules)
 			hypo.upgrade_hypo()
