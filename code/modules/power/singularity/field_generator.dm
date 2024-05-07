@@ -206,6 +206,7 @@ no power level overlay is currently in the overlays list.
 	air_update_turf(TRUE, FALSE)
 	INVOKE_ASYNC(src, PROC_REF(cleanup))
 	addtimer(CALLBACK(src, PROC_REF(cool_down)), 5 SECONDS)
+	RemoveElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
 
 /obj/machinery/field/generator/proc/cool_down()
 	if(active || warming_up <= 0)
@@ -218,6 +219,7 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/proc/turn_on()
 	active = FG_CHARGING
 	addtimer(CALLBACK(src, PROC_REF(warm_up)), 5 SECONDS)
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
 
 /obj/machinery/field/generator/proc/warm_up()
 	if(!active)

@@ -24,12 +24,20 @@ GLOBAL_LIST_INIT(bioscrambler_parts_blacklist, typecacheof(list(
 	/obj/item/bodypart/leg/left/monkey,
 	/obj/item/bodypart/leg/right/monkey,
 	/obj/item/bodypart/leg/left/tallboy,
-	/obj/item/bodypart/leg/right/tallboy,
+	/obj/item/bodypart/leg/right/tallboy
 )))
+
+/// Blacklist of limb IDs which should not appear when bioscrambled, mostly because they looks awful and buggy.
+GLOBAL_LIST_INIT(bioscrambler_limb_id_blacklist, list(
+	BODYPART_ID_PSYKER,
+	SPECIES_SIMIAN,
+	SPECIES_MONKEY,
+	SPECIES_GOBLIN
+))
 
 /// Blacklist of organs which should not appear when bioscrambled.
 /// Either will look terrible outside of intended host, give you magical powers, are irreversible, or kill you
-GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list (
+GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list(
 	/obj/item/organ/external/pod_hair,
 	/obj/item/organ/external/spines,
 	/obj/item/organ/external/wings,
@@ -38,14 +46,35 @@ GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list (
 	/obj/item/organ/internal/brain,
 	/obj/item/organ/internal/body_egg,
 	/obj/item/organ/internal/cyberimp,
+	/obj/item/organ/internal/ears/dullahan,
+	/obj/item/organ/internal/eyes/dullahan,
 	/obj/item/organ/internal/heart/cursed,
 	/obj/item/organ/internal/heart/demon,
 	/obj/item/organ/internal/lungs,
 	/obj/item/organ/internal/monster_core,
+	/obj/item/organ/internal/tongue/dullahan,
 	/obj/item/organ/internal/vocal_cords/colossus,
 	/obj/item/organ/internal/zombie_infection,
-	/obj/item/organ/internal/empowered_borer_egg, // MONKESTATION ADDITION -- CORTICAL_BORERS
-)))
+	// monkestation additions
+	/obj/item/organ/internal/heart/gland/egg,
+	/obj/item/organ/internal/heart/gland/electric,
+	/obj/item/organ/internal/heart/gland/mindshock,
+	/obj/item/organ/internal/heart/gland/plasma,
+	/obj/item/organ/internal/heart/gland/quantum,
+	/obj/item/organ/internal/heart/gland/slime,
+	/obj/item/organ/internal/heart/gland/trauma,
+	/obj/item/organ/internal/heart/gland/viral,
+	/obj/item/organ/external/anime_head,
+	/obj/item/organ/external/anime_middle,
+	/obj/item/organ/external/anime_bottom,
+	/obj/item/organ/internal/tongue/fly,
+	/obj/item/organ/internal/stomach/fly,
+	/obj/item/organ/internal/legion_tumour,
+	/obj/item/organ/internal/liver/gondola,
+	/obj/item/organ/internal/heart/gondola,
+	/obj/item/organ/internal/tongue/gondola,
+	/obj/item/organ/internal/empowered_borer_egg
+)) - subtypesof(/obj/item/organ/external/wings/functional) - typesof(/obj/item/organ/external/wings/moth))
 
 /// List of body parts we can apply to people
 GLOBAL_LIST_EMPTY(bioscrambler_valid_parts)

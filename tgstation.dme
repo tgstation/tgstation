@@ -1362,6 +1362,7 @@
 #include "code\datums\elements\footstep_override.dm"
 #include "code\datums\elements\forced_gravity.dm"
 #include "code\datums\elements\frozen.dm"
+#include "code\datums\elements\give_turf_traits.dm"
 #include "code\datums\elements\haunted.dm"
 #include "code\datums\elements\high_fiver.dm"
 #include "code\datums\elements\honkspam.dm"

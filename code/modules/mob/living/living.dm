@@ -2431,6 +2431,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		apply_damage(rand(5,10), BRUTE, BODY_ZONE_CHEST)
 		lattice.deconstruct(FALSE)
 
+/// Prints an ominous message if something bad is going to happen to you
+/mob/living/proc/ominous_nosebleed()
+	to_chat(src, span_warning("You feel a bit nauseous for just a moment."))
+
 /**
  * Proc used by different station pets such as Ian and Poly so that some of their data can persist between rounds.
  * This base definition only contains a trait and comsig to stop memory from being (over)written.

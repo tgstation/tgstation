@@ -1,3 +1,6 @@
+#define ACTIVE_SETUPFIELDS 1
+#define ACTIVE_HASFIELDS 2
+
 /obj/structure/emergency_shield
 	name = "emergency energy shield"
 	desc = "An energy shield used to contain hull breaches."
@@ -261,12 +264,23 @@
 	balloon_alert(user, "access controller shorted")
 	return TRUE
 
+/// Turn the machine on with side effects
+/obj/machinery/power/shieldwallgen/proc/activate()
+	active = ACTIVE_SETUPFIELDS
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
+
+/// Turn the machine off with side effects
+/obj/machinery/power/shieldwallgen/proc/deactivate()
+	active = FALSE
+	for(var/d in GLOB.cardinals)
+		cleanup_field(d)
+	update_appearance()
+	RemoveElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
+
 /obj/machinery/shieldgen/update_icon_state()
 	icon_state = "shield[active ? "on" : "off"][(machine_stat & BROKEN) ? "br" : null]"
 	return ..()
 
-#define ACTIVE_SETUPFIELDS 1
-#define ACTIVE_HASFIELDS 2
 /obj/machinery/power/shieldwallgen
 	name = "shield wall generator"
 	desc = "A shield generator."
@@ -334,7 +348,7 @@
 				"If this message is ever seen, something is wrong.",
 				span_hear("You hear heavy droning fade out."))
 			icon_state = "shield_wall_gen"
-			active = FALSE
+			deactivate()
 			log_game("[src] deactivated due to lack of power at [AREACOORD(src)]")
 			for(var/d in GLOB.cardinals)
 				cleanup_field(d)
@@ -444,13 +458,13 @@
 		user.visible_message(span_notice("[user] turned \the [src] off."), \
 			span_notice("You turn off \the [src]."), \
 			span_hear("You hear heavy droning fade out."))
-		active = FALSE
+		deactivate()
 		user.log_message("deactivated [src].", LOG_GAME)
 	else
 		user.visible_message(span_notice("[user] turned \the [src] on."), \
 			span_notice("You turn on \the [src]."), \
 			span_hear("You hear heavy droning."))
-		active = ACTIVE_SETUPFIELDS
+		activate()
 		user.log_message("activated [src].", LOG_GAME)
 	add_fingerprint(user)
 
@@ -489,6 +503,7 @@
 		L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 		L.gib()
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity))
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
 
 /obj/machinery/shieldwall/Destroy()
 	gen_primary = null
