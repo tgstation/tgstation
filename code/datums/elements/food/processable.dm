@@ -71,9 +71,9 @@
 
 	else
 		if(result_gender == PLURAL)
-			examine_list += span_notice("It can be turned into some [result_name] with [span_bold(tool_desc)]</b>!")
+			examine_list += span_notice("It can be turned into some [result_name] with [span_bold(tool_desc)]!")
 		else
-			examine_list += span_notice("It can be turned into \a [result_name] with <b>[span_bold(tool_desc)]</b>!")
+			examine_list += span_notice("It can be turned into \a [result_name] with [span_bold(tool_desc)]!")
 
 /**
  * Adds context sensitivy directly to the processable file for screentips

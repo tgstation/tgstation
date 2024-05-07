@@ -54,7 +54,7 @@
 /obj/effect/fun_balloon/sentience/ui_state(mob/user)
 	return GLOB.admin_state
 
-/obj/effect/fun_balloon/sentience/ui_status(mob/user)
+/obj/effect/fun_balloon/sentience/ui_status(mob/user, datum/ui_state/state)
 	if(popped)
 		return UI_CLOSE
 	if(isAdminObserver(user)) // ignore proximity if we're an admin
@@ -87,8 +87,17 @@
 		if (!possessable.ckey && possessable.stat == CONSCIOUS) // Only assign ghosts to living, non-occupied mobs!
 			bodies += possessable
 
-	var/question = "Would you like to be [group_name]?"
-	var/list/candidates = poll_candidates_for_mobs(question, ROLE_SENTIENCE, ROLE_SENTIENCE, 10 SECONDS, bodies, POLL_IGNORE_SHUTTLE_DENIZENS)
+	var/list/candidates = SSpolling.poll_ghosts_for_targets(
+		question = "Would you like to be [span_notice(group_name)]?",
+		role = ROLE_SENTIENCE,
+		check_jobban = ROLE_SENTIENCE,
+		poll_time = 10 SECONDS,
+		checked_targets = bodies,
+		ignore_category = POLL_IGNORE_SHUTTLE_DENIZENS,
+		alert_pic = src,
+		role_name_text = "sentience fun balloon",
+	)
+
 	while(LAZYLEN(candidates) && LAZYLEN(bodies))
 		var/mob/dead/observer/C = pick_n_take(candidates)
 		var/mob/living/body = pick_n_take(bodies)

@@ -9,6 +9,7 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1125)
 	harmful = FALSE
 	var/modified = FALSE
+	var/static/list/insertable_items_hint = list(/obj/item/pen)
 
 /obj/item/ammo_casing/foam_dart/Initialize(mapload)
 	. = ..()
@@ -18,46 +19,36 @@
 	. = ..()
 	if(modified)
 		icon_state = "[base_icon_state]_empty"
-		loaded_projectile?.icon_state = "[base_icon_state]_empty"
+		loaded_projectile?.icon_state = "[loaded_projectile.base_icon_state]_empty_proj"
 		return
 	icon_state = "[base_icon_state]"
-	loaded_projectile?.icon_state = "[loaded_projectile.base_icon_state]"
+	loaded_projectile?.icon_state = "[loaded_projectile.base_icon_state]_proj"
 
 /obj/item/ammo_casing/foam_dart/update_desc()
 	. = ..()
 	desc = "It's Donk or Don't! [modified ? "... Although, this one doesn't look too safe." : "Ages 8 and up."]"
 
-/obj/item/ammo_casing/foam_dart/attackby(obj/item/A, mob/user, params)
-	var/obj/projectile/bullet/foam_dart/FD = loaded_projectile
-	if (A.tool_behaviour == TOOL_SCREWDRIVER && !modified)
+/obj/item/ammo_casing/foam_dart/examine_more(mob/user)
+	. = ..()
+	if(!HAS_TRAIT(src, TRAIT_DART_HAS_INSERT))
+		var/list/type_initial_names = list()
+		for(var/type in insertable_items_hint)
+			var/obj/item/type_item = type
+			type_initial_names += "\a [initial(type_item.name)]"
+		. += span_notice("[modified ? "You can" : "If you removed the safety cap with a screwdriver, you could"] insert a small item\
+			[length(type_initial_names) ? ", such as [english_list(type_initial_names, and_text = "or ", final_comma_text = ", ")]" : ""].")
+
+
+/obj/item/ammo_casing/foam_dart/attackby(obj/item/attacking_item, mob/user, params)
+	var/obj/projectile/bullet/foam_dart/dart = loaded_projectile
+	if (attacking_item.tool_behaviour == TOOL_SCREWDRIVER && !modified)
 		modified = TRUE
-		FD.modified = TRUE
-		FD.damage_type = BRUTE
+		dart.modified = TRUE
+		dart.damage_type = BRUTE
 		to_chat(user, span_notice("You pop the safety cap off [src]."))
 		update_appearance()
-	else if (istype(A, /obj/item/pen))
-		if(modified)
-			if(!FD.pen)
-				harmful = TRUE
-				if(!user.transferItemToLoc(A, FD))
-					return
-				FD.pen = A
-				FD.damage = 5
-				to_chat(user, span_notice("You insert [A] into [src]."))
-			else
-				to_chat(user, span_warning("There's already something in [src]."))
-		else
-			to_chat(user, span_warning("The safety cap prevents you from inserting [A] into [src]."))
 	else
 		return ..()
-
-/obj/item/ammo_casing/foam_dart/attack_self(mob/living/user)
-	var/obj/projectile/bullet/foam_dart/FD = loaded_projectile
-	if(FD.pen)
-		FD.damage = initial(FD.damage)
-		user.put_in_hands(FD.pen)
-		to_chat(user, span_notice("You remove [FD.pen] from [src]."))
-		FD.pen = null
 
 /obj/item/ammo_casing/foam_dart/riot
 	name = "riot foam dart"

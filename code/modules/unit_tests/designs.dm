@@ -18,6 +18,8 @@
 				TEST_FAIL("Design [current_design.type] requires materials but does not have have any build_path or make_reagent set")
 		else if (!isnull(current_design.build_path) || !isnull(current_design.build_path)) // //Design requires no materials but creates stuff
 			TEST_FAIL("Design [current_design.type] requires NO materials but has build_path or make_reagent set")
+		if (length(current_design.reagents_list) && !(current_design.build_type & LIMBGROWER))
+			TEST_FAIL("Design [current_design.type] requires reagents but isn't a limb grower design. Reagent costs are only supported by limb grower designs")
 
 	for(var/path in subtypesof(/datum/design/surgery))
 		var/datum/design/surgery/current_design = new path //Create an instance of each design

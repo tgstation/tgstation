@@ -310,3 +310,14 @@
 	)
 	result = /obj/item/food/popsicle/licorice_creamsicle
 	category = CAT_ICE
+
+/datum/crafting_recipe/food/meatsicle
+	name = "Meatsicle"
+	reqs = list(
+		/obj/item/popsicle_stick = 1,
+		/obj/item/food/meat/slab = 1,
+		/datum/reagent/consumable/ice = 2,
+		/datum/reagent/consumable/sugar = 2
+	)
+	result = /obj/item/food/popsicle/meatsicle
+	category = CAT_ICE

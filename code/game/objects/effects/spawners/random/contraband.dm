@@ -21,22 +21,20 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 10,
 		/obj/item/storage/fancy/cigarettes/cigpack_shadyjims = 10,
 		/obj/item/storage/box/donkpockets = 10,
+		/obj/effect/spawner/random/contraband/plus = 10,
 		/obj/item/reagent_containers/pill/maintenance = 5,
-		/obj/effect/spawner/random/contraband/plus = 5,
 	)
 
 /obj/effect/spawner/random/contraband/plus
 	name = "contraband loot spawner plus"
 	desc = "Where'd ya find this?"
 	loot = list(
-		/obj/effect/spawner/random/contraband/prison = 40,
 		/obj/item/clothing/under/syndicate = 20,
 		/obj/item/reagent_containers/cup/bottle/thermite = 20,
-		/obj/item/reagent_containers/pill/maintenance = 10,
 		/obj/item/restraints/legcuffs/beartrap = 10,
-		/obj/effect/spawner/random/contraband/narcotics = 10,
-		/obj/item/seeds/kronkus = 5,
-		/obj/item/seeds/odious_puffball = 5,
+		/obj/item/food/drug/saturnx = 5,
+		/obj/item/reagent_containers/cup/blastoff_ampoule = 5,
+		/obj/item/food/drug/moon_rock = 5,
 		/obj/item/grenade/empgrenade = 5,
 		/obj/effect/spawner/random/contraband/armory = 1,
 	)
@@ -140,4 +138,60 @@
 		/obj/effect/mine/explosive = 2,
 		/obj/item/restraints/legcuffs/beartrap/prearmed = 5, //not really a landmine, but still a good threat
 		/obj/effect/mine/shrapnel = 5,
+	)
+
+/obj/effect/spawner/random/contraband/grenades
+	name = "grenades spawner"
+	loot = list(
+		/obj/item/grenade/chem_grenade/metalfoam,
+		/obj/item/grenade/chem_grenade/cleaner,
+		/obj/effect/spawner/random/entertainment/colorful_grenades,
+		/obj/item/grenade/smokebomb,
+		/obj/item/grenade/chem_grenade/antiweed,
+		/obj/item/grenade/spawnergrenade/syndiesoap,
+		/obj/effect/spawner/random/contraband/grenades/dangerous,
+	)
+
+/obj/effect/spawner/random/contraband/grenades/dangerous
+	name = "dangerous grenades spawner"
+	loot = list(
+		/obj/item/grenade/flashbang = 3,
+		/obj/item/grenade/chem_grenade/teargas = 2,
+		/obj/item/grenade/iedcasing/spawned = 2,
+		/obj/item/grenade/empgrenade = 2,
+		/obj/item/grenade/antigravity = 2,
+		/obj/effect/spawner/random/contraband/grenades/cluster = 1,
+		/obj/effect/spawner/random/contraband/grenades/lethal = 1,
+	)
+
+/obj/effect/spawner/random/contraband/grenades/cluster
+	name = "clusterbusters spawner"
+	loot = list(
+		/obj/item/grenade/clusterbuster/smoke = 4,
+		/obj/item/grenade/clusterbuster/metalfoam = 4,
+		/obj/item/grenade/clusterbuster/cleaner = 4,
+		/obj/item/grenade/clusterbuster = 3,
+		/obj/item/grenade/clusterbuster/teargas = 3,
+		/obj/item/grenade/clusterbuster/antiweed = 3,
+		/obj/item/grenade/clusterbuster/soap = 2,
+		/obj/item/grenade/clusterbuster/emp = 1,
+		/obj/item/grenade/clusterbuster/spawner_spesscarp = 1,
+		/obj/item/grenade/clusterbuster/facid = 1,
+		/obj/item/grenade/clusterbuster/inferno = 1,
+		/obj/item/grenade/clusterbuster/clf3 = 1,
+	)
+
+/obj/effect/spawner/random/contraband/grenades/lethal
+	name = "lethal grenades spawner"
+	loot = list(
+		/obj/item/grenade/chem_grenade/incendiary = 3,
+		/obj/item/grenade/chem_grenade/facid = 3,
+		/obj/item/grenade/chem_grenade/ez_clean = 3,
+		/obj/item/grenade/chem_grenade/clf3 = 2,
+		/obj/item/grenade/gluon = 2,
+		/obj/item/grenade/chem_grenade/holy = 2,
+		/obj/item/grenade/spawnergrenade/spesscarp = 1,
+		/obj/item/grenade/spawnergrenade/cat = 1,
+		/obj/item/grenade/frag = 1,
+		/obj/item/grenade/chem_grenade/bioterrorfoam = 1,
 	)

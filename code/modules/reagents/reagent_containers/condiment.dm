@@ -424,6 +424,7 @@
 		/datum/reagent/consumable/bbqsauce = list("condi_bbq", "BBQ sauce", "Hand wipes not included."),
 		/datum/reagent/consumable/peanut_butter = list("condi_peanutbutter", "Peanut Butter", "A creamy paste made from ground peanuts."),
 		/datum/reagent/consumable/cherryjelly = list("condi_cherryjelly", "Cherry Jelly", "A jar of super-sweet cherry jelly."),
+		/datum/reagent/consumable/mayonnaise = list("condi_mayo", "Mayonnaise", "Not an instrument."),
 	)
 	/// Can't use initial(name) for this. This stores the name set by condimasters.
 	var/originalname = "condiment"
@@ -464,9 +465,12 @@
 /// Handles reagents getting added to the condiment pack.
 /obj/item/reagent_containers/condiment/pack/proc/on_reagent_add(datum/reagents/reagents)
 	SIGNAL_HANDLER
-	var/main_reagent = reagents.get_master_reagent_id()
-	if(main_reagent in possible_states)
-		var/list/temp_list = possible_states[main_reagent]
+
+	var/datum/reagent/main_reagent = reagents.get_master_reagent()
+
+	var/main_reagent_type = main_reagent?.type
+	if(main_reagent_type in possible_states)
+		var/list/temp_list = possible_states[main_reagent_type]
 		icon_state = temp_list[1]
 		desc = temp_list[3]
 	else
@@ -513,3 +517,15 @@
 	originalname = "sugar"
 	volume = 5
 	list_reagents = list(/datum/reagent/consumable/sugar = 5)
+
+/obj/item/reagent_containers/condiment/pack/soysauce
+	name = "soy sauce pack"
+	originalname = "soy sauce"
+	volume = 5
+	list_reagents = list(/datum/reagent/consumable/soysauce = 5)
+
+/obj/item/reagent_containers/condiment/pack/mayonnaise
+	name = "mayonnaise pack"
+	originalname = "mayonnaise"
+	volume = 5
+	list_reagents = list(/datum/reagent/consumable/mayonnaise = 5)

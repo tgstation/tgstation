@@ -66,7 +66,7 @@
 
 	qdel(src)
 
-/datum/component/radioactive_exposure/Destroy(force, silent)
+/datum/component/radioactive_exposure/Destroy(force)
 	var/mob/living/carbon/human/human_parent = parent
 	human_parent.clear_alert(ALERT_RADIOACTIVE_AREA)
 

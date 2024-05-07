@@ -3,7 +3,7 @@
 	name = "knife"
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "knife"
-	plane = GAME_PLANE_FOV_HIDDEN
+	layer = LOW_MOB_LAYER
 	/// The color the knife glows around it.
 	var/glow_color = "#ececff"
 

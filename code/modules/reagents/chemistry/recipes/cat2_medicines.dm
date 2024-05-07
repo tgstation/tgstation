@@ -25,7 +25,7 @@
 /datum/chemical_reaction/medicine/helbital/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	explode_fire_vortex(holder, equilibrium, 1, 1, "impure")
 	holder.chem_temp += 2.5
-	var/datum/reagent/helbital = holder.get_reagent(/datum/reagent/medicine/c2/helbital)
+	var/datum/reagent/helbital = holder.has_reagent(/datum/reagent/medicine/c2/helbital)
 	if(!helbital)
 		return
 	if(helbital.purity <= 0.25)
@@ -41,7 +41,7 @@
 
 /datum/chemical_reaction/medicine/helbital/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
-	var/datum/reagent/helbital = holder.get_reagent(/datum/reagent/medicine/c2/helbital)
+	var/datum/reagent/helbital = holder.has_reagent(/datum/reagent/medicine/c2/helbital)
 	if(!helbital)
 		return
 	if(helbital.purity <= 0.1) //So people don't ezmode this by keeping it at min
@@ -211,7 +211,6 @@
 	required_reagents = list(/datum/reagent/nitrogen = 3, /datum/reagent/acetone = 2)
 	required_catalysts = list(/datum/reagent/toxin/acid = 1)
 	mix_message = "The mixture turns into a tired reddish pink liquid."
-	optimal_temp = 1
 	optimal_temp = 900
 	overheat_temp = 720
 	optimal_ph_min = 2

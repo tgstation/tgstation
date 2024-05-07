@@ -161,7 +161,6 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define RESERVED_TURF_TYPE /turf/open/space/basic //What the turf is when not being used
 
 //Ruin Generation
-
 #define PLACEMENT_TRIES 100 //How many times we try to fit the ruin somewhere until giving up (really should just swap to some packing algo)
 
 #define PLACE_DEFAULT "random"
@@ -174,10 +173,6 @@ Always compile, always use that verb, and always make sure that it works for wha
 ///Map generation defines
 #define DEFAULT_SPACE_RUIN_LEVELS 7
 #define DEFAULT_SPACE_EMPTY_LEVELS 1
-
-#define PERLIN_LAYER_HEIGHT "perlin_height"
-#define PERLIN_LAYER_HUMIDITY "perlin_humidity"
-#define PERLIN_LAYER_HEAT "perlin_heat"
 
 #define BIOME_LOW_HEAT "low_heat"
 #define BIOME_LOWMEDIUM_HEAT "lowmedium_heat"

@@ -110,6 +110,9 @@
 		if(new_area.lighting_effects)
 			add_overlay(new_area.lighting_effects[index])
 
-	// If we're changing into an area with no lighting, and we're lit, light ourselves
-	if(!new_area.lighting_effects && old_area.lighting_effects && space_lit)
-		overlays += GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
+	// Manage removing/adding starlight overlays, we'll inherit from the area so we can drop it if the area has it already
+	if(space_lit)
+		if(!new_area.lighting_effects && old_area.lighting_effects)
+			overlays += GLOB.starlight_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
+		else if (new_area.lighting_effects && !old_area.lighting_effects)
+			overlays -= GLOB.starlight_overlays[GET_TURF_PLANE_OFFSET(src) + 1]

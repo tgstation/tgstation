@@ -107,28 +107,28 @@
 	if(get_integrity() <= 1)
 		to_chat(chassis.occupants, span_warning("Error -- Equipment critically damaged."))
 		return FALSE
-	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_EQUIPMENT(type)))
+	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_EQUIPMENT(type)))
 		return FALSE
 	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/proc/action(mob/source, atom/target, list/modifiers)
 	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), equip_cooldown)//Cooldown is on the MECH so people dont bypass it by switching equipment
 	SEND_SIGNAL(source, COMSIG_MOB_USED_MECH_EQUIPMENT, chassis)
-	chassis.use_power(energy_drain)
+	chassis.use_energy(energy_drain)
 	return TRUE
 
 /**
  * Cooldown proc variant for using do_afters between activations instead of timers
  * Example of usage is mech drills, rcds
  * arguments:
- * * target: targetted atom for action activation
+ * * target: targeted atom for action activation
  * * user: occupant to display do after for
  * * interaction_key: interaction key to pass to [/proc/do_after]
  */
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target, mob/user, interaction_key)
 	if(!chassis)
 		return FALSE
-	chassis.use_power(energy_drain)
+	chassis.use_energy(energy_drain)
 	return do_after(user, equip_cooldown, target, extra_checks = CALLBACK(src, PROC_REF(do_after_checks), target), interaction_key = interaction_key)
 
 ///Do after wrapper for mecha equipment
@@ -219,7 +219,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/set_active(active)
 	src.active = active
 
-/obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null, log_globally)
+/obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null, log_globally, list/data)
 	if(chassis)
 		return chassis.log_message("ATTACHMENT: [src] [message]", message_type, color)
 	return ..()

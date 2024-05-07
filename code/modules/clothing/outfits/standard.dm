@@ -113,6 +113,16 @@
 	r_hand = /obj/item/gun/energy/recharge/ebow
 	shoes = /obj/item/clothing/shoes/magboots/advance
 
+/datum/outfit/heretic_hallucination
+	name = "Heretic Hallucination"
+
+	uniform = /obj/item/clothing/under/color/grey
+	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
+	neck = /obj/item/clothing/neck/heretic_focus
+	r_hand = /obj/item/melee/touch_attack/mansus_fist
+	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
+	shoes = /obj/item/clothing/shoes/sneakers/black
+
 /datum/outfit/rev_cutout
 	name = "Revolutionary Cutout"
 
@@ -194,7 +204,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	l_pocket = /obj/item/melee/energy/sword/saber
-	l_hand = /obj/item/storage/secure/briefcase
+	l_hand = /obj/item/storage/briefcase/secure
 
 /datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/obj/item/clothing/under/U = H.w_uniform
@@ -204,7 +214,7 @@
 		return
 
 	//Could use a type
-	var/obj/item/storage/secure/briefcase/sec_briefcase = H.get_item_for_held_index(1)
+	var/obj/item/storage/briefcase/secure/sec_briefcase = H.get_item_for_held_index(1)
 	for(var/obj/item/briefcase_item in sec_briefcase)
 		qdel(briefcase_item)
 	for(var/i = 3 to 0 step -1)

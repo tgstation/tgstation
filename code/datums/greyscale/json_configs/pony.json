@@ -1,0 +1,30 @@
+{
+	"pony": [
+		{
+			"type": "icon_state",
+			"icon_state": "pony",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pony_hair",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"pony_dead": [
+		{
+			"type": "icon_state",
+			"icon_state": "pony_dead",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pony_hair_dead",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

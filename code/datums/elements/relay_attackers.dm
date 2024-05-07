@@ -33,8 +33,10 @@
 	))
 	REMOVE_TRAIT(source, TRAIT_RELAYING_ATTACKER, REF(src))
 
-/datum/element/relay_attackers/proc/after_attackby(atom/target, obj/item/weapon, mob/attacker)
+/datum/element/relay_attackers/proc/after_attackby(atom/target, obj/item/weapon, mob/attacker, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
+	if(!proximity_flag) // we don't care about someone clicking us with a piece of metal from across the room
+		return
 	if(weapon.force)
 		relay_attacker(target, attacker, weapon.damtype == STAMINA ? ATTACKER_STAMINA_ATTACK : ATTACKER_DAMAGING_ATTACK)
 

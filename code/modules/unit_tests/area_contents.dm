@@ -6,23 +6,28 @@
 /datum/unit_test/area_contents/Run()
 	// First, we check that there are no entries in more then one area
 	// That or duplicate entries
-	for(var/area/space in GLOB.areas)
-		for(var/turf/position as anything in space.get_contained_turfs())
-			if(!isturf(position))
-				TEST_FAIL("Found a [position.type] in [space.type]'s turf listing")
+	for (var/area/area_to_test in GLOB.areas)
+		area_to_test.cannonize_contained_turfs()
+		for (var/i in 1 to area_to_test.turfs_by_zlevel.len)
+			if (!islist(area_to_test.turfs_by_zlevel[i]))
+				TEST_FAIL("zlevel index [i] in [area_to_test.type] is not a list.")
 
-			if(position.in_contents_of)
-				var/area/existing = position.in_contents_of
-				if(existing == space)
-					TEST_FAIL("Found a duplicate turf [position.type] inside [space.type]'s turf listing")
-				else
-					TEST_FAIL("Found a shared turf [position.type] between [space.type] and [existing.type]'s turf listings")
+			for (var/turf/turf_to_check as anything in area_to_test.turfs_by_zlevel[i])
+				if (!isturf(turf_to_check))
+					TEST_FAIL("Found a [turf_to_check.type] in [area_to_test.type]'s turf listing")
 
-			var/area/dream_spot = position.loc
-			if(dream_spot != space)
-				TEST_FAIL("Found a turf [position.type] which is IN [dream_spot.type], but is registered as being in [space.type]")
+				if (turf_to_check.in_contents_of)
+					var/area/existing = turf_to_check.in_contents_of
+					if (existing == turf_to_check)
+						TEST_FAIL("Found a duplicate turf [turf_to_check.type] inside [area_to_test.type]'s turf listing")
+					else
+						TEST_FAIL("Found a shared turf [turf_to_check.type] between [area_to_test.type] and [existing.type]'s turf listings")
 
-			position.in_contents_of = space
+				var/area/turfs_actual_area = turf_to_check.loc
+				if (turfs_actual_area != area_to_test)
+					TEST_FAIL("Found a turf [turf_to_check.type] which is IN [turfs_actual_area.type], but is registered as being in [area_to_test.type]")
+
+				turf_to_check.in_contents_of = turf_to_check
 
 	for(var/turf/position in ALL_TURFS())
 		if(!position.in_contents_of)

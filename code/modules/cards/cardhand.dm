@@ -110,7 +110,7 @@
 		icon_state = null // we want an error icon to appear if this doesn't get qdel
 		return
 
-	var/starting_card_pos = max(1, cards.len - CARDS_MAX_DISPLAY_LIMIT) // only display the top cards in the cardhand
+	var/starting_card_pos = max(0, cards.len - CARDS_MAX_DISPLAY_LIMIT) + 1 // only display the top cards in the cardhand, +1 because list indexes start at 1
 	var/cards_to_display = min(CARDS_MAX_DISPLAY_LIMIT, cards.len)
 	// 90 degrees from the 1st card to the last, so split the divider by total cards displayed
 	var/angle_divider = round(90/(cards_to_display - 1))

@@ -1,5 +1,6 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+
+import { Antagonist, Category } from '../base';
 
 export const HERETIC_MECHANICAL_DESCRIPTION = multiline`
       Find hidden influences and sacrifice crew members to gain magical

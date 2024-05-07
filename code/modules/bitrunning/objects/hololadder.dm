@@ -29,14 +29,13 @@
 	if(isnull(user.mind))
 		return
 
-	var/datum/component/avatar_connection/connection = user.GetComponent(/datum/component/avatar_connection)
-	if(isnull(connection))
+	if(!HAS_TRAIT(user, TRAIT_TEMPORARY_BODY))
 		balloon_alert(user, "no connection detected.")
 		return
 
 	balloon_alert(user, "disconnecting...")
 	if(do_after(user, travel_time, src))
-		SEND_SIGNAL(user, COMSIG_BITRUNNER_SAFE_DISCONNECT)
+		SEND_SIGNAL(user, COMSIG_BITRUNNER_LADDER_SEVER)
 
 /// Helper for times when you dont have hands (gondola??)
 /obj/structure/hololadder/proc/on_enter(datum/source, atom/movable/arrived, turf/old_loc)

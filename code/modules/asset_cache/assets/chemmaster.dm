@@ -4,8 +4,8 @@
 
 /datum/asset/spritesheet/chemmaster/create_spritesheets()
 	var/list/ids = list()
-	for(var/category in GLOB.chem_master_containers)
-		for(var/obj/item/reagent_containers/container as anything in GLOB.chem_master_containers[category])
+	for(var/category in GLOB.reagent_containers)
+		for(var/obj/item/reagent_containers/container as anything in GLOB.reagent_containers[category])
 			var/icon_file = initial(container.icon)
 			var/icon_state = initial(container.icon_state)
 			var/id = sanitize_css_class_name("[container]")

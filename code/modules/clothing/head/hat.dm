@@ -90,11 +90,11 @@
 	inhand_icon_state = null
 
 /obj/item/clothing/head/cowboy
-	name = "bounty hunting hat"
+	name = "cowboy hat"
 	desc = "Ain't nobody gonna cheat the hangman in my town."
 	icon = 'icons/obj/clothing/head/cowboy.dmi'
 	worn_icon = 'icons/mob/clothing/head/cowboy.dmi'
-	icon_state = "cowboy"
+	icon_state = "cowboy_hat_brown"
 	worn_icon_state = "hunter"
 	inhand_icon_state = null
 	armor_type = /datum/armor/head_cowboy
@@ -126,6 +126,10 @@
 
 /// Bounty hunter's hat, very likely to intercept bullets
 /obj/item/clothing/head/cowboy/bounty
+	name = "bounty hunting hat"
+	desc = "Reach for the skies, pardner."
+	icon_state = "bounty_hunter"
+	worn_icon_state = "hunter"
 	deflect_chance = 50
 
 /obj/item/clothing/head/cowboy/black
@@ -134,6 +138,10 @@
 	icon_state = "cowboy_hat_black"
 	worn_icon_state = "cowboy_hat_black"
 	inhand_icon_state = "cowboy_hat_black"
+
+/// More likely to intercept bullets, since you're likely to not be wearing your modsuit with this on
+/obj/item/clothing/head/cowboy/black/syndicate
+	deflect_chance = 25
 
 /obj/item/clothing/head/cowboy/white
 	name = "ten-gallon hat"
@@ -172,12 +180,27 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	dog_fashion = /datum/dog_fashion/head/santa
 
+/obj/item/clothing/head/costume/santa/gags
+	name = "santa hat"
+	desc = "On the first day of christmas my employer gave to me!"
+	icon_state = "santa_hat"
+	greyscale_colors = "#cc0000#f8f8f8"
+	greyscale_config = /datum/greyscale_config/santa_hat
+	greyscale_config_worn = /datum/greyscale_config/santa_hat/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+
 /obj/item/clothing/head/costume/jester
 	name = "jester hat"
 	desc = "A hat with bells, to add some merriness to the suit."
-	icon_state = "jester_hat"
+	icon_state = "jester_map"
+	greyscale_colors = "#00ff00#ff0000"
+	greyscale_config = /datum/greyscale_config/jester_hat
+	greyscale_config_worn = /datum/greyscale_config/jester_hat/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
 
-/obj/item/clothing/head/costume/jester/alt
+/obj/item/clothing/head/costume/jesteralt
+	name = "jester hat"
+	desc = "A hat with bells, to add some merriness to the suit."
 	icon_state = "jester2"
 
 /obj/item/clothing/head/costume/rice_hat
@@ -294,6 +317,13 @@
 		inhand_icon_state = downsprite
 		to_chat(user, span_notice("You lower the ear flaps on the ushanka."))
 	earflaps = !earflaps
+
+/obj/item/clothing/head/costume/ushanka/polar
+	name = "bear hunter's ushanka"
+	desc = "Handcrafted in Siberia from real polar bears."
+	icon_state = "ushankadown_polar"
+	upsprite = "ushankaup_polar"
+	downsprite = "ushankadown_polar"
 
 /obj/item/clothing/head/costume/nightcap/blue
 	name = "blue nightcap"

@@ -262,6 +262,76 @@
 	result = /obj/item/food/beef_wellington
 	category = CAT_MEAT
 
+/datum/crafting_recipe/food/korta_wellington
+	name = "Korta Wellington"
+	reqs = list(
+		/obj/item/food/meat/steak = 1,
+		/obj/item/food/grown/mushroom = 1,
+		/obj/item/food/grown/garlic = 1,
+		/obj/item/food/meat/bacon = 1,
+		/obj/item/food/flatrootdough = 1,
+		/datum/reagent/consumable/korta_milk = 5,
+		/datum/reagent/consumable/salt = 2,
+		/datum/reagent/consumable/blackpepper = 2
+	)
+	result = /obj/item/food/korta_wellington
+	category = CAT_MEAT
+
+/datum/crafting_recipe/food/full_roast
+	name = "Roast Chicken Dinner"
+	reqs = list(
+		/obj/item/food/meat/steak/chicken = 2,
+		/obj/item/food/roastparsnip = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/peas = 1,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/herbs = 1,
+		/datum/reagent/consumable/flour = 5,
+		/datum/reagent/consumable/gravy = 15,
+		/datum/reagent/consumable/salt = 2,
+		/datum/reagent/consumable/blackpepper = 2
+	)
+	result = /obj/item/food/roast_dinner
+	category = CAT_MEAT
+
+/datum/crafting_recipe/food/full_roast_lizzy
+	name = "Grain-Free Roast Chicken Dinner"
+	reqs = list(
+		/obj/item/food/meat/steak/chicken = 2,
+		/obj/item/food/roastparsnip = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/peas = 1,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/herbs = 1,
+		/datum/reagent/consumable/korta_flour = 25,
+		/datum/reagent/consumable/nutriment = 5,
+		/datum/reagent/blood = 5,
+		/datum/reagent/consumable/salt = 2,
+		/datum/reagent/consumable/blackpepper = 2
+	)
+	result = /obj/item/food/roast_dinner_lizzy
+	category = CAT_MEAT
+
+/datum/crafting_recipe/food/full_roast_tofu
+	name = "Meat-Free Roast Dinner"
+	reqs = list(
+		/obj/item/food/tofu = 6,
+		/obj/item/food/roastparsnip = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/peas = 1,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/herbs = 1,
+		/datum/reagent/consumable/flour = 15,
+		/datum/reagent/consumable/soymilk = 15,
+		/datum/reagent/consumable/salt = 2,
+		/datum/reagent/consumable/blackpepper = 2
+	)
+	result = /obj/item/food/roast_dinner_tofu
+	category = CAT_MEAT
+
 /datum/crafting_recipe/food/full_english
 	name = "Full English Breakfast"
 	reqs = list(

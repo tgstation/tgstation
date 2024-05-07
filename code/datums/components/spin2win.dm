@@ -38,7 +38,7 @@
 	src.start_spin_message = start_spin_message
 	src.end_spin_message = end_spin_message
 
-/datum/component/spin2win/Destroy(force, silent)
+/datum/component/spin2win/Destroy(force)
 	on_spin_callback = null
 	on_unspin_callback = null
 	return ..()

@@ -30,8 +30,6 @@
 	var/toxloss = 0
 	///Burn damage caused by being way too hot, too cold or burnt.
 	var/fireloss = 0
-	///Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
-	var/cloneloss = 0
 
 	/// The movement intent of the mob (run/wal)
 	var/move_intent = MOVE_INTENT_RUN
@@ -225,6 +223,3 @@
 
 	/// What our current gravity state is. Used to avoid duplicate animates and such
 	var/gravity_state = null
-
-	/// Whether this mob can be mutated into a cybercop via quantum server get_valid_domain_targets(). Specifically dodges megafauna
-	var/can_be_cybercop = TRUE

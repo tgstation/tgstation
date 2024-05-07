@@ -11,7 +11,7 @@
 	muzzle_type = /obj/effect/projectile/muzzle/plasma_cutter
 	impact_type = /obj/effect/projectile/impact/plasma_cutter
 
-/obj/projectile/plasma/on_hit(atom/target)
+/obj/projectile/plasma/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target

@@ -1,7 +1,7 @@
 /// Attempts to use a mob ability on a target
 /datum/ai_planning_subtree/targeted_mob_ability
 	/// Blackboard key for the ability
-	var/ability_key = BB_TARGETTED_ACTION
+	var/ability_key = BB_TARGETED_ACTION
 	/// Blackboard key for where the target ref is stored
 	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
 	/// Behaviour to perform using ability
@@ -23,3 +23,6 @@
 	controller.queue_behavior(use_ability_behaviour, ability_key, target_key)
 	if (finish_planning)
 		return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/ai_planning_subtree/targeted_mob_ability/continue_planning
+	finish_planning = FALSE

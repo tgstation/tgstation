@@ -187,6 +187,17 @@
 	result = /obj/item/food/rootdough
 	category = CAT_LIZARD
 
+/datum/crafting_recipe/food/rootdough2
+	name = "Rootdough"
+	reqs = list(
+		/obj/item/food/grown/potato = 2,
+		/datum/reagent/consumable/soymilk = 15,
+		/datum/reagent/consumable/korta_flour = 5,
+		/datum/reagent/water = 10
+	)
+	result = /obj/item/food/rootdough
+	category = CAT_LIZARD
+
 /datum/crafting_recipe/food/snail_nizaya
 	name = "Desert snail nizaya"
 	reqs = list(
@@ -432,6 +443,25 @@
 	result = /obj/item/food/steeped_mushrooms
 	category = CAT_LIZARD
 
+/datum/crafting_recipe/food/rootbreadpbj
+	name = "Peanut butter and jelly rootwich"
+	reqs = list(
+		/obj/item/food/breadslice/root = 2,
+		/datum/reagent/consumable/peanut_butter = 5,
+		/datum/reagent/consumable/cherryjelly = 5
+	)
+	result = /obj/item/food/rootbread_peanut_butter_jelly
+	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/rootbreadpbb
+	name = "Peanut butter and banana rootwich"
+	reqs = list(
+		/obj/item/food/breadslice/root = 2,
+		/datum/reagent/consumable/peanut_butter = 5,
+		/obj/item/food/grown/banana = 1
+	)
+	result = /obj/item/food/rootbread_peanut_butter_banana
+	category = CAT_LIZARD
 // Soups
 
 /datum/crafting_recipe/food/reaction/soup/atrakor_dumplings

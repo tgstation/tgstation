@@ -23,5 +23,5 @@
 		return
 	var/new_dir = old_dir
 	if(direction == old_dir || direction == REVERSE_DIR(old_dir))
-		new_dir = angle2dir(dir2angle(direction) + pick(90, -90))
+		new_dir = turn(source.dir, pick(90, -90))
 	source.setDir(new_dir)

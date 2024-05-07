@@ -47,17 +47,15 @@
 
 /obj/machinery/airalarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if((buildstage == AIR_ALARM_BUILD_NO_CIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
-		return list("mode" = RCD_WALLFRAME, "delay" = 2 SECONDS, "cost" = 1)
+		return list("delay" = 2 SECONDS, "cost" = 1)
 	return FALSE
 
-/obj/machinery/airalarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	switch(passed_mode)
-		if(RCD_WALLFRAME)
-			user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
-			span_notice("You adapt an air alarm circuit and slot it into the assembly."))
-			buildstage = AIR_ALARM_BUILD_NO_WIRES
-			update_appearance()
-			return TRUE
+/obj/machinery/airalarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_WALLFRAME)
+		balloon_alert(user, "circuit installed")
+		buildstage = AIR_ALARM_BUILD_NO_WIRES
+		update_appearance()
+		return TRUE
 	return FALSE
 
 /obj/machinery/airalarm/attack_hand_secondary(mob/user, list/modifiers)
@@ -91,16 +89,14 @@
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
-/obj/machinery/airalarm/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron(loc, 2)
-		if((buildstage == AIR_ALARM_BUILD_NO_WIRES) || (buildstage == AIR_ALARM_BUILD_COMPLETE))
-			var/obj/item/electronics/airalarm/alarm = new(loc)
-			if(!disassembled)
-				alarm.take_damage(alarm.max_integrity * 0.5, sound_effect = FALSE)
-		if((buildstage == AIR_ALARM_BUILD_COMPLETE))
-			new /obj/item/stack/cable_coil(loc, 3)
-	qdel(src)
+/obj/machinery/airalarm/on_deconstruction(disassembled = TRUE)
+	new /obj/item/stack/sheet/iron(loc, 2)
+	if((buildstage == AIR_ALARM_BUILD_NO_WIRES) || (buildstage == AIR_ALARM_BUILD_COMPLETE))
+		var/obj/item/electronics/airalarm/alarm = new(loc)
+		if(!disassembled)
+			alarm.take_damage(alarm.max_integrity * 0.5, sound_effect = FALSE)
+	if((buildstage == AIR_ALARM_BUILD_COMPLETE))
+		new /obj/item/stack/cable_coil(loc, 3)
 
 /obj/machinery/airalarm/attackby(obj/item/W, mob/user, params)
 	update_last_used(user)
@@ -120,7 +116,7 @@
 					return
 				user.visible_message(span_notice("[user.name] wires the air alarm."), \
 									span_notice("You start wiring the air alarm..."))
-				if (do_after(user, 20, target = src))
+				if (do_after(user, 2 SECONDS, target = src))
 					if (cable.get_amount() >= 5 && buildstage == AIR_ALARM_BUILD_NO_WIRES)
 						cable.use(5)
 						to_chat(user, span_notice("You wire the air alarm."))
@@ -144,7 +140,7 @@
 
 			if(istype(W, /obj/item/electroadaptive_pseudocircuit))
 				var/obj/item/electroadaptive_pseudocircuit/P = W
-				if(!P.adapt_circuit(user, 25))
+				if(!P.adapt_circuit(user, circuit_cost = 0.025 * STANDARD_CELL_CHARGE))
 					return
 				user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 				span_notice("You adapt an air alarm circuit and slot it into the assembly."))

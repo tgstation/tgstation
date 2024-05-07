@@ -6,18 +6,14 @@
 	init_flags = NONE
 	/// The materials this alloy is made from weighted by their ratios.
 	var/list/composition = null
-	/// Breakdown flags required to reduce this alloy to its component materials.
-	var/req_breakdown_flags = BREAKDOWN_ALLOYS
 
-/datum/material/alloy/return_composition(amount=1, breakdown_flags)
-	if(req_breakdown_flags & !(breakdown_flags & req_breakdown_flags))
-		return ..()
-
+/datum/material/alloy/return_composition(amount = 1)
 	. = list()
+
 	var/list/cached_comp = composition
 	for(var/comp_mat in cached_comp)
 		var/datum/material/component_material = GET_MATERIAL_REF(comp_mat)
-		var/list/component_composition = component_material.return_composition(cached_comp[comp_mat], breakdown_flags)
+		var/list/component_composition = component_material.return_composition(cached_comp[comp_mat])
 		for(var/comp_comp_mat in component_composition)
 			.[comp_comp_mat] += component_composition[comp_comp_mat] * amount
 

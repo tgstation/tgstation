@@ -9,7 +9,6 @@
 #define MALF_AI_ROLL_COOLDOWN 1 SECONDS + MALF_AI_ROLL_TIME
 #define MALF_AI_ROLL_DAMAGE 75
 #define MALF_AI_ROLL_CRIT_CHANCE 5 //percent
-#define MALF_AI_ROLL_MAX_DISTANCE 1 //anything further away than this, and the roll will fail
 
 GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/field/containment,
@@ -167,7 +166,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/nuke_station
 	name = "Doomsday Device"
 	desc = "Activates the doomsday device. This is not reversible."
-	button_icon_state = "doomsday_device"
+	button_icon = 'icons/obj/machines/nuke_terminal.dmi'
+	button_icon_state = "nuclearbomb_timing"
 	auto_use_uses = FALSE
 
 /datum/action/innate/ai/nuke_station/Activate()
@@ -276,7 +276,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 			"[owner_AI] has activated a Doomsday Device!",
 			source = owner_AI,
 			header = "DOOOOOOM!!!",
-			action = NOTIFY_ORBIT,
 		)
 
 		qdel(src)
@@ -456,15 +455,15 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		return FALSE
 
 	caller.playsound_local(caller, 'sound/misc/interference.ogg', 50, FALSE, use_reverb = FALSE)
-	adjust_uses(-1)
-
-	if(uses)
-		desc = "[initial(desc)] It has [uses] use\s remaining."
-		build_all_button_icons()
 
 	clicked_machine.audible_message(span_userdanger("You hear a loud electrical buzzing sound coming from [clicked_machine]!"))
 	addtimer(CALLBACK(src, PROC_REF(animate_machine), caller, clicked_machine), 5 SECONDS) //kabeep!
 	unset_ranged_ability(caller, span_danger("Sending override signal..."))
+	adjust_uses(-1) //adjust after we unset the active ability since we may run out of charges, thus deleting the ability
+
+	if(uses)
+		desc = "[initial(desc)] It has [uses] use\s remaining."
+		build_all_button_icons()
 	return TRUE
 
 /datum/action/innate/ai/ranged/override_machine/proc/animate_machine(mob/living/caller, obj/machinery/to_animate)
@@ -600,6 +599,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/honk
 	name = "Percussive Intercomm Interference"
 	desc = "Rock the station's intercom system with an obnoxious HONK!"
+	button_icon = 'icons/obj/machines/wallmounts.dmi'
 	button_icon_state = "intercom"
 	uses = 2
 
@@ -623,7 +623,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	name = "Robotic Factory (Removes Shunting)"
 	description = "Build a machine anywhere, using expensive nanomachines, that can convert a living human into a loyal cyborg slave when placed inside."
 	cost = 100
-	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/place_transformer
 	unlock_text = span_notice("You make contact with Space Amazon and request a robotics factory for delivery.")
 	unlock_sound = 'sound/machines/ping.ogg'
@@ -656,9 +655,11 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	var/obj/machinery/transformer/conveyor = new(T)
 	conveyor.master_ai = owner
 	playsound(T, 'sound/effects/phasein.ogg', 100, TRUE)
-	owner_AI.can_shunt = FALSE
-	to_chat(owner, span_warning("You are no longer able to shunt your core to APCs."))
+	if(owner_AI.can_shunt) //prevent repeated messages
+		owner_AI.can_shunt = FALSE
+		to_chat(owner, span_warning("You are no longer able to shunt your core to APCs."))
 	adjust_uses(-1)
+	active = FALSE
 
 /mob/living/silicon/ai/proc/remove_transformer_image(client/C, image/I, turf/T)
 	if(C && I.loc == T)
@@ -687,7 +688,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		I.loc = T
 		client.images += I
 		I.icon_state = "[success ? "green" : "red"]Overlay" //greenOverlay and redOverlay for success and failure respectively
-		addtimer(CALLBACK(src, PROC_REF(remove_transformer_image), client, I, T), 30)
+		addtimer(CALLBACK(src, PROC_REF(remove_transformer_image), client, I, T), 3 SECONDS)
 	if(!success)
 		to_chat(src, span_warning("[alert_msg]"))
 	return success
@@ -706,7 +707,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/break_air_alarms
 	name = "Override Air Alarm Safeties"
 	desc = "Enables extremely dangerous settings on all air alarms."
-	button_icon_state = "break_air_alarms"
+	button_icon = 'icons/obj/machines/wallmounts.dmi'
+	button_icon_state = "alarmx"
 	uses = 1
 
 /datum/action/innate/ai/break_air_alarms/Activate()
@@ -762,7 +764,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/emergency_lights
 	name = "Disable Emergency Lights"
 	desc = "Disables all emergency lighting. Note that emergency lights can be restored through reboot at an APC."
-	button_icon_state = "emergency_lights"
+	button_icon = 'icons/obj/lighting.dmi'
+	button_icon_state = "floor_emergency"
 	uses = 1
 
 /datum/action/innate/ai/emergency_lights/Activate()
@@ -802,7 +805,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		if(!uses)
 			break
-		if(!C.status || C.view_range != initial(C.view_range))
+		if(!C.camera_enabled || C.view_range != initial(C.view_range))
 			C.toggle_cam(owner_AI, 0) //Reactivates the camera based on status. Badly named proc.
 			C.view_range = initial(C.view_range)
 			fixed_cameras++
@@ -832,10 +835,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 	var/upgraded_cameras = 0
 	for(var/obj/machinery/camera/camera as anything in GLOB.cameranet.cameras)
-		var/obj/structure/camera_assembly/assembly = camera.assembly_ref?.resolve()
-		if(!assembly)
-			continue
-
 		var/upgraded = FALSE
 
 		if(!camera.isXRay())
@@ -868,7 +867,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /datum/ai_module/upgrade/upgrade_turrets/upgrade(mob/living/silicon/ai/AI)
 	for(var/obj/machinery/porta_turret/ai/turret as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/porta_turret/ai))
-		turret.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES | EMP_PROTECT_CONTENTS)
+		turret.AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 		turret.max_integrity = 200
 		turret.repair_damage(200)
 		turret.lethal_projectile = /obj/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
@@ -892,7 +891,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/ai_module/upgrade/mecha_domination
 	name = "Unlock Mech Domination"
 	description = "Allows you to hack into a mech's onboard computer, shunting all processes into it and ejecting any occupants. \
-		Once uploaded to the mech, it is impossible to leave. Do not allow the mech to leave the station's vicinity or allow it to be destroyed. \
+		Do not allow the mech to leave the station's vicinity or allow it to be destroyed. \
 		Upgrade is done immediately upon purchase."
 	cost = 30
 	upgrade = TRUE
@@ -946,6 +945,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	var/prev_verbs
 	/// Saved span state, used to restore after a voice change
 	var/prev_span
+	/// The list of available voices
+	var/static/list/voice_options = list("normal", SPAN_ROBOT, SPAN_YELL, SPAN_CLOWN)
 
 /obj/machinery/ai_voicechanger/Initialize(mapload)
 	. = ..()
@@ -973,11 +974,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /obj/machinery/ai_voicechanger/ui_data(mob/user)
 	var/list/data = list()
-	data["voices"] = list("normal", SPAN_ROBOT, SPAN_YELL, SPAN_CLOWN) //manually adding this since i dont see other option
+	data["voices"] = voice_options
 	data["loud"] = loudvoice
 	data["on"] = changing_voice
 	data["say_verb"] = say_verb
 	data["name"] = say_name
+	data["selected"] = say_span || owner.speech_span
 	return data
 
 /obj/machinery/ai_voicechanger/ui_act(action, params)
@@ -1011,9 +1013,23 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 			if(changing_voice)
 				owner.radio.use_command = loudvoice
 		if("look")
-			say_span = params["look"]
+			var/selection = params["look"]
+			if(isnull(selection))
+				return FALSE
+
+			var/found = FALSE
+			for(var/option in voice_options)
+				if(option == selection)
+					found = TRUE
+					break
+			if(!found)
+				stack_trace("User attempted to select an unavailable voice option")
+				return FALSE
+
+			say_span = selection
 			if(changing_voice)
 				owner.speech_span = say_span
+			to_chat(usr, span_notice("Voice set to [selection]."))
 		if("verb")
 			say_verb = params["verb"]
 			if(changing_voice)
@@ -1025,7 +1041,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 			say_name = params["name"]
 
 /datum/ai_module/utility/emag
-	name = "Targetted Safeties Override"
+	name = "Targeted Safeties Override"
 	description = "Allows you to disable the safeties of any machinery on the station, provided you can access it."
 	cost = 20
 	power_type = /datum/action/innate/ai/ranged/emag
@@ -1033,7 +1049,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	unlock_sound = SFX_SPARKS
 
 /datum/action/innate/ai/ranged/emag
-	name = "Targetted Safeties Override"
+	name = "Targeted Safeties Override"
 	desc = "Allows you to effectively emag anything you click on."
 	button_icon = 'icons/obj/card.dmi'
 	button_icon_state = "emag"
@@ -1138,6 +1154,11 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	enable_text = span_notice("Your inner servos shift as you prepare to roll around. Click adjacent tiles to roll onto them!")
 	disable_text = span_notice("You disengage your rolling protocols.")
 
+	/// How long does it take for us to roll?
+	var/roll_over_time = MALF_AI_ROLL_TIME
+	/// On top of [roll_over_time], how long does it take for the ability to cooldown?
+	var/roll_over_cooldown = MALF_AI_ROLL_COOLDOWN
+
 /datum/action/innate/ai/ranged/core_tilt/New()
 	. = ..()
 	desc = "[desc] It has [uses] use\s remaining."
@@ -1152,7 +1173,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		return FALSE
 	var/mob/living/silicon/ai/ai_caller = caller
 
-	if (ai_caller.incapacitated())
+	if (ai_caller.incapacitated() || !isturf(ai_caller.loc))
 		return FALSE
 
 	var/turf/target = get_turf(clicked_on)
@@ -1163,30 +1184,32 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		target.balloon_alert(ai_caller, "can't roll on yourself!")
 		return FALSE
 
-	if (get_dist(ai_caller, target) > MALF_AI_ROLL_MAX_DISTANCE)
-		target.balloon_alert(ai_caller, "too far!")
-		return FALSE
-
 	var/picked_dir = get_dir(ai_caller, target)
+	if (!picked_dir)
+		return FALSE
+	var/turf/temp_target = get_step(ai_caller, picked_dir) // we can move during the timer so we cant just pass the ref
 
-	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(target, MALF_AI_ROLL_TIME)
+	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(temp_target, roll_over_time)
 	ai_caller.balloon_alert_to_viewers("rolling...")
-	addtimer(CALLBACK(src, PROC_REF(do_roll_over), ai_caller, picked_dir), MALF_AI_ROLL_TIME)
+	addtimer(CALLBACK(src, PROC_REF(do_roll_over), ai_caller, picked_dir), roll_over_time)
 
 	adjust_uses(-1)
 	if(uses)
 		desc = "[initial(desc)] It has [uses] use\s remaining."
 		build_all_button_icons()
 
-	COOLDOWN_START(src, time_til_next_tilt, MALF_AI_ROLL_COOLDOWN)
+	COOLDOWN_START(src, time_til_next_tilt, roll_over_cooldown)
 
 /datum/action/innate/ai/ranged/core_tilt/proc/do_roll_over(mob/living/silicon/ai/ai_caller, picked_dir)
+	if (ai_caller.incapacitated() || !isturf(ai_caller.loc)) // prevents bugs where the ai is carded and rolls
+		return
+
 	var/turf/target = get_step(ai_caller, picked_dir) // in case we moved we pass the dir not the target turf
 
 	if (isnull(target))
 		return
 
-	var/paralyze_time = clamp(6 SECONDS, 0 SECONDS, (MALF_AI_ROLL_COOLDOWN * 0.9)) //the clamp prevents stunlocking as the max is always a little less than the cooldown between rolls
+	var/paralyze_time = clamp(6 SECONDS, 0 SECONDS, (roll_over_cooldown * 0.9)) //the clamp prevents stunlocking as the max is always a little less than the cooldown between rolls
 
 	return ai_caller.fall_and_crush(target, MALF_AI_ROLL_DAMAGE, MALF_AI_ROLL_CRIT_CHANCE, null, paralyze_time, picked_dir, rotation = get_rotation_from_dir(picked_dir))
 
@@ -1321,4 +1344,3 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 #undef MALF_AI_ROLL_TIME
 #undef MALF_AI_ROLL_DAMAGE
 #undef MALF_AI_ROLL_CRIT_CHANCE
-#undef MALF_AI_ROLL_MAX_DISTANCE

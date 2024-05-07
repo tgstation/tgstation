@@ -17,7 +17,7 @@
 
 	abstract_type = /datum/traitor_objective/destroy_heirloom
 
-	/// The jobs that this objective is targetting.
+	/// The jobs that this objective is targeting.
 	var/list/target_jobs
 	/// the item we need to destroy
 	var/obj/item/target_item
@@ -41,7 +41,6 @@
 	target_jobs = list(
 		// Medical
 		/datum/job/doctor,
-		/datum/job/virologist,
 		/datum/job/paramedic,
 		/datum/job/psychologist,
 		/datum/job/chemist,

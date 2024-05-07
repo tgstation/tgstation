@@ -21,6 +21,7 @@
 
 	var/dat = "<center><B>Game Panel</B></center><hr>"
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
+		dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
 		dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart=1'>(Force Roundstart Rulesets)</A><br>"
 		if (GLOB.dynamic_forced_roundstart_ruleset.len > 0)
 			for(var/datum/dynamic_ruleset/roundstart/rule in GLOB.dynamic_forced_roundstart_ruleset)
@@ -30,6 +31,7 @@
 	dat += "<hr/>"
 	if(SSticker.IsRoundInProgress())
 		dat += "<a href='?src=[REF(src)];[HrefToken()];gamemode_panel=1'>(Game Mode Panel)</a><BR>"
+		dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
 	dat += {"
 		<BR>
 		<A href='?src=[REF(src)];[HrefToken()];create_object=1'>Create Object</A><br>
@@ -46,14 +48,9 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
-/datum/admins/proc/spawn_atom(object as text)
-	set category = "Debug"
-	set desc = "(atom path) Spawn an atom"
-	set name = "Spawn"
-
-	if(!check_rights(R_SPAWN) || !object)
+ADMIN_VERB(spawn_atom, R_SPAWN, "Spawn", "Spawn an atom.", ADMIN_CATEGORY_DEBUG, object as text)
+	if(!object)
 		return
-
 	var/list/preparsed = splittext(object,":")
 	var/path = preparsed[1]
 	var/amount = 1
@@ -63,7 +60,7 @@
 	var/chosen = pick_closest_path(path)
 	if(!chosen)
 		return
-	var/turf/T = get_turf(usr)
+	var/turf/T = get_turf(user.mob)
 
 	if(ispath(chosen, /turf))
 		T.ChangeTurf(chosen)
@@ -72,21 +69,14 @@
 			var/atom/A = new chosen(T)
 			A.flags_1 |= ADMIN_SPAWNED_1
 
-	log_admin("[key_name(usr)] spawned [amount] x [chosen] at [AREACOORD(usr)]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Atom") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	log_admin("[key_name(user)] spawned [amount] x [chosen] at [AREACOORD(user.mob)]")
+	BLACKBOX_LOG_ADMIN_VERB("Spawn Atom")
 
-/datum/admins/proc/podspawn_atom(object as text)
-	set category = "Debug"
-	set desc = "(atom path) Spawn an atom via supply drop"
-	set name = "Podspawn"
-
-	if(!check_rights(R_SPAWN))
-		return
-
+ADMIN_VERB(spawn_atom_pod, R_SPAWN, "PodSpawn", "Spawn an atom via supply drop.", ADMIN_CATEGORY_DEBUG, object as text)
 	var/chosen = pick_closest_path(object)
 	if(!chosen)
 		return
-	var/turf/target_turf = get_turf(usr)
+	var/turf/target_turf = get_turf(user.mob)
 
 	if(ispath(chosen, /turf))
 		target_turf.ChangeTurf(chosen)
@@ -99,26 +89,19 @@
 		var/atom/A = new chosen(pod)
 		A.flags_1 |= ADMIN_SPAWNED_1
 
-	log_admin("[key_name(usr)] pod-spawned [chosen] at [AREACOORD(usr)]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Podspawn Atom") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	log_admin("[key_name(user)] pod-spawned [chosen] at [AREACOORD(user.mob)]")
+	BLACKBOX_LOG_ADMIN_VERB("Podspawn Atom")
 
-/datum/admins/proc/spawn_cargo(object as text)
-	set category = "Debug"
-	set desc = "(atom path) Spawn a cargo crate"
-	set name = "Spawn Cargo"
-
-	if(!check_rights(R_SPAWN))
-		return
-
+ADMIN_VERB(spawn_cargo, R_SPAWN, "Spawn Cargo", "Spawn a cargo crate.", ADMIN_CATEGORY_DEBUG, object as text)
 	var/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/datum/supply_pack)))
 	if(!chosen)
 		return
 	var/datum/supply_pack/S = new chosen
 	S.admin_spawned = TRUE
-	S.generate(get_turf(usr))
+	S.generate(get_turf(user.mob))
 
-	log_admin("[key_name(usr)] spawned cargo pack [chosen] at [AREACOORD(usr)]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Cargo") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	log_admin("[key_name(user)] spawned cargo pack [chosen] at [AREACOORD(user.mob)]")
+	BLACKBOX_LOG_ADMIN_VERB("Spawn Cargo")
 
 /datum/admins/proc/dynamic_mode_options(mob/user)
 	var/dat = {"
@@ -143,10 +126,109 @@
 
 	user << browse(dat, "window=dyn_mode_options;size=900x650")
 
-/datum/admins/proc/create_or_modify_area()
-	set category = "Debug"
-	set name = "Create or modify area"
-	create_area(usr)
+/datum/admins/proc/dynamic_ruleset_manager(mob/user)
+	var/dat = "<center><B><h2>Dynamic Ruleset Management</h2></B></center><hr>\
+		Change these options to forcibly enable or disable dynamic rulesets.<br/>\
+		Disabled rulesets will never run, even if they would otherwise be valid.<br/>\
+		Enabled rulesets will run even if the qualifying minimum of threat or player count is not present, this does not guarantee that they will necessarily be chosen (for example their weight may be set to 0 in config).<br/>\
+		\[<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_all_on=1'>force enable all</A> / \
+		<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_all_off=1'>force disable all</A> / \
+		<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_all_reset=1'>reset all</A>\]"
+
+	if (SSticker.current_state <= GAME_STATE_PREGAME) // Don't bother displaying after the round has started
+		var/static/list/rulesets_by_context = list()
+		if (!length(rulesets_by_context))
+			for (var/datum/dynamic_ruleset/rule as anything in subtypesof(/datum/dynamic_ruleset))
+				if (initial(rule.name) == "")
+					continue
+				LAZYADD(rulesets_by_context[initial(rule.ruletype)], rule)
+
+		dat += dynamic_ruleset_category_pre_start_display("Roundstart", rulesets_by_context[ROUNDSTART_RULESET])
+		dat += dynamic_ruleset_category_pre_start_display("Latejoin", rulesets_by_context[LATEJOIN_RULESET])
+		dat += dynamic_ruleset_category_pre_start_display("Midround", rulesets_by_context[MIDROUND_RULESET])
+		user << browse(dat, "window=dyn_mode_options;size=900x650")
+		return
+
+	var/pop_count = length(GLOB.alive_player_list)
+	var/threat_level = SSdynamic.threat_level
+	dat += dynamic_ruleset_category_during_round_display("Latejoin", SSdynamic.latejoin_rules, pop_count, threat_level)
+	dat += dynamic_ruleset_category_during_round_display("Midround", SSdynamic.midround_rules, pop_count, threat_level)
+	user << browse(dat, "window=dyn_mode_options;size=900x650")
+
+/datum/admins/proc/dynamic_ruleset_category_pre_start_display(title, list/rules)
+	var/dat = "<B><h3>[title]</h3></B><table class='ml-2'>"
+	for (var/datum/dynamic_ruleset/rule as anything in rules)
+		var/forced = GLOB.dynamic_forced_rulesets[rule] || RULESET_NOT_FORCED
+		var/color = COLOR_BLACK
+		switch (forced)
+			if (RULESET_FORCE_ENABLED)
+				color = COLOR_GREEN
+			if (RULESET_FORCE_DISABLED)
+				color = COLOR_RED
+		dat += "<tr><td><b>[initial(rule.name)]</b></td><td>\[<font color=[color]>[forced]</font>\]</td><td>\[\
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_on=[text_ref(rule)]'>force enabled</A> /\
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_off=[text_ref(rule)]'>force disabled</A> /\
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_reset=[text_ref(rule)]'>reset</A>\]</td></tr>"
+	dat += "</table>"
+	return dat
+
+/datum/admins/proc/dynamic_ruleset_category_during_round_display(title, list/rules, pop_count, threat_level)
+	var/dat = "<B><h3>[title]</h3></B><table class='ml-2'>"
+	for (var/datum/dynamic_ruleset/rule as anything in rules)
+		var/active = rule.acceptable(population = pop_count, threat_level = threat_level) && rule.weight > 0
+		var/forced = GLOB.dynamic_forced_rulesets[rule.type] || RULESET_NOT_FORCED
+		var/color = (active) ? COLOR_GREEN : COLOR_RED
+		var/explanation = ""
+		if (!active)
+			if (rule.weight <= 0)
+				explanation = " - Weight is zero"
+			else if (forced == RULESET_FORCE_DISABLED)
+				explanation = " - Forcibly disabled"
+			else if (forced == RULESET_FORCE_ENABLED)
+				explanation = " - Failed spawn conditions"
+			else if (!rule.is_valid_population(pop_count))
+				explanation = " - Invalid player count"
+			else if (!rule.is_valid_threat(pop_count, threat_level))
+				explanation = " - Insufficient threat"
+			else
+				explanation = " - Failed spawn conditions"
+		else if (forced == RULESET_FORCE_ENABLED)
+			explanation = " - Forcibly enabled"
+		active = active ? "Active" : "Inactive"
+
+		dat += "<tr><td><b>[rule.name]</b></td>\
+			<td>\[Weight : [rule.weight]\]\
+			<td>\[<font color=[color]>[active][explanation]</font>\]</td><td>\[\
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_on=[text_ref(rule.type)]'>force enabled</A> /\
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_off=[text_ref(rule.type)]'>force disabled</A> /\
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_reset=[text_ref(rule.type)]'>reset</A>\]</td>\
+			<td>\[<A href='?src=[REF(src)];[HrefToken()];f_inspect_ruleset=[text_ref(rule)]'>VV</A>\]</td></tr>"
+	dat += "</table>"
+	return dat
+
+
+/datum/admins/proc/force_all_rulesets(mob/user, force_value)
+	if (force_value == RULESET_NOT_FORCED)
+		GLOB.dynamic_forced_rulesets = list()
+	else
+		for (var/datum/dynamic_ruleset/rule as anything in subtypesof(/datum/dynamic_ruleset))
+			GLOB.dynamic_forced_rulesets[rule] = force_value
+	var/logged_message = "[key_name(user)] set all dynamic rulesets to [force_value]."
+	log_admin(logged_message)
+	message_admins(logged_message)
+	dynamic_ruleset_manager(user)
+
+/datum/admins/proc/set_dynamic_ruleset_forced(mob/user, datum/dynamic_ruleset/type, force_value)
+	if (isnull(type))
+		return
+	GLOB.dynamic_forced_rulesets[type] = force_value
+	dynamic_ruleset_manager(user)
+	var/logged_message = "[key_name(user)] set '[initial(type.name)] ([initial(type.ruletype)])' to [GLOB.dynamic_forced_rulesets[type]]."
+	log_admin(logged_message)
+	message_admins(logged_message)
+
+ADMIN_VERB(create_or_modify_area, R_DEBUG, "Create Or Modify Area", "Create of modify an area. wow.", ADMIN_CATEGORY_DEBUG)
+	create_area(user.mob)
 
 //Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked
 //defaults to kicking everyone (afk + non afk clients in the lobby)
@@ -196,7 +278,7 @@
 
 	message_admins(span_adminnotice("[key_name_admin(usr)] has put [frommob.key] in control of [tomob.name]."))
 	log_admin("[key_name(usr)] stuffed [frommob.key] into [tomob.name].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Ghost Drag Control")
+	BLACKBOX_LOG_ADMIN_VERB("Ghost Drag Control")
 
 	tomob.key = frommob.key
 	tomob.client?.init_verbs()

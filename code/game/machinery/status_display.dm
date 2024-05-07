@@ -30,9 +30,9 @@
 	var/message2 = ""
 
 	/// Normal text color
-	var/text_color = "#09F"
+	var/text_color = COLOR_DISPLAY_BLUE
 	/// Color for headers, eg. "- ETA -"
-	var/header_text_color = "#2CF"
+	var/header_text_color = COLOR_DISPLAY_PURPLE
 
 /obj/item/wallframe/status_display
 	name = "status display frame"
@@ -72,16 +72,13 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/status_display/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
-		return
+/obj/machinery/status_display/on_deconstruction(disassembled)
 	if(!disassembled)
 		new /obj/item/stack/sheet/iron(drop_location(), 2)
 		new /obj/item/shard(drop_location())
 		new /obj/item/shard(drop_location())
 	else
 		new /obj/item/wallframe/status_display(drop_location())
-	qdel(src)
 
 /// Immediately change the display to the given picture.
 /obj/machinery/status_display/proc/set_picture(state)
@@ -151,7 +148,7 @@
 	)
 		set_light(0)
 		return
-	set_light(1.5, 0.7, LIGHT_COLOR_BLUE) // blue light
+	set_light(1.5, 0.7, LIGHT_COLOR_FAINT_CYAN) // blue light
 
 /obj/machinery/status_display/update_overlays(updates)
 	. = ..()
@@ -374,8 +371,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 /obj/machinery/status_display/supply
 	name = "supply display"
 	current_mode = SD_MESSAGE
-	text_color = "#F90"
-	header_text_color = "#FC2"
+	text_color = COLOR_DISPLAY_ORANGE
+	header_text_color = COLOR_DISPLAY_YELLOW
 
 /obj/machinery/status_display/supply/process()
 	if(machine_stat & NOPOWER)
@@ -409,8 +406,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	current_mode = SD_MESSAGE
 	var/shuttle_id
 
-	text_color = "#0F5"
-	header_text_color = "#2FC"
+	text_color = COLOR_DISPLAY_GREEN
+	header_text_color = COLOR_DISPLAY_CYAN
 
 /obj/machinery/status_display/shuttle/process()
 	if(!shuttle_id || (machine_stat & NOPOWER))
@@ -544,6 +541,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 			status_signal.data["picture_state"] = picture_map[picture.value]
 
 	connected_display.receive_signal(status_signal)
+
+/obj/machinery/status_display/random_message
+	current_mode = SD_MESSAGE
+	/// list to pick the first line from
+	var/list/firstline_to_secondline = list()
+
+/obj/machinery/status_display/random_message/Initialize(mapload, ndir, building)
+	if(firstline_to_secondline?.len)
+		message1 = pick(firstline_to_secondline)
+		message2 = firstline_to_secondline[message1]
+	return ..() // status displays call update appearance on init so i suppose we should set the messages before calling parent as to not call it twice
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 
 #undef MAX_STATIC_WIDTH
 #undef FONT_STYLE

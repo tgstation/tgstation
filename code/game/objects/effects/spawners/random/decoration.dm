@@ -93,6 +93,14 @@
 	loot_type_path = /obj/structure/showcase
 	loot = list()
 
+/obj/effect/spawner/random/decoration/microwave
+	name = "microwave showcase spawner"
+	icon_state = "showcase"
+	loot = list(
+		/obj/structure/showcase/machinery/microwave,
+		/obj/structure/showcase/machinery/microwave_engineering,
+	)
+
 /obj/effect/spawner/random/decoration/glowstick
 	name = "random colored glowstick"
 	icon_state = "glowstick"

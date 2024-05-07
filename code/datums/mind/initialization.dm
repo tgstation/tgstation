@@ -11,6 +11,7 @@
 	mind.set_current(src)
 	// There's nowhere else to set this up, mind code makes me depressed
 	mind.antag_hud = add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/antagonist_hud, "combo_hud", mind)
+	SEND_SIGNAL(src, COMSIG_MOB_MIND_INITIALIZED, mind)
 
 /mob/living/carbon/mind_initialize()
 	..()

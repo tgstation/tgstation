@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "Inducers no longer break completely after trying to charge a PDA with them."

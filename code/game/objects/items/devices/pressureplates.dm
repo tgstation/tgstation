@@ -91,3 +91,21 @@
 
 	active = underfloor_accessibility < UNDERFLOOR_VISIBLE
 
+/obj/item/pressure_plate/puzzle
+	protected = TRUE
+	anchored = TRUE //this prevents us from being picked up
+	active = TRUE
+	removable_signaller = FALSE
+	/// puzzle id we send if stepped on
+	var/puzzle_id
+	/// queue size must match
+	var/queue_size = 2
+
+/obj/item/pressure_plate/puzzle/Initialize(mapload)
+	. = ..()
+	if(!isnull(puzzle_id))
+		SSqueuelinks.add_to_queue(src, puzzle_id, queue_size)
+
+/obj/item/pressure_plate/puzzle/trigger()
+	can_trigger = FALSE
+	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)

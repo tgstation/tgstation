@@ -1,0 +1,1 @@
+/obj/item/flashlight/@SUBTYPES{on=@ANY} : /obj/item/flashlight/@SUBTYPES{@OLD;on=@SKIP;start_on=@OLD:on}

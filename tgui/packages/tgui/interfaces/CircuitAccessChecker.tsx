@@ -1,17 +1,18 @@
-import { useBackend } from '../backend';
-import { Window } from '../layouts';
-import { LabeledList, Button } from '../components';
-import { AccessConfig } from './common/AccessConfig';
 import { BooleanLike } from 'common/react';
+
+import { useBackend } from '../backend';
+import { Button, LabeledList } from '../components';
+import { Window } from '../layouts';
+import { AccessConfig, Region } from './common/AccessConfig';
 
 type Data = {
   oneAccess: BooleanLike;
-  regions: string[];
+  regions: Region[];
   accesses: string[];
 };
 
-export const CircuitAccessChecker = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const CircuitAccessChecker = (props) => {
+  const { act, data } = useBackend<Data>();
   const { oneAccess, regions = [], accesses = [] } = data;
 
   return (

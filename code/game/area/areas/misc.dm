@@ -22,7 +22,10 @@
 
 /area/space/nearstation
 	icon_state = "space_near"
-	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	area_flags = UNIQUE_AREA
+	static_lighting = TRUE
+	base_lighting_alpha = 0
+	base_lighting_color = null
 
 /area/misc/start
 	name = "start area"
@@ -31,6 +34,7 @@
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
+	ambient_buzz = null
 
 /area/misc/testroom
 	requires_power = FALSE

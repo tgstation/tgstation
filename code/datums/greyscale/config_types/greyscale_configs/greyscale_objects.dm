@@ -112,11 +112,6 @@
 	name = "Hazard Striped Canister"
 	json_config = 'code/datums/greyscale/json_configs/canister_hazard.json'
 
-/datum/greyscale_config/prototype_canister
-	name = "Prototype Canister"
-	icon_file = 'icons/obj/pipes_n_cables/prototype_canister.dmi'
-	json_config = 'code/datums/greyscale/json_configs/canister_proto.json'
-
 /datum/greyscale_config/stationary_canister
 	name = "Stationary Canister"
 	icon_file = 'icons/obj/pipes_n_cables/stationary_canisters.dmi'

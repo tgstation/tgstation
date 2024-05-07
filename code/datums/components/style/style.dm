@@ -96,8 +96,6 @@
 	if(multitooled)
 		src.multitooled = multitooled
 
-	RegisterSignal(src, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_parent_multitool))
-
 /datum/component/style/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_ITEM_AFTERATTACK, PROC_REF(hotswap))
 	RegisterSignal(parent, COMSIG_MOB_MINED, PROC_REF(on_mine))
@@ -105,7 +103,7 @@
 	RegisterSignal(parent, COMSIG_MOB_EMOTED("flip"), PROC_REF(on_flip))
 	RegisterSignal(parent, COMSIG_MOB_EMOTED("spin"), PROC_REF(on_spin))
 	RegisterSignal(parent, COMSIG_MOB_ITEM_ATTACK, PROC_REF(on_attack))
-	RegisterSignal(parent, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(on_punch))
+	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_punch))
 	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH, PROC_REF(on_death))
 	RegisterSignal(parent, COMSIG_LIVING_RESONATOR_BURST, PROC_REF(on_resonator_burst))
 	RegisterSignal(parent, COMSIG_LIVING_PROJECTILE_PARRIED, PROC_REF(on_projectile_parry))
@@ -132,7 +130,7 @@
 	UnregisterSignal(parent, COMSIG_MOB_MINED)
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
 	UnregisterSignal(parent, list(COMSIG_MOB_EMOTED("flip"), COMSIG_MOB_EMOTED("spin")))
-	UnregisterSignal(parent, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_HUMAN_MELEE_UNARMED_ATTACK))
+	UnregisterSignal(parent, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_LIVING_UNARMED_ATTACK))
 	UnregisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH)
 	UnregisterSignal(parent, COMSIG_LIVING_RESONATOR_BURST)
 	UnregisterSignal(parent, COMSIG_LIVING_PROJECTILE_PARRIED)
@@ -144,7 +142,7 @@
 		qdel(projectile_parry.resolve())
 
 
-/datum/component/style/Destroy(force, silent)
+/datum/component/style/Destroy(force)
 	STOP_PROCESSING(SSdcs, src)
 	var/mob/mob_parent = parent
 	if(mob_parent.hud_used)
@@ -342,12 +340,6 @@
 	INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, put_in_hands), target)
 	source.visible_message(span_notice("[source] quickly swaps [weapon] out with [target]!"), span_notice("You quickly swap [weapon] with [target]."))
 
-
-/datum/component/style/proc/on_parent_multitool(datum/source, mob/living/user, obj/item/tool, list/recipes)
-	multitooled = !multitooled
-	user.balloon_alert(user, "meter [multitooled ? "" : "un"]hacked")
-
-
 // Point givers
 /datum/component/style/proc/on_punch(mob/living/carbon/human/punching_person, atom/attacked_atom, proximity)
 	SIGNAL_HANDLER
@@ -453,7 +445,7 @@
 
 
 // Negative effects
-/datum/component/style/proc/on_take_damage()
+/datum/component/style/proc/on_take_damage(...)
 	SIGNAL_HANDLER
 
 	point_multiplier = round(max(point_multiplier - 0.3, 1), 0.1)

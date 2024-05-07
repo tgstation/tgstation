@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(floor_diseases, list(
 
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(handle_movement))
-	RegisterSignal(parent, COMSIG_ATOM_WASHED, PROC_REF(wash)) //Wash germs off dirty things
+	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(wash)) //Wash germs off dirty things
 
 	RegisterSignals(parent, list(
 		COMSIG_ITEM_DROPPED, //Dropped into the world
@@ -46,13 +46,13 @@ GLOBAL_LIST_INIT(floor_diseases, list(
 /datum/component/germ_sensitive/UnregisterFromParent()
 	REMOVE_TRAIT(parent, TRAIT_GERM_SENSITIVE, REF(src))
 	UnregisterSignal(parent, list(
-		COMSIG_ATOM_EXAMINE,
-		COMSIG_MOVABLE_MOVED,
-		COMSIG_ATOM_WASHED,
-		COMSIG_ITEM_DROPPED,
-		COMSIG_ATOM_EXITED,
-		COMSIG_ITEM_PICKUP,
 		COMSIG_ATOM_ENTERED,
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_ATOM_EXITED,
+		COMSIG_COMPONENT_CLEAN_ACT,
+		COMSIG_ITEM_DROPPED,
+		COMSIG_ITEM_PICKUP,
+		COMSIG_MOVABLE_MOVED,
 	))
 
 /datum/component/germ_sensitive/Destroy()
@@ -117,8 +117,10 @@ GLOBAL_LIST_INIT(floor_diseases, list(
 	parent.AddComponent(/datum/component/infective, new random_disease, weak = TRUE)
 
 /datum/component/germ_sensitive/proc/wash()
+	SIGNAL_HANDLER
 	if(infective)
 		infective = FALSE
 		qdel(parent.GetComponent(/datum/component/infective))
+		return COMPONENT_CLEANED
 
 #undef GERM_EXPOSURE_DELAY

@@ -31,7 +31,7 @@
 			direction = get_original_direction(text2num(A))
 			break
 	if(reagent)
-		reagents.trans_id_to(target.parent, reagent, amount)
+		reagents.trans_to(target.parent, amount, target_id = reagent)
 	else
 		for(var/A in reagents.reagent_list)
 			var/datum/reagent/R = A
@@ -40,7 +40,7 @@
 			var/new_amount
 			if(R.volume < amount)
 				new_amount = amount - R.volume
-			reagents.trans_id_to(target.parent, R.type, amount)
+			reagents.trans_to(target.parent, amount, target_id = R.type)
 			amount = new_amount
 			if(amount <= 0)
 				break

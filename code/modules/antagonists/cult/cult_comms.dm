@@ -81,7 +81,7 @@
 	var/my_message
 	if(!message)
 		return
-	my_message = span_cultboldtalic("The [user.name]: [message]")
+	my_message = span_cult_bold_italic("The [user.name]: [message]")
 	for(var/mob/player_list as anything in GLOB.player_list)
 		if(IS_CULTIST(player_list))
 			to_chat(player_list, my_message)
@@ -99,60 +99,101 @@
 /datum/action/innate/cult/mastervote/IsAvailable(feedback = FALSE)
 	if(!owner || !owner.mind)
 		return FALSE
-	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-	if(!C || C.cult_team.cult_vote_called || !ishuman(owner))
+	var/datum/antagonist/cult/mind_cult_datum = owner.mind.has_antag_datum(/datum/antagonist/cult)
+	if(!mind_cult_datum || mind_cult_datum.cult_team.cult_leader_datum || mind_cult_datum.cult_team.cult_vote_called || !ishuman(owner))
 		return FALSE
 	return ..()
 
 /datum/action/innate/cult/mastervote/Activate()
 	var/choice = tgui_alert(owner, "The mantle of leadership is heavy. Success in this role requires an expert level of communication and experience. Are you sure?",, list("Yes", "No"))
 	if(choice == "Yes" && IsAvailable())
-		var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-		pollCultists(owner,C.cult_team)
+		var/datum/antagonist/cult/mind_cult_datum = owner.mind.has_antag_datum(/datum/antagonist/cult)
+		start_poll_cultists_for_leader(owner, mind_cult_datum.cult_team)
 
-/proc/pollCultists(mob/living/Nominee, datum/team/cult/team) //Cult Master Poll
+///Start the poll for Cult Leaeder.
+/proc/start_poll_cultists_for_leader(mob/living/nominee, datum/team/cult/team)
 	if(world.time < CULT_POLL_WAIT)
-		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [DisplayTimeText(CULT_POLL_WAIT-world.time)].")
+		to_chat(nominee, "It would be premature to select a leader while everyone is still settling in, try again in [DisplayTimeText(CULT_POLL_WAIT-world.time)].")
 		return
-	team.cult_vote_called = TRUE //somebody's trying to be a master, make sure we don't let anyone else try
-	for(var/datum/mind/B in team.members)
-		if(B.current)
-			B.current.update_mob_action_buttons()
-			if(!B.current.incapacitated())
-				SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
-				to_chat(B.current, span_cultlarge("Acolyte [Nominee] has asserted that [Nominee.p_theyre()] worthy of leading the cult. A vote will be called shortly."))
-	sleep(10 SECONDS)
-	var/list/asked_cultists = list()
-	for(var/datum/mind/B in team.members)
-		if(B.current && B.current != Nominee && !B.current.incapacitated())
-			SEND_SOUND(B.current, 'sound/magic/exit_blood.ogg')
-			asked_cultists += B.current
-	var/list/yes_voters = poll_candidates("[Nominee] seeks to lead your cult, do you support [Nominee.p_them()]?", poll_time = 300, group = asked_cultists)
-	if(QDELETED(Nominee) || Nominee.incapacitated())
+	team.cult_vote_called = TRUE
+	for(var/datum/mind/team_member as anything in team.members)
+		if(!team_member.current)
+			continue
+		team_member.current.update_mob_action_buttons()
+		if(team_member.current.incapacitated())
+			continue
+		SEND_SOUND(team_member.current, 'sound/hallucinations/im_here1.ogg')
+		to_chat(team_member.current, span_cult_large("Acolyte [nominee] has asserted that [nominee.p_theyre()] worthy of leading the cult. A vote will be called shortly."))
+
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(poll_cultists_for_leader), nominee, team), 10 SECONDS)
+
+///Polls all Cultists on whether the person putting themselves forward should be made the Cult Leader, if they can actually be such.
+/proc/poll_cultists_for_leader(mob/living/nominee, datum/team/cult/team)
+	if(QDELETED(nominee) || nominee.incapacitated())
 		team.cult_vote_called = FALSE
-		for(var/datum/mind/B in team.members)
-			if(B.current)
-				B.current.update_mob_action_buttons()
-				if(!B.current.incapacitated())
-					to_chat(B.current,span_cultlarge("[Nominee] has died in the process of attempting to win the cult's support!"))
+		for(var/datum/mind/team_member as anything in team.members)
+			if(!team_member.current)
+				continue
+			team_member.current.update_mob_action_buttons()
+			if(team_member.current.incapacitated())
+				continue
+			to_chat(team_member.current,span_cult_large("[nominee] has died in the process of attempting to start a vote!"))
 		return FALSE
-	if(!Nominee.mind)
+	var/list/mob/living/asked_cultists = list()
+	for(var/datum/mind/team_member as anything in team.members)
+		if(!team_member.current || team_member.current == nominee || team_member.current.incapacitated())
+			continue
+		SEND_SOUND(team_member.current, 'sound/magic/exit_blood.ogg')
+		asked_cultists += team_member.current
+
+	var/list/yes_voters = SSpolling.poll_candidates(
+		question = "[span_notice(nominee.name)] seeks to lead your cult, do you support [nominee.p_them()]?",
+		poll_time = 30 SECONDS,
+		group = asked_cultists,
+		alert_pic = nominee,
+		role_name_text = "cult master nomination",
+		custom_response_messages = list(
+			POLL_RESPONSE_SIGNUP = "You have pledged your allegience to [nominee].",
+			POLL_RESPONSE_ALREADY_SIGNED = "You have already pledged your allegience!",
+			POLL_RESPONSE_NOT_SIGNED = "You aren't nominated for this.",
+			POLL_RESPONSE_TOO_LATE_TO_UNREGISTER = "It's too late to unregister yourself, voting has already begun!",
+			POLL_RESPONSE_UNREGISTERED = "You have been removed your pledge to [nominee].",
+		chat_text_border_icon = mutable_appearance('icons/effects/effects.dmi', "cult_master_logo")
+		)
+	)
+	if(QDELETED(nominee) || nominee.incapacitated())
 		team.cult_vote_called = FALSE
-		for(var/datum/mind/B in team.members)
-			if(B.current)
-				B.current.update_mob_action_buttons()
-				if(!B.current.incapacitated())
-					to_chat(B.current,span_cultlarge("[Nominee] has gone catatonic in the process of attempting to win the cult's support!"))
+		for(var/datum/mind/team_member as anything in team.members)
+			if(!team_member.current)
+				continue
+			team_member.current.update_mob_action_buttons()
+			if(team_member.current.incapacitated())
+				continue
+			to_chat(team_member.current,span_cult_large("[nominee] has died in the process of attempting to win the cult's support!"))
+		return FALSE
+	if(!nominee.mind)
+		team.cult_vote_called = FALSE
+		for(var/datum/mind/team_member as anything in team.members)
+			if(!team_member.current)
+				continue
+			team_member.current.update_mob_action_buttons()
+			if(team_member.current.incapacitated())
+				continue
+			to_chat(team_member.current,span_cult_large("[nominee] has gone catatonic in the process of attempting to win the cult's support!"))
 		return FALSE
 	if(LAZYLEN(yes_voters) <= LAZYLEN(asked_cultists) * 0.5)
 		team.cult_vote_called = FALSE
-		for(var/datum/mind/B in team.members)
-			if(B.current)
-				B.current.update_mob_action_buttons()
-				if(!B.current.incapacitated())
-					to_chat(B.current, span_cultlarge("[Nominee] could not win the cult's support and shall continue to serve as an acolyte."))
+		for(var/datum/mind/team_member as anything in team.members)
+			if(!team_member.current)
+				continue
+			team_member.current.update_mob_action_buttons()
+			if(team_member.current.incapacitated())
+				continue
+			to_chat(team_member.current, span_cult_large("[nominee] could not win the cult's support and shall continue to serve as an acolyte."))
 		return FALSE
-	var/datum/antagonist/cult/cult_datum = Nominee.mind.has_antag_datum(/datum/antagonist/cult)
+
+	team.cult_vote_called = FALSE
+	var/datum/antagonist/cult/cult_datum = nominee.mind.has_antag_datum(/datum/antagonist/cult)
 	if(!cult_datum.make_cult_leader())
 		CRASH("[cult_datum.owner.current] was supposed to turn into the leader, but they didn't for some reason. This isn't supposed to happen unless an Admin messed with it.")
 	return TRUE
@@ -177,7 +218,7 @@
 	var/place = get_area(owner)
 	var/datum/objective/eldergod/summon_objective = locate() in antag.cult_team.objectives
 	if(place in summon_objective.summon_spots)//cant do final reckoning in the summon area to prevent abuse, you'll need to get everyone to stand on the circle!
-		to_chat(owner, span_cultlarge("The veil is too weak here! Move to an area where it is strong enough to support this magic."))
+		to_chat(owner, span_cult_large("The veil is too weak here! Move to an area where it is strong enough to support this magic."))
 		return
 	for(var/i in 1 to 4)
 		chant(i)
@@ -188,7 +229,7 @@
 		if(!LAZYLEN(destinations))
 			to_chat(owner, span_warning("You need more space to summon your cult!"))
 			return
-		if(do_after(owner, 30, target = owner))
+		if(do_after(owner, 3 SECONDS, target = owner))
 			for(var/datum/mind/B in antag.cult_team.members)
 				if(B.current && B.current.stat != DEAD)
 					var/turf/mobloc = get_turf(B.current)
@@ -211,7 +252,7 @@
 									S.release_shades(owner)
 								B.current.setDir(SOUTH)
 								new /obj/effect/temp_visual/cult/blood(final)
-								addtimer(CALLBACK(B.current, TYPE_PROC_REF(/mob/, reckon), final), 10)
+								addtimer(CALLBACK(B.current, TYPE_PROC_REF(/mob/, reckon), final), 1 SECONDS)
 		else
 			return
 	antag.cult_team.reckoning_complete = TRUE
@@ -312,14 +353,14 @@
 	if(cult_team.blood_target)
 		if(!COOLDOWN_FINISHED(src, cult_mark_cooldown))
 			cult_team.unset_blood_target_and_timer()
-			to_chat(owner, span_cultbold("You have cleared the cult's blood target!"))
+			to_chat(owner, span_cult_bold("You have cleared the cult's blood target!"))
 			return TRUE
 
-		to_chat(owner, span_cultbold("The cult has already designated a target!"))
+		to_chat(owner, span_cult_bold("The cult has already designated a target!"))
 		return FALSE
 
 	if(!COOLDOWN_FINISHED(src, cult_mark_cooldown))
-		to_chat(owner, span_cultbold("You aren't ready to place another blood mark yet!"))
+		to_chat(owner, span_cult_bold("You aren't ready to place another blood mark yet!"))
 		return FALSE
 
 	var/atom/mark_target = owner.orbiting?.parent || get_turf(owner)
@@ -327,7 +368,7 @@
 		return FALSE
 
 	if(cult_team.set_blood_target(mark_target, owner, 60 SECONDS))
-		to_chat(owner, span_cultbold("You have marked [mark_target] for the cult! It will last for [DisplayTimeText(cult_mark_duration)]."))
+		to_chat(owner, span_cult_bold("You have marked [mark_target] for the cult! It will last for [DisplayTimeText(cult_mark_duration)]."))
 		COOLDOWN_START(src, cult_mark_cooldown, cult_mark_cooldown_duration)
 		build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 		addtimer(CALLBACK(src, PROC_REF(reset_button)), cult_mark_cooldown_duration + 1)
@@ -359,7 +400,7 @@
 		return
 
 	SEND_SOUND(owner, 'sound/magic/enter_blood.ogg')
-	to_chat(owner, span_cultbold("Your previous mark is gone - you are now ready to create a new blood mark."))
+	to_chat(owner, span_cult_bold("Your previous mark is gone - you are now ready to create a new blood mark."))
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
 //////// ELDRITCH PULSE /////////
@@ -448,12 +489,12 @@
 			if(!IS_CULTIST(living_clicked))
 				return FALSE
 			SEND_SOUND(caller, sound('sound/weapons/thudswoosh.ogg'))
-			to_chat(caller, span_cultbold("You reach through the veil with your mind's eye and seize [clicked_on]! <b>Click anywhere nearby to teleport [clicked_on.p_them()]!</b>"))
+			to_chat(caller, span_cult_bold("You reach through the veil with your mind's eye and seize [clicked_on]! <b>Click anywhere nearby to teleport [clicked_on.p_them()]!</b>"))
 			throwee_ref = WEAKREF(clicked_on)
 			return TRUE
 
 		if(istype(clicked_on, /obj/structure/destructible/cult))
-			to_chat(caller, span_cultbold("You reach through the veil with your mind's eye and lift [clicked_on]! <b>Click anywhere nearby to teleport it!</b>"))
+			to_chat(caller, span_cult_bold("You reach through the veil with your mind's eye and lift [clicked_on]! <b>Click anywhere nearby to teleport it!</b>"))
 			throwee_ref = WEAKREF(clicked_on)
 			return TRUE
 

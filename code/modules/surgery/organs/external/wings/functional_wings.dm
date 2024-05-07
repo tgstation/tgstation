@@ -26,13 +26,16 @@
 	///Are our wings open or closed?
 	var/wings_open = FALSE
 
-/obj/item/organ/external/wings/functional/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+	// grind_results = list(/datum/reagent/flightpotion = 5)
+	food_reagents = list(/datum/reagent/flightpotion = 5)
+
+/obj/item/organ/external/wings/functional/Insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	if(. && isnull(fly))
 		fly = new
 		fly.Grant(receiver)
 
-/obj/item/organ/external/wings/functional/Remove(mob/living/carbon/organ_owner, special, moving)
+/obj/item/organ/external/wings/functional/Remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	fly.Remove(organ_owner)
@@ -136,9 +139,9 @@
 
 /datum/bodypart_overlay/mutant/wings/functional/get_global_feature_list()
 	if(wings_open)
-		return GLOB.wings_open_list
+		return SSaccessories.wings_open_list
 	else
-		return GLOB.wings_list
+		return SSaccessories.wings_list
 
 ///Update our wingsprite to the open wings variant
 /datum/bodypart_overlay/mutant/wings/functional/proc/open_wings()
@@ -200,3 +203,9 @@
 	name = "fly wings"
 	desc = "Fly as a fly."
 	sprite_accessory_override = /datum/sprite_accessory/wings/fly
+
+///slime wings, which relate to slimes.
+/obj/item/organ/external/wings/functional/slime
+	name = "slime wings"
+	desc = "How does something so squishy even fly?"
+	sprite_accessory_override = /datum/sprite_accessory/wings/slime

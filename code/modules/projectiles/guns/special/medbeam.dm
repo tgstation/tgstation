@@ -16,12 +16,7 @@
 
 	weapon_weight = WEAPON_MEDIUM
 
-/obj/item/gun/medbeam/Initialize(mapload)
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
 /obj/item/gun/medbeam/Destroy(mob/user)
-	STOP_PROCESSING(SSobj, src)
 	LoseTarget()
 	return ..()
 
@@ -41,6 +36,7 @@
 		QDEL_NULL(current_beam)
 		active = FALSE
 		on_beam_release(current_target)
+	STOP_PROCESSING(SSobj, src)
 	current_target = null
 
 /**
@@ -69,6 +65,7 @@
 	active = TRUE
 	current_beam = user.Beam(current_target, icon_state="medbeam", time = 10 MINUTES, maxdistance = max_range, beam_type = /obj/effect/ebeam/medical)
 	RegisterSignal(current_beam, COMSIG_QDELETING, PROC_REF(beam_died))//this is a WAY better rangecheck than what was done before (process check)
+	START_PROCESSING(SSobj, src)
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 
@@ -144,10 +141,13 @@
 /obj/item/gun/medbeam/proc/on_beam_tick(mob/living/target)
 	if(target.health != target.maxHealth)
 		new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
-	target.adjustBruteLoss(-4)
-	target.adjustFireLoss(-4)
-	target.adjustToxLoss(-1, forced = TRUE)
-	target.adjustOxyLoss(-1, forced = TRUE)
+	var/need_mob_update
+	need_mob_update = target.adjustBruteLoss(-4, updating_health = FALSE, forced = TRUE)
+	need_mob_update += target.adjustFireLoss(-4, updating_health = FALSE, forced = TRUE)
+	need_mob_update += target.adjustToxLoss(-1, updating_health = FALSE, forced = TRUE)
+	need_mob_update += target.adjustOxyLoss(-1, updating_health = FALSE, forced = TRUE)
+	if(need_mob_update)
+		target.updatehealth()
 	return
 
 /obj/item/gun/medbeam/proc/on_beam_release(mob/living/target)

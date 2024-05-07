@@ -3,7 +3,7 @@
 	result = /mob/living/simple_animal/bot/secbot/ed209
 	reqs = list(
 		/obj/item/robot_suit = 1,
-		/obj/item/clothing/head/helmet = 1,
+		/obj/item/clothing/head/helmet/sec = 1,
 		/obj/item/clothing/suit/armor/vest = 1,
 		/obj/item/bodypart/leg/left/robot = 1,
 		/obj/item/bodypart/leg/right/robot = 1,
@@ -32,7 +32,7 @@
 
 /datum/crafting_recipe/cleanbot
 	name = "Cleanbot"
-	result = /mob/living/simple_animal/bot/cleanbot
+	result = /mob/living/basic/bot/cleanbot
 	reqs = list(
 		/obj/item/reagent_containers/cup/bucket = 1,
 		/obj/item/assembly/prox_sensor = 1,
@@ -56,7 +56,7 @@
 
 /datum/crafting_recipe/medbot
 	name = "Medbot"
-	result = /mob/living/simple_animal/bot/medbot
+	result = /mob/living/basic/bot/medbot
 	reqs = list(
 		/obj/item/healthanalyzer = 1,
 		/obj/item/storage/medkit = 1,
@@ -71,10 +71,10 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/medbot/on_craft_completion(mob/user, atom/result)
-	var/mob/living/simple_animal/bot/medbot/bot = result
+	var/mob/living/basic/bot/medbot/bot = result
 	var/obj/item/storage/medkit/medkit = bot.contents[3]
 	bot.medkit_type = medkit
-	bot.healthanalyzer = bot.contents[4]
+	bot.health_analyzer = bot.contents[4]
 
 	///if you add a new one don't forget to update /obj/item/storage/medkit/attackby()
 	if (istype(medkit, /obj/item/storage/medkit/fire))
@@ -90,7 +90,7 @@
 	else if (istype(src, /obj/item/storage/medkit/tactical))
 		bot.skin = "bezerk"
 
-	bot.damagetype_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
+	bot.damage_type_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
 	bot.update_appearance()
 
 /datum/crafting_recipe/honkbot
@@ -131,7 +131,7 @@
 
 /datum/crafting_recipe/hygienebot
 	name = "Hygienebot"
-	result = /mob/living/simple_animal/bot/hygienebot
+	result = /mob/living/basic/bot/hygienebot
 	reqs = list(
 		/obj/item/bot_assembly/hygienebot = 1,
 		/obj/item/stack/ducts = 1,

@@ -60,6 +60,7 @@
 		"You are a universally renowned artist.",
 		"The station is your canvas.",
 		"Make something beautiful out of your canvas. It will be admired as an artistic wonder of this sector.",
+		"Art requires appreciation. Cultivate an audience aboard the station to ensure as many as possible see your works.",
 	)
 
 /datum/ai_laws/tyrant

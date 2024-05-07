@@ -69,6 +69,11 @@
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/hermit)
+"vy" = (
+/obj/item/cultivator/rake,
+/obj/item/cultivator,
+/turf/open/floor/grass/fairy,
+/area/ruin/powered/hermit)
 "wf" = (
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime,
 /obj/structure/table/wood,
@@ -326,7 +331,7 @@ ph
 ph
 uw
 bp
-bp
+vy
 bp
 WK
 gr

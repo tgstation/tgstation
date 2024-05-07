@@ -20,7 +20,7 @@
 		return
 
 	if(reagents.total_volume > 0)
-		if(target.reagents.total_volume >= target.reagents.maximum_volume)
+		if(target.reagents.holder_full())
 			to_chat(user, span_notice("[target] is full."))
 			return
 
@@ -29,7 +29,7 @@
 			return
 
 		var/trans = 0
-		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
+		var/fraction = min(amount_per_transfer_from_this / reagents.total_volume, 1)
 
 		if(ismob(target))
 			if(ishuman(target))

@@ -10,6 +10,7 @@
 		return
 	if(check_stun_immunity(CANKNOCKDOWN))
 		return
+	SEND_SIGNAL(src, COMSIG_CARBON_ENTER_STAMCRIT)
 
 	to_chat(src, span_notice("You're too exhausted to keep going..."))
 	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_FLOORED), STAMINA)

@@ -111,5 +111,13 @@
         "roundend_report": "was a terrorist from Waffle Corporation.",
         "ui_theme": "syndicate",
         "uplink": "You have been provided with a standard uplink to accomplish your task."
+    },
+	"Contractor Support Unit": {
+        "allies": "You are being sent to help your designated agent. Their allegiences are above all others.",
+        "goal": "Help your designated agent to the furtest extent you can, their life is above your own.",
+        "introduction": "You are the Contractor Support Agent.",
+        "roundend_report": "was a contractor support agent.",
+        "ui_theme": "syndicate",
+        "uplink": "You do not come with your own uplink, defer to your agent."
     }
 }

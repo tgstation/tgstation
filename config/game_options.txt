@@ -43,7 +43,7 @@ WALK_DELAY 4
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
-##MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal/slime 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/basic/slime 0
 MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 0
 MULTIPLICATIVE_MOVESPEED /mob/living/basic 0
 
@@ -147,6 +147,13 @@ EVENTS_MIN_TIME_MUL 1
 ## Set to 0 to make dangerous events avaliable for all populations.
 EVENTS_MIN_PLAYERS_MUL 1
 
+## The lower bound, in deciseconds, for how soon another random event can be scheduled.
+## Defaults to 1500 deciseconds or 2.5 minutes
+EVENTS_FREQUENCY_LOWER 1500
+
+## The upper bound, in deciseconds, for how soon another random event can be scheduled.
+## Defaults to 4200 deciseconds or 7 minutes
+EVENTS_FREQUENCY_UPPER 4200
 
 ## AI ###
 
@@ -352,43 +359,16 @@ ROUNDSTART_RACES plasmaman
 ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES jelly
 #ROUNDSTART_RACES abductor
-#ROUNDSTART_RACES synth
-
-## Including all the various golem subtypes that are better than humans in some ways, but worse in others
-#ROUNDSTART_RACES iron_golem
-#ROUNDSTART_RACES adamantine_golem
-#ROUNDSTART_RACES plasma_golem
-#ROUNDSTART_RACES diamond_golem
-#ROUNDSTART_RACES gold_golem
-#ROUNDSTART_RACES silver_golem
-#ROUNDSTART_RACES uranium_golem
-#ROUNDSTART_RACES plasteel_golem
-#ROUNDSTART_RACES titanium_golem
-#ROUNDSTART_RACES plastitanium_golem
-#ROUNDSTART_RACES alloy_golem
-#ROUNDSTART_RACES wood_golem
-#ROUNDSTART_RACES sand_golem
-#ROUNDSTART_RACES glass_golem
-#ROUNDSTART_RACES bluespace_golem
-#ROUNDSTART_RACES bananium_golem
-#ROUNDSTART_RACES runic_golem
-#ROUNDSTART_RACES cloth_golem
-#ROUNDSTART_RACES plastic_golem
-#ROUNDSTART_RACES bronze_golem
-#ROUNDSTART_RACES cardboard_golem
-#ROUNDSTART_RACES leather_golem
-#ROUNDSTART_RACES durathread_golem
-#ROUNDSTART_RACES bone_golem
-#ROUNDSTART_RACES snow_golem
-#ROUNDSTART_RACES metallic_hydrogen_golem
+#ROUNDSTART_RACES snail
 
 ## Races that are straight upgrades. If these are on expect powergamers to always pick them
 #ROUNDSTART_RACES skeleton
 #ROUNDSTART_RACES zombie
-#ROUNDSTART_RACES slime
 #ROUNDSTART_RACES pod
-#ROUNDSTART_RACES military_synth
-#ROUNDSTART_RACES agent
+
+## Races that are radical departures to what a species is, so while they technically can be roundstart - it's probably not wise
+#ROUNDSTART_RACES android
+#ROUNDSTART_RACES golem
 
 ##-------------------------------------------------------------------------------------------
 
@@ -529,3 +509,32 @@ DISALLOW_TITLE_MUSIC
 ## This is primarily useful for developing tutorials. If you have a proper DB setup, you
 ## don't need (or want) this.
 #GIVE_TUTORIALS_WITHOUT_DB
+
+## Configuration for station traits of each type.
+## The first value (key) is the budget, or the space available to use for station traits of that type. Some take more space than others.
+## The second value (assoc) is the weight associated with said budget compared to the rest for that type.
+POSITIVE_STATION_TRAITS 0 8
+POSITIVE_STATION_TRAITS 1 4
+POSITIVE_STATION_TRAITS 2 2
+POSITIVE_STATION_TRAITS 3 1
+
+NEUTRAL_STATION_TRAITS 0 10
+NEUTRAL_STATION_TRAITS 1 10
+NEUTRAL_STATION_TRAITS 2 3
+NEUTRAL_STATION_TRAITS 2.5 1
+
+NEGATIVE_STATION_TRAITS 0 8
+NEGATIVE_STATION_TRAITS 1 4
+NEGATIVE_STATION_TRAITS 2 2
+NEGATIVE_STATION_TRAITS 3 1
+
+# Uncomment to disable Quirk point balancing for the server and clients.
+# If enabled, players will be able to select positive quirks without first selecting negative quirks.
+# If enabled, randomized Quirks will still use points internally, in order to maintain balance.
+#DISABLE_QUIRK_POINTS
+
+# The maximum amount of positive quirks one character can have at roundstart.
+# If set to -1, then players will be able to select any quantity of positive quirks.
+# If set to 0, then players won't be able to select any positive quirks.
+# If commented-out or undefined, the maximum default is 6.
+MAX_POSITIVE_QUIRKS 6

@@ -1,0 +1,2 @@
+output_name = "reinf_plasma_glass"
+template = "bitmask/diagonal_32x32.toml"

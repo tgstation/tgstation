@@ -7,7 +7,7 @@
 	inhand_icon_state = "pwig"
 	worn_icon_state = "wig"
 	flags_inv = HIDEHAIR
-	color = "#000000"
+	color = COLOR_BLACK
 	var/hairstyle = "Very Long Hair"
 	var/adjustablecolor = TRUE //can color be changed manually?
 
@@ -25,31 +25,31 @@
 	item_flags &= ~EXAMINE_SKIP
 
 /obj/item/clothing/head/wig/update_icon_state()
-	var/datum/sprite_accessory/hair_style = GLOB.hairstyles_list[hairstyle]
+	var/datum/sprite_accessory/hair/hair_style = SSaccessories.hairstyles_list[hairstyle]
 	if(hair_style)
 		icon = hair_style.icon
 		icon_state = hair_style.icon_state
 	return ..()
-
 
 /obj/item/clothing/head/wig/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
 	. = ..()
 	if(isinhands)
 		return
 
-	var/datum/sprite_accessory/hair = GLOB.hairstyles_list[hairstyle]
+	var/datum/sprite_accessory/hair/hair = SSaccessories.hairstyles_list[hairstyle]
 	if(!hair)
 		return
 
 	var/mutable_appearance/hair_overlay = mutable_appearance(hair.icon, hair.icon_state, layer = -HAIR_LAYER, appearance_flags = RESET_COLOR)
 	hair_overlay.color = color
+	hair_overlay.pixel_y = hair.y_offset
 	. += hair_overlay
 
 	// So that the wig actually blocks emissives.
 	hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, src, alpha = hair_overlay.alpha)
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
-	var/new_style = tgui_input_list(user, "Select a hairstyle", "Wig Styling", GLOB.hairstyles_list - "Bald")
+	var/new_style = tgui_input_list(user, "Select a hairstyle", "Wig Styling", SSaccessories.hairstyles_list - "Bald")
 	var/newcolor = adjustablecolor ? input(usr,"","Choose Color",color) as color|null : null
 	if(!user.can_perform_action(src))
 		return
@@ -92,19 +92,19 @@
 		update_appearance()
 
 /obj/item/clothing/head/wig/random/Initialize(mapload)
-	hairstyle = pick(GLOB.hairstyles_list - "Bald") //Don't want invisible wig
+	hairstyle = pick(SSaccessories.hairstyles_list - "Bald") //Don't want invisible wig
 	add_atom_colour("#[random_short_color()]", FIXED_COLOUR_PRIORITY)
 	. = ..()
 
 /obj/item/clothing/head/wig/natural
 	name = "natural wig"
 	desc = "A bunch of hair without a head attached. This one changes color to match the hair of the wearer. Nothing natural about that."
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 	adjustablecolor = FALSE
 	custom_price = PAYCHECK_COMMAND
 
 /obj/item/clothing/head/wig/natural/Initialize(mapload)
-	hairstyle = pick(GLOB.hairstyles_list - "Bald")
+	hairstyle = pick(SSaccessories.hairstyles_list - "Bald")
 	. = ..()
 
 /obj/item/clothing/head/wig/natural/visual_equipped(mob/living/carbon/human/user, slot)

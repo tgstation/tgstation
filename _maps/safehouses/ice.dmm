@@ -14,6 +14,10 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain/safehouse)
+"e" = (
+/obj/modular_map_connector,
+/turf/closed/wall/ice,
+/area/virtual_domain/safehouse)
 "f" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -202,7 +206,7 @@ i
 g
 a
 i
-i
+e
 "}
 (2,1,1) = {"
 i

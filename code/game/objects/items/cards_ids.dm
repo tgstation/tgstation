@@ -1,9 +1,3 @@
-/**
- * x1, y1, x2, y2 - Represents the bounding box for the ID card's non-transparent portion of its various icon_states.
- * Used to crop the ID card's transparency away when chaching the icon for better use in tgui chat.
- */
-#define ID_ICON_BORDERS 1, 9, 32, 24
-
 /// Fallback time if none of the config entries are set for USE_LOW_LIVING_HOUR_INTERN
 #define INTERN_THRESHOLD_FALLBACK_HOURS 15
 
@@ -32,6 +26,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
+
 	/// Cached icon that has been built for this card. Intended to be displayed in chat. Cardboards IDs and actual IDs use it.
 	var/icon/cached_flat_icon
 
@@ -124,9 +119,8 @@
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
-	var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned", player_account = FALSE)
+	var/datum/bank_account/blank_bank_account = new("Unassigned", SSjob.GetJobType(/datum/job/unassigned), player_account = FALSE)
 	registered_account = blank_bank_account
-	blank_bank_account.account_job = new /datum/job/unassigned
 	registered_account.replaceable = TRUE
 
 	// Applying the trim updates the label and icon, so don't do this twice.
@@ -355,7 +349,8 @@
 	var/list/wildcard_access = list()
 	var/list/normal_access = list()
 
-	build_access_lists(new_access_list, normal_access, wildcard_access)
+	if(length(new_access_list))
+		build_access_lists(new_access_list, normal_access, wildcard_access)
 
 	// Check if we can add the wildcards.
 	if(mode == ERROR_ON_FAIL)
@@ -414,6 +409,13 @@
 
 		wildcard_access_list |= new_access
 
+/// Helper proc that determines if a card can be used in certain types of payment transactions.
+/obj/item/card/id/proc/can_be_used_in_payment(mob/living/user)
+	if(QDELETED(src) || isnull(registered_account?.account_job) || !isliving(user))
+		return FALSE
+
+	return TRUE
+
 /obj/item/card/id/attack_self(mob/user)
 	if(Adjacent(user))
 		var/minor
@@ -440,14 +442,11 @@
 /obj/item/card/id/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	if(held_item != src)
-		return
-
 	context[SCREENTIP_CONTEXT_LMB] = "Show ID"
 	context[SCREENTIP_CONTEXT_RMB] = "Project pay stand"
 	if(isnull(registered_account) || registered_account.replaceable) //Same check we use when we check if we can assign an account
-		context[SCREENTIP_CONTEXT_ALT_LMB] = "Assign account"
-	else
+		context[SCREENTIP_CONTEXT_ALT_RMB] = "Assign account"
+	else if(registered_account.account_balance > 0)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Withdraw credits"
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -455,8 +454,8 @@
 	if(!COOLDOWN_FINISHED(src, last_holopay_projection))
 		balloon_alert(user, "still recharging")
 		return
-	if(!registered_account || !registered_account.account_job)
-		balloon_alert(user, "no account")
+	if(can_be_used_in_payment(user))
+		balloon_alert(user, "no account!")
 		to_chat(user, span_warning("You need a valid bank account to do this."))
 		return
 	/// Determines where the holopay will be placed based on tile contents
@@ -633,9 +632,9 @@
 /// Helper proc. Can the user alt-click the ID?
 /obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
 	if(!isliving(user))
-		return
+		return FALSE
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+		return FALSE
 
 	return TRUE
 
@@ -648,10 +647,8 @@
 		return FALSE
 	var/list/user_memories = user.mind.memories
 	var/datum/memory/key/account/user_key = user_memories[/datum/memory/key/account]
-	var/user_account = 11111
-	if(!isnull(user_key))
-		user_account = user_key.remembered_id
-	var/new_bank_id = tgui_input_number(user, "Enter the account ID to associate with this card.", "Link Bank Account", user_account, 999999, 111111)
+	var/default_account = (istype(user_key) && user_key.remembered_id) || 11111
+	var/new_bank_id = tgui_input_number(user, "Enter the account ID to associate with this card.", "Link Bank Account", default_account, 999999, 111111)
 	if(!new_bank_id || QDELETED(user) || QDELETED(src) || issilicon(user) || !alt_click_can_use_id(user) || loc != user)
 		return FALSE
 	if(registered_account?.account_id == new_bank_id)
@@ -669,40 +666,53 @@
 	to_chat(user, span_notice("The provided account has been linked to this ID card. It contains [account.account_balance] credits."))
 	return TRUE
 
-/obj/item/card/id/AltClick(mob/living/user)
+/obj/item/card/id/click_alt(mob/living/user)
 	if(!alt_click_can_use_id(user))
-		return
-	if(!registered_account || registered_account.replaceable)
-		set_new_account(user)
-		return
+		return NONE
 	if(registered_account.account_debt)
 		var/choice = tgui_alert(user, "Choose An Action", "Bank Account", list("Withdraw", "Pay Debt"))
 		if(!choice || QDELETED(user) || QDELETED(src) || !alt_click_can_use_id(user) || loc != user)
-			return
+			return CLICK_ACTION_BLOCKING
 		if(choice == "Pay Debt")
 			pay_debt(user)
-			return
+			return CLICK_ACTION_SUCCESS
 	if (registered_account.being_dumped)
 		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
-		return
+		return CLICK_ACTION_SUCCESS
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the ID to continue!"))
-		return
+		return CLICK_ACTION_BLOCKING
+	if(registered_account.replaceable && !registered_account.account_balance)
+		var/choice = tgui_alert(user, "This card's account is unassigned. Would you like to link a bank account?", "Bank Account", list("Link Account", "Leave Unassigned"))
+		if(!choice || QDELETED(user) || QDELETED(src) || !alt_click_can_use_id(user) || loc != user)
+			return CLICK_ACTION_BLOCKING
+		if(choice == "Link Account")
+			set_new_account(user)
+			return CLICK_ACTION_SUCCESS
 	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? (Max: [registered_account.account_balance] cr)", "Withdraw Funds", max_value = registered_account.account_balance)
 	if(!amount_to_remove || QDELETED(user) || QDELETED(src) || issilicon(user) || loc != user)
-		return
+		return CLICK_ACTION_BLOCKING
 	if(!alt_click_can_use_id(user))
-		return
+		return CLICK_ACTION_BLOCKING
 	if(registered_account.adjust_money(-amount_to_remove, "System: Withdrawal"))
 		var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
 		user.put_in_hands(holochip)
 		to_chat(user, span_notice("You withdraw [amount_to_remove] credits into a holochip."))
 		SSblackbox.record_feedback("amount", "credits_removed", amount_to_remove)
 		log_econ("[amount_to_remove] credits were removed from [src] owned by [src.registered_name]")
-		return
+		return CLICK_ACTION_SUCCESS
 	else
 		var/difference = amount_to_remove - registered_account.account_balance
 		registered_account.bank_card_talk(span_warning("ERROR: The linked account requires [difference] more credit\s to perform that withdrawal."), TRUE)
+		return CLICK_ACTION_BLOCKING
+
+/obj/item/card/id/alt_click_secondary(mob/user)
+	. = ..()
+	if(!alt_click_can_use_id(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!registered_account || registered_account.replaceable)
+		set_new_account(user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/card/id/proc/pay_debt(user)
 	var/amount_to_pay = tgui_input_number(user, "How much do you want to pay? (Max: [registered_account.account_balance] cr)", "Debt Payment", max_value = min(registered_account.account_balance, registered_account.account_debt))
@@ -721,11 +731,13 @@
 	if(!user.can_read(src))
 		return
 
-	if(registered_account)
+	if(registered_account && !isnull(registered_account.account_id))
 		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
 		if(ACCESS_COMMAND in access)
 			var/datum/bank_account/linked_dept = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			. += "The [linked_dept.account_holder] linked to the ID reports a balance of [linked_dept.account_balance] cr."
+	else
+		. += span_notice("Alt-Right-Click the ID to set the linked bank account.")
 
 	if(HAS_TRAIT(user, TRAIT_ID_APPRAISER))
 		. += HAS_TRAIT(src, TRAIT_JOB_FIRST_ID_CARD) ? span_boldnotice("Hmm... yes, this ID was issued from Central Command!") : span_boldnotice("This ID was created in this sector, not by Central Command.")
@@ -752,10 +764,10 @@
 		break
 
 /obj/item/card/id/examine_more(mob/user)
+	. = ..()
 	if(!user.can_read(src))
 		return
 
-	. = ..()
 	. += span_notice("<i>You examine [src] closer, and note the following...</i>")
 
 	if(registered_age)
@@ -772,6 +784,8 @@
 				. += "The [D.account_holder] reports a balance of [D.account_balance] cr."
 		. += span_info("Alt-Click the ID to pull money from the linked account in the form of holochips.")
 		. += span_info("You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.")
+		if(registered_account.replaceable)
+			. += span_info("Alt-Right-Click the ID to change the linked bank account.")
 		if(registered_account.civilian_bounty)
 			. += "<span class='info'><b>There is an active civilian bounty.</b>"
 			. += span_info("<i>[registered_account.bounty_text()]</i>")
@@ -905,8 +919,9 @@
 	department_name = ACCOUNT_CAR_NAME
 	icon_state = "car_budget" //saving up for a new tesla
 
-/obj/item/card/id/departmental_budget/AltClick(mob/living/user)
+/obj/item/card/id/departmental_budget/click_alt(mob/living/user)
 	registered_account.bank_card_talk(span_warning("Withdrawing is not compatible with this card design."), TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates
+	return CLICK_ACTION_BLOCKING
 
 /obj/item/card/id/advanced
 	name = "identification card"
@@ -1001,7 +1016,7 @@
 	if(istype(old_loc, /obj/item/storage/wallet))
 		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
-	if(istype(old_loc, /obj/item/modular_computer/pda))
+	if(istype(old_loc, /obj/item/modular_computer))
 		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 	//New loc
@@ -1009,7 +1024,7 @@
 		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
 		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
 
-	if(istype(loc, /obj/item/modular_computer/pda))
+	if(istype(loc, /obj/item/modular_computer))
 		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
 		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
 
@@ -1066,6 +1081,14 @@
 	inhand_icon_state = "silver_id"
 	assigned_icon_state = "assigned_silver"
 	wildcard_slots = WILDCARD_LIMIT_SILVER
+
+/obj/item/card/id/advanced/robotic
+	name = "magnetic identification card"
+	desc = "An integrated card which shows the work poured into opening doors."
+	icon_state = "card_carp" //im not a spriter
+	inhand_icon_state = "silver_id"
+	assigned_icon_state = "assigned_silver"
+	wildcard_slots = WILDCARD_LIMIT_GREY
 
 /datum/id_trim/maint_reaper
 	access = list(ACCESS_MAINT_TUNNELS)
@@ -1207,7 +1230,7 @@
 
 /obj/item/card/id/advanced/debug
 	name = "\improper Debug ID"
-	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
+	desc = "A debug ID card. Has ALL the all access and a boatload of money, you really shouldn't have this."
 	icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
 	trim = /datum/id_trim/admin
@@ -1215,8 +1238,26 @@
 
 /obj/item/card/id/advanced/debug/Initialize(mapload)
 	. = ..()
-	registered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	registered_account.account_job = new /datum/job/admin // so we can actually use this account without being filtered as a "departmental" card
+	registered_account = new(player_account = FALSE)
+	registered_account.account_id = ADMIN_ACCOUNT_ID // this is so bank_card_talk() can work.
+	registered_account.account_job = SSjob.GetJobType(/datum/job/admin)
+	registered_account.account_balance += 999999 // MONEY! We add more money to the account every time we spawn because it's a debug item and infinite money whoopie
+
+/obj/item/card/id/advanced/debug/alt_click_can_use_id(mob/living/user)
+	. = ..()
+	if(!. || isnull(user.client?.holder)) // admins only as a safety so people don't steal all the dollars. spawn in a holochip if you want them to get some dosh
+		registered_account.bank_card_talk(span_warning("Only authorized representatives of Nanotrasen may use this card."), force = TRUE)
+		return FALSE
+
+	return TRUE
+
+/obj/item/card/id/advanced/debug/can_be_used_in_payment(mob/living/user)
+	. = ..()
+	if(!. || isnull(user.client?.holder))
+		registered_account.bank_card_talk(span_warning("Only authorized representatives of Nanotrasen may use this card."), force = TRUE)
+		return FALSE
+
+	return TRUE
 
 /obj/item/card/id/advanced/prisoner
 	name = "prisoner ID card"
@@ -1442,7 +1483,7 @@
 /obj/item/card/id/advanced/chameleon/ui_state(mob/user)
 	return GLOB.always_state
 
-/obj/item/card/id/advanced/chameleon/ui_status(mob/user)
+/obj/item/card/id/advanced/chameleon/ui_status(mob/user, datum/ui_state/state)
 	var/target = theft_target?.resolve()
 
 	if(!target)
@@ -1683,7 +1724,6 @@
 	icon_state = "ctf_green"
 
 #undef INTERN_THRESHOLD_FALLBACK_HOURS
-#undef ID_ICON_BORDERS
 #undef HOLOPAY_PROJECTION_INTERVAL
 
 #define INDEX_NAME_COLOR 1
@@ -1711,7 +1751,7 @@
 	///An icon state used as trim.
 	var/scribbled_trim
 	///The colors for each of the above variables, for when overlays are updated.
-	var/details_colors = list("#000000", "#000000", "#000000")
+	var/details_colors = list(COLOR_BLACK, COLOR_BLACK, COLOR_BLACK)
 
 /obj/item/card/cardboard/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
@@ -1757,14 +1797,14 @@
 				return
 			scribbled_name = input_name
 			var/list/details = item.get_writing_implement_details()
-			details_colors[INDEX_NAME_COLOR] = details["color"] || "#000000"
+			details_colors[INDEX_NAME_COLOR] = details["color"] || COLOR_BLACK
 		if("Assignment")
 			var/input_assignment = tgui_input_text(user, "What assignment would you like to put on this card?", "Cardboard card job ssignment", scribbled_assignment || "Assistant", MAX_NAME_LEN)
 			if(!after_input_check(user, item, input_assignment, scribbled_assignment))
 				return
 			scribbled_assignment = sanitize(input_assignment)
 			var/list/details = item.get_writing_implement_details()
-			details_colors[INDEX_ASSIGNMENT_COLOR] = details["color"] || "#000000"
+			details_colors[INDEX_ASSIGNMENT_COLOR] = details["color"] || COLOR_BLACK
 		if("Trim")
 			var/static/list/possible_trims
 			if(!possible_trims)
@@ -1779,12 +1819,12 @@
 				return
 			scribbled_trim = "cardboard_[input_trim]"
 			var/list/details = item.get_writing_implement_details()
-			details_colors[INDEX_TRIM_COLOR] = details["color"] || "#000000"
+			details_colors[INDEX_TRIM_COLOR] = details["color"] || COLOR_BLACK
 		if("Reset")
 			scribbled_name = null
 			scribbled_assignment = null
 			scribbled_trim = null
-			details_colors = list("#000000", "#000000", "#000000")
+			details_colors = list(COLOR_BLACK, COLOR_BLACK, COLOR_BLACK)
 
 	update_appearance()
 

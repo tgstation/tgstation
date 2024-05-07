@@ -10,9 +10,9 @@
 		/mob/living/basic/mining/brimdemon = 1,
 		/mob/living/basic/mining/goldgrub = 1,
 		/mob/living/basic/mining/goliath = 1,
+		/mob/living/basic/mining/legion = 1,
 		/mob/living/basic/mining/lobstrosity/lava = 1,
 		/mob/living/basic/mining/watcher = 1,
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion = 1,
 	)
 
 /// Spawns random watcher variants during map generation
@@ -46,6 +46,6 @@
 	desc = "Chance to spawn a rare shiny version."
 	icon_state = "legion"
 	loot = list(
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion = 19,
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf = 1,
+		/mob/living/basic/mining/legion = 19,
+		/mob/living/basic/mining/legion/dwarf = 1,
 	)

@@ -50,7 +50,7 @@
 	if(istype(starting_light))
 		add_light(starting_light)
 
-/datum/component/seclite_attachable/Destroy(force, silent)
+/datum/component/seclite_attachable/Destroy(force)
 	if(light)
 		remove_light()
 	return ..()
@@ -160,7 +160,7 @@
 	var/successful_toggle = light.toggle_light(user)
 	if(!successful_toggle)
 		return TRUE
-	user.balloon_alert(user, "[light.name] toggled [light.on ? "on":"off"]")
+	user.balloon_alert(user, "[light.name] toggled [light.light_on ? "on":"off"]")
 	update_light()
 	return TRUE
 
@@ -236,7 +236,7 @@
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(unscrew_light), source, user, tool)
-	return COMPONENT_BLOCK_TOOL_ATTACK
+	return ITEM_INTERACT_BLOCKING
 
 /// Invoked asyncronously from [proc/on_screwdriver]. Handles removing the light from our parent.
 /datum/component/seclite_attachable/proc/unscrew_light(obj/item/source, mob/user, obj/item/tool)
@@ -270,7 +270,7 @@
 	if(!light)
 		return
 
-	var/overlay_state = "[light_overlay][light.on ? "_on":""]"
+	var/overlay_state = "[light_overlay][light.light_on ? "_on":""]"
 	var/mutable_appearance/flashlight_overlay = mutable_appearance(light_overlay_icon, overlay_state)
 	flashlight_overlay.pixel_x = overlay_x
 	flashlight_overlay.pixel_y = overlay_y
@@ -288,7 +288,7 @@
 	var/base_state = source.base_icon_state || initial(source.icon_state)
 	// Updates our icon state based on our light state.
 	if(light)
-		source.icon_state = "[base_state]-[light_icon_state][light.on ? "-on":""]"
+		source.icon_state = "[base_state]-[light_icon_state][light.light_on ? "-on":""]"
 
 	// Reset their icon state when if we've got no light.
 	else if(source.icon_state != base_state)

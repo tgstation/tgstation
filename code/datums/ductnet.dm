@@ -43,6 +43,7 @@
 	for(var/dir in P.ducts)
 		if(P.ducts[dir] == src)
 			P.ducts -= dir
+
 	if(!ducts.len) //there were no ducts, so it was a direct connection. we destroy ourselves since a ductnet with only one plumber and no ducts is worthless
 		destroy_network()
 

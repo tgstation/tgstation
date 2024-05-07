@@ -22,6 +22,7 @@
 /obj/structure/closet/crate/secure/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NO_MANIFEST_CONTENTS_ERROR, TRAIT_GENERIC)
 
 /obj/structure/closet/crate/secure/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	if(prob(tamperproof) && damage_amount >= DAMAGE_PRECISION)
@@ -62,8 +63,8 @@
 	base_icon_state = "hydrosecurecrate"
 
 /obj/structure/closet/crate/secure/freezer //for consistency with other "freezer" closets/crates
-	desc = "An insulated crate with a lock on it, used to secure perishables."
-	name = "secure kitchen crate"
+	desc = "An icebox with a lock on it, used to secure perishables."
+	name = "secure kitchen icebox"
 	icon_state = "kitchen_secure_crate"
 	base_icon_state = "kitchen_secure_crate"
 	paint_jobs = null
@@ -78,17 +79,48 @@
 	. = ..()
 	new /obj/effect/spawner/random/food_or_drink/pizzaparty(src)
 
+/obj/structure/closet/crate/secure/centcom
+	name = "secure centcom crate"
+	icon_state = "centcom_secure"
+	base_icon_state = "centcom_secure"
+
+/obj/structure/closet/crate/secure/cargo
+	name = "secure cargo crate"
+	icon_state = "cargo_secure"
+	base_icon_state = "cargo_secure"
+
+/obj/structure/closet/crate/secure/cargo/mining
+	name = "secure mining crate"
+	icon_state = "mining_secure"
+	base_icon_state = "mining_secure"
+
+/obj/structure/closet/crate/secure/radiation
+	name = "secure radioation crate"
+	icon_state = "radiation_secure"
+	base_icon_state = "radiation_secure"
+
 /obj/structure/closet/crate/secure/engineering
 	desc = "A crate with a lock on it, painted in the scheme of the station's engineers."
 	name = "secure engineering crate"
 	icon_state = "engi_secure_crate"
 	base_icon_state = "engi_secure_crate"
 
+/obj/structure/closet/crate/secure/engineering/atmos
+	name = "secure atmospherics crate"
+	desc = "A crate with a lock on it, painted in the scheme of the station's atmospherics engineers."
+	icon_state = "atmos_secure"
+	base_icon_state = "atmos_secure"
+
 /obj/structure/closet/crate/secure/science
 	name = "secure science crate"
 	desc = "A crate with a lock on it, painted in the scheme of the station's scientists."
 	icon_state = "scisecurecrate"
 	base_icon_state = "scisecurecrate"
+
+/obj/structure/closet/crate/secure/science/robo
+	name = "robotics science crate"
+	icon_state = "robo_secure"
+	base_icon_state = "robo_secure"
 
 /obj/structure/closet/crate/secure/owned
 	name = "private crate"

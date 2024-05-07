@@ -81,7 +81,7 @@
 	SIGNAL_HANDLER
 
 	if(check_if_detonate(tool))
-		return COMPONENT_BLOCK_TOOL_ATTACK
+		return ITEM_INTERACT_BLOCKING
 
 /// Shot by something
 /datum/component/explodable/proc/projectile_react(datum/source, obj/projectile/shot)
@@ -91,13 +91,16 @@
 		detonate()
 
 ///Called when you attack a specific body part of the thing this is equipped on. Useful for exploding pants.
-/datum/component/explodable/proc/explodable_attack_zone(datum/source, damage, damagetype, def_zone)
+/datum/component/explodable/proc/explodable_attack_zone(datum/source, damage, damagetype, def_zone, ...)
 	SIGNAL_HANDLER
 
 	if(!def_zone)
 		return
 	if(damagetype != BURN) //Don't bother if it's not fire.
 		return
+	if(isbodypart(def_zone))
+		var/obj/item/bodypart/hitting = def_zone
+		def_zone = hitting.body_zone
 	if(!is_hitting_zone(def_zone)) //You didn't hit us! ha!
 		return
 	detonate()
@@ -119,13 +122,7 @@
 	if(!istype(wearer))
 		return FALSE
 
-	// Maybe switch this over if we have a get_all_clothing or similar proc for carbon mobs.
-	// get_all_worn_items is a lie, they include pockets.
-	var/list/worn_items = list()
-	worn_items += list(wearer.head, wearer.wear_mask, wearer.gloves, wearer.shoes, wearer.glasses, wearer.ears)
-	if(ishuman(wearer))
-		var/mob/living/carbon/human/human_wearer = wearer
-		worn_items += list(human_wearer.wear_suit, human_wearer.w_uniform)
+	var/list/worn_items = wearer.get_equipped_items()
 
 	if(!(item in worn_items))
 		return FALSE

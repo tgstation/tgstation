@@ -5,6 +5,7 @@
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "stargazer_menu"
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED | AB_CHECK_PHASED
 	/// Weakref for storing our stargazer
 	var/datum/weakref/our_mob
 

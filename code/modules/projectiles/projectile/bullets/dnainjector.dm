@@ -7,7 +7,7 @@
 	embedding = null
 	shrapnel_type = null
 
-/obj/projectile/bullet/dnainjector/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/dnainjector/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100)

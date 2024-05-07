@@ -6,7 +6,7 @@
 	possible_types = list(/mob/living/basic/cockroach)
 	traits = EXPERIMENT_TRAIT_DESTRUCTIVE
 
-/datum/experiment/scanning/random/cytology/final_contributing_index_checks(atom/target, typepath)
+/datum/experiment/scanning/random/cytology/final_contributing_index_checks(datum/component/experiment_handler/experiment_handler, atom/target, typepath)
 	return ..() && HAS_TRAIT(target, TRAIT_VATGROWN)
 
 /datum/experiment/scanning/random/cytology/serialize_progress_stage(atom/target, list/seen_instances)

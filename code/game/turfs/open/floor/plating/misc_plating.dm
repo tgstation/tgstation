@@ -6,6 +6,10 @@
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	baseturfs = /turf/open/floor/plating/lowpressure
 
+/turf/open/floor/plating/dumpsterair
+	initial_gas_mix = OPENTURF_DIRTY_ATMOS
+	temperature = 309
+
 /turf/open/floor/plating/icemoon
 	icon_state = "plating"
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
