@@ -384,8 +384,6 @@
 	allowed += list(
 		/obj/item/autopsy_scanner,
 		/obj/item/scythe,
-		/obj/item/shovel/serrated,
-		/obj/item/shovel/serrated/dull,
 	)
 
 /obj/item/clothing/head/hooded/winterhood/medical/coroner
