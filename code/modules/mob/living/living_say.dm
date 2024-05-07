@@ -122,11 +122,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		client?.cmd_admin_say(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		client?.dsay(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, message)
 		return
 
 	// dead is the only state you can never emote
@@ -208,9 +208,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	spans |= speech_span
 
-	if(language)
-		var/datum/language/L = GLOB.language_datum_instances[language]
-		spans |= L.spans
+	var/datum/language/spoken_lang = GLOB.language_datum_instances[language]
+	if(LAZYLEN(spoken_lang?.spans))
+		spans |= spoken_lang.spans
 
 	if(message_mods[MODE_SING])
 		var/randomnote = pick("\u2669", "\u266A", "\u266B")
@@ -412,7 +412,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			var/mob/living/carbon/human/human_speaker = src
 			if(istype(human_speaker.wear_mask, /obj/item/clothing/mask))
 				var/obj/item/clothing/mask/worn_mask = human_speaker.wear_mask
-				if(!worn_mask.mask_adjusted)
+				if(!worn_mask.up)
 					if(worn_mask.voice_override)
 						voice_to_use = worn_mask.voice_override
 					if(worn_mask.voice_filter)

@@ -160,7 +160,7 @@
 	key_third_person = "snaps"
 	message = "snaps their fingers."
 	message_param = "snaps their fingers at %t."
-	emote_type = EMOTE_AUDIBLE
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	hands_use_check = TRUE
 	muzzle_ignore = TRUE
 

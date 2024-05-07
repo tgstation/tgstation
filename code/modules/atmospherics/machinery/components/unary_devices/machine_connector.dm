@@ -5,14 +5,12 @@
 	var/obj/machinery/atmospherics/components/unary/gas_connector
 
 /datum/gas_machine_connector/New(location, obj/machinery/connecting_machine = null, direction = SOUTH, gas_volume)
-	gas_connector = new(location)
-
 	connected_machine = connecting_machine
 	if(!connected_machine)
-		QDEL_NULL(gas_connector)
 		qdel(src)
 		return
 
+	gas_connector = new(location)
 	gas_connector.dir = connected_machine.dir
 	gas_connector.airs[1].volume = gas_volume
 
@@ -41,7 +39,8 @@
 	RegisterSignal(connected_machine, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move_connected_machine))
 	RegisterSignal(connected_machine, COMSIG_MOVABLE_MOVED, PROC_REF(moved_connected_machine))
 	RegisterSignal(connected_machine, COMSIG_MACHINERY_DEFAULT_ROTATE_WRENCH, PROC_REF(wrenched_connected_machine))
-	RegisterSignal(connected_machine, COMSIG_QDELETING, PROC_REF(deconstruct_connected_machine))
+	RegisterSignal(connected_machine, COMSIG_OBJ_DECONSTRUCT, PROC_REF(deconstruct_connected_machine))
+	RegisterSignal(connected_machine, COMSIG_QDELETING, PROC_REF(destroy_connected_machine))
 
 /**
  * Unregister the signals previously registered
@@ -51,7 +50,8 @@
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_MOVABLE_PRE_MOVE,
 		COMSIG_MACHINERY_DEFAULT_ROTATE_WRENCH,
-		COMSIG_QDELETING,
+		COMSIG_OBJ_DECONSTRUCT,
+		COMSIG_QDELETING
 	))
 
 /**
@@ -82,12 +82,18 @@
  */
 /datum/gas_machine_connector/proc/deconstruct_connected_machine()
 	SIGNAL_HANDLER
+
 	relocate_airs()
+
+/**
+ * Called when the machine has been destroyed
+ */
+/datum/gas_machine_connector/proc/destroy_connected_machine()
+	SIGNAL_HANDLER
+
 	disconnect_connector()
 	SSair.stop_processing_machine(connected_machine)
 	unregister_from_machine()
-	connected_machine = null
-	QDEL_NULL(gas_connector)
 	qdel(src)
 
 /**

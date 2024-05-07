@@ -338,7 +338,6 @@
 	if(drop)
 		dump_inventory_contents()
 	update_appearance()
-	updateUsrDialog()
 
 /**
  * Drop every movable atom in the machine's contents list, including any components and circuit.
@@ -423,7 +422,6 @@
 	if(target && !target.has_buckled_mobs() && (!isliving(target) || !mobtarget.buckled))
 		set_occupant(target)
 		target.forceMove(src)
-	updateUsrDialog()
 	update_appearance()
 
 ///updates the use_power var for this machine and updates its static power usage from its area to reflect the new value
@@ -590,12 +588,14 @@
 	set_panel_open(!panel_open)
 
 /obj/machinery/can_interact(mob/user)
+	if(QDELETED(user))
+		return FALSE
+
 	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE)) // Check if the machine is broken, and if we can still interact with it if so
 		return FALSE
 
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_INTERACT)
 		return FALSE
-
 
 	if(isAdminGhostAI(user))
 		return TRUE //the Gods have unlimited power and do not care for things such as range or blindness
@@ -667,10 +667,8 @@
 
 //Return a non FALSE value to interrupt attack_hand propagation to subtypes.
 /obj/machinery/interact(mob/user)
-	if(interaction_flags_machine & INTERACT_MACHINE_SET_MACHINE)
-		user.set_machine(src)
 	update_last_used(user)
-	. = ..()
+	return ..()
 
 /obj/machinery/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	add_fingerprint(usr)
@@ -768,13 +766,14 @@
 		return
 	update_last_used(user)
 
-/obj/machinery/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+/obj/machinery/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_TOOLS)
-		return ITEM_INTERACT_ANY_BLOCKER
+		return ITEM_INTERACT_BLOCKING
+
 	. = ..()
-	if(. & ITEM_INTERACT_BLOCKING)
-		return
-	update_last_used(user)
+	if(.)
+		update_last_used(user)
+	return .
 
 /obj/machinery/_try_interact(mob/user)
 	if((interaction_flags_machine & INTERACT_MACHINE_WIRES_IF_OPEN) && panel_open && (attempt_wire_interaction(user) == WIRE_INTERACTION_BLOCK))

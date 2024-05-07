@@ -47,6 +47,7 @@ Possible to do for anyone motivated enough:
 	armor_type = /datum/armor/machinery_holopad
 	circuit = /obj/item/circuitboard/machine/holopad
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
+	interaction_flags_click = ALLOW_SILICON_REACH
 	// Blue, dim light
 	light_power = 0.8
 	light_color = LIGHT_COLOR_BLUE

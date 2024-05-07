@@ -99,6 +99,15 @@
 	max_integrity = 55
 	w_class = WEIGHT_CLASS_NORMAL
 
+/obj/item/shield/kite
+	name = "kite shield"
+	desc = "Protect your internal organs with this almond shaped shield."
+	icon_state = "kite"
+	inhand_icon_state = "kite"
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 15)
+	shield_break_sound = 'sound/effects/grillehit.ogg'
+	max_integrity = 60
+
 /obj/item/shield/roman
 	name = "\improper Roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."

@@ -43,6 +43,8 @@
 
 ///if we have bags and lost a head, remove them
 /datum/quirk/all_nighter/proc/on_removed_limb(datum/source, obj/item/bodypart/removed_limb, special, dismembered)
+	SIGNAL_HANDLER
+
 	if(bodypart_overlay && istype(removed_limb, /obj/item/bodypart/head))
 		remove_bags()
 

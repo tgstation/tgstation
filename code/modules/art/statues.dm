@@ -44,8 +44,6 @@
 		return
 	return ..()
 
-/obj/structure/statue/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/structure/statue/atom_deconstruct(disassembled = TRUE)
 	var/amount_mod = disassembled ? 0 : -2

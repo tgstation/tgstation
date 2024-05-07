@@ -10,6 +10,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
+	interaction_flags_click = FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 
 	///The implant case currently inserted into the pad.
 	var/obj/item/implantcase/inserted_case
@@ -46,11 +47,9 @@
 	update_static_data_for_all_viewers()
 	update_appearance(UPDATE_ICON)
 
-/obj/item/implantpad/AltClick(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+/obj/item/implantpad/click_alt(mob/user)
 	remove_implant(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/implantpad/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

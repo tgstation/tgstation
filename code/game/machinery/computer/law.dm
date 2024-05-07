@@ -7,7 +7,6 @@
 
 /obj/machinery/computer/upload/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/gps, "Encrypted Upload")
 	if(!mapload)
 		log_silicon("\A [name] was created at [loc_name(src)].")
 		message_admins("\A [name] was created at [ADMIN_VERBOSEJMP(src)].")
@@ -29,6 +28,7 @@
 			current = null
 			return
 		M.install(current.laws, user)
+		imprint_gps(gps_tag = "Weak Upload Signal")
 	else
 		return ..()
 

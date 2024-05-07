@@ -38,6 +38,9 @@
 	if(!isnull(limb))
 		register_to_limb(limb)
 
+/mob/living/basic/living_limb_flesh/apply_target_randomisation()
+	AddElement(/datum/element/attack_zone_randomiser, GLOB.limb_zones)
+
 /mob/living/basic/living_limb_flesh/Destroy(force)
 	. = ..()
 	if(current_bodypart)
@@ -71,6 +74,8 @@
 			if(!victim.CanReach(movable))
 				continue
 			candidates += movable
+		if(!length(candidates))
+			return
 		var/atom/movable/candidate = pick(candidates)
 		if(isnull(candidate))
 			return
@@ -123,9 +128,9 @@
 			part_type = /obj/item/bodypart/leg/right/flesh
 
 	target.visible_message(span_danger("[src] [target_part ? "tears off and attaches itself" : "attaches itself"] to where [target][target.p_s()] limb used to be!"))
-	var/obj/item/bodypart/new_bodypart = new part_type(TRUE) //dont_spawn_flesh, we cant use named arguments here
-	new_bodypart.replace_limb(target, TRUE)
+	var/obj/item/bodypart/new_bodypart = new part_type()
 	forceMove(new_bodypart)
+	new_bodypart.replace_limb(target, TRUE)
 	register_to_limb(new_bodypart)
 
 /mob/living/basic/living_limb_flesh/proc/owner_shocked(datum/source, shock_damage, shock_source, siemens_coeff, flags)
@@ -176,4 +181,3 @@
 	ai_controller.set_ai_status(AI_STATUS_ON)
 	forceMove(limb.drop_location())
 	qdel(limb)
-

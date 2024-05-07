@@ -129,6 +129,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EVENT_PROTECTED (1<<15)
 /// This Area Doesn't have Flood or Bomb Admin Messages, but will still log
 #define QUIET_LOGS (1<<16)
+/// This area does not allow virtual entities to enter.
+#define VIRTUAL_SAFE_AREA (1<<17)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -312,3 +314,5 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMOTE_VISIBLE (1<<1)
 /// Is it an emote that should be shown regardless of blindness/deafness
 #define EMOTE_IMPORTANT (1<<2)
+/// Emote only prints to runechat, not to the chat window
+#define EMOTE_RUNECHAT (1<<3)

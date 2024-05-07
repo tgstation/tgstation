@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Basic Bots will use their \"salute\" emotes less often."
-  - rscdel: "Basic bot fists."
