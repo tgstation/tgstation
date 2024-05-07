@@ -52,7 +52,7 @@
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_LIVING, SENSOR_LIVING, SENSOR_COORDS, SENSOR_COORDS, SENSOR_OFF)
 	register_context()
-	AddElement(/datum/element/update_icon_updates_onmob, flags = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK, body = TRUE)
+	AddElement(/datum/element/update_icon_updates_onmob, flags = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING, body = TRUE)
 
 /obj/item/clothing/under/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = NONE
