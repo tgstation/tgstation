@@ -30,7 +30,7 @@
 
 /turf/open/misc/grass/burnt_states()
 	if (!smoothing_junction || !(smoothing_flags & SMOOTH_BURNT_TURF))
-		return list(base_burnt_icon_state)
+		return list("[base_burnt_icon_state]-255")
 
 	return list("[base_burnt_icon_state]-[smoothing_junction]")
 
