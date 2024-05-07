@@ -104,7 +104,7 @@
 
 	return new trash_type(location || drop_location())
 
-/obj/item/food/grown/grind_requirements()
+/obj/item/food/grown/blend_requirements()
 	if(dry_grind && !HAS_TRAIT(src, TRAIT_DRIED))
 		to_chat(usr, span_warning("[src] needs to be dry before it can be ground up!"))
 		return

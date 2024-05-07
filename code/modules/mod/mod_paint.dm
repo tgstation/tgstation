@@ -68,7 +68,7 @@
 	QDEL_NULL(proxy_view)
 	current_color = COLOR_MATRIX_IDENTITY
 
-/obj/item/mod/paint/ui_status(mob/user)
+/obj/item/mod/paint/ui_status(mob/user, datum/ui_state/state)
 	if(check_menu(editing_mod, user))
 		return ..()
 	return UI_CLOSE

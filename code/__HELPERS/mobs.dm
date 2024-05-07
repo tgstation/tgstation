@@ -12,7 +12,7 @@
 /proc/random_eye_color()
 	switch(pick(20;"brown",20;"hazel",20;"grey",15;"blue",15;"green",1;"amber",1;"albino"))
 		if("brown")
-			return "#663300"
+			return COLOR_BROWNER_BROWN
 		if("hazel")
 			return "#554422"
 		if("grey")
@@ -26,34 +26,34 @@
 		if("albino")
 			return "#" + pick("cc","dd","ee","ff") + pick("00","11","22","33","44","55","66","77","88","99") + pick("00","11","22","33","44","55","66","77","88","99")
 		else
-			return "#000000"
+			return COLOR_BLACK
 
 /proc/random_underwear(gender)
-	if(!GLOB.underwear_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
+	if(length(SSaccessories.underwear_list) == 0)
+		CRASH("No underwear to choose from!")
 	switch(gender)
 		if(MALE)
-			return pick(GLOB.underwear_m)
+			return pick(SSaccessories.underwear_m)
 		if(FEMALE)
-			return pick(GLOB.underwear_f)
+			return pick(SSaccessories.underwear_f)
 		else
-			return pick(GLOB.underwear_list)
+			return pick(SSaccessories.underwear_list)
 
 /proc/random_undershirt(gender)
-	if(!GLOB.undershirt_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
+	if(length(SSaccessories.undershirt_list) == 0)
+		CRASH("No undershirts to choose from!")
 	switch(gender)
 		if(MALE)
-			return pick(GLOB.undershirt_m)
+			return pick(SSaccessories.undershirt_m)
 		if(FEMALE)
-			return pick(GLOB.undershirt_f)
+			return pick(SSaccessories.undershirt_f)
 		else
-			return pick(GLOB.undershirt_list)
+			return pick(SSaccessories.undershirt_list)
 
 /proc/random_socks()
-	if(!GLOB.socks_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
-	return pick(GLOB.socks_list)
+	if(length(SSaccessories.socks_list) == 0)
+		CRASH("No socks to choose from!")
+	return pick(SSaccessories.socks_list)
 
 /proc/random_backpack()
 	return pick(GLOB.backpacklist)
@@ -61,61 +61,20 @@
 /proc/random_hairstyle(gender)
 	switch(gender)
 		if(MALE)
-			return pick(GLOB.hairstyles_male_list)
+			return pick(SSaccessories.hairstyles_male_list)
 		if(FEMALE)
-			return pick(GLOB.hairstyles_female_list)
+			return pick(SSaccessories.hairstyles_female_list)
 		else
-			return pick(GLOB.hairstyles_list)
+			return pick(SSaccessories.hairstyles_list)
 
 /proc/random_facial_hairstyle(gender)
 	switch(gender)
 		if(MALE)
-			return pick(GLOB.facial_hairstyles_male_list)
+			return pick(SSaccessories.facial_hairstyles_male_list)
 		if(FEMALE)
-			return pick(GLOB.facial_hairstyles_female_list)
+			return pick(SSaccessories.facial_hairstyles_female_list)
 		else
-			return pick(GLOB.facial_hairstyles_list)
-
-/proc/random_unique_name(gender, attempts_to_find_unique_name=10)
-	for(var/i in 1 to attempts_to_find_unique_name)
-		if(gender == FEMALE)
-			. = capitalize(pick(GLOB.first_names_female)) + " " + capitalize(pick(GLOB.last_names))
-		else
-			. = capitalize(pick(GLOB.first_names_male)) + " " + capitalize(pick(GLOB.last_names))
-
-		if(!findname(.))
-			break
-
-/proc/random_unique_lizard_name(gender, attempts_to_find_unique_name=10)
-	for(var/i in 1 to attempts_to_find_unique_name)
-		. = capitalize(lizard_name(gender))
-
-		if(!findname(.))
-			break
-
-/proc/random_unique_plasmaman_name(attempts_to_find_unique_name=10)
-	for(var/i in 1 to attempts_to_find_unique_name)
-		. = capitalize(plasmaman_name())
-
-		if(!findname(.))
-			break
-
-/proc/random_unique_ethereal_name(attempts_to_find_unique_name=10)
-	for(var/i in 1 to attempts_to_find_unique_name)
-		. = capitalize(ethereal_name())
-
-		if(!findname(.))
-			break
-
-/proc/random_unique_moth_name(attempts_to_find_unique_name=10)
-	for(var/i in 1 to attempts_to_find_unique_name)
-		. = capitalize(pick(GLOB.moth_first)) + " " + capitalize(pick(GLOB.moth_last))
-
-		if(!findname(.))
-			break
-
-/proc/random_skin_tone()
-	return pick(GLOB.skin_tones)
+			return pick(SSaccessories.facial_hairstyles_list)
 
 GLOBAL_LIST_INIT(skin_tones, sort_list(list(
 	"albino",
@@ -154,9 +113,6 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	"mixed3" = "Coffee",
 	"mixed4" = "Macadamia",
 ))
-
-/// An assoc list of species IDs to type paths
-GLOBAL_LIST_EMPTY(species_list)
 
 /proc/age2agedescription(age)
 	switch(age)
@@ -201,9 +157,26 @@ GLOBAL_LIST_EMPTY(species_list)
  *
  * Checks that `user` does not move, change hands, get stunned, etc. for the
  * given `delay`. Returns `TRUE` on success or `FALSE` on failure.
- * Interaction_key is the assoc key under which the do_after is capped, with max_interact_count being the cap. Interaction key will default to target if not set.
+ *
+ * @param {mob} user - The mob performing the action.
+ *
+ * @param {number} delay - The time in deciseconds. Use the SECONDS define for readability. `1 SECONDS` is 10 deciseconds.
+ *
+ * @param {atom} target - The target of the action. This is where the progressbar will display.
+ *
+ * @param {flag} timed_action_flags - Flags to control the behavior of the timed action.
+ *
+ * @param {boolean} progress - Whether to display a progress bar / cogbar.
+ *
+ * @param {datum/callback} extra_checks - Additional checks to perform before the action is executed.
+ *
+ * @param {string} interaction_key - The assoc key under which the do_after is capped, with max_interact_count being the cap. Interaction key will default to target if not set.
+ *
+ * @param {number} max_interact_count - The maximum amount of interactions allowed.
+ *
+ * @param {boolean} hidden - By default, any action 1 second or longer shows a cog over the user while it is in progress. If hidden is set to TRUE, the cog will not be shown.
  */
-/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
+/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, hidden = FALSE)
 	if(!user)
 		return FALSE
 	if(!isnum(delay))
@@ -221,7 +194,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/atom/target_loc = target?.loc
 
 	var/drifting = FALSE
-	if(SSmove_manager.processing_on(user, SSspacedrift))
+	if(GLOB.move_manager.processing_on(user, SSspacedrift))
 		drifting = TRUE
 
 	var/holding = user.get_active_held_item()
@@ -230,8 +203,14 @@ GLOBAL_LIST_EMPTY(species_list)
 		delay *= user.cached_multiplicative_actions_slowdown
 
 	var/datum/progressbar/progbar
+	var/datum/cogbar/cog
+
 	if(progress)
-		progbar = new(user, delay, target || user)
+		if(user.client)
+			progbar = new(user, delay, target || user)
+
+		if(!hidden && delay >= 1 SECONDS)
+			cog = new(user)
 
 	SEND_SIGNAL(user, COMSIG_DO_AFTER_BEGAN)
 
@@ -244,7 +223,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(!QDELETED(progbar))
 			progbar.update(world.time - starttime)
 
-		if(drifting && !SSmove_manager.processing_on(user, SSspacedrift))
+		if(drifting && !GLOB.move_manager.processing_on(user, SSspacedrift))
 			drifting = FALSE
 			user_loc = user.loc
 
@@ -264,6 +243,8 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	if(!QDELETED(progbar))
 		progbar.end_progress()
+
+	cog?.remove()
 
 	if(interaction_key)
 		var/reduced_interaction_count = (LAZYACCESS(user.do_afters, interaction_key) || 0) - 1
@@ -451,6 +432,19 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(!HAS_TRAIT(L, TRAIT_PASSTABLE))
 		L.pass_flags &= ~PASSTABLE
 
+/proc/passwindow_on(target, source)
+	var/mob/living/target_mob = target
+	if (!HAS_TRAIT(target_mob, TRAIT_PASSWINDOW) && target_mob.pass_flags & PASSWINDOW)
+		ADD_TRAIT(target_mob, TRAIT_PASSWINDOW, INNATE_TRAIT)
+	ADD_TRAIT(target_mob, TRAIT_PASSWINDOW, source)
+	target_mob.pass_flags |= PASSWINDOW
+
+/proc/passwindow_off(target, source)
+	var/mob/living/target_mob = target
+	REMOVE_TRAIT(target_mob, TRAIT_PASSWINDOW, source)
+	if(!HAS_TRAIT(target_mob, TRAIT_PASSWINDOW))
+		target_mob.pass_flags &= ~PASSWINDOW
+
 /proc/dance_rotate(atom/movable/AM, datum/callback/callperrotate, set_original_dir=FALSE)
 	set waitfor = FALSE
 	var/originaldir = AM.dir
@@ -564,15 +558,15 @@ GLOBAL_LIST_EMPTY(species_list)
 		moblist += mob_to_sort
 	for(var/mob/dead/new_player/mob_to_sort in sortmob)
 		moblist += mob_to_sort
-	for(var/mob/living/simple_animal/slime/mob_to_sort in sortmob)
+	for(var/mob/living/basic/slime/mob_to_sort in sortmob)
 		moblist += mob_to_sort
 	for(var/mob/living/simple_animal/mob_to_sort in sortmob)
-		// We've already added slimes.
-		if(isslime(mob_to_sort))
-			continue
 		moblist += mob_to_sort
 	for(var/mob/living/basic/mob_to_sort in sortmob)
 		moblist += mob_to_sort
+		// We've already added slimes.
+		if(isslime(mob_to_sort))
+			continue
 	return moblist
 
 ///returns a mob type controlled by a specified ckey

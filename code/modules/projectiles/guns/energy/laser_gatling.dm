@@ -145,9 +145,8 @@
 	..()
 	ammo_pack.overheat++
 	if(ammo_pack.battery)
-		var/totransfer = min(100, ammo_pack.battery.charge)
-		var/transferred = cell.give(totransfer)
-		ammo_pack.battery.use(transferred)
+		var/transferred = ammo_pack.battery.use(cell.maxcharge - cell.charge, force = TRUE)
+		cell.give(transferred)
 
 
 /obj/item/gun/energy/minigun/afterattack(atom/target, mob/living/user, flag, params)
@@ -158,5 +157,5 @@
 /obj/item/stock_parts/cell/minigun
 	name = "gatling gun fusion core"
 	desc = "Where did these come from?"
-	maxcharge = 500000
-	chargerate = 5000
+	maxcharge = 500 * STANDARD_CELL_CHARGE
+	chargerate = 5 * STANDARD_CELL_CHARGE

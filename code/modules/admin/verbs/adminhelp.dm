@@ -500,7 +500,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	state = AHELP_RESOLVED
 	GLOB.ahelp_tickets.ListInsert(src)
 
-	addtimer(CALLBACK(initiator, TYPE_PROC_REF(/client, giveadminhelpverb)), 50)
+	addtimer(CALLBACK(initiator, TYPE_PROC_REF(/client, giveadminhelpverb)), 5 SECONDS)
 
 	AddInteraction("<font color='green'>Resolved by [key_name].</font>", player_message = "<font color='green'>Ticket resolved!</font>")
 	to_chat(initiator, span_adminhelp("Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly."), confidential = TRUE)
@@ -1047,10 +1047,10 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 		if(!M.mind)
 			continue
 
-		for(var/string in splittext(lowertext(M.real_name), " "))
+		for(var/string in splittext(LOWER_TEXT(M.real_name), " "))
 			if(!(string in ignored_words))
 				nameWords += string
-		for(var/string in splittext(lowertext(M.name), " "))
+		for(var/string in splittext(LOWER_TEXT(M.name), " "))
 			if(!(string in ignored_words))
 				nameWords += string
 

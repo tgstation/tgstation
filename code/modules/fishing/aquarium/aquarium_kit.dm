@@ -85,7 +85,7 @@
 	)
 	return pick_weight(weighted_list)
 
-/obj/item/storage/fish_cas/blackmarket/Initialize(mapload)
+/obj/item/storage/fish_case/blackmarket/Initialize(mapload)
 	. = ..()
 	for(var/obj/item/fish/fish as anything in contents)
 		fish.set_status(FISH_DEAD)

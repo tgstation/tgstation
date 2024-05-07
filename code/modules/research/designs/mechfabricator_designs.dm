@@ -1408,6 +1408,36 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
 
+/datum/design/borg_upgrade_surgicalomnitool
+	name = "Advanced Surgical Omnitool Upgrade"
+	id = "borg_upgrade_surgicalomnitool"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/surgery_omnitool
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/silver=SHEET_MATERIAL_AMOUNT*2,
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
+/datum/design/borg_upgrade_engineeringomnitool
+	name = "Advanced Engineering Omnitool Upgrade"
+	id = "borg_upgrade_engineeringomnitool"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/engineering_omnitool
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/gold=SHEET_MATERIAL_AMOUNT*2,
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING,
+	)
+
 /datum/design/borg_upgrade_trashofholding
 	name = "Trash Bag of Holding"
 	id = "borg_upgrade_trashofholding"
@@ -2046,6 +2076,17 @@
 		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT,
 	)
 	build_path = /obj/item/mod/module/welding
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
+	)
+/datum/design/module/mod_head_protection
+	name = "Safety-First Head Protection Module"
+	id = "mod_safety"
+	materials = list(
+		/datum/material/iron =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/mod/module/headprotector
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
 	)

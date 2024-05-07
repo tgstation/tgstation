@@ -23,6 +23,10 @@ SUBSYSTEM_DEF(events)
 		if(!event.typepath || !event.valid_for_map())
 			continue //don't want this one! leave it for the garbage collector
 		control += event //add it to the list of all events (controls)
+
+	frequency_lower = CONFIG_GET(number/events_frequency_lower)
+	frequency_upper = CONFIG_GET(number/events_frequency_upper)
+
 	reschedule()
 	// Instantiate our holidays list if it hasn't been already
 	if(isnull(GLOB.holidays))
@@ -50,7 +54,11 @@ SUBSYSTEM_DEF(events)
 //checks if we should select a random event yet, and reschedules if necessary
 /datum/controller/subsystem/events/proc/checkEvent()
 	if(scheduled <= world.time)
+#ifdef MAP_TEST
+		message_admins("Random event skipped (Game is compiled in MAP_TEST mode)")
+#else
 		spawnEvent()
+#endif
 		reschedule()
 
 //decides which world.time we should select another random event at.
@@ -81,7 +89,8 @@ SUBSYSTEM_DEF(events)
 			event_roster[event_to_check] = event_to_check.weight
 
 	var/datum/round_event_control/event_to_run = pick_weight(event_roster)
-	TriggerEvent(event_to_run)
+	if(event_to_run)
+		TriggerEvent(event_to_run)
 
 ///Does the last pre-flight checks for the passed event, and runs it if the event is ready.
 /datum/controller/subsystem/events/proc/TriggerEvent(datum/round_event_control/event_to_trigger)
@@ -99,8 +108,8 @@ SUBSYSTEM_DEF(events)
 
 ///Sets the event frequency bounds back to their initial value.
 /datum/controller/subsystem/events/proc/resetFrequency()
-	frequency_lower = initial(frequency_lower)
-	frequency_upper = initial(frequency_upper)
+	frequency_lower = CONFIG_GET(number/events_frequency_lower)
+	frequency_upper = CONFIG_GET(number/events_frequency_upper)
 
 /**
  * HOLIDAYS

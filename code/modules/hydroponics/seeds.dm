@@ -234,7 +234,7 @@
 		else
 			t_prod = new product(output_loc, new_seed = src)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))
-			t_prod.name = lowertext(parent.myseed.plantname)
+			t_prod.name = LOWER_TEXT(parent.myseed.plantname)
 		if(productdesc)
 			t_prod.desc = productdesc
 		t_prod.seed.name = parent.myseed.name
@@ -475,7 +475,7 @@
 					return
 				if(!user.can_perform_action(src))
 					return
-				name = "[lowertext(newplantname)]"
+				name = "[LOWER_TEXT(newplantname)]"
 				plantname = newplantname
 			if("Seed Description")
 				var/newdesc = tgui_input_text(user, "Write a new seed description", "Seed Description", desc, 180)

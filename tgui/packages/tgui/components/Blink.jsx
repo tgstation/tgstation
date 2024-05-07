@@ -55,14 +55,14 @@ export class Blink extends Component {
     clearTimeout(this.timer);
   }
 
-  render(props) {
+  render() {
     return (
       <span
         style={{
           visibility: this.state.hidden ? 'hidden' : 'visible',
         }}
       >
-        {props.children}
+        {this.props.children}
       </span>
     );
   }

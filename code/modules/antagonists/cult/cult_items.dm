@@ -97,7 +97,7 @@ Striking a noncultist, however, will tear their flesh."}
 		user.Paralyze(100)
 		user.dropItemToGround(src, TRUE)
 		user.visible_message(span_warning("A powerful force shoves [user] away from [target]!"), \
-				span_cultlarge("\"You shouldn't play with sharp things. You'll poke someone's eye out.\""))
+				span_cult_large("\"You shouldn't play with sharp things. You'll poke someone's eye out.\""))
 		if(ishuman(user))
 			var/mob/living/carbon/human/miscreant = user
 			miscreant.apply_damage(rand(force/2, force), BRUTE, pick(GLOB.arm_zones))
@@ -121,7 +121,7 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
 	if(!IS_CULTIST(user))
-		to_chat(user, span_cultlarge("\"I wouldn't advise that.\""))
+		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
 
 /datum/action/innate/dash/cult
 	name = "Rend the Veil"
@@ -156,7 +156,7 @@ Striking a noncultist, however, will tear their flesh."}
 		return
 	var/mob/living/carbon/carbon_user = user
 	if(user.num_legs < 2 || carbon_user.legcuffed) //if they can't be ensnared, stun for the same time as it takes to breakout of bola
-		to_chat(user, span_cultlarge("\"I wouldn't advise that.\""))
+		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
 		user.dropItemToGround(src, TRUE)
 		user.Paralyze(CULT_BOLA_PICKUP_STUN)
 	else
@@ -413,7 +413,7 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/living/user, slot)
 	..()
 	if(!IS_CULTIST(user))
-		to_chat(user, span_cultlarge("\"I wouldn't advise that.\""))
+		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
 		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
 		user.dropItemToGround(src, TRUE)
 		user.set_dizzy_if_lower(1 MINUTES)
@@ -450,7 +450,7 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
 	..()
 	if(!IS_CULTIST(user))
-		to_chat(user, span_cultlarge("\"I wouldn't advise that.\""))
+		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
 		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
 		user.dropItemToGround(src, TRUE)
 		user.set_dizzy_if_lower(1 MINUTES)
@@ -467,7 +467,7 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
 	..()
 	if(user.stat != DEAD && !IS_CULTIST(user) && (slot & ITEM_SLOT_EYES))
-		to_chat(user, span_cultlarge("\"You want to be blind, do you?\""))
+		to_chat(user, span_cult_large("\"You want to be blind, do you?\""))
 		user.dropItemToGround(src, TRUE)
 		user.set_dizzy_if_lower(1 MINUTES)
 		user.Paralyze(100)
@@ -989,7 +989,7 @@ Striking a noncultist, however, will tear their flesh."}
 		if(.)
 			if(illusions > 0)
 				illusions--
-				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 450)
+				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 45 SECONDS)
 				if(prob(60))
 					var/mob/living/simple_animal/hostile/illusion/M = new(owner.loc)
 					M.faction = list(FACTION_CULT)

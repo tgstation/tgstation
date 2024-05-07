@@ -93,7 +93,7 @@ const PaperPublishing = (props) => {
                 <Dropdown
                   width="35rem"
                   options={Object.keys(fileList)}
-                  displayText={selectedFile ? selectedFile : '-'}
+                  selected={selectedFile}
                   onSelected={(ordfile_name) =>
                     act('select_file', {
                       selected_uid: fileList[ordfile_name],
@@ -117,7 +117,7 @@ const PaperPublishing = (props) => {
                 <Dropdown
                   width="35rem"
                   options={Object.keys(expList)}
-                  displayText={selectedExperiment ? selectedExperiment : '-'}
+                  selected={selectedExperiment}
                   onSelected={(experiment_name) =>
                     act('select_experiment', {
                       selected_expath: expList[experiment_name],
@@ -141,7 +141,7 @@ const PaperPublishing = (props) => {
                 <Dropdown
                   width="35rem"
                   options={allowedTiers.map((number) => String(number))}
-                  displayText={tier ? String(tier) : '-'}
+                  selected={String(tier)}
                   onSelected={(new_tier) =>
                     act('select_tier', {
                       selected_tier: Number(new_tier),
@@ -165,7 +165,7 @@ const PaperPublishing = (props) => {
                 <Dropdown
                   width="35rem"
                   options={Object.keys(allowedPartners)}
-                  displayText={selectedPartner ? selectedPartner : '-'}
+                  selected={selectedPartner}
                   onSelected={(new_partner) =>
                     act('select_partner', {
                       selected_partner: allowedPartners[new_partner],

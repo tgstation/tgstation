@@ -90,7 +90,7 @@
 	if((obj_flags & EMAGGED) || !safe)
 		do_sparks(3, TRUE, src)
 		playsound(src, SFX_SPARKS, vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-	use_power(50)
+	use_energy(50 JOULES)
 	playsound(src, doorClose, vol = 40, vary = FALSE)
 	operating = TRUE
 	layer = CLOSED_DOOR_LAYER
@@ -136,7 +136,7 @@
 		for(var/mob/living/future_pancake in checked_turf)
 			future_pancake.visible_message(span_warning("[src] beeps angrily and closes on [future_pancake]!"), span_userdanger("[src] beeps angrily and closes on you!"))
 			SEND_SIGNAL(future_pancake, COMSIG_LIVING_DOORCRUSHED, src)
-			if(ishuman(future_pancake) || ismonkey(future_pancake))
+			if(ishuman(future_pancake))
 				future_pancake.emote("scream")
 				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 2)
 				future_pancake.Paralyze(2 SECONDS)
@@ -184,7 +184,7 @@
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/door/airlock/tram/LateInitialize(mapload)
+/obj/machinery/door/airlock/tram/post_machine_initialize()
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(open))
 	SStransport.doors += src

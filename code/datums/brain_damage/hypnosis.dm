@@ -61,7 +61,7 @@
 	..()
 	if(SPT_PROB(1, seconds_per_tick))
 		if(prob(50))
-			to_chat(owner, span_hypnophrase("<i>...[lowertext(hypnotic_phrase)]...</i>"))
+			to_chat(owner, span_hypnophrase("<i>...[LOWER_TEXT(hypnotic_phrase)]...</i>"))
 		else
 			owner.cause_hallucination( \
 				/datum/hallucination/chat, \

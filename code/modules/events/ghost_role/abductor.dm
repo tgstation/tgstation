@@ -14,7 +14,7 @@
 	fakeable = FALSE //Nothing to fake here
 
 /datum/round_event/ghost_role/abductor/spawn_role()
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_ABDUCTOR, role = ROLE_ABDUCTOR, pic_source = /obj/item/melee/baton/abductor, role_name_text = role_name)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_ABDUCTOR, role = ROLE_ABDUCTOR, alert_pic = /obj/item/melee/baton/abductor, role_name_text = role_name, amount_to_pick = 2)
 
 	if(candidates.len < 2)
 		return NOT_ENOUGH_PLAYERS

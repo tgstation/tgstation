@@ -83,7 +83,7 @@
 /datum/stock_market_event/large_boost
 	name = "Large Boost!"
 	trend_value = MARKET_TREND_UPWARD
-	trend_duration = 3
+	trend_duration = 4
 	circumstance = list(
 		"has just released a new product that raised the price of ",
 		"discovered a new valuable use for ",
@@ -93,14 +93,14 @@
 /datum/stock_market_event/large_boost/start_event()
 	. = ..()
 	var/price_units = SSstock_market.materials_prices[mat]
-	SSstock_market.materials_prices[mat] += round(gaussian(price_units * 0.5, price_units * 0.1))
+	SSstock_market.materials_prices[mat] += round(gaussian(price_units, price_units * 0.15))
 	SSstock_market.materials_prices[mat] = clamp(SSstock_market.materials_prices[mat], price_minimum * mat.value_per_unit, price_maximum * mat.value_per_unit)
 	create_news()
 
 /datum/stock_market_event/large_drop
 	name = "Large Drop!"
 	trend_value = MARKET_TREND_DOWNWARD
-	trend_duration = 5
+	trend_duration = 4
 	circumstance = list(
 		"'s latest product has seen major controversy, and resulted in a price drop for ",
 		"has been hit with a major lawsuit, resulting in a price drop for ",
@@ -110,6 +110,42 @@
 /datum/stock_market_event/large_drop/start_event()
 	. = ..()
 	var/price_units = SSstock_market.materials_prices[mat]
-	SSstock_market.materials_prices[mat] -= round(gaussian(price_units * 1.5, price_units * 0.1))
+	SSstock_market.materials_prices[mat] -= round(gaussian(price_units * 1.5, price_units * 0.15))
 	SSstock_market.materials_prices[mat] = clamp(SSstock_market.materials_prices[mat], price_minimum * mat.value_per_unit, price_maximum * mat.value_per_unit)
 	create_news()
+
+/datum/stock_market_event/hotcakes
+	name = "Selling like Hotcakes!"
+	trend_value = MARKET_TREND_UPWARD
+	trend_duration = 1
+	circumstance = list(
+		"has just released a new product that is dominating the market for  ",
+		"is hitting it big! Dramatically stocking and raising the price of ",
+		", in a surprise move, monopolized supply and has raised the price of ",
+	)
+
+/datum/stock_market_event/hotcakes/start_event()
+	. = ..()
+	SSstock_market.materials_prices[mat] = round(price_maximum * mat.value_per_unit)
+	create_news()
+
+/datum/stock_market_event/lockdown
+	name = "Lockdown!"
+	trend_value = MARKET_TREND_DOWNWARD
+	trend_duration = 2
+	circumstance = list(
+		"is being investigated by the Galactic Trade Commission, resulting in a halt of trade for ",
+		", in a stunning move, has been embargoed by TerraGov, resulting in a halt of trade of ",
+	)
+
+/datum/stock_market_event/lockdown/handle()
+	. = ..()
+	SSstock_market.materials_quantity[mat] = 0 //Force the material to be unavailable.
+
+/datum/stock_market_event/lockdown/end_event()
+	. = ..()
+	SSstock_market.materials_quantity[mat] = initial(mat.tradable_base_quantity) //Force the material to be available again.
+	SSstock_market.materials_prices[mat] = initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT //Force the price to be reset once the lockdown is over.
+	create_news()
+
+

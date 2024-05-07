@@ -52,9 +52,6 @@
 	QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, emote), "me", 1, message, TRUE), SSspeech_controller)
 
 /mob/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
-	SHOULD_CALL_PARENT(TRUE)
-	if(!..())
-		return FALSE
 	var/list/filter_result
 	var/list/soft_filter_result
 	if(client && !forced && !filterproof)
@@ -69,17 +66,17 @@
 		to_chat(src, span_warning("\"[message]\""))
 		REPORT_CHAT_FILTER_TO_USER(src, filter_result)
 		log_filter("IC", message, filter_result)
-		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
+		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, LOWER_TEXT(config.ic_filter_regex.match))
 		return FALSE
 
 	if(soft_filter_result && !filterproof)
 		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
-			SSblackbox.record_feedback("tally", "soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
+			SSblackbox.record_feedback("tally", "soft_ic_blocked_words", 1, LOWER_TEXT(config.soft_ic_filter_regex.match))
 			log_filter("Soft IC", message, filter_result)
 			return FALSE
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[message]\"")
 		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[message]\"")
-		SSblackbox.record_feedback("tally", "passed_soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
+		SSblackbox.record_feedback("tally", "passed_soft_ic_blocked_words", 1, LOWER_TEXT(config.soft_ic_filter_regex.match))
 		log_filter("Soft IC (Passed)", message, filter_result)
 
 	if(client && !(ignore_spam || forced))
@@ -88,8 +85,30 @@
 			return FALSE
 		if(client.handle_spam_prevention(message, MUTE_IC))
 			return FALSE
-	// Including can_speak() here would ignore COMPONENT_CAN_ALWAYS_SPEAK in /mob/living/try_speak()
+
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_TRY_SPEECH, message, ignore_spam, forced)
+	if(sigreturn & COMPONENT_IGNORE_CAN_SPEAK)
+		return TRUE
+	if(sigreturn & COMPONENT_CANNOT_SPEAK)
+		return FALSE
+
+	if(!..()) // the can_speak check
+		if(HAS_MIND_TRAIT(src, TRAIT_MIMING))
+			to_chat(src, span_green("Your vow of silence prevents you from speaking!"))
+		else
+			to_chat(src, span_warning("You find yourself unable to speak!"))
+		return FALSE
+
 	return TRUE
+
+/mob/can_speak(allow_mimes = FALSE)
+	if(!allow_mimes && HAS_MIND_TRAIT(src, TRAIT_MIMING))
+		return FALSE
+
+	if(is_muzzled())
+		return FALSE
+
+	return ..()
 
 ///Speak as a dead person (ghost etc)
 /mob/proc/say_dead(message)
@@ -198,7 +217,7 @@
 			if(stat == CONSCIOUS) //necessary indentation so it gets stripped of the semicolon anyway.
 				mods[MODE_HEADSET] = TRUE
 		else if((key in GLOB.department_radio_prefixes) && length(message) > length(key) + 1 && !mods[RADIO_EXTENSION])
-			mods[RADIO_KEY] = lowertext(message[1 + length(key)])
+			mods[RADIO_KEY] = LOWER_TEXT(message[1 + length(key)])
 			mods[RADIO_EXTENSION] = GLOB.department_radio_keys[mods[RADIO_KEY]]
 			chop_to = length(key) + 2
 		else if(key == "," && !mods[LANGUAGE_EXTENSION])

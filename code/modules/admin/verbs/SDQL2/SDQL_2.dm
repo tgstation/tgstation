@@ -195,20 +195,15 @@
 		state = SDQL2_STATE_ERROR;\
 		CRASH("SDQL2 fatal error");};
 
-/client/proc/SDQL2_query(query_text as message)
-	set category = "Debug"
-	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
-		message_admins(span_danger("ERROR: Non-admin [key_name(usr)] attempted to execute a SDQL query!"))
-		usr.log_message("non-admin attempted to execute a SDQL query!", LOG_ADMIN)
-		return FALSE
-	var/prompt = tgui_alert(usr, "Run SDQL2 Query?", "SDQL2", list("Yes", "Cancel"))
+ADMIN_VERB(sdql2_query, R_DEBUG, "SDQL2 Query", "Run a SDQL2 query.", ADMIN_CATEGORY_DEBUG, query_text as message)
+	var/prompt = tgui_alert(user, "Run SDQL2 Query?", "SDQL2", list("Yes", "Cancel"))
 	if (prompt != "Yes")
 		return
-	var/list/results = world.SDQL2_query(query_text, key_name_admin(usr), "[key_name(usr)]")
+	var/list/results = world.SDQL2_query(query_text, key_name_admin(user), "[key_name(user)]")
 	if(length(results) == 3)
 		for(var/I in 1 to 3)
-			to_chat(usr, span_admin(results[I]), confidential = TRUE)
-	SSblackbox.record_feedback("nested tally", "SDQL query", 1, list(ckey, query_text))
+			to_chat(user, span_admin(results[I]), confidential = TRUE)
+	SSblackbox.record_feedback("nested tally", "SDQL query", 1, list(user.ckey, query_text))
 
 /world/proc/SDQL2_query(query_text, log_entry1, log_entry2, silent = FALSE)
 	var/query_log = "executed SDQL query(s): \"[query_text]\"."
@@ -1027,7 +1022,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 		return null
 
 	else if(expression [start] == "{" && long)
-		if(lowertext(copytext(expression[start + 1], 1, 3)) != "0x") //3 == length("0x") + 1
+		if(LOWER_TEXT(copytext(expression[start + 1], 1, 3)) != "0x") //3 == length("0x") + 1
 			to_chat(usr, span_danger("Invalid pointer syntax: [expression[start + 1]]"), confidential = TRUE)
 			return null
 		var/datum/located = locate("\[[expression[start + 1]]]")

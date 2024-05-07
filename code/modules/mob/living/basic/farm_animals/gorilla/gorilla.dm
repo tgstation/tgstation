@@ -16,18 +16,19 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	maxHealth = 220
 	health = 220
+	initial_language_holder = /datum/language_holder/monkey
 	response_help_continuous = "prods"
 	response_help_simple = "prod"
 	response_disarm_continuous = "challenges"
 	response_disarm_simple = "challenge"
 	response_harm_continuous = "thumps"
 	response_harm_simple = "thump"
-	speed = 0.5
+	speed = -0.1
 	melee_attack_cooldown = CLICK_CD_MELEE
-	melee_damage_lower = 15
-	melee_damage_upper = 18
+	melee_damage_lower = 25
+	melee_damage_upper = 30
 	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, STAMINA = 0, OXY = 1.5)
-	obj_damage = 20
+	obj_damage = 40
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummel"
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -123,7 +124,7 @@
 /// Gorillas are slower when carrying something
 /datum/movespeed_modifier/gorilla_standing
 	blacklisted_movetypes = (FLYING|FLOATING)
-	multiplicative_slowdown = 0.5
+	multiplicative_slowdown = 1.2
 
 /// A smaller gorilla summoned via magic
 /mob/living/basic/gorilla/lesser

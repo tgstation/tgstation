@@ -152,6 +152,16 @@ if $grep -i '(add_traits|remove_traits)\(.+,\s*src\)' $code_files; then
 	st=1
 fi;
 
+part "ensure proper lowertext usage"
+# lowertext() is a BYOND-level proc, so it can be used in any sort of code... including the TGS DMAPI which we don't manage in this repository.
+# basically, we filter out any results with "tgs" in it to account for this edgecase without having to enforce this rule in that separate codebase.
+# grepping the grep results is a bit of a sad solution to this but it's pretty much the only option in our existing linter framework
+if $grep -i 'lowertext\(.+\)' $code_files | $grep -v 'UNLINT\(.+\)' | $grep -v '\/modules\/tgs\/'; then
+	echo
+	echo -e "${RED}ERROR: Found a lowertext() proc call. Please use the LOWER_TEXT() macro instead. If you know what you are doing, wrap your text (ensure it is a string) in UNLINT().${NC}"
+	st=1
+fi;
+
 part "balloon_alert sanity"
 if $grep 'balloon_alert\(".*"\)' $code_files; then
 	echo
@@ -276,6 +286,12 @@ if [ "$pcre2_support" -eq 1 ]; then
 	if $grep -P '^/(obj|mob|turf|area|atom)/.+/Initialize\((?!mapload).*\)' $code_files; then
 		echo
 		echo -e "${RED}ERROR: Initialize override without 'mapload' argument.${NC}"
+		st=1
+	fi;
+	part "pronoun helper spellcheck"
+	if $grep -P '%PRONOUN_(?!they|They|their|Their|theirs|Theirs|them|Them|have|are|were|do|theyve|Theyve|theyre|Theyre|s|es)' $code_files; then
+		echo
+		echo -e "${RED}ERROR: Invalid pronoun helper found.${NC}"
 		st=1
 	fi;
 else

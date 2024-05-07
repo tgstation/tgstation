@@ -29,20 +29,21 @@
 
 		//If colors are too dark, set to original colors
 		if(base_hsv[3] < 50)
-			generated_base_color = "#00FF00"
+			generated_base_color = COLOR_VIBRANT_LIME
 		if(ribbon_hsv[3] < 50)
-			generated_ribbon_color = "#FF0000"
+			generated_ribbon_color = COLOR_RED
 
 		//Set layers to these colors, base then ribbon
 		set_greyscale(colors = list(generated_base_color, generated_ribbon_color))
 
-/obj/item/stack/wrapping_paper/AltClick(mob/user, modifiers)
+/obj/item/stack/wrapping_paper/click_alt(mob/user)
 	var/new_base = input(user, "", "Select a base color", color) as color
 	var/new_ribbon = input(user, "", "Select a ribbon color", color) as color
-	if(!user.can_perform_action(src))
-		return
+	if(!new_base || !new_ribbon)
+		return CLICK_ACTION_BLOCKING
+
 	set_greyscale(colors = list(new_base, new_ribbon))
-	return TRUE
+	return CLICK_ACTION_SUCCESS
 
 //preset wrapping paper meant to fill the original color configuration
 /obj/item/stack/wrapping_paper/xmas
@@ -130,7 +131,7 @@
 			item.forceMove(parcel)
 			var/size = round(item.w_class)
 			parcel.name = "[weight_class_to_text(size)] parcel"
-			parcel.w_class = size
+			parcel.update_weight_class(size)
 			size = min(size, 5)
 			parcel.base_icon_state = "deliverypackage[size]"
 			parcel.update_icon()

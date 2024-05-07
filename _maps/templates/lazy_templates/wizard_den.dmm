@@ -229,7 +229,8 @@
 "nV" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /mob/living/simple_animal/hostile/ooze/gelatinous{
-	name = "Jimmy"
+	name = "Jimmy";
+	faction = list("slime", "Wizard")
 	},
 /turf/open/floor/grass,
 /area/centcom/wizard_station)
@@ -536,7 +537,8 @@
 /area/centcom/wizard_station)
 "AW" = (
 /mob/living/simple_animal/pet/gondola{
-	name = "Jommy"
+	name = "Jommy";
+	faction = list("gondola", "Wizard")
 	},
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,

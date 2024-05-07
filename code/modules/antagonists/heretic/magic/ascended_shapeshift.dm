@@ -6,6 +6,8 @@
 	cooldown_time = 20 SECONDS
 	convert_damage = FALSE
 	die_with_shapeshifted_form = FALSE
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "lock_ascension"
 	possible_shapes = list(
 		/mob/living/basic/heretic_summon/ash_spirit,
 		/mob/living/basic/heretic_summon/raw_prophet/ascended,

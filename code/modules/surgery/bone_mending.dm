@@ -20,13 +20,6 @@
 		/datum/surgery_step/close,
 	)
 
-/datum/surgery/repair_bone_hairline/can_start(mob/living/user, mob/living/carbon/target)
-	. = ..()
-	if(.)
-		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
-		return(targeted_bodypart.get_wound_type(targetable_wound))
-
-
 ///// Repair Compound Fracture (Critical)
 /datum/surgery/repair_bone_compound
 	name = "Repair Compound Fracture"
@@ -49,19 +42,13 @@
 		/datum/surgery_step/close,
 	)
 
-/datum/surgery/repair_bone_compound/can_start(mob/living/user, mob/living/carbon/target)
-	. = ..()
-	if(.)
-		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
-		return(targeted_bodypart.get_wound_type(targetable_wound))
-
 //SURGERY STEPS
 
 ///// Repair Hairline Fracture (Severe)
 /datum/surgery_step/repair_bone_hairline
 	name = "repair hairline fracture (bonesetter/bone gel/tape)"
 	implements = list(
-		/obj/item/bonesetter = 100,
+		TOOL_BONESET = 100,
 		/obj/item/stack/medical/bone_gel = 100,
 		/obj/item/stack/sticky_tape/surgical = 100,
 		/obj/item/stack/sticky_tape/super = 50,
@@ -111,7 +98,7 @@
 /datum/surgery_step/reset_compound_fracture
 	name = "reset bone (bonesetter)"
 	implements = list(
-		/obj/item/bonesetter = 100,
+		TOOL_BONESET = 100,
 		/obj/item/stack/sticky_tape/surgical = 60,
 		/obj/item/stack/sticky_tape/super = 40,
 		/obj/item/stack/sticky_tape = 20)
@@ -216,14 +203,6 @@
 		/datum/surgery_step/clamp_bleeders/discard_skull_debris,
 		/datum/surgery_step/repair_skull
 	)
-
-/datum/surgery/cranial_reconstruction/can_start(mob/living/user, mob/living/carbon/target)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
-	return !isnull(targeted_bodypart.get_wound_type(targetable_wound))
 
 /datum/surgery_step/clamp_bleeders/discard_skull_debris
 	name = "discard skull debris (hemostat)"

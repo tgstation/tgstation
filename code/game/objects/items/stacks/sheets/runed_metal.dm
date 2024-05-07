@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		time = 4 SECONDS, \
 		one_per_turf = TRUE, \
 		on_solid_ground = TRUE, \
-		desc = span_cultbold("Pylon: Heals and regenerates the blood of nearby blood cultists and constructs, and also \
+		desc = span_cult_bold("Pylon: Heals and regenerates the blood of nearby blood cultists and constructs, and also \
 			converts nearby floor tiles into engraved flooring, which allows blood cultists to scribe runes faster."), \
 		required_noun = "runed metal sheet", \
 		category = CAT_CULT, \
@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		time = 4 SECONDS, \
 		one_per_turf = TRUE, \
 		on_solid_ground = TRUE, \
-		desc = span_cultbold("Altar: Can make Eldritch Whetstones, Construct Shells, and Flasks of Unholy Water."), \
+		desc = span_cult_bold("Altar: Can make Eldritch Whetstones, Construct Shells, and Flasks of Unholy Water."), \
 		required_noun = "runed metal sheet", \
 		category = CAT_CULT, \
 	), \
@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		time = 4 SECONDS, \
 		one_per_turf = TRUE, \
 		on_solid_ground = TRUE, \
-		desc = span_cultbold("Archives: Can make Zealot's Blindfolds, Shuttle Curse Orbs, \
+		desc = span_cult_bold("Archives: Can make Zealot's Blindfolds, Shuttle Curse Orbs, \
 			and Veil Walker equipment. Emits Light."), \
 		required_noun = "runed metal sheet", \
 		category = CAT_CULT, \
@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		time = 4 SECONDS, \
 		one_per_turf = TRUE, \
 		on_solid_ground = TRUE, \
-		desc = span_cultbold("Daemon Forge: Can make Nar'Sien Hardened Armor, Flagellant's Robes, \
+		desc = span_cult_bold("Daemon Forge: Can make Nar'Sien Hardened Armor, Flagellant's Robes, \
 			and Eldritch Longswords. Emits Light."), \
 		required_noun = "runed metal sheet", \
 		category = CAT_CULT, \
@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		time = 5 SECONDS, \
 		one_per_turf = TRUE, \
 		on_solid_ground = TRUE, \
-		desc = span_cultbold("Runed Door: A weak door which stuns non-blood cultists who touch it."), \
+		desc = span_cult_bold("Runed Door: A weak door which stuns non-blood cultists who touch it."), \
 		required_noun = "runed metal sheet", \
 		category = CAT_CULT, \
 	), \
@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		time = 5 SECONDS, \
 		one_per_turf = TRUE, \
 		on_solid_ground = TRUE, \
-		desc = span_cultbold("Runed Girder: A weak girder that can be instantly destroyed by ritual daggers. Not a recommended usage of runed metal."), \
+		desc = span_cult_bold("Runed Girder: A weak girder that can be instantly destroyed by ritual daggers. Not a recommended usage of runed metal."), \
 		required_noun = "runed metal sheet", \
 		category = CAT_CULT, \
 	), \

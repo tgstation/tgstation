@@ -148,7 +148,7 @@
 	name = "automated screwdriver"
 	desc = "A powerful automated screwdriver, designed to be both precise and quick."
 	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "screwdriver_cyborg"
+	icon_state = "toolkit_engiborg_screwdriver"
 	hitsound = 'sound/items/drill_hit.ogg'
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.5

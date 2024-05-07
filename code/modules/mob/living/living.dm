@@ -68,11 +68,19 @@
 	if(levels <= 1 && can_help_themselves)
 		var/obj/item/organ/external/wings/gliders = get_organ_by_type(/obj/item/organ/external/wings)
 		if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
+			var/graceful_landing = HAS_TRAIT(src, TRAIT_CATLIKE_GRACE)
+
+			if(graceful_landing)
+				add_movespeed_modifier(/datum/movespeed_modifier/landed_on_feet)
+				addtimer(CALLBACK(src, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/landed_on_feet), levels * 3 SECONDS)
+			else
+				Knockdown(levels * 4 SECONDS)
+				emote("spin")
+
 			visible_message(
-				span_notice("[src] makes a hard landing on [impacted_turf] but remains unharmed from the fall."),
-				span_notice("You brace for the fall. You make a hard landing on [impacted_turf], but remain unharmed."),
+				span_notice("[src] makes a hard landing on [impacted_turf] but remains unharmed from the fall[graceful_landing ? " and stays on [p_their()] feet" : " by tucking in rolling into the landing"]."),
+				span_notice("You brace for the fall. You make a hard landing on [impacted_turf], but remain unharmed[graceful_landing ? " while landing on your feet" : " by tucking in and rolling into the landing"]."),
 			)
-			Knockdown(levels * 4 SECONDS)
 			return . | ZIMPACT_NO_MESSAGE
 
 	var/incoming_damage = (levels * 5) ** 1.5
@@ -148,6 +156,7 @@
 		return TRUE
 
 	SEND_SIGNAL(src, COMSIG_LIVING_MOB_BUMP, M)
+	SEND_SIGNAL(M, COMSIG_LIVING_MOB_BUMPED, src)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
 
@@ -398,10 +407,6 @@
 								span_warning("[src] grabs you passively!"), null, null, src)
 				to_chat(src, span_notice("You grab [M] passively!"))
 
-		if(!iscarbon(src))
-			M.LAssailant = null
-		else
-			M.LAssailant = WEAKREF(usr)
 		if(isliving(M))
 			var/mob/living/L = M
 
@@ -497,7 +502,7 @@
 	log_message("points at [pointing_at]", LOG_EMOTE)
 	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
 
-/mob/living/verb/succumb(whispered as null)
+/mob/living/verb/succumb(whispered as num|null)
 	set hidden = TRUE
 	if (!CAN_SUCCUMB(src))
 		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
@@ -673,7 +678,7 @@
 
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
-	if(!instant && !do_after(src, 1 SECONDS, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
+	if(!instant && !do_after(src, 1 SECONDS, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP, hidden = TRUE))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
@@ -929,6 +934,8 @@
 
 	// I don't really care to keep this under a flag
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
+	overeatduration = 0
+	satiety = 0
 
 	// These should be tracked by status effects
 	losebreath = 0
@@ -1079,6 +1086,20 @@
 		return pick("ltrails_1", "ltrails_2")
 	else
 		return pick("trails_1", "trails_2")
+
+/// Print a message about an annoying sensation you are feeling. Returns TRUE if successful.
+/mob/living/proc/itch(obj/item/bodypart/target_part = null, damage = 0.5, can_scratch = TRUE, silent = FALSE)
+	if ((mob_biotypes & (MOB_ROBOTIC | MOB_SPIRIT)))
+		return FALSE
+	var/will_scratch = can_scratch && !incapacitated()
+	var/applied_damage = 0
+	if (will_scratch && damage)
+		applied_damage = apply_damage(damage, damagetype = BRUTE, def_zone = target_part)
+	if (silent)
+		return applied_damage > 0
+	var/visible_part = isnull(target_part) ? "side" : target_part.plaintext_zone
+	visible_message("[can_scratch ? span_warning("[src] scratches [p_their()] [visible_part].") : ""]", span_warning("Your [visible_part] itches. [can_scratch ? "You scratch it." : ""]"))
+	return TRUE
 
 /mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
 	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
@@ -1265,18 +1286,18 @@
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
 	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, user) & COMPONENT_CANT_TRACK)
 		return FALSE
-	var/turf/T = get_turf(src)
-	if(!T)
+	if(!isnull(user) && src == user)
 		return FALSE
+	if(invisibility || alpha <= 50)//cloaked
+		return FALSE
+	if(!isturf(loc)) //The reason why we don't just use get_turf is because they could be in a closet, disposals, or a vehicle.
+		return FALSE
+	var/turf/T = loc
 	if(is_centcom_level(T.z)) //dont detect mobs on centcom
 		return FALSE
 	if(is_away_level(T.z))
 		return FALSE
 	if(onSyndieBase() && !(ROLE_SYNDICATE in user?.faction))
-		return FALSE
-	if(!isnull(user) && src == user)
-		return FALSE
-	if(invisibility || alpha == 0)//cloaked
 		return FALSE
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
 	if(!GLOB.cameranet.checkCameraVis(src))
@@ -1307,9 +1328,10 @@
 			return FALSE
 
 	if(!Adjacent(target) && (target.loc != src) && !recursive_loc_check(src, target))
-		if(issilicon(src) && !ispAI(src))
+		if(HAS_SILICON_ACCESS(src) && !ispAI(src))
 			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks (except pAIs)
-				to_chat(src, span_warning("You are too far away!"))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 		else // just a normal carbon mob
 			if((action_bitflags & FORBID_TELEKINESIS_REACH))
@@ -1318,8 +1340,13 @@
 
 			var/datum/dna/mob_DNA = has_dna()
 			if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/human/telekinesis) || !tkMaxRangeCheck(src, target))
-				to_chat(src, span_warning("You are too far away!"))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
+
+	if((action_bitflags & NEED_VENTCRAWL) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS))
+		to_chat(src, span_warning("You wouldn't fit!"))
+		return FALSE
 
 	if((action_bitflags & NEED_DEXTERITY) && !ISADVANCEDTOOLUSER(src))
 		to_chat(src, span_warning("You don't have the dexterity to do this!"))
@@ -1438,7 +1465,7 @@
 				created_robot.clear_zeroth_law(announce = FALSE)
 
 		if(WABBAJACK_SLIME)
-			new_mob = new /mob/living/simple_animal/slime/random(loc)
+			new_mob = new /mob/living/basic/slime/random(loc)
 
 		if(WABBAJACK_XENO)
 			var/picked_xeno_type
@@ -1451,7 +1478,7 @@
 			else
 				picked_xeno_type = pick(
 					/mob/living/carbon/alien/adult/hunter,
-					/mob/living/simple_animal/hostile/alien/sentinel,
+					/mob/living/basic/alien/sentinel,
 				)
 			new_mob = new picked_xeno_type(loc)
 
@@ -1580,11 +1607,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	return fire_status.ignite(silent)
 
-/mob/living/proc/update_fire()
-	var/datum/status_effect/fire_handler/fire_stacks/fire_stacks = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
-	if(fire_stacks)
-		fire_stacks.update_overlay()
-
 /**
  * Extinguish all fire on the mob
  *
@@ -1592,7 +1614,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * Signals the extinguishing.
  */
 /mob/living/proc/extinguish_mob()
-	if(HAS_TRAIT(src, TRAIT_PERMANENTLY_ONFIRE)) //The everlasting flames will not be extinguished
+	if(HAS_TRAIT(src, TRAIT_NO_EXTINGUISH)) //The everlasting flames will not be extinguished
 		return
 	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 	if(!fire_status || !fire_status.on_fire)
@@ -1611,13 +1633,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/proc/adjust_fire_stacks(stacks, fire_type = /datum/status_effect/fire_handler/fire_stacks)
 	if(stacks < 0)
-		if(HAS_TRAIT(src, TRAIT_PERMANENTLY_ONFIRE)) //You can't reduce fire stacks of the everlasting flames
+		if(HAS_TRAIT(src, TRAIT_NO_EXTINGUISH)) //You can't reduce fire stacks of the everlasting flames
 			return
 		stacks = max(-fire_stacks, stacks)
 	apply_status_effect(fire_type, stacks)
 
 /mob/living/proc/adjust_wet_stacks(stacks, wet_type = /datum/status_effect/fire_handler/wet_stacks)
-	if(HAS_TRAIT(src, TRAIT_PERMANENTLY_ONFIRE)) //The everlasting flames will not be extinguished
+	if(HAS_TRAIT(src, TRAIT_NO_EXTINGUISH)) //The everlasting flames will not be extinguished
 		return
 	if(stacks < 0)
 		stacks = max(fire_stacks, stacks)
@@ -1695,19 +1717,18 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	ignite_mob()
 
 /**
- * Sets fire overlay of the mob.
+ * Gets the fire overlay to use for this mob
  *
- * Vars:
+ * Args:
  * * stacks: Current amount of fire_stacks
  * * on_fire: If we're lit on fire
- * * last_icon_state: Holds last fire overlay icon state, used for optimization
- * * suffix: Suffix for the fire icon state for special fire types
  *
- * This should return last_icon_state for the fire status efect
+ * Return a mutable appearance, the overlay that will be applied.
  */
 
-/mob/living/proc/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
-	return last_icon_state
+/mob/living/proc/get_fire_overlay(stacks, on_fire)
+	RETURN_TYPE(/mutable_appearance)
+	return null
 
 /**
  * Handles effects happening when mob is on normal fire
@@ -1756,32 +1777,36 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 
 /mob/living/proc/update_z(new_z) // 1+ to register, null to unregister
-	if (registered_z != new_z)
-		if (registered_z)
-			SSmobs.clients_by_zlevel[registered_z] -= src
-		if (client)
-			if (new_z)
-				//Figure out how many clients were here before
-				var/oldlen = SSmobs.clients_by_zlevel[new_z].len
-				SSmobs.clients_by_zlevel[new_z] += src
-				for (var/I in length(SSidlenpcpool.idle_mobs_by_zlevel[new_z]) to 1 step -1) //Backwards loop because we're removing (guarantees optimal rather than worst-case performance), it's fine to use .len here but doesn't compile on 511
-					var/mob/living/simple_animal/SA = SSidlenpcpool.idle_mobs_by_zlevel[new_z][I]
-					if (SA)
-						if(oldlen == 0)
-							//Start AI idle if nobody else was on this z level before (mobs will switch off when this is the case)
-							SA.toggle_ai(AI_IDLE)
+	if(registered_z == new_z)
+		return
+	if(registered_z)
+		SSmobs.clients_by_zlevel[registered_z] -= src
+	if(isnull(client))
+		registered_z = null
+		return
 
-						//If they are also within a close distance ask the AI if it wants to wake up
-						if(get_dist(get_turf(src), get_turf(SA)) < MAX_SIMPLEMOB_WAKEUP_RANGE)
-							SA.consider_wakeup() // Ask the mob if it wants to turn on it's AI
-					//They should clean up in destroy, but often don't so we get them here
-					else
-						SSidlenpcpool.idle_mobs_by_zlevel[new_z] -= SA
+	//Check the amount of clients exists on the Z level we're leaving from,
+	//this excludes us because at this point we are not registered to any z level.
+	var/old_level_new_clients = (registered_z ? SSmobs.clients_by_zlevel[registered_z].len : null)
+	//No one is left after we're gone, shut off inactive ones
+	if(registered_z && old_level_new_clients == 0)
+		for(var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[registered_z])
+			controller.set_ai_status(AI_STATUS_OFF)
 
+	if(new_z)
+		//Check the amount of clients exists on the Z level we're moving towards, excluding ourselves.
+		var/new_level_old_clients = SSmobs.clients_by_zlevel[new_z].len
 
-			registered_z = new_z
-		else
-			registered_z = null
+		//We'll add ourselves to the list now so get_expected_ai_status() will know we're on the z level.
+		SSmobs.clients_by_zlevel[new_z] += src
+
+		if(new_level_old_clients == 0) //No one was here before, wake up all the AIs.
+			for (var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[new_z])
+				//We don't set them directly on, for instances like AIs acting while dead and other cases that may exist in the future.
+				//This isn't a problem for AIs with a client since the client will prevent this from being called anyway.
+				controller.set_ai_status(controller.get_expected_ai_status())
+
+	registered_z = new_z
 
 /mob/living/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	..()
@@ -1794,7 +1819,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(M.can_be_held && U.pulling == M)
 			M.mob_try_pickup(U)//blame kevinz
 			return//dont open the mobs inventory if you are picking them up
-	. = ..()
+	return ..()
 
 /mob/living/proc/mob_pickup(mob/living/user)
 	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
@@ -1802,7 +1827,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	user.put_in_hands(holder)
 
 /mob/living/proc/set_name()
-	numba = rand(1, 1000)
+	if(numba == 0)
+		numba = rand(1, 1000)
 	name = "[name] ([numba])"
 	real_name = name
 
@@ -1922,6 +1948,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_HALLUCINATION, "Give Hallucination")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_DELUSION_HALLUCINATION, "Give Delusion Hallucination")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_GUARDIAN_SPIRIT, "Give Guardian Spirit")
+	VV_DROPDOWN_OPTION(VV_HK_ADMIN_RENAME, "Force Change Name")
 
 /mob/living/vv_do_topic(list/href_list)
 	. = ..()
@@ -1958,6 +1985,29 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(!check_rights(NONE))
 			return
 		admin_give_guardian(usr)
+
+	if(href_list[VV_HK_ADMIN_RENAME])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/old_name = real_name
+		var/new_name = sanitize_name(tgui_input_text(usr, "Enter the new name.", "Admin Rename", real_name))
+		if(!new_name || new_name == real_name)
+			return
+
+		fully_replace_character_name(real_name, new_name)
+		var/replace_preferences = !isnull(client) && (tgui_alert(usr, "Would you like to update the client's preference with the new name?", "Pref Overwrite", list("Yes", "No")) == "Yes")
+		if(replace_preferences)
+			client.prefs.write_preference(GLOB.preference_entries[/datum/preference/name/real_name], new_name)
+
+		log_admin("forced rename", list(
+			"admin" = key_name(usr),
+			"player" = key_name(src),
+			"old_name" = old_name,
+			"new_name" = new_name,
+			"updated_prefs" = replace_preferences,
+		))
+		message_admins("[key_name_admin(usr)] has forcibly changed the real name of [key_name(src)] from '[old_name]' to '[real_name]'[(replace_preferences ? " and their preferences" : "")]")
 
 /mob/living/proc/move_to_error_room()
 	var/obj/effect/landmark/error/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
@@ -2263,6 +2313,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/is_face_visible()
 	return TRUE
 
+/// Sprite to show for photocopying mob butts
+/mob/living/proc/get_butt_sprite()
+	return null
 
 ///Proc to modify the value of num_legs and hook behavior associated to this event.
 /mob/living/proc/set_num_legs(new_value)
@@ -2329,27 +2382,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 //Used specifically for the clown box suicide act
 /mob/living/carbon/human/will_escape_storage()
 	return TRUE
-
-/// Sets the mob's hunger levels to a safe overall level. Useful for TRAIT_NOHUNGER species changes.
-/mob/living/proc/set_safe_hunger_level()
-	// Nutrition reset and alert clearing.
-	nutrition = NUTRITION_LEVEL_FED
-	clear_alert(ALERT_NUTRITION)
-	satiety = 0
-
-	// Trait removal if obese
-	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY))
-		if(overeatduration >= (200 SECONDS))
-			to_chat(src, span_notice("Your transformation restores your body's natural fitness!"))
-
-		REMOVE_TRAIT(src, TRAIT_FAT, OBESITY)
-		remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
-		update_worn_undersuit()
-		update_worn_oversuit()
-
-	// Reset overeat duration.
-	overeatduration = 0
-
 
 /// Changes the value of the [living/body_position] variable. Call this before set_lying_angle()
 /mob/living/proc/set_body_position(new_value)
@@ -2434,6 +2466,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			span_userdanger("You're thrown violently into [lattice], smashing through it and punching straight through!"))
 		apply_damage(rand(5,10), BRUTE, BODY_ZONE_CHEST)
 		lattice.deconstruct(FALSE)
+
+/// Prints an ominous message if something bad is going to happen to you
+/mob/living/proc/ominous_nosebleed()
+	to_chat(src, span_warning("You feel a bit nauseous for just a moment."))
 
 /**
  * Proc used by different station pets such as Ian and Poly so that some of their data can persist between rounds.
@@ -2560,6 +2596,26 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	SEND_SIGNAL(src, COMSIG_LIVING_UNFRIENDED, old_friend)
 	return TRUE
 
+/**
+ * Common proc used to deduct money from cargo, announce the kidnapping and add src to the black market.
+ * Returns the black market item, for extra stuff like signals that need to be registered.
+ */
+/mob/living/proc/process_capture(ransom_price, black_market_price)
+	if(ransom_price > 0)
+		var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+
+		if(cargo_account) //Just in case
+			cargo_account.adjust_money(-min(ransom_price, cargo_account.account_balance)) //Not so much, especially for competent cargo. Plus this can't be mass-triggered like it has been done with contractors
+		priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. As is policy we've taken a portion of the station's funds to offset the overall cost.", "Nanotrasen Asset Protection", has_important_message = TRUE)
+
+	///The price should be high enough that the contractor can't just buy 'em back with their cut alone.
+	var/datum/market_item/hostage/market_item = new(src, black_market_price || ransom_price)
+	SSblackmarket.markets[/datum/market/blackmarket].add_item(market_item)
+
+	if(mind)
+		ADD_TRAIT(mind, TRAIT_HAS_BEEN_KIDNAPPED, TRAIT_GENERIC)
+	return market_item
+
 /// Admin only proc for making the mob hallucinate a certain thing
 /mob/living/proc/admin_give_hallucination(mob/admin)
 	if(!admin || !check_rights(NONE))
@@ -2601,10 +2657,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(isnull(guardian_client))
 		return
 	else if(guardian_client == "Poll Ghosts")
-		var/list/candidates = SSpolling.poll_ghost_candidates("Do you want to play as an admin created Guardian Spirit of [real_name]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, ignore_category = POLL_IGNORE_HOLOPARASITE, pic_source = src, role_name_text = "guardian spirit")
-		if(LAZYLEN(candidates))
-			var/mob/dead/observer/candidate = pick(candidates)
-			guardian_client = candidate.client
+		var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as an admin created [span_notice("Guardian Spirit")] of [span_danger(real_name)]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, ignore_category = POLL_IGNORE_HOLOPARASITE, alert_pic = mutable_appearance('icons/mob/nonhuman-player/guardian.dmi', "magicexample"), jump_target = src, role_name_text = "guardian spirit", amount_to_pick = 1)
+		if(chosen_one)
+			guardian_client = chosen_one.client
 		else
 			tgui_alert(admin, "No ghost candidates.", "Guardian Controller")
 			return
@@ -2651,3 +2706,20 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		end_look_down()
 	else
 		look_down()
+
+/**
+ * Totals the physical cash on the mob and returns the total.
+ */
+/mob/living/verb/tally_physical_credits()
+	//Here is all the possible non-ID payment methods.
+	var/list/counted_money = list()
+	var/physical_cash_total = 0
+	for(var/obj/item/credit as anything in typecache_filter_list(get_all_contents(), GLOB.allowed_money)) //Coins, cash, and credits.
+		physical_cash_total += credit.get_item_credit_value()
+		counted_money += credit
+
+	if(is_type_in_typecache(pulling, GLOB.allowed_money)) //Coins(Pulled).
+		var/obj/item/counted_credit = pulling
+		physical_cash_total += counted_credit.get_item_credit_value()
+		counted_money += counted_credit
+	return round(physical_cash_total)

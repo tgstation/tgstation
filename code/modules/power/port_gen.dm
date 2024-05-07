@@ -66,7 +66,7 @@
 			TogglePower()
 			return
 		if(powernet)
-			add_avail(power_gen * power_output)
+			add_avail(power_to_energy(power_gen * power_output))
 		UseFuel()
 	else
 		handleInactive()
@@ -98,7 +98,7 @@
 	var/obj/S = sheet_path
 	sheet_name = initial(S.name)
 
-/obj/machinery/power/port_gen/pacman/Destroy()
+/obj/machinery/power/port_gen/pacman/on_deconstruction(disassembled)
 	DropFuel()
 	return ..()
 
@@ -114,7 +114,7 @@
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
 	. = ..()
-	. += span_notice("The generator has [sheets] units of [sheet_name] fuel left, producing [display_power(power_gen)] per cycle.")
+	. += span_notice("The generator has [sheets] units of [sheet_name] fuel left, producing [display_power(power_gen)].")
 	if(anchored)
 		. += span_notice("It is anchored to the ground.")
 
@@ -240,8 +240,8 @@
 	data["anchored"] = anchored
 	data["connected"] = (powernet == null ? 0 : 1)
 	data["ready_to_boot"] = anchored && HasFuel()
-	data["power_generated"] = display_power(power_gen)
-	data["power_output"] = display_power(power_gen * power_output)
+	data["power_generated"] = display_power(power_gen, convert = FALSE)
+	data["power_output"] = display_power(power_gen * power_output, convert = FALSE)
 	data["power_available"] = (powernet == null ? 0 : display_power(avail()))
 	data["current_heat"] = current_heat
 	. = data

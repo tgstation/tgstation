@@ -183,7 +183,9 @@
 	name = "air floor"
 	initial_gas_mix = ATMOS_TANK_AIRMIX
 
-
+/turf/open/floor/engine/xenobio
+	name = "xenobio bz floor"
+	initial_gas_mix = XENOBIO_BZ
 
 /turf/open/floor/engine/cult
 	name = "engraved floor"

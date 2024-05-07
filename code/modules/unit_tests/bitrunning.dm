@@ -9,7 +9,7 @@
 		TEST_ASSERT_NOTNULL(vdom.key, "[path] should have a key")
 		TEST_ASSERT_NOTNULL(vdom.map_name, "[path] should have a map name")
 
-		if(!length(vdom.extra_loot))
+		if(!length(vdom.completion_loot))
 			continue
 
-		TEST_ASSERT_EQUAL(cache.spawn_loot(vdom.extra_loot), TRUE, "[path] didn't spawn loot. Extra loot should be an associative list")
+		TEST_ASSERT_EQUAL(cache.spawn_loot(vdom.completion_loot), TRUE, "[path] didn't spawn loot. Completion loot should be an associative list")

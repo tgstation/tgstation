@@ -18,7 +18,6 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/felinid
 	payday_modifier = 1.0
-	ass_image = 'icons/ass/asscat.png'
 	family_heirlooms = list(/obj/item/toy/cattoy)
 	/// When false, this is a felinid created by mass-purrbation
 	var/original_felinid = TRUE
@@ -39,17 +38,65 @@
 			target_human.dna.features["tail_cat"] = "Cat"
 			if(target_human.dna.features["ears"] == "None")
 				target_human.dna.features["ears"] = "Cat"
-		if(target_human.dna.features["ears"] == "Cat")
-			var/obj/item/organ/internal/ears/cat/ears = new
-			ears.Insert(target_human, movement_flags = DELETE_IF_REPLACED)
-		else
+		if(target_human.dna.features["ears"] == "None")
 			mutantears = /obj/item/organ/internal/ears
+		else
+			var/obj/item/organ/internal/ears/cat/ears = new(FALSE, target_human.dna.features["ears"])
+			ears.Insert(target_human, movement_flags = DELETE_IF_REPLACED)
 	return ..()
 
 /datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
 	var/list/features = ..()
 	features["ears"] = pick("None", "Cat")
 	return features
+
+/datum/species/human/felinid/get_laugh_sound(mob/living/carbon/human/felinid)
+	if(felinid.physique == FEMALE)
+		return 'sound/voice/human/womanlaugh.ogg'
+	return pick(
+		'sound/voice/human/manlaugh1.ogg',
+		'sound/voice/human/manlaugh2.ogg',
+	)
+
+
+/datum/species/human/felinid/get_cough_sound(mob/living/carbon/human/felinid)
+	if(felinid.physique == FEMALE)
+		return pick(
+			'sound/voice/human/female_cough1.ogg',
+			'sound/voice/human/female_cough2.ogg',
+			'sound/voice/human/female_cough3.ogg',
+			'sound/voice/human/female_cough4.ogg',
+			'sound/voice/human/female_cough5.ogg',
+			'sound/voice/human/female_cough6.ogg',
+		)
+	return pick(
+		'sound/voice/human/male_cough1.ogg',
+		'sound/voice/human/male_cough2.ogg',
+		'sound/voice/human/male_cough3.ogg',
+		'sound/voice/human/male_cough4.ogg',
+		'sound/voice/human/male_cough5.ogg',
+		'sound/voice/human/male_cough6.ogg',
+	)
+
+
+/datum/species/human/felinid/get_cry_sound(mob/living/carbon/human/felinid)
+	if(felinid.physique == FEMALE)
+		return pick(
+			'sound/voice/human/female_cry1.ogg',
+			'sound/voice/human/female_cry2.ogg',
+		)
+	return pick(
+		'sound/voice/human/male_cry1.ogg',
+		'sound/voice/human/male_cry2.ogg',
+		'sound/voice/human/male_cry3.ogg',
+	)
+
+
+/datum/species/human/felinid/get_sneeze_sound(mob/living/carbon/human/felinid)
+	if(felinid.physique == FEMALE)
+		return 'sound/voice/human/female_sneeze1.ogg'
+	return 'sound/voice/human/male_sneeze1.ogg'
+
 
 /proc/mass_purrbation()
 	for(var/mob in GLOB.human_list)

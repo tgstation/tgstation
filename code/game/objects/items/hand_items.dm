@@ -41,7 +41,7 @@
 
 	if(!istype(sucker) || !in_range(owner, sucker))
 		return
-	addtimer(CALLBACK(src, PROC_REF(waitASecond), owner, sucker), 4)
+	addtimer(CALLBACK(src, PROC_REF(waitASecond), owner, sucker), 0.4 SECONDS)
 
 /// Stage 2: Fear sets in
 /obj/item/hand_item/circlegame/proc/waitASecond(mob/living/owner, mob/living/sucker)
@@ -50,10 +50,10 @@
 
 	if(owner == sucker) // big mood
 		to_chat(owner, span_danger("Wait a second... you just looked at your own [src.name]!"))
-		addtimer(CALLBACK(src, PROC_REF(selfGottem), owner), 10)
+		addtimer(CALLBACK(src, PROC_REF(selfGottem), owner), 1 SECONDS)
 	else
 		to_chat(sucker, span_danger("Wait a second... was that a-"))
-		addtimer(CALLBACK(src, PROC_REF(GOTTEM), owner, sucker), 6)
+		addtimer(CALLBACK(src, PROC_REF(GOTTEM), owner, sucker), 0.6 SECONDS)
 
 /// Stage 3A: We face our own failures
 /obj/item/hand_item/circlegame/proc/selfGottem(mob/living/owner)
@@ -219,9 +219,9 @@
 /obj/item/hand_item/slapper/attack(mob/living/slapped, mob/living/carbon/human/user)
 	SEND_SIGNAL(user, COMSIG_LIVING_SLAP_MOB, slapped)
 
-	if(ishuman(slapped))
-		var/mob/living/carbon/human/human_slapped = slapped
-		SEND_SIGNAL(human_slapped, COMSIG_ORGAN_WAG_TAIL, FALSE)
+	if(iscarbon(slapped))
+		var/mob/living/carbon/potential_tailed = slapped
+		potential_tailed.unwag_tail()
 	user.do_attack_animation(slapped)
 
 	var/slap_volume = 50
@@ -491,7 +491,7 @@
 	blown_kiss.original = target
 	blown_kiss.fired_from = user
 	blown_kiss.firer = user // don't hit ourself that would be really annoying
-	blown_kiss.impacted = list(user = TRUE) // just to make sure we don't hit the wearer
+	blown_kiss.impacted = list(WEAKREF(user) = TRUE) // just to make sure we don't hit the wearer
 	blown_kiss.preparePixelProjectile(target, user)
 	blown_kiss.fire()
 	qdel(src)
@@ -517,7 +517,7 @@
 	blown_kiss.original = taker
 	blown_kiss.fired_from = offerer
 	blown_kiss.firer = offerer // don't hit ourself that would be really annoying
-	blown_kiss.impacted = list(offerer = TRUE) // just to make sure we don't hit the wearer
+	blown_kiss.impacted = list(WEAKREF(offerer) = TRUE) // just to make sure we don't hit the wearer
 	blown_kiss.preparePixelProjectile(taker, offerer)
 	blown_kiss.suppressed = SUPPRESSED_VERY // this also means it's a direct offer
 	blown_kiss.fire()

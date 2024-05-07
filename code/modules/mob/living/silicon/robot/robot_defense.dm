@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if (getFireLoss() > 0 || getToxLoss() > 0)
 			if(src == user)
 				to_chat(user, span_notice("You start fixing yourself..."))
-				if(!do_after(user, 50, target = src))
+				if(!do_after(user, 5 SECONDS, target = src))
 					return
 			if (coil.use(1))
 				adjustFireLoss(-30)
@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			return
 		to_chat(user, span_notice("You begin to place [W] on [src]'s head..."))
 		to_chat(src, span_notice("[user] is placing [W] on your head..."))
-		if(do_after(user, 30, target = src))
+		if(do_after(user, 3 SECONDS, target = src))
 			if (user.temporarilyRemoveItemFromInventory(W, TRUE))
 				place_on_head(W)
 		return
@@ -227,7 +227,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 	spark_system.start()
 	step_away(src, user, 15)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), src, get_turf(user), 15), 3)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), src, get_turf(user), 15), 0.3 SECONDS)
 
 /mob/living/silicon/robot/get_shove_flags(mob/living/shover, obj/item/weapon)
 	. = ..()

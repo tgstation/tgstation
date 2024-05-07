@@ -73,7 +73,7 @@
 		petrified_mob.forceMove(loc)
 	return ..()
 
-/obj/structure/statue/petrified/deconstruct(disassembled = TRUE)
+/obj/structure/statue/petrified/atom_deconstruct(disassembled = TRUE)
 	var/destruction_message = "[src] shatters!"
 	if(!disassembled)
 		if(petrified_mob)
@@ -89,7 +89,6 @@
 				destruction_message = "[src] shatters, a solid brain tumbling out!"
 			petrified_mob.dust()
 	visible_message(span_danger(destruction_message))
-	qdel(src)
 
 /obj/structure/statue/petrified/animate_atom_living(mob/living/owner)
 	if(isnull(petrified_mob))

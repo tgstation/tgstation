@@ -587,7 +587,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 						if(queued_pipe_flipped)
 							tube.setDir(turn(queued_pipe_dir, 45 + ROTATION_FLIP))
-							tube.AfterRotation(user, ROTATION_FLIP)
+							tube.post_rotation(user, ROTATION_FLIP)
 
 						tube.add_fingerprint(usr)
 						if(mode & WRENCH_MODE)
@@ -705,7 +705,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/upgrade_flags
 
 /obj/item/rpd_upgrade/unwrench
+	name = "RPD advanced upgrade: wrench mode"
 	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
+	icon_state = "datadisk1"
 	upgrade_flags = RPD_UPGRADE_UNWRENCH
 
 #undef ATMOS_CATEGORY

@@ -195,6 +195,9 @@
 	if(HAS_TRAIT(new_owner, TRAIT_HULK))
 		modifier += 0.5
 
+	if(HAS_TRAIT(new_owner, TRAIT_STIMMED)) // Naturally produces stimulants to help get you PUMPED
+		modifier += 1
+
 	if(HAS_TRAIT(new_owner, TRAIT_FAT)) // less xp until you get into shape
 		modifier -= 0.5
 
@@ -209,10 +212,10 @@
 		if(new_owner.reagents.has_reagent(workout_reagent))
 			food_boost += supplementary_reagents_bonus[workout_reagent]
 
-	var/skill_level_boost = (new_owner.mind.get_skill_level(/datum/skill/fitness) - 1) * 2 SECONDS
+	var/skill_level_boost = (new_owner.mind.get_skill_level(/datum/skill/athletics) - 1) * 2 SECONDS
 	bonus_time = (bonus_time + food_boost + skill_level_boost) * modifier
 
-	var/exhaustion_limit = new_owner.mind.get_skill_modifier(/datum/skill/fitness, SKILL_VALUE_MODIFIER) + world.time
+	var/exhaustion_limit = new_owner.mind.get_skill_modifier(/datum/skill/athletics, SKILL_VALUE_MODIFIER) + world.time
 	if(duration + bonus_time >= exhaustion_limit)
 		duration = exhaustion_limit
 		to_chat(new_owner, span_userdanger("Your muscles are exhausted! Might be a good idea to sleep..."))
@@ -228,10 +231,10 @@
 /datum/status_effect/exercised/refresh(mob/living/new_owner, bonus_time)
 	duration += workout_duration(new_owner, bonus_time)
 	new_owner.clear_mood_event("exercise") // we need to reset the old mood event in case our fitness skill changes
-	new_owner.add_mood_event("exercise", /datum/mood_event/exercise, new_owner.mind.get_skill_level(/datum/skill/fitness))
+	new_owner.add_mood_event("exercise", /datum/mood_event/exercise, new_owner.mind.get_skill_level(/datum/skill/athletics))
 
 /datum/status_effect/exercised/on_apply()
-	owner.add_mood_event("exercise", /datum/mood_event/exercise, owner.mind.get_skill_level(/datum/skill/fitness))
+	owner.add_mood_event("exercise", /datum/mood_event/exercise, owner.mind.get_skill_level(/datum/skill/athletics))
 	return ..()
 
 /datum/status_effect/exercised/on_remove()

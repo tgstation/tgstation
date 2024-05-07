@@ -66,8 +66,7 @@
 	name = "Containment Pen";
 	req_access = list("xenobiology")
 	},
-/obj/machinery/door/window/left/directional/north{
-	dir = 2;
+/obj/machinery/door/window/left/directional/south{
 	name = "Containment Pen";
 	req_access = list("xenobiology")
 	},

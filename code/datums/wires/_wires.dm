@@ -258,8 +258,13 @@
 		return TRUE
 
 	// Station blueprints do that too, but only if the wires are not randomized.
-	if(user.is_holding_item_of_type(/obj/item/areaeditor/blueprints) && !randomize)
-		return TRUE
+	if(!randomize)
+		if(user.is_holding_item_of_type(/obj/item/blueprints))
+			return TRUE
+		for(var/obj/item/photo/photo in user.held_items)
+			if(!photo.picture || !photo.picture.has_blueprints)
+				continue
+			return TRUE
 
 	return FALSE
 
@@ -277,7 +282,7 @@
 /datum/wires/ui_host()
 	return holder
 
-/datum/wires/ui_status(mob/user)
+/datum/wires/ui_status(mob/user, datum/ui_state/state)
 	if(interactable(user))
 		return ..()
 	return UI_CLOSE

@@ -4,7 +4,6 @@
 	custom_price = PAYCHECK_LOWER * 0.7
 	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "t-ray0"
-	var/on = FALSE
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "electronic"
@@ -12,6 +11,10 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 1.5)
+	/// Is this T-Ray scanner currently on?
+	var/on = FALSE
+	/// Will this T-Ray scanner shut off on de-equip? (Cyborgs only)
+	var/shut_off_on_unequip = TRUE
 
 /obj/item/t_scanner/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to emit terahertz-rays into [user.p_their()] brain with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -29,6 +32,8 @@
 	toggle_on()
 
 /obj/item/t_scanner/cyborg_unequip(mob/user)
+	if(!shut_off_on_unequip)
+		return
 	if(!on)
 		return
 	toggle_on()
