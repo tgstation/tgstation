@@ -36,7 +36,7 @@
 
 /datum/quirk/stowaway
 	name = "Stowaway"
-	desc = "You wake up up inside a random locker with only a crude fake for an ID card."
+	desc = "You wake up inside a random locker with only a crude fake for an ID card."
 	value = -2
 	icon = FA_ICON_SUITCASE
 
