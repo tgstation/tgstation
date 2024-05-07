@@ -1,0 +1,4 @@
+author: "RikuTheKiller"
+delete-after: True
+changes:
+  - bugfix: "Remove purity adjustment for overdose thresholds, as we don't even use reagent purity here."
