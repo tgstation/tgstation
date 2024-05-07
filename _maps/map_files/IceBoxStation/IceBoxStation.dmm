@@ -737,6 +737,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"ana" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "boneyard"
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/mapping_helpers/airlock/access/all/medical/morgue,
+/turf/open/floor/plating,
+/area/station/medical/morgue)
 "anb" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2214,6 +2223,9 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
+"aKN" = (
+/turf/closed/mineral/snowmountain/coldroom,
+/area/icemoon/underground/explored/graveyard)
 "aLy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -3217,6 +3229,12 @@
 	dir = 8
 	},
 /area/station/engineering/atmos/storage/gas)
+"aZW" = (
+/obj/structure/fence{
+	dir = 1
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored/graveyard)
 "baf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4547,6 +4565,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/construction)
+"btw" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "boneyard"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/medical/morgue,
+/turf/open/floor/plating,
+/area/station/medical/morgue)
 "btB" = (
 /obj/structure/table,
 /obj/item/flashlight/lantern,
@@ -4947,6 +4973,9 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/entry)
+"bzh" = (
+/turf/closed/mineral/random/snow,
+/area/icemoon/underground/explored/graveyard)
 "bzn" = (
 /obj/machinery/door/airlock{
 	name = "Kitchen Access"
@@ -10165,6 +10194,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness)
+"cXU" = (
+/obj/structure/closet/crate/grave,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/graveyard)
 "cXV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
@@ -14930,6 +14963,9 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
+"evu" = (
+/turf/open/floor/iron/dark,
+/area/icemoon/underground/unexplored/rivers/deep/shoreline)
 "evw" = (
 /obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 2
@@ -15828,6 +15864,12 @@
 	dir = 8
 	},
 /area/station/maintenance/port/fore)
+"eKZ" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/graveyard)
 "eLb" = (
 /obj/machinery/iv_drip,
 /turf/open/floor/engine,
@@ -27504,6 +27546,12 @@
 "iwC" = (
 /turf/closed/wall/r_wall,
 /area/station/hallway/primary/central/fore)
+"iwH" = (
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored/graveyard)
 "iwO" = (
 /obj/structure/closet/secure_closet/personal{
 	anchored = 1
@@ -29117,6 +29165,7 @@
 	dir = 4
 	},
 /obj/machinery/light/dim/directional/north,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "iWO" = (
@@ -29565,6 +29614,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"jdO" = (
+/obj/structure/closet/crate/grave/filled,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/graveyard)
 "jdQ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -30071,6 +30125,14 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
+"jon" = (
+/obj/structure/rack,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/shovel,
+/obj/item/clothing/mask/gas/plaguedoctor,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "joG" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/siding/wideplating/dark{
@@ -41805,6 +41867,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
 /turf/open/floor/iron/white,
 /area/station/maintenance/aft/greater)
+"mSB" = (
+/obj/structure/closet/crate/grave/filled,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "mSH" = (
 /obj/structure/fence{
 	dir = 1
@@ -45529,8 +45595,6 @@
 "nTA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/cobweb,
-/obj/item/radio/intercom/directional/north,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/disposalpipe/segment{
@@ -56019,6 +56083,9 @@
 /obj/structure/closet,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
+"rbi" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored/graveyard)
 "rbm" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "MiniSat External NorthWest";
@@ -58511,6 +58578,9 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"rQs" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/graveyard)
 "rQt" = (
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
@@ -64008,6 +64078,13 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"tBq" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/obj/machinery/light/directional/east,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/graveyard)
 "tBs" = (
 /turf/closed/wall,
 /area/station/maintenance/department/chapel)
@@ -71760,6 +71837,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "waL" = (
@@ -73174,7 +73252,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/firealarm/directional/north,
+/obj/structure/sign/warning/gas_mask/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "wvV" = (
@@ -78740,6 +78818,10 @@
 "yey" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
+"yeA" = (
+/obj/machinery/light/dim/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "yeB" = (
@@ -174802,7 +174884,7 @@ thA
 thA
 thA
 thA
-thA
+evu
 thA
 thA
 thA
@@ -175829,7 +175911,7 @@ iDt
 xMq
 iDt
 iDt
-iDt
+mSB
 iDt
 gjq
 gjq
@@ -179188,7 +179270,7 @@ cCb
 iDt
 scw
 iDt
-iDt
+nfG
 eXH
 nlN
 nlS
@@ -179436,7 +179518,7 @@ gEz
 dMS
 xMq
 xMq
-scw
+iDt
 iDt
 scw
 iDt
@@ -179692,11 +179774,11 @@ dMS
 dMS
 dMS
 dMS
-xMq
-iDt
-iDt
-scw
-scw
+bzh
+aZW
+aZW
+aZW
+aZW
 btU
 xUf
 syW
@@ -179949,11 +180031,11 @@ cjK
 cjK
 sAc
 dMS
-xMq
-xMq
-iDt
-iDt
-iDt
+bzh
+jdO
+rQs
+rQs
+rbi
 ioK
 jvw
 bja
@@ -180206,11 +180288,11 @@ dMS
 hHU
 nCJ
 dMS
-xMq
-xMq
-iDt
-iDt
-iDt
+bzh
+rQs
+rQs
+rQs
+iwH
 ioK
 rZX
 bja
@@ -180463,11 +180545,11 @@ dMS
 dMS
 nCJ
 dMS
-xMq
-xMq
-nfG
-xMq
-xMq
+bzh
+cXU
+rbi
+rQs
+rQs
 btU
 btU
 btU
@@ -180720,11 +180802,11 @@ bwL
 dMS
 otj
 dMS
-xMq
-xMq
-xMq
-xMq
-xMq
+bzh
+jdO
+rQs
+rQs
+rQs
 btU
 kCR
 btU
@@ -180977,10 +181059,10 @@ fsr
 fEj
 nCJ
 dMS
-fuH
-fuH
-fuH
-fuH
+aKN
+rbi
+rQs
+rbi
 btU
 btU
 sGf
@@ -181234,10 +181316,10 @@ hHU
 dMS
 nCJ
 dMS
-fuH
-fuH
-fuH
-fuH
+aKN
+cXU
+rQs
+eKZ
 btU
 idr
 qSe
@@ -181491,10 +181573,10 @@ dMS
 dMS
 nCJ
 dMS
-fuH
-fuH
-fuH
-fuH
+aKN
+aKN
+rbi
+tBq
 btU
 oYm
 kht
@@ -181749,8 +181831,8 @@ sEp
 jWp
 dMS
 dMS
-fwB
-fwB
+btU
+ana
 btU
 btU
 btU
@@ -182006,9 +182088,9 @@ dMS
 dMS
 dMS
 fwB
-fwB
-fwB
 btU
+yeA
+btw
 nTA
 kJm
 nyQ
@@ -182263,8 +182345,8 @@ pKe
 rZK
 qPE
 fwB
-fwB
-fwB
+btU
+jon
 btU
 wvL
 jnY
@@ -182520,8 +182602,8 @@ mQk
 mCb
 wMP
 fwB
-fwB
-fwB
+btU
+btU
 btU
 mtt
 tHe
