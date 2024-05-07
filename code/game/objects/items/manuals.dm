@@ -162,7 +162,7 @@
 				Put ingredients on table, then click and drag the table onto yourself to see what recipes you can prepare.
 
 				<h2>Microwave:</h2>
-				Use it to cook or boil food ingredients (meats, doughs, egg, spaghetti, donkpocket, etc...).
+				Use it to cook or boil food ingredients (meats, doughs, egg, donkpocket, etc...).
 				It can cook multiple items at once.
 
 				<h2>Processor:</h2>
@@ -183,7 +183,7 @@
 				<b>Popcorn:</b> Microwave corn.<br>
 				<b>Meat Steak:</b> Microwave meat.<br>
 				<b>Meat Pie:</b> 1 plain pie + 1u black pepper + 1u salt + 2 meat cutlets<br>
-				<b>Boiled Spagetti:</b> Microwave spaghetti.<br>
+				<b>Boiled Spaghetti:</b>Raw Spaghetti + 50u water at 450+K<br>
 				<b>Donuts:</b> 1u sugar + 1 pastry base<br>
 				<b>Fries:</b> Process potato.
 
@@ -191,7 +191,7 @@
 				You can put your meals on your kitchen counter or load them in the snack vending machines.
 				</body>
 				</html>
-			"}
+			"}// Monkestation Edit: Removed spaghetti from microwave recipes
 
 /obj/item/book/manual/nuclear
 	name = "Fission Mailed: Nuclear Sabotage 101"
@@ -293,14 +293,14 @@
 	icon_state ="bookEngineering"
 	starting_author = "Engineering Encyclopedia"
 	starting_title = "Station Repairs and Construction"
-	page_link = "Guide_to_construction"
+	page_link = "en/jobs/engineering/guide-to-construction"
 
 /obj/item/book/manual/wiki/engineering_guide
 	name = "Engineering Textbook"
 	icon_state ="bookEngineering2"
 	starting_author = "Engineering Encyclopedia"
 	starting_title = "Engineering Textbook"
-	page_link = "Guide_to_engineering"
+	page_link = "en/jobs/engineering/station-engineer"
 
 /obj/item/book/manual/wiki/security_space_law
 	name = "Space Law"
@@ -308,7 +308,7 @@
 	icon_state = "bookSpaceLaw"
 	starting_author = "Nanotrasen"
 	starting_title = "Space Law"
-	page_link = "space-laws"
+	page_link = "en/space-laws"
 
 /obj/item/book/manual/wiki/security_space_law/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] pretends to read \the [src] intently... then promptly dies of laughter!"))
