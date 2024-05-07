@@ -18,8 +18,7 @@
 	var/list/items_to_add = list()
 	/// List of items to remove with the module, if any
 	var/list/items_to_remove = list()
-	// if true, is not stored in the robot to be ejected
-	// if model is reset
+	// if true, is not stored in the robot to be ejected if model is reset
 	var/one_use = FALSE
 	// If the module allows duplicates of itself to exist within the borg.
 	// one_use technically makes this value not mean anything, maybe could be just one variable with flags?
