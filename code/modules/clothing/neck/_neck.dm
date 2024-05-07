@@ -128,8 +128,7 @@
 
 /obj/item/clothing/neck/tie/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(!isnull(held_item))
-		context[SCREENTIP_CONTEXT_ALT_RMB] = "Wear [alternate_worn_layer == initial(alternate_worn_layer) ? "below" : "above"] suit"
+	context[SCREENTIP_CONTEXT_ALT_RMB] = "Wear [alternate_worn_layer == initial(alternate_worn_layer) ? "above" : "below"] suit"
 	if(clip_on)
 		return
 	if(is_tied)
