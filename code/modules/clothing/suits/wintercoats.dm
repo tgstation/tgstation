@@ -384,6 +384,8 @@
 	allowed += list(
 		/obj/item/autopsy_scanner,
 		/obj/item/scythe,
+		/obj/item/shovel,
+		/obj/item/shovel/serrated,
 	)
 
 /obj/item/clothing/head/hooded/winterhood/medical/coroner
@@ -629,6 +631,8 @@
 		/obj/item/storage/bag/ore,
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/tank/internals,
+		/obj/item/shovel,
+		/obj/item/shovel/serrated,
 	)
 	armor_type = /datum/armor/wintercoat_miner
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner
