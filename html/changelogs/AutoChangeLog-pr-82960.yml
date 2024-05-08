@@ -1,5 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - balance: "Virtual domain ghost roles can no longer enter the safehouse/\"equipment\" areas of a domain."
-  - bugfix: "Pirate virtual domain ghost roles will no longer make a pirate team antag datum."
