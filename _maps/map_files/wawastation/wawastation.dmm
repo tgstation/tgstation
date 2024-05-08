@@ -17614,7 +17614,7 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/window/left/directional/north{
 	req_access = list("medical");
-	name = "anti-assistant windoor"
+	name = "Anti Assistant Protection Door"
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -40004,19 +40004,6 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
-"oPy" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/preopen{
-	id = "medsecprivacy";
-	name = "Privacy Shutter"
-	},
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = "medsecprivacy";
-	name = "Privacy Shutter"
-	},
-/turf/open/floor/plating,
-/area/station/security/checkpoint/medical)
 "oPB" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -62846,7 +62833,7 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/door/window/right/directional/north{
 	req_access = list("medical");
-	name = "anti-assistant windoor"
+	name = "Anti Assistant Protection Door"
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
@@ -80679,7 +80666,7 @@ aem
 kFT
 kFT
 aeI
-oPy
+fvo
 kFT
 dKw
 gwE
