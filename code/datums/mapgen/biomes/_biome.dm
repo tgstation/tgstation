@@ -2,21 +2,21 @@
 /datum/biome
 	///Type of turf this biome creates
 	var/turf_type
-	///Chance of having a structure from the flora types list spawn
+	/// Chance of having a structure from the flora types list spawn
 	var/flora_density = 0
-	///Chance of having a mob from the fauna types list spawn
-	var/fauna_density = 0
-	/// Base chance of spawning features
+	/// Chance of spawning special features, such as geysers.
 	var/feature_density = 0
+	/// Chance of having a mob from the fauna types list spawn
+	var/fauna_density = 0
 	/// Weighted list of type paths of flora that can be spawned when the
 	/// turf spawns flora.
 	var/list/flora_types = list()
-	/// Weighted list of type paths of fauna that can be spawned when the
-	/// turf spawns fauna.
-	var/list/fauna_types = list()
 	/// Weighted list of extra features that can spawn in the biome, such as
 	/// geysers. Gets expanded automatically.
 	var/list/feature_types = list()
+	/// Weighted list of type paths of fauna that can be spawned when the
+	/// turf spawns fauna.
+	var/list/fauna_types = list()
 
 
 /datum/biome/New()
