@@ -88,11 +88,14 @@
 /obj/machinery/quantum_server/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 
+	if(obj_flags & EMAGGED)
+		return
+
 	obj_flags |= EMAGGED
 	glitch_chance = 0.09
 
 	add_overlay(mutable_appearance('icons/obj/machines/bitrunning.dmi', "emag_overlay"))
-	balloon_alert(user, "bzzzt...")
+	balloon_alert(user, "system jailbroken...")
 	playsound(src, 'sound/effects/sparks1.ogg', 35, vary = TRUE)
 
 /obj/machinery/quantum_server/update_appearance(updates)

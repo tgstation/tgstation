@@ -26,7 +26,7 @@
 
 /area/virtual_domain/safehouse
 	name = "Virtual Domain Safehouse"
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | VIRTUAL_SAFE_AREA
 	icon_state = "bit_safe"
 	requires_power = FALSE
 	sound_environment = SOUND_ENVIRONMENT_ROOM
@@ -49,3 +49,13 @@
 	icon_state = "bit_space"
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
 
+///Areas that virtual entities should not be in
+
+/area/virtual_domain/protected_space
+	name = "Virtual Domain Safe Zone"
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | VIRTUAL_SAFE_AREA
+	icon_state = "bit_safe"
+
+/area/virtual_domain/protected_space/fullbright
+	static_lighting = FALSE
+	base_lighting_alpha = 255

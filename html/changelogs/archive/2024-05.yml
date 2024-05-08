@@ -147,3 +147,38 @@
 2024-05-07:
   CandleJaxx:
   - rscadd: '''puppy'' ''kitten'' and ''spider'' pai skins'
+2024-05-08:
+  '@MrEmre12, @Majkl-J':
+  - rscadd: Fishing pool introduced to metastation garden
+  - refactor: All water tiles now handle fishing through a unified fishing_datum variable
+  BurgerBB:
+  - qol: The inspector's Fedora now uses regex. When saying commands, it is much more
+      generous on picking up trigger word.
+  Derpguy3:
+  - bugfix: A meter attached to distribution pipes in Birdshot's atmospherics has
+      been moved to the matching pipe layer.
+  Fikou:
+  - rscdel: You can no longer use another station's blueprint photo to look at wires
+      or do the traitor objective with.
+  Iamgoofball:
+  - balance: Spies can now use other spies' uplinks.
+  Melbert:
+  - balance: To see wires in photos of blueprints, you first must squint at the photo.
+  ReturnToZender (hitting delete on a power cable):
+  - rscdel: Single loose power cable in icebox maintenance
+  Rhials:
+  - balance: Virtual domain ghost roles can no longer enter the safehouse/"equipment"
+      areas of a domain.
+  - bugfix: Pirate virtual domain ghost roles will no longer make a pirate team antag
+      datum.
+  ShizCalev:
+  - bugfix: Inducers no longer break completely after trying to charge a PDA with
+      them.
+  delingar:
+  - rscadd: RD's skillchip adds cyborg wires knowledge
+  jlsnow301:
+  - bugfix: Lootpanel now requires 515.1635 to generate most icons. TG support for
+      514 ended May 1. Update your client to fix the icons.
+  mc-oofert:
+  - qol: temporarily soulless (deathmatch, etc) bodies dont appear as soulless on
+      medhud

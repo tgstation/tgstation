@@ -1,4 +1,0 @@
-author: "Derpguy3"
-delete-after: True
-changes:
-  - bugfix: "A meter attached to distribution pipes in Birdshot's atmospherics has been moved to the matching pipe layer."
