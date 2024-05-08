@@ -1091,6 +1091,7 @@
 #include "code\datums\components\geiger_sound.dm"
 #include "code\datums\components\ghost_direct_control.dm"
 #include "code\datums\components\gps.dm"
+#include "code\datums\components\gravedigger.dm"
 #include "code\datums\components\grillable.dm"
 #include "code\datums\components\ground_sinking.dm"
 #include "code\datums\components\growth_and_differentiation.dm"

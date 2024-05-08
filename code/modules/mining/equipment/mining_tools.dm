@@ -135,6 +135,8 @@
 	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 	sharpness = SHARP_EDGED
+	///How quickly do we dig graves?
+	var/grave_speed = 8 SECONDS
 
 /obj/item/shovel/Initialize(mapload)
 	. = ..()
@@ -143,6 +145,9 @@
 	effectiveness = 40, \
 	)
 	//it's sharp, so it works, but barely.
+	AddComponent(/datum/component/gravedigger, \
+	dig_time = grave_speed, \
+	)
 
 /obj/item/shovel/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins digging their own grave! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -161,6 +166,7 @@
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
+	grave_speed = 20 SECONDS
 
 /obj/item/shovel/serrated
 	name = "serrated bone shovel"
@@ -223,6 +229,9 @@
 /obj/item/trench_tool/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
+	AddComponent(/datum/component/gravedigger, \
+	dig_time = 8 SECONDS, \
+	)
 
 /obj/item/trench_tool/examine(mob/user)
 	. = ..()
@@ -317,6 +326,7 @@
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 	slowdown = 3
 	attack_speed = 1.2 SECONDS
+	grave_speed = 3 SECONDS
 	/// The factor at which the recoil becomes less.
 	var/recoil_factor = 3
 	/// Wether we knock down and launch away out enemies when we attack.
