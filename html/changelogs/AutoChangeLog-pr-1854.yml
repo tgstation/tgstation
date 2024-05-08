@@ -1,4 +1,0 @@
-author: "Oricana-16"
-delete-after: True
-changes:
-  - bugfix: "BCI Actions now use icons instead of ERRORs/."

@@ -1,4 +1,0 @@
-author: "Uristthedorf"
-delete-after: True
-changes:
-  - rscadd: "Diagnostic huds can now see nanite volume."

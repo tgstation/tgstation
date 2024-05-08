@@ -1,5 +1,0 @@
-author: "AlbertNanotracen"
-delete-after: True
-changes:
-  - bugfix: "fixed some wikibook links"
-  - bugfix: "Chef recipe book no longer tells you you can microwave pasta to cook it (you cant)"

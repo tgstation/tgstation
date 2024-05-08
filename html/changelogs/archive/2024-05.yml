@@ -77,3 +77,42 @@
   - rscadd: 'Mobs with synthetic voice boxes (such as IPCs) are now capable of using
       silicon-type emotes. As of the time of this change, this means they can now
       use: boop, buzz, buzz2, chime, honk, ping, sad, warn, slowclap.'
+2024-05-08:
+  Absolucy:
+  - bugfix: Bioscramblers can no longer give you buggy abstract organs, like dullahan
+      eyes.
+  - qol: Added some more things to the bioscrambler blacklist, such as psyker heads,
+      fly tongues/stomachs, anime implants, and abductor glands.
+  - rscadd: Bioscramblers can now give you wings. Moffcats, here we come!
+  - balance: The Bioscrambler will now actively attempt to get closer to living targets
+      rather than chilling in a closet nobody goes into (unless you trap it in a containment
+      field).
+  - balance: Because it can now travel through walls, the Bioscrambler will no longer
+      transform you THROUGH walls.
+  - bugfix: Fixed various worn items (most noticeably gloves) looking weird with variable
+      heights.
+  AlbertNanotracen:
+  - bugfix: fixed some wikibook links
+  - bugfix: Chef recipe book no longer tells you you can microwave pasta to cook it
+      (you cant)
+  DimWhat:
+  - rscadd: Added heels to the LawDrobe
+  MrMelbert, NikoTheDude, Ported by Hardly:
+  - rscadd: Added examine text, describe your character in ways that a 32x32 sprite
+      can't!
+  - rscadd: Added temporary examine text alongside an indicator
+  - rscadd: Added character records text
+  - admin: Admins can see all flavor texts of a character
+  NicoDeLuna:
+  - rscadd: Added Ashsuits for miners
+  Odairu:
+  - rscadd: Added a secondary ammo type on the captain's Antique
+  Oricana-16:
+  - bugfix: BCI Actions now use icons instead of ERRORs/.
+  RikuTheKiller:
+  - bugfix: Remove purity adjustment for overdose thresholds, as we don't even use
+      reagent purity here.
+  Uristthedorf:
+  - rscadd: Diagnostic huds can now see nanite volume.
+  flleeppyy:
+  - bugfix: spelling mistake in quirk description

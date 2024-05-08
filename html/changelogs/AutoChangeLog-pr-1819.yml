@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed various worn items (most noticeably gloves) looking weird with variable heights."
