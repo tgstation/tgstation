@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Spies may spawn in less numbers, but rarely may also spawn in more numbers."
