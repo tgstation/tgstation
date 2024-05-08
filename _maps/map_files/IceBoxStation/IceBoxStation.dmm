@@ -23029,6 +23029,10 @@
 	dir = 1
 	},
 /area/station/security/prison)
+"gZR" = (
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/plating,
+/area/station/maintenance/department/electrical)
 "gZT" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -256595,7 +256599,7 @@ qAS
 fUc
 jaX
 glI
-rPu
+gZR
 kKL
 kKL
 mbG

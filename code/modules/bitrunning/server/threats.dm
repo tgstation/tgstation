@@ -2,6 +2,7 @@
 /obj/machinery/quantum_server/proc/add_threats(mob/living/threat)
 	spawned_threat_refs.Add(WEAKREF(threat))
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_THREAT_CREATED)
+	threat.AddComponent(/datum/component/virtual_entity, src)
 
 /// Choses which antagonist role is spawned based on threat
 /obj/machinery/quantum_server/proc/get_antagonist_role()
