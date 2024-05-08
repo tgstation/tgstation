@@ -1,7 +1,8 @@
 /datum/component/shrink
 	var/olddens
 	var/oldopac
-	var/newsquash = null
+	/// Tracks the squashable component we apply when we make the small mob squashable
+	var/datum/component/squashable/newsquash
 	dupe_mode = COMPONENT_DUPE_HIGHLANDER
 
 /datum/component/shrink/Initialize(shrink_time)
@@ -37,7 +38,8 @@
 		parent_atom.set_density(FALSE) // this is handled by the UNDENSE trait on mobs
 	parent_atom.visible_message(span_warning("[parent_atom] shrinks down to a tiny size!"),
 	span_userdanger("Everything grows bigger!"))
-	QDEL_IN(src, shrink_time)
+	if(shrink_time >= 0) // negative shrink time is permanent
+		QDEL_IN(src, shrink_time)
 
 /datum/component/shrink/proc/handle_shrunk_speech(mob/living/little_guy, list/speech_args)
 	SIGNAL_HANDLER

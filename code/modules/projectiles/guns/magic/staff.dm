@@ -150,7 +150,7 @@
 		/obj/projectile/magic/teleport,
 		/obj/projectile/magic/wipe,
 		/obj/projectile/temp/chill,
-		/obj/projectile/beam/shrink/magic
+		/obj/projectile/magic/shrink
 	)
 
 /obj/item/gun/magic/staff/chaos/unrestricted
@@ -332,5 +332,5 @@
 	recharge_rate = 5
 	no_den_usage = 1
 	school = SCHOOL_TRANSMUTATION
-	slot_flags = null //too small to wear on your back
+	slot_flags = NONE //too small to wear on your back
 	w_class = WEIGHT_CLASS_NORMAL //but small enough for a bag
