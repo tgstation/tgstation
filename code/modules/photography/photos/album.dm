@@ -15,6 +15,8 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/persistence_id
 
+GENERAL_PROTECT_DATUM(/obj/item/storage/photo_album)
+
 /obj/item/storage/photo_album/Initialize(mapload)
 	. = ..()
 	if (!SSpersistence.initialized)
