@@ -113,7 +113,7 @@
 /obj/item/organ/internal/brain/carp/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
-	AddElement(/datum/element/noticable_organ, "%PRONOUN_They seem%PRONOUN_S unable to stay still.")
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_They seem%PRONOUN_s unable to stay still.")
 
 /obj/item/organ/internal/brain/carp/on_mob_insert(mob/living/carbon/brain_owner)
 	. = ..()

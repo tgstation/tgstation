@@ -89,15 +89,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 		gender = body.gender
 		if(body.mind && body.mind.name)
-			if(body.mind.ghostname)
-				name = body.mind.ghostname
-			else
-				name = body.mind.name
+			name = body.mind.ghostname || body.mind.name
 		else
-			if(body.real_name)
-				name = body.real_name
-			else
-				name = random_unique_name(gender)
+			name = body.real_name || generate_random_mob_name(gender)
+
 
 		mind = body.mind //we don't transfer the mind but we keep a reference to it.
 
@@ -125,8 +120,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	abstract_move(T)
 
-	if(!name) //To prevent nameless ghosts
-		name = random_unique_name(gender)
+	//To prevent nameless ghosts
+	name ||= generate_random_mob_name(FALSE)
 	real_name = name
 
 	if(!fun_verbs)
@@ -221,7 +216,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	if(ghost_accs == GHOST_ACCS_FULL && (icon_state in GLOB.ghost_forms_with_accessories_list)) //check if this form supports accessories and if the client wants to show them
 		if(facial_hairstyle)
-			var/datum/sprite_accessory/S = GLOB.facial_hairstyles_list[facial_hairstyle]
+			var/datum/sprite_accessory/S = SSaccessories.facial_hairstyles_list[facial_hairstyle]
 			if(S)
 				facial_hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
 				if(facial_hair_color)
@@ -229,7 +224,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 				facial_hair_overlay.alpha = 200
 				add_overlay(facial_hair_overlay)
 		if(hairstyle)
-			var/datum/sprite_accessory/hair/S = GLOB.hairstyles_list[hairstyle]
+			var/datum/sprite_accessory/hair/S = SSaccessories.hairstyles_list[hairstyle]
 			if(S)
 				hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
 				if(hair_color)
@@ -838,7 +833,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	client.prefs.apply_character_randomization_prefs()
 
 	var/species_type = client.prefs.read_preference(/datum/preference/choiced/species)
-	var/datum/species/species = new species_type
+	var/datum/species/species = GLOB.species_prototypes[species_type]
 	if(species.check_head_flags(HEAD_HAIR))
 		hairstyle = client.prefs.read_preference(/datum/preference/choiced/hairstyle)
 		hair_color = ghostify_color(client.prefs.read_preference(/datum/preference/color/hair_color))
@@ -846,8 +841,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(species.check_head_flags(HEAD_FACIAL_HAIR))
 		facial_hairstyle = client.prefs.read_preference(/datum/preference/choiced/facial_hairstyle)
 		facial_hair_color = ghostify_color(client.prefs.read_preference(/datum/preference/color/facial_hair_color))
-
-	qdel(species)
 
 	update_appearance()
 
