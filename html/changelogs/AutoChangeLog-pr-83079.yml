@@ -1,0 +1,4 @@
+author: "XElectricX"
+delete-after: True
+changes:
+  - qol: "Mech drills can auto-mine by walking into rock."
