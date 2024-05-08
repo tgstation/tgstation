@@ -1,0 +1,4 @@
+author: "Kitsunemitsu"
+delete-after: True
+changes:
+  - bugfix: "fixed the syndicate and prisoner ID cards being missaligned."
