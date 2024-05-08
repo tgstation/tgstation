@@ -9865,6 +9865,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/warden)
+"cRt" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/misc/dirt/dark{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/graveyard)
 "cRy" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -10196,7 +10204,12 @@
 /area/station/commons/fitness)
 "cXU" = (
 /obj/structure/closet/crate/grave,
-/turf/open/misc/asteroid/snow/icemoon,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/misc/dirt/dark{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/icemoon/underground/explored/graveyard)
 "cXV" = (
 /obj/effect/decal/cleanable/dirt,
@@ -12171,6 +12184,14 @@
 /obj/machinery/telecomms/server/presets/medical,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
+"dBm" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/misc/dirt/dark{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/graveyard)
 "dBp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -15866,9 +15887,11 @@
 /area/station/maintenance/port/fore)
 "eKZ" = (
 /obj/effect/turf_decal/weather/snow/corner{
-	dir = 5
+	dir = 6
 	},
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/dirt/dark{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/icemoon/underground/explored/graveyard)
 "eLb" = (
 /obj/machinery/iv_drip,
@@ -20446,6 +20469,14 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
+"gjn" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/misc/dirt/dark{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/graveyard)
 "gjq" = (
 /turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
@@ -29621,7 +29652,12 @@
 "jdO" = (
 /obj/structure/closet/crate/grave/filled,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/misc/asteroid/snow/icemoon,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/misc/dirt/dark{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/icemoon/underground/explored/graveyard)
 "jdQ" = (
 /obj/structure/cable,
@@ -39765,6 +39801,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
+"mgC" = (
+/obj/structure/fence{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/graveyard)
 "mgD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/engine,
@@ -59210,6 +59252,12 @@
 	},
 /turf/open/floor/stone,
 /area/station/commons/lounge)
+"rZV" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/misc/dirt/dark{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/graveyard)
 "rZX" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/rack,
@@ -62208,6 +62256,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
+"sTs" = (
+/obj/structure/closet/crate/grave/filled,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/misc/dirt/dark{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/graveyard)
 "sTv" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/engine,
@@ -64083,9 +64141,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "tBq" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 5
-	},
 /obj/machinery/light/directional/east,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored/graveyard)
@@ -78826,6 +78881,7 @@
 /area/station/medical/morgue)
 "yeA" = (
 /obj/machinery/light/dim/directional/north,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "yeB" = (
@@ -78930,6 +78986,11 @@
 	},
 /turf/open/floor/iron/smooth_half,
 /area/station/security/brig/upper)
+"ygQ" = (
+/turf/open/misc/dirt/dark{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/graveyard)
 "yhe" = (
 /obj/structure/cable,
 /obj/machinery/light/directional/south,
@@ -78986,6 +79047,15 @@
 "yiL" = (
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/security/armory)
+"yjb" = (
+/obj/structure/closet/crate/grave,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/turf/open/misc/dirt/dark{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/graveyard)
 "yjh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -179781,7 +179851,7 @@ dMS
 bzh
 aZW
 aZW
-aZW
+mgC
 aZW
 btU
 xUf
@@ -180037,7 +180107,7 @@ sAc
 dMS
 bzh
 jdO
-rQs
+dBm
 rQs
 rbi
 ioK
@@ -180293,9 +180363,9 @@ hHU
 nCJ
 dMS
 bzh
-rQs
-rQs
-rQs
+gjn
+ygQ
+dBm
 iwH
 ioK
 rZX
@@ -180551,8 +180621,8 @@ nCJ
 dMS
 bzh
 cXU
-rQs
-rQs
+ygQ
+rZV
 rQs
 btU
 btU
@@ -180807,9 +180877,9 @@ dMS
 otj
 dMS
 bzh
-jdO
-rQs
-rQs
+sTs
+ygQ
+rZV
 rQs
 btU
 kCR
@@ -181064,9 +181134,9 @@ fEj
 nCJ
 dMS
 aKN
-rQs
-rQs
-rQs
+gjn
+ygQ
+rZV
 btU
 btU
 sGf
@@ -181321,8 +181391,8 @@ dMS
 nCJ
 dMS
 aKN
-cXU
-rQs
+yjb
+cRt
 eKZ
 btU
 idr
