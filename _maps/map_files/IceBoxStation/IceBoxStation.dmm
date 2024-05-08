@@ -14984,9 +14984,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"evu" = (
-/turf/open/floor/iron/dark,
-/area/icemoon/underground/unexplored/rivers/deep/shoreline)
 "evw" = (
 /obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 2
@@ -41913,10 +41910,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
 /turf/open/floor/iron/white,
 /area/station/maintenance/aft/greater)
-"mSB" = (
-/obj/structure/closet/crate/grave/filled,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
 "mSH" = (
 /obj/structure/fence{
 	dir = 1
@@ -174958,7 +174951,7 @@ thA
 thA
 thA
 thA
-evu
+thA
 thA
 thA
 thA
@@ -175985,7 +175978,7 @@ iDt
 xMq
 iDt
 iDt
-mSB
+iDt
 iDt
 gjq
 gjq
