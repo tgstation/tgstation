@@ -85,10 +85,10 @@
 
 /turf/open/misc/asteroid/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
-	if(weapon.tool_behaviour == TOOL_SHOVEL && !locate(/obj/structure/closet/crate/grave/fresh) in src.contents)
+	if(weapon.tool_behaviour == TOOL_SHOVEL && !locate(/obj/structure/closet/crate/grave) in src)
 		balloon_alert(user, "digging grave...")
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, TRUE)
-		if(do_after(user, 6 SECONDS, src))
+		if(do_after(user, 8 SECONDS, src))
 			new /obj/structure/closet/crate/grave/fresh(src)
 			playsound(src, 'sound/effects/shovel_dig.ogg', 50, TRUE)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
