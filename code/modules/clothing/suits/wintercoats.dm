@@ -386,6 +386,7 @@
 		/obj/item/scythe,
 		/obj/item/shovel,
 		/obj/item/shovel/serrated,
+		/obj/item/trench_tool,
 	)
 
 /obj/item/clothing/head/hooded/winterhood/medical/coroner
@@ -633,6 +634,7 @@
 		/obj/item/tank/internals,
 		/obj/item/shovel,
 		/obj/item/shovel/serrated,
+		/obj/item/trench_tool,
 	)
 	armor_type = /datum/armor/wintercoat_miner
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner
