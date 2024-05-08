@@ -5,6 +5,7 @@
 		BB_LOBSTROSITY_EXPLOIT_TRAITS = list(TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT),
 		BB_LOBSTROSITY_FINGER_LUST = 0
 	)
+	ai_traits = PAUSE_DURING_DO_AFTER
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
@@ -16,8 +17,15 @@
 		/datum/ai_planning_subtree/flee_target/lobster,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/lobster,
+		/datum/ai_planning_subtree/find_food,
+		/datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing,
 		/datum/ai_planning_subtree/find_fingers,
 	)
+
+/datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing
+	target_key = BB_FISHING_TARGET
+	hunt_targets = list(/turf/open/lava)
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/lobster
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/lobster

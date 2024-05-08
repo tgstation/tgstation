@@ -540,3 +540,41 @@
 ///It spins, and dimly glows in the dark.
 /obj/item/fish/starfish/flop_animation()
 	DO_FLOATING_ANIM(src)
+
+/obj/item/fish/lavaloop
+	name = "lavaloop fish"
+	desc = "Due to its curvature, it can be used as make-shift boomerang."
+	icon_state = "lava_loop"
+	sprite_width = 6
+	sprite_height = 5
+	average_size = 30
+	average_weight = 500
+	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
+	fish_ai_type = FISH_AI_ZIPPY
+	min_pressure = HAZARD_LOW_PRESSURE
+	required_temperature_min = MIN_AQUARIUM_TEMP+30
+	required_temperature_max = MIN_AQUARIUM_TEMP+35
+	aquarium_vc_color = "#ce7e1d"
+	fish_traits = list(
+		/datum/fish_trait/carnivore,
+		/datum/fish_trait/heavy,
+	)
+	throwforce = 5
+
+/obj/item/fish/lavaloop/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/boomerang, throw_range, TRUE)
+	AddComponent(/datum/component/throwbonus_on_windup, maximum_bonus = 20, pass_maximum_callback = CALLBACK(src, PROC_REF(explode_on_user)), apply_bonus_callback = CALLBACK(src, PROC_REF(on_fish_land)))
+
+/obj/item/fish/lavaloop/proc/explode_on_user(mob/living/user)
+	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
+	active_arm?.dismember()
+	to_chat(user, span_warning("[src] explodes!"))
+	playsound(src, 'sound/effects/explosion1.ogg', 40, TRUE)
+	user.flash_act(1, 1)
+	qdel(src)
+
+/obj/item/fish/lavaloop/proc/on_fish_land(mob/living/target, bonus_value)
+	if(!istype(target))
+		return FALSE
+	return (target.mob_size >= MOB_SIZE_LARGE)

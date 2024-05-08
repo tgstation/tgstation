@@ -273,3 +273,6 @@
 
 /// From /datum/element/basic_eating/finish_eating()
 #define COMSIG_MOB_ATE "mob_ate"
+
+///From mob/living/carbon/proc/throw_mode_on and throw_mode_off
+#define COMSIG_LIVING_THROW_MODE_TOGGLE "living_throw_mode_toggle"
