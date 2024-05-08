@@ -126,7 +126,7 @@
 	key_third_person = "flaps"
 	message = "flaps their wings."
 	hands_use_check = TRUE
-	var/wing_time = 0.5 SECONDS
+	var/wing_time = 0.25 SECONDS
 
 /datum/emote/living/flap/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
