@@ -1585,6 +1585,7 @@
 #include "code\datums\looping_sounds\projectiles.dm"
 #include "code\datums\looping_sounds\vents.dm"
 #include "code\datums\looping_sounds\weather.dm"
+#include "code\datums\mapgen\biome_cave_generator.dm"
 #include "code\datums\mapgen\CaveGenerator.dm"
 #include "code\datums\mapgen\JungleGenerator.dm"
 #include "code\datums\mapgen\biomes\_biome.dm"
