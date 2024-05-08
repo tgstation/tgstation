@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/lobstrosity
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_LOBSTROSITY_EXPLOIT_TRAITS = list(TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT),
 		BB_LOBSTROSITY_FINGER_LUST = 0
@@ -31,6 +31,8 @@
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/lobster
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/lobster/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(!isliving(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]))
+		return ..()
 	if (!controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
 		return
 	if (!isnull(controller.blackboard[BB_LOBSTROSITY_TARGET_LIMB]))
@@ -44,7 +46,7 @@
 
 /datum/ai_behavior/basic_melee_attack/lobster/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	var/mob/living/target = controller.blackboard[target_key]
-	if (isnull(target))
+	if (isnull(target) || !istype(target))
 		return ..()
 	var/is_vulnerable = FALSE
 	for (var/trait in controller.blackboard[BB_LOBSTROSITY_EXPLOIT_TRAITS])

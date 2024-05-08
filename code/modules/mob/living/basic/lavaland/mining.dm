@@ -27,13 +27,11 @@
 	var/static/list/vulnerable_projectiles
 	if(!vulnerable_projectiles)
 		vulnerable_projectiles = string_list(MINING_MOB_PROJECTILE_VULNERABILITY)
-	var/static/list/thrown_weakness = list(/obj/item/fish/lavaloop)
 	AddElement(\
 		/datum/element/ranged_armour,\
 		minimum_projectile_force = 30,\
 		below_projectile_multiplier = 0.3,\
 		vulnerable_projectile_types = vulnerable_projectiles,\
-		thrown_objects_exceptions = thrown_weakness,\
 		minimum_thrown_force = 20,\
 		throw_blocked_message = throw_blocked_message,\
 	)

@@ -8,8 +8,6 @@
 	var/below_projectile_multiplier
 	/// Projectile damage types which work regardless of force
 	var/list/vulnerable_projectile_types
-	/// thrown objects which will always work
-	var/list/thrown_objects_exceptions
 	/// The minimum force a thrown object must have to ignore our armour
 	var/minimum_thrown_force
 	/// Message to output if throwing damage is absorbed
@@ -20,7 +18,6 @@
 	minimum_projectile_force = 0,
 	below_projectile_multiplier = 0,
 	list/vulnerable_projectile_types = list(),
-	list/thrown_objects_exceptions = list(),
 	minimum_thrown_force = 0,
 	throw_blocked_message = "bounces off",
 )
@@ -30,7 +27,6 @@
 	src.minimum_projectile_force = minimum_projectile_force
 	src.below_projectile_multiplier = below_projectile_multiplier
 	src.vulnerable_projectile_types = vulnerable_projectile_types
-	src.thrown_objects_exceptions = thrown_objects_exceptions
 	src.minimum_thrown_force = minimum_thrown_force
 	src.throw_blocked_message = throw_blocked_message
 
@@ -57,7 +53,7 @@
 /// Ignore thrown damage based on projectile properties. There's no elegant way to multiply the damage because throwforce is persistent.
 /datum/element/ranged_armour/proc/pre_thrown_impact(atom/parent, obj/item/hit_atom, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
-	if (!isitem(hit_atom) || !is_type_in_list(hit_atom, thrown_objects_exceptions))
+	if (!isitem(hit_atom) || HAS_TRAIT(hit_atom, TRAIT_BYPASS_RANGED_ARMOR))
 		return
 	if (hit_atom.throwforce >= minimum_thrown_force)
 		return

@@ -11,8 +11,14 @@
 	var/obj/effect/overlay/windup_bar/our_bar
 	///any additional behavior we should look for before applying the bonus
 	var/datum/callback/apply_bonus_callback
+	///sound we play after successfully damaging the enemy with a bonus
+	var/sound_on_success
+	///effect we play after successfully damaging the enemy with a bonus
+	var/effect_on_success
+	///how fast we increase the wind up counter on process
+	var/windup_increment_speed
 
-/datum/component/throwbonus_on_windup/Initialize(maximum_bonus, pass_maximum_callback, apply_bonus_callback)
+/datum/component/throwbonus_on_windup/Initialize(maximum_bonus = 20, windup_increment_speed = 1, pass_maximum_callback, apply_bonus_callback, sound_on_success, effect_on_success)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -20,6 +26,9 @@
 	src.maximum_bonus = maximum_bonus
 	src.pass_maximum_callback = pass_maximum_callback
 	src.apply_bonus_callback = apply_bonus_callback
+	src.sound_on_success = sound_on_success
+	src.effect_on_success = effect_on_success
+	src.windup_increment_speed = windup_increment_speed
 
 /datum/component/throwbonus_on_windup/proc/on_equip(datum/source, mob/living/equipper, slot)
 	SIGNAL_HANDLER
@@ -88,8 +97,8 @@
 		end_windup()
 		return PROCESS_KILL
 
-	our_bar.recalculate_position(throwforce_bonus)
-	throwforce_bonus++
+	our_bar.recalculate_position(min(throwforce_bonus, maximum_bonus))
+	throwforce_bonus += windup_increment_speed
 
 /datum/component/throwbonus_on_windup/proc/on_move(obj/item/source, atom/entering_loc)
 	SIGNAL_HANDLER
@@ -114,6 +123,11 @@
 
 	if(apply_bonus_callback && !apply_bonus_callback.Invoke(hit_atom, damage_to_apply))
 		return
+
+	if(effect_on_success)
+		new effect_on_success(get_turf(hit_atom))
+	if(sound_on_success)
+		playsound(hit_atom, sound_on_success, 50, TRUE)
 
 	var/mob/living/living_target = hit_atom
 	living_target.apply_damage(damage_to_apply)
