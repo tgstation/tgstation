@@ -22,7 +22,6 @@
 		/obj/item/ai_module/core/full/ten_commandments,
 		/obj/item/ai_module/core/full/nutimov,
 		/obj/item/ai_module/core/full/drone,
-		/obj/item/ai_module/core/full/yesman,
 		/obj/item/ai_module/core/full/custom, // uses lawsets from config/silicon_laws.txt (defaults to asmiov if no lawsets)
 	)
 
