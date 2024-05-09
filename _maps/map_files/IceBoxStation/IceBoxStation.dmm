@@ -13320,6 +13320,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/stone,
 /area/station/commons/lounge)
 "dQI" = (
@@ -27834,10 +27835,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 4
-	},
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "iwO" = (
 /obj/structure/closet/secure_closet/personal{
@@ -27992,6 +27990,10 @@
 "iyY" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
+"izf" = (
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "izn" = (
 /obj/effect/spawner/random/decoration/generic,
@@ -32445,6 +32447,7 @@
 /obj/structure/chair/stool/bar/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/eighties,
 /area/station/commons/lounge)
 "jTf" = (
@@ -34210,6 +34213,7 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair/stool/bar/directional/north,
+/obj/structure/cable,
 /turf/open/floor/eighties,
 /area/station/commons/lounge)
 "ksO" = (
@@ -38480,6 +38484,7 @@
 	pixel_y = 32
 	},
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/light/small/dim/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "lFg" = (
@@ -53738,6 +53743,9 @@
 /area/station/cargo/miningdock)
 "qjT" = (
 /obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "qjV" = (
@@ -56818,6 +56826,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/textured,
 /area/station/security/brig)
 "rea" = (
@@ -62436,7 +62445,6 @@
 /area/mine/storage)
 "sJd" = (
 /obj/machinery/newscaster/directional/east,
-/obj/structure/cable,
 /turf/open/floor/stone,
 /area/station/commons/lounge)
 "sJe" = (
@@ -67043,10 +67051,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
-"ukp" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "uks" = (
 /obj/machinery/door/airlock/command{
 	name = "Conference Room"
@@ -247055,7 +247059,7 @@ bln
 bln
 bln
 qjT
-sEB
+ooL
 skl
 dzx
 deY
@@ -247575,7 +247579,7 @@ skl
 oss
 oss
 skl
-bln
+fsm
 tlH
 gmW
 knl
@@ -250138,8 +250142,8 @@ bln
 bln
 stJ
 bln
-ukp
-sEB
+gsK
+kKU
 kKL
 cvF
 cDx
@@ -250671,7 +250675,7 @@ kXu
 jKV
 gmW
 qbH
-rCf
+izf
 rCf
 kKL
 kKL
