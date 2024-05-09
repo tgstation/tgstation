@@ -269,6 +269,7 @@
 	worn_icon_state = "pipegun"
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
+
 	projectile_damage_multiplier = 1.35
 	obj_flags = UNIQUE_RENAME
 	can_bayonet = TRUE
