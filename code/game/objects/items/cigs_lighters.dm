@@ -226,9 +226,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	SIGNAL_HANDLER
 	if(isnull(mob_smoke))
 		return
-	update_partile_position(mob_smoke, new_dir)
+	update_particle_position(mob_smoke, new_dir)
 
-/obj/item/clothing/mask/cigarette/proc/update_partile_position(obj/effect/abstract/particle_holder/to_edit, new_dir = loc.dir)
+/obj/item/clothing/mask/cigarette/proc/update_particle_position(obj/effect/abstract/particle_holder/to_edit, new_dir = loc.dir)
 	var/new_x = 0
 	var/new_layer = initial(to_edit.layer)
 	if(new_dir & NORTH)
@@ -371,7 +371,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 
 	var/obj/effect/abstract/particle_holder/big_smoke = new(smoker.loc, /particles/smoke/cig/big)
-	update_partile_position(big_smoke, smoker.dir)
+	update_particle_position(big_smoke, smoker.dir)
 	QDEL_IN(big_smoke, big_smoke.particles.lifespan)
 
 /// Handles processing the reagents in the cigarette.
@@ -475,7 +475,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/proc/make_mob_smoke(mob/living/smoker)
 	mob_smoke = new(smoker, /particles/smoke/cig)
-	update_partile_position(mob_smoke, smoker.dir)
+	update_particle_position(mob_smoke, smoker.dir)
 	return mob_smoke
 
 /obj/item/clothing/mask/cigarette/proc/make_cig_smoke()
