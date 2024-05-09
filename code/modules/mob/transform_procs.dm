@@ -283,8 +283,6 @@
 
 /**
  * Turns the source atom into a crab crab, the peak of evolutionary design.
- * WARNING! This is IRREVERSIBLE!
- * It adds the NO_TRANSFORM trait and should thus be reserved for admin shenanigans or effective round-enders for the most part.
  */
 /mob/living/carbon/human/proc/crabize()
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
