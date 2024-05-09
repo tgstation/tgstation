@@ -1364,7 +1364,7 @@
 /turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/graveyard/chapel)
 "awz" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=CHW";
@@ -7856,7 +7856,7 @@
 	name = "graveyard"
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/graveyard/chapel)
 "cno" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth,
@@ -9627,7 +9627,7 @@
 	dir = 10
 	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/graveyard/chapel)
 "cNm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9947,7 +9947,7 @@
 /turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/graveyard/chapel)
 "cSu" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -13735,7 +13735,7 @@
 /turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/graveyard/chapel)
 "ebK" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/rack,
@@ -13981,7 +13981,7 @@
 /turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/graveyard/chapel)
 "efV" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
@@ -18165,6 +18165,9 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
+"fxJ" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/graveyard/chapel)
 "fxR" = (
 /obj/machinery/telecomms/hub/preset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -25443,7 +25446,7 @@
 	},
 /obj/structure/sign/warning,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/graveyard/chapel)
 "hNI" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/effect/turf_decal/bot,
@@ -29260,6 +29263,10 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/engineering/atmos)
+"iXt" = (
+/obj/structure/fence,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/graveyard/chapel)
 "iXu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
@@ -35362,7 +35369,7 @@
 /turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/graveyard/chapel)
 "kOk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -41301,7 +41308,7 @@
 /turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/graveyard/chapel)
 "mFU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -49116,6 +49123,12 @@
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"oXa" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored/graveyard/chapel)
 "oXc" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -49711,7 +49724,7 @@
 /turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/graveyard/chapel)
 "pgq" = (
 /obj/machinery/light_switch/directional/west,
 /obj/effect/decal/cleanable/cobweb,
@@ -50012,6 +50025,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
+"pjs" = (
+/obj/structure/fence/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored/graveyard/chapel)
 "pjw" = (
 /obj/structure/table/wood,
 /obj/item/toy/cards/deck{
@@ -56159,7 +56178,7 @@
 /turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/graveyard/chapel)
 "rcj" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=Lockers";
@@ -59818,6 +59837,10 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
+"sjS" = (
+/obj/structure/fence,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored/graveyard/chapel)
 "sjU" = (
 /obj/structure/sign/warning/docking/directional/east,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -63717,7 +63740,7 @@
 /turf/open/misc/dirt/dark{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/graveyard/chapel)
 "tur" = (
 /turf/open/floor/iron/cafeteria{
 	dir = 8
@@ -64741,7 +64764,7 @@
 /turf/open/misc/dirt/dark{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/graveyard/chapel)
 "tJE" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -68512,7 +68535,7 @@
 /turf/open/misc/dirt/dark{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/graveyard/chapel)
 "uXm" = (
 /obj/structure/chair{
 	desc = "Aw geez, I wonder what the chef's cooking up in there!";
@@ -76226,6 +76249,12 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/atmos)
+"xoJ" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/graveyard/chapel)
 "xpo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -78537,7 +78566,7 @@
 /turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/graveyard/chapel)
 "yaD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -188308,14 +188337,14 @@ vRz
 wMj
 vRz
 iDt
-wkV
-tej
-kNC
-tej
-tej
-tej
-kNC
-tej
+pjs
+sjS
+iXt
+sjS
+sjS
+sjS
+iXt
+sjS
 cNh
 iDt
 iDt
@@ -188566,13 +188595,13 @@ tNA
 tBs
 tBs
 tBs
-iDt
+fxJ
 kOi
 rbZ
 rbZ
 rbZ
 pgo
-iDt
+fxJ
 hNF
 iDt
 iDt
@@ -188830,7 +188859,7 @@ tuk
 ebB
 efM
 pgo
-rcY
+xoJ
 iDt
 scw
 iDt
@@ -189344,7 +189373,7 @@ efM
 uXk
 efM
 awy
-rcY
+xoJ
 iDt
 iDt
 ubd
@@ -189600,8 +189629,8 @@ ebB
 yav
 ebB
 awy
-iDt
-qau
+fxJ
+oXa
 iDt
 xMq
 wrX

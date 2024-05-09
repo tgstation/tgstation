@@ -294,3 +294,6 @@
 	ambience_index = AMBIENCE_SPOOKY
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "graveyard"
+
+/area/icemoon/underground/explored/graveyard/chapel
+	name = "Chapel Graveyard"
