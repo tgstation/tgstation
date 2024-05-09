@@ -76,6 +76,7 @@
 	telecrystal_reward = list(1, 2)
 	target_jobs = list(
 		// Cargo
+		/datum/job/bitrunner,
 		/datum/job/shaft_miner,
 		// Service
 		/datum/job/chaplain,
