@@ -116,3 +116,9 @@
   - rscadd: Diagnostic huds can now see nanite volume.
   flleeppyy:
   - bugfix: spelling mistake in quirk description
+2024-05-09:
+  Absolucy:
+  - bugfix: Dimensional anomalies are once again immobile like they should be.
+  - bugfix: Fixed hollow anomalies "escaping" the anomaly research ruin.
+  Kitsunemitsu:
+  - bugfix: fixed the syndicate and prisoner ID cards being missaligned.

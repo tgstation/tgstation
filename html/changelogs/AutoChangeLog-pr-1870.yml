@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Dimensional anomalies are once again immobile like they should be."
-  - bugfix: "Fixed hollow anomalies \"escaping\" the anomaly research ruin."
