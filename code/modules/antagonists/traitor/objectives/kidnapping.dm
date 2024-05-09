@@ -80,6 +80,7 @@
 
 	target_jobs = list(
 		// Cargo
+		/datum/job/bitrunner,
 		/datum/job/shaft_miner,
 		// Medical
 		/datum/job/paramedic,
