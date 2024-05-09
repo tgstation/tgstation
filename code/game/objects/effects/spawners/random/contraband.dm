@@ -43,13 +43,14 @@
 	name = "armory loot spawner"
 	icon_state = "pistol"
 	loot = list(
-		/obj/item/gun/ballistic/automatic/pistol = 8,
+		/obj/item/gun/ballistic/automatic/pistol/contraband = 8,
 		/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
 		/obj/item/storage/box/syndie_kit/throwing_weapons = 3,
 		/obj/item/grenade/clusterbuster/teargas = 2,
 		/obj/item/grenade/clusterbuster = 2,
-		/obj/item/gun/ballistic/automatic/pistol/deagle,
-		/obj/item/gun/ballistic/revolver/mateba,
+		/obj/item/gun/ballistic/automatic/pistol/deagle/contraband,
+		/obj/item/gun/ballistic/revolver/mateba = 0.9,
+		/obj/item/gun/ballistic/revolver/reverse/mateba = 0.1,
 	)
 
 /obj/effect/spawner/random/contraband/narcotics

@@ -311,3 +311,10 @@
 		user.emote("scream")
 		user.drop_all_held_items()
 		user.Paralyze(80)
+
+/obj/item/gun/ballistic/revolver/reverse/mateba
+	name = /obj/item/gun/ballistic/revolver/syndicate::name
+	desc = /obj/item/gun/ballistic/revolver/syndicate::desc
+	clumsy_check = FALSE
+	icon_state = "mateba"
+
