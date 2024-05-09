@@ -165,7 +165,7 @@
 /area/lavaland/surface/outdoors/unexplored //monsters and ruins spawn here
 	icon_state = "unexplored"
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
-	map_generator = /datum/map_generator/cave_generator/lavaland
+	map_generator = /datum/map_generator/cave_generator/biome/lavaland
 
 /area/lavaland/surface/outdoors/unexplored/danger //megafauna will also spawn here
 	icon_state = "danger"
@@ -173,7 +173,7 @@
 
 /// Same thing as parent, but uses a different map generator for the icemoon ruin that needs it.
 /area/lavaland/surface/outdoors/unexplored/danger/no_ruins
-	map_generator = /datum/map_generator/cave_generator/lavaland/ruin_version
+	map_generator = /datum/map_generator/cave_generator/biome/lavaland/ruin_version
 
 /area/lavaland/surface/outdoors/explored
 	name = "Lavaland Labor Camp"
@@ -219,7 +219,7 @@
 /area/icemoon/surface/outdoors/nospawn/New() // unless you roll forested trait lol
 	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED))
-		map_generator = /datum/map_generator/cave_generator/icemoon/surface/forested
+		map_generator = /datum/map_generator/cave_generator/biome/icemoon/surface/forested
 		area_flags = MOB_SPAWN_ALLOWED | FLORA_ALLOWED//flip this on, the generator has already disabled dangerous fauna
 
 /area/icemoon/surface/outdoors/noteleport // for places like the cursed spring water
@@ -228,7 +228,7 @@
 /area/icemoon/surface/outdoors/noruins // when you want random generation without the chance of getting ruins
 	icon_state = "noruins"
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | CAVES_ALLOWED
-	map_generator =  /datum/map_generator/cave_generator/icemoon/surface/noruins
+	map_generator =  /datum/map_generator/cave_generator/biome/icemoon/surface/noruins
 
 /area/icemoon/surface/outdoors/labor_camp
 	name = "Icemoon Labor Camp"
@@ -240,12 +240,12 @@
 
 /area/icemoon/surface/outdoors/unexplored/rivers // rivers spawn here
 	icon_state = "danger"
-	map_generator = /datum/map_generator/cave_generator/icemoon/surface
+	map_generator = /datum/map_generator/cave_generator/biome/icemoon/surface
 
 /area/icemoon/surface/outdoors/unexplored/rivers/New()
 	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED))
-		map_generator = /datum/map_generator/cave_generator/icemoon/surface/forested
+		map_generator = /datum/map_generator/cave_generator/biome/icemoon/surface/forested
 		area_flags |= MOB_SPAWN_ALLOWED //flip this on, the generator has already disabled dangerous fauna
 
 /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters
@@ -271,14 +271,14 @@
 /area/icemoon/underground/unexplored/no_rivers
 	icon_state = "norivers"
 	area_flags = CAVES_ALLOWED | FLORA_ALLOWED // same rules as "shoreline" turfs since we might need this to pull double-duty
-	map_generator = /datum/map_generator/cave_generator/icemoon
+	map_generator = /datum/map_generator/cave_generator/biome/icemoon
 
 /area/icemoon/underground/unexplored/rivers // rivers spawn here
 	icon_state = "danger"
-	map_generator = /datum/map_generator/cave_generator/icemoon
+	map_generator = /datum/map_generator/cave_generator/biome/icemoon
 
 /area/icemoon/underground/unexplored/rivers/deep
-	map_generator = /datum/map_generator/cave_generator/icemoon/deep
+	map_generator = /datum/map_generator/cave_generator/biome/icemoon/deep
 
 /area/icemoon/underground/unexplored/rivers/deep/shoreline //use this for when you don't want mobs to spawn in certain areas in the "deep" portions. Think adjacent to rivers or station structures.
 	icon_state = "shore"

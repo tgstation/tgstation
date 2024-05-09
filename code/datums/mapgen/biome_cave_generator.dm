@@ -7,40 +7,22 @@
 
 	/// The turf types to replace with a biome-related turf, as an associative list of type = TRUE. Leave empty for all open turfs (but not closed turfs) to be hijacked.
 	var/list/turf/open/turfs_affected_by_biome = list()
-	/// 2D list of all biomes based on heat and humidity combos.
-	var/list/possible_biomes = list(
-		BIOME_LOW_HEAT = list(
-			BIOME_LOW_HUMIDITY = /datum/biome/plains,
-			BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mudlands,
-			BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mudlands,
-			BIOME_HIGH_HUMIDITY = /datum/biome/water
-		),
-		BIOME_LOWMEDIUM_HEAT = list(
-			BIOME_LOW_HUMIDITY = /datum/biome/plains,
-			BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/jungle,
-			BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle,
-			BIOME_HIGH_HUMIDITY = /datum/biome/mudlands
-		),
-		BIOME_HIGHMEDIUM_HEAT = list(
-			BIOME_LOW_HUMIDITY = /datum/biome/plains,
-			BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/plains,
-			BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle/deep,
-			BIOME_HIGH_HUMIDITY = /datum/biome/jungle
-		),
-		BIOME_HIGH_HEAT = list(
-			BIOME_LOW_HUMIDITY = /datum/biome/wasteland,
-			BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/plains,
-			BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle,
-			BIOME_HIGH_HUMIDITY = /datum/biome/jungle/deep
-		)
-	)
+	/// 2D list of all biomes based on heat and humidity combos. Associative by
+	/// `BIOME_X_HEAT` and then by `BIOME_X_HUMIDITY` (i.e.
+	/// `possible_biomes[BIOME_LOW_HEAT][BIOME_LOWMEDIUM_HUMIDITY]`).
+	/// Check /datum/map_generator/cave_generator/biome/jungle for an example
+	/// of how to set it up properly.
+	var/list/possible_biomes = list()
 	/// Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
 
 
 /datum/map_generator/cave_generator/biome/generate_terrain(list/turfs, area/generate_in)
 	if(!(generate_in.area_flags & CAVES_ALLOWED))
-		return
+		return ..()
+
+	if(!length(possible_biomes))
+		return ..()
 
 	var/humidity_seed = rand(0, 50000)
 	var/heat_seed = rand(0, 50000)
@@ -114,6 +96,9 @@
 
 
 /datum/map_generator/cave_generator/biome/populate_terrain(list/turfs, area/generate_in)
+	if(!length(possible_biomes))
+		return ..()
+
 	// Area var pullouts to make accessing in the loop faster
 	var/flora_allowed = (generate_in.area_flags & FLORA_ALLOWED)
 	var/features_allowed = (generate_in.area_flags & FLORA_ALLOWED)
@@ -139,5 +124,33 @@
 	to_chat(world, span_boldannounce("[message]"))
 	log_world(message)
 
+
+/datum/map_generator/cave_generator/biome/jungle
+	possible_biomes = list(
+		BIOME_LOW_HEAT = list(
+			BIOME_LOW_HUMIDITY = /datum/biome/plains,
+			BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mudlands,
+			BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mudlands,
+			BIOME_HIGH_HUMIDITY = /datum/biome/water
+		),
+		BIOME_LOWMEDIUM_HEAT = list(
+			BIOME_LOW_HUMIDITY = /datum/biome/plains,
+			BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/jungle,
+			BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle,
+			BIOME_HIGH_HUMIDITY = /datum/biome/mudlands
+		),
+		BIOME_HIGHMEDIUM_HEAT = list(
+			BIOME_LOW_HUMIDITY = /datum/biome/plains,
+			BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/plains,
+			BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle/deep,
+			BIOME_HIGH_HUMIDITY = /datum/biome/jungle
+		),
+		BIOME_HIGH_HEAT = list(
+			BIOME_LOW_HUMIDITY = /datum/biome/wasteland,
+			BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/plains,
+			BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle,
+			BIOME_HIGH_HUMIDITY = /datum/biome/jungle/deep
+		)
+	)
 
 #undef BIOME_RANDOM_SQUARE_DRIFT
