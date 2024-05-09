@@ -16,6 +16,10 @@ export function IconDisplay(props: Props) {
     return fallback;
   }
 
+  if (icon === 'n/a') {
+    return <Icon name="dumpster-fire" size={2} color="gray" />;
+  }
+
   if (icon_state) {
     return (
       <DmIcon

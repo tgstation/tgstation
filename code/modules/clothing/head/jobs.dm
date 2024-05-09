@@ -246,8 +246,10 @@
 	interaction_flags_click = FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	///prefix our phrases must begin with
 	var/prefix = "go go gadget"
-	///an assoc list of phrase = item (like gun = revolver)
-	var/list/items_by_phrase = list()
+	///an assoc list of regex = item (like regex datum = revolver item)
+	var/list/items_by_regex = list()
+	///A an assoc list of regex = phrase (like regex datum = gun text)
+	var/list/phrases_by_regex = list()
 	///how many gadgets can we hold
 	var/max_items = 4
 	///items above this weight cannot be put in the hat
@@ -258,36 +260,58 @@
 	become_hearing_sensitive(ROUNDSTART_TRAIT)
 	QDEL_NULL(atom_storage)
 
+/obj/item/clothing/head/fedora/inspector_hat/proc/set_prefix(desired_prefix)
+
+	prefix = desired_prefix
+
+	// Regenerated the phrases here.
+	for(var/old_regex in phrases_by_regex)
+		var/old_phrase = phrases_by_regex[old_regex]
+		var/obj/item/old_item = items_by_regex[old_regex]
+		items_by_regex -= old_regex
+		phrases_by_regex -= old_regex
+		set_phrase(old_phrase,old_item)
+
+	return TRUE
+
+/obj/item/clothing/head/fedora/inspector_hat/proc/set_phrase(desired_phrase,obj/item/associated_item)
+
+	var/regex/phrase_regex = regex("[prefix]\[\\s\\W\]+[desired_phrase]","i")
+
+	phrases_by_regex[phrase_regex] = desired_phrase
+	items_by_regex[phrase_regex] = associated_item
+
+	return TRUE
+
 /obj/item/clothing/head/fedora/inspector_hat/examine(mob/user)
 	. = ..()
 	. += span_notice("You can put items inside, and get them out by saying a phrase, or using it in-hand!")
 	. += span_notice("The prefix is <b>[prefix]</b>, and you can change it with alt-click!\n")
-	for(var/phrase in items_by_phrase)
-		var/obj/item/item = items_by_phrase[phrase]
-		. += span_notice("[icon2html(item, user)] You can remove [item] by saying <b>\"[prefix] [phrase]\"</b>!")
+	for(var/found_regex in phrases_by_regex)
+		var/found_phrase = phrases_by_regex[found_regex]
+		var/obj/item/found_item = items_by_regex[found_regex]
+		. += span_notice("[icon2html(found_item, user)] You can remove [found_item] by saying <b>\"[prefix] [found_phrase]\"</b>!")
 
 /obj/item/clothing/head/fedora/inspector_hat/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	var/mob/living/carbon/wearer = loc
 	if(!istype(wearer) || speaker != wearer) //if we are worn
-		return FALSE
+		return
 
 	raw_message = htmlrendertext(raw_message)
-	var/prefix_index = findtext(raw_message, prefix)
-	if(prefix_index != 1)
-		return FALSE
 
-	var/the_phrase = trim_left(replacetext(raw_message, prefix, ""))
-	var/obj/item/result = items_by_phrase[the_phrase]
-	if(!result)
-		return FALSE
-
-	if(wearer.put_in_active_hand(result))
-		wearer.visible_message(span_warning("[src] drops [result] into the hands of [wearer]!"))
-	else
-		balloon_alert(wearer, "cant put in hands!")
-
-	return TRUE
+	for(var/regex/found_regex as anything in phrases_by_regex)
+		if(!found_regex.Find(raw_message))
+			continue
+		var/obj/item/found_item = items_by_regex[found_regex]
+		if(wearer.put_in_hands(found_item))
+			wearer.visible_message(span_warning("[src] drops [found_item] into the hands of [wearer]!"))
+			. = TRUE
+		else
+			balloon_alert(wearer, "can't put in hands!")
+			break
+			
+	return .
 
 /obj/item/clothing/head/fedora/inspector_hat/attackby(obj/item/item, mob/user, params)
 	. = ..()
@@ -299,51 +323,61 @@
 		balloon_alert(user, "too big!")
 		return
 
-	var/input = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
-	if(!input || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-	if(input in items_by_phrase)
-		balloon_alert(user, "already used!")
+	var/desired_phrase = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
+	if(!desired_phrase || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
 	if(item.loc != user || !user.transferItemToLoc(item, src))
 		return
 
-	to_chat(user, span_notice("You install [item] into the [thtotext(contents.len)] slot in [src]."))
+	to_chat(user, span_notice("You install [item] into the [thtotext(contents.len)] slot of [src]."))
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-	items_by_phrase[input] = item
+	set_phrase(desired_phrase,item)
+
+	return TRUE
 
 /obj/item/clothing/head/fedora/inspector_hat/attack_self(mob/user)
 	. = ..()
-	var/phrase = tgui_input_list(user, "What item do you want to remove by phrase?", "Item Removal", items_by_phrase)
-	if(!phrase || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-	user.put_in_inactive_hand(items_by_phrase[phrase])
+	if(!length(items_by_regex))
+		return CLICK_ACTION_BLOCKING
+	var/list/found_items = list()
+	for(var/found_regex in items_by_regex)
+		found_items += items_by_regex[found_regex]
+	var/obj/found_item = tgui_input_list(user, "What item do you want to remove?", "Item Removal", found_items)
+	if(!found_item || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return CLICK_ACTION_BLOCKING
+	user.put_in_inactive_hand(found_item)
 
 /obj/item/clothing/head/fedora/inspector_hat/click_alt(mob/user)
 	var/new_prefix = tgui_input_text(user, "What should be the new prefix?", "Activation prefix", prefix, max_length = 24)
 	if(!new_prefix || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return CLICK_ACTION_BLOCKING
-	prefix = new_prefix
+	set_prefix(new_prefix)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/fedora/inspector_hat/Exited(atom/movable/gone, direction)
 	. = ..()
-	for(var/phrase in items_by_phrase)
-		var/obj/item/result = items_by_phrase[phrase]
-		if(gone == result)
-			items_by_phrase -= phrase
-			return
+	for(var/found_regex in items_by_regex)
+		var/obj/item/found_item = items_by_regex[found_regex]
+		if(gone != found_item)
+			continue
+		items_by_regex -= found_regex
+		phrases_by_regex -= found_regex
+		break
 
 /obj/item/clothing/head/fedora/inspector_hat/atom_destruction(damage_flag)
-	for(var/phrase in items_by_phrase)
-		var/obj/item/result = items_by_phrase[phrase]
-		result.forceMove(drop_location())
-	items_by_phrase = null
+
+	var/atom/atom_location = drop_location()
+	for(var/found_regex in items_by_regex)
+		var/obj/item/result = items_by_regex[found_regex]
+		result.forceMove(atom_location)
+		items_by_regex -= found_regex
+		phrases_by_regex -= found_regex
+
 	return ..()
 
 /obj/item/clothing/head/fedora/inspector_hat/Destroy()
-	QDEL_LIST_ASSOC(items_by_phrase)
+	QDEL_LIST_ASSOC(items_by_regex) //Anything that failed to drop gets deleted.
 	return ..()
 
 //Mime

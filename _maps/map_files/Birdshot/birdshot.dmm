@@ -49319,7 +49319,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer2{
 	dir = 6
 	},
-/obj/machinery/meter,
+/obj/machinery/meter/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
 "qQg" = (
