@@ -145,7 +145,7 @@
 	effectiveness = 40, \
 	)
 	//it's sharp, so it works, but barely.
-	AddComponent(/datum/component/gravedigger, \
+	AddElement(/datum/element/gravedigger, \
 	dig_time = grave_speed, \
 	)
 
@@ -229,7 +229,7 @@
 /obj/item/trench_tool/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	AddComponent(/datum/component/gravedigger, \
+	AddElement(/datum/element/gravedigger, \
 	dig_time = 8 SECONDS, \
 	)
 
