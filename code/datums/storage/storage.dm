@@ -443,11 +443,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * * mob/user - (optional) the user who is inserting the item.
  * * override - see item_insertion_feedback()
  * * force - bypass locked storage up to a certain level. See [code/__DEFINES/storage.dm]
+ * * messages - if TRUE, we will create balloon alerts for the user.
  */
-/datum/storage/proc/attempt_insert(obj/item/to_insert, mob/user, override = FALSE, force = STORAGE_NOT_LOCKED)
+/datum/storage/proc/attempt_insert(obj/item/to_insert, mob/user, override = FALSE, force = STORAGE_NOT_LOCKED, messages = TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	if(!can_insert(to_insert, user, force = force))
+	if(!can_insert(to_insert, user, messages = messages, force = force))
 		return FALSE
 
 	SEND_SIGNAL(parent, COMSIG_STORAGE_STORED_ITEM, to_insert, user, force)

@@ -1,4 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - balance: "Knockdown effects will know consistently disarm, instead of failing to disarm if you're already lying down."

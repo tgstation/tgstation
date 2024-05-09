@@ -182,3 +182,29 @@
   mc-oofert:
   - qol: temporarily soulless (deathmatch, etc) bodies dont appear as soulless on
       medhud
+2024-05-09:
+  00-Steven:
+  - bugfix: Pride pins can be reskinned again with alt-click.
+  AMyriad:
+  - bugfix: Removed stray pixels appearing on certain parts of railing
+  Bisar:
+  - balance: Knockdown effects will know consistently disarm, instead of failing to
+      disarm if you're already lying down.
+  Ghommie:
+  - bugfix: Added the missing  bulwark MOD module and the jawed fishing hook to the
+      black market.
+  GoldenAlpharex:
+  - bugfix: Removed another rogue cable from underneath a disconnected SMES.
+  Jane:
+  - qol: The Coroner's Ritual Knife can now sit upon Med Belts!
+  Melbert:
+  - bugfix: DNA infusing tiers works again
+  - bugfix: Cult can build again
+  - qol: There is now a slight animation to entering a portal or teleporter.
+  - qol: Spies may spawn in less numbers, but rarely may also spawn in more numbers.
+  XElectricX:
+  - qol: Mech drills can auto-mine by walking into rock.
+  jlsnow301:
+  - bugfix: Silicons can set the teleporter destinations again.
+  - bugfix: The quick equip 'E' hotkey shouldn't warn if one of your bags is full
+      anymore
