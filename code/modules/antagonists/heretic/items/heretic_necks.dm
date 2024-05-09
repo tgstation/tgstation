@@ -15,7 +15,6 @@
 	icon_state = "crimson_focus"
 	/// The aura healing component. Used to delete it when taken off.
 	var/datum/component/component
-	var/cult_boosted = FALSE
 
 
 /obj/item/clothing/neck/heretic_focus/crimson_focus/equipped(mob/living/user, slot)
@@ -61,7 +60,9 @@
 
 	if(IS_HERETIC_OR_MONSTER(user))
 		for(var/datum/action/cooldown/spell/spell_action in user.actions)
-			spell_action.cooldown_time *= 1
+			if(spell_action.cooldown_time == initial(spell_action.cooldown_time))
+				return
+			spell_action.cooldown_time *= 2
 	QDEL_NULL(component)
 	user.remove_traits(list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOODY_MESS), REF(src))
 
@@ -72,11 +73,6 @@
 		QDEL_NULL(magic_holder.spells[ENHANCED_BLOODCHARGE])
 	magic_holder?.magic_enhanced = FALSE
 
-/obj/item/clothing/neck/heretic_focus/crimson_focus/proc/buff_empower(mob/user, signal_return_list)
-	SIGNAL_HANDLER
-
-	signal_return_list["limit_data"] += 1
-	signal_return_list["speed_data"] *= 0.5
 
 /obj/item/clothing/neck/heretic_focus/crimson_focus/attack_self(mob/living/user, modifiers)
 	. = ..()

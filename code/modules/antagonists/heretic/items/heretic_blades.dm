@@ -38,8 +38,7 @@
 	return ..()
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
-	if(seek_safety(user))
-		return TRUE
+	seek_safety(user)
 	return ..()
 
 /// Attempts to teleport the passed mob to somewhere safe on the station, if they can use the blade.

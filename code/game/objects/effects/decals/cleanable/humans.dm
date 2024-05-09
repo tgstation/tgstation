@@ -101,7 +101,7 @@
 /obj/effect/decal/cleanable/blood/trails
 	desc = "Looks like a corpse was smeared all over the floor like ketchup. Kinda makes you hungry."
 	random_icon_states = list("trails1", "trails2")
-	icon_state = "trails"
+	icon_state = "trails1"
 	beauty = -50
 	dryname = "dried tracks"
 	drydesc = "Looks like a corpse was smeared all over the floor like ketchup, but it's all dried up and nasty now, ew. You lose some of your appetite."

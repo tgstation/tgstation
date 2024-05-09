@@ -218,16 +218,6 @@
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
 	return ..()
 
-/datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
-	. = ..()
-	ADD_TRAIT(owner.current, TRAIT_MANSUS_TOUCHED, REF(src))
-	RegisterSignal(owner.current, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
-
-/datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
-	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_MANSUS_TOUCHED, REF(src))
-	UnregisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED)
-
 /datum/antagonist/heretic/on_removal()
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
@@ -244,6 +234,8 @@
 	if (!issilicon(our_mob))
 		GLOB.reality_smash_track.add_tracked_mind(owner)
 
+	ADD_TRAIT(owner.current, TRAIT_MANSUS_TOUCHED, REF(src))
+	RegisterSignal(owner.current, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 	RegisterSignals(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(on_spell_cast))
 	RegisterSignal(our_mob, COMSIG_MOB_ITEM_AFTERATTACK, PROC_REF(on_item_afterattack))
 	RegisterSignal(our_mob, COMSIG_MOB_LOGIN, PROC_REF(fix_influence_network))
@@ -257,12 +249,14 @@
 	if (owner in GLOB.reality_smash_track.tracked_heretics)
 		GLOB.reality_smash_track.remove_tracked_mind(owner)
 
+	REMOVE_TRAIT(owner, TRAIT_MANSUS_TOUCHED, REF(src))
 	UnregisterSignal(our_mob, list(
 		COMSIG_MOB_BEFORE_SPELL_CAST,
 		COMSIG_MOB_SPELL_ACTIVATED,
 		COMSIG_MOB_ITEM_AFTERATTACK,
 		COMSIG_MOB_LOGIN,
 		COMSIG_LIVING_POST_FULLY_HEAL,
+		COMSIG_LIVING_CULT_SACRIFICED,
 	))
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
