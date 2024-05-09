@@ -86,14 +86,15 @@
 
 /obj/item/borg/upgrade/rename/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if(.)
-		var/oldname = borg.real_name
-		var/oldkeyname = key_name(borg)
-		borg.custom_name = heldname
-		borg.updatename()
-		if(oldname == borg.real_name)
-			borg.notify_ai(AI_NOTIFICATION_CYBORG_RENAMED, oldname, borg.real_name)
-		usr.log_message("used a cyborg reclassification board to rename [oldkeyname] to [key_name(borg)]", LOG_GAME)
+	if(!.)
+		return .
+	var/oldname = borg.real_name
+	var/oldkeyname = key_name(borg)
+	borg.custom_name = heldname
+	borg.updatename()
+	if(oldname == borg.real_name)
+		borg.notify_ai(AI_NOTIFICATION_CYBORG_RENAMED, oldname, borg.real_name)
+	usr.log_message("used a cyborg reclassification board to rename [oldkeyname] to [key_name(borg)]", LOG_GAME)
 
 /obj/item/borg/upgrade/disablercooler
 	name = "cyborg rapid disabler cooling module"
@@ -102,28 +103,33 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/security)
 	model_flags = BORG_MODEL_SECURITY
+	// We handle this in a custom way
+	allow_duplicates = TRUE
 
 /obj/item/borg/upgrade/disablercooler/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if(.)
-		var/obj/item/gun/energy/disabler/cyborg/T = locate() in borg.model.modules
-		if(!T)
-			to_chat(user, span_warning("There's no disabler in this unit!"))
-			return FALSE
-		if(T.charge_delay <= 2)
-			to_chat(borg, span_warning("A cooling unit is already installed!"))
-			to_chat(user, span_warning("There's no room for another cooling unit!"))
-			return FALSE
+	if(!.)
+		return .
 
-		T.charge_delay = max(2 , T.charge_delay - 4)
+	var/obj/item/gun/energy/disabler/cyborg/disabler = locate() in borg.model.modules
+	if(isnull(disabler))
+		to_chat(user, span_warning("There's no disabler in this unit!"))
+		return FALSE
+	if(disabler.charge_delay <= 2)
+		to_chat(borg, span_warning("A cooling unit is already installed!"))
+		to_chat(user, span_warning("There's no room for another cooling unit!"))
+		return FALSE
+
+	disabler.charge_delay = max(2 , disabler.charge_delay - 4)
 
 /obj/item/borg/upgrade/disablercooler/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if (.)
-		var/obj/item/gun/energy/disabler/cyborg/T = locate() in borg.model.modules
-		if(!T)
-			return FALSE
-		T.charge_delay = initial(T.charge_delay)
+	if(!.)
+		return .
+	var/obj/item/gun/energy/disabler/cyborg/T = locate() in borg.model.modules
+	if(!T)
+		return FALSE
+	T.charge_delay = initial(T.charge_delay)
 
 /obj/item/borg/upgrade/thrusters
 	name = "ion thruster upgrade"
@@ -132,18 +138,20 @@
 
 /obj/item/borg/upgrade/thrusters/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if(.)
-		if(borg.ionpulse)
-			to_chat(user, span_warning("This unit already has ion thrusters installed!"))
-			return FALSE
+	if(!.)
+		return .
+	if(borg.ionpulse)
+		to_chat(user, span_warning("This unit already has ion thrusters installed!"))
+		return FALSE
 
-		borg.ionpulse = TRUE
-		borg.toggle_ionpulse() //Enabled by default
+	borg.ionpulse = TRUE
+	borg.toggle_ionpulse() //Enabled by default
 
 /obj/item/borg/upgrade/thrusters/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if (.)
-		borg.ionpulse = FALSE
+	if(!.)
+		return .
+	borg.ionpulse = FALSE
 
 /obj/item/borg/upgrade/diamond_drill
 	name = "mining cyborg diamond drill"
@@ -207,20 +215,22 @@
 
 /obj/item/borg/upgrade/syndicate/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if(.)
-		if(borg.emagged)
-			return FALSE
+	if(!.)
+		return .
+	if(borg.emagged)
+		return FALSE
 
-		borg.SetEmagged(TRUE)
-		borg.logevent("WARN: hardware installed with missing security certificate!") //A bit of fluff to hint it was an illegal tech item
-		borg.logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") //random eight digit hex value. Two are used because rand(1,4294967295) throws an error
+	borg.SetEmagged(TRUE)
+	borg.logevent("WARN: hardware installed with missing security certificate!") //A bit of fluff to hint it was an illegal tech item
+	borg.logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") //random eight digit hex value. Two are used because rand(1,4294967295) throws an error
 
-		return TRUE
+	return TRUE
 
 /obj/item/borg/upgrade/syndicate/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if (.)
-		borg.SetEmagged(FALSE)
+	if(!.)
+		return .
+	borg.SetEmagged(FALSE)
 
 /obj/item/borg/upgrade/lavaproof
 	name = "mining cyborg lavaproof chassis"
@@ -233,13 +243,15 @@
 
 /obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if(.)
-		borg.add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), type)
+	if(!.)
+		return .
+	borg.add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), type)
 
 /obj/item/borg/upgrade/lavaproof/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if (.)
-		borg.remove_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), type)
+	if(!.)
+		return .
+	borg.remove_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), type)
 
 /obj/item/borg/upgrade/selfrepair
 	name = "self-repair module"
@@ -257,17 +269,19 @@
 
 /obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if(.)
-		icon_state = "selfrepair_off"
-		toggle_action = new /datum/action/item_action/toggle(src)
-		toggle_action.Grant(borg)
+	if(!.)
+		return .
+	icon_state = "selfrepair_off"
+	toggle_action = new /datum/action/item_action/toggle(src)
+	toggle_action.Grant(borg)
 
 /obj/item/borg/upgrade/selfrepair/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if (.)
-		toggle_action.Remove(borg)
-		QDEL_NULL(toggle_action)
-		deactivate_sr()
+	if(!.)
+		return .
+	toggle_action.Remove(borg)
+	QDEL_NULL(toggle_action)
+	deactivate_sr()
 
 /obj/item/borg/upgrade/selfrepair/ui_action_click()
 	if(on)
@@ -350,15 +364,17 @@
 
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if(.)
-		for(var/obj/item/reagent_containers/borghypo/medical/hypo in borg.model.modules)
-			hypo.upgrade_hypo()
+	if(!.)
+		return .
+	for(var/obj/item/reagent_containers/borghypo/medical/hypo in borg.model.modules)
+		hypo.upgrade_hypo()
 
 /obj/item/borg/upgrade/hypospray/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if (.)
-		for(var/obj/item/reagent_containers/borghypo/medical/hypo in borg.model.modules)
-			hypo.remove_hypo_upgrade()
+	if(!.)
+		return .
+	for(var/obj/item/reagent_containers/borghypo/medical/hypo in borg.model.modules)
+		hypo.remove_hypo_upgrade()
 
 /obj/item/borg/upgrade/hypospray/expanded
 	name = "medical cyborg expanded hypospray"
@@ -373,21 +389,23 @@
 
 /obj/item/borg/upgrade/piercing_hypospray/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if(.)
-		var/found_hypo = FALSE
-		for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
-			hypo.bypass_protection = TRUE
-			found_hypo = TRUE
+	if(!.)
+		return .
+	var/found_hypo = FALSE
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+		hypo.bypass_protection = TRUE
+		found_hypo = TRUE
 
-		if(!found_hypo)
-			to_chat(user, span_warning("This unit is already equipped with a piercing hypospray upgrade!")) //check to see if we already have this module
-			return FALSE
+	if(!found_hypo)
+		to_chat(user, span_warning("This unit is already equipped with a piercing hypospray upgrade!")) //check to see if we already have this module
+		return FALSE
 
 /obj/item/borg/upgrade/piercing_hypospray/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if (.)
-		for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
-			hypo.bypass_protection = initial(hypo.bypass_protection)
+	if(!.)
+		return .
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+		hypo.bypass_protection = initial(hypo.bypass_protection)
 
 /obj/item/borg/upgrade/surgery_omnitool
 	name = "cyborg surgical omni-tool upgrade"
@@ -401,7 +419,7 @@
 /obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/cyborg, user = usr)
 	. = ..()
 	if(!.)
-		return FALSE
+		return .
 	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade in cyborg.model.modules)
 		if(omnitool_upgrade.upgraded)
 			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
@@ -412,7 +430,7 @@
 /obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, user = usr)
 	. = ..()
 	if(!.)
-		return FALSE
+		return .
 	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
 		omnitool.downgrade_omnitool()
 
@@ -428,7 +446,7 @@
 /obj/item/borg/upgrade/engineering_omnitool/action(mob/living/silicon/robot/cyborg, user = usr)
 	. = ..()
 	if(!.)
-		return FALSE
+		return .
 	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool_upgrade in cyborg.model.modules)
 		if(omnitool_upgrade.upgraded)
 			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
@@ -439,7 +457,7 @@
 /obj/item/borg/upgrade/engineering_omnitool/deactivate(mob/living/silicon/robot/cyborg, user = usr)
 	. = ..()
 	if(!.)
-		return FALSE
+		return .
 	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
 		omnitool.downgrade_omnitool()
 
@@ -456,11 +474,12 @@
 
 /obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if(.)
-		var/obj/item/borg/upgrade/defib/backpack/defib_pack = locate() in borg //If a full defib unit was used to upgrade prior, we can just pop it out now and replace
-		if(defib_pack)
-			defib_pack.deactivate(borg, user)
-			to_chat(user, span_notice("The defibrillator pops out of the chassis as the compact upgrade installs."))
+	if(!.)
+		return .
+	var/obj/item/borg/upgrade/defib/backpack/defib_pack = locate() in borg //If a full defib unit was used to upgrade prior, we can just pop it out now and replace
+	if(defib_pack)
+		defib_pack.deactivate(borg, user)
+		to_chat(user, span_notice("The defibrillator pops out of the chassis as the compact upgrade installs."))
 
 ///A version of the above that also acts as a holder of an actual defibrillator item used in place of the upgrade chip.
 /obj/item/borg/upgrade/defib/backpack
@@ -468,7 +487,7 @@
 
 /obj/item/borg/upgrade/defib/backpack/Initialize(mapload, obj/item/defibrillator/defib)
 	. = ..()
-	if(!defib)
+	if(isnull(defib))
 		defib = new /obj/item/defibrillator
 	defib_instance = defib
 	name = defib_instance.name
@@ -488,8 +507,9 @@
 
 /obj/item/borg/upgrade/defib/backpack/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if(.)
-		defib_instance?.forceMove(borg.drop_location()) // [on_defib_instance_qdel_or_moved()] handles the rest.
+	if(!.)
+		return .
+	defib_instance?.forceMove(borg.drop_location()) // [on_defib_instance_qdel_or_moved()] handles the rest.
 
 /obj/item/borg/upgrade/processor
 	name = "medical cyborg surgical processor"
@@ -504,25 +524,27 @@
 	items_to_add = list(/obj/item/surgical_processor)
 
 /obj/item/borg/upgrade/ai
-	name = "B.O.borg.I.S. module"
+	name = "B.O.R.I.S. module"
 	desc = "Bluespace Optimized Remote Intelligence Synchronization. An uplink device which takes the place of an MMI in cyborg endoskeletons, creating a robotic shell controlled by an AI."
 	icon_state = "boris"
 
 /obj/item/borg/upgrade/ai/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if(.)
-		if(borg.key) //You cannot replace a player unless the key is completely removed.
-			to_chat(user, span_warning("Intelligence patterns detected in this [borg.braintype]. Aborting."))
-			return FALSE
+	if(!.)
+		return .
+	if(borg.key) //You cannot replace a player unless the key is completely removed.
+		to_chat(user, span_warning("Intelligence patterns detected in this [borg.braintype]. Aborting."))
+		return FALSE
 
-		borg.make_shell(src)
+	borg.make_shell(src)
 
 /obj/item/borg/upgrade/ai/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if (.)
-		if(borg.shell)
-			borg.undeploy()
-			borg.notify_ai(AI_NOTIFICATION_AI_SHELL)
+	if(!. || !borg.shell)
+		return .
+
+	borg.undeploy()
+	borg.notify_ai(AI_NOTIFICATION_AI_SHELL)
 
 /obj/item/borg/upgrade/expand
 	name = "borg expander"
@@ -558,10 +580,11 @@
 
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if (.)
-		if (borg.hasExpanded)
-			borg.hasExpanded = FALSE
-			borg.update_transform(0.5)
+	if(!.)
+		return .
+	if (borg.hasExpanded)
+		borg.hasExpanded = FALSE
+		borg.update_transform(0.5)
 
 /obj/item/borg/upgrade/rped
 	name = "engineering cyborg RPED"
@@ -612,18 +635,20 @@
 
 /obj/item/borg/upgrade/pinpointer/action(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if(.)
-		crew_monitor = new /datum/action/item_action/crew_monitor(src)
-		crew_monitor.Grant(borg)
-		icon_state = "scanner"
+	if(!.)
+		return .
+	crew_monitor = new /datum/action/item_action/crew_monitor(src)
+	crew_monitor.Grant(borg)
+	icon_state = "scanner"
 
 
 /obj/item/borg/upgrade/pinpointer/deactivate(mob/living/silicon/robot/borg, user = usr)
 	. = ..()
-	if (.)
-		icon_state = "pinpointer_crew"
-		crew_monitor.Remove(borg)
-		QDEL_NULL(crew_monitor)
+	if(!.)
+		return .
+	icon_state = "pinpointer_crew"
+	crew_monitor.Remove(borg)
+	QDEL_NULL(crew_monitor)
 
 /obj/item/borg/upgrade/pinpointer/ui_action_click()
 	if(..())
