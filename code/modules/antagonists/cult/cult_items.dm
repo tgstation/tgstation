@@ -127,12 +127,12 @@ Striking a noncultist, however, will tear their flesh."}
 	light_color = COLOR_BLACK
 	light_system = OVERLAY_LIGHT
 	light_range = 4
-	// holder for the actual action when created.
+	/// holder for the actual action when created.
 	var/datum/action/cooldown/spell/path_wielder_action
 	var/mob/living/trapped_entity
-	// The heretic path that the variable below uses to index abilities. Assigned when the heretic is ensouled.
+	/// The heretic path that the variable below uses to index abilities. Assigned when the heretic is ensouled.
 	var/heretic_path
-	// Nested static list used to index abilities and names.
+	/// Nested static list used to index abilities and names.
 	var/static/list/heretic_paths_to_haunted_sword_abilities = list(
 	// Ash
 	PATH_ASH = list(
@@ -727,8 +727,8 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/proteon_orb/examine(mob/user)
 	. = ..()
 	if(!IS_CULTIST(user) && isliving(user))
-		var/mob/living/luser = user
-		luser.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+		var/mob/living/living_user = user
+		living_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 		. += span_danger("It hurts just to look at it. Better keep away.")
 	else
 		. += span_cult("It can be used to create a gateway to Nar'Sie's domain, which will summon weak, sentient constructs over time.")

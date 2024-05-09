@@ -17,7 +17,7 @@
 
 /obj/structure/destructible/cult/Destroy()
 	cult_team = null
-	. = ..()
+	return ..()
 
 
 /obj/structure/destructible/cult/on_constructed(mob/builder)

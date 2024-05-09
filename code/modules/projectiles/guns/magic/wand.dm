@@ -257,9 +257,7 @@
 	desc = "It's not just a stick, it's a MAGIC stick?"
 	ammo_type = /obj/item/ammo_casing/magic/nothing
 
-/////////////////////////////////////
-//WAND OF DEBUG
-/////////////////////////////////////
+// Wand of debugging
 
 #ifdef TESTING
 

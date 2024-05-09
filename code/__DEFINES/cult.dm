@@ -9,7 +9,7 @@
 #define RUNE_COLOR_SUMMON COLOR_VIBRANT_LIME
 
 //blood magic
-// Cultists can get up to 5 spell slots. This define is the maximum number possible.
+/// The maximum number of cult spell slots each cultist is allowed to scribe at once.
 #define ENHANCED_BLOODCHARGE 5
 #define MAX_BLOODCHARGE 4
 #define RUNELESS_MAX_BLOODCHARGE 1
@@ -30,7 +30,7 @@
 #define THEME_CULT "cult"
 #define THEME_WIZARD "wizard"
 #define THEME_HOLY "holy"
-// Only used for heretic Harvesters, gotten from sacrificing cult
+/// Only used for heretic Harvesters, obtained from sacrificing cultists
 #define THEME_HERETIC "heretic"
 
 /// Defines for cult item_dispensers.

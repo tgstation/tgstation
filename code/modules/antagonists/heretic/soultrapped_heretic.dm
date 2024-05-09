@@ -4,7 +4,7 @@
 	roundend_category = "Heretics"
 	antagpanel_category = "Heretic"
 	job_rank = ROLE_HERETIC
-	antag_moodlet = /datum/mood_event/fallen_changeling
+	antag_moodlet = /datum/mood_event/soultrapped_heretic
 	antag_hud_name = "heretic"
 
 // Will never show up because they're shades inside a sword
