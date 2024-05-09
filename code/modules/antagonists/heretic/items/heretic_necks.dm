@@ -13,7 +13,7 @@
 	name = "Crimson Focus"
 	desc = "A blood-red focusing glass that provides a link to the world beyond, and worse. Its eye is constantly twitching and gazing in all directions. It almost seems to be silently screaming..."
 	icon_state = "crimson_focus"
-	// The aura healing component. Used to delete it when taken off.
+	/// The aura healing component. Used to delete it when taken off.
 	var/datum/component/component
 	var/cult_boosted = FALSE
 

@@ -279,8 +279,8 @@
 /obj/structure/spawner/sentient/proteon_spawner/examine(mob/user)
 	. = ..()
 	if(!IS_CULTIST(user) && isliving(user))
-		var/mob/living/luser = user
-		luser.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15)
+		var/mob/living/living_user = user
+		living_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15)
 		. += span_danger("The voices of the damned echo relentlessly in your mind, continously rebounding on the walls of your self the more you focus on [src]. Your head pounds, better keep away...")
 	else
 		. += span_cult("The gateway will create one weak proteon construct every [spawn_time * 0.1] seconds, up to a total of [max_mobs], that may be controlled by the spirits of the dead.")

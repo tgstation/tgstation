@@ -24,6 +24,7 @@
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	var/after_use_message = ""
 
+/// Checks if the passed mob can use this blade without being stunned
 /obj/item/melee/sickly_blade/proc/check_usability(mob/living/user)
 	return IS_HERETIC_OR_MONSTER(user)
 
@@ -41,6 +42,7 @@
 		return TRUE
 	return ..()
 
+/// Attempts to teleport the passed mob to somewhere safe on the station, if they can use the blade.
 /obj/item/melee/sickly_blade/proc/seek_safety(mob/user)
 	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
 	if(check_usability(user))
@@ -195,7 +197,7 @@
 /obj/item/melee/sickly_blade/cursed/seek_safety(mob/user, secondary_attack = FALSE)
 	if(IS_CULTIST(user) && !secondary_attack)
 		return FALSE
-	..()
+	return ..()
 
 /obj/item/melee/sickly_blade/cursed/check_usability(mob/living/user)
 	if(IS_HERETIC_OR_MONSTER(user) || IS_CULTIST(user))
