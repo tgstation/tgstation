@@ -270,7 +270,7 @@
 	base_icon_state = "shrinkwand"
 	fire_sound = 'sound/magic/staff_shrink.ogg'
 	max_charges = 10 //10, 5, 5, 4
-	no_den_usage = 1
+	no_den_usage = TRUE
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/gun/magic/wand/shrink/zap_self(mob/living/user)

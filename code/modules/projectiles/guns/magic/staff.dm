@@ -330,7 +330,7 @@
 	inhand_icon_state = "staff"
 	max_charges = 10 // slightly more/faster charges since this will be used on walls and such
 	recharge_rate = 5
-	no_den_usage = 1
+	no_den_usage = TRUE
 	school = SCHOOL_TRANSMUTATION
 	slot_flags = NONE //too small to wear on your back
 	w_class = WEIGHT_CLASS_NORMAL //but small enough for a bag
