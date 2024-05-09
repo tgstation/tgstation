@@ -1,4 +1,0 @@
-author: "AMyriad"
-delete-after: True
-changes:
-  - bugfix: "Removed stray pixels appearing on certain parts of railing"
