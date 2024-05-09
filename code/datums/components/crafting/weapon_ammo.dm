@@ -71,8 +71,8 @@
 	category = CAT_WEAPON_AMMO
 
 /datum/crafting_recipe/improvisedslug
-	name = "Improvised Shotgun Shell"
-	result = /obj/item/ammo_casing/shotgun/improvised
+	name = "Junk Shell"
+	result = /obj/effect/spawner/random/junk_shell
 	reqs = list(
 		/obj/item/stack/sheet/iron = 2,
 		/obj/item/stack/cable_coil = 1,
