@@ -116,6 +116,6 @@
 	var/list/lockers = list()
 	for(var/obj/structure/closet/closet in exposed_turf.contents)
 		lockers += closet
-	if(!length(lockers))
+	if(!lockers.len)
 		return
-	GLOB.eigenstate_manager.create_new_link(lockers)
+	GLOB.eigenstate_manager.create_new_link(lockers, subtle = FALSE)

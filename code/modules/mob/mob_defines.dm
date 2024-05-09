@@ -79,9 +79,6 @@
 	var/computer_id = null
 	var/list/logging = list()
 
-	/// The machine the mob is interacting with (this is very bad old code btw)
-	var/obj/machinery/machine = null
-
 	/// Tick time the mob can next move
 	var/next_move = null
 

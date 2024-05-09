@@ -4,7 +4,7 @@
 /// Will deal more damage the more people are present.
 /datum/component/damage_aura
 	/// The range of which to damage
-	var/range
+	var/range = 5
 
 	/// Whether or not you must be a visible object of the parent
 	var/requires_visibility = TRUE
@@ -43,7 +43,7 @@
 	COOLDOWN_DECLARE(last_damage_effect_time)
 
 /datum/component/damage_aura/Initialize(
-	range,
+	range = 5,
 	requires_visibility = TRUE,
 	brute_damage = 0,
 	burn_damage = 0,
@@ -59,7 +59,7 @@
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSaura, src)
 
 	src.range = range
 	src.requires_visibility = requires_visibility
@@ -75,7 +75,7 @@
 	src.current_owner = WEAKREF(current_owner)
 
 /datum/component/damage_aura/Destroy(force)
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSaura, src)
 	return ..()
 
 /// The requirements for the mob to be effected by the damage aura.
@@ -102,7 +102,15 @@
 	if (should_show_effect)
 		COOLDOWN_START(src, last_damage_effect_time, DAMAGE_EFFECT_COOLDOWN)
 
-	for (var/mob/living/candidate in (requires_visibility ? view(range, parent) : range(range, parent)))
+	var/list/to_damage = list()
+	if(requires_visibility)
+		for(var/mob/living/candidate in view(range, parent))
+			to_damage += candidate
+	else
+		for(var/mob/living/candidate in range(range, parent))
+			to_damage += candidate
+
+	for (var/mob/living/candidate as anything in to_damage)
 		var/mob/living/owner = current_owner?.resolve()
 		if (owner && owner == candidate)
 			owner_effect(owner, seconds_per_tick)

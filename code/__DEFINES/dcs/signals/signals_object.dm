@@ -448,7 +448,10 @@
 	/// Prevents click from happening.
 	#define COMPONENT_CANCEL_EQUIPMENT_CLICK (1<<0)
 
+///from base of /obj/item/attack(): (mob/living, mob/living, params)
 #define COMSIG_ITEM_ATTACK "item_attack"
+///from base of /obj/item/attack(): (mob/living, mob/living, params)
+#define COMSIG_ITEM_POST_ATTACK "item_post_attack" // called only if the attack was executed
 ///from base of obj/item/attack_self(): (/mob)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 //from base of obj/item/attack_self_secondary(): (/mob)
@@ -472,8 +475,6 @@
 	#define COMPONENT_AFTERATTACK_PROCESSED_ITEM (1<<0)
 ///from base of obj/item/afterattack_secondary(): (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_ITEM_AFTERATTACK_SECONDARY "item_afterattack_secondary"
-///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
-#define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"
 ///from base of obj/item/embedded(): (atom/target, obj/item/bodypart/part)
 #define COMSIG_ITEM_EMBEDDED "item_embedded"
 ///from base of datum/component/embedded/safeRemove(): (mob/living/carbon/victim)

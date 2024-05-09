@@ -430,6 +430,7 @@
 		return
 
 	location.ClearWet()
+	location.temperature = T20C
 	if(location.air)
 		var/datum/gas_mixture/air = location.air
 		air.temperature = T20C

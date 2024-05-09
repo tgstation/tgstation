@@ -163,10 +163,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	stored.color = colorC
 	stored.update_appearance()
 
-/obj/structure/pipe_cleaner/AltClick(mob/living/user)
-	if(!user.can_perform_action(src))
-		return
+/obj/structure/pipe_cleaner/click_alt(mob/living/user)
 	cut_pipe_cleaner(user)
+	return CLICK_ACTION_SUCCESS
 
 ///////////////////////////////////////////////
 // The pipe cleaner coil object, used for laying pipe cleaner

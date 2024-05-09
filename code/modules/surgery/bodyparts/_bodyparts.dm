@@ -165,8 +165,8 @@
 
 	/// Type of an attack from this limb does. Arms will do punches, Legs for kicks, and head for bites. (TO ADD: tactical chestbumps)
 	var/attack_type = BRUTE
-	/// the verb used for an unarmed attack when using this limb, such as arm.unarmed_attack_verb = punch
-	var/unarmed_attack_verb = "bump"
+	/// the verbs used for an unarmed attack when using this limb, such as arm.unarmed_attack_verbs = list("punch")
+	var/list/unarmed_attack_verbs = list("bump")
 	/// if we have a special attack verb for hitting someone who is grappled by us, it goes here.
 	var/grappled_attack_verb
 	/// what visual effect is used when this limb is used to strike someone.
@@ -746,13 +746,13 @@
 	if(owner == new_owner)
 		return FALSE //`null` is a valid option, so we need to use a num var to make it clear no change was made.
 
-	SEND_SIGNAL(src, COMSIG_BODYPART_CHANGED_OWNER, new_owner, owner)
-
 	if(owner)
 		. = owner //return value is old owner
 		clear_ownership(owner)
 	if(new_owner)
 		apply_ownership(new_owner)
+
+	SEND_SIGNAL(src, COMSIG_BODYPART_CHANGED_OWNER, new_owner, owner)
 
 	refresh_bleed_rate()
 	return .

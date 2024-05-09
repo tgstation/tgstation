@@ -360,23 +360,30 @@
 /obj/item/storage/bag/tray/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
-	atom_storage.set_holdable(list(
-		/obj/item/clothing/mask/cigarette,
-		/obj/item/food,
-		/obj/item/kitchen,
-		/obj/item/lighter,
-		/obj/item/organ,
-		/obj/item/plate,
-		/obj/item/reagent_containers/condiment,
-		/obj/item/reagent_containers/cup,
-		/obj/item/rollingpaper,
-		/obj/item/storage/box/gum,
-		/obj/item/storage/box/matches,
-		/obj/item/storage/fancy,
-		/obj/item/trash,
-	)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Food Containers, Food Trash, Organs, Tobacco Products, Lighters, and Kitchen Tools.
+	atom_storage.set_holdable(
+		can_hold_list = list(
+			/obj/item/clothing/mask/cigarette,
+			/obj/item/food,
+			/obj/item/kitchen,
+			/obj/item/lighter,
+			/obj/item/organ,
+			/obj/item/plate,
+			/obj/item/reagent_containers/condiment,
+			/obj/item/reagent_containers/cup,
+			/obj/item/rollingpaper,
+			/obj/item/storage/box/gum,
+			/obj/item/storage/box/matches,
+			/obj/item/storage/fancy,
+			/obj/item/trash,
+		),
+		cant_hold_list = list(
+			/obj/item/plate/oven_tray,
+			/obj/item/reagent_containers/cup/soup_pot,
+		),
+	) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Food Containers, Food Trash, Organs, Tobacco Products, Lighters, and Kitchen Tools.
 	atom_storage.insert_preposition = "on"
-	atom_storage.max_slots = 7
+	atom_storage.max_slots = 8
+	atom_storage.max_total_storage = 16
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -399,7 +406,7 @@
 
 /obj/item/storage/bag/tray/proc/do_scatter(obj/item/tray_item)
 	var/delay = rand(2,4)
-	var/datum/move_loop/loop = SSmove_manager.move_rand(tray_item, list(NORTH,SOUTH,EAST,WEST), delay, timeout = rand(1, 2) * delay, flags = MOVEMENT_LOOP_START_FAST)
+	var/datum/move_loop/loop = GLOB.move_manager.move_rand(tray_item, list(NORTH,SOUTH,EAST,WEST), delay, timeout = rand(1, 2) * delay, flags = MOVEMENT_LOOP_START_FAST)
 	//This does mean scattering is tied to the tray. Not sure how better to handle it
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(change_speed))
 
@@ -460,9 +467,6 @@
 		/obj/item/reagent_containers/syringe,
 	))
 
-/*
- *  Biowaste bag (mostly for virologists)
- */
 
 /obj/item/storage/bag/bio
 	name = "bio bag"

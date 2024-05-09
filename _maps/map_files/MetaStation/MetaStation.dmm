@@ -945,8 +945,6 @@
 /area/station/command/heads_quarters/hos)
 "atf" = (
 /obj/structure/table/glass,
-/obj/item/clothing/gloves/latex,
-/obj/item/surgical_drapes,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -5051,12 +5049,6 @@
 /area/station/security/execution/education)
 "bMS" = (
 /obj/structure/table/glass,
-/obj/item/scalpel{
-	pixel_y = 12
-	},
-/obj/item/circular_saw,
-/obj/item/blood_filter,
-/obj/item/bonesetter,
 /obj/machinery/button/door/directional/south{
 	id = "main_surgery";
 	name = "privacy shutters control"
@@ -9498,12 +9490,10 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "dyq" = (
 /obj/structure/table/glass,
-/obj/item/retractor,
-/obj/item/hemostat,
-/obj/item/cautery,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/status_display/evac/directional/west,
 /obj/machinery/digital_clock/directional/south,
+/obj/item/surgery_tray/full,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "dyr" = (
@@ -14256,8 +14246,6 @@
 /area/station/medical/medbay/central)
 "fiK" = (
 /obj/structure/table/glass,
-/obj/item/clothing/gloves/latex,
-/obj/item/surgical_drapes,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
@@ -14701,11 +14689,9 @@
 /area/station/ai_monitored/aisat/exterior)
 "fpg" = (
 /obj/structure/table/glass,
-/obj/item/retractor,
-/obj/item/hemostat,
-/obj/item/cautery,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/status_display/evac/directional/west,
+/obj/item/surgery_tray/full,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "fpj" = (
@@ -24296,9 +24282,6 @@
 /obj/structure/table/glass,
 /obj/machinery/reagentgrinder{
 	pixel_y = 8
-	},
-/obj/item/toy/figure/virologist{
-	pixel_x = -8
 	},
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /obj/machinery/light/small/directional/south,
@@ -41390,7 +41373,6 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
-/obj/effect/landmark/start/virologist,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -51737,7 +51719,6 @@
 "syT" = (
 /obj/structure/cable,
 /obj/structure/chair/office/light,
-/obj/effect/landmark/start/virologist,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -55525,12 +55506,6 @@
 /area/station/medical/virology)
 "tOT" = (
 /obj/structure/table/glass,
-/obj/item/scalpel{
-	pixel_y = 12
-	},
-/obj/item/circular_saw,
-/obj/item/blood_filter,
-/obj/item/bonesetter,
 /obj/machinery/button/door/directional/north{
 	id = "main_surgery";
 	name = "privacy shutters control"
@@ -55922,7 +55897,7 @@
 /turf/open/floor/carpet,
 /area/station/service/chapel/funeral)
 "tVC" = (
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/super/full,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/flasher/directional/north{

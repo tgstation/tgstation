@@ -98,7 +98,7 @@
 	SIGNAL_HANDLER
 	mobility_flags &= ~MOBILITY_MOVE
 	if(living_flags & MOVES_ON_ITS_OWN)
-		SSmove_manager.stop_looping(src) //stop mid walk //This is also really dumb
+		GLOB.move_manager.stop_looping(src) //stop mid walk //This is also really dumb
 
 /// Called when [TRAIT_IMMOBILIZED] is removed from the mob.
 /mob/living/proc/on_immobilized_trait_loss(datum/source)
@@ -157,7 +157,6 @@
 /mob/living/proc/on_ui_blocked_trait_gain(datum/source)
 	SIGNAL_HANDLER
 	mobility_flags &= ~(MOBILITY_UI)
-	unset_machine()
 	update_mob_action_buttons()
 
 /// Called when [TRAIT_UI_BLOCKED] is removed from the mob.

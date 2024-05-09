@@ -20,6 +20,7 @@
 	light_range = 2
 	light_power = 2
 	light_on = FALSE
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	var/status = FALSE
 	var/lit = FALSE //on or off
 	var/operating = FALSE//cooldown
@@ -158,12 +159,15 @@
 /obj/item/flamethrower/attack_self(mob/user)
 	toggle_igniter(user)
 
-/obj/item/flamethrower/AltClick(mob/user)
-	if(ptank && isliving(user) && user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		user.put_in_hands(ptank)
-		ptank = null
-		to_chat(user, span_notice("You remove the plasma tank from [src]!"))
-		update_appearance()
+/obj/item/flamethrower/click_alt(mob/user)
+	if(isnull(ptank))
+		return NONE
+
+	user.put_in_hands(ptank)
+	ptank = null
+	to_chat(user, span_notice("You remove the plasma tank from [src]!"))
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/flamethrower/examine(mob/user)
 	. = ..()
@@ -219,10 +223,6 @@
 		sleep(0.1 SECONDS)
 		previousturf = T
 	operating = FALSE
-	for(var/mob/M in viewers(1, loc))
-		if((M.client && M.machine == src))
-			attack_self(M)
-
 
 /obj/item/flamethrower/proc/default_ignite(turf/target, release_amount = 0.05)
 	//TODO: DEFERRED Consider checking to make sure tank pressure is high enough before doing this...

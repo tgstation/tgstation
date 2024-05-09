@@ -76,7 +76,7 @@ effective or pretty fucking useless.
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
 
-/obj/item/healthanalyzer/rad_laser/interact_with_atom(atom/interacting_with, mob/living/user)
+/obj/item/healthanalyzer/rad_laser/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!stealth || !irradiate)
 		. = ..()
 

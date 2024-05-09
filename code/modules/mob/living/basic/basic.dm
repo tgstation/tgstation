@@ -121,6 +121,7 @@
 		return
 	apply_atmos_requirements(mapload)
 	apply_temperature_requirements(mapload)
+	apply_target_randomisation()
 
 /mob/living/basic/proc/on_ssair_init(datum/source)
 	SIGNAL_HANDLER
@@ -141,6 +142,11 @@
 	if((unsuitable_cold_damage == 0 && unsuitable_heat_damage == 0) || (minimum_survivable_temperature <= 0 && maximum_survivable_temperature >= INFINITY))
 		return
 	AddElement(/datum/element/body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage, mapload)
+
+/mob/living/basic/proc/apply_target_randomisation()
+	if (basic_mob_flags & PRECISE_ATTACK_ZONES)
+		return
+	AddElement(/datum/element/attack_zone_randomiser)
 
 /mob/living/basic/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()

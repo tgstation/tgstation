@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Medbots can no longer be used as especially large golden ID cards"

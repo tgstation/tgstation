@@ -58,8 +58,6 @@
 		return
 	. = ..()
 
-/obj/structure/chair/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 ///allows each chair to request the electrified_buckle component with overlays that dont look ridiculous
 /obj/structure/chair/proc/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
@@ -436,6 +434,8 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool/bar)
 	buildstacktype = /obj/item/stack/sheet/bronze
 	buildstackamount = 1
 	item_chair = null
+	interaction_flags_click = NEED_DEXTERITY
+	/// Total rotations made
 	var/turns = 0
 
 /obj/structure/chair/bronze/Initialize(mapload)
@@ -453,10 +453,8 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool/bar)
 	if(turns >= 8)
 		STOP_PROCESSING(SSfastprocess, src)
 
-/obj/structure/chair/bronze/AltClick(mob/user)
+/obj/structure/chair/bronze/click_alt(mob/user)
 	turns = 0
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return
 	if(!(datum_flags & DF_ISPROCESSING))
 		user.visible_message(span_notice("[user] spins [src] around, and the last vestiges of Ratvarian technology keeps it spinning FOREVER."), \
 		span_notice("Automated spinny chairs. The pinnacle of ancient Ratvarian technology."))
@@ -465,6 +463,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool/bar)
 		user.visible_message(span_notice("[user] stops [src]'s uncontrollable spinning."), \
 		span_notice("You grab [src] and stop its wild spinning."))
 		STOP_PROCESSING(SSfastprocess, src)
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/chair/mime
 	name = "invisible chair"
@@ -473,11 +472,11 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool/bar)
 	icon_state = null
 	buildstacktype = null
 	item_chair = null
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
+	obj_flags = parent_type::obj_flags | NO_DEBRIS_AFTER_DECONSTRUCTION
 	alpha = 0
 
 /obj/structure/chair/mime/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	return ITEM_INTERACT_BLOCKING
+	return NONE
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)
 	M.pixel_y += 5

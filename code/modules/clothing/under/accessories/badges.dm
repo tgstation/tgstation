@@ -172,7 +172,7 @@
 		display = span_notice("The dogtag is all scratched up.")
 
 /obj/item/clothing/accessory/dogtag/borg_ready
-	name = "Pre-Approved Cyborg Cantidate dogtag"
+	name = "Pre-Approved Cyborg Candidate dogtag"
 	display = "This employee has been screened for negative mental traits to an acceptable level of accuracy, and is approved for the NT Cyborg program as an alternative to medical resuscitation."
 
 /// Reskins for the pride pin accessory, mapped by display name to icon state
