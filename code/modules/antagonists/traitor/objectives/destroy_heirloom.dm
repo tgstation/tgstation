@@ -44,6 +44,7 @@
 		/datum/job/paramedic,
 		/datum/job/psychologist,
 		/datum/job/chemist,
+		/datum/job/coroner,
 		// Service
 		/datum/job/clown,
 		/datum/job/botanist,
@@ -99,6 +100,7 @@
 		/datum/job/chief_medical_officer,
 		/datum/job/research_director,
 		/datum/job/quartermaster,
+		/datum/job/chief_engineer,
 	)
 
 /datum/traitor_objective/destroy_heirloom/captain
