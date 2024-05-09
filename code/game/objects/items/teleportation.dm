@@ -143,7 +143,7 @@
 	if(is_parent_of_portal(target))
 		qdel(target)
 		to_chat(user, span_notice("You dispel [target] with \the [src]!"))
-		playsound(loc, 'sound/effects/portal_close.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(loc, "sound/effects/portal_close.ogg", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return TRUE
 	return FALSE
 
@@ -254,7 +254,7 @@
 	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_teleport_turf(get_turf(teleport_target)), 300, 1, null)
 	if(LAZYLEN(created) != 2)
 		return
-	playsound(loc, pick, ('sound/effects/portal_open_1.ogg', 'sound/effects/portal_open_2.ogg', 'sound/effects/portal_open_3.ogg' ), 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, pick("sound/effects/portal_open_1.ogg", "sound/effects/portal_open_2.ogg", "sound/effects/portal_open_3.ogg" ), 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/effect/portal/portal1 = created[1]
 	var/obj/effect/portal/portal2 = created[2]
 
