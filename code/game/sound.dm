@@ -84,10 +84,11 @@
 			. += listening_mob
 
 /**
- * Plays a sound locally
+ * Plays a sound with a specific point of origin for src mob
+ * Affected by pressure, distance, terrain and environment (see arguments)
  *
  * Arguments:
- * * turf_source - The turf our sound originates from
+ * * turf_source - The turf our sound originates from, if this is not a turf, the sound is played with no spatial audio
  * * soundin - Either a file, or a string that can be used to get an SFX.
  * * vol - The volume of the sound, excluding falloff and pressure affection.
  * * vary - bool that determines if the sound changes pitch every time it plays.
