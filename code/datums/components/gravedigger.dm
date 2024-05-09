@@ -31,16 +31,16 @@
 	SIGNAL_HANDLER
 
 	if(!is_type_in_typecache(interacting_with, turfs_to_consider))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return NONE
 
 	if(locate(/obj/structure/closet/crate/grave) in interacting_with)
 		user.balloon_alert(user, "grave already present!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 	user.balloon_alert(user, "digging grave...")
 	playsound(interacting_with, 'sound/effects/shovel_dig.ogg', 50, TRUE)
 	INVOKE_ASYNC(src, PROC_REF(perform_digging), user, interacting_with)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_BLOCKING
 
 /datum/component/gravedigger/proc/perform_digging(mob/user, atom/dig_area)
 	if(do_after(user, dig_time, dig_area))
