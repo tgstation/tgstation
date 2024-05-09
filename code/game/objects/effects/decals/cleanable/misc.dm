@@ -219,6 +219,14 @@
 	. = ..()
 	. += emissive_appearance(icon, icon_state, src, alpha = src.alpha)
 
+/// Nebula vomit with extra guests
+/obj/effect/decal/cleanable/vomit/nebula/worms
+
+/obj/effect/decal/cleanable/vomit/nebula/worms/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	for (var/i in 1 to rand(2, 3))
+		new /mob/living/basic/hivelord_brood(loc)
+
 /obj/effect/decal/cleanable/vomit/old
 	name = "crusty dried vomit"
 	desc = "You try not to look at the chunks, and fail."

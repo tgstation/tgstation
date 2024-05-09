@@ -140,10 +140,12 @@
 		no_effect = TRUE
 	else
 		last_effect = world.time
+	var/turf/start_turf = get_turf(M)
 	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel, forced = force_teleport))
 		if(isprojectile(M))
 			var/obj/projectile/P = M
 			P.ignore_source_check = TRUE
+		new /obj/effect/temp_visual/portal_animation(start_turf, src, M)
 		return TRUE
 	return FALSE
 
@@ -206,3 +208,22 @@
 	. = ..()
 	if (. && !isdead(M))
 		qdel(src)
+
+/**
+ * Animation used for transitioning atoms which are teleporting somewhere via a portal
+ *
+ * To use, pass it the atom doing the teleporting and the atom that is being teleported in init.
+ */
+/obj/effect/temp_visual/portal_animation
+	duration = 0.25 SECONDS
+
+/obj/effect/temp_visual/portal_animation/Initialize(mapload, atom/portal, atom/movable/teleporting)
+	. = ..()
+	if(isnull(portal) || isnull(teleporting))
+		return
+
+	appearance = teleporting.appearance
+	dir = teleporting.dir
+	layer = portal.layer + 0.01
+	alpha = teleporting.alpha
+	animate(src, pixel_x = (portal.x * 32) - (x * 32), pixel_y = (portal.y * 32) - (y * 32), alpha = 0, time = duration)
