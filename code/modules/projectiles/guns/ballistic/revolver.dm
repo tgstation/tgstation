@@ -313,8 +313,8 @@
 		user.Paralyze(80)
 
 /obj/item/gun/ballistic/revolver/reverse/mateba
-	name = /obj/item/gun/ballistic/revolver/syndicate::name
-	desc = /obj/item/gun/ballistic/revolver/syndicate::desc
+	name = /obj/item/gun/ballistic/revolver/mateba::name
+	desc = /obj/item/gun/ballistic/revolver/mateba::desc
 	clumsy_check = FALSE
 	icon_state = "mateba"
 
