@@ -14,11 +14,12 @@
 	response_disarm_simple = "gently push aside"
 	initial_language_holder = /datum/language_holder/spider
 	melee_attack_cooldown = CLICK_CD_MELEE
-	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, STAMINA = 1, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, STAMINA = 1, OXY = 0)
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = NONE
-	unsuitable_cold_damage = 4
-	unsuitable_heat_damage = 4
+	unsuitable_atmos_damage = 0
+	unsuitable_cold_damage = 0
+	unsuitable_heat_damage = 0
 	combat_mode = TRUE
 	faction = list(FACTION_SPIDER)
 	pass_flags = PASSTABLE
@@ -51,7 +52,7 @@
 
 /mob/living/basic/spider/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_WEB_SURFER, TRAIT_FENCE_CLIMBER), INNATE_TRAIT)
+	add_traits(list(TRAIT_WEB_SURFER, TRAIT_FENCE_CLIMBER, TRAIT_NOBREATH, TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
 	AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
