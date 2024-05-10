@@ -856,7 +856,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	dna.remove_all_mutations()
 	dna.stability = 100
 	if(prob(max(70-instability,0)))
-		switch(rand(0,10)) //not complete and utter death
+		switch(rand(0,11)) //not complete and utter death
 			if(0)
 				monkeyize()
 			if(1)
@@ -893,6 +893,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			if(9 to 10)
 				ForceContractDisease(new/datum/disease/gastrolosis())
 				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
+			if(11)
+				to_chat(src, span_notice("Your DNA mutates into the ultimate biological form!"))
+				crabize()
 	else
 		switch(rand(0,6))
 			if(0)
