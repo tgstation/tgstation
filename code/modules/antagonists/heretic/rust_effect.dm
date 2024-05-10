@@ -2,7 +2,7 @@
 /obj/effect/temp_visual/glowing_rune
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "small_rune_1"
-	duration = INFINITY
+	duration = 10 HOURS
 	layer = LOW_SIGIL_LAYER
 	plane = GAME_PLANE
 
