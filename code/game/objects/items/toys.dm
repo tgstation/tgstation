@@ -1207,7 +1207,7 @@
 /obj/item/toy/figure/bitrunner
 	name = "\improper Bitrunner action figure"
 	icon_state = "bitrunner"
-	toysay = "I'd rather be gaming."
+	toysay = "Upgrades Please!"
 
 /obj/item/toy/figure/borg
 	name = "\improper Cyborg action figure"
