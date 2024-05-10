@@ -215,9 +215,10 @@
 // So if we want to allow people to shove carts people are riding, we gotta check the mob for bumped and redirect it
 /obj/structure/closet/crate/miningcar/post_buckle_mob(mob/living/buckled_mob)
 	RegisterSignal(buckled_mob, COMSIG_ATOM_BUMPED, PROC_REF(buckled_bumped))
+	RegisterSignal(buckled_mob, COMSIG_MOVABLE_BUMP_PUSHED, PROC_REF(block_bump_push))
 
 /obj/structure/closet/crate/miningcar/post_unbuckle_mob(mob/living/unbuckled_mob)
-	UnregisterSignal(unbuckled_mob, COMSIG_ATOM_BUMPED)
+	UnregisterSignal(unbuckled_mob, list(COMSIG_ATOM_BUMPED, COMSIG_MOVABLE_BUMP_PUSHED))
 
 /obj/structure/closet/crate/miningcar/proc/buckled_bumped(datum/source, atom/bumper)
 	SIGNAL_HANDLER
@@ -263,7 +264,7 @@
 		var/turf/open/open_turf = get_step(src, side_dir)
 		if(!istype(open_turf))
 			continue
-		smacked.safe_throw_at(open_turf, 1, 1, spin = FALSE, gentle = TRUE)
+		smacked.safe_throw_at(open_turf, 1, 3, spin = FALSE, gentle = TRUE)
 
 /**
  * Updates the state of the minecart to be on or off rails.
@@ -273,7 +274,7 @@
 		return
 	on_rails = new_state
 	if(on_rails)
-		drag_slowdown = 0
+		drag_slowdown = 0.5
 		RegisterSignal(src, COMSIG_MOVABLE_BUMP_PUSHED, PROC_REF(block_bump_push))
 	else
 		drag_slowdown = 2
@@ -281,9 +282,13 @@
 
 // We want a low move resistance so people can drag it along the tracks
 // But we also don't want people to nudge it with a push (since it requires a do_after to set off)
-/obj/structure/closet/crate/miningcar/proc/block_bump_push(atom/bumped_atom)
+/obj/structure/closet/crate/miningcar/proc/block_bump_push(datum/source, mob/living/bumper, force)
 	SIGNAL_HANDLER
-	return COMPONENT_NO_PUSH
+	if(on_rails)
+		return COMPONENT_NO_PUSH
+	if(force < MOVE_FORCE_STRONG)
+		return COMPONENT_NO_PUSH
+	return NONE
 
 /obj/structure/closet/crate/miningcar/forceMove(atom/destination)
 	update_rail_state(FALSE)
@@ -313,7 +318,7 @@
 	if(!do_after(user, 2 SECONDS, src))
 		return
 	update_rail_state(FALSE)
-	forceMove(new_destination)
+	Move(new_destination)
 	var/sound/thud_sound = sound('sound/weapons/thudswoosh.ogg')
 	thud_sound.pitch = 0.5
 	playsound(src, thud_sound, 50, TRUE)
@@ -331,7 +336,7 @@
 	var/obj/structure/minecart_rail/set_rail = locate() in new_destination
 	if(isnull(set_rail))
 		return
-	forceMove(new_destination)
+	Move(new_destination)
 	setDir(set_rail.dir & ALL_CARDINALS) // Set it to only cardinals, not diagonals
 	update_rail_state(TRUE)
 	var/sound/click_sound = sound('sound/machines/click.ogg')
@@ -487,14 +492,14 @@
 /obj/structure/closet/crate/miningcar/proc/throw_contents()
 	var/was_open = opened
 	var/list/to_yeet = contents.Copy()
-	bust_open()
-	if(!opened)
-		return
-
 	var/yeet_rider = has_buckled_mobs()
 	if(yeet_rider)
 		to_yeet += buckled_mobs
 		unbuckle_all_mobs()
+
+	bust_open()
+	if(!opened)
+		return
 
 	if(!length(to_yeet))
 		if(!was_open)
@@ -503,8 +508,8 @@
 
 	var/throw_distance = clamp(ceil(momentum / 3) - 4, 1, 5)
 	var/turf/some_distant_turf = get_edge_target_turf(src, dir)
-	for(var/obj/item/yeeten in to_yeet)
-		yeeten.throw_at(some_distant_turf, throw_distance, 1, quickstart = TRUE)
+	for(var/atom/movable/yeeten in to_yeet)
+		yeeten.throw_at(some_distant_turf, throw_distance, 3, quickstart = TRUE)
 
 	if(was_open)
 		visible_message(span_warning("[src] spills its contents!"))
