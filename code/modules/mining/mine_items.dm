@@ -547,6 +547,9 @@
 	name = "cart rail break"
 	desc = "Stops carts in their tracks. On the tracks. You get what I mean."
 	icon_state = "track_break"
+	can_buckle = TRUE
+	buckle_requires_restraints = TRUE
+	buckle_lying = NO_BUCKLE_LYING
 
 /obj/structure/minecart_rail/railbreak/rail_examine()
 	return span_notice("Run a powered cable underneath it to stop carts that pass over it.")
