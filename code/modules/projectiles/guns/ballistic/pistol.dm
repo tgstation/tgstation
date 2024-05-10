@@ -41,6 +41,7 @@
 			/obj/item/firing_pin/clown/ultra/selfdestruct,
 		))
 	. = ..()
+	pin.pin_removable = FALSE
 
 
 /obj/item/gun/ballistic/automatic/pistol/suppressed/Initialize(mapload)
@@ -107,6 +108,7 @@
 			/obj/item/firing_pin/clown/ultra/selfdestruct,
 		))
 	. = ..()
+	pin.pin_removable = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/gold
 	desc = "A gold plated Desert Eagle folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
