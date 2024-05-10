@@ -76,6 +76,32 @@ export function capitalizeFirst(str: string): string {
   return str.replace(/^\w/, (letter) => letter.toUpperCase());
 }
 
+const WORDS_UPPER = ['Id', 'Tv'] as const;
+
+const WORDS_LOWER = [
+  'A',
+  'An',
+  'And',
+  'As',
+  'At',
+  'But',
+  'By',
+  'For',
+  'For',
+  'From',
+  'In',
+  'Into',
+  'Near',
+  'Nor',
+  'Of',
+  'On',
+  'Onto',
+  'Or',
+  'The',
+  'To',
+  'With',
+] as const;
+
 /**
  * Converts a string to title case.
  *
@@ -85,51 +111,27 @@ export function capitalizeFirst(str: string): string {
  * ```
  */
 export function toTitleCase(str: string): string {
-  // Handle empty string
   if (!str) return str;
 
-  // Handle string
-  const WORDS_UPPER = ['Id', 'Tv'];
-
-  const WORDS_LOWER = [
-    'A',
-    'An',
-    'And',
-    'As',
-    'At',
-    'But',
-    'By',
-    'For',
-    'For',
-    'From',
-    'In',
-    'Into',
-    'Near',
-    'Nor',
-    'Of',
-    'On',
-    'Onto',
-    'Or',
-    'The',
-    'To',
-    'With',
-  ];
   let currentStr = str.replace(/([^\W_]+[^\s-]*) */g, (str) => {
-    return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
+    return capitalize(str);
   });
+
   for (let word of WORDS_LOWER) {
     const regex = new RegExp('\\s' + word + '\\s', 'g');
     currentStr = currentStr.replace(regex, (str) => str.toLowerCase());
   }
+
   for (let word of WORDS_UPPER) {
     const regex = new RegExp('\\b' + word + '\\b', 'g');
     currentStr = currentStr.replace(regex, (str) => str.toLowerCase());
   }
+
   return currentStr;
 }
 
-const translate_re = /&(nbsp|amp|quot|lt|gt|apos);/g;
-const translate = {
+const TRANSLATE_REGEX = /&(nbsp|amp|quot|lt|gt|apos);/g;
+const TRANSLATIONS = {
   amp: '&',
   apos: "'",
   gt: '>',
@@ -156,7 +158,7 @@ export function decodeHtmlEntities(str: string): string {
       .replace(/<br>/gi, '\n')
       .replace(/<\/?[a-z0-9-_]+[^>]*>/gi, '')
       // Basic entities
-      .replace(translate_re, (match, entity) => translate[entity])
+      .replace(TRANSLATE_REGEX, (match, entity) => TRANSLATIONS[entity])
       // Decimal entities
       .replace(/&#?([0-9]+);/gi, (match, numStr) => {
         const num = parseInt(numStr, 10);
