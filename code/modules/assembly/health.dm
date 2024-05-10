@@ -20,22 +20,6 @@
 	if(iscarbon(loc))
 		RegisterSignal(loc, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
-/obj/item/assembly/health/activate()
-	if(!..())
-		return FALSE//Cooldown check
-	toggle_scan()
-	return TRUE
-
-/obj/item/assembly/health/toggle_secure()
-	secured = !secured
-	if(secured && scanning)
-		START_PROCESSING(SSobj, src)
-	else
-		scanning = FALSE
-		STOP_PROCESSING(SSobj, src)
-	update_appearance()
-	return secured
-
 /obj/item/assembly/health/process()
 	//not ready yet
 	if(!scanning || !secured)
@@ -103,6 +87,7 @@
 
 /obj/item/assembly/health/ui_data(mob/user)
 	var/list/data = list()
+	data["health"] = health_scan
 	data["scanning"] = scanning
 	data["target"] = health_target
 	return data
