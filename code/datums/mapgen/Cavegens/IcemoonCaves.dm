@@ -1,4 +1,4 @@
-/datum/map_generator/cave_generator/biome/icemoon
+/datum/map_generator/cave_generator/icemoon
 	weighted_open_turf_types = list(/turf/open/misc/asteroid/snow/icemoon = 19, /turf/open/misc/ice/icemoon = 1)
 	weighted_closed_turf_types = list(
 		/turf/closed/mineral/random/snow = 100,
@@ -32,7 +32,7 @@
 		/obj/structure/ore_vent/boss/icebox = 1,
 	)
 
-/datum/map_generator/cave_generator/biome/icemoon/surface
+/datum/map_generator/cave_generator/icemoon/surface
 	flora_spawn_chance = 4
 	weighted_mob_spawn_list = null
 	initial_closed_chance = 53
@@ -48,7 +48,7 @@
 	)
 
 /// Surface snow generator variant for forested station trait, WITH FORESTSSSS
-/datum/map_generator/cave_generator/biome/icemoon/surface/forested
+/datum/map_generator/cave_generator/icemoon/surface/forested
 	weighted_open_turf_types = list(/turf/open/misc/asteroid/snow/icemoon = 1)
 	initial_closed_chance = 10
 
@@ -67,9 +67,9 @@
 	mob_spawn_chance = 0.2
 	weighted_mob_spawn_list = list(/mob/living/basic/deer/ice = 99, /mob/living/basic/tree = 1)
 
-/datum/map_generator/cave_generator/biome/icemoon/surface/noruins //use this for when you don't want ruins to spawn in a certain area
+/datum/map_generator/cave_generator/icemoon/surface/noruins //use this for when you don't want ruins to spawn in a certain area
 
-/datum/map_generator/cave_generator/biome/icemoon/deep
+/datum/map_generator/cave_generator/icemoon/deep
 	weighted_closed_turf_types = list(/turf/closed/mineral/random/snow = 1)
 	weighted_mob_spawn_list = list(
 		SPAWN_MEGAFAUNA = 1,
