@@ -338,7 +338,7 @@
 	if(isnull(set_rail))
 		return
 	Move(new_destination)
-	setDir(set_rail.dir & ALL_CARDINALS) // Set it to only cardinals, not diagonals
+	setDir(set_rail.dir)
 	update_rail_state(TRUE)
 	var/sound/click_sound = sound('sound/machines/click.ogg')
 	click_sound.pitch = 0.5
