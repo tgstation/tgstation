@@ -115,7 +115,7 @@
 	max_range = max(3, max_range)
 
 /obj/machinery/smoke_machine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = NONE
+	. = ITEM_INTERACT_BLOCKING
 	if(user.combat_mode || tool.item_flags & ABSTRACT || tool.flags_1 & HOLOGRAM_1 || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
@@ -125,14 +125,8 @@
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transferred_by = user)
 		if(units)
 			to_chat(user, span_notice("You transfer [units] units of the solution to [src]."))
-			return ITEM_INTERACT_SUCCESS
-		return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/smoke_machine/wrench_act(mob/living/user, obj/item/tool)
-	. = NONE
-	if(user.combat_mode)
-		return ITEM_INTERACT_SKIP_TO_ATTACK
-
 	. = ITEM_INTERACT_BLOCKING
 	if(on)
 		balloon_alert(user, "turn off first!")
@@ -142,10 +136,6 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smoke_machine/screwdriver_act(mob/living/user, obj/item/tool)
-	. = NONE
-	if(user.combat_mode)
-		return ITEM_INTERACT_SKIP_TO_ATTACK
-
 	. = ITEM_INTERACT_BLOCKING
 	if(on)
 		balloon_alert(user, "turn off first!")
@@ -156,10 +146,6 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smoke_machine/crowbar_act(mob/living/user, obj/item/tool)
-	. = NONE
-	if(user.combat_mode)
-		return ITEM_INTERACT_SKIP_TO_ATTACK
-
 	. = ITEM_INTERACT_BLOCKING
 	if(on)
 		balloon_alert(user, "turn off first!")
