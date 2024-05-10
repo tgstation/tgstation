@@ -20,6 +20,22 @@
 	if(iscarbon(loc))
 		RegisterSignal(loc, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
+/obj/item/assembly/health/activate()
+	if(!..())
+		return FALSE//Cooldown check
+	toggle_scan()
+	return TRUE
+
+/obj/item/assembly/health/toggle_secure()
+	secured = !secured
+	if(secured && scanning)
+		START_PROCESSING(SSobj, src)
+	else
+		scanning = FALSE
+		STOP_PROCESSING(SSobj, src)
+	update_appearance()
+	return secured
+
 /obj/item/assembly/health/process()
 	//not ready yet
 	if(!scanning || !secured)
@@ -62,14 +78,6 @@
 	else
 		health_target = HEALTH_THRESHOLD_CRIT
 	return
-
-/obj/item/assembly/health/attack_self(mob/user)
-	. = ..()
-	if (secured)
-		balloon_alert(user, "scanning [scanning ? "disabled" : "enabled"]")
-	else
-		balloon_alert(user, "secure it first!")
-	toggle_scan()
 
 /obj/item/assembly/health/proc/get_status_tab_item(mob/living/carbon/source, list/items)
 	SIGNAL_HANDLER
