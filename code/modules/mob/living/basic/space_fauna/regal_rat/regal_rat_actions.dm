@@ -16,6 +16,9 @@
 	shared_cooldown = NONE
 
 /datum/action/cooldown/mob_cooldown/domain/proc/domain()
+	if(owner.movement_type & VENTCRAWLING)
+		owner.balloon_alert(owner, "can't use while ventcrawling!")
+		return FALSE
 	var/turf/location = get_turf(owner)
 	location.atmos_spawn_air("[GAS_MIASMA]=4;[TURF_TEMPERATURE(T20C)]")
 	switch (rand(1,10))
