@@ -1,14 +1,16 @@
 /datum/component/armor_plate
 	var/amount = 0
 	var/maxamount = 3
-	var/upgrade_item = /obj/item/stack/sheet/animalhide/goliath_hide
+	///What item is currently applied for upgrades
+	var/atom/current_upgrade_item
+	///What items can be used for upgrading
+	var/list/atom/possible_upgrade_items
 	var/datum/armor/armor_mod = /datum/armor/armor_plate
-	var/upgrade_name
 
 /datum/armor/armor_plate
 	melee = 10
 
-/datum/component/armor_plate/Initialize(_maxamount, obj/item/_upgrade_item, datum/armor/_added_armor)
+/datum/component/armor_plate/Initialize(_maxamount, list/atom/upgrades, datum/armor/_added_armor)
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -20,36 +22,48 @@
 
 	if(_maxamount)
 		maxamount = _maxamount
-	if(_upgrade_item)
-		upgrade_item = _upgrade_item
+	if(upgrades)
+		if(upgrades.len == 1)	//May as well assign it if there is only one possible upgrade
+			current_upgrade_item = upgrades[1]
+		possible_upgrade_items = upgrades
+	else
+		current_upgrade_item = /obj/item/stack/sheet/animalhide/goliath_hide	//Default upgrade item
 	if(_added_armor)
 		armor_mod = _added_armor
-	var/obj/item/typecast = upgrade_item
-	upgrade_name = initial(typecast.name)
 
 /datum/component/armor_plate/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	//upgrade_item could also be typecast here instead
 	if(ismecha(parent))
 		if(amount)
 			if(amount < maxamount)
-				examine_list += span_notice("Its armor is enhanced with [amount] [upgrade_name].")
+				examine_list += span_notice("Its armor is enhanced with [amount] [current_upgrade_item::name].")
 			else
-				examine_list += span_notice("It's wearing a fearsome carapace entirely composed of [upgrade_name] - its pilot must be an experienced monster hunter.")
+				examine_list += span_notice("It's wearing a fearsome carapace entirely composed of [current_upgrade_item::name] - its pilot must be an experienced monster hunter.")
 		else
+			//Flavor text is pretty nice so not changing it like the one for non-mechs; should be changed if mechs ever get more upgrade items
 			examine_list += span_notice("It has attachment points for strapping monster hide on for added protection.")
 	else
-		if(amount)
-			examine_list += span_notice("It has been strengthened with [amount]/[maxamount] [upgrade_name].")
+		if(current_upgrade_item)
+			if(amount)
+				examine_list += span_notice("It has been strengthened with [amount]/[maxamount] [current_upgrade_item::name].")
+			else
+				examine_list += span_notice("It can be strengthened with up to [maxamount] [current_upgrade_item::name].")
 		else
-			examine_list += span_notice("It can be strengthened with up to [maxamount] [upgrade_name].")
+			examine_list += span_notice("It can be strengthened with the following: [english_list(possible_upgrade_items, final_comma_text = ",")]")
 
 /datum/component/armor_plate/proc/applyplate(datum/source, obj/item/I, mob/user, params)
 	SIGNAL_HANDLER
 
-	if(!istype(I,upgrade_item))
-		return
+	//If an item has already been applied to upgrade the armor, check the type for a match; otherwise check if the item is in the list of possible upgrades
+	if(current_upgrade_item)
+		if(!istype(I, current_upgrade_item))
+			return
+	else
+		if(!(I.type in possible_upgrade_items))
+			return
+		current_upgrade_item = I.type
+
 	if(amount >= maxamount)
 		to_chat(user, span_warning("You can't improve [parent] any further!"))
 		return
@@ -80,15 +94,28 @@
 
 	if(ismecha(parent)) //items didn't drop the plates before and it causes erroneous behavior for the time being with collapsible helmets
 		for(var/i in 1 to amount)
-			new upgrade_item(get_turf(parent))
+			new current_upgrade_item(get_turf(parent))
 
 /datum/component/armor_plate/proc/apply_mech_overlays(obj/vehicle/sealed/mecha/mech, list/overlays)
 	SIGNAL_HANDLER
 
-	if(amount)
-		var/overlay_string = "ripley-g"
-		if(amount >= 3)
-			overlay_string += "-full"
-		if(!LAZYLEN(mech.occupants))
-			overlay_string += "-open"
-		overlays += overlay_string
+	if(!current_upgrade_item)
+		return
+
+	if(!amount)
+		return
+
+	var/overlay_name
+	switch(current_upgrade_item)
+		if(/obj/item/stack/sheet/animalhide/goliath_hide)
+			overlay_name = "ripley-g"
+		if(/obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide)
+			overlay_name = "ripley-p"
+		else
+			return
+
+	if(amount >= 3)
+		overlay_name += "-full"
+	if(!LAZYLEN(mech.occupants))
+		overlay_name += "-open"
+	overlays += overlay_name
