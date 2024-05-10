@@ -295,6 +295,8 @@
 		return TRUE
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
+	if(SEND_SIGNAL(AM, COMSIG_MOVABLE_BUMP_PUSHED, src, force) & COMPONENT_NO_PUSH)
+		return
 	now_pushing = TRUE
 	SEND_SIGNAL(src, COMSIG_LIVING_PUSHING_MOVABLE, AM)
 	var/dir_to_target = get_dir(src, AM)

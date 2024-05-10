@@ -158,7 +158,6 @@
 	drag_slowdown = 2
 	open_sound = 'sound/machines/trapdoor/trapdoor_open.ogg'
 	close_sound = 'sound/machines/trapdoor/trapdoor_shut.ogg'
-	move_resist = MOVE_RESIST_DEFAULT
 	set_dir_on_move = TRUE
 	can_buckle = TRUE
 	/// Whether we're on a set of rails or just on the ground
@@ -184,18 +183,18 @@
 		return ..()
 	if(!on_rails)
 		return ..()
-	if(locate(/obj/structure/minecart_rail) in newloc)
+	// Allows people to drag minecarts along the rails rather than solely shoving it
+	if(can_travel_on_turf(get_turf(newloc), direct))
 		return ..()
 	momentum = 0
 	return FALSE
 
 /obj/structure/closet/crate/miningcar/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
-	if(!on_rails)
-		return
-	if(momentum <= 0)
+	if(!on_rails || momentum <= 0)
 		return
 
+	// Handling running OVER people
 	for(var/mob/living/smacked in loc)
 		if(smacked.body_position != LYING_DOWN)
 			continue
@@ -232,6 +231,7 @@
  * * momentum_mod - How much to divide the momentum by after the smack.
  */
 /obj/structure/closet/crate/miningcar/proc/smack(mob/living/smacked, damage_mod = 2, momentum_mod = 2)
+	ASSERT(momentum_mod >= 1)
 	if(!smacked.apply_damage(damage_mod * momentum, BRUTE, BODY_ZONE_CHEST, wound_bonus = damage_mod * 10, attack_direction = dir))
 		return
 	if(get_integrity() <= max_integrity * 0.05)
@@ -256,6 +256,8 @@
 
 	smacked.Knockdown(5 SECONDS)
 	for(var/side_dir in shuffle(GLOB.alldirs))
+		// Don't throw people in front of the cart, and
+		// don't throw people in any direction behind us
 		if(side_dir == dir || (side_dir & REVERSE_DIR(dir)))
 			continue
 		var/turf/open/open_turf = get_step(src, side_dir)
@@ -267,13 +269,21 @@
  * Updates the state of the minecart to be on or off rails.
  */
 /obj/structure/closet/crate/miningcar/proc/update_rail_state(new_state)
+	if(on_rails == new_state)
+		return
 	on_rails = new_state
 	if(on_rails)
 		drag_slowdown = 0
-		move_resist = INFINITY
+		RegisterSignal(src, COMSIG_MOVABLE_BUMP_PUSHED, PROC_REF(block_bump_push))
 	else
 		drag_slowdown = 2
-		move_resist = MOVE_RESIST_DEFAULT
+		UnregisterSignal(src, COMSIG_MOVABLE_BUMP_PUSHED)
+
+// We want a low move resistance so people can drag it along the tracks
+// But we also don't want people to nudge it with a push (since it requires a do_after to set off)
+/obj/structure/closet/crate/miningcar/proc/block_bump_push(atom/bumped_atom)
+	SIGNAL_HANDLER
+	return COMPONENT_NO_PUSH
 
 /obj/structure/closet/crate/miningcar/forceMove(atom/destination)
 	update_rail_state(FALSE)
@@ -318,9 +328,11 @@
 	balloon_alert(user, "putting on rails...")
 	if(!do_after(user, 2 SECONDS, src))
 		return
-	if(!(locate(/obj/structure/minecart_rail) in new_destination))
+	var/obj/structure/minecart_rail/set_rail = locate() in new_destination
+	if(isnull(set_rail))
 		return
 	forceMove(new_destination)
+	setDir(set_rail.dir & ALL_CARDINALS) // Set it to only cardinals, not diagonals
 	update_rail_state(TRUE)
 	var/sound/click_sound = sound('sound/machines/click.ogg')
 	click_sound.pitch = 0.5
@@ -331,6 +343,7 @@
 	if(.)
 		return
 
+	// Handling running INTO people
 	if(!isliving(bumped_atom) || momentum <= 0)
 		return
 	if(momentum <= 8)
@@ -342,13 +355,14 @@
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(shove_off), bumped_atom)
 
+/// Starts the cart moving automatically.
 /obj/structure/closet/crate/miningcar/proc/shove_off(atom/movable/bumped_atom)
 	if(!on_rails || momentum > 0)
 		return
 
 	var/movedir = bumped_atom.dir
 	var/turf/next_turf = get_step(src, movedir)
-	if(isnull(next_turf) || !(locate(/obj/structure/minecart_rail) in next_turf))
+	if(!can_travel_on_turf(next_turf, movedir))
 		return
 
 	if(isliving(bumped_atom))
@@ -361,7 +375,7 @@
 		balloon_alert(bumper, "setting off...")
 		if(!do_after(bumper, 1.5 SECONDS, src))
 			return
-		if(QDELETED(rail) || !on_rails)
+		if(QDELETED(rail) || !on_rails || !can_travel_on_turf(next_turf, movedir))
 			return
 		momentum += 20
 
@@ -389,26 +403,26 @@
 /obj/structure/closet/crate/miningcar/proc/check_rail(datum/move_loop/move/source)
 	SIGNAL_HANDLER
 
+	if(momentum <= 0)
+		stack_trace("Mine cart moving on 0 momentum!")
+		GLOB.move_manager.stop_looping(src, SSconveyors)
+		return MOVELOOP_SKIP_STEP
+	// Forced to not move
 	if(anchored || !has_gravity())
 		return MOVELOOP_SKIP_STEP
-
-	var/turf/next_turf = get_step(src, dir)
-	if(locate(/obj/structure/minecart_rail) in next_turf)
+	// Going straight
+	if(can_travel_on_turf(get_step(src, dir)))
 		return NONE
-
-	var/list/valid_turfs = get_adjacent_open_turfs(src)
-	valid_turfs -= next_turf
-	valid_turfs -= get_step(src, REVERSE_DIR(dir))
-
-	for(var/turf/open/corner_turf as anything in shuffle(valid_turfs))
-		if(!(locate(/obj/structure/minecart_rail) in corner_turf))
+	// Trying to turn
+	for(var/next_dir in shuffle(list(turn(dir, 90), turn(dir, -90))))
+		if(!can_travel_on_turf(get_step(src, next_dir), dir|next_dir))
 			continue
 		momentum -= 1 // Extra cost for turning
 		if(momentum <= 0)
 			break
-		source.direction = get_dir(src, corner_turf)
+		source.direction = next_dir
 		return NONE
-
+	// Can't go straight and cant turn = STOP
 	GLOB.move_manager.stop_looping(src, SSconveyors)
 	if(momentum >= 8)
 		visible_message(span_warning("[src] comes to a halt!"))
@@ -420,40 +434,54 @@
 
 /obj/structure/closet/crate/miningcar/proc/decay_momentum(datum/move_loop/move/source)
 	SIGNAL_HANDLER
-	var/obj/structure/minecart_rail/railbreak/stop_break = locate() in loc
-	var/obj/structure/cable/cable = locate() in loc
 
-	if(stop_break && cable?.avail(10 KILO JOULES))
-		if(momentum >= 8)
-			visible_message(span_notice("[src] comes to a sudden stop."))
-		else
-			visible_message(span_notice("[src] comes to a stop."))
-		momentum = 0
-		GLOB.move_manager.stop_looping(src, SSconveyors)
-		cable.add_delayedload(1 KILO JOULES)
-		return
+	if(momentum > 0)
+		var/obj/structure/minecart_rail/railbreak/stop_break = locate() in loc
+		var/obj/structure/cable/cable = locate() in loc
+		// There is a break and it is powered, so STOP
+		if(stop_break && cable?.avail(10 KILO JOULES))
+			if(momentum >= 8)
+				visible_message(span_notice("[src] comes to a sudden stop."))
+			else
+				visible_message(span_notice("[src] comes to a stop."))
+			momentum = 0
+			GLOB.move_manager.stop_looping(src, SSconveyors)
+			cable.add_delayedload(10 KILO JOULES)
+			return
+		// This is a powered rail, so maintain speed
+		if(cable?.avail(1 KILO JOULES))
+			// Speeds up the cart to 5 or 10, then stops decay
+			if(momentum <= 5)
+				momentum = 5
+				cable.add_delayedload(0.5 KILO JOULES)
+			else if(momentum <= 10)
+				momentum = 10
+				cable.add_delayedload(1 KILO JOULES)
+			return
+		// Here is where actual slowdown happens
+		momentum -= 1
 
-	if(cable?.avail(1 KILO JOULES))
-		cable.add_delayedload(1 KILO JOULES)
-		// Speeds up the cart to 5 or 10, then stops decay
-		if(momentum <= 5)
-			momentum = 5
-		else if(momentum <= 10)
-			momentum = 10
-		return
-
-	momentum -= 1
+	// No more momentum = STOP
 	if(momentum <= 0)
 		GLOB.move_manager.stop_looping(src, SSconveyors)
 		visible_message(span_notice("[src] comes to a slow stop."))
 		return
 
+	// Handles slowing down the move loop / cart
 	var/datum/move_loop/loop = GLOB.move_manager.processing_on(src, SSconveyors)
 	loop?.set_delay(calculate_delay())
 
 /// Calculates how fast the cart is going
 /obj/structure/closet/crate/miningcar/proc/calculate_delay()
 	return (-0.05 SECONDS * momentum) + 1.1 SECONDS
+
+/// Checks if we can travel on the passed turf
+/obj/structure/closet/crate/miningcar/proc/can_travel_on_turf(turf/next_turf, dir_to_check = dir)
+	for(var/obj/structure/minecart_rail/rail in next_turf)
+		if(rail.dir & (dir_to_check|REVERSE_DIR(dir_to_check)))
+			return TRUE
+
+	return FALSE
 
 /// Throws all the contents of the cart out ahead
 /obj/structure/closet/crate/miningcar/proc/throw_contents()
@@ -487,11 +515,12 @@
 /obj/structure/minecart_rail
 	name = "cart rail"
 	desc = "Carries carts along the track."
-	icon = 'icons/obj/tram/tram_rails.dmi'
-	icon_state = "rail"
+	icon = 'icons/obj/track.dmi'
+	icon_state = "track"
 	layer = TRAM_RAIL_LAYER
 	plane = FLOOR_PLANE
 	anchored = TRUE
+	move_resist = INFINITY
 
 /obj/structure/minecart_rail/Initialize(mapload)
 	. = ..()
@@ -503,9 +532,15 @@
 
 /obj/structure/minecart_rail/examine(mob/user)
 	. = ..()
-	. += span_notice("Run a cable underneath it to power carts as they travel, maintaining their speed.")
+	. += rail_examine()
+
+/obj/structure/minecart_rail/proc/rail_examine()
+	return span_notice("Run a powered cable underneath it to power carts as they travel, maintaining their speed.")
 
 /obj/structure/minecart_rail/railbreak
 	name = "cart rail break"
 	desc = "Stops carts in their tracks. On the tracks. You get what I mean."
-	color = COLOR_DARK_RED
+	icon_state = "track_break"
+
+/obj/structure/minecart_rail/railbreak/rail_examine()
+	return span_notice("Run a powered cable underneath it to stop carts that pass over it.")
