@@ -115,7 +115,7 @@
 	max_range = max(3, max_range)
 
 /obj/machinery/smoke_machine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ITEM_INTERACT_BLOCKING
+	. = NONE
 	if(user.combat_mode || tool.item_flags & ABSTRACT || tool.flags_1 & HOLOGRAM_1 || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
