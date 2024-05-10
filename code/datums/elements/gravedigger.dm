@@ -3,6 +3,7 @@
  */
 /datum/element/gravedigger
 	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 
 	/// How long it takes to dig a grave
 	var/dig_time = 8 SECONDS
@@ -22,7 +23,6 @@
 
 	if(!isobj(target))
 		return ELEMENT_INCOMPATIBLE
-
 	src.dig_time = dig_time
 	RegisterSignal(target, COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(dig_checks))
 
