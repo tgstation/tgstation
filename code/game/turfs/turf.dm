@@ -625,7 +625,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return
 
 	AddElement(/datum/element/rust/heretic)
-	new /obj/effect/temp_visual/glowing_rune(src)
+	new /obj/effect/glowing_rune(src)
 
 /turf/handle_fall(mob/faller)
 	if(has_gravity(src))

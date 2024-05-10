@@ -96,7 +96,7 @@
 	. = ..()
 	UnregisterSignal(source, COMSIG_ATOM_ENTERED)
 	UnregisterSignal(source, COMSIG_ATOM_EXITED)
-	for(var/obj/effect/temp_visual/glowing_rune/rune_to_remove in source)
+	for(var/obj/effect/glowing_rune/rune_to_remove in source)
 		qdel(rune_to_remove)
 
 /datum/element/rust/heretic/proc/on_entered(turf/source, atom/movable/entered, ...)

@@ -1,12 +1,13 @@
 // Small visual effect imparted onto rusted things by rust heretics.
-/obj/effect/temp_visual/glowing_rune
+/obj/effect/glowing_rune
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "small_rune_1"
-	duration = 10 HOURS
-	layer = LOW_SIGIL_LAYER
+	anchored = TRUE
+	layer = ABOVE_MOB_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	plane = GAME_PLANE
 
-/obj/effect/temp_visual/glowing_rune/Initialize(mapload)
+/obj/effect/glowing_rune/Initialize(mapload)
 	. = ..()
 	pixel_y = rand(-6, 6)
 	pixel_x = rand(-6, 6)
