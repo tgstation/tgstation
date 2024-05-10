@@ -85,6 +85,9 @@
  * * Spawn a single mouse if below the mouse cap.
  */
 /datum/action/cooldown/mob_cooldown/riot/proc/riot()
+	if(owner.movement_type & VENTCRAWLING)
+		owner.balloon_alert(owner, "can't use while ventcrawling!")
+		return FALSE
 	var/uplifted_mice = FALSE
 	for (var/mob/living/basic/mouse/nearby_mouse in oview(owner, range))
 		uplifted_mice = convert_mouse(nearby_mouse) || uplifted_mice
