@@ -737,8 +737,10 @@
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "alW" = (
-/obj/item/surgery_tray/full/deployed,
-/turf/open/floor/iron/white,
+/obj/item/surgery_tray/deployed,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/broken_flooring/singular,
+/turf/open/floor/plating,
 /area/station/medical/surgery)
 "alX" = (
 /obj/effect/turf_decal/stripes{
@@ -7242,7 +7244,12 @@
 /area/station/engineering/atmos)
 "cMJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/broken_flooring/pile{
+	dir = 8
+	},
+/turf/open/floor/plating,
 /area/station/medical/surgery)
 "cMR" = (
 /obj/structure/safe/floor,
@@ -9419,6 +9426,7 @@
 /area/station/service/chapel)
 "dzq" = (
 /obj/machinery/duct,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "dzr" = (
@@ -9649,6 +9657,7 @@
 /obj/structure/closet/crate/freezer/surplus_limbs,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/light/cold/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/surgery/theatre)
 "dBS" = (
@@ -19816,6 +19825,15 @@
 "hov" = (
 /turf/closed/wall,
 /area/station/commons/storage/tools)
+"hoD" = (
+/obj/structure/frame/computer,
+/obj/machinery/firealarm/directional/north,
+/obj/item/shard,
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/station/medical/surgery)
 "hoM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/engine,
@@ -22317,6 +22335,17 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
+"ilk" = (
+/obj/structure/table_frame,
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/camera/autoname/directional/west{
+	network = list("ss13","medbay")
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/broken_flooring/pile,
+/turf/open/floor/plating,
+/area/station/medical/surgery)
 "ilp" = (
 /turf/closed/mineral/random/stationside/asteroid/porus{
 	mineralChance = 20
@@ -26747,6 +26776,8 @@
 /obj/effect/mapping_helpers/airlock/access/any/medical/surgery,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery)
 "jQs" = (
@@ -27365,6 +27396,7 @@
 /obj/machinery/camera/autoname/directional/west{
 	network = list("ss13","medbay")
 	},
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "kcz" = (
@@ -36707,6 +36739,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/surgery/theatre)
 "nwc" = (
@@ -44732,7 +44765,9 @@
 /area/station/service/kitchen)
 "qxE" = (
 /obj/structure/tank_holder/anesthetic,
-/turf/open/floor/iron/white,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/broken_flooring/singular,
+/turf/open/floor/plating,
 /area/station/medical/surgery)
 "qxG" = (
 /obj/structure/cable,
@@ -54054,6 +54089,14 @@
 	},
 /turf/open/floor/engine,
 /area/station/command/heads_quarters/captain/private)
+"tMO" = (
+/obj/machinery/light/small/broken/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/station/medical/surgery)
 "tMP" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -56061,6 +56104,7 @@
 /obj/item/surgery_tray/full/deployed,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/newscaster/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/surgery/theatre)
 "uxy" = (
@@ -78152,8 +78196,8 @@ rnk
 jRU
 kic
 qvA
-xKp
-oSP
+ilk
+tMO
 alW
 qvA
 xKp
@@ -78409,7 +78453,7 @@ rnk
 rnk
 ina
 qvA
-lbw
+hoD
 cMJ
 qxE
 qvA
