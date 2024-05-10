@@ -396,9 +396,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 		rod.visible_message(span_cult_italic(displayed_message))
 		switch(num_slain)
-			if(0, 1)
+			if(0)
 				animate_spawn_sword(rod, /obj/item/melee/cultblade/dagger)
-			if(2)
+			if(1)
 				animate_spawn_sword(rod, /obj/item/melee/cultblade)
 			else
 				animate_spawn_sword(rod, /obj/item/melee/cultblade/halberd)

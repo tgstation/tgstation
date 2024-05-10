@@ -447,20 +447,17 @@
  * anim_time: Total time of the animation. Split into two different calls.
  */
 /obj/item/proc/gender_reveal(outline_color = pick(COLOR_ADMIN_PINK, COLOR_BLUE_LIGHT), anim_time = 10 SECONDS)
-
-	// First half. We increase the layer to appear on top of all, add a cool outline, and make it fly up into the air.
 	var/og_layer = layer
 	layer = ABOVE_MOB_LAYER
 	add_filter("ready_outline", 3, list("type" = "outline", "color" = outline_color, "size" = 2))
 	animate(src, pixel_y = 12, time = anim_time * 0.5, easing = QUAD_EASING | EASE_OUT)
-	stoplag(anim_time * 0.5)
+	animate(pixel_y = 0, time = anim_time * 0.5, easing = QUAD_EASING | EASE_IN)
+	addtimer(CALLBACK(src, PROC_REF(remove_gender_reveal_fx), og_layer, anim_time))
 
-	// Once the first animation ends, we animate the thing going down, with a lesser glow.
-	animate(src, pixel_y = 0, time = anim_time * 0.5, easing = QUAD_EASING | EASE_IN)
-	modify_filter("ready_outline", list("size" = 1))
-	stoplag(anim_time * 0.5)
-
-	// // The item has lowered back onto the ground, remove the filter and refresh the layer.
+/**
+ * Removes the non-animate effects from above proc
+ */
+/obj/item/proc/remove_gender_reveal_fx(og_layer)
 	remove_filter("ready_outline")
 	layer = og_layer
 

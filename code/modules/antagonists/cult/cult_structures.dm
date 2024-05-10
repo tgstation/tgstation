@@ -19,8 +19,11 @@
 	cult_team = null
 	return ..()
 
+/obj/structure/destructible/cult/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_CONSTRUCTED, PROC_REF(on_constructed))
 
-/obj/structure/destructible/cult/on_constructed(mob/builder)
+/obj/structure/destructible/cult/proc/on_constructed(mob/builder)
 	var/datum/antagonist/cult/cultist = builder.mind?.has_antag_datum(/datum/antagonist/cult, TRUE)
 	cult_team = cultist?.get_team()
 
