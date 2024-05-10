@@ -104,7 +104,7 @@
 
 /datum/reagent/inverse/cryostylane/on_mob_add(mob/living/carbon/affected_mob, amount)
 	. = ..()
-	if(HAS_TRAIT(affected_mob, TRAIT_FREEZEIMMUNITY))
+	if(HAS_TRAIT(affected_mob, TRAIT_RESISTCOLD))
 		holder.remove_reagent(type, volume)
 		return
 	cube = new /obj/structure/ice_stasis(get_turf(affected_mob))

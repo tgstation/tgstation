@@ -224,8 +224,6 @@
 		return ..()
 
 /turf/closed/wall/r_wall/rust_turf()
-	if(turf_flags & NO_RUST)
-		return
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ChangeTurf(/turf/closed/wall/rust)
 		return

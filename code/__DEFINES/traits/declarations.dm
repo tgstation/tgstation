@@ -98,8 +98,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PUSHIMMUNE "push_immunity"
 /// Are we immune to shocks?
 #define TRAIT_SHOCKIMMUNE "shock_immunity"
-/// Makes you immune to the stasis from cryogelidia
-#define TRAIT_FREEZEIMMUNITY "freeze_immunity"
 /// Are we immune to specifically tesla / SM shocks?
 #define TRAIT_TESLA_SHOCKIMMUNE "tesla_shock_immunity"
 #define TRAIT_AIRLOCK_SHOCKIMMUNE "airlock_shock_immunity"

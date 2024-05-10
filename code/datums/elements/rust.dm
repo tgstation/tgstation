@@ -78,12 +78,17 @@
 /// Prevents placing floor tiles on rusted turf
 /datum/element/rust/proc/on_interaction(datum/source, mob/user, obj/item/tool, modifiers)
 	SIGNAL_HANDLER
-	if(istype(tool, /obj/item/stack/tile))
+	if(istype(tool, /obj/item/stack/tile) || istype(tool, /obj/item/stack/rods))
 		user.balloon_alert(user, "floor too rusted!")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
+
+/// For rust applied by heretics
+/datum/element/rust/heretic
 
 /datum/element/rust/heretic/Attach(atom/target, rust_icon, rust_icon_state)
 	. = ..()
+	if(. == ELEMENT_INCOMPATIBLE)
+		return .
 	RegisterSignal(target, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
 	RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
 
@@ -91,6 +96,8 @@
 	. = ..()
 	UnregisterSignal(source, COMSIG_ATOM_ENTERED)
 	UnregisterSignal(source, COMSIG_ATOM_EXITED)
+	for(var/obj/effect/temp_visual/glowing_rune/rune_to_remove in source)
+		qdel(rune_to_remove)
 
 /datum/element/rust/heretic/proc/on_entered(turf/source, atom/movable/entered, ...)
 	SIGNAL_HANDLER

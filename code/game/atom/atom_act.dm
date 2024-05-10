@@ -205,6 +205,7 @@
  */
 /atom/proc/rust_heretic_act()
 	return
+
 ///wrapper proc that passes our mob's rust_strength to the target we are rusting
 /mob/living/proc/do_rust_heretic_act(atom/target)
 	var/datum/antagonist/heretic/heretic_data = IS_HERETIC(src)

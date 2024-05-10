@@ -663,6 +663,8 @@
 /datum/antagonist/heretic/proc/get_knowledge(wanted)
 	return researched_knowledge[wanted]
 
+/// Makes our heretic more able to rust things.
+/// if side_path_only is set to TRUE, this function does nothing for rust heretics.
 /datum/antagonist/heretic/proc/increase_rust_strength(side_path_only=FALSE)
 	if(side_path_only && get_knowledge(/datum/heretic_knowledge/limited_amount/starting/base_rust))
 		return

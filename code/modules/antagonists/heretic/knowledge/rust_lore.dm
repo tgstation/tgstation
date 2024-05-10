@@ -250,7 +250,6 @@
 	/// A static list of traits we give to the heretic when on rust.
 	var/static/list/conditional_immunities = list(
 		TRAIT_BOMBIMMUNE,
-		TRAIT_FREEZEIMMUNITY,
 		TRAIT_IGNOREDAMAGESLOWDOWN,
 		TRAIT_IGNORESLOWDOWN,
 		TRAIT_NO_SLIP_ALL,
