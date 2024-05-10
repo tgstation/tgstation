@@ -530,8 +530,7 @@
 
 /obj/structure/minecart_rail/Initialize(mapload)
 	. = ..()
-	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN)
-	AddElement(/datum/element/give_turf_traits, give_turf_traits)
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_TURF_IGNORE_SLOWDOWN)))
 	AddElement(/datum/element/footstep_override, footstep = FOOTSTEP_CATWALK)
 	for(var/obj/structure/closet/crate/miningcar/cart in loc)
 		cart.update_rail_state(TRUE)
