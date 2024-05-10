@@ -113,15 +113,11 @@
 		/// But medics who work hard enough can make this
 		/// to clear reagents instantly (for a price...)
 		clear_mob_reagents = TRUE
-	if(ismob(holder.my_atom))
-		/// Minimum explosion range of 1 if inside a mob
+		if(ismob(holder.my_atom))
+		/// Minimum explosion mod of 1.5 if inside a mob
 		/// to make this a trade-off for medics who want
 		/// a quick instant purge of all chems for someone
-		/// We check to see if the volume is over five so we
-		/// don't default to +1 explosion for miners who fucked up and
-		/// penstacked because the volume means they'll get
-		/// donked by it regardless
-		modifier = (created_volume > 5 ? 0 : 1)
+			modifier = (created_volume > 5 ? 0 : 1.5)
 	..()
 
 
