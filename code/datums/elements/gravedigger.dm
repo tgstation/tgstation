@@ -23,6 +23,7 @@
 
 	if(!isobj(target))
 		return ELEMENT_INCOMPATIBLE
+
 	src.dig_time = dig_time
 	RegisterSignal(target, COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(dig_checks))
 
@@ -42,10 +43,9 @@
 
 	user.balloon_alert(user, "digging grave...")
 	playsound(interacting_with, 'sound/effects/shovel_dig.ogg', 50, TRUE)
-	INVOKE_ASYNC(src, PROC_REF(perform_digging), user, interacting_with)
+	INVOKE_ASYNC(src, PROC_REF(perform_digging), user, interacting_with, source)
 	return NONE
 
-/datum/element/gravedigger/proc/perform_digging(mob/user, atom/dig_area)
-	if(do_after(user, dig_time, dig_area))
+/datum/element/gravedigger/proc/perform_digging(mob/user, atom/dig_area, obj/item/our_tool)
+	if(our_tool.use_tool(dig_area, user, 10 SECONDS))
 		new /obj/structure/closet/crate/grave/fresh(dig_area) //We don't get_turf for the location since this is guaranteed to be a turf at this point.
-		playsound(dig_area, 'sound/effects/shovel_dig.ogg', 50, TRUE)
