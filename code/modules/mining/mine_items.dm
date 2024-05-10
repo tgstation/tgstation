@@ -209,6 +209,7 @@
 	return !opened && ..()
 
 /obj/structure/closet/crate/miningcar/after_open(mob/living/user, force)
+	. = ..()
 	unbuckle_all_mobs()
 
 // Hack: If a mob is buckled onto the cart, bumping the cart will instead bump the mob (because higher layer)
