@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Morgue trays (and the contents inside) are now animated on open and close"

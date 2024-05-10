@@ -1,4 +1,0 @@
-author: "malton33"
-delete-after: True
-changes:
-  - bugfix: "space heaters now display the correct mode when the maintenance panel is closed"
