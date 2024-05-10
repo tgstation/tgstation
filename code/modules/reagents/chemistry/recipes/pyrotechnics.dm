@@ -4,9 +4,11 @@
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EXPLOSIVE | REACTION_TAG_MODERATE | REACTION_TAG_DANGEROUS
 	required_temp = 0 //Prevent impromptu RPGs
+	/// Remove clearing mob reagents except in special cases
+	var/clear_mob_reagents = FALSE
 
-/datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	default_explode(holder, created_volume, modifier, strengthdiv)
+/datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume, clear_mob_reagents)
+	default_explode(holder, created_volume, modifier, strengthdiv, clear_mob_reagents)
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin
 	results = list(/datum/reagent/nitroglycerin = 2)
@@ -105,10 +107,34 @@
 	required_reagents = list(/datum/reagent/medicine/c2/penthrite = 1, /datum/reagent/medicine/epinephrine = 1)
 	strengthdiv = 5
 
+/datum/chemical_reaction/reagent_explosion/penthrite_explosion_epinephrine/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume, clear_mob_reagents)
+	if(holder.has_reagent(/datum/reagent/medicine/omnizine))
+		/// Clear reagents if TRUE; no penstacking for miners
+		/// But medics who work hard enough can make this
+		/// to clear reagents instantly (for a price...)
+		clear_mob_reagents = TRUE
+	if(ismob(holder.my_atom))
+		/// Minimum explosion range of 1 if inside a mob
+		/// to make this a trade-off for medics who want
+		/// a quick instant purge of all chems for someone
+		/// We check to see if the volume is over five so we
+		/// don't default to +1 explosion for miners who fucked up and
+		/// penstacked because the volume means they'll get
+		/// donked by it regardless
+		modifier = (created_volume > 5 ? 0 : 1)
+	..()
+
+
 /datum/chemical_reaction/reagent_explosion/penthrite_explosion_atropine
 	required_reagents = list(/datum/reagent/medicine/c2/penthrite = 1, /datum/reagent/medicine/atropine = 1)
 	strengthdiv = 5
 	modifier = 5
+	/// TRUE for penthrite + atropine, because both are rarer chemicals
+	/// It'll fucking gib your patient unless they're in a bomb suit
+	/// but this should still purge reagents because the prospect of someone
+	/// dressing someone up in a bomb suit to pull this off is hilarious
+	/// Gives a whole new meaning to CLEAR!!!
+	clear_mob_reagents = TRUE
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/potassium = 1)

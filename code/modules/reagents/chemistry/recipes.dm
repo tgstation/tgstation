@@ -281,7 +281,7 @@
  * * modifier - a flat additive numeric to the size of the explosion - set this if you want a minimum range
  * * strengthdiv - the divisional factor of the explosion, a larger number means a smaller range - This is the part that modifies an explosion's range with volume (i.e. it divides it by this number)
  */
-/datum/chemical_reaction/proc/default_explode(datum/reagents/holder, created_volume, modifier = 0, strengthdiv = 10)
+/datum/chemical_reaction/proc/default_explode(datum/reagents/holder, created_volume, modifier = 0, strengthdiv = 10, clear_mob_reagents)
 	var/power = modifier + round(created_volume/strengthdiv, 1)
 	if(power > 0)
 		var/turf/T = get_turf(holder.my_atom)
@@ -300,8 +300,13 @@
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(power , T, 0, 0)
 		e.start(holder.my_atom)
-	holder.clear_reagents()
-
+	if (ismob(holder.my_atom))
+		if (clear_mob_reagents)
+		/// Only clear reagents if they use a special explosive reaction to do it; it shouldn't apply
+		/// to any explosion inside a person
+			holder.clear_reagents()
+	else
+		holder.clear_reagents()
 /*
  *Creates a flash effect only - less expensive than explode()
  *
