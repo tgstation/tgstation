@@ -150,11 +150,9 @@
 /obj/docking_port/stationary/mining_home/common/northstar
 	roundstart_template = /datum/map_template/shuttle/mining_common/northstar
 
-/**********************Mining car (Crate like thing, not the rail car)**************************/
-
 /obj/structure/closet/crate/miningcar
 	name = "mine cart"
-	desc = "A cart for use on rails."
+	desc = "A cart for use on rails. Or off rails, if you're so inclined."
 	icon_state = "miningcar"
 	base_icon_state = "miningcar"
 	drag_slowdown = 2
@@ -173,6 +171,13 @@
 	AddElement(/datum/element/noisy_movement, 'sound/effects/tank_treads.ogg', 50)
 	if(locate(/obj/structure/minecart_rail) in loc)
 		update_rail_state(TRUE)
+
+/obj/structure/closet/crate/miningcar/examine(mob/user)
+	. = ..()
+	if(on_rails)
+		. += span_notice("You can give this a bump to send it on its way, or drag it off the rails to drag it around.")
+	else
+		. += span_notice("Drag this onto a mine cart rail to set it on its way.")
 
 /obj/structure/closet/crate/miningcar/Move(atom/newloc, direct, glide_size_override, update_dir)
 	if(isnull(newloc))
@@ -198,28 +203,69 @@
 			momentum = floor(momentum / 2)
 			break
 		smack(smacked, 3, 1.5)
+		if(QDELETED(src))
+			break
 
+/obj/structure/closet/crate/miningcar/is_buckle_possible(mob/living/target, force, check_loc)
+	return !opened && ..()
+
+/obj/structure/closet/crate/miningcar/after_open(mob/living/user, force)
+	unbuckle_all_mobs()
+
+// Hack: If a mob is buckled onto the cart, bumping the cart will instead bump the mob (because higher layer)
+// So if we want to allow people to shove carts people are riding, we gotta check the mob for bumped and redirect it
+/obj/structure/closet/crate/miningcar/post_buckle_mob(mob/living/buckled_mob)
+	RegisterSignal(buckled_mob, COMSIG_ATOM_BUMPED, PROC_REF(buckled_bumped))
+
+/obj/structure/closet/crate/miningcar/post_unbuckle_mob(mob/living/unbuckled_mob)
+	UnregisterSignal(unbuckled_mob, COMSIG_ATOM_BUMPED)
+
+/obj/structure/closet/crate/miningcar/proc/buckled_bumped(datum/source, atom/bumper)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(shove_off), bumper)
+
+/**
+ * Called when the minecart smacks into someone.
+ *
+ * * smacked - The mob that was smacked.
+ * * damage_mod - How much to multiply the momentum by to get the damage.
+ * * momentum_mod - How much to divide the momentum by after the smack.
+ */
 /obj/structure/closet/crate/miningcar/proc/smack(mob/living/smacked, damage_mod = 2, momentum_mod = 2)
 	if(!smacked.apply_damage(damage_mod * momentum, BRUTE, BODY_ZONE_CHEST, wound_bonus = damage_mod * 10, attack_direction = dir))
 		return
-	smacked.visible_message(
-		span_danger("[src] smashes into [smacked]!"),
-		span_userdanger("You are smacked by [src]!"),
-	)
+	if(get_integrity() <= max_integrity * 0.05)
+		smacked.visible_message(
+			span_danger("[src] smashes into [smacked], breaking into pieces!"),
+			span_userdanger("You are smacked by [src] as it breaks into pieces!"),
+		)
+		playsound(src, 'sound/effects/break_stone.ogg', 50, vary = TRUE)
+		momentum = 0
+
+	else
+		smacked.visible_message(
+			span_danger("[src] smashes into [smacked]!"),
+			span_userdanger("You are smacked by [src]!"),
+		)
 	playsound(src, 'sound/effects/bang.ogg', 50, vary = TRUE)
+	take_damage(max_integrity * 0.05)
+	momentum = floor(momentum / momentum_mod)
 	if(smacked.body_position == LYING_DOWN)
 		smacked.Paralyze(4 SECONDS)
-	else
-		smacked.Knockdown(5 SECONDS)
-	momentum = floor(momentum / momentum_mod)
+		return
+
+	smacked.Knockdown(5 SECONDS)
 	for(var/side_dir in shuffle(GLOB.alldirs))
-		if(side_dir == dir || side_dir == REVERSE_DIR(dir))
+		if(side_dir == dir || (side_dir & REVERSE_DIR(dir)))
 			continue
 		var/turf/open/open_turf = get_step(src, side_dir)
 		if(!istype(open_turf))
 			continue
-		smacked.safe_throw_at(open_turf, 1, 2, gentle = TRUE)
+		smacked.safe_throw_at(open_turf, 1, 1, spin = FALSE, gentle = TRUE)
 
+/**
+ * Updates the state of the minecart to be on or off rails.
+ */
 /obj/structure/closet/crate/miningcar/proc/update_rail_state(new_state)
 	on_rails = new_state
 	if(on_rails)
@@ -246,6 +292,12 @@
 		try_put_on_rails(usr, get_turf(over))
 		return
 
+/**
+ * Attempt to remove the cart from rails
+ *
+ * * user - The user attempting to remove the cart from the rails.
+ * * new_destination - The turf the cart will be moved to.
+ */
 /obj/structure/closet/crate/miningcar/proc/try_take_off_rails(mob/living/user, turf/open/new_destination)
 	balloon_alert(user, "removing from rails...")
 	if(!do_after(user, 2 SECONDS, src))
@@ -256,6 +308,12 @@
 	thud_sound.pitch = 0.5
 	playsound(src, thud_sound, 50, TRUE)
 
+/**
+ * Attempt to put the cart on rails
+ *
+ * * user - The user attempting to put the cart on the rails.
+ * * new_destination - The turf the cart will be moved to.
+ */
 /obj/structure/closet/crate/miningcar/proc/try_put_on_rails(mob/living/user, turf/open/new_destination)
 	balloon_alert(user, "putting on rails...")
 	if(!do_after(user, 2 SECONDS, src))
@@ -277,13 +335,17 @@
 		return
 	if(momentum <= 8)
 		momentum = floor(momentum / 2)
-		break
+		return
 	smack(bumped_atom)
 
 /obj/structure/closet/crate/miningcar/Bumped(atom/movable/bumped_atom)
 	. = ..()
+	INVOKE_ASYNC(src, PROC_REF(shove_off), bumped_atom)
+
+/obj/structure/closet/crate/miningcar/proc/shove_off(atom/movable/bumped_atom)
 	if(!on_rails || momentum > 0)
 		return
+
 	var/movedir = bumped_atom.dir
 	var/turf/next_turf = get_step(src, movedir)
 	if(isnull(next_turf) || !(locate(/obj/structure/minecart_rail) in next_turf))
@@ -308,6 +370,16 @@
 		if(bumped_item.w_class <= WEIGHT_CLASS_SMALL)
 			return
 		momentum += bumped_item.w_class
+
+	else if(istype(bumped_atom, /obj/structure/closet/crate/miningcar))
+		var/obj/structure/closet/crate/miningcar/bumped_car = bumped_atom
+		if(bumped_car.momentum <= 0)
+			return
+		momentum += bumped_car.momentum
+		bumped_car.momentum = 0
+
+	if(momentum <= 0)
+		return
 
 	setDir(movedir)
 	var/datum/move_loop/loop = GLOB.move_manager.move(src, dir, delay = calculate_delay(), subsystem = SSconveyors, flags = MOVEMENT_LOOP_START_FAST|MOVEMENT_LOOP_IGNORE_PRIORITY)
@@ -338,8 +410,9 @@
 		return NONE
 
 	GLOB.move_manager.stop_looping(src, SSconveyors)
-	if(momentum >= 10)
+	if(momentum >= 8)
 		visible_message(span_warning("[src] comes to a halt!"))
+		throw_contents()
 	else
 		visible_message(span_notice("[src] comes to a slow stop."))
 	momentum = 0
@@ -347,6 +420,28 @@
 
 /obj/structure/closet/crate/miningcar/proc/decay_momentum(datum/move_loop/move/source)
 	SIGNAL_HANDLER
+	var/obj/structure/minecart_rail/railbreak/stop_break = locate() in loc
+	var/obj/structure/cable/cable = locate() in loc
+
+	if(stop_break && cable?.avail(10 KILO JOULES))
+		if(momentum >= 8)
+			visible_message(span_notice("[src] comes to a sudden stop."))
+		else
+			visible_message(span_notice("[src] comes to a stop."))
+		momentum = 0
+		GLOB.move_manager.stop_looping(src, SSconveyors)
+		cable.add_delayedload(1 KILO JOULES)
+		return
+
+	if(cable?.avail(1 KILO JOULES))
+		cable.add_delayedload(1 KILO JOULES)
+		// Speeds up the cart to 5 or 10, then stops decay
+		if(momentum <= 5)
+			momentum = 5
+		else if(momentum <= 10)
+			momentum = 10
+		return
+
 	momentum -= 1
 	if(momentum <= 0)
 		GLOB.move_manager.stop_looping(src, SSconveyors)
@@ -356,12 +451,42 @@
 	var/datum/move_loop/loop = GLOB.move_manager.processing_on(src, SSconveyors)
 	loop?.set_delay(calculate_delay())
 
+/// Calculates how fast the cart is going
 /obj/structure/closet/crate/miningcar/proc/calculate_delay()
 	return (-0.05 SECONDS * momentum) + 1.1 SECONDS
 
+/// Throws all the contents of the cart out ahead
+/obj/structure/closet/crate/miningcar/proc/throw_contents()
+	var/was_open = opened
+	var/list/to_yeet = contents.Copy()
+	bust_open()
+	if(!opened)
+		return
+
+	var/yeet_rider = has_buckled_mobs()
+	if(yeet_rider)
+		to_yeet += buckled_mobs
+		unbuckle_all_mobs()
+
+	if(!length(to_yeet))
+		if(!was_open)
+			visible_message(span_warning("[src] breaks open!"))
+		return
+
+	var/throw_distance = clamp(ceil(momentum / 3) - 4, 1, 5)
+	var/turf/some_distant_turf = get_edge_target_turf(src, dir)
+	for(var/obj/item/yeeten in to_yeet)
+		yeeten.throw_at(some_distant_turf, throw_distance, 1, quickstart = TRUE)
+
+	if(was_open)
+		visible_message(span_warning("[src] spills its contents!"))
+	else
+		// Update this message if someone allows multiple people to ride one minecart
+		visible_message(span_warning("[src] breaks open, spilling its contents[yeet_rider ? " and throwing its rider":""]!"))
+
 /obj/structure/minecart_rail
-	name = "rail"
-	desc = "No gold necessary, fortunately."
+	name = "cart rail"
+	desc = "Carries carts along the track."
 	icon = 'icons/obj/tram/tram_rails.dmi'
 	icon_state = "rail"
 	layer = TRAM_RAIL_LAYER
@@ -375,3 +500,12 @@
 	AddElement(/datum/element/footstep_override, footstep = FOOTSTEP_CATWALK)
 	for(var/obj/structure/closet/crate/miningcar/cart in loc)
 		cart.update_rail_state(TRUE)
+
+/obj/structure/minecart_rail/examine(mob/user)
+	. = ..()
+	. += span_notice("Run a cable underneath it to power carts as they travel, maintaining their speed.")
+
+/obj/structure/minecart_rail/railbreak
+	name = "cart rail break"
+	desc = "Stops carts in their tracks. On the tracks. You get what I mean."
+	color = COLOR_DARK_RED
