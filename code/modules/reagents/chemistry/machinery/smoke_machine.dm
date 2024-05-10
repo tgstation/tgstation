@@ -125,6 +125,7 @@
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transferred_by = user)
 		if(units)
 			to_chat(user, span_notice("You transfer [units] units of the solution to [src]."))
+			return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smoke_machine/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
