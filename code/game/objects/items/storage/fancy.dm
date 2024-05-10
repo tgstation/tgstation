@@ -236,11 +236,11 @@
 	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
 	register_context()
 
-/obj/item/storage/fancy/cigarettes/attack(mob/living/M, mob/living/user, params)
+/obj/item/storage/fancy/cigarettes/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(M != user) // you can quickly put a cigarette in your mouth only
+	if(interacting_with != user) // you can quickly put a cigarette in your mouth only
 		return ..()
-	quick_remove_item(/obj/item/clothing/mask/cigarette, user, equip = 1)
+	quick_remove_item(/obj/item/clothing/mask/cigarette, user, equip_to_mouth = TRUE)
 
 /obj/item/storage/fancy/cigarettes/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -256,14 +256,14 @@
 	return CLICK_ACTION_SUCCESS
 
 /// Removes an item or puts it in mouth from the packet, if any
-/obj/item/storage/fancy/cigarettes/proc/quick_remove_item(obj/item/grabbies, mob/user, equip = 0)
+/obj/item/storage/fancy/cigarettes/proc/quick_remove_item(obj/item/grabbies, mob/user, equip_to_mouth =  FALSE)
 	var/obj/item/finger = locate(grabbies) in contents
 	if(finger)
-		if(!equip)
+		if(!equip_to_mouth)
 			atom_storage.remove_single(user, finger, drop_location())
 			user.put_in_hands(finger)
 			return
-		if(user.equip_to_slot_if_possible(finger, ITEM_SLOT_MASK, 0, 1, 1))
+		if(user.equip_to_slot_if_possible(finger, ITEM_SLOT_MASK, qdel_on_fail = FALSE, disable_warning = TRUE))
 			finger.forceMove(user)
 			return
 		balloon_alert(user, "mouth is covered!")
