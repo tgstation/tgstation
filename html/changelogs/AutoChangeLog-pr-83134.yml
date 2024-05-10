@@ -1,4 +1,0 @@
-author: "paganiy"
-delete-after: True
-changes:
-  - bugfix: "The shuttle will no longer delete you while you are in jaunt"
