@@ -126,6 +126,7 @@
 		if(units)
 			to_chat(user, span_notice("You transfer [units] units of the solution to [src]."))
 			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/smoke_machine/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
