@@ -1,0 +1,5 @@
+author: "norsvenska"
+delete-after: True
+changes:
+  - bugfix: "The Coroner and Bitrunner can now be selected as a target for kidnapping and heirloom destruction objectives."
+  - bugfix: "The Chief Engineer is now a valid target for heirloom destruction objectives."
