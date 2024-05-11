@@ -456,31 +456,32 @@
 	return obscured
 
 
-/obj/item/proc/equip_to_best_slot(mob/M)
-	if(M.equip_to_appropriate_slot(src))
-		M.update_held_items()
+/// Tries to equip an item, store it in open storage, or in next best storage
+/obj/item/proc/equip_to_best_slot(mob/user)
+	if(user.equip_to_appropriate_slot(src))
+		user.update_held_items()
 		return TRUE
 	else
 		if(equip_delay_self)
 			return
 
-	if(M.active_storage?.attempt_insert(src, M))
+	if(user.active_storage?.attempt_insert(src, user, messages = FALSE))
 		return TRUE
 
 	var/list/obj/item/possible = list(
-		M.get_inactive_held_item(),
-		M.get_item_by_slot(ITEM_SLOT_BELT),
-		M.get_item_by_slot(ITEM_SLOT_DEX_STORAGE),
-		M.get_item_by_slot(ITEM_SLOT_BACK),
+		user.get_inactive_held_item(),
+		user.get_item_by_slot(ITEM_SLOT_BELT),
+		user.get_item_by_slot(ITEM_SLOT_DEX_STORAGE),
+		user.get_item_by_slot(ITEM_SLOT_BACK),
 	)
-	for(var/i in possible)
-		if(!i)
+	for(var/thing in possible)
+		if(isnull(thing))
 			continue
-		var/obj/item/I = i
-		if(I.atom_storage?.attempt_insert(src, M))
+		var/obj/item/gear = thing
+		if(gear.atom_storage?.attempt_insert(src, user, messages = FALSE))
 			return TRUE
 
-	to_chat(M, span_warning("You are unable to equip that!"))
+	to_chat(user, span_warning("You are unable to equip that!"))
 	return FALSE
 
 
