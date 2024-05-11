@@ -128,6 +128,17 @@
 /obj/item/soulstone/proc/role_check(mob/who)
 	return required_role ? (who.mind && who.mind.has_antag_datum(required_role, TRUE)) : TRUE
 
+
+/// Returns the antag string by theme, except holy
+/obj/item/soulstone/proc/get_antag_role()
+	switch(theme)
+		if(THEME_WIZARD)
+			return ROLE_WIZARD
+		if(THEME_CULT)
+			return ROLE_CULTIST
+		if(THEME_HOLY)
+			return NONE
+
 /// Called whenever the soulstone releases a shade from it.
 /obj/item/soulstone/proc/on_release_spirits()
 	if(!one_use)
@@ -312,9 +323,10 @@
 		return TRUE
 
 	to_chat(user, "[span_userdanger("Capture failed!")]: The soul has already fled its mortal frame. You attempt to bring it back...")
+	var/antag_role = get_antag_role()
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
-		role = ROLE_CULTIST,
-		check_jobban = ROLE_CULTIST,
+		role = antag_role,
+		check_jobban = antag_role || ROLE_CULTIST,
 		poll_time = 20 SECONDS,
 		checked_target = src,
 		ignore_category = POLL_IGNORE_SHADE,
