@@ -3516,6 +3516,14 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
+/obj/machinery/requests_console/directional/north{
+	department = "Security";
+	name = "Security Requests Console"
+	},
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/information,
+/obj/effect/mapping_helpers/requests_console/ore_update,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/qm)
 "bkM" = (
@@ -32953,10 +32961,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
-"lJR" = (
-/obj/structure/noticeboard/qm,
-/turf/closed/wall,
-/area/station/command/heads_quarters/qm)
 "lKu" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space/basic,
@@ -62295,6 +62299,9 @@
 	},
 /obj/structure/statue/gold/qm,
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/machinery/status_display/supply{
+	pixel_y = 32
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "vQs" = (
@@ -64632,6 +64639,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"wEH" = (
+/obj/structure/noticeboard/qm,
+/turf/closed/wall,
+/area/station/cargo/storage)
 "wER" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -89127,7 +89138,7 @@ jXu
 jXu
 kAI
 mGf
-cbz
+wEH
 kUu
 vmm
 bhm
@@ -89898,7 +89909,7 @@ aaa
 jXu
 jXu
 xJk
-lJR
+kQP
 bkL
 wtQ
 xIZ
