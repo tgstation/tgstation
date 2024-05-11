@@ -208,3 +208,56 @@
   - bugfix: Silicons can set the teleporter destinations again.
   - bugfix: The quick equip 'E' hotkey shouldn't warn if one of your bags is full
       anymore
+2024-05-10:
+  00-Steven:
+  - qol: Added alt-click usage context to toggle_icon component
+  - bugfix: The stomach pump surgery actually works again.
+  - spellcheck: '"brusing" to "bruising" in the message you get when failing the stomach
+      pump surgery.'
+  Echriser:
+  - bugfix: conveyor switches work for cyborgs again
+  GoldenAlpharex for the code, Thlumyn for the sprites:
+  - bugfix: Fixed smoothing turfs displaying some incorrect damaged overlays because
+      of a non-smoothing damage overlay of different dimensions than the smoothing
+      sprite used as the base. Less black void, let's go!
+  - image: Added smooth broken/burnt overlays for grass, meaning that it's going to
+      look a lot less broken when the grass tile is at the edge of a smoothing group.
+  Jacquerel:
+  - rscdel: Being sacrified by a Heretic no longer gives you an incurable phobia.
+  - rscadd: Being sacrificed by a Heretic will drop 2-4 of your organs on the ground
+      and replace them with "corrupt organs" with negative effects which can be suppressed
+      with Holy Water.
+  - rscadd: Players who have been sacrificed by Heretics will experience additional
+      and rapidly lethal consequences for attempting to fight someone who previously
+      sacrificed them, as long as that person is wearing a focus.
+  - sound: Lasers adjust their pitch as they run out of charge, rather than frequency
+  Melbert:
+  - qol: Morgue trays (and the contents inside) are now animated on open and close
+  MrStonedOne & Lilah Novi:
+  - rscadd: Say commands typed in the command bar now trigger typing indicators
+  Pickle-Coding:
+  - qol: The labor camp shuttle properly sets people to parole after they complete
+      their work.
+  - qol: The labor camp shuttle specifies which person returned to the station.
+  ShizCalev:
+  - bugfix: Cursed Items wizard event actually works again.
+  TiviPlus:
+  - bugfix: fixed clients being seen as stuck doing tutorials in some cases when changing
+      mobs
+  jlsnow301:
+  - bugfix: Supermatter shards now have screentips with a wrench in hand
+  malton33:
+  - bugfix: space heaters now display the correct mode when the maintenance panel
+      is closed
+  paganiy:
+  - bugfix: The shuttle will no longer delete you while you are in jaunt
+  vinylspiders:
+  - bugfix: moths with functional/flight potion wings get an animation when they *flap
+      once again, and it makes a sound
+2024-05-11:
+  carlarctg:
+  - rscadd: Chance to become crab on nonlethal DNA meltdown
+  norsvenska:
+  - bugfix: The Coroner and Bitrunner can now be selected as a target for kidnapping
+      and heirloom destruction objectives.
+  - bugfix: The Chief Engineer is now a valid target for heirloom destruction objectives.
