@@ -38,14 +38,14 @@ export const Health = (props) => {
         >
           {health !== undefined && (
             <ProgressBar
-              value={health / 100}
+              value={scanning ? health / 100 : 0}
               ranges={{
                 good: [0.5, Infinity],
                 average: [0.2, 0.5],
                 bad: [-Infinity, 0.2],
               }}
             >
-              <AnimatedNumber value={health} />
+              {scanning ? <AnimatedNumber value={health} /> : 'Off'}
             </ProgressBar>
           )}
         </Section>
