@@ -62,7 +62,7 @@
 /obj/machinery/power/multitool_act_secondary(mob/living/user, obj/item/tool)
 	return multitool_act(user, tool)
 
-/// Called on multitool_act when we can change cable layers, override to add more conditions 
+/// Called on multitool_act when we can change cable layers, override to add more conditions
 /obj/machinery/power/proc/cable_layer_act(mob/living/user, obj/item/tool)
 	var/choice = tgui_input_list(user, "Select Power Line For Operation", "Select Cable Layer", GLOB.cable_name_to_layer)
 	if(isnull(choice) || QDELETED(src) || QDELETED(user) || QDELETED(tool) || !user.Adjacent(src) || !user.is_holding(tool))
@@ -176,7 +176,7 @@
 	var/surplus = local_apc.surplus()
 	var/grid_used = min(surplus, amount)
 	var/apc_used = 0
-	if((amount > grid_used) && !ignore_apc) // Use from the APC's cell if there isn't enough energy from the grid.
+	if((amount > grid_used) && !ignore_apc && !QDELETED(local_apc.cell)) // Use from the APC's cell if there isn't enough energy from the grid.
 		apc_used = local_apc.cell.use(amount - grid_used, force = force)
 
 	if(!force && (amount < grid_used + apc_used)) // If we aren't forcing it and there isn't enough energy to supply demand, return nothing.
@@ -204,7 +204,7 @@
 		return amount
 
 	var/obj/machinery/power/apc/my_apc = my_area.apc
-	if(isnull(my_apc))
+	if(isnull(my_apc) || QDELETED(my_apc.cell))
 		return FALSE
 	return my_apc.cell.use(amount, force = force)
 

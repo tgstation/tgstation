@@ -13,8 +13,7 @@
 /datum/tutorial/New(mob/user)
 	src.user = user
 
-	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(destroy_self))
-	RegisterSignal(user.client, COMSIG_QDELETING, PROC_REF(destroy_self))
+	RegisterSignals(user, list(COMSIG_QDELETING, COMSIG_MOB_LOGOUT), PROC_REF(destroy_self))
 
 /datum/tutorial/Destroy(force)
 	user.client?.screen -= instruction_screen
@@ -242,7 +241,13 @@
 /// Dismisses the tutorial, not marking it as completed in the database.
 /// Call `/datum/tutorial/proc/dismiss()` instead.
 /datum/tutorial_manager/proc/dismiss(mob/user)
-	performing_ckeys -= user.ckey
+	// this can be null in some disconnect/mob logout cases so we use some fallbacks
+	var/user_ckey = user.ckey
+	if(!user_ckey && user.canon_client)
+		user_ckey = user.canon_client.ckey
+	if(!user_ckey && user.mind?.key)
+		user_ckey = ckey(user.mind.key)
+	performing_ckeys -= user_ckey
 
 /// Given a ckey, will mark them as being completed without affecting the database.
 /// Call `/datum/tutorial/proc/complete()` instead.

@@ -99,7 +99,7 @@
 /obj/machinery/dna_infuser/proc/end_infuse(fail_explanation, fail_title)
 	var/mob/living/carbon/human/human_occupant = occupant
 	if(human_occupant.infuse_organ(infusing_into))
-		check_tier_progression(src)
+		check_tier_progression(human_occupant)
 		to_chat(occupant, span_danger("You feel yourself becoming more... [infusing_into.infusion_desc]?"))
 	infusing = FALSE
 	infusing_into = null
@@ -123,7 +123,7 @@
 		&& target.has_status_effect(infusing_into.status_effect_type) \
 	)
 		max_tier_allowed++
-		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 		visible_message(span_notice("[src] dings as it records the results of the full infusion."))
 
 /obj/machinery/dna_infuser/update_icon_state()

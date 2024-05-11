@@ -16,17 +16,15 @@ INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 27);
 In any query remember to add a prefix to the table names if you use one.
 -----------------------------------------------------
 Version 5.27, 26 April 2024, by zephyrtfa
-Add the ip intel table
+Add the ip intel whitelist table
 ```sql
-DROP TABLE IF EXISTS `ipintel`;
+DROP TABLE IF EXISTS `ipintel_whitelist`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ipintel` (
-  `ip` int(10) unsigned NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `intel` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ip`),
-  KEY `idx_ipintel` (`ip`,`intel`,`date`)
+CREATE TABLE `ipintel_whitelist` (
+	`ckey` varchar(32) NOT NULL,
+	`admin_ckey` varchar(32) NOT NULL,
+	PRIMARY KEY (`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 ```

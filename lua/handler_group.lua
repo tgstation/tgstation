@@ -14,7 +14,7 @@ function HandlerGroup:register_signal(datum, signal, func)
 	if not callback then
 		return
 	end
-	table.insert(self.registered, { datum = datum, signal = signal, callback = callback  })
+	table.insert(self.registered, { datum = dm.global_proc("WEAKREF", datum), signal = signal, callback = callback  })
 end
 
 -- Clears all the signals that have been registered on this HandlerGroup
