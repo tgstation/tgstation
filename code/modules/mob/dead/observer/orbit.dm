@@ -69,7 +69,6 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		if(number_of_orbiters)
 			serialized["orbiters"] = number_of_orbiters
 
-
 		if(mob_poi.GetComponent(/datum/component/deadchat_control))
 			deadchat_controlled += list(serialized)
 
