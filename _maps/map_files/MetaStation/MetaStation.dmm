@@ -730,9 +730,6 @@
 "anW" = (
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/west,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -2047,16 +2044,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"aMA" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/construction/storage_wing)
 "aMB" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/dark,
@@ -5082,7 +5069,6 @@
 	},
 /obj/structure/window/spawner/directional/west,
 /obj/structure/disposalpipe/segment,
-/obj/structure/sign/warning/directional/west,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
@@ -6101,6 +6087,10 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/commons/fitness)
+"cfz" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall,
+/area/station/cargo/warehouse)
 "cfA" = (
 /obj/machinery/oven/range,
 /turf/open/floor/iron/cafeteria,
@@ -7998,7 +7988,6 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "cSb" = (
-/obj/structure/plasticflaps,
 /obj/machinery/disposal/delivery_chute,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -8008,6 +7997,7 @@
 	},
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/east,
+/obj/structure/plasticflaps,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "cSg" = (
@@ -8547,6 +8537,9 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 5
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -10268,6 +10261,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
+"dLg" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/closed/wall,
+/area/station/cargo/warehouse)
 "dLl" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -11060,7 +11059,6 @@
 	pixel_x = -6;
 	pixel_y = 1
 	},
-/obj/structure/extinguisher_cabinet/directional/east,
 /obj/item/clipboard{
 	pixel_x = -5;
 	pixel_y = 31
@@ -11355,6 +11353,9 @@
 "ebX" = (
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/trimline/red/filled/warning/corner,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "ebY" = (
@@ -18965,6 +18966,7 @@
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "gOp" = (
@@ -26436,6 +26438,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/qm)
 "jrL" = (
@@ -30705,6 +30708,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/item/binoculars,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "kOY" = (
@@ -31036,12 +31040,12 @@
 /obj/structure/railing/corner/end/flip{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/tile/brown/diagonal_centre,
+/turf/open/floor/iron/diagonal,
 /area/station/cargo/storage)
 "kUJ" = (
 /obj/effect/turf_decal/box/white{
@@ -32243,9 +32247,8 @@
 	name = "Quartermaster's Office"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/structure/cable,
-/turf/open/floor/iron,
+/turf/open/floor/iron/diagonal,
 /area/station/command/heads_quarters/qm)
 "lsJ" = (
 /obj/structure/disposalpipe/segment{
@@ -34137,6 +34140,9 @@
 /area/station/command/heads_quarters/qm)
 "mgb" = (
 /obj/machinery/light/directional/south,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "mgc" = (
@@ -38206,6 +38212,9 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Cargo Bay - Aft";
 	pixel_x = 14
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -45355,6 +45364,14 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
+"pXQ" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/chair/office,
+/obj/item/toy/plush/lizard_plushie/green{
+	name = "Loads-The-Crates"
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "pYn" = (
 /obj/structure/sign/plaques/kiddie/library{
 	pixel_y = -32
@@ -48490,6 +48507,11 @@
 /obj/effect/turf_decal/arrows{
 	dir = 1
 	},
+/obj/structure/disposaloutlet{
+	dir = 1
+	},
+/obj/structure/disposalpipe/trunk,
+/obj/structure/window/spawner/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "rcq" = (
@@ -51287,13 +51309,16 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/window/spawner/directional/west,
 /obj/structure/disposalpipe/segment,
+/obj/structure/sign/poster/official/random/directional/west,
 /obj/machinery/conveyor{
-	dir = 5;
+	dir = 1;
 	id = "packageExternal"
 	},
-/obj/structure/sign/poster/official/random/directional/west,
+/obj/machinery/door/window/left/directional/north{
+	req_access = list("shipping")
+	},
+/obj/structure/window/spawner/directional/west,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "sbl" = (
@@ -53785,6 +53810,7 @@
 	},
 /obj/structure/window/spawner/directional/west,
 /obj/structure/disposalpipe/segment,
+/obj/structure/sign/warning/directional/west,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "sVx" = (
@@ -57337,6 +57363,7 @@
 	pixel_x = -7
 	},
 /obj/machinery/camera/directional/north,
+/obj/machinery/digital_clock/directional/east,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/qm)
 "uhI" = (
@@ -57968,6 +57995,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/red/filled/warning,
 /obj/effect/turf_decal/caution/stand_clear/red,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "utt" = (
@@ -60513,13 +60543,13 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "vmm" = (
-/obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
 /obj/effect/landmark/start/quartermaster,
 /obj/structure/cable,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/tile/brown/diagonal_centre,
+/turf/open/floor/iron/diagonal,
 /area/station/cargo/storage)
 "vmp" = (
 /obj/structure/cable,
@@ -60660,7 +60690,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "voS" = (
-/obj/machinery/digital_clock/directional/south,
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
@@ -62298,11 +62327,11 @@
 	dir = 10
 	},
 /obj/structure/statue/gold/qm,
-/obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/machinery/status_display/supply{
 	pixel_y = 32
 	},
-/turf/open/floor/iron,
+/obj/effect/turf_decal/tile/brown/diagonal_centre,
+/turf/open/floor/iron/diagonal,
 /area/station/cargo/storage)
 "vQs" = (
 /turf/closed/wall,
@@ -65073,6 +65102,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "wPo" = (
@@ -65741,6 +65771,9 @@
 /area/station/security/warden)
 "xac" = (
 /obj/effect/turf_decal/trimline/red/filled/warning,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "xaj" = (
@@ -66361,7 +66394,6 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "xlv" = (
@@ -68307,13 +68339,13 @@
 /area/station/science/research)
 "xVE" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/window/spawner/directional/south,
-/obj/structure/chair/office,
-/obj/item/toy/plush/lizard_plushie/green{
-	name = "Loads-The-Crates"
+/obj/machinery/disposal/delivery_chute,
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
 	},
-/obj/structure/sign/poster/official/no_erp/directional/north,
-/obj/machinery/light/small/directional/west,
+/obj/structure/plasticflaps,
 /turf/open/floor/iron/sepia,
 /area/station/cargo/sorting)
 "xWm" = (
@@ -85539,7 +85571,7 @@ pnI
 rsf
 lMJ
 lMJ
-aox
+pXQ
 bRM
 hxo
 aSZ
@@ -87866,9 +87898,9 @@ aok
 ujC
 mmR
 mgb
-vQs
-vQs
-vQs
+cfz
+cfz
+dLg
 vQs
 vQs
 vQs
@@ -90938,9 +90970,9 @@ aEH
 aHt
 eAa
 fAP
-aMA
-aMA
-aMA
+aHt
+aHt
+aHt
 anW
 aHt
 hIE
