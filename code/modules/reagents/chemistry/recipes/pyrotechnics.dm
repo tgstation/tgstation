@@ -1,15 +1,49 @@
+#define PURGING_REAGENTS list( \
+	/datum/reagent/medicine/c2/multiver, \
+	/datum/reagent/medicine/pen_acid, \
+	/datum/reagent/medicine/calomel, \
+	/datum/reagent/medicine/ammoniated_mercury, \
+	/datum/reagent/medicine/c2/syriniver, \
+	/datum/reagent/medicine/c2/musiver \
+)
+
 /datum/chemical_reaction/reagent_explosion
 	var/strengthdiv = 10
 	var/modifier = 0
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EXPLOSIVE | REACTION_TAG_MODERATE | REACTION_TAG_DANGEROUS
 	required_temp = 0 //Prevent impromptu RPGs
-	/// Remove clearing mob reagents except in special cases
+	/// Only clear mob reagents in special cases
 	var/clear_mob_reagents = FALSE
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume, clear_mob_reagents)
+	/// If an explosive reaction clears mob reagents, it should always be a minimum power
+	if(ismob(holder.my_atom) && clear_mob_reagents)
+		if((created_volume / strengthdiv) + modifier < 1)
+			modifier += 1 - ((created_volume / strengthdiv) + modifier)
+	/// If this particular explosion doesn't automatically clear mob reagents as an inherent quality,
+	/// then we can still clear mob reagents with some mad science malpractice that shouldn't work but
+	/// does because omnizine is magic and also it's the future or whatever
+	if(ismob(holder.my_atom) && !clear_mob_reagents)
+		/// The explosion needs to be a minimum power to clear reagents: see above
+		var/purge_power = (created_volume / strengthdiv) + modifier
+		/// For doctors who take their Hippocratic Oath with a grain of salt
+		/// but still practice at least some caution with their mad medical science
+		/// Only run all of this if it's at the minimum purge power
+		if(purge_power >= 1)
+			var/has_purging_chemical = FALSE
+			/// They need one of the purge reagents in them
+			for(var/purging_chem as anything in PURGING_REAGENTS)
+				if(holder.has_reagent(purging_chem))
+					/// We have a purging chemical
+					has_purging_chemical = TRUE
+					break
+			/// Then we need omnizine! MAGIC!
+			var/has_omnizine = holder.has_reagent(/datum/reagent/medicine/omnizine)
+			if(has_purging_chemical && has_omnizine)
+				/// With all this medical "science" combined, we can clear mob reagents
+				clear_mob_reagents = TRUE
 	default_explode(holder, created_volume, modifier, strengthdiv, clear_mob_reagents)
-
 /datum/chemical_reaction/reagent_explosion/nitroglycerin
 	results = list(/datum/reagent/nitroglycerin = 2)
 	required_reagents = list(/datum/reagent/glycerol = 1, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/toxin/acid = 1)
@@ -106,30 +140,17 @@
 /datum/chemical_reaction/reagent_explosion/penthrite_explosion_epinephrine
 	required_reagents = list(/datum/reagent/medicine/c2/penthrite = 1, /datum/reagent/medicine/epinephrine = 1)
 	strengthdiv = 5
-
-/datum/chemical_reaction/reagent_explosion/penthrite_explosion_epinephrine/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume, clear_mob_reagents)
-	if(holder.has_reagent(/datum/reagent/medicine/omnizine))
-		/// Clear reagents if TRUE; no penstacking for miners
-		/// But medics who work hard enough can make this
-		/// to clear reagents instantly (for a price...)
-		clear_mob_reagents = TRUE
-		if(ismob(holder.my_atom))
-		/// Minimum explosion mod of 1.5 if inside a mob
-		/// to make this a trade-off for medics who want
-		/// a quick instant purge of all chems for someone
-			modifier = (created_volume > 5 ? 0 : 1.5)
-	..()
+	/// Penthrite is rare as hell, so this clears your reagents
+	/// Will most likely be from miners accidentally penstacking
+	clear_mob_reagents = TRUE
 
 
 /datum/chemical_reaction/reagent_explosion/penthrite_explosion_atropine
 	required_reagents = list(/datum/reagent/medicine/c2/penthrite = 1, /datum/reagent/medicine/atropine = 1)
 	strengthdiv = 5
 	modifier = 5
-	/// TRUE for penthrite + atropine, because both are rarer chemicals
-	/// It'll fucking gib your patient unless they're in a bomb suit
-	/// but this should still purge reagents because the prospect of someone
-	/// dressing someone up in a bomb suit to pull this off is hilarious
-	/// Gives a whole new meaning to CLEAR!!!
+	/// Rare reagents clear your reagents
+	/// Probably not good for you because you'll need healing chems to survive this most likely
 	clear_mob_reagents = TRUE
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
