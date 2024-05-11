@@ -10531,6 +10531,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"dPA" = (
+/obj/effect/spawner/random/vending/colavend,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/primary/port)
 "dPF" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/stripes/red/line,
@@ -21501,8 +21506,6 @@
 /area/station/maintenance/port)
 "hKq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/maintenance,
-/obj/machinery/light/small/broken/directional/north,
 /obj/machinery/button/door/directional/north{
 	id = "warehouse";
 	name = "Warehouse Shutters Control"
@@ -21520,12 +21523,6 @@
 	},
 /area/station/service/chapel)
 "hKw" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral{
@@ -24657,6 +24654,7 @@
 	pixel_x = 5;
 	pixel_y = 7
 	},
+/obj/machinery/light/small/broken/directional/east,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "iNo" = (
@@ -27295,9 +27293,6 @@
 "jFi" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-/obj/effect/turf_decal/trimline/brown/filled/corner{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -34380,9 +34375,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/junction{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/structure/sign/poster/official/random/directional/north,
@@ -86619,7 +86611,7 @@ qkD
 erM
 giD
 vQs
-eHf
+dPA
 hyW
 xOw
 iOc
