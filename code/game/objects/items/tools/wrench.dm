@@ -30,6 +30,7 @@
 
 /obj/item/wrench/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/item_storage_state, "[icon_state]_stg")
 	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
 
 /obj/item/wrench/suicide_act(mob/living/user)
@@ -111,6 +112,7 @@
 		clumsy_check = FALSE, \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+	AddElement(/datum/element/item_storage_state, "[icon_state]_stg")
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].

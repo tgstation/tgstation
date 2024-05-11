@@ -127,10 +127,6 @@
 	throw_range = 7
 	force = 0
 	var/random_color = TRUE
-	/// the string of the dmi state the balloon has while on the floor.
-	var/world_state
-	/// the string of the dmi state the balloon has while in your inventory.
-	var/storage_state
 	/// the string describing the name of balloon's current colour.
 	var/current_color
 
@@ -159,13 +155,6 @@
 		list("orange", "purple") = /obj/item/toy/balloon_animal/plasmaman,
 	)
 
-/obj/item/toy/balloon/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
-	. = ..()
-	if(isturf(loc))
-		icon_state = "[world_state]"
-	else
-		icon_state = "[storage_state]"
-	update_appearance()
 
 /obj/item/toy/balloon/long/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(!istype(attacking_item, /obj/item/toy/balloon/long) || !HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
@@ -223,8 +212,7 @@
 		name = "[chosen_balloon_color] [name]"
 		icon_state = "[icon_state]_[chosen_balloon_color]"
 		inhand_icon_state = icon_state
-		world_state = "[icon_state]"
-		storage_state = "[icon_state]_storage"
+	AddElement(/datum/element/item_storage_state, "[icon_state]_storage")
 
 /obj/item/toy/balloon/corgi
 	name = "corgi balloon"
