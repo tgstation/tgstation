@@ -326,7 +326,7 @@
 	var/antag_role = get_antag_role()
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		role = antag_role,
-		check_jobban = antag_role || ROLE_CULTIST,
+		check_jobban = (antag_role || ROLE_CULTIST),
 		poll_time = 20 SECONDS,
 		checked_target = src,
 		ignore_category = POLL_IGNORE_SHADE,
