@@ -2471,7 +2471,6 @@
 	dir = 9
 	},
 /turf/open/floor/iron,
-/turf/open/floor/iron,
 /area/station/cargo/lobby)
 "aUm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -6661,10 +6660,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms)
-"crP" = (
-/obj/structure/lattice,
-/turf/closed/wall,
-/area/station/maintenance/port/greater)
 "csb" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -9859,6 +9854,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
+"dCZ" = (
+/obj/machinery/status_display/supply,
+/turf/closed/wall,
+/area/station/cargo/sorting)
 "dDe" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
@@ -13772,7 +13771,6 @@
 	pixel_x = -7;
 	pixel_y = 1
 	},
-/obj/item/toy/figure/cargotech,
 /turf/open/floor/catwalk_floor/iron,
 /area/station/cargo/storage)
 "eUL" = (
@@ -18210,7 +18208,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/turf/open/floor/iron,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "gBx" = (
@@ -32057,6 +32054,10 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
+"lpg" = (
+/obj/machinery/status_display/supply,
+/turf/closed/wall,
+/area/station/cargo/storage)
 "lpo" = (
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
@@ -32248,10 +32249,6 @@
 	},
 /turf/open/floor/iron/white/side,
 /area/station/medical/medbay/central)
-"lsN" = (
-/obj/structure/lattice,
-/turf/closed/wall/r_wall,
-/area/station/security/prison/safe)
 "lsP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32486,9 +32483,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/door/window/left/directional/west{
+/obj/machinery/door/window/left/directional/east{
 	name = "Crate Security Door";
-	dir = 4
+	req_access = list("shipping")
 	},
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
@@ -37387,7 +37384,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
-/turf/open/floor/iron,
 /area/station/cargo/storage)
 "nmf" = (
 /obj/machinery/smartfridge,
@@ -38535,8 +38531,6 @@
 "nDS" = (
 /obj/effect/turf_decal/bot_white,
 /obj/effect/spawner/random/structure/crate_loot,
-/turf/open/floor/iron,
-/turf/open/floor/iron,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "nDT" = (
@@ -44932,10 +44926,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
-"pQD" = (
-/turf/open/floor/iron,
-/turf/open/floor/iron,
-/area/station/cargo/lobby)
 "pQG" = (
 /obj/machinery/porta_turret/ai{
 	dir = 4
@@ -45041,14 +45031,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"pSy" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/port/fore)
 "pSz" = (
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating,
@@ -49172,7 +49154,6 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/iron,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "rrg" = (
@@ -54721,8 +54702,6 @@
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 4
 	},
-/turf/open/floor/iron,
-/turf/open/floor/iron,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "tmq" = (
@@ -64220,7 +64199,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -65415,7 +65393,6 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "wUj" = (
@@ -69047,11 +69024,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/door/window/left/directional/west{
-	name = "Crate Security Door";
-	dir = 4
-	},
 /obj/effect/landmark/start/assistant,
+/obj/machinery/door/window/right/directional/east{
+	name = "Crate Security Door";
+	req_access = list("shipping")
+	},
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "yhO" = (
@@ -85564,7 +85541,7 @@ hxo
 dNj
 eaV
 lMJ
-crP
+fcq
 awh
 awh
 wEz
@@ -86077,7 +86054,7 @@ dZB
 hxo
 hxo
 hxo
-cbz
+lpg
 wOX
 xlt
 vQs
@@ -88629,7 +88606,7 @@ lpS
 lpS
 lpS
 ykL
-pSy
+lpS
 lpS
 bxS
 kSp
@@ -89674,7 +89651,7 @@ pQI
 puD
 kRK
 cAs
-pQD
+rVn
 qxJ
 oZg
 agQ
@@ -90449,7 +90426,7 @@ rVn
 qxJ
 mgJ
 eUL
-bzH
+dCZ
 bGt
 uRu
 xwM
@@ -91186,7 +91163,7 @@ mmA
 wZz
 wZz
 wZz
-lsN
+sjP
 lMJ
 jXu
 jXu
