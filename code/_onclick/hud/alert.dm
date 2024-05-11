@@ -370,14 +370,15 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 	handle_transfer()
 
-/atom/movable/screen/alert/give/alert_examine(mob/clicker)
+/atom/movable/screen/alert/give/examine(mob/user)
 	if(!examinable)
 		return ..()
 
-	var/name_bold = span_boldnotice(name)
-	var/desc_info = span_info("[offer.owner] is offering you the following item (click the alert to take it!):")
-	var/examine_info = jointext(offer.offered_item.examine(clicker), "\n")
-	to_chat(clicker, examine_block("[name_bold]\n[desc_info]\n<hr>[examine_info]"))
+	return list(
+		span_boldnotice(name),
+		span_info("[offer.owner] is offering you the following item (click the alert to take it!):"),
+		"<hr>[jointext(offer.offered_item.examine(user), "\n")]",
+	)
 
 /// An overrideable proc used simply to hand over the item when claimed, this is a proc so that high-fives can override them since nothing is actually transferred
 /atom/movable/screen/alert/give/proc/handle_transfer()
@@ -1083,7 +1084,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return FALSE
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
-		alert_examine(usr)
+		to_chat(usr, examine_block(jointext(examine(usr), "\n")))
 		return FALSE
 	var/datum/our_master = master_ref?.resolve()
 	if(our_master && click_master)
@@ -1098,8 +1099,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	owner = null
 	screen_loc = ""
 
-/// Called when someone tries to examine the alert.
-/atom/movable/screen/alert/proc/alert_examine(mob/clicker)
-	var/name_bold = span_boldnotice(name)
-	var/desc_info = span_info(desc)
-	to_chat(clicker, examine_block("[name_bold]\n[desc_info]"))
+/atom/movable/screen/alert/examine(mob/user)
+	return list(
+		span_boldnotice(name),
+		span_info(desc),
+	)
