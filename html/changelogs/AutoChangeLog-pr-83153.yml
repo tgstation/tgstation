@@ -1,0 +1,4 @@
+author: "Higgin"
+delete-after: True
+changes:
+  - bugfix: "Spies no longer get the 'nothing' / 'free objective' due to trying to make Protect objectives without targets."

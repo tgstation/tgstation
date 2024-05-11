@@ -379,6 +379,10 @@
 			span_notice("You open [src]'s casing."), span_hear("You hear a noise."))
 		deconstruct()
 		return
+
+	if(tool.item_flags & ABSTRACT)
+		return
+
 	to_chat(user, span_userdanger("You stick \the [tool] into the light socket!"))
 	if(has_power() && (tool.obj_flags & CONDUCTS_ELECTRICITY))
 		do_sparks(3, TRUE, src)
