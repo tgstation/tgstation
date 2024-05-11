@@ -313,6 +313,7 @@
 
 	to_chat(user, "[span_userdanger("Capture failed!")]: The soul has already fled its mortal frame. You attempt to bring it back...")
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		role = ROLE_CULTIST,
 		check_jobban = ROLE_CULTIST,
 		poll_time = 20 SECONDS,
 		checked_target = src,
