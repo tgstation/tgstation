@@ -730,9 +730,6 @@
 "anW" = (
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/west,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
 "aok" = (
