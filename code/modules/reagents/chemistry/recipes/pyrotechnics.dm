@@ -44,6 +44,8 @@
 				/// With all this medical "science" combined, we can clear mob reagents
 				clear_mob_reagents = TRUE
 	default_explode(holder, created_volume, modifier, strengthdiv, clear_mob_reagents)
+
+#undef PURGING_REAGENTS
 /datum/chemical_reaction/reagent_explosion/nitroglycerin
 	results = list(/datum/reagent/nitroglycerin = 2)
 	required_reagents = list(/datum/reagent/glycerol = 1, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/toxin/acid = 1)
