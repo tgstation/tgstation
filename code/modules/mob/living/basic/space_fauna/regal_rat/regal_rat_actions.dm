@@ -15,10 +15,16 @@
 	button_icon_state = "coffer"
 	shared_cooldown = NONE
 
-/datum/action/cooldown/mob_cooldown/domain/proc/domain()
-	if(owner.movement_type & VENTCRAWLING)
-		owner.balloon_alert(owner, "can't use while ventcrawling!")
+/datum/action/cooldown/mob_cooldown/domain/IsAvailable(feedback = FALSE)
+	. = ..()
+	if (!.)
 		return FALSE
+	if (owner.movement_type & VENTCRAWLING)
+		if (feedback)
+			owner.balloon_alert(owner, "can't use while ventcrawling!")
+		return FALSE
+
+/datum/action/cooldown/mob_cooldown/domain/proc/domain()
 	var/turf/location = get_turf(owner)
 	location.atmos_spawn_air("[GAS_MIASMA]=4;[TURF_TEMPERATURE(T20C)]")
 	switch (rand(1,10))
@@ -72,6 +78,15 @@
 		/datum/pet_command/point_targeting/attack/glockroach
 	)
 
+/datum/action/cooldown/mob_cooldown/riot/IsAvailable(feedback = FALSE)
+	. = ..()
+	if (!.)
+		return FALSE
+	if (owner.movement_type & VENTCRAWLING)
+		if (feedback)
+			owner.balloon_alert(owner, "can't use while ventcrawling!")
+		return FALSE
+
 /datum/action/cooldown/mob_cooldown/riot/Activate(atom/target)
 	StartCooldown(10 SECONDS)
 	riot()
@@ -85,9 +100,6 @@
  * * Spawn a single mouse if below the mouse cap.
  */
 /datum/action/cooldown/mob_cooldown/riot/proc/riot()
-	if(owner.movement_type & VENTCRAWLING)
-		owner.balloon_alert(owner, "can't use while ventcrawling!")
-		return FALSE
 	var/uplifted_mice = FALSE
 	for (var/mob/living/basic/mouse/nearby_mouse in oview(owner, range))
 		uplifted_mice = convert_mouse(nearby_mouse) || uplifted_mice
