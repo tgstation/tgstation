@@ -267,6 +267,7 @@
 /obj/item/scalpel/supermatter/Initialize(mapload)
 	. = ..()
 	usesLeft = rand(2, 4)
+	AddElement(/datum/element/item_storage_state, "[icon_state]_stg")
 
 /obj/item/hemostat/supermatter
 	name = "supermatter extraction tongs"
@@ -283,6 +284,7 @@
 /obj/item/hemostat/supermatter/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/item_storage_state, "[icon_state]_stg")
 
 /obj/item/hemostat/supermatter/Destroy()
 	QDEL_NULL(sliver)

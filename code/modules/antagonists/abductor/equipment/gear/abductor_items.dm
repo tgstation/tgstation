@@ -710,7 +710,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			"Multitool" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "multitool"),
 			"Screwdriver" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "screwdriver_a"),
 			"Wirecutters" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "cutters"),
-			"Wrench" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "wrench"),
+			"Wrench" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "wrench_stg"),
 			"Welding Tool" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "welder"),
 		)
 		active_toolset = TOOLSET_HACKING
@@ -718,14 +718,14 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			balloon_alert(user, "hacking toolset selected")
 	else
 		tool_list = list(
-			"Retractor" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "retractor"),
-			"Hemostat" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "hemostat"),
-			"Cautery" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "cautery"),
-			"Drill" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "drill"),
-			"Scalpel" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "scalpel"),
-			"Saw" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "saw"),
-			"Bonesetter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bonesetter"),
-			"Blood Filter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bloodfilter"),
+			"Retractor" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "retractor_stg"),
+			"Hemostat" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "hemostat_stg"),
+			"Cautery" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "cautery_stg"),
+			"Drill" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "drill_stg"),
+			"Scalpel" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "scalpel_stg"),
+			"Saw" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "saw_stg"),
+			"Bonesetter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bonesetter_stg"),
+			"Blood Filter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bloodfilter_stg"),
 		)
 		active_toolset = TOOLSET_MEDICAL
 		if(user)
