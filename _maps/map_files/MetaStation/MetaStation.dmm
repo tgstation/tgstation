@@ -48501,9 +48501,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "rbL" = (
-/obj/effect/turf_decal/trimline/brown/warning{
-	dir = 8
-	},
 /obj/effect/turf_decal/arrows{
 	dir = 1
 	},
@@ -48512,7 +48509,9 @@
 	},
 /obj/structure/disposalpipe/trunk,
 /obj/structure/window/spawner/directional/west,
-/turf/open/floor/iron,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/east,
+/turf/open/floor/plating,
 /area/station/cargo/storage)
 "rcq" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/purple/visible,
@@ -68346,7 +68345,7 @@
 	dir = 8
 	},
 /obj/structure/plasticflaps,
-/turf/open/floor/iron/sepia,
+/turf/open/floor/plating,
 /area/station/cargo/sorting)
 "xWm" = (
 /obj/structure/rack,
