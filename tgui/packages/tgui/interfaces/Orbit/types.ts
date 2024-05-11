@@ -1,3 +1,5 @@
+import { BooleanLike } from 'common/react';
+
 export type Antagonist = Observable & { antag: string; antag_group: string };
 
 export type AntagGroup = [string, Antagonist[]];
@@ -13,11 +15,14 @@ export type OrbitData = {
 };
 
 export type Observable = {
-  extra?: string;
   full_name: string;
-  health?: number;
-  job?: string;
-  name?: string;
-  orbiters?: number;
   ref: string;
-};
+  // Optionals
+} & Partial<{
+  client: BooleanLike;
+  extra: string;
+  health: number;
+  job: string;
+  name: string;
+  orbiters: number;
+}>;

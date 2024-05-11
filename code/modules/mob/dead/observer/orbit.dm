@@ -69,6 +69,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		if(number_of_orbiters)
 			serialized["orbiters"] = number_of_orbiters
 
+
 		if(mob_poi.GetComponent(/datum/component/deadchat_control))
 			deadchat_controlled += list(serialized)
 
@@ -81,12 +82,16 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			continue
 
 		if(isnull(mob_poi.mind))
+			var/mob/living/npc = mob_poi
+			serialized["health"] = FLOOR((npc.health / npc.maxHealth * 100), 1)
+
 			npcs += list(serialized)
 			continue
 
 		var/datum/mind/mind = mob_poi.mind
 		var/was_antagonist = FALSE
 
+		serialized["client"] = !!mob_poi.client
 		serialized["name"] = mob_poi.real_name
 
 		if(isliving(mob_poi)) // handles edge cases like blob
