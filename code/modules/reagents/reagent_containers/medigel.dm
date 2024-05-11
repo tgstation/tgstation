@@ -73,14 +73,14 @@
 
 /obj/item/reagent_containers/medigel/libital
 	name = "medical gel (libital)"
-	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains libital, for treating cuts and bruises. Libital does minor liver damage. Diluted with granibitaluri."
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains libital, for treating cuts and bruises. Libital does minor liver damage - a small warning label reads 'DO NOT USE MORE THAN HALF OF CONTENTS IN ANY FIFTEEN MINUTE PERIOD.' Diluted with granibitaluri."
 	icon_state = "brutegel"
 	current_skin = "brutegel"
 	list_reagents = list(/datum/reagent/medicine/c2/libital = 24, /datum/reagent/medicine/granibitaluri = 36)
 
 /obj/item/reagent_containers/medigel/aiuri
 	name = "medical gel (aiuri)"
-	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains aiuri, useful for treating burns. Aiuri does minor eye damage. Diluted with granibitaluri."
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains aiuri, useful for treating burns. Aiuri does minor eye damage - a small warning label reads 'DO NOT USE MORE THAN HALF OF CONTENTS IN ANY FIFTEEN MINUTE PERIOD.' Diluted with granibitaluri."
 	icon_state = "burngel"
 	current_skin = "burngel"
 	list_reagents = list(/datum/reagent/medicine/c2/aiuri = 24, /datum/reagent/medicine/granibitaluri = 36)

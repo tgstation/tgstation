@@ -105,7 +105,7 @@
 /datum/reagent/medicine/c2/libital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	need_mob_update += affected_mob.adjustBruteLoss(-3 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -198,7 +198,7 @@
 	. = ..()
 	var/need_mob_update
 	need_mob_update = affected_mob.adjustFireLoss(-2 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, 0.25 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, 0.35 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -357,7 +357,7 @@
 
 	//you're yes and... oh no!
 	healypoints = round(healypoints, 0.1)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, healypoints / 5, required_organ_flag = affected_organ_flags)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, healypoints, required_organ_flag = affected_organ_flags)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
