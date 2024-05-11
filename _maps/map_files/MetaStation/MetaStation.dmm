@@ -32233,7 +32233,7 @@
 /area/station/hallway/primary/central)
 "lsu" = (
 /obj/machinery/door/airlock/mining{
-	name = "Deliveries"
+	name = "Quartermaster's Office"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
