@@ -13772,6 +13772,7 @@
 	pixel_x = -7;
 	pixel_y = 1
 	},
+/obj/item/toy/figure/cargotech,
 /turf/open/floor/catwalk_floor/iron,
 /area/station/cargo/storage)
 "eUL" = (
@@ -21494,7 +21495,6 @@
 "hKq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/maintenance,
-/obj/machinery/light_switch/directional/east,
 /obj/machinery/light/small/broken/directional/north,
 /obj/machinery/button/door/directional/north{
 	id = "warehouse";
@@ -21502,6 +21502,8 @@
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/mapping_helpers/turn_off_lights_with_lightswitch,
+/obj/structure/table,
+/obj/machinery/microwave,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "hKv" = (
@@ -24639,6 +24641,15 @@
 "iNk" = (
 /obj/structure/sign/poster/random/directional/east,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/donkpockets{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/effect/spawner/random/food_or_drink/donkpockets{
+	pixel_x = 5;
+	pixel_y = 7
+	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "iNo" = (
@@ -46665,7 +46676,6 @@
 /turf/open/space,
 /area/space/nearstation)
 "qzy" = (
-/obj/effect/spawner/random/structure/crate,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/arrows/red{
 	dir = 1
@@ -60204,6 +60214,7 @@
 /obj/item/pushbroom,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "vhU" = (
