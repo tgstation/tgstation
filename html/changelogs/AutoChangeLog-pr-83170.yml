@@ -1,0 +1,5 @@
+author: "paganiy"
+delete-after: True
+changes:
+  - qol: "Now you can put a cigarette in your mouth just by hitting the pack of cigarettes on yourself."
+  - bugfix: "The cigarette pack no longer moves under the spaceman when they interacts with it with the RMB"
