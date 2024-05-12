@@ -27,9 +27,6 @@
 	if(ismob(holder.my_atom) && !clear_mob_reagents)
 		/// The explosion needs to be a minimum power to clear reagents: see above
 		var/purge_power = (created_volume / strengthdiv) + modifier
-		/// For doctors who take their Hippocratic Oath with a grain of salt
-		/// but still practice at least some caution with their mad medical science
-		/// Only run all of this if it's at the minimum purge power
 		if(purge_power >= 1)
 			var/has_purging_chemical = FALSE
 			/// They need one of the purge reagents in them
