@@ -13,6 +13,8 @@
 	melee_damage_upper = 6
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
+	//how many units of venom are injected in target per attack
+	var/venom_dose = 4
 
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
@@ -62,7 +64,7 @@
 	if(isnull(special_reagent))
 		special_reagent = /datum/reagent/toxin
 
-	AddElement(/datum/element/venomous, special_reagent, 4)
+	AddElement(/datum/element/venomous, special_reagent, venom_dose)
 
 /mob/living/basic/snake/befriend(mob/living/new_friend)
 	. = ..()
