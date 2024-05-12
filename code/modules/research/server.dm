@@ -154,17 +154,16 @@
 		if(HDD_OVERLOADED)
 			. += "The front panel is dangling open. The hdd inside is destroyed and the wires are all burned."
 
-/obj/machinery/rnd/server/master/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+/obj/machinery/rnd/server/master/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!tool.tool_behaviour)
-		return ..()
-	// Only antags are given the training and knowledge to disassemble this thing.
-	if(is_special_character(user))
-		return ..()
-	if(user.combat_mode)
 		return NONE
-
-	balloon_alert(user, "you can't find an obvious maintenance hatch!")
-	return ITEM_INTERACT_BLOCKING
+	// Only antags are given the training and knowledge to disassemble this thing.
+	if(!is_special_character(user))
+		if(user.combat_mode)
+			return ITEM_INTERACT_SKIP_TO_ATTACK
+		balloon_alert(user, "you can't find an obvious maintenance hatch!")
+		return ITEM_INTERACT_BLOCKING
+	return NONE
 
 /obj/machinery/rnd/server/master/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/computer_disk/hdd_theft))
@@ -230,7 +229,7 @@
 		to_chat(user, span_notice("You delicately cut the wire. [hdd_wires] wire\s left..."))
 	return TRUE
 
-/obj/machinery/rnd/server/master/on_deconstruction()
+/obj/machinery/rnd/server/master/on_deconstruction(disassembled)
 	// If the machine contains a source code HDD, destroying it will negatively impact research speed. Safest to log this.
 	if(source_code_hdd)
 		// Destroyed with a hard drive inside = harm income

@@ -41,15 +41,33 @@
 /turf/open/update_overlays()
 	if(isnull(damaged_dmi))
 		return ..()
+
 	. = ..()
+
 	if(broken)
-		. += mutable_appearance(damaged_dmi, pick(broken_states()))
+		var/mutable_appearance/broken_appearance = mutable_appearance(damaged_dmi, pick(broken_states()))
+
+		if(smoothing_flags && !(smoothing_flags & SMOOTH_BROKEN_TURF))
+			var/matrix/translation = new
+			translation.Translate(-LARGE_TURF_SMOOTHING_X_OFFSET, -LARGE_TURF_SMOOTHING_Y_OFFSET)
+			broken_appearance.transform = translation
+
+		. += broken_appearance
+
 	else if(burnt)
 		var/list/burnt_states = burnt_states()
+		var/mutable_appearance/burnt_appearance
 		if(burnt_states.len)
-			. += mutable_appearance(damaged_dmi, pick(burnt_states))
+			burnt_appearance = mutable_appearance(damaged_dmi, pick(burnt_states))
 		else
-			. += mutable_appearance(damaged_dmi, pick(broken_states()))
+			burnt_appearance = mutable_appearance(damaged_dmi, pick(broken_states()))
+
+		if(smoothing_flags && !(smoothing_flags & SMOOTH_BURNT_TURF))
+			var/matrix/translation = new
+			translation.Translate(-LARGE_TURF_SMOOTHING_X_OFFSET, -LARGE_TURF_SMOOTHING_Y_OFFSET)
+			burnt_appearance.transform = translation
+
+		. += burnt_appearance
 
 //direction is direction of travel of A
 /turf/open/zPassIn(direction)
@@ -115,11 +133,27 @@
 /turf/open/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)
 	return
 
+
+/turf/open/indestructible/large
+	icon_state = "floor_large"
+
 /turf/open/indestructible/white
 	icon_state = "white"
 
+/turf/open/indestructible/white/smooth_large
+	icon_state = "white_large"
+
+/turf/open/indestructible/white/textured
+	icon_state = "textured_white"
+
 /turf/open/indestructible/dark
 	icon_state = "darkfull"
+
+/turf/open/indestructible/dark/textured
+	icon_state = "textured_dark"
+
+/turf/open/indestructible/dark/smooth_large
+	icon_state = "dark_large"
 
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
@@ -232,6 +266,9 @@
 /turf/open/indestructible/meat/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/indestructible/vault
+	icon_state = "rockvault"
+
 /turf/open/indestructible/plating
 	name = "plating"
 	icon_state = "plating"
@@ -242,6 +279,18 @@
 
 /turf/open/indestructible/plating/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/indestructible/kitchen
+	icon_state = /turf/open/floor/iron/kitchen::icon_state
+
+/turf/open/indestructible/rockyground
+	icon_state = /turf/open/misc/ashplanet/rocky::icon_state
+	icon = /turf/open/misc/ashplanet/rocky::icon
+	name = /turf/open/misc/ashplanet/rocky::name
+
+/turf/open/indestructible/stone
+	icon_state = /turf/open/floor/stone::icon_state
+	name = /turf/open/floor/stone::name
 
 /turf/open/Initalize_Atmos(time)
 	excited = FALSE
@@ -274,7 +323,7 @@
 /turf/open/proc/water_vapor_gas_act()
 	MakeSlippery(TURF_WET_WATER, min_wet_time = 100, wet_time_to_add = 50)
 
-	for(var/mob/living/simple_animal/slime/M in src)
+	for(var/mob/living/basic/slime/M in src)
 		M.apply_water()
 
 	wash(CLEAN_WASH)

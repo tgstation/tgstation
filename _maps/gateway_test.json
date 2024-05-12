@@ -10,6 +10,7 @@
 		"/datum/unit_test/job_roundstart_spawnpoints",
 		"/datum/unit_test/required_map_items",
 		"/datum/unit_test/space_dragon_expiration",
+		"/datum/unit_test/spy_bounty",
 		"/datum/unit_test/traitor"
 	]
 }

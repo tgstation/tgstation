@@ -4,8 +4,8 @@
 	icon_state = "cowboy_brown"
 	armor_type = /datum/armor/shoes_cowboy
 	custom_price = PAYCHECK_CREW
-	var/max_occupants = 4
 	can_be_tied = FALSE
+	var/max_occupants = 4
 	/// Do these boots have spur sounds?
 	var/has_spurs = FALSE
 	/// The jingle jangle jingle of our spurs
@@ -64,7 +64,7 @@
 		to_chat(user, span_notice("[target] slithers into [src]."))
 
 /obj/item/clothing/shoes/cowboy/container_resist_act(mob/living/user)
-	if(!do_after(user, 10, target = user))
+	if(!do_after(user, 1 SECONDS, target = user))
 		return
 	user.forceMove(drop_location())
 

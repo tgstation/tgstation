@@ -58,9 +58,10 @@ Chilling extracts:
 		to_chat(user, span_warning("[src] can't affect such a large area."))
 		return
 	user.visible_message(span_notice("[src] shatters, and a healing aura fills the room briefly."))
-	for(var/turf/area_turf as anything in user_area.get_contained_turfs())
-		for(var/mob/living/carbon/nearby in area_turf)
-			nearby.reagents?.add_reagent(/datum/reagent/medicine/regen_jelly,10)
+	for (var/list/zlevel_turfs as anything in user_area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			for(var/mob/living/carbon/nearby in area_turf)
+				nearby.reagents?.add_reagent(/datum/reagent/medicine/regen_jelly,10)
 	..()
 
 /obj/item/slimecross/chilling/blue
@@ -108,7 +109,7 @@ Chilling extracts:
 		to_chat(user, span_warning("[src] can't affect such a large area."))
 		return
 	var/filtered = FALSE
-	for(var/turf/open/T in A.get_contained_turfs())
+	for(var/turf/open/T in A.get_turfs_from_all_zlevels())
 		var/datum/gas_mixture/G = T.air
 		if(istype(G))
 			G.assert_gas(/datum/gas/plasma)
@@ -173,7 +174,7 @@ Chilling extracts:
 	for(var/mob/living/M in allies)
 		var/datum/status_effect/slimerecall/S = M.apply_status_effect(/datum/status_effect/slimerecall)
 		S.target = user
-	if(do_after(user, 100, target=src))
+	if(do_after(user, 10 SECONDS, target=src))
 		to_chat(user, span_notice("[src] shatters as it tears a hole in reality, snatching the linked individuals from the void!"))
 		for(var/mob/living/M in allies)
 			var/datum/status_effect/slimerecall/S = M.has_status_effect(/datum/status_effect/slimerecall)
@@ -235,9 +236,9 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/red/do_effect(mob/user)
 	var/slimesfound = FALSE
-	for(var/mob/living/simple_animal/slime/slimes_in_view in view(get_turf(user), 7))
+	for(var/mob/living/basic/slime/slime_in_view in view(get_turf(user), 7))
 		slimesfound = TRUE
-		slimes_in_view.docile = TRUE
+		slime_in_view.set_pacified_behaviour()
 	if(slimesfound)
 		user.visible_message(span_notice("[src] lets out a peaceful ring as it shatters, and nearby slimes seem calm."))
 	else
@@ -291,7 +292,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/oil/do_effect(mob/user)
 	user.visible_message(span_danger("[src] begins to shake with muted intensity!"))
-	addtimer(CALLBACK(src, PROC_REF(boom)), 50)
+	addtimer(CALLBACK(src, PROC_REF(boom)), 5 SECONDS)
 
 /obj/item/slimecross/chilling/oil/proc/boom()
 	explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 10, explosion_cause = src) //Large radius, but mostly light damage, and no flash.
@@ -336,7 +337,8 @@ Chilling extracts:
 		to_chat(user, span_warning("[src] can't affect such a large area."))
 		return
 	user.visible_message(span_warning("[src] reflects an array of dazzling colors and light, energy rushing to nearby doors!"))
-	for(var/turf/area_turf as anything in area.get_contained_turfs())
-		for(var/obj/machinery/door/airlock/door in area_turf)
-			new /obj/effect/forcefield/slimewall/rainbow(door.loc)
+	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/machinery/door/airlock/door in area_turf)
+				new /obj/effect/forcefield/slimewall/rainbow(door.loc)
 	return ..()

@@ -40,7 +40,10 @@
 	one_use = TRUE
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user)
-	heldname = sanitize_name(tgui_input_text(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN), allow_numbers = TRUE)
+	var/new_heldname = sanitize_name(tgui_input_text(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN), allow_numbers = TRUE)
+	if(!new_heldname || !user.is_holding(src))
+		return
+	heldname = new_heldname
 	user.log_message("set \"[heldname]\" as a name in a cyborg reclassification board at [loc_name(user)]", LOG_GAME)
 
 /obj/item/borg/upgrade/rename/action(mob/living/silicon/robot/R, user = usr)
@@ -295,7 +298,7 @@
 	/// Minimum time between repairs in seconds
 	var/repair_cooldown = 4
 	var/on = FALSE
-	var/powercost = 10
+	var/energy_cost = 0.01 * STANDARD_CELL_CHARGE
 	var/datum/action/toggle_action
 
 /obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/R, user = usr)
@@ -355,7 +358,7 @@
 			deactivate_sr()
 			return
 
-		if(cyborg.cell.charge < powercost * 2)
+		if(cyborg.cell.charge < energy_cost * 2)
 			to_chat(cyborg, span_alert("Self-repair module deactivated. Please recharge."))
 			deactivate_sr()
 			return
@@ -363,16 +366,16 @@
 		if(cyborg.health < cyborg.maxHealth)
 			if(cyborg.health < 0)
 				repair_amount = -2.5
-				powercost = 30
+				energy_cost = 0.03 * STANDARD_CELL_CHARGE
 			else
 				repair_amount = -1
-				powercost = 10
+				energy_cost = 0.01 * STANDARD_CELL_CHARGE
 			cyborg.adjustBruteLoss(repair_amount)
 			cyborg.adjustFireLoss(repair_amount)
 			cyborg.updatehealth()
-			cyborg.cell.use(powercost)
+			cyborg.cell.use(energy_cost)
 		else
-			cyborg.cell.use(5)
+			cyborg.cell.use(0.005 * STANDARD_CELL_CHARGE)
 		next_repair = world.time + repair_cooldown * 10 // Multiply by 10 since world.time is in deciseconds
 
 		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_BORG_SELF_REPAIR))
@@ -398,6 +401,10 @@
 
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
+	var/obj/item/borg/upgrade/hypospray/U = locate() in R
+	if(U)
+		to_chat(user, span_warning("This unit is already equipped with an expanded hypospray synthesiser!")) //check to see if we already have this module
+		return FALSE
 	if(.)
 		for(var/obj/item/reagent_containers/borghypo/medical/H in R.model.modules)
 			H.upgrade_hypo()
@@ -428,6 +435,7 @@
 			found_hypo = TRUE
 
 		if(!found_hypo)
+			to_chat(user, span_warning("This unit is already equipped with a piercing hypospray upgrade!")) //check to see if we already have this module
 			return FALSE
 
 /obj/item/borg/upgrade/piercing_hypospray/deactivate(mob/living/silicon/robot/R, user = usr)
@@ -435,6 +443,60 @@
 	if (.)
 		for(var/obj/item/reagent_containers/borghypo/H in R.model.modules)
 			H.bypass_protection = initial(H.bypass_protection)
+
+/obj/item/borg/upgrade/surgery_omnitool
+	name = "cyborg surgical omni-tool upgrade"
+	desc = "An upgrade to the Medical model, upgrading the built-in \
+		surgical omnitool, to be on par with advanced surgical tools"
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/medical,  /obj/item/robot_model/syndicate_medical)
+	model_flags = BORG_MODEL_MEDICAL
+
+/obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/cyborg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade in cyborg.model.modules)
+		if(omnitool_upgrade.upgraded)
+			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
+			return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.model.modules)
+		omnitool.upgrade_omnitool()
+
+/obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
+		omnitool.downgrade_omnitool()
+
+/obj/item/borg/upgrade/engineering_omnitool
+	name = "cyborg engineering omni-tool upgrade"
+	desc = "An upgrade to the Engineering model, upgrading the built-in \
+		engineering omnitool, to be on par with advanced engineering tools"
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering,  /obj/item/robot_model/saboteur)
+	model_flags = BORG_MODEL_ENGINEERING
+
+/obj/item/borg/upgrade/engineering_omnitool/action(mob/living/silicon/robot/cyborg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool_upgrade in cyborg.model.modules)
+		if(omnitool_upgrade.upgraded)
+			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
+			return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool in cyborg.model.modules)
+		omnitool.upgrade_omnitool()
+
+/obj/item/borg/upgrade/engineering_omnitool/deactivate(mob/living/silicon/robot/cyborg, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
+		omnitool.downgrade_omnitool()
 
 /obj/item/borg/upgrade/defib
 	name = "medical cyborg defibrillator"
@@ -448,6 +510,10 @@
 /obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
+		var/obj/item/borg/upgrade/defib/U = locate() in R
+		if(U)
+			to_chat(user, span_warning("This unit is already equipped with a defibrillator module!")) //check to see if we already have this module
+			return FALSE
 		var/obj/item/borg/upgrade/defib/backpack/BP = locate() in R //If a full defib unit was used to upgrade prior, we can just pop it out now and replace
 		if(BP)
 			BP.deactivate(R, user)
@@ -504,6 +570,10 @@
 /obj/item/borg/upgrade/processor/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
+		var/obj/item/borg/upgrade/processor/U = locate() in R
+		if(U)
+			to_chat(user, span_warning("This unit is already equipped with a surgical processor module!")) //check to see if we already have this module
+			return FALSE
 		var/obj/item/surgical_processor/SP = new(R.model)
 		R.model.basic_modules += SP
 		R.model.add_module(SP, FALSE, TRUE)
@@ -612,30 +682,39 @@
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
 
-/obj/item/borg/upgrade/inducer/action(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/inducer/action(mob/living/silicon/robot/silicon_friend, user = usr)
 	. = ..()
 	if(.)
-		var/obj/item/inducer/cyborg/inter_inducer = locate() in R
+		var/obj/item/inducer/cyborg/inter_inducer = locate() in silicon_friend
 		if(inter_inducer)
+			silicon_friend.balloon_alert(user, "already has one!")
 			return FALSE
-		inter_inducer = new(R.model)
-		R.model.basic_modules += inter_inducer
-		R.model.add_module(inter_inducer, FALSE, TRUE)
-		inter_inducer.cell = R.cell
 
-/obj/item/borg/upgrade/inducer/deactivate(mob/living/silicon/robot/R, user = usr)
+		inter_inducer = new(silicon_friend.model)
+		silicon_friend.model.basic_modules += inter_inducer
+		silicon_friend.model.add_module(inter_inducer, FALSE, TRUE)
+
+/obj/item/borg/upgrade/inducer/deactivate(mob/living/silicon/robot/silicon_friend, user = usr)
 	. = ..()
-	if (.)
-		var/obj/item/inducer/cyborg/inter_inducer = locate() in R.model
-		if (inter_inducer)
-			R.model.remove_module(inter_inducer, TRUE)
-			inter_inducer.cell = null
+	if(.)
+		var/obj/item/inducer/cyborg/inter_inducer = locate() in silicon_friend.model
+		if(inter_inducer)
+			silicon_friend.model.remove_module(inter_inducer, TRUE)
 
 /obj/item/inducer/cyborg
 	name = "Internal inducer"
-	powertransfer = 1500
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
+	cell_type = null
+
+/obj/item/inducer/cyborg/get_cell()
+	var/obj/item/robot_model/possible_model = loc
+	var/mob/living/silicon/robot/silicon_friend = istype(possible_model) ? possible_model.robot : possible_model
+	if(istype(silicon_friend))
+		. = silicon_friend.cell
+
+/obj/item/inducer/cyborg/screwdriver_act(mob/living/user, obj/item/tool)
+	return FALSE
 
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"

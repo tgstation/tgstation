@@ -20,8 +20,6 @@
 	var/is_ready = TRUE
 	/// Chance multipled by threat to spawn a glitch
 	var/glitch_chance = 0.05
-	/// List of available domains
-	var/list/available_domains = list()
 	/// Current plugged in users
 	var/list/datum/weakref/avatar_connection_refs = list()
 	/// Cached list of mutable mobs in zone for cybercops
@@ -46,13 +44,12 @@
 	var/threat = 0
 	/// The turfs we can place a hololadder on.
 	var/turf/exit_turfs = list()
+	/// Determines if we broadcast to entertainment monitors or not
+	var/broadcasting = FALSE
+	/// Cooldown between being able to toggle broadcasting
+	COOLDOWN_DECLARE(broadcast_toggle_cd)
 
-/obj/machinery/quantum_server/Initialize(mapload)
-	. = ..()
-
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/quantum_server/LateInitialize()
+/obj/machinery/quantum_server/post_machine_initialize()
 	. = ..()
 
 	radio = new(src)
@@ -63,13 +60,9 @@
 	RegisterSignals(src, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(on_broken))
 	RegisterSignal(src, COMSIG_QDELETING, PROC_REF(on_delete))
 
-	// This further gets sorted in the client by cost so it's random and grouped
-	available_domains = shuffle(subtypesof(/datum/lazy_template/virtual_domain))
-
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
 
-	available_domains.Cut()
 	mutation_candidate_refs.Cut()
 	avatar_connection_refs.Cut()
 	spawned_threat_refs.Cut()
@@ -95,11 +88,14 @@
 /obj/machinery/quantum_server/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 
+	if(obj_flags & EMAGGED)
+		return
+
 	obj_flags |= EMAGGED
 	glitch_chance = 0.09
 
 	add_overlay(mutable_appearance('icons/obj/machines/bitrunning.dmi', "emag_overlay"))
-	balloon_alert(user, "bzzzt...")
+	balloon_alert(user, "system jailbroken...")
 	playsound(src, 'sound/effects/sparks1.ogg', 35, vary = TRUE)
 
 /obj/machinery/quantum_server/update_appearance(updates)

@@ -35,7 +35,7 @@
 	for(var/mob/living/simple_animal/bot/simple_bot as anything in GLOB.bots_list)
 		if(!is_valid_z_level(current_turf, get_turf(simple_bot)) || !(simple_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
 			continue
-		if(computer && !simple_bot.check_access(user)) // Only check Bots we can access)
+		if(!simple_bot.allowed(user) && !simple_bot.check_access(computer.computer_id_slot)) // Only check Bots we can access
 			continue
 		var/list/newbot = list(
 			"name" = simple_bot.name,
@@ -49,6 +49,7 @@
 			var/mob/living/simple_animal/bot/mulebot/simple_mulebot = simple_bot
 			mulelist += list(list(
 				"name" = simple_mulebot.name,
+				"id" = simple_mulebot.id,
 				"dest" = simple_mulebot.destination,
 				"power" = simple_mulebot.cell ? simple_mulebot.cell.percent() : 0,
 				"home" = simple_mulebot.home_destination,
@@ -56,9 +57,8 @@
 				"autoPickup" = simple_mulebot.auto_pickup,
 				"reportDelivery" = simple_mulebot.report_delivery,
 				"mule_ref" = REF(simple_mulebot),
+				"load" = simple_mulebot.get_load_name(),
 			))
-			if(simple_mulebot.load)
-				data["load"] = simple_mulebot.load.name
 			newbot["mule_check"] = TRUE
 		botlist += list(newbot)
 
@@ -83,7 +83,8 @@
 
 	return data
 
-/datum/computer_file/program/robocontrol/ui_act(action, list/params, datum/tgui/ui)
+/datum/computer_file/program/robocontrol/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	var/mob/current_user = ui.user
 	var/obj/item/card/id/id_card = computer?.computer_id_slot
 

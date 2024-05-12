@@ -45,7 +45,7 @@
 		COMSIG_LIVING_START_PULL), PROC_REF(trigger_reaction))
 	RegisterSignal(targ, COMSIG_ATOM_EXAMINE, PROC_REF(examine_target))
 	RegisterSignal(targ, COMSIG_LIVING_PRE_MOB_BUMP, PROC_REF(block_bumps_target))
-	RegisterSignals(targ, list(COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED), PROC_REF(cancel))
+	RegisterSignals(targ, list(COMSIG_LIVING_DISARM_HIT, COMSIG_LIVING_GET_PULLED), PROC_REF(cancel))
 	RegisterSignals(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), PROC_REF(cancel))
 
 	var/distance = min(get_dist(shooter, target), 1) // treat 0 distance as adjacent
@@ -88,7 +88,7 @@
 	RegisterSignals(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP), PROC_REF(check_bump))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	RegisterSignal(parent, COMSIG_LIVING_PRE_MOB_BUMP, PROC_REF(block_bumps_parent))
-	RegisterSignal(parent, COMSIG_HUMAN_DISARM_HIT, PROC_REF(cancel))
+	RegisterSignal(parent, COMSIG_LIVING_DISARM_HIT, PROC_REF(cancel))
 
 /datum/component/gunpoint/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
@@ -98,7 +98,7 @@
 	UnregisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP))
 	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(parent, COMSIG_LIVING_PRE_MOB_BUMP)
-	UnregisterSignal(parent, COMSIG_HUMAN_DISARM_HIT)
+	UnregisterSignal(parent, COMSIG_LIVING_DISARM_HIT)
 
 ///If the shooter bumps the target, cancel the holdup to avoid cheesing and forcing the charged shot
 /datum/component/gunpoint/proc/check_bump(atom/B, atom/A)

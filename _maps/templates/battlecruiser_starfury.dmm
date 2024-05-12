@@ -3723,7 +3723,7 @@
 /area/shuttle/sbc_starfury)
 "nR" = (
 /obj/machinery/power/smes/engineering{
-	charge = 4e+006
+	charge = 5e+007
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -4737,8 +4737,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "FO" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 1;
+/obj/machinery/door/window/survival_pod/left/directional/north{
 	req_access = list("syndicate_leader");
 	name = "Command Desk"
 	},
@@ -4785,7 +4784,7 @@
 	faction = list("neutral","silicon","turret","Syndicate");
 	name = "Syndicate Medibot";
 	skin = "bezerk";
-	maints_access_required = list("syndicate")
+	req_one_access = list("syndicate")
 	},
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
@@ -5791,9 +5790,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
-"ZF" = (
-/turf/closed/wall/mineral/plastitanium/nosmooth,
-/area/shuttle/sbc_starfury)
 "ZK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -5974,7 +5970,7 @@ cH
 ow
 ae
 ae
-ZF
+ac
 aa
 aa
 aa
@@ -6110,7 +6106,7 @@ cH
 Zl
 ae
 ae
-ZF
+ac
 aa
 aa
 aa
@@ -8014,7 +8010,7 @@ cH
 vC
 ae
 ae
-ZF
+ac
 aa
 aa
 aa
@@ -8150,7 +8146,7 @@ cH
 xI
 ae
 ae
-ZF
+ac
 aa
 aa
 aa

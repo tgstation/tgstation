@@ -10,7 +10,7 @@
 	C.icon = H.ui_style
 	H.static_inventory += C
 	CL.screen += C
-	RegisterSignal(C, COMSIG_CLICK, PROC_REF(component_ui_interact))
+	RegisterSignal(C, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(component_ui_interact))
 
 #define COOKING TRUE
 #define CRAFTING FALSE
@@ -191,42 +191,86 @@
 
 	var/list/contents = get_surroundings(crafter, recipe.blacklist)
 	var/send_feedback = 1
-	if(check_contents(crafter, recipe, contents))
-		if(check_tools(crafter, recipe, contents))
-			if(recipe.one_per_turf)
-				for(var/content in get_turf(crafter))
-					if(istype(content, recipe.result))
-						return ", object already present."
-			//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
-			if(ismob(crafter) && !do_after(crafter, recipe.time, target = crafter))
-				return "."
-			contents = get_surroundings(crafter, recipe.blacklist)
-			if(!check_contents(crafter, recipe, contents))
-				return ", missing component."
-			if(!check_tools(crafter, recipe, contents))
-				return ", missing tool."
-			var/list/parts = del_reqs(recipe, crafter)
-			var/atom/movable/result
-			if(ispath(recipe.result, /obj/item/stack))
-				result = new recipe.result(get_turf(crafter.loc), recipe.result_amount || 1)
-			else
-				result = new recipe.result(get_turf(crafter.loc))
-				if(result.atom_storage && recipe.delete_contents)
-					for(var/obj/item/thing in result)
-						qdel(thing)
-			var/datum/reagents/holder = locate() in parts
-			if(holder) //transfer reagents from ingredients to result
-				if(!ispath(recipe.result,  /obj/item/reagent_containers) && result.reagents)
-					result.reagents.clear_reagents()
-					holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
-				parts -= holder
-				qdel(holder)
-			result.CheckParts(parts, recipe)
-			if(send_feedback)
-				SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)
-			return result //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
+	var/turf/dest_turf = get_turf(crafter)
+
+	if(!check_contents(crafter, recipe, contents))
+		return ", missing component."
+
+	if(!check_tools(crafter, recipe, contents))
 		return ", missing tool."
-	return ", missing component."
+
+
+
+	if((recipe.crafting_flags & CRAFT_ONE_PER_TURF) && (locate(recipe.result) in dest_turf))
+		return ", already one here!"
+
+	if(recipe.crafting_flags & CRAFT_CHECK_DIRECTION)
+		if(!valid_build_direction(dest_turf, crafter.dir, is_fulltile = (recipe.crafting_flags & CRAFT_IS_FULLTILE)))
+			return ", won't fit here!"
+
+	if(recipe.crafting_flags & CRAFT_ON_SOLID_GROUND)
+		if(isclosedturf(dest_turf))
+			return ", cannot be made on a wall!"
+
+		if(is_type_in_typecache(dest_turf, GLOB.turfs_without_ground))
+			if(!locate(/obj/structure/thermoplastic) in dest_turf) // for tram construction
+				return ", must be made on solid ground!"
+
+	if(recipe.crafting_flags & CRAFT_CHECK_DENSITY)
+		for(var/obj/object in dest_turf)
+			if(object.density && !(object.obj_flags & IGNORE_DENSITY) || object.obj_flags & BLOCKS_CONSTRUCTION)
+				return ", something is in the way!"
+
+	if(recipe.placement_checks & STACK_CHECK_CARDINALS)
+		var/turf/nearby_turf
+		for(var/direction in GLOB.cardinals)
+			nearby_turf = get_step(dest_turf, direction)
+			if(locate(recipe.result) in nearby_turf)
+				to_chat(crafter, span_warning("\The [recipe.name] must not be built directly adjacent to another!"))
+				return ", can't be adjacent to another!"
+
+	if(recipe.placement_checks & STACK_CHECK_ADJACENT)
+		if(locate(recipe.result) in range(1, dest_turf))
+			return ", can't be near another!"
+
+	if(recipe.placement_checks & STACK_CHECK_TRAM_FORBIDDEN)
+		if(locate(/obj/structure/transport/linear/tram) in dest_turf || locate(/obj/structure/thermoplastic) in dest_turf)
+			return ", can't be on tram!"
+
+	if(recipe.placement_checks & STACK_CHECK_TRAM_EXCLUSIVE)
+		if(!locate(/obj/structure/transport/linear/tram) in dest_turf)
+			return ", must be made on a tram!"
+
+	//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
+	if(ismob(crafter) && !do_after(crafter, recipe.time, target = crafter))
+		return "."
+	contents = get_surroundings(crafter, recipe.blacklist)
+	if(!check_contents(crafter, recipe, contents))
+		return ", missing component."
+	if(!check_tools(crafter, recipe, contents))
+		return ", missing tool."
+	var/list/parts = del_reqs(recipe, crafter)
+	var/atom/movable/result
+	if(ispath(recipe.result, /obj/item/stack))
+		result = new recipe.result(get_turf(crafter.loc), recipe.result_amount || 1)
+		result.dir = crafter.dir
+	else
+		result = new recipe.result(get_turf(crafter.loc))
+		result.dir = crafter.dir
+		if(result.atom_storage && recipe.delete_contents)
+			for(var/obj/item/thing in result)
+				qdel(thing)
+	var/datum/reagents/holder = locate() in parts
+	if(holder) //transfer reagents from ingredients to result
+		if(!ispath(recipe.result,  /obj/item/reagent_containers) && result.reagents)
+			result.reagents.clear_reagents()
+			holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
+		parts -= holder
+		qdel(holder)
+	result.CheckParts(parts, recipe)
+	if(send_feedback)
+		SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)
+	return result //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
 
 /*Del reqs works like this:
 
@@ -369,7 +413,7 @@
 		qdel(DL)
 
 /datum/component/personal_crafting/proc/is_recipe_available(datum/crafting_recipe/recipe, mob/user)
-	if(!recipe.always_available && !(recipe.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
+	if((recipe.crafting_flags & CRAFT_MUST_BE_LEARNED) && !(recipe.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
 		return FALSE
 	if (recipe.category == CAT_CULT && !IS_CULTIST(user)) // Skip blood cult recipes if not cultist
 		return FALSE
@@ -458,28 +502,39 @@
 
 	return data
 
+/datum/component/personal_crafting/proc/make_action(datum/crafting_recipe/recipe, mob/user)
+	var/atom/movable/result = construct_item(user, recipe)
+	if(istext(result)) //We failed to make an item and got a fail message
+		to_chat(user, span_warning("Construction failed[result]"))
+		return FALSE
+	if(ismob(user) && isitem(result)) //In case the user is actually possessing a non mob like a machine
+		user.put_in_hands(result)
+	else if(!istype(result, /obj/effect/spawner))
+		result.forceMove(user.drop_location())
+	to_chat(user, span_notice("[recipe.name] crafted."))
+	user.investigate_log("crafted [recipe]", INVESTIGATE_CRAFTING)
+	recipe.on_craft_completion(user, result)
+	return TRUE
+
+
 /datum/component/personal_crafting/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
 	switch(action)
-		if("make")
+		if("make", "make_mass")
 			var/mob/user = usr
 			var/datum/crafting_recipe/crafting_recipe = locate(params["recipe"]) in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes)
 			busy = TRUE
 			ui_interact(user)
-			var/atom/movable/result = construct_item(user, crafting_recipe)
-			if(!istext(result)) //We made an item and didn't get a fail message
-				if(ismob(user) && isitem(result)) //In case the user is actually possessing a non mob like a machine
-					user.put_in_hands(result)
-				else
-					if(!istype(result, /obj/effect/spawner))
-						result.forceMove(user.drop_location())
-				to_chat(user, span_notice("[crafting_recipe.name] crafted."))
-				user.investigate_log("crafted [crafting_recipe]", INVESTIGATE_CRAFTING)
-				crafting_recipe.on_craft_completion(user, result)
+			if(action == "make_mass")
+				var/crafted_items = 0
+				while(make_action(crafting_recipe, user))
+					crafted_items++
+				if(crafted_items)
+					to_chat(user, span_notice("You made [crafted_items] item\s."))
 			else
-				to_chat(user, span_warning("Construction failed[result]"))
+				make_action(crafting_recipe, user)
 			busy = FALSE
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only
@@ -549,6 +604,7 @@
 	// Crafting
 	if(recipe.non_craftable)
 		data["non_craftable"] = recipe.non_craftable
+	data["mass_craftable"] = recipe.mass_craftable
 	if(recipe.steps)
 		data["steps"] = recipe.steps
 

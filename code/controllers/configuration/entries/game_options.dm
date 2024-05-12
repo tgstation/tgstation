@@ -257,7 +257,7 @@
 /datum/config_entry/number/outdated_movedelay/alien_delay
 	movedelay_type = /mob/living/carbon/alien
 /datum/config_entry/number/outdated_movedelay/slime_delay
-	movedelay_type = /mob/living/simple_animal/slime
+	movedelay_type = /mob/living/basic/slime
 /datum/config_entry/number/outdated_movedelay/animal_delay
 	movedelay_type = /mob/living/simple_animal
 /////////////////////////////////////////////////
@@ -346,6 +346,16 @@
 	default = 1
 	min_val = 0
 	integer = FALSE
+
+/datum/config_entry/number/events_frequency_lower
+	default = 2.5 MINUTES
+	min_val = 0
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/number/events_frequency_upper
+	default = 7 MINUTES
+	min_val = 0
+	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/number/mice_roundstart
 	default = 10
@@ -445,3 +455,12 @@
 	default = list("0" = 10, "1" = 10, "2" = 3, "2.5" = 1)
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
+
+// Configs for the Quirk system
+/// Disables Quirk point balancing for the server and clients.
+/datum/config_entry/flag/disable_quirk_points
+
+/// The maximum amount of positive quirks one character can have at roundstart.
+/datum/config_entry/number/max_positive_quirks
+	default = 6
+	min_val = -1

@@ -19,7 +19,7 @@
 		BT.on_death()
 
 /mob/living/carbon/proc/inflate_gib() // Plays an animation that makes mobs appear to inflate before finally gibbing
-	addtimer(CALLBACK(src, PROC_REF(gib), DROP_BRAIN|DROP_ORGANS|DROP_ITEMS), 25)
+	addtimer(CALLBACK(src, PROC_REF(gib), DROP_BRAIN|DROP_ORGANS|DROP_ITEMS), 2.5 SECONDS)
 	var/matrix/M = matrix()
 	M.Scale(1.8, 1.2)
 	animate(src, time = 40, transform = M, easing = SINE_EASING)
@@ -42,7 +42,7 @@
 
 	for(var/obj/item/organ/organ as anything in organs)
 		if((drop_bitflags & DROP_BRAIN) && istype(organ, /obj/item/organ/internal/brain))
-			if(drop_bitflags & DROP_BODYPARTS)
+			if((drop_bitflags & DROP_BODYPARTS) && (check_zone(organ.zone) != BODY_ZONE_CHEST)) // chests can't drop
 				continue // the head will drop, so the brain should stay inside
 
 			organ.Remove(src)

@@ -11,7 +11,7 @@
 	finding_behavior = /datum/ai_behavior/find_hunt_target/mouse_cable
 	hunt_targets = list(/obj/structure/cable)
 	hunt_range = 0 // Only look below us
-	hunt_chance = 5
+	hunt_chance = 1
 
 // When looking for a cable, we can only bite things we can reach.
 /datum/ai_behavior/find_hunt_target/mouse_cable

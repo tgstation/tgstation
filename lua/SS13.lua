@@ -1,4 +1,5 @@
-local SS13 = {}
+local SS13 = require("SS13_base")
+local timer = require("timer")
 
 __SS13_signal_handlers = __SS13_signal_handlers or {}
 __SS13_timeouts = __SS13_timeouts or {}
@@ -187,5 +188,11 @@ function SS13.stop_all_loops()
 		end
 	end
 end
+
+SS13.wait = timer.wait
+SS13.set_timeout = timer.set_timeout
+SS13.start_loop = timer.start_loop
+SS13.end_loop = timer.end_loop
+SS13.stop_all_loops = timer.stop_all_loops
 
 return SS13

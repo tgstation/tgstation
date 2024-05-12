@@ -11,7 +11,7 @@
 		Nakamura Engineering swears up and down there's airbrakes."
 	icon_state = "pathfinder"
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/pathfinder)
 	/// The pathfinding implant.
 	var/obj/item/implant/mod/implant
@@ -68,7 +68,7 @@
 	human_user.update_action_buttons(TRUE)
 	balloon_alert(human_user, "[mod] attached")
 	playsound(mod, 'sound/machines/ping.ogg', 50, TRUE)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/item/implant/mod
 	name = "MOD pathfinder implant"
@@ -94,10 +94,9 @@
 	return ..()
 
 /obj/item/implant/mod/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Nakamura Engineering Pathfinder Implant<BR>
-				<b>Implant Details:</b> Allows for the recall of a Modular Outerwear Device by the implant owner at any time.<BR>"}
-	return dat
+	return "<b>Implant Specifications:</b><BR> \
+		<b>Name:</b> Nakamura Engineering Pathfinder Implant<BR> \
+		<b>Implant Details:</b> Allows for the recall of a Modular Outerwear Device by the implant owner at any time.<BR>"
 
 /obj/item/implant/mod/proc/recall()
 	if(!module?.mod)

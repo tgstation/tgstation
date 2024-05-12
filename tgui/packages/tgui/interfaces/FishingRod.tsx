@@ -64,7 +64,7 @@ export const FishingRod = (props) => {
   } = data;
 
   return (
-    <Window height={300} width={300}>
+    <Window height={450} width={400}>
       <Window.Content>
         <Section>
           <FishingRodSlot

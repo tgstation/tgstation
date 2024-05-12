@@ -35,6 +35,10 @@
 		symptom_delay_max = 45
 
 /datum/symptom/narcolepsy/Activate(datum/disease/advance/A)
+	. = ..()
+	if(!.)
+		return
+
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(1)

@@ -9,6 +9,7 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/fingerless
+	clothing_traits = list(TRAIT_FAST_CUFFING)
 
 /obj/item/clothing/gloves/color/black/Initialize(mapload)
 	. = ..()

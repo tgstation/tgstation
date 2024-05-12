@@ -48,6 +48,7 @@
 
 ///The abstract effect ignores even more effects and is often typechecked for atoms that should truly not be fucked with.
 /obj/effect/abstract
+	resistance_flags = parent_type::resistance_flags | SHUTTLE_CRUSH_PROOF
 
 /obj/effect/abstract/singularity_pull()
 	return

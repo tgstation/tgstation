@@ -77,11 +77,13 @@
 	welded = TRUE
 	. = ..()
 
-/obj/machinery/power/emitter/cable_layer_change_checks(mob/living/user, obj/item/tool)
+/obj/machinery/power/emitter/cable_layer_act(mob/living/user, obj/item/tool)
+	if(panel_open)
+		return NONE
 	if(welded)
 		balloon_alert(user, "unweld first!")
-		return FALSE
-	return TRUE
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/machinery/power/emitter/set_anchored(anchorvalue)
 	. = ..()
@@ -123,7 +125,7 @@
 		. += span_notice("Its status display is glowing faintly.")
 	else
 		. += span_notice("Its status display reads: Emitting one beam between <b>[DisplayTimeText(minimum_fire_delay)]</b> and <b>[DisplayTimeText(maximum_fire_delay)]</b>.")
-		. += span_notice("Power consumption at <b>[display_power(active_power_usage)]</b>.")
+		. += span_notice("Power consumption at <b>[display_power(active_power_usage, convert = FALSE)]</b>.")
 
 /obj/machinery/power/emitter/should_have_node()
 	return welded
@@ -140,6 +142,9 @@
 /obj/machinery/power/emitter/update_icon_state()
 	if(!active || !powernet)
 		icon_state = base_icon_state
+		return ..()
+	if(panel_open)
+		icon_state = "[base_icon_state]_open"
 		return ..()
 	icon_state = avail(active_power_usage) ? icon_state_on : icon_state_underpowered
 	return ..()
@@ -183,15 +188,16 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/power/emitter/process(seconds_per_tick)
+	var/power_usage = active_power_usage * seconds_per_tick
 	if(machine_stat & (BROKEN))
 		return
-	if(!welded || (!powernet && active_power_usage))
+	if(!welded || (!powernet && power_usage))
 		active = FALSE
 		update_appearance()
 		return
 	if(!active)
 		return
-	if(active_power_usage && surplus() < active_power_usage)
+	if(power_usage && surplus() < power_usage)
 		if(powered)
 			powered = FALSE
 			update_appearance()
@@ -199,7 +205,7 @@
 			log_game("[src] lost power in [AREACOORD(src)]")
 		return
 
-	add_load(active_power_usage)
+	add_load(power_usage)
 	if(!powered)
 		powered = TRUE
 		update_appearance()
@@ -310,7 +316,7 @@
 /obj/machinery/power/emitter/screwdriver_act(mob/living/user, obj/item/item)
 	if(..())
 		return TRUE
-	default_deconstruction_screwdriver(user, "emitter_open", "emitter", item)
+	default_deconstruction_screwdriver(user, "[base_icon_state]_open", base_icon_state, item)
 	return TRUE
 
 /// Attempt to toggle the controls lock of the emitter
@@ -340,8 +346,6 @@
 			return
 	return ..()
 
-/obj/machinery/power/emitter/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/machinery/power/emitter/proc/integrate(obj/item/gun/energy/energy_gun, mob/user)
 	if(!istype(energy_gun, /obj/item/gun/energy))
@@ -422,7 +426,7 @@
 			return
 	buckled_mob.forceMove(get_turf(src))
 	..()
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
+	playsound(src, 'sound/mecha/mechmove01.ogg', 50, TRUE)
 	buckled_mob.pixel_y = 14
 	layer = 4.1
 	if(buckled_mob.client)
@@ -432,7 +436,7 @@
 	auto.Grant(buckled_mob, src)
 
 /datum/action/innate/proto_emitter
-	check_flags = AB_CHECK_HANDS_BLOCKED | AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
+	check_flags = AB_CHECK_HANDS_BLOCKED | AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	///Stores the emitter the user is currently buckled on
 	var/obj/machinery/power/emitter/prototype/proto_emitter
 	///Stores the mob instance that is buckled to the emitter

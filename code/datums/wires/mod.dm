@@ -52,7 +52,7 @@
 
 /datum/wires/mod/ui_act(action, params)
 	var/obj/item/mod/control/mod = holder
-	if(!issilicon(usr) && mod.seconds_electrified && mod.shock(usr))
+	if(!HAS_SILICON_ACCESS(usr) && mod.seconds_electrified && mod.shock(usr))
 		return FALSE
 	return ..()
 

@@ -166,3 +166,11 @@
 	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
 	if(api)
 		return api.Visibility()
+
+/world/TgsTriggerEvent(event_name, list/parameters, wait_for_completion = FALSE)
+	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
+	if(api)
+		if(!istype(parameters, /list))
+			parameters = list()
+
+		return api.TriggerEvent(event_name, parameters, wait_for_completion)

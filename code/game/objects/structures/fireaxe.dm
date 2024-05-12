@@ -108,19 +108,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
 /obj/structure/fireaxecabinet/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
+	if(!broken)
 		update_appearance()
 		broken = TRUE
 		playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		new /obj/item/shard(loc)
 		new /obj/item/shard(loc)
 
-/obj/structure/fireaxecabinet/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(held_item && loc)
-			held_item.forceMove(loc)
-		new /obj/item/wallframe/fireaxecabinet(loc)
-	qdel(src)
+/obj/structure/fireaxecabinet/atom_deconstruct(disassembled = TRUE)
+	if(held_item && loc)
+		held_item.forceMove(loc)
+	new /obj/item/wallframe/fireaxecabinet(loc)
 
 /obj/structure/fireaxecabinet/blob_act(obj/structure/blob/B)
 	if(held_item)
@@ -230,12 +228,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/empty, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval, 32)
 
-/obj/structure/fireaxecabinet/mechremoval/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(held_item && loc)
-			held_item.forceMove(loc)
-		new /obj/item/wallframe/fireaxecabinet/mechremoval(loc)
-	qdel(src)
+/obj/structure/fireaxecabinet/mechremoval/atom_deconstruct(disassembled = TRUE)
+	if(held_item && loc)
+		held_item.forceMove(loc)
+	new /obj/item/wallframe/fireaxecabinet/mechremoval(loc)
 
 /obj/structure/fireaxecabinet/mechremoval/empty
 	populate_contents = FALSE

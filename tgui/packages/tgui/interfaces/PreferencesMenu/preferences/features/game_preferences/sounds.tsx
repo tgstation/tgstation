@@ -4,10 +4,10 @@ import {
   CheckboxInput,
   Feature,
   FeatureChoiced,
-  FeatureDropdownInput,
   FeatureSliderInput,
   FeatureToggle,
 } from '../base';
+import { FeatureDropdownInput } from '../dropdowns';
 
 export const sound_ambience: FeatureToggle = {
   name: 'Enable ambience',

@@ -73,7 +73,7 @@
 						return
 					for(var/obj/structure/transit_tube_pod/pod in loc)
 						pod.visible_message(span_warning("[user] starts putting [GM] into the [pod]!"))
-						if(do_after(user, 15, target = src))
+						if(do_after(user, 1.5 SECONDS, target = src))
 							if(open_status == STATION_TUBE_OPEN && GM && user.grab_state >= GRAB_AGGRESSIVE && user.pulling == GM && !GM.buckled && !GM.has_buckled_mobs())
 								GM.Paralyze(100)
 								src.Bumped(GM)
@@ -87,7 +87,7 @@
 					else if(open_status == STATION_TUBE_OPEN)
 						if(pod.contents.len && user.loc != pod)
 							user.visible_message(span_notice("[user] starts emptying [pod]'s contents onto the floor."), span_notice("You start emptying [pod]'s contents onto the floor..."))
-							if(do_after(user, 10, target = src)) //So it doesn't default to close_animation() on fail
+							if(do_after(user, 1 SECONDS, target = src)) //So it doesn't default to close_animation() on fail
 								if(pod && pod.loc == loc)
 									for(var/atom/movable/AM in pod)
 										AM.forceMove(get_turf(user))
@@ -153,7 +153,7 @@
 
 /obj/structure/transit_tube/station/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
 	pod_moving = TRUE
-	addtimer(CALLBACK(src, PROC_REF(start_stopped), pod), 5)
+	addtimer(CALLBACK(src, PROC_REF(start_stopped), pod), 0.5 SECONDS)
 
 /obj/structure/transit_tube/station/proc/start_stopped(obj/structure/transit_tube_pod/pod)
 	if(QDELETED(pod))

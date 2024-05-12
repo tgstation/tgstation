@@ -42,7 +42,7 @@
 
 /obj/projectile/bullet/cannonball/explosive
 	name = "explosive shell"
-	color = "#FF0000"
+	color = COLOR_RED
 	projectile_piercing = NONE
 	damage = 40 //set to 30 before first mob impact, but they're gonna be gibbed by the explosion
 

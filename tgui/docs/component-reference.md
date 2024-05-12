@@ -710,32 +710,37 @@ to fine tune the value, or single click it to manually type a number.
 **Props:**
 
 - `animated: boolean` - Animates the value if it was changed externally.
+- `disabled: boolean` - Makes the input field uneditable & non draggable to prevent user changes
 - `fluid: boolean` - Fill all available horizontal space.
-- `value: number` - Value itself.
+- `value: string|number` - Value itself.
 - `unit: string` - Unit to display to the right of value.
 - `minValue: number` - Lowest possible value.
 - `maxValue: number` - Highest possible value.
-- `step: number` (default: 1) - Adjust value by this amount when
+- `step: number` - Adjust value by this amount when
   dragging the input.
 - `stepPixelSize: number` (default: 1) - Screen distance mouse needs
   to travel to adjust value by one `step`.
-- `width: string|number` - Width of the element, in `Box` units or pixels.
-- `height: string|numer` - Height of the element, in `Box` units or pixels.
-- `lineHeight: string|number` - lineHeight of the element, in `Box` units or pixels.
-- `fontSize: string|number` - fontSize of the element, in `Box` units or pixels.
-- `format: value => value` - Format value using this function before
+- `width: string` - Width of the element, in `Box` units or pixels.
+- `height: string` - Height of the element, in `Box` units or pixels.
+- `lineHeight: string` - lineHeight of the element, in `Box` units or pixels.
+- `fontSize: string` - fontSize of the element, in `Box` units or pixels.
+- `format: (value: number) => string` - Format value using this function before
   displaying it.
-- `suppressFlicker: number` - A number in milliseconds, for which the input
-  will hold off from updating while events propagate through the backend.
-  Default is about 250ms, increase it if you still see flickering.
-- `onChange: (e, value) => void` - An event, which fires when you release
+- `onChange: (value: number) => void` - An event, which fires when you release
   the input, or successfully enter a number.
-- `onDrag: (e, value) => void` - An event, which fires about every 500ms
+- `onDrag: (value: number) => void` - An event, which fires about every 500ms
   when you drag the input up and down, on release and on manual editing.
 
 ### `Popper`
 
-Popper lets you position elements so that they don't go out of the bounds of the window. See [react-tiny-popover](https://github.com/alexkatz/react-tiny-popover) for more information.
+Popper lets you position elements so that they don't go out of the bounds of the window. See [popper.js](https://popper.js.org/) for more information.
+
+**Props:**
+
+- `content: ReactNode` - The content that will be put inside the popper.
+- `isOpen: boolean` - Whether or not the popper is open.
+- `onClickOutside?: (e) => void` - A function that will be called when the user clicks outside of the popper.
+- `placement?: string` - The placement of the popper. See [https://popper.js.org/docs/v2/constructors/#placement]
 
 ### `ProgressBar`
 

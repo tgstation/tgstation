@@ -6,6 +6,7 @@
 #Ignore everything in datafolder and subdirectories
 /data/**/*
 /tmp/**/*
+/cache/**/*
 
 #Ignore byond config folder.
 /cfg/**/*
@@ -191,6 +192,9 @@ Temporary Items
 /_maps/**/backup/
 /_maps/templates.dm
 
+#dmm palette file. You really should be using StrongDMM instead.
+*.dmm-pal
+
 #dmdoc default folder
 /dmdoc
 
@@ -210,7 +214,7 @@ Temporary Items
 # Built auxtools libraries and intermediate files
 aux*.dll
 libaux*.so
-aux*.pdb
+*.pdb
 
 # byond-tracy, we intentionally do not ship this and do not want to maintain it
 # https://github.com/mafemergency/byond-tracy/
@@ -237,4 +241,6 @@ define_sanity_output.txt
 # ezdb
 /db/
 /config/ezdb.txt
-*.pdb
+
+# Running OpenDream locally
+tgstation.json

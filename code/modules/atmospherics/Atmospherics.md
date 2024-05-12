@@ -3,7 +3,7 @@
 
 This file will be written in the first person in the interest of having a laid back style, as some of the concepts here would be ass to read as technical writing. Understand that this isn't the work of one person, but the combined efforts of several contributors. It is a living document, and one you should strive to keep up to date.
 
-I have ~~stolen~~ adapted this document from the work of duncathan, an off and on maintainer who is responsible for the majority of the quality of the current atmos system. He pushed through several code cleanliness and sanity refactors to the system, and wrote the rundown of gas mixtures you'll find in this document. See the [original](https://gist.github.com/duncathan/77d918748d153b4f31a8f76f6085b91a) for his draft.
+I have ~~stolen~~ adapted this document from the work of duncathan, an off and on maintainer who is responsible for the majority of the quality of the current atmos system. Hii pushed through several code cleanliness and sanity refactors to the system, and wrote the rundown of gas mixtures you'll find in this document. See the [original](https://gist.github.com/duncathan/77d918748d153b4f31a8f76f6085b91a) for his draft.
 
 Now, the purpose of this bit of documentation.
 

@@ -25,7 +25,7 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.1)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
-	var/colour = "#000000" //what colour the ink is!
+	var/colour = COLOR_BLACK //what colour the ink is!
 	var/degrees = 0
 	var/font = PEN_FONT
 	var/requires_gravity = TRUE // can you use this to write in zero-g
@@ -44,6 +44,7 @@
 		dart_insert_projectile_icon_state, \
 		CALLBACK(src, PROC_REF(get_dart_var_modifiers))\
 	)
+	AddElement(/datum/element/tool_renaming)
 	RegisterSignal(src, COMSIG_DART_INSERT_ADDED, PROC_REF(on_inserted_into_dart))
 	RegisterSignal(src, COMSIG_DART_INSERT_REMOVED, PROC_REF(on_removed_from_dart))
 
@@ -71,42 +72,42 @@
 /obj/item/pen/blue
 	desc = "It's a normal blue ink pen."
 	icon_state = "pen_blue"
-	colour = "#0000FF"
+	colour = COLOR_BLUE
 
 /obj/item/pen/red
 	desc = "It's a normal red ink pen."
 	icon_state = "pen_red"
-	colour = "#FF0000"
+	colour = COLOR_RED
 	throw_speed = 4 // red ones go faster (in this case, fast enough to embed!)
 
 /obj/item/pen/invisible
 	desc = "It's an invisible pen marker."
 	icon_state = "pen"
-	colour = "#FFFFFF"
+	colour = COLOR_WHITE
 
 /obj/item/pen/fourcolor
 	desc = "It's a fancy four-color ink pen, set to black."
 	name = "four-color pen"
 	icon_state = "pen_4color"
-	colour = "#000000"
+	colour = COLOR_BLACK
 
 /obj/item/pen/fourcolor/attack_self(mob/living/carbon/user)
 	. = ..()
 	var/chosen_color = "black"
 	switch(colour)
-		if("#000000")
-			colour = "#FF0000"
+		if(COLOR_BLACK)
+			colour = COLOR_RED
 			chosen_color = "red"
 			throw_speed++
-		if("#FF0000")
-			colour = "#00FF00"
+		if(COLOR_RED)
+			colour = COLOR_VIBRANT_LIME
 			chosen_color = "green"
 			throw_speed--
-		if("#00FF00")
-			colour = "#0000FF"
+		if(COLOR_VIBRANT_LIME)
+			colour = COLOR_BLUE
 			chosen_color = "blue"
 		else
-			colour = "#000000"
+			colour = COLOR_BLACK
 	to_chat(user, span_notice("\The [src] will now write in [chosen_color]."))
 	desc = "It's a fancy four-color ink pen, set to [chosen_color]."
 
@@ -179,6 +180,7 @@
 	if(current_skin)
 		desc = "It's an expensive [current_skin] fountain pen. The nib is quite sharp."
 
+
 /obj/item/pen/fountain/captain/proc/reskin_dart_insert(datum/component/dart_insert/insert_comp)
 	if(!istype(insert_comp)) //You really shouldn't be sending this signal from anything other than a dart_insert component
 		return
@@ -208,65 +210,6 @@
 	to_chat(M, span_danger("You feel a tiny prick!"))
 	log_combat(user, M, "stabbed", src)
 	return TRUE
-
-/obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
-	. = ..()
-
-	if (!proximity)
-		return .
-
-	. |= AFTERATTACK_PROCESSED_ITEM
-
-	//Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
-	if(isobj(O) && (O.obj_flags & UNIQUE_RENAME))
-		var/penchoice = tgui_input_list(user, "What would you like to edit?", "Pen Setting", list("Rename", "Description", "Reset"))
-		if(QDELETED(O) || !user.can_perform_action(O))
-			return
-		if(penchoice == "Rename")
-			var/input = tgui_input_text(user, "What do you want to name [O]?", "Object Name", "[O.name]", MAX_NAME_LEN)
-			var/oldname = O.name
-			if(QDELETED(O) || !user.can_perform_action(O))
-				return
-			if(input == oldname || !input)
-				to_chat(user, span_notice("You changed [O] to... well... [O]."))
-			else
-				O.AddComponent(/datum/component/rename, input, O.desc)
-				var/datum/component/label/label = O.GetComponent(/datum/component/label)
-				if(label)
-					label.remove_label()
-					label.apply_label()
-				to_chat(user, span_notice("You have successfully renamed \the [oldname] to [O]."))
-				ADD_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
-				O.update_appearance(UPDATE_ICON)
-
-		if(penchoice == "Description")
-			var/input = tgui_input_text(user, "Describe [O]", "Description", "[O.desc]", 280)
-			var/olddesc = O.desc
-			if(QDELETED(O) || !user.can_perform_action(O))
-				return
-			if(input == olddesc || !input)
-				to_chat(user, span_notice("You decide against changing [O]'s description."))
-			else
-				O.AddComponent(/datum/component/rename, O.name, input)
-				to_chat(user, span_notice("You have successfully changed [O]'s description."))
-				ADD_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
-				O.update_appearance(UPDATE_ICON)
-
-		if(penchoice == "Reset")
-			if(QDELETED(O) || !user.can_perform_action(O))
-				return
-
-			qdel(O.GetComponent(/datum/component/rename))
-
-			//reapply any label to name
-			var/datum/component/label/label = O.GetComponent(/datum/component/label)
-			if(label)
-				label.remove_label()
-				label.apply_label()
-
-			to_chat(user, span_notice("You have successfully reset [O]'s name and description."))
-			REMOVE_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
-			O.update_appearance(UPDATE_ICON)
 
 /obj/item/pen/get_writing_implement_details()
 	return list(
@@ -325,10 +268,10 @@
 	armour_penetration = 20
 	bare_wound_bonus = 10
 	item_flags = NO_BLOOD_ON_ITEM
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 1.5
-	light_power = 0.75
-	light_color = COLOR_SOFT_RED
+	light_power = 1.3
+	light_color = "#FA8282"
 	light_on = FALSE
 	dart_insert_projectile_icon_state = "overlay_edagger"
 	/// The real name of our item when extended.
@@ -472,7 +415,7 @@
 	tool_behaviour = TOOL_MINING //For the classic "digging out of prison with a spoon but you're in space so this analogy doesn't work" situation.
 	toolspeed = 10 //You will never willingly choose to use one of these over a shovel.
 	font = FOUNTAIN_PEN_FONT
-	colour = "#0000FF"
+	colour = COLOR_BLUE
 	dart_insert_casing_icon_state = "overlay_survivalpen"
 	dart_insert_projectile_icon_state = "overlay_survivalpen_proj"
 

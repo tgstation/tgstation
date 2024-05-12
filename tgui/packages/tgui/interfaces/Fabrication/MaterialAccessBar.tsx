@@ -2,7 +2,7 @@ import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
 import { useState } from 'react';
 
-import { AnimatedNumber, Button, Flex, Stack } from '../../components';
+import { AnimatedNumber, Button, Flex } from '../../components';
 import { formatSiUnit } from '../../format';
 import { MaterialIcon } from './MaterialIcon';
 import { Material } from './Types';
@@ -55,9 +55,9 @@ export const MaterialAccessBar = (props: MaterialAccessBarProps) => {
 
   return (
     <Flex wrap>
-      {sortBy((m: Material) => MATERIAL_RARITY[m.name])(availableMaterials).map(
+      {sortBy(availableMaterials, (m: Material) => MATERIAL_RARITY[m.name]).map(
         (material) => (
-          <Flex.Item key={material.name} grow={1}>
+          <Flex.Item grow basis={4.5} key={material.name}>
             <MaterialCounter
               material={material}
               SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
@@ -95,7 +95,7 @@ const MaterialCounter = (props: MaterialCounterProps) => {
         sheets < 1 && 'MaterialDock--disabled',
       ])}
     >
-      <Stack vertical direction="column-reverse">
+      <Flex direction="column-reverse">
         <Flex
           direction="column"
           textAlign="center"
@@ -135,7 +135,7 @@ const MaterialCounter = (props: MaterialCounterProps) => {
             </Flex>
           </div>
         )}
-      </Stack>
+      </Flex>
     </div>
   );
 };

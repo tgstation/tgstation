@@ -1,6 +1,4 @@
-#define ROD_SLOT_BAIT "bait"
-#define ROD_SLOT_LINE "line"
-#define ROD_SLOT_HOOK "hook"
+#define FISHING_ROD_REEL_CAST_RANGE 2
 
 /obj/item/fishing_rod
 	name = "fishing rod"
@@ -16,18 +14,18 @@
 	w_class = WEIGHT_CLASS_HUGE
 
 	/// How far can you cast this
-	var/cast_range = 5
+	var/cast_range = 3
 	/// Fishing minigame difficulty modifier (additive)
 	var/difficulty_modifier = 0
 	/// Explaination of rod functionality shown in the ui
 	var/ui_description = "A classic fishing rod, with no special qualities."
 
 	var/obj/item/bait
-	var/obj/item/fishing_line/line
-	var/obj/item/fishing_hook/hook
+	var/obj/item/fishing_line/line = /obj/item/fishing_line
+	var/obj/item/fishing_hook/hook = /obj/item/fishing_hook
 
 	/// Currently hooked item for item reeling
-	var/obj/item/currently_hooked_item
+	var/atom/movable/currently_hooked
 
 	/// Fishing line visual for the hooked item
 	var/datum/beam/fishing_line/fishing_line
@@ -41,15 +39,26 @@
 	///The name of the icon state of the reel overlay
 	var/reel_overlay = "reel_overlay"
 
+	///Prevents spamming the line casting, without affecting the player's click cooldown.
+	COOLDOWN_DECLARE(casting_cd)
+
 /obj/item/fishing_rod/Initialize(mapload)
 	. = ..()
 	register_context()
 	register_item_context()
+
+	if(ispath(bait))
+		set_slot(new bait(src), ROD_SLOT_BAIT)
+	if(ispath(hook))
+		set_slot(new hook(src), ROD_SLOT_HOOK)
+	if(ispath(line))
+		set_slot(new line(src), ROD_SLOT_LINE)
+
 	update_appearance()
 
 /obj/item/fishing_rod/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(src == held_item)
-		if(currently_hooked_item)
+		if(currently_hooked)
 			context[SCREENTIP_CONTEXT_LMB] = "Reel in"
 		context[SCREENTIP_CONTEXT_RMB] = "Modify"
 		return CONTEXTUAL_SCREENTIP_SET
@@ -57,13 +66,10 @@
 
 /obj/item/fishing_rod/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	. = ..()
-	if(currently_hooked_item)
+	if(currently_hooked)
 		context[SCREENTIP_CONTEXT_LMB] = "Reel in"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
-
-/obj/item/fishing_rod/Destroy(force)
-	return ..()
 
 /obj/item/fishing_rod/examine(mob/user)
 	. = ..()
@@ -72,35 +78,12 @@
 		equipped_stuff += "[icon2html(line, user)] <b>[line.name]</b>"
 	if(hook)
 		equipped_stuff += "[icon2html(hook, user)] <b>[hook.name]</b>"
+	if(bait)
+		equipped_stuff += "[icon2html(bait, user)] <b>[bait]</b> as bait."
 	if(length(equipped_stuff))
 		. += span_notice("It has \a [english_list(equipped_stuff)] equipped.")
-	if(bait)
-		. += span_notice("\a [icon2html(bait, user)] <b>[bait]</b> is being used as bait.")
-	else
-		. += span_warning("It doesn't have any bait attached. Fishing will be more tedious!")
-	. += span_notice("<b>Right-Click</b> in your active hand to access its slots UI")
-
-/**
- * Catch weight modifier for the given fish_type (or FISHING_DUD)
- * and source, multiplicative. Called before `additive_fish_bonus()`.
- */
-/obj/item/fishing_rod/proc/multiplicative_fish_bonus(fish_type, datum/fish_source/source)
-	if(!hook)
-		return FISHING_DEFAULT_HOOK_BONUS_MULTIPLICATIVE
-
-	return hook.get_hook_bonus_multiplicative(fish_type)
-
-
-/**
- * Catch weight modifier for the given fish_type (or FISHING_DUD)
- * and source, additive. Called after `multiplicative_fish_bonus()`.
- */
-/obj/item/fishing_rod/proc/additive_fish_bonus(fish_type, datum/fish_source/source)
-	if(!hook)
-		return FISHING_DEFAULT_HOOK_BONUS_ADDITIVE
-
-	return hook.get_hook_bonus_additive(fish_type)
-
+	if(!bait)
+		. += span_warning("It doesn't have a bait attached to it. Fishing will be more tedious!")
 
 /**
  * Is there a reason why this fishing rod couldn't fish in target_fish_source?
@@ -126,16 +109,34 @@
 	update_icon()
 
 /obj/item/fishing_rod/interact(mob/user)
-	if(currently_hooked_item)
+	if(currently_hooked)
 		reel(user)
 
 /obj/item/fishing_rod/proc/reel(mob/user)
-	//Could use sound here for feedback
-	if(do_after(user, 1 SECONDS, currently_hooked_item))
-		// Should probably respect and used force move later
-		step_towards(currently_hooked_item, get_turf(src))
-		if(get_dist(currently_hooked_item,get_turf(src)) < 1)
+	if(DOING_INTERACTION_WITH_TARGET(user, currently_hooked))
+		return
+	playsound(src, SFX_REEL, 50, vary = FALSE)
+	if(!do_after(user, 0.8 SECONDS, currently_hooked, timed_action_flags = IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fishing_line_check))))
+		return
+	if(currently_hooked.anchored || currently_hooked.move_resist >= MOVE_FORCE_STRONG)
+		balloon_alert(user, "[currently_hooked.p_they()] won't budge!")
+		return
+	//Try to move it 'till it's under the user's feet, then try to pick it up
+	if(isitem(currently_hooked))
+		step_towards(currently_hooked, get_turf(src))
+		if(currently_hooked.loc == user.loc)
+			user.put_in_inactive_hand(currently_hooked)
 			QDEL_NULL(fishing_line)
+	//Not an item, so just delete the line if it's adjacent to the user.
+	else if(get_dist(currently_hooked,get_turf(src)) > 1)
+		step_towards(currently_hooked, get_turf(src))
+		if(get_dist(currently_hooked,get_turf(src)) <= 1)
+			QDEL_NULL(fishing_line)
+	else
+		QDEL_NULL(fishing_line)
+
+/obj/item/fishing_rod/proc/fishing_line_check()
+	return !QDELETED(fishing_line)
 
 /obj/item/fishing_rod/attack_self_secondary(mob/user, modifiers)
 	. = ..()
@@ -144,9 +145,11 @@
 /obj/item/fishing_rod/pre_attack(atom/targeted_atom, mob/living/user, params)
 	. = ..()
 	/// Reel in if able
-	if(currently_hooked_item)
+	if(currently_hooked)
 		reel(user)
 		return TRUE
+	if(!hook)
+		balloon_alert(user, "install a hook first!")
 	SEND_SIGNAL(targeted_atom, COMSIG_PRE_FISHING)
 
 /// Generates the fishing line visual from the current user to the target and updates inhands
@@ -171,7 +174,7 @@
 		var/mob/user = loc
 		user.update_held_items()
 	fishing_line = null
-	currently_hooked_item = null
+	currently_hooked = null
 
 /obj/item/fishing_rod/dropped(mob/user, silent)
 	. = ..()
@@ -179,18 +182,14 @@
 
 /// Hooks the item
 /obj/item/fishing_rod/proc/hook_item(mob/user, atom/target_atom)
-	if(currently_hooked_item)
+	if(currently_hooked)
 		return
-	if(!can_be_hooked(target_atom))
+	if(!hook.can_be_hooked(target_atom))
 		return
-	currently_hooked_item = target_atom
+	currently_hooked = target_atom
 	create_fishing_line(target_atom)
+	hook.hook_attached(target_atom, src)
 	SEND_SIGNAL(src, COMSIG_FISHING_ROD_HOOKED_ITEM, target_atom, user)
-
-/// Checks what can be hooked
-/obj/item/fishing_rod/proc/can_be_hooked(atom/movable/target)
-	// Could be made dependent on actual hook, ie magnet to hook metallic items
-	return isitem(target)
 
 // Checks fishing line for interruptions and range
 /obj/item/fishing_rod/proc/check_los(datum/beam/source)
@@ -206,7 +205,7 @@
 	. |= AFTERATTACK_PROCESSED_ITEM
 
 	/// Reel in if able
-	if(currently_hooked_item)
+	if(currently_hooked)
 		reel(user)
 		return .
 
@@ -216,7 +215,15 @@
 
 ///Called by afterattack(). If the line to whatever that is is clear and we're not already busy, try fishing in it
 /obj/item/fishing_rod/proc/cast_line(atom/target, mob/user, proximity_flag)
-	if(casting || currently_hooked_item || proximity_flag || !CheckToolReach(user, target, cast_range))
+	if(casting || currently_hooked || proximity_flag)
+		return
+	if(!hook)
+		balloon_alert(user, "install a hook first!")
+		return
+	if(!CheckToolReach(user, target, cast_range))
+		balloon_alert(user, "cannot reach there!")
+		return
+	if(!COOLDOWN_FINISHED(src, casting_cd))
 		return
 	/// Annoyingly pre attack is only called in melee
 	SEND_SIGNAL(target, COMSIG_PRE_FISHING)
@@ -227,14 +234,15 @@
 	cast_projectile.original = target
 	cast_projectile.fired_from = src
 	cast_projectile.firer = user
-	cast_projectile.impacted = list(user = TRUE)
+	cast_projectile.impacted = list(WEAKREF(user) = TRUE)
 	cast_projectile.preparePixelProjectile(target, user)
 	cast_projectile.fire()
+	COOLDOWN_START(src, casting_cd, 1 SECONDS)
 
 /// Called by hook projectile when hitting things
 /obj/item/fishing_rod/proc/hook_hit(atom/atom_hit_by_hook_projectile)
 	var/mob/user = loc
-	if(!istype(user))
+	if(!hook || !istype(user))
 		return
 	if(SEND_SIGNAL(atom_hit_by_hook_projectile, COMSIG_FISHING_ROD_CAST, src, user) & FISHING_ROD_CAST_HANDLED)
 		return
@@ -328,6 +336,8 @@
 	data["hook_name"] = format_text(hook?.name)
 	data["hook_icon"] = hook != null ? icon2base64(icon(hook.icon, hook.icon_state)) : null
 
+	data["busy"] = fishing_line
+
 	data["description"] = ui_description
 
 	return data
@@ -357,9 +367,7 @@
 		if("slot_action")
 			// Simple click with empty hand to remove, click with item to insert/switch
 			var/obj/item/held_item = user.get_active_held_item()
-			if(held_item == src)
-				return
-			use_slot(params["slot"], user, held_item)
+			use_slot(params["slot"], user, held_item == src ? null : held_item)
 			return TRUE
 
 /// Ideally this will be replaced with generic slotted storage datum + display
@@ -377,23 +385,16 @@
 	// Trying to remove the item
 	if(!new_item && current_item)
 		user.put_in_hands(current_item)
-		update_icon()
-		return
+		balloon_alert(user, "[slot] removed")
 	// Trying to insert item into empty slot
-	if(new_item && !current_item)
+	else if(new_item && !current_item)
 		if(!slot_check(new_item, slot))
 			return
 		if(user.transferItemToLoc(new_item,src))
-			switch(slot)
-				if(ROD_SLOT_BAIT)
-					bait = new_item
-				if(ROD_SLOT_HOOK)
-					hook = new_item
-				if(ROD_SLOT_LINE)
-					line = new_item
-			update_icon()
+			set_slot(new_item, slot)
+			balloon_alert(user, "[slot] installed")
 	/// Trying to swap item
-	if(new_item && current_item)
+	else if(new_item && current_item)
 		if(!slot_check(new_item,slot))
 			return
 		if(user.transferItemToLoc(new_item,src))
@@ -405,17 +406,40 @@
 				if(ROD_SLOT_LINE)
 					line = new_item
 		user.put_in_hands(current_item)
-		update_icon()
+		balloon_alert(user, "[slot] swapped")
 
+	if(new_item)
+		SEND_SIGNAL(new_item, COMSIG_FISHING_EQUIPMENT_SLOTTED, src)
+
+	update_icon()
+	playsound(src, 'sound/items/click.ogg', 50, TRUE)
+
+///assign an item to the given slot and its standard effects, while Exited() should handle unsetting the slot.
+/obj/item/fishing_rod/proc/set_slot(obj/item/equipment, slot)
+	switch(slot)
+		if(ROD_SLOT_BAIT)
+			bait = equipment
+		if(ROD_SLOT_HOOK)
+			hook = equipment
+		if(ROD_SLOT_LINE)
+			line = equipment
+			cast_range += FISHING_ROD_REEL_CAST_RANGE
 
 /obj/item/fishing_rod/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == bait)
 		bait = null
 	if(gone == line)
+		cast_range -= FISHING_ROD_REEL_CAST_RANGE
 		line = null
 	if(gone == hook)
+		QDEL_NULL(fishing_line)
 		hook = null
+
+///Found in the fishing toolbox (the hook and line are separate items)
+/obj/item/fishing_rod/unslotted
+	hook = null
+	line = null
 
 /obj/item/fishing_rod/bone
 	name = "bone fishing rod"
@@ -423,15 +447,8 @@
 	icon_state = "fishing_rod_bone"
 	reel_overlay = "reel_bone"
 	default_line_color = "red"
-
-/datum/crafting_recipe/bone_rod
-	name = "Bone Fishing Rod"
-	result = /obj/item/fishing_rod/bone
-	time = 5 SECONDS
-	reqs = list(/obj/item/stack/sheet/leather = 1,
-				/obj/item/stack/sheet/sinew = 2,
-				/obj/item/stack/sheet/bone = 2)
-	category = CAT_TOOLS
+	line = null //sinew line (usable to fish in lava) not included
+	hook = /obj/item/fishing_hook/bone
 
 /obj/item/fishing_rod/telescopic
 	name = "telescopic fishing rod"
@@ -442,8 +459,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	ui_description = "A collapsible fishing rod that can fit within a backpack."
 	reel_overlay = "reel_telescopic"
-	///Whether the rod is exteded or not. Tied to the transforming element.
-	var/active = FALSE
 	///The force of the item when extended.
 	var/active_force = 8
 
@@ -454,30 +469,31 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/fishing_rod/telescopic/reason_we_cant_fish(datum/fish_source/target_fish_source)
-	if(!active)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return "You need to extend your fishing rod before you can cast the line."
 	return ..()
 
 /obj/item/fishing_rod/telescopic/cast_line(atom/target, mob/user, proximity_flag)
-	if(!active)
-		to_chat(user, "You need to extend your fishing rod before you can cast the line.")
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		if(!proximity_flag)
+			balloon_alert(user, "extend the rod first!")
 		return
 	return ..()
 
 /obj/item/fishing_rod/telescopic/get_fishing_overlays()
-	if(!active)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return list()
 	return ..()
 
 /obj/item/fishing_rod/telescopic/get_fishing_worn_overlays(mutable_appearance/standing, isinhands, icon_file)
-	if(!active)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return list()
 	return ..()
 
 ///Stops the fishing rod from being collapsed while fishing.
 /obj/item/fishing_rod/telescopic/proc/pre_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
-	if(active)
+	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return
 	//the fishing minigame uses the attack_self signal to let the user end it early without having to drop the rod.
 	if(HAS_TRAIT(user, TRAIT_GONE_FISHING))
@@ -487,14 +503,12 @@
 /obj/item/fishing_rod/telescopic/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	src.active = active
 	inhand_icon_state = active ? "rod" : null // When inactive, there is no inhand icon_state.
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
 	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	update_appearance(UPDATE_OVERLAYS)
-	if(fishing_line)
-		QDEL_NULL(fishing_line)
+	QDEL_NULL(fishing_line)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/fishing_rod/telescopic/master
@@ -505,6 +519,9 @@
 	icon_state = "fishing_rod_master"
 	reel_overlay = "reel_master"
 	active_force = 13 //It's that sturdy
+	cast_range = 5
+	line = /obj/item/fishing_line/bouncy
+	hook = /obj/item/fishing_hook/weighted
 
 /obj/item/fishing_rod/tech
 	name = "advanced fishing rod"
@@ -512,6 +529,7 @@
 	ui_description = "This rod has an infinite supply of synth-bait. Also doubles as an Experi-Scanner for fish."
 	icon_state = "fishing_rod_science"
 	reel_overlay = "reel_science"
+	bait = /obj/item/food/bait/doughball/synthetic
 
 /obj/item/fishing_rod/tech/Initialize(mapload)
 	. = ..()
@@ -528,10 +546,6 @@
 		config_flags = EXPERIMENT_CONFIG_SILENT_FAIL|EXPERIMENT_CONFIG_IMMEDIATE_ACTION, \
 		experiment_signals = fishing_signals, \
 	)
-
-	var/obj/item/food/bait/doughball/synthetic/infinite_supply_of_bait = new(src)
-	bait = infinite_supply_of_bait
-	update_icon()
 
 /obj/item/fishing_rod/tech/examine(mob/user)
 	. = ..()
@@ -560,6 +574,12 @@
 
 	var/obj/item/fishing_rod/owner
 	var/datum/beam/our_line
+
+/obj/projectile/fishing_cast/fire(angle, atom/direct_target)
+	if(owner.hook)
+		icon_state = owner.hook.icon_state
+		transform = transform.Scale(1, -1)
+	return ..()
 
 /obj/projectile/fishing_cast/Impact(atom/hit_atom)
 	. = ..()
@@ -634,3 +654,5 @@
 		if(NORTH)
 			override_origin_pixel_x = lefthand ? lefthand_n_px : righthand_n_px
 			override_origin_pixel_y = lefthand ? lefthand_n_py : righthand_n_py
+
+#undef FISHING_ROD_REEL_CAST_RANGE

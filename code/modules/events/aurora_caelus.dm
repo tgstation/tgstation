@@ -52,7 +52,7 @@
 	set_starlight(aurora_color)
 
 	for(var/area/station/service/kitchen/affected_area in GLOB.areas)
-		for(var/turf/open/kitchen_floor in affected_area.get_contained_turfs())
+		for(var/turf/open/kitchen_floor in affected_area.get_turfs_from_all_zlevels())
 			kitchen_floor.set_light(l_color = aurora_color)
 
 /datum/round_event/aurora_caelus/end()
@@ -92,14 +92,14 @@
 	var/start_color = hsl_gradient(1, 0, "#A2FF80", 1, "#A2FFEE")
 	var/start_range = 1
 	var/start_power = 0.75
-	var/end_color = "#000000"
+	var/end_color = COLOR_BLACK
 	var/end_range = 0.5
 	var/end_power = 0
 	if(fade_in)
 		end_color = hsl_gradient(0, 0, "#A2FF80", 1, "#A2FFEE")
 		end_range = start_range
 		end_power = start_power
-		start_color = "#000000"
+		start_color = COLOR_BLACK
 		start_range = 0.5
 		start_power = 0
 
@@ -108,9 +108,9 @@
 		var/walked_range = LERP(start_range, end_range, i/5)
 		var/walked_power = LERP(start_power, end_power, i/5)
 		for(var/area/station/service/kitchen/affected_area in GLOB.areas)
-			for(var/turf/open/kitchen_floor in affected_area.get_contained_turfs())
+			for(var/turf/open/kitchen_floor in affected_area.get_turfs_from_all_zlevels())
 				kitchen_floor.set_light(walked_range, walked_power, walked_color)
 		sleep(8 SECONDS)
 	for(var/area/station/service/kitchen/affected_area in GLOB.areas)
-		for(var/turf/open/kitchen_floor in affected_area.get_contained_turfs())
+		for(var/turf/open/kitchen_floor in affected_area.get_turfs_from_all_zlevels())
 			kitchen_floor.set_light(end_range, end_power, end_color)

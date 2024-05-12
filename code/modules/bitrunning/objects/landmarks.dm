@@ -22,6 +22,11 @@
 	name = "Bitrunning crate spawn"
 	icon_state = "crate"
 
+/// Where you want secondary objectives to spawn
+/obj/effect/landmark/bitrunning/curiosity_spawn
+	name = "Bitrunning curiosity spawn"
+	icon_state = "crate"
+
 ///Swaps the locations of an encrypted crate in the area with another randomly selected crate.
 ///Randomizes names, so you have to inspect crates manually.
 /obj/effect/landmark/bitrunning/crate_replacer
@@ -39,14 +44,15 @@
 	var/obj/structure/closet/crate/secure/bitrunning/encrypted/encrypted_crate
 	var/area/my_area = get_area(src)
 
-	for(var/turf/area_turf as anything in my_area.get_contained_turfs())
-		for(var/obj/structure/closet/crate/crate_to_check in area_turf)
-			if(istype(crate_to_check, /obj/structure/closet/crate/secure/bitrunning/encrypted))
-				encrypted_crate = crate_to_check
-				crate_to_check.desc += span_hypnophrase(" This feels like the crate we're looking for!")
-			else
-				crate_list += crate_to_check
-			crate_to_check.name = "Unidentified Crate"
+	for (var/list/zlevel_turfs as anything in my_area.get_zlevel_turf_lists())
+		for (var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/structure/closet/crate/crate_to_check in area_turf)
+				if(istype(crate_to_check, /obj/structure/closet/crate/secure/bitrunning/encrypted))
+					encrypted_crate = crate_to_check
+					crate_to_check.desc += span_hypnophrase(" This feels like the crate we're looking for!")
+				else
+					crate_list += crate_to_check
+				crate_to_check.name = "Unidentified Crate"
 
 	if(!encrypted_crate)
 		stack_trace("Bitrunning Goal Crate Randomizer failed to find an encrypted crate to swap positions for.")

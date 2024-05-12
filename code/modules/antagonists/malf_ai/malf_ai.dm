@@ -60,8 +60,6 @@
 
 /// Generates a complete set of malf AI objectives up to the traitor objective limit.
 /datum/antagonist/malf_ai/proc/forge_ai_objectives()
-	objectives.Cut()
-
 	if(prob(PROB_SPECIAL))
 		forge_special_objective()
 
@@ -161,6 +159,8 @@
 
 	to_chat(malf_ai, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
 
+	if(malf_ai.malf_picker)
+		return
 	malf_ai.add_malf_picker()
 
 
@@ -248,7 +248,7 @@
 
 	result += objectives_text
 
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 
 	if(malf_ai_won)
 		result += span_greentext("The [special_role_text] was successful!")

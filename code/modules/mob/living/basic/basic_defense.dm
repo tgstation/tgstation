@@ -4,31 +4,7 @@
 		return TRUE
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(user.move_force < move_resist)
-			return
-		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-		playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-		var/shove_dir = get_dir(user, src)
-		if(!Move(get_step(src, shove_dir), shove_dir))
-			log_combat(user, src, "shoved", "failing to move it")
-			user.visible_message(
-				span_danger("[user.name] [response_disarm_continuous] [src]!"),
-				span_danger("You [response_disarm_simple] [src]!"),
-				span_hear("You hear aggressive shuffling!"),
-				COMBAT_MESSAGE_RANGE,
-				list(src),
-			)
-			to_chat(src, span_userdanger("You're shoved by [user.name]!"))
-			return TRUE
-		log_combat(user, src, "shoved", "pushing it")
-		user.visible_message(
-			span_danger("[user.name] [response_disarm_continuous] [src], pushing [p_them()]!"),
-			span_danger("You [response_disarm_simple] [src], pushing [p_them()]!"),
-			span_hear("You hear aggressive shuffling!"),
-			COMBAT_MESSAGE_RANGE,
-			list(src),
-		)
-		to_chat(src, span_userdanger("You're pushed by [user.name]!"))
+		user.disarm(src)
 		return TRUE
 
 	if(!user.combat_mode)
@@ -62,6 +38,19 @@
 	log_combat(user, src, "attacked")
 	updatehealth()
 	return TRUE
+
+/mob/living/basic/get_shoving_message(mob/living/shover, obj/item/weapon, shove_flags)
+	if(weapon) // no "gently pushing aside" if you're pressing a shield at them.
+		return ..()
+	var/moved = !(shove_flags & SHOVE_BLOCKED)
+	shover.visible_message(
+		span_danger("[shover.name] [response_disarm_continuous] [src][moved ? ", pushing [p_them()]" : ""]!"),
+		span_danger("You [response_disarm_simple] [src][moved ? ", pushing [p_them()]" : ""]!"),
+		span_hear("You hear aggressive shuffling!"),
+		COMBAT_MESSAGE_RANGE,
+		list(src),
+	)
+	to_chat(src, span_userdanger("You're [moved ? "pushed" : "shoved"] by [shover.name]!"))
 
 /mob/living/basic/attack_hulk(mob/living/carbon/human/user)
 	. = ..()

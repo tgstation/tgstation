@@ -59,8 +59,10 @@
 /datum/component/infective/proc/try_infect_eat(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
 
-	if(!eater.has_quirk(/datum/quirk/deviant_tastes))
-		eater.add_mood_event("disgust", /datum/mood_event/disgust/dirty_food)
+	if(HAS_TRAIT(eater, TRAIT_STRONG_STOMACH))
+		return
+
+	eater.add_mood_event("disgust", /datum/mood_event/disgust/dirty_food)
 
 	if(is_weak && !prob(weak_infection_chance))
 		return
@@ -75,6 +77,9 @@
 
 /datum/component/infective/proc/try_infect_drink(datum/source, mob/living/drinker, mob/living/feeder)
 	SIGNAL_HANDLER
+
+	if(HAS_TRAIT(drinker, TRAIT_STRONG_STOMACH))
+		return
 
 	var/appendage_zone = feeder.held_items.Find(source)
 	appendage_zone = appendage_zone == 0 ? BODY_ZONE_CHEST : appendage_zone % 2 ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM
@@ -161,3 +166,20 @@
 /datum/component/infective/proc/try_infect(mob/living/L, target_zone)
 	for(var/V in diseases)
 		L.ContactContractDisease(V, target_zone)
+
+/datum/component/infective/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, list(
+		COMSIG_FOOD_EATEN,
+		COMSIG_PILL_CONSUMED,
+		COMSIG_COMPONENT_CLEAN_ACT,
+		COMSIG_MOVABLE_BUMP,
+		COMSIG_MOVABLE_IMPACT_ZONE,
+		COMSIG_ITEM_ATTACK_ZONE,
+		COMSIG_ITEM_ATTACK,
+		COMSIG_ITEM_EQUIPPED,
+		COMSIG_GLASS_DRANK,
+		COMSIG_ORGAN_IMPLANTED,
+		COMSIG_GIBS_STREAK,
+	))
+	qdel(GetComponent(/datum/component/connect_loc_behalf))

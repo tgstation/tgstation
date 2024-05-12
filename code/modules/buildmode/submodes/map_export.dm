@@ -5,8 +5,6 @@
 	var/shuttle_flag = SAVE_SHUTTLEAREA_DONTCARE
 	/// Variable with a flag value to indicate what should be saved (for example, only objects or only mobs).
 	var/save_flag = ALL
-	/// A guard variable to prevent more than one map export process from occurring at the same time.
-	var/static/is_running = FALSE
 
 /datum/buildmode_mode/map_export/change_settings(client/builder)
 	var/static/list/options = list(
@@ -52,14 +50,25 @@
 	if(cornerA == cornerB)
 		return
 
-	if(is_running)
-		to_chat(builder, span_warning("Someone is already running the generator! Try again in a little bit."))
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(_save_map), cornerA, cornerB, save_flag, shuttle_flag)
+
+/// A guard variable to prevent more than one map export process from occurring at the same time.
+GLOBAL_VAR_INIT(map_writing_running, FALSE)
+/// Hey bud don't call this directly, it exists so we can invoke async and prevent the buildmode datum being qdel'd from halting this proc
+/proc/_save_map(turf/cornerA, turf/cornerB, save_flag, shuttle_flag)
+	if(!check_rights(R_DEBUG))
+		message_admins("[ckey(usr)] tried to run the map save generator but was rejected due to insufficient perms.")
+		to_chat(usr, span_warning("You must have +ADMIN rights to use this."))
+		return
+	if(GLOB.map_writing_running)
+		to_chat(usr, span_warning("Someone is already running the generator! Try again in a little bit."))
 		return
 
-	to_chat(builder, span_warning("Saving, please wait..."))
-	is_running = TRUE
+	to_chat(usr, span_warning("Saving, please wait..."))
+	GLOB.map_writing_running = TRUE
 
-	log_admin("Build Mode: [key_name(builder)] is exporting the map area from [AREACOORD(cornerA)] through [AREACOORD(cornerB)]") //I put this before the actual saving of the map because it likely won't log if it crashes the fucking server
+	//I put this before the actual saving of the map because it likely won't log if it crashes the fucking server
+	log_admin("Build Mode: [key_name(usr)] is exporting the map area from [AREACOORD(cornerA)] through [AREACOORD(cornerB)]")
 
 	//oversimplified for readability and understandibility
 
@@ -74,9 +83,9 @@
 	//Step 1: Get the data (This can take a while)
 	var/dat = write_map(minx, miny, minz, maxx, maxy, maxz, save_flag, shuttle_flag)
 
-	//Step 2: Write the data to a file and give map to client 
+	//Step 2: Write the data to a file and give map to client
 	var/date = time2text(world.timeofday, "YYYY-MM-DD_hh-mm-ss")
-	var/file_name = sanitize_filename(tgui_input_text(builder, "Filename?", "Map Exporter", "exported_map_[date]"))
-	send_exported_map(builder, file_name, dat)
-	to_chat(builder, span_green("The map was successfully saved!"))
-	is_running = FALSE
+	var/file_name = sanitize_filename(tgui_input_text(usr, "Filename?", "Map Exporter", "exported_map_[date]"))
+	send_exported_map(usr, file_name, dat)
+	to_chat(usr, span_green("The map was successfully saved!"))
+	GLOB.map_writing_running = FALSE

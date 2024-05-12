@@ -1,12 +1,15 @@
 /datum/emote/living/carbon/human
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
 
+
 /datum/emote/living/carbon/human/cry
 	key = "cry"
 	key_third_person = "cries"
 	message = "cries."
 	message_mime = "sobs silently."
+	audio_cooldown = 5 SECONDS
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	vary = TRUE
 	stat_allowed = SOFT_CRIT
 
 /datum/emote/living/carbon/human/cry/run_emote(mob/user, params, type_override, intentional)
@@ -15,6 +18,11 @@
 		return
 	var/mob/living/carbon/human/human_user = user
 	QDEL_IN(human_user.give_emote_overlay(/datum/bodypart_overlay/simple/emote/cry), 12.8 SECONDS)
+
+/datum/emote/living/carbon/human/cry/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+	return user.dna.species.get_cry_sound(user)
 
 /datum/emote/living/carbon/human/dap
 	key = "dap"
@@ -38,6 +46,36 @@
 	if(istype(eyes_slot, /obj/item/clothing/glasses/regular) || istype(eyes_slot, /obj/item/clothing/glasses/sunglasses))
 		return ..()
 	return FALSE
+
+/datum/emote/living/carbon/human/cough
+	key = "cough"
+	key_third_person = "coughs"
+	message = "coughs!"
+	message_mime = "acts out an exaggerated cough!"
+	vary = TRUE
+	audio_cooldown = 5 SECONDS
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_RUNECHAT
+
+/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
+	return !HAS_TRAIT(user, TRAIT_SOOTHED_THROAT) && ..()
+
+/datum/emote/living/carbon/human/cough/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+	return user.dna.species.get_cough_sound(user)
+/datum/emote/living/carbon/human/sneeze
+	key = "sneeze"
+	key_third_person = "sneezes"
+	message = "sneezes."
+	audio_cooldown = 5 SECONDS
+	message_mime = "acts out an exaggerated silent sneeze."
+	vary = TRUE
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/sneeze/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+	return user.dna.species.get_sneeze_sound(user)
 
 /datum/emote/living/carbon/human/glasses/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -81,10 +119,14 @@
 	only_forced_audio = TRUE
 	vary = TRUE
 
+/datum/emote/carbon/human/scream/run_emote(mob/user, params, type_override, intentional = FALSE)
+	if(!intentional && HAS_TRAIT(user, TRAIT_ANALGESIA))
+		return
+	return ..()
+
 /datum/emote/living/carbon/human/scream/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
-
 	return user.dna.species.get_scream_sound(user)
 
 /datum/emote/living/carbon/human/scream/screech //If a human tries to screech it'll just scream.
@@ -133,10 +175,12 @@
 	if(!.)
 		return
 	var/obj/item/organ/external/tail/oranges_accessory = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	//I am so sorry my son
+	//We bypass helpers here cause we already have the tail
 	if(oranges_accessory.wag_flags & WAG_WAGGING) //We verified the tail exists in can_run_emote()
-		SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL, FALSE)
+		oranges_accessory.stop_wag(user)
 	else
-		SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL, TRUE)
+		oranges_accessory.start_wag(user)
 
 /datum/emote/living/carbon/human/wag/select_message_type(mob/user, intentional)
 	. = ..()

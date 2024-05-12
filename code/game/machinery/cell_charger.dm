@@ -7,7 +7,7 @@
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
 	var/obj/item/stock_parts/cell/charging = null
-	var/charge_rate = 250
+	var/charge_rate = 0.25 * STANDARD_CELL_RATE
 
 /obj/machinery/cell_charger/update_overlays()
 	. = ..()
@@ -31,7 +31,7 @@
 	if(charging)
 		. += "Current charge: [round(charging.percent(), 1)]%."
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Charging power: <b>[charge_rate]W</b>.")
+		. += span_notice("The status display reads: Charging power: <b>[display_power(charge_rate, convert = FALSE)]</b>.")
 
 /obj/machinery/cell_charger/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -72,10 +72,9 @@
 			return
 		return ..()
 
-/obj/machinery/cell_charger/deconstruct()
+/obj/machinery/cell_charger/on_deconstruction(disassembled)
 	if(charging)
 		charging.forceMove(drop_location())
-	return ..()
 
 /obj/machinery/cell_charger/Destroy()
 	QDEL_NULL(charging)
@@ -126,7 +125,7 @@
 
 /obj/machinery/cell_charger/RefreshParts()
 	. = ..()
-	charge_rate = 250
+	charge_rate = 0.25 * STANDARD_CELL_RATE
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		charge_rate *= capacitor.tier
 
@@ -137,10 +136,12 @@
 	if(charging.percent() >= 100)
 		return
 
-	var/main_draw = use_power_from_net(charge_rate * seconds_per_tick, take_any = TRUE) //Pulls directly from the Powernet to dump into the cell
+	var/main_draw = charge_rate * seconds_per_tick
 	if(!main_draw)
 		return
-	charging.give(main_draw)
-	use_power(charge_rate / 100) //use a small bit for the charger itself, but power usage scales up with the part tier
+
+	//use a small bit for the charger itself, but power usage scales up with the part tier
+	use_energy(main_draw * 0.01)
+	charge_cell(main_draw, charging, grid_only = TRUE)
 
 	update_appearance()

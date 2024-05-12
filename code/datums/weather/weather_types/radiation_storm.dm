@@ -87,7 +87,7 @@
 
 /// Used by the radioactive nebula when the station doesnt have enough shielding
 /datum/weather/rad_storm/nebula
-	protected_areas = list(/area/shuttle)
+	protected_areas = list(/area/shuttle, /area/station/maintenance/radshelter)
 
 	weather_overlay = "nebula_radstorm"
 	weather_duration_lower = 100 HOURS

@@ -19,6 +19,9 @@
 /// Time taken for an rcd hologram to disappear
 #define RCD_HOLOGRAM_FADE_TIME (15 SECONDS)
 
+/// Delay before another rcd scan can be performed in the UI
+#define RCD_DESTRUCTIVE_SCAN_COOLDOWN (RCD_HOLOGRAM_FADE_TIME + 1 SECONDS)
+
 //All available upgrades
 /// Upgrade for building machines
 #define RCD_UPGRADE_FRAMES (1 << 0)

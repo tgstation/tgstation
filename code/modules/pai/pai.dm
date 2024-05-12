@@ -16,7 +16,7 @@
 	light_flags = LIGHT_ATTACHED
 	light_on = FALSE
 	light_range = 3
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	maxHealth = 500
 	mob_size = MOB_SIZE_TINY
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
@@ -80,6 +80,9 @@
 	/// Remote signaler
 	var/obj/item/assembly/signaler/internal/signaler
 
+	///The messeenger ability that pAIs get when they are put in a PDA.
+	var/datum/action/innate/pai/messenger/messenger_ability
+
 	// Static lists
 	/// List of all available downloads
 	var/static/list/available_software = list(
@@ -116,6 +119,9 @@
 		"mouse" = TRUE,
 		"rabbit" = TRUE,
 		"repairbot" = TRUE,
+		"kitten" = TRUE,
+		"puppy" = TRUE,
+		"spider" = TRUE,
 	)
 	/// List of all available card overlays.
 	var/static/list/possible_overlays = list(
@@ -149,6 +155,7 @@
 	return ..(target, action_bitflags)
 
 /mob/living/silicon/pai/Destroy()
+	QDEL_NULL(messenger_ability)
 	QDEL_NULL(atmos_analyzer)
 	QDEL_NULL(hacking_cable)
 	QDEL_NULL(instrument)
@@ -211,6 +218,8 @@
 
 /mob/living/silicon/pai/Initialize(mapload)
 	. = ..()
+	if(istype(loc, /obj/item/modular_computer))
+		give_messenger_ability()
 	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
 	make_laws()
@@ -232,6 +241,7 @@
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 	RegisterSignals(src, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE), PROC_REF(on_shell_damaged))
 	RegisterSignal(src, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(on_shell_weakened))
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -345,6 +355,12 @@
 	to_chat(src, span_danger("WARN: Holochasis range restrictions disabled."))
 	return TRUE
 
+/mob/living/silicon/pai/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	set_silence_if_lower(disrupt_duration)
+	balloon_alert(src, "muted!")
+	return COMSIG_SABOTEUR_SUCCESS
+
 /**
  * Resets the pAI and any emagged status.
  *
@@ -453,7 +469,7 @@
 	SIGNAL_HANDLER
 
 	for(var/mob/living/cultist as anything in invokers)
-		to_chat(cultist, span_cultitalic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
+		to_chat(cultist, span_cult_italic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
 	return STOP_SACRIFICE
 
 /// Updates the distance we can be from our pai card
@@ -465,3 +481,14 @@
 	if (new_distance < HOLOFORM_MIN_RANGE || new_distance > HOLOFORM_MAX_RANGE)
 		return
 	leash.set_distance(new_distance)
+
+///Gives the messenger ability to the pAI, creating a new one if it doesn't have one already.
+/mob/living/silicon/pai/proc/give_messenger_ability()
+	if(!messenger_ability)
+		messenger_ability = new(src)
+	messenger_ability.Grant(src)
+
+///Removes the messenger ability from the pAI, but does not delete it.
+/mob/living/silicon/pai/proc/remove_messenger_ability()
+	if(messenger_ability)
+		messenger_ability.Remove(src)

@@ -9,7 +9,7 @@
 	base_icon_state = "grille"
 	density = TRUE
 	anchored = TRUE
-	pass_flags_self = PASSGRILLE
+	pass_flags_self = PASSGRILLE | PASSWINDOW
 	obj_flags = CONDUCTS_ELECTRICITY
 	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
 	pressure_resistance = 5*ONE_ATMOSPHERE
@@ -52,8 +52,6 @@
 
 /obj/structure/grille/examine(mob/user)
 	. = ..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
 
 	if(anchored)
 		. += span_notice("It's secured in place with <b>screws</b>. The rods look like they could be <b>cut</b> through.")
@@ -200,10 +198,8 @@
 	add_fingerprint(user)
 	if(shock(user, 100))
 		return
-	if(obj_flags & NO_DECONSTRUCTION)
-		return FALSE
 	tool.play_tool_sound(src, 100)
-	deconstruct()
+	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/grille/screwdriver_act(mob/living/user, obj/item/tool)
@@ -211,8 +207,6 @@
 		return FALSE
 	add_fingerprint(user)
 	if(shock(user, 90))
-		return FALSE
-	if(obj_flags & NO_DECONSTRUCTION)
 		return FALSE
 	if(!tool.use_tool(src, user, 0, volume=100))
 		return FALSE
@@ -296,18 +290,13 @@
 			playsound(src, 'sound/items/welder.ogg', 80, TRUE)
 
 
-/obj/structure/grille/deconstruct(disassembled = TRUE)
-	if(!loc) //if already qdel'd somehow, we do nothing
-		return
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/obj/R = new rods_type(drop_location(), rods_amount)
-		transfer_fingerprints_to(R)
-		qdel(src)
-	..()
+/obj/structure/grille/atom_deconstruct(disassembled = TRUE)
+	var/obj/rods = new rods_type(drop_location(), rods_amount)
+	transfer_fingerprints_to(rods)
 
 /obj/structure/grille/atom_break()
 	. = ..()
-	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
+	if(!broken)
 		icon_state = "brokengrille"
 		set_density(FALSE)
 		atom_integrity = 20
@@ -339,19 +328,19 @@
 	var/turf/T = get_turf(src)
 	if(T.overfloor_placed)//cant be a floor in the way!
 		return FALSE
-	// Shocking hurts the grille (to weaken monkey powersinks)
-	if(prob(50))
+
+	var/obj/structure/cable/cable_node = T.get_cable_node()
+	if(isnull(cable_node))
+		return FALSE
+	if(!electrocute_mob(user, cable_node, src, 1, TRUE))
+		return FALSE
+	if(prob(50)) // Shocking hurts the grille (to weaken monkey powersinks)
 		take_damage(1, BURN, FIRE, sound_effect = FALSE)
-	var/obj/structure/cable/C = T.get_cable_node()
-	if(C)
-		if(electrocute_mob(user, C, src, 1, TRUE))
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(3, 1, src)
-			s.start()
-			return TRUE
-		else
-			return FALSE
-	return FALSE
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	sparks.set_up(3, 1, src)
+	sparks.start()
+
+	return TRUE
 
 /obj/structure/grille/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > T0C + 1500 && !broken

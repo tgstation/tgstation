@@ -77,6 +77,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
+/obj/item/food/waffles/make_edible()
+	. = ..()
+	AddComponent(/datum/component/ice_cream_holder, max_scoops = 1, x_offset = -2)
+
 /obj/item/food/soylentgreen
 	name = "\improper Soylent Green"
 	desc = "Not made of people. Honest." //Totally people.
@@ -122,6 +126,10 @@
 	foodtypes = GRAIN | VEGETABLES | SUGAR | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/rofflewaffles/make_edible()
+	. = ..()
+	AddComponent(/datum/component/ice_cream_holder, max_scoops = 1, x_offset = -2)
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
@@ -356,7 +364,7 @@
 	bite_consumption = 4
 	foodtypes = DAIRY | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	crafting_complexity = FOOD_COMPLEXITY_3
+	crafting_complexity = FOOD_COMPLEXITY_2
 	max_volume = 10 //The max volumes scales up with the number of scoops of ice cream served.
 	/// These two variables are used by the ice cream vat. Latter is the one that shows on the UI.
 	var/list/ingredients = list(
@@ -371,12 +379,10 @@
 	 */
 	var/list/prefill_flavours
 
-/obj/item/food/icecream/New(loc, list/prefill_flavours)
-	return ..()
-
 /obj/item/food/icecream/Initialize(mapload, list/prefill_flavours)
-	if(prefill_flavours)
-		src.prefill_flavours = prefill_flavours
+	if(ingredients)
+		ingredients_text = "Requires: [reagent_paths_list_to_text(ingredients)]"
+	src.prefill_flavours = prefill_flavours
 	return ..()
 
 /obj/item/food/icecream/make_edible()
@@ -396,7 +402,6 @@
 		/datum/reagent/consumable/sugar,
 		/datum/reagent/consumable/coco,
 	)
-	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/icecream/korta
 	name = "korta cone"
