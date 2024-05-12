@@ -70,10 +70,7 @@
 
 	player.set_service_style()
 	player.equipOutfit(preview_outfit)
-
-	var/chosen_name = pick(GLOB.cyberauth_names)
-
-	player.fully_replace_character_name(player.name, chosen_name)
+	player.fully_replace_character_name(player.name, pick(GLOB.cyberauth_names))
 	fix_agent_id()
 
 
