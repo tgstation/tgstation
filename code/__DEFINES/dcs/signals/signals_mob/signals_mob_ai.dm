@@ -4,3 +4,5 @@
 /// Signal sent when a blackboard key is cleared
 #define COMSIG_AI_BLACKBOARD_KEY_CLEARED(blackboard_key) "ai_blackboard_key_clear_[blackboard_key]"
 
+///Signal sent when a bot is reset
+#define COMSIG_BOT_RESET "bot_reset"

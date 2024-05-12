@@ -380,7 +380,7 @@
 /area/shuttle/escape/brig)
 "gr" = (
 /obj/item/radio/intercom/directional/south,
-/mob/living/simple_animal/bot/medbot{
+/mob/living/basic/bot/medbot{
 	name = "Doktor Oktoberfest"
 	},
 /turf/open/floor/iron/white/textured_edge,
@@ -1672,7 +1672,7 @@
 	},
 /area/shuttle/escape/brig)
 "EK" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/basic/bot/medbot{
 	name = "Doctor Patches"
 	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,

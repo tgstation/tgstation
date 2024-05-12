@@ -17,6 +17,7 @@
 		/datum/ai_planning_subtree/find_and_hunt_target/baby_egg,
 		/datum/ai_planning_subtree/mine_walls,
 	)
+	can_idle = FALSE // we want these to be running always
 
 /datum/ai_controller/basic_controller/babygrub
 	blackboard = list(
@@ -36,6 +37,7 @@
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/look_for_adult,
 	)
+	can_idle = FALSE // we want these to be running always
 
 ///consume food!
 /datum/ai_planning_subtree/find_and_hunt_target/hunt_ores

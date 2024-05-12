@@ -414,7 +414,7 @@
 		sleep(100)
 		var/list/possible_bots = list(
 			/mob/living/simple_animal/bot/cleanbot,
-			/mob/living/simple_animal/bot/medbot,
+			/mob/living/basic/bot/medbot,
 			/mob/living/simple_animal/bot/secbot,
 			/mob/living/simple_animal/bot/floorbot,
 			/mob/living/simple_animal/bot/buttbot

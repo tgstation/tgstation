@@ -50082,7 +50082,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/mob/living/simple_animal/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/service)
 "qhy" = (

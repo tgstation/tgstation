@@ -10048,7 +10048,7 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation/ship)
 "BS" = (
-/mob/living/simple_animal/bot/medbot/mysterious{
+/mob/living/basic/bot/medbot/mysterious{
 	desc = "If you don't accidentally blow yourself up from time to time you're not really a wizard anyway.";
 	faction = list("neutral","silicon","creature");
 	name = "Nobody's Perfect"
@@ -13799,7 +13799,7 @@
 /turf/closed/indestructible/riveted/uranium,
 /area/centcom/wizard_station)
 "Mt" = (
-/mob/living/simple_animal/bot/cleanbot/medbay,
+/mob/living/basic/bot/cleanbot/medbay,
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)

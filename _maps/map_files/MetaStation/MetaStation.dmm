@@ -11164,7 +11164,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "eih" = (
-/mob/living/simple_animal/bot/cleanbot/medbay,
+/mob/living/basic/bot/cleanbot/medbay,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "eio" = (
@@ -36485,7 +36485,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/simple_animal/bot/cleanbot/autopatrol,
+/mob/living/basic/bot/cleanbot/autopatrol,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "mZL" = (
@@ -38634,7 +38634,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/blue,
-/mob/living/simple_animal/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "nMK" = (
@@ -50917,7 +50917,7 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
-/mob/living/simple_animal/bot/medbot/autopatrol,
+/mob/living/basic/bot/medbot/autopatrol,
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},

@@ -73,6 +73,8 @@
 #define COMSIG_GLOB_NUKE_DEVICE_ARMED "!nuclear_device_armed"
 /// global signal sent when a nuclear device is disarmed (/obj/machinery/nuclearbomb/nuke/disarmed_nuke)
 #define COMSIG_GLOB_NUKE_DEVICE_DISARMED "!nuclear_device_disarmed"
+/// global signal sent when a nuclear device is detonating (/obj/machinery/nuclearbomb/nuke/exploding_nuke)
+#define COMSIG_GLOB_NUKE_DEVICE_DETONATING "!nuclear_device_detonating"
 
 /// Global signal sent when a light mechanism is completed (try_id)
 #define COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED "!light_mechanism_completed"

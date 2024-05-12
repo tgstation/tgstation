@@ -8,9 +8,10 @@
 	var/atom/movable/target = weak_target?.resolve()
 	return ismovable(target) && isturf(target.loc) && ismob(controller.pawn)
 
+/datum/ai_behavior/stop_and_stare/get_cooldown(datum/ai_controller/cooldown_for)
+	return cooldown_for.blackboard[BB_STATIONARY_COOLDOWN]
+
 /datum/ai_behavior/stop_and_stare/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	// i don't really like doing this but we wanna make sure that the cooldown is pertinent to what we need for this specific controller before we invoke parent
-	action_cooldown = controller.blackboard[BB_STATIONARY_COOLDOWN]
 	. = ..()
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/movable/target = weak_target?.resolve()

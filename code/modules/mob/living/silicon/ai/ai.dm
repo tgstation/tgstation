@@ -575,17 +575,21 @@
 		to_chat(src, span_danger("Selected location is not visible."))
 
 /mob/living/silicon/ai/proc/call_bot(turf/waypoint)
-	var/mob/living/simple_animal/bot/bot = bot_ref?.resolve()
+	var/mob/living/bot = bot_ref?.resolve()
 	if(!bot)
 		return
+	var/summon_success
+	if(isbasicbot(bot))
+		var/mob/living/basic/bot/basic_bot = bot
+		summon_success = basic_bot.summon_bot(src, waypoint, grant_all_access = TRUE)
+	else
+		var/mob/living/simple_animal/bot/simple_bot = bot
+		call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
+		summon_success = simple_bot.call_bot(src, waypoint)
+		call_bot_cooldown = 0
 
-	if(bot.calling_ai && bot.calling_ai != src) //Prevents an override if another AI is controlling this bot.
-		to_chat(src, span_danger("Interface error. Unit is already in use."))
-		return
-	to_chat(src, span_notice("Sending command to bot..."))
-	call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
-	bot.call_bot(src, waypoint)
-	call_bot_cooldown = 0
+	var/chat_message = summon_success ? "Sending command to bot..." : "Interface error. Unit is already in use."
+	to_chat(src, span_notice("[chat_message]"))
 
 /mob/living/silicon/ai/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
 	SIGNAL_HANDLER

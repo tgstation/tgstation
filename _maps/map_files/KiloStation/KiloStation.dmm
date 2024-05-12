@@ -14294,7 +14294,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/mob/living/simple_animal/bot/cleanbot/medbay,
+/mob/living/basic/bot/cleanbot/medbay,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
@@ -23314,7 +23314,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/mob/living/simple_animal/bot/cleanbot/medbay{
+/mob/living/basic/bot/cleanbot/medbay{
 	maints_access_required = list(22);
 	name = "Deacon Scrubsy"
 	},
@@ -58968,7 +58968,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/mob/living/simple_animal/bot/cleanbot/autopatrol,
+/mob/living/basic/bot/cleanbot/autopatrol,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
@@ -59389,7 +59389,7 @@
 /area/station/hallway/primary/aft)
 "tCd" = (
 /obj/effect/landmark/event_spawn,
-/mob/living/simple_animal/bot/medbot/autopatrol,
+/mob/living/basic/bot/medbot/autopatrol,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/blue/opposingcorners,

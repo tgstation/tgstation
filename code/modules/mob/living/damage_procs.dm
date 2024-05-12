@@ -1,4 +1,8 @@
 
+/// return the total damage of all types which update your health
+/mob/living/proc/get_total_damage(precision = DAMAGE_PRECISION)
+	return round(getBruteLoss() + getFireLoss() + getToxLoss() + getOxyLoss(), precision)
+
 /**
  * Applies damage to this mob.
  *

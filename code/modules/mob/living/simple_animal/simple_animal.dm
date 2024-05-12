@@ -136,7 +136,7 @@
 	///Played when someone punches the creature.
 	var/attacked_sound = SFX_PUNCH
 
-	///The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players).
+	///The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever).
 	var/AIStatus = AI_ON
 	///once we have become sentient, we can never go back.
 	var/can_have_ai = TRUE
@@ -210,10 +210,6 @@
 	QDEL_NULL(access_card)
 	GLOB.simple_animals[AIStatus] -= src
 	SSnpcpool.currentrun -= src
-
-	var/turf/T = get_turf(src)
-	if (T && AIStatus == AI_Z_OFF)
-		SSidlenpcpool.idle_mobs_by_zlevel[T.z] -= src
 
 	return ..()
 
@@ -580,28 +576,11 @@
 		return
 	if (AIStatus != togglestatus)
 		if (togglestatus > 0 && togglestatus < 5)
-			if (togglestatus == AI_Z_OFF || AIStatus == AI_Z_OFF)
-				var/turf/T = get_turf(src)
-				if (T)
-					if (AIStatus == AI_Z_OFF)
-						SSidlenpcpool.idle_mobs_by_zlevel[T.z] -= src
-					else
-						SSidlenpcpool.idle_mobs_by_zlevel[T.z] += src
 			GLOB.simple_animals[AIStatus] -= src
 			GLOB.simple_animals[togglestatus] += src
 			AIStatus = togglestatus
 		else
 			stack_trace("Something attempted to set simple animals AI to an invalid state: [togglestatus]")
-
-/mob/living/simple_animal/proc/consider_wakeup()
-	if (pulledby || shouldwakeup)
-		toggle_ai(AI_ON)
-
-/mob/living/simple_animal/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	..()
-	if (old_turf && AIStatus == AI_Z_OFF)
-		SSidlenpcpool.idle_mobs_by_zlevel[old_turf.z] -= src
-		toggle_ai(initial(AIStatus))
 
 ///This proc is used for adding the swabbale element to mobs so that they are able to be biopsied and making sure holograpic and butter-based creatures don't yield viable cells samples.
 /mob/living/simple_animal/proc/add_cell_sample()

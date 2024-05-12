@@ -142,3 +142,11 @@
 #define BB_BASIC_MOB_REINFORCEMENT_TARGET "BB_basic_mob_reinforcement_target"
 /// The next time at which this mob can call for reinforcements
 #define BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN "BB_basic_mob_reinforcements_cooldown"
+
+///Text we display when we befriend someone
+#define BB_FRIENDLY_MESSAGE "friendly_message"
+
+// Keys used by one and only one behavior
+// Used to hold state without making bigass lists
+/// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
+#define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"

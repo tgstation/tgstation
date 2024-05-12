@@ -199,7 +199,7 @@
 		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/flee_target)
 
 	if(slime_flags & CLEANER_SLIME)
-		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/cleaning_subtree)
+		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/cleaning_subtree_slime)
 
 	if(!(slime_flags & PASSIVE_SLIME))
 		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/simple_find_target_no_trait/slime)

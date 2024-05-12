@@ -15,6 +15,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 /// List of types of abstract mob which shouldn't usually exist in the world on its own if we're spawning random mobs
 GLOBAL_LIST_INIT(abstract_mob_types, list(
 	/mob/living/basic/blob_minion,
+	/mob/living/basic/bot,
 	/mob/living/basic/construct,
 	/mob/living/basic/guardian,
 	/mob/living/basic/heretic_summon,
@@ -64,7 +65,7 @@ GLOBAL_LIST_EMPTY(human_list) //all instances of /mob/living/carbon/human and su
 GLOBAL_LIST_EMPTY(ai_list)
 GLOBAL_LIST_EMPTY(pai_list)
 GLOBAL_LIST_EMPTY(available_ai_shells)
-GLOBAL_LIST_INIT(simple_animals, list(list(),list(),list(),list())) // One for each AI_* status define
+GLOBAL_LIST_INIT(simple_animals, list(list(),list(),list())) // One for each AI_* status define
 GLOBAL_LIST_EMPTY(spidermobs) //all sentient spider mobs
 GLOBAL_LIST_EMPTY(bots_list)
 GLOBAL_LIST_EMPTY(aiEyes)

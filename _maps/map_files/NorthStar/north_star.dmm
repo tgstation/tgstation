@@ -20571,7 +20571,7 @@
 	codes_txt = "patrol;next_patrol=2-0";
 	location = "2-19"
 	},
-/mob/living/simple_animal/bot/medbot/autopatrol,
+/mob/living/basic/bot/medbot/autopatrol,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor2/aft)
 "fwV" = (
@@ -62637,7 +62637,7 @@
 /area/station/science/xenobiology)
 "qCZ" = (
 /obj/structure/table/reinforced,
-/mob/living/simple_animal/bot/medbot/stationary{
+/mob/living/basic/bot/medbot/stationary{
 	name = "Doctor Oktoberfest";
 	desc = "A little medical robot. He helps keep the individual you're performing surgery on alive"
 	},
@@ -65176,7 +65176,7 @@
 	codes_txt = "patrol;next_patrol=4-1";
 	location = "4-0"
 	},
-/mob/living/simple_animal/bot/medbot/autopatrol,
+/mob/living/basic/bot/medbot/autopatrol,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -85891,7 +85891,7 @@
 /area/station/maintenance/floor2/starboard)
 "wXy" = (
 /obj/machinery/airalarm/directional/north,
-/mob/living/simple_animal/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "wXE" = (
