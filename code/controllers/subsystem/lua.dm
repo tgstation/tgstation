@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(lua)
 	world.SetConfig("env", "LUAU_PATH", jointext(lua_path, ";"))
 
 /datum/controller/subsystem/lua/Shutdown()
-	AUXTOOLS_SHUTDOWN(AUXLUA)
+	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)
 
 /datum/controller/subsystem/lua/proc/queue_resume(datum/lua_state/state, index, arguments)
 	if(!initialized)

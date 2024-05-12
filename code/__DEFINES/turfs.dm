@@ -104,3 +104,8 @@
  * Finds the midpoint of two given turfs.
  */
 #define TURF_MIDPOINT(a, b) (locate(((a.x + b.x) * 0.5), (a.y + b.y) * 0.5, (a.z + b.z) * 0.5))
+
+/// Defines the x offset to apply to larger smoothing turfs (such as grass).
+#define LARGE_TURF_SMOOTHING_X_OFFSET -9
+/// Defines the y offset to apply to larger smoothing turfs (such as grass).
+#define LARGE_TURF_SMOOTHING_Y_OFFSET -9

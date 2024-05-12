@@ -61,7 +61,7 @@
 /obj/item/organ/internal/heart/rat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
-	AddElement(/datum/element/noticable_organ, "%PRONOUN_They hunch%PRONOUN_ES over unnaturally!")
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_They hunch%PRONOUN_es over unnaturally!")
 
 /obj/item/organ/internal/heart/rat/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()

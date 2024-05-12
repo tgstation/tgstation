@@ -193,9 +193,13 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	icon_state = "pride"
 	obj_flags = UNIQUE_RENAME | INFINITE_RESKIN
 
-/obj/item/clothing/accessory/pride/Initialize(mapload)
-	. = ..()
+/obj/item/clothing/accessory/pride/setup_reskinning()
 	unique_reskin = GLOB.pride_pin_reskins
+	if(!check_setup_reskinning())
+		return
+
+	// We already register context regardless in Initialize.
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
 
 /obj/item/clothing/accessory/deaf_pin
 	name = "deaf personnel pin"
