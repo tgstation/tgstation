@@ -3036,10 +3036,6 @@
 	},
 /turf/open/floor/carpet/red,
 /area/ruin/syndicate_lava_base/dormitories)
-"Eg" = (
-/obj/effect/mapping_helpers/no_lava,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/lavaland/surface/outdoors)
 "Ev" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/rag{
@@ -5396,7 +5392,7 @@ pa
 pa
 pa
 pa
-Eg
+pa
 pa
 pa
 pa
