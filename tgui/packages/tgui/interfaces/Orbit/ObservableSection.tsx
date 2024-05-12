@@ -1,7 +1,7 @@
 import { capitalizeFirst } from 'common/string';
 
 import { useBackend } from '../../backend';
-import { Button, Collapsible, Icon } from '../../components';
+import { Button, Collapsible, Icon, Stack } from '../../components';
 import { JOB2ICON } from '../common/JobToIcon';
 import {
   getDisplayColor,
@@ -46,37 +46,41 @@ export function ObservableSection(props: Props) {
   }
 
   return (
-    <Collapsible
-      bold
-      color={color ?? 'grey'}
-      open={!!color}
-      title={title + ` - (${filteredSection.length})`}
-    >
-      {filteredSection.map((item) => {
-        const { extra, full_name, health, job, name, orbiters, ref } = item;
+    <Stack.Item>
+      <Collapsible
+        bold
+        color={color ?? 'grey'}
+        open={!!color}
+        title={title + ` - (${filteredSection.length})`}
+      >
+        {filteredSection.map((item) => {
+          const { extra, full_name, health, job, name, orbiters, ref } = item;
 
-        return (
-          <Button
-            color={getDisplayColor(item, heatMap, color)}
-            key={ref}
-            icon={(job && JOB2ICON[job]) || null}
-            onClick={() =>
-              act('orbit', { auto_observe: autoObserve, ref: ref })
-            }
-            tooltip={(!!health || !!extra) && <ObservableTooltip item={item} />}
-            tooltipPosition="bottom-start"
-          >
-            {capitalizeFirst(getDisplayName(full_name, name))}
-            {!!orbiters && (
-              <>
-                {' '}
-                <Icon mr={0} name={'ghost'} />
-                {orbiters}
-              </>
-            )}
-          </Button>
-        );
-      })}
-    </Collapsible>
+          return (
+            <Button
+              color={getDisplayColor(item, heatMap, color)}
+              key={ref}
+              icon={(job && JOB2ICON[job]) || null}
+              onClick={() =>
+                act('orbit', { auto_observe: autoObserve, ref: ref })
+              }
+              tooltip={
+                (!!health || !!extra) && <ObservableTooltip item={item} />
+              }
+              tooltipPosition="bottom-start"
+            >
+              {capitalizeFirst(getDisplayName(full_name, name))}
+              {!!orbiters && (
+                <>
+                  {' '}
+                  <Icon mr={0} name={'ghost'} />
+                  {orbiters}
+                </>
+              )}
+            </Button>
+          );
+        })}
+      </Collapsible>
+    </Stack.Item>
   );
 }

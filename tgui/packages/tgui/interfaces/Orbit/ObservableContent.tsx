@@ -75,30 +75,28 @@ export function ObservableContent(props: Props) {
     <Stack vertical>
       {collatedAntagonists?.map(([title, antagonists]) => {
         return (
-          <Stack.Item key={title}>
-            <ObservableSection
-              autoObserve={autoObserve}
-              color={ANTAG2COLOR[title] || 'bad'}
-              heatMap={heatMap}
-              searchQuery={searchQuery}
-              section={antagonists}
-              title={title}
-            />
-          </Stack.Item>
+          <ObservableSection
+            autoObserve={autoObserve}
+            color={ANTAG2COLOR[title] || 'bad'}
+            heatMap={heatMap}
+            key={title}
+            searchQuery={searchQuery}
+            section={antagonists}
+            title={title}
+          />
         );
       })}
       {sections.map((section) => {
         return (
-          <Stack.Item key={section.title}>
-            <ObservableSection
-              autoObserve={autoObserve}
-              color={section.color}
-              heatMap={heatMap}
-              searchQuery={searchQuery}
-              section={section.content}
-              title={section.title}
-            />
-          </Stack.Item>
+          <ObservableSection
+            autoObserve={autoObserve}
+            color={section.color}
+            heatMap={heatMap}
+            key={section.title}
+            searchQuery={searchQuery}
+            section={section.content}
+            title={section.title}
+          />
         );
       })}
     </Stack>
