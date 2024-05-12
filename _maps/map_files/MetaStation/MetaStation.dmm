@@ -5383,7 +5383,10 @@
 /area/station/medical/medbay/central)
 "bRM" = (
 /obj/structure/lattice/catwalk,
-/obj/effect/spawner/random/structure/crate,
+/obj/structure/closet/crate,
+/obj/item/toy/plush/lizard_plushie/green{
+	name = "Loads-The-Crates"
+	},
 /turf/open/space/basic,
 /area/space/nearstation)
 "bRT" = (
@@ -31967,10 +31970,6 @@
 "lnc" = (
 /turf/closed/wall,
 /area/station/commons/dorms)
-"lnd" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space)
 "lnu" = (
 /obj/structure/table,
 /obj/item/clipboard,
@@ -32893,10 +32892,6 @@
 /obj/structure/chair/comfy/brown,
 /turf/open/floor/engine/cult,
 /area/station/service/library)
-"lJf" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/space)
 "lJh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -45353,14 +45348,6 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
-"pXQ" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/chair/office,
-/obj/item/toy/plush/lizard_plushie/green{
-	name = "Loads-The-Crates"
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "pYn" = (
 /obj/structure/sign/plaques/kiddie/library{
 	pixel_y = -32
@@ -47949,6 +47936,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/spawner/random/structure/crate,
 /obj/effect/turf_decal/bot_white,
+/obj/structure/closet/crate,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "qTz" = (
@@ -49239,10 +49227,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/security/prison/visit)
-"rsf" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "rsi" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /obj/machinery/meter,
@@ -55707,10 +55691,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/prison)
-"tHk" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/station/maintenance/port/fore)
 "tHE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -83491,7 +83471,7 @@ aaa
 aaa
 aaa
 aaa
-rsf
+lMJ
 qGV
 xWC
 tvR
@@ -83748,7 +83728,7 @@ aaa
 aaa
 aaa
 aaa
-rsf
+lMJ
 tmz
 xgB
 iQF
@@ -84005,7 +83985,7 @@ aaa
 aaa
 aaa
 aaa
-rsf
+lMJ
 tmz
 xgB
 iQF
@@ -84262,7 +84242,7 @@ aaa
 aaa
 aaa
 aaa
-rsf
+lMJ
 tmz
 xgB
 iQF
@@ -84519,7 +84499,7 @@ aaa
 aaa
 aaa
 aaa
-rsf
+lMJ
 tmz
 xgB
 iQF
@@ -84776,7 +84756,7 @@ aaa
 aaa
 aaa
 aaa
-rsf
+lMJ
 tmz
 xgB
 iQF
@@ -85033,7 +85013,7 @@ aaa
 aaa
 aaa
 aaa
-rsf
+lMJ
 rqa
 gny
 iQd
@@ -85288,13 +85268,13 @@ aaa
 aaa
 aaa
 aaa
-lnd
+aox
 aox
 jXu
 jXu
 cCe
 jXu
-tHk
+lMJ
 lMJ
 lMJ
 pnI
@@ -85545,7 +85525,7 @@ aaa
 mWd
 aaa
 aaa
-rsf
+lMJ
 lMJ
 nmg
 vEV
@@ -85559,10 +85539,10 @@ iZC
 kRe
 qRa
 pnI
-rsf
 lMJ
 lMJ
-pXQ
+lMJ
+aox
 bRM
 hxo
 aSZ
@@ -88876,7 +88856,7 @@ jjM
 ilg
 cmB
 aaa
-lAu
+aUn
 aaa
 aaa
 aaa
@@ -89409,11 +89389,11 @@ aOu
 kdw
 aaa
 aaa
-lJf
-lAu
+aaf
 aaa
-lJf
-lAu
+aaa
+aaf
+aaa
 aaa
 jXu
 twr
@@ -89664,14 +89644,14 @@ rgL
 jXu
 grt
 kdw
-lJf
+aaf
 rlU
 rlU
 rlU
 rlU
 rlU
 rlU
-lJf
+aaf
 jXu
 sxn
 fqn
@@ -89910,8 +89890,8 @@ egg
 sjP
 aaa
 aaa
-rsf
-lAu
+lMJ
+aaa
 aaa
 jXu
 jXu
@@ -90167,8 +90147,8 @@ dSB
 sjP
 sjP
 aaa
-rsf
-lAu
+lMJ
+aaa
 aaa
 jXu
 fTT
@@ -91206,14 +91186,14 @@ sHu
 qnX
 nTP
 jXu
-lJf
+aaf
 rlU
 rlU
 rlU
 rlU
 rlU
 rlU
-rsf
+lMJ
 aEH
 rhW
 fde
