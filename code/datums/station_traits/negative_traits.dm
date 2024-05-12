@@ -619,10 +619,14 @@
 
 	// The component handles its own removal
 
+/// When a mob is spawned by dynamic, intercept and give it a little radiation shield. Only works for dynamic mobs!
 /datum/station_trait/nebula/hostile/radiation/proc/on_spawned_mob(datum/SSdcs/dcs, mob/spawned_mob)
 	SIGNAL_HANDLER
 
-	if(!isliving(spawned_mob))
+	if(!istype(get_area(spawned_mob), /area/space)) //only if you're spawned in space
+		return
+
+	if(!isliving(spawned_mob)) // Dynamic shouldnt spawn non-living but uhhhhhhh why not
 		return
 
 	var/mob/living/spawnee = spawned_mob
