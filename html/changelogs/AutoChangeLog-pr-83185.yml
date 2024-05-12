@@ -1,0 +1,4 @@
+author: "nikothedude"
+delete-after: True
+changes:
+  - spellcheck: "Added a period to the end of the wendigo deathrattle"
