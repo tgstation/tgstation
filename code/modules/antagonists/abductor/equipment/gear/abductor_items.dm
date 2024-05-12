@@ -710,7 +710,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			"Multitool" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "multitool"),
 			"Screwdriver" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "screwdriver_a"),
 			"Wirecutters" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "cutters"),
-			"Wrench" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "wrench"),
+			"Wrench" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "wrench_stg"),
 			"Welding Tool" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "welder"),
 		)
 		active_toolset = TOOLSET_HACKING
