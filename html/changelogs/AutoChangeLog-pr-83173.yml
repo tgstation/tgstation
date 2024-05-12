@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - rscadd: "Bitrunners now have their own job figurine. Cool!"

@@ -1,0 +1,5 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - bugfix: "Rat Kings can no longer trap mice inside of pipes by creating them while ventcrawling."
+  - balance: "Rat Kings can no longer create grime and miasma while ventcrawling."
