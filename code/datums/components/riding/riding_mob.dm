@@ -223,7 +223,7 @@
 		return
 	ridden.Shake(duration = 2 SECONDS)
 	ridden.balloon_alert(rider, "tries to shake you off!")
-	var/datum/riding_minigame/game = new(ridden, rider)
+	var/datum/riding_minigame/game = new(ridden, rider, FALSE)
 	game.commence_minigame()
 
 /datum/component/riding/creature/human/RegisterWithParent()
@@ -538,7 +538,7 @@
 
 /datum/component/riding/creature/raptor/handle_specials()
 	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-4, 8), TEXT_WEST = list(4, 8)))
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(7, 7), TEXT_SOUTH = list(2, 10), TEXT_EAST = list(12, 7), TEXT_WEST = list(10, 7)))
 	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
@@ -560,13 +560,15 @@
 	///cached directional icons of our host
 	var/list/cached_icons = list()
 
-/datum/riding_minigame/New(mob/living/ridden, mob/living/rider)
+/datum/riding_minigame/New(mob/living/ridden, mob/living/rider, use_mob_icons = TRUE)
 	. = ..()
 	RegisterSignal(rider, COMSIG_MOB_UNBUCKLED, PROC_REF(lose_game))
 	host = WEAKREF(ridden)
 	mounter = WEAKREF(rider)
+	var/used_icon = use_mob_icons ? initial(ridden.icon) : 'icons/testing/turf_analysis.dmi'
+	var/used_icon_state = use_mob_icons ? initial(ridden.icon_state) : "red_arrow"
 	for(var/direction in GLOB.cardinals)
-		var/icon/directional_icon = getFlatIcon(image(icon = initial(ridden.icon), icon_state = initial(ridden.icon_state), dir = direction))
+		var/icon/directional_icon = getFlatIcon(image(icon = used_icon, icon_state = used_icon_state, dir = direction))
 		var/string_icon = icon2base64(directional_icon)
 		var/opposite_direction = dir2text(REVERSE_DIR(direction))
 		cached_icons[opposite_direction] = string_icon
@@ -617,7 +619,7 @@
 			lose_game()
 		if("win_game")
 			win_game()
-			
+
 /datum/riding_minigame/proc/win_game()
 	var/mob/living/living_host = host?.resolve()
 	var/mob/living/living_rider = mounter?.resolve()

@@ -1,6 +1,7 @@
 /mob/living/basic/mining/raptor/baby_raptor
 	name = "baby raptor"
 	desc = "Will this grow into something useful?"
+	icon = 'icons/mob/simple/lavaland/raptor_baby.dmi'
 	speed = 5
 	maxHealth = 25
 	health = 25
@@ -10,6 +11,7 @@
 	move_resist = MOVE_RESIST_DEFAULT
 	ai_controller = /datum/ai_controller/basic_controller/baby_raptor
 	ridable_component = null
+	change_offsets = FALSE
 	dex_description = "A cute baby raptor, Having it near a parent or a birds-nest could encourage it to grow faster, \
 		grooming it and feeding it could also ensure that it grows up quicker!"
 	///what do we grow into

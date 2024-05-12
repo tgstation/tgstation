@@ -118,6 +118,7 @@
 		if (HAS_TRAIT(parent, trait))
 			ADD_TRAIT(rider, trait, REF(src))
 	rider.add_traits(rider_traits, REF(src))
+	post_vehicle_mob_buckle(movable_parent, rider)
 
 /// This proc is called when the rider attempts to grab the thing they're riding, preventing them from doing so.
 /datum/component/riding/proc/on_rider_try_pull(mob/living/rider_pulling, atom/movable/target, force)

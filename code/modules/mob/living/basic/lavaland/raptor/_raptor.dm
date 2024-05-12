@@ -22,7 +22,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 /mob/living/basic/mining/raptor
 	name = "raptor"
 	desc = "A trusty powerful stead. Taming it might prove difficult..."
-	icon = 'icons/mob/simple/lavaland/raptor.dmi'
+	icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
 	speed = 2
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	maxHealth = 250
@@ -39,6 +39,8 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	ai_controller = /datum/ai_controller/basic_controller/raptor
 	///can this mob breed
 	var/can_breed = TRUE
+	///should we change offsets on direction change?
+	var/change_offsets = TRUE
 	///can we ride this mob
 	var/ridable_component = /datum/component/riding/creature/raptor
 	//pet commands when we tame the raptor
@@ -96,7 +98,8 @@ GLOBAL_LIST_EMPTY(raptor_population)
 			post_birth = CALLBACK(src, PROC_REF(egg_inherit)),\
 			breed_timer = 3 MINUTES,\
 		)
-
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
+	adjust_offsets(dir)
 	add_happiness_component()
 
 
@@ -104,12 +107,23 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	var/static/list/percentage_callbacks = list(0, 15, 25, 35, 50, 75, 90, 100)
 	AddComponent(\
 		/datum/component/happiness,\
-		on_petted_change = 50,\
-		on_groom_change = 50,\
-		on_eat_change = 200,\
+		on_petted_change = 100,\
+		on_groom_change = 100,\
+		on_eat_change = 400,\
 		callback_percentages = percentage_callbacks,\
 		happiness_callback = CALLBACK(src, PROC_REF(happiness_change)),\
 	)
+
+/mob/living/basic/mining/raptor/proc/on_dir_change(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+	adjust_offsets(new_dir)
+
+/mob/living/basic/mining/raptor/proc/adjust_offsets(direction)
+	if(!change_offsets)
+		return
+	pixel_x = (direction & EAST) ? -20 : 0
+	pixel_y = (direction & NORTH) ? -5 : 0
+
 
 /mob/living/basic/mining/raptor/proc/pre_attack(mob/living/puncher, atom/target)
 	SIGNAL_HANDLER
@@ -122,13 +136,19 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	if(isnull(ore_food))
 		balloon_alert(src, "no food!")
 	else
-		melee_attack(ore_food)
+		INVOKE_ASYNC(src, PROC_REF(melee_attack), ore_food)
 	return COMPONENT_HOSTILE_NO_ATTACK
+
+/mob/living/basic/mining/raptor/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
+	if(!combat_mode && istype(target, /mob/living/basic/mining/raptor/baby_raptor))
+		target.attack_hand(src, list(LEFT_CLICK = TRUE))
+		return
+	return ..()
 
 /mob/living/basic/mining/raptor/death(gibbed)
 	. = ..()
 	GLOB.raptor_population -= REF(src)
-	
+
 /mob/living/basic/mining/raptor/proc/happiness_change(percent_value)
 	var/attack_boost = round(initial(melee_damage_lower) * percent_value * HAPPINESS_BOOST_DAMPENER, 1)
 	melee_damage_lower = initial(melee_damage_lower) + attack_boost

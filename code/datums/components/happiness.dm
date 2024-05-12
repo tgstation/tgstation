@@ -48,7 +48,6 @@
 
 	if(on_petted_change)
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_petted))
-		RegisterSignal(parent, COMSIG_ATOM_ATTACK_BASIC_MOB, PROC_REF(on_animal_petted))
 	if(on_groom_change)
 		RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
 	if(on_eat_change)
@@ -63,7 +62,7 @@
 
 /datum/component/happiness/proc/on_eat(datum/source)
 	SIGNAL_HANDLER
-	
+
 	increase_happiness_level(on_eat_change)
 
 /datum/component/happiness/proc/on_clean(mob/living/source)
