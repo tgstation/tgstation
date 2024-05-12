@@ -172,9 +172,13 @@ multiple modular subtrees with behaviors
 			return FALSE
 	return TRUE
 
-/datum/ai_controller/proc/recalculate_idle()
+/datum/ai_controller/proc/recalculate_idle(datum/exited)
 	if(ai_status == AI_STATUS_OFF)
 		return
+
+	if(exited && (get_dist(pawn, (islist(exited) ? exited[1] : exited)) <= interesting_dist)) //is our target in between interesting cells?
+		return
+
 	if(should_idle())
 		set_ai_status(AI_STATUS_IDLE)
 
@@ -187,7 +191,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/on_client_exit(datum/source, datum/exited)
 	SIGNAL_HANDLER
 
-	recalculate_idle()
+	recalculate_idle(exited)
 
 /// Sets the AI on or off based on current conditions, call to reset after you've manually disabled it somewhere
 /datum/ai_controller/proc/reset_ai_status()
@@ -231,9 +235,10 @@ multiple modular subtrees with behaviors
 ///Called when the AI controller pawn changes z levels, we check if there's any clients on the new one and wake up the AI if there is.
 /datum/ai_controller/proc/on_changed_z_level(atom/source, turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	SIGNAL_HANDLER
-	var/mob/mob_pawn = pawn
-	if((mob_pawn?.client && !continue_processing_when_client))
-		return
+	if (ismob(pawn))
+		var/mob/mob_pawn = pawn
+		if((mob_pawn?.client && !continue_processing_when_client))
+			return
 	if(old_turf)
 		SSai_controllers.ai_controllers_by_zlevel[old_turf.z] -= src
 	if(new_turf)

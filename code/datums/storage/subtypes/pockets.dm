@@ -4,7 +4,7 @@
 	max_total_storage = 50
 	rustle_sound = FALSE
 
-/datum/storage/pockets/attempt_insert(obj/item/to_insert, mob/user, override, force)
+/datum/storage/pockets/attempt_insert(obj/item/to_insert, mob/user, override, force, messages)
 	. = ..()
 	if(!.)
 		return
@@ -45,6 +45,7 @@
 
 /datum/storage/pockets/small/fedora/detective
 	attack_hand_interact = TRUE // so the detectives would discover pockets in their hats
+	click_alt_open = FALSE
 
 /datum/storage/pockets/chefhat
 	attack_hand_interact = TRUE

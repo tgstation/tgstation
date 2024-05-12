@@ -156,6 +156,7 @@
 		return TRUE
 
 	SEND_SIGNAL(src, COMSIG_LIVING_MOB_BUMP, M)
+	SEND_SIGNAL(M, COMSIG_LIVING_MOB_BUMPED, src)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
 
@@ -1289,9 +1290,9 @@
 		return FALSE
 	if(invisibility || alpha <= 50)//cloaked
 		return FALSE
-	if(!isturf(src.loc)) //The reason why we don't just use get_turf is because they could be in a closet, disposals, or a vehicle.
+	if(!isturf(loc)) //The reason why we don't just use get_turf is because they could be in a closet, disposals, or a vehicle.
 		return FALSE
-	var/turf/T = src.loc
+	var/turf/T = loc
 	if(is_centcom_level(T.z)) //dont detect mobs on centcom
 		return FALSE
 	if(is_away_level(T.z))
@@ -2399,10 +2400,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /// Proc to append behavior to the condition of being floored. Called when the condition starts.
 /mob/living/proc/on_floored_start()
+	on_fall()
 	if(body_position == STANDING_UP) //force them on the ground
 		set_body_position(LYING_DOWN)
 		set_lying_angle(pick(90, 270))
-		on_fall()
 
 
 /// Proc to append behavior to the condition of being floored. Called when the condition ends.
