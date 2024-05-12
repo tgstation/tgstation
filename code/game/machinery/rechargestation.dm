@@ -93,12 +93,6 @@
 	else //Turned on
 		begin_processing()
 
-
-/obj/machinery/recharge_station/process(seconds_per_tick)
-	if(occupant)
-		process_occupant(seconds_per_tick)
-	return 1
-
 /obj/machinery/recharge_station/relaymove(mob/living/user, direction)
 	if(user.stat)
 		return
@@ -179,8 +173,8 @@
 	icon_state = "borgcharger[state_open ? 0 : (occupant ? 1 : 2)]"
 	return ..()
 
-/obj/machinery/recharge_station/proc/process_occupant(seconds_per_tick)
-	if(!occupant)
+/obj/machinery/recharge_station/process(seconds_per_tick)
+	if(QDELETED(occupant) || !is_operational)
 		return
 
 	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, charge_cell, seconds_per_tick, repairs, sendmats)
