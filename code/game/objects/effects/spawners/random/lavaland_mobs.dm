@@ -53,7 +53,7 @@
 /obj/effect/spawner/random/lavaland_mob/raptor
 	name = "random raptor"
 	desc = "Chance to spawn a rare shiny version."
-	icon = 'icons/mob/simple/lavaland/raptor.dmi'
+	icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
 	icon_state = "raptor_red"
 	loot = list(
 		/mob/living/basic/mining/raptor/red = 20,

@@ -1,5 +1,5 @@
 /obj/item/food/egg/raptor_egg
-	icon = 'icons/mob/simple/lavaland/raptor.dmi'
+	icon = 'icons/mob/simple/lavaland/raptor_baby.dmi'
 	icon_state = "raptor_egg"
 	///inheritance datum to pass on to the child
 	var/datum/raptor_inheritance/inherited_stats
