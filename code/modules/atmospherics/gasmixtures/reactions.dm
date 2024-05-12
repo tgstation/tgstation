@@ -109,7 +109,7 @@
 	var/consumed = 0
 	switch(air.temperature)
 		if(-INFINITY to WATER_VAPOR_DEPOSITION_POINT)
-			if(location?.freeze_turf())
+			location?.freeze_turf()
 			return REACTING
 	
 		if(WATER_VAPOR_DEPOSITION_POINT to WATER_VAPOR_CONDENSATION_POINT)
