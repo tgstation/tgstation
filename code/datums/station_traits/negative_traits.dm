@@ -570,6 +570,8 @@
 /datum/station_trait/nebula/hostile/radiation/New()
 	. = ..()
 
+	RegisterSignal(SSdcs, COMSIG_RULESET_BODY_GENERATED_FROM_GHOSTS, PROC_REF(on_spawned_mob))
+
 	for(var/area/target as anything in get_areas(radioactive_areas))
 		RegisterSignal(target, COMSIG_AREA_ENTERED, PROC_REF(on_entered))
 		RegisterSignal(target, COMSIG_AREA_EXITED, PROC_REF(on_exited))
@@ -616,6 +618,11 @@
 	SSradioactive_nebula.fake_unirradiate(exiter)
 
 	// The component handles its own removal
+
+/datum/station_trait/nebula/hostile/radiation/proc/on_spawned_mob(datum/SSdcs/dcs, mob/spawned_mob)
+	SIGNAL_HANDLER
+
+	on_spawned_mob.apply_status_effect(/datum/status_effect/radiation_immunity)
 
 /datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)
 	//big bombad now
