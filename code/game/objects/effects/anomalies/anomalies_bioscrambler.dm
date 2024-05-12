@@ -60,6 +60,8 @@
 			continue
 		if (target.stat >= UNCONSCIOUS)
 			continue // Don't just haunt a corpse
+		if (contained && get_area(target) != impact_area) // monkestation edit: fix "runaway" bioscramblers
+			continue
 		var/distance_from_target = get_dist(src, target)
 		if(distance_from_target >= closest_distance)
 			continue

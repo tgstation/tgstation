@@ -1,6 +1,6 @@
 /obj/effect/anomaly
-	/// If set, the anomaly will delete itself if it leaves this z-level.
-	var/stay_on_z
+	/// If TRUE, the anomaly is contained to its impact_area.
+	var/contained = FALSE
 
 /obj/effect/anomaly/proc/scan_anomaly(mob/user, obj/item/scanner)
 	if(!aSignal)
@@ -11,10 +11,13 @@
 
 /obj/effect/anomaly/stabilize(anchor, has_core)
 	. = ..()
-	var/turf/current_turf = get_turf(src)
-	stay_on_z = current_turf.z
+	contained = TRUE
 
-/obj/effect/anomaly/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	. = ..()
-	if(!isnull(stay_on_z) && !QDELETED(src) && new_turf?.z != stay_on_z)
-		qdel(src)
+/obj/effect/anomaly/Move(atom/newloc, direct, glide_size_override, update_dir)
+	if(contained)
+		if(impact_area != get_area(newloc))
+			return FALSE
+		else if(impact_area != get_area(src)) // if we somehow escaped ANYWAYS, let's just go poof
+			qdel(src)
+			return FALSE
+	return ..()
