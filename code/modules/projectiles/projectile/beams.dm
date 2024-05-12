@@ -43,7 +43,7 @@
 	icon_state = "lava"
 	light_color = COLOR_DARK_RED
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
-	damage = 35
+	damage = 9
 	wound_bonus = -40
 	speed = 1.1
 
