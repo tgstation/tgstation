@@ -11,22 +11,7 @@ import {
 } from '../../components';
 import { BoxProps } from '../../components/Box';
 import { logger } from '../../logging';
-
-type VariantList = ({ key: Variant | null; value?: Variant | null } | null)[];
-
-type ParameterizedVariant =
-  | ['list', VariantList]
-  | ['cycle', [number, 'key' | 'value'][]]
-  | ['ref', string];
-
-type Variant =
-  | 'error'
-  | 'function'
-  | 'thread'
-  | 'userdata'
-  | 'error_as_value'
-  | ParameterizedVariant
-  | null;
+import { Variant, VariantList } from './index';
 
 const mapListVariantsInner = (value: any, variant: Variant) => {
   if (Array.isArray(variant)) {
@@ -111,7 +96,6 @@ type ListPath = { index: number; type: 'key' | 'value' | 'entry' }[];
 
 type ListMapperProps = BoxProps & {
   list: any[];
-  path: ListPath;
 } & Partial<{
     variants: VariantList;
     editable: boolean;
@@ -119,6 +103,8 @@ type ListMapperProps = BoxProps & {
     vvAct: (path: ListPath) => void;
     skipNulls: boolean;
     collapsible: boolean;
+    callType: 'callFunction' | 'resumeTask';
+    path: ListPath;
   }>;
 
 type CallInfo = {
@@ -227,7 +213,11 @@ export const ListMapper = (props: ListMapperProps) => {
       typeof key === 'string' ||
       typeof key === 'number' ||
       (React.isValidElement(key) && key.key === 'ref');
-    let valueNode = ThingNode(value, valuePath, uniquelyIndexable);
+    let valueNode = ThingNode(
+      value,
+      typeof key === 'number' ? keyPath : valuePath,
+      uniquelyIndexable,
+    );
     return (
       <LabeledList.Item
         label={keyNode}
@@ -275,7 +265,7 @@ export const ListMapper = (props: ListMapperProps) => {
   );
 
   const buttons = vvAct && list?.length > 0 && (
-    <Button icon="search" tooltip="VV List" onClick={() => vvAct(path)} />
+    <Button icon="search" tooltip="VV List" onClick={() => vvAct(path ?? [])} />
   );
 
   return collapsible ? (

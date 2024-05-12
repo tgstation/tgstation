@@ -5,7 +5,13 @@
  */
 
 import { canRender, classes } from 'common/react';
-import { forwardRef, ReactNode, RefObject, useRef } from 'react';
+import {
+  forwardRef,
+  ReactNode,
+  RefObject,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 
@@ -46,6 +52,11 @@ export const Section = forwardRef(
       contentRef.current.focus();
     }
 
+    useImperativeHandle(
+      forwardedRef,
+      () => contentRef.current as HTMLDivElement,
+    );
+
     return (
       <div
         className={classes([
@@ -58,7 +69,6 @@ export const Section = forwardRef(
           computeBoxClassName(rest),
         ])}
         {...computeBoxProps(rest)}
-        ref={forwardedRef}
       >
         {hasTitle && (
           <div className="Section__title">

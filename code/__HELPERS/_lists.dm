@@ -1009,7 +1009,7 @@
 			duplicate_keys[final_key] = 1
 			to_add[final_key] = value
 		else
-			to_add += new_key
+			to_add += list(new_key)
 		ret += to_add
 		if(i < target_list.len)
 			CHECK_TICK
@@ -1218,7 +1218,7 @@
 				while(values.Find(out_key))
 			else
 				visited[key] = TRUE
-				out_key = list(deep_copy_without_cycles(key, visited))
+				out_key = deep_copy_without_cycles(key, visited)
 				visited -= key
 		var/value
 		if(!isnull(key) && !isnum(key))
@@ -1265,5 +1265,22 @@
 				return_values[key] = null
 				continue
 			remove_non_dm_variants(return_values[key], pair["value"], visited)
-		if(i < return_values.len)
-			CHECK_TICK
+
+/proc/compare_lua_logs(list/log_1, list/log_2)
+	if(log_1 == log_2)
+		return TRUE
+	for(var/field in list("status", "name", "message"))
+		if(log_1[field] != log_2[field])
+			return FALSE
+	switch(log_1["status"])
+		if("finished", "yield")
+			return deep_compare_list(
+					recursive_list_resolve(log_1["return_values"]),
+					recursive_list_resolve(log_2["return_values"])
+					) && deep_compare_list(log_1["variants"], log_2["variants"])
+		if("runtime")
+			return log_1["file"] == log_2["file"]\
+				&& log_1["line"] == log_2["line"]\
+				&& deep_compare_list(log_1["stack"], log_2["stack"])
+		else
+			return TRUE

@@ -53,9 +53,18 @@ export const Log = (props) => {
   const [, setViewedChunk] = useLocalState('viewedChunk');
   const [, setModal] = useLocalState('modal');
   return stateLog.map((element, i) => {
-    const { name, status, return_values, variants, message, chunk, repeats } =
-      element;
-    logger.log(element);
+    const {
+      name,
+      status,
+      return_values,
+      variants,
+      message,
+      line,
+      file,
+      stack,
+      chunk,
+      repeats,
+    } = element;
     let output;
     let messageColor;
     switch (status) {
@@ -134,15 +143,20 @@ export const Log = (props) => {
         messageColor = 'green';
         break;
       case 'error':
-        output = (
-          <>
-            <b>{name}</b> errored with the message &quot;{message}&quot;
-          </>
-        );
+        output = message;
         messageColor = 'red';
         break;
       case 'panic':
         output = parsePanic(name, message);
+        break;
+      case 'runtime':
+        output = (
+          <>
+            Runtime at {file}:{line}: {message}
+            <ListMapper list={stack} name="Stack Trace" collapsible />
+          </>
+        );
+        messageColor = 'red';
         break;
       case 'print':
         output = message;

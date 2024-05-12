@@ -10,6 +10,7 @@
     "common": "workspace:*",
     "dateformat": "^4.6.2",
     "dompurify": "^2.4.4",
+    "file-extension-icon-js": "^1.1.6",
     "highlight.js": "^11.9.0",
     "js-yaml": "^4.1.0",
     "marked": "^4.2.12",

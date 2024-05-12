@@ -1,13 +1,13 @@
 #define MAX_LOG_REPEAT_LOOKBACK 5
 
-GLOBAL_VAR_INIT(IsLuaCall, FALSE)
-GLOBAL_PROTECT(IsLuaCall)
-
 GLOBAL_DATUM(lua_usr, /mob)
 GLOBAL_PROTECT(lua_usr)
 
+GLOBAL_LIST_EMPTY_TYPED(lua_state_stack, /datum/weakref)
+GLOBAL_PROTECT(lua_state_stack)
+
 /datum/lua_state
-	var/name
+	var/display_name
 
 	/// The internal ID of the lua state stored in auxlua's global map
 	var/internal_id
@@ -30,7 +30,7 @@ GLOBAL_PROTECT(lua_usr)
 	if(SSlua.initialized != TRUE)
 		qdel(src)
 		return
-	name = _name
+	display_name = _name
 	internal_id = DREAMLUAU_NEW_STATE()
 	if(!isnum(internal_id))
 		stack_trace(internal_id)
@@ -44,22 +44,14 @@ GLOBAL_PROTECT(lua_usr)
 	if(!islist(result))
 		return
 	var/status = result["status"]
-	if(!verbose && status != "error" && status != "panic" && !(result["name"] == "input" && (status == "finished" || length(result["return_values"]))))
+	if(!verbose && status != "error" && status != "panic" && status != "runtime" && !(result["name"] == "input" && (status == "finished" || length(result["return_values"]))))
 		return
 	var/append_to_log = TRUE
 	var/index_of_log
 	if(log.len)
 		for(var/index in log.len to max(log.len - MAX_LOG_REPEAT_LOOKBACK, 1) step -1)
 			var/list/entry = log[index]
-			if(entry["status"] != status)
-				continue
-			if(entry["chunk"] != result["chunk"])
-				continue
-			if(entry["name"] != result["name"])
-				continue
-			if((status == "error" || status == "panic" || status == "print") && (entry["message"] != result["message"]))
-				continue
-			if(!(deep_compare_list(result["return_values"], entry["return_values"]) && deep_compare_list(result["variants"], result["variants"])))
+			if(!compare_lua_logs(entry, result))
 				continue
 			if(!entry["repeats"])
 				entry["repeats"] = 0
@@ -83,12 +75,12 @@ GLOBAL_PROTECT(lua_usr)
 		return list("status" = "error", "message" = message, "name" = name)
 
 /datum/lua_state/proc/load_script(script)
-	GLOB.IsLuaCall = TRUE
 	var/tmp_usr = GLOB.lua_usr
 	GLOB.lua_usr = usr
 	DREAMLUAU_SET_USR
+	GLOB.lua_state_stack += WEAKREF(src)
 	var/result = DREAMLUAU_LOAD(internal_id, script, "input")
-	GLOB.IsLuaCall = FALSE
+	pop(GLOB.lua_state_stack)
 	GLOB.lua_usr = tmp_usr
 
 	// Internal errors unrelated to the code being executed are returned as text rather than lists
@@ -121,10 +113,10 @@ GLOBAL_PROTECT(lua_usr)
 
 	var/tmp_usr = GLOB.lua_usr
 	GLOB.lua_usr = usr
-	GLOB.IsLuaCall = TRUE
 	DREAMLUAU_SET_USR
+	GLOB.lua_state_stack += WEAKREF(src)
 	var/result = DREAMLUAU_CALL_FUNCTION(internal_id, function, call_args)
-	GLOB.IsLuaCall = FALSE
+	pop(GLOB.lua_state_stack)
 	GLOB.lua_usr = tmp_usr
 
 	if(isnull(result))
@@ -135,8 +127,9 @@ GLOBAL_PROTECT(lua_usr)
 	return result
 
 /datum/lua_state/proc/call_function_return_first(function, ...)
+	SHOULD_NOT_SLEEP(TRUE) // This function is meant to be used for signal handlers.
 	var/list/result = call_function(arglist(args))
-	log_result(deep_copy_list(result), verbose = FALSE)
+	INVOKE_ASYNC(src, PROC_REF(log_result), deep_copy_list(result), /*verbose = */FALSE)
 	if(length(result))
 		if(islist(result["return_values"]) && length(result["return_values"]))
 			var/return_value = result["return_values"][1]
@@ -146,10 +139,10 @@ GLOBAL_PROTECT(lua_usr)
 			return return_value
 
 /datum/lua_state/proc/awaken()
-	GLOB.IsLuaCall = TRUE
 	DREAMLUAU_SET_USR
+	GLOB.lua_state_stack += WEAKREF(src)
 	var/result = DREAMLUAU_AWAKEN(internal_id)
-	GLOB.IsLuaCall = FALSE
+	pop(GLOB.lua_state_stack)
 
 	if(isnull(result))
 		result = list("status" = "error", "message" = "awaken returned null (it may have runtimed - check the runtime logs)", "name" = "An attempted awaken")
@@ -164,10 +157,10 @@ GLOBAL_PROTECT(lua_usr)
 	var/msg = "[key_name(usr)] resumed a lua coroutine with arguments: [english_list(call_args)]"
 	log_lua(msg)
 
-	GLOB.IsLuaCall = TRUE
 	DREAMLUAU_SET_USR
+	GLOB.lua_state_stack += WEAKREF(src)
 	var/result = DREAMLUAU_RESUME(internal_id, index, call_args)
-	GLOB.IsLuaCall = FALSE
+	pop(GLOB.lua_state_stack)
 
 	if(isnull(result))
 		result = list("status" = "error", "param" = "resume returned null (it may have runtimed - check the runtime logs)", "name" = "An attempted resume")

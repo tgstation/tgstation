@@ -16,6 +16,12 @@
 	/// If set, we will force the editor to look at this chunk
 	var/force_view_chunk
 
+	/// If set, we will force the script input to be this
+	var/force_input
+
+	/// If set, the latest code execution performed from the editor raised an error, and this is the message from that error
+	var/last_error
+
 /datum/lua_editor/New(state, _quick_log_index)
 	. = ..()
 	if(state)
@@ -65,10 +71,18 @@
 		data["tasks"] = current_state.get_tasks()
 		if(show_global_table)
 			current_state.get_globals()
-			var/list/values = kvpify_list(prepare_lua_editor_list(deep_copy_without_cycles(current_state.globals["values"])))
+			var/list/values = current_state.globals["values"]
+			values = deep_copy_without_cycles(values)
+			values = prepare_lua_editor_list(values)
+			values = kvpify_list(values)
 			var/list/variants = current_state.globals["variants"]
 			data["globals"] = list("values" = values, "variants" = variants)
-	data["states"] = SSlua.states
+		if(last_error)
+			data["lastError"] = last_error
+			last_error = null
+	data["states"] = list()
+	for(var/datum/lua_state/state as anything in SSlua.states)
+		data["states"] += state.display_name
 	data["callArguments"] = kvpify_list(prepare_lua_editor_list(deep_copy_without_cycles(arguments)))
 	if(force_modal)
 		data["forceModal"] = force_modal
@@ -76,6 +90,9 @@
 	if(force_view_chunk)
 		data["forceViewChunk"] = force_view_chunk
 		force_view_chunk = null
+	if(force_input)
+		data["force_input"] = force_input
+		force_input = null
 	return data
 
 /datum/lua_editor/proc/traverse_list(list/path, list/root, traversal_depth_offset = 0)
@@ -107,6 +124,15 @@
 	else
 		return root
 
+/datum/lua_editor/proc/run_code(code)
+	var/ckey = usr.ckey
+	current_state.ckey_last_runner = ckey
+	var/result = current_state.load_script(code)
+	var/index_with_result = current_state.log_result(result)
+	if(result["status"] == "error")
+		last_error = result["message"]
+	message_admins("[key_name(usr)] executed [length(code)] bytes of lua code. [ADMIN_LUAVIEW_CHUNK(current_state, index_with_result)]")
+
 /datum/lua_editor/ui_act(action, list/params)
 	. = ..()
 	if(.)
@@ -135,11 +161,14 @@
 			page = 0
 			return TRUE
 		if("runCode")
-			var/code = params["code"]
-			current_state.ckey_last_runner = usr.ckey
-			var/result = current_state.load_script(code)
-			var/index_with_result = current_state.log_result(result)
-			message_admins("[key_name(usr)] executed [length(code)] bytes of lua code. [ADMIN_LUAVIEW_CHUNK(current_state, index_with_result)]")
+			run_code(params["code"])
+			return TRUE
+		if("runFile")
+			var/code_file = input(usr, "Select a script to run.", "Lua") as file|null
+			if(!code_file)
+				return TRUE
+			var/code = file2text(code_file)
+			run_code(code)
 			return TRUE
 		if("moveArgUp")
 			var/list/path = params["path"]
@@ -196,6 +225,8 @@
 						return
 			var/result = current_state.call_function(arglist(list(function) + arguments))
 			current_state.log_result(result)
+			if(result["status"] == "error")
+				last_error = result["message"]
 			arguments.Cut()
 			return TRUE
 		if("resumeTask")
@@ -235,6 +266,9 @@
 			return TRUE
 		if("previousPage")
 			page = max(page-1, 0)
+			return TRUE
+		if("nukeLog")
+			current_state.log.Cut()
 			return TRUE
 
 /datum/lua_editor/ui_close(mob/user)

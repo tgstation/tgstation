@@ -255,6 +255,18 @@
 #define DREAMLUAU_KILL_STATE(state) DREAMLUAU_CALL(kill_state)((state))
 
 /**
+ * Retrieve lua traceback info, containing every lua stack frame between the lua entrypoint and the re-entry to dm code.
+ *
+ * @param level the level of lua execution to get the traceback for,
+ * with 1 being the lua code that executed the dm code that called this function,
+ * 2 being the lua code that executed the dm code that executed the lua code
+ * that executed the dm code that called this function, etc.
+ *
+ * @return the callstack of the specified lua level if valid, null if invalid
+ */
+#define DREAMLUAU_GET_TRACEBACK(index) DREAMLUAU_CALL(get_traceback)((index))
+
+/**
  * Luau userdata corresponding to a ref-counted DM type counts as a hard reference for BYOND's garbage collector.
  * If you need to delete a DM object, and you cannot be certain that there are no references to it in any luau state,
  * call this function before deleting that object to disassociate it from any userdata in any luau state.

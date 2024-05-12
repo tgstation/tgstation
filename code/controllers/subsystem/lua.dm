@@ -17,6 +17,7 @@ SUBSYSTEM_DEF(lua)
 	var/list/current_run = list()
 
 /datum/controller/subsystem/lua/Initialize()
+	DREAMLUAU_SET_EXECUTION_LIMIT_SECS(5)
 	// Set wrappers to ensure that lua scripts are subject to the same safety restrictions as other admin tooling
 	DREAMLUAU_SET_NEW_WRAPPER("/proc/_new")
 	DREAMLUAU_SET_VAR_GET_WRAPPER("/proc/wrap_lua_get_var")
@@ -115,3 +116,24 @@ SUBSYSTEM_DEF(lua)
 	// Update every lua editor TGUI open for each state that had a task awakened or resumed
 	for(var/datum/lua_state/state in affected_states)
 		INVOKE_ASYNC(state, TYPE_PROC_REF(/datum/lua_state, update_editors))
+
+/datum/controller/subsystem/lua/proc/log_involved_runtime(exception/runtime, list/desclines, list/lua_stacks)
+	var/list/json_data = list("status" = "runtime", "file" = runtime.file, "line" = runtime.line, "message" = runtime.name, "stack" = list())
+	var/level = 1
+	for(var/line in desclines)
+		line = copytext(line, 3)
+		if(starts_with_any(line, list(
+				"/datum/lua_state (/datum/lua_state): load script",
+				"/datum/lua_state (/datum/lua_state): call function",
+				"/datum/lua_state (/datum/lua_state): awaken",
+				"/datum/lua_state (/datum/lua_state): resume"
+			)))
+			json_data["stack"] += lua_stacks[level]
+			level++
+		json_data["stack"] += line
+	for(var/datum/weakref/state_ref as anything in GLOB.lua_state_stack)
+		var/datum/lua_state/state = state_ref.resolve()
+		if(!state)
+			continue
+		state.log_result(json_data)
+	return
