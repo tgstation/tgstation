@@ -1,12 +1,17 @@
-// teleatom: atom to teleport
-// destination: destination to teleport to
-// precision: teleport precision (0 is most precise, the default)
-// effectin: effect to show right before teleportation
-// effectout: effect to show right after teleportation
-// asoundin: soundfile to play before teleportation
-// asoundout: soundfile to play after teleportation
-// no_effects: disable the default effectin/effectout of sparks
-// forced: whether or not to ignore no_teleport
+/**
+ * Generic teleporting proc
+ *
+ * Arguments:
+ * * teleatom: atom to teleport
+ * * destination: destination to teleport to
+ * * precision: teleport precision (0 is most precise, the default)
+ * * effectin: effect to show right before teleportation
+ * * effectout: effect to show right after teleportation
+ * * asoundin: soundfile to play before teleportation
+ * * asoundout: soundfile to play after teleportation
+ * * no_effects: disable the default effectin/effectout of sparks
+ * * forced: whether or not to ignore no_teleport
+*/
 /proc/do_teleport(atom/movable/teleatom, atom/destination, precision=null, datum/effect_system/effectin=null, datum/effect_system/effectout=null, asoundin=null, asoundout=null, no_effects=FALSE, channel=TELEPORT_CHANNEL_BLUESPACE, forced = FALSE)
 	// teleporting most effects just deletes them
 	var/static/list/delete_atoms = zebra_typecacheof(list(

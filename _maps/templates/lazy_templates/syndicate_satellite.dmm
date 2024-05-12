@@ -287,8 +287,10 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership)
 "mv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/gateway,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/engine,
 /area/centcom/syndicate_mothership)
 "mz" = (
@@ -768,7 +770,10 @@
 /turf/open/floor/engine,
 /area/centcom/syndicate_mothership)
 "HR" = (
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/teleport/syndicate_gate{
+	name = Syndicate Satellite
+	},
 /turf/open/floor/engine,
 /area/centcom/syndicate_mothership)
 "Ic" = (
@@ -1617,8 +1622,8 @@ Sq
 (13,1,1) = {"
 Go
 os
-mv
 Ni
+HR
 ZN
 JO
 Kr
@@ -1656,7 +1661,7 @@ Go
 os
 Bo
 Iy
-HR
+Iy
 OB
 kJ
 hg
@@ -1693,7 +1698,7 @@ Go
 et
 HN
 xd
-HN
+mv
 mH
 Go
 Cz

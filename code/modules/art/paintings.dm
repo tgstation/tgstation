@@ -504,6 +504,106 @@
 	result_path = /obj/structure/sign/painting
 	pixel_shift = 30
 
+/obj/item/wallframe/painting/syndicate_teleporter
+	result_path = /obj/structure/sign/painting/syndicate_teleporter
+
+/obj/structure/sign/painting/syndicate_teleporter
+	damage_deflection = 20
+	///Where a human gets teleported to once they activate the teleporter, picks from a list of GLOB.active_syndicate_beacons
+	var/atom/teleport_target
+	///If we've taken enough damage, we become unusable
+	var/integrity_compromised = FALSE
+
+/obj/structure/sign/painting/syndicate_teleporter/Initialize(mapload, dir, building)
+	. = ..()
+	GLOB.active_syndicate_paintings += src
+	RegisterSignal(src, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(on_damage_taken))
+	RegisterSignals(src, list(COMSIG_QDELETING,	COMSIG_MACHINERY_BROKEN, COMSIG_TELEPORTER_SET_TARGET), PROC_REF(remove_connections))
+
+/obj/structure/sign/painting/syndicate_teleporter/Destroy()
+	GLOB.active_syndicate_paintings -= src
+	QDEL_NULL(current_canvas)
+	teleport_target = null
+	return ..()
+
+/obj/structure/sign/painting/syndicate_teleporter/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(!IS_TRAITOR(user))
+		return NONE
+	if(integrity_compromised)
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/sign/painting/syndicate_teleporter/atom_deconstruct(disassembled = TRUE)
+	if(disassembled)
+		new /obj/item/wallframe/painting/syndicate_teleporter(loc)
+
+/obj/structure/sign/painting/syndicate_teleporter/attack_hand(mob/user, list/modifiers)
+	if(!teleport_target || !ishuman(user) || !IS_TRAITOR(user) || integrity_compromised)
+		return ..()
+	var/mob/living/carbon/human/teleportee = user
+	do_teleport(teleportee, teleport_target, forced = TRUE)
+
+/obj/structure/sign/painting/syndicate_teleporter/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return .
+
+	if(!ishuman(user) || !IS_TRAITOR(user) || integrity_compromised)
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	if(teleport_target)
+		remove_connections(src)
+		user.balloon_alert(user, "target cleared")
+		update_appearance(UPDATE_ICON)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	var/set_target = tgui_input_list(user, "Where to launch to?", "Set Teleporter?", GLOB.active_syndicate_beacons)
+	if(!set_target)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	teleport_target = set_target
+	SEND_SIGNAL(teleport_target, COMSIG_PAINTING_SET_TARGET, src)
+	update_appearance(UPDATE_ICON)
+	user.balloon_alert(user, "target set")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/structure/sign/painting/syndicate_teleporter/update_icon_state(updates)
+	. = ..()
+	if(integrity_compromised)
+		icon_state = "BrokenFrame"
+		return
+	if(teleport_target)
+		icon_state = "ActivatedFrame"
+	else
+		icon_state = initial(icon_state)
+
+///Once we take enough damage, we can no longer be recovered
+/obj/structure/sign/painting/syndicate_teleporter/proc/on_damage_taken(datum/source, damage_amount)
+	SIGNAL_HANDLER
+
+	var/total = max_integrity - damage_amount
+	var/integrity = (atom_integrity / total) * 100
+	if(integrity > 50)
+		return
+
+	current_canvas?.forceMove(drop_location())
+	integrity_compromised = TRUE
+	remove_connections(src)
+	update_appearance(UPDATE_ICON)
+
+///Sends a signal so that all relevant teleporter hubs can clear their reference to us
+/obj/structure/sign/painting/syndicate_teleporter/proc/remove_connections(datum/source)
+	SIGNAL_HANDLER
+	if(teleport_target)
+		var/atom/old_teleport_target = teleport_target
+		teleport_target = null
+		SEND_SIGNAL(old_teleport_target, COMSIG_PAINTING_CUT_CONNECTIONS, src)
+		update_appearance(UPDATE_ICON)
+
 /obj/structure/sign/painting
 	name = "Painting"
 	desc = "Art or \"Art\"? You decide."

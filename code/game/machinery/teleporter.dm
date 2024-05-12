@@ -99,12 +99,6 @@
 /obj/machinery/teleport/hub/proc/is_ready()
 	. = !panel_open && !(machine_stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.machine_stat & (BROKEN|NOPOWER))
 
-/obj/machinery/teleport/hub/syndicate/Initialize(mapload)
-	. = ..()
-	var/obj/item/stock_parts/matter_bin/super/super_bin = new(src)
-	LAZYADD(component_parts, super_bin)
-	RefreshParts()
-
 /obj/machinery/teleport/station
 	name = "teleporter station"
 	desc = "The power control station for a bluespace teleporter. Used for toggling power, and can activate a test-fire to prevent malfunctions."
@@ -224,3 +218,109 @@
 		return ..()
 	icon_state = base_icon_state
 	return ..()
+
+/obj/machinery/teleport/syndicate_gate
+	icon = 'icons/obj/machines/teleporter_multitile.dmi'
+	icon_state = "teleporter_off"
+	pixel_x = -32
+	///Tracks wether the portal is active or not, used to toggle the sprite
+	var/activated = FALSE
+	///When a painting targets us as their signal, we save them as our return target
+	var/atom/return_target
+	///Internal timer to prevent audio spam.
+	var/next_beep = 0
+
+/obj/machinery/teleport/syndicate_gate/Destroy()
+	GLOB.active_syndicate_beacons -= src
+	return ..()
+
+/obj/machinery/teleport/syndicate_gate/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_PAINTING_SET_TARGET, PROC_REF(on_target_set))
+	RegisterSignals(src, list(COMSIG_QDELETING, COMSIG_MACHINERY_BROKEN, COMSIG_PAINTING_CUT_CONNECTIONS), PROC_REF(remove_connections))
+	var/obj/item/stock_parts/matter_bin/super/super_bin = new(src)
+	LAZYADD(component_parts, super_bin)
+	RefreshParts()
+
+/obj/machinery/teleport/syndicate_gate/Bumped(mob/user)
+	if(!ishuman(user))
+		return //Otherwise the sparks keep making the sound spam
+	if(!IS_TRAITOR(user) || !return_target)
+		if(next_beep <= world.time)
+			next_beep = world.time + (2 SECONDS)
+			playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
+		return
+	if(return_target == "Random Teleport")
+		return_target = get_random_station_turf() //Good luck
+	do_teleport(user, return_target, forced = TRUE)
+	if(!istype(return_target, /obj/structure/sign/painting/syndicate_teleporter))
+		remove_connections(src) //Single use tele if we trust RNGesus
+
+///When a painting sets us as their teleport target, we save them as a reference so we may return to it
+/obj/machinery/teleport/syndicate_gate/proc/on_target_set(datum/source, atom/return_portal)
+	SIGNAL_HANDLER
+	if(return_target) //So we don't end up with multiple paintings linked to 1 hub
+		remove_connections(source)
+	return_target = return_portal
+	update_appearance(UPDATE_ICON)
+
+///Removes any active return_target
+/obj/machinery/teleport/syndicate_gate/proc/remove_connections(datum/source)
+	SIGNAL_HANDLER
+	if(!return_target)
+		update_appearance(UPDATE_ICON)
+		return
+
+	if(!istext(return_target))
+		var/atom/old_return_target = return_target
+		SEND_SIGNAL(old_return_target, COMSIG_TELEPORTER_SET_TARGET, src)
+
+	return_target = null
+	update_appearance(UPDATE_ICON)
+
+/obj/machinery/teleport/syndicate_gate/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(!(src in GLOB.active_syndicate_beacons))
+		GLOB.active_syndicate_beacons += src
+		user.balloon_alert(user, "activated")
+		activated = TRUE
+		update_appearance(UPDATE_ICON)
+		return
+	if(return_target)
+		var/confirmation = tgui_alert(user, "This will cut the link to any other teleporter, are you sure?", "WARNING", list("DISABLE", "cancel"))
+		if(confirmation != "DISABLE")
+			return
+	GLOB.active_syndicate_beacons -= src
+	user.balloon_alert(user, "deactivated")
+	activated = FALSE
+	remove_connections(src)
+	update_appearance(UPDATE_ICON)
+
+/obj/machinery/teleport/syndicate_gate/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return .
+
+	if(!activated)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(return_target)
+		attack_hand(user, modifiers)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	var/target_input = tgui_input_list(user, "Where to launch to?", "Set Teleporter?", GLOB.active_syndicate_paintings)
+	if(!target_input)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return_target = target_input
+	update_appearance(UPDATE_ICON)
+	user.balloon_alert(user, "target set")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/teleport/syndicate_gate/update_icon_state()
+	. = ..()
+	if(return_target)
+		icon_state = "teleporter_active"
+	else if(activated)
+		icon_state = "teleporter_on"
+	else
+		icon_state = "teleporter_off"

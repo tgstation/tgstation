@@ -278,7 +278,7 @@
 
 		if(organs)
 			for(var/organ_type in organs)
-				var/obj/item/organ/implant = SSwardrobe.provide_type(organ_type, user)
+				SSwardrobe.provide_type(organ_type, user)
 
 		// Insert the skillchips associated with this outfit into the target.
 		if(skillchips)
