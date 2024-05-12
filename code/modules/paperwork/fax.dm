@@ -33,28 +33,38 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	var/list/fax_history = list()
 	/// List of types which should always be allowed to be faxed
 	var/static/list/allowed_types = list(
+		/obj/item/canvas,
 		/obj/item/paper,
 		/obj/item/photo,
-		/obj/item/tcgcard
+		/obj/item/tcgcard,
 	)
 	/// List of types which should be allowed to be faxed if hacked
 	var/static/list/exotic_types = list(
-		/obj/item/food/pizzaslice,
-		/obj/item/food/root_flatbread,
-		/obj/item/food/pizza/flatbread,
-		/obj/item/food/breadslice,
-		/obj/item/food/salami,
-		/obj/item/throwing_star,
-		/obj/item/stack/spacecash,
-		/obj/item/holochip,
 		/obj/item/card,
 		/obj/item/folder/biscuit,
+		/obj/item/food/breadslice,
+		/obj/item/food/pizza/flatbread,
+		/obj/item/food/pizzaslice,
+		/obj/item/food/root_flatbread,
+		/obj/item/food/salami,
+		/obj/item/holochip,
+		/obj/item/stack/spacecash,
+		/obj/item/throwing_star,
 	)
 	/// List with a fake-networks(not a fax actually), for request manager.
 	var/list/special_networks = list(
 		nanotrasen = list(fax_name = "NT HR Department", fax_id = "central_command", color = "teal", emag_needed = FALSE),
 		syndicate = list(fax_name = "Sabotage Department", fax_id = "syndicate", color = "red", emag_needed = TRUE),
 	)
+
+/obj/machinery/fax/auto_name
+	name = "Auto-naming Fax Machine"
+
+/obj/machinery/fax/auto_name/Initialize(mapload)
+	var/area/current_area = get_area(src)
+	name = "[current_area.name]'s Fax Machine"
+	fax_name = "[current_area.name]"
+	return ..()
 
 /obj/machinery/fax/Initialize(mapload)
 	. = ..()

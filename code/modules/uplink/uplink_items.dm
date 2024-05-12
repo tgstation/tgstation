@@ -1,4 +1,3 @@
-
 // TODO: Work into reworked uplinks.
 /// Selects a set number of unique items from the uplink, and deducts a percentage discount from them
 /proc/create_uplink_sales(num, datum/uplink_category/category, limited_stock, list/sale_items)
@@ -8,7 +7,20 @@
 		var/datum/uplink_item/taken_item = pick_n_take(sale_items_copy)
 		var/datum/uplink_item/uplink_item = new taken_item.type()
 		var/discount = uplink_item.get_discount()
-		var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")
+		var/static/list/disclaimer = list(
+			"Void where prohibited.",
+			"Not recommended for children.",
+			"Contains small parts.",
+			"Check local laws for legality in region.",
+			"Do not taunt.",
+			"Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.",
+			"Keep away from fire or flames.",
+			"Product is provided \"as is\" without any implied or expressed warranties.",
+			"As seen on TV.",
+			"For recreational use only.",
+			"Use only as directed.",
+			"16% sales tax will be charged for orders originating within Space Nebraska.",
+		)
 		uplink_item.limited_stock = limited_stock
 		if(uplink_item.cost >= 20) //Tough love for nuke ops
 			discount *= 0.5
@@ -59,7 +71,7 @@
 	/// If this uplink item is only available to certain roles. Roles are dependent on the frequency chip or stored ID.
 	var/list/restricted_roles = list()
 	/// The species able to purchase this uplink item.
-	var/restricted_species = list()
+	var/list/restricted_species = list()
 	/// The minimum amount of progression needed for this item to be added to uplinks.
 	var/progression_minimum = 0
 	/// Whether this purchase is visible in the purchase log.
@@ -111,10 +123,11 @@
 
 /// Spawns an item and logs its purchase
 /datum/uplink_item/proc/purchase(mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
-	var/atom/A = spawn_item(item, user, uplink_handler, source)
+	var/atom/spawned_item = spawn_item(item, user, uplink_handler, source)
 	log_uplink("[key_name(user)] purchased [src] for [cost] telecrystals from [source]'s uplink")
+	user.playsound_local(get_turf(user), 'sound/effects/kaching.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	if(purchase_log_vis && uplink_handler.purchase_log)
-		uplink_handler.purchase_log.LogPurchase(A, src, cost)
+		uplink_handler.purchase_log.LogPurchase(spawned_item, src, cost)
 	if(lock_other_purchases)
 		uplink_handler.shop_locked = TRUE
 
@@ -122,20 +135,48 @@
 /datum/uplink_item/proc/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	if(!spawn_path)
 		return
-	var/atom/A
+	var/atom/spawned_item
 	if(ispath(spawn_path))
-		A = new spawn_path(get_turf(user))
+		spawned_item = new spawn_path(get_turf(user))
 	else
-		A = spawn_path
+		spawned_item = spawn_path
 	if(refundable)
-		A.AddElement(/datum/element/uplink_reimburse, (refund_amount ? refund_amount : cost))
-	if(ishuman(user) && isitem(A))
-		var/mob/living/carbon/human/H = user
-		if(H.put_in_hands(A))
-			to_chat(H, span_boldnotice("[A] materializes into your hands!"))
-			return A
-	to_chat(user, span_boldnotice("[A] materializes onto the floor!"))
-	return A
+		spawned_item.AddElement(/datum/element/uplink_reimburse, (refund_amount ? refund_amount : cost))
+	var/mob/living/carbon/human/human_user = user
+	if(istype(human_user) && isitem(spawned_item) && human_user.put_in_hands(spawned_item))
+		to_chat(human_user, span_boldnotice("[spawned_item] materializes into your hands!"))
+	else
+		to_chat(user, span_boldnotice("[spawned_item] materializes onto the floor!"))
+	SEND_SIGNAL(uplink_handler, COMSIG_ON_UPLINK_PURCHASE, spawned_item, user)
+	return spawned_item
+
+/// Used to create the uplink's item for generic use, rather than use by a Syndie specifically
+/// Can be used to "de-restrict" some items, such as Nukie guns spawning with Syndicate pins
+/datum/uplink_item/proc/spawn_item_for_generic_use(mob/user)
+	var/atom/movable/created = new item(user.loc)
+
+	if(isgun(created))
+		replace_pin(created)
+	else if(istype(created, /obj/item/storage/toolbox/guncase))
+		for(var/obj/item/gun/gun in created)
+			replace_pin(gun)
+
+	if(isobj(created))
+		var/obj/created_obj = created
+		LAZYREMOVE(created_obj.req_access, ACCESS_SYNDICATE)
+		LAZYREMOVE(created_obj.req_one_access, ACCESS_SYNDICATE)
+
+	return created
+
+/// Used by spawn_item_for_generic_use to replace the pin of a gun with a normal one
+/datum/uplink_item/proc/replace_pin(obj/item/gun/gun_reward)
+	PRIVATE_PROC(TRUE)
+
+	if(!istype(gun_reward.pin, /obj/item/firing_pin/implant/pindicate))
+		return
+
+	QDEL_NULL(gun_reward.pin)
+	gun_reward.pin = new /obj/item/firing_pin(gun_reward)
 
 ///For special overrides if an item can be bought or not.
 /datum/uplink_item/proc/can_be_bought(datum/uplink_handler/source)
@@ -156,6 +197,7 @@
 //Discounts (dynamically filled above)
 /datum/uplink_item/discounts
 	category = /datum/uplink_category/discounts
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Probably not necessary but just in case
 
 // Special equipment (Dynamically fills in uplink component)
 /datum/uplink_item/special_equipment
@@ -164,6 +206,7 @@
 	desc = "Equipment necessary for accomplishing specific objectives. If you are seeing this, something has gone wrong."
 	limited_stock = 1
 	illegal_tech = FALSE
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Ditto
 
 /datum/uplink_item/special_equipment/purchase(mob/user, datum/component/uplink/U)
 	..()

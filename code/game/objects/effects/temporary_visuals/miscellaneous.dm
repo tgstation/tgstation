@@ -555,7 +555,7 @@
 		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		obj_flags &= ~CAN_BE_HIT
 		icon_state = "rcd_end"
-		addtimer(CALLBACK(src, PROC_REF(end)), 15)
+		addtimer(CALLBACK(src, PROC_REF(end)), 1.5 SECONDS)
 
 /obj/effect/constructing_effect/proc/end()
 	qdel(src)
@@ -683,11 +683,11 @@
 	duration = 0.4 SECONDS
 
 /// Plays a dispersing animation on hivelord and legion minions so they don't just vanish
-/obj/effect/temp_visual/hive_spawn_wither
+/obj/effect/temp_visual/despawn_effect
 	name = "withering spawn"
 	duration = 1 SECONDS
 
-/obj/effect/temp_visual/hive_spawn_wither/Initialize(mapload, atom/copy_from)
+/obj/effect/temp_visual/despawn_effect/Initialize(mapload, atom/copy_from)
 	if (isnull(copy_from))
 		. = ..()
 		return INITIALIZE_HINT_QDEL

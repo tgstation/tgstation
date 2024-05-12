@@ -37,6 +37,11 @@
 /obj/item/newspaper/Initialize(mapload)
 	. = ..()
 	register_context()
+	AddComponent(\
+		/datum/component/two_handed,\
+		wield_callback = CALLBACK(src, PROC_REF(on_wielded)),\
+		unwield_callback = CALLBACK(src, PROC_REF(on_unwielded)),\
+	)
 	creation_time = GLOB.news_network.last_action
 	for(var/datum/feed_channel/iterated_feed_channel in GLOB.news_network.network_channels)
 		news_content += iterated_feed_channel
@@ -105,11 +110,37 @@
 				return FALSE
 	return FALSE
 
+/// Called when you start reading the paper with both hands
+/obj/item/newspaper/proc/on_wielded(obj/item/source, mob/user)
+	RegisterSignal(user, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(holder_updated_overlays))
+	RegisterSignal(user, COMSIG_HUMAN_GET_VISIBLE_NAME, PROC_REF(holder_checked_name))
+	user.update_appearance(UPDATE_OVERLAYS)
+	user.name = user.get_visible_name()
+
+/// Called when you stop doing that
+/obj/item/newspaper/proc/on_unwielded(obj/item/source, mob/user)
+	UnregisterSignal(user, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_HUMAN_GET_VISIBLE_NAME))
+	user.update_appearance(UPDATE_OVERLAYS)
+	user.name = user.get_visible_name()
+
+/// Called when we're being read and overlays are updated, we should show a big newspaper over the reader
+/obj/item/newspaper/proc/holder_updated_overlays(atom/reader, list/overlays)
+	SIGNAL_HANDLER
+	overlays += mutable_appearance(icon, "newspaper_held_over", ABOVE_MOB_LAYER)
+	overlays += mutable_appearance(icon, "newspaper_held_under", BELOW_MOB_LAYER)
+
+/// Called when someone tries to figure out what our identity is, but they can't see it because of the newspaper
+/obj/item/newspaper/proc/holder_checked_name(mob/living/carbon/human/source, list/identity)
+	SIGNAL_HANDLER
+	identity[VISIBLE_NAME_FACE] = ""
+	identity[VISIBLE_NAME_ID] = ""
+
 /obj/item/newspaper/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "Newspaper", name)
-		ui.open()
+	if(ui)
+		return
+	ui = new(user, src, "Newspaper", name)
+	ui.open()
 
 /obj/item/newspaper/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

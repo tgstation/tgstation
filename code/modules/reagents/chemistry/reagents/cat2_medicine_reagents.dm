@@ -452,7 +452,7 @@
 	overdose_threshold = 25
 	ph = 9.1
 	var/datum/brain_trauma/mild/muscle_weakness/trauma
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/c2/musiver/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -584,8 +584,10 @@
 
 	if(affected_mob.health <= (affected_mob.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*(2*normalise_creation_purity()))) //certain death below this threshold
 		REMOVE_TRAIT(affected_mob, TRAIT_STABLEHEART, type) //we have to remove the stable heart trait before we give them a heart attack
-		to_chat(affected_mob,span_danger("You feel something rupturing inside your chest!"))
-		affected_mob.emote("scream")
+		affected_mob.remove_traits(subject_traits, type)
+		to_chat(affected_mob, span_danger("You feel something rupturing inside your chest!"))
+		if(!HAS_TRAIT(affected_mob, TRAIT_ANALGESIA))
+			affected_mob.emote("scream")
 		affected_mob.set_heartattack(TRUE)
 		volume = 0
 	if(need_mob_update)

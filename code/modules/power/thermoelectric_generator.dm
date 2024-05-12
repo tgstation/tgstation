@@ -42,7 +42,7 @@
 	SSair.stop_processing_machine(src)
 	return ..()
 
-/obj/machinery/power/thermoelectric_generator/on_deconstruction()
+/obj/machinery/power/thermoelectric_generator/on_deconstruction(disassembled)
 	null_circulators()
 
 /obj/machinery/power/thermoelectric_generator/update_overlays()

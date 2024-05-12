@@ -482,8 +482,8 @@ const FunForYouTab = (props) => {
                 color="red"
                 icon="user-secret"
                 fluid
-                content="Everyone is the traitor"
-                onClick={() => act('traitor_all')}
+                content="Everyone is the antag"
+                onClick={() => act('antag_all')}
               />
             </NoticeBox>
           </Stack.Item>

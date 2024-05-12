@@ -7,6 +7,8 @@
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_EXTERNAL_SPINES
 
+	preference = "feature_lizard_spines"
+
 	dna_block = DNA_SPINES_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
@@ -30,7 +32,7 @@
 	feature_key = "spines"
 
 /datum/bodypart_overlay/mutant/spines/get_global_feature_list()
-	return GLOB.spines_list
+	return SSaccessories.spines_list
 
 /datum/bodypart_overlay/mutant/spines/can_draw_on_bodypart(mob/living/carbon/human/human)
 	. = ..()

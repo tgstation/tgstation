@@ -5,7 +5,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/robot_suit
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*7.5)
-	construction_time = 500
+	construction_time = 50 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
 	)
@@ -16,7 +16,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/bodypart/chest/robot
 	materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT*20)
-	construction_time = 350
+	construction_time = 35 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
 	)
@@ -27,7 +27,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/bodypart/head/robot
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 2.5)
-	construction_time = 350
+	construction_time = 35 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
 	)
@@ -38,7 +38,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/bodypart/arm/left/robot
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
 	)
@@ -49,7 +49,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/bodypart/arm/right/robot
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
 	)
@@ -60,7 +60,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/bodypart/leg/left/robot
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
 	)
@@ -71,7 +71,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/bodypart/leg/right/robot
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
 	)
@@ -145,7 +145,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/ripley
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -159,7 +159,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*3.75,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -170,7 +170,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_left_arm
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*7.5)
-	construction_time = 150
+	construction_time = 15 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -181,7 +181,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_right_arm
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*7.5)
-	construction_time = 150
+	construction_time = 15 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -192,7 +192,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_left_leg
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*7.5)
-	construction_time = 150
+	construction_time = 15 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -203,7 +203,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_right_leg
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*7.5)
-	construction_time = 150
+	construction_time = 15 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -215,7 +215,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/odysseus
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -226,7 +226,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_torso
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*6)
-	construction_time = 180
+	construction_time = 18 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -240,7 +240,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*3,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*5
 	)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -251,7 +251,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_left_arm
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*3)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -262,7 +262,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_right_arm
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*3)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -273,7 +273,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_left_leg
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*3.5)
-	construction_time = 130
+	construction_time = 13 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -284,7 +284,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_right_leg
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*3.5)
-	construction_time = 130
+	construction_time = 13 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -296,7 +296,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/gygax
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -312,7 +312,7 @@
 		/datum/material/gold=SHEET_MATERIAL_AMOUNT,
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 300
+	construction_time = 30 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -328,7 +328,7 @@
 		/datum/material/gold=SHEET_MATERIAL_AMOUNT,
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -343,7 +343,7 @@
 		/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/silver=HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -358,7 +358,7 @@
 		/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/silver=HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -373,7 +373,7 @@
 		/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/silver=HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -388,7 +388,7 @@
 		/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/silver=HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -404,7 +404,7 @@
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 600
+	construction_time = 60 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -416,7 +416,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/durand
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*12.5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -431,7 +431,7 @@
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 300
+	construction_time = 30 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -446,7 +446,7 @@
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*7.5,
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -460,7 +460,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT*2,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -474,7 +474,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT*2,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -488,7 +488,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT*2,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -502,7 +502,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT*2,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -517,7 +517,7 @@
 		/datum/material/uranium=SHEET_MATERIAL_AMOUNT*12.5,
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*10,
 	)
-	construction_time = 600
+	construction_time = 60 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -529,7 +529,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/honker
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -544,7 +544,7 @@
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/bananium=SHEET_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 300
+	construction_time = 30 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -559,7 +559,7 @@
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
 		/datum/material/bananium=SHEET_MATERIAL_AMOUNT * 2.5,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -573,7 +573,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*7.5,
 		/datum/material/bananium=SHEET_MATERIAL_AMOUNT * 2.5,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -587,7 +587,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*7.5,
 		/datum/material/bananium=SHEET_MATERIAL_AMOUNT * 2.5,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -601,7 +601,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*7.5,
 		/datum/material/bananium=SHEET_MATERIAL_AMOUNT * 2.5,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -615,7 +615,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*7.5,
 		/datum/material/bananium=SHEET_MATERIAL_AMOUNT * 2.5,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -627,7 +627,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/phazon
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -642,7 +642,7 @@
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/plasma=SHEET_MATERIAL_AMOUNT*10,
 	)
-	construction_time = 300
+	construction_time = 30 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -657,7 +657,7 @@
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
 		/datum/material/plasma=SHEET_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -671,7 +671,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/plasma=SHEET_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -685,7 +685,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/plasma=SHEET_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -699,7 +699,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/plasma=SHEET_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -713,7 +713,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/plasma=SHEET_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -728,7 +728,7 @@
 		/datum/material/plasma=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*10,
 	)
-	construction_time = 300
+	construction_time = 30 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -740,7 +740,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/savannah_ivanov
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -754,7 +754,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*3.75,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -768,7 +768,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*3,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -779,7 +779,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/savannah_ivanov_left_arm
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*7.5)
-	construction_time = 150
+	construction_time = 15 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -790,7 +790,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/savannah_ivanov_right_arm
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*7.5)
-	construction_time = 150
+	construction_time = 15 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -801,7 +801,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/savannah_ivanov
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*12.5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -816,7 +816,7 @@
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 300
+	construction_time = 30 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -831,7 +831,7 @@
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*7.5,
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -845,7 +845,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT*2,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -859,7 +859,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT*2,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -873,7 +873,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT*2,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -887,7 +887,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT*2,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -902,7 +902,7 @@
 		/datum/material/uranium=SHEET_MATERIAL_AMOUNT*12.5,
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*10,
 	)
-	construction_time = 600
+	construction_time = 60 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -914,7 +914,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/clarke
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -928,7 +928,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*3.75,
 		)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -942,7 +942,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*3,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -953,7 +953,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/clarke_left_arm
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*7.5)
-	construction_time = 150
+	construction_time = 15 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -964,7 +964,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/clarke_right_arm
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*7.5)
-	construction_time = 150
+	construction_time = 15 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
@@ -979,7 +979,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/plasma=SHEET_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -995,7 +995,7 @@
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/titanium = SHEET_MATERIAL_AMOUNT *5,
 	)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_CHASSIS,
@@ -1007,7 +1007,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -1019,7 +1019,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -1031,7 +1031,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/drill
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -1052,7 +1052,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT * 2.5,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT *1.25,
 	)
-	construction_time = 50
+	construction_time = 5 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -1065,7 +1065,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/extinguisher
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -1083,7 +1083,7 @@
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT,
 		/datum/material/plasma=SHEET_MATERIAL_AMOUNT * 2.5,
 	)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -1104,7 +1104,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/bananium=SHEET_MATERIAL_AMOUNT * 2.5,
 	)
-	construction_time = 300
+	construction_time = 30 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_HONK,
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
@@ -1120,7 +1120,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/bananium=SHEET_MATERIAL_AMOUNT * 2.5,
 	)
-	construction_time = 300
+	construction_time = 30 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_HONK,
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
@@ -1136,7 +1136,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/bananium=SHEET_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 500
+	construction_time = 50 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_HONK,
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
@@ -1152,7 +1152,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/bananium=SHEET_MATERIAL_AMOUNT*3.75,
 	)
-	construction_time = 400
+	construction_time = 40 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_HONK,
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
@@ -1165,7 +1165,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/radio
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2.5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -1183,7 +1183,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/air_tank
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -1205,7 +1205,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/rename
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
@@ -1219,7 +1219,7 @@
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
 	)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
@@ -1235,7 +1235,7 @@
 		/datum/material/plasma =SHEET_MATERIAL_AMOUNT * 2.5,
 		/datum/material/uranium =SHEET_MATERIAL_AMOUNT*3,
 	)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
@@ -1251,7 +1251,7 @@
 		/datum/material/gold =SHEET_MATERIAL_AMOUNT,
 		/datum/material/diamond =SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SECURITY
 	)
@@ -1266,7 +1266,7 @@
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*3,
 		/datum/material/diamond =SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 80
+	construction_time = 8 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
 	)
@@ -1281,7 +1281,7 @@
 		/datum/material/gold =SHEET_MATERIAL_AMOUNT,
 		/datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 40
+	construction_time = 4 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
 	)
@@ -1296,7 +1296,7 @@
 		/datum/material/plasma =SHEET_MATERIAL_AMOUNT*2,
 		/datum/material/titanium =SHEET_MATERIAL_AMOUNT * 2.5,
 	)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
 	)
@@ -1311,7 +1311,7 @@
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*7.5,
 		/datum/material/diamond =SHEET_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
@@ -1326,7 +1326,7 @@
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*7.5,
 		/datum/material/bananium =HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
@@ -1340,7 +1340,7 @@
 		/datum/material/iron =SHEET_MATERIAL_AMOUNT*7.5,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*7.5,
 	)
-	construction_time = 80
+	construction_time = 8 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
@@ -1356,7 +1356,7 @@
 		/datum/material/plasma =SHEET_MATERIAL_AMOUNT*4,
 		/datum/material/uranium =SHEET_MATERIAL_AMOUNT*4,
 	)
-	construction_time = 80
+	construction_time = 8 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
@@ -1372,7 +1372,7 @@
 		/datum/material/titanium =SHEET_MATERIAL_AMOUNT * 2.5,
 		/datum/material/diamond =SHEET_MATERIAL_AMOUNT * 1.5,
 	)
-	construction_time = 80
+	construction_time = 8 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
@@ -1388,7 +1388,7 @@
 		/datum/material/silver =SHEET_MATERIAL_AMOUNT*2,
 		/datum/material/gold =SHEET_MATERIAL_AMOUNT * 1.5,
 	)
-	construction_time = 80
+	construction_time = 8 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
@@ -1403,9 +1403,39 @@
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*2,
 		/datum/material/silver =SHEET_MATERIAL_AMOUNT*2,
 	)
-	construction_time = 40
+	construction_time = 4 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
+/datum/design/borg_upgrade_surgicalomnitool
+	name = "Advanced Surgical Omnitool Upgrade"
+	id = "borg_upgrade_surgicalomnitool"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/surgery_omnitool
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/silver=SHEET_MATERIAL_AMOUNT*2,
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
+/datum/design/borg_upgrade_engineeringomnitool
+	name = "Advanced Engineering Omnitool Upgrade"
+	id = "borg_upgrade_engineeringomnitool"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/engineering_omnitool
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/gold=SHEET_MATERIAL_AMOUNT*2,
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING,
 	)
 
 /datum/design/borg_upgrade_trashofholding
@@ -1417,7 +1447,7 @@
 		/datum/material/gold =SHEET_MATERIAL_AMOUNT,
 		/datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 40
+	construction_time = 4 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
@@ -1431,7 +1461,7 @@
 		/datum/material/iron =SHEET_MATERIAL_AMOUNT,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 40
+	construction_time = 4 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
@@ -1445,7 +1475,7 @@
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.125,
 		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*0.75,
 	)
-	construction_time = 40
+	construction_time = 4 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
@@ -1543,7 +1573,7 @@
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT*100,
 		/datum/material/titanium =SHEET_MATERIAL_AMOUNT * 2.5,
 	)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
@@ -1558,7 +1588,7 @@
 		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/gold =SMALL_MATERIAL_AMOUNT * 2,
 	)
-	construction_time = 50
+	construction_time = 5 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
 	)
@@ -1573,7 +1603,7 @@
 		/datum/material/iron =SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
 	)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
@@ -1584,7 +1614,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/inducer
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
@@ -1598,7 +1628,7 @@
 		/datum/material/iron =SHEET_MATERIAL_AMOUNT,
 		/datum/material/titanium =SMALL_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
@@ -1612,7 +1642,7 @@
 		/datum/material/iron =SHEET_MATERIAL_AMOUNT,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT*1.125,
 	) //Need glass for the new beaker too
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
@@ -1626,7 +1656,7 @@
 		/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/glass =SMALL_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
 	)
@@ -1640,7 +1670,7 @@
 		/datum/material/iron =SHEET_MATERIAL_AMOUNT*2,
 		/datum/material/glass =SMALL_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 120
+	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
@@ -1654,7 +1684,7 @@
 		/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/glass =SMALL_MATERIAL_AMOUNT*5,
 	)
-	construction_time = 75
+	construction_time = 7.5 SECONDS
 	build_path = /obj/item/mmi
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
@@ -1679,7 +1709,7 @@
 		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*1.35,
 		/datum/material/gold =SMALL_MATERIAL_AMOUNT*5
 	)
-	construction_time = 75
+	construction_time = 7.5 SECONDS
 	build_path = /obj/item/mmi/posibrain
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
@@ -1693,7 +1723,7 @@
 	build_type = MECHFAB
 	build_path =/obj/item/mecha_parts/mecha_tracking
 	materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*5)
-	construction_time = 50
+	construction_time = 5 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -1715,7 +1745,7 @@
 		/datum/material/glass =SMALL_MATERIAL_AMOUNT*5,
 		/datum/material/silver =SMALL_MATERIAL_AMOUNT * 2,
 	)
-	construction_time = 50
+	construction_time = 5 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_CONTROL_INTERFACES,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
@@ -1739,7 +1769,7 @@
 		/datum/material/plasma =SMALL_MATERIAL_AMOUNT * 2,
 		/datum/material/titanium =SMALL_MATERIAL_AMOUNT * 2,
 	)
-	construction_time = 50
+	construction_time = 5 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_CONTROL_INTERFACES,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
@@ -1760,7 +1790,7 @@
 		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7.5,
 		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 7.5,
 	)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	build_path = /obj/item/assembly/flash/handheld
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG
@@ -2046,6 +2076,17 @@
 		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT,
 	)
 	build_path = /obj/item/mod/module/welding
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
+	)
+/datum/design/module/mod_head_protection
+	name = "Safety-First Head Protection Module"
+	id = "mod_safety"
+	materials = list(
+		/datum/material/iron =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/mod/module/headprotector
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
 	)

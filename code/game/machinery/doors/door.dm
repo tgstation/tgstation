@@ -32,22 +32,32 @@
 	/// A filler object used to fill the space of multi-tile airlocks
 	var/obj/structure/fluff/airlock_filler/filler
 	var/welded = FALSE
-	var/heat_proof = FALSE // For rglass-windowed airlocks and firedoors
-	var/emergency = FALSE // Emergency access override
-	var/sub_door = FALSE // true if it's meant to go under another door.
+	/// For rglass-windowed airlocks and firedoors
+	var/heat_proof = FALSE
+	/// Emergency access override
+	var/emergency = FALSE
+	/// true if it's meant to go under another door.
+	var/sub_door = FALSE
 	var/closingLayer = CLOSED_DOOR_LAYER
-	var/autoclose = FALSE //does it automatically close after some time
-	var/safe = TRUE //whether the door detects things and mobs in its way and reopen or crushes them.
-	var/locked = FALSE //whether the door is bolted or not.
+	///does it automatically close after some time
+	var/autoclose = FALSE
+	///whether the door detects things and mobs in its way and reopen or crushes them.
+	var/safe = TRUE
+	///whether the door is bolted or not.
+	var/locked = FALSE
 	var/datum/effect_system/spark_spread/spark_system
-	var/real_explosion_block //ignore this, just use explosion_block
-	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
+	///ignore this, just use explosion_block
+	var/real_explosion_block
+	///if TRUE, this door will always open on red alert
+	var/red_alert_access = FALSE
 	/// Checks to see if this airlock has an unrestricted "sensor" within (will set to TRUE if present).
 	var/unres_sensor = FALSE
 	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 	var/unres_sides = NONE
-	var/can_crush = TRUE /// Whether or not the door can crush mobs.
-	var/can_open_with_hands = TRUE /// Whether or not the door can be opened by hand (used for blast doors and shutters)
+	/// Whether or not the door can crush mobs.
+	var/can_crush = TRUE
+	/// Whether or not the door can be opened by hand (used for blast doors and shutters)
+	var/can_open_with_hands = TRUE
 	/// Whether or not this door can be opened through a door remote, ever
 	var/opens_with_door_remote = FALSE
 	/// Special operating mode for elevator doors
@@ -116,7 +126,7 @@
 	if(!can_open_with_hands)
 		return .
 
-	if(isaicamera(user) || issilicon(user))
+	if(isaicamera(user) || HAS_SILICON_ACCESS(user))
 		return .
 
 	if(isnull(held_item) && Adjacent(user))
@@ -239,7 +249,7 @@
 		var/obj/item/I = AM
 		if(!density || (I.w_class < WEIGHT_CLASS_NORMAL && !LAZYLEN(I.GetAccess())))
 			return
-		if(check_access(I))
+		if(requiresID() && check_access(I))
 			open()
 		else
 			do_animate("deny")
@@ -422,7 +432,7 @@
 	if(operating)
 		return FALSE
 	operating = TRUE
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	do_animate("opening")
 	set_opacity(0)
 	SLEEP_NOT_DEL(0.5 SECONDS)

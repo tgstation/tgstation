@@ -114,7 +114,6 @@
 	var/megas_allowed = (generate_in.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && length(megafauna_spawn_list)
 
 	var/start_time = REALTIMEOFDAY
-	SSore_generation.ore_vent_minerals = (SSore_generation.ore_vent_minerals_default).Copy() //reset the ore vent minerals to the default
 
 	for(var/turf/target_turf as anything in turfs)
 		if(!(target_turf.type in open_turf_types)) //only put stuff on open turfs we generated, so closed walls and rivers and stuff are skipped

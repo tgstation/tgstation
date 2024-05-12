@@ -2142,7 +2142,7 @@
 /area/awaymission/cabin/caves)
 "km" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /turf/open/floor/wood,
 /area/awaymission/cabin/caves)
 "ko" = (
@@ -3002,7 +3002,7 @@
 	set_luminosity = 6;
 	light_color = "#9bbbff"
 	},
-/mob/living/basic/pet/penguin/baby/permanent,
+/mob/living/basic/pet/penguin/baby/permanent/snowdin,
 /turf/open/misc/ice/smooth,
 /area/awaymission/cabin/snowforest)
 "sK" = (
@@ -3725,7 +3725,7 @@
 	set_luminosity = 6;
 	light_color = "#9bbbff"
 	},
-/mob/living/basic/pet/penguin/emperor,
+/mob/living/basic/pet/penguin/emperor/snowdin,
 /turf/open/misc/ice/smooth,
 /area/awaymission/cabin/snowforest)
 "Aa" = (

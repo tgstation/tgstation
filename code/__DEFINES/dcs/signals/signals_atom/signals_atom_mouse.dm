@@ -13,7 +13,6 @@
 #define COMSIG_CLICK_CTRL "ctrl_click"
 ///from base of atom/AltClick(): (/mob)
 #define COMSIG_CLICK_ALT "alt_click"
-	#define COMPONENT_CANCEL_CLICK_ALT (1<<0)
 ///from base of atom/alt_click_secondary(): (/mob)
 #define COMSIG_CLICK_ALT_SECONDARY "alt_click_secondary"
 	#define COMPONENT_CANCEL_CLICK_ALT_SECONDARY (1<<0)
@@ -26,3 +25,5 @@
 #define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"
 ///from base of mob/MouseWheelOn(): (/atom, delta_x, delta_y, params)
 #define COMSIG_MOUSE_SCROLL_ON "mousescroll_on"
+/// From /atom/movable/screen/click(): (atom/target, atom/location, control, params, mob/user)
+#define COMSIG_SCREEN_ELEMENT_CLICK "screen_element_click"

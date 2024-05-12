@@ -14,6 +14,7 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	resistance_flags = FIRE_PROOF
 	clothing_flags = SNUG_FIT | STACKABLE_HELMET_EXEMPT
 
@@ -23,9 +24,9 @@
 	acid = 60
 
 /obj/item/clothing/head/utility/welding/attack_self(mob/user)
-	weldingvisortoggle(user)
+	adjust_visor(user)
 
-/obj/item/clothing/head/utility/welding/visor_toggling()
+/obj/item/clothing/head/utility/welding/update_icon_state()
 	. = ..()
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 	inhand_icon_state = "[initial(inhand_icon_state)][up ? "off" : ""]"
-

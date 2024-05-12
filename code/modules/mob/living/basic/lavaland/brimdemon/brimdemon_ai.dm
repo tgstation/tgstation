@@ -43,6 +43,5 @@
 /datum/ai_behavior/targeted_mob_ability/brimbeam/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
 	var/mob/living/target = controller.blackboard[target_key]
 	if (QDELETED(target) || !(get_dir(controller.pawn, target) in GLOB.cardinals) || get_dist(controller.pawn, target) > max_target_distance)
-		finish_action(controller, succeeded = FALSE, ability_key = ability_key, target_key = target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	return ..()

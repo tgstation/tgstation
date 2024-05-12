@@ -48,12 +48,9 @@
 		var/static/list/blacklisted_pylon_turfs = typecacheof(list(
 			/turf/closed,
 			/turf/open/floor/engine/cult,
-			/turf/open/space,
-			/turf/open/lava,
-			/turf/open/chasm,
 			/turf/open/misc/asteroid,
 		))
-		if(is_type_in_typecache(nearby_turf, blacklisted_pylon_turfs))
+		if(isgroundlessturf(nearby_turf) || is_type_in_typecache(nearby_turf, blacklisted_pylon_turfs))
 			continue
 		validturfs |= nearby_turf
 

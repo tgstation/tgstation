@@ -1,6 +1,6 @@
 #define GONDOLA_ORGAN_COLOR "#7a503d"
-#define GONDOLA_SCLERA_COLOR "#000000"
-#define GONDOLA_PUPIL_COLOR "#000000"
+#define GONDOLA_SCLERA_COLOR COLOR_BLACK
+#define GONDOLA_PUPIL_COLOR COLOR_BLACK
 #define GONDOLA_COLORS GONDOLA_ORGAN_COLOR + GONDOLA_SCLERA_COLOR + GONDOLA_PUPIL_COLOR
 
 /*
@@ -31,7 +31,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 /obj/item/organ/internal/heart/gondola/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/gondola)
-	AddElement(/datum/element/noticable_organ, "radiate%PRONOUN_S an aura of serenity.")
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_They radiate%PRONOUN_s an aura of serenity.")
 
 /obj/item/organ/internal/heart/gondola/Insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
@@ -60,7 +60,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 
 /obj/item/organ/internal/tongue/gondola/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "mouth is permanently affixed into a relaxed smile.", BODY_ZONE_PRECISE_MOUTH)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their mouth is permanently affixed into a relaxed smile.", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/gondola)
 
 /obj/item/organ/internal/tongue/gondola/Insert(mob/living/carbon/tongue_owner, special, movement_flags)
@@ -79,15 +79,12 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	icon_state = "liver"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GONDOLA_COLORS
-	/// instance of the martial art granted on insertion
-	var/datum/martial_art/hugs_of_the_gondola/pax_hugs
 
 /obj/item/organ/internal/liver/gondola/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/gondola)
-	AddElement(/datum/element/noticable_organ, "left arm has small needles breaching the skin all over it.", BODY_ZONE_L_ARM)
-	AddElement(/datum/element/noticable_organ, "right arm has small needles breaching the skin all over it.", BODY_ZONE_R_ARM)
-	pax_hugs = new
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their left arm has small needles breaching the skin all over it.", BODY_ZONE_L_ARM)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their right arm has small needles breaching the skin all over it.", BODY_ZONE_R_ARM)
 
 /obj/item/organ/internal/liver/gondola/Insert(mob/living/carbon/liver_owner, special, movement_flags)
 	. = ..()
@@ -100,14 +97,13 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	else
 		to_chat(liver_owner, span_warning("You feel like something would be happening to your arms right now... if you still had them."))
 	to_chat(liver_owner, span_notice("Hugging a target will pacify them, but you won't be able to carry much of anything anymore."))
-	pax_hugs.teach(liver_owner)
 	RegisterSignal(liver_owner, COMSIG_HUMAN_EQUIPPING_ITEM, PROC_REF(on_owner_equipping_item))
 	RegisterSignal(liver_owner, COMSIG_LIVING_TRY_PULL, PROC_REF(on_owner_try_pull))
+	RegisterSignal(liver_owner, COMSIG_CARBON_HELPED, PROC_REF(on_hug))
 
 /obj/item/organ/internal/liver/gondola/Remove(mob/living/carbon/liver_owner, special, movement_flags)
 	. = ..()
-	pax_hugs.remove(liver_owner)
-	UnregisterSignal(liver_owner, list(COMSIG_HUMAN_EQUIPPING_ITEM, COMSIG_LIVING_TRY_PULL))
+	UnregisterSignal(liver_owner, list(COMSIG_HUMAN_EQUIPPING_ITEM, COMSIG_LIVING_TRY_PULL, COMSIG_CARBON_HELPED))
 
 /// signal sent when prompting if an item can be equipped
 /obj/item/organ/internal/liver/gondola/proc/on_owner_equipping_item(mob/living/carbon/human/owner, obj/item/equip_target, slot)
@@ -129,6 +125,18 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 		if(item_target.w_class > WEIGHT_CLASS_TINY)
 			item_target.balloon_alert(owner, "too weak to pull this!")
 			return COMSIG_LIVING_CANCEL_PULL
+
+/obj/item/organ/internal/liver/gondola/proc/on_hug(mob/living/carbon/human/source, mob/living/carbon/hugged)
+	SIGNAL_HANDLER
+
+	var/list/covered_body_zones = source.get_covered_body_zones()
+	var/pax_injected = 4
+	if(BODY_ZONE_L_ARM in covered_body_zones)
+		pax_injected -= 2
+	if(BODY_ZONE_R_ARM in covered_body_zones)
+		pax_injected -= 2
+	if(pax_injected > 0 && hugged.reagents?.add_reagent(/datum/reagent/pax, pax_injected))
+		to_chat(hugged, span_warning("You feel a tiny prick!"))
 
 #undef GONDOLA_ORGAN_COLOR
 #undef GONDOLA_SCLERA_COLOR

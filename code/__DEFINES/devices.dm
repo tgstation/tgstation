@@ -8,8 +8,17 @@
 #define INSPECTOR_PRINT_SOUND_MODE_FAFAFOGGY 4
 #define BANANIUM_CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST 4
 #define CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST 4
-#define INSPECTOR_POWER_USAGE_HONK 15
-#define INSPECTOR_POWER_USAGE_NORMAL 5
+#define INSPECTOR_ENERGY_USAGE_HONK (0.015 * STANDARD_CELL_CHARGE)
+#define INSPECTOR_ENERGY_USAGE_NORMAL (0.005 * STANDARD_CELL_CHARGE)
 #define INSPECTOR_TIME_MODE_SLOW 1
 #define INSPECTOR_TIME_MODE_FAST 2
 #define INSPECTOR_TIME_MODE_HONK 3
+
+// Health scan modes
+/// Healthscan prints health of the target
+#define SCANNER_CONDENSED 0
+/// Healthscan prints health of each bodypart of the target in addition to broad health
+#define SCANNER_VERBOSE 1
+/// Used to prevent health analyzers from switching modes when they shouldn't.
+/// Functions the same as [SCANNER_CONDENSED]
+#define SCANNER_NO_MODE -1

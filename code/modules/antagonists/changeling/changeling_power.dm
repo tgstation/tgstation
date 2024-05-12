@@ -44,7 +44,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 
 /datum/action/changeling/Trigger(trigger_flags)
 	var/mob/user = owner
-	if(!user || !user.mind || !user.mind.has_antag_datum(/datum/antagonist/changeling))
+	if(!user || !IS_CHANGELING(user))
 		return
 	try_to_sting(user)
 
@@ -61,7 +61,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 /datum/action/changeling/proc/try_to_sting(mob/living/user, mob/living/target)
 	if(!can_sting(user, target))
 		return FALSE
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	if(sting_action(user, target))
 		sting_feedback(user, target)
 		changeling.adjust_chemicals(-chemical_cost)
@@ -81,7 +81,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 /datum/action/changeling/proc/can_sting(mob/living/user, mob/living/target)
 	if(!can_be_used_by(user))
 		return FALSE
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	if(changeling.chem_charges < chemical_cost)
 		user.balloon_alert(user, "needs [chemical_cost] chemicals!")
 		return FALSE

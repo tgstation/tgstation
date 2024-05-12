@@ -54,7 +54,7 @@
 	jitter = 40 SECONDS
 	range = 7
 	icon_state = "spark"
-	color = "#FFFF00"
+	color = COLOR_YELLOW
 	embedding = null
 
 /obj/projectile/bullet/shotgun_frag12

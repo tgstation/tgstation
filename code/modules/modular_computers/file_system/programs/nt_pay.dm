@@ -21,7 +21,7 @@
 	///Pay token what we want to find
 	var/wanted_token
 
-/datum/computer_file/program/nt_pay/ui_act(action, list/params, datum/tgui/ui, datum/tgui/ui, datum/ui_state/state)
+/datum/computer_file/program/nt_pay/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	switch(action)
 		if("Transaction")

@@ -63,7 +63,7 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 	examine_list += message
 
 ///Only scannable fish will contribute towards the experiment.
-/datum/experiment/scanning/fish/final_contributing_index_checks(obj/item/fish/target, typepath)
+/datum/experiment/scanning/fish/final_contributing_index_checks(datum/component/experiment_handler/experiment_handler, obj/item/fish/target, typepath)
 	return target.experisci_scannable
 
 /**
@@ -104,7 +104,7 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 	fish_source_reward = /datum/fish_source/portal/random
 
 ///holo fishes are normally unscannable, but this is an experiment for them, so we don't care for the experisci_scannable variable.
-/datum/experiment/scanning/fish/holographic/final_contributing_index_checks(obj/item/fish/target, typepath)
+/datum/experiment/scanning/fish/holographic/final_contributing_index_checks(datum/component/experiment_handler/experiment_handler, obj/item/fish/target, typepath)
 	return TRUE
 
 /datum/experiment/scanning/fish/fourth

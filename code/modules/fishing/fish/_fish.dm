@@ -204,20 +204,20 @@
 	size = new_size
 	switch(size)
 		if(0 to FISH_SIZE_TINY_MAX)
-			w_class = WEIGHT_CLASS_TINY
+			update_weight_class(WEIGHT_CLASS_TINY)
 			inhand_icon_state = "fish_small"
 		if(FISH_SIZE_TINY_MAX to FISH_SIZE_SMALL_MAX)
 			inhand_icon_state = "fish_small"
-			w_class = WEIGHT_CLASS_SMALL
+			update_weight_class(WEIGHT_CLASS_SMALL)
 		if(FISH_SIZE_SMALL_MAX to FISH_SIZE_NORMAL_MAX)
 			inhand_icon_state = "fish_normal"
-			w_class = WEIGHT_CLASS_NORMAL
+			update_weight_class(WEIGHT_CLASS_NORMAL)
 		if(FISH_SIZE_NORMAL_MAX to FISH_SIZE_BULKY_MAX)
 			inhand_icon_state = "fish_bulky"
-			w_class = WEIGHT_CLASS_BULKY
+			update_weight_class(WEIGHT_CLASS_BULKY)
 		if(FISH_SIZE_BULKY_MAX to INFINITY)
 			inhand_icon_state = "fish_huge"
-			w_class = WEIGHT_CLASS_HUGE
+			update_weight_class(WEIGHT_CLASS_HUGE)
 	if(fillet_type)
 		var/init_fillets = initial(num_fillets)
 		var/amount = max(round(init_fillets * size / FISH_FILLET_NUMBER_SIZE_DIVISOR, 1), 1)

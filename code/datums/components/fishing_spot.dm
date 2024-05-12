@@ -15,6 +15,12 @@
 	fish_source.on_fishing_spot_init()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_attackby))
 	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examined_more))
+
+/datum/component/fishing_spot/Destroy()
+	fish_source = null
+	return ..()
 
 /datum/component/fishing_spot/proc/handle_cast(datum/source, obj/item/fishing_rod/rod, mob/user)
 	SIGNAL_HANDLER
@@ -27,6 +33,43 @@
 	if(try_start_fishing(item,user))
 		return COMPONENT_NO_AFTERATTACK
 	return NONE
+
+///If the fish source has fishes that are shown in the
+/datum/component/fishing_spot/proc/on_examined(datum/source, mob/user, list/examine_text)
+	SIGNAL_HANDLER
+	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
+		return
+
+	var/has_known_fishes = FALSE
+	for(var/reward in fish_source.fish_counts)
+		if(!ispath(reward, /obj/item/fish))
+			continue
+		var/obj/item/fish/prototype = reward
+		if(initial(prototype.show_in_catalog))
+			has_known_fishes = TRUE
+			break
+	if(!has_known_fishes)
+		return
+
+	examine_text += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
+
+/datum/component/fishing_spot/proc/on_examined_more(datum/source, mob/user, list/examine_text)
+	SIGNAL_HANDLER
+	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
+		return
+
+	var/list/known_fishes = list()
+	for(var/reward in fish_source.fish_counts)
+		if(!ispath(reward, /obj/item/fish))
+			continue
+		var/obj/item/fish/prototype = reward
+		if(initial(prototype.show_in_catalog))
+			known_fishes += initial(prototype.name)
+
+	if(!length(known_fishes))
+		return
+
+	examine_text += span_info("You can catch the following fish here: [english_list(known_fishes)].")
 
 /datum/component/fishing_spot/proc/try_start_fishing(obj/item/possibly_rod, mob/user)
 	SIGNAL_HANDLER

@@ -2,6 +2,7 @@
 /obj/machinery/quantum_server/proc/add_threats(mob/living/threat)
 	spawned_threat_refs.Add(WEAKREF(threat))
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_THREAT_CREATED)
+	threat.AddComponent(/datum/component/virtual_entity, src)
 
 /// Choses which antagonist role is spawned based on threat
 /obj/machinery/quantum_server/proc/get_antagonist_role()
@@ -69,16 +70,15 @@
 
 	var/datum/antagonist/bitrunning_glitch/chosen_role = forced_role || get_antagonist_role()
 	var/role_name = initial(chosen_role.name)
-
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(spawn_glitch), chosen_role, mutation_target)
-	mutation_target.AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_GLITCH, \
-		job_bans = ROLE_GLITCH, \
-		to_call = to_call, \
-		title = role_name, \
-		header = "Bitrunning Malfunction", \
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		check_jobban = ROLE_GLITCH,
+		poll_time = 20 SECONDS,
+		checked_target = mutation_target,
+		ignore_category = POLL_IGNORE_GLITCH,
+		alert_pic = mutation_target,
+		role_name_text = "Bitrunning Malfunction: [role_name]",
 	)
-
+	spawn_glitch(chosen_role, mutation_target, chosen_one)
 	return mutation_target
 
 /// Orbit poll has concluded - spawn the antag

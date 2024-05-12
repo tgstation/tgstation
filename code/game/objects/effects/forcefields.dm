@@ -107,3 +107,6 @@
 
 /obj/effect/forcefield/cosmic_field/fast
 	initial_duration = 5 SECONDS
+
+/obj/effect/forcefield/cosmic_field/extrafast
+	initial_duration = 2.5 SECONDS

@@ -2,7 +2,7 @@
 	target_mobtypes = list(/mob/living)
 	requires_bodypart_type = NONE
 	replaced_by = /datum/surgery
-	surgery_flags = SURGERY_IGNORE_CLOTHES | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB
+	surgery_flags = SURGERY_IGNORE_CLOTHES | SURGERY_REQUIRE_RESTING
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
@@ -18,8 +18,11 @@
 
 /datum/surgery/healing/can_start(mob/user, mob/living/patient)
 	. = ..()
+	if(!.)
+		return .
 	if(!(patient.mob_biotypes & (MOB_ORGANIC|MOB_HUMANOID)))
 		return FALSE
+	return .
 
 /datum/surgery/healing/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
@@ -27,13 +30,15 @@
 		steps = list(
 			/datum/surgery_step/incise/nobleed,
 			healing_step_type, //hehe cheeky
-			/datum/surgery_step/close)
+			/datum/surgery_step/close,
+		)
 
 /datum/surgery_step/heal
 	name = "repair body (hemostat)"
 	implements = list(
 		TOOL_HEMOSTAT = 100,
 		TOOL_SCREWDRIVER = 65,
+		TOOL_WIRECUTTER = 60,
 		/obj/item/pen = 55)
 	repeatable = TRUE
 	time = 25

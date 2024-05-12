@@ -1,6 +1,6 @@
 #define RAT_ORGAN_COLOR "#646464"
 #define RAT_SCLERA_COLOR "#f0e055"
-#define RAT_PUPIL_COLOR "#000000"
+#define RAT_PUPIL_COLOR COLOR_BLACK
 #define RAT_COLORS RAT_ORGAN_COLOR + RAT_SCLERA_COLOR + RAT_PUPIL_COLOR
 
 ///bonus of the rat: you can ventcrawl!
@@ -16,8 +16,8 @@
 	name = "mutated rat-eyes"
 	desc = "Rat DNA infused into what was once a normal pair of eyes."
 	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
-	eye_color_left = "#000000"
-	eye_color_right = "#000000"
+	eye_color_left = COLOR_BLACK
+	eye_color_right = COLOR_BLACK
 
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "eyes"
@@ -29,7 +29,7 @@
 
 /obj/item/organ/internal/eyes/night_vision/rat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "eyes have deep, shifty black pupils, surrounded by a sickening yellow sclera.", BODY_ZONE_PRECISE_EYES)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes have deep, shifty black pupils, surrounded by a sickening yellow sclera.", BODY_ZONE_PRECISE_EYES)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 
 ///increases hunger, disgust recovers quicker, expands what is defined as "food"
@@ -47,7 +47,7 @@
 /obj/item/organ/internal/stomach/rat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
-	AddElement(/datum/element/noticable_organ, "mouth is drooling excessively.", BODY_ZONE_PRECISE_MOUTH)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their mouth is drooling excessively.", BODY_ZONE_PRECISE_MOUTH)
 
 /// makes you smaller, walk over tables, and take 1.5x damage
 /obj/item/organ/internal/heart/rat
@@ -61,30 +61,26 @@
 /obj/item/organ/internal/heart/rat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
-	AddElement(/datum/element/noticable_organ, "hunch%PRONOUN_ES over unnaturally!")
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_They hunch%PRONOUN_es over unnaturally!")
 
 /obj/item/organ/internal/heart/rat/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
-	if(!. || !ishuman(receiver))
+	if(!ishuman(receiver))
 		return
 	var/mob/living/carbon/human/human_receiver = receiver
-	if(!human_receiver.can_mutate())
-		return
-	human_receiver.dna.add_mutation(/datum/mutation/human/dwarfism)
+	if(human_receiver.can_mutate())
+		human_receiver.dna.add_mutation(/datum/mutation/human/dwarfism)
 	//but 1.5 damage
-	if(human_receiver.physiology)
-		human_receiver.physiology.damage_resistance -= 50
+	human_receiver.physiology?.damage_resistance -= 50
 
 /obj/item/organ/internal/heart/rat/on_mob_remove(mob/living/carbon/heartless, special)
 	. = ..()
 	if(!ishuman(heartless))
 		return
 	var/mob/living/carbon/human/human_heartless = heartless
-	if(!human_heartless.can_mutate())
-		return
-	human_heartless.dna.remove_mutation(/datum/mutation/human/dwarfism)
-	if(human_heartless.physiology)
-		human_heartless.physiology.damage_resistance += 50
+	if(human_heartless.can_mutate())
+		human_heartless.dna.remove_mutation(/datum/mutation/human/dwarfism)
+	human_heartless.physiology?.damage_resistance += 50
 
 /// you occasionally squeak, and have some rat related verbal tics
 /obj/item/organ/internal/tongue/rat
@@ -102,12 +98,12 @@
 
 /obj/item/organ/internal/tongue/rat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "teeth are oddly shaped and yellowing.", BODY_ZONE_PRECISE_MOUTH)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their teeth are oddly shaped and yellowing.", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 
 /obj/item/organ/internal/tongue/rat/modify_speech(datum/source, list/speech_args)
 	. = ..()
-	var/message = lowertext(speech_args[SPEECH_MESSAGE])
+	var/message = LOWER_TEXT(speech_args[SPEECH_MESSAGE])
 	if(message == "hi" || message == "hi.")
 		speech_args[SPEECH_MESSAGE] = "Cheesed to meet you!"
 	if(message == "hi?")

@@ -42,7 +42,7 @@
 
 /datum/heretic_knowledge/ashen_grasp
 	name = "Grasp of Ash"
-	desc = "Your Mansus Grasp will burn the eyes of the victim, causing damage and blindness."
+	desc = "Your Mansus Grasp will burn the eyes of the victim, damaging them and blurring their vision."
 	gain_text = "The Nightwatcher was the first of them, his treason started it all. \
 		Their lantern, expired to ash - their watch, absent."
 	next_knowledge = list(/datum/heretic_knowledge/spell/ash_passage)
@@ -70,7 +70,7 @@
 
 /datum/heretic_knowledge/spell/ash_passage
 	name = "Ashen Passage"
-	desc = "Grants you Ashen Passage, a silent but short range jaunt."
+	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality and traverse a short distance, passing though any walls."
 	gain_text = "He knew how to walk between the planes."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/ash_mark,
@@ -84,8 +84,9 @@
 /datum/heretic_knowledge/mark/ash_mark
 	name = "Mark of Ash"
 	desc = "Your Mansus Grasp now applies the Mark of Ash. The mark is triggered from an attack with your Ashen Blade. \
-		When triggered, the victim takes additional stamina and burn damage, and the mark is transferred to any nearby heathens. \
-		Damage dealt is decreased with each transfer."
+		When triggered, the victim takes additional stamina and burn damage, and the mark is transferred to a nearby heathen. \
+		Damage dealt is decreased with each transfer. \
+		Triggering the mark will also greatly reduce the cooldown of your Mansus Grasp."
 	gain_text = "He was a very particular man, always watching in the dead of night. \
 		But in spite of his duty, he regularly tranced through the Manse with his blazing lantern held high. \
 		He shone brightly in the darkness, until the blaze begin to die."
@@ -101,7 +102,7 @@
 	// Also refunds 75% of charge!
 	var/datum/action/cooldown/spell/touch/mansus_grasp/grasp = locate() in source.actions
 	if(grasp)
-		grasp.next_use_time = min(round(grasp.next_use_time - grasp.cooldown_time * 0.75, 0), 0)
+		grasp.next_use_time -= round(grasp.cooldown_time*0.75)
 		grasp.build_all_button_icons()
 
 /datum/heretic_knowledge/knowledge_ritual/ash
@@ -180,6 +181,7 @@
 		When completed, you become a harbinger of flames, gaining two abilites. \
 		Cascade, which causes a massive, growing ring of fire around you, \
 		and Oath of Flame, causing you to passively create a ring of flames as you walk. \
+		Some ashen spells you already knew will be empowered as well. \
 		You will also become immune to flames, space, and similar environmental hazards."
 	gain_text = "The Watch is dead, the Nightwatcher burned with it. Yet his fire burns evermore, \
 		for the Nightwatcher brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
@@ -212,7 +214,7 @@
 	priority_announce(
 		text = "[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
-		sound = ANNOUNCER_SPANOMALIES,
+		sound = 'sound/ambience/antag/heretic/ascend_ash.ogg',
 		color_override = "pink",
 	)
 

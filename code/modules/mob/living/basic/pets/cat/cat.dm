@@ -33,6 +33,7 @@
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
+	cult_icon_state = "cat_cult"
 	///can this cat breed?
 	var/can_breed = TRUE
 	///can hold items?
@@ -134,6 +135,7 @@
 	icon_state = "spacecat"
 	icon_living = "spacecat"
 	icon_dead = "spacecat_dead"
+	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = TCMB
 	maximum_survivable_temperature = T0C + 40
 	held_state = "spacecat"

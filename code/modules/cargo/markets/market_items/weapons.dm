@@ -1,5 +1,6 @@
 /datum/market_item/weapon
 	category = "Weapons"
+	abstract_path = /datum/market_item/weapon
 
 /datum/market_item/weapon/bear_trap
 	name = "Bear Trap"
@@ -66,10 +67,19 @@
 
 /datum/market_item/weapon/fisher
 	name = "SC/FISHER Saboteur Handgun"
-	desc = "A self-recharging, compact pistol that disrupts flashlights and security cameras, if only temporarily. Also usable in melee."
+	desc = "A self-recharging, compact pistol that disrupts lights, cameras, APCs, turrets and more, if only temporarily. Also usable in melee."
 	item = /obj/item/gun/energy/recharge/fisher
 
 	price_min = CARGO_CRATE_VALUE * 2
 	price_max = CARGO_CRATE_VALUE * 4
 	stock_max = 1
 	availability_prob = 75
+
+/datum/market_item/weapon/dimensional_bomb
+	name = "Multi-Dimensional Bomb Core"
+	desc = "A special bomb core, one of a kind, for all your 'terraforming gone wrong' purposes."
+	item = /obj/item/bombcore/dimensional
+	price_min = CARGO_CRATE_VALUE * 40
+	price_max = CARGO_CRATE_VALUE * 50
+	stock_max = 1
+	availability_prob = 15
