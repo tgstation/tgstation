@@ -772,7 +772,7 @@
 "HR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/teleport/syndicate_gate{
-	name = Syndicate Satellite
+	name = SyndicateSatellite
 	},
 /turf/open/floor/engine,
 /area/centcom/syndicate_mothership)
@@ -3000,11 +3000,11 @@ Go
 Go
 Go
 Gz
-VT
-VW
-gQ
-LT
-CH
+yl
+yl
+GL
+yl
+re
 ag
 hR
 yG
@@ -3037,11 +3037,11 @@ Sq
 Sq
 Sq
 Go
-Go
-Wq
-Uk
-Go
-Go
+VT
+VW
+gQ
+LT
+ag
 Go
 hX
 NU
@@ -3074,11 +3074,11 @@ Sq
 Sq
 Sq
 Go
-oN
-VH
-fF
-mC
-RM
+Go
+Wq
+Uk
+Go
+Go
 Go
 hX
 kB
@@ -3111,11 +3111,11 @@ Sq
 Sq
 Sq
 Go
-wj
-Xu
-Ng
-RD
-zv
+oN
+VH
+fF
+mC
+RM
 Go
 hX
 hX
@@ -3148,11 +3148,11 @@ Sq
 Sq
 Sq
 Go
-KK
-kQ
-NS
-Kt
-nf
+wj
+Xu
+Ng
+RD
+zv
 Go
 Go
 Go
@@ -3175,6 +3175,43 @@ Sq
 Sq
 "}
 (23,1,2) = {"
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Go
+KK
+kQ
+NS
+Kt
+nf
+Go
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+Sq
+"}
+(24,1,2) = {"
 Sq
 Sq
 Sq
@@ -3211,7 +3248,7 @@ Sq
 Sq
 Sq
 "}
-(24,1,2) = {"
+(25,1,2) = {"
 Sq
 Sq
 Sq
@@ -3248,7 +3285,7 @@ Sq
 Sq
 Sq
 "}
-(25,1,2) = {"
+(26,1,2) = {"
 Sq
 Sq
 Sq
@@ -3285,7 +3322,7 @@ Sq
 Sq
 Sq
 "}
-(26,1,2) = {"
+(27,1,2) = {"
 Sq
 Sq
 Sq
@@ -3322,7 +3359,7 @@ Sq
 Sq
 Sq
 "}
-(27,1,2) = {"
+(28,1,2) = {"
 Sq
 Sq
 Sq
@@ -3359,7 +3396,7 @@ Sq
 Sq
 Sq
 "}
-(28,1,2) = {"
+(29,1,2) = {"
 Sq
 Sq
 Sq
@@ -3396,43 +3433,6 @@ Sq
 Sq
 Sq
 "}
-(29,1,2) = {"
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Go
-Go
-Go
-Go
-Go
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-Sq
-"}
 (30,1,2) = {"
 Sq
 Sq
@@ -3444,11 +3444,11 @@ Sq
 Sq
 Sq
 Sq
-Sq
-Sq
-Sq
-Sq
-Sq
+Go
+Go
+Go
+Go
+Go
 Sq
 Sq
 Sq
