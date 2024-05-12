@@ -104,6 +104,14 @@
 	  */
 	var/list/implants = null
 
+	/**
+	 * Any special organs the mob should start implanted with
+	 *
+	 * Format of this list is (typepath, typepath, typepath)
+	 */
+	var/list/organs = null
+
+
 	///ID of the slot containing a gas tank
 	var/internals_slot = null
 
@@ -267,6 +275,10 @@
 			for(var/implant_type in implants)
 				var/obj/item/implant/implanter = SSwardrobe.provide_type(implant_type, user)
 				implanter.implant(user, null, TRUE)
+
+		if(organs)
+			for(var/organ_type in organs)
+				var/obj/item/organ/implant = SSwardrobe.provide_type(organ_type, user)
 
 		// Insert the skillchips associated with this outfit into the target.
 		if(skillchips)

@@ -184,3 +184,24 @@
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	l_pocket = /obj/item/melee/energy/sword/saber/red
 	r_pocket = /obj/item/melee/baton/telescopic
+
+///syndicate handler
+
+/obj/effect/mob_spawn/ghost_role/human/syndicate/satellite
+	name = "Syndicate Support Agent"
+	you_are_text = "You are a specialized agent on board a remote satellite base"
+	flavour_text = "Your job is to provide the right support to the field agents. Do not harm any agents and do not abandon the base without reason."
+	outfit = /datum/outfit/syndicate_empty/satellite
+
+/datum/outfit/syndicate_empty/satellite
+	name = "Syndicate Support Agent"
+	organs = list(
+		/obj/item/organ/internal/cyberimp/eyes/hud/medical,
+		/obj/item/organ/internal/cyberimp/arm/surgery,
+		/obj/item/organ/internal/cyberimp/arm/toolset/l,
+	)
+
+/datum/outfit/syndicate_empty/satellite/post_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+	. = ..()
+	var/datum/martial_art/cqc/to_learn = new()
+	to_learn.teach(user)

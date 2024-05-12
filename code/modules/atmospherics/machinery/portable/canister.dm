@@ -159,6 +159,16 @@
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#009823#ff0e00"
 
+/obj/machinery/portable_atmospherics/canister/healium/pluoxmix
+	name = "Advanced anesthetic mix"
+	gas_type = null
+
+/obj/machinery/portable_atmospherics/canister/healium/pluoxmix/create_gas()
+	air_contents.add_gases(/datum/gas/pluoxium, /datum/gas/healium)
+	air_contents.gases[/datum/gas/pluoxium][MOLES] = (O2_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.gases[/datum/gas/healium][MOLES] = (N2O_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	SSair.start_processing_machine(src)
+
 /obj/machinery/portable_atmospherics/canister/helium
 	name = "Helium canister"
 	gas_type = /datum/gas/helium
