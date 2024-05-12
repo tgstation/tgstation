@@ -5,7 +5,7 @@
 
 /obj/effect/spawner/random/engineering/tool
 	name = "Tool spawner"
-	icon_state = "wrench_stg"
+	icon_state = "wrench"
 	loot = list(
 		/obj/item/wrench = 2,
 		/obj/item/wirecutters = 2,
@@ -23,7 +23,7 @@
 
 /obj/effect/spawner/random/engineering/tool_advanced
 	name = "Advanced tool spawner"
-	icon_state = "wrench_stg"
+	icon_state = "wrench"
 	loot = list( // Mail loot spawner. Some sort of random and rare building tool. No alien tech here.
 		/obj/item/wrench/caravan,
 		/obj/item/wirecutters/caravan,
@@ -34,7 +34,7 @@
 
 /obj/effect/spawner/random/engineering/tool_alien
 	name = "Rare tool spawner"
-	icon_state = "wrench_stg"
+	icon_state = "wrench"
 	loot = list(
 		/obj/item/wrench/abductor,
 		/obj/item/wirecutters/abductor,

@@ -15,10 +15,6 @@
 	/// How this looks when placed in a surgical tray
 	var/surgical_tray_overlay = "retractor_normal"
 
-/obj/item/retractor/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/item_storage_state, "[icon_state]_stg")
-
 /obj/item/retractor/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
 
@@ -45,10 +41,6 @@
 	toolspeed = 1
 	/// How this looks when placed in a surgical tray
 	var/surgical_tray_overlay = "hemostat_normal"
-
-/obj/item/hemostat/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/item_storage_state, "[icon_state]_stg")
 
 /obj/item/hemostat/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
@@ -77,10 +69,6 @@
 	heat = 500
 	/// How this looks when placed in a surgical tray
 	var/surgical_tray_overlay = "cautery_normal"
-
-/obj/item/cautery/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/item_storage_state, "[icon_state]_stg")
 
 /obj/item/cautery/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
@@ -124,7 +112,6 @@
 		clumsy_check = FALSE, \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
-	AddElement(/datum/element/item_storage_state, "[icon_state]_stg")
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -177,7 +164,6 @@
 /obj/item/surgicaldrill/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/eyestab)
-	AddElement(/datum/element/item_storage_state, "[icon_state]_stg")
 
 /obj/item/surgicaldrill/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
@@ -231,7 +217,6 @@
 	bonus_modifier = 0, \
 	)
 	AddElement(/datum/element/eyestab)
-	AddElement(/datum/element/item_storage_state, "[icon_state]_stg")
 
 /obj/item/scalpel/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
@@ -287,7 +272,6 @@
 		/datum/component/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
-	AddElement(/datum/element/item_storage_state, "[icon_state]_stg")
 
 /obj/item/circular_saw/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
@@ -424,7 +408,6 @@
 		clumsy_check = FALSE, \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
-	AddElement(/datum/element/item_storage_state, "[icon_state]_stg")
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -476,7 +459,6 @@
 		clumsy_check = FALSE, \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
-	AddElement(/datum/element/item_storage_state, "[icon_state]_stg")
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -596,10 +578,6 @@
 	tool_behaviour = TOOL_BONESET
 	toolspeed = 1
 
-/obj/item/bonesetter/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/item_storage_state, "[icon_state]_stg")
-
 /obj/item/bonesetter/get_surgery_tool_overlay(tray_extended)
 	return "bonesetter" + (tray_extended ? "" : "_out")
 
@@ -619,10 +597,6 @@
 	toolspeed = 1
 	/// Assoc list of chem ids to names, used for deciding which chems to filter when used for surgery
 	var/list/whitelist = list()
-
-/obj/item/blood_filter/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/item_storage_state, "[icon_state]_stg")
 
 /obj/item/blood_filter/get_surgery_tool_overlay(tray_extended)
 	return "filter"
