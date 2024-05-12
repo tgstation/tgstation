@@ -600,7 +600,7 @@
 
 /datum/status_effect/radiation_immunity
 	id = "radiation_immunity"
-	duration = 1 MINUTE
+	duration = 1 MINUTES
 
 	alert_type = /atom/movable/screen/alert/status_effect/radiation_immunity
 
@@ -614,3 +614,4 @@
 	name = "Radiation shielding"
 	desc = "You're immune to radiation!"
 	icon_state = "radiation_shield"
+

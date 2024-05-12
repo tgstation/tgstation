@@ -622,7 +622,11 @@
 /datum/station_trait/nebula/hostile/radiation/proc/on_spawned_mob(datum/SSdcs/dcs, mob/spawned_mob)
 	SIGNAL_HANDLER
 
-	on_spawned_mob.apply_status_effect(/datum/status_effect/radiation_immunity)
+	if(!isliving(spawned_mob))
+		return
+
+	var/mob/living/spawnee = spawned_mob
+	spawnee.apply_status_effect(/datum/status_effect/radiation_immunity)
 
 /datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)
 	//big bombad now
