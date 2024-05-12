@@ -7599,7 +7599,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/plating,
-/area/station/maintenance/port/greater)
+/area/station/cargo/warehouse)
 "cKd" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 4
@@ -9784,7 +9784,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/cargo/sorting)
+/area/station/cargo/storage)
 "dBb" = (
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -24654,7 +24654,7 @@
 	},
 /obj/machinery/light/small/broken/directional/east,
 /turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/warehouse)
 "iNo" = (
 /obj/structure/filingcabinet/filingcabinet,
 /obj/machinery/camera/directional/south{
@@ -44939,10 +44939,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
-"pQD" = (
-/obj/structure/disposalpipe/segment,
-/turf/open/space/basic,
-/area/space)
 "pQG" = (
 /obj/machinery/porta_turret/ai{
 	dir = 4
@@ -54711,7 +54707,7 @@
 /obj/structure/cable,
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron,
-/area/station/cargo/sorting)
+/area/station/cargo/storage)
 "tlZ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -63668,10 +63664,6 @@
 "wmL" = (
 /turf/closed/wall/r_wall,
 /area/station/science/xenobiology/hallway)
-"wmS" = (
-/obj/structure/sign/poster/traitor/random,
-/turf/closed/wall,
-/area/station/maintenance/port/greater)
 "wmT" = (
 /obj/machinery/shower/directional/east,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -84828,7 +84820,7 @@ aaa
 aaa
 aaa
 aaa
-pQD
+aaa
 aaa
 aaa
 kzI
@@ -85085,7 +85077,7 @@ aaa
 aaa
 aaa
 aaa
-pQD
+aaa
 aaa
 aaa
 fcq
@@ -85860,12 +85852,12 @@ aaa
 cbz
 cbz
 iaa
-fcq
-fcq
-wmS
+vQs
+vQs
+vXT
 cJQ
-fcq
-fcq
+vQs
+vQs
 iSk
 nzD
 uxa
