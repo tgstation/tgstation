@@ -2400,10 +2400,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /// Proc to append behavior to the condition of being floored. Called when the condition starts.
 /mob/living/proc/on_floored_start()
+	on_fall()
 	if(body_position == STANDING_UP) //force them on the ground
 		set_body_position(LYING_DOWN)
 		set_lying_angle(pick(90, 270))
-		on_fall()
 
 
 /// Proc to append behavior to the condition of being floored. Called when the condition ends.
