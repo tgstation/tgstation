@@ -644,8 +644,12 @@
 	hud_completion = new(null, null, challenge)
 	vis_contents += list(hud_bait, hud_fish, hud_completion)
 	challenge.user.client.screen += src
+	master_ref = WEAKREF(challenge)
 
 /atom/movable/screen/fishing_hud/Destroy()
+	var/datum/fishing_challenge/challenge = master_ref?.resolve()
+	if(!isnull(challenge))
+		challenge.user.client.screen -= src
 	QDEL_NULL(hud_fish)
 	QDEL_NULL(hud_bait)
 	QDEL_NULL(hud_completion)

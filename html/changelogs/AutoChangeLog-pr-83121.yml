@@ -1,4 +1,0 @@
-author: "Echriser"
-delete-after: True
-changes:
-  - bugfix: "conveyor switches work for cyborgs again"
