@@ -1,7 +1,6 @@
 import { filter, sortBy } from 'common/collections';
 import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
-import { multiline } from 'common/string';
 
 import { useBackend } from '../backend';
 import {
@@ -124,7 +123,7 @@ export const BluespaceVendor = (props) => {
                   color="transparent"
                   icon="info"
                   tooltipPosition="bottom-start"
-                  tooltip={multiline`
+                  tooltip={`
                   Quick guide for machine use: Prepare a tank to create a
                   new one in the machine, pick how much you want it filled,
                   and finally press start on the gas of your choice!
