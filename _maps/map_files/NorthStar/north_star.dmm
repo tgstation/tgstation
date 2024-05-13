@@ -15675,7 +15675,9 @@
 "dXy" = (
 /obj/structure/table/glass,
 /obj/machinery/defibrillator_mount/directional/east,
-/obj/item/storage/box/syringes,
+/obj/item/storage/box/syringes{
+	pixel_y = 6
+	},
 /obj/item/stack/medical/mesh{
 	layer = 3.01
 	},
@@ -90811,11 +90813,9 @@
 	name = "medbay camera";
 	network = list("ss13","medbay")
 	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/iron/white,
+/obj/machinery/shower/directional/south,
+/obj/structure/fluff/shower_drain,
+/turf/open/floor/catwalk_floor/flat_white,
 /area/station/medical/treatment_center)
 "xrh" = (
 /obj/effect/turf_decal/tile/blue{
