@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Alt click will draw the captain's sabre again"
