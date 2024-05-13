@@ -2575,7 +2575,7 @@
 /area/station/security/prison/work)
 "aHK" = (
 /obj/machinery/light/directional/east,
-/obj/item/kirbyplants/random,
+/obj/structure/closet/secure_closet/medical2,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "aHM" = (
@@ -12547,10 +12547,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/machinery/door/poddoor/shutters/window/preopen{
 	dir = 1;
-	id = "med_lockdown";
-	name = "Medbay Lockdown Shutters"
+	name = "Medbay Lockdown Shutters";
+	id = "med_lockdown"
 	},
 /turf/open/floor/plating,
 /area/station/medical/medbay/lobby)
@@ -15354,16 +15354,14 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
-/obj/machinery/button/door/directional/south{
-	id = "med_doors";
-	name = "Medbay Door Control";
-	normaldoorcontrol = 1;
-	req_access = list("medical")
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /obj/machinery/disposal/bin,
+/obj/machinery/button/door/directional/south{
+	name = "Medbay Lockdown Shutters";
+	id = "med_lockdown"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/paramedic)
 "dUr" = (
@@ -23297,7 +23295,11 @@
 /area/station/cargo/warehouse)
 "gcm" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/decal/cleanable/blood/old,
+/obj/structure/table/reinforced/rglass,
+/obj/item/pai_card,
+/obj/item/reagent_containers/spray/cleaner{
+	layer = 3.01
+	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "gcs" = (
@@ -26305,16 +26307,6 @@
 	},
 /turf/open/floor/pod/dark,
 /area/station/service/kitchen/abandoned)
-"gRW" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/table/reinforced/rglass,
-/obj/item/pai_card,
-/obj/item/reagent_containers/spray/cleaner{
-	layer = 3.01
-	},
-/turf/open/floor/iron/white/textured,
-/area/station/medical/treatment_center)
 "gSd" = (
 /obj/effect/baseturf_helper/reinforced_plating/ceiling,
 /turf/open/floor/engine,
@@ -90823,7 +90815,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/closet/secure_closet/medical2,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "xrh" = (
@@ -196483,9 +196474,9 @@ dUj
 sRR
 vSA
 rwv
-bCd
+dzM
 vNV
-gRW
+hwV
 gHO
 yba
 lfW
@@ -196740,7 +196731,7 @@ dhZ
 sRR
 tOW
 rwv
-dzM
+bCd
 dzM
 gcm
 txp
@@ -197254,9 +197245,9 @@ woE
 biz
 dzM
 kUl
+kUf
 dzM
-dzM
-dzM
+dYM
 scx
 dzM
 dzM
@@ -197511,9 +197502,9 @@ gBz
 sRR
 xqZ
 jTK
-kUf
 dzM
-dYM
+dzM
+dzM
 ijd
 vOo
 vOo
