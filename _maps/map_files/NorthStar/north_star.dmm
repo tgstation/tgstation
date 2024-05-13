@@ -92,6 +92,7 @@
 /area/station/cargo/sorting)
 "aaU" = (
 /obj/effect/turf_decal/stripes,
+/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "aaV" = (
@@ -9645,10 +9646,6 @@
 /turf/open/floor/wood,
 /area/station/service/bar)
 "csR" = (
-/obj/machinery/digital_clock/directional/east,
-/obj/structure/chair{
-	dir = 8
-	},
 /obj/effect/turf_decal/siding/blue{
 	dir = 4;
 	pixel_x = -15
@@ -9660,7 +9657,8 @@
 	network = list("ss13","medbay");
 	dir = 2
 	},
-/obj/machinery/firealarm/directional/south,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "csT" = (
@@ -24839,6 +24837,7 @@
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/chair,
+/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "gyd" = (
@@ -25563,6 +25562,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "gHU" = (
@@ -26308,6 +26308,7 @@
 /obj/item/reagent_containers/spray/cleaner{
 	layer = 3.01
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "gSd" = (
@@ -26695,11 +26696,6 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/turf_decal/siding/blue{
 	dir = 4;
 	pixel_x = -15
@@ -29385,12 +29381,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/door/airlock/medical{
-	name = "Paramedic Dispatch"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/medical/general,
 /obj/structure/disposalpipe/segment{
 	dir = 8
+	},
+/obj/structure/table/reinforced/rglass,
+/obj/machinery/door/window/right/directional/east{
+	name = "First Aid Supplies";
+	req_access = list("medical")
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/lobby)
@@ -59883,6 +59880,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "puI" = (
@@ -70630,6 +70628,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "slQ" = (
@@ -70713,6 +70712,11 @@
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
+"sno" = (
+/obj/structure/table/reinforced/rglass,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/iron/dark/textured,
+/area/station/medical/medbay/lobby)
 "snp" = (
 /turf/open/floor/iron/dark/side{
 	dir = 8
@@ -84451,6 +84455,7 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "vNY" = (
@@ -85046,6 +85051,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/floor2/port/fore)
+"vVR" = (
+/obj/structure/table/reinforced/rglass,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/dark/textured,
+/area/station/medical/medbay/lobby)
 "vVT" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 1
@@ -92542,6 +92553,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "xNK" = (
@@ -93502,6 +93514,7 @@
 "yba" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "ybe" = (
@@ -196159,9 +196172,9 @@ xYM
 jLQ
 usK
 ilR
-aHk
+vVR
 hHe
-aHk
+sno
 aHk
 wdd
 fqn
