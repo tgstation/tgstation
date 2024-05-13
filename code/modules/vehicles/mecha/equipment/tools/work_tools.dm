@@ -223,7 +223,7 @@
 	range = MECHA_MELEE|MECHA_RANGED
 	item_flags = NO_MAT_REDEMPTION
 	///Maximum range the RCD can construct at.
-	var/rcd_range = 3
+	var/rcd_range = 5
 	///Whether or not to deconstruct instead.
 	var/deconstruct_active = FALSE
 	///The type of internal RCD this equipment uses.
