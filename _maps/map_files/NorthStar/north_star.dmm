@@ -77647,13 +77647,12 @@
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/light/directional/south,
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
 /obj/structure/bed/medical/anchored,
-/obj/effect/turf_decal/bot_white{
-	color = "#74b2d3"
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
@@ -84840,9 +84839,6 @@
 /area/station/cargo/lobby)
 "vSA" = (
 /obj/machinery/digital_clock/directional/north,
-/obj/effect/turf_decal/bot_white{
-	color = "#74b2d3"
-	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "vSB" = (
@@ -85787,7 +85783,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor3/fore)
 "wdd" = (
-/obj/machinery/light/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
