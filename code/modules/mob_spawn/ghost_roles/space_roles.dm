@@ -195,6 +195,7 @@
 
 /datum/outfit/syndicate_empty/satellite
 	name = "Syndicate Support Agent"
+	implants = list(/obj/item/implant/gate_authorization)
 	organs = list(
 		/obj/item/organ/internal/cyberimp/eyes/hud/medical,
 		/obj/item/organ/internal/cyberimp/arm/surgery,

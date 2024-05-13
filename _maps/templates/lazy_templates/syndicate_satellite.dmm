@@ -38,7 +38,6 @@
 /area/centcom/syndicate_mothership)
 "cp" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/pen/blue{
 	pixel_x = 7
 	},
@@ -175,7 +174,6 @@
 /area/centcom/syndicate_mothership)
 "ho" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/folder,
 /obj/item/pen/blue{
 	pixel_x = 7
@@ -212,10 +210,7 @@
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership)
 "jQ" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership)
 "kn" = (
 /obj/effect/turf_decal/stripes/line,
@@ -262,11 +257,6 @@
 "ls" = (
 /obj/effect/turf_decal/syndicateemblem/middle/middle,
 /turf/open/floor/mineral/plastitanium/red,
-/area/centcom/syndicate_mothership)
-"lv" = (
-/obj/structure/railing,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "lw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -407,7 +397,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "pt" = (
-/obj/structure/ladder/unbreakable,
+/obj/structure/ladder/unbreakable{
+	height = 2;
+	id = "syndie_sat1"
+	},
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership)
 "py" = (
@@ -597,11 +590,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
-"yd" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/railing,
-/turf/open/floor/iron/dark,
-/area/centcom/syndicate_mothership)
 "yk" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/donkpockets{
@@ -772,7 +760,7 @@
 "HR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/teleport/syndicate_gate{
-	name = SyndicateSatellite
+	name = "Syndicate Satellite"
 	},
 /turf/open/floor/engine,
 /area/centcom/syndicate_mothership)
@@ -785,12 +773,6 @@
 /area/centcom/syndicate_mothership)
 "Iy" = (
 /turf/open/floor/engine,
-/area/centcom/syndicate_mothership)
-"Jo" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "JO" = (
 /obj/effect/turf_decal/stripes/line,
@@ -1068,7 +1050,6 @@
 /area/centcom/syndicate_mothership)
 "UX" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/pen/red,
 /obj/item/pen/blue{
 	pixel_x = 7
@@ -1136,10 +1117,11 @@
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership)
 "Xr" = (
-/obj/structure/railing{
-	dir = 8
+/obj/structure/ladder/unbreakable{
+	height = 1;
+	id = "syndie_sat1"
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/centcom/syndicate_mothership)
 "Xu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -1378,7 +1360,7 @@ dk
 Go
 Go
 uX
-pt
+Xr
 hX
 Go
 Sq
@@ -2741,11 +2723,11 @@ Go
 aw
 Bg
 yl
-Jo
-Jo
-Jo
-Jo
-Jo
+yl
+yl
+yl
+yl
+yl
 yl
 qJ
 Xa
@@ -2777,13 +2759,13 @@ Sq
 Go
 aw
 lw
-lv
-Sq
-Sq
-Sq
-Sq
-Sq
+lw
 jQ
+MK
+RC
+Vb
+jQ
+yl
 yl
 Xa
 Go
@@ -2814,13 +2796,13 @@ Sq
 Go
 aw
 yl
-yd
-Sq
-Sq
-Sq
-Sq
-Sq
+lw
 jQ
+rM
+ls
+MZ
+jQ
+yl
 yl
 Xa
 Go
@@ -2851,13 +2833,13 @@ Sq
 Go
 aw
 yl
-yd
-Sq
-Sq
-Sq
-Sq
-Sq
+lw
 jQ
+mu
+hN
+OF
+jQ
+yl
 yl
 Xa
 Go
@@ -2889,11 +2871,11 @@ Go
 aw
 qJ
 ve
-Xr
-Xr
-Xr
-Xr
-Xr
+yl
+yl
+yl
+yl
+yl
 yl
 Bg
 Xa

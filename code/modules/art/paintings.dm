@@ -509,7 +509,7 @@
 
 /obj/structure/sign/painting/syndicate_teleporter
 	damage_deflection = 20
-	///Where a human gets teleported to once they activate the teleporter, picks from a list of GLOB.active_syndicate_beacons
+	///Where a human gets teleported to once they activate the teleporter, picks from a list of GLOB.active_syndicate_gates
 	var/atom/teleport_target
 	///If we've taken enough damage, we become unusable
 	var/integrity_compromised = FALSE
@@ -518,7 +518,8 @@
 	. = ..()
 	GLOB.active_syndicate_paintings += src
 	RegisterSignal(src, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(on_damage_taken))
-	RegisterSignals(src, list(COMSIG_QDELETING,	COMSIG_MACHINERY_BROKEN, COMSIG_TELEPORTER_SET_TARGET), PROC_REF(remove_connections))
+	RegisterSignal(src, COMSIG_GATE_SET_TARGET, PROC_REF(on_target_set))
+	RegisterSignals(src, list(COMSIG_QDELETING,	COMSIG_MACHINERY_BROKEN, COMSIG_GATE_CUT_CONNECTIONS), PROC_REF(remove_connections))
 
 /obj/structure/sign/painting/syndicate_teleporter/Destroy()
 	GLOB.active_syndicate_paintings -= src
@@ -530,8 +531,6 @@
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
-	if(!IS_TRAITOR(user))
-		return NONE
 	if(integrity_compromised)
 		qdel(src)
 		return ITEM_INTERACT_SUCCESS
@@ -542,18 +541,35 @@
 	if(disassembled)
 		new /obj/item/wallframe/painting/syndicate_teleporter(loc)
 
-/obj/structure/sign/painting/syndicate_teleporter/attack_hand(mob/user, list/modifiers)
-	if(!teleport_target || !ishuman(user) || !IS_TRAITOR(user) || integrity_compromised)
+/obj/structure/sign/painting/syndicate_teleporter/attack_hand(mob/living/user, list/modifiers)
+	if(!teleport_target || !ishuman(user) || integrity_compromised)
 		return ..()
 	var/mob/living/carbon/human/teleportee = user
-	do_teleport(teleportee, teleport_target, forced = TRUE)
+	var/actual_target = teleport_target
+	if((locate(/obj/item/implant/gate_authorization) in user.implants)) //Safe travels for authorized users
+		do_teleport(teleportee, actual_target, forced = TRUE)
+		return
+
+	switch(rand(1, 100)) //Good luck
+		if(1 to 5)
+			actual_target = teleport_target
+		if(6 to 10)
+			if(!isnull(GLOB.main_supermatter_engine))
+				actual_target = get_turf(GLOB.main_supermatter_engine)
+			else
+				var/list/potential_area = GLOB.areas_by_type.Copy() - typecacheof(/area/centcom)
+				actual_target = pick(get_area_turfs(pick(potential_area)))
+		if(11 to 100)
+			var/list/potential_area = GLOB.areas_by_type.Copy() - typecacheof(/area/centcom)
+			actual_target = pick(get_area_turfs(pick(potential_area)))
+	do_teleport(teleportee, actual_target, forced = TRUE)
 
 /obj/structure/sign/painting/syndicate_teleporter/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return .
 
-	if(!ishuman(user) || !IS_TRAITOR(user) || integrity_compromised)
+	if(!ishuman(user) || integrity_compromised)
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	if(teleport_target)
@@ -562,7 +578,7 @@
 		update_appearance(UPDATE_ICON)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	var/set_target = tgui_input_list(user, "Where to launch to?", "Set Teleporter?", GLOB.active_syndicate_beacons)
+	var/set_target = tgui_input_list(user, "Where to launch to?", "Set Teleporter?", GLOB.active_syndicate_gates)
 	if(!set_target)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	teleport_target = set_target
@@ -580,6 +596,13 @@
 		icon_state = "ActivatedFrame"
 	else
 		icon_state = initial(icon_state)
+
+///When a gate sets us as their teleport target, we save them as a reference so we may return to it
+/obj/structure/sign/painting/syndicate_teleporter/proc/on_target_set(datum/source, atom/return_gate)
+	SIGNAL_HANDLER
+	remove_connections(src)
+	teleport_target = return_gate
+	update_appearance(UPDATE_ICON)
 
 ///Once we take enough damage, we can no longer be recovered
 /obj/structure/sign/painting/syndicate_teleporter/proc/on_damage_taken(datum/source, damage_amount)
@@ -602,7 +625,12 @@
 		var/atom/old_teleport_target = teleport_target
 		teleport_target = null
 		SEND_SIGNAL(old_teleport_target, COMSIG_PAINTING_CUT_CONNECTIONS, src)
-		update_appearance(UPDATE_ICON)
+	update_appearance(UPDATE_ICON)
+
+/obj/item/storage/box/syndie_kit/syndicate_gate_bundle/PopulateContents()
+	new /obj/item/implanter/gate_authorization(src)
+	new /obj/item/wallframe/painting/syndicate_teleporter(src)
+	new /obj/item/wallframe/painting/syndicate_teleporter(src)
 
 /obj/structure/sign/painting
 	name = "Painting"

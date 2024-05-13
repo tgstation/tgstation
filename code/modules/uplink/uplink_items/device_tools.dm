@@ -74,13 +74,6 @@
 	item = /obj/item/storage/briefcase/launchpad
 	cost = 6
 
-/datum/uplink_item/device_tools/briefcase_teleporter
-	name = "Syndicate Teleporter Beacon"
-	desc = "A painting containing a portal to another dimension!"
-	surplus = 0
-	item = /obj/item/wallframe/painting/syndicate_teleporter
-	cost = 3
-
 /datum/uplink_item/device_tools/syndicate_teleporter
 	name = "Experimental Syndicate Teleporter"
 	desc = "A handheld device that teleports the user 4-8 meters forward. \
