@@ -543,3 +543,40 @@
 	granted_spells = list(
 		/datum/action/cooldown/spell/conjure/simian,
 	)
+
+// Moth: Engineer, Pirate, Pacifism
+// Ethereal: Nomad, Electricity, Medieval
+// Plasmaman: Plasma, Fire, Skeleton
+
+// Human: Station, Superiority, Silicon
+// Bridge Assistant covers all niches of humanity pretty well.
+/datum/outfit/deathmatch_loadout/humanity
+	name = "Deathmatch: Human Race"
+	display_name = "Humanity"
+	desc = "The protagonists"
+
+	uniform = /obj/item/clothing/under/trek/command/next
+	neck = /obj/item/clothing/neck/large_scarf/blue
+	belt = /obj/item/storage/belt/utility/full/inducer
+	ears = /obj/item/radio/headset/headset_com
+	glasses = /obj/item/clothing/glasses/sunglasses
+	gloves = /obj/item/clothing/gloves/fingerless
+	head = /obj/item/clothing/head/soft/black
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	l_pocket = /obj/item/gun/energy/e_gun/mini
+
+// Lizard: Desert, Soldier, Trash
+/datum/outfit/deathmatch_loadout/lizardkind
+	name = "Deathmatch: Lizard Race"
+	display_name = "Lizardkind"
+	desc = "The protagonists"
+
+	uniform = /obj/item/clothing/under/trek/command/next
+	neck = /obj/item/clothing/neck/large_scarf/blue
+	belt = /obj/item/storage/belt/utility/full/inducer
+	ears = /obj/item/radio/headset/headset_com
+	glasses = /obj/item/clothing/glasses/sunglasses
+	gloves = /obj/item/clothing/gloves/fingerless
+	head = /obj/item/clothing/head/soft/black
+	shoes = /obj/item/clothing/shoes/laceup
+	l_pocket = /obj/item/gun/energy/e_gun/mini

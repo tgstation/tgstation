@@ -185,5 +185,13 @@
 	key = "train"
 	turf_reservation_type = /datum/turf_reservation/indestructible_plating
 
+/datum/lazy_template/deathmatch/race_wars
+	name = "Race Wars"
+	desc = "Choose your favorite species and prove its superiority against all the other, lamer species. And also anyone else playing as your species."
+	max_players = 8
+	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/assistant)
+	map_name = "race_wars"
+	key = "race_wars"
+
 /datum/turf_reservation/indestructible_plating
 	turf_type = /turf/open/indestructible/plating //a little hacky but i guess it has to be done
