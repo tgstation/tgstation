@@ -267,3 +267,25 @@
       make Protect objectives without targets.
   Xander3359:
   - bugfix: Ale now has a drinking_glass style
+2024-05-13:
+  Bisar:
+  - qol: Most of the alternate click modes (right click, control clicking, shift clicking,
+      etc) have been enabled in the alt-click item menu.
+  - bugfix: You will no longer point at things you right-click in the alt-click item
+      menu.
+  Melbert:
+  - rscadd: Cigarette smoke is now more smokey.
+  - rscadd: Taking a cigarette out of your mouth will let out a big puff of smoke.
+  PapaMichael:
+  - bugfix: Rat Kings can no longer trap mice inside of pipes by creating them while
+      ventcrawling.
+  - balance: Rat Kings can no longer create grime and miasma while ventcrawling.
+  Rhials:
+  - rscadd: Bitrunners now have their own job figurine. Cool!
+  nikothedude:
+  - spellcheck: Added a period to the end of the wendigo deathrattle
+  paganiy:
+  - qol: Now you can put a cigarette in your mouth just by hitting the pack of cigarettes
+      on yourself.
+  - bugfix: The cigarette pack no longer moves under the spaceman when they interacts
+      with it with the RMB

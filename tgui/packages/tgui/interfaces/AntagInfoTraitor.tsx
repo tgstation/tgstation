@@ -1,5 +1,4 @@
 import { BooleanLike } from 'common/react';
-import { multiline } from 'common/string';
 
 import { useBackend } from '../backend';
 import { BlockQuote, Button, Dimmer, Section, Stack } from '../components';
@@ -66,7 +65,7 @@ const EmployerSection = (props) => {
       buttons={
         <Button
           icon="hammer"
-          tooltip={multiline`
+          tooltip={`
             This is a gameplay suggestion for bored traitors.
             You don't have to follow it, unless you want some
             ideas for how to spend the round.`}
