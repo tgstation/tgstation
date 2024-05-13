@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Gaining TRAIT_VIRUSIMMUNE now properly cures any diseases."
