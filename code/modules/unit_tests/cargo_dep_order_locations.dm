@@ -1,9 +1,8 @@
 /datum/unit_test/cargo_dep_order_locations
 
 /datum/unit_test/cargo_dep_order_locations/Run()
-	for(var/datum/job_department/department as anything in subtypesof(/datum/job_department))
-		var/datum/job_department/dep = new department(FALSE)
-		var/delivery_areas = dep.department_delivery_areas
+	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
+		var/delivery_areas = department.department_delivery_areas
 		if(isnull(initial(dep.department_delivery_areas)) || !length(delivery_areas))
 			continue
 		if(check_valid_delivery_location(delivery_areas))
