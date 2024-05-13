@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Healing holoparas (and other mobs that heal on touch) are slime-friendly and won't damage them anymore."

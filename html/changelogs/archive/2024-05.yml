@@ -122,3 +122,9 @@
   - bugfix: Fixed hollow anomalies "escaping" the anomaly research ruin.
   Kitsunemitsu:
   - bugfix: fixed the syndicate and prisoner ID cards being missaligned.
+2024-05-13:
+  Absolucy:
+  - bugfix: Healing holoparas (and other mobs that heal on touch) are slime-friendly
+      and won't damage them anymore.
+  - bugfix: Actually, hopefully, probably fixed runaway ruin anomalies this time.
+  - bugfix: Fixed guardian decks not working afterwards if nobody signs up.

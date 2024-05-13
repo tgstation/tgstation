@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Actually, hopefully, probably fixed runaway ruin anomalies this time."
