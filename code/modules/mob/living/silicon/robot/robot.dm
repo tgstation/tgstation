@@ -319,7 +319,7 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	if(same_z_layer)
+	if(same_z_layer || QDELING(src))
 		return ..()
 	cut_overlay(eye_lights)
 	SET_PLANE_EXPLICIT(eye_lights, PLANE_TO_TRUE(eye_lights.plane), src)
