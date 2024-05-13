@@ -7,6 +7,14 @@
 const EPSILON = 0.0001;
 
 export class Color {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+  static fromHex: (hex: any) => Color;
+  static lerp: (c1: Color, c2: Color, n: number) => Color;
+  static lookup: (value: number, colors: Color[]) => Color;
+
   constructor(r = 0, g = 0, b = 0, a = 1) {
     this.r = r;
     this.g = g;
@@ -14,9 +22,12 @@ export class Color {
     this.a = a;
   }
 
-  toString() {
+  toString(): string {
     // Alpha component needs to permit fractional values, so cannot use |
-    let alpha = parseFloat(this.a);
+    let alpha = this.a;
+    if (typeof alpha === 'string') {
+      alpha = parseFloat(this.a as any);
+    }
     if (isNaN(alpha)) {
       alpha = 1;
     }
@@ -24,7 +35,7 @@ export class Color {
   }
 
   // Darkens a color by a given percent. Returns a color, which can have toString called to get it's rgba() css value.
-  darken(percent) {
+  darken(percent: number): Color {
     percent /= 100;
     return new Color(
       this.r - this.r * percent,
@@ -35,7 +46,7 @@ export class Color {
   }
 
   // Brightens a color by a given percent. Returns a color, which can have toString called to get it's rgba() css value.
-  lighten(percent) {
+  lighten(percent: number): Color {
     // No point in rewriting code we already have.
     return this.darken(-percent);
   }
@@ -44,17 +55,17 @@ export class Color {
 /**
  * Creates a color from the CSS hex color notation.
  */
-Color.fromHex = (hex) =>
+Color.fromHex = (hex: string): Color =>
   new Color(
-    parseInt(hex.substr(1, 2), 16),
-    parseInt(hex.substr(3, 2), 16),
-    parseInt(hex.substr(5, 2), 16),
+    parseInt(hex.slice(1, 2), 16),
+    parseInt(hex.slice(3, 2), 16),
+    parseInt(hex.slice(5, 2), 16),
   );
 
 /**
  * Linear interpolation of two colors.
  */
-Color.lerp = (c1, c2, n) =>
+Color.lerp = (c1: Color, c2: Color, n: number): Color =>
   new Color(
     (c2.r - c1.r) * n + c1.r,
     (c2.g - c1.g) * n + c1.g,
@@ -66,7 +77,7 @@ Color.lerp = (c1, c2, n) =>
  * Loops up the color in the provided list of colors
  * with linear interpolation.
  */
-Color.lookup = (value, colors = []) => {
+Color.lookup = (value: number, colors: Color[]): Color => {
   const len = colors.length;
   if (len < 2) {
     throw new Error('Needs at least two colors!');
