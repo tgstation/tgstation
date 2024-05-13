@@ -84,7 +84,12 @@
 	SIGNAL_HANDLER
 
 	for(var/datum/disease/disease as anything in diseases)
-		disease.cure(FALSE)
+		// monkestation edit start - virology (cure() on advanced diseases has the infected mob as the first argument now)
+		if(istype(disease, /datum/disease/advanced))
+			disease.cure(src, FALSE)
+		else
+			disease.cure(FALSE)
+		// monkestation end
 
 /**
  * On gain of TRAIT_TOXIMMUNE

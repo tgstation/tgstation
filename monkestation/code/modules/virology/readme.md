@@ -13,6 +13,7 @@ This PR aims to make virology not ass to play with
 
 <!-- If you had to edit, or append to any core procs in the process of making this PR, list them here. APPEND: Also, please include any files that you've changed. .DM files that is. -->
 	- code\modules\mob\living\carbon\life.dm
+	- code\modules\mob\living\carbon\init_signals.dm
 	- code\datums\diseases\_disease.dm
 	- code\game\objects\effects\decals\cleanable.dm
 	- code\game\atoms.dm
