@@ -236,6 +236,8 @@
 	user.do_attack_animation(target_mob)
 	target_mob.attacked_by(src, user)
 
+	SEND_SIGNAL(src, COMSIG_ITEM_POST_ATTACK, target_mob, user, params)
+
 	log_combat(user, target_mob, "attacked", src.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
@@ -387,7 +389,7 @@
 					glasses.add_mob_blood(src)
 					update_worn_glasses()
 
-			if(!attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_HEAD_INJURY_BLOCKED))
+			if(!attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_HEAD_INJURY_BLOCKED) && attacking_item.damtype == BRUTE)
 				if(prob(damage_done))
 					adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
 					if(stat == CONSCIOUS)
@@ -417,7 +419,7 @@
 					w_uniform.add_mob_blood(src)
 					update_worn_undersuit()
 
-			if(stat == CONSCIOUS && !attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
+			if(stat == CONSCIOUS && !attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) && attacking_item.damtype == BRUTE)
 				if(prob(damage_done))
 					visible_message(
 						span_danger("[src] is knocked down!"),

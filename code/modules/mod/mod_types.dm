@@ -596,6 +596,7 @@
 		/obj/item/mod/module/storage/bluespace,
 		/obj/item/mod/module/emp_shield/advanced,
 		/obj/item/mod/module/welding,
+		/obj/item/mod/module/rad_protection,
 		/obj/item/mod/module/stealth/ninja,
 		/obj/item/mod/module/quick_carry/advanced,
 		/obj/item/mod/module/magboot/advanced,

@@ -7,6 +7,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 
 /datum/ai_behavior/find_potential_targets
 	action_cooldown = 2 SECONDS
+	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	/// How far can we see stuff?
 	var/vision_range = 9
 	/// Blackboard key for aggro range, uses vision range if not specified
@@ -34,7 +35,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 
 	// If we're using a field rn, just don't do anything yeah?
 	if(controller.blackboard[BB_FIND_TARGETS_FIELD(type)])
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/list/potential_targets = hearers(aggro_range, get_turf(controller.pawn)) - living_mob //Remove self, so we don't suicide
 
@@ -146,7 +147,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 		var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]
 		qdel(field) // autoclears so it's fine
 		controller.CancelActions() // On retarget cancel any further queued actions so that they will setup again with new target
-		controller.modify_cooldown(controller, get_cooldown(controller))
+		controller.modify_cooldown(src, get_cooldown(controller))
 
 /// Returns the desired final target from the filtered list of targets
 /datum/ai_behavior/find_potential_targets/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets)

@@ -112,19 +112,20 @@
 		human.remove_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), SPECIES_FLIGHT_TRAIT)
 		passtable_off(human, SPECIES_FLIGHT_TRAIT)
 		close_wings()
-	human.update_body_parts()
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/external/wings/functional/proc/open_wings()
 	var/datum/bodypart_overlay/mutant/wings/functional/overlay = bodypart_overlay
 	overlay.open_wings()
 	wings_open = TRUE
+	owner.update_body_parts()
 
 ///close our wings
 /obj/item/organ/external/wings/functional/proc/close_wings()
 	var/datum/bodypart_overlay/mutant/wings/functional/overlay = bodypart_overlay
 	wings_open = FALSE
 	overlay.close_wings()
+	owner.update_body_parts()
 
 	if(isturf(owner?.loc))
 		var/turf/location = loc
@@ -139,9 +140,9 @@
 
 /datum/bodypart_overlay/mutant/wings/functional/get_global_feature_list()
 	if(wings_open)
-		return GLOB.wings_open_list
+		return SSaccessories.wings_open_list
 	else
-		return GLOB.wings_list
+		return SSaccessories.wings_list
 
 ///Update our wingsprite to the open wings variant
 /datum/bodypart_overlay/mutant/wings/functional/proc/open_wings()
@@ -185,6 +186,9 @@
 	name = "skeletal wings"
 	desc = "Powered by pure edgy-teenager-notebook-scribblings. Just kidding. But seriously, how do these keep you flying?!"
 	sprite_accessory_override = /datum/sprite_accessory/wings/skeleton
+
+/obj/item/organ/external/wings/functional/moth/make_flap_sound(mob/living/carbon/wing_owner)
+	playsound(wing_owner, 'sound/voice/moth/moth_flutter.ogg', 50, TRUE)
 
 ///mothra wings, which relate to moths.
 /obj/item/organ/external/wings/functional/moth/mothra

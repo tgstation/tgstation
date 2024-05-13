@@ -25,5 +25,5 @@
 /obj/structure/alien/egg/delivery/Initialize(mapload)
 	. = ..()
 
-	SScommunications.xenomorph_egg_delivered = TRUE
-	SScommunications.captivity_area = get_area(src)
+	GLOB.communications_controller.xenomorph_egg_delivered = TRUE
+	GLOB.communications_controller.captivity_area = get_area(src)

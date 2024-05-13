@@ -76,7 +76,7 @@
 	messenger = /obj/item/storage/backpack/messenger/science
 
 	chameleon_extras = /obj/item/stamp/head/rd
-	skillchips = list(/obj/item/skillchip/job/research_director)
+	skillchips = list(/obj/item/skillchip/research_director, /obj/item/skillchip/job/roboticist)
 
 /datum/outfit/job/rd/mod
 	name = "Research Director (MODsuit)"

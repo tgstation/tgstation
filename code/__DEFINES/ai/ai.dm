@@ -31,7 +31,7 @@
 ///Finish the behavior successfully
 #define AI_BEHAVIOR_SUCCEEDED (1<<1)
 ///Finish the behavior unsuccessfully
-#define AI_BEHAVIOR_FAILED (1<<1)
+#define AI_BEHAVIOR_FAILED (1<<2)
 
 #define AI_BEHAVIOR_INSTANT (NONE)
 
