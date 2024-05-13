@@ -11,7 +11,7 @@
 
 
 /datum/unit_test/cargo_dep_order_locations/proc/check_valid_delivery_location(/datum/job_department/department_to_check)
-	for(var/delivery_area_type in department_delivery_areas)
+	for(var/delivery_area_type in department_to_check.department_delivery_areas)
 		if(GLOB.areas_by_type[delivery_area_type])
 			return TRUE
 	return FALSE
