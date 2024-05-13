@@ -11,8 +11,18 @@ export class Color {
   g: number;
   b: number;
   a: number;
+  /**
+   * Creates a color from the CSS hex color notation.
+   */
   static fromHex: (hex: any) => Color;
+  /**
+   * Linear interpolation of two colors.
+   */
   static lerp: (c1: Color, c2: Color, n: number) => Color;
+  /**
+   * Loops up the color in the provided list of colors
+   * with linear interpolation.
+   */
   static lookup: (value: number, colors: Color[]) => Color;
 
   constructor(r = 0, g = 0, b = 0, a = 1) {
@@ -34,7 +44,7 @@ export class Color {
     return `rgba(${this.r | 0}, ${this.g | 0}, ${this.b | 0}, ${alpha})`;
   }
 
-  // Darkens a color by a given percent. Returns a color, which can have toString called to get it's rgba() css value.
+  /**  Darkens a color by a given percent. Returns a color, which can have toString called to get it's rgba() css value. */
   darken(percent: number): Color {
     percent /= 100;
     return new Color(
@@ -45,51 +55,41 @@ export class Color {
     );
   }
 
-  // Brightens a color by a given percent. Returns a color, which can have toString called to get it's rgba() css value.
+  /** Brightens a color by a given percent. Returns a color, which can have toString called to get it's rgba() css value. */
   lighten(percent: number): Color {
     // No point in rewriting code we already have.
     return this.darken(-percent);
   }
+
+  fromHex = (hex: string): Color =>
+    new Color(
+      parseInt(hex.slice(1, 2), 16),
+      parseInt(hex.slice(3, 2), 16),
+      parseInt(hex.slice(5, 2), 16),
+    );
+
+  lerp = (c1: Color, c2: Color, n: number): Color =>
+    new Color(
+      (c2.r - c1.r) * n + c1.r,
+      (c2.g - c1.g) * n + c1.g,
+      (c2.b - c1.b) * n + c1.b,
+      (c2.a - c1.a) * n + c1.a,
+    );
+
+  lookup = (value: number, colors: Color[]): Color => {
+    const len = colors.length;
+    if (len < 2) {
+      throw new Error('Needs at least two colors!');
+    }
+    const scaled = value * (len - 1);
+    if (value < EPSILON) {
+      return colors[0];
+    }
+    if (value >= 1 - EPSILON) {
+      return colors[len - 1];
+    }
+    const ratio = scaled % 1;
+    const index = scaled | 0;
+    return Color.lerp(colors[index], colors[index + 1], ratio);
+  };
 }
-
-/**
- * Creates a color from the CSS hex color notation.
- */
-Color.fromHex = (hex: string): Color =>
-  new Color(
-    parseInt(hex.slice(1, 2), 16),
-    parseInt(hex.slice(3, 2), 16),
-    parseInt(hex.slice(5, 2), 16),
-  );
-
-/**
- * Linear interpolation of two colors.
- */
-Color.lerp = (c1: Color, c2: Color, n: number): Color =>
-  new Color(
-    (c2.r - c1.r) * n + c1.r,
-    (c2.g - c1.g) * n + c1.g,
-    (c2.b - c1.b) * n + c1.b,
-    (c2.a - c1.a) * n + c1.a,
-  );
-
-/**
- * Loops up the color in the provided list of colors
- * with linear interpolation.
- */
-Color.lookup = (value: number, colors: Color[]): Color => {
-  const len = colors.length;
-  if (len < 2) {
-    throw new Error('Needs at least two colors!');
-  }
-  const scaled = value * (len - 1);
-  if (value < EPSILON) {
-    return colors[0];
-  }
-  if (value >= 1 - EPSILON) {
-    return colors[len - 1];
-  }
-  const ratio = scaled % 1;
-  const index = scaled | 0;
-  return Color.lerp(colors[index], colors[index + 1], ratio);
-};
