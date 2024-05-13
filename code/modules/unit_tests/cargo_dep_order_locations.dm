@@ -1,18 +1,20 @@
 /datum/unit_test/cargo_dep_order_locations
 
 /datum/unit_test/cargo_dep_order_locations/Run()
-	for(var/datum/job_department/department_type_to_check in subtypesof(/datum/job_department))
-		var/datum/job_department/department_to_check = new department_type_to_check
-		if(isnull(department_to_check.department_delivery_areas) || !length(department_to_check.department_delivery_areas))
+	for(var/datum/job_department/department as anything in subtypesof(/datum/job_department))
+		var/datum/job_department/dep = new department(FALSE)
+		var/delivery_areas = dep.department_delivery_areas
+		if(isnull(initial(dep.department_delivery_areas)) || !length(delivery_areas))
 			continue
-		if(check_valid_delivery_location(department_to_check))
+		if(check_valid_delivery_location(delivery_areas))
 			continue
 		else
-			TEST_FAIL("[department_to_check.type] failed to find a valid delivery location on this map.")
+			TEST_FAIL("[department.type] failed to find a valid delivery location on this map.")
 
 
-/datum/unit_test/cargo_dep_order_locations/proc/check_valid_delivery_location(datum/job_department/department_to_check)
-	for(var/delivery_area_type in department_to_check.department_delivery_areas)
+/datum/unit_test/cargo_dep_order_locations/proc/check_valid_delivery_location(var/list/delivery_areas)
+	for(var/delivery_area_type in delivery_areas)
+
 		if(GLOB.areas_by_type[delivery_area_type])
 			return TRUE
 	return FALSE

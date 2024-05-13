@@ -28,13 +28,15 @@
 	/// A list of generic access flags people in this department generally have.
 	var/list/department_access = list()
 
-/datum/job_department/New()
+/datum/job_department/New(check_areas = TRUE)
 	. = ..()
-	// This is just for the case we are somehow missing these. And to not break testing on runtimestation
-	for(var/delivery_area_type in department_delivery_areas)
-		if(GLOB.areas_by_type[delivery_area_type])
-			return
-	department_delivery_areas = list(/area/station/hallway/primary/central) //if this doesn't exist like honestly fuck your map man
+	// Speeds up any future loops
+	if(check_areas == TRUE)
+		for(var/delivery_area_type in department_delivery_areas)
+			if(GLOB.areas_by_type[delivery_area_type])
+				department_delivery_areas = list(delivery_area_type)
+				return
+		department_delivery_areas = list(/area/station/hallway/primary/central) //if this doesn't exist like honestly fuck your map man
 
 /// Handles adding jobs to the department and setting up the job bitflags.
 /datum/job_department/proc/add_job(datum/job/job)
