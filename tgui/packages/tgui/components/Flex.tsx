@@ -42,7 +42,7 @@ export const computeFlexProps = (props: FlexProps) => {
   });
 };
 
-export const Flex = (props: FlexProps) => {
+export const Flex = (props) => {
   const { className, ...rest } = props;
   return (
     <div
