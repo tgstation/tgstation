@@ -19,14 +19,14 @@
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume, clear_mob_reagents)
 	/// If an explosive reaction clears mob reagents, it should always be a minimum power
 	if(ismob(holder.my_atom) && clear_mob_reagents)
-		if((created_volume / strengthdiv) + modifier < 1)
+		if(round((created_volume / strengthdiv) + modifier, 1) < 1)
 			modifier += 1 - ((created_volume / strengthdiv) + modifier)
 	/// If this particular explosion doesn't automatically clear mob reagents as an inherent quality,
 	/// then we can still clear mob reagents with some mad science malpractice that shouldn't work but
 	/// does because omnizine is magic and also it's the future or whatever
 	if(ismob(holder.my_atom) && !clear_mob_reagents)
 		/// The explosion needs to be a minimum power to clear reagents: see above
-		var/purge_power = (created_volume / strengthdiv) + modifier
+		var/purge_power = round((created_volume / strengthdiv) + modifier, 1)
 		if(purge_power >= 1)
 			var/has_purging_chemical = FALSE
 			/// They need one of the purge reagents in them
