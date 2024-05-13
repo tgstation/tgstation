@@ -1,7 +1,7 @@
 import { capitalizeFirst } from 'common/string';
 
 import { useBackend } from '../../backend';
-import { Button, Collapsible, Icon, Stack } from '../../components';
+import { Button, Collapsible, DmIcon, Icon, Stack } from '../../components';
 import { JOB2ICON } from '../common/JobToIcon';
 import {
   getDisplayColor,
@@ -54,13 +54,13 @@ export function ObservableSection(props: Props) {
         title={title + ` - (${filteredSection.length})`}
       >
         {filteredSection.map((item) => {
-          const { extra, full_name, health, job, name, orbiters, ref } = item;
+          const { extra, full_name, health, icon, job, name, orbiters, ref } =
+            item;
 
           return (
             <Button
               color={getDisplayColor(item, heatMap, color)}
               key={ref}
-              icon={(job && JOB2ICON[job]) || null}
               onClick={() =>
                 act('orbit', { auto_observe: autoObserve, ref: ref })
               }
@@ -69,18 +69,45 @@ export function ObservableSection(props: Props) {
               }
               tooltipPosition="bottom-start"
             >
-              {capitalizeFirst(getDisplayName(full_name, name))}
-              {!!orbiters && (
-                <>
-                  {' '}
-                  <Icon mr={0} name={'ghost'} />
-                  {orbiters}
-                </>
-              )}
+              <Stack>
+                {!!job && <JobIcon icon={icon} job={job} />}
+
+                <Stack.Item ml={0.5}>
+                  {capitalizeFirst(getDisplayName(full_name, name))}
+                </Stack.Item>
+
+                {!!orbiters && (
+                  <Stack.Item>
+                    <Icon name="ghost" />
+                    {orbiters}
+                  </Stack.Item>
+                )}
+              </Stack>
             </Button>
           );
         })}
       </Collapsible>
     </Stack.Item>
   );
+}
+
+function JobIcon(props) {
+  const { icon, job } = props;
+
+  if (icon) {
+    return (
+      <Stack.Item style={{ height: '18px', width: '18px' }}>
+        <DmIcon
+          icon="icons/mob/huds/hud.dmi"
+          icon_state={icon}
+          style={{ transform: 'scale(2)  translateX(8px) translateY(1px)' }}
+        />
+      </Stack.Item>
+    );
+  }
+
+  const toDisplay = JOB2ICON[job];
+  if (!toDisplay) return null;
+
+  return <Icon name={toDisplay} />;
 }

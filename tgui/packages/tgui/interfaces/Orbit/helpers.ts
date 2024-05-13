@@ -21,8 +21,8 @@ export function getAntagCategories(antagonists: Antagonist[]) {
 }
 
 /** Returns a disguised name in case the person is wearing someone else's ID */
-export function getDisplayName(full_name: string, name?: string) {
-  if (!name) {
+export function getDisplayName(full_name: string, nickname?: string) {
+  if (!nickname) {
     return full_name;
   }
 
@@ -31,7 +31,7 @@ export function getDisplayName(full_name: string, name?: string) {
     full_name.match(/\(as /) ||
     full_name.match(/^Unknown/)
   ) {
-    return name;
+    return nickname;
   }
 
   // return only the name before the first ' [' or ' ('

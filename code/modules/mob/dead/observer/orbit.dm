@@ -14,6 +14,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	if (!ui)
 		ui = new(user, src, "Orbit")
 		ui.open()
+		ui.set_autoupdate(FALSE)
 
 /datum/orbit_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -40,8 +41,10 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 				user.do_observe(poi)
 			return TRUE
 		if ("refresh")
-			update_static_data(usr, ui)
+			ui.send_full_update()
 			return TRUE
+
+	return FALSE
 
 /datum/orbit_menu/ui_static_data(mob/user)
 	var/list/new_mob_pois = SSpoints_of_interest.get_mob_pois(CALLBACK(src, PROC_REF(validate_mob_poi)), append_dead_role = FALSE)
@@ -98,9 +101,11 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			serialized["health"] = FLOOR((player.health / player.maxHealth * 100), 1)
 			if(issilicon(player))
 				serialized["job"] = player.job
+				serialized["icon"] = "borg"
 			else
 				var/obj/item/card/id/id_card = player.get_idcard(hand_first = FALSE)
 				serialized["job"] = id_card?.get_trim_assignment()
+				serialized["icon"] = id_card?.trim?.sechud_icon_state
 
 		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
 			if (antag_datum.show_to_ghosts)

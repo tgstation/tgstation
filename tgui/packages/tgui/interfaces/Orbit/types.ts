@@ -22,6 +22,7 @@ export type Observable = {
   client: BooleanLike;
   extra: string;
   health: number;
+  icon: string;
   job: string;
   name: string;
   orbiters: number;
