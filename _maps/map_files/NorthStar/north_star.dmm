@@ -19637,6 +19637,13 @@
 "ffe" = (
 /turf/closed/wall/r_wall,
 /area/station/security/holding_cell)
+"ffh" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/lobby)
 "ffi" = (
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 4
@@ -92520,6 +92527,14 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port/aft)
+"xNd" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/siding/blue,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/lobby)
 "xNf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/hangover,
@@ -195162,7 +195177,7 @@ tDb
 gvp
 gVI
 qtM
-blH
+xNd
 ihL
 hwV
 hYk
@@ -195674,7 +195689,7 @@ cdm
 jLQ
 aYU
 gvp
-gVI
+ffh
 lbi
 blH
 ihL
