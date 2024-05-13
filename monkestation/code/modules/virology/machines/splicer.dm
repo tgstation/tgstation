@@ -180,8 +180,8 @@
 
 	var/list/effects = dish.contained_virus.symptoms
 	for(var/x = 1 to effects.len)
-		var/datum/symptom/e = effects[x]
-		if(e.stage == target_stage)
+		if(x == target_stage)
+			var/datum/symptom/e = effects[x]
 			effects[x] = memorybank.Copy(dish.contained_virus)
 			dish.contained_virus.log += "<br />[ROUND_TIME()] [memorybank.name] spliced in by [key_name(usr)] (replaces [e.name])"
 			break

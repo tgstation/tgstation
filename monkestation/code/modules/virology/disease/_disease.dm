@@ -133,8 +133,9 @@ GLOBAL_LIST_INIT(virusDB, list())
 			machine = dish.loc
 
 	if(specified_stage)
-		for(var/datum/symptom/e in symptoms)
-			if(e.stage == specified_stage)
+		for(var/x in symptoms.len)
+			if(x == specified_stage)
+				var/datum/symptom/e = symptoms[x]
 				e.multiplier_tweak(0.1 * rand(1, 3))
 				minormutate(specified_stage)
 				if(e.chance == e.max_chance && prob(strength) && e.max_chance <= initial(e.max_chance) * 3)
