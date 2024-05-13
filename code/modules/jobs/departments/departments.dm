@@ -28,15 +28,6 @@
 	/// A list of generic access flags people in this department generally have.
 	var/list/department_access = list()
 
-/datum/job_department/New()
-	. = ..()
-	for(var/delivery_area_type in department_delivery_areas)
-		if(GLOB.areas_by_type[delivery_area_type])
-			return
-	//every area fallback didn't exist on this map so throw a mapping error and set some generic area that uuuh please exist okay
-	log_mapping("[type] has no valid areas to deliver to on this map, add some more fallback areas to its \"department_delivery_areas\" var.")
-	department_delivery_areas = list(/area/station/hallway/primary/central) //if this doesn't exist like honestly fuck your map man
-
 /// Handles adding jobs to the department and setting up the job bitflags.
 /datum/job_department/proc/add_job(datum/job/job)
 	department_jobs += job
