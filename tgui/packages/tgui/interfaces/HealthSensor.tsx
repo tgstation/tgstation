@@ -10,7 +10,7 @@ type Data = {
   target: BooleanLike;
 };
 
-export const Health = (props) => {
+export const HealthSensor = (props) => {
   const { act, data } = useBackend<Data>();
   const { health, scanning, target } = data;
 
