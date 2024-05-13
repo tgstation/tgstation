@@ -14,7 +14,7 @@ export class Color {
   /**
    * Creates a color from the CSS hex color notation.
    */
-  static fromHex: (hex: any) => Color;
+  static fromHex: (hex: string) => Color;
   /**
    * Linear interpolation of two colors.
    */
@@ -61,20 +61,22 @@ export class Color {
     return this.darken(-percent);
   }
 
-  fromHex = (hex: string): Color =>
-    new Color(
-      parseInt(hex.slice(1, 2), 16),
-      parseInt(hex.slice(3, 2), 16),
-      parseInt(hex.slice(5, 2), 16),
+  fromHex = (hex: string): Color => {
+    return new Color(
+      parseInt(hex.slice(1, 3), 16),
+      parseInt(hex.slice(3, 5), 16),
+      parseInt(hex.slice(5, 7), 16),
     );
+  };
 
-  lerp = (c1: Color, c2: Color, n: number): Color =>
-    new Color(
+  lerp = (c1: Color, c2: Color, n: number): Color => {
+    return new Color(
       (c2.r - c1.r) * n + c1.r,
       (c2.g - c1.g) * n + c1.g,
       (c2.b - c1.b) * n + c1.b,
       (c2.a - c1.a) * n + c1.a,
     );
+  };
 
   lookup = (value: number, colors: Color[]): Color => {
     const len = colors.length;
@@ -90,6 +92,6 @@ export class Color {
     }
     const ratio = scaled % 1;
     const index = scaled | 0;
-    return Color.lerp(colors[index], colors[index + 1], ratio);
+    return this.lerp(colors[index], colors[index + 1], ratio);
   };
 }
