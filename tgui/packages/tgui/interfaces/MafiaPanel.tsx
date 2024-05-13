@@ -1,6 +1,5 @@
 import { BooleanLike, classes } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
-import { multiline } from 'common/string';
 import { useState } from 'react';
 
 import { useBackend } from '../backend';
@@ -124,7 +123,7 @@ export const MafiaPanelData = (props) => {
                             color="transparent"
                             icon="address-book"
                             tooltipPosition="bottom-start"
-                            tooltip={multiline`
+                            tooltip={`
                             This is the list of roles in the game. You can
                             press the question mark to get a quick blurb
                             about the role itself.`}
@@ -140,7 +139,7 @@ export const MafiaPanelData = (props) => {
                             color="transparent"
                             icon="pencil"
                             tooltipPosition="bottom-start"
-                            tooltip={multiline`
+                            tooltip={`
                             This is your notes, anything you want to write
                             can be saved for future reference. You can
                             also send it to chat with a button.`}
@@ -234,7 +233,7 @@ const MafiaLobby = (props) => {
           <Button
             icon="clipboard-check"
             tooltipPosition="bottom-start"
-            tooltip={multiline`
+            tooltip={`
               Signs you up for the next game. If there
               is an ongoing one, you will be signed up
               for the next.
@@ -245,7 +244,7 @@ const MafiaLobby = (props) => {
           <Button
             icon="arrow-right"
             tooltipPosition="bottom-start"
-            tooltip={multiline`
+            tooltip={`
               Submit a vote to start the game early.
               Starts when half of the current signup list have voted to start.
               Requires a bare minimum of six players.
