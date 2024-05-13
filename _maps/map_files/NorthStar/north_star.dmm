@@ -6520,6 +6520,9 @@
 /obj/item/reagent_containers/cup/bottle{
 	pixel_x = 2
 	},
+/obj/effect/turf_decal/bot_white{
+	color = "#74b2d3"
+	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "bCk" = (
@@ -20515,6 +20518,9 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
+/obj/effect/turf_decal/bot_white{
+	color = "#74b2d3"
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "fqo" = (
@@ -32776,6 +32782,16 @@
 	},
 /turf/closed/wall,
 /area/station/maintenance/floor1/starboard/aft)
+"iAQ" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_white{
+	color = "#74b2d3"
+	},
+/turf/open/floor/iron/white/textured,
+/area/station/medical/treatment_center)
 "iAS" = (
 /obj/structure/cable,
 /obj/machinery/power/smes/engineering,
@@ -77615,15 +77631,15 @@
 "tZZ" = (
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/light/directional/south,
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
 /obj/structure/bed/medical/anchored,
+/obj/effect/turf_decal/bot_white{
+	color = "#74b2d3"
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "uae" = (
@@ -196180,7 +196196,7 @@ wdd
 fqn
 wis
 slP
-wis
+iAQ
 tZZ
 aZW
 aZW
