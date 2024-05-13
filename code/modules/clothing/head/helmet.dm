@@ -524,3 +524,48 @@
 	fire = 65
 	acid = 40
 	wound = 15
+
+/obj/item/clothing/head/helmet/military
+	name = "Crude Helmet"
+	desc = "A cheaply made kettle helmet with an added faceplate to protect your eyes and mouth."
+	icon_state = "military"
+	inhand_icon_state = "knight_helmet"
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	strip_delay = 80
+	dog_fashion = null
+	armor_type = /datum/armor/helmet_military
+
+/datum/armor/helmet_military
+	melee = 45
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 25
+	fire = 10
+	acid = 50
+	wound = 20
+
+/obj/item/clothing/head/helmet/military/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+
+/obj/item/clothing/head/helmet/knight/warlord
+	name = "golden barbute helmet"
+	desc = "There is no man behind the helmet, only a terrible thought."
+	icon_state = "warlord"
+	inhand_icon_state = null
+	armor_type = /datum/armor/helmet_warlord
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEMASK|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	slowdown = 0.2
+
+/datum/armor/helmet_warlord
+	melee = 70
+	bullet = 60
+	laser = 70
+	energy = 70
+	bomb = 40
+	fire = 50
+	acid = 50
+	wound = 30

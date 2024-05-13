@@ -207,7 +207,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 			continue
 		part_list += component_part
 		//Sort the parts. This ensures that higher tier items are applied first.
-	part_list = sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
+	sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
 	return part_list
 
 /proc/cmp_rped_sort(obj/item/first_item, obj/item/second_item)
