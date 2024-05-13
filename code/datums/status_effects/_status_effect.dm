@@ -89,7 +89,9 @@
 		QDEL_NULL(particle_effect)
 	return ..()
 
+/// Updates the status effect alert's maptext (if possible)
 /datum/status_effect/proc/update_shown_duration()
+	PRIVATE_PROC(TRUE)
 	if(!linked_alert || !show_duration)
 		return
 
