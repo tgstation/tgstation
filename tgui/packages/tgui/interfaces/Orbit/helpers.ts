@@ -1,4 +1,4 @@
-import { filter, sortBy } from 'common/collections';
+import { sortBy } from 'common/collections';
 
 import { HEALTH, THREAT } from './constants';
 import type { AntagGroup, Antagonist, Observable } from './types';
@@ -36,25 +36,6 @@ export function getDisplayName(full_name: string, name?: string) {
 
   // return only the name before the first ' [' or ' ('
   return `"${full_name.split(/ \[| \(/)[0]}"`;
-}
-
-export function getMostRelevant(
-  searchQuery: string,
-  observables: Observable[][],
-): Observable {
-  const queriedObservables =
-    // Sorts descending by orbiters
-    sortBy(
-      // Filters out anything that doesn't match search
-      filter(
-        observables
-          // Makes a single Observables list for an easy search
-          .flat(),
-        (observable) => isJobOrNameMatch(observable, searchQuery),
-      ),
-      (observable) => -(observable.orbiters || 0),
-    );
-  return queriedObservables[0];
 }
 
 /** Returns the display color for certain health percentages */
@@ -107,9 +88,8 @@ export function getDisplayColor(
 
 /** Checks if a full name or job title matches the search. */
 export function isJobOrNameMatch(observable: Observable, searchQuery: string) {
-  if (!searchQuery) {
-    return true;
-  }
+  if (!searchQuery) return true;
+
   const { full_name, job } = observable;
 
   return (
@@ -132,6 +112,20 @@ export function sortByRealName(poiA: Observable, poiB: Observable) {
     return -1;
   }
   if (nameA > nameB) {
+    return 1;
+  }
+  return 0;
+}
+
+/** Sorts by most orbiters  */
+export function sortByOrbiters(poiA: Observable, poiB: Observable) {
+  const orbitersA = poiA.orbiters || 0;
+  const orbitersB = poiB.orbiters || 0;
+
+  if (orbitersA < orbitersB) {
+    return -1;
+  }
+  if (orbitersA > orbitersB) {
     return 1;
   }
   return 0;

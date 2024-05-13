@@ -3,37 +3,31 @@ import { Button, Icon, Input, Section, Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';
 
 import { useBackend } from '../../backend';
-import { getMostRelevant } from './helpers';
+import { isJobOrNameMatch, sortByOrbiters } from './helpers';
 import { ObservableContent } from './ObservableContent';
 import { OrbitData } from './types';
 
 export function Orbit(props) {
   const { act, data } = useBackend<OrbitData>();
-  const {
-    alive = [],
-    antagonists = [],
-    deadchat_controlled = [],
-    dead = [],
-    ghosts = [],
-    misc = [],
-    npcs = [],
-  } = data;
 
   const [autoObserve, setAutoObserve] = useState(false);
   const [heatMap, setHeatMap] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   /** Gets a list of Observables, then filters the most relevant to orbit */
-  function orbitMostRelevant(searchQuery: string) {
-    const mostRelevant = getMostRelevant(searchQuery, [
-      alive,
-      antagonists,
-      deadchat_controlled,
-      dead,
-      ghosts,
-      misc,
-      npcs,
-    ]);
+  function orbitMostRelevant() {
+    const mostRelevant = [
+      data.alive,
+      data.antagonists,
+      data.deadchat_controlled,
+      data.dead,
+      data.ghosts,
+      data.misc,
+      data.npcs,
+    ]
+      .flat()
+      .filter((observable) => isJobOrNameMatch(observable, searchQuery))
+      .sort(sortByOrbiters)[0];
 
     if (mostRelevant !== undefined) {
       act('orbit', {
@@ -57,7 +51,7 @@ export function Orbit(props) {
                   <Input
                     autoFocus
                     fluid
-                    onEnter={(event, value) => orbitMostRelevant(value)}
+                    onEnter={orbitMostRelevant}
                     onInput={(event, value) => setSearchQuery(value)}
                     placeholder="Search..."
                     value={searchQuery}
