@@ -1,0 +1,6 @@
+author: "AlbertNanotracen"
+delete-after: True
+changes:
+  - bugfix: "Splicing a symptom on a symptom that isn't in its initial stage will now work"
+  - bugfix: "Stage Occurrence mutations will now work on symptoms not in their initial stage"
+  - rscadd: "Bio bag can now carry mouse cubes and virus dishes"
