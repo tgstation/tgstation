@@ -126,7 +126,7 @@
 		QDEL_NULL(linked)
 	else
 		linked = null
-	playsound(loc, "sound/effects/portal_close.ogg" , 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, "sound/effects/portal_close.ogg" , 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return ..()
 
 /obj/effect/portal/attack_ghost(mob/dead/observer/O)
