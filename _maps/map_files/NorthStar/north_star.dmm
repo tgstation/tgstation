@@ -982,6 +982,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/blue,
 /obj/machinery/medical_kiosk,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "anb" = (
@@ -23566,15 +23567,16 @@
 /turf/open/floor/iron/checker,
 /area/station/service/bar/atrium)
 "ggp" = (
-/obj/structure/table/reinforced,
-/obj/structure/barricade/wooden{
-	name = "wooden barricade (KEEP OUT)"
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
 	},
-/obj/structure/window/reinforced/tinted/spawner/directional/south,
-/obj/structure/window/reinforced/tinted/spawner/directional/north,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/station/medical/chemistry)
+/obj/effect/turf_decal/siding/yellow{
+	dir = 8;
+	pixel_x = 15
+	},
+/obj/structure/chair,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/lobby)
 "ggD" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 8
@@ -26706,6 +26708,8 @@
 	dir = 4;
 	pixel_x = -15
 	},
+/obj/effect/landmark/start/assistant,
+/obj/structure/chair,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "gYb" = (
@@ -37813,10 +37817,9 @@
 /area/station/maintenance/floor2/starboard/aft)
 "jQb" = (
 /obj/machinery/door/airlock/medical{
-	name = "Ph-rm--y"
+	name = "Chemical Storage"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/chemistry,
-/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
@@ -41567,6 +41570,9 @@
 "kMv" = (
 /obj/machinery/plumbing/receiver,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/structure/railing{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "kMC" = (
@@ -67212,6 +67218,9 @@
 "rmD" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/structure/closet/secure_closet/chemical,
+/obj/structure/railing{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "rmF" = (
@@ -84838,6 +84847,9 @@
 /area/station/cargo/lobby)
 "vSA" = (
 /obj/machinery/digital_clock/directional/north,
+/obj/effect/turf_decal/bot_white{
+	color = "#74b2d3"
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "vSB" = (
@@ -92504,12 +92516,12 @@
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "xMH" = (
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/machinery/door/airlock/hatch{
 	name = "Maintenance Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/unres,
+/obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/port)
 "xMJ" = (
@@ -127613,9 +127625,9 @@ jsP
 fQQ
 lkE
 kzE
-xgH
-xgH
-xgH
+kzE
+kzE
+kzE
 rSc
 tCB
 twx
@@ -127869,11 +127881,11 @@ hLX
 hLX
 hLX
 lkE
-ggp
+wCn
 opB
 wCR
-xgH
-xgH
+kzE
+kzE
 ulh
 eVk
 wVn
@@ -128130,7 +128142,7 @@ jQb
 hzV
 vLM
 lBB
-xgH
+kzE
 pLe
 lJk
 wVn
@@ -128387,7 +128399,7 @@ wCn
 fKC
 ssi
 tkz
-xgH
+kzE
 dxS
 twx
 wVn
@@ -128644,7 +128656,7 @@ kzE
 wAe
 mYo
 kzr
-xgH
+kzE
 wVn
 wVn
 wVn
@@ -128901,7 +128913,7 @@ xMH
 trP
 dpC
 qHH
-xgH
+kzE
 oBQ
 xgH
 xgH
@@ -129154,11 +129166,11 @@ dJO
 tIG
 vag
 vag
-xgH
-xgH
-xgH
-xgH
-xgH
+kzE
+kzE
+kzE
+kzE
+kzE
 dJO
 nJI
 xgH
@@ -194931,7 +194943,7 @@ xYM
 jLQ
 yka
 mtI
-hOX
+ggp
 hOX
 qob
 aHk
