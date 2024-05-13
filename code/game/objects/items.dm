@@ -629,12 +629,27 @@
 		if(src.can_parry && attack_type != PROJECTILE_ATTACK) //we can parry only "melee" attacks
 			if(isitem(hitby)) //if we're block attack by item
 				hitby.take_damage(src.force)
+
 			else if(attack_type != LEAP_ATTACK && attack_type != THROWN_PROJECTILE_ATTACK) //if we're parry punches/shoves/grabs
 				var/mob/living/carbon/attacker = hitby
-				attacker.apply_damage(damage = src.force, def_zone = attacker.get_active_hand(), blocked = 50, bare_wound_bonus = src.bare_wound_bonus, sharpness = src.sharpness, attacking_item = src) //watch yo hands
+				attacker.apply_damage(
+					damage = src.force,
+					def_zone = attacker.get_active_hand(),
+					blocked = 50 + attacker.run_armor_check(attacker.get_active_hand(), MELEE, armour_penetration = src.armour_penetration),
+					bare_wound_bonus = src.bare_wound_bonus,
+					sharpness = src.sharpness,
+					attacking_item = src) //watch yo hands
+
 			else //if we're attacked by a guy with tacklers, flying body or just a mob
 				var/mob/living/attacker = hitby
-				attacker.apply_damage(damage = src.force, def_zone = BODY_ZONE_HEAD, blocked = 30, bare_wound_bonus = src.bare_wound_bonus, sharpness = src.sharpness, attacking_item = src) //you jumped onto a sword, what were you thinking?
+				attacker.apply_damage(
+					damage = src.force,
+					def_zone = BODY_ZONE_HEAD,
+					blocked = 30 + attacker.run_armor_check(BODY_ZONE_HEAD, MELEE, armour_penetration = src.armour_penetration),
+					bare_wound_bonus = src.bare_wound_bonus,
+					sharpness = src.sharpness,
+					attacking_item = src) //you jumped onto a sword, what were you thinking?
+
 		var/owner_turf = get_turf(owner)
 		new block_effect(owner_turf, COLOR_YELLOW)
 		playsound(src, block_sound, BLOCK_SOUND_VOLUME, vary = TRUE)
