@@ -178,6 +178,8 @@
 
 	///Chance of blocking incoming attack
 	var/block_chance = 0
+	///Can an item in case of a successful block parry an incoming attack, causing damage to an object or attacker
+	var/can_parry = FALSE
 	///Effect of blocking
 	var/block_effect = /obj/effect/temp_visual/block
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
@@ -624,7 +626,15 @@
 		return TRUE
 
 	if(prob(final_block_chance))
-		owner.visible_message(span_danger("[owner] blocks [attack_text] with [src]!"))
+		if(src.can_parry && attack_type != PROJECTILE_ATTACK) //we can parry only "melee" attacks
+			if(isitem(hitby)) //if we're block attack by item
+				hitby.take_damage(src.force)
+			else if(attack_type != LEAP_ATTACK && attack_type != THROWN_PROJECTILE_ATTACK) //if we're parry punches/shoves/grabs
+				var/mob/living/carbon/attacker = hitby
+				attacker.apply_damage(damage = src.force, def_zone = attacker.get_active_hand(), blocked = 50, bare_wound_bonus = src.bare_wound_bonus, sharpness = src.sharpness, attacking_item = src) //watch yo hands
+			else //if we're attacked by a guy with tacklers, flying body or just a mob
+				var/mob/living/attacker = hitby
+				attacker.apply_damage(damage = src.force, def_zone = BODY_ZONE_HEAD, blocked = 30, bare_wound_bonus = src.bare_wound_bonus, sharpness = src.sharpness, attacking_item = src) //you jumped onto a sword, what were you thinking?
 		var/owner_turf = get_turf(owner)
 		new block_effect(owner_turf, COLOR_YELLOW)
 		playsound(src, block_sound, BLOCK_SOUND_VOLUME, vary = TRUE)

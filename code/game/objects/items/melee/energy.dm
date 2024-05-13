@@ -188,6 +188,7 @@
 	throw_range = 5
 	armour_penetration = 35
 	block_chance = 50
+	can_parry = TRUE
 	block_sound = 'sound/weapons/block_blade.ogg'
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
 
