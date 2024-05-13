@@ -29402,6 +29402,10 @@
 	name = "First Aid Supplies";
 	req_access = list("medical")
 	},
+/obj/structure/desk_bell{
+	pixel_y = 1;
+	pixel_x = -5
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/lobby)
 "hHi" = (
@@ -85078,6 +85082,11 @@
 /obj/structure/table/reinforced/rglass,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/airalarm/directional/north,
+/obj/item/food/pizzaslice/mothic_five_cheese,
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_y = 7;
+	pixel_x = 6
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/lobby)
 "vVT" = (
