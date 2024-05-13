@@ -1,7 +1,8 @@
 /datum/unit_test/cargo_dep_order_locations
 
 /datum/unit_test/cargo_dep_order_locations/Run()
-	for(var/datum/job_department/department_to_check in subtypesof(/datum/job_department))
+	for(var/datum/job_department/department_type_to_check in subtypesof(/datum/job_department))
+		var/datum/job_department/department_to_check = new department_type_to_check
 		if(isnull(department_to_check.department_delivery_areas) || !length(department_to_check.department_delivery_areas))
 			continue
 		if(check_valid_delivery_location(department_to_check))
