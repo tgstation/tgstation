@@ -504,6 +504,57 @@ ADMIN_VERB(debug_mob_lists, R_DEBUG, "Debug Mob Lists", "For when you just gotta
 		if("Joined Clients")
 			to_chat(user, jointext(GLOB.joined_player_list,","), confidential = TRUE)
 
+ADMIN_VERB(get_atmos_heatmap, R_DEBUG, "Get atmos heat map", "Gets a big list of atmos cost per turf, aggregated", ADMIN_CATEGORY_DEBUG)
+	var/static/next_fetch = world.time
+	if(next_fetch > world.time)
+		to_chat(user, span_warning("Wait a bit before fetching the atmos cost per turf again"))
+		return
+	next_fetch = world.time + 15 SECONDS
+
+	var/list/zTurfs = list()
+	for(var/z in 1 to world.maxz)
+		var/list/xTurfs = list()
+		for(var/x in 1 to world.maxx)
+			var/list/yTurfs = list()
+			for(var/y in 1 to world.maxy)
+				var/turf/target_turf = locate(x, y, z)
+				yTurfs.Add(list(
+					"heat" = target_turf.TEMP_atmos_heat,
+					"type" = target_turf.type
+				))
+				CHECK_TICK
+			xTurfs.Add(yTurfs)
+		zTurfs.Add(xTurfs)
+
+	rustg_file_write(json_encode(zTurfs), "tmp/atmos_heatmap.json")
+	user << ftp(file("tmp/atmos_heatmap.json"), "atmos_heatmap.json")
+
+ADMIN_VERB(get_heatmap_snapshot, R_DEBUG, "Generate atmos heat map snapshot", "Adds a colour to every turf viewable temporarily by the admin who called this verb", ADMIN_CATEGORY_DEBUG)
+	var/static/next_fetch = world.time
+	if(next_fetch > world.time)
+		to_chat(user, span_warning("Wait a bit before fetching the atmos cost per turf again"))
+		return
+	next_fetch = world.time + 15 SECONDS
+
+	var/turf/highest_cost
+
+	for(var/z in 1 to world.maxz)
+		for(var/x in 1 to world.maxx)
+			for(var/y in 1 to world.maxy)
+				var/turf/target_turf = locate(x, y, z)
+				if(target_turf.TEMP_atmos_heat > 0)
+					var/image/visualization = image('icons/effects/alphacolors.dmi', target_turf, "white")
+					var/cost_ratio = (target_turf.TEMP_atmos_heat / GLOB.TEMP_atmos_heat_max)
+					visualization.color = rgb(max(120 - cost_ratio * 120, 0), 100, 50, space = COLORSPACE_HSV)
+					visualization.alpha = max(255 * (target_turf.TEMP_atmos_heat / GLOB.TEMP_atmos_heat_max), 30)
+					user.images += visualization
+					if(GLOB.TEMP_atmos_heat_max == target_turf.TEMP_atmos_heat)
+						highest_cost = target_turf
+				CHECK_TICK
+
+	if(highest_cost)
+		SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/jump_to_turf, highest_cost)
+
 ADMIN_VERB(del_log, R_DEBUG, "Display del() Log", "Display del's log of everything that's passed through it.", ADMIN_CATEGORY_DEBUG)
 	var/list/dellog = list("<B>List of things that have gone through qdel this round</B><BR><BR><ol>")
 	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)

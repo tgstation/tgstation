@@ -249,7 +249,11 @@
 /turf/proc/process_cell(fire_count)
 	SSair.remove_from_active(src)
 
+GLOBAL_VAR_INIT(TEMP_atmos_heat_max, 0)
+
 /turf/open/process_cell(fire_count)
+	var/cost_offset = world.tick_usage
+
 	if(archived_cycle < fire_count) //archive self if not already done
 		LINDA_CYCLE_ARCHIVE(src)
 
@@ -364,6 +368,8 @@
 
 	significant_share_ticker = cached_ticker //Save our changes
 	temperature_expose(our_air, our_air.temperature)
+	TEMP_atmos_heat += world.tick_usage - cost_offset
+	GLOB.TEMP_atmos_heat_max = max(GLOB.TEMP_atmos_heat_max, TEMP_atmos_heat)
 
 //////////////////////////SPACEWIND/////////////////////////////
 

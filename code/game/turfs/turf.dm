@@ -105,6 +105,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// Never directly access this, use get_explosive_block() instead
 	var/inherent_explosive_resistance = -1
 
+	/// Incremented by the amount of cost each `process_cell` is called by.
+	var/TEMP_atmos_heat = 0
+
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list(NAMEOF_STATIC(src, x), NAMEOF_STATIC(src, y), NAMEOF_STATIC(src, z))
 	if(var_name in banned_edits)

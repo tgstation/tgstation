@@ -69,6 +69,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(flags & CHANGETURF_SKIP)
 		return new path(src)
 
+	var/old_TEMP_atmos_heat = TEMP_atmos_heat
 	var/old_lighting_object = lighting_object
 	var/old_lighting_corner_NE = lighting_corner_NE
 	var/old_lighting_corner_SE = lighting_corner_SE
@@ -134,6 +135,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	lighting_corner_SE = old_lighting_corner_SE
 	lighting_corner_SW = old_lighting_corner_SW
 	lighting_corner_NW = old_lighting_corner_NW
+	TEMP_atmos_heat = old_TEMP_atmos_heat
 
 	dynamic_lumcount = old_dynamic_lumcount
 
