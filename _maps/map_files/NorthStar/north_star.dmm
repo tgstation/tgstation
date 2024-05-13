@@ -62441,6 +62441,7 @@
 /area/station/maintenance/floor2/port/aft)
 "qcr" = (
 /obj/structure/fake_stairs/directional/south,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
 "qct" = (
