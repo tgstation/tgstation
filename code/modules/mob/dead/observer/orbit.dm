@@ -84,8 +84,9 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			continue
 
 		if(isnull(mob_poi.mind))
-			var/mob/living/npc = mob_poi
-			serialized["health"] = FLOOR((npc.health / npc.maxHealth * 100), 1)
+			if(isliving(mob_poi))
+				var/mob/living/npc = mob_poi
+				serialized["health"] = FLOOR((npc.health / npc.maxHealth * 100), 1)
 
 			npcs += list(serialized)
 			continue
