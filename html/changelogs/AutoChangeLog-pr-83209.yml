@@ -1,0 +1,4 @@
+author: "Webcomicartist"
+delete-after: True
+changes:
+  - bugfix: "The lavaland mining shuttle doors no longer trap cargo security on lavaland due to access weirdness."
