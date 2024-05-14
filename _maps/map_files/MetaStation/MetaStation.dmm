@@ -13379,11 +13379,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
-"eTv" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/exit/departure_lounge)
 "eTI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -39370,14 +39365,6 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
-"obV" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/exit/departure_lounge)
 "ocg" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/structure/cable,
@@ -95905,7 +95892,7 @@ qFP
 tAx
 mZC
 hdZ
-eTv
+bDp
 mIi
 bfl
 bfl
@@ -96162,7 +96149,7 @@ dXQ
 kSD
 vGN
 wpr
-obV
+tDU
 mGA
 xMC
 izG
