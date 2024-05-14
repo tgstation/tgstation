@@ -9,6 +9,7 @@
 	)
 
 	coldmod = 0.5 //snails only come out when its cold and wet
+	speedmod = 6 //they get a speed boost from their lube walking element.
 	siemens_coeff = 2 //snails are mostly water
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP
 	sexes = FALSE //snails are hermaphrodites
@@ -88,11 +89,11 @@
 	if(!istype(bag, /obj/item/storage/backpack/snail))
 		if(new_snailperson.dropItemToGround(bag)) //returns TRUE even if its null
 			new_snailperson.equip_to_slot_or_del(new /obj/item/storage/backpack/snail(new_snailperson), ITEM_SLOT_BACK)
-	new_snailperson.AddElement(/datum/element/snailcrawl)
+	new_snailperson.AddElement(/datum/element/lube_walking, require_resting = TRUE)
 
 /datum/species/snail/on_species_loss(mob/living/carbon/former_snailperson, datum/species/new_species, pref_load)
 	. = ..()
-	former_snailperson.RemoveElement(/datum/element/snailcrawl)
+	former_snailperson.RemoveElement(/datum/element/lube_walking, require_resting = TRUE)
 	var/obj/item/storage/backpack/bag = former_snailperson.get_item_by_slot(ITEM_SLOT_BACK)
 	if(istype(bag, /obj/item/storage/backpack/snail))
 		bag.emptyStorage()
