@@ -61,12 +61,10 @@ export function ObservableSection(props: Props) {
             return (
               <Flex.Item
                 align="center"
-                key={ref}
+                key={full_name + ref}
                 mb={0.5}
                 mr={0.5}
-                onClick={() =>
-                  act('orbit', { auto_observe: autoObserve, ref: ref })
-                }
+                onClick={() => act('orbit', { auto_observe: autoObserve, ref })}
                 style={{
                   display: 'flex',
                 }}

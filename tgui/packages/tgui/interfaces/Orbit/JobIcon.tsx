@@ -9,7 +9,7 @@ type Props = {
 export function JobIcon(props: Props) {
   const { icon, job } = props;
 
-  if (!icon) return null;
+  if (!icon || icon === 'hudunknown') return null;
 
   return (
     <div className="JobIcon">
