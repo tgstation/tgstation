@@ -29393,6 +29393,7 @@
 	pixel_y = 1;
 	pixel_x = -5
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/lobby)
 "hHi" = (
@@ -31354,6 +31355,7 @@
 	id = "med_lockdown";
 	name = "Medbay Lockdown Shutters"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "ihQ" = (
@@ -70739,6 +70741,7 @@
 	pixel_y = -5;
 	pixel_x = 5
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/lobby)
 "snp" = (
@@ -77641,9 +77644,6 @@
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
 /obj/structure/bed/medical/anchored,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -85083,6 +85083,7 @@
 	pixel_y = 7;
 	pixel_x = 6
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/lobby)
 "vVT" = (
@@ -85778,9 +85779,6 @@
 /area/station/hallway/floor3/fore)
 "wdd" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
 /obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
