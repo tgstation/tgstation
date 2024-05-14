@@ -3,12 +3,12 @@ import { Stack } from '../../components';
 import { ANTAG2COLOR } from './constants';
 import { getAntagCategories } from './helpers';
 import { ObservableSection } from './ObservableSection';
-import { AntagGroup, Observable, OrbitData } from './types';
+import { AntagGroup, Observable, OrbitData, ViewMode } from './types';
 
 type Props = {
   autoObserve: boolean;
-  heatMap: boolean;
   searchQuery: string;
+  viewMode: ViewMode;
 };
 
 type Section = {
@@ -23,7 +23,7 @@ type Section = {
  * observable group.
  */
 export function ObservableContent(props: Props) {
-  const { autoObserve, heatMap, searchQuery } = props;
+  const { autoObserve, searchQuery, viewMode } = props;
 
   const { data } = useBackend<OrbitData>();
   const {
@@ -78,11 +78,11 @@ export function ObservableContent(props: Props) {
           <ObservableSection
             autoObserve={autoObserve}
             color={ANTAG2COLOR[title] || 'bad'}
-            heatMap={heatMap}
             key={title}
             searchQuery={searchQuery}
             section={antagonists}
             title={title}
+            viewMode={viewMode}
           />
         );
       })}
@@ -91,11 +91,11 @@ export function ObservableContent(props: Props) {
           <ObservableSection
             autoObserve={autoObserve}
             color={section.color}
-            heatMap={heatMap}
             key={section.title}
             searchQuery={searchQuery}
             section={section.content}
             title={section.title}
+            viewMode={viewMode}
           />
         );
       })}

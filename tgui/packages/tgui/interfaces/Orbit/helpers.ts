@@ -1,7 +1,7 @@
 import { sortBy } from 'common/collections';
 
-import { HEALTH, THREAT } from './constants';
-import type { AntagGroup, Antagonist, Observable } from './types';
+import { DEPARTMENT2COLOR, HEALTH, THREAT, VIEWMODE } from './constants';
+import { AntagGroup, Antagonist, Observable, ViewMode } from './types';
 
 /** Return a map of strings with each antag in its antag_category */
 export function getAntagCategories(antagonists: Antagonist[]) {
@@ -38,6 +38,18 @@ export function getDisplayName(full_name: string, nickname?: string) {
   return `"${full_name.split(/ \[| \(/)[0]}"`;
 }
 
+/** Returns the color of the department the player is in */
+function getDepartmentColor(job: string | undefined) {
+  if (!job) return 'grey';
+
+  for (const department in DEPARTMENT2COLOR) {
+    if (DEPARTMENT2COLOR[department].trims.includes(job)) {
+      return DEPARTMENT2COLOR[department].color;
+    }
+  }
+  return 'grey';
+}
+
 /** Returns the display color for certain health percentages */
 function getHealthColor(health: number) {
   switch (true) {
@@ -67,23 +79,29 @@ function getThreatColor(orbiters = 0) {
 /** Displays color for buttons based on the health or orbiter count. */
 export function getDisplayColor(
   item: Observable,
-  heatMap: boolean,
-  color?: string,
+  mode: ViewMode,
+  override?: string,
 ) {
-  const { health, orbiters } = item;
+  const { job, health, orbiters } = item;
+
+  // Things like blob camera, etc
   if (typeof health !== 'number') {
-    return color ? 'good' : 'grey';
+    return override ? 'good' : 'grey';
   }
 
-  if ('client' in item && !item.client) {
-    return 'grey';
-  }
+  // Players that are AFK
+  // if ('client' in item && !item.client) {
+  //   return 'grey';
+  // }
 
-  if (heatMap) {
-    return getThreatColor(orbiters);
+  switch (mode) {
+    case VIEWMODE.Orbiters:
+      return getThreatColor(orbiters);
+    case VIEWMODE.Department:
+      return getDepartmentColor(job);
+    default:
+      return getHealthColor(health);
   }
-
-  return getHealthColor(health);
 }
 
 /** Checks if a full name or job title matches the search. */
@@ -100,7 +118,7 @@ export function isJobOrNameMatch(observable: Observable, searchQuery: string) {
 }
 
 /** Sorts based on real name */
-export function sortByRealName(poiA: Observable, poiB: Observable) {
+export function sortByDisplayName(poiA: Observable, poiB: Observable) {
   const nameA = getDisplayName(poiA.full_name, poiA.name)
     .replace(/^"/, '')
     .toLowerCase();

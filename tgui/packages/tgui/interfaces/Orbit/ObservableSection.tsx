@@ -6,19 +6,19 @@ import {
   getDisplayColor,
   getDisplayName,
   isJobOrNameMatch,
-  sortByRealName,
+  sortByDisplayName,
 } from './helpers';
 import { JobIcon } from './JobIcon';
 import { ObservableTooltip } from './ObservableTooltip';
-import { Observable, OrbitData } from './types';
+import { Observable, OrbitData, ViewMode } from './types';
 
 type Props = {
   autoObserve: boolean;
   color?: string;
-  heatMap: boolean;
   searchQuery: string;
   section: Observable[];
   title: string;
+  viewMode: ViewMode;
 };
 
 /**
@@ -29,17 +29,17 @@ export function ObservableSection(props: Props) {
   const {
     autoObserve,
     color,
-    heatMap,
     searchQuery,
     section = [],
     title,
+    viewMode,
   } = props;
 
   const { act } = useBackend<OrbitData>();
 
   const filteredSection = section
     .filter((observable) => isJobOrNameMatch(observable, searchQuery))
-    .sort(sortByRealName);
+    .sort(sortByDisplayName);
 
   if (!filteredSection.length) {
     return null;
@@ -74,7 +74,7 @@ export function ObservableSection(props: Props) {
                 {!!job && <JobIcon icon={icon} job={job} />}
 
                 <Button
-                  color={getDisplayColor(item, heatMap, color)}
+                  color={getDisplayColor(item, viewMode, color)}
                   pl={job && 0.5}
                   tooltip={
                     (!!health || !!extra) && <ObservableTooltip item={item} />

@@ -1,5 +1,7 @@
 import { BooleanLike } from 'common/react';
 
+import { VIEWMODE } from './constants';
+
 export type Antagonist = Observable & { antag: string; antag_group: string };
 
 export type AntagGroup = [string, Antagonist[]];
@@ -27,3 +29,5 @@ export type Observable = {
   name: string;
   orbiters: number;
 }>;
+
+export type ViewMode = (typeof VIEWMODE)[keyof typeof VIEWMODE];
