@@ -623,14 +623,14 @@
 /datum/station_trait/nebula/hostile/radiation/proc/on_spawned_mob(datum/source, mob/spawned_mob)
 	SIGNAL_HANDLER
 
-	if(!istype(get_area(spawned_mob), /area/space)) //only if you're spawned in space
+	if(!istype(get_area(spawned_mob), radioactive_areas)) //only if you're spawned in the radioactive areas
 		return
 
 	if(!isliving(spawned_mob)) // Dynamic shouldnt spawn non-living but uhhhhhhh why not
 		return
 
 	var/mob/living/spawnee = spawned_mob
-	spawnee.apply_status_effect(/datum/status_effect/radiation_immunity)
+	spawnee.apply_status_effect(/datum/status_effect/radiation_immunity/radnebula)
 
 /datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)
 	//big bombad now
