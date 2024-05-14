@@ -1,0 +1,4 @@
+author: "iwishforducks"
+delete-after: True
+changes:
+  - bugfix: "Fixes random decal in space on Tramstation"
