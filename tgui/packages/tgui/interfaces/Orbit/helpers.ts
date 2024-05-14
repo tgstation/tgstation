@@ -49,7 +49,7 @@ function getDepartmentByJob(job: string) {
 
 /** Gets department color for a job */
 function getDepartmentColor(job: string) {
-  const department = getDepartmentByJob(job);
+  const department = getDepartmentByJob(job.replace(/ \(.*\)/, ''));
   if (!department) return 'grey';
 
   return DEPARTMENT2COLOR[department].color;
@@ -104,7 +104,8 @@ export function getDisplayColor(
       return getThreatColor(orbiters);
     case VIEWMODE.Department:
       if (!job) return 'grey';
-      return getDepartmentColor(job);
+
+      return getDepartmentColor(job.replace(/\(.*\)/, ''));
     default:
       return getHealthColor(health);
   }

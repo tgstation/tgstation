@@ -29,7 +29,7 @@ export const DEPARTMENT2COLOR: Record<string, Department> = {
   },
   engineering: {
     color: 'orange',
-    trims: ['Atmospherics Technician', 'Chief Engineer', 'Station Engineer'],
+    trims: ['Atmospheric Technician', 'Chief Engineer', 'Station Engineer'],
   },
   medical: {
     color: 'teal',
@@ -55,6 +55,7 @@ export const DEPARTMENT2COLOR: Record<string, Department> = {
       'Bartender',
       'Botanist',
       'Chaplain',
+      'Chef',
       'Clown',
       'Cook',
       'Curator',
