@@ -327,11 +327,9 @@
 /obj/item/storage/belt/military/assault/fisher
 
 /obj/item/storage/belt/military/assault/fisher/PopulateContents()
-	new /obj/item/gun/ballistic/automatic/pistol/clandestine(src) // 7 TC
-	new /obj/item/suppressor(src) // 3 TC
+	new /obj/item/gun/ballistic/automatic/pistol/clandestine/fisher(src) // 11 TC: 7 (pistol) + 3 (suppressor) + lightbreaker (1 TC, black market meme/util item)
 	new /obj/item/ammo_box/magazine/m10mm(src) // 1 TC
 	new /obj/item/ammo_box/magazine/m10mm(src)
-	new /obj/item/gun/energy/recharge/fisher(src) // Acquirable through black market, shit utility item 1 TC
 	new /obj/item/card/emag/doorjack(src) // 3 TC
 	new /obj/item/knife/combat(src) //comparable to the e-dagger, 2 TC
 
