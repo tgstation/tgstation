@@ -13,6 +13,11 @@
 // Qdel should assume this object won't gc, and hard delete it posthaste.
 #define QDEL_HINT_HARDDEL_NOW 4
 
+#ifdef OPENDREAM
+#define DEFAULT_QDEL_HINT QDEL_HINT_HARDDEL_NOW
+#else
+#define DEFAULT_QDEL_HINT QDEL_HINT_QUEUE
+#endif
 
 #ifdef REFERENCE_TRACKING
 /** If REFERENCE_TRACKING is enabled, qdel will call this object's find_references() verb.

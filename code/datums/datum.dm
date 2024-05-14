@@ -142,11 +142,7 @@
 	_clear_signal_refs()
 	//END: ECS SHIT
 
-#ifdef OPENDREAM // OpenDream does things better than byond.
-	return QDEL_HINT_HARDDEL_NOW
-#else
-	return QDEL_HINT_QUEUE
-#endif
+	return DEFAULT_QDEL_HINT
 
 ///Only override this if you know what you're doing. You do not know what you're doing
 ///This is a threat

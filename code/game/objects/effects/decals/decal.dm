@@ -89,4 +89,4 @@
 	// off an enormous amount of procs, signals, etc, that this temporary effect object
 	// never needs or affects.
 	loc = null
-	return QDEL_HINT_QUEUE
+	return DEFAULT_QDEL_HINT

@@ -63,7 +63,7 @@
 	// may result.
 	if(force)
 		..()
-		return QDEL_HINT_QUEUE
+		return DEFAULT_QDEL_HINT
 	else
 		return QDEL_HINT_LETMELIVE
 
