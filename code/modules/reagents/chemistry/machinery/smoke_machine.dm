@@ -157,7 +157,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smoke_machine/process()
-	if(!reagents.total_volume || !on || !is_operational)
+	if(!reagents.total_volume || !anchored || !on || !is_operational)
 		on = FALSE
 		update_appearance(UPDATE_ICON_STATE)
 		return PROCESS_KILL
