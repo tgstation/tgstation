@@ -13757,6 +13757,9 @@
 /obj/structure/railing{
 	dir = 8
 	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 9
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "eUL" = (
@@ -27633,11 +27636,11 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "jLf" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 9
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -35826,7 +35829,11 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/east{
-	name = "Ore Redemtion Window"
+	name = "Ore Redemption Window"
+	},
+/obj/machinery/door/window/left/directional/west{
+	req_access = list("shipping");
+	name = "Cargo Security Window"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
@@ -45235,15 +45242,6 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/station/medical/medbay/lobby)
-"pWL" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "pWN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -88661,7 +88659,7 @@ hIa
 cdY
 iyq
 jLf
-pWL
+iqt
 mmR
 kaf
 auO
