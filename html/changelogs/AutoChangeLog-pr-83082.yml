@@ -1,6 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - rscdel: "Being sacrified by a Heretic no longer gives you an incurable phobia."
-  - rscadd: "Being sacrificed by a Heretic will drop 2-4 of your organs on the ground and replace them with \"corrupt organs\" with negative effects which can be suppressed with Holy Water."
-  - rscadd: "Players who have been sacrificed by Heretics will experience additional and rapidly lethal consequences for attempting to fight someone who previously sacrificed them, as long as that person is wearing a focus."

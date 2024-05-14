@@ -208,3 +208,97 @@
   - bugfix: Silicons can set the teleporter destinations again.
   - bugfix: The quick equip 'E' hotkey shouldn't warn if one of your bags is full
       anymore
+2024-05-10:
+  00-Steven:
+  - qol: Added alt-click usage context to toggle_icon component
+  - bugfix: The stomach pump surgery actually works again.
+  - spellcheck: '"brusing" to "bruising" in the message you get when failing the stomach
+      pump surgery.'
+  Echriser:
+  - bugfix: conveyor switches work for cyborgs again
+  GoldenAlpharex for the code, Thlumyn for the sprites:
+  - bugfix: Fixed smoothing turfs displaying some incorrect damaged overlays because
+      of a non-smoothing damage overlay of different dimensions than the smoothing
+      sprite used as the base. Less black void, let's go!
+  - image: Added smooth broken/burnt overlays for grass, meaning that it's going to
+      look a lot less broken when the grass tile is at the edge of a smoothing group.
+  Jacquerel:
+  - rscdel: Being sacrified by a Heretic no longer gives you an incurable phobia.
+  - rscadd: Being sacrificed by a Heretic will drop 2-4 of your organs on the ground
+      and replace them with "corrupt organs" with negative effects which can be suppressed
+      with Holy Water.
+  - rscadd: Players who have been sacrificed by Heretics will experience additional
+      and rapidly lethal consequences for attempting to fight someone who previously
+      sacrificed them, as long as that person is wearing a focus.
+  - sound: Lasers adjust their pitch as they run out of charge, rather than frequency
+  Melbert:
+  - qol: Morgue trays (and the contents inside) are now animated on open and close
+  MrStonedOne & Lilah Novi:
+  - rscadd: Say commands typed in the command bar now trigger typing indicators
+  Pickle-Coding:
+  - qol: The labor camp shuttle properly sets people to parole after they complete
+      their work.
+  - qol: The labor camp shuttle specifies which person returned to the station.
+  ShizCalev:
+  - bugfix: Cursed Items wizard event actually works again.
+  TiviPlus:
+  - bugfix: fixed clients being seen as stuck doing tutorials in some cases when changing
+      mobs
+  jlsnow301:
+  - bugfix: Supermatter shards now have screentips with a wrench in hand
+  malton33:
+  - bugfix: space heaters now display the correct mode when the maintenance panel
+      is closed
+  paganiy:
+  - bugfix: The shuttle will no longer delete you while you are in jaunt
+  vinylspiders:
+  - bugfix: moths with functional/flight potion wings get an animation when they *flap
+      once again, and it makes a sound
+2024-05-11:
+  carlarctg:
+  - rscadd: Chance to become crab on nonlethal DNA meltdown
+  norsvenska:
+  - bugfix: The Coroner and Bitrunner can now be selected as a target for kidnapping
+      and heirloom destruction objectives.
+  - bugfix: The Chief Engineer is now a valid target for heirloom destruction objectives.
+2024-05-12:
+  Higgin:
+  - bugfix: Spies no longer get the 'nothing' / 'free objective' due to trying to
+      make Protect objectives without targets.
+  Xander3359:
+  - bugfix: Ale now has a drinking_glass style
+2024-05-13:
+  Bisar:
+  - qol: Most of the alternate click modes (right click, control clicking, shift clicking,
+      etc) have been enabled in the alt-click item menu.
+  - bugfix: You will no longer point at things you right-click in the alt-click item
+      menu.
+  Melbert:
+  - rscadd: Cigarette smoke is now more smokey.
+  - rscadd: Taking a cigarette out of your mouth will let out a big puff of smoke.
+  PapaMichael:
+  - bugfix: Rat Kings can no longer trap mice inside of pipes by creating them while
+      ventcrawling.
+  - balance: Rat Kings can no longer create grime and miasma while ventcrawling.
+  Rhials:
+  - rscadd: Bitrunners now have their own job figurine. Cool!
+  nikothedude:
+  - spellcheck: Added a period to the end of the wendigo deathrattle
+  paganiy:
+  - qol: Now you can put a cigarette in your mouth just by hitting the pack of cigarettes
+      on yourself.
+  - bugfix: The cigarette pack no longer moves under the spaceman when they interacts
+      with it with the RMB
+2024-05-14:
+  Jacquerel:
+  - rscadd: People who spend time improving their bodies are able to evaluate the
+      relative physical strength of those they examine as a kind of "power level".
+  - rscadd: Changeling transformation copies the target's athletics skill level.
+  Time-Green:
+  - bugfix: Deleting someones brain kills them again
+  jlsnow301:
+  - bugfix: Alt click will draw the captain's sabre again
+  paganiy:
+  - bugfix: Accelerator laser gun no longer shoots sun size projectiles.
+  starrm4nn:
+  - qol: Gives Health sensor assemblies a UI so its easier to use.

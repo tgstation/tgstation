@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "moths with functional/flight potion wings get an animation when they *flap once again, and it makes a sound"

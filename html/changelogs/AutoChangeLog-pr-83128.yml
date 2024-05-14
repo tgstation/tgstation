@@ -1,5 +1,0 @@
-author: "GoldenAlpharex for the code, Thlumyn for the sprites"
-delete-after: True
-changes:
-  - bugfix: "Fixed smoothing turfs displaying some incorrect damaged overlays because of a non-smoothing damage overlay of different dimensions than the smoothing sprite used as the base. Less black void, let's go!"
-  - image: "Added smooth broken/burnt overlays for grass, meaning that it's going to look a lot less broken when the grass tile is at the edge of a smoothing group."
