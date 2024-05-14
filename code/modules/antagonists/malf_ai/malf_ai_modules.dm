@@ -47,6 +47,22 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/hypertorus/corner,
 		/obj/machinery/atmospherics/components/binary/valve,
 		/obj/machinery/portable_atmospherics/canister,
+		/obj/machinery/computer/shuttle/pirate
+		/obj/machinery/computer/shuttle/ferry
+		/obj/machinery/computer/shuttle
+		/obj/machinery/computer/emergency_shuttle
+		/obj/machinery/computer/cyborg_mothership/bridge
+		/obj/machinery/computer/shuttle/caravan/bridge
+		/obj/machinery/computer/shuttle/caravan/syndicate1
+		/obj/machinery/computer/shuttle/caravan/syndicate2
+		/obj/machinery/computer/shuttle/caravan/syndicate3
+		/obj/machinery/computer/shuttle/hunter
+		/obj/machinery/computer/shuttle/pirate/drop_pod
+		/obj/machinery/computer/shuttle/ferry/request
+		/obj/machinery/computer/shuttle/pod
+		/obj/machinery/computer/gateway_control
+
+
 	)))
 
 GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
