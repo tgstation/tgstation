@@ -3,7 +3,7 @@
 /datum/unit_test/cargo_dep_order_locations/Run()
 	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
 		var/delivery_areas = department.department_delivery_areas
-		if(isnull(delivery_areas) || !length(delivery_areas))
+		if(!length(delivery_areas))
 			continue
 		if(check_valid_delivery_location(delivery_areas))
 			continue
