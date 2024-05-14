@@ -6,6 +6,7 @@
  */
 /datum/element/lube_walking
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY
+	argument_hash_start_idx = 2
 	///The wet flags that we make each tile we are affecting slippery with.
 	var/wet_flags
 	///The minimum amount of time any tile we wet will be wet for.
