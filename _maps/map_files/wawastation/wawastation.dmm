@@ -3009,6 +3009,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
+/obj/machinery/door/window/brigdoor/left/directional/west{
+	req_access = list("hop")
+	},
+/obj/machinery/door/window/left/directional/east,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "bbh" = (
@@ -5141,13 +5146,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
-"bTi" = (
-/obj/machinery/ticket_machine/directional/west,
-/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/hallway/secondary/command)
 "bTm" = (
 /obj/effect/spawner/structure/window,
 /obj/structure/curtain/cloth/fancy/mechanical{
@@ -7688,14 +7686,16 @@
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "cTc" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
 	id = "hopdesk"
 	},
-/obj/item/flashlight/lamp,
 /obj/machinery/door/firedoor,
-/turf/open/floor/iron,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/station/command/heads_quarters/hop)
 "cTm" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -25430,6 +25430,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "jqY" = (
@@ -25821,6 +25822,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light_switch/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "jzI" = (
@@ -26976,6 +26978,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/hop)
 "jSu" = (
@@ -34665,10 +34668,7 @@
 	pixel_y = 5
 	},
 /obj/structure/cable,
-/obj/item/clothing/gloves/color/yellow{
-	siemens_coefficient = 5;
-	name = "unsulated gloves"
-	},
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "mFT" = (
@@ -44059,6 +44059,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "qgy" = (
@@ -46336,14 +46337,14 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "raX" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
 	id = "hopdesk"
 	},
-/obj/structure/desk_bell,
 /obj/machinery/door/firedoor,
-/turf/open/floor/iron,
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/station/command/heads_quarters/hop)
 "raZ" = (
 /obj/machinery/door/airlock/maintenance_hatch,
@@ -51908,6 +51909,7 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "sRU" = (
@@ -61407,6 +61409,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "wsW" = (
@@ -62479,14 +62482,8 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/rods/fifty,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/item/clothing/gloves/color/yellow{
-	siemens_coefficient = 5;
-	name = "unsulated gloves"
-	},
-/obj/item/clothing/gloves/color/yellow{
-	siemens_coefficient = 5;
-	name = "unsulated gloves"
-	},
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "wMu" = (
@@ -62534,6 +62531,7 @@
 "wNa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/hop)
 "wNk" = (
@@ -93356,7 +93354,7 @@ hvt
 iwm
 aBy
 aBy
-bTi
+aBy
 uDE
 ahw
 nvK
