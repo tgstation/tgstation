@@ -66,6 +66,8 @@ export function ObservableSection(props: Props) {
             const { extra, full_name, health, icon, job, name, orbiters, ref } =
               item;
 
+            const validIcon = !!job && !!icon && icon !== 'hudunknown';
+
             return (
               <Flex.Item
                 align="center"
@@ -77,11 +79,11 @@ export function ObservableSection(props: Props) {
                   display: 'flex',
                 }}
               >
-                {!!job && <JobIcon icon={icon} job={job} />}
+                {validIcon && <JobIcon icon={icon} job={job} />}
 
                 <Button
                   color={getDisplayColor(item, viewMode, color)}
-                  pl={job && 0.5}
+                  pl={validIcon && 0.5}
                   tooltip={
                     (!!health || !!extra) && <ObservableTooltip item={item} />
                   }

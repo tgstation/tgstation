@@ -2,14 +2,12 @@ import { DmIcon, Icon } from '../../components';
 import { JOB2ICON } from '../common/JobToIcon';
 
 type Props = {
-  icon: string | undefined;
+  icon: string;
   job: string;
 };
 
 export function JobIcon(props: Props) {
   const { icon, job } = props;
-
-  if (!icon || icon === 'hudunknown') return null;
 
   return (
     <div className="JobIcon">
