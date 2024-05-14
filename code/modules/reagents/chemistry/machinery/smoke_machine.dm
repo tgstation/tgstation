@@ -65,7 +65,7 @@
 		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
 		return CONTEXTUAL_SCREENTIP_SET
 	else if(held_item.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]Anchor"
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Una" : "A"]nchor"
 		return CONTEXTUAL_SCREENTIP_SET
 	else if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
@@ -84,7 +84,7 @@
 	if(anchored)
 		. += span_notice("It can be [EXAMINE_HINT("wrenched")] loose.")
 	else
-		. += span_warning("It nees to be [EXAMINE_HINT("anchored")] in place to work.")
+		. += span_warning("It needs to be [EXAMINE_HINT("anchored")] in place to work.")
 
 /obj/machinery/smoke_machine/update_icon_state()
 	if(!is_operational || !on || !reagents.total_volume)
