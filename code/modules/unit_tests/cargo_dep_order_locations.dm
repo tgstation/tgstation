@@ -7,8 +7,7 @@
 			continue
 		if(check_valid_delivery_location(delivery_areas))
 			continue
-		else
-			TEST_FAIL("[department.type] failed to find a valid delivery location on this map.")
+		TEST_FAIL("[department.type] failed to find a valid delivery location on this map.")
 
 
 /datum/unit_test/cargo_dep_order_locations/proc/check_valid_delivery_location(list/delivery_areas)
