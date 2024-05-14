@@ -1,4 +1,0 @@
-author: "paganiy"
-delete-after: True
-changes:
-  - bugfix: "Accelerator laser gun no longer shoots sun size projectiles."
