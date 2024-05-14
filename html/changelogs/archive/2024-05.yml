@@ -128,3 +128,12 @@
       and won't damage them anymore.
   - bugfix: Actually, hopefully, probably fixed runaway ruin anomalies this time.
   - bugfix: Fixed guardian decks not working afterwards if nobody signs up.
+2024-05-14:
+  Absolucy:
+  - bugfix: Gaining TRAIT_VIRUSIMMUNE now properly cures any diseases.
+  AlbertNanotracen:
+  - bugfix: Splicing a symptom on a symptom that isn't in its initial stage will now
+      work
+  - bugfix: Stage Occurrence mutations will now work on symptoms not in their initial
+      stage
+  - rscadd: Bio bag can now carry mouse cubes and virus dishes
