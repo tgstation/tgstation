@@ -142,7 +142,7 @@
 	_clear_signal_refs()
 	//END: ECS SHIT
 
-#ifdef OPENDREAM // OpenDream has C# style garbage collection (because it's written in C#), so we can just let it fall off naturally.
+#ifdef OPENDREAM // OpenDream does things better than byond.
 	return QDEL_HINT_HARDDEL_NOW
 #else
 	return QDEL_HINT_QUEUE
