@@ -40,16 +40,20 @@ export function getDisplayName(full_name: string, nickname?: string) {
 
 /** Returns the department the player is in */
 function getDepartmentByJob(job: string) {
+  const withoutParenthesis = job.replace(/ \(.*\)/, '');
+
   for (const department in DEPARTMENT2COLOR) {
-    if (DEPARTMENT2COLOR[department].trims.includes(job)) {
+    if (DEPARTMENT2COLOR[department].trims.includes(withoutParenthesis)) {
       return department;
     }
   }
 }
 
 /** Gets department color for a job */
-function getDepartmentColor(job: string) {
-  const department = getDepartmentByJob(job.replace(/ \(.*\)/, ''));
+function getDepartmentColor(job: string | undefined) {
+  if (!job) return 'grey';
+
+  const department = getDepartmentByJob(job);
   if (!department) return 'grey';
 
   return DEPARTMENT2COLOR[department].color;
@@ -103,9 +107,7 @@ export function getDisplayColor(
     case VIEWMODE.Orbiters:
       return getThreatColor(orbiters);
     case VIEWMODE.Department:
-      if (!job) return 'grey';
-
-      return getDepartmentColor(job.replace(/\(.*\)/, ''));
+      return getDepartmentColor(job);
     default:
       return getHealthColor(health);
   }
