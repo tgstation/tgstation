@@ -38,16 +38,21 @@ export function getDisplayName(full_name: string, nickname?: string) {
   return `"${full_name.split(/ \[| \(/)[0]}"`;
 }
 
-/** Returns the color of the department the player is in */
-function getDepartmentColor(job: string | undefined) {
-  if (!job) return 'grey';
-
+/** Returns the department the player is in */
+function getDepartmentByJob(job: string) {
   for (const department in DEPARTMENT2COLOR) {
     if (DEPARTMENT2COLOR[department].trims.includes(job)) {
-      return DEPARTMENT2COLOR[department].color;
+      return department;
     }
   }
-  return 'grey';
+}
+
+/** Gets department color for a job */
+function getDepartmentColor(job: string) {
+  const department = getDepartmentByJob(job);
+  if (!department) return 'grey';
+
+  return DEPARTMENT2COLOR[department].color;
 }
 
 /** Returns the display color for certain health percentages */
@@ -90,14 +95,15 @@ export function getDisplayColor(
   }
 
   // Players that are AFK
-  // if ('client' in item && !item.client) {
-  //   return 'grey';
-  // }
+  if ('client' in item && !item.client) {
+    return 'grey';
+  }
 
   switch (mode) {
     case VIEWMODE.Orbiters:
       return getThreatColor(orbiters);
     case VIEWMODE.Department:
+      if (!job) return 'grey';
       return getDepartmentColor(job);
     default:
       return getHealthColor(health);
@@ -115,6 +121,16 @@ export function isJobOrNameMatch(observable: Observable, searchQuery: string) {
     job?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
     false
   );
+}
+
+/** Sorts by department */
+export function sortByDepartment(poiA: Observable, poiB: Observable) {
+  const departmentA = (poiA.job && getDepartmentByJob(poiA.job)) || 'unknown';
+  const departmentB = (poiB.job && getDepartmentByJob(poiB.job)) || 'unknown';
+
+  if (departmentA < departmentB) return -1;
+  if (departmentA > departmentB) return 1;
+  return 0;
 }
 
 /** Sorts based on real name */

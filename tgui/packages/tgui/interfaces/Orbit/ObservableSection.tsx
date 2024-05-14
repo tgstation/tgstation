@@ -2,10 +2,12 @@ import { capitalizeFirst } from 'common/string';
 
 import { useBackend } from '../../backend';
 import { Button, Collapsible, Flex, Icon, Stack } from '../../components';
+import { VIEWMODE } from './constants';
 import {
   getDisplayColor,
   getDisplayName,
   isJobOrNameMatch,
+  sortByDepartment,
   sortByDisplayName,
 } from './helpers';
 import { JobIcon } from './JobIcon';
@@ -37,9 +39,15 @@ export function ObservableSection(props: Props) {
 
   const { act } = useBackend<OrbitData>();
 
-  const filteredSection = section
-    .filter((observable) => isJobOrNameMatch(observable, searchQuery))
-    .sort(sortByDisplayName);
+  const filteredSection = section.filter((observable) =>
+    isJobOrNameMatch(observable, searchQuery),
+  );
+
+  if (viewMode === VIEWMODE.Department) {
+    filteredSection.sort(sortByDepartment);
+  } else {
+    filteredSection.sort(sortByDisplayName);
+  }
 
   if (!filteredSection.length) {
     return null;
