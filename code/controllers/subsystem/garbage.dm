@@ -376,6 +376,13 @@ SUBSYSTEM_DEF(garbage)
 	if(isnull(to_delete))
 		return
 
+#ifdef OPENDREAM
+	// go brrr
+	// but HARDDEL_NOW breaks shit, lol
+	if(hint == QDEL_HINT_QUEUE)
+		hint = QDEL_HINT_HARDDEL
+#endif
+
 	switch(hint)
 		if (QDEL_HINT_QUEUE) //qdel should queue the object for deletion.
 			SSgarbage.Queue(to_delete)
