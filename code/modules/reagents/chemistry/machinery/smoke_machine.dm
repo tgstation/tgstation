@@ -226,6 +226,7 @@
 				log_combat(user, src, "has activated [src] which contains [english_list] at [AREACOORD(src)].")
 				begin_processing()
 			else
+				on = FALSE
 				end_processing()
 			update_appearance(UPDATE_ICON_STATE)
 			return TRUE
