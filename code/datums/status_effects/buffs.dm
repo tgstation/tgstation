@@ -606,6 +606,7 @@
 /datum/status_effect/radiation_immunity
 	id = "radiation_immunity"
 	duration = 1 MINUTES
+	show_duration = TRUE
 
 /datum/status_effect/radiation_immunity/on_apply()
 	ADD_TRAIT(owner, TRAIT_RADIMMUNE, type)
