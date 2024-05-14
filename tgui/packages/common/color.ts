@@ -11,19 +11,6 @@ export class Color {
   g: number;
   b: number;
   a: number;
-  /**
-   * Creates a color from the CSS hex color notation.
-   */
-  static fromHex: (hex: string) => Color;
-  /**
-   * Linear interpolation of two colors.
-   */
-  static lerp: (c1: Color, c2: Color, n: number) => Color;
-  /**
-   * Loops up the color in the provided list of colors
-   * with linear interpolation.
-   */
-  static lookup: (value: number, colors: Color[]) => Color;
 
   constructor(r = 0, g = 0, b = 0, a = 1) {
     this.r = r;
@@ -61,7 +48,10 @@ export class Color {
     return this.darken(-percent);
   }
 
-  fromHex = (hex: string): Color => {
+  /**
+   * Creates a color from the CSS hex color notation.
+   */
+  static fromHex = (hex: string): Color => {
     return new Color(
       parseInt(hex.slice(1, 3), 16),
       parseInt(hex.slice(3, 5), 16),
@@ -69,7 +59,10 @@ export class Color {
     );
   };
 
-  lerp = (c1: Color, c2: Color, n: number): Color => {
+  /**
+   * Linear interpolation of two colors.
+   */
+  static lerp = (c1: Color, c2: Color, n: number): Color => {
     return new Color(
       (c2.r - c1.r) * n + c1.r,
       (c2.g - c1.g) * n + c1.g,
@@ -78,7 +71,11 @@ export class Color {
     );
   };
 
-  lookup = (value: number, colors: Color[]): Color => {
+  /**
+   * Loops up the color in the provided list of colors
+   * with linear interpolation.
+   */
+  static lookup = (value: number, colors: Color[]): Color => {
     const len = colors.length;
     if (len < 2) {
       throw new Error('Needs at least two colors!');
