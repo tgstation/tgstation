@@ -18198,7 +18198,6 @@
 /obj/item/clothing/gloves/cargo_gauntlet{
 	pixel_y = 8
 	},
-/obj/structure/cable,
 /obj/item/reagent_containers/cup/soda_cans{
 	pixel_x = -7;
 	pixel_y = 1
@@ -65441,7 +65440,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/structure/cable,
 /obj/structure/railing/corner/end,
 /obj/structure/fake_stairs/directional/south,
 /turf/open/floor/iron,
