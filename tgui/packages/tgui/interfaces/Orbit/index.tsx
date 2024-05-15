@@ -47,7 +47,7 @@ export function Orbit(props) {
   }
 
   const viewModeTitle = Object.entries(VIEWMODE).find(
-    ([key, value]) => value === viewMode,
+    ([_key, value]) => value === viewMode,
   )?.[0];
 
   return (

@@ -60,14 +60,10 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 	for(var/name in new_mob_pois)
 		var/list/serialized = list()
-
 		var/mob/mob_poi = new_mob_pois[name]
-
-		var/poi_ref = REF(mob_poi)
-
 		var/number_of_orbiters = length(mob_poi.get_all_orbiters())
 
-		serialized["ref"] = poi_ref
+		serialized["ref"] = REF(mob_poi)
 		serialized["full_name"] = name
 		if(number_of_orbiters)
 			serialized["orbiters"] = number_of_orbiters
@@ -91,33 +87,19 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			npcs += list(serialized)
 			continue
 
-		var/datum/mind/mind = mob_poi.mind
-		var/was_antagonist = FALSE
-
 		serialized["client"] = !!mob_poi.client
 		serialized["name"] = mob_poi.real_name
 
-		if(isliving(mob_poi)) // handles edge cases like blob
-			var/mob/living/player = mob_poi
-			serialized["health"] = FLOOR((player.health / player.maxHealth * 100), 1)
-			if(issilicon(player))
-				serialized["job"] = player.job
-				serialized["icon"] = "borg"
-			else
-				var/obj/item/card/id/id_card = player.get_idcard(hand_first = FALSE)
-				serialized["job"] = id_card?.get_trim_assignment()
-				serialized["icon"] = id_card?.get_trim_sechud_icon_state()
+		if(isliving(mob_poi))
+			serialized += get_living_data(mob_poi)
 
-		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
-			if (antag_datum.show_to_ghosts)
-				was_antagonist = TRUE
-				serialized["antag"] = antag_datum.name
-				serialized["antag_group"] = antag_datum.antagpanel_category
-				antagonists += list(serialized)
-				break
+		var/list/antag_data = get_antag_data(mob_poi.mind)
+		if(length(antag_data))
+			serialized += antag_data
+			antagonists += list(serialized)
+			continue
 
-		if(!was_antagonist)
-			alive += list(serialized)
+		alive += list(serialized)
 
 	for(var/name in new_other_pois)
 		var/atom/atom_poi = new_other_pois[name]
@@ -165,9 +147,43 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		"npcs" = npcs,
 	)
 
+
 /// Shows the UI to the specified user.
 /datum/orbit_menu/proc/show(mob/user)
 	ui_interact(user)
+
+
+/// Helper function to get threat type, group, overrides for job and icon
+/datum/orbit_menu/proc/get_antag_data(datum/mind/poi_mind)
+	var/list/serialized = list()
+
+	for(var/datum/antagonist/antag as anything in poi_mind.antag_datums)
+		if(!antag.show_to_ghosts)
+			continue
+
+		serialized["antag"] = antag.name
+		serialized["antag_group"] = antag.antagpanel_category
+		serialized["job"] = antag.name
+		serialized["icon"] = antag.antag_hud_name
+
+		return serialized
+
+
+/// Helper function to get job / icon / health data for a living mob
+/datum/orbit_menu/proc/get_living_data(mob/living/player)
+	var/list/serialized = list()
+
+	serialized["health"] = FLOOR((player.health / player.maxHealth * 100), 1)
+	if(issilicon(player))
+		serialized["job"] = player.job
+		serialized["icon"] = "borg"
+	else
+		var/obj/item/card/id/id_card = player.get_idcard(hand_first = FALSE)
+		serialized["job"] = id_card?.get_trim_assignment()
+		serialized["icon"] = id_card?.get_trim_sechud_icon_state()
+
+	return serialized
+
 
 /**
  * Helper POI validation function passed as a callback to various SSpoints_of_interest procs.
@@ -191,3 +207,4 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			return FALSE
 
 	return potential_poi.validate()
+

@@ -1,13 +1,41 @@
 import { DmIcon, Icon } from '../../components';
 import { JOB2ICON } from '../common/JobToIcon';
+import { Antagonist, Observable } from './types';
 
 type Props = {
-  icon: string;
-  job: string;
+  item: Observable | Antagonist;
+};
+
+type IconSettings = {
+  dmi: string;
+  transform: string;
+};
+
+const normalIcon: IconSettings = {
+  dmi: 'icons/mob/huds/hud.dmi',
+  transform: 'scale(2) translateX(8px)',
+};
+
+const antagIcon: IconSettings = {
+  dmi: 'icons/mob/huds/antag_hud.dmi',
+  transform: 'scale(1.8) translateX(-16px) translateY(7px)',
 };
 
 export function JobIcon(props: Props) {
-  const { icon, job } = props;
+  const { item } = props;
+
+  let iconSettings: IconSettings;
+
+  let antag;
+  if ('antag' in item) {
+    antag = item.antag;
+    iconSettings = antagIcon;
+  } else {
+    iconSettings = normalIcon;
+  }
+
+  // We don't need to cast here but typescript isn't smart enough to know that
+  const { icon = '', job = '' } = item;
 
   return (
     <div className="JobIcon">
@@ -21,9 +49,9 @@ export function JobIcon(props: Props) {
           }}
         >
           <DmIcon
-            icon="icons/mob/huds/hud.dmi"
+            icon={iconSettings.dmi}
             icon_state={icon}
-            style={{ transform: 'scale(2)  translateX(8px)' }}
+            style={{ transform: iconSettings.transform }}
           />
         </div>
       )}

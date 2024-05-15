@@ -1,18 +1,13 @@
-import { capitalizeFirst } from 'common/string';
-
-import { useBackend } from '../../backend';
-import { Button, Collapsible, Flex, Icon, Stack } from '../../components';
+import { Collapsible, Flex, Stack, Tooltip } from '../../components';
 import { VIEWMODE } from './constants';
 import {
-  getDisplayColor,
-  getDisplayName,
   isJobOrNameMatch,
   sortByDepartment,
   sortByDisplayName,
 } from './helpers';
-import { JobIcon } from './JobIcon';
+import { ObservableItem } from './ObservableItem';
 import { ObservableTooltip } from './ObservableTooltip';
-import { Observable, OrbitData, ViewMode } from './types';
+import { Observable, ViewMode } from './types';
 
 type Props = {
   autoObserve: boolean;
@@ -36,8 +31,6 @@ export function ObservableSection(props: Props) {
     title,
     viewMode,
   } = props;
-
-  const { act } = useBackend<OrbitData>();
 
   const filteredSection = section.filter((observable) =>
     isJobOrNameMatch(observable, searchQuery),
@@ -63,46 +56,28 @@ export function ObservableSection(props: Props) {
       >
         <Flex wrap>
           {filteredSection.map((item) => {
-            const { extra, full_name, health, icon, job, name, orbiters, ref } =
-              item;
+            const content = (
+              <ObservableItem
+                autoObserve={autoObserve}
+                color={color}
+                item={item}
+                key={item.ref}
+                viewMode={viewMode}
+              />
+            );
 
-            const validIcon = !!job && !!icon && icon !== 'hudunknown';
+            if (!item.health && !item.extra) {
+              return content;
+            }
 
             return (
-              <Flex.Item
-                align="center"
-                key={full_name + ref}
-                mb={0.5}
-                mr={0.5}
-                onClick={() => act('orbit', { auto_observe: autoObserve, ref })}
-                style={{
-                  display: 'flex',
-                }}
+              <Tooltip
+                content={<ObservableTooltip item={item} />}
+                key={item.ref}
+                position="bottom-start"
               >
-                {validIcon && <JobIcon icon={icon} job={job} />}
-
-                <Button
-                  color={getDisplayColor(item, viewMode, color)}
-                  pl={validIcon && 0.5}
-                  tooltip={
-                    (!!health || !!extra) && <ObservableTooltip item={item} />
-                  }
-                  tooltipPosition="bottom-start"
-                >
-                  <Stack>
-                    <Stack.Item>
-                      {capitalizeFirst(getDisplayName(full_name, name))}
-                    </Stack.Item>
-
-                    {!!orbiters && (
-                      <Stack.Item>
-                        <Icon name="ghost" />
-                        {orbiters}
-                      </Stack.Item>
-                    )}
-                  </Stack>
-                </Button>
-              </Flex.Item>
+                {content}
+              </Tooltip>
             );
           })}
         </Flex>
