@@ -633,7 +633,6 @@
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/tank/internals,
 		/obj/item/shovel,
-		/obj/item/shovel/serrated,
 		/obj/item/trench_tool,
 	)
 	armor_type = /datum/armor/wintercoat_miner
