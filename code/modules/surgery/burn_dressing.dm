@@ -20,12 +20,14 @@
 	)
 
 /datum/surgery/debride/can_start(mob/living/user, mob/living/carbon/target)
-	if(!istype(target))
-		return FALSE
-	if(..())
-		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
-		var/datum/wound/burn/flesh/burn_wound = targeted_bodypart.get_wound_type(targetable_wound)
-		return(burn_wound && burn_wound.infestation > 0)
+	. = ..()
+	if(!.)
+		return .
+
+	var/datum/wound/burn/flesh/burn_wound = target.get_bodypart(user.zone_selected).get_wound_type(targetable_wound)
+	// Should be guaranteed to have the wound by this point
+	ASSERT(burn_wound, "[type] on [target] has no burn wound when it should have been guaranteed to have one by can_start")
+	return burn_wound.infestation > 0
 
 //SURGERY STEPS
 

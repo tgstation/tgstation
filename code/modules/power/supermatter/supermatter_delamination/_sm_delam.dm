@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /datum/sm_delam/proc/can_select(obj/machinery/power/supermatter_crystal/sm)
 	return FALSE
 
-#define ROUNDCOUNT_ENGINE_JUST_EXPLODED 0
+#define ROUNDCOUNT_ENGINE_JUST_EXPLODED -1
 
 /// Called when the count down has been finished, do the nasty work.
 /// [/obj/machinery/power/supermatter_crystal/proc/count_down]

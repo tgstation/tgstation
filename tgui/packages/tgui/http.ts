@@ -4,7 +4,7 @@
 export const fetchRetry = (
   url: string,
   options?: RequestInit,
-  retryTimer: number = 1000
+  retryTimer: number = 1000,
 ): Promise<Response> => {
   return fetch(url, options).catch(() => {
     return new Promise((resolve) => {

@@ -133,6 +133,8 @@
 /datum/component/tippable/proc/do_tip(mob/living/tipped_mob, mob/tipper)
 	if(QDELETED(tipped_mob))
 		CRASH("Tippable component: do_tip() called with QDELETED tipped_mob!")
+	if (is_tipped) // sanity check in case multiple people try to tip at the same time
+		return
 
 	to_chat(tipper, span_warning("You tip over [tipped_mob]."))
 	if (!isnull(tipped_mob.client))
@@ -185,6 +187,8 @@
 /datum/component/tippable/proc/do_untip(mob/living/tipped_mob, mob/untipper)
 	if(QDELETED(tipped_mob))
 		return
+	if (!is_tipped) // sanity check in case multiple people try to untip at the same time
+		return
 
 	to_chat(untipper, span_notice("You right [tipped_mob]."))
 	tipped_mob.visible_message(
@@ -227,10 +231,11 @@
 	is_tipped = new_status
 	if(is_tipped)
 		tipped_mob.transform = turn(tipped_mob.transform, 180)
-		ADD_TRAIT(tipped_mob, TRAIT_IMMOBILIZED, TIPPED_OVER)
-	else
-		tipped_mob.transform = turn(tipped_mob.transform, -180)
-		REMOVE_TRAIT(tipped_mob, TRAIT_IMMOBILIZED, TIPPED_OVER)
+		tipped_mob.add_traits(list(TRAIT_MOB_TIPPED, TRAIT_IMMOBILIZED), TIPPED_OVER)
+		return
+
+	tipped_mob.transform = turn(tipped_mob.transform, -180)
+	tipped_mob.remove_traits(list(TRAIT_MOB_TIPPED, TRAIT_IMMOBILIZED), TIPPED_OVER)
 
 /**
  * Accepts "roleplay" in the form of emotes, which removes a quarter of the remaining time left to untip ourself.

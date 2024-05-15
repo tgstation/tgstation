@@ -1,8 +1,15 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  LabeledList,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
-import { CargoCatalog } from './Cargo';
+import { CargoCatalog } from './Cargo/CargoCatalog';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 type Data = {
@@ -17,8 +24,8 @@ type Data = {
   message: string;
 };
 
-export const CargoExpress = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export function CargoExpress(props) {
+  const { data } = useBackend<Data>();
   const { locked } = data;
 
   return (
@@ -29,10 +36,10 @@ export const CargoExpress = (props, context) => {
       </Window.Content>
     </Window>
   );
-};
+}
 
-const CargoExpressContent = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+function CargoExpressContent(props) {
+  const { act, data } = useBackend<Data>();
   const {
     hasBeacon,
     message,
@@ -53,25 +60,23 @@ const CargoExpressContent = (props, context) => {
             <AnimatedNumber value={Math.round(points)} />
             {' credits'}
           </Box>
-        }>
+        }
+      >
         <LabeledList>
           <LabeledList.Item label="Landing Location">
-            <Button
-              content="Cargo Bay"
-              selected={!usingBeacon}
-              onClick={() => act('LZCargo')}
-            />
+            <Button selected={!usingBeacon} onClick={() => act('LZCargo')}>
+              Cargo Bay
+            </Button>
             <Button
               selected={usingBeacon}
               disabled={!hasBeacon}
-              onClick={() => act('LZBeacon')}>
+              onClick={() => act('LZBeacon')}
+            >
               {beaconzone} ({beaconName})
             </Button>
-            <Button
-              content={printMsg}
-              disabled={!canBuyBeacon}
-              onClick={() => act('printBeacon')}
-            />
+            <Button disabled={!canBuyBeacon} onClick={() => act('printBeacon')}>
+              {printMsg}
+            </Button>
           </LabeledList.Item>
           <LabeledList.Item label="Notice">{message}</LabeledList.Item>
         </LabeledList>
@@ -79,4 +84,4 @@ const CargoExpressContent = (props, context) => {
       <CargoCatalog express />
     </>
   );
-};
+}

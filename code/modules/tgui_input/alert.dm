@@ -18,7 +18,11 @@
 			var/client/client = user
 			user = client.mob
 		else
-			return
+			return null
+
+	if(isnull(user.client))
+		return null
+
 	// A gentle nudge - you should not be using TGUI alert for anything other than a simple message.
 	if(length(buttons) > 3)
 		log_tgui(user, "Error: TGUI Alert initiated with too many buttons. Use a list.", "TguiAlert")
@@ -73,7 +77,7 @@
 		start_time = world.time
 		QDEL_IN(src, timeout)
 
-/datum/tgui_alert/Destroy(force, ...)
+/datum/tgui_alert/Destroy(force)
 	SStgui.close_uis(src)
 	state = null
 	QDEL_NULL(buttons)

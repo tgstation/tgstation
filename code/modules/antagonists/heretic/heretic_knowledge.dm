@@ -25,9 +25,12 @@
 	var/list/banned_knowledge = list()
 	/// Assoc list of [typepaths we need] to [amount needed].
 	/// If set, this knowledge allows the heretic to do a ritual on a transmutation rune with the components set.
+	/// If one of the items in the list is a list, it's treated as 'any of these items will work'
 	var/list/required_atoms
 	/// Paired with above. If set, the resulting spawned atoms upon ritual completion.
 	var/list/result_atoms = list()
+	/// If set, required_atoms checks for these *exact* types and doesn't allow them to be ingredients.
+	var/list/banned_atom_types = list()
 	/// Cost of knowledge in knowledge points
 	var/cost = 0
 	/// The priority of the knowledge. Higher priority knowledge appear higher in the ritual list.
@@ -113,6 +116,17 @@
 	return TRUE
 
 /**
+ * Parses specific items into a more readble form.
+ * Can be overriden by knoweldge subtypes.
+ */
+/datum/heretic_knowledge/proc/parse_required_item(atom/item_path, number_of_things)
+	// If we need a human, there is a high likelihood we actually need a (dead) body
+	if(ispath(item_path, /mob/living/carbon/human))
+		return "bod[number_of_things > 1 ? "ies" : "y"]"
+	if(ispath(item_path, /mob/living))
+		return "carcass[number_of_things > 1 ? "es" : ""] of any kind"
+	return "[initial(item_path.name)]\s"
+/**
  * Called whenever the knowledge's associated ritual is completed successfully.
  *
  * Creates atoms from types in result_atoms.
@@ -129,6 +143,7 @@
 /datum/heretic_knowledge/proc/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	if(!length(result_atoms))
 		return FALSE
+
 	for(var/result in result_atoms)
 		new result(loc)
 	return TRUE
@@ -158,10 +173,14 @@
 			var/obj/item/stack/sac_stack = sacrificed
 			var/how_much_to_use = 0
 			for(var/requirement in required_atoms)
-				if(istype(sacrificed, requirement))
-					how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
-					break
-
+				// If it's not requirement type and type is not a list, skip over this check
+				if(!istype(sacrificed, requirement) && !islist(requirement))
+					continue
+				// If requirement *is* a list and the stack *is* in the list, skip over this check
+				if(islist(requirement) && !is_type_in_list(sacrificed, requirement))
+					continue
+				how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
+				break
 			sac_stack.use(how_much_to_use)
 			continue
 
@@ -192,7 +211,8 @@
 
 /datum/heretic_knowledge/spell/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve()
-	created_spell?.Remove(user)
+	if(created_spell?.owner == user)
+		created_spell.Remove(user)
 
 /**
  * A knowledge subtype for knowledge that can only
@@ -205,8 +225,10 @@
 	var/limit = 1
 	/// A list of weakrefs to all items we've created.
 	var/list/datum/weakref/created_items
+	/// if we have all the blades then we don’t want to tear our hands off
+	var/valid_blades = FALSE
 
-/datum/heretic_knowledge/limited_amount/Destroy(force, ...)
+/datum/heretic_knowledge/limited_amount/Destroy(force)
 	LAZYCLEARLIST(created_items)
 	return ..()
 
@@ -217,8 +239,14 @@
 			LAZYREMOVE(created_items, ref)
 
 	if(LAZYLEN(created_items) >= limit)
-		loc.balloon_alert(user, "ritual failed, at limit!")
-		return FALSE
+		for(var/obj/item/melee/sickly_blade/is_blade_ritual as anything in result_atoms)
+			valid_blades = blades_limit_check(user)
+			break
+		if(valid_blades)
+			return TRUE
+		else
+			loc.balloon_alert(user, "ritual failed, at limit!")
+			return FALSE
 
 	return TRUE
 
@@ -226,7 +254,35 @@
 	for(var/result in result_atoms)
 		var/atom/created_thing = new result(loc)
 		LAZYADD(created_items, WEAKREF(created_thing))
+		if(istype(created_thing, /obj/item/melee/sickly_blade))
+			add_to_list_sickly_blade(user, created_thing)
 	return TRUE
+
+/datum/heretic_knowledge/limited_amount/proc/add_to_list_sickly_blade(mob/living/heretic, obj/item/melee/sickly_blade/created_blade)
+	var/obj/item/melee/sickly_blade/blade_check = created_blade
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(heretic)
+	if(!isnull(our_heretic))
+		blade_check.owner = our_heretic
+		LAZYADD(our_heretic.blades_list, blade_check)
+
+/datum/heretic_knowledge/limited_amount/proc/blades_limit_check(mob/living/heretic)
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(heretic)
+	var/success_check = FALSE
+	for(var/obj/item/melee/sickly_blade/blades_in_list as anything in our_heretic.blades_list)
+		if(get_turf(heretic) == get_turf(blades_in_list))
+			continue
+		success_check = TRUE
+		LAZYREMOVE(our_heretic.blades_list, blades_in_list)
+		var/mob/living/living_target = recursive_loc_check(src, /mob/living)
+		if(living_target)
+			living_target.apply_damage(15)
+			var/obj/item/bodypart/thief_hand = living_target.get_bodypart(BODY_ZONE_L_ARM)
+			if(!isnull(thief_hand))
+				thief_hand.dismember(BRUTE)
+			to_chat(living_target, span_boldwarning("You feel severe pain in your hand as if otherworldly powers tore it from inside. [blades_in_list] collapse and disappeared.. maybe it never existed?"))
+		qdel(blades_in_list)
+		break
+	return success_check
 
 /**
  * A knowledge subtype for limited_amount knowledge
@@ -508,6 +564,7 @@
 
 /datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/mob/living/summoned = new mob_to_summon(loc)
+	summoned.ai_controller?.set_ai_status(AI_STATUS_OFF)
 	// Fade in the summon while the ghost poll is ongoing.
 	// Also don't let them mess with the summon while waiting
 	summoned.alpha = 0
@@ -516,23 +573,22 @@
 	animate(summoned, 10 SECONDS, alpha = 155)
 
 	message_admins("A [summoned.name] is being summoned by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(summoned)].")
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [summoned.real_name]?", ROLE_HERETIC, FALSE, 10 SECONDS, summoned, poll_ignore_define)
-	if(!LAZYLEN(candidates))
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_HERETIC, poll_time = 10 SECONDS, checked_target = summoned, ignore_category = poll_ignore_define, alert_pic = summoned, role_name_text = summoned.name)
+	if(isnull(chosen_one))
 		loc.balloon_alert(user, "ritual failed, no ghosts!")
 		animate(summoned, 0.5 SECONDS, alpha = 0)
 		QDEL_IN(summoned, 0.6 SECONDS)
 		return FALSE
 
-	var/mob/dead/observer/picked_candidate = pick(candidates)
 	// Ok let's make them an interactable mob now, since we got a ghost
 	summoned.alpha = 255
 	REMOVE_TRAIT(summoned, TRAIT_NO_TRANSFORM, REF(src))
 	summoned.move_resist = initial(summoned.move_resist)
 
 	summoned.ghostize(FALSE)
-	summoned.key = picked_candidate.key
+	summoned.key = chosen_one.key
 
-	user.log_message("created a [summoned.name], controlled by [key_name(picked_candidate)].", LOG_GAME)
+	user.log_message("created a [summoned.name], controlled by [key_name(chosen_one)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")
 
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
@@ -705,12 +761,16 @@
 
 	SSblackbox.record_feedback("tally", "heretic_ascended", 1, route)
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")
-	notify_ghosts("[user] has completed an ascension ritual!", source = user, action = NOTIFY_ORBIT, header = "A Heretic is Ascending!")
+	notify_ghosts(
+		"[user] has completed an ascension ritual!",
+		source = user,
+		header = "A Heretic is Ascending!",
+	)
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)
 	for(var/mob/living/carbon/human/sacrifice in selected_atoms)
 		selected_atoms -= sacrifice
-		sacrifice.gib()
+		sacrifice.gib(DROP_ALL_REMAINS)
 
 	return ..()

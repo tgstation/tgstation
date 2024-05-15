@@ -11,8 +11,23 @@
 		{
 			"type": "byond",
 			"request": "launch",
+			"name": "Launch DreamSeeker (low memory mode)",
+			"preLaunchTask": "Build All (low memory mode)",
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}"
+		},
+		{
+			"type": "byond",
+			"request": "launch",
 			"name": "Launch DreamDaemon",
 			"preLaunchTask": "Build All",
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
+			"dreamDaemon": true
+		},
+		{
+			"type": "byond",
+			"request": "launch",
+			"name": "Launch DreamDaemon (low memory mode)",
+			"preLaunchTask": "Build All (low memory mode)",
 			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
 			"dreamDaemon": true
 		},
@@ -27,6 +42,18 @@
 				"-trusted"
 			],
 			"preLaunchTask": "Build All"
+		},
+		{
+			"name": "Debug External Libraries (low memory mode)",
+			"type": "cppvsdbg",
+			"request": "launch",
+			"program": "${command:dreammaker.returnDreamDaemonPath}",
+			"cwd": "${workspaceRoot}",
+			"args": [
+				"${command:dreammaker.getFilenameDmb}",
+				"-trusted"
+			],
+			"preLaunchTask": "Build All (low memory mode)"
 		}
 	]
 }

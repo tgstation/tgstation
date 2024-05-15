@@ -13,18 +13,20 @@
 
 	steel_sheet_cost = 2
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT, /datum/material/plastic=SMALL_MATERIAL_AMOUNT)
-	interaction_flags_atom = INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 
 	icon_state_menu = "menu"
 	max_capacity = 64
 	allow_chunky = TRUE
-	hardware_flag = PROGRAM_TABLET
+	hardware_flag = PROGRAM_PDA
 	max_idle_programs = 2
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 	has_light = TRUE //LED flashlight!
 	comp_light_luminosity = 2.3 //this is what old PDAs were set to
 	looping_sound = FALSE
+
+	shell_capacity = SHELL_CAPACITY_SMALL
 
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
@@ -155,12 +157,6 @@
 	inserted_item = attacking_item
 	playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
-/obj/item/modular_computer/pda/AltClick(mob/user)
-	. = ..()
-	if(.)
-		return
-
-	remove_pen(user)
 
 /obj/item/modular_computer/pda/CtrlClick(mob/user)
 	. = ..()
@@ -272,6 +268,20 @@
 	if(msg)
 		msg.invisible = TRUE
 
+/obj/item/modular_computer/pda/syndicate_contract_uplink
+	name = "contractor tablet"
+	device_theme = PDA_THEME_SYNDICATE
+	icon_state_menu = "contractor-assign"
+	comp_light_luminosity = 6.3
+	has_pda_programs = FALSE
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
+	greyscale_colors = "#696969#000000#FFA500"
+
+	starting_programs = list(
+		/datum/computer_file/program/contract_uplink,
+		/datum/computer_file/program/secureye/syndicate,
+	)
+
 /**
  * Silicon PDA
  *
@@ -317,6 +327,10 @@
 /obj/item/modular_computer/pda/silicon/Destroy()
 	silicon_owner = null
 	return ..()
+
+///Silicons don't have the tools (or hands) to make circuits setups with their own PDAs.
+/obj/item/modular_computer/pda/silicon/add_shell_component(capacity)
+	return
 
 /obj/item/modular_computer/pda/silicon/turn_on(mob/user, open_ui = FALSE)
 	if(silicon_owner?.stat != DEAD)

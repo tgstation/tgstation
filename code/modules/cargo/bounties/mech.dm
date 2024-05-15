@@ -2,13 +2,12 @@
 	..()
 	description = "Upper management has requested one [name] mech be sent as soon as possible. Ship it to receive a large payment."
 
-/datum/bounty/item/mech/ship(obj/O)
-	if(!applies_to(O))
+/datum/bounty/item/mech/ship(obj/shipped)
+	. = ..()
+	if(!.)
 		return
-	if(ismecha(O))
-		var/obj/vehicle/sealed/mecha/M = O
-		M.wreckage = null // So the mech doesn't explode.
-	..()
+	var/obj/vehicle/sealed/mecha/mecha = shipped
+	mecha.wreckage = null // So the mech doesn't explode.
 
 /datum/bounty/item/mech/ripleymk2
 	name = "APLU MK-II \"Ripley\""

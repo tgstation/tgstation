@@ -52,18 +52,17 @@
 	. = ..()
 	update_appearance()
 
-/obj/vehicle/ridden/wheelchair/wrench_act(mob/living/user, obj/item/I) //Attackby should stop it attacking the wheelchair after moving away during decon
+/obj/vehicle/ridden/wheelchair/wrench_act(mob/living/user, obj/item/tool) //Attackby should stop it attacking the wheelchair after moving away during decon
 	..()
-	to_chat(user, span_notice("You begin to detach the wheels..."))
-	if(I.use_tool(src, user, 40, volume=50))
-		to_chat(user, span_notice("You detach the wheels and deconstruct the chair."))
-		new /obj/item/stack/rods(drop_location(), 6)
-		new /obj/item/stack/sheet/iron(drop_location(), 4)
-		qdel(src)
-	return TRUE
+	balloon_alert(user, "disassembling")
+	if(!tool.use_tool(src, user, 4 SECONDS, volume=50))
+		return ITEM_INTERACT_SUCCESS
+	to_chat(user, span_notice("You detach the wheels and deconstruct the chair."))
+	new /obj/item/stack/rods(drop_location(), 6)
+	new /obj/item/stack/sheet/iron(drop_location(), 4)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/vehicle/ridden/wheelchair/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/vehicle/ridden/wheelchair/update_overlays()
 	. = ..()
@@ -127,7 +126,7 @@
 	. = ..()
 	if(over_object != usr || !Adjacent(usr) || !foldabletype)
 		return FALSE
-	if(!ishuman(usr) || !usr.can_perform_action(src))
+	if(!ishuman(usr) || !usr.can_perform_action(src, ALLOW_RESTING))
 		return FALSE
 	if(has_buckled_mobs())
 		return FALSE
@@ -138,6 +137,12 @@
 
 /obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchair on in-hand use
 	deploy_wheelchair(user, user.loc)
+
+/obj/item/wheelchair/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isopenturf(interacting_with))
+		deploy_wheelchair(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/wheelchair/proc/deploy_wheelchair(mob/user, atom/location)
 	var/obj/vehicle/ridden/wheelchair/wheelchair_unfolded = new unfolded_type(location)

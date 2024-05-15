@@ -1,46 +1,37 @@
-/// Attaches a component which listens for a given signal from the item.
-///
-/// When the signal is received, it will add points to the signaler.
+/// Attaches to a turf so it spawns a crate when a certain amount of points are added to it.
 /datum/component/bitrunning_points
-	/// The range at which we can find the signaler
-	var/max_point_range
-	/// Weakref to the loot crate landmark - where we send points
-	var/datum/weakref/our_spawner
-	/// The amount of points per each signal
-	var/points_per_signal
-	/// The signal we listen for
-	var/signal_type
+	/// The amount required to spawn a crate
+	var/points_goal = 10
+	/// A special condition limits this from spawning a crate
+	var/points_received = 0
 
-/datum/component/bitrunning_points/Initialize(signal_type, points_per_signal = 1, max_point_range = 4)
-	src.max_point_range = max_point_range
-	src.points_per_signal = points_per_signal
-	src.signal_type = signal_type
+/datum/component/bitrunning_points/Initialize(datum/lazy_template/virtual_domain/domain)
+	. = ..()
+	if(!isturf(parent))
+		return COMPONENT_INCOMPATIBLE
 
-	locate_spawner()
+	RegisterSignal(domain, COMSIG_BITRUNNER_GOAL_POINT, PROC_REF(on_add_points))
 
-/datum/component/bitrunning_points/RegisterWithParent()
-	RegisterSignal(parent, signal_type, PROC_REF(on_event))
-
-/datum/component/bitrunning_points/UnregisterFromParent()
-	UnregisterSignal(parent, signal_type)
-
-/// Finds the signaler if it hasn't been found yet.
-/datum/component/bitrunning_points/proc/locate_spawner()
-	var/obj/effect/landmark/bitrunning/loot_signal/spawner = our_spawner?.resolve()
-	if(spawner)
-		return spawner
-
-	for(var/obj/effect/landmark/bitrunning/loot_signal/found in GLOB.landmarks_list)
-		if(IN_GIVEN_RANGE(get_turf(parent), found, max_point_range))
-			our_spawner = WEAKREF(found)
-			return found
-
-/// Once the specified signal is received, whisper to the spawner to add points.
-/datum/component/bitrunning_points/proc/on_event(datum/source)
+/// Listens for points to be added which will eventually spawn a crate.
+/datum/component/bitrunning_points/proc/on_add_points(datum/source, points_to_add)
 	SIGNAL_HANDLER
 
-	var/obj/effect/landmark/bitrunning/loot_signal/spawner = locate_spawner()
-	if(isnull(spawner))
+	points_received += points_to_add
+
+	if(points_received < points_goal)
 		return
 
-	SEND_SIGNAL(spawner, COMSIG_BITRUNNER_GOAL_POINT, points_per_signal)
+	reveal()
+
+/// Spawns the crate with some effects
+/datum/component/bitrunning_points/proc/reveal()
+	playsound(src, 'sound/magic/blink.ogg', 50, TRUE)
+
+	var/turf/tile = parent
+	new /obj/structure/closet/crate/secure/bitrunning/encrypted(tile)
+
+	var/datum/effect_system/spark_spread/quantum/sparks = new(tile)
+	sparks.set_up(number = 5, location = tile)
+	sparks.start()
+
+	qdel(src)

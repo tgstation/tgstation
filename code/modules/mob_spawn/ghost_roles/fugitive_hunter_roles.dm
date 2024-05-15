@@ -76,7 +76,7 @@
 	prompt_name = "a psyker"
 	you_are_text = "Ahahaha! I am a Psyker Shikari!"
 	flavour_text = "Man, waking up from a gorenap always BLOWS. Finding dealers in this sector of space is always difficult, but \
-		we've recieved an offer that might set us up for life! Kidnap some fugitives and get FREE GORE!"
+		we've received an offer that might set us up for life! Kidnap some fugitives and get FREE GORE!"
 	back_story = HUNTER_PACK_PSYKER
 	outfit = /datum/outfit/psyker
 

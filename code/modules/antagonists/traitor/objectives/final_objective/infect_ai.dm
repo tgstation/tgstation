@@ -3,7 +3,7 @@
 	description = "Infect the station AI with an experimental virus. Go to %AREA% to receive an infected law upload board \
 		and use it on the AI core or a law upload console."
 
-	///area type the objective owner must be in to recieve the law upload module
+	///area type the objective owner must be in to receive the law upload module
 	var/area/board_area_pickup
 	///checker on whether we have sent the law upload module
 	var/sent_board = FALSE

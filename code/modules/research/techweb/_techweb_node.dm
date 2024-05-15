@@ -24,8 +24,8 @@
 	var/list/design_ids = list()
 	/// CALCULATED FROM OTHER NODE'S PREREQUISITIES. Associated list id = TRUE
 	var/list/unlock_ids = list()
-	/// Associative list, path = list(point type = point_value)
-	var/list/boost_item_paths = list()
+	/// List of items you need to deconstruct to unlock this node.
+	var/list/required_items_to_unlock = list()
 	/// Boosting this will autounlock this node
 	var/autounlock_by_boost = TRUE
 	/// The points cost to research the node, type = amount
@@ -36,6 +36,8 @@
 	var/list/required_experiments = list()
 	/// If completed, these experiments give a specific point amount discount to the node.area
 	var/list/discount_experiments = list()
+	/// When this node is completed, allows these experiments to be performed.
+	var/list/experiments_to_unlock = list()
 	/// Whether or not this node should show on the wiki
 	var/show_on_wiki = TRUE
 

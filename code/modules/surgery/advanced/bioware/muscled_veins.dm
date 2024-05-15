@@ -8,18 +8,16 @@
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/incise,
-		/datum/surgery_step/muscled_veins,
+		/datum/surgery_step/apply_bioware/muscled_veins,
 		/datum/surgery_step/close,
 	)
 
-	bioware_target = BIOWARE_CIRCULATION
+	status_effect_gained = /datum/status_effect/bioware/heart/muscled_veins
 
-/datum/surgery_step/muscled_veins
+/datum/surgery_step/apply_bioware/muscled_veins
 	name = "shape vein muscles (hand)"
-	accept_hand = TRUE
-	time = 125
 
-/datum/surgery_step/muscled_veins/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/apply_bioware/muscled_veins/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
 		user,
 		target,
@@ -29,7 +27,11 @@
 	)
 	display_pain(target, "Your entire body burns in agony!")
 
-/datum/surgery_step/muscled_veins/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+/datum/surgery_step/apply_bioware/muscled_veins/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	. = ..()
+	if(!.)
+		return
+
 	display_results(
 		user,
 		target,
@@ -38,18 +40,3 @@
 		span_notice("[user] finishes manipulating [target]'s circulatory system."),
 	)
 	display_pain(target, "You can feel your heartbeat's powerful pulses ripple through your body!")
-	new /datum/bioware/muscled_veins(target)
-	return ..()
-
-/datum/bioware/muscled_veins
-	name = "Muscled Veins"
-	desc = "The circulatory system is affixed with a muscled membrane, allowing the veins to pump blood without the need for a heart."
-	mod_type = BIOWARE_CIRCULATION
-
-/datum/bioware/muscled_veins/on_gain()
-	..()
-	ADD_TRAIT(owner, TRAIT_STABLEHEART, EXPERIMENTAL_SURGERY_TRAIT)
-
-/datum/bioware/muscled_veins/on_lose()
-	..()
-	REMOVE_TRAIT(owner, TRAIT_STABLEHEART, EXPERIMENTAL_SURGERY_TRAIT)

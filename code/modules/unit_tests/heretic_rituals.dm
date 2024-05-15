@@ -63,8 +63,13 @@
 		var/list/created_atoms = list()
 		for(var/ritual_item_path in knowledge.required_atoms)
 			var/amount_to_create = knowledge.required_atoms[ritual_item_path]
+			if(islist(ritual_item_path))
+				ritual_item_path = pick(ritual_item_path)
 			for(var/i in 1 to amount_to_create)
-				created_atoms += new ritual_item_path(get_turf(our_heretic))
+				var/obj/item/item = new ritual_item_path(get_turf(our_heretic))
+				if(isitem(item))
+					item.item_flags &= ~ABSTRACT
+				created_atoms += item
 
 		// Now, we can ACTUALLY run the ritual. Let's do it.
 		// Attempt to run the knowledge via the sacrifice rune.
@@ -104,6 +109,10 @@
 		for(var/atom/thing as anything in nearby_atoms)
 			if(!ismovable(thing))
 				continue
+			if(isitem(thing))
+				var/obj/item/item = thing
+				if(item.item_flags & ABSTRACT) //bodyparts and stuff will get registered otherwise
+					continue
 
 			// There are atoms around the rune still, and there shouldn't be.
 			// All component atoms were consumed, and all resulting atoms were cleaned up.

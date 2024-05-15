@@ -202,7 +202,7 @@
 				to_chat(owner, span_warning("You feel really sick at the thought of being alone!"))
 			else
 				to_chat(owner, span_warning("You feel sick..."))
-			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, vomit), high_stress), 50) //blood vomit if high stress
+			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, vomit), high_stress), 5 SECONDS) //blood vomit if high stress
 		if(2)
 			if(high_stress)
 				to_chat(owner, span_warning("You feel weak and scared! If only you weren't alone..."))
@@ -309,7 +309,7 @@
 	var/regex/reg = new("(\\b[REGEX_QUOTE(trigger_phrase)]\\b)","ig")
 
 	if(findtext(hearing_args[HEARING_RAW_MESSAGE], reg))
-		addtimer(CALLBACK(src, PROC_REF(hypnotrigger)), 10) //to react AFTER the chat message
+		addtimer(CALLBACK(src, PROC_REF(hypnotrigger)), 1 SECONDS) //to react AFTER the chat message
 		hearing_args[HEARING_RAW_MESSAGE] = reg.Replace(hearing_args[HEARING_RAW_MESSAGE], span_hypnophrase("*********"))
 
 /datum/brain_trauma/severe/hypnotic_trigger/proc/hypnotrigger()
@@ -330,3 +330,167 @@
 /datum/brain_trauma/severe/dyslexia/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
 	..()
+
+/*
+ * Brain traumas that eldritch paintings apply
+ * This one is for "The Sister and He Who Wept" or /obj/structure/sign/painting/eldritch
+ */
+/datum/brain_trauma/severe/weeping
+	name = "The Weeping"
+	desc = "Patient hallucinates everyone as a figure called He Who Wept"
+	scan_desc = "H_E##%%%WEEP6%11S!!,)()"
+	gain_text = span_warning("HE WEEPS AND I WILL SEE HIM ONCE MORE")
+	lose_text = span_notice("You feel the tendrils of something slip from your mind.")
+	random_gain = FALSE
+	/// Our cooldown declare for causing hallucinations
+	COOLDOWN_DECLARE(weeping_hallucinations)
+
+/datum/brain_trauma/severe/weeping/on_life(seconds_per_tick, times_fired)
+	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
+		return
+	// If they have examined a painting recently
+	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
+		return
+	if(!COOLDOWN_FINISHED(src, weeping_hallucinations))
+		return
+	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
+	owner.add_mood_event("eldritch_weeping", /datum/mood_event/eldritch_painting/weeping)
+	COOLDOWN_START(src, weeping_hallucinations, 10 SECONDS)
+	..()
+
+//This one is for "The First Desire" or /obj/structure/sign/painting/eldritch/desire
+/datum/brain_trauma/severe/flesh_desire
+	name = "The Desire for Flesh"
+	desc = "Patient appears hungrier and only wishes to eat meats."
+	scan_desc = "H_(82882)G3E:__))9R"
+	gain_text = span_warning("I feel a hunger, only organs and flesh will feed it...")
+	lose_text = span_notice("You no longer feel the hunger for flesh...")
+	random_gain = FALSE
+	/// How much faster we loose hunger
+	var/hunger_rate = 15
+
+/datum/brain_trauma/severe/flesh_desire/on_gain()
+	// Allows them to eat faster, mainly for flavor
+	ADD_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
+	ADD_TRAIT(owner, TRAIT_FLESH_DESIRE, REF(src))
+	..()
+
+/datum/brain_trauma/severe/flesh_desire/on_life(seconds_per_tick, times_fired)
+	// Causes them to need to eat at 10x the normal rate
+	owner.adjust_nutrition(-hunger_rate * HUNGER_FACTOR)
+	if(SPT_PROB(10, seconds_per_tick))
+		to_chat(owner, span_notice("You feel a ravenous hunger for flesh..."))
+	owner.overeatduration = max(owner.overeatduration - 200 SECONDS, 0)
+
+/datum/brain_trauma/severe/flesh_desire/on_lose()
+	REMOVE_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
+	REMOVE_TRAIT(owner, TRAIT_FLESH_DESIRE, REF(src))
+	return ..()
+
+// This one is for "Lady out of gates" or /obj/item/wallframe/painting/eldritch/beauty
+/datum/brain_trauma/severe/eldritch_beauty
+	name = "The Pursuit of Perfection"
+	desc = "Patient seems to furiously scratch at their body, the only way to make them cease is for them to remove their jumpsuit."
+	scan_desc = "I_)8(P_E##R&&F(E)C__T)"
+	gain_text = span_warning("I WILL RID MY FLESH FROM IMPERFECTION!! I WILL BE PERFECT WITHOUT MY SUITS!!")
+	lose_text = span_notice("You feel the influence of something slip your mind, and you feel content as you are.")
+	random_gain = FALSE
+	/// How much damage we deal with each scratch
+	var/scratch_damage = 0.5
+
+/datum/brain_trauma/severe/eldritch_beauty/on_life(seconds_per_tick, times_fired)
+	// Jumpsuits ruin the "perfection" of the body
+	if(!owner.get_item_by_slot(ITEM_SLOT_ICLOTHING))
+		return
+
+	// Scratching code
+	var/obj/item/bodypart/bodypart = owner.get_bodypart(owner.get_random_valid_zone(even_weights = TRUE))
+	if(!(bodypart && IS_ORGANIC_LIMB(bodypart)) && bodypart.bodypart_flags & BODYPART_PSEUDOPART)
+		return
+	if(owner.incapacitated())
+		return
+	bodypart.receive_damage(scratch_damage)
+	if(SPT_PROB(33, seconds_per_tick))
+		to_chat(owner, span_notice("You scratch furiously at [bodypart] to ruin the cloth that hides the beauty!"))
+
+// This one is for "Climb over the rusted mountain" or /obj/structure/sign/painting/eldritch/rust
+/datum/brain_trauma/severe/rusting
+	name = "The Rusted Climb"
+	desc = "Patient seems to oxidise things around them at random, and seem to believe they are aiding a creature in climbing a mountin."
+	scan_desc = "C_)L(#_I_##M;B"
+	gain_text = span_warning("The rusted climb shall finish at the peak")
+	lose_text = span_notice("The rusted climb? What's that? An odd dream to be sure.")
+	random_gain = FALSE
+
+/datum/brain_trauma/severe/rusting/on_life(seconds_per_tick, times_fired)
+	var/atom/tile = get_turf(owner)
+	// Examining a painting should stop this effect to give counterplay
+	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
+		return
+
+	if(SPT_PROB(50, seconds_per_tick))
+		to_chat(owner, span_notice("You feel eldritch energies pulse from your body!"))
+		tile.rust_heretic_act()
+
+/datum/brain_trauma/severe/kleptomaniac
+	name = "Kleptomania"
+	desc = "Patient is prone to stealing things."
+	scan_desc = "kleptomania"
+	gain_text = span_warning("You feel a sudden urge to take that. Surely no one will notice.")
+	lose_text = span_notice("You no longer feel the urge to take things.")
+	/// Cooldown between allowing steal attempts
+	COOLDOWN_DECLARE(steal_cd)
+
+/datum/brain_trauma/severe/kleptomaniac/on_gain()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_taken))
+
+/datum/brain_trauma/severe/kleptomaniac/on_lose()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
+
+/datum/brain_trauma/severe/kleptomaniac/proc/damage_taken(datum/source, damage_amount, damage_type, ...)
+	SIGNAL_HANDLER
+	// While you're fighting someone (or dying horribly) your mind has more important things to focus on than pocketing stuff
+	if(damage_amount >= 5 && (damage_type == BRUTE || damage_type == BURN || damage_type == STAMINA))
+		COOLDOWN_START(src, steal_cd, 12 SECONDS)
+
+/datum/brain_trauma/severe/kleptomaniac/on_life(seconds_per_tick, times_fired)
+	if(owner.usable_hands <= 0)
+		return
+	if(!SPT_PROB(5, seconds_per_tick))
+		return
+	if(!COOLDOWN_FINISHED(src, steal_cd))
+		return
+	if(!owner.has_active_hand() || !owner.get_empty_held_indexes())
+		return
+
+	// If our main hand is full, that means our offhand is empty, so try stealing with that
+	var/steal_to_offhand = !!owner.get_active_held_item()
+	var/curr_index = owner.active_hand_index
+	var/pre_dir = owner.dir
+	if(steal_to_offhand)
+		owner.swap_hand(owner.get_inactive_hand_index())
+
+	var/list/stealables = list()
+	for(var/obj/item/potential_stealable in oview(1, owner))
+		if(potential_stealable.w_class >= WEIGHT_CLASS_BULKY)
+			continue
+		if(potential_stealable.anchored || !(potential_stealable.interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP))
+			continue
+		stealables += potential_stealable
+
+	for(var/obj/item/stealable as anything in shuffle(stealables))
+		if(!owner.CanReach(stealable, view_only = TRUE) || stealable.IsObscured())
+			continue
+		// Try to do a raw click on the item with one of our empty hands, to pick it up (duh)
+		owner.log_message("attempted to pick up (kleptomania)", LOG_ATTACK, color = "orange")
+		owner.ClickOn(stealable)
+		// No feedback message. Intentional, you may not even realize you picked up something
+		break
+
+	if(steal_to_offhand)
+		owner.swap_hand(curr_index)
+	owner.setDir(pre_dir)
+	// Gives you a small buffer - not to avoid spam, but to make it more subtle / less predictable
+	COOLDOWN_START(src, steal_cd, 8 SECONDS)

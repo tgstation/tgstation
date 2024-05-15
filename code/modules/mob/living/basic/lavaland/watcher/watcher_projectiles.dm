@@ -7,7 +7,7 @@
 	armor_flag = ENERGY
 	temperature = -50
 
-/obj/projectile/temp/watcher/on_hit(mob/living/target, blocked = 0)
+/obj/projectile/temp/watcher/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if (!isliving(target))
 		return

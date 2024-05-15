@@ -17,7 +17,7 @@
 
 /turf/open/misc/ice/Initialize(mapload)
 	. = ..()
-	MakeSlippery(TURF_WET_PERMAFROST, INFINITY, 0, INFINITY, TRUE)
+	MakeSlippery(TURF_WET_PERMAFROST, INFINITY, 0, INFINITY, TRUE, FALSE)
 
 /turf/open/misc/ice/break_tile()
 	return

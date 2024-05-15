@@ -12,8 +12,9 @@
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	spread_text = "Organic meltdown"
 	process_dead = TRUE
+	bypasses_immunity = TRUE
 
-/datum/disease/decloning/cure()
+/datum/disease/decloning/cure(add_resistance = TRUE)
 	affected_mob.remove_status_effect(/datum/status_effect/decloning)
 	return ..()
 

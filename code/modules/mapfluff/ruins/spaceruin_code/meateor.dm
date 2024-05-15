@@ -44,6 +44,14 @@
 	icon = 'icons/mob/simple/meteor_heart.dmi'
 	anchored = TRUE
 
+/obj/structure/meateor_fluff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bloody_spreader,\
+		blood_left = INFINITY,\
+		blood_dna = list("meaty DNA" = "MT-"),\
+		diseases = null,\
+	)
+
 /obj/structure/meateor_fluff/play_attack_sound(damage_amount, damage_type, damage_flag)
 	switch(damage_type)
 		if(BRUTE)

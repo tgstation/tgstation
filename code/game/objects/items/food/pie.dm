@@ -122,6 +122,15 @@
 	tastes = list("pie" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_NORMAL
+	slice_type = /obj/item/food/pieslice/meatpie
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/pieslice/meatpie
+	name = "meat-pie slice"
+	desc = "Oh nice, meat pie!"
+	icon_state = "meatpie_slice"
+	tastes = list("pie" = 1, "meat" = 1)
+	foodtypes = GRAIN | MEAT
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/tofupie
@@ -134,6 +143,15 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("pie" = 1, "tofu" = 1)
+	foodtypes = GRAIN | VEGETABLES
+	slice_type = /obj/item/food/pieslice/tofupie
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/pieslice/tofupie
+	name = "tofu-pie slice"
+	desc = "Oh nice, meat pie- WAIT A MINUTE!!"
+	icon_state = "meatpie_slice"
+	tastes = list("pie" = 1, "disappointment" = 1, "tofu" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -187,6 +205,16 @@
 	)
 	tastes = list("pie" = 1, "meat" = 1, "acid" = 1)
 	foodtypes = GRAIN | MEAT
+	slice_type = /obj/item/food/pieslice/xemeatpie
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/pieslice/xemeatpie
+	name = "xeno-pie slice"
+	desc = "Oh god... Is that still moving?"
+	icon_state = "xenopie_slice"
+	tastes = list("pie" = 1, "acid" = 1, "meat" = 1)
+	foodtypes = GRAIN | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/applepie
 	name = "apple pie"
@@ -198,6 +226,17 @@
 	)
 	tastes = list("pie" = 1, "apple" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
+	slice_type = /obj/item/food/pieslice/apple
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/pieslice/apple
+	name = "apple pie slice"
+	desc = "A slice of comfy apple pie, warm autumn memories ahead."
+	icon_state = "applepie_slice"
+	tastes = list("pie" = 1, "apples" = 1)
+	foodtypes = GRAIN | FRUIT | SUGAR
+	crafting_complexity = FOOD_COMPLEXITY_3
+
 
 /obj/item/food/pie/cherrypie
 	name = "cherry pie"
@@ -208,6 +247,15 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	tastes = list("pie" = 7, "Nicole Paige Brooks" = 2)
+	foodtypes = GRAIN | FRUIT | SUGAR
+	slice_type = /obj/item/food/pieslice/cherry
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/pieslice/cherry
+	name = "cherry pie slice"
+	desc = "A slice of delicious cherry pie, I hope it's morellos!"
+	icon_state = "cherrypie_slice"
+	tastes = list("pie" = 1, "apples" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -344,6 +392,15 @@
 	)
 	tastes = list("mint" = 1, "pie" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
+	slice_type = /obj/item/food/pieslice/frostypie
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/pieslice/frostypie
+	name = "frosty pie slice"
+	desc = "Tasty blue, like my favourite crayon!"
+	icon_state = "frostypie_slice"
+	tastes = list("pie" = 1, "mint" = 1)
+	foodtypes = GRAIN | FRUIT | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/baklava
@@ -427,3 +484,30 @@
 	tastes = list("pie" = 1, "the far off year of 2010" = 1)
 	foodtypes = GRAIN
 	crafting_complexity = FOOD_COMPLEXITY_2
+
+/obj/item/food/pie/bacid_pie
+	name = "battery acid pie"
+	desc = "Ooh it's a pie made of... battery acid? You suppose an ethereal could find some enjoyement in eating this."
+	icon_state = "bacid_pie"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 18,
+		/datum/reagent/consumable/liquidelectricity/enriched = 18
+	)
+	tastes = list("battery acid" = 2, "electricity" = 2, "a cyber world" = 2)
+	foodtypes = TOXIC
+	slice_type = /obj/item/food/pieslice/bacid_pie
+	yield = 4
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+
+/obj/item/food/pieslice/bacid_pie
+	name = "battery acid pie slice"
+	desc = "The battery acid filling has a concerningly appealing bright green color"
+	icon_state = "bacid_pie_slice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 4.5,
+		/datum/reagent/consumable/liquidelectricity/enriched = 4.5
+	)
+	tastes = list("battery acid" = 1, "electricity" = 1, "a cyber world" = 1)
+	foodtypes = TOXIC
+	crafting_complexity = FOOD_COMPLEXITY_3

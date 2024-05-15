@@ -32,6 +32,13 @@
 	if(marked_atom || !user.Adjacent(target) || is_right_clicking)
 		return ..()
 
+	if(isliving(target))
+		INVOKE_ASYNC(src, PROC_REF(mark_mob_or_contents), user, target)
+		return TRUE
+
+	mark_target(target)
+
+/obj/item/multitool/circuit/proc/mark_target(atom/target)
 	say("Marked [target].")
 	marked_atom = target
 	RegisterSignal(marked_atom, COMSIG_QDELETING, PROC_REF(cleanup_marked_atom))
@@ -39,6 +46,51 @@
 	flick("multitool_circuit_flick", src)
 	playsound(src.loc, 'sound/misc/compiler-stage2.ogg', 30, TRUE)
 	return TRUE
+
+/// Allow users to mark items equipped by the target that are visible.
+/obj/item/multitool/circuit/proc/mark_mob_or_contents(mob/user, mob/living/target)
+	var/list/visible_items
+	var/mob/living/carbon/carbon_target
+	if(iscarbon(target))
+		carbon_target = target
+		visible_items = carbon_target.get_visible_items()
+	else
+		visible_items = target.get_equipped_items()
+
+	visible_items -= src // the multitool cannot mark itself.
+
+	if(!length(visible_items))
+		mark_target(target)
+		return
+
+	var/list/selectable_targets = list()
+	var/datum/radial_menu_choice/mob_choice = new
+	mob_choice.image = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_mob")
+	mob_choice.name = target.name
+	selectable_targets[REF(target)] = mob_choice
+	for(var/obj/item/item as anything in visible_items)
+		var/datum/radial_menu_choice/item_choice = new
+
+		var/mutable_appearance/item_appearance = new(item)
+		item_appearance.layer = FLOAT_LAYER
+		item_appearance.plane = FLOAT_PLANE
+
+		item_choice.name = item.name
+		item_choice.image = item_appearance
+		selectable_targets[REF(item)] = item_choice
+
+	var/picked_ref = show_radial_menu(user, src, selectable_targets, radius = 38, custom_check = CALLBACK(src, PROC_REF(check_menu), user, target), tooltips = TRUE)
+	if(!picked_ref)
+		return
+
+	var/atom/movable/chosen = locate(picked_ref)
+	if(chosen == target || (chosen in (carbon_target ? carbon_target.get_visible_items() : target.get_equipped_items())))
+		mark_target(chosen)
+	else
+		balloon_alert(user, "cannot mark entity")
+
+/obj/item/multitool/circuit/proc/check_menu(mob/user, mob/living/target)
+	return !marked_atom && user.is_holding(src) && user.Adjacent(target)
 
 /obj/item/multitool/circuit/update_overlays()
 	. = ..()

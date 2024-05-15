@@ -16,8 +16,8 @@ type Reagent = {
   description: string;
 };
 
-export const BorgShaker = (props, context) => {
-  const { data } = useBackend<BorgShakerContext>(context);
+export const BorgShaker = (props) => {
+  const { data } = useBackend<BorgShakerContext>();
   const { theme, minVolume, sodas, alcohols, selectedReagent } = data;
 
   const dynamicHeight =
@@ -47,8 +47,8 @@ export const BorgShaker = (props, context) => {
   );
 };
 
-const ReagentDisplay = (props, context) => {
-  const { act } = useBackend(context);
+const ReagentDisplay = (props) => {
+  const { act } = useBackend();
   const { reagents, selected, minimum } = props;
   if (reagents.length === 0) {
     return <NoticeBox>No reagents available!</NoticeBox>;

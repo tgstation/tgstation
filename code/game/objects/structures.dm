@@ -63,6 +63,16 @@
 
 /obj/structure/zap_act(power, zap_flags)
 	if(zap_flags & ZAP_OBJ_DAMAGE)
-		take_damage(power * 1.5625e-7, BURN, "energy")
+		take_damage(power * 2.5e-4, BURN, "energy")
 	power -= power * 5e-4 //walls take a lot out of ya
 	. = ..()
+
+/obj/structure/animate_atom_living(mob/living/owner)
+	new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)
+
+/// For when a mob comes flying through the window, smash it and damage the mob
+/obj/structure/proc/smash_and_injure(mob/living/flying_mob, atom/oldloc, direction)
+	flying_mob.balloon_alert_to_viewers("smashed through!")
+	flying_mob.apply_damage(damage = rand(5, 15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(src, oldloc))
+	new /obj/effect/decal/cleanable/glass(get_step(flying_mob, flying_mob.dir))
+	deconstruct(disassembled = FALSE)

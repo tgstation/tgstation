@@ -30,6 +30,9 @@
 	var/datum/reagent/cure = GLOB.chemical_reagents_list[cures[1]]
 	cure_text = cure.name
 
+/datum/disease/advance/carpellosis/GetDiseaseID()
+	return "[type]"
+
 /datum/disease/advance/carpellosis/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
@@ -64,7 +67,7 @@
 		QDEL_NULL(rift_ability)
 	return ..()
 
-/datum/disease/advance/carpellosis/cure()
+/datum/disease/advance/carpellosis/cure(add_resistance = TRUE)
 	if(ability_granted)
 		rift_ability.Remove(affected_mob)
 	if(max_stage_reached && prob(ella_spawn_chance))

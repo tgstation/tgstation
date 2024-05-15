@@ -122,6 +122,10 @@
 	},
 /turf/open/floor/iron/dark/smooth_edge,
 /area/virtual_domain/safehouse)
+"N" = (
+/obj/modular_map_connector,
+/turf/closed/wall,
+/area/virtual_domain/safehouse)
 "O" = (
 /obj/item/gun/energy/recharge/kinetic_accelerator{
 	pixel_x = -6;
@@ -191,7 +195,7 @@ f
 f
 P
 P
-f
+N
 "}
 (2,1,1) = {"
 P

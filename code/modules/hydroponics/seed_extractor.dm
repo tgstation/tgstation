@@ -91,7 +91,7 @@
 /obj/machinery/seed_extractor/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/seed_extractor/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(!isliving(user) || user.combat_mode)
@@ -177,22 +177,13 @@
  * taking_from - where are we taking the seed from? A mob, a bag, etc? If null its means its just laying on the turf so force move it in
  **/
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/to_add, atom/taking_from)
-	if(!isnull(taking_from))
-		if(ismob(taking_from))
-			var/mob/mob_loc = taking_from
-			if(!mob_loc.transferItemToLoc(to_add, src))
-				return FALSE
-
-		else if(!taking_from.atom_storage?.attempt_remove(to_add, src, silent = TRUE))
-			return FALSE
-	else
-		to_add.forceMove(src)
-
 	var/seed_id = generate_seed_hash(to_add)
+	var/list/seed_data
+	var/has_seed_data // so we remember to add a seed obj weakref to piles[seed_id] at the end of the proc. That way if some reason we runtime in this proc it won't incorrectly add data to the list
 	if(piles[seed_id])
-		piles[seed_id]["refs"] += WEAKREF(to_add)
+		has_seed_data = TRUE
 	else
-		var/list/seed_data = list()
+		seed_data = list()
 		seed_data["icon"] = sanitize_css_class_name("[initial(to_add.icon)][initial(to_add.icon_state)]")
 		seed_data["name"] = capitalize(replacetext(to_add.name,"pack of ", ""));
 		seed_data["lifespan"] = to_add.lifespan
@@ -216,8 +207,8 @@
 		seed_data["mutatelist"] = list()
 		for(var/obj/item/seeds/mutant as anything in to_add.mutatelist)
 			seed_data["mutatelist"] += initial(mutant.plantname)
-		var/obj/item/food/grown/product = new to_add.product
-		if(product)
+		if(to_add.product)
+			var/obj/item/food/grown/product = new to_add.product
 			var/datum/reagent/product_distill_reagent = product.distill_reagent
 			seed_data["distill_reagent"] = initial(product_distill_reagent.name)
 			var/datum/reagent/product_juice_typepath = product.juice_typepath
@@ -225,8 +216,25 @@
 			seed_data["grind_results"] = list()
 			for(var/datum/reagent/reagent as anything in product.grind_results)
 				seed_data["grind_results"] += initial(reagent.name)
-		qdel(product)
+			qdel(product)
+
+	if(!isnull(taking_from))
+		if(ismob(taking_from))
+			var/mob/mob_loc = taking_from
+			if(!mob_loc.transferItemToLoc(to_add, src))
+				return FALSE
+
+		else if(!taking_from.atom_storage?.attempt_remove(to_add, src, silent = TRUE))
+			return FALSE
+	else
+		to_add.forceMove(src)
+
+	// do this at the end, in case any of the previous steps failed
+	if(has_seed_data)
+		piles[seed_id]["refs"] += WEAKREF(to_add)
+	else
 		piles[seed_id] = seed_data
+
 	return TRUE
 
 /obj/machinery/seed_extractor/ui_state(mob/user)

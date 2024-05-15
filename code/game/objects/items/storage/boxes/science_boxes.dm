@@ -43,7 +43,7 @@
 /obj/item/storage/box/monkeycubes/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 7
-	atom_storage.set_holdable(list(/obj/item/food/monkeycube))
+	atom_storage.set_holdable(/obj/item/food/monkeycube)
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
 	for(var/i in 1 to 5)
@@ -62,7 +62,7 @@
 /obj/item/storage/box/gorillacubes/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 3
-	atom_storage.set_holdable(list(/obj/item/food/monkeycube))
+	atom_storage.set_holdable(/obj/item/food/monkeycube)
 
 /obj/item/storage/box/gorillacubes/PopulateContents()
 	for(var/i in 1 to 3)

@@ -6,6 +6,7 @@ SUBSYSTEM_DEF(lighting)
 	var/static/list/sources_queue = list() // List of lighting sources queued for update.
 	var/static/list/corners_queue = list() // List of lighting corners queued for update.
 	var/static/list/objects_queue = list() // List of lighting objects queued for update.
+	var/static/list/current_sources = list()
 #ifdef VISUALIZE_LIGHT_UPDATES
 	var/allow_duped_values = FALSE
 	var/allow_duped_corners = FALSE
@@ -30,11 +31,13 @@ SUBSYSTEM_DEF(lighting)
 	if(!init_tick_checks)
 		MC_SPLIT_TICK
 
-	var/list/queue
-	var/i = 0
+	if(!resumed)
+		current_sources = sources_queue
+		sources_queue = list()
 
 	// UPDATE SOURCE QUEUE
-	queue = sources_queue
+	var/i = 0
+	var/list/queue = current_sources
 	while(i < length(queue)) //we don't use for loop here because i cannot be changed during an iteration
 		i += 1
 

@@ -22,19 +22,6 @@ export const windowClose = () => {
   Byond.sendMessage('close');
 };
 
-/** Some QoL to hide the window on load. Doesn't log this event */
-export const windowLoad = () => {
-  Byond.winset('tgui_say', {
-    pos: '848,500',
-    size: `${WINDOW_SIZES.width}x${WINDOW_SIZES.small}`,
-    visible: false,
-  });
-
-  Byond.winset('map', {
-    focus: true,
-  });
-};
-
 /**
  * Modifies the window size.
  */

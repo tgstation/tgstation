@@ -126,7 +126,7 @@
 /turf/open/floor/pod/dark,
 /area/misc/survivalpod)
 "v" = (
-/obj/machinery/door/window/survival_pod{
+/obj/machinery/door/window/survival_pod/left/directional/south{
 	req_one_access = list("bar","mining")
 	},
 /turf/open/floor/pod/dark,

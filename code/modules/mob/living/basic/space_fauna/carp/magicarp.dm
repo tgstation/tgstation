@@ -56,8 +56,8 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack,
-		/datum/pet_command/point_targetting/use_ability/magicarp,
+		/datum/pet_command/point_targeting/attack,
+		/datum/pet_command/point_targeting/use_ability/magicarp,
 	)
 	/// List of all projectiles we can fire.
 	/// Non-static, because subtypes can have their own lists.
@@ -91,15 +91,15 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 	ai_controller.set_blackboard_key(BB_MAGICARP_SPELL, spell)
 	assign_spell_ai(spell_type)
 
-/// If you have certain spells, use a different targetting datum
+/// If you have certain spells, use a different targeting strategy
 /mob/living/basic/carp/magic/proc/assign_spell_ai(spell_type)
-	var/static/list/spell_special_targetting = list(
+	var/static/list/spell_special_targeting = list(
 		/obj/projectile/magic/animate = MAGICARP_SPELL_OBJECTS,
 		/obj/projectile/magic/door = MAGICARP_SPELL_WALLS,
 		/obj/projectile/magic/resurrection = MAGICARP_SPELL_CORPSES,
 	)
 
-	ai_controller.set_blackboard_key(BB_MAGICARP_SPELL_SPECIAL_TARGETTING, spell_special_targetting[spell_type])
+	ai_controller.set_blackboard_key(BB_MAGICARP_SPELL_SPECIAL_TARGETING, spell_special_targeting[spell_type])
 
 /// Shoot when you click away from you
 /mob/living/basic/carp/magic/RangedAttack(atom/atom_target, modifiers)

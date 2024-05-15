@@ -1,7 +1,7 @@
 /obj/item/holosign_creator
 	name = "holographic sign projector"
 	desc = "A handy-dandy holographic projector that displays a janitorial sign."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "signmaker"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
@@ -15,13 +15,16 @@
 	item_flags = NOBLUDGEON
 	var/list/signs
 	var/max_signs = 10
-	var/creation_time = 0 //time to create a holosign in deciseconds.
+	//time to create a holosign in deciseconds.
+	var/creation_time = 0
+	//holosign image that is projected
 	var/holosign_type = /obj/structure/holosign/wetsign
 	var/holocreator_busy = FALSE //to prevent placing multiple holo barriers at once
 
 /obj/item/holosign_creator/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/openspace_item_click_handler)
+	RegisterSignal(src, COMSIG_OBJ_PAINTED, TYPE_PROC_REF(/obj/item/holosign_creator, on_color_change))
 
 /obj/item/holosign_creator/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
 	afterattack(target, user, proximity_flag, click_parameters)
@@ -63,24 +66,39 @@
 			return .
 		if(target_turf.is_blocked_turf(TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 			return .
-	target_holosign = new holosign_type(get_turf(target), src)
+	target_holosign = create_holosign(target, user)
 	return .
 
 /obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
 
+/obj/item/holosign_creator/proc/create_holosign(atom/target, mob/user)
+	var/atom/new_holosign = new holosign_type(get_turf(target), src)
+	new_holosign.add_hiddenprint(user)
+	if(color)
+		new_holosign.color = color
+	return new_holosign
+
 /obj/item/holosign_creator/attack_self(mob/user)
 	if(LAZYLEN(signs))
-		for(var/H in signs)
-			qdel(H)
+		for(var/obj/structure/holosign/hologram as anything in signs)
+			qdel(hologram)
 		balloon_alert(user, "holograms cleared")
 
 /obj/item/holosign_creator/Destroy()
 	. = ..()
 	if(LAZYLEN(signs))
-		for(var/H in signs)
-			qdel(H)
+		for(var/obj/structure/holosign/hologram as anything in signs)
+			qdel(hologram)
 
+/obj/item/holosign_creator/proc/on_color_change(obj/item/holosign_creator, mob/user, obj/item/toy/crayon/spraycan/spraycan, is_dark_color)
+	SIGNAL_HANDLER
+	if(!spraycan.actually_paints)
+		return
+
+	if(LAZYLEN(signs))
+		for(var/obj/structure/holosign/hologram as anything in signs)
+			hologram.color = color
 
 /obj/item/holosign_creator/janibarrier
 	name = "custodial holobarrier projector"
@@ -112,6 +130,49 @@
 	holosign_type = /obj/structure/holosign/barrier/atmos
 	creation_time = 0
 	max_signs = 6
+	/// Clearview holograms don't catch clicks and are more transparent
+	var/clearview = FALSE
+	/// Timer for auto-turning off clearview
+	var/clearview_timer
+
+/obj/item/holosign_creator/atmos/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/holosign_creator/atmos/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(LAZYLEN(signs))
+		context[SCREENTIP_CONTEXT_RMB] = "[clearview ? "Turn off" : "Temporarily activate"] clearview"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/holosign_creator/atmos/create_holosign(atom/target, mob/user)
+	var/obj/structure/holosign/barrier/atmos/new_holosign = new holosign_type(get_turf(target), src)
+	new_holosign.add_hiddenprint(user)
+	if(color)
+		new_holosign.color = color
+	if(clearview)
+		new_holosign.clearview_transparency()
+	return new_holosign
+
+/obj/item/holosign_creator/atmos/attack_self_secondary(mob/user, modifiers)
+	if(clearview)
+		reset_hologram_transparency()
+		balloon_alert(user, "turned off clearview")
+		return
+	if(LAZYLEN(signs))
+		for(var/obj/structure/holosign/barrier/atmos/hologram as anything in signs)
+			hologram.clearview_transparency()
+		clearview = TRUE
+		balloon_alert(user, "turned on clearview")
+		clearview_timer = addtimer(CALLBACK(src, PROC_REF(reset_hologram_transparency)), 40 SECONDS, TIMER_STOPPABLE)
+	return ..()
+
+/obj/item/holosign_creator/atmos/proc/reset_hologram_transparency()
+	if(LAZYLEN(signs))
+		for(var/obj/structure/holosign/barrier/atmos/hologram as anything in signs)
+			hologram.reset_transparency()
+		clearview = FALSE
+		deltimer(clearview_timer)
 
 /obj/item/holosign_creator/medical
 	name = "\improper PENLITE barrier projector"
@@ -127,28 +188,28 @@
 	creation_time = 1.5 SECONDS
 	max_signs = 9
 	holosign_type = /obj/structure/holosign/barrier/cyborg
-	var/shock = 0
+	var/shock = FALSE
 
 /obj/item/holosign_creator/cyborg/attack_self(mob/user)
 	if(iscyborg(user))
-		var/mob/living/silicon/robot/R = user
+		var/mob/living/silicon/robot/borg = user
 
 		if(shock)
 			to_chat(user, span_notice("You clear all active holograms, and reset your projector to normal."))
 			holosign_type = /obj/structure/holosign/barrier/cyborg
-			creation_time = 5
-			for(var/sign in signs)
-				qdel(sign)
-			shock = 0
+			creation_time = 0.5 SECONDS
+			for(var/obj/structure/holosign/hologram as anything in signs)
+				qdel(hologram)
+			shock = FALSE
 			return
-		if(R.emagged && !shock)
+		if(borg.emagged && !shock)
 			to_chat(user, span_warning("You clear all active holograms, and overload your energy projector!"))
 			holosign_type = /obj/structure/holosign/barrier/cyborg/hacked
-			creation_time = 30
-			for(var/sign in signs)
-				qdel(sign)
-			shock = 1
+			creation_time = 3 SECONDS
+			for(var/obj/structure/holosign/hologram as anything in signs)
+				qdel(hologram)
+			shock = TRUE
 			return
-	for(var/sign in signs)
-		qdel(sign)
+	for(var/obj/structure/holosign/hologram as anything in signs)
+		qdel(hologram)
 	balloon_alert(user, "holograms cleared")

@@ -509,7 +509,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/triumphal_arch
 	. = ..()
 	. += span_notice("<i>You browse some of the poster's information...</i>")
 	. += "\t[span_info("Va Lümla Commissary Menu (Spring 335)")]"
-	. += "\t[span_info("Windgrass Cigarettes, Half-Pack (6): 1 Ticket")]"
+	. += "\t[span_info("Sparkweed Cigarettes, Half-Pack (6): 1 Ticket")]"
 	. += "\t[span_info("Töchtaüse Schnapps, Bottle (4 Measures): 2 Tickets")]"
 	. += "\t[span_info("Activin Gum, Pack (4): 1 Ticket")]"
 	. += "\t[span_info("A18 Sustenance Bar, Breakfast, Bar (4): 1 Ticket")]"
@@ -625,3 +625,35 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/blood_geometer
 	icon_state = "singletank_bomb"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/singletank_bomb, 32)
+
+///a special poster meant to fool people into thinking this is a bombable wall at a glance.
+/obj/structure/sign/poster/contraband/fake_bombable
+	name = "fake bombable poster"
+	desc = "We do a little trolling."
+	icon_state = "fake_bombable"
+	never_random = TRUE
+
+/obj/structure/sign/poster/contraband/fake_bombable/Initialize(mapload)
+	. = ..()
+	var/turf/our_wall = get_turf_pixel(src)
+	name = our_wall.name
+
+/obj/structure/sign/poster/contraband/fake_bombable/examine(mob/user)
+	var/turf/our_wall = get_turf_pixel(src)
+	. = our_wall.examine(user)
+	. += span_notice("It seems to be slightly cracked...")
+
+/obj/structure/sign/poster/contraband/fake_bombable/ex_act(severity, target)
+	addtimer(CALLBACK(src, PROC_REF(fall_off_wall)), 2.5 SECONDS)
+	return FALSE
+
+/obj/structure/sign/poster/contraband/fake_bombable/proc/fall_off_wall()
+	if(QDELETED(src) || !isturf(loc))
+		return
+	var/turf/our_wall = get_turf_pixel(src)
+	our_wall.balloon_alert_to_viewers("it was a ruse!")
+	roll_and_drop(loc)
+	playsound(loc, 'sound/items/handling/paper_drop.ogg', 50, TRUE)
+
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/fake_bombable, 32)

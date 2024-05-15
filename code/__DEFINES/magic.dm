@@ -50,8 +50,7 @@
 /// Whether the spell can be cast by mobs who are brains / mmis.
 /// When applying, bear in mind most spells will not function for brains out of the box.
 #define SPELL_CASTABLE_AS_BRAIN (1 << 2)
-/// Whether the spell can be cast while phased, such as blood crawling, ethereal jaunting or using rod form.
-#define SPELL_CASTABLE_WHILE_PHASED (1 << 3)
+
 /// Whether the spell can be cast while the user has antimagic on them that corresponds to the spell's own antimagic flags.
 #define SPELL_REQUIRES_NO_ANTIMAGIC (1 << 4)
 /// Whether the spell requires being on the station z-level to be cast.
@@ -66,7 +65,6 @@
 
 DEFINE_BITFIELD(spell_requirements, list(
 	"SPELL_CASTABLE_AS_BRAIN" = SPELL_CASTABLE_AS_BRAIN,
-	"SPELL_CASTABLE_WHILE_PHASED" = SPELL_CASTABLE_WHILE_PHASED,
 	"SPELL_CASTABLE_WITHOUT_INVOCATION" = SPELL_CASTABLE_WITHOUT_INVOCATION,
 	"SPELL_REQUIRES_HUMAN" = SPELL_REQUIRES_HUMAN,
 	"SPELL_REQUIRES_MIME_VOW" = SPELL_REQUIRES_MIME_VOW,

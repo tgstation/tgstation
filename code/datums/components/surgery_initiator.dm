@@ -14,7 +14,7 @@
 	var/obj/item/surgery_tool = parent
 	surgery_tool.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
 
-/datum/component/surgery_initiator/Destroy(force, silent)
+/datum/component/surgery_initiator/Destroy(force)
 	last_user_ref = null
 	surgery_target_ref = null
 
@@ -81,32 +81,33 @@
 /datum/component/surgery_initiator/proc/get_available_surgeries(mob/user, mob/living/target)
 	var/list/available_surgeries = list()
 
-	var/mob/living/carbon/carbon_target
-	var/obj/item/bodypart/affecting
-	if (iscarbon(target))
-		carbon_target = target
-		affecting = carbon_target.get_bodypart(check_zone(user.zone_selected))
+	var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(user.zone_selected))
 
 	for(var/datum/surgery/surgery as anything in GLOB.surgeries_list)
 		if(!surgery.possible_locs.Find(user.zone_selected))
 			continue
-		if(affecting)
-			if(!(surgery.surgery_flags & SURGERY_REQUIRE_LIMB))
+		if(!is_type_in_list(target, surgery.target_mobtypes))
+			continue
+		if(user == target && !(surgery.surgery_flags & SURGERY_SELF_OPERABLE))
+			continue
+
+		if(isnull(affecting))
+			if(surgery.surgery_flags & SURGERY_REQUIRE_LIMB)
 				continue
+		else
 			if(surgery.requires_bodypart_type && !(affecting.bodytype & surgery.requires_bodypart_type))
+				continue
+			if(surgery.targetable_wound && !affecting.get_wound_type(surgery.targetable_wound))
 				continue
 			if((surgery.surgery_flags & SURGERY_REQUIRES_REAL_LIMB) && (affecting.bodypart_flags & BODYPART_PSEUDOPART))
 				continue
-		else if(carbon_target && (surgery.surgery_flags & SURGERY_REQUIRE_LIMB)) //mob with no limb in surgery zone when we need a limb
-			continue
+
 		if(IS_IN_INVALID_SURGICAL_POSITION(target, surgery))
 			continue
 		if(!surgery.can_start(user, target))
 			continue
-		for(var/path in surgery.target_mobtypes)
-			if(istype(target, path))
-				available_surgeries += surgery
-				break
+
+		available_surgeries += surgery
 
 	return available_surgeries
 
@@ -134,8 +135,11 @@
 		required_tool_type = TOOL_SCREWDRIVER
 
 	if(iscyborg(user))
-		close_tool = locate(/obj/item/cautery) in user.held_items
-		if(!close_tool)
+		var/has_cautery = FALSE
+		for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in user.held_items)
+			if(omnitool.tool_behaviour == TOOL_CAUTERY)
+				has_cautery = TRUE
+		if(!has_cautery)
 			patient.balloon_alert(user, "need a cautery in an inactive slot to stop the surgery!")
 			return
 	else if(!close_tool || close_tool.tool_behaviour != required_tool_type)
@@ -284,24 +288,20 @@
 		target.balloon_alert(user, "can't start the surgery!")
 		return
 
-	var/obj/item/bodypart/affecting_limb
-
 	var/selected_zone = user.zone_selected
+	var/obj/item/bodypart/affecting_limb = target.get_bodypart(check_zone(selected_zone))
 
-	if (iscarbon(target))
-		var/mob/living/carbon/carbon_target = target
-		affecting_limb = carbon_target.get_bodypart(check_zone(selected_zone))
-
-	if ((surgery.surgery_flags & SURGERY_REQUIRE_LIMB) == isnull(affecting_limb))
-		if (surgery.surgery_flags & SURGERY_REQUIRE_LIMB)
-			target.balloon_alert(user, "patient has no [parse_zone(selected_zone)]!")
-		else
-			target.balloon_alert(user, "patient has \a [parse_zone(selected_zone)]!")
+	if ((surgery.surgery_flags & SURGERY_REQUIRE_LIMB) && isnull(affecting_limb))
+		target.balloon_alert(user, "patient has no [parse_zone(selected_zone)]!")
 		return
 
-	if (!isnull(affecting_limb) && surgery.requires_bodypart_type && !(affecting_limb.bodytype & surgery.requires_bodypart_type))
-		target.balloon_alert(user, "not the right type of limb!")
-		return
+	if (!isnull(affecting_limb))
+		if(surgery.requires_bodypart_type && !(affecting_limb.bodytype & surgery.requires_bodypart_type))
+			target.balloon_alert(user, "not the right type of limb!")
+			return
+		if(surgery.targetable_wound && !affecting_limb.get_wound_type(surgery.targetable_wound))
+			target.balloon_alert(user, "no wound to operate on!")
+			return
 
 	if (IS_IN_INVALID_SURGICAL_POSITION(target, surgery))
 		target.balloon_alert(user, "patient is not lying down!")
@@ -320,7 +320,7 @@
 	var/datum/surgery/procedure = new surgery.type(target, selected_zone, affecting_limb)
 	ADD_TRAIT(target, TRAIT_ALLOWED_HONORBOUND_ATTACK, type)
 
-	target.balloon_alert(user, "starting \"[lowertext(procedure.name)]\"")
+	target.balloon_alert(user, "starting \"[LOWER_TEXT(procedure.name)]\"")
 
 	user.visible_message(
 		span_notice("[user] drapes [parent] over [target]'s [parse_zone(selected_zone)] to prepare for surgery."),

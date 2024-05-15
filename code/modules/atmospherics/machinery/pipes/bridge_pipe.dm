@@ -13,6 +13,8 @@
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "bridge_center"
 
+	has_gas_visuals = FALSE
+
 /obj/machinery/atmospherics/pipe/bridge_pipe/set_init_directions()
 	switch(dir)
 		if(NORTH, SOUTH)

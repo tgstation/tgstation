@@ -15,6 +15,8 @@
 	construction_type = /obj/item/pipe/quaternary
 	pipe_state = "he_manifold4w"
 
+	has_gas_visuals = FALSE
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/set_init_directions()
 	initialize_directions = initial(initialize_directions)
 

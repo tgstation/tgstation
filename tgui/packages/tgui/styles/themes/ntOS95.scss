@@ -11,17 +11,17 @@ $dark-gray: #858585;
 $scrollbar-color-multiplier: 1;
 
 @use '../colors.scss' with (
-   $primary: #000000,
-   $good: #007c11,
-   $average: #f0ec11,
-   $bad: #db2828,
-   $label: #000000,
- );
+  $primary: #000000,
+  $good: #007c11,
+  $average: #f0ec11,
+  $bad: #db2828,
+  $label: #000000
+);
 @use '../base.scss' with (
-   $color-bg: #008081,
-   $color-bg-grad-spread: 0%,
-   $border-radius: 0,
- );
+  $color-bg: #008081,
+  $color-bg-grad-spread: 0%,
+  $border-radius: 0
+);
 
 .theme-ntOS95 {
   // Atomic classes

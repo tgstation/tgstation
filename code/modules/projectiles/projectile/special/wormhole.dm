@@ -6,7 +6,7 @@
 	pass_flags = PASSGLASS | PASSTABLE | PASSGRILLE | PASSMOB
 	//Weakref to the thing that shot us
 	var/datum/weakref/gun
-	color = "#33CCFF"
+	color = COLOR_BLUE_LIGHT
 	tracer_type = /obj/effect/projectile/tracer/wormhole
 	impact_type = /obj/effect/projectile/impact/wormhole
 	muzzle_type = /obj/effect/projectile/muzzle/wormhole
@@ -22,9 +22,12 @@
 		gun = casing.gun
 
 
-/obj/projectile/beam/wormhole/on_hit(atom/target)
+/obj/projectile/beam/wormhole/on_hit(atom/target, blocked = 0, pierce_hit)
 	var/obj/item/gun/energy/wormhole_projector/projector = gun.resolve()
 	if(!projector)
 		qdel(src)
-		return
+		return BULLET_ACT_BLOCK
+
+	. = ..()
+	playsound(loc, pick("sound/effects/portal_open1.ogg" , "sound/effects/portal_open2.ogg" , "sound/effects/portal_open3.ogg"), 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	projector.create_portal(src, get_turf(src))

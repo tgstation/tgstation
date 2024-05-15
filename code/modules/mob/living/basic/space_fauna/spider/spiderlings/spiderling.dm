@@ -39,6 +39,7 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume = 0.2) // they're small but you can hear 'em
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/spiderling_web)
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/fast_web)
 
 	// keep in mind we have infinite range (the entire pipenet is our playground, it's just a matter of random choice as to where we end up) so lower and upper both have their gives and takes.
 	// but, also remember the more time we aren't in a vent, the more susceptible we are to dying to anything and everything.
@@ -60,8 +61,7 @@
 /// Opportunistically hops in and out of vents, if it can find one. We aren't interested in attacking due to how weak we are, we gotta be quick and hidey.
 /datum/ai_controller/basic_controller/spiderling
 	blackboard = list(
-		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/larger, // Run away from mobs bigger than we are
-		BB_BASIC_MOB_FLEEING = TRUE,
+		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/larger, // Run away from mobs bigger than we are
 		BB_VENTCRAWL_COOLDOWN = 20 SECONDS, // enough time to get splatted while we're out in the open.
 		BB_TIME_TO_GIVE_UP_ON_VENT_PATHING = 30 SECONDS,
 	)

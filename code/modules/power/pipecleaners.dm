@@ -106,15 +106,13 @@ By design, d1 is the smallest direction and d2 is the highest
 		QDEL_NULL(stored)
 	return ..() // then go ahead and delete the pipe_cleaner
 
-/obj/structure/pipe_cleaner/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		var/turf/T = get_turf(loc)
-		if(T)
-			stored.forceMove(T)
-			stored = null
-		else
-			qdel(stored)
-	qdel(src)
+/obj/structure/pipe_cleaner/atom_deconstruct(disassembled = TRUE)
+	var/turf/location = get_turf(loc)
+	if(location)
+		stored.forceMove(location)
+		stored = null
+	else
+		qdel(stored)
 
 ///////////////////////////////////
 // General procedures
@@ -165,10 +163,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	stored.color = colorC
 	stored.update_appearance()
 
-/obj/structure/pipe_cleaner/AltClick(mob/living/user)
-	if(!user.can_perform_action(src))
-		return
+/obj/structure/pipe_cleaner/click_alt(mob/living/user)
 	cut_pipe_cleaner(user)
+	return CLICK_ACTION_SUCCESS
 
 ///////////////////////////////////////////////
 // The pipe cleaner coil object, used for laying pipe cleaner
@@ -197,7 +194,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	throw_speed = 3
 	throw_range = 5
 	mats_per_unit = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.1, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.1)
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines", "flogs")
 	attack_verb_simple = list("whip", "lash", "discipline", "flog")

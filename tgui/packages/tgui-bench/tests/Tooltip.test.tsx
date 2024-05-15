@@ -12,7 +12,7 @@ export const ListOfTooltips = () => {
         <Box as="span" backgroundColor="blue" fontSize="48px" m={1}>
           Tooltip #{i}
         </Box>
-      </Tooltip>
+      </Tooltip>,
     );
   }
 

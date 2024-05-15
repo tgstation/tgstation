@@ -1,7 +1,7 @@
 /obj/machinery/wish_granter
 	name = "wish granter"
 	desc = "You're not so sure about this, anymore..."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/machines/beacon.dmi'
 	icon_state = "syndbeacon"
 
 	use_power = NO_POWER_USE
