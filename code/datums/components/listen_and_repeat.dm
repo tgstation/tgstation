@@ -9,11 +9,6 @@
 /// the tone it should be said in
 #define MESSAGE_PITCH "pitch"
 
-GLOBAL_LIST_INIT(invalid_voice, list(
-	MESSAGE_VOICE = "invalid",
-	MESSAGE_PITCH = 0,
-))
-
 /// Simple element that will deterministically set a value based on stuff that the source has heard and will then compel the source to repeat it.
 /// Requires a valid AI Blackboard.
 /datum/component/listen_and_repeat
