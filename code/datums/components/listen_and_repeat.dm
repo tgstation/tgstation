@@ -25,6 +25,11 @@ GLOBAL_LIST_INIT(invalid_voice, list(
 	var/switch_phrase_probability = null
 	/// List of things that we've heard and will repeat.
 	var/list/speech_buffer = null
+	/// list we give speech that doesnt have a voice or a pitch
+	var/static/list/invalid_voice = list(
+		MESSAGE_VOICE = "invalid",
+		MESSAGE_PITCH = 0,
+	)
 
 /datum/component/listen_and_repeat/Initialize(list/desired_phrases, blackboard_key)
 	. = ..()
@@ -67,7 +72,7 @@ GLOBAL_LIST_INIT(invalid_voice, list(
 	else
 		speaker_sound = list()
 		var/atom/movable/movable_speaker = speaker
-		speaker_sound[MESSAGE_VOICE] = (movable_speaker.voice ? movable_speaker.voice : "invalid")
+		speaker_sound[MESSAGE_VOICE] = movable_speaker.voice || "invalid"
 		speaker_sound[MESSAGE_PITCH] = (movable_speaker.pitch && SStts.pitch_enabled ? movable_speaker.pitch : 0)
 
 	if(over_radio && prob(RADIO_IGNORE_CHANCE))

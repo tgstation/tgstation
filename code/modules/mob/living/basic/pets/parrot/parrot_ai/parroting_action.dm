@@ -1,4 +1,4 @@
-#define MAXIMUM_PARROT_PITCH 50
+#define MAXIMUM_PARROT_PITCH 24
 /// When a parrot... parrots...
 /datum/ai_planning_subtree/parrot_as_in_repeat
 	operational_datums = list(/datum/component/listen_and_repeat)
@@ -53,7 +53,7 @@
 	if(SStts.available_speakers.Find(speech["voice"]))
 		speaking_pawn.voice = speech["voice"]
 	if(speech["pitch"] && SStts.pitch_enabled)
-		speaking_pawn.pitch = min(speech["pitch"] + rand(12, 24), MAXIMUM_PARROT_PITCH)
+		speaking_pawn.pitch = min(speech["pitch"] + rand(6, 12), MAXIMUM_PARROT_PITCH)
 
 /datum/ai_behavior/perform_speech/parrot/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
