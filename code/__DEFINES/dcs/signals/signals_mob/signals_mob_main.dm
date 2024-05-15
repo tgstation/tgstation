@@ -217,3 +217,7 @@
 
 /// from /mob/proc/change_mob_type_unchecked() : ()
 #define COMSIG_MOB_CHANGED_TYPE "mob_changed_type"
+
+/// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced) iodk where it shuld go
+#define COMSIG_MOB_LIMP_CHECK "mob_limp_check"
+	#define COMPONENT_CANCEL_LIMP (1<<0)

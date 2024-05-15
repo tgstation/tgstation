@@ -494,8 +494,57 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "thrash")
 
+/obj/item/cane/crutch
+	name = "medical crutch"
+	desc = "A medical crutch used by people missing a leg. Not all that useful if you're missing both of them, though."
+	icon = 'icons/obj/weapons/staff.dmi'
+	icon_state = "crutch_med"
+	inhand_icon_state = "crutch_med"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	force = 12
+	throwforce = 8
+	w_class = WEIGHT_CLASS_BULKY
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5)
+	attack_verb_continuous = list("bludgeons", "whacks", "thrashes")
+	attack_verb_simple = list("bludgeon", "whack", "thrash")
+
+/obj/item/cane/crutch/equipped(mob/living/user, slot, initial)
+	. = ..()
+	if(slot & ITEM_SLOT_HANDS)
+		RegisterSignal(user, COMSIG_LIVING_LIMBLESS_SLOWDOWN, PROC_REF(handle_slowdown))
+		RegisterSignal(user, COMSIG_MOB_LIMP_CHECK, PROC_REF(handle_limping))
+		user.set_usable_legs()
+
+/obj/item/cane/crutch/dropped(mob/living/user, slot, initial)
+	. = ..()
+	if(!(slot & ITEM_SLOT_HANDS))
+		UnregisterSignal(user, list(COMSIG_LIVING_LIMBLESS_SLOWDOWN, COMSIG_MOB_LIMP_CHECK))
+		user.set_usable_legs()
+
+/obj/item/cane/crutch/proc/handle_slowdown(mob/living/user, limbless_slowdown)
+	SIGNAL_HANDLER
+	var/leg_amount = user.usable_legs
+	// Don't do anything if the number is equal (or higher) to the usual.
+	if(leg_amount >= user.default_num_legs)
+		return
+	// If we have at least one leg and it's less than the default, reduce slowdown by 60%.
+	if(leg_amount && (leg_amount < user.default_num_legs))
+		limbless_slowdown *= 0.4
+	return limbless_slowdown
+
+/obj/item/cane/crutch/proc/handle_limping(mob/living/user)
+	return COMPONENT_CANCEL_LIMP
+
+/obj/item/cane/crutch/wood
+	name = "wooden crutch"
+	desc = "A handmade crutch. Also makes a decent bludgeon if you need it."
+	icon_state = "crutch_wood"
+	inhand_icon_state = "crutch_wood"
+	custom_materials = list(/datum/material/wood = SMALL_MATERIAL_AMOUNT * 0.5)
+
 /obj/item/cane/white
-	name = "white cane"
+	name = "probing cane"
 	desc = "A cane traditionally used by the blind to help them see. Folds down to be easier to transport."
 	icon_state = "cane_white"
 	inhand_icon_state = "cane_white"

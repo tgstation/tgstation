@@ -2209,7 +2209,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		new_value = 0
 
 	. = usable_legs
-	usable_legs = new_value
+	if(!isnull(new_value))
+		usable_legs = new_value
 
 	if(new_value > .) // Gained leg usage.
 		REMOVE_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
@@ -2224,7 +2225,12 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		var/limbless_slowdown = (default_num_legs - usable_legs) * 3
 		if(!usable_legs && usable_hands < default_num_hands)
 			limbless_slowdown += (default_num_hands - usable_hands) * 3
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/limbless, multiplicative_slowdown = limbless_slowdown)
+		var/sig_result = SEND_SIGNAL(src, COMSIG_LIVING_LIMBLESS_SLOWDOWN, limbless_slowdown)
+		var/final_slowdown = sig_result ? sig_result : limbless_slowdown
+		if(final_slowdown == 0)
+			remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
+			return
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/limbless, multiplicative_slowdown = final_slowdown)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
 
