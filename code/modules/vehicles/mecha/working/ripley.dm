@@ -58,6 +58,7 @@
 
 /obj/vehicle/sealed/mecha/ripley/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/armor_plate, 3, /obj/item/stack/sheet/animalhide/goliath_hide, /datum/armor/armor_plate_ripley_goliath)
 
 /datum/armor/armor_plate_ripley_goliath
 	melee = 10
