@@ -127,6 +127,7 @@
 
 /// When something sets off a mine
 /obj/effect/mine/proc/triggermine(atom/movable/triggerer)
+	SIGNAL_HANDLER
 	if(triggered) //too busy detonating to detonate again
 		return
 	if(triggerer)
