@@ -5815,6 +5815,7 @@
 #include "code\modules\surgery\prosthetic_replacement.dm"
 #include "code\modules\surgery\repair_puncture.dm"
 #include "code\modules\surgery\revival.dm"
+#include "code\modules\surgery\sleeper_surgery.dm"
 #include "code\modules\surgery\stomachpump.dm"
 #include "code\modules\surgery\surgery.dm"
 #include "code\modules\surgery\surgery_helpers.dm"
