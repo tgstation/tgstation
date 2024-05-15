@@ -34,7 +34,7 @@
 
 	for(var/speech in desired_phrases)
 		if(!islist(desired_phrases[speech]) || !desired_phrases[speech][MESSAGE_VOICE] || !desired_phrases[speech][MESSAGE_PITCH])
-			LAZYSET(speech_buffer, speech, GLOB.invalid_voice)
+			LAZYSET(speech_buffer, speech, invalid_voice)
 			continue
 		LAZYSET(speech_buffer, speech, desired_phrases[speech])
 
@@ -63,7 +63,7 @@
 	var/list/speaker_sound
 
 	if(!SStts.tts_enabled || !ismovable(speaker))
-		speaker_sound = GLOB.invalid_voice
+		speaker_sound = invalid_voice
 	else
 		speaker_sound = list()
 		var/atom/movable/movable_speaker = speaker
