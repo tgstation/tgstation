@@ -799,7 +799,8 @@
 		human_bloodbag.updatehealth()
 	playsound(get_turf(human_bloodbag), 'sound/magic/staff_healing.ogg', 25)
 	new /obj/effect/temp_visual/cult/sparks(get_turf(human_bloodbag))
-	user.Beam(human_bloodbag, icon_state="sendbeam", time = 15)
+	if (user != human_bloodbag) //Dont create beam from the user to the user
+		user.Beam(human_bloodbag, icon_state="sendbeam", time = 15)
 	return TRUE
 
 /**
