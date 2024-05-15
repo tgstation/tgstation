@@ -505,6 +505,35 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "thrash")
 
+/obj/item/cane/get_examine_string(mob/user, thats)
+	. = ..()
+	. += span_notice("This item can be used to support your weight, preventing limping from any broken bones on your legs you may have.")
+
+/obj/item/cane/equipped(mob/living/user, slot, initial)
+	. = ..()
+	movement_support_add(user, slot, initial)
+
+/obj/item/cane/dropped(mob/living/user, slot, initial)
+	. = ..()
+	movement_support_del(user, slot, initial)
+
+/obj/item/cane/proc/movement_support_add(mob/living/user, slot, initial)
+	if(!(slot & ITEM_SLOT_HANDS))
+		return
+	RegisterSignal(user, COMSIG_MOB_LIMP_CHECK, PROC_REF(handle_limping))
+	user.set_usable_legs()
+	return TRUE
+
+/obj/item/cane/proc/movement_support_del(mob/living/user, slot, initial)
+	if((slot & ITEM_SLOT_HANDS))
+		return
+	UnregisterSignal(user, list(COMSIG_MOB_LIMP_CHECK))
+	user.set_usable_legs()
+	return TRUE
+
+/obj/item/cane/proc/handle_limping(mob/living/user)
+	return COMPONENT_CANCEL_LIMP
+
 /obj/item/cane/crutch
 	name = "medical crutch"
 	desc = "A medical crutch used by people missing a leg. Not all that useful if you're missing both of them, though."
@@ -520,18 +549,25 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("bludgeons", "whacks", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "thrash")
 
-/obj/item/cane/crutch/equipped(mob/living/user, slot, initial)
+/obj/item/cane/crutch/get_examine_string(mob/user, thats)
 	. = ..()
-	if(slot & ITEM_SLOT_HANDS)
-		RegisterSignal(user, COMSIG_LIVING_LIMBLESS_SLOWDOWN, PROC_REF(handle_slowdown))
-		RegisterSignal(user, COMSIG_MOB_LIMP_CHECK, PROC_REF(handle_limping))
-		user.set_usable_legs()
+	// tacked on after the cane string
+	. += span_notice("As a crutch, it can also help lessen the slowdown incurred by missing a leg.")
 
-/obj/item/cane/crutch/dropped(mob/living/user, slot, initial)
+/obj/item/cane/crutch/movement_support_add(mob/living/user, slot, initial)
 	. = ..()
-	if(!(slot & ITEM_SLOT_HANDS))
-		UnregisterSignal(user, list(COMSIG_LIVING_LIMBLESS_SLOWDOWN, COMSIG_MOB_LIMP_CHECK))
-		user.set_usable_legs()
+	if(!.)
+		return
+	RegisterSignal(user, COMSIG_LIVING_LIMBLESS_SLOWDOWN, PROC_REF(handle_slowdown))
+	user.set_usable_legs()
+	user.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
+
+/obj/item/cane/crutch/movement_support_del(mob/living/user, slot, initial)
+	. = ..()
+	if(!.)
+		return
+	UnregisterSignal(user, list(COMSIG_LIVING_LIMBLESS_SLOWDOWN, COMSIG_MOB_LIMP_CHECK))
+	REMOVE_TRAIT(user, TRAIT_WADDLING, REF(src))
 
 /obj/item/cane/crutch/proc/handle_slowdown(mob/living/user, limbless_slowdown)
 	SIGNAL_HANDLER
@@ -543,9 +579,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(leg_amount && (leg_amount < user.default_num_legs))
 		limbless_slowdown *= 0.4
 	return limbless_slowdown
-
-/obj/item/cane/crutch/proc/handle_limping(mob/living/user)
-	return COMPONENT_CANCEL_LIMP
 
 /obj/item/cane/crutch/wood
 	name = "wooden crutch"
@@ -578,6 +611,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 	ADD_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
+
+/obj/item/cane/white/handle_limping(mob/living/user)
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? COMPONENT_CANCEL_LIMP : null
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
