@@ -3,7 +3,7 @@
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "small_rune_1"
 	anchored = TRUE
-	layer = ABOVE_MOB_LAYER
+	layer = LOW_SIGIL_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	plane = GAME_PLANE
 
