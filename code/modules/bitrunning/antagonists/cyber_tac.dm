@@ -11,7 +11,7 @@
 		stack_trace("humans only for this position")
 		return
 
-	convert_agent(owner.current, /datum/outfit/cyber_police/tactical)
+	convert_agent()
 
 /datum/outfit/cyber_police/tactical
 	name = ROLE_CYBER_TAC
