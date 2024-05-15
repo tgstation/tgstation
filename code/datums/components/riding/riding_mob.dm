@@ -535,6 +535,7 @@
 
 /datum/component/riding/creature/raptor
 	require_minigame = TRUE
+	ride_check_flags = RIDER_NEEDS_ARM
 
 /datum/component/riding/creature/raptor/handle_specials()
 	. = ..()

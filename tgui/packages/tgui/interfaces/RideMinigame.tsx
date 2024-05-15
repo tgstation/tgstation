@@ -53,7 +53,7 @@ export const RideMinigame = (props) => {
     return () => clearInterval(intervalId);
   }, [CurrIcon, ChosenAnswer, CurrDisabled]);
   return (
-    <Window title="Raptor Data" width={318} height={220}>
+    <Window title="Click the opposite direction!" width={318} height={220}>
       <Window.Content>
         <Stack>
           <Stack.Item>

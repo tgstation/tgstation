@@ -7,6 +7,7 @@
 	health = 25
 	melee_damage_lower = 3
 	melee_damage_upper = 5
+	density = FALSE
 	can_breed = FALSE
 	move_resist = MOVE_RESIST_DEFAULT
 	ai_controller = /datum/ai_controller/basic_controller/baby_raptor
@@ -51,6 +52,7 @@
 	qdel(src)
 
 /mob/living/basic/mining/raptor/baby_raptor/black
+	name = "baby black raptor"
 	icon_state = "baby_black"
 	icon_living = "baby_black"
 	icon_dead = "baby_black_dead"
@@ -58,36 +60,42 @@
 	roll_rate = 10
 
 /mob/living/basic/mining/raptor/baby_raptor/red
+	name = "baby red raptor"
 	icon_state = "baby_red"
 	icon_living = "baby_red"
 	icon_dead = "baby_red_dead"
 	growth_path = /mob/living/basic/mining/raptor/red
 
 /mob/living/basic/mining/raptor/baby_raptor/purple
+	name = "baby purple raptor"
 	icon_state = "baby_purple"
 	icon_living = "baby_purple"
 	icon_dead = "baby_purple_dead"
 	growth_path = /mob/living/basic/mining/raptor/purple
 
 /mob/living/basic/mining/raptor/baby_raptor/white
+	name = "baby white raptor"
 	icon_state = "baby_white"
 	icon_living = "baby_white"
 	icon_dead = "baby_white_dead"
 	growth_path = /mob/living/basic/mining/raptor/white
 
 /mob/living/basic/mining/raptor/baby_raptor/yellow
+	name = "baby yellow raptor"
 	icon_state = "baby_yellow"
 	icon_living = "baby_yellow"
 	icon_dead = "baby_yellow_dead"
 	growth_path = /mob/living/basic/mining/raptor/yellow
 
 /mob/living/basic/mining/raptor/baby_raptor/green
+	name = "baby green raptor"
 	icon_state = "baby_green"
 	icon_living = "baby_green"
 	icon_dead = "baby_green_dead"
 	growth_path = /mob/living/basic/mining/raptor/green
 
 /mob/living/basic/mining/raptor/baby_raptor/blue
+	name = "baby blue raptor"
 	icon_state = "baby_blue"
 	icon_living = "baby_blue"
 	icon_dead = "baby_blue_dead"

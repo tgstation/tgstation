@@ -25,8 +25,8 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
 	speed = 2
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	maxHealth = 250
-	health = 250
+	maxHealth = 400
+	health = 400
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	sentience_type = SENTIENCE_BOSS
@@ -211,8 +211,8 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	icon_state = "raptor_green"
 	icon_living = "raptor_green"
 	icon_dead = "raptor_green_dead"
-	maxHealth = 320
-	health = 320
+	maxHealth = 460
+	health = 460
 	raptor_color = RAPTOR_GREEN
 	dex_description = "A tough breed of raptor, made to withstand the harshest of punishment and to laugh in the face of pain, \
 		This breed is able to withstand more beating than its peers."
@@ -246,8 +246,8 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	icon_state = "raptor_black"
 	icon_living = "raptor_black"
 	icon_dead = "raptor_black_dead"
-	maxHealth = 320
-	health = 320
+	maxHealth = 460
+	health = 460
 	speed = 1
 	ridable_component = /datum/component/riding/creature/raptor/fast
 	melee_damage_lower = 20
