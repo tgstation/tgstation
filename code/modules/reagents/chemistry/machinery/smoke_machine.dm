@@ -143,7 +143,7 @@
 		balloon_alert(user, "turn off first!")
 		return
 
-	if(default_deconstruction_screwdriver(user, "smoke0", "smoke0", tool))
+	if(default_deconstruction_screwdriver(user, "smoke0-o", "smoke0", tool))
 		update_appearance(UPDATE_ICON_STATE)
 		return ITEM_INTERACT_SUCCESS
 
