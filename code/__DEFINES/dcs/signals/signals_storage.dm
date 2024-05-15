@@ -9,4 +9,4 @@
 #define COMSIG_STORAGE_STORED_ITEM "storage_storing_item"
 
 /// Sent to the STORAGE when an ITEM is REMOVED. (obj/item, atom, silent)
-#define COMSIG_STORAGE_REMOVED_ITEM "stoarge_removing_item"
+#define COMSIG_STORAGE_REMOVED_ITEM "storage_removing_item"

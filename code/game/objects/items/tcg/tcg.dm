@@ -193,12 +193,6 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	var/static/radial_shuffle = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_shuffle")
 	var/static/radial_pickup = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup")
 
-/obj/item/tcgcard_deck/Initialize(mapload)
-	. = ..()
-	var/datum/storage/storage_datum = create_storage(storage_type = /datum/storage/tcg)
-	RegisterSignal(storage_datum, COMSIG_STORAGE_REMOVED_ITEM, PROC_REF(card_removed_from_storage))
-
-
 /obj/item/tcgcard_deck/update_icon_state()
 	if(!flipped)
 		icon_state = "[base_icon_state]_up"
@@ -315,12 +309,11 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		nu_card.flipped = flipped
 		nu_card.update_icon_state()
 	update_icon_state()
-/**
- * Signal handler for COMSIG_STORAGE_REMOVED_ITEM. Flips the card to our flipped state, and qdels src if our storage is empty.
- */
-/obj/item/tcgcard_deck/proc/card_removed_from_storage(datum/storage/tcg/signal_source, obj/item/thing, atom/remove_to_loc, silent)
-	SIGNAL_HANDLER
 
+/obj/item/tcgcard_deck/on_storage_remove(datum/storage/storage_datum, obj/item/thing, atom/remove_to_loc, silent = FALSE)
+
+	if (istype(thing, /obj/item/tcgcard))
+		return
 	var/obj/item/tcgcard/card = thing
 	card.flipped = flipped
 	card.update_appearance(UPDATE_ICON_STATE)

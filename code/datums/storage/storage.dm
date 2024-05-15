@@ -451,6 +451,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return FALSE
 
 	SEND_SIGNAL(parent, COMSIG_STORAGE_STORED_ITEM, to_insert, user, force)
+	parent.on_storage_insert(src, to_insert, user, force)
 	to_insert.forceMove(real_location)
 	item_insertion_feedback(user, to_insert, override)
 	parent.update_appearance()
@@ -527,8 +528,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/attempt_remove(obj/item/thing, atom/remove_to_loc, silent = FALSE)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	SEND_SIGNAL(parent, COMSIG_STORAGE_REMOVED_ITEM, thing, remove_to_loc, silent)
-
 	if(istype(thing) && ismob(parent.loc))
 		var/mob/mob_parent = parent.loc
 		thing.dropped(mob_parent, /*silent = */TRUE)
@@ -544,6 +543,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(animated)
 		animate_parent()
+
+	SEND_SIGNAL(parent, COMSIG_STORAGE_REMOVED_ITEM, thing, remove_to_loc, silent)
+	parent.on_storage_remove(src, thing, remove_to_loc, silent)
 
 	refresh_views()
 	parent.update_appearance()
