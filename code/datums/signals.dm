@@ -121,6 +121,6 @@
 	// AKA: No you can't cancel the signal reception of another object by doing an unregister in the same signal.
 	var/list/queued_calls = list()
 	for(var/datum/listening_datum as anything in target)
-		queued_calls[listening_datum] = listening_datum._signal_procs[src][sigtype]
-	for(var/datum/listening_datum as anything in queued_calls)
-		. |= call(listening_datum, queued_calls[listening_datum])(arglist(arguments))
+		queued_calls += list(listening_datum, listening_datum._signal_procs[src][sigtype])
+	for(var/list/listening_data as anything in queued_calls)
+		. |= call(listening_data[1], listening_data[2])(arglist(arguments))
