@@ -7,24 +7,16 @@ import { isJobOrNameMatch, sortByOrbiters } from './helpers';
 import { OrbitData, ViewMode } from './types';
 
 type Props = {
-  autoObserve: boolean;
-  searchQuery: string;
-  setAutoObserve: Dispatch<SetStateAction<boolean>>;
-  setSearchQuery: Dispatch<SetStateAction<string>>;
-  setViewMode: Dispatch<SetStateAction<ViewMode>>;
-  viewMode: ViewMode;
+  autoObserve: [boolean, Dispatch<SetStateAction<boolean>>];
+  searchQuery: [string, Dispatch<SetStateAction<string>>];
+  viewMode: [ViewMode, Dispatch<SetStateAction<ViewMode>>];
 };
 
 /** Search bar for the orbit ui. Has a few buttons to switch between view modes and auto-observe */
 export function OrbitSearch(props: Props) {
-  const {
-    autoObserve,
-    searchQuery,
-    setAutoObserve,
-    setSearchQuery,
-    setViewMode,
-    viewMode,
-  } = props;
+  const [autoObserve, setAutoObserve] = props.autoObserve;
+  const [searchQuery, setSearchQuery] = props.searchQuery;
+  const [viewMode, setViewMode] = props.viewMode;
 
   const { act, data } = useBackend<OrbitData>();
 

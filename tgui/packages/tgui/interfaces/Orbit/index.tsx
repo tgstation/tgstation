@@ -8,9 +8,9 @@ import { OrbitSearch } from './OrbitSearch';
 import { ViewMode } from './types';
 
 export function Orbit(props) {
-  const [autoObserve, setAutoObserve] = useState(false);
-  const [viewMode, setViewMode] = useState<ViewMode>(VIEWMODE.Health);
-  const [searchQuery, setSearchQuery] = useState('');
+  const autoObserveState = useState(false);
+  const searchQueryState = useState('');
+  const viewModeState = useState<ViewMode>(VIEWMODE.Health);
 
   return (
     <Window title="Orbit" width={400} height={550}>
@@ -18,19 +18,16 @@ export function Orbit(props) {
         <Stack fill vertical>
           <Stack.Item>
             <OrbitSearch
-              autoObserve={autoObserve}
-              searchQuery={searchQuery}
-              setAutoObserve={setAutoObserve}
-              setSearchQuery={setSearchQuery}
-              setViewMode={setViewMode}
-              viewMode={viewMode}
+              autoObserve={autoObserveState}
+              searchQuery={searchQueryState}
+              viewMode={viewModeState}
             />
           </Stack.Item>
           <Stack.Item mt={0.2} grow>
             <ObservableContent
-              autoObserve={autoObserve}
-              searchQuery={searchQuery}
-              viewMode={viewMode}
+              autoObserve={autoObserveState[0]}
+              searchQuery={searchQueryState[0]}
+              viewMode={viewModeState[0]}
             />
           </Stack.Item>
         </Stack>
