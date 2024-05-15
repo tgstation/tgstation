@@ -14,7 +14,7 @@ type Props = {
 };
 
 /** Each button on the observable section */
-export function ObservableItem(props: Props) {
+export function OrbitItem(props: Props) {
   const { item, autoObserve, viewMode, color } = props;
 
   const { act } = useBackend<OrbitData>();

@@ -3,8 +3,8 @@ import { Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';
 
 import { VIEWMODE } from './constants';
-import { ObservableContent } from './ObservableContent';
-import { OrbitSearch } from './OrbitSearch';
+import { OrbitContent } from './OrbitContent';
+import { OrbitSearchBar } from './OrbitSearchBar';
 import { ViewMode } from './types';
 
 export function Orbit(props) {
@@ -17,14 +17,14 @@ export function Orbit(props) {
       <Window.Content scrollable>
         <Stack fill vertical>
           <Stack.Item>
-            <OrbitSearch
+            <OrbitSearchBar
               autoObserve={autoObserveState}
               searchQuery={searchQueryState}
               viewMode={viewModeState}
             />
           </Stack.Item>
           <Stack.Item mt={0.2} grow>
-            <ObservableContent
+            <OrbitContent
               autoObserve={autoObserveState[0]}
               searchQuery={searchQueryState[0]}
               viewMode={viewModeState[0]}

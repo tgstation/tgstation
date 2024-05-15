@@ -4,7 +4,7 @@ import { useBackend } from '../../backend';
 import { NoticeBox, Section, Stack, Table, Tooltip } from '../../components';
 import { ANTAG2COLOR } from './constants';
 import { getAntagCategories } from './helpers';
-import { ObservableSection } from './ObservableSection';
+import { OrbitCollapsible } from './OrbitCollapsible';
 import { AntagGroup, Observable, OrbitData, ViewMode } from './types';
 
 type Props = {
@@ -24,7 +24,7 @@ type ContentSection = {
  * Renders a scrollable section replete collapsibles for each
  * observable group.
  */
-export function ObservableContent(props: Props) {
+export function OrbitContent(props: Props) {
   const { autoObserve, searchQuery, viewMode } = props;
 
   const { act, data } = useBackend<OrbitData>();
@@ -85,7 +85,7 @@ export function ObservableContent(props: Props) {
         ))}
 
         {antagGroups.map(([title, members]) => (
-          <ObservableSection
+          <OrbitCollapsible
             autoObserve={autoObserve}
             color={ANTAG2COLOR[title] || 'bad'}
             key={title}
@@ -97,7 +97,7 @@ export function ObservableContent(props: Props) {
         ))}
 
         {sections.map((section) => (
-          <ObservableSection
+          <OrbitCollapsible
             autoObserve={autoObserve}
             color={section.color}
             key={section.title}

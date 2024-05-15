@@ -5,8 +5,8 @@ import {
   sortByDepartment,
   sortByDisplayName,
 } from './helpers';
-import { ObservableItem } from './ObservableItem';
-import { ObservableTooltip } from './ObservableTooltip';
+import { OrbitItem } from './OrbitItem';
+import { OrbitTooltip } from './OrbitTooltip';
 import { Observable, ViewMode } from './types';
 
 type Props = {
@@ -22,7 +22,7 @@ type Props = {
  * Displays a collapsible with a map of observable items.
  * Filters the results if there is a provided search query.
  */
-export function ObservableSection(props: Props) {
+export function OrbitCollapsible(props: Props) {
   const {
     autoObserve,
     color,
@@ -56,7 +56,7 @@ export function ObservableSection(props: Props) {
       <Flex wrap>
         {filteredSection.map((item) => {
           const content = (
-            <ObservableItem
+            <OrbitItem
               autoObserve={autoObserve}
               color={color}
               item={item}
@@ -71,7 +71,7 @@ export function ObservableSection(props: Props) {
 
           return (
             <Tooltip
-              content={<ObservableTooltip item={item} />}
+              content={<OrbitTooltip item={item} />}
               key={item.ref}
               position="bottom-start"
             >

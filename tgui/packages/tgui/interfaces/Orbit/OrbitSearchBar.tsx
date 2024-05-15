@@ -13,7 +13,7 @@ type Props = {
 };
 
 /** Search bar for the orbit ui. Has a few buttons to switch between view modes and auto-observe */
-export function OrbitSearch(props: Props) {
+export function OrbitSearchBar(props: Props) {
   const [autoObserve, setAutoObserve] = props.autoObserve;
   const [searchQuery, setSearchQuery] = props.searchQuery;
   const [viewMode, setViewMode] = props.viewMode;
