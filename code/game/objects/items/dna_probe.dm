@@ -59,9 +59,9 @@
 		return
 	if((allowed_scans & DNA_PROBE_SCAN_PLANTS) && target.GetComponent(/datum/component/plant_growing))
 		var/obj/item/seeds/seed = locate(/obj/item/seeds) in target.contents
-		if(seed)
+		var/datum/component/growth_information/info = seed?.GetComponent(/datum/component/growth_information)
+		if(QDELETED(seed) || QDELETED(info))
 			return
-		var/datum/component/growth_information/info = seed.GetComponent(/datum/component/growth_information)
 		if(our_vault.plant_dna[seed.type])
 			to_chat(user, span_notice("Plant data is already present in vault storage."))
 			return
