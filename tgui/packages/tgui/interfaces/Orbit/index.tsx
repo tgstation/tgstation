@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import { Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';
 
@@ -8,30 +8,42 @@ import { OrbitSearchBar } from './OrbitSearchBar';
 import { ViewMode } from './types';
 
 export function Orbit(props) {
-  const autoObserveState = useState(false);
-  const searchQueryState = useState('');
-  const viewModeState = useState<ViewMode>(VIEWMODE.Health);
+  const [autoObserve, setAutoObserve] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState<ViewMode>(VIEWMODE.Health);
 
   return (
-    <Window title="Orbit" width={400} height={550}>
-      <Window.Content scrollable>
-        <Stack fill vertical>
-          <Stack.Item>
-            <OrbitSearchBar
-              autoObserve={autoObserveState}
-              searchQuery={searchQueryState}
-              viewMode={viewModeState}
-            />
-          </Stack.Item>
-          <Stack.Item mt={0.2} grow>
-            <OrbitContent
-              autoObserve={autoObserveState[0]}
-              searchQuery={searchQueryState[0]}
-              viewMode={viewModeState[0]}
-            />
-          </Stack.Item>
-        </Stack>
-      </Window.Content>
-    </Window>
+    <OrbitContext.Provider
+      value={{
+        autoObserve,
+        setAutoObserve,
+        searchQuery,
+        setSearchQuery,
+        viewMode,
+        setViewMode,
+      }}
+    >
+      <Window title="Orbit" width={400} height={550}>
+        <Window.Content scrollable>
+          <Stack fill vertical>
+            <Stack.Item>
+              <OrbitSearchBar />
+            </Stack.Item>
+            <Stack.Item mt={0.2} grow>
+              <OrbitContent />
+            </Stack.Item>
+          </Stack>
+        </Window.Content>
+      </Window>
+    </OrbitContext.Provider>
   );
 }
+
+export const OrbitContext = createContext({
+  autoObserve: false,
+  setAutoObserve: (bool: boolean) => {},
+  searchQuery: '',
+  setSearchQuery: (str: string) => {},
+  viewMode: VIEWMODE.Health as ViewMode,
+  setViewMode: (mode: ViewMode) => {},
+});

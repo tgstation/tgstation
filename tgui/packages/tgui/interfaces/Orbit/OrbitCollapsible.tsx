@@ -1,4 +1,7 @@
+import { useContext } from 'react';
+
 import { Collapsible, Flex, Tooltip } from '../../components';
+import { OrbitContext } from '.';
 import { VIEWMODE } from './constants';
 import {
   isJobOrNameMatch,
@@ -7,15 +10,12 @@ import {
 } from './helpers';
 import { OrbitItem } from './OrbitItem';
 import { OrbitTooltip } from './OrbitTooltip';
-import { Observable, ViewMode } from './types';
+import { Observable } from './types';
 
 type Props = {
-  autoObserve: boolean;
   color?: string;
-  searchQuery: string;
   section: Observable[];
   title: string;
-  viewMode: ViewMode;
 };
 
 /**
@@ -23,14 +23,9 @@ type Props = {
  * Filters the results if there is a provided search query.
  */
 export function OrbitCollapsible(props: Props) {
-  const {
-    autoObserve,
-    color,
-    searchQuery,
-    section = [],
-    title,
-    viewMode,
-  } = props;
+  const { color, section = [], title } = props;
+
+  const { autoObserve, searchQuery, viewMode } = useContext(OrbitContext);
 
   const filteredSection = section.filter((observable) =>
     isJobOrNameMatch(observable, searchQuery),

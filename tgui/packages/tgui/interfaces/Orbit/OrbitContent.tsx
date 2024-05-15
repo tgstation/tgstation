@@ -5,13 +5,7 @@ import { NoticeBox, Section, Stack, Table, Tooltip } from '../../components';
 import { ANTAG2COLOR } from './constants';
 import { getAntagCategories } from './helpers';
 import { OrbitCollapsible } from './OrbitCollapsible';
-import { AntagGroup, Observable, OrbitData, ViewMode } from './types';
-
-type Props = {
-  autoObserve: boolean;
-  searchQuery: string;
-  viewMode: ViewMode;
-};
+import { AntagGroup, Observable, OrbitData } from './types';
 
 type ContentSection = {
   content: Observable[];
@@ -24,9 +18,7 @@ type ContentSection = {
  * Renders a scrollable section replete collapsibles for each
  * observable group.
  */
-export function OrbitContent(props: Props) {
-  const { autoObserve, searchQuery, viewMode } = props;
-
+export function OrbitContent(props) {
   const { act, data } = useBackend<OrbitData>();
   const { antagonists = [], critical = [] } = data;
 
@@ -86,25 +78,19 @@ export function OrbitContent(props: Props) {
 
         {antagGroups.map(([title, members]) => (
           <OrbitCollapsible
-            autoObserve={autoObserve}
             color={ANTAG2COLOR[title] || 'bad'}
             key={title}
-            searchQuery={searchQuery}
             section={members}
             title={title}
-            viewMode={viewMode}
           />
         ))}
 
         {sections.map((section) => (
           <OrbitCollapsible
-            autoObserve={autoObserve}
             color={section.color}
             key={section.title}
-            searchQuery={searchQuery}
             section={section.content}
             title={section.title}
-            viewMode={viewMode}
           />
         ))}
       </Stack>

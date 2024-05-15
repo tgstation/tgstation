@@ -1,22 +1,22 @@
-import { Dispatch, SetStateAction } from 'react';
+import { useContext } from 'react';
 
 import { useBackend } from '../../backend';
 import { Button, Icon, Input, Section, Stack } from '../../components';
+import { OrbitContext } from '.';
 import { VIEWMODE } from './constants';
 import { isJobOrNameMatch, sortByOrbiters } from './helpers';
-import { OrbitData, ViewMode } from './types';
-
-type Props = {
-  autoObserve: [boolean, Dispatch<SetStateAction<boolean>>];
-  searchQuery: [string, Dispatch<SetStateAction<string>>];
-  viewMode: [ViewMode, Dispatch<SetStateAction<ViewMode>>];
-};
+import { OrbitData } from './types';
 
 /** Search bar for the orbit ui. Has a few buttons to switch between view modes and auto-observe */
-export function OrbitSearchBar(props: Props) {
-  const [autoObserve, setAutoObserve] = props.autoObserve;
-  const [searchQuery, setSearchQuery] = props.searchQuery;
-  const [viewMode, setViewMode] = props.viewMode;
+export function OrbitSearchBar(props) {
+  const {
+    autoObserve,
+    searchQuery,
+    viewMode,
+    setAutoObserve,
+    setSearchQuery,
+    setViewMode,
+  } = useContext(OrbitContext);
 
   const { act, data } = useBackend<OrbitData>();
 
