@@ -391,6 +391,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/give/highfive
 	additional_desc_text = "Click this alert to slap it."
 	screentip_override_text = "High Five"
+	examinable = FALSE
 	/// Tracks active "to slow"ing so we can't spam click
 	var/too_slowing_this_guy = FALSE
 
@@ -451,6 +452,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/give/hand
 	screentip_override_text = "Take Hand"
+	examinable = FALSE
 
 /atom/movable/screen/alert/give/hand/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
 	additional_desc_text = "Click this alert to take it and let [offerer.p_them()] pull you around!"
