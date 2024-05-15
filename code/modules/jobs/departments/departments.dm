@@ -102,7 +102,10 @@
 	label_class = "engineering"
 	ui_color = "#dfb567"
 	nation_prefixes = list("Atomo", "Engino", "Power", "Teleco")
-	department_delivery_areas = list(/area/station/engineering/main)
+	department_delivery_areas = list(
+		/area/station/engineering/main,
+		/area/station/engineering/lobby,
+	)
 	associated_cargo_groups = list("Engineering", "Engine Construction", "Canisters & Materials")
 	head_of_staff_access = ACCESS_CE
 	department_access = REGION_ACCESS_ENGINEERING
@@ -135,7 +138,11 @@
 	label_class = "science"
 	ui_color = "#c973c9"
 	nation_prefixes = list("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
-	department_delivery_areas = list(/area/station/science/research)
+	department_delivery_areas = list(
+		/area/station/science/research,
+		/area/station/science/lobby,
+		/area/station/science/lab,
+		)
 	associated_cargo_groups = list("Science", "Livestock", "Canisters & Materials")
 	head_of_staff_access = ACCESS_RD
 	department_access = REGION_ACCESS_RESEARCH
