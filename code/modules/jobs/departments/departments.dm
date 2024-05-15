@@ -142,7 +142,7 @@
 		/area/station/science/research,
 		/area/station/science/lobby,
 		/area/station/science/lab,
-		)
+	)
 	associated_cargo_groups = list("Science", "Livestock", "Canisters & Materials")
 	head_of_staff_access = ACCESS_RD
 	department_access = REGION_ACCESS_RESEARCH
