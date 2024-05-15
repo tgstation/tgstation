@@ -5,5 +5,8 @@
 /// Sent after dumping into some other storage object: (atom/dest_object, mob/user)
 #define COMSIG_STORAGE_DUMP_POST_TRANSFER "storage_dump_into_storage"
 
-/// Sent to the STORAGE when an ITEM is STORED INSIDE.
+/// Sent to the STORAGE when an ITEM is STORED INSIDE. (obj/item, mob, force)
 #define COMSIG_STORAGE_STORED_ITEM "storage_storing_item"
+
+/// Sent to the STORAGE when an ITEM is REMOVED. (obj/item, atom, silent)
+#define COMSIG_STORAGE_REMOVED_ITEM "stoarge_removing_item"
