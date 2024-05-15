@@ -256,3 +256,25 @@
 	name = "wand of nothing"
 	desc = "It's not just a stick, it's a MAGIC stick?"
 	ammo_type = /obj/item/ammo_casing/magic/nothing
+
+
+/////////////////////////////////////
+//WAND OF SHRINKING
+/////////////////////////////////////
+
+/obj/item/gun/magic/wand/shrink
+	name = "wand of shrinking"
+	desc = "Feel the tiny eldritch terror of an itty... bitty... head!"
+	ammo_type = /obj/item/ammo_casing/magic/shrink/wand
+	icon_state = "shrinkwand"
+	base_icon_state = "shrinkwand"
+	fire_sound = 'sound/magic/staff_shrink.ogg'
+	max_charges = 10 //10, 5, 5, 4
+	no_den_usage = TRUE
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/gun/magic/wand/shrink/zap_self(mob/living/user)
+	to_chat(user, span_notice("The world grows large..."))
+	charges--
+	user.AddComponent(/datum/component/shrink, -1) // small forever
+	return ..()
