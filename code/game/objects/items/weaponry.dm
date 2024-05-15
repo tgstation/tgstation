@@ -505,7 +505,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "thrash")
 
-/obj/item/cane/get_examine_string(mob/user, thats)
+/obj/item/cane/examine(mob/user, thats)
 	. = ..()
 	. += span_notice("This item can be used to support your weight, preventing limping from any broken bones on your legs you may have.")
 
@@ -549,7 +549,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("bludgeons", "whacks", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "thrash")
 
-/obj/item/cane/crutch/get_examine_string(mob/user, thats)
+/obj/item/cane/crutch/examine(mob/user, thats)
 	. = ..()
 	// tacked on after the cane string
 	. += span_notice("As a crutch, it can also help lessen the slowdown incurred by missing a leg.")
