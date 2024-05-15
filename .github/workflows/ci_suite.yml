@@ -220,6 +220,7 @@ jobs:
     name: Check Alternate Tests
     needs: [run_alternate_tests]
     runs-on: ubuntu-22.04
+    timeout-minutes: 5
     steps:
       - run: echo Alternate tests passed.
 
