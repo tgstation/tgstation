@@ -113,6 +113,8 @@
 		passtable_off(human, SPECIES_FLIGHT_TRAIT)
 		close_wings()
 
+	human.refresh_gravity()
+
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/external/wings/functional/proc/open_wings()
 	var/datum/bodypart_overlay/mutant/wings/functional/overlay = bodypart_overlay
