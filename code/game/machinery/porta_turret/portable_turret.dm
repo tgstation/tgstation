@@ -432,14 +432,11 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/process()
 	//the main machinery process
-	if(has_cover && cover == null && anchored) //if it has no cover and is anchored
-		if(machine_stat & BROKEN) //if the turret is borked
-			qdel(cover) //delete its cover, assuming it has one. Workaround for a pesky little bug
-		else
-			cover = new /obj/machinery/porta_turret_cover(loc) //if the turret has no cover and is anchored, give it a cover
-			cover.parent_turret = src //assign the cover its parent_turret, which would be this (src)
-			if(raised)
-				cover.icon_state = "openTurretCover"
+	if(has_cover && cover == null && anchored && !(machine_stat & BROKEN)) //if it has no cover and is anchored
+		cover = new /obj/machinery/porta_turret_cover(loc) //if the turret has no cover and is anchored, give it a cover
+		cover.parent_turret = src //assign the cover its parent_turret, which would be this (src)
+		if(raised)
+			cover.icon_state = "openTurretCover"
 
 	if(!on || (machine_stat & (NOPOWER|BROKEN)))
 		return PROCESS_KILL
