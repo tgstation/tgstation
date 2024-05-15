@@ -23,6 +23,7 @@ jobs:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Run Linters
     runs-on: ubuntu-22.04
+    timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v4
@@ -133,6 +134,7 @@ jobs:
     name: Compile Maps
     needs: [collect_data]
     runs-on: ubuntu-22.04
+    timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v4
@@ -156,6 +158,7 @@ jobs:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Collect data for other tasks
     runs-on: ubuntu-22.04
+    timeout-minutes: 5
     outputs:
       maps: ${{ steps.map_finder.outputs.maps }}
       alternate_tests: ${{ steps.alternate_test_finder.outputs.alternate_tests }}
@@ -185,6 +188,7 @@ jobs:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Integration Tests
     needs: [collect_data]
+
     strategy:
       fail-fast: false
       matrix:
@@ -223,6 +227,7 @@ jobs:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') && (always() && (!failure() && !cancelled())) )
     needs: [run_all_tests, run_alternate_tests]
     name: Compare Screenshot Tests
+    timeout-minutes: 15
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -261,6 +266,7 @@ jobs:
     name: Windows Build
     needs: [collect_data]
     runs-on: windows-latest
+    timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v4
