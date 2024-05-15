@@ -1,0 +1,11 @@
+author: "tmyqlfpir"
+delete-after: True
+changes:
+  - qol: "Add tooltips to circuit editor buttons"
+  - qol: "Add grid alignment mode to circuit editor"
+  - rscadd: "Added new compare health state component"
+  - rscadd: "Added new NTNet send list literal component"
+  - rscadd: "Added new toggle component"
+  - qol: "Added activity toggle to voice activator component"
+  - qol: "Added quiet mode to speech component"
+  - qol: "NTNet send component will not use power/trigger if NTNet is offline"

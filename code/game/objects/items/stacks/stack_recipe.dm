@@ -47,6 +47,7 @@
 	src.res_amount = res_amount
 	src.max_res_amount = max_res_amount
 	src.time = time
+	src.crafting_flags = crafting_flags
 	src.placement_checks = placement_checks
 	src.trait_booster = trait_booster
 	src.trait_modifier = trait_modifier
@@ -63,15 +64,13 @@
 	res_amount = 1,
 	max_res_amount = 1,
 	time = 0,
-	one_per_turf = FALSE,
-	on_solid_ground = FALSE,
-	window_checks = FALSE,
+	crafting_flags = CRAFT_CHECK_DENSITY,
 	placement_checks = NONE,
 	trait_booster,
 	trait_modifier = 1,
+	category,
 	desc,
 	required_noun,
-	category,
 )
 	if(category)
 		src.category = category

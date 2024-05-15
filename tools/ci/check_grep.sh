@@ -288,6 +288,12 @@ if [ "$pcre2_support" -eq 1 ]; then
 		echo -e "${RED}ERROR: Initialize override without 'mapload' argument.${NC}"
 		st=1
 	fi;
+	part "pronoun helper spellcheck"
+	if $grep -P '%PRONOUN_(?!they|They|their|Their|theirs|Theirs|them|Them|have|are|were|do|theyve|Theyve|theyre|Theyre|s|es)' $code_files; then
+		echo
+		echo -e "${RED}ERROR: Invalid pronoun helper found.${NC}"
+		st=1
+	fi;
 else
 	echo -e "${RED}pcre2 not supported, skipping checks requiring pcre2"
 	echo -e "if you want to run these checks install ripgrep with pcre2 support.${NC}"

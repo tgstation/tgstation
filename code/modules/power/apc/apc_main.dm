@@ -704,6 +704,8 @@
 /obj/machinery/power/apc/proc/draw_energy(amount)
 	var/grid_used = min(terminal?.surplus(), amount)
 	terminal?.add_load(grid_used)
+	if(QDELETED(cell))
+		return grid_used
 	var/cell_used = 0
 	if(amount > grid_used)
 		cell_used += cell.use(amount - grid_used, force = TRUE)

@@ -119,6 +119,9 @@
 		"mouse" = TRUE,
 		"rabbit" = TRUE,
 		"repairbot" = TRUE,
+		"kitten" = TRUE,
+		"puppy" = TRUE,
+		"spider" = TRUE,
 	)
 	/// List of all available card overlays.
 	var/static/list/possible_overlays = list(

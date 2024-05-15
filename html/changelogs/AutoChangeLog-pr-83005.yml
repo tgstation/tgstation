@@ -1,4 +1,0 @@
-author: "Ikalpo"
-delete-after: True
-changes:
-  - bugfix: "Stage 2 singularities should no longer escape containment"
