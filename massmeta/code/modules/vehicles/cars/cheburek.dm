@@ -18,7 +18,7 @@
 	var/gopgear = 3 // nowadays it has 3(actually 4) five-speed gearbox, someday it had 5... and also R-ocket one
 	var/gearbox_failure_count = 1 // value between 1..10, 10 - means fully broken
 	/// headlights of Cheburek, front white-yellow(Done but have some [BUG]'s to resolve!) and rear deep-red(TODO)
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_range = 8
 	light_power = 2
 	light_on = FALSE

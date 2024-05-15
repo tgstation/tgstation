@@ -592,7 +592,7 @@
 	toggle_hardsuit_mode(user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		C.head_update(src, forced = 1)
+		C.update_worn_head(src, forced = 1)
 	icon_state = "hardsuit[on]-[hardsuit_type]"
 	worn_icon_state = "hardsuit[on]-[hardsuit_type]"
 	user.update_worn_head()
@@ -675,7 +675,7 @@
 	slowdown = 0
 	armor_type = /datum/armor/hardsuit_syndi_admin
 	cell = /obj/item/stock_parts/cell/infinite
-	clothing_flags = list(TRAIT_SHOVE_KNOCKDOWN_BLOCKED)
+	clothing_flags = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 	strip_delay = 1000
 	equip_delay_other = 1000
 

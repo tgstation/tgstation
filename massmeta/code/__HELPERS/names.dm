@@ -35,7 +35,7 @@
 							. += pick(names)
 						else
 							if(prob(10))
-								. += pick(lizard_name(MALE),lizard_name(FEMALE))
+								. += pick(GLOB.lizard_names_male,GLOB.lizard_names_female)
 							else
 								var/new_name = pick(pick(GLOB.first_names_male,GLOB.first_names_female))
 								new_name += " "
