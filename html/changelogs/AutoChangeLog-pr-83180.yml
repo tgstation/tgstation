@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "When you are offered something, you can shift-click the alert to examine the item rather than take it."
+  - qol: "Examine blocks for screen alert examining."
+  - qol: "Screentips for offer alerts."

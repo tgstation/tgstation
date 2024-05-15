@@ -1,4 +1,4 @@
-import { capitalizeAll, multiline } from 'common/string';
+import { capitalizeAll } from 'common/string';
 import { useBackend } from 'tgui/backend';
 import {
   Button,
@@ -128,7 +128,7 @@ const PaiButton = (props) => {
       <Button
         color="transparent"
         icon="robot"
-        tooltip={multiline`Insert an active PAI card to control this device.`}
+        tooltip={`Insert an active PAI card to control this device.`}
       >
         No PAI Inserted
       </Button>
@@ -139,7 +139,7 @@ const PaiButton = (props) => {
         disabled={!pai_inserted}
         icon="eject"
         onClick={() => act('eject_pai')}
-        tooltip={multiline`Ejects the current PAI.`}
+        tooltip={`Ejects the current PAI.`}
       >
         Eject PAI
       </Button>
@@ -297,7 +297,7 @@ const MedbotSync = (props) => {
 
   return (
     <Tooltip
-      content={multiline`Synchronize surgical data with research network.
+      content={`Synchronize surgical data with research network.
        Improves Tending Efficiency.`}
     >
       <Icon

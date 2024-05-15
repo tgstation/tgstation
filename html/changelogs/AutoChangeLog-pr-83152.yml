@@ -1,0 +1,4 @@
+author: "Shadow-Quill"
+delete-after: True
+changes:
+  - qol: "The \"Confirm Order\" button on Cargo consoles is now active when the cargo shuttle is at Central Command instead of at the station."

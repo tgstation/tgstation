@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "cell chargers, mechbay port chargers & recharge stations heat lost is directly proportional to energy drawn from the grid to charge their respective cells"
+  - bugfix: "cyborgs should charge more frequently & to their max capacity at recharge stations"

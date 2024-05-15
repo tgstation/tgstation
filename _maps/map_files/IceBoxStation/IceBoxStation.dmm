@@ -22987,6 +22987,10 @@
 	dir = 1
 	},
 /area/station/security/prison)
+"gZR" = (
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/plating,
+/area/station/maintenance/department/electrical)
 "gZT" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -58482,11 +58486,6 @@
 /obj/structure/fake_stairs/wood/directional/north,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"rPu" = (
-/obj/structure/cable,
-/obj/machinery/power/smes/engineering,
-/turf/open/floor/plating,
-/area/station/maintenance/department/electrical)
 "rPL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -256513,7 +256512,7 @@ qAS
 fUc
 jaX
 glI
-rPu
+gZR
 kKL
 kKL
 mbG
@@ -257541,7 +257540,7 @@ dvS
 pwd
 glI
 tsR
-rPu
+gZR
 lUC
 tXV
 kvX
