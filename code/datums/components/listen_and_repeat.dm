@@ -31,7 +31,6 @@
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
-
 	for(var/speech in desired_phrases)
 		if(!islist(desired_phrases[speech]) || !desired_phrases[speech][MESSAGE_VOICE] || !desired_phrases[speech][MESSAGE_PITCH])
 			LAZYSET(speech_buffer, speech, invalid_voice)
