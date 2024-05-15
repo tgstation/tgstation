@@ -302,3 +302,19 @@
   - bugfix: Accelerator laser gun no longer shoots sun size projectiles.
   starrm4nn:
   - qol: Gives Health sensor assemblies a UI so its easier to use.
+2024-05-15:
+  DaCoolBoss:
+  - bugfix: The random arcade machines in the 'Interdyne Spinward Research Base's
+      now function.
+  Melbert:
+  - qol: Some alerts, such as Fleshmend's, show their remaining duration on their
+      icon.
+  Seven:
+  - bugfix: Fixed a runtime when using the cultist blood rites on yourself.
+  Webcomicartist:
+  - bugfix: The lavaland mining shuttle doors no longer trap cargo security on lavaland
+      due to access weirdness.
+  iwishforducks:
+  - bugfix: Fixes random decal in space on Tramstation
+  necromanceranne:
+  - bugfix: Fixes an accidental reversion to greyscale plate armor.

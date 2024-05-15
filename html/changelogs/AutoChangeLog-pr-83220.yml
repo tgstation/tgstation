@@ -1,4 +1,0 @@
-author: "Seven"
-delete-after: True
-changes:
-  - bugfix: "Fixed a runtime when using the cultist blood rites on yourself."
