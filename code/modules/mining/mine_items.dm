@@ -543,7 +543,7 @@
 	return span_notice("Run a powered cable underneath it to power carts as they travel, maintaining their speed.")
 
 /obj/structure/minecart_rail/railbreak
-	name = "cart rail break"
+	name = "cart rail brake"
 	desc = "Stops carts in their tracks. On the tracks. You get what I mean."
 	icon_state = "track_break"
 	can_buckle = TRUE
