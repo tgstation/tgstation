@@ -31,6 +31,9 @@
 	icon_state = "hooked"
 
 /atom/movable/screen/alert/status_effect/hooked/Click()
+	. = ..()
+	if(!.)
+		return
 	if(!owner.can_resist())
 		return
 	owner.balloon_alert(owner, "removing hook...")

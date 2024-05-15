@@ -49,6 +49,7 @@
 	 * make sure to enter it both ways (so that A conflicts with B, and B with A)
 	 */
 	var/list/conflicts
+	var/remove_on_aheal = TRUE
 
 	/**
 	 * can we take chromosomes?

@@ -34,14 +34,16 @@
 	if(isnull(op_datum))
 		balloon_alert(user, "invalid access!")
 		return
-
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), user, op_datum)
-	AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_SYNDICATE, \
-		job_bans = ROLE_OPERATIVE, \
-		to_call = to_call, \
-		title = "Nuclear Operative Modsuit AI" \
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		check_jobban = ROLE_OPERATIVE,
+		poll_time = 20 SECONDS,
+		checked_target = src,
+		ignore_category = POLL_IGNORE_SYNDICATE,
+		alert_pic = src,
+		role_name_text = "Nuclear Operative Modsuit AI",
+		chat_text_border_icon = mutable_appearance(icon, "syndicard-full"),
 	)
+	on_poll_concluded(user, op_datum, chosen_one)
 
 /// Poll has concluded with a ghost, create the AI
 /obj/item/aicard/syndie/loaded/proc/on_poll_concluded(mob/user, datum/antagonist/nukeop/op_datum, mob/dead/observer/ghost)

@@ -55,7 +55,7 @@
 			if(ishuman(target))
 				var/mob/living/carbon/human/human_target = target
 				var/obj/item/bodypart/chest/target_chest = human_target.get_bodypart(BODY_ZONE_CHEST)
-				if(!(bodypart_to_attach.bodytype & target_chest.acceptable_bodytype))
+				if((!(bodypart_to_attach.bodyshape & target_chest.acceptable_bodyshape)) && (!(bodypart_to_attach.bodytype & target_chest.acceptable_bodytype)))
 					to_chat(user, span_warning("[bodypart_to_attach] doesn't match the patient's morphology."))
 					return SURGERY_STEP_FAIL
 				if(bodypart_to_attach.check_for_frankenstein(target))

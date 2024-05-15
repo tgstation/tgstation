@@ -1,5 +1,6 @@
 /datum/market_item/consumable
 	category = "Consumables"
+	abstract_path = /datum/market_item/consumable
 
 /datum/market_item/consumable/clown_tears
 	name = "Bottle of Clown's Tears"
@@ -39,7 +40,8 @@
 				/obj/item/storage/pill_bottle/lsd,
 				/obj/item/storage/pill_bottle/aranesp,
 				/obj/item/storage/pill_bottle/stimulant))
-	return new pillbottle(loc)
+	item = pillbottle
+	return ..()
 
 /datum/market_item/consumable/floor_pill
 	name = "Strange Pill"

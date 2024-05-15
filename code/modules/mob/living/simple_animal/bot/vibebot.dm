@@ -9,9 +9,9 @@
 	health = 25
 	maxHealth = 25
 	pass_flags = PASSMOB | PASSFLAPS
-	light_system = MOVABLE_LIGHT
-	light_range = 7
-	light_power = 3
+	light_system = OVERLAY_LIGHT
+	light_range = 6
+	light_power = 2
 
 	hackables = "vibing scanners"
 	radio_key = /obj/item/encryptionkey/headset_service

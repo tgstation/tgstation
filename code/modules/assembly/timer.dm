@@ -83,7 +83,7 @@
 		. += "timer_timing"
 		attached_overlays += "timer_timing"
 
-/obj/item/assembly/timer/ui_status(mob/user)
+/obj/item/assembly/timer/ui_status(mob/user, datum/ui_state/state)
 	if(is_secured(user))
 		return ..()
 	return UI_CLOSE

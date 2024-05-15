@@ -23,6 +23,9 @@
 /datum/action/changeling/pheromone_receptors/sting_action(mob/living/carbon/user)
 	..()
 	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
+	if(HAS_TRAIT(user, TRAIT_ANOSMIA)) //Anosmia quirk holders can't smell anything
+		to_chat(user, span_warning("We can't smell!"))
+		return
 	if(!receptors_active)
 		to_chat(user, span_warning("We search for the scent of any nearby changelings."))
 		changeling.chem_recharge_slowdown += 0.25

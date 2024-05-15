@@ -39,5 +39,5 @@
 			P.range = override_projectile_range
 		P.preparePixelProjectile(shootat_turf, target)
 		P.firer = firer // don't hit ourself that would be really annoying
-		P.impacted = list(target = TRUE) // don't hit the target we hit already with the flak
+		P.impacted = list(WEAKREF(target) = TRUE) // don't hit the target we hit already with the flak
 		P.fire()

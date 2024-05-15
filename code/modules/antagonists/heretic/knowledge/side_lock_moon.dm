@@ -16,10 +16,10 @@
 
 /datum/heretic_knowledge/unfathomable_curio
 	name = "Unfathomable Curio"
-	desc = "Allows you to transmute 3 rods, a brain and a belt into an Unfathomable Curio\
-			, a belt that can hold blades and items for rituals. Whilst worn will also \
+	desc = "Allows you to transmute 3 rods, lungs and any belt into an Unfathomable Curio\
+			, a belt that can hold blades and items for rituals. Whilst worn it will also \
 			veil you, allowing you to take 5 hits without suffering damage, this veil will recharge very slowly \
-			outside of combat. When examined the examiner will suffer brain damage and blindness."
+			outside of combat."
 	gain_text = "The mansus holds many a curio, some are not meant for the mortal eye."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/burglar_finesse,
@@ -38,12 +38,12 @@
 	name = "Unsealed Arts"
 	desc = "Allows you to transmute a canvas and an additional item to create a piece of art, these paintings \
 			have different effects depending on the additional item added. Possible paintings: \
-			The sister and He Who Wept: Eyes. When a non-heretic looks at the painting they will begin to hallucinate everyone as heretics. \
-			The First Desire: Any bodypart. Increases the hunger of non-heretics, when examined drops an organ or body part at your feet. \
-			Great chaparral over rolling hills: Any grown food. Spreads kudzu when placed, when examined grants a flower. \
-			Lady out of gates: Gloves. Causes non-heretics to scratch themselves, when examined removes all your mutations. \
-			Climb over the rusted mountain: Trash. Causes non-heretics to rust the floor they walk on. \
-			These effects are mitigated for a few minutes when a non-heretic suffering an effect examines the painting that caused the effect."
+			The sister and He Who Wept: Eyes. Clears your own mind, but curses non-heretics with hallucinations. \
+			The First Desire: Any bodypart. Supplies you with random organs, but curses non-heretics with a hunger for flesh. \
+			Great chaparral over rolling hills: Any grown food. Spreads kudzu when placed and examined by non-heretics. Also supplies you with poppies and harebells. \
+			Lady out of gates: Gloves. Clears your mutations, but mutates non-heretics and curses them with scratching. \
+			Climb over the rusted mountain: Trash. Curses non-heretics to rust the floor they walk on. \
+			Non-heretics can counter most of these effects by examining one of these paintings."
 	gain_text = "A wind of inspiration blows through me, past the walls and past the gate inspirations lie, yet to be depicted. \
 				They yearn for mortal eyes again, and I shall grant that wish."
 	next_knowledge = list(

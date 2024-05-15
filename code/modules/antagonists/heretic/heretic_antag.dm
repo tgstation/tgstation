@@ -46,6 +46,8 @@
 	var/high_value_sacrifices = 0
 	/// Lazy assoc list of [refs to humans] to [image previews of the human]. Humans that we have as sacrifice targets.
 	var/list/mob/living/carbon/human/sac_targets
+	/// List of all sickly blades linked with heretic mind.
+	var/list/obj/item/melee/sickly_blade/blades_list
 	/// List of all sacrifice target's names, used for end of round report
 	var/list/all_sac_targets = list()
 	/// Whether we're drawing a rune or not
@@ -82,6 +84,9 @@
 
 /datum/antagonist/heretic/Destroy()
 	LAZYNULL(sac_targets)
+	for(var/obj/item/melee/sickly_blade/blade as anything in blades_list)
+		blade.owner = null
+	LAZYNULL(blades_list)
 	return ..()
 
 /datum/antagonist/heretic/ui_data(mob/user)
@@ -202,7 +207,7 @@
 	if(give_objectives)
 		forge_primary_objectives()
 
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/heretic/heretic_gain.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 	for(var/starting_knowledge in GLOB.heretic_start_knowledge)
 		gain_knowledge(starting_knowledge)
@@ -350,7 +355,7 @@
 	else
 		drawing_effect = new(target_turf, rune_colour)
 
-	if(!do_after(user, drawing_time, target_turf, extra_checks = additional_checks))
+	if(!do_after(user, drawing_time, target_turf, extra_checks = additional_checks, hidden = TRUE))
 		target_turf.balloon_alert(user, "interrupted!")
 		new /obj/effect/temp_visual/drawing_heretic_rune/fail(target_turf, rune_colour)
 		qdel(drawing_effect)

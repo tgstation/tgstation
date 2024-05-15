@@ -77,7 +77,6 @@ export const ReactionDisplay = (props: ReactionDisplayProps) => {
               minValue={0}
               maxValue={14}
               alertAfter={isFlashing}
-              content={'test'}
               format={() => ''}
               ranges={{
                 red: [-0.22, 1.5],
@@ -131,7 +130,6 @@ export const ReactionDisplay = (props: ReactionDisplayProps) => {
                     minValue={0}
                     maxValue={1}
                     alertAfter={reaction.purityAlert}
-                    content={'test'}
                     format={(value) => ''}
                     ml={5}
                     ranges={{
@@ -232,7 +230,7 @@ export const ChemHeater = (props) => {
                   value={dispenseVolume}
                   minValue={1}
                   maxValue={10}
-                  onDrag={(e, value) =>
+                  onDrag={(value) =>
                     act('disp_vol', {
                       target: value,
                     })
@@ -253,7 +251,7 @@ export const ChemHeater = (props) => {
                   value={round(targetTemp, 0.1)}
                   minValue={0}
                   maxValue={1000}
-                  onDrag={(e, value) =>
+                  onDrag={(value) =>
                     act('temperature', {
                       target: value,
                     })

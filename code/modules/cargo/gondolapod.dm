@@ -67,7 +67,7 @@
 	opened = TRUE
 	layer = initial(layer)
 	update_appearance()
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, setClosed)), 50)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, setClosed)), 5 SECONDS)
 
 /mob/living/simple_animal/pet/gondola/gondolapod/setClosed()
 	opened = FALSE

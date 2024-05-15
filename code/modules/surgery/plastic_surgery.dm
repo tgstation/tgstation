@@ -94,11 +94,11 @@
 			else
 				user.visible_message(span_warning("You have no picture to base the appearance on, reverting to random appearances."))
 				for(var/i in 1 to 10)
-					names += target.dna.species.random_name(target.gender, TRUE)
+					names += target.generate_random_mob_name(TRUE)
 		else
-			for(var/_i in 1 to 9)
+			for(var/j in 1 to 9)
 				names += "Subject [target.gender == MALE ? "i" : "o"]-[pick("a", "b", "c", "d", "e")]-[rand(10000, 99999)]"
-			names += target.dna.species.random_name(target.gender, TRUE) //give one normal name in case they want to do regular plastic surgery
+			names += target.generate_random_mob_name(TRUE) //give one normal name in case they want to do regular plastic surgery
 		var/chosen_name = tgui_input_list(user, "New name to assign", "Plastic Surgery", names)
 		if(isnull(chosen_name))
 			return

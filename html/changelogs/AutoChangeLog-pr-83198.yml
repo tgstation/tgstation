@@ -1,0 +1,4 @@
+author: "DaxDupont"
+delete-after: True
+changes:
+  - bugfix: "Fixes error when running docker compose on apt upgrade"

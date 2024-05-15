@@ -1,4 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes:
-  - code_imp: "added an IS_CHANGELING() helper and used it where applicable"

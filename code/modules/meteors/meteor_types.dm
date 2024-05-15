@@ -76,7 +76,7 @@
 /obj/effect/meteor/proc/chase_target(atom/chasing, delay, home)
 	if(!isatom(chasing))
 		return
-	var/datum/move_loop/new_loop = SSmove_manager.move_towards(src, chasing, delay, home, lifetime)
+	var/datum/move_loop/new_loop = GLOB.move_manager.move_towards(src, chasing, delay, home, lifetime)
 	if(!new_loop)
 		return
 
@@ -257,15 +257,17 @@
 	desc = "An irradiated chunk of space rock. You could probably stop and appreciate its incandescent green glow, if it weren't moving so fast."
 	icon_state = "glowing"
 	heavy = TRUE
+	hits = 9
 	meteordrop = list(/obj/item/stack/ore/uranium)
-	threat = 15
+	threat = 35
 	signature = "radiation"
 
 /obj/effect/meteor/irradiated/meteor_effect()
 	..()
-	explosion(src, light_impact_range = 4, flash_range = 3, adminlog = FALSE)
-	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
-	radiation_pulse(src, max_range = 3, threshold = RAD_MEDIUM_INSULATION, chance = 80)
+	explosion(src, heavy_impact_range = 1, light_impact_range = 3, flash_range = 6, adminlog = FALSE)
+	for(var/turf/open/floor/surviving_ground in range(2, get_turf(src)))
+		if(prob(70))
+			new /obj/effect/decal/cleanable/greenglow/radioactive(get_turf(surviving_ground))
 
 //Cluster meteor
 /obj/effect/meteor/cluster

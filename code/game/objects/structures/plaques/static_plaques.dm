@@ -35,8 +35,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/plaque/static_plaque/tram/LateInitialize(mapload)
-	. = ..()
+/obj/structure/plaque/static_plaque/tram/LateInitialize()
 	link_tram()
 	set_tram_serial()
 

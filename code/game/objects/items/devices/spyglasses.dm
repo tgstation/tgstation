@@ -87,7 +87,7 @@
 
 /obj/item/paper/fluff/nerddocs
 	name = "Espionage For Dummies"
-	color = "#FFFF00"
+	color = COLOR_YELLOW
 	desc = "An eye gougingly yellow pamphlet with a badly designed image of a detective on it. the subtext says \" The Latest way to violate privacy guidelines!\" "
 	default_raw_text = @{"
 

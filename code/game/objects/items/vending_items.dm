@@ -19,8 +19,10 @@
 	w_class = WEIGHT_CLASS_BULKY
 	armor_type = /datum/armor/item_vending_refill
 
-	// Built automatically from the corresponding vending machine.
-	// If null, considered to be full. Otherwise, is list(/typepath = amount).
+	/**
+	 * Built automatically from the corresponding vending machine.
+	 * If null, considered to be full. Otherwise, is list(/typepath = amount).
+	 */
 	var/list/products
 	var/list/product_categories
 	var/list/contraband

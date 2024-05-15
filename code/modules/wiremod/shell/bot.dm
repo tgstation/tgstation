@@ -9,7 +9,7 @@
 	icon_state = "setup_medium_box"
 
 	density = FALSE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_on = FALSE
 
 /obj/structure/bot/Initialize(mapload)

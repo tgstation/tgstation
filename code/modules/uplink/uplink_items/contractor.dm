@@ -13,7 +13,7 @@
 	item = /obj/item/storage/box/syndicate/contract_kit
 	category = /datum/uplink_category/contractor
 	cost = 20
-	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS | UPLINK_TRAITORS)
+	purchasable_from = UPLINK_INFILTRATORS
 
 /datum/uplink_item/bundles_tc/contract_kit/purchase(mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	. = ..()
@@ -36,7 +36,7 @@
 	name = "Contract Reroll"
 	desc = "Request a reroll of your current contract list. Will generate a new target, \
 		payment, and dropoff for the contracts you currently have available."
-	item = /obj/effect/gibspawner/generic
+	item = ABSTRACT_UPLINK_ITEM
 	limited_stock = 2
 	cost = 0
 

@@ -12,7 +12,7 @@
 	var/atom/movable/moving = controller.pawn
 	var/delay = controller.movement_delay
 
-	var/datum/move_loop/has_target/jps/loop = SSmove_manager.jps_move(moving,
+	var/datum/move_loop/has_target/jps/loop = GLOB.move_manager.jps_move(moving,
 		current_movement_target,
 		delay,
 		repath_delay = 0.5 SECONDS,
@@ -51,3 +51,6 @@
 
 /datum/ai_movement/jps/bot/travel_to_beacon
 	maximum_length = AI_BOT_PATH_LENGTH
+
+/datum/ai_movement/jps/modsuit
+	maximum_length = MOD_AI_RANGE

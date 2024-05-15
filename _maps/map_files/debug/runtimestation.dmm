@@ -683,6 +683,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/disk/data/debug{
+	pixel_y = 9;
+	pixel_x = 7
+	},
 /turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
 "cL" = (
@@ -2460,9 +2464,7 @@
 /turf/open/floor/iron,
 /area/station/medical/medbay)
 "Va" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},

@@ -24,7 +24,7 @@
 	set_wires(new /datum/wires/rnd(src))
 	register_context()
 
-/obj/machinery/rnd/LateInitialize()
+/obj/machinery/rnd/post_machine_initialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
@@ -150,7 +150,7 @@
 	return TRUE
 
 //we eject the loaded item when deconstructing the machine
-/obj/machinery/rnd/on_deconstruction()
+/obj/machinery/rnd/on_deconstruction(disassembled)
 	if(loaded_item)
 		loaded_item.forceMove(drop_location())
 	..()

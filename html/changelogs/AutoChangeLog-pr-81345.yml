@@ -1,5 +1,0 @@
-author: "1393F"
-delete-after: True
-changes:
-  - bugfix: "The HFR now provides the max temperature for recipes"
-  - bugfix: "the crystallizer now provides the dangerous object created instead of itself in admin logging"

@@ -72,11 +72,9 @@
 		if (is_banned_from(creature.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
 			trimmed_list.Remove(creature)
 			continue
-
 		if (isnull(creature.mind))
 			continue
-
-		if (restrict_ghost_roles && (creature.mind.assigned_role.title in GLOB.exp_specialmap[EXP_TYPE_SPECIAL])) // Are they playing a ghost role?
+		if (restrict_ghost_roles && !(creature.mind.assigned_role.job_flags & JOB_CREW_MEMBER)) // Are they not playing a station role?
 			trimmed_list.Remove(creature)
 			continue
 		if (creature.mind.assigned_role.title in restricted_roles) // Does their job allow it?
@@ -136,11 +134,11 @@
 
 	SSdynamic.log_dynamic_and_announce("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	candidates = SSpolling.poll_ghost_candidates(
-		question = "Looking for volunteers to become [antag_flag] for [name]",
+		question = "Looking for volunteers to become [span_notice(antag_flag)] for [span_danger(name)]",
 		check_jobban = antag_flag_override,
 		role = antag_flag || antag_flag_override,
 		poll_time = 30 SECONDS,
-		pic_source = signup_item_path,
+		alert_pic = signup_item_path,
 		role_name_text = antag_flag,
 	)
 
@@ -185,6 +183,7 @@
 		var/mob/new_character = applicant
 		if(makeBody)
 			new_character = generate_ruleset_body(applicant)
+			SEND_GLOBAL_SIGNAL(COMSIG_RULESET_BODY_GENERATED_FROM_GHOSTS, applicant)
 		finish_setup(new_character, i)
 		notify_ghosts(
 			"[applicant.name] has been picked for the ruleset [name]!",
@@ -299,25 +298,29 @@
 	cost = 10
 	required_type = /mob/living/silicon/ai
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/malf_ai)
+	// AIs are technically considered "Ghost roles" as far as candidate selection are concerned
+	// So we need to allow it here. We filter of actual ghost role AIs (charlie) via trim_candidates ourselves
+	restrict_ghost_roles = FALSE
 
 /datum/dynamic_ruleset/midround/malf/trim_candidates()
 	..()
-	candidates = living_players
-	for(var/mob/living/player in candidates)
-		if(!isAI(player))
-			candidates -= player
+	candidates = list()
+	for(var/mob/living/silicon/ai/player in living_players)
+		if(!is_station_level(player.z))
 			continue
-
-		if(is_centcom_level(player.z))
-			candidates -= player
+		if(isnull(player.mind))
 			continue
+		if(player.mind.special_role || length(player.mind.antag_datums))
+			continue
+		candidates += player
 
-		if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
-			candidates -= player
+/datum/dynamic_ruleset/midround/malf/ready(forced)
+	if(!check_candidates())
+		log_dynamic("FAIL: No valid AI found for the Malfunctioning AI ruleset.")
+		return FALSE
+	return ..()
 
 /datum/dynamic_ruleset/midround/malf/execute()
-	if(!candidates || !candidates.len)
-		return FALSE
 	var/mob/living/silicon/ai/new_malf_ai = pick_n_take(candidates)
 	assigned += new_malf_ai.mind
 	var/datum/antagonist/malf_ai/malf_antag_datum = new
@@ -478,6 +481,11 @@
 	var/mob/living/carbon/human/blob_antag = pick_n_take(candidates)
 	assigned += blob_antag.mind
 	blob_antag.mind.special_role = antag_flag
+	notify_ghosts(
+		"[blob_antag] has become a blob host!",
+		source = blob_antag,
+		header = "So Bulbous...",
+	)
 	return ..()
 
 /// Midround Xenomorph Ruleset (From Ghosts)
@@ -847,6 +855,11 @@
 	obsessed.gain_trauma(/datum/brain_trauma/special/obsessed)
 	message_admins("[ADMIN_LOOKUPFLW(obsessed)] has been made Obsessed by the midround ruleset.")
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
+	notify_ghosts(
+		"[obsessed] has developed an obsession with someone!",
+		source = obsessed,
+		header = "Love Can Bloom",
+	)
 	return TRUE
 
 /// Midround Space Changeling Ruleset (From Ghosts)

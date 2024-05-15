@@ -76,7 +76,7 @@ effective or pretty fucking useless.
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
 
-/obj/item/healthanalyzer/rad_laser/interact_with_atom(atom/interacting_with, mob/living/user)
+/obj/item/healthanalyzer/rad_laser/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!stealth || !irradiate)
 		. = ..()
 
@@ -202,9 +202,104 @@ effective or pretty fucking useless.
 				target = round(target)
 				wavelength = clamp(target, 0, 120)
 
+/datum/action/item_action/stealth_mode
+	name = "Toggle Stealth"
+	desc = "Makes you invisible to the naked eye."
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon_state = "ninja_cloak"
+	/// Whether stealth is active or not
+	var/stealth_engaged = FALSE
+	/// The amount of time the stealth mode can be active for, drains to 0 when active
+	var/charge = 30 SECONDS
+	/// The maximum amount of time the stealth mode can be active for
+	var/max_charge = 30 SECONDS
+	/// The minimum alpha value for the stealth mode
+	var/min_alpha = 0
+	/// Whether the stealth mode recharges while active
+	/// if TRUE standing in darkness will recharge even while active
+	/// if FALSE it will not uncharge, but not recharge while in darkness
+	var/recharge_while_active = TRUE
+
+/datum/action/item_action/stealth_mode/is_action_active(atom/movable/screen/movable/action_button/current_button)
+	return stealth_engaged
+
+/datum/action/item_action/stealth_mode/Grant(mob/grant_to)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/datum/action/item_action/stealth_mode/Remove(mob/remove_from)
+	if(!isnull(owner) && stealth_engaged)
+		stealth_off()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/datum/action/item_action/stealth_mode/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return
+
+	if(stealth_engaged)
+		stealth_off()
+	else
+		stealth_on()
+
+/datum/action/item_action/stealth_mode/proc/stealth_on()
+	animate(owner, alpha = get_alpha(), time = 0.5 SECONDS)
+	apply_wibbly_filters(owner)
+	stealth_engaged = TRUE
+	build_all_button_icons(UPDATE_BUTTON_STATUS|UPDATE_BUTTON_BACKGROUND)
+	owner.balloon_alert(owner, "stealth mode engaged")
+
+/datum/action/item_action/stealth_mode/proc/stealth_off()
+	owner.alpha = initial(owner.alpha)
+	remove_wibbly_filters(owner)
+	stealth_engaged = FALSE
+	build_all_button_icons(UPDATE_BUTTON_STATUS|UPDATE_BUTTON_BACKGROUND)
+	owner.balloon_alert(owner, "stealth mode disengaged")
+
+/datum/action/item_action/stealth_mode/proc/get_alpha()
+	return clamp(255 - (255 * charge / max_charge), min_alpha, 255)
+
+/datum/action/item_action/stealth_mode/process(seconds_per_tick)
+	if(!stealth_engaged)
+		// Recharge over time
+		charge = min(max_charge, charge + (max_charge * 0.04) * seconds_per_tick)
+		build_all_button_icons(UPDATE_BUTTON_STATUS)
+		return
+
+	if(charge <= 0)
+		stealth_off()
+		return
+
+	var/turf/our_turf = get_turf(owner)
+	var/lumcount = our_turf?.get_lumcount() || 0
+	if(lumcount > 0.3)
+		// Decay charge while invisible+ in the light
+		charge = max(0, charge - (max_charge * 0.05) * seconds_per_tick)
+		build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+	else if(recharge_while_active)
+		// Return charage while invisible + in the darkness + recharge_while_active
+		charge = min(max_charge, charge + (max_charge * 0.1) * seconds_per_tick)
+		build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+	animate(owner, alpha = get_alpha(), time = 1 SECONDS, flags = ANIMATION_PARALLEL)
+
+/datum/action/item_action/stealth_mode/update_button_status(atom/movable/screen/movable/action_button/current_button, force)
+	. = ..()
+	current_button.maptext_x = 9
+	current_button.maptext = MAPTEXT_TINY_UNICODE("[round(charge / max_charge * 100, 0.01)]%")
+
+/datum/action/item_action/stealth_mode/weaker
+	charge = 15 SECONDS
+	max_charge = 15 SECONDS
+	min_alpha = 20
+	recharge_while_active = FALSE
+
 /obj/item/shadowcloak
 	name = "cloaker belt"
-	desc = "Makes you invisible for short periods of time. Recharges in darkness."
+	desc = "Makes you invisible for short periods of time. Recharges in darkness, even while active."
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utility"
 	inhand_icon_state = "utility"
@@ -214,66 +309,16 @@ effective or pretty fucking useless.
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines")
 	attack_verb_simple = list("whip", "lash", "discipline")
-
-	var/mob/living/carbon/human/user = null
-	var/charge = 300
-	var/max_charge = 300
-	var/on = FALSE
-	actions_types = list(/datum/action/item_action/toggle)
-
-/obj/item/shadowcloak/ui_action_click(mob/user)
-	if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
-		if(!on)
-			Activate(usr)
-
-		else
-			Deactivate()
-
-	return
+	actions_types = list(/datum/action/item_action/stealth_mode)
 
 /obj/item/shadowcloak/item_action_slot_check(slot, mob/user)
-	if(slot & ITEM_SLOT_BELT)
-		return 1
+	return slot & slot_flags
 
-/obj/item/shadowcloak/proc/Activate(mob/living/carbon/human/user)
-	if(!user)
-		return
-
-	to_chat(user, span_notice("You activate [src]."))
-	src.user = user
-	START_PROCESSING(SSobj, src)
-	on = TRUE
-
-/obj/item/shadowcloak/proc/Deactivate()
-	to_chat(user, span_notice("You deactivate [src]."))
-	STOP_PROCESSING(SSobj, src)
-	if(user)
-		user.alpha = initial(user.alpha)
-
-	on = FALSE
-	user = null
-
-/obj/item/shadowcloak/dropped(mob/user)
-	..()
-	if(user && user.get_item_by_slot(ITEM_SLOT_BELT) != src)
-		Deactivate()
-
-/obj/item/shadowcloak/process(seconds_per_tick)
-	if(user.get_item_by_slot(ITEM_SLOT_BELT) != src)
-		Deactivate()
-		return
-
-	var/turf/T = get_turf(src)
-	if(on)
-		var/lumcount = T.get_lumcount()
-
-		if(lumcount > 0.3)
-			charge = max(0, charge - 12.5 * seconds_per_tick)//Quick decrease in light
-
-		else
-			charge = min(max_charge, charge + 25 * seconds_per_tick) //Charge in the dark
-
-		animate(user,alpha = clamp(255 - charge,0,255),time = 10)
+/obj/item/shadowcloak/weaker
+	name = "stealth belt"
+	desc = "Makes you nigh-invisible to the naked eye for a short period of time. \
+		Lasts indefinitely in darkness, but will not recharge unless inactive."
+	actions_types = list(/datum/action/item_action/stealth_mode/weaker)
 
 /// Checks if a given atom is in range of a radio jammer, returns TRUE if it is.
 /proc/is_within_radio_jammer_range(atom/source)
@@ -410,7 +455,7 @@ effective or pretty fucking useless.
 
 		balloon_alert(user, "repaired!")
 
-/obj/machinery/porta_turret/syndicate/toolbox/deconstruct(disassembled)
+/obj/machinery/porta_turret/syndicate/toolbox/on_deconstruction(disassembled)
 	if(disassembled)
 		var/atom/movable/old_toolbox = toolbox
 		toolbox = null
@@ -431,7 +476,7 @@ effective or pretty fucking useless.
 		toolbox = null
 		qdel(src)
 
-/obj/machinery/porta_turret/syndicate/toolbox/ui_status(mob/user)
+/obj/machinery/porta_turret/syndicate/toolbox/ui_status(mob/user, datum/ui_state/state)
 	if(faction_check(user.faction, faction))
 		return ..()
 
