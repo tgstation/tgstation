@@ -8,3 +8,10 @@
 #define TARGET_NEUTRALS (1<<1)
 /// target those who have bad relations with the controller
 #define TARGET_FOES (1<<2)
+
+/// do not check for faction
+#define FACTION_CHECK_SKIP 0
+/// check if any factions are in common
+#define FACTION_CHECK_ANY 1
+/// check if factions match
+#define FACTION_CHECK_MATCHING 2

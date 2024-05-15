@@ -20,8 +20,8 @@
 	/// Whether we care for seeing the target or not
 	var/ignore_sight = FALSE
 
-	///what it means to us for a matching faction
-	var/faction_target_flags = NONE
+	/// how should we check for a similar faction
+	var/faction_check = FACTION_CHECK_ANY
 
 	///whether friends, foes, and those who are neither should be targets
 	var/relationship_target_flags = TARGET_NEUTRALS | TARGET_FOES
@@ -93,15 +93,15 @@
 /datum/targeting_strategy/basic/proc/is_relationship_target(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	/// check for special relations
 
-	// faction members are naturally treated as friends
-	var/is_friend = \
-	(controller.blackboard_key_exists(BB_FRIENDS) && (the_target in controller.blackboard[BB_FRIENDS])) \
-	|| living_mob.faction_check_atom(the_target, exact_match = check_factions_exactly)
-
+	var/same_faction = FALSE
+	if(faction_check != FACTION_CHECK_SKIP)
+		same_faction = living_mob.faction_check_atom(the_target, exact_match = faction_check)
+	var/is_friend = FALSE
+	if(same_faction || (controller.blackboard_key_exists(BB_FRIENDS) && (the_target in controller.blackboard[BB_FRIENDS])))
+		is_friend = TRUE
+		if(relationship_target_flags & TARGET_FRIENDS)
+			return TRUE
 	var/is_foe = FALSE
-
-	if(relationship_target_flags & TARGET_FRIENDS)
-		return TRUE
 	if(controller.blackboard_key_exists(BB_FOES))
 		is_foe = (the_target in controller.blackboard[BB_FOES])
 		if(relationship_target_flags & TARGET_FOES)
