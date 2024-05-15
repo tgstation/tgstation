@@ -172,7 +172,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	return serialized
 
 
-/// Gets two lists: Misc data and critical data. Handles all snowflakey misc data
+/// Gets a list: Misc data and whether it's critical. Handles all snowflakey type cases
 /datum/orbit_menu/proc/get_misc_data(atom/movable/atom_poi) as /list
 	var/list/misc = list()
 	var/critical = FALSE
