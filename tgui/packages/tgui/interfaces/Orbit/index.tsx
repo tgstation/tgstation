@@ -20,6 +20,7 @@ export function Orbit(props) {
     const mostRelevant = [
       data.alive,
       data.antagonists,
+      data.critical,
       data.deadchat_controlled,
       data.dead,
       data.ghosts,

@@ -52,6 +52,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 	var/list/alive = list()
 	var/list/antagonists = list()
+	var/list/critical = list()
 	var/list/deadchat_controlled = list()
 	var/list/dead = list()
 	var/list/ghosts = list()
@@ -114,32 +115,18 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			))
 			continue
 
-		misc += list(list(
-			"ref" = REF(atom_poi),
-			"full_name" = name,
-		))
+		var/list/other_data = get_misc_data(atom_poi)
+		var/misc_data = list(other_data[1])
 
-		// Display the supermatter crystal integrity
-		if(istype(atom_poi, /obj/machinery/power/supermatter_crystal))
-			var/obj/machinery/power/supermatter_crystal/crystal = atom_poi
-			misc[length(misc)]["extra"] = "Integrity: [round(crystal.get_integrity_percent())]%"
-			continue
-		// Display the nuke timer
-		if(istype(atom_poi, /obj/machinery/nuclearbomb))
-			var/obj/machinery/nuclearbomb/bomb = atom_poi
-			if(bomb.timing)
-				misc[length(misc)]["extra"] = "Timer: [bomb.countdown?.displayed_text]s"
-			continue
-		// Display the holder if its a nuke disk
-		if(istype(atom_poi, /obj/item/disk/nuclear))
-			var/obj/item/disk/nuclear/disk = atom_poi
-			var/mob/holder = disk.pulledby || get(disk, /mob)
-			misc[length(misc)]["extra"] = "Location: [holder?.real_name || "Unsecured"]"
-			continue
+		misc += misc_data
+
+		if(other_data[2]) // Critical = TRUE
+			critical += misc_data
 
 	return list(
 		"alive" = alive,
 		"antagonists" = antagonists,
+		"critical" = critical,
 		"deadchat_controlled" = deadchat_controlled,
 		"dead" = dead,
 		"ghosts" = ghosts,
@@ -154,7 +141,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 
 /// Helper function to get threat type, group, overrides for job and icon
-/datum/orbit_menu/proc/get_antag_data(datum/mind/poi_mind)
+/datum/orbit_menu/proc/get_antag_data(datum/mind/poi_mind) as /list
 	var/list/serialized = list()
 
 	for(var/datum/antagonist/antag as anything in poi_mind.antag_datums)
@@ -170,7 +157,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 
 /// Helper function to get job / icon / health data for a living mob
-/datum/orbit_menu/proc/get_living_data(mob/living/player)
+/datum/orbit_menu/proc/get_living_data(mob/living/player) as /list
 	var/list/serialized = list()
 
 	serialized["health"] = FLOOR((player.health / player.maxHealth * 100), 1)
@@ -183,6 +170,56 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		serialized["icon"] = id_card?.get_trim_sechud_icon_state()
 
 	return serialized
+
+
+/// Gets two lists: Misc data and critical data. Handles all snowflakey misc data
+/datum/orbit_menu/proc/get_misc_data(atom/movable/atom_poi) as /list
+	var/list/misc = list()
+	var/critical = FALSE
+
+	misc["ref"] = REF(atom_poi)
+	misc["full_name"] = atom_poi.name
+
+	// Display the supermatter crystal integrity
+	if(istype(atom_poi, /obj/machinery/power/supermatter_crystal))
+		var/obj/machinery/power/supermatter_crystal/crystal = atom_poi
+		var/integrity = round(crystal.get_integrity_percent())
+		misc["extra"] = "Integrity: [integrity]%"
+
+		if(integrity < 10)
+			critical = TRUE
+
+		return list(misc, critical)
+
+	// Display the nuke timer
+	if(istype(atom_poi, /obj/machinery/nuclearbomb))
+		var/obj/machinery/nuclearbomb/bomb = atom_poi
+
+		if(bomb.timing)
+			misc["extra"] = "Timer: [bomb.countdown?.displayed_text]s"
+			critical = TRUE
+
+		return list(misc, critical)
+
+	// Display the holder if its a nuke disk
+	if(istype(atom_poi, /obj/item/disk/nuclear))
+		var/obj/item/disk/nuclear/disk = atom_poi
+		var/mob/holder = disk.pulledby || get(disk, /mob)
+		misc["extra"] = "Location: [holder?.real_name || "Unsecured"]"
+
+		return list(misc, critical)
+
+	// Display singuloths if they exist
+	if(istype(atom_poi, /obj/singularity))
+		var/obj/singularity/singulo = atom_poi
+		misc["extra"] = "Energy: [round(singulo.energy)]"
+
+		if(singulo.current_size > 2)
+			critical = TRUE
+
+		return list(misc, critical)
+
+	return list(misc, critical)
 
 
 /**

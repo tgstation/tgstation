@@ -24,7 +24,6 @@ export function ObservableItem(props: Props) {
 
   return (
     <Flex.Item
-      key={full_name + ref}
       mb={0.5}
       mr={0.5}
       onClick={() => act('orbit', { auto_observe: autoObserve, ref })}

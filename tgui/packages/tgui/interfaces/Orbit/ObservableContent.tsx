@@ -1,5 +1,7 @@
+import { toTitleCase } from 'common/string';
+
 import { useBackend } from '../../backend';
-import { Stack } from '../../components';
+import { NoticeBox, Stack, Table, Tooltip } from '../../components';
 import { ANTAG2COLOR } from './constants';
 import { getAntagCategories } from './helpers';
 import { ObservableSection } from './ObservableSection';
@@ -19,22 +21,14 @@ type Section = {
 
 /**
  * The primary content display for points of interest.
- * Renders a scrollable section replete with subsections for each
+ * Renders a scrollable section replete collapsibles for each
  * observable group.
  */
 export function ObservableContent(props: Props) {
   const { autoObserve, searchQuery, viewMode } = props;
 
-  const { data } = useBackend<OrbitData>();
-  const {
-    alive = [],
-    antagonists = [],
-    deadchat_controlled = [],
-    dead = [],
-    ghosts = [],
-    misc = [],
-    npcs = [],
-  } = data;
+  const { act, data } = useBackend<OrbitData>();
+  const { antagonists = [], critical = [] } = data;
 
   let antagGroups: AntagGroup[] = [];
   if (antagonists.length) {
@@ -44,34 +38,51 @@ export function ObservableContent(props: Props) {
   const sections: readonly Section[] = [
     {
       color: 'purple',
-      content: deadchat_controlled,
+      content: data.deadchat_controlled,
       title: 'Deadchat Controlled',
     },
     {
       color: 'blue',
-      content: alive,
+      content: data.alive,
       title: 'Alive',
     },
     {
-      content: dead,
+      content: data.dead,
       title: 'Dead',
     },
     {
-      content: ghosts,
+      content: data.ghosts,
       title: 'Ghosts',
     },
     {
-      content: misc,
+      content: data.misc,
       title: 'Misc',
     },
     {
-      content: npcs,
+      content: data.npcs,
       title: 'NPCs',
     },
   ];
 
   return (
     <Stack vertical>
+      {critical.map((crit) => (
+        <Tooltip content="Click to orbit" key={crit.ref}>
+          <NoticeBox
+            verticalAlign
+            color="purple"
+            onClick={() => act('orbit', { ref: crit.ref })}
+          >
+            <Table>
+              <Table.Row>
+                <Table.Cell>{toTitleCase(crit.full_name)}</Table.Cell>
+                <Table.Cell collapsing>{crit.extra}</Table.Cell>
+              </Table.Row>
+            </Table>
+          </NoticeBox>
+        </Tooltip>
+      ))}
+
       {antagGroups.map(([title, members]) => (
         <ObservableSection
           autoObserve={autoObserve}
@@ -83,6 +94,7 @@ export function ObservableContent(props: Props) {
           viewMode={viewMode}
         />
       ))}
+
       {sections.map((section) => (
         <ObservableSection
           autoObserve={autoObserve}

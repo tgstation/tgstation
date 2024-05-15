@@ -1,4 +1,4 @@
-import { Collapsible, Flex, Stack, Tooltip } from '../../components';
+import { Collapsible, Flex, Tooltip } from '../../components';
 import { VIEWMODE } from './constants';
 import {
   isJobOrNameMatch,
@@ -43,45 +43,43 @@ export function ObservableSection(props: Props) {
   }
 
   if (!filteredSection.length) {
-    return null;
+    return;
   }
 
   return (
-    <Stack.Item>
-      <Collapsible
-        bold
-        color={color || 'grey'}
-        open={!!color}
-        title={title + ` - (${filteredSection.length})`}
-      >
-        <Flex wrap>
-          {filteredSection.map((item) => {
-            const content = (
-              <ObservableItem
-                autoObserve={autoObserve}
-                color={color}
-                item={item}
-                key={item.ref}
-                viewMode={viewMode}
-              />
-            );
+    <Collapsible
+      bold
+      color={color || 'grey'}
+      open={!!color}
+      title={title + ` - (${filteredSection.length})`}
+    >
+      <Flex wrap>
+        {filteredSection.map((item) => {
+          const content = (
+            <ObservableItem
+              autoObserve={autoObserve}
+              color={color}
+              item={item}
+              key={item.ref}
+              viewMode={viewMode}
+            />
+          );
 
-            if (!item.health && !item.extra) {
-              return content;
-            }
+          if (!item.health && !item.extra) {
+            return content;
+          }
 
-            return (
-              <Tooltip
-                content={<ObservableTooltip item={item} />}
-                key={item.ref}
-                position="bottom-start"
-              >
-                {content}
-              </Tooltip>
-            );
-          })}
-        </Flex>
-      </Collapsible>
-    </Stack.Item>
+          return (
+            <Tooltip
+              content={<ObservableTooltip item={item} />}
+              key={item.ref}
+              position="bottom-start"
+            >
+              {content}
+            </Tooltip>
+          );
+        })}
+      </Flex>
+    </Collapsible>
   );
 }

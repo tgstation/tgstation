@@ -9,6 +9,7 @@ export type AntagGroup = [string, Antagonist[]];
 export type OrbitData = {
   alive: Observable[];
   antagonists: Antagonist[];
+  critical: Critical[];
   dead: Observable[];
   deadchat_controlled: Observable[];
   ghosts: Observable[];
@@ -29,5 +30,11 @@ export type Observable = {
   name: string;
   orbiters: number;
 }>;
+
+type Critical = {
+  extra: string;
+  full_name: string;
+  ref: string;
+};
 
 export type ViewMode = (typeof VIEWMODE)[keyof typeof VIEWMODE];
