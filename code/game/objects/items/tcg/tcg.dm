@@ -193,6 +193,10 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	var/static/radial_shuffle = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_shuffle")
 	var/static/radial_pickup = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup")
 
+/obj/item/tcgcard_deck/Initialize(mapload)
+	. = ..()
+	create_storage(storage_type = /datum/storage/tcg)
+
 /obj/item/tcgcard_deck/update_icon_state()
 	if(!flipped)
 		icon_state = "[base_icon_state]_up"
