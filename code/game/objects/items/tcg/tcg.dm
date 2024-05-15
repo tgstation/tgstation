@@ -198,11 +198,6 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	var/datum/storage/storage_datum = create_storage(storage_type = /datum/storage/tcg)
 	RegisterSignal(storage_datum, COMSIG_STORAGE_REMOVED_ITEM, PROC_REF(card_removed_from_storage))
 
-/obj/item/tcgcard_deck/Destroy()
-	if (atom_storage)
-		UnregisterSignal(atom_storage, COMSIG_STORAGE_REMOVED_ITEM)
-
-	return ..()
 
 /obj/item/tcgcard_deck/update_icon_state()
 	if(!flipped)
@@ -330,7 +325,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	card.flipped = flipped
 	card.update_appearance(UPDATE_ICON_STATE)
 
-	if(length(signal_source.real_location.contents) == 0)
+	if(length(contents) == 0)
 		qdel(src)
 
 /obj/item/cardpack
