@@ -36,10 +36,9 @@ export function ObservableContent(props: Props) {
     npcs = [],
   } = data;
 
-  let collatedAntagonists: AntagGroup[] = [];
-
+  let antagGroups: AntagGroup[] = [];
   if (antagonists.length) {
-    collatedAntagonists = getAntagCategories(antagonists);
+    antagGroups = getAntagCategories(antagonists);
   }
 
   const sections: readonly Section[] = [
@@ -73,32 +72,28 @@ export function ObservableContent(props: Props) {
 
   return (
     <Stack vertical>
-      {collatedAntagonists?.map(([title, antagonists]) => {
-        return (
-          <ObservableSection
-            autoObserve={autoObserve}
-            color={ANTAG2COLOR[title] || 'bad'}
-            key={title}
-            searchQuery={searchQuery}
-            section={antagonists}
-            title={title}
-            viewMode={viewMode}
-          />
-        );
-      })}
-      {sections.map((section) => {
-        return (
-          <ObservableSection
-            autoObserve={autoObserve}
-            color={section.color}
-            key={section.title}
-            searchQuery={searchQuery}
-            section={section.content}
-            title={section.title}
-            viewMode={viewMode}
-          />
-        );
-      })}
+      {antagGroups.map(([title, members]) => (
+        <ObservableSection
+          autoObserve={autoObserve}
+          color={ANTAG2COLOR[title] || 'bad'}
+          key={title}
+          searchQuery={searchQuery}
+          section={members}
+          title={title}
+          viewMode={viewMode}
+        />
+      ))}
+      {sections.map((section) => (
+        <ObservableSection
+          autoObserve={autoObserve}
+          color={section.color}
+          key={section.title}
+          searchQuery={searchQuery}
+          section={section.content}
+          title={section.title}
+          viewMode={viewMode}
+        />
+      ))}
     </Stack>
   );
 }

@@ -1,27 +1,33 @@
-import { sortBy } from 'common/collections';
-
 import { DEPARTMENT2COLOR, HEALTH, THREAT, VIEWMODE } from './constants';
 import { AntagGroup, Antagonist, Observable, ViewMode } from './types';
 
 /** Return a map of strings with each antag in its antag_category */
-export function getAntagCategories(antagonists: Antagonist[]) {
-  const categories: Record<string, Antagonist[]> = {};
+export function getAntagCategories(antagonists: Antagonist[]): AntagGroup[] {
+  const categories = new Map<string, Antagonist[]>();
 
-  antagonists.map((player) => {
+  for (const player of antagonists) {
     const { antag_group } = player;
 
-    if (!categories[antag_group]) {
-      categories[antag_group] = [];
+    if (!categories.has(antag_group)) {
+      categories.set(antag_group, []);
     }
+    categories.get(antag_group)!.push(player);
+  }
 
-    categories[antag_group].push(player);
+  const sorted = Array.from(categories.entries()).sort((a, b) => {
+    const lowerA = a[0].toLowerCase();
+    const lowerB = b[0].toLowerCase();
+
+    if (lowerA < lowerB) return -1;
+    if (lowerA > lowerB) return 1;
+    return 0;
   });
 
-  return sortBy<AntagGroup>(Object.entries(categories), ([key]) => key);
+  return sorted;
 }
 
 /** Returns a disguised name in case the person is wearing someone else's ID */
-export function getDisplayName(full_name: string, nickname?: string) {
+export function getDisplayName(full_name: string, nickname?: string): string {
   if (!nickname) {
     return full_name;
   }
@@ -39,7 +45,7 @@ export function getDisplayName(full_name: string, nickname?: string) {
 }
 
 /** Returns the department the player is in */
-function getDepartmentByJob(job: string) {
+function getDepartmentByJob(job: string): string | undefined {
   const withoutParenthesis = job.replace(/ \(.*\)/, '');
 
   for (const department in DEPARTMENT2COLOR) {
@@ -50,7 +56,7 @@ function getDepartmentByJob(job: string) {
 }
 
 /** Gets department color for a job */
-function getDepartmentColor(job: string | undefined) {
+function getDepartmentColor(job: string | undefined): string {
   if (!job) return 'grey';
 
   const department = getDepartmentByJob(job);
@@ -60,7 +66,7 @@ function getDepartmentColor(job: string | undefined) {
 }
 
 /** Returns the display color for certain health percentages */
-function getHealthColor(health: number) {
+function getHealthColor(health: number): string {
   switch (true) {
     case health > HEALTH.Good:
       return 'good';
@@ -72,7 +78,7 @@ function getHealthColor(health: number) {
 }
 
 /** Returns the display color based on orbiter numbers */
-function getThreatColor(orbiters = 0) {
+function getThreatColor(orbiters = 0): string {
   switch (true) {
     case orbiters > THREAT.High:
       return 'violet';
@@ -90,7 +96,7 @@ export function getDisplayColor(
   item: Observable,
   mode: ViewMode,
   override?: string,
-) {
+): string {
   const { job, health, orbiters } = item;
 
   // Things like blob camera, etc
@@ -114,7 +120,10 @@ export function getDisplayColor(
 }
 
 /** Checks if a full name or job title matches the search. */
-export function isJobOrNameMatch(observable: Observable, searchQuery: string) {
+export function isJobOrNameMatch(
+  observable: Observable,
+  searchQuery: string,
+): boolean {
   if (!searchQuery) return true;
 
   const { full_name, job } = observable;
@@ -127,7 +136,7 @@ export function isJobOrNameMatch(observable: Observable, searchQuery: string) {
 }
 
 /** Sorts by department */
-export function sortByDepartment(poiA: Observable, poiB: Observable) {
+export function sortByDepartment(poiA: Observable, poiB: Observable): number {
   const departmentA = (poiA.job && getDepartmentByJob(poiA.job)) || 'unknown';
   const departmentB = (poiB.job && getDepartmentByJob(poiB.job)) || 'unknown';
 
@@ -137,7 +146,7 @@ export function sortByDepartment(poiA: Observable, poiB: Observable) {
 }
 
 /** Sorts based on real name */
-export function sortByDisplayName(poiA: Observable, poiB: Observable) {
+export function sortByDisplayName(poiA: Observable, poiB: Observable): number {
   const nameA = getDisplayName(poiA.full_name, poiA.name)
     .replace(/^"/, '')
     .toLowerCase();
@@ -155,7 +164,7 @@ export function sortByDisplayName(poiA: Observable, poiB: Observable) {
 }
 
 /** Sorts by most orbiters  */
-export function sortByOrbiters(poiA: Observable, poiB: Observable) {
+export function sortByOrbiters(poiA: Observable, poiB: Observable): number {
   const orbitersA = poiA.orbiters || 0;
   const orbitersB = poiB.orbiters || 0;
 
