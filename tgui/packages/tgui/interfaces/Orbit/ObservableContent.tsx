@@ -1,7 +1,7 @@
 import { toTitleCase } from 'common/string';
 
 import { useBackend } from '../../backend';
-import { NoticeBox, Stack, Table, Tooltip } from '../../components';
+import { NoticeBox, Section, Stack, Table, Tooltip } from '../../components';
 import { ANTAG2COLOR } from './constants';
 import { getAntagCategories } from './helpers';
 import { ObservableSection } from './ObservableSection';
@@ -13,7 +13,7 @@ type Props = {
   viewMode: ViewMode;
 };
 
-type Section = {
+type ContentSection = {
   content: Observable[];
   title: string;
   color?: string;
@@ -35,7 +35,7 @@ export function ObservableContent(props: Props) {
     antagGroups = getAntagCategories(antagonists);
   }
 
-  const sections: readonly Section[] = [
+  const sections: readonly ContentSection[] = [
     {
       color: 'purple',
       content: data.deadchat_controlled,
@@ -65,47 +65,49 @@ export function ObservableContent(props: Props) {
   ];
 
   return (
-    <Stack vertical>
-      {critical.map((crit) => (
-        <Tooltip content="Click to orbit" key={crit.ref}>
-          <NoticeBox
-            verticalAlign
-            color="purple"
-            onClick={() => act('orbit', { ref: crit.ref })}
-          >
-            <Table>
-              <Table.Row>
-                <Table.Cell>{toTitleCase(crit.full_name)}</Table.Cell>
-                <Table.Cell collapsing>{crit.extra}</Table.Cell>
-              </Table.Row>
-            </Table>
-          </NoticeBox>
-        </Tooltip>
-      ))}
+    <Section fill>
+      <Stack vertical>
+        {critical.map((crit) => (
+          <Tooltip content="Click to orbit" key={crit.ref}>
+            <NoticeBox
+              verticalAlign
+              color="purple"
+              onClick={() => act('orbit', { ref: crit.ref })}
+            >
+              <Table>
+                <Table.Row>
+                  <Table.Cell>{toTitleCase(crit.full_name)}</Table.Cell>
+                  <Table.Cell collapsing>{crit.extra}</Table.Cell>
+                </Table.Row>
+              </Table>
+            </NoticeBox>
+          </Tooltip>
+        ))}
 
-      {antagGroups.map(([title, members]) => (
-        <ObservableSection
-          autoObserve={autoObserve}
-          color={ANTAG2COLOR[title] || 'bad'}
-          key={title}
-          searchQuery={searchQuery}
-          section={members}
-          title={title}
-          viewMode={viewMode}
-        />
-      ))}
+        {antagGroups.map(([title, members]) => (
+          <ObservableSection
+            autoObserve={autoObserve}
+            color={ANTAG2COLOR[title] || 'bad'}
+            key={title}
+            searchQuery={searchQuery}
+            section={members}
+            title={title}
+            viewMode={viewMode}
+          />
+        ))}
 
-      {sections.map((section) => (
-        <ObservableSection
-          autoObserve={autoObserve}
-          color={section.color}
-          key={section.title}
-          searchQuery={searchQuery}
-          section={section.content}
-          title={section.title}
-          viewMode={viewMode}
-        />
-      ))}
-    </Stack>
+        {sections.map((section) => (
+          <ObservableSection
+            autoObserve={autoObserve}
+            color={section.color}
+            key={section.title}
+            searchQuery={searchQuery}
+            section={section.content}
+            title={section.title}
+            viewMode={viewMode}
+          />
+        ))}
+      </Stack>
+    </Section>
   );
 }
