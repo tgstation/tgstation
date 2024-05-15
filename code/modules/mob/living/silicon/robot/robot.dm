@@ -950,13 +950,14 @@
 
 /mob/living/silicon/robot/proc/charge(datum/source, datum/callback/charge_cell, seconds_per_tick, repairs, sendmats)
 	SIGNAL_HANDLER
-	charge_cell.Invoke(cell, seconds_per_tick)
+
 	if(model)
-		model.respawn_consumable(src, cell.use(cell.chargerate * 0.005))
+		model.respawn_consumable(src, cell.use(cell.charge * 0.005))
 		if(sendmats)
 			model.restock_consumable()
 	if(repairs)
 		heal_bodypart_damage(repairs, repairs)
+	charge_cell.Invoke(cell, seconds_per_tick)
 
 /mob/living/silicon/robot/proc/set_connected_ai(new_ai)
 	if(connected_ai == new_ai)
