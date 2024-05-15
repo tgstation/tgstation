@@ -129,12 +129,17 @@
 		MK.uninstall(src)
 	return ..()
 
+/obj/item/gun/energy/recharge/kinetic_accelerator/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(istype(arrived, /obj/item/borg/upgrade/modkit))
+		modkits |= arrived
+
 /obj/item/gun/energy/recharge/kinetic_accelerator/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/borg/upgrade/modkit))
 		var/obj/item/borg/upgrade/modkit/MK = I
 		MK.install(src, user)
 	else
-		..()
+		return ..()
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/proc/get_remaining_mod_capacity()
 	var/current_capacity_used = 0
@@ -263,7 +268,7 @@
 	if(istype(A, /obj/item/gun/energy/recharge/kinetic_accelerator) && !issilicon(user))
 		install(A, user)
 	else
-		..()
+		return ..()
 
 /obj/item/borg/upgrade/modkit/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -294,7 +299,7 @@
 				return
 			to_chat(user, span_notice("You install the modkit."))
 			playsound(loc, 'sound/items/screwdriver.ogg', 100, TRUE)
-			KA.modkits += src
+			KA.modkits |= src
 		else
 			to_chat(user, span_notice("The modkit you're trying to install would conflict with an already installed modkit. Remove existing modkits first."))
 	else
