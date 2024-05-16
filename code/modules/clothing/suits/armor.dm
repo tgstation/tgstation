@@ -301,6 +301,7 @@
 	blood_overlay_type = "armor"
 	armor_type = /datum/armor/armor_bone
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /datum/armor/armor_bone
 	melee = 35
