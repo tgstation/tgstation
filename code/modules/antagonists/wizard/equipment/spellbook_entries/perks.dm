@@ -60,7 +60,7 @@
 
 /datum/spellbook_entry/perks/dejavu
 	name = "Dejavu"
-	desc = "Every 60 seconds returns you to the place where you were 20 seconds ago with the same amount of health as you had 20 seconds ago"
+	desc = "Every 60 seconds returns you to the place where you were 60 seconds ago with the same amount of health as you had 60 seconds ago"
 
 /datum/spellbook_entry/perks/dejavu/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
