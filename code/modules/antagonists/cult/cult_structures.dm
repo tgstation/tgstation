@@ -23,11 +23,12 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_CONSTRUCTED, PROC_REF(on_constructed))
 
-/obj/structure/destructible/cult/proc/on_constructed(mob/builder)
+/obj/structure/destructible/cult/proc/on_constructed(datum/source, mob/builder)
+	SIGNAL_HANDLER
 	var/datum/antagonist/cult/cultist = builder.mind?.has_antag_datum(/datum/antagonist/cult, TRUE)
 	cult_team = cultist?.get_team()
 
-// Tries to find a cultist. If it succeeds, it also takes advantage of the moment to define the structure's cult team if it's not set yet.
+/// Tries to find a cultist. If it succeeds, it also takes advantage of the moment to define the structure's cult team if it's not set yet.
 /obj/structure/destructible/cult/proc/is_cultist_check(mob/fool)
 
 	if(!IS_CULTIST(fool))
