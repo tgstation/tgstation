@@ -40,7 +40,7 @@
 		embryo_type = growth_path,\
 		minimum_growth_rate = 0.5,\
 		maximum_growth_rate = 1,\
-		total_growth_required = 300,\
+		total_growth_required = 100,\
 		current_growth = 0,\
 		location_allowlist = typecacheof(list(/turf)),\
 		post_hatch = CALLBACK(src, PROC_REF(post_hatch)),\
