@@ -2753,6 +2753,7 @@
 #include "code\game\turfs\open\dirtystation.dm"
 #include "code\game\turfs\open\floor.dm"
 #include "code\game\turfs\open\grass.dm"
+#include "code\game\turfs\open\hay.dm"
 #include "code\game\turfs\open\ice.dm"
 #include "code\game\turfs\open\lava.dm"
 #include "code\game\turfs\open\misc.dm"
