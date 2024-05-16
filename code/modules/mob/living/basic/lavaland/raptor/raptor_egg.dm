@@ -4,6 +4,11 @@
 	///inheritance datum to pass on to the child
 	var/datum/raptor_inheritance/inherited_stats
 
+/obj/item/food/egg/raptor_egg/Initialize(mapload)
+	. = ..()
+	if(SSmapping.is_planetary())
+		icon = 'icons/mob/simple/lavaland/raptor_icebox.dmi'
+
 /obj/item/food/egg/raptor_egg/proc/determine_growth_path(mob/living/basic/mining/raptor/dad, mob/living/basic/mining/raptor/mom)
 	if(dad.type == mom.type)
 		add_growth_component(dad.child_path)

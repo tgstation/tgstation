@@ -33,7 +33,6 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	attack_verb_continuous = "pecks"
 	attack_verb_simple = "chomps"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	move_resist = MOVE_FORCE_VERY_STRONG
 	faction = list(FACTION_RAPTOR, FACTION_NEUTRAL)
 	speak_emote = list("screeches")
 	ai_controller = /datum/ai_controller/basic_controller/raptor
@@ -63,6 +62,9 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 /mob/living/basic/mining/raptor/Initialize(mapload)
 	. = ..()
+	if(SSmapping.is_planetary())
+		change_offsets = FALSE
+		icon = 'icons/mob/simple/lavaland/raptor_icebox.dmi'
 	if(!mapload)
 		GLOB.raptor_population += REF(src)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
@@ -73,8 +75,15 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	)
 
 	var/static/list/display_emote = list(
-		BB_EMOTE_SAY = list("Chirp chirp chirp!", ),
-		BB_EMOTE_SEE = list("shakes its feathers!", "stretches!"),
+		BB_EMOTE_SAY = list("Chirp chirp chirp!", "Bweh!", "Kweh!", "Wark!", "Kwark!", "Bwark!"),
+		BB_EMOTE_SEE = list("shakes its feathers!", "stretches!", "flaps it's wings!", "pecks at the ground!"),
+		BB_EMOTE_SOUND = list(
+			'sound/creatures/raptor_1.ogg',
+			'sound/creatures/raptor_2.ogg',
+			'sound/creatures/raptor_3.ogg',
+			'sound/creatures/raptor_4.ogg',
+			'sound/creatures/raptor_5.ogg',
+		),
 		BB_SPEAK_CHANCE = 5,
 	)
 
@@ -98,6 +107,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 			post_birth = CALLBACK(src, PROC_REF(egg_inherit)),\
 			breed_timer = 3 MINUTES,\
 		)
+	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
 	adjust_offsets(dir)
 	add_happiness_component()

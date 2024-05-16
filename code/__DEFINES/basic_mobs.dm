@@ -69,6 +69,6 @@ GLOBAL_VAR_INIT(gutlunch_count, 0)
 ///our trough target
 #define BB_RAPTOR_TROUGH_TARGET "raptor_trough_target"
 
-#define MAX_RAPTOR_POP 20
+#define MAX_RAPTOR_POP 64
 
 

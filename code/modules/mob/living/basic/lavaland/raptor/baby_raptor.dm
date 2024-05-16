@@ -28,7 +28,7 @@
 		/datum/component/growth_and_differentiation,\
 		growth_time = null,\
 		growth_path = growth_path,\
-		growth_probability = 20,\
+		growth_probability = 80,\
 		lower_growth_value = 0.5,\
 		upper_growth_value = 0.8,\
 		signals_to_kill_on = list(COMSIG_MOB_CLIENT_LOGIN),\
