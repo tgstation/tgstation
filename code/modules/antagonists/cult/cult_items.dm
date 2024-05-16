@@ -144,43 +144,51 @@ Striking a noncultist, however, will tear their flesh."}
 		PATH_FLESH = list(
 			WIELDER_SPELL = /datum/action/cooldown/spell/pointed/blood_siphon,
 			SWORD_SPELL = /datum/action/cooldown/spell/pointed/cleave,
-			SWORD_PREFIX = "sanguine"),
+			SWORD_PREFIX = "sanguine",
+		),
 		// Void
 		PATH_VOID = list(
 			WIELDER_SPELL = /datum/action/cooldown/spell/pointed/void_phase,
 			SWORD_SPELL = /datum/action/cooldown/spell/cone/staggered/cone_of_cold/void,
-			SWORD_PREFIX = "tenebrous"),
+			SWORD_PREFIX = "tenebrous",
+		),
 		// Blade
 		PATH_BLADE = list(
 			WIELDER_SPELL = /datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted,
 			SWORD_SPELL = /datum/action/cooldown/spell/pointed/projectile/furious_steel/solo,
-			SWORD_PREFIX = "keen"),
+			SWORD_PREFIX = "keen",
+		),
 		// Rust
 		PATH_RUST = list(
 			WIELDER_SPELL = /datum/action/cooldown/spell/cone/staggered/entropic_plume,
 			SWORD_SPELL = list(/datum/action/cooldown/spell/aoe/rust_conversion/small, /datum/action/cooldown/spell/pointed/rust_construction),
-			SWORD_PREFIX = "rusted"),
+			SWORD_PREFIX = "rusted",
+		),
 		// Cosmic
 		PATH_COSMIC = list(
 			WIELDER_SPELL = /datum/action/cooldown/spell/conjure/cosmic_expansion,
 			SWORD_SPELL = /datum/action/cooldown/spell/pointed/projectile/star_blast,
-			SWORD_PREFIX = "astral"),
+			SWORD_PREFIX = "astral",
+		),
 		// Lock
 		PATH_LOCK = list(
 			WIELDER_SPELL = /datum/action/cooldown/spell/pointed/burglar_finesse,
 			SWORD_SPELL = /datum/action/cooldown/spell/pointed/apetra_vulnera,
-			SWORD_PREFIX = "incisive"),
+			SWORD_PREFIX = "incisive",
+		),
 		// Moon
 		PATH_MOON = list(
 			WIELDER_SPELL = /datum/action/cooldown/spell/pointed/projectile/moon_parade,
 			SWORD_SPELL = /datum/action/cooldown/spell/pointed/moon_smile,
-			SWORD_PREFIX = "shimmering"),
+			SWORD_PREFIX = "shimmering",
+		),
 		// Starter
 		PATH_START = list(
 			WIELDER_SPELL = null,
 			SWORD_SPELL = null,
-			SWORD_PREFIX = "nascent") // lol loser
-)
+			SWORD_PREFIX = "nascent", // lol loser
+		) ,
+	)
 
 /obj/item/melee/cultblade/haunted/Initialize(mapload, mob/soul_to_bind, mob/awakener, do_bind = TRUE)
 	. = ..()

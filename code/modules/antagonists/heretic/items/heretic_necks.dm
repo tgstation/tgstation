@@ -78,7 +78,7 @@
 /obj/item/clothing/neck/heretic_focus/crimson_focus/attack_self(mob/living/user, modifiers)
 	. = ..()
 	to_chat(user, span_danger("You start tightly squeezing [src]..."))
-	if(!do_after(user, 1.25 SECONDS))
+	if(!do_after(user, 1.25 SECONDS, src))
 		return
 	to_chat(user, span_danger("[src] explodes into a shower of gore and blood, drenching your arm. You can feel the blood seeping into your skin. You inmediately feel better, but soon, the feeling turns hollow as your veins itch."))
 	new /obj/effect/gibspawner/generic(get_turf(src))
