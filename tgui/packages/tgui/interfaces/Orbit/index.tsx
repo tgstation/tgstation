@@ -10,7 +10,7 @@ import { ViewMode } from './types';
 
 export function Orbit(props) {
   const [autoObserve, setAutoObserve] = useState(false);
-  const [bladeOpen, setBladeOpen] = useState(true);
+  const [bladeOpen, setBladeOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<ViewMode>(VIEWMODE.Health);
 

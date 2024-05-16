@@ -16,10 +16,12 @@ type Props = {
 /** Each button on the observable section */
 export function OrbitItem(props: Props) {
   const { item, autoObserve, viewMode, color } = props;
-
-  const { act } = useBackend<OrbitData>();
   const { full_name, icon, job, name, orbiters, ref } = item;
 
+  const { act, data } = useBackend<OrbitData>();
+  const { orbiting } = data;
+
+  const selected = ref === orbiting?.ref;
   const validIcon = !!job && !!icon && icon !== 'hudunknown';
 
   return (
@@ -38,7 +40,7 @@ export function OrbitItem(props: Props) {
         pl={validIcon && 0.5}
       >
         <Stack>
-          <Stack.Item>
+          <Stack.Item bold={selected}>
             {capitalizeFirst(getDisplayName(full_name, name))}
           </Stack.Item>
 
