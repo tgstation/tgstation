@@ -33918,7 +33918,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "mpH" = (
-/obj/structure/table/glass,
+/obj/machinery/computer/operating{
+	dir = 1
+	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
@@ -42971,7 +42973,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "pKg" = (
-/obj/structure/table/glass,
+/obj/machinery/computer/operating,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/white,
