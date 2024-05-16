@@ -318,3 +318,71 @@
   - bugfix: Fixes random decal in space on Tramstation
   necromanceranne:
   - bugfix: Fixes an accidental reversion to greyscale plate armor.
+2024-05-16:
+  Ben10Omintrix:
+  - rscadd: parrots will now try to immitate the speaker's voice
+  DaxDupont:
+  - bugfix: Fixes error when running docker compose on apt upgrade
+  Derpguy3:
+  - qol: Additional box types can be crafted from cardboard. Happy organizing.
+  - spellcheck: A typo in box crafting for prescription glasses has been fixed.
+  Hatterhat:
+  - bugfix: The SC/FISHER can now shoot floor lights.
+  Jacquerel:
+  - admin: Admins can now more easily modify whether a Blood Brother can convert someone
+  Jane:
+  - qol: Shovels, Serrated Bone Shovels, and Entrenching Tools can now be hung upon
+      Miner and Coroner Winter Coats, as well as the Coroner's Labcoat!
+  - image: Mirrored the mirrored sprites to display Shovels in the suit slot properly.
+  Melbert:
+  - qol: When you are offered something, you can shift-click the alert to examine
+      the item rather than take it.
+  - qol: Examine blocks for screen alert examining.
+  - qol: Screentips for offer alerts.
+  PKPenguin321:
+  - rscadd: New funny wizard staff/wand that shrinks stuff.
+  - rscadd: Being shrunken now leaves you vulnerable to being crushed to death.
+  Pickle-Coding:
+  - balance: There are reports of malfunctioning guns being confiscated.
+  Seven:
+  - bugfix: Destroyed solar panels no longer drop their overlays
+  Shadow-Quill:
+  - qol: The "Confirm Order" button on Cargo consoles is now active when the cargo
+      shuttle is at Central Command instead of at the station.
+  ShizCalev:
+  - bugfix: Spam clicking a modkit with a kinetic accelerator can no longer lead to
+      ghosted versions of the modkits appearing in the modkit list, breaking the gun.
+  SyncIt21:
+  - bugfix: cell chargers, mechbay port chargers & recharge stations heat lost is
+      directly proportional to energy drawn from the grid to charge their respective
+      cells
+  - bugfix: cyborgs should charge more frequently & to their max capacity at recharge
+      stations
+  - qol: adds examines & screentips for tool & container actions on the smoke machine
+  - qol: smoke machine no longer requires a power cell for construction
+  - code_imp: autodocs & removes vars for some machine, Updated attack chain to latest
+      standards for smoke machine
+  - bugfix: You no longer hit the smoke machine with the beaker
+  - bugfix: You can hit the smoke machine with tools & beakers when in combat mode
+  - bugfix: no abstract & hologram item interactions allowed with smoke machine
+  Time-Green:
+  - bugfix: Space Ninja and other space spawned antags get a 1 minute radiation shield
+      in the radioactive nebula
+  grungussuss and Virgilcore:
+  - sound: portals now have a unique sound to them
+  jlsnow301:
+  - bugfix: Bitrunning antagonists no longer gib on teleport
+  - bugfix: Cyber tac now have a visible name / ID
+  - bugfix: 'Renamed the bitrunning malfunction event to just "Malfunction: x"'
+  - bugfix: You can adjust your uniform while lying down again
+  necromanceranne:
+  - bugfix: Fixes the knife offset for pipeguns
+  tmyqlfpir:
+  - qol: Add tooltips to circuit editor buttons
+  - qol: Add grid alignment mode to circuit editor
+  - rscadd: Added new compare health state component
+  - rscadd: Added new NTNet send list literal component
+  - rscadd: Added new toggle component
+  - qol: Added activity toggle to voice activator component
+  - qol: Added quiet mode to speech component
+  - qol: NTNet send component will not use power/trigger if NTNet is offline
