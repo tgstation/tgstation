@@ -40,10 +40,9 @@ export function OrbitItem(props: Props) {
         pl={validIcon && 0.5}
       >
         <Stack>
-          <Stack.Item bold={selected}>
+          <Stack.Item>
             {capitalizeFirst(getDisplayName(full_name, name))}
           </Stack.Item>
-
           {!!orbiters && (
             <Stack.Item>
               <Icon name="ghost" />
@@ -51,6 +50,7 @@ export function OrbitItem(props: Props) {
             </Stack.Item>
           )}
         </Stack>
+        {selected && <div className="OrbitItem__selected" />}
       </Button>
     </Flex.Item>
   );

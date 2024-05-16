@@ -102,7 +102,7 @@ function OrbitInfo(props) {
   return (
     <Section title="Orbiting">
       <Stack fill vertical>
-        <Stack.Item align="center">
+        <Stack.Item>
           {toTitleCase(getDisplayName(full_name, name))}
           {showAFK && (
             <Tooltip content="Away from keyboard" position="bottom-start">
@@ -130,28 +130,59 @@ function OrbitInfo(props) {
         )}
         {health !== undefined && (
           <Stack.Item>
-            <Stack align="center">
-              <Stack.Item>
-                <Icon color="grey" name="heartbeat" />
-              </Stack.Item>
-              <Stack.Item grow>
-                <ProgressBar
-                  maxValue={100}
-                  minValue={0}
-                  ranges={{
-                    good: [70, Infinity],
-                    average: [20, HEALTH.Good],
-                    bad: [0, HEALTH.Average],
-                  }}
-                  value={health}
-                />
-              </Stack.Item>
-            </Stack>
+            <HealthDisplay health={health} />
           </Stack.Item>
         )}
 
         <Stack.Item />
       </Stack>
     </Section>
+  );
+}
+
+function HealthDisplay(props: { health: number }) {
+  const { health } = props;
+
+  let icon = 'heart';
+  let howDead;
+  switch (true) {
+    case health <= HEALTH.Ruined:
+      howDead = `Very Dead: ${health}`;
+      icon = 'skull';
+      break;
+    case health <= HEALTH.Dead:
+      howDead = `Dead: ${health}`;
+      icon = 'heart-broken';
+      break;
+    case health <= HEALTH.Crit:
+      howDead = `Health critical: ${health}`;
+      icon = 'tired';
+      break;
+    case health <= HEALTH.Bad:
+      howDead = `Bad: ${health}`;
+      icon = 'heartbeat';
+      break;
+  }
+
+  return (
+    <Stack align="center">
+      <Stack.Item>
+        <Icon color="grey" name={icon} />
+      </Stack.Item>
+      <Stack.Item color={howDead && 'bad'} grow>
+        {howDead || (
+          <ProgressBar
+            maxValue={100}
+            minValue={0}
+            ranges={{
+              good: [70, Infinity],
+              average: [20, HEALTH.Good],
+              bad: [0, HEALTH.Average],
+            }}
+            value={health}
+          />
+        )}
+      </Stack.Item>
+    </Stack>
   );
 }
