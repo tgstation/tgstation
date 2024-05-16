@@ -1,0 +1,7 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Snails no longer move at normal speed while resting."
+  - bugfix: "Snails can no longer get insane speed from getting their legs replaced."
+  - bugfix: "Humans don't become immensely slow when getting a Snail leg."
+  - admin: "lube walking element is now much easier to mess with to fit however you want to use it for."

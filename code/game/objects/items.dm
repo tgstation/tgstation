@@ -288,7 +288,7 @@
 	if(!unique_reskin)
 		return
 
-	if(current_skin && !(item_flags & INFINITE_RESKIN))
+	if(current_skin && !(obj_flags & INFINITE_RESKIN))
 		return
 
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Reskin"

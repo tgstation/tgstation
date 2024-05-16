@@ -1,0 +1,14 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - balance: "Rust Heretics rusting is now consistent and tied to knowledge progression."
+  - balance: "Walking on rust applies disgust and chem purge to non-heretics and brute damage to silicons."
+  - balance: "Toxic damage on heretic skills is replaced with disgust."
+  - balance: "Aggressive Spread radius is now a bit shorter in exchange for losing its RNG elements, cooldown is halved on ascension."
+  - balance: "Pulse of Entropy had its radius doubled and the recipe simplified."
+  - balance: "Leeching walk has had its healing increased and a minor temp regulation effect added."
+  - balance: "Rust Walker's knowledge has been moved up in tree(close to aggressive spread) they are now easier to summon and have more health."
+  - balance: "You cannot place floor tiles on rusted turfs anymore, (use a welder to scrape off the rust first)."
+  - balance: "Rustbringer's oath has been reworked to propagate around in a circular fashion and not just on the bridge z level."
+  - balance: "Resist cold trait now gives immunity to freeze effects, and has now been added to Rustbringer's oath along with slowdown immunity."
+  - bugfix: "Fixed glowing runes being invisible."

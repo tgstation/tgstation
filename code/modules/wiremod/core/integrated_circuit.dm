@@ -80,6 +80,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// The Y position of the screen. Used for adding components.
 	var/screen_y = 0
 
+	/// The grid mode state for the circuit.
+	var/grid_mode = TRUE
+
 	/// The current size of the circuit.
 	var/current_size = 0
 
@@ -400,6 +403,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	.["examined_notices"] = examined?.get_ui_notices()
 	.["examined_rel_x"] = examined_rel_x
 	.["examined_rel_y"] = examined_rel_y
+	.["grid_mode"] = grid_mode
 
 	.["is_admin"] = (admin_only || isAdminGhostAI(user)) && check_rights_for(user.client, R_VAREDIT)
 
@@ -577,6 +581,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			else
 				set_display_name("")
 			. = TRUE
+		if("toggle_grid_mode")
+			toggle_grid_mode()
+			. = TRUE
 		if("set_examined_component")
 			var/component_id = text2num(params["component_id"])
 			if(!WITHIN_RANGE(component_id, attached_components))
@@ -708,6 +715,10 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			shell.name = display_name
 	else
 		shell.name = initial(shell.name)
+
+/// Toggles the grid mode property for this circuit.
+/obj/item/integrated_circuit/proc/toggle_grid_mode()
+	grid_mode = !grid_mode
 
 /**
  * Returns the creator of the integrated circuit. Used in admin messages and other related things.

@@ -1,5 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes:
-  - qol: "The labor camp shuttle properly sets people to parole after they complete their work."
-  - qol: "The labor camp shuttle specifies which person returned to the station."

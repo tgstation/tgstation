@@ -1,0 +1,5 @@
+author: "siliconOpossum"
+delete-after: True
+changes:
+  - qol: "Neckties are now worn underneath suit items and accessories, they can still be optionally worn over them in case you want the \"business space suit\" look"
+  - bugfix: "Fixed a bug where accessories wouldn't correctly apply over suits if you equipped the jumpsuit they're attached to after the suit"

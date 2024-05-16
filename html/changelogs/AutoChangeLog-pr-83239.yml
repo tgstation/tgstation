@@ -1,0 +1,4 @@
+author: "Seven"
+delete-after: True
+changes:
+  - bugfix: "Wings no longer work in space if you activated them beforehand."

@@ -2027,10 +2027,11 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/unres,
-/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
 /obj/machinery/door/airlock/external/glass{
 	name = "Mining Shuttle Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/production)
 "lN" = (
@@ -7197,7 +7198,6 @@
 "RW" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/unres,
-/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
@@ -7207,6 +7207,7 @@
 /obj/machinery/door/airlock/external/glass{
 	name = "Mining Shuttle Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/production)
 "RY" = (
