@@ -190,7 +190,9 @@
 /obj/effect/mob_spawn/ghost_role/human/syndicate/satellite
 	name = "Syndicate Support Agent"
 	you_are_text = "You are a specialized agent on board a remote satellite base"
-	flavour_text = "Your job is to provide the right support to the field agents. Do not harm any agents and do not abandon the base without reason."
+	flavour_text = "Your job is to provide the right support to the field agents. \
+					Do not harm any agents unless in self defense \
+					and DO NOT ABANDON THE BASE, unless a field agent is in mortal peril or incarcerated."
 	outfit = /datum/outfit/syndicate_empty/satellite
 
 /datum/outfit/syndicate_empty/satellite
@@ -204,5 +206,9 @@
 
 /datum/outfit/syndicate_empty/satellite/post_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
 	. = ..()
-	var/datum/martial_art/cqc/to_learn = new()
+	var/datum/martial_art/the_sleeping_carp/satellite/to_learn = new()
 	to_learn.teach(user)
+
+/obj/effect/mob_spawn/ghost_role/human/syndicate/satellite/special(mob/living/spawned_mob, mob/mob_possessor)
+	. = ..()
+	spawned_mob.client.prefs.safe_transfer_prefs_to(spawned_mob)

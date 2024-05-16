@@ -390,10 +390,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "oO" = (
-/obj/machinery/light/cold/directional/south,
-/obj/structure/table/wood,
-/obj/machinery/coffeemaker/impressa,
-/obj/effect/turf_decal/tile/dark_red/fourcorners,
+/obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
+	dir = 1
+	},
+/obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "pt" = (
@@ -649,8 +649,11 @@
 /turf/open/floor/engine,
 /area/centcom/syndicate_mothership)
 "Bx" = (
-/obj/machinery/light/cold/directional/south,
-/obj/effect/turf_decal/tile/dark_red/fourcorners,
+/obj/effect/turf_decal/tile/dark_red/anticorner/contrasted,
+/obj/machinery/computer/records/security/syndie{
+	dir = 8
+	},
+/obj/structure/table/wood,
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "BB" = (
@@ -715,7 +718,10 @@
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership)
 "Fp" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/cold/directional/south,
+/obj/effect/turf_decal/tile/dark_red/fourcorners,
+/obj/item/storage/fancy/donut_box,
+/obj/structure/table/wood,
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "Gm" = (
@@ -766,9 +772,11 @@
 /area/centcom/syndicate_mothership)
 "Ic" = (
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
-	dir = 8
+	dir = 1
 	},
-/obj/machinery/light/cold/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "Iy" = (
@@ -936,11 +944,11 @@
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "Pv" = (
-/obj/machinery/door/airlock/command,
 /obj/effect/turf_decal/tile/dark_red/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command,
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "PQ" = (
@@ -977,9 +985,8 @@
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "RS" = (
-/obj/machinery/door/airlock/command,
 /obj/effect/turf_decal/tile/dark_red/fourcorners,
-/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "Sc" = (
@@ -1082,10 +1089,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "Wb" = (
-/obj/effect/turf_decal/tile/dark_red/anticorner/contrasted,
-/obj/machinery/computer/records/security/syndie{
-	dir = 8
-	},
+/obj/machinery/light/cold/directional/south,
+/obj/machinery/coffeemaker/impressa,
+/obj/effect/turf_decal/tile/dark_red/fourcorners,
+/obj/structure/table/wood,
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "Wq" = (
@@ -1513,9 +1520,9 @@ Go
 Go
 Go
 dk
-dk
-dk
 Go
+Sq
+Sq
 Sq
 Sq
 Sq
@@ -1546,14 +1553,14 @@ yl
 yl
 qJ
 wQ
-dk
-rZ
-Ic
-Gn
+Go
+oO
 Gn
 ej
-oO
+Wb
 Go
+Sq
+Sq
 Sq
 Sq
 Sq
@@ -1584,13 +1591,13 @@ yl
 yl
 Lr
 RS
-aw
-yl
-Bg
+Ic
 yl
 yl
 mI
 dk
+Sq
+Sq
 Sq
 Sq
 Sq
@@ -1623,11 +1630,11 @@ Lr
 Pv
 WI
 pX
-pX
-Fp
 yl
 RO
 dk
+Sq
+Sq
 Sq
 Sq
 Sq
@@ -1659,12 +1666,12 @@ yl
 Lr
 RS
 aw
-yl
-yl
 up
 yl
 py
 dk
+Sq
+Sq
 Sq
 Sq
 Sq
@@ -1694,14 +1701,14 @@ yl
 yl
 Bg
 Lr
-dk
+Go
 LZ
 Pu
-CH
-CH
-Wb
 Bx
+Fp
 Go
+Sq
+Sq
 Sq
 Sq
 Sq
@@ -1735,9 +1742,9 @@ Go
 Go
 Go
 dk
-dk
-dk
 Go
+Sq
+Sq
 Sq
 Sq
 Sq
@@ -2573,7 +2580,7 @@ Sq
 Sq
 Sq
 Sq
-Sq
+Go
 Go
 rZ
 Gn
@@ -3017,7 +3024,7 @@ Sq
 Sq
 Sq
 Sq
-Sq
+Go
 Go
 VT
 VW

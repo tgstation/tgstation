@@ -225,6 +225,11 @@
 	)
 	return COMPONENT_NO_AFTERATTACK
 
+/datum/martial_art/the_sleeping_carp/satellite/can_use(mob/living/martial_artist)
+	if(!is_type_in_list(get_area(martial_artist), list(/area/centcom/syndicate_mothership)))
+		return FALSE
+	return ..()
+
 /// Verb added to humans who learn the art of the sleeping carp.
 /mob/living/proc/sleeping_carp_help()
 	set name = "Recall Teachings"
