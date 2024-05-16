@@ -298,7 +298,7 @@
 /datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustOxyLoss(-3 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update = affected_mob.adjustOxyLoss(-4.5 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	need_mob_update += affected_mob.adjustStaminaLoss(2 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	if(drowsycd && COOLDOWN_FINISHED(src, drowsycd))
 		affected_mob.adjust_drowsiness(20 SECONDS)
