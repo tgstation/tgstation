@@ -63,6 +63,8 @@
 	desc = "A grey uniform for operating in hazardous environments."
 	icon_state = "explorer"
 	inhand_icon_state = null
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/cargo/bitrunner
 	name = "bitrunner's jumpsuit"
