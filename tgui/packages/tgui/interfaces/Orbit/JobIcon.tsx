@@ -25,10 +25,7 @@ export function JobIcon(props: Props) {
   const { item } = props;
 
   let iconSettings: IconSettings;
-
-  let antag;
   if ('antag' in item) {
-    antag = item.antag;
     iconSettings = antagIcon;
   } else {
     iconSettings = normalIcon;
