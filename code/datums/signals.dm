@@ -111,6 +111,13 @@
  * Use the [SEND_SIGNAL] define instead
  */
 /datum/proc/_SendSignal(sigtype, list/arguments)
+	var/static/x = 0
+	if (++x % 2 == 0)
+		return _SendSignal_OLD(sigtype, arguments)
+	else
+		return _SendSignal_NEW(sigtype, arguments)
+
+/datum/proc/_SendSignal_OLD(sigtype, list/arguments)
 	var/target = _listen_lookup[sigtype]
 	if(!length(target))
 		var/datum/listening_datum = target
@@ -120,7 +127,22 @@
 	// all the objects that are receiving the signal get the signal this final time.
 	// AKA: No you can't cancel the signal reception of another object by doing an unregister in the same signal.
 	var/list/queued_calls = list()
-	// This should be faster than the other method of iterating over a list
+	for(var/datum/listening_datum as anything in target)
+		queued_calls[listening_datum] = listening_datum._signal_procs[src][sigtype]
+	for(var/datum/listening_datum as anything in queued_calls)
+		. |= call(listening_datum, queued_calls[listening_datum])(arglist(arguments))
+
+/datum/proc/_SendSignal_NEW(sigtype, list/arguments)
+	var/target = _listen_lookup[sigtype]
+	if(!length(target))
+		var/datum/listening_datum = target
+		return NONE | call(listening_datum, listening_datum._signal_procs[src][sigtype])(arglist(arguments))
+	. = NONE
+	// This exists so that even if one of the signal receivers unregisters the signal,
+	// all the objects that are receiving the signal get the signal this final time.
+	// AKA: No you can't cancel the signal reception of another object by doing an unregister in the same signal.
+	var/list/queued_calls = list()
+	// This should be faster than doing `var/datum/listening_datum as anything in target` as it does not implicitly copy the list
 	for(var/i in 1 to length(target))
 		var/datum/listening_datum = target[i]
 		queued_calls.Add(listening_datum, listening_datum._signal_procs[src][sigtype])
