@@ -44,6 +44,7 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "tie_greyscale_tied"
 	inhand_icon_state = "" //no inhands
+	alternate_worn_layer = LOW_NECK_LAYER // So that it renders below suit jackets, MODsuits, etc
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW
 	greyscale_config = /datum/greyscale_config/ties
@@ -66,6 +67,7 @@
 
 /obj/item/clothing/neck/tie/examine(mob/user)
 	. = ..()
+	. += span_notice("The tie can be worn above or below your suit. Alt-Right-click to toggle.")
 	if(clip_on)
 		. += span_notice("Looking closely, you can see that it's actually a cleverly disguised clip-on.")
 	else if(!is_tied)
@@ -102,6 +104,14 @@
 	user.update_clothing(ITEM_SLOT_NECK)
 	return CLICK_ACTION_SUCCESS
 
+/obj/item/clothing/neck/tie/alt_click_secondary(mob/user)
+	. = ..()
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
+		return	
+	alternate_worn_layer = alternate_worn_layer == initial(alternate_worn_layer) ? NONE : initial(alternate_worn_layer)
+	user.update_clothing(ITEM_SLOT_NECK)
+	balloon_alert(user, "wearing [alternate_worn_layer == initial(alternate_worn_layer) ? "below" : "above"] suits")
+
 /obj/item/clothing/neck/tie/update_icon()
 	. = ..()
 	if(clip_on)
@@ -120,6 +130,7 @@
 
 /obj/item/clothing/neck/tie/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_RMB] = "Wear [alternate_worn_layer == initial(alternate_worn_layer) ? "above" : "below"] suit"
 	if(clip_on)
 		return
 	if(is_tied)
@@ -127,6 +138,17 @@
 	else
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Tie"
 	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/clothing/neck/tie/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+	var/mob/living/carbon/human/wearer = loc
+	if(!ishuman(wearer) || !wearer.w_uniform)
+		return
+	var/obj/item/clothing/under/undershirt = wearer.w_uniform
+	if(!istype(undershirt) || !LAZYLEN(undershirt.attached_accessories))
+		return
+	if(alternate_worn_layer)
+		. += undershirt.accessory_overlay
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"
