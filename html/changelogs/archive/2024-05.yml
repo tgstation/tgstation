@@ -137,3 +137,6 @@
   - bugfix: Stage Occurrence mutations will now work on symptoms not in their initial
       stage
   - rscadd: Bio bag can now carry mouse cubes and virus dishes
+2024-05-16:
+  Absolucy:
+  - bugfix: Fix DNA vault scanner being broken with plants.
