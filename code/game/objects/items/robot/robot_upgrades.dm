@@ -126,10 +126,10 @@
 	. = ..()
 	if(!.)
 		return .
-	var/obj/item/gun/energy/disabler/cyborg/T = locate() in borg.model.modules
-	if(!T)
+	var/obj/item/gun/energy/disabler/cyborg/disabler = locate() in borg.model.modules
+	if(isnull(disabler))
 		return FALSE
-	T.charge_delay = initial(T.charge_delay)
+	disabler.charge_delay = initial(disabler.charge_delay)
 
 /obj/item/borg/upgrade/thrusters
 	name = "ion thruster upgrade"
