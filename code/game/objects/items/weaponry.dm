@@ -532,6 +532,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return TRUE
 
 /obj/item/cane/proc/handle_limping(mob/living/user)
+	SIGNAL_HANDLER
 	return COMPONENT_CANCEL_LIMP
 
 /obj/item/cane/crutch
@@ -613,7 +614,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	ADD_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
 
 /obj/item/cane/white/handle_limping(mob/living/user)
-	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? COMPONENT_CANCEL_LIMP : null
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? COMPONENT_CANCEL_LIMP : NONE
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
