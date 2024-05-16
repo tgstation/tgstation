@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	attack_verb_simple = "chomps"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	move_resist = MOVE_FORCE_VERY_STRONG
-	faction = list(FACTION_RAPTOR)
+	faction = list(FACTION_RAPTOR, FACTION_NEUTRAL)
 	speak_emote = list("screeches")
 	ai_controller = /datum/ai_controller/basic_controller/raptor
 	///can this mob breed
