@@ -305,10 +305,19 @@
 		attack_hand(user, modifiers)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	var/target_input = tgui_input_list(user, "Where to launch to?", "Set Teleporter?", GLOB.active_syndicate_paintings)
+	var/list/targets = list("Random Teleport" = "Random Teleport")
+	for(var/obj/structure/sign/painting/syndicate_teleporter/potential_target in GLOB.active_syndicate_paintings)
+		if(potential_target.integrity_compromised)
+			continue
+
+		var/list/area_index = list()
+		var/area/target_area = get_area(potential_target)
+		targets[avoid_assoc_duplicate_keys(format_text(target_area.name), area_index)] = potential_target
+
+	var/target_input = tgui_input_list(user, "Where to launch to?", "Set Teleporter?", sort_list(targets))
 	if(!target_input)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return_target = target_input
+	return_target = targets[target_input]
 	if(!istext(return_target))
 		SEND_SIGNAL(return_target, COMSIG_GATE_SET_TARGET, src)
 	update_appearance(UPDATE_ICON)
