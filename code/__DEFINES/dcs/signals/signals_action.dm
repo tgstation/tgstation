@@ -51,6 +51,3 @@
 
 /// From /datum/action/cooldown/mob_cooldown/capture_photo/Activate():
 #define COMSIG_ACTION_PHOTO_CAPTURED "action_photo_captured"
-
-/// From /datum/action/cooldown/proc/StartCooldown()
-#define COMSIG_ACTION_START_COOLDOWN "action_start_cooldown"

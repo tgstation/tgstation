@@ -202,9 +202,6 @@
 	/// Dusts the target instead of gibbing them (no soulstone)
 	#define DUST_SACRIFICE (1<<2)
 
-/// From /datum/action/innate/cult/blood_magic/Activate()
-#define COMSIG_LIVING_CULT_EMPOWER "living_empower"
-
 /// From /mob/living/befriend() : (mob/living/new_friend)
 #define COMSIG_LIVING_BEFRIENDED "living_befriended"
 

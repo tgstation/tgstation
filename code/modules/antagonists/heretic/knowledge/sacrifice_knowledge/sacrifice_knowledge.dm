@@ -253,8 +253,7 @@
 
 	else if(isitem(reward))
 		var/obj/item/item_reward = reward
-		ASYNC
-			item_reward.gender_reveal(outline_color = COLOR_GREEN)
+		item_reward.gender_reveal(outline_color = COLOR_GREEN)
 
 	ASSERT(reward)
 

@@ -771,7 +771,7 @@ Striking a noncultist, however, will tear their flesh."}
 	sleep(5 SECONDS) // can we still use these or. i mean its async
 	new /obj/structure/spawner/sentient/proteon_spawner(src)
 	visible_message(span_cult_bold("A mysterious hole appears out of nowhere!"))
-	if(!fucked)
+	if(!fucked || QDELETED(user))
 		return
 	if(get_turf(user) != src) // they get away. for now
 		REMOVE_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))

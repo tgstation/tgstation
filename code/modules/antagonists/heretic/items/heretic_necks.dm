@@ -15,7 +15,8 @@
 	icon_state = "crimson_focus"
 	/// The aura healing component. Used to delete it when taken off.
 	var/datum/component/component
-
+	/// If active or not, used to add and remove its cult and heretic buffs.
+	var/active = FALSE
 
 /obj/item/clothing/neck/heretic_focus/crimson_focus/equipped(mob/living/user, slot)
 	. = ..()
@@ -27,9 +28,10 @@
 		var/datum/action/innate/cult/blood_magic/magic_holder = locate() in user.actions
 		team_color = COLOR_CULT_RED
 		magic_holder.magic_enhanced = TRUE
-	if(IS_HERETIC_OR_MONSTER(user))
+	if(IS_HERETIC_OR_MONSTER(user) && !active)
 		for(var/datum/action/cooldown/spell/spell_action in user.actions)
 			spell_action.cooldown_time *= 0.5
+			active = TRUE
 		team_color = COLOR_GREEN
 	else
 		team_color = pick(COLOR_CULT_RED, COLOR_GREEN)
@@ -58,11 +60,10 @@
 	if(HAS_TRAIT_FROM(user, TRAIT_MANSUS_TOUCHED, REF(src)))
 		to_chat(user, span_notice("Your heart and blood return to their regular old rhythm and flow."))
 
-	if(IS_HERETIC_OR_MONSTER(user))
+	if(IS_HERETIC_OR_MONSTER(user) && active)
 		for(var/datum/action/cooldown/spell/spell_action in user.actions)
-			if(spell_action.cooldown_time == initial(spell_action.cooldown_time))
-				return
 			spell_action.cooldown_time *= 2
+			active = FALSE
 	QDEL_NULL(component)
 	user.remove_traits(list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOODY_MESS), REF(src))
 
