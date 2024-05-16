@@ -103,6 +103,11 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	add_happiness_component()
 
 
+/mob/living/basic/mining/raptor/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE)
+	if(!iscarbon(target))
+		return
+	return ..()
+
 /mob/living/basic/mining/raptor/proc/add_happiness_component()
 	var/static/list/percentage_callbacks = list(0, 15, 25, 35, 50, 75, 90, 100)
 	AddComponent(\
