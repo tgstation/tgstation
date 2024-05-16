@@ -105,12 +105,10 @@
 
 /obj/structure/spider/stickyweb/genetic/Initialize(mapload, allowedmob)
 	. = ..()
+	allowed_mob = allowedmob
+	RegisterSignal(allowed_mob, COMSIG_QDELETING, PROC_REF(on_allowed_mob_delete))
 	// Tint it purple so that spiders don't get confused about why they can't cross this one
 	add_filter(SPIDER_WEB_TINT, 10, list("type" = "outline", "color" = "#ffaaf8ff", "size" = 0.1))
-
-/obj/structure/spider/stickyweb/genetic/Initialize(mapload, allowedmob)
-	allowed_mob = allowedmob
-	return ..()
 
 /obj/structure/spider/stickyweb/genetic/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -125,6 +123,15 @@
 	else if(isprojectile(mover))
 		return prob(30)
 	return .
+
+/obj/structure/spider/stickyweb/genetic/proc/on_allowed_mob_delete(datum/source)
+	SIGNAL_HANDLER
+
+	allowed_mob = null
+
+/obj/structure/spider/stickyweb/genetic/Destroy()
+	allowed_mob = null
+	return ..()
 
 /// Web with a 100% chance to intercept movement
 /obj/structure/spider/stickyweb/very_sticky
