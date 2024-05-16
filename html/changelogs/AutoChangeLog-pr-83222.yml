@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Spam clicking a modkit with a kinetic accelerator can no longer lead to ghosted versions of the modkits appearing in the modkit list, breaking the gun."

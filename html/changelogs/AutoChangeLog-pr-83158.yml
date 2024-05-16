@@ -1,9 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - qol: "adds examines & screentips for tool & container actions on the smoke machine"
-  - qol: "smoke machine no longer requires a power cell for construction"
-  - code_imp: "autodocs & removes vars for some machine, Updated attack chain to latest standards for smoke machine"
-  - bugfix: "You no longer hit the smoke machine with the beaker"
-  - bugfix: "You can hit the smoke machine with tools & beakers when in combat mode"
-  - bugfix: "no abstract & hologram item interactions allowed with smoke machine"
