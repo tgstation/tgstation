@@ -57,7 +57,7 @@ export function OrbitContent(props) {
   ];
 
   return (
-    <Section fill>
+    <Section fill scrollable>
       <Stack vertical>
         {critical.map((crit) => (
           <Tooltip content="Click to orbit" key={crit.ref}>

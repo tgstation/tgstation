@@ -11,9 +11,11 @@ import { OrbitData } from './types';
 export function OrbitSearchBar(props) {
   const {
     autoObserve,
+    bladeOpen,
     searchQuery,
     viewMode,
     setAutoObserve,
+    setBladeOpen,
     setSearchQuery,
     setViewMode,
   } = useContext(OrbitContext);
@@ -99,6 +101,16 @@ export function OrbitSearchBar(props) {
             onClick={() => act('refresh')}
             tooltip="Refresh"
             tooltipPosition="bottom-start"
+          />
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            color="transparent"
+            icon="sliders-h"
+            onClick={() => setBladeOpen(!bladeOpen)}
+            selected={bladeOpen}
+            tooltip="Toggle settings blade"
+            tooltipPosition="left-end"
           />
         </Stack.Item>
       </Stack>

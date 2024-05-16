@@ -14,7 +14,6 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	if (!ui)
 		ui = new(user, src, "Orbit")
 		ui.open()
-		ui.set_autoupdate(FALSE)
 
 /datum/orbit_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -37,6 +36,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			var/mob/dead/observer/user = usr
 			user.ManualFollow(poi)
 			user.reset_perspective(null)
+			user.orbiting_ref = ref
 			if (auto_observe)
 				user.do_observe(poi)
 			return TRUE
@@ -45,6 +45,16 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			return TRUE
 
 	return FALSE
+
+
+/datum/orbit_menu/ui_data(mob/user)
+	var/list/data = list()
+
+	if(isobserver(user))
+		data["orbiting"] = get_currently_orbiting(user)
+
+	return data
+
 
 /datum/orbit_menu/ui_static_data(mob/user)
 	var/list/new_mob_pois = SSpoints_of_interest.get_mob_pois(CALLBACK(src, PROC_REF(validate_mob_poi)), append_dead_role = FALSE)
@@ -154,6 +164,43 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		serialized["icon"] = antag.antag_hud_name
 
 		return serialized
+
+
+/// Helper to get the current thing we're orbiting (if any)
+/datum/orbit_menu/proc/get_currently_orbiting(mob/dead/observer/user)
+	if(isnull(user.orbiting_ref))
+		return
+
+	var/atom/poi = SSpoints_of_interest.get_poi_atom_by_ref(user.orbiting_ref)
+	if(isnull(poi))
+		user.orbiting_ref = null
+		return
+
+	if((ismob(poi) && !SSpoints_of_interest.is_valid_poi(poi, CALLBACK(src, PROC_REF(validate_mob_poi)))) \
+		|| !SSpoints_of_interest.is_valid_poi(poi)
+	)
+		user.orbiting_ref = null
+		return
+
+	var/list/serialized = list()
+
+	if(!ismob(poi))
+		var/list/misc_info = get_misc_data(poi)
+		serialized += misc_info[1]
+		return serialized
+
+	var/mob/mob_poi = poi
+	serialized["full_name"] = mob_poi.name
+	serialized["ref"] = REF(poi)
+
+	if(mob_poi.mind)
+		serialized["client"] = !!mob_poi.client
+		serialized["name"] = mob_poi.real_name
+
+	if(isliving(mob_poi))
+		serialized += get_living_data(mob_poi)
+
+	return serialized
 
 
 /// Helper function to get job / icon / health data for a living mob

@@ -15,6 +15,7 @@ export type OrbitData = {
   ghosts: Observable[];
   misc: Observable[];
   npcs: Observable[];
+  orbiting: Observable | null;
 };
 
 export type Observable = {

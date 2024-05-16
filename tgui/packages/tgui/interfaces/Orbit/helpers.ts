@@ -45,7 +45,7 @@ export function getDisplayName(full_name: string, nickname?: string): string {
 }
 
 /** Returns the department the player is in */
-function getDepartmentByJob(job: string): string | undefined {
+export function getDepartmentByJob(job: string): string | undefined {
   const withoutParenthesis = job.replace(/ \(.*\)/, '');
 
   for (const department in DEPARTMENT2COLOR) {

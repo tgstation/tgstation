@@ -1,37 +1,52 @@
-import { createContext, useState } from 'react';
+import { createContext, Dispatch, SetStateAction, useState } from 'react';
 import { Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';
 
 import { VIEWMODE } from './constants';
+import { OrbitBlade } from './OrbitBlade';
 import { OrbitContent } from './OrbitContent';
 import { OrbitSearchBar } from './OrbitSearchBar';
 import { ViewMode } from './types';
 
 export function Orbit(props) {
   const [autoObserve, setAutoObserve] = useState(false);
+  const [bladeOpen, setBladeOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<ViewMode>(VIEWMODE.Health);
+
+  const dynamicWidth = bladeOpen ? 650 : 400;
 
   return (
     <OrbitContext.Provider
       value={{
         autoObserve,
         setAutoObserve,
+        bladeOpen,
+        setBladeOpen,
         searchQuery,
         setSearchQuery,
         viewMode,
         setViewMode,
       }}
     >
-      <Window title="Orbit" width={400} height={550}>
-        <Window.Content scrollable>
-          <Stack fill vertical>
-            <Stack.Item>
-              <OrbitSearchBar />
+      <Window title="Orbit" width={dynamicWidth} height={550}>
+        <Window.Content>
+          <Stack fill>
+            <Stack.Item grow>
+              <Stack fill vertical>
+                <Stack.Item>
+                  <OrbitSearchBar />
+                </Stack.Item>
+                <Stack.Item grow>
+                  <OrbitContent />
+                </Stack.Item>
+              </Stack>
             </Stack.Item>
-            <Stack.Item mt={0.2} grow>
-              <OrbitContent />
-            </Stack.Item>
+            {bladeOpen && (
+              <Stack.Item>
+                <OrbitBlade />
+              </Stack.Item>
+            )}
           </Stack>
         </Window.Content>
       </Window>
@@ -39,11 +54,15 @@ export function Orbit(props) {
   );
 }
 
-export const OrbitContext = createContext({
-  autoObserve: false,
-  setAutoObserve: (bool: boolean) => {},
-  searchQuery: '',
-  setSearchQuery: (str: string) => {},
-  viewMode: VIEWMODE.Health as ViewMode,
-  setViewMode: (mode: ViewMode) => {},
-});
+type Context = {
+  autoObserve: boolean;
+  setAutoObserve: Dispatch<SetStateAction<boolean>>;
+  bladeOpen: boolean;
+  setBladeOpen: Dispatch<SetStateAction<boolean>>;
+  searchQuery: string;
+  setSearchQuery: Dispatch<SetStateAction<string>>;
+  viewMode: ViewMode;
+  setViewMode: Dispatch<SetStateAction<ViewMode>>;
+};
+
+export const OrbitContext = createContext({} as Context);
