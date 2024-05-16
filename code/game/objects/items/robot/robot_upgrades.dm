@@ -15,9 +15,9 @@
 	var/list/model_flags = NONE
 
 	/// List of items to add with the module, if any
-	var/list/items_to_add = list()
+	var/list/items_to_add
 	/// List of items to remove with the module, if any
-	var/list/items_to_remove = list()
+	var/list/items_to_remove
 	// if true, is not stored in the robot to be ejected if model is reset
 	var/one_use = FALSE
 	// If the module allows duplicates of itself to exist within the borg.
