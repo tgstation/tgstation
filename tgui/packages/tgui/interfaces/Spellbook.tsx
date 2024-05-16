@@ -23,6 +23,7 @@ enum SpellCategory {
   Mobility = 'Mobility',
   Assistance = 'Assistance',
   Rituals = 'Rituals',
+  Perks = 'Perks',
 }
 
 type byondRef = string;
@@ -125,6 +126,16 @@ const TAB2NAME: TabType[] = [
       "If you didn't like the loadouts offered, you can embrace chaos. Not recommended for newer wizards.",
     component: () => <Randomize />,
   },
+  {
+    title: 'Perks',
+    blurb:
+      'Perks are useful (and not so useful) improvements to the soul and body collected from all corners of the universe.',
+    scrollable: true,
+  },
+  {
+    title: 'Table of Contents',
+    component: () => <TableOfContents />,
+  },
 ];
 
 enum Buywords {
@@ -159,7 +170,7 @@ const EnscribedName = (props) => {
   );
 };
 
-const lineHeightToc = '34.6px';
+const lineHeightToc = '30.6px';
 
 const TableOfContents = (props) => {
   const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
@@ -238,6 +249,14 @@ const TableOfContents = (props) => {
         icon="dice"
         content="Arcane Randomizer"
         onClick={() => setTabIndex(9)}
+      />
+      <Divider />
+      <Button
+        lineHeight={lineHeightToc}
+        fluid
+        icon="cog"
+        content="Perks"
+        onClick={() => setTabIndex(11)}
       />
     </Box>
   );
@@ -732,7 +751,7 @@ export const Spellbook = (props) => {
                           <Button
                             mr={0}
                             icon="arrow-right"
-                            disabled={tabIndex === 9}
+                            disabled={tabIndex === 11}
                             content="Next Page"
                             onClick={() => setTabIndex(tabIndex + 2)}
                           />

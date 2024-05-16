@@ -641,6 +641,8 @@ Behavior that's still missing from this component that original food items had t
 ///Delete the item when it is fully eaten
 /datum/component/edible/proc/On_Consume(mob/living/eater, mob/living/feeder)
 	SEND_SIGNAL(parent, COMSIG_FOOD_CONSUMED, eater, feeder)
+	if(iscarbon(eater))
+		SEND_SIGNAL(eater, COMSIG_CARBON_FINISH_EAT, parent, feeder)
 
 	on_consume?.Invoke(eater, feeder)
 	if (QDELETED(parent)) // might be destroyed by the callback
