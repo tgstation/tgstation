@@ -1,0 +1,4 @@
+author: "Rengan"
+delete-after: True
+changes:
+  - bugfix: "Officers sabre and grilles now conducts electricity as it should."
