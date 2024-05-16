@@ -66,6 +66,7 @@
 	. = ..()
 
 	var/changed = FALSE
+
 	if(isnull(held_item) && has_sensor == HAS_SENSORS)
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle suit sensors"
 		changed = TRUE
@@ -86,7 +87,7 @@
 		context[SCREENTIP_CONTEXT_ALT_LMB] =  "Wear [adjusted == ALT_STYLE ? "normally" : "casually"]"
 		changed = TRUE
 
-	return changed ? CONTEXTUAL_SCREENTIP_SET : NONE
+	return changed ? CONTEXTUAL_SCREENTIP_SET : .
 
 
 /obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
