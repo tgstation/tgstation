@@ -1,0 +1,4 @@
+author: "starrm4nn"
+delete-after: True
+changes:
+  - bugfix: "Fixed the spess knife's cutter tool icon being invisible."

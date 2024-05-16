@@ -1,0 +1,5 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - rscdel: "Removes the sleeper protocol traitor objective"
+  - balance: "RND server/Telecomms sabotage can now show up even later in the round"

@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - bugfix: "Pyre chaplains can no longer generate infinite favour for free by buying and selling candles. Candles now offer for 40 favour, down from 50."

@@ -1,0 +1,9 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Emotion masks no longer use a janky workaround for infinite reskinning."
+  - bugfix: "Mech pilot suit shows reskinning usage context correctly."
+  - bugfix: "Accessories show \"wear above/below suit\" usage context appropriately."
+  - bugfix: "Accessories don't block reskinning usage context when they shouldn't."
+  - bugfix: "Showing reskinning usage context cares about the infinite reskinning flag, rather than whether it's in storage or not."
+  - rscdel: "Removed redundant reskinning usage context code from medical sprays, now shows reskinning usage context like other reskinnables."

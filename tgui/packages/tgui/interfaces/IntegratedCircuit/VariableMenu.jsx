@@ -1,5 +1,4 @@
 import { shallowDiffers } from 'common/react';
-import { multiline } from 'common/string';
 import { Component } from 'react';
 
 import {
@@ -97,7 +96,7 @@ export class VariableMenu extends Component {
                             onMouseDown={(e) => handleMouseDownSetter(e, val)}
                             color={val.color}
                             disabled={!!val.is_list}
-                            tooltip={multiline`
+                            tooltip={`
                             Drag me onto the circuit's grid
                             to make a setter for this variable`}
                             icon="pen"
@@ -106,7 +105,7 @@ export class VariableMenu extends Component {
                         <Stack.Item>
                           <Button
                             fluid
-                            tooltip={multiline`
+                            tooltip={`
                             Drag me onto the circuit's grid
                             to make a getter for this variable`}
                             color={val.color}

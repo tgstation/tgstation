@@ -103,3 +103,6 @@
 
 /// Global signal sent when narsie summon count is updated: (new count)
 #define COMSIG_NARSIE_SUMMON_UPDATE "!narsie_summon_update"
+
+/// Global signal sent when a mob is spawned from a ghost in a dynamic ruleset (mob/spawned_mob)
+#define COMSIG_RULESET_BODY_GENERATED_FROM_GHOSTS "!ruleset_body_generated_from_ghosts"

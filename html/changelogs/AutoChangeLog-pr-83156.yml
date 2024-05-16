@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "Atoms on the border of a tile will now only trigger landmines if they ACTUALLY pass over said mine."
