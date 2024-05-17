@@ -1,5 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - qol: "Most of the alternate click modes (right click, control clicking, shift clicking, etc) have been enabled in the alt-click item menu."
-  - bugfix: "You will no longer point at things you right-click in the alt-click item menu."
