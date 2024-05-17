@@ -282,6 +282,7 @@
 
 /obj/structure/chem_separator/process(seconds_per_tick)
 	if(!reagents.total_volume)
+		boiling = FALSE
 		toggle_burner(FALSE)
 		return PROCESS_KILL
 
