@@ -344,7 +344,7 @@
 		return
 
 	src.sensor_mode = SENSOR_COORDS
-	to_chat(user, span_notice("Your suit will now report your exact vital lifesigns as well as your coordinate position."))
+	balloon_alert(user, "Your suit will now report your exact vital lifesigns as well as your coordinate position.")
 
 /// Checks if the toggler is allowed to toggle suit sensors currently
 /obj/item/clothing/under/proc/can_toggle_sensors(mob/toggler)
