@@ -21216,6 +21216,10 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms/laundry)
+"gwF" = (
+/obj/structure/no_effect_signpost,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "gwJ" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 5
@@ -169844,7 +169848,7 @@ iDt
 scw
 scw
 iDt
-iDt
+gwF
 sLI
 scw
 scw
