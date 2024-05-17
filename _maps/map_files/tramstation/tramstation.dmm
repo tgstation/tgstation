@@ -53702,6 +53702,9 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
+"rYE" = (
+/turf/open/floor/plating/airless,
+/area/space)
 "rYL" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
@@ -54233,7 +54236,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
 	},
-/turf/open/space/basic,
+/turf/open/floor/iron/airless,
 /area/space)
 "siZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -70366,6 +70369,10 @@
 /obj/machinery/light/small/dim/directional/west,
 /turf/open/floor/iron,
 /area/station/maintenance/tram/left)
+"xRm" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
 "xRn" = (
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
@@ -130810,8 +130817,8 @@ vXM
 vXM
 vXM
 vXM
-vXM
-vXM
+xRm
+rYE
 vXM
 vXM
 vXM
@@ -131066,9 +131073,9 @@ vXM
 vXM
 vXM
 vXM
-vXM
-vXM
-vXM
+xRm
+rYE
+rYE
 vXM
 vXM
 vXM
@@ -131323,9 +131330,9 @@ vXM
 vXM
 vXM
 vXM
-vXM
+xRm
 siX
-vXM
+xRm
 vXM
 vXM
 vXM
@@ -131581,7 +131588,7 @@ vXM
 vXM
 vXM
 vXM
-vXM
+xRm
 vXM
 vXM
 vXM

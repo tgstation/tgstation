@@ -48,6 +48,7 @@ GLOBAL_LIST_EMPTY(starlight)
 	name = "\proper space"
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -242,8 +243,6 @@ GLOBAL_LIST_EMPTY(starlight)
 
 	return FALSE
 
-/turf/open/space/rust_heretic_act()
-	return FALSE
 
 /turf/open/space/attempt_lattice_replacement()
 	var/dest_x = destination_x

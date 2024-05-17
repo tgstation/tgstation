@@ -183,6 +183,7 @@
 		var/mob/new_character = applicant
 		if(makeBody)
 			new_character = generate_ruleset_body(applicant)
+			SEND_GLOBAL_SIGNAL(COMSIG_RULESET_BODY_GENERATED_FROM_GHOSTS, applicant)
 		finish_setup(new_character, i)
 		notify_ghosts(
 			"[applicant.name] has been picked for the ruleset [name]!",
