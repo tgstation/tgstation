@@ -247,10 +247,16 @@
 	strongman.client?.give_award(/datum/award/achievement/jobs/feat_of_strength, strongman)
 	strongman.visible_message(
 		span_boldwarning("[strongman] suplexes [src] into the ground!"),
-		span_warning("You suplex [src] into the ground!")
+		span_warning("As you suplex [src] into the ground, your body ripples with power!")
 		)
 	new /obj/structure/festivus/anchored(drop_location())
 	new /obj/effect/anomaly/flux(drop_location())
+
+	var/is_heavy_gravity = strongman.has_gravity() > STANDARD_GRAVITY //If for some reason you have to suplex the rod in heavy gravity, you get the double experience here as well, why not
+
+	strongman.mind?.adjust_experience(/datum/skill/athletics, is_heavy_gravity ? 2000 : 1000) //You'll probably instantly become an expert athlete from this alone
+	strongman.apply_status_effect(/datum/status_effect/exercised) //time for a nap, you earned it
+
 	qdel(src)
 	return TRUE
 
