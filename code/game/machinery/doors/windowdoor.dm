@@ -116,7 +116,7 @@
 	if(check_access(null))
 		sleep(5 SECONDS)
 	else //secure doors close faster
-		sleep(2 SECONDS)
+		sleep(4 SECONDS)
 	if(!density && autoclose) //did someone change state while we slept?
 		close()
 
