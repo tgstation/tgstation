@@ -344,7 +344,7 @@
 		return
 
 	src.sensor_mode = SENSOR_COORDS
-	balloon_alert(user, "your suit will now report your exact vital lifesigns as well as your coordinate position.")
+	balloon_alert(user, "coordinate sensors.")
 
 /// Checks if the toggler is allowed to toggle suit sensors currently
 /obj/item/clothing/under/proc/can_toggle_sensors(mob/toggler)
