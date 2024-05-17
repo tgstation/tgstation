@@ -621,13 +621,13 @@
 			return FALSE
 		if(HAS_TRAIT(living_target, TRAIT_IMMOBILIZED) && HAS_TRAIT(living_target, TRAIT_FLOORED) && HAS_TRAIT(living_target, TRAIT_HANDS_BLOCKED))
 			return FALSE
-		if(!hit_prone_targets)
+		if(hit_prone_targets)
 			var/mob/living/buckled_to = living_target.lowest_buckled_mob()
-			if(!buckled_to.density) // Will just be us if we're not buckled to another mob
-				return FALSE
-			if(living_target.body_position != LYING_DOWN)
+			if((decayedRange - range) <= 10) // after 10 tiles, auto-aim hit for mobs on the floor turns off
 				return TRUE
-	return TRUE
+			if(buckled_to.density) // Will just be us if we're not buckled to another mob
+				return TRUE
+	return FALSE
 
 /**
  * Scan if we should hit something and hit it if we need to
