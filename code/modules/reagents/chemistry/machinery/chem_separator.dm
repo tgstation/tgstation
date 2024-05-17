@@ -334,16 +334,16 @@
 				reagents.remove_reagent(reg.type, amount)
 			boiling = TRUE
 
-		//boiling sound effect
-		if(boiling)
-			if(!loop_started)
-				soundloop.start()
-				loop_started = TRUE
-				update_appearance(UPDATE_OVERLAYS)
-		else
-			soundloop.stop()
-			loop_started = FALSE
+	//boiling sound effect
+	if(boiling)
+		if(!loop_started)
+			soundloop.start()
+			loop_started = TRUE
 			update_appearance(UPDATE_OVERLAYS)
+	else
+		soundloop.stop()
+		loop_started = FALSE
+		update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/chem_separator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
