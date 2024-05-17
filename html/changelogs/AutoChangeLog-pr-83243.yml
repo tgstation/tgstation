@@ -1,5 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes:
-  - bugfix: "Fixes engineering cyborg screwdriver not being pointy. Fixes engineering cyborg crowbar from being pointy."
-  - bugfix: "Fixes cyborg omnitools not using the correct wound bonus and armour penetration values."
