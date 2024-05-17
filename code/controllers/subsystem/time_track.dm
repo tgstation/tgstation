@@ -123,7 +123,7 @@ SUBSYSTEM_DEF(time_track)
 		send_maps_values += packet["value"]
 		send_maps_values += packet["calls"]
 
-	SSblackbox.record_feedback("associative", "time_dilation_current", 1, list("[SQLtime()]" = list("current" = "[time_dilation_current]", "avg_fast" = "[time_dilation_avg_fast]", "avg" = "[time_dilation_avg]", "avg_slow" = "[time_dilation_avg_slow]")))
+	SSblackbox.record_feedback("associative", "time_dilation_current", 1, list("[ISOtime()]" = list("current" = "[time_dilation_current]", "avg_fast" = "[time_dilation_avg_fast]", "avg" = "[time_dilation_avg]", "avg_slow" = "[time_dilation_avg_slow]")))
 	log_perf(
 		list(
 			world.time,

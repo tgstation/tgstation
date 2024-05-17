@@ -60,6 +60,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/datum/spawners_menu/spawners_menu
 	var/datum/minigames_menu/minigames_menu
 
+	/// The POI we're orbiting (orbit menu)
+	var/orbiting_ref
+
 /mob/dead/observer/Initialize(mapload)
 	set_invisibility(GLOB.observer_default_invisibility)
 
@@ -1077,3 +1080,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!prefs || (client?.combo_hud_enabled && prefs.toggles & COMBOHUD_LIGHTING))
 		return ..()
 	return GLOB.ghost_lighting_options[prefs.read_preference(/datum/preference/choiced/ghost_lighting)]
+
+
+/// Called when we exit the orbiting state
+/mob/dead/observer/proc/on_deorbit(datum/source)
+	SIGNAL_HANDLER
+
+	orbiting_ref = null

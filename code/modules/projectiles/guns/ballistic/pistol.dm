@@ -30,6 +30,20 @@
 /obj/item/gun/ballistic/automatic/pistol/fire_mag
 	spawn_magazine_type = /obj/item/ammo_box/magazine/m9mm/fire
 
+/obj/item/gun/ballistic/automatic/pistol/contraband
+
+/obj/item/gun/ballistic/automatic/pistol/contraband/Initialize(mapload)
+	if(prob(10))
+		pin = pick(
+		list(
+			/obj/item/firing_pin/clown,
+			/obj/item/firing_pin/clown/ultra,
+			/obj/item/firing_pin/clown/ultra/selfdestruct,
+		))
+	. = ..()
+	pin.pin_removable = FALSE
+
+
 /obj/item/gun/ballistic/automatic/pistol/suppressed/Initialize(mapload)
 	. = ..()
 	var/obj/item/suppressor/S = new(src)
@@ -82,6 +96,19 @@
 	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
 	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
+
+/obj/item/gun/ballistic/automatic/pistol/deagle/contraband
+
+/obj/item/gun/ballistic/automatic/pistol/deagle/contraband/Initialize(mapload)
+	if(prob(10))
+		pin = pick(
+		list(
+			/obj/item/firing_pin/clown,
+			/obj/item/firing_pin/clown/ultra,
+			/obj/item/firing_pin/clown/ultra/selfdestruct,
+		))
+	. = ..()
+	pin.pin_removable = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/gold
 	desc = "A gold plated Desert Eagle folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
