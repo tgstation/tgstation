@@ -47294,10 +47294,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
-"ouz" = (
-/obj/structure/signpost,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
 "ouE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -169848,7 +169844,7 @@ iDt
 scw
 scw
 iDt
-ouz
+iDt
 sLI
 scw
 scw
