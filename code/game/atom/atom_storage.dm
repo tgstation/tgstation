@@ -41,11 +41,3 @@
 			atom_storage.set_holdable(cloning.can_hold, cloning.cant_hold)
 
 	return atom_storage
-
-/// Called from /datum/storage/attempt_insert(), or when an item is placed in our atom storage.
-/atom/proc/on_storage_insert(datum/storage/storage_datum, obj/item/to_insert, mob/user, force = STORAGE_NOT_LOCKED)
-	return
-
-/// Called from /datum/storage/attempt_remove(), or when an item is removed from our atom storage.
-/atom/proc/on_storage_remove(datum/storage/storage_datum, obj/item/thing, atom/remove_to_loc, silent = FALSE)
-	return
