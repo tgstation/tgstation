@@ -1,4 +1,0 @@
-author: "Seven"
-delete-after: True
-changes:
-  - bugfix: "Destroyed solar panels no longer drop their overlays"

@@ -1,5 +1,0 @@
-author: "Jane"
-delete-after: True
-changes:
-  - qol: "Shovels, Serrated Bone Shovels, and Entrenching Tools can now be hung upon Miner and Coroner Winter Coats, as well as the Coroner's Labcoat!"
-  - image: "Mirrored the mirrored sprites to display Shovels in the suit slot properly."

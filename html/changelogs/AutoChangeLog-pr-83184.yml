@@ -1,6 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "Bitrunning antagonists no longer gib on teleport"
-  - bugfix: "Cyber tac now have a visible name / ID"
-  - bugfix: "Renamed the bitrunning malfunction event to just \"Malfunction: x\""
