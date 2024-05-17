@@ -65,10 +65,10 @@
 		return
 
 	if(is_reagent_container(held_item) && held_item.is_open_container())
-		if(!QDELETED(distilled_container))
+		if(QDELETED(distilled_container))
 			context[SCREENTIP_CONTEXT_LMB] = "Insert beaker"
 			return CONTEXTUAL_SCREENTIP_SET
-		if(!QDELETED(burner_fuel_container))
+		if(QDELETED(burner_fuel_container))
 			context[SCREENTIP_CONTEXT_LMB] = "Insert fuel"
 			return CONTEXTUAL_SCREENTIP_SET
 
