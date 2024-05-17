@@ -195,13 +195,16 @@
 	if(!(def_zone in covered_limbs))
 		return
 
-	var/zone_name = parse_zone(def_zone)
+	var/zone_name
 	var/break_verb = ((damage_type == BRUTE) ? "torn" : "burned")
 
 	if(iscarbon(loc))
-		var/mob/living/carbon/C = loc
-		C.visible_message(span_danger("The [zone_name] on [C]'s [src.name] is [break_verb] away!"), span_userdanger("The [zone_name] on your [src.name] is [break_verb] away!"), vision_distance = COMBAT_MESSAGE_RANGE)
-		RegisterSignal(C, COMSIG_MOVABLE_MOVED, PROC_REF(bristle), override = TRUE)
+		var/mob/living/carbon/carbon_loc = loc
+		zone_name = carbon_loc.parse_zone_with_bodypart(def_zone)
+		carbon_loc.visible_message(span_danger("The [zone_name] on [carbon_loc]'s [src.name] is [break_verb] away!"), span_userdanger("The [zone_name] on your [src.name] is [break_verb] away!"), vision_distance = COMBAT_MESSAGE_RANGE)
+		RegisterSignal(carbon_loc, COMSIG_MOVABLE_MOVED, PROC_REF(bristle), override = TRUE)
+	else
+		zone_name = parse_zone(def_zone)
 
 	zones_disabled++
 	body_parts_covered &= ~body_zone2cover_flags(def_zone)

@@ -75,7 +75,7 @@
 	target_key = BB_TROUGH_TARGET
 	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/food_trough
 	finding_behavior = /datum/ai_behavior/find_hunt_target/food_trough
-	hunt_targets = list(/obj/structure/ore_container/gutlunch_trough)
+	hunt_targets = list(/obj/structure/ore_container/food_trough/gutlunch_trough)
 	hunt_chance = 75
 	hunt_range = 9
 
