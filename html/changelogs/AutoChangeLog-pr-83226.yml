@@ -1,0 +1,4 @@
+author: "Sadboysuss"
+delete-after: True
+changes:
+  - bugfix: "fixed malf AI being able to overload shuttle consoles and the gateway control console"

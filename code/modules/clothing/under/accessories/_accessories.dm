@@ -165,11 +165,12 @@
 	SIGNAL_HANDLER
 
 	accessory_dropped(source, user)
-	user.update_clothing(ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
+	user.update_clothing(ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK)
 
 /// Called when the uniform this accessory is pinned to is equipped in a valid slot
 /obj/item/clothing/accessory/proc/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	equipped(user, user.get_slot_by_item(clothes)) // so we get any actions, item_flags get set, etc
+	user.update_clothing(ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK)
 	return
 
 /// Called when the uniform this accessory is pinned to is dropped

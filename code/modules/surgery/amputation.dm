@@ -43,9 +43,9 @@
 	display_results(
 		user,
 		target,
-		span_notice("You begin to sever [target]'s [parse_zone(target_zone)]..."),
-		span_notice("[user] begins to sever [target]'s [parse_zone(target_zone)]!"),
-		span_notice("[user] begins to sever [target]'s [parse_zone(target_zone)]!"),
+		span_notice("You begin to sever [target]'s [target.parse_zone_with_bodypart(target_zone)]..."),
+		span_notice("[user] begins to sever [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
+		span_notice("[user] begins to sever [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 	)
 	display_pain(target, "You feel a gruesome pain in your [parse_zone(target_zone)]'s joint!")
 
@@ -54,11 +54,11 @@
 	display_results(
 		user,
 		target,
-		span_notice("You sever [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] severs [target]'s [parse_zone(target_zone)]!"),
-		span_notice("[user] severs [target]'s [parse_zone(target_zone)]!"),
+		span_notice("You sever [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+		span_notice("[user] severs [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
+		span_notice("[user] severs [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 	)
-	display_pain(target, "You can no longer feel your severed [parse_zone(target_zone)]!")
+	display_pain(target, "You can no longer feel your severed [target.parse_zone_with_bodypart(target_zone)]!")
 
 	if(HAS_MIND_TRAIT(user, TRAIT_MORBID) && ishuman(user))
 		var/mob/living/carbon/human/morbid_weirdo = user
