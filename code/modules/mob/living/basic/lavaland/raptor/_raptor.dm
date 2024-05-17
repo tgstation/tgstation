@@ -65,6 +65,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	if(SSmapping.is_planetary())
 		change_offsets = FALSE
 		icon = 'icons/mob/simple/lavaland/raptor_icebox.dmi'
+
 	if(!mapload)
 		GLOB.raptor_population += REF(src)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
@@ -75,7 +76,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	)
 
 	var/static/list/display_emote = list(
-		BB_EMOTE_SAY = list("Chirp chirp chirp!", "Bweh!", "Kweh!", "Wark!", "Kwark!", "Bwark!"),
+		BB_EMOTE_SAY = list("Chirp chirp chirp!", "Kweh!", "Bwark!"),
 		BB_EMOTE_SEE = list("shakes its feathers!", "stretches!", "flaps it's wings!", "pecks at the ground!"),
 		BB_EMOTE_SOUND = list(
 			'sound/creatures/raptor_1.ogg',
@@ -84,7 +85,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 			'sound/creatures/raptor_4.ogg',
 			'sound/creatures/raptor_5.ogg',
 		),
-		BB_SPEAK_CHANCE = 5,
+		BB_SPEAK_CHANCE = 2,
 	)
 
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, display_emote)

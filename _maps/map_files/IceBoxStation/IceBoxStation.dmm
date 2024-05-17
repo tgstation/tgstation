@@ -56450,7 +56450,7 @@
 /turf/open/floor/wood/large,
 /area/mine/eva/lower)
 "rgn" = (
-/mob/living/basic/mining/raptor/yellow,
+/obj/effect/spawner/random/lavaland_mob/raptor,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "rgs" = (
@@ -169065,7 +169065,7 @@ iiv
 vmJ
 iDt
 iDt
-rgn
+iDt
 iDt
 msC
 iDt
@@ -169322,7 +169322,7 @@ iiv
 vmJ
 iDt
 iDt
-iDt
+rgn
 iDt
 msC
 iDt
@@ -170864,7 +170864,7 @@ iiv
 vmJ
 iDt
 iDt
-iDt
+rgn
 iDt
 msC
 iDt
@@ -171121,7 +171121,7 @@ iiv
 vmJ
 iDt
 iDt
-rgn
+iDt
 iDt
 msC
 iDt

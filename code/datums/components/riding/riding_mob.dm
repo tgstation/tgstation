@@ -539,7 +539,10 @@
 
 /datum/component/riding/creature/raptor/handle_specials()
 	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(7, 7), TEXT_SOUTH = list(2, 10), TEXT_EAST = list(12, 7), TEXT_WEST = list(10, 7)))
+	if(!SSmapping.is_planetary())
+		set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(7, 7), TEXT_SOUTH = list(2, 10), TEXT_EAST = list(12, 7), TEXT_WEST = list(10, 7)))
+	else
+		set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 7), TEXT_SOUTH = list(0, 10), TEXT_EAST = list(-3, 9), TEXT_WEST = list(3, 9)))
 	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
