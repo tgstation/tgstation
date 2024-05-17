@@ -69,7 +69,7 @@
 
 	if(isnull(held_item) && has_sensor == HAS_SENSORS)
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle suit sensors"
-		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Set suit sensors to coordinates"
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Set suit sensors to tracking"
 		changed = TRUE
 
 	if(istype(held_item, /obj/item/clothing/accessory) && length(attached_accessories) < max_number_of_accessories)
@@ -340,11 +340,13 @@
 
 /obj/item/clothing/under/CtrlClick(mob/user)
 	. = ..()
+	if(!.)
+		return
 	if(!can_toggle_sensors(user))
 		return
 
-	src.sensor_mode = SENSOR_COORDS
-	balloon_alert(user, "coordinate sensors.")
+	sensor_mode = SENSOR_COORDS
+	balloon_alert(user, "set to tracking")
 
 /// Checks if the toggler is allowed to toggle suit sensors currently
 /obj/item/clothing/under/proc/can_toggle_sensors(mob/toggler)
