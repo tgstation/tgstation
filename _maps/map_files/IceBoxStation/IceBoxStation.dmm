@@ -4538,10 +4538,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"brV" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/closed/wall,
-/area/station/service/bar)
 "brX" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
@@ -52232,15 +52228,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
-"pGF" = (
-/obj/machinery/button/door/directional/south{
-	id = "minecraft_shutter"
-	},
-/obj/machinery/button/door/directional/south{
-	id = "minecraft_shutter"
-	},
-/turf/closed/wall,
-/area/station/maintenance/starboard/lesser)
 "pGJ" = (
 /obj/structure/sign/poster/contraband/random/directional/north,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -186053,7 +186040,7 @@ jre
 jre
 twS
 jre
-pGF
+jre
 jre
 jre
 drw
@@ -249785,7 +249772,7 @@ any
 kKL
 vSu
 iUi
-brV
+fzK
 orZ
 gVX
 dSs
