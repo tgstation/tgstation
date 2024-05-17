@@ -140,3 +140,6 @@
 2024-05-16:
   Absolucy:
   - bugfix: Fix DNA vault scanner being broken with plants.
+2024-05-17:
+  Gboster-0:
+  - bugfix: borers can now be taken out of a host
