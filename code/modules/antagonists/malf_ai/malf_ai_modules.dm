@@ -455,7 +455,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		to_chat(caller, span_warning("You can only animate machines!"))
 		return FALSE
 	var/obj/machinery/clicked_machine = clicked_on
-	if(!clicked_machine.can_be_overridden() || is_type_in_typecache(clicked_machine, GLOB.blacklisted_malf_machines))
+	if((clicked_machine.resistance_flags & INDESTRUCTIBLE) || is_type_in_typecache(clicked_machine, GLOB.blacklisted_malf_machines))
 		to_chat(caller, span_warning("That machine can't be overridden!"))
 		return FALSE
 
@@ -543,7 +543,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		to_chat(caller, span_warning("You can only overload machines!"))
 		return FALSE
 	var/obj/machinery/clicked_machine = clicked_on
-	if(is_type_in_typecache(clicked_machine, GLOB.blacklisted_malf_machines))
+	if((clicked_machine.resistance_flags & INDESTRUCTIBLE) || is_type_in_typecache(clicked_machine, GLOB.blacklisted_malf_machines))
 		to_chat(caller, span_warning("You cannot overload that device!"))
 		return FALSE
 
