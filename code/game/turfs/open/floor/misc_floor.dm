@@ -335,4 +335,4 @@
 
 /turf/open/floor/asphalt/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt
