@@ -35,6 +35,10 @@
 /obj/structure/chem_separator/atom_deconstruct(disassembled)
 	var/atom/drop = drop_location()
 
+	new /obj/item/stack/sheet/mineral/wood(drop, 1)
+
+	new /obj/item/thermometer(drop)
+
 	if(!QDELETED(distilled_container))
 		distilled_container.forceMove(drop)
 
@@ -72,6 +76,10 @@
 			context[SCREENTIP_CONTEXT_RMB] = "Insert fuel"
 			return CONTEXTUAL_SCREENTIP_SET
 
+	if(held_item.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/structure/chem_separator/examine(mob/user)
 	. = ..()
 
@@ -93,6 +101,7 @@
 		. += span_notice("You can start a flame with an combustible device.")
 
 	. += span_notice("You can [EXAMINE_HINT("examine more")] to see reagent boiling points & fuel properties.")
+	. += span_notice("The whole aparatus can be [EXAMINE_HINT("pried")] apart.")
 
 /obj/structure/chem_separator/examine_more(mob/user)
 	. = ..()
@@ -239,6 +248,10 @@
 		return NONE
 	user.visible_message(ignition_message)
 	toggle_burner(TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/chem_separator/crowbar_act(mob/living/user, obj/item/tool)
+	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/chem_separator/attack_hand(mob/living/user, list/modifiers)
