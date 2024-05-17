@@ -69,7 +69,7 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Insert beaker"
 			return CONTEXTUAL_SCREENTIP_SET
 		if(QDELETED(burner_fuel_container))
-			context[SCREENTIP_CONTEXT_LMB] = "Insert fuel"
+			context[SCREENTIP_CONTEXT_RMB] = "Insert fuel"
 			return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/chem_separator/examine(mob/user)
