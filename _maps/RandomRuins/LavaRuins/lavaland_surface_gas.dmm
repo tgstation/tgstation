@@ -38,7 +38,7 @@
 	},
 /obj/structure/closet/crate/freezer,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
-/turf/open/floor/iron{
+/turf/open/floor/iron/freezer{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
 /area/ruin/thelizardsgas_lavaland)
@@ -236,7 +236,7 @@
 /obj/item/storage/cans/sixbeer,
 /obj/item/storage/cans/sixsoda,
 /obj/structure/closet/crate/freezer,
-/turf/open/floor/iron{
+/turf/open/floor/iron/freezer{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
 /area/ruin/thelizardsgas_lavaland)
@@ -503,7 +503,7 @@
 	},
 /obj/item/storage/fancy/pickles_jar,
 /obj/structure/closet/crate/freezer,
-/turf/open/floor/iron{
+/turf/open/floor/iron/freezer{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
 /area/ruin/thelizardsgas_lavaland)
@@ -590,7 +590,7 @@
 	pixel_y = -1
 	},
 /obj/structure/closet/crate/freezer,
-/turf/open/floor/iron{
+/turf/open/floor/iron/freezer{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
 /area/ruin/thelizardsgas_lavaland)
@@ -638,7 +638,7 @@
 /obj/item/food/cheese/cheese_curds,
 /obj/item/food/cheese/curd_cheese,
 /obj/structure/closet/crate/freezer,
-/turf/open/floor/iron{
+/turf/open/floor/iron/freezer{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
 /area/ruin/thelizardsgas_lavaland)
@@ -1220,7 +1220,7 @@
 	pixel_x = -3
 	},
 /obj/structure/closet/crate/freezer,
-/turf/open/floor/iron{
+/turf/open/floor/iron/freezer{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
 /area/ruin/thelizardsgas_lavaland)
