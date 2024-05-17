@@ -81,12 +81,12 @@
 		. += span_notice("The distilation beaker reads <b>[distilled_container.reagents.total_volume]/[distilled_container.reagents.maximum_volume]u</b>.")
 		. += span_notice("Remove beaker with [EXAMINE_HINT("LMB")].")
 	else
-		. += span_warning("Its missing a distilation container")
+		. += span_warning("Its missing a distilation container, insert with [EXAMINE_HINT("LMB")]")
 	if(!QDELETED(burner_fuel_container))
 		. += span_notice("The burner fuel container reads <b>[burner_fuel_container.reagents.total_volume]/[burner_fuel_container.reagents.maximum_volume]u</b>.")
 		. += span_notice("Remove fuel with [EXAMINE_HINT("RMB")].")
 	else
-		. += span_warning("Its missing a beaker containing fuel for the burner.")
+		. += span_warning("Its missing a beaker containing fuel for the burner, insert with [EXAMINE_HINT("RMB")]")
 	if(burner_on)
 		. += span_notice("Off burner with [EXAMINE_HINT("ALT LMB")].")
 	else
