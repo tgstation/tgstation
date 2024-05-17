@@ -3,6 +3,7 @@
 	id = "golem_status"
 	duration = 5 MINUTES
 	alert_type = /atom/movable/screen/alert/status_effect/golem_status
+	show_duration = TRUE
 	/// Icon state prefix for overlay to display on golem limbs
 	var/overlay_state_prefix
 	/// Name of the mineral we ate to get this

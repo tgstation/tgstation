@@ -193,7 +193,7 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "zF" = (
-/obj/item/ammo_casing/shotgun/improvised,
+/obj/effect/spawner/random/junk_shell,
 /turf/open/indestructible,
 /area/deathmatch)
 "AG" = (

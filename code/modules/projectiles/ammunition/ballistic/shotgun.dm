@@ -103,15 +103,6 @@
 	variance = 25
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 
-/obj/item/ammo_casing/shotgun/improvised
-	name = "improvised shell"
-	desc = "A homemade shotgun casing filled with crushed glass, used to commmit vandalism and property damage."
-	icon_state = "improvshell"
-	projectile_type = /obj/projectile/bullet/pellet/shotgun_improvised
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1)
-	pellets = 6
-	variance = 30
-
 /obj/item/ammo_casing/shotgun/ion
 	name = "ion shell"
 	desc = "An advanced shotgun shell which uses a subspace ansible crystal to produce an effect similar to a standard ion rifle. \
