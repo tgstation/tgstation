@@ -11952,6 +11952,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
+"dya" = (
+/obj/item/flashlight/lantern/on,
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface)
 "dyf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -13654,6 +13658,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"eaM" = (
+/obj/structure/railing/wooden_fence{
+	dir = 6
+	},
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface)
 "ebb" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
@@ -15743,6 +15753,17 @@
 /obj/structure/lattice,
 /turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
+"eJo" = (
+/obj/structure/table/wood,
+/obj/item/raptor_dex{
+	pixel_y = 13
+	},
+/obj/item/raptor_dex{
+	pixel_y = 7
+	},
+/obj/item/raptor_dex,
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface)
 "eJq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -19135,6 +19156,12 @@
 	dir = 1
 	},
 /area/station/hallway/primary/port)
+"fNL" = (
+/obj/structure/railing/wooden_fence{
+	dir = 8
+	},
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface)
 "fNN" = (
 /obj/structure/cable,
 /turf/open/floor/engine,
@@ -22278,6 +22305,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"gOv" = (
+/obj/structure/flora/rock/icy/style_random,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
 "gOx" = (
 /obj/effect/turf_decal/loading_area,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
@@ -23684,6 +23715,12 @@
 /obj/machinery/vending/clothing,
 /turf/open/floor/iron,
 /area/station/commons/locker)
+"hma" = (
+/obj/structure/railing/wooden_fence{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "hmb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -26602,6 +26639,9 @@
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
+"iiv" = (
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface)
 "iiy" = (
 /obj/machinery/firealarm/directional/north,
 /obj/structure/chair{
@@ -30249,6 +30289,9 @@
 /obj/structure/railing/corner/end/flip,
 /turf/open/floor/iron,
 /area/mine/production)
+"jrY" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/unexplored/rivers/deep/shoreline)
 "jrZ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -30559,6 +30602,9 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
+"jvk" = (
+/turf/closed/mineral/random/snow,
+/area/icemoon/underground/unexplored/rivers/deep/shoreline)
 "jvs" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -31181,6 +31227,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
+"jGp" = (
+/obj/structure/flora/rock/icy/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored/rivers/deep/shoreline)
 "jGB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -35655,6 +35705,10 @@
 	dir = 1
 	},
 /area/station/service/chapel/office)
+"kTp" = (
+/obj/structure/ore_container/food_trough/raptor_trough,
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface)
 "kTz" = (
 /turf/open/floor/iron/smooth_half,
 /area/station/security/brig/upper)
@@ -40458,6 +40512,10 @@
 /obj/item/stack/ducts/fifty,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
+"msC" = (
+/obj/structure/railing/wooden_fence,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "msN" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /turf/closed/wall/r_wall,
@@ -41523,6 +41581,9 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/carpet,
 /area/station/service/library)
+"mME" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/icemoon/surface)
 "mMM" = (
 /turf/closed/wall/r_wall,
 /area/station/security/prison)
@@ -43960,6 +44021,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
+"nwn" = (
+/obj/item/stack/sheet/mineral/wood,
+/obj/effect/decal/cleanable/generic,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "nwr" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -47228,6 +47294,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
+"ouz" = (
+/obj/structure/signpost,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "ouE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -48880,6 +48950,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"oUe" = (
+/obj/structure/railing/wooden_fence{
+	dir = 10
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "oUG" = (
 /obj/machinery/door/airlock{
 	id_tag = "Toilet2";
@@ -49297,6 +49373,17 @@
 "pbs" = (
 /turf/closed/wall,
 /area/station/ai_monitored/turret_protected/aisat/maint)
+"pbv" = (
+/obj/structure/table/wood,
+/obj/item/soap/deluxe{
+	pixel_y = 11
+	},
+/obj/item/soap/deluxe{
+	pixel_y = 6
+	},
+/obj/item/soap/deluxe,
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface)
 "pby" = (
 /obj/effect/gibspawner/human,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -51667,6 +51754,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"pLb" = (
+/obj/structure/railing/wooden_fence{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "pLe" = (
 /obj/structure/sign/warning/xeno_mining,
 /turf/closed/wall/ice,
@@ -56310,6 +56403,12 @@
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen/diner)
+"rgh" = (
+/obj/structure/railing/wooden_fence{
+	dir = 6
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "rgi" = (
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/plating,
@@ -56350,6 +56449,10 @@
 /obj/item/stack/package_wrap,
 /turf/open/floor/wood/large,
 /area/mine/eva/lower)
+"rgn" = (
+/obj/effect/spawner/random/lavaland_mob/raptor,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "rgs" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -57046,6 +57149,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"rrE" = (
+/obj/structure/railing/wooden_fence,
+/obj/item/flashlight/lantern/on,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "rrV" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/plating,
@@ -57114,6 +57222,15 @@
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"rtl" = (
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
+	},
+/obj/structure/railing/wooden_fence{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "rtn" = (
 /obj/structure/chair/comfy/black,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -60256,6 +60373,12 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
+"sqZ" = (
+/obj/structure/railing/wooden_fence{
+	dir = 4
+	},
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface)
 "sra" = (
 /obj/structure/table,
 /obj/item/flashlight{
@@ -61614,6 +61737,12 @@
 	},
 /turf/open/floor/plating/icemoon,
 /area/station/security/execution/education)
+"sJx" = (
+/obj/structure/railing/wooden_fence{
+	dir = 9
+	},
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface)
 "sJA" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -61734,6 +61863,10 @@
 	dir = 1
 	},
 /area/station/medical/chemistry)
+"sLI" = (
+/obj/item/flashlight/lantern/on,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "sLR" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -63070,6 +63203,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness)
+"tld" = (
+/obj/structure/railing/wooden_fence{
+	dir = 5
+	},
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface)
 "tlh" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -68081,6 +68220,9 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
+"uQX" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored/rivers/deep/shoreline)
 "uQY" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/carpet,
@@ -69342,6 +69484,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/large,
 /area/station/hallway/secondary/entry)
+"vmJ" = (
+/obj/structure/railing/wooden_fence,
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface)
 "vmP" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/plating,
@@ -72059,6 +72205,12 @@
 	},
 /turf/open/floor/iron/smooth_edge,
 /area/station/command/heads_quarters/rd)
+"wfU" = (
+/obj/structure/railing/wooden_fence{
+	dir = 1
+	},
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface)
 "wgr" = (
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
@@ -73792,6 +73944,11 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"wFI" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lantern/on,
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface)
 "wFN" = (
 /mob/living/basic/slime,
 /turf/open/floor/engine,
@@ -78541,6 +78698,12 @@
 "ybQ" = (
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/command/nuke_storage)
+"ybW" = (
+/obj/structure/railing/wooden_fence{
+	dir = 10
+	},
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface)
 "yca" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mining Station Maintenance"
@@ -168378,21 +168541,21 @@ thA
 thA
 thA
 thA
-thA
-thA
-thA
-thA
-xMq
-ebd
+mME
+mME
+mME
+mME
+mME
+mME
+mME
+mME
+hma
+hma
+nwn
+rtl
+oUe
 iDt
 iDt
-iDt
-scw
-iDt
-nfG
-thA
-thA
-thA
 iDt
 iDt
 iDt
@@ -168635,22 +168798,22 @@ thA
 thA
 thA
 thA
-thA
-thA
-thA
-thA
-xMq
-xMq
-iDt
-iDt
+mME
+kTp
+iiv
+iiv
+wfU
+kTp
+iiv
+vmJ
 ijY
-xMq
-thA
-thA
-thA
-thA
-thA
-nfG
+iDt
+iDt
+iDt
+msC
+iDt
+iDt
+jZN
 iDt
 iDt
 iDt
@@ -168892,22 +169055,22 @@ thA
 thA
 thA
 thA
-thA
-thA
-thA
-thA
-thA
-xMq
-xMq
-scw
-xMq
-xMq
-thA
-thA
-thA
-thA
-thA
-xMq
+mME
+dya
+iiv
+iiv
+wfU
+dya
+iiv
+vmJ
+iDt
+iDt
+iDt
+iDt
+msC
+iDt
+iDt
+iDt
 iDt
 scw
 cCb
@@ -169149,23 +169312,23 @@ thA
 thA
 thA
 thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
+mME
+iiv
+iiv
+iiv
+wfU
+iiv
+iiv
+vmJ
+iDt
+iDt
+rgn
+iDt
+msC
+iDt
+iDt
+iDt
+iDt
 iDt
 iDt
 iDt
@@ -169406,23 +169569,23 @@ tjo
 thA
 thA
 thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-xMq
-xMq
+mME
+sqZ
+sqZ
+iiv
+tld
+sqZ
+iiv
+eaM
+iDt
+iDt
+iDt
+iDt
+msC
+iDt
+iDt
+iDt
+iDt
 ijY
 iDt
 iDt
@@ -169660,34 +169823,34 @@ tjo
 tjo
 tjo
 tjo
-tjo
-tjo
-tjo
-tjo
 thA
 thA
 thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-xMq
-xMq
-xMq
-xMq
+mME
+iiv
+iiv
+iiv
+iiv
+iiv
+iiv
+iiv
 iDt
 iDt
+iDt
+iDt
+rrE
 scw
 iDt
+scw
+scw
+scw
 iDt
+scw
+scw
 iDt
-iDt
+ouz
+sLI
+scw
 scw
 iDt
 iDt
@@ -169917,34 +170080,34 @@ tjo
 tjo
 tjo
 tjo
-tjo
-tjo
-tjo
-tjo
 thA
 thA
 thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
-psb
-scw
-psb
+mME
+pbv
+wFI
+iiv
+iiv
+eJo
+wFI
+iiv
+rgn
 iDt
-thA
-thA
-xMq
-ijY
-jZN
+iDt
+iDt
+iDt
+scw
+scw
+scw
+scw
+scw
+scw
+scw
+jrY
+jrY
+scw
+gOv
+nfG
 scw
 iDt
 iDt
@@ -170174,34 +170337,34 @@ tjo
 tjo
 tjo
 tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
 thA
 thA
 thA
-thA
-thA
-thA
-thA
-thA
-thA
-thA
+mME
+iiv
+iiv
+iiv
+iiv
+iiv
+iiv
+iiv
 iDt
+iDt
+iDt
+iDt
+rrE
+scw
+scw
 scw
 iDt
 scw
-iDt
-thA
-thA
-thA
-xMq
-xMq
+scw
+scw
+uQX
+jrY
+jrY
+scw
+scw
 aRt
 aRt
 xMq
@@ -170431,34 +170594,34 @@ tjo
 tjo
 tjo
 tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
 thA
 thA
 thA
-thA
-thA
-thA
-thA
+mME
+fNL
+fNL
+iiv
+sJx
+fNL
+iiv
+ybW
 iDt
 iDt
-psb
-scw
-psb
 iDt
-thA
-thA
-thA
-thA
-thA
+iDt
+msC
+iDt
+iDt
+iDt
+iDt
+iDt
+iDt
+iDt
+uQX
+jGp
+uQX
+uQX
+uQX
 iDt
 scw
 thA
@@ -170688,33 +170851,33 @@ tjo
 tjo
 tjo
 tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
 thA
 thA
 thA
-thA
-thA
-thA
+mME
+iiv
+iiv
+iiv
+wfU
+iiv
+iiv
+vmJ
+iDt
+iDt
+rgn
+iDt
+msC
 iDt
 iDt
 iDt
 daZ
 iDt
 iDt
-thA
-thA
-thA
-thA
-thA
+jvk
+uQX
+uQX
+uQX
+uQX
 iDt
 iDt
 iDt
@@ -170945,28 +171108,28 @@ tjo
 tjo
 tjo
 tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
 thA
 thA
 thA
-thA
+mME
+dya
+iiv
+iiv
+wfU
+dya
+iiv
+vmJ
+iDt
+iDt
+iDt
+iDt
+msC
 iDt
 iDt
 iDt
 iDt
 iDt
-iDt
-iDt
-thA
+jvk
 thA
 thA
 thA
@@ -171202,22 +171365,22 @@ tjo
 tjo
 tjo
 tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
 thA
 thA
 thA
-thA
-thA
-thA
-thA
+mME
+kTp
+iiv
+iiv
+wfU
+kTp
+iiv
+vmJ
 iDt
 iDt
+iDt
+iDt
+msC
 iDt
 iDt
 iDt
@@ -171459,22 +171622,22 @@ tjo
 tjo
 tjo
 tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
 thA
 thA
 thA
-thA
-thA
-thA
-iDt
-iDt
-iDt
+mME
+mME
+mME
+mME
+mME
+mME
+mME
+mME
+pLb
+nwn
+pLb
+pLb
+rgh
 iDt
 daZ
 iDt
@@ -171716,18 +171879,18 @@ tjo
 tjo
 tjo
 tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
 thA
 thA
 thA
 thA
 thA
+thA
+thA
+thA
+thA
+iDt
+iDt
+iDt
 iDt
 xPu
 iDt
@@ -171974,16 +172137,16 @@ tjo
 tjo
 tjo
 tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
 thA
 thA
 thA
 thA
+thA
+thA
+thA
+thA
+iDt
+iDt
 iDt
 iDt
 aaD
@@ -172231,15 +172394,15 @@ tjo
 tjo
 tjo
 tjo
-tjo
-tjo
-tjo
-tjo
-tjo
-tjo
 thA
 thA
 thA
+thA
+thA
+thA
+thA
+thA
+iDt
 iDt
 iDt
 iDt
