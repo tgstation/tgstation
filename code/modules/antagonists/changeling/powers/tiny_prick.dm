@@ -99,6 +99,9 @@
 		return
 	if(!new_selected_dna || changeling.chosen_sting || selected_dna) // selected other sting or other DNA while sleeping
 		return
+	if(TRAIT_NO_DNA_COPY in new_selected_dna.dna.species.inherent_traits)
+		user.balloon_alert(user, "dna incompatible!")
+		return
 	selected_dna = new_selected_dna
 	return ..()
 
