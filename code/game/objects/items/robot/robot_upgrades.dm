@@ -24,7 +24,7 @@
 	// one_use technically makes this value not mean anything, maybe could be just one variable with flags?
 	var/allow_duplicates = FALSE
 
-/obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	if(borg.stat == DEAD)
 		to_chat(user, span_warning("[src] will not function on a deceased cyborg!"))
 		return FALSE
@@ -43,7 +43,7 @@
 		remove_items(borg, user, items_to_remove)
 	return TRUE
 
-/obj/item/borg/upgrade/proc/deactivate(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/proc/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	if (!(src in borg.upgrades))
 		return FALSE
 
@@ -55,7 +55,7 @@
 	return TRUE
 
 // Handles adding items with the module
-/obj/item/borg/upgrade/proc/install_items(mob/living/silicon/robot/borg, user = usr, list/items)
+/obj/item/borg/upgrade/proc/install_items(mob/living/silicon/robot/borg, mob/living/user = usr, list/items)
 	for(var/item_to_add in items)
 		var/obj/item/module_item = new item_to_add(borg.model.modules)
 		borg.model.basic_modules += module_item
@@ -63,7 +63,7 @@
 	return TRUE
 
 // Handles removing some items as the module is installed
-/obj/item/borg/upgrade/proc/remove_items(mob/living/silicon/robot/borg, user = usr, list/items)
+/obj/item/borg/upgrade/proc/remove_items(mob/living/silicon/robot/borg, mob/living/user = usr, list/items)
 	for(var/item_to_remove in items)
 		var/obj/item/module_item = locate(item_to_remove) in borg.model.modules
 		if (module_item)
@@ -84,7 +84,7 @@
 	heldname = new_heldname
 	user.log_message("set \"[heldname]\" as a name in a cyborg reclassification board at [loc_name(user)]", LOG_GAME)
 
-/obj/item/borg/upgrade/rename/action(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/rename/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -106,7 +106,7 @@
 	// We handle this in a custom way
 	allow_duplicates = TRUE
 
-/obj/item/borg/upgrade/disablercooler/action(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/disablercooler/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -122,7 +122,7 @@
 
 	disabler.charge_delay = max(2 , disabler.charge_delay - 4)
 
-/obj/item/borg/upgrade/disablercooler/deactivate(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/disablercooler/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -136,7 +136,7 @@
 	desc = "An energy-operated thruster system for cyborgs."
 	icon_state = "cyborg_upgrade3"
 
-/obj/item/borg/upgrade/thrusters/action(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/thrusters/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -147,7 +147,7 @@
 	borg.ionpulse = TRUE
 	borg.toggle_ionpulse() //Enabled by default
 
-/obj/item/borg/upgrade/thrusters/deactivate(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/thrusters/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -213,7 +213,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
 
-/obj/item/borg/upgrade/syndicate/action(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/syndicate/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -226,7 +226,7 @@
 
 	return TRUE
 
-/obj/item/borg/upgrade/syndicate/deactivate(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/syndicate/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -241,13 +241,13 @@
 	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
 
-/obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
 	borg.add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), type)
 
-/obj/item/borg/upgrade/lavaproof/deactivate(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/lavaproof/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -267,7 +267,7 @@
 	var/energy_cost = 0.01 * STANDARD_CELL_CHARGE
 	var/datum/action/toggle_action
 
-/obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -275,7 +275,7 @@
 	toggle_action = new /datum/action/item_action/toggle(src)
 	toggle_action.Grant(borg)
 
-/obj/item/borg/upgrade/selfrepair/deactivate(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/selfrepair/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -362,14 +362,14 @@
 	model_flags = BORG_MODEL_MEDICAL
 	var/list/additional_reagents = list()
 
-/obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
 	for(var/obj/item/reagent_containers/borghypo/medical/hypo in borg.model.modules)
 		hypo.upgrade_hypo()
 
-/obj/item/borg/upgrade/hypospray/deactivate(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/hypospray/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -387,7 +387,7 @@
 		pierce armor and thick material."
 	icon_state = "cyborg_upgrade3"
 
-/obj/item/borg/upgrade/piercing_hypospray/action(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/piercing_hypospray/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -400,7 +400,7 @@
 		to_chat(user, span_warning("This unit is already equipped with a piercing hypospray upgrade!")) //check to see if we already have this module
 		return FALSE
 
-/obj/item/borg/upgrade/piercing_hypospray/deactivate(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/piercing_hypospray/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -416,7 +416,7 @@
 	model_type = list(/obj/item/robot_model/medical,  /obj/item/robot_model/syndicate_medical)
 	model_flags = BORG_MODEL_MEDICAL
 
-/obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/cyborg, user = usr)
+/obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -427,7 +427,7 @@
 	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.model.modules)
 		omnitool.upgrade_omnitool()
 
-/obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, user = usr)
+/obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -443,7 +443,7 @@
 	model_type = list(/obj/item/robot_model/engineering,  /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
 
-/obj/item/borg/upgrade/engineering_omnitool/action(mob/living/silicon/robot/cyborg, user = usr)
+/obj/item/borg/upgrade/engineering_omnitool/action(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -454,7 +454,7 @@
 	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool in cyborg.model.modules)
 		omnitool.upgrade_omnitool()
 
-/obj/item/borg/upgrade/engineering_omnitool/deactivate(mob/living/silicon/robot/cyborg, user = usr)
+/obj/item/borg/upgrade/engineering_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -472,7 +472,7 @@
 
 	items_to_add = list(/obj/item/shockpaddles/cyborg)
 
-/obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -505,7 +505,7 @@
 		QDEL_NULL(defib_instance)
 	return ..()
 
-/obj/item/borg/upgrade/defib/backpack/deactivate(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/defib/backpack/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -528,7 +528,7 @@
 	desc = "Bluespace Optimized Remote Intelligence Synchronization. An uplink device which takes the place of an MMI in cyborg endoskeletons, creating a robotic shell controlled by an AI."
 	icon_state = "boris"
 
-/obj/item/borg/upgrade/ai/action(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/ai/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -538,7 +538,7 @@
 
 	borg.make_shell(src)
 
-/obj/item/borg/upgrade/ai/deactivate(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/ai/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!. || !borg.shell)
 		return .
@@ -551,7 +551,7 @@
 	desc = "A cyborg resizer, it makes a cyborg huge."
 	icon_state = "cyborg_upgrade3"
 
-/obj/item/borg/upgrade/expand/action(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/expand/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!. || HAS_TRAIT(borg, TRAIT_NO_TRANSFORM))
 		return FALSE
@@ -578,7 +578,7 @@
 	borg.hasExpanded = TRUE
 	borg.update_transform(2)
 
-/obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -633,7 +633,7 @@
 	items_to_add = list(/obj/item/pinpointer/crew)
 	var/datum/action/crew_monitor
 
-/obj/item/borg/upgrade/pinpointer/action(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/pinpointer/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -642,7 +642,7 @@
 	icon_state = "scanner"
 
 
-/obj/item/borg/upgrade/pinpointer/deactivate(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/pinpointer/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
@@ -665,7 +665,7 @@
 	icon_state = "cyborg_upgrade3"
 	var/obj/item/robot_model/new_model = null
 
-/obj/item/borg/upgrade/transform/action(mob/living/silicon/robot/borg, user = usr)
+/obj/item/borg/upgrade/transform/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(. && new_model)
 		borg.model.transform_to(new_model)
