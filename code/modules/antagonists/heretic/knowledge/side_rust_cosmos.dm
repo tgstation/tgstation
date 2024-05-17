@@ -20,7 +20,7 @@
 
 /datum/heretic_knowledge/entropy_pulse
 	name = "Pulse of Entropy"
-	desc = "Allows you to transmute 10 iron sheets to fill the surrounding vicinity of the rune with rust."
+	desc = "Allows you to transmute 10 iron sheets and a garbage item to fill the surrounding vicinity of the rune with rust."
 	gain_text = "Reality begins to whisper to me. To give it its entropic end."
 	required_atoms = list(
 		/obj/item/stack/sheet/iron = 10,
