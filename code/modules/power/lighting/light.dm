@@ -292,7 +292,6 @@
 	return TRUE
 
 /obj/machinery/light/process(seconds_per_tick)
-	var/got_power = has_power()
 	if(has_power())
 		if(is_full_charge() && !reagents)
 			return PROCESS_KILL
