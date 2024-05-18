@@ -545,7 +545,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/teleport/proc/handle_portal(portal_type, turf/origin)
 	var/turf/T = get_turf(src)
 	close_portal() // To avoid stacking descriptions/animations
-	playsound(T, pick('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg'), 100, TRUE, 14)
+	playsound(T, 'sound/effects/portal_travel.ogg', 100, TRUE, 14)
 	inner_portal = new /obj/effect/temp_visual/cult/portal(T)
 	if(portal_type == "space")
 		set_light_color(color)

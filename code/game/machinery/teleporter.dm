@@ -50,6 +50,7 @@
 		to_chat(AM, span_warning("You can't use this here!"))
 		return
 	if(is_ready())
+		playsound(loc, "sound/effects/portal_travel.ogg", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		teleport(AM)
 
 /obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, params)

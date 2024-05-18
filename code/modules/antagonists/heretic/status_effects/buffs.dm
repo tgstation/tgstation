@@ -6,6 +6,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 15 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/crucible_soul
+	show_duration = TRUE
 	var/turf/location
 
 /datum/status_effect/crucible_soul/on_apply()
@@ -30,6 +31,7 @@
 	id = "Blessing of Dusk and Dawn"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 60 SECONDS
+	show_duration = TRUE
 	alert_type =/atom/movable/screen/alert/status_effect/duskndawn
 
 /datum/status_effect/duskndawn/on_apply()
@@ -47,6 +49,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 60 SECONDS
 	tick_interval = 1 SECONDS
+	show_duration = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/marshal
 
 /datum/status_effect/marshal/on_apply()
@@ -299,6 +302,7 @@
 	id = "Moon Grasp Hide Identity"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 15 SECONDS
+	show_duration = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/moon_grasp_hide
 
 /datum/status_effect/moon_grasp_hide/on_apply()
