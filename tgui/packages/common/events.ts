@@ -4,17 +4,21 @@
  * @license MIT
  */
 
+type Fn = (...args: any[]) => void;
+
 export class EventEmitter {
+  private listeners: Record<string, Fn[]>;
+
   constructor() {
     this.listeners = {};
   }
 
-  on(name, listener) {
+  on(name: string, listener: Fn): void {
     this.listeners[name] = this.listeners[name] || [];
     this.listeners[name].push(listener);
   }
 
-  off(name, listener) {
+  off(name: string, listener: Fn): void {
     const listeners = this.listeners[name];
     if (!listeners) {
       throw new Error(`There is no listeners for "${name}"`);
@@ -24,7 +28,7 @@ export class EventEmitter {
     });
   }
 
-  emit(name, ...params) {
+  emit(name: string, ...params: any[]): void {
     const listeners = this.listeners[name];
     if (!listeners) {
       return;
@@ -35,7 +39,7 @@ export class EventEmitter {
     }
   }
 
-  clear() {
+  clear(): void {
     this.listeners = {};
   }
 }
