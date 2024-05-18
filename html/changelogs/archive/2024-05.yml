@@ -469,3 +469,39 @@
   - spellcheck: Fixes some typos in the goodies section and makes it look a bit more
       consistent.
   - bugfix: Fixed the spess knife's cutter tool icon being invisible.
+2024-05-18:
+  Absolucy:
+  - bugfix: You will now be ejected from Space Phase if you lose your focus or lose
+      consciousness somehow during the jaunt.
+  DaCoolBoss:
+  - bugfix: adds missing prefix to name of The Lizard's Gas Lava land ruin.
+  Echriser:
+  - bugfix: Fixes a bunch of hearts turning into errors when you try to eat them
+  Hatterhat:
+  - qol: The Ansem, suppressor, and SC/FISHER included in the Fisher gimmick bundle
+      now come together as one whole gun, the Ansem/SC. It's integrally suppressed,
+      and fires the disruptor on right-click.
+  - bugfix: The SC/FISHER disrupts APCs for an appropriate amount of time, not ten
+      times the intended disruption length.
+  Jacquerel:
+  - bugfix: Mob spawners (such as lavaland tendrils) won't spawn more mobs than they
+      are supposed to, faster than they should.
+  Melbert:
+  - rscadd: Adds Minecarts, (possibly admin only depending on when this PR is merged
+      in relation to the Icebox Bar PR)
+  - rscadd: 'Icebox: The bar returns to its home.'
+  - rscadd: 'Icebox: Standardizes some decal styles in the main hallway.'
+  - bugfix: 'Icebox: The lower brig''s missing air alarm has been found.'
+  Sadboysuss:
+  - bugfix: fixed malf AI being able to overload shuttle consoles and the gateway
+      control console
+  ShizCalev:
+  - bugfix: Malf AI can now override/overload closed turrets.
+  - bugfix: Fixed a scenario in which a turret would have its covers closed while
+      still firing.
+  grungussuss:
+  - qol: suit sensors can now be maxed by ctrl clicking your jumpsuit
+  improvedname:
+  - balance: Nukies ordnance now include more gasses and stock parts
+  sheets, spacemenart, ben10omintrix, goofball, infrared baron, aofie:
+  - rscadd: adds lavaland raptors and the raptor ranch
