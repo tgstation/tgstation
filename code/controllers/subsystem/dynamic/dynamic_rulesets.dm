@@ -83,6 +83,8 @@
 
 	/// A list, or null, of templates that the ruleset depends on to function correctly
 	var/list/ruleset_lazy_templates
+	/// What kind of ruleset are we? Crewside, ghost-spawn, alieny? Used by station traits to influence dynamic. Only if dynamic has every flag here can it run
+	var/flavor_flags = null
 
 /datum/dynamic_ruleset/New()
 	// Rulesets can be instantiated more than once, such as when an admin clicks

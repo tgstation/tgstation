@@ -38,3 +38,15 @@
 #define RULESET_FORCE_ENABLED "force enabled"
 /// Ruleset should not run regardless of population and threat available
 #define RULESET_FORCE_DISABLED "force disabled"
+
+// Flavor ruletypes, used by station traits
+/// Default allowed flavors
+#define RULESET_FLAVORS_DEFAULT RULESET_FLAVOR_CREW_ANTAGONIST | RULESET_FLAVOR_UNWITTING_ANTAGONIST | RULESET_FLAVOR_HUMANOID_ANTAGONIST | RULESET_FLAVOR_HORROR_ANTAGONIST
+/// Any antag that spawns as a crewmember among crewmembers
+#define RULESET_FLAVOR_CREW_ANTAGONIST (1<<0)
+/// Antags that can't help it, such as obsesseds or being infected by a blob core
+#define RULESET_FLAVOR_UNWITTING_ANTAGONIST (1<<1)
+/// Any antag that spawns human mobs, includes nightmares and such, but not benos and spiders etc
+#define RULESET_FLAVOR_HUMANOID_ANTAGONIST (1<<2)
+/// Any  "spooky" antag, like xenos, changelings, spiders
+#define RULESET_FLAVOR_HORROR_ANTAGONIST (1<<3)

@@ -35,8 +35,8 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	var/dynamic_threat_id
 	/// If ran during dynamic, do we reduce the total threat? Will be overriden by config if set
 	var/threat_reduction = 0
-	/// Overwrite the dynamic config for custom rulesets and behaviours
-	var/dynamic_config_override = ""
+	/// Which ruleset flags to allow dynamic to use. null to disregard
+	var/dynamic_flavor_flags = null
 	/// Trait should not be instantiated in a round if its type matches this type
 	var/abstract_type = /datum/station_trait
 
@@ -47,14 +47,14 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 
 	if(threat_reduction)
 		GLOB.dynamic_station_traits[src] = threat_reduction
+	if(dynamic_flavor_flags)
+		GLOB.dynamic_ruleset_flavors = dynamic_flavor_flags
 	if(sign_up_button)
 		GLOB.lobby_station_traits += src
 	if(trait_processes)
 		START_PROCESSING(SSstation, src)
 	if(trait_to_give)
 		ADD_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
-	if(dynamic_config_override)
-		GLOB.dynamic_config_string = dynamic_config_override
 
 /datum/station_trait/Destroy()
 	SSstation.station_traits -= src

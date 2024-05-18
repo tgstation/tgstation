@@ -17,10 +17,10 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /// Modify the threat level for station traits before dynamic can be Initialized. List(instance = threat_reduction)
 GLOBAL_LIST_EMPTY(dynamic_station_traits)
-/// The config we use for our lawsets. Can be overriden by other systems pre-init (such as station traits)
-GLOBAL_VAR_INIT(dynamic_config_string, "dynamic.json")
 /// Rulesets which have been forcibly enabled or disabled
 GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
+/// Bitflags used during init by Dynamic to determine which rulesets we're allowed to use, used by station traits for gamemode-esque experiences
+GLOBAL_VAR_INIT(dynamic_ruleset_flavors, RULESET_FLAVORS_DEFAULT)
 
 SUBSYSTEM_DEF(dynamic)
 	name = "Dynamic"
@@ -504,7 +504,7 @@ SUBSYSTEM_DEF(dynamic)
 // Called BEFORE everyone is equipped with their job
 /datum/controller/subsystem/dynamic/proc/pre_setup()
 	if(CONFIG_GET(flag/dynamic_config_enabled))
-		var/json_file = file("[global.config.directory]/[GLOB.dynamic_config_string]")
+		var/json_file = file("[global.config.directory]/dynamic.json")
 		if(fexists(json_file))
 			configuration = json_decode(file2text(json_file))
 			if(configuration["Dynamic"])
@@ -645,7 +645,6 @@ SUBSYSTEM_DEF(dynamic)
 	log_admin(concatenated_message)
 	to_chat(GLOB.admins, concatenated_message)
 
-
 /// Initializes the internal ruleset variables
 /datum/controller/subsystem/dynamic/proc/setup_rulesets()
 	midround_rules = init_rulesets(/datum/dynamic_ruleset/midround)
@@ -661,6 +660,9 @@ SUBSYSTEM_DEF(dynamic)
 			continue
 
 		if (initial(ruleset_type.weight) == 0)
+			continue
+
+		if(!(initial(ruleset_type.flavor_flags) & GLOB.dynamic_ruleset_flavors)) //check if correct
 			continue
 
 		var/ruleset = new ruleset_type

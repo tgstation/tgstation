@@ -369,6 +369,6 @@
 	weight = 1
 	show_in_report = TRUE
 
-	dynamic_config_override = "dynamic_background_checks.json"
+	dynamic_flavor_flags = RULESET_FLAVORS_DEFAULT ~ RULESET_FLAVOR_CREW_ANTAGONIST
 	threat_reduction = 15
 	dynamic_threat_id = "Background Checks"

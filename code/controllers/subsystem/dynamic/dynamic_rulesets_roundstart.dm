@@ -9,6 +9,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/traitor
 	name = "Traitors"
 	antag_flag = ROLE_TRAITOR
+	flavor_flags = RULESET_FLAVOR_CREW_ANTAGONIST | RULESET_FLAVOR_HUMANOID_ANTAGONIST
 	antag_datum = /datum/antagonist/traitor
 	minimum_required_age = 0
 	protected_roles = list(
@@ -98,6 +99,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/traitorbro
 	name = "Blood Brothers"
 	antag_flag = ROLE_BROTHER
+	flavor_flags = RULESET_FLAVOR_CREW_ANTAGONIST | RULESET_FLAVOR_HUMANOID_ANTAGONIST
 	antag_datum = /datum/antagonist/brother
 	protected_roles = list(
 		JOB_CAPTAIN,
@@ -148,6 +150,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/changeling
 	name = "Changelings"
 	antag_flag = ROLE_CHANGELING
+	flavor_flags = RULESET_FLAVOR_CREW_ANTAGONIST | RULESET_FLAVOR_HUMANOID_ANTAGONIST | RULESET_FLAVOR_HORROR_ANTAGONIST
 	antag_datum = /datum/antagonist/changeling
 	protected_roles = list(
 		JOB_CAPTAIN,
@@ -196,6 +199,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/heretics
 	name = "Heretics"
 	antag_flag = ROLE_HERETIC
+	flavor_flags = RULESET_FLAVOR_CREW_ANTAGONIST | RULESET_FLAVOR_HUMANOID_ANTAGONIST
 	antag_datum = /datum/antagonist/heretic
 	protected_roles = list(
 		JOB_CAPTAIN,
@@ -254,6 +258,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	name = "Wizard"
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard
+	flavor_flags = RULESET_FLAVOR_HUMANOID_ANTAGONIST
 	flags = HIGH_IMPACT_RULESET
 	minimum_required_age = 14
 	restricted_roles = list(
@@ -315,6 +320,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/bloodcult
 	name = "Blood Cult"
 	antag_flag = ROLE_CULTIST
+	flavor_flags = RULESET_FLAVOR_CREW_ANTAGONIST | RULESET_FLAVOR_HUMANOID_ANTAGONIST
 	antag_datum = /datum/antagonist/cult
 	minimum_required_age = 14
 	restricted_roles = list(
@@ -395,6 +401,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/nuclear
 	name = "Nuclear Emergency"
 	antag_flag = ROLE_OPERATIVE
+	flavor_flags = RULESET_FLAVOR_HUMANOID_ANTAGONIST
 	antag_datum = /datum/antagonist/nukeop
 	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
 	minimum_required_age = 14
@@ -489,6 +496,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	persistent = TRUE
 	antag_flag = ROLE_REV_HEAD
 	antag_flag_override = ROLE_REV_HEAD
+	flavor_flags = RULESET_FLAVOR_CREW_ANTAGONIST | RULESET_FLAVOR_HUMANOID_ANTAGONIST
 	antag_datum = /datum/antagonist/rev/head
 	minimum_required_age = 14
 	restricted_roles = list(
@@ -618,6 +626,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	antag_datum = /datum/antagonist/nukeop/clownop
 	antag_flag = ROLE_CLOWN_OPERATIVE
 	antag_flag_override = ROLE_OPERATIVE
+	flavor_flags = RULESET_FLAVOR_HUMANOID_ANTAGONIST
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	required_role = ROLE_CLOWN_OPERATIVE
@@ -697,6 +706,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/spies
 	name = "Spies"
 	antag_flag = ROLE_SPY
+	flavor_flags = RULESET_FLAVOR_CREW_ANTAGONIST | RULESET_FLAVOR_HUMANOID_ANTAGONIST
 	antag_datum = /datum/antagonist/spy
 	minimum_required_age = 0
 	protected_roles = list(
