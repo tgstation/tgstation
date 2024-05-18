@@ -53,6 +53,8 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 		START_PROCESSING(SSstation, src)
 	if(trait_to_give)
 		ADD_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
+	if(dynamic_config_override)
+		GLOB.dynamic_config_string = dynamic_config_override
 
 /datum/station_trait/Destroy()
 	SSstation.station_traits -= src
