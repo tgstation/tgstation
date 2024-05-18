@@ -26,7 +26,9 @@
 	faction = list(FACTION_STATION, FACTION_NEUTRAL)
 	light_range = 4
 	basic_mob_flags = DEL_ON_DEATH
-
+	move_force = MOVE_FORCE_VERY_STRONG
+	move_resist = MOVE_FORCE_VERY_STRONG
+	pull_force = MOVE_FORCE_VERY_STRONG
 	speak_emote = list("chirps")
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
