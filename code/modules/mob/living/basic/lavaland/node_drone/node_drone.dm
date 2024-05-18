@@ -17,8 +17,8 @@
 	icon_living = "mining_node_active"
 	icon_dead = "mining_node_active"
 
-	maxHealth = 500
-	health = 500
+	maxHealth = 300
+	health = 300
 	density = TRUE
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	mob_size = MOB_SIZE_LARGE
