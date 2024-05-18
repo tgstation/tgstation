@@ -59151,7 +59151,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/treatment_center)
 "rDN" = (
-/obj/structure/signpost,
+/obj/structure/no_effect_signpost,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "rDO" = (
