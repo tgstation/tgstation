@@ -364,8 +364,11 @@
 /// Crew don't ever spawn as enemies of the station. Obsesseds, blob infection, space changelings etc can still happen though
 /datum/station_trait/background_checks
 	name = "Station-Wide Background Checks"
-	report_message = "We're testing a new protocol for station-wide background checks, we're excited to see the increased productivity!"
+	report_message = "We're testing a new protocol for station-wide background checks, take comfort in trusting your fellow crew."
 	trait_type = STATION_TRAIT_POSITIVE
-	dynamic_config_override = "dynamic_background_checks.json"
 	weight = 1
 	show_in_report = TRUE
+
+	dynamic_config_override = "dynamic_background_checks.json"
+	threat_reduction = 15
+	dynamic_threat_id = "Background Checks"
