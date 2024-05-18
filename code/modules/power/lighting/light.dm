@@ -293,6 +293,7 @@
 
 /obj/machinery/light/process(seconds_per_tick)
 	if(has_power())
+		// If the cell is done mooching station power, and reagents don't need processing, stop processing
 		if(is_full_charge() && !reagents)
 			return PROCESS_KILL
 		if(cell)
