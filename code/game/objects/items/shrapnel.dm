@@ -30,10 +30,14 @@
 	ricochet_chance = 70
 	shrapnel_type = /obj/item/shrapnel
 	ricochet_incidence_leeway = 60
-	hit_prone_targets = TRUE
 	sharpness = SHARP_EDGED
 	wound_bonus = 30
 	embedding = list(embed_chance=70, ignore_throwspeed_threshold=TRUE, fall_chance=1)
+
+/obj/projectile/bullet/shrapnel/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
+	if(isliving(target))
+		direct_target = TRUE
+	return ..(target, direct_target, ignore_loc, cross_failed)
 
 /obj/projectile/bullet/shrapnel/short_range
 	range = 5
