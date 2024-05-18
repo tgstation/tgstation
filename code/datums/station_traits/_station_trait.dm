@@ -35,6 +35,8 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	var/dynamic_threat_id
 	/// If ran during dynamic, do we reduce the total threat? Will be overriden by config if set
 	var/threat_reduction = 0
+	/// Overwrite the dynamic config for custom rulesets and behaviours
+	var/dynamic_config_override = ""
 	/// Trait should not be instantiated in a round if its type matches this type
 	var/abstract_type = /datum/station_trait
 

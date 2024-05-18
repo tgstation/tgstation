@@ -1,7 +1,6 @@
 #define PARTY_COOLDOWN_LENGTH_MIN (6 MINUTES)
 #define PARTY_COOLDOWN_LENGTH_MAX (12 MINUTES)
 
-
 /datum/station_trait/lucky_winner
 	name = "Lucky winner"
 	trait_type = STATION_TRAIT_POSITIVE
@@ -30,6 +29,9 @@
 	for(var/i in 1 to 6)
 		new /obj/item/reagent_containers/cup/glass/bottle/beer(toLaunch)
 	new /obj/effect/pod_landingzone(T, toLaunch)
+
+#undef PARTY_COOLDOWN_LENGTH_MIN
+#undef PARTY_COOLDOWN_LENGTH_MAX
 
 /datum/station_trait/galactic_grant
 	name = "Galactic grant"
@@ -359,5 +361,11 @@
 	show_in_report = TRUE
 	blacklist = list(/datum/station_trait/colored_assistants)
 
-#undef PARTY_COOLDOWN_LENGTH_MIN
-#undef PARTY_COOLDOWN_LENGTH_MAX
+/// Crew don't ever spawn as enemies of the station. Obsesseds, blob infection, space changelings etc can still happen though
+/datum/station_trait/background_checks
+	name = "Station-Wide Background Checks"
+	report_message = "We're testing a new protocol for station-wide background checks, we're excited to see the increased productivity!"
+	trait_type = STATION_TRAIT_POSITIVE
+	dynamic_config_override = "dynamic_background_checks.json"
+	weight = 1
+	show_in_report = TRUE
