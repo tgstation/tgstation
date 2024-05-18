@@ -73,3 +73,27 @@
 	icon_state = "rod_jagged"
 	base_icon_state = "rod_jagged"
 	projectile_type = /obj/projectile/bullet/rebarsyndie
+
+/obj/item/ammo_casing/rebar/zaukerite
+	name = "zaukerite sliver"
+	desc = "A sliver of a zaukerite crystal. Do not ingest."
+	caliber = CALIBER_REBAR
+	icon_state = "zaukerite_shard"
+	base_icon_state = "zaukerite_shard"
+	projectile_type = /obj/projectile/bullet/rebar/zaukerite
+
+/obj/item/ammo_casing/rebar/hydrogen
+	name = "Metallic Hydrogen Bolt"
+	desc = "An ultra-sharp rod made from pure metallic hydrogen. Armor may as well not exist."
+	caliber = CALIBER_REBAR
+	icon_state = "rod_hydrogen"
+	base_icon_state = "rod_hydrogen"
+	projectile_type = /obj/projectile/bullet/rebar/hydrogen
+
+/obj/item/ammo_casing/rebar/paperball
+	name = "Paper Ball"
+	desc = "Doink!"
+	caliber = CALIBER_REBAR
+	icon_state = "paperball"
+	base_icon_state = "paperball"
+	projectile_type = /obj/projectile/bullet/paperball

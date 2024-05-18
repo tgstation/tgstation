@@ -12,6 +12,15 @@
 	time = 0.5 SECONDS
 	category = CAT_WEAPON_AMMO
 
+/datum/crafting_recipe/paperball
+	name = "Paper Ball"
+	result = /obj/item/ammo_casing/rebar/paperball
+	reqs = list(
+		/obj/item/paper = 1,
+	)
+	time = 0.1 SECONDS
+	category = CAT_WEAPON_AMMO
+
 /datum/crafting_recipe/rebarsyndie
 	name = "jagged iron rod"
 	result = /obj/item/ammo_casing/rebar/syndie
