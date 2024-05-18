@@ -295,6 +295,8 @@
 		return TRUE
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
+	if(SEND_SIGNAL(AM, COMSIG_MOVABLE_BUMP_PUSHED, src, force) & COMPONENT_NO_PUSH)
+		return
 	now_pushing = TRUE
 	SEND_SIGNAL(src, COMSIG_LIVING_PUSHING_MOVABLE, AM)
 	var/dir_to_target = get_dir(src, AM)
@@ -2723,3 +2725,26 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		physical_cash_total += counted_credit.get_item_credit_value()
 		counted_money += counted_credit
 	return round(physical_cash_total)
+
+/// Returns an arbitrary number which very roughly correlates with how buff you look
+/mob/living/proc/calculate_fitness()
+	var/athletics_level = mind?.get_skill_level(/datum/skill/athletics) || 1
+	var/damage = (melee_damage_lower + melee_damage_upper) / 2
+
+	return ceil(damage * (ceil(athletics_level / 2)) * maxHealth)
+
+/// Create a report string about how strong this person looks, generated in a somewhat arbitrary fashion
+/mob/living/proc/compare_fitness(mob/living/scouter)
+	if (HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return span_warning("It's impossible to tell whether this person lifts.")
+
+	var/our_fitness_level = calculate_fitness()
+	var/their_fitness_level = scouter.calculate_fitness()
+
+	var/comparative_fitness = our_fitness_level / their_fitness_level
+
+	if (comparative_fitness > 2)
+		scouter.set_jitter_if_lower(comparative_fitness SECONDS)
+		return "[span_notice("You'd estimate [p_their()] fitness level at about...")] [span_boldwarning("What?!? [our_fitness_level]???")]"
+
+	return span_notice("You'd estimate [p_their()] fitness level at about [our_fitness_level]. [comparative_fitness <= 0.33 ? "Pathetic." : ""]")
