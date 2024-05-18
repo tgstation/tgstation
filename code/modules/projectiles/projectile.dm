@@ -623,7 +623,7 @@
 			return FALSE
 		if(hit_prone_targets)
 			var/mob/living/buckled_to = living_target.lowest_buckled_mob()
-			if(istype(src, /obj/projectile/bullet/p50) || istype(src, /obj/projectile/bullet/pellet/stingball)) // doesn't apply to sniper rifles and ricocheted stingballs
+			if((istype(src, /obj/projectile/bullet/p50)) || (istype(src, /obj/projectile/bullet/pellet/stingball))) // doesn't apply to sniper rifles and ricocheted stingballs
 				return TRUE
 			if((decayedRange - range) <= 10) // after 10 tiles, auto-aim hit for mobs on the floor turns off
 				return TRUE
