@@ -387,7 +387,7 @@
 			continue
 		var/amount2purge = 3
 		if(holder.has_reagent(/datum/reagent/toxin/anacea))
-			amount2purge = 0.5
+			amount2purge = 0
 		if(medibonus >= 3 && istype(the_reagent2, /datum/reagent/medicine)) //3 unique meds (2+multiver) | (1 + pure multiver) will make it not purge medicines
 			continue
 		affected_mob.reagents.remove_reagent(the_reagent2.type, amount2purge * REM * seconds_per_tick)
