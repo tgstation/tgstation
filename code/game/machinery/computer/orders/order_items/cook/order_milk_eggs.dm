@@ -142,5 +142,5 @@
 
 /datum/orderable_item/milk_eggs/moonfish
 	name = "Moonfish"
-	item_path = /obj/item/food/meat/slab/moonfish
+	item_path = /obj/item/food/fishmeat/moonfish
 	cost_per_order = 30
