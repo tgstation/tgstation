@@ -38,7 +38,7 @@ export const ChemSeparator = (props) => {
               </Box>
             }
           >
-            <Stack vertical={false} fill>
+            <Stack fill>
               <Stack.Item ml="27px">
                 <ProgressBar
                   height={2}
@@ -56,7 +56,7 @@ export const ChemSeparator = (props) => {
                   >
                     {`${Math.ceil(flask.total_volume)} of ${
                       flask.maximum_volume
-                    } units at ${Math.ceil(flask.temp)}°C`}
+                    } units at ${Math.ceil(flask.temp)}K`}
                   </Box>
                 </ProgressBar>
               </Stack.Item>
@@ -88,7 +88,7 @@ export const ChemSeparator = (props) => {
                 </Box>
               }
             >
-              <Stack vertical={false} fill>
+              <Stack fill>
                 <Stack.Item ml="27px">
                   <ProgressBar
                     height={2}
@@ -106,7 +106,7 @@ export const ChemSeparator = (props) => {
                     >
                       {`${Math.ceil(beaker.total_volume)} of ${
                         beaker.maximum_volume
-                      } units at ${Math.ceil(beaker.temp)}°C`}
+                      } units at ${Math.ceil(beaker.temp)}K`}
                     </Box>
                   </ProgressBar>
                 </Stack.Item>
@@ -138,7 +138,7 @@ export const ChemSeparator = (props) => {
               </Box>
             }
           >
-            <Stack ml="27px" vertical={false} fill>
+            <Stack ml="27px" fill>
               {BURNER_SETTINGS.map((value, i) => (
                 <Stack.Item key={value}>
                   <Button.Checkbox
@@ -185,7 +185,7 @@ export const ChemSeparator = (props) => {
                 >
                   {`${Math.ceil(fuel.total_volume)} of ${
                     fuel.maximum_volume
-                  } units at ${Math.ceil(fuel.temp)}°C`}
+                  } units at ${Math.ceil(fuel.temp)}K`}
                 </Box>
               </ProgressBar>
             </LabeledList.Item>

@@ -39,6 +39,8 @@
 
 	new /obj/item/thermometer(drop)
 
+	new /obj/item/burner(drop)
+
 	if(!QDELETED(distilled_container))
 		distilled_container.forceMove(drop)
 
@@ -106,7 +108,7 @@
 /obj/structure/chem_separator/examine_more(mob/user)
 	. = ..()
 
-	. += span_notice("For burner fuel Oil > Welding Fuel > Ethanol > Monkey Energy")
+	. += span_notice("For burner fuel Oil > Welding Fuel = Oxygen > Ethanol > Monkey Energy")
 
 	. += span_notice("Upon cross examining the flasks reagents contents with its chart you see the boiling points of each reagent present.")
 	for(var/datum/reagent/reg as anything in reagents.reagent_list)
@@ -182,6 +184,7 @@
 	var/static/list/reagent_coefficients = list(
 		/datum/reagent/fuel/oil = 0.8,
 		/datum/reagent/fuel = 0.7,
+		/datum/reagent/oxygen = 0.7,
 		/datum/reagent/consumable/ethanol = 0.6,
 		/datum/reagent/consumable/monkey_energy = 0.5,
 		/datum/reagent/water = - 0.7
@@ -328,7 +331,7 @@
 
 		//finally heat the mixture
 		if(can_process)
-			reagents.adjust_thermal_energy((1000 - reagents.chem_temp) * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * (0.1 + (0.3 * knob_ratio)) * fuel_coefficient)
+			reagents.adjust_thermal_energy((1000 - reagents.chem_temp) * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * (0.15 + (0.35 * knob_ratio)) * fuel_coefficient)
 			reagents.handle_reactions()
 	else if(reagents.chem_temp > DEFAULT_REAGENT_TEMPERATURE) //the container cools down if there is no flame heating it till it reaches room temps
 		reagents.adjust_thermal_energy((DEFAULT_REAGENT_TEMPERATURE - reagents.chem_temp) * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * 0.05)
