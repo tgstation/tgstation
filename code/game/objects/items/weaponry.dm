@@ -511,22 +511,22 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/cane/equipped(mob/living/user, slot, initial)
 	. = ..()
+	if(!(slot & ITEM_SLOT_HANDS))
+		return
 	movement_support_add(user, slot, initial)
 
-/obj/item/cane/dropped(mob/living/user, slot, initial)
+/obj/item/cane/dropped(mob/living/user, silent = FALSE)
 	. = ..()
+	if((slot & ITEM_SLOT_HANDS))
+		return
 	movement_support_del(user, slot, initial)
 
 /obj/item/cane/proc/movement_support_add(mob/living/user, slot, initial)
-	if(!(slot & ITEM_SLOT_HANDS))
-		return
 	RegisterSignal(user, COMSIG_MOB_LIMP_CHECK, PROC_REF(handle_limping))
 	user.set_usable_legs()
 	return TRUE
 
 /obj/item/cane/proc/movement_support_del(mob/living/user, slot, initial)
-	if((slot & ITEM_SLOT_HANDS))
-		return
 	UnregisterSignal(user, list(COMSIG_MOB_LIMP_CHECK))
 	user.set_usable_legs()
 	return TRUE
@@ -559,17 +559,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(!.)
 		return
 	RegisterSignal(user, COMSIG_LIVING_LIMBLESS_SLOWDOWN, PROC_REF(handle_slowdown))
-	user.set_usable_legs()
+	user.update_usable_leg_status()
 	user.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
 
 /obj/item/cane/crutch/movement_support_del(mob/living/user, slot, initial)
 	. = ..()
 	if(!.)
 		return
+	user.update_usable_leg_status()
 	UnregisterSignal(user, list(COMSIG_LIVING_LIMBLESS_SLOWDOWN, COMSIG_MOB_LIMP_CHECK))
 	REMOVE_TRAIT(user, TRAIT_WADDLING, REF(src))
 
-/obj/item/cane/crutch/proc/handle_slowdown(mob/living/user, limbless_slowdown)
+/obj/item/cane/crutch/proc/handle_slowdown(mob/living/user, limbless_slowdown, list/slowdown_mods)
 	SIGNAL_HANDLER
 	var/leg_amount = user.usable_legs
 	// Don't do anything if the number is equal (or higher) to the usual.
@@ -577,8 +578,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return
 	// If we have at least one leg and it's less than the default, reduce slowdown by 60%.
 	if(leg_amount && (leg_amount < user.default_num_legs))
-		limbless_slowdown *= 0.4
-	return limbless_slowdown
+		slowdown_mods += 0.4
 
 /obj/item/cane/crutch/wood
 	name = "wooden crutch"
@@ -589,7 +589,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/cane/white
 	name = "probing cane"
-	desc = "A cane traditionally used by the blind to help them see. Folds down to be easier to transport."
+	desc = "Often called a white cane, it's traditionally used by the blind to help them see. Folds down to be easier to transport."
 	icon_state = "cane_white"
 	inhand_icon_state = "cane_white"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'

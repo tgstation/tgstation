@@ -2334,8 +2334,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		new_value = 0
 
 	. = usable_legs
-	if(!isnull(new_value))
-		usable_legs = new_value
+	usable_legs = new_value
+	update_usable_leg_status()
+
+/**
+ * Proc that updates the status of the mob's legs without setting its leg value to something else.
+ */
+/mob/living/proc/update_usable_leg_status()
 
 	if(new_value > .) // Gained leg usage.
 		REMOVE_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
@@ -2350,7 +2355,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		var/limbless_slowdown = (default_num_legs - usable_legs) * 3
 		if(!usable_legs && usable_hands < default_num_hands)
 			limbless_slowdown += (default_num_hands - usable_hands) * 3
-		var/sig_result = SEND_SIGNAL(src, COMSIG_LIVING_LIMBLESS_SLOWDOWN, limbless_slowdown)
+		var/list/slowdown_mods = list()
+		var/sig_result = SEND_SIGNAL(src, COMSIG_LIVING_LIMBLESS_SLOWDOWN, limbless_slowdown, slowdown_mods)
+		for(var/num in slowdown_mods)
+			limbless_slowdown *= num
 		var/final_slowdown = sig_result ? sig_result : limbless_slowdown
 		if(final_slowdown == 0)
 			remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
