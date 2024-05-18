@@ -89,3 +89,60 @@
 	name = "Pickled Voltvine"
 	item_path = /obj/item/food/pickled_voltvine
 	cost_per_order = 5
+
+/datum/orderable_item/veggies/chili
+	name = "Chili"
+	item_path = /obj/item/food/grown/chili
+
+/datum/orderable_item/veggies/berries
+	name = "Berries"
+	item_path = /obj/item/food/grown/berries
+
+/datum/orderable_item/veggies/pineapple
+	name = "Pineapple"
+	item_path = /obj/item/food/grown/pineapple
+
+/datum/orderable_item/veggies/peas
+	name = "Peas"
+	item_path = /obj/item/food/grown/peas
+
+/datum/orderable_item/veggies/korta_nut //nanotrasen does not devote as much of their resources to pathetic lizard crops
+	name = "Korta Nut"
+	item_path = /obj/item/food/grown/korta_nut
+	cost_per_order = 15
+
+/datum/orderable_item/veggies/parsnip
+	name = "Parsnip"
+	item_path = /obj/item/food/grown/parsnip
+
+/datum/orderable_item/veggies/redbeet
+	name = "Red Beet"
+	item_path = /obj/item/food/grown/redbeet
+
+/datum/orderable_item/veggies/orange
+	name = "Orange"
+	item_path = /obj/item/food/grown/citrus/orange
+
+/datum/orderable_item/veggies/vanillapod
+	name = "Vanilla"
+	item_path = /obj/item/food/grown/vanillapod
+	cost_per_order = 25 //food items that are treated as mutations in game should be more expensive. groceries shouldnt include ACTUAL mutations but i think real foods are ok
+
+/datum/orderable_item/veggies/sweetkorta
+	name = "Sweet Korta Nut"
+	item_path = /obj/item/food/grown/korta_nut/sweet
+	cost_per_order = 30
+
+/datum/orderable_item/veggies/redonion
+	name = "Red Onion"
+	item_path = /obj/item/food/grown/onion/red
+	cost_per_order = 25
+
+/datum/orderable_item/veggies/peanut
+	name = "Peanut"
+	item_path = /obj/item/food/grown/peanut
+
+/datum/orderable_item/veggies/sweetpotato
+	name = "Sweet Potato"
+	item_path = /obj/item/food/grown/potato/sweet
+	cost_per_order = 25
