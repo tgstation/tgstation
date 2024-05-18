@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Malf AI can now override/overload closed turrets."
-  - bugfix: "Fixed a scenario in which a turret would have its covers closed while still firing."
