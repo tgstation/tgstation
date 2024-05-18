@@ -3,7 +3,7 @@
 	desc = "A nausea-inducing hunk of twisting flesh and metal."
 	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "gland"
-	organ_flags = ORGAN_ROBOTIC // weird?
+	organ_flags = ORGAN_ROBOTIC | ORGAN_PROMINENT // weird?
 	/// Shows name of the gland as well as a description of what it does upon examination by abductor scientists and observers.
 	var/abductor_hint = "baseline placebo referencer"
 
