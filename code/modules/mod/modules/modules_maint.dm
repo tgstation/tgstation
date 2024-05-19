@@ -10,7 +10,7 @@
 	icon_state = "springlock"
 	complexity = 3 // it is inside every part of your suit, so
 	incompatible_modules = list(/obj/item/mod/module/springlock)
-	var/set_off = false
+	var/set_off = FALSE
 
 /obj/item/mod/module/springlock/on_install()
 	mod.activation_step_time *= 0.5
