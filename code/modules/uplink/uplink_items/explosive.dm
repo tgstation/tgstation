@@ -50,7 +50,7 @@
 	desc = "A box that contains five EMP grenades and an EMP implant with three uses. Useful to disrupt communications, \
 			security's energy weapons and silicon lifeforms when you're in a tight spot."
 	item = /obj/item/storage/box/syndie_kit/emp
-	cost = 2
+	cost = 3
 
 /datum/uplink_item/explosives/emp/New()
 	..()
