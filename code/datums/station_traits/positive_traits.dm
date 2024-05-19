@@ -368,6 +368,7 @@
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 1
 	show_in_report = TRUE
+	can_revert = FALSE
 
 	dynamic_category = RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	threat_reduction = 15
