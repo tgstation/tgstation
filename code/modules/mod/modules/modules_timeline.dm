@@ -62,6 +62,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/rewinder)
 	cooldown_time = 20 SECONDS
+	required_slots = list(ITEM_SLOT_BACK)
 
 /obj/item/mod/module/rewinder/on_use()
 	balloon_alert(mod.wearer, "anchor point set")
@@ -103,6 +104,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/timestopper)
 	cooldown_time = 60 SECONDS
+	required_slots = list(ITEM_SLOT_BACK)
 	///The current timestop in progress.
 	var/obj/effect/timestop/channelled/timestop
 
@@ -151,6 +153,7 @@
 	incompatible_modules = list(/obj/item/mod/module/timeline_jumper)
 	cooldown_time = 5 SECONDS
 	allow_flags = MODULE_ALLOW_PHASEOUT
+	required_slots = list(ITEM_SLOT_BACK)
 	///The dummy for phasing from this module, the wearer is phased out while this exists.
 	var/obj/effect/dummy/phased_mob/chrono/phased_mob
 
@@ -203,6 +206,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/tem)
 	cooldown_time = 0.5 SECONDS
+	required_slots = list(ITEM_SLOT_BACK)
 	///Reference to the chrono field being controlled by this module
 	var/obj/structure/chrono_field/field = null
 	///Where the chronofield maker was when the field went up

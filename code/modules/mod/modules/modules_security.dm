@@ -8,6 +8,7 @@
 	complexity = 2
 	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/magnetic_harness)
+	required_slots = list(ITEM_SLOT_OCLOTHING)
 	/// Time before we activate the magnet.
 	var/magnet_delay = 0.8 SECONDS
 	/// The typecache of all guns we allow.
@@ -71,6 +72,7 @@
 	cooldown_time = 5 SECONDS
 	overlay_state_inactive = "module_pepper"
 	overlay_state_use = "module_pepper_used"
+	required_slots = list(ITEM_SLOT_OCLOTHING)
 
 /obj/item/mod/module/pepper_shoulders/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_check_block))
@@ -110,6 +112,7 @@
 	incompatible_modules = list(/obj/item/mod/module/holster)
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
+	required_slots = list(ITEM_SLOT_OCLOTHING|ITEM_SLOT_GLOVES|ITEM_SLOT_FEET)
 	/// Gun we have holstered.
 	var/obj/item/gun/holstered
 
@@ -155,6 +158,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/megaphone)
 	cooldown_time = 0.5 SECONDS
+	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 	/// List of spans we add to the speaker.
 	var/list/voicespan = list(SPAN_COMMAND)
 
@@ -184,6 +188,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/criminalcapture)
 	cooldown_time = 0.5 SECONDS
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// Time to capture a prisoner.
 	var/capture_time = 2.5 SECONDS
 	/// Time to dematerialize a bodybag.
@@ -298,6 +303,7 @@
 	active_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/projectile_dampener)
 	cooldown_time = 1.5 SECONDS
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// Radius of the dampening field.
 	var/field_radius = 2
 	/// Damage multiplier on projectiles.
@@ -355,6 +361,7 @@
 	complexity = 2
 	incompatible_modules = list(/obj/item/mod/module/active_sonar)
 	cooldown_time = 15 SECONDS
+	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 	/// Time between us displaying radial scans
 	var/scan_cooldown_time = 0.5 SECONDS
 	/// The current slice we're going to scan
@@ -468,6 +475,7 @@
 	module_type = MODULE_PASSIVE
 	complexity = 3
 	incompatible_modules = list(/obj/item/mod/module/shooting_assistant)
+	required_slots = list(ITEM_SLOT_GLOVES)
 	var/selected_mode = SHOOTING_ASSISTANT_OFF
 	///Association list, the assoc values are the balloon alerts shown to the user when the mode is set.
 	var/static/list/available_modes = list(
@@ -567,6 +575,7 @@
 	icon_state = "bulwark"
 	complexity = 3
 	incompatible_modules = list(/obj/item/mod/module/shove_blocker)
+	required_slots = list(ITEM_SLOT_OCLOTHING)
 
 /obj/item/mod/module/shove_blocker/on_suit_activation()
 	mod.wearer.add_traits(list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), MOD_TRAIT)
@@ -585,6 +594,7 @@
 	desc = "Enhanced gauntlent grip pads that help with placing individuals in restraints more quickly. Doesn't look like they'll come off."
 	removable = FALSE
 	complexity = 0
+	required_slots = list(ITEM_SLOT_GLOVES)
 
 /obj/item/mod/module/quick_cuff/on_suit_activation()
 	. = ..()

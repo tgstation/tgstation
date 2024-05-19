@@ -44,7 +44,7 @@
 	/// flags that let the module ability be used in odd circumstances
 	var/allow_flags = NONE
 	/// A list of slots required in the suit to work. Formatted like list(x|y, z, ...) where either x or y are required and z is required.
-	var/list/required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
+	var/list/required_slots = list()
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 
@@ -78,6 +78,8 @@
 
 /// Looks through the MODsuit's parts to see if it has the parts required to support this module
 /obj/item/mod/module/proc/has_required_parts(list/parts, need_extended = FALSE)
+	if(!length(required_slots))
+		return TRUE
 	var/total_slot_flags = NONE
 	for(var/part_slot in parts)
 		if(need_extended)

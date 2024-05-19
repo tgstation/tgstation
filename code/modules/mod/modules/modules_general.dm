@@ -8,6 +8,7 @@
 	icon_state = "storage"
 	complexity = 3
 	incompatible_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/plate_compression)
+	required_slots = list(ITEM_SLOT_BACK)
 	/// Max weight class of items in the storage.
 	var/max_w_class = WEIGHT_CLASS_NORMAL
 	/// Max combined weight of all items in the storage.
@@ -72,14 +73,14 @@
 /obj/item/mod/module/storage/belt
 	name = "MOD case storage module"
 	desc = "Some concessions had to be made when creating a compressed modular suit core. \
-	As a result, Roseus Galactic equipped their suit with a slimline storage case.  \
-	If you find this equipped to a standard modular suit, then someone has almost certainly shortchanged you on a proper storage module."
+		As a result, Roseus Galactic equipped their suit with a slimline storage case.  \
+		If you find this equipped to a standard modular suit, then someone has almost certainly shortchanged you on a proper storage module."
 	icon_state = "storage_case"
 	complexity = 0
 	max_w_class = WEIGHT_CLASS_SMALL
-	removable = FALSE
 	max_combined_w_class = 21
 	max_items = 7
+	required_slots = list(ITEM_SLOT_BELT)
 
 /obj/item/mod/module/storage/bluespace
 	name = "MOD bluespace storage module"
@@ -106,6 +107,7 @@
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_jetpack"
 	overlay_state_active = "module_jetpack_on"
+	required_slots = list(ITEM_SLOT_BACK)
 	/// Do we give the wearer a speed buff.
 	var/full_speed = FALSE
 	/// Do we have stabilizers? If yes the user won't move from inertia.
@@ -188,6 +190,7 @@
 	cooldown_time = 30 SECONDS
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/jump_jet)
+	required_slots = list(ITEM_SLOT_BACK)
 
 /obj/item/mod/module/jump_jet/on_use()
 	. = ..()
@@ -228,6 +231,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.1
 	incompatible_modules = list(/obj/item/mod/module/status_readout)
 	tgui_id = "status_readout"
+	required_slots = list(ITEM_SLOT_BACK)
 	/// Does this show damage types, body temp, satiety
 	var/display_detailed_vitals = TRUE
 	/// Does this show DNA data
@@ -305,6 +309,7 @@
 	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/mouthhole)
 	overlay_state_inactive = "module_apparatus"
+	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK)
 	/// Former flags of the helmet.
 	var/former_helmet_flags = NONE
 	/// Former visor flags of the helmet.
@@ -350,6 +355,7 @@
 	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/emp_shield)
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 
 /obj/item/mod/module/emp_shield/on_install()
 	mod.AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
@@ -388,6 +394,7 @@
 	light_range = 4
 	light_power = 1
 	light_on = FALSE
+	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK)
 	/// Charge drain per range amount.
 	var/base_power = DEFAULT_CHARGE_DRAIN * 0.1
 	/// Minimum range we can set.
@@ -476,6 +483,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/dispenser)
 	cooldown_time = 5 SECONDS
+	required_slots = list(ITEM_SLOT_GLOVES)
 	/// Path we dispense.
 	var/dispense_type = /obj/item/food/burger/plain
 	/// Time it takes for us to dispense.
@@ -503,6 +511,7 @@
 	complexity = 1
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/longfall)
+	required_slots = list(ITEM_SLOT_FEET)
 
 /obj/item/mod/module/longfall/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT, PROC_REF(z_impact_react))
@@ -541,6 +550,7 @@
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/thermal_regulator)
 	cooldown_time = 0.5 SECONDS
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// The temperature we are regulating to.
 	var/temperature_setting = BODYTEMP_NORMAL
 	/// Minimum temperature we can set.
@@ -646,6 +656,7 @@
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/plasma_stabilizer)
 	overlay_state_inactive = "module_plasma"
+	required_slots = list(ITEM_SLOT_HEAD)
 
 /obj/item/mod/module/plasma_stabilizer/generate_worn_overlay()
 	if(locate(/obj/item/mod/module/infiltrator) in mod.modules)
@@ -669,6 +680,7 @@
 		This is a must-have for Nanotrasen Captains, enabling them to show off their authoritative hat even while in their MODsuit."
 	icon_state = "hat_holder"
 	incompatible_modules = list(/obj/item/mod/module/hat_stabilizer)
+	required_slots = list(ITEM_SLOT_HEAD)
 	/*Intentionally left inheriting 0 complexity and removable = TRUE;
 	even though it comes inbuilt into the Magnate/Corporate MODS and spawns in maints, I like the idea of stealing them*/
 	/// Currently "stored" hat. No armor or function will be inherited, only the icon and cover flags.
@@ -751,6 +763,15 @@
 		helmet.visor_flags_cover = former_visor_flags
 	mod.wearer.update_clothing(mod.slot_flags)
 
+/obj/item/mod/module/hat_stabilizer/syndicate
+	name = "MOD elite hat stabilizer module"
+	desc = "A simple set of deployable stands, directly atop one's head; \
+		these will deploy under a hat to keep it from falling off, allowing them to be worn atop the sealed helmet. \
+		You still need to take the hat off your head while the helmet deploys, though. This is a must-have for \
+		Syndicate Operatives and Agents alike, enabling them to continue to style on the opposition even while in their MODsuit."
+	complexity = 0
+	removable = FALSE
+
 ///Sign Language Translator - allows people to sign over comms using the modsuit's gloves.
 /obj/item/mod/module/signlang_radio
 	name = "MOD glove translator module"
@@ -761,6 +782,7 @@
 	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/signlang_radio)
+	required_slots = list(ITEM_SLOT_GLOVES)
 
 /obj/item/mod/module/signlang_radio/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)
@@ -775,6 +797,7 @@
 	icon_state = "joint_torsion"
 	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/joint_torsion)
+	required_slots = list(ITEM_SLOT_FEET)
 	var/power_per_step = DEFAULT_CHARGE_DRAIN * 0.3
 
 /obj/item/mod/module/joint_torsion/on_suit_activation()
@@ -804,15 +827,6 @@
 		return
 	mod.core.add_charge(power_per_step)
 
-/obj/item/mod/module/hat_stabilizer/syndicate
-	name = "MOD elite hat stabilizer module"
-	desc = "A simple set of deployable stands, directly atop one's head; \
-		these will deploy under a hat to keep it from falling off, allowing them to be worn atop the sealed helmet. \
-		You still need to take the hat off your head while the helmet deploys, though. This is a must-have for \
-		Syndicate Operatives and Agents alike, enabling them to continue to style on the opposition even while in their MODsuit."
-	complexity = 0
-	removable = FALSE
-
 /// Module that shoves garbage inside its material container when the user crosses it, and eject the recycled material with MMB.
 /obj/item/mod/module/recycler
 	name = "MOD recycler module"
@@ -826,6 +840,7 @@
 	incompatible_modules = list(/obj/item/mod/module/recycler)
 	overlay_state_inactive = "module_recycler"
 	overlay_state_active = "module_recycler"
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// A multiplier of the amount of material extracted from the item
 	var/efficiency = 1
 	/// Items that will be collected
