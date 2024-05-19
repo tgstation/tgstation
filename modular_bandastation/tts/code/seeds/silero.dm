@@ -4861,3 +4861,243 @@
 	value = "slovo_patsana_main"
 	category = TTS_CATEGORY_BOYS_WORD
 	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/hg_poppy
+	name = "hg_poppy"
+	value = "hogwarts_poppy_sweeting"
+	category = TTS_CATEGORY_HOGWARTS
+	gender = TTS_GENDER_FEMALE
+
+/datum/tts_seed/silero/hg_sebastian
+	name = "hg_sebastian"
+	value = "hogwarts_sebastian_sallow"
+	category = TTS_CATEGORY_HOGWARTS
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/hg_player_female
+	name = "hg_player_female"
+	value = "hogwarts_player_female"
+	category = TTS_CATEGORY_HOGWARTS
+	gender = TTS_GENDER_FEMALE
+
+/datum/tts_seed/silero/hg_goblin_generic_a
+	name = "hg_goblin_generic_a"
+	value = "hogwarts_goblin_generic_a"
+	category = TTS_CATEGORY_HOGWARTS
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/hg_player_male
+	name = "hg_player_male"
+	value = "hogwarts_player_male"
+	category = TTS_CATEGORY_HOGWARTS
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/hg_natsai
+	name = "hg_natsai"
+	value = "hogwarts_natsai_onai"
+	category = TTS_CATEGORY_HOGWARTS
+	gender = TTS_GENDER_FEMALE
+
+/datum/tts_seed/silero/hg_eleazar_fig
+	name = "hg_eleazar_fig"
+	value = "hogwarts_eleazar_fig"
+	category = TTS_CATEGORY_HOGWARTS
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/hg_aesop_sharp
+	name = "hg_aesop_sharp"
+	value = "hogwarts_aesop_sharp"
+	category = TTS_CATEGORY_HOGWARTS
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/hg_ominis_gaunt
+	name = "hg_ominis_gaunt"
+	value = "hogwarts_ominis_gaunt"
+	category = TTS_CATEGORY_HOGWARTS
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/hg_sophronia_franklin
+	name = "hg_sophronia_franklin"
+	value = "hogwarts_sophronia_franklin"
+	category = TTS_CATEGORY_HOGWARTS
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/hg_abraham_ronen
+	name = "hg_abraham_ronen"
+	value = "hogwarts_abraham_ronen"
+	category = TTS_CATEGORY_HOGWARTS
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/hg_cuthbert_binns
+	name = "hg_cuthbert_binns"
+	value = "hogwarts_cuthbert_binns"
+	category = TTS_CATEGORY_HOGWARTS
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/hg_lodgok
+	name = "hg_lodgok"
+	value = "hogwarts_lodgok"
+	category = TTS_CATEGORY_HOGWARTS
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/hg_matilda_weasley
+	name = "hg_matilda_weasley"
+	value = "hogwarts_matilda_weasley"
+	category = TTS_CATEGORY_HOGWARTS
+	gender = TTS_GENDER_FEMALE
+
+/datum/tts_seed/silero/hg_mirabel_garlick
+	name = "hg_mirabel_garlick"
+	value = "hogwarts_mirabel_garlick"
+	category = TTS_CATEGORY_HOGWARTS
+	gender = TTS_GENDER_FEMALE
+
+/datum/tts_seed/silero/hg_dinah_hecat
+	name = "hg_dinah_hecat"
+	value = "hogwarts_dinah_hecat"
+	category = TTS_CATEGORY_HOGWARTS
+	gender = TTS_GENDER_FEMALE
+
+/datum/tts_seed/silero/halflife_gman
+	name = "halflife_gman"
+	value = "halflife_gman"
+	category = TTS_CATEGORY_HALFLIFE_ALYX
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/halflife_vortigaunt
+	name = "halflife_vortigaunt"
+	value = "halflife_vortigaunt"
+	category = TTS_CATEGORY_HALFLIFE_ALYX
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/halflife_larry
+	name = "halflife_larry"
+	value = "halflife_larry"
+	category = TTS_CATEGORY_HALFLIFE_ALYX
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/halflife_olga
+	name = "halflife_olga"
+	value = "halflife_olga"
+	category = TTS_CATEGORY_HALFLIFE_ALYX
+	gender = TTS_GENDER_FEMALE
+
+/datum/tts_seed/silero/halflife_alyx
+	name = "halflife_alyx"
+	value = "halflife_alyx"
+	category = TTS_CATEGORY_HALFLIFE_ALYX
+	gender = TTS_GENDER_FEMALE
+
+/datum/tts_seed/silero/stronghold_richard
+	name = "stronghold_richard"
+	value = "stronghold_richard"
+	category = TTS_CATEGORY_STRONGHOLD
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stronghold_sultan
+	name = "stronghold_sultan"
+	value = "stronghold_sultan"
+	category = TTS_CATEGORY_STRONGHOLD
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stronghold_emir
+	name = "stronghold_emir"
+	value = "stronghold_emir"
+	category = TTS_CATEGORY_STRONGHOLD
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stronghold_saladin
+	name = "stronghold_saladin"
+	value = "stronghold_saladin"
+	category = TTS_CATEGORY_STRONGHOLD
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stronghold_abbot
+	name = "stronghold_abbot"
+	value = "stronghold_abbot"
+	category = TTS_CATEGORY_STRONGHOLD
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stronghold_rat
+	name = "stronghold_rat"
+	value = "stronghold_rat"
+	category = TTS_CATEGORY_STRONGHOLD
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stronghold_halif
+	name = "stronghold_halif"
+	value = "stronghold_halif"
+	category = TTS_CATEGORY_STRONGHOLD
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stronghold_snake
+	name = "stronghold_snake"
+	value = "stronghold_snake"
+	category = TTS_CATEGORY_STRONGHOLD
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stronghold_friedrich
+	name = "stronghold_friedrich"
+	value = "stronghold_friedrich"
+	category = TTS_CATEGORY_STRONGHOLD
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stronghold_boar
+	name = "stronghold_boar"
+	value = "stronghold_boar"
+	category = TTS_CATEGORY_STRONGHOLD
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stalker_metro_bandit02
+	name = "stalker_metro_bandit02"
+	value = "stalker_metro_bandit02"
+	category = TTS_CATEGORY_STALKER
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stalker_metro_degtyarev
+	name = "stalker_metro_degtyarev"
+	value = "stalker_metro_degtyarev"
+	category = TTS_CATEGORY_STALKER
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stalker_metro_novice02
+	name = "stalker_metro_novice02"
+	value = "stalker_metro_novice02"
+	category = TTS_CATEGORY_STALKER
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stalker_metro_pavel
+	name = "stalker_metro_pavel"
+	value = "stalker_metro_pavel"
+	category = TTS_CATEGORY_STALKER
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stalker_metro_saharov
+	name = "stalker_metro_saharov"
+	value = "stalker_metro_saharov"
+	category = TTS_CATEGORY_STALKER
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stalker_metro_soldier
+	name = "stalker_metro_soldier"
+	value = "stalker_metro_soldier"
+	category = TTS_CATEGORY_STALKER
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stalker_metro_stalker01
+	name = "stalker_metro_stalker01"
+	value = "stalker_metro_stalker01"
+	category = TTS_CATEGORY_STALKER
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/stalker_metro_newbie01
+	name = "stalker_metro_newbie01"
+	value = "stalker_metro_newbie01"
+	category = TTS_CATEGORY_STALKER
+	gender = TTS_GENDER_MALE
+
+/datum/tts_seed/silero/warcraft_garrosh
+	name = "warcraft_garrosh"
+	value = "warcraft_garrosh"
+	category = TTS_CATEGORY_WARCRAFT3
+	gender = TTS_GENDER_MALE
