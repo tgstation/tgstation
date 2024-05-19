@@ -61,7 +61,7 @@
 	name = "Smoke Grenades"
 	desc = "A box that contains four smoke grenades. Useful for vanishing and ninja fans with katana."
 	item = /obj/item/storage/box/syndie_kit/smoke
-	cost = 3
+	cost = 2
 
 /datum/uplink_item/explosives/pizza_bomb
 	name = "Pizza Bomb"
