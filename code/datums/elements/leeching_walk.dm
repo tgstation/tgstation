@@ -43,11 +43,11 @@
 
 	// Heals all damage + Stamina
 	var/need_mob_update = FALSE
-	need_mob_update += source.adjustBruteLoss(-2, updating_health = FALSE)
-	need_mob_update += source.adjustFireLoss(-2, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss(-2, updating_health = FALSE, forced = TRUE) // Slimes are people to
-	need_mob_update += source.adjustOxyLoss(-0.5, updating_health = FALSE)
-	need_mob_update += source.adjustStaminaLoss(-2, updating_stamina = FALSE)
+	need_mob_update += source.adjustBruteLoss(-3, updating_health = FALSE)
+	need_mob_update += source.adjustFireLoss(-3, updating_health = FALSE)
+	need_mob_update += source.adjustToxLoss(-3, updating_health = FALSE, forced = TRUE) // Slimes are people to
+	need_mob_update += source.adjustOxyLoss(-1.5, updating_health = FALSE)
+	need_mob_update += source.adjustStaminaLoss(-10, updating_stamina = FALSE)
 	if(need_mob_update)
 		source.updatehealth()
 	// Reduces duration of stuns/etc
