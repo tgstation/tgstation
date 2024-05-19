@@ -150,3 +150,30 @@
 /datum/orderable_item/veggies/oat
 	name = "Oat"
 	item_path = /obj/item/food/grown/oat
+
+/datum/orderable_item/veggies/trumpet
+	name = "Spaceman's Trumpet"
+	item_path = /obj/item/food/grown/trumpet
+	cost_per_order = 25
+
+/datum/orderable_item/veggies/banana
+	name = "Banana"
+	item_path = /obj/item/food/grown/banana
+
+/datum/orderable_item/veggies/ghostchili
+	name = "Ghost Chili"
+	item_path = /obj/item/food/grown/ghost_chili
+	cost_per_order = 25
+
+/datum/orderable_item/veggies/lemon
+	name = "Lemon"
+	item_path = /obj/item/food/grown/citrus/lemon
+
+/datum/orderable_item/veggies/lime
+	name = "Lime"
+	item_path = /obj/item/food/grown/citrus/lime
+
+/datum/orderable_item/veggies/toechtauese
+	name = "Töchtaüse berries"
+	item_path = /obj/item/food/grown/toechtauese
+	cost_per_order = 15
