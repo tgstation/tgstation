@@ -5531,6 +5531,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/wood/tile,
 /area/station/security/courtroom)
 "bZq" = (
@@ -16716,9 +16717,10 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/robotics/lab)
 "gfe" = (
-/obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/iv_drip,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "gft" = (
@@ -24867,7 +24869,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/newscaster/directional/north,
+/obj/item/radio/intercom/directional/north,
 /obj/machinery/modular_computer/preset/cargochat/cargo,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -50024,7 +50026,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
-/obj/structure/sign/poster/random/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "sgW" = (
@@ -56622,7 +56624,7 @@
 "uxw" = (
 /obj/item/surgery_tray/full/deployed,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/newscaster/directional/west,
+/obj/machinery/airalarm/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/surgery/theatre)
