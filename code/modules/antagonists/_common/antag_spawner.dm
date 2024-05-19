@@ -95,7 +95,7 @@
  */
 /obj/item/antag_spawner/nuke_ops
 	name = "syndicate operative beacon"
-	desc = "MI13 designed one-use radio for calling immediate backup. Have no regards for safety of whom it summons - they are all inferior clones from Interdyne's genebanks anyway."
+	desc = "A single-use beacon designed to quickly launch reinforcement operatives into the field."
 	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "nukietalkie"
 	/// The name of the special role given to the recruit
