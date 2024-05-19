@@ -38,6 +38,7 @@
 	desc = "When this pops, things are gonna get more aware around here."
 	var/group_name = "a bunch of giant spiders"
 	var/effect_range = 3
+	var/antag_type = null
 
 /obj/effect/fun_balloon/sentience/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -73,6 +74,14 @@
 		if("effect_range")
 			effect_range = params["updated_range"]
 
+		if("select_antag")
+			// var/list/antagonists = list()
+			var/list/paths = subtypesof(/datum/antagonist)
+			// for(var/path in paths)
+			// 	var/datum/antagonist/O = path
+			// 	antagonists[initial(O.name)] = path
+			antag_type = input(usr,"Select antag", "Antagonist selection") as null|anything in sort_list(paths)
+
 		if("pop")
 			if(!popped)
 				popped = TRUE
@@ -105,6 +114,9 @@
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(body)])")
 		body.ghostize(FALSE)
 		body.key = C.key
+		if (antag_type != null)
+			body.mind.add_antag_datum(antag_type)
+			continue
 		new /obj/effect/temp_visual/gravpush(get_turf(body))
 
 // ----------- Emergency Shuttle Balloon

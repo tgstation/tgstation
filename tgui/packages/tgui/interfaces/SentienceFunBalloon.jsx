@@ -13,7 +13,7 @@ export const SentienceFunBalloon = (props) => {
   const { act, data } = useBackend();
   const { group_name, range } = data;
   return (
-    <Window title={'Sentience Fun Balloon'} width={400} height={175}>
+    <Window title={'Sentience Fun Balloon'} width={400} height={200}>
       <Window.Content>
         <Stack vertical>
           <Section title="Configure balloon effect:">
@@ -42,6 +42,14 @@ export const SentienceFunBalloon = (props) => {
                       updated_range: value,
                     })
                   }
+                />
+              </LabeledList.Item>
+              <LabeledList.Item label="Make group into antagonists?">
+                <Button
+                  icon={data.on ? 'user-secret' : 'times'}
+                  content={data.on ? 'Yes' : 'No'}
+                  selected={data.on}
+                  onClick={() => act('select_antag')}
                 />
               </LabeledList.Item>
             </LabeledList>
