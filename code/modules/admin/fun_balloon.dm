@@ -75,11 +75,7 @@
 			effect_range = params["updated_range"]
 
 		if("select_antag")
-			// var/list/antagonists = list()
 			var/list/paths = subtypesof(/datum/antagonist)
-			// for(var/path in paths)
-			// 	var/datum/antagonist/O = path
-			// 	antagonists[initial(O.name)] = path
 			antag_type = input(usr,"Select antag", "Antagonist selection") as null|anything in sort_list(paths)
 
 		if("pop")
