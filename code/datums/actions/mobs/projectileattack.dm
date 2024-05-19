@@ -402,11 +402,14 @@
 	var/shots_per = 7
 	var/difference = 360 / shots_per
 	var/wave_direction = pick(-1, 1)
+	switch(wave_direction)
+		if(-1)
+			projectile_type = /obj/projectile/colossus/wendigo_shockwave/wave/alternate
+		if(1)
+			projectile_type = /obj/projectile/colossus/wendigo_shockwave/wave
 	for(var/shoot_times in 1 to 32)
 		for(var/shot in 1 to shots_per)
 			var/angle = shot * difference + shoot_times * 5 * wave_direction * -1
-			var/obj/projectile/colossus/wendigo_shockwave/wave/shockwave = shoot_projectile(firer, target, angle, firer, null, null)
-			if(istype(shockwave))
-				shockwave.wave_speed = 10 * wave_direction
+			shoot_projectile(firer, target, angle, firer, null, null)
 		SLEEP_CHECK_DEATH(2, firer)
 	SLEEP_CHECK_DEATH(3 SECONDS, firer)

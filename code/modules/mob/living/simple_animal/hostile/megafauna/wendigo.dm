@@ -112,9 +112,9 @@ Difficulty: Hard
 		chosen_attack = rand(1, 2)
 	switch(chosen_attack)
 		if(1)
-			ground_slam.Trigger(target = target)
+			ground_slam.Activate(target)
 		if(2)
-			teleport.Trigger(target = target)
+			teleport.Activate(target)
 			if(WENDIGO_ENRAGED)
 				shotgun_blast.Activate(target)
 		if(3)
@@ -127,17 +127,19 @@ Difficulty: Hard
 			switch(shockwave_attack)
 				if(1)
 					alternating_circle.enraged = WENDIGO_ENRAGED
-					alternating_circle.Trigger(target = target)
+					alternating_circle.Activate(target)
 				if(2)
 					spiral.enraged = WENDIGO_ENRAGED
-					spiral.Trigger(target = target)
+					spiral.Activate(target)
 				if(3)
-					wave.Trigger(target = target)
+					wave.Activate(target)
 			update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 3 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 3 SECONDS))
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/Move(atom/newloc, direct)
 	stored_move_dirs |= direct
-	return ..()
+	. = ..()
+	// Remove after anyways in case the movement was prevented
+	stored_move_dirs &= ~direct
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
@@ -207,6 +209,10 @@ Difficulty: Hard
 /obj/projectile/colossus/wendigo_shockwave/wave
 	speed = 8
 	wave_movement = TRUE
+	wave_speed = 10
+
+/obj/projectile/colossus/wendigo_shockwave/wave/alternate
+	wave_speed = -10
 
 /obj/projectile/colossus/wendigo_shockwave/pixel_move(trajectory_multiplier, hitscanning = FALSE)
 	. = ..()
