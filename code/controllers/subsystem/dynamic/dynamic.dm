@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 /// Rulesets which have been forcibly enabled or disabled
 GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 /// Bitflags used during init by Dynamic to determine which rulesets we're allowed to use, used by station traits for gamemode-esque experiences
-GLOBAL_VAR_INIT(dynamic_ruleset_flavors, RULESET_FLAVORS_DEFAULT)
+GLOBAL_VAR_INIT(dynamic_ruleset_categories, RULESET_CATEGORY_DEFAULT)
 
 SUBSYSTEM_DEF(dynamic)
 	name = "Dynamic"
@@ -662,7 +662,7 @@ SUBSYSTEM_DEF(dynamic)
 		if (initial(ruleset_type.weight) == 0)
 			continue
 
-		if(!(initial(ruleset_type.flavor_flags) & GLOB.dynamic_ruleset_flavors)) //check if correct
+		if(!(initial(ruleset_type.ruleset_category) & GLOB.dynamic_ruleset_categories))
 			continue
 
 		var/ruleset = new ruleset_type

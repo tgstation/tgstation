@@ -55,7 +55,6 @@
 	antag_datum = /datum/antagonist/traitor/infiltrator
 	antag_flag = ROLE_SYNDICATE_INFILTRATOR
 	antag_flag_override = ROLE_TRAITOR
-	flavor_flags = RULESET_FLAVOR_CREW_ANTAGONIST | RULESET_FLAVOR_HUMANOID_ANTAGONIST
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
@@ -86,7 +85,6 @@
 	antag_datum = /datum/antagonist/rev/head
 	antag_flag = ROLE_PROVOCATEUR
 	antag_flag_override = ROLE_REV_HEAD
-	flavor_flags = RULESET_FLAVOR_CREW_ANTAGONIST | RULESET_FLAVOR_HUMANOID_ANTAGONIST
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
@@ -187,7 +185,6 @@
 	antag_datum = /datum/antagonist/heretic
 	antag_flag = ROLE_HERETIC_SMUGGLER
 	antag_flag_override = ROLE_HERETIC
-	flavor_flags = RULESET_FLAVOR_CREW_ANTAGONIST | RULESET_FLAVOR_HUMANOID_ANTAGONIST
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
@@ -230,7 +227,6 @@
 	antag_datum = /datum/antagonist/changeling
 	antag_flag = ROLE_STOWAWAY_CHANGELING
 	antag_flag_override = ROLE_CHANGELING
-	flavor_flags = RULESET_FLAVOR_CREW_ANTAGONIST | RULESET_FLAVOR_HUMANOID_ANTAGONIST | RULESET_FLAVOR_HORROR_ANTAGONIST
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,

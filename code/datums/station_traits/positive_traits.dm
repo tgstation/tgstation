@@ -369,6 +369,6 @@
 	weight = 1
 	show_in_report = TRUE
 
-	dynamic_flavor_flags = RULESET_FLAVORS_DEFAULT ~ RULESET_FLAVOR_CREW_ANTAGONIST
+	dynamic_category = RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	threat_reduction = 15
 	dynamic_threat_id = "Background Checks"
