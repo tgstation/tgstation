@@ -53,6 +53,7 @@
 		distilled_container = null
 		update_appearance(UPDATE_OVERLAYS)
 	if(burner_fuel_container == gone)
+		toggle_burner(FALSE)
 		burner_fuel_container = null
 		update_appearance(UPDATE_OVERLAYS)
 
@@ -72,10 +73,10 @@
 
 	if(is_reagent_container(held_item) && held_item.is_open_container())
 		if(QDELETED(distilled_container))
-			context[SCREENTIP_CONTEXT_LMB] = "Insert beaker"
+			context[SCREENTIP_CONTEXT_LMB] = "[QDELETED(distilled_container) ? "Insert" : "Replace"] beaker"
 			return CONTEXTUAL_SCREENTIP_SET
 		if(QDELETED(burner_fuel_container))
-			context[SCREENTIP_CONTEXT_RMB] = "Insert fuel"
+			context[SCREENTIP_CONTEXT_RMB] = "[QDELETED(burner_fuel_container) ? "Insert" : "Replace"] fuel"
 			return CONTEXTUAL_SCREENTIP_SET
 
 	if(held_item.tool_behaviour == TOOL_CROWBAR)
@@ -108,7 +109,7 @@
 /obj/structure/chem_separator/examine_more(mob/user)
 	. = ..()
 
-	. += span_notice("For burner fuel Oil > Welding Fuel = Oxygen > Ethanol > Monkey Energy")
+	. += span_notice("For burner fuel Plasma > Oil > Welding Fuel = Oxygen > Ethanol > Monkey Energy")
 
 	. += span_notice("Upon cross examining the flasks reagents contents with its chart you see the boiling points of each reagent present.")
 	for(var/datum/reagent/reg as anything in reagents.reagent_list)
@@ -182,6 +183,7 @@
 
 	//map of reagents & how much burning potential they all have
 	var/static/list/reagent_coefficients = list(
+		/datum/reagent/toxin/plasma = 1,
 		/datum/reagent/fuel/oil = 0.8,
 		/datum/reagent/fuel = 0.7,
 		/datum/reagent/oxygen = 0.7,
@@ -192,9 +194,11 @@
 
 	var/total_coefficient = 0
 	for(var/datum/reagent/reg as anything in burner_fuel_container.reagents.reagent_list)
-		var/coefficient = reagent_coefficients[reg.type]
-		if(!coefficient) //any fuel that is not on the list acts as an inhibitor
-			coefficient = - 1
+		var/coefficient = -1 //any fuel that is not on the list acts as an inhibitor
+		for(var/datum/reagent/fuel as anything in reagent_coefficients)
+			if(istype(reg, fuel))
+				coefficient = reagent_coefficients[fuel]
+				break
 		total_coefficient += coefficient
 
 	return clamp(total_coefficient, 0, 1)
@@ -236,12 +240,18 @@
 
 	///Add the distilation flask
 	if(is_reagent_container(tool) && tool.is_open_container())
+		//transfer old container
+		if(!QDELETED(distilled_container))
+			user.put_in_hands(distilled_container)
+
+		//add new container
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("[tool] is stuck in your hand"))
+			to_chat(user, span_warning("[tool] is stuck in your hand."))
 			return ITEM_INTERACT_BLOCKING
 		distilled_container = tool
+		balloon_alert(user, "distillation container added.")
+
 		ui_interact(user)
-		balloon_alert(user, "distillation container added")
 		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
 
@@ -264,7 +274,8 @@
 			return TRUE
 
 		if(user.put_in_hands(distilled_container))
-			to_chat(user, span_notice("you take out the distilation flask"))
+			to_chat(user, span_notice("you take out the output flask."))
+			update_appearance(UPDATE_OVERLAYS)
 		return TRUE
 
 	return ..()
@@ -275,30 +286,37 @@
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	if(is_reagent_container(tool) && tool.is_open_container())
+		//transfer old container
+		if(!QDELETED(burner_fuel_container))
+			user.put_in_hands(burner_fuel_container)
+
+		//add new container
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("[tool] is stuck in your hand"))
+			to_chat(user, span_warning("[tool] is stuck in your hand."))
 			return ITEM_INTERACT_BLOCKING
 		burner_fuel_container = tool
+		balloon_alert(user, "burner fuel container added.")
+
 		ui_interact(user)
-		balloon_alert(user, "burner fuel container added")
 		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/chem_separator/attack_hand_secondary(mob/user, list/modifiers)
 	if(!QDELETED(burner_fuel_container))
 		if(!SStgui.get_open_ui(user, src)) //for convinience open ui first then interact with beakers if you still want to
 			ui_interact(user)
-			return TRUE
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		if(user.put_in_hands(burner_fuel_container))
 			to_chat(user, span_notice("you take out the burner fuel container"))
 			toggle_burner(FALSE)
-		return TRUE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	return ..()
 
 /obj/structure/chem_separator/process(seconds_per_tick)
 	if(!reagents.total_volume)
 		boiling = FALSE
+		soundloop.stop()
 		toggle_burner(FALSE)
 		return PROCESS_KILL
 
@@ -314,9 +332,10 @@
 
 
 		var/knob_ratio = burner_knob / 5
+		var/datum/reagents/fuel = burner_fuel_container.reagents
 
-		//consume some air after we have validated we have some good fuel
-		if(can_process)
+		//consume some air after we have validated we have some good fuel. Only if we don't already use O2 as a fuel
+		if(can_process && !fuel.has_reagent(/datum/reagent/oxygen))
 			var/datum/gas_mixture/air = return_air()
 			if(!air.remove_specific(/datum/gas/oxygen, 0.01 + (0.04 * knob_ratio))) //can burn anywhere between 0.01 & 0.05 moles of air based on the knob settings
 				can_process = FALSE
@@ -324,8 +343,7 @@
 
 		//burn some fuel if we combusted some air
 		if(can_process)
-			var/datum/reagents/fuel = burner_fuel_container.reagents
-			if(!fuel.remove_all(0.01 + (0.24 * knob_ratio))) //can burn anywhere between 0.01 & 0.25 units of fuel based on the knob settings
+			if(!fuel.remove_all(0.01 + (0.19 * knob_ratio))) //can burn anywhere between 0.01 & 0.2 units of fuel based on the knob settings
 				can_process = FALSE
 				toggle_burner(FALSE)
 
@@ -426,6 +444,7 @@
 				return FALSE
 
 			if(distilled_container.reagents.trans_to(reagents, reagents.maximum_volume))
+				reagents.set_temperature(DEFAULT_REAGENT_TEMPERATURE) //this way hot reagents don't insta boil & you have to reheat them with burner
 				START_PROCESSING(SSobj, src)
 				update_appearance(UPDATE_OVERLAYS)
 				return TRUE
@@ -440,7 +459,8 @@
 				return FALSE
 
 			burner_knob = clamp(setting, 1, 5)
-			set_light(ROUND_UP(2 * (burner_knob / 5)))
+			if(burner_on)
+				set_light(ROUND_UP(2 * (burner_knob / 5)))
 			return TRUE
 
 /obj/structure/chem_separator/click_alt(mob/user)

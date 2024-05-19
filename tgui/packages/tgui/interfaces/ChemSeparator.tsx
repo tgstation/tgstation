@@ -1,5 +1,12 @@
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, ProgressBar, Stack } from '../components';
+import {
+  Box,
+  Button,
+  Knob,
+  LabeledList,
+  ProgressBar,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 type RegHolderData = {
@@ -16,14 +23,12 @@ type Data = {
   knob: number;
 };
 
-const BURNER_SETTINGS = [1, 2, 3, 4, 5];
-
 export const ChemSeparator = (props) => {
   const { act, data } = useBackend<Data>();
   const { flask, beaker, fuel, knob } = data;
 
   return (
-    <Window width={370} height={170}>
+    <Window width={370} height={190}>
       <Window.Content>
         <LabeledList>
           <LabeledList.Item
@@ -138,22 +143,20 @@ export const ChemSeparator = (props) => {
               </Box>
             }
           >
-            <Stack ml="27px" fill>
-              {BURNER_SETTINGS.map((value, i) => (
-                <Stack.Item key={value}>
-                  <Button.Checkbox
-                    checked={value === knob}
-                    onClick={() =>
-                      act('knob', {
-                        amount: value,
-                      })
-                    }
-                  >
-                    {value}
-                  </Button.Checkbox>
-                </Stack.Item>
-              ))}
-            </Stack>
+            <Knob
+              ml="30px"
+              size={1.3}
+              minValue={1}
+              maxValue={5}
+              step={1}
+              stepPixelSize={15}
+              value={knob}
+              onDrag={(_e, value) =>
+                act('knob', {
+                  amount: value,
+                })
+              }
+            />
           </LabeledList.Item>
           {fuel && (
             <LabeledList.Item
@@ -174,7 +177,7 @@ export const ChemSeparator = (props) => {
                 maxValue={fuel.maximum_volume}
                 value={fuel.total_volume}
                 color={fuel.color}
-                maxWidth="200px"
+                maxWidth="170px"
                 ml="25px"
               >
                 <Box
