@@ -39,6 +39,7 @@
 	var/group_name = "a bunch of giant spiders"
 	var/effect_range = 3
 	var/antag_type = null
+	var/make_antag = FALSE
 
 /obj/effect/fun_balloon/sentience/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -50,6 +51,7 @@
 	var/list/data = list()
 	data["group_name"] = group_name
 	data["range"] = effect_range
+	data["antag"] = make_antag
 	return data
 
 /obj/effect/fun_balloon/sentience/ui_state(mob/user)
@@ -77,6 +79,7 @@
 		if("select_antag")
 			var/list/paths = subtypesof(/datum/antagonist)
 			antag_type = input(usr,"Select antag", "Antagonist selection") as null|anything in sort_list(paths)
+			make_antag = TRUE
 
 		if("pop")
 			if(!popped)
@@ -110,7 +113,7 @@
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(body)])")
 		body.ghostize(FALSE)
 		body.key = C.key
-		if (antag_type != null)
+		if (make_antag)
 			body.mind.add_antag_datum(antag_type)
 			continue
 		new /obj/effect/temp_visual/gravpush(get_turf(body))

@@ -11,7 +11,7 @@ import { Window } from '../layouts';
 
 export const SentienceFunBalloon = (props) => {
   const { act, data } = useBackend();
-  const { group_name, range } = data;
+  const { group_name, range, antag } = data;
   return (
     <Window title={'Sentience Fun Balloon'} width={400} height={200}>
       <Window.Content>
@@ -45,10 +45,10 @@ export const SentienceFunBalloon = (props) => {
                 />
               </LabeledList.Item>
               <LabeledList.Item label="Make group into antagonists?">
-                <Button
-                  icon={data.on ? 'user-secret' : 'times'}
-                  content={data.on ? 'Yes' : 'No'}
-                  selected={data.on}
+                <Button.Checkbox
+                  icon={data.antag ? 'user-secret' : 'times'}
+                  content={data.antag ? 'Yes' : 'No'}
+                  selected={data.antag}
                   onClick={() => act('select_antag')}
                 />
               </LabeledList.Item>
