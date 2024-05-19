@@ -481,9 +481,10 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			continue
 		if(ai.control_disabled)
 			continue
-		if(skip_syndicate && (ROLE_SYNDICATE in ai.faction))
+		var/syndie_ai = istype(ai, /mob/living/silicon/ai/weak_syndie)
+		if(skip_syndicate && syndie_ai)
 			continue
-		if(only_syndicate && !(ROLE_SYNDICATE in ai.faction))
+		if(only_syndicate && !syndie_ai)
 			continue
 		if(check_mind)
 			if(!ai.mind)
