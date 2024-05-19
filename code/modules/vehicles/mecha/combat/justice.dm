@@ -35,8 +35,10 @@
 		MECHA_ARMOR = 2,
 	)
 	step_energy_drain = 2
+	///Looking for parent of invisibility action in occupant abilities to check its status
 	var/datum/action/vehicle/sealed/mecha/invisibility/stealth_action
-	var/datum/action/vehicle/sealed/mecha/invisibility/charge_action
+	///Looking for parent of charge attack action in occupant abilities to check its status
+	var/datum/action/vehicle/sealed/mecha/charge_attack/charge_action
 
 /datum/armor/mecha_justice
 	melee = 30
@@ -48,7 +50,7 @@
 
 /obj/vehicle/sealed/mecha/justice/Initialize(mapload, built_manually)
 	. = ..()
-	RegisterSignal(src, COMSIG_MECHA_MELEE_CLICK, PROC_REF(justice_fatality)) //We do not hit those who are in crit or stun. We are finishing them
+	RegisterSignal(src, COMSIG_MECHA_MELEE_CLICK, PROC_REF(justice_fatality)) //We do not hit those who are in crit or stun. We are finishing them.
 	transform = transform.Scale(1.04, 1.04)
 
 /obj/vehicle/sealed/mecha/justice/generate_actions()
@@ -65,8 +67,7 @@
 
 /obj/vehicle/sealed/mecha/justice/process(seconds_per_tick)
 	. = ..()
-	for(var/who_inside in occupants)
-		var/mob/living/occupant = who_inside
+	for(var/mob/living/occupant in occupants)
 		stealth_action = LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/invisibility)
 		charge_action = LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/charge_attack)
 		if(alpha == 255)
@@ -95,26 +96,38 @@
 	. = ..()
 	update_appearance(UPDATE_ICON_STATE)
 
+///Says 1 of 3 epic phrases before attacking and make a finishing blow to targets in stun or crit after 1 SECOND.
 /obj/vehicle/sealed/mecha/justice/proc/justice_fatality(datum/source, mob/living/pilot, atom/target, on_cooldown, is_adjacent)
 	SIGNAL_HANDLER
 
-	if(isliving(target))
-		var/mob/living/live_or_dead = target
-		if((live_or_dead.stat >= UNCONSCIOUS && live_or_dead.stat < DEAD) || live_or_dead.getStaminaLoss() >= 100)
-			if(charge_action) // We don't do fatality if try to use charge or stealth attack
-				if(charge_action.on)
-					return FALSE
-			if(stealth_action)
-				if(stealth_action.on)
-					return FALSE
-			say(pick("Take my Justice-Slash!", "A falling leaf...", "Justice is quite a lonely path"), forced = "Justice Mech")
-			playsound(src, 'sound/mecha/mech_stealth_pre_attack.ogg', 75, FALSE)
-			addtimer(CALLBACK(src, PROC_REF(finish_him), pilot, live_or_dead), 1 SECONDS)
-			return TRUE
+	if(!isliving(target))
+		return
+	var/mob/living/live_or_dead = target
+	if(live_or_dead.stat < UNCONSCIOUS && live_or_dead.getStaminaLoss() < 100)
 		return FALSE
+	if(charge_action?.on)
+		return FALSE
+	if(stealth_action?.on)
+		return FALSE
+	say(pick("Take my Justice-Slash!", "A falling leaf...", "Justice is quite a lonely path"), forced = "Justice Mech")
+	playsound(src, 'sound/mecha/mech_stealth_pre_attack.ogg', 75, FALSE)
+	addtimer(CALLBACK(src, PROC_REF(finish_him), pilot, live_or_dead), 1 SECONDS)
+	return TRUE
 
+/**
+ * ## finish_him
+ *
+ * Target's head is cut off (if it has one),
+ * Otherwise it deals 100 damage.
+ * Attack from invisability and charged attack have higher priority.
+ * Arguments:
+ * * finisher - Mech pilot who makes an attack.
+ * * him - Target at which the mech makes an attack.
+ */
 /obj/vehicle/sealed/mecha/justice/proc/finish_him(mob/finisher, mob/living/him)
+	/// turf where we end attack
 	var/turf/finish_turf = get_step(him, get_dir(finisher, him))
+	/// turf where we start attack
 	var/turf/for_line_turf = get_turf(finisher)
 	var/obj/item/bodypart/in_your_head = him.get_bodypart(BODY_ZONE_HEAD)
 	if(in_your_head)
@@ -126,57 +139,62 @@
 	forceMove(finish_turf)
 
 /obj/vehicle/sealed/mecha/justice/melee_attack_effect(mob/living/victim, heavy)
-	if(heavy)
-		var/obj/item/bodypart/cut_bodypart = victim.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
-		if(prob(DISMEMBER_CUALITY_HIGTH))
-			cut_bodypart.dismember(BRUTE)
-	else
+	if(!heavy)
 		victim.Knockdown(40)
+		return
+	var/obj/item/bodypart/cut_bodypart = victim.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
+	if(prob(DISMEMBER_CUALITY_HIGTH))
+		cut_bodypart.dismember(BRUTE)
+
 
 /obj/vehicle/sealed/mecha/justice/mob_exit(mob/M, silent, randomstep, forced)
 	. = ..()
-	if(stealth_action)
-		if(stealth_action.on)
-			animate(src, alpha = 255, time = 0.5 SECONDS)
-			playsound(src, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+	if(!stealth_action?.on)
+		return
+	animate(src, alpha = 255, time = 0.5 SECONDS)
+	playsound(src, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
 
 /obj/vehicle/sealed/mecha/justice/Bump(atom/obstacle)
 	. = ..()
 	if(!isliving(obstacle))
 		return
-	if(stealth_action)
-		if(stealth_action.on)
-			animate(src, alpha = 255, time = 0.5 SECONDS)
-			playsound(src, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+	if(!stealth_action?.on)
+		return
+	animate(src, alpha = 255, time = 0.5 SECONDS)
+	playsound(src, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
 
 /obj/vehicle/sealed/mecha/justice/Bumped(atom/movable/bumped_atom)
 	. = ..()
 	if(!isliving(bumped_atom))
 		return
-	if(stealth_action)
-		if(stealth_action.on)
-			animate(src, alpha = 255, time = 0.5 SECONDS)
-			playsound(src, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+	if(!stealth_action?.on)
+		return
+	animate(src, alpha = 255, time = 0.5 SECONDS)
+	playsound(src, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
 
 /obj/vehicle/sealed/mecha/justice/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
-	if(stealth_action)
-		if(stealth_action.on)
-			animate(src, alpha = 255, time = 0.5 SECONDS)
-			playsound(src, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+	if(stealth_action?.on)
+		animate(src, alpha = 255, time = 0.5 SECONDS)
+		playsound(src, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
 	if(LAZYLEN(occupants))
 		if(prob(60))
 			new /obj/effect/temp_visual/mech_sparks(get_turf(src))
 			playsound(src, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
 			return
-	. = ..()
+	return ..()
 
 /datum/action/vehicle/sealed/mecha/invisibility
 	name = "Invisibility"
 	button_icon_state = "mech_stealth_off"
+	/// Is invisibility activated.
 	var/on = FALSE
+	/// Recharge check.
 	var/charge = TRUE
+	/// Block movement if we start aoe attack from invisibility.
 	var/start_attack = FALSE
+	/// Aoe pre attack sound.
 	var/stealth_pre_attack_sound = 'sound/mecha/mech_stealth_pre_attack.ogg'
+	/// Aoe attack sound.
 	var/stealth_attack_sound = 'sound/mecha/mech_stealth_attack.ogg'
 
 /datum/action/vehicle/sealed/mecha/invisibility/Trigger(trigger_flags)
@@ -191,12 +209,10 @@
 	on = !on
 	playsound(chassis, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
 	if(on)
-		for(var/who_inside in chassis.occupants)
-			var/mob/living/occupant = who_inside
+		for(var/mob/living/occupant in chassis.occupants)
 			var/datum/action/vehicle/sealed/mecha/charge_attack/charge_action = LAZYACCESSASSOC(chassis.occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/charge_attack)
-			if(charge_action)
-				if(charge_action.on)
-					charge_action.on = FALSE
+			if(charge_action?.on)
+				charge_action.on = FALSE
 		animate(chassis, alpha = 0, time = 0.5 SECONDS)
 		button_icon_state = "mech_stealth_on"
 		addtimer(CALLBACK(src, PROC_REF(end_stealth)), 20 SECONDS)
@@ -208,11 +224,21 @@
 		UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
 	build_all_button_icons()
 
+/**
+ * ## end_stealth
+ *
+ * Called when mech runs out of invisibility time.
+ */
 /datum/action/vehicle/sealed/mecha/invisibility/proc/end_stealth()
-	if(on)
-		owner.balloon_alert(owner, "invisability is over")
-		Trigger()
+	if(!on)
+		return
+	owner.balloon_alert(owner, "invisability is over")
+	Trigger()
 
+/**  Proc makes an AOE attack after 1 SECOND.
+ * Called by the mech pilot when he is in stealth mode and wants to attack.
+ * During this, mech cannot move.
+*/
 /datum/action/vehicle/sealed/mecha/invisibility/proc/stealth_attack_aoe(datum/source, mob/living/pilot, atom/target, on_cooldown, is_adjacent)
 	SIGNAL_HANDLER
 
@@ -228,6 +254,14 @@
 	addtimer(CALLBACK(src, PROC_REF(attack_in_aoe), pilot), 1 SECONDS)
 	return TRUE
 
+/**
+ * ## attack_in_aoe
+ *
+ * Brings mech out of invisibility.
+ * Deal everyone in range 3x3 35 damage and 25 chanse to cut off limb.
+ * Arguments:
+ * * pilot - occupant inside mech.
+ */
 /datum/action/vehicle/sealed/mecha/invisibility/proc/attack_in_aoe(mob/living/pilot)
 	Trigger()
 	new /obj/effect/temp_visual/mech_attack_aoe_attack(get_turf(chassis))
@@ -251,6 +285,11 @@
 	build_all_button_icons()
 	addtimer(CALLBACK(src, PROC_REF(charge)), 5 SECONDS)
 
+/**
+ * ## charge
+ *
+ * Recharge invisibility action after 5 SECONDS.
+ */
 /datum/action/vehicle/sealed/mecha/invisibility/proc/charge()
 	button_icon_state = "mech_stealth_off"
 	charge = TRUE
@@ -259,9 +298,13 @@
 /datum/action/vehicle/sealed/mecha/charge_attack
 	name = "Charge Attack"
 	button_icon_state = "mech_charge_off"
+	/// Is invisibility activated.
 	var/on = FALSE
+	/// Recharge check.
 	var/charge = TRUE
+	/// Maximum range of charge attack.
 	var/max_charge_range = 7
+	/// Sound when mech do charge attack.
 	var/charge_attack_sound = 'sound/mecha/mech_charge_attack.ogg'
 
 /datum/action/vehicle/sealed/mecha/charge_attack/Trigger(trigger_flags)
@@ -286,6 +329,7 @@
 		UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
 	build_all_button_icons()
 
+///Called when mech attacks with charge attack enabled.
 /datum/action/vehicle/sealed/mecha/charge_attack/proc/click_try_charge(datum/source, mob/living/pilot, atom/target, on_cooldown, is_adjacent)
 	SIGNAL_HANDLER
 
@@ -304,14 +348,25 @@
 			return TRUE
 	return FALSE
 
+/**
+ * ## charge_attack
+ *
+ * Brings mech out of invisibility.
+ * Deal everyone in range 3x3 35 damage and 25 chanse to cut off limb.
+ * Arguments:
+ * * charger - occupant inside mech.
+ * * target - occupant inside mech.
+ */
 /datum/action/vehicle/sealed/mecha/charge_attack/proc/charge_attack(mob/living/charger, turf/target)
+	/// Remember where we start charge
 	var/turf/start_charge_here = get_turf(charger)
-	var/turf/we_wanna_here = get_turf(target)
-	var/charge_range = min(get_dist_euclidian(start_charge_here, we_wanna_here), max_charge_range)
-	var/turf/but_we_gonna_here = get_ranged_target_turf(start_charge_here, get_dir(start_charge_here, we_wanna_here), floor(charge_range))
-
+	/// Calculate charge range betwen range where we click and max charge range
+	var/charge_range = min(get_dist_euclidian(start_charge_here, target), max_charge_range)
+	/// Final result where where we start charge and charge range
+	var/turf/but_we_gonna_here = get_ranged_target_turf(start_charge_here, get_dir(start_charge_here, target), floor(charge_range))
+	/// Where mech is
 	var/turf/here_we_go = start_charge_here
-	for(var/turf/line_turf in get_line(get_step(start_charge_here, get_dir(start_charge_here, we_wanna_here)), but_we_gonna_here))
+	for(var/turf/line_turf in get_line(get_step(start_charge_here, get_dir(start_charge_here, target)), but_we_gonna_here))
 		if(get_turf(charger) == get_turf(line_turf))
 			continue
 		if(isclosedturf(line_turf))
@@ -352,6 +407,7 @@
 			somthing_living.apply_damage(35, BRUTE)
 		here_we_go = line_turf
 
+	// If the mech didn't move, it didn't charge
 	if(here_we_go == start_charge_here)
 		charger.balloon_alert(charger, "can't charge this direction!")
 		return FALSE
@@ -366,6 +422,11 @@
 	addtimer(CALLBACK(src, PROC_REF(charge)), 5 SECONDS)
 	return TRUE
 
+/**
+ * ## charge
+ *
+ * Recharge charge attack action after 5 SECONDS.
+ */
 /datum/action/vehicle/sealed/mecha/charge_attack/proc/charge()
 	charge = TRUE
 	button_icon_state = "mech_charge_off"
