@@ -10642,6 +10642,13 @@
 /obj/structure/marker_beacon/jade,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"dba" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "dbi" = (
 /obj/structure/table,
 /obj/item/flashlight,
@@ -27480,12 +27487,6 @@
 /obj/item/storage/bag/plants,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"inP" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/station/medical/morgue)
 "inQ" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin/carbon{
@@ -34088,13 +34089,6 @@
 /obj/structure/dresser,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
-"klS" = (
-/obj/effect/decal/cleanable/blood/tracks{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark,
-/area/station/medical/morgue)
 "klX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/public/glass{
@@ -35787,11 +35781,6 @@
 /obj/item/clothing/under/costume/skeleton,
 /obj/item/clothing/head/helmet/skull,
 /turf/open/floor/plating,
-/area/station/medical/morgue)
-"kKk" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "kKn" = (
 /obj/machinery/light/cold/directional/east,
@@ -49838,6 +49827,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/textured,
 /area/station/commons/storage/art)
+"oVP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "oVR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -69610,12 +69605,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
-"uOz" = (
-/obj/structure/marker_beacon/yellow,
-/turf/open/misc/dirt{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
-/area/icemoon/underground/explored/graveyard)
 "uOE" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 5
@@ -71338,6 +71327,12 @@
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
+"vsm" = (
+/obj/structure/marker_beacon/yellow,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/graveyard)
 "vsp" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/stripes/red/line{
@@ -74134,6 +74129,11 @@
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"wll" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "wlr" = (
 /obj/structure/table,
 /obj/item/stack/spacecash/c10,
@@ -184343,7 +184343,7 @@ drw
 bpa
 psb
 psb
-uOz
+vsm
 amq
 hai
 mtt
@@ -184856,7 +184856,7 @@ tkY
 jKL
 rpJ
 psb
-uOz
+vsm
 amq
 wvL
 fDp
@@ -185120,7 +185120,7 @@ btU
 hlQ
 btU
 gfy
-inP
+oVP
 xMv
 wav
 pWi
@@ -185371,7 +185371,7 @@ drw
 cQV
 psb
 psb
-uOz
+vsm
 wvL
 btU
 sEI
@@ -185634,7 +185634,7 @@ btU
 dzr
 btU
 oEH
-kKk
+wll
 pWG
 btU
 kKa
@@ -186147,7 +186147,7 @@ ese
 btU
 cJa
 oEH
-klS
+dba
 vAO
 jUB
 oXs
