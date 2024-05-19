@@ -146,3 +146,7 @@
 	name = "Sweet Potato"
 	item_path = /obj/item/food/grown/potato/sweet
 	cost_per_order = 25
+
+/datum/orderable_item/veggies/oat
+	name = "Oat"
+	item_path = /obj/item/food/grown/oat
