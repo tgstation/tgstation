@@ -32,7 +32,7 @@ if ($Env:TG_BOOTSTRAP_CACHE) {
 }
 
 # Get OS version
-$OSMajor = (Get-WmiObject -Class Win32_OperatingSystem).Version.Split(".")[0]
+[int]$OSMajor = (Get-WmiObject -Class Win32_OperatingSystem).Version.Split(".")[0]
 
 # Set Node version based on OS version
 if ($OSMajor -lt 10) {

@@ -200,6 +200,8 @@
 	icon_state = "trap-frost"
 
 /obj/structure/trap/chill/trap_effect(mob/living/victim)
+	if(HAS_TRAIT(victim, TRAIT_RESISTCOLD))
+		return
 	to_chat(victim, span_bolddanger("You're frozen solid!"))
 	victim.Paralyze(2 SECONDS)
 	victim.adjust_bodytemperature(-300)

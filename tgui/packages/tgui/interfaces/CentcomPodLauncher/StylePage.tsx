@@ -1,5 +1,4 @@
 import { classes } from 'common/react';
-import { multiline } from 'common/string';
 
 import { useBackend } from '../../backend';
 import { Box, Button, Section } from '../../components';
@@ -18,7 +17,7 @@ export function StylePage(props) {
           icon="edit"
           onClick={() => act('effectName')}
           selected={effectName}
-          tooltip={multiline`
+          tooltip={`
             Edit pod's
             name/desc.`}
           tooltipPosition="bottom-start"

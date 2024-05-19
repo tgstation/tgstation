@@ -11,6 +11,7 @@
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	limb_integrity = 30
+	interaction_flags_click = ALLOW_RESTING
 
 	/// Has this undersuit been freshly laundered and, as such, imparts a mood bonus for wearing
 	var/freshly_laundered = FALSE
@@ -52,7 +53,7 @@
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_LIVING, SENSOR_LIVING, SENSOR_COORDS, SENSOR_COORDS, SENSOR_OFF)
 	register_context()
-	AddElement(/datum/element/update_icon_updates_onmob, flags = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING, body = TRUE)
+	AddElement(/datum/element/update_icon_updates_onmob, flags = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK, body = TRUE)
 
 /obj/item/clothing/under/setup_reskinning()
 	if(!check_setup_reskinning())
@@ -65,8 +66,10 @@
 	. = ..()
 
 	var/changed = FALSE
+
 	if(isnull(held_item) && has_sensor == HAS_SENSORS)
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle suit sensors"
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Set suit sensors to tracking"
 		changed = TRUE
 
 	if(istype(held_item, /obj/item/clothing/accessory) && length(attached_accessories) < max_number_of_accessories)
@@ -85,7 +88,7 @@
 		context[SCREENTIP_CONTEXT_ALT_LMB] =  "Wear [adjusted == ALT_STYLE ? "normally" : "casually"]"
 		changed = TRUE
 
-	return changed ? CONTEXTUAL_SCREENTIP_SET : NONE
+	return changed ? CONTEXTUAL_SCREENTIP_SET : .
 
 
 /obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
@@ -334,6 +337,16 @@
 		var/mob/living/carbon/human/H = loc
 		if(H.w_uniform == src)
 			H.update_suit_sensors()
+
+/obj/item/clothing/under/CtrlClick(mob/user)
+	. = ..()
+	if(!.)
+		return
+	if(!can_toggle_sensors(user))
+		return
+
+	sensor_mode = SENSOR_COORDS
+	balloon_alert(user, "set to tracking")
 
 /// Checks if the toggler is allowed to toggle suit sensors currently
 /obj/item/clothing/under/proc/can_toggle_sensors(mob/toggler)
