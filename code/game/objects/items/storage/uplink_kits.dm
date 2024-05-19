@@ -444,7 +444,7 @@
 	name = "smoke kit"
 
 /obj/item/storage/box/syndie_kit/smoke/PopulateContents()
-	for(var/i in 1 to 4)
+	for(var/i in 1 to 5)
 		new /obj/item/grenade/smokebomb(src)
 
 /obj/item/storage/box/syndie_kit/mail_counterfeit
