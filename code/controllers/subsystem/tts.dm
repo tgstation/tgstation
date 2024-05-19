@@ -236,9 +236,14 @@ SUBSYSTEM_DEF(tts)
 			var/sound/audio_file_blips
 			if(current_target.local)
 				if(current_target.use_blips)
-					audio_file_blips = new(current_target.audio_file_blips)
+					fdel("tmp/tts/current_blips.ogg")
+					world.shelleo("rename [current_target.audio_file_blips] current_blips.ogg")
+					audio_file_blips = new("tmp/tts/current_blips.ogg")
 					SEND_SOUND(current_target.target, audio_file_blips)
 				else
+					fdel("tmp/tts/current_tts.ogg")
+					world.shelleo("rename [current_target.audio_file] current_tts.ogg")
+					audio_file_blips = new("tmp/tts/current_tts.ogg")
 					audio_file = new(current_target.audio_file)
 					SEND_SOUND(current_target.target, audio_file)
 				SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
@@ -343,6 +348,8 @@ SUBSYSTEM_DEF(tts)
 	/// What's the pitch adjustment?
 	var/pitch = 0
 
+/datum/tts_request/vv_edit_var(var_name, var_value)
+	return FALSE
 
 /datum/tts_request/New(identifier, datum/http_request/request, datum/http_request/request_blips, message, target, local, datum/language/language, message_range, volume_offset, list/listeners, pitch)
 	. = ..()
