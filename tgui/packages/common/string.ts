@@ -73,7 +73,7 @@ export function capitalizeAll(str: string): string {
  * ```
  */
 export function capitalizeFirst(str: string): string {
-  return str.replace(/^\w/, (letter) => letter.toUpperCase());
+  return str.replace(/^[\wа-яА-ЯёЁ]/, (letter) => letter.toUpperCase()); // BANDASTATION EDIT - Original: return str.replace(/^\w/, (letter) => letter.toUpperCase());
 }
 
 const WORDS_UPPER = ['Id', 'Tv'] as const;
