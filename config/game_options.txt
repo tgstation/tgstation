@@ -272,6 +272,7 @@ RANDOM_LAWS nt_default
 #RANDOM_LAWS reporter
 #RANDOM_LAWS hulkamania
 #RANDOM_LAWS ten_commandments
+#RANDOM_LAWS yesman
 
 ## Bad idea laws. Probably shouldn't enable these
 #RANDOM_LAWS syndie

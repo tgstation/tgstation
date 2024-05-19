@@ -48,7 +48,7 @@ Difficulty: Hard
 	achievement_type = /datum/award/achievement/boss/wendigo_kill
 	crusher_achievement_type = /datum/award/achievement/boss/wendigo_crusher
 	score_achievement_type = /datum/award/score/wendigo_score
-	death_message = "falls to the ground in a bloody heap, shaking the arena"
+	death_message = "falls to the ground in a bloody heap, shaking the arena."
 	death_sound = 'sound/effects/gravhit.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list(/datum/action/innate/megafauna_attack/heavy_stomp,

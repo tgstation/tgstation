@@ -225,6 +225,8 @@
 	var/limit = 1
 	/// A list of weakrefs to all items we've created.
 	var/list/datum/weakref/created_items
+	/// if we have all the blades then we don’t want to tear our hands off
+	var/valid_blades = FALSE
 
 /datum/heretic_knowledge/limited_amount/Destroy(force)
 	LAZYCLEARLIST(created_items)
@@ -237,8 +239,14 @@
 			LAZYREMOVE(created_items, ref)
 
 	if(LAZYLEN(created_items) >= limit)
-		loc.balloon_alert(user, "ritual failed, at limit!")
-		return FALSE
+		for(var/obj/item/melee/sickly_blade/is_blade_ritual as anything in result_atoms)
+			valid_blades = blades_limit_check(user)
+			break
+		if(valid_blades)
+			return TRUE
+		else
+			loc.balloon_alert(user, "ritual failed, at limit!")
+			return FALSE
 
 	return TRUE
 
@@ -246,7 +254,35 @@
 	for(var/result in result_atoms)
 		var/atom/created_thing = new result(loc)
 		LAZYADD(created_items, WEAKREF(created_thing))
+		if(istype(created_thing, /obj/item/melee/sickly_blade))
+			add_to_list_sickly_blade(user, created_thing)
 	return TRUE
+
+/datum/heretic_knowledge/limited_amount/proc/add_to_list_sickly_blade(mob/living/heretic, obj/item/melee/sickly_blade/created_blade)
+	var/obj/item/melee/sickly_blade/blade_check = created_blade
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(heretic)
+	if(!isnull(our_heretic))
+		blade_check.owner = our_heretic
+		LAZYADD(our_heretic.blades_list, blade_check)
+
+/datum/heretic_knowledge/limited_amount/proc/blades_limit_check(mob/living/heretic)
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(heretic)
+	var/success_check = FALSE
+	for(var/obj/item/melee/sickly_blade/blades_in_list as anything in our_heretic.blades_list)
+		if(get_turf(heretic) == get_turf(blades_in_list))
+			continue
+		success_check = TRUE
+		LAZYREMOVE(our_heretic.blades_list, blades_in_list)
+		var/mob/living/living_target = recursive_loc_check(src, /mob/living)
+		if(living_target)
+			living_target.apply_damage(15)
+			var/obj/item/bodypart/thief_hand = living_target.get_bodypart(BODY_ZONE_L_ARM)
+			if(!isnull(thief_hand))
+				thief_hand.dismember(BRUTE)
+			to_chat(living_target, span_boldwarning("You feel severe pain in your hand as if otherworldly powers tore it from inside. [blades_in_list] collapse and disappeared.. maybe it never existed?"))
+		qdel(blades_in_list)
+		break
+	return success_check
 
 /**
  * A knowledge subtype for limited_amount knowledge
@@ -730,6 +766,7 @@
 		source = user,
 		header = "A Heretic is Ascending!",
 	)
+	heretic_datum.increase_rust_strength()
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)
