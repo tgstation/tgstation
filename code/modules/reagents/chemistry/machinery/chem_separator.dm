@@ -14,9 +14,13 @@
 	/// The container for transferring distilled reagents into
 	var/obj/item/reagent_containers/distilled_container
 	/// The container for holding the fuel source for the bunset burner
-	var/obj/item/reagent_containers/burner_fuel_container
+	var/obj/item/reagent_containers/fuel_container
 	/// Is the bunset burner currenrly switched on/off
 	var/burner_on = FALSE
+	/// Do we have a condenser installed for forced cooling
+	var/condenser_installed = FALSE
+	/// Is the condenser on
+	var/condenser_on = FALSE
 	/// Knob setting on the burner
 	var/burner_knob = 1
 
@@ -28,7 +32,7 @@
 
 /obj/structure/chem_separator/Destroy()
 	QDEL_NULL(distilled_container)
-	QDEL_NULL(burner_fuel_container)
+	QDEL_NULL(fuel_container)
 	QDEL_NULL(soundloop)
 	return ..()
 
@@ -41,20 +45,23 @@
 
 	new /obj/item/burner(drop)
 
+	if(condenser_installed)
+		new /obj/item/assembly/igniter/condenser(drop)
+
 	if(!QDELETED(distilled_container))
 		distilled_container.forceMove(drop)
 
-	if(!QDELETED(burner_fuel_container))
-		burner_fuel_container.forceMove(drop)
+	if(!QDELETED(fuel_container))
+		fuel_container.forceMove(drop)
 
 /obj/structure/chem_separator/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(distilled_container == gone)
 		distilled_container = null
 		update_appearance(UPDATE_OVERLAYS)
-	if(burner_fuel_container == gone)
+	if(fuel_container == gone)
 		toggle_burner(FALSE)
-		burner_fuel_container = null
+		fuel_container = null
 		update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/chem_separator/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -63,7 +70,7 @@
 		if(!QDELETED(distilled_container))
 			context[SCREENTIP_CONTEXT_LMB] = "Remove beaker"
 			. = CONTEXTUAL_SCREENTIP_SET
-		if(!QDELETED(burner_fuel_container))
+		if(!QDELETED(fuel_container))
 			context[SCREENTIP_CONTEXT_RMB] = "Remove fuel"
 			. = CONTEXTUAL_SCREENTIP_SET
 		if(burner_on)
@@ -71,12 +78,16 @@
 			. = CONTEXTUAL_SCREENTIP_SET
 		return
 
+	if(!condenser_installed && istype(held_item, /obj/item/assembly/igniter/condenser))
+		context[SCREENTIP_CONTEXT_LMB] = "Installer cooler"
+		return CONTEXTUAL_SCREENTIP_SET
+
 	if(is_reagent_container(held_item) && held_item.is_open_container())
 		if(QDELETED(distilled_container))
 			context[SCREENTIP_CONTEXT_LMB] = "[QDELETED(distilled_container) ? "Insert" : "Replace"] beaker"
 			return CONTEXTUAL_SCREENTIP_SET
-		if(QDELETED(burner_fuel_container))
-			context[SCREENTIP_CONTEXT_RMB] = "[QDELETED(burner_fuel_container) ? "Insert" : "Replace"] fuel"
+		if(QDELETED(fuel_container))
+			context[SCREENTIP_CONTEXT_RMB] = "[QDELETED(fuel_container) ? "Insert" : "Replace"] fuel"
 			return CONTEXTUAL_SCREENTIP_SET
 
 	if(held_item.tool_behaviour == TOOL_CROWBAR)
@@ -93,8 +104,8 @@
 		. += span_notice("Remove beaker with [EXAMINE_HINT("LMB")].")
 	else
 		. += span_warning("Its missing a distilation container, insert with [EXAMINE_HINT("LMB")]")
-	if(!QDELETED(burner_fuel_container))
-		. += span_notice("The burner fuel container reads <b>[burner_fuel_container.reagents.total_volume]/[burner_fuel_container.reagents.maximum_volume]u</b>.")
+	if(!QDELETED(fuel_container))
+		. += span_notice("The burner fuel container reads <b>[fuel_container.reagents.total_volume]/[fuel_container.reagents.maximum_volume]u</b>.")
 		. += span_notice("Remove fuel with [EXAMINE_HINT("RMB")].")
 	else
 		. += span_warning("Its missing a beaker containing fuel for the burner, insert with [EXAMINE_HINT("RMB")]")
@@ -102,6 +113,11 @@
 		. += span_notice("Off burner with [EXAMINE_HINT("ALT LMB")].")
 	else
 		. += span_notice("You can start a flame with an combustible device.")
+
+	if(condenser_installed)
+		. += span_notice("The in-built condenser can facilitate faster cooling but consumes fuel.")
+	else
+		. += span_notice("You could install a [EXAMINE_HINT("condenser")] for fater cooling.")
 
 	. += span_notice("You can [EXAMINE_HINT("examine more")] to see reagent boiling points & fuel properties.")
 	. += span_notice("The whole aparatus can be [EXAMINE_HINT("pried")] apart.")
@@ -178,7 +194,7 @@
 /obj/structure/chem_separator/proc/get_ignition_coefficient()
 	PRIVATE_PROC(TRUE)
 
-	if(QDELETED(burner_fuel_container))
+	if(QDELETED(fuel_container))
 		return 0
 
 	//map of reagents & how much burning potential they all have
@@ -193,7 +209,7 @@
 	)
 
 	var/total_coefficient = 0
-	for(var/datum/reagent/reg as anything in burner_fuel_container.reagents.reagent_list)
+	for(var/datum/reagent/reg as anything in fuel_container.reagents.reagent_list)
 		var/coefficient = -1 //any fuel that is not on the list acts as an inhibitor
 		for(var/datum/reagent/fuel as anything in reagent_coefficients)
 			if(istype(reg, fuel))
@@ -249,10 +265,21 @@
 			to_chat(user, span_warning("[tool] is stuck in your hand."))
 			return ITEM_INTERACT_BLOCKING
 		distilled_container = tool
+
+		START_PROCESSING(SSobj, src)
 		balloon_alert(user, "distillation container added.")
 
 		ui_interact(user)
 		update_appearance(UPDATE_OVERLAYS)
+		return ITEM_INTERACT_SUCCESS
+	else if(istype(tool, /obj/item/assembly/igniter/condenser))
+		if(!user.temporarilyRemoveItemFromInventory(tool))
+			to_chat(user, span_warning("[tool] is stuck in your hand."))
+			return ITEM_INTERACT_BLOCKING
+		condenser_installed = TRUE
+		update_static_data()
+		qdel(tool)
+		balloon_alert(user, "condenser installed.")
 		return ITEM_INTERACT_SUCCESS
 
 	///Try & ignite the bunset burner with this item
@@ -287,38 +314,55 @@
 
 	if(is_reagent_container(tool) && tool.is_open_container())
 		//transfer old container
-		if(!QDELETED(burner_fuel_container))
-			user.put_in_hands(burner_fuel_container)
+		if(!QDELETED(fuel_container))
+			user.put_in_hands(fuel_container)
 
 		//add new container
 		if(!user.transferItemToLoc(tool, src))
 			to_chat(user, span_warning("[tool] is stuck in your hand."))
 			return ITEM_INTERACT_BLOCKING
-		burner_fuel_container = tool
-		balloon_alert(user, "burner fuel container added.")
+		fuel_container = tool
+		balloon_alert(user, "fuel container added.")
 
 		ui_interact(user)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/chem_separator/attack_hand_secondary(mob/user, list/modifiers)
-	if(!QDELETED(burner_fuel_container))
+	if(!QDELETED(fuel_container))
 		if(!SStgui.get_open_ui(user, src)) //for convinience open ui first then interact with beakers if you still want to
 			ui_interact(user)
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-		if(user.put_in_hands(burner_fuel_container))
+		if(user.put_in_hands(fuel_container))
 			to_chat(user, span_notice("you take out the burner fuel container"))
 			toggle_burner(FALSE)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	return ..()
 
+///Returns the coefficient of cooling of reagents, taking into consideration the condenser
+/obj/structure/chem_separator/proc/get_cool_coefficient()
+	PRIVATE_PROC(TRUE)
+
+	var/coefficient = 0.2
+
+	var/fuel_coefficient = get_ignition_coefficient()
+	if(condenser_installed && condenser_on && fuel_coefficient > 0)
+		var/datum/reagents/fuel = fuel_container.reagents
+		if(fuel.remove_all(0.15))
+			coefficient += fuel_coefficient
+		else
+			condenser_on = FALSE
+
+	return coefficient
+
 /obj/structure/chem_separator/process(seconds_per_tick)
 	if(!reagents.total_volume)
-		boiling = FALSE
-		soundloop.stop()
-		toggle_burner(FALSE)
-		return PROCESS_KILL
+		if(QDELETED(distilled_container) || !distilled_container.reagents.total_volume)
+			boiling = FALSE
+			soundloop.stop()
+			toggle_burner(FALSE)
+			return PROCESS_KILL
 
 	//if burner in on attempt to heat the reagents
 	if(burner_on)
@@ -330,9 +374,8 @@
 			can_process = FALSE
 			toggle_burner(FALSE)
 
-
 		var/knob_ratio = burner_knob / 5
-		var/datum/reagents/fuel = burner_fuel_container.reagents
+		var/datum/reagents/fuel = fuel_container.reagents
 
 		//consume some air after we have validated we have some good fuel. Only if we don't already use O2 as a fuel
 		if(can_process && !fuel.has_reagent(/datum/reagent/oxygen))
@@ -352,8 +395,14 @@
 			reagents.adjust_thermal_energy((1000 - reagents.chem_temp) * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * (0.15 + (0.35 * knob_ratio)) * fuel_coefficient)
 			reagents.handle_reactions()
 	else if(reagents.chem_temp > DEFAULT_REAGENT_TEMPERATURE) //the container cools down if there is no flame heating it till it reaches room temps
-		reagents.adjust_thermal_energy((DEFAULT_REAGENT_TEMPERATURE - reagents.chem_temp) * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * 0.05)
+		reagents.adjust_thermal_energy((DEFAULT_REAGENT_TEMPERATURE - reagents.chem_temp) * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * get_cool_coefficient())
 		reagents.handle_reactions()
+
+	//the target distilation beaker also cools down
+	if(!QDELETED(distilled_container) && distilled_container.reagents.chem_temp > DEFAULT_REAGENT_TEMPERATURE)
+		var/datum/reagents/distiled_reagents = distilled_container.reagents
+		distiled_reagents.adjust_thermal_energy((DEFAULT_REAGENT_TEMPERATURE - distiled_reagents.chem_temp) * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * get_cool_coefficient())
+		distiled_reagents.handle_reactions()
 
 	//the distilation process checks the individual boiling point of each reagent based on their mass for seperation
 	boiling = FALSE
@@ -386,6 +435,9 @@
 		ui = new(user, src, "ChemSeparator", name)
 		ui.open()
 
+/obj/structure/chem_separator/ui_static_data(mob/user)
+	return list("condenser_installed" = condenser_installed)
+
 /obj/structure/chem_separator/ui_data(mob/user)
 	. = list()
 
@@ -411,8 +463,8 @@
 
 	//burner fuel data
 	var/list/fuel_data = null
-	if(!QDELETED(burner_fuel_container))
-		var/datum/reagents/fuel_reagents = burner_fuel_container.reagents
+	if(!QDELETED(fuel_container))
+		var/datum/reagents/fuel_reagents = fuel_container.reagents
 
 		fuel_data = list()
 		fuel_data["total_volume"] = fuel_reagents.total_volume
@@ -422,7 +474,11 @@
 	.["fuel"] = fuel_data
 
 	//Knob setting
+	.["burner_on"] = burner_on
 	.["knob"] = burner_knob
+
+	//Condenser setting
+	.["condenser_on"] = condenser_on
 
 /obj/structure/chem_separator/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -435,7 +491,6 @@
 				return FALSE
 
 			if(reagents.trans_to(distilled_container.reagents, reagents.maximum_volume))
-				STOP_PROCESSING(SSobj, src)
 				toggle_burner(FALSE)
 				return TRUE
 
@@ -444,8 +499,6 @@
 				return FALSE
 
 			if(distilled_container.reagents.trans_to(reagents, reagents.maximum_volume))
-				reagents.set_temperature(DEFAULT_REAGENT_TEMPERATURE) //this way hot reagents don't insta boil & you have to reheat them with burner
-				START_PROCESSING(SSobj, src)
 				update_appearance(UPDATE_OVERLAYS)
 				return TRUE
 
@@ -461,6 +514,13 @@
 			burner_knob = clamp(setting, 1, 5)
 			if(burner_on)
 				set_light(ROUND_UP(2 * (burner_knob / 5)))
+			return TRUE
+
+		if("cool")
+			if(!condenser_installed)
+				return FALSE
+
+			condenser_on = !condenser_on
 			return TRUE
 
 /obj/structure/chem_separator/click_alt(mob/user)

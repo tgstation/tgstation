@@ -1,3 +1,5 @@
+import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import {
   Box,
@@ -20,15 +22,26 @@ type Data = {
   flask: RegHolderData;
   beaker: RegHolderData;
   fuel: RegHolderData;
+  burner_on: BooleanLike;
   knob: number;
+  condenser_installed: BooleanLike;
+  condenser_on: BooleanLike;
 };
 
 export const ChemSeparator = (props) => {
   const { act, data } = useBackend<Data>();
-  const { flask, beaker, fuel, knob } = data;
+  const {
+    flask,
+    beaker,
+    fuel,
+    burner_on,
+    knob,
+    condenser_installed,
+    condenser_on,
+  } = data;
 
   return (
-    <Window width={370} height={190}>
+    <Window width={370} height={215}>
       <Window.Content>
         <LabeledList>
           <LabeledList.Item
@@ -167,7 +180,7 @@ export const ChemSeparator = (props) => {
                     width: '57px',
                   }}
                 >
-                  Burner Fuel:
+                  Fuel Source:
                 </Box>
               }
             >
@@ -193,6 +206,33 @@ export const ChemSeparator = (props) => {
               </ProgressBar>
             </LabeledList.Item>
           )}
+          {!!condenser_installed &&
+            (flask.total_volume > 0 || beaker?.total_volume > 0) &&
+            fuel?.total_volume > 0 && (
+              <LabeledList.Item
+                label={
+                  <Box
+                    style={{
+                      transform: 'translate(20%, -20%)',
+                      width: '57px',
+                    }}
+                  >
+                    Cooling:
+                  </Box>
+                }
+              >
+                <Button
+                  icon="thermometer-full"
+                  disabled={burner_on}
+                  selected={condenser_on}
+                  fontSize="15px"
+                  ml="25px"
+                  onClick={() => act('cool')}
+                >
+                  Start
+                </Button>
+              </LabeledList.Item>
+            )}
         </LabeledList>
       </Window.Content>
     </Window>
