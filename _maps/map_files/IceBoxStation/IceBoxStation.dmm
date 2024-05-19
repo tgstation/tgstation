@@ -7485,7 +7485,7 @@
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
 "cge" = (
-/obj/machinery/light/directional/west,
+/obj/machinery/light/dim/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "cgs" = (
@@ -12532,6 +12532,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "dDt" = (
@@ -22064,7 +22065,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "gEX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small/dim/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "gEZ" = (
@@ -26461,6 +26462,8 @@
 "hWX" = (
 /obj/effect/mapping_helpers/airlock/access/all/medical/coroner,
 /obj/machinery/door/airlock/medical/glass,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "hXm" = (
@@ -27866,6 +27869,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"isZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "itj" = (
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
@@ -28177,9 +28186,7 @@
 "iyF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/blobstart,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "iyK" = (
@@ -30971,6 +30978,11 @@
 /obj/machinery/mining_weather_monitor/directional/east,
 /turf/open/floor/iron/grimy,
 /area/station/hallway/secondary/entry)
+"jsi" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "jsp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
@@ -40360,9 +40372,10 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "meW" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "mfc" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -42200,6 +42213,12 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
+"mNv" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "mNy" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -46344,12 +46363,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/radio/intercom/directional/north,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/machinery/light/small/dim/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "nTK" = (
@@ -48761,10 +48780,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/aft)
 "oEH" = (
-/obj/structure/marker_beacon/burgundy{
-	name = "landing marker"
+/obj/structure/marker_beacon/yellow,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored/graveyard)
 "oEX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -53286,7 +53305,10 @@
 "pWG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/light/small/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/machinery/light/small/dim/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "pWY" = (
@@ -62658,7 +62680,8 @@
 /area/station/engineering/atmos)
 "sEI" = (
 /obj/machinery/light/small/dim/directional/north,
-/turf/open/floor/iron/dark,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
 /area/station/medical/morgue)
 "sEK" = (
 /obj/structure/table/glass,
@@ -67464,6 +67487,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/iron/white,
 /area/station/medical/cryo)
+"ugb" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "ugd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -79667,7 +79697,7 @@
 /obj/structure/bodycontainer/morgue{
 	dir = 8
 	},
-/obj/machinery/light/directional/south,
+/obj/machinery/light/dim/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "xRI" = (
@@ -182259,7 +182289,7 @@ ubi
 psb
 iDt
 iDt
-nfG
+iDt
 iDt
 scw
 btU
@@ -182516,7 +182546,7 @@ cem
 psb
 iDt
 iDt
-iDt
+nfG
 iDt
 scw
 btU
@@ -182771,7 +182801,7 @@ exw
 phl
 fuH
 psb
-meW
+iDt
 iDt
 iDt
 iDt
@@ -183542,7 +183572,7 @@ fuH
 phl
 ubi
 psb
-oEH
+csV
 mtt
 mtt
 mtt
@@ -184313,7 +184343,7 @@ drw
 bpa
 psb
 psb
-amq
+oEH
 amq
 hai
 mtt
@@ -184826,7 +184856,7 @@ tkY
 jKL
 rpJ
 psb
-amq
+oEH
 amq
 wvL
 fDp
@@ -185090,7 +185120,7 @@ btU
 hlQ
 btU
 gfy
-dYr
+isZ
 xMv
 wav
 pWi
@@ -185341,7 +185371,7 @@ drw
 cQV
 psb
 psb
-amq
+oEH
 wvL
 btU
 sEI
@@ -185603,8 +185633,8 @@ hai
 btU
 dzr
 btU
-dYr
-pps
+meW
+jsi
 pWG
 btU
 kKa
@@ -185856,7 +185886,7 @@ xxo
 cem
 psb
 hai
-oEH
+csV
 btU
 gCG
 cge
@@ -186116,8 +186146,8 @@ olO
 ese
 btU
 cJa
-dYr
-xFG
+meW
+ugb
 vAO
 jUB
 oXs
@@ -186373,7 +186403,7 @@ fuH
 fuH
 btU
 mkN
-pps
+mNv
 xFG
 qad
 jUB
