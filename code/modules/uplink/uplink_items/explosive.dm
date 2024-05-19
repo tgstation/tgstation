@@ -50,12 +50,18 @@
 	desc = "A box that contains five EMP grenades and an EMP implant with three uses. Useful to disrupt communications, \
 			security's energy weapons and silicon lifeforms when you're in a tight spot."
 	item = /obj/item/storage/box/syndie_kit/emp
-	cost = 2
+	cost = 3
 
 /datum/uplink_item/explosives/emp/New()
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		cost *= 3
+
+/datum/uplink_item/explosives/smoke
+	name = "Smoke Grenades"
+	desc = "A box that contains four smoke grenades. Useful for vanishing and ninja fans with katana."
+	item = /obj/item/storage/box/syndie_kit/smoke
+	cost = 3
 
 /datum/uplink_item/explosives/pizza_bomb
 	name = "Pizza Bomb"
