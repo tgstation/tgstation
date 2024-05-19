@@ -360,16 +360,3 @@
 	trait_to_give = STATION_TRAIT_ASSISTANT_GIMMICKS
 	show_in_report = TRUE
 	blacklist = list(/datum/station_trait/colored_assistants)
-
-/// Crew don't ever spawn as enemies of the station. Obsesseds, blob infection, space changelings etc can still happen though
-/datum/station_trait/background_checks
-	name = "Station-Wide Background Checks"
-	report_message = "We replaced the intern doing your crew's background checks with a trained screener for this shift! That said, our enemies may just find another way to infiltrate the station, so be careful."
-	trait_type = STATION_TRAIT_POSITIVE
-	weight = 1
-	show_in_report = TRUE
-	can_revert = FALSE
-
-	dynamic_category = RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
-	threat_reduction = 15
-	dynamic_threat_id = "Background Checks"
