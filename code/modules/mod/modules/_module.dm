@@ -90,9 +90,8 @@
 	var/list/needed_slots = required_slots.Copy()
 	for(var/needed_slot in needed_slots)
 		if(!(needed_slot & total_slot_flags))
-			continue
+			break
 		needed_slots -= needed_slot
-		break
 	return !length(needed_slots)
 
 /// Called when the module is selected from the TGUI, radial or the action button
