@@ -531,7 +531,8 @@
 						return
 					player_turn = TRUE
 					ui_panel = UI_PANEL_WORLD_MAP
-					player_gold /= 2
+					if(player_gold)
+						player_gold = max(round(player_gold /= 2, 1), 0)
 					return TRUE
 			//they pressed something but it wasn't in the menu, we'll be nice and give them back their turn anyway.
 			player_turn = TRUE

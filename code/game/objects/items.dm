@@ -225,6 +225,8 @@
 	var/current_skin
 	///// List of options to reskin.
 	var/list/unique_reskin
+	/// Do we apply a click cooldown when resisting this object if it is restraining them?
+	var/resist_cooldown = CLICK_CD_BREAKOUT
 
 /obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
@@ -262,9 +264,7 @@
 	if(LAZYLEN(embedding))
 		updateEmbedding()
 
-	if(unique_reskin)
-		RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
-		register_context()
+	setup_reskinning()
 
 
 /obj/item/Destroy(force)
@@ -288,7 +288,7 @@
 	if(!unique_reskin)
 		return
 
-	if(current_skin && !(item_flags & INFINITE_RESKIN))
+	if(current_skin && !(obj_flags & INFINITE_RESKIN))
 		return
 
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Reskin"

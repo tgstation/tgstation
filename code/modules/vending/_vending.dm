@@ -1417,7 +1417,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		if(isliving(usr))
 			living_user = usr
 			card_used = living_user.get_idcard(TRUE)
-		else if(age_restrictions && item_record.age_restricted && (!card_used.registered_age || card_used.registered_age < AGE_MINOR))
+		if(age_restrictions && item_record.age_restricted && (!card_used.registered_age || card_used.registered_age < AGE_MINOR))
 			speak("You are not of legal age to purchase [item_record.name].")
 			if(!(usr in GLOB.narcd_underages))
 				if (isnull(sec_radio))

@@ -195,13 +195,16 @@
 	if(!(def_zone in covered_limbs))
 		return
 
-	var/zone_name = parse_zone(def_zone)
+	var/zone_name
 	var/break_verb = ((damage_type == BRUTE) ? "torn" : "burned")
 
 	if(iscarbon(loc))
-		var/mob/living/carbon/C = loc
-		C.visible_message(span_danger("The [zone_name] on [C]'s [src.name] is [break_verb] away!"), span_userdanger("The [zone_name] on your [src.name] is [break_verb] away!"), vision_distance = COMBAT_MESSAGE_RANGE)
-		RegisterSignal(C, COMSIG_MOVABLE_MOVED, PROC_REF(bristle), override = TRUE)
+		var/mob/living/carbon/carbon_loc = loc
+		zone_name = carbon_loc.parse_zone_with_bodypart(def_zone)
+		carbon_loc.visible_message(span_danger("The [zone_name] on [carbon_loc]'s [src.name] is [break_verb] away!"), span_userdanger("The [zone_name] on your [src.name] is [break_verb] away!"), vision_distance = COMBAT_MESSAGE_RANGE)
+		RegisterSignal(carbon_loc, COMSIG_MOVABLE_MOVED, PROC_REF(bristle), override = TRUE)
+	else
+		zone_name = parse_zone(def_zone)
 
 	zones_disabled++
 	body_parts_covered &= ~body_zone2cover_flags(def_zone)
@@ -470,7 +473,8 @@ BLIND     // can't see anything
 	female_clothing_icon = fcopy_rsc(female_clothing_icon)
 	GLOB.female_clothing_icons[index] = female_clothing_icon
 
-/obj/item/clothing/proc/adjust_visor(mob/living/user) //proc to toggle welding visors on helmets, masks, goggles, etc.
+/// Proc that adjusts the clothing item, used by things like breathing masks, welding helmets, welding goggles etc.
+/obj/item/clothing/proc/adjust_visor(mob/living/user)
 	if(!can_use(user))
 		return FALSE
 
@@ -483,6 +487,8 @@ BLIND     // can't see anything
 	if(user.is_holding(src))
 		user.update_held_items()
 		return TRUE
+	if(up)
+		user.update_obscured_slots(visor_flags_inv)
 	user.update_clothing(slot_flags)
 	if(!iscarbon(user))
 		return TRUE

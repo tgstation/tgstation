@@ -112,6 +112,7 @@
 		/obj/item/spear/explosive,
 		/obj/item/spear/bonespear,
 		/obj/item/spear/bamboospear,
+		/obj/item/spear/military,
 	)
 	result = /obj/structure/headpike
 	category = CAT_ENTERTAINMENT
@@ -142,6 +143,20 @@
 		/obj/item/spear/bamboospear = 1,
 	)
 	result = /obj/structure/headpike/bamboo
+	category = CAT_ENTERTAINMENT
+
+/datum/crafting_recipe/headpikemilitary
+	name = "Spike Head (Military)"
+	time = 6.5 SECONDS
+	reqs = list(
+		/obj/item/spear/military = 1,
+		/obj/item/bodypart/head = 1,
+	)
+	parts = list(
+		/obj/item/bodypart/head = 1,
+		/obj/item/spear/military = 1,
+	)
+	result = /obj/structure/headpike/military
 	category = CAT_ENTERTAINMENT
 
 /datum/crafting_recipe/guillotine

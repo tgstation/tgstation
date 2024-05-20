@@ -27,27 +27,42 @@
 	owner.special_role = special_role
 	finalize_brother()
 
+	if (team.brothers_left <= 0)
+		return ..()
+
+	var/mob/living/carbon/carbon_owner = owner.current
+	if (!istype(carbon_owner))
+		return ..()
+
+	grant_conversion_skills()
+	carbon_owner.equip_conspicuous_item(new /obj/item/assembly/flash)
+
 	var/is_first_brother = team.members.len == 1
-	team.brothers_left -= 1
-
-	if (is_first_brother || team.brothers_left > 0)
-		var/mob/living/carbon/carbon_owner = owner.current
-		if (istype(carbon_owner))
-			carbon_owner.equip_conspicuous_item(new /obj/item/assembly/flash)
-			carbon_owner.AddComponentFrom(REF(src), /datum/component/can_flash_from_behind)
-			RegisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, PROC_REF(on_mob_successful_flashed_carbon))
-
-			if (!is_first_brother)
-				to_chat(carbon_owner, span_boldwarning("The Syndicate have higher expectations from you than others. They have granted you an extra flash to convert one other person."))
+	if (!is_first_brother)
+		to_chat(carbon_owner, span_boldwarning("The Syndicate have higher expectations from you than others. They have granted you an extra flash to convert one other person."))
 
 	return ..()
 
 /datum/antagonist/brother/on_removal()
 	owner.special_role = null
-	owner.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
-	UnregisterSignal(owner, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
-
+	remove_conversion_skills()
 	return ..()
+
+/// Give us the ability to add another brother
+/datum/antagonist/brother/proc/grant_conversion_skills()
+	var/mob/living/carbon/carbon_owner = owner.current
+	if (!istype(carbon_owner))
+		return
+	carbon_owner.AddComponentFrom(REF(src), /datum/component/can_flash_from_behind)
+	RegisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, PROC_REF(on_mob_successful_flashed_carbon))
+
+/// Take away the ability to add more brothers
+/datum/antagonist/brother/proc/remove_conversion_skills()
+	if (isnull(owner.current))
+		return
+	var/mob/living/carbon/carbon_owner = owner.current
+	carbon_owner.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
+	UnregisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
 
 /datum/antagonist/brother/proc/on_mob_successful_flashed_carbon(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash)
 	SIGNAL_HANDLER
@@ -95,11 +110,19 @@
 	)
 	flashed.balloon_alert(source, "converted")
 
-	UnregisterSignal(source, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
-	source.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
-
 /datum/antagonist/brother/antag_panel_data()
-	return "Conspirators : [get_brother_names()]"
+	return "Conspirators : [get_brother_names()] | Remaining: [team.brothers_left]"
+
+/datum/antagonist/brother/get_admin_commands()
+	. = ..()
+	.["Adjust Remaining Conversions"] = CALLBACK(src, PROC_REF(update_recruitments_remaining))
+
+/// Add or remove the potential to put more bros in here
+/datum/antagonist/brother/proc/update_recruitments_remaining(mob/admin)
+	var/new_count = tgui_input_number(admin, "How many more people should be able to be recruited?", "Adjust Conversions Remaining", default = 1, min_value = 0)
+	if (isnull(new_count))
+		return
+	team.set_brothers_left(new_count)
 
 /datum/antagonist/brother/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/brother1 = new
@@ -131,6 +154,9 @@
 
 /datum/antagonist/brother/proc/get_brother_names()
 	var/list/brothers = team.members - owner
+	if (!length(brothers))
+		return "none"
+
 	var/brother_text = ""
 	for(var/i = 1 to brothers.len)
 		var/datum/mind/M = brothers[i]
@@ -167,13 +193,15 @@
 	member_name = "blood brother"
 	var/brothers_left = 2
 
-/datum/team/brother_team/New()
+/datum/team/brother_team/New(starting_members)
 	. = ..()
 	if (prob(10))
 		brothers_left += 1
 
 /datum/team/brother_team/add_member(datum/mind/new_member)
 	. = ..()
+	if (!length(objectives))
+		forge_brother_objectives()
 	if (!new_member.has_antag_datum(/datum/antagonist/brother))
 		add_brother(new_member.current)
 
@@ -193,11 +221,17 @@
 	if (isnull(new_brother) || isnull(new_brother.mind) || !GET_CLIENT(new_brother) || new_brother.mind.has_antag_datum(/datum/antagonist/brother))
 		return FALSE
 
+	set_brothers_left(brothers_left - 1)
 	for (var/datum/mind/brother_mind as anything in members)
 		if (brother_mind == new_brother.mind)
 			continue
+
 		to_chat(brother_mind, span_notice("[span_bold("[new_brother.real_name]")] has been converted to aid you as your brother!"))
+		if (brothers_left == 0)
+			to_chat(brother_mind, span_notice("You cannot recruit any more brothers."))
+
 	new_brother.mind.add_antag_datum(/datum/antagonist/brother, src)
+
 	return TRUE
 
 /datum/team/brother_team/proc/update_name()
@@ -217,7 +251,7 @@
 	add_objective(new /datum/objective/convert_brother)
 
 	var/is_hijacker = prob(10)
-	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (members.len > 2) - is_hijacker))
+	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (brothers_left > 2) - is_hijacker))
 		forge_single_objective()
 	if(is_hijacker)
 		if(!locate(/datum/objective/hijack) in objectives)
@@ -235,6 +269,22 @@
 			add_objective(new /datum/objective/assassinate, needs_target = TRUE)
 	else
 		add_objective(new /datum/objective/steal, needs_target = TRUE)
+
+/// Control how many more people we can recruit
+/datum/team/brother_team/proc/set_brothers_left(remaining_brothers)
+	if (brothers_left == remaining_brothers)
+		return
+
+	if (brothers_left == 0 && remaining_brothers > 0)
+		for (var/datum/mind/brother_mind as anything in members)
+			var/datum/antagonist/brother/brother_datum = brother_mind.has_antag_datum(/datum/antagonist/brother)
+			brother_datum?.grant_conversion_skills()
+
+	else if (brothers_left > 0 && remaining_brothers <= 0)
+		for (var/datum/mind/brother_mind as anything in members)
+			var/datum/antagonist/brother/brother_datum = brother_mind.has_antag_datum(/datum/antagonist/brother)
+			brother_datum?.remove_conversion_skills()
+	brothers_left = remaining_brothers
 
 /datum/objective/convert_brother
 	name = "convert brother"

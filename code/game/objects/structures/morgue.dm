@@ -45,6 +45,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	var/locked = FALSE
 	///Cooldown between breakout msesages.
 	COOLDOWN_DECLARE(breakout_message_cooldown)
+	/// Cooldown between being able to slide the tray in or out.
+	COOLDOWN_DECLARE(open_close_cd)
 
 /obj/structure/bodycontainer/Initialize(mapload)
 	. = ..()
@@ -131,30 +133,90 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 
 /obj/structure/bodycontainer/proc/open()
-	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	if(!COOLDOWN_FINISHED(src, open_close_cd))
+		return FALSE
+
+	COOLDOWN_START(src, open_close_cd, 0.25 SECONDS)
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	playsound(src, 'sound/effects/roll.ogg', 5, TRUE)
-	var/turf/T = get_step(src, dir)
-	if (connected)
-		connected.setDir(dir)
-	for(var/atom/movable/AM in src)
-		AM.forceMove(T)
+	var/turf/dump_turf = get_step(src, dir)
+	connected?.setDir(dir)
+	for(var/atom/movable/moving in src)
+		moving.forceMove(dump_turf)
+		animate_slide_out(moving)
 	update_appearance()
+	return TRUE
 
 /obj/structure/bodycontainer/proc/close()
+	if(!COOLDOWN_FINISHED(src, open_close_cd))
+		return FALSE
+
+	COOLDOWN_START(src, open_close_cd, 0.5 SECONDS)
 	playsound(src, 'sound/effects/roll.ogg', 5, TRUE)
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-	for(var/atom/movable/AM in connected.loc)
-		if(!AM.anchored || AM == connected)
-			if(isliving(AM))
-				var/mob/living/living_mob = AM
-				if(living_mob.incorporeal_move)
-					continue
-			else if(istype(AM, /obj/effect/dummy/phased_mob))
+	var/turf/close_loc = connected.loc
+	for(var/atom/movable/entering in close_loc)
+		if(entering.anchored && entering != connected)
+			continue
+		if(isliving(entering))
+			var/mob/living/living_mob = entering
+			if(living_mob.incorporeal_move)
 				continue
-			else if(isdead(AM))
-				continue
-			AM.forceMove(src)
+		else if(istype(entering, /obj/effect/dummy/phased_mob) || isdead(entering))
+			continue
+		animate_slide_in(entering, close_loc)
+		entering.forceMove(src)
 	update_appearance()
+	return TRUE
+
+#define SLIDE_LENGTH (0.3 SECONDS)
+
+/// Slides the passed object out of the morgue tray.
+/obj/structure/bodycontainer/proc/animate_slide_out(atom/movable/animated)
+	var/old_layer = animated.layer
+	animated.layer = layer - (animated == connected ? 0.03 : 0.01)
+	animated.pixel_x = animated.base_pixel_x + (x * 32) - (animated.x * 32)
+	animated.pixel_y = animated.base_pixel_y + (y * 32) - (animated.y * 32)
+	animate(
+		animated,
+		pixel_x = animated.base_pixel_x,
+		pixel_y = animated.base_pixel_y,
+		time = SLIDE_LENGTH,
+		easing = CUBIC_EASING|EASE_OUT,
+		flags = ANIMATION_PARALLEL,
+	)
+	addtimer(VARSET_CALLBACK(animated, layer, old_layer), SLIDE_LENGTH)
+
+/// Slides the passed object into the morgue tray from the passed turf.
+/obj/structure/bodycontainer/proc/animate_slide_in(atom/movable/animated, turf/from_loc)
+	// It's easier to just make a visual for entering than to animate the object itself
+	var/obj/effect/temp_visual/morgue_content/visual = new(from_loc, animated)
+	visual.layer = layer - (animated == connected ? 0.03 : 0.01)
+	animate(
+		visual,
+		pixel_x = visual.base_pixel_x + (x * 32) - (visual.x * 32),
+		pixel_y = visual.base_pixel_y + (y * 32) - (visual.y * 32),
+		time = SLIDE_LENGTH,
+		easing = CUBIC_EASING|EASE_IN,
+		flags = ANIMATION_PARALLEL,
+	)
+
+/// Used to mimic the appearance of an object sliding into a morgue tray.
+/obj/effect/temp_visual/morgue_content
+	duration = SLIDE_LENGTH
+
+/obj/effect/temp_visual/morgue_content/Initialize(mapload, atom/movable/sliding_in)
+	. = ..()
+	if(isnull(sliding_in))
+		return
+
+	appearance = sliding_in.appearance
+	dir = sliding_in.dir
+	alpha = sliding_in.alpha
+	base_pixel_x = sliding_in.base_pixel_x
+	base_pixel_y = sliding_in.base_pixel_y
+
+#undef SLIDE_LENGTH
 
 #define MORGUE_EMPTY 1
 #define MORGUE_NO_MOBS 2
@@ -526,6 +588,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	name = "crematorium tray"
 	desc = "Apply body before burning."
 	icon_state = "cremat"
+	layer = /obj/structure/bodycontainer/crematorium::layer - 0.03
 
 /*
  * Morgue tray
@@ -536,6 +599,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "morguet"
 	pass_flags_self = PASSTABLE | LETPASSTHROW
+	layer = /obj/structure/bodycontainer/morgue::layer - 0.03
 
 /obj/structure/tray/m_tray/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()

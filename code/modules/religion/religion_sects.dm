@@ -200,11 +200,11 @@
 	if(!istype(power_cell))
 		return
 
-	if(power_cell.charge < 0.3 * STANDARD_CELL_CHARGE)
+	if(power_cell.charge() < 0.3 * STANDARD_CELL_CHARGE)
 		to_chat(chap, span_notice("[GLOB.deity] does not accept pity amounts of power."))
 		return
 
-	adjust_favor(round(power_cell.charge/300), chap)
+	adjust_favor(round(power_cell.charge() / (0.3 * STANDARD_CELL_CHARGE)), chap)
 	to_chat(chap, span_notice("You offer [power_cell]'s power to [GLOB.deity], pleasing them."))
 	qdel(power_cell)
 	return TRUE
@@ -238,7 +238,7 @@
 		to_chat(user, span_notice("The candle needs to be lit to be offered!"))
 		return
 	to_chat(user, span_notice("[GLOB.deity] is pleased with your sacrifice."))
-	adjust_favor(50, user) //it's not a lot but hey there's a pacifist favor option at least
+	adjust_favor(40, user) //it's not a lot but hey there's a pacifist favor option at least
 	qdel(offering)
 	return TRUE
 
