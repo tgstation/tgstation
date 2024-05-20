@@ -1,0 +1,4 @@
+author: "KnigTheThrasher"
+delete-after: True
+changes:
+  - balance: "Removed knockdown from command and detective batongs, cooldown reduced back to 1.5 seconds as a compensation"
