@@ -5142,6 +5142,7 @@
 #include "code\modules\mod\mod_core.dm"
 #include "code\modules\mod\mod_link.dm"
 #include "code\modules\mod\mod_paint.dm"
+#include "code\modules\mod\mod_part.dm"
 #include "code\modules\mod\mod_theme.dm"
 #include "code\modules\mod\mod_types.dm"
 #include "code\modules\mod\mod_ui.dm"
