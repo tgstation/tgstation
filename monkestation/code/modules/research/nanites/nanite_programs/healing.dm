@@ -61,6 +61,8 @@
 /datum/nanite_program/purging/active_effect()
 	host_mob.adjustToxLoss(-1)
 	for(var/datum/reagent/R in host_mob.reagents.reagent_list)
+		if (istype(R, /datum/reagent/toxin/radiomagnetic_disruptor))
+			continue
 		host_mob.reagents.remove_reagent(R.type,1)
 
 /datum/nanite_program/brain_heal
@@ -155,6 +157,8 @@
 /datum/nanite_program/purging_advanced/active_effect()
 	host_mob.adjustToxLoss(-1)
 	for(var/datum/reagent/toxin/R in host_mob.reagents.reagent_list)
+		if (istype(R, /datum/reagent/toxin/radiomagnetic_disruptor))
+			continue
 		host_mob.reagents.remove_reagent(R.type,1)
 
 /datum/nanite_program/regenerative_advanced

@@ -405,3 +405,8 @@
 	purity_min = 0.4
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/radiomagnetic_disruptor // MONKESTATION ADDITION: NANITE REMOVAL CHEM
+	results = list(/datum/reagent/toxin/radiomagnetic_disruptor = 2)
+	required_reagents = list(/datum/reagent/thermite = 1, /datum/reagent/uranium/radium = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
