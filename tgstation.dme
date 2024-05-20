@@ -909,6 +909,7 @@
 #include "code\datums\ai\basic_mobs\basic_subtrees\mine_walls.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\move_to_cardinal.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\opportunistic_ventcrawler.dm"
+#include "code\datums\ai\basic_mobs\basic_subtrees\play_with_owners.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\prepare_travel_to_destination.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\ranged_skirmish.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\run_emote.dm"
