@@ -180,6 +180,9 @@
 /obj/structure/chem_separator/proc/get_boiling_point(datum/reagent/reg)
 	PRIVATE_PROC(TRUE)
 
+	//use the constant mass set on init
+	reg = GLOB.chemical_reagents_list[reg.type]
+
 	//reagents masses can vary between 10->800
 	var/normalized_coord = (reg.mass - 10) / 790
 
