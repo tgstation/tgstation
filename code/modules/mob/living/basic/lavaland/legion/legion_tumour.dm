@@ -7,6 +7,7 @@
 	icon_state = "legion_remains"
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_PARASITE_EGG
+	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE | ORGAN_VIRGIN | ORGAN_PROMINENT
 	decay_factor = STANDARD_ORGAN_DECAY * 3 // About 5 minutes outside of a host
 	/// What stage of growth the corruption has reached.
 	var/stage = 0
