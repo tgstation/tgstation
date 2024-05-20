@@ -80,6 +80,8 @@
 		"regenerative_nanites",
 		"sensor_crit_nanites",
 		"sensor_damage_nanites",
+		"sensor_blood_nanites",
+		"sensor_nutrition_nanites",
 		"sensor_death_nanites",
 		"sensor_health_nanites",
 		"sensor_species_nanites",

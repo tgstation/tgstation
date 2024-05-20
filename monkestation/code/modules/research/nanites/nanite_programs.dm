@@ -181,12 +181,10 @@
 	if(timer_trigger && world.time > timer_trigger_next)
 		trigger()
 		timer_trigger_next = world.time + timer_trigger
-		return
 
 	if(timer_trigger_delay_next && world.time > timer_trigger_delay_next)
 		trigger(delayed = TRUE)
 		timer_trigger_delay_next = 0
-		return
 
 	if(check_conditions() && consume_nanites(use_rate))
 		if(!passive_enabled)
@@ -268,7 +266,10 @@
 			host_mob.investigate_log("[src] nanite program received a software error due to minor shock.", INVESTIGATE_NANITES)
 			software_error()
 
-/datum/nanite_program/proc/on_death()
+/datum/nanite_program/proc/on_death(gibbed)
+	return
+
+/datum/nanite_program/proc/on_revive(full_heal, admin_revive)
 	return
 
 /datum/nanite_program/proc/software_error(type)
@@ -300,6 +301,8 @@
 			qdel(src)
 
 /datum/nanite_program/proc/receive_signal(code, source)
+	if (!code) // makes code 0 invalid
+		return
 	if(activation_code && code == activation_code && !activated)
 		activate()
 		host_mob.investigate_log("'s [name] nanite program was activated by [source] with code [code].", INVESTIGATE_NANITES)
@@ -312,6 +315,25 @@
 	if(kill_code && code == kill_code)
 		host_mob.investigate_log("'s [name] nanite program was deleted by [source] with code [code].", INVESTIGATE_NANITES)
 		qdel(src)
+
+/datum/nanite_program/proc/send_code_any(setting)
+	if (!activated)
+		return
+
+	var/datum/nanite_extra_setting/code_setting = extra_settings[setting]
+	SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, code_setting.get_value(), "a [name] program")
+
+/datum/nanite_program/proc/send_code()
+	send_code_any(NES_SENT_CODE)
+
+/datum/nanite_program/proc/send_code_inverted()
+	send_code_any(NES_SENT_CODE_INVERTED)
+
+/datum/nanite_program/proc/send_trigger_code()
+	send_code_any(NES_SENT_CODE_TRIGGER)
+
+/datum/nanite_program/proc/send_trigger_code_inverted()
+	send_code_any(NES_SENT_CODE_TRIGGER_INVERTED)
 
 ///A nanite program containing a behaviour protocol. Only one protocol of each class can be active at once.
 /datum/nanite_program/protocol
