@@ -16,10 +16,6 @@ GLOBAL_LIST_EMPTY_TYPED(dummy_grid_atoms, /obj/effect/abstract/dummy_grid_source
 	/// List of grid contents by type
 	var/list/grid_contents
 
-/obj/effect/abstract/dummy_grid_source/Destroy(force)
-	. = ..()
-
-
 /obj/effect/abstract/dummy_grid_source/proc/get_grid_contents(grid_type)
 	return grid_contents?[grid_type] || list()
 
