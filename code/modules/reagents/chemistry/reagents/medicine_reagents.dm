@@ -704,6 +704,7 @@
 		return
 	improve_eyesight(affected_mob, eyes)
 
+
 /datum/reagent/medicine/oculine/proc/improve_eyesight(mob/living/carbon/affected_mob, obj/item/organ/internal/eyes/eyes)
 	delta_light = creation_purity*10
 	eyes.lighting_cutoff += delta_light
@@ -753,6 +754,11 @@
 	if(!eyes)
 		return
 	restore_eyesight(affected_mob, eyes)
+
+/datum/reagent/medicine/oculine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, 1.5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/inacusiate
 	name = "Inacusiate"
