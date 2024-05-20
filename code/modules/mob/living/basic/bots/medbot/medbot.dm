@@ -156,7 +156,7 @@
 /mob/living/basic/bot/medbot/LateInitialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
-		linked_techweb = SSresearch.science_tech
+		link_techweb(SSresearch.science_tech) // monkestation edit: techweb linking refactor
 
 /mob/living/basic/bot/medbot/update_icon_state()
 	. = ..()
@@ -187,7 +187,7 @@
 
 /mob/living/basic/bot/medbot/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		linked_techweb = tool.buffer
+		link_techweb(tool.buffer) // monkestation edit: techweb linking refactor
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 // Variables sent to TGUI
@@ -222,9 +222,10 @@
 		if("stationary_mode")
 			medical_mode_flags ^= MEDBOT_STATIONARY_MODE
 		if("sync_tech")
-			if(!linked_techweb)
+			if(!sync_tech())
 				to_chat(our_user, span_notice("No research techweb connected."))
 				return
+			/* monkestation start - move sync_tech into its own proc.
 			var/oldheal_amount = heal_amount
 			var/tech_boosters
 			for(var/index in linked_techweb.researched_designs)
@@ -236,6 +237,7 @@
 				heal_amount = (round(tech_boosters * 0.5, 0.1) * initial(heal_amount)) + initial(heal_amount) //every 2 tend wounds tech gives you an extra 100% healing, adjusting for unique branches (combo is bonus)
 				if(oldheal_amount < heal_amount)
 					speak("New knowledge found! Surgical efficacy improved to [round(heal_amount/initial(heal_amount)*100)]%!")
+			*/ // monkestation end
 
 	update_appearance()
 

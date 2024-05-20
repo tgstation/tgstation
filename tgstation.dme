@@ -6549,6 +6549,7 @@
 #include "monkestation\code\modules\mob\living\living_defines.dm"
 #include "monkestation\code\modules\mob\living\status_procs.dm"
 #include "monkestation\code\modules\mob\living\basic\animatronic.dm"
+#include "monkestation\code\modules\mob\living\basic\bots\medbot\medbot.dm"
 #include "monkestation\code\modules\mob\living\basic\ggg\glerm.dm"
 #include "monkestation\code\modules\mob\living\basic\ggg\susflash.dm"
 #include "monkestation\code\modules\mob\living\basic\pets\parrot\parrot_ai\parroting_action.dm"
