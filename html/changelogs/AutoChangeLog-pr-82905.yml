@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - refactor: "modsuits have been refactored if you see bugs report them"
+  - bugfix: "admin cargo tech modsuit outfit now works correctly"
