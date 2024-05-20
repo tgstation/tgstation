@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	actions_types = list(/datum/action/item_action/halt, /datum/action/item_action/adjust)
 	icon_state = "sechailer"
 	inhand_icon_state = "sechailer"
-	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | GAS_FILTERING
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
@@ -60,10 +60,15 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	unique_death = 'sound/voice/sec_death.ogg'
 	COOLDOWN_DECLARE(hailer_cooldown)
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
+	///Decides the phrases available for use; defines used are the last index of a category of available phrases
 	var/aggressiveness = AGGR_BAD_COP
-	var/overuse_cooldown = FALSE
-	var/recent_uses = 0
+	///Whether the hailer has been broken due to overuse or not
 	var/broken_hailer = FALSE
+	///Whether the hailer is currently in cooldown for resetting recent_uses
+	var/overuse_cooldown = FALSE
+	///How many times was the hailer used in the last OVERUSE_COOLDOWN seconds
+	var/recent_uses = 0
+	///Whether the hailer is emagged or not
 	var/safety = TRUE
 
 /obj/item/clothing/mask/gas/sechailer/plasmaman
@@ -102,10 +107,8 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	actions_types = list(/datum/action/item_action/halt)
 
 /obj/item/clothing/mask/gas/sechailer/screwdriver_act(mob/living/user, obj/item/I)
-	. = TRUE
-	if(..())
-		return
-	else if (aggressiveness == AGGR_BROKEN)
+	. = ..()
+	if(aggressiveness == AGGR_BROKEN)
 		to_chat(user, span_danger("You adjust the restrictor but nothing happens, probably because it's broken."))
 		return
 	var/position = aggressiveness == AGGR_GOOD_COP ? "middle" : aggressiveness == AGGR_BAD_COP ? "last" : "first"
@@ -113,11 +116,11 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	aggressiveness = aggressiveness % 3 + 1 // loop AGGR_GOOD_COP -> AGGR_SHIT_COP
 
 /obj/item/clothing/mask/gas/sechailer/wirecutter_act(mob/living/user, obj/item/I)
-	. = TRUE
-	..()
+	. = ..()
 	if(aggressiveness != AGGR_BROKEN)
 		to_chat(user, span_danger("You broke the restrictor!"))
 		aggressiveness = AGGR_BROKEN
+		return
 
 /obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/halt))
@@ -128,12 +131,11 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
 
-/obj/item/clothing/mask/gas/sechailer/emag_act(mob/user, obj/item/card/emag/emag_card)
+/obj/item/clothing/mask/gas/sechailer/emag_act(mob/user)
 	if(safety)
 		safety = FALSE
-		balloon_alert(user, "vocal circuit fried")
-		return TRUE
-	return FALSE
+		to_chat(user, span_warning("You silently fry [src]'s vocal circuit."))
+		return ..()
 
 /obj/item/clothing/mask/gas/sechailer/verb/halt()
 	set category = "Object"
@@ -165,9 +167,8 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	// select phrase to play
 	play_phrase(usr, GLOB.hailer_phrases[select_phrase()])
 
-
 /obj/item/clothing/mask/gas/sechailer/proc/select_phrase()
-	if (!safety)
+	if(!safety)
 		return EMAG_PHRASE
 	else
 		var/upper_limit

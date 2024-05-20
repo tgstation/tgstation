@@ -118,7 +118,9 @@
 
 	//do the cleaning
 	user.visible_message(span_notice("[user] starts to clean [target]!"), span_notice("You start to clean [target]..."))
+	var/clean_succeeded = FALSE
 	if(do_after(user, cleaning_duration, target = target))
+		clean_succeeded = TRUE
 		user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
 		if(clean_target)
 			for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
@@ -131,7 +133,7 @@
 				for(var/datum/disease/advanced/D as anything in item.viruses)
 					item.remove_disease(D)
 
-		on_cleaned_callback?.Invoke(source, target, user)
+	on_cleaned_callback?.Invoke(source, target, user, clean_succeeded)
 
 	//remove the cleaning overlay
 	target.cut_overlay(low_bubble)
