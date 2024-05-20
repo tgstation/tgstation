@@ -55,6 +55,10 @@
 	stage = 0
 	elapsed_time = 0
 
+/obj/item/organ/internal/legion_tumour/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	owner.log_message("has received [src] which will eventually turn them into a Legion.", LOG_VICTIM)
+
 /obj/item/organ/internal/legion_tumour/attack(mob/living/target, mob/living/user, params)
 	if (try_apply(target, user))
 		qdel(src)
@@ -79,6 +83,7 @@
 	if (!ishuman(target))
 		return FALSE
 
+	log_combat(user, target, "used a Legion Tumour on", src, "as they are in crit, this will turn them into a Legion.")
 	target.visible_message(span_boldwarning("[user] splatters [target] with [src]... and it springs into horrible life!"))
 	var/mob/living/basic/legion_brood/skull = new(target.loc)
 	skull.melee_attack(target)
@@ -143,6 +148,7 @@
 /obj/item/organ/internal/legion_tumour/proc/infest()
 	if (QDELETED(src) || QDELETED(owner))
 		return
+	owner.log_message("has been turned into a Legion by their tumour.", LOG_VICTIM)
 	owner.visible_message(span_boldwarning("Black tendrils burst from [owner]'s flesh, covering them in amorphous flesh!"))
 	var/mob/living/basic/mining/legion/new_legion = new spawn_type(owner.loc)
 	new_legion.consume(owner)
