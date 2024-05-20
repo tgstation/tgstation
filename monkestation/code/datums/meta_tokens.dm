@@ -1,4 +1,7 @@
-GLOBAL_LIST_INIT(used_monthly_token, list())
+GLOBAL_LIST_EMPTY(used_monthly_token)
+
+/// Token for each player in the round, used to backup tokens to logs at roundend.
+GLOBAL_LIST_EMPTY(saved_token_values)
 
 ///assoc list of how many event tokens each role gets each month
 GLOBAL_LIST_INIT(patreon_etoken_values, list(
@@ -49,6 +52,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	owner = creator
 
 	var/datum/preferences/owners_prefs = creator.prefs
+	backup_tokens()
 	convert_list_to_tokens(owners_prefs.saved_tokens)
 	donator_token = check_for_donator_token()
 
@@ -63,6 +67,13 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 
 	total_antag_tokens = total_low_threat_tokens + total_medium_threat_tokens + total_high_threat_tokens
 
+/// Backs up the owner's tokens to [GLOB.saved_token_values],
+/// with sanity checks to make damn sure we don't write invalid data.
+/datum/meta_token_holder/proc/backup_tokens()
+	if(QDELETED(src) || QDELETED(owner) || !owner.ckey || QDELETED(owner.prefs) || !owner.prefs.saved_tokens)
+		return
+	GLOB.saved_token_values[owner.ckey] = owner.prefs.saved_tokens.Copy()
+
 /datum/meta_token_holder/proc/convert_tokens_to_list()
 	owner.prefs.saved_tokens = list(
 		"low_threat" = total_low_threat_tokens,
@@ -71,6 +82,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 		"event_tokens" = event_tokens,
 		"event_token_month" = event_token_month,
 	)
+	backup_tokens()
 	owner.prefs.save_preferences()
 
 /datum/meta_token_holder/proc/check_for_donator_token()

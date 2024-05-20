@@ -282,6 +282,9 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
 	var/hour = round((world.time - SSticker.round_start_time) / 36000)
+
+	// monkestation start: token backups, monkecoin rewards, challenges, and roundend webhook
+	rustg_file_write(json_encode(GLOB.saved_token_values), "[GLOB.log_directory]/tokens.json")
 	var/minute = round(((world.time - SSticker.round_start_time) - (hour * 36000)) / 600)
 	var/added_xp = round(25 + (minute**0.85))
 	for(var/client/C in GLOB.clients)
@@ -305,6 +308,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	ready_for_reboot = TRUE
 	var/datum/discord_embed/embed = format_roundend_embed("<@&999008528595419278>")
 	send2roundend_webhook(embed)
+	// monkestation end
 	standard_reboot()
 
 /datum/controller/subsystem/ticker/proc/format_roundend_embed(message)
