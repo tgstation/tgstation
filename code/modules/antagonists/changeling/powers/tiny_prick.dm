@@ -77,6 +77,8 @@
 	VAR_FINAL/datum/changeling_profile/selected_dna
 	/// Duration of the sting
 	var/sting_duration = 8 MINUTES
+	/// Set this to false via VV to allow golem, plasmaman, or monkey changelings to turn other people into golems, plasmamen, or monkeys
+	var/verify_valid_species = TRUE
 
 /datum/action/changeling/sting/transformation/Grant(mob/grant_to)
 	. = ..()
@@ -98,6 +100,9 @@
 	if(QDELETED(src) || QDELETED(changeling) || QDELETED(user))
 		return
 	if(!new_selected_dna || changeling.chosen_sting || selected_dna) // selected other sting or other DNA while sleeping
+		return
+	if(verify_valid_species && (TRAIT_NO_DNA_COPY in new_selected_dna.dna.species.inherent_traits))
+		user.balloon_alert(user, "dna incompatible!")
 		return
 	selected_dna = new_selected_dna
 	return ..()
