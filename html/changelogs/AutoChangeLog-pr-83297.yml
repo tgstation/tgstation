@@ -1,0 +1,4 @@
+author: "tmyqlfpir"
+delete-after: True
+changes:
+  - bugfix: "[Metastation] Service hallway door being bypassed by lying down"
