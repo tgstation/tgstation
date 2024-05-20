@@ -18,9 +18,9 @@
 	attack_verb_simple = "slice"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	move_force = MOVE_FORCE_EXTREMELY_STRONG
-	move_resist = MOVE_FORCE_EXTREMELY_STRONG
-	pull_force = MOVE_FORCE_EXTREMELY_STRONG
+	move_force = MOVE_FORCE_VERY_STRONG
+	move_resist = MOVE_FORCE_VERY_STRONG
+	pull_force = MOVE_FORCE_VERY_STRONG
 	crusher_loot = /obj/item/crusher_trophy/ice_demon_cube
 	ai_controller = /datum/ai_controller/basic_controller/ice_demon
 	death_message = "fades as the energies that tied it to this world dissipate."
