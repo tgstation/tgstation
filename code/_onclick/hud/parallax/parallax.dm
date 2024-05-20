@@ -182,7 +182,10 @@
 		animate(L, transform = L.transform, time = 0, loop = -1, flags = ANIMATION_END_NOW)
 		animate(transform = matrix(), time = T)
 
+GLOBAL_LIST_EMPTY(parallax_cost)
+GLOBAL_LIST_EMPTY(parallax_count)
 /datum/hud/proc/update_parallax(mob/viewmob)
+	INIT_COST(GLOB.parallax_cost, GLOB.parallax_count)
 	var/mob/screenmob = viewmob || mymob
 	var/client/C = screenmob.client
 	var/turf/posobj = get_turf(C.eye)
@@ -190,63 +193,102 @@
 		return
 
 	var/area/areaobj = posobj.loc
+	SET_COST("initial setup")
 	// Update the movement direction of the parallax if necessary (for shuttles)
 	set_parallax_movedir(areaobj.parallax_movedir, FALSE, screenmob)
+	SET_COST("set movedir")
 
 	var/force = FALSE
 	if(!C.previous_turf || (C.previous_turf.z != posobj.z))
 		C.previous_turf = posobj
 		force = TRUE
+	SET_COST("pull previous turf")
 
 	//Doing it this way prevents parallax layers from "jumping" when you change Z-Levels.
 	var/offset_x = posobj.x - C.previous_turf.x
 	var/offset_y = posobj.y - C.previous_turf.y
+	SET_COST("calc offsets")
 
 	if(!offset_x && !offset_y && !force)
 		return
 
+	SET_COST("check offsets")
 	var/glide_rate = round(world.icon_size / screenmob.glide_size * world.tick_lag, world.tick_lag)
+	SET_COST("build glide rate")
 	C.previous_turf = posobj
+	SET_COST("set previous turf")
 
 	var/largest_change = max(abs(offset_x), abs(offset_y))
+	SET_COST("calc largest change")
 	var/max_allowed_dist = (glide_rate / world.tick_lag) + 1
+	SET_COST("calc max allowed dist")
 	// If we aren't already moving/don't allow parallax, have made some movement, and that movement was smaller then our "glide" size, animate
 	var/run_parralax = (C.do_parallax_animations && glide_rate && !areaobj.parallax_movedir && C.dont_animate_parallax <= world.time && largest_change <= max_allowed_dist)
+	SET_COST("calc run parallax")
 
 	for(var/atom/movable/screen/parallax_layer/parallax_layer as anything in C.parallax_layers)
+		SET_COST("iterate layers")
 		var/our_speed = parallax_layer.speed
+		SET_COST("read speed var")
 		var/change_x
 		var/change_y
+		SET_COST("create change vars")
 		if(parallax_layer.absolute)
+			SET_COST("check absolute")
 			// We use change here so the typically large absolute objects (just lavaland for now) don't jitter so much
 			change_x = (posobj.x - SSparallax.planet_x_offset) * our_speed + parallax_layer.offset_x
+			SET_COST("abs calc delta x")
 			change_y = (posobj.y - SSparallax.planet_y_offset) * our_speed + parallax_layer.offset_y
+			SET_COST("abs calc delta y")
 		else
+			SET_COST("check absolute")
 			change_x = offset_x * our_speed
+			SET_COST("calc delta x")
 			change_y = offset_y * our_speed
+			SET_COST("calc delta y")
 
 			// This is how we tile parralax sprites
 			// It doesn't use change because we really don't want to animate this
 			if(parallax_layer.offset_x - change_x > 240)
+				SET_COST("tile check x > 240")
 				parallax_layer.offset_x -= 480
+				SET_COST("tile offset x - 480")
 			else if(parallax_layer.offset_x - change_x < -240)
+				SET_COST("tile check x < -240")
 				parallax_layer.offset_x += 480
+				SET_COST("tile offset x + 480")
+			else
+				SET_COST("tile check failed")
 			if(parallax_layer.offset_y - change_y > 240)
+				SET_COST("tile check y > 240")
 				parallax_layer.offset_y -= 480
+				SET_COST("tile offset y - 480")
 			else if(parallax_layer.offset_y - change_y < -240)
+				SET_COST("tile check y < -240")
 				parallax_layer.offset_y += 480
-
+				SET_COST("tile offset y + 480")
+			else
+				SET_COST("tile check failed")
 		// Now that we have our offsets, let's do our positioning
 		parallax_layer.offset_x -= change_x
+		SET_COST("offset by detlta X")
 		parallax_layer.offset_y -= change_y
+		SET_COST("offset by delta y")
 
 		parallax_layer.screen_loc = "CENTER-7:[round(parallax_layer.offset_x, 1)],CENTER-7:[round(parallax_layer.offset_y, 1)]"
+		SET_COST("set screen loc")
 
 		// We're going to use a transform to "glide" that last movement out, so it looks nicer
 		// Don't do any animates if we're not actually moving enough distance yeah? thanks lad
 		if(run_parralax && (largest_change * our_speed > 1))
+			SET_COST("check for animation")
 			parallax_layer.transform = matrix(1,0,change_x, 0,1,change_y)
+			SET_COST("set transform backwards")
 			animate(parallax_layer, transform=matrix(), time = glide_rate)
+			SET_COST("animate transform to null")
+		else
+			SET_COST("check for animation failed")
+	SET_COST("finish iterate layers")
 
 /atom/movable/proc/update_parallax_contents()
 	for(var/mob/client_mob as anything in client_mobs_in_contents)
