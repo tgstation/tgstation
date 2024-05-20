@@ -11,7 +11,7 @@
 	if(charge_time)
 		emote("inhale")
 
-	var/callback = on_sneeze_callback ? on_sneeze_callback : CALLBACK(src, PROC_REF(launch_sneeze), range, sneezoid, on_sneeze_hit_callback)
+	var/callback = on_sneeze_callback || CALLBACK(src, PROC_REF(launch_sneeze), range, sneezoid, on_sneeze_hit_callback)
 	addtimer(callback, charge_time)
 
 /// Shoot the sneeze projectile
