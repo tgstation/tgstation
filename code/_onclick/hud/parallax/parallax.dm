@@ -184,8 +184,8 @@
 		layer.pixel_x = target_x
 		layer.pixel_y = target_y
 
-		animate(layer, pixel_x = 0, pixel_y = 0, time = 0, loop = -1, flags = ANIMATION_END_NOW)
-		animate(transform = matrix(), time = T)
+		animate(layer, pixel_x = target_x, pixel_y = target_y, time = 0, loop = -1, flags = ANIMATION_END_NOW)
+		animate(pixel_x = 0, pixel_y = 0, time = T)
 
 GLOBAL_LIST_EMPTY(parallax_cost)
 GLOBAL_LIST_EMPTY(parallax_count)
@@ -363,7 +363,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 			if(x == 0 && y == 0)
 				continue
 			var/mutable_appearance/texture_overlay = mutable_appearance(icon, icon_state)
-			texture_overlay.transform = matrix(1, 0, x*480, 0, 1, y*480)
+			texture_overlay.pixel_x += 480 * x
+			texture_overlay.pixel_y += 480 * y
 			new_overlays += texture_overlay
 	cut_overlays()
 	add_overlay(new_overlays)
