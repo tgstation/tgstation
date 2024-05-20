@@ -78,6 +78,50 @@
 /datum/species/simian/get_species_description()
 	return "Monke."
 
+/datum/species/simian/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "skull",
+			SPECIES_PERK_NAME = "Little Monke",
+			SPECIES_PERK_DESC = "You are a weak being, and have less health than most.", // 0.85% health
+		)
+		,list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "hand",
+			SPECIES_PERK_NAME = "Thief",
+			SPECIES_PERK_DESC = "Your monkey instincts force you to steal objects at random.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "bolt",
+			SPECIES_PERK_NAME = "Agile",
+			SPECIES_PERK_DESC = "Simians run slightly faster than other species, but are still outpaced by Goblins.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "running",
+			SPECIES_PERK_NAME = "Vaulting",
+			SPECIES_PERK_DESC = "Simians vault over tables instead of climbing them.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fist-raised",
+			SPECIES_PERK_NAME = "Easy to Keep Down",
+			SPECIES_PERK_DESC = "You get back up slower from stuns.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "heart",
+			SPECIES_PERK_NAME = "Ape Not Kill Ape",
+			SPECIES_PERK_DESC = "Monkeys like you more.",
+		),
+	)
+
+	return to_add
+
 /datum/species/simian/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()
 	C.gain_trauma(/datum/brain_trauma/mild/kleptomania, TRAUMA_RESILIENCE_ABSOLUTE)

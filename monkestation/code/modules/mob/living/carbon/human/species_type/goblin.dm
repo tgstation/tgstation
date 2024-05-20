@@ -117,13 +117,25 @@
 			SPECIES_PERK_ICON = "",
 			SPECIES_PERK_NAME = "Short",
 			SPECIES_PERK_DESC = "Short, haha.", //Dwarf trauma
-		)
+		),
 		,list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "",
+			SPECIES_PERK_ICON = "hand",
 			SPECIES_PERK_NAME = "Small Hands",
 			SPECIES_PERK_DESC = "Goblin's small hands allow them to construct machines faster.", //Quick Build trait
-		)
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "bolt",
+			SPECIES_PERK_NAME = "Agile",
+			SPECIES_PERK_DESC = "Goblins run faster than other species.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "fist-raised",
+			SPECIES_PERK_NAME = "Hard to Keep Down",
+			SPECIES_PERK_DESC = "You get back up quicker from stuns.",
+		),
 	)
 
 	return to_add

@@ -84,6 +84,12 @@
 			SPECIES_PERK_DESC = "Arachnids cannot equip any kind of eyewear, requiring \
 			alternatives like welding helmets or implants. Their eyes have night vision however.",
 		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fist-raised",
+			SPECIES_PERK_NAME = "Arachnid Biology",
+			SPECIES_PERK_DESC = "Fly swatters  and pest killer will deal significantly higher amounts of damage to an Arachnid.",
+		),
 	)
 
 	return to_add
