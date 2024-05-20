@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Medibots now automatically update their surgical knowledge whenever surgery tech is researched."
