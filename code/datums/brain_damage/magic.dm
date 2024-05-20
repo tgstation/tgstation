@@ -22,7 +22,7 @@
 	if(!istype(T))
 		return
 
-	if(T.get_lumcount() <= SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
+	if(T.lumcount_below(SHADOW_SPECIES_LIGHT_THRESHOLD)) //if there's enough light, start dying
 		return
 
 	if(COOLDOWN_FINISHED(src, damage_warning_cooldown))

@@ -134,13 +134,12 @@
 		return
 	var/mob/living/carbon/human/affected_human = affected_carbon
 	var/turf/T = get_turf(affected_human)
-	var/lums = T.get_lumcount()
-	if(lums > 0.5)
+	if(T.lumcount_below(0.5))
+		affected_carbon.clear_mood_event("too_bright")
+	else
 		affected_human.add_mood_event("too_bright", /datum/mood_event/bright_light)
 		affected_human.adjust_dizzy_up_to(6 SECONDS, 80 SECONDS)
 		affected_human.adjust_confusion_up_to(0.5 SECONDS * seconds_per_tick, 20 SECONDS)
-	else
-		affected_carbon.clear_mood_event("too_bright")
 
 /datum/addiction/maintenance_drugs/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()

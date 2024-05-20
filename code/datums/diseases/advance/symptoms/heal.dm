@@ -285,12 +285,12 @@
 
 /datum/symptom/heal/darkness/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
-	var/light_amount = 0
-	if(isturf(M.loc)) //else, there's considered to be no light
-		var/turf/T = M.loc
-		light_amount = min(1,T.get_lumcount()) - 0.5
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			return power
+	if(!isturf(M.loc)) // No turf, no light
+		return power
+	var/turf/light_source = M.loc
+	if(light_source.lumcount_below(SHADOW_SPECIES_LIGHT_THRESHOLD + 0.5))
+		return power
+	return null
 
 /datum/symptom/heal/darkness/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 2 * actual_power

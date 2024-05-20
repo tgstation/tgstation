@@ -50,10 +50,13 @@
 		"352" = 'icons/effects/light_overlays/light_352.dmi',
 		)
 
+	///Cached list of turfs impacting our visibility
+	///Clears and will need to be recalculated if we move
+	var/list/cached_turfs
+	///Spatial source datum we use to manage the turfs we impact
+	var/datum/circle_grid_source/spatial_source
 	///Overlay effect to cut into the darkness and provide light.
 	var/image/visible_mask
-	///Lazy list to track the turfs being affected by our light, to determine their visibility.
-	var/list/turf/affected_turfs
 	///Movable atom currently holding the light. Parent might be a flashlight, for example, but that might be held by a mob or something else.
 	var/atom/movable/current_holder
 	///Movable atom the parent is attached to. For example, a flashlight into a helmet or gun. We'll need to track the thing the parent is attached to as if it were the parent itself.
@@ -82,8 +85,7 @@
 		stack_trace("[type] added to [parent], with [movable_parent.light_system] value for the light_system var. Use [OVERLAY_LIGHT], [OVERLAY_LIGHT_DIRECTIONAL] or [OVERLAY_LIGHT_BEAM] instead.")
 		return COMPONENT_INCOMPATIBLE
 
-	. = ..()
-
+	spatial_source = new(src, SPATIAL_GRID_CONTENTS_TYPE_OVERLAY_LIGHTS, _range, null)
 	visible_mask = image('icons/effects/light_overlays/light_32.dmi', icon_state = "light")
 	SET_PLANE_EXPLICIT(visible_mask, O_LIGHTING_VISUAL_PLANE, movable_parent)
 	visible_mask.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
@@ -110,7 +112,6 @@
 	if(!isnull(starts_on))
 		movable_parent.set_light_on(starts_on)
 
-
 /datum/component/overlay_lighting/RegisterWithParent()
 	. = ..()
 	if(directional)
@@ -132,12 +133,10 @@
 	if(movable_parent.light_on)
 		turn_on()
 
-
 /datum/component/overlay_lighting/UnregisterFromParent()
 	overlay_lighting_flags &= ~LIGHTING_ATTACHED
 	set_parent_attached_to(null)
 	set_holder(null)
-	clean_old_turfs()
 	UnregisterSignal(parent, list(
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_MOVABLE_Z_CHANGED,
@@ -155,45 +154,41 @@
 		turn_off()
 	return ..()
 
-
 /datum/component/overlay_lighting/Destroy()
 	set_parent_attached_to(null)
 	set_holder(null)
-	clean_old_turfs()
+	QDEL_NULL(spatial_source)
 	visible_mask = null
 	cone = null
 	parent_attached_to = null
 	return ..()
 
+/datum/component/overlay_lighting/proc/turf_impacted(turf/check_location)
+	SIGNAL_HANDLER
+	if(get_dist(check_location, get_turf(current_holder)) > lumcount_range)
+		return FALSE
+	if(check_location in get_affected_turfs())
+		return TRUE
+	return FALSE
 
-///Clears the affected_turfs lazylist, removing from its contents the effects of being near the light.
-/datum/component/overlay_lighting/proc/clean_old_turfs()
-	for(var/turf/lit_turf as anything in affected_turfs)
-		lit_turf.dynamic_lumcount -= lum_power
-	affected_turfs = null
+/datum/component/overlay_lighting/proc/get_affected_turfs()
+	if(!isnull(cached_turfs))
+		return cached_turfs
+	var/list/impacted_turfs = list()
+	if(isturf(current_holder?.loc))
+		for(var/turf/lit_turf in view(lumcount_range, get_turf(current_holder)))
+			impacted_turfs += lit_turf
+	cached_turfs = impacted_turfs
+	return impacted_turfs
 
-
-///Populates the affected_turfs lazylist, adding to its contents the effects of being near the light.
-/datum/component/overlay_lighting/proc/get_new_turfs()
-	if(!current_holder)
-		return
-	. = list()
-	for(var/turf/lit_turf in view(lumcount_range, get_turf(current_holder)))
-		lit_turf.dynamic_lumcount += lum_power
-		. += lit_turf
-	if(length(.))
-		affected_turfs = .
-
-
-///Clears the old affected turfs and populates the new ones.
-/datum/component/overlay_lighting/proc/make_luminosity_update()
-	clean_old_turfs()
+///Called when our lighting info changes
+/datum/component/overlay_lighting/proc/luminosity_update()
+	/// Reset cache
+	cached_turfs = null
 	if(!isturf(current_holder?.loc))
 		return
 	if(directional)
 		cast_directional_light()
-	get_new_turfs()
-
 
 ///Adds the luminosity and source for the affected movable atoms to keep track of their visibility.
 /datum/component/overlay_lighting/proc/add_dynamic_lumi()
@@ -202,6 +197,7 @@
 	current_holder.update_dynamic_luminosity()
 	if(directional)
 		current_holder.underlays += cone
+	spatial_source.set_center(current_holder)
 
 ///Removes the luminosity and source for the affected movable atoms to keep track of their visibility.
 /datum/component/overlay_lighting/proc/remove_dynamic_lumi()
@@ -210,6 +206,7 @@
 	current_holder.update_dynamic_luminosity()
 	if(directional)
 		current_holder.underlays -= cone
+	spatial_source.set_center(null)
 
 ///Called to change the value of parent_attached_to.
 /datum/component/overlay_lighting/proc/set_parent_attached_to(atom/movable/new_parent_attached_to)
@@ -247,7 +244,7 @@
 			remove_dynamic_lumi()
 	current_holder = new_holder
 	if(new_holder == null)
-		clean_old_turfs()
+		luminosity_update()
 		return
 	if(new_holder != parent && new_holder != parent_attached_to)
 		RegisterSignal(new_holder, COMSIG_QDELETING, PROC_REF(on_holder_qdel))
@@ -260,8 +257,7 @@
 		current_direction = new_holder.dir
 	if(overlay_lighting_flags & LIGHTING_ON)
 		add_dynamic_lumi()
-		make_luminosity_update()
-
+		luminosity_update()
 
 ///Used to determine the new valid current_holder from the parent's loc.
 /datum/component/overlay_lighting/proc/check_holder()
@@ -285,7 +281,6 @@
 		return
 	set_holder(null)
 
-
 ///Called when the current_holder is qdeleted, to remove the light effect.
 /datum/component/overlay_lighting/proc/on_holder_qdel(atom/movable/source, force)
 	SIGNAL_HANDLER
@@ -297,14 +292,12 @@
 		UnregisterSignal(current_holder, COMSIG_ATOM_DIR_CHANGE)
 	set_holder(null)
 
-
 ///Called when current_holder changes loc.
 /datum/component/overlay_lighting/proc/on_holder_moved(atom/movable/source, OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
 	if(!(overlay_lighting_flags & LIGHTING_ON))
 		return
-	make_luminosity_update()
-
+	luminosity_update()
 
 ///Called when parent changes loc.
 /datum/component/overlay_lighting/proc/on_parent_moved(atom/movable/source, OldLoc, Dir, Forced)
@@ -315,7 +308,7 @@
 	check_holder()
 	if(!(overlay_lighting_flags & LIGHTING_ON) || !current_holder)
 		return
-	make_luminosity_update()
+	luminosity_update()
 
 /datum/component/overlay_lighting/proc/on_z_move(atom/source)
 	SIGNAL_HANDLER
@@ -346,7 +339,7 @@
 	check_holder()
 	if(!(overlay_lighting_flags & LIGHTING_ON) || !current_holder)
 		return
-	make_luminosity_update()
+	luminosity_update()
 
 
 ///Changes the range which the light reaches. 0 means no light, 6 is the maximum value.
@@ -380,7 +373,8 @@
 		else
 			cast_range = clamp(round(new_range * 0.5), 1, 3)
 	if(overlay_lighting_flags & LIGHTING_ON)
-		make_luminosity_update()
+		luminosity_update()
+	spatial_source.set_radius(lumcount_range)
 
 
 ///Changes the intensity/brightness of the light by altering the visual object's alpha.
@@ -455,11 +449,9 @@
 	overlay_lighting_flags |= LIGHTING_ON
 	if(current_holder)
 		add_dynamic_lumi()
-		if(directional)
-			cast_directional_light()
 	if(current_holder && current_holder != parent && current_holder != parent_attached_to)
 		RegisterSignal(current_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
-	get_new_turfs()
+	luminosity_update()
 
 
 ///Toggles the light off.
@@ -471,7 +463,7 @@
 	overlay_lighting_flags &= ~LIGHTING_ON
 	if(current_holder && current_holder != parent && current_holder != parent_attached_to)
 		UnregisterSignal(current_holder, COMSIG_MOVABLE_MOVED)
-	clean_old_turfs()
+	luminosity_update()
 
 
 ///Here we append the behavior associated to changing lum_power.
@@ -480,9 +472,7 @@
 		return
 	. = lum_power
 	lum_power = new_lum_power
-	var/difference = . - lum_power
-	for(var/turf/lit_turf as anything in affected_turfs)
-		lit_turf.dynamic_lumcount -= difference
+	luminosity_update()
 
 ///Here we append the behavior associated to changing lum_power.
 /datum/component/overlay_lighting/proc/cast_directional_light()
@@ -551,7 +541,7 @@
 		return
 	current_direction = newdir
 	if(overlay_lighting_flags & LIGHTING_ON)
-		make_luminosity_update()
+		luminosity_update()
 
 /datum/component/overlay_lighting/proc/on_parent_crafted(datum/source, atom/movable/new_craft)
 	SIGNAL_HANDLER

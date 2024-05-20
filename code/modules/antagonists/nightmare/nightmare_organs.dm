@@ -112,8 +112,7 @@
 		return
 	var/turf/T = get_turf(owner)
 	if(istype(T))
-		var/light_amount = T.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+		if(T.lumcount_below(SHADOW_SPECIES_LIGHT_THRESHOLD))
 			respawn_progress += seconds_per_tick SECONDS
 			playsound(owner, 'sound/effects/singlebeat.ogg', 40, TRUE)
 	if(respawn_progress < HEART_RESPAWN_THRESHHOLD)

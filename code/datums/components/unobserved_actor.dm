@@ -87,7 +87,7 @@
 /datum/component/unobserved_actor/proc/can_be_seen(mob/living/source)
 	var/turf/my_turf = get_turf(source)
 	// Check for darkness
-	if(my_turf.lighting_object && my_turf.get_lumcount() < 0.1) // No one can see us in the darkness, right?
+	if(my_turf.lighting_object && my_turf.lumcount_below(0.1)) // No one can see us in the darkness, right?
 		return FALSE
 
 	// We aren't in darkness, loop for viewers.

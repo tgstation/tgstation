@@ -16,11 +16,13 @@
 #define SPATIAL_GRID_CONTENTS_TYPE_CLIENTS RECURSIVE_CONTENTS_CLIENT_MOBS
 ///all atmos machines are stored in this channel (I'm sorry kyler)
 #define SPATIAL_GRID_CONTENTS_TYPE_ATMOS "spatial_grid_contents_type_atmos"
+///all lighting overlay sources are stored in this channel
+#define SPATIAL_GRID_CONTENTS_TYPE_OVERLAY_LIGHTS "spatial_grid_contents_type_lights"
 
-#define ALL_CONTENTS_OF_CELL(cell) (cell.hearing_contents | cell.client_contents | cell.atmos_contents)
+#define ALL_CONTENTS_OF_CELL(cell) (cell.hearing_contents | cell.client_contents | cell.atmos_contents | cell.light_contents)
 
 ///whether movable is itself or containing something which should be in one of the spatial grid channels.
-#define HAS_SPATIAL_GRID_CONTENTS(movable) (movable.spatial_grid_key)
+#define HAS_SPATIAL_GRID_CONTENTS(datum) (datum.spatial_grid_key)
 
 // macros meant specifically to add/remove movables from the internal lists of /datum/spatial_grid_cell,
 // when empty they become references to a single list in SSspatial_grid and when filled they become their own list
@@ -52,4 +54,5 @@
 #define GRID_CELL_REMOVE_ALL(cell, movable) \
 	GRID_CELL_REMOVE(cell.hearing_contents, movable) \
 	GRID_CELL_REMOVE(cell.client_contents, movable) \
-	GRID_CELL_REMOVE(cell.atmos_contents, movable)
+	GRID_CELL_REMOVE(cell.atmos_contents, movable) \
+	GRID_CELL_REMOVE(cell.light_contents, movable)

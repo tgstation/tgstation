@@ -184,7 +184,7 @@
 					sleep_quality = -0.2
 
 		var/turf/rest_turf = get_turf(owner)
-		var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
+		var/is_sleeping_in_darkness = rest_turf.lumcount_below(LIGHTING_TILE_IS_DARK)
 
 		// sleeping with a blindfold or in the dark helps us rest
 		if(owner.is_blind_from(EYES_COVERED) || is_sleeping_in_darkness)

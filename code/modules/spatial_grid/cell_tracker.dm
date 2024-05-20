@@ -74,6 +74,11 @@
 				new_members += cell.atmos_contents
 			for(var/datum/spatial_grid_cell/cell as anything in new_and_old[2])
 				former_members += cell.atmos_contents
+		if(SPATIAL_GRID_CONTENTS_TYPE_OVERLAY_LIGHTS)
+			for(var/datum/spatial_grid_cell/cell as anything in new_and_old[1])
+				new_members += cell.light_contents
+			for(var/datum/spatial_grid_cell/cell as anything in new_and_old[2])
+				former_members += cell.light_contents
 
 	return list(new_members, former_members)
 

@@ -44,7 +44,7 @@
 /mob/living/basic/creature/proc/can_be_seen(turf/location)
 	// Check for darkness
 	if(location?.lighting_object)
-		if(location.get_lumcount() < 0.1) // No one can see us in the darkness, right?
+		if(location.lumcount_below(0.1)) // No one can see us in the darkness, right?
 			return null
 
 	// We aren't in darkness, loop for viewers.

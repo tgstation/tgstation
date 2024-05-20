@@ -28,6 +28,8 @@
 	var/list/client_contents
 	///every atmos machine inside this cell
 	var/list/atmos_contents
+	///holds /obj/effect/abstract/dummy_grid_source objects WHICH IN TURN hold every overlay light inside this cell (I am sorry)
+	var/list/light_contents
 
 /datum/spatial_grid_cell/New(cell_x, cell_y, cell_z)
 	. = ..()
@@ -43,6 +45,7 @@
 	hearing_contents = dummy_list
 	client_contents = dummy_list
 	atmos_contents = dummy_list
+	light_contents = dummy_list
 
 /datum/spatial_grid_cell/Destroy(force)
 	if(force)//the response to someone trying to qdel this is a right proper fuck you
@@ -74,7 +77,8 @@
  *
  * The second pattern is more paired down, and supports more wide use.
  * Rather then the object and anything the object is in being sensitive, it's limited to just the object itself
- * Currently only [SPATIAL_GRID_CONTENTS_TYPE_ATMOS] uses this pattern. This is because it's far more common, and so worth optimizing
+ * Currently only [SPATIAL_GRID_CONTENTS_TYPE_ATMOS] and [SPATIAL_GRID_CONTENTS_TYPE_OVERLAY_LIGHTS] use this pattern.
+ * This is because they're far more common, and so worth optimizing (and overlay lights manage themselves)
  *
  */
 SUBSYSTEM_DEF(spatial_grid)
@@ -207,10 +211,10 @@ SUBSYSTEM_DEF(spatial_grid)
 				old_cell_that_needs_updating.cell_y = cell_row_for_expanded_y_axis
 
 ///the left or bottom side index of a box composed of spatial grid cells with the given actual center x or y coordinate
-#define BOUNDING_BOX_MIN(center_coord) max(GET_SPATIAL_INDEX(center_coord - range), 1)
+#define BOUNDING_BOX_MIN(center_coord, range) max(GET_SPATIAL_INDEX(center_coord - range), 1)
 ///the right or upper side index of a box composed of spatial grid cells with the given center x or y coordinate.
 ///outputted value cant exceed the number of cells on that axis
-#define BOUNDING_BOX_MAX(center_coord, axis_size) min(GET_SPATIAL_INDEX(center_coord + range), axis_size)
+#define BOUNDING_BOX_MAX(center_coord, axis_size, range) min(GET_SPATIAL_INDEX(center_coord + range), axis_size)
 
 /**
  * https://en.wikipedia.org/wiki/Range_searching#Orthogonal_range_searching
@@ -238,22 +242,26 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	switch(type)
 		if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
-			for(var/row in BOUNDING_BOX_MIN(center_y) to BOUNDING_BOX_MAX(center_y, cells_on_y_axis))
-				for(var/x_index in BOUNDING_BOX_MIN(center_x) to BOUNDING_BOX_MAX(center_x, cells_on_x_axis))
+			for(var/row in BOUNDING_BOX_MIN(center_y, range) to BOUNDING_BOX_MAX(center_y, cells_on_y_axis, range))
+				for(var/x_index in BOUNDING_BOX_MIN(center_x, range) to BOUNDING_BOX_MAX(center_x, cells_on_x_axis, range))
 
 					. += grid_level[row][x_index].client_contents
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
-			for(var/row in BOUNDING_BOX_MIN(center_y) to BOUNDING_BOX_MAX(center_y, cells_on_y_axis))
-				for(var/x_index in BOUNDING_BOX_MIN(center_x) to BOUNDING_BOX_MAX(center_x, cells_on_x_axis))
+			for(var/row in BOUNDING_BOX_MIN(center_y, range) to BOUNDING_BOX_MAX(center_y, cells_on_y_axis, range))
+				for(var/x_index in BOUNDING_BOX_MIN(center_x, range) to BOUNDING_BOX_MAX(center_x, cells_on_x_axis, range))
 
 					. += grid_level[row][x_index].hearing_contents
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
-			for(var/row in BOUNDING_BOX_MIN(center_y) to BOUNDING_BOX_MAX(center_y, cells_on_y_axis))
-				for(var/x_index in BOUNDING_BOX_MIN(center_x) to BOUNDING_BOX_MAX(center_x, cells_on_x_axis))
+			for(var/row in BOUNDING_BOX_MIN(center_y, range) to BOUNDING_BOX_MAX(center_y, cells_on_y_axis, range))
+				for(var/x_index in BOUNDING_BOX_MIN(center_x, range) to BOUNDING_BOX_MAX(center_x, cells_on_x_axis, range))
 					. += grid_level[row][x_index].atmos_contents
 
+		if(SPATIAL_GRID_CONTENTS_TYPE_OVERLAY_LIGHTS)
+			for(var/row in BOUNDING_BOX_MIN(center_y, range) to BOUNDING_BOX_MAX(center_y, cells_on_y_axis, range))
+				for(var/x_index in BOUNDING_BOX_MIN(center_x, range) to BOUNDING_BOX_MAX(center_x, cells_on_x_axis, range))
+					. += grid_level[row][x_index].light_contents
 	return .
 
 ///get the grid cell encomapassing targets coordinates
@@ -379,6 +387,10 @@ SUBSYSTEM_DEF(spatial_grid)
 				GRID_CELL_SET(intersecting_cell.atmos_contents, new_target)
 				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_ATMOS), new_target)
 
+			if(SPATIAL_GRID_CONTENTS_TYPE_OVERLAY_LIGHTS)
+				GRID_CELL_SET(intersecting_cell.light_contents, new_target)
+				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_OVERLAY_LIGHTS), new_target)
+
 ///acts like enter_cell() but only adds the target to a specified type of grid cell contents list
 /datum/controller/subsystem/spatial_grid/proc/add_single_type(atom/movable/new_target, turf/target_turf, exclusive_type)
 	if(!initialized)
@@ -408,6 +420,10 @@ SUBSYSTEM_DEF(spatial_grid)
 		if(SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 			GRID_CELL_SET(intersecting_cell.atmos_contents, new_target)
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_ATMOS), new_target)
+
+		if(SPATIAL_GRID_CONTENTS_TYPE_OVERLAY_LIGHTS)
+			GRID_CELL_SET(intersecting_cell.light_contents, new_target)
+			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_OVERLAY_LIGHTS), new_target)
 
 	return intersecting_cell
 
@@ -448,6 +464,10 @@ SUBSYSTEM_DEF(spatial_grid)
 				GRID_CELL_REMOVE(intersecting_cell.atmos_contents, old_target)
 				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(type), old_target)
 
+			if(SPATIAL_GRID_CONTENTS_TYPE_OVERLAY_LIGHTS)
+				GRID_CELL_REMOVE(intersecting_cell.light_contents, old_target)
+				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(type), old_target)
+
 	return TRUE
 
 ///acts like exit_cell() but only removes the target from the specified type of grid cell contents list
@@ -478,6 +498,10 @@ SUBSYSTEM_DEF(spatial_grid)
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 			GRID_CELL_REMOVE(intersecting_cell.atmos_contents, old_target)
+			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target)
+
+		if(SPATIAL_GRID_CONTENTS_TYPE_OVERLAY_LIGHTS)
+			GRID_CELL_REMOVE(intersecting_cell.light_contents, old_target)
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target)
 
 	return TRUE
@@ -529,6 +553,12 @@ SUBSYSTEM_DEF(spatial_grid)
 						contents = "[contents], atmos"
 					else
 						contents = "atmos"
+
+				if(movable_to_check in cell.light_contents)
+					if(length(contents) > 0)
+						contents = "[contents], light"
+					else
+						contents = "light"
 
 				if(length(error_data) > 0)
 					error_data = "[error_data], {coords: [coords], within channels: [contents]}"
@@ -601,7 +631,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	for(var/list/z_level_grid as anything in grids_by_z_level)
 		for(var/list/cell_row as anything in z_level_grid)
 			for(var/datum/spatial_grid_cell/cell as anything in cell_row)
-				if(to_remove in (cell.hearing_contents | cell.client_contents | cell.atmos_contents))
+				if(to_remove in (cell.hearing_contents | cell.client_contents | cell.atmos_contents | cell.light_contents))
 					containing_cells += cell
 					if(remove_from_cells)
 						force_remove_from_cell(to_remove, cell)
@@ -674,14 +704,17 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/raw_clients = 0
 	var/raw_hearables = 0
 	var/raw_atmos = 0
+	var/raw_lights = 0
 
 	var/cells_with_clients = 0
 	var/cells_with_hearables = 0
 	var/cells_with_atmos = 0
+	var/cells_with_lights = 0
 
 	var/list/client_list = list()
 	var/list/hearable_list = list()
 	var/list/atmos_list = list()
+	var/list/light_list = list()
 
 	var/x_cell_count = world.maxx / SPATIAL_GRID_CELLSIZE
 	var/y_cell_count = world.maxy / SPATIAL_GRID_CELLSIZE
@@ -691,6 +724,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/average_clients_per_cell = 0
 	var/average_hearables_per_cell = 0
 	var/average_atmos_mech_per_call = 0
+	var/average_lights_per_call = 0
 
 	var/hearable_min_x = x_cell_count
 	var/hearable_max_x = 1
@@ -709,6 +743,12 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	var/atmos_min_y = y_cell_count
 	var/atmos_max_y = 1
+
+	var/light_min_x = x_cell_count
+	var/light_max_x = 1
+
+	var/light_min_y = y_cell_count
+	var/light_max_y = 1
 
 	var/list/inserted_clients = list()
 
@@ -734,10 +774,12 @@ SUBSYSTEM_DEF(spatial_grid)
 		var/client_length = length(cell.client_contents)
 		var/hearable_length = length(cell.hearing_contents)
 		var/atmos_length = length(cell.atmos_contents)
+		var/light_length = length(cell.light_contents)
 
 		raw_clients += client_length
 		raw_hearables += hearable_length
 		raw_atmos += atmos_length
+		raw_lights += light_length
 
 		if(client_length)
 			cells_with_clients++
@@ -790,13 +832,33 @@ SUBSYSTEM_DEF(spatial_grid)
 			if(cell.cell_y > atmos_max_y)
 				atmos_max_y = cell.cell_y
 
+		if(raw_lights)
+			cells_with_lights++
+
+			for(var/obj/effect/abstract/dummy_grid_source/source as anything in cell.light_contents)
+				light_list += source.get_grid_contents(SPATIAL_GRID_CONTENTS_TYPE_OVERLAY_LIGHTS)
+
+			if(cell.cell_x < light_min_x)
+				light_min_x = cell.cell_x
+
+			if(cell.cell_x > light_max_x)
+				light_max_x = cell.cell_x
+
+			if(cell.cell_y < light_min_y)
+				light_min_y = cell.cell_y
+
+			if(cell.cell_y > light_max_y)
+				light_max_y = cell.cell_y
+
 	var/total_client_distance = 0
 	var/total_hearable_distance = 0
 	var/total_atmos_distance = 0
+	var/total_light_distance = 0
 
 	var/average_client_distance = 0
 	var/average_hearable_distance = 0
 	var/average_atmos_distance = 0
+	var/average_light_distance = 0
 
 	for(var/hearable in hearable_list)//n^2 btw
 		for(var/other_hearable in hearable_list)
@@ -816,30 +878,40 @@ SUBSYSTEM_DEF(spatial_grid)
 				continue
 			total_atmos_distance += get_dist(atmos, other_atmos)
 
+	for(var/light in light_list)//n^2 btw
+		for(var/other_light in light_list)
+			if(light == other_light)
+				continue
+			total_light_distance += get_dist(light, other_light)
+
 	if(length(hearable_list))
 		average_hearable_distance = total_hearable_distance / length(hearable_list)
 	if(length(client_list))
 		average_client_distance = total_client_distance / length(client_list)
 	if(length(atmos_list))
 		average_atmos_distance = total_atmos_distance / length(atmos_list)
+	if(length(light_list))
+		average_light_distance = total_light_distance / length(light_list)
 
 	average_clients_per_cell = raw_clients / total_cells
 	average_hearables_per_cell = raw_hearables / total_cells
 	average_atmos_mech_per_call = raw_atmos / total_cells
+	average_lights_per_call = raw_lights / total_cells
 
 	for(var/mob/inserted_client as anything in inserted_clients)
 		qdel(inserted_client)
 
 	message_admins("on z level [z] there are [raw_clients] clients ([insert_clients] of whom are fakes inserted to random station turfs)\
-	, [raw_hearables] hearables, and [raw_atmos] atmos machines. all of whom are inside the bounding box given by \
+	, [raw_hearables] hearables, [raw_atmos] atmos machines, and [raw_lights] overlay lights. all of whom are inside the bounding box given by \
 	clients: ([client_min_x], [client_min_y]) x ([client_max_x], [client_max_y]), \
-	hearables: ([hearable_min_x], [hearable_min_y]) x ([hearable_max_x], [hearable_max_y]) \
-	and atmos machines: ([atmos_min_x], [atmos_min_y]) x ([atmos_max_x], [atmos_max_y]), \
+	hearables: ([hearable_min_x], [hearable_min_y]) x ([hearable_max_x], [hearable_max_y]), \
+	atmos machines: ([atmos_min_x], [atmos_min_y]) x ([atmos_max_x], [atmos_max_y]), \
+	and overlay lights: ([light_min_x], [light_min_y]) x ([light_max_x], [light_max_y]), \
 	on average there are [average_clients_per_cell] clients per cell, [average_hearables_per_cell] hearables per cell, \
-	and [average_atmos_mech_per_call] per cell, \
-	[cells_with_clients] cells have clients, [cells_with_hearables] have hearables, and [cells_with_atmos] have atmos machines \
+	[average_atmos_mech_per_call] atmos machines per cell, and [average_lights_per_call] overlay lights per cell \
+	[cells_with_clients] cells have clients, [cells_with_hearables] have hearables, [cells_with_atmos] have atmos machines, and [cells_with_lights] have lights \
 	the average client distance is: [average_client_distance], the average hearable_distance is [average_hearable_distance], \
-	and the average atmos distance is [average_atmos_distance] ")
+	the average atmos distance is [average_atmos_distance], and the average light distance is [average_light_distance] ")
 
 #undef BOUNDING_BOX_MAX
 #undef BOUNDING_BOX_MIN

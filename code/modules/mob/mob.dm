@@ -589,7 +589,7 @@
 	if(is_blind()) //blind people see things differently (through touch)
 		if(!blind_examine_check(examinify))
 			return
-	else if(examine_turf && !(examine_turf.luminosity || examine_turf.dynamic_lumcount) && \
+	else if(examine_turf && examine_turf.is_softly_lit() && \
 		get_dist(src, examine_turf) > 1 && \
 		!has_nightvision()) // If you aren't blind, it's in darkness (that you can't see) and farther then next to you
 		return
@@ -1389,7 +1389,7 @@
 	var/turf/mob_location = get_turf(src)
 	var/area/mob_area = get_area(src)
 
-	if(mob_location.get_lumcount() > light_amount)
+	if(!mob_location.lumcount_below(light_amount))
 		return TRUE
 	else if(!mob_area.static_lighting)
 		return TRUE

@@ -815,6 +815,7 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 
 	// We'll have to update this if offsets change, because we load lowest z to highest z
 	generate_lighting_appearance_by_z(z_value)
+	update_dummy_sources(z_value)
 
 /datum/controller/subsystem/mapping/proc/build_area_turfs(z_level, space_guaranteed)
 	// If we know this is filled with default tiles, we can use the default area

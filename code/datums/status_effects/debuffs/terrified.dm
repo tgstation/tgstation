@@ -125,11 +125,10 @@
 	var/unlit_tiles = 0
 
 	for(var/turf/open/turf_to_check in range(1, owner.loc))
-		var/light_amount = turf_to_check.get_lumcount()
-		if(light_amount > 0.2)
-			lit_tiles++
-		else
+		if(turf_to_check.lumcount_below(LIGHTING_TILE_IS_DARK))
 			unlit_tiles++
+		else
+			lit_tiles++
 
 	return lit_tiles < unlit_tiles
 

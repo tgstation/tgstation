@@ -273,8 +273,7 @@ effective or pretty fucking useless.
 		return
 
 	var/turf/our_turf = get_turf(owner)
-	var/lumcount = our_turf?.get_lumcount() || 0
-	if(lumcount > 0.3)
+	if(!our_turf?.lumcount_below(0.3))
 		// Decay charge while invisible+ in the light
 		charge = max(0, charge - (max_charge * 0.05) * seconds_per_tick)
 		build_all_button_icons(UPDATE_BUTTON_STATUS)

@@ -34,9 +34,7 @@
 
 	var/turf/holder_turf = get_turf(quirk_holder)
 
-	var/lums = holder_turf.get_lumcount()
-
-	if(lums > LIGHTING_TILE_IS_DARK)
+	if(!holder_turf.lumcount_below(LIGHTING_TILE_IS_DARK))
 		quirk_holder.clear_mood_event("nyctophobia")
 		return
 

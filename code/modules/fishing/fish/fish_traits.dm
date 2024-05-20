@@ -83,8 +83,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 /datum/fish_trait/nocturnal/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
 	var/turf/turf = get_turf(fisherman)
-	var/light_amount = turf.get_lumcount()
-	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
+	if(!turf.lumcount_below(SHADOW_SPECIES_LIGHT_THRESHOLD))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 
 /datum/fish_trait/nocturnal/apply_to_fish(obj/item/fish/fish)
@@ -94,8 +93,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	SIGNAL_HANDLER
 	if(isturf(source.loc) || isaquarium(source))
 		var/turf/turf = get_turf(source)
-		var/light_amount = turf.get_lumcount()
-		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
+		if(!turf.lumcount_below(SHADOW_SPECIES_LIGHT_THRESHOLD))
 			source.adjust_health(source.health - 0.5 * seconds_per_tick)
 
 /datum/fish_trait/heavy

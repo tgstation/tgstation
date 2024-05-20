@@ -16,6 +16,39 @@
 
 	new /datum/lighting_object(src)
 
+/// Returns TRUE if lumcount is below the passed in threshold, FALSE otherwise
+/turf/proc/lumcount_below(threshold)
+	if(threshold > 1)
+		return TRUE
+	if (!lighting_object)
+		return TRUE
+
+	var/totallums = 0
+	var/datum/lighting_corner/L
+	L = lighting_corner_NE
+	if (L)
+		totallums += L.lum_r + L.lum_b + L.lum_g
+	L = lighting_corner_SE
+	if (L)
+		totallums += L.lum_r + L.lum_b + L.lum_g
+	L = lighting_corner_SW
+	if (L)
+		totallums += L.lum_r + L.lum_b + L.lum_g
+	L = lighting_corner_NW
+	if (L)
+		totallums += L.lum_r + L.lum_b + L.lum_g
+	if(totallums >= threshold)
+		return FALSE
+
+	for(var/datum/component/overlay_lighting/in_range as anything in SSspatial_grid.orthogonal_range_search(src, SPATIAL_GRID_CONTENTS_TYPE_OVERLAY_LIGHTS, 0))
+		if(!in_range.turf_impacted(src))
+			continue
+		totallums += in_range.lum_power
+		if(totallums >= threshold)
+			return FALSE
+
+	return TRUE
+
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(minlum = 0, maxlum = 1)
 	if (!lighting_object)
@@ -41,7 +74,7 @@
 
 	totallums = (totallums - minlum) / (maxlum - minlum)
 
-	totallums += dynamic_lumcount
+	totallums += get_dynamic_lumcount()
 
 	return CLAMP01(totallums)
 
@@ -53,7 +86,19 @@
 	if (!lighting_object)
 		return FALSE
 
-	return !(luminosity || dynamic_lumcount)
+	return !(luminosity || get_dynamic_lumcount())
+
+/// Returns the lumcount from dynamic sources impacting this turf
+/turf/proc/get_dynamic_lumcount()
+	var/dynamic_lumcount = 0
+	// Alright, let's pull from overlay lighting
+	// Gonna do this by extracting from overlay lights both near us and that want us
+	for(var/obj/effect/abstract/dummy_grid_source/in_range as anything in SSspatial_grid.orthogonal_range_search(src, SPATIAL_GRID_CONTENTS_TYPE_OVERLAY_LIGHTS, 0))
+		for(var/datum/component/overlay_lighting/light_in_range as anything in in_range.get_grid_contents(SPATIAL_GRID_CONTENTS_TYPE_OVERLAY_LIGHTS))
+			if(!light_in_range.turf_impacted(src))
+				continue
+			dynamic_lumcount += light_in_range.lum_power
+	return dynamic_lumcount
 
 
 ///Proc to add movable sources of opacity on the turf and let it handle lighting code.

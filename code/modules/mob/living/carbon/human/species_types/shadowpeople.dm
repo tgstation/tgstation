@@ -110,9 +110,8 @@
 	var/turf/owner_turf = owner.loc
 	if(!isturf(owner_turf))
 		return
-	var/light_amount = owner_turf.get_lumcount()
-
-	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
+		
+	if (owner_turf.lumcount_below(SHADOW_SPECIES_LIGHT_THRESHOLD)) //heal in the dark
 		owner.apply_status_effect(applied_status)
 	if (!owner.has_status_effect(applied_status))
 		owner.take_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
