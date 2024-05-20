@@ -47346,7 +47346,7 @@
 "okf" = (
 /obj/structure/bodycontainer/morgue,
 /obj/machinery/camera{
-	c_tag = "Morgue South";
+	c_tag = "Morgue Office";
 	dir = 5;
 	network = list("ss13","medbay")
 	},
@@ -71962,6 +71962,11 @@
 "vAO" = (
 /obj/structure/bodycontainer/morgue/beeper_off{
 	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Morgue South";
+	dir = 5;
+	network = list("ss13","medbay")
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
