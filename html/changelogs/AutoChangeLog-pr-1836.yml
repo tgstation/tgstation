@@ -1,0 +1,4 @@
+author: "Uristthedorf"
+delete-after: True
+changes:
+  - rscadd: "More documentation for arachnids, florans, goblins, simians, and moths."
