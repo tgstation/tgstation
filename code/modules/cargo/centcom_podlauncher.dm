@@ -27,6 +27,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 		null, // I don't know why null is the first element of this typepache but it was there when I found it
 		/mob/dead,
 		/obj/effect/landmark,
+		/obj/effect/abstract/dummy_grid_source,
 		/obj/docking_port,
 		/obj/effect/particle_effect/sparks,
 		/obj/effect/pod_landingzone,

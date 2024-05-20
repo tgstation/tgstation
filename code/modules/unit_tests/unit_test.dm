@@ -78,7 +78,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	// clear the test area
 	for (var/turf/turf in Z_TURFS(run_loc_floor_bottom_left.z))
 		for (var/content in turf.contents)
-			if (istype(content, /obj/effect/landmark))
+			if (istype(content, /obj/effect/landmark) || istype(content, /obj/effect/abstract/dummy_grid_source))
 				continue
 			qdel(content)
 	return ..()
