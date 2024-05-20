@@ -254,7 +254,7 @@
 			if(disease_air_spread_walk(T, V))
 				C.AirborneContractDisease(src, force_spread)
 
-/proc/disease_air_spread_walk(turf/start, turf/end)//
+/proc/disease_air_spread_walk(turf/start, turf/end)
 	if(!start || !end)
 		return FALSE
 	while(TRUE)

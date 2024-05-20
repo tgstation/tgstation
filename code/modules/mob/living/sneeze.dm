@@ -1,9 +1,12 @@
+/// Launch a sneeze that can infect with a disease
 /mob/living/proc/infectious_sneeze(datum/disease/disease, force, range = 4, charge_time = 0.5 SECONDS, obj/projectile/sneezoid = /obj/projectile/sneeze)
 	sneeze(range, charge_time, sneezoid, on_sneeze_hit_callback = CALLBACK(src, PROC_REF(try_sneeze_infect), disease, force))
 
+/// Try and infect following a sneeze hit. force to always infect
 /mob/living/proc/try_sneeze_infect(datum/disease/disease, force, mob/living/target)
 	target.AirborneContractDisease(disease, force)
 
+/// Inhale and start the sneeze timer. on_sneeze_callback can be used to do custom sneezes, on_sneeze_hit_callback for special effects, but probably usually making it infect
 /mob/living/proc/sneeze(range = 4, charge_time = 0.5 SECONDS, obj/projectile/sneezoid = /obj/projectile/sneeze, on_sneeze_callback = null, on_sneeze_hit_callback = null)
 	if(charge_time)
 		emote("inhale")
@@ -11,6 +14,7 @@
 	var/callback = on_sneeze_callback ? on_sneeze_callback : CALLBACK(src, PROC_REF(launch_sneeze), range, sneezoid, on_sneeze_hit_callback)
 	addtimer(callback, charge_time)
 
+/// Shoot the sneeze projectile
 /mob/living/proc/launch_sneeze(range, obj/projectile/sneezoid, datum/callback/on_sneeze_hit_callback)
 	emote("sneeze")
 
@@ -42,4 +46,4 @@
 	. = ..()
 
 	if(isliving(target))
-		sneezie_callback?.Invoke(target)
+		sneezie_callback?.Invoke(target) //you've been sneezered
