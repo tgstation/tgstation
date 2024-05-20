@@ -483,6 +483,12 @@
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")
 
+// They dont call it the grandfather of the baseball bat for nothing
+/obj/item/melee/cleric_mace/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/kneecapping)
+	AddElement(/datum/element/attack_knockback)
+
 /obj/item/melee/cleric_mace/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
 		final_block_chance = 0 //Don't bring a...mace to a gunfight, and also you aren't going to really block someone full body tackling you with a mace

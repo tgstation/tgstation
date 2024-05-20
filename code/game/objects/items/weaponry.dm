@@ -715,6 +715,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		desc = pick("You've got red on you.", "You gotta know what a crumpet is to understand cricket.")
 
 	AddElement(/datum/element/kneecapping)
+	AddElement(/datum/element/attack_knockback)
 
 /obj/item/melee/baseball_bat/attack_self(mob/user)
 	if(!homerun_able)
@@ -730,23 +731,19 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return ..()
 
 /obj/item/melee/baseball_bat/attack(mob/living/target, mob/living/user)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_PACIFISM) || !homerun_ready)
+		return
 	// we obtain the relative direction from the bat itself to the target
 	var/relative_direction = get_cardinal_dir(src, target)
 	var/atom/throw_target = get_edge_target_turf(target, relative_direction)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
-	if(homerun_ready)
-		user.visible_message(span_userdanger("It's a home run!"))
-		if(!QDELETED(target))
-			target.throw_at(throw_target, rand(8,10), 14, user)
-		SSexplosions.medturf += throw_target
-		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
-		homerun_ready = FALSE
-		return
-	else if(!QDELETED(target) && !target.anchored)
-		var/whack_speed = (prob(60) ? 1 : 4)
-		target.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
+	user.visible_message(span_userdanger("It's a home run!"))
+	SSexplosions.medturf += throw_target
+	playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
+	homerun_ready = FALSE
+	if(!QDELETED(target))
+		target.throw_at(throw_target, rand(8,10), 14, user)
+	return
 
 /obj/item/melee/baseball_bat/Destroy(force)
 	for(var/target in thrown_datums)
