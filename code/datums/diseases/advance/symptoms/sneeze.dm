@@ -53,7 +53,7 @@
 				affected_mob.emote("sniff")
 		else
 			if(affected_mob.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
-				affected_mob.infectious_sneeze(active_disease, TRUE)
+				affected_mob.infectious_sneeze(active_disease, TRUE, range = spread_range)
 			if(cartoon_sneezing) //Yeah, this can fling you around even if you have a space suit helmet on. It's, uh, bluespace snot, yeah.
 				to_chat(affected_mob, span_userdanger("You are launched violently backwards by an all-mighty sneeze!"))
 				var/sneeze_distance = rand(2,4) //twice as far as a normal baseball bat strike will fling you
