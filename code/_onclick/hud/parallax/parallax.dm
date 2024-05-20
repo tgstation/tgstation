@@ -237,8 +237,8 @@ GLOBAL_LIST_EMPTY(parallax_count)
 		SET_COST("read speed var")
 		var/change_x
 		var/change_y
-		var/old_x = parallax_layer.pixel_x
-		var/old_y = parallax_layer.pixel_y
+		var/old_x = parallax_layer.offset_x
+		var/old_y = parallax_layer.offset_y
 		SET_COST("create change vars")
 		if(parallax_layer.absolute)
 			SET_COST("check absolute")
@@ -258,36 +258,45 @@ GLOBAL_LIST_EMPTY(parallax_count)
 			// It doesn't use change because we really don't want to animate this
 			if(old_x - change_x > 240)
 				SET_COST("tile check x > 240")
-				parallax_layer.pixel_x -= 480
+				parallax_layer.offset_x -= 480
+				parallax_layer.pixel_x = parallax_layer.offset_x
 				SET_COST("tile offset x - 480")
 			else if(old_x - change_x < -240)
 				SET_COST("tile check x < -240")
-				parallax_layer.pixel_x += 480
+				parallax_layer.offset_x += 480
+				parallax_layer.pixel_x = parallax_layer.offset_x
 				SET_COST("tile offset x + 480")
 			else
 				SET_COST("tile check failed")
 			if(old_y - change_y > 240)
 				SET_COST("tile check y > 240")
-				parallax_layer.pixel_y -= 480
+				parallax_layer.offset_y -= 480
+				parallax_layer.pixel_y = parallax_layer.offset_y
 				SET_COST("tile offset y - 480")
 			else if(old_y - change_y < -240)
 				SET_COST("tile check y < -240")
-				parallax_layer.pixel_y += 480
+				parallax_layer.offset_y += 480
+				parallax_layer.pixel_y = parallax_layer.offset_y
 				SET_COST("tile offset y + 480")
 			else
 				SET_COST("tile check failed")
+
+		parallax_layer.offset_x -= change_x
+		SET_COST("offset x")
+		parallax_layer.offset_y -= change_y
+		SET_COST("offset y")
 		// Now that we have our offsets, let's do our positioning
 		// We're going to use an animate to "glide" that last movement out, so it looks nicer
 		// Don't do any animates if we're not actually moving enough distance yeah? thanks lad
 		if(run_parralax && (largest_change * our_speed > 1))
 			SET_COST("check run parallax")
-			animate(parallax_layer, pixel_x = parallax_layer.pixel_x - change_x, pixel_y = parallax_layer.pixel_y - change_y, time = glide_rate)
+			animate(parallax_layer, pixel_x = parallax_layer.offset_x, pixel_y = parallax_layer.offset_y, time = glide_rate)
 			SET_COST("animate pixel offsets")
 		else
 			SET_COST("check run parallax")
-			parallax_layer.pixel_x -= change_x
+			parallax_layer.pixel_x = parallax_layer.offset_x
 			SET_COST("offset pixel x")
-			parallax_layer.pixel_y -= change_y
+			parallax_layer.pixel_y = parallax_layer.offset_x
 			SET_COST("offset pixel y")
 
 	SET_COST("finish iterate layers")
