@@ -228,7 +228,7 @@
 			SPECIES_PERK_ICON = FA_ICON_PERSON_FALLING,
 			SPECIES_PERK_NAME = "Catlike Grace",
 			SPECIES_PERK_DESC = "Felinids have catlike instincts allowing them to land upright on their feet.  \
-				Instead of being knocked down from falling, you only recieve a short slowdown. \
+				Instead of being knocked down from falling, you only receive a short slowdown. \
 				However, they do not have catlike legs, and the fall will deal additional damage.",
 		),
 		list(
