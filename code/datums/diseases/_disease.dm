@@ -254,7 +254,7 @@
 			if(disease_air_spread_walk(T, V))
 				C.AirborneContractDisease(src, force_spread)
 
-/proc/disease_air_spread_walk(turf/start, turf/end)
+/proc/disease_air_spread_walk(turf/start, turf/end)//
 	if(!start || !end)
 		return FALSE
 	while(TRUE)
@@ -264,7 +264,6 @@
 		if(!TURFS_CAN_SHARE(end, Temp)) //Don't go through a wall
 			return FALSE
 		end = Temp
-
 
 /datum/disease/proc/cure(add_resistance = TRUE)
 	if(severity == DISEASE_SEVERITY_UNCURABLE) //aw man :(

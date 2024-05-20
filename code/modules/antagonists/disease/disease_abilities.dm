@@ -227,15 +227,9 @@ new /datum/disease_ability/symptom/powerful/youth
 		to_chat(our_disease, span_warning("Your host must be conscious to sneeze."))
 		return FALSE
 	to_chat(our_disease, span_notice("You force [host.real_name] to sneeze."))
-	host.emote("sneeze")
 	if(host.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
 		var/datum/disease/advance/sentient_disease/disease_datum = our_disease.hosts[host]
-		for(var/mob/living/nearby_mob in oview(4, disease_datum.affected_mob))
-			if(!is_source_facing_target(disease_datum.affected_mob, nearby_mob))
-				continue
-			if(!disease_air_spread_walk(get_turf(disease_datum.affected_mob), get_turf(nearby_mob)))
-				continue
-			nearby_mob.AirborneContractDisease(disease_datum, TRUE)
+		host.infectious_sneeze(disease_datum, TRUE)
 
 	return TRUE
 
