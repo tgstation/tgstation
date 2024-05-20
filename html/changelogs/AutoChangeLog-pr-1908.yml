@@ -1,0 +1,6 @@
+author: "AlbertNanotracen"
+delete-after: True
+changes:
+  - bugfix: "You can now control blast doors with buttons again"
+  - rscadd: "Security gas masks now can use filters to filter out harmful chemicals"
+  - bugfix: "Mopping floors makes them slippery"
