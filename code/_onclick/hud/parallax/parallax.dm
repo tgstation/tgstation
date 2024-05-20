@@ -13,7 +13,7 @@
 
 	if(!C.parallax_rock)
 		C.parallax_rock = new(null, src)
-		C.screen += C.parallax_rock
+	C.screen |= C.parallax_rock
 
 	if(!length(C.parallax_layers_cached))
 		C.parallax_layers_cached = list()
