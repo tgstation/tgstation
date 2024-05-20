@@ -197,6 +197,7 @@
 
 	var/list/parallax_layers
 	var/list/parallax_layers_cached
+	var/atom/movable/screen/parallax_home/parallax_rock
 	///this is the last recorded client eye by SSparallax/fire()
 	var/atom/movable/movingmob
 	var/turf/previous_turf
