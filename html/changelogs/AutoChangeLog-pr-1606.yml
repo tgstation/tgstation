@@ -1,0 +1,6 @@
+author: "Bastian0930, Metekillot, TJatPBnJ, Singul0"
+delete-after: True
+changes:
+  - bugfix: "IPCs are unable to be absorb and escape as objectives, after the hivemind realized IPCs have no DNA."
+  - bugfix: "IPC firmware upgrades no longer allow a changelings transformation sting to work on them."
+  - bugfix: "TGUI say now shows :g as \"cling\"."
