@@ -480,7 +480,7 @@ BLIND     // can't see anything
 
 	visor_toggling()
 
-	to_chat(user, span_notice("You push [src] [up ? "out of the way" : "back to its original position"]."))
+	to_chat(user, span_notice("You push [src] [up ? "out of the way" : "back into place"]."))
 
 	update_item_action_buttons()
 
