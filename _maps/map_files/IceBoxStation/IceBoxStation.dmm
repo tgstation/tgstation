@@ -32093,7 +32093,6 @@
 	},
 /obj/item/pen,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
-/obj/machinery/door/airlock,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "jJV" = (
