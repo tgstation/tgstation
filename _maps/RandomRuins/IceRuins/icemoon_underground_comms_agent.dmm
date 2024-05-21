@@ -67,6 +67,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
 "eE" = (
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
 "eT" = (
@@ -77,10 +78,15 @@
 /area/ruin/powered/comms_agent)
 "fk" = (
 /obj/structure/rack,
-/obj/item/storage/toolbox/syndicate{
-	pixel_y = 3
+/obj/structure/cable,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 2;
+	pixel_x = 2
 	},
-/obj/item/stack/cable_coil,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -7;
+	pixel_x = -1
+	},
 /turf/open/floor/plating,
 /area/ruin/powered/comms_agent)
 "ge" = (
@@ -151,6 +157,10 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
+"ka" = (
+/obj/machinery/seed_extractor,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/powered/comms_agent)
 "kp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -210,7 +220,6 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
@@ -313,10 +322,10 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "sJ" = (
-/obj/machinery/computer/camera_advanced{
+/obj/structure/sign/poster/contraband/random/directional/west,
+/obj/machinery/computer/camera_advanced/syndie{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
 "tb" = (
@@ -411,10 +420,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
-"wn" = (
-/obj/effect/decal/remains/human/smokey,
-/turf/open/lava/plasma/ice_moon,
-/area/icemoon/underground/explored)
 "xi" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -478,7 +483,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
@@ -536,7 +540,9 @@
 /turf/open/floor/plating,
 /area/ruin/powered/comms_agent)
 "CW" = (
-/obj/machinery/atmospherics/components/tank/air,
+/obj/machinery/atmospherics/components/tank/air{
+	piping_layer = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/powered/comms_agent)
 "DH" = (
@@ -578,6 +584,7 @@
 /area/ruin/powered/comms_agent)
 "FZ" = (
 /obj/effect/baseturf_helper/reinforced_plating/ceiling,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
 "Gp" = (
@@ -668,9 +675,6 @@
 /area/ruin/powered/comms_agent)
 "Kv" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/mineral/plasma/thirty{
-	amount = 5
-	},
 /obj/item/stack/sheet/glass{
 	amount = 20
 	},
@@ -680,6 +684,11 @@
 	},
 /obj/item/reagent_containers/condiment/enzyme,
 /obj/machinery/light/dim/directional/south,
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/item/stack/sheet/mineral/plasma/thirty,
 /turf/open/floor/plating,
 /area/ruin/powered/comms_agent)
 "KB" = (
@@ -753,9 +762,9 @@
 /area/ruin/powered/comms_agent)
 "Mz" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
 "MH" = (
@@ -818,9 +827,20 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"PX" = (
+/obj/item/storage/toolbox/fishing{
+	pixel_y = -9;
+	pixel_x = 11
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/powered/comms_agent)
 "Qn" = (
 /obj/machinery/power/apc/auto_name/directional/east,
-/obj/effect/mapping_helpers/apc,
+/obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
 "Qx" = (
@@ -1368,7 +1388,7 @@ OB
 OB
 OB
 OB
-EL
+OB
 EL
 EL
 EL
@@ -1405,7 +1425,6 @@ EL
 EL
 EL
 EL
-EL
 OB
 OB
 OB
@@ -1427,8 +1446,9 @@ OB
 OB
 OB
 OB
-EL
-EL
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1460,8 +1480,6 @@ EL
 EL
 EL
 EL
-EL
-EL
 OB
 OB
 OB
@@ -1485,8 +1503,10 @@ OB
 OB
 OB
 OB
-EL
-EL
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1515,10 +1535,6 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
 OB
 OB
 OB
@@ -1543,8 +1559,12 @@ OB
 OB
 OB
 OB
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1570,39 +1590,39 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
 OB
 OB
 OB
 OB
 OB
 OB
-OM
-OM
+OB
+OB
+OB
+OB
+OB
 OB
 OB
 OM
 OM
-OM
+OB
+OB
 OM
 OM
 OM
 OM
 OM
+OM
+OM
+OM
 OB
 OB
 OB
 OB
 OB
 OB
-EL
-EL
+OB
+OB
 EL
 EL
 EL
@@ -1626,14 +1646,14 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
 OB
 OB
 OB
@@ -1681,16 +1701,16 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
 OB
 OB
 OB
@@ -1717,7 +1737,7 @@ OB
 OB
 OB
 OB
-EL
+OB
 EL
 EL
 EL
@@ -1737,16 +1757,16 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
 OB
 OB
 OB
@@ -1794,12 +1814,12 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1850,9 +1870,9 @@ EL
 (16,1,1) = {"
 EL
 EL
-EL
-EL
-EL
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1872,7 +1892,7 @@ MH
 MH
 tl
 tl
-MH
+tl
 LP
 YI
 wh
@@ -1889,7 +1909,7 @@ OB
 OB
 OB
 OB
-EL
+OB
 EL
 EL
 EL
@@ -1907,7 +1927,7 @@ EL
 (17,1,1) = {"
 EL
 EL
-EL
+OB
 EL
 EL
 EL
@@ -1946,7 +1966,7 @@ OB
 OB
 OB
 OB
-EL
+OB
 EL
 EL
 EL
@@ -2004,7 +2024,7 @@ OB
 OB
 OB
 OB
-EL
+OB
 EL
 EL
 EL
@@ -2061,7 +2081,7 @@ OB
 OB
 OB
 OB
-EL
+OB
 EL
 EL
 EL
@@ -2107,7 +2127,7 @@ WL
 Gp
 YI
 ge
-Qx
+GR
 Kv
 LP
 MH
@@ -2119,7 +2139,7 @@ OB
 OB
 OB
 OB
-EL
+OB
 EL
 EL
 EL
@@ -2176,7 +2196,7 @@ OB
 OB
 OB
 OB
-EL
+OB
 EL
 EL
 EL
@@ -2233,7 +2253,7 @@ OB
 OB
 OB
 OB
-EL
+OB
 EL
 EL
 EL
@@ -2687,7 +2707,7 @@ OM
 OB
 OB
 OB
-wn
+OB
 OB
 OM
 OM
@@ -2789,8 +2809,8 @@ bk
 LP
 xi
 he
-he
-he
+PX
+ka
 YX
 tl
 MH
@@ -3169,7 +3189,7 @@ EL
 EL
 EL
 EL
-EL
+OB
 OB
 OB
 OB
@@ -3226,8 +3246,8 @@ EL
 EL
 EL
 EL
-EL
-EL
+OB
+OB
 OB
 OB
 OB
@@ -3284,9 +3304,9 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
+OB
+OB
+OB
 OB
 OB
 OB
@@ -3341,9 +3361,9 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
+OB
+OB
+OB
 OB
 OB
 OB
@@ -3399,9 +3419,9 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
+OB
+OB
+OB
 OB
 OB
 OB
@@ -3457,9 +3477,66 @@ EL
 EL
 EL
 EL
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+"}
+(45,1,1) = {"
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+OB
 OB
 OB
 OB
@@ -3500,63 +3577,6 @@ EL
 EL
 EL
 "}
-(45,1,1) = {"
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-OB
-OB
-Lz
-di
-OB
-OB
-OB
-OB
-OB
-OB
-OB
-OB
-OB
-OB
-OB
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-"}
 (46,1,1) = {"
 EL
 EL
@@ -3575,21 +3595,21 @@ EL
 EL
 EL
 EL
-EL
-EL
-ig
+OB
+OB
+OB
 Lz
-iZ
+di
 OB
 OB
 OB
 OB
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -3633,14 +3653,14 @@ EL
 EL
 EL
 EL
-EL
-BD
-OM
-Ok
-EL
-EL
-EL
-EL
+OB
+ig
+Lz
+iZ
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -3691,10 +3711,10 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
+BD
+OM
+Ok
+OB
 EL
 EL
 EL
