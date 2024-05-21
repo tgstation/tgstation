@@ -29,6 +29,9 @@
 	//The following vars are customizable
 	var/activated = TRUE //If FALSE, the program won't process, disables passive effects, can't trigger and doesn't consume nanites
 
+	/// Whether or not the program is forcibly disabled by a software error. This is cleared by cloud syncs.
+	var/force_disabled = FALSE
+
 	var/timer_restart = 0 //When deactivated, the program will wait X deciseconds before self-reactivating. Also works if the program begins deactivated.
 	var/timer_shutdown = 0 //When activated, the program will wait X deciseconds before self-deactivating. Also works if the program begins activated.
 	var/timer_trigger = 0 //[Trigger only] While active, the program will attempt to trigger once every x deciseconds.
@@ -91,6 +94,8 @@
 	target.deactivation_code = deactivation_code
 	target.kill_code = kill_code
 	target.trigger_code = trigger_code
+
+	target.force_disabled = force_disabled
 
 	target.rules = list()
 	for(var/R in rules)
@@ -197,6 +202,8 @@
 //If false, disables active, passive effects, and triggers without consuming nanites
 //Can be used to avoid consuming nanites for nothing
 /datum/nanite_program/proc/check_conditions()
+	if (force_disabled)
+		return FALSE
 	if (!LAZYLEN(rules))
 		return TRUE
 	for(var/R in rules)
@@ -287,8 +294,8 @@
 			kill_code = 0
 			trigger_code = 0
 		if(3)
-			host_mob.investigate_log("[src] nanite program was toggled by software error.", INVESTIGATE_NANITES)
-			toggle() //enable/disable
+			host_mob.investigate_log("[src] nanite program was disabled by software error.", INVESTIGATE_NANITES)
+			force_disabled = TRUE
 		if(4)
 			if(can_trigger)
 				host_mob.investigate_log("[src] nanite program was triggered by software error.", INVESTIGATE_NANITES)

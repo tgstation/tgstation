@@ -19,7 +19,7 @@
 
 /datum/reagent/consumable/nutriment/soup/chicken_noodle_soup
 	data = list(
-		"threshhold" = 20
+		"threshold" = 20
 	)
 
 /datum/reagent/consumable/nutriment/soup/chicken_noodle_soup/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
