@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Adminwho should no longer have a weird delay every time it's ran."
-  - bugfix: "Clicking on an admin's name in Adminwho should no longer crash."

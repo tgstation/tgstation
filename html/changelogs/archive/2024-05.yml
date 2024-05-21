@@ -143,3 +143,47 @@
 2024-05-17:
   Gboster-0:
   - bugfix: borers can now be taken out of a host
+2024-05-21:
+  Absolucy:
+  - bugfix: Adminwho should no longer have a weird delay every time it's ran.
+  - bugfix: Clicking on an admin's name in Adminwho should no longer crash.
+  - admin: The antag tokens of every player that logged in during a round is now logged
+      to `tokens.json` at roundend.
+  - rscadd: Medibots now automatically update their surgical knowledge whenever surgery
+      tech is researched.
+  AlbertNanotracen:
+  - bugfix: Lantern syndrome should no longer flash (hopefully)
+  - image: removed a random pixel that some centrifuge sprites had
+  - bugfix: You can now control blast doors with buttons again
+  - rscadd: Security gas masks now can use filters to filter out harmful chemicals
+  - bugfix: Mopping floors makes them slippery
+  Bastian0930, Metekillot, TJatPBnJ, Singul0:
+  - bugfix: IPCs are unable to be absorb and escape as objectives, after the hivemind
+      realized IPCs have no DNA.
+  - bugfix: IPC firmware upgrades no longer allow a changelings transformation sting
+      to work on them.
+  - bugfix: TGUI say now shows :g as "cling".
+  HimKobold:
+  - rscadd: Added Brads office to the CentCom level.
+  - rscdel: 'Removed a placeholder office to replace it with the new one.
+
+      \:cl:'
+  KnigTheThrasher:
+  - balance: Removed knockdown from command and detective batongs, cooldown reduced
+      back to 1.5 seconds as a compensation
+  RikuTheKiller:
+  - rscadd: Added the Radiomagnetic Disruptor reagent which rapidly purges nanites
+      and causes localized EMPs.
+  - qol: Code 0 is now invalid on nanites allowing you to leave blank output signals.
+  - qol: Added missing rule for the nanite species sensor.
+  - qol: The species and damage sensors can detect additional types now.
+  - rscadd: Added completely new sensors (with rules) for blood and nutrition.
+  - bugfix: The species sensor no longer uses a weird trigger based snowflake system,
+      it's now signal based like all the others.
+  - refactor: Refactored some nanite sensor code, this might (or rather, is practically
+      guaranteed to) cause some minor issues. Please report them ASAP if you find
+      any.
+  Uristthedorf:
+  - rscadd: Security Assistants are now considered enemies to antagonists to the story
+      teller.
+  - rscadd: More documentation for arachnids, florans, goblins, simians, and moths.

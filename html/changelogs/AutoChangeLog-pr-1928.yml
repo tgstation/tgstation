@@ -1,5 +1,0 @@
-author: "HimKobold"
-delete-after: True
-changes:
-  - rscadd: "Added Brads office to the CentCom level."
-  - rscdel: "Removed a placeholder office to replace it with the new one.\n\\:cl:"

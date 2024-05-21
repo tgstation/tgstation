@@ -1,9 +1,0 @@
-author: "RikuTheKiller"
-delete-after: True
-changes:
-  - qol: "Code 0 is now invalid on nanites allowing you to leave blank output signals."
-  - qol: "Added missing rule for the nanite species sensor."
-  - qol: "The species and damage sensors can detect additional types now."
-  - rscadd: "Added completely new sensors (with rules) for blood and nutrition."
-  - bugfix: "The species sensor no longer uses a weird trigger based snowflake system, it's now signal based like all the others."
-  - refactor: "Refactored some nanite sensor code, this might (or rather, is practically guaranteed to) cause some minor issues. Please report them ASAP if you find any."

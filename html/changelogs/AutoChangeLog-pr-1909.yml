@@ -1,5 +1,0 @@
-author: "AlbertNanotracen"
-delete-after: True
-changes:
-  - bugfix: "Lantern syndrome should no longer flash (hopefully)"
-  - image: "removed a random pixel that some centrifuge sprites had"

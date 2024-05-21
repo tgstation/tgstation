@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - admin: "The antag tokens of every player that logged in during a round is now logged to `tokens.json` at roundend."
