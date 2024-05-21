@@ -432,6 +432,8 @@
 		var/found_hypo = FALSE
 		for(var/obj/item/reagent_containers/borghypo/H in R.model.modules)
 			H.bypass_protection = TRUE
+		for(var/obj/item/reagent_containers/borghypo/H in R.model.emag_modules)
+			H.bypass_protection = TRUE
 			found_hypo = TRUE
 
 		if(!found_hypo)
@@ -442,6 +444,8 @@
 	. = ..()
 	if (.)
 		for(var/obj/item/reagent_containers/borghypo/H in R.model.modules)
+			H.bypass_protection = initial(H.bypass_protection)
+		for(var/obj/item/reagent_containers/borghypo/H in R.model.emag_modules)
 			H.bypass_protection = initial(H.bypass_protection)
 
 /obj/item/borg/upgrade/surgery_omnitool
