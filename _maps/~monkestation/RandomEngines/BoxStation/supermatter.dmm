@@ -151,6 +151,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "eo" = (
@@ -293,6 +294,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "jx" = (
@@ -330,7 +332,6 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/east,
-/obj/machinery/firealarm/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "kx" = (
@@ -367,6 +368,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/west,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "lB" = (
@@ -744,7 +746,15 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Ae" = (
-/obj/machinery/firealarm/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/north,
+/obj/structure/table/reinforced,
+/obj/item/clothing/suit/utility/radiation,
+/obj/item/clothing/head/utility/radiation,
+/obj/item/geiger_counter,
+/obj/item/clothing/glasses/meson,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Ah" = (
@@ -859,7 +869,6 @@
 	network = list("ss13","engine");
 	pixel_x = 23
 	},
-/obj/machinery/firealarm/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "CW" = (
@@ -1483,6 +1492,7 @@
 /area/station/engineering/supermatter/room)
 "Yz" = (
 /obj/machinery/light/directional/north,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "YK" = (
@@ -2064,7 +2074,7 @@ Kd
 "}
 (20,1,1) = {"
 BL
-jM
+Ae
 TL
 XP
 HS
@@ -2192,7 +2202,7 @@ ee
 BL
 Lj
 rz
-Ae
+MV
 wE
 iZ
 BL

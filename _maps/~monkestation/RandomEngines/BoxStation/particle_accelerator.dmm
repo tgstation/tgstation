@@ -502,6 +502,7 @@
 /area/station/engineering/main)
 "Ds" = (
 /obj/effect/turf_decal/bot_red,
+/obj/item/toy/plush/space_lizard_plushie,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "DP" = (
@@ -610,15 +611,15 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "Kd" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/structure/sign/warning/directional/south,
 /obj/machinery/button/door/directional/west{
 	id = "particle_accelerator";
 	name = "Particle Accelerator Shutters Control";
 	req_access = list("engineering")
 	},
-/turf/open/floor/plating,
+/obj/structure/closet/radiation,
+/turf/open/floor/iron,
 /area/station/engineering/main)
 "Lo" = (
 /obj/effect/turf_decal/stripes/line{
@@ -646,11 +647,6 @@
 "MS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
-	},
-/obj/machinery/button/door/directional/east{
-	id = "particle_accelerator";
-	name = "Particle Accelerator Shutters Control";
-	req_access = list("engineering")
 	},
 /obj/structure/cable,
 /obj/item/weldingtool,
@@ -690,11 +686,12 @@
 "Px" = (
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/structure/sign/warning/directional/south,
-/obj/structure/table,
-/obj/item/clothing/suit/utility/radiation,
-/obj/item/clothing/head/utility/radiation,
-/obj/item/clothing/glasses/meson,
-/obj/item/geiger_counter,
+/obj/machinery/button/door/directional/east{
+	id = "particle_accelerator";
+	name = "Particle Accelerator Shutters Control";
+	req_access = list("engineering")
+	},
+/obj/structure/closet/radiation,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "PG" = (
@@ -1231,7 +1228,7 @@ El
 PG
 Fj
 Pl
-Kd
+ZH
 WJ
 ZH
 xj
@@ -1399,7 +1396,7 @@ El
 mJ
 Rw
 qo
-Px
+Kd
 PG
 zd
 Cq

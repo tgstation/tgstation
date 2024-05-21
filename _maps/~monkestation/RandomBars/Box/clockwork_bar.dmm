@@ -151,6 +151,7 @@
 "uV" = (
 /obj/machinery/camera/autoname/directional/east,
 /obj/machinery/light/small/directional/east,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
 "xT" = (
@@ -259,7 +260,7 @@
 /area/station/commons/lounge)
 "Oh" = (
 /obj/machinery/camera/autoname/directional/south,
-/obj/machinery/firealarm/directional/south,
+/obj/machinery/airalarm/directional/south,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},

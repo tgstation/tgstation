@@ -146,7 +146,7 @@
 /area/station/commons/lounge)
 "nU" = (
 /obj/machinery/camera/autoname/directional/south,
-/obj/machinery/firealarm/directional/south,
+/obj/machinery/airalarm/directional/south,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
@@ -332,6 +332,7 @@
 "GX" = (
 /obj/machinery/camera/autoname/directional/east,
 /obj/machinery/light/small/directional/east,
+/obj/item/radio/intercom/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},

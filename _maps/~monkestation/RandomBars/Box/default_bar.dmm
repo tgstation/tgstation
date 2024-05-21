@@ -41,7 +41,7 @@
 "cL" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/camera/autoname/directional/south,
-/obj/machinery/firealarm/directional/south,
+/obj/machinery/airalarm/directional/south,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
@@ -212,6 +212,7 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/camera/autoname/directional/east,
 /obj/machinery/light/small/directional/east,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "zF" = (
