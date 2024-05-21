@@ -170,7 +170,7 @@
 /obj/item/antag_spawner/nuke_ops/overwatch
 	name = "overwatch support beacon"
 	desc = "Assigns an Overwatch Intelligence Agent to your operation. Stationed at their own remote outpost, they can view station cameras, alarms, and even move the Infiltrator shuttle! \
-		Also, all members of your operation will recieve body cameras that they can view your progress from."
+		Also, all members of your operation will receive body cameras that they can view your progress from."
 	special_role_name = ROLE_OPERATIVE_OVERWATCH
 	outfit = /datum/outfit/syndicate/support
 	use_subtypes = FALSE

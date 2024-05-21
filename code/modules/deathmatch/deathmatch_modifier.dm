@@ -149,7 +149,7 @@
 	blacklisted_modifiers = list(/datum/deathmatch_modifier/no_gravity)
 
 /datum/deathmatch_modifier/snail_crawl/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
-	player.AddElement(/datum/element/snailcrawl)
+	player.AddElement(/datum/element/lube_walking, require_resting = TRUE)
 
 /datum/deathmatch_modifier/blinking_and_breathing
 	name = "Manual Blinking/Breathing"

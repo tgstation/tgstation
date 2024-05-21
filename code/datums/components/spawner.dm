@@ -19,7 +19,7 @@
 	var/spawn_distance_exclude
 	COOLDOWN_DECLARE(spawn_delay)
 
-/datum/component/spawner/Initialize(spawn_types = list(), spawn_time = 30 SECONDS, max_spawned = 5, max_spawn_per_attempt = 2 , faction = list(FACTION_MINING), spawn_text = null, spawn_distance = 1, spawn_distance_exclude = 0)
+/datum/component/spawner/Initialize(spawn_types = list(), spawn_time = 30 SECONDS, max_spawned = 5, max_spawn_per_attempt = 1 , faction = list(FACTION_MINING), spawn_text = null, spawn_distance = 1, spawn_distance_exclude = 0)
 	if (!islist(spawn_types))
 		CRASH("invalid spawn_types to spawn specified for spawner component!")
 	src.spawn_time = spawn_time
@@ -52,14 +52,16 @@
 	if(!COOLDOWN_FINISHED(src, spawn_delay))
 		return
 	validate_references()
-	if(length(spawned_things) >= max_spawned)
+	var/spawned_total = length(spawned_things)
+	if(spawned_total >= max_spawned)
 		return
 	var/atom/spawner = parent
 	COOLDOWN_START(src, spawn_delay, spawn_time)
 	var/chosen_mob_type = pick(spawn_types)
 	var/adjusted_spawn_count = 1
-	if (max_spawn_per_attempt > 1)
-		adjusted_spawn_count = rand(1, max_spawn_per_attempt)
+	var/max_spawn_this_attempt = min(max_spawn_per_attempt, max_spawned - spawned_total)
+	if (max_spawn_this_attempt > 1)
+		adjusted_spawn_count = rand(1, max_spawn_this_attempt)
 	for(var/i in 1 to adjusted_spawn_count)
 		var/atom/created
 		var/turf/picked_spot
@@ -70,6 +72,8 @@
 			picked_spot = pick(turf_peel(spawn_distance, spawn_distance_exclude, spawner.loc, view_based = TRUE))
 			if(!picked_spot)
 				picked_spot = pick(circle_range_turfs(spawner.loc, spawn_distance))
+			if(picked_spot == spawner.loc)
+				SEND_SIGNAL(spawner, COMSIG_SPAWNER_SPAWNED_DEFAULT)
 			created = new chosen_mob_type(picked_spot)
 		else if (spawn_distance >= 1)
 			picked_spot = pick(circle_range_turfs(spawner.loc, spawn_distance))
