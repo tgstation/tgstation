@@ -3,12 +3,17 @@
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	///list of accesses we are allowed to access via this component
 	var/list/access
+	///the blackboard key we put access in
+	var/access_blackboard_key
 
-/datum/component/simple_access/Initialize(list/new_access, atom/donor_atom)
+/datum/component/simple_access/Initialize(list/new_access, atom/donor_atom, access_blackboard_key = BB_BASIC_ACCESS)
 	. = ..()
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 	access = new_access
+	src.access_blackboard_key = access_blackboard_key
+	var/mob/living/living_parent = parent
+	living_parent.ai_controller?.set_blackboard_key(access_blackboard_key, new_access)
 	RegisterSignal(parent, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
 	if(!donor_atom)
 		return
@@ -17,6 +22,10 @@
 	else if(istype(donor_atom, /obj/item/implant))
 		RegisterSignal(donor_atom, COMSIG_IMPLANT_REMOVED, PROC_REF(on_donor_removed))
 	RegisterSignal(donor_atom, COMSIG_QDELETING, PROC_REF(on_donor_removed))
+
+/datum/component/simple_access/UnregisterFromParent()
+	var/mob/living/living_parent = parent
+	living_parent.ai_controller?.clear_blackboard_key(access_blackboard_key)
 
 /datum/component/simple_access/proc/on_tried_access(datum/source, atom/locked_thing)
 	SIGNAL_HANDLER

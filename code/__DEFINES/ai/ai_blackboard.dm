@@ -19,6 +19,9 @@
 ///can this mob heal?
 #define BB_BASIC_MOB_HEALER "BB_basic_mob_healer"
 
+///key that stores our list of accesses
+#define BB_BASIC_ACCESS "BB_basic_access"
+
 
 /// Store a single or list of emotes at this key
 #define BB_EMOTE_KEY "BB_emotes"
