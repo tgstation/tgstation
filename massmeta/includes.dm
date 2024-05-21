@@ -67,10 +67,15 @@
 #include "code\modules\projectiles\boxes_magazines\ammo_boxes.dm"
 #include "code\modules\projectiles\ammunition\ballistic\rifle.dm"
 #include "code\modules\projectiles\projectile\bullets\rifle.dm"
-#include "code\modules\vehicles\vehicle_actions.dm"
-#include "code\modules\vehicles\cars\cheburek.dm"
 #include "code\modules\map_vote.dm"
 #include "code\modules\hallucination\fake_chat.dm"
+
+//cheburek Car
+#include "code\modules\vehicles\cars\cheburek.dm"
+#include "code\modules\vehicles\vehicle_actions.dm"
+#include "code\game\objects\structures\crates_lockers\crates\large.dm"
+#include "code\modules\cargo\packs\imports.dm"
+
 //species secondary color
 #include "code\modules\client\preferences\species_features\mutants_color_secondary.dm"
 #include "code\modules\mob\dead\new_player\sprite_accessories\multi_part.dm"
