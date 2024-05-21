@@ -1,8 +1,8 @@
 /datum/component/echolocation
 	/// Radius of our view.
 	var/echo_range = 4
-	/// Time between echolocations.
-	var/cooldown_time = 1.8 SECONDS
+	/// Time between echolocations. IMPORTANT!! The effective time in local and the effective time in live are very different. The second is noticeably slower,
+	var/cooldown_time = 1 SECONDS
 	/// Time for the image to start fading out.
 	var/image_expiry_time = 1.4 SECONDS
 	/// Time for the image to fade in.

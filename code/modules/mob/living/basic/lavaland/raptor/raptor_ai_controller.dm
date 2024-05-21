@@ -2,6 +2,12 @@
 
 /datum/ai_controller/basic_controller/raptor
 	blackboard = list(
+		BB_INTERACTIONS_WITH_OWNER = list(
+			"Pecks",
+			"Nuzzles",
+			"Wags tail against",
+			"Playfully leans against"
+		),
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/mining/raptor),
@@ -25,6 +31,7 @@
 		/datum/ai_planning_subtree/make_babies,
 		/datum/ai_planning_subtree/find_and_hunt_target/raptor_start_trouble,
 		/datum/ai_planning_subtree/express_happiness,
+		/datum/ai_planning_subtree/find_and_hunt_target/play_with_owner/raptor,
 	)
 
 /datum/ai_controller/basic_controller/raptor/TryPossessPawn(atom/new_pawn)
@@ -39,7 +46,7 @@
 
 /datum/targeting_strategy/basic/raptor
 
-//dont attack anyone with the neutral faction. 
+//dont attack anyone with the neutral faction.
 /datum/targeting_strategy/basic/raptor/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	return (the_target.faction.Find(FACTION_NEUTRAL) || the_target.faction.Find(FACTION_RAPTOR))
 

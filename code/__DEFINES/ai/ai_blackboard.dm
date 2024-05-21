@@ -22,6 +22,11 @@
 ///key that stores our list of accesses
 #define BB_BASIC_ACCESS "BB_basic_access"
 
+///the owner we will try to play with
+#define BB_OWNER_TARGET "BB_owner_target"
+///the list of interactions we can have with the owner
+#define BB_INTERACTIONS_WITH_OWNER "BB_interactions_with_owner"
+
 
 /// Store a single or list of emotes at this key
 #define BB_EMOTE_KEY "BB_emotes"
