@@ -38,6 +38,7 @@
 @include meta.load-css('./components/NumberInput.scss');
 @include meta.load-css('./components/ProgressBar.scss');
 @include meta.load-css('./components/RoundGauge.scss');
+@include meta.load-css('./components/SearchItem.scss');
 @include meta.load-css('./components/Section.scss');
 @include meta.load-css('./components/Slider.scss');
 @include meta.load-css('./components/Stack.scss');
@@ -65,6 +66,7 @@
 @include meta.load-css('./interfaces/NtosMessenger.scss');
 @include meta.load-css('./interfaces/NtosNotepad.scss');
 @include meta.load-css('./interfaces/NuclearBomb.scss');
+@include meta.load-css('./interfaces/Orbit.scss');
 @include meta.load-css('./interfaces/Paper.scss');
 @include meta.load-css('./interfaces/PersonalCrafting.scss');
 @include meta.load-css('./interfaces/PreferencesMenu.scss');

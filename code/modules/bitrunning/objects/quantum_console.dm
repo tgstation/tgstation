@@ -12,11 +12,8 @@
 	. = ..()
 	desc = "Even in the distant year [CURRENT_STATION_YEAR], Nanostrasen is still using REST APIs. How grim."
 
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/computer/quantum_console/LateInitialize()
+/obj/machinery/computer/quantum_console/post_machine_initialize()
 	. = ..()
-
 	find_server()
 
 /obj/machinery/computer/quantum_console/ui_interact(mob/user, datum/tgui/ui)

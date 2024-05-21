@@ -140,7 +140,7 @@
 	for (var/list/zlevel_turfs as anything in currentarea.get_zlevel_turf_lists())
 		for(var/turf/area_turf as anything in zlevel_turfs)
 			for(var/obj/structure/window/barrier in area_turf)
-				if((barrier.obj_flags & NO_DECONSTRUCTION) || (barrier.flags_1 & HOLOGRAM_1))// Just in case: only holo-windows
+				if(barrier.flags_1 & HOLOGRAM_1)// Just in case: only holo-windows
 					qdel(barrier)
 
 			for(var/mob/contestant in area_turf)

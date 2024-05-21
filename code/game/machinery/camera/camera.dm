@@ -110,7 +110,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 	for(var/network_name in network)
 		network -= network_name
-		network += lowertext(network_name)
+		network += LOWER_TEXT(network_name)
 
 	GLOB.cameranet.cameras += src
 
@@ -216,19 +216,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		return
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(prob(150 / severity))
-		network = list()
-		GLOB.cameranet.removeCamera(src)
-		set_machine_stat(machine_stat | EMPED)
-		set_light(0)
-		emped++ //Increase the number of consecutive EMP's
-		update_appearance()
-		addtimer(CALLBACK(src, PROC_REF(post_emp_reset), emped, network), reset_time)
-		for(var/mob/M as anything in GLOB.player_list)
-			if (M.client?.eye == src)
-				M.unset_machine()
-				M.reset_perspective(null)
-				to_chat(M, span_warning("The screen bursts into static!"))
+	if(!prob(150 / severity))
+		return
+	network = list()
+	GLOB.cameranet.removeCamera(src)
+	set_machine_stat(machine_stat | EMPED)
+	set_light(0)
+	emped++ //Increase the number of consecutive EMP's
+	update_appearance()
+	addtimer(CALLBACK(src, PROC_REF(post_emp_reset), emped, network), reset_time)
+	for(var/mob/M as anything in GLOB.player_list)
+		if (M.client?.eye == src)
+			M.reset_perspective(null)
+			to_chat(M, span_warning("The screen bursts into static!"))
 
 /obj/machinery/camera/proc/on_saboteur(datum/source, disrupt_duration)
 	SIGNAL_HANDLER
@@ -302,23 +302,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		toggle_cam(null, 0)
 
 /obj/machinery/camera/on_deconstruction(disassembled)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(disassembled)
-			var/obj/item/wallframe/camera/dropped_cam = new(drop_location())
-			dropped_cam.update_integrity(dropped_cam.max_integrity * 0.5)
-			if(camera_construction_state >= CAMERA_STATE_WIRED)
-				new /obj/item/stack/cable_coil(drop_location(), 2)
-			if(xray_module)
-				drop_upgrade(xray_module)
-			if(emp_module)
-				drop_upgrade(emp_module)
-			if(proximity_monitor)
-				drop_upgrade(proximity_monitor)
-		else
-			if(camera_construction_state >= CAMERA_STATE_WIRED)
-				new /obj/item/stack/cable_coil(drop_location(), 2)
-			new /obj/item/stack/sheet/iron(loc)
-	return ..()
+	if(!disassembled)
+		if(camera_construction_state >= CAMERA_STATE_WIRED)
+			new /obj/item/stack/cable_coil(drop_location(), 2)
+		new /obj/item/stack/sheet/iron(loc)
+		return
+
+	var/obj/item/wallframe/camera/dropped_cam = new(drop_location())
+	dropped_cam.update_integrity(dropped_cam.max_integrity * 0.5)
+	if(camera_construction_state >= CAMERA_STATE_WIRED)
+		new /obj/item/stack/cable_coil(drop_location(), 2)
+	if(xray_module)
+		drop_upgrade(xray_module)
+	if(emp_module)
+		drop_upgrade(emp_module)
+	if(proximity_monitor)
+		drop_upgrade(proximity_monitor)
 
 /obj/machinery/camera/update_icon_state() //TO-DO: Make panel open states, xray camera, and indicator lights overlays instead.
 	var/xray_module
@@ -356,7 +355,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		change_msg = "reactivates"
 		triggerCameraAlarm()
 		if(!QDELETED(src)) //We'll be doing it anyway in destroy
-			addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 100)
+			addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 10 SECONDS)
 	if(displaymessage)
 		if(user)
 			visible_message(span_danger("[user] [change_msg] [src]!"))
@@ -372,7 +371,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	//I guess that doesn't matter since they can't use it anyway?
 	for(var/mob/O as anything in GLOB.player_list)
 		if (O.client?.eye == src)
-			O.unset_machine()
 			O.reset_perspective(null)
 			to_chat(O, span_warning("The screen bursts into static!"))
 

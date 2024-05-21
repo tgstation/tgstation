@@ -1,4 +1,0 @@
-author: "hyperjll"
-delete-after: True
-changes:
-  - rscadd: "Added a 'kaching' sound to the game, and made uplinks play this sound locally to the user whenever a purchase is made."

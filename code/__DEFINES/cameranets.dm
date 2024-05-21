@@ -26,3 +26,4 @@
 #define CAMERANET_NETWORK_BAR "bar"
 #define CAMERANET_NETWORK_INTERROGATION "interrogation"
 #define CAMERANET_NETWORK_ABDUCTOR "abductor"
+#define OPERATIVE_CAMERA_NET "operative"

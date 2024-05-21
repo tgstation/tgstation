@@ -16,7 +16,8 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/door_buttons/LateInitialize()
+/obj/machinery/door_buttons/post_machine_initialize()
+	. = ..()
 	find_objects_by_tag()
 
 /obj/machinery/door_buttons/emag_act(mob/user, obj/item/card/emag/emag_card)

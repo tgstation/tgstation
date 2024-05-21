@@ -13,6 +13,9 @@
 	var/automatic_gameend_time = 8 MINUTES
 	/// List of allowed loadouts for this map, otherwise defaults to all loadouts
 	var/list/allowed_loadouts = list()
+	/// whether we are currently being loaded by a lobby
+	var/template_in_use = FALSE
+
 
 /datum/lazy_template/deathmatch/ragecage
 	name = "Ragecage"
@@ -150,3 +153,37 @@
 	)
 	map_name = "backalley"
 	key = "backalley"
+
+/datum/lazy_template/deathmatch/raginmages
+	name = "Ragin' Mages"
+	desc = "Greetings! We're the wizards of the wizard federation!"
+	max_players = 8
+	automatic_gameend_time = 4 MINUTES // ill be surprised if this lasts more than two minutes
+	allowed_loadouts = list(
+		/datum/outfit/deathmatch_loadout/wizard,
+		/datum/outfit/deathmatch_loadout/wizard/pyro,
+		/datum/outfit/deathmatch_loadout/wizard/electro,
+		/datum/outfit/deathmatch_loadout/wizard/necromancer,
+		/datum/outfit/deathmatch_loadout/wizard/larp,
+		/datum/outfit/deathmatch_loadout/wizard/chuuni,
+		/datum/outfit/deathmatch_loadout/wizard/battle,
+		/datum/outfit/deathmatch_loadout/wizard/apprentice,
+		/datum/outfit/deathmatch_loadout/wizard/gunmancer,
+		/datum/outfit/deathmatch_loadout/wizard/monkey,
+		/datum/outfit/deathmatch_loadout/wizard/chaos,
+		/datum/outfit/deathmatch_loadout/wizard/clown,
+	)
+	map_name = "ragin_mages"
+	key = "ragin_mages"
+
+/datum/lazy_template/deathmatch/train
+	name = "Trainship Hijack"
+	desc = "Trouble stirs in Tizira..."
+	max_players = 8
+	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/battler/cowboy)
+	map_name = "train"
+	key = "train"
+	turf_reservation_type = /datum/turf_reservation/indestructible_plating
+
+/datum/turf_reservation/indestructible_plating
+	turf_type = /turf/open/indestructible/plating //a little hacky but i guess it has to be done

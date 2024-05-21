@@ -1,4 +1,0 @@
-author: "moocowswag"
-delete-after: True
-changes:
-  - bugfix: "anchored circuits no longer blow up after 2 components are used."

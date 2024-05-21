@@ -38,6 +38,7 @@
 /area/shuttle/arrival)
 "k" = (
 /obj/machinery/door/airlock/titanium,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "l" = (
@@ -55,6 +56,7 @@
 /area/shuttle/arrival)
 "o" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "p" = (

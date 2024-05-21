@@ -30,7 +30,7 @@
 	suffix = "lavaland_biodome_clown_planet.dmm"
 
 /datum/map_template/ruin/lavaland/lizgas
-	name = "The Lizard's Gas(Lava)"
+	name = "Lava-Ruin The Lizard's Gas"
 	id = "lizgas2"
 	description = "A recently opened gas station from the Lizard's Gas franchise."
 	suffix = "lavaland_surface_gas.dmm"

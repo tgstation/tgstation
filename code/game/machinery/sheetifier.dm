@@ -50,7 +50,7 @@
 	var/mutable_appearance/processing_overlay = mutable_appearance(icon, "processing")
 	processing_overlay.color = last_inserted_material.color
 	flick_overlay_static(processing_overlay, src, 64)
-	addtimer(CALLBACK(src, PROC_REF(finish_processing)), 64)
+	addtimer(CALLBACK(src, PROC_REF(finish_processing)), 6.4 SECONDS)
 
 /obj/machinery/sheetifier/proc/finish_processing()
 	busy_processing = FALSE

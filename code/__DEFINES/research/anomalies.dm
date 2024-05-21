@@ -21,11 +21,6 @@
 GLOBAL_LIST_INIT(bioscrambler_parts_blacklist, typecacheof(list(
 	/obj/item/bodypart/chest/larva,
 	/obj/item/bodypart/head/larva,
-	// Re-add the ones below this line when the bug with offset is fixed
-	/obj/item/bodypart/leg/left/monkey,
-	/obj/item/bodypart/leg/right/monkey,
-	/obj/item/bodypart/leg/left/tallboy,
-	/obj/item/bodypart/leg/right/tallboy,
 )))
 
 /// Blacklist of organs which should not appear when bioscrambled.
@@ -39,10 +34,13 @@ GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list (
 	/obj/item/organ/internal/brain,
 	/obj/item/organ/internal/body_egg,
 	/obj/item/organ/internal/cyberimp,
+	/obj/item/organ/internal/ears/dullahan,
+	/obj/item/organ/internal/eyes/dullahan,
 	/obj/item/organ/internal/heart/cursed,
 	/obj/item/organ/internal/heart/demon,
 	/obj/item/organ/internal/lungs,
 	/obj/item/organ/internal/monster_core,
+	/obj/item/organ/internal/tongue/dullahan,
 	/obj/item/organ/internal/vocal_cords/colossus,
 	/obj/item/organ/internal/zombie_infection,
 )))

@@ -77,7 +77,6 @@ export const ReactionDisplay = (props: ReactionDisplayProps) => {
               minValue={0}
               maxValue={14}
               alertAfter={isFlashing}
-              content={'test'}
               format={() => ''}
               ranges={{
                 red: [-0.22, 1.5],
@@ -131,7 +130,6 @@ export const ReactionDisplay = (props: ReactionDisplayProps) => {
                     minValue={0}
                     maxValue={1}
                     alertAfter={reaction.purityAlert}
-                    content={'test'}
                     format={(value) => ''}
                     ml={5}
                     ranges={{

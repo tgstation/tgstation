@@ -89,7 +89,7 @@
 			interact(user, K.qpad)
 		else
 			to_chat(user, span_notice("You insert [K] into [src]'s card slot, initiating the link procedure."))
-			if(do_after(user, 40, target = src))
+			if(do_after(user, 4 SECONDS, target = src))
 				to_chat(user, span_notice("You complete the link between [K] and [src]."))
 				K.set_pad(src)
 

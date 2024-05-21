@@ -25,7 +25,7 @@
 	added_trauma.resilience = TRAUMA_RESILIENCE_ABSOLUTE
 	added_trauma.name = name
 	added_trauma.desc = medical_record_text
-	added_trauma.scan_desc = lowertext(name)
+	added_trauma.scan_desc = LOWER_TEXT(name)
 	added_trauma.gain_text = null
 	added_trauma.lose_text = null
 
@@ -33,7 +33,7 @@
 	added_trama_ref = WEAKREF(added_trauma)
 
 /datum/quirk/insanity/post_add()
-	var/rds_policy = get_policy("[type]") || "Please note that your [lowertext(name)] does NOT give you any additional right to attack people or cause chaos."
+	var/rds_policy = get_policy("[type]") || "Please note that your [LOWER_TEXT(name)] does NOT give you any additional right to attack people or cause chaos."
 	// I don't /think/ we'll need this, but for newbies who think "roleplay as insane" = "license to kill", it's probably a good thing to have.
 	to_chat(quirk_holder, span_big(span_info(rds_policy)))
 

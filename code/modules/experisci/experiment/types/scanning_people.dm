@@ -12,7 +12,7 @@
 	required_atoms = list(/mob/living/carbon/human = required_count)
 	return ..()
 
-/datum/experiment/scanning/people/final_contributing_index_checks(atom/target, typepath)
+/datum/experiment/scanning/people/final_contributing_index_checks(datum/component/experiment_handler/experiment_handler, atom/target, typepath)
 	. = ..()
 	if(!.)
 		return FALSE

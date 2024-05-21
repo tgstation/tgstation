@@ -1,3 +1,6 @@
+#define REGIME_TELEPORTER "Teleporter"
+#define REGIME_GATE "Gate"
+
 /obj/machinery/computer/teleporter
 	name = "teleporter control console"
 	desc = "Used to control a linked teleportation Hub and Station."
@@ -5,10 +8,13 @@
 	icon_keyboard = "teleport_key"
 	light_color = LIGHT_COLOR_BLUE
 	circuit = /obj/item/circuitboard/computer/teleporter
-
-	var/regime_set = "Teleporter"
+	/// Currently can be "Teleporter" or "Gate"
+	var/regime_set = REGIME_TELEPORTER
+	/// The ID of this teleporter, used for linking to power stations
 	var/id
+	/// The power station this teleporter is linked to
 	var/obj/machinery/teleport/station/power_station
+	/// Whether the teleporter is currently calibrating
 	var/calibrating
 	///Weakref to the target atom we're pointed at currently
 	var/datum/weakref/target_ref
@@ -63,7 +69,7 @@
 	data["power_station"] = power_station ? TRUE : FALSE
 	data["teleporter_hub"] = power_station?.teleporter_hub ? TRUE : FALSE
 	data["regime_set"] = regime_set
-	data["target"] = !target ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"
+	data["target"] = !target ? "None" : "[get_area(target)] [(regime_set != REGIME_GATE) ? "" : REGIME_TELEPORTER]"
 	data["calibrating"] = calibrating
 
 	if(power_station?.teleporter_hub?.calibrated || power_station?.teleporter_hub?.accuracy >= 3)
@@ -145,10 +151,10 @@
 
 /obj/machinery/computer/teleporter/proc/reset_regime()
 	set_teleport_target(null)
-	if(regime_set == "Teleporter")
-		regime_set = "Gate"
+	if(regime_set == REGIME_TELEPORTER)
+		regime_set = REGIME_GATE
 	else
-		regime_set = "Teleporter"
+		regime_set = REGIME_TELEPORTER
 
 /// Gets a list of targets to teleport to.
 /// List is an assoc list of descriptors to locations.
@@ -156,7 +162,7 @@
 	var/list/targets = list()
 	var/list/area_index = list()
 
-	if (regime_set == "Teleporter")
+	if (regime_set == REGIME_TELEPORTER)
 		for (var/obj/item/beacon/beacon as anything in GLOB.teleportbeacons)
 			if (!is_eligible(beacon))
 				continue
@@ -199,9 +205,9 @@
 /obj/machinery/computer/teleporter/proc/set_target(mob/user)
 	var/list/targets = get_targets()
 
-	if (regime_set == "Teleporter")
+	if (regime_set == REGIME_TELEPORTER)
 		var/desc = tgui_input_list(usr, "Select a location to lock in", "Locking Computer", sort_list(targets))
-		if(isnull(desc))
+		if(isnull(desc) || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 			return
 		set_teleport_target(targets[desc])
 		user.log_message("set the teleporter target to [targets[desc]].]", LOG_GAME)
@@ -211,7 +217,7 @@
 			return
 
 		var/desc = tgui_input_list(usr, "Select a station to lock in", "Locking Computer", sort_list(targets))
-		if(isnull(desc))
+		if(isnull(desc)|| !user.can_perform_action(src, ALLOW_SILICON_REACH))
 			return
 		var/obj/machinery/teleport/station/target_station = targets[desc]
 		if(!target_station || !target_station.teleporter_hub)
@@ -231,6 +237,10 @@
 	if(!A || (A.area_flags & NOTELEPORT))
 		return FALSE
 	return TRUE
+
+
+#undef REGIME_TELEPORTER
+#undef REGIME_GATE
 
 /obj/item/circuit_component/teleporter_control_console
 	display_name = "Teleporter Control Console"

@@ -39,7 +39,9 @@ SUBSYSTEM_DEF(lua)
 		return SS_INIT_SUCCESS
 	catch(var/exception/e)
 		// Something went wrong, best not allow the subsystem to run
-		warning("Error initializing SSlua: [e.name]")
+		var/crash_message = "Error initializing SSlua: [e.name]"
+		initialization_failure_message = crash_message
+		warning(crash_message)
 		return SS_INIT_FAILURE
 
 /datum/controller/subsystem/lua/OnConfigLoad()
@@ -51,7 +53,7 @@ SUBSYSTEM_DEF(lua)
 	world.SetConfig("env", "LUAU_PATH", jointext(lua_path, ";"))
 
 /datum/controller/subsystem/lua/Shutdown()
-	AUXTOOLS_SHUTDOWN(AUXLUA)
+	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)
 
 /datum/controller/subsystem/lua/proc/queue_resume(datum/lua_state/state, index, arguments)
 	if(!initialized)

@@ -66,7 +66,7 @@ Consuming extracts:
 		fed = TRUE
 	else
 		M.visible_message(span_danger("[user] tries to force [M] to eat [src]!"), span_userdanger("[user] tries to force you to eat [src]!"))
-		if(do_after(user, 20, target = M))
+		if(do_after(user, 2 SECONDS, target = M))
 			fed = TRUE
 			M.visible_message(span_danger("[user] forces [M] to eat [src]!"), span_warning("[user] forces you to eat [src]."))
 	if(fed)

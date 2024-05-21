@@ -30,13 +30,15 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/temperature_pump/AltClick(mob/user)
-	if(can_interact(user) && !(heat_transfer_rate == max_heat_transfer_rate))
-		heat_transfer_rate = max_heat_transfer_rate
-		investigate_log("was set to [heat_transfer_rate]% by [key_name(user)]", INVESTIGATE_ATMOS)
-		balloon_alert(user, "transfer rate set to [heat_transfer_rate]%")
-		update_appearance()
-	return ..()
+/obj/machinery/atmospherics/components/binary/temperature_pump/click_alt(mob/user)
+	if(heat_transfer_rate == max_heat_transfer_rate)
+		return CLICK_ACTION_BLOCKING
+
+	heat_transfer_rate = max_heat_transfer_rate
+	investigate_log("was set to [heat_transfer_rate]% by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "transfer rate set to [heat_transfer_rate]%")
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/update_icon_nopipes()
 	icon_state = "tpump_[on && is_operational ? "on" : "off"]-[set_overlay_offset(piping_layer)]"

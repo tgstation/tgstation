@@ -16,10 +16,8 @@
 	else
 		return ..()
 
-/obj/structure/dresser/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
-	qdel(src)
+/obj/structure/dresser/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 
 /obj/structure/dresser/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -42,7 +40,7 @@
 		return
 	switch(choice)
 		if("Underwear")
-			var/new_undies = tgui_input_list(user, "Select your underwear", "Changing", GLOB.underwear_list)
+			var/new_undies = tgui_input_list(user, "Select your underwear", "Changing", SSaccessories.underwear_list)
 			if(new_undies)
 				dressing_human.underwear = new_undies
 		if("Underwear Color")
@@ -50,11 +48,11 @@
 			if(new_underwear_color)
 				dressing_human.underwear_color = sanitize_hexcolor(new_underwear_color)
 		if("Undershirt")
-			var/new_undershirt = tgui_input_list(user, "Select your undershirt", "Changing", GLOB.undershirt_list)
+			var/new_undershirt = tgui_input_list(user, "Select your undershirt", "Changing", SSaccessories.undershirt_list)
 			if(new_undershirt)
 				dressing_human.undershirt = new_undershirt
 		if("Socks")
-			var/new_socks = tgui_input_list(user, "Select your socks", "Changing", GLOB.socks_list)
+			var/new_socks = tgui_input_list(user, "Select your socks", "Changing", SSaccessories.socks_list)
 			if(new_socks)
 				dressing_human.socks = new_socks
 

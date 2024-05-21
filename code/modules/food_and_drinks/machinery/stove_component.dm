@@ -128,6 +128,14 @@
 /datum/component/stove/proc/on_attackby(obj/machinery/source, obj/item/attacking_item, mob/user, params)
 	SIGNAL_HANDLER
 
+	if(istype(source, /obj/machinery/oven/range) && istype(attacking_item, /obj/item/storage/bag/tray) && container)
+		var/obj/machinery/oven/range/range = source
+		var/obj/item/reagent_containers/cup/soup_pot/soup_pot = container
+
+		if(!range.open)
+			soup_pot.transfer_from_container_to_pot(attacking_item, user)
+			return COMPONENT_NO_AFTERATTACK
+
 	if(!attacking_item.is_open_container())
 		return
 	if(!isnull(container))
@@ -249,7 +257,7 @@
 				return
 			// this gets badly murdered by sidemap
 			soup_smoke = new(parent, particle_type)
-			soup_smoke.set_particle_position(list(container_x, round(world.icon_size * 0.66), 0))
+			soup_smoke.set_particle_position(container_x, round(world.icon_size * 0.66), 0)
 		return
 
 	QDEL_NULL(soup_smoke)

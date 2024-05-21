@@ -12,9 +12,6 @@
 	if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 		view_core()
 
-	if(machine)
-		machine.check_eye(src)
-
 	// Handle power damage (oxy)
 	if(aiRestorePowerRoutine)
 		// Lost power
@@ -164,4 +161,4 @@
 	adjust_temp_blindness(2 SECONDS)
 	update_sight()
 	to_chat(src, span_alert("You've lost power!"))
-	addtimer(CALLBACK(src, PROC_REF(start_RestorePowerRoutine)), 20)
+	addtimer(CALLBACK(src, PROC_REF(start_RestorePowerRoutine)), 2 SECONDS)

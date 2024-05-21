@@ -63,7 +63,7 @@
 		persistence_cb = null
 	return ..()
 
-/obj/item/piggy_bank/deconstruct(disassembled = TRUE)
+/obj/item/piggy_bank/atom_deconstruct(disassembled = TRUE)
 	for(var/obj/item/thing as anything in contents)
 		thing.forceMove(loc)
 	//Smashing the piggy after the round is over doesn't count.

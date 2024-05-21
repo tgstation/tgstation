@@ -13,14 +13,18 @@ on:
   merge_group:
     branches:
     - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   run_linters:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Run Linters
     runs-on: ubuntu-22.04
-    concurrency:
-      group: run_linters-${{ github.head_ref || github.run_id }}
-      cancel-in-progress: true
+    timeout-minutes: 5
+
     steps:
       - uses: actions/checkout@v4
       - name: Restore SpacemanDMM cache
@@ -130,16 +134,15 @@ jobs:
     name: Compile Maps
     needs: [collect_data]
     runs-on: ubuntu-22.04
-    concurrency:
-      group: compile_all_maps-${{ github.head_ref || github.run_id }}
-      cancel-in-progress: true
+    timeout-minutes: 5
+
     steps:
       - uses: actions/checkout@v4
       - name: Restore BYOND cache
         uses: actions/cache@v4
         with:
           path: ~/BYOND
-          key: ${{ runner.os }}-byond
+          key: ${{ runner.os }}-byond-${{ hashFiles('dependencies.sh') }}
       - name: Compile All Maps
         run: |
           bash tools/ci/install_byond.sh
@@ -155,13 +158,12 @@ jobs:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Collect data for other tasks
     runs-on: ubuntu-22.04
+    timeout-minutes: 5
     outputs:
       maps: ${{ steps.map_finder.outputs.maps }}
       alternate_tests: ${{ steps.alternate_test_finder.outputs.alternate_tests }}
       max_required_byond_client: ${{ steps.max_required_byond_client.outputs.max_required_byond_client }}
-    concurrency:
-      group: find_all_maps-${{ github.head_ref || github.run_id }}
-      cancel-in-progress: true
+
     steps:
       - uses: actions/checkout@v4
       - name: Find Maps
@@ -186,13 +188,12 @@ jobs:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Integration Tests
     needs: [collect_data]
+
     strategy:
       fail-fast: false
       matrix:
         map: ${{ fromJSON(needs.collect_data.outputs.maps).paths }}
-    concurrency:
-      group: run_all_tests-${{ github.head_ref || github.run_id }}-${{ matrix.map }}
-      cancel-in-progress: true
+
     uses: ./.github/workflows/run_integration_tests.yml
     with:
       map: ${{ matrix.map }}
@@ -206,9 +207,7 @@ jobs:
       fail-fast: false
       matrix:
         setup: ${{ fromJSON(needs.collect_data.outputs.alternate_tests) }}
-    concurrency:
-      group: run_all_tests-${{ github.head_ref || github.run_id }}-${{ matrix.setup.major }}.${{ matrix.setup.minor }}-${{ matrix.setup.map }}
-      cancel-in-progress: true
+
     uses: ./.github/workflows/run_integration_tests.yml
     with:
       map: ${{ matrix.setup.map }}
@@ -221,6 +220,7 @@ jobs:
     name: Check Alternate Tests
     needs: [run_alternate_tests]
     runs-on: ubuntu-22.04
+    timeout-minutes: 5
     steps:
       - run: echo Alternate tests passed.
 
@@ -228,6 +228,7 @@ jobs:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') && (always() && (!failure() && !cancelled())) )
     needs: [run_all_tests, run_alternate_tests]
     name: Compare Screenshot Tests
+    timeout-minutes: 15
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -266,9 +267,8 @@ jobs:
     name: Windows Build
     needs: [collect_data]
     runs-on: windows-latest
-    concurrency:
-      group: test_windows-${{ github.head_ref || github.run_id }}
-      cancel-in-progress: true
+    timeout-minutes: 5
+
     steps:
       - uses: actions/checkout@v4
       - name: Restore Yarn cache

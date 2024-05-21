@@ -3,6 +3,7 @@
 	desc = "This device recharges energy dependent lifeforms, like cyborgs, ethereals and MODsuit users."
 	icon = 'icons/obj/machines/borg_charger.dmi'
 	icon_state = "borgcharger0"
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 	density = FALSE
 	req_access = list(ACCESS_ROBOTICS)
 	state_open = TRUE
@@ -59,23 +60,28 @@
 /obj/machinery/recharge_station/proc/charge_target_cell(obj/item/stock_parts/cell/target, seconds_per_tick)
 	PRIVATE_PROC(TRUE)
 
-	return charge_cell(recharge_speed * seconds_per_tick, target, grid_only = TRUE)
+	//charge the cell, account for heat loss from work done
+	var/charge_given = charge_cell(recharge_speed * seconds_per_tick, target, grid_only = TRUE)
+	if(charge_given)
+		use_energy((charge_given + active_power_usage) * 0.01)
+
+	return charge_given
 
 /obj/machinery/recharge_station/RefreshParts()
 	. = ..()
 	recharge_speed = 0
 	repairs = 0
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		recharge_speed += (capacitor.tier * STANDARD_CELL_CHARGE * 0.1)
+		recharge_speed += 5e-3 * capacitor.tier
 	for(var/datum/stock_part/servo/servo in component_parts)
 		repairs += servo.tier - 1
 	for(var/obj/item/stock_parts/cell/cell in component_parts)
-		recharge_speed *= (cell.maxcharge / STANDARD_CELL_CHARGE)
+		recharge_speed *= cell.maxcharge
 
 /obj/machinery/recharge_station/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Recharging <b>[recharge_speed]J</b> per cycle.")
+		. += span_notice("The status display reads: Recharging: <b>[display_power(recharge_speed, convert = FALSE)]</b>.")
 		if(materials.silo)
 			. += span_notice("The ore silo link indicator is lit, and cyborg restocking can be toggled by <b>Right-Clicking</b> [src].")
 		if(repairs)
@@ -86,12 +92,6 @@
 		end_processing()
 	else //Turned on
 		begin_processing()
-
-
-/obj/machinery/recharge_station/process(seconds_per_tick)
-	if(occupant)
-		process_occupant(seconds_per_tick)
-	return 1
 
 /obj/machinery/recharge_station/relaymove(mob/living/user, direction)
 	if(user.stat)
@@ -173,7 +173,8 @@
 	icon_state = "borgcharger[state_open ? 0 : (occupant ? 1 : 2)]"
 	return ..()
 
-/obj/machinery/recharge_station/proc/process_occupant(seconds_per_tick)
-	if(!occupant)
+/obj/machinery/recharge_station/process(seconds_per_tick)
+	if(QDELETED(occupant) || !is_operational)
 		return
+
 	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, charge_cell, seconds_per_tick, repairs, sendmats)

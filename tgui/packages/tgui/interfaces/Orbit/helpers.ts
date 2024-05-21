@@ -1,29 +1,34 @@
-import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
-
-import { HEALTH, THREAT } from './constants';
-import type { AntagGroup, Antagonist, Observable } from './types';
+import { DEPARTMENT2COLOR, HEALTH, THREAT, VIEWMODE } from './constants';
+import { AntagGroup, Antagonist, Observable, ViewMode } from './types';
 
 /** Return a map of strings with each antag in its antag_category */
-export const getAntagCategories = (antagonists: Antagonist[]) => {
-  const categories: Record<string, Antagonist[]> = {};
+export function getAntagCategories(antagonists: Antagonist[]): AntagGroup[] {
+  const categories = new Map<string, Antagonist[]>();
 
-  antagonists.map((player) => {
+  for (const player of antagonists) {
     const { antag_group } = player;
 
-    if (!categories[antag_group]) {
-      categories[antag_group] = [];
+    if (!categories.has(antag_group)) {
+      categories.set(antag_group, []);
     }
+    categories.get(antag_group)!.push(player);
+  }
 
-    categories[antag_group].push(player);
+  const sorted = Array.from(categories.entries()).sort((a, b) => {
+    const lowerA = a[0].toLowerCase();
+    const lowerB = b[0].toLowerCase();
+
+    if (lowerA < lowerB) return -1;
+    if (lowerA > lowerB) return 1;
+    return 0;
   });
 
-  return sortBy<AntagGroup>(([key]) => key)(Object.entries(categories));
-};
+  return sorted;
+}
 
 /** Returns a disguised name in case the person is wearing someone else's ID */
-export const getDisplayName = (full_name: string, name?: string) => {
-  if (!name) {
+export function getDisplayName(full_name: string, nickname?: string): string {
+  if (!nickname) {
     return full_name;
   }
 
@@ -32,30 +37,36 @@ export const getDisplayName = (full_name: string, name?: string) => {
     full_name.match(/\(as /) ||
     full_name.match(/^Unknown/)
   ) {
-    return name;
+    return nickname;
   }
 
   // return only the name before the first ' [' or ' ('
   return `"${full_name.split(/ \[| \(/)[0]}"`;
-};
+}
 
-export const getMostRelevant = (
-  searchQuery: string,
-  observables: Observable[][],
-): Observable => {
-  return flow([
-    // Filters out anything that doesn't match search
-    filter<Observable>((observable) =>
-      isJobOrNameMatch(observable, searchQuery),
-    ),
-    // Sorts descending by orbiters
-    sortBy<Observable>((observable) => -(observable.orbiters || 0)),
-    // Makes a single Observables list for an easy search
-  ])(observables.flat())[0];
-};
+/** Returns the department the player is in */
+export function getDepartmentByJob(job: string): string | undefined {
+  const withoutParenthesis = job.replace(/ \(.*\)/, '');
+
+  for (const department in DEPARTMENT2COLOR) {
+    if (DEPARTMENT2COLOR[department].trims.includes(withoutParenthesis)) {
+      return department;
+    }
+  }
+}
+
+/** Gets department color for a job */
+function getDepartmentColor(job: string | undefined): string {
+  if (!job) return 'grey';
+
+  const department = getDepartmentByJob(job);
+  if (!department) return 'grey';
+
+  return DEPARTMENT2COLOR[department].color;
+}
 
 /** Returns the display color for certain health percentages */
-const getHealthColor = (health: number) => {
+function getHealthColor(health: number): string {
   switch (true) {
     case health > HEALTH.Good:
       return 'good';
@@ -64,10 +75,10 @@ const getHealthColor = (health: number) => {
     default:
       return 'bad';
   }
-};
+}
 
 /** Returns the display color based on orbiter numbers */
-const getThreatColor = (orbiters = 0) => {
+function getThreatColor(orbiters = 0): string {
   switch (true) {
     case orbiters > THREAT.High:
       return 'violet';
@@ -78,32 +89,43 @@ const getThreatColor = (orbiters = 0) => {
     default:
       return 'good';
   }
-};
+}
 
 /** Displays color for buttons based on the health or orbiter count. */
-export const getDisplayColor = (
+export function getDisplayColor(
   item: Observable,
-  heatMap: boolean,
-  color?: string,
-) => {
-  const { health, orbiters } = item;
+  mode: ViewMode,
+  override?: string,
+): string {
+  const { job, health, orbiters } = item;
+
+  // Things like blob camera, etc
   if (typeof health !== 'number') {
-    return color ? 'good' : 'grey';
+    return override ? 'good' : 'grey';
   }
-  if (heatMap) {
-    return getThreatColor(orbiters);
+
+  // Players that are AFK
+  if ('client' in item && !item.client) {
+    return 'grey';
   }
-  return getHealthColor(health);
-};
+
+  switch (mode) {
+    case VIEWMODE.Orbiters:
+      return getThreatColor(orbiters);
+    case VIEWMODE.Department:
+      return getDepartmentColor(job);
+    default:
+      return getHealthColor(health);
+  }
+}
 
 /** Checks if a full name or job title matches the search. */
-export const isJobOrNameMatch = (
+export function isJobOrNameMatch(
   observable: Observable,
   searchQuery: string,
-) => {
-  if (!searchQuery) {
-    return true;
-  }
+): boolean {
+  if (!searchQuery) return true;
+
   const { full_name, job } = observable;
 
   return (
@@ -111,4 +133,46 @@ export const isJobOrNameMatch = (
     job?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
     false
   );
-};
+}
+
+/** Sorts by department */
+export function sortByDepartment(poiA: Observable, poiB: Observable): number {
+  const departmentA = (poiA.job && getDepartmentByJob(poiA.job)) || 'unknown';
+  const departmentB = (poiB.job && getDepartmentByJob(poiB.job)) || 'unknown';
+
+  if (departmentA < departmentB) return -1;
+  if (departmentA > departmentB) return 1;
+  return 0;
+}
+
+/** Sorts based on real name */
+export function sortByDisplayName(poiA: Observable, poiB: Observable): number {
+  const nameA = getDisplayName(poiA.full_name, poiA.name)
+    .replace(/^"/, '')
+    .toLowerCase();
+  const nameB = getDisplayName(poiB.full_name, poiB.name)
+    .replace(/^"/, '')
+    .toLowerCase();
+
+  if (nameA < nameB) {
+    return -1;
+  }
+  if (nameA > nameB) {
+    return 1;
+  }
+  return 0;
+}
+
+/** Sorts by most orbiters  */
+export function sortByOrbiters(poiA: Observable, poiB: Observable): number {
+  const orbitersA = poiA.orbiters || 0;
+  const orbitersB = poiB.orbiters || 0;
+
+  if (orbitersA < orbitersB) {
+    return -1;
+  }
+  if (orbitersA > orbitersB) {
+    return 1;
+  }
+  return 0;
+}

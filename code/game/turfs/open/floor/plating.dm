@@ -14,6 +14,7 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 	//Can this plating have reinforced floors placed ontop of it
 	var/attachment_holes = TRUE
@@ -62,7 +63,7 @@
 			return
 		else
 			to_chat(user, span_notice("You begin reinforcing the floor..."))
-			if(do_after(user, 30, target = src))
+			if(do_after(user, 3 SECONDS, target = src))
 				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
 					place_on_top(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
 					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
@@ -121,10 +122,7 @@
 
 #undef PLATE_REINFORCE_COST
 
-/turf/open/floor/plating/rust_heretic_act()
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
-	return ..()
+
 
 /turf/open/floor/plating/make_plating(force = FALSE)
 	return
@@ -177,9 +175,8 @@
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
-/turf/open/floor/plating/foam/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	SHOULD_CALL_PARENT(FALSE)
-	return NONE // Fuck you
+/turf/open/floor/plating/foam/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return user.combat_mode ? ITEM_INTERACT_SKIP_TO_ATTACK : ITEM_INTERACT_BLOCKING // Fuck you
 
 //reinforced plating deconstruction states
 #define PLATE_INTACT 0
@@ -198,6 +195,7 @@
 	allow_replacement = FALSE
 	rcd_proof = TRUE
 	upgradable = FALSE
+	rust_resistance = RUST_RESISTANCE_REINFORCED
 
 	//Used to track which stage of deconstruction the plate is currently in, Intact > Bolts Loosened > Cut
 	var/deconstruction_state = PLATE_INTACT

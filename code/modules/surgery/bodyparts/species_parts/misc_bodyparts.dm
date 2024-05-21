@@ -15,7 +15,7 @@
 
 /obj/item/bodypart/arm/left/snail
 	limb_id = SPECIES_SNAIL
-	unarmed_attack_verb = "slap"
+	unarmed_attack_verbs = list("slap")
 	unarmed_attack_effect = ATTACK_EFFECT_DISARM
 	unarmed_damage_low = 1
 	unarmed_damage_high = 2 //snails are soft and squishy
@@ -24,7 +24,7 @@
 
 /obj/item/bodypart/arm/right/snail
 	limb_id = SPECIES_SNAIL
-	unarmed_attack_verb = "slap"
+	unarmed_attack_verbs = list("slap")
 	unarmed_attack_effect = ATTACK_EFFECT_DISARM
 	unarmed_damage_low = 1
 	unarmed_damage_high = 2 //snails are soft and squishy
@@ -36,7 +36,6 @@
 	unarmed_damage_low = 1
 	unarmed_damage_high = 2 //snails are soft and squishy
 	burn_modifier = 2
-	speed_modifier = 3 //disgustingly slow
 	biological_state = (BIO_FLESH|BIO_BLOODED)
 
 /obj/item/bodypart/leg/right/snail
@@ -44,7 +43,6 @@
 	unarmed_damage_low = 1
 	unarmed_damage_high = 2 //snails are soft and squishy
 	burn_modifier = 2
-	speed_modifier = 3 //disgustingly slow
 	biological_state = (BIO_FLESH|BIO_BLOODED)
 
 ///ABDUCTOR
@@ -222,7 +220,7 @@
 
 /obj/item/bodypart/arm/left/pod
 	limb_id = SPECIES_PODPERSON
-	unarmed_attack_verb = "slash"
+	unarmed_attack_verbs = list("slash", "lash")
 	grappled_attack_verb = "lacerate"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/weapons/slice.ogg'
@@ -231,7 +229,7 @@
 
 /obj/item/bodypart/arm/right/pod
 	limb_id = SPECIES_PODPERSON
-	unarmed_attack_verb = "slash"
+	unarmed_attack_verbs = list("slash", "lash")
 	grappled_attack_verb = "lacerate"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/weapons/slice.ogg'
@@ -584,38 +582,34 @@
 	limb_id = BODYPART_ID_MEAT
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/arm/left/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
+/obj/item/bodypart/arm/left/flesh/Initialize(mapload)
 	. = ..()
-	if(!dont_spawn_flesh)
-		new /mob/living/basic/living_limb_flesh(src, src)
 	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
+	AddElement(/datum/element/living_limb_initialiser)
 
 /obj/item/bodypart/arm/right/flesh
 	limb_id = BODYPART_ID_MEAT
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/arm/right/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
+/obj/item/bodypart/arm/right/flesh/Initialize(mapload)
 	. = ..()
-	if(!dont_spawn_flesh)
-		new /mob/living/basic/living_limb_flesh(src, src)
 	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
+	AddElement(/datum/element/living_limb_initialiser)
 
 /obj/item/bodypart/leg/left/flesh
 	limb_id = BODYPART_ID_MEAT
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/leg/left/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
+/obj/item/bodypart/leg/left/flesh/Initialize(mapload)
 	. = ..()
-	if(!dont_spawn_flesh)
-		new /mob/living/basic/living_limb_flesh(src, src)
 	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
+	AddElement(/datum/element/living_limb_initialiser)
 
 /obj/item/bodypart/leg/right/flesh
 	limb_id = BODYPART_ID_MEAT
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/leg/right/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
+/obj/item/bodypart/leg/right/flesh/Initialize(mapload)
 	. = ..()
-	if(!dont_spawn_flesh)
-		new /mob/living/basic/living_limb_flesh(src, src)
 	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
+	AddElement(/datum/element/living_limb_initialiser)

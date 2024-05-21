@@ -236,7 +236,8 @@
 		JOB_HEAD_OF_SECURITY,
 		JOB_HEAD_OF_PERSONNEL,
 		JOB_CHIEF_ENGINEER,
-		JOB_CHIEF_MEDICAL_OFFICER
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_QUARTERMASTER,
 	)
 	exists_on_map = TRUE
 	difficulty = 3
@@ -279,7 +280,8 @@
 		JOB_HEAD_OF_SECURITY,
 		JOB_HEAD_OF_PERSONNEL,
 		JOB_CHIEF_ENGINEER,
-		JOB_CHIEF_MEDICAL_OFFICER
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_QUARTERMASTER,
 	)
 	exists_on_map = TRUE
 	difficulty = 4
@@ -525,7 +527,7 @@
 
 /datum/objective_item/steal/blueprints
 	name = "the station blueprints"
-	targetitem = /obj/item/areaeditor/blueprints
+	targetitem = /obj/item/blueprints
 	excludefromjob = list(JOB_CHIEF_ENGINEER)
 	item_owner = list(JOB_CHIEF_ENGINEER)
 	altitems = list(/obj/item/photo)
@@ -533,11 +535,11 @@
 	difficulty = 3
 	steal_hint = "The blueprints of the station, found in the Chief Engineer's locker, or on their person. A picture may suffice."
 
-/obj/item/areaeditor/blueprints/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/areaeditor/blueprints)
+/obj/item/blueprints/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/blueprints)
 
 /datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)
-	if(istype(I, /obj/item/areaeditor/blueprints))
+	if(istype(I, /obj/item/blueprints))
 		return TRUE
 	if(istype(I, /obj/item/photo))
 		var/obj/item/photo/P = I
@@ -574,7 +576,7 @@
 /datum/objective_item/steal/traitor/moth_plush
 	name = "cute moth plush toy"
 	targetitem = /obj/item/toy/plush/moth
-	excludefromjob = list(JOB_PSYCHOLOGIST, JOB_PARAMEDIC, JOB_CHEMIST, JOB_MEDICAL_DOCTOR, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_CORONER)
+	excludefromjob = list(JOB_PSYCHOLOGIST, JOB_PARAMEDIC, JOB_CHEMIST, JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_CORONER)
 	exists_on_map = TRUE
 	difficulty = 1
 	steal_hint = "A moth plush toy. The Psychologist has one to help console patients."
@@ -629,7 +631,15 @@
 /datum/objective_item/steal/traitor/rpd
 	name = "rapid pipe dispenser"
 	targetitem = /obj/item/pipe_dispenser
-	excludefromjob = list(JOB_ATMOSPHERIC_TECHNICIAN, JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER, JOB_SCIENTIST, JOB_RESEARCH_DIRECTOR, JOB_GENETICIST, JOB_ROBOTICIST)
+	excludefromjob = list(
+		JOB_ATMOSPHERIC_TECHNICIAN,
+		JOB_STATION_ENGINEER,
+		JOB_CHIEF_ENGINEER,
+		JOB_SCIENTIST,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_GENETICIST,
+		JOB_ROBOTICIST,
+	)
 	item_owner = list(JOB_CHIEF_ENGINEER)
 	exists_on_map = TRUE
 	difficulty = 1
@@ -641,7 +651,19 @@
 /datum/objective_item/steal/traitor/donut_box
 	name = "a box of prized donuts"
 	targetitem = /obj/item/storage/fancy/donut_box
-	excludefromjob = list(JOB_CAPTAIN, JOB_CHIEF_ENGINEER, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY, JOB_QUARTERMASTER, JOB_CHIEF_MEDICAL_OFFICER, JOB_RESEARCH_DIRECTOR, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_LAWYER, JOB_DETECTIVE)
+	excludefromjob = list(
+		JOB_CAPTAIN,
+		JOB_CHIEF_ENGINEER,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_QUARTERMASTER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+		JOB_LAWYER,
+		JOB_DETECTIVE,
+	)
 	exists_on_map = TRUE
 	difficulty = 1
 	steal_hint = "Everyone has a box of donuts - you may most commonly find them on the Bridge, within Security, or in any department's break room."

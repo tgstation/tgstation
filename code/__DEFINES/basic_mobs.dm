@@ -14,6 +14,8 @@
 #define IMMUNE_TO_FISTS (1<<4)
 /// Mob is immune to getting wet
 #define IMMUNE_TO_GETTING_WET (1<<5)
+/// Disables the function of attacking random body zones
+#define PRECISE_ATTACK_ZONES (1<<6)
 
 /// Temporary trait applied when an attack forecast animation has completed
 #define TRAIT_BASIC_ATTACK_FORECAST "trait_basic_attack_forecast"
@@ -30,3 +32,43 @@
 
 ///keeps track of how many gutlunches are born
 GLOBAL_VAR_INIT(gutlunch_count, 0)
+
+//raptor defines
+
+#define RAPTOR_RED "Red"
+#define RAPTOR_GREEN "Green"
+#define RAPTOR_PURPLE "Purple"
+#define RAPTOR_WHITE "White"
+#define RAPTOR_YELLOW "Yellow"
+#define RAPTOR_BLACK "Black"
+#define RAPTOR_BLUE "Blue"
+
+#define RAPTOR_INHERIT_MAX_ATTACK 5
+#define RAPTOR_INHERIT_MAX_HEALTH 30
+
+///this mob suffers depression
+#define BB_BASIC_DEPRESSED "basic_depressed"
+///this mob will care for its young
+#define BB_RAPTOR_MOTHERLY "raptor_motherly"
+///this mob will be playful around their owners
+#define BB_RAPTOR_PLAYFUL "raptor_playful"
+///this mob will flee combat when it feels threatened
+#define BB_RAPTOR_COWARD "raptor_coward"
+///this mob will go out seeking trouble against its kind
+#define BB_RAPTOR_TROUBLE_MAKER "raptor_trouble_maker"
+///cooldown till we go out cause trouble again
+#define BB_RAPTOR_TROUBLE_COOLDOWN "raptor_trouble_maker_cooldown"
+///our raptor baby target we will take care of
+#define BB_RAPTOR_BABY "raptor_baby"
+///the raptor we will heal up
+#define BB_INJURED_RAPTOR "injured_raptor"
+///the raptor we will bully
+#define BB_RAPTOR_VICTIM "raptor_victim"
+///the cooldown for next time we eat
+#define BB_RAPTOR_EAT_COOLDOWN "raptor_eat_cooldown"
+///our trough target
+#define BB_RAPTOR_TROUGH_TARGET "raptor_trough_target"
+
+#define MAX_RAPTOR_POP 64
+
+
