@@ -10,7 +10,7 @@ import { PaiData } from './types';
  * another section that displays the selected installed
  * software info.
  */
-export const InstalledDisplay = (props) => {
+export function InstalledDisplay(props) {
   const { data } = useBackend<PaiData>();
   const { installed = [] } = data;
 
@@ -52,13 +52,17 @@ export const InstalledDisplay = (props) => {
       </Stack.Item>
     </Stack>
   );
+}
+
+type SoftwareButtonsProps = {
+  currentSelection: string;
 };
 
 /**
  * Once a software is selected, generates custom buttons or a default
  * power toggle.
  */
-const SoftwareButtons = (props: { currentSelection: string }) => {
+function SoftwareButtons(props: SoftwareButtonsProps) {
   const { currentSelection } = props;
 
   const { act, data } = useBackend<PaiData>();
@@ -161,4 +165,4 @@ const SoftwareButtons = (props: { currentSelection: string }) => {
         </Button>
       );
   }
-};
+}

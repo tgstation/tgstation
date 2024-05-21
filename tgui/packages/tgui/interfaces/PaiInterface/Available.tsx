@@ -15,7 +15,7 @@ import { PaiData } from './types';
 /**
  * Renders a list of available software and the ram with which to download it
  */
-export const AvailableDisplay = () => {
+export function AvailableDisplay(props) {
   const { data } = useBackend<PaiData>();
   const { available } = data;
 
@@ -38,10 +38,10 @@ export const AvailableDisplay = () => {
       </Table>
     </Section>
   );
-};
+}
 
 /** Displays the remaining RAM left as a progressbar. */
-const MemoryDisplay = (props) => {
+function MemoryDisplay(props) {
   const { data } = useBackend<PaiData>();
   const { ram } = data;
 
@@ -62,13 +62,16 @@ const MemoryDisplay = (props) => {
                 bad: [0, 33],
               }}
               value={ram}
-            />
+              width={5}
+            >
+              {ram}
+            </ProgressBar>
           </Table.Cell>
         </Table.Row>
       </Table>
     </Tooltip>
   );
-};
+}
 
 type ListItemProps = {
   cost: number;
@@ -76,12 +79,13 @@ type ListItemProps = {
 };
 
 /** A row for an individual software listing. */
-const ListItem = (props: ListItemProps) => {
+function ListItem(props: ListItemProps) {
   const { act, data } = useBackend<PaiData>();
   const { installed, ram } = data;
   const { cost, name } = props;
 
   const purchased = installed.includes(name);
+  const tooExpensive = ram < cost;
 
   return (
     <Tooltip content={SOFTWARE_DESC[name]} position="bottom-start">
@@ -90,7 +94,7 @@ const ListItem = (props: ListItemProps) => {
           <Box color="label">{name}</Box>
         </Table.Cell>
         <Table.Cell collapsing>
-          <Box color={ram < cost && 'bad'} textAlign="right">
+          <Box color={tooExpensive && 'bad'} textAlign="right">
             {!purchased && cost}{' '}
             <Icon
               color={purchased || ram >= cost ? 'purple' : 'bad'}
@@ -101,13 +105,12 @@ const ListItem = (props: ListItemProps) => {
         <Table.Cell collapsing>
           <Button
             icon="download"
-            width={2}
             mb={0.5}
-            disabled={ram < cost || purchased}
+            disabled={tooExpensive || purchased}
             onClick={() => act('buy', { selection: name })}
           />
         </Table.Cell>
       </Table.Row>
     </Tooltip>
   );
-};
+}

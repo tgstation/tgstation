@@ -8,7 +8,7 @@ import { DirectiveDisplay } from './Directives';
 import { InstalledDisplay } from './Installed';
 import { SystemDisplay } from './System';
 
-export const PaiInterface = (props) => {
+export function PaiInterface(props) {
   const [tab, setTab] = useState(PAI_TAB.System);
 
   return (
@@ -57,4 +57,4 @@ export const PaiInterface = (props) => {
       </Window.Content>
     </Window>
   );
-};
+}
