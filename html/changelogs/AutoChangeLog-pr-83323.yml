@@ -1,0 +1,5 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - balance: "A wound being inflicted doesn't get broadcasted to everyone in view until a higher severity now."
+  - sound: "Wound sounds drop off more quickly, and no longer travel through walls. This has no effect on attack sounds."

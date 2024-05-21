@@ -15,6 +15,7 @@ import {
   Stack,
   Tabs,
   Tooltip,
+  VirtualList,
 } from '../components';
 import { Window } from '../layouts';
 import { Food } from './PreferencesMenu/data';
@@ -496,32 +497,36 @@ export const PersonalCrafting = (props) => {
               style={{ overflowY: 'auto' }}
             >
               {recipes.length > 0 ? (
-                recipes
-                  .slice(0, displayLimit)
-                  .map((item) =>
-                    display_compact ? (
-                      <RecipeContentCompact
-                        key={item.ref}
-                        item={item}
-                        craftable={
-                          !item.non_craftable && Boolean(craftability[item.ref])
-                        }
-                        busy={busy}
-                        mode={mode}
-                      />
-                    ) : (
-                      <RecipeContent
-                        key={item.ref}
-                        item={item}
-                        craftable={
-                          !item.non_craftable && Boolean(craftability[item.ref])
-                        }
-                        busy={busy}
-                        mode={mode}
-                        diet={diet}
-                      />
-                    ),
-                  )
+                <VirtualList>
+                  {recipes
+                    .slice(0, displayLimit)
+                    .map((item) =>
+                      display_compact ? (
+                        <RecipeContentCompact
+                          key={item.ref}
+                          item={item}
+                          craftable={
+                            !item.non_craftable &&
+                            Boolean(craftability[item.ref])
+                          }
+                          busy={busy}
+                          mode={mode}
+                        />
+                      ) : (
+                        <RecipeContent
+                          key={item.ref}
+                          item={item}
+                          craftable={
+                            !item.non_craftable &&
+                            Boolean(craftability[item.ref])
+                          }
+                          busy={busy}
+                          mode={mode}
+                          diet={diet}
+                        />
+                      ),
+                    )}
+                </VirtualList>
               ) : (
                 <NoticeBox m={1} p={1}>
                   No recipes found.
