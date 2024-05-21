@@ -1,0 +1,4 @@
+author: "RikuTheKiller"
+delete-after: True
+changes:
+  - balance: "The nanite \"Toggle\" error has been replaced with a \"Disable\" error that temporarily forces the nanite program to be inactive. It's fixed by cloud syncs automatically, unlike the previous permanent version."
