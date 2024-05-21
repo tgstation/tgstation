@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Custom emotes now default to both visible and audible rather than just audible"
-  - qol: "Invoking the custom emote verb now explains how to set your custom emote to visible or audible"
