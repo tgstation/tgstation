@@ -36,11 +36,7 @@
 	. = ..()
 	if(prob(1))
 		AddComponent(/datum/component/boomerang, boomerang_throw_range = throw_range + 4, thrower_easy_catch_enabled = TRUE)
-
-/obj/item/food/grown/banana/examine_more(mob/user)
-	. = ..()
-	if(GetComponent(/datum/component/boomerang))
-		. += "The curve on this one looks particularly acute."
+		addtimer(VARSET_CALLBACK(src, desc, " The curve on this one looks particularly acute."), 0.1 SECONDS) // delay because orderable items shouldn't have a dynamic desc
 
 ///Clowns will always like bananas.
 /obj/item/food/grown/banana/proc/check_liked(mob/living/carbon/human/consumer)
