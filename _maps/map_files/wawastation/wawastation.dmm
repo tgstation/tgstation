@@ -740,14 +740,20 @@
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "alW" = (
-/obj/structure/table_frame,
 /obj/machinery/camera/autoname/directional/west{
 	network = list("ss13","medbay")
 	},
 /obj/effect/decal/cleanable/glass,
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/broken_flooring/pile,
-/turf/open/floor/plating,
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 1
+	},
+/obj/item/storage/box/masks{
+	pixel_y = 4
+	},
+/obj/item/storage/box/bodybags,
+/turf/open/floor/iron/white/textured,
 /area/station/maintenance/department/medical/central)
 "alX" = (
 /obj/effect/turf_decal/stripes{
@@ -22578,6 +22584,7 @@
 "imI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "imQ" = (
@@ -23215,7 +23222,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
 "iyA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "iyE" = (
@@ -30565,10 +30571,10 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/satellite)
 "lbw" = (
-/obj/structure/tank_holder/anesthetic,
+/obj/structure/closet/l3closet,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/broken_flooring/singular,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/green/half/contrasted,
+/turf/open/floor/iron/white/textured,
 /area/station/maintenance/department/medical/central)
 "lbJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -31805,13 +31811,12 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "lAs" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/glass,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/broken_flooring/pile{
-	dir = 8
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/green/opposingcorners,
+/turf/open/floor/iron/white/textured,
 /area/station/maintenance/department/medical/central)
 "lAy" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -39745,6 +39750,9 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "oDJ" = (
 /obj/structure/rack,
+/obj/item/reagent_containers/cup/bottle/formaldehyde{
+	pixel_y = 5
+	},
 /obj/item/reagent_containers/cup/bottle/nitrogen{
 	pixel_x = -6
 	},
@@ -44293,7 +44301,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/white,
@@ -45117,7 +45124,11 @@
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/white/textured,
 /area/station/maintenance/department/medical/central)
 "qxG" = (
 /obj/structure/cable,
@@ -45253,7 +45264,6 @@
 	dir = 1
 	},
 /obj/machinery/vending/drugs,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 10
 	},
@@ -47769,12 +47779,11 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/engine)
 "rvo" = (
-/obj/machinery/light/small/broken/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
+/obj/machinery/light/small/dim/directional/west,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/turf/open/floor/iron/white/textured,
 /area/station/maintenance/department/medical/central)
 "rwf" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -54589,10 +54598,13 @@
 /turf/open/floor/engine,
 /area/station/command/heads_quarters/captain/private)
 "tMO" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/falsewall,
-/turf/open/floor/plating,
-/area/station/maintenance/department/medical/central)
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "tMP" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -56558,17 +56570,18 @@
 /turf/open/floor/engine,
 /area/station/command/corporate_dock)
 "uvl" = (
-/obj/machinery/door/airlock/medical{
-	name = "Surgery"
-	},
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 8
+/obj/machinery/door/airlock/virology/glass{
+	name = "Biohazard Gear"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/medical/surgery,
-/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 8
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical/central)
 "uvn" = (
@@ -65409,10 +65422,17 @@
 /turf/closed/wall,
 /area/station/maintenance/port/greater)
 "xKp" = (
-/obj/item/surgery_tray/deployed,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/broken_flooring/singular,
-/turf/open/floor/plating,
+/obj/structure/closet/preopen{
+	name = "level 3 biohazard gear closet";
+	icon_state = "bio"
+	},
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 8
+	},
+/obj/item/radio/intercom/directional/west,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/tank/internals/oxygen,
+/turf/open/floor/iron/white/textured,
 /area/station/maintenance/department/medical/central)
 "xKx" = (
 /mob/living/basic/mothroach,
@@ -78781,7 +78801,7 @@ jRU
 kic
 fpK
 ilk
-tMO
+rnk
 alW
 rvo
 xKp
@@ -79554,7 +79574,7 @@ dKw
 bay
 lvW
 xsM
-wrU
+tMO
 qhu
 wBe
 iyb
