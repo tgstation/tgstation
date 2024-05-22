@@ -786,7 +786,7 @@ Striking a noncultist, however, will tear their flesh."}
 		return
 	user.visible_message(span_cult_bold("[user] is pulled into the portal through an infinitesmally minuscule hole, shredding [user.p_their()] body!"))
 	sleep(5 SECONDS)
-	user.visible_message(span_cult_italic("An unusually large construct appears through the portal..."))
+	user.visible_message(span_cult_italic("An unusually large construct appears through the portal!"))
 	user.gib() // total destruction
 	var/mob/living/basic/construct/proteon/hostile/remnant = new(get_step_rand(src))
 	remnant.name = "[user]" // no, they do not become it
