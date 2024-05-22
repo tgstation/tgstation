@@ -134,6 +134,7 @@
 	//Items: Misc
 	/obj/item/toy/plush/moth/ = list("Bug!", "Found a bug!", "There's a bug here!", "Moth!", "Moth here!", "🐛"),
 	/obj/item/reagent_containers/cup/glass/drinkingglass/filled/sunset_sarsaparilla = list("Patroling the lavalands almost makes you wish for an ash storm."),
+	/obj/item/grenade/c4 = list("EXPLOSIVES PLACED!!", "Things about to go boom!!", "READY TO BLOW!!", "Quick! Throw it at your local scout!", "Hey, easy on the c4, yeah?", "Scouts favourite meal!"),
 
 	//Machines
 	/obj/machinery/mineral/ore_redemption/ = list("ORM! Drop off your rocks and stones!", "It's a mystery to me how all these minerals fit inside!", "Making a deposit!", "Molly!", "Bloody scientists never upgrade this thing..."),
