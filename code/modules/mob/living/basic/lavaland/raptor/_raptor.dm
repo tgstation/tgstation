@@ -34,7 +34,6 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = BODYTEMP_COLD_ICEBOX_SAFE
 	maximum_survivable_temperature = INFINITY
-	sentience_type = SENTIENCE_BOSS
 	attack_verb_continuous = "pecks"
 	attack_verb_simple = "chomps"
 	attack_sound = 'sound/weapons/punch1.ogg'
