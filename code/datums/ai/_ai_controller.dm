@@ -476,7 +476,7 @@ multiple modular subtrees with behaviors
 	if(!isliving(pawn))
 		return
 	var/mob/living/living_pawn = pawn
-	return pawn.get_access()
+	return living_pawn.get_access()
 
 ///Returns the minimum required distance to preform one of our current behaviors. Honestly this should just be cached or something but fuck you
 /datum/ai_controller/proc/get_minimum_distance()
