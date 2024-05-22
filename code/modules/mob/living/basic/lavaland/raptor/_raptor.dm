@@ -30,9 +30,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	combat_mode = TRUE
-	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
-	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
 	sentience_type = SENTIENCE_BOSS
