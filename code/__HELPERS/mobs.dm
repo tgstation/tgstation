@@ -632,6 +632,49 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		else
 			return precise_zone
 
+///Returns a list of strings for a given slot flag.
+/proc/parse_slot_flags(slot_flags)
+	var/list/slot_strings = list()
+	if(slot_flags & ITEM_SLOT_BACK)
+		slot_strings += "back"
+	if(slot_flags & ITEM_SLOT_MASK)
+		slot_strings += "mask"
+	if(slot_flags & ITEM_SLOT_NECK)
+		slot_strings += "neck"
+	if(slot_flags & ITEM_SLOT_HANDCUFFED)
+		slot_strings += "handcuff"
+	if(slot_flags & ITEM_SLOT_LEGCUFFED)
+		slot_strings += "legcuff"
+	if(slot_flags & ITEM_SLOT_BELT)
+		slot_strings += "belt"
+	if(slot_flags & ITEM_SLOT_ID)
+		slot_strings += "id"
+	if(slot_flags & ITEM_SLOT_EARS)
+		slot_strings += "ear"
+	if(slot_flags & ITEM_SLOT_EYES)
+		slot_strings += "glasses"
+	if(slot_flags & ITEM_SLOT_GLOVES)
+		slot_strings += "glove"
+	if(slot_flags & ITEM_SLOT_HEAD)
+		slot_strings += "head"
+	if(slot_flags & ITEM_SLOT_FEET)
+		slot_strings += "shoe"
+	if(slot_flags & ITEM_SLOT_OCLOTHING)
+		slot_strings += "oversuit"
+	if(slot_flags & ITEM_SLOT_ICLOTHING)
+		slot_strings += "undersuit"
+	if(slot_flags & ITEM_SLOT_SUITSTORE)
+		slot_strings += "suit storage"
+	if(slot_flags & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET))
+		slot_strings += "pocket"
+	if(slot_flags & ITEM_SLOT_HANDS)
+		slot_strings += "hand"
+	if(slot_flags & ITEM_SLOT_DEX_STORAGE)
+		slot_strings += "dextrous storage"
+	if(slot_flags & ITEM_SLOT_BACKPACK)
+		slot_strings += "backpack"
+	return slot_strings
+
 ///Returns the direction that the initiator and the target are facing
 /proc/check_target_facings(mob/living/initiator, mob/living/target)
 	/*This can be used to add additional effects on interactions between mobs depending on how the mobs are facing each other, such as adding a crit damage to blows to the back of a guy's head.

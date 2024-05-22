@@ -82,6 +82,8 @@
 		icon_state = icon_state_tapped
 		update_appearance(UPDATE_ICON_STATE)
 		add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", ABOVE_MOB_LAYER))
+
+	RegisterSignal(src, COMSIG_SPAWNER_SPAWNED_DEFAULT, PROC_REF(anti_cheese))
 	return ..()
 
 /obj/structure/ore_vent/Destroy()
@@ -406,6 +408,13 @@
 	if(apply_cooldown)
 		COOLDOWN_START(src, manual_vent_cooldown, 10 SECONDS)
 	return new_rock
+
+/**
+ * When the ore vent cannot spawn a mob due to being blocked from all sides, we cause some MILD, MILD explosions.
+ * Explosion matches a gibtonite light explosion, as a way to clear neartby solid structures, with a high likelyhood of breaking the NODE drone.
+ */
+/obj/structure/ore_vent/proc/anti_cheese()
+	explosion(src, heavy_impact_range = 1, light_impact_range = 3, flame_range = 0, flash_range = 0, adminlog = FALSE)
 
 //comes with the station, and is already tapped.
 /obj/structure/ore_vent/starter_resources
