@@ -187,3 +187,19 @@
   - rscadd: Security Assistants are now considered enemies to antagonists to the story
       teller.
   - rscadd: More documentation for arachnids, florans, goblins, simians, and moths.
+2024-05-22:
+  Absolucy:
+  - qol: Allow normal engis to unlock air alarms.
+  DimWhat:
+  - image: fixes mouse tail sprites
+  MichiRecRoom:
+  - qol: Personal AIs and simple bots (such as Medibots) can now listen to the curator
+      radio.
+  RikuTheKiller:
+  - balance: The nanite "Toggle" error has been replaced with a "Disable" error that
+      temporarily forces the nanite program to be inactive. It's fixed by cloud syncs
+      automatically, unlike the previous permanent version.
+  The-Black-Screen:
+  - rscadd: added rpds to engineering shared storage, other miscellaneous things around
+      the map.
+  - bugfix: fixed the teg, other miscellaneous things around the map.
