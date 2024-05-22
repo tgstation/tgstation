@@ -72,6 +72,7 @@
 		faction = faction, \
 		spawn_text = spawn_text,\
 		spawn_callback = CALLBACK(src, PROC_REF(on_mob_spawn)), \
+		initial_spawn_delay = !mapload, \
 	)
 
 /obj/structure/spawner/attack_animal(mob/living/simple_animal/user, list/modifiers)
@@ -264,7 +265,7 @@
 	max_integrity = 50
 	density = FALSE
 	max_mobs = 2
-	spawn_time = 1 MINUTES
+	spawn_time = 15 SECONDS
 	mob_types = list(/mob/living/basic/construct/proteon/hostile)
 	spawn_text = "arises from"
 	faction = list(FACTION_CULT)

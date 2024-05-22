@@ -140,7 +140,7 @@
 		/datum/action/cooldown/spell/aoe/rust_conversion,
 		/datum/action/cooldown/spell/pointed/rust_construction,
 	)
-	can_repair = TRUE
+	can_repair = FALSE
 	slowed_by_drag = FALSE
 	faction = list(FACTION_HERETIC)
 	// Dim green
@@ -149,6 +149,11 @@
 	lighting_cutoff_blue = 20
 	playstyle_string = "<B>You are a Rusted Harvester, built to serve the Sanguine Apostate, but twisted to work the will of the Mansus. You are fragile and weak, but you rend cultists (only) apart on each attack. Follow your Master's orders!<B>"
 	theme = THEME_HERETIC
+
+// Just in case
+/mob/living/basic/construct/harvester/heretic/mind_initialize()
+	. = ..()
+	mind.add_antag_datum(/datum/antagonist/heretic_monster)
 
 /mob/living/basic/construct/harvester/heretic/grant_abilities()
 	AddElement(/datum/element/wall_walker, or_trait = TRAIT_RUSTY)
@@ -159,6 +164,7 @@
 		surgery_verb = "slicing",\
 		minimum_stat = CONSCIOUS,\
 		pre_hit_callback = CALLBACK(src, PROC_REF(is_cultist_handler)),\
+
 	)
 
 /mob/living/basic/construct/harvester/heretic/proc/is_cultist_handler(mob/victim)

@@ -38,7 +38,6 @@
 
 	caster.do_rust_heretic_act(victim)
 
-/datum/action/cooldown/spell/aoe/rust_conversion/small
-	name = "Rust Conversion"
-	desc = "Spreads rust onto nearby surfaces."
-	aoe_radius = 2
+/datum/action/cooldown/spell/aoe/rust_conversion/construct
+	name = "Construct Spread"
+	cooldown_time = 15 SECONDS

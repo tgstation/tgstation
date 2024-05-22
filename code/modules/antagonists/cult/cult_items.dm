@@ -161,7 +161,7 @@ Striking a noncultist, however, will tear their flesh."}
 		// Rust
 		PATH_RUST = list(
 			WIELDER_SPELL = /datum/action/cooldown/spell/cone/staggered/entropic_plume,
-			SWORD_SPELL = list(/datum/action/cooldown/spell/aoe/rust_conversion/small, /datum/action/cooldown/spell/pointed/rust_construction),
+			SWORD_SPELL = list(/datum/action/cooldown/spell/aoe/rust_conversion, /datum/action/cooldown/spell/pointed/rust_construction),
 			SWORD_PREFIX = "rusted",
 		),
 		// Cosmic

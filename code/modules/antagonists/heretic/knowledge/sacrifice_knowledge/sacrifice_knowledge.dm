@@ -80,9 +80,11 @@
 	// If we have targets, we can check to see if we can do a sacrifice
 	// Let's remove any humans in our atoms list that aren't a sac target
 	for(var/mob/living/carbon/human/sacrifice in atoms)
-		// If the mob's not in soft crit or worse, or isn't one of the sacrifices, remove it from the list
-		// We specially handle cultist sacrifices and reward the heretic.
-		if(sacrifice.stat < SOFT_CRIT || !(sacrifice in heretic_datum.sac_targets) || !IS_CULTIST(sacrifice))
+		// If the mob's not in soft crit or worse, remove from list
+		if(sacrifice.stat < SOFT_CRIT)
+			atoms -= sacrifice
+		// Otherwise if it's neither a target nor a cultist, remove it
+		else if(!(sacrifice in heretic_datum.sac_targets) && !IS_CULTIST(sacrifice))
 			atoms -= sacrifice
 
 	// Finally, return TRUE if we have a target in the list
@@ -95,9 +97,7 @@
 
 /datum/heretic_knowledge/hunt_and_sacrifice/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	// If one of the targets is a cultist we'll force it through no matter what
-	var/mob/living/carbon/human/cultist_override = locate() in selected_atoms
-	if(!LAZYLEN(heretic_datum.sac_targets) && !IS_CULTIST(cultist_override))
+	if(!LAZYLEN(heretic_datum.sac_targets))
 		if(obtain_targets(user, heretic_datum = heretic_datum))
 			return TRUE
 		else
@@ -193,7 +193,7 @@
 	if(!sacrifice)
 		CRASH("[type] sacrifice_process didn't have a human in the atoms list. How'd it make it so far?")
 	if(!(sacrifice in heretic_datum.sac_targets) && !IS_CULTIST(sacrifice))
-		CRASH("[type] sacrifice_process managed to get a non-target human. This is incorrect.")
+		CRASH("[type] sacrifice_process managed to get a non-target, non-cult human. This is incorrect.")
 
 	if(sacrifice.mind)
 		LAZYADD(target_blacklist, sacrifice.mind)
@@ -202,22 +202,24 @@
 
 	var/feedback = "Your patrons accept your offer"
 	var/sac_job_flag = sacrifice.mind?.assigned_role?.job_flags | sacrifice.last_mind?.assigned_role?.job_flags
-	if((sac_job_flag & JOB_HEAD_OF_STAFF) || IS_CULTIST(sacrifice))
-		heretic_datum.knowledge_points++
+	// Heads give 3 points, cultists give 1 point (and a special reward), normal sacrifices give 2 points.
+	heretic_datum.total_sacrifices++
+	if((sac_job_flag & JOB_HEAD_OF_STAFF))
+		heretic_datum.knowledge_points += 3
 		heretic_datum.high_value_sacrifices++
 		feedback += " <i>graciously</i>"
-
-	heretic_datum.total_sacrifices++
-	heretic_datum.knowledge_points += 2
-
-	if(IS_CULTIST(sacrifice))
+	else if(IS_CULTIST(sacrifice))
+		heretic_datum.knowledge_points += 1
+		feedback += " <i>rapturously</i>"
 		grant_reward(user, sacrifice, loc)
 		return
 	else
-		to_chat(user, span_hypnophrase("[feedback]."))
-		if(!begin_sacrifice(sacrifice))
-			disembowel_target(sacrifice)
-			return
+		heretic_datum.knowledge_points += 2
+
+	to_chat(user, span_hypnophrase("[feedback]."))
+	if(!begin_sacrifice(sacrifice))
+		disembowel_target(sacrifice)
+		return
 
 	sacrifice.apply_status_effect(/datum/status_effect/heretic_curse, user)
 

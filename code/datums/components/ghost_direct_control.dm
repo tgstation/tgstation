@@ -142,14 +142,20 @@
 		return
 	if (extra_control_checks && !extra_control_checks.Invoke(harbinger))
 		return
+
+	// doesn't transfer mind because that transfers antag datum as well
+	new_body.key = harbinger.key
 	harbinger.log_message("took control of [new_body].", LOG_GAME)
-	harbinger.mind.transfer_to(new_body)
+
 	// Already qdels due to below proc but just in case
 	qdel(src)
 
 /// When someone assumes control, get rid of our component
 /datum/component/ghost_direct_control/proc/on_login(mob/harbinger)
 	SIGNAL_HANDLER
+	// This proc is called the very moment .key is set, so we need to force mind to initialize here if we want the invoke to affect the mind of the mob
+	if(isnull(harbinger.mind))
+		harbinger.mind_initialize()
 	to_chat(harbinger, span_boldnotice(assumed_control_message))
 	after_assumed_control?.Invoke(harbinger)
 	qdel(src)
