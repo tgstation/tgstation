@@ -17,8 +17,10 @@
 	var/effect_on_success
 	///how fast we increase the wind up counter on process
 	var/windup_increment_speed
+	///text we display when we start winding up
+	var/throw_text
 
-/datum/component/throwbonus_on_windup/Initialize(maximum_bonus = 20, windup_increment_speed = 1, pass_maximum_callback, apply_bonus_callback, sound_on_success, effect_on_success)
+/datum/component/throwbonus_on_windup/Initialize(maximum_bonus = 20, windup_increment_speed = 1, pass_maximum_callback, apply_bonus_callback, sound_on_success, effect_on_success, throw_text)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -29,6 +31,7 @@
 	src.sound_on_success = sound_on_success
 	src.effect_on_success = effect_on_success
 	src.windup_increment_speed = windup_increment_speed
+	src.throw_text = throw_text
 
 /datum/component/throwbonus_on_windup/proc/on_equip(datum/source, mob/living/equipper, slot)
 	SIGNAL_HANDLER
@@ -47,6 +50,8 @@
 	var/mob/living/our_holder = holder?.resolve()
 	if(isnull(holder))
 		return
+	if(throw_text)
+		to_chat(our_holder, span_warning(throw_text))
 	var/list/offset_to_add = get_icon_dimensions(our_holder.icon)
 	var/x_position = CEILING(offset_to_add["width"] * 0.5, 1)
 	our_bar = new()

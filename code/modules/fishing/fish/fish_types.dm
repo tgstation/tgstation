@@ -573,6 +573,7 @@
 		/datum/component/throwbonus_on_windup,\
 		maximum_bonus = maximum_bonus,\
 		windup_increment_speed = 2,\
+		throw_text = "starts cooking in your hands, it may explode soon!",\
 		pass_maximum_callback = CALLBACK(src, PROC_REF(explode_on_user)),\
 		apply_bonus_callback = CALLBACK(src, PROC_REF(on_fish_land)),\
 		sound_on_success = 'sound/weapons/parry.ogg',\
