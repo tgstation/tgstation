@@ -29,10 +29,9 @@
 	else
 		return ACCESS_DISALLOWED
 
-/datum/component/simple_access/proc/retrieve_access()
+/datum/component/simple_access/proc/retrieve_access(datum/source, list/access_list)
 	SIGNAL_HANDLER
-
-	return access
+	access_list += access
 
 /datum/component/simple_access/proc/on_donor_removed(datum/source)
 	SIGNAL_HANDLER
