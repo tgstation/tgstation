@@ -158,11 +158,8 @@
 	item_heal_robotic(attacked_humanoid, user, 15, 0)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/weldingtool/afterattack(atom/attacked_atom, mob/user, proximity)
+/obj/item/weldingtool/afterattack(atom/attacked_atom, mob/user, click_parameters)
 	. = ..()
-	if(!proximity)
-		return
-
 	if(isOn() && ismovable(attacked_atom))
 		use(1)
 		var/turf/location = get_turf(user)

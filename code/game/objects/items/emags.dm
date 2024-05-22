@@ -60,15 +60,8 @@
 	interacting_with.emag_act(user, src)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/card/emag/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	// Proximity based emagging is handled by above
-	// This is only for ranged emagging
-	if(proximity_flag || prox_check)
-		return
-
-	. |= AFTERATTACK_PROCESSED_ITEM
-	interact_with_atom(target, user)
+/obj/item/card/emag/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return prox_check ? NONE : interact_with_atom(target, user)
 
 /obj/item/card/emag/proc/can_emag(atom/target, mob/user)
 	for (var/subtypelist in type_blacklist)

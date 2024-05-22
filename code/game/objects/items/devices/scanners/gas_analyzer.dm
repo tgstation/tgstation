@@ -145,12 +145,14 @@
 
 	ui_interact(user)
 
-/obj/item/analyzer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!can_see(user, target, ranged_scan_distance))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	atmos_scan(user, (target.return_analyzable_air() ? target : get_turf(target)))
+/obj/item/analyzer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!can_see(user, interacting_with, ranged_scan_distance))
+		return ITEM_INTERACT_BLOCKING
+	atmos_scan(user, (interacting_with.return_analyzable_air() ? interacting_with : get_turf(interacting_with)))
+	return ITEM_INTERACT_SUCCESS // melbert todo : blocks all clicks I guess?
 
 /// Called when our analyzer is used on something
 /obj/item/analyzer/proc/on_analyze(datum/source, atom/target)

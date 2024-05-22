@@ -341,13 +341,14 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
 
-/obj/item/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
+/obj/item/shard/afterattack(atom/target, mob/user, click_parameters)
 	. = ..()
+	// melbert todo : this is stupid
 	if(!proximity || !(src in user))
 		return
-	if(isturf(A))
+	if(isturf(target))
 		return
-	if(istype(A, /obj/item/storage))
+	if(istype(target, /obj/item/storage))
 		return
 	var/hit_hand = ((user.active_hand_index % 2 == 0) ? "r_" : "l_") + "arm"
 	if(ishuman(user))

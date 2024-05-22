@@ -121,6 +121,38 @@
 /obj/item/proc/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	return interact_with_atom(interacting_with, user, modifiers)
 
+/atom/proc/base_ranged_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	SHOULD_CALL_PARENT(TRUE)
+	PROTECTED_PROC(TRUE)
+
+	var/early_sig_return = NONE
+	early_sig_return = SEND_SIGNAL(src, COMSIG_ATOM_RANGED_ITEM_INTERACTION, user, tool, modifiers) \
+		| SEND_SIGNAL(tool, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM, user, src, modifiers)
+	if(early_sig_return)
+		return early_sig_return
+
+	var/self_interaction = ranged_item_interaction(user, tool, modifiers)
+	if(self_interaction)
+		return self_interaction
+
+	var/interact_return = tool.ranged_interact_with_atom(src, user, modifiers)
+	if(interact_return)
+		return interact_return
+
+	return NONE
+
+/atom/proc/ranged_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return NONE
+
+/atom/proc/ranged_item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	return ranged_item_interaction(user, tool, modifiers)
+
+/obj/item/proc/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return NONE
+
+/obj/item/proc/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
 /*
  * Tool-specific behavior procs.
  *

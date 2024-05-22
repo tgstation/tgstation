@@ -231,16 +231,14 @@
 			if(istype(WH))
 				WH.gun = WEAKREF(src)
 
-/obj/item/gun/energy/wormhole_projector/afterattack(atom/target, mob/living/user, flag, params)
-	if(select == AMMO_SELECT_ORANGE) //Last fired in right click mode. Switch to blue wormhole (left click).
-		select_fire()
+/obj/item/gun/energy/wormhole_projector/try_fire_gun(atom/target, mob/living/user, params)
+	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		if(select == AMMO_SELECT_BLUE) //Last fired in left click mode. Switch to orange wormhole (right click).
+			select_fire()
+	else
+		if(select == AMMO_SELECT_ORANGE) //Last fired in right click mode. Switch to blue wormhole (left click).
+			select_fire()
 	return ..()
-
-/obj/item/gun/energy/wormhole_projector/afterattack_secondary(atom/target, mob/living/user, flag, params)
-	if(select == AMMO_SELECT_BLUE) //Last fired in left click mode. Switch to orange wormhole (right click).
-		select_fire()
-	fire_gun(target, user, flag, params)
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/gun/energy/wormhole_projector/proc/on_portal_destroy(obj/effect/portal/P)
 	SIGNAL_HANDLER
@@ -408,13 +406,15 @@
 		coin_count++
 		COOLDOWN_START(src, coin_regen_cd, coin_regen_rate)
 
-/obj/item/gun/energy/marksman_revolver/afterattack_secondary(atom/target, mob/living/user, params)
-	if(!CAN_THEY_SEE(target, user))
+/obj/item/gun/energy/marksman_revolver/try_fire_gun(atom/target, mob/living/user, params)
+	if(!LAZYACCESS(params2list(params), RIGHT_CLICK))
 		return ..()
+	if(!CAN_THEY_SEE(target, user))
+		return ITEM_INTERACT_BLOCKING
 
 	if(max_coins && coin_count <= 0)
 		to_chat(user, span_warning("You don't have any coins right now!"))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 	if(max_coins)
 		START_PROCESSING(SSobj, src)
@@ -426,5 +426,4 @@
 	var/obj/projectile/bullet/coin/new_coin = new(get_turf(user), target_turf, user)
 	new_coin.preparePixelProjectile(target_turf, user)
 	new_coin.fire()
-
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
