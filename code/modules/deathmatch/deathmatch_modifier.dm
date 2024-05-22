@@ -544,3 +544,13 @@
 
 /datum/deathmatch_modifier/hear_global_chat/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.add_traits(list(TRAIT_SIXTHSENSE, TRAIT_XRAY_HEARING), DEATHMATCH_TRAIT)
+
+/datum/deathmatch_modifier/apply_quirks
+	name = "Quirks enabled"
+	description = "Applies selected quirks to all players"
+
+/datum/deathmatch_modifier/apply_quirks/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
+	if (!player.client)
+		return
+
+	SSquirks.AssignQuirks(player, player.client)

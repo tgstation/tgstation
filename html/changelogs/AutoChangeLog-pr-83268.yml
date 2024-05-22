@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Malf AI can now properly interact with APCs under their control"
-  - bugfix: "Malf AI & their slaved cyborgs won't be told that access is denied when trying to right-click lock/unlock APCs."

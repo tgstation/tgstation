@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - admin: "Various bad things that can happen as a result of Legion organs are now logged"
