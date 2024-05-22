@@ -234,7 +234,7 @@
 	addtimer(CALLBACK(src, PROC_REF(narsie_spawn_animation_end)), 3.5 SECONDS)
 
 /obj/narsie/proc/narsie_spawn_animation_end()
-	var/datum/component/singularity/singularity_component = singularity.resolve()
+	var/datum/component/singularity/singularity_component = singularity?.resolve()
 	singularity_component?.roaming = TRUE
 
 /**
