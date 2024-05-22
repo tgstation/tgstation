@@ -1,0 +1,4 @@
+author: "Muffindrake"
+delete-after: True
+changes:
+  - balance: "reduced claymore/weak force from 30 to 24 and armor penetration from 15 to 10"
