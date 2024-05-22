@@ -226,7 +226,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-	if(!isturf(loc) || isnull(owner) || mapload || !react_on_init)
+	if(!isturf(loc) || mapload || !react_on_init)
 		return
 
 	for(var/atom/movable/existing as anything in loc)
