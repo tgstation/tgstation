@@ -118,10 +118,6 @@
 				if(ismining(mob_blocker))
 					return FALSE
 
-			// Also block spawns if there's a random lavaland mob spawner nearby
-			if(locate(/obj/effect/spawner/random/lavaland_mob) in things_in_range)
-				return FALSE
-
 		new picked_mob(target_turf)
 		return TRUE
 
@@ -179,10 +175,6 @@
 				for(var/mob/living/mob_blocker in things_in_range)
 					if(ismining(mob_blocker))
 						continue
-
-				// Also block spawns if there's a random lavaland mob spawner nearby
-				if(locate(/obj/effect/spawner/random/lavaland_mob) in things_in_range)
-					continue
 
 			new picked_mob(target_turf)
 
