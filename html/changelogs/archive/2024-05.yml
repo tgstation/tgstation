@@ -576,3 +576,45 @@
   - balance: Multiver stops purging when Anacea is present in the bloodstream.
   tmyqlfpir:
   - bugfix: '[Metastation] Service hallway door being bypassed by lying down'
+2024-05-22:
+  Bisar:
+  - balance: A wound being inflicted doesn't get broadcasted to everyone in view until
+      a higher severity now.
+  - sound: Wound sounds drop off more quickly, and no longer travel through walls.
+      This has no effect on attack sounds.
+  Fikou:
+  - spellcheck: the nuke op reinforcement beacon no longer talks about clones
+  Horatio22:
+  - spellcheck: Corrects spelling of "amulette" to "amulet"
+  - spellcheck: Correctly spells "received."
+  Iamgoofball:
+  - spellcheck: Removes a shit clown name and adds a better clown name instead
+  SyncIt21:
+  - bugfix: Crafting menu loads long lists faster
+  - bugfix: Monkey power reactions are instant and won't occur when exact reagent
+      requirements (50u power & 1u water) or above aren't met. Stops players from
+      cheesing monkeys from plumbing factories
+  Watermelon914:
+  - qol: New players will no longer start with ghost ears, ghost sight and ghost whispers
+      on by default.
+  Wayland-Smithy:
+  - qol: Crew Monitor UI now scrolls properly even after clicking the inner list.
+  Xander3359:
+  - bugfix: fixed a weird door in icebox bridge
+  hack-wrench:
+  - rscadd: Added smoke kit (5 grenades) with four grenades to uplink by 2 TC
+  improvedname:
+  - rscdel: Removes night vision quirk
+  necromanceranne:
+  - rscadd: The Research Director is now actually strong.
+  - rscadd: Fitness bros will determine the Research Director to be stronger than
+      they actually are, without even working out. How does he do it?
+  - balance: Suplexing a rod grants a large burst of athletics experience.
+  - rscadd: The more sentient casualties of the rod, the more experience suplexing
+      that rod grants. Absorb the souls of the weak and feeble.
+  nikothedude:
+  - rscadd: Adds a new deathmatch modifier that enables quirks
+  - bugfix: The deathmatch modifier menu works now
+  norsvenska:
+  - spellcheck: The message displayed when adjusting a mask no longer incorrectly
+      states the way in which the mask has moved.
