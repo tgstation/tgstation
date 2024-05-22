@@ -582,9 +582,6 @@
 		if(mobtarget.move_resist == MOVE_FORCE_OVERPOWERING) //No megafauna or bolted AIs, please.
 			balloon_alert(source, "too strong!")
 			return
-		if (mobtarget.mob_size > MOB_SIZE_HUMAN)
-			balloon_alert(source, "too big!")
-			return
 		if(secmech.cargo_hold.contents.len >= secmech.cargo_hold.cargo_capacity)
 			balloon_alert(source, "no room!")
 			return
