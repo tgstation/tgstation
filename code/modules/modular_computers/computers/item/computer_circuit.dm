@@ -69,7 +69,8 @@
 		print.set_value(html_encode(trim(print.value, MAX_PAPER_LENGTH)))
 
 /obj/item/circuit_component/modpc/proc/print_text(datum/source)
-	computer.print_text(print_text.value)
+	if(computer.enabled)
+		computer.print_text(print_text.value)
 
 /obj/item/circuit_component/modpc/proc/toggle_power(datum/source)
 	if(computer.enabled)
