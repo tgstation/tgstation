@@ -510,16 +510,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. += span_notice("This item can be used to support your weight, preventing limping from any broken bones on your legs you may have.")
 
 /obj/item/cane/equipped(mob/living/user, slot, initial)
-	. = ..()
+	..()
 	if(!(slot & ITEM_SLOT_HANDS))
 		return
-	movement_support_add(user, slot, initial)
+	movement_support_add(user)
 
 /obj/item/cane/dropped(mob/living/user, silent = FALSE)
-	. = ..()
-	if((slot & ITEM_SLOT_HANDS))
-		return
-	movement_support_del(user, slot, initial)
+	..()
+	movement_support_del(user)
 
 /obj/item/cane/proc/movement_support_add(mob/living/user)
 	RegisterSignal(user, COMSIG_MOB_LIMP_CHECK, PROC_REF(handle_limping))
