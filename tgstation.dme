@@ -6508,6 +6508,7 @@
 #include "monkestation\code\modules\mentor\mentor_pm.dm"
 #include "monkestation\code\modules\mentor\mentor_say.dm"
 #include "monkestation\code\modules\mentor\mentor_who.dm"
+#include "monkestation\code\modules\meteors\meteor_dark_matteor.dm"
 #include "monkestation\code\modules\metrics\metric_subsystem.dm"
 #include "monkestation\code\modules\metrics\subsystem_analytics\generics.dm"
 #include "monkestation\code\modules\microfusion\code\cargo_stuff.dm"
