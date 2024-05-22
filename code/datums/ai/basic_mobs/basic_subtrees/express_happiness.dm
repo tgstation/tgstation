@@ -7,7 +7,7 @@
 	var/happiness_key = BB_BASIC_HAPPINESS
 	///list of emotions we relay when happy
 	var/static/list/happy_emotions = list(
-		"celebrate happily!",
+		"celebrates happily!",
 		"dances around in excitement!",
 	)
 	///our moderate emotions
