@@ -484,6 +484,16 @@
 	playsound(src, 'sound/machines/card_slide.ogg', 50)
 
 /obj/item/modular_computer/proc/turn_on(mob/user, open_ui = TRUE)
+	if(!user) // Some things (circuits) can turn on the computer without a user
+		if(use_energy(base_active_power_usage))
+			if(looping_sound)
+				soundloop.start()
+			enabled = TRUE
+			update_appearance()
+			return TRUE
+		else
+			return FALSE
+
 	var/issynth = HAS_SILICON_ACCESS(user) // Robots and AIs get different activation messages.
 	if(atom_integrity <= integrity_failure * max_integrity)
 		if(user)
