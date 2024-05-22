@@ -35,6 +35,11 @@
 	/// list of type = TRUE. Leave empty for all open turfs (but not closed
 	/// turfs) to be hijacked.
 	var/list/turf/open/turfs_affected_by_biome = list()
+	/// An associative list of biome type to the list of turfs that were
+	/// generated of that biome specifically. Helps to improve the efficiency
+	/// of biome-related operations. Is populated through
+	/// `generate_terrain_with_biomes()`.
+	var/list/generated_turfs_per_biome = list()
 	/// 2D list of all biomes based on heat and humidity combos. Associative by
 	/// `BIOME_X_HEAT` and then by `BIOME_X_HUMIDITY` (i.e.
 	/// `possible_biomes[BIOME_LOW_HEAT][BIOME_LOWMEDIUM_HUMIDITY]`).
@@ -143,11 +148,12 @@
 	var/start_time = REALTIMEOFDAY
 	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
 
-	var/list/open_turfs_used = list()
+	var/list/expanded_closed_turfs = src.closed_turf_types
+	var/list/expanded_open_turfs = src.open_turf_types
 
 	for(var/turf/gen_turf as anything in turfs) //Go through all the turfs and generate them
 		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "0"
-		var/turf/new_turf = pick(closed ? closed_turf_types : open_turf_types)
+		var/turf/new_turf = pick(closed ? expanded_closed_turfs : expanded_open_turfs)
 
 		var/datum/biome/selected_biome
 
@@ -181,29 +187,35 @@
 				humidity_level = BIOME_HIGH_HUMIDITY
 
 		selected_biome = possible_biomes[heat_level][humidity_level]
-		selected_biome = SSmapping.biomes[selected_biome] //Get the instance of this biome from SSmapping
+		// selected_biome = SSmapping.biomes[selected_biome] //Get the instance of this biome from SSmapping
 
 		// Currently, we only affect open turfs, because biomes don't currently
 		// have a definition for biome-specific closed turfs.
 		if((!length(turfs_affected_by_biome) && !closed) || turfs_affected_by_biome[new_turf])
-			new_turf = selected_biome.generate_turf_for_terrain(gen_turf)
+			// new_turf = selected_biome.generate_turf_for_terrain(gen_turf)
+			LAZYADD(generated_turfs_per_biome[selected_biome], gen_turf)
 
 		else
 			// The assumption is this will be faster then changeturf, and changeturf isn't required since by this point
 			// The old tile hasn't got the chance to init yet
 			new_turf = new new_turf(gen_turf)
 
-		if(!closed)
-			open_turfs_used[new_turf.type] = TRUE
+			if(gen_turf.turf_flags & NO_RUINS)
+				new_turf.turf_flags |= NO_RUINS
 
-		new_turf.biome = selected_biome
-
-		if(gen_turf.turf_flags & NO_RUINS)
-			new_turf.turf_flags |= NO_RUINS
+		// if(!closed)
+		// 	open_turfs_used[new_turf.type] = TRUE
 
 		CHECK_TICK
 
-	open_turf_types = assoc_to_keys(open_turfs_used)
+	// open_turf_types = open_turfs_used
+
+	for(var/biome in generated_turfs_per_biome)
+		var/datum/biome/generating_biome = SSmapping.biomes[biome]
+
+		var/list/turf/generated_turfs = generating_biome.generate_turfs_for_terrain(generated_turfs_per_biome[biome])
+
+		generated_turfs_per_biome[biome] = generated_turfs
 
 	var/message = "[name] terrain generation finished in [(REALTIMEOFDAY - start_time)/10]s!"
 	to_chat(world, span_boldannounce("[message]"))
@@ -306,6 +318,9 @@
  * This handles the population of terrain with biomes. Should only be called by
  * `populate_terrain()`, if you find yourself calling this, you're probably not
  * doing it right.
+ *
+ * This proc won't do anything if the area we're trying to generate in does not
+ * have `FLORA_ALLOWED` or `MOB_SPAWN_ALLOWED` in its `area_flags`.
  */
 /datum/map_generator/cave_generator/proc/populate_terrain_with_biomes(list/turfs, area/generate_in)
 	// Area var pullouts to make accessing in the loop faster
@@ -322,12 +337,11 @@
 		log_world(message)
 		return
 
-	for(var/turf/target_turf as anything in turfs)
-		if(!(target_turf.type in open_turf_types)) //only put stuff on open turfs we generated, so closed walls and rivers and stuff are skipped
-			continue
+	for(var/biome in generated_turfs_per_biome)
+		var/datum/biome/generating_biome = SSmapping.biomes[biome]
+		generating_biome.populate_turfs(generated_turfs_per_biome[biome], flora_allowed, features_allowed, fauna_allowed)
 
-		target_turf.biome?.populate_turf(target_turf, flora_allowed, features_allowed, fauna_allowed)
-		CHECK_TICK
+	 	CHECK_TICK
 
 	var/message = "[name] terrain population finished in [(REALTIMEOFDAY - start_time)/10]s!"
 	to_chat(world, span_boldannounce("[message]"))
