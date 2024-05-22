@@ -12,7 +12,7 @@
 /datum/map_template/random_room/random_bar/box_base/clockwork
 	name = "Clockwork Bar"
 	room_id = "box_clockwork"
-	mappath = "_maps/~monkestation/RandomBars/Box/clockwork_icebox.dmm"
+	mappath = "_maps/~monkestation/RandomBars/Box/clockwork_bar.dmm"
 	weight = 2
 
 /datum/map_template/random_room/random_bar/box_base/cult
