@@ -4850,7 +4850,6 @@
 "aFC" = (
 /obj/effect/spawner/random/structure/crate_abandoned,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/clothing/under/rank/centcom/military/eng,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "aFP" = (
@@ -6497,10 +6496,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/lower)
 "aTl" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "ceprivacy";
-	name = "Privacy Shutter"
-	},
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/ce)
@@ -8496,7 +8491,6 @@
 /area/station/security/prison/workout)
 "bCh" = (
 /obj/effect/spawner/random/trash/mess,
-/obj/effect/spawner/random/contraband/landmine,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
@@ -17293,7 +17287,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/item/clothing/under/rank/security/constable,
-/obj/item/clothing/under/rank/nanotrasen_consultant/hubert,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "esQ" = (

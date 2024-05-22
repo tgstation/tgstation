@@ -94,6 +94,8 @@
 
 /obj/effect/spawner/random/contraband/landmine
 	name = "landmine spawner"
+	icon = 'icons/obj/weapons/grenade.dmi' //MONKESTATION EDIT: because a certain person shoved a landmine in atmos
+	icon_state = "uglymine"
 	loot = list(
 		/obj/effect/mine/explosive/light = 10,
 		/obj/effect/mine/explosive/flame = 10,
