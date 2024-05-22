@@ -793,12 +793,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "amK" = (
-/obj/machinery/button/elevator/directional/east{
-	id = "medbay1"
-	},
-/obj/machinery/lift_indicator/directional/east{
-	linked_elevator_id = "medbay1"
-	},
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
@@ -8878,12 +8872,6 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "dkZ" = (
-/obj/machinery/button/elevator/directional/west{
-	id = "medbay1"
-	},
-/obj/machinery/lift_indicator/directional/west{
-	linked_elevator_id = "medbay1"
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
@@ -15915,7 +15903,9 @@
 /area/station/security/breakroom)
 "fLM" = (
 /obj/structure/transport/linear/public,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor{
+	_status_traits = list("underfloor" = list("innate"))
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/cargo/storage)
 "fLU" = (
@@ -16214,7 +16204,6 @@
 	dir = 9
 	},
 /obj/structure/disposalpipe/trunk,
-/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "fQG" = (
@@ -60444,8 +60433,10 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "vBA" = (
+/obj/machinery/light/floor{
+	_status_traits = list("underfloor" = list("innate"))
+	},
 /obj/structure/transport/linear/public,
-/obj/machinery/light/floor,
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/cargo/storage)
