@@ -276,10 +276,12 @@
 	//we are the parent node
 	parent_node = src
 
+// we do this in LateInitialize() because weeds on the same loc may not be done initializing yet (as in create_and_destroy)
+/obj/structure/alien/weeds/node/LateInitialize()
 	//destroy any non-node weeds on turf
 	var/obj/structure/alien/weeds/check_weed = locate(/obj/structure/alien/weeds) in loc
 	if(check_weed && check_weed != src)
-		QDEL_IN(check_weed, 0) // Weeds might not be finished initializing yet (as in create_and_destroy).
+		qdel(check_weed)
 
 	//start the cooldown
 	COOLDOWN_START(src, growtime, rand(minimum_growtime, maximum_growtime))
