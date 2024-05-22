@@ -207,8 +207,8 @@
 	var/parallax_movedir = 0
 	/// How many parallax layers to show our client
 	var/parallax_layers_max = 4
-	/// Timer for the area directional animation
-	var/parallax_animate_timer
+	/// Timers for the area directional animation, one for each layer
+	var/list/parallax_animate_timers
 	/// Do we want to do parallax animations at all?
 	/// Exists to prevent laptop fires
 	var/do_parallax_animations = TRUE
