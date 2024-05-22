@@ -1,0 +1,6 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "The melee attacks from small mobs spawned by Legions can now be dodged."
+  - balance: "Legions spawn their mobs less often."
+  - bugfix: "Legions cannot spawn mobs while inside pipes or closets."
