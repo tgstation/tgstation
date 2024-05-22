@@ -1,4 +1,0 @@
-author: "norsvenska"
-delete-after: True
-changes:
-  - spellcheck: "The message displayed when adjusting a mask no longer incorrectly states the way in which the mask has moved."

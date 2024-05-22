@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Monkey power reactions are instant and won't occur when exact reagent requirements (50u power & 1u water) or above aren't met. Stops players from cheesing monkeys from plumbing factories"
