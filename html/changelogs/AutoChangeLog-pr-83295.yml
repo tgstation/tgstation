@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - balance: "Ore vents, if blocked off from all four sides while being defended, now cause a mild gas explosion, resulting in a mild dissuasive explosion."
-  - bugfix: "NODE drones spawned from ore vent defense have lower maximum health."
