@@ -1,3 +1,6 @@
+///The maximum number of settings on a burner knob
+#define MAX_BURNER_KNOB_SETTINGS 10
+
 /obj/structure/chem_separator
 	name = "distillation apparatus"
 	desc = "A device that performs chemical separation by distillation."
@@ -26,7 +29,7 @@
 
 /obj/structure/chem_separator/Initialize(mapload)
 	. = ..()
-	create_reagents(300, TRANSPARENT | INJECTABLE)
+	create_reagents(100, TRANSPARENT | INJECTABLE)
 	soundloop = new(src)
 	register_context()
 
@@ -280,7 +283,7 @@
 			to_chat(user, span_warning("[tool] is stuck in your hand."))
 			return ITEM_INTERACT_BLOCKING
 		condenser_installed = TRUE
-		update_static_data()
+		update_static_data_for_all_viewers()
 		qdel(tool)
 		balloon_alert(user, "condenser installed.")
 		return ITEM_INTERACT_SUCCESS
@@ -377,7 +380,7 @@
 			can_process = FALSE
 			toggle_burner(FALSE)
 
-		var/knob_ratio = burner_knob / 5
+		var/knob_ratio = burner_knob / MAX_BURNER_KNOB_SETTINGS
 		var/datum/reagents/fuel = fuel_container.reagents
 
 		//consume some air after we have validated we have some good fuel. Only if we don't already use O2 as a fuel
@@ -395,7 +398,7 @@
 
 		//finally heat the mixture
 		if(can_process)
-			reagents.adjust_thermal_energy((1000 - reagents.chem_temp) * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * (0.15 + (0.35 * knob_ratio)) * fuel_coefficient)
+			reagents.adjust_thermal_energy((1000 - reagents.chem_temp) * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * (0.05 + (0.45 * knob_ratio)) * fuel_coefficient)
 			reagents.handle_reactions()
 	else if(reagents.chem_temp > DEFAULT_REAGENT_TEMPERATURE) //the container cools down if there is no flame heating it till it reaches room temps
 		reagents.adjust_thermal_energy((DEFAULT_REAGENT_TEMPERATURE - reagents.chem_temp) * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * get_cool_coefficient())
@@ -439,7 +442,10 @@
 		ui.open()
 
 /obj/structure/chem_separator/ui_static_data(mob/user)
-	return list("condenser_installed" = condenser_installed)
+	return list(
+		"condenser_installed" = condenser_installed,
+		"max_burner_knob_settings" = MAX_BURNER_KNOB_SETTINGS,
+	)
 
 /obj/structure/chem_separator/ui_data(mob/user)
 	. = list()
@@ -514,9 +520,9 @@
 			if(!setting)
 				return FALSE
 
-			burner_knob = clamp(setting, 1, 5)
+			burner_knob = clamp(setting, 1, MAX_BURNER_KNOB_SETTINGS)
 			if(burner_on)
-				set_light(ROUND_UP(2 * (burner_knob / 5)))
+				set_light(ROUND_UP(2 * (burner_knob / MAX_BURNER_KNOB_SETTINGS)))
 			return TRUE
 
 		if("cool")
@@ -532,3 +538,5 @@
 
 	toggle_burner(FALSE)
 	return CLICK_ACTION_SUCCESS
+
+#undef MAX_BURNER_KNOB_SETTINGS

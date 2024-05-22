@@ -26,6 +26,7 @@ type Data = {
   knob: number;
   condenser_installed: BooleanLike;
   condenser_on: BooleanLike;
+  max_burner_knob_settings: number;
 };
 
 export const ChemSeparator = (props) => {
@@ -38,6 +39,7 @@ export const ChemSeparator = (props) => {
     knob,
     condenser_installed,
     condenser_on,
+    max_burner_knob_settings,
   } = data;
 
   return (
@@ -160,9 +162,9 @@ export const ChemSeparator = (props) => {
               ml="30px"
               size={1.3}
               minValue={1}
-              maxValue={5}
+              maxValue={max_burner_knob_settings}
               step={1}
-              stepPixelSize={15}
+              stepPixelSize={10}
               value={knob}
               onDrag={(_e, value) =>
                 act('knob', {
