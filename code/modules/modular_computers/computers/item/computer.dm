@@ -484,17 +484,10 @@
 	playsound(src, 'sound/machines/card_slide.ogg', 50)
 
 /obj/item/modular_computer/proc/turn_on(mob/user, open_ui = TRUE)
-	if(!user) // Some things (circuits) can turn on the computer without a user
-		if(use_energy(base_active_power_usage))
-			if(looping_sound)
-				soundloop.start()
-			enabled = TRUE
-			update_appearance()
-			return TRUE
-		else
-			return FALSE
+	var/issynth = FALSE // Robots and AIs get different activation messages.
+	if(user)
+		issynth = HAS_SILICON_ACCESS(user)
 
-	var/issynth = HAS_SILICON_ACCESS(user) // Robots and AIs get different activation messages.
 	if(atom_integrity <= integrity_failure * max_integrity)
 		if(user)
 			if(issynth)
@@ -515,7 +508,7 @@
 				to_chat(user, span_notice("You press the power button and start up \the [src]."))
 			if(open_ui)
 				update_tablet_open_uis(user)
-		SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_TURNED_ON, user)
+			SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_TURNED_ON, user)
 		return TRUE
 	else // Unpowered
 		if(user)
