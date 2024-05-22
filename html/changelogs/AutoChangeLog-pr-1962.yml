@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Reagents that shouldn't exist on their own in the first place can no longer appear in maint pills."
+  - qol: "Removed some completely useless reagents from the maint pill pool, such as those related to pH or purity."
+  - balance: "Maint pills are now less biased towards certain reagents with a large number of variants, i.e carpet or colorful reagent."
