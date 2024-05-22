@@ -35,6 +35,12 @@
 	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING))
 		return
 
+	/// No loot panel if it's on our person
+	if(isobj(target) && isliving(src))
+		var/mob/living/user = src
+		if(locate(target) in user.get_all_gear())
+			return
+
 	client.loot_panel.open(tile)
 
 
