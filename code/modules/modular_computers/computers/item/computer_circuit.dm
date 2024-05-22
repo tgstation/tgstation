@@ -5,7 +5,9 @@
 	var/obj/item/modular_computer/computer
 	///Turns the PC on/off
 	var/datum/port/input/on_off
-	///When set, will print a piece of paper with the value as text.
+	///Determines the text to be printed
+	var/datum/port/input/print_text
+	/// Print when triggered
 	var/datum/port/input/print
 
 	///Sent when turned on
@@ -54,7 +56,8 @@
 
 /obj/item/circuit_component/modpc/populate_ports()
 	on_off = add_input_port("Turn On/Off", PORT_TYPE_SIGNAL)
-	print = add_input_port("Print Text", PORT_TYPE_STRING)
+	print_text = add_input_port("Print Text", PORT_TYPE_STRING)
+	print = add_input_port("Print", PORT_TYPE_SIGNAL)
 
 	is_on = add_output_port("Turned On", PORT_TYPE_SIGNAL)
 	is_on = add_output_port("Shut Down", PORT_TYPE_SIGNAL)
@@ -62,7 +65,7 @@
 /obj/item/circuit_component/modpc/pre_input_received(datum/port/input/port)
 	if(isnull(computer))
 		return
-	if(COMPONENT_TRIGGERED_BY(print, port))
+	if(COMPONENT_TRIGGERED_BY(print_text, port))
 		print.set_value(html_encode(trim(print.value, MAX_PAPER_LENGTH)))
 
 /obj/item/circuit_component/modpc/input_received(datum/port/input/port)
@@ -79,7 +82,7 @@
 		return
 
 	if(COMPONENT_TRIGGERED_BY(print, port))
-		computer.print_text(print.value)
+		computer.print_text(print_text.value)
 
 	if(lights)
 		if(COMPONENT_TRIGGERED_BY(lights, port))
