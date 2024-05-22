@@ -279,7 +279,7 @@
 	//destroy any non-node weeds on turf
 	var/obj/structure/alien/weeds/check_weed = locate(/obj/structure/alien/weeds) in loc
 	if(check_weed && check_weed != src)
-		qdel(check_weed)
+		QDEL_IN(check_weed, 0) // Weeds might not be finished initializing yet (as in create_and_destroy).
 
 	//start the cooldown
 	COOLDOWN_START(src, growtime, rand(minimum_growtime, maximum_growtime))
