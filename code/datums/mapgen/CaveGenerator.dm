@@ -148,6 +148,8 @@
 	var/start_time = REALTIMEOFDAY
 	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
 
+	var/heat_gen = rustg_cnoise_generate()
+
 	var/list/expanded_closed_turfs = src.closed_turf_types
 	var/list/expanded_open_turfs = src.open_turf_types
 
@@ -187,12 +189,10 @@
 				humidity_level = BIOME_HIGH_HUMIDITY
 
 		selected_biome = possible_biomes[heat_level][humidity_level]
-		// selected_biome = SSmapping.biomes[selected_biome] //Get the instance of this biome from SSmapping
 
 		// Currently, we only affect open turfs, because biomes don't currently
 		// have a definition for biome-specific closed turfs.
 		if((!length(turfs_affected_by_biome) && !closed) || turfs_affected_by_biome[new_turf])
-			// new_turf = selected_biome.generate_turf_for_terrain(gen_turf)
 			LAZYADD(generated_turfs_per_biome[selected_biome], gen_turf)
 
 		else
@@ -203,12 +203,7 @@
 			if(gen_turf.turf_flags & NO_RUINS)
 				new_turf.turf_flags |= NO_RUINS
 
-		// if(!closed)
-		// 	open_turfs_used[new_turf.type] = TRUE
-
 		CHECK_TICK
-
-	// open_turf_types = open_turfs_used
 
 	for(var/biome in generated_turfs_per_biome)
 		var/datum/biome/generating_biome = SSmapping.biomes[biome]
@@ -341,7 +336,7 @@
 		var/datum/biome/generating_biome = SSmapping.biomes[biome]
 		generating_biome.populate_turfs(generated_turfs_per_biome[biome], flora_allowed, features_allowed, fauna_allowed)
 
-	 	CHECK_TICK
+		CHECK_TICK
 
 	var/message = "[name] terrain population finished in [(REALTIMEOFDAY - start_time)/10]s!"
 	to_chat(world, span_boldannounce("[message]"))

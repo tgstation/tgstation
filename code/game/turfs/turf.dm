@@ -104,8 +104,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// This would either be expensive, or impossible to manage. Let's just avoid it yes?
 	/// Never directly access this, use get_explosive_block() instead
 	var/inherent_explosive_resistance = -1
-	/// The biome this turf was generated in, if any. null by default.
-	var/datum/biome/biome = null
 
 
 /turf/vv_edit_var(var_name, new_value)
@@ -197,8 +195,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		T = GET_TURF_BELOW(src)
 		if(T)
 			T.multiz_turf_del(src, UP)
-
-	biome = null
 
 	if(force)
 		..()
