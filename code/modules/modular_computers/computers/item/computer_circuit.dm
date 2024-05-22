@@ -60,7 +60,7 @@
 	print = add_input_port("Print", PORT_TYPE_SIGNAL, trigger = PROC_REF(print_text))
 
 	is_on = add_output_port("Turned On", PORT_TYPE_SIGNAL)
-	is_on = add_output_port("Shut Down", PORT_TYPE_SIGNAL)
+	is_off = add_output_port("Shut Down", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/modpc/pre_input_received(datum/port/input/port)
 	if(isnull(computer))
