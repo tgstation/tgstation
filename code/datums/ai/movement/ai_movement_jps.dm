@@ -18,7 +18,7 @@
 		repath_delay = 0.5 SECONDS,
 		max_path_length = maximum_length,
 		minimum_distance = controller.get_minimum_distance(),
-		access = controller.blackboard[BB_BASIC_ACCESS] || controller.get_access(),
+		access = controller.get_access(),
 		subsystem = SSai_movement,
 		diagonal_handling = diagonal_flags,
 		extra_info = controller,

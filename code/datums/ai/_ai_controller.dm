@@ -473,7 +473,7 @@ multiple modular subtrees with behaviors
 
 /// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding. Return the access list you want to use
 /datum/ai_controller/proc/get_access()
-	return
+	return SEND_SIGNAL(pawn, COMSIG_MOB_RETRIEVE_SIMPLE_ACCESS)
 
 ///Returns the minimum required distance to preform one of our current behaviors. Honestly this should just be cached or something but fuck you
 /datum/ai_controller/proc/get_minimum_distance()

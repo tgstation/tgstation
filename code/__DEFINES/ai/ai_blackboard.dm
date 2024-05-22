@@ -19,9 +19,6 @@
 ///can this mob heal?
 #define BB_BASIC_MOB_HEALER "BB_basic_mob_healer"
 
-///key that stores our list of accesses
-#define BB_BASIC_ACCESS "BB_basic_access"
-
 ///the owner we will try to play with
 #define BB_OWNER_TARGET "BB_owner_target"
 ///the list of interactions we can have with the owner
