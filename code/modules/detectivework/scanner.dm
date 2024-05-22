@@ -75,13 +75,12 @@
 	log = list()
 
 /obj/item/detective_scanner/pre_attack_secondary(atom/A, mob/user, params)
-	safe_scan(user, atom_to_scan = A)
+	safe_scan(user, atom_to_scan = A) // Should use interact_with_atom instead but storage insert needs to go over first
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
-	. = ..()
+/obj/item/detective_scanner/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	safe_scan(user, atom_to_scan = A)
-	return . | AFTERATTACK_PROCESSED_ITEM
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * safe_scan - a wrapper proc for scan()
