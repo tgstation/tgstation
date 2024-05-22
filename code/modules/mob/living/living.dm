@@ -2342,7 +2342,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  */
 /mob/living/proc/update_usable_leg_status()
 
-	if(new_value > .) // Gained leg usage.
+	if(usable_legs > 0) // Gained leg usage.
 		REMOVE_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 	else if(!(movement_type & (FLYING | FLOATING))) //Lost leg usage, not flying.

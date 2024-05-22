@@ -521,12 +521,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return
 	movement_support_del(user, slot, initial)
 
-/obj/item/cane/proc/movement_support_add(mob/living/user, slot, initial)
+/obj/item/cane/proc/movement_support_add(mob/living/user)
 	RegisterSignal(user, COMSIG_MOB_LIMP_CHECK, PROC_REF(handle_limping))
 	user.set_usable_legs()
 	return TRUE
 
-/obj/item/cane/proc/movement_support_del(mob/living/user, slot, initial)
+/obj/item/cane/proc/movement_support_del(mob/living/user)
 	UnregisterSignal(user, list(COMSIG_MOB_LIMP_CHECK))
 	user.set_usable_legs()
 	return TRUE
@@ -555,7 +555,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	// tacked on after the cane string
 	. += span_notice("As a crutch, it can also help lessen the slowdown incurred by missing a leg.")
 
-/obj/item/cane/crutch/movement_support_add(mob/living/user, slot, initial)
+/obj/item/cane/crutch/movement_support_add(mob/living/user)
 	. = ..()
 	if(!.)
 		return
@@ -563,7 +563,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.update_usable_leg_status()
 	user.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
 
-/obj/item/cane/crutch/movement_support_del(mob/living/user, slot, initial)
+/obj/item/cane/crutch/movement_support_del(mob/living/user)
 	. = ..()
 	if(!.)
 		return
