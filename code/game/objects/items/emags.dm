@@ -61,7 +61,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/emag/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return prox_check ? NONE : interact_with_atom(target, user)
+	return prox_check ? NONE : interact_with_atom(interacting_with, user)
 
 /obj/item/card/emag/proc/can_emag(atom/target, mob/user)
 	for (var/subtypelist in type_blacklist)

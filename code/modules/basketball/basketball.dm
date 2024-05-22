@@ -173,10 +173,11 @@
 	user.swap_hand(user.get_held_index_of_item(src))
 	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
 
-/obj/item/toy/basketball/afterattack(atom/target, mob/living/user)
-	. = ..()
-	if(!user.combat_mode)
-		user.throw_item(target)
+/obj/item/toy/basketball/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(user.combat_mode)
+		user.throw_item(interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/toy/basketball/afterattack_secondary(atom/aim_target, mob/living/baller, proximity_flag, click_parameters)
 	// dunking negates shooting

@@ -32,14 +32,17 @@
 		owner = null
 	return ..()
 
-/obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
+/obj/item/melee/sickly_blade/attack(mob/living/target_mob, mob/living/user)
 	if(!IS_HERETIC_OR_MONSTER(user))
 		to_chat(user, span_danger("You feel a pulse of alien intellect lash out at your mind!"))
 		var/mob/living/carbon/human/human_user = user
 		human_user.AdjustParalyzed(5 SECONDS)
 		return TRUE
 
-	return ..()
+	. = ..()
+	if(!.)
+		SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target_mob, src)
+	return .
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
 	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
@@ -57,13 +60,6 @@
 	if(isliving(interacting_with))
 		SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, interacting_with, src)
 		return ITEM_INTERACT_BLOCKING
-
-/obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
-	. = ..()
-	if(.)
-		return
-
-	SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target, src)
 
 /obj/item/melee/sickly_blade/examine(mob/user)
 	. = ..()

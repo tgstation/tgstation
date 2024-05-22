@@ -312,7 +312,7 @@
 		balloon_alert(user, "not ready!")
 		return ITEM_INTERACT_BLOCKING
 
-	var/target_turf = get_turf(target)
+	var/turf/target_turf = get_turf(interacting_with)
 	var/mob/living/living_target = locate(/mob/living) in target_turf
 
 	if(!living_target || (living_target == user))
