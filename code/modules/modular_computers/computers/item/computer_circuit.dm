@@ -18,6 +18,7 @@
 	var/datum/port/input/red
 	var/datum/port/input/green
 	var/datum/port/input/blue
+	var/datum/port/input/set_color
 
 /obj/item/circuit_component/modpc/register_shell(atom/movable/shell)
 	. = ..()
@@ -43,6 +44,7 @@
 		red = add_input_port("Red", PORT_TYPE_NUMBER)
 		green = add_input_port("Green", PORT_TYPE_NUMBER)
 		blue = add_input_port("Blue", PORT_TYPE_NUMBER)
+		set_color = add_input_port("Set Color", PORT_TYPE_SIGNAL, trigger = PROC_REF(set_lights))
 
 /obj/item/circuit_component/modpc/unregister_shell(atom/movable/shell)
 	if(computer)
@@ -62,12 +64,6 @@
 		return
 	if(COMPONENT_TRIGGERED_BY(print, port))
 		print.set_value(html_encode(trim(print.value, MAX_PAPER_LENGTH)))
-	else if(COMPONENT_TRIGGERED_BY(red, port))
-		red.set_value(clamp(red.value, 0, 255))
-	else if(COMPONENT_TRIGGERED_BY(blue, port))
-		blue.set_value(clamp(blue.value, 0, 255))
-	else if(COMPONENT_TRIGGERED_BY(green, port))
-		green.set_value(clamp(green.value, 0, 255))
 
 /obj/item/circuit_component/modpc/input_received(datum/port/input/port)
 	if(isnull(computer))
@@ -88,8 +84,12 @@
 	if(lights)
 		if(COMPONENT_TRIGGERED_BY(lights, port))
 			computer.toggle_flashlight()
-		if(COMPONENT_TRIGGERED_BY(red, port) || COMPONENT_TRIGGERED_BY(green, port) || COMPONENT_TRIGGERED_BY(blue, port))
-			computer.set_flashlight_color(rgb(red.value || 0, green.value || 0, blue.value || 0))
+
+/obj/item/circuit_component/modpc/proc/set_lights(datum/source)
+	red.set_value(clamp(red.value, 0, 255))
+	blue.set_value(clamp(blue.value, 0, 255))
+	green.set_value(clamp(green.value, 0, 255))
+	computer.set_flashlight_color(rgb(red.value || 0, green.value || 0, blue.value || 0))
 
 /obj/item/circuit_component/modpc/proc/computer_on(datum/source, mob/user)
 	SIGNAL_HANDLER
