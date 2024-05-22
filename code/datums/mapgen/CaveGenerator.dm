@@ -148,8 +148,6 @@
 	var/start_time = REALTIMEOFDAY
 	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
 
-	var/heat_gen = rustg_cnoise_generate()
-
 	var/list/expanded_closed_turfs = src.closed_turf_types
 	var/list/expanded_open_turfs = src.open_turf_types
 
