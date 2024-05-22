@@ -1,3 +1,6 @@
+/// How many degrees, up and down, can our sneeze deviate from our facing direction?
+#define SNEEZE_CONE 60
+
 /// Launch a sneeze that can infect with a disease
 /mob/living/proc/infectious_sneeze(datum/disease/disease, force, range = 4, charge_time = 0.5 SECONDS, obj/projectile/sneezoid = /obj/projectile/sneeze)
 	sneeze(range, charge_time, sneezoid, on_sneeze_hit_callback = CALLBACK(src, PROC_REF(try_sneeze_infect), disease, force))
@@ -11,21 +14,41 @@
 	if(charge_time)
 		emote("inhale")
 
-	var/callback = on_sneeze_callback || CALLBACK(src, PROC_REF(launch_sneeze), range, sneezoid, on_sneeze_hit_callback)
+	clear_fullscreen("sneezer", 0)
+	var/atom/movable/screen/fullscreen/cursor_catcher/catcher = overlay_fullscreen("sneezer", /atom/movable/screen/fullscreen/cursor_catcher, FALSE)
+	if(client)
+		catcher.assign_to_mob(src)
+	var/callback = on_sneeze_callback || CALLBACK(src, PROC_REF(launch_sneeze), range, sneezoid, on_sneeze_hit_callback, catcher)
 	addtimer(callback, charge_time)
 
 /// Shoot the sneeze projectile
-/mob/living/proc/launch_sneeze(range, obj/projectile/sneezoid, datum/callback/on_sneeze_hit_callback)
+/mob/living/proc/launch_sneeze(range, obj/projectile/sneezoid, datum/callback/on_sneeze_hit_callback, atom/movable/screen/fullscreen/cursor_catcher/catcher)
 	emote("sneeze")
 
 	var/obj/projectile/sneezium = new sneezoid(get_turf(src), on_sneeze_hit_callback)
+	var/angle = dir2angle(dir)
+
+	if(catcher && catcher.given_turf)
+		catcher.calculate_params()
+		/// Take the target and subtract self for relative grid position. Then take the pixel x on the tile and divide by the tiles pixel size, and add 0.5 so it's fired from the center
+		var/sneeze_x = catcher.given_turf.x - x + catcher.given_x / world.icon_size - 0.5
+		var/sneeze_y = catcher.given_turf.y - y + catcher.given_y / world.icon_size - 0.5
+		angle = ATAN2(sneeze_y, sneeze_x)
+
+		// Check if we're within the sneeze cone, otherwise just sneeze straight
+		var/snois = abs(closer_angle_difference(angle, dir2angle(dir) - SNEEZE_CONE)) + abs(closer_angle_difference(angle, dir2angle(dir) + SNEEZE_CONE))
+		if(snois > 2 * SNEEZE_CONE)
+			angle = dir2angle(dir)
+
+		clear_fullscreen("sneezer", 0)
+
 	sneezium.range = range
 	sneezium.firer = src
-	sneezium.fire(dir2angle(dir))
+	sneezium.fire(angle)
 
 /// Sneeze projectile launched by sneezing. gross
 /obj/projectile/sneeze
-	name = "sneezoid"
+	name = "sneeze"
 	icon_state = "sneeze"
 
 	suppressed = TRUE
