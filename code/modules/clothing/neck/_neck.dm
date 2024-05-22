@@ -60,9 +60,8 @@
 
 /obj/item/clothing/neck/tie/Initialize(mapload)
 	. = ..()
-	if(clip_on)
-		return
-	update_appearance(UPDATE_ICON)
+	if(!clip_on)
+		update_appearance(UPDATE_ICON)
 	register_context()
 
 /obj/item/clothing/neck/tie/examine(mob/user)
