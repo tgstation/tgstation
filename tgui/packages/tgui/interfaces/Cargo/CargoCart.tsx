@@ -17,7 +17,7 @@ export function CargoCart(props) {
   const { act, data } = useBackend<CargoData>();
   const { requestonly, away, cart = [], docked, location } = data;
 
-  const sendable = !away && !!docked;
+  const sendable = !!away && !!docked;
 
   return (
     <Stack fill vertical>

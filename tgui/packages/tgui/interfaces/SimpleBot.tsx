@@ -1,4 +1,5 @@
-import { capitalizeAll, multiline } from 'common/string';
+import { BooleanLike } from 'common/react';
+import { capitalizeAll } from 'common/string';
 import { useBackend } from 'tgui/backend';
 import {
   Button,
@@ -12,34 +13,30 @@ import {
 } from 'tgui/components';
 import { Window } from 'tgui/layouts';
 
-type SimpleBotContext = {
-  can_hack: number;
-  locked: number;
-  emagged: number;
-  has_access: number;
+type Data = {
+  can_hack: BooleanLike;
+  custom_controls: Record<string, number>;
+  emagged: BooleanLike;
+  has_access: BooleanLike;
+  locked: BooleanLike;
   settings: Settings;
-  custom_controls: Controls;
 };
 
 type Settings = {
-  power: number;
-  airplane_mode: number;
-  maintenance_lock: number;
-  patrol_station: number;
-  allow_possession: number;
-  possession_enabled: number;
-  has_personality: number;
+  airplane_mode: BooleanLike;
+  allow_possession: BooleanLike;
+  has_personality: BooleanLike;
+  maintenance_lock: BooleanLike;
   pai_inserted: boolean;
+  patrol_station: BooleanLike;
+  possession_enabled: BooleanLike;
+  power: BooleanLike;
 };
 
-type Controls = {
-  [Control: string]: [Value: number];
-};
-
-export const SimpleBot = (props) => {
-  const { data } = useBackend<SimpleBotContext>();
-  const { can_hack, locked } = data;
-  const access = !locked || can_hack;
+export function SimpleBot(props) {
+  const { data } = useBackend<Data>();
+  const { can_hack, custom_controls, locked } = data;
+  const access = !locked || !!can_hack;
 
   return (
     <Window width={450} height={300}>
@@ -50,10 +47,20 @@ export const SimpleBot = (props) => {
               {!access ? <NoticeBox>Locked!</NoticeBox> : <SettingsDisplay />}
             </Section>
           </Stack.Item>
-          {access && (
+          {!!access && (
             <Stack.Item grow>
               <Section fill scrollable title="Controls">
-                <ControlsDisplay />
+                <LabeledControls wrap>
+                  {Object.entries(custom_controls).map((control) => (
+                    <LabeledControls.Item
+                      pb={2}
+                      key={control[0]}
+                      label={capitalizeAll(control[0].replace('_', ' '))}
+                    >
+                      <ControlHelper control={control} />
+                    </LabeledControls.Item>
+                  ))}
+                </LabeledControls>
               </Section>
             </Stack.Item>
           )}
@@ -61,17 +68,37 @@ export const SimpleBot = (props) => {
       </Window.Content>
     </Window>
   );
-};
+}
 
 /** Creates a lock button at the top of the controls */
-const TabDisplay = (props) => {
-  const { act, data } = useBackend<SimpleBotContext>();
-  const { can_hack, has_access, locked } = data;
-  const { allow_possession } = data.settings;
+function TabDisplay(props) {
+  const { act, data } = useBackend<Data>();
+  const {
+    can_hack,
+    emagged,
+    has_access,
+    locked,
+    settings: { allow_possession },
+  } = data;
 
   return (
     <>
-      {!!can_hack && <HackButton />}
+      {!!can_hack && (
+        <Button
+          color="danger"
+          disabled={!can_hack}
+          icon={emagged ? 'bug' : 'lock'}
+          onClick={() => act('hack')}
+          selected={!emagged}
+          tooltip={
+            !emagged
+              ? 'Unlocks the safety protocols.'
+              : 'Resets the bot operating system.'
+          }
+        >
+          {emagged ? 'Malfunctional' : 'Safety Lock'}
+        </Button>
+      )}
       {!!allow_possession && <PaiButton />}
       <Button
         color="transparent"
@@ -93,72 +120,52 @@ const TabDisplay = (props) => {
       </Button>
     </>
   );
-};
-
-/** If user is a bad silicon, they can press this button to hack the bot */
-const HackButton = (props) => {
-  const { act, data } = useBackend<SimpleBotContext>();
-  const { can_hack, emagged } = data;
-
-  return (
-    <Button
-      color="danger"
-      disabled={!can_hack}
-      icon={emagged ? 'bug' : 'lock'}
-      onClick={() => act('hack')}
-      selected={!emagged}
-      tooltip={
-        !emagged
-          ? 'Unlocks the safety protocols.'
-          : 'Resets the bot operating system.'
-      }
-    >
-      {emagged ? 'Malfunctional' : 'Safety Lock'}
-    </Button>
-  );
-};
+}
 
 /** Creates a button indicating PAI status and offers the eject action */
-const PaiButton = (props) => {
-  const { act, data } = useBackend<SimpleBotContext>();
-  const { pai_inserted } = data.settings;
+function PaiButton(props) {
+  const { act, data } = useBackend<Data>();
+  const {
+    settings: { pai_inserted },
+  } = data;
 
   if (!pai_inserted) {
     return (
       <Button
         color="transparent"
         icon="robot"
-        tooltip={multiline`Insert an active PAI card to control this device.`}
+        tooltip={`Insert an active PAI card to control this device.`}
       >
         No PAI Inserted
       </Button>
     );
-  } else {
-    return (
-      <Button
-        disabled={!pai_inserted}
-        icon="eject"
-        onClick={() => act('eject_pai')}
-        tooltip={multiline`Ejects the current PAI.`}
-      >
-        Eject PAI
-      </Button>
-    );
   }
-};
+
+  return (
+    <Button
+      disabled={!pai_inserted}
+      icon="eject"
+      onClick={() => act('eject_pai')}
+      tooltip={`Ejects the current PAI.`}
+    >
+      Eject PAI
+    </Button>
+  );
+}
 
 /** Displays the bot's standard settings: Power, patrol, etc. */
-const SettingsDisplay = (props) => {
-  const { act, data } = useBackend<SimpleBotContext>();
-  const { settings } = data;
+function SettingsDisplay(props) {
+  const { act, data } = useBackend<Data>();
   const {
-    airplane_mode,
-    patrol_station,
-    power,
-    maintenance_lock,
-    allow_possession,
-    possession_enabled,
-  } = settings;
+    settings: {
+      airplane_mode,
+      patrol_station,
+      power,
+      maintenance_lock,
+      allow_possession,
+      possession_enabled,
+    },
+  } = data;
 
   return (
     <LabeledControls>
@@ -236,68 +243,54 @@ const SettingsDisplay = (props) => {
       )}
     </LabeledControls>
   );
-};
+}
 
-/** Iterates over custom controls.
- * Calls the helper to identify which button to use.
- */
-const ControlsDisplay = (props) => {
-  const { data } = useBackend<SimpleBotContext>();
-  const { custom_controls } = data;
+enum ControlType {
+  MedbotSync = 'sync_tech',
+  MedbotThreshold = 'heal_threshold',
+  FloorbotTiles = 'tile_stack',
+  FloorbotLine = 'line_mode',
+}
 
-  return (
-    <LabeledControls wrap>
-      {Object.entries(custom_controls).map((control) => {
-        return (
-          <LabeledControls.Item
-            pb={2}
-            key={control[0]}
-            label={capitalizeAll(control[0].replace('_', ' '))}
-          >
-            <ControlHelper control={control} />
-          </LabeledControls.Item>
-        );
-      })}
-    </LabeledControls>
-  );
+type ControlProps = {
+  control: [string, number];
 };
 
 /** Helper function which identifies which button to create.
  * Might need some fine tuning if you are using more advanced controls.
  */
-const ControlHelper = (props) => {
-  const { act } = useBackend<SimpleBotContext>();
+function ControlHelper(props: ControlProps) {
+  const { act } = useBackend<Data>();
   const { control } = props;
-  if (control[0] === 'sync_tech') {
-    /** Control is for sync - this is medbot specific */
-    return <MedbotSync />;
-  } else if (control[0] === 'heal_threshold') {
-    /** Control is a threshold - this is medbot specific */
-    return <MedbotThreshold control={control} />;
-  } else if (control[0] === 'tile_stack') {
-    return <FloorbotTiles control={control} />;
-  } else if (control[0] === 'line_mode') {
-    return <FloorbotLine control={control} />;
-  } else {
-    /** Control is a boolean of some type */
-    return (
-      <Icon
-        color={control[1] ? 'good' : 'gray'}
-        name={control[1] ? 'toggle-on' : 'toggle-off'}
-        size={2}
-        onClick={() => act(control[0])}
-      />
-    );
+
+  switch (control[0]) {
+    case ControlType.MedbotSync:
+      return <MedbotSync />;
+    case ControlType.MedbotThreshold:
+      return <MedbotThreshold control={control} />;
+    case ControlType.FloorbotTiles:
+      return <FloorbotTiles control={control} />;
+    case ControlType.FloorbotLine:
+      return <FloorbotLine control={control} />;
+    default:
+      return (
+        <Icon
+          color={control[1] ? 'good' : 'gray'}
+          name={control[1] ? 'toggle-on' : 'toggle-off'}
+          size={2}
+          onClick={() => act(control[0])}
+        />
+      );
   }
-};
+}
 
 /** Small button to sync medbots with research. */
-const MedbotSync = (props) => {
-  const { act } = useBackend<SimpleBotContext>();
+function MedbotSync(props) {
+  const { act } = useBackend<Data>();
 
   return (
     <Tooltip
-      content={multiline`Synchronize surgical data with research network.
+      content={`Synchronize surgical data with research network.
        Improves Tending Efficiency.`}
     >
       <Icon
@@ -308,11 +301,11 @@ const MedbotSync = (props) => {
       />
     </Tooltip>
   );
-};
+}
 
 /** Slider button for medbot healing thresholds */
-const MedbotThreshold = (props) => {
-  const { act } = useBackend<SimpleBotContext>();
+function MedbotThreshold(props: ControlProps) {
+  const { act } = useBackend<Data>();
   const { control } = props;
 
   return (
@@ -332,11 +325,11 @@ const MedbotThreshold = (props) => {
       />
     </Tooltip>
   );
-};
+}
 
 /** Tile stacks for floorbots - shows number and eject button */
-const FloorbotTiles = (props) => {
-  const { act } = useBackend<SimpleBotContext>();
+function FloorbotTiles(props: ControlProps) {
+  const { act } = useBackend<Data>();
   const { control } = props;
 
   return (
@@ -349,11 +342,11 @@ const FloorbotTiles = (props) => {
       {control[1] ? `${control[1]}` : 'Empty'}
     </Button>
   );
-};
+}
 
 /** Direction indicator for floorbot when line mode is chosen. */
-const FloorbotLine = (props) => {
-  const { act } = useBackend<SimpleBotContext>();
+function FloorbotLine(props: ControlProps) {
+  const { act } = useBackend<Data>();
   const { control } = props;
 
   return (
@@ -369,4 +362,4 @@ const FloorbotLine = (props) => {
       </Icon>
     </Tooltip>
   );
-};
+}
