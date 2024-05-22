@@ -94,7 +94,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/comms_agent)
 "gt" = (
-/obj/machinery/atmospherics/components/unary/passive_vent/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/layer4,
 /turf/open/floor/carpet,
 /area/ruin/powered/comms_agent)
 "gv" = (
@@ -164,7 +164,7 @@
 "kp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/passive_vent/layer4{
+/obj/machinery/atmospherics/components/unary/vent_pump/layer4{
 	dir = 8
 	},
 /turf/open/floor/wood/tile,
@@ -277,7 +277,7 @@
 /area/ruin/powered/comms_agent)
 "pV" = (
 /obj/machinery/light/small/directional/south,
-/obj/machinery/atmospherics/components/unary/passive_vent/layer4{
+/obj/machinery/atmospherics/components/unary/vent_pump/layer4{
 	dir = 1
 	},
 /turf/open/floor/wood/tile,
@@ -357,7 +357,7 @@
 "ud" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
-/obj/machinery/atmospherics/components/unary/passive_vent/layer4{
+/obj/machinery/atmospherics/components/unary/vent_pump/layer4{
 	dir = 1
 	},
 /turf/open/floor/plating/snowed,
@@ -689,6 +689,7 @@
 	dir = 4
 	},
 /obj/item/stack/sheet/mineral/plasma/thirty,
+/obj/item/stack/sheet/mineral/plasma/thirty,
 /turf/open/floor/plating,
 /area/ruin/powered/comms_agent)
 "KB" = (
@@ -923,10 +924,10 @@
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
 "Vo" = (
-/obj/machinery/atmospherics/components/unary/passive_vent/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_pump/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/ruin/powered/comms_agent)
 "VN" = (
