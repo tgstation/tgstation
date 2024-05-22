@@ -362,3 +362,30 @@
 	icon_state = "fingerless_long"
 
 
+/obj/item/clothing/suit/toggle/jacket_oliver
+	name = "scarved jacket"
+	desc = "A jacket that has a scarf. Dandy."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "jacket_oliver"
+	toggle_noun = "scarf"
+
+/obj/item/clothing/suit/toggle/jacket_oliver/Initialize(mapload)
+	. = ..()
+	allowed += list(
+		/obj/item/flashlight,
+		/obj/item/lighter,
+		/obj/item/modular_computer/pda,
+		/obj/item/radio,
+		/obj/item/storage/bag/books,
+		/obj/item/storage/fancy/cigarettes,
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
+		/obj/item/toy,
+	)
+/obj/item/clothing/glasses/hud/security/terminated
+	name = "terminated security HUD"
+	desc = "My job is to protect you."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "sechud_terminated"
