@@ -264,8 +264,8 @@
 	, "Surely, there's no way this could go bad.", "Winners don't do dr- oh what the heck!", "Free pills? At no cost, how could I lose?")
 
 /obj/item/reagent_containers/pill/maintenance/Initialize(mapload)
-	//monkestation edit on next line: replaced get_random_reagent_id_unrestricted() with get_random_reagent_id_unrestricted_non_ethanol()
-	list_reagents = list(get_random_reagent_id_unrestricted_non_ethanol() = rand(10,50)) //list_reagents is called before init, because init generates the reagents using list_reagents
+	//monkestation edit on next line: replaced get_random_reagent_id_unrestricted() with pick_weight(GLOB.weighted_random_reagents)
+	list_reagents = list(pick_weight(GLOB.weighted_random_reagents) = rand(10,50)) //list_reagents is called before init, because init generates the reagents using list_reagents
 	. = ..()
 	if(!GLOB.pill_names.len)
 		var/json = file("strings/pill_names.json")
