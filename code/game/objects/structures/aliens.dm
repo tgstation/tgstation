@@ -276,6 +276,8 @@
 	//we are the parent node
 	parent_node = src
 
+	return INITIALIZE_HINT_LATELOAD
+
 // we do this in LateInitialize() because weeds on the same loc may not be done initializing yet (as in create_and_destroy)
 /obj/structure/alien/weeds/node/LateInitialize()
 	//destroy any non-node weeds on turf
