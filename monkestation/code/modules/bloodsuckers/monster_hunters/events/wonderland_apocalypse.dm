@@ -29,6 +29,7 @@
 		text = "What the heELl is going on?! WEeE have detected  massive up-spikes in ##@^^?? coming fr*m yoOourr st!*i@n! GeEeEEET out of THERE NOW!!",
 		title = Gibberish("[command_name()] Higher Dimensional Affairs", TRUE, 45),
 		sound = 'monkestation/sound/bloodsuckers/monsterhunterintro.ogg',
+		encode_title = FALSE, // Gibberish() already sanitizes
 		color_override = "purple"
 	)
 
@@ -117,6 +118,8 @@
 	id = "wonderland_district"
 	alert_type = null
 	tick_interval = -1
+	var/static/list/spell_whitelist_typecache
+	var/static/list/trigger_recoil_typecache
 
 /datum/status_effect/wonderland_district/on_apply()
 	. = ..()
@@ -125,10 +128,11 @@
 	to_chat(owner, span_warning("You feel an ominous pressure fill the air around you..."))
 	RegisterSignal(owner, COMSIG_ENTER_AREA, PROC_REF(on_enter_area))
 	RegisterSignal(owner, COMSIG_MOB_AFTER_SPELL_CAST, PROC_REF(after_spell_cast))
+	RegisterSignal(owner, COMSIG_ACTION_TRIGGER, PROC_REF(on_action_triggered))
 
 /datum/status_effect/wonderland_district/on_remove()
 	. = ..()
-	UnregisterSignal(owner, list(COMSIG_ENTER_AREA, COMSIG_MOB_AFTER_SPELL_CAST))
+	UnregisterSignal(owner, list(COMSIG_ENTER_AREA, COMSIG_MOB_AFTER_SPELL_CAST, COMSIG_ACTION_TRIGGER))
 
 /datum/status_effect/wonderland_district/proc/on_enter_area(datum/source, area/centcom/new_area)
 	SIGNAL_HANDLER
@@ -137,15 +141,39 @@
 
 /datum/status_effect/wonderland_district/proc/after_spell_cast(datum/source, datum/action/cooldown/spell/spell, atom/cast_on)
 	SIGNAL_HANDLER
-	if(!istype(spell) || QDELING(spell) || !spell.antimagic_flags) // don't affect non-magic spells.
+	if(!spell_whitelist_typecache)
+		spell_whitelist_typecache = typecacheof(list(
+			/datum/action/cooldown/spell/florida_regeneration,
+			/datum/action/cooldown/spell/florida_cuff_break,
+			/datum/action/cooldown/spell/florida_doorbuster
+		))
+	if(!istype(spell) || QDELING(spell) || !spell.antimagic_flags || is_type_in_typecache(spell, spell_whitelist_typecache)) // don't affect non-magic spells.
 		return
+	recoil(span_warning("[owner] doubles over in pain, violently coughing up blood!"), span_userdanger("An overwhelming pressure fills your body as you cast [spell.name || "magic"], filling you with excruciating pain down to the very core of your being!"))
+
+/datum/status_effect/wonderland_district/proc/on_action_triggered(datum/source, datum/action/action)
+	SIGNAL_HANDLER
+	if(!trigger_recoil_typecache)
+		trigger_recoil_typecache = typecacheof(list(
+			/datum/action/innate/cult/blood_spell,
+			/datum/action/innate/cult/blood_magic,
+			/datum/action/innate/cult/master,
+			/datum/action/innate/clockcult/quick_bind,
+			/datum/action/cooldown/bloodsucker
+		))
+	if(!is_type_in_typecache(action, trigger_recoil_typecache))
+		return
+	recoil(span_warning("[owner] doubles over in pain, violently coughing up blood!"), span_userdanger("An overwhelming pressure fills your body as you use [action.name || "your ability"], filling you with excruciating pain down to the very core of your being!"))
+
+/datum/status_effect/wonderland_district/proc/recoil(vis_msg, self_msg)
 	make_visible()
 	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/living, emote), "scream")
-	owner.visible_message(span_warning("[owner] doubles over in pain, violently coughing up blood!"), span_userdanger("An overwhelming pressure fills your body as you cast [spell.name || "magic"], filling you with excruciating pain down to the very core of your being!"))
+	if(vis_msg)
+		owner.visible_message(vis_msg, self_msg)
 	owner.take_overall_damage(brute = rand(5, 15))
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.vomit(lost_nutrition = 0, blood = TRUE, distance = rand(1, 2), message = FALSE)
+		carbon_owner.vomit(lost_nutrition = 0, blood = TRUE, stun = FALSE, distance = prob(20) + 1, message = FALSE)
 
 /datum/status_effect/wonderland_district/proc/make_visible()
 	if(alert_type && !QDELETED(linked_alert))

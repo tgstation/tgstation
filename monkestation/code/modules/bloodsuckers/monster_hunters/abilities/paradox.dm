@@ -18,7 +18,6 @@
 	chessmark = GLOB.wonderland_marks["Wonderchess landmark"]
 	landmark =  GLOB.wonderland_marks["Wonderland landmark"]
 
-
 /datum/action/cooldown/paradox/Activate()
 	var/turf/owner_turf = get_turf(owner)
 	if(!is_station_level(owner_turf.z))
