@@ -1352,6 +1352,11 @@
 /obj/machinery/igniter/incinerator_ordmix,
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance)
+"awi" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/central)
 "awj" = (
 /obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/iron/white,
@@ -3265,6 +3270,11 @@
 "beW" = (
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
+"bfc" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/maintenance/department/medical/central)
 "bfe" = (
 /obj/machinery/vending/autodrobe,
 /obj/machinery/firealarm/directional/east,
@@ -4043,6 +4053,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/uppernorth)
+"bvP" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/central)
 "bvT" = (
 /obj/machinery/atmospherics/pipe/multiz/supply/hidden/layer4{
 	dir = 4
@@ -6189,6 +6204,11 @@
 	},
 /turf/open/floor/iron/textured_large,
 /area/station/service/hydroponics/garden)
+"clY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/central)
 "cmf" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/structure/railing/corner/end,
@@ -10499,6 +10519,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/interrogation)
+"dNp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/central)
 "dNr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible,
 /turf/open/floor/iron,
@@ -11711,6 +11737,7 @@
 /area/station/command/heads_quarters/hop)
 "eje" = (
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "ejh" = (
@@ -22932,6 +22959,7 @@
 "ina" = (
 /obj/effect/spawner/random/structure/steam_vent,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "ine" = (
@@ -25204,6 +25232,7 @@
 	spawn_scatter_radius = 1
 	},
 /obj/machinery/light/floor,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "jfB" = (
@@ -30075,6 +30104,7 @@
 	dir = 4
 	},
 /obj/item/trash/chips,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "kJM" = (
@@ -30445,6 +30475,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "kRG" = (
@@ -30703,6 +30734,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/dim/directional/north,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "kUW" = (
@@ -34448,6 +34480,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "mpH" = (
@@ -44181,6 +44214,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "pTw" = (
@@ -46464,6 +46498,7 @@
 	spawn_scatter_radius = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "qLg" = (
@@ -46695,6 +46730,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "qPX" = (
@@ -51012,6 +51048,7 @@
 	dir = 4
 	},
 /obj/structure/sign/poster/random/directional/north,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "sjJ" = (
@@ -53909,6 +53946,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "tkD" = (
@@ -54418,6 +54456,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/poster/contraband/lusty_xenomorph/directional/north,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "tsX" = (
@@ -61452,6 +61491,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "vTd" = (
@@ -61711,6 +61751,7 @@
 "vXS" = (
 /obj/structure/broken_flooring/side,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "vYg" = (
@@ -61996,6 +62037,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "wdz" = (
@@ -62949,6 +62991,7 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "wxa" = (
@@ -65825,6 +65868,7 @@
 "xwO" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "xxe" = (
@@ -67862,6 +67906,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "ylj" = (
@@ -78668,12 +78713,12 @@ vxX
 rnk
 rnk
 rnk
-huv
-huv
-huv
-vlR
+dNp
+dNp
+dNp
+clY
 qLc
-vlR
+clY
 mpG
 gtK
 qET
@@ -78925,7 +78970,7 @@ vxX
 rnk
 ryV
 rnk
-huv
+dNp
 kic
 ceZ
 jJA
@@ -79182,7 +79227,7 @@ vxX
 rnk
 bCv
 tDg
-huv
+dNp
 vHh
 rnk
 rnk
@@ -79696,7 +79741,7 @@ lCY
 gzq
 nez
 huv
-huv
+dNp
 rnk
 rnk
 rnk
@@ -79953,7 +79998,7 @@ lCY
 lCY
 rnk
 jRU
-kic
+awi
 fpK
 ilk
 rnk
@@ -80467,7 +80512,7 @@ qAS
 uiU
 rnk
 vqq
-kic
+awi
 rnk
 rnk
 rnk
@@ -80724,7 +80769,7 @@ koZ
 mPX
 szK
 kbY
-kic
+awi
 dKw
 bay
 lvW
@@ -82778,7 +82823,7 @@ kTC
 nnL
 ylf
 cOf
-wCV
+bfc
 tiI
 rnk
 jyg
@@ -83292,7 +83337,7 @@ hgi
 bSz
 orI
 etV
-wCV
+bfc
 gok
 rnk
 lpF
@@ -84064,7 +84109,7 @@ kwS
 rXp
 ylV
 wwY
-xpx
+bvP
 bMm
 dgy
 jha
