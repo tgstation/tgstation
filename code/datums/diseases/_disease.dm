@@ -70,9 +70,32 @@
 
 	D.after_add()
 	infectee.med_hud_set_status()
+	register_disease_signals()
 
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
+
+/// Updates the spread flags set, ensuring signals are updated as necessary
+/datum/disease/proc/update_spread_flags(new_flags)
+	if(spread_flags == new_flags)
+		return
+
+	spread_flags = new_flags
+	unregister_disease_signals()
+	register_disease_signals()
+
+/// Register any relevant signals for the disease
+/datum/disease/proc/register_disease_signals()
+	if(isnull(affected_mob))
+		return
+	if(spread_flags & DISEASE_SPREAD_AIRBORNE)
+		RegisterSignal(affected_mob, COMSIG_CARBON_PRE_BREATHE, PROC_REF(on_breath))
+
+/// Unregister any relevant signals for the disease
+/datum/disease/proc/unregister_disease_signals()
+	if(isnull(affected_mob))
+		return
+	UnregisterSignal(affected_mob, COMSIG_CARBON_PRE_BREATHE)
 
 ///Proc to process the disease and decide on whether to advance, cure or make the symptoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
 /datum/disease/proc/stage_act(seconds_per_tick, times_fired)
@@ -219,7 +242,6 @@
 	if(!. || (needs_all_cures && . < cures.len))
 		return FALSE
 
-//Airborne spreading
 /**
  * Handles performing a spread-via-air
  *
@@ -243,7 +265,9 @@
 	if(!istype(mob_loc))
 		return FALSE
 	for(var/mob/living/carbon/to_infect in oview(spread_range, affected_mob))
-		var/turf/infect_loc = get_turf(to_infect)
+		var/turf/infect_loc = to_infect.loc
+		if(!istype(infect_loc))
+			continue
 		if(require_facing && !is_source_facing_target(affected_mob, to_infect))
 			continue
 		if(!disease_air_spread_walk(mob_loc, infect_loc))
@@ -251,6 +275,7 @@
 		to_infect.contract_airborne_disease(src)
 	return TRUE
 
+/// Helper for checking if there is an air path between two turfs
 /proc/disease_air_spread_walk(turf/start, turf/end)
 	if(!start || !end)
 		return FALSE
@@ -304,6 +329,7 @@
 	return "[type]"
 
 /datum/disease/proc/remove_disease()
+	unregister_disease_signals()
 	LAZYREMOVE(affected_mob.diseases, src) //remove the datum from the list
 	affected_mob.med_hud_set_status()
 	affected_mob = null
@@ -342,6 +368,13 @@
 		return FALSE
 
 	return TRUE
+
+/// Handles spreading via air when we breathe
+/datum/disease/proc/on_breath(datum/source, seconds_per_tick, ...)
+	SIGNAL_HANDLER
+
+	if(SPT_PROB(infectivity * 4, seconds_per_tick))
+		airborne_spread()
 
 //Use this to compare severities
 /proc/get_disease_severity_value(severity)

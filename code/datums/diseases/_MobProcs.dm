@@ -136,16 +136,18 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return FALSE
-
+	// I don't know how you are spreading via air with no head but sure
+	if(!get_bodypart(BODY_ZONE_HEAD))
+		return TRUE
+	// Check both hat and mask for bio protection
+	// Anything above 50 individually is a shoe-in, and stacking two items at 25 is also a shoe-in
 	var/obj/item/clothing/hat = is_mouth_covered(ITEM_SLOT_HEAD)
-	if(hat?.get_armor_rating(BIO) >= 25)
-		return TRUE
-
 	var/obj/item/clothing/mask = is_mouth_covered(ITEM_SLOT_MASK)
-	if(mask?.get_armor_rating(BIO) >= 25)
-		return TRUE
+	var/total_prot = 2 * (hat?.get_armor_rating(BIO) + mask?.get_armor_rating(BIO))
+	if(prob(total_prot))
+		return FALSE
 
-	return FALSE
+	return TRUE
 
 /mob/living/carbon/can_spread_airborne_diseases()
 	if(internal || external)
@@ -161,14 +163,15 @@
 	if(HAS_TRAIT(src, TRAIT_VIRUS_RESISTANCE) && prob(75))
 		return FALSE
 	// Full body bio check here, accounts for getting your hand sneezed on or whatever
+	// IE wearing a biosuit = 100% protection, of course
 	if(prob(getarmor(null, BIO)))
 		return FALSE
 	// Bonus bio check for head AND mask
+	// Meaning if we're masked up and wearing a dome, we are very likely never getting sick
 	var/obj/item/clothing/hat = is_mouth_covered(ITEM_SLOT_HEAD)
-	if(prob(hat?.get_armor_rating(BIO)))
-		return FALSE
 	var/obj/item/clothing/mask = is_mouth_covered(ITEM_SLOT_MASK)
-	if(prob(mask?.get_armor_rating(BIO)))
+	var/total_prot = (hat?.get_armor_rating(BIO) + mask?.get_armor_rating(BIO))
+	if(prob(total_prot))
 		return FALSE
 
 	return TRUE
