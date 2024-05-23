@@ -39,6 +39,7 @@
 	if(isobj(target) && isliving(src))
 		var/mob/living/user = src
 		if(locate(target) in user.get_all_gear())
+			to_chat(user, span_warning("You're already wearing this item!"))
 			return
 
 	client.loot_panel.open(tile)
