@@ -25,7 +25,7 @@
 	gain_text = "The flesh of humanity is weak. Make them bleed. Show them their fragility."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mad_mask,
-		/datum/heretic_knowledge/moon_amulette,
+		/datum/heretic_knowledge/moon_amulet,
 	)
 	required_atoms = list(
 		/obj/item/bodypart/leg/left = 1,

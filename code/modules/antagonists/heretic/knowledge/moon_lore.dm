@@ -13,7 +13,7 @@
  * Mark of Moon
  * Ritual of Knowledge
  * Lunar Parade
- * Moonlight Amulette
+ * Moonlight Amulet
  * > Sidepaths:
  *   Curse of Paralasys
  *   Unfathomable Curio
@@ -103,15 +103,15 @@
 	desc = "Grants you Lunar Parade, a spell that - after a short charge - sends a carnival forward \
 		when hitting someone they are forced to join the parade and suffer hallucinations."
 	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
-	next_knowledge = list(/datum/heretic_knowledge/moon_amulette)
+	next_knowledge = list(/datum/heretic_knowledge/moon_amulet)
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 1
 	route = PATH_MOON
 
 
-/datum/heretic_knowledge/moon_amulette
-	name = "Moonlight Amulette"
-	desc = "Allows you to transmute 2 sheets of glass, a heart and a tie to create a Moonlight Amulette. \
+/datum/heretic_knowledge/moon_amulet
+	name = "Moonlight Amulet"
+	desc = "Allows you to transmute 2 sheets of glass, a heart and a tie to create a Moonlight Amulet. \
 			If the item is used on someone with low sanity they go berserk attacking everyone, \
 			if their sanity isn't low enough it decreases their mood."
 	gain_text = "At the head of the parade he stood, the moon condensed into one mass, a reflection of the soul."
@@ -127,7 +127,7 @@
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/clothing/neck/tie = 1,
 	)
-	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulette)
+	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulet)
 	cost = 1
 	route = PATH_MOON
 
@@ -171,7 +171,7 @@
 		Bring 3 corpses with more than 50 brain damage to a transmutation rune to complete the ritual. \
 		When completed, you become a harbinger of madness gaining and aura of passive sanity decrease, \
 		confusion increase and, if their sanity is low enough, brain damage and blindness. \
-		1/5th of the crew will turn into acolytes and follow your command, they will all recieve moonlight amulettes."
+		1/5th of the crew will turn into acolytes and follow your command, they will all receive moonlight amulets."
 	gain_text = "We dived down towards the crowd, his soul splitting off in search of greater venture \
 		for where the Ringleader had started the parade, I shall continue it unto the suns demise \
 		WITNESS MY ASCENSION, THE MOON SMILES ONCE MORE AND FOREVER MORE IT SHALL!"
@@ -229,7 +229,7 @@
 			continue
 		var/datum/antagonist/lunatic/lunatic = crewmate.mind.add_antag_datum(/datum/antagonist/lunatic)
 		lunatic.set_master(user.mind, user)
-		var/obj/item/clothing/neck/heretic_focus/moon_amulette/amulet = new(crewmate_turf)
+		var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet = new(crewmate_turf)
 		var/static/list/slots = list(
 			"neck" = ITEM_SLOT_NECK,
 			"hands" = ITEM_SLOT_HANDS,
