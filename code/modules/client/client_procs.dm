@@ -1230,7 +1230,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(length(GLOB.admins) > 0 || !SSticker.IsRoundInProgress()) // We only want to report this stuff if we are currently playing.
 		return
 
-	var/cheesy_message = pick(
+	var/cheesy_message = pick(list(
 		"Forever alone :(",
 		"I have no admins online!",
 		"I need a hug :(",
@@ -1243,7 +1243,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		"What happened? Where has everyone gone?",
 		"Where has everyone gone?",
 		"Why does nobody love me? :(",
-	)
+	))
 
 	send2adminchat("Server", "[cheesy_message] (No admins online)")
 
