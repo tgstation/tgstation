@@ -1,5 +1,3 @@
-import { multiline } from 'common/string';
-
 import { useBackend } from '../../backend';
 import { Box, Button } from '../../components';
 import { useCompact } from './hooks';
@@ -17,7 +15,7 @@ export function PodLaunch(props) {
       onClick={() => act('giveLauncher')}
       selected={giveLauncher}
       textAlign="center"
-      tooltip={multiline`
+      tooltip={`
         You should know what the
         Codex Astartes says about this`}
       tooltipPosition="top"

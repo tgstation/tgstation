@@ -315,7 +315,7 @@
 			I.AddElement(/datum/element/frozen)
 
 	for(var/mob/living/L in contents)
-		if(L.bodytemperature <= 50)
+		if(L.bodytemperature <= 50 && !HAS_TRAIT(L, TRAIT_RESISTCOLD))
 			L.apply_status_effect(/datum/status_effect/freon)
 	MakeSlippery(TURF_WET_PERMAFROST, 50)
 	return TRUE

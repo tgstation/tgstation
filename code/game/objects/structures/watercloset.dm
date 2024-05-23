@@ -345,7 +345,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	if(busy)
 		to_chat(user, span_warning("Someone's already washing here!"))
 		return
-	var/selected_area = parse_zone(user.zone_selected)
+	var/selected_area = user.parse_zone_with_bodypart(user.zone_selected)
 	var/washing_face = 0
 	if(selected_area in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES))
 		washing_face = 1
@@ -601,7 +601,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	if(busy)
 		to_chat(user, span_warning("Someone's already washing here!"))
 		return
-	var/selected_area = parse_zone(user.zone_selected)
+	var/selected_area = user.parse_zone_with_bodypart(user.zone_selected)
 	var/washing_face = FALSE
 	if(selected_area in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES))
 		washing_face = TRUE

@@ -8,7 +8,7 @@
 #define LINE1_Y -4
 #define LINE2_X 1
 #define LINE2_Y -11
-#define STATUS_DISPLAY_FONT_DATUM /datum/font/tiny_unicode/size_12pt
+GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12pt())
 
 /// Status display which can show images and scrolling text.
 /obj/machinery/status_display
@@ -22,8 +22,11 @@
 	density = FALSE
 	layer = ABOVE_WINDOW_LAYER
 
-	var/obj/effect/overlay/status_display_text/message1_overlay
-	var/obj/effect/overlay/status_display_text/message2_overlay
+	// We store overlays as keys, so multiple displays can use the same object safely
+	/// String key we use to index the first effect overlay displayed on us
+	var/message_key_1
+	/// String key we use to index the second effect overlay displayed on us
+	var/message_key_2
 	var/current_picture = ""
 	var/current_mode = SD_BLANK
 	var/message1 = ""
@@ -109,10 +112,26 @@
  * Don't call this in subclasses.
  */
 /obj/machinery/status_display/proc/remove_messages()
-	if(message1_overlay)
-		QDEL_NULL(message1_overlay)
-	if(message2_overlay)
-		QDEL_NULL(message2_overlay)
+	var/obj/effect/overlay/status_display_text/overlay_1 = get_status_text(message_key_1)
+	message_key_1 = null
+	overlay_1?.disown(src)
+	var/obj/effect/overlay/status_display_text/overlay_2 = get_status_text(message_key_2)
+	message_key_2 = null
+	overlay_2?.disown(src)
+
+// List in the form key -> status display that shows said key
+GLOBAL_LIST_EMPTY(key_to_status_display)
+
+/proc/generate_status_text(line_y, message, x_offset, text_color, header_text_color, line_pair)
+	var/key = "[line_y]-[message]-[x_offset]-[text_color]-[header_text_color]-[line_pair]"
+	var/obj/effect/overlay/status_display_text/new_overlay = GLOB.key_to_status_display[key]
+	if(!new_overlay)
+		new_overlay = new(null, line_y, message, text_color, header_text_color, x_offset, line_pair, key)
+		GLOB.key_to_status_display[key] = new_overlay
+	return new_overlay
+
+/proc/get_status_text(key)
+	return GLOB.key_to_status_display[key]
 
 /**
  * Create/update message overlay.
@@ -125,19 +144,16 @@
  * * message - the new message text.
  * Returns new /obj/effect/overlay/status_display_text or null if unchanged.
  */
-/obj/machinery/status_display/proc/update_message(obj/effect/overlay/status_display_text/overlay, line_y, message, x_offset, line_pair)
-	if(overlay && message == overlay.message)
-		return null
+/obj/machinery/status_display/proc/update_message(current_key, line_y, message, x_offset, line_pair)
+	var/obj/effect/overlay/status_display_text/current_overlay = get_status_text(current_key)
+	var/obj/effect/overlay/status_display_text/new_overlay = generate_status_text(line_y, message, text_color, header_text_color, x_offset, line_pair)
 
-	if(overlay)
-		qdel(overlay)
+	if(current_overlay == new_overlay)
+		return current_key
 
-	var/obj/effect/overlay/status_display_text/new_status_display_text = new(src, line_y, message, text_color, header_text_color, x_offset, line_pair)
-	// Draw our object visually "in front" of this display, taking advantage of sidemap
-	new_status_display_text.pixel_y = -32
-	new_status_display_text.pixel_z = 32
-	vis_contents += new_status_display_text
-	return new_status_display_text
+	current_overlay?.disown(src)
+	new_overlay.own(src)
+	return new_overlay.status_key
 
 /obj/machinery/status_display/update_appearance(updates=ALL)
 	. = ..()
@@ -171,17 +187,12 @@
 			var/line1_metric
 			var/line2_metric
 			var/line_pair
-			var/datum/font/display_font = new STATUS_DISPLAY_FONT_DATUM()
-			line1_metric = display_font.get_metrics(message1)
-			line2_metric = display_font.get_metrics(message2)
+			line1_metric = GLOB.status_font.get_metrics(message1)
+			line2_metric = GLOB.status_font.get_metrics(message2)
 			line_pair = (line1_metric > line2_metric ? line1_metric : line2_metric)
 
-			var/overlay = update_message(message1_overlay, LINE1_Y, message1, LINE1_X, line_pair)
-			if(overlay)
-				message1_overlay = overlay
-			overlay = update_message(message2_overlay, LINE2_Y, message2, LINE2_X, line_pair)
-			if(overlay)
-				message2_overlay = overlay
+			message_key_1 = update_message(message_key_1, LINE1_Y, message1, LINE1_X, line_pair)
+			message_key_2 = update_message(message_key_2, LINE2_Y, message2, LINE2_X, line_pair)
 
 			// Turn off backlight if message is blank
 			if(message1 == "" && message2 == "")
@@ -215,6 +226,8 @@
 
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
+	var/obj/effect/overlay/status_display_text/message1_overlay = get_status_text(message_key_1)
+	var/obj/effect/overlay/status_display_text/message2_overlay = get_status_text(message_key_2)
 	if (message1_overlay || message2_overlay)
 		. += "The display says:"
 		if (message1_overlay.message)
@@ -247,30 +260,37 @@
 /obj/effect/overlay/status_display_text
 	icon = 'icons/obj/machines/status_display.dmi'
 	vis_flags = VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
+	// physically shift down to render correctly
+	pixel_y = -32
+	pixel_z = 32
 
 	/// The message this overlay is displaying.
 	var/message
+	/// Amount of usage this overlay is getting
+	var/use_count = 0
+	/// The status key we represent
+	var/status_key
 
 	// If the line is short enough to not marquee, and it matches this, it's a header.
 	var/static/regex/header_regex = regex("^-.*-$")
 
-/obj/effect/overlay/status_display_text/Initialize(mapload, yoffset, line, text_color, header_text_color, xoffset = 0, line_pair)
+/obj/effect/overlay/status_display_text/Initialize(mapload, maptext_y, message, text_color, header_text_color, xoffset = 0, line_pair, status_key)
 	. = ..()
 
-	maptext_y = yoffset
-	message = line
+	src.maptext_y = maptext_y
+	src.message = message
+	src.status_key = status_key
 
-	var/datum/font/display_font = new STATUS_DISPLAY_FONT_DATUM()
-	var/line_width = display_font.get_metrics(line)
+	var/line_width = GLOB.status_font.get_metrics(message)
 
 	if(line_width > MAX_STATIC_WIDTH)
 		// Marquee text
-		var/marquee_message = "[line]    [line]    [line]"
+		var/marquee_message = "[message]    [message]    [message]"
 
 		// Width of full content. Must of these is never revealed unless the user inputted a single character.
-		var/full_marquee_width = display_font.get_metrics("[marquee_message]    ")
+		var/full_marquee_width = GLOB.status_font.get_metrics("[marquee_message]    ")
 		// We loop after only this much has passed.
-		var/looping_marquee_width = (display_font.get_metrics("[line]    ]") - SCROLL_PADDING)
+		var/looping_marquee_width = (GLOB.status_font.get_metrics("[message]    ]") - SCROLL_PADDING)
 
 		maptext = generate_text(marquee_message, center = FALSE, text_color = text_color)
 		maptext_width = full_marquee_width
@@ -285,9 +305,27 @@
 		animate(maptext_x = MAX_STATIC_WIDTH, time = 0)
 	else
 		// Centered text
-		var/color = header_regex.Find(line) ? header_text_color : text_color
-		maptext = generate_text(line, center = TRUE, text_color = color)
+		var/color = header_regex.Find(message) ? header_text_color : text_color
+		maptext = generate_text(message, center = TRUE, text_color = color)
 		maptext_x = xoffset //Defaults to 0, this would be centered unless overided
+
+/obj/effect/overlay/status_display_text/Destroy(force)
+	GLOB.key_to_status_display -= status_key
+	return ..()
+
+/// Status displays are static, shared by everyone who needs them
+/// This marks us as being used by one more guy
+/obj/effect/overlay/status_display_text/proc/own(atom/movable/owned_by)
+	owned_by.vis_contents += src
+	use_count += 1
+
+/// Status displays are static, shared by everyone who needs them
+/// This marks us as no longer being used by a guy
+/obj/effect/overlay/status_display_text/proc/disown(atom/movable/disowned_by)
+	disowned_by.vis_contents -= src
+	use_count -= 1
+	if(use_count <= 0)
+		qdel(src)
 
 /**
  * Generate the actual maptext.
@@ -562,6 +600,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
 #undef LINE1_Y
 #undef LINE2_X
 #undef LINE2_Y
-#undef STATUS_DISPLAY_FONT_DATUM
-
 #undef SCROLL_PADDING

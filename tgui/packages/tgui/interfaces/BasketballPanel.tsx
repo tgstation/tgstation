@@ -1,4 +1,3 @@
-import { multiline } from '../../common/string';
 import { useBackend } from '../backend';
 import { Button, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -30,7 +29,7 @@ export const BasketballPanel = (props) => {
                   <Button
                     icon="clipboard-check"
                     tooltipPosition="bottom-start"
-                    tooltip={multiline`
+                    tooltip={`
                     Signs you up for the next game. If there
                     is an ongoing one, you will be signed up
                     for the next.

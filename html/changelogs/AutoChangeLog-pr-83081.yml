@@ -1,4 +1,0 @@
-author: "MrStonedOne & Lilah Novi"
-delete-after: True
-changes:
-  - rscadd: "Say commands typed in the command bar now trigger typing indicators"
