@@ -25,8 +25,8 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
 	speed = 2
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	maxHealth = 250
-	health = 250
+	maxHealth = 270
+	health = 270
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	combat_mode = TRUE
@@ -70,7 +70,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		change_offsets = FALSE
 		icon = 'icons/mob/simple/lavaland/raptor_icebox.dmi'
 
-	add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
+	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
 
 	if(!mapload)
 		GLOB.raptor_population += REF(src)
@@ -268,8 +268,8 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	icon_state = "raptor_black"
 	icon_living = "raptor_black"
 	icon_dead = "raptor_black_dead"
-	maxHealth = 460
-	health = 460
+	maxHealth = 400
+	health = 400
 	speed = 1
 	ridable_component = /datum/component/riding/creature/raptor/fast
 	melee_damage_lower = 20
