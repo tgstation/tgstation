@@ -286,6 +286,8 @@ ADMIN_VERB(create_or_modify_area, R_DEBUG, "Create Or Modify Area", "Create of m
 
 	return TRUE
 
+/// Sends a message to adminchat when anyone with a holder logs in or logs out.
+/// Is dependent on admin preferences and configuration settings, which means that this proc can fire without sending a message.
 /client/proc/adminGreet(logout = FALSE)
 	if(!SSticker.HasRoundStarted())
 		return
