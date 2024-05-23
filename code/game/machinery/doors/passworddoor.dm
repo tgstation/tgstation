@@ -70,9 +70,9 @@
 	if(animation && animation != "deny")
 		icon_state = animation
 	else
-		icon_state = density ? "closed" : "open"
+		icon_state = density ? "closed" : "open_top"
 
-/obj/machinery/door/poddoor/update_overlays()
+/obj/machinery/door/password/update_overlays()
 	. = ..()
 	if(!density)
 		// If we're open we layer the bit below us "above" any mobs so they can walk through

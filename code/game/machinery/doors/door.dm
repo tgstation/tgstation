@@ -580,6 +580,19 @@
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
 
+/obj/machinery/door/morgue/update_icon_state()
+	. = ..()
+	if(animation && animation != "deny")
+		icon_state = animation
+	else
+		icon_state = density ? "closed" : "open_top"
+
+/obj/machinery/door/morgue/update_overlays()
+	. = ..()
+	if(!density)
+		// If we're open we layer the bit below us "above" any mobs so they can walk through
+		. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+
 /obj/machinery/door/get_dumping_location()
 	return null
 
