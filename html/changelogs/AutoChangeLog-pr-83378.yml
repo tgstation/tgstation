@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Smoker quirk users can select a favourite brand again."

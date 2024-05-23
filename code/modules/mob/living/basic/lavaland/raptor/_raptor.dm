@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 /mob/living/basic/mining/raptor
 	name = "raptor"
-	desc = "A trusty powerful stead. Taming it might prove difficult..."
+	desc = "A trusty, powerful steed. Taming it might prove difficult..."
 	icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
 	speed = 2
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
@@ -202,7 +202,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	melee_damage_upper = 20
 	raptor_color = RAPTOR_RED
 	dex_description = "A resilient breed of raptors, battle-tested and bred for the purpose of humbling its foes in combat, \
-		This breed demonstrates higher combat capabilities than its peers and oozes rutheless aggression."
+		This breed demonstrates higher combat capabilities than its peers and oozes ruthless aggression."
 	child_path = /mob/living/basic/mining/raptor/baby_raptor/red
 
 /mob/living/basic/mining/raptor/purple
@@ -231,7 +231,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	health = 460
 	raptor_color = RAPTOR_GREEN
 	dex_description = "A tough breed of raptor, made to withstand the harshest of punishment and to laugh in the face of pain, \
-		This breed is able to withstand more beating than its peers."
+		this breed is able to withstand more punishment than its peers."
 	child_path = /mob/living/basic/mining/raptor/baby_raptor/green
 
 /mob/living/basic/mining/raptor/green/Initialize(mapload)

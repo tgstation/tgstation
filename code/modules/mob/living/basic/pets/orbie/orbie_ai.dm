@@ -22,12 +22,12 @@
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
-	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_SET(BB_LAST_RECIEVED_MESSAGE), PROC_REF(on_set_message))
+	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_SET(BB_LAST_RECEIVED_MESSAGE), PROC_REF(on_set_message))
 
 /datum/ai_controller/basic_controller/orbie/proc/on_set_message(datum/source)
 	SIGNAL_HANDLER
 
-	addtimer(CALLBACK(src, PROC_REF(clear_blackboard_key), BB_LAST_RECIEVED_MESSAGE), MESSAGE_EXPIRY_TIME)
+	addtimer(CALLBACK(src, PROC_REF(clear_blackboard_key), BB_LAST_RECEIVED_MESSAGE), MESSAGE_EXPIRY_TIME)
 
 ///ai behavior that lets us search for other orbies to play with
 /datum/ai_planning_subtree/find_playmates
@@ -84,10 +84,10 @@
 /datum/ai_planning_subtree/relay_pda_message
 
 /datum/ai_planning_subtree/relay_pda_message/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(controller.blackboard[BB_VIRTUAL_PET_LEVEL] < 2 || isnull(controller.blackboard[BB_LAST_RECIEVED_MESSAGE]))
+	if(controller.blackboard[BB_VIRTUAL_PET_LEVEL] < 2 || isnull(controller.blackboard[BB_LAST_RECEIVED_MESSAGE]))
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/relay_pda_message, BB_LAST_RECIEVED_MESSAGE)
+	controller.queue_behavior(/datum/ai_behavior/relay_pda_message, BB_LAST_RECEIVED_MESSAGE)
 
 /datum/ai_behavior/relay_pda_message/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/mob/living/basic/living_pawn = controller.pawn

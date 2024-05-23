@@ -32093,7 +32093,6 @@
 	},
 /obj/item/pen,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
-/obj/machinery/door/airlock,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "jJV" = (
@@ -59151,7 +59150,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/treatment_center)
 "rDN" = (
-/obj/structure/signpost,
+/obj/structure/no_effect_signpost,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "rDO" = (
