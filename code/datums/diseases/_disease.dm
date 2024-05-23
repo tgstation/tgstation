@@ -249,6 +249,7 @@
  *
  * * spread_range - How far the disease can spread
  * * force_spread - If TRUE, the disease will spread regardless of the spread_flags
+ * * require_facing - If TRUE, the disease will only spread if the source mob is facing the target mob
  */
 /datum/disease/proc/airborne_spread(spread_range = 2, force_spread = TRUE, require_facing = FALSE)
 	if(isnull(affected_mob))
@@ -369,7 +370,7 @@
 
 	return TRUE
 
-/// Handles spreading via air when we breathe
+/// Handles spreading via air when our mob breathes
 /datum/disease/proc/on_breath(datum/source, seconds_per_tick, ...)
 	SIGNAL_HANDLER
 

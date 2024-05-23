@@ -131,7 +131,8 @@
 
 	return ..()
 
-/// Checks if this mob can currently spread air based diseases
+/// Checks if this mob can currently spread air based diseases.
+/// Nondeterministic
 /mob/living/proc/can_spread_airborne_diseases()
 	SHOULD_CALL_PARENT(TRUE)
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
@@ -158,6 +159,7 @@
 	return ..()
 
 /// Checks if this mob can currently be infected by air based diseases
+/// Nondeterministic
 /mob/living/proc/can_be_spread_airborne_disease()
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return FALSE
@@ -166,7 +168,7 @@
 	// Spaceacillin for infection resistance
 	if(HAS_TRAIT(src, TRAIT_VIRUS_RESISTANCE) && prob(75))
 		return FALSE
-	// Bonus bio check for head AND mask
+	// Bio check for head AND mask
 	// Meaning if we're masked up and wearing a dome, we are very likely never getting sick
 	var/obj/item/clothing/hat = is_mouth_covered(ITEM_SLOT_HEAD)
 	var/obj/item/clothing/mask = is_mouth_covered(ITEM_SLOT_MASK)
