@@ -35,8 +35,7 @@
 		angle = ATAN2(sneeze_y, sneeze_x)
 
 		// Check if we're within the sneeze cone, otherwise just sneeze straight
-		var/snois = abs(closer_angle_difference(angle, dir2angle(dir) - SNEEZE_CONE)) + abs(closer_angle_difference(angle, dir2angle(dir) + SNEEZE_CONE))
-		if(snois > 2 * SNEEZE_CONE)
+		if(abs(closer_angle_difference(angle, dir2angle(dir) - SNEEZE_CONE)) + abs(closer_angle_difference(angle, dir2angle(dir) + SNEEZE_CONE)) > 2 * SNEEZE_CONE)
 			angle = dir2angle(dir)
 
 		clear_fullscreen("sneezer", 0)
@@ -72,3 +71,5 @@
 
 	if(isliving(target))
 		sneezie_callback?.Invoke(target) //you've been sneezered
+
+#undef SNEEZE_CONE
