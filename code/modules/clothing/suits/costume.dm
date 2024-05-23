@@ -27,7 +27,13 @@
 	icon_state = "pirate"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list(/obj/item/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/cup/glass/bottle/rum)
+	allowed = list(
+		/obj/item/melee/energy/sword/pirate,
+		/obj/item/clothing/glasses/eyepatch,
+		/obj/item/reagent_containers/cup/glass/bottle/rum,
+		/obj/item/gun/energy/laser/musket,
+		/obj/item/gun/energy/disabler/smoothbore,
+	)
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/costume/pirate/armored
@@ -352,6 +358,48 @@
 	icon = 'icons/obj/clothing/head/costume.dmi'
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "bee"
+	body_parts_covered = HEAD
+	clothing_flags = THICKMATERIAL
+	flags_inv = HIDEHAIR|HIDEEARS
+
+/obj/item/clothing/suit/hooded/shark_costume // Blahaj
+	name = "Shark costume"
+	desc = "Finally, a costume to match your favorite plush."
+	icon_state = "shark"
+	icon = 'icons/obj/clothing/suits/costume.dmi'
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
+	inhand_icon_state = "shark"
+	body_parts_covered = CHEST|GROIN|ARMS
+	clothing_flags = THICKMATERIAL
+	hoodtype = /obj/item/clothing/head/hooded/shark_hood
+
+/obj/item/clothing/head/hooded/shark_hood
+	name = "shark hood"
+	desc = "A hood attached to a shark costume."
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	icon_state = "shark"
+	body_parts_covered = HEAD
+	clothing_flags = THICKMATERIAL
+	flags_inv = HIDEHAIR|HIDEEARS
+
+/obj/item/clothing/suit/hooded/shork_costume // Oh God Why
+	name = "shork costume"
+	desc = "Why would you ever do this?"
+	icon_state = "sharkcursed"
+	icon = 'icons/obj/clothing/suits/costume.dmi'
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
+	inhand_icon_state = "sharkcursed"
+	body_parts_covered = CHEST|GROIN|ARMS
+	clothing_flags = THICKMATERIAL
+	hoodtype = /obj/item/clothing/head/hooded/shork_hood
+
+/obj/item/clothing/head/hooded/shork_hood
+	name = "shork hood"
+	desc = "A hood attached to a shork costume."
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	icon_state = "sharkcursed"
 	body_parts_covered = HEAD
 	clothing_flags = THICKMATERIAL
 	flags_inv = HIDEHAIR|HIDEEARS

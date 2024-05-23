@@ -99,6 +99,15 @@
 	max_integrity = 55
 	w_class = WEIGHT_CLASS_NORMAL
 
+/obj/item/shield/kite
+	name = "kite shield"
+	desc = "Protect your internal organs with this almond shaped shield."
+	icon_state = "kite"
+	inhand_icon_state = "kite"
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 15)
+	shield_break_sound = 'sound/effects/grillehit.ogg'
+	max_integrity = 60
+
 /obj/item/shield/roman
 	name = "\improper Roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
@@ -231,7 +240,7 @@
 			return
 		else
 			to_chat(user, span_notice("You begin to replace the bulb..."))
-			if(do_after(user, 20, target = user))
+			if(do_after(user, 2 SECONDS, target = user))
 				if(QDELETED(flash) || flash.burnt_out)
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -396,5 +405,49 @@
 		if(send_message)
 			balloon_alert(user, "extend it first!")
 		return COMPONENT_BLOCK_ITEM_DISARM_ATTACK
+
+/datum/armor/item_shield/ballistic
+	melee = 30
+	bullet = 85
+	bomb = 10
+	laser = 80
+
+/obj/item/shield/ballistic
+	name = "ballistic shield"
+	desc = "A heavy shield designed for blocking projectiles, weaker to melee."
+	icon_state = "ballistic"
+	inhand_icon_state = "ballistic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/titanium =SHEET_MATERIAL_AMOUNT)
+	max_integrity = 75
+	shield_break_leftover = /obj/item/stack/rods/ten
+	armor_type = /datum/armor/item_shield/ballistic
+
+/obj/item/shield/ballistic/attackby(obj/item/attackby_item, mob/user, params)
+	if(istype(attackby_item, /obj/item/stack/sheet/mineral/titanium))
+		if (atom_integrity >= max_integrity)
+			to_chat(user, span_warning("[src] is already in perfect condition."))
+			return
+		var/obj/item/stack/sheet/mineral/titanium/titanium_sheet = attackby_item
+		titanium_sheet.use(1)
+		atom_integrity = max_integrity
+		to_chat(user, span_notice("You repair [src] with [titanium_sheet]."))
+		return
+	return ..()
+
+/datum/armor/item_shield/improvised
+	melee = 40
+	bullet = 30
+	laser = 30
+
+/obj/item/shield/improvised
+	name = "improvised shield"
+	desc = "A crude shield made out of several sheets of iron taped together, not very durable."
+	icon_state = "improvised"
+	inhand_icon_state = "improvised"
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 2)
+	max_integrity = 35
+	shield_break_leftover = /obj/item/stack/rods/two
+	armor_type = /datum/armor/item_shield/improvised
+	block_sound = 'sound/items/trayhit2.ogg'
 
 #undef BATON_BASH_COOLDOWN

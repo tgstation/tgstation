@@ -303,6 +303,7 @@
 	Knockdown(amount)
 	Stun(amount)
 	Immobilize(amount)
+	Unconscious(amount)
 
 
 /mob/living/proc/SetAllImmobility(amount)
@@ -310,6 +311,7 @@
 	SetKnockdown(amount)
 	SetStun(amount)
 	SetImmobilized(amount)
+	SetUnconscious(amount)
 
 
 /mob/living/proc/AdjustAllImmobility(amount)
@@ -317,6 +319,7 @@
 	AdjustKnockdown(amount)
 	AdjustStun(amount)
 	AdjustImmobilized(amount)
+	AdjustUnconscious(amount)
 
 
 /* UNCONSCIOUS */

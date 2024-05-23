@@ -1,6 +1,0 @@
-author: "JohnFulpWillard, Unit2E teaching me the TEG"
-delete-after: True
-changes:
-  - bugfix: "The TEG now works again (still unobtainable by regular means though)."
-  - bugfix: "the TEG and its circulators can now be rotated counterclockwise again."
-  - refactor: "The TEG now uses a TGUI interface rather than the old HTML one."

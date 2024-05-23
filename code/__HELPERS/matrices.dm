@@ -178,7 +178,7 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 	if(!color)
 		return COLOR_MATRIX_IDENTITY
 	if(istext(color))
-		var/list/L = ReadRGB(color)
+		var/list/L = rgb2num(color)
 		if(!L)
 			var/message = "Invalid/unsupported color ([color]) argument in color_to_full_rgba_matrix()"
 			if(return_identity_on_fail)
@@ -193,7 +193,7 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 		if(3 to 5) // row-by-row hexadecimals
 			. = list()
 			for(var/a in 1 to L.len)
-				var/list/rgb = ReadRGB(L[a])
+				var/list/rgb = rgb2num(L[a])
 				for(var/b in rgb)
 					. += b/255
 				if(length(rgb) % 4) // RGB has no alpha instruction

@@ -133,7 +133,7 @@
 
 	return ..()
 
-/obj/machinery/cryo_cell/on_deconstruction()
+/obj/machinery/cryo_cell/on_deconstruction(disassembled)
 	if(occupant)
 		occupant.vis_flags &= ~VIS_INHERIT_PLANE
 		REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
@@ -239,8 +239,10 @@
 		return
 	. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-[on && is_operational ? "on" : "off"]", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
 
-/obj/machinery/cryo_cell/dump_inventory_contents(list/subset = list(occupant))
-	//only drop the mob and nothing else by default when opening the machine
+/obj/machinery/cryo_cell/dump_inventory_contents(list/subset = list())
+	//only drop mobs when opening the machine
+	for (var/mob/living/living_guy in contents)
+		subset += living_guy
 	return ..(subset)
 
 /obj/machinery/cryo_cell/Exited(atom/movable/gone, direction)
@@ -427,7 +429,7 @@
 	user.visible_message(span_notice("You see [user] kicking against the glass of [src]!"), \
 		span_notice("You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(CRYO_BREAKOUT_TIME)].)"), \
 		span_hear("You hear a thump from [src]."))
-	if(do_after(user, CRYO_BREAKOUT_TIME, target = src))
+	if(do_after(user, CRYO_BREAKOUT_TIME, target = src, hidden = TRUE))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
@@ -642,14 +644,13 @@
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 	return ..()
 
-/obj/machinery/cryo_cell/AltClick(mob/user)
-	if(can_interact(user))
-		if(state_open)
-			close_machine()
-		else
-			open_machine()
-		balloon_alert(user, "door [state_open ? "opened" : "closed"]")
-	return ..()
+/obj/machinery/cryo_cell/click_alt(mob/user)
+	if(state_open)
+		close_machine()
+	else
+		open_machine()
+	balloon_alert(user, "door [state_open ? "opened" : "closed"]")
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/cryo_cell/get_remote_view_fullscreens(mob/user)
 	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)

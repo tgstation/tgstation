@@ -220,7 +220,7 @@
 	to_chat(owner, span_warning("Your connection to [linked_target] suddenly feels extremely strong... you can feel it pulling you!"))
 	owner.playsound_local(owner, 'sound/magic/lightning_chargeup.ogg', 75, FALSE)
 	returning = TRUE
-	addtimer(CALLBACK(src, PROC_REF(snapback)), 100)
+	addtimer(CALLBACK(src, PROC_REF(snapback)), 10 SECONDS)
 
 /datum/brain_trauma/special/quantum_alignment/proc/snapback()
 	returning = FALSE
@@ -245,14 +245,15 @@
 
 /datum/brain_trauma/special/psychotic_brawling/on_gain()
 	..()
-	psychotic_brawling = new(null)
+	psychotic_brawling = new()
+	psychotic_brawling.allow_temp_override = FALSE
 	if(!psychotic_brawling.teach(owner, TRUE))
 		to_chat(owner, span_notice("But your martial knowledge keeps you grounded."))
 		qdel(src)
 
 /datum/brain_trauma/special/psychotic_brawling/on_lose()
 	..()
-	psychotic_brawling.remove(owner)
+	psychotic_brawling.fully_remove(owner)
 	QDEL_NULL(psychotic_brawling)
 
 /datum/brain_trauma/special/psychotic_brawling/bath_salts
@@ -266,11 +267,11 @@
 	lose_text = span_warning("You realize you can feel pain again.")
 
 /datum/brain_trauma/special/tenacity/on_gain()
-	owner.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), TRAUMA_TRAIT)
+	owner.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/special/tenacity/on_lose()
-	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), TRAUMA_TRAIT)
+	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/special/death_whispers
@@ -294,7 +295,7 @@
 /datum/brain_trauma/special/death_whispers/proc/whispering()
 	ADD_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
 	active = TRUE
-	addtimer(CALLBACK(src, PROC_REF(cease_whispering)), rand(50, 300))
+	addtimer(CALLBACK(src, PROC_REF(cease_whispering)), rand(5 SECONDS, 30 SECONDS))
 
 /datum/brain_trauma/special/death_whispers/proc/cease_whispering()
 	REMOVE_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
@@ -425,3 +426,102 @@
 		to_chat(victim, "[span_name("[name]")] exclaims, \"[span_robot("[beepskys_cry]")]")
 		if(victim.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 			victim.create_chat_message(src, raw_message = beepskys_cry, spans = list("robotic"))
+
+// Used by Veteran Security Advisor job.
+/datum/brain_trauma/special/ptsd
+	name = "Combat PTSD"
+	desc = "The patient is experiencing PTSD stemming from past combat exposure, resulting in a lack of emotions. Additionally, they are experiencing mild hallucinations."
+	scan_desc = "PTSD"
+	gain_text = span_warning("You're thrust back into the chaos of past! Explosions! Gunfire! Emotions, gone AWOL!")
+	lose_text = span_notice("You feel flashbacks of past fade, as your emotions return and mind clear.")
+	resilience = TRAUMA_RESILIENCE_ABSOLUTE
+	can_gain = TRUE
+	random_gain = FALSE
+	/// Our cooldown declare for causing hallucinations
+	COOLDOWN_DECLARE(ptsd_hallucinations)
+	var/list/ptsd_hallucinations_list = list(
+		/datum/hallucination/fake_sound/normal/boom,
+		/datum/hallucination/fake_sound/normal/distant_boom,
+		/datum/hallucination/stray_bullet,
+		/datum/hallucination/battle/gun/disabler,
+		/datum/hallucination/battle/gun/laser,
+		/datum/hallucination/battle/bomb,
+		/datum/hallucination/battle/e_sword,
+		/datum/hallucination/battle/harm_baton,
+		/datum/hallucination/battle/stun_prod,
+	)
+
+/datum/brain_trauma/special/ptsd/on_life(seconds_per_tick, times_fired)
+	if(owner.stat != CONSCIOUS)
+		return
+
+	if(!COOLDOWN_FINISHED(src, ptsd_hallucinations))
+		return
+
+	owner.cause_hallucination(pick(ptsd_hallucinations_list), "Caused by The Combat PTSD brain trauma")
+	COOLDOWN_START(src, ptsd_hallucinations, rand(10 SECONDS, 10 MINUTES))
+
+/datum/brain_trauma/special/ptsd/on_gain()
+	owner.add_mood_event("combat_ptsd", /datum/mood_event/desentized)
+	owner.mob_mood?.mood_modifier -= 1 //Basically nothing can change your mood
+	owner.mob_mood?.sanity_level = SANITY_DISTURBED //Makes sanity on a unstable level unless cured
+	..()
+
+/datum/brain_trauma/special/ptsd/on_lose()
+	owner.clear_mood_event("combat_ptsd")
+	owner.mob_mood?.mood_modifier += 1
+	owner.mob_mood?.sanity_level = SANITY_GREAT
+	return ..()
+
+/datum/brain_trauma/special/primal_instincts
+	name = "Feral Instincts"
+	desc = "Patient's mind is stuck in a primal state, causing them to act on instinct rather than reason."
+	scan_desc = "ferality"
+	gain_text = span_warning("Your pupils dilate, and it becomes harder to think straight.")
+	lose_text = span_notice("Your mind clears, and you feel more in control.")
+	resilience = TRAUMA_RESILIENCE_SURGERY
+	/// Tracks any existing AI controller, so we can restore it when we're cured
+	var/old_ai_controller_type
+
+/datum/brain_trauma/special/primal_instincts/on_gain()
+	. = ..()
+	if(!isnull(owner.ai_controller))
+		old_ai_controller_type = owner.ai_controller.type
+		QDEL_NULL(owner.ai_controller)
+
+	owner.ai_controller = new /datum/ai_controller/monkey(owner)
+	owner.ai_controller.continue_processing_when_client = TRUE
+	owner.ai_controller.can_idle = FALSE
+	owner.ai_controller.set_ai_status(AI_STATUS_OFF)
+
+/datum/brain_trauma/special/primal_instincts/on_lose(silent)
+	. = ..()
+	if(QDELING(owner))
+		return
+
+	QDEL_NULL(owner.ai_controller)
+	if(old_ai_controller_type)
+		owner.ai_controller = new old_ai_controller_type(owner)
+	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
+
+/datum/brain_trauma/special/primal_instincts/on_life(seconds_per_tick, times_fired)
+	if(isnull(owner.ai_controller))
+		qdel(src)
+		return
+
+	if(!SPT_PROB(3, seconds_per_tick))
+		return
+
+	owner.grant_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
+	owner.ai_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, prob(75))
+	if(owner.ai_controller.ai_status == AI_STATUS_OFF)
+		owner.ai_controller.set_ai_status(AI_STATUS_ON)
+		owner.log_message("became controlled by monkey instincts ([owner.ai_controller.blackboard[BB_MONKEY_AGGRESSIVE] ? "aggressive" : "docile"])", LOG_ATTACK, color = "orange")
+		to_chat(owner, span_warning("You feel the urge to act on your primal instincts..."))
+	// extend original timer if we roll the effect while it's already ongoing
+	addtimer(CALLBACK(src, PROC_REF(primal_instincts_off)), rand(20 SECONDS, 40 SECONDS), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE|TIMER_DELETE_ME)
+
+/datum/brain_trauma/special/primal_instincts/proc/primal_instincts_off()
+	owner.ai_controller.set_ai_status(AI_STATUS_OFF)
+	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
+	to_chat(owner, span_green("The urge subsides."))

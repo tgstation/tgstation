@@ -88,12 +88,6 @@ SUBSYSTEM_DEF(statpanels)
 			if(update_actions && num_fires % default_wait == 0)
 				set_action_tabs(target, target_mob)
 
-			// Handle the examined turf of the stat panel, if it's been long enough, or if we've generated new images for it
-			var/turf/listed_turf = target_mob?.listed_turf
-			if(listed_turf && num_fires % default_wait == 0)
-				if(target.stat_tab == listed_turf.name || !(listed_turf.name in target.panel_tabs))
-					set_turf_examine_tab(target, target_mob)
-
 		if(MC_TICK_CHECK)
 			return
 
@@ -166,71 +160,6 @@ SUBSYSTEM_DEF(statpanels)
 
 	target.stat_panel.send_message("update_spells", list(spell_tabs = target.spell_tabs, actions = actions))
 
-/datum/controller/subsystem/statpanels/proc/set_turf_examine_tab(client/target, mob/target_mob)
-	var/list/overrides = list()
-	for(var/image/target_image as anything in target.images)
-		if(!target_image.loc || target_image.loc.loc != target_mob.listed_turf || !target_image.override)
-			continue
-		overrides += target_image.loc
-
-	var/list/atoms_to_display = list(target_mob.listed_turf)
-	for(var/atom/movable/turf_content as anything in target_mob.listed_turf)
-		if(turf_content.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
-			continue
-		if(turf_content.invisibility > target_mob.see_invisible)
-			continue
-		if(turf_content in overrides)
-			continue
-		if(turf_content.IsObscured())
-			continue
-		atoms_to_display += turf_content
-
-	/// Set the atoms we're meant to display
-	var/datum/object_window_info/obj_window = target.obj_window
-	obj_window.atoms_to_show = atoms_to_display
-	START_PROCESSING(SSobj_tab_items, obj_window)
-	refresh_client_obj_view(target)
-
-/datum/controller/subsystem/statpanels/proc/refresh_client_obj_view(client/refresh)
-	var/list/turf_items = return_object_images(refresh)
-	if(!length(turf_items) || !refresh.mob?.listed_turf)
-		return
-	refresh.stat_panel.send_message("update_listedturf", turf_items)
-
-#define OBJ_IMAGE_LOADING "statpanels obj loading temporary"
-/// Returns all our ready object tab images
-/// Returns a list in the form list(list(object_name, object_ref, loaded_image), ...)
-/datum/controller/subsystem/statpanels/proc/return_object_images(client/load_from)
-	// You might be inclined to think that this is a waste of cpu time, since we
-	// A: Double iterate over atoms in the build case, or
-	// B: Generate these lists over and over in the refresh case
-	// It's really not very hot. The hot portion of this code is genuinely mostly in the image generation
-	// So it's ok to pay a performance cost for cleanliness here
-
-	// No turf? go away
-	if(!load_from.mob?.listed_turf)
-		return list()
-	var/datum/object_window_info/obj_window = load_from.obj_window
-	var/list/already_seen = obj_window.atoms_to_images
-	var/list/to_make = obj_window.atoms_to_imagify
-	var/list/turf_items = list()
-	for(var/atom/turf_item as anything in obj_window.atoms_to_show)
-		// First, we fill up the list of refs to display
-		// If we already have one, just use that
-		var/existing_image = already_seen[turf_item]
-		if(existing_image == OBJ_IMAGE_LOADING)
-			continue
-		// We already have it. Success!
-		if(existing_image)
-			turf_items[++turf_items.len] = list("[turf_item.name]", REF(turf_item), existing_image)
-			continue
-		// Now, we're gonna queue image generation out of those refs
-		to_make += turf_item
-		already_seen[turf_item] = OBJ_IMAGE_LOADING
-		obj_window.RegisterSignal(turf_item, COMSIG_QDELETING, TYPE_PROC_REF(/datum/object_window_info,viewing_atom_deleted)) // we reset cache if anything in it gets deleted
-	return turf_items
-
-#undef OBJ_IMAGE_LOADING
 
 /datum/controller/subsystem/statpanels/proc/generate_mc_data()
 	mc_data = list(
@@ -272,16 +201,6 @@ SUBSYSTEM_DEF(statpanels)
 		set_action_tabs(target, target_mob)
 		return TRUE
 
-	// Handle turfs
-
-	if(target_mob?.listed_turf)
-		if(!target_mob.TurfAdjacent(target_mob.listed_turf))
-			target_mob.set_listed_turf(null)
-
-		else if(target.stat_tab == target_mob?.listed_turf.name || !(target_mob?.listed_turf.name in target.panel_tabs))
-			set_turf_examine_tab(target, target_mob)
-			return TRUE
-
 	if(!target.holder)
 		return FALSE
 
@@ -301,105 +220,3 @@ SUBSYSTEM_DEF(statpanels)
 
 /// Stat panel window declaration
 /client/var/datum/tgui_window/stat_panel
-
-/// Datum that holds and tracks info about a client's object window
-/// Really only exists because I want to be able to do logic with signals
-/// And need a safe place to do the registration
-/datum/object_window_info
-	/// list of atoms to show to our client via the object tab, at least currently
-	var/list/atoms_to_show = list()
-	/// list of atom -> image string for objects we have had in the right click tab
-	/// this is our caching
-	var/list/atoms_to_images = list()
-	/// list of atoms to turn into images for the object tab
-	var/list/atoms_to_imagify = list()
-	/// Our owner client
-	var/client/parent
-	/// Are we currently tracking a turf?
-	var/actively_tracking = FALSE
-
-/datum/object_window_info/New(client/parent)
-	. = ..()
-	src.parent = parent
-
-/datum/object_window_info/Destroy(force)
-	atoms_to_show = null
-	atoms_to_images = null
-	atoms_to_imagify = null
-	parent.obj_window = null
-	parent = null
-	STOP_PROCESSING(SSobj_tab_items, src)
-	return ..()
-
-/// Takes a client, attempts to generate object images for it
-/// We will update the client with any improvements we make when we're done
-/datum/object_window_info/process(seconds_per_tick)
-	// Cache the datum access for sonic speed
-	var/list/to_make = atoms_to_imagify
-	var/list/newly_seen = atoms_to_images
-	var/index = 0
-	for(index in 1 to length(to_make))
-		var/atom/thing = to_make[index]
-
-		var/generated_string
-		if(ismob(thing) || length(thing.overlays) > 2)
-			generated_string = costly_icon2html(thing, parent, sourceonly=TRUE)
-		else
-			generated_string = icon2html(thing, parent, sourceonly=TRUE)
-
-		newly_seen[thing] = generated_string
-		if(TICK_CHECK)
-			to_make.Cut(1, index + 1)
-			index = 0
-			break
-	// If we've not cut yet, do it now
-	if(index)
-		to_make.Cut(1, index + 1)
-	SSstatpanels.refresh_client_obj_view(parent)
-	if(!length(to_make))
-		return PROCESS_KILL
-
-/datum/object_window_info/proc/start_turf_tracking()
-	if(actively_tracking)
-		stop_turf_tracking()
-	var/static/list/connections = list(
-		COMSIG_MOVABLE_MOVED = PROC_REF(on_mob_move),
-		COMSIG_MOB_LOGOUT = PROC_REF(on_mob_logout),
-	)
-	AddComponent(/datum/component/connect_mob_behalf, parent, connections)
-	actively_tracking = TRUE
-
-/datum/object_window_info/proc/stop_turf_tracking()
-	qdel(GetComponent(/datum/component/connect_mob_behalf))
-	actively_tracking = FALSE
-
-/datum/object_window_info/proc/on_mob_move(mob/source)
-	SIGNAL_HANDLER
-	var/turf/listed = source.listed_turf
-	if(!listed || !source.TurfAdjacent(listed))
-		source.set_listed_turf(null)
-
-/datum/object_window_info/proc/on_mob_logout(mob/source)
-	SIGNAL_HANDLER
-	on_mob_move(parent.mob)
-
-/// Clears any cached object window stuff
-/// We use hard refs cause we'd need a signal for this anyway. Cleaner this way
-/datum/object_window_info/proc/viewing_atom_deleted(atom/deleted)
-	SIGNAL_HANDLER
-	atoms_to_show -= deleted
-	atoms_to_imagify -= deleted
-	atoms_to_images -= deleted
-
-/mob/proc/set_listed_turf(turf/new_turf)
-	listed_turf = new_turf
-	if(!client)
-		return
-	if(!client.obj_window)
-		client.obj_window = new(client)
-	if(listed_turf)
-		client.stat_panel.send_message("create_listedturf", listed_turf.name)
-		client.obj_window.start_turf_tracking()
-	else
-		client.stat_panel.send_message("remove_listedturf")
-		client.obj_window.stop_turf_tracking()

@@ -5,61 +5,52 @@
 	max_specific_storage = WEIGHT_CLASS_TINY
 	max_slots = 30
 	max_total_storage = WEIGHT_CLASS_TINY * 30
-	
-/datum/storage/tcg/New()
-	. = ..()
-	set_holdable(list(/obj/item/tcgcard))
 
-/datum/storage/tcg/attempt_remove(obj/item/thing, atom/newLoc, silent = FALSE)
+/datum/storage/tcg/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
 	. = ..()
-	handle_empty_deck()
+	set_holdable(/obj/item/tcgcard)
+
+/datum/storage/tcg/attempt_remove(obj/item/thing, atom/remove_to_loc, silent = FALSE)
+	. = ..()
+	if(!.)
+		return
+
+	var/obj/item/tcgcard_deck/deck = parent
+	var/obj/item/tcgcard/card = thing
+	card.flipped = deck.flipped
+	card.update_appearance(UPDATE_ICON_STATE)
+
+	if(length(real_location.contents) == 0)
+		qdel(parent)
 
 /datum/storage/tcg/show_contents(mob/to_show)
+	// sometimes, show contents is called when the mob is already seeing the contents of the deck, to refresh the view.
+	// to avoid spam, we only show the message if they weren't already seeing the contents.
+	var/was_already_seeing = to_show.active_storage == src
 	. = ..()
+	if(!.)
+		return .
+	if(!was_already_seeing)
+		to_show.visible_message(
+			span_notice("[to_show] starts to look through the contents of [parent]!"),
+			span_notice("You begin looking into the contents of [parent]."),
+		)
+	return .
 
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
-		return
-
-	to_show.visible_message(span_notice("[to_show] starts to look through the contents of \the [resolve_parent]!"), \
-					span_notice("You begin looking into the contents of \the [resolve_parent]!"))
-
-/datum/storage/tcg/hide_contents()
+/datum/storage/tcg/hide_contents(mob/to_hide)
+	// see above
+	var/was_actually_seeing = to_hide.active_storage == src
 	. = ..()
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
-		return
-
-	var/obj/item/resolve_location = real_location?.resolve()
-	if(!resolve_location)
-		return
-
-	resolve_location.visible_message(span_notice("\the [resolve_parent] is shuffled after looking through it."))
-	resolve_location.contents = shuffle(resolve_location.contents)
-
-/datum/storage/tcg/dump_content_at(atom/dest_object, mob/user)
-	. = ..()
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
-		return
-
-	if(!resolve_parent.contents.len)
-		qdel(resolve_parent)
-
-/datum/storage/tcg/proc/handle_empty_deck()
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
-		return
-
-	var/obj/item/resolve_location = real_location?.resolve()
-	if(!real_location)
-		return
-
-	//You can't have a deck of one card!
-	if(resolve_location.contents.len == 1)
-		var/obj/item/tcgcard_deck/deck = resolve_location
-		var/obj/item/tcgcard/card = resolve_location.contents[1]
-		attempt_remove(card, card.drop_location())
-		card.flipped = deck.flipped
-		card.update_icon_state()
-		qdel(resolve_parent)
+	if(!.)
+		return .
+	if(QDELING(src))
+		return .
+	if(was_actually_seeing)
+		real_location.visible_message(span_notice("[parent] is shuffled after looking through it."))
+		real_location.contents = shuffle(real_location.contents)
+	return .

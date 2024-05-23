@@ -84,34 +84,7 @@
 /turf/open/water/beach,
 /area/virtual_domain/fullbright)
 "db" = (
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/vending_refill/cigarette,
-/obj/item/vending_refill/boozeomat,
-/obj/structure/closet/secure_closet{
-	icon_state = "cabinet";
-	name = "booze storage";
-	req_access = list("bar")
-	},
-/obj/item/storage/backpack/duffelbag,
-/obj/item/etherealballdeployer,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/colocup,
-/obj/item/reagent_containers/cup/glass/colocup,
-/obj/item/reagent_containers/cup/glass/colocup,
-/obj/item/reagent_containers/cup/glass/colocup,
-/obj/item/reagent_containers/cup/glass/colocup,
+/obj/structure/closet/secure_closet/bar/lavaland_bartender_booze,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "di" = (
@@ -395,19 +368,8 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/virtual_domain/fullbright)
 "ug" = (
-/obj/structure/closet/secure_closet{
-	icon_state = "cabinet";
-	name = "bartender's closet";
-	req_access = list("bar")
-	},
-/obj/item/clothing/shoes/sandal{
-	desc = "A very fashionable pair of flip-flops.";
-	name = "flip-flops"
-	},
-/obj/item/clothing/neck/beads,
-/obj/item/clothing/glasses/sunglasses/reagent,
-/obj/item/clothing/suit/costume/hawaiian,
 /obj/machinery/light/small/directional/east,
+/obj/structure/closet/secure_closet/bar/lavaland_bartender_clothes,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "uk" = (
@@ -897,7 +859,7 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "Nw" = (
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 4
 	},
 /obj/structure/bed{

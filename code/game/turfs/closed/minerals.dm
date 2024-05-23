@@ -103,8 +103,6 @@
 
 	var/distance = 128 // Max distance for a get_dist is 127
 	for(var/obj/structure/ore_vent/vent as anything in SSore_generation.possible_vents)
-		if(vent.unique_vent)
-			continue
 		if(vent.z != src.z)
 			continue //Silly
 		var/temp_distance = get_dist(src, vent)
@@ -143,15 +141,15 @@
 		return rand(1,5)
 
 	if(distance < VENT_PROX_VERY_HIGH)
-		return 5
+		return ORE_WALL_VERY_HIGH
 	if(distance < VENT_PROX_HIGH)
-		return 4
+		return ORE_WALL_HIGH
 	if(distance < VENT_PROX_MEDIUM)
-		return 3
+		return ORE_WALL_MEDIUM
 	if(distance < VENT_PROX_LOW)
-		return 2
+		return ORE_WALL_LOW
 	if(distance < VENT_PROX_FAR)
-		return 1
+		return ORE_WALL_FAR
 	return 0
 
 /turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
@@ -245,7 +243,7 @@
 
 /turf/closed/mineral/attack_hulk(mob/living/carbon/human/H)
 	..()
-	if(do_after(H, 50, target = src))
+	if(do_after(H, 5 SECONDS, target = src))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		H.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		gets_drilled(H)
@@ -321,7 +319,7 @@
 				var/turf/closed/mineral/M = T
 				M.turf_type = src.turf_type
 				M.mineralAmt = scale_ore_to_vent()
-				SSore_generation.post_ore_random["[M.mineralAmt]"] += 1
+				GLOB.post_ore_random["[M.mineralAmt]"] += 1
 				src = M
 				M.levelupdate()
 			else
@@ -332,7 +330,7 @@
 			Change_Ore(path, FALSE)
 			Spread_Vein(path)
 			mineralAmt = scale_ore_to_vent()
-			SSore_generation.post_ore_manual["[mineralAmt]"] += 1
+			GLOB.post_ore_manual["[mineralAmt]"] += 1
 
 /turf/closed/mineral/random/high_chance
 	icon_state = "rock_highchance"
@@ -652,6 +650,7 @@
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	turf_type = /turf/open/misc/ashplanet/rocky
 	defer_change = TRUE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/closed/mineral/snowmountain
 	name = "snowy mountainside"

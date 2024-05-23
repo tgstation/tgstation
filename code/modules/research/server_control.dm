@@ -9,7 +9,7 @@
 	///Connected techweb node the server is connected to.
 	var/datum/techweb/stored_research
 
-/obj/machinery/computer/rdservercontrol/LateInitialize()
+/obj/machinery/computer/rdservercontrol/post_machine_initialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)

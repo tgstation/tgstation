@@ -33,7 +33,7 @@
 	throw_range = 3
 	attack_verb_continuous = list("pompfs")
 	attack_verb_simple = list("pompf")
-	greyscale_colors = "#000000" //only here for unit testing. overriden in initialize()
+	greyscale_colors = COLOR_BLACK //only here for unit testing. overriden in initialize()
 	greyscale_config = /datum/greyscale_config/flower_simple
 	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
 
@@ -80,7 +80,7 @@
 			dye_color = DYE_BLACK
 			desc += " This one is in a midnight black color."
 		if(8)
-			set_greyscale("#FFFFFF")
+			set_greyscale(COLOR_WHITE)
 			reagents.add_reagent(/datum/reagent/colorful_reagent/powder/white, 3)
 			dye_color = DYE_WHITE
 			desc += " This one is in a pure white color."

@@ -169,7 +169,7 @@
 			return
 		user.visible_message(span_notice("[user] begins engraving [src]."), \
 			span_notice("You begin engraving [src]."))
-		if(!do_after(user, 40, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
+		if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
 			return
 		name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
 		desc = "The plaque reads: '[descriptionchoice]'"

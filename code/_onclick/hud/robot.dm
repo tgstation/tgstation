@@ -77,6 +77,7 @@
 	var/mob/living/silicon/robot/robit = mymob
 	var/atom/movable/screen/using
 
+// Language
 	using = new/atom/movable/screen/language_menu(null, src)
 	using.screen_loc = ui_borg_language_menu
 	static_inventory += using
@@ -84,6 +85,11 @@
 // Navigation
 	using = new /atom/movable/screen/navigate(null, src)
 	using.screen_loc = ui_borg_navigate_menu
+	static_inventory += using
+
+// Z-level floor change
+	using = new /atom/movable/screen/floor_menu(null, src)
+	using.screen_loc = ui_borg_floor_menu
 	static_inventory += using
 
 //Radio

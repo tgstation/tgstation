@@ -7,7 +7,7 @@
 	// Blood splashed around everywhere will carry these diseases. Oh no...
 	var/list/diseases
 
-/datum/component/bloody_spreader/Initialize(blood_left, list/blood_dna, list/diseases)
+/datum/component/bloody_spreader/Initialize(blood_left = INFINITY, list/blood_dna, list/diseases)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/list/signals_to_add = list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACKBY)
@@ -33,6 +33,9 @@
 /datum/component/bloody_spreader/proc/spread_yucky_blood(atom/parent, atom/bloody_fool)
 	SIGNAL_HANDLER
 	bloody_fool.add_blood_DNA(blood_dna, diseases)
+	blood_left--
+	if(blood_left <= 0)
+		qdel(src)
 
 /datum/component/bloody_spreader/InheritComponent(/datum/component/new_comp, i_am_original, blood_left = 0)
 

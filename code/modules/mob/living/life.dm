@@ -62,9 +62,6 @@
 
 	handle_wounds(seconds_per_tick, times_fired)
 
-	if(machine)
-		machine.check_eye(src)
-
 	if(stat != DEAD)
 		return 1
 

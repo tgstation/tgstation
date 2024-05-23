@@ -1192,7 +1192,7 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/item/organ/internal/brain,
-/obj/item/skillchip/job/research_director,
+/obj/item/skillchip/research_director,
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 4
 	},
@@ -2483,12 +2483,7 @@
 	pixel_x = 15;
 	pixel_y = 12
 	},
-/obj/structure/fluff{
-	desc = "Ew, I think I see a hairball.";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/machinery/shower/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/dangerous_research/dorms)

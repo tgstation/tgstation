@@ -7,7 +7,7 @@ TGS_DEFINE_AND_SET_GLOBAL(tgs, null)
 	var/list/warned_deprecated_command_runs
 
 /datum/tgs_api/New(datum/tgs_event_handler/event_handler, datum/tgs_version/version)
-	. = ..()
+	..()
 	src.event_handler = event_handler
 	src.version = version
 
@@ -17,7 +17,7 @@ TGS_DEFINE_AND_SET_GLOBAL(tgs, null)
 		world.sleep_offline = FALSE // https://www.byond.com/forum/post/2894866
 		del(world)
 		world.sleep_offline = FALSE // just in case, this is BYOND after all...
-		sleep(1)
+		sleep(world.tick_lag)
 		TGS_DEBUG_LOG("BYOND DIDN'T TERMINATE THE WORLD!!! TICK IS: [world.time], sleep_offline: [world.sleep_offline]")
 
 /datum/tgs_api/latest
@@ -69,3 +69,6 @@ TGS_PROTECT_DATUM(/datum/tgs_api)
 
 /datum/tgs_api/proc/Visibility()
 	return TGS_UNIMPLEMENTED
+
+/datum/tgs_api/proc/TriggerEvent(event_name, list/parameters, wait_for_completion)
+	return FALSE

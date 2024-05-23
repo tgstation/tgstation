@@ -82,10 +82,11 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/Destroy()
 	if(bodypart_owner && !owner && !QDELETED(bodypart_owner))
 		bodypart_remove(bodypart_owner)
-	else if(owner)
-		// The special flag is important, because otherwise mobs can die
-		// while undergoing transformation into different mobs.
+	else if(owner && QDESTROYING(owner))
+		// The mob is being deleted, don't update the mob
 		Remove(owner, special=TRUE)
+	else if(owner)
+		Remove(owner)
 	else
 		STOP_PROCESSING(SSobj, src)
 	return ..()
@@ -239,6 +240,11 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		for(var/obj/item/organ/organ as anything in organs)
 			organ.set_organ_damage(0)
 		set_heartattack(FALSE)
+
+		// Ears have aditional vаr "deaf", need to update it too
+		var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+		ears?.adjustEarDamage(0, -INFINITY) // full heal ears deafness
+
 		return
 
 	// Default organ fixing handling
@@ -273,7 +279,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(!ears)
 		ears = new()
 		ears.Insert(src)
-	ears.set_organ_damage(0)
+	ears.adjustEarDamage(-INFINITY, -INFINITY) // actually do: set_organ_damage(0) and deaf = 0
 
 /obj/item/organ/proc/handle_failing_organs(seconds_per_tick)
 	return

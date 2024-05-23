@@ -38,6 +38,12 @@
 		/obj/item/melee/baton/security/boomerang/loaded = 1
 	)
 	rpg_title = "Guard"
+	alternate_titles = list(
+		JOB_SECURITY_OFFICER_MEDICAL,
+		JOB_SECURITY_OFFICER_ENGINEERING,
+		JOB_SECURITY_OFFICER_SUPPLY,
+		JOB_SECURITY_OFFICER_SCIENCE,
+	)
 	job_flags = STATION_JOB_FLAGS
 
 
@@ -116,6 +122,12 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		var/obj/item/card/id/worn_id = spawning.get_idcard(hand_first = FALSE)
 		SSid_access.apply_trim_to_card(worn_id, dep_trim)
 		spawning.sec_hud_set_ID()
+
+		// Update PDA to match new trim.
+		var/obj/item/modular_computer/pda/pda = spawning.get_item_by_slot(ITEM_SLOT_BELT)
+		var/assignment = worn_id.get_trim_assignment()
+		if(istype(pda) && !isnull(assignment))
+			pda.imprint_id(spawning.real_name, assignment)
 
 	var/spawn_point = pick(LAZYACCESS(GLOB.department_security_spawns, department))
 

@@ -7,7 +7,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE
 	custom_premium_price = PAYCHECK_COMMAND * 3.5
-	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
+	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH,TRAIT_FAST_CUFFING)
 	/// For storing our tackler datum so we can remove it after
 	var/datum/component/tackler
 	/// See: [/datum/component/tackler/var/stamina_cost]

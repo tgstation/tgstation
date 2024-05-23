@@ -6,10 +6,8 @@
 	},
 /area/ruin/powered/icemoon_phone_booth)
 "c" = (
-/obj/machinery/door/window{
-	dir = 1
-	},
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/north,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
 	},

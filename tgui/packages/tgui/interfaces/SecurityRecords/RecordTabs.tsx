@@ -1,5 +1,4 @@
 import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { useState } from 'react';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
@@ -29,10 +28,10 @@ export const SecurityRecordTabs = (props) => {
 
   const [search, setSearch] = useState('');
 
-  const sorted: SecurityRecord[] = flow([
-    filter((record: SecurityRecord) => isRecordMatch(record, search)),
-    sortBy((record: SecurityRecord) => record.name),
-  ])(records);
+  const sorted = sortBy(
+    filter(records, (record) => isRecordMatch(record, search)),
+    (record) => record.name,
+  );
 
   return (
     <Stack fill vertical>
@@ -91,7 +90,7 @@ const CrewTab = (props: { record: SecurityRecord }) => {
   const { act, data } = useBackend<SecurityRecordsData>();
   const { assigned_view } = data;
   const { record } = props;
-  const { crew_ref, name, rank, wanted_status } = record;
+  const { crew_ref, name, trim, wanted_status } = record;
 
   /** Chooses a record */
   const selectRecord = (record: SecurityRecord) => {
@@ -112,7 +111,7 @@ const CrewTab = (props: { record: SecurityRecord }) => {
       selected={isSelected}
     >
       <Box bold={isSelected} color={CRIMESTATUS2COLOR[wanted_status]}>
-        <Icon name={JOB2ICON[rank] || 'question'} /> {name}
+        <Icon name={JOB2ICON[trim] || 'question'} /> {name}
       </Box>
     </Tabs.Tab>
   );

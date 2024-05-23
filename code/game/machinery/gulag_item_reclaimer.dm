@@ -99,6 +99,9 @@
 /obj/machinery/gulag_item_reclaimer/proc/drop_items(mob/user)
 	if(!stored_items[user])
 		return
+	if(!use_energy(active_power_usage, force = FALSE))
+		balloon_alert(user, "not enough energy!")
+		return
 	var/drop_location = drop_location()
 	for(var/i in stored_items[user])
 		var/obj/item/W = i
@@ -106,4 +109,3 @@
 		W.forceMove(drop_location)
 	stored_items -= user
 	user.log_message("has reclaimed their items from the gulag item reclaimer.", LOG_GAME)
-	use_power(active_power_usage)

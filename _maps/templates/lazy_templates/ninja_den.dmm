@@ -470,7 +470,7 @@
 "lh" = (
 /obj/structure/toilet,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
-/obj/machinery/door/window/survival_pod,
+/obj/machinery/door/window/survival_pod/left/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/centcom/central_command_areas/holding)
 "ln" = (
@@ -594,7 +594,7 @@
 /obj/machinery/shower/directional/south,
 /obj/item/soap/syndie,
 /obj/structure/curtain,
-/obj/machinery/door/window/survival_pod,
+/obj/machinery/door/window/survival_pod/left/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/centcom/central_command_areas/holding)
 "ov" = (

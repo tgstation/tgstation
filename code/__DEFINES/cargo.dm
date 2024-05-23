@@ -64,3 +64,10 @@
 #define SUPPLY_PACK_UNCOMMON_DISCOUNTABLE "uncommon_discount"
 ///Discount category for the silly, overpriced, joke content, sometimes useful or plain bad.
 #define SUPPLY_PACK_RARE_DISCOUNTABLE "rare_discount"
+
+///Standard export define for not selling the item.
+#define EXPORT_NOT_SOLD 0
+///Sell the item
+#define EXPORT_SOLD 1
+///Sell the item, but for the love of god, don't delete it, we're handling it in a fancier way.
+#define EXPORT_SOLD_DONT_DELETE 2

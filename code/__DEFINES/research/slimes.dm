@@ -1,9 +1,39 @@
+///This slime is a baby
 #define SLIME_LIFE_STAGE_BABY "baby"
+///This slime is an adult
 #define SLIME_LIFE_STAGE_ADULT "adult"
 
+///This lowest charge a slime can have
 #define SLIME_MIN_POWER 0
+///Dangerous levels of charge
 #define SLIME_MEDIUM_POWER 5
+///The highest level of charge a slime can have
 #define SLIME_MAX_POWER 10
+
+///The maximum amount of nutrition a slime can contain
+#define SLIME_MAX_NUTRITION 1000
+///The starting nutrition of a slime
+#define SLIME_STARTING_NUTRITION 700
+/// Above it we grow our amount_grown and our power_level, below it we can eat
+#define SLIME_GROW_NUTRITION 800
+/// Below this, we feel hungry
+#define SLIME_HUNGER_NUTRITION 500
+/// Below this, we feel starving
+#define SLIME_STARVE_NUTRITION 200
+
+///The slime is not hungry. It might try to feed anyways.
+#define SLIME_HUNGER_NONE 0
+///The slime is more likely to feed on people
+#define SLIME_HUNGER_HUNGRY 1
+///The slime is very likely to feed on anything
+#define SLIME_HUNGER_STARVING 2
+
+#define SLIME_MOOD_NONE "none"
+#define SLIME_MOOD_ANGRY "angry"
+#define SLIME_MOOD_MISCHIEVOUS "mischievous"
+#define SLIME_MOOD_POUT "pout"
+#define SLIME_MOOD_SAD "sad"
+#define SLIME_MOOD_SMILE ":3"
 
 // Just slimin' here.
 // Warning: These defines are used for slime icon states, so if you

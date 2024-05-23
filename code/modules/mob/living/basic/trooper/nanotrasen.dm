@@ -64,7 +64,7 @@
 	desc = "Pray for your life, syndicate. Run while you can."
 	maxHealth = 150
 	health = 150
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	unsuitable_cold_damage = 0
 	casingtype = /obj/item/ammo_casing/energy/laser
 	burst_shots = 3
