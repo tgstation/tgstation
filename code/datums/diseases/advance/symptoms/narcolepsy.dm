@@ -64,7 +64,7 @@
 
 			if(yawning)
 				M.emote("yawn")
-				A.airborn_spread(6)
+				A.airborne_spread(6)
 
 		if(5)
 			if(prob(50))
@@ -74,4 +74,4 @@
 
 			if(yawning)
 				M.emote("yawn")
-				A.airborn_spread(6)
+				A.airborne_spread(6)

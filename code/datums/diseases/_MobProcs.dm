@@ -100,9 +100,7 @@
  * * disease - the disease datum that's infecting us
  */
 /mob/living/proc/contract_airborne_disease(datum/disease/disease)
-	if(!can_spread_diseases_airborne()) // Can't spread it, can't be spread to - simple rules
-		return FALSE
-	if(HAS_TRAIT(src, TRAIT_VIRUS_RESISTANCE) && prob(75))
+	if(!can_be_spread_airborne_disease())
 		return FALSE
 	if(!prob(min((50 * disease.spreading_modifier - 1), 50)))
 		return FALSE
@@ -134,7 +132,7 @@
 	return ..()
 
 /// Checks if this mob can currently spread air based diseases
-/mob/living/proc/can_spread_diseases_airborne()
+/mob/living/proc/can_spread_airborne_diseases()
 	SHOULD_CALL_PARENT(TRUE)
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return FALSE
@@ -149,8 +147,35 @@
 
 	return FALSE
 
-/mob/living/carbon/can_spread_diseases_airborne()
+/mob/living/carbon/can_spread_airborne_diseases()
 	if(internal || external)
+		return FALSE
+
+	return ..()
+
+/// Checks if this mob can currently be infected by air based diseases
+/mob/living/proc/can_be_spread_airborne_disease()
+	if(HAS_TRAIT(src, TRAIT_NOBREATH))
+		return FALSE
+	// Spaceacillin for infection resistance
+	if(HAS_TRAIT(src, TRAIT_VIRUS_RESISTANCE) && prob(75))
+		return FALSE
+	// Full body bio check here, accounts for getting your hand sneezed on or whatever
+	if(prob(getarmor(null, BIO)))
+		return FALSE
+	// Bonus bio check for head AND mask
+	var/obj/item/clothing/hat = is_mouth_covered(ITEM_SLOT_HEAD)
+	if(prob(hat?.get_armor_rating(BIO)))
+		return FALSE
+	var/obj/item/clothing/mask = is_mouth_covered(ITEM_SLOT_MASK)
+	if(prob(mask?.get_armor_rating(BIO)))
+		return FALSE
+
+	return TRUE
+
+/mob/living/carbon/can_be_spread_airborne_disease()
+	// Using an isolated air supply is also effective
+	if((internal || external) && prob(75))
 		return FALSE
 
 	return ..()

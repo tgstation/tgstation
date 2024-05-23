@@ -52,7 +52,7 @@
 			if(!suppress_warning)
 				affected_mob.emote("sniff")
 		else
-			active_disease.airborn_spread(spread_range, force_spread = TRUE, require_facing = TRUE)
+			active_disease.airborne_spread(spread_range, force_spread = TRUE, require_facing = TRUE)
 			if(cartoon_sneezing) //Yeah, this can fling you around even if you have a space suit helmet on. It's, uh, bluespace snot, yeah.
 				affected_mob.emote("sneeze")
 				to_chat(affected_mob, span_userdanger("You are launched violently backwards by an all-mighty sneeze!"))

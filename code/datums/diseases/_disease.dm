@@ -228,12 +228,12 @@
  * * spread_range - How far the disease can spread
  * * force_spread - If TRUE, the disease will spread regardless of the spread_flags
  */
-/datum/disease/proc/airborn_spread(spread_range = 2, force_spread = TRUE, require_facing = FALSE)
+/datum/disease/proc/airborne_spread(spread_range = 2, force_spread = TRUE, require_facing = FALSE)
 	if(isnull(affected_mob))
 		return FALSE
 	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
 		return FALSE
-	if(affected_mob.can_spread_diseases_airborne())
+	if(affected_mob.can_spread_airborne_diseases())
 		return FALSE
 	if(!has_required_infectious_organ(affected_mob, ORGAN_SLOT_LUNGS)) //also if you lack lungs
 		return FALSE

@@ -190,7 +190,7 @@ new /datum/disease_ability/symptom/powerful/youth
 	to_chat(our_disease, span_notice("You force [host.real_name] to cough."))
 	host.emote("cough")
 	var/datum/disease/advance/sentient_disease/disease_datum = our_disease.hosts[host]
-	disease_datum.airborn_spread(2)
+	disease_datum.airborne_spread(2)
 	return TRUE
 
 /datum/disease_ability/action/sneeze
@@ -228,7 +228,7 @@ new /datum/disease_ability/symptom/powerful/youth
 	to_chat(our_disease, span_notice("You force [host.real_name] to sneeze."))
 	host.emote("sneeze")
 	var/datum/disease/advance/sentient_disease/disease_datum = our_disease.hosts[host]
-	disease_datum.airborn_spread(4, force_spread = TRUE, require_facing = TRUE)
+	disease_datum.airborne_spread(4, force_spread = TRUE, require_facing = TRUE)
 
 	return TRUE
 
