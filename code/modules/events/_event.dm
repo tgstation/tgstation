@@ -72,14 +72,14 @@
 // Admin-created events override this.
 /datum/round_event_control/proc/can_spawn_event(players_amt, allow_magic = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	//__check_serialization_semverif(occurrences >= max_occurrences)
-	//	return FALSE
-	//if(earliest_start >= world.time-SSticker.round_start_time)
-	//	return FALSE
-	//if(!allow_magic && wizardevent != SSevents.wizardmode)
-	//	return FALSE
-//	if(players_amt < min_players)
-//		return FALSE
+	if(occurrences >= max_occurrences)
+		return FALSE
+	if(earliest_start >= world.time-SSticker.round_start_time)
+		return FALSE
+	if(!allow_magic && wizardevent != SSevents.wizardmode)
+		return FALSE
+	if(players_amt < min_players)
+		return FALSE
 	if(holidayID && !check_holidays(holidayID))
 		return FALSE
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED)

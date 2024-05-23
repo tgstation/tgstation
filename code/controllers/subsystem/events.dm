@@ -65,8 +65,12 @@ SUBSYSTEM_DEF(events)
 /datum/controller/subsystem/events/proc/reschedule()
 	scheduled = world.time + rand(frequency_lower, max(frequency_lower,frequency_upper))
 
-///selects a random event based on whether it can occur and it's 'weight'(probability)
-/// * excluded_event - The event path we will be foregoing, if present.
+/**
+ * Selects a random event based on whether it can occur and it's 'weight'(probability)
+ *
+ * Arguments:
+ * * excluded_event - The event path we will be foregoing, if present.
+ */
 /datum/controller/subsystem/events/proc/spawnEvent(datum/round_event_control/excluded_event)
 	set waitfor = FALSE //for the admin prompt
 	if(!CONFIG_GET(flag/allow_random_events))
