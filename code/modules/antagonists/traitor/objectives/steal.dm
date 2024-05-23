@@ -131,11 +131,6 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		/datum/objective_item/steal/traitor/captain_spare,
 	)
 
-/datum/traitor_objective/steal_item/most_risky/generate_objective(datum/mind/generating_for, list/possible_duplicates)
-	if(!handler.get_completion_count(/datum/traitor_objective/steal_item/very_risky))
-		return FALSE
-	return ..()
-
 /datum/traitor_objective/steal_item/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	for(var/datum/traitor_objective/steal_item/objective as anything in possible_duplicates)
 		possible_items -= objective.target_item.type
