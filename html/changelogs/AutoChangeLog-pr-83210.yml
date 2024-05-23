@@ -1,0 +1,4 @@
+author: "EEASAS"
+delete-after: True
+changes:
+  - rscadd: "Remapped NorthStar's medbay a little bit"
