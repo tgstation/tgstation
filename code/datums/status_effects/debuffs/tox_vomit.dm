@@ -4,7 +4,7 @@
 	tick_interval = 2 SECONDS
 	alert_type = null
 	/// Has a chance to count up every tick, until it reaches a threshold, which causes the mob to vomit and resets
-	var/puke_counter = 0
+	VAR_PRIVATE/puke_counter = 0
 
 /datum/status_effect/tox_vomit/tick(seconds_between_ticks)
 	if(!AT_TOXIN_VOMIT_THRESHOLD(owner))
