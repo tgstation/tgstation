@@ -508,7 +508,7 @@
 				to_chat(user, span_notice("You press the power button and start up \the [src]."))
 			if(open_ui)
 				update_tablet_open_uis(user)
-			SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_TURNED_ON, user)
+		SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_TURNED_ON, user)
 		return TRUE
 	else // Unpowered
 		if(user)
