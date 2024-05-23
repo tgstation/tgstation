@@ -206,11 +206,11 @@
 	//map of reagents & how much burning potential they all have
 	var/static/list/reagent_coefficients = list(
 		/datum/reagent/toxin/plasma = 1,
-		/datum/reagent/fuel/oil = 0.8,
-		/datum/reagent/fuel = 0.7,
-		/datum/reagent/oxygen = 0.7,
-		/datum/reagent/consumable/ethanol = 0.6,
-		/datum/reagent/consumable/monkey_energy = 0.5,
+		/datum/reagent/fuel/oil = 0.9,
+		/datum/reagent/fuel = 0.8,
+		/datum/reagent/oxygen = 0.8,
+		/datum/reagent/consumable/ethanol = 0.7,
+		/datum/reagent/consumable/monkey_energy = 0.6,
 		/datum/reagent/water = - 0.7
 	)
 
