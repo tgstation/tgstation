@@ -309,12 +309,10 @@
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
 "sc" = (
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_y = 35
-	},
 /obj/effect/decal/cleanable/blood/splatter/over_window{
 	pixel_y = 32
 	},
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/north,
 /turf/open/floor/wood/parquet,
 /area/ruin/powered/comms_agent)
 "sB" = (
@@ -953,12 +951,8 @@
 /obj/machinery/syndicatebomb/self_destruct{
 	anchored = 1
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 2;
-	req_access = list("syndicate");
-	name = "Self Destruct Option"
-	},
 /obj/machinery/light/small/red/directional/north,
+/obj/machinery/door/window/brigdoor/left/directional/south,
 /turf/open/floor/circuit/red,
 /area/ruin/powered/comms_agent)
 "Xk" = (
