@@ -2,15 +2,15 @@
 #define SNEEZE_CONE 60
 
 /// Launch a sneeze that can infect with a disease
-/mob/living/proc/infectious_sneeze(datum/disease/disease, force, range = 4, charge_time = 0.5 SECONDS, obj/projectile/sneezoid = /obj/projectile/sneeze)
-	sneeze(range, charge_time, sneezoid, on_sneeze_hit_callback = CALLBACK(src, PROC_REF(try_sneeze_infect), disease, force))
+/mob/living/proc/infectious_sneeze(datum/disease/disease, force, range = 4, count = 3, charge_time = 0.5 SECONDS, obj/projectile/sneezoid = /obj/projectile/sneeze)
+	sneeze(range, count, charge_time, sneezoid, on_sneeze_hit_callback = CALLBACK(src, PROC_REF(try_sneeze_infect), disease.Copy(), force))
 
 /// Try and infect following a sneeze hit. force to always infect
 /mob/living/proc/try_sneeze_infect(datum/disease/disease, force, mob/living/target)
 	target.AirborneContractDisease(disease, force)
 
 /// Inhale and start the sneeze timer. on_sneeze_callback can be used to do custom sneezes, on_sneeze_hit_callback for special effects, but probably usually making it infect
-/mob/living/proc/sneeze(range = 4, charge_time = 0.5 SECONDS, obj/projectile/sneezoid = /obj/projectile/sneeze, on_sneeze_callback = null, on_sneeze_hit_callback = null)
+/mob/living/proc/sneeze(range = 4, count = 3, charge_time = 0.5 SECONDS, obj/projectile/sneezoid = /obj/projectile/sneeze, on_sneeze_callback = null, on_sneeze_hit_callback = null)
 	if(charge_time)
 		emote("inhale")
 
@@ -18,14 +18,13 @@
 	var/atom/movable/screen/fullscreen/cursor_catcher/catcher = overlay_fullscreen("sneezer", /atom/movable/screen/fullscreen/cursor_catcher, FALSE)
 	if(client)
 		catcher.assign_to_mob(src)
-	var/callback = on_sneeze_callback || CALLBACK(src, PROC_REF(launch_sneeze), range, sneezoid, on_sneeze_hit_callback, catcher)
+	var/callback = on_sneeze_callback || CALLBACK(src, PROC_REF(launch_sneeze), range, count, sneezoid, on_sneeze_hit_callback, catcher)
 	addtimer(callback, charge_time)
 
 /// Shoot the sneeze projectile
-/mob/living/proc/launch_sneeze(range, obj/projectile/sneezoid, datum/callback/on_sneeze_hit_callback, atom/movable/screen/fullscreen/cursor_catcher/catcher)
+/mob/living/proc/launch_sneeze(range, count, obj/projectile/sneezoid, datum/callback/on_sneeze_hit_callback, atom/movable/screen/fullscreen/cursor_catcher/catcher)
 	emote("sneeze")
 
-	var/obj/projectile/sneezium = new sneezoid(get_turf(src), on_sneeze_hit_callback)
 	var/angle = dir2angle(dir)
 
 	if(catcher && catcher.given_turf)
@@ -42,18 +41,21 @@
 
 		clear_fullscreen("sneezer", 0)
 
-	sneezium.range = range
-	sneezium.firer = src
-	sneezium.fire(angle)
+	for(var/i in 0 to count)
+		var/obj/projectile/sneezium = new sneezoid(get_turf(src), on_sneeze_hit_callback)
+		sneezium.range = range
+		sneezium.firer = src
+		sneezium.fire(angle)
 
 /// Sneeze projectile launched by sneezing. gross
 /obj/projectile/sneeze
 	name = "sneeze"
 	icon_state = "sneeze"
 
-	suppressed = TRUE
+	suppressed = SUPPRESSED_VERY
 	range = 4
 	speed = 4
+	spread = 40
 	damage_type = BRUTE
 	damage = 0
 
