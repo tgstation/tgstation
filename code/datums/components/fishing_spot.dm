@@ -17,6 +17,7 @@
 	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examined_more))
+	ADD_TRAIT(parent, TRAIT_FISHING_SPOT, REF(src))
 
 /datum/component/fishing_spot/Destroy()
 	fish_source = null
