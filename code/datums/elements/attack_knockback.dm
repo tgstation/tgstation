@@ -9,7 +9,7 @@
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
+	RegisterSignal(target, COMSIG_ITEM_POST_ATTACK, PROC_REF(on_item_attack))
 
 /datum/element/attack_knockback/Detach(datum/source, ...)
 	. = ..()
