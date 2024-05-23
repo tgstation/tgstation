@@ -220,39 +220,36 @@
 		return FALSE
 
 //Airborne spreading
-/datum/disease/proc/spread(force_spread = 0)
-	if(!affected_mob)
-		return
-
+/**
+ * Handles performing a spread-via-air
+ *
+ * Checks for stuff like "is our mouth covered" for you
+ *
+ * * spread_range - How far the disease can spread
+ * * force_spread - If TRUE, the disease will spread regardless of the spread_flags
+ */
+/datum/disease/proc/airborn_spread(spread_range = 2, force_spread = TRUE, require_facing = FALSE)
+	if(isnull(affected_mob))
+		return FALSE
 	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
-		return
-
-	if(affected_mob.internal) //if you keep your internals on, no airborne spread at least
-		return
-
-	if(HAS_TRAIT(affected_mob, TRAIT_NOBREATH)) //also if you don't breathe
-		return
-
+		return FALSE
+	if(affected_mob.can_spread_diseases_airborne())
+		return FALSE
 	if(!has_required_infectious_organ(affected_mob, ORGAN_SLOT_LUNGS)) //also if you lack lungs
-		return
-
-	if(!affected_mob.CanSpreadAirborneDisease()) //should probably check this huh
-		return
-
-	if(HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/2))) //being full or on spaceacillin makes you less likely to spread a virus
-		return
-
-	var/spread_range = 2
-
-	if(force_spread)
-		spread_range = force_spread
-
-	var/turf/T = affected_mob.loc
-	if(istype(T))
-		for(var/mob/living/carbon/C in oview(spread_range, affected_mob))
-			var/turf/V = get_turf(C)
-			if(disease_air_spread_walk(T, V))
-				C.AirborneContractDisease(src, force_spread)
+		return FALSE
+	if(HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) || (affected_mob.satiety > 0 && prob(affected_mob.satiety / 2))) //being full or on spaceacillin makes you less likely to spread a virus
+		return FALSE
+	var/turf/mob_loc = affected_mob.loc
+	if(!istype(mob_loc))
+		return FALSE
+	for(var/mob/living/carbon/to_infect in oview(spread_range, affected_mob))
+		var/turf/infect_loc = get_turf(to_infect)
+		if(require_facing && !is_source_facing_target(affected_mob, to_infect))
+			continue
+		if(!disease_air_spread_walk(mob_loc, infect_loc))
+			continue
+		to_infect.contract_airborne_disease(src)
+	return TRUE
 
 /proc/disease_air_spread_walk(turf/start, turf/end)
 	if(!start || !end)

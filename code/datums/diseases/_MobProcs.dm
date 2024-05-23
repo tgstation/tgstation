@@ -94,24 +94,21 @@
 	if(passed)
 		disease.try_infect(src)
 
-/mob/living/proc/AirborneContractDisease(datum/disease/disease, force_spread)
+/**
+ * Handle being contracted a disease via airborne transmission
+ *
+ * * disease - the disease datum that's infecting us
+ */
+/mob/living/proc/contract_airborne_disease(datum/disease/disease)
+	if(!can_spread_diseases_airborne()) // Can't spread it, can't be spread to - simple rules
+		return FALSE
 	if(HAS_TRAIT(src, TRAIT_VIRUS_RESISTANCE) && prob(75))
-		return
-
-	if(((disease.spread_flags & DISEASE_SPREAD_AIRBORNE) || force_spread) && prob(min((50*disease.spreading_modifier - 1), 50)))
-		ForceContractDisease(disease)
-
-/mob/living/carbon/AirborneContractDisease(datum/disease/disease, force_spread)
-	if(internal)
-		return
-	if(HAS_TRAIT(src, TRAIT_NOBREATH))
-		return
-
+		return FALSE
+	if(!prob(min((50 * disease.spreading_modifier - 1), 50)))
+		return FALSE
 	if(!disease.has_required_infectious_organ(src, ORGAN_SLOT_LUNGS))
-		return
-
-	..()
-
+		return FALSE
+	return ForceContractDisease(disease)
 
 //Proc to use when you 100% want to try to infect someone (ignoreing protective clothing and such), as long as they aren't immune
 /mob/living/proc/ForceContractDisease(datum/disease/D, make_copy = TRUE, del_on_fail = FALSE)
@@ -136,8 +133,24 @@
 
 	return ..()
 
-/mob/living/proc/CanSpreadAirborneDisease()
-	return !is_mouth_covered()
+/// Checks if this mob can currently spread air based diseases
+/mob/living/proc/can_spread_diseases_airborne()
+	SHOULD_CALL_PARENT(TRUE)
+	if(HAS_TRAIT(src, TRAIT_NOBREATH))
+		return FALSE
 
-/mob/living/carbon/CanSpreadAirborneDisease()
-	return !((head && (head.flags_cover & HEADCOVERSMOUTH) && (head.get_armor_rating(BIO) >= 25)) || (wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH) && (wear_mask.get_armor_rating(BIO) >= 25)))
+	var/obj/item/clothing/hat = is_mouth_covered(ITEM_SLOT_HEAD)
+	if(hat?.get_armor_rating(BIO) >= 25)
+		return TRUE
+
+	var/obj/item/clothing/mask = is_mouth_covered(ITEM_SLOT_MASK)
+	if(mask?.get_armor_rating(BIO) >= 25)
+		return TRUE
+
+	return FALSE
+
+/mob/living/carbon/can_spread_diseases_airborne()
+	if(internal || external)
+		return FALSE
+
+	return ..()

@@ -483,7 +483,7 @@
 		if(QDELETED(disease)) //Got cured/deleted while the loop was still going.
 			continue
 		if(SPT_PROB(disease.infectivity, seconds_per_tick))
-			disease.spread()
+			disease.airborn_spread()
 		if(stat != DEAD || disease.process_dead)
 			disease.stage_act(seconds_per_tick, times_fired)
 

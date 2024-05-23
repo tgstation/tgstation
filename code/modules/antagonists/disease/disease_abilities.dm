@@ -189,9 +189,8 @@ new /datum/disease_ability/symptom/powerful/youth
 		return FALSE
 	to_chat(our_disease, span_notice("You force [host.real_name] to cough."))
 	host.emote("cough")
-	if(host.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
-		var/datum/disease/advance/sentient_disease/disease_datum = our_disease.hosts[host]
-		disease_datum.spread(2)
+	var/datum/disease/advance/sentient_disease/disease_datum = our_disease.hosts[host]
+	disease_datum.airborn_spread(2)
 	return TRUE
 
 /datum/disease_ability/action/sneeze
@@ -228,14 +227,8 @@ new /datum/disease_ability/symptom/powerful/youth
 		return FALSE
 	to_chat(our_disease, span_notice("You force [host.real_name] to sneeze."))
 	host.emote("sneeze")
-	if(host.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
-		var/datum/disease/advance/sentient_disease/disease_datum = our_disease.hosts[host]
-		for(var/mob/living/nearby_mob in oview(4, disease_datum.affected_mob))
-			if(!is_source_facing_target(disease_datum.affected_mob, nearby_mob))
-				continue
-			if(!disease_air_spread_walk(get_turf(disease_datum.affected_mob), get_turf(nearby_mob)))
-				continue
-			nearby_mob.AirborneContractDisease(disease_datum, TRUE)
+	var/datum/disease/advance/sentient_disease/disease_datum = our_disease.hosts[host]
+	disease_datum.airborn_spread(4, force_spread = TRUE, require_facing = TRUE)
 
 	return TRUE
 
