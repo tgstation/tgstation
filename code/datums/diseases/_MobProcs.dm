@@ -162,10 +162,6 @@
 	// Spaceacillin for infection resistance
 	if(HAS_TRAIT(src, TRAIT_VIRUS_RESISTANCE) && prob(75))
 		return FALSE
-	// Full body bio check here, accounts for getting your hand sneezed on or whatever
-	// IE wearing a biosuit = 100% protection, of course
-	if(prob(getarmor(null, BIO)))
-		return FALSE
 	// Bonus bio check for head AND mask
 	// Meaning if we're masked up and wearing a dome, we are very likely never getting sick
 	var/obj/item/clothing/hat = is_mouth_covered(ITEM_SLOT_HEAD)
