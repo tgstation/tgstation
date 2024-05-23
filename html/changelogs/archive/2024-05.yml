@@ -618,3 +618,16 @@
   norsvenska:
   - spellcheck: The message displayed when adjusting a mask no longer incorrectly
       states the way in which the mask has moved.
+2024-05-23:
+  Jacquerel:
+  - balance: The melee attacks from small mobs spawned by Legions can now be dodged.
+  - balance: Legions spawn their mobs less often.
+  - bugfix: Legions cannot spawn mobs while inside pipes or closets.
+  Muffindrake:
+  - balance: reduced claymore/weak force from 30 to 24 and armor penetration from
+      15 to 10
+  hack-wrench:
+  - rscadd: Added RUN_SERVER.bat for maintainer issues
+  paganiy:
+  - balance: Auto-aim in combat mode at mobs on the floor is disabled after the projectile
+      passes 10 tiles.
