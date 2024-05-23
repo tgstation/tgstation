@@ -1,7 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fix double-encoding on the Wonderland Apocalypse announcement's header."
-  - bugfix: "More magic is now affected by the Wonderland Manifestation status effect (spellcode moment)"
-  - image: "Improved the icon for the Wonderland Manifestation status effect (thanks, Aberra!)"
-  - bugfix: "You can no longer take off the cursed rabbit mask while in wonderland, preventing weird issues that could result."

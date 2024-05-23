@@ -203,3 +203,35 @@
   - rscadd: added rpds to engineering shared storage, other miscellaneous things around
       the map.
   - bugfix: fixed the teg, other miscellaneous things around the map.
+2024-05-23:
+  Absolucy:
+  - bugfix: Dark Matt-eor announcements no longer falsely claim it missed.
+  - bugfix: Traitors hacking communication consoles will no longer trigger dynamic
+      rulesets instead of storyteller events.
+  - rscadd: The "unknown signal" comms console hack now has a somewhat low chance
+      of spawning certain non-traitor antagonists instead.
+  - bugfix: Fix double-encoding on the Wonderland Apocalypse announcement's header.
+  - bugfix: More magic is now affected by the Wonderland Manifestation status effect
+      (spellcode moment)
+  - image: Improved the icon for the Wonderland Manifestation status effect (thanks,
+      Aberra!)
+  - bugfix: You can no longer take off the cursed rabbit mask while in wonderland,
+      preventing weird issues that could result.
+  - bugfix: Reagents that shouldn't exist on their own in the first place can no longer
+      appear in maint pills.
+  - qol: Removed some completely useless reagents from the maint pill pool, such as
+      those related to pH or purity.
+  - balance: Maint pills are now less biased towards certain reagents with a large
+      number of variants, i.e carpet or colorful reagent.
+  DimWhat:
+  - rscadd: Added Oliver's and Gnob's clothing items
+  KnigTheThrasher:
+  - rscadd: Miner callouts for c4
+  - rscdel: Removed the "iconic" tramstation atmos landmine
+  Rex9001:
+  - rscadd: The explosive spear/lance is now back as a blood brothers crafting option!
+      Knights rejoice!
+  aberrantQuesrist:
+  - bugfix: Changed Deltastation SM interior to be in line with other SM interiors.
+  - bugfix: Put Deltastation xenobio in line with other stations with the layout adjusted
+      to fit 2 new slime pens.

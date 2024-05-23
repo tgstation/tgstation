@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Traitors hacking communication consoles will no longer trigger dynamic rulesets instead of storyteller events."
-  - rscadd: "The \"unknown signal\" comms console hack now has a somewhat low chance of spawning certain non-traitor antagonists instead."

@@ -1,5 +1,0 @@
-author: "aberrantQuesrist"
-delete-after: True
-changes:
-  - bugfix: "Changed Deltastation SM interior to be in line with other SM interiors."
-  - bugfix: "Put Deltastation xenobio in line with other stations with the layout adjusted to fit 2 new slime pens."
