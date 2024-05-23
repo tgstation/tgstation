@@ -54125,10 +54125,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
-"sfC" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/station/asteroid)
 "sfE" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
@@ -104149,7 +104145,7 @@ kgg
 eEp
 hzQ
 qHs
-sfC
+pHM
 aeV
 aeV
 prq
