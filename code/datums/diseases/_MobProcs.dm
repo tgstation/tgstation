@@ -136,6 +136,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return FALSE
+	if(losebreath >= 1)
+		return FALSE
 	// I don't know how you are spreading via air with no head but sure
 	if(!get_bodypart(BODY_ZONE_HEAD))
 		return TRUE
@@ -158,6 +160,8 @@
 /// Checks if this mob can currently be infected by air based diseases
 /mob/living/proc/can_be_spread_airborne_disease()
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
+		return FALSE
+	if(losebreath >= 1)
 		return FALSE
 	// Spaceacillin for infection resistance
 	if(HAS_TRAIT(src, TRAIT_VIRUS_RESISTANCE) && prob(75))
