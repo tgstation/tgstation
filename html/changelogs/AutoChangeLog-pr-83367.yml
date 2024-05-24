@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Airlock electronics created by deconstructing roundstart airlocks inherit their cycling id properly."
