@@ -167,8 +167,8 @@
 	result = /obj/item/clothing/suit/armor/bone
 	time = 3 SECONDS
 	reqs = list(
-		/obj/item/stack/sheet/bone = 4,
-		/obj/item/stack/sheet/animalhide/goliath_hide = 2,
+		/obj/item/stack/sheet/bone = 6,
+		/obj/item/stack/sheet/animalhide/goliath_hide = 3,
 	)
 	category = CAT_CLOTHING
 
