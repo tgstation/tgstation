@@ -281,7 +281,7 @@
 
 /obj/item/thermometer
 	name = "thermometer"
-	desc = "A thermometer for checking a beaker's temperature"
+	desc = "A thermometer for checking a something's temperature."
 	icon_state = "thermometer"
 	icon = 'icons/obj/medical/chemical.dmi'
 	item_flags = NOBLUDGEON
@@ -291,19 +291,18 @@
 	var/datum/reagents/attached_to_reagents
 
 /obj/item/thermometer/Destroy()
-	QDEL_NULL(attached_to_reagents) //I have no idea how you can destroy this, but not the beaker, but here we go
+	attached_to_reagents = null
 	return ..()
 
-/obj/item/thermometer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(target.reagents)
-		if(!user.transferItemToLoc(src, target))
-			return .
-		attached_to_reagents = target.reagents
-		to_chat(user, span_notice("You add the [src] to the [target]."))
-		ui_interact(usr, null)
-	return .
+/obj/item/thermometer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isnull(interacting_with.reagents))
+		return NONE
+	if(!user.transferItemToLoc(src, interacting_with))
+		return ITEM_INTERACT_BLOCKING
+	attached_to_reagents = interacting_with.reagents
+	to_chat(user, span_notice("You add the [src] to [interacting_with]."))
+	ui_interact(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/thermometer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -316,7 +315,7 @@
 	INVOKE_ASYNC(src, PROC_REF(remove_thermometer), user)
 
 /obj/item/thermometer/ui_status(mob/user, datum/ui_state/state)
-	if(!(in_range(src, user)))
+	if(!in_range(src, user))
 		return UI_CLOSE
 	return UI_INTERACTIVE
 
@@ -326,7 +325,9 @@
 /obj/item/thermometer/ui_data(mob/user)
 	if(!attached_to_reagents)
 		ui_close(user)
-	var/data = list()
+		return
+
+	var/list/data = list()
 	data["Temperature"] = round(attached_to_reagents.chem_temp)
 	return data
 
@@ -335,8 +336,8 @@
 	attached_to_reagents = null
 
 /obj/item/thermometer/proc/try_put_in_hand(obj/object, mob/living/user)
-	to_chat(user, span_notice("You remove the [src] from the [attached_to_reagents.my_atom]."))
-	if(!issilicon(user) && in_range(src.loc, user))
+	to_chat(user, span_notice("You remove the [src] from [attached_to_reagents.my_atom]."))
+	if(!issilicon(user) && in_range(loc, user))
 		user.put_in_hands(object)
 	else
 		object.forceMove(drop_location())

@@ -501,22 +501,22 @@
 	. += span_notice("To initiate the surrender prompt, simply click on an individual within your proximity.")
 
 //Code from the medical penlight
-/obj/item/pen/red/security/afterattack(atom/target, mob/living/user, proximity)
-	. = ..()
+/obj/item/pen/red/security/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, holosign_cooldown))
 		balloon_alert(user, "not ready!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	var/target_turf = get_turf(target)
+	var/turf/target_turf = get_turf(interacting_with)
 	var/mob/living/living_target = locate(/mob/living) in target_turf
 
 	if(!living_target || (living_target == user))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	living_target.apply_status_effect(/datum/status_effect/surrender_timed)
 	to_chat(living_target, span_userdanger("[user] requests your immediate surrender! You are given 30 seconds to comply!"))
 	new /obj/effect/temp_visual/security_holosign(target_turf, user) //produce a holographic glow
 	COOLDOWN_START(src, holosign_cooldown, 30 SECONDS)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/effect/temp_visual/security_holosign
 	name = "security holosign"

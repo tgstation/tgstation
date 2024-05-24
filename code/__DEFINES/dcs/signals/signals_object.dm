@@ -161,9 +161,6 @@
 	/// Return to prevent the default behavior (attack_selfing) from ocurring.
 	#define COMPONENT_ITEM_ACTION_SLOT_INVALID (1<<0)
 
-/// Sent from /obj/item/attack_atom(): (atom/attacked_atom, mob/living/user)
-#define COMSIG_ITEM_POST_ATTACK_ATOM "item_post_attack_atom"
-
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"
 ///from base of obj/item/hit_reaction(): (owner, hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
@@ -450,8 +447,6 @@
 
 ///from base of /obj/item/attack(): (mob/living, mob/living, params)
 #define COMSIG_ITEM_ATTACK "item_attack"
-///from base of /obj/item/attack(): (mob/living, mob/living, params)
-#define COMSIG_ITEM_POST_ATTACK "item_post_attack" // called only if the attack was executed
 ///from base of obj/item/attack_self(): (/mob)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 //from base of obj/item/attack_self_secondary(): (/mob)
