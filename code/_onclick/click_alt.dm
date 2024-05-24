@@ -41,7 +41,7 @@
 	/// No loot panel if it's on our person
 	if(isobj(target) && isliving(src))
 		var/mob/living/user = src
-		if(locate(target) in user.get_all_gear())
+		if(target in user.get_all_gear())
 			to_chat(user, span_warning("You can't search for this item, it's already in your inventory! Take it off first."))
 			return
 
