@@ -99,10 +99,18 @@
 		icon_wielded = "[base_icon_state]1", \
 		attacksound = SFX_SPARKS, \
 	)
+	AddElement(/datum/element/attack_knockback, \
+		throw_range = 200, \
+		throw_speed = 4, \
+		pre_hit_callback = CALLBACK(src, PROC_REF(is_wielded_wrapper)), \
+	)
 
 /obj/item/mjollnir/update_icon_state()
 	icon_state = "[base_icon_state]0"
 	return ..()
+
+/obj/item/mjollnir/proc/is_wielded_wrapper()
+	return HAS_TRAIT(src, TRAIT_WIELDED)
 
 /obj/item/mjollnir/proc/shock(mob/living/target)
 	target.Stun(1.5 SECONDS)
@@ -113,8 +121,6 @@
 	target.visible_message(span_danger("[target.name] is shocked by [src]!"), \
 		span_userdanger("You feel a powerful shock course through your body sending you flying!"), \
 		span_hear("You hear a heavy electrical crack!"))
-	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
-	target.throw_at(throw_target, 200, 4)
 
 /obj/item/mjollnir/attack(mob/living/target_mob, mob/user)
 	..()
