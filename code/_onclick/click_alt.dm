@@ -21,8 +21,7 @@
 		client.loot_panel.open(tile)
 		return
 
-	// Turfs don't have a click_alt currently, so this saves some time.
-	if(!isturf(target) && can_perform_action(target, (target.interaction_flags_click | SILENT_ADJACENCY)))
+	if(isturf(target) || can_perform_action(target, (target.interaction_flags_click | SILENT_ADJACENCY)))
 		// If it has a signal handler that returns a click action, done.
 		if(SEND_SIGNAL(target, COMSIG_CLICK_ALT, src) & CLICK_ACTION_ANY)
 			return
