@@ -5716,6 +5716,7 @@
 #include "monkestation\code\datums\announcers\duke.dm"
 #include "monkestation\code\datums\brain_damage\magic.dm"
 #include "monkestation\code\datums\brain_damage\phobia.dm"
+#include "monkestation\code\datums\changelog\changelog.dm"
 #include "monkestation\code\datums\components\carbon_sprint.dm"
 #include "monkestation\code\datums\components\crafting.dm"
 #include "monkestation\code\datums\components\irradiated.dm"
