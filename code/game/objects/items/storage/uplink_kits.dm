@@ -440,6 +440,13 @@
 		new /obj/item/grenade/empgrenade(src)
 	new /obj/item/implanter/emp(src)
 
+/obj/item/storage/box/syndie_kit/smoke
+	name = "smoke kit"
+
+/obj/item/storage/box/syndie_kit/smoke/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/smokebomb(src)
+
 /obj/item/storage/box/syndie_kit/mail_counterfeit
 	name = "mail counterfeit kit"
 	desc = "A box full of mail counterfeit devices. Nothing stops the mail."

@@ -127,11 +127,11 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	pet.forceMove(computer)
 
 
-/datum/computer_file/program/virtual_pet/proc/on_message_recieve(datum/source, sender_title, inbound_message, photo_message)
+/datum/computer_file/program/virtual_pet/proc/on_message_receive(datum/source, sender_title, inbound_message, photo_message)
 	SIGNAL_HANDLER
 
 	var/message_to_display = "[sender_title] has sent you a message [photo_message ? "with a photo attached" : ""]: [inbound_message]!"
-	pet.ai_controller?.set_blackboard_key(BB_LAST_RECIEVED_MESSAGE, message_to_display)
+	pet.ai_controller?.set_blackboard_key(BB_LAST_RECEIVED_MESSAGE, message_to_display)
 
 /datum/computer_file/program/virtual_pet/proc/pet_pre_clean(atom/source, mob/user)
 	SIGNAL_HANDLER
@@ -289,7 +289,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 /datum/computer_file/program/virtual_pet/proc/grant_level_abilities()
 	switch(level)
 		if(2)
-			RegisterSignal(computer, COMSIG_COMPUTER_RECIEVED_MESSAGE, PROC_REF(on_message_recieve)) // we will now read out PDA messages
+			RegisterSignal(computer, COMSIG_COMPUTER_RECEIVED_MESSAGE, PROC_REF(on_message_receive)) // we will now read out PDA messages
 			var/datum/action/cooldown/mob_cooldown/lights/lights = new(pet)
 			lights.Grant(pet)
 			pet.ai_controller?.set_blackboard_key(BB_LIGHTS_ABILITY, lights)

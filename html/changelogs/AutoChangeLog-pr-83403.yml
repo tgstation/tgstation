@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - bugfix: "Epinephrine will prevent metabolism of all allergic reagents (instead of just one), if taken with multiple chemicals that one is allergic to."

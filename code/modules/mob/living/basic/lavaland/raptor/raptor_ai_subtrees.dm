@@ -60,3 +60,7 @@
 		return
 	return ..()
 
+/datum/ai_planning_subtree/find_and_hunt_target/play_with_owner/raptor/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(!controller.blackboard[BB_RAPTOR_PLAYFUL])
+		return
+	return ..()

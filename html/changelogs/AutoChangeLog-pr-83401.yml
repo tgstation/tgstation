@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "You can no longer open the loot panel at range as a blind person and cheese item names"
