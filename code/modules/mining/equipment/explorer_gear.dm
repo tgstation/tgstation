@@ -124,7 +124,7 @@
 	. = ..()
 	allowed = GLOB.mining_suit_allowed
 
-/datum/armor/hooded_explorer
+/datum/armor/hooded_goliath
 	melee = 60
 	bullet = 10
 	laser = 10
