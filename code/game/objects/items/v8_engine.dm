@@ -70,20 +70,18 @@
 	AddComponent(/datum/component/two_handed, force_unwielded = 12, force_wielded = 22, attacksound = active_hitsound)
 	RegisterSignals(src, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_PRE_THROW, COMSIG_ITEM_ATTACK_SELF), PROC_REF(reset_charges))
 
-/obj/item/house_edge/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+/obj/item/house_edge/afterattack(atom/target, mob/user, click_parameters)
 	if(!ismob(target))
 		return
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		//Add a fire charge to a max of 3, updates icon_state.
 		fire_charges = clamp((fire_charges + 1), HOUSE_EDGE_ICONS_MIN, HOUSE_EDGE_ICONS_MAX)
-		icon_state = "house_edge[fire_charges]"
 		COOLDOWN_RESET(src, fire_charge_cooldown)
 	else
 		//Lose a fire charge to a min of 0, updates icon_state.
 		fire_charges = clamp((fire_charges - 1), HOUSE_EDGE_ICONS_MIN, HOUSE_EDGE_ICONS_MAX)
-		icon_state = "house_edge[fire_charges]"
 		do_sparks(number = 0, cardinal_only = TRUE, source = src)
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/house_edge/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	if(!COOLDOWN_FINISHED(src, fire_charge_cooldown))
@@ -98,6 +96,7 @@
 
 /obj/item/house_edge/update_icon_state()
 	inhand_icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "house_edge1" : "house_edge0"
+	icon_state = "house_edge[fire_charges]"
 	return ..()
 
 /obj/item/house_edge/proc/reset_charges(on_dash = FALSE)

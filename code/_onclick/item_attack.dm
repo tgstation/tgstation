@@ -283,10 +283,10 @@
 	user.changeNext_move(attack_speed)
 	user.do_attack_animation(attacked_atom)
 	attacked_atom.attacked_by(src, user)
-	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, params)
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, src, params)
-	SEND_SIGNAL(target, COMSIG_ATOM_AFTER_ATTACKEDBY, src, user, params)
-	afterattack(target, user, params)
+	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, attacked_atom, user, params)
+	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, attacked_atom, src, params)
+	SEND_SIGNAL(attacked_atom, COMSIG_ATOM_AFTER_ATTACKEDBY, src, user, params)
+	afterattack(attacked_atom, user, params)
 	return FALSE // unhandled
 
 /// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds

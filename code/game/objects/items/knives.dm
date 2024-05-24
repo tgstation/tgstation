@@ -78,7 +78,6 @@
 	var/bleed_stacks_per_hit = 3
 
 /obj/item/knife/bloodletter/afterattack(atom/target, mob/user, click_parameters)
-	. = ..()
 	if(!isliving(target))
 		return
 	var/mob/living/M = target

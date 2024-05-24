@@ -52,7 +52,6 @@
 	return BRUTELOSS
 
 /obj/item/fireaxe/afterattack(atom/target, mob/user, click_parameters)
-	. = ..()
 	if(!HAS_TRAIT(src, TRAIT_WIELDED)) //destroys windows and grilles in one hit
 		return
 	if(target.resistance_flags & INDESTRUCTIBLE)

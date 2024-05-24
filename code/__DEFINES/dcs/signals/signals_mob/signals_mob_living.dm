@@ -44,7 +44,8 @@
 ///from base of mob/living/set_body_position()
 #define COMSIG_LIVING_SET_BODY_POSITION  "living_set_body_position"
 ///From post-can inject check of syringe after attack (mob/user)
-#define COMSIG_LIVING_TRY_SYRINGE "living_try_syringe"
+#define COMSIG_LIVING_TRY_SYRINGE_INJECT "living_try_syringe_inject"
+#define COMSIG_LIVING_TRY_SYRINGE_WITHDRAW "living_try_syringe_withdraw"
 ///From living/Life(). (deltatime, times_fired)
 #define COMSIG_LIVING_LIFE "living_life"
 	/// Block the Life() proc from proceeding... this should really only be done in some really wacky situations.

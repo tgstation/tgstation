@@ -191,10 +191,7 @@
 		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword
 	return ..()
 
-/obj/item/melee/beesword/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
+/obj/item/melee/beesword/afterattack(atom/target, mob/user, click_parameters)
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		carbon_target.reagents.add_reagent(/datum/reagent/toxin, 4)

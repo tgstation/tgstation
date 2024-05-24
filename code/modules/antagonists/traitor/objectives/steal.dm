@@ -273,28 +273,26 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 			. += span_notice("This device must be placed by <b>clicking on the [initial(target_object_type.name)]</b> with it.")
 		. += span_notice("Remember, you may leave behind fingerprints or fibers on the device. Use <b>soap</b> or similar to scrub it clean to be safe!")
 
-/obj/item/traitor_bug/afterattack(atom/movable/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+/obj/item/traitor_bug/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!target_object_type)
-		return
-	if(!user.Adjacent(target))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+		return NONE
+
 	var/result = SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT, target)
 	if(!(result & COMPONENT_FORCE_PLACEMENT))
 		if(result & COMPONENT_FORCE_FAIL_PLACEMENT || !istype(target, target_object_type))
 			balloon_alert(user, "you can't attach this onto here!")
-			return
+			return ITEM_INTERACT_BLOCKING
 	if(!do_after(user, deploy_time, src, hidden = TRUE))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(planted_on)
-		return
+		return ITEM_INTERACT_BLOCKING
 	forceMove(target)
 	target.vis_contents += src
 	vis_flags |= VIS_INHERIT_PLANE
 	planted_on = target
 	RegisterSignal(planted_on, COMSIG_QDELETING, PROC_REF(handle_planted_on_deletion))
 	SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PLANTED_OBJECT, target)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/traitor_bug/proc/handle_planted_on_deletion()
 	planted_on = null

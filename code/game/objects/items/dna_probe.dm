@@ -30,18 +30,12 @@
 	///weak ref to the dna vault
 	var/datum/weakref/dna_vault_ref
 
-/obj/item/dna_probe/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag || !target)
-		return .
-
-	if (isitem(target))
-		. |= AFTERATTACK_PROCESSED_ITEM
-
+/obj/item/dna_probe/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(istype(target, /obj/machinery/dna_vault) && !dna_vault_ref?.resolve())
 		try_linking_vault(target, user)
 	else
 		scan_dna(target, user)
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/dna_probe/proc/try_linking_vault(atom/target, mob/user)
 	var/obj/machinery/dna_vault/our_vault = dna_vault_ref?.resolve()

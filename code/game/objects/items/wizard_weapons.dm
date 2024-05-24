@@ -59,22 +59,20 @@
 				step_towards(A,pull)
 				step_towards(A,pull)
 
-/obj/item/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/living/user, proximity)
-	. = ..()
-	if(!proximity)
+/obj/item/singularityhammer/afterattack(atom/target, mob/user, click_parameters)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		if(charged)
-			charged = FALSE
-			if(isliving(A))
-				var/mob/living/Z = A
-				Z.take_bodypart_damage(20,0)
-			playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
-			var/turf/target = get_turf(A)
-			vortex(target,user)
-			addtimer(CALLBACK(src, PROC_REF(recharge)), 10 SECONDS)
-	return .
+	if(!charged)
+		return
+
+	charged = FALSE
+	if(isliving(A))
+		var/mob/living/Z = A
+		Z.take_bodypart_damage(20,0)
+	playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
+	var/turf/target = get_turf(A)
+	vortex(target,user)
+	addtimer(CALLBACK(src, PROC_REF(recharge)), 10 SECONDS)
 
 /obj/item/mjollnir
 	name = "Mjollnir"

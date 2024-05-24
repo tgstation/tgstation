@@ -216,7 +216,6 @@
 	)
 
 /obj/item/melee/arm_blade/afterattack(atom/target, mob/user, click_parameters)
-	. = ..()
 	if(istype(target, /obj/structure/table))
 		target.deconstruct(FALSE)
 
