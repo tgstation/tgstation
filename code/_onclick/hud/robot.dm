@@ -208,21 +208,24 @@
 		if(!R.robot_modules_background)
 			return
 
-		var/display_rows = max(CEILING(length(R.model.get_inactive_modules()) / 8, 1),1)
+		var/list/usable_modules = R.model.get_usable_modules()
+
+		var/display_rows = max(CEILING(length(usable_modules) / 8, 1),1)
 		R.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
 		screenmob.client.screen += R.robot_modules_background
 
 		var/x = -4 //Start at CENTER-4,SOUTH+1
 		var/y = 1
 
-		for(var/atom/movable/A in R.model.get_inactive_modules())
-			//Module is not currently active
-			screenmob.client.screen += A
-			if(x < 0)
-				A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
-			else
-				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
-			SET_PLANE_IMPLICIT(A, ABOVE_HUD_PLANE)
+		for(var/atom/movable/A in usable_modules)
+			if(!(A in R.held_items))
+				//Module is not currently active
+				screenmob.client.screen += A
+				if(x < 0)
+					A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
+				else
+					A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
+				SET_PLANE_IMPLICIT(A, ABOVE_HUD_PLANE)
 
 			x++
 			if(x == 4)
