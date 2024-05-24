@@ -214,23 +214,22 @@
 		R.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
 		screenmob.client.screen += R.robot_modules_background
 
-		var/x = -4 //Start at CENTER-4,SOUTH+1
-		var/y = 1
-
-		for(var/atom/movable/A in usable_modules)
-			if(!(A in R.held_items))
+		for(var/i in 1 to length(usable_modules))
+			var/atom/movable/A = usable_modules[i]
+			if(A in R.held_items)
 				//Module is not currently active
-				screenmob.client.screen += A
-				if(x < 0)
-					A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
-				else
-					A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
-				SET_PLANE_IMPLICIT(A, ABOVE_HUD_PLANE)
+				continue
 
-			x++
-			if(x == 4)
-				x = -4
-				y++
+			// Arrange in a grid x=-4 to 3 and y=1 to display_rows
+			var/x = (i-1)%8 - 4
+			var/y = floor((i-1)/8)+1
+
+			screenmob.client.screen += A
+			if(x < 0)
+				A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
+			else
+				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
+			SET_PLANE_IMPLICIT(A, ABOVE_HUD_PLANE)
 
 	else
 		//Modules display is hidden
