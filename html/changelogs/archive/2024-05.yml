@@ -235,3 +235,6 @@
   - bugfix: Changed Deltastation SM interior to be in line with other SM interiors.
   - bugfix: Put Deltastation xenobio in line with other stations with the layout adjusted
       to fit 2 new slime pens.
+2024-05-24:
+  Absolucy:
+  - bugfix: Fixed a rare bug where the round would not properly restart.
