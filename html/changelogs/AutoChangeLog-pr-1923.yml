@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "The changelog UI now parses and shows changelogs for all current testmerges."
+  - refactor: "Refactored the changelog UI from JavaScript into TypeScript."
