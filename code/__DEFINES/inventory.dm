@@ -241,6 +241,26 @@ GLOBAL_LIST_INIT(chaplain_suit_allowed, list(
 	/obj/item/gun/ballistic/revolver/chaplain,
 ))
 
+//Allowed list for all mining suits
+
+GLOBAL_LIST_INIT(mining_suit_allowed, list(
+	/obj/item/flashlight,
+	/obj/item/gun/energy/recharge/kinetic_accelerator,
+	/obj/item/mining_scanner,
+	/obj/item/pickaxe,
+	/obj/item/resonator,
+	/obj/item/storage/bag/ore,
+	/obj/item/t_scanner/adv_mining_scanner,
+	/obj/item/tank/internals,
+	/obj/item/spear,
+	/obj/item/organ/internal/monster_core,
+	/obj/item/knife,
+	/obj/item/kinetic_crusher,
+	/obj/item/melee/cleaving_saw,
+	/obj/item/grapple_gun,
+	/obj/item/climbing_hook,
+))
+
 /// String for items placed into the left pocket.
 #define LOCATION_LPOCKET "in your left pocket"
 /// String for items placed into the right pocket

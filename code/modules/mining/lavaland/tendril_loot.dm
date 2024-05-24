@@ -670,19 +670,10 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	resistance_flags = FIRE_PROOF
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	clothing_flags = THICKMATERIAL
-	allowed = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
-		/obj/item/pickaxe,
-		/obj/item/spear,
-		/obj/item/organ/internal/monster_core,
-		/obj/item/knife,
-		/obj/item/kinetic_crusher,
-		/obj/item/resonator,
-		/obj/item/melee/cleaving_saw,
-	)
+	allowed = null
 
 /datum/armor/hooded_berserker
 	melee = 30
@@ -696,6 +687,7 @@
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, ALL, inventory_flags = ITEM_SLOT_OCLOTHING)
+	allowed = GLOB.mining_suit_allowed
 
 #define MAX_BERSERK_CHARGE 100
 #define PROJECTILE_HIT_MULTIPLIER 1.5
@@ -716,7 +708,8 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	resistance_flags = FIRE_PROOF
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	clothing_flags = SNUG_FIT|THICKMATERIAL
 	/// Current charge of berserk, goes from 0 to 100
 	var/berserk_charge = 0
