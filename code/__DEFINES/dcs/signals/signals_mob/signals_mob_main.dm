@@ -244,7 +244,3 @@
 
 /// from /mob/proc/key_down(): (key, client/client, full_key)
 #define COMSIG_MOB_KEYDOWN "mob_key_down"
-
-/// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced) iodk where it shuld go
-#define COMSIG_MOB_LIMP_CHECK "mob_limp_check"
-	#define COMPONENT_CANCEL_LIMP (1<<0)
