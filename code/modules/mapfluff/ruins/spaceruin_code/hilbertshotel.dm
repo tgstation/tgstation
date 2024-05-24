@@ -354,16 +354,8 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		promptExit(user)
 
 /turf/closed/indestructible/hoteldoor/click_alt(mob/user)
-	if(!user.CanReach(src))
-		to_chat(user, span_warning("You're too far away!"))
-		return CLICK_ACTION_BLOCKING
-
 	if(user.is_blind())
 		to_chat(user, span_warning("Drats! Your vision is too poor to use this!"))
-		return CLICK_ACTION_BLOCKING
-
-	if(user.incapacitated())
-		to_chat(user, span_warning("You can't use this!"))
 		return CLICK_ACTION_BLOCKING
 
 	to_chat(user, span_notice("You peak through the door's bluespace peephole..."))
