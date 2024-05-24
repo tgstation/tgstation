@@ -117,13 +117,22 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	allowed = null
 	resistance_flags = FIRE_PROOF
-	armor_type = /datum/armor/hooded_explorer
+	armor_type = /datum/armor/hooded_goliath
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
 
 /obj/item/clothing/suit/hooded/cloak/goliath/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/armor_plate, upgrade_item = /obj/item/clothing/accessory/talisman)
 	allowed = GLOB.mining_suit_allowed
+
+/datum/armor/hooded_explorer
+	melee = 60
+	bullet = 10
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 50
+	acid = 50
+	wound = 10
 
 /obj/item/clothing/suit/hooded/cloak/goliath/click_alt(mob/user)
 	if(!iscarbon(user))
@@ -155,7 +164,7 @@
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "golhood"
 	desc = "A protective & concealing hood."
-	armor_type = /datum/armor/hooded_explorer
+	armor_type = /datum/armor/hooded_goliath
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
@@ -168,7 +177,6 @@
 
 /obj/item/clothing/head/hooded/cloakhood/goliath/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/armor_plate, upgrade_item = /obj/item/clothing/accessory/talisman)
 
 /obj/item/clothing/suit/armor/bone
 	name = "bone armor"

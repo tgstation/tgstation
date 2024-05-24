@@ -248,7 +248,7 @@
 	time = 5 SECONDS
 	reqs = list(
 		/obj/item/stack/sheet/sinew = 3,
-		/obj/item/stack/sheet/animalhide/goliath_hide = 3,
+		/obj/item/stack/sheet/animalhide/goliath_hide = 9,
 	)
 	category = CAT_CLOTHING
 
