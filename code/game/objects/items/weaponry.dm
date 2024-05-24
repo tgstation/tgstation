@@ -520,12 +520,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	movement_support_del(user)
 
 /obj/item/cane/proc/movement_support_add(mob/living/user)
-	RegisterSignal(user, COMSIG_MOB_LIMP_CHECK, PROC_REF(handle_limping))
+	RegisterSignal(user, COMSIG_CARBON_LIMPING, PROC_REF(handle_limping))
 	user.set_usable_legs()
 	return TRUE
 
 /obj/item/cane/proc/movement_support_del(mob/living/user)
-	UnregisterSignal(user, list(COMSIG_MOB_LIMP_CHECK))
+	UnregisterSignal(user, list(COMSIG_CARBON_LIMPING))
 	user.set_usable_legs()
 	return TRUE
 
@@ -566,7 +566,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(!.)
 		return
 	user.update_usable_leg_status()
-	UnregisterSignal(user, list(COMSIG_LIVING_LIMBLESS_SLOWDOWN, COMSIG_MOB_LIMP_CHECK))
+	UnregisterSignal(user, list(COMSIG_LIVING_LIMBLESS_SLOWDOWN, COMSIG_CARBON_LIMPING))
 	REMOVE_TRAIT(user, TRAIT_WADDLING, REF(src))
 
 /obj/item/cane/crutch/proc/handle_slowdown(mob/living/user, limbless_slowdown, list/slowdown_mods)

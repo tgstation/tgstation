@@ -2356,10 +2356,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(!usable_legs && usable_hands < default_num_hands)
 			limbless_slowdown += (default_num_hands - usable_hands) * 3
 		var/list/slowdown_mods = list()
-		var/sig_result = SEND_SIGNAL(src, COMSIG_LIVING_LIMBLESS_SLOWDOWN, limbless_slowdown, slowdown_mods)
+		SEND_SIGNAL(src, COMSIG_LIVING_LIMBLESS_SLOWDOWN, limbless_slowdown, slowdown_mods)
 		for(var/num in slowdown_mods)
 			limbless_slowdown *= num
-		var/final_slowdown = sig_result ? sig_result : limbless_slowdown
+		var/final_slowdown = limbless_slowdown
 		if(final_slowdown == 0)
 			remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
 			return
