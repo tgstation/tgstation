@@ -122,11 +122,8 @@
 
 /obj/item/clothing/suit/hooded/cloak/goliath/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/armor_plate, max_amount = 6, upgrade_item = /obj/item/stack/sheet/bone, armor_mod = /datum/armor/goliath_upgrade)
+	AddComponent(/datum/component/armor_plate, upgrade_item = /obj/item/clothing/accessory/talisman)
 	allowed = GLOB.mining_suit_allowed
-
-/datum/armor/goliath_upgrade
-	melee = 5
 
 /obj/item/clothing/suit/hooded/cloak/goliath/click_alt(mob/user)
 	if(!iscarbon(user))
@@ -171,7 +168,7 @@
 
 /obj/item/clothing/head/hooded/cloakhood/goliath/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/armor_plate, max_amount = 6, upgrade_item = /obj/item/stack/sheet/bone, armor_mod = /datum/armor/goliath_upgrade)
+	AddComponent(/datum/component/armor_plate, upgrade_item = /obj/item/clothing/accessory/talisman)
 
 /obj/item/clothing/suit/armor/bone
 	name = "bone armor"
@@ -189,7 +186,7 @@
 
 /obj/item/clothing/suit/armor/bone/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/armor_plate)
+	AddComponent(/datum/component/armor_plate, upgrade_item = /obj/item/clothing/accessory/talisman)
 	allowed = GLOB.mining_suit_allowed
 
 /obj/item/clothing/head/helmet/skull
@@ -208,7 +205,7 @@
 
 /obj/item/clothing/head/helmet/skull/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/armor_plate)
+	AddComponent(/datum/component/armor_plate, upgrade_item = /obj/item/clothing/accessory/talisman)
 
 /obj/item/clothing/suit/hooded/cloak/drake
 	name = "drake armour"
