@@ -3,7 +3,7 @@
 	desc = "Allows a creature to voluntary shoot their tongue out as a deadly weapon."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your feel like you can throw your voice.")
-	instability = 15
+	instability = 30
 	power_path = /datum/action/cooldown/spell/tongue_spike
 
 	energy_coeff = 1
@@ -89,7 +89,7 @@
 	desc = "Allows a creature to voluntary shoot their tongue out as biomass, allowing a long range transfer of chemicals."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your feel like you can really connect with people by throwing your voice.")
-	instability = 15
+	instability = 30
 	locked = TRUE
 	power_path = /datum/action/cooldown/spell/tongue_spike/chem
 	energy_coeff = 1

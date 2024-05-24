@@ -6,7 +6,7 @@
 	difficulty = 18
 	text_gain_indication = "<span class='notice'>You feel smarter!</span>"
 	limb_req = BODY_ZONE_HEAD
-	instability = 30
+	instability = 45
 	///Typecache of atoms that TK shouldn't interact with
 	var/static/list/blacklisted_atoms = typecacheof(list(/atom/movable/screen))
 

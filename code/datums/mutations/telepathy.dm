@@ -6,5 +6,5 @@
 	text_lose_indication = "<span class='notice'>You don't hear your mind echo anymore.</span>"
 	difficulty = 12
 	power_path = /datum/action/cooldown/spell/list_target/telepathy
-	instability = 10
+	instability = 25
 	energy_coeff = 1

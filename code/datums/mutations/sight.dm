@@ -2,6 +2,7 @@
 /datum/mutation/human/nearsight
 	name = "Near Sightness"
 	desc = "The holder of this mutation has poor eyesight."
+	instability = -15
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You can't see very well.</span>"
 
@@ -19,6 +20,7 @@
 /datum/mutation/human/blind
 	name = "Blindness"
 	desc = "Renders the subject completely blind."
+	instability = -30
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You can't seem to see anything.</span>"
 
@@ -40,7 +42,7 @@
 	difficulty = 18
 	text_gain_indication = "<span class='notice'>You can see the heat rising off of your skin...</span>"
 	text_lose_indication = "<span class='notice'>You can no longer see the heat rising off of your skin...</span>"
-	instability = 25
+	instability = 40
 	synchronizer_coeff = 1
 	power_coeff = 1
 	energy_coeff = 1
@@ -182,6 +184,7 @@
 /datum/mutation/human/illiterate
 	name = "Illiterate"
 	desc = "Causes a severe case of Aphasia that prevents reading or writing."
+	instability = -30
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel unable to read or write.</span>"
 	text_lose_indication = "<span class='danger'>You feel able to read and write again.</span>"

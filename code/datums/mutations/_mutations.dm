@@ -1,6 +1,17 @@
 /datum/mutation
 	var/name
 
+/*
+
+NEGATIVE STABILITY LEGACY
+per 5/24/2024 rework, negative mutations give stability! via, roughly, these rules:
+
+-5~: For barely negative mutations that are often injected just for 'fun'. Eg: Tourettes, Swedish.
+-15~: For mutations that cause consistent headaches that are hard to work around.
+-30~: For actually harmful mutations that require consistent management to avoid killing or very heavily impairing you.
+
+*/
+
 /datum/mutation/human
 	name = "mutation"
 	/// Description of the mutation

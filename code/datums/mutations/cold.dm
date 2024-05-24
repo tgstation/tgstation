@@ -25,7 +25,7 @@
 	desc = "Draws negative energy from the sub-zero void to freeze surrounding temperatures at subject's will."
 	quality = POSITIVE //upsides and downsides
 	text_gain_indication = "<span class='notice'>Your hand feels cold.</span>"
-	instability = 30
+	instability = 45
 	difficulty = 12
 	synchronizer_coeff = 1
 	energy_coeff = 1
