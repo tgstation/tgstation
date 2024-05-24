@@ -45,20 +45,16 @@
 		AddElement(/datum/element/heretic_focus)
 		update_weight_class(WEIGHT_CLASS_NORMAL)
 
-/obj/item/codex_cicatrix/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag)
-		return
-
+/obj/item/codex_cicatrix/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	if(!heretic_datum)
-		return
-
+		return NONE
 	if(isopenturf(target))
 		var/obj/effect/heretic_influence/influence = locate(/obj/effect/heretic_influence) in target
 		if(!influence?.drain_influence_with_codex(user, src))
 			heretic_datum.try_draw_rune(user, target, drawing_time = 8 SECONDS)
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
+	return NONE
 
 /// Plays a little animation that shows the book opening and closing.
 /obj/item/codex_cicatrix/proc/open_animation()

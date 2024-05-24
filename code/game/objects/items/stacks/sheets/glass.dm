@@ -350,7 +350,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		return
 
 	to_chat(user, span_warning("[src] cuts into your hand!"))
-	user.apply_damage(force * 0.5, BRUTE, user.get_active_hand(), attacking_item = src)
+	jab.apply_damage(force * 0.5, BRUTE, user.get_active_hand(), attacking_item = src)
 
 /obj/item/shard/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/lightreplacer))

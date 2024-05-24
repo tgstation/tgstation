@@ -313,8 +313,8 @@ Moving interrupts
 /obj/item/chisel/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(sculpting)
 		return ITEM_INTERACT_BLOCKING
-	if(istype(target, /obj/structure/carving_block))
-		var/obj/structure/carving_block/sculpt_block = target
+	if(istype(interacting_with, /obj/structure/carving_block))
+		var/obj/structure/carving_block/sculpt_block = interacting_with
 
 		if(sculpt_block.completion) // someone already started sculpting this so just finish
 			set_block(sculpt_block, user, silent = TRUE)
@@ -328,7 +328,7 @@ Moving interrupts
 		return ITEM_INTERACT_SUCCESS
 
 	else if(prepared_block) //We're aiming at something next to us with block prepared
-		prepared_block.set_target(target, user)
+		prepared_block.set_target(interacting_with, user)
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE

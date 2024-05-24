@@ -11,7 +11,7 @@
 /obj/item/taster/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!interacting_with.reagents)
 		to_chat(user, span_notice("[src] cannot taste [interacting_with], since [interacting_with.p_they()] [interacting_with.p_have()] have no reagents."))
-	else if(O.reagents.total_volume == 0)
+	else if(interacting_with.reagents.total_volume == 0)
 		to_chat(user, span_notice("[src] cannot taste [interacting_with], since [interacting_with.p_they()] [interacting_with.p_are()] empty."))
 	else
 		var/message = interacting_with.reagents.generate_taste_message(user, taste_sensitivity)

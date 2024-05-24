@@ -568,19 +568,12 @@
 			reagents.expose(draw_turf, methods = TOUCH, volume_modifier = volume_multiplier)
 	check_empty(user)
 
-/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
-	. = ..()
+/obj/item/toy/crayon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!check_allowed_items(interacting_with))
+		return NONE
 
-	if(!proximity)
-		return
-
-	if (isitem(target))
-		. |= AFTERATTACK_PROCESSED_ITEM
-
-	if (!check_allowed_items(target))
-		return
-
-	use_on(target, user, params)
+	use_on(interacting_with, user, params)
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/toy/crayon/get_writing_implement_details()
 	return list(
@@ -674,7 +667,7 @@
 	charges = INFINITE_CHARGES
 	dye_color = DYE_RAINBOW
 
-/obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/toy/crayon/rainbow/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	set_painting_tool_color(rgb(rand(0,255), rand(0,255), rand(0,255)))
 	return ..()
 
@@ -927,14 +920,12 @@
 
 	return ..()
 
-/obj/item/toy/crayon/spraycan/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!proximity_flag)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/toy/crayon/spraycan/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(is_capped)
 		balloon_alert(user, "take the cap off first!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 	if(check_empty(user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 	if(isbodypart(target) && actually_paints)
 		var/obj/item/bodypart/limb = target
@@ -950,16 +941,14 @@
 			if(choice && (use_charges(user, 5, requires_full = FALSE)))
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 				limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			return ITEM_INTERACT_SUCCESS
 	if(target.color)
 		paint_color = target.color
 		balloon_alert(user, "matched colour of target")
 		update_appearance()
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	else
-		balloon_alert(user, "can't match those colours!")
-
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "can't match those colours!")
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/toy/crayon/spraycan/click_alt(mob/user)
 	if(!has_cap)

@@ -327,9 +327,8 @@
 	attack_verb_simple = list("flog", "whip", "lash", "discipline")
 	hitsound = 'sound/weapons/whip.ogg'
 
-/obj/item/melee/curator_whip/afterattack(target, mob/user, proximity_flag)
-	. = ..()
-	if(ishuman(target) && proximity_flag)
+/obj/item/melee/curator_whip/afterattack(atom/target, mob/user, click_parameters)
+	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		human_target.drop_all_held_items()
 		human_target.visible_message(span_danger("[user] disarms [human_target]!"), span_userdanger("[user] disarmed you!"))
@@ -424,22 +423,27 @@
 		held_sausage = null
 		update_appearance()
 
-/obj/item/melee/roastingstick/afterattack(atom/target, mob/user, proximity)
-	. = ..()
+/obj/item/melee/roastingstick/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		return
+		return NONE
 	if (!is_type_in_typecache(target, ovens))
-		return
-	if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
+		return NONE
+	if (istype(interacting_with, /obj/singularity) && get_dist(user, interacting_with) < 10)
 		to_chat(user, span_notice("You send [held_sausage] towards [target]."))
 		playsound(src, 'sound/items/rped.ogg', 50, TRUE)
 		beam = user.Beam(target, icon_state = "rped_upgrade", time = 10 SECONDS)
-	else if (user.Adjacent(target))
-		to_chat(user, span_notice("You extend [src] towards [target]."))
-		playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
-	else
-		return
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/item/melee/roastingstick/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return NONE
+	if (!is_type_in_typecache(target, ovens))
+		return NONE
+	to_chat(user, span_notice("You extend [src] towards [target]."))
+	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	finish_roasting(user, target)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
 	if(do_after(user, 10 SECONDS, target = user))

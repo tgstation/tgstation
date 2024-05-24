@@ -38,7 +38,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	return TRUE
 
 /obj/item/storage/part_replacer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return part_replace_action(attacked_object, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+	return part_replace_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 /obj/item/storage/part_replacer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!works_from_distance)

@@ -169,9 +169,9 @@
 	use(1)
 	var/turf/location = get_turf(user)
 	location.hotspot_expose(700, 50, 1)
-	if(QDELETED(attacked_atom) || !isliving(attacked_atom)) // can't ignite something that doesn't exist
+	if(QDELETED(target) || !isliving(target)) // can't ignite something that doesn't exist
 		return
-	var/mob/living/attacked_mob = attacked_atom
+	var/mob/living/attacked_mob = target
 	if(attacked_mob.ignite_mob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
 		user.log_message("set [key_name(attacked_mob)] on fire with [src].", LOG_ATTACK)

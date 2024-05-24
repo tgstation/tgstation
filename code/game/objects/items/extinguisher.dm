@@ -211,7 +211,7 @@
 
 	playsound(src.loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 
-	var/direction = get_dir(src,target)
+	var/direction = get_dir(src,interacting_with)
 
 	if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
 		var/obj/B = user.buckled
@@ -221,7 +221,7 @@
 		user.newtonian_move(REVERSE_DIR(direction))
 
 	//Get all the turfs that can be shot at
-	var/turf/T = get_turf(target)
+	var/turf/T = get_turf(interacting_with)
 	var/turf/T1 = get_step(T,turn(direction, 90))
 	var/turf/T2 = get_step(T,turn(direction, -90))
 	var/list/the_targets = list(T,T1,T2)

@@ -354,24 +354,23 @@ All the important duct code:
 		duct_color = new_color
 		add_atom_colour(GLOB.pipe_paint_colors[new_color], FIXED_COLOUR_PRIORITY)
 
-/obj/item/stack/ducts/afterattack(atom/target, user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(istype(target, /obj/machinery/duct))
-		var/obj/machinery/duct/duct = target
+/obj/item/stack/ducts/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/machinery/duct))
+		var/obj/machinery/duct/duct = interacting_with
 		if(duct.anchored)
 			to_chat(user, span_warning("The duct must be unanchored before it can be picked up."))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		// Turn into a duct stack and then merge to the in-hand stack.
 		var/obj/item/stack/ducts/stack = new(duct.loc, 1, FALSE)
 		qdel(duct)
 		if(stack.can_merge(src))
 			stack.merge(src)
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	check_attach_turf(target)
+	check_attach_turf(interacting_with)
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/stack/ducts/proc/check_attach_turf(atom/target)
 	if(isopenturf(target) && use(1))

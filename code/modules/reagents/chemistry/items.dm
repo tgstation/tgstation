@@ -78,20 +78,20 @@
 	///If the paper was used, and therefore cannot change color again
 	var/used = FALSE
 
-/obj/item/ph_paper/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!is_reagent_container(target))
+/obj/item/ph_paper/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!is_reagent_container(interacting_with))
 		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	var/obj/item/reagent_containers/cont = target
-	if(used == TRUE)
-		to_chat(user, span_warning("[src] has already been used!"))
-		return
+	var/obj/item/reagent_containers/cont = interacting_with
 	if(!LAZYLEN(cont.reagents.reagent_list))
-		return
+		return NONE
+	if(used)
+		to_chat(user, span_warning("[src] has already been used!"))
+		return ITEM_INTERACT_BLOCKING
 	CONVERT_PH_TO_COLOR(round(cont.reagents.ph, 1), color)
 	desc += " The paper looks to be around a pH of [round(cont.reagents.ph, 1)]"
 	name = "used [name]"
 	used = TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /*
 * pH meter that will give a detailed or truncated analysis of all the reagents in of an object with a reagents datum attached to it. Only way of detecting purity for now.
@@ -113,14 +113,12 @@
 		to_chat(user, span_notice("You switch the chemical analyzer to not include reagent descriptions in it's report."))
 		scanmode = SHORTENED_CHEM_OUTPUT
 
-/obj/item/ph_meter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!is_reagent_container(target))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	var/obj/item/reagent_containers/cont = target
-	if(LAZYLEN(cont.reagents.reagent_list) == null)
-		return
+/obj/item/ph_meter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!is_reagent_container(interacting_with))
+		return NONE
+	var/obj/item/reagent_containers/cont = interacting_with
+	if(!LAZYLEN(cont.reagents.reagent_list))
+		return NONE
 	var/list/out_message = list()
 	to_chat(user, "<i>The chemistry meter beeps and displays:</i>")
 	out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Current temperature: [round(cont.reagents.chem_temp, 0.1)]K Total pH: [round(cont.reagents.ph, 0.01)]\n"
@@ -137,6 +135,7 @@
 			out_message += "<b>Analysis:</b> [reagent.description]\n"
 	to_chat(user, "[out_message.Join()]</span>")
 	desc = "An electrode attached to a small circuit box that will display details of a solution. Can be toggled to provide a description of each of the reagents. The screen currently displays detected vol: [round(cont.volume, 0.01)] detected pH:[round(cont.reagents.ph, 0.1)]."
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/burner
 	name = "burner"
@@ -187,24 +186,25 @@
 	set_lit(TRUE)
 	user.visible_message(span_notice("[user] lights up the [src]."))
 
-/obj/item/burner/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(lit)
-		. |= AFTERATTACK_PROCESSED_ITEM
-		if(is_reagent_container(target))
-			var/obj/item/reagent_containers/container = target
-			container.reagents.expose_temperature(get_temperature())
-			to_chat(user, span_notice("You heat up the [src]."))
-			playsound(user.loc, 'sound/chemistry/heatdam.ogg', 50, TRUE)
-			return .
-	else if(isitem(target))
-		var/obj/item/item = target
-		if(item.heat > 1000)
-			. |= AFTERATTACK_PROCESSED_ITEM
-			set_lit(TRUE)
-			user.visible_message(span_notice("[user] lights up the [src]."))
+/obj/item/burner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!lit)
+		return NONE
 
-	return .
+	if(is_reagent_container(interacting_with))
+		var/obj/item/reagent_containers/container = interacting_with
+		container.reagents.expose_temperature(get_temperature())
+		user.visible_message(span_notice("[user] heats up [src]."), span_notice("You heat up [src]."))
+		playsound(user, 'sound/chemistry/heatdam.ogg', 50, TRUE)
+		return ITEM_INTERACT_SUCCESS
+
+	else if(isitem(interacting_with))
+		var/obj/item/item = interacting_with
+		if(item.get_temperature() > 1000)
+			set_lit(TRUE)
+			user.visible_message(span_notice("[user] lights up [src]."), span_notice("You light up [src]."))
+			return ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/burner/update_icon_state()
 	. = ..()

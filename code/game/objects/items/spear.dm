@@ -167,19 +167,17 @@
 	return CLICK_ACTION_SUCCESS
 
 
-/obj/item/spear/explosive/afterattack(atom/movable/AM, mob/user, proximity)
-	. = ..()
-	if(!proximity || !HAS_TRAIT(src, TRAIT_WIELDED) || !istype(AM))
+/obj/item/spear/explosive/afterattack(atom/movable/AM, mob/user, click_parameters)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED) || !istype(AM))
 		return
-	. |= AFTERATTACK_PROCESSED_ITEM
 	if(AM.resistance_flags & INDESTRUCTIBLE) //due to the lich incident of 2021, embedding grenades inside of indestructible structures is forbidden
-		return .
+		return
 	if(ismob(AM))
 		var/mob/mob_target = AM
 		if(mob_target.status_flags & GODMODE) //no embedding grenade phylacteries inside of ghost poly either
-			return .
+			return
 	if(iseffect(AM)) //and no accidentally wasting your moment of glory on graffiti
-		return .
+		return
 	user.say("[war_cry]", forced="spear warcry")
 	if(isliving(user))
 		var/mob/living/living_user = user
@@ -190,7 +188,6 @@
 		if(!QDELETED(living_user))
 			living_user.set_resting(new_resting = FALSE, silent = TRUE, instant = TRUE)
 	qdel(src)
-	return .
 
 //GREY TIDE
 /obj/item/spear/grey_tide
@@ -201,20 +198,18 @@
 	force_unwielded = 15
 	force_wielded = 25
 
-/obj/item/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
+/obj/item/spear/grey_tide/afterattack(atom/movable/AM, mob/user, click_parameters)
 	user.faction |= "greytide([REF(user)])"
-	if(isliving(AM))
-		var/mob/living/L = AM
-		if(istype (L, /mob/living/simple_animal/hostile/illusion))
-			return
-		if(!L.stat && prob(50))
-			var/mob/living/simple_animal/hostile/illusion/M = new(user.loc)
-			M.faction = user.faction.Copy()
-			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
-			M.GiveTarget(L)
+	if(!isliving(AM))
+		return
+	var/mob/living/L = AM
+	if(istype(L, /mob/living/simple_animal/hostile/illusion))
+		return
+	if(!L.stat && prob(50))
+		var/mob/living/simple_animal/hostile/illusion/M = new(user.loc)
+		M.faction = user.faction.Copy()
+		M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
+		M.GiveTarget(L)
 
 //MILITARY
 /obj/item/spear/military

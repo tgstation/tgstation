@@ -110,8 +110,8 @@
 	if(isdead(interacting_with))
 		return NONE
 	// melbert todo : check storage inserting
-	aim_dir = get_dir(user, bomb_target)
-	return plant_c4(bomb_target, user) ? ITEM_INTERACT_SUCCES : ITEM_INTERACT_BLOCKING
+	aim_dir = get_dir(user, interacting_with)
+	return plant_c4(interacting_with, user) ? ITEM_INTERACT_SUCCES : ITEM_INTERACT_BLOCKING
 
 /obj/item/grenade/c4/proc/plant_c4(atom/bomb_target, mob/living/user)
 	if(bomb_target != user && HAS_TRAIT(user, TRAIT_PACIFISM) && isliving(bomb_target))

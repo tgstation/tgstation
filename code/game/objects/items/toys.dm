@@ -51,21 +51,21 @@
 /obj/item/toy/waterballoon/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/toy/waterballoon/afterattack(atom/A as mob|obj, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if (istype(A, /obj/structure/reagent_dispensers))
-		var/obj/structure/reagent_dispensers/RD = A
-		if(RD.reagents.total_volume <= 0)
-			to_chat(user, span_warning("[RD] is empty."))
-		else if(reagents.total_volume >= 10)
-			to_chat(user, span_warning("[src] is full."))
-		else
-			A.reagents.trans_to(src, 10, transferred_by = user)
-			to_chat(user, span_notice("You fill the balloon with the contents of [A]."))
-			desc = "A translucent balloon with some form of liquid sloshing around in it."
-			update_appearance()
+/obj/item/toy/waterballoon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!istype(interacting_with, /obj/structure/reagent_dispensers))
+		return NONE
+	var/obj/structure/reagent_dispensers/RD = A
+	if(RD.reagents.total_volume <= 0)
+		to_chat(user, span_warning("[RD] is empty."))
+	else if(reagents.total_volume >= 10)
+		to_chat(user, span_warning("[src] is full."))
+	else
+		A.reagents.trans_to(src, 10, transferred_by = user)
+		to_chat(user, span_notice("You fill the balloon with the contents of [A]."))
+		desc = "A translucent balloon with some form of liquid sloshing around in it."
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/cup))

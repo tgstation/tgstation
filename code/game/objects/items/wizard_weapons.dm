@@ -39,9 +39,6 @@
 	icon_state = "[base_icon_state]0"
 	return ..()
 
-/obj/item/singularityhammer/proc/recharge()
-	charged = TRUE
-
 /obj/item/singularityhammer/proc/vortex(turf/pull, mob/wielder)
 	for(var/atom/X in orange(5,pull))
 		if(ismovable(X))
@@ -66,13 +63,12 @@
 		return
 
 	charged = FALSE
-	if(isliving(A))
-		var/mob/living/Z = A
-		Z.take_bodypart_damage(20,0)
+	if(isliving(target))
+		var/mob/living/smacked = target
+		smacked.take_bodypart_damage(20, 0)
 	playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
-	var/turf/target = get_turf(A)
-	vortex(target,user)
-	addtimer(CALLBACK(src, PROC_REF(recharge)), 10 SECONDS)
+	vortex( get_turf(target), user)
+	addtimer(VARSET_CALLBACK(src, recharge, TRUE), 10 SECONDS)
 
 /obj/item/mjollnir
 	name = "Mjollnir"
