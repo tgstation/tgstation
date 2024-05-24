@@ -631,3 +631,17 @@
   paganiy:
   - balance: Auto-aim in combat mode at mobs on the floor is disabled after the projectile
       passes 10 tiles.
+2024-05-24:
+  00-Steven:
+  - bugfix: Smoker quirk users can select a favourite brand again.
+  Ben10Omintrix:
+  - rscadd: adds a new fish to lava and plasma rivers, the lava loop
+  DATA-xPUNGED:
+  - bugfix: The Lance Crew Evacuation System now moves in the right direction in Hyperspace.
+  EEASAS:
+  - rscadd: Remapped NorthStar's medbay a little bit
+  Rhials:
+  - spellcheck: Fixes a typo with latejoin AIs
+  by INFRARED_BARON:
+  - image: 'Changes icons of: Gygax, d-gygax, durand, ripley variants, firefighter
+      statue, phazon & odysseus. Adds new icons for polar hide item.'
