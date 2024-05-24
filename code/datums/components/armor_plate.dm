@@ -8,7 +8,7 @@
 /datum/armor/armor_plate
 	melee = 10
 
-/datum/component/armor_plate/Initialize(_maxamount, obj/item/_upgrade_item, datum/armor/_added_armor)
+/datum/component/armor_plate/Initialize(maxamount, obj/item/upgrade_item, datum/armor/added_armor)
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -18,14 +18,14 @@
 	if(istype(parent, /obj/vehicle/sealed/mecha/ripley))
 		RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_mech_overlays))
 
-	if(_maxamount)
-		maxamount = _maxamount
-	if(_upgrade_item)
-		upgrade_item = _upgrade_item
-	if(_added_armor)
-		armor_mod = _added_armor
+	if(maxamount)
+		src.maxamount = maxamount
+	if(upgrade_item)
+		src.upgrade_item = upgrade_item
+	if(added_armor)
+		src.armor_mod = added_armor
 	var/obj/item/typecast = upgrade_item
-	upgrade_name = initial(typecast.name)
+	src.upgrade_name = initial(typecast.name)
 
 /datum/component/armor_plate/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
