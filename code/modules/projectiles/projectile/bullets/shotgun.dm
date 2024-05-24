@@ -108,10 +108,6 @@
 	stamina = 6
 	embedding = null
 
-/obj/projectile/bullet/pellet/shotgun_improvised/on_range()
-	do_sparks(1, TRUE, src)
-	..()
-
 // Mech Scattershot
 
 /obj/projectile/bullet/scattershot
