@@ -1,6 +1,11 @@
 #!/bin/bash
 set -euo pipefail
 
+## DO NOT ADD SPELLCHECKING TO THIS SCRIPT
+## NOTHING NEW SHOULD BE ADDED TO THIS
+## MAKE A BETTER REPLACEMENT
+## -ZephyrTFA
+
 #nb: must be bash to support shopt globstar
 shopt -s globstar extglob
 
@@ -75,27 +80,6 @@ if $grep '\tarmor = list' $map_files; then
 	echo
 	echo -e "${RED}ERROR: Outdated armor list in map file.${NC}"
 	st=1
-fi;
-part "common spelling mistakes"
-if $grep -i 'nanotransen' $map_files; then
-	echo
-    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in maps, please remove the extra N(s).${NC}"
-    st=1
-fi;
-if $grep 'NanoTrasen' $map_files; then
-	echo
-    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in maps, please uncapitalize the T(s).${NC}"
-    st=1
-fi;
-if $grep -i'centcomm' $map_files; then
-	echo
-    echo -e "${RED}ERROR: Misspelling(s) of CentCom detected in maps, please remove the extra M(s).${NC}"
-    st=1
-fi;
-if $grep -i'eciev' $map_files; then
-	echo
-    echo -e "${RED}ERROR: Common I-before-E typo detected in maps.${NC}"
-    st=1
 fi;
 
 section "whitespace issues"
@@ -194,27 +178,6 @@ if $grep 'AddElement\(/datum/element/update_icon_updates_onmob.+ITEM_SLOT_HANDS'
 	st=1
 fi;
 
-part "common spelling mistakes"
-if $grep -i 'centcomm' $code_files; then
-	echo
-    echo -e "${RED}ERROR: Misspelling(s) of CentCom detected in code, please remove the extra M(s).${NC}"
-    st=1
-fi;
-if $grep -ni 'nanotransen' $code_files; then
-	echo
-    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please remove the extra N(s).${NC}"
-    st=1
-fi;
-if $grep 'NanoTrasen' $code_files; then
-	echo
-    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please uncapitalize the T(s).${NC}"
-    st=1
-fi;
-if $grep -i'eciev' $code_files; then
-	echo
-    echo -e "${RED}ERROR: Common I-before-E typo detected in code.${NC}"
-    st=1
-fi;
 part "map json naming"
 if ls _maps/*.json | $grep "[A-Z]"; then
 	echo
