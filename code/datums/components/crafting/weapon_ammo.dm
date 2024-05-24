@@ -32,6 +32,16 @@
 	category = CAT_WEAPON_AMMO
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
+/datum/crafting_recipe/healium_bolt
+	name = "healium crystal crossbow bolt"
+	result = /obj/item/ammo_casing/rebar/syndie
+	reqs = list(
+		/datum/gas_recipe/crystallizer/healium_grenade = 1
+	)
+	time = 0.1 SECONDS
+	category = CAT_WEAPON_AMMO
+	crafting_flags = CRAFT_CHECK_DENSITY
+
 /datum/crafting_recipe/pulseslug
 	name = "Pulse Slug Shell"
 	result = /obj/item/ammo_casing/shotgun/pulseslug

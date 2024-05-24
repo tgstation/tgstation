@@ -81,31 +81,90 @@
 /obj/projectile/bullet/rebar/zaukerite
 	name = "zaukerite shard"
 	icon_state = "rebar_zaukerite"
-	damage = 40
-	eyeblur = 1
-	speed = 0.4
-	dismemberment = 1
+	damage = 60
+	speed = 0.6
+	dismemberment = 2
 	damage_type = TOX
-	armour_penetration = 12
-	wound_bonus = -15
-	bare_wound_bonus = 15
-	embedding = list(embed_chance = 90, fall_chance=1, jostle_chance=3, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.6, pain_mult=5, jostle_pain_mult=2, rip_time=18)
-	embed_falloff_tile = -3
+	eyeblur = 5
+	armour_penetration = 30
+	wound_bonus = 0
+	bare_wound_bonus = 20
+	embedding = list(embed_chance=90, fall_chance=0, jostle_chance=5, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.8, pain_mult=6, jostle_pain_mult=2, rip_time=30)
+	embed_falloff_tile = -5
 	shrapnel_type = /obj/item/ammo_casing/rebar/zaukerite
 
 /obj/projectile/bullet/rebar/hydrogen
 	name = "metallic hydrogen bolt"
 	icon_state = "rebar_hydrogen"
-	damage = 50
-	speed = 0.6
+	damage = 40
+	speed = 0.4
 	dismemberment = 2
 	damage_type = BRUTE
-	armour_penetration = 30 //because its goddamn metallic hydrogen.
-	wound_bonus = 0
-	bare_wound_bonus = 20
-	embedding = list(embed_chance=60, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=2, rip_time=10)
-	embed_falloff_tile = -5
+	armour_penetration = 16
+	wound_bonus = -15
+	bare_wound_bonus = 30
+	embedding = list(embed_chance = 70, fall_chance=1, jostle_chance=3, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.6, pain_mult=4, jostle_pain_mult=2, rip_time=18)
+	embed_falloff_tile = -3
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
+
+/obj/projectile/bullet/rebar/healium
+	name = "healium bolt"
+	icon_state = "rebar_hydrogen"
+	damage = 0
+	speed = 0.4
+	dismemberment = 0
+	damage_type = BRUTE
+	armour_penetration = 100
+	wound_bonus = -100
+	bare_wound_bonus = -100
+	embedding = list(embed_chance = 0)
+	embed_falloff_tile = -3
+	shrapnel_type = /obj/item/ammo_casing/rebar/healium
+
+/obj/projectile/bullet/rebar/healium/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/breather = target
+		breather.SetSleeping(3 SECONDS)
+		var/need_mob_update
+		need_mob_update = breather.adjustFireLoss(-30, updating_health = TRUE, required_bodytype = BODYTYPE_ORGANIC)
+		need_mob_update += breather.adjustToxLoss(-30, updating_health = TRUE, required_biotype = BODYTYPE_ORGANIC)
+		need_mob_update += breather.adjustBruteLoss(-30, updating_health = TRUE, required_bodytype = BODYTYPE_ORGANIC)
+		need_mob_update += breather.adjustOxyLoss(-30, updating_health = TRUE, required_biotype = BODYTYPE_ORGANIC, required_respiration_type = ALL)
+		if(need_mob_update)
+			return UPDATE_MOB_HEALTH
+
+
+	return BULLET_ACT_HIT
+
+
+/obj/projectile/bullet/rebar/supermatter
+	name = "supermatter bolt"
+	icon_state = "rebar_supermatter"
+	damage = 0
+	speed = 0.4
+	dismemberment = 0
+	damage_type = TOX
+	armour_penetration = 100
+	shrapnel_type = /obj/item/ammo_casing/rebar/supermatter
+
+/obj/projectile/bullet/rebar/supermatter/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/victim = target
+		victim.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
+		dust_feedback(target)
+		victim.dust()
+
+	if(!isturf(target))
+		dust_feedback(target)
+		qdel(target)
+	return BULLET_ACT_HIT
+
+
+/obj/projectile/bullet/rebar/supermatter/proc/dust_feedback(atom/target)
+	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 10, TRUE)
+	visible_message(span_danger("[src] is hit by [target], turning [target.p_them()] to dust in a brilliant flash of light!"))
 
 /obj/projectile/bullet/rebar/Initialize(mapload)
 	. = ..()
