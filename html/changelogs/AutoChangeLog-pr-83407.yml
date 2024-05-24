@@ -1,0 +1,5 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - balance: "you can now polymorph into raptors"
+  - balance: "raptors overall have less health and no longer have armor against ranged attacks"
