@@ -16,7 +16,6 @@ endmap
 # Production-level maps.
 
 map birdshot
-	#default
 	maxplayers 66
 	votable
 endmap
@@ -52,6 +51,11 @@ map pubbystation
 endmap
 
 map boxstation
+	votable
+endmap
+
+map kilostation
+	maxplayers 35
 	votable
 endmap
 
