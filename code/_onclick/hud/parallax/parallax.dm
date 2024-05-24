@@ -11,7 +11,7 @@
 	for(var/atom/movable/screen/plane_master/parallax as anything in get_true_plane_masters(PLANE_SPACE_PARALLAX))
 		parallax.unhide_plane(screenmob)
 
-	if(!C.parallax_rock)
+	if(isnull(C.parallax_rock))
 		C.parallax_rock = new(null, src)
 	C.screen |= C.parallax_rock
 
