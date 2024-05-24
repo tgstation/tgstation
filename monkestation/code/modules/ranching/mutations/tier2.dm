@@ -21,14 +21,17 @@
 	happiness = 50
 
 	can_come_from_string = "Silkie"
+
 /datum/mutation/ranching/chicken/snowy
 	chicken_type = /mob/living/basic/chicken/snowy
 	egg_type = /obj/item/food/egg/snowy
 	temperature_variance = 20
 	needed_temperature = 4
-	required_atmos = list(GAS_O2 = 30) //No space raising these bad boys
+	needed_pressure = 1003
+	pressure_variance = 1000
 
 	can_come_from_string = "White Silkie"
+
 /datum/mutation/ranching/chicken/pigeon
 	chicken_type = /mob/living/basic/chicken/pigeon
 	egg_type = /obj/item/food/egg/pigeon
@@ -37,6 +40,7 @@
 	food_requirements = list(/obj/item/food/grown/corn)
 
 	can_come_from_string = "Silkie"
+
 /datum/mutation/ranching/chicken/stone
 	chicken_type = /mob/living/basic/chicken/stone
 	egg_type = /obj/item/food/egg/stone
@@ -45,6 +49,7 @@
 	food_requirements = list(/obj/item/food/grown/cannabis)
 
 	can_come_from_string = "Glass Chicken"
+
 /datum/mutation/ranching/chicken/wiznerd
 	chicken_type = /mob/living/basic/chicken/wiznerd
 	egg_type = /obj/item/food/egg/wiznerd

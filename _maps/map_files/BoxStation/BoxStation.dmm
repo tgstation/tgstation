@@ -8746,6 +8746,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/side,
 /area/station/engineering/break_room)
+"cTn" = (
+/mob/living/basic/pet/potty,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "cTq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -30363,6 +30367,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
+"kfJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/mob/living/basic/pet/potty,
+/turf/open/floor/iron,
+/area/station/service/hydroponics/garden)
 "kfN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -30383,7 +30397,7 @@
 /turf/closed/wall/r_wall,
 /area/station/security/evidence)
 "kgn" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "kgv" = (
@@ -58585,7 +58599,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "tIO" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "tIU" = (
@@ -58618,6 +58632,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/autoname/directional/south,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark/side,
 /area/station/service/hydroponics)
 "tJF" = (
@@ -63486,6 +63501,7 @@
 /obj/machinery/camera/autoname/directional/south{
 	dir = 5
 	},
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark/side,
 /area/station/service/hydroponics)
 "voo" = (
@@ -67437,7 +67453,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark/side,
 /area/station/service/hydroponics)
 "wGN" = (
@@ -69385,7 +69401,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark/side,
 /area/station/service/hydroponics)
 "xqW" = (
@@ -85501,7 +85517,7 @@ vxd
 fPN
 cMT
 bKP
-axZ
+kfJ
 axZ
 qEk
 mrF
@@ -87060,7 +87076,7 @@ gLY
 emg
 juc
 fzI
-juc
+cTn
 nJa
 xqS
 rCa

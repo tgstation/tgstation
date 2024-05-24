@@ -382,9 +382,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if (isnull(body))
 		create_body()
 	else
-		//body.wipe_state()
-		QDEL_NULL(body)
-		create_body()
+		body.wipe_state()
 	appearance = preferences.render_new_preview_appearance(body)
 
 /atom/movable/screen/map_view/char_preview/proc/create_body()

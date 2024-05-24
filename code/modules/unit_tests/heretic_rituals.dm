@@ -110,7 +110,8 @@
 			// There are atoms around the rune still, and there shouldn't be.
 			// All component atoms were consumed, and all resulting atoms were cleaned up.
 			// This means the ritual may have messed up somewhere. Throw a fail and clean them up so we can keep testing.
-			TEST_FAIL("Heretic rituals: ([knowledge.type]) After completing the ritual, there were non-result atoms remaining on the rune. ([thing] - [thing.type])")
+			if(!istype(thing, /obj/effect/name_tag))
+				TEST_FAIL("Heretic rituals: ([knowledge.type]) After completing the ritual, there were non-result atoms remaining on the rune. ([thing] - [thing.type])")
 			nearby_atoms -= thing
 			qdel(thing)
 

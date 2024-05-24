@@ -52,18 +52,3 @@
 	animate(pixel_y = -1, time = 0.1 SECONDS, easing = EASE_OUT)
 	animate(transform = base_matrix, time = 0.1 SECONDS, easing = EASE_IN)
 	animate(pixel_y = base_pixel_y, time = 0.1 SECONDS, easing = EASE_IN)
-
-/mob/proc/remove_overlay_rainbow_effect(id)
-	for(var/obj/effect/abstract/blank/overlay/overlay in vis_contents)
-		if(id != overlay.id)
-			continue
-		qdel(overlay)
-
-/mutable_appearance/proc/apply_rainbow_effect(id, mob/tied_to)
-	render_target = id
-	var/obj/effect/abstract/blank/overlay/overlay = new
-	overlay.id = id
-	overlay.layer = layer
-	overlay.plane = plane
-	overlay.add_filter("rainbow", 1, alpha_mask_filter(render_source = id))
-	tied_to.vis_contents += overlay

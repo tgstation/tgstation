@@ -25,6 +25,7 @@
 	RegisterSignal(parent, COMSIG_MOB_FEED, PROC_REF(on_feed))
 	RegisterSignal(parent, COMSIG_MOB_RETURN_HUNGER, PROC_REF(return_hunger))
 	RegisterSignal(parent, COMSIG_MOB_ADJUST_HUNGER, PROC_REF(adjust_hunger))
+	RegisterSignal(parent, COMSIG_ATOM_MOUSE_ENTERED, PROC_REF(view_hunger))
 
 /datum/component/generic_mob_hunger/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_STOP_HUNGER)
@@ -32,6 +33,7 @@
 	UnregisterSignal(parent, COMSIG_MOB_FEED)
 	UnregisterSignal(parent, COMSIG_MOB_RETURN_HUNGER)
 	UnregisterSignal(parent, COMSIG_MOB_ADJUST_HUNGER)
+	UnregisterSignal(parent, COMSIG_ATOM_MOUSE_ENTERED)
 
 /datum/component/generic_mob_hunger/proc/stop_hunger()
 	hunger_paused = TRUE
@@ -92,3 +94,28 @@
 
 /datum/component/generic_mob_hunger/proc/remove_hunger_trait(trait)
 	REMOVE_TRAIT(parent, trait, "hunger_trait")
+
+
+/datum/component/generic_mob_hunger/proc/view_hunger(mob/living/source, mob/living/clicker)
+	if(!istype(clicker) || !clicker.client)
+		return
+
+	var/list/offset_to_add = get_icon_dimensions(source.icon)
+	var/y_position = offset_to_add["height"] + 8 // this renders above any health ones
+	var/obj/effect/overlay/happiness_overlay/hunger/hearts = new(null, clicker)
+	hearts.pixel_y = y_position
+	hearts.set_hearts(current_hunger / max_hunger)
+	var/image/new_image = new(source)
+	new_image.appearance = hearts.appearance
+	if(!isturf(source.loc))
+		new_image.loc = source.loc
+		SET_PLANE_EXPLICIT(new_image, new_image.plane, source.loc)
+	else
+		new_image.loc = source
+		SET_PLANE_EXPLICIT(new_image, new_image.plane, source)
+	clicker.client.images += new_image
+	hearts.image = new_image
+
+/obj/effect/overlay/happiness_overlay/hunger
+	full_icon = "full_hunger"
+	empty_icon = "empty_hunger"

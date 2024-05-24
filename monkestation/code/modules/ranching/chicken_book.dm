@@ -61,7 +61,7 @@
 
 		details["name"] = "[female_name] / [male_name]"
 		details["desc"] = F.book_desc
-		details["max_age"] = F.max_age
+		details["max_age"] = 100
 		details["happiness"] = created_mutation.happiness
 		details["temperature"] = created_mutation.needed_temperature
 		details["temperature_variance"] = created_mutation.temperature_variance

@@ -40,6 +40,7 @@
 	reagent_requirements = list(/datum/reagent/toxin/chloralhydrate)
 
 	can_come_from_string = "White Chicken"
+
 /datum/mutation/ranching/chicken/silkie
 	chicken_type = /mob/living/basic/chicken/silkie
 	egg_type = /obj/item/food/egg/silkie

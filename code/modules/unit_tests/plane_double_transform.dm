@@ -28,6 +28,8 @@
 		// Walk the relay targets
 		for(var/target_plane in plane.render_relay_planes)
 			var/atom/movable/screen/plane_master/target = our_group.plane_masters["[target_plane]"]
+			if(istype(target, /atom/movable/screen/plane_master/name_tag_blocker) || istype(target, /atom/movable/screen/plane_master/name_tags))
+				continue
 			if(target.multiz_scaled)
 				TEST_FAIL("[plane.type] draws a render relay into [target.type]. Both are scaled by multiz, so this will cause strange transforms.\n\
 				consider making a new render plate that they can both draw to instead, or something of that nature.")
@@ -38,6 +40,8 @@
 			if(!filter["render_source"])
 				continue
 			var/atom/movable/screen/plane_master/target = render_target_to_plane[filter["render_source"]]
+			if(istype(target, /atom/movable/screen/plane_master/name_tag_blocker) || istype(target, /atom/movable/screen/plane_master/name_tags))
+				continue
 			if(target.multiz_scaled)
 				TEST_FAIL("[plane.type] draws a render relay into [target.type]. Both are scaled by multiz, so this will cause strange transforms.\n\
 				consider making a new render plate that they can both draw to instead, or something of that nature.")

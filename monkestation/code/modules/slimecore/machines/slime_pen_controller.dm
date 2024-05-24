@@ -179,7 +179,14 @@
 	var/obj/machinery/corral_corner/pad = multitool.buffer
 	if(!istype(pad) || !pad.connected_data)
 		return
+	if(linked_data)
+		UnregisterSignal(linked_data, COMSIG_QDELETING)
 	linked_data = pad.connected_data
+	RegisterSignal(linked_data, COMSIG_QDELETING, PROC_REF(clear_data))
 	balloon_alert_to_viewers("linked pad")
 	pad.balloon_alert_to_viewers("linked to controller")
 	to_chat(user, span_notice("You link the [pad] to the [src]."))
+
+/obj/machinery/slime_pen_controller/proc/clear_data()
+	UnregisterSignal(linked_data, COMSIG_QDELETING)
+	linked_data = null

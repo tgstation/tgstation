@@ -48,6 +48,7 @@
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
+	update_name_tag(name)
 
 	if(stat != DEAD)
 		return TRUE

@@ -2360,7 +2360,7 @@
 	taste_description = "bitterness" // apparently what viagra tastes like
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/growthserum/feed_interaction(mob/living/basic/chicken/target, volume)
+/datum/reagent/growthserum/feed_interaction(mob/living/basic/chicken/target, volume, mob/user)
 	. = ..()
 	target.egg_laying_boosting += min(volume, 25)
 

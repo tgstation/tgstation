@@ -2034,10 +2034,13 @@
 	if (isnull(user))
 		return
 
+	if(user.client)
+		SEND_SIGNAL(user.client, COMSIG_CLIENT_HOVER_NEW, src)
+	SEND_SIGNAL(src, COMSIG_ATOM_MOUSE_ENTERED, user)
+
 	// Face directions on combat mode. No procs, no typechecks, just a var for speed
 	if(user.face_mouse)
 		user.face_atom(src)
-
 	// Screentips
 	var/datum/hud/active_hud = user.hud_used
 	if(!active_hud)

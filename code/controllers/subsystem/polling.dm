@@ -155,8 +155,8 @@ SUBSYSTEM_DEF(polling)
 		if(ignore_category)
 			act_never = "<a href='?src=[REF(poll_alert_button)];never=1'>\[Never For This Round\]</a>"
 
-		if(!duplicate_message_check(alert_poll)) //Only notify people once. They'll notice if there are multiple and we don't want to spam people.
-			SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg')
+		if(!duplicate_message_check(alert_poll) && candidate_mob.client) //Only notify people once. They'll notice if there are multiple and we don't want to spam people.
+			SEND_SOUND(candidate_mob.client, sound('sound/misc/notice2.ogg', volume = candidate_mob.client.prefs.channel_volume["[CHANNEL_SOUND_EFFECTS]"]))
 			to_chat(candidate_mob, span_boldnotice(examine_block("Now looking for candidates [role_name_text ? "to play as \an [role_name_text]." : "\"[question]\""] [act_jump] [act_signup] [act_never]")))
 
 		// Start processing it so it updates visually the timer

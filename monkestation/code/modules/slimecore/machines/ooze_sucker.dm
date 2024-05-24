@@ -161,7 +161,7 @@
 	var/datum/liquid_group/targeted_group = affected_turf.liquids.liquid_group
 	if(!targeted_group.reagents_per_turf)
 		return
-	targeted_group.transfer_specific_reagents(reagents, target_value, reagents_to_check = typesof(/datum/reagent/slime_ooze), merge = TRUE)
+	targeted_group.transfer_specific_reagents(reagents, target_value, reagents_to_check = typesof(/datum/reagent/slime_ooze), remover = affected_turf.liquids,  merge = TRUE)
 	drained_last_process = TRUE
 
 /obj/machinery/plumbing/ooze_sucker/attack_hand_secondary(mob/user, list/modifiers)

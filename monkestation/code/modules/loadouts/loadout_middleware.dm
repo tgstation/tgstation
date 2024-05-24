@@ -121,6 +121,8 @@
 	if("[params["unusual_placement"]]" in preferences.special_loadout_list["unusual"])
 		preferences.special_loadout_list["unusual"] -= params["unusual_placement"]
 		preferences.save_preferences()
+		var/datum/tgui/ui = SStgui.get_open_ui(user, preferences)
+		ui.send_update()
 		return
 
 	if(!islist(preferences.special_loadout_list["unusual"]))

@@ -30,6 +30,7 @@
 
 	particle.icon_state = state
 	particle.loc = owner_loc
+	SET_PLANE_EXPLICIT(particle, GAME_PLANE_UPPER_FOV_HIDDEN, owner_loc)
 	particle.pixel_x = origin_coords[1]
 	particle.pixel_y = origin_coords[2]
 	//A matrix to animate towards. Saves copy pasting var declarations.

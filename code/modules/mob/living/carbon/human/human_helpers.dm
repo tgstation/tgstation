@@ -277,6 +277,8 @@
 
 	mob_height = new_height
 	regenerate_icons()
+	if(isdummy(src))
+		apply_height_filters(src, TRUE)
 	return TRUE
 
 /**

@@ -245,6 +245,7 @@
 		"razor",
 		"screwdriver",
 		"secateurs",
+		"chicken_carrier",
 		"shovel",
 		"spade",
 		"spraycan",

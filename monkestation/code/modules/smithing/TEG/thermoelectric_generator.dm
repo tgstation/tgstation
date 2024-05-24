@@ -216,28 +216,30 @@
 	var/list/data = list()
 	data["error_message"] = null
 
-	var/datum/gas_mixture/cold_circ_air1 = cold_circ.airs[1]
-	var/datum/gas_mixture/cold_circ_air2 = cold_circ.airs[2]
+	var/datum/gas_mixture/cold_circ_air1 = cold_circ?.airs[1]
+	var/datum/gas_mixture/cold_circ_air2 = cold_circ?.airs[2]
 
-	var/datum/gas_mixture/hot_circ_air1 = hot_circ.airs[1]
-	var/datum/gas_mixture/hot_circ_air2 = hot_circ.airs[2]
+	var/datum/gas_mixture/hot_circ_air1 = hot_circ?.airs[1]
+	var/datum/gas_mixture/hot_circ_air2 = hot_circ?.airs[2]
 
 	data["last_power_output"] = display_power(lastgenlev)
 
 	data["past_power_info"] = past_power_levels
 
 	var/list/cold_data = list()
-	cold_data["temperature_inlet"] = round(cold_circ_air2.temperature, 0.1)
-	cold_data["temperature_outlet"] = round(cold_circ_air1.temperature, 0.1)
-	cold_data["pressure_inlet"] = round(cold_circ_air2.return_pressure(), 0.1)
-	cold_data["pressure_outlet"] = round(cold_circ_air1.return_pressure(), 0.1)
+	if(cold_circ_air2 && cold_circ_air1)
+		cold_data["temperature_inlet"] = round(cold_circ_air2.temperature, 0.1)
+		cold_data["temperature_outlet"] = round(cold_circ_air1.temperature, 0.1)
+		cold_data["pressure_inlet"] = round(cold_circ_air2.return_pressure(), 0.1)
+		cold_data["pressure_outlet"] = round(cold_circ_air1.return_pressure(), 0.1)
 	data["cold_data"] = list(cold_data)
 
 	var/list/hot_data = list()
-	hot_data["temperature_inlet"] = round(hot_circ_air2.temperature, 0.1)
-	hot_data["temperature_outlet"] = round(hot_circ_air1.temperature, 0.1)
-	hot_data["pressure_inlet"] = round(hot_circ_air2.return_pressure(), 0.1)
-	hot_data["pressure_outlet"] = round(hot_circ_air1.return_pressure(), 0.1)
+	if(hot_circ_air1 && hot_circ_air2)
+		hot_data["temperature_inlet"] = round(hot_circ_air2.temperature, 0.1)
+		hot_data["temperature_outlet"] = round(hot_circ_air1.temperature, 0.1)
+		hot_data["pressure_inlet"] = round(hot_circ_air2.return_pressure(), 0.1)
+		hot_data["pressure_outlet"] = round(hot_circ_air1.return_pressure(), 0.1)
 	data["hot_data"] = list(hot_data)
 
 	if(!powernet)

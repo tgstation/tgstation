@@ -28,6 +28,7 @@
 		M.Scale(1.2,1.2)
 		sleep(0.1 SECONDS)
 	alpha = 0
+	return TRUE
 
 //inverse of above
 /atom/proc/fading_leap_down()

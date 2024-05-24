@@ -12,7 +12,7 @@
 
 /datum/antagonist/cortical_borer/antag_token(datum/mind/hosts_mind, mob/spender)
 	var/list/vents = list()
-	if(isliving(spender))
+	if(isliving(spender) && hosts_mind)
 		hosts_mind.current.unequip_everything()
 		new /obj/effect/holy(hosts_mind.current.loc)
 		QDEL_IN(hosts_mind.current, 20)

@@ -13,3 +13,4 @@
 	icon_state = "onagadori"
 
 	layer_hen_type = /mob/living/basic/chicken/onagadori
+	turf_requirements = list(/turf/open/floor/grass, /turf/open/floor/sandy_dirt)

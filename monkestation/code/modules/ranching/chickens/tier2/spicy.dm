@@ -11,3 +11,5 @@
 	icon_state = "spicy"
 
 	layer_hen_type = /mob/living/basic/chicken/spicy
+	low_temp = 350
+	high_temp = 450

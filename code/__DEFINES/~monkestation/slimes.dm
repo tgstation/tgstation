@@ -75,6 +75,9 @@
 
 #define COMSIG_FRIENDSHIP_CHECK_LEVEL "friendship_check_level"
 #define COMSIG_FRIENDSHIP_CHANGE "friendship_change"
-
+#define COMSIG_FRIENDSHIP_PASS_FRIENDSHIP "friendship_passfriends"
 
 #define TRAIT_RAINBOWED "rainbowed"
+
+#define COMSIG_ATOM_MOUSE_ENTERED "mouse_entered"
+#define COMSIG_CLIENT_HOVER_NEW "client_new_hover"

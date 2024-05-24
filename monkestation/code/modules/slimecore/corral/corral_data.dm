@@ -25,14 +25,19 @@
 			RegisterSignal(slime, COMSIG_LIVING_DEATH, PROC_REF(remove_cause_sucked))
 			RegisterSignals(slime, list(COMSIG_PREQDELETED, COMSIG_QDELETING), PROC_REF(try_remove))
 
+	for(var/obj/machinery/corral_corner/corner as anything in corral_corners)
+		RegisterSignal(corner, COMSIG_QDELETING, PROC_REF(start_break))
+
 /datum/corral_data/Destroy(force, ...)
 	QDEL_LIST(corral_connectors)
 	corral_turfs = null
 
 	for(var/obj/machinery/corral_corner/corner as anything in corral_corners)
 		corner.connected_data = null
+		UnregisterSignal(corner, COMSIG_QDELETING)
 		corral_corners -= corner
 	corral_corners = null
+
 	for(var/mob/living/basic/slime/slime as anything in managed_slimes)
 		UnregisterSignal(slime, COMSIG_ATOM_SUCKED)
 		UnregisterSignal(slime, COMSIG_LIVING_DEATH)
@@ -101,3 +106,6 @@
 			UnregisterSignal(slime, list(COMSIG_PREQDELETED, COMSIG_QDELETING))
 			for(var/datum/corral_upgrade/upgrade as anything in corral_upgrades)
 				upgrade.on_slime_exited(slime)
+
+/datum/corral_data/proc/start_break()
+	qdel(src)

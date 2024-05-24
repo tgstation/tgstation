@@ -11,3 +11,4 @@
 	icon_state = "ixworth"
 
 	layer_hen_type = /mob/living/basic/chicken/ixworth
+	turf_requirements = list(/turf/open/floor/grass, /turf/open/floor/sandy_dirt)

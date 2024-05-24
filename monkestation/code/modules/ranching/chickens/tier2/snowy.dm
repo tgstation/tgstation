@@ -13,6 +13,9 @@
 
 	layer_hen_type = /mob/living/basic/chicken/snowy
 
+	high_temp = 24
+	low_pressure = 3
+	high_pressure = 2003
 
 /obj/item/food/egg/snowy/consumed_egg(datum/source, mob/living/eater, mob/living/feeder)
 	eater.apply_status_effect(SNOWY_EGG)

@@ -6,6 +6,10 @@
 	mutation_list = list()
 
 	book_desc = "A mystical chicken born from the dreams of death will only appear when a Black Selkie dies of old age."
+
+/mob/living/basic/chicken/dream/old_age_death()
+	return
+
 /obj/item/food/egg/dream
 	name = "Dream Egg"
 	icon_state = "dream"

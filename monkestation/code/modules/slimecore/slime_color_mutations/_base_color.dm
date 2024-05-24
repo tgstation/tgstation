@@ -1,4 +1,5 @@
 GLOBAL_LIST_INIT(unlocked_slime_colors, list())
+GLOBAL_LIST_INIT(mutated_slime_colors, list())
 
 /datum/slime_color
 	///the name of the slime color

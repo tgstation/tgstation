@@ -9,6 +9,7 @@
 	light_mask = "nutri-light-mask"
 	products = list(
 		/obj/item/cultivator = 3,
+		/obj/item/chicken_carrier = 5,
 		/obj/item/plant_analyzer = 4,
 		/obj/item/reagent_containers/cup/bottle/nutrient/ez = 30,
 		/obj/item/reagent_containers/cup/bottle/nutrient/l4z = 20,

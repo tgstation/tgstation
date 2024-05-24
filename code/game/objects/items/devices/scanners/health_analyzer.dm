@@ -683,10 +683,18 @@
 
 	var/list/render = list()
 	for(var/datum/disease/disease as anything in patient.diseases)
-		if(!(disease.visibility_flags & HIDDEN_SCANNER))
-			render += "<span class='alert ml-1'><b>Warning: [disease.form] detected</b>\n\
-			<div class='ml-2'>Name: [disease.name].\nType: [disease.spread_text].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
-			</span>"
+		if(istype(disease, /datum/disease/advanced))
+			var/datum/disease/advanced/advanced = disease
+			if(!(disease.visibility_flags & HIDDEN_SCANNER))
+				render += "<span class='alert ml-1'><b>Warning: [advanced.origin] detected</b>\n\
+				<div class='ml-2'>Name: [advanced.real_name()].\nType: [disease.spread_text].\nStage: [disease.stage]/[disease.max_stages].</div>\
+				</span>"
+
+		else
+			if(!(disease.visibility_flags & HIDDEN_SCANNER))
+				render += "<span class='alert ml-1'><b>Warning: [disease.form] detected</b>\n\
+				<div class='ml-2'>Name: [disease.name].\nType: [disease.spread_text].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
+				</span>"
 
 	if(!length(render))
 		playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)

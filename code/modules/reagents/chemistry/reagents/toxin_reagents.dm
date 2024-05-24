@@ -62,7 +62,7 @@
 	affected_mob.adjustToxLoss(0.5 * seconds_per_tick * REM, required_biotype = affected_biotype)
 	return ..()
 
-/datum/reagent/toxin/mutagen/feed_interaction(mob/living/basic/chicken/target, volume)
+/datum/reagent/toxin/mutagen/feed_interaction(mob/living/basic/chicken/target, volume, mob/user)
 	target.instability += min(25, volume)
 
 /*

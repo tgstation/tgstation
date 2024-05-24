@@ -12,3 +12,4 @@
 	icon_state = "chocolateegg"
 
 	layer_hen_type = /mob/living/basic/chicken/brown
+	turf_requirements = list(/turf/open/floor/grass, /turf/open/floor/sandy_dirt)

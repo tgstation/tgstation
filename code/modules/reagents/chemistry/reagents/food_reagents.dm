@@ -60,7 +60,7 @@
 	var/brute_heal = 1
 	var/burn_heal = 0
 
-/datum/reagent/consumable/nutriment/feed_interaction(mob/living/basic/chicken/target, volume)
+/datum/reagent/consumable/nutriment/feed_interaction(mob/living/basic/chicken/target, volume, mob/user)
 	. = ..()
 	target.fertility_boosting += min(25, volume * 0.5)
 
@@ -232,9 +232,9 @@
 	default_container = /obj/item/reagent_containers/condiment/sugar
 
 
-/datum/reagent/consumable/sugar/feed_interaction(mob/living/basic/chicken/target, volume)
+/datum/reagent/consumable/sugar/feed_interaction(mob/living/basic/chicken/target, volume, mob/user)
 	.=..()
-	target.adjust_happiness(0.1*volume)
+	target.adjust_happiness(0.1*volume, user)
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("You go into hyperglycaemic shock! Lay off the twinkies!"))

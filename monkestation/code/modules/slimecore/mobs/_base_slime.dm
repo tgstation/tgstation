@@ -384,6 +384,8 @@
 		if(random && listed.syringe_blocked)
 			continue
 		valid_choices += listed
+		if(!(listed.type in GLOB.mutated_slime_colors))
+			listed.weight *= 100
 		valid_choices[listed] = listed.weight
 	if(!length(valid_choices))
 		return FALSE
@@ -392,6 +394,8 @@
 	if(!picked)
 		return FALSE
 	mutating_into = picked.output
+	if(!(mutating_into.type in GLOB.mutated_slime_colors))
+		GLOB.mutated_slime_colors |= mutating_into.type
 	return TRUE
 
 /mob/living/basic/slime/proc/attempt_change(datum/source, hunger_precent)

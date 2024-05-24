@@ -19,5 +19,3 @@
 
 
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
-
-#define COMSIG_MUTATION_TRIGGER "mutation_trigger"

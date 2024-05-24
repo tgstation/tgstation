@@ -58,6 +58,14 @@
 /client
 	var/list/redeemed_rewards = list()
 
+/client/verb/open_xp_menu()
+	set category = "IC"
+	set name = "Open XP Menu"
+	set desc = "List job xp."
+
+	xp_menu = new(src)
+	xp_menu.ui_interact(usr)
+
 /client/verb/claim_job_reward()
 	set category = "IC"
 	set name = "Claim Job Rewards"

@@ -11,6 +11,7 @@
 	icon_state = "dreamsicle"
 
 	layer_hen_type = /mob/living/basic/chicken/dreamsicle
+	nearby_mob = /mob/living/basic/chicken/snowy
 
 /obj/item/food/egg/dreamsicle/consumed_egg(datum/source, mob/living/eater, mob/living/feeder)
 	to_chat(eater, "<span class='warning'>You start to feel a dreamsicle high coming on.</span>")

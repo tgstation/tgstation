@@ -11,6 +11,15 @@
 	melee_damage_lower = 8
 	obj_damage = 10
 
+	pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/point_targeting/attack/chicken/ranged,
+		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/play_dead,
+	)
+
 	targeted_ability = /datum/action/cooldown/mob_cooldown/chicken/petrifying_gaze
 
 	egg_type = /obj/item/food/egg/cockatrice

@@ -126,8 +126,8 @@
 	if(..())
 		return
 	//We're leaving the size traits permanent until someone wants to separate the mutation from customization aspects
-	//REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	//owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
+	REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
+	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
 
 //Clumsiness has a very large amount of small drawbacks depending on item.
 /datum/mutation/human/clumsy

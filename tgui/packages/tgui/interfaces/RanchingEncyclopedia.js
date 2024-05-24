@@ -125,25 +125,25 @@ const ChickenInfo = (props, context) => {
         {selectedChicken.required_rooster &&
           'A ' +
             selectedChicken.required_rooster +
-            " needs to be present for this chicken's birth."}
+            ' needs to be around for the egg to hatch.'}
       </Flex.Item>
       <Flex.Item class="chicken-metric">
         {selectedChicken.liquid_depth &&
           'Their needs to be a pool of liquid atleast' +
             selectedChicken.liquid_depth +
-            ' deeo.'}
+            ' deep for the egg to hatch.'}
       </Flex.Item>
       <Flex.Item class="chicken-metric">
         {selectedChicken.needed_turfs &&
           'Their needs to be ' +
             selectedChicken.needed_turfs +
-            ' around at this chickens birth.'}
+            ' around for the egg to hatch.'}
       </Flex.Item>
       <Flex.Item class="chicken-metric">
         {selectedChicken.nearby_items &&
-          'You need ' +
+          'The Chicken needs to be given ' +
             selectedChicken.nearby_items +
-            ' nearby to entice the chicken to hatch.'}
+            ' to mutate.'}
       </Flex.Item>
     </Flex>
   );

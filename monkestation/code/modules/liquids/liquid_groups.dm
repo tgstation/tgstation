@@ -424,7 +424,10 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		if(!(reagent_type.type in reagents_to_check))
 			continue
 		secondary_reagent.add_reagent(reagent_type.type, reagent_type.volume * precent, no_react = TRUE)
-		remove_specific(amount = reagent_type.volume * precent, reagent_type = reagent_type.type)
+		if(remover)
+			remove_specific(remover, amount = reagent_type.volume * precent, reagent_type = reagent_type.type)
+		else
+			remove_specific(amount = reagent_type.volume * precent, reagent_type = reagent_type.type)
 
 	process_removal()
 	handle_visual_changes()
