@@ -1,4 +1,0 @@
-author: "paganiy"
-delete-after: True
-changes:
-  - balance: "Auto-aim in combat mode at mobs on the floor is disabled after the projectile passes 10 tiles."
