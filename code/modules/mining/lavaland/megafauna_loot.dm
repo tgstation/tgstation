@@ -264,7 +264,7 @@
 	clothing_flags = THICKMATERIAL
 	resistance_flags = FIRE_PROOF|LAVA_PROOF|ACID_PROOF
 	transparent_protection = HIDESUITSTORAGE|HIDEJUMPSUIT
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/pickaxe)
+	allowed = null
 	greyscale_colors = "#4d4d4d#808080"
 	greyscale_config = /datum/greyscale_config/heck_suit
 	greyscale_config_worn = /datum/greyscale_config/heck_suit/worn
@@ -283,6 +283,7 @@
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 	AddElement(/datum/element/gags_recolorable)
+	allowed = GLOB.mining_suit_allowed
 
 /obj/item/clothing/suit/hooded/hostile_environment/process(seconds_per_tick)
 	var/mob/living/carbon/wearer = loc
