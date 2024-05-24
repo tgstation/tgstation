@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Mixing the reagents for moon rocks, bLaSToFF ampoules, or SaturnX globs in amounts less than the minimum for the recipe no longer eats the reagents without doing anything."
