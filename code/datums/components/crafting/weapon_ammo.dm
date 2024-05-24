@@ -34,9 +34,9 @@
 
 /datum/crafting_recipe/healium_bolt
 	name = "healium crystal crossbow bolt"
-	result = /obj/item/ammo_casing/rebar/syndie
+	result = /obj/item/ammo_casing/rebar/healium
 	reqs = list(
-		/datum/gas_recipe/crystallizer/healium_grenade = 1
+		/obj/item/grenade/gas_crystal/healium_crystal = 1
 	)
 	time = 0.1 SECONDS
 	category = CAT_WEAPON_AMMO
