@@ -73,7 +73,7 @@
 	// less limping while we have determination still
 	var/determined_mod = owner.has_status_effect(/datum/status_effect/determined) ? 0.5 : 1
 
-	if(SEND_SIGNAL(owner, COMSIG_MOB_LIMP_CHECK) & COMPONENT_CANCEL_LIMP)
+	if(SEND_SIGNAL(owner, COMSIG_CARBON_LIMPING) & COMPONENT_CANCEL_LIMP)
 		return
 
 	if(next_leg == left)
