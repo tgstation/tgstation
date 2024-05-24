@@ -5966,6 +5966,7 @@
 #include "code\modules\transport\tram\tram_structures.dm"
 #include "code\modules\tutorials\_tutorial.dm"
 #include "code\modules\tutorials\tutorial_instruction.dm"
+#include "code\modules\tutorials\tutorial_skip.dm"
 #include "code\modules\tutorials\tutorials\drop.dm"
 #include "code\modules\tutorials\tutorials\switch_hands.dm"
 #include "code\modules\unit_tests\_unit_tests.dm"
