@@ -162,7 +162,7 @@
 	// This means our position function is x^2. This is always LESS then the linear we're using here
 	// But if we just used the same time delay, our rate of change would mismatch. f'(1) = 2x for quad easing, rather then the 1 we get for linear
 	// (This is because of how derivatives work right?)
-	// Because of this, while our actual rate of change from before was PARALLAX_LOOP_TIME, our percieved rate of change was PARALLAX_LOOP_TIME / 2 (lower == faster).
+	// Because of this, while our actual rate of change from before was PARALLAX_LOOP_TIME, our perceived rate of change was PARALLAX_LOOP_TIME / 2 (lower == faster).
 	// Let's account for that here
 	var/scaled_time = (PARALLAX_LOOP_TIME / layer.speed) / 2
 	animate(layer, transform = new_transform, time = 0, loop = -1, flags = ANIMATION_END_NOW)
