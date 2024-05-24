@@ -9,7 +9,7 @@
 	if(SSmapping.is_planetary())
 		icon = 'icons/mob/simple/lavaland/raptor_icebox.dmi'
 
-/obj/item/food/egg/raptor_egg/proc/determine_growth_path(mob/living/basic/mining/raptor/dad, mob/living/basic/mining/raptor/mom)
+/obj/item/food/egg/raptor_egg/proc/determine_growth_path(mob/living/basic/raptor/dad, mob/living/basic/raptor/mom)
 	if(dad.type == mom.type)
 		add_growth_component(dad.child_path)
 		return
@@ -24,9 +24,9 @@
 		add_growth_component(path)
 		return
 	var/list/valid_subtypes = list()
-	var/static/list/all_subtypes = subtypesof(/mob/living/basic/mining/raptor/baby_raptor)
+	var/static/list/all_subtypes = subtypesof(/mob/living/basic/raptor/baby_raptor)
 	for(var/path in all_subtypes)
-		var/mob/living/basic/mining/raptor/baby_raptor/raptor_path = path
+		var/mob/living/basic/raptor/baby_raptor/raptor_path = path
 		if(!prob(initial(raptor_path.roll_rate)))
 			continue
 		valid_subtypes += raptor_path
@@ -46,7 +46,7 @@
 		post_hatch = CALLBACK(src, PROC_REF(post_hatch)),\
 	)
 
-/obj/item/food/egg/raptor_egg/proc/post_hatch(mob/living/basic/mining/raptor/baby)
+/obj/item/food/egg/raptor_egg/proc/post_hatch(mob/living/basic/raptor/baby)
 	if(!istype(baby))
 		return
 	QDEL_NULL(baby.inherited_stats)
