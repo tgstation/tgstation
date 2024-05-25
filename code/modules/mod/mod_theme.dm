@@ -143,6 +143,8 @@
 	control_part_datum.part_item = mod
 	mod.mod_parts["[mod.slot_flags]"] = control_part_datum
 	for(var/path in variants[default_skin])
+		if(!ispath(path))
+			continue
 		var/obj/item/mod_part = new path(mod)
 		if(mod_part.slot_flags == ITEM_SLOT_OCLOTHING && isclothing(mod_part))
 			var/obj/item/clothing/chestplate = mod_part
