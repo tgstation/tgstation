@@ -1,0 +1,4 @@
+author: "OverwatchVoice"
+delete-after: True
+changes:
+  - qol: "The \"Proto-Nitrate BZ response\" atmsopheric reaction now lists it's required temperature."
