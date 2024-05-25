@@ -230,16 +230,16 @@
 			//Module is currently active
 			continue
 
-	// Arrange in a grid x=-4 to 3 and y=1 to display_rows
-	var/x = (i - 1) % 8 - 4
-	var/y = floor((i - 1) / 8) + 1
+		// Arrange in a grid x=-4 to 3 and y=1 to display_rows
+		var/x = (i - 1) % 8 - 4
+		var/y = floor((i - 1) / 8) + 1
 
-	screenmob.client.screen += A
-	if(x < 0)
-		A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
-	else
-		A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
-	SET_PLANE_IMPLICIT(A, ABOVE_HUD_PLANE)
+		screenmob.client.screen += A
+		if(x < 0)
+			A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
+		else
+			A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
+		SET_PLANE_IMPLICIT(A, ABOVE_HUD_PLANE)
 
 
 /datum/hud/robot/persistent_inventory_update(mob/viewer)
