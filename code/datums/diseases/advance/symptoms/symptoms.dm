@@ -32,8 +32,6 @@
 	var/symptom_delay_max = 1
 	///Can be used to multiply virus effects
 	var/power = 1
-	///A neutered symptom has no effect, and only affects statistics.
-	var/neutered = FALSE
 	var/list/thresholds
 	///If this symptom can appear from /datum/disease/advance/GenerateSymptoms()
 	var/naturally_occuring = TRUE
@@ -50,19 +48,13 @@
 
 ///Called when processing of the advance disease that holds this symptom infects a host and upon each Refresh() of that advance disease.
 /datum/symptom/proc/Start(datum/disease/advance/A)
-	if(neutered)
-		return FALSE
 	return TRUE
 
 ///Called when the advance disease is going to be deleted or when the advance disease stops processing.
 /datum/symptom/proc/End(datum/disease/advance/A)
-	if(neutered)
-		return FALSE
 	return TRUE
 
 /datum/symptom/proc/Activate(datum/disease/advance/advanced_disease)
-	if(neutered)
-		return FALSE
 	if(required_organ)
 		if(!advanced_disease.has_required_infectious_organ(advanced_disease.affected_mob, required_organ))
 			return FALSE
@@ -74,15 +66,12 @@
 		return TRUE
 
 /datum/symptom/proc/on_stage_change(datum/disease/advance/A)
-	if(neutered)
-		return FALSE
 	return TRUE
 
 /datum/symptom/proc/Copy()
 	var/datum/symptom/new_symp = new type
 	new_symp.name = name
 	new_symp.id = id
-	new_symp.neutered = neutered
 	return new_symp
 
 /datum/symptom/proc/generate_threshold_desc()
@@ -111,7 +100,6 @@
 	data["stage_speed"] = stage_speed
 	data["transmission"] = transmittable
 	data["level"] = level
-	data["neutered"] = neutered
 	data["threshold_desc"] = threshold_descs
 	return data
 

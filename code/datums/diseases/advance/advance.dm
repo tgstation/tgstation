@@ -158,10 +158,8 @@
 				symptom_datum.next_activation = world.time + (rand(symptom_datum.symptom_delay_min SECONDS, symptom_datum.symptom_delay_max SECONDS) * DISEASE_SYMPTOM_FREQUENCY_MODIFIER)
 			symptom_datum.on_stage_change(src)
 
-	for(var/s in symptoms)
-		var/datum/symptom/symptom_datum = s
-		if(!symptom_datum.neutered)
-			symptom_datum.Activate(src)
+	for(var/datum/symptom/symptom_datum as anything in symptoms)
+		symptom_datum.Activate(src)
 
 
 // Tell symptoms stage changed
@@ -257,8 +255,7 @@
 		properties["stealth"] += S.stealth
 		properties["stage_rate"] += S.stage_speed
 		properties["transmittable"] += S.transmittable
-		if(!S.neutered)
-			properties["severity"] += S.severity // severity is based on the sum of all non-neutered symptoms' severity
+		properties["severity"] += S.severity
 	if(properties["severity"] > 0)
 		properties["severity"] += round((properties["resistance"] / 12), 1)
 		properties["severity"] += round((properties["stage_rate"] / 11), 1)
@@ -370,16 +367,6 @@
 			RemoveSymptom(S)
 			Refresh(TRUE)
 
-// Randomly neuter a symptom.
-/datum/disease/advance/proc/Neuter(ignore_mutable = FALSE)
-	if(!mutable && !ignore_mutable)
-		return
-	if(length(symptoms))
-		var/datum/symptom/S = pick(symptoms)
-		if(S)
-			NeuterSymptom(S)
-			Refresh(TRUE)
-
 // Name the disease.
 /datum/disease/advance/proc/AssignName(name = "Unknown")
 	var/datum/disease/advance/A = SSdisease.archive_diseases[GetDiseaseID()]
@@ -389,11 +376,8 @@
 /datum/disease/advance/GetDiseaseID()
 	if(!id)
 		var/list/L = list()
-		for(var/datum/symptom/S in symptoms)
-			if(S.neutered)
-				L += "[S.id]N"
-			else
-				L += S.id
+		for(var/datum/symptom/symptom as anything in symptoms)
+			L += symptom.id
 		L = sort_list(L) // Sort the list so it doesn't matter which order the symptoms are in.
 		var/result = jointext(L, ":")
 		id = result
@@ -415,13 +399,6 @@
 /datum/disease/advance/proc/RemoveSymptom(datum/symptom/S)
 	symptoms -= S
 	S.OnRemove(src)
-
-// Neuter a symptom, so it will only affect stats
-/datum/disease/advance/proc/NeuterSymptom(datum/symptom/S)
-	if(!S.neutered)
-		S.neutered = TRUE
-		S.name += " (neutered)"
-		S.OnRemove(src)
 
 /*
 
