@@ -239,20 +239,24 @@
 		if(!isspaceturf(turf))
 			consume_turf(turf)
 
-/obj/item/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
+/obj/item/melee/supermatter_sword/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
-	if(user && target == user)
-		user.dropItemToGround(src)
-	if(proximity_flag)
-		consume_everything(target)
-		return . | AFTERATTACK_PROCESSED_ITEM
+	if(.)
+		return
+
+	if(A == user)
+		user.dropItemToGround(src, TRUE)
+	else
+		user.do_attack_animation(A)
+	consume_everything(A)
+	return TRUE
 
 /obj/item/melee/supermatter_sword/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(ismob(hit_atom))
 		var/mob/mob = hit_atom
 		if(src.loc == mob)
-			mob.dropItemToGround(src)
+			mob.dropItemToGround(src, TRUE)
 	consume_everything(hit_atom)
 
 /obj/item/melee/supermatter_sword/pickup(user)

@@ -66,14 +66,13 @@
 	user.visible_message(span_notice("[user] fails to analyze [interacting_with]'s genetic makeup."), span_warning("[interacting_with] has no readable genetic makeup!"))
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/sequence_scanner/afterattack_secondary(obj/object, mob/user, proximity)
-	. = ..()
-	if(!istype(object) || !proximity)
-		return
+/obj/item/sequence_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(istype(object, /obj/machinery/computer/scan_consolenew))
 		var/obj/machinery/computer/scan_consolenew/console = object
 		var/buffer_index = tgui_input_number(user, "Slot:", "Which slot to export:", 1, LAZYLEN(console.genetic_makeup_buffer), 1)
 		console.genetic_makeup_buffer[buffer_index] = genetic_makeup_buffer
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/sequence_scanner/attack_self(mob/user)
 	display_sequence(user)
@@ -81,18 +80,16 @@
 /obj/item/sequence_scanner/attack_self_tk(mob/user)
 	return
 
-/obj/item/sequence_scanner/afterattack(obj/object, mob/user, proximity)
-	. = ..()
-	if(!istype(object) || !proximity)
-		return
-
-	if(istype(object, /obj/machinery/computer/scan_consolenew))
+/obj/item/sequence_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/machinery/computer/scan_consolenew))
 		var/obj/machinery/computer/scan_consolenew/console = object
 		if(console.stored_research)
 			to_chat(user, span_notice("[name] linked to central research database."))
 			discovered = console.stored_research.discovered_mutations
 		else
 			to_chat(user,span_warning("No database to update from."))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 ///proc for scanning someone's mutations
 /obj/item/sequence_scanner/proc/gene_scan(mob/living/carbon/target, mob/living/user)

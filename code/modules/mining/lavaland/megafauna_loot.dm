@@ -1030,23 +1030,27 @@
 	affected_weather.wind_down()
 	user.log_message("has dispelled a storm at [AREACOORD(user_turf)].", LOG_GAME)
 
-/obj/item/storm_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/storm_staff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return thunder_blast(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+
+/obj/item/storm_staff/afterattack(atom/target, mob/user, click_parameters)
+	thunder_blast(target, user)
+
+/obj/item/storm_staff/proc/thunder_blast(atom/target, mob/user)
 	if(!thunder_charges)
 		balloon_alert(user, "needs to charge!")
-		return
+		return FALSE
 	var/turf/target_turf = get_turf(target)
 	var/area/target_area = get_area(target)
 	if(!target_turf || !target_area || (is_type_in_list(target_area, excluded_areas)))
 		balloon_alert(user, "can't bolt here!")
-		return
+		return FALSE
 	if(target_turf in targeted_turfs)
 		balloon_alert(user, "already targeted!")
-		return
+		return FALSE
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		balloon_alert(user, "you don't want to harm!")
-		return
+		return FALSE
 	var/power_boosted = FALSE
 	for(var/datum/weather/weather as anything in SSweather.processing)
 		if(weather.stage != MAIN_STAGE)
@@ -1062,6 +1066,7 @@
 	thunder_charges--
 	addtimer(CALLBACK(src, PROC_REF(recharge)), thunder_charge_time)
 	user.log_message("fired the staff of storms at [AREACOORD(target_turf)].", LOG_ATTACK)
+	return TRUE
 
 /obj/item/storm_staff/proc/recharge(mob/user)
 	thunder_charges = min(thunder_charges + 1, max_thunder_charges)

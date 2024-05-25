@@ -102,26 +102,22 @@
 /obj/item/delivery/can_be_package_wrapped()
 	return FALSE
 
-/obj/item/stack/package_wrap/afterattack(obj/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(!istype(target))
-		return
-	if(target.anchored)
-		return
+/obj/item/stack/package_wrap/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isobj(interacting_with))
+		return NONE
+	if(interacting_with.anchored)
+		return NONE
 
-	if(isitem(target))
-		. |= AFTERATTACK_PROCESSED_ITEM
-		var/obj/item/item = target
+	if(isitem(interacting_with))
+		var/obj/item/item = interacting_with
 		if(!item.can_be_package_wrapped())
 			balloon_alert(user, "can't be wrapped!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(user.is_holding(item))
 			if(!user.dropItemToGround(item))
-				return
+				return ITEM_INTERACT_BLOCKING
 		else if(!isturf(item.loc))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(use(1))
 			var/obj/item/delivery/small/parcel = new(get_turf(item.loc))
 			if(user.Adjacent(item))
@@ -135,15 +131,17 @@
 			size = min(size, 5)
 			parcel.base_icon_state = "deliverypackage[size]"
 			parcel.update_icon()
+		else
+			return ITEM_INTERACT_BLOCKING
 
 	else if(istype(target, /obj/structure/closet))
 		var/obj/structure/closet/closet = target
 		if(closet.opened)
 			balloon_alert(user, "can't wrap while open!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(!closet.delivery_icon) //no delivery icon means unwrappable closet (e.g. body bags)
 			balloon_alert(user, "can't wrap!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(use(3))
 			var/obj/item/delivery/big/parcel = new(get_turf(closet.loc))
 			parcel.base_icon_state = closet.delivery_icon
@@ -154,13 +152,13 @@
 			closet.add_fingerprint(user)
 		else
 			balloon_alert(user, "not enough paper!")
-			return
+			return ITEM_INTERACT_BLOCKING
 
 	else if(istype(target,  /obj/machinery/portable_atmospherics))
 		var/obj/machinery/portable_atmospherics/portable_atmospherics = target
 		if(portable_atmospherics.anchored)
 			balloon_alert(user, "can't wrap while anchored!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(use(3))
 			var/obj/item/delivery/big/parcel = new(get_turf(portable_atmospherics.loc))
 			parcel.base_icon_state = "deliverybox"
@@ -171,14 +169,15 @@
 			portable_atmospherics.add_fingerprint(user)
 		else
 			balloon_alert(user, "not enough paper!")
-			return
+			return ITEM_INTERACT_BLOCKING
 
 	else
 		balloon_alert(user, "can't wrap!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(span_notice("[user] wraps [target]."))
 	user.log_message("has used [name] on [key_name(target)]", LOG_ATTACK, color="blue")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/package_wrap/use(used, transfer = FALSE, check = TRUE)
 	var/turf/T = get_turf(src)
