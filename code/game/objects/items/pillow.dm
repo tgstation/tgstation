@@ -51,7 +51,7 @@
 	if(!iscarbon(target_mob))
 		return
 	if(bricked || HAS_TRAIT(src, TRAIT_WIELDED))
-		user.apply_damage(15, STAMINA) // when hitting with such force we should prolly be getting tired too
+		user.apply_damage(15, STAMINA) // when hitting with such force we should prolly be getting tired too. Note wielded self dmg should always be higher as to not make it a straight upgrade from unwielded
 		hit_sound = 'sound/items/pillow_hit2.ogg'
 	else
 		user.apply_damage(10, STAMINA) //Had to be done so one person cannot keep multiple people stam critted
