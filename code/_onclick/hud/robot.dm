@@ -224,11 +224,11 @@
 	R.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
 	screenmob.client.screen += R.robot_modules_background
 
-	for(var/i in 1 to length(usable_modules))
-		var/atom/movable/A = usable_modules[i]
-		if(A in R.held_items)
-			//Module is not currently active
-			continue
+		for(var/i in 1 to length(usable_modules))
+			var/atom/movable/A = usable_modules[i]
+			if(A in R.held_items)
+				//Module is currently active
+				continue
 
 		// Arrange in a grid x=-4 to 3 and y=1 to display_rows
 		var/x = (i - 1) % 8 - 4
