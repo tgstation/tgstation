@@ -405,7 +405,7 @@
 /datum/disease/advance/proc/AddSymptom(datum/symptom/S)
 	if(HasSymptom(S))
 		return
-	while(get_symptom_weights() >= VIRUS_SYMPTOM_LIMIT)
+	while(get_symptom_weights() > VIRUS_SYMPTOM_LIMIT + S.weight)
 		RemoveSymptom(pick(symptoms))
 	symptoms += S
 	S.OnAdd(src)
