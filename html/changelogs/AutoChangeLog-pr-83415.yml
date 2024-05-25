@@ -1,0 +1,4 @@
+author: "tmyqlfpir"
+delete-after: True
+changes:
+  - bugfix: "[Ice Box Station] Dorm 1's door no longer shares ID with dorm 2's door"
