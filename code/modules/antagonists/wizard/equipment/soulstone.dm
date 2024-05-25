@@ -119,7 +119,7 @@
 	for(var/mob/shade_to_convert in contents)
 		if(IS_CULTIST(shade_to_convert))
 			continue
-		shade_to_convert.mind?.add_antag_datum(/datum/antagonist/cult)
+		shade_to_convert.mind?.add_antag_datum(/datum/antagonist/cult/shade)
 
 	RegisterSignal(src, COMSIG_BIBLE_SMACKED)
 	return TRUE
@@ -393,7 +393,7 @@
 	if(user)
 		soulstone_spirit.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
 		if(IS_CULTIST(user))
-			soulstone_spirit.mind.add_antag_datum(/datum/antagonist/cult)
+			soulstone_spirit.mind.add_antag_datum(/datum/antagonist/cult/shade)
 			SSblackbox.record_feedback("tally", "cult_shade_created", 1)
 
 	soulstone_spirit.cancel_camera()
@@ -423,7 +423,7 @@
 	// Cult shades get cult datum
 	if (user.mind.has_antag_datum(/datum/antagonist/cult))
 		shade.mind.remove_antag_datum(/datum/antagonist/shade_minion)
-		shade.mind.add_antag_datum(/datum/antagonist/cult)
+		shade.mind.add_antag_datum(/datum/antagonist/cult/shade)
 		return
 
 	// Only blessed soulstones can de-cult shades
