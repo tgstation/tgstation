@@ -13,6 +13,11 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+18
 	required_temperature_max = MIN_AQUARIUM_TEMP+26
 
+/obj/item/fish/goldfish/saul
+	name = "Saul"
+	stable_population = 1
+	random_case_rarity = FISH_RARITY_NOPE
+
 /obj/item/fish/angelfish
 	name = "angelfish"
 	desc = "Young Angelfish often live in groups, while adults prefer solitary life. They become territorial and aggressive toward other fish when they reach adulthood."

@@ -10064,8 +10064,7 @@
 /obj/machinery/door/poddoor/shutters{
 	dir = 4;
 	id = "minecraft_shutter";
-	name = "Cart Shutters";
-	pixel_y = 0
+	name = "Cart Shutters"
 	},
 /turf/open/floor/plating/snowed/coldroom,
 /area/icemoon/underground/explored)
@@ -26427,7 +26426,6 @@
 "hWv" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /obj/machinery/door/poddoor/shutters/preopen{
-	dir = 2;
 	id = "botany_chasm_and_wolf_shutters"
 	},
 /turf/open/floor/plating,
@@ -32196,8 +32194,7 @@
 /obj/machinery/door/poddoor/shutters{
 	dir = 1;
 	id = "minecraft_shutter";
-	name = "Cart Shutters";
-	pixel_y = 0
+	name = "Cart Shutters"
 	},
 /obj/structure/minecart_rail{
 	dir = 1
@@ -49759,8 +49756,7 @@
 "oVr" = (
 /obj/structure/table/wood/poker,
 /obj/effect/spawner/random/entertainment/coin{
-	pixel_x = -7;
-	pixel_y = 0
+	pixel_x = -7
 	},
 /obj/effect/spawner/random/clothing/bowler_or_that,
 /turf/open/floor/wood/large,
@@ -56019,7 +56015,6 @@
 	pixel_x = 7
 	},
 /obj/item/grown/log/tree{
-	pixel_y = 0;
 	pixel_x = 7
 	},
 /turf/open/floor/plating/snowed/coldroom,
@@ -59257,7 +59252,6 @@
 /area/station/medical/treatment_center)
 "rEH" = (
 /obj/item/chair/stool/bar{
-	dir = 2;
 	pixel_y = -2
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -71215,7 +71209,6 @@
 "vrw" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	dir = 2;
 	id = "pharmacy_shutters3";
 	name = "Pharmacy Shutters"
 	},
@@ -73112,6 +73105,10 @@
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"vXe" = (
+/obj/structure/aquarium/lawyer,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
 "vXh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -168538,7 +168535,7 @@ gjq
 gjq
 gjq
 gjq
-gjq
+wUj
 wUj
 dKC
 dKC
@@ -168796,9 +168793,9 @@ gjq
 iDt
 gjq
 wUj
-wUj
 qLB
 jpy
+vXe
 ssY
 wUj
 gjq
