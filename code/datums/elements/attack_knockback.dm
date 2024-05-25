@@ -31,6 +31,7 @@
 /datum/element/attack_knockback/Detach(datum/source, ...)
 	. = ..()
 
+	QDEL_NULL(pre_hit_callback)
 	UnregisterSignal(source, COMSIG_ITEM_ATTACK)
 
 /datum/element/attack_knockback/proc/on_item_attack(obj/item/bat, mob/living/target, mob/living/user)
