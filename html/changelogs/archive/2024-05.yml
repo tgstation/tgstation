@@ -238,3 +238,9 @@
 2024-05-24:
   Absolucy:
   - bugfix: Fixed a rare bug where the round would not properly restart.
+2024-05-25:
+  Absolucy:
+  - rscadd: The changelog UI now parses and shows changelogs for all current testmerges.
+  - refactor: Refactored the changelog UI from JavaScript into TypeScript.
+  - bugfix: Fixed a weird oozeling revival bug that results in their items being sent
+      to the void.
