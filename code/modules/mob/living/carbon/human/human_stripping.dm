@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return null
 
 	var/list/actions = list()
-	if(jumpsuit.has_sensor)
+	if(jumpsuit.has_sensor == HAS_SENSORS)
 		actions += "adjust_sensor"
 	if(jumpsuit.can_adjust)
 		actions += "adjust_jumpsuit"
@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	mob_source.update_body()
 
 /datum/strippable_item/mob_item_slot/jumpsuit/proc/do_adjust_sensor(atom/source, mob/user, obj/item/clothing/under/jumpsuit)
-	if(!jumpsuit.has_sensor)
+	if(jumpsuit.has_sensor != HAS_SENSORS)
 		return
 
 	var/static/list/sensor_mode_text_to_num = list(
@@ -220,7 +220,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	source.log_message("is being pickpocketed of [item] by [key_name(user)] ([pocket_side])", LOG_VICTIM, color="orange", log_globally=FALSE)
 	item.add_fingerprint(src)
 
-	var/result = start_unequip_mob(item, source, user, POCKET_STRIP_DELAY)
+	var/result = start_unequip_mob(item, source, user, strip_delay = POCKET_STRIP_DELAY, hidden = TRUE)
 
 	if (!result)
 		warn_owner(source)

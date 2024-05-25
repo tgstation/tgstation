@@ -30,6 +30,8 @@
 	var/list/allowed_turf_typecache
 	/// allow typecache for only certain turfs, forbid to allow all but those. allow only certain turfs will take precedence.
 	var/list/forbid_turf_typecache
+	/// additional traits to add to anyone riding this vehicle
+	var/list/rider_traits = list(TRAIT_NO_FLOATING_ANIM)
 	/// We don't need roads where we're going if this is TRUE, allow normal movement in space tiles
 	var/override_allow_spacemove = FALSE
 	/// can anyone other than the rider unbuckle the rider?
@@ -96,7 +98,7 @@
 	for (var/trait in GLOB.movement_type_trait_to_flag)
 		if (HAS_TRAIT(parent, trait))
 			REMOVE_TRAIT(rider, trait, REF(src))
-	REMOVE_TRAIT(rider, TRAIT_NO_FLOATING_ANIM, REF(src))
+	rider.remove_traits(rider_traits, REF(src))
 	if(!movable_parent.has_buckled_mobs())
 		qdel(src)
 
@@ -115,7 +117,7 @@
 	for (var/trait in GLOB.movement_type_trait_to_flag)
 		if (HAS_TRAIT(parent, trait))
 			ADD_TRAIT(rider, trait, REF(src))
-	ADD_TRAIT(rider, TRAIT_NO_FLOATING_ANIM, REF(src))
+	rider.add_traits(rider_traits, REF(src))
 
 /// This proc is called when the rider attempts to grab the thing they're riding, preventing them from doing so.
 /datum/component/riding/proc/on_rider_try_pull(mob/living/rider_pulling, atom/movable/target, force)

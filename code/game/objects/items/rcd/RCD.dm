@@ -428,7 +428,7 @@
 	desc = "A device used to rapidly build walls and floors."
 	banned_upgrades = RCD_UPGRADE_SILO_LINK
 	/// enery usage
-	var/energyfactor = 72 KILO JOULES
+	var/energyfactor = 0.072 * STANDARD_CELL_CHARGE
 
 /obj/item/construction/rcd/borg/get_matter(mob/user)
 	if(!iscyborg(user))
@@ -470,7 +470,7 @@
 	desc = "A reverse-engineered RCD with black market upgrades that allow this device to deconstruct reinforced walls. Property of Donk Co."
 	icon_state = "ircd"
 	inhand_icon_state = "ircd"
-	energyfactor = 66 KILO JOULES
+	energyfactor = 0.066 * STANDARD_CELL_CHARGE
 	canRturf = TRUE
 
 /obj/item/construction/rcd/loaded
@@ -522,7 +522,7 @@
 	upgrade = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
 
 ///How much charge is used up for each matter unit.
-#define MASS_TO_ENERGY (16 KILO JOULES)
+#define MASS_TO_ENERGY (0.016 * STANDARD_CELL_CHARGE)
 
 /obj/item/construction/rcd/exosuit
 	name = "mounted RCD"

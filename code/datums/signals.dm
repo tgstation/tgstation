@@ -38,7 +38,7 @@
 
 	if(exists)
 		if(!override)
-			var/override_message = "[signal_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [target] ([target.type]) Proc: [proctype]"
+			var/override_message = "[signal_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [target] ([target.type]) Existing Proc: [exists] New Proc: [proctype]"
 			log_signal(override_message)
 			stack_trace(override_message)
 		return

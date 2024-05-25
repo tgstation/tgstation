@@ -107,12 +107,9 @@
 		to_chat(user, span_notice("You turn off [src]."))
 	return TRUE
 
-/obj/item/hand_labeler/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
+/obj/item/hand_labeler/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/hand_labeler_refill))
-		return .
+		return NONE
 
 	balloon_alert(user, "refilled")
 	qdel(tool)

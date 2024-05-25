@@ -204,6 +204,22 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/spray/chemsprayer/party(src)
 
+/obj/item/storage/box/balloons
+	name = "box of long balloons"
+	desc = "A completely randomized and wacky box of long balloons, harvested straight from balloon farms on the clown planet."
+	illustration = "balloon"
+
+/obj/item/storage/box/balloons/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 24
+	atom_storage.set_holdable(list(/obj/item/toy/balloon/long))
+	atom_storage.max_total_storage = 24
+	atom_storage.allow_quick_gather = FALSE
+
+/obj/item/storage/box/balloons/PopulateContents()
+	for(var/i in 1 to 24)
+		new /obj/item/toy/balloon/long(src)
+
 /obj/item/storage/box/stickers
 	name = "box of stickers"
 	desc = "A box full of random stickers. Do give to the clown."

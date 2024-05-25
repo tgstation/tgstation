@@ -137,7 +137,7 @@
 	name = "RCD anti disruption designs upgrade"
 	desc = "Prevents interruption of RCD construction and deconstruction."
 	id = "rcd_upgrade_anti_interrupt"
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25,
@@ -154,7 +154,7 @@
 	name = "RCD cooling upgrade"
 	desc = "Allows the RCD to more quickly perform multiple actions at once."
 	id = "rcd_upgrade_cooling"
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT,

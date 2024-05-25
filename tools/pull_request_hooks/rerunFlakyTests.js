@@ -8,20 +8,20 @@ const CONSIDERED_JOBS = [
 ];
 
 async function getFailedJobsForRun(github, context, workflowRunId, runAttempt) {
-	const {
-		data: { jobs },
-	} = await github.rest.actions.listJobsForWorkflowRunAttempt({
-		owner: context.repo.owner,
-		repo: context.repo.repo,
-		run_id: workflowRunId,
-		attempt_number: runAttempt,
-	});
+	const jobs = await github.paginate(
+		github.rest.actions.listJobsForWorkflowRunAttempt,
+		{
+			owner: context.repo.owner,
+			repo: context.repo.repo,
+			run_id: workflowRunId,
+			attempt_number: runAttempt
+		},
+		response => {
+			return response.data;
+		});
 
 	return jobs
-		.filter((job) => job.conclusion === "failure")
-		.filter((job) =>
-			CONSIDERED_JOBS.some((title) => job.name.startsWith(title))
-		);
+		.filter((job) => job.conclusion === "failure");
 }
 
 export async function rerunFlakyTests({ github, context }) {
@@ -32,16 +32,16 @@ export async function rerunFlakyTests({ github, context }) {
 		context.payload.workflow_run.run_attempt
 	);
 
-	if (failingJobs.length > 1) {
-		console.log("Multiple jobs failing. PROBABLY not flaky, not rerunning.");
+	const filteredFailingJobs = failingJobs.filter((job) => {
+		console.log(`Failing job: ${job.name}`)
+		return CONSIDERED_JOBS.some((title) => job.name.startsWith(title));
+	});
+	if (filteredFailingJobs.length === 0) {
+		console.log("Failing jobs are NOT designated flaky. Not rerunning.");
 		return;
 	}
 
-	if (failingJobs.length === 0) {
-		throw new Error(
-			"rerunFlakyTests should not have run on a run with no failing jobs"
-		);
-	}
+	console.log(`Rerunning job: ${filteredFailingJobs[0].name}`);
 
 	github.rest.actions.reRunWorkflowFailedJobs({
 		owner: context.repo.owner,
@@ -244,8 +244,13 @@ export async function reportFlakyTests({ github, context }) {
 		context.payload.workflow_run.run_attempt - 1
 	);
 
+	const filteredFailingJobs = failedJobsFromLastRun.filter((job) => {
+		console.log(`Failing job: ${job.name}`)
+		return CONSIDERED_JOBS.some((title) => job.name.startsWith(title));
+	});
+
 	// This could one day be relaxed if we face serious enough flaky test problems, so we're going to loop anyway
-	if (failedJobsFromLastRun.length !== 1) {
+	if (filteredFailingJobs.length !== 1) {
 		console.log(
 			"Multiple jobs failing after retry, assuming maintainer rerun."
 		);
@@ -253,7 +258,7 @@ export async function reportFlakyTests({ github, context }) {
 		return;
 	}
 
-	for (const job of failedJobsFromLastRun) {
+	for (const job of filteredFailingJobs) {
 		const { data: log } =
 			await github.rest.actions.downloadJobLogsForWorkflowRun({
 				owner: context.repo.owner,

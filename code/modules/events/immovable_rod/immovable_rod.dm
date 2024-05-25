@@ -45,9 +45,9 @@
 	RegisterSignal(src, COMSIG_ATOM_ENTERING, PROC_REF(on_entering_atom))
 
 	if(special_target)
-		SSmove_manager.home_onto(src, special_target)
+		GLOB.move_manager.home_onto(src, special_target)
 	else
-		SSmove_manager.move_towards(src, real_destination)
+		GLOB.move_manager.move_towards(src, real_destination)
 
 /obj/effect/immovablerod/Destroy(force)
 	UnregisterSignal(src, COMSIG_ATOM_ENTERING)
@@ -75,11 +75,6 @@
 		var/mob/dead/observer/ghost = usr
 		if(istype(ghost))
 			ghost.ManualFollow(src)
-
-/obj/effect/immovablerod/proc/on_entered_over_movable(datum/source, atom/movable/atom_crossed_over)
-	SIGNAL_HANDLER
-	if((atom_crossed_over.density || isliving(atom_crossed_over)) && !QDELETED(atom_crossed_over))
-		Bump(atom_crossed_over)
 
 /obj/effect/immovablerod/proc/on_entering_atom(datum/source, atom/destination, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
@@ -113,7 +108,7 @@
 				return
 
 			visible_message(span_danger("[src] phases into reality."))
-			SSmove_manager.home_onto(src, special_target)
+			GLOB.move_manager.home_onto(src, special_target)
 
 		if(loc == target_turf)
 			complete_trajectory()
@@ -264,7 +259,7 @@
  * Stops your rod's automated movement. Sit... Stay... Good rod!
  */
 /obj/effect/immovablerod/proc/sit_stay_good_rod()
-	SSmove_manager.stop_looping(src)
+	GLOB.move_manager.stop_looping(src)
 
 /**
  * Allows your rod to release restraint level zero and go for a walk.
@@ -278,7 +273,7 @@
 /obj/effect/immovablerod/proc/go_for_a_walk(walkies_location = null)
 	if(walkies_location)
 		special_target = walkies_location
-		SSmove_manager.home_onto(src, special_target)
+		GLOB.move_manager.home_onto(src, special_target)
 		return
 
 	complete_trajectory()
@@ -294,7 +289,7 @@
  */
 /obj/effect/immovablerod/proc/walk_in_direction(direction)
 	destination_turf = get_edge_target_turf(src, direction)
-	SSmove_manager.move_towards(src, destination_turf)
+	GLOB.move_manager.move_towards(src, destination_turf)
 
 /**
  * Rod will push the tram to a landmark if it hits the tram from the front/back

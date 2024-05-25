@@ -239,6 +239,7 @@
 						"Black" = "black_mech_suit",
 						)
 
+
 /obj/item/clothing/under/costume/russian_officer
 	name = "\improper Russian officer's uniform"
 	desc = "The latest in fashionable russian outfits."
@@ -426,4 +427,18 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR
+
+/obj/item/clothing/under/costume/gamberson
+	name = "re-enactor's Gamberson"
+	desc = "A colorful set of clothes made to look like a medieval gamberson."
+	icon_state = "gamberson"
+	inhand_icon_state = null
+	female_sprite_flags = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/gamberson/military
+	name = "swordsman's Gamberson"
+	desc = "A padded medieval gamberson. Has enough woolen layers to dull a strike from any small weapon."
+	armor_type = /datum/armor/clothing_under/rank_security
+	has_sensor = NO_SENSORS
 

@@ -209,6 +209,11 @@
 	name = "Icemoon Wastes"
 	outdoors = TRUE
 
+/area/icemoon/surface/outdoors/Initialize(mapload)
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_BRIGHT_DAY))
+		base_lighting_alpha = 145
+	return ..()
+
 /area/icemoon/surface/outdoors/nospawn // this is the area you use for stuff to not spawn, but if you still want weather.
 
 /area/icemoon/surface/outdoors/nospawn/New() // unless you roll forested trait lol

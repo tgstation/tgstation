@@ -88,7 +88,7 @@ export const FUNDAMENTAL_DATA_TYPES = {
         color={'transparent'}
         options={data}
         onSelected={setValue}
-        displayText={value}
+        selected={value}
         menuWidth={large ? '200px' : undefined}
       />
     );

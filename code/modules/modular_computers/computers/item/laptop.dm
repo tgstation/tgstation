@@ -91,14 +91,11 @@
 	toggle_open(user)
 
 
-/obj/item/modular_computer/laptop/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
-	if(screen_on) // Close it.
-		try_toggle_open(user)
-	else
-		return ..()
+/obj/item/modular_computer/laptop/click_alt(mob/user)
+	if(!screen_on)
+		return CLICK_ACTION_BLOCKING
+	try_toggle_open(user) // Close it.
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/modular_computer/laptop/proc/toggle_open(mob/living/user=null)
 	if(screen_on)
