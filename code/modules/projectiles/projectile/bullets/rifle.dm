@@ -164,10 +164,8 @@
 
 /obj/projectile/bullet/rebar/Initialize(mapload)
 	. = ..()
-	RegisterSignals(src, list(COMSIG_PROJECTILE_ON_SPAWN_DROP, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED), PROC_REF(handle_drop))
 
 /obj/projectile/bullet/rebar/proc/handle_drop(datum/source, obj/item/ammo_casing/rebar/newcasing)
-	SIGNAL_HANDLER
 
 /obj/projectile/bullet/paperball
 	desc = "Doink!"
