@@ -579,8 +579,8 @@
 		/datum/martial_art/the_sleeping_carp = 30,
 		// uncommon
 		/datum/martial_art/boxing/evil = 20,
-		/datum/martial_art/wrestling = 20,
 		// rare
+		/datum/martial_art/wrestling = 10, // wrestling is kinda strong ngl
 		/datum/martial_art/psychotic_brawling = 10,
 		/datum/martial_art/mushpunch = 10,
 		// LEGENDARY
