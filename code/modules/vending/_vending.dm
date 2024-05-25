@@ -1458,7 +1458,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
 		to_chat(usr, span_notice("You take [item_record.name] out of the slot."))
 	else
-		to_chat(usr, span_warning("[capitalize(item_record.name)] falls onto the floor!"))
+		to_chat(usr, span_warning("[capitalize(format_text(item_record.name))] falls onto the floor!"))
 	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[item_record.product_path]"))
 	vend_ready = TRUE
 
@@ -1846,7 +1846,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(user.CanReach(src) && user.put_in_hands(dispensed_item))
 		to_chat(user, span_notice("You take [dispensed_item.name] out of the slot."))
 	else
-		to_chat(user, span_warning("[capitalize(dispensed_item.name)] falls onto the floor!"))
+		to_chat(user, span_warning("[capitalize(format_text(dispensed_item.name))] falls onto the floor!"))
 	return TRUE
 
 /obj/machinery/vending/custom/unbreakable
