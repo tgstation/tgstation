@@ -29,6 +29,8 @@
 /datum/status_effect/slimed/on_apply()
 	if(owner.get_organic_health() <= MIN_HEALTH)
 		return FALSE
+	if(!iscarbon(owner))
+		duration = 30 SECONDS
 	to_chat(owner, span_userdanger("You have been covered in a thick layer of slime! Find a way to wash it off!"))
 	return ..()
 
