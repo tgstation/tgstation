@@ -32,7 +32,7 @@
 
 	///List of loot drops on death, since it deletes itself on death (like trooper).
 	var/list/loot = list(
-		/obj/effect/decal/cleanable/blood/gibs,
+		/obj/effect/decal/cleanable/blood/gibs = 1,
 		/obj/item/stack/sheet/animalhide/gondola = 1,
 		/obj/item/food/meat/slab/gondola = 1,
 	)

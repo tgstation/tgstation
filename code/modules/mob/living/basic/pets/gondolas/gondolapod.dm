@@ -9,7 +9,7 @@
 	layer = TABLE_LAYER //so that deliveries dont appear underneath it
 
 	loot = list(
-		/obj/effect/decal/cleanable/blood/gibs,
+		/obj/effect/decal/cleanable/blood/gibs = 1,
 		/obj/item/stack/sheet/animalhide/gondola = 2,
 		/obj/item/food/meat/slab/gondola = 2,
 	)
