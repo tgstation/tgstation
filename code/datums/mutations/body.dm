@@ -4,7 +4,7 @@
 /datum/mutation/human/epilepsy
 	name = "Epilepsy"
 	desc = "A genetic defect that sporadically causes seizures."
-	instability = -20
+	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
 	synchronizer_coeff = 1
@@ -51,7 +51,7 @@
 /datum/mutation/human/bad_dna
 	name = "Unstable DNA"
 	desc = "Strange mutation that causes the holder to randomly mutate."
-	instability = -15
+	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel strange.</span>"
 	locked = TRUE
@@ -81,7 +81,7 @@
 /datum/mutation/human/cough
 	name = "Cough"
 	desc = "A chronic cough."
-	instability = -15
+	instability = NEGATIVE_STABILITY_MODERATE
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You start coughing.</span>"
 	synchronizer_coeff = 1
@@ -99,7 +99,7 @@
 /datum/mutation/human/paranoia
 	name = "Paranoia"
 	desc = "Subject is easily terrified, and may suffer from hallucinations."
-	instability = -15
+	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel screams echo through your mind...</span>"
 	text_lose_indication = "<span class='notice'>The screaming in your mind fades.</span>"
@@ -116,7 +116,7 @@
 	desc = "A mutation believed to be the cause of dwarfism."
 	quality = POSITIVE
 	difficulty = 16
-	instability = 10
+	instability = POSITIVE_INSTABILITY_MINOR
 	conflicts = list(/datum/mutation/human/gigantism, /datum/mutation/human/acromegaly)
 	locked = TRUE // Default intert species for now, so locked from regular pool.
 
@@ -137,7 +137,7 @@
 	desc = "A mutation believed to be the cause of acromegaly, or 'being unusually tall'."
 	quality = MINOR_NEGATIVE
 	difficulty = 16
-	instability = -10
+	instability = NEGATIVE_STABILITY_MODERATE
 	synchronizer_coeff = 1
 	conflicts = list(/datum/mutation/human/dwarfism)
 
@@ -194,7 +194,7 @@
 /datum/mutation/human/clumsy
 	name = "Clumsiness"
 	desc = "A genome that inhibits certain brain functions, causing the holder to appear clumsy. Honk!"
-	instability = -15
+	instability = NEGATIVE_STABILITY_MAJOR
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel lightheaded.</span>"
 
@@ -214,7 +214,7 @@
 	name = "Tourette's Syndrome"
 	desc = "A chronic twitch that forces the user to scream bad words." //definitely needs rewriting
 	quality = NEGATIVE
-	instability = -5
+	instability = 0
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
 	synchronizer_coeff = 1
 
@@ -237,7 +237,7 @@
 /datum/mutation/human/deaf
 	name = "Deafness"
 	desc = "The holder of this genome is completely deaf."
-	instability = -15
+	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You can't seem to hear anything.</span>"
 
@@ -259,6 +259,7 @@
 	text_gain_indication = "You feel unusually monkey-like."
 	text_lose_indication = "You feel like your old self."
 	quality = NEGATIVE
+	instability = NEGATIVE_STABILITY_MAJOR // mmmonky
 	remove_on_aheal = FALSE
 	locked = TRUE //Species specific, keep out of actual gene pool
 	var/datum/species/original_species = /datum/species/human
@@ -283,7 +284,7 @@
 	desc = "You permanently emit a light with a random color and intensity."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your skin begins to glow softly.</span>"
-	instability = 10
+	instability = POSITIVE_INSTABILITY_MINI
 	power_coeff = 1
 	conflicts = list(/datum/mutation/human/glow/anti)
 	var/glow_power = 2
@@ -321,6 +322,7 @@
 	desc = "Your skin seems to attract and absorb nearby light creating 'darkness' around you."
 	text_gain_indication = "<span class='notice'>The light around you seems to disappear.</span>"
 	conflicts = list(/datum/mutation/human/glow)
+	instability = POSITIVE_INSTABILITY_MINOR
 	locked = TRUE
 	glow_power = -1.5
 
@@ -329,10 +331,10 @@
 
 /datum/mutation/human/strong
 	name = "Strength"
-	desc = "The user's muscles slightly expand."
+	desc = "The user's muscles slightly expand. Commonly seen in top-ranking boxers."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You feel strong.</span>"
-	instability = 15
+	instability = POSITIVE_INSTABILITY_MINI
 	difficulty = 16
 
 /datum/mutation/human/strong/on_acquiring(mob/living/carbon/human/owner)
@@ -350,8 +352,9 @@
 
 /datum/mutation/human/stimmed
 	name = "Stimmed"
-	desc = "The user's chemical balance is more robust."
+	desc = "The user's chemical balance is more robust. This mutation is known to slightly improve workout efficiency."
 	quality = POSITIVE
+	instability = POSITIVE_INSTABILITY_MINI
 	text_gain_indication = "<span class='notice'>You feel stimmed.</span>"
 	instability = 15
 	difficulty = 16
@@ -375,7 +378,7 @@
 	text_gain_indication = "<span class='notice'>Your fingertips go numb.</span>"
 	text_lose_indication = "<span class='notice'>Your fingertips regain feeling.</span>"
 	difficulty = 16
-	instability = 40
+	instability = POSITIVE_INSTABILITY_MODERATE
 
 /datum/mutation/human/insulated/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -419,7 +422,7 @@
 	text_gain_indication = "<span class='warning'>The space around you twists sickeningly.</span>"
 	text_lose_indication = "<span class='notice'>The space around you settles back to normal.</span>"
 	difficulty = 18//high so it's hard to unlock and abuse
-	instability = -10
+	instability = NEGATIVE_STABILITY_MODERATE
 	synchronizer_coeff = 1
 	energy_coeff = 1
 	power_coeff = 1
@@ -445,7 +448,7 @@
 /datum/mutation/human/acidflesh
 	name = "Acidic Flesh"
 	desc = "Subject has acidic chemicals building up underneath the skin. This is often lethal."
-	instability = -25
+	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
 	text_gain_indication = "<span class='userdanger'>A horrible burning sensation envelops you as your flesh turns to acid!</span>"
 	text_lose_indication = "<span class='notice'>A feeling of relief fills you as your flesh goes back to normal.</span>"
@@ -466,7 +469,7 @@
 /datum/mutation/human/spastic
 	name = "Spastic"
 	desc = "Subject suffers from muscle spasms."
-	instability = -15
+	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>You flinch.</span>"
 	text_lose_indication = "<span class='notice'>Your flinching subsides.</span>"
@@ -485,7 +488,7 @@
 /datum/mutation/human/extrastun
 	name = "Two Left Feet"
 	desc = "A mutation that replaces the right foot with another left foot. Symptoms include kissing the floor when taking a step."
-	instability = -15
+	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>Your right foot feels... left.</span>"
 	text_lose_indication = "<span class='notice'>Your right foot feels alright.</span>"
@@ -517,7 +520,7 @@
 /datum/mutation/human/martyrdom
 	name = "Internal Martyrdom"
 	desc = "A mutation that makes the body destruct when near death. Not damaging, but very, VERY disorienting."
-	instability = -20 // free stability >:)
+	instability = NEGATIVE_STABILITY_MAJOR // free stability >:)
 	locked = TRUE
 	quality = POSITIVE //not that cloning will be an option a lot but generally lets keep this around i guess?
 	text_gain_indication = "<span class='warning'>You get an intense feeling of heartburn.</span>"
@@ -565,7 +568,7 @@
 /datum/mutation/human/headless
 	name = "H.A.R.S."
 	desc = "A mutation that makes the body reject the head, the brain receding into the chest. Stands for Head Allergic Rejection Syndrome. Warning: Removing this mutation is very dangerous, though it will regenerate non-vital head organs."
-	instability = -30
+	instability = NEGATIVE_STABILITY_MAJOR
 	difficulty = 12 //pretty good for traitors
 	quality = NEGATIVE //holy shit no eyes or tongue or ears
 	text_gain_indication = "<span class='warning'>Something feels off.</span>"
