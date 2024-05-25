@@ -42,7 +42,7 @@
 	if(QDELETED(target) || target.anchored)
 		return
 
-	if(pre_hit_callback && !pre_hit_callback.Invoke(user))
+	if(pre_hit_callback && !pre_hit_callback.Invoke())
 		return
 
 	target.throw_at(throw_target, pick(throw_range), pick(throw_speed), user, gentle = src.gentle) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
