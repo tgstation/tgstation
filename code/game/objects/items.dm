@@ -1123,11 +1123,11 @@
 	if(delay)
 		// Create a callback with checks that would be called every tick by do_after.
 		var/datum/callback/tool_check = CALLBACK(src, PROC_REF(tool_check_callback), user, amount, extra_checks)
-		if(delay >= MIN_TOOL_SOUND_DELAY)
+
+		if(delay >= MIN_TOOL_OPERATING_DELAY)
 			play_tool_operating_sound(target, volume)
 
 		if(!do_after(user, delay, target=target, extra_checks=tool_check))
-
 			return
 	else
 		// Invoke the extra checks once, just in case.
