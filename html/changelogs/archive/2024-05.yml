@@ -645,3 +645,39 @@
   by INFRARED_BARON:
   - image: 'Changes icons of: Gygax, d-gygax, durand, ripley variants, firefighter
       statue, phazon & odysseus. Adds new icons for polar hide item.'
+2024-05-25:
+  00-Steven:
+  - bugfix: Airlock electronics created by deconstructing roundstart airlocks inherit
+      their cycling id properly.
+  - spellcheck: Examining a renamed airlock assembly no longer says it has a paper
+      placard that is "labelled with written on it is".
+  - bugfix: Mixing the reagents for moon rocks, bLaSToFF ampoules, or SaturnX globs
+      in amounts less than the minimum for the recipe no longer eats the reagents
+      without doing anything.
+  - bugfix: Airlocks without access requirements no longer create airlock electronics
+      with a broken menu.
+  - spellcheck: When a vendor tells you something dropped onto the floor, the line
+      no longer starts with a broken character in the case of cigarette boxes.
+  Ben10Omintrix:
+  - balance: you can now polymorph into raptors
+  - balance: raptors overall have less health and no longer have armor against ranged
+      attacks
+  BramvanZijp:
+  - bugfix: Fixed an inconsistency regarding the interactions between the Piercing
+      Hypo Borg upgrade and Hacked Borg Hypos.
+  Derpguy3:
+  - spellcheck: A handful of grammar errors in some department signs has been fixed.
+  Jacquerel:
+  - bugfix: The destructive analyser once more hungers for multitools
+  PapaMichael:
+  - bugfix: Epinephrine will prevent metabolism of all allergic reagents (instead
+      of just one), if taken with multiple chemicals that one is allergic to.
+  TiviPlus:
+  - qol: Added a "Remind me later" button for tutorials
+  Twaticus:
+  - image: resprites egg (and more)
+  jlsnow301:
+  - bugfix: You can no longer open the loot panel at range as a blind person and cheese
+      item names
+  nikothedude:
+  - code_imp: New signals for atom storage remove and insert

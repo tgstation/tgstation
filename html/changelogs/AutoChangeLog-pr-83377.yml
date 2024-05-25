@@ -1,4 +1,0 @@
-author: "BramvanZijp"
-delete-after: True
-changes:
-  - bugfix: "Fixed an inconsistency regarding the interactions between the Piercing Hypo Borg upgrade and Hacked Borg Hypos."

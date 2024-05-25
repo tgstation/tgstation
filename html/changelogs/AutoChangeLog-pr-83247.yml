@@ -1,4 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - code_imp: "New signals for atom storage remove and insert"
