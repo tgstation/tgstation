@@ -301,26 +301,24 @@
 		e.set_up(power , T, 0, 0)
 		e.start(holder.my_atom)
 	if (ismob(holder.my_atom) && clear_mob_reagents)
-		/// Only clear reagents if they use a special explosive reaction to do it; it shouldn't apply
-		/// to any explosion inside a person
+		// Only clear reagents if they use a special explosive reaction to do it; it shouldn't apply
+		// to any explosion inside a person
 		holder.clear_reagents()
 		if(iscarbon(holder.my_atom))
 			var/mob/living/carbon/victim = holder.my_atom
 			var/vomit_flags = MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE
-			/// The vomiting here is for effect, not meant to help with purging
+			// The vomiting here is for effect, not meant to help with purging
 			victim.vomit(vomit_flags, distance = 5)
 		return
-		/// Not quite the same if the reaction is in their stomach; they'll throw up
-		/// from any explosion, but it'll only make them puke up everything in their
-		/// stomach
+		// Not quite the same if the reaction is in their stomach; they'll throw up
+		// from any explosion, but it'll only make them puke up everything in their
+		// stomach
 	else if (istype(holder.my_atom, /obj/item/organ/internal/stomach))
 		var/obj/item/organ/internal/stomach/indigestion = holder.my_atom
-		if(power >= 1)
-			if(indigestion.owner)
-				var/mob/living/carbon/victim = indigestion.owner
-				var/vomit_flags = MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE
-				victim.vomit(vomit_flags, lost_nutrition = 150, distance = 5, purge_ratio = 1)
-			holder.clear_reagents()
+		if(power < 1)
+			return
+		indigestion.owner?.vomit(MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE, lost_nutrition = 150, distance = 5, purge_ratio = 1)
+		holder.clear_reagents()
 		return
 	else
 		holder.clear_reagents()
