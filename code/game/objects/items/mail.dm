@@ -14,8 +14,8 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	/// Destination tagging for the mail sorter.
 	var/sort_tag = 0
-	/// Weak reference to who this mail is for and who can open it.
-	var/datum/weakref/recipient_ref
+	/// The real name that this mail is associated with, anyone with that real name can open it
+	var/associated_real_name
 	/// How many goodies this mail contains.
 	var/goodie_count = 1
 	/// Goodies which can be given to anyone. The base weight is 50. For there to be a 50/50 chance of getting a department item, they need 50 weight as well.
@@ -166,9 +166,9 @@
 	. += span_info("Distribute by hand or via destination tagger using the certified NT disposal system.")
 
 /// Accepts a mind to initialize goodies for a piece of mail.
-/obj/item/mail/proc/initialize_for_recipient(datum/mind/recipient)
-	name = "[initial(name)] for [recipient.name] ([recipient.assigned_role.title])"
-	recipient_ref = WEAKREF(recipient)
+/obj/item/mail/proc/initialize_for_recipient(mob/living/carbon/human/recipient)
+	associated_real_name = recipient.real_name
+	name = "[initial(name)] for [associated_real_name] ([recipient.mind.assigned_role.title])"
 
 	var/mob/living/body = recipient.current
 	var/list/goodies = generic_goodies
@@ -283,7 +283,7 @@
 		if(!(human.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 			continue
 
-		mail_recipients += human.mind
+		mail_recipients += human
 
 	for(var/i in 1 to mail_count)
 		var/obj/item/mail/new_mail
