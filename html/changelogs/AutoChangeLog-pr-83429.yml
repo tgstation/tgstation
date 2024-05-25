@@ -1,0 +1,4 @@
+author: "thegrb93"
+delete-after: True
+changes:
+  - qol: "Made borg inventory not shift around depending on equipped items"
