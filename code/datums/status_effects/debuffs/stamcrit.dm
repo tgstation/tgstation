@@ -1,6 +1,6 @@
 /datum/status_effect/incapacitating/stamcrit
 	status_type = STATUS_EFFECT_REFRESH
-	duration = STAMINA_REGEN_BLOCK_TIME
+	duration = 10 SECONDS
 	/// Cooldown between displaying warning messages that we hit diminishing returns
 	COOLDOWN_DECLARE(warn_cd)
 	/// A counter that tracks every time we've taken enough damage to trigger diminishing returns
