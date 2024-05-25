@@ -78,3 +78,6 @@
 	icon_state = "open"
 	density = FALSE
 	opacity = FALSE
+
+/obj/machinery/door/poddoor/shutters/syndicate
+	icon = 'icons/obj/doors/syndicateshutters.dmi'

@@ -26,8 +26,11 @@
 /obj/machinery/chem_dispenser/drinks/fullupgrade{
 	dir = 1
 	},
-/obj/structure/table/wood,
-/turf/open/floor/wood/tile,
+/obj/structure/table/reinforced/plastitanium,
+/obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership)
 "cj" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
@@ -59,13 +62,6 @@
 "cU" = (
 /obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/plating,
-/area/centcom/syndicate_mothership)
-"cX" = (
-/obj/structure/table/wood,
-/obj/structure/window/reinforced/spawner/directional/north{
-	pixel_y = 1
-	},
-/turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership)
 "dk" = (
 /obj/structure/window/reinforced/plasma/plastitanium,
@@ -101,7 +97,7 @@
 "eG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood/tile,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership)
 "eU" = (
 /obj/machinery/door/window/left/directional/north,
@@ -204,11 +200,6 @@
 "hX" = (
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership)
-"iy" = (
-/obj/structure/table/wood,
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/wood/tile,
-/area/centcom/syndicate_mothership)
 "jQ" = (
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership)
@@ -220,7 +211,10 @@
 "kq" = (
 /obj/machinery/vending/boozeomat/syndicate_access,
 /obj/machinery/light/cold/directional/west,
-/turf/open/floor/wood/tile,
+/obj/effect/turf_decal/tile/dark_red/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership)
 "kB" = (
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden/layer2,
@@ -236,7 +230,7 @@
 /area/centcom/syndicate_mothership)
 "kJ" = (
 /obj/effect/turf_decal/stripes/full,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/syndicate{
 	id = "syndie_satellite_entry"
 	},
 /turf/open/floor/engine,
@@ -350,11 +344,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/turf/open/floor/wood/tile,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership)
 "om" = (
-/obj/structure/chair/stool/bar{
-	dir = 8
+/obj/structure/chair/stool/bar/syndicate_light{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
@@ -379,7 +373,10 @@
 "oE" = (
 /obj/machinery/microwave,
 /obj/structure/table/wood,
-/turf/open/floor/wood/tile,
+/obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership)
 "oN" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
@@ -394,6 +391,14 @@
 	dir = 1
 	},
 /obj/machinery/light/cold/directional/west,
+/turf/open/floor/iron/dark,
+/area/centcom/syndicate_mothership)
+"ps" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/chair/stool/bar/syndicate_dark{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "pt" = (
@@ -452,6 +457,12 @@
 /area/centcom/syndicate_mothership)
 "re" = (
 /obj/effect/turf_decal/tile/dark_red,
+/turf/open/floor/iron/dark,
+/area/centcom/syndicate_mothership)
+"rf" = (
+/obj/structure/chair/stool/bar/syndicate_dark{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "rM" = (
@@ -526,8 +537,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "wm" = (
-/obj/machinery/door/window/right/directional/south,
-/turf/open/floor/wood/tile,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership)
 "wo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -591,7 +604,6 @@
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "yk" = (
-/obj/structure/table/wood,
 /obj/item/storage/box/donkpockets{
 	pixel_x = 2
 	},
@@ -602,7 +614,11 @@
 	pixel_x = -2;
 	pixel_y = 6
 	},
-/turf/open/floor/wood/tile,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/turf_decal/tile/dark_red/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership)
 "yl" = (
 /turf/open/floor/iron/dark,
@@ -700,7 +716,7 @@
 /area/centcom/syndicate_mothership)
 "CP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/wood/tile,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership)
 "DA" = (
 /obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
@@ -711,10 +727,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "Ef" = (
-/obj/structure/table/wood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood/tile,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership)
 "Fp" = (
 /obj/machinery/light/cold/directional/south,
@@ -749,11 +765,11 @@
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "Hy" = (
-/obj/structure/chair/stool/bar{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/chair/stool/bar/syndicate_light{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "HN" = (
@@ -788,14 +804,16 @@
 /turf/open/floor/engine,
 /area/centcom/syndicate_mothership)
 "Kl" = (
-/obj/machinery/door/window/right/directional/north,
-/turf/open/floor/wood/tile,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 1
+	},
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership)
 "Kr" = (
 /obj/effect/turf_decal/stripes/full,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/syndicate{
 	id = "syndie_satellite_entry"
 	},
 /turf/open/floor/engine,
@@ -1008,8 +1026,11 @@
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
 	dir = 1
 	},
-/obj/structure/table/wood,
-/turf/open/floor/wood/tile,
+/obj/structure/table/reinforced/plastitanium,
+/obj/effect/turf_decal/tile/dark_red/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership)
 "SH" = (
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
@@ -1119,8 +1140,8 @@
 /turf/open/floor/engine,
 /area/centcom/syndicate_mothership)
 "Xo" = (
-/obj/structure/table/wood,
-/turf/open/floor/wood/tile,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership)
 "Xr" = (
 /obj/structure/ladder/unbreakable{
@@ -1470,11 +1491,11 @@ Go
 rZ
 Gn
 qR
-cX
+Xo
 Xo
 Ef
 Xo
-iy
+Xo
 oB
 Gn
 DA
@@ -1507,11 +1528,11 @@ Go
 MF
 yl
 ve
+ps
 Hy
-Hy
-Hy
+ps
 om
-om
+rf
 yl
 yl
 XB
