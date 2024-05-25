@@ -69,6 +69,8 @@
 	var/hitsound
 	///Played when the item is used, for example tools
 	var/usesound
+	///Played when item is used for long progress
+	var/operating_sound
 	///Used when yate into a mob
 	var/mob_throw_hit_sound
 	///Sound used when equipping the item into a valid slot
@@ -1121,8 +1123,11 @@
 	if(delay)
 		// Create a callback with checks that would be called every tick by do_after.
 		var/datum/callback/tool_check = CALLBACK(src, PROC_REF(tool_check_callback), user, amount, extra_checks)
+		if(delay >= MIN_TOOL_SOUND_DELAY)
+			play_tool_operating_sound(target, volume)
 
 		if(!do_after(user, delay, target=target, extra_checks=tool_check))
+
 			return
 	else
 		// Invoke the extra checks once, just in case.
@@ -1161,6 +1166,16 @@
 
 		if(islist(usesound))
 			played_sound = pick(usesound)
+
+		playsound(target, played_sound, volume, TRUE)
+
+///Play item's operating sound
+/obj/item/proc/play_tool_operating_sound(atom/target, volume=50)
+	if(target && operating_sound && volume)
+		var/played_sound = operating_sound
+
+		if(islist(operating_sound))
+			played_sound = pick(operating_sound)
 
 		playsound(target, played_sound, volume, TRUE)
 
