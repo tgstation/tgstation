@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - admin: "Admins can now reroll random events into something else."
