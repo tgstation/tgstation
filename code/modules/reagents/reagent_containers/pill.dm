@@ -22,8 +22,6 @@
 		icon_state = "pill[rand(1,20)]"
 	if(reagents.total_volume && rename_with_volume)
 		name += " ([reagents.total_volume]u)"
-	if(apply_type == INGEST)
-		AddComponent(/datum/component/germ_sensitive, mapload)
 
 /obj/item/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
 	if(!canconsume(M, user))

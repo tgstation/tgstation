@@ -7,7 +7,7 @@
 	eatverbs = list("slurp", "sip", "inhale", "drink")
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/bowled/make_germ_sensitive(mapload)
+/obj/item/food/bowled/make_decompose(mapload)
 	return // It's in a bowl
 
 /obj/item/food/bowled/wish

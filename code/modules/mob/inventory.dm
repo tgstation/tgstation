@@ -245,41 +245,6 @@
 	// Failed to put in hands - drop the item
 	var/atom/location = drop_location()
 
-	// Try dropping on nearby tables if germ sensitive (except table behind you)
-	if(HAS_TRAIT(I, TRAIT_GERM_SENSITIVE))
-		var/list/dirs = list( // All dirs in clockwise order
-			NORTH,
-			NORTHEAST,
-			EAST,
-			SOUTHEAST,
-			SOUTH,
-			SOUTHWEST,
-			WEST,
-			NORTHWEST,
-		)
-		var/dir_count = dirs.len
-		var/facing_dir_index = dirs.Find(dir)
-		var/cw_index = facing_dir_index
-		var/ccw_index = facing_dir_index
-		var/list/turfs_ordered = list(get_step(src, dir))
-
-		// Build ordered list of turfs starting from the front facing
-		for(var/i in 1 to ROUND_UP(dir_count/2) - 1)
-			cw_index++
-			if(cw_index > dir_count)
-				cw_index = 1
-			turfs_ordered += get_step(src, dirs[cw_index]) // Add next tile on your right
-			ccw_index--
-			if(ccw_index <= 0)
-				ccw_index = dir_count
-			turfs_ordered += get_step(src, dirs[ccw_index])	// Add next tile on your left
-
-		// Check tables on these turfs
-		for(var/turf in turfs_ordered)
-			if(locate(/obj/structure/table) in turf || locate(/obj/structure/rack) in turf || locate(/obj/machinery/icecream_vat) in turf)
-				location = turf
-				break
-
 	I.forceMove(location)
 	I.layer = initial(I.layer)
 	SET_PLANE_EXPLICIT(I, initial(I.plane), location)

@@ -16,7 +16,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	preserved_food = TRUE
 
-/obj/item/food/canned/make_germ_sensitive(mapload)
+/obj/item/food/canned/make_decompose(mapload)
 	return // It's in a can
 
 /obj/item/food/canned/proc/open_can(mob/user)

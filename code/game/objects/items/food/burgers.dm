@@ -233,7 +233,7 @@
 	START_PROCESSING(SSobj, src)
 	AddComponent(/datum/component/ghost_edible, bite_consumption = bite_consumption)
 
-/obj/item/food/burger/ghost/make_germ_sensitive()
+/obj/item/food/burger/ghost/make_decompose()
 	return // This burger moves itself so it shouldn't pick up germs from walking onto the floor
 
 /obj/item/food/burger/ghost/process()
