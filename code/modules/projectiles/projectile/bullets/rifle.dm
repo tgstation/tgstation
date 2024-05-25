@@ -75,8 +75,6 @@
 	embedding = list(embed_chance=80, fall_chance=1, jostle_chance=3, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=2, rip_time=14)
 	embed_falloff_tile = -3
 	shrapnel_type = /obj/item/ammo_casing/rebar/syndie
-	var/modified = FALSE
-	var/obj/item/pen/pen = null
 
 /obj/projectile/bullet/rebar/zaukerite
 	name = "zaukerite shard"
@@ -126,14 +124,11 @@
 	if(isliving(target))
 		var/mob/living/breather = target
 		breather.SetSleeping(3 SECONDS)
-		var/need_mob_update
+		var/need_mob_update = FALSE
 		need_mob_update = breather.adjustFireLoss(-30, updating_health = TRUE, required_bodytype = BODYTYPE_ORGANIC)
-		need_mob_update += breather.adjustToxLoss(-30, updating_health = TRUE, required_biotype = BODYTYPE_ORGANIC)
-		need_mob_update += breather.adjustBruteLoss(-30, updating_health = TRUE, required_bodytype = BODYTYPE_ORGANIC)
-		need_mob_update += breather.adjustOxyLoss(-30, updating_health = TRUE, required_biotype = BODYTYPE_ORGANIC, required_respiration_type = ALL)
-		if(need_mob_update)
-			return UPDATE_MOB_HEALTH
-
+		need_mob_update ||= breather.adjustToxLoss(-30, updating_health = TRUE, required_biotype = BODYTYPE_ORGANIC)
+		need_mob_update ||= breather.adjustBruteLoss(-30, updating_health = TRUE, required_bodytype = BODYTYPE_ORGANIC)
+		need_mob_update ||= breather.adjustOxyLoss(-30, updating_health = TRUE, required_biotype = BODYTYPE_ORGANIC, required_respiration_type = ALL)
 
 	return BULLET_ACT_HIT
 
@@ -156,9 +151,10 @@
 		dust_feedback(target)
 		victim.dust()
 
-	if(!isturf(target))
+	else if(!isturf(target)&& !isliving(target))
 		dust_feedback(target)
 		qdel(target)
+
 	return BULLET_ACT_HIT
 
 
@@ -175,7 +171,7 @@
 
 /obj/projectile/bullet/paperball
 	desc = "Doink!"
-	damage = 0 // It's a damn toy.
+	damage = 1 // It's a damn toy.
 	range = 10
 	shrapnel_type = null
 	embedding = null
@@ -184,6 +180,4 @@
 	damage_type = BRUTE
 	icon = 'icons/obj/weapons/guns/toy.dmi'
 	icon_state = "paperball"
-
-//obj/projectile/bullet/paperball/proc/handle_drop(datum/source, obj/item/ammo_casing/paperball/newcasing)
 	//SIGNAL_HANDLER
