@@ -482,7 +482,7 @@
 	assignment = "Geneticist"
 	trim_state = "trim_geneticist"
 	department_color = COLOR_SCIENCE_PINK
-	subdepartment_color = COLOR_SCIENCE_PINK
+	subdepartment_color = COLOR_MEDICAL_BLUE
 	sechud_icon_state = SECHUD_GENETICIST
 	minimal_access = list(
 		ACCESS_GENETICS,
