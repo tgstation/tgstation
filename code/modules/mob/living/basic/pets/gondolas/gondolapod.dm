@@ -84,8 +84,8 @@
 
 ///Checks the contents of the gondola and lets them know what they're holding.
 /datum/action/innate/check_gondola_contents
-	name = "Deliver"
-	desc = "Open your pod and release any contents stored within."
+	name = "Check contents"
+	desc = "See how many items you are currently holding in your pod."
 	button_icon = 'icons/hud/implants.dmi'
 	button_icon_state = "storage"
 	check_flags = AB_CHECK_PHASED
