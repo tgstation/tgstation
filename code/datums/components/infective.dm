@@ -45,8 +45,6 @@
 				RegisterSignal(parent, COMSIG_GLASS_DRANK, PROC_REF(try_infect_drink))
 			if(isorgan(parent))
 				RegisterSignal(parent, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_organ_insertion))
-		else if(istype(parent, /obj/effect/decal/cleanable/blood/gibs))
-			RegisterSignal(parent, COMSIG_GIBS_STREAK, PROC_REF(try_infect_streak))
 
 /datum/component/infective/proc/on_organ_insertion(obj/item/organ/target, mob/living/carbon/receiver)
 	SIGNAL_HANDLER
@@ -180,6 +178,5 @@
 		COMSIG_ITEM_EQUIPPED,
 		COMSIG_GLASS_DRANK,
 		COMSIG_ORGAN_IMPLANTED,
-		COMSIG_GIBS_STREAK,
 	))
 	qdel(GetComponent(/datum/component/connect_loc_behalf))

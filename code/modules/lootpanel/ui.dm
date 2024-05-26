@@ -36,6 +36,11 @@
 		modifiers += "middle=1;"
 	if(params["shift"])
 		modifiers += "shift=1;"
+	if(params["alt"])
+		modifiers += "alt=1;"
+	if(params["right"])
+		modifiers += "right=1;"
+
 
 	user.ClickOn(thing, modifiers)
 

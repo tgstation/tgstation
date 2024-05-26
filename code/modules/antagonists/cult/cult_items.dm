@@ -382,7 +382,7 @@ Striking a noncultist, however, will tear their flesh."}
 	AddComponent( \
 		/datum/component/shielded, \
 		recharge_start_delay = 0 SECONDS, \
-		shield_icon_file = 'icons/effects/cult/effects.dmi', \
+		shield_icon_file = 'icons/effects/cult.dmi', \
 		shield_icon = "shield-cult", \
 		run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)), \
 	)
@@ -620,9 +620,9 @@ Striking a noncultist, however, will tear their flesh."}
 	new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, user_cultist.dir)
 	new /obj/effect/temp_visual/dir_setting/cult/phase(destination, user_cultist.dir)
 
-	playsound(mobloc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(mobloc, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	playsound(destination, 'sound/effects/phasein.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	playsound(destination, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/flashlight/flare/culttorch
 	name = "void torch"

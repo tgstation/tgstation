@@ -6,7 +6,7 @@
 /obj/item/surgery_tray
 	name = "surgery tray"
 	desc = "A Deforest brand medical cart. It is a folding model, meaning the wheels on the bottom can be retracted and the body used as a tray."
-	icon = 'icons/obj/medicart.dmi'
+	icon = 'icons/obj/medical/medicart.dmi'
 	icon_state = "tray"
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 1
