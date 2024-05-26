@@ -243,3 +243,33 @@
 	bio = 90
 	fire = 80
 	acid = 50
+
+///Subtype of krav maga. Only used for the warden.
+/datum/martial_art/krav_maga/warden
+	name = "Krav Maga"
+	///List of all areas that Krav Maga will work in, defaults to Security.
+	var/list/warden_areas = list(/area/station/security)
+
+/// Refreshes the valid areas from the cook's mapping config, adding areas in config to the list of possible areas.
+/datum/martial_art/krav_maga/warden/proc/refresh_valid_areas()
+	var/list/additional_warden_areas = CHECK_MAP_JOB_CHANGE(JOB_WARDEN, "additional_warden_areas")
+	if(!additional_warden_areas)
+		return
+
+	if(!islist(additional_warden_areas))
+		stack_trace("Incorrect Krav Maga area format from mapping configs. Expected /list, got: \[[additional_warden_areas.type]\]")
+		return
+
+	for(var/path_as_text in additional_warden_areas)
+		var/path = text2path(path_as_text)
+		if(!ispath(path, /area))
+			stack_trace("Invalid path in mapping config for warden Krav Maga: \[[path_as_text]\]")
+			continue
+
+		warden_areas |= path
+
+/// Limits where the warden's krav maga can be used to only whitelisted areas.
+/datum/martial_art/krav_maga/warden/can_use(mob/living/martial_artist)
+	if(!is_type_in_list(get_area(martial_artist), warden_areas))
+		return FALSE
+	return ..()
