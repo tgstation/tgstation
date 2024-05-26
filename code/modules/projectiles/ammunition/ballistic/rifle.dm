@@ -73,7 +73,7 @@
 	icon_state = "rod_sharp"
 	base_icon_state = "rod_sharp"
 	projectile_type = /obj/projectile/bullet/rebar/zaukerite
-/*
+
 /obj/item/ammo_casing/rebar/hydrogen
 	name = "Metallic Hydrogen Bolt"
 	desc = "An ultra-sharp rod made from pure metallic hydrogen. Armor may as well not exist."

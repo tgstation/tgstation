@@ -90,7 +90,7 @@
 	embedding = list("embed_chance" = 90, "fall_chance" = 1, "jostle_chance" = 5, "ignore_throwspeed_threshold" = TRUE, "pain_stam_pct" = 0.8, "pain_mult" = 6, "jostle_pain_mult" = 2, "rip_time" = 30)
 	embed_falloff_tile = -2 // very spiky.
 	shrapnel_type = /obj/item/ammo_casing/rebar/zaukerite
-/*
+
 /obj/projectile/bullet/rebar/hydrogen
 	name = "metallic hydrogen bolt"
 	icon_state = "rebar_hydrogen"
