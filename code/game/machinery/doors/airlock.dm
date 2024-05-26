@@ -1571,6 +1571,7 @@
 /obj/machinery/door/airlock/proc/prepare_deconstruction_assembly(obj/structure/door_assembly/assembly)
 	assembly.heat_proof_finished = heat_proof //tracks whether there's rglass in
 	assembly.set_anchored(TRUE)
+	assembly.setDir(dir)
 	assembly.glass = glass
 	assembly.state = AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS
 	assembly.created_name = name
@@ -2546,13 +2547,16 @@
 	name = "fancy ungodlike airlock"
 	desc = "I can only imagine the amount of hate this will get if this isn't like... actually perfect."
 	icon = 'icons/obj/doors/airlocks/greyscale_template.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_greyscale
 	greyscale_config = /datum/greyscale_config/airlocks
 	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#ffffff"
 
 /obj/machinery/door/airlock/greyscale/red
+	assemblytype = /obj/structure/door_assembly/door_assembly_greyscale_red
 	greyscale_colors = "#d40808#d40808#d40808#d40808#808080"
 
 /obj/machinery/door/airlock/greyscale/green
+	assemblytype = /obj/structure/door_assembly/door_assembly_greyscale_green
 	greyscale_colors = "#00c41a#00c41a#00c41a#00c41a#808080"
 
 /*

@@ -158,5 +158,37 @@
 			"blend_mode": "overlay",
 			"color_ids": [ 5 ]
 		}
+	],
+	"construction": [
+		{
+			"type": "icon_state",
+			"icon_state": "left_door_panel_construction",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "right_door_panel_construction",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "top_left_rim_construction",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "top_right_rim_construction",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "fill_construction",
+			"blend_mode": "overlay",
+			"color_ids": [ 5 ]
+		}
 	]
 }
