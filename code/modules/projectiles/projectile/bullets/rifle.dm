@@ -58,7 +58,7 @@
 	armour_penetration = 10
 	wound_bonus = -20
 	bare_wound_bonus = 20
-	embedding = list(embed_chance=60, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=2, rip_time=10)
+	embedding = list("embed_chance" = 60, "fall_chance" = 2, "jostle_chance" = 2, "ignore_throwspeed_threshold" = TRUE, "pain_stam_pct" = 0.4, "pain_mult" = 4, "jostle_pain_mult" = 2, "rip_time" = 10)
 	embed_falloff_tile = -5
 	wound_falloff_tile = -2
 	shrapnel_type = /obj/item/ammo_casing/rebar
@@ -71,8 +71,8 @@
 	dismemberment = 2 //It's a budget sniper rifle.
 	armour_penetration = 20 //A bit better versus armor. Gets past anti laser armor or a vest, but doesnt wound proc on sec armor.
 	wound_bonus = 10
-	bare_wound_bonus = 30
-	embedding = list(embed_chance=80, fall_chance=1, jostle_chance=3, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=2, rip_time=14)
+	bare_wound_bonus = 20
+	embedding = list("embed_chance" = 80, "fall_chance" = 1, "jostle_chance" = 3, "ignore_throwspeed_threshold" = TRUE, "pain_stam_pct" = 0.4, "pain_mult" = 3, "jostle_pain_mult" = 2,"rip_time" = 14)
 	embed_falloff_tile = -3
 	shrapnel_type = /obj/item/ammo_casing/rebar/syndie
 
@@ -80,28 +80,29 @@
 	name = "zaukerite shard"
 	icon_state = "rebar_zaukerite"
 	damage = 60
-	speed = 0.6
+	speed = 0.4
 	dismemberment = 2
 	damage_type = TOX
 	eyeblur = 5
-	armour_penetration = 30
+	armour_penetration = 15 // not nearly as good, as its not as sharp.
 	wound_bonus = 0
 	bare_wound_bonus = 20
-	embedding = list(embed_chance=90, fall_chance=0, jostle_chance=5, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.8, pain_mult=6, jostle_pain_mult=2, rip_time=30)
-	embed_falloff_tile = -5
+	embedding = list("embed_chance" = 90, "fall_chance" = 1, "jostle_chance" = 5, "ignore_throwspeed_threshold" = TRUE, "pain_stam_pct" = 0.8, "pain_mult" = 6, "jostle_pain_mult" = 2, "rip_time" = 30)
+	embed_falloff_tile = -2 // very spiky.
 	shrapnel_type = /obj/item/ammo_casing/rebar/zaukerite
 
 /obj/projectile/bullet/rebar/hydrogen
 	name = "metallic hydrogen bolt"
 	icon_state = "rebar_hydrogen"
 	damage = 40
-	speed = 0.4
-	dismemberment = 2
+	speed = 0.6
+	dismemberment = 0 //goes through clean.
 	damage_type = BRUTE
-	armour_penetration = 16
+	armour_penetration = 30 //very pointy.
+	projectile_piercing = PASSMOB //felt this might have been a nice compromise for the lower damage for the difficulty of getting it
 	wound_bonus = -15
-	bare_wound_bonus = 30
-	embedding = list(embed_chance = 70, fall_chance=1, jostle_chance=3, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.6, pain_mult=4, jostle_pain_mult=2, rip_time=18)
+	bare_wound_bonus = 10
+	embedding = list("embed_chance" = 50, "fall_chance" = 2, "jostle_chance" = 3, "ignore_throwspeed_threshold" = TRUE, "pain_stam_pct" = 0.6, "pain_mult" = 4, "jostle_pain_mult" = 2, "rip_time" =18)
 	embed_falloff_tile = -3
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
 
@@ -121,14 +122,15 @@
 
 /obj/projectile/bullet/rebar/healium/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(isliving(target))
+	if(!isliving(target))
+		return BULLET_ACT_HIT
+	else
 		var/mob/living/breather = target
 		breather.SetSleeping(3 SECONDS)
-		var/need_mob_update = FALSE
-		need_mob_update = breather.adjustFireLoss(-30, updating_health = TRUE, required_bodytype = BODYTYPE_ORGANIC)
-		need_mob_update ||= breather.adjustToxLoss(-30, updating_health = TRUE, required_biotype = BODYTYPE_ORGANIC)
-		need_mob_update ||= breather.adjustBruteLoss(-30, updating_health = TRUE, required_bodytype = BODYTYPE_ORGANIC)
-		need_mob_update ||= breather.adjustOxyLoss(-30, updating_health = TRUE, required_biotype = BODYTYPE_ORGANIC, required_respiration_type = ALL)
+		breather.adjustFireLoss(-30, updating_health = TRUE, required_bodytype = BODYTYPE_ORGANIC)
+		breather.adjustToxLoss(-30, updating_health = TRUE, required_biotype = BODYTYPE_ORGANIC)
+		breather.adjustBruteLoss(-30, updating_health = TRUE, required_bodytype = BODYTYPE_ORGANIC)
+		breather.adjustOxyLoss(-30, updating_health = TRUE, required_biotype = BODYTYPE_ORGANIC, required_respiration_type = ALL)
 
 	return BULLET_ACT_HIT
 
@@ -178,4 +180,3 @@
 	damage_type = BRUTE
 	icon = 'icons/obj/weapons/guns/toy.dmi'
 	icon_state = "paperball"
-	//SIGNAL_HANDLER
