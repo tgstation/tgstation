@@ -105,8 +105,8 @@
 	damage_type = BRUTE
 	armour_penetration = 30 //very pointy.
 	projectile_piercing = PASSMOB //felt this might have been a nice compromise for the lower damage for the difficulty of getting it
-	wound_bonus = -20
-	bare_wound_bonus = 5
+	wound_bonus = -15
+	bare_wound_bonus = 10
 	embedding = list("embed_chance" = 50, "fall_chance" = 2, "jostle_chance" = 3, "ignore_throwspeed_threshold" = TRUE, "pain_stam_pct" = 0.6, "pain_mult" = 4, "jostle_pain_mult" = 2, "rip_time" =18)
 	embed_falloff_tile = -3
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
