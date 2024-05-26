@@ -14,8 +14,8 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+18
 	required_temperature_max = MIN_AQUARIUM_TEMP+26
 
-/obj/item/fish/goldfish/saul
-	name = "Saul"
+/obj/item/fish/goldfish/gill
+	name = "McGill"
 	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case, \
 		they work for justice from within the shadows."
 	stable_population = 1

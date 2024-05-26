@@ -361,7 +361,7 @@
 	new /obj/item/aquarium_prop/sand(src)
 	new /obj/item/aquarium_prop/seaweed(src)
 
-	new /obj/item/fish/goldfish/saul(src)
+	new /obj/item/fish/goldfish/gill(src)
 
 	reagents.add_reagent(/datum/reagent/consumable/nutriment, 2)
 
