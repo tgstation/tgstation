@@ -80,3 +80,7 @@
 /datum/brain_trauma/mild/phobia/freak_out(atom/reason, trigger_word)
 	if(!suppressed)
 		return ..()
+
+/datum/brain_trauma/mild/phobia/christian_minecraft
+	phobia_type = "christian minecraft"
+	random_gain = FALSE
