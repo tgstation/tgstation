@@ -134,6 +134,12 @@
 /obj/machinery/door/puzzle/light
 	desc = "This door only opens when a linked mechanism is powered. It looks virtually indestructible."
 
+//For the satellite base
+/obj/machinery/door/puzzle/keycard/satellite_chemistry
+	name = "Syndicate Bio-Weapon Laboratory"
+	desc = "Locked. Looks like you'll need a special access key to get in."
+	puzzle_id = "satellite_chemistry"
+
 //*************************
 //***Box Pushing Puzzles***
 //*************************

@@ -5,6 +5,7 @@
 /datum/uplink_item/support_tools
 	category = /datum/uplink_category/satellite_support
 	surplus = 0
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 //Nothing in this category can be bought until the satellite is spawned in
 /datum/uplink_item/support_tools/can_be_bought(datum/uplink_handler/source)
@@ -42,3 +43,18 @@
 	desc = "Ensures safe travels through Syndicate gates"
 	item = /obj/item/implanter/gate_authorization
 	cost = 5
+
+/datum/uplink_item/support_tools/bio_key
+	name = "Interdyne Pharmaeceutical Access Card"
+	desc = "For some of our best Operatives, watching corpo space stations blow up with a flash of retribution just isn't enough. \
+		Folks like those prefer a more personal touch to their artistry. For those interested, a special Authorization Key \
+		can be instantly delivered to your location. Create groundbreaking chemical agents, cook up, sell the best of drugs, \
+		and listen to the best classic music today!"
+	item = /obj/item/keycard/satellite_chemistry
+	cost = 8
+
+/obj/item/keycard/satellite_chemistry
+	name = "Interdyne Pharmaeceutical Access Card"
+	desc = "A red keycard with an image of a beaker. Using this will allow you to gain access to the pharmaeceutical wing aboard the satellite base."
+	color = "#9c0e26"
+	puzzle_id = "satellite_chemistry"
