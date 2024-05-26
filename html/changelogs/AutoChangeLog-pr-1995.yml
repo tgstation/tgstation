@@ -1,5 +1,0 @@
-author: "DexeeXI"
-delete-after: True
-changes:
-  - qol: "HOP now has supply radio access as they are the final boss of supply."
-  - bugfix: "HOP is no longer self-supervising. You answer to the Captain, damnit!"

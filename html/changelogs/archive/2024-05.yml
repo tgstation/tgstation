@@ -244,3 +244,9 @@
   - refactor: Refactored the changelog UI from JavaScript into TypeScript.
   - bugfix: Fixed a weird oozeling revival bug that results in their items being sent
       to the void.
+2024-05-26:
+  DexeeXI:
+  - qol: HOP now has supply radio access as they are the final boss of supply.
+  - bugfix: HOP is no longer self-supervising. You answer to the Captain, damnit!
+  Kitsunemitsu:
+  - rscadd: Geneticist is now a medsci role.
