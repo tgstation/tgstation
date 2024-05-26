@@ -1573,6 +1573,7 @@
 	assembly.set_anchored(TRUE)
 	assembly.setDir(dir)
 	assembly.glass = glass
+	assembly.set_greyscale(greyscale_colors, greyscale_config)
 	assembly.state = AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS
 	assembly.created_name = name
 	assembly.previous_assembly = previous_airlock

@@ -47,13 +47,6 @@
 /obj/structure/door_assembly/Initialize(mapload)
 	base_name = base_name || initial(airlock_type.name) || "Airlock"
 	overlays_file = initial(airlock_type.overlays_file)
-	greyscale_config = initial(airlock_type.greyscale_config)
-	greyscale_colors = initial(airlock_type.greyscale_colors)
-	if(glass && !istype(greyscale_config, /datum/greyscale_config/airlocks/custom))
-		greyscale_config = /datum/greyscale_config/airlocks/window
-		greyscale_colors = (copytext(greyscale_colors, 1, 43))
-	else if(istype(greyscale_config, /datum/greyscale_config/airlocks))
-		greyscale_colors = (copytext(greyscale_colors, 1, 36))
 	. = ..()
 	update_appearance()
 	update_name()
