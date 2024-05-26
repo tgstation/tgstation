@@ -220,3 +220,6 @@
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
 	icon_state = "syndieheadband"
+
+/datum/armor/helmet_durathread
+	bullet = 15
