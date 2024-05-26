@@ -573,6 +573,7 @@
 	name = "Random martial arts"
 	description = "Everyone learns a random martial art!"
 	blacklisted_maps = list(/datum/lazy_template/deathmatch/meatower)
+	// krav maga excluded because its too common and too simple, mushpunch excluded because its horrible and not even funny
 	var/static/list/weighted_martial_arts = list(
 		// common
 		/datum/martial_art/cqc = 30,
@@ -580,11 +581,10 @@
 		// uncommon
 		/datum/martial_art/boxing/evil = 20,
 		// rare
-		/datum/martial_art/wrestling = 10, // wrestling is kinda strong ngl
-		/datum/martial_art/psychotic_brawling = 10,
-		/datum/martial_art/mushpunch = 10,
+		/datum/martial_art/psychotic_brawling = 10, // a complete meme. sometimes you just get hardstunned. sometimes you punch someone across the room
 		// LEGENDARY
 		/datum/martial_art/plasma_fist = 5,
+		/datum/martial_art/wrestling = 5, // wrestling is kinda strong ngl
 	)
 
 /datum/deathmatch_modifier/martial_artistry/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
@@ -592,6 +592,10 @@
 
 	var/datum/martial_art/picked_art_path = pick_weight(weighted_martial_arts)
 	var/datum/martial_art/instantiated_art = new picked_art_path()
+
+	if (istype(instantiated_art, /datum/martial_art/boxing))
+		player.mind.adjust_experience(/datum/skill/athletics, SKILL_EXP_MASTER)
+
 	instantiated_art.teach(player)
 
 	to_chat(player, span_revenboldnotice("Your martial art is [uppertext(instantiated_art.name)]!"))
