@@ -1843,6 +1843,7 @@
 #include "code\datums\status_effects\debuffs\strandling.dm"
 #include "code\datums\status_effects\debuffs\terrified.dm"
 #include "code\datums\status_effects\debuffs\tower_of_babel.dm"
+#include "code\datums\status_effects\debuffs\tox_vomit.dm"
 #include "code\datums\status_effects\debuffs\slime\slime_food.dm"
 #include "code\datums\status_effects\debuffs\slime\slime_leech.dm"
 #include "code\datums\status_effects\debuffs\slime\slimed.dm"
