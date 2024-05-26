@@ -1,6 +1,3 @@
-#define PROFILER_FILENAME "profiler"
-#define SENDMAPS_FILENAME "sendmaps"
-
 SUBSYSTEM_DEF(profiler)
 	name = "Profiler"
 	init_order = INIT_ORDER_PROFILER
@@ -56,12 +53,12 @@ SUBSYSTEM_DEF(profiler)
 
 	if(!length(current_profile_data)) //Would be nice to have explicit proc to check this
 		stack_trace("Warning, profiling stopped manually before dump.")
-	var/prof_file = file("[GLOB.log_directory]/profiler/[PROFILER_FILENAME]-[round(world.time * 0.1, 10)].json")
+	var/prof_file = file("[GLOB.log_directory]/profiler/profiler-[round(world.time * 0.1, 10)].json")
 	if(fexists(prof_file))
 		fdel(prof_file)
 	if(!length(current_sendmaps_data)) //Would be nice to have explicit proc to check this
 		stack_trace("Warning, sendmaps profiling stopped manually before dump.")
-	var/sendmaps_file = file("[GLOB.log_directory]/profiler/[SENDMAPS_FILENAME]-[round(world.time * 0.1, 10)].json")
+	var/sendmaps_file = file("[GLOB.log_directory]/profiler/sendmaps-[round(world.time * 0.1, 10)].json")
 	if(fexists(sendmaps_file))
 		fdel(sendmaps_file)
 
@@ -70,5 +67,3 @@ SUBSYSTEM_DEF(profiler)
 	WRITE_FILE(sendmaps_file, current_sendmaps_data)
 	write_cost = MC_AVERAGE(write_cost, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
-#undef PROFILER_FILENAME
-#undef SENDMAPS_FILENAME
