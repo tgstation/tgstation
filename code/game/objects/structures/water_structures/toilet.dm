@@ -268,4 +268,4 @@
 		var/obj/item/secret = new secret_type(src)
 		secret.desc += " It's a secret!"
 		w_items += secret.w_class
-		LAZYADD(cistern_items, attacking_item)
+		LAZYADD(cistern_items, secret)
