@@ -6,13 +6,24 @@
 	base_icon_state = "toilet"
 	density = FALSE
 	anchored = TRUE
+
+	///Boolean if whether the toilet is currently flushing.
 	var/flushing = FALSE
-	var/open = FALSE //if the lid is up
-	var/cistern = 0 //if the cistern bit is open
-	var/w_items = 0 //the combined w_class of all the items in the cistern
-	var/mob/living/swirlie = null //the mob being given a swirlie
-	var/buildstacktype = /obj/item/stack/sheet/iron //they're iron now, shut up
+	///Boolean if the toilet seat is up.
+	var/open = FALSE
+	///Boolean if the cistern is up, allowing items to be put in/out.
+	var/cistern
+	///Amount of fish currently in the toilet, not to be mixed with the items in the cistern.
+	var/fishes = 0
+	///The combined weight of all items in the cistern put together.
+	var/w_items = 0
+	///Reference to the mob being given a swirlie.
+	var/mob/living/swirlie
+	///The type of material used to build the toilet.
+	var/buildstacktype = /obj/item/stack/sheet/iron
+	///How much of the buildstacktype is needed to construct the toilet.
 	var/buildstackamount = 1
+	///Static toilet water overlay given to toilets that are facing a direction we can see the water in.
 	var/static/mutable_appearance/toilet_water
 
 /obj/structure/toilet/Initialize(mapload)
@@ -35,51 +46,58 @@
 		swirlie.visible_message(span_danger("[user] slams the toilet seat onto [swirlie]'s head!"), span_userdanger("[user] slams the toilet seat onto your head!"), span_hear("You hear reverberating porcelain."))
 		log_combat(user, swirlie, "swirlied (brute)")
 		swirlie.adjustBruteLoss(5)
+		return
 
-	else if(user.pulling && isliving(user.pulling))
+	if(user.pulling && isliving(user.pulling))
 		user.changeNext_move(CLICK_CD_MELEE)
-		var/mob/living/GM = user.pulling
-		if(user.grab_state >= GRAB_AGGRESSIVE)
-			if(GM.loc != get_turf(src))
-				to_chat(user, span_warning("[GM] needs to be on [src]!"))
-				return
-			if(!swirlie)
-				if(open)
-					GM.visible_message(span_danger("[user] starts to give [GM] a swirlie!"), span_userdanger("[user] starts to give you a swirlie..."))
-					swirlie = GM
-					var/was_alive = (swirlie.stat != DEAD)
-					if(do_after(user, 3 SECONDS, target = src, timed_action_flags = IGNORE_HELD_ITEM))
-						GM.visible_message(span_danger("[user] gives [GM] a swirlie!"), span_userdanger("[user] gives you a swirlie!"), span_hear("You hear a toilet flushing."))
-						if(iscarbon(GM))
-							var/mob/living/carbon/C = GM
-							if(!C.internal)
-								log_combat(user, C, "swirlied (oxy)")
-								C.adjustOxyLoss(5)
-						else
-							log_combat(user, GM, "swirlied (oxy)")
-							GM.adjustOxyLoss(5)
-					if(was_alive && swirlie.stat == DEAD && swirlie.client)
-						swirlie.client.give_award(/datum/award/achievement/misc/swirlie, swirlie) // just like space high school all over again!
-					swirlie = null
-				else
-					playsound(src.loc, 'sound/effects/bang.ogg', 25, TRUE)
-					GM.visible_message(span_danger("[user] slams [GM.name] into [src]!"), span_userdanger("[user] slams you into [src]!"))
-					log_combat(user, GM, "toilet slammed")
-					GM.adjustBruteLoss(5)
-		else
+		var/mob/living/grabbed_mob = user.pulling
+		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, span_warning("You need a tighter grip!"))
+			return
+		if(grabbed_mob.loc != get_turf(src))
+			to_chat(user, span_warning("[grabbed_mob] needs to be on [src]!"))
+			return
+		if(swirlie)
+			return
+		if(open)
+			grabbed_mob.visible_message(span_danger("[user] starts to give [grabbed_mob] a swirlie!"), span_userdanger("[user] starts to give you a swirlie..."))
+			swirlie = grabbed_mob
+			var/was_alive = (swirlie.stat != DEAD)
+			if(!do_after(user, 3 SECONDS, target = src, timed_action_flags = IGNORE_HELD_ITEM))
+				swirlie = null
+				return
+			grabbed_mob.visible_message(span_danger("[user] gives [grabbed_mob] a swirlie!"), span_userdanger("[user] gives you a swirlie!"), span_hear("You hear a toilet flushing."))
+			if(iscarbon(grabbed_mob))
+				var/mob/living/carbon/carbon_grabbed = grabbed_mob
+				if(!carbon_grabbed.internal)
+					log_combat(user, carbon_grabbed, "swirlied (oxy)")
+					carbon_grabbed.adjustOxyLoss(5)
+			else
+				log_combat(user, grabbed_mob, "swirlied (oxy)")
+				grabbed_mob.adjustOxyLoss(5)
+			if(was_alive && swirlie.stat == DEAD && swirlie.client)
+				swirlie.client.give_award(/datum/award/achievement/misc/swirlie, swirlie) // just like space high school all over again!
+			swirlie = null
+		else
+			playsound(src.loc, 'sound/effects/bang.ogg', 25, TRUE)
+			grabbed_mob.visible_message(span_danger("[user] slams [grabbed_mob.name] into [src]!"), span_userdanger("[user] slams you into [src]!"))
+			log_combat(user, grabbed_mob, "toilet slammed")
+			grabbed_mob.adjustBruteLoss(5)
+		return
 
-	else if(cistern && !open && user.CanReach(src))
+	if(cistern && !open && user.CanReach(src))
 		if(!contents.len)
 			to_chat(user, span_notice("The cistern is empty."))
+			return
+		var/obj/item/I = pick(contents)
+		if(ishuman(user))
+			user.put_in_hands(I)
 		else
-			var/obj/item/I = pick(contents)
-			if(ishuman(user))
-				user.put_in_hands(I)
-			else
-				I.forceMove(drop_location())
-			to_chat(user, span_notice("You find [I] in the cistern."))
-			w_items -= I.w_class
+			I.forceMove(drop_location())
+		to_chat(user, span_notice("You find [I] in the cistern."))
+		w_items -= I.w_class
+		return
+
 	else if(!flushing)
 		open = !open
 		update_appearance(UPDATE_ICON)
