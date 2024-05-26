@@ -588,26 +588,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(credits)
 		QDEL_LIST(credits)
 	if(holder)
-		adminGreet(1)
 		holder.owner = null
 		GLOB.admins -= src
-		if (!GLOB.admins.len && SSticker.IsRoundInProgress()) //Only report this stuff if we are currently playing.
-			var/cheesy_message = pick(
-				"I have no admins online!",\
-				"I'm all alone :(",\
-				"I'm feeling lonely :(",\
-				"I'm so lonely :(",\
-				"Why does nobody love me? :(",\
-				"I want a man :(",\
-				"Where has everyone gone?",\
-				"I need a hug :(",\
-				"Someone come hold me :(",\
-				"I need someone on me :(",\
-				"What happened? Where has everyone gone?",\
-				"Forever alone :("\
-			)
+		handle_admin_logout()
 
-			send2adminchat("Server", "[cheesy_message] (No admins online)")
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 
 	SSambience.remove_ambience_client(src)
@@ -1239,6 +1223,36 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				continue
 
 		screen -= object
+
+/// Handles any "fluff" or supplementary procedures related to an admin logout event. Should not have anything critically related cleaning up an admin's logout.
+/client/proc/handle_admin_logout()
+	adminGreet(logout = TRUE)
+	if(length(GLOB.admins) > 0 || !SSticker.IsRoundInProgress()) // We only want to report this stuff if we are currently playing.
+		return
+
+	var/list/message_to_send = list()
+	var/static/list/cheesy_messages = null
+
+	if (isnull(cheesy_messages))
+		cheesy_messages = list(
+			"Forever alone :(",
+			"I have no admins online!",
+			"I need a hug :(",
+			"I need someone on me :(",
+			"I want a man :(",
+			"I'm all alone :(",
+			"I'm feeling lonely :(",
+			"I'm so lonely :(",
+			"Someone come hold me :(",
+			"What happened? Where has everyone gone?",
+			"Where has everyone gone?",
+			"Why does nobody love me? :(",
+		)
+
+	message_to_send += pick(cheesy_messages)
+	message_to_send += "(No admins online)"
+
+	send2adminchat("Server", jointext(message_to_send, " "))
 
 #undef ADMINSWARNED_AT
 #undef CURRENT_MINUTE

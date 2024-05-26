@@ -103,11 +103,12 @@
 
 	// We sleep HERE, in pre-event setup (because there's no sense doing it in run_event() since the event is already running!) for the given amount of time to make an admin has enough time to cancel an event un-fitting of the present round.
 	if(alert_observers)
-		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name]. (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
+		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name]. (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>) (<a href='?src=[REF(src)];different_event=1'>SOMETHING ELSE</a>)")
 		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
 		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
 		if(!can_spawn_event(players_amt))
-			message_admins("Second pre-condition check for [name] failed, skipping...")
+			message_admins("Second pre-condition check for [name] failed, rerolling...")
+			SSevents.spawnEvent(excluded_event = src)
 			return EVENT_INTERRUPTED
 
 	if(!triggering)
@@ -125,6 +126,15 @@
 		message_admins("[key_name_admin(usr)] cancelled event [name].")
 		log_admin_private("[key_name(usr)] cancelled event [name].")
 		SSblackbox.record_feedback("tally", "event_admin_cancelled", 1, typepath)
+	if(href_list["different_event"])
+		if(!triggering)
+			to_chat(usr, span_admin("Too late to change events now!"))
+			return
+		triggering = FALSE
+		message_admins("[key_name_admin(usr)] chose to have event [name] rolled into a different event.")
+		log_admin_private("[key_name(usr)] rerolled event [name].")
+		SSblackbox.record_feedback("tally", "event_admin_rerolled", 1, typepath)
+		SSevents.spawnEvent(excluded_event = src)
 
 /*
 Runs the event

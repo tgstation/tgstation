@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Adds Minecarts, (possibly admin only depending on when this PR is merged in relation to the Icebox Bar PR)"

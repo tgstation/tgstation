@@ -15,19 +15,6 @@
 	. = ..()
 	set_holdable(/obj/item/tcgcard)
 
-/datum/storage/tcg/attempt_remove(obj/item/thing, atom/remove_to_loc, silent = FALSE)
-	. = ..()
-	if(!.)
-		return
-
-	var/obj/item/tcgcard_deck/deck = parent
-	var/obj/item/tcgcard/card = thing
-	card.flipped = deck.flipped
-	card.update_appearance(UPDATE_ICON_STATE)
-
-	if(length(real_location.contents) == 0)
-		qdel(parent)
-
 /datum/storage/tcg/show_contents(mob/to_show)
 	// sometimes, show contents is called when the mob is already seeing the contents of the deck, to refresh the view.
 	// to avoid spam, we only show the message if they weren't already seeing the contents.

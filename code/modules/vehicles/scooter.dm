@@ -224,7 +224,7 @@
 /obj/item/scooter_frame
 	name = "scooter frame"
 	desc = "A metal frame for building a scooter. Looks like you'll need to add some iron to make wheels."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "scooter_frame"
 	w_class = WEIGHT_CLASS_NORMAL
 
