@@ -289,7 +289,7 @@
 		else
 			new_mail = new /obj/item/mail/envelope(src)
 
-		var/datum/mind/recipient = pick_n_take(mail_recipients)
+		var/mob/living/carbon/human/recipient = pick_n_take(mail_recipients)
 		if(recipient)
 			new_mail.initialize_for_recipient(recipient)
 		else
@@ -349,7 +349,7 @@
 	atom_storage.set_holdable(list(
 		/obj/item/mail,
 		/obj/item/delivery/small,
-		/obj/item/paper
+		/obj/item/paper,
 	))
 
 /obj/item/paper/fluff/junkmail_redpill
@@ -553,8 +553,8 @@
 		else
 			shady_mail.name = mail_type
 	else
-		var/recipient_mob = mail_recipients[index].current
-		shady_mail.initialize_for_recipient(recipient_mob)
+		var/datum/mind/recipient_mind = mail_recipients[index]
+		shady_mail.initialize_for_recipient(recipient_mind.current)
 
 	atom_storage.hide_contents(user)
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
