@@ -580,11 +580,10 @@
 		/datum/martial_art/the_sleeping_carp = 30,
 		// uncommon
 		/datum/martial_art/boxing/evil = 20,
-		// rare
-		/datum/martial_art/psychotic_brawling = 10, // a complete meme. sometimes you just get hardstunned. sometimes you punch someone across the room
 		// LEGENDARY
 		/datum/martial_art/plasma_fist = 5,
 		/datum/martial_art/wrestling = 5, // wrestling is kinda strong ngl
+		/datum/martial_art/psychotic_brawling = 5, // a complete meme. sometimes you just get hardstunned. sometimes you punch someone across the room
 	)
 
 /datum/deathmatch_modifier/martial_artistry/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
