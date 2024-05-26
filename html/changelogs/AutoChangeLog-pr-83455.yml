@@ -1,0 +1,4 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - rscdel: "Miasma and gibs no longer generates random diseases"
