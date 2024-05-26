@@ -87,7 +87,7 @@ DEFINE_BITFIELD(spread_flags, list(
 #define DISEASE_SLOWDOWN_RECOVERY_BONUS_DURATION 200
 /// Negative Malnutrition Recovery Penalty
 //// Flat penalty to recovery chance if malnourished or starving
-#define DISEASE_MALNUTRITION_RECOVERY_PENALTY 1.5
+#define DISEASE_MALNUTRITION_RECOVERY_PENALTY 3
 /// Satiety Recovery Multiplier - added chance to recover based on positive satiety
 //// Multiplier of satiety/max_satiety if satiety is positive or zero. Increase to make satiety more valuable, decrease for less.
 #define DISEASE_SATIETY_RECOVERY_MULTIPLIER 3
