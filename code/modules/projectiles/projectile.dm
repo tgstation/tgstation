@@ -632,7 +632,10 @@
 				return TRUE
 			if(buckled_to.density) // Will just be us if we're not buckled to another mob
 				return TRUE
-	return FALSE
+			return FALSE
+		else if(living_target.body_position == LYING_DOWN)
+			return FALSE
+	return TRUE
 
 /**
  * Scan if we should hit something and hit it if we need to
