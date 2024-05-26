@@ -90,7 +90,7 @@
 	embedding = list("embed_chance" = 90, "fall_chance" = 1, "jostle_chance" = 5, "ignore_throwspeed_threshold" = TRUE, "pain_stam_pct" = 0.8, "pain_mult" = 6, "jostle_pain_mult" = 2, "rip_time" = 30)
 	embed_falloff_tile = -2 // very spiky.
 	shrapnel_type = /obj/item/ammo_casing/rebar/zaukerite
-
+/*
 /obj/projectile/bullet/rebar/hydrogen
 	name = "metallic hydrogen bolt"
 	icon_state = "rebar_hydrogen"
@@ -164,11 +164,6 @@
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 10, TRUE)
 	visible_message(span_danger("[src] is hit by [target], turning [target.p_them()] to dust in a brilliant flash of light!"))
 
-/obj/projectile/bullet/rebar/Initialize(mapload)
-	. = ..()
-
-/obj/projectile/bullet/rebar/proc/handle_drop(datum/source, obj/item/ammo_casing/rebar/newcasing)
-
 /obj/projectile/bullet/paperball
 	desc = "Doink!"
 	damage = 1 // It's a damn toy.
@@ -180,3 +175,8 @@
 	damage_type = BRUTE
 	icon = 'icons/obj/weapons/guns/toy.dmi'
 	icon_state = "paperball"
+*/
+/obj/projectile/bullet/rebar/Initialize(mapload)
+	. = ..()
+
+/obj/projectile/bullet/rebar/proc/handle_drop(datum/source, obj/item/ammo_casing/rebar/newcasing)
