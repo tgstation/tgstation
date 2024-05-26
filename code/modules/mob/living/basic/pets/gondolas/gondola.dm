@@ -17,7 +17,6 @@
 	maxHealth = 200
 	health = 200
 	faction = list(FACTION_GONDOLA)
-	melee_attack_cooldown = 1.2 SECONDS
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "bops"
@@ -76,7 +75,7 @@
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
+	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 
 #undef GONDOLA_HEIGHT
 #undef GONDOLA_COLOR
