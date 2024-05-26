@@ -69,6 +69,7 @@
 	if(slime_stacks <= 0)
 		to_chat(owner, span_notice("You manage to wash off the layer of slime completely."))
 		qdel(src)
+		return
 
 	if(prob(10))
 		to_chat(owner,span_warning("The layer of slime is slowly getting thinner."))
