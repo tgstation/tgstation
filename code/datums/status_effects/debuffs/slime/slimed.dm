@@ -70,15 +70,15 @@
 		to_chat(owner, span_notice("You manage to wash off the layer of slime completely."))
 		qdel(src)
 
+	if(prob(10))
+		to_chat(owner,span_warning("The layer of slime is slowly getting thinner."))
+
 /datum/status_effect/slimed/tick(seconds_between_ticks)
 	// remove from the mob once we have dealt enough damage
 	if(owner.get_organic_health() <= MIN_HEALTH)
 		to_chat(owner, span_warning("You feel the layer of slime crawling off of your weakened body."))
 		qdel(src)
 		return
-
-	if(SPT_PROB(10, seconds_between_ticks))
-		to_chat(owner,span_warning("The layer of slime is slowly getting thinner."))
 
 	// handle washing slime off
 	var/datum/status_effect/fire_handler/wet_stacks/wetness = locate() in owner.status_effects
