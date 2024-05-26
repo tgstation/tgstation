@@ -70,8 +70,8 @@
 	name = "zaukerite sliver"
 	desc = "A sliver of a zaukerite crystal. Do not ingest."
 	caliber = CALIBER_REBAR
-	icon_state = "zaukerite_shard"
-	base_icon_state = "zaukerite_shard"
+	icon_state = "rod_sharp"
+	base_icon_state = "rod_sharp"
 	projectile_type = /obj/projectile/bullet/rebar/zaukerite
 /*
 /obj/item/ammo_casing/rebar/hydrogen
