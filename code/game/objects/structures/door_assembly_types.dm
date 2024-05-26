@@ -127,7 +127,6 @@
 	airlock_type = /obj/machinery/door/airlock/cult/unruned
 	glass_type = /obj/machinery/door/airlock/cult/unruned/glass
 
-#warn unit test for broken airlocks/cosntructed airlocks
 /obj/structure/door_assembly/door_assembly_viro
 	name = "virology airlock assembly"
 	icon =  /obj/machinery/door/airlock/virology::icon
