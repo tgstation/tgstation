@@ -681,3 +681,22 @@
       item names
   nikothedude:
   - code_imp: New signals for atom storage remove and insert
+2024-05-26:
+  Jacquerel:
+  - bugfix: Ghosts can more reliably become a harvester.
+  OverwatchVoice:
+  - qol: The "Proto-Nitrate BZ response" atmsopheric reaction now lists it's required
+      temperature.
+  Rhials:
+  - admin: Admins can now reroll random events into something else.
+  grungussuss:
+  - qol: tramstation upload now has an extra motion camera
+  - qol: tramstation SM setup now has an emergency cooling setup
+  - bugfix: changed layout of Northstar dining hall so customer bots can reach the
+      kitchen counter
+  paganiy:
+  - bugfix: You can shoot at items on the floor again
+  thegrb93:
+  - qol: Made borg inventory not shift around depending on equipped items
+  tmyqlfpir:
+  - bugfix: '[Ice Box Station] Dorm 1''s door no longer shares ID with dorm 2''s door'

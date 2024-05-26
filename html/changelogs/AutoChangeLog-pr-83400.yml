@@ -1,5 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - qol: "tramstation upload now has an extra motion camera"
-  - qol: "tramstation SM setup now has an emergency cooling setup"
