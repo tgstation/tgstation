@@ -270,11 +270,11 @@
 /// Fills this mail crate with N pieces of mail, where N is the lower of the amount var passed, and the maximum capacity of this crate. If N is larger than the number of alive human players, the excess will be junkmail.
 /obj/structure/closet/crate/mail/proc/populate(amount)
 	var/mail_count = min(amount, storage_capacity)
-	// Fills the
 	var/list/mail_recipients = list()
 
 	for(var/mob/living/carbon/human/human in GLOB.player_list)
-		if(human.stat == DEAD || !human.mind)
+		// People who suicided are usually not very interesting to look for on the player side
+		if(HAS_TRAIT(human, TRAIT_SUICIDED) || !human.mind)
 			continue
 		// Skip wizards, nuke ops, cyborgs; Centcom does not send them mail
 		if(!(human.mind.assigned_role.job_flags & JOB_CREW_MEMBER))

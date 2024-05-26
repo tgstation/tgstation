@@ -6,5 +6,5 @@
 	person.mind_initialize()
 	var/obj/item/mail/traitor/test_mail = allocate(/obj/item/mail/traitor)
 	person.mind.set_assigned_role(SSjob.GetJobType(/datum/job/captain))
-	test_mail.initialize_for_recipient(person.mind)
+	test_mail.initialize_for_recipient(person)
 	TEST_ASSERT_EQUAL(test_mail.contents.len, 0, "/obj/item/mail/traitor should not have items after initialize_for_recipient proc!")
