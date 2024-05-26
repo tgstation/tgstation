@@ -123,12 +123,12 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		rank = chosen_assignment	,
 		species = person.dna.species.name,
 		trim = assignment,
+		mind_ref = WEAKREF(person.mind), // monkestation edit: weakreffed mind ref
 		// Locked specifics
 		dna_ref = person.dna,
-		mind_ref = person.mind,
 	)
 
-	new /datum/record/crew(
+	var/datum/record/crew/crewfile = new (
 		age = person.age,
 		blood_type = person.dna.blood_type,
 		character_appearance = character_appearance,
@@ -140,6 +140,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		rank = chosen_assignment,
 		species = person.dna.species.name,
 		trim = assignment,
+		mind_ref = WEAKREF(person.mind), // monkestation edit: weakreffed mind ref
 		// Crew specific
 		lock_ref = REF(lockfile),
 		major_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY, from_scan = TRUE),
@@ -148,6 +149,9 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		minor_disabilities_desc = person.get_quirk_string(TRUE, CAT_QUIRK_MINOR_DISABILITY),
 		quirk_notes = person.get_quirk_string(TRUE, CAT_QUIRK_NOTES),
 	)
+
+	person.mind.crewfile = crewfile
+	person.mind.lockfile = lockfile
 
 	return
 

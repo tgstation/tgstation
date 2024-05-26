@@ -336,26 +336,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 			reset_religion()
 
 	// Delete them from datacore and ghost records.
-	var/announce_rank = null
-
-	for(var/list/record in GLOB.ghost_records)
-		if(record["name"] == stored_name)
-			announce_rank = record["rank"]
-			GLOB.ghost_records.Remove(list(record))
-			break
-
-	if(!announce_rank) // No need to loop over all of those if we already found it beforehand.
-		for(var/datum/record/crew/possible_target_record as anything in GLOB.manifest.general)
-			if(possible_target_record.name == stored_name && (stored_rank == "N/A" || possible_target_record.trim == stored_rank))
-				announce_rank = possible_target_record.rank
-				//qdel(possible_target_record) <- we allow people to exit and i dont wanna deal with recreating manifest records
-				break
+	var/datum/record/crew/crewfile = mob_occupant.mind?.crewfile
+	var/datum/record/locked/lockfile = mob_occupant.mind?.lockfile
+	var/announce_rank = crewfile?.rank
 
 	var/obj/machinery/computer/cryopod/control_computer = control_computer_weakref?.resolve()
 	if(!control_computer)
 		control_computer_weakref = null
 	else
-		control_computer.frozen_crew += list(list("name" = stored_name, "job" = stored_rank, "items" = list(), "ckey" = stored_ckey, "entered_time" = world.time))
+		control_computer.frozen_crew += list(list(
+			"name" = stored_name,
+			"job" = stored_rank,
+			"items" = list(),
+			"ckey" = stored_ckey,
+			"entered_time" = world.time,
+			"crewfile" = crewfile,
+			"lockfile" = lockfile
+		))
 
 	// Make an announcement and log the person entering storage. If set to quiet, does not make an announcement.
 	if(!quiet)
@@ -385,6 +382,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 			mob_occupant.transferItemToLoc(item_content, drop_location(), force = TRUE, silent = TRUE)
 
 	GLOB.joined_player_list -= stored_ckey
+	GLOB.manifest.general -= crewfile
 
 	handle_objectives()
 	mob_occupant.ghostize()
@@ -400,7 +398,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		if(target.ckey != listed["ckey"])
 			continue
 
-		if(world.time < listed["entered_time"] + 15 MINUTES)
+		if(world.time < (listed["entered_time"] + 15 MINUTES))
 			to_chat(target, span_notice("You need to wait atleast 15 minutes before you can return from cryosleep."))
 			return
 
@@ -410,6 +408,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 				if(!newmob.equip_to_appropriate_slot(listed_item))
 					listed_item.forceMove(get_turf(newmob))
 				control_computer.frozen_item -= listed_item
+
+		var/datum/record/crew/crewfile = listed["crewfile"]
+		if(crewfile)
+			GLOB.manifest.general += crewfile
+			newmob.mind?.crewfile ||= crewfile
+		var/datum/record/locked/lockfile = listed["lockfile"]
+		if(lockfile)
+			newmob.mind?.lockfile ||= lockfile
+
 
 		listed["ckey"] = null //incase we fuck up down below
 		control_computer.frozen_crew -= list(listed)

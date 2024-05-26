@@ -1,4 +1,3 @@
-/* monkestation: replaced by [monkestation\code\datums\records\record.dm]
 /**
  * Record datum. Used for crew records and admin locked records.
  */
@@ -25,6 +24,8 @@
 	var/species
 	/// The character's ID trim
 	var/trim
+	/// Reference to the [/datum/mind] that this record was originally created for.
+	var/datum/weakref/mind_ref
 
 /datum/record/New(
 	age = 18,
@@ -38,6 +39,7 @@
 	rank = "Unassigned",
 	species = "Human",
 	trim = "Unassigned",
+	datum/mind/mind_ref
 )
 	src.age = age
 	src.blood_type = blood_type
@@ -50,6 +52,10 @@
 	src.rank = rank
 	src.species = species
 	src.trim = trim
+	if(istype(mind_ref, /datum/mind))
+		src.mind_ref = WEAKREF(mind_ref)
+	else if(istype(mind_ref, /datum/weakref))
+		src.mind_ref = mind_ref
 
 /**
  * Crew record datum
@@ -94,6 +100,7 @@
 	rank = "Unassigned",
 	species = "Human",
 	trim = "Unassigned",
+	datum/mind/mind_ref,
 	/// Crew specific
 	lock_ref,
 	major_disabilities = "None",
@@ -126,8 +133,6 @@
 /datum/record/locked
 	/// Mob's dna
 	var/datum/dna/dna_ref
-	/// Mind datum
-	var/datum/mind/mind_ref
 	/// Typepath of species used by player, for usage in respawning via records
 	var/species_type
 
@@ -143,13 +148,12 @@
 	rank = "Unassigned",
 	species = "Human",
 	trim = "Unassigned",
+	datum/mind/mind_ref,
 	/// Locked specific
 	datum/dna/dna_ref,
-	datum/mind/mind_ref,
 )
 	. = ..()
 	src.dna_ref = dna_ref
-	src.mind_ref = mind_ref
 	species_type = dna_ref.species.type
 
 	GLOB.manifest.locked += src
@@ -274,4 +278,3 @@
 	printed_paper.update_appearance()
 
 	return printed_paper
-*/
