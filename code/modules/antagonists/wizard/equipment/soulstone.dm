@@ -502,7 +502,11 @@
 		newstruct.master = stoner
 		var/datum/action/innate/seek_master/seek_master = new
 		seek_master.Grant(newstruct)
-	target.mind?.transfer_to(newstruct, force_key_move = TRUE)
+
+	if (isnull(target.mind))
+		newstruct.key = target.key
+	else
+		target.mind.transfer_to(newstruct, force_key_move = TRUE)
 	var/atom/movable/screen/alert/bloodsense/sense_alert
 	if(newstruct.mind && !IS_CULTIST(newstruct) && ((stoner && IS_CULTIST(stoner)) || cultoverride) && SSticker.HasRoundStarted())
 		newstruct.mind.add_antag_datum(/datum/antagonist/cult/construct)
