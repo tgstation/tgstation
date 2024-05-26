@@ -299,4 +299,3 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 /obj/structure/sinkframe/proc/drop_materials()
 	for(var/datum/material/material as anything in custom_materials)
 		new material.sheet_type(loc, FLOOR(custom_materials[material] / SHEET_MATERIAL_AMOUNT, 1))
-	return

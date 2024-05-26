@@ -44,8 +44,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 	if(exposed)
 		if(hidden_item)
-			user.put_in_hands(hidden_item)
 			to_chat(user, span_notice("You fish [hidden_item] out of the drain enclosure."))
+			user.put_in_hands(hidden_item)
 		else
 			to_chat(user, span_warning("There is nothing in the drain holder!"))
 		return
@@ -53,7 +53,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/urinal/attackby(obj/item/attacking_item, mob/user, params)
 	if(exposed)
-		if (hidden_item)
+		if(hidden_item)
 			to_chat(user, span_warning("There is already something in the drain enclosure!"))
 			return
 		if(attacking_item.w_class > WEIGHT_CLASS_TINY)
@@ -82,7 +82,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/structure/urinal/wrench_act_secondary(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(user)
 	deconstruct(TRUE)
-	loc.balloon_alert(user, "removed urinal")
+	balloon_alert(user, "removed urinal")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/urinal/atom_deconstruct(disassembled = TRUE)
