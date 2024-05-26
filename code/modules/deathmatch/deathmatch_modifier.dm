@@ -547,7 +547,7 @@
 
 /datum/deathmatch_modifier/any_loadout/on_map_changed(datum/deathmatch_lobby/lobby)
 	if(lobby.loadouts == GLOB.deathmatch_game.loadouts) //This arena already allows any loadout for some reason.
-		lobby.modifiers -= type
+		lobby.unselect_modifier(src)
 	else
 		lobby.loadouts = GLOB.deathmatch_game.loadouts
 
