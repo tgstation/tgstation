@@ -63,6 +63,11 @@
 	wound_falloff_tile = -2
 	shrapnel_type = /obj/item/ammo_casing/rebar
 
+/obj/projectile/bullet/rebar/Initialize(mapload)
+	. = ..()
+
+/obj/projectile/bullet/rebar/proc/handle_drop(datum/source, obj/item/ammo_casing/rebar/newcasing)
+
 /obj/projectile/bullet/rebarsyndie
 	name = "rebar"
 	icon_state = "rebar"
@@ -78,7 +83,7 @@
 
 /obj/projectile/bullet/rebar/zaukerite
 	name = "zaukerite shard"
-	icon_state = "rebar_zaukerite"
+	icon_state = "rebar"
 	damage = 60
 	speed = 0.4
 	dismemberment = 2
@@ -93,7 +98,7 @@
 
 /obj/projectile/bullet/rebar/hydrogen
 	name = "metallic hydrogen bolt"
-	icon_state = "rebar_hydrogen"
+	icon_state = "rebar"
 	damage = 40
 	speed = 0.6
 	dismemberment = 0 //goes through clean.
@@ -108,7 +113,7 @@
 
 /obj/projectile/bullet/rebar/healium
 	name = "healium bolt"
-	icon_state = "rebar_healium"
+	icon_state = "rebar"
 	damage = 0
 	speed = 0.4
 	dismemberment = 0
@@ -137,7 +142,7 @@
 
 /obj/projectile/bullet/rebar/supermatter
 	name = "supermatter bolt"
-	icon_state = "rebar_supermatter"
+	icon_state = "rebar"
 	damage = 0
 	speed = 0.4
 	dismemberment = 0
@@ -173,10 +178,6 @@
 	name = "paper ball"
 	desc = "doink!"
 	damage_type = BRUTE
-	icon = 'icons/obj/weapons/guns/toy.dmi'
-	icon_state = "paperball"
-*/
-/obj/projectile/bullet/rebar/Initialize(mapload)
-	. = ..()
+	icon_state = "rebar"
 
-/obj/projectile/bullet/rebar/proc/handle_drop(datum/source, obj/item/ammo_casing/rebar/newcasing)
+

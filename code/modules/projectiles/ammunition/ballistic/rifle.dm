@@ -78,32 +78,32 @@
 	name = "Metallic Hydrogen Bolt"
 	desc = "An ultra-sharp rod made from pure metallic hydrogen. Armor may as well not exist."
 	caliber = CALIBER_REBAR
-	icon_state = "rod_hydrogen"
-	base_icon_state = "rod_hydrogen"
+	icon_state = "rod_sharp"
+	base_icon_state = "rod_sharp"
 	projectile_type = /obj/projectile/bullet/rebar/hydrogen
 
 /obj/item/ammo_casing/rebar/healium
 	name = "Healium Crystal Bolt"
 	desc = "Who needs a syringe gun, anyway?"
 	caliber = CALIBER_REBAR
-	icon_state = "rod_healium"
-	base_icon_state = "rod_healium"
+	icon_state = "rod_sharp"
+	base_icon_state = "rod_sharp"
 	projectile_type = /obj/projectile/bullet/rebar/healium
 
 /obj/item/ammo_casing/rebar/supermatter
 	name = "Supermatter Bolt"
 	desc = "Wait, how is the bow capable of firing this without dusting?"
 	caliber = CALIBER_REBAR
-	icon_state = "rod_supermatter"
-	base_icon_state = "rod_supermatter"
+	icon_state = "rod_sharp"
+	base_icon_state = "rod_sharp"
 	projectile_type = /obj/projectile/bullet/rebar/supermatter
 
 /obj/item/ammo_casing/rebar/paperball
 	name = "Paper Ball"
 	desc = "Doink!"
 	caliber = CALIBER_REBAR
-	icon_state = "paperball"
-	base_icon_state = "paperball"
+	icon_state = "rod_sharp"
+	base_icon_state = "rod_sharp"
 	projectile_type = /obj/projectile/bullet/paperball
 
 /obj/item/ammo_casing/rebar/Initialize(mapload)
@@ -113,4 +113,4 @@
 /obj/item/ammo_casing/rebar/update_icon_state()
 	. = ..()
 	icon_state = "[base_icon_state]"
-*/
+
