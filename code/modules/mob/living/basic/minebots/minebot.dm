@@ -108,7 +108,7 @@
 	for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)
 		. += span_notice("There is \a [modkit] installed, using <b>[modkit.cost]%</b> capacity.")
 	if(ai_controller && ai_controller.ai_status == AI_STATUS_IDLE)
-		. += "The [src] appears to be in <b>sleep mode</b>. You can return it to normal function by <b>tapping</b> it."
+		. += "The [src] appears to be in <b>sleep mode</b>. You can restore normal functions by <b>tapping</b> it."
 
 
 /mob/living/basic/mining_drone/welder_act(mob/living/user, obj/item/welder)
@@ -136,7 +136,7 @@
 	if(!user.combat_mode)
 		if(ai_controller && ai_controller.ai_status == AI_STATUS_IDLE)
 			ai_controller.set_ai_status(AI_STATUS_ON)
-		if(LAZYACCESS(modifiers, LEFT_CLICK)) //Lets Right Click be specifically for re-enabling their AI, while Left Click simply does both.
+		if(LAZYACCESS(modifiers, LEFT_CLICK)) //Lets Right Click be specifically for re-enabling their AI (and avoiding the UI popup), while Left Click simply does both.
 			ui_interact(user)
 		return
 	return ..()
