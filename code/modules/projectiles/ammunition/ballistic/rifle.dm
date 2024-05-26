@@ -58,14 +58,6 @@
 	base_icon_state = "rod_sharp"
 	projectile_type = /obj/projectile/bullet/rebar
 
-/obj/item/ammo_casing/rebar/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/caseless, TRUE)
-
-/obj/item/ammo_casing/rebar/update_icon_state()
-	. = ..()
-	icon_state = "[base_icon_state]"
-
 /obj/item/ammo_casing/rebar/syndie
 	name = "Jagged iron rod"
 	desc = "An Iron rod, with notches cut into it. You really dont want this stuck in you."
@@ -113,3 +105,11 @@
 	icon_state = "paperball"
 	base_icon_state = "paperball"
 	projectile_type = /obj/projectile/bullet/paperball
+
+/obj/item/ammo_casing/rebar/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless, TRUE)
+
+/obj/item/ammo_casing/rebar/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]"

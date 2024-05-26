@@ -108,7 +108,7 @@
 
 /obj/projectile/bullet/rebar/healium
 	name = "healium bolt"
-	icon_state = "rebar_hydrogen"
+	icon_state = "rebar_healium"
 	damage = 0
 	speed = 0.4
 	dismemberment = 0
