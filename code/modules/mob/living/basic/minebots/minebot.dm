@@ -136,8 +136,8 @@
 	if(!user.combat_mode)
 		if(ai_controller && ai_controller.ai_status == AI_STATUS_IDLE)
 			ai_controller.set_ai_status(AI_STATUS_ON)
-		if(LAZYACCESS(modifiers, LEFT_CLICK))
-			ui_interact(user) //Lets Right Click be specifically for re-enabling their AI, while Left Click simply does both.
+		if(LAZYACCESS(modifiers, LEFT_CLICK)) //Lets Right Click be specifically for re-enabling their AI, while Left Click simply does both.
+			ui_interact(user)
 		return
 	return ..()
 
