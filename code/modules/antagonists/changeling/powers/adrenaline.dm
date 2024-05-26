@@ -43,7 +43,6 @@
 
 	// Add fast reagents to go fast.
 	user.reagents.add_reagent(/datum/reagent/medicine/changelingadrenaline, 4) //20 seconds
-	user.reagents.add_reagent(/datum/reagent/medicine/changelinghaste, 10) //20 seconds
 
 	return TRUE
 
