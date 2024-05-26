@@ -5990,6 +5990,19 @@
 	dir = 5
 	},
 /area/station/maintenance/port/aft)
+"bLa" = (
+/obj/structure/bed,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/spawner/random/bedsheet,
+/obj/machinery/button/door/directional/east{
+	id = "Dorm1";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/item/pillow/random,
+/turf/open/floor/carpet,
+/area/station/commons/dorms)
 "bLc" = (
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
@@ -49673,7 +49686,7 @@
 /area/station/hallway/primary/central)
 "oTh" = (
 /obj/machinery/door/airlock{
-	id_tag = "Dorm2";
+	id_tag = "Dorm1";
 	name = "Dorm 1"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -242567,7 +242580,7 @@ ygB
 mJO
 oCF
 ygB
-mJO
+bLa
 oCF
 ygB
 lBD

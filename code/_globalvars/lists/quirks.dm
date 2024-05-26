@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(possible_junkie_addictions, setup_junkie_addictions(list(
 )))
 
 ///Options for the Smoker quirk to choose from
-GLOBAL_LIST_INIT(possible_smoker_addictions, setup_junkie_addictions(list(
+GLOBAL_LIST_INIT(possible_smoker_addictions, setup_smoker_addictions(list(
 	/obj/item/storage/fancy/cigarettes,
 	/obj/item/storage/fancy/cigarettes/cigpack_midori,
 	/obj/item/storage/fancy/cigarettes/cigpack_uplift,
