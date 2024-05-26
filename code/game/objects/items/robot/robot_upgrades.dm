@@ -395,7 +395,7 @@
 	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
 		hypo.bypass_protection = TRUE
 		found_hypo = TRUE
-	for(var/obj/item/reagent_containers/borghypo/hypo in R.model.emag_modules)
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.emag_modules)
 		hypo.bypass_protection = TRUE
 		found_hypo = TRUE
 
@@ -409,8 +409,8 @@
 		return .
 	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
 		hypo.bypass_protection = initial(hypo.bypass_protection)
-	for(var/obj/item/reagent_containers/borghypo/hypo in R.model.emag_modules)
-		hypo.bypass_protection = initial(H.bypass_protection)
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.emag_modules)
+		hypo.bypass_protection = initial(hypo.bypass_protection)
 
 /obj/item/borg/upgrade/surgery_omnitool
 	name = "cyborg surgical omni-tool upgrade"
