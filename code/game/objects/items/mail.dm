@@ -124,11 +124,10 @@
 
 /// proc for unwrapping a mail. Goes just for an unwrapping procces, returns FALSE if it fails.
 /obj/item/mail/proc/unwrap(mob/user)
-	if(recipient_ref)
-		var/datum/mind/recipient = recipient_ref.resolve()
+	if(associated_real_name)
 		// If the recipient's mind has gone, then anyone can open their mail
 		// whether a mind can actually be qdel'd is an exercise for the reader
-		if(recipient && recipient != user?.mind)
+		if(associated_real_name != user.real_name)
 			to_chat(user, span_notice("You can't open somebody else's mail! That's <em>illegal</em>!"))
 			return FALSE
 
@@ -156,24 +155,22 @@
 		. += span_info("This mail has no postmarking of any sort...")
 	else
 		. += span_notice("<i>You notice the postmarking on the front of the mail...</i>")
-	var/datum/mind/recipient = recipient_ref.resolve()
-	if(recipient)
-		. += span_info("[postmarked ? "Certified NT" : "Uncertfieid"] mail for [recipient].")
+	if(associated_real_name)
+		. += span_info("[postmarked ? "Certified NT" : "Uncertfieid"] mail for [associated_real_name].")
 	else if(postmarked)
 		. += span_info("Certified mail for [GLOB.station_name].")
 	else
 		. += span_info("This is a dead letter mail with no recipient.")
 	. += span_info("Distribute by hand or via destination tagger using the certified NT disposal system.")
 
-/// Accepts a mind to initialize goodies for a piece of mail.
+/// Accepts a human to initialize goodies and the associated_real_name for a piece of mail.
 /obj/item/mail/proc/initialize_for_recipient(mob/living/carbon/human/recipient)
 	associated_real_name = recipient.real_name
 	name = "[initial(name)] for [associated_real_name] ([recipient.mind.assigned_role.title])"
 
-	var/mob/living/body = recipient.current
 	var/list/goodies = generic_goodies
 
-	var/datum/job/this_job = recipient.assigned_role
+	var/datum/job/this_job = recipient.mind.assigned_role
 	var/is_mail_restricted = FALSE // certain roles and jobs (prisoner) do not receive generic gifts
 
 	if(this_job)
@@ -192,7 +189,7 @@
 		// the weighted list is 50 (generic items) + 50 (job items)
 		// every quirk adds 5 to the final weighted list (regardless the number of items or weights in the quirk list)
 		// 5% is not too high or low so that stacking multiple quirks doesn't tilt the weighted list too much
-		for(var/datum/quirk/quirk as anything in body.quirks)
+		for(var/datum/quirk/quirk as anything in recipient.quirks)
 			if(LAZYLEN(quirk.mail_goodies))
 				var/quirk_goodie = pick(quirk.mail_goodies)
 				goodies[quirk_goodie] = 5
@@ -200,7 +197,7 @@
 	for(var/iterator in 1 to goodie_count)
 		var/target_good = pick_weight(goodies)
 		var/atom/movable/target_atom = new target_good(src)
-		body.log_message("received [target_atom.name] in the mail ([target_good])", LOG_GAME)
+		recipient.log_message("received [target_atom.name] in the mail ([target_good])", LOG_GAME)
 
 	return TRUE
 
@@ -556,7 +553,8 @@
 		else
 			shady_mail.name = mail_type
 	else
-		shady_mail.initialize_for_recipient(mail_recipients[index])
+		var/recipient_mob = mail_recipients[index].current
+		shady_mail.initialize_for_recipient(recipient_mob)
 
 	atom_storage.hide_contents(user)
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
