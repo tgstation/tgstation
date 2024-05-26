@@ -550,6 +550,12 @@
 		do_teleport(teleportee, actual_target, forced = TRUE)
 		return
 
+	var/confirmation = tgui_alert(user, "This is highly risky to use and can have disastrous results, are you sure you wish to proceed?", "WARNING", list("Teleport?", "cancel"))
+	if(confirmation != "Teleport?")
+		return
+	if(!Adjacent(user))
+		return
+
 	switch(rand(1, 100)) //Good luck
 		if(1 to 5)
 			actual_target = teleport_target

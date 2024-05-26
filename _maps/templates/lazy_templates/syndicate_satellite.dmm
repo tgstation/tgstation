@@ -24,7 +24,7 @@
 /area/centcom/syndicate_mothership)
 "bw" = (
 /obj/machinery/chem_dispenser/drinks/fullupgrade{
-	dir = 1
+	dir = 4
 	},
 /obj/structure/table/reinforced/plastitanium,
 /obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
@@ -105,11 +105,11 @@
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "ej" = (
-/obj/machinery/computer/records/medical/syndie{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
 	dir = 8
+	},
+/obj/machinery/computer/camera_advanced/syndie{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
@@ -199,6 +199,7 @@
 /obj/item/tank/internals/oxygen/yellow,
 /obj/item/clothing/suit/space/syndicate/black/red,
 /obj/item/clothing/head/helmet/space/syndicate/black/red,
+/obj/item/clothing/mask/gas/syndicate,
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "gQ" = (
@@ -208,15 +209,6 @@
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/centcom/syndicate_mothership)
-"hg" = (
-/obj/effect/turf_decal/tile/dark_red/half/contrasted{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "ho" = (
@@ -233,17 +225,6 @@
 	dir = 8
 	},
 /obj/machinery/light/cold/directional/west,
-/turf/open/floor/iron/dark,
-/area/centcom/syndicate_mothership)
-"hy" = (
-/obj/effect/turf_decal/tile/dark_red/half/contrasted{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "hN" = (
@@ -477,6 +458,13 @@
 	dir = 1
 	},
 /obj/machinery/light/cold/directional/west,
+/obj/structure/table/wood,
+/obj/item/modular_computer/pda/syndicate{
+	pixel_x = -4
+	},
+/obj/item/computer_disk/syndicate/camera_app{
+	pixel_x = 6
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "ps" = (
@@ -495,10 +483,10 @@
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership)
 "py" = (
-/obj/machinery/computer/camera_advanced/syndie{
+/obj/effect/turf_decal/tile/dark_red/anticorner/contrasted,
+/obj/machinery/computer/records/medical/syndie{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/dark_red/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "pz" = (
@@ -564,6 +552,10 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
+/area/centcom/syndicate_mothership)
+"rx" = (
+/obj/machinery/porta_turret/syndicate/energy,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/centcom/syndicate_mothership)
 "rM" = (
 /obj/effect/turf_decal/syndicateemblem/top/middle,
@@ -841,9 +833,6 @@
 /area/centcom/syndicate_mothership)
 "Cz" = (
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /obj/structure/sign/poster/contraband/gorlex_recruitment/directional/north,
@@ -1286,9 +1275,6 @@
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
 /obj/machinery/button/door{
 	pixel_y = 32;
 	id = "syndie_satellite_entry"
@@ -1304,10 +1290,10 @@
 /area/centcom/syndicate_mothership)
 "Sq" = (
 /turf/open/space/basic,
-/area/centcom/syndicate_mothership)
+/area/template_noop)
 "SA" = (
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
-	dir = 1
+	dir = 4
 	},
 /obj/structure/table/reinforced/plastitanium,
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
@@ -1333,6 +1319,7 @@
 /obj/item/tank/internals/oxygen/yellow,
 /obj/item/clothing/suit/space/syndicate/black/red,
 /obj/item/clothing/head/helmet/space/syndicate/black/red,
+/obj/item/clothing/mask/gas/syndicate,
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "Tl" = (
@@ -1805,7 +1792,7 @@ Sq
 Sq
 Go
 Go
-Go
+rx
 Sk
 Kl
 CP
@@ -1813,7 +1800,7 @@ eG
 nX
 wm
 Cd
-Go
+rx
 UO
 Go
 Go
@@ -1952,7 +1939,7 @@ Iy
 PQ
 kn
 kJ
-hg
+aw
 yl
 ve
 cp
@@ -1989,7 +1976,7 @@ HR
 ZN
 JO
 Kr
-hy
+WI
 ve
 ve
 OJ
@@ -2026,7 +2013,7 @@ Iy
 Iy
 OB
 kJ
-hg
+aw
 yl
 ve
 UX
@@ -2175,7 +2162,7 @@ Sq
 Sq
 Go
 Go
-Go
+rx
 Gz
 eU
 BB
@@ -2183,7 +2170,7 @@ pX
 NJ
 kE
 ag
-Go
+rx
 no
 Go
 Go

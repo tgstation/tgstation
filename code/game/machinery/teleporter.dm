@@ -248,6 +248,14 @@
 			next_beep = world.time + (2 SECONDS)
 			playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
 		return
+
+	if(user.mind.has_antag_datum(/datum/antagonist/satellite_agent))
+		var/confirmation = tgui_alert(user, "Are you sure you wish to leave the satellite, this should only be a last resort to help a field agent", "WARNING", list("Teleport?", "cancel"))
+		if(confirmation != "Teleport?")
+			return
+		if(!Adjacent(user))
+			return
+
 	var/actual_target = return_target
 	if(!(locate(/obj/item/implant/gate_authorization) in user.implants) || return_target == "Random Teleport")
 		actual_target = get_random_station_turf() //Good luck

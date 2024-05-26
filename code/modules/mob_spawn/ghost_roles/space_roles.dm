@@ -212,3 +212,19 @@
 /obj/effect/mob_spawn/ghost_role/human/syndicate/satellite/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
 	spawned_mob.client.prefs.safe_transfer_prefs_to(spawned_mob)
+	spawned_mob.mind.add_antag_datum(/datum/antagonist/satellite_agent)
+
+/datum/antagonist/satellite_agent
+	name = "\improper Satellite Support Agent"
+
+/datum/antagonist/satellite_agent/on_gain()
+	forge_objectives()
+	. = ..()
+
+/datum/antagonist/satellite_agent/forge_objectives()
+	objectives += new /datum/objective/satellite_agent
+
+/datum/objective/satellite_agent
+
+/datum/objective/satellite_agent/New()
+	explanation_text = "Ensure the success of any syndicate agent on board the station. Do not leave the satellite unless absolutely necessary"
