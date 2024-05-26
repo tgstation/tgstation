@@ -442,23 +442,6 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 2
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
-	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/gun/energy/recharge/kinetic_accelerator,
-		/obj/item/mining_scanner,
-		/obj/item/pickaxe,
-		/obj/item/resonator,
-		/obj/item/storage/bag/ore,
-		/obj/item/t_scanner/adv_mining_scanner,
-		/obj/item/tank/internals,
-		/obj/item/spear,
-		/obj/item/organ/internal/monster_core,
-		/obj/item/knife,
-		/obj/item/kinetic_crusher,
-		/obj/item/melee/cleaving_saw,
-		/obj/item/grapple_gun,
-		/obj/item/climbing_hook,
-	)
 	inbuilt_modules = list(/obj/item/mod/module/ash_accretion, /obj/item/mod/module/sphere_transform)
 	variants = list(
 		"mining" = list(
@@ -526,6 +509,10 @@
 			),
 		),
 	)
+
+/datum/mod_theme/loader/New()
+	.=..()
+	allowed_suit_storage = GLOB.mining_suit_allowed
 
 /datum/armor/mod_theme_mining
 	melee = 20
