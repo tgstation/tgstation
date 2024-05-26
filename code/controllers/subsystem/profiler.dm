@@ -56,12 +56,12 @@ SUBSYSTEM_DEF(profiler)
 
 	if(!length(current_profile_data)) //Would be nice to have explicit proc to check this
 		stack_trace("Warning, profiling stopped manually before dump.")
-	var/prof_file = file("[GLOB.log_directory]/profiler/[PROFILER_FILENAME]-[round(world.time * 0.1)].json")
+	var/prof_file = file("[GLOB.log_directory]/profiler/[PROFILER_FILENAME]-[round(world.time * 0.1, 10)].json")
 	if(fexists(prof_file))
 		fdel(prof_file)
 	if(!length(current_sendmaps_data)) //Would be nice to have explicit proc to check this
 		stack_trace("Warning, sendmaps profiling stopped manually before dump.")
-	var/sendmaps_file = file("[GLOB.log_directory]/profiler/[SENDMAPS_FILENAME]-[round(world.time * 0.1)].json")
+	var/sendmaps_file = file("[GLOB.log_directory]/profiler/[SENDMAPS_FILENAME]-[round(world.time * 0.1, 10)].json")
 	if(fexists(sendmaps_file))
 		fdel(sendmaps_file)
 
