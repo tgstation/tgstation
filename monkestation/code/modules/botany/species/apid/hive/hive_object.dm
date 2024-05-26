@@ -44,8 +44,20 @@ GLOBAL_LIST_INIT(hive_exits, list())
 
 /obj/structure/beebox/hive/Destroy()
 	. = ..()
-	for(var/atom/movable/listed in linked_exit?.atoms_inside)
+	var/turf/turf = get_turf(src)
+	for(var/atom/movable/listed as anything in linked_exit?.atoms_inside)
+		if(isnull(turf))
+			continue
 		listed.forceMove(get_turf(src))
+	var/area/area = get_area(linked_exit)
+	if(area)
+		for(var/atom/movable/movable as anything in area)
+			if(isturf(movable))
+				continue
+			if(isnull(turf))
+				continue
+			movable.forceMove(turf)
+
 	linked_exit?.linked_hive = null
 	linked_exit.name = "generic hive exit"
 	linked_exit = null
@@ -86,8 +98,21 @@ GLOBAL_LIST_INIT(hive_exits, list())
 
 /obj/structure/hive_exit/Destroy()
 	. = ..()
+	if(!linked_hive || !get_turf(linked_hive))
+		return
+	var/turf/turf = get_turf(linked_hive)
 	for(var/atom/movable/listed in atoms_inside)
-		listed.forceMove(get_turf(linked_hive))
+		if(isnull(turf))
+			continue
+		listed.forceMove(turf)
+	var/area/area = get_area(src)
+	for(var/atom/movable/movable as anything in area)
+		if(isturf(movable))
+			continue
+		if(isnull(turf))
+			continue
+		movable.forceMove(turf)
+
 	GLOB.hive_exits -= src
 	linked_hive?.linked_exit = null
 	linked_hive = null

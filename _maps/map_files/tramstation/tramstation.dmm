@@ -5707,7 +5707,7 @@
 /area/station/commons/fitness/recreation)
 "aMY" = (
 /obj/structure/industrial_lift/tram,
-/obj/structure/window/reinforced/tram/mid/directional/south,
+/obj/structure/window/reinforced/tram/directional/south,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "aNa" = (
@@ -23376,14 +23376,6 @@
 /obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/plating,
 /area/station/asteroid)
-"gxA" = (
-/obj/structure/industrial_lift/tram,
-/obj/structure/window/reinforced/tram/right/directional/north,
-/obj/structure/chair/sofa/bench/tram/right{
-	dir = 8
-	},
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "gxY" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 10
@@ -37380,7 +37372,7 @@
 /area/station/hallway/primary/tram/right)
 "kYp" = (
 /obj/structure/industrial_lift/tram,
-/obj/structure/window/reinforced/tram/right/directional/south,
+/obj/structure/window/reinforced/tram/directional/south,
 /obj/machinery/destination_sign/south{
 	pixel_y = -11
 	},
@@ -45803,7 +45795,7 @@
 /area/station/hallway/secondary/command)
 "nKp" = (
 /obj/structure/industrial_lift/tram,
-/obj/structure/window/reinforced/tram/left/directional/north,
+/obj/structure/window/reinforced/tram/directional/north,
 /obj/structure/chair/sofa/bench/tram/right{
 	dir = 8
 	},
@@ -46185,7 +46177,7 @@
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "nQc" = (
 /obj/structure/industrial_lift/tram,
-/obj/structure/window/reinforced/tram/right/directional/north,
+/obj/structure/window/reinforced/tram/directional/north,
 /obj/machinery/destination_sign/north{
 	pixel_y = 10
 	},
@@ -47590,7 +47582,7 @@
 /obj/machinery/destination_sign/north{
 	pixel_y = 10
 	},
-/obj/structure/window/reinforced/tram/left/directional/north,
+/obj/structure/window/reinforced/tram/directional/north,
 /obj/structure/chair/sofa/bench/tram/right{
 	dir = 8
 	},
@@ -59107,7 +59099,7 @@
 /area/station/maintenance/starboard/central)
 "rZD" = (
 /obj/structure/industrial_lift/tram,
-/obj/structure/window/reinforced/tram/left/directional/south,
+/obj/structure/window/reinforced/tram/directional/south,
 /obj/structure/chair/sofa/bench/tram/right{
 	dir = 4
 	},
@@ -59516,14 +59508,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/right)
-"sgt" = (
-/obj/structure/industrial_lift/tram,
-/obj/structure/window/reinforced/tram/right/directional/south,
-/obj/structure/chair/sofa/bench/tram/right{
-	dir = 4
-	},
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "sgu" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
@@ -67577,7 +67561,7 @@
 /obj/machinery/destination_sign/south{
 	pixel_y = -11
 	},
-/obj/structure/window/reinforced/tram/left/directional/south,
+/obj/structure/window/reinforced/tram/directional/south,
 /obj/effect/landmark/start/hangover,
 /obj/structure/chair/sofa/bench/tram/left{
 	dir = 8
@@ -77780,7 +77764,7 @@
 /area/station/science/xenobiology)
 "xVH" = (
 /obj/structure/industrial_lift/tram,
-/obj/structure/window/reinforced/tram/mid/directional/north,
+/obj/structure/window/reinforced/tram/directional/north,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "xVJ" = (
@@ -176749,11 +176733,11 @@ aEk
 veL
 cMD
 jJV
-gxA
+nKp
 hio
 kpb
 aEq
-sgt
+rZD
 jJV
 syH
 pxC

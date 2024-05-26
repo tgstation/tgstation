@@ -37,7 +37,9 @@
 	)
 
 	mutant_organs = list(
-		/obj/item/organ/internal/cyberimp/arm/power_cord,
+		/obj/item/organ/internal/cyberimp/arm/item_set/power_cord,
+		/obj/item/organ/internal/cyberimp/cyberlink/nt_low,
+
 		)
 	external_organs = list(
 		/obj/item/organ/external/antennae/ipc = "None"

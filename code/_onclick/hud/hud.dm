@@ -97,6 +97,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/stamina
 	var/atom/movable/screen/healthdoll
 	var/atom/movable/screen/spacesuit
+
+	var/list/atom/movable/screen/cybernetics/ammo_counter/cybernetics_ammo = list() //monkestation edit - CYBERNETICS
+
 	// subtypes can override this to force a specific UI style
 	var/ui_style
 
@@ -231,6 +234,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	stamina = null
 	healthdoll = null
 	spacesuit = null
+	cybernetics_ammo = null //monkestation edit - CYBERNETICS
 	blobpwrdisplay = null
 	alien_plasma_display = null
 	alien_queen_finder = null

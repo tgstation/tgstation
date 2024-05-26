@@ -13,7 +13,7 @@
 		if(3,4)
 			new /obj/item/soulstone/anybody/mining(src)
 		if(5,6)
-			new /obj/item/organ/internal/cyberimp/arm/katana(src)
+			new /obj/item/organ/internal/cyberimp/arm/item_set/katana(src)
 		if(7,8)
 			new /obj/item/clothing/glasses/godeye(src)
 		if(9,10)

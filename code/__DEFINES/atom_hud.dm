@@ -51,6 +51,8 @@
 #define DIAG_NANITE_FULL_HUD "24"
 // for gun permit
 #define PERMIT_HUD "25"
+// for implants to let you see sensor field
+#define SENSOR_HUD	"26"
 //monkestation edit end
 
 //by default everything in the hud_list of an atom is an image
@@ -70,6 +72,7 @@
 #define DATA_HUD_AI_DETECT 9
 #define DATA_HUD_FAN 10
 #define DATA_HUD_PERMIT 11 //monkestation edit
+#define DATA_HUD_SENSORS 12 //monkestation edit
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

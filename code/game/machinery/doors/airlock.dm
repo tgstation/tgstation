@@ -1000,9 +1000,14 @@
 			return
 	add_fingerprint(user)
 
-	if(is_wire_tool(C) && panel_open)
-		attempt_wire_interaction(user)
-		return
+	if(is_wire_tool(C))
+		if(panel_open)
+			attempt_wire_interaction(user)
+			return
+		else
+			attempt_hacking_interaction(user)
+			return
+
 	else if(panel_open && security_level == AIRLOCK_SECURITY_NONE && istype(C, /obj/item/stack/sheet))
 		if(istype(C, /obj/item/stack/sheet/iron))
 			return try_reinforce(user, C, 2, AIRLOCK_SECURITY_IRON)

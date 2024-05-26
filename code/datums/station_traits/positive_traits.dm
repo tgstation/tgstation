@@ -295,7 +295,7 @@
 		/datum/job/cook = /obj/item/organ/internal/cyberimp/chest/nutriment/plus,
 		/datum/job/curator = /obj/item/organ/internal/eyes/robotic/glow,
 		/datum/job/detective = /obj/item/organ/internal/lungs/cybernetic/tier3,
-		/datum/job/doctor = /obj/item/organ/internal/cyberimp/arm/surgery,
+		/datum/job/doctor = /obj/item/organ/internal/cyberimp/arm/item_set/surgery,
 		/datum/job/geneticist = /obj/item/organ/internal/fly, //we don't care about implants, we have cancer.
 		/datum/job/head_of_personnel = /obj/item/organ/internal/eyes/robotic,
 		/datum/job/head_of_security = /obj/item/organ/internal/eyes/robotic/thermals,
@@ -309,9 +309,9 @@
 		/datum/job/research_director = /obj/item/organ/internal/cyberimp/bci,
 		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
 		/datum/job/scientist = /obj/item/organ/internal/ears/cybernetic,
-		/datum/job/security_officer = /obj/item/organ/internal/cyberimp/arm/flash,
+		/datum/job/security_officer = /obj/item/organ/internal/cyberimp/arm/item_set/flash,
 		/datum/job/shaft_miner = /obj/item/organ/internal/monster_core/rush_gland,
-		/datum/job/station_engineer = /obj/item/organ/internal/cyberimp/arm/toolset,
+		/datum/job/station_engineer = /obj/item/organ/internal/cyberimp/arm/item_set/toolset,
 		/datum/job/virologist = /obj/item/organ/internal/lungs/cybernetic/tier2,
 		/datum/job/warden = /obj/item/organ/internal/cyberimp/eyes/hud/security,
 	)

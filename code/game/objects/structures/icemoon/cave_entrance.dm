@@ -198,4 +198,4 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(26)
 			new /obj/item/book/granter/action/spell/sacredflame(loc)
 		if(27)
-			new /obj/item/organ/internal/cyberimp/arm/katana(loc)
+			new /obj/item/organ/internal/cyberimp/arm/item_set/katana(loc)

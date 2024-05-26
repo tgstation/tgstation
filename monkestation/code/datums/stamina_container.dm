@@ -26,6 +26,7 @@
 	src.maximum = maximum
 	src.regen_rate = regen_rate
 	src.current = maximum
+	START_PROCESSING(SSstamina, src)
 
 /datum/stamina_container/Destroy()
 	parent?.stamina = null
@@ -34,7 +35,7 @@
 	return ..()
 
 /datum/stamina_container/proc/update(seconds_per_tick)
-	if(seconds_per_tick && !is_regenerating)
+	if(!is_regenerating)
 		if(!COOLDOWN_FINISHED(src, paused_stamina))
 			return
 		is_regenerating = TRUE
@@ -45,12 +46,6 @@
 		current = max(current + (-decrement*seconds_per_tick), 0)
 	loss = maximum - current
 	loss_as_percent = loss ? (loss == maximum ? 0 : loss / maximum * 100) : 0
-
-	if(datum_flags & DF_ISPROCESSING)
-		if(seconds_per_tick && current == maximum)
-			STOP_PROCESSING(SSstamina, src)
-	else if(!(current == maximum))
-		START_PROCESSING(SSstamina, src)
 
 	parent.on_stamina_update()
 
@@ -78,7 +73,7 @@
 	///Our parent might want to fuck with these numbers
 	var/modify = parent.pre_stamina_change(amt, forced)
 	current = round(clamp(current + modify, 0, maximum), DAMAGE_PRECISION)
-	update()
+	update(1)
 	if((amt < 0) && is_regenerating)
 		pause(STAMINA_REGEN_TIME)
 	return amt
@@ -96,7 +91,7 @@
 		amount = current - lowest_stamina_value
 
 	current = round(clamp(current + amount, 0, maximum), DAMAGE_PRECISION)
-	update()
+	update(1)
 	if((amount < 0) && is_regenerating)
 		pause(STAMINA_REGEN_TIME)
 	return amount

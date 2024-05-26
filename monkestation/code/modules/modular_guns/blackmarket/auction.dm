@@ -151,6 +151,7 @@
 	name = "Back Alley Guns"
 
 /datum/market_item/auction
+	uses_stock = FALSE
 	markets = list(/datum/market/auction)
 	///the user whos currently bid on it
 	var/mob/user

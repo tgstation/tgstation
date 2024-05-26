@@ -398,7 +398,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list (/datum/material/iron = 2500, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	construction_time =SMALL_MATERIAL_AMOUNT * 2
-	build_path = /obj/item/organ/internal/cyberimp/arm/surgery
+	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/surgery
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
 	)
@@ -411,7 +411,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list (/datum/material/iron = 2500, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	construction_time =SMALL_MATERIAL_AMOUNT * 2
-	build_path = /obj/item/organ/internal/cyberimp/arm/toolset
+	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/toolset
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
 	)

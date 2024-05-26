@@ -19,6 +19,7 @@ GLOBAL_LIST_INIT(huds, list(
 	DATA_HUD_AI_DETECT = new/datum/atom_hud/ai_detector(),
 	DATA_HUD_FAN = new/datum/atom_hud/data/human/fan_hud(),
 	DATA_HUD_PERMIT = new/datum/atom_hud/data/human/permit(), //monkestation edit
+	DATA_HUD_SENSORS = new/datum/atom_hud/data/human/medical/basic/sensors(), //monkestation edit - CYBERNETICS
 ))
 
 /datum/atom_hud

@@ -102,6 +102,7 @@
 #define VV_HK_EDIT_COLOR_MATRIX "edit_color_matrix"
 #define VV_HK_ADD_AI "add_ai"
 #define VV_HK_ARMOR_MOD "mod_obj_armor"
+#define VV_HK_ADJUST_ANIMATIONS "adjust_animations" //Monkestation EDIT CYBERNETIC
 
 // /atom/movable
 #define VV_HK_DEADCHAT_PLAYS "deadchat_plays"

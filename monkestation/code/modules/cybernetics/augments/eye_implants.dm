@@ -16,10 +16,14 @@
 	var/HUD_type = 0
 	var/HUD_trait = null
 	/// Whether the HUD implant is on or off
-	var/toggled_on = TRUE 
+	var/toggled_on = TRUE
+	encode_info = AUGMENT_NT_LOWLEVEL
 
 
 /obj/item/organ/internal/cyberimp/eyes/hud/proc/toggle_hud(mob/living/carbon/eye_owner)
+	if(!check_compatibility())
+		return
+
 	if(toggled_on)
 		if(HUD_type)
 			var/datum/atom_hud/hud = GLOB.huds[HUD_type]
@@ -63,6 +67,7 @@
 	HUD_type = DATA_HUD_SECURITY_ADVANCED
 	HUD_trait = TRAIT_SECURITY_HUD
 	organ_flags = ALL
+	encode_info = AUGMENT_NT_HIGHLEVEL
 
 /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic
 	name = "Diagnostic HUD implant"
@@ -73,3 +78,4 @@
 	name = "Contraband Security HUD Implant"
 	desc = "A Cybersun Industries brand Security HUD Implant. These illicit cybernetic eye implants will display a security HUD over everything you see."
 	organ_flags = ORGAN_SYNTHETIC | ORGAN_HIDDEN
+	encode_info = AUGMENT_SYNDICATE_LEVEL

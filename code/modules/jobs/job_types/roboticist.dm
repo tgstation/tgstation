@@ -54,7 +54,7 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/science
 
 	pda_slot = ITEM_SLOT_LPOCKET
-	skillchips = list(/obj/item/skillchip/job/roboticist)
+	skillchips = list(/obj/item/skillchip/job/roboticist, /obj/item/skillchip/cyberjacker)
 
 /datum/outfit/job/roboticist/mod
 	name = "Roboticist (MODsuit)"

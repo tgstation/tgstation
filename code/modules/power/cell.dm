@@ -145,6 +145,7 @@
 	if(!force && charge < amount)
 		return FALSE
 	charge = max(charge - amount, 0)
+	SEND_SIGNAL(src,COMSIG_CELL_CHANGE_POWER)
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
 	return TRUE
@@ -158,6 +159,7 @@
 		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
 	charge += power_used
+	SEND_SIGNAL(src,COMSIG_CELL_CHANGE_POWER)
 	return power_used
 
 /obj/item/stock_parts/cell/examine(mob/user)

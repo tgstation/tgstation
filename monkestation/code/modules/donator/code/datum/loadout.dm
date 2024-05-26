@@ -131,6 +131,12 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/head/snowman
+	name = "Snowman Head"
+	item_path = /obj/item/clothing/head/costume/snowman
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 /datum/loadout_item/toys/seam_plush
 	name = "Seam Plush"
 	item_path = /obj/item/toy/plush/seam

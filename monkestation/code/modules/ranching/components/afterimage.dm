@@ -3,12 +3,17 @@
 	var/rest_time
 	var/list/obj/effect/after_image/after_images
 
-/datum/component/after_image/Initialize(count = 4, rest_time = 1)
+	//cycles colors
+	var/color_cycle = FALSE
+	var/list/hsv
+
+/datum/component/after_image/Initialize(count = 4, rest_time = 1, color_cycle = FALSE)
 	..()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.rest_time = rest_time
 	src.after_images = list()
+	src.color_cycle = color_cycle
 	if(count > 1)
 		for(var/number = 1 to count)
 			var/obj/effect/after_image/added_image = new /obj/effect/after_image(null)
@@ -62,8 +67,16 @@
 	targeted_image.active = TRUE
 	targeted_image.sync_with_parent(parent)
 	targeted_image.loc = null
+
+	if(color_cycle)
+		if(!hsv)
+			hsv = RGBtoHSV(rgb(255, 0, 0))
+		hsv = RotateHue(hsv, world.time - rest_time * 15)
+		targeted_image.color = HSVtoRGB(hsv)
+
 	if(!isnull(dir_override))
 		targeted_image.setDir(dir_override)
+
 	var/atom/movable/parent_am = parent
 	var/atom/target_loc = parent_am.loc
 	for(var/obj/effect/after_image/listed_image in src.after_images)

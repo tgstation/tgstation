@@ -4,7 +4,7 @@
 	if(!I)
 		return
 
-	if(I.tool_behaviour == TOOL_WIRECUTTER || I.tool_behaviour == TOOL_MULTITOOL)
+	if(I.tool_behaviour == TOOL_WIRECUTTER || I.tool_behaviour == TOOL_MULTITOOL || I.tool_behaviour == TOOL_HACKING)
 		return TRUE
 	if(isassembly(I))
 		var/obj/item/assembly/A = I
@@ -256,7 +256,8 @@
 	// Station blueprints do that too, but only if the wires are not randomized.
 	if(user.is_holding_item_of_type(/obj/item/areaeditor/blueprints) && !randomize)
 		return TRUE
-
+	if(revealed_wires)
+		return TRUE
 	return FALSE
 
 /**

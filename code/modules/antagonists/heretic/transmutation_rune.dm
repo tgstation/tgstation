@@ -101,6 +101,8 @@
 
 	// Now go through all our nearby atoms and see which are good for our ritual.
 	for(var/atom/nearby_atom as anything in atoms_in_range)
+		if(istype(nearby_atom, /obj/item/organ/internal/brain/slime))
+			selected_atoms |= nearby_atom
 		// Go through all of our required atoms
 		for(var/req_type in requirements_list)
 			// We already have enough of this type, skip

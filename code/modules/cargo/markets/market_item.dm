@@ -26,6 +26,8 @@
 	var/stock_max = 0
 	/// Probability for this item to be available. Used by SSblackmarket on init.
 	var/availability_prob = 0
+	///do we use stock
+	var/uses_stock = TRUE
 
 /datum/market_item/New()
 	if(isnull(price))
@@ -52,7 +54,8 @@
 
 	// SSblackmarket takes care of the shipping.
 	if(SSblackmarket.queue_item(purchase))
-		stock--
+		if(uses_stock)
+			stock--
 		buyer.log_message("has succesfully purchased [name] using [shipping_method] for shipping.", LOG_ECON)
 		return TRUE
 	return FALSE

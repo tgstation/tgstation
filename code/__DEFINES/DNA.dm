@@ -126,6 +126,10 @@
 #define ORGAN_SLOT_ZOMBIE "zombie_infection"
 #define ORGAN_SLOT_BUTT "butt"
 #define ORGAN_SLOT_BLADDER "bladder"
+#define ORGAN_SLOT_LINK "cyber_link"
+#define ORGAN_SLOT_RIGHT_LEG_AUG "r_leg_device"
+#define ORGAN_SLOT_LEFT_LEG_AUG "l_leg_device"
+#define ORGAN_SLOT_SPINAL "spinal_implant"
 
 /// Organ slot external
 #define ORGAN_SLOT_EXTERNAL_TAIL "tail"
@@ -170,9 +174,13 @@
 /// Exists so Life()'s organ process order is consistent
 GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_BRAIN,
+	ORGAN_SLOT_LINK,
+	ORGAN_SLOT_SPINAL,
 	ORGAN_SLOT_APPENDIX,
 	ORGAN_SLOT_RIGHT_ARM_AUG,
 	ORGAN_SLOT_LEFT_ARM_AUG,
+	ORGAN_SLOT_RIGHT_LEG_AUG,
+	ORGAN_SLOT_LEFT_LEG_AUG,
 	ORGAN_SLOT_STOMACH,
 	ORGAN_SLOT_STOMACH_AID,
 	ORGAN_SLOT_BREATHING_TUBE,

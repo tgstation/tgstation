@@ -16,7 +16,12 @@
 	///Reference to the currently logged in user's bank account.
 	var/datum/bank_account/current_user
 	/// List of typepaths for "/datum/market"s that this uplink can access.
-	var/list/accessible_markets = list(/datum/market/blackmarket, /datum/market/auction/guns, /datum/market/restock/guns_galore)
+	var/list/accessible_markets = list(
+		/datum/market/blackmarket,
+		/datum/market/auction/guns,
+		/datum/market/restock/guns_galore,
+		/datum/market/auction/aftermarket_parts,
+	)
 	///our current_bid
 	var/current_bid = 0
 
@@ -195,7 +200,12 @@
 	icon = 'icons/obj/blackmarket.dmi'
 	icon_state = "uplink"
 	//The original black market uplink
-	accessible_markets = list(/datum/market/blackmarket, /datum/market/auction/guns, /datum/market/restock/guns_galore)
+	accessible_markets = list(
+		/datum/market/blackmarket,
+		/datum/market/auction/guns,
+		/datum/market/restock/guns_galore,
+		/datum/market/auction/aftermarket_parts,
+	)
 
 
 /datum/crafting_recipe/blackmarket_uplink

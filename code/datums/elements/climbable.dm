@@ -67,7 +67,10 @@
 		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
 	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
 		adjusted_climb_time *= 0.8
-		adjusted_climb_stun *= 0.8
+	//monkestation edit - CYBERNETICS
+	if(HAS_TRAIT(user,TRAIT_FAST_CLIMBER)) //How it feels to chew 5 gum
+		adjusted_climb_time *= 0.3
+	//monkestation edit - CYBERNETICS
 	LAZYADDASSOCLIST(current_climbers, climbed_thing, user)
 	if(do_after(user, adjusted_climb_time, climbed_thing))
 		if(QDELETED(climbed_thing)) //Checking if structure has been destroyed
@@ -147,7 +150,7 @@
 	if(bumpee.force_moving?.allow_climbing)
 		do_climb(source, bumpee)
 	if(bumpee.m_intent == MOVE_INTENT_SPRINT)
-		INVOKE_ASYNC(src, PROC_REF(attempt_sprint_climb), source, bumpee)
+		INVOKE_ASYNC(src, PROC_REF(climb_structure), source, bumpee)
 
 ///Tries to climb onto the target if the forced movement of the mob allows it
 /datum/element/climbable/proc/attempt_sprint_climb(datum/source, mob/bumpee)

@@ -111,8 +111,8 @@
 		// cyberimplants range from a nice bonus to fucking broken bullshit so no subtypesof
 		var/list/selectable_types = list(
 			/obj/item/organ/internal/cyberimp/brain/anti_drop,
-			/obj/item/organ/internal/cyberimp/arm/toolset,
-			/obj/item/organ/internal/cyberimp/arm/surgery,
+			/obj/item/organ/internal/cyberimp/arm/item_set/toolset,
+			/obj/item/organ/internal/cyberimp/arm/item_set/surgery,
 			/obj/item/organ/internal/cyberimp/chest/thrusters,
 			/obj/item/organ/internal/lungs/cybernetic/tier3,
 			/obj/item/organ/internal/liver/cybernetic/tier3,

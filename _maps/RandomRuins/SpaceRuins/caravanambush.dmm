@@ -562,7 +562,7 @@
 "tL" = (
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/crate/secure/engineering,
-/obj/item/organ/internal/cyberimp/arm/toolset,
+/obj/item/organ/internal/cyberimp/arm/item_set,
 /obj/item/organ/internal/cyberimp/eyes/hud/medical,
 /obj/item/organ/internal/cyberimp/brain/anti_stun,
 /turf/open/floor/iron/dark/airless,

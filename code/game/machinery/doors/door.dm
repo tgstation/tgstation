@@ -301,6 +301,10 @@
 		forced_open = crowbar.force_opens
 	if(istype(tool, /obj/item/slasher_machette))
 		forced_open = TRUE
+	if(istype(tool, /obj/item/mantis_blade/chromata))
+		var/obj/item/mantis_blade/chromata/attacker = tool
+		forced_open = attacker.check_can_crowbar(user)
+
 	try_to_crowbar(tool, user, forced_open)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

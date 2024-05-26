@@ -20,7 +20,12 @@
 /datum/atom_hud/data/human/medical
 	hud_icons = list(STATUS_HUD, HEALTH_HUD, NANITE_HUD)
 
-/datum/atom_hud/data/human/medical/basic
+/datum/atom_hud/data/human/medical/basic/add_atom_to_single_mob_hud(mob/M, mob/living/carbon/H)
+	if(check_sensors(H))
+		..()
+
+/datum/atom_hud/data/human/medical/basic/proc/update_suit_sensors(mob/living/carbon/H)
+	check_sensors(H) ? add_atom_to_hud(H) : remove_atom_from_hud(H)
 
 /datum/atom_hud/data/human/medical/basic/proc/check_sensors(mob/living/carbon/human/H)
 	if(!istype(H))
@@ -32,11 +37,12 @@
 		return FALSE
 	return TRUE
 
-/datum/atom_hud/data/human/medical/basic/add_atom_to_single_mob_hud(mob/M, mob/living/carbon/H)
-	if(check_sensors(H))
-		..()
+/datum/atom_hud/data/human/medical/advanced
 
-/datum/atom_hud/data/human/medical/basic/proc/update_suit_sensors(mob/living/carbon/H)
+/datum/atom_hud/data/human/medical/basic/sensors
+	hud_icons = list(SENSOR_HUD)
+
+/datum/atom_hud/data/human/medical/basic/sensors/update_suit_sensors(mob/living/carbon/H)
 	check_sensors(H) ? add_atom_to_hud(H) : remove_atom_from_hud(H)
 
 /datum/atom_hud/data/human/medical/advanced
@@ -167,7 +173,9 @@ Medical HUD! Basic mode needs suit sensors on.
 //called when a human changes suit sensors
 /mob/living/carbon/proc/update_suit_sensors()
 	var/datum/atom_hud/data/human/medical/basic/B = GLOB.huds[DATA_HUD_MEDICAL_BASIC]
+	var/datum/atom_hud/data/human/medical/basic/sensors/S = GLOB.huds[DATA_HUD_SENSORS]
 	B.update_suit_sensors(src)
+	S.update_suit_sensors(src)
 
 //called when a living mob changes health
 /mob/living/proc/med_hud_set_health()
@@ -186,14 +194,20 @@ Medical HUD! Basic mode needs suit sensors on.
 //called when a carbon changes stat, virus or XENO_HOST
 /mob/living/proc/med_hud_set_status()
 	var/image/holder = hud_list?[STATUS_HUD]
+	var/image/sensors = hud_list?[SENSOR_HUD]
 	if (isnull(holder))
 		return
 
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+		if(sensors)
+			SET_PLANE_EXPLICIT(sensors, ABOVE_LIGHTING_PLANE, src)
+			sensors.icon_state = "sensors"
+
 		holder.icon_state = "huddead"
 	else
+		sensors?.icon_state = null
 		holder.icon_state = "hudhealthy"
 
 /mob/living/carbon/med_hud_set_status()
