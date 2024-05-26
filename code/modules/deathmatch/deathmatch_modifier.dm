@@ -593,7 +593,7 @@
 	var/datum/martial_art/instantiated_art = new picked_art_path()
 
 	if (istype(instantiated_art, /datum/martial_art/boxing))
-		player.mind.adjust_experience(/datum/skill/athletics, SKILL_EXP_MASTER)
+		player.mind.adjust_experience(/datum/skill/athletics, SKILL_EXP_LEGENDARY)
 
 	instantiated_art.teach(player)
 
