@@ -230,6 +230,7 @@
 		balloon_alert(user, "upgraded")
 		qdel(upgrade)
 		qdel(src)
+		return
 	return ..()
 
 /obj/structure/aquarium/proc/on_attacked(datum/source, mob/attacker, attack_flags)

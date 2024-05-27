@@ -364,7 +364,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	catalog_description = "This fish is capable of substaining itself by producing its own sources of energy (food)."
 	incompatible_traits = list(/datum/fish_trait/predator, /datum/fish_trait/necrophage)
 
-/datum/fish_trait/antigrav/apply_to_fish(obj/item/fish/fish)
+/datum/fish_trait/mixotroph/apply_to_fish(obj/item/fish/fish)
 	ADD_TRAIT(fish, TRAIT_FISH_NO_HUNGER, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/antigrav
@@ -402,7 +402,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 		if(istype(other_fish, fish.type) && !single_mate_found)
 			single_mate_found = TRUE
 			continue
-		fish.loc.visible_message("[src] seems to freak out for a moment, then it stops moving...")
+		fish.loc.visible_message(span_warning("[fish] seems to freak out for a moment, then it stops moving..."))
 		fish.set_status(FISH_DEAD)
 		return
 

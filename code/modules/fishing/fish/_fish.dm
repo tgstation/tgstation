@@ -140,6 +140,8 @@
 	var/experisci_scannable = TRUE
 	/// cooldown on creating tesla zaps
 	COOLDOWN_DECLARE(electrogenesis_cooldown)
+	/// power of the tesla zap created by the fish in a bioelectric generator
+	var/electrogenesis_power = 20 MEGA JOULES
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
@@ -615,13 +617,13 @@
 		return
 	COOLDOWN_START(src, electrogenesis_cooldown, ELECTROGENESIS_DURATION + ELECTROGENESIS_VARIANCE)
 	var/fish_zap_range = 1
-	var/fish_zap_power = 5 KILO JOULES // 8 damage
+	var/fish_zap_power = 1 KILO JOULES // ~5 damage, just a little friendly "yeeeouch!"
 	var/fish_zap_flags = ZAP_MOB_DAMAGE
 	if(istype(loc, /obj/structure/aquarium/bioelec_gen))
 		fish_zap_range = 5
-		fish_zap_power = 20 KILO JOULES // now 33 damage
-		fish_zap_flags |= (ZAP_GENERATES_POWER | ZAP_MOB_STUN | ZAP_OBJ_DAMAGE)
-	tesla_zap(source = get_turf(src), zap_range = fish_zap_range, power = fish_zap_power, cutoff = 1 KILO JOULES, zap_flags = fish_zap_flags)
+		fish_zap_power = electrogenesis_power
+		fish_zap_flags |= (ZAP_GENERATES_POWER | ZAP_MOB_STUN)
+	tesla_zap(source = get_turf(src), zap_range = fish_zap_range, power = fish_zap_power, cutoff = 1 MEGA JOULES, zap_flags = fish_zap_flags)
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)
