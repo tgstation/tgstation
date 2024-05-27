@@ -1,0 +1,4 @@
+author: "Absolucy, Fluffles"
+delete-after: True
+changes:
+  - bugfix: "Hats/glasses/masks should hopefully behave more predictably for the purposes of eye/mouth surgery."
