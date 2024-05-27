@@ -158,5 +158,5 @@
 #define INFO_NAMED "name"
 /// Used for specific alt-reskins, like the pride pin
 #define INFO_RESKIN "reskin"
-/// Handles additional information about the item, for example layer
+/// Handles which layer the item will be on, for accessories
 #define INFO_LAYER "layer"

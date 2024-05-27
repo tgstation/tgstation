@@ -1,6 +1,6 @@
-import { BooleanLike } from 'common/react';
 import { useState } from 'react';
 
+import { BooleanLike } from '../../../common/react';
 import { useBackend } from '../../backend';
 import {
   Box,
@@ -15,7 +15,7 @@ import {
   Tabs,
 } from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
-import { LoadoutList, PreferencesMenuData } from './data';
+import { PreferencesMenuData } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 type LoadoutButton = {
@@ -38,9 +38,8 @@ export type LoadoutCategory = {
   contents: LoadoutItem[];
 };
 
-type Data = PreferencesMenuData & {
+type LoadoutManagerData = PreferencesMenuData & {
   job_clothes: BooleanLike;
-  loadout_preview_view: string;
 };
 
 export const LoadoutPage = () => {
@@ -74,7 +73,7 @@ const LoadoutPageInner = (props: { loadout_tabs: LoadoutCategory[] }) => {
             <Input
               width="200px"
               onInput={(_, value) => setSearchLoadout(value)}
-              placeholder="Search for item"
+              placeholder="Search for an item..."
               value={searchLoadout}
             />
           }
@@ -106,13 +105,6 @@ const LoadoutPageInner = (props: { loadout_tabs: LoadoutCategory[] }) => {
       </Stack.Item>
     </Stack>
   );
-};
-
-const LoadoutListIncludes = (list: LoadoutList, path: string) => {
-  if (!list) {
-    return false;
-  }
-  return list[path] !== undefined;
 };
 
 const ItemIcon = (props: { item: LoadoutItem }) => {
@@ -194,17 +186,15 @@ const ItemDisplay = (props: { item: LoadoutItem; active: boolean }) => {
 };
 
 const ItemListDisplay = (props: { items: LoadoutItem[] }) => {
-  const { data } = useBackend<Data>();
+  const { data } = useBackend<LoadoutManagerData>();
+  const loadout = data.character_preferences.misc.loadout_list;
   return (
     <Flex wrap>
       {props.items.map((item) => (
         <Flex.Item key={item.name} mr={2} mb={2}>
           <ItemDisplay
             item={item}
-            active={LoadoutListIncludes(
-              data.character_preferences.misc.loadout_list,
-              item.path,
-            )}
+            active={loadout && loadout[item.path] !== undefined}
           />
         </Flex.Item>
       ))}
@@ -258,7 +248,7 @@ const LoadoutTabs = (props: {
   currentTab: string;
   currentSearch: string;
 }) => {
-  const { act } = useBackend<Data>();
+  const { act } = useBackend<LoadoutManagerData>();
   const { loadout_tabs, currentTab, currentSearch } = props;
   const activeCategory = loadout_tabs.find((curTab) => {
     return curTab.name === currentTab;
@@ -322,8 +312,7 @@ const LoadoutTabs = (props: {
 };
 
 const LoadoutPreviewSection = () => {
-  const { act, data } = useBackend<Data>();
-  const { job_clothes, loadout_preview_view } = data;
+  const { act, data } = useBackend<LoadoutManagerData>();
 
   return (
     <Section
@@ -332,17 +321,16 @@ const LoadoutPreviewSection = () => {
       buttons={
         <Button.Checkbox
           align="center"
-          checked={job_clothes}
+          checked={data.job_clothes}
           onClick={() => act('toggle_job_clothes')}
         >
           Job Clothes
         </Button.Checkbox>
       }
     >
-      {/* The heights on these sections are fucked, whatever fix it later */}
       <Stack vertical height="500px">
         <Stack.Item grow align="center">
-          <CharacterPreview height="100%" id={loadout_preview_view} />
+          <CharacterPreview height="100%" id={data.character_preview_view} />
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item align="center">

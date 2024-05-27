@@ -92,8 +92,6 @@
 
 /datum/preference_middleware/loadout/get_ui_data(mob/user)
 	var/list/data = list()
-	data["selected_loadout"] = preferences.read_preference(/datum/preference/loadout)
-	data["mob_name"] = preferences.read_preference(/datum/preference/name/real_name)
 	data["job_clothes"] = preferences.character_preview_view.show_job_clothes
 	return data
 

@@ -148,6 +148,7 @@ export type PreferencesMenuData = {
       joblessrole: JoblessRole;
       species: string;
       loadout_list: LoadoutList;
+      job_clothes: BooleanLike;
     };
 
     randomization: Record<string, RandomSetting>;
