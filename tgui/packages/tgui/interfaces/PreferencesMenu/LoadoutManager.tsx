@@ -47,13 +47,12 @@ export const LoadoutPage = () => {
   return (
     <ServerPreferencesFetcher
       render={(serverData) => {
-        return serverData ? (
-          <LoadoutPageInner
-            loadout_tabs={serverData.loadout.loadout_tabs as LoadoutCategory[]}
-          />
-        ) : (
-          <NoticeBox>Loading...</NoticeBox>
-        );
+        if (!serverData) {
+          return <NoticeBox>Loading...</NoticeBox>;
+        }
+        const loadout_tabs: LoadoutCategory[] = serverData.loadout
+          .loadout_tabs as LoadoutCategory[];
+        return <LoadoutPageInner loadout_tabs={loadout_tabs} />;
       }}
     />
   );
@@ -214,11 +213,7 @@ const ItemDisplay = (props: { item: LoadoutItem; active: boolean }) => {
     >
       <Stack vertical>
         <Stack.Item ml={-1}>
-          <ItemDisplayButtons
-            item={item}
-            buttons={item.buttons}
-            active={active}
-          />
+          <ItemDisplayButtons item={item} active={active} />
         </Stack.Item>
         <Stack.Item mt={ShowsButtons(item, active) ? -4 : 0}>
           <ItemIcon item={item} />
