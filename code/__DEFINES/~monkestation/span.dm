@@ -4,5 +4,3 @@
 #define span_clockgray(str) ("<span class='clockgray'>" + str + "</span>")
 #define span_clockred(str) ("<span class='clockred'>" + str + "</span>")
 #define span_ratvar(str) ("<span class='ratvar'>" + str + "</span>")
-
-#define REQUEST_MENTORHELP "request_mentorhelp"
