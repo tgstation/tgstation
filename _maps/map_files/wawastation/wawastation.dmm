@@ -953,6 +953,8 @@
 	dir = 6
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/requests_console/auto_name/directional/south,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "apk" = (
@@ -11377,6 +11379,9 @@
 	},
 /obj/structure/sign/warning/explosives/directional/north,
 /obj/effect/turf_decal/trimline/yellow/filled/warning,
+/obj/machinery/requests_console/auto_name/directional/east,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "ebo" = (
@@ -14239,6 +14244,7 @@
 	pixel_y = -12
 	},
 /obj/structure/table,
+/obj/machinery/requests_console/auto_name/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
 "fhu" = (
@@ -15560,6 +15566,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/machinery/requests_console/auto_name/directional/east,
+/obj/effect/mapping_helpers/requests_console/supplies,
+/obj/effect/mapping_helpers/requests_console/ore_update,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "fEI" = (
@@ -17095,7 +17105,7 @@
 /obj/effect/landmark/transport/transport_id{
 	specific_transport_id = "medbay1"
 	},
-/obj/machinery/elevator_control_panel/directional/east{
+/obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "medbay1"
 	},
 /turf/open/floor/plating/elevatorshaft,
@@ -20236,6 +20246,7 @@
 	dir = 4
 	},
 /obj/item/radio/intercom/directional/west,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "hmj" = (
@@ -29526,6 +29537,9 @@
 	dir = 1
 	},
 /obj/machinery/computer/records/security,
+/obj/machinery/requests_console/auto_name/directional/north,
+/obj/effect/mapping_helpers/requests_console/supplies,
+/obj/effect/mapping_helpers/requests_console/information,
 /turf/open/floor/iron,
 /area/station/security/office)
 "kxG" = (
@@ -36293,10 +36307,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 9
 	},
-/obj/machinery/requests_console/directional/south{
-	department = "Atmospherics";
-	name = "Atmospherics Requests Console"
-	},
+/obj/machinery/requests_console/auto_name/directional/south,
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/turf_decal/tile/yellow{
@@ -39100,6 +39111,8 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/requests_console/auto_name/directional/north,
+/obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "nZo" = (
@@ -44057,6 +44070,13 @@
 /obj/structure/cable,
 /turf/open/space/basic,
 /area/station/solars/port/fore)
+"pNs" = (
+/obj/structure/cable,
+/obj/effect/landmark/start/bitrunner,
+/obj/machinery/requests_console/auto_name/directional/east,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/station/cargo/bitrunning/den)
 "pNB" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -47924,6 +47944,7 @@
 /obj/machinery/requests_console/auto_name/directional/west,
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/machinery/firealarm/directional/north,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "rgX" = (
@@ -151698,7 +151719,7 @@ vxX
 vxX
 vxX
 bNL
-xWQ
+pNs
 dpH
 sLa
 iIq
