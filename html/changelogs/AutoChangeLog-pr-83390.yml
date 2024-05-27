@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes:
+  - qol: "Traitor-created Infected AIs no longer hear the Malf AI antag sound alert."
