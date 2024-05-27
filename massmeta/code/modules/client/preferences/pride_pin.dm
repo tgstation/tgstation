@@ -4,7 +4,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 
 /datum/preference/choiced/pride_pin/init_possible_values()
-	return assoc_to_keys(GLOB.pride_pin_reskins)
+	return assoc_to_keys(GLOB.patriotic_flag_reskins) // MASSMETA EDIT
 
 /datum/preference/choiced/pride_pin/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))

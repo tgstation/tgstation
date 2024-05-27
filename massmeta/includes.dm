@@ -92,3 +92,6 @@
 #include "code\modules\surgery\organs\internal\butts\butts_init.dm"
 //gay removal (6.21 КоАП РФ)
 #include "code\modules\clothing\under\accessories\badges.dm"
+#include "code\modules\clothing\shoes\sneakers.dm"
+#include "code\modules\client\preferences\pride_pin.dm"
+#include "code\datums\quirks\neutral_quirks\pride_pin.dm"
