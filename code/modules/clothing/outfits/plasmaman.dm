@@ -302,3 +302,10 @@
 	uniform = /obj/item/clothing/under/plasmaman //same
 	gloves = /obj/item/clothing/gloves/color/plasmaman/black
 	head = /obj/item/clothing/head/helmet/space/plasmaman
+
+/datum/outfit/plasmaman/telecommunication_dispatcher
+	name = "Telecommunication Dispatcher Plasmaman"
+
+	uniform = /obj/item/clothing/under/plasmaman/enviroslacks
+	gloves = /obj/item/clothing/gloves/color/plasmaman/black
+	head = /obj/item/clothing/head/helmet/space/plasmaman/engineering

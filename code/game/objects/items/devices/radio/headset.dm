@@ -453,3 +453,11 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	use_command = !use_command
 	to_chat(user, span_notice("You toggle high-volume mode [use_command ? "on" : "off"]."))
 	return CLICK_ACTION_SUCCESS
+
+/obj/item/radio/headset/dispatcher
+	name = "\proper the dispatcher's headset"
+	desc = "The coordinator's headset: guaranteed to make your ears hurt from all the squabble and chaos."
+	icon_state = "com_headset"
+	worn_icon_state = "com_headset"
+	command = TRUE
+	keyslot = /obj/item/encryptionkey/heads/dipsatcher

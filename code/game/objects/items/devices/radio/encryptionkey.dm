@@ -224,3 +224,10 @@
 
 /obj/item/encryptionkey/secbot
 	channels = list(RADIO_CHANNEL_AI_PRIVATE = 1, RADIO_CHANNEL_SECURITY = 1)
+
+/obj/item/encryptionkey/heads/dipsatcher
+	name = "\proper the dispatcher's encryption key"
+	icon_state = "cypherkey_cube"
+	channels = list(RADIO_CHANNEL_COMMAND = 1, RADIO_CHANNEL_SECURITY = 1, RADIO_CHANNEL_ENGINEERING = 1, RADIO_CHANNEL_SCIENCE = 1, RADIO_CHANNEL_MEDICAL = 1, RADIO_CHANNEL_SUPPLY = 1, RADIO_CHANNEL_SERVICE = 1)
+	greyscale_config = /datum/greyscale_config/encryptionkey_cube
+	greyscale_colors = "#2b2793#c2c1c9"

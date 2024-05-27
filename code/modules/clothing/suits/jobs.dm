@@ -189,6 +189,11 @@
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
 
+/obj/item/clothing/suit/hazardvest/blue
+	name = "blue hazard vest"
+	desc = "A high-visibility vest used in work zones, this one is blue."
+	icon_state = "hazard_blue"
+
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer
 	name = "blue formal suit jacket"

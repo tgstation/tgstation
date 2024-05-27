@@ -454,6 +454,20 @@
 		/datum/computer_file/program/borg_monitor,
 	)
 
+/obj/item/modular_computer/pda/dispatcher
+	name = "telecommunication dispatcher's PDA"
+	internal_cell = /obj/item/stock_parts/cell/high //we want people be able to contact the dispatch not only for first 3 minutes
+	greyscale_colors = "#374f7e#a52f29"
+	spam_mode = TRUE
+	starting_programs = list(
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/status,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/records/medical,
+		/datum/computer_file/program/chatclient,
+	)
+
 /**
  * Non-roles
  */

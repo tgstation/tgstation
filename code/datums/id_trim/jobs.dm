@@ -1183,6 +1183,35 @@
 		)
 	job = /datum/job/station_engineer
 
+/datum/id_trim/job/telecommunication_dispatcher
+	assignment = "Telecommunication Dispatcher"
+	trim_state = "trim_telecommunicationdispatcher"
+	department_color = COLOR_SERVICE_LIME
+	subdepartment_color = COLOR_ENGINEERING_ORANGE
+	sechud_icon_state = SECHUD_TELECOMMUNICATION_DISPATCHER
+	minimal_access = list(
+		ACCESS_CONSTRUCTION,
+		ACCESS_ENGINEERING,
+		ACCESS_NETWORK,
+		ACCESS_RC_ANNOUNCE,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_MINISAT,
+		ACCESS_TCOMMS,
+		ACCESS_TECH_STORAGE,
+		)
+	extra_access = list(
+		ACCESS_EXTERNAL_AIRLOCKS,
+		ACCESS_ENGINE_EQUIP,
+		ACCESS_MAINT_TUNNELS,
+		)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+		ACCESS_CE,
+		ACCESS_HOP,
+		)
+	job = /datum/job/telecommunication_dispatcher
+
 /datum/id_trim/job/veteran_advisor
 	assignment = "Veteran Security Advisor"
 	trim_state = "trim_veteranadvisor"

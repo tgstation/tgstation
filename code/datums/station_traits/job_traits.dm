@@ -244,6 +244,19 @@
 			qdel(thing_on_table)
 	new /obj/machinery/fax/auto_name(picked_turf)
 
+/datum/station_trait/job/telecommunication_dispatcher
+	name = "Telecommunication Dispatcher"
+	button_desc = "Sign up to become a tireless Telecommunication Dispatcher. Coordinate departments, manage emergencies, and maintain telecomms, all without any real authority."
+	weight = 2
+	report_message = "Telecommunication Dispatcher has been assigned to your station to assist with coordination and telecommunication maintenance."
+	show_in_report = TRUE
+	can_roll_antag = CAN_ROLL_PROTECTED
+	job_to_add = /datum/job/telecommunication_dispatcher
+
+/datum/station_trait/job/telecommunication_dispatcher/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
+	. = ..()
+	overlays += "telecommunication_dispatcher"
+
 #undef CAN_ROLL_ALWAYS
 #undef CAN_ROLL_PROTECTED
 #undef CAN_ROLL_NEVER

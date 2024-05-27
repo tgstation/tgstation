@@ -281,6 +281,9 @@
 /obj/item/clothing/under/costume/buttondown/slacks/service //preset one to be a formal white shirt and black pants
 	greyscale_colors = "#EEEEEE#CBDBFC#17171B#222227"
 
+/obj/item/clothing/under/costume/buttondown/slacks/dispatcher //light-blue shirt and yellow pants, used by Telecommunication Dispatcher
+	greyscale_colors = "#B7DDF4#D15B1B#612313#DCA01B"
+
 /obj/item/clothing/under/costume/buttondown/shorts
 	name = "buttondown shirt with shorts"
 	desc = "A fancy buttondown shirt with shorts."
@@ -304,6 +307,9 @@
 
 /obj/item/clothing/under/costume/buttondown/skirt/service //preset one to be a formal white shirt and black skirt
 	greyscale_colors = "#EEEEEE#CBDBFC#17171B#222227"
+
+/obj/item/clothing/under/costume/buttondown/skirt/dispatcher //white shirt and blue pants, used by Intedepartmental Dispatcher
+	greyscale_colors = "#B7DDF4#D15B1B#612313#DCA01B"
 
 /obj/item/clothing/under/costume/jackbros
 	name = "jack bros outfit"

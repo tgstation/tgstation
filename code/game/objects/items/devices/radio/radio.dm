@@ -625,4 +625,12 @@
 	. = ..()
 	set_listening(FALSE)
 
+/obj/item/radio/dispatcher //used by Intedeparmental Dispatcher
+	name = "deluxe radio"
+	desc = "An upgraded handheld radio that communicates with local telecommunication networks, \
+		has built-in loudness enchancer. Can be tuned to any station frequency."
+	icon_state = "deluxetalkie"
+	command = TRUE
+	freerange = TRUE
+
 #undef FREQ_LISTENING
