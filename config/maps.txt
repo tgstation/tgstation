@@ -25,6 +25,8 @@ map deltastation
 endmap
 
 map kilostation
+	maxplayers 40
+	votable
 endmap
 
 map icebox
@@ -42,15 +44,10 @@ map northstar
 	votable
 endmap
 
-
 map runtimestation
 endmap
 
 map multiz_debug
-endmap
-
-map oshan
-	votable
 endmap
 
 map boxstation
