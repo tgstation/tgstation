@@ -21,7 +21,8 @@
 		UNTYPED_LIST_ADD(., list(
 			"icon" = FA_ICON_ARROW_DOWN,
 			"act_key" = "set_layer",
-			"tooltip" = "Modify this item to be above or below your over suit."
+			"tooltip" = "Modify this item to be above or below your over suit.",
+			"only_when_selected" = TRUE,
 		))
 
 /datum/loadout_item/accessory/handle_loadout_action(datum/preference_middleware/loadout/manager, mob/user, action)

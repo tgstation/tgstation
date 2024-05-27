@@ -22,6 +22,7 @@ type LoadoutButton = {
   icon: string;
   act_key?: string;
   tooltip?: string;
+  only_when_selected?: BooleanLike;
 };
 
 type LoadoutItem = {
@@ -47,7 +48,9 @@ export const LoadoutPage = () => {
     <ServerPreferencesFetcher
       render={(serverData) => {
         return serverData ? (
-          <LoadoutPageInner loadout_tabs={serverData.loadout.loadout_tabs} />
+          <LoadoutPageInner
+            loadout_tabs={serverData.loadout.loadout_tabs as LoadoutCategory[]}
+          />
         ) : (
           <NoticeBox>Loading...</NoticeBox>
         );
@@ -133,6 +136,64 @@ const ItemIcon = (props: { item: LoadoutItem }) => {
   );
 };
 
+// Is an item showing buttons?
+const ShowsButtons = (item: LoadoutItem, active: boolean) => {
+  for (const button of item.buttons) {
+    if (button.only_when_selected && !active) {
+      continue;
+    }
+    return true;
+  }
+  return false;
+};
+
+const ItemDisplayButton = (props: {
+  item: LoadoutItem;
+  button: LoadoutButton;
+  active: boolean;
+}) => {
+  const { act } = useBackend<LoadoutItem>();
+  const { item, button, active } = props;
+
+  if (button.only_when_selected && !active) {
+    return null;
+  }
+
+  return (
+    <Button
+      icon={button.icon}
+      height="22px"
+      width="22px"
+      tooltip={button.tooltip}
+      tooltipPosition={'bottom-start'}
+      disabled={!button.act_key}
+      color="yellow"
+      style={{ zIndex: '2' }}
+      onClick={(e) => {
+        e.stopPropagation();
+        act('pass_to_loadout_item', {
+          path: item.path,
+          subaction: button.act_key,
+        });
+      }}
+    />
+  );
+};
+
+const ItemDisplayButtons = (props: { item: LoadoutItem; active: boolean }) => {
+  const { item, active } = props;
+  const buttons = item.buttons;
+  return (
+    <Flex>
+      {buttons.map((button) => (
+        <Flex.Item key={button.act_key} mr={1}>
+          <ItemDisplayButton item={item} button={button} active={active} />
+        </Flex.Item>
+      ))}
+    </Flex>
+  );
+};
+
 const ItemDisplay = (props: { item: LoadoutItem; active: boolean }) => {
   const { act } = useBackend<LoadoutItem>();
   const { item, active } = props;
@@ -153,31 +214,13 @@ const ItemDisplay = (props: { item: LoadoutItem; active: boolean }) => {
     >
       <Stack vertical>
         <Stack.Item ml={-1}>
-          <Flex>
-            {item.buttons.map((button) => (
-              <Flex.Item mr={1} key={button.act_key}>
-                <Button
-                  icon={button.icon}
-                  height="22px"
-                  width="22px"
-                  tooltip={button.tooltip}
-                  tooltipPosition={'bottom-start'}
-                  disabled={button.act_key === undefined}
-                  style={{ zIndex: '2' }}
-                  color="yellow"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    act('pass_to_loadout_item', {
-                      path: item.path,
-                      subaction: button.act_key,
-                    });
-                  }}
-                />
-              </Flex.Item>
-            ))}
-          </Flex>
+          <ItemDisplayButtons
+            item={item}
+            buttons={item.buttons}
+            active={active}
+          />
         </Stack.Item>
-        <Stack.Item mt={item.buttons.length ? -4 : 0}>
+        <Stack.Item mt={ShowsButtons(item, active) ? -4 : 0}>
           <ItemIcon item={item} />
         </Stack.Item>
       </Stack>

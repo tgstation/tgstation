@@ -294,7 +294,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	for(var/tooltip in additional_tooltip_contents)
 		// Not real buttons - have no act - but just provides a "hey, this is special!" tip
 		UNTYPED_LIST_ADD(button_list, list(
-			"icon" = FA_ICON_EXCLAMATION,
+			"icon" = FA_ICON_INFO,
 			"tooltip" = tooltip,
 		))
 
@@ -302,7 +302,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 		UNTYPED_LIST_ADD(button_list, list(
 			"icon" = FA_ICON_PALETTE,
 			"act_key" = "select_color",
-			"tooltip" = "Modify this item's color via greyscaling!",
+			"tooltip" = "Modify this item's color.",
 		))
 
 	if(can_be_named)
