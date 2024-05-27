@@ -25,9 +25,9 @@
 	item_path = /obj/item/cane/white
 
 /datum/loadout_item/inhand/briefcase
-	name = "Briefcase"
+	name = "Briefcase (Leather)"
 	item_path = /obj/item/storage/briefcase
 
 /datum/loadout_item/inhand/briefcase_secure
-	name = "Secure Briefcase"
+	name = "Briefcase (Secure)"
 	item_path = /obj/item/storage/briefcase/secure

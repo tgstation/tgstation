@@ -1,31 +1,3 @@
-/// -- Outfit and mob helpers to equip our loadout items. --
-
-/// An empty outfit we fill in with our loadout items to dress our dummy.
-/datum/outfit/player_loadout
-	name = "Player Loadout (Dont Select This)"
-
-/mob/living/carbon/human/proc/make_loadout_outfit(
-	datum/preferences/preference_source,
-	datum/outfit/outfit = /datum/outfit/player_loadout,
-	visuals_only = FALSE,
-	list/loadout_list = loadout_list_to_datums(preference_source?.read_preference(/datum/preference/loadout)),
-)
-
-	if(isnull(preference_source) && !length(loadout_list))
-		return
-
-	var/datum/outfit/equipped_outfit
-	if(ispath(outfit))
-		equipped_outfit = new outfit()
-	else if(istype(outfit))
-		equipped_outfit = outfit
-
-	// Place any loadout items into the outfit before going forward
-	for(var/datum/loadout_item/item as anything in loadout_list)
-		item.insert_path_into_outfit(equipped_outfit, src, visuals_only)
-
-	return equipped_outfit
-
 /**
  * Equips this mob with a given outfit and loadout items as per the passed preferences.
  *
@@ -40,15 +12,27 @@
  * * preference_source - the preferences to draw loadout items from.
  * * visuals_only - whether we call special equipped procs, or if we just look like we equipped it
  */
-/mob/living/carbon/human/proc/equip_outfit_and_loadout(datum/outfit/outfit, datum/preferences/preference_source, visuals_only = FALSE)
-	if(isnull(outfit))
-		return
+/mob/living/carbon/human/proc/equip_outfit_and_loadout(
+	datum/outfit/outfit = /datum/outfit,
+	datum/preferences/preference_source,
+	visuals_only = FALSE,
+)
 	if(isnull(preference_source))
 		return equipOutfit(outfit, visuals_only)
 
+	var/datum/outfit/equipped_outfit
+	if(ispath(outfit, /datum/outfit))
+		equipped_outfit = new outfit()
+	else if(istype(outfit, /datum/outfit))
+		equipped_outfit = outfit
+	else
+		CRASH("Invalid outfit passed to equip_outfit_and_loadout ([outfit])")
+
 	var/list/preference_list = preference_source.read_preference(/datum/preference/loadout)
 	var/list/loadout_datums = loadout_list_to_datums(preference_list)
-	var/datum/outfit/equipped_outfit = make_loadout_outfit(preference_source, outfit, visuals_only, loadout_datums)
+	// Slap our things into the outfit given
+	for(var/datum/loadout_item/item as anything in loadout_datums)
+		item.insert_path_into_outfit(equipped_outfit, src, visuals_only)
 	// Equip the outfit loadout items included
 	if(!equipped_outfit.equip(src, visuals_only))
 		return FALSE

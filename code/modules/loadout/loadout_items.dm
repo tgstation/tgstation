@@ -85,29 +85,26 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	switch(action)
 		if("select_color")
 			if(can_be_greyscale)
-				set_item_color(manager, user)
-				// no update necessary. no change until they interact with the menu
-				return FALSE
+				return set_item_color(manager, user)
 
 		if("set_name")
 			if(can_be_named)
-				set_name(manager, user)
-				// no update necessary, name is not seen
-				return FALSE
+				return set_name(manager, user)
 
 		if("set_skin")
-			if(can_be_reskinned)
-				set_skin(manager, user)
-				return TRUE // do an update to show new skin
+			return set_skin(manager, user)
 
 	return FALSE
 
 /datum/loadout_item/proc/set_item_color(datum/preference_middleware/loadout/manager, mob/user)
 	if(manager.menu)
 		tgui_alert(user, "You already have a color menu open!")
-		return
+		return FALSE
 
 	var/list/loadout = manager.preferences.read_preference(/datum/preference/loadout)
+	if(!loadout?[item_path])
+		manager.select_item(src)
+
 	var/list/allowed_configs = list()
 	if(initial(item_path.greyscale_config))
 		allowed_configs += "[initial(item_path.greyscale_config)]"
@@ -130,6 +127,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 
 	manager.register_greyscale_menu(menu)
 	menu.ui_interact(user)
+	return TRUE
 
 /// Sets [category_slot]'s greyscale colors to the colors in the currently opened [open_menu].
 /datum/loadout_item/proc/set_slot_greyscale(datum/preference_middleware/loadout/manager, datum/greyscale_modify_menu/open_menu)
@@ -142,12 +140,14 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 
 	var/list/colors = open_menu.split_colors
 	if(!colors)
-		return
+		return FALSE
 
 	loadout[item_path][INFO_GREYSCALE] = colors.Join("")
 	manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], loadout)
+	return TRUE // update UI
 
 /datum/loadout_item/proc/set_name(datum/preference_middleware/loadout/manager, mob/user)
+	. = FALSE
 	var/list/loadout = manager.preferences.read_preference(/datum/preference/loadout)
 	var/input_name = tgui_input_text(
 		user = user,
@@ -157,10 +157,11 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 		max_length = MAX_NAME_LEN,
 	)
 	if(QDELETED(src) || QDELETED(user) || QDELETED(manager) || QDELETED(manager.preferences))
-		return
+		return .
 
 	if(!islist(loadout?[item_path]))
 		manager.select_item(src)
+		. = TRUE // update UI
 
 	if(input_name)
 		loadout[item_path][INFO_NAMED] = input_name
@@ -168,8 +169,12 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 		loadout[item_path] -= INFO_NAMED
 
 	manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], loadout)
+	return .
 
 /datum/loadout_item/proc/set_skin(datum/preference_middleware/loadout/manager, mob/user)
+	if(!can_be_reskinned)
+		return FALSE
+
 	var/list/loadout = manager.preferences.read_preference(/datum/preference/loadout)
 	var/static/list/list/cached_reskins = list()
 	if(!islist(cached_reskins[item_path]))
@@ -188,7 +193,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 		default = loadout?[item_path]?[INFO_RESKIN],
 	)
 	if(QDELETED(src) || QDELETED(user) || QDELETED(manager) || QDELETED(manager.preferences))
-		return
+		return FALSE
 
 	if(!islist(loadout?[type]))
 		manager.select_item(src)
@@ -199,6 +204,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 		loadout[item_path][INFO_RESKIN] = input_skin
 
 	manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], loadout)
+	return TRUE // always update UI
 
 /**
  * Place our [var/item_path] into [outfit].
@@ -215,6 +221,8 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 
 /**
  * Called When the item is equipped on [equipper].
+ *
+ * At this point the item is in the mob's contents
  *
  * preference_source - the datum/preferences our loadout item originated from - cannot be null
  * equipper - the mob we're equipping this item onto - cannot be null
@@ -244,8 +252,12 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 		if(skin_chosen in equipped_item.unique_reskin)
 			equipped_item.current_skin = skin_chosen
 			equipped_item.icon_state = equipped_item.unique_reskin[skin_chosen]
-			equipper.update_clothing(equipped_item.slot_flags|ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
-			// melbert todo : accessory shenanigans here
+			if(istype(equipped_item, /obj/item/clothing/accessory))
+				var/obj/item/clothing/under/attached_to = equipped_item.loc
+				attached_to.update_accessory_overlay()
+				equipper.update_clothing(ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
+			else
+				equipper.update_clothing(equipped_item.slot_flags)
 
 		else
 			// Not valid

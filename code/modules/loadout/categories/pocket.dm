@@ -5,7 +5,7 @@
 	category_name = "Other"
 	type_to_generate = /datum/loadout_item/pocket_items
 	/// How many pocket items are allowed
-	VAR_PRIVATE/max_allowed = 3
+	VAR_PRIVATE/max_allowed = 2
 
 /datum/loadout_category/pocket/New()
 	. = ..()
@@ -44,31 +44,31 @@
 	return ..()
 
 /datum/loadout_item/pocket_items/lipstick_black
-	name = "Black Lipstick"
+	name = "Lipstick (Black)"
 	item_path = /obj/item/lipstick/black
 
 /datum/loadout_item/pocket_items/lipstick_blue
-	name = "Blue Lipstick"
+	name = "Lipstick (Blue)"
 	item_path = /obj/item/lipstick/blue
 
 /datum/loadout_item/pocket_items/lipstick_green
-	name = "Green Lipstick"
+	name = "Lipstick (Green)"
 	item_path = /obj/item/lipstick/green
 
 /datum/loadout_item/pocket_items/lipstick_jade
-	name = "Jade Lipstick"
+	name = "Lipstick (Jade)"
 	item_path = /obj/item/lipstick/jade
 
 /datum/loadout_item/pocket_items/lipstick_purple
-	name = "Purple Lipstick"
+	name = "Lipstick (Purple)"
 	item_path = /obj/item/lipstick/purple
 
 /datum/loadout_item/pocket_items/lipstick_red
-	name = "Red Lipstick"
+	name = "Lipstick (Red)"
 	item_path = /obj/item/lipstick
 
 /datum/loadout_item/pocket_items/lipstick_white
-	name = "White Lipstick"
+	name = "Lipstick (White)"
 	item_path = /obj/item/lipstick/white
 
 /datum/loadout_item/pocket_items/plush
@@ -76,53 +76,53 @@
 	can_be_named = TRUE
 
 /datum/loadout_item/pocket_items/plush/bee
-	name = "Bee Plush"
+	name = "Plush (Bee)"
 	item_path = /obj/item/toy/plush/beeplushie
 
 /datum/loadout_item/pocket_items/plush/carp
-	name = "Carp Plush"
+	name = "Plush (Carp)"
 	item_path = /obj/item/toy/plush/carpplushie
 
 /datum/loadout_item/pocket_items/plush/lizard_greyscale
-	name = "Greyscale Lizard Plush"
+	name = "Plush (Lizard, Colorable)"
 	item_path = /obj/item/toy/plush/lizard_plushie/greyscale
 
 /datum/loadout_item/pocket_items/plush/lizard_random
-	name = "Random Lizard Plush"
+	name = "Plush (Lizard, Random)"
 	can_be_greyscale = DONT_GREYSCALE
 	item_path = /obj/item/toy/plush/lizard_plushie
 	additional_tooltip_contents = list(TOOLTIP_RANDOM_COLOR)
 
 /datum/loadout_item/pocket_items/plush/moth
-	name = "Moth Plush"
+	name = "Plush (Moth)"
 	item_path = /obj/item/toy/plush/moth
 
 /datum/loadout_item/pocket_items/plush/narsie
-	name = "Nar'sie Plush"
+	name = "Plush (Nar'sie)"
 	item_path = /obj/item/toy/plush/narplush
 
 /datum/loadout_item/pocket_items/plush/nukie
-	name = "Nukie Plush"
+	name = "Plush (Nukie)"
 	item_path = /obj/item/toy/plush/nukeplushie
 
 /datum/loadout_item/pocket_items/plush/peacekeeper
-	name = "Peacekeeper Plush"
+	name = "Plush (Peacekeeper)"
 	item_path = /obj/item/toy/plush/pkplush
 
 /datum/loadout_item/pocket_items/plush/plasmaman
-	name = "Plasmaman Plush"
+	name = "Plush (Plasmaman)"
 	item_path = /obj/item/toy/plush/plasmamanplushie
 
 /datum/loadout_item/pocket_items/plush/ratvar
-	name = "Ratvar Plush"
+	name = "Plush (Ratvar)"
 	item_path = /obj/item/toy/plush/ratplush
 
 /datum/loadout_item/pocket_items/plush/rouny
-	name = "Rouny Plush"
+	name = "Plush (Rouny)"
 	item_path = /obj/item/toy/plush/rouny
 
 /datum/loadout_item/pocket_items/plush/snake
-	name = "Snake Plush"
+	name = "Plush (Snake)"
 	item_path = /obj/item/toy/plush/snakeplushie
 
 /datum/loadout_item/pocket_items/card_binder

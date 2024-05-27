@@ -377,9 +377,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	body = new
 
-	// Without this, it doesn't show up in the menu
-	// body.appearance_flags &= ~KEEP_TOGETHER // melbert todo check this
-
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()
 

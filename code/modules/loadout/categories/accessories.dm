@@ -12,7 +12,7 @@
 
 /datum/loadout_item/accessory/New()
 	. = ..()
-	if(!ispath(item_path, /obj/item/clothing/accessory))
+	if(ispath(item_path, /obj/item/clothing/accessory))
 		can_be_layer_adjusted = TRUE
 
 /datum/loadout_item/accessory/get_ui_buttons()
@@ -21,19 +21,19 @@
 		UNTYPED_LIST_ADD(., list(
 			"icon" = FA_ICON_ARROW_DOWN,
 			"act_key" = "set_layer",
-			"tooltip" = "You can modify this item to be above or below your over suit."
+			"tooltip" = "Modify this item to be above or below your over suit."
 		))
 
 /datum/loadout_item/accessory/handle_loadout_action(datum/preference_middleware/loadout/manager, mob/user, action)
-	switch(action)
-		if("set_layer")
-			if(can_be_layer_adjusted)
-				set_accessory_layer(manager, user)
-				return TRUE // update to show the new layer
+	if(action == "set_layer")
+		return set_accessory_layer(manager, user)
 
 	return ..()
 
 /datum/loadout_item/accessory/proc/set_accessory_layer(datum/preference_middleware/loadout/manager, mob/user)
+	if(!can_be_layer_adjusted)
+		return FALSE
+
 	var/list/loadout = manager.preferences.read_preference(/datum/preference/loadout)
 	if(!loadout?[item_path])
 		manager.select_item(src)
@@ -42,8 +42,8 @@
 		loadout[item_path][INFO_LAYER] = FALSE
 
 	loadout[item_path][INFO_LAYER] = !loadout[item_path][INFO_LAYER]
-	to_chat(user, span_boldnotice("[name] will now appear [loadout[item_path][INFO_LAYER] ? "above" : "below"] suits."))
 	manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], loadout)
+	return TRUE // Update UI
 
 /datum/loadout_item/accessory/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE)
 	if(outfit.accessory)
@@ -79,10 +79,6 @@
 	name = "Pocket Protector (Filled)"
 	item_path = /obj/item/clothing/accessory/pocketprotector/full
 	additional_tooltip_contents = list("Contains multiple pens.")
-
-/datum/loadout_item/accessory/ribbon
-	name = "Ribbon"
-	item_path = /obj/item/clothing/accessory/medal/ribbon
 
 /datum/loadout_item/accessory/pride
 	name = "Pride Pin"

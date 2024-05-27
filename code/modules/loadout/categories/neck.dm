@@ -12,25 +12,25 @@
 	outfit.neck = item_path
 
 /datum/loadout_item/neck/scarf_greyscale
-	name = "Greyscale Scarf"
+	name = "Scarf (Colorable)"
 	item_path = /obj/item/clothing/neck/scarf
 
 /datum/loadout_item/neck/greyscale_large
-	name = "Large Greyscale Scarf"
+	name = "Scarf (Large, Colorable)"
 	item_path = /obj/item/clothing/neck/large_scarf
 
 /datum/loadout_item/neck/greyscale_larger
-	name = "Larger Greyscale Scarf"
+	name = "Scarf (Larger, Colorable)"
 	item_path = /obj/item/clothing/neck/infinity_scarf
 
 /datum/loadout_item/neck/necktie
-	name = "Greyscale Necktie"
+	name = "Necktie (Colorable)"
 	item_path = /obj/item/clothing/neck/tie
 
 /datum/loadout_item/neck/necktie_disco
-	name = "Horrific Necktie"
+	name = "Necktie (Ugly)"
 	item_path = /obj/item/clothing/neck/tie/horrible
 
 /datum/loadout_item/neck/necktie_loose
-	name = "Loose Necktie"
+	name = "Necktie (Loose)"
 	item_path = /obj/item/clothing/neck/tie/detective
