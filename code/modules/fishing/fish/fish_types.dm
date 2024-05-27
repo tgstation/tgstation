@@ -295,6 +295,26 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+5
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
 
+/obj/item/fish/jumpercable
+	name = "monocloning jumpercable"
+	desc = "A surprisingly useful if nasty looking creation from the syndicate fish labs. Drop one in a tank, and \
+		watch it feed itself, multiply itself, and as a growing swarm, generate more and more power!"
+	icon_state = "jumpercable"
+	dedicated_in_aquarium_icon_state = "jumpercable_small"
+	sprite_width = 17
+	sprite_height = 5
+	stable_population = 12
+	average_size = 110
+	average_weight = 10000
+	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
+	required_temperature_min = MIN_AQUARIUM_TEMP+10
+	required_temperature_max = MIN_AQUARIUM_TEMP+30
+	fish_traits = list(
+		/datum/fish_trait/parthenogenesis,
+		/datum/fish_trait/mixotroph,
+		/datum/fish_trait/electrogenesis
+	)
+
 /obj/item/fish/ratfish
 	name = "ratfish"
 	desc = "A rat exposed to the murky waters of maintenance too long. Any higher power, if it revealed itself, would state that the ratfish's continued existence is extremely unwelcome."
@@ -614,9 +634,10 @@
 	return FALSE
 
 /obj/item/fish/stresszapper
-	name = "wibbling stresszapper"
-	desc = "An incredibly anxious and electroreceptive fish. That means the fish shocks everyone around it, and worries about the walls of its tank closing in constantly. Not in that order."
-	icon_state = "stresszapper"
+	name = "anxious zipzap"
+	desc = "An incredibly anxiety-ridden and electroreceptive fish. Worried about the walls of its tank closing in constantly. Both literally and as a general metaphorical unease about life's direction."
+	icon_state = "zipzap"
+	icon_state_dead = "zipzap_dead"
 	sprite_width = 8
 	sprite_height = 8
 	stable_population = 1

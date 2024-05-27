@@ -216,6 +216,19 @@
 			fish.feed(item.reagents)
 		balloon_alert(user, "fed the fish")
 		return TRUE
+	if(istype(item, /obj/item/aquarium_upgrade))
+		var/obj/item/aquarium_upgrade/upgrade = item
+		if(upgrade.upgrade_from_type != type)
+			balloon_alert(user, "wrong kind of aquarium!")
+			return
+		balloon_alert(user, "upgrading...")
+		if(!do_after(user, 5 SECONDS, src))
+			return
+		var/obj/structure/aquarium/upgraded_aquarium = new upgrade.upgrade_to_type(loc)
+		for(var/atom/movable/moving in contents)
+			moving.forceMove(upgraded_aquarium)
+		balloon_alert(user, "upgraded")
+		qdel(src)
 	return ..()
 
 /obj/structure/aquarium/proc/on_attacked(datum/source, mob/attacker, attack_flags)

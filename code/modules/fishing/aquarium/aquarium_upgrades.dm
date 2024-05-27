@@ -3,20 +3,28 @@
 /obj/item/aquarium_upgrade
 	name = "Aquarium Upgrade"
 	desc = "An upgrade."
+	/// What kind of aquarium can accept this upgrade. Strict type check, no subtypes.
+	var/upgrade_from_type = /obj/structure/aquarium
 	/// typepath of the new aquarium subtype created.
-	var/upgrade_type = /obj/structure/aquarium
+	var/upgrade_to_type = /obj/structure/aquarium
 
 /obj/item/aquarium_upgrade/bioelec_gen
 	name = "Aquarium Bioelectricity Kit"
 	desc = "All the required components to allow an aquarium to harness energy bioelectric fish."
-	upgrade_type = /obj/structure/aquarium/bioelec_gen
+	upgrade_to_type = /obj/structure/aquarium/bioelec_gen
 
 /obj/structure/aquarium/bioelec_gen
 	name = "bioelectricity generator"
-	desc = "An unconventional type of generator that harvests the energy produced by bioelectric fish."
+	desc = "An unconventional type of generator that boosts and harvests the energy produced by bioelectric fish."
 
 	icon_state = "bioelec_map"
 	icon_prefix = "bioelec"
+
+/obj/structure/aquarium/bioelec_gen/zap_act(power, zap_flags)
+	var/explosive = zap_flags & ZAP_MACHINE_EXPLOSIVE
+	if(!explosive)
+		return //immune to all other shocks to make sure power can be generated without breaking the generator itself
+	. = ..()
 
 /obj/structure/aquarium/bioelec_gen/examine(mob/user)
 	. = ..()

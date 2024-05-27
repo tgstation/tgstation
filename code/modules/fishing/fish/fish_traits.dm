@@ -405,7 +405,6 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	inheritability = 60
 	diff_traits_inheritability = 30
 	catalog_description = "This fish is electroreceptive, and will generate electric fields. Can be harnessed inside a bioelectric generator."
-	incompatible_traits = list(/datum/fish_trait/mixotroph)
 
 /datum/fish_trait/electrogenesis/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
@@ -430,10 +429,10 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	SIGNAL_HANDLER
 	var/fish_zap_range = 1
 	var/fish_zap_power = 5000
-	var/fish_zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
+	var/fish_zap_flags = ZAP_MOB_DAMAGE
 	if(istype(fish.loc, /obj/structure/aquarium/bioelec_gen))
 		fish_zap_range = 5
 		fish_zap_power *= 4
 		/// zaps are sent in 3 minute intervals, so no chance of stunlocking
-		fish_zap_flags |= (ZAP_GENERATES_POWER | ZAP_MOB_STUN)
+		fish_zap_flags |= (ZAP_GENERATES_POWER | ZAP_MOB_STUN | ZAP_OBJ_DAMAGE)
 	tesla_zap(source = fish, zap_range = fish_zap_range, power = fish_zap_power, zap_flags = fish_zap_flags)
