@@ -138,6 +138,8 @@
 
 	/// If this fish type counts towards the Fish Species Scanning experiments
 	var/experisci_scannable = TRUE
+	/// cooldown on creating tesla zaps
+	COOLDOWN_DECLARE(electrogenesis_cooldown)
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
@@ -350,6 +352,9 @@
 	process_health(seconds_per_tick)
 	if(ready_to_reproduce())
 		try_to_reproduce()
+
+	if(HAS_TRAIT(src, TRAIT_FISH_ELECTROGENESIS) && COOLDOWN_FINISHED(src, electrogenesis_cooldown))
+		try_electrogenesis()
 
 	SEND_SIGNAL(src, COMSIG_FISH_LIFE, seconds_per_tick)
 
@@ -604,6 +609,19 @@
 /obj/item/fish/proc/refresh_flopping()
 	if(flopping)
 		flop_animation()
+
+/obj/item/fish/proc/try_electrogenesis()
+	if(status == FISH_DEAD || is_hungry())
+		return
+	COOLDOWN_START(src, electrogenesis_cooldown, ELECTROGENESIS_DURATION + ELECTROGENESIS_VARIANCE)
+	var/fish_zap_range = 1
+	var/fish_zap_power = 5 KILO JOULES // 8 damage
+	var/fish_zap_flags = ZAP_MOB_DAMAGE
+	if(istype(loc, /obj/structure/aquarium/bioelec_gen))
+		fish_zap_range = 5
+		fish_zap_power = 20 KILO JOULES // now 33 damage
+		fish_zap_flags |= (ZAP_GENERATES_POWER | ZAP_MOB_STUN | ZAP_OBJ_DAMAGE)
+	tesla_zap(source = get_turf(src), zap_range = fish_zap_range, power = fish_zap_power, cutoff = 1 KILO JOULES, zap_flags = fish_zap_flags)
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)

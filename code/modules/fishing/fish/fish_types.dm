@@ -298,7 +298,7 @@
 /obj/item/fish/jumpercable
 	name = "monocloning jumpercable"
 	desc = "A surprisingly useful if nasty looking creation from the syndicate fish labs. Drop one in a tank, and \
-		watch it feed itself, multiply itself, and as a growing swarm, generate more and more power!"
+		watch it self-feed and multiply. Generates more and more power as a growing swarm!"
 	icon_state = "jumpercable"
 	dedicated_in_aquarium_icon_state = "jumpercable_small"
 	sprite_width = 17
