@@ -84,7 +84,7 @@
 		if(seed)
 			plank_count += round(seed.potency / 25)
 
-		user.balloon_alert(user, "made [plank_count] [plank_name]!")
+		user.balloon_alert(user, "made [plank_count] [plank_name]")
 		new plank_type(user.loc, plank_count)
 		qdel(src)
 		return
@@ -92,7 +92,7 @@
 	if(CheckAccepted(attacking_item))
 		var/obj/item/food/grown/leaf = attacking_item
 		if(HAS_TRAIT(leaf, TRAIT_DRIED))
-			user.show_message(span_notice("You wrap [attacking_item] around the log, turning it into a torch!"))
+			user.balloon_alert(user, "torch crafted")
 			var/obj/item/flashlight/flare/torch/new_torch = new /obj/item/flashlight/flare/torch(user.loc)
 			user.dropItemToGround(attacking_item)
 			user.put_in_active_hand(new_torch)
@@ -100,7 +100,7 @@
 			qdel(src)
 			return
 		else
-			balloon_alert(user, "dry [attacking_item] first!")
+			balloon_alert(user, "dry it first!")
 	else
 		return ..()
 

@@ -38,8 +38,8 @@
 	if(seed)
 		cotton_count += round(seed.potency / 25)
 
-	user.balloon_alert(user, "pulled [cotton_count] piece\s of [cotton_name]!")
-	new cotton_type(user.loc, cotton_count)
+	user.balloon_alert(user, "pulled [cotton_count] piece\s")
+	new cotton_type(user.drop_location(), cotton_count)
 	qdel(src)
 
 
