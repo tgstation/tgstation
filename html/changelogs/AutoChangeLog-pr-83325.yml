@@ -1,0 +1,4 @@
+author: "Whoneedspacee"
+delete-after: True
+changes:
+  - refactor: "Wendigos abilities have been changed into actions that can be added to any mob."
