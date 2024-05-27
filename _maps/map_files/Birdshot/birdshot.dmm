@@ -2007,6 +2007,7 @@
 	pixel_x = -24;
 	pixel_y = -2
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
 "aVX" = (
@@ -19856,6 +19857,8 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/binary/pump,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
 "hRF" = (
@@ -24386,6 +24389,10 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
+"jsz" = (
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance)
 "jsG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -44695,6 +44702,7 @@
 /area/station/maintenance/aft)
 "pCV" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "pCX" = (
@@ -45070,6 +45078,7 @@
 /area/station/science/ordnance/storage)
 "pHS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "pId" = (
@@ -75981,6 +75990,7 @@
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_ordmix{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
 "xZN" = (
@@ -126763,7 +126773,7 @@ oZz
 xZJ
 aVT
 pCV
-enG
+jsz
 pCV
 pCV
 pHS
