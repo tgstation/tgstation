@@ -633,7 +633,7 @@
 	target.apply_status_effect(/datum/status_effect/ice_block_talisman, freeze_timer SECONDS)
 	return FALSE
 
-/obj/item/fish/stresszapper
+/obj/item/fish/zipzap
 	name = "anxious zipzap"
 	desc = "An incredibly anxiety-ridden and electroreceptive fish. Worried about the walls of its tank closing in constantly. Both literally and as a general metaphorical unease about life's direction."
 	icon_state = "zipzap"
@@ -650,5 +650,6 @@
 	fish_traits = list(
 		/datum/fish_trait/no_mating,
 		/datum/fish_trait/wary,
-		/datum/fish_trait/anxiety
+		/datum/fish_trait/anxiety,
+		/datum/fish_trait/electrogenesis
 	)
