@@ -5,8 +5,7 @@
  * Some job items are preserved after being overridden - belt items, ear items, and glasses.
  * The rest of the slots, the items are overridden completely and deleted.
  *
- * Plasmamen are snowflaked to not have any envirosuit pieces removed just in case.
- * Their loadout items for those slots will be added to their backpack on spawn.
+ * Species with special outfits are snowflaked to have loadout items placed in their bags instead of overriding the outfit.
  *
  * * outfit - the job outfit we're equipping
  * * preference_source - the preferences to draw loadout items from.

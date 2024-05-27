@@ -1,5 +1,3 @@
-// -- The loadout item datum and related procs. --
-
 /// Global list of ALL loadout datums instantiated.
 /// Loadout datums are created by loadout categories.
 GLOBAL_LIST_EMPTY(all_loadout_datums)
@@ -96,6 +94,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 
 	return FALSE
 
+/// Opens up the GAGS editing menu for a certain item
 /datum/loadout_item/proc/set_item_color(datum/preference_middleware/loadout/manager, mob/user)
 	if(manager.menu)
 		tgui_alert(user, "You already have a color menu open!")
@@ -146,6 +145,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], loadout)
 	return TRUE // update UI
 
+/// Sets the name of the item in the loadout
 /datum/loadout_item/proc/set_name(datum/preference_middleware/loadout/manager, mob/user)
 	. = FALSE
 	var/list/loadout = manager.preferences.read_preference(/datum/preference/loadout)
@@ -171,6 +171,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], loadout)
 	return .
 
+/// Used for reskinning an item to an alt skin by default
 /datum/loadout_item/proc/set_skin(datum/preference_middleware/loadout/manager, mob/user)
 	if(!can_be_reskinned)
 		return FALSE
@@ -253,9 +254,11 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 			equipped_item.current_skin = skin_chosen
 			equipped_item.icon_state = equipped_item.unique_reskin[skin_chosen]
 			if(istype(equipped_item, /obj/item/clothing/accessory))
-				var/obj/item/clothing/under/attached_to = equipped_item.loc
-				attached_to.update_accessory_overlay()
-				equipper.update_clothing(ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
+				// Snowflake handing for accessories, because we need to update the thing it's attached to instead
+				if(isclothing(equipped_item.loc))
+					var/obj/item/clothing/under/attached_to = equipped_item.loc
+					attached_to.update_accessory_overlay()
+					equipper.update_clothing(ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
 			else
 				equipper.update_clothing(equipped_item.slot_flags)
 
@@ -267,8 +270,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	return equipped_item
 
 /// Returns a formatted list of data for this loadout item, for use in UIs
-/datum/loadout_item/proc/to_ui_data()
-	RETURN_TYPE(/list)
+/datum/loadout_item/proc/to_ui_data() as /list
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/list/formatted_item = list()
@@ -284,9 +286,8 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
  * These will automatically be turned into buttons in the UI, according to they icon you provide
  * act_key should match a key to handle in [handle_loadout_action] - this is how you react to the button being pressed
  */
-/datum/loadout_item/proc/get_ui_buttons()
+/datum/loadout_item/proc/get_ui_buttons() as /list
 	SHOULD_CALL_PARENT(TRUE)
-	RETURN_TYPE(/list)
 
 	var/list/button_list = list()
 
