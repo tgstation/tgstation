@@ -979,3 +979,21 @@
 	attempt_insert_storage(product)
 	balloon_alert(mod.wearer, "ammo box dispensed.")
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
+
+/obj/item/mod/module/shock_absorber
+	name = "MOD shock absorption module"
+	desc = "A module that makes the user resistant to the knockdown inflicted by Stun Batons."
+	icon_state = "no_baton"
+	removable = FALSE
+	complexity = 0
+	idle_power_cost = 0
+	incompatible_modules = list(/obj/item/mod/module/shock_absorber)
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
+
+/obj/item/mod/module/shock_absorber/on_suit_activation()
+	. = ..()
+	ADD_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, src)
+
+/obj/item/mod/module/shock_absorber/on_suit_deactivation(deleting)
+	. = ..()
+	REMOVE_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, src)

@@ -1332,7 +1332,7 @@
 	slowdown_active = 0
 	ui_theme = "syndicate"
 	slot_flags = ITEM_SLOT_BELT
-	inbuilt_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/storage/belt, /obj/item/mod/module/demoralizer)
+	inbuilt_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/storage/belt, /obj/item/mod/module/demoralizer, /obj/item/mod/module/shock_absorber)
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
