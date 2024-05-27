@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - image: "makes food hud burger icon have a sharp outline"
