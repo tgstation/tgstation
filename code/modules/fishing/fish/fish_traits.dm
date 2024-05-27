@@ -313,7 +313,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	name = "Aggressive"
 	inheritability = 80
 	diff_traits_inheritability = 40
-	catalog_description = "This fish is agressively territorial, and may attack fish that come close to it."
+	catalog_description = "This fish is aggressively territorial, and may attack fish that come close to it."
 
 /datum/fish_trait/aggressive/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(try_attack_fish))
@@ -379,3 +379,61 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/antigrav/apply_to_fish(obj/item/fish/fish)
 	fish.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
+
+/datum/fish_trait/anxiety
+	name = "Anxiety"
+	inheritability = 100
+	diff_traits_inheritability = 70
+	catalog_description = "This fish will eventually die if ANY other fish are in the tank."
+
+/datum/fish_trait/anxiety/apply_to_fish(obj/item/fish/fish)
+	RegisterSignal(fish, COMSIG_FISH_FED, PROC_REF(on_fish_fed))
+
+///signal sent when the anxiety fish is fed, killing it if anyone else is in the tank.
+/datum/fish_trait/anxiety/proc/on_fish_fed(obj/item/fish/fish, seconds_per_tick)
+	SIGNAL_HANDLER
+	if(!fish.loc)
+		return
+	for(var/obj/item/other_fish in fish.loc)
+		if(fish == other_fish)
+			continue
+		fish.loc.visible_message("[src] seems to freak out for a moment, then it stops moving...")
+		fish.set_status(FISH_DEAD)
+
+/datum/fish_trait/electrogenesis
+	name = "Electrogenesis"
+	inheritability = 60
+	diff_traits_inheritability = 30
+	catalog_description = "This fish is electroreceptive, and will generate electric fields. Can be harnessed inside a bioelectric generator."
+	incompatible_traits = list(/datum/fish_trait/mixotroph)
+
+/datum/fish_trait/electrogenesis/apply_to_fish(obj/item/fish/fish)
+	RegisterSignal(fish, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
+	RegisterSignal(fish, COMSIG_FISH_FED, PROC_REF(on_fish_fed))
+
+/datum/fish_trait/electrogenesis/proc/on_item_attack(obj/item/fish/fish, mob/living/target, mob/living/user)
+	SIGNAL_HANDLER
+
+	if(fish.status == FISH_ALIVE)
+		fish.force = 16
+		fish.damtype = BURN
+		fish.attack_verb_continuous = list("shocks", "zaps")
+		fish.attack_verb_simple = list("shock", "zap")
+	else
+		fish.force = fish::force
+		fish.damtype = fish::damtype
+		fish.attack_verb_continuous = fish::attack_verb_continuous
+		fish.attack_verb_simple = fish::attack_verb_simple
+
+///signal sent when the electroreceptive fish is fed, creating a tesla bolt if the fish is in a power generating tank
+/datum/fish_trait/electrogenesis/proc/on_fish_fed(obj/item/fish/fish, seconds_per_tick)
+	SIGNAL_HANDLER
+	var/fish_zap_range = 1
+	var/fish_zap_power = 5000
+	var/fish_zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
+	if(istype(fish.loc, /obj/structure/aquarium/bioelec_gen))
+		fish_zap_range = 5
+		fish_zap_power *= 4
+		/// zaps are sent in 3 minute intervals, so no chance of stunlocking
+		fish_zap_flags |= (ZAP_GENERATES_POWER | ZAP_MOB_STUN)
+	tesla_zap(source = fish, zap_range = fish_zap_range, power = fish_zap_power, zap_flags = fish_zap_flags)

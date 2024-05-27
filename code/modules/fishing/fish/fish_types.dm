@@ -400,9 +400,9 @@
 /obj/item/fish/mastodon
 	name = "unmarine mastodon"
 	desc = "A monster of exposed muscles and innards, wrapped in a fish-like skeleton. You don't remember ever seeing it on the catalog."
-	icon = 'icons/obj/aquarium_wide.dmi'
+	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "mastodon"
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
 	dedicated_in_aquarium_icon_state = "mastodon_small"
 	base_pixel_x = -16
 	pixel_x = -16
@@ -612,3 +612,22 @@
 		return FALSE
 	target.apply_status_effect(/datum/status_effect/ice_block_talisman, freeze_timer SECONDS)
 	return FALSE
+
+/obj/item/fish/stresszapper
+	name = "wibbling stresszapper"
+	desc = "An incredibly anxious and electroreceptive fish. That means the fish shocks everyone around it, and worries about the walls of its tank closing in constantly. Not in that order."
+	icon_state = "stresszapper"
+	sprite_width = 8
+	sprite_height = 8
+	stable_population = 1
+	average_size = 30
+	average_weight = 500
+	random_case_rarity = FISH_RARITY_VERY_RARE
+	favorite_bait = list(/obj/item/food/bait/doughball)
+	required_temperature_min = MIN_AQUARIUM_TEMP+18
+	required_temperature_max = MIN_AQUARIUM_TEMP+26
+	fish_traits = list(
+		/datum/fish_trait/no_mating,
+		/datum/fish_trait/wary,
+		/datum/fish_trait/anxiety
+	)

@@ -2,7 +2,7 @@
 /obj/item/fish
 	name = "generic looking aquarium fish"
 	desc = "very bland"
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "bugfish"
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
@@ -141,7 +141,7 @@
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
-	AddComponent(/datum/component/aquarium_content, PROC_REF(get_aquarium_animation), list(COMSIG_FISH_STATUS_CHANGED,COMSIG_FISH_STIRRED))
+	AddComponent(/datum/component/aquarium_content, icon, PROC_REF(get_aquarium_animation), list(COMSIG_FISH_STATUS_CHANGED,COMSIG_FISH_STIRRED))
 
 	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
 	if(do_flop_animation)

@@ -2,7 +2,7 @@
 /obj/item/fish_feed
 	name = "fish feed can"
 	desc = "A refillable can that dispenses nutritious fish feed."
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/aquarium/supplies.dmi'
 	icon_state = "fish_feed"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -93,7 +93,7 @@
 /obj/item/aquarium_kit
 	name = "DIY Aquarium Construction Kit"
 	desc = "Everything you need to build your own aquarium. Raw materials sold separately."
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/aquarium/supplies.dmi'
 	icon_state = "construction_kit"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -104,14 +104,14 @@
 /obj/item/aquarium_prop
 	name = "generic aquarium prop"
 	desc = "very boring"
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/aquarium/supplies.dmi'
 
 	w_class = WEIGHT_CLASS_TINY
 	var/layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
 
 /obj/item/aquarium_prop/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/aquarium_content)
+	AddComponent(/datum/component/aquarium_content, icon)
 
 /obj/item/aquarium_prop/rocks
 	name = "rocks"
