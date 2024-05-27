@@ -63,9 +63,6 @@
 	wound_falloff_tile = -2
 	shrapnel_type = /obj/item/ammo_casing/rebar
 
-/obj/projectile/bullet/rebar/Initialize(mapload)
-	. = ..()
-
 /obj/projectile/bullet/rebar/proc/handle_drop(datum/source, obj/item/ammo_casing/rebar/newcasing)
 
 /obj/projectile/bullet/rebarsyndie
