@@ -992,8 +992,8 @@
 
 /obj/item/mod/module/shock_absorber/on_suit_activation()
 	. = ..()
-	ADD_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, src)
+	ADD_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, REF(src)
 
 /obj/item/mod/module/shock_absorber/on_suit_deactivation(deleting)
 	. = ..()
-	REMOVE_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, src)
+	REMOVE_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, REF(src)
