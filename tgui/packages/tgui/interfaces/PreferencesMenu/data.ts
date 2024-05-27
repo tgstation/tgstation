@@ -185,17 +185,20 @@ export type PreferencesMenuData = {
     name: string;
     is_enabled: BooleanLike;
   }>;
-  seeds: Array<{
-    name: string;
-    value: string;
-    category: string;
-    gender: string;
-    provider: string;
-    donator_level: number;
-  }>;
+  seeds: Array<Seed>;
   phrases: string[];
-  // BANDASTATION EDIT END
 };
+
+export type Seed = {
+  name: string;
+  value: string;
+  category: string;
+  gender: string;
+  provider: string;
+  donator_level: number;
+};
+
+// BANDASTATION EDIT END - TTS
 
 export type ServerData = {
   jobs: {

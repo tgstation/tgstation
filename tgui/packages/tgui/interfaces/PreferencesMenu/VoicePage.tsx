@@ -11,8 +11,9 @@ import {
   Section,
   Stack,
   Table,
+  VirtualList,
 } from '../../components';
-import { PreferencesMenuData } from './data';
+import { PreferencesMenuData, Seed } from './data';
 
 const donatorTiers = {
   0: 'Free',
@@ -68,7 +69,7 @@ const getCheckboxGroup = (
 };
 
 export const VoicePage = (props) => {
-  const { act, data } = useBackend<PreferencesMenuData>();
+  const { data } = useBackend<PreferencesMenuData>();
 
   const {
     providers,
@@ -160,80 +161,6 @@ export const VoicePage = (props) => {
         seed.name.toLowerCase().includes(searchtext.toLowerCase()),
     );
 
-  let seedsRow = availableSeeds.map((seed) => {
-    return (
-      <Table.Row
-        key={seed.name}
-        backgroundColor={tts_seed === seed.name ? 'green' : 'transparent'}
-      >
-        <Table.Cell collapsing textAlign="center">
-          <Button
-            fluid
-            color={tts_seed === seed.name ? 'green' : 'transparent'}
-            content={tts_seed === seed.name ? 'Выбрано' : 'Выбрать'}
-            tooltip={
-              donator_level < seed.donator_level &&
-              'Требуется более высокий уровень подписки'
-            }
-            onClick={() => act('select_voice', { seed: seed.name })}
-          />
-        </Table.Cell>
-        <Table.Cell collapsing textAlign="center">
-          <Button
-            fluid
-            icon="music"
-            color={tts_seed === seed.name ? 'green' : 'transparent'}
-            content=""
-            tooltip="Прослушать пример"
-            onClick={() =>
-              act('listen', { seed: seed.name, phrase: selectedPhrase })
-            }
-          />
-        </Table.Cell>
-        <Table.Cell
-          bold
-          collapsing
-          textColor={
-            seed.donator_level > 0 && tts_seed !== seed.name
-              ? 'orange'
-              : 'white'
-          }
-        >
-          {seed.name}
-        </Table.Cell>
-        <Table.Cell
-          opacity={tts_seed === seed.name ? 0.5 : 0.25}
-          textAlign="left"
-        >
-          {seed.category}
-        </Table.Cell>
-        <Table.Cell
-          collapsing
-          opacity={0.5}
-          textColor={
-            tts_seed === seed.name ? 'white' : gendersIcons[seed.gender].color
-          }
-          textAlign="left"
-        >
-          <Icon mx={1} size={1.2} name={gendersIcons[seed.gender].icon} />
-        </Table.Cell>
-        <Table.Cell
-          collapsing
-          opacity={0.5}
-          textColor="white"
-          textAlign="right"
-        >
-          {seed.donator_level > 0 && (
-            <>
-              {donatorTiers[seed.donator_level]}
-              <Icon ml={1} mr={2} name="coins" />
-            </>
-          )}
-        </Table.Cell>
-      </Table.Row>
-    );
-  });
-
   return (
     <Stack fill>
       <Stack.Item basis={'40%'}>
@@ -266,16 +193,18 @@ export const VoicePage = (props) => {
                 <>
                   <Button
                     icon="times"
-                    content="Убрать всё"
                     disabled={selectedCategories.length === 0}
                     onClick={() => setSelectedCategories([])}
-                  />
+                  >
+                    Убрать всё
+                  </Button>
                   <Button
                     icon="check"
-                    content="Выбрать всё"
                     disabled={selectedCategories.length === categories.length}
                     onClick={() => setSelectedCategories(categories)}
-                  />
+                  >
+                    Выбрать всё
+                  </Button>
                 </>
               }
             >
@@ -303,10 +232,101 @@ export const VoicePage = (props) => {
             scrollable
             title={`Голоса (${availableSeeds.length}/${seeds.length})`}
           >
-            <Table>{seedsRow}</Table>
+            <Table>
+              <VirtualList>
+                {availableSeeds.map((seed) => {
+                  return (
+                    <SeedRow
+                      key={seed.name}
+                      seed={seed}
+                      selected_seed={tts_seed}
+                      selected_phrase={selectedPhrase}
+                      donator_level={donator_level}
+                    />
+                  );
+                })}
+              </VirtualList>
+            </Table>
           </Section>
         </Stack>
       </Stack.Item>
     </Stack>
+  );
+};
+
+const SeedRow = (props: {
+  seed: Seed;
+  selected_seed: string;
+  selected_phrase: string;
+  donator_level: number;
+}) => {
+  const { seed, selected_seed, selected_phrase, donator_level } = props;
+  const { act } = useBackend();
+  return (
+    <Table.Row
+      backgroundColor={selected_seed === seed.name ? 'green' : 'transparent'}
+    >
+      <Table.Cell collapsing textAlign="center">
+        <Button
+          fluid
+          color={selected_seed === seed.name ? 'green' : 'transparent'}
+          tooltip={
+            donator_level < seed.donator_level &&
+            'Требуется более высокий уровень подписки'
+          }
+          onClick={() => act('select_voice', { seed: seed.name })}
+        >
+          {selected_seed === seed.name ? 'Выбрано' : 'Выбрать'}
+        </Button>
+      </Table.Cell>
+      <Table.Cell collapsing textAlign="center">
+        <Button
+          fluid
+          icon="music"
+          color={selected_seed === seed.name ? 'green' : 'transparent'}
+          tooltip="Прослушать пример"
+          onClick={() =>
+            act('listen', { seed: seed.name, phrase: selected_phrase })
+          }
+        />
+      </Table.Cell>
+      <Table.Cell
+        bold
+        collapsing
+        textColor={
+          seed.donator_level > 0 && selected_seed !== seed.name
+            ? 'orange'
+            : 'white'
+        }
+      >
+        {seed.name}
+      </Table.Cell>
+      <Table.Cell
+        opacity={selected_seed === seed.name ? 0.5 : 0.25}
+        textAlign="left"
+      >
+        {seed.category}
+      </Table.Cell>
+      <Table.Cell
+        collapsing
+        opacity={0.5}
+        textColor={
+          selected_seed === seed.name
+            ? 'white'
+            : gendersIcons[seed.gender].color
+        }
+        textAlign="left"
+      >
+        <Icon mx={1} size={1.2} name={gendersIcons[seed.gender].icon} />
+      </Table.Cell>
+      <Table.Cell collapsing opacity={0.5} textColor="white" textAlign="right">
+        {seed.donator_level > 0 && (
+          <>
+            {donatorTiers[seed.donator_level]}
+            <Icon ml={1} mr={2} name="coins" />
+          </>
+        )}
+      </Table.Cell>
+    </Table.Row>
   );
 };
