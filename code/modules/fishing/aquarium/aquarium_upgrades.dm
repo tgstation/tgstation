@@ -34,4 +34,4 @@
 	. = ..()
 	. += span_boldwarning("WARNING! WARNING! WARNING!")
 	. += span_warning("The bioelectric potential of the fish inside is magnified to dangerous levels by the generator.")
-	. += span_notice("Tesla coils are required to collect this magnified energy... and to protect yourself.")
+	. += span_notice("Tesla coils are required to collect this magnified energy... and you'll want a grounding rod to protect yourself as well.")
