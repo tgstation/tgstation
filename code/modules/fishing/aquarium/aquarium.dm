@@ -228,6 +228,7 @@
 		for(var/atom/movable/moving in contents)
 			moving.forceMove(upgraded_aquarium)
 		balloon_alert(user, "upgraded")
+		qdel(upgrade)
 		qdel(src)
 	return ..()
 

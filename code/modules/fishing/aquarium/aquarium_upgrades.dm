@@ -3,6 +3,9 @@
 /obj/item/aquarium_upgrade
 	name = "Aquarium Upgrade"
 	desc = "An upgrade."
+
+	icon = 'icons/obj/aquarium/supplies.dmi'
+	icon_state = "construction_kit"
 	/// What kind of aquarium can accept this upgrade. Strict type check, no subtypes.
 	var/upgrade_from_type = /obj/structure/aquarium
 	/// typepath of the new aquarium subtype created.
@@ -11,6 +14,7 @@
 /obj/item/aquarium_upgrade/bioelec_gen
 	name = "Aquarium Bioelectricity Kit"
 	desc = "All the required components to allow an aquarium to harness energy bioelectric fish."
+	icon_state = "bioelec_kit"
 	upgrade_to_type = /obj/structure/aquarium/bioelec_gen
 
 /obj/structure/aquarium/bioelec_gen

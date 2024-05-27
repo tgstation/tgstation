@@ -384,7 +384,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	name = "Anxiety"
 	inheritability = 100
 	diff_traits_inheritability = 70
-	catalog_description = "This fish will eventually die if ANY other fish are in the tank."
+	catalog_description = "This fish tends to die if ANY other fish are in the tank."
 
 /datum/fish_trait/anxiety/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_FISH_FED, PROC_REF(on_fish_fed))
@@ -435,4 +435,4 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 		fish_zap_power *= 4
 		/// zaps are sent in 3 minute intervals, so no chance of stunlocking
 		fish_zap_flags |= (ZAP_GENERATES_POWER | ZAP_MOB_STUN | ZAP_OBJ_DAMAGE)
-	tesla_zap(source = fish, zap_range = fish_zap_range, power = fish_zap_power, zap_flags = fish_zap_flags)
+	tesla_zap(source = fish.loc, zap_range = fish_zap_range, power = fish_zap_power, zap_flags = fish_zap_flags)
