@@ -700,3 +700,16 @@
   - qol: Made borg inventory not shift around depending on equipped items
   tmyqlfpir:
   - bugfix: '[Ice Box Station] Dorm 1''s door no longer shares ID with dorm 2''s door'
+2024-05-27:
+  Melbert:
+  - refactor: Refactored the way high toxins cause you to vomit.
+  Time-Green:
+  - rscdel: Removes sentient disease from the game
+  - rscdel: Miasma and gibs no longer generates random diseases
+  YesterdaysPromise:
+  - image: Cleaned a single stray pixel in a single frame of a bite telegraphing accidentaly
+      found while re-organizing the files.
+  by INFRARED_BARON:
+  - image: Changes the sprites of bone and ash drake armor (suit + helmet mob/objs)
+  necromanceranne:
+  - bugfix: Material floor tiles once again have their improved sprite.
