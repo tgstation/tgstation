@@ -308,7 +308,7 @@
 /obj/item/clothing/under/costume/buttondown/skirt/service //preset one to be a formal white shirt and black skirt
 	greyscale_colors = "#EEEEEE#CBDBFC#17171B#222227"
 
-/obj/item/clothing/under/costume/buttondown/skirt/dispatcher //white shirt and blue pants, used by Intedepartmental Dispatcher
+/obj/item/clothing/under/costume/buttondown/skirt/dispatcher //light-blue shirt and yellow skirt, used by Telecommunication Dispatcher
 	greyscale_colors = "#B7DDF4#D15B1B#612313#DCA01B"
 
 /obj/item/clothing/under/costume/jackbros
