@@ -1,3 +1,11 @@
+/turf/open/floor/circuit/green/anim/update_icon_state()
+	icon = on ? 'icons/turf/floors.dmi' : 'monkestation/icons/turf/floors.dmi'
+	return ..()
+
+/turf/open/floor/circuit/red/anim/update_icon_state()
+	icon = on ? 'icons/turf/floors.dmi' : 'monkestation/icons/turf/floors.dmi'
+	return ..()
+
 /obj/item/stack/tile/sandy_dirt
 	name = "sandy dirt tiles"
 	singular_name = "sandy dirt tile"
