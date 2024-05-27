@@ -458,7 +458,6 @@
 	name = "telecommunication dispatcher's PDA"
 	internal_cell = /obj/item/stock_parts/cell/high //we want people be able to contact the dispatch not only for first 3 minutes
 	greyscale_colors = "#374f7e#a52f29"
-	spam_mode = TRUE
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
@@ -467,6 +466,11 @@
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/chatclient,
 	)
+
+/obj/item/modular_computer/pda/dispatcher/Initialize(mapload)
+	. = ..()
+	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
+		messenger_app.spam_mode = TRUE
 
 /**
  * Non-roles
