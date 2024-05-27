@@ -4686,10 +4686,11 @@
 	pixel_x = 17;
 	pixel_y = 12
 	},
-/obj/item/organ/internal/cyberimp/arm/item_set{
-	pixel_y = 2;
-	pixel_x = 6
+/obj/item/organ/internal/cyberimp/arm/item_set/toolset{
+	pixel_x = 6;
+	pixel_y = 2
 	},
+/obj/item/organ/internal/cyberimp/cyberlink/nt_high,
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=6;o2=16;n2=82;TEMP=293.15"
 	},
