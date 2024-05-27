@@ -63,7 +63,7 @@ In this example, we start off by creating a sprite specified by a different conf
 
 The first of the two in the inner group is an "icon_state", this means that the icon will be retrieved from the associated dmi file using the "icon_state" key.
 
-Note that you don't need to give colors to every layer if the layer does not need any colors applied to it, such as if it's a pre-colored component. 
+Note that you don't need to give colors to every layer if the layer does not need any colors applied to it, such as if it's a pre-colored component.
 In this example, the last layer is one such example, referencing a separately colored config.
 
 "blend_mode" and "color_ids" are special, all layer types have them. The blend mode is what controls how that layer's finished product gets merged together with the rest of the sprite. The color ids control what colors are passed in to the layer.
@@ -128,7 +128,7 @@ While creating a greyscale config, be sure to take subtypes into account! Rather
 ```c
 /datum/greyscale_config/tablet
 	name = "PDA"
-	icon_file = 'icons/obj/modular_pda.dmi'
+	icon_file = 'icons/obj/devices/modular_pda.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pda.json'
 
 /datum/greyscale_config/tablet/chaplain
