@@ -93,7 +93,7 @@
 
 	return preview_job
 
-/datum/preferences/proc/render_new_preview_appearance(mob/living/carbon/human/dummy/mannequin)
+/datum/preferences/proc/render_new_preview_appearance(mob/living/carbon/human/dummy/mannequin, show_job_clothes = TRUE)
 	var/datum/job/preview_job = get_highest_priority_job()
 
 	if(preview_job)
@@ -106,9 +106,13 @@
 	// Set up the dummy for its photoshoot
 	apply_prefs_to(mannequin, TRUE)
 
-	if(preview_job)
-		mannequin.job = preview_job.title
-		mannequin.dress_up_as_job(preview_job, TRUE)
+	if(show_job_clothes)
+		if(preview_job)
+			mannequin.job = preview_job.title
+			mannequin.dress_up_as_job(preview_job, TRUE, parent)
+
+	else
+		mannequin.equip_outfit_and_loadout(/datum/outfit/player_loadout, src, TRUE)
 
 	// Apply visual quirks
 	// Yes we do it every time because it needs to be done after job gear

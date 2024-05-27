@@ -531,6 +531,11 @@
 	desc = "An adorable stuffed toy that resembles a green lizardperson. This one fills you with nostalgia and soul."
 	greyscale_colors = "#66ff33#000000"
 
+/obj/item/toy/plush/lizard_plushie/greyscale
+	desc = "An adorable stuffed toy that resembles a lizardperson. This one has been custom made."
+	greyscale_colors = "#d3d3d3#000000"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
 /obj/item/toy/plush/lizard_plushie/space
 	name = "space lizard plushie"
 	desc = "An adorable stuffed toy that resembles a very determined spacefaring lizardperson. To infinity and beyond, little guy."

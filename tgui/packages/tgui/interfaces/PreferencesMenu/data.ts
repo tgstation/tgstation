@@ -147,6 +147,7 @@ export type PreferencesMenuData = {
       gender: Gender;
       joblessrole: JoblessRole;
       species: string;
+      loadout_list: Record<string, Record<string, string> | []> | null;
     };
 
     randomization: Record<string, RandomSetting>;

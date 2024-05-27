@@ -188,12 +188,12 @@
 	return TRUE
 
 
-/mob/living/proc/on_job_equipping(datum/job/equipping)
+/mob/living/proc/on_job_equipping(datum/job/equipping, client/player_client)
 	return
 
 #define VERY_LATE_ARRIVAL_TOAST_PROB 20
 
-/mob/living/carbon/human/on_job_equipping(datum/job/equipping)
+/mob/living/carbon/human/on_job_equipping(datum/job/equipping, client/player_client)
 	if(equipping.paycheck_department)
 		var/datum/bank_account/bank_account = new(real_name, equipping, dna.species.payday_modifier)
 		bank_account.payday(STARTING_PAYCHECKS, TRUE)
@@ -201,19 +201,19 @@
 		bank_account.replaceable = FALSE
 		add_mob_memory(/datum/memory/key/account, remembered_id = account_id)
 
-	dress_up_as_job(equipping)
+	dress_up_as_job(equipping, FALSE, player_client)
 
 	if(EMERGENCY_PAST_POINT_OF_NO_RETURN && prob(VERY_LATE_ARRIVAL_TOAST_PROB))
 		equip_to_slot_or_del(new /obj/item/food/griddle_toast(src), ITEM_SLOT_MASK)
 
 #undef VERY_LATE_ARRIVAL_TOAST_PROB
 
-/mob/living/proc/dress_up_as_job(datum/job/equipping, visual_only = FALSE)
+/mob/living/proc/dress_up_as_job(datum/job/equipping, visual_only = FALSE, client/player_client)
 	return
 
-/mob/living/carbon/human/dress_up_as_job(datum/job/equipping, visual_only = FALSE)
+/mob/living/carbon/human/dress_up_as_job(datum/job/equipping, visual_only = FALSE, client/player_client)
 	dna.species.pre_equip_species_outfit(equipping, src, visual_only)
-	equipOutfit(equipping.get_outfit(), visual_only)
+	equip_outfit_and_loadout(equipping.get_outfit(), player_client?.prefs, visual_only)
 
 /datum/job/proc/announce_head(mob/living/carbon/human/H, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	if(H && GLOB.announcement_systems.len)
