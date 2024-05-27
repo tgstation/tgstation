@@ -1,4 +1,0 @@
-author: "AlbertNanotracen"
-delete-after: True
-changes:
-  - bugfix: "particle weather immunity check now checks the immunity of mobs directly on a tile"

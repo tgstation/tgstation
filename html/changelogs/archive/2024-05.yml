@@ -250,3 +250,16 @@
   - bugfix: HOP is no longer self-supervising. You answer to the Captain, damnit!
   Kitsunemitsu:
   - rscadd: Geneticist is now a medsci role.
+2024-05-27:
+  Absolucy:
+  - bugfix: Cryoing now properly removes you from the manifest! Uncryoing will also
+      add you back to the manifest.
+  Absolucy, ninjanomnom:
+  - admin: Unrelated stack traces no longer group together in the runtime viewer.
+  AlbertNanotracen:
+  - bugfix: particle weather immunity check now checks the immunity of mobs directly
+      on a tile
+  DexeeXI:
+  - admin: Welcome to our Christian Minecraft Server.
+  Uristthedorf:
+  - balance: Durathread is stronger now.

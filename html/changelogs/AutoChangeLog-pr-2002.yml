@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Cryoing now properly removes you from the manifest! Uncryoing will also add you back to the manifest."

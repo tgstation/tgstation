@@ -1,4 +1,0 @@
-author: "Absolucy, ninjanomnom"
-delete-after: True
-changes:
-  - admin: "Unrelated stack traces no longer group together in the runtime viewer."
