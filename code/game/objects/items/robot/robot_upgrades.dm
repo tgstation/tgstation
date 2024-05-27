@@ -433,6 +433,8 @@
 		for(var/obj/item/reagent_containers/borghypo/H in R.model.modules)
 			H.bypass_protection = TRUE
 			found_hypo = TRUE
+		for(var/obj/item/reagent_containers/borghypo/H in R.model.emag_modules)
+			H.bypass_protection = TRUE
 
 		if(!found_hypo)
 			to_chat(user, span_warning("This unit is already equipped with a piercing hypospray upgrade!")) //check to see if we already have this module
@@ -442,6 +444,8 @@
 	. = ..()
 	if (.)
 		for(var/obj/item/reagent_containers/borghypo/H in R.model.modules)
+			H.bypass_protection = initial(H.bypass_protection)
+		for(var/obj/item/reagent_containers/borghypo/H in R.model.emag_modules)
 			H.bypass_protection = initial(H.bypass_protection)
 
 /obj/item/borg/upgrade/surgery_omnitool

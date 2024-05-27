@@ -1,0 +1,4 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - bugfix: "Rust debuffs now gets properly removed if you derust a tile you  are standing on."

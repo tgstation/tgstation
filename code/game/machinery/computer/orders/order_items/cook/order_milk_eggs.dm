@@ -134,3 +134,13 @@
 	name = "Mothic Pantry Pack"
 	item_path = /obj/item/storage/box/mothic_cans_sauces
 	cost_per_order = 120
+
+/datum/orderable_item/milk_eggs/armorfish
+	name = "Cleaned Armorfish"
+	item_path = /obj/item/food/fishmeat/armorfish
+	cost_per_order = 30
+
+/datum/orderable_item/milk_eggs/moonfish
+	name = "Moonfish"
+	item_path = /obj/item/food/fishmeat/moonfish
+	cost_per_order = 30
