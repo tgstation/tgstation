@@ -91,6 +91,13 @@
 	has_ceiling = FALSE
 	unpickable = TRUE
 
+/datum/map_template/ruin/icemoon/deacon_hell
+	name = "Deacon hell"
+	id = "deaconhell"
+	description = "Burn for your sins"
+	suffix = "icemoon_underground_deacon_hell.dmm"
+	always_place = TRUE
+
 // below ground only
 
 /datum/map_template/ruin/icemoon/underground
