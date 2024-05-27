@@ -24,14 +24,20 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	/// Whether this item can be reskinned.
 	/// Only works if the item has a "unique reskin" list set.
 	var/can_be_reskinned = FALSE
-	/// The category of the loadout item. Set automatically in New
-	VAR_FINAL/datum/loadout_category/category
 	/// The abstract parent of this loadout item, to determine which items to not instantiate
 	var/abstract_type = /datum/loadout_item
 	/// The actual item path of the loadout item.
 	var/obj/item/item_path
 	/// Lazylist of additional "tooltips" to display about this item.
 	var/list/additional_tooltip_contents
+	/// Icon file (DMI) for the UI to use for preview icons.
+	/// Set automatically if null
+	var/ui_icon
+	/// Icon state for the UI to use for preview icons.
+	/// Set automatically if null
+	var/ui_icon_state
+	/// The category of the loadout item. Set automatically in New
+	VAR_FINAL/datum/loadout_category/category
 
 /datum/loadout_item/New(category)
 
@@ -40,7 +46,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	if(can_be_greyscale == DONT_GREYSCALE)
 		// Explicitly be false if we don't want this to greyscale
 		can_be_greyscale = FALSE
-	else if(initial(item_path.flags_1) & IS_PLAYER_COLORABLE_1)
+	else if(item_path::flags_1 & IS_PLAYER_COLORABLE_1)
 		// Otherwise set this automatically to true if it is actually colorable
 		can_be_greyscale = TRUE
 		// This means that one can add a greyscale item that does not have player colorable set
@@ -48,11 +54,15 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 		// Why? I HAVE NO IDEA why you would do that but you sure can
 
 	if(isnull(name))
-		name = initial(item_path.name)
+		name = item_path::name
 
 	if(GLOB.all_loadout_datums[item_path])
 		stack_trace("Loadout datum collision detected! [item_path] is shared between multiple loadout datums.")
 	GLOB.all_loadout_datums[item_path] = src
+
+	if(isnull(ui_icon) && isnull(ui_icon_state))
+		ui_icon = item_path::icon_preview || item_path::icon
+		ui_icon_state = item_path::icon_state_preview || item_path::icon_state
 
 /datum/loadout_item/Destroy(force, ...)
 	if(force)
@@ -235,6 +245,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 			equipped_item.current_skin = skin_chosen
 			equipped_item.icon_state = equipped_item.unique_reskin[skin_chosen]
 			equipper.update_clothing(equipped_item.slot_flags|ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
+			// melbert todo : accessory shenanigans here
 
 		else
 			// Not valid
@@ -252,6 +263,8 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	formatted_item["name"] = name
 	formatted_item["path"] = item_path
 	formatted_item["buttons"] = get_ui_buttons()
+	formatted_item["icon"] = ui_icon
+	formatted_item["icon_state"] = ui_icon_state
 	return formatted_item
 
 /**

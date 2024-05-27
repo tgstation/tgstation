@@ -3,7 +3,6 @@
 /// Head Slot Items (Deletes overrided items)
 /datum/loadout_category/head
 	category_name = "Head"
-	ui_title = "Head Slot Items"
 	type_to_generate = /datum/loadout_item/head
 
 /datum/loadout_item/head
@@ -93,33 +92,9 @@
 	name = "White Fedora"
 	item_path = /obj/item/clothing/head/fedora/white
 
-/datum/loadout_item/head/dark_blue_hardhat
-	name = "Dark Blue Hardhat"
-	item_path = /obj/item/clothing/head/utility/hardhat/dblue
-
-/datum/loadout_item/head/orange_hardhat
-	name = "Orange Hardhat"
-	item_path = /obj/item/clothing/head/utility/hardhat/orange
-
-/datum/loadout_item/head/red_hardhat
-	name = "Red Hardhat"
-	item_path = /obj/item/clothing/head/utility/hardhat/red
-
-/datum/loadout_item/head/white_hardhat
-	name = "White Hardhat"
-	item_path = /obj/item/clothing/head/utility/hardhat/white
-
-/datum/loadout_item/head/yellow_hardhat
-	name = "Yellow Hardhat"
-	item_path = /obj/item/clothing/head/utility/hardhat
-
 /datum/loadout_item/head/mail_cap
 	name = "Mail Cap"
 	item_path = /obj/item/clothing/head/costume/mailman
-
-/datum/loadout_item/head/nurse_hat
-	name = "Nurse Hat"
-	item_path = /obj/item/clothing/head/costume/nursehat
 
 /datum/loadout_item/head/kitty_ears
 	name = "Kitty Ears"
@@ -161,35 +136,11 @@
 	name = "Wedding Veil"
 	item_path = /obj/item/clothing/head/costume/weddingveil
 
-/datum/loadout_item/head/poppy
-	name = "Poppy"
-	item_path = /obj/item/food/grown/poppy
-
-/datum/loadout_item/head/lily
-	name = "Lily"
-	item_path = /obj/item/food/grown/poppy/lily
-
-/datum/loadout_item/head/geranium
-	name = "Geranium"
-	item_path = /obj/item/food/grown/poppy/geranium
-
 /datum/loadout_item/head/rose
 	name = "Rose"
 	item_path = /obj/item/food/grown/rose
 
-/datum/loadout_item/head/sunflower
-	name = "Sunflower"
-	item_path = /obj/item/food/grown/sunflower
-
-/datum/loadout_item/head/harebell
-	name = "Harebell"
-	item_path = /obj/item/food/grown/harebell
-
-/datum/loadout_item/head/rainbow_bunch
-	name = "Rainbow Bunch"
-	item_path = /obj/item/food/grown/rainbow_flower
-	additional_tooltip_contents = list(TOOLTIP_RANDOM_COLOR)
-
 /datum/loadout_item/head/wig
 	name = "Wig"
 	item_path = /obj/item/clothing/head/wig/natural
+	additional_tooltip_contents = list("Matches the natural style and color of your hair, but can be changed in game.")

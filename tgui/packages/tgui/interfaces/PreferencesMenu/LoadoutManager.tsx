@@ -5,6 +5,9 @@ import { useBackend } from '../../backend';
 import {
   Box,
   Button,
+  DmIcon,
+  Flex,
+  Icon,
   Input,
   NoticeBox,
   Section,
@@ -12,7 +15,7 @@ import {
   Tabs,
 } from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
-import { PreferencesMenuData } from './data';
+import { LoadoutList, PreferencesMenuData } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 type LoadoutButton = {
@@ -24,12 +27,14 @@ type LoadoutButton = {
 type LoadoutItem = {
   name: string;
   path: string; // typepath
+  icon: string | null; // dmi
+  icon_state: string | null;
   buttons: LoadoutButton[];
 };
 
 export type LoadoutCategory = {
   name: string;
-  title: string;
+  title_postfix: string | null;
   contents: LoadoutItem[];
 };
 
@@ -103,76 +108,97 @@ const LoadoutPageInner = (props: { loadout_tabs: LoadoutCategory[] }) => {
   );
 };
 
-const LoadoutListIncludes = (
-  list: Record<string, Record<string, string> | []>,
-  path: string,
-) => {
+const LoadoutListIncludes = (list: LoadoutList, path: string) => {
   if (!list) {
     return false;
   }
   return list[path] !== undefined;
 };
 
-const ItemDisplay = (props: { item: LoadoutItem; active: boolean }) => {
-  const { act } = useBackend<LoadoutItem>();
-  const { item, active } = props;
-  return (
-    <Stack>
-      <Stack.Item grow align="left" style={{ textTransform: 'capitalize' }}>
-        {item.name}
-      </Stack.Item>
-      {item.buttons.map((button) => (
-        <Stack.Item key={button.act_key}>
-          <Button
-            icon={button.icon}
-            tooltip={button.tooltip}
-            disabled={button.act_key === undefined}
-            onClick={() =>
-              act('pass_to_loadout_item', {
-                path: item.path,
-                subaction: button.act_key,
-              })
-            }
-          />
-        </Stack.Item>
-      ))}
-      <Stack.Item>
-        <Button.Checkbox
-          checked={active}
-          fluid
-          onClick={() =>
-            act('select_item', {
-              path: item.path,
-              deselect: active,
-            })
-          }
-        >
-          Select
-        </Button.Checkbox>
-      </Stack.Item>
-    </Stack>
-  );
-};
+const ItemIcon = (props: { item: LoadoutItem }) => {
+  const { item } = props;
+  const icon_to_use = item.icon;
+  const icon_state_to_use = item.icon_state;
 
-const LoadoutTabDisplay = (props: {
-  category: LoadoutCategory | undefined;
-}) => {
-  const { data } = useBackend<Data>();
-  const { category } = props;
-  if (!category) {
+  if (!icon_to_use || !icon_state_to_use) {
     return (
-      <Stack.Item>
-        <NoticeBox>
-          Erroneous category detected! This is a bug, please report it.
-        </NoticeBox>
-      </Stack.Item>
+      <Icon
+        name="question"
+        size={8}
+        color="red"
+        style={{ transform: 'translateX(6px) translateY(6px)' }}
+      />
     );
   }
 
   return (
-    <>
-      {category.contents.map((item) => (
-        <Stack.Item key={item.name}>
+    <DmIcon
+      fallback={<Icon name="spinner" spin color="gray" />}
+      icon={icon_to_use}
+      icon_state={icon_state_to_use}
+      style={{ transform: 'scale(3) translateX(10px) translateY(12px)' }}
+    />
+  );
+};
+
+const ItemDisplay = (props: { item: LoadoutItem; active: boolean }) => {
+  const { act } = useBackend<LoadoutItem>();
+  const { item, active } = props;
+  return (
+    <Button
+      height="100px"
+      width="100px"
+      color={active ? 'green' : 'default'}
+      style={{ textTransform: 'capitalize', zIndex: '1' }}
+      tooltip={item.name}
+      tooltipPosition={'bottom'}
+      onClick={() =>
+        act('select_item', {
+          path: item.path,
+          deselect: active,
+        })
+      }
+    >
+      <Stack vertical>
+        <Stack.Item ml={-1}>
+          <Flex>
+            {item.buttons.map((button) => (
+              <Flex.Item mr={1} key={button.act_key}>
+                <Button
+                  icon={button.icon}
+                  height="22px"
+                  width="22px"
+                  tooltip={button.tooltip}
+                  tooltipPosition={'bottom-start'}
+                  disabled={button.act_key === undefined}
+                  style={{ zIndex: '2' }}
+                  color="yellow"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    act('pass_to_loadout_item', {
+                      path: item.path,
+                      subaction: button.act_key,
+                    });
+                  }}
+                />
+              </Flex.Item>
+            ))}
+          </Flex>
+        </Stack.Item>
+        <Stack.Item mt={item.buttons.length ? -4 : 0}>
+          <ItemIcon item={item} />
+        </Stack.Item>
+      </Stack>
+    </Button>
+  );
+};
+
+const ItemListDisplay = (props: { items: LoadoutItem[] }) => {
+  const { data } = useBackend<Data>();
+  return (
+    <Flex wrap>
+      {props.items.map((item) => (
+        <Flex.Item key={item.name} mr={2} mb={2}>
           <ItemDisplay
             item={item}
             active={LoadoutListIncludes(
@@ -180,17 +206,31 @@ const LoadoutTabDisplay = (props: {
               item.path,
             )}
           />
-        </Stack.Item>
+        </Flex.Item>
       ))}
-    </>
+    </Flex>
   );
+};
+
+const LoadoutTabDisplay = (props: {
+  category: LoadoutCategory | undefined;
+}) => {
+  const { category } = props;
+  if (!category) {
+    return (
+      <NoticeBox>
+        Erroneous category detected! This is a bug, please report it.
+      </NoticeBox>
+    );
+  }
+
+  return <ItemListDisplay items={category.contents} />;
 };
 
 const SearchDisplay = (props: {
   loadout_tabs: LoadoutCategory[];
   currentSearch: string;
 }) => {
-  const { data } = useBackend<Data>();
   const { loadout_tabs, currentSearch } = props;
 
   const allLoadoutItems = () => {
@@ -207,28 +247,10 @@ const SearchDisplay = (props: {
   );
 
   if (validLoadoutItems.length === 0) {
-    return (
-      <Stack.Item>
-        <NoticeBox>No items found!</NoticeBox>
-      </Stack.Item>
-    );
+    return <NoticeBox>No items found!</NoticeBox>;
   }
 
-  return (
-    <>
-      {validLoadoutItems.map((item) => (
-        <Stack.Item key={item.name}>
-          <ItemDisplay
-            item={item}
-            active={LoadoutListIncludes(
-              data.character_preferences.misc.loadout_list,
-              item.path,
-            )}
-          />
-        </Stack.Item>
-      ))}
-    </>
-  );
+  return <ItemListDisplay items={validLoadoutItems} />;
 };
 
 const LoadoutTabs = (props: {
@@ -243,17 +265,25 @@ const LoadoutTabs = (props: {
   });
   const searching = currentSearch.length > 1;
 
+  const formatName = (category: LoadoutCategory | undefined) => {
+    if (!category) {
+      return 'No category selected';
+    }
+    if (category.title_postfix) {
+      return `Catalog (${category.title_postfix})`;
+    }
+    return 'Catalog';
+  };
+
   return (
     <Stack fill>
-      <Stack.Item grow align="center">
+      <Stack.Item align="center" width="250px">
         <LoadoutPreviewSection />
       </Stack.Item>
       <Stack.Item grow>
-        {searching || (activeCategory && activeCategory.contents) ? (
+        {searching || activeCategory?.contents ? (
           <Section
-            title={
-              searching ? 'Searching...' : activeCategory?.title || 'Error'
-            }
+            title={searching ? 'Searching...' : formatName(activeCategory)}
             fill
             scrollable
             buttons={
@@ -269,14 +299,16 @@ const LoadoutTabs = (props: {
             }
           >
             <Stack vertical>
-              {searching ? (
-                <SearchDisplay
-                  loadout_tabs={loadout_tabs}
-                  currentSearch={currentSearch}
-                />
-              ) : (
-                <LoadoutTabDisplay category={activeCategory} />
-              )}
+              <Stack.Item>
+                {searching ? (
+                  <SearchDisplay
+                    loadout_tabs={loadout_tabs}
+                    currentSearch={currentSearch}
+                  />
+                ) : (
+                  <LoadoutTabDisplay category={activeCategory} />
+                )}
+              </Stack.Item>
             </Stack>
           </Section>
         ) : (
@@ -295,15 +327,16 @@ const LoadoutPreviewSection = () => {
 
   return (
     <Section
-      title={`Preview: ${data.character_preferences.names.real_name}`}
       height="100%"
+      title="Preview"
       buttons={
         <Button.Checkbox
           align="center"
-          content="Toggle Job Clothes"
           checked={job_clothes}
           onClick={() => act('toggle_job_clothes')}
-        />
+        >
+          Job Clothes
+        </Button.Checkbox>
       }
     >
       {/* The heights on these sections are fucked, whatever fix it later */}

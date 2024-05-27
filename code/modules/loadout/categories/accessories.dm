@@ -3,7 +3,6 @@
 /// Accessory Items (Moves overrided items to backpack)
 /datum/loadout_category/accessories
 	category_name = "Accessory"
-	ui_title = "Uniform Accessory Items"
 	type_to_generate = /datum/loadout_item/accessory
 
 /datum/loadout_item/accessory

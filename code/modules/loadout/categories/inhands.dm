@@ -3,7 +3,6 @@
 /// Inhand items (Moves overrided items to backpack)
 /datum/loadout_category/inhands
 	category_name = "Inhand"
-	ui_title = "In-hand Items"
 	type_to_generate = /datum/loadout_item/inhand
 
 /datum/loadout_item/inhand

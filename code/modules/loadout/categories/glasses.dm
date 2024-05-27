@@ -3,7 +3,6 @@
 /// Glasses Slot Items (Moves overrided items to backpack)
 /datum/loadout_category/glasses
 	category_name = "Glasses"
-	ui_title = "Eye Slot Items"
 	type_to_generate = /datum/loadout_item/glasses
 
 /datum/loadout_item/glasses
@@ -50,10 +49,6 @@
 /datum/loadout_item/glasses/red_glasses
 	name = "Red Glasses"
 	item_path = /obj/item/clothing/glasses/red
-
-/datum/loadout_item/glasses/welding_goggles
-	name = "Welding Goggles"
-	item_path = /obj/item/clothing/glasses/welding
 
 /datum/loadout_item/glasses/eyepatch
 	name = "Eyepatch"

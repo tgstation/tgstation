@@ -107,7 +107,7 @@
 /obj/item/clothing/neck/tie/alt_click_secondary(mob/user)
 	. = ..()
 	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return	
+		return
 	alternate_worn_layer = alternate_worn_layer == initial(alternate_worn_layer) ? NONE : initial(alternate_worn_layer)
 	user.update_clothing(ITEM_SLOT_NECK)
 	balloon_alert(user, "wearing [alternate_worn_layer == initial(alternate_worn_layer) ? "below" : "above"] suits")
@@ -401,6 +401,7 @@
 /obj/item/clothing/neck/large_scarf
 	name = "large scarf"
 	icon_state = "large_scarf"
+	icon_state_preview = "large_scarf"
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#C6C6C6#EEEEEE"

@@ -9,7 +9,7 @@
 
 /datum/loadout_category/pocket/New()
 	. = ..()
-	ui_title = "Backpack Items ([max_allowed] max)"
+	ui_title_postfix = "[max_allowed] max"
 
 /datum/loadout_category/pocket/handle_duplicate_entires(
 	datum/preference_middleware/loadout/manager,

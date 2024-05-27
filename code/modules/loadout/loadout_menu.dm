@@ -114,7 +114,7 @@
 	for(var/datum/loadout_category/category as anything in loadout_categories)
 		UNTYPED_LIST_ADD(loadout_tabs, list(
 			"name" = category.category_name,
-			"title" = category.ui_title,
+			"title_postfix" = category.ui_title_postfix,
 			"contents" = category.items_to_ui_data(),
 		))
 
