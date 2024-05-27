@@ -2007,9 +2007,8 @@
 	pixel_x = -24;
 	pixel_y = -2
 	},
-/obj/structure/cable,
 /turf/open/floor/engine,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "aVX" = (
 /obj/structure/cable,
 /obj/structure/chair,
@@ -19858,7 +19857,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump,
 /turf/open/floor/engine,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "hRF" = (
 /obj/structure/transit_tube/curved{
 	dir = 1
@@ -23855,7 +23854,7 @@
 "jiR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "jiT" = (
 /obj/structure/cable,
 /turf/open/floor/iron/white/corner{
@@ -24387,10 +24386,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
-"jsz" = (
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/science/ordnance)
 "jsG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -36326,7 +36321,7 @@
 "naz" = (
 /obj/machinery/igniter/incinerator_ordmix,
 /turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "naC" = (
 /obj/structure/cable,
 /obj/structure/broken_flooring/singular/directional/south,
@@ -39310,7 +39305,7 @@
 "nWh" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /turf/closed/wall/r_wall,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "nWq" = (
 /obj/structure/chair/sofa/bench/right,
 /obj/effect/decal/cleanable/dirt,
@@ -42604,7 +42599,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
 /turf/open/floor/engine,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "oZI" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -44700,7 +44695,6 @@
 /area/station/maintenance/aft)
 "pCV" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "pCX" = (
@@ -45076,7 +45070,6 @@
 /area/station/science/ordnance/storage)
 "pHS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "pId" = (
@@ -50528,7 +50521,7 @@
 "reN" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/closed/wall/r_wall,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "reT" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -51024,7 +51017,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/air_sensor/ordnance_burn_chamber,
 /turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "rlN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -52812,7 +52805,7 @@
 "rLr" = (
 /obj/machinery/door/poddoor/incinerator_ordmix,
 /turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "rLt" = (
 /obj/item/clothing/head/cone{
 	pixel_x = -8;
@@ -73404,7 +73397,7 @@
 /area/station/medical/medbay/lobby)
 "xtW" = (
 /turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "xtZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -73663,7 +73656,7 @@
 "xxa" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/ordnance_burn_chamber_input,
 /turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "xxn" = (
 /obj/machinery/atmospherics/components/binary/tank_compressor,
 /obj/effect/mapping_helpers/broken_floor,
@@ -74203,10 +74196,8 @@
 /obj/machinery/airlock_sensor/incinerator_ordmix{
 	pixel_x = 24
 	},
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/engine,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "xEo" = (
 /obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/flora/bush/flowers_yw,
@@ -75990,9 +75981,8 @@
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_ordmix{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/engine,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "xZN" = (
 /obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
 	dir = 8
@@ -126773,7 +126763,7 @@ oZz
 xZJ
 aVT
 pCV
-jsz
+enG
 pCV
 pCV
 pHS
