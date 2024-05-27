@@ -8,7 +8,7 @@
 	if (!..(preferences))
 		return FALSE
 
-	return "Blindness" in preferences.all_quirks
+	return "Blind" in preferences.all_quirks
 
 /datum/preference/color/blindfold_color/apply_to_human(mob/living/carbon/human/target, value)
 	return
