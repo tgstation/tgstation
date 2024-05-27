@@ -1,0 +1,5 @@
+author: "AlbertNanotracen"
+delete-after: True
+changes:
+  - rscadd: "Circuit tiles now all stack with each other and can be used in-hand to recolor"
+  - image: "Animated circuit tiles have valid sprites for when there is no power"
