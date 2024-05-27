@@ -171,3 +171,6 @@ lizard_laugh1.ogg: https://youtu.be/I7CX0AS8RNI , License: CC-BY-3.0
 moth_laugh1.ogg: https://github.com/BeeStation/BeeStation-Hornet/blob/11ba3fa04105c93dd96a63ad4afaef4b20c02d0d/sound/emotes/ , license: CC-BY-SA-3.0
 whistle1.ogg: https://freesound.org/people/taure/sounds/411638/ , license: CC0 1.0 DEED
 
+gravgen_start.ogg, gravgen_mid1.ogg, gravgen_mid2.ogg, gravgen_mid3.ogg and gravgen_end.ogg are all original works by Capsandi.
+They use samples released under CC0 by Craig Smith. Read https://blog.freesound.org/?p=901 for more details
+
