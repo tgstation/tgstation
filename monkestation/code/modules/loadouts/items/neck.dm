@@ -186,6 +186,10 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 	name = "Asexual Pride Cloak"
 	item_path = /obj/item/clothing/neck/ace
 
+/datum/loadout_item/neck/rainbow_bowtie
+	name = "Rainbow Bow Tie"
+	item_path = /obj/item/clothing/neck/bowtie/rainbow
+
 /*
 *	DONATOR
 */
