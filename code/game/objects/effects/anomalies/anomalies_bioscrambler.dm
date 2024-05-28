@@ -11,7 +11,7 @@
 	/// Cooldown for every anomaly pulse
 	COOLDOWN_DECLARE(pulse_cooldown)
 	/// How many seconds between each anomaly pulses
-	var/pulse_delay = 15 SECONDS
+	var/pulse_delay = 10 SECONDS
 	/// Range of the anomaly pulse
 	var/range = 2
 
