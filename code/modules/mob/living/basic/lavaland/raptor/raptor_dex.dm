@@ -19,7 +19,7 @@
 
 /obj/item/raptor_dex/ui_static_data(mob/user)
 	var/list/data = list()
-	var/mob/living/basic/mining/raptor/my_raptor = raptor.resolve()
+	var/mob/living/basic/raptor/my_raptor = raptor.resolve()
 
 	data["raptor_image"] = icon2base64(getFlatIcon(image(icon = my_raptor.icon, icon_state = my_raptor.icon_state)))
 	data["raptor_attack"] = my_raptor.melee_damage_lower
@@ -44,7 +44,7 @@
 	data["inherited_attack_max"] = RAPTOR_INHERIT_MAX_ATTACK
 	data["inherited_health"] = inherit.health_modifier
 	data["inherited_health_max"] = RAPTOR_INHERIT_MAX_HEALTH
-	
+
 	data["inherited_traits"] = list()
 	for(var/index in inherit.inherit_traits)
 		data["inherited_traits"] += GLOB.raptor_inherit_traits[index]
@@ -52,7 +52,7 @@
 
 
 /obj/item/raptor_dex/interact_with_atom(atom/attacked_atom, mob/living/user)
-	if(!istype(attacked_atom, /mob/living/basic/mining/raptor))
+	if(!istype(attacked_atom, /mob/living/basic/raptor))
 		return NONE
 
 	raptor = WEAKREF(attacked_atom)

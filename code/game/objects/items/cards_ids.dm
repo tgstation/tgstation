@@ -454,7 +454,7 @@
 	if(!COOLDOWN_FINISHED(src, last_holopay_projection))
 		balloon_alert(user, "still recharging")
 		return
-	if(can_be_used_in_payment(user))
+	if(!can_be_used_in_payment(user))
 		balloon_alert(user, "no account!")
 		to_chat(user, span_warning("You need a valid bank account to do this."))
 		return
