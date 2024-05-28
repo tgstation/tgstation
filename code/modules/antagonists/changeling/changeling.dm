@@ -983,7 +983,9 @@
 
 	return parts.Join("<br>")
 
-/datum/antagonist/changeling/get_preview_icon()
+// monkestation start: refactor to use [get_base_preview_icon] for better midround polling images
+/datum/antagonist/changeling/get_base_preview_icon()
+	RETURN_TYPE(/icon)
 	var/icon/final_icon = render_preview_outfit(/datum/outfit/changeling)
 	var/icon/split_icon = render_preview_outfit(/datum/outfit/job/engineer)
 
@@ -995,7 +997,11 @@
 
 	final_icon.Blend(split_icon, ICON_OVERLAY)
 
-	return finish_preview_icon(final_icon)
+	return final_icon
+
+/datum/antagonist/changeling/get_preview_icon()
+	return finish_preview_icon(get_base_preview_icon())
+// monkestation end
 
 /datum/antagonist/changeling/ui_data(mob/user)
 	var/list/data = list()

@@ -42,9 +42,6 @@
 	team.forge_brother_objectives()
 	hosts_mind.add_antag_datum(/datum/antagonist/brother, team)
 
-/datum/antagonist/brother/render_poll_preview()
-	return image(get_base_preview_icon())
-
 /datum/antagonist/brother/proc/communicate(message)
 	if(!istext(message) || !length(message) || QDELETED(owner) || QDELETED(team))
 		return

@@ -100,8 +100,8 @@
 /datum/antagonist/brother/antag_panel_data()
 	return "Conspirators : [get_brother_names()]"
 
-/datum/antagonist/brother/proc/get_base_preview_icon()
-	RETURN_TYPE(/icon)
+// monkestation start: refactor to use [get_base_preview_icon] for better midround polling images
+/datum/antagonist/brother/get_base_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/brother1 = new
 	var/mob/living/carbon/human/dummy/consistent/brother2 = new
 
@@ -130,8 +130,8 @@
 	return final_icon
 
 /datum/antagonist/brother/get_preview_icon()
-	RETURN_TYPE(/icon)
 	return finish_preview_icon(get_base_preview_icon())
+// monkestation end
 
 /datum/antagonist/brother/proc/get_brother_names()
 	var/list/brothers = team.members - owner

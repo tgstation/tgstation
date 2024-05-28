@@ -18,8 +18,15 @@
 	else
 		hosts_mind.add_antag_datum(type)
 
-/datum/antagonist/proc/render_poll_preview()
+/datum/antagonist/proc/get_base_preview_icon() as /icon
+	RETURN_TYPE(/icon)
+	return null
+
+/datum/antagonist/proc/render_poll_preview() as /image
 	RETURN_TYPE(/image)
+	var/icon/base_preview = get_base_preview_icon()
+	if(base_preview)
+		return image(base_preview)
 	if(preview_outfit)
 		var/icon/rendered_outfit = render_preview_outfit(preview_outfit)
 		if(rendered_outfit)
