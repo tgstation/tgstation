@@ -1,3 +1,6 @@
+/datum/antagonist/wizard
+	remove_from_manifest = TRUE
+
 /datum/antagonist/wizard/on_gain()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_CANT_SIGN_SPELLS, REF(src))
@@ -10,6 +13,7 @@
 	name = "\improper Syndicate Space Wizard"
 	roundend_category = "syndicate wizards/witches"
 	allow_rename = FALSE
+	remove_from_manifest = FALSE
 
 // overrides the standard equipping, as to not delete the wizard's 50 traitor toys for no reason
 /datum/antagonist/wizard/traitor/equip_wizard()

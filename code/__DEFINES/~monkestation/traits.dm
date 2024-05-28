@@ -16,6 +16,8 @@
 #define TRAIT_PERFECT_SURGEON "perfect_surgeon"
 /// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
 #define TRAIT_CANT_SIGN_SPELLS "cant_sign_spells"
+/// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.
+#define TRAIT_REMOVED_FROM_MANIFEST "removed_from_manifest"
 /// Station trait for when the clown has bridge access *shudders*
 #define STATION_TRAIT_CLOWN_BRIDGE "clown_bridge"
 
