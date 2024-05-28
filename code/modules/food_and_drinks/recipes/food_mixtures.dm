@@ -107,6 +107,8 @@
 	required_temp = 413.15
 	optimal_temp = 600
 	mob_react = FALSE
+	required_container = /obj/item/reagent_containers/cup/soup_pot
+	required_container_accepts_subtypes = TRUE
 
 /datum/chemical_reaction/food/caramel_burned
 	results = list(/datum/reagent/carbon = 1)
@@ -115,6 +117,8 @@
 	optimal_temp = 1000
 	rate_up_lim = 10
 	mob_react = FALSE
+	required_container = /obj/item/reagent_containers/cup/soup_pot
+	required_container_accepts_subtypes = TRUE
 
 /datum/chemical_reaction/food/cheesewheel
 	required_reagents = list(/datum/reagent/consumable/milk = 40)
