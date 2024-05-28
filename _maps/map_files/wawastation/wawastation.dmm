@@ -58939,7 +58939,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "uQM" = (
-/obj/structure/table/glass,
+/obj/structure/rack,
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/glasses/science,
 /obj/effect/turf_decal/stripes/line,
