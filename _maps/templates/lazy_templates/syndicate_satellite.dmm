@@ -263,8 +263,6 @@
 "kB" = (
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/multiz/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership)
 "kE" = (
@@ -654,8 +652,6 @@
 /turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership)
 "wo" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/multiz/supply/hidden/layer4,
@@ -812,11 +808,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/cold/directional/south,
-/turf/open/floor/iron/dark,
-/area/centcom/syndicate_mothership)
-"BM" = (
-/obj/structure/window/reinforced/plasma/plastitanium,
-/obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/iron/dark,
 /area/centcom/syndicate_mothership)
 "Cd" = (
@@ -2241,7 +2232,7 @@ Go
 Go
 dk
 dk
-BM
+dk
 Go
 Go
 mL
