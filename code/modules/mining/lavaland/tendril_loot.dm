@@ -675,7 +675,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	clothing_flags = THICKMATERIAL
+	clothing_flags = THICKMATERIAL|HEADINTERNALS
 
 /datum/armor/hooded_berserker
 	melee = 30

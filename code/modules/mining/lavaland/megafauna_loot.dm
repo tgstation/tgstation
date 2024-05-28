@@ -261,7 +261,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	clothing_flags = THICKMATERIAL
+	clothing_flags = THICKMATERIAL|HEADINTERNALS
 	resistance_flags = FIRE_PROOF|LAVA_PROOF|ACID_PROOF
 	transparent_protection = HIDESUITSTORAGE|HIDEJUMPSUIT
 	allowed = null
