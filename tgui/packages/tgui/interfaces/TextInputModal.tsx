@@ -1,10 +1,11 @@
-import { Loader } from './common/Loader';
-import { InputButtons } from './common/InputButtons';
+import { KEY } from 'common/keys';
+import { KeyboardEvent, useState } from 'react';
+
 import { useBackend } from '../backend';
 import { Box, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
-import { KEY } from 'common/keys';
+import { InputButtons } from './common/InputButtons';
+import { Loader } from './common/Loader';
 
 type TextInputData = {
   large_buttons: boolean;
@@ -77,7 +78,7 @@ export const TextInputModal = (props) => {
               <Box color="label">{message}</Box>
             </Stack.Item>
             <Stack.Item grow>
-              <InputArea input={input} onType={onType} />
+              <InputArea key={title} input={input} onType={onType} />
             </Stack.Item>
             <Stack.Item>
               <InputButtons
@@ -110,7 +111,7 @@ const InputArea = (props: {
       height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
       maxLength={max_length}
       onEscape={() => act('cancel')}
-      onEnter={(event) => {
+      onEnter={(event: KeyboardEvent<HTMLTextAreaElement>) => {
         if (visualMultiline && event.shiftKey) {
           return;
         }
@@ -118,6 +119,7 @@ const InputArea = (props: {
         act('submit', { entry: input });
       }}
       onChange={(_, value) => onType(value)}
+      onInput={(_, value) => onType(value)}
       placeholder="Type something..."
       value={input}
     />

@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Button,
@@ -379,11 +381,8 @@ const RecipeLibrary = (props) => {
     linkedBeaker,
   } = data;
 
-  const [reagentFilter, setReagentFilter] = useLocalState(
-    'reagentFilter',
-    true,
-  );
-  const [bookmarkMode, setBookmarkMode] = useLocalState('bookmarkMode', false);
+  const [reagentFilter, setReagentFilter] = useState(true);
+  const [bookmarkMode, setBookmarkMode] = useState(false);
 
   const matchReagents = (reaction) => {
     if (!reagentFilter || currentReagents === null) {
@@ -459,7 +458,7 @@ const RecipeLibrary = (props) => {
             value={page}
             minValue={1}
             maxValue={pageIndexMax}
-            onDrag={(e, value) => setPage(value)}
+            onDrag={(value) => setPage(value)}
           />
           <Button
             icon="plus"

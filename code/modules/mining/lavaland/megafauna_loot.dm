@@ -120,7 +120,7 @@
 		if(isturf(user.loc))
 			user.visible_message(span_hierophant_warning("[user] starts fiddling with [src]'s pommel..."), \
 			span_notice("You start detaching the hierophant beacon..."))
-			if(do_after(user, 50, target = user) && !beacon)
+			if(do_after(user, 5 SECONDS, target = user) && !beacon)
 				var/turf/user_turf = get_turf(user)
 				playsound(user_turf,'sound/magic/blind.ogg', 200, TRUE, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(user_turf, user)
@@ -149,7 +149,7 @@
 	beacon.icon_state = "hierophant_tele_on"
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/user_telegraph = new /obj/effect/temp_visual/hierophant/telegraph/edge(user.loc)
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/beacon_telegraph = new /obj/effect/temp_visual/hierophant/telegraph/edge(beacon.loc)
-	if(do_after(user, 40, target = user) && user && beacon)
+	if(do_after(user, 4 SECONDS, target = user) && user && beacon)
 		var/turf/destination = get_turf(beacon)
 		var/turf/source = get_turf(user)
 		if(destination.is_blocked_turf(TRUE))
@@ -162,7 +162,7 @@
 		new /obj/effect/temp_visual/hierophant/telegraph(source, user)
 		playsound(destination,'sound/magic/wand_teleport.ogg', 200, TRUE)
 		playsound(source,'sound/machines/airlockopen.ogg', 200, TRUE)
-		if(!do_after(user, 3, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
+		if(!do_after(user, 0.3 SECONDS, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
 			if(user)
 				user.update_mob_action_buttons()
@@ -285,13 +285,15 @@
 	AddElement(/datum/element/gags_recolorable)
 
 /obj/item/clothing/suit/hooded/hostile_environment/process(seconds_per_tick)
-	. = ..()
 	var/mob/living/carbon/wearer = loc
 	if(istype(wearer) && SPT_PROB(1, seconds_per_tick)) //cursed by bubblegum
 		if(prob(7.5))
 			wearer.cause_hallucination(/datum/hallucination/oh_yeah, "H.E.C.K suit", haunt_them = TRUE)
 		else
-			to_chat(wearer, span_warning("[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]"))
+			if(HAS_TRAIT(wearer, TRAIT_ANOSMIA)) //Anosmia quirk holder cannot fell any smell
+				to_chat(wearer, span_warning("[pick("You hear faint whispers.","You feel hot.","You hear a roar in the distance.")]"))
+			else
+				to_chat(wearer, span_warning("[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]"))
 
 /obj/item/clothing/head/hooded/hostile_environment
 	name = "H.E.C.K. helmet"
@@ -423,13 +425,16 @@
 	using = TRUE
 	balloon_alert(user, "you hold the scythe up...")
 	ADD_TRAIT(src, TRAIT_NODROP, type)
-
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), user)
-	AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_POSSESSED_BLADE, \
-		job_bans = ROLE_PAI, \
-		to_call = to_call, \
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		check_jobban = ROLE_PAI,
+		poll_time = 20 SECONDS,
+		checked_target = src,
+		ignore_category = POLL_IGNORE_POSSESSED_BLADE,
+		alert_pic = src,
+		role_name_text = "soulscythe soul",
+		chat_text_border_icon = src,
 	)
+	on_poll_concluded(user, chosen_one)
 
 /// Ghost poll has concluded and a candidate has been chosen.
 /obj/item/soulscythe/proc/on_poll_concluded(mob/living/master, mob/dead/observer/ghost)

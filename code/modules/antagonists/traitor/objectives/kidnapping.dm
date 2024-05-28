@@ -15,6 +15,8 @@
 	var/alive_bonus = 0
 	/// All stripped targets belongings (weakrefs)
 	var/list/target_belongings = list()
+	/// The ID of the stoppable timer for returning the captured crew
+	var/list/victim_timerid
 
 	duplicate_type = /datum/traitor_objective/target_player
 
@@ -46,7 +48,7 @@
 		/datum/job/chemist,
 		/datum/job/doctor,
 		/datum/job/psychologist,
-		/datum/job/virologist,
+		/datum/job/coroner,
 		// Science
 		/datum/job/geneticist,
 		/datum/job/roboticist,
@@ -78,6 +80,7 @@
 
 	target_jobs = list(
 		// Cargo
+		/datum/job/bitrunner,
 		/datum/job/shaft_miner,
 		// Medical
 		/datum/job/paramedic,
@@ -216,6 +219,7 @@
 	new /obj/effect/pod_landingzone(get_turf(user), new_pod)
 
 /datum/traitor_objective/target_player/kidnapping/proc/enter_check(obj/structure/closet/supplypod/extractionpod/source, entered_atom)
+	SIGNAL_HANDLER
 	if(!istype(source))
 		CRASH("Kidnapping objective's enter_check called with source being not an extraction pod: [source ? source.type : "N/A"]")
 
@@ -223,9 +227,6 @@
 		return
 
 	var/mob/living/carbon/human/sent_mob = entered_atom
-
-	if(sent_mob.mind)
-		ADD_TRAIT(sent_mob.mind, TRAIT_HAS_BEEN_KIDNAPPED, TRAIT_GENERIC)
 
 	for(var/obj/item/belonging in sent_mob.gather_belongings())
 		if(belonging == sent_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING) || belonging == sent_mob.get_item_by_slot(ITEM_SLOT_FEET))
@@ -236,12 +237,8 @@
 			continue
 		target_belongings.Add(WEAKREF(belonging))
 
-	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-
-	if(cargo_account) //Just in case
-		cargo_account.adjust_money(-min(rand(1000, 3000), cargo_account.account_balance)) //Not so much, especially for competent cargo. Plus this can't be mass-triggered like it has been done with contractors
-
-	priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. As is policy we've taken a portion of the station's funds to offset the overall cost.", "Nanotrasen Asset Protection", has_important_message = TRUE)
+	var/datum/market_item/hostage/market_item = sent_mob.process_capture(rand(1000, 3000))
+	RegisterSignal(market_item, COMSIG_MARKET_ITEM_SPAWNED, PROC_REF(on_victim_shipped))
 
 	addtimer(CALLBACK(src, PROC_REF(handle_target), sent_mob), 1.5 SECONDS)
 
@@ -257,7 +254,7 @@
 	source.startExitSequence(source)
 
 /datum/traitor_objective/target_player/kidnapping/proc/handle_target(mob/living/carbon/human/sent_mob)
-	addtimer(CALLBACK(src, PROC_REF(return_target), sent_mob), 3 MINUTES)
+	victim_timerid = addtimer(CALLBACK(src, PROC_REF(return_target), sent_mob), COME_BACK_FROM_CAPTURE_TIME, TIMER_STOPPABLE)
 	if(sent_mob.stat == DEAD)
 		return
 
@@ -266,38 +263,24 @@
 	sent_mob.adjust_dizzy(10 SECONDS)
 	sent_mob.set_eye_blur_if_lower(100 SECONDS)
 	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
-	to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
+	to_chat(sent_mob, span_hypnophrase("A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
 		we thank you for providing them. Your value is expended, and you will be ransomed back to your station. We always get paid, \
-		so it's only a matter of time before we ship you back...\"</i>")))
+		so it's only a matter of time before we ship you back...\"</i>"))
 
 /datum/traitor_objective/target_player/kidnapping/proc/return_target(mob/living/carbon/human/sent_mob)
 	if(!sent_mob || QDELETED(sent_mob)) //suicided and qdeleted themselves
 		return
 
-	var/list/possible_turfs = list()
-	for(var/turf/open/open_turf in dropoff_area)
-		if(open_turf.is_blocked_turf() || isspaceturf(open_turf))
-			continue
-		possible_turfs += open_turf
+	var/obj/structure/closet/supplypod/back_to_station/return_pod = new()
+	return_pod.return_from_capture(sent_mob)
+	returnal_side_effects(return_pod, sent_mob)
 
-	if(!LAZYLEN(possible_turfs))
-		var/turf/new_turf = get_safe_random_station_turf()
-		if(!new_turf) //SOMEHOW
-			to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Seems where you got sent here from won't \
-				be able to handle our pod... You will die here instead.\"</i></span>")))
-			if (sent_mob.can_heartattack())
-				sent_mob.set_heartattack(TRUE)
-			return
+/datum/traitor_objective/target_player/kidnapping/proc/on_victim_shipped(datum/market_item/source, obj/item/market_uplink/uplink, shipping_method, turf/shipping_loc)
+	SIGNAL_HANDLER
+	deltimer(victim_timerid)
+	returnal_side_effects(shipping_loc, source.item)
 
-		possible_turfs += new_turf
-
-	var/obj/structure/closet/supplypod/return_pod = new()
-	return_pod.bluespace = TRUE
-	return_pod.explosionSize = list(0,0,0,0)
-	return_pod.style = STYLE_SYNDICATE
-
-	do_sparks(8, FALSE, sent_mob)
-	sent_mob.visible_message(span_notice("[sent_mob] vanishes!"))
+/datum/traitor_objective/target_player/kidnapping/proc/returnal_side_effects(atom/dropoff_location, mob/living/carbon/human/sent_mob)
 	for(var/obj/item/belonging in sent_mob.gather_belongings())
 		if(belonging == sent_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING) || belonging == sent_mob.get_item_by_slot(ITEM_SLOT_FEET))
 			continue
@@ -307,13 +290,10 @@
 		var/obj/item/belonging = belonging_ref.resolve()
 		if(!belonging)
 			continue
-		belonging.forceMove(return_pod)
+		belonging.forceMove(dropoff_location)
 
-	sent_mob.forceMove(return_pod)
 	sent_mob.flash_act()
 	sent_mob.adjust_confusion(10 SECONDS)
 	sent_mob.adjust_dizzy(10 SECONDS)
 	sent_mob.set_eye_blur_if_lower(100 SECONDS)
 	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
-
-	new /obj/effect/pod_landingzone(pick(possible_turfs), return_pod)

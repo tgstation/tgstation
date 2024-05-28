@@ -1,10 +1,10 @@
-import { Button, Section } from '../components';
-
 import { BooleanLike } from 'common/react';
-import { PortableBasicInfo } from './common/PortableAtmos';
-import { Window } from '../layouts';
-import { getGasLabel } from '../constants';
+
 import { useBackend } from '../backend';
+import { Button, Section } from '../components';
+import { getGasLabel } from '../constants';
+import { Window } from '../layouts';
+import { PortableBasicInfo } from './common/PortableAtmos';
 
 type Data = {
   filterTypes: Filter[];

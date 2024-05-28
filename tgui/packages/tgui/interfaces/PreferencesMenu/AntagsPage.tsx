@@ -1,6 +1,8 @@
 import { binaryInsertWith } from 'common/collections';
 import { classes } from 'common/react';
-import { useBackend, useLocalState } from '../../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -23,9 +25,10 @@ const antagsByCategory = new Map<Category, Antagonist[]>();
 
 // This will break at priorities higher than 10, but that almost definitely
 // will not happen.
-const binaryInsertAntag = binaryInsertWith((antag: Antagonist) => {
-  return `${antag.priority}_${antag.name}`;
-});
+const binaryInsertAntag = (collection: Antagonist[], value: Antagonist) =>
+  binaryInsertWith(collection, value, (antag) => {
+    return `${antag.priority}_${antag.name}`;
+  });
 
 for (const antagKey of requireAntag.keys()) {
   const antag = requireAntag<{
@@ -46,8 +49,7 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
   const { act, data } = useBackend<PreferencesMenuData>();
   const className = 'PreferencesMenu__Antags__antagSelection';
 
-  const [predictedState, setPredictedState] = useLocalState(
-    'AntagSelection_predictedState',
+  const [predictedState, setPredictedState] = useState(
     new Set(data.selected_antags),
   );
 

@@ -1,19 +1,20 @@
 import { map, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { classes } from 'common/react';
+import { useState } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
   Dropdown,
+  Flex,
   Input,
+  LabeledList,
   Modal,
   NoticeBox,
   NumberInput,
-  LabeledList,
   Section,
   Stack,
-  Flex,
   Table,
 } from '../components';
 import { Window } from '../layouts';
@@ -134,14 +135,14 @@ export const Inventory = (props) => {
 
 export const InventoryDetails = (props) => {
   const { act, data } = useBackend();
-  const inventory = flow([
-    map((book, i) => ({
+  const inventory = sortBy(
+    map(data.inventory, (book, i) => ({
       ...book,
       // Generate a unique id
       key: i,
     })),
-    sortBy((book) => book.key),
-  ])(data.inventory);
+    (book) => book.key,
+  );
   return (
     <Section>
       <Table>
@@ -259,25 +260,19 @@ export const CheckoutEntries = (props) => {
 
 const CheckoutModal = (props) => {
   const { act, data } = useBackend();
-  const inventory = flow([
-    map((book, i) => ({
+  const inventory = sortBy(
+    map(data.inventory, (book, i) => ({
       ...book,
       // Generate a unique id
       key: i,
     })),
-    sortBy((book) => book.key),
-  ])(data.inventory);
+    (book) => book.key,
+  );
 
   const [checkoutBook, setCheckoutBook] = useLocalState('CheckoutBook', false);
-  const [bookName, setBookName] = useLocalState(
-    'CheckoutBookName',
-    'Insert Book name...',
-  );
-  const [checkoutee, setCheckoutee] = useLocalState('Checkoutee', 'Recipient');
-  const [checkoutPeriod, setCheckoutPeriod] = useLocalState(
-    'CheckoutPeriod',
-    5,
-  );
+  const [bookName, setBookName] = useState('Insert Book name...');
+  const [checkoutee, setCheckoutee] = useState('Recipient');
+  const [checkoutPeriod, setCheckoutPeriod] = useState(5);
   return (
     <Modal width="500px">
       <Box fontSize="20px" pb={1}>
@@ -287,7 +282,7 @@ const CheckoutModal = (props) => {
         over
         mb={1.7}
         width="100%"
-        displayText={bookName}
+        selected={bookName}
         options={inventory.map((book) => book.title)}
         value={bookName}
         onSelected={(e) => setBookName(e)}
@@ -305,6 +300,7 @@ const CheckoutModal = (props) => {
             value={checkoutPeriod}
             unit=" Minutes"
             minValue={1}
+            step={1}
             stepPixelSize={10}
             onChange={(e, value) => setCheckoutPeriod(value)}
           />
@@ -390,14 +386,14 @@ export const SearchAndDisplay = (props) => {
     params_changed,
     can_db_request,
   } = data;
-  const records = flow([
-    map((record, i) => ({
+  const records = sortBy(
+    map(data.pages, (record, i) => ({
       ...record,
       // Generate a unique id
       key: i,
     })),
-    sortBy((record) => record.key),
-  ])(data.pages);
+    (record) => record.key,
+  );
 
   return (
     <Box>
@@ -419,6 +415,7 @@ export const SearchAndDisplay = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Dropdown
+                width="120px"
                 options={search_categories}
                 selected={category}
                 onSelected={(value) =>
@@ -643,7 +640,7 @@ const UploadModal = (props) => {
 
   const { upload_categories, default_category, can_db_request } = data;
   const [uploadToDB, setUploadToDB] = useLocalState('UploadDB', false);
-  const [uploadCategory, setUploadCategory] = useLocalState('ModalUpload', '');
+  const [uploadCategory, setUploadCategory] = useState('');
 
   const display_category = uploadCategory || default_category;
   return (
@@ -695,10 +692,7 @@ const UploadModal = (props) => {
 export const Print = (props) => {
   const { act, data } = useBackend();
   const { deity, religion, bible_name, bible_sprite, posters } = data;
-  const [selectedPoster, setSelectedPoster] = useLocalState(
-    'selected_poster',
-    posters[0],
-  );
+  const [selectedPoster, setSelectedPoster] = useState(posters[0]);
 
   return (
     <Stack vertical fill>

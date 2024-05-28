@@ -54,6 +54,7 @@
 	name = "Bountiful bounties"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
 	report_message = "It seems collectors in this system are extra keen to on bounties, and will pay more to see their completion."
 
@@ -68,7 +69,6 @@
 	report_message = "Prices are low in this system, BUY BUY BUY!"
 	blacklist = list(/datum/station_trait/distant_supply_lines)
 
-
 /datum/station_trait/strong_supply_lines/on_round_start()
 	SSeconomy.pack_price_modifier *= 0.8
 
@@ -76,6 +76,7 @@
 	name = "Filled up maintenance"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
 	report_message = "Our workers accidentally forgot more of their personal belongings in the maintenace areas."
 	blacklist = list(/datum/station_trait/empty_maint)
@@ -176,13 +177,11 @@
 	report_message = "All members of the station have received an implant to notify each other if one of them dies. This should help improve job-safety!"
 	var/datum/deathrattle_group/deathrattle_group
 
-
 /datum/station_trait/deathrattle_all/New()
 	. = ..()
 	deathrattle_group = new("station group")
 	blacklist = subtypesof(/datum/station_trait/deathrattle_department)
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
-
 
 /datum/station_trait/deathrattle_all/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
@@ -220,6 +219,7 @@
 		/datum/job/geneticist = /obj/item/organ/internal/fly, //we don't care about implants, we have cancer.
 		/datum/job/head_of_personnel = /obj/item/organ/internal/eyes/robotic,
 		/datum/job/head_of_security = /obj/item/organ/internal/eyes/robotic/thermals,
+		/datum/job/human_ai = /obj/item/organ/internal/brain/cybernetic,
 		/datum/job/janitor = /obj/item/organ/internal/eyes/robotic/xray,
 		/datum/job/lawyer = /obj/item/organ/internal/heart/cybernetic/tier2,
 		/datum/job/mime = /obj/item/organ/internal/tongue/robot, //...
@@ -233,7 +233,6 @@
 		/datum/job/security_officer = /obj/item/organ/internal/cyberimp/arm/flash,
 		/datum/job/shaft_miner = /obj/item/organ/internal/monster_core/rush_gland,
 		/datum/job/station_engineer = /obj/item/organ/internal/cyberimp/arm/toolset,
-		/datum/job/virologist = /obj/item/organ/internal/lungs/cybernetic/tier2,
 		/datum/job/warden = /obj/item/organ/internal/cyberimp/eyes/hud/security,
 	)
 
@@ -269,6 +268,7 @@
 	name = "Advanced Medbots"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
 	report_message = "Your station's medibots have received a hardware upgrade, enabling expanded healing capabilities."
 	trait_to_give = STATION_TRAIT_MEDBOT_MANIA
@@ -292,6 +292,15 @@
 	weight_multiplier = 3
 	max_occurrences_modifier = 10 //lotta cows
 
+/datum/station_trait/bright_day
+	name = "Bright Day"
+	report_message = "The stars shine bright and the clouds are scarcer than usual. It's a bright day here on the Ice Moon's surface."
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 5
+	show_in_report = TRUE
+	trait_flags = STATION_TRAIT_PLANETARY
+	trait_to_give = STATION_TRAIT_BRIGHT_DAY
+
 /datum/station_trait/shuttle_sale
 	name = "Shuttle Firesale"
 	report_message = "The Nanotrasen Emergency Dispatch team is celebrating a record number of shuttle calls in the recent quarter. Some of your emergency shuttle options have been discounted!"
@@ -305,6 +314,7 @@
 	report_message = "A repair technician left their wallet in a locker somewhere. They would greatly appreciate if you could locate and return it to them when the shift has ended."
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
 
 /datum/station_trait/missing_wallet/on_round_start()
@@ -338,6 +348,16 @@
 	assignment = "Repair Technician"
 	trim_state = "trim_stationengineer"
 	department_color = COLOR_ASSISTANT_GRAY
+
+/// Spawns assistants with some gear, either gimmicky or functional. Maybe, one day, it will inspire an assistant to do something productive or fun
+/datum/station_trait/assistant_gimmicks
+	name = "Geared Assistants Pilot"
+	report_message = "The Nanotrassen Assistant Affairs division is performing a pilot to see if different assistant equipments help improve productivity!"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 3
+	trait_to_give = STATION_TRAIT_ASSISTANT_GIMMICKS
+	show_in_report = TRUE
+	blacklist = list(/datum/station_trait/colored_assistants)
 
 #undef PARTY_COOLDOWN_LENGTH_MIN
 #undef PARTY_COOLDOWN_LENGTH_MAX

@@ -6,8 +6,8 @@
 //NORTH default dir
 /obj/docking_port
 	invisibility = INVISIBILITY_ABSTRACT
-	icon = 'icons/obj/devices/tracker.dmi'
-	icon_state = "pinonfar"
+	icon = 'icons/effects/docking_ports.dmi'
+	icon_state = "static"
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
@@ -436,7 +436,7 @@
 
 /obj/docking_port/mobile
 	name = "shuttle"
-	icon_state = "pinonclose"
+	icon_state = "mobile"
 
 	area_type = SHUTTLE_DEFAULT_SHUTTLE_AREA_TYPE
 
@@ -514,13 +514,14 @@
 		var/min_y = -1
 		var/max_x = WORLDMAXX_CUTOFF
 		var/max_y = WORLDMAXY_CUTOFF
-		for(var/area/area as anything in shuttle_areas)
-			for(var/turf/turf in area)
-				min_x = max(turf.x, min_x)
-				max_x = min(turf.x, max_x)
-				min_y = max(turf.y, min_y)
-				max_y = min(turf.y, max_y)
-			CHECK_TICK
+		for(var/area/shuttle_area as anything in shuttle_areas)
+			for (var/list/zlevel_turfs as anything in shuttle_area.get_zlevel_turf_lists())
+				for(var/turf/turf as anything in zlevel_turfs)
+					min_x = max(turf.x, min_x)
+					max_x = min(turf.x, max_x)
+					min_y = max(turf.y, min_y)
+					max_y = min(turf.y, max_y)
+				CHECK_TICK
 
 		if(min_x == -1 || max_x == WORLDMAXX_CUTOFF)
 			CRASH("Failed to locate shuttle boundaries when iterating through shuttle areas, somehow.")

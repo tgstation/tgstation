@@ -80,7 +80,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/incident_display/LateInitialize()
+/obj/machinery/incident_display/post_machine_initialize()
 	. = ..()
 	GLOB.map_delamination_counters += src
 	update_delam_count(SSpersistence.rounds_since_engine_exploded, SSpersistence.delam_highscore)
@@ -164,15 +164,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	delam_record = rand(1,99)
 	update_appearance()
 
-/obj/machinery/incident_display/deconstruct()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
-
+/obj/machinery/incident_display/on_deconstruction(disassembled)
 	new /obj/item/stack/sheet/mineral/titanium(drop_location(), 2)
 	new /obj/item/shard(drop_location())
 	new /obj/item/shard(drop_location())
-
-	qdel(src)
 
 /obj/machinery/incident_display/proc/update_delam_count(new_count, record)
 	delam_record = record

@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Section, LabeledList, NumberInput } from '../components';
+import { Box, Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
 export const MassDriverControl = (props) => {
@@ -72,9 +72,10 @@ export const MassDriverControl = (props) => {
                   <NumberInput
                     value={power}
                     width="40px"
+                    step={1}
                     minValue={0.25}
                     maxValue={16}
-                    onChange={(e, value) => {
+                    onChange={(value) => {
                       return act('set_power', {
                         power: value,
                       });

@@ -61,7 +61,7 @@
 	else if(adjacent)
 		try_move_adjacent(tunnel)
 
-	playsound(src,'sound/effects/sparks4.ogg',50,TRUE)
+	playsound(src, "sound/effects/portal_travel.ogg",50,TRUE)
 	qdel(src)
 	return FALSE // used for chasm code
 
@@ -114,4 +114,4 @@
 			L.Paralyze(60)
 			if(ishuman(L))
 				shake_camera(L, 20, 1)
-				addtimer(CALLBACK(L, TYPE_PROC_REF(/mob/living/carbon, vomit)), 20)
+				addtimer(CALLBACK(L, TYPE_PROC_REF(/mob/living/carbon, vomit)), 2 SECONDS)

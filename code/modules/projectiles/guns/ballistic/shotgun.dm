@@ -85,6 +85,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	semi_auto = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	/// If defined, the secondary tube is this type, if you want different shell loads
 	var/alt_mag_type
 	/// If TRUE, we're drawing from the alternate_magazine
@@ -96,6 +97,10 @@
 	name = "bounty cycler shotgun"
 	desc = "An advanced shotgun with two separate magazine tubes. This one shows signs of bounty hunting customization, meaning it likely has a dual rubber shot/fire slug load."
 	alt_mag_type = /obj/item/ammo_box/magazine/internal/shot/tube/fire
+
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/deadly
+	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube/buckshot
+	alt_mag_type = /obj/item/ammo_box/magazine/internal/shot/tube/slug
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/examine(mob/user)
 	. = ..()
@@ -127,16 +132,15 @@
 	else
 		balloon_alert(user, "switched to tube A")
 
-/obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/click_alt(mob/living/user)
 	rack()
+	return CLICK_ACTION_SUCCESS
 
 // Bulldog shotgun //
 
 /obj/item/gun/ballistic/shotgun/bulldog
 	name = "\improper Bulldog Shotgun"
-	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines. Can have a secondary magazine attached to quickly swap between ammo types, or just to keep shooting."
+	desc = "A 2-round burst fire, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines. Can have a secondary magazine attached to quickly swap between ammo types, or just to keep shooting."
 	icon_state = "bulldog"
 	inhand_icon_state = "bulldog"
 	worn_icon_state = "cshotgun"
@@ -148,11 +152,11 @@
 	weapon_weight = WEAPON_MEDIUM
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m12g
 	can_suppress = FALSE
-	burst_size = 1
-	fire_delay = 0
+	burst_size = 2
+	fire_delay = 1
 	pin = /obj/item/firing_pin/implant/pindicate
 	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'
-	actions_types = list()
+	actions_types = list(/datum/action/item_action/toggle_firemode)
 	mag_display = TRUE
 	empty_indicator = TRUE
 	empty_alarm = TRUE
@@ -161,6 +165,7 @@
 	semi_auto = TRUE
 	internal_magazine = FALSE
 	tac_reloads = TRUE
+	burst_fire_selection = TRUE
 	///the type of secondary magazine for the bulldog
 	var/secondary_magazine_type
 	///the secondary magazine
@@ -283,10 +288,6 @@
 	can_be_sawn_off = TRUE
 	pb_knockback = 3 // it's a super shotgun!
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/AltClick(mob/user)
-	. = ..()
-	if(unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
-		reskin_obj(user)
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
 	. = ..()

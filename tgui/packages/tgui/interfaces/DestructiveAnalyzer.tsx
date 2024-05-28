@@ -1,6 +1,7 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
-import { Button, Box, Section, NoticeBox } from '../components';
+import { Box, Button, Image, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -68,14 +69,11 @@ export const DestructiveAnalyzer = (props) => {
             />
           }
         >
-          <Box
-            as="img"
+          <Image
             src={`data:image/jpeg;base64,${item_icon}`}
             height="64px"
             width="64px"
-            style={{
-              verticalAlign: 'middle',
-            }}
+            verticalAlign="middle"
           />
         </Section>
         <Section title="Deconstruction Methods">
@@ -108,20 +106,21 @@ export const DestructiveAnalyzer = (props) => {
           )}
           {node_data.map((node) => (
             <Button.Confirm
-              content={node.node_name}
               icon="cash-register"
               mt={1}
               disabled={!node.node_hidden}
               key={node.node_id}
               tooltip={
                 node.node_hidden
-                  ? 'Deconstructing this will allow you to research the node in question by making it visible to R&D consoles.'
-                  : 'This node has already been researched, and does not need to be deconstructed.'
+                  ? 'Deconstruct this to research the selected node.'
+                  : 'This node has already been researched.'
               }
               onClick={() =>
                 act('deconstruct', { deconstruct_id: node.node_id })
               }
-            />
+            >
+              {node.node_name}
+            </Button.Confirm>
           ))}
         </Section>
       </Window.Content>

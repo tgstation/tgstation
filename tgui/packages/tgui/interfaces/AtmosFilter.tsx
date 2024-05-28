@@ -1,9 +1,9 @@
-import { Button, LabeledList, NumberInput, Section } from '../components';
-
 import { BooleanLike } from 'common/react';
-import { Window } from '../layouts';
+
 import { useBackend } from '../backend';
+import { Button, LabeledList, NumberInput, Section } from '../components';
 import { getGasLabel } from '../constants';
+import { Window } from '../layouts';
 
 type Data = {
   filter_types: Filter[];
@@ -40,12 +40,13 @@ export const AtmosFilter = (props) => {
             <LabeledList.Item label="Transfer Rate">
               <NumberInput
                 animated
+                step={1}
                 value={rate}
                 width="63px"
                 unit="L/s"
                 minValue={0}
                 maxValue={max_rate}
-                onDrag={(_, value) =>
+                onDrag={(value) =>
                   act('rate', {
                     rate: value,
                   })

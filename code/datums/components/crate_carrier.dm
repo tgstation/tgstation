@@ -23,7 +23,7 @@
 		var/static/default_cache = typecacheof(list(/obj/structure/closet/crate))
 		src.carriable_cache = default_cache
 
-/datum/component/crate_carrier/Destroy(force, silent)
+/datum/component/crate_carrier/Destroy(force)
 	LAZYCLEARLIST(crates_in_hand)
 	return ..()
 

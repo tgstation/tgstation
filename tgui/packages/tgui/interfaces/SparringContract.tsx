@@ -1,6 +1,6 @@
 import { BooleanLike } from 'common/react';
-import { multiline } from 'common/string';
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import { BlockQuote, Button, Dropdown, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -71,7 +71,7 @@ export const SparringContract = (props) => {
                     </Stack.Item>
                     <Stack.Item>
                       <Button
-                        tooltip={multiline`
+                        tooltip={`
                         The Chaplain's Deity wishes for honorable fighting.
                         As such, it uses contracts. Signing your name will
                         set the terms for the battle. Then, the person you
@@ -144,7 +144,7 @@ export const SparringContract = (props) => {
               </Stack>
             </Stack.Item>
             <Stack.Item grow>
-              <Stack grow textAlign="center">
+              <Stack textAlign="center">
                 <Stack.Item fontSize={left_sign !== 'none' && '14px'} grow>
                   {(left_sign === 'none' && (
                     <Button
@@ -197,7 +197,7 @@ export const SparringContract = (props) => {
                     FIGHT!
                   </Button>
                   <Button
-                    tooltip={multiline`
+                    tooltip={`
                       If you've already signed but you want to renegotiate
                       the terms, you can clear out the signatures with
                       this button.

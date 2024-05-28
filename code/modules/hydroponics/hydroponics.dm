@@ -102,7 +102,7 @@
 	// If the plant's not in either state, we can't do much else, so early return.
 	if(isnull(held_item))
 		// Silicons can't interact with trays :frown:
-		if(issilicon(user))
+		if(HAS_SILICON_ACCESS(user))
 			return NONE
 
 		switch(plant_status)
@@ -1074,7 +1074,7 @@
 	. = ..()
 	if(.)
 		return
-	if(issilicon(user)) //How does AI know what plant is?
+	if(HAS_SILICON_ACCESS(user)) //How does AI know what plant is?
 		return
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
 		return myseed.harvest(user)
@@ -1099,8 +1099,6 @@
 	set_self_sustaining(!self_sustaining)
 	to_chat(user, span_notice("You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""]."))
 
-/obj/machinery/hydroponics/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/machinery/hydroponics/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -1159,10 +1157,15 @@
 	circuit = null
 	density = FALSE
 	use_power = NO_POWER_USE
-	obj_flags = NO_DECONSTRUCTION
 	unwrenchable = FALSE
 	self_sustaining_overlay_icon_state = null
 	maxnutri = 15
+
+/obj/machinery/hydroponics/soil/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
+	return NONE
+
+/obj/machinery/hydroponics/soil/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
+	return NONE
 
 /obj/machinery/hydroponics/soil/update_icon(updates=ALL)
 	. = ..()
@@ -1184,9 +1187,8 @@
 /obj/machinery/hydroponics/soil/CtrlClick(mob/user)
 	return //Soil has no electricity.
 
-/obj/machinery/hydroponics/soil/deconstruct(disassembled)
+/obj/machinery/hydroponics/soil/on_deconstruction(disassembled)
 	new /obj/item/stack/ore/glass(drop_location(), 3)
-	return ..()
 
 ///The usb port circuit
 

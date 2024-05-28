@@ -1,4 +1,6 @@
 import { toFixed } from 'common/math';
+import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
   Button,
@@ -10,7 +12,6 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 const TAB2NAME = [
   {
@@ -481,8 +482,8 @@ const FunForYouTab = (props) => {
                 color="red"
                 icon="user-secret"
                 fluid
-                content="Everyone is the traitor"
-                onClick={() => act('traitor_all')}
+                content="Everyone is the antag"
+                onClick={() => act('antag_all')}
               />
             </NoticeBox>
           </Stack.Item>

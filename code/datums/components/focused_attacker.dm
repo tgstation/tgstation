@@ -17,7 +17,7 @@
 	src.maximum_gain = maximum_gain
 	src.gain_per_attack = gain_per_attack
 
-/datum/component/focused_attacker/Destroy(force, silent)
+/datum/component/focused_attacker/Destroy(force)
 	if (!isnull(last_target))
 		UnregisterSignal(last_target, COMSIG_QDELETING)
 	return ..()

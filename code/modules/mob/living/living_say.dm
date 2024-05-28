@@ -94,28 +94,39 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	return new_msg
 
-/mob/living/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
+/mob/living/say(
+	message,
+	bubble_type,
+	list/spans = list(),
+	sanitize = TRUE,
+	datum/language/language,
+	ignore_spam = FALSE,
+	forced,
+	filterproof = FALSE,
+	message_range = 7,
+	datum/saymode/saymode,
+	list/message_mods = list(),
+)
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
 		return
 
-	var/list/message_mods = list()
 	var/original_message = message
 	message = get_message_mods(message, message_mods)
 	saymode = SSradio.saymodes[message_mods[RADIO_KEY]]
-	if (!forced)
+	if (!forced && !saymode)
 		message = check_for_custom_say_emote(message, message_mods)
 
 	if(!message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		client?.cmd_admin_say(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		client?.dsay(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, message)
 		return
 
 	// dead is the only state you can never emote
@@ -197,39 +208,41 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	spans |= speech_span
 
-	if(language)
-		var/datum/language/L = GLOB.language_datum_instances[language]
-		spans |= L.spans
+	var/datum/language/spoken_lang = GLOB.language_datum_instances[language]
+	if(LAZYLEN(spoken_lang?.spans))
+		spans |= spoken_lang.spans
 
 	if(message_mods[MODE_SING])
 		var/randomnote = pick("\u2669", "\u266A", "\u266B")
 		message = "[randomnote] [message] [randomnote]"
 		spans |= SPAN_SINGING
 
+	if(message_mods[WHISPER_MODE]) // whisper away
+		spans |= SPAN_ITALICS
 
 	if(!message)
 		if(succumbed)
 			succumb()
 		return
 
+	//Get which verb is prefixed to the message before radio but after most modifications
+	message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
+
 	//This is before anything that sends say a radio message, and after all important message type modifications, so you can scumb in alien chat or something
 	if(saymode && !saymode.handle_message(src, message, language))
 		return
-	var/radio_message = message
-	if(message_mods[WHISPER_MODE])
-		// radios don't pick up whispers very well
-		radio_message = stars(radio_message)
-		spans |= SPAN_ITALICS
 
-	var/radio_return = radio(radio_message, message_mods, spans, language)//roughly 27% of living/say()'s total cost
+	var/radio_return = radio(message, message_mods, spans, language)//roughly 27% of living/say()'s total cost
+	if(radio_return & NOPASS)
+		return TRUE
+
 	if(radio_return & ITALICS)
 		spans |= SPAN_ITALICS
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
 		if(!message_mods[WHISPER_MODE])
 			message_mods[WHISPER_MODE] = MODE_WHISPER
-	if(radio_return & NOPASS)
-		return TRUE
+			message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
 
 	//No screams in space, unless you're next to someone.
 	var/turf/T = get_turf(src)
@@ -268,7 +281,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/understood = TRUE
 	if(!is_custom_emote) // we do not translate emotes
 		var/untranslated_raw_message = raw_message
-		raw_message = translate_language(src, message_language, raw_message) // translate
+		raw_message = translate_language(speaker, message_language, raw_message, spans, message_mods) // translate
 		if(raw_message != untranslated_raw_message)
 			understood = FALSE
 
@@ -312,7 +325,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	if(speaker != src)
 		if(!radio_freq) //These checks have to be separate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
-			deaf_message = "[span_name("[speaker]")] [speaker.verb_say] something but you cannot hear [speaker.p_them()]."
+			deaf_message = "[span_name("[speaker]")] [speaker.get_default_say_verb()] something but you cannot hear [speaker.p_them()]."
 			deaf_type = MSG_VISUAL
 	else
 		deaf_message = span_notice("You can't hear yourself!")
@@ -399,11 +412,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			var/mob/living/carbon/human/human_speaker = src
 			if(istype(human_speaker.wear_mask, /obj/item/clothing/mask))
 				var/obj/item/clothing/mask/worn_mask = human_speaker.wear_mask
-				if(worn_mask.voice_override)
-					voice_to_use = worn_mask.voice_override
-				if(worn_mask.voice_filter)
-					filter += worn_mask.voice_filter
-				use_radio = worn_mask.use_radio_beeps_tts
+				if(!worn_mask.up)
+					if(worn_mask.voice_override)
+						voice_to_use = worn_mask.voice_override
+					if(worn_mask.voice_filter)
+						filter += worn_mask.voice_filter
+					use_radio = worn_mask.use_radio_beeps_tts
 		if(use_radio)
 			special_filter += TTS_FILTER_RADIO
 		if(issilicon(src))
@@ -423,38 +437,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 /mob/proc/binarycheck()
 	return FALSE
-
-/mob/living/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
-	if(!..())
-		return FALSE
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_TRY_SPEECH, message, ignore_spam, forced)
-	if(sigreturn & COMPONENT_CAN_ALWAYS_SPEAK)
-		return TRUE
-
-	if(sigreturn & COMPONENT_CANNOT_SPEAK)
-		return FALSE
-
-	if(!can_speak())
-		if(HAS_MIND_TRAIT(src, TRAIT_MIMING))
-			to_chat(src, span_green("Your vow of silence prevents you from speaking!"))
-		else
-			to_chat(src, span_warning("You find yourself unable to speak!"))
-		return FALSE
-
-	return TRUE
-
-/mob/living/can_speak(allow_mimes = FALSE)
-	if(!allow_mimes && HAS_MIND_TRAIT(src, TRAIT_MIMING))
-		return FALSE
-
-	if(HAS_TRAIT(src, TRAIT_MUTE))
-		return FALSE
-
-	if(is_muzzled())
-		return FALSE
-
-	return TRUE
-
 
 /**
  * Treats the passed message with things that may modify speech (stuttering, slurring etc).

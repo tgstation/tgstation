@@ -15,11 +15,11 @@
 /obj/vehicle/sealed/mecha/savannah_ivanov
 	name = "\improper Savannah-Ivanov"
 	desc = "An insanely overbulked mecha that handily crushes single-pilot opponents. The price is that you need two pilots to use it."
-	icon = 'icons/mob/coop_mech.dmi'
+	icon = 'icons/mob/rideables/coop_mech.dmi'
 	base_icon_state = "savannah_ivanov"
 	icon_state = "savannah_ivanov_0_0"
 	//does not include mmi compatibility
-	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS
 	mech_type = EXOSUIT_MODULE_SAVANNAH
 	movedelay = 3
 	max_integrity = 450 //really tanky, like damn

@@ -37,6 +37,7 @@
 	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "trashbag"
 	inhand_icon_state = "trashbag"
+	worn_icon_state = "trashbag"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	storage_type = /datum/storage/trash
@@ -48,7 +49,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_total_storage = 30
 	atom_storage.max_slots = 30
-	atom_storage.set_holdable(cant_hold_list = list(/obj/item/disk/nuclear))
+	atom_storage.set_holdable(cant_hold_list = /obj/item/disk/nuclear)
 	atom_storage.supports_smart_equip = FALSE
 	RegisterSignal(atom_storage, COMSIG_STORAGE_DUMP_POST_TRANSFER, PROC_REF(post_insertion))
 
@@ -136,7 +137,7 @@
 	atom_storage.numerical_stacking = TRUE
 	atom_storage.allow_quick_empty = TRUE
 	atom_storage.allow_quick_gather = TRUE
-	atom_storage.set_holdable(list(/obj/item/stack/ore))
+	atom_storage.set_holdable(/obj/item/stack/ore)
 	atom_storage.silent_for_user = TRUE
 
 /obj/item/storage/bag/ore/equipped(mob/user)
@@ -153,6 +154,12 @@
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 		listeningTo = null
+
+/obj/item/storage/bag/ore/attackby(obj/item/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/boulder))
+		to_chat(user, span_warning("You can't fit \the [attacking_item] into \the [src]. Perhaps you should break it down first, or find an ore box."))
+		return TRUE
+	return ..()
 
 /obj/item/storage/bag/ore/proc/pickup_ores(mob/living/user)
 	SIGNAL_HANDLER
@@ -238,8 +245,7 @@
 		/obj/item/grown,
 		/obj/item/food/honeycomb,
 		/obj/item/seeds,
-		))
-////////
+	))
 
 /obj/item/storage/bag/plants/portaseeder
 	name = "portable seed extractor"
@@ -283,20 +289,22 @@
 	icon_state = "sheetsnatcher"
 	worn_icon_state = "satchel"
 
-	var/capacity = 300; //the number of sheets it can carry.
+	var/capacity = 300 //the number of sheets it can carry.
 
 /obj/item/storage/bag/sheetsnatcher/Initialize(mapload)
 	. = ..()
 	atom_storage.allow_quick_empty = TRUE
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.numerical_stacking = TRUE
-	atom_storage.set_holdable(list(
+	atom_storage.set_holdable(
+		can_hold_list = list(
 			/obj/item/stack/sheet
-			),
-		list(
+		),
+		cant_hold_list = list(
 			/obj/item/stack/sheet/mineral/sandstone,
 			/obj/item/stack/sheet/mineral/wood,
-			))
+		),
+	)
 	atom_storage.max_total_storage = capacity / 2
 
 // -----------------------------
@@ -352,23 +360,30 @@
 /obj/item/storage/bag/tray/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
-	atom_storage.set_holdable(list(
-		/obj/item/clothing/mask/cigarette,
-		/obj/item/food,
-		/obj/item/kitchen,
-		/obj/item/lighter,
-		/obj/item/organ,
-		/obj/item/plate,
-		/obj/item/reagent_containers/condiment,
-		/obj/item/reagent_containers/cup,
-		/obj/item/rollingpaper,
-		/obj/item/storage/box/gum,
-		/obj/item/storage/box/matches,
-		/obj/item/storage/fancy,
-		/obj/item/trash,
-		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Food Containers, Food Trash, Organs, Tobacco Products, Lighters, and Kitchen Tools.
+	atom_storage.set_holdable(
+		can_hold_list = list(
+			/obj/item/clothing/mask/cigarette,
+			/obj/item/food,
+			/obj/item/kitchen,
+			/obj/item/lighter,
+			/obj/item/organ,
+			/obj/item/plate,
+			/obj/item/reagent_containers/condiment,
+			/obj/item/reagent_containers/cup,
+			/obj/item/rollingpaper,
+			/obj/item/storage/box/gum,
+			/obj/item/storage/box/matches,
+			/obj/item/storage/fancy,
+			/obj/item/trash,
+		),
+		cant_hold_list = list(
+			/obj/item/plate/oven_tray,
+			/obj/item/reagent_containers/cup/soup_pot,
+		),
+	) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Food Containers, Food Trash, Organs, Tobacco Products, Lighters, and Kitchen Tools.
 	atom_storage.insert_preposition = "on"
-	atom_storage.max_slots = 7
+	atom_storage.max_slots = 8
+	atom_storage.max_total_storage = 16
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -391,7 +406,7 @@
 
 /obj/item/storage/bag/tray/proc/do_scatter(obj/item/tray_item)
 	var/delay = rand(2,4)
-	var/datum/move_loop/loop = SSmove_manager.move_rand(tray_item, list(NORTH,SOUTH,EAST,WEST), delay, timeout = rand(1, 2) * delay, flags = MOVEMENT_LOOP_START_FAST)
+	var/datum/move_loop/loop = GLOB.move_manager.move_rand(tray_item, list(NORTH,SOUTH,EAST,WEST), delay, timeout = rand(1, 2) * delay, flags = MOVEMENT_LOOP_START_FAST)
 	//This does mean scattering is tied to the tray. Not sure how better to handle it
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(change_speed))
 
@@ -450,11 +465,8 @@
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
-		))
+	))
 
-/*
- *  Biowaste bag (mostly for virologists)
- */
 
 /obj/item/storage/bag/bio
 	name = "bio bag"
@@ -480,7 +492,7 @@
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/reagent_containers/syringe,
-		))
+	))
 
 /*
  *  Science bag (mostly for xenobiologists)
@@ -511,7 +523,7 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/slime_extract,
 		/obj/item/swab,
-		))
+	))
 
 /*
  *  Construction bag (for engineering, holds stock parts and electronics)
@@ -540,7 +552,7 @@
 		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/stock_parts,
 		/obj/item/wallframe/camera,
-		))
+	))
 
 /obj/item/storage/bag/harpoon_quiver
 	name = "harpoon quiver"
@@ -555,9 +567,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
 	atom_storage.max_slots = 40
 	atom_storage.max_total_storage = 100
-	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/harpoon
-		))
+	atom_storage.set_holdable(/obj/item/ammo_casing/harpoon)
 
 /obj/item/storage/bag/harpoon_quiver/PopulateContents()
 	for(var/i in 1 to 40)

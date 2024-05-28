@@ -50,7 +50,7 @@ jobs:
         env:
           Database__DatabaseType: Sqlite
           Database__ConnectionString: Data Source=TGS_TGTest.sqlite3;Mode=ReadWriteCreate
-          General__ConfigVersion: 4.1.0
+          General__ConfigVersion: 5.0.0
           General__ApiPort: ${{ env.TGS_API_PORT }}
           General__SetupWizardMode: Never
         ports:
@@ -59,10 +59,10 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: 7.0.x
+          dotnet-version: 8.0.x
 
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Test TGS Integration
         run: dotnet run -c Release --project tools/tgs_test ${{ github.repository }} /tgs_instances/tgstation ${{ env.TGS_API_PORT }} ${{ github.event.pull_request.head.sha || github.sha }} ${{ secrets.GITHUB_TOKEN }} ${{ env.PR_NUMBER }}

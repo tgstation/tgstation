@@ -187,7 +187,7 @@ Behavior that's still missing from this component that original food items had t
 	// add newly passed in reagents
 	setup_initial_reagents(initial_reagents)
 
-/datum/component/edible/Destroy(force, silent)
+/datum/component/edible/Destroy(force)
 	after_eat = null
 	on_consume = null
 	check_liked = null
@@ -215,7 +215,7 @@ Behavior that's still missing from this component that original food items had t
 
 	if(foodtypes)
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
-		examine_list += span_notice("It is [lowertext(english_list(types))].")
+		examine_list += span_notice("It is [LOWER_TEXT(english_list(types))].")
 
 	var/quality = get_perceived_food_quality(user)
 	if(quality > 0)
@@ -251,7 +251,7 @@ Behavior that's still missing from this component that original food items had t
 	if(!(food_flags & FOOD_IN_CONTAINER))
 		switch(bitecount)
 			if(0)
-				// pass
+				pass()
 			if(1)
 				examine_list += span_notice("[owner] was bitten by someone!")
 			if(2, 3)
@@ -580,8 +580,10 @@ Behavior that's still missing from this component that original food items had t
 	food_quality = min(food_quality, FOOD_QUALITY_TOP)
 	var/atom/owner = parent
 	var/timeout_mod = owner.reagents.get_average_purity(/datum/reagent/consumable) * 2 // mood event duration is 100% at average purity of 50%
-	var/event = GLOB.food_quality_events[food_quality]
-	gourmand.add_mood_event("quality_food", event, timeout_mod)
+	var/datum/mood_event/event = GLOB.food_quality_events[food_quality]
+	event = new event.type
+	event.timeout *= timeout_mod
+	gourmand.add_mood_event("quality_food", event)
 	gourmand.adjust_disgust(-5 + -2 * food_quality * fraction)
 	var/quality_label = GLOB.food_quality_description[food_quality]
 	to_chat(gourmand, span_notice("That's \an [quality_label] meal."))

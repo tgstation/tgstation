@@ -167,8 +167,8 @@
 /////////// Lavaland
 
 /obj/item/paper/fluff/stations/lavaland/orm_notice
-	name = "URGENT!"
-	default_raw_text = "A hastily written note has been scribbled here... <br><br> Please use the ore redemption machine in the cargo office for smelting. PLEASE! <br><br>--The Research Staff"
+	name = "URGENT! RENOVATIONS!"
+	default_raw_text = "A hastily written note has been scribbled here... <br><br> Please use the <s>ore redemption machine</s> smelter and refinery in the cargo office for smelting. PLEASE! Leave boulders alone for the BRM to pick up! <br><br>--The Research Staff"
 
 /////////// Space Ruins
 

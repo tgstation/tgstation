@@ -1,17 +1,18 @@
+import { shallowDiffers } from 'common/react';
+import { Component } from 'react';
+
+import { resolveAsset } from '../../assets';
 import {
-  Section,
   Button,
   Dropdown,
-  Stack,
   Input,
   NoticeBox,
+  Section,
+  Stack,
 } from '../../components';
-import { Component } from 'react';
-import { shallowDiffers } from 'common/react';
 import { fetchRetry } from '../../http';
-import { resolveAsset } from '../../assets';
-import { DisplayComponent } from './DisplayComponent';
 import { DEFAULT_COMPONENT_MENU_LIMIT } from './constants';
+import { DisplayComponent } from './DisplayComponent';
 
 // Cache response so it's only sent once
 let fetchServerData;
@@ -119,7 +120,8 @@ export class ComponentMenu extends Component {
                   currentLimit: DEFAULT_COMPONENT_MENU_LIMIT,
                 })
               }
-              displayText={`Category: ${selectedTab}`}
+              selected={selectedTab}
+              placeholder="Category"
               color="transparent"
               className="IntegratedCircuit__BlueBorder"
             />

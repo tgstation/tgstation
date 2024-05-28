@@ -2,9 +2,9 @@ import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
+  Icon,
   LabeledList,
   NoticeBox,
-  Icon,
   Section,
   Stack,
   Tabs,

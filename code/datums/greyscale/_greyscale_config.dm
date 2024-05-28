@@ -65,7 +65,7 @@
 	if(!name)
 		stack_trace("Greyscale config object [DebugName()] is missing a name, make sure `name` has been assigned a value.")
 
-/datum/greyscale_config/Destroy(force, ...)
+/datum/greyscale_config/Destroy(force)
 	if(!force)
 		return QDEL_HINT_LETMELIVE
 	return ..()

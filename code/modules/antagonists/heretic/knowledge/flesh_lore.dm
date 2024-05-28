@@ -13,7 +13,6 @@
  * Imperfect Ritual
  * > Sidepaths:
  *   Void Cloak
- *   Ashen Eyes
  *
  * Mark of Flesh
  * Ritual of Knowledge
@@ -21,13 +20,13 @@
  * Raw Ritual
  * > Sidepaths:
  *   Blood Siphon
- *   Curse of Paralysis
+ *   Opening Blast
  *
  * Bleeding Steel
  * Lonely Ritual
  * > Sidepaths:
- *   Ashen Ritual
  *   Cleave
+ *   Aptera Vulnera
  *
  * Priest's Final Hymn
  */
@@ -123,13 +122,13 @@
 /datum/heretic_knowledge/limited_amount/flesh_ghoul
 	name = "Imperfect Ritual"
 	desc = "Allows you to transmute a corpse and a poppy to create a Voiceless Dead. \
+		The corpse does not need to have a soul. \
 		Voiceless Dead are mute ghouls and only have 50 health, but can use Bloody Blades effectively. \
 		You can only create two at a time."
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/flesh_mark,
 		/datum/heretic_knowledge/void_cloak,
-		/datum/heretic_knowledge/medallion,
 	)
 	required_atoms = list(
 		/mob/living/carbon/human = 1,
@@ -169,15 +168,13 @@
 
 	if(!soon_to_be_ghoul.mind || !soon_to_be_ghoul.client)
 		message_admins("[ADMIN_LOOKUPFLW(user)] is creating a voiceless dead of a body with no player.")
-		var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [soon_to_be_ghoul.real_name], a voiceless dead?", ROLE_HERETIC, ROLE_HERETIC, 5 SECONDS, soon_to_be_ghoul)
-		if(!LAZYLEN(candidates))
+		var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger(soon_to_be_ghoul.real_name)], a [span_notice("voiceless dead")]?", check_jobban = ROLE_HERETIC, role = ROLE_HERETIC, poll_time = 5 SECONDS, checked_target = soon_to_be_ghoul, alert_pic = mutable_appearance('icons/mob/human/human.dmi', "husk"), jump_target = soon_to_be_ghoul, role_name_text = "voiceless dead")
+		if(isnull(chosen_one))
 			loc.balloon_alert(user, "ritual failed, no ghosts!")
 			return FALSE
-
-		var/mob/dead/observer/chosen_candidate = pick(candidates)
-		message_admins("[key_name_admin(chosen_candidate)] has taken control of ([key_name_admin(soon_to_be_ghoul)]) to replace an AFK player.")
+		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(soon_to_be_ghoul)]) to replace an AFK player.")
 		soon_to_be_ghoul.ghostize(FALSE)
-		soon_to_be_ghoul.key = chosen_candidate.key
+		soon_to_be_ghoul.key = chosen_one.key
 
 	selected_atoms -= soon_to_be_ghoul
 	make_ghoul(user, soon_to_be_ghoul)
@@ -242,7 +239,7 @@
 		/datum/heretic_knowledge/blade_upgrade/flesh,
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/spell/blood_siphon,
-		/datum/heretic_knowledge/curse/paralysis,
+		/datum/heretic_knowledge/spell/opening_blast,
 	)
 	required_atoms = list(
 		/obj/item/organ/internal/eyes = 1,
@@ -281,7 +278,7 @@
 		An ever shapeshifting mass of flesh, it knew well my goals. The Marshal approved."
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/flesh_final,
-		/datum/heretic_knowledge/summon/ashy,
+		/datum/heretic_knowledge/spell/apetra_vulnera,
 		/datum/heretic_knowledge/spell/cleave,
 	)
 	required_atoms = list(
@@ -317,7 +314,7 @@
 	priority_announce(
 		text = "[generate_heretic_text()] Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, [user.real_name] has ascended! Fear the ever twisting hand! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
-		sound = ANNOUNCER_SPANOMALIES,
+		sound = 'sound/ambience/antag/heretic/ascend_flesh.ogg',
 		color_override = "pink",
 	)
 

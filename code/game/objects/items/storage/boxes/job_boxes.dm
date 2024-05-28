@@ -30,10 +30,8 @@
 	if(!isnull(mask_type))
 		new mask_type(src)
 
-	if(!isplasmaman(loc))
+	if(!isnull(internal_type))
 		new internal_type(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
 
 	if(!isnull(medipen_type))
 		new medipen_type(src)

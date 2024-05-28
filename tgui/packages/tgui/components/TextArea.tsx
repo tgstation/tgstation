@@ -5,33 +5,37 @@
  * @license MIT
  */
 
+import { KEY } from 'common/keys';
 import { classes } from 'common/react';
 import {
   forwardRef,
-  useEffect,
-  useState,
   RefObject,
-  useRef,
+  useEffect,
   useImperativeHandle,
+  useRef,
+  useState,
 } from 'react';
-import { toInputValue } from './Input';
-import { KEY } from 'common/keys';
+import { KeyboardEvent, SyntheticEvent } from 'react';
+
 import { Box, BoxProps } from './Box';
-import { ChangeEvent, KeyboardEvent } from 'react';
+import { toInputValue } from './Input';
 
 type Props = Partial<{
   autoFocus: boolean;
   autoSelect: boolean;
   displayedValue: string;
   dontUseTabForIndent: boolean;
+  fluid: boolean;
   maxLength: number;
   noborder: boolean;
-  // This fires when: value changes
-  onChange: (event: ChangeEvent<HTMLTextAreaElement>, value: string) => void;
-  // This fires when: enter is pressed
-  onEnter: (event: KeyboardEvent<HTMLTextAreaElement>, value: string) => void;
-  // This fires when: escape is pressed
-  onEscape: (event: KeyboardEvent<HTMLTextAreaElement>) => void;
+  /** Fires when user is 'done typing': Clicked out, blur, enter key (but not shift+enter) */
+  onChange: (event: SyntheticEvent<HTMLTextAreaElement>, value: string) => void;
+  /** Fires once the enter key is pressed */
+  onEnter: (event: SyntheticEvent<HTMLTextAreaElement>, value: string) => void;
+  /** Fires once the escape key is pressed */
+  onEscape: (event: SyntheticEvent<HTMLTextAreaElement>) => void;
+  /** Fires on each key press / value change. Used for searching */
+  onInput: (event: SyntheticEvent<HTMLTextAreaElement>, value: string) => void;
   placeholder: string;
   scrollbar: boolean;
   selfClear: boolean;
@@ -51,6 +55,7 @@ export const TextArea = forwardRef(
       onChange,
       onEnter,
       onEscape,
+      onInput,
       placeholder,
       scrollbar,
       selfClear,
@@ -65,7 +70,7 @@ export const TextArea = forwardRef(
     const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
       if (event.key === KEY.Enter) {
         if (event.shiftKey) {
-          onChange?.(event as any, event.currentTarget.value);
+          event.currentTarget.focus();
           return;
         }
 
@@ -74,7 +79,6 @@ export const TextArea = forwardRef(
           event.currentTarget.value = '';
         }
         event.currentTarget.blur();
-
         return;
       }
 
@@ -106,11 +110,12 @@ export const TextArea = forwardRef(
       () => textareaRef.current as HTMLTextAreaElement,
     );
 
+    /** Focuses the input on mount */
     useEffect(() => {
+      if (!autoFocus && !autoSelect) return;
+
       const input = textareaRef.current;
       if (!input) return;
-
-      input.value = toInputValue(value);
 
       if (autoFocus || autoSelect) {
         setTimeout(() => {
@@ -122,6 +127,17 @@ export const TextArea = forwardRef(
         }, 1);
       }
     }, []);
+
+    /** Updates the initial value on props change */
+    useEffect(() => {
+      const input = textareaRef.current;
+      if (!input) return;
+
+      const newValue = toInputValue(value);
+      if (input.value === newValue) return;
+
+      input.value = newValue;
+    }, [value]);
 
     return (
       <Box
@@ -162,7 +178,8 @@ export const TextArea = forwardRef(
             nowrap && 'TextArea__nowrap',
           ])}
           maxLength={maxLength}
-          onChange={(event) => onChange?.(event, event.target.value)}
+          onBlur={(event) => onChange?.(event, event.target.value)}
+          onChange={(event) => onInput?.(event, event.target.value)}
           onKeyDown={handleKeyDown}
           onScroll={() => {
             if (displayedValue && textareaRef.current) {

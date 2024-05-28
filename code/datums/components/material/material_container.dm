@@ -30,13 +30,13 @@
 
 /// Sets up the proper signals and fills the list of materials with the appropriate references.
 /datum/component/material_container/Initialize(
-			list/init_mats,
-			max_amt = 0,
-			_mat_container_flags = NONE,
-			list/allowed_mats = init_mats,
-			list/allowed_items,
-			list/container_signals
-		)
+	list/init_mats,
+	max_amt = 0,
+	_mat_container_flags = NONE,
+	list/allowed_mats = init_mats,
+	list/allowed_items,
+	list/container_signals
+)
 
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -66,6 +66,9 @@
 		for(var/signal in container_signals)
 			parent.RegisterSignal(src, signal, container_signals[signal])
 
+	//drop sheets when the object is deconstructed but not deleted
+	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(drop_sheets))
+
 	if(_mat_container_flags & MATCONTAINER_NO_INSERT)
 		return
 
@@ -74,8 +77,7 @@
 
 	RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
-/datum/component/material_container/Destroy(force, silent)
-	retrieve_all()
+/datum/component/material_container/Destroy(force)
 	materials = null
 	allowed_materials = null
 	return ..()
@@ -88,6 +90,11 @@
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
 		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
+/datum/component/material_container/proc/drop_sheets()
+	SIGNAL_HANDLER
+
+	retrieve_all()
+
 /datum/component/material_container/proc/on_examine(datum/source, mob/user, list/examine_texts)
 	SIGNAL_HANDLER
 
@@ -95,7 +102,7 @@
 		var/datum/material/M = I
 		var/amt = materials[I] / SHEET_MATERIAL_AMOUNT
 		if(amt)
-			examine_texts += span_notice("It has [amt] sheets of [lowertext(M.name)] stored.")
+			examine_texts += span_notice("It has [amt] sheets of [LOWER_TEXT(M.name)] stored.")
 
 /datum/component/material_container/vv_edit_var(var_name, var_value)
 	var/old_flags = mat_container_flags
@@ -133,17 +140,16 @@
  * Arguments:
  * - [source][/obj/item]: The source of the materials we are inserting.
  * - multiplier: The multiplier for the materials extract from this item being inserted.
- * - breakdown_flags: The breakdown bitflags that will be used to retrieve the materials from the source
  * - context: the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_ITEM_CONSUMED
  * and is used mostly for silo logging, the silo resends this signal on the context to give it a
  * chance to process the item
  */
-/datum/component/material_container/proc/insert_item_materials(obj/item/source, multiplier = 1, breakdown_flags = mat_container_flags, atom/context = parent)
+/datum/component/material_container/proc/insert_item_materials(obj/item/source, multiplier = 1, atom/context = parent)
 	var/primary_mat
 	var/max_mat_value = 0
 	var/material_amount = 0
 
-	var/list/item_materials = source.get_material_composition(breakdown_flags)
+	var/list/item_materials = source.get_material_composition()
 	var/list/mats_consumed = list()
 	for(var/MAT in item_materials)
 		if(!can_hold_material(MAT))
@@ -200,17 +206,16 @@
  * Arguments:
  * - [weapon][obj/item]: the item you are trying to insert
  * - multiplier: The multiplier for the materials being inserted
- * - breakdown_flags: The breakdown bitflags that will be used to retrieve the materials from the source
  * - context: the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_ITEM_CONSUMED and is used mostly for silo logging
  */
-/datum/component/material_container/proc/insert_item(obj/item/weapon, multiplier = 1, breakdown_flags = mat_container_flags, atom/context = parent)
+/datum/component/material_container/proc/insert_item(obj/item/weapon, multiplier = 1, atom/context = parent)
 	if(QDELETED(weapon))
 		return MATERIAL_INSERT_ITEM_NO_MATS
 	multiplier = CEILING(multiplier, 0.01)
 
 	var/obj/item/target = weapon
 
-	var/material_amount = OPTIMAL_COST(get_item_material_amount(target, breakdown_flags) * multiplier)
+	var/material_amount = OPTIMAL_COST(get_item_material_amount(target) * multiplier)
 	if(!material_amount)
 		return MATERIAL_INSERT_ITEM_NO_MATS
 	var/obj/item/stack/item_stack
@@ -224,7 +229,7 @@
 		if(!sheets_to_insert)
 			return MATERIAL_INSERT_ITEM_NO_SPACE
 		target = fast_split_stack(item_stack, sheets_to_insert)
-		material_amount = get_item_material_amount(target, breakdown_flags) * multiplier
+		material_amount = get_item_material_amount(target) * multiplier
 	material_amount = OPTIMAL_COST(material_amount)
 
 	//not enough space, time to bail
@@ -232,7 +237,7 @@
 		return MATERIAL_INSERT_ITEM_NO_SPACE
 
 	//do the insert
-	var/last_inserted_id = insert_item_materials(target, multiplier, breakdown_flags, context)
+	var/last_inserted_id = insert_item_materials(target, multiplier, context)
 	if(!isnull(last_inserted_id))
 		qdel(target) //item gone
 		return material_amount
@@ -254,10 +259,9 @@
  * Arguments:
  * * held_item - the item to insert
  * * user - the mob inserting this item
- * * breakdown_flags - how this item and all it's contents inside are broken down during insertion. This is unique to the machine doing the insertion
  * * context - the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_ITEM_CONSUMED and is used mostly for silo logging
  */
-/datum/component/material_container/proc/user_insert(obj/item/held_item, mob/living/user, breakdown_flags = mat_container_flags, atom/context = parent)
+/datum/component/material_container/proc/user_insert(obj/item/held_item, mob/living/user, atom/context = parent)
 	set waitfor = FALSE
 	. = 0
 
@@ -271,10 +275,9 @@
 	var/inserted = 0
 	//All messages to be displayed to chat
 	var/list/chat_msgs = list()
-
 	//differs from held_item when using TK
 	var/active_held = user.get_active_held_item()
-
+	//storage items to retrive items from
 	var/static/list/storage_items
 	if(isnull(storage_items))
 		storage_items = list(
@@ -284,7 +287,7 @@
 		)
 
 	//1st iteration consumes all items that do not have contents inside
-	//2nd iteration consumes items who do have contents inside(but they were consumed in the 1st iteration si its empty now)
+	//2nd iteration consumes items who do have contents inside(but they were consumed in the 1st iteration so its empty now)
 	for(var/i in 1 to 2)
 		//no point inserting more items
 		if(inserted == MATERIAL_INSERT_ITEM_NO_SPACE)
@@ -307,15 +310,11 @@
 			//can't allow abstract, hologram items
 			if((target_item.item_flags & ABSTRACT) || (target_item.flags_1 & HOLOGRAM_1))
 				continue
-			//untouchable, move it out the way, code copied from recycler
-			if(target_item.resistance_flags & INDESTRUCTIBLE)
-				target_item.forceMove(get_turf(parent))
-				continue
 			//user defined conditions
 			if(SEND_SIGNAL(src, COMSIG_MATCONTAINER_PRE_USER_INSERT, target_item, user) & MATCONTAINER_BLOCK_INSERT)
 				continue
-			//item is either not allowed for redemption, not in the allowed types
-			if((target_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache)))
+			//item is either indestructible, not allowed for redemption or not in the allowed types
+			if((target_item.resistance_flags & INDESTRUCTIBLE) || (target_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache)))
 				if(!(mat_container_flags & MATCONTAINER_SILENT) && i == 1) //count only child items the 1st time around
 					var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] || list()
 					var/list/item_data = status_data[target_item.name] || list()
@@ -323,6 +322,10 @@
 					status_data[target_item.name] = item_data
 					chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] = status_data
 
+				if(target_item.resistance_flags & INDESTRUCTIBLE)
+					if(i == 1 && target_item != active_held) //move it out of any storage medium its in so it doesn't get consumed with its parent, but only if that storage medium is not our hand
+						target_item.forceMove(get_turf(context))
+					continue
 				//storage items usually come here but we make the exception only on the 1st iteration
 				//this is so players can insert items from their bags into machines for convinience
 				if(!is_type_in_list(target_item, storage_items))
@@ -342,7 +345,7 @@
 				if(!isstack(target_item) && !is_type_in_list(target_item, storage_items))
 					var/total_amount = 0
 					for(var/obj/item/weapon as anything in target_item.get_all_contents_type(/obj/item))
-						total_amount += get_item_material_amount(weapon, breakdown_flags)
+						total_amount += get_item_material_amount(weapon)
 					if(!has_space(total_amount))
 						if(!(mat_container_flags & MATCONTAINER_SILENT))
 							to_chat(user, span_warning("[parent] does not have enough space for [target_item]!"))
@@ -397,7 +400,7 @@
 				item_name = the_stack.singular_name
 				item_count = the_stack.amount
 				is_stack = TRUE
-			inserted = insert_item(target_item, 1, mat_container_flags, context)
+			inserted = insert_item(target_item, 1, context)
 			if(inserted > 0)
 				. += inserted
 				inserted /= SHEET_MATERIAL_AMOUNT // display units inserted as sheets for improved readability
@@ -418,11 +421,9 @@
 				//collect all messages to print later
 				var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_SUCCESS]"] || list()
 				var/list/item_data = status_data[item_name] || list()
+				item_data["count"] += item_count
 				item_data["amount"] += inserted
-				if(!is_stack) //count will match with amount so its not required
-					item_data["count"] += item_count
-				else
-					item_data["stack"] = TRUE
+				item_data["stack"] = is_stack
 				status_data[item_name] = item_data
 				chat_msgs["[MATERIAL_INSERT_ITEM_SUCCESS]"] = status_data
 
@@ -463,15 +464,16 @@
 				switch(text2num(status))
 					if(MATERIAL_INSERT_ITEM_SUCCESS) //no problems full item was consumed
 						if(chat_data["stack"])
-							to_chat(user, span_notice("[amount > 1 ? amount : ""] [item_name][amount > 1 ? "'s" : ""] was consumed by [parent]"))
+							var/sheets = min(count, amount) //minimum between sheets inserted vs sheets consumed(values differ for alloys)
+							to_chat(user, span_notice("[sheets > 1 ? sheets : ""] [item_name][sheets > 1 ? "s were" : " was"] added to [parent]."))
 						else
-							to_chat(user, span_notice("[count > 1 ? count : ""] [item_name][count > 1 ? "'s" : ""] worth [amount] sheets of material was consumed by [parent]"))
+							to_chat(user, span_notice("[count > 1 ? count : ""] [item_name][count > 1 ? "s" : ""], worth [amount] sheets, [count > 1 ? "were" : "was"] added to [parent]."))
 					if(MATERIAL_INSERT_ITEM_NO_SPACE) //no space
-						to_chat(user, span_warning("[parent] has no space to accept [item_name]"))
+						to_chat(user, span_warning("[parent] has no space to accept [item_name]!"))
 					if(MATERIAL_INSERT_ITEM_NO_MATS) //no materials inside these items
-						to_chat(user, span_warning("[count > 1 ? count : ""] [item_name][count > 1 ? "'s" : ""] has no materials to be accepted by [parent]"))
+						to_chat(user, span_warning("[item_name][count > 1 ? "s have" : " has"] no materials that can be accepted by [parent]!"))
 					if(MATERIAL_INSERT_ITEM_FAILURE) //could be because the material type was not accepted or other stuff
-						to_chat(user, span_warning("[count > 1 ? count : ""] [item_name][count > 1 ? "'s" : ""] was rejected by [parent]"))
+						to_chat(user, span_warning("[item_name][count > 1 ? "s were" : " was"] rejected by [parent]!"))
 
 /// Proc that allows players to fill the parent with mats
 /datum/component/material_container/proc/on_attackby(datum/source, obj/item/weapon, mob/living/user)
@@ -539,13 +541,12 @@
  *
  * Arguments:
  * - [I][obj/item]: the item whos materials must be retrieved
- * - breakdown_flags: how this item must be broken down to retrieve its materials
  */
-/datum/component/material_container/proc/get_item_material_amount(obj/item/I, breakdown_flags = mat_container_flags)
+/datum/component/material_container/proc/get_item_material_amount(obj/item/I)
 	if(!istype(I) || !I.custom_materials)
 		return 0
 	var/material_amount = 0
-	var/list/item_materials = I.get_material_composition(breakdown_flags)
+	var/list/item_materials = I.get_material_composition()
 	for(var/MAT in item_materials)
 		if(!can_hold_material(MAT))
 			continue
@@ -586,7 +587,9 @@
 		return FALSE
 
 	for(var/x in mats) //Loop through all required materials
-		if(!has_enough_of_material(x, OPTIMAL_COST(mats[x] * coefficient) * multiplier))//Not a category, so just check the normal way
+		var/wanted = OPTIMAL_COST(mats[x] * coefficient) * multiplier
+		if(!has_enough_of_material(x, wanted))//Not a category, so just check the normal way
+			testing("didnt have: [x] wanted: [wanted]")
 			return FALSE
 
 	return TRUE
@@ -675,6 +678,7 @@
 	while(sheet_amt > 0)
 		//don't merge yet. we need to do stuff with it first
 		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, min(sheet_amt, MAX_STACK_SIZE), FALSE)
+		new_sheets.manufactured = TRUE
 		count += new_sheets.amount
 		//use material & deduct work needed
 		use_amount_mat(new_sheets.amount * SHEET_MATERIAL_AMOUNT, material)
@@ -750,7 +754,7 @@
 		return NONE
 	if((held_item.flags_1 & HOLOGRAM_1) || (held_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(held_item, allowed_item_typecache)))
 		return NONE
-	var/list/item_materials = held_item.get_material_composition(mat_container_flags)
+	var/list/item_materials = held_item.get_material_composition()
 	if(!length(item_materials))
 		return NONE
 	for(var/material in item_materials)

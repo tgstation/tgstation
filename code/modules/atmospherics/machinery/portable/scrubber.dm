@@ -31,9 +31,9 @@
 		/datum/gas/halon,
 	)
 
-/obj/machinery/portable_atmospherics/scrubber/Destroy()
-	var/turf/T = get_turf(src)
-	T.assume_air(air_contents)
+/obj/machinery/portable_atmospherics/scrubber/on_deconstruction(disassembled)
+	var/turf/local_turf = get_turf(src)
+	local_turf.assume_air(air_contents)
 	return ..()
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon_state()

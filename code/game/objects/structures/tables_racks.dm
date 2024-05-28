@@ -47,7 +47,7 @@
 	make_climbable()
 
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(table_carbon),
+		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(table_living),
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -73,7 +73,7 @@
 			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
 			. = CONTEXTUAL_SCREENTIP_SET
 
-	if(!(obj_flags & NO_DECONSTRUCTION) && deconstruction_ready)
+	if(deconstruction_ready)
 		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_RMB] = "Disassemble"
 			. = CONTEXTUAL_SCREENTIP_SET
@@ -181,7 +181,7 @@
 	pushed_mob.Knockdown(30)
 	pushed_mob.apply_damage(10, BRUTE)
 	pushed_mob.apply_damage(40, STAMINA)
-	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
+	if(user.mind?.martial_art?.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
 	playsound(pushed_mob, 'sound/effects/tableslam.ogg', 90, TRUE)
 	pushed_mob.visible_message(span_danger("[user] slams [pushed_mob] onto \the [src]!"), \
@@ -198,7 +198,7 @@
 	banged_limb?.receive_damage(30, wound_bonus = extra_wound)
 	pushed_mob.apply_damage(60, STAMINA)
 	take_damage(50)
-	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
+	if(user.mind?.martial_art?.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
 	playsound(pushed_mob, 'sound/effects/bang.ogg', 90, TRUE)
 	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s [banged_limb.plaintext_zone] against \the [src]!"),
@@ -207,7 +207,7 @@
 	pushed_mob.add_mood_event("table", /datum/mood_event/table_limbsmash, banged_limb)
 
 /obj/structure/table/screwdriver_act_secondary(mob/living/user, obj/item/tool)
-	if(obj_flags & NO_DECONSTRUCTION || !deconstruction_ready)
+	if(!deconstruction_ready)
 		return FALSE
 	to_chat(user, span_notice("You start disassembling [src]..."))
 	if(tool.use_tool(src, user, 2 SECONDS, volume=50))
@@ -215,12 +215,13 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/wrench_act_secondary(mob/living/user, obj/item/tool)
-	if(obj_flags & NO_DECONSTRUCTION || !deconstruction_ready)
+	if(!deconstruction_ready)
 		return FALSE
 	to_chat(user, span_notice("You start deconstructing [src]..."))
 	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		deconstruct(TRUE, 1)
+		frame = null
+		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/attackby(obj/item/I, mob/living/user, params)
@@ -297,20 +298,18 @@
 /obj/structure/table/proc/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	return
 
-/obj/structure/table/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/turf/T = get_turf(src)
-		if(buildstack)
-			new buildstack(T, buildstackamount)
-		else
-			for(var/i in custom_materials)
-				var/datum/material/M = i
-				new M.sheet_type(T, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
-		if(!wrench_disassembly)
-			new frame(T)
-		else
-			new framestack(T, framestackamount)
-	qdel(src)
+/obj/structure/table/atom_deconstruct(disassembled = TRUE)
+	var/turf/target_turf = get_turf(src)
+	if(buildstack)
+		new buildstack(target_turf, buildstackamount)
+	else
+		for(var/datum/material/mat in custom_materials)
+			new mat.sheet_type(target_turf, FLOOR(custom_materials[mat] / SHEET_MATERIAL_AMOUNT, 1))
+
+	if(frame)
+		new frame(target_turf)
+	else
+		new framestack(get_turf(src), framestackamount)
 
 /obj/structure/table/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
@@ -323,17 +322,17 @@
 		return TRUE
 	return FALSE
 
-/obj/structure/table/proc/table_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
+/obj/structure/table/proc/table_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
 	SIGNAL_HANDLER
-	if(!shove_blocked)
+	if((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED))
 		return
 	target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
 	target.visible_message(span_danger("[shover.name] shoves [target.name] onto \the [src]!"),
-		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
 	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
 	target.throw_at(src, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
-	log_combat(shover, target, "shoved", "onto [src] (table)")
-	return COMSIG_CARBON_SHOVE_HANDLED
+	log_combat(shover, target, "shoved", "onto [src] (table)[weapon ? " with [weapon]" : ""]")
+	return COMSIG_LIVING_SHOVE_HANDLED
 
 /obj/structure/table/greyscale
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
@@ -437,13 +436,12 @@
 
 /obj/structure/table/glass/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
+
 	if(!isliving(AM))
 		return
 	// Don't break if they're just flying past
 	if(AM.throwing)
-		addtimer(CALLBACK(src, PROC_REF(throw_check), AM), 5)
+		addtimer(CALLBACK(src, PROC_REF(throw_check), AM), 0.5 SECONDS)
 	else
 		check_break(AM)
 
@@ -469,19 +467,16 @@
 	victim.Paralyze(100)
 	qdel(src)
 
-/obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(disassembled)
-			..()
-			return
-		else
-			var/turf/T = get_turf(src)
-			playsound(T, SFX_SHATTER, 50, TRUE)
+/obj/structure/table/glass/atom_deconstruct(disassembled = TRUE)
+	if(disassembled)
+		..()
+		return
+	else
+		var/turf/T = get_turf(src)
+		playsound(T, SFX_SHATTER, 50, TRUE)
 
-			new frame(loc)
-			new glass_shard_type(loc)
-
-	qdel(src)
+		new frame(loc)
+		new glass_shard_type(loc)
 
 /obj/structure/table/glass/narsie_act()
 	color = NARSIE_WINDOW_COLOUR
@@ -825,6 +820,28 @@
 	pass_flags_self = LETPASSTHROW //You can throw objects over this, despite it's density.
 	max_integrity = 20
 
+/obj/structure/rack/skeletal
+	name = "skeletal minibar"
+	desc = "Rattle me boozes!"
+	icon = 'icons/obj/fluff/general.dmi'
+	icon_state = "minibar"
+
+/obj/structure/rack/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 12)
+	register_context()
+
+/obj/structure/rack/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
 /obj/structure/rack/examine(mob/user)
 	. = ..()
 	. += span_notice("It's held together by a couple of <b>bolts</b>.")
@@ -836,25 +853,17 @@
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return TRUE
 
-/obj/structure/rack/MouseDrop_T(obj/O, mob/user)
-	. = ..()
-	if ((!( isitem(O) ) || user.get_active_held_item() != O))
-		return
-	if(!user.dropItemToGround(O))
-		return
-	if(O.loc != src.loc)
-		step(O, get_dir(O, src))
+/obj/structure/rack/wrench_act_secondary(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/rack/attackby(obj/item/W, mob/living/user, params)
-	var/list/modifiers = params2list(params)
-	if (W.tool_behaviour == TOOL_WRENCH && !(obj_flags & NO_DECONSTRUCTION) && LAZYACCESS(modifiers, RIGHT_CLICK))
-		W.play_tool_sound(src)
-		deconstruct(TRUE)
-		return
-	if(user.combat_mode)
-		return ..()
-	if(user.transferItemToLoc(W, drop_location()))
-		return 1
+/obj/structure/rack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if((tool.item_flags & ABSTRACT) || user.combat_mode)
+		return NONE
+	if(user.transferItemToLoc(tool, drop_location(), silent = FALSE))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/structure/rack/attack_paw(mob/living/user, list/modifiers)
 	attack_hand(user, modifiers)
@@ -863,7 +872,7 @@
 	. = ..()
 	if(.)
 		return
-	if(user.body_position == LYING_DOWN || user.usable_legs < 2)
+	if(!user.combat_mode || user.body_position == LYING_DOWN || user.usable_legs < 2)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
@@ -884,12 +893,10 @@
  * Rack destruction
  */
 
-/obj/structure/rack/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		set_density(FALSE)
-		var/obj/item/rack_parts/newparts = new(loc)
-		transfer_fingerprints_to(newparts)
-	qdel(src)
+/obj/structure/rack/atom_deconstruct(disassembled = TRUE)
+	set_density(FALSE)
+	var/obj/item/rack_parts/newparts = new(loc)
+	transfer_fingerprints_to(newparts)
 
 
 /*
@@ -906,19 +913,38 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	var/building = FALSE
 
-/obj/item/rack_parts/attackby(obj/item/W, mob/user, params)
-	if (W.tool_behaviour == TOOL_WRENCH)
-		new /obj/item/stack/sheet/iron(user.loc)
-		qdel(src)
-	else
-		. = ..()
+/obj/item/rack_parts/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/rack_parts/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item == src)
+		context[SCREENTIP_CONTEXT_LMB] = "Construct Rack"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
+/obj/item/rack_parts/wrench_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/rack_parts/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/iron(drop_location())
 
 /obj/item/rack_parts/attack_self(mob/user)
 	if(building)
 		return
 	building = TRUE
 	to_chat(user, span_notice("You start constructing a rack..."))
-	if(do_after(user, 50, target = user, progress=TRUE))
+	if(do_after(user, 5 SECONDS, target = user, progress=TRUE))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/obj/structure/rack/R = new /obj/structure/rack(get_turf(src))

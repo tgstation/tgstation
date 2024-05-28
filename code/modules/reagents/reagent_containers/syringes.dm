@@ -82,9 +82,10 @@
 			living_target.log_message("injected themselves ([contained]) with [name]", LOG_ATTACK, color="orange")
 		else
 			log_combat(user, living_target, "injected", src, addition="which had [contained]")
-	reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user, methods = INJECT)
-	to_chat(user, span_notice("You inject [amount_per_transfer_from_this] units of the solution. The syringe now contains [reagents.total_volume] units."))
-	target.update_appearance()
+
+	if(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user, methods = INJECT))
+		to_chat(user, span_notice("You inject [amount_per_transfer_from_this] units of the solution. The syringe now contains [reagents.total_volume] units."))
+		target.update_appearance()
 
 /obj/item/reagent_containers/syringe/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	if (!try_syringe(target, user, proximity_flag))
@@ -266,6 +267,12 @@
 	var/toxin_to_get = pick(/datum/reagent/toxin/bungotoxin, /datum/reagent/toxin/coniine, /datum/reagent/toxin/amanitin, /datum/reagent/consumable/liquidelectricity/enriched, /datum/reagent/ants)
 	list_reagents = list((toxin_to_get) = 5)
 	return ..()
+
+/obj/item/reagent_containers/syringe/crude/mushroom
+	list_reagents = list(/datum/reagent/drug/mushroomhallucinogen = 5)
+
+/obj/item/reagent_containers/syringe/crude/blastoff
+	list_reagents = list(/datum/reagent/drug/blastoff = 5)
 
 /obj/item/reagent_containers/syringe/spider_extract
 	name = "spider extract syringe"

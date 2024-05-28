@@ -1,4 +1,5 @@
 import { sortBy } from 'common/collections';
+
 import { useBackend } from '../backend';
 import {
   Box,
@@ -110,7 +111,7 @@ const Options = (props) => {
             minValue={1}
             maxValue={10}
             value={num_copies}
-            onDrag={(e, value) =>
+            onDrag={(value) =>
               act('set_copies', {
                 num_copies: value,
               })
@@ -177,7 +178,7 @@ const Blanks = (props) => {
   const { act, data } = useBackend();
   const { blanks, categories, category } = data;
 
-  const sortedBlanks = sortBy((blank) => blank.name)(blanks || []);
+  const sortedBlanks = sortBy(blanks || [], (blank) => blank.name);
 
   const selectedCategory = category ?? categories[0];
   const visibleBlanks = sortedBlanks.filter(

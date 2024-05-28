@@ -930,8 +930,10 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 		if(!new_z)
 			old_area = crds.loc
-			old_area.turfs_to_uncontain += crds
-			area_instance.contained_turfs.Add(crds)
+			LISTASSERTLEN(old_area.turfs_to_uncontain_by_zlevel, crds.z, list())
+			LISTASSERTLEN(area_instance.turfs_by_zlevel, crds.z, list())
+			old_area.turfs_to_uncontain_by_zlevel[crds.z] += crds
+			area_instance.turfs_by_zlevel[crds.z] += crds
 		area_instance.contents.Add(crds)
 
 		if(GLOB.use_preloader)
@@ -1004,8 +1006,6 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	if (!text)
 		return
 
-	// If we're using a semi colon, we can do this as splittext rather then constant calls to find_next_delimiter_position
-	// This does make the code a bit harder to read, but saves a good bit of time so suck it up
 	var/position
 	var/old_position = 1
 	while(position != 0)

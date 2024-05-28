@@ -43,7 +43,7 @@
 
 	src.base_container_type = base_container_type || parent.type
 
-/datum/component/takes_reagent_appearance/Destroy(force, silent)
+/datum/component/takes_reagent_appearance/Destroy(force)
 	on_icon_changed = null
 	on_icon_reset = null
 	return ..()

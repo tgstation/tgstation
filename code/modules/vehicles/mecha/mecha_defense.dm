@@ -115,18 +115,15 @@
 	return ..()
 
 /obj/vehicle/sealed/mecha/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit) //wrapper
-	. = ..()
-	if(. != BULLET_ACT_HIT)
-		return .
-
 	//allows bullets to hit the pilot of open-canopy mechs
-	if(!enclosed \
+	if(!(mecha_flags & IS_ENCLOSED) \
 		&& LAZYLEN(occupants) \
 		&& !(mecha_flags & SILICON_PILOT) \
 		&& (def_zone == BODY_ZONE_HEAD || def_zone == BODY_ZONE_CHEST))
-		for(var/mob/living/hitmob as anything in occupants)
-			hitmob.bullet_act(hitting_projectile, def_zone, piercing_hit) //If the sides are open, the occupant can be hit
-		return BULLET_ACT_HIT
+		var/mob/living/hitmob = pick(occupants)
+		return hitmob.bullet_act(hitting_projectile, def_zone, piercing_hit) //If the sides are open, the occupant can be hit
+
+	. = ..()
 
 	log_message("Hit by projectile. Type: [hitting_projectile]([hitting_projectile.damage_type]).", LOG_MECHA, color="red")
 	// yes we *have* to run the armor calc proc here I love tg projectile code too
@@ -137,6 +134,7 @@
 		attack_dir = REVERSE_DIR(hitting_projectile.dir),
 		armour_penetration = hitting_projectile.armour_penetration,
 	), def_zone)
+
 
 /obj/vehicle/sealed/mecha/ex_act(severity, target)
 	log_message("Affected by explosion of severity: [severity].", LOG_MECHA, color="red")
@@ -173,7 +171,7 @@
 	if (. & EMP_PROTECT_SELF)
 		return
 	if(get_charge())
-		use_power((cell.charge/3)/(severity*2))
+		use_energy((cell.charge/3)/(severity*2))
 		take_damage(30 / severity, BURN, ENERGY, 1)
 	log_message("EMP detected", LOG_MECHA, color="red")
 
@@ -199,7 +197,7 @@
 
 /obj/vehicle/sealed/mecha/fire_act() //Check if we should ignite the pilot of an open-canopy mech
 	. = ..()
-	if(enclosed || mecha_flags & SILICON_PILOT)
+	if(mecha_flags & IS_ENCLOSED || mecha_flags & SILICON_PILOT)
 		return
 	for(var/mob/living/cookedalive as anything in occupants)
 		if(cookedalive.fire_stacks < 5)
@@ -225,6 +223,10 @@
 
 	if(istype(weapon, /obj/item/mecha_ammo))
 		ammo_resupply(weapon, user)
+		return
+
+	if(istype(weapon, /obj/item/rcd_upgrade))
+		upgrade_rcd(weapon, user)
 		return
 
 	if(weapon.GetID())
@@ -346,21 +348,9 @@
 	..()
 	. = TRUE
 
-	if(!(mecha_flags & PANEL_OPEN) && LAZYLEN(occupants))
-		for(var/mob/occupant as anything in occupants)
-			occupant.show_message(
-				span_userdanger("[user] is trying to open the maintenance panel of [src]!"), MSG_VISUAL,
-				span_userdanger("You hear someone trying to open the maintenance panel of [src]!"), MSG_AUDIBLE,
-			)
-		visible_message(span_danger("[user] is trying to open the maintenance panel of [src]!"))
-		if(!do_after(user, 5 SECONDS, src))
-			return
-		for(var/mob/occupant as anything in occupants)
-			occupant.show_message(
-				span_userdanger("[user] has opened the maintenance panel of [src]!"), MSG_VISUAL,
-				span_userdanger("You hear someone opening the maintenance panel of [src]!"), MSG_AUDIBLE,
-			)
-		visible_message(span_danger("[user] has opened the maintenance panel of [src]!"))
+	if(LAZYLEN(occupants))
+		balloon_alert(user, "panel blocked")
+		return
 
 	mecha_flags ^= PANEL_OPEN
 	balloon_alert(user, (mecha_flags & PANEL_OPEN) ? "panel open" : "panel closed")
@@ -524,3 +514,9 @@
 		else
 			balloon_alert(user, "can't use this ammo!")
 	return FALSE
+
+///Upgrades any attached RCD equipment.
+/obj/vehicle/sealed/mecha/proc/upgrade_rcd(obj/item/rcd_upgrade/rcd_upgrade, mob/user)
+	for(var/obj/item/mecha_parts/mecha_equipment/rcd/rcd_equip in flat_equipment)
+		if(rcd_equip.internal_rcd.install_upgrade(rcd_upgrade, user))
+			return

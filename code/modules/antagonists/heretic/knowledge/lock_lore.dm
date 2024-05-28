@@ -5,21 +5,22 @@
  *
  * A Steward's Secret
  * Grasp of Lock
- * > Sidepaths:
- *   Ashen Eyes
- *	 Codex Cicatrix
  * Key Keeper’s Burden
- *
+ * > Sidepaths:
+ *   Mindgate
  * Concierge's Rite
  * Mark Of Lock
  * Ritual of Knowledge
  * Burglar's Finesse
  * > Sidepaths:
- *   Apetra Vulnera
  *   Opening Blast
+ *   Unfathomable Curio
+ * 	 Unsealed arts
  *
  * Opening Blade
  * Caretaker’s Last Refuge
+ * > Sidepaths:
+ * 	 Apetra Vulnera
  *
  * Unlock the Labyrinth
  */
@@ -45,11 +46,7 @@
 		DNA locks on mechs will be removed, and any pilot will be ejected. Works on consoles. \
 		Makes a distinctive knocking sound on use."
 	gain_text = "Nothing may remain closed from my touch."
-	next_knowledge = list(
-		/datum/heretic_knowledge/key_ring,
-		/datum/heretic_knowledge/medallion,
-		/datum/heretic_knowledge/codex_cicatrix,
-	)
+	next_knowledge = list(/datum/heretic_knowledge/key_ring)
 	cost = 1
 	route = PATH_LOCK
 
@@ -95,9 +92,12 @@
 /datum/heretic_knowledge/key_ring
 	name = "Key Keeper’s Burden"
 	desc = "Allows you to transmute a wallet, an iron rod, and an ID card to create an Eldritch Card. \
-		It functions the same as an ID Card, but attacking it with an ID card fuses it and gains its access. \
-		You can use it in-hand to change its form to a card you fused. \
-		Does not preserve the card used in the ritual."
+		Hit a pair of airlocks with it to create a pair of portals, which will teleport you between them, but teleport non-heretics randomly. \
+		You can ctrl-click the card to invert this behavior for created portals. \
+		Each card may only sustain a single pair of portals at the same time. \
+		It also functions and appears the same as a regular ID Card. \
+		Attacking it with a normal ID card consumes it and gains its access, and you can use it in-hand to change its appearance to a card you fused. \
+		Does not preserve the card originally used in the ritual."
 	gain_text = "The Keeper sneered. \"These plastic rectangles are a mockery of keys, and I curse every door that desires them.\""
 	required_atoms = list(
 		/obj/item/storage/wallet = 1,
@@ -105,22 +105,10 @@
 		/obj/item/card/id = 1,
 	)
 	result_atoms = list(/obj/item/card/id/advanced/heretic)
-	next_knowledge = list(/datum/heretic_knowledge/limited_amount/concierge_rite)
-	cost = 1
-	route = PATH_LOCK
-
-/datum/heretic_knowledge/limited_amount/concierge_rite // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
-	name = "Concierge's Rite"
-	desc = "Allows you to transmute a white crayon, a wooden plank, and a multitool to create a Labyrinth Handbook. \
-		It can materialize a barricade at range that only you and people resistant to magic can pass. 3 uses."
-	gain_text = "The Concierge scribbled my name into the Handbook. \"Welcome to your new home, fellow Steward.\""
-	required_atoms = list(
-		/obj/item/toy/crayon/white = 1,
-		/obj/item/stack/sheet/mineral/wood = 1,
-		/obj/item/multitool = 1,
+	next_knowledge = list(
+		/datum/heretic_knowledge/mark/lock_mark,
+		/datum/heretic_knowledge/spell/mind_gate,
 	)
-	result_atoms = list(/obj/item/heretic_labyrinth_handbook)
-	next_knowledge = list(/datum/heretic_knowledge/mark/lock_mark)
 	cost = 1
 	route = PATH_LOCK
 
@@ -135,7 +123,22 @@
 	mark_type = /datum/status_effect/eldritch/lock
 
 /datum/heretic_knowledge/knowledge_ritual/lock
+	next_knowledge = list(/datum/heretic_knowledge/limited_amount/concierge_rite)
+	route = PATH_LOCK
+
+/datum/heretic_knowledge/limited_amount/concierge_rite // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
+	name = "Concierge's Rite"
+	desc = "Allows you to transmute a white crayon, a wooden plank, and a multitool to create a Labyrinth Handbook. \
+		It can materialize a barricade at range that only you and people resistant to magic can pass. 3 uses."
+	gain_text = "The Concierge scribbled my name into the Handbook. \"Welcome to your new home, fellow Steward.\""
+	required_atoms = list(
+		/obj/item/toy/crayon/white = 1,
+		/obj/item/stack/sheet/mineral/wood = 1,
+		/obj/item/multitool = 1,
+	)
+	result_atoms = list(/obj/item/heretic_labyrinth_handbook)
 	next_knowledge = list(/datum/heretic_knowledge/spell/burglar_finesse)
+	cost = 1
 	route = PATH_LOCK
 
 /datum/heretic_knowledge/spell/burglar_finesse
@@ -144,12 +147,14 @@
 		that puts a random item from the victims backpack into your hand."
 	gain_text = "Consorting with Burglar spirits is frowned upon, but a Steward will always want to learn about new doors."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/apetra_vulnera,
 		/datum/heretic_knowledge/spell/opening_blast,
+		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/blade_upgrade/flesh/lock,
+		/datum/heretic_knowledge/unfathomable_curio,
+		/datum/heretic_knowledge/painting,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
-	cost = 2
+	cost = 1
 	route = PATH_LOCK
 
 /datum/heretic_knowledge/blade_upgrade/flesh/lock //basically a chance-based weeping avulsion version of the former
@@ -171,7 +176,10 @@
 		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
 		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
 	gain_text = "Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable."
-	next_knowledge = list(/datum/heretic_knowledge/ultimate/lock_final)
+	next_knowledge = list(
+		/datum/heretic_knowledge/ultimate/lock_final,
+		/datum/heretic_knowledge/spell/apetra_vulnera,
+	)
 	route = PATH_LOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 1
@@ -181,7 +189,8 @@
 	desc = "The ascension ritual of the Path of Knock. \
 		Bring 3 corpses without organs in their torso to a transmutation rune to complete the ritual. \
 		When completed, you gain the ability to transform into empowered eldritch creatures \
-		and in addition, create a tear to the Labyrinth's heart; \
+		and your keyblades will become even deadlier. \
+		In addition, you will create a tear to the Labyrinth's heart; \
 		a tear in reality located at the site of this ritual. \
 		Eldritch creatures will endlessly pour from this rift \
 		who are bound to obey your instructions."
@@ -215,7 +224,7 @@
 	priority_announce(
 		text = "Delta-class dimensional anomaly detec[generate_heretic_text()] Reality rended, torn. Gates open, doors open, [user.real_name] has ascended! Fear the tide! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
-		sound = ANNOUNCER_SPANOMALIES,
+		sound = 'sound/ambience/antag/heretic/ascend_knock.ogg',
 		color_override = "pink",
 	)
 	user.client?.give_award(/datum/award/achievement/misc/lock_ascension, user)

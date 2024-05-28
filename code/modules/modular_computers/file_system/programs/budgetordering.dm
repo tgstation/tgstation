@@ -8,6 +8,7 @@
 	can_run_on_flags = PROGRAM_LAPTOP | PROGRAM_PDA
 	size = 10
 	tgui_id = "NtosCargo"
+	program_icon = FA_ICON_CART_FLATBED
 	///Are you actually placing orders with it?
 	var/requestonly = TRUE
 	///Can the tablet see or buy illegal stuff?
@@ -34,7 +35,7 @@
 	var/cargo_account = ACCOUNT_CAR
 
 /datum/computer_file/program/budgetorders/proc/is_visible_pack(mob/user, paccess_to_check, list/access, contraband)
-	if(issilicon(user)) //Borgs can't buy things.
+	if(HAS_SILICON_ACCESS(user)) //Borgs can't buy things.
 		return FALSE
 	if(computer.obj_flags & EMAGGED)
 		return TRUE
@@ -57,7 +58,7 @@
 
 	return FALSE
 
-/datum/computer_file/program/budgetorders/ui_data()
+/datum/computer_file/program/budgetorders/ui_data(mob/user)
 	var/list/data = list()
 	data["location"] = SSshuttle.supply.getStatusText()
 	data["department"] = "Cargo"
@@ -79,12 +80,12 @@
 	if(buyer)
 		data["points"] = buyer.account_balance
 
-//Otherwise static data, that is being applied in ui_data as the crates visible and buyable are not static, and are determined by inserted ID.
+	//Otherwise static data, that is being applied in ui_data as the crates visible and buyable are not static, and are determined by inserted ID.
 	data["requestonly"] = requestonly
 	data["supplies"] = list()
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(!is_visible_pack(usr, P.access_view , null, P.contraband) || P.hidden)
+		if(!is_visible_pack(user, P.access_view , null, P.contraband) || P.hidden)
 			continue
 		if(!data["supplies"][P.group])
 			data["supplies"][P.group] = list(
@@ -102,7 +103,7 @@
 			"access" = P.access
 		))
 
-//Data regarding the User's capability to buy things.
+	//Data regarding the User's capability to buy things.
 	data["has_id"] = id_card
 	data["away"] = SSshuttle.supply.getDockedId() == docking_away
 	data["self_paid"] = self_paid
@@ -166,7 +167,8 @@
 	data["max_order"] = CARGO_MAX_ORDER
 	return data
 
-/datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui)
+/datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("send")
 			if(!SSshuttle.supply.canMove())

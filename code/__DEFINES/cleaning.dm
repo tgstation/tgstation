@@ -29,3 +29,8 @@
 #define CLEAN_SCRUB (CLEAN_WASH | CLEAN_TYPE_FINGERPRINTS | CLEAN_TYPE_FIBERS | CLEAN_TYPE_HARD_DECAL)
 #define CLEAN_RAD CLEAN_TYPE_RADIATION
 #define CLEAN_ALL ALL
+
+// Footprint sprites to use when making footprints in blood, oil, etc.
+#define FOOTPRINT_SPRITE_SHOES "shoes"
+#define FOOTPRINT_SPRITE_PAWS "paws"
+#define FOOTPRINT_SPRITE_CLAWS "claws"

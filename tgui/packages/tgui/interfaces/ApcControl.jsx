@@ -1,15 +1,17 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
+import { useState } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
   Dimmer,
   Icon,
+  Section,
+  Stack,
   Table,
   Tabs,
-  Stack,
-  Section,
 } from '../components';
 import { Window } from '../layouts';
 import { AreaCharge, powerRank } from './PowerMonitor';
@@ -46,7 +48,7 @@ const ApcLoggedOut = (props) => {
 const ApcLoggedIn = (props) => {
   const { act, data } = useBackend();
   const { restoring } = data;
-  const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
+  const [tabIndex, setTabIndex] = useState(1);
   return (
     <Box>
       <Tabs>
@@ -158,18 +160,21 @@ const ApcControlScene = (props) => {
   const [sortByField] = useLocalState('sortByField', 'name');
 
   const apcs = flow([
-    map((apc, i) => ({
-      ...apc,
-      // Generate a unique id
-      id: apc.name + i,
-    })),
-    sortByField === 'name' && sortBy((apc) => apc.name),
-    sortByField === 'charge' && sortBy((apc) => -apc.charge),
+    (apcs) =>
+      map(apcs, (apc, i) => ({
+        ...apc,
+        // Generate a unique id
+        id: apc.name + i,
+      })),
+    sortByField === 'name' && ((apcs) => sortBy(apcs, (apc) => apc.name)),
+    sortByField === 'charge' && ((apcs) => sortBy(apcs, (apc) => -apc.charge)),
     sortByField === 'draw' &&
-      sortBy(
-        (apc) => -powerRank(apc.load),
-        (apc) => -parseFloat(apc.load),
-      ),
+      ((apcs) =>
+        sortBy(
+          apcs,
+          (apc) => -powerRank(apc.load),
+          (apc) => -parseFloat(apc.load),
+        )),
   ])(data.apcs);
   return (
     <Box height={30}>
@@ -253,14 +258,11 @@ const ApcControlScene = (props) => {
 const LogPanel = (props) => {
   const { data } = useBackend();
 
-  const logs = flow([
-    map((line, i) => ({
-      ...line,
-      // Generate a unique id
-      id: line.entry + i,
-    })),
-    (logs) => logs.reverse(),
-  ])(data.logs);
+  const logs = map(data.logs, (line, i) => ({
+    ...line,
+    // Generate a unique id
+    id: line.entry + i,
+  })).reverse();
   return (
     <Box m={-0.5}>
       {logs.map((line) => (

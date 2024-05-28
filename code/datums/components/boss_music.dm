@@ -22,7 +22,7 @@
 	src.boss_track = boss_track
 	src.track_duration = track_duration
 
-/datum/component/boss_music/Destroy(force, silent)
+/datum/component/boss_music/Destroy(force)
 	. = ..()
 	for(var/callback in music_callbacks)
 		deltimer(callback)

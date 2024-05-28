@@ -87,7 +87,7 @@
 	name = "hydraulic wrench"
 	desc = "An advanced robotic wrench, powered by internal hydraulics. Twice as fast as the handheld version."
 	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "wrench_cyborg"
+	icon_state = "toolkit_engiborg_wrench"
 	toolspeed = 0.5
 
 /obj/item/wrench/combat

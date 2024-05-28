@@ -1,8 +1,9 @@
 import { map } from 'common/collections';
+import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import { Button, Flex, LabeledList, Section, Table, Tabs } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 export const ShuttleManipulator = (props) => {
   const [tab, setTab] = useState(1);
@@ -103,7 +104,7 @@ export const ShuttleManipulatorTemplates = (props) => {
       <Flex>
         <Flex.Item>
           <Tabs vertical>
-            {map((template, templateId) => (
+            {map(templateObject, (template, templateId) => (
               <Tabs.Tab
                 key={templateId}
                 selected={selectedTemplateId === templateId}
@@ -111,7 +112,7 @@ export const ShuttleManipulatorTemplates = (props) => {
               >
                 {template.port_id}
               </Tabs.Tab>
-            ))(templateObject)}
+            ))}
           </Tabs>
         </Flex.Item>
         <Flex.Item grow={1} basis={0}>

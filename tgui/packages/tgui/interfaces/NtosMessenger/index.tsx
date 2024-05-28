@@ -1,22 +1,23 @@
+import { sortBy } from 'common/collections';
+import { BooleanLike } from 'common/react';
+import { createSearch } from 'common/string';
+import { useState } from 'react';
+
+import { useBackend } from '../../backend';
 import {
   Box,
   Button,
-  Icon,
-  Section,
-  Stack,
-  Input,
-  TextArea,
   Dimmer,
   Divider,
+  Icon,
+  Input,
+  Section,
+  Stack,
+  TextArea,
 } from '../../components';
-import { useBackend, useLocalState } from '../../backend';
-import { createSearch } from 'common/string';
-import { BooleanLike } from 'common/react';
 import { NtosWindow } from '../../layouts';
-
-import { NtChat, NtMessenger, NtPicture } from './types';
 import { ChatScreen } from './ChatScreen';
-import { sortBy } from 'common/collections';
+import { NtChat, NtMessenger, NtPicture } from './types';
 
 type NtosMessengerData = {
   can_spam: BooleanLike;
@@ -97,9 +98,10 @@ const ContactsScreen = (props: any) => {
     sending_virus,
   } = data;
 
-  const [searchUser, setSearchUser] = useLocalState('searchUser', '');
+  const [searchUser, setSearchUser] = useState('');
 
-  const sortByUnreads = sortBy<NtChat>((chat) => chat.unread_messages);
+  const sortByUnreads = (array: NtChat[]) =>
+    sortBy(array, (chat) => chat.unread_messages);
 
   const searchChatByName = createSearch(
     searchUser,
@@ -213,7 +215,7 @@ const ContactsScreen = (props: any) => {
               width="220px"
               placeholder="Search by name or job..."
               value={searchUser}
-              onChange={(_, value) => setSearchUser(value)}
+              onInput={(_, value) => setSearchUser(value)}
             />
           </Stack>
         </Section>
@@ -298,7 +300,7 @@ const SendToAllSection = (props) => {
   const { data, act } = useBackend<NtosMessengerData>();
   const { on_spam_cooldown } = data;
 
-  const [message, setmessage] = useLocalState('everyoneMessage', '');
+  const [message, setmessage] = useState('');
 
   return (
     <>

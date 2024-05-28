@@ -101,6 +101,10 @@
 	controller.queue_loop(src)
 
 /datum/move_loop/process()
+	if(isnull(controller))
+		qdel(src)
+		return
+
 	var/old_delay = delay //The signal can sometimes change delay
 
 	if(SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_CHECK) & MOVELOOP_SKIP_STEP) //Chance for the object to react
@@ -158,7 +162,7 @@
 	status &= ~MOVELOOP_STATUS_PAUSED
 
 ///Removes the atom from some movement subsystem. Defaults to SSmovement
-/datum/controller/subsystem/move_manager/proc/stop_looping(atom/movable/moving, datum/controller/subsystem/movement/subsystem = SSmovement)
+/datum/move_manager/proc/stop_looping(atom/movable/moving, datum/controller/subsystem/movement/subsystem = SSmovement)
 	var/datum/movement_packet/our_info = moving.move_packet
 	if(!our_info)
 		return FALSE
@@ -179,7 +183,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/move, priority, flags, extra_info, delay, timeout, direction)
 
 ///Replacement for walk()
@@ -220,7 +224,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/force_move_dir(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/force_move_dir(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/move/force, priority, flags, extra_info, delay, timeout, direction)
 
 /datum/move_loop/move/force
@@ -277,7 +281,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/force_move(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/force_move(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/force_move, priority, flags, extra_info, delay, timeout, chasing)
 
 ///Used for force-move loops
@@ -311,7 +315,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/jps_move(moving,
+/datum/move_manager/proc/jps_move(moving,
 	chasing,
 	delay,
 	timeout,
@@ -323,6 +327,7 @@
 	turf/avoid,
 	skip_first,
 	subsystem,
+	diagonal_handling,
 	priority,
 	flags,
 	datum/extra_info,
@@ -343,6 +348,7 @@
 		simulated_only,
 		avoid,
 		skip_first,
+		diagonal_handling,
 		initial_path)
 
 /datum/move_loop/has_target/jps
@@ -360,6 +366,8 @@
 	var/turf/avoid
 	///Should we skip the first step? This is the tile we're currently on, which breaks some things
 	var/skip_first
+	///Whether we replace diagonal movements with cardinal movements or follow through with them
+	var/diagonal_handling
 	///A list for the path we're currently following
 	var/list/movement_path
 	///Cooldown for repathing, prevents spam
@@ -373,7 +381,7 @@
 	. = ..()
 	on_finish_callbacks += CALLBACK(src, PROC_REF(on_finish_pathing))
 
-/datum/move_loop/has_target/jps/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, list/initial_path)
+/datum/move_loop/has_target/jps/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, list/initial_path)
 	. = ..()
 	if(!.)
 		return
@@ -384,6 +392,7 @@
 	src.simulated_only = simulated_only
 	src.avoid = avoid
 	src.skip_first = skip_first
+	src.diagonal_handling = diagonal_handling
 	movement_path = initial_path?.Copy()
 
 /datum/move_loop/has_target/jps/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, initial_path)
@@ -410,7 +419,7 @@
 	if(!COOLDOWN_FINISHED(src, repath_cooldown))
 		return
 	COOLDOWN_START(src, repath_cooldown, repath_delay)
-	if(SSpathfinder.pathfind(moving, target, max_path_length, minimum_distance, access, simulated_only, avoid, skip_first, on_finish = on_finish_callbacks))
+	if(SSpathfinder.pathfind(moving, target, max_path_length, minimum_distance, access, simulated_only, avoid, skip_first, diagonal_handling, on_finish = on_finish_callbacks))
 		is_pathing = TRUE
 		SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_REPATH)
 
@@ -418,6 +427,7 @@
 /datum/move_loop/has_target/jps/proc/on_finish_pathing(list/path)
 	movement_path = path
 	is_pathing = FALSE
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_FINISHED_PATHING, path)
 
 /datum/move_loop/has_target/jps/move()
 	if(!length(movement_path))
@@ -435,7 +445,8 @@
 	// this check if we're on exactly the next tile may be overly brittle for dense objects who may get bumped slightly
 	// to the side while moving but could maybe still follow their path without needing a whole new path
 	if(get_turf(moving) == next_step)
-		movement_path.Cut(1,2)
+		if(length(movement_path))
+			movement_path.Cut(1,2)
 	else
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		return MOVELOOP_FAILURE
@@ -482,7 +493,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_to(moving, chasing, min_dist, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_to(moving, chasing, min_dist, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_to, priority, flags, extra_info, delay, timeout, chasing, min_dist)
 
 ///Wrapper around walk_to()
@@ -516,7 +527,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_away(moving, chasing, max_dist, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_away(moving, chasing, max_dist, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_away, priority, flags, extra_info, delay, timeout, chasing, max_dist)
 
 ///Wrapper around walk_away()
@@ -551,7 +562,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_towards(moving, chasing, delay, home, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_towards(moving, chasing, delay, home, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards, priority, flags, extra_info, delay, timeout, chasing, home)
 
 /**
@@ -570,7 +581,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/home_onto(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/home_onto(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return move_towards(moving, chasing, delay, TRUE, timeout, subsystem, priority, flags, extra_info)
 
 ///Used as a alternative to walk_towards
@@ -706,7 +717,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_towards_legacy(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_towards_legacy(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards_budget, priority, flags, extra_info, delay, timeout, chasing)
 
 ///The actual implementation of walk_towards()
@@ -732,7 +743,7 @@
  * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  */
-/datum/controller/subsystem/move_manager/proc/freeze(moving, halted_turf, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/freeze(moving, halted_turf, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/freeze, priority, flags, extra_info, delay, timeout, halted_turf)
 
 /// As close as you can get to a "do-nothing" move loop, the pure intention of this is to absolutely resist all and any automated movement until the move loop times out.
@@ -756,7 +767,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_rand(moving, directions, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_rand(moving, directions, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	if(!directions)
 		directions = GLOB.alldirs
 	return add_to_loop(moving, subsystem, /datum/move_loop/move_rand, priority, flags, extra_info, delay, timeout, directions)
@@ -808,7 +819,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_to_rand(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_to_rand(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/move_to_rand, priority, flags, extra_info, delay, timeout)
 
 ///Wrapper around step_rand
@@ -834,7 +845,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_disposals(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_disposals(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/disposal_holder, priority, flags, extra_info, delay, timeout)
 
 /// Disposal holders need to move through a chain of pipes

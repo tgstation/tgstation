@@ -305,6 +305,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 		/datum/reagent/consumable/nutriment/protein = 4,
 	)
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	tastes = list("mashed beans" = 1, "onion" = 3,)
 	foodtypes = VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
@@ -319,6 +320,7 @@
 		/datum/reagent/consumable/nutriment = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	tastes = list("zesty rice" = 1, "tomato sauce" = 3,)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL

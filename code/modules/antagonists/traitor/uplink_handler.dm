@@ -59,7 +59,7 @@
 	. = ..()
 	maximum_potential_objectives = CONFIG_GET(number/maximum_potential_objectives)
 
-/datum/uplink_handler/Destroy(force, ...)
+/datum/uplink_handler/Destroy(force)
 	can_replace_objectives = null
 	replace_objectives = null
 	return ..()
@@ -254,3 +254,12 @@
 		return
 
 	to_act_on.ui_perform_action(user, action)
+
+///Helper to add telecrystals to the uplink handler, calling set_telecrystals.
+/datum/uplink_handler/proc/add_telecrystals(amount)
+	set_telecrystals(telecrystals + amount)
+
+///Sets how many telecrystals the uplink handler has, then updates the UI for any players watching.
+/datum/uplink_handler/proc/set_telecrystals(amount)
+	telecrystals = amount
+	on_update()

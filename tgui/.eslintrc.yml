@@ -11,12 +11,13 @@ env:
   browser: true
   node: true
 plugins:
-  - radar
+  - sonarjs
   - react
   - unused-imports
+  - simple-import-sort
 settings:
   react:
-    version: '16.10'
+    version: '18.2'
 rules:
   ## Possible Errors
   ## ----------------------------------------
@@ -337,7 +338,7 @@ rules:
   ## Require or disallow named function expressions
   # func-names: error
   ## Enforce the consistent use of either function declarations or expressions
-  func-style: [error, expression]
+  # func-style: [error, expression]
   ## Enforce line breaks between arguments of a function call
   # function-call-argument-newline: error
   ## Enforce consistent line breaks inside function parentheses
@@ -764,3 +765,6 @@ rules:
   ## Prevents the use of unused imports.
   ## This could be done by enabling no-unused-vars, but we're doing this for now
   unused-imports/no-unused-imports: error
+  ## https://github.com/lydell/eslint-plugin-simple-import-sort/
+  simple-import-sort/imports: error
+  simple-import-sort/exports: error

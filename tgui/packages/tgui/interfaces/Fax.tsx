@@ -39,13 +39,14 @@ export const Fax = (props) => {
   const { act } = useBackend();
   const { data } = useBackend<FaxData>();
   const faxes = data.faxes
-    ? sortBy((sortFax: FaxInfo) => sortFax.fax_name)(
+    ? sortBy(
         data.syndicate_network
           ? data.faxes.filter((filterFax: FaxInfo) => filterFax.visible)
           : data.faxes.filter(
               (filterFax: FaxInfo) =>
                 filterFax.visible && !filterFax.syndicate_network,
             ),
+        (sortFax: FaxInfo) => sortFax.fax_name,
       )
     : [];
   return (
@@ -90,7 +91,7 @@ export const Fax = (props) => {
               ).map((special: FaxSpecial) => (
                 <Button
                   key={special.fax_id}
-                  title={special.fax_name}
+                  tooltip={special.fax_name}
                   disabled={!data.has_paper}
                   color={special.color}
                   onClick={() =>
@@ -106,7 +107,7 @@ export const Fax = (props) => {
               {faxes.map((fax: FaxInfo) => (
                 <Button
                   key={fax.fax_id}
-                  title={fax.fax_name}
+                  tooltip={fax.fax_name}
                   disabled={!data.has_paper}
                   color={fax.syndicate_network ? 'red' : 'blue'}
                   onClick={() =>

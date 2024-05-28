@@ -46,8 +46,8 @@
 	gain_text = "I met an old man in an anique shop who wielded a very unusual weapon. \
 		I could not purchase it at the time, but they showed me how they made it ages ago."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/realignment,
-		/datum/heretic_knowledge/spell/rust_construction,
+		/datum/heretic_knowledge/duel_stance,
+		/datum/heretic_knowledge/spell/area_conversion,
 		/datum/heretic_knowledge/rifle_ammo,
 	)
 	required_atoms = list(

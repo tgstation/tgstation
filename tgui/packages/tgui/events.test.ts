@@ -1,7 +1,7 @@
 import {
-  KeyEvent,
   addScrollableNode,
   canStealFocus,
+  KeyEvent,
   removeScrollableNode,
   setupGlobalEvents,
 } from './events';

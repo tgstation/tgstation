@@ -19,7 +19,7 @@
 		return 0
 
 	var/obj/item/I = O
-	var/list/mat_comp = I.get_material_composition(BREAKDOWN_FLAGS_EXPORT)
+	var/list/mat_comp = I.get_material_composition()
 	var/datum/material/mat_ref = ispath(material_id) ? locate(material_id) in mat_comp : GET_MATERIAL_REF(material_id)
 	if(isnull(mat_comp[mat_ref]))
 		return 0
@@ -139,19 +139,11 @@
 
 	//This formula should impact lower quantity materials greater, and higher quantity materials less. Still, it's  a bit rough. Tweaking may be needed.
 	if(!dry_run)
-		//this material is worthless. no point adding more to the stock
-		var/market_price = SSstock_market.materials_prices[material_id]
-		if(!market_price)
-			return
-
 		//decrease the market price
-		market_price -= round((market_price) * (amount / (amount + SSstock_market.materials_quantity[material_id])))
-		if(market_price < 0)
-			market_price = 0
-		SSstock_market.materials_prices[material_id] = market_price
+		SSstock_market.adjust_material_price(material_id, -SSstock_market.materials_prices[material_id] * (amount / (amount + SSstock_market.materials_quantity[material_id])))
 
 		//increase the stock
-		SSstock_market.materials_quantity[material_id] += amount
+		SSstock_market.adjust_material_quantity(material_id, amount)
 
 
 // Stock blocks are a special type of export that can be used to sell a quantity of materials at a specific price on the market.

@@ -59,7 +59,7 @@
 		deltimer(ground_sinking_start_timer)
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 
-/datum/component/ground_sinking/Destroy(force, silent)
+/datum/component/ground_sinking/Destroy(force)
 	if(sinked || is_sinking)
 		unsink()
 	. = ..()

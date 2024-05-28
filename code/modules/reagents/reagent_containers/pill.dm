@@ -48,11 +48,10 @@
 
 ///Runs the consumption code, can be overriden for special effects
 /obj/item/reagent_containers/pill/proc/on_consumption(mob/consumer, mob/giver)
-	if(icon_state == "pill4") //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
-		SEND_SIGNAL(consumer, COMSIG_BITRUNNER_RED_PILL_SEVER) //if your bitrunning avatar somehow manages to acquire and consume a red pill, they will be ejected from the Matrix
-		if(prob(5)) //the other kind of red pill
-			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), consumer, span_notice("[pick(strings(REDPILL_FILE, "redpill_questions"))]")), 50)
+	if(icon_state == "pill4" && prob(5)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), consumer, span_notice("[pick(strings(REDPILL_FILE, "redpill_questions"))]")), 5 SECONDS)
 	if(apply_type == INGEST)
+		SEND_SIGNAL(consumer, COMSIG_LIVING_PILL_CONSUMED, src, giver)
 		SEND_SIGNAL(src, COMSIG_PILL_CONSUMED, eater = consumer, feeder = giver)
 	if(reagents.total_volume)
 		reagents.trans_to(consumer, reagents.total_volume, transferred_by = giver, methods = apply_type)
@@ -314,6 +313,12 @@
 	icon_state = "pill8"
 	list_reagents = list(/datum/reagent/gravitum = 5)
 	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/ondansetron
+	name = "ondansetron pill"
+	desc = "Alleviates nausea. May cause drowsiness."
+	icon_state = "pill11"
+	list_reagents = list(/datum/reagent/medicine/ondansetron = 10)
 
 // Pill styles for chem master
 

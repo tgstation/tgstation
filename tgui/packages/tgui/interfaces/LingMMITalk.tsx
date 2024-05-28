@@ -1,4 +1,6 @@
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import { Button, ByondUi, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
 
@@ -8,7 +10,7 @@ type Data = {
 
 export const LingMMITalk = (props) => {
   const { data, act } = useBackend<Data>();
-  const [mmiMessage, setmmiMessage] = useLocalState<string>('textArea', '');
+  const [mmiMessage, setmmiMessage] = useState('');
 
   return (
     <Window title="Decoy Brain MMI View" height={360} width={360}>

@@ -1,24 +1,25 @@
-import { useBackend, useLocalState } from '../backend';
-import {
-  InfinitePlane,
-  Stack,
-  Box,
-  Button,
-  Modal,
-  Dropdown,
-  Section,
-  LabeledList,
-  Tooltip,
-  Slider,
-} from '../components';
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes, shallowDiffers } from 'common/react';
 import { Component, createRef, RefObject } from 'react';
-import { Window } from '../layouts';
+
 import { resolveAsset } from '../assets';
-import { MOUSE_BUTTON_LEFT, noop } from './IntegratedCircuit/constants';
+import { useBackend, useLocalState } from '../backend';
+import {
+  Box,
+  Button,
+  Dropdown,
+  InfinitePlane,
+  LabeledList,
+  Modal,
+  Section,
+  Slider,
+  Stack,
+  Tooltip,
+} from '../components';
+import { Window } from '../layouts';
 import { Connection, Connections, Position } from './common/Connections';
+import { MOUSE_BUTTON_LEFT, noop } from './IntegratedCircuit/constants';
 
 enum ConnectionType {
   Relay,
@@ -128,10 +129,9 @@ const textWidth = (text, font, fontsize) => {
   // default font height is 12 in tgui
   font = fontsize + 'x ' + font;
   const c = document.createElement('canvas');
-  const ctx = c.getContext('2d') as any;
+  const ctx = c.getContext('2d') as CanvasRenderingContext2D;
   ctx.font = font;
-  const width = ctx.measureText(text).width;
-  return width;
+  return ctx.measureText(text).width;
 };
 
 const planeToPosition = function (plane: Plane, index, is_incoming): Position {
@@ -158,7 +158,7 @@ const sortConnectionRefs = function (
   direction: ConnectionDirection,
   connectSources: AssocConnected,
 ) {
-  refs = sortBy((connection: ConnectionRef) => connection.sort_by)(refs);
+  refs = sortBy(refs, (connection: ConnectionRef) => connection.sort_by);
   refs.map((connection, index) => {
     let connectSource = connectSources[connection.ref];
     if (direction === ConnectionDirection.Outgoing) {
@@ -264,14 +264,15 @@ const positionPlanes = (connectSources: AssocConnected) => {
   // and get rid of the now unneeded parent refs
   const stack = depth_stack.map((layer) =>
     flow([
-      sortBy((plane: string) => plane_info[plane].plane),
-      sortBy((plane: string) => {
-        const read_from = plane_info[layer[plane]];
-        if (!read_from) {
-          return 0;
-        }
-        return read_from.plane;
-      }),
+      (planes) => sortBy(planes, (plane: string) => plane_info[plane].plane),
+      (planes) =>
+        sortBy(planes, (plane: string) => {
+          const read_from = plane_info[layer[plane]];
+          if (!read_from) {
+            return 0;
+          }
+          return read_from.plane;
+        }),
     ])(Object.keys(layer)),
   );
 
@@ -507,7 +508,6 @@ class PlaneMaster extends Component<PlaneMasterProps> {
               ? 'ObjectComponent__Greyed_Content'
               : 'ObjectComponent__Content'
           }
-          unselectable="on"
           py={1}
           px={1}
         >
@@ -672,6 +672,13 @@ const PlaneWindow = (props) => {
   const doc_html = {
     __html: workingPlane.documentation,
   };
+
+  const setAlpha = (event, value) =>
+    act('set_alpha', {
+      edit: workingPlane.our_ref,
+      alpha: value,
+    });
+
   return (
     <Section
       top="27px"
@@ -775,18 +782,8 @@ const PlaneWindow = (props) => {
           maxValue={255}
           step={1}
           stepPixelSize={1.9}
-          onDrag={(e, value) =>
-            act('set_alpha', {
-              edit: workingPlane.our_ref,
-              alpha: value,
-            })
-          }
-          onChange={(e, value) =>
-            act('set_alpha', {
-              edit: workingPlane.our_ref,
-              alpha: value,
-            })
-          }
+          onDrag={setAlpha}
+          onChange={setAlpha}
         >
           Alpha ({workingPlane.alpha})
         </Slider>
@@ -888,7 +885,6 @@ const GroupDropdown = (props) => {
         <Dropdown
           options={present_groups}
           selected={our_group}
-          displayText={our_group}
           onSelected={(value) =>
             act('set_group', {
               target_group: value,
@@ -936,7 +932,7 @@ const AddModal = (props) => {
   );
 
   const plane_list = Object.keys(plane_info).map((plane) => plane_info[plane]);
-  const planes = sortBy((plane: Plane) => -plane.plane)(plane_list);
+  const planes = sortBy(plane_list, (plane: Plane) => -plane.plane);
 
   const plane_options = planes.map((plane) => plane.name);
 

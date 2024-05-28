@@ -57,7 +57,7 @@
 	return TRUE
 
 /mob/living/basic/guardian/gravitokinetic/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if (LAZYACCESS(modifiers, RIGHT_CLICK) && proximity_flag && !gravity_targets[attack_target])
+	if (LAZYACCESS(modifiers, RIGHT_CLICK) && proximity_flag && !gravity_targets[attack_target] && can_unarmed_attack())
 		slam_turf(attack_target)
 		return
 	return ..()

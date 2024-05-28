@@ -122,7 +122,7 @@
 
 /datum/greyscale_config/tablet
 	name = "PDA"
-	icon_file = 'icons/obj/modular_pda.dmi'
+	icon_file = 'icons/obj/devices/modular_pda.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pda.json'
 
 /datum/greyscale_config/tablet/chaplain
@@ -335,3 +335,8 @@
 	name = "Flower Worn"
 	icon_file = 'icons/mob/clothing/head/hydroponics.dmi'
 	json_config = 'code/datums/greyscale/json_configs/simple_flower_worn.json'
+
+/datum/greyscale_config/piggy_bank
+	name = "Piggy Bank"
+	icon_file = 'icons/obj/fluff/general.dmi'
+	json_config = 'code/datums/greyscale/json_configs/piggy_bank.json'

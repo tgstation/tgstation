@@ -9,6 +9,7 @@
 	desc = "A fleshy growth that was dug out of the skull of a Nightmare."
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-x-d"
+	applied_status = /datum/status_effect/shadow_regeneration/nightmare
 	///Our associated shadow jaunt spell, for all nightmares
 	var/datum/action/cooldown/spell/jaunt/shadow_walk/our_jaunt
 	///Our associated terrorize spell, for antagonist nightmares
@@ -16,7 +17,6 @@
 
 /obj/item/organ/internal/brain/shadow/nightmare/on_mob_insert(mob/living/carbon/brain_owner)
 	. = ..()
-	RegisterSignal(brain_owner, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets))
 
 	if(brain_owner.dna.species.id != SPECIES_NIGHTMARE)
 		brain_owner.set_species(/datum/species/shadow/nightmare)
@@ -33,13 +33,28 @@
 	. = ..()
 	QDEL_NULL(our_jaunt)
 	QDEL_NULL(terrorize_spell)
-	UnregisterSignal(brain_owner, COMSIG_ATOM_PRE_BULLET_ACT)
 
-/obj/item/organ/internal/brain/shadow/nightmare/proc/dodge_bullets(mob/living/carbon/human/source, obj/projectile/hitting_projectile, def_zone)
+/atom/movable/screen/alert/status_effect/shadow_regeneration/nightmare
+	name = "Lightless Domain"
+	desc = "Bathed in soothing darkness you will slowly regenerate, even past the point of death. \
+		Heightened reflexes will allow you to dodge projectile weapons."
+
+/datum/status_effect/shadow_regeneration/nightmare
+	alert_type = /atom/movable/screen/alert/status_effect/shadow_regeneration/nightmare
+
+/datum/status_effect/shadow_regeneration/nightmare/on_apply()
+	. = ..()
+	if (!.)
+		return FALSE
+	RegisterSignal(owner, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets))
+	return TRUE
+
+/datum/status_effect/shadow_regeneration/nightmare/on_remove()
+	UnregisterSignal(owner, COMSIG_ATOM_PRE_BULLET_ACT)
+	return ..()
+
+/datum/status_effect/shadow_regeneration/nightmare/proc/dodge_bullets(mob/living/carbon/human/source, obj/projectile/hitting_projectile, def_zone)
 	SIGNAL_HANDLER
-	var/turf/dodge_turf = source.loc
-	if(!istype(dodge_turf) || dodge_turf.get_lumcount() >= SHADOW_SPECIES_LIGHT_THRESHOLD)
-		return NONE
 	source.visible_message(
 		span_danger("[source] dances in the shadows, evading [hitting_projectile]!"),
 		span_danger("You evade [hitting_projectile] with the cover of darkness!"),
@@ -53,7 +68,7 @@
 	icon_state = "demon_heart-on"
 	base_icon_state = "demon_heart"
 	visual = TRUE
-	color = "#1C1C1C"
+	color = COLOR_CRAYON_BLACK
 	decay_factor = 0
 	/// How many life ticks in the dark the owner has been dead for. Used for nightmare respawns.
 	var/respawn_progress = 0

@@ -1,6 +1,5 @@
-import { multiline } from '../../common/string';
 import { useBackend } from '../backend';
-import { Button, NoticeBox, Stack, Section } from '../components';
+import { Button, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type BasketballPanelData = {
@@ -30,7 +29,7 @@ export const BasketballPanel = (props) => {
                   <Button
                     icon="clipboard-check"
                     tooltipPosition="bottom-start"
-                    tooltip={multiline`
+                    tooltip={`
                     Signs you up for the next game. If there
                     is an ongoing one, you will be signed up
                     for the next.
@@ -40,7 +39,7 @@ export const BasketballPanel = (props) => {
                   />
                   <Button
                     icon="basketball"
-                    disabled={!(data.total_votes >= data.players_min)}
+                    disabled={data.total_votes < data.players_min}
                     onClick={() => act('basketball_start')}
                   >
                     Start

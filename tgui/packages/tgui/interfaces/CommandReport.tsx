@@ -1,4 +1,6 @@
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -56,17 +58,19 @@ const CentComName = (props) => {
   const { act, data } = useBackend<Data>();
   const { command_name, command_name_presets = [], custom_name } = data;
 
+  const sendName = (value) => {
+    act('update_command_name', {
+      updated_name: value,
+    });
+  };
+
   return (
     <Section title="Set Central Command name" textAlign="center">
       <Dropdown
         width="100%"
         selected={command_name}
         options={command_name_presets}
-        onSelected={(value) =>
-          act('update_command_name', {
-            updated_name: value,
-          })
-        }
+        onSelected={(value) => sendName(value)}
       />
       {!!custom_name && (
         <Input
@@ -74,11 +78,7 @@ const CentComName = (props) => {
           mt={1}
           value={command_name}
           placeholder={command_name}
-          onChange={(_, value) =>
-            act('update_command_name', {
-              updated_name: value,
-            })
-          }
+          onChange={(_, value) => sendName(value)}
         />
       )}
     </Section>
@@ -117,7 +117,7 @@ const AnnouncementColor = (props) => {
     <Section title="Set announcement color" textAlign="center">
       <Dropdown
         width="100%"
-        displayText={announcement_color}
+        selected={announcement_color}
         options={announcement_colors}
         onSelected={(value) =>
           act('update_announcement_color', {
@@ -138,7 +138,7 @@ const AnnouncementSound = (props) => {
     <Section title="Set announcement sound" textAlign="center">
       <Dropdown
         width="100%"
-        displayText={played_sound}
+        selected={played_sound}
         options={announcer_sounds}
         onSelected={(value) =>
           act('set_report_sound', {
@@ -154,10 +154,7 @@ const AnnouncementSound = (props) => {
 const ReportText = (props) => {
   const { act, data } = useBackend<Data>();
   const { announce_contents, print_report, command_report_content } = data;
-  const [commandReport, setCommandReport] = useLocalState<string>(
-    'textArea',
-    command_report_content,
-  );
+  const [commandReport, setCommandReport] = useState(command_report_content);
 
   return (
     <Section title="Set report text" textAlign="center">

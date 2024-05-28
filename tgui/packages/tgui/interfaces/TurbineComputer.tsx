@@ -1,13 +1,14 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import {
+  Box,
   Button,
   LabeledList,
-  Section,
-  Box,
   Modal,
-  ProgressBar,
   NumberInput,
+  ProgressBar,
+  Section,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -78,9 +79,10 @@ export const TurbineComputer = (props) => {
                 animated
                 value={data.regulator * 100}
                 unit="%"
+                step={1}
                 minValue={1}
                 maxValue={100}
-                onDrag={(e, value) =>
+                onDrag={(value) =>
                   act('regulate', {
                     regulate: value * 0.01,
                   })

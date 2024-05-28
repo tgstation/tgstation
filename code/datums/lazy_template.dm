@@ -13,12 +13,16 @@
 	var/map_dir = "_maps/templates/lazy_templates"
 	/// The filename (without extension) of the map to load
 	var/map_name
+	/// place_on_top: Whether to use /turf/proc/PlaceOnTop rather than /turf/proc/ChangeTurf
+	var/place_on_top = FALSE
+	/// type of turf reservation
+	var/turf_reservation_type = /datum/turf_reservation
 
 /datum/lazy_template/New()
 	reservations = list()
 	..()
 
-/datum/lazy_template/Destroy(force, ...)
+/datum/lazy_template/Destroy(force)
 	if(!force)
 		stack_trace("Something is trying to delete [type]")
 		return QDEL_HINT_LETMELIVE
@@ -60,6 +64,7 @@
 		width,
 		height,
 		parsed_template.parsed_bounds[MAP_MAXZ],
+		reservation_type = turf_reservation_type,
 	)
 	if(!reservation)
 		CRASH("Failed to reserve a block for lazy template: '[key]'")
@@ -83,6 +88,7 @@
 			bottom_left.z,
 			z_upper = z_idx,
 			z_lower = z_idx,
+			place_on_top = place_on_top,
 		)
 		for(var/turf/turf as anything in block(bottom_left, top_right))
 			loaded_turfs += turf

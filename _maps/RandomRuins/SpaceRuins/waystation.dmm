@@ -357,9 +357,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "gE" = (
 /obj/structure/sign/poster/contraband/missing_gloves/directional/north,
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/super/full,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -466,9 +464,7 @@
 /area/ruin/space)
 "iT" = (
 /obj/machinery/light/dim/directional/north,
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/super/full,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)
@@ -1143,7 +1139,7 @@
 /area/ruin/space/has_grav/waystation/dorms)
 "rQ" = (
 /obj/structure/bed,
-/obj/item/bedsheet/random,
+/obj/effect/spawner/random/bedsheet/any,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/dorms)
 "rV" = (
@@ -1889,7 +1885,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "IS" = (
 /obj/structure/bed,
-/obj/item/bedsheet/random,
+/obj/effect/spawner/random/bedsheet/any,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/dorms)

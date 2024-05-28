@@ -925,9 +925,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "tT" = (
-/obj/structure/railing{
-	dir = 2
-	},
+/obj/structure/railing,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
 "tZ" = (
@@ -957,7 +955,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "uu" = (
-/mob/living/simple_animal/hostile/alien/maid/barmaid,
+/mob/living/basic/alien/maid/barmaid,
 /turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "uy" = (
@@ -1224,9 +1222,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Av" = (
-/obj/structure/railing{
-	dir = 2
-	},
+/obj/structure/railing,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/stairs{
 	dir = 8
@@ -1398,7 +1394,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/fun_balloon/sentience/emergency_shuttle,
+/obj/effect/fun_balloon/sentience/emergency_shuttle{
+	group_name = "bar staff on the NTTS Independence"
+	},
 /turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "DF" = (
@@ -1754,9 +1752,7 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 6
 	},
-/obj/structure/railing{
-	dir = 2
-	},
+/obj/structure/railing,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "LD" = (
@@ -2818,7 +2814,7 @@ WX
 hB
 AF
 Mv
-DA
+Tz
 il
 YY
 tG
@@ -2864,7 +2860,7 @@ at
 AL
 AF
 AF
-Tz
+DA
 il
 IO
 Ew

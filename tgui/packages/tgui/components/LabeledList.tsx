@@ -6,6 +6,7 @@
 
 import { BooleanLike, classes } from 'common/react';
 import { PropsWithChildren, ReactNode } from 'react';
+
 import { Box, unit } from './Box';
 import { Divider } from './Divider';
 import { Tooltip } from './Tooltip';
@@ -90,6 +91,7 @@ const LabeledListItem = (props: LabeledListItemProps) => {
         color={color}
         textAlign={textAlign}
         className={classes(['LabeledList__cell', 'LabeledList__content'])}
+        // @ts-ignore
         colSpan={buttons ? undefined : 2}
         verticalAlign={verticalAlign}
       >

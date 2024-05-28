@@ -95,7 +95,7 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/socks/init_possible_values()
-	return assoc_to_keys_features(GLOB.socks_list)
+	return assoc_to_keys_features(SSaccessories.socks_list)
 
 /datum/preference/choiced/socks/icon_for(value)
 	var/static/icon/lower_half
@@ -105,7 +105,7 @@
 		lower_half.Blend(icon('icons/mob/human/bodyparts_greyscale.dmi', "human_r_leg"), ICON_OVERLAY)
 		lower_half.Blend(icon('icons/mob/human/bodyparts_greyscale.dmi', "human_l_leg"), ICON_OVERLAY)
 
-	return generate_underwear_icon(GLOB.socks_list[value], lower_half)
+	return generate_underwear_icon(SSaccessories.socks_list[value], lower_half)
 
 /datum/preference/choiced/socks/apply_to_human(mob/living/carbon/human/target, value)
 	target.socks = value
@@ -119,7 +119,7 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/undershirt/init_possible_values()
-	return assoc_to_keys_features(GLOB.undershirt_list)
+	return assoc_to_keys_features(SSaccessories.undershirt_list)
 
 /datum/preference/choiced/undershirt/icon_for(value)
 	var/static/icon/body
@@ -135,7 +135,7 @@
 	var/icon/icon_with_undershirt = icon(body)
 
 	if (value != "Nude")
-		var/datum/sprite_accessory/accessory = GLOB.undershirt_list[value]
+		var/datum/sprite_accessory/accessory = SSaccessories.undershirt_list[value]
 		icon_with_undershirt.Blend(icon('icons/mob/clothing/underwear.dmi', accessory.icon_state), ICON_OVERLAY)
 
 	icon_with_undershirt.Crop(9, 9, 23, 23)
@@ -154,7 +154,7 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/underwear/init_possible_values()
-	return assoc_to_keys_features(GLOB.underwear_list)
+	return assoc_to_keys_features(SSaccessories.underwear_list)
 
 /datum/preference/choiced/underwear/icon_for(value)
 	var/static/icon/lower_half
@@ -165,7 +165,7 @@
 		lower_half.Blend(icon('icons/mob/human/bodyparts_greyscale.dmi', "human_r_leg"), ICON_OVERLAY)
 		lower_half.Blend(icon('icons/mob/human/bodyparts_greyscale.dmi', "human_l_leg"), ICON_OVERLAY)
 
-	return generate_underwear_icon(GLOB.underwear_list[value], lower_half, COLOR_ALMOST_BLACK)
+	return generate_underwear_icon(SSaccessories.underwear_list[value], lower_half, COLOR_ALMOST_BLACK)
 
 /datum/preference/choiced/underwear/apply_to_human(mob/living/carbon/human/target, value)
 	target.underwear = value
@@ -175,7 +175,7 @@
 		return FALSE
 
 	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
-	var/datum/species/species = new species_type
+	var/datum/species/species = GLOB.species_prototypes[species_type]
 	return !(TRAIT_NO_UNDERWEAR in species.inherent_traits)
 
 /datum/preference/choiced/underwear/compile_constant_data()

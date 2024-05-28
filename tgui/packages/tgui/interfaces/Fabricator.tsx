@@ -1,19 +1,20 @@
+import { classes } from 'common/react';
+
 import { useBackend } from '../backend';
 import {
-  Stack,
-  Section,
-  Icon,
-  Dimmer,
   Box,
-  Tooltip,
   Button,
+  Dimmer,
+  Icon,
+  Section,
+  Stack,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
-import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { FabricatorData, Design, MaterialMap } from './Fabrication/Types';
-import { classes } from 'common/react';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
+import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
+import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
+import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
 
 export const Fabricator = (props) => {
   const { act, data } = useBackend<FabricatorData>();
@@ -115,10 +116,14 @@ type CustomPrintProps = {
 const CustomPrint = (props: CustomPrintProps) => {
   const { act } = useBackend();
   const { design, available } = props;
-  const canPrint = !Object.entries(design.cost).some(
-    ([material, amount]) =>
-      !available[material] || amount > (available[material] ?? 0),
+  let maxMult = Object.entries(design.cost).reduce(
+    (accumulator: number, [material, required]) => {
+      return Math.min(accumulator, (available[material] || 0) / required);
+    },
+    Infinity,
   );
+  maxMult = Math.min(Math.floor(maxMult), 50);
+  const canPrint = maxMult > 0;
 
   return (
     <div
@@ -128,16 +133,16 @@ const CustomPrint = (props: CustomPrintProps) => {
       ])}
     >
       <Button.Input
-        content={'[Max: ' + design.maxmult + ']'}
-        color={'transparent'}
-        maxValue={design.maxmult}
+        color="transparent"
         onCommit={(_e, value: string) =>
           act('build', {
             ref: design.id,
             amount: value,
           })
         }
-      />
+      >
+        [Max: {maxMult}]
+      </Button.Input>
     </div>
   );
 };

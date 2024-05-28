@@ -6,13 +6,15 @@
 	base_icon_state = "dispenser"
 	amount = 10
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
-	obj_flags = NO_DECONSTRUCTION
 	use_power = NO_POWER_USE
-	var/static/list/shortcuts = list(
-		"meth" = /datum/reagent/drug/methamphetamine
-	)
 	///The purity of the created reagent in % (purity uses 0-1 values)
 	var/purity = 100
+
+/obj/machinery/chem_dispenser/chem_synthesizer/screwdriver_act(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/machinery/chem_dispenser/chem_synthesizer/crowbar_act(mob/living/user, obj/item/tool)
+	return NONE
 
 /obj/machinery/chem_dispenser/chem_synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -45,16 +47,28 @@
 			return TRUE
 
 		if("amount")
-			var/input = text2num(params["amount"])
-			if(input)
-				amount = input
-			return FALSE
+			var/input = params["amount"]
+			if(isnull(input))
+				return FALSE
+
+			input = text2num(input)
+			if(isnull(input))
+				return FALSE
+
+			amount = input
+			return TRUE
 
 		if("purity")
-			var/input = text2num(params["amount"])
-			if(input)
-				purity = input
-			return FALSE
+			var/input = params["amount"]
+			if(isnull(input))
+				return FALSE
+
+			input = text2num(input)
+			if(isnull(input))
+				return FALSE
+
+			purity = input
+			return TRUE
 
 	update_appearance()
 

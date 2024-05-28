@@ -13,13 +13,6 @@
 ///Called from /mob/living/carbon/help_shake_act on the helper, after any hugs have ocurred. (mob/living/helped)
 #define COMSIG_CARBON_HELPED "carbon_helped_someone"
 
-///Before a carbon mob is shoved, sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target)
-#define COMSIG_CARBON_DISARM_PRESHOVE "carbon_disarm_preshove"
-	#define COMSIG_CARBON_ACT_SOLID (1<<0) //Tells disarm code to act as if the mob was shoved into something solid, even we we're not
-///When a carbon mob is disarmed, this is sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
-#define COMSIG_CARBON_DISARM_COLLIDE "carbon_disarm_collision"
-	#define COMSIG_CARBON_SHOVE_HANDLED (1<<0)
-
 ///When a carbon slips. Called on /turf/open/handle_slip()
 #define COMSIG_ON_CARBON_SLIP "carbon_slip"
 // /mob/living/carbon physiology signals
@@ -64,6 +57,8 @@
 /// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
 
+/// from /mob/living/carbon/enter_stamcrit()
+#define COMSIG_CARBON_ENTER_STAMCRIT "carbon_enter_stamcrit"
 ///from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"
 ///from /item/organ/proc/Insert() (/obj/item/organ/)
@@ -125,8 +120,6 @@
 
 ///Applied preferences to a human
 #define COMSIG_HUMAN_PREFS_APPLIED "human_prefs_applied"
-///Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
-#define COMSIG_HUMAN_DISARM_HIT "human_disarm_hit"
 ///Whenever EquipRanked is called, called after job is set
 #define COMSIG_JOB_RECEIVED "job_received"
 ///from /mob/living/carbon/human/proc/set_coretemperature(): (oldvalue, newvalue)
@@ -157,3 +150,12 @@
 
 ///from /atom/movable/screen/alert/give/proc/handle_transfer(): (taker, item)
 #define COMSIG_CARBON_ITEM_GIVEN "carbon_item_given"
+
+/// Sent from /mob/living/carbon/human/handle_blood(): (seconds_per_tick, times_fired)
+#define COMSIG_HUMAN_ON_HANDLE_BLOOD "human_on_handle_blood"
+	/// Return to prevent all default blood handling
+	#define HANDLE_BLOOD_HANDLED (1<<0)
+	/// Return to skip default nutrition -> blood conversion
+	#define HANDLE_BLOOD_NO_NUTRITION_DRAIN (1<<1)
+	/// Return to skip oxyloss and similar effecst from blood level
+	#define HANDLE_BLOOD_NO_EFFECTS (1<<2)

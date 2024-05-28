@@ -73,7 +73,7 @@
 			if(97 to 102) //letters a to f
 				. += char
 			if(65 to 70) //letters A to F
-				char = lowertext(char)
+				char = LOWER_TEXT(char)
 				. += char
 			else
 				break

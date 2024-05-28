@@ -4,7 +4,8 @@
  * @license MIT
  */
 
-import { useSelector, useDispatch } from 'tgui/backend';
+import { useDispatch, useSelector } from 'tgui/backend';
+
 import { selectAudio } from './selectors';
 
 export const useAudio = () => {

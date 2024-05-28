@@ -1,7 +1,8 @@
 import { paginate } from 'common/collections';
 import { BooleanLike } from 'common/react';
+
 import { useBackend, useLocalState } from '../backend';
-import { Stack, Button, Icon, Input, Section, Tabs } from '../components';
+import { Button, Icon, Input, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 const CATEGORY_PAGE_ITEMS = 4;
@@ -20,13 +21,15 @@ const paginateEvents = (events: Event[], maxPerPage: number): Event[][] => {
   let maxChars = EVENT_PAGE_MAXCHARS;
 
   for (const event of events) {
-    maxChars -= event.name.length;
-    if (maxChars <= 0) {
-      // would overflow the next line over
-      itemsToAdd = maxPerPage;
-      maxChars = EVENT_PAGE_MAXCHARS - event.name.length;
-      pages.push(page);
-      page = [];
+    if (event.name && typeof event.name === 'string') {
+      maxChars -= event.name.length;
+      if (maxChars <= 0) {
+        // would overflow the next line over
+        itemsToAdd = maxPerPage;
+        maxChars = EVENT_PAGE_MAXCHARS - event.name.length;
+        pages.push(page);
+        page = [];
+      }
     }
     page.push(event);
     itemsToAdd--;
@@ -93,7 +96,7 @@ export const PanelOptions = (props) => {
         <Input
           autoFocus
           fluid
-          onChange={(e, value) => setSearchQuery(value)}
+          onInput={(e, value) => setSearchQuery(value)}
           placeholder="Search..."
           value={searchQuery}
         />
@@ -126,7 +129,14 @@ export const EventSection = (props) => {
         return false;
       }
       // remove events not being searched for, if a search is active
-      if (searchQuery && !event.name.toLowerCase().includes(searchQuery)) {
+      if (
+        searchQuery &&
+        event.name &&
+        typeof event.name === 'string' &&
+        searchQuery &&
+        typeof searchQuery === 'string' &&
+        !event.name.toLowerCase().includes(searchQuery.toLowerCase())
+      ) {
         return false;
       }
       return true;

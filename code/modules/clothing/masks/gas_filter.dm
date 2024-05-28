@@ -39,7 +39,8 @@
 		/datum/gas/nitrium,
 		/datum/gas/freon,
 		/datum/gas/hypernoblium,
-		/datum/gas/bz
+		/datum/gas/bz,
+		/datum/gas/miasma,
 		)
 	///List of gases with low filter priority
 	var/list/low_filtering_gases = list(

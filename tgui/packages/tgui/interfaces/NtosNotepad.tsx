@@ -4,12 +4,13 @@
  * @license MIT
  */
 
-import { NtosWindow } from '../layouts';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Section, TextArea, MenuBar, Divider } from '../components';
-import { Component, createRef, RefObject } from 'react';
-import { createLogger } from '../logging';
+import { Component, createRef, RefObject, useState } from 'react';
+
+import { useBackend } from '../backend';
+import { Box, Divider, MenuBar, Section, TextArea } from '../components';
 import { Dialog, UnsavedChangesDialog } from '../components/Dialog';
+import { NtosWindow } from '../layouts';
+import { createLogger } from '../logging';
 
 const logger = createLogger('NtosNotepad');
 
@@ -71,11 +72,8 @@ const NtosNotepadMenuBar = (props: MenuBarProps) => {
     setWordWrap,
     aboutNotepadDialog,
   } = props;
-  const [openOnHover, setOpenOnHover] = useLocalState('openOnHover', false);
-  const [openMenuBar, setOpenMenuBar] = useLocalState<string | null>(
-    'openMenuBar',
-    null,
-  );
+  const [openOnHover, setOpenOnHover] = useState(false);
+  const [openMenuBar, setOpenMenuBar] = useState<string | null>(null);
   const onMenuItemClick = (value) => {
     setOpenOnHover(false);
     setOpenMenuBar(null);
@@ -310,7 +308,6 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
         ref={this.innerRef}
         onChange={(_, value) => setText(value)}
         className="NtosNotepad__textarea"
-        scroll
         nowrap={!wordWrap}
         value={text}
       />
@@ -370,33 +367,18 @@ type RetryActionType = (retrying?: boolean) => void;
 export const NtosNotepad = (props) => {
   const { act, data, config } = useBackend<NoteData>();
   const { note } = data;
-  const [documentName, setDocumentName] = useLocalState<string>(
-    'documentName',
-    DEFAULT_DOCUMENT_NAME,
-  );
-  const [originalText, setOriginalText] = useLocalState<string>(
-    'originalText',
-    note,
-  );
-  console.log(note);
-  const [text, setText] = useLocalState<string>('text', note);
-  const [statuses, setStatuses] = useLocalState<Statuses>('statuses', {
+  const [documentName, setDocumentName] = useState(DEFAULT_DOCUMENT_NAME);
+  const [originalText, setOriginalText] = useState(note);
+  const [text, setText] = useState<string>(note);
+  const [statuses, setStatuses] = useState<Statuses>({
     line: 0,
     column: 0,
   });
-  const [activeDialog, setActiveDialog] = useLocalState<Dialogs>(
-    'activeDialog',
-    Dialogs.NONE,
-  );
-  const [retryAction, setRetryAction] = useLocalState<RetryActionType | null>(
-    'activeAction',
-    null,
-  );
-  const [showStatusBar, setShowStatusBar] = useLocalState<boolean>(
-    'showStatusBar',
-    true,
-  );
-  const [wordWrap, setWordWrap] = useLocalState<boolean>('wordWrap', true);
+  const [activeDialog, setActiveDialog] = useState<Dialogs>(Dialogs.NONE);
+  const [retryAction, setRetryAction] = useState<RetryActionType | null>(null);
+  const [showStatusBar, setShowStatusBar] = useState<boolean>(true);
+  const [wordWrap, setWordWrap] = useState<boolean>(true);
+
   const handleCloseDialog = () => setActiveDialog(Dialogs.NONE);
   const handleSave = (newDocumentName: string = documentName) => {
     logger.log(`Saving the document as ${newDocumentName}`);

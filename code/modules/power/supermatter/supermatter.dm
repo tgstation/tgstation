@@ -109,7 +109,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/external_damage_immediate = 0
 
 	///The cutoff for a bolt jumping, grows with heat, lowers with higher mol count,
-	var/zap_cutoff = 1.2e6
+	var/zap_cutoff = 1.2 MEGA JOULES
 	///How much the bullets damage should be multiplied by when it is added to the internal variables
 	var/bullet_energy = SUPERMATTER_DEFAULT_BULLET_ENERGY
 	///How much hallucination should we produce per unit of power?
@@ -306,7 +306,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			range = 3,
 			zap_str = internal_energy * zap_transmission_rate * delta_time,
 			zap_flags = ZAP_SUPERMATTER_FLAGS,
-			zap_cutoff = 2.4e5 * delta_time,
+			zap_cutoff = 240 KILO WATTS * delta_time,
 			power_level = internal_energy,
 			color = zap_color,
 		)
@@ -318,7 +318,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	damage_factors = calculate_damage()
 	if(damage == 0) // Clear any in game forced delams if on full health.
 		set_delam(SM_DELAM_PRIO_IN_GAME, SM_DELAM_STRATEGY_PURGE)
-	else if(damage <= explosion_point)
+	else if(!final_countdown)
 		set_delam(SM_DELAM_PRIO_NONE, SM_DELAM_STRATEGY_PURGE) // This one cant clear any forced delams.
 	delamination_strategy.delam_progress(src)
 	if(damage > explosion_point && !final_countdown)
@@ -564,7 +564,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		header = "Meltdown Incoming",
 	)
 
-	var/datum/sm_delam/last_delamination_strategy = delamination_strategy
 	var/list/count_down_messages = delamination_strategy.count_down_messages()
 
 	radio.talk_into(
@@ -587,10 +586,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			)
 
 	for(var/i in delamination_countdown_time to 0 step -10)
-		if(last_delamination_strategy != delamination_strategy)
-			count_down_messages = delamination_strategy.count_down_messages()
-			last_delamination_strategy = delamination_strategy
-
 		var/message
 		var/healed = FALSE
 
@@ -895,7 +890,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	delamination_strategy.on_select(src)
 	return TRUE
 
-/obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 3.2e6, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1.2e6, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
+/obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 3.2 MEGA JOULES, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1.2 MEGA JOULES, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
 	if(QDELETED(zapstart))
 		return
 	. = zapstart.dir

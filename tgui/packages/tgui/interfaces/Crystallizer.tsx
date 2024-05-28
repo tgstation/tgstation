@@ -1,3 +1,7 @@
+import { toFixed } from 'common/math';
+import { BooleanLike } from 'common/react';
+
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -6,12 +10,8 @@ import {
   ProgressBar,
   Section,
 } from '../components';
-
-import { BooleanLike } from 'common/react';
-import { Window } from '../layouts';
 import { getGasColor } from '../constants';
-import { toFixed } from 'common/math';
-import { useBackend } from '../backend';
+import { Window } from '../layouts';
 
 type Data = {
   on: BooleanLike;
@@ -81,12 +81,13 @@ const Controls = (props) => {
         <LabeledList.Item label="Gas Input">
           <NumberInput
             animated
+            step={0.1}
             value={gas_input}
             width="63px"
             unit="moles/s"
             minValue={0}
             maxValue={250}
-            onDrag={(e, value) =>
+            onDrag={(value) =>
               act('gas_input', {
                 gas_input: value,
               })

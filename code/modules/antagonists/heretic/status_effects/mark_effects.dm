@@ -95,28 +95,8 @@
 	effect_icon_state = "emark3"
 
 /datum/status_effect/eldritch/rust/on_effect()
-	if(iscarbon(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		var/static/list/organs_to_damage = list(
-			ORGAN_SLOT_BRAIN,
-			ORGAN_SLOT_EARS,
-			ORGAN_SLOT_EYES,
-			ORGAN_SLOT_LIVER,
-			ORGAN_SLOT_LUNGS,
-			ORGAN_SLOT_STOMACH,
-			ORGAN_SLOT_HEART,
-		)
-
-		// Roughly 75% of their organs will take a bit of damage
-		for(var/organ_slot in organs_to_damage)
-			if(prob(75))
-				carbon_owner.adjustOrganLoss(organ_slot, 20)
-
-		// And roughly 75% of their items will take a smack, too
-		for(var/obj/item/thing in carbon_owner.get_all_gear())
-			if(!QDELETED(thing) && prob(75))
-				thing.take_damage(100)
-
+	owner.adjust_disgust(100)
+	owner.adjust_confusion(10 SECONDS)
 	return ..()
 
 // MARK OF VOID
@@ -260,3 +240,49 @@
 /datum/status_effect/eldritch/lock/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, STATUS_EFFECT_TRAIT)
 	return ..()
+
+// MARK OF MOON
+
+/datum/status_effect/eldritch/moon
+	effect_icon_state = "emark8"
+	///Used for checking if the pacifism effect should end early
+	var/damage_sustained = 0
+
+/datum/status_effect/eldritch/moon/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_PACIFISM, id)
+	owner.emote(pick("giggle", "laugh"))
+	owner.balloon_alert(owner, "you feel unable to hurt a soul!")
+	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	return TRUE
+
+/// Checks for damage so the heretic can't just attack them with another weapon whilst they are unable to fight back
+/datum/status_effect/eldritch/moon/proc/on_damaged(datum/source, damage, damagetype)
+	SIGNAL_HANDLER
+
+	// The grasp itself deals stamina damage so we will ignore it
+	if(damagetype == STAMINA)
+		return
+
+	damage_sustained += damage
+
+	if(damage_sustained < 15)
+		return
+
+	// Removes the trait in here since we don't wanna destroy the mark before its detonated or allow detonation triggers with other weapons
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
+	owner.balloon_alert(owner, "you feel able to once again strike!")
+
+/datum/status_effect/eldritch/moon/on_effect()
+	owner.adjust_confusion(30 SECONDS)
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25, 160)
+	owner.emote(pick("giggle", "laugh"))
+	owner.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
+	return ..()
+
+/datum/status_effect/eldritch/moon/on_remove()
+	. = ..()
+	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
+
+	// Incase the trait was not removed earlier
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)

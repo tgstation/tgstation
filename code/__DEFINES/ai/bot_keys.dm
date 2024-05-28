@@ -33,6 +33,10 @@
 #define BB_NEAR_DEATH_SPEECH "near_death_speech"
 ///in crit patient we must alert medbay about
 #define BB_PATIENT_IN_CRIT "patient_in_crit"
+///how much time interval before we clear list
+#define BB_UNREACHABLE_LIST_COOLDOWN "unreachable_list_cooldown"
+///can we clear the list now
+#define	BB_CLEAR_LIST_READY "clear_list_ready"
 
 // cleanbots
 ///key that holds the foaming ability
@@ -55,3 +59,17 @@
 #define BB_ACID_SPRAY_TARGET "acid_spray_target"
 ///key that holds trash we will burn
 #define BB_HUNTABLE_TRASH "huntable_trash"
+
+//hygienebots
+///key that holds our threats
+#define BB_WASH_THREATS "wash_threats"
+///key that holds speech when we find our target
+#define BB_WASH_FOUND "wash_found"
+///key that holds speech when we cleaned our target
+#define BB_WASH_DONE "wash_done"
+///key that holds target we will wash
+#define BB_WASH_TARGET "wash_target"
+///key that holds how frustrated we are when target is running away
+#define BB_WASH_FRUSTRATION "wash_frustration"
+///key that holds cooldown after we finish cleaning something, so we dont immediately run off to patrol
+#define BB_POST_CLEAN_COOLDOWN "post_clean_cooldown"

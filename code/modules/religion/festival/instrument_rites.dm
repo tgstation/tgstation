@@ -68,7 +68,7 @@
 	///particle effect of playing this tune
 	var/particles_path = /particles/musical_notes
 	///what the instrument will glow when playing
-	var/glow_color = "#000000"
+	var/glow_color = COLOR_BLACK
 
 /datum/religion_rites/song_tuner/invoke_effect(mob/living/user, obj/structure/altar_of_gods/altar)
 	. = ..()
@@ -138,7 +138,7 @@
 	var/obj/effect/dummy/lighting_obj/moblight/performer_light_obj
 
 /datum/religion_rites/song_tuner/light/performer_start_effect(mob/living/carbon/human/performer, atom/song_source)
-	performer_light_obj = performer.mob_light(8, color = LIGHT_COLOR_DIM_YELLOW)
+	performer_light_obj = performer.mob_light(8, 1.5, color = LIGHT_COLOR_DIM_YELLOW)
 
 /datum/religion_rites/song_tuner/light/Destroy()
 	QDEL_NULL(performer_light_obj)

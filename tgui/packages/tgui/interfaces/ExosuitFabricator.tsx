@@ -1,15 +1,21 @@
-import { useBackend } from '../backend';
-import { Box, Button, Section, Stack, Icon } from '../components';
-import { Window } from '../layouts';
-import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
-import { DesignBrowser } from './Fabrication/DesignBrowser';
-import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { Tooltip } from '../components';
 import { BooleanLike, classes } from 'common/react';
+
+import { useBackend } from '../backend';
+import { Box, Button, Icon, Section, Stack } from '../components';
+import { Tooltip } from '../components';
+import { Window } from '../layouts';
+import { DesignBrowser } from './Fabrication/DesignBrowser';
+import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
+import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
+import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
+
+type ExosuitDesign = Design & {
+  constructionTime: number;
+};
 
 type ExosuitFabricatorData = FabricatorData & {
   processing: BooleanLike;
+  designs: Record<string, ExosuitDesign>;
 };
 
 export const ExosuitFabricator = (props) => {

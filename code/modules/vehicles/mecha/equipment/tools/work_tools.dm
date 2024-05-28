@@ -7,7 +7,7 @@
 	desc = "Equipment for engineering exosuits. Lifts objects and loads them into cargo."
 	icon_state = "mecha_clamp"
 	equip_cooldown = 15
-	energy_drain = 10
+	energy_drain = 0.01 * STANDARD_CELL_CHARGE
 	tool_behaviour = TOOL_RETRACTOR
 	range = MECHA_MELEE
 	toolspeed = 0.8
@@ -214,117 +214,88 @@
 			attempt_refill(usr)
 			return TRUE
 
-#define MODE_DECONSTRUCT 0
-#define MODE_WALL 1
-#define MODE_AIRLOCK 2
-
 /obj/item/mecha_parts/mecha_equipment/rcd
 	name = "mounted RCD"
 	desc = "An exosuit-mounted Rapid Construction Device."
 	icon_state = "mecha_rcd"
-	equip_cooldown = 10
-	energy_drain = 250
+	equip_cooldown = 0 // internal RCD already handles it
+	energy_drain = 0 // internal RCD handles power consumption based on matter use
 	range = MECHA_MELEE|MECHA_RANGED
 	item_flags = NO_MAT_REDEMPTION
-	///determines what we'll so when clicking on a turf
-	var/mode = MODE_DECONSTRUCT
+	///Maximum range the RCD can construct at.
+	var/rcd_range = 3
+	///Whether or not to deconstruct instead.
+	var/deconstruct_active = FALSE
+	///The type of internal RCD this equipment uses.
+	var/rcd_type = /obj/item/construction/rcd/exosuit
+	///The internal RCD item used by this equipment.
+	var/obj/item/construction/rcd/internal_rcd
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Initialize(mapload)
 	. = ..()
+	internal_rcd = new rcd_type(src)
 	GLOB.rcd_list += src
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Destroy()
 	GLOB.rcd_list -= src
+	qdel(internal_rcd)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/get_snowflake_data()
 	return list(
-		"snowflake_id" = MECHA_SNOWFLAKE_ID_MODE,
-		"mode" = get_mode_name(),
-		"mode_label" = "RCD control",
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_RCD,
+		"scan_ready" = COOLDOWN_FINISHED(internal_rcd, destructive_scan_cooldown),
+		"deconstructing" = deconstruct_active,
+		"mode" = internal_rcd.design_title,
 	)
 
-/// fetches the mode name to display in the UI
-/obj/item/mecha_parts/mecha_equipment/rcd/proc/get_mode_name()
-	switch(mode)
-		if(MODE_DECONSTRUCT)
-			return "Deconstruct"
-		if(MODE_WALL)
-			return "Build wall"
-		if(MODE_AIRLOCK)
-			return "Build Airlock"
-		else
-			return "Someone didnt set this"
-
-/obj/item/mecha_parts/mecha_equipment/rcd/handle_ui_act(action, list/params)
-	if(action == "change_mode")
-		mode++
-		if(mode > MODE_AIRLOCK)
-			mode = MODE_DECONSTRUCT
-		switch(mode)
-			if(MODE_DECONSTRUCT)
-				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Deconstruct.")]")
-				energy_drain = initial(energy_drain)
-			if(MODE_WALL)
-				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Construct Walls and Flooring.")]")
-				energy_drain = 2*initial(energy_drain)
-			if(MODE_AIRLOCK)
-				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Construct Airlock.")]")
-				energy_drain = 2*initial(energy_drain)
-		return TRUE
-
-/obj/item/mecha_parts/mecha_equipment/rcd/action(mob/source, atom/target, list/modifiers)
-	if(!isturf(target) && !istype(target, /obj/machinery/door/airlock))
-		target = get_turf(target)
-	if(!action_checks(target) || !(target in view(3, chassis)) || istype(target, /turf/open/space/transit))
-		return
-	playsound(chassis, 'sound/machines/click.ogg', 50, TRUE)
-
-	switch(mode)
-		if(MODE_DECONSTRUCT)
-			to_chat(source, "[icon2html(src, source)][span_notice("Deconstructing [target]...")]")
-			if(iswallturf(target))
-				var/turf/closed/wall/wall_turf = target
-				if(!do_after_cooldown(wall_turf, source))
-					return
-				wall_turf.ScrapeAway()
-			else if(isfloorturf(target))
-				var/turf/open/floor/floor_turf = target
-				if(!do_after_cooldown(floor_turf, source))
-					return
-				floor_turf.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-			else if (istype(target, /obj/machinery/door/airlock))
-				if(!do_after_cooldown(target, source))
-					return
-				qdel(target)
-		if(MODE_WALL)
-			if(isfloorturf(target))
-				var/turf/open/floor/floor_turf = target
-				to_chat(source, "[icon2html(src, source)][span_notice("Building Wall...")]")
-				if(!do_after_cooldown(floor_turf, source))
-					return
-				floor_turf.place_on_top(/turf/closed/wall)
-			else if(isopenturf(target))
-				var/turf/open/open_turf = target
-				to_chat(source, "[icon2html(src, source)][span_notice("Building Floor...")]")
-				if(!do_after_cooldown(open_turf, source))
-					return
-				open_turf.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-		if(MODE_AIRLOCK)
-			if(isfloorturf(target))
-				to_chat(source, "[icon2html(src, source)][span_notice("Building Airlock...")]")
-				if(!do_after_cooldown(target, source))
-					return
-				var/obj/machinery/door/airlock/airlock_door = new /obj/machinery/door/airlock(target)
-				airlock_door.autoclose = TRUE
-				playsound(target, 'sound/effects/sparks2.ogg', 50, TRUE)
-	chassis.spark_system.start()
-	playsound(target, 'sound/items/deconstruct.ogg', 50, TRUE)
+/// Set the RCD's owner when attaching and detaching it
+/obj/item/mecha_parts/mecha_equipment/rcd/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
+	internal_rcd.owner = new_mecha
 	return ..()
 
-#undef MODE_DECONSTRUCT
-#undef MODE_WALL
-#undef MODE_AIRLOCK
+/obj/item/mecha_parts/mecha_equipment/rcd/detach(atom/moveto)
+	internal_rcd.owner = null
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/rcd/handle_ui_act(action, list/params)
+	switch(action)
+		if("rcd_scan")
+			if(!COOLDOWN_FINISHED(internal_rcd, destructive_scan_cooldown))
+				return FALSE
+			rcd_scan(internal_rcd)
+			COOLDOWN_START(internal_rcd, destructive_scan_cooldown, RCD_DESTRUCTIVE_SCAN_COOLDOWN)
+			return TRUE
+		if("toggle_deconstruct")
+			deconstruct_active = !deconstruct_active
+			return TRUE
+		if("change_mode")
+			for(var/mob/driver as anything in chassis.return_drivers())
+				internal_rcd.ui_interact(driver)
+			return TRUE
+
+/obj/item/mecha_parts/mecha_equipment/rcd/action(mob/source, atom/target, list/modifiers)
+	if(!action_checks(target))
+		return
+	if(get_dist(chassis, target) > rcd_range)
+		balloon_alert(source, "out of range!")
+		return
+	if(!internal_rcd) // if it somehow went missing
+		internal_rcd = new rcd_type(src)
+		stack_trace("Exosuit-mounted RCD had no internal RCD!")
+	..() // do this now because the do_after can take a while
+	var/construction_mode = internal_rcd.mode
+	if(deconstruct_active) // deconstruct isn't in the RCD menu so switch it to deconstruct mode and set it back when it's done
+		internal_rcd.mode = RCD_DECONSTRUCT
+	internal_rcd.rcd_create(target, source)
+	internal_rcd.mode = construction_mode
+	return TRUE
+
+/obj/item/mecha_parts/mecha_equipment/rcd/attackby(obj/item/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/rcd_upgrade))
+		internal_rcd.install_upgrade(attacking_item, user)
+		return
+	return ..()
 
 //Dunno where else to put this so shrug
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade
@@ -385,7 +356,8 @@
 		equipment.detach(newmech)
 		equipment.attach(newmech, righthandgun)
 	newmech.dna_lock = markone.dna_lock
-	newmech.mecha_flags = markone.mecha_flags
+	newmech.mecha_flags |= markone.mecha_flags & ~initial(markone.mecha_flags) // transfer any non-inherent flags like PANEL_OPEN and LIGHTS_ON
+	newmech.set_light_on(newmech.mecha_flags & LIGHTS_ON) // in case the lights were on
 	newmech.strafe = markone.strafe
 	//Integ set to the same percentage integ as the old mecha, rounded to be whole number
 	newmech.update_integrity(round((markone.get_integrity() / markone.max_integrity) * newmech.get_integrity()))

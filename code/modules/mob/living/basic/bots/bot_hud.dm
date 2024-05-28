@@ -37,3 +37,84 @@
 			holder.icon_state = "hudmove"
 		else
 			holder.icon_state = ""
+
+///proc that handles drawing and transforming the bot's path onto diagnostic huds
+/mob/living/basic/bot/proc/generate_bot_path(datum/move_loop/has_target/jps/source)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(src, COMSIG_MOVELOOP_JPS_FINISHED_PATHING)
+
+	if(isnull(ai_controller))
+		return
+
+	clear_path_hud()
+
+	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
+	LAZYCLEARLIST(path_images)
+
+	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED])
+
+	var/atom/move_target = ai_controller.current_movement_target
+	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
+		return
+
+	var/list/our_path = source.movement_path
+	if(!length(our_path))
+		return
+
+	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
+		hud.remove_atom_from_hud(src)
+
+	for(var/index in 1 to our_path.len)
+		if(index == 1 || index == our_path.len)
+			continue
+		var/turf/current_turf = our_path[index]
+		var/turf/previous_turf = our_path[index - 1]
+
+		var/turf/next_turf = our_path[index + 1]
+		var/next_direction = get_dir(previous_turf, next_turf)
+		var/previous_direction = get_dir(current_turf, previous_turf)
+
+		var/image/path_display = image(icon = path_image_icon, loc = current_turf, icon_state = path_image_icon_state, layer = GAME_PLANE, dir = next_direction)
+
+		if((ISDIAGONALDIR(next_direction) && (previous_direction & (NORTH|SOUTH))))
+			var/turn_value = (next_direction == SOUTHWEST || next_direction == NORTHEAST) ? 90 : -90
+			path_display.transform = path_display.transform.Turn(turn_value)
+			path_display.transform = path_display.transform.Scale(1, -1)
+
+		path_display.color = path_image_color
+		path_images += path_display
+		current_pathed_turfs[current_turf] = path_display
+
+	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
+		hud.add_atom_to_hud(src)
+
+///proc that handles moving along the bot's drawn path
+/mob/living/basic/bot/proc/handle_loop_movement(atom/movable/source, atom/oldloc, dir, forced)
+	SIGNAL_HANDLER
+
+	handle_hud_path()
+	on_bot_movement(source, oldloc, dir, forced)
+
+/mob/living/basic/bot/proc/handle_hud_path()
+	if(client || !length(current_pathed_turfs) || isnull(ai_controller))
+		return
+
+	var/atom/move_target = ai_controller.current_movement_target
+
+	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
+		clear_path_hud()
+
+	var/turf/our_turf = get_turf(src)
+	var/image/target_image = current_pathed_turfs[our_turf]
+	if(target_image)
+		animate(target_image, alpha = 0, time = 0.3 SECONDS)
+	current_pathed_turfs -= our_turf
+
+///proc that handles deleting the bot's drawn path when needed
+/mob/living/basic/bot/proc/clear_path_hud()
+	for(var/turf/index as anything in current_pathed_turfs)
+		var/image/our_image = current_pathed_turfs[index]
+		animate(our_image, alpha = 0, time = 0.3 SECONDS)
+		current_pathed_turfs -= index
+

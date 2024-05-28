@@ -1,8 +1,8 @@
+import { useBackend } from 'tgui/backend';
 import { Box, Button, Icon, Table, Tooltip } from 'tgui/components';
 import { getGasColor, getGasLabel } from 'tgui/constants';
 
 import { HypertorusData } from '.';
-import { useBackend } from 'tgui/backend';
 
 type Recipe = {
   param: string;
@@ -88,7 +88,7 @@ const recipe_effect_structure: Recipe[] = [
     override_base: 0.85,
     scale: 1.15,
     tooltip: (v, d) =>
-      'Maximum: ' + (d.baseMaximumTemperature * v).toExponential() + ' K',
+      'Maximum: ' + (d.baseMaxTemperature * v).toExponential() + ' K',
   },
 ];
 
@@ -128,7 +128,7 @@ const GasCellItem = (props: GasCellProps) => {
   if (!gasid) return <Table.Cell />;
 
   return (
-    <Table.Cell key={gasid} label={getGasLabel(gasid)} {...rest}>
+    <Table.Cell key={gasid} {...rest}>
       <Box color={getGasColor(gasid)}>{getGasLabel(gasid)}</Box>
     </Table.Cell>
   );
@@ -144,16 +144,16 @@ export const HypertorusRecipes = (props: RecipeProps) => {
       <Table>
         <MemoRow header>
           <Table.Cell />
-          <Table.Cell colspan="2">Fuel</Table.Cell>
-          <Table.Cell colspan="2">Fusion Byproducts</Table.Cell>
-          <Table.Cell colspan="6">Produced gases</Table.Cell>
-          <Table.Cell colspan="6">Effects</Table.Cell>
+          <Table.Cell colSpan={2}>Fuel</Table.Cell>
+          <Table.Cell colSpan={2}>Fusion Byproducts</Table.Cell>
+          <Table.Cell colSpan={6}>Produced gases</Table.Cell>
+          <Table.Cell colSpan={6}>Effects</Table.Cell>
         </MemoRow>
         <MemoRow header>
           <Table.Cell />
           <Table.Cell>Primary</Table.Cell>
           <Table.Cell>Secondary</Table.Cell>
-          <Table.Cell colspan="2" />
+          <Table.Cell colSpan={2} />
           <Table.Cell>Tier 1</Table.Cell>
           <Table.Cell>Tier 2</Table.Cell>
           <Table.Cell>Tier 3</Table.Cell>

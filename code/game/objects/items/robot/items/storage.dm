@@ -50,29 +50,31 @@
 	stored.attack_self(user)
 
 //Alt click drops the stored item.
-/obj/item/borg/apparatus/AltClick(mob/living/silicon/robot/user)
+/obj/item/borg/apparatus/click_alt(mob/living/silicon/robot/user)
 	if(!stored || !issilicon(user))
-		return ..()
+		return CLICK_ACTION_BLOCKING
 	stored.forceMove(user.drop_location())
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
-	if(!stored)
-		// Borgs should not be grabbing their own modules
-		if(!istype(atom.loc, /mob/living/silicon/robot))
-			var/itemcheck = FALSE
-			for(var/storable_type in storable)
-				if(istype(atom, storable_type))
-					itemcheck = TRUE
-					break
-			if(itemcheck)
-				var/obj/item/item = atom
-				item.forceMove(src)
-				stored = item
-				RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
-				update_appearance()
-				return TRUE
-	else
+	if(stored)
 		stored.melee_attack_chain(user, atom, params)
+		return TRUE
+
+	if(istype(atom.loc, /mob/living/silicon/robot) || istype(atom.loc, /obj/item/robot_model) || HAS_TRAIT(atom, TRAIT_NODROP))
+		return ..() // Borgs should not be grabbing their own modules
+
+	var/itemcheck = FALSE
+	for(var/storable_type in storable)
+		if(istype(atom, storable_type))
+			itemcheck = TRUE
+			break
+	if(itemcheck)
+		var/obj/item/item = atom
+		item.forceMove(src)
+		stored = item
+		RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
+		update_appearance()
 		return TRUE
 	return ..()
 
@@ -243,16 +245,16 @@
 		bag = mutable_appearance(icon, icon_state = "evidenceobj") // empty bag
 	. += bag
 
-/obj/item/borg/apparatus/organ_storage/AltClick(mob/living/silicon/robot/user)
-	. = ..()
-	if(stored)
-		var/obj/item/organ = stored
-		user.visible_message(span_notice("[user] dumps [organ] from [src]."), span_notice("You dump [organ] from [src]."))
-		cut_overlays()
-		organ.forceMove(get_turf(src))
-	else
+/obj/item/borg/apparatus/organ_storage/click_alt(mob/living/silicon/robot/user)
+	if(!stored)
 		to_chat(user, span_notice("[src] is empty."))
-	return
+		return CLICK_ACTION_BLOCKING
+
+	var/obj/item/organ = stored
+	user.visible_message(span_notice("[user] dumps [organ] from [src]."), span_notice("You dump [organ] from [src]."))
+	cut_overlays()
+	organ.forceMove(get_turf(src))
+	return CLICK_ACTION_SUCCESS
 
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator
