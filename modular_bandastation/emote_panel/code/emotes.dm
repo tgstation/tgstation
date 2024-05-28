@@ -199,7 +199,7 @@
 
 /datum/emote/living/snore
 	name = "храпеть"
-	message = "храпеть."
+	message = "храпит."
 	message_mime = "бесшумно храпит."
 
 /datum/emote/living/stare
@@ -434,6 +434,7 @@
 	name = "кричать"
 	message = "кричит!"
 	message_mime = "изображает крик!"
+	only_forced_audio = FALSE
 
 /datum/emote/living/carbon/human/scream/screech
 	name = "визжать"
