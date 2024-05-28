@@ -234,7 +234,9 @@
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
 
 	user.do_attack_animation(target_mob)
-	target_mob.attacked_by(src, user)
+
+	if(!target_mob.attacked_by(src, user))
+		return TRUE
 
 	SEND_SIGNAL(src, COMSIG_ITEM_POST_ATTACK, target_mob, user, params)
 
