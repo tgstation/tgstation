@@ -58,7 +58,7 @@
 	armour_penetration = 10
 	wound_bonus = -20
 	bare_wound_bonus = 20
-	embedding = list("embed_chance" = 60, "fall_chance" = 2, "jostle_chance" = 2, "ignore_throwspeed_threshold" = TRUE, "pain_stam_pct" = 0.4, "pain_mult" = 4, "jostle_pain_mult" = 2, "rip_time" = 10)
+	embedding = list(embed_chance=60, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=2, rip_time=10)
 	embed_falloff_tile = -5
 	wound_falloff_tile = -2
 	shrapnel_type = /obj/item/ammo_casing/rebar
@@ -74,7 +74,7 @@
 	armour_penetration = 20 //A bit better versus armor. Gets past anti laser armor or a vest, but doesnt wound proc on sec armor.
 	wound_bonus = 10
 	bare_wound_bonus = 20
-	embedding = list("embed_chance" = 80, "fall_chance" = 1, "jostle_chance" = 3, "ignore_throwspeed_threshold" = TRUE, "pain_stam_pct" = 0.4, "pain_mult" = 3, "jostle_pain_mult" = 2, "rip_time" = 14)
+	embedding = list(embed_chance=80, fall_chance=1, jostle_chance=3, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=2, rip_time=14)
 	embed_falloff_tile = -3
 	shrapnel_type = /obj/item/ammo_casing/rebar/syndie
 
@@ -89,7 +89,7 @@
 	armour_penetration = 15 // not nearly as good, as its not as sharp.
 	wound_bonus = 0
 	bare_wound_bonus = 20
-	embedding = list("embed_chance" = 90, "fall_chance" = 1, "jostle_chance" = 5, "ignore_throwspeed_threshold" = TRUE, "pain_stam_pct" = 0.8, "pain_mult" = 6, "jostle_pain_mult" = 2, "rip_time" = 30)
+	embedding = list(embed_chance=90, fall_chance=0, jostle_chance=5, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.8, pain_mult=6, jostle_pain_mult=2, rip_time=30)
 	embed_falloff_tile = -2 // very spiky.
 	shrapnel_type = /obj/item/ammo_casing/rebar/zaukerite
 
