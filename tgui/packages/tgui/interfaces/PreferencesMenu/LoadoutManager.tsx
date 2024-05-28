@@ -15,8 +15,10 @@ import {
   Tabs,
 } from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
-import { PreferencesMenuData } from './data';
+import { PreferencesMenuData, ServerData } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
+
+export type LoadoutList = Record<string, Record<string, string> | []>;
 
 type LoadoutButton = {
   icon: string;
@@ -43,12 +45,6 @@ type LoadoutManagerData = PreferencesMenuData & {
   job_clothes: BooleanLike;
 };
 
-type LoadoutServerData = {
-  loadout: {
-    loadout_tabs: LoadoutCategory[];
-  };
-};
-
 export const LoadoutPage = () => {
   return (
     <ServerPreferencesFetcher
@@ -56,8 +52,12 @@ export const LoadoutPage = () => {
         if (!serverData) {
           return <NoticeBox>Loading...</NoticeBox>;
         }
-        const data = serverData as LoadoutServerData;
-        return <LoadoutPageInner loadout_tabs={data.loadout.loadout_tabs} />;
+        const loadoutServerData: ServerData = serverData;
+        return (
+          <LoadoutPageInner
+            loadout_tabs={loadoutServerData.loadout.loadout_tabs}
+          />
+        );
       }}
     />
   );

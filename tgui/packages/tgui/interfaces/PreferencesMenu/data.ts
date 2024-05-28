@@ -2,6 +2,7 @@ import { BooleanLike } from 'common/react';
 
 import { sendAct } from '../../backend';
 import { Gender } from './preferences/gender';
+import { LoadoutCategory, LoadoutList } from './preferences/loadout';
 
 export enum Food {
   Alcohol = 'ALCOHOL',
@@ -193,8 +194,9 @@ export type ServerData = {
   random: {
     randomizable: string[];
   };
+  loadout: {
+    loadout_tabs: LoadoutCategory[];
+  };
   species: Record<string, Species>;
   [otheyKey: string]: unknown;
 };
-
-export type LoadoutList = Record<string, Record<string, string> | []>;
