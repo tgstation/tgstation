@@ -1,8 +1,8 @@
 import { BooleanLike } from 'common/react';
 
 import { sendAct } from '../../backend';
+import { LoadoutCategory, LoadoutList } from './LoadoutManager';
 import { Gender } from './preferences/gender';
-import { LoadoutCategory, LoadoutList } from './preferences/loadout';
 
 export enum Food {
   Alcohol = 'ALCOHOL',
