@@ -207,6 +207,7 @@
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/stack/ore/slag = 20,
+		/obj/item/fish/lavaloop = 15,
 		/obj/structure/closet/crate/necropolis/tendril = 1,
 		/obj/effect/mob_spawn/corpse/human/charredskeleton = 1
 	)
@@ -229,6 +230,7 @@
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/chasm_crab/ice = 15,
+		/obj/item/fish/lavaloop/plasma_river = 15,
 		/obj/item/coin/plasma = 3,
 		/obj/item/stack/ore/plasma = 3,
 		/mob/living/basic/mining/lobstrosity = 1,

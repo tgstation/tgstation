@@ -645,6 +645,15 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"ey" = (
+/obj/structure/lattice/catwalk/mining,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/toy/plush/shark{
+	desc = "A plushie depicting a somewhat cartoonish shark. The tag calls it a 'hákarl', noting that it was made by an obscure furniture manufacturer in old Scandinavia. This one seems to have some cable wiring sticking out of its mouth."
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "ez" = (
 /obj/structure/chair/comfy/teal{
 	dir = 4
@@ -2869,7 +2878,7 @@
 /area/mine/laborcamp/production)
 "ps" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/super/full,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
@@ -5038,7 +5047,7 @@
 /turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "Ee" = (
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/super/full,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/maintenance/labor)
@@ -29901,7 +29910,7 @@ Xw
 aj
 aj
 aj
-cU
+ey
 aj
 aj
 aj
