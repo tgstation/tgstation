@@ -8,7 +8,7 @@
 	var/clusterCheckFlags = CLUSTER_CHECK_SAME_ATOMS
 	var/allowAtomsOnSpace = FALSE
 
-/datum/map_generator_module/Destroy(force, ...)
+/datum/map_generator_module/Destroy(force)
 	mother = null
 	return ..()
 

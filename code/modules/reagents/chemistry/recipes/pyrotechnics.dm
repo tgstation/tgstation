@@ -15,7 +15,7 @@
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 
-	if(holder.has_reagent(/datum/reagent/exotic_stabilizer,round(created_volume / 25, CHEMICAL_QUANTISATION_LEVEL)))
+	if(holder.has_reagent(/datum/reagent/exotic_stabilizer, created_volume / 25))
 		return
 	holder.remove_reagent(/datum/reagent/nitroglycerin, created_volume * 2)
 	..()
@@ -77,11 +77,12 @@
 	required_temp = 450
 	strengthdiv = 3
 
-/datum/chemical_reaction/reagent_explosion/tatp/update_info()
-	required_temp = 450 + rand(-49,49)  //this gets loaded only on round start
+/datum/chemical_reaction/reagent_explosion/tatp/New()
+	. = ..()
+	required_temp = 450 + rand(-49, 49)
 
 /datum/chemical_reaction/reagent_explosion/tatp/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	if(holder.has_reagent(/datum/reagent/exotic_stabilizer,round(created_volume / 50, CHEMICAL_QUANTISATION_LEVEL))) // we like exotic stabilizer
+	if(holder.has_reagent(/datum/reagent/exotic_stabilizer, created_volume / 50)) // we like exotic stabilizer
 		return
 	holder.remove_reagent(/datum/reagent/tatp, created_volume)
 	..()
@@ -93,12 +94,12 @@
 
 /datum/chemical_reaction/reagent_explosion/tatp_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/strengthdiv_adjust = created_volume / ( 2100 / initial(strengthdiv))
-	strengthdiv = max(initial(strengthdiv) - strengthdiv_adjust + 1.5 ,1.5) //Slightly better than nitroglycerin
-	. = ..()
-	return
+	strengthdiv = max(initial(strengthdiv) - strengthdiv_adjust + 1.5, 1.5) //Slightly better than nitroglycerin
+	return ..()
 
-/datum/chemical_reaction/reagent_explosion/tatp_explosion/update_info()
-	required_temp = 550 + rand(-49,49)
+/datum/chemical_reaction/reagent_explosion/tatp_explosion/New()
+	. = ..()
+	required_temp = 550 + rand(-49, 49)
 
 /datum/chemical_reaction/reagent_explosion/penthrite_explosion_epinephrine
 	required_reagents = list(/datum/reagent/medicine/c2/penthrite = 1, /datum/reagent/medicine/epinephrine = 1)
@@ -156,7 +157,7 @@
 	mix_message = "<span class='boldnotice'>Sparks start flying around the gunpowder!</span>"
 
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	addtimer(CALLBACK(src, PROC_REF(default_explode), holder, created_volume, modifier, strengthdiv), rand(5,10) SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(default_explode), holder, created_volume, modifier, strengthdiv), rand(5 SECONDS, 10 SECONDS))
 
 /datum/chemical_reaction/thermite
 	results = list(/datum/reagent/thermite = 3)
@@ -193,7 +194,7 @@
 			beeagents += R
 		var/bee_amount = round(created_volume * 0.2)
 		for(var/i in 1 to bee_amount)
-			var/mob/living/basic/bee/short/new_bee = new(location)
+			var/mob/living/basic/bee/timed/new_bee = new(location)
 			if(LAZYLEN(beeagents))
 				new_bee.assign_reagent(pick(beeagents))
 
@@ -418,7 +419,7 @@
 	determin_ph_range = 6
 	temp_exponent_factor = 0.5
 	ph_exponent_factor = 1
-	thermic_constant = -7.5
+	thermic_constant = -1.5
 	H_ion_release = 0
 	rate_up_lim = 10
 	purity_min = 0.2
@@ -559,7 +560,7 @@
 	var/atom/holder_atom = holder.my_atom
 	if(QDELETED(holder_atom))
 		return
-	tesla_zap(source = holder_atom, zap_range = 7, power = power, cutoff = 1e3, zap_flags = zap_flags)
+	tesla_zap(source = holder_atom, zap_range = 7, power = power, cutoff = 1 KILO JOULES, zap_flags = zap_flags)
 	playsound(holder_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat

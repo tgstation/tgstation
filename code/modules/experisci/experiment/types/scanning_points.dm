@@ -24,7 +24,7 @@
 		var/types_joined = types.Join(", ")
 		. += EXPERIMENT_PROG_DETAIL("[text2num(point_amt)] point\s: [types_joined]", complete)
 
-/datum/experiment/scanning/points/get_contributing_index(atom/target)
+/datum/experiment/scanning/points/experiment_requirements(datum/component/experiment_handler/experiment_handler, atom/target)
 	var/destructive = traits & EXPERIMENT_TRAIT_DESTRUCTIVE
 	for (var/req_atom in required_atoms)
 		if (!istype(target, req_atom))
@@ -38,7 +38,7 @@
 			selected = req_atom
 
 		// Run any additonal checks if necessary
-		if (selected && final_contributing_index_checks(target, selected))
+		if (selected && final_contributing_index_checks(experiment_handler, target, selected))
 			return selected
 
 /datum/experiment/scanning/points/do_after_experiment(atom/target, typepath)

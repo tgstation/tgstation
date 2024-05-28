@@ -1,4 +1,5 @@
 import { classes } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Icon, Section, Table, Tooltip } from '../components';
 import { Window } from '../layouts';
@@ -56,7 +57,7 @@ export const CrewManifest = (props) => {
                         <Icon className="CrewManifest__Icon" name="infinity" />
                       </Tooltip>
                     )}
-                    {crewMember.rank === 'Captain' && (
+                    {crewMember.trim === 'Captain' && (
                       <Tooltip content="Captain" position="bottom">
                         <Icon
                           className={classes([
@@ -67,7 +68,7 @@ export const CrewManifest = (props) => {
                         />
                       </Tooltip>
                     )}
-                    {commandJobs.includes(crewMember.rank) && (
+                    {commandJobs.includes(crewMember.trim) && (
                       <Tooltip content="Member of command" position="bottom">
                         <Icon
                           className={classes([

@@ -1,5 +1,6 @@
-import { useBackend, useLocalState } from 'tgui/backend';
-import { Input, Stack, Box, Button } from 'tgui/components';
+import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
+import { Box, Button, Input, Stack } from 'tgui/components';
 
 type Props = {
   color?: string;
@@ -24,10 +25,7 @@ export const EditableText = (props: Props) => {
   if (!field) return <> </>;
 
   const { act } = useBackend();
-  const [editing, setEditing] = useLocalState<boolean>(
-    `editing_${field}`,
-    false,
-  );
+  const [editing, setEditing] = useState(false);
 
   return editing ? (
     <Input

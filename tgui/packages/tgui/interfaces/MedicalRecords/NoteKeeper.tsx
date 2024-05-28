@@ -1,4 +1,3 @@
-import { multiline } from 'common/string';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
   BlockQuote,
@@ -11,6 +10,7 @@ import {
   TextArea,
   Tooltip,
 } from 'tgui/components';
+
 import { getMedicalRecord } from './helpers';
 import { MedicalNote, MedicalRecordData } from './types';
 
@@ -72,7 +72,7 @@ export const NoteKeeper = (props) => {
           <Box color="label" mb={1} mt={1}>
             Content:
           </Box>
-          <BlockQuote wrap>{selectedNote.content}</BlockQuote>
+          <BlockQuote>{selectedNote.content}</BlockQuote>
         </>
       )}
     </Section>
@@ -110,7 +110,6 @@ const NoteTabs = (props) => {
       {notes.map((note, index) => (
         <Tabs.Tab
           key={index}
-          label={index + 1}
           onClick={() => setNote(note)}
           selected={selectedNote?.note_ref === note.note_ref}
         >
@@ -118,7 +117,7 @@ const NoteTabs = (props) => {
         </Tabs.Tab>
       ))}
       <Tooltip
-        content={multiline`Add a new note. Press enter or escape to exit view.`}
+        content={`Add a new note. Press enter or escape to exit view.`}
         position="bottom"
       >
         <Tabs.Tab onClick={composeNew} selected={writing}>

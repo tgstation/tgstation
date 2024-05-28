@@ -52,7 +52,7 @@
 		new dropped_item(get_turf(parent))
 	qdel(src)
 
-/datum/component/pinata/Destroy(force, silent)
+/datum/component/pinata/Destroy(force)
 	UnregisterSignal(parent, list(
 		COMSIG_MOB_APPLY_DAMAGE,
 		COMSIG_LIVING_DEATH,

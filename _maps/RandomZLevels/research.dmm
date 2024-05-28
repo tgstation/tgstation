@@ -485,9 +485,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "ck" = (
-/obj/machinery/door/window/right/directional/east{
-	dir = 2
-	},
+/obj/machinery/door/window/right/directional/south,
 /obj/effect/landmark/awaystart,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -1136,8 +1134,8 @@
 /area/awaymission/research/interior/security)
 "fw" = (
 /obj/machinery/power/smes{
-	capacity = 9e+006;
-	charge = 10000
+	capacity = 1.8e+008;
+	charge = 2e+005
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,

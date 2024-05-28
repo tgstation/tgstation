@@ -1,7 +1,7 @@
-import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
 import { useBackend } from '../backend';
 import { Button, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
+import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
 
 type Data = {
   amount: number;
@@ -28,7 +28,7 @@ export const ChemDebugSynthesizer = (props) => {
                   maxValue={beaker.maxVolume}
                   step={1}
                   stepPixelSize={2}
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('amount', {
                       amount: value,
                     })
@@ -41,7 +41,7 @@ export const ChemDebugSynthesizer = (props) => {
                   maxValue={120}
                   step={1}
                   stepPixelSize={2}
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('purity', {
                       amount: value,
                     })

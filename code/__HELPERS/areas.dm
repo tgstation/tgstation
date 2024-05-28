@@ -1,9 +1,11 @@
 #define BP_MAX_ROOM_SIZE 300
 
-GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/engineering/main, \
-															    /area/station/engineering/supermatter, \
-															    /area/station/engineering/atmospherics_engine, \
-															    /area/station/ai_monitored/turret_protected/ai))
+GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
+	/area/station/engineering/main,
+	/area/station/engineering/supermatter,
+	/area/station/engineering/atmospherics_engine,
+	/area/station/ai_monitored/turret_protected/ai,
+)))
 
 // Gets an atmos isolated contained space
 // Returns an associative list of turf|dirs pairs
@@ -271,13 +273,11 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	// Now their turfs
 	var/list/turfs = list()
 	for(var/area/pull_from as anything in areas_to_pull)
-		var/list/our_turfs = pull_from.get_contained_turfs()
-		if(target_z == 0)
-			turfs += our_turfs
+		if (target_z == 0)
+			for (var/list/zlevel_turfs as anything in pull_from.get_zlevel_turf_lists())
+				turfs += zlevel_turfs
 		else
-			for(var/turf/turf_in_area as anything in our_turfs)
-				if(target_z == turf_in_area.z)
-					turfs += turf_in_area
+			turfs += pull_from.get_turfs_by_zlevel(target_z)
 	return turfs
 
 
@@ -293,3 +293,51 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 				mobs_in_area += mob
 				break
 	return mobs_in_area
+
+/**
+ * rename_area
+ * Renames an area to the given new name, updating all machines' names and firedoors
+ * to properly ensure alarms and machines are named correctly at all times.
+ * Args:
+ * - area_to_rename: The area that's being renamed.
+ * - new_name: The name we're changing said area to.
+ */
+/proc/rename_area(area/area_to_rename, new_name)
+	var/prevname = "[area_to_rename.name]"
+	set_area_machinery_title(area_to_rename, new_name, prevname)
+	area_to_rename.name = new_name
+	require_area_resort() //area renamed so resort the names
+
+	if(LAZYLEN(area_to_rename.firedoors))
+		for(var/obj/machinery/door/firedoor/area_firedoors as anything in area_to_rename.firedoors)
+			area_firedoors.CalculateAffectingAreas()
+	area_to_rename.update_areasize()
+	return TRUE
+
+/**
+ * Renames all machines in a defined area from the old title to the new title.
+ * Used when renaming an area to ensure that all machiens are labeled the new area's machine.
+ * Args:
+ * - area_renaming: The area being renamed, which we'll check turfs from to rename machines in.
+ * - title: The new name of the area that we're swapping into.
+ * - oldtitle: The old name of the area that we're replacing text from.
+ */
+/proc/set_area_machinery_title(area/area_renaming, title, oldtitle)
+	if(!oldtitle) // or replacetext goes to infinite loop
+		return
+
+	//stuff tied to the area to rename
+	var/static/list/to_rename = typecacheof(list(
+		/obj/machinery/airalarm,
+		/obj/machinery/atmospherics/components/unary/vent_scrubber,
+		/obj/machinery/atmospherics/components/unary/vent_pump,
+		/obj/machinery/door,
+		/obj/machinery/firealarm,
+		/obj/machinery/light_switch,
+		/obj/machinery/power/apc,
+		/obj/machinery/camera,
+	))
+	for(var/list/zlevel_turfs as anything in area_renaming.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/machine as anything in typecache_filter_list(area_turf.contents, to_rename))
+				machine.name = replacetext(machine.name, oldtitle, title)

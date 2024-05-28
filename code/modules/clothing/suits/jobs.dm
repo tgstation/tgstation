@@ -144,6 +144,12 @@
 	icon_state = "detsuit"
 	inhand_icon_state = null
 
+/obj/item/clothing/suit/jacket/det_suit/brown
+	name = "brown suit jacket"
+	desc = "A suit jacket perfect for dinner dates and criminal investigations."
+	icon_state = "detsuit_brown"
+	inhand_icon_state = null
+
 /obj/item/clothing/suit/jacket/det_suit/kim
 	name = "aerostatic bomber jacket"
 	desc = "A jacket once worn by the revolutionary air brigades during the Antecentennial Revolution. There are quite a few pockets on the inside, mostly for storing notebooks and compasses."
@@ -173,7 +179,7 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/t_scanner,
-		/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime,
+		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
 	)
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
@@ -230,10 +236,14 @@
 	icon_state = "qm_coat"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(
+
+/obj/item/clothing/suit/jacket/quartermaster/Initialize(mapload)
+	. = ..()
+	allowed += list(
 		/obj/item/stamp,
 		/obj/item/storage/bag/mail,
 		/obj/item/universal_scanner,
+		/obj/item/melee/baton/telescopic,
 	)
 
 /obj/item/clothing/suit/toggle/lawyer/greyscale
@@ -389,7 +399,10 @@
 
 /obj/item/clothing/suit/jacket/research_director/Initialize(mapload)
 	. = ..()
-	allowed += /obj/item/storage/bag/xeno
+	allowed += list(
+		/obj/item/storage/bag/xeno,
+		/obj/item/melee/baton/telescopic,
+	)
 
 // Atmos
 /obj/item/clothing/suit/atmos_overalls
@@ -412,6 +425,7 @@
 		/obj/item/t_scanner,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
+		/obj/item/extinguisher,
 	)
 
 /datum/armor/atmos_overalls

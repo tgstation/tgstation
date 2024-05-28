@@ -79,6 +79,15 @@
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_1
 
+/obj/item/food/virtual_chocolate
+	name = "virtual chocolate bar"
+	desc = "Digital food only gives off the sensation of eating... without any of the nutritional benefits."
+	icon_state = "virtual_chocolate"
+	tastes = list("nothing" = 1)
+	foodtypes = NONE
+	w_class = WEIGHT_CLASS_TINY
+
+
 /obj/item/food/chococoin
 	name = "chocolate coin"
 	desc = "A completely edible but non-flippable festive coin."
@@ -232,7 +241,6 @@
 	metabolization_amount = REAGENTS_METABOLISM
 
 /obj/item/food/bubblegum/bubblegum/process()
-	. = ..()
 	if(iscarbon(loc))
 		hallucinate(loc)
 

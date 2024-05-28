@@ -1,8 +1,8 @@
 import { classes } from 'common/react';
+
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
-import { Box, Button, Section, Stack } from '../../components';
-import { MutationInfo } from './MutationInfo';
+import { Box, Button, Image, Section, Stack } from '../../components';
 import {
   CLEAR_GENE,
   GENE_COLORS,
@@ -12,6 +12,7 @@ import {
   SUBJECT_DEAD,
   SUBJECT_TRANSFORMING,
 } from './constants';
+import { MutationInfo } from './MutationInfo';
 
 const GenomeImage = (props) => {
   const { url, selected, onClick } = props;
@@ -20,8 +21,7 @@ const GenomeImage = (props) => {
     outline = '2px solid #22aa00';
   }
   return (
-    <Box
-      as="img"
+    <Image
       src={url}
       style={{
         width: '64px',

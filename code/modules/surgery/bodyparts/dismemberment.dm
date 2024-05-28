@@ -26,7 +26,7 @@
 	if (wounding_type)
 		LAZYSET(limb_owner.body_zone_dismembered_by, body_zone, wounding_type)
 
-	drop_limb()
+	drop_limb(dismembered = TRUE)
 
 	limb_owner.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
 	var/turf/owner_location = limb_owner.loc
@@ -185,38 +185,6 @@
 		var/datum/wound/loss/dismembering = new
 		return dismembering.apply_dismember(src, wounding_type)
 
-/obj/item/organ/internal/eyes/on_bodypart_insert(obj/item/bodypart/head/head)
-	head.eyes = src
-	..()
-
-/obj/item/organ/internal/ears/on_bodypart_insert(obj/item/bodypart/head/head)
-	head.ears = src
-	..()
-
-/obj/item/organ/internal/tongue/on_bodypart_insert(obj/item/bodypart/head/head)
-	head.tongue = src
-	..()
-
-/obj/item/organ/internal/brain/on_bodypart_insert(obj/item/bodypart/head/head)
-	head.brain = src
-	..()
-
-/obj/item/organ/internal/eyes/on_bodypart_remove(obj/item/bodypart/head/head)
-	head.eyes = null
-	..()
-
-/obj/item/organ/internal/ears/on_bodypart_remove(obj/item/bodypart/head/head)
-	head.ears = null
-	..()
-
-/obj/item/organ/internal/tongue/on_bodypart_remove(obj/item/bodypart/head/head)
-	head.tongue = null
-	..()
-
-/obj/item/organ/internal/brain/on_bodypart_remove(obj/item/bodypart/head/head)
-	head.brain = null
-	..()
-
 /obj/item/bodypart/chest/drop_limb(special, dismembered, move_to_floor = TRUE)
 	if(special)
 		return ..()
@@ -243,8 +211,8 @@
 		associated_hand?.update_appearance()
 	if(arm_owner.gloves)
 		arm_owner.dropItemToGround(arm_owner.gloves, TRUE)
+	. = ..()
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
-	return ..()
 
 /obj/item/bodypart/leg/drop_limb(special, dismembered, move_to_floor = TRUE)
 	if(owner && !special)
@@ -302,7 +270,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/chest/mob_chest = new_limb_owner.get_bodypart(BODY_ZONE_CHEST)
-	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !special)
+	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !(mob_chest.acceptable_bodyshape & bodyshape) && !special)
 		return FALSE
 	return TRUE
 
@@ -395,9 +363,17 @@
 	new_head_owner.update_body()
 	new_head_owner.update_damage_overlays()
 
+/obj/item/bodypart/arm/try_attach_limb(mob/living/carbon/new_arm_owner, special = FALSE)
+	. = ..()
+
+	if(!.)
+		return
+
+	new_arm_owner.update_worn_gloves() // To apply bloody hands overlay
+
 /mob/living/carbon/proc/regenerate_limbs(list/excluded_zones = list())
 	SEND_SIGNAL(src, COMSIG_CARBON_REGENERATE_LIMBS, excluded_zones)
-	var/list/zone_list = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	var/list/zone_list = GLOB.all_body_zones.Copy()
 
 	var/list/dismembered_by_copy = body_zone_dismembered_by?.Copy()
 

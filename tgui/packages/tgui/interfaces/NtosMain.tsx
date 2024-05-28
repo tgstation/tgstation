@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, ColorBox, Stack, Section, Table } from '../components';
+import { Button, ColorBox, Section, Stack, Table } from '../components';
 import { NtosWindow } from '../layouts';
 import { NTOSData } from '../layouts/NtosWindow';
 

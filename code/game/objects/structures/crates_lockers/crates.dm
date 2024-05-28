@@ -18,6 +18,8 @@
 	drag_slowdown = 0
 	door_anim_time = 0 // no animation
 	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
+	x_shake_pixel_shift = 1
+	y_shake_pixel_shift = 2
 	/// Mobs standing on it are nudged up by this amount.
 	var/elevation = 14
 	/// The same, but when the crate is open
@@ -44,20 +46,20 @@
 	var/static/list/crate_paint_jobs
 	if(isnull(crate_paint_jobs))
 		crate_paint_jobs = list(
-		"Internals" = list("icon_state" = "o2crate"),
-		"Medical" = list("icon_state" = "medical"),
-		"Medical Plus" = list("icon_state" = "medicalcrate"),
-		"Radiation" = list("icon_state" = "radiation"),
-		"Hydrophonics" = list("icon_state" = "hydrocrate"),
-		"Science" = list("icon_state" = "scicrate"),
-		"Robotics" = list("icon_state" = "robo"),
-		"Solar" = list("icon_state" = "engi_e_crate"),
-		"Engineering" = list("icon_state" = "engi_crate"),
-		"Atmospherics" = list("icon_state" = "atmos"),
-		"Cargo" = list("icon_state" = "cargo"),
-		"Mining" = list("icon_state" = "mining"),
-		"Command" = list("icon_state" = "centcom")
-	)
+			"Internals" = list("icon_state" = "o2crate"),
+			"Medical" = list("icon_state" = "medical"),
+			"Medical Plus" = list("icon_state" = "medicalcrate"),
+			"Radiation" = list("icon_state" = "radiation"),
+			"Hydrophonics" = list("icon_state" = "hydrocrate"),
+			"Science" = list("icon_state" = "scicrate"),
+			"Robotics" = list("icon_state" = "robo"),
+			"Solar" = list("icon_state" = "engi_e_crate"),
+			"Engineering" = list("icon_state" = "engi_crate"),
+			"Atmospherics" = list("icon_state" = "atmos"),
+			"Cargo" = list("icon_state" = "cargo"),
+			"Mining" = list("icon_state" = "mining"),
+			"Command" = list("icon_state" = "centcom"),
+		)
 	if(paint_jobs)
 		paint_jobs = crate_paint_jobs
 
@@ -378,6 +380,7 @@
 
 /obj/structure/closet/crate/goldcrate
 	name = "gold crate"
+	desc = "A rectangular steel crate. It seems to be painted to look like gold."
 	icon_state = "gold"
 	base_icon_state = "gold"
 
@@ -393,6 +396,7 @@
 
 /obj/structure/closet/crate/silvercrate
 	name = "silver crate"
+	desc = "A rectangular steel crate. It seems to be painted to look like silver."
 	icon_state = "silver"
 	base_icon_state = "silver"
 

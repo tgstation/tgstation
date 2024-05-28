@@ -564,7 +564,7 @@
 		"someone's parents" = 2,
 	)
 	glass_price = FOOD_PRICE_EXOTIC
-	color = "#FF0000"
+	color = COLOR_RED
 
 /datum/glass_style/has_foodtype/soup/clownchili
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/clownchili
@@ -618,7 +618,7 @@
 	name = "Tomato Soup"
 	description = "Drinking this feels like being a vampire! A tomato vampire..."
 	data = list("tomato" = 1)
-	color = "#FF0000"
+	color = COLOR_RED
 
 /datum/glass_style/has_foodtype/soup/tomato
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/tomato
@@ -1228,7 +1228,6 @@
 	)
 	results =  list(
 		/datum/reagent/consumable/nutriment/soup/oatmeal = 20,
-		/datum/reagent/consumable/milk = 12,
 		/datum/reagent/consumable/nutriment/vitamin = 8,
 	)
 	percentage_of_nutriment_converted = 0 // Oats have barely any nutrients
@@ -1326,7 +1325,7 @@
 	name = "Corn Chowder"
 	description = "A creamy bowl of corn chowder, with bacon bits and mixed vegetables. One bowl is never enough."
 	data = list("creamy broth" = 1, "bacon" = 1, "mixed vegetables" = 1)
-	color = "#FFF200"
+	color = COLOR_CRAYON_YELLOW
 
 /datum/glass_style/has_foodtype/soup/corn_chowder
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/corn_chowder
@@ -1484,12 +1483,15 @@
 	drink_type = MEAT | VEGETABLES
 
 /datum/chemical_reaction/food/soup/rootbread_soup
-	required_reagents = list(/datum/reagent/water = 50)
+	required_reagents = list(
+		/datum/reagent/water = 50,
+		/datum/reagent/consumable/eggyolk = 2,
+		/datum/reagent/consumable/eggwhite = 4
+	)
 	required_ingredients = list(
 		/obj/item/food/breadslice/root = 2,
 		/obj/item/food/grown/garlic = 1,
-		/obj/item/food/grown/chili = 1,
-		/obj/item/food/egg = 1
+		/obj/item/food/grown/chili = 1
 	)
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/rootbread = 30,

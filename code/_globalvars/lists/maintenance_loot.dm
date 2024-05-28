@@ -258,6 +258,8 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/computer_disk/maintenance/scanner = 1,
 		/obj/item/computer_disk/maintenance/camera = 1,
 		/obj/item/computer_disk/maintenance/modsuit_control = 1,
+		/obj/item/computer_disk/maintenance/spectre_meter = 1,
+		/obj/item/computer_disk/maintenance/arcade = 1,
 		/obj/item/computer_disk/maintenance/theme = 3,
 	) = 4,
 
@@ -300,6 +302,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/pen/survival = 1,
 		/obj/item/restraints/handcuffs = 1,
 		/obj/item/shield/buckler = 1,
+		/obj/item/shield/improvised = 1,
 		/obj/item/throwing_star = 1,
 		/obj/item/weldingtool/hugetank = 1,
 		/obj/item/fishing_rod/telescopic/master = 1,

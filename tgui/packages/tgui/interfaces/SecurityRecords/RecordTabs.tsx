@@ -1,20 +1,21 @@
 import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
+import { useState } from 'react';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
-  Stack,
-  Input,
-  Section,
-  Tabs,
-  NoticeBox,
   Box,
-  Icon,
   Button,
+  Icon,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+  Tabs,
 } from 'tgui/components';
+
 import { JOB2ICON } from '../common/JobToIcon';
 import { CRIMESTATUS2COLOR } from './constants';
 import { isRecordMatch } from './helpers';
-import { SecurityRecordsData, SecurityRecord } from './types';
+import { SecurityRecord, SecurityRecordsData } from './types';
 
 /** Tabs on left, with search bar */
 export const SecurityRecordTabs = (props) => {
@@ -25,12 +26,12 @@ export const SecurityRecordTabs = (props) => {
     ? 'No records found.'
     : 'No match. Refine your search.';
 
-  const [search, setSearch] = useLocalState('search', '');
+  const [search, setSearch] = useState('');
 
-  const sorted: SecurityRecord[] = flow([
-    filter((record: SecurityRecord) => isRecordMatch(record, search)),
-    sortBy((record: SecurityRecord) => record.name),
-  ])(records);
+  const sorted = sortBy(
+    filter(records, (record) => isRecordMatch(record, search)),
+    (record) => record.name,
+  );
 
   return (
     <Stack fill vertical>
@@ -38,7 +39,7 @@ export const SecurityRecordTabs = (props) => {
         <Input
           fluid
           placeholder="Name/Job/Fingerprints"
-          onChange={(event, value) => setSearch(value)}
+          onInput={(event, value) => setSearch(value)}
         />
       </Stack.Item>
       <Stack.Item grow>
@@ -89,7 +90,7 @@ const CrewTab = (props: { record: SecurityRecord }) => {
   const { act, data } = useBackend<SecurityRecordsData>();
   const { assigned_view } = data;
   const { record } = props;
-  const { crew_ref, name, rank, wanted_status } = record;
+  const { crew_ref, name, trim, wanted_status } = record;
 
   /** Chooses a record */
   const selectRecord = (record: SecurityRecord) => {
@@ -106,12 +107,11 @@ const CrewTab = (props: { record: SecurityRecord }) => {
   return (
     <Tabs.Tab
       className="candystripe"
-      label={record.name}
       onClick={() => selectRecord(record)}
       selected={isSelected}
     >
-      <Box bold={isSelected} color={CRIMESTATUS2COLOR[wanted_status]} wrap>
-        <Icon name={JOB2ICON[rank] || 'question'} /> {name}
+      <Box bold={isSelected} color={CRIMESTATUS2COLOR[wanted_status]}>
+        <Icon name={JOB2ICON[trim] || 'question'} /> {name}
       </Box>
     </Tabs.Tab>
   );

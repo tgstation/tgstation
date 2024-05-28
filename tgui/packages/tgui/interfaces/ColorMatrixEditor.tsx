@@ -1,18 +1,19 @@
-import { useBackend } from '../backend';
 import { toFixed } from 'common/math';
+
+import { useBackend } from '../backend';
 import {
   Box,
-  Stack,
-  Section,
+  Button,
   ByondUi,
   NumberInput,
-  Button,
+  Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
   mapRef: string;
-  currentColor: string[];
+  currentColor: number[];
 };
 
 const PREFIXES = ['r', 'g', 'b', 'a', 'c'] as const;
@@ -40,12 +41,13 @@ export const ColorMatrixEditor = (props) => {
                                 {`${PREFIXES[row]}${PREFIXES[col]}:`}
                               </Box>
                               <NumberInput
-                                inline
+                                minValue={-Infinity}
+                                maxValue={+Infinity}
                                 value={currentColor[row * 4 + col]}
                                 step={0.01}
                                 width="50px"
                                 format={(value) => toFixed(value, 2)}
-                                onDrag={(_, value) => {
+                                onDrag={(value) => {
                                   let retColor = currentColor;
                                   retColor[row * 4 + col] = value;
                                   act('transition_color', {

@@ -71,7 +71,7 @@
 	// This happens after everything's all set, remember this for New overrides
 	generate_memory_name()
 
-/datum/memory/Destroy(force, ...)
+/datum/memory/Destroy(force)
 	memorizer_mind = null
 	return ..()
 
@@ -392,7 +392,7 @@
 
 	if(istype(character, /datum/mind))
 		var/datum/mind/character_mind = character
-		return "\the [lowertext(initial(character_mind.assigned_role.title))]"
+		return "\the [LOWER_TEXT(initial(character_mind.assigned_role.title))]"
 
 	// Generic result - mobs get "the guy", objs / turfs get "a thing"
 	return ismob(character) ? "\the [character]" : "\a [character]"

@@ -25,7 +25,7 @@
 	if(tatted_limb.owner)
 		setup_tatted_owner(tatted_limb.owner)
 
-/datum/component/tattoo/Destroy(force, silent)
+/datum/component/tattoo/Destroy(force)
 	if(!parent)
 		return ..()
 	var/obj/item/bodypart/tatted_limb = parent

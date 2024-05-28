@@ -312,7 +312,7 @@
 	// Has a nice effect, makes thing stand out
 	color = list(1.2,0,0,0, 0,1.2,0,0, 0,0,1.2,0, 0,0,0,1, 0,0,0,0)
 	// This serves a similar purpose, I want the pipes to pop
-	add_filter("pipe_dropshadow", 1, drop_shadow_filter(x = -1, y= -1, size = 1, color = "#0000007A"))
+	add_filter("pipe_dropshadow", 1, drop_shadow_filter(x = -1, y= -1, size = 1, color = COLOR_HALF_TRANSPARENT_BLACK))
 	mirror_parent_hidden()
 
 /atom/movable/screen/plane_master/camera_static

@@ -1,10 +1,10 @@
 import {
   Action,
-  Reducer,
   applyMiddleware,
   combineReducers,
   createAction,
   createStore,
+  Reducer,
 } from './redux';
 
 // Dummy Reducer

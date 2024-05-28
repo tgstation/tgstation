@@ -1,6 +1,7 @@
 import { decodeHtmlEntities } from 'common/string';
 import { useBackend } from 'tgui/backend';
 import { BlockQuote, Box, LabeledList, Section, Stack } from 'tgui/components';
+
 import { DIRECTIVE_COMPREHENSION, DIRECTIVE_ORDER } from './constants';
 import { PaiData } from './types';
 

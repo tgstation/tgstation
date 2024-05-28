@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - rscadd: "Bridge Assistant job accessible from a station trait."

@@ -6,6 +6,7 @@
 
 import { Button, Section, Stack } from 'tgui/components';
 import { Pane } from 'tgui/layouts';
+
 import { NowPlayingWidget, useAudio } from './audio';
 import { ChatPanel, ChatTabs } from './chat';
 import { useGame } from './game';

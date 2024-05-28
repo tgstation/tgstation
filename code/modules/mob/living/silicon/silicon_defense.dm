@@ -1,5 +1,5 @@
 
-/mob/living/silicon/grippedby(mob/living/user, instant = FALSE)
+/mob/living/silicon/grippedby(mob/living/carbon/user, instant = FALSE)
 	return //can't upgrade a simple pull into a more aggressive grab.
 
 /mob/living/silicon/get_ear_protection()//no ears
@@ -56,25 +56,30 @@
 					span_userdanger("[user] punches you!"), null, COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You punch [src]!"))
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	. = FALSE
-	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
-		. = TRUE
+	. = ..()
+	if(.)
+		return TRUE
+
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		user.disarm(src)
+		return TRUE
+
 	if(has_buckled_mobs() && !user.combat_mode)
 		user_unbuckle_mob(buckled_mobs[1], user)
+		return TRUE
+	if(user.combat_mode)
+		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+		playsound(src.loc, 'sound/effects/bang.ogg', 10, TRUE)
+		visible_message(span_danger("[user] punches [src], but doesn't leave a dent!"), \
+						span_warning("[user] punches you, but doesn't leave a dent!"), null, COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_danger("You punch [src], but don't leave a dent!"))
+		return TRUE
 	else
-		if(user.combat_mode)
-			user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-			playsound(src.loc, 'sound/effects/bang.ogg', 10, TRUE)
-			visible_message(span_danger("[user] punches [src], but doesn't leave a dent!"), \
-							span_warning("[user] punches you, but doesn't leave a dent!"), null, COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_danger("You punch [src], but don't leave a dent!"))
-		else
-			visible_message(span_notice("[user] pets [src]."), \
-							span_notice("[user] pets you."), null, null, user)
-			to_chat(user, span_notice("You pet [src]."))
-			user.add_mood_event("pet_borg", /datum/mood_event/pet_borg)
+		visible_message(span_notice("[user] pets [src]."), span_notice("[user] pets you."), null, null, user)
+		to_chat(user, span_notice("You pet [src]."))
+		SEND_SIGNAL(user, COMSIG_MOB_PAT_BORG)
+		return TRUE
 
 /mob/living/silicon/check_block(atom/hitby, damage, attack_text, attack_type, armour_penetration, damage_type, attack_flag)
 	. = ..()
@@ -95,13 +100,6 @@
 	if(user.combat_mode)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
-
-/mob/living/silicon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
-	if(buckled_mobs)
-		for(var/mob/living/M in buckled_mobs)
-			unbuckle_mob(M)
-			M.electrocute_act(shock_damage/100, source, siemens_coeff, flags) //Hard metal shell conducts!
-	return 0 //So borgs they don't die trying to fix wiring
 
 /mob/living/silicon/emp_act(severity)
 	. = ..()

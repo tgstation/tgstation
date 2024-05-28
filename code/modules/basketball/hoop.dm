@@ -24,7 +24,7 @@
 
 /obj/structure/hoop/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_REQUIRE_WRENCH|ROTATION_IGNORE_ANCHORED, AfterRotation = CALLBACK(src, PROC_REF(reset_appearance)))
+	AddComponent(/datum/component/simple_rotation, ROTATION_REQUIRE_WRENCH|ROTATION_IGNORE_ANCHORED, post_rotation = CALLBACK(src, PROC_REF(reset_appearance)))
 	update_appearance()
 	register_context()
 
@@ -152,7 +152,7 @@
 	var/score_chance = throw_range_success[distance]
 	var/obj/structure/hoop/backboard = throwingdatum.initial_target?.resolve()
 	var/click_on_hoop = TRUE
-	var/mob/living/thrower = throwingdatum.thrower
+	var/mob/living/thrower = throwingdatum?.get_thrower()
 
 	// aim penalty for not clicking directly on the hoop when shooting
 	if(!istype(backboard) || backboard != src)

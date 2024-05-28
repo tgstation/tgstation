@@ -118,7 +118,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 			beard_dresser.set_facial_hairstyle("Shaved", update = TRUE)
 		return TRUE
 
-	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
+	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", SSaccessories.facial_hairstyles_list)
 
 	if(isnull(new_style))
 		return TRUE
@@ -131,7 +131,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	beard_dresser.set_facial_hairstyle(new_style, update = TRUE)
 
 /obj/structure/mirror/proc/change_hair(mob/living/carbon/human/hairdresser)
-	var/new_style = tgui_input_list(hairdresser, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
+	var/new_style = tgui_input_list(hairdresser, "Select a hairstyle", "Grooming", SSaccessories.hairstyles_list)
 	if(isnull(new_style))
 		return TRUE
 	if(HAS_TRAIT(hairdresser, TRAIT_BALD))
@@ -180,12 +180,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	else if(HAS_TRAIT(race_changer, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(race_changer, TRAIT_FIXED_MUTANT_COLORS))
 		var/new_mutantcolor = input(race_changer, "Choose your skin color:", "Race change", race_changer.dna.features["mcolor"]) as color|null
 		if(new_mutantcolor)
-			var/temp_hsv = RGBtoHSV(new_mutantcolor)
+			var/list/mutant_hsv = rgb2hsv(new_mutantcolor)
 
-			if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
+			if(mutant_hsv[3] >= 50) // mutantcolors must be bright
 				race_changer.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 				race_changer.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
-
 			else
 				to_chat(race_changer, span_notice("Invalid color. Your color is not bright enough."))
 				return TRUE
@@ -261,7 +260,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 /obj/structure/mirror/atom_break(damage_flag, mapload)
 	. = ..()
-	if(broken || (obj_flags & NO_DECONSTRUCTION))
+	if(broken)
 		return
 	icon_state = "mirror_broke"
 	if(!mapload)
@@ -270,13 +269,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		desc = "Oh no, seven years of bad luck!"
 	broken = TRUE
 
-/obj/structure/mirror/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(!disassembled)
-			new /obj/item/shard(loc)
-		else
-			new /obj/item/wallframe/mirror(loc)
-	qdel(src)
+/obj/structure/mirror/atom_deconstruct(disassembled = TRUE)
+	if(!disassembled)
+		new /obj/item/shard(loc)
+	else
+		new /obj/item/wallframe/mirror(loc)
 
 /obj/structure/mirror/welder_act(mob/living/user, obj/item/I)
 	..()
@@ -334,7 +331,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	selectable_races = sort_list(selectable_races)
 
 /obj/structure/mirror/magic/change_beard(mob/living/carbon/human/beard_dresser) // magical mirrors do nothing but give you the damn beard
-	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
+	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", SSaccessories.facial_hairstyles_list)
 	if(isnull(new_style))
 		return TRUE
 	beard_dresser.set_facial_hairstyle(new_style, update = TRUE)

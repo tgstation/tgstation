@@ -4,8 +4,8 @@
 		scan everyone in sight"
 	department_head = list(JOB_CHIEF_MEDICAL_OFFICER)
 	faction = FACTION_STATION
-	total_positions = 5
-	spawn_positions = 3
+	total_positions = 6
+	spawn_positions = 4
 	supervisors = SUPERVISOR_CMO
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "MEDICAL_DOCTOR"
@@ -44,12 +44,11 @@
 	jobtype = /datum/job/doctor
 
 	id_trim = /datum/id_trim/job/medical_doctor
-	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
+	uniform = /obj/item/clothing/under/rank/medical/doctor
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	suit_store = /obj/item/flashlight/pen
 	belt = /obj/item/modular_computer/pda/medical
 	ears = /obj/item/radio/headset/headset_med
-	head = /obj/item/clothing/head/utility/surgerycap
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_hand = /obj/item/storage/medkit/surgery
 

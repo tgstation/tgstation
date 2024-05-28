@@ -1,8 +1,9 @@
 import { range } from 'common/collections';
 import { BooleanLike } from 'common/react';
+
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Stack } from '../components';
+import { Box, Button, Icon, Image, Stack } from '../components';
 import { Window } from '../layouts';
 
 const ROWS = 5;
@@ -70,6 +71,11 @@ const ALTERNATE_ACTIONS: Record<string, AlternateAction> = {
   adjust_jumpsuit: {
     icon: 'tshirt',
     text: 'Adjust jumpsuit',
+  },
+
+  adjust_sensor: {
+    icon: 'microchip',
+    text: 'Adjust sensors',
   },
 };
 
@@ -235,7 +241,7 @@ type StripMenuItem =
       | {
           icon: string;
           name: string;
-          alternate?: string;
+          alternate?: string[];
         }
       | {
           obscured: ObscuringLevel;
@@ -282,21 +288,15 @@ export const StripMenu = (props) => {
                   const item = data.items[keyAtSpot];
                   const slot = SLOTS[keyAtSpot];
 
-                  let alternateAction: AlternateAction | undefined;
-
-                  let content;
-                  let tooltip;
+                  let content: JSX.Element | undefined;
+                  let alternateActions: JSX.Element[] | undefined;
+                  let tooltip: string | undefined;
 
                   if (item === null) {
                     tooltip = slot.displayName;
                   } else if ('name' in item) {
-                    if (item.alternate) {
-                      alternateAction = ALTERNATE_ACTIONS[item.alternate];
-                    }
-
                     content = (
-                      <Box
-                        as="img"
+                      <Image
                         src={`data:image/jpeg;base64,${item.icon}`}
                         height="100%"
                         width="100%"
@@ -307,6 +307,41 @@ export const StripMenu = (props) => {
                     );
 
                     tooltip = item.name;
+                    if (item.alternate) {
+                      alternateActions = item.alternate.map(
+                        (alternateKey, idx) => {
+                          const alternateAction =
+                            ALTERNATE_ACTIONS[alternateKey];
+
+                          const alternateActionStyle = {
+                            background: 'rgba(0, 0, 0, 0.6)',
+                            position: 'absolute',
+                            overflow: 'hidden',
+                            margin: '0px',
+                            maxWidth: '22px', // yes I know its not 20 or 25; they look bad. 22px is perfect
+                            zIndex: '2',
+                            left: `${idx === 0 ? '0' : undefined}`,
+                            right: `${idx === 1 ? '0' : undefined}`,
+                            bottom: '0',
+                          };
+                          return (
+                            <Button
+                              key={alternateAction.text}
+                              onClick={() => {
+                                act('alt', {
+                                  key: keyAtSpot,
+                                  alternate_action: alternateKey,
+                                });
+                              }}
+                              tooltip={alternateAction.text}
+                              style={alternateActionStyle}
+                            >
+                              <Icon name={alternateAction.icon} />
+                            </Button>
+                          );
+                        },
+                      );
+                    }
                   } else if ('obscured' in item) {
                     content = (
                       <Icon
@@ -359,12 +394,11 @@ export const StripMenu = (props) => {
                             position: 'relative',
                             width: '100%',
                             height: '100%',
-                            padding: 0,
+                            padding: '0',
                           }}
                         >
                           {slot.image && (
-                            <Box
-                              as="img"
+                            <Image
                               className="centered-image"
                               src={resolveAsset(slot.image)}
                               opacity={0.7}
@@ -375,26 +409,7 @@ export const StripMenu = (props) => {
 
                           {slot.additionalComponent}
                         </Button>
-
-                        {alternateAction !== undefined && (
-                          <Button
-                            onClick={() => {
-                              act('alt', {
-                                key: keyAtSpot,
-                              });
-                            }}
-                            tooltip={alternateAction.text}
-                            style={{
-                              background: 'rgba(0, 0, 0, 0.6)',
-                              position: 'absolute',
-                              bottom: 0,
-                              right: 0,
-                              zIndex: 2,
-                            }}
-                          >
-                            <Icon name={alternateAction.icon} />
-                          </Button>
-                        )}
+                        {alternateActions}
                       </Box>
                     </Stack.Item>
                   );

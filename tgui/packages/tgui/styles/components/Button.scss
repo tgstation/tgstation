@@ -27,20 +27,13 @@ $bg-map: colors.$bg-map !default;
   background-color: $color;
   color: $text-color;
 
-  &:hover {
-    transition:
-      color 0ms,
-      background-color 0ms;
-  }
-
   &:focus {
     transition:
       color 100ms,
       background-color 100ms;
   }
 
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: lighten($color, 30%);
     color: $text-color;
   }
@@ -73,6 +66,12 @@ $bg-map: colors.$bg-map !default;
     min-width: 1.333em;
     text-align: center;
   }
+}
+
+.Button--dropdown {
+  line-height: base.em(16px);
+  height: base.em(22px);
+  padding: 0.2rem 0.5rem;
 }
 
 .Button--hasContent {

@@ -1,9 +1,9 @@
-import { useBackend } from '../backend';
-import { multiline } from 'common/string';
-import { BlockQuote, Button, Dimmer, Section, Stack } from '../components';
 import { BooleanLike } from 'common/react';
+
+import { useBackend } from '../backend';
+import { BlockQuote, Button, Dimmer, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { ObjectivePrintout, Objective } from './common/Objectives';
+import { Objective, ObjectivePrintout } from './common/Objectives';
 
 const allystyle = {
   fontWeight: 'bold',
@@ -35,6 +35,7 @@ type Info = {
   has_uplink: BooleanLike;
   uplink_intro: string;
   uplink_unlock_info: string;
+  given_uplink: BooleanLike;
   objectives: Objective[];
 };
 
@@ -64,7 +65,7 @@ const EmployerSection = (props) => {
       buttons={
         <Button
           icon="hammer"
-          tooltip={multiline`
+          tooltip={`
             This is a gameplay suggestion for bored traitors.
             You don't have to follow it, unless you want some
             ideas for how to spend the round.`}
@@ -222,7 +223,7 @@ const CodewordsSection = (props) => {
 
 export const AntagInfoTraitor = (props) => {
   const { data } = useBackend<Info>();
-  const { theme } = data;
+  const { theme, given_uplink } = data;
   return (
     <Window width={620} height={580} theme={theme}>
       <Window.Content>
@@ -237,9 +238,11 @@ export const AntagInfoTraitor = (props) => {
               </Stack.Item>
             </Stack>
           </Stack.Item>
-          <Stack.Item>
-            <UplinkSection />
-          </Stack.Item>
+          {!!given_uplink && (
+            <Stack.Item>
+              <UplinkSection />
+            </Stack.Item>
+          )}
           <Stack.Item>
             <CodewordsSection />
           </Stack.Item>

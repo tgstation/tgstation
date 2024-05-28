@@ -36,8 +36,9 @@
 /datum/heretic_knowledge/eldritch_coin
 	name = "Eldritch Coin"
 	desc = "Allows you to transmute a sheet of plasma and a diamond to create an Eldritch Coin. \
-		The coin will open or close nearby doors when landing on heads and bolt or unbolt nearby doors \
-		when landing on tails. If the coin gets inserted into an airlock it emags the door destroying the coin."
+		The coin will open or close nearby doors when landing on heads and toggle their bolts \
+		when landing on tails. If you insert the coin into an airlock, it will be consumed \
+		to fry its electronics, opening the airlock permanently unless bolted. "
 	gain_text = "The Mansus is a place of all sorts of sins. But greed held a special role."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/cosmic_expansion,

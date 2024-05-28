@@ -574,7 +574,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/ruin/cyborg_mothership)
 "Fe" = (
-/mob/living/simple_animal/bot/hygienebot,
+/mob/living/basic/bot/hygienebot,
 /obj/machinery/camera/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/ruin/cyborg_mothership)

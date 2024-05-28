@@ -35,11 +35,10 @@
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
-/obj/structure/lavaland/ash_walker/deconstruct(disassembled)
+/obj/structure/lavaland/ash_walker/atom_deconstruct(disassembled)
 	var/core_to_drop = pick(subtypesof(/obj/item/assembly/signaler/anomaly))
 	new core_to_drop (get_step(loc, pick(GLOB.alldirs)))
 	new /obj/effect/collapse(loc)
-	return ..()
 
 /obj/structure/lavaland/ash_walker/process()
 	consume()
@@ -50,12 +49,12 @@
 		if(offeredmob.loc == src)
 			continue //Ashwalker Revive in Progress...
 		if(offeredmob.stat)
-			for(var/obj/item/W in offeredmob)
-				if(!offeredmob.dropItemToGround(W))
-					qdel(W)
+			offeredmob.unequip_everything()
+
 			if(issilicon(offeredmob)) //no advantage to sacrificing borgs...
 				offeredmob.investigate_log("has been gibbed by the necropolis tendril.", INVESTIGATE_DEATHS)
 				visible_message(span_notice("Serrated tendrils eagerly pull [offeredmob] apart, but find nothing of interest."))
+				offeredmob.gib()
 				return
 
 			if(offeredmob.mind?.has_antag_datum(/datum/antagonist/ashwalker) && (offeredmob.ckey || offeredmob.get_ghost(FALSE, TRUE))) //special interactions for dead lava lizards with ghosts attached

@@ -9,11 +9,11 @@
 	var/autofire_stat = AUTOFIRE_STAT_IDLE
 	var/mouse_parameters
 	/// Time between individual shots.
-	var/autofire_shot_delay = 0.3 SECONDS 
+	var/autofire_shot_delay = 0.3 SECONDS
 	/// This seems hacky but there can be two MouseDown() without a MouseUp() in between if the user holds click and uses alt+tab, printscreen or similar.
-	var/mouse_status = AUTOFIRE_MOUSEUP 
+	var/mouse_status = AUTOFIRE_MOUSEUP
 	/// Should dual wielding be allowed?
-	var/allow_akimbo 
+	var/allow_akimbo
 
 	///windup autofire vars
 	///Whether the delay between shots increases over time, simulating a spooling weapon
@@ -249,7 +249,7 @@
 	if(get_dist(shooter, target) <= 0)
 		target = get_step(shooter, shooter.dir) //Shoot in the direction faced if the mouse is on the same tile as we are.
 		target_loc = target
-	else if(!in_view_range(shooter, target))
+	else if(!CAN_THEY_SEE(target, shooter))
 		stop_autofiring() //Elvis has left the building.
 		return FALSE
 	shooter.face_atom(target)
@@ -259,7 +259,7 @@
 		current_windup_reduction = (current_windup_reduction + round(autofire_shot_delay * windup_autofire_reduction_multiplier))
 		timerid = addtimer(CALLBACK(src, PROC_REF(windup_reset), FALSE), windup_spindown, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 	if(HAS_TRAIT(shooter, TRAIT_DOUBLE_TAP))
-		next_delay = round(next_delay * 0.5)
+		next_delay = round(next_delay * 0.5, SSprojectiles.wait)
 	COOLDOWN_START(src, next_shot_cd, next_delay)
 	if(SEND_SIGNAL(parent, COMSIG_AUTOFIRE_SHOT, target, shooter, allow_akimbo, mouse_parameters) & COMPONENT_AUTOFIRE_SHOT_SUCCESS)
 		return TRUE
@@ -310,7 +310,7 @@
 	if(istype(akimbo_gun) && weapon_weight < WEAPON_MEDIUM && allow_akimbo)
 		if(akimbo_gun.weapon_weight < WEAPON_MEDIUM && akimbo_gun.can_trigger_gun(shooter))
 			bonus_spread = dual_wield_spread
-			addtimer(CALLBACK(akimbo_gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, shooter, TRUE, params, null, bonus_spread), 1)
+			addtimer(CALLBACK(akimbo_gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, shooter, TRUE, params, null, bonus_spread), 0.1 SECONDS)
 	process_fire(target, shooter, TRUE, params, null, bonus_spread)
 
 #undef AUTOFIRE_MOUSEUP

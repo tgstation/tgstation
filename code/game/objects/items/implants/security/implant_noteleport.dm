@@ -7,11 +7,10 @@
 	hud_icon_state = "hud_imp_noteleport"
 
 /obj/item/implant/teleport_blocker/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Robust Corp EXP-001 'Bluespace Grounder'<BR>
-				<b>Implant Details:</b> Upon implantation, grounds the user's bluespace signature to their currently occupied plane of existence.
-					Most, if not all forms of teleportation on the implantee will be rendered ineffective. Useful for keeping especially slippery prisoners in place.<BR>"}
-	return dat
+	return "<b>Implant Specifications:</b><BR> \
+		<b>Name:</b> Robust Corp EXP-001 'Bluespace Grounder'<BR> \
+		<b>Implant Details:</b> Upon implantation, grounds the user's bluespace signature to their currently occupied plane of existence. \
+		Most, if not all forms of teleportation on the implantee will be rendered ineffective. Useful for keeping especially slippery prisoners in place.<BR>"
 
 /obj/item/implant/teleport_blocker/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()

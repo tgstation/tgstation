@@ -57,7 +57,7 @@
 	if(recharge_start_delay)
 		START_PROCESSING(SSdcs, src)
 
-/datum/component/shielded/Destroy(force, silent)
+/datum/component/shielded/Destroy(force)
 	if(wearer)
 		shield_icon = "broken"
 		UnregisterSignal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS)
@@ -111,7 +111,7 @@
 /datum/component/shielded/proc/on_equipped(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
-	if((slot & ITEM_SLOT_HANDS) && !shield_inhand)
+	if(user.is_holding(parent) && !shield_inhand)
 		lost_wearer(source, user)
 		return
 	set_wearer(user)
@@ -154,6 +154,14 @@
 	SIGNAL_HANDLER
 
 	COOLDOWN_START(src, recently_hit_cd, recharge_start_delay)
+
+	//No wearer? No block.
+	if(isnull(wearer))
+		return
+
+	//if our wearer isn't the owner of the block, don't block
+	if(owner != wearer)
+		return
 
 	if(current_charges <= 0)
 		return

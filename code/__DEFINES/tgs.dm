@@ -1,6 +1,6 @@
 // tgstation-server DMAPI
 
-#define TGS_DMAPI_VERSION "6.7.0"
+#define TGS_DMAPI_VERSION "7.1.2"
 
 // All functions and datums outside this document are subject to change with any version and should not be relied on.
 
@@ -50,6 +50,13 @@
 
 #endif
 
+#ifndef TGS_FILE2TEXT_NATIVE
+#ifdef file2text
+#error Your codebase is re-defining the BYOND proc file2text. The DMAPI requires the native version to read the result of world.Export(). You can fix this by adding "#define TGS_FILE2TEXT_NATIVE file2text" before your override of file2text to allow the DMAPI to use the native version. This will only be used for world.Export(), not regular file accesses
+#endif
+#define TGS_FILE2TEXT_NATIVE file2text
+#endif
+
 // EVENT CODES
 
 /// Before a reboot mode change, extras parameters are the current and new reboot mode enums.
@@ -73,12 +80,12 @@
 #define TGS_EVENT_REPO_MERGE_PULL_REQUEST 3
 /// Before the repository makes a sychronize operation. Parameters: Absolute repostiory path.
 #define TGS_EVENT_REPO_PRE_SYNCHRONIZE 4
-/// Before a BYOND install operation begins. Parameters: [/datum/tgs_version] of the installing BYOND.
-#define TGS_EVENT_BYOND_INSTALL_START 5
-/// When a BYOND install operation fails. Parameters: Error message
-#define TGS_EVENT_BYOND_INSTALL_FAIL 6
-/// When the active BYOND version changes.  Parameters: (Nullable) [/datum/tgs_version] of the current BYOND, [/datum/tgs_version] of the new BYOND.
-#define TGS_EVENT_BYOND_ACTIVE_VERSION_CHANGE 7
+/// Before a engine install operation begins. Parameters: Version string of the installing engine.
+#define TGS_EVENT_ENGINE_INSTALL_START 5
+/// When a engine install operation fails. Parameters: Error message
+#define TGS_EVENT_ENGINE_INSTALL_FAIL 6
+/// When the active engine version changes. Parameters: (Nullable) Version string of the current engine, version string of the new engine.
+#define TGS_EVENT_ENGINE_ACTIVE_VERSION_CHANGE 7
 /// When the compiler starts running. Parameters: Game directory path, origin commit SHA.
 #define TGS_EVENT_COMPILE_START 8
 /// When a compile is cancelled. No parameters.
@@ -108,7 +115,7 @@
 // #define TGS_EVENT_DREAM_DAEMON_LAUNCH 22
 /// After a single submodule update is performed. Parameters: Updated submodule name.
 #define TGS_EVENT_REPO_SUBMODULE_UPDATE 23
-/// After CodeModifications are applied, before DreamMaker is run. Parameters: Game directory path, origin commit sha, byond version.
+/// After CodeModifications are applied, before DreamMaker is run. Parameters: Game directory path, origin commit sha, version string of the used engine.
 #define TGS_EVENT_PRE_DREAM_MAKER 24
 /// Whenever a deployment folder is deleted from disk. Parameters: Game directory path.
 #define TGS_EVENT_DEPLOYMENT_CLEANUP 25
@@ -122,6 +129,7 @@
 /// The watchdog will restart on reboot.
 #define TGS_REBOOT_MODE_RESTART 2
 
+// Note that security levels are currently meaningless in OpenDream
 /// DreamDaemon Trusted security level.
 #define TGS_SECURITY_TRUSTED 0
 /// DreamDaemon Safe security level.
@@ -135,6 +143,11 @@
 #define TGS_VISIBILITY_PRIVATE 1
 /// DreamDaemon invisible visibility level.
 #define TGS_VISIBILITY_INVISIBLE 2
+
+/// The Build Your Own Net Dream engine.
+#define TGS_ENGINE_TYPE_BYOND 0
+/// The OpenDream engine.
+#define TGS_ENGINE_TYPE_OPENDREAM 1
 
 //REQUIRED HOOKS
 
@@ -299,6 +312,7 @@
 	var/datum/tgs_chat_embed/structure/embed
 
 /datum/tgs_message_content/New(text)
+	..()
 	if(!istext(text))
 		TGS_ERROR_LOG("[/datum/tgs_message_content] created with no text!")
 		text = null
@@ -341,6 +355,7 @@
 	var/proxy_url
 
 /datum/tgs_chat_embed/media/New(url)
+	..()
 	if(!istext(url))
 		CRASH("[/datum/tgs_chat_embed/media] created with no url!")
 
@@ -354,6 +369,7 @@
 	var/proxy_icon_url
 
 /datum/tgs_chat_embed/footer/New(text)
+	..()
 	if(!istext(text))
 		CRASH("[/datum/tgs_chat_embed/footer] created with no text!")
 
@@ -370,6 +386,7 @@
 	var/proxy_icon_url
 
 /datum/tgs_chat_embed/provider/author/New(name)
+	..()
 	if(!istext(name))
 		CRASH("[/datum/tgs_chat_embed/provider/author] created with no name!")
 
@@ -382,6 +399,7 @@
 	var/is_inline
 
 /datum/tgs_chat_embed/field/New(name, value)
+	..()
 	if(!istext(name))
 		CRASH("[/datum/tgs_chat_embed/field] created with no name!")
 
@@ -420,6 +438,7 @@
 
 /**
  * Send a message to connected chats. This function may sleep!
+ * If TGS is offline when called, the message may be placed in a queue to be sent and this function will return immediately. Your message will be sent when TGS reconnects to the game.
  *
  * message - The [/datum/tgs_message_content] to send.
  * admin_only: If [TRUE], message will be sent to admin connected chats. Vice-versa applies.
@@ -429,6 +448,7 @@
 
 /**
  * Send a private message to a specific user. This function may sleep!
+ * If TGS is offline when called, the message may be placed in a queue to be sent and this function will return immediately. Your message will be sent when TGS reconnects to the game.
  *
  * message - The [/datum/tgs_message_content] to send.
  * user: The [/datum/tgs_chat_user] to PM.
@@ -438,6 +458,7 @@
 
 /**
  * Send a message to connected chats that are flagged as game-related in TGS. This function may sleep!
+ * If TGS is offline when called, the message may be placed in a queue to be sent and this function will return immediately. Your message will be sent when TGS reconnects to the game.
  *
  * message - The [/datum/tgs_message_content] to send.
  * channels - Optional list of [/datum/tgs_chat_channel]s to restrict the message to.
@@ -447,6 +468,10 @@
 
 /// Returns the current [/datum/tgs_version] of TGS if it is running the server, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsVersion()
+	return
+
+/// Returns the running engine type
+/world/proc/TgsEngine()
 	return
 
 /// Returns the current [/datum/tgs_version] of the DMAPI being used if it was activated, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
@@ -477,10 +502,20 @@
 /world/proc/TgsChatChannelInfo()
 	return
 
+/**
+ * Trigger an event in TGS. Requires TGS version >= 6.3.0. Returns [TRUE] if the event was triggered successfully, [FALSE] otherwise. This function may sleep!
+ *
+ * event_name - The name of the event to trigger
+ * parameters - Optional list of string parameters to pass as arguments to the event script. The first parameter passed to a script will always be the running game's directory followed by these parameters.
+ * wait_for_completion - If set, this function will not return until the event has run to completion.
+ */
+/world/proc/TgsTriggerEvent(event_name, list/parameters, wait_for_completion = FALSE)
+	return
+
 /*
 The MIT License
 
-Copyright (c) 2017-2023 Jordan Brown
+Copyright (c) 2017-2024 Jordan Brown
 
 Permission is hereby granted, free of charge,
 to any person obtaining a copy of this software and

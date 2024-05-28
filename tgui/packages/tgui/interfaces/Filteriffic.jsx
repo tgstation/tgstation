@@ -1,5 +1,7 @@
 import { map } from 'common/collections';
 import { toFixed } from 'common/math';
+import { useState } from 'react';
+
 import { numberOfDecimalDigits } from '../../common/math';
 import { useBackend } from '../backend';
 import {
@@ -15,7 +17,6 @@ import {
   Section,
 } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 const FilterIntegerEntry = (props) => {
   const { value, name, filterName } = props;
@@ -25,9 +26,10 @@ const FilterIntegerEntry = (props) => {
       value={value}
       minValue={-500}
       maxValue={500}
+      step={1}
       stepPixelSize={5}
       width="39px"
-      onDrag={(e, value) =>
+      onDrag={(value) =>
         act('modify_filter_value', {
           name: filterName,
           new_data: {
@@ -54,7 +56,7 @@ const FilterFloatEntry = (props) => {
         step={step}
         format={(value) => toFixed(value, numberOfDecimalDigits(step))}
         width="80px"
-        onDrag={(e, value) =>
+        onDrag={(value) =>
           act('transition_filter_value', {
             name: filterName,
             new_data: {
@@ -71,7 +73,7 @@ const FilterFloatEntry = (props) => {
         step={0.001}
         format={(value) => toFixed(value, 4)}
         width="70px"
-        onChange={(e, value) => setStep(value)}
+        onChange={(value) => setStep(value)}
       />
     </>
   );
@@ -153,10 +155,9 @@ const FilterFlagsEntry = (props) => {
 
   const filterInfo = data.filter_info;
   const flags = filterInfo[filterType]['flags'];
-  return map((bitField, flagName) => (
+  return map(flags, (bitField, flagName) => (
     <Button.Checkbox
       checked={value & bitField}
-      content={flagName}
       onClick={() =>
         act('modify_filter_value', {
           name: filterName,
@@ -165,8 +166,11 @@ const FilterFlagsEntry = (props) => {
           },
         })
       }
-    />
-  ))(flags);
+      key={flagName}
+    >
+      {flagName}
+    </Button.Checkbox>
+  ));
 };
 
 const FilterDataEntry = (props) => {
@@ -228,9 +232,10 @@ const FilterEntry = (props) => {
         <>
           <NumberInput
             value={priority}
+            step={1}
             stepPixelSize={10}
             width="60px"
-            onChange={(e, value) =>
+            onChange={(value) =>
               act('change_priority', {
                 name: name,
                 new_priority: value,
@@ -322,7 +327,7 @@ export const Filteriffic = (props) => {
             <Dropdown
               icon="plus"
               displayText="Add Filter"
-              nochevron
+              noChevron
               options={Object.keys(filterDefaults)}
               onSelected={(value) =>
                 act('add_filter', {
@@ -337,9 +342,9 @@ export const Filteriffic = (props) => {
           {!hasFilters ? (
             <Box>No filters</Box>
           ) : (
-            map((entry, key) => (
+            map(filters, (entry, key) => (
               <FilterEntry filterDataEntry={entry} name={key} key={key} />
-            ))(filters)
+            ))
           )}
         </Section>
       </Window.Content>

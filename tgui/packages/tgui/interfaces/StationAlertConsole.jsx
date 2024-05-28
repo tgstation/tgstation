@@ -1,5 +1,5 @@
 import { sortBy } from 'common/collections';
-import { flow } from 'common/fp';
+
 import { useBackend } from '../backend';
 import { Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -29,8 +29,9 @@ export const StationAlertConsoleContent = (props) => {
     Camera: 5,
   };
 
-  const sortedAlarms = flow([sortBy((alarm) => sortingKey[alarm.name])])(
+  const sortedAlarms = sortBy(
     data.alarms || [],
+    (alarm) => sortingKey[alarm.name],
   );
 
   return (

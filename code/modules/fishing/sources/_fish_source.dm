@@ -170,10 +170,13 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 
 	var/atom/movable/reward = spawn_reward(reward_path, fisherman, fishing_spot)
 	if(!reward) //balloon alert instead
-		fisherman.balloon_alert(fisherman,pick(duds))
+		fisherman.balloon_alert(fisherman, pick(duds))
 		return
 	if(isitem(reward)) //Try to put it in hand
 		INVOKE_ASYNC(fisherman, TYPE_PROC_REF(/mob, put_in_hands), reward)
+	else if(istype(reward, /obj/effect/spawner)) // Do not attempt to forceMove() a spawner. It will break things, and the spawned item should already be at the mob's turf by now.
+		fisherman.balloon_alert(fisherman, "caught something!")
+		return
 	else // for fishing things like corpses, move them to the turf of the fisherman
 		INVOKE_ASYNC(reward, TYPE_PROC_REF(/atom/movable, forceMove), get_turf(fisherman))
 	fisherman.balloon_alert(fisherman, "caught [reward]!")
@@ -237,8 +240,8 @@ GLOBAL_LIST(fishing_property_cache)
 
 	var/list/final_table = fish_table.Copy()
 	for(var/result in final_table)
-		final_table[result] *= rod.multiplicative_fish_bonus(result, src)
-		final_table[result] += rod.additive_fish_bonus(result, src) //Decide on order here so it can be multiplicative
+		final_table[result] *= rod.hook?.get_hook_bonus_multiplicative(result)
+		final_table[result] += rod.hook?.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
 		if(ispath(result, /obj/item/fish))
 			//Modify fish roll chance
 			var/obj/item/fish/caught_fish = result

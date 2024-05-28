@@ -28,7 +28,7 @@
 		var/mob/living/living_parent = parent
 		living_parent.set_glide_size(front.glide_size)
 
-/datum/component/mob_chain/Destroy(force, silent)
+/datum/component/mob_chain/Destroy(force)
 	if (!isnull(front))
 		SEND_SIGNAL(front, COMSIG_MOB_LOST_CHAIN_TAIL, parent)
 	front = null

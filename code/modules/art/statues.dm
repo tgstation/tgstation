@@ -26,38 +26,32 @@
 	AddElement(art_type, impressiveness)
 	AddElement(/datum/element/beauty, impressiveness * 75)
 	AddComponent(/datum/component/simple_rotation)
+	AddComponent(/datum/component/marionette)
 
 /obj/structure/statue/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return FALSE
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(W.tool_behaviour == TOOL_WELDER)
-			if(!W.tool_start_check(user, amount=1))
-				return FALSE
-			user.balloon_alert(user, "slicing apart...")
-			if(W.use_tool(src, user, 40, volume=50))
-				deconstruct(TRUE)
-			return
+	if(W.tool_behaviour == TOOL_WELDER)
+		if(!W.tool_start_check(user, amount=1))
+			return FALSE
+		user.balloon_alert(user, "slicing apart...")
+		if(W.use_tool(src, user, 40, volume=50))
+			deconstruct(TRUE)
+		return
 	return ..()
 
-/obj/structure/statue/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
-/obj/structure/statue/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/amount_mod = disassembled ? 0 : -2
-		for(var/mat in custom_materials)
-			var/datum/material/custom_material = GET_MATERIAL_REF(mat)
-			var/amount = max(0,round(custom_materials[mat]/SHEET_MATERIAL_AMOUNT) + amount_mod)
-			if(amount > 0)
-				new custom_material.sheet_type(drop_location(), amount)
-	qdel(src)
+/obj/structure/statue/atom_deconstruct(disassembled = TRUE)
+	var/amount_mod = disassembled ? 0 : -2
+	for(var/mat in custom_materials)
+		var/datum/material/custom_material = GET_MATERIAL_REF(mat)
+		var/amount = max(0,round(custom_materials[mat]/SHEET_MATERIAL_AMOUNT) + amount_mod)
+		if(amount > 0)
+			new custom_material.sheet_type(drop_location(), amount)
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
 ////////////////////////uranium///////////////////////////////////
@@ -572,23 +566,21 @@ Moving interrupts
 	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, FLOOR_PLANE)
 
 	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
-	var/list/overlays_to_remove = list()
+	var/list/overlays_to_keep = list()
 	for(var/mutable_appearance/special_overlay as anything in content_ma.overlays)
 		var/mutable_appearance/real = new()
 		real.appearance = special_overlay
 		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
-			continue
-		overlays_to_remove += real
-	content_ma.overlays -= overlays_to_remove
+			overlays_to_keep += real
+	content_ma.overlays = overlays_to_keep
 
-	var/list/underlays_to_remove = list()
+	var/list/underlays_to_keep = list()
 	for(var/mutable_appearance/special_underlay as anything in content_ma.underlays)
 		var/mutable_appearance/real = new()
 		real.appearance = special_underlay
 		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
-			continue
-		underlays_to_remove += real
-	content_ma.underlays -= underlays_to_remove
+			underlays_to_keep += real
+	content_ma.underlays = underlays_to_keep
 
 	content_ma.appearance_flags &= ~KEEP_APART //Don't want this
 	content_ma.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)

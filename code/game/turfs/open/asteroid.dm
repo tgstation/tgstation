@@ -14,7 +14,7 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 	/// Base turf type to be created by the tunnel
 	var/turf_type = /turf/open/misc/asteroid
 			/// Whether this turf has different icon states
@@ -183,6 +183,10 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /// Used for the lavaland icemoon ruin.
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
+	turf_flags = NO_RUINS
+
+/// A turf that can't we can't build openspace chasms on or spawn ruins in.
+/turf/closed/mineral/volcanic/lava_land_surface/do_not_chasm
 	turf_flags = NO_RUINS
 
 /turf/open/misc/asteroid/lowpressure

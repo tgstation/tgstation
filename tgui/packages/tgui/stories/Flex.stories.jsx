@@ -4,7 +4,8 @@
  * @license MIT
  */
 
-import { useLocalState } from '../backend';
+import { useState } from 'react';
+
 import { Button, Flex, Section } from '../components';
 
 export const meta = {
@@ -13,10 +14,10 @@ export const meta = {
 };
 
 const Story = (props) => {
-  const [grow, setGrow] = useLocalState('fs_grow', 1);
-  const [direction, setDirection] = useLocalState('fs_direction', 'column');
-  const [fill, setFill] = useLocalState('fs_fill', true);
-  const [hasTitle, setHasTitle] = useLocalState('fs_title', true);
+  const [grow, setGrow] = useState(1);
+  const [direction, setDirection] = useState('column');
+  const [fill, setFill] = useState(true);
+  const [hasTitle, setHasTitle] = useState(true);
   return (
     <Flex height="100%" direction="column">
       <Flex.Item mb={1}>

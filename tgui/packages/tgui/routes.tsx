@@ -4,9 +4,10 @@
  * @license MIT
  */
 
-import { Window } from './layouts';
 import { useBackend } from './backend';
+import { useDebug } from './debug';
 import { LoadingScreen } from './interfaces/common/LoadingToolbox';
+import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces');
 
@@ -52,7 +53,9 @@ const RefreshingWindow = () => {
 
 // Get the component for the current route
 export const getRoutedComponent = () => {
-  const { suspended, config, debug } = useBackend();
+  const { suspended, config } = useBackend();
+  const { kitchenSink = false } = useDebug();
+
   if (suspended) {
     return SuspendedWindow;
   }
@@ -61,10 +64,11 @@ export const getRoutedComponent = () => {
   }
   if (process.env.NODE_ENV !== 'production') {
     // Show a kitchen sink
-    if (debug?.kitchenSink) {
+    if (kitchenSink) {
       return require('./debug').KitchenSink;
     }
   }
+
   const name = config?.interface;
   const interfacePathBuilders = [
     (name: string) => `./${name}.tsx`,

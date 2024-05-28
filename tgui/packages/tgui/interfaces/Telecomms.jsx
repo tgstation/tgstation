@@ -1,14 +1,14 @@
 import { useBackend } from '../backend';
 import {
+  Box,
   Button,
   Input,
+  LabeledControls,
   LabeledList,
-  Section,
-  Table,
   NoticeBox,
   NumberInput,
-  LabeledControls,
-  Box,
+  Section,
+  Table,
 } from '../components';
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
@@ -122,7 +122,7 @@ export const Telecomms = (props) => {
                       minValue={minfreq / 10}
                       maxValue={maxfreq / 10}
                       value={changefrequency / 10}
-                      onChange={(e, value) => act('change_freq', { value })}
+                      onChange={(value) => act('change_freq', { value })}
                     />
                     <Button
                       icon={'times'}
@@ -240,7 +240,7 @@ export const Telecomms = (props) => {
                         minValue={minfreq / 10}
                         maxValue={maxfreq / 10}
                         value={frequency / 10}
-                        onChange={(e, value) => act('tempfreq', { value })}
+                        onChange={(value) => act('tempfreq', { value })}
                       />
                     </Table.Cell>
                     <Button

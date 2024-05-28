@@ -1,17 +1,19 @@
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import {
-  NoticeBox,
-  Section,
-  Tabs,
-  Input,
   Button,
-  NumberInput,
-  Stack,
   Collapsible,
+  Input,
+  NoticeBox,
+  NumberInput,
+  Section,
+  Stack,
+  Tabs,
 } from '../components';
 import { Window } from '../layouts';
 
-type PthData = {
+type Data = {
   db_connected: boolean;
   cached_ckeys: string[];
   ticket_cache: TicketData[];
@@ -38,15 +40,14 @@ enum Pages {
 }
 
 export const PlayerTicketHistory = (props: any) => {
-  const { act, data } = useBackend<PthData>();
+  const { act, data } = useBackend<Data>();
 
-  const [page, setPage] = useLocalState(
-    'page',
+  const [page, setPage] = useState(
     data.target_ckey ? Pages.TicketHistory : Pages.Cache,
   );
 
-  const [cacheInput, setCacheInput] = useLocalState('cacheInput', '');
-  const [cacheCount, setCacheCount] = useLocalState('cacheCount', 5);
+  const [cacheInput, setCacheInput] = useState('');
+  const [cacheCount, setCacheCount] = useState(5);
 
   if (!data.db_connected) {
     return (
@@ -98,7 +99,7 @@ export const PlayerTicketHistory = (props: any) => {
 };
 
 const TicketHistory = (props: any) => {
-  const { act, data } = useBackend<PthData>();
+  const { act, data } = useBackend<Data>();
 
   if (data.ticket_cache === undefined) {
     return (
@@ -108,10 +109,7 @@ const TicketHistory = (props: any) => {
     );
   }
 
-  const [activeTicket, setActiveTicket] = useLocalState<TicketData | undefined>(
-    'ticket',
-    undefined,
-  );
+  const [activeTicket, setActiveTicket] = useState<TicketData | undefined>();
 
   // sory by round then ticket number, descending
   data.ticket_cache.sort((b, a) => {
@@ -164,7 +162,7 @@ type CacheProps = {
 };
 
 const Cache = (props: CacheProps) => {
-  const { act, data } = useBackend<PthData>();
+  const { act, data } = useBackend<Data>();
 
   return (
     <Section>
@@ -177,10 +175,11 @@ const Cache = (props: CacheProps) => {
           }
         />
         <NumberInput
+          step={1}
           value={props.cacheCount}
           minValue={1}
           maxValue={20}
-          onChange={(_: any, value: number) => props.setCacheCount(value)}
+          onChange={(value: number) => props.setCacheCount(value)}
         />
         <Button
           icon="search"
@@ -215,8 +214,8 @@ type TicketViewProps = {
 };
 
 const TicketView = (props: TicketViewProps) => {
-  const { act, data } = useBackend<PthData>();
-  const [forceExpand, setForceExpand] = useLocalState('forceExpand', false);
+  const { act, data } = useBackend<Data>();
+  const [forceExpand, setForceExpand] = useState(false);
 
   // sort by timestamp
   props.ticket.ticket_log.sort((a, b) => {
@@ -234,7 +233,6 @@ const TicketView = (props: TicketViewProps) => {
     >
       {props.ticket.ticket_log.map((log, index) => (
         <Collapsible
-          tooltip={log.timestamp}
           open={forceExpand}
           key={`${props.ticket.round_id}-${props.ticket.ticket_number}-${index}`}
           title={`${log.action} - ${log.origin_ckey}${

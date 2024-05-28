@@ -268,15 +268,16 @@
 			if(machine_target.anchored)
 				balloon_alert(user, "unanchor first!")
 				return
-			if(do_after(user, 20, target = target))
+			if(do_after(user, 2 SECONDS, target = target))
 				machine_target.deconstruct() //Let's not substract matter
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 			return
 
 	create_machine(target, user)
 
-/obj/item/construction/plumbing/AltClick(mob/user)
+/obj/item/construction/plumbing/click_alt(mob/user)
 	ui_interact(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/construction/plumbing/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER

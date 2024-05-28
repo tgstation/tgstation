@@ -1,11 +1,12 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import {
   Button,
   Flex,
   Knob,
-  NumberInput,
   LabeledControls,
+  NumberInput,
   Section,
 } from '../components';
 import { Window } from '../layouts';
@@ -83,8 +84,9 @@ export const Aquarium = (props) => {
                 value={feeding_interval}
                 minValue={1}
                 maxValue={7}
+                step={1}
                 unit="minutes"
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('feeding_interval', {
                     feeding_interval: value,
                   })

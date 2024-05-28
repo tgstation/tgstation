@@ -761,7 +761,7 @@
 /area/virtual_domain)
 "WT" = (
 /obj/machinery/door/airlock/bananium,
-/turf/open/indestructible/honk,
+/turf/open/floor/carpet,
 /area/virtual_domain)
 "WX" = (
 /turf/open/indestructible/white,

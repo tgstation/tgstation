@@ -1,4 +1,5 @@
 import { classes } from 'common/react';
+
 import { Icon } from '../../components';
 
 const MATERIAL_ICONS: Record<string, [number, string][]> = {

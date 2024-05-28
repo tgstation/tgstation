@@ -19,6 +19,8 @@
 	var/active = FALSE
 	///The final countdown (delay before we explode)
 	var/delay = MICROBOMB_DELAY
+	///If the delay is equal or lower to MICROBOMB_DELAY (0.7 sec), the explosion will be instantaneous.
+	var/instant_explosion = TRUE
 	///Radius of weak devastation explosive impact
 	var/explosion_light = MICROBOMB_EXPLOSION_LIGHT
 	///Radius of medium devastation explosive impact
@@ -33,7 +35,10 @@
 	var/no_paralyze = FALSE
 	///Do we override other explosive implants?
 	var/master_implant = FALSE
-
+	///Will this implant notify ghosts when activated?
+	var/notify_ghosts = TRUE
+	///Do we tell people when they activated it?
+	var/announce_activation = TRUE
 
 /obj/item/implant/explosive/proc/on_death(datum/source, gibbed)
 	SIGNAL_HANDLER
@@ -45,16 +50,14 @@
 	INVOKE_ASYNC(src, PROC_REF(activate), "death")
 
 /obj/item/implant/explosive/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Robust Corp RX-78 Employee Management Implant<BR>
-				<b>Life:</b> Activates upon death.<BR>
-				<b>Important Notes:</b> Explodes<BR>
-				<HR>
-				<b>Implant Details:</b><BR>
-				<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
-				<b>Special Features:</b> Explodes<BR>
-				"}
-	return dat
+	return "<b>Implant Specifications:</b><BR> \
+		<b>Name:</b> Robust Corp RX-78 Employee Management Implant<BR> \
+		<b>Life:</b> Activates upon death.<BR> \
+		<b>Important Notes:</b> Explodes<BR> \
+		<HR> \
+		<b>Implant Details:</b><BR> \
+		<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR> \
+		<b>Special Features:</b> Explodes<BR>"
 
 /obj/item/implant/explosive/activate(cause)
 	. = ..()
@@ -70,12 +73,13 @@
 			return FALSE
 	if(cause == "death" && HAS_TRAIT(imp_in, TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION))
 		return FALSE
-	to_chat(imp_in, span_notice("You activate your [name]."))
+	if(announce_activation)
+		to_chat(imp_in, span_notice("You activate your [name]."))
 	active = TRUE
 	var/turf/boomturf = get_turf(imp_in)
 	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [ADMIN_VERBOSEJMP(boomturf)], with cause of [cause].")
 	//If the delay is shorter or equal to the default delay, just blow up already jeez
-	if(delay <= MICROBOMB_DELAY)
+	if(delay <= MICROBOMB_DELAY && instant_explosion)
 		explode()
 		return
 	timed_explosion()
@@ -85,7 +89,7 @@
 		if(istype(target_implant, /obj/item/implant/explosive)) //we don't use our own type here, because macrobombs inherit this proc and need to be able to upgrade microbombs
 			var/obj/item/implant/explosive/other_implant = target_implant
 			if(other_implant.master_implant && master_implant) //we cant have two master implants at once
-				target.balloon_alert(target, "cannot fit implant!")
+				target.balloon_alert(user, "cannot fit implant!")
 				return FALSE
 			if(master_implant)
 				merge_implants(src, other_implant)
@@ -119,16 +123,19 @@
  * Make the implantee beep a few times, keel over and explode. Usually to a devastating effect.
  */
 /obj/item/implant/explosive/proc/timed_explosion()
-	imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))
-
-	notify_ghosts(
-		"[imp_in] is about to detonate their explosive implant!",
-		source = src,
-		header = "Tick Tick Tick...",
-		notify_flags = NOTIFY_CATEGORY_NOFLASH,
-		ghost_sound = 'sound/machines/warning-buzzer.ogg',
-		notify_volume = 75,
-	)
+	if (isnull(imp_in))
+		visible_message(span_warning("[src] starts beeping ominously!"))
+	else
+		imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))
+		if(notify_ghosts)
+			notify_ghosts(
+				"[imp_in] is about to detonate their explosive implant!",
+				source = src,
+				header = "Tick Tick Tick...",
+				notify_flags = NOTIFY_CATEGORY_NOFLASH,
+				ghost_sound = 'sound/machines/warning-buzzer.ogg',
+				notify_volume = 75,
+			)
 
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	if(!panic_beep_sound)
@@ -158,14 +165,15 @@
 
 
 ///When called, just explodes
-/obj/item/implant/explosive/proc/explode()
+/obj/item/implant/explosive/proc/explode(atom/override_explode_target = null)
 	explosion_devastate = round(explosion_devastate)
 	explosion_heavy = round(explosion_heavy)
 	explosion_light = round(explosion_light)
-	explosion(src, devastation_range = explosion_devastate, heavy_impact_range = explosion_heavy, light_impact_range = explosion_light, flame_range = explosion_light, flash_range = explosion_light, explosion_cause = src)
-	if(imp_in)
-		imp_in.investigate_log("has been gibbed by an explosive implant.", INVESTIGATE_DEATHS)
-		imp_in.gib(DROP_ORGANS|DROP_BODYPARTS)
+	explosion(override_explode_target || src, devastation_range = explosion_devastate, heavy_impact_range = explosion_heavy, light_impact_range = explosion_light, flame_range = explosion_light, flash_range = explosion_light, explosion_cause = src)
+	var/mob/living/kill_mob = isliving(override_explode_target) ? override_explode_target : imp_in
+	if(!isnull(kill_mob))
+		kill_mob.investigate_log("has been gibbed by an explosive implant.", INVESTIGATE_DEATHS)
+		kill_mob.gib(DROP_ORGANS|DROP_BODYPARTS)
 	qdel(src)
 
 ///Macrobomb has the strength and delay of 10 microbombs
@@ -204,6 +212,13 @@
 
 	if(source.health < source.crit_threshold)
 		INVOKE_ASYNC(src, PROC_REF(activate), "deniability")
+
+/obj/item/implant/explosive/deathmatch
+	name = "deathmatch microbomb implant"
+	delay = 0.5 SECONDS
+	actions_types = null
+	instant_explosion = FALSE
+	notify_ghosts = FALSE
 
 /obj/item/implanter/explosive
 	name = "implanter (microbomb)"

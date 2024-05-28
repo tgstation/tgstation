@@ -190,7 +190,6 @@
 	if(user)
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
-		target.LAssailant = WEAKREF(user)
 		if(log_stun_attack)
 			log_combat(user, target, "stun attacked", src)
 	if(baton_effect(target, user, modifiers) && user)
@@ -427,11 +426,17 @@
 	on_stun_volume = 50
 	active = FALSE
 	context_living_rmb_active = "Harmful Stun"
+	light_range = 1.5
+	light_system = OVERLAY_LIGHT
+	light_on = FALSE
+	light_color = LIGHT_COLOR_ORANGE
+	light_power = 0.5
+
 
 	var/throw_stun_chance = 35
 	var/obj/item/stock_parts/cell/cell
 	var/preload_cell_type //if not empty the baton starts with this type of cell
-	var/cell_hit_cost = 1000
+	var/cell_hit_cost = STANDARD_CELL_CHARGE
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
 
@@ -448,6 +453,7 @@
 		else
 			cell = new preload_cell_type(src)
 	RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(convert))
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	update_appearance()
 
 /obj/item/melee/baton/security/get_cell()
@@ -482,6 +488,14 @@
 	qdel(item)
 	qdel(src)
 
+/obj/item/melee/baton/security/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(!active)
+		return
+	toggle_light()
+	active = FALSE
+	update_appearance()
+	return COMSIG_SABOTEUR_SUCCESS
 /obj/item/melee/baton/security/Exited(atom/movable/mov_content)
 	. = ..()
 	if(mov_content == cell)
@@ -541,6 +555,8 @@
 		active = !active
 		balloon_alert(user, "turned [active ? "on" : "off"]")
 		playsound(src, SFX_SPARKS, 75, TRUE, -1)
+		toggle_light(user)
+		do_sparks(1, TRUE, src)
 	else
 		active = FALSE
 		if(!cell)
@@ -549,6 +565,11 @@
 			balloon_alert(user, "out of charge!")
 	update_appearance()
 	add_fingerprint(user)
+
+/// Toggles the stun baton's light
+/obj/item/melee/baton/security/proc/toggle_light(mob/user)
+	set_light_on(!light_on)
+	return
 
 /obj/item/melee/baton/security/proc/deductcharge(deducted_charge)
 	if(!cell)
@@ -559,6 +580,7 @@
 	if(active && cell.charge < cell_hit_cost)
 		//we're below minimum, turn off
 		active = FALSE
+		set_light_on(FALSE)
 		update_appearance()
 		playsound(src, SFX_SPARKS, 75, TRUE, -1)
 
@@ -625,7 +647,7 @@
 	. = list()
 
 	.["visible"] = span_danger("[user] tries to stun [target] with [src], and predictably fails!")
-	.["local"] = span_userdanger("[target] tries to... stun you with [src]?")
+	.["local"] = span_userdanger("[user] tries to... stun you with [src]?")
 
 /obj/item/melee/baton/security/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -637,7 +659,7 @@
 	if (!cell)
 		return
 	if (!(. & EMP_PROTECT_SELF))
-		deductcharge(1000 / severity)
+		deductcharge(STANDARD_CELL_CHARGE / severity)
 	if (cell.charge >= cell_hit_cost)
 		var/scramble_time
 		scramble_mode()
@@ -649,6 +671,8 @@
 	if (!cell || cell.charge < cell_hit_cost)
 		return
 	active = !active
+	toggle_light()
+	do_sparks(1, TRUE, src)
 	playsound(src, SFX_SPARKS, 75, TRUE, -1)
 	update_appearance()
 
@@ -669,7 +693,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	force = 3
 	throwforce = 5
-	cell_hit_cost = 2000
+	cell_hit_cost = STANDARD_CELL_CHARGE * 2
 	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
@@ -733,7 +757,7 @@
 	force = 5
 	throwforce = 5
 	throw_range = 5
-	cell_hit_cost = 2000
+	cell_hit_cost = STANDARD_CELL_CHARGE * 2
 	throw_stun_chance = 99  //Have you prayed today?
 	convertible = FALSE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*5, /datum/material/gold = SHEET_MATERIAL_AMOUNT)

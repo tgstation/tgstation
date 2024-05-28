@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Stack, Section, Input, Button, Dropdown } from '../components';
+import { Button, Dropdown, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const CircuitModule = (props) => {
@@ -130,7 +130,7 @@ const PortEntry = (props) => {
         </Stack.Item>
         <Stack.Item>
           <Dropdown
-            displayText={datatype}
+            selected={datatype}
             options={datatypeOptions}
             onSelected={onSetType}
           />

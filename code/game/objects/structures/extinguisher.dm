@@ -105,11 +105,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		if(!opened)
 			opened = 1
 			playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
+			update_appearance(UPDATE_ICON)
 	else
 		toggle_cabinet(user)
 
 /obj/structure/extinguisher_cabinet/attack_hand_secondary(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))
 		return ..()
 	toggle_cabinet(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -159,7 +160,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 
 /obj/structure/extinguisher_cabinet/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
+	if(!broken)
 		broken = 1
 		opened = 1
 		if(stored_extinguisher)
@@ -168,16 +169,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		update_appearance(UPDATE_ICON)
 
 
-/obj/structure/extinguisher_cabinet/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(disassembled)
-			new /obj/item/wallframe/extinguisher_cabinet(loc)
-		else
-			new /obj/item/stack/sheet/iron (loc, 2)
-		if(stored_extinguisher)
-			stored_extinguisher.forceMove(loc)
-			stored_extinguisher = null
-	qdel(src)
+/obj/structure/extinguisher_cabinet/atom_deconstruct(disassembled = TRUE)
+	if(disassembled)
+		new /obj/item/wallframe/extinguisher_cabinet(loc)
+	else
+		new /obj/item/stack/sheet/iron (loc, 2)
+	if(stored_extinguisher)
+		stored_extinguisher.forceMove(loc)
+		stored_extinguisher = null
 
 /obj/item/wallframe/extinguisher_cabinet
 	name = "extinguisher cabinet frame"

@@ -1,6 +1,7 @@
 import { map, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { capitalize } from 'common/string';
+import { useState } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -79,10 +80,14 @@ type Book = {
   category: string;
   title: string;
   id: number;
+};
+
+type AdminBook = Book & {
+  author_ckey: string;
   deleted: boolean;
 };
 
-type DisplayBook = Book & {
+type DisplayAdminBook = AdminBook & {
   key: number;
 };
 
@@ -118,14 +123,18 @@ const SearchAndDisplay = (props) => {
     view_raw,
     show_deleted,
   } = data;
-  const books = flow([
-    map<Book, DisplayBook>((book, i) => ({
-      ...book,
-      // Generate a unique id
-      key: i,
-    })),
-    sortBy<DisplayBook>((book) => book.key),
-  ])(pages);
+  const books = sortBy(
+    map(
+      pages,
+      (book, i) =>
+        ({
+          ...book,
+          // Generate a unique id
+          key: i,
+        }) as DisplayAdminBook,
+    ),
+    (book) => book.key,
+  );
   return (
     <Section>
       <Stack justify="space-between">
@@ -336,7 +345,7 @@ const ModifyPage = (props) => {
   const { can_db_request, view_raw, history } = data;
   const [modifyMethod, setModifyMethod] = useLocalState('ModifyMethod', '');
   const [modifyTarget, setModifyTarget] = useLocalState('ModifyTarget', 0);
-  const [reason, setReason] = useLocalState('Reason', 'null');
+  const [reason, setReason] = useState('null');
 
   const entries = history[modifyTarget.toString()]
     ? history[modifyTarget.toString()].sort((a, b) => b.id - a.id)
@@ -344,7 +353,7 @@ const ModifyPage = (props) => {
 
   return (
     <Window.Content scrollable>
-      <NoticeBox warning>
+      <NoticeBox>
         Heads Up! We do not allow you to fully delete books in game
         <br />
         What you&apos;re doing here is a &quot;don&apos;t show this to

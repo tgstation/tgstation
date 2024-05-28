@@ -44,6 +44,7 @@
 	)
 
 /datum/computer_file/program/portrait_printer/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("search")
 			if(search_string != params["to_search"])

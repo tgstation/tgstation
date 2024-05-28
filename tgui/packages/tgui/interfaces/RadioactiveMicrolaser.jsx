@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Box, NumberInput, Section, LabeledList } from '../components';
+import { Box, Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
 export const RadioactiveMicrolaser = (props) => {
@@ -75,7 +75,8 @@ export const RadioactiveMicrolaser = (props) => {
                 width="40px"
                 minValue={1}
                 maxValue={20}
-                onChange={(e, value) => {
+                step={1}
+                onChange={(value) => {
                   return act('radintensity', {
                     target: value,
                   });
@@ -104,7 +105,8 @@ export const RadioactiveMicrolaser = (props) => {
                 width="40px"
                 minValue={0}
                 maxValue={120}
-                onChange={(e, value) => {
+                step={1}
+                onChange={(value) => {
                   return act('radwavelength', {
                     target: value,
                   });

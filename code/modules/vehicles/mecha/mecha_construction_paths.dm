@@ -62,7 +62,7 @@
 
 /datum/component/construction/unordered/mecha_chassis/spawn_result()
 	var/atom/parent_atom = parent
-	parent_atom.icon = 'icons/mob/mech_construction.dmi'
+	parent_atom.icon = 'icons/mob/rideables/mech_construction.dmi'
 	parent_atom.set_density(TRUE)
 	parent_atom.cut_overlays()
 	..()
@@ -197,24 +197,24 @@
 			"key" = /obj/item/stock_parts/servo,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Scanning module is secured, the <b> micro-servo</b> can be added.",
-			"forward_message" = "added micro-servo",
+			"desc" = "Scanning module is secured, the <b>servo</b> can be added.",
+			"forward_message" = "added servo",
 			"backward_message" = "unsecured capacitor"
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Micro-servo is installed, and can be <b>screwed</b> into place.",
-			"forward_message" = "secured micro-servo",
-			"backward_message" = "removed micro-servo"
+			"desc" = "Servo is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured servo",
+			"backward_message" = "removed servo"
 		),
 		list(
 			"key" = /obj/item/stock_parts/cell,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Micro-servo is secured, and the <b>power cell</b> can be added.",
+			"desc" = "Servo is secured, and the <b>power cell</b> can be added.",
 			"forward_message" = "added power cell",
-			"backward_message" = "unsecured micro-servo"
+			"backward_message" = "unsecured servo"
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
@@ -534,7 +534,7 @@
 		list(
 			"key" = /obj/item/stock_parts/servo,
 			"action" = ITEM_MOVE_INSIDE,
-			"desc" = "Humor <b>micro-servo</b> can be added!",
+			"desc" = "Humor <b>servo</b> can be added!",
 			"forward_message" = "added smile"
 		),
 		list(
@@ -580,7 +580,7 @@
 /datum/component/construction/mecha/honker/update_parent(step_index)
 	if(step_index == 1)
 		var/atom/parent_atom = parent
-		parent_atom.icon = 'icons/mob/mech_construct.dmi'
+		parent_atom.icon = 'icons/mob/rideables/mech_construct.dmi'
 		parent_atom.icon_state = "honker_chassis"
 	..()
 
@@ -680,24 +680,24 @@
 			"key" = /obj/item/stock_parts/servo,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Capacitor is secured, the <b>micro-servo</b> can be added.",
-			"forward_message" = "added micro-servo",
+			"desc" = "Capacitor is secured, the <b>servo</b> can be added.",
+			"forward_message" = "added servo",
 			"backward_message" = "unsecured capacitor"
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Micro-servo is installed, and can be <b>screwed</b> into place.",
-			"forward_message" = "secured micro-servo",
-			"backward_message" = "removed micro-servo"
+			"desc" = "Servo is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured servo",
+			"backward_message" = "removed servo"
 		),
 		list(
 			"key" = /obj/item/stack/ore/bluespace_crystal,
 			"amount" = 1,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Micro-servo is secured, and the <b>bluespace crystal</b> can be added.",
+			"desc" = "Servo is secured, and the <b>bluespace crystal</b> can be added.",
 			"forward_message" = "added bluespace crystal",
-			"backward_message" = "unsecured micro-servo"
+			"backward_message" = "unsecured servo"
 		),
 		list(
 			"key" = /obj/item/stack/cable_coil,

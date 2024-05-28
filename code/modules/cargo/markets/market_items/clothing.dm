@@ -1,5 +1,6 @@
 /datum/market_item/clothing
 	category = "Clothing"
+	abstract_path = /datum/market_item/clothing
 
 /datum/market_item/clothing/ninja_mask
 	name = "Space Ninja Mask"
@@ -79,3 +80,25 @@
 	price_max = CARGO_CRATE_VALUE * 1.5
 	stock_max = 5
 	availability_prob = 70
+
+/datum/market_item/clothing/floortileset
+	name = "Floor-tile Camouflage Uniform"
+	desc = "Hey there, looking to surprise somebody? Spy? Steal? Then you're lucky, meet our newest \
+		floor-tile 'NT SCUM' styled camouflage fatigues. This is the ultimate \
+		espionage uniform used by the very best. Providing the best \
+		flexibility, with our latest Camo-tech threads. Perfect for \
+		risky espionage hallway operations. Enjoy our product!"
+	item = /obj/item/storage/box/floor_camo
+	price_min = CARGO_CRATE_VALUE * 0.5
+	price_max = CARGO_CRATE_VALUE
+	stock_max = 3
+	availability_prob = 40
+
+/datum/market_item/clothing/collar_bomb
+	name = "Collar Bomb Kit"
+	desc = "An unpatented and questionably ethical kit consisting of a low-yield explosive collar and a remote to trigger it."
+	item = /obj/item/storage/box/collar_bomb
+	price_min = CARGO_CRATE_VALUE * 3.5
+	price_max = CARGO_CRATE_VALUE * 4.5
+	stock_max = 3
+	availability_prob = 60

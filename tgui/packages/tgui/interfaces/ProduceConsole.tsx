@@ -1,6 +1,7 @@
 import { BooleanLike } from 'common/react';
 import { capitalize, createSearch } from 'common/string';
 import { useState } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -8,6 +9,7 @@ import {
   Dimmer,
   Divider,
   Icon,
+  Image,
   Input,
   NumberInput,
   Section,
@@ -103,7 +105,7 @@ const ShoppingTab = (props) => {
                 width="150px"
                 placeholder="Search item..."
                 value={searchItem}
-                onChange={(e, value) => {
+                onInput={(e, value) => {
                   setSearchItem(value);
                 }}
               />
@@ -125,8 +127,7 @@ const ShoppingTab = (props) => {
                   />{' '}
                   {!condensed && (
                     <Stack.Item>
-                      <Box
-                        as="img"
+                      <Image
                         src={`data:image/jpeg;base64,${item.product_icon}`}
                         height="34px"
                         width="34px"
@@ -147,7 +148,7 @@ const ShoppingTab = (props) => {
                     />
                     <br />
                   </Stack.Item>
-                  <Stack.Item mt={-1.5} Align="right">
+                  <Stack.Item mt={-1.5} align="right">
                     <Box fontSize="10px" color="label">
                       {item.cost + credit_type + ' per order.'}
                     </Box>
@@ -173,7 +174,8 @@ const ShoppingTab = (props) => {
                       width="41px"
                       minValue={0}
                       maxValue={20}
-                      onChange={(e, value) =>
+                      step={1}
+                      onChange={(value) =>
                         act('cart_set', {
                           target: item.ref,
                           amt: value,
@@ -250,7 +252,8 @@ const CheckoutTab = (props) => {
                         width="41px"
                         minValue={0}
                         maxValue={(item.cost > 10 && 50) || 10}
-                        onChange={(e, value) =>
+                        step={1}
+                        onChange={(value) =>
                           act('cart_set', {
                             target: item.ref,
                             amt: value,

@@ -6,8 +6,9 @@
 
 import { classes } from 'common/react';
 import { Component, createRef, ReactNode, RefObject } from 'react';
-import { Box } from './Box';
+
 import { logger } from '../logging';
+import { Box } from './Box';
 import { Icon } from './Icon';
 
 type MenuProps = {

@@ -9,25 +9,10 @@
 	hair_hidden = FALSE
 	facial_hair_hidden = FALSE
 	if(human_head_owner)
-		if(human_head_owner.head)
-			var/obj/item/hat = human_head_owner.head
-			if(hat.flags_inv & HIDEHAIR)
+		for(var/obj/item/worn_item in human_head_owner.get_equipped_items())
+			if(worn_item.flags_inv & HIDEHAIR)
 				hair_hidden = TRUE
-			if(hat.flags_inv & HIDEFACIALHAIR)
-				facial_hair_hidden = TRUE
-
-		if(human_head_owner.wear_mask)
-			var/obj/item/mask = human_head_owner.wear_mask
-			if(mask.flags_inv & HIDEHAIR)
-				hair_hidden = TRUE
-			if(mask.flags_inv & HIDEFACIALHAIR)
-				facial_hair_hidden = TRUE
-
-		if(human_head_owner.w_uniform)
-			var/obj/item/item_uniform = human_head_owner.w_uniform
-			if(item_uniform.flags_inv & HIDEHAIR)
-				hair_hidden = TRUE
-			if(item_uniform.flags_inv & HIDEFACIALHAIR)
+			if(worn_item.flags_inv & HIDEFACIALHAIR)
 				facial_hair_hidden = TRUE
 		//invisibility and husk stuff
 		if(HAS_TRAIT(human_head_owner, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(human_head_owner, TRAIT_HUSK))
@@ -49,12 +34,12 @@
 		else
 			show_eyeless = FALSE
 	else
-		if(!hair_hidden && !brain)
+		if(!hair_hidden && !(locate(/obj/item/organ/internal/brain) in src))
 			show_debrained = TRUE
 		else
 			show_debrained = FALSE
 
-		if(!eyes)
+		if(!(locate(/obj/item/organ/internal/eyes) in src))
 			show_eyeless = TRUE
 		else
 			show_eyeless = FALSE
@@ -70,7 +55,7 @@
 	facial_hairstyle = human_head_owner.facial_hairstyle
 	facial_hair_alpha = owner_species.facial_hair_alpha
 	facial_hair_color = human_head_owner.facial_hair_color
-	fixed_hair_color = owner_species.fixed_hair_color //Can be null
+	fixed_hair_color = owner_species.get_fixed_hair_color(human_head_owner) //Can be null
 	gradient_styles = human_head_owner.grad_style?.Copy()
 	gradient_colors = human_head_owner.grad_color?.Copy()
 
@@ -99,7 +84,7 @@
 
 	var/image/facial_hair_overlay
 	if(!facial_hair_hidden && facial_hairstyle && (head_flags & HEAD_FACIAL_HAIR))
-		sprite_accessory = GLOB.facial_hairstyles_list[facial_hairstyle]
+		sprite_accessory = SSaccessories.facial_hairstyles_list[facial_hairstyle]
 		if(sprite_accessory)
 			//Overlay
 			facial_hair_overlay = image(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, image_dir)
@@ -114,12 +99,12 @@
 			var/facial_hair_gradient_style = LAZYACCESS(gradient_styles, GRADIENT_FACIAL_HAIR_KEY)
 			if(facial_hair_gradient_style)
 				var/facial_hair_gradient_color = LAZYACCESS(gradient_colors, GRADIENT_FACIAL_HAIR_KEY)
-				var/image/facial_hair_gradient_overlay = get_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, GLOB.facial_hair_gradients_list[facial_hair_gradient_style], facial_hair_gradient_color, image_dir)
+				var/image/facial_hair_gradient_overlay = get_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, SSaccessories.facial_hair_gradients_list[facial_hair_gradient_style], facial_hair_gradient_color, image_dir)
 				. += facial_hair_gradient_overlay
 
 	var/image/hair_overlay
 	if(!(show_debrained && (head_flags & HEAD_DEBRAIN)) && !hair_hidden && hairstyle && (head_flags & HEAD_HAIR))
-		var/datum/sprite_accessory/hair/hair_sprite_accessory = GLOB.hairstyles_list[hairstyle]
+		var/datum/sprite_accessory/hair/hair_sprite_accessory = SSaccessories.hairstyles_list[hairstyle]
 		if(hair_sprite_accessory)
 			//Overlay
 			hair_overlay = image(hair_sprite_accessory.icon, hair_sprite_accessory.icon_state, -HAIR_LAYER, image_dir)
@@ -135,7 +120,7 @@
 			var/hair_gradient_style = LAZYACCESS(gradient_styles, GRADIENT_HAIR_KEY)
 			if(hair_gradient_style)
 				var/hair_gradient_color = LAZYACCESS(gradient_colors, GRADIENT_HAIR_KEY)
-				var/image/hair_gradient_overlay = get_gradient_overlay(hair_sprite_accessory.icon, hair_sprite_accessory.icon_state, -HAIR_LAYER, GLOB.hair_gradients_list[hair_gradient_style], hair_gradient_color, image_dir)
+				var/image/hair_gradient_overlay = get_gradient_overlay(hair_sprite_accessory.icon, hair_sprite_accessory.icon_state, -HAIR_LAYER, SSaccessories.hair_gradients_list[hair_gradient_style], hair_gradient_color, image_dir)
 				hair_gradient_overlay.pixel_y = hair_sprite_accessory.y_offset
 				. += hair_gradient_overlay
 

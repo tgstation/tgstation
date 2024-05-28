@@ -7,7 +7,8 @@
 	stop_automated_movement = TRUE
 	wander = FALSE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = null
+	unsuitable_atmos_damage = 0
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST)
 	maxbodytemp = INFINITY
 	minbodytemp = 0
@@ -23,18 +24,16 @@
 	bubble_icon = "machine"
 	speech_span = SPAN_ROBOT
 	faction = list(FACTION_NEUTRAL, FACTION_SILICON, FACTION_TURRET)
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 3
-	light_power = 0.9
+	light_power = 0.6
 	del_on_death = TRUE
+	req_one_access = list(ACCESS_ROBOTICS)
+	interaction_flags_click = ALLOW_SILICON_REACH
 
-	///Will other (noncommissioned) bots salute this bot?
-	var/commissioned = FALSE
 	///Cooldown between salutations for commissioned bots
 	COOLDOWN_DECLARE(next_salute_check)
 
-	///Access required to access this Bot's maintenance protocols
-	var/maints_access_required = list(ACCESS_ROBOTICS)
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/arm/right/robot
 	///The inserted (if any) pAI in this bot.
@@ -50,7 +49,7 @@
 	///Bot-related mode flags on the Bot indicating how they will act. BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
 	var/bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
 
-	///Bot-related cover flags on the Bot to deal with what has been done to their cover, including emagging. BOT_COVER_OPEN | BOT_COVER_LOCKED | BOT_COVER_EMAGGED | BOT_COVER_HACKED
+	///Bot-related cover flags on the Bot to deal with what has been done to their cover, including emagging. BOT_COVER_MAINTS_OPEN | BOT_COVER_LOCKED | BOT_COVER_EMAGGED | BOT_COVER_HACKED
 	var/bot_cover_flags = BOT_COVER_LOCKED
 
 	///Small name of what the bot gets messed with when getting hacked/emagged.
@@ -100,7 +99,7 @@
 	var/datum/atom_hud/data/bot_path/path_hud
 	var/path_image_icon = 'icons/mob/silicon/aibots.dmi'
 	var/path_image_icon_state = "path_indicator"
-	var/path_image_color = "#FFFFFF"
+	var/path_image_color = COLOR_WHITE
 	var/reset_access_timer_id
 	var/ignorelistcleanuptimer = 1 // This ticks up every automated action, at 300 we clean the ignore list
 
@@ -205,6 +204,7 @@
 
 	pa_system = new(src, automated_announcements = automated_announcements)
 	pa_system.Grant(src)
+	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
 
 /mob/living/simple_animal/bot/Destroy()
 	GLOB.bots_list -= src
@@ -285,25 +285,10 @@
 			return
 	fully_replace_character_name(real_name, new_name)
 
-/mob/living/simple_animal/bot/proc/check_access(mob/living/user, obj/item/card/id)
-	if(user.has_unlimited_silicon_privilege || isAdminGhostAI(user)) // Silicon and Admins always have access.
-		return TRUE
-	if(!maints_access_required) // No requirements to access it.
-		return TRUE
+/mob/living/simple_animal/bot/allowed(mob/living/user)
 	if(!(bot_cover_flags & BOT_COVER_LOCKED)) // Unlocked.
 		return TRUE
-	if(!istype(user)) // Non-living mobs shouldn't be manipulating bots (like observes using the botkeeper UI).
-		return FALSE
-
-	var/obj/item/card/id/used_id = id || user.get_idcard(TRUE)
-
-	if(!used_id || !used_id.access)
-		return FALSE
-
-	for(var/requested_access in maints_access_required)
-		if(requested_access in used_id.access)
-			return TRUE
-	return FALSE
+	return ..()
 
 /mob/living/simple_animal/bot/bee_friendly()
 	return TRUE
@@ -327,7 +312,7 @@
 		bot_cover_flags &= ~BOT_COVER_LOCKED
 		balloon_alert(user, "cover unlocked")
 		return TRUE
-	if(!(bot_cover_flags & BOT_COVER_LOCKED) && bot_cover_flags & BOT_COVER_OPEN) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) && bot_cover_flags & BOT_COVER_MAINTS_OPEN) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		bot_cover_flags |= BOT_COVER_EMAGGED
 		bot_cover_flags &= ~BOT_COVER_LOCKED //Manually emagging the bot locks out the panel.
 		bot_mode_flags &= ~BOT_MODE_REMOTE_ENABLED //Manually emagging the bot also locks the AI from controlling it.
@@ -351,16 +336,16 @@
 			. += "[src]'s parts look very loose!"
 	else
 		. += "[src] is in pristine condition."
-	. += span_notice("Its maintenance panel is [bot_cover_flags & BOT_COVER_OPEN ? "open" : "closed"].")
-	. += span_info("You can use a <b>screwdriver</b> to [bot_cover_flags & BOT_COVER_OPEN ? "close" : "open"] it.")
-	if(bot_cover_flags & BOT_COVER_OPEN)
+	. += span_notice("Its maintenance panel is [bot_cover_flags & BOT_COVER_MAINTS_OPEN ? "open" : "closed"].")
+	. += span_info("You can use a <b>screwdriver</b> to [bot_cover_flags & BOT_COVER_MAINTS_OPEN ? "close" : "open"] it.")
+	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		. += span_notice("Its control panel is [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"].")
-		var/is_sillycone = issilicon(user)
+		var/is_sillycone = HAS_SILICON_ACCESS(user)
 		if(!(bot_cover_flags & BOT_COVER_EMAGGED) && (is_sillycone || user.Adjacent(src)))
 			. += span_info("Alt-click [is_sillycone ? "" : "or use your ID on "]it to [bot_cover_flags & BOT_COVER_LOCKED ? "un" : ""]lock its control panel.")
 	if(paicard)
 		. += span_notice("It has a pAI device installed.")
-		if(!(bot_cover_flags & BOT_COVER_OPEN))
+		if(!(bot_cover_flags & BOT_COVER_MAINTS_OPEN))
 			. += span_info("You can use a <b>hemostat</b> to remove it.")
 
 /mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -393,11 +378,11 @@
 	if(!(bot_mode_flags & BOT_MODE_ON) || client)
 		return FALSE
 
-	if(commissioned && COOLDOWN_FINISHED(src, next_salute_check))
+	if(HAS_TRAIT(src, TRAIT_COMMISSIONED) && COOLDOWN_FINISHED(src, next_salute_check))
 		COOLDOWN_START(src, next_salute_check, BOT_COMMISSIONED_SALUTE_DELAY)
 		for(var/mob/living/simple_animal/bot/B in view(5, src))
-			if(!B.commissioned && B.bot_mode_flags & BOT_MODE_ON)
-				visible_message("<b>[B]</b> performs an elaborate salute for [src]!")
+			if(!HAS_TRAIT(B, TRAIT_COMMISSIONED) && B.bot_mode_flags & BOT_MODE_ON)
+				manual_emote("performs an elaborate salute for [src]!")
 				break
 
 	switch(mode) //High-priority overrides are processed first. Bots can do nothing else while under direct command.
@@ -428,22 +413,18 @@
 		ui = new(user, src, "SimpleBot", name)
 		ui.open()
 
-/mob/living/simple_animal/bot/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
+/mob/living/simple_animal/bot/click_alt(mob/user)
 	unlock_with_id(user)
+	return CLICK_ACTION_SUCCESS
 
 /mob/living/simple_animal/bot/proc/unlock_with_id(mob/user)
 	if(bot_cover_flags & BOT_COVER_EMAGGED)
 		to_chat(user, span_danger("ERROR"))
 		return
-	if(bot_cover_flags & BOT_COVER_OPEN)
+	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		to_chat(user, span_warning("Please close the access panel before [bot_cover_flags & BOT_COVER_LOCKED ? "un" : ""]locking it."))
 		return
-	if(!check_access(user))
+	if(!allowed(user))
 		to_chat(user, span_warning("Access denied."))
 		return
 	bot_cover_flags ^= BOT_COVER_LOCKED
@@ -456,8 +437,8 @@
 		return ITEM_INTERACT_SUCCESS
 
 	tool.play_tool_sound(src)
-	bot_cover_flags ^= BOT_COVER_OPEN
-	to_chat(user, span_notice("The maintenance panel is now [bot_cover_flags & BOT_COVER_OPEN ? "opened" : "closed"]."))
+	bot_cover_flags ^= BOT_COVER_MAINTS_OPEN
+	to_chat(user, span_notice("The maintenance panel is now [bot_cover_flags & BOT_COVER_MAINTS_OPEN ? "opened" : "closed"]."))
 	return ITEM_INTERACT_SUCCESS
 
 /mob/living/simple_animal/bot/welder_act(mob/living/user, obj/item/tool)
@@ -468,7 +449,7 @@
 	if(health >= maxHealth)
 		to_chat(user, span_warning("[src] does not need a repair!"))
 		return ITEM_INTERACT_SUCCESS
-	if(!(bot_cover_flags & BOT_COVER_OPEN))
+	if(!(bot_cover_flags & BOT_COVER_MAINTS_OPEN))
 		to_chat(user, span_warning("Unable to repair with the maintenance panel closed!"))
 		return ITEM_INTERACT_SUCCESS
 
@@ -485,7 +466,7 @@
 		insertpai(user, attacking_item)
 		return
 	if(attacking_item.tool_behaviour == TOOL_HEMOSTAT && paicard)
-		if(bot_cover_flags & BOT_COVER_OPEN)
+		if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 			balloon_alert(user, "open the access panel!")
 		else
 			balloon_alert(user, "removing pAI...")
@@ -777,7 +758,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/bot_patrol()
 	patrol_step()
-	addtimer(CALLBACK(src, PROC_REF(do_patrol)), 5)
+	addtimer(CALLBACK(src, PROC_REF(do_patrol)), 0.5 SECONDS)
 
 /mob/living/simple_animal/bot/proc/do_patrol()
 	if(mode == BOT_PATROL)
@@ -831,7 +812,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 		var/moved = bot_move(patrol_target)//step_towards(src, next) // attempt to move
 		if(!moved) //Couldn't proceed the next step of the path BOT_STEP_MAX_RETRIES times
-			addtimer(CALLBACK(src, PROC_REF(patrol_step_not_moved)), 2)
+			addtimer(CALLBACK(src, PROC_REF(patrol_step_not_moved)), 0.2 SECONDS)
 
 	else // no path, so calculate new one
 		mode = BOT_START_PATROL
@@ -962,7 +943,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 		var/moved = bot_move(summon_target, 3) // Move attempt
 		if(!moved)
-			addtimer(CALLBACK(src, PROC_REF(summon_step_not_moved)), 2)
+			addtimer(CALLBACK(src, PROC_REF(summon_step_not_moved)), 0.2 SECONDS)
 
 	else // no path, so calculate new one
 		calc_summon_path()
@@ -971,28 +952,28 @@ Pass a positive integer as an argument to override a bot's default speed.
 	calc_summon_path()
 	tries = 0
 
-/mob/living/simple_animal/bot/Bump(atom/A) //Leave no door unopened!
-	. = ..()
-	if((istype(A, /obj/machinery/door/airlock) || istype(A, /obj/machinery/door/window)) && (!isnull(access_card)))
-		var/obj/machinery/door/D = A
-		if(D.check_access(access_card))
-			D.open()
-			frustration = 0
+/mob/living/simple_animal/bot/proc/attempt_access(mob/bot, obj/door_attempt)
+	SIGNAL_HANDLER
+
+	if(door_attempt.check_access(access_card))
+		frustration = 0
+		return ACCESS_ALLOWED
+	return ACCESS_DISALLOWED
 
 /mob/living/simple_animal/bot/ui_data(mob/user)
 	var/list/data = list()
-	data["can_hack"] = (issilicon(user) || isAdminGhostAI(user))
+	data["can_hack"] = HAS_SILICON_ACCESS(user)
 	data["custom_controls"] = list()
 	data["emagged"] = bot_cover_flags & BOT_COVER_EMAGGED
-	data["has_access"] = check_access(user)
+	data["has_access"] = allowed(user)
 	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
 	data["settings"] = list()
-	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) || HAS_SILICON_ACCESS(user))
 		data["settings"]["pai_inserted"] = !!paicard
 		data["settings"]["allow_possession"] = bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT
 		data["settings"]["possession_enabled"] = can_be_possessed
 		data["settings"]["airplane_mode"] = !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)
-		data["settings"]["maintenance_lock"] = !(bot_cover_flags & BOT_COVER_OPEN)
+		data["settings"]["maintenance_lock"] = !(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		data["settings"]["power"] = bot_mode_flags & BOT_MODE_ON
 		data["settings"]["patrol_station"] = bot_mode_flags & BOT_MODE_AUTOPATROL
 	return data
@@ -1002,7 +983,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	if(.)
 		return
-	if(!check_access(usr))
+	var/mob/user = usr
+	if(!allowed(user))
 		to_chat(usr, span_warning("Access denied."))
 		return
 
@@ -1016,14 +998,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 			else
 				turn_on()
 		if("maintenance")
-			bot_cover_flags ^= BOT_COVER_OPEN
+			bot_cover_flags ^= BOT_COVER_MAINTS_OPEN
 		if("patrol")
 			bot_mode_flags ^= BOT_MODE_AUTOPATROL
 			bot_reset()
 		if("airplane")
 			bot_mode_flags ^= BOT_MODE_REMOTE_ENABLED
 		if("hack")
-			if(!(issilicon(usr) || isAdminGhostAI(usr)))
+			if(!HAS_SILICON_ACCESS(usr))
 				return
 			if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 				bot_cover_flags |= (BOT_COVER_EMAGGED|BOT_COVER_HACKED|BOT_COVER_LOCKED)
@@ -1068,7 +1050,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
 		if(!(bot_cover_flags & BOT_COVER_HACKED)) //Manually emagged by a human - access denied to all.
 			return TRUE
-		else if(!issilicon(user) && !isAdminGhostAI(user)) //Bot is hacked, so only silicons and admins are allowed access.
+		else if(!HAS_SILICON_ACCESS(user)) //Bot is hacked, so only silicons and admins are allowed access.
 			return TRUE
 	return FALSE
 
@@ -1080,7 +1062,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(key)
 		balloon_alert(user, "personality already present!")
 		return
-	if(bot_cover_flags & BOT_COVER_LOCKED || !(bot_cover_flags & BOT_COVER_OPEN))
+	if(bot_cover_flags & BOT_COVER_LOCKED || !(bot_cover_flags & BOT_COVER_MAINTS_OPEN))
 		balloon_alert(user, "slot inaccessible!")
 		return
 	if(!(bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT))
@@ -1137,7 +1119,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /// Ejects the pAI remotely.
 /mob/living/simple_animal/bot/proc/ejectpairemote(mob/user)
-	if(!check_access(user) || !paicard)
+	if(!allowed(user) || !paicard)
 		return
 	speak("Ejecting personality chip.", radio_channel)
 	ejectpai(user)
@@ -1175,7 +1157,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		hud.remove_atom_from_hud(src)
 
 	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
-	QDEL_LIST(path_images)
+	LAZYCLEARLIST(path_images)
 	if(length(newpath))
 		var/mutable_appearance/path_image = new /mutable_appearance()
 		path_image.icon = path_image_icon
@@ -1230,3 +1212,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/rust_heretic_act()
 	adjustBruteLoss(400)
+
+/mob/living/simple_animal/bot/spawn_gibs(drop_bitflags = NONE)
+	new /obj/effect/gibspawner/robot(drop_location(), src)

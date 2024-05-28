@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
@@ -35,7 +36,7 @@ export const AtmosTempPump = (props) => {
                 minValue={0}
                 maxValue={max_heat_transfer_rate}
                 step={1}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('rate', {
                     rate: value,
                   })

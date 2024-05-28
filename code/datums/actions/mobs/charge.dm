@@ -22,9 +22,10 @@
 	var/list/charging = list()
 
 /datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
-	StartCooldown(360 SECONDS, 360 SECONDS)
+	disable_cooldown_actions()
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()
+	enable_cooldown_actions()
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/charge/proc/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
@@ -43,15 +44,15 @@
 
 	if(charger in charging)
 		// Stop any existing charging, this'll clean things up properly
-		SSmove_manager.stop_looping(charger)
+		GLOB.move_manager.stop_looping(charger)
 
 	charging += charger
 	actively_moving = FALSE
 	SEND_SIGNAL(owner, COMSIG_STARTED_CHARGE)
-	RegisterSignal(charger, COMSIG_MOVABLE_BUMP, PROC_REF(on_bump), TRUE)
-	RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move), TRUE)
-	RegisterSignal(charger, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), TRUE)
-	RegisterSignal(charger, COMSIG_LIVING_DEATH, PROC_REF(charge_end))
+	RegisterSignal(charger, COMSIG_MOVABLE_BUMP, PROC_REF(on_bump), override = TRUE)
+	RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move), override = TRUE)
+	RegisterSignal(charger, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), override = TRUE)
+	RegisterSignal(charger, COMSIG_LIVING_DEATH, PROC_REF(charge_end), override = TRUE)
 	charger.setDir(dir)
 	do_charge_indicator(charger, target)
 
@@ -59,12 +60,12 @@
 
 	var/time_to_hit = min(get_dist(charger, target), charge_distance) * charge_speed
 
-	var/datum/move_loop/new_loop = SSmove_manager.home_onto(charger, target, delay = charge_speed, timeout = time_to_hit, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	var/datum/move_loop/new_loop = GLOB.move_manager.home_onto(charger, target, delay = charge_speed, timeout = time_to_hit, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	if(!new_loop)
 		return
-	RegisterSignal(new_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
-	RegisterSignal(new_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move))
-	RegisterSignal(new_loop, COMSIG_QDELETING, PROC_REF(charge_end))
+	RegisterSignal(new_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move), override = TRUE)
+	RegisterSignal(new_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move), override = TRUE)
+	RegisterSignal(new_loop, COMSIG_QDELETING, PROC_REF(charge_end), override = TRUE)
 
 	// Yes this is disgusting. But we need to queue this stuff, and this code just isn't setup to support that right now. So gotta do it with sleeps
 	sleep(time_to_hit + charge_speed)
@@ -95,7 +96,7 @@
 /datum/action/cooldown/mob_cooldown/charge/update_status_on_signal(mob/source, new_stat, old_stat)
 	. = ..()
 	if(new_stat == DEAD)
-		SSmove_manager.stop_looping(source) //This will cause the loop to qdel, triggering an end to our charging
+		GLOB.move_manager.stop_looping(source) //This will cause the loop to qdel, triggering an end to our charging
 
 /datum/action/cooldown/mob_cooldown/charge/proc/do_charge_indicator(atom/charger, atom/charge_target)
 	var/turf/target_turf = get_turf(charge_target)
@@ -103,7 +104,7 @@
 		return
 	new /obj/effect/temp_visual/dragon_swoop/bubblegum(target_turf)
 	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(charger.loc, charger)
-	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
+	animate(D, alpha = 0, color = COLOR_RED, transform = matrix()*2, time = 3)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/on_move(atom/source, atom/new_loc)
 	SIGNAL_HANDLER
@@ -303,8 +304,8 @@
 
 /datum/action/cooldown/mob_cooldown/charge/hallucination_charge/hallucination_surround
 	name = "Surround Target"
-	button_icon = 'icons/turf/walls/wall.dmi'
-	button_icon_state = "wall-0"
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon_state = "expand"
 	desc = "Allows you to create hallucinations that charge around your target."
 	charge_delay = 0.6 SECONDS
 	charge_past = 2

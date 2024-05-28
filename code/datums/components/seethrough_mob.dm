@@ -42,7 +42,7 @@
 	var/datum/action/cooldown/toggle_seethrough/action = new(src)
 	action.Grant(parent)
 
-/datum/component/seethrough_mob/Destroy(force, silent)
+/datum/component/seethrough_mob/Destroy(force)
 	QDEL_NULL(render_source_atom)
 	return ..()
 

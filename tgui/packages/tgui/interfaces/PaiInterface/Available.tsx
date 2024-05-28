@@ -8,6 +8,7 @@ import {
   Table,
   Tooltip,
 } from 'tgui/components';
+
 import { SOFTWARE_DESC } from './constants';
 import { PaiData } from './types';
 
@@ -89,10 +90,10 @@ const ListItem = (props) => {
 
   return (
     <Table.Row className="candystripe">
-      <Table.Cell collapsible>
+      <Table.Cell collapsing>
         <Box color="label">{name}</Box>
       </Table.Cell>
-      <Table.Cell collapsible>
+      <Table.Cell collapsing>
         <Box color={ram < cost && 'bad'} textAlign="right">
           {!purchased && cost}{' '}
           <Icon
@@ -101,7 +102,7 @@ const ListItem = (props) => {
           />
         </Box>
       </Table.Cell>
-      <Table.Cell collapsible>
+      <Table.Cell collapsing>
         <Button
           fluid
           mb={0.5}

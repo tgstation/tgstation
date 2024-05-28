@@ -29,7 +29,7 @@
 	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ATOM_EXAMINE))
 	return ..()
 
-/datum/component/golem_food/Destroy(force, silent)
+/datum/component/golem_food/Destroy(force)
 	QDEL_NULL(golem_snack)
 	snack_type = null
 	extra_validation = null

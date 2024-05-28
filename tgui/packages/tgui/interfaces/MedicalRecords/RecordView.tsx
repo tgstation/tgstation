@@ -1,26 +1,27 @@
-import { NoteKeeper } from './NoteKeeper';
 import {
-  Stack,
-  Section,
-  NoticeBox,
   Box,
-  LabeledList,
   Button,
+  LabeledList,
+  NoticeBox,
   RestrictedInput,
+  Section,
+  Stack,
 } from 'tgui/components';
-import { CharacterPreview } from '../common/CharacterPreview';
-import { getMedicalRecord, getQuirkStrings } from './helpers';
+
 import { useBackend } from '../../backend';
+import { CharacterPreview } from '../common/CharacterPreview';
+import { EditableText } from '../common/EditableText';
 import {
-  PHYSICALSTATUS2COLOR,
-  PHYSICALSTATUS2DESC,
-  PHYSICALSTATUS2ICON,
   MENTALSTATUS2COLOR,
   MENTALSTATUS2DESC,
   MENTALSTATUS2ICON,
+  PHYSICALSTATUS2COLOR,
+  PHYSICALSTATUS2DESC,
+  PHYSICALSTATUS2ICON,
 } from './constants';
+import { getMedicalRecord, getQuirkStrings } from './helpers';
+import { NoteKeeper } from './NoteKeeper';
 import { MedicalRecordData } from './types';
-import { EditableText } from '../common/EditableText';
 
 /** Views a selected record. */
 export const MedicalRecordView = (props) => {
@@ -78,7 +79,6 @@ export const MedicalRecordView = (props) => {
           fill
           scrollable
           title={name}
-          wrap
         >
           <LabeledList>
             <LabeledList.Item label="Name">

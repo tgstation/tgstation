@@ -175,6 +175,11 @@
 
 			var/list/reattach_response = TopicResponse(error_message)
 			reattach_response[DMAPI5_PARAMETER_CUSTOM_COMMANDS] = ListCustomCommands()
+			reattach_response[DMAPI5_PARAMETER_TOPIC_PORT] = GetTopicPort()
+
+			for(var/eventId in pending_events)
+				pending_events[eventId] = TRUE
+
 			return reattach_response
 
 		if(DMAPI5_TOPIC_COMMAND_SEND_CHUNK)
@@ -273,6 +278,15 @@
 				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_BROADCAST_MESSAGE]")
 
 			TGS_WORLD_ANNOUNCE(message)
+			return TopicResponse()
+
+		if(DMAPI5_TOPIC_COMMAND_COMPLETE_EVENT)
+			var/event_id = topic_parameters[DMAPI5_EVENT_ID]
+			if (!istext(event_id))
+				return TopicResponse("Invalid or missing [DMAPI5_EVENT_ID]")
+
+			TGS_DEBUG_LOG("Completing event ID [event_id]...")
+			pending_events[event_id] = TRUE
 			return TopicResponse()
 
 	return TopicResponse("Unknown command: [command]")

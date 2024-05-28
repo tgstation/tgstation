@@ -16,8 +16,10 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	///A list of trait roles that should never be able to roll antag
 	var/list/antag_restricted_roles = list()
 
-/datum/controller/subsystem/processing/station/Initialize()
+	/// Assosciative list of station goal type -> goal instance
+	var/list/datum/station_goal/goals_by_type = list()
 
+/datum/controller/subsystem/processing/station/Initialize()
 	//If doing unit tests we don't do none of that trait shit ya know?
 	// Autowiki also wants consistent outputs, for example making sure the vending machine page always reports the normal products
 	#if !defined(UNIT_TESTS) && !defined(AUTOWIKI)
@@ -29,6 +31,45 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	SSparallax.post_station_setup() //Apply station effects that parallax might have
 
 	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/processing/station/Recover()
+	station_traits = SSstation.station_traits
+	selectable_traits_by_types = SSstation.selectable_traits_by_types
+	announcer = SSstation.announcer
+	antag_protected_roles = SSstation.antag_protected_roles
+	antag_restricted_roles = SSstation.antag_restricted_roles
+	goals_by_type = SSstation.goals_by_type
+	..()
+
+/// This gets called by SSdynamic during initial gamemode setup.
+/// This is done because for a greenshift we want all goals to be generated
+/datum/controller/subsystem/processing/station/proc/generate_station_goals(goal_budget)
+	var/list/possible = subtypesof(/datum/station_goal)
+
+	var/goal_weights = 0
+	var/chosen_goals = list()
+	var/is_planetary = SSmapping.is_planetary()
+	while(possible.len && goal_weights < goal_budget)
+		var/datum/station_goal/picked = pick_n_take(possible)
+		if(picked::requires_space && is_planetary)
+			continue
+
+		goal_weights += initial(picked.weight)
+		chosen_goals += picked
+
+	for(var/chosen in chosen_goals)
+		new chosen()
+
+/// Returns all station goals that are currently active
+/datum/controller/subsystem/processing/station/proc/get_station_goals()
+	var/list/goals = list()
+	for(var/goal_type in goals_by_type)
+		goals += goals_by_type[goal_type]
+	return goals
+
+/// Returns a specific station goal by type
+/datum/controller/subsystem/processing/station/proc/get_station_goal(goal_type)
+	return goals_by_type[goal_type]
 
 ///Rolls for the amount of traits and adds them to the traits list
 /datum/controller/subsystem/processing/station/proc/SetupTraits()
@@ -71,24 +112,47 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_SPACE_BOUND) && !SSmapping.is_planetary()) //we're in space but we can't do space ;_;
 			continue
 
+		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_REQUIRES_AI) && !CONFIG_GET(flag/allow_ai)) //can't have AI traits without AI
+			continue
+
 		selectable_traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
 
-	var/positive_trait_count = pick(20;0, 5;1, 1;2)
-	var/neutral_trait_count = pick(10;0, 10;1, 3;2)
-	var/negative_trait_count = pick(20;0, 5;1, 1;2)
+	var/positive_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/positive_station_traits)))
+	var/neutral_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/neutral_station_traits)))
+	var/negative_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/negative_station_traits)))
 
-	pick_traits(STATION_TRAIT_POSITIVE, positive_trait_count)
-	pick_traits(STATION_TRAIT_NEUTRAL, neutral_trait_count)
-	pick_traits(STATION_TRAIT_NEGATIVE, negative_trait_count)
+#ifdef MAP_TEST
+	positive_trait_budget = 0
+	neutral_trait_budget = 0
+	negative_trait_budget = 0
+#endif
 
-///Picks traits of a specific category (e.g. bad or good) and a specified amount, then initializes them, adds them to the list of traits,
-///then removes them from possible traits as to not roll twice.
-/datum/controller/subsystem/processing/station/proc/pick_traits(trait_sign, amount)
-	if(!amount)
+	pick_traits(STATION_TRAIT_POSITIVE, positive_trait_budget)
+	pick_traits(STATION_TRAIT_NEUTRAL, neutral_trait_budget)
+	pick_traits(STATION_TRAIT_NEGATIVE, negative_trait_budget)
+
+/**
+ * Picks traits of a specific category (e.g. bad or good), initializes them, adds them to the list of traits,
+ * then removes them from possible traits as to not roll twice and subtracts their cost from the budget.
+ * All until the whole budget is spent or no more traits can be picked with it.
+ */
+/datum/controller/subsystem/processing/station/proc/pick_traits(trait_sign, budget)
+	if(!budget)
 		return
-	for(var/iterator in 1 to amount)
-		var/datum/station_trait/trait_type = pick_weight(selectable_traits_by_types[trait_sign]) //Rolls from the table for the specific trait type
-		selectable_traits_by_types[trait_sign] -= trait_type
+	///A list of traits of the same trait sign
+	var/list/selectable_traits = selectable_traits_by_types[trait_sign]
+	while(budget)
+		///Remove any station trait with a cost bigger than the budget
+		for(var/datum/station_trait/proto_trait as anything in selectable_traits)
+			if(initial(proto_trait.cost) > budget)
+				selectable_traits -= proto_trait
+		///We have spare budget but no trait that can be bought with what's left of it
+		if(!length(selectable_traits))
+			return
+		//Rolls from the table for the specific trait type
+		var/datum/station_trait/trait_type = pick_weight(selectable_traits)
+		selectable_traits -= trait_type
+		budget -= initial(trait_type.cost)
 		setup_trait(trait_type)
 
 ///Creates a given trait of a specific type, while also removing any blacklisted ones from the future pool.

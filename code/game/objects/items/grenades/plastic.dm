@@ -12,11 +12,19 @@
 	display_timer = FALSE
 	w_class = WEIGHT_CLASS_SMALL
 	gender = PLURAL
+	/// What the charge is stuck to
 	var/atom/target = null
+	/// C4 overlay to put on target
 	var/mutable_appearance/plastic_overlay
+	/// Do we do a directional explosion when target is a a dense atom?
 	var/directional = FALSE
+	/// When doing a directional explosion, what arc does the explosion cover
+	var/directional_arc = 120
+	/// For directional charges, which cardinal direction is the charge facing?
 	var/aim_dir = NORTH
+	/// List of explosion radii (DEV, HEAVY, LIGHT)
 	var/boom_sizes = list(0, 0, 3)
+	/// Do we apply the full force of a heavy ex_act() to mob targets
 	var/full_damage_on_mobs = FALSE
 	/// Minimum timer for c4 charges
 	var/minimum_timer = 10
@@ -68,18 +76,20 @@
 
 	. = ..()
 	var/turf/location
+	var/target_density
 	if(target)
 		if(!QDELETED(target))
 			location = get_turf(target)
+			target_density = target.density // We're about to blow target up, so need to save this value for later
 			target.cut_overlay(plastic_overlay, TRUE)
 			if(!ismob(target) || full_damage_on_mobs)
 				EX_ACT(target, EXPLODE_HEAVY, target)
 	else
 		location = get_turf(src)
 	if(location)
-		if(directional && target?.density)
-			var/turf/turf = get_step(location, aim_dir)
-			explosion(get_step(turf, aim_dir), devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3], explosion_cause = src)
+		if(directional && target_density)
+			var/angle = dir2angle(aim_dir)
+			explosion(location, devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3], explosion_cause = src, explosion_direction = angle, explosion_arc = directional_arc)
 		else
 			explosion(location, devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3], explosion_cause = src)
 	qdel(src)
@@ -111,7 +121,7 @@
 
 	to_chat(user, span_notice("You start planting [src]. The timer is set to [det_time]..."))
 
-	if(do_after(user, 30, target = bomb_target))
+	if(do_after(user, 3 SECONDS, target = bomb_target))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return .
 		target = bomb_target
@@ -119,10 +129,14 @@
 
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_VERBOSEJMP(target)] with [det_time] second fuse")
 		user.log_message("planted [name] on [target.name] with a [det_time] second fuse.", LOG_ATTACK)
+		var/icon/target_icon = icon(bomb_target.icon, bomb_target.icon_state)
+		target_icon.Blend(icon(icon, icon_state), ICON_OVERLAY)
+		var/mutable_appearance/bomb_target_image = mutable_appearance(target_icon)
 		notify_ghosts(
 			"[user] has planted \a [src] on [target] with a [det_time] second fuse!",
 			source = bomb_target,
 			header = "Explosive Planted",
+			alert_overlay = bomb_target_image,
 			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		)
 

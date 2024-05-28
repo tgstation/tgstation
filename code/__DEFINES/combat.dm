@@ -274,7 +274,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 #define GRENADE_CLUMSY_FUMBLE 1
 #define GRENADE_NONCLUMSY_FUMBLE 2
-#define GRENADE_NO_FUMBLE 3
 
 #define BODY_ZONE_HEAD "head"
 #define BODY_ZONE_CHEST "chest"
@@ -283,6 +282,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BODY_ZONE_L_LEG "l_leg"
 #define BODY_ZONE_R_LEG "r_leg"
 
+GLOBAL_LIST_INIT(all_body_zones, list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
+GLOBAL_LIST_INIT(limb_zones, list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 
 #define BODY_ZONE_PRECISE_EYES "eyes"
@@ -338,13 +339,13 @@ GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 	#define COMPONENT_AUTOFIRE_SHOT_SUCCESS (1<<0)
 
 /// Martial arts attack requested but is not available, allow a check for a regular attack.
-#define MARTIAL_ATTACK_INVALID -1
+#define MARTIAL_ATTACK_INVALID NONE
 
 /// Martial arts attack happened but failed, do not allow a check for a regular attack.
-#define MARTIAL_ATTACK_FAIL FALSE
+#define MARTIAL_ATTACK_FAIL COMPONENT_SKIP_ATTACK
 
 /// Martial arts attack happened and succeeded, do not allow a check for a regular attack.
-#define MARTIAL_ATTACK_SUCCESS TRUE
+#define MARTIAL_ATTACK_SUCCESS COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// IF an object is weak against armor, this is the value that any present armor is multiplied by
 #define ARMOR_WEAKENED_MULTIPLIER 2
@@ -370,3 +371,28 @@ GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 #define COMBO_STEPS "steps"
 /// The proc the combo calls
 #define COMBO_PROC "proc"
+
+///Checks If the target can be moved at all by shoving them
+#define SHOVE_CAN_MOVE (1<<0)
+///If the target can be shoved into something something with perhaps special interactions.
+#define SHOVE_CAN_HIT_SOMETHING (1<<1)
+///Keeps knockdowns at bay for the target
+#define SHOVE_KNOCKDOWN_BLOCKED (1<<2)
+///If the target can be briefly paralized by shoving them once again after knocking them down.
+#define SHOVE_CAN_KICK_SIDE (1<<3)
+///Whether the staggered status effect can be applied on the target
+#define SHOVE_CAN_STAGGER (1<<4)
+///If the target could move, but didn't because there's an obstacle in the path.
+#define SHOVE_BLOCKED (1<<5)
+///If the obstacle is an object at the border of the turf (so no signal from being sent to the other turf)
+#define SHOVE_DIRECTIONAL_BLOCKED (1<<6)
+
+///Deathmatch lobby current status
+#define DEATHMATCH_NOT_PLAYING 0
+#define DEATHMATCH_PRE_PLAYING 1
+#define DEATHMATCH_PLAYING 2
+
+/// The amount of energy needed to increase the burn force by 1 damage during electrocution.
+#define JOULES_PER_DAMAGE (25 KILO JOULES)
+/// Calculates the amount of burn force when applying this much energy to a mob via electrocution from an energy source.
+#define ELECTROCUTE_DAMAGE(energy) (energy >= 1 KILO JOULES ? clamp(20 + round(energy / JOULES_PER_DAMAGE), 20, 195) + rand(-5,5) : 0)

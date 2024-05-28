@@ -1,15 +1,17 @@
-import { useBackend, useLocalState } from '../backend';
-import { BooleanLike } from 'common/react';
-import {
-  Stack,
-  Section,
-  LabeledList,
-  ProgressBar,
-  Button,
-  NoticeBox,
-  Dropdown,
-} from '../components';
 import { toFixed } from 'common/math';
+import { BooleanLike } from 'common/react';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import {
+  Button,
+  Dropdown,
+  LabeledList,
+  NoticeBox,
+  ProgressBar,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -61,10 +63,7 @@ export const TramController = (props) => {
     destinations = [],
   } = data;
 
-  const [tripDestination, setTripDestination] = useLocalState(
-    'TramDestination',
-    '',
-  );
+  const [tripDestination, setTripDestination] = useState('');
 
   return (
     <Window title="Tram Controller" width={778} height={327} theme="dark">
@@ -194,7 +193,7 @@ export const TramController = (props) => {
                 width="98.5%"
                 options={destinations.map((id) => id.name)}
                 selected={tripDestination}
-                displayText={tripDestination || 'Pick a Destination'}
+                placeholder="Pick a Destination"
                 onSelected={(value) => setTripDestination(value)}
               />
               <Button

@@ -10,30 +10,25 @@
 	module_type = MODULE_TOGGLE
 	complexity = 4
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/stealth)
 	cooldown_time = 5 SECONDS
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// Whether or not the cloak turns off on bumping.
 	var/bumpoff = TRUE
 	/// The alpha applied when the cloak is on.
 	var/stealth_alpha = 50
 
 /obj/item/mod/module/stealth/on_activation()
-	. = ..()
-	if(!.)
-		return
 	if(bumpoff)
 		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, PROC_REF(unstealth))
 	RegisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
 	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
 	RegisterSignals(mod.wearer, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), PROC_REF(unstealth))
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/item/mod/module/stealth/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	if(bumpoff)
 		UnregisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP)
 	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
@@ -44,8 +39,8 @@
 
 	to_chat(mod.wearer, span_warning("[src] gets discharged from contact!"))
 	do_sparks(2, TRUE, src)
-	drain_power(use_power_cost)
-	on_deactivation(display_message = TRUE, deleting = FALSE)
+	drain_power(use_energy_cost)
+	deactivate()
 
 /obj/item/mod/module/stealth/proc/on_unarmed_attack(datum/source, atom/target)
 	SIGNAL_HANDLER
@@ -73,7 +68,7 @@
 	bumpoff = FALSE
 	stealth_alpha = 20
 	active_power_cost = DEFAULT_CHARGE_DRAIN
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	cooldown_time = 3 SECONDS
 
 /obj/item/mod/module/stealth/ninja/on_activation()
@@ -99,6 +94,7 @@
 	removable = FALSE
 	complexity = 0
 	overlay_state_inactive = null
+	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 
 /obj/item/mod/module/welding/camera_vision/on_suit_activation()
 	. = ..()
@@ -133,10 +129,7 @@
 	icon_state = "hacker"
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/hacker)
-	/// Minimum amount of power we can drain in a single drain action
-	var/mindrain = 200
-	/// Maximum amount of power we can drain in a single drain action
-	var/maxdrain = 400
+	required_slots = list(ITEM_SLOT_GLOVES)
 	/// Whether or not the communication console hack was used to summon another antagonist.
 	var/communication_console_hack_success = FALSE
 	/// How many times the module has been used to force open doors.
@@ -174,9 +167,10 @@
 	icon_state = "recall"
 	removable = FALSE
 	module_type = MODULE_USABLE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/weapon_recall)
 	cooldown_time = 0.5 SECONDS
+	required_slots = list(ITEM_SLOT_GLOVES, ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// The item linked to the module that will get recalled.
 	var/obj/item/linked_weapon
 	/// The accepted typepath we can link to.
@@ -189,9 +183,6 @@
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOGUNS, MOD_TRAIT)
 
 /obj/item/mod/module/weapon_recall/on_use()
-	. = ..()
-	if(!.)
-		return
 	if(!linked_weapon)
 		var/obj/item/weapon_to_link = mod.wearer.is_holding_item_of_type(accepted_type)
 		if(!weapon_to_link)
@@ -205,7 +196,7 @@
 		return
 	var/distance = get_dist(mod.wearer, linked_weapon)
 	var/in_view = (linked_weapon in view(mod.wearer))
-	if(!in_view && !drain_power(use_power_cost * distance))
+	if(!in_view && !drain_power(use_energy_cost * distance))
 		balloon_alert(mod.wearer, "not enough charge!")
 		return
 	linked_weapon.forceMove(linked_weapon.drop_location())
@@ -263,7 +254,7 @@
 		Due to utilizing a skintight dampening shield, this one is entirely sealed against electromagnetic interference; \
 		it also dutifully protects the secrets of the Spider Clan from unknowing outsiders."
 	icon_state = "dnalock_ninja"
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.5
 
 /obj/item/mod/module/dna_lock/reinforced/on_mod_activation(datum/source, mob/user)
 	. = ..()
@@ -288,16 +279,13 @@
 		it will piss off everyone around them."
 	icon_state = "emp_pulse"
 	module_type = MODULE_USABLE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 10
 	cooldown_time = 8 SECONDS
 
 /obj/item/mod/module/emp_shield/pulse/on_use()
-	. = ..()
-	if(!.)
-		return
 	playsound(src, 'sound/effects/empulse.ogg', 60, TRUE)
 	empulse(src, heavy_range = 4, light_range = 6)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /// Ninja Status Readout - Like the normal status display (see the base type), but with a clock.
 /obj/item/mod/module/status_readout/ninja
@@ -321,9 +309,10 @@
 	icon_state = "energy_net"
 	removable = FALSE
 	module_type = MODULE_ACTIVE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 6
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 6
 	incompatible_modules = list(/obj/item/mod/module/energy_net)
 	cooldown_time = 5 SECONDS
+	required_slots = list(ITEM_SLOT_GLOVES)
 	/// List of all energy nets this module made.
 	var/list/energy_nets = list()
 
@@ -342,7 +331,7 @@
 	net.firer = mod.wearer
 	playsound(src, 'sound/weapons/punchmiss.ogg', 25, TRUE)
 	INVOKE_ASYNC(net, TYPE_PROC_REF(/obj/projectile, fire))
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/item/mod/module/energy_net/proc/add_net(obj/structure/energy_net/net)
 	energy_nets += net
@@ -408,6 +397,7 @@
 	allow_flags = MODULE_ALLOW_INCAPACITATED
 	incompatible_modules = list(/obj/item/mod/module/adrenaline_boost)
 	cooldown_time = 12 SECONDS
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// What reagent we need to refill?
 	var/reagent_required = /datum/reagent/uranium/radium
 	/// How much of a reagent we need to refill the boost.
@@ -418,13 +408,13 @@
 	create_reagents(reagent_required_amount)
 	reagents.add_reagent(reagent_required, reagent_required_amount)
 
-/obj/item/mod/module/adrenaline_boost/on_use()
+/obj/item/mod/module/adrenaline_boost/used()
 	if(!reagents.has_reagent(reagent_required, reagent_required_amount))
 		balloon_alert(mod.wearer, "no charge!")
-		return
-	. = ..()
-	if(!.)
-		return
+		return FALSE
+	return ..()
+
+/obj/item/mod/module/adrenaline_boost/on_use()
 	if(IS_SPACE_NINJA(mod.wearer))
 		mod.wearer.say(pick_list_replacements(NINJA_FILE, "lines"), forced = type)
 	to_chat(mod.wearer, span_notice("You have used the adrenaline boost."))
@@ -442,7 +432,7 @@
 /obj/item/mod/module/adrenaline_boost/on_install()
 	RegisterSignal(mod, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 
-/obj/item/mod/module/adrenaline_boost/on_uninstall(deleting)
+/obj/item/mod/module/adrenaline_boost/on_uninstall(deleting = FALSE)
 	UnregisterSignal(mod, COMSIG_ATOM_ATTACKBY)
 
 /obj/item/mod/module/adrenaline_boost/attackby(obj/item/attacking_item, mob/user, params)

@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
@@ -43,7 +44,7 @@ export const AtmosMixer = (props) => {
                 minValue={0}
                 maxValue={max_pressure}
                 step={10}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('pressure', {
                     pressure: value,
                   })
@@ -65,12 +66,13 @@ export const AtmosMixer = (props) => {
               <NumberInput
                 animated
                 value={node1_concentration}
+                step={1}
                 unit="%"
                 width="60px"
                 minValue={0}
                 maxValue={100}
                 stepPixelSize={2}
-                onDrag={(e, value) =>
+                onDrag={(value) =>
                   act('node1', {
                     concentration: value,
                   })
@@ -81,12 +83,13 @@ export const AtmosMixer = (props) => {
               <NumberInput
                 animated
                 value={node2_concentration}
+                step={1}
                 unit="%"
                 width="60px"
                 minValue={0}
                 maxValue={100}
                 stepPixelSize={2}
-                onDrag={(e, value) =>
+                onDrag={(value) =>
                   act('node2', {
                     concentration: value,
                   })

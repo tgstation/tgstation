@@ -9,12 +9,14 @@
 	desc = "A little fire extinguishing bot. He looks rather anxious."
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "firebot1"
+	light_color = "#8cffc9"
+	light_power = 0.8
 	density = FALSE
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
 
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
+	req_one_access = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FIRE_BOT
@@ -77,7 +79,7 @@
 /mob/living/simple_animal/bot/firebot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+	if(!can_unarmed_attack())
 		return
 	if(internal_ext)
 		internal_ext.afterattack(A, src)
@@ -140,7 +142,7 @@
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/firebot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) || HAS_SILICON_ACCESS(user))
 		data["custom_controls"]["extinguish_fires"] = extinguish_fires
 		data["custom_controls"]["extinguish_people"] = extinguish_people
 		data["custom_controls"]["stationary_mode"] = stationary_mode
@@ -149,7 +151,7 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/firebot/ui_act(action, params)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
 		return
 
 	switch(action)
@@ -316,4 +318,3 @@
 #undef SPEECH_INTERVAL
 #undef DETECTED_VOICE_INTERVAL
 #undef FOAM_INTERVAL
-

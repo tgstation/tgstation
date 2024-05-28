@@ -1,9 +1,6 @@
 /// Multiplier applied on construction & deconstruction time when building multiple structures
 #define FREQUENT_USE_DEBUFF_MULTIPLIER 3
 
-/// Delay before another rcd scan can be performed in the UI
-#define RCD_DESTRUCTIVE_SCAN_COOLDOWN (RCD_HOLOGRAM_FADE_TIME + 1 SECONDS)
-
 //RAPID CONSTRUCTION DEVICE
 
 /obj/item/construction/rcd
@@ -33,8 +30,8 @@
 	/// The path of the structure the rcd is currently creating
 	var/atom/movable/rcd_design_path
 
-	/// owner of this rcd. It can either be an construction console or an player
-	var/owner
+	/// Owner of this rcd. It can either be a construction console, player, or mech.
+	var/atom/owner
 	/// used by arcd, can this rcd work from a range
 	var/ranged = FALSE
 	/// delay multiplier for all construction types
@@ -206,6 +203,11 @@
  * * [mob][user]- the user building this structure
  */
 /obj/item/construction/rcd/proc/rcd_create(atom/target, mob/user)
+	//straight up cant touch this
+	if(mode == RCD_DECONSTRUCT && (target.resistance_flags & INDESTRUCTIBLE))
+		balloon_alert(user, "too durable!")
+		return
+
 	//does this atom allow for rcd actions?
 	var/list/rcd_results = target.rcd_vals(user, src)
 	if(!rcd_results)
@@ -222,7 +224,14 @@
 		delay *= FREQUENT_USE_DEBUFF_MULTIPLIER
 
 	current_active_effects += 1
-	_rcd_create_effect(target, user, delay, rcd_results)
+
+	var/target_name = target.name //Store this information before it gets mutated by the rcd.
+	var/target_path = target.type
+	var/atom/design_path = rcd_results["[RCD_DESIGN_PATH]"]
+	var/location = AREACOORD(target)
+	if(_rcd_create_effect(target, user, delay, rcd_results))
+		log_tool("[key_name(user)] used [src] to [rcd_results["[RCD_DESIGN_MODE]"] != RCD_DECONSTRUCT ? "construct [initial(design_path.name)]([design_path])" : "deconstruct [target_name]([target_path])"] at [location]")
+
 	current_active_effects -= 1
 
 /**
@@ -243,8 +252,9 @@
 		return FALSE
 	var/beam
 	if(ranged)
-		beam = user.Beam(target, icon_state = "rped_upgrade", time = delay)
-	if(!do_after(user, delay, target = target))
+		var/atom/beam_source = owner ? owner : user
+		beam = beam_source.Beam(target, icon_state = "rped_upgrade", time = delay)
+	if(delay && !do_after(user, delay, target = target)) // no need for do_after with no delay
 		qdel(rcd_effect)
 		if(!isnull(beam))
 			qdel(beam)
@@ -408,7 +418,7 @@
 		buzz loudly!</b></span>","<span class='danger'><b>[src] begins \
 		vibrating violently!</b></span>")
 	// 5 seconds to get rid of it
-	addtimer(CALLBACK(src, PROC_REF(detonate_pulse_explode)), 50)
+	addtimer(CALLBACK(src, PROC_REF(detonate_pulse_explode)), 5 SECONDS)
 
 /obj/item/construction/rcd/proc/detonate_pulse_explode()
 	explosion(src, light_impact_range = 3, flame_range = 1, flash_range = 1)
@@ -417,7 +427,8 @@
 /obj/item/construction/rcd/borg
 	desc = "A device used to rapidly build walls and floors."
 	banned_upgrades = RCD_UPGRADE_SILO_LINK
-	var/energyfactor = 72
+	/// enery usage
+	var/energyfactor = 0.072 * STANDARD_CELL_CHARGE
 
 /obj/item/construction/rcd/borg/get_matter(mob/user)
 	if(!iscyborg(user))
@@ -459,7 +470,7 @@
 	desc = "A reverse-engineered RCD with black market upgrades that allow this device to deconstruct reinforced walls. Property of Donk Co."
 	icon_state = "ircd"
 	inhand_icon_state = "ircd"
-	energyfactor = 66
+	energyfactor = 0.066 * STANDARD_CELL_CHARGE
 	canRturf = TRUE
 
 /obj/item/construction/rcd/loaded
@@ -510,8 +521,58 @@
 	has_ammobar = FALSE
 	upgrade = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
 
+///How much charge is used up for each matter unit.
+#define MASS_TO_ENERGY (0.016 * STANDARD_CELL_CHARGE)
+
+/obj/item/construction/rcd/exosuit
+	name = "mounted RCD"
+	desc = "An exosuit-mounted Rapid Construction Device."
+	max_matter = INFINITY // mass-energy equivalence go brrrrrr
+	canRturf = TRUE
+	ranged = TRUE
+	has_ammobar = FALSE
+	resistance_flags = FIRE_PROOF | INDESTRUCTIBLE // should NOT be destroyed unless the equipment is destroyed
+	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON | DROPDEL // already qdeleted in the equipment's Destroy() but you can never be too sure
+	delay_mod = 0.5
+
+/obj/item/construction/rcd/exosuit/ui_status(mob/user, datum/ui_state/state)
+	if(ismecha(owner))
+		return owner.ui_status(user)
+	return UI_CLOSE
+
+/obj/item/construction/rcd/exosuit/get_matter(mob/user)
+	if(silo_link)
+		return ..()
+	if(!ismecha(owner))
+		return 0
+	var/obj/vehicle/sealed/mecha/gundam = owner
+	return round(gundam.get_charge() / MASS_TO_ENERGY)
+
+/obj/item/construction/rcd/exosuit/useResource(amount, mob/user)
+	if(silo_link)
+		return ..()
+	if(!ismecha(owner))
+		return 0
+	var/obj/vehicle/sealed/mecha/gundam = owner
+	if(!gundam.use_energy(amount * MASS_TO_ENERGY))
+		gundam.balloon_alert(user, "insufficient charge!")
+		return FALSE
+	return TRUE
+
+/obj/item/construction/rcd/exosuit/checkResource(amount, mob/user)
+	if(silo_link)
+		return ..()
+	if(!ismecha(owner))
+		return 0
+	var/obj/vehicle/sealed/mecha/gundam = owner
+	if(!gundam.has_charge(amount * MASS_TO_ENERGY))
+		gundam.balloon_alert(user, "insufficient charge!")
+		return FALSE
+	return TRUE
+
+#undef MASS_TO_ENERGY
+
 #undef FREQUENT_USE_DEBUFF_MULTIPLIER
-#undef RCD_DESTRUCTIVE_SCAN_COOLDOWN
 
 /obj/item/rcd_ammo
 	name = "RCD matter cartridge"

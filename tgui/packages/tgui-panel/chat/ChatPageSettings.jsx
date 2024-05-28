@@ -13,7 +13,14 @@ import {
   Section,
   Stack,
 } from 'tgui/components';
-import { removeChatPage, toggleAcceptedType, updateChatPage } from './actions';
+
+import {
+  moveChatPageLeft,
+  moveChatPageRight,
+  removeChatPage,
+  toggleAcceptedType,
+  updateChatPage,
+} from './actions';
 import { MESSAGE_TYPES } from './constants';
 import { selectCurrentChatPage } from './selectors';
 
@@ -23,9 +30,9 @@ export const ChatPageSettings = (props) => {
   return (
     <Section>
       <Stack align="center">
-        <Stack.Item grow={1}>
+        <Stack.Item grow>
           <Input
-            fluid
+            width="100%"
             value={page.name}
             onChange={(e, value) =>
               dispatch(
@@ -38,20 +45,74 @@ export const ChatPageSettings = (props) => {
           />
         </Stack.Item>
         <Stack.Item>
-          <Button
-            icon="times"
-            color="red"
+          <Button.Checkbox
+            content="Mute"
+            checked={page.hideUnreadCount}
+            icon={page.hideUnreadCount ? 'bell-slash' : 'bell'}
+            tooltip="Disables unread counter"
             onClick={() =>
               dispatch(
-                removeChatPage({
+                updateChatPage({
                   pageId: page.id,
+                  hideUnreadCount: !page.hideUnreadCount,
                 }),
               )
             }
-          >
-            Remove
-          </Button>
+          />
         </Stack.Item>
+        {!page.isMain ? (
+          <Stack.Item>
+            <Button
+              icon="times"
+              color="red"
+              onClick={() =>
+                dispatch(
+                  removeChatPage({
+                    pageId: page.id,
+                  }),
+                )
+              }
+            >
+              Remove
+            </Button>
+          </Stack.Item>
+        ) : (
+          ''
+        )}
+      </Stack>
+      <Divider />
+      <Stack align="center">
+        {!page.isMain ? (
+          <Stack.Item>
+            Reorder Chat:&emsp;
+            <Button
+              color="blue"
+              onClick={() =>
+                dispatch(
+                  moveChatPageLeft({
+                    pageId: page.id,
+                  }),
+                )
+              }
+            >
+              &laquo;
+            </Button>
+            <Button
+              color="blue"
+              onClick={() =>
+                dispatch(
+                  moveChatPageRight({
+                    pageId: page.id,
+                  }),
+                )
+              }
+            >
+              &raquo;
+            </Button>
+          </Stack.Item>
+        ) : (
+          ''
+        )}
       </Stack>
       <Divider />
       <Section title="Messages to display" level={2}>

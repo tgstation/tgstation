@@ -1,6 +1,6 @@
 /obj/item/modular_computer/pda
 	name = "pda"
-	icon = 'icons/obj/modular_pda.dmi'
+	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "pda"
 	worn_icon_state = "nothing"
 	base_icon_state = "tablet"
@@ -13,7 +13,7 @@
 
 	steel_sheet_cost = 2
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT, /datum/material/plastic=SMALL_MATERIAL_AMOUNT)
-	interaction_flags_atom = INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 
 	icon_state_menu = "menu"
 	max_capacity = 64
@@ -25,6 +25,8 @@
 	has_light = TRUE //LED flashlight!
 	comp_light_luminosity = 2.3 //this is what old PDAs were set to
 	looping_sound = FALSE
+
+	shell_capacity = SHELL_CAPACITY_SMALL
 
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
@@ -155,12 +157,6 @@
 	inserted_item = attacking_item
 	playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
-/obj/item/modular_computer/pda/AltClick(mob/user)
-	. = ..()
-	if(.)
-		return
-
-	remove_pen(user)
 
 /obj/item/modular_computer/pda/CtrlClick(mob/user)
 	. = ..()
@@ -283,6 +279,7 @@
 
 	starting_programs = list(
 		/datum/computer_file/program/contract_uplink,
+		/datum/computer_file/program/secureye/syndicate,
 	)
 
 /**
@@ -331,6 +328,10 @@
 	silicon_owner = null
 	return ..()
 
+///Silicons don't have the tools (or hands) to make circuits setups with their own PDAs.
+/obj/item/modular_computer/pda/silicon/add_shell_component(capacity)
+	return
+
 /obj/item/modular_computer/pda/silicon/turn_on(mob/user, open_ui = FALSE)
 	if(silicon_owner?.stat != DEAD)
 		return ..()
@@ -375,7 +376,7 @@
 		return robotact
 	qdel(robotact)
 	robotact = null
-	CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
+	CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected receiving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
 
 //Makes the light settings reflect the borg's headlamp settings
 /obj/item/modular_computer/pda/silicon/cyborg/ui_data(mob/user)

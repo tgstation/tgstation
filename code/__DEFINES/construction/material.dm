@@ -15,8 +15,8 @@
 #define MAXCOIL 30
 
 //Category of materials
-/// Is the material from an ore? currently unused but exists atm for categorizations sake
-#define MAT_CATEGORY_ORE "ore capable"
+/// Can this material be stored in the ore silo
+#define MAT_CATEGORY_SILO "silo capable"
 /// Hard materials, such as iron or silver
 #define MAT_CATEGORY_RIGID "rigid material"
 /// Materials that can be used to craft items
@@ -39,26 +39,6 @@
 #define MATCONTAINER_ANY_INTENT (1<<2)
 ///If the user won't receive a warning when attacking the container with an unallowed item.
 #define MATCONTAINER_SILENT (1<<3)
-
-// The following flags are for decomposing alloys. Should be expanded upon and diversified once someone gets around to reworking recycling.
-/// Can reduce an alloy into its component materials.
-#define BREAKDOWN_ALLOYS (1<<4)
-/// Makes the material composition include transmuted materials objects
-#define BREAKDOWN_INCLUDE_ALCHEMY (1<<5)
-/// Breakdown flags used by techfabs and circuit printers.
-#define BREAKDOWN_FLAGS_LATHE (BREAKDOWN_ALLOYS)
-/// Breakdown flags used by the ORM.
-#define BREAKDOWN_FLAGS_ORM (BREAKDOWN_ALLOYS)
-/// Breakdown flags used by the recycler.
-#define BREAKDOWN_FLAGS_RECYCLER (BREAKDOWN_ALLOYS)
-/// Breakdown flags used by the sheetifier.
-#define BREAKDOWN_FLAGS_SHEETIFIER (BREAKDOWN_ALLOYS)
-/// Breakdown flags used by the ore processor.
-#define BREAKDOWN_FLAGS_ORE_PROCESSOR (BREAKDOWN_ALLOYS)
-/// Breakdown flags used by the drone dispenser.
-#define BREAKDOWN_FLAGS_DRONE_DISPENSER (BREAKDOWN_ALLOYS)
-/// Breakdown flags used when exporting materials.
-#define BREAKDOWN_FLAGS_EXPORT (NONE)
 
 /// Whether a material's mechanical effects should apply to the atom. This is necessary for other flags to work.
 #define MATERIAL_EFFECTS (1<<0)
@@ -88,10 +68,22 @@
 
 //Stock market stock values.
 /// How much quantity of a material stock exists for common materials like iron & glass.
-#define MATERIAL_QUANTITY_COMMON 25000
+#define MATERIAL_QUANTITY_COMMON 5000
 /// How much quantity of a material stock exists for uncommon materials like silver & titanium.
-#define MATERIAL_QUANTITY_UNCOMMON 10000
+#define MATERIAL_QUANTITY_UNCOMMON 1000
 /// How much quantity of a material stock exists for rare materials like gold, uranium, & diamond.
-#define MATERIAL_QUANTITY_RARE 2500
+#define MATERIAL_QUANTITY_RARE 200
 /// How much quantity of a material stock exists for exotic materials like diamond & bluespace crystals.
-#define MATERIAL_QUANTITY_EXOTIC 500
+#define MATERIAL_QUANTITY_EXOTIC 50
+
+// The number of ore vents that will spawn boulders with this material.
+/// Is this material going to spawn often in ore vents? (80% of vents on lavaland)
+#define MATERIAL_RARITY_COMMON 12
+/// Is this material going to spawn often in ore vents? (53% of vents on lavaland)
+#define MATERIAL_RARITY_SEMIPRECIOUS 8
+/// Is this material going to spawn uncommonly in ore vents? (33% of vents on lavaland)
+#define MATERIAL_RARITY_PRECIOUS 5
+/// Is this material going to spawn rarely in ore vents? (20% of vents on lavaland)
+#define MATERIAL_RARITY_RARE 3
+/// Is this material only going to spawn once in ore vents? (6% of vents on lavaland)
+#define MATERIAL_RARITY_UNDISCOVERED 1

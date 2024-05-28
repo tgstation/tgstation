@@ -1,19 +1,20 @@
 import { BooleanLike } from 'common/react';
 import { classes } from 'common/react';
+
 import { useBackend, useLocalState } from '../backend';
-import { Window } from '../layouts';
 import {
   Box,
-  Section,
-  NumberInput,
-  Table,
-  Tabs,
+  Button,
   LabeledList,
   NoticeBox,
-  Button,
+  NumberInput,
   ProgressBar,
+  Section,
   Stack,
+  Table,
+  Tabs,
 } from '../components';
+import { Window } from '../layouts';
 
 type BiogeneratorData = {
   processing: BooleanLike;
@@ -219,10 +220,11 @@ const ItemList = (props) => {
       <Table.Cell collapsing>
         <NumberInput
           value={item.amount}
+          step={1}
           width="35px"
           minValue={1}
           maxValue={item.max_amount}
-          onChange={(e, value) => item.setAmount(value)}
+          onChange={(value) => item.setAmount(value)}
         />
       </Table.Cell>
       <Table.Cell collapsing>

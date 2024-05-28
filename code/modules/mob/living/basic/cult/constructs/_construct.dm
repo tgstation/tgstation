@@ -12,6 +12,7 @@
 	pressure_resistance = 100
 	speed = 0
 	unique_name = TRUE
+	can_buckle_to = FALSE
 	initial_language_holder = /datum/language_holder/construct
 	death_message = "collapses in a shattered heap."
 

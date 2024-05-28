@@ -1,15 +1,13 @@
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import { Box, Flex, Icon, Table, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 export const Achievements = (props) => {
   const { data } = useBackend();
   const { categories } = data;
-  const [selectedCategory, setSelectedCategory] = useLocalState(
-    'category',
-    categories[0],
-  );
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const achievements = data.achievements.filter(
     (x) => x.category === selectedCategory,
   );

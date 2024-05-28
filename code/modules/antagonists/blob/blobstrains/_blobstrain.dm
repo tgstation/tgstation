@@ -145,7 +145,9 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 /datum/blobstrain/proc/attack_living(mob/living/L, list/nearby_blobs) // When the blob attacks people
 	send_message(L)
 
-/datum/blobstrain/proc/blobbernaut_attack(mob/living/L, blobbernaut) // When this blob's blobbernaut attacks people
+/// When this blob's blobbernaut attacks any atom
+/datum/blobstrain/proc/blobbernaut_attack(atom/attacking, mob/living/basic/blobbernaut)
+	return
 
 /datum/blobstrain/proc/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag, coefficient = 1) //when the blob takes damage, do this
 	return coefficient*damage

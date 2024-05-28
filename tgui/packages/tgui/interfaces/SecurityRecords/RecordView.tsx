@@ -9,12 +9,13 @@ import {
   Stack,
   Table,
 } from 'tgui/components';
+
 import { CharacterPreview } from '../common/CharacterPreview';
 import { EditableText } from '../common/EditableText';
-import { CrimeWatcher } from './CrimeWatcher';
-import { RecordPrint } from './RecordPrint';
 import { CRIMESTATUS2COLOR, CRIMESTATUS2DESC } from './constants';
+import { CrimeWatcher } from './CrimeWatcher';
 import { getSecurityRecord } from './helpers';
+import { RecordPrint } from './RecordPrint';
 import { SecurityRecordsData } from './types';
 
 /** Views a selected record. */
@@ -102,7 +103,6 @@ const RecordInfo = (props) => {
               {name}
             </Table.Cell>
           }
-          wrap
         >
           <LabeledList>
             <LabeledList.Item

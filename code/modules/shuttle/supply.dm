@@ -30,6 +30,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/structure/blob,
 		/obj/structure/checkoutmachine,
 		/obj/structure/disposalpipe,
+		/obj/structure/disposaloutlet,
 		/obj/structure/extraction_point,
 		/obj/structure/guardian_beacon,
 		/obj/tear_in_reality,
@@ -59,22 +60,23 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	return ..()
 
 /obj/docking_port/mobile/supply/proc/check_blacklist(areaInstances)
-	for(var/place in areaInstances)
-		var/area/shuttle/shuttle_area = place
-		for(var/turf/shuttle_turf in shuttle_area.get_contained_turfs())
-			for(var/atom/passenger in shuttle_turf.get_all_contents())
-				if((is_type_in_typecache(passenger, GLOB.blacklisted_cargo_types) || HAS_TRAIT(passenger, TRAIT_BANNED_FROM_CARGO_SHUTTLE)) && !istype(passenger, /obj/docking_port))
-					return FALSE
+	for(var/area/shuttle_area as anything in areaInstances)
+		for (var/list/zlevel_turfs as anything in shuttle_area.get_zlevel_turf_lists())
+			for(var/turf/shuttle_turf as anything in zlevel_turfs)
+				for(var/atom/passenger in shuttle_turf.get_all_contents())
+					if((is_type_in_typecache(passenger, GLOB.blacklisted_cargo_types) || HAS_TRAIT(passenger, TRAIT_BANNED_FROM_CARGO_SHUTTLE)) && !istype(passenger, /obj/docking_port))
+						return FALSE
 	return TRUE
 
 /// Returns anything on the cargo blacklist found within areas_to_check back to the turf of the home docking port via Centcom branded supply pod.
 /obj/docking_port/mobile/supply/proc/return_blacklisted_things_home(list/area/areas_to_check, obj/docking_port/stationary/home)
 	var/list/stuff_to_send_home = list()
 	for(var/area/shuttle_area as anything in areas_to_check)
-		for(var/turf/shuttle_turf in shuttle_area.get_contained_turfs())
-			for(var/atom/passenger in shuttle_turf.get_all_contents())
-				if((is_type_in_typecache(passenger, GLOB.blacklisted_cargo_types) || HAS_TRAIT(passenger, TRAIT_BANNED_FROM_CARGO_SHUTTLE)) && !istype(passenger, /obj/docking_port))
-					stuff_to_send_home += passenger
+		for (var/list/zlevel_turfs as anything in shuttle_area.get_zlevel_turf_lists())
+			for(var/turf/shuttle_turf as anything in zlevel_turfs)
+				for(var/atom/passenger in shuttle_turf.get_all_contents())
+					if((is_type_in_typecache(passenger, GLOB.blacklisted_cargo_types) || HAS_TRAIT(passenger, TRAIT_BANNED_FROM_CARGO_SHUTTLE)) && !istype(passenger, /obj/docking_port))
+						stuff_to_send_home += passenger
 
 	if(!length(stuff_to_send_home))
 		return FALSE
@@ -135,7 +137,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	var/list/empty_turfs = list()
 	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
-		for(var/turf/open/floor/shuttle_turf in shuttle_area)
+		for(var/turf/open/floor/shuttle_turf in shuttle_area.get_turfs_from_all_zlevels())
 			if(shuttle_turf.is_blocked_turf())
 				continue
 			empty_turfs += shuttle_turf
@@ -272,12 +274,14 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/datum/export_report/report = new
 
 	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
-		for(var/atom/movable/exporting_atom in shuttle_area)
-			if(iscameramob(exporting_atom))
-				continue
-			if(exporting_atom.anchored)
-				continue
-			export_item_and_contents(exporting_atom, apply_elastic = TRUE, dry_run = FALSE, external_report = report)
+		for (var/list/zlevel_turfs as anything in shuttle_area.get_zlevel_turf_lists())
+			for(var/turf/shuttle_turf as anything in zlevel_turfs)
+				for(var/atom/movable/exporting_atom in shuttle_turf)
+					if(iscameramob(exporting_atom))
+						continue
+					if(exporting_atom.anchored)
+						continue
+					export_item_and_contents(exporting_atom, apply_elastic = TRUE, dry_run = FALSE, external_report = report)
 
 	if(report.exported_atoms)
 		report.exported_atoms += "." //ugh
@@ -305,9 +309,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	//spawn crate
 	var/list/empty_turfs = list()
-	for(var/place as anything in shuttle_areas)
-		var/area/shuttle/shuttle_area = place
-		for(var/turf/open/floor/shuttle_floor in shuttle_area)
+	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
+		for(var/turf/open/floor/shuttle_floor in shuttle_area.get_turfs_from_all_zlevels())
 			if(shuttle_floor.is_blocked_turf())
 				continue
 			empty_turfs += shuttle_floor

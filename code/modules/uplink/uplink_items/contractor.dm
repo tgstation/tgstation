@@ -36,7 +36,7 @@
 	name = "Contract Reroll"
 	desc = "Request a reroll of your current contract list. Will generate a new target, \
 		payment, and dropoff for the contracts you currently have available."
-	item = /obj/effect/gibspawner/generic
+	item = ABSTRACT_UPLINK_ITEM
 	limited_stock = 2
 	cost = 0
 
@@ -82,26 +82,9 @@
 	cost = 1
 
 /datum/uplink_item/contractor/partner
-	name = "Reinforcements"
-	desc = "Upon purchase we'll contact available units in the area. Should there be an agent free, \
-		we'll send them down to assist you immediately. If no units are free, we give a full refund."
-	item = /obj/effect/gibspawner/generic
+	name = "Contractor Reinforcement"
+	desc = "A reinforecment operative will be sent to aid you in your goals, \
+		they are paid separately, and will not take a cut from your profits."
+	item = /obj/item/antag_spawner/loadout/contractor
 	limited_stock = 1
 	cost = 2
-
-/datum/uplink_item/contractor/partner/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
-	to_chat(user, span_notice("The uplink vibrates quietly, connecting to nearby agents..."))
-	var/list/candidates = poll_ghost_candidates(
-		question = "Do you want to play as the Contractor Support Unit for [user.real_name]?",
-		jobban_type = ROLE_TRAITOR,
-		be_special_flag = ROLE_TRAITOR,
-		poll_time = 10 SECONDS,
-		ignore_category = POLL_IGNORE_CONTRACTOR_SUPPORT,
-	)
-	if(!LAZYLEN(candidates))
-		to_chat(user, span_notice("No available agents at this time, please try again later."))
-		limited_stock++
-		return //bobux no icon
-	var/mob/dead/observer/selected_player = pick(candidates)
-	uplink_handler.contractor_hub.contractor_teammate = spawn_contractor_partner(user, selected_player.key)
-	return source //for log icon

@@ -1,15 +1,15 @@
-import { useBackend } from '../backend';
-import { multiline } from 'common/string';
-import { GenericUplink, Item } from './Uplink/GenericUplink';
-import { BlockQuote, Button, Section, Stack, Tabs } from '../components';
 import { BooleanLike } from 'common/react';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import { BlockQuote, Button, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 import {
-  ObjectivePrintout,
   Objective,
+  ObjectivePrintout,
   ReplaceObjectivesButton,
 } from './common/Objectives';
-import { useState } from 'react';
+import { GenericUplink, Item } from './Uplink/GenericUplink';
 
 const allystyle = {
   fontWeight: 'bold',
@@ -78,7 +78,7 @@ const FlavorSection = (props) => {
           mr={-0.8}
           mt={-0.5}
           icon="hammer"
-          tooltip={multiline`
+          tooltip={`
             This is a gameplay suggestion for bored ais.
             You don't have to follow it, unless you want some
             ideas for how to spend the round.`}

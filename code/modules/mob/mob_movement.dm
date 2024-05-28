@@ -47,8 +47,8 @@
 /client/Move(new_loc, direct)
 	if(world.time < move_delay) //do not move anything ahead of this check please
 		return FALSE
-	next_move_dir_add = 0
-	next_move_dir_sub = 0
+	next_move_dir_add = NONE
+	next_move_dir_sub = NONE
 	var/old_move_delay = move_delay
 	move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
 	if(!direct || !new_loc)
@@ -76,7 +76,8 @@
 		return mob.remote_control.relaymove(mob, direct)
 
 	if(isAI(mob))
-		return AIMove(new_loc,direct,mob)
+		var/mob/living/silicon/ai/smoovin_ai = mob
+		return smoovin_ai.AIMove(direct)
 
 	if(Process_Grab()) //are we restrained by someone's grip?
 		return
@@ -314,7 +315,7 @@
 		if(rebound.last_pushoff == world.time)
 			continue
 		if(continuous_move && !pass_allowed)
-			var/datum/move_loop/move/rebound_engine = SSmove_manager.processing_on(rebound, SSspacedrift)
+			var/datum/move_loop/move/rebound_engine = GLOB.move_manager.processing_on(rebound, SSspacedrift)
 			// If you're moving toward it and you're both going the same direction, stop
 			if(moving_direction == get_dir(src, pushover) && rebound_engine && moving_direction == rebound_engine.direction)
 				continue
@@ -348,9 +349,11 @@
 /mob/proc/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, force_drop = FALSE)
 	add_mob_memory(/datum/memory/was_slipped, antagonist = slipped_on)
 
+	SEND_SIGNAL(src, COMSIG_MOB_SLIPPED, knockdown_amount, slipped_on, lube_flags, paralyze, force_drop)
+
 //bodypart selection verbs - Cyberboss
 //8: repeated presses toggles through head - eyes - mouth
-//9: eyes 8: head 7: mouth
+//7: mouth 8: head  9: eyes
 //4: r-arm 5: chest 6: l-arm
 //1: r-leg 2: groin 3: l-leg
 
@@ -359,12 +362,12 @@
 	return mob && mob.hud_used && mob.hud_used.zone_select && istype(mob.hud_used.zone_select, /atom/movable/screen/zone_sel)
 
 /**
- * Hidden verb to set the target zone of a mob to the head
+ * Hidden verbs to set desired body target zone
  *
- * (bound to 8) - repeated presses toggles through head - eyes - mouth
+ * Uses numpad keys 1-9
  */
 
-///Hidden verb to target the head, bound to 8
+///Hidden verb to cycle through head zone with repeated presses, head - eyes - mouth. Bound to 8
 /client/verb/body_toggle_head()
 	set name = "body-toggle-head"
 	set hidden = TRUE
@@ -383,6 +386,17 @@
 
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(next_in_line, mob)
+
+///Hidden verb to target the head, unbound by default.
+/client/verb/body_head()
+	set name = "body-head"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone(BODY_ZONE_HEAD, mob)
 
 ///Hidden verb to target the eyes, bound to 7
 /client/verb/body_eyes()
@@ -479,14 +493,14 @@
 	set instant = TRUE
 	if(isliving(mob))
 		var/mob/living/user_mob = mob
-		user_mob.toggle_move_intent(usr)
+		user_mob.toggle_move_intent()
 
 /**
  * Toggle the move intent of the mob
  *
  * triggers an update the move intent hud as well
  */
-/mob/living/proc/toggle_move_intent(mob/user)
+/mob/living/proc/toggle_move_intent()
 	if(move_intent == MOVE_INTENT_RUN)
 		move_intent = MOVE_INTENT_WALK
 	else
@@ -496,15 +510,19 @@
 			selector.update_appearance()
 	update_move_intent_slowdown()
 
+	SEND_SIGNAL(src, COMSIG_MOVE_INTENT_TOGGLED)
+
 ///Moves a mob upwards in z level
 /mob/verb/up()
 	set name = "Move Upwards"
 	set category = "IC"
 
+	if(remote_control)
+		return remote_control.relaymove(src, UP)
+
 	var/turf/current_turf = get_turf(src)
 	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
 
-	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
 	if(!above_turf)
 		to_chat(src, span_warning("There's nowhere to go in that direction!"))
 		return
@@ -513,13 +531,17 @@
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, UP)
 
+	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
+
 	if(can_z_move(DOWN, above_turf, current_turf, ZMOVE_FALL_FLAGS|ventcrawling_flag)) //Will we fall down if we go up?
 		if(buckled)
 			to_chat(src, span_warning("[buckled] is is not capable of flight."))
 		else
 			to_chat(src, span_warning("You are not Superman."))
 		return
-
+	balloon_alert(src, "moving up...")
+	if(!do_after(src, 1 SECONDS, hidden = TRUE))
+		return
 	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move upwards."))
 
@@ -528,8 +550,12 @@
 	set name = "Move Down"
 	set category = "IC"
 
+	if(remote_control)
+		return remote_control.relaymove(src, DOWN)
+
 	var/turf/current_turf = get_turf(src)
 	var/turf/below_turf = GET_TURF_BELOW(current_turf)
+
 	if(!below_turf)
 		to_chat(src, span_warning("There's nowhere to go in that direction!"))
 		return
@@ -539,6 +565,9 @@
 		return loc_atom.relaymove(src, DOWN)
 
 	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
+	balloon_alert(src, "moving down...")
+	if(!do_after(src, 1 SECONDS, hidden = TRUE))
+		return
 	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move down."))
 	return FALSE

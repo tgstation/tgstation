@@ -1,11 +1,12 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import {
+  AnimatedNumber,
   Box,
   Button,
   ProgressBar,
   Section,
-  AnimatedNumber,
 } from '../components';
 import { Window } from '../layouts';
 

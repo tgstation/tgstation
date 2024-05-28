@@ -1,8 +1,8 @@
-import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
+import { filter, sort } from 'common/collections';
 import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
   Button,
@@ -67,15 +67,17 @@ const prevNextCamera = (
  * Filters cameras, applies search terms and sorts the alphabetically.
  */
 const selectCameras = (cameras: Camera[], searchText = ''): Camera[] => {
-  const testSearch = createSearch(searchText, (camera: Camera) => camera.name);
+  let queriedCameras = filter(cameras, (camera: Camera) => !!camera.name);
+  if (searchText) {
+    const testSearch = createSearch(
+      searchText,
+      (camera: Camera) => camera.name,
+    );
+    queriedCameras = filter(queriedCameras, testSearch);
+  }
+  queriedCameras = sort(queriedCameras);
 
-  return flow([
-    filter((camera: Camera) => !!camera.name),
-    // Optional search term
-    searchText && filter(testSearch),
-    // Slightly expensive, but way better than sorting in BYOND
-    sortBy((camera: Camera) => camera),
-  ])(cameras);
+  return queriedCameras;
 };
 
 export const CameraConsole = (props) => {
@@ -114,10 +116,12 @@ const CameraSelector = (props) => {
       <Stack.Item>
         <Input
           autoFocus
+          expensive
           fluid
           mt={1}
           placeholder="Search for a camera"
-          onChange={(e, value) => setSearchText(value)}
+          onInput={(e, value) => setSearchText(value)}
+          value={searchText}
         />
       </Stack.Item>
       <Stack.Item grow>

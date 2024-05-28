@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { NoticeBox, Section, LabeledList, Stack } from '../components';
+import { LabeledList, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -47,7 +47,7 @@ export const TramPlaque = (props) => {
           </LabeledList>
         </Section>
         <Section title="Tram History">
-          <Stack horizontal fill>
+          <Stack fill>
             <Stack.Item m={1} grow>
               <b>Serial</b>
             </Stack.Item>

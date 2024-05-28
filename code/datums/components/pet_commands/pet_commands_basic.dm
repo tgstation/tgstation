@@ -247,6 +247,8 @@
 	set_command_target(parent, victim)
 
 /datum/pet_command/protect_owner/proc/set_attacking_target(atom/source, mob/living/attacker)
+	SIGNAL_HANDLER
+
 	var/mob/living/basic/owner = weak_parent.resolve()
 	if(isnull(owner))
 		return

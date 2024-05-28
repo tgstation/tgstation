@@ -12,7 +12,7 @@
 	var/deconversion_source
 
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
-	if(new_owner.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+	if(new_owner.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 		return FALSE
 	if(new_owner.unconvertable)
 		return FALSE
@@ -334,7 +334,7 @@
 
 /// Handles rev removal via IC methods such as borging, mindshielding, blunt force trauma to the head or revs losing.
 /datum/antagonist/rev/proc/remove_revolutionary(deconverter)
-	owner.current.log_message("has been deconverted from the revolution by [ismob(deconverter) ? key_name(deconverter) : deconverter]!", LOG_ATTACK, color="#960000")
+	owner.current.log_message("has been deconverted from the revolution by [ismob(deconverter) ? key_name(deconverter) : deconverter]!", LOG_ATTACK, color=COLOR_CULT_RED)
 	if(deconverter == DECONVERTER_BORGED)
 		message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been borged while being a [name]")
 	owner.special_role = null

@@ -6,3 +6,7 @@
 
 /datum/action/item_action/hands_free/shift_nerves
 	name = "Shift Nerves"
+
+/datum/action/item_action/hands_free/moth_googles
+	name = "Toggle Zoom"
+	desc = "Look further out with the help of your mothic googles."

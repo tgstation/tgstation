@@ -1,5 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { Fragment } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -9,6 +10,7 @@ import {
   NumberInput,
   Section,
   Table,
+  VirtualList,
 } from '../components';
 import { Window } from '../layouts';
 import {
@@ -26,6 +28,8 @@ type AirAlarmData = {
   dangerLevel: 0 | 1 | 2;
   atmosAlarm: BooleanLike; // fix this
   fireAlarm: BooleanLike;
+  faultStatus: 0 | 1 | 2;
+  faultLocation: string;
   sensor: BooleanLike;
   allowLinkChange: BooleanLike;
   envData: {
@@ -87,7 +91,22 @@ const AirAlarmStatus = (props) => {
       localStatusText: 'Danger (Internals Required)',
     },
   };
+  const faultMap = {
+    0: {
+      color: 'green',
+      areaFaultText: 'None',
+    },
+    1: {
+      color: 'purple',
+      areaFaultText: 'Manual Trigger',
+    },
+    2: {
+      color: 'average',
+      areaFaultText: 'Automatic Detection',
+    },
+  };
   const localStatus = dangerMap[data.dangerLevel] || dangerMap[0];
+  const areaFault = faultMap[data.faultStatus] || faultMap[0];
   return (
     <Section title="Air Status">
       <LabeledList>
@@ -105,16 +124,25 @@ const AirAlarmStatus = (props) => {
                 </LabeledList.Item>
               );
             })}
-            <LabeledList.Item label="Local status" color={localStatus.color}>
+            <LabeledList.Item label="Local Status" color={localStatus.color}>
               {localStatus.localStatusText}
             </LabeledList.Item>
             <LabeledList.Item
-              label="Area status"
+              label="Area Status"
               color={data.atmosAlarm || data.fireAlarm ? 'bad' : 'good'}
             >
               {(data.atmosAlarm && 'Atmosphere Alarm') ||
                 (data.fireAlarm && 'Fire Alarm') ||
                 'Nominal'}
+            </LabeledList.Item>
+            <LabeledList.Item label="Fault Status" color={areaFault.color}>
+              {areaFault.areaFaultText}
+            </LabeledList.Item>
+            <LabeledList.Item
+              label="Fault Location"
+              color={data.faultLocation ? 'blue' : 'green'}
+            >
+              {data.faultLocation || 'None'}
             </LabeledList.Item>
           </>
         )) || (
@@ -261,11 +289,11 @@ const AirAlarmControlVents = (props) => {
     return <span>Nothing to show</span>;
   }
   return (
-    <>
+    <VirtualList>
       {vents.map((vent) => (
         <Vent key={vent.refID} {...vent} />
       ))}
-    </>
+    </VirtualList>
   );
 };
 
@@ -279,11 +307,11 @@ const AirAlarmControlScrubbers = (props) => {
     return <span>Nothing to show</span>;
   }
   return (
-    <>
+    <VirtualList>
       {scrubbers.map((scrubber) => (
         <Scrubber key={scrubber.refID} {...scrubber} />
       ))}
-    </>
+    </VirtualList>
   );
 };
 
@@ -358,7 +386,7 @@ const EditingModal = (props: EditingModalProps) => {
         ) : (
           <>
             <NumberInput
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_threshold', {
                   threshold: id,
                   threshold_type: type,

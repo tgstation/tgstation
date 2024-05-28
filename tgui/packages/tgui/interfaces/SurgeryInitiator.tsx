@@ -2,6 +2,7 @@ import { sortBy } from 'common/collections';
 import { KEY_DOWN, KEY_ENTER, KEY_UP } from 'common/keycodes';
 import { BooleanLike } from 'common/react';
 import { Component } from 'react';
+
 import { useBackend } from '../backend';
 import { Button, KeyListener, Stack } from '../components';
 import { BodyZone, BodyZoneSelector } from '../components/BodyZoneSelector';
@@ -18,7 +19,8 @@ type SurgeryInitiatorData = {
   target_name: string;
 };
 
-const sortSurgeries = sortBy((surgery: Surgery) => surgery.name);
+const sortSurgeries = (array: Surgery[]) =>
+  sortBy(array, (surgery) => surgery.name);
 
 type SurgeryInitiatorInnerState = {
   selectedSurgeryIndex: number;

@@ -4,9 +4,6 @@
 /// from /obj/effect/bitrunning/loot_signal: (points)
 #define COMSIG_BITRUNNER_GOAL_POINT "bitrunner_goal_point"
 
-/// from /obj/item/reagent_containers/pill
-#define COMSIG_BITRUNNER_RED_PILL_SEVER "bitrunner_red_pill_sever"
-
 // Netpods
 
 /// from /obj/machinery/netpod/sever_connection()
@@ -47,3 +44,6 @@
 // Ladder
 /// from /obj/structure/hololadder/disconnect()
 #define COMSIG_BITRUNNER_LADDER_SEVER "bitrunner_ladder_sever"
+
+/// Sent when a server console is emagged
+#define COMSIG_BITRUNNER_SERVER_EMAGGED "bitrunner_server_emagged"

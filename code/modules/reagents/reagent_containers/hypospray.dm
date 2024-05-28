@@ -17,6 +17,8 @@
 	var/infinite = FALSE
 	/// If TRUE, won't play a noise when injecting.
 	var/stealthy = FALSE
+	/// If TRUE, the hypospray will be permanently unusable.
+	var/used_up = FALSE
 
 /obj/item/reagent_containers/hypospray/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -26,8 +28,8 @@
 
 ///Handles all injection checks, injection and logging.
 /obj/item/reagent_containers/hypospray/proc/inject(mob/living/affected_mob, mob/user)
-	if(!reagents.total_volume)
-		to_chat(user, span_warning("[src] is empty!"))
+	if(used_up)
+		to_chat(user, span_warning("[src] tip is broken and is now unusable!"))
 		return FALSE
 	if(!iscarbon(affected_mob))
 		return FALSE
@@ -39,7 +41,7 @@
 	var/contained = english_list(injected)
 	log_combat(user, affected_mob, "attempted to inject", src, "([contained])")
 
-	if(reagents.total_volume && (ignore_flags || affected_mob.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))) // Ignore flag should be checked first or there will be an error message.
+	if(!used_up && (ignore_flags || affected_mob.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))) // Ignore flag should be checked first or there will be an error message.
 		to_chat(affected_mob, span_warning("You feel a tiny prick!"))
 		to_chat(user, span_notice("You inject [affected_mob] with [src]."))
 		if(!stealthy)
@@ -120,7 +122,7 @@
 	has_variable_transfer_amount = FALSE
 	volume = 15
 	ignore_flags = 1 //so you can medipen through spacesuits
-	reagent_flags = DRAWABLE
+	reagent_flags = NONE
 	flags_1 = null
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulant = 2)
 	custom_price = PAYCHECK_CREW
@@ -134,8 +136,8 @@
 
 /obj/item/reagent_containers/hypospray/medipen/inject(mob/living/affected_mob, mob/user)
 	. = ..()
-	if(.)
-		reagents.maximum_volume = 0 //Makes them useless afterwards
+	if(. && !reagents.total_volume)
+		used_up = TRUE //Makes them useless afterwards
 		reagents.flags = NONE
 		update_appearance()
 
@@ -310,7 +312,6 @@
 	base_icon_state = "gorillapen"
 	volume = 5
 	ignore_flags = 0
-	reagent_flags = NONE
 	list_reagents = list(/datum/reagent/magillitis = 5)
 
 /obj/item/reagent_containers/hypospray/medipen/pumpup
@@ -350,3 +351,11 @@
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/mutadone = 15)
+
+/obj/item/reagent_containers/hypospray/medipen/penthrite
+	name = "penthrite autoinjector"
+	desc = "Experimental heart medication."
+	icon_state = "atropen"
+	inhand_icon_state = "atropen"
+	base_icon_state = "atropen"
+	list_reagents = list(/datum/reagent/medicine/c2/penthrite = 10)

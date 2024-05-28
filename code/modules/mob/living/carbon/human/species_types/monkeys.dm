@@ -4,7 +4,7 @@
 	name = "Monkey"
 	id = SPECIES_MONKEY
 	external_organs = list(
-		/obj/item/organ/external/tail/monkey = "Monkey"
+		/obj/item/organ/external/tail/monkey = "Monkey",
 	)
 	mutanttongue = /obj/item/organ/internal/tongue/monkey
 	mutantbrain = /obj/item/organ/internal/brain/primate
@@ -22,6 +22,7 @@
 	)
 	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
+	inherent_factions = list(FACTION_MONKEY)
 	sexes = FALSE
 	species_language_holder = /datum/language_holder/monkey
 
@@ -40,19 +41,14 @@
 	payday_modifier = 1.5
 	ai_controlled_species = TRUE
 
-/datum/species/monkey/random_name(gender,unique,lastname)
-	var/randname = "monkey ([rand(1,999)])"
-
-	return randname
-
-/datum/species/monkey/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
+/datum/species/monkey/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
-	passtable_on(H, SPECIES_TRAIT)
-	H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
-	H.dna.activate_mutation(/datum/mutation/human/race)
-	H.AddElement(/datum/element/human_biter)
+	passtable_on(human_who_gained_species, SPECIES_TRAIT)
+	human_who_gained_species.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
+	human_who_gained_species.dna.activate_mutation(/datum/mutation/human/race)
+	human_who_gained_species.AddElement(/datum/element/human_biter)
 
-/datum/species/monkey/on_species_loss(mob/living/carbon/C)
+/datum/species/monkey/on_species_loss(mob/living/carbon/human/C)
 	. = ..()
 	passtable_off(C, SPECIES_TRAIT)
 	C.dna.remove_mutation(/datum/mutation/human/race)
@@ -60,6 +56,7 @@
 
 /datum/species/monkey/check_roundstart_eligible()
 	// STOP ADDING MONKEY SUBTYPES YOU HEATHEN
+	// ok we killed monkey subtypes but we're keeping this in cause we can't trust you fuckers
 	if(check_holidays(MONKEYDAY) && id == SPECIES_MONKEY)
 		return TRUE
 	return ..()
@@ -166,56 +163,23 @@
 		to_chat(monkey_brain.owner, span_notice("You will now stumble while while colliding with people who are in combat mode."))
 	build_all_button_icons()
 
-
 /obj/item/organ/internal/brain/primate/on_mob_insert(mob/living/carbon/primate)
 	. = ..()
-	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed), TRUE)
+	RegisterSignal(primate, COMSIG_LIVING_MOB_BUMPED, PROC_REF(on_mob_bump))
 
 /obj/item/organ/internal/brain/primate/on_mob_remove(mob/living/carbon/primate)
 	. = ..()
-	UnregisterSignal(primate, COMSIG_MOVABLE_CROSS)
+	UnregisterSignal(primate, COMSIG_LIVING_MOB_BUMPED)
 
-/obj/item/organ/internal/brain/primate/proc/on_crossed(datum/source, atom/movable/crossed)
+/obj/item/organ/internal/brain/primate/proc/on_mob_bump(mob/source, mob/living/crossing_mob)
 	SIGNAL_HANDLER
-	if(!tripping)
+	if(!tripping || !crossing_mob.combat_mode)
 		return
-	if(IS_DEAD_OR_INCAP(owner) || !isliving(crossed))
-		return
-	var/mob/living/in_the_way_mob = crossed
-	if(iscarbon(in_the_way_mob) && !in_the_way_mob.combat_mode)
-		return
-	if(in_the_way_mob.pass_flags & PASSTABLE)
-		return
-	in_the_way_mob.knockOver(owner)
+	crossing_mob.knockOver(owner)
 
 /obj/item/organ/internal/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
-	return owner.get_bodypart(BODY_ZONE_HEAD)
-
-/// Virtual monkeys that crave virtual bananas. Everything about them is ephemeral (except that bite).
-/datum/species/monkey/holodeck
-	id = SPECIES_MONKEY_HOLODECK
-	knife_butcher_results = list()
-	meat = null
-	skinned_type = null
-	inherent_traits = list(
-		TRAIT_GENELESS,
-		TRAIT_GUN_NATURAL,
-		TRAIT_NO_AUGMENTS,
-		TRAIT_NO_BLOOD_OVERLAY,
-		TRAIT_NO_DNA_COPY,
-		TRAIT_NO_UNDERWEAR,
-		TRAIT_NO_ZOMBIFY,
-		TRAIT_NOBLOOD,
-		TRAIT_NOHUNGER,
-		TRAIT_VENTCRAWLER_NUDE,
-	)
-	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/monkey,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/monkey,
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/monkey,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/monkey,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/monkey,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
-	)
+	if(!HAS_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER))
+		return owner.get_bodypart(BODY_ZONE_HEAD)
+	return ..()
 
 #undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE

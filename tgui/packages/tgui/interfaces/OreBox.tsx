@@ -1,20 +1,17 @@
 import { toTitleCase } from 'common/string';
-import { Box, Button, Section, Table } from '../components';
+
 import { useBackend } from '../backend';
+import { Box, Button, Section, Table } from '../components';
 import { Window } from '../layouts';
 
-type Data = {
-  materials: Material[];
-};
-
 type Material = {
-  type: string;
   name: string;
   amount: number;
 };
 
-const OREBOX_INFO = `All ores will be placed in here when you are wearing a
-mining stachel on your belt or in a pocket while dragging the ore box.`;
+type Data = {
+  materials: Material[];
+};
 
 export const OreBox = (props) => {
   const { act, data } = useBackend<Data>();
@@ -24,18 +21,25 @@ export const OreBox = (props) => {
     <Window width={335} height={415}>
       <Window.Content scrollable>
         <Section
-          title="Ores"
-          buttons={<Button content="Empty" onClick={() => act('removeall')} />}
+          title="Ores & Boulders"
+          buttons={
+            <Button
+              disabled={materials.length === 0}
+              onClick={() => act('removeall')}
+            >
+              Empty
+            </Button>
+          }
         >
           <Table>
             <Table.Row header>
-              <Table.Cell>Ore</Table.Cell>
+              <Table.Cell>Item</Table.Cell>
               <Table.Cell collapsing textAlign="right">
                 Amount
               </Table.Cell>
             </Table.Row>
-            {materials.map((material) => (
-              <Table.Row key={material.type}>
+            {materials.map((material, id) => (
+              <Table.Row key={id}>
                 <Table.Cell>{toTitleCase(material.name)}</Table.Cell>
                 <Table.Cell collapsing textAlign="right">
                   <Box color="label" inline>
@@ -48,7 +52,8 @@ export const OreBox = (props) => {
         </Section>
         <Section>
           <Box>
-            {OREBOX_INFO}
+            Ores can be loaded here via a mining satchel or by hand. Boulders
+            can also be stored here
             <br />
             Gibtonite is not accepted.
           </Box>

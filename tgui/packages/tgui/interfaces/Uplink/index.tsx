@@ -1,27 +1,28 @@
-import { useBackend } from '../../backend';
-import { Window } from '../../layouts';
-import { GenericUplink, Item } from './GenericUplink';
-import { Component, Fragment } from 'react';
-import { fetchRetry } from '../../http';
-import { resolveAsset } from '../../assets';
 import { BooleanLike } from 'common/react';
+import { Component, Fragment } from 'react';
+
+import { resolveAsset } from '../../assets';
+import { useBackend } from '../../backend';
 import {
   Box,
-  Tabs,
   Button,
-  Stack,
-  Section,
-  Tooltip,
   Dimmer,
+  Section,
+  Stack,
+  Tabs,
+  Tooltip,
 } from '../../components';
-import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
-import { Objective, ObjectiveMenu } from './ObjectiveMenu';
+import { fetchRetry } from '../../http';
+import { Window } from '../../layouts';
 import {
-  calculateProgression,
   calculateDangerLevel,
+  calculateProgression,
   dangerDefault,
   dangerLevelsTooltip,
 } from './calculateDangerLevel';
+import { GenericUplink, Item } from './GenericUplink';
+import { Objective, ObjectiveMenu } from './ObjectiveMenu';
+import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 
 type UplinkItem = {
   id: string;
@@ -136,13 +137,15 @@ export class Uplink extends Component<{}, UplinkState> {
     uplinkData.items = uplinkData.items.filter((value) => {
       if (
         value.restricted_roles.length > 0 &&
-        !value.restricted_roles.includes(uplinkRole)
+        !value.restricted_roles.includes(uplinkRole) &&
+        !data.debug
       ) {
         return false;
       }
       if (
         value.restricted_species.length > 0 &&
-        !value.restricted_species.includes(uplinkSpecies)
+        !value.restricted_species.includes(uplinkSpecies) &&
+        !data.debug
       ) {
         return false;
       }
@@ -454,7 +457,7 @@ export class Uplink extends Component<{}, UplinkState> {
                         }
                       }}
                     />
-                    {(shop_locked && (
+                    {(shop_locked && !data.debug && (
                       <Dimmer>
                         <Box
                           color="red"

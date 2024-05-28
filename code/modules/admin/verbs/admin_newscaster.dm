@@ -1,17 +1,6 @@
-/datum/admins/proc/access_news_network() //MARKER
-	set category = "Admin.Events"
-	set name = "Access Newscaster Network"
-	set desc = "Allows you to view, add and edit news feeds."
-
-	if (!istype(src, /datum/admins))
-		src = usr.client.holder
-	if (!istype(src, /datum/admins))
-		to_chat(usr, "Error: you are not an admin!", confidential = TRUE)
-		return
-
+ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows you to view, add, and edit news feeds.", ADMIN_CATEGORY_EVENTS)
 	var/datum/newspanel/new_newspanel = new
-
-	new_newspanel.ui_interact(usr)
+	new_newspanel.ui_interact(user.mob)
 
 /datum/newspanel
 	///What newscaster channel is currently being viewed by the player?
@@ -78,14 +67,15 @@
 	data["crime_description"] = crime_description
 	var/list/wanted_info = list()
 	if(GLOB.news_network.wanted_issue)
-		if(GLOB.news_network.wanted_issue.img)
+		var/has_wanted_issue = !isnull(GLOB.news_network.wanted_issue.img)
+		if(has_wanted_issue)
 			user << browse_rsc(GLOB.news_network.wanted_issue.img, "wanted_photo.png")
 		wanted_info = list(list(
 			"active" = GLOB.news_network.wanted_issue.active,
 			"criminal" = GLOB.news_network.wanted_issue.criminal,
 			"crime" = GLOB.news_network.wanted_issue.body,
 			"author" = GLOB.news_network.wanted_issue.scanned_user,
-			"image" = "wanted_photo.png"
+			"image" = (has_wanted_issue ? "wanted_photo.png" : null)
 		))
 
 	//Code breaking down the channels that have been made on-station thus far. ha
@@ -320,6 +310,7 @@
 	new_feed_comment.body = comment_text
 	new_feed_comment.time_stamp = station_time_timestamp()
 	current_message.comments += new_feed_comment
+	GLOB.news_network.last_action ++
 	usr.log_message("(as an admin) commented on message [current_message.return_body(-1)] -- [current_message.body]", LOG_COMMENT)
 	creating_comment = FALSE
 

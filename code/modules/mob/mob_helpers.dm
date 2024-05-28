@@ -355,23 +355,22 @@
 	if(usr)
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
 		message_admins("[key_name_admin(usr)] has offered control of ([ADMIN_LOOKUPFLW(M)]) to ghosts")
-	var/poll_message = "Do you want to play as [M.real_name]?"
+	var/poll_message = "Do you want to play as [span_danger(M.real_name)]?"
 	if(M.mind)
-		poll_message = "[poll_message] Job: [M.mind.assigned_role.title]."
+		poll_message = "[poll_message] Job: [span_notice(M.mind.assigned_role.title)]."
 		if(M.mind.special_role)
-			poll_message = "[poll_message] Status: [M.mind.special_role]."
+			poll_message = "[poll_message] Status: [span_boldnotice(M.mind.special_role)]."
 		else
 			var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 			if(A)
-				poll_message = "[poll_message] Status: [A.name]."
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob(poll_message, ROLE_PAI, FALSE, 10 SECONDS, M)
+				poll_message = "[poll_message] Status: [span_boldnotice(A.name)]."
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(poll_message, check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = M, alert_pic = M, role_name_text = "ghost control")
 
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+	if(chosen_one)
 		to_chat(M, "Your mob has been taken over by a ghost!")
-		message_admins("[key_name_admin(C)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
+		message_admins("[key_name_admin(chosen_one)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
 		M.ghostize(FALSE)
-		M.key = C.key
+		M.key = chosen_one.key
 		M.client?.init_verbs()
 		return TRUE
 	else
@@ -391,7 +390,7 @@
 
 ///Can the mob hear
 /mob/proc/can_hear()
-	. = TRUE
+	return !HAS_TRAIT(src, TRAIT_DEAF)
 
 /**
  * Examine text for traits shared by multiple types.

@@ -77,7 +77,7 @@
 	if(!eddie_murphy)
 		return ..()
 	user.visible_message(span_warning("[user] begins cleaning [eddie_murphy] out of [src]."), span_warning("You begin cleaning [eddie_murphy] out of [src]..."))
-	if(!do_after(user, 60, target = src))
+	if(!do_after(user, 6 SECONDS, target = src))
 		return ..()
 	user.visible_message(span_warning("[user] cleans [eddie_murphy] out of [src]."), span_warning("You manage to get [eddie_murphy] out of [src]."))
 	eddie_murphy.forceMove(drop_location())

@@ -57,7 +57,7 @@
 	RegisterSignal(thrown_thing, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(listen_throw_land))
 
 /// A throw we were listening to has finished, see if it's in range for us to try grabbing it
-/datum/pet_command/point_targeting/fetch/proc/listen_throw_land(obj/item/thrown_thing, datum/thrownthing/throwing_datum)
+/datum/pet_command/point_targeting/fetch/proc/listen_throw_land(obj/item/thrown_thing, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(thrown_thing, COMSIG_MOVABLE_THROW_LANDED)
@@ -69,9 +69,11 @@
 	if (!can_see(parent, thrown_thing, length = sense_radius))
 		return
 
-	try_activate_command(throwing_datum.thrower)
-	set_command_target(parent, thrown_thing)
-	parent.ai_controller.set_blackboard_key(BB_FETCH_DELIVER_TO, throwing_datum.thrower)
+	var/mob/thrower = throwingdatum?.get_thrower()
+	if(thrower)
+		try_activate_command(thrower)
+		set_command_target(parent, thrown_thing)
+		parent.ai_controller.set_blackboard_key(BB_FETCH_DELIVER_TO, thrower)
 
 // Don't try and fetch turfs or anchored objects if someone points at them
 /datum/pet_command/point_targeting/fetch/look_for_target(mob/living/pointing_friend, obj/item/pointed_atom)

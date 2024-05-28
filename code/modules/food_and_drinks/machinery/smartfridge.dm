@@ -6,6 +6,7 @@
 	desc = "Keeps cold things cold and hot things cold."
 	icon = 'icons/obj/machines/smartfridge.dmi'
 	icon_state = "smartfridge"
+	base_icon_state = "plant"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/smartfridge
@@ -17,8 +18,6 @@
 	var/base_build_path = /obj/machinery/smartfridge
 	/// Maximum number of items that can be loaded into the machine
 	var/max_n_of_items = 1500
-	/// The overlay for this fridge when it is filled with stuff
-	var/contents_icon_state = "plant"
 	/// List of items that the machine starts with upon spawn
 	var/list/initial_contents
 	/// If the machine shows an approximate number of its contents on its sprite
@@ -226,9 +225,10 @@
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
 
+	var/initial_icon_state = initial(icon_state)
 	var/shown_contents_length = visible_items()
 	if(visible_contents && shown_contents_length)
-		var/content_level = "[initial(icon_state)]-[contents_icon_state]"
+		var/content_level = "[initial_icon_state]-[base_icon_state]"
 		switch(shown_contents_length)
 			if(1 to 25)
 				content_level += "-1"
@@ -238,10 +238,10 @@
 				content_level += "-3"
 		. += mutable_appearance(icon, content_level)
 
-	. += mutable_appearance(icon, "[initial(icon_state)]-glass[(machine_stat & BROKEN) ? "-broken" : ""]")
+	. += mutable_appearance(icon, "[initial_icon_state]-glass[(machine_stat & BROKEN) ? "-broken" : ""]")
 
 	if(!machine_stat && has_emissive)
-		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask", src, alpha = src.alpha)
+		. += emissive_appearance(icon, "[initial_icon_state]-light-mask", src, alpha = src.alpha)
 
 /obj/machinery/smartfridge/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -265,7 +265,7 @@
 			!(weapon.flags_1 & HOLOGRAM_1) && \
 			accept_check(weapon) \
 		)
-			load(weapon)
+			load(weapon, user)
 			user.visible_message(span_notice("[user] adds \the [weapon] to \the [src]."), span_notice("You add \the [weapon] to \the [src]."))
 			SStgui.update_uis(src)
 			if(visible_contents)
@@ -282,7 +282,7 @@
 					!(object.flags_1 & HOLOGRAM_1) && \
 					accept_check(object) \
 				)
-					load(object)
+					load(object, user)
 					loaded++
 			SStgui.update_uis(src)
 
@@ -328,7 +328,7 @@
  * Arguments
  * * [weapon][obj/item] - the item to load. If the item is being held by a mo it will transfer it from hand else directly force move
  */
-/obj/machinery/smartfridge/proc/load(obj/item/weapon)
+/obj/machinery/smartfridge/proc/load(obj/item/weapon, mob/user)
 	if(ismob(weapon.loc))
 		var/mob/owner = weapon.loc
 		if(!owner.transferItemToLoc(weapon, src))
@@ -411,7 +411,7 @@
 					if(!living_mob.put_in_hands(dispensed_item))
 						dispensed_item.forceMove(drop_location())
 						adjust_item_drop_location(dispensed_item)
-					use_power(active_power_usage)
+					use_energy(active_power_usage)
 					desired--
 
 			if (visible_contents)
@@ -437,6 +437,8 @@
 	can_atmos_pass = ATMOS_PASS_YES
 	/// Is the rack currently drying stuff
 	var/drying = FALSE
+	/// The reference to the last user's mind. Needed for the chef made trait to be properly applied correctly to dried food.
+	var/datum/weakref/current_user
 
 /obj/machinery/smartfridge/drying_rack/Initialize(mapload)
 	. = ..()
@@ -446,6 +448,10 @@
 
 	//so we don't drop any of the parent smart fridge parts upon deconstruction
 	clear_components()
+
+/obj/machinery/smartfridge/drying_rack/Destroy()
+	current_user = null
+	return ..()
 
 /// We cleared out the components in initialize so we can optimize this
 /obj/machinery/smartfridge/drying_rack/visible_items()
@@ -485,7 +491,7 @@
 /obj/machinery/smartfridge/drying_rack/exchange_parts()
 	return
 
-/obj/machinery/smartfridge/drying_rack/on_deconstruction()
+/obj/machinery/smartfridge/drying_rack/on_deconstruction(disassembled)
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 
 /obj/machinery/smartfridge/drying_rack/crowbar_act(mob/living/user, obj/item/tool)
@@ -505,7 +511,7 @@
 
 	switch(action)
 		if("Dry")
-			toggle_drying(FALSE)
+			toggle_drying(FALSE, usr)
 			return TRUE
 
 /obj/machinery/smartfridge/drying_rack/powered()
@@ -516,9 +522,13 @@
 	if(!powered())
 		toggle_drying(TRUE)
 
-/obj/machinery/smartfridge/drying_rack/load(obj/item/dried_object) //For updating the filled overlay
+/obj/machinery/smartfridge/drying_rack/load(obj/item/dried_object, mob/user) //For updating the filled overlay
 	. = ..()
+	if(!.)
+		return
 	update_appearance()
+	if(drying && user?.mind)
+		current_user = WEAKREF(user.mind)
 
 /obj/machinery/smartfridge/drying_rack/update_overlays()
 	. = ..()
@@ -536,7 +546,7 @@
 
 		SStgui.update_uis(src)
 		update_appearance()
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 
 /obj/machinery/smartfridge/drying_rack/accept_check(obj/item/O)
 	return HAS_TRAIT(O, TRAIT_DRYABLE)
@@ -546,17 +556,20 @@
  * Arguments
  * * forceoff - if TRUE will force the dryer off always
  */
-/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff)
+/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff, mob/user)
 	if(drying || forceoff)
 		drying = FALSE
+		current_user = FALSE
 		update_use_power(IDLE_POWER_USE)
 	else
 		drying = TRUE
+		if(user?.mind)
+			current_user = WEAKREF(user.mind)
 		update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 
 /obj/machinery/smartfridge/drying_rack/proc/rack_dry(obj/item/target)
-	SEND_SIGNAL(target, COMSIG_ITEM_DRIED)
+	SEND_SIGNAL(target, COMSIG_ITEM_DRIED, current_user)
 
 /obj/machinery/smartfridge/drying_rack/emp_act(severity)
 	. = ..()
@@ -571,7 +584,7 @@
 	name = "drink showcase"
 	desc = "A refrigerated storage unit for tasty tasty alcohol."
 	base_build_path = /obj/machinery/smartfridge/drinks
-	contents_icon_state = "drink"
+	base_icon_state = "drink"
 
 /obj/machinery/smartfridge/drinks/accept_check(obj/item/weapon)
 	//not an item or valid container
@@ -591,7 +604,7 @@
 /obj/machinery/smartfridge/food
 	desc = "A refrigerated storage unit for food."
 	base_build_path = /obj/machinery/smartfridge/food
-	contents_icon_state = "food"
+	base_icon_state = "food"
 
 /obj/machinery/smartfridge/food/accept_check(obj/item/weapon)
 	if(weapon.w_class >= WEIGHT_CLASS_BULKY)
@@ -609,7 +622,7 @@
 	name = "smart slime extract storage"
 	desc = "A refrigerated storage unit for slime extracts."
 	base_build_path = /obj/machinery/smartfridge/extract
-	contents_icon_state = "slime"
+	base_icon_state = "slime"
 
 /obj/machinery/smartfridge/extract/accept_check(obj/item/weapon)
 	return (istype(weapon, /obj/item/slime_extract) || istype(weapon, /obj/item/slime_scanner))
@@ -624,7 +637,7 @@
 	name = "smart petri dish storage"
 	desc = "A refrigerated storage unit for petri dishes."
 	base_build_path = /obj/machinery/smartfridge/petri
-	contents_icon_state = "petri"
+	base_icon_state = "petri"
 
 /obj/machinery/smartfridge/petri/accept_check(obj/item/weapon)
 	return istype(weapon, /obj/item/petri_dish)
@@ -640,24 +653,24 @@
 	desc = "A refrigerated storage unit for organ storage."
 	max_n_of_items = 20 //vastly lower to prevent processing too long
 	base_build_path = /obj/machinery/smartfridge/organ
-	contents_icon_state = "organ"
+	base_icon_state = "organ"
 	/// The rate at which this fridge will repair damaged organs
 	var/repair_rate = 0
 
 /obj/machinery/smartfridge/organ/accept_check(obj/item/O)
 	return (isorgan(O) || isbodypart(O))
 
-/obj/machinery/smartfridge/organ/load(obj/item/O)
+/obj/machinery/smartfridge/organ/load(obj/item/item, mob/user)
 	. = ..()
 	if(!.) //if the item loads, clear can_decompose
 		return
 
-	if(isorgan(O))
-		var/obj/item/organ/organ = O
+	if(isorgan(item))
+		var/obj/item/organ/organ = item
 		organ.organ_flags |= ORGAN_FROZEN
 
-	if(isbodypart(O))
-		var/obj/item/bodypart/bodypart = O
+	if(isbodypart(item))
+		var/obj/item/bodypart/bodypart = item
 		for(var/obj/item/organ/stored in bodypart.contents)
 			stored.organ_flags |= ORGAN_FROZEN
 
@@ -693,7 +706,7 @@
 	name = "smart chemical storage"
 	desc = "A refrigerated storage unit for medicine storage."
 	base_build_path = /obj/machinery/smartfridge/chemistry
-	contents_icon_state = "chem"
+	base_icon_state = "chem"
 
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/weapon)
 	// not an item or reagent container
@@ -743,7 +756,7 @@
 	name = "smart virus storage"
 	desc = "A refrigerated storage unit for volatile sample storage."
 	base_build_path = /obj/machinery/smartfridge/chemistry/virology
-	contents_icon_state = "viro"
+	base_icon_state = "viro"
 
 /obj/machinery/smartfridge/chemistry/virology/preloaded
 	initial_contents = list(

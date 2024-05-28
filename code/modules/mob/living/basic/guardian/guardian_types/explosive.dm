@@ -22,7 +22,7 @@
 	return ..()
 
 /mob/living/basic/guardian/explosive/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) && proximity_flag && isobj(attack_target))
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) && proximity_flag && isobj(attack_target) && can_unarmed_attack())
 		bomb.Trigger(target = attack_target)
 		return
 	return ..()

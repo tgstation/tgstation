@@ -1,14 +1,15 @@
-import { useBackend } from '../backend';
-import { Window } from '../layouts';
-import {
-  Stack,
-  Section,
-  ProgressBar,
-  Button,
-  NumberInput,
-  LabeledList,
-} from '../components';
 import { BooleanLike } from 'common/react';
+
+import { useBackend } from '../backend';
+import {
+  Button,
+  LabeledList,
+  NumberInput,
+  ProgressBar,
+  Section,
+  Stack,
+} from '../components';
+import { Window } from '../layouts';
 
 type ModularShieldGenData = {
   max_strength: number;
@@ -97,10 +98,11 @@ export const ModularShieldGen = (props) => {
                   <NumberInput
                     disabled={active}
                     fluid
+                    step={1}
                     value={current_radius}
                     minValue={3}
                     maxValue={max_radius}
-                    onChange={(e, value) =>
+                    onChange={(value) =>
                       act('set_radius', {
                         new_radius: value,
                       })
@@ -121,7 +123,7 @@ export const ModularShieldGen = (props) => {
               <LabeledList>
                 <LabeledList.Item label="Toggle Power">
                   <Button
-                    bold={1}
+                    bold
                     disabled={recovering || initiating_field}
                     selected={active}
                     content={active ? 'On' : 'Off'}

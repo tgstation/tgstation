@@ -5,6 +5,7 @@
  */
 
 import { BooleanLike } from 'common/react';
+
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Box, Button } from '../components';
@@ -110,7 +111,7 @@ export const NtosWindow = (props) => {
                   className="NtosHeader__icon"
                   src={resolveAsset(PC_batteryicon)}
                 />
-                {PC_batterypercent && PC_batterypercent}
+                {PC_batterypercent}
               </Box>
             )}
             {!!PC_showexitprogram && (

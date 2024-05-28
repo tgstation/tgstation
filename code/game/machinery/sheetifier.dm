@@ -15,7 +15,7 @@
 		/datum/component/material_container, \
 		list(/datum/material/meat, /datum/material/hauntium), \
 		SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, \
-		MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_SHEETIFIER, \
+		MATCONTAINER_EXAMINE, \
 		typesof(/datum/material/meat) + /datum/material/hauntium, list(/obj/item/food/meat, /obj/item/photo), \
 		container_signals = list(
 			COMSIG_MATCONTAINER_PRE_USER_INSERT = TYPE_PROC_REF(/obj/machinery/sheetifier, CanInsertMaterials),
@@ -50,13 +50,13 @@
 	var/mutable_appearance/processing_overlay = mutable_appearance(icon, "processing")
 	processing_overlay.color = last_inserted_material.color
 	flick_overlay_static(processing_overlay, src, 64)
-	addtimer(CALLBACK(src, PROC_REF(finish_processing)), 64)
+	addtimer(CALLBACK(src, PROC_REF(finish_processing)), 6.4 SECONDS)
 
 /obj/machinery/sheetifier/proc/finish_processing()
 	busy_processing = FALSE
 	update_appearance()
 	materials.retrieve_all() //Returns all as sheets
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/sheetifier/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

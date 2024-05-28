@@ -88,6 +88,11 @@
 	if(!isliving(usr))
 		return
 
+	var/area/my_area = get_area(src)
+	if(!istype(my_area, /area/shuttle/escape))
+		say("Error - Network connectivity: Console has lost connection to the shuttle.")
+		return
+
 	var/mob/living/user = usr
 	. = FALSE
 
@@ -196,15 +201,21 @@
 			shuttle.setTimer(shuttle.timeLeft(1) + hijack_flight_time_increase) //give the guy more time to hijack if it's already in flight.
 	return shuttle.hijack_status
 
-/obj/machinery/computer/emergency_shuttle/AltClick(user)
-	if(isliving(user))
-		attempt_hijack_stage(user)
+/obj/machinery/computer/emergency_shuttle/click_alt(mob/living/user)
+	if(!isliving(user))
+		return NONE
+	attempt_hijack_stage(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/computer/emergency_shuttle/proc/attempt_hijack_stage(mob/living/user)
 	if(!user.CanReach(src))
 		return
 	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		to_chat(user, span_warning("You need your hands free before you can manipulate [src]."))
+		return
+	var/area/my_area = get_area(src)
+	if(!istype(my_area, /area/shuttle/escape))
+		say("Error - Network connectivity: Console has lost connection to the shuttle.")
 		return
 	if(!user?.mind?.get_hijack_speed())
 		to_chat(user, span_warning("You manage to open a user-mode shell on [src], and hundreds of lines of debugging output fly through your vision. It is probably best to leave this alone."))
@@ -282,13 +293,12 @@
 
 	obj_flags |= EMAGGED
 	SSshuttle.emergency.movement_force = list("KNOCKDOWN" = 60, "THROW" = 20)//YOUR PUNY SEATBELTS can SAVE YOU NOW, MORTAL
-	var/datum/species/S = new
 	for(var/i in 1 to 10)
 		// the shuttle system doesn't know who these people are, but they
 		// must be important, surely
 		var/obj/item/card/id/ID = new(src)
 		var/datum/job/J = pick(SSjob.joinable_occupations)
-		ID.registered_name = S.random_name(pick(MALE, FEMALE))
+		ID.registered_name = generate_random_name_species_based(species_type = /datum/species/human)
 		ID.assignment = J.title
 
 		authorized += ID
@@ -736,7 +746,7 @@
 	return INITIALIZE_HINT_QDEL
 
 /obj/docking_port/stationary/random/icemoon
-	target_area = /area/icemoon/surface/outdoors
+	target_area = /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters
 
 //Pod suits/pickaxes
 
@@ -810,10 +820,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/pod, 32)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-/obj/item/storage/pod/AltClick(mob/user)
-	if(!can_interact(user))
-		return
-	return ..()
+/obj/item/storage/pod/click_alt(mob/user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/pod/can_interact(mob/user)
 	if(!..())
