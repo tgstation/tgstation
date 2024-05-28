@@ -1,0 +1,602 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ax" = (
+/obj/machinery/light/floor,
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"aT" = (
+/obj/item/chair/wood,
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"bE" = (
+/mob/living/basic/mining/deacon,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"cO" = (
+/obj/structure/chair/wood,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"ds" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"eu" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"eB" = (
+/obj/structure/chair/wood,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"eE" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"fl" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"hM" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"hS" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"jQ" = (
+/obj/structure/chair/wood,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"kd" = (
+/obj/structure/flora/grass/brown/style_random,
+/obj/structure/chair/wood,
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/icemoon/underground/unexplored)
+"kq" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"lH" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"lR" = (
+/obj/structure/chair/wood,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"mP" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"nt" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"nT" = (
+/turf/open/floor/iron/white,
+/area/icemoon/underground/unexplored)
+"tW" = (
+/obj/item/chair/wood,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"wg" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"yy" = (
+/obj/effect/turf_decal/weather/snow,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"At" = (
+/obj/structure/flora/grass/brown/style_random,
+/obj/effect/turf_decal/weather/snow,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"Dd" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"DG" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"Ep" = (
+/obj/structure/fluff/divine/convertaltar,
+/obj/structure/railing,
+/turf/open/floor/iron/chapel,
+/area/icemoon/underground/unexplored)
+"Ff" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"Fn" = (
+/obj/structure/chair/wood,
+/obj/effect/turf_decal/weather/snow,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"HU" = (
+/obj/structure/stairs/north,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"Ia" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/machinery/light/floor,
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/turf/open/floor/iron/white,
+/area/icemoon/underground/unexplored)
+"KT" = (
+/obj/item/chair/wood,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"Oe" = (
+/obj/structure/stairs/north,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"Ot" = (
+/obj/structure/chair/wood,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"Qi" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"Sc" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"TE" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"Vg" = (
+/obj/machinery/light/floor,
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/turf/open/floor/iron/white,
+/area/icemoon/underground/unexplored)
+"Wr" = (
+/obj/item/chair/wood,
+/obj/effect/turf_decal/weather/snow,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+
+(1,1,1) = {"
+lH
+lH
+lH
+lH
+lH
+wg
+lH
+lH
+DG
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+"}
+(2,1,1) = {"
+lH
+lH
+lR
+lR
+lR
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+kd
+Dd
+Dd
+lH
+"}
+(3,1,1) = {"
+lH
+lH
+lR
+tW
+Ot
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+aT
+ds
+Dd
+lH
+"}
+(4,1,1) = {"
+lH
+lH
+lR
+cO
+lR
+mP
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+Ff
+Ff
+hS
+"}
+(5,1,1) = {"
+lH
+lH
+lR
+cO
+Wr
+hM
+lH
+lH
+yy
+lH
+lH
+lH
+kq
+Dd
+Dd
+Dd
+lH
+"}
+(6,1,1) = {"
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+At
+lH
+lH
+lH
+ax
+"}
+(7,1,1) = {"
+nT
+Ia
+HU
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+"}
+(8,1,1) = {"
+nT
+Ep
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+"}
+(9,1,1) = {"
+nT
+Ep
+lH
+lH
+lH
+lH
+lH
+bE
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+"}
+(10,1,1) = {"
+nT
+Vg
+Oe
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+"}
+(11,1,1) = {"
+lH
+Qi
+Qi
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+"}
+(12,1,1) = {"
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+ax
+"}
+(13,1,1) = {"
+lH
+lH
+lR
+Fn
+lR
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+Dd
+Dd
+eE
+lH
+"}
+(14,1,1) = {"
+lH
+lH
+lR
+cO
+lR
+hM
+lH
+lH
+lH
+lH
+lH
+lH
+Sc
+lR
+fl
+fl
+TE
+"}
+(15,1,1) = {"
+lH
+lH
+lR
+KT
+lR
+lH
+mP
+lH
+lH
+lH
+lH
+lH
+yy
+aT
+Dd
+Dd
+lH
+"}
+(16,1,1) = {"
+lH
+lH
+lR
+eB
+jQ
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+nt
+ds
+Dd
+lH
+"}
+(17,1,1) = {"
+lH
+lH
+lR
+lR
+lR
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+eu
+Dd
+Dd
+lH
+"}
+(18,1,1) = {"
+lH
+lH
+lH
+lH
+lH
+wg
+lH
+lH
+DG
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+"}

@@ -297,3 +297,4 @@
 #define BB_DEACON_DOMAIN_ATTACKS "domain_attacks"
 #define BB_DEACON_BOUNCE "bounce"
 #define BB_DEACON_BOUNCE_MODE "bounce_mode"
+#define BB_DEACON_USED_SPECIAL_ATTACKS "used_special_attacks"

@@ -13,3 +13,4 @@
 /obj/effect/landmark/deacon_heaven_player
 	name = "deacon heaven player landmark"
 	icon_state = "x"
+

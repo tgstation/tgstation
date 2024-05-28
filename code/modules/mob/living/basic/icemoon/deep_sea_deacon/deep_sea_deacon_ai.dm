@@ -1,5 +1,6 @@
 #define SPECIAL_ATTACK_COUNTER 2
 #define DOMAIN_HEALTH_THRESHOLD 0.45
+#define CYCLE_STARTED_NOTIFY 2 SECONDS
 
 /datum/ai_controller/basic_controller/deep_sea_deacon
 	blackboard = list(
@@ -8,6 +9,7 @@
 		BB_DEACON_SPECIAL_ATTACK_COUNTER = 0,
 		BB_DEACON_NEXT_CYCLE_READY = TRUE,
 		BB_DEACON_BOUNCE_MODE = FALSE,
+		BB_DEACON_USED_SPECIAL_ATTACKS = list()
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -34,16 +36,22 @@
 	if(ability_type == /datum/action/cooldown/mob_cooldown/domain_teleport)
 		CancelActions()
 		return
+
 	if(ability_type in blackboard[BB_DEACON_CYCLE_RESETERS])
+		var/list/used_specials = list()
+		if(length(blackboard[BB_DEACON_USED_SPECIAL_ATTACKS]) < length(blackboard[BB_DEACON_CYCLE_RESETERS]))
+			used_specials = blackboard[BB_DEACON_USED_SPECIAL_ATTACKS] + ability_type
 		CancelActions()
 		set_blackboard_key(BB_DEACON_LAST_SPECIAL_ATTACK, ability_type)
 		set_blackboard_key(BB_DEACON_SPECIAL_ATTACK_COUNTER, 0)
+		override_blackboard_key(BB_DEACON_USED_SPECIAL_ATTACKS, used_specials)
 		return
+
 	var/cycle_timer = blackboard[BB_DEACON_CYCLE_TIMERS][ability_type]
 	if(!isnull(cycle_timer))
 		set_blackboard_key(BB_DEACON_SPECIAL_ATTACK_COUNTER, blackboard[BB_DEACON_SPECIAL_ATTACK_COUNTER] + 1)
 		set_blackboard_key(BB_DEACON_NEXT_CYCLE_READY, FALSE)
-		addtimer(CALLBACK(src, PROC_REF(set_blackboard_key), BB_DEACON_CYCLE_STARTED, TRUE), 2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(set_blackboard_key), BB_DEACON_CYCLE_STARTED, TRUE), CYCLE_STARTED_NOTIFY)
 		addtimer(CALLBACK(src, PROC_REF(set_blackboard_key), BB_DEACON_NEXT_CYCLE_READY, TRUE), cycle_timer)
 		return
 
@@ -98,6 +106,8 @@
 
 /datum/ai_planning_subtree/targeted_mob_ability/deacon/deacon_special_attack/check_availability(datum/ai_controller/controller, ability_key)
 	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
+	if(ability.type in controller.blackboard[BB_DEACON_USED_SPECIAL_ATTACKS])
+		return FALSE
 	return ability.IsAvailable() && (controller.blackboard[BB_DEACON_LAST_SPECIAL_ATTACK] != ability.type)
 
 /datum/ai_planning_subtree/targeted_mob_ability/deacon/deacon_domain_attack

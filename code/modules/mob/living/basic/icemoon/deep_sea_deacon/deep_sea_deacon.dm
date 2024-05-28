@@ -8,6 +8,8 @@
 	base_pixel_x = -32
 	gender = MALE
 	speed = 10
+	light_range = 2
+	light_color = COLOR_PINK
 	basic_mob_flags = IMMUNE_TO_FISTS
 	maxHealth = 3000
 	health = 3000

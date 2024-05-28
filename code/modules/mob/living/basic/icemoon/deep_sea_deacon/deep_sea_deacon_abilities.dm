@@ -1,4 +1,4 @@
-
+#define SWORD_DROP_TIMER 0.75 SECONDS
 /obj/effect/overlay/crystal_overlay
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
@@ -294,8 +294,8 @@
 	click_to_activate = TRUE
 	shared_cooldown = NONE
 	melee_cooldown_time = 0 SECONDS
-	/// time between each droplet launched
-	var/fire_interval = 1.5 SECONDS
+	/// time between each sword launched
+	var/fire_interval = SWORD_DROP_TIMER + 0.25 SECONDS
 	//the list of swords we launched at the enemy
 	var/list/current_swords = list()
 
@@ -339,7 +339,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "holy_blade"
 	layer = ABOVE_ALL_MOB_LAYER
-	duration = 1 SECONDS
+	duration = SWORD_DROP_TIMER
 	light_color = COLOR_BLUE
 	light_range = 2
 	///damage we should apply
@@ -458,6 +458,8 @@
 	var/fire_amount = 4
 	/// time between entrappment and damaging attack
 	var/time_to_fire = 2 SECONDS
+	/// angle we fire projectiles at
+	var/list/projectile_angles = list(22.5, 67.5, 112.5, 157.5, 202.5, 247.5, 292.5, 337.5)
 
 /datum/action/cooldown/mob_cooldown/black_n_white/Activate(atom/movable/target)
 	ADD_TRAIT(owner, TRAIT_AI_PAUSED, REF(src))
@@ -472,6 +474,8 @@
 	addtimer(CALLBACK(src, PROC_REF(commence_fire)), 2 SECONDS)
 
 /datum/action/cooldown/mob_cooldown/black_n_white/proc/commence_fire()
+	for(var/count in 0 to fire_amount)
+		addtimer(CALLBACK(src, PROC_REF(shoot_projectiles)), count * time_to_fire * 2)
 	for(var/count in 1 to fire_amount)
 		beam_directions(GLOB.cardinals)
 		SLEEP_CHECK_DEATH(time_to_fire, owner)
@@ -481,6 +485,19 @@
 		return
 	animate(owner, alpha = 0, time = 1 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(end_attack)), 1 SECONDS)
+
+/datum/action/cooldown/mob_cooldown/black_n_white/proc/shoot_projectiles()
+	if(isnull(owner))
+		return
+	var/turf/my_turf = get_turf(owner)
+	var/turf/target_turf = get_turf(target)
+	for(var/angle in projectile_angles)
+		var/obj/projectile/deacon_wisp/wisp = new
+		wisp.preparePixelProjectile(my_turf, target_turf)
+		wisp.firer = owner
+		wisp.original = my_turf
+		wisp.fire(angle)
+
 
 /datum/action/cooldown/mob_cooldown/black_n_white/proc/end_attack()
 	if(isnull(owner))
@@ -515,13 +532,19 @@
 /obj/effect/ebeam/reacting/judgement
 	name = "judgement beam"
 	react_on_init = TRUE
+	///damage we apply to whom who enter
+	var/damage_to_apply = 50
 
 /obj/effect/ebeam/reacting/judgement/beam_entered(atom/movable/entered)
 	. = ..()
 	if(!isliving(entered))
 		return
 	var/mob/living/living_entered = entered
-	living_entered.apply_damage(50, BURN)
+	if(!(FACTION_BOSS in living_entered.faction))
+		living_entered.apply_damage(damage_to_apply, BURN)
+
+/obj/effect/ebeam/reacting/judgement/crystal
+	damage_to_apply = 20
 
 /datum/action/cooldown/mob_cooldown/beam_crystal
 	name = "beam crystal"
@@ -835,7 +858,7 @@
 /datum/action/cooldown/mob_cooldown/beam_trial/proc/beam_opposite_crystal(atom/our_crystal, atom/target_crystal)
 	our_crystal.Beam(
 		BeamTarget = target_crystal,
-		beam_type = /obj/effect/ebeam/reacting/judgement,
+		beam_type = /obj/effect/ebeam/reacting/judgement/crystal,
 		icon = 'icons/effects/beam.dmi',
 		icon_state = "holy_beam",
 		beam_color = COLOR_WHITE,
@@ -968,7 +991,7 @@
 		target_turf_list += get_line(crystal, target_turf)
 		crystal.Beam(
 			BeamTarget = target_turf,
-			beam_type = /obj/effect/ebeam/reacting/judgement,
+			beam_type = /obj/effect/ebeam/reacting/judgement/crystal,
 			icon = 'icons/effects/beam.dmi',
 			icon_state = "holy_beam",
 			beam_color = COLOR_WHITE,
@@ -1013,6 +1036,8 @@
 	desc = "Leap upon your target!"
 	cooldown_time = 5 SECONDS
 	shared_cooldown = NONE
+	///angle we fire projectiles at
+	var/list/projectile_angles = list(0, 90, 180, 270)
 
 /datum/action/cooldown/mob_cooldown/bounce/Activate(atom/movable/target)
 	if(isnull(target))
@@ -1035,16 +1060,37 @@
 	owner.forceMove(target)
 	animate(leap, transform = matrix().Scale(0.1, 0.1), time = 0.4 SECONDS)
 	animate(owner, pixel_y = initial(owner.pixel_y), time = 0.4 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(apply_damage)), 0.4 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(apply_damage), target), 0.4 SECONDS)
 
-/datum/action/cooldown/mob_cooldown/bounce/proc/apply_damage(atom/movable/leap)
+/datum/action/cooldown/mob_cooldown/bounce/proc/apply_damage(atom/target)
+	fire_projectiles(target)
+	var/turf/chasmed_turfs = list()
 	for(var/turf/possible_turf as anything in RANGE_TURFS(1, owner))
-		if(isclosedturf(possible_turf))
+		if(isclosedturf(possible_turf) || isgroundlessturf(possible_turf))
 			continue
 		new /obj/effect/temp_visual/mook_dust(possible_turf)
-		possible_turf.TerraformTurf(/turf/open/chasm/icemoon, /turf/open/chasm/icemoon, flags = CHANGETURF_INHERIT_AIR)
+		var/old_turf_type = possible_turf.type
+		var/turf/new_turf = possible_turf.TerraformTurf(/turf/open/chasm/icemoon, /turf/open/chasm/icemoon, flags = CHANGETURF_INHERIT_AIR)
+		chasmed_turfs[new_turf] = old_turf_type
 	for(var/mob/living/living_mob in oview(9, owner))
 		shake_camera(living_mob, duration = 3, strength = 1)
+	addtimer(CALLBACK(src, PROC_REF(revert_turfs), chasmed_turfs), 25 SECONDS)
+
+/datum/action/cooldown/mob_cooldown/bounce/proc/fire_projectiles(atom/target)
+	var/turf/target_turf = get_turf(target)
+	var/turf/my_turf = get_turf(owner)
+	for(var/angle in projectile_angles)
+		var/obj/projectile/deacon_wisp/wisp = new
+		wisp.preparePixelProjectile(my_turf, target_turf)
+		wisp.firer = owner
+		wisp.original = my_turf
+		wisp.fire(angle)
+
+/datum/action/cooldown/mob_cooldown/bounce/proc/revert_turfs(list/chasmed_turfs)
+	for(var/turf/old_turf as anything in chasmed_turfs)
+		var/chasmed_turf_type = chasmed_turfs[old_turf]
+		chasmed_turfs -= old_turf
+		old_turf.TerraformTurf(chasmed_turf_type, chasmed_turf_type, flags = CHANGETURF_INHERIT_AIR)
 
 /datum/action/cooldown/mob_cooldown/domain_teleport/heaven
 	name = "heaven domain"
@@ -1065,3 +1111,17 @@
 	pixel_x = -32
 	base_pixel_x = -32
 	duration = 10 SECONDS
+
+/obj/projectile/deacon_wisp
+	name = "deacon wisp"
+	icon_state = "deacon_wisp"
+	damage = 15
+	armour_penetration = 100
+	light_range = 2
+	light_color = COLOR_WHITE
+	speed = 2
+	pixel_speed_multiplier = 0.3
+	damage_type = BURN
+	pass_flags = PASSTABLE
+	plane = GAME_PLANE
+	nondirectional_sprite = TRUE

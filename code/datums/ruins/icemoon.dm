@@ -91,12 +91,29 @@
 	has_ceiling = FALSE
 	unpickable = TRUE
 
-/datum/map_template/ruin/icemoon/deacon_hell
+/datum/map_template/ruin/icemoon/delapitated_church
+	name = "Ice-Ruin Delapitated Church"
+	id = "delapitatedchurch"
+	description = "A once beautiful holy place for worship of god, what happened in there?"
+	suffix = "icemoon_surface_delapitated_church.dmm"
+	always_place = TRUE
+	always_spawn_with = list(/datum/map_template/ruin/icemoon/underground/delapitated_church_below = PLACE_BELOW)
+
+/datum/map_template/ruin/icemoon/underground/delapitated_church_below
+	name = "Ice-Ruin Delapitated Church Undeground"
+	id = "delapitatedchurch-underground"
+	description = "Does the horror not end?"
+	suffix = "icemoon_underground_delapitated_church.dmm"
+	has_ceiling = FALSE
+	unpickable = TRUE
+	always_spawn_with = list(/datum/map_template/ruin/icemoon/underground/deacon_hell = PLACE_BELOW)
+
+/datum/map_template/ruin/icemoon/underground/deacon_hell
 	name = "Deacon hell"
 	id = "deaconhell"
 	description = "Burn for your sins"
 	suffix = "icemoon_underground_deacon_hell.dmm"
-	always_place = TRUE
+	unpickable = TRUE
 
 // below ground only
 

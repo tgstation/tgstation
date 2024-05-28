@@ -1,0 +1,115 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"eB" = (
+/obj/structure/railing/corner,
+/obj/structure/flora/grass/brown/style_random,
+/obj/structure/statue/bone/rib,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"fl" = (
+/obj/structure/closet/crate/grave,
+/obj/item/book/bible,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"gv" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/structure/closet/crate/grave,
+/obj/item/reagent_containers/cup/glass/bottle/holywater,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"kd" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"lH" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"mP" = (
+/obj/structure/statue/bone/rib,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Fn" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"KT" = (
+/obj/structure/flora/grass/brown/style_random,
+/obj/structure/statue/bone/rib,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Oe" = (
+/obj/structure/fluff/divine/convertaltar,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Wr" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+
+(1,1,1) = {"
+lH
+mP
+KT
+KT
+mP
+lH
+"}
+(2,1,1) = {"
+lH
+lH
+kd
+lH
+lH
+lH
+"}
+(3,1,1) = {"
+lH
+lH
+lH
+lH
+lH
+lH
+"}
+(4,1,1) = {"
+lH
+lH
+Oe
+lH
+fl
+lH
+"}
+(5,1,1) = {"
+lH
+lH
+Oe
+lH
+gv
+lH
+"}
+(6,1,1) = {"
+lH
+kd
+lH
+Fn
+lH
+lH
+"}
+(7,1,1) = {"
+lH
+lH
+lH
+lH
+Wr
+lH
+"}
+(8,1,1) = {"
+lH
+mP
+mP
+KT
+eB
+lH
+"}
