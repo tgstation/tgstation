@@ -107,7 +107,7 @@
 			continue
 		if(space_los(meteor_to_destroy))
 			var/turf/beam_from = get_turf(src)
-			beam_from.Beam(get_turf(meteor_to_destroy), icon_state="sat_beam", time = 5)
+			beam_from.Beam(get_turf(meteor_to_destroy), icon_state="sat_beam", time = 3)
 			if(meteor_to_destroy.shield_defense(src))
 				qdel(meteor_to_destroy)
 
