@@ -40,6 +40,12 @@
 	///Subsystem ID. Used for when we need a technical name for the SS used by SSmetrics
 	var/ss_id = "generic_ss_id"
 
+	/**
+	 * boolean set by admins. if TRUE then this subsystem will stop the world profiler after ignite() returns and start it again when called.
+	 * used so that you can audit a specific subsystem or group of subsystems' synchronous call chain.
+	 */
+	var/profiler_focused = FALSE
+
 	/*
 	 * The following variables are managed by the MC and should not be modified directly.
 	 */
