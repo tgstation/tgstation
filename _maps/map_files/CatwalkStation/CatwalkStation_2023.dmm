@@ -10002,14 +10002,6 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/engine/vacuum,
 /area/station/science/explab)
-"egJ" = (
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/effect/turf_decal/trimline/blue/filled/mid_joiner,
-/obj/machinery/computer/department_orders/medical{
-	dir = 1
-	},
-/turf/open/floor/iron/white/textured_large,
-/area/station/medical/medbay/central)
 "egL" = (
 /obj/structure/railing/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -10149,8 +10141,8 @@
 /area/station/maintenance/starboard/aft)
 "ekB" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
 /obj/structure/window/reinforced/tinted/spawner/directional/south,
+/obj/effect/spawner/random/bedsheet,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "ekK" = (
@@ -21480,6 +21472,12 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/requests_console/directional/north{
+	department = "Medbay";
+	name = "Medbay Requests Console"
+	},
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "iTI" = (
@@ -22690,9 +22688,25 @@
 /area/space)
 "jsT" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/machinery/computer/cargo/request{
-	dir = 1
+/obj/machinery/requests_console/directional/south{
+	department = "Engineering";
+	name = "Engineering Requests Console"
 	},
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_y = 6;
+	pixel_x = -5
+	},
+/obj/item/stamp/granted{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/obj/item/stamp/denied{
+	pixel_y = 1;
+	pixel_x = 8
+	},
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "jtc" = (
@@ -24686,7 +24700,8 @@
 /area/station/maintenance/solars/port/aft)
 "kfX" = (
 /obj/vehicle/sealed/mecha/ripley/cargo{
-	name = "\improper APLU \";\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tCargostormer 3\""=None
+	name = "\improper APLU \";
+	\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tCargostormer 3\""=None
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -33349,7 +33364,7 @@
 /turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
 "nHL" = (
-/mob/living/simple_animal/slime,
+/mob/living/basic/slime,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "nHS" = (
@@ -34565,7 +34580,6 @@
 "ojZ" = (
 /obj/structure/bed,
 /obj/structure/window/reinforced/tinted/spawner/directional/south,
-/obj/item/bedsheet/dorms,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
@@ -36483,6 +36497,7 @@
 	fax_name = "Engineering Lobby";
 	name = "Engineering Lobby Fax Machine"
 	},
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "paB" = (
@@ -38896,14 +38911,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
-"qbh" = (
-/obj/structure/bed,
-/obj/item/bedsheet/dorms,
-/obj/structure/window/reinforced/tinted/spawner/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
-/area/station/commons/dorms)
 "qbi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -39440,7 +39447,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/computer/department_orders/science,
 /turf/open/floor/iron,
 /area/station/science/research)
 "qna" = (
@@ -40251,6 +40257,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
+"qFa" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/modular_computer/preset/cargochat/medical,
+/turf/open/floor/wood,
+/area/station/medical/medbay/central)
 "qFk" = (
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
@@ -41960,8 +41973,7 @@
 /obj/machinery/requests_console/directional/east{
 	department = "Bridge";
 	name = "Bridge Requests Console";
-	pixel_x = 0;
-	pixel_y = -32
+	pixel_x = -32
 	},
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/information,
@@ -50994,9 +51006,7 @@
 /turf/open/floor/iron/large,
 /area/space)
 "vaO" = (
-/obj/machinery/computer/department_orders/service{
-	dir = 1
-	},
+/obj/structure/table,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "vaP" = (
@@ -53665,6 +53675,7 @@
 /obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/item/cigbutt,
 /obj/structure/bed/maint,
+/obj/effect/spawner/random/bedsheet,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "wfq" = (
@@ -55150,14 +55161,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/wood,
 /area/station/service/chapel)
-"wJL" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/effect/turf_decal/trimline/yellow/filled/mid_joiner,
-/obj/machinery/modular_computer/preset/cargochat/medical{
-	dir = 1
-	},
-/turf/open/floor/iron/white/textured_large,
-/area/station/medical/medbay/central)
 "wKb" = (
 /turf/closed/wall,
 /area/station/maintenance/starboard/aft)
@@ -89601,7 +89604,7 @@ oiH
 gXT
 tRH
 irh
-pAn
+qFa
 xaH
 hXT
 nap
@@ -90377,7 +90380,7 @@ tMg
 lEe
 nap
 hXT
-wJL
+vmJ
 gOm
 oYy
 cfi
@@ -90634,7 +90637,7 @@ tMg
 nKB
 tuu
 hXT
-egJ
+xsC
 pdO
 pmL
 oTO
@@ -96274,7 +96277,7 @@ qJM
 dUP
 arT
 wps
-wps
+nHL
 lKK
 mJp
 nHL
@@ -96285,7 +96288,7 @@ hhp
 hhp
 arT
 wps
-wps
+nHL
 lKK
 mJp
 nHL
@@ -98073,10 +98076,10 @@ nxR
 nmu
 arT
 wps
-wps
+nHL
 lKK
 mJp
-wps
+nHL
 wps
 arT
 rlu
@@ -98087,7 +98090,7 @@ wps
 nHL
 lKK
 mJp
-wps
+nHL
 wps
 arT
 qeG
@@ -161757,7 +161760,7 @@ xHP
 xHP
 pRO
 wIK
-qbh
+ojZ
 auA
 fUJ
 vMG
