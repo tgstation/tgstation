@@ -112,7 +112,7 @@
 	return TRUE
 
 /datum/candidate_poll/proc/do_never_for_this_round(mob/candidate)
-	LAZYADDASSOC(GLOB.poll_ignore, ignoring_category, candidate.ckey)
+	LAZYADDASSOCLIST(GLOB.poll_ignore, ignoring_category, candidate.ckey)
 	to_chat(candidate, span_danger("Choice registered: Never for this round."))
 	remove_candidate(candidate, silent = TRUE)
 
