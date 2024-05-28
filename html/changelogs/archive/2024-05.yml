@@ -700,3 +700,56 @@
   - qol: Made borg inventory not shift around depending on equipped items
   tmyqlfpir:
   - bugfix: '[Ice Box Station] Dorm 1''s door no longer shares ID with dorm 2''s door'
+2024-05-27:
+  Melbert:
+  - refactor: Refactored the way high toxins cause you to vomit.
+  Time-Green:
+  - rscdel: Removes sentient disease from the game
+  - rscdel: Miasma and gibs no longer generates random diseases
+  YesterdaysPromise:
+  - image: Cleaned a single stray pixel in a single frame of a bite telegraphing accidentaly
+      found while re-organizing the files.
+  by INFRARED_BARON:
+  - image: Changes the sprites of bone and ash drake armor (suit + helmet mob/objs)
+  necromanceranne:
+  - bugfix: Material floor tiles once again have their improved sprite.
+2024-05-28:
+  Echriser:
+  - bugfix: computers with no lights can now turn on using the on/off signal
+  - bugfix: RGB lights on PDA circuits now use a signal
+  - bugfix: the is_off signal now works on consoles
+  - bugfix: printing text on a console component now uses a signal
+  - refactor: each input signal in console circuits now have their own proc
+  EnterTheJake:
+  - bugfix: Rust debuffs now gets properly removed if you derust a tile you  are standing
+      on.
+  Fikou:
+  - image: makes food hud burger icon have a sharp outline
+  Fluffles:
+  - bugfix: echolocation is less laggy. and works.
+  Higgin:
+  - balance: Viruses now self-heal much more effectively with good mood, sleep, food,
+      and spaceacillin.
+  - balance: Viruses now punish being hungry more. Stay fed!
+  - balance: Spaceacillin now gives 200 ticks of symptom resistance, declining over
+      time, rather than 100.
+  - balance: Viruses now progress slightly slower.
+  - balance: Viruses now only hide if their stealth stat is greater than their total
+      computed severity.
+  Jacquerel:
+  - balance: Mobs significantly larger than humans, such as Space Dragons and Xenomorph
+      Queens, breakout of being arrested by a mech significantly faster.
+  - bugfix: Venus Man Traps cannot use vines to drag around machines or objects that
+      are bolted, welded, rooted to, or otherwise are part of the ground
+  - bugfix: Standing on a table will not prevent you from being grappled by a Venus
+      Man Trap
+  LemonInTheDark:
+  - refactor: I have reworked how parallax and its animations (space travel) work.
+      Please report any bugs lads!
+  Pickle-Coding:
+  - spellcheck: Fixes labour camp shuttle retrieval message starting with "/p".
+  Whoneedspacee:
+  - refactor: Wendigos abilities have been changed into actions that can be added
+      to any mob.
+  zxaber:
+  - qol: Traitor-created Infected AIs no longer hear the Malf AI antag sound alert.
