@@ -49,10 +49,10 @@ export const LoadoutPage = () => {
   return (
     <ServerPreferencesFetcher
       render={(serverData) => {
-        const loadoutServerData: ServerData = serverData;
-        if (!loadoutServerData) {
+        if (!serverData) {
           return <NoticeBox>Loading...</NoticeBox>;
         }
+        const loadoutServerData: ServerData = serverData;
         return (
           <LoadoutPageInner
             loadout_tabs={loadoutServerData.loadout.loadout_tabs}
