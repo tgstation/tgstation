@@ -618,3 +618,138 @@
   norsvenska:
   - spellcheck: The message displayed when adjusting a mask no longer incorrectly
       states the way in which the mask has moved.
+2024-05-23:
+  Jacquerel:
+  - balance: The melee attacks from small mobs spawned by Legions can now be dodged.
+  - balance: Legions spawn their mobs less often.
+  - bugfix: Legions cannot spawn mobs while inside pipes or closets.
+  Muffindrake:
+  - balance: reduced claymore/weak force from 30 to 24 and armor penetration from
+      15 to 10
+  hack-wrench:
+  - rscadd: Added RUN_SERVER.bat for maintainer issues
+  paganiy:
+  - balance: Auto-aim in combat mode at mobs on the floor is disabled after the projectile
+      passes 10 tiles.
+2024-05-24:
+  00-Steven:
+  - bugfix: Smoker quirk users can select a favourite brand again.
+  Ben10Omintrix:
+  - rscadd: adds a new fish to lava and plasma rivers, the lava loop
+  DATA-xPUNGED:
+  - bugfix: The Lance Crew Evacuation System now moves in the right direction in Hyperspace.
+  EEASAS:
+  - rscadd: Remapped NorthStar's medbay a little bit
+  Rhials:
+  - spellcheck: Fixes a typo with latejoin AIs
+  by INFRARED_BARON:
+  - image: 'Changes icons of: Gygax, d-gygax, durand, ripley variants, firefighter
+      statue, phazon & odysseus. Adds new icons for polar hide item.'
+2024-05-25:
+  00-Steven:
+  - bugfix: Airlock electronics created by deconstructing roundstart airlocks inherit
+      their cycling id properly.
+  - spellcheck: Examining a renamed airlock assembly no longer says it has a paper
+      placard that is "labelled with written on it is".
+  - bugfix: Mixing the reagents for moon rocks, bLaSToFF ampoules, or SaturnX globs
+      in amounts less than the minimum for the recipe no longer eats the reagents
+      without doing anything.
+  - bugfix: Airlocks without access requirements no longer create airlock electronics
+      with a broken menu.
+  - spellcheck: When a vendor tells you something dropped onto the floor, the line
+      no longer starts with a broken character in the case of cigarette boxes.
+  Ben10Omintrix:
+  - balance: you can now polymorph into raptors
+  - balance: raptors overall have less health and no longer have armor against ranged
+      attacks
+  BramvanZijp:
+  - bugfix: Fixed an inconsistency regarding the interactions between the Piercing
+      Hypo Borg upgrade and Hacked Borg Hypos.
+  Derpguy3:
+  - spellcheck: A handful of grammar errors in some department signs has been fixed.
+  Jacquerel:
+  - bugfix: The destructive analyser once more hungers for multitools
+  PapaMichael:
+  - bugfix: Epinephrine will prevent metabolism of all allergic reagents (instead
+      of just one), if taken with multiple chemicals that one is allergic to.
+  TiviPlus:
+  - qol: Added a "Remind me later" button for tutorials
+  Twaticus:
+  - image: resprites egg (and more)
+  jlsnow301:
+  - bugfix: You can no longer open the loot panel at range as a blind person and cheese
+      item names
+  nikothedude:
+  - code_imp: New signals for atom storage remove and insert
+2024-05-26:
+  Jacquerel:
+  - bugfix: Ghosts can more reliably become a harvester.
+  OverwatchVoice:
+  - qol: The "Proto-Nitrate BZ response" atmsopheric reaction now lists it's required
+      temperature.
+  Rhials:
+  - admin: Admins can now reroll random events into something else.
+  grungussuss:
+  - qol: tramstation upload now has an extra motion camera
+  - qol: tramstation SM setup now has an emergency cooling setup
+  - bugfix: changed layout of Northstar dining hall so customer bots can reach the
+      kitchen counter
+  paganiy:
+  - bugfix: You can shoot at items on the floor again
+  thegrb93:
+  - qol: Made borg inventory not shift around depending on equipped items
+  tmyqlfpir:
+  - bugfix: '[Ice Box Station] Dorm 1''s door no longer shares ID with dorm 2''s door'
+2024-05-27:
+  Melbert:
+  - refactor: Refactored the way high toxins cause you to vomit.
+  Time-Green:
+  - rscdel: Removes sentient disease from the game
+  - rscdel: Miasma and gibs no longer generates random diseases
+  YesterdaysPromise:
+  - image: Cleaned a single stray pixel in a single frame of a bite telegraphing accidentaly
+      found while re-organizing the files.
+  by INFRARED_BARON:
+  - image: Changes the sprites of bone and ash drake armor (suit + helmet mob/objs)
+  necromanceranne:
+  - bugfix: Material floor tiles once again have their improved sprite.
+2024-05-28:
+  Echriser:
+  - bugfix: computers with no lights can now turn on using the on/off signal
+  - bugfix: RGB lights on PDA circuits now use a signal
+  - bugfix: the is_off signal now works on consoles
+  - bugfix: printing text on a console component now uses a signal
+  - refactor: each input signal in console circuits now have their own proc
+  EnterTheJake:
+  - bugfix: Rust debuffs now gets properly removed if you derust a tile you  are standing
+      on.
+  Fikou:
+  - image: makes food hud burger icon have a sharp outline
+  Fluffles:
+  - bugfix: echolocation is less laggy. and works.
+  Higgin:
+  - balance: Viruses now self-heal much more effectively with good mood, sleep, food,
+      and spaceacillin.
+  - balance: Viruses now punish being hungry more. Stay fed!
+  - balance: Spaceacillin now gives 200 ticks of symptom resistance, declining over
+      time, rather than 100.
+  - balance: Viruses now progress slightly slower.
+  - balance: Viruses now only hide if their stealth stat is greater than their total
+      computed severity.
+  Jacquerel:
+  - balance: Mobs significantly larger than humans, such as Space Dragons and Xenomorph
+      Queens, breakout of being arrested by a mech significantly faster.
+  - bugfix: Venus Man Traps cannot use vines to drag around machines or objects that
+      are bolted, welded, rooted to, or otherwise are part of the ground
+  - bugfix: Standing on a table will not prevent you from being grappled by a Venus
+      Man Trap
+  LemonInTheDark:
+  - refactor: I have reworked how parallax and its animations (space travel) work.
+      Please report any bugs lads!
+  Pickle-Coding:
+  - spellcheck: Fixes labour camp shuttle retrieval message starting with "/p".
+  Whoneedspacee:
+  - refactor: Wendigos abilities have been changed into actions that can be added
+      to any mob.
+  zxaber:
+  - qol: Traitor-created Infected AIs no longer hear the Malf AI antag sound alert.

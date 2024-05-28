@@ -1,0 +1,6 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "some missing modsuit (un)sealing messages should no longer be missing"
+  - bugfix: "MOD circuit adapter core deployed parts output should work again"
+  - bugfix: "Modsuit painter works again"
