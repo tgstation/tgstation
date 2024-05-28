@@ -2763,6 +2763,7 @@
 #include "code\game\turfs\open\openspace.dm"
 #include "code\game\turfs\open\planet.dm"
 #include "code\game\turfs\open\river.dm"
+#include "code\game\turfs\open\roots.dm"
 #include "code\game\turfs\open\sand.dm"
 #include "code\game\turfs\open\snow.dm"
 #include "code\game\turfs\open\water.dm"
