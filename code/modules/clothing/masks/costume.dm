@@ -4,6 +4,7 @@
 	icon_state = "joy"
 	clothing_flags = MASKINTERNALS
 	flags_inv = HIDESNOUT
+	obj_flags = parent_type::obj_flags | INFINITE_RESKIN
 	unique_reskin = list(
 			"Joy" = "joy",
 			"Flushed" = "flushed",
@@ -16,7 +17,6 @@
 /obj/item/clothing/mask/joy/reskin_obj(mob/user)
 	. = ..()
 	user.update_worn_mask()
-	current_skin = null//so we can infinitely reskin
 
 /obj/item/clothing/mask/mummy
 	name = "mummy mask"

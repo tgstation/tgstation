@@ -1147,7 +1147,7 @@
 /turf/open/indestructible/binary{
 	density = 1;
 	desc = "No, I am not going through this.";
-	icon = 'icons/misc/beach.dmi';
+	icon = 'icons/obj/fluff/beach.dmi';
 	icon_state = "water";
 	name = "dirty water"
 	},

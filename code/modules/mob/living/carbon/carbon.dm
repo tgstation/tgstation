@@ -117,12 +117,14 @@
 	throw_mode = THROW_MODE_DISABLED
 	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_off"
+	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
 
 
 /mob/living/carbon/proc/throw_mode_on(mode = THROW_MODE_TOGGLE)
 	throw_mode = mode
 	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_on"
+	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
 
 /mob/proc/throw_item(atom/target)
 	SEND_SIGNAL(src, COMSIG_MOB_THROW, target)
@@ -1125,14 +1127,14 @@
 			return
 		var/list/limb_list = list()
 		if(edit_action == "remove")
-			for(var/obj/item/bodypart/B as anything in bodyparts)
-				limb_list += B.body_zone
+			for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+				limb_list += iter_part.body_zone
 				limb_list -= BODY_ZONE_CHEST
 		else
 			limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_CHEST)
 		var/result = input(usr, "Please choose which bodypart to [edit_action]","[capitalize(edit_action)] Bodypart") as null|anything in sort_list(limb_list)
 		if(result)
-			var/obj/item/bodypart/BP = get_bodypart(result)
+			var/obj/item/bodypart/part = get_bodypart(result)
 			var/list/limbtypes = list()
 			switch(result)
 				if(BODY_ZONE_CHEST)
@@ -1149,9 +1151,9 @@
 					limbtypes = typesof(/obj/item/bodypart/leg/right)
 			switch(edit_action)
 				if("remove")
-					if(BP)
-						BP.drop_limb()
-						admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [parse_zone(BP.body_zone)]")
+					if(part)
+						part.drop_limb()
+						admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [part.plaintext_zone]")
 					else
 						to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
 						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
@@ -1159,8 +1161,8 @@
 					var/limb2add = input(usr, "Select a bodypart type to add", "Add/Replace Bodypart") as null|anything in sort_list(limbtypes)
 					var/obj/item/bodypart/new_bp = new limb2add()
 					if(new_bp.replace_limb(src, special = TRUE))
-						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [BP.type] with [new_bp.type]")
-						qdel(BP)
+						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [part.type] with [new_bp.type]")
+						qdel(part)
 					else
 						to_chat(usr, "Failed to replace bodypart! They might be incompatible.")
 						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")

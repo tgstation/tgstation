@@ -295,6 +295,8 @@
 		return TRUE
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
+	if(SEND_SIGNAL(AM, COMSIG_MOVABLE_BUMP_PUSHED, src, force) & COMPONENT_NO_PUSH)
+		return
 	now_pushing = TRUE
 	SEND_SIGNAL(src, COMSIG_LIVING_PUSHING_MOVABLE, AM)
 	var/dir_to_target = get_dir(src, AM)
@@ -607,10 +609,11 @@
  * Returns the access list for this mob
  */
 /mob/living/proc/get_access()
+	var/list/access_list = list()
+	SEND_SIGNAL(src, COMSIG_MOB_RETRIEVE_SIMPLE_ACCESS, access_list)
 	var/obj/item/card/id/id = get_idcard()
-	if(isnull(id))
-		return list()
-	return id.GetAccess()
+	access_list += id?.GetAccess()
+	return access_list
 
 /mob/living/proc/get_id_in_hand()
 	var/obj/item/held_item = get_active_held_item()
