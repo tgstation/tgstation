@@ -353,6 +353,7 @@
 	created.pixel_x = created.base_pixel_x + rand(-6, 6)
 	created.pixel_y = created.base_pixel_y + rand(-6, 6)
 	created.forceMove(target)
+	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[created.type]"))
 
 	if(is_stack)
 		items_remaining = 0
