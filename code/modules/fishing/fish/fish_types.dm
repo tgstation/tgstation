@@ -16,8 +16,7 @@
 
 /obj/item/fish/goldfish/gill
 	name = "McGill"
-	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case, \
-		they work for justice from within the shadows."
+	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case."
 	stable_population = 1
 	random_case_rarity = FISH_RARITY_NOPE
 
