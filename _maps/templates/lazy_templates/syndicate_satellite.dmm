@@ -651,12 +651,6 @@
 	},
 /turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership)
-"wo" = (
-/obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/multiz/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/centcom/syndicate_mothership)
 "wp" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
 	dir = 1
@@ -2244,7 +2238,7 @@ dk
 Go
 Go
 mL
-wo
+kB
 by
 Go
 Sq
