@@ -1,6 +1,0 @@
-author: "Absolucy, san7890"
-delete-after: True
-changes:
-  - qol: "The game now supports export of your preferences into a JSON file! The verb (export-preferences) should now be available in the OOC tab of your stat-panel if enabled by server operators."
-  - server: "Exporting player preferences is controlled by a configuration option, 'FORBID_PREFERENCES_EXPORT'. If you do not wish to let clients access the ftp() function to their own preferences file (probably for bandwidth reasons?) you should uncomment this or add it to your config somehow."
-  - config: "Server operators are also able to set the cooldown between requests to download the JSON Preferences file via the 'SECONDS_COOLDOWN_FOR_PREFERENCES_EXPORT' config option."

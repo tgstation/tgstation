@@ -263,3 +263,30 @@
   - admin: Welcome to our Christian Minecraft Server.
   Uristthedorf:
   - balance: Durathread is stronger now.
+2024-05-28:
+  Absolucy, Fluffles:
+  - bugfix: Hats/glasses/masks should hopefully behave more predictably for the purposes
+      of eye/mouth surgery.
+  Absolucy, san7890:
+  - qol: The game now supports export of your preferences into a JSON file! The verb
+      (export-preferences) should now be available in the OOC tab of your stat-panel
+      if enabled by server operators.
+  - server: Exporting player preferences is controlled by a configuration option,
+      'FORBID_PREFERENCES_EXPORT'. If you do not wish to let clients access the ftp()
+      function to their own preferences file (probably for bandwidth reasons?) you
+      should uncomment this or add it to your config somehow.
+  - config: Server operators are also able to set the cooldown between requests to
+      download the JSON Preferences file via the 'SECONDS_COOLDOWN_FOR_PREFERENCES_EXPORT'
+      config option.
+  AlbertNanotracen:
+  - rscadd: Circuit tiles now all stack with each other and can be used in-hand to
+      recolor
+  - image: Animated circuit tiles have valid sprites for when there is no power
+  KnigTheThrasher:
+  - bugfix: fixed toolset implant in charlie and added a cyberlink there
+  - rscadd: Kilostation is back! Rejoice
+  - rscadd: Major reworks in Kilo departments that try to make them less claustrophobic
+  Odairu:
+  - rscadd: Stamp Right click functionality
+  Tractor Mann:
+  - rscadd: Added IPC bodyparts as researchable prints!
