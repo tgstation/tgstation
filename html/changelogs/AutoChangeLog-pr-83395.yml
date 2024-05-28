@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - refactor: "I have reworked how parallax and its animations (space travel) work. Please report any bugs lads!"

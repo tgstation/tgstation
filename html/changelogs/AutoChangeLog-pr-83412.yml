@@ -1,8 +1,0 @@
-author: "Echriser"
-delete-after: True
-changes:
-  - bugfix: "computers with no lights can now turn on using the on/off signal"
-  - bugfix: "RGB lights on PDA circuits now use a signal"
-  - bugfix: "the is_off signal now works on consoles"
-  - bugfix: "printing text on a console component now uses a signal"
-  - refactor: "each input signal in console circuits now have their own proc"

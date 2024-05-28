@@ -1,4 +1,0 @@
-author: "Fluffles"
-delete-after: True
-changes:
-  - bugfix: "echolocation is less laggy. and works."
