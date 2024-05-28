@@ -84,6 +84,14 @@
 	port_id = "emergency"
 	name = "Base Shuttle Template (Emergency)"
 
+/datum/map_template/shuttle/emergency/New()
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_SHUTTLE_SALE) && credit_cost > 0 && prob(15))
+		var/discount_amount = round(rand(25, 80), 5)
+		name += " ([discount_amount]% Discount!)"
+		var/discount_multiplier = 100 - discount_amount
+		credit_cost = ((credit_cost * discount_multiplier) / 100)
+
 /datum/map_template/shuttle/cargo
 	port_id = "cargo"
 	name = "Base Shuttle Template (Cargo)"

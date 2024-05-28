@@ -1,5 +1,8 @@
 #define LOCKER_FULL -1
 
+///A comprehensive list of all closets (NOT CRATES) in the game world
+GLOBAL_LIST_EMPTY(roundstart_station_closets)
+
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
@@ -82,6 +85,9 @@
 /obj/structure/closet/Initialize(mapload)
 	. = ..()
 
+	if(is_station_level(z) && mapload)
+		add_to_roundstart_list()
+
 	// if closed, any item at the crate's loc is put in the contents
 	if (mapload && !opened)
 		. = INITIALIZE_HINT_LATELOAD
@@ -112,6 +118,7 @@
 /obj/structure/closet/Destroy()
 	QDEL_NULL(door_obj)
 	QDEL_NULL(electronics)
+	GLOB.roundstart_station_closets -= src
 	return ..()
 
 /obj/structure/closet/update_appearance(updates=ALL)
@@ -811,5 +818,9 @@
 
 	locked = FALSE
 	INVOKE_ASYNC(src, PROC_REF(open))
+
+///Adds the closet to a global list. Placed in its own proc so that crates may be excluded.
+/obj/structure/closet/proc/add_to_roundstart_list()
+	GLOB.roundstart_station_closets += src
 
 #undef LOCKER_FULL

@@ -19,7 +19,7 @@ const EMAG_SHUTTLE_NOTICE =
 
 const sortShuttles = sortBy(
   (shuttle) => !shuttle.emagOnly,
-  (shuttle) => shuttle.creditCost
+  (shuttle) => shuttle.initial_cost
 );
 
 const AlertButton = (props, context) => {
