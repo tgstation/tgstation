@@ -984,16 +984,25 @@
 	name = "MOD shock absorption module"
 	desc = "A module that makes the user resistant to the knockdown inflicted by Stun Batons."
 	icon_state = "no_baton"
-	removable = FALSE
-	complexity = 0
+	complexity = 1
 	idle_power_cost = 0
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/shock_absorber)
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 
 /obj/item/mod/module/shock_absorber/on_suit_activation()
 	. = ..()
 	ADD_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, REF(src))
+	RegisterSignal(mod.wearer, COMSIG_MOB_BATONED, PROC_REF(do_visuals))
 
 /obj/item/mod/module/shock_absorber/on_suit_deactivation(deleting)
 	. = ..()
 	REMOVE_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, REF(src))
+	UnregisterSignal(mod.wearer, COMSIG_MOB_BATONED)
+
+/obj/item/mod/module/shock_absorber/proc/do_visuals(datum/source)
+	SIGNAL_HANDLER
+	drain_power(use_energy_cost)
+	var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
+	s.set_up(5, 1, mod.wearer.loc)
+	s.start()

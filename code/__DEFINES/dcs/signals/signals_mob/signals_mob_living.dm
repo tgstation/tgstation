@@ -278,3 +278,5 @@
 #define COMSIG_LIVING_THROW_MODE_TOGGLE "living_throw_mode_toggle"
 ///From /datum/component/happiness()
 #define COMSIG_MOB_HAPPINESS_CHANGE "happiness_change"
+/// From /obj/item/melee/baton/baton_effect()
+#define COMSIG_MOB_BATONED "mob_batoned"
