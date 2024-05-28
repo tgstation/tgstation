@@ -221,7 +221,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 		TO WELCOME YOU INTO OUR SPACE IF YOU PAY %PAYOFF AS HOMAGE TO OUR LAW. BE WISE ON YOUR CHOICE!! \
 		(send message. send message. why message not sent?)."
 	arrival_announcement = "I FIGURED OUT HOW TO FLY MY SHIP, WE WILL BE DOCKING NEXT TO YOU IN A MINUTE!!"
-	possible_answers = list("Please don't hurt me.","You are dumb, go larp somewhere else.")
+	possible_answers = list("Alright, i like my skull intact.","You are dumb, go larp somewhere else.")
 
 	response_received = "THIS WILL SUFFICE, REMEMBER WHO OWNS YOU!!"
 	response_rejected = "FOOLISH DECISION, I'LL MAKE AN EXAMPLE OUT OF YOUR CARCASS!! (does anyone remember how to pilot our ship?)"

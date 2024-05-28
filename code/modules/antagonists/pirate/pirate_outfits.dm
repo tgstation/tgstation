@@ -153,7 +153,7 @@
 	name = "Medieval Warmonger"
 
 	id = null
-	glasses = null
+	glasses = /obj/item/clothing/glasses/sunglasses
 	uniform = /obj/item/clothing/under/costume/gamberson/military
 	suit = /obj/item/clothing/suit/armor/vest/military
 	suit_store = /obj/item/spear/military
