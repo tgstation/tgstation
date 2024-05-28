@@ -308,7 +308,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /turf/closed/indestructible/hoteldoor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Peak through"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Peek through"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /turf/closed/indestructible/hoteldoor/proc/promptExit(mob/living/user)
