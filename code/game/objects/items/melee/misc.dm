@@ -330,7 +330,7 @@
 	attack_verb_simple = list("flog", "whip", "lash", "discipline")
 	hitsound = 'sound/weapons/whip.ogg'
 
-/obj/item/melee/curator_whip/attack(target, mob/user, proximity_flag)
+/obj/item/melee/curator_whip/attack(mob/living/target, mob/living/user, params)
 	.= ..()
 	if(.)
 		return
