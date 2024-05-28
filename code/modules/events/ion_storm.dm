@@ -573,11 +573,7 @@
 							message = "ALL [ionthreats] ARE NOW NAMED [ionobjects]."
 		if(42 to 46)//Pets are something else now
 			switch(rand(1,4))//What are they now?
-				if(1)//They're a human
-					message = "[ionpet] IS HUMAN"
-				if(2)//I want this to roll multiple times and can't figure out a better way, please help)
-					message = "[ionpet] IS HUMAN"
-				if(3)
+				if(1 to 3)//They're a human
 					message = "[ionpet] IS HUMAN"
 				if(4)//They're something else (This is to cover for other lawsets)
 					switch(rand(1,6))
