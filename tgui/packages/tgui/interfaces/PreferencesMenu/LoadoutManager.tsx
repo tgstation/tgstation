@@ -43,6 +43,12 @@ type LoadoutManagerData = PreferencesMenuData & {
   job_clothes: BooleanLike;
 };
 
+type LoadoutServerData = {
+  loadout: {
+    loadout_tabs: LoadoutCategory[];
+  };
+};
+
 export const LoadoutPage = () => {
   return (
     <ServerPreferencesFetcher
@@ -50,9 +56,8 @@ export const LoadoutPage = () => {
         if (!serverData) {
           return <NoticeBox>Loading...</NoticeBox>;
         }
-        const loadout_tabs: LoadoutCategory[] = serverData.loadout
-          .loadout_tabs as LoadoutCategory[];
-        return <LoadoutPageInner loadout_tabs={loadout_tabs} />;
+        const data = serverData as LoadoutServerData;
+        return <LoadoutPageInner loadout_tabs={data.loadout.loadout_tabs} />;
       }}
     />
   );
