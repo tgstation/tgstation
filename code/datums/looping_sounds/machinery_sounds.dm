@@ -91,11 +91,12 @@
 		'sound/machines/tcomms/tcomms_mid7.ogg' = 1,
 	)
 	mid_length = 1.8 SECONDS
-	extra_range = -11
-	falloff_distance = 1
+	extra_range = -8
+	falloff_distance = 3
 	falloff_exponent = 5
-	volume = 50
+	volume = 35
 	ignore_walls = FALSE
+	pressure_affected = FALSE
 
 /datum/looping_sound/computer
 	start_sound = 'sound/machines/computer/computer_start.ogg'
