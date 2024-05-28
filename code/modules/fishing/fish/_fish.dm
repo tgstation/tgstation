@@ -141,7 +141,7 @@
 	/// cooldown on creating tesla zaps
 	COOLDOWN_DECLARE(electrogenesis_cooldown)
 	/// power of the tesla zap created by the fish in a bioelectric generator
-	var/electrogenesis_power = 20 MEGA JOULES
+	var/electrogenesis_power = 10 MEGA JOULES
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()

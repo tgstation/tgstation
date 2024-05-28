@@ -380,31 +380,29 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 /datum/fish_trait/antigrav/apply_to_fish(obj/item/fish/fish)
 	fish.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 
+///Anxiety means the fish will die if in a location with more than 3 fish (including itself)
+///This is just barely enough to crossbreed out of anxiety, but it severely limits the potential of
 /datum/fish_trait/anxiety
 	name = "Anxiety"
 	inheritability = 100
 	diff_traits_inheritability = 70
-	catalog_description = "This fish tends to die of stress if ANY other fish are in the tank. \
-		Seems to allow one other fish of its own kind, any more and it's just too much."
+	catalog_description = "This fish tends to die of stress when forced to be around too many other fish."
 
 /datum/fish_trait/anxiety/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(on_fish_life))
 
-///signal sent when the anxiety fish is fed, killing it if anyone else is in the tank.
+///signal sent when the anxiety fish is fed, killing it if sharing contents with too many fish.
 /datum/fish_trait/anxiety/proc/on_fish_life(obj/item/fish/fish, seconds_per_tick)
 	SIGNAL_HANDLER
+	var/fish_tolerance = 3
 	if(!fish.loc || fish.status == FISH_DEAD)
 		return
-	var/single_mate_found = FALSE
-	for(var/obj/item/other_fish in fish.loc)
-		if(fish == other_fish)
-			continue
-		if(istype(other_fish, fish.type) && !single_mate_found)
-			single_mate_found = TRUE
-			continue
-		fish.loc.visible_message(span_warning("[fish] seems to freak out for a moment, then it stops moving..."))
-		fish.set_status(FISH_DEAD)
-		return
+	for(var/obj/item/other_fish in fish.loc.contents)
+		if(!fish_tolerance)
+			fish.loc.visible_message(span_warning("[fish] seems to freak out for a moment, then it stops moving..."))
+			fish.set_status(FISH_DEAD)
+			return
+		fish_tolerance -= 1
 
 /datum/fish_trait/electrogenesis
 	name = "Electrogenesis"

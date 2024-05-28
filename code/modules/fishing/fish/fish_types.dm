@@ -635,12 +635,12 @@
 
 /obj/item/fish/zipzap
 	name = "anxious zipzap"
-	desc = "An incredibly anxiety-ridden and electroreceptive fish. Worried about the walls of its tank closing in constantly. Both literally and as a general metaphorical unease about life's direction."
+	desc = "A fish overflowing with crippling anxiety and electric potential. Worried about the walls of its tank closing in constantly. Both literally and as a general metaphorical unease about life's direction."
 	icon_state = "zipzap"
 	icon_state_dead = "zipzap_dead"
 	sprite_width = 8
 	sprite_height = 8
-	stable_population = 1
+	stable_population = 3
 	average_size = 30
 	average_weight = 500
 	random_case_rarity = FISH_RARITY_VERY_RARE
@@ -653,3 +653,5 @@
 		/datum/fish_trait/anxiety,
 		/datum/fish_trait/electrogenesis
 	)
+	//anxiety naturally limits the amount of zipzaps per tank, so they are stronger alone
+	electrogenesis_power = 20 MEGA JOULES
