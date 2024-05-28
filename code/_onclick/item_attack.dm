@@ -234,7 +234,6 @@
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
 
 	user.do_attack_animation(target_mob)
-
 	if(!target_mob.attacked_by(src, user))
 		return TRUE
 
