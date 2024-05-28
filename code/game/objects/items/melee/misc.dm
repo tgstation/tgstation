@@ -334,7 +334,7 @@
 	.= ..()
 	if(.)
 		return
-	if(ishuman(target) && proximity_flag)
+	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		human_target.drop_all_held_items()
 		human_target.visible_message(span_danger("[user] disarms [human_target]!"), span_userdanger("[user] disarmed you!"))
