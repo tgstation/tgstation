@@ -15316,7 +15316,7 @@
 "fzZ" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "r2p";
-	dir = 1
+	dir = 8
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -16029,6 +16029,10 @@
 /area/station/engineering/atmos)
 "fMT" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "r1p";
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/medical/patients_rooms/room_a)
 "fMW" = (
@@ -17304,8 +17308,8 @@
 "gjw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/junction{
-	dir = 8
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white/textured_large,
@@ -63164,12 +63168,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "wur" = (
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/camera/autoname/directional/north{
 	network = list("ss13","medbay")
 	},
-/obj/structure/disposalpipe/trunk,
 /turf/open/floor/iron/textured_large,
 /area/station/medical/treatment_center)
 "wus" = (
