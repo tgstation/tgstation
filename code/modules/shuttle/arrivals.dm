@@ -112,7 +112,7 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
-	for(var/mob/player in GLOB.player_list)
+	for(var/mob/player as anything in GLOB.player_list)
 		if((get_area(player) in areas) && (player.stat != DEAD) && !HAS_TRAIT(player, TRAIT_BLOCK_SHUTTLE_MOVEMENT))
 			return TRUE
 	return FALSE
