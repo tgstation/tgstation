@@ -6885,6 +6885,8 @@
 #include "monkestation\code\modules\reagents\reagent_containers.dm"
 #include "monkestation\code\modules\reagents\reagents.dm"
 #include "monkestation\code\modules\reagents\sunset_sarsaparilla.dm"
+#include "monkestation\code\modules\reagents\chemistry\reagents\drug_reagents.dm"
+#include "monkestation\code\modules\reagents\chemistry\reagents\other_reagents.dm"
 #include "monkestation\code\modules\reagents\fun\austrialium.dm"
 #include "monkestation\code\modules\reagents\fun\liquid_justice.dm"
 #include "monkestation\code\modules\reagents\fun\shakeium.dm"
