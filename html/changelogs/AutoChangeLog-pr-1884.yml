@@ -1,0 +1,4 @@
+author: "Oricana-16"
+delete-after: True
+changes:
+  - bugfix: "BCIs now correctly show their charge by default."
