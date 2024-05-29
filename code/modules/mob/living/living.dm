@@ -2362,11 +2362,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		SEND_SIGNAL(src, COMSIG_LIVING_LIMBLESS_SLOWDOWN, limbless_slowdown, slowdown_mods)
 		for(var/num in slowdown_mods)
 			limbless_slowdown *= num
-		var/final_slowdown = limbless_slowdown
-		if(final_slowdown == 0)
+		if(limbless_slowdown == 0)
 			remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
 			return
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/limbless, multiplicative_slowdown = final_slowdown)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/limbless, multiplicative_slowdown = limbless_slowdown)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
 
