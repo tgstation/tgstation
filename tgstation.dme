@@ -6958,6 +6958,7 @@
 #include "monkestation\code\modules\slimecore\corral\upgrades\_base_upgrade.dm"
 #include "monkestation\code\modules\slimecore\corral\upgrades\human_docility_upgrade.dm"
 #include "monkestation\code\modules\slimecore\corral\upgrades\obliteration_upgrade.dm"
+#include "monkestation\code\modules\slimecore\crossbreeding\industrial.dm"
 #include "monkestation\code\modules\slimecore\items\crossbreeds.dm"
 #include "monkestation\code\modules\slimecore\items\mutation_syringe.dm"
 #include "monkestation\code\modules\slimecore\items\vacuum_pack.dm"
