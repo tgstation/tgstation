@@ -5,6 +5,8 @@
 	COOLDOWN_DECLARE(warn_cd)
 	/// A counter that tracks every time we've taken enough damage to trigger diminishing returns
 	var/diminishing_return_counter = 0
+	/// If TRUE, we reset stamina to 0 on removal
+	var/refund_stamina = TRUE
 
 /datum/status_effect/incapacitating/stamcrit/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
@@ -12,6 +14,7 @@
 		return .
 
 	// This should be in on apply but we need it to happen AFTER being added to the mob
+	// (Because we need to wait until the status effect is in their status effect list, or we'll add two)
 	if(owner.getStaminaLoss() < 120)
 		// Puts you a little further into the initial stamcrit, makes stamcrit harder to outright counter with chems.
 		owner.adjustStaminaLoss(30, FALSE)
@@ -39,7 +42,8 @@
 	UnregisterSignal(owner, COMSIG_LIVING_HEALTH_UPDATE)
 	UnregisterSignal(owner, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE)
 	owner.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_FLOORED), STAMINA)
-	owner.adjustStaminaLoss(-INFINITY)
+	if(refund_stamina)
+		owner.adjustStaminaLoss(-INFINITY)
 	return ..()
 
 /datum/status_effect/incapacitating/stamcrit/proc/update_diminishing_return(datum/source, type, amount, forced)
@@ -67,4 +71,5 @@
 /datum/status_effect/incapacitating/stamcrit/proc/check_remove(datum/source, ...)
 	SIGNAL_HANDLER
 	if(owner.maxHealth - owner.getStaminaLoss() > owner.crit_threshold)
+		refund_stamina = FALSE // We healed out of stamcrit from some other means, like a chem, don't go all the way to 0
 		qdel(src)
