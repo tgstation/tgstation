@@ -118,7 +118,7 @@
 		if(check_chunky_fingers())
 			balloon_alert(src, "fingers are too big!")
 			return FALSE
-	if(HAS_TRAIT(src, TRAIT_NOGUNS))
+	if(HAS_TRAIT(src, TRAIT_NOGUNS) && !istype(G, /obj/item/gun/ballistic/bow)) /// bow is not a gun
 		to_chat(src, span_warning("You can't bring yourself to use a ranged weapon!"))
 		return FALSE
 

@@ -8,7 +8,7 @@
 	l_pocket = /obj/item/grenade/c4/ninja
 	r_pocket = /obj/item/tank/internals/emergency_oxygen
 	internals_slot = ITEM_SLOT_RPOCKET
-	belt = /obj/item/energy_katana
+	r_hand = /obj/item/energy_case
 	back = /obj/item/mod/control/pre_equipped/ninja
 	implants = list(/obj/item/implant/explosive)
 
@@ -21,11 +21,6 @@
 		return
 	var/obj/item/mod/module/dna_lock/reinforced/lock = locate(/obj/item/mod/module/dna_lock/reinforced) in mod.modules
 	lock.dna = ninja.dna.unique_enzymes
-	var/obj/item/mod/module/weapon_recall/recall = locate(/obj/item/mod/module/weapon_recall) in mod.modules
-	var/obj/item/weapon = ninja.belt
-	if(!istype(weapon, recall.accepted_type))
-		return
-	recall.set_weapon(weapon)
 
 /datum/outfit/ninja_preview
 	name = "Space Ninja (Preview only)"

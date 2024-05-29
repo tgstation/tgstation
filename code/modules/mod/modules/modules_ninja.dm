@@ -174,7 +174,13 @@
 	/// The item linked to the module that will get recalled.
 	var/obj/item/linked_weapon
 	/// The accepted typepath we can link to.
-	var/accepted_type = /obj/item/energy_katana
+	var/list/accepted_types = list(
+		/obj/item/energy_katana,
+		/obj/item/energy_glaive,
+		/obj/item/energy_kusarigama_kama,
+		/obj/item/energy_kusarigama_fundo,
+		/obj/item/gun/ballistic/bow/energy_hankyu
+	)
 
 /obj/item/mod/module/weapon_recall/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_NOGUNS, MOD_TRAIT)
@@ -184,7 +190,9 @@
 
 /obj/item/mod/module/weapon_recall/on_use()
 	if(!linked_weapon)
-		var/obj/item/weapon_to_link = mod.wearer.is_holding_item_of_type(accepted_type)
+		var/obj/item/weapon_to_link
+		if(is_type_in_list(mod.wearer.get_active_held_item(), accepted_types))
+			weapon_to_link = mod.wearer.get_active_held_item()
 		if(!weapon_to_link)
 			balloon_alert(mod.wearer, "can't locate weapon!")
 			return
