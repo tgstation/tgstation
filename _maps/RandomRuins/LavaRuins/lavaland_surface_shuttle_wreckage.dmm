@@ -1,0 +1,640 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/floor/mineral/titanium/yellow,
+/area/lavaland/surface)
+"c" = (
+/turf/closed/mineral/random,
+/area/lavaland/surface)
+"d" = (
+/obj/structure/table,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"e" = (
+/obj/effect/spawner/random/structure/crate,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"f" = (
+/turf/closed/mineral/titanium,
+/area/lavaland/surface)
+"g" = (
+/mob/living/basic/mining/goliath,
+/turf/open/floor/mineral/titanium/blue,
+/area/lavaland/surface)
+"h" = (
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"i" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/lavaland/surface)
+"j" = (
+/obj/item/shard/titanium,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"k" = (
+/turf/open/floor/mineral/titanium/yellow,
+/area/lavaland/surface)
+"l" = (
+/obj/item/shard/titanium,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface)
+"o" = (
+/obj/structure/window/reinforced/shuttle,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"p" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/lavaland_atmos,
+/area/lavaland/surface)
+"q" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"r" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface)
+"s" = (
+/mob/living/basic/mining/goldgrub,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"t" = (
+/obj/item/stack/sheet/iron,
+/turf/open/floor/mineral/titanium,
+/area/lavaland/surface)
+"u" = (
+/obj/item/shard/titanium,
+/obj/machinery/light/small/directional/east,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"v" = (
+/obj/item/stack/sheet/iron,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"w" = (
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface)
+"x" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Cockpit"
+	},
+/turf/open/floor/mineral/titanium,
+/area/lavaland/surface)
+"y" = (
+/obj/item/shard/titanium,
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"z" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"A" = (
+/mob/living/basic/mining/goliath,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"D" = (
+/obj/structure/door_assembly/door_assembly_shuttle,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"F" = (
+/turf/open/floor/mineral/titanium,
+/area/lavaland/surface)
+"G" = (
+/obj/item/stack/sheet/iron/five,
+/turf/open/floor/mineral/titanium,
+/area/lavaland/surface)
+"H" = (
+/obj/machinery/computer,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"I" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"J" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/lavaland/surface)
+"K" = (
+/obj/item/shard/titanium,
+/obj/item/stack/sheet/iron,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"L" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"M" = (
+/turf/closed/wall/mineral/titanium,
+/area/lavaland/surface)
+"N" = (
+/obj/machinery/computer/communications{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"O" = (
+/obj/structure/window/reinforced/shuttle/unanchored,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"P" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"Q" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/lavaland/surface)
+"R" = (
+/obj/machinery/power/shuttle_engine/heater,
+/turf/open/floor/plating/lavaland_atmos,
+/area/lavaland/surface)
+"S" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/lavaland/surface)
+"T" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"U" = (
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface)
+"V" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface)
+"W" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"X" = (
+/obj/item/stack/sheet/iron/five,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"Y" = (
+/obj/structure/spawner/lavaland/legion,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"Z" = (
+/obj/effect/spawner/random/structure/crate,
+/turf/open/floor/mineral/plastitanium/red,
+/area/lavaland/surface)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+f
+f
+W
+W
+W
+r
+r
+r
+r
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+r
+f
+f
+r
+D
+W
+D
+r
+M
+J
+r
+r
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+c
+c
+r
+M
+M
+M
+r
+r
+j
+y
+h
+M
+i
+Z
+r
+r
+a
+a
+"}
+(4,1,1) = {"
+a
+c
+c
+M
+L
+h
+I
+j
+Q
+S
+j
+W
+w
+w
+w
+i
+r
+r
+r
+a
+"}
+(5,1,1) = {"
+a
+r
+M
+r
+r
+r
+W
+g
+w
+w
+S
+W
+w
+M
+i
+w
+e
+o
+r
+r
+"}
+(6,1,1) = {"
+r
+r
+M
+r
+r
+e
+G
+w
+w
+S
+W
+W
+w
+w
+w
+w
+W
+o
+r
+r
+"}
+(7,1,1) = {"
+r
+r
+r
+r
+L
+G
+w
+V
+l
+h
+W
+W
+v
+K
+W
+j
+W
+o
+r
+r
+"}
+(8,1,1) = {"
+W
+W
+r
+r
+W
+t
+w
+M
+w
+l
+W
+Y
+W
+s
+W
+j
+b
+o
+r
+r
+"}
+(9,1,1) = {"
+W
+W
+W
+W
+X
+G
+F
+M
+l
+w
+U
+j
+W
+d
+k
+h
+r
+r
+r
+r
+"}
+(10,1,1) = {"
+W
+W
+W
+O
+H
+W
+F
+x
+w
+w
+w
+h
+h
+z
+r
+b
+r
+r
+c
+r
+"}
+(11,1,1) = {"
+W
+f
+f
+F
+W
+A
+h
+M
+w
+w
+X
+W
+X
+k
+k
+R
+p
+c
+c
+r
+"}
+(12,1,1) = {"
+a
+f
+f
+f
+F
+P
+N
+j
+q
+W
+W
+T
+W
+k
+r
+r
+r
+c
+c
+a
+"}
+(13,1,1) = {"
+a
+f
+f
+W
+W
+M
+M
+o
+j
+h
+F
+W
+F
+R
+p
+r
+r
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+f
+W
+W
+w
+w
+w
+j
+y
+u
+F
+F
+f
+r
+r
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+r
+r
+W
+w
+w
+w
+h
+r
+o
+o
+f
+f
+a
+a
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+r
+r
+r
+r
+W
+W
+o
+r
+r
+f
+f
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+r
+r
+r
+W
+W
+r
+r
+r
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+r
+r
+r
+W
+W
+r
+r
+r
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+r
+r
+c
+c
+c
+r
+r
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+a
+r
+c
+c
+r
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
