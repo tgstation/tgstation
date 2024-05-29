@@ -241,7 +241,7 @@
 	flushing = TRUE
 	flushAnimation()
 	sleep(1 SECONDS)
-	if(last_sound < world.time + 1)
+	if(last_sound < world.time - 1) //Prevents piles of items from playing a dozen sounds at once
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, FALSE)
 		last_sound = world.time
 	sleep(0.5 SECONDS)

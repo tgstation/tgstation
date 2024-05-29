@@ -17,8 +17,8 @@
 	icon_living = "mining_node_active"
 	icon_dead = "mining_node_active"
 
-	maxHealth = 500
-	health = 500
+	maxHealth = 300 // We adjust the max health based on the vent size in the arrive() proc.
+	health = 300
 	density = TRUE
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	mob_size = MOB_SIZE_LARGE
@@ -74,6 +74,8 @@
 
 /mob/living/basic/node_drone/proc/arrive(obj/structure/ore_vent/parent_vent)
 	attached_vent = parent_vent
+	maxHealth = 300 + ((attached_vent.boulder_size/BOULDER_SIZE_SMALL) * 100)
+	health = maxHealth
 	flying_state = FLY_IN_STATE
 	update_appearance(UPDATE_ICON_STATE)
 	pixel_z = 400

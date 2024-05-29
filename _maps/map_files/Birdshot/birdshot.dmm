@@ -76062,6 +76062,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
+/mob/living/basic/spider/giant/sgt_araneus,
 /turf/open/floor/stone,
 /area/station/command/heads_quarters/hos)
 "yaG" = (
