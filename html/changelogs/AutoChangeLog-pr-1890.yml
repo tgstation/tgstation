@@ -1,0 +1,5 @@
+author: "Oricana-16"
+delete-after: True
+changes:
+  - code_imp: "Non-carbons (simple mobs and stuff like that) can now be made as ERTs"
+  - admin: "Added Moffroach Station Inspectors ERT"
