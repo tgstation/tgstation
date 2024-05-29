@@ -40651,11 +40651,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "mkN" = (
-/obj/item/radio/intercom/directional/north,
 /obj/machinery/computer/records/medical/laptop{
 	pixel_y = 1
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/camera/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "mld" = (
@@ -77573,6 +77573,12 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/plastic,
 /area/station/commons/dorms/laundry)
+"xkT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "xkZ" = (
 /obj/machinery/teleport/station,
 /obj/machinery/light/small/directional/east,
@@ -185645,7 +185651,7 @@ hai
 btU
 dzr
 btU
-oEH
+xkT
 kKk
 pWG
 btU
