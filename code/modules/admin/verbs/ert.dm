@@ -25,16 +25,19 @@
 
 
 /datum/admins/proc/equipAntagOnDummy(mob/living/carbon/human/dummy/mannequin, datum/antagonist/antag)
+	// MONKESTATION EDIT
+	// Non carbon mobs dont got clothes
+	if(!istype(mannequin))
+		return
+
 	for(var/I in mannequin.get_equipped_items(TRUE))
 		qdel(I)
 	if (ispath(antag, /datum/antagonist/ert))
 		var/datum/antagonist/ert/ert = antag
 		mannequin.equipOutfit(initial(ert.outfit), TRUE)
 
+// MONKESTATION EDIT - Allows non-carbons to still get displayed in the preview.
 /datum/admins/proc/makeERTPreviewIcon(list/settings)
-	// Set up the dummy for its photoshoot
-	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_ADMIN)
-
 	var/prefs = settings["mainsettings"]
 	var/datum/ert/template = prefs["template"]["value"]
 	if (isnull(template))
@@ -42,33 +45,50 @@
 	if (!ispath(template))
 		template = text2path(prefs["template"]["value"]) // new text2path ... doesn't compile in 511
 
+
 	template = new template
 	var/datum/antagonist/ert/ert = template.leader_role
 
-	equipAntagOnDummy(mannequin, ert)
-
-	CHECK_TICK
 	var/icon/preview_icon = icon('icons/effects/effects.dmi', "nothing")
+
 	preview_icon.Scale(48+32, 16+32)
-	CHECK_TICK
-	mannequin.setDir(NORTH)
-	var/icon/stamp = getFlatIcon(mannequin)
-	CHECK_TICK
-	preview_icon.Blend(stamp, ICON_OVERLAY, 25, 17)
-	CHECK_TICK
-	mannequin.setDir(WEST)
-	stamp = getFlatIcon(mannequin)
-	CHECK_TICK
-	preview_icon.Blend(stamp, ICON_OVERLAY, 1, 9)
-	CHECK_TICK
-	mannequin.setDir(SOUTH)
-	stamp = getFlatIcon(mannequin)
-	CHECK_TICK
-	preview_icon.Blend(stamp, ICON_OVERLAY, 49, 1)
-	CHECK_TICK
+
+	if(ispath(template.mobtype, /mob/living/carbon))
+		// Set up the dummy for its photoshoot
+		var/mob/living/carbon/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_ADMIN)
+
+		equipAntagOnDummy(mannequin, ert)
+
+		CHECK_TICK
+		mannequin.setDir(NORTH)
+		var/icon/stamp = getFlatIcon(mannequin)
+		CHECK_TICK
+		preview_icon.Blend(stamp, ICON_OVERLAY, 25, 17)
+		CHECK_TICK
+		mannequin.setDir(WEST)
+		stamp = getFlatIcon(mannequin)
+		CHECK_TICK
+		preview_icon.Blend(stamp, ICON_OVERLAY, 1, 9)
+		CHECK_TICK
+		mannequin.setDir(SOUTH)
+		stamp = getFlatIcon(mannequin)
+		CHECK_TICK
+		preview_icon.Blend(stamp, ICON_OVERLAY, 49, 1)
+		CHECK_TICK
+
+		unset_busy_human_dummy(DUMMY_HUMAN_SLOT_ADMIN)
+	else
+		var/mob/template_mobtype = template.mobtype
+		var/mob_icon = template_mobtype::icon
+		var/mob_icon_state = template_mobtype::icon_state
+
+		preview_icon.Blend(icon(mob_icon, mob_icon_state, NORTH), ICON_OVERLAY, 25, 17)
+		preview_icon.Blend(icon(mob_icon, mob_icon_state, WEST), ICON_OVERLAY, 1, 9)
+		preview_icon.Blend(icon(mob_icon, mob_icon_state, SOUTH), ICON_OVERLAY, 49, 1)
+
 	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2) // Scaling here to prevent blurring in the browser.
-	CHECK_TICK
-	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_ADMIN)
+
+
 	return preview_icon
 
 /datum/admins/proc/makeEmergencyresponseteam(datum/ert/ertemplate = null)
@@ -222,12 +242,18 @@
 				continue
 
 			//Spawn the body
-			var/mob/living/carbon/human/ert_operative = new ertemplate.mobtype(spawnloc)
-			chosen_candidate.client.prefs.safe_transfer_prefs_to(ert_operative, is_antag = TRUE)
-			ert_operative.key = chosen_candidate.key
+			var/mob/ert_operative = new ertemplate.mobtype(spawnloc)
 
-			if(ertemplate.enforce_human || !(ert_operative.dna.species.changesource_flags & ERT_SPAWN)) // Don't want any exploding plasmemes
-				ert_operative.set_species(/datum/species/human)
+			// MONKESTATION EDIT - Non-Carbon compatibility.
+			if(iscarbon(ert_operative))
+				var/mob/living/carbon/ert_operative_carbon = ert_operative
+				chosen_candidate.client.prefs.safe_transfer_prefs_to(ert_operative_carbon, is_antag = TRUE)
+
+				if(ertemplate.enforce_human || !(ert_operative_carbon.dna.species.changesource_flags & ERT_SPAWN)) // Don't want any exploding plasmemes
+					ert_operative_carbon.set_species(/datum/species/human)
+
+			ert_operative.key = chosen_candidate.key
+			// MONKESTATION EDIT END
 
 			//Give antag datum
 			var/datum/antagonist/ert/ert_antag
