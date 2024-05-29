@@ -111,13 +111,11 @@
 	if(!HAS_SILICON_ACCESS(user))
 		return TRUE
 	. = TRUE
-	var/mob/living/silicon/ai/AI = user
-	var/mob/living/silicon/robot/robot = user
-	if(istype(AI) || istype(robot))
+	if(isAI(user) || iscyborg(user))
 		if(aidisabled)
 			. = FALSE
-		else if(istype(malfai) && (malfai != AI || !(robot in malfai.connected_robots)))
-			. = FALSE 
+		else if(istype(malfai) && !(malfai == user || (user in malfai.connected_robots)))
+			. = FALSE
 	if (!. && !loud)
 		balloon_alert(user, "it's disabled!")
 	return .

@@ -363,8 +363,8 @@
 	data["map"]["min_players"] = map.min_players
 	data["map"]["max_players"] = map.max_players
 
-	data["mod_menu_open"] = FALSE
-	data["modifiers"] = has_auth ? list() : get_modifier_list(is_host, mod_menu_open)
+	data["mod_menu_open"] = mod_menu_open
+	data["modifiers"] = has_auth ? get_modifier_list(is_host, mod_menu_open) : list()
 	data["observers"] = get_observer_list()
 	data["players"] = get_player_list()
 	data["playing"] = playing
