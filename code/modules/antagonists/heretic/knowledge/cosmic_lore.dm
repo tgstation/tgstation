@@ -238,6 +238,7 @@
 	var/static/list/star_gazer_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
+		/datum/pet_command/protect_owner, // monkestation edit: allow star gazers to passively protect their summoner
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targeting/attack/star_gazer
 	)
