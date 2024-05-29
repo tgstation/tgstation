@@ -1,0 +1,4 @@
+author: "AlbertNanotracen"
+delete-after: True
+changes:
+  - bugfix: "propeller hat now has the right name in the store"
