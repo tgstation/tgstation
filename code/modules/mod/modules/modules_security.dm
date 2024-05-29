@@ -8,6 +8,7 @@
 	complexity = 2
 	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/magnetic_harness)
+	required_slots = list(ITEM_SLOT_OCLOTHING)
 	/// Time before we activate the magnet.
 	var/magnet_delay = 0.8 SECONDS
 	/// The typecache of all guns we allow.
@@ -21,13 +22,19 @@
 		guns_typecache = typecacheof(list(/obj/item/gun/ballistic, /obj/item/gun/energy, /obj/item/gun/grenadelauncher, /obj/item/gun/chem, /obj/item/gun/syringe))
 
 /obj/item/mod/module/magnetic_harness/on_install()
-	already_allowed_guns = guns_typecache & mod.chestplate.allowed
-	mod.chestplate.allowed |= guns_typecache
+	var/obj/item/clothing/suit = mod.get_part_from_slot(ITEM_SLOT_OCLOTHING)
+	if(!istype(suit))
+		return
+	already_allowed_guns = guns_typecache & suit.allowed
+	suit.allowed |= guns_typecache
 
 /obj/item/mod/module/magnetic_harness/on_uninstall(deleting = FALSE)
 	if(deleting)
 		return
-	mod.chestplate.allowed -= (guns_typecache - already_allowed_guns)
+	var/obj/item/clothing/suit = mod.get_part_from_slot(ITEM_SLOT_OCLOTHING)
+	if(!istype(suit))
+		return
+	suit.allowed -= (guns_typecache - already_allowed_guns)
 
 /obj/item/mod/module/magnetic_harness/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(check_dropped_item))
@@ -65,6 +72,7 @@
 	cooldown_time = 5 SECONDS
 	overlay_state_inactive = "module_pepper"
 	overlay_state_use = "module_pepper_used"
+	required_slots = list(ITEM_SLOT_OCLOTHING)
 
 /obj/item/mod/module/pepper_shoulders/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_check_block))
@@ -73,9 +81,6 @@
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK)
 
 /obj/item/mod/module/pepper_shoulders/on_use()
-	. = ..()
-	if(!.)
-		return
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
 	var/datum/reagents/capsaicin_holder = new(10)
 	capsaicin_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 10)
@@ -92,7 +97,7 @@
 	if(!check_power(use_energy_cost))
 		return
 	mod.wearer.visible_message(span_warning("[src] reacts to the attack with a smoke of pepper spray!"), span_notice("Your [src] releases a cloud of pepper spray!"))
-	on_use()
+	used()
 
 ///Holster - Instantly holsters any not huge gun.
 /obj/item/mod/module/holster
@@ -107,13 +112,11 @@
 	incompatible_modules = list(/obj/item/mod/module/holster)
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
+	required_slots = list(ITEM_SLOT_OCLOTHING|ITEM_SLOT_GLOVES|ITEM_SLOT_FEET)
 	/// Gun we have holstered.
 	var/obj/item/gun/holstered
 
 /obj/item/mod/module/holster/on_use()
-	. = ..()
-	if(!.)
-		return
 	if(!holstered)
 		var/obj/item/gun/holding = mod.wearer.get_active_held_item()
 		if(!holding)
@@ -155,19 +158,14 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/megaphone)
 	cooldown_time = 0.5 SECONDS
+	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 	/// List of spans we add to the speaker.
 	var/list/voicespan = list(SPAN_COMMAND)
 
 /obj/item/mod/module/megaphone/on_activation()
-	. = ..()
-	if(!.)
-		return
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /obj/item/mod/module/megaphone/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	UnregisterSignal(mod.wearer, COMSIG_MOB_SAY)
 
 /obj/item/mod/module/megaphone/proc/handle_speech(datum/source, list/speech_args)
@@ -190,6 +188,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/criminalcapture)
 	cooldown_time = 0.5 SECONDS
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// Time to capture a prisoner.
 	var/capture_time = 2.5 SECONDS
 	/// Time to dematerialize a bodybag.
@@ -203,10 +202,7 @@
 	idle_power_cost = linked_bodybag ? (DEFAULT_CHARGE_DRAIN * 3) : 0
 	return ..()
 
-/obj/item/mod/module/criminalcapture/on_deactivation(display_message, deleting)
-	. = ..()
-	if(!.)
-		return
+/obj/item/mod/module/criminalcapture/on_deactivation(display_message = TRUE, deleting = FALSE)
 	if(!linked_bodybag)
 		return
 	packup()
@@ -273,9 +269,6 @@
 	dispense_type = /obj/item/grenade/mirage
 
 /obj/item/mod/module/dispenser/mirage/on_use()
-	. = ..()
-	if(!.)
-		return
 	var/obj/item/grenade/mirage/grenade = .
 	grenade.arm_grenade(mod.wearer)
 
@@ -310,6 +303,7 @@
 	active_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/projectile_dampener)
 	cooldown_time = 1.5 SECONDS
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// Radius of the dampening field.
 	var/field_radius = 2
 	/// Damage multiplier on projectiles.
@@ -328,9 +322,6 @@
 	projectile_effect = image('icons/effects/fields.dmi', "projectile_dampen_effect")
 
 /obj/item/mod/module/projectile_dampener/on_activation()
-	. = ..()
-	if(!.)
-		return
 	if(istype(dampening_field))
 		QDEL_NULL(dampening_field)
 	dampening_field = new(mod.wearer, field_radius, TRUE, src)
@@ -370,6 +361,7 @@
 	complexity = 2
 	incompatible_modules = list(/obj/item/mod/module/active_sonar)
 	cooldown_time = 15 SECONDS
+	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 	/// Time between us displaying radial scans
 	var/scan_cooldown_time = 0.5 SECONDS
 	/// The current slice we're going to scan
@@ -454,9 +446,6 @@
 	COOLDOWN_START(src, scan_cooldown, scan_cooldown_time)
 
 /obj/item/mod/module/active_sonar/on_use()
-	. = ..()
-	if(!.)
-		return
 	balloon_alert(mod.wearer, "readying sonar...")
 	playsound(mod.wearer, 'sound/mecha/skyfall_power_up.ogg', vol = 20, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	if(!do_after(mod.wearer, 1.1 SECONDS, target = mod))
@@ -486,6 +475,7 @@
 	module_type = MODULE_PASSIVE
 	complexity = 3
 	incompatible_modules = list(/obj/item/mod/module/shooting_assistant)
+	required_slots = list(ITEM_SLOT_GLOVES)
 	var/selected_mode = SHOOTING_ASSISTANT_OFF
 	///Association list, the assoc values are the balloon alerts shown to the user when the mode is set.
 	var/static/list/available_modes = list(
@@ -585,6 +575,7 @@
 	icon_state = "bulwark"
 	complexity = 3
 	incompatible_modules = list(/obj/item/mod/module/shove_blocker)
+	required_slots = list(ITEM_SLOT_OCLOTHING)
 
 /obj/item/mod/module/shove_blocker/on_suit_activation()
 	mod.wearer.add_traits(list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), MOD_TRAIT)
@@ -603,6 +594,7 @@
 	desc = "Enhanced gauntlent grip pads that help with placing individuals in restraints more quickly. Doesn't look like they'll come off."
 	removable = FALSE
 	complexity = 0
+	required_slots = list(ITEM_SLOT_GLOVES)
 
 /obj/item/mod/module/quick_cuff/on_suit_activation()
 	. = ..()

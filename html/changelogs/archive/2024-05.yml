@@ -469,3 +469,313 @@
   - spellcheck: Fixes some typos in the goodies section and makes it look a bit more
       consistent.
   - bugfix: Fixed the spess knife's cutter tool icon being invisible.
+2024-05-18:
+  Absolucy:
+  - bugfix: You will now be ejected from Space Phase if you lose your focus or lose
+      consciousness somehow during the jaunt.
+  DaCoolBoss:
+  - bugfix: adds missing prefix to name of The Lizard's Gas Lava land ruin.
+  Echriser:
+  - bugfix: Fixes a bunch of hearts turning into errors when you try to eat them
+  Hatterhat:
+  - qol: The Ansem, suppressor, and SC/FISHER included in the Fisher gimmick bundle
+      now come together as one whole gun, the Ansem/SC. It's integrally suppressed,
+      and fires the disruptor on right-click.
+  - bugfix: The SC/FISHER disrupts APCs for an appropriate amount of time, not ten
+      times the intended disruption length.
+  Jacquerel:
+  - bugfix: Mob spawners (such as lavaland tendrils) won't spawn more mobs than they
+      are supposed to, faster than they should.
+  Melbert:
+  - rscadd: Adds Minecarts, (possibly admin only depending on when this PR is merged
+      in relation to the Icebox Bar PR)
+  - rscadd: 'Icebox: The bar returns to its home.'
+  - rscadd: 'Icebox: Standardizes some decal styles in the main hallway.'
+  - bugfix: 'Icebox: The lower brig''s missing air alarm has been found.'
+  Sadboysuss:
+  - bugfix: fixed malf AI being able to overload shuttle consoles and the gateway
+      control console
+  ShizCalev:
+  - bugfix: Malf AI can now override/overload closed turrets.
+  - bugfix: Fixed a scenario in which a turret would have its covers closed while
+      still firing.
+  grungussuss:
+  - qol: suit sensors can now be maxed by ctrl clicking your jumpsuit
+  improvedname:
+  - balance: Nukies ordnance now include more gasses and stock parts
+  sheets, spacemenart, ben10omintrix, goofball, infrared baron, aofie:
+  - rscadd: adds lavaland raptors and the raptor ranch
+2024-05-21:
+  ArcaneMusic:
+  - balance: Ore vents, if blocked off from all four sides while being defended, now
+      cause a mild gas explosion, resulting in a mild dissuasive explosion.
+  - bugfix: NODE drones spawned from ore vent defense have lower maximum health.
+  Ben10Omintrix:
+  - bugfix: ' fixes being able to ride all mobs through space'
+  - bugfix: playful raptors now correctly play with owners
+  EnterTheJake:
+  - spellcheck: Pulse of entropy description now displays the correct reagents for
+      the ritual
+  Fikou:
+  - bugfix: carps now properly stop floating when you kill them
+  - refactor: modsuits have been refactored if you see bugs report them
+  - bugfix: admin cargo tech modsuit outfit now works correctly
+  Jacquerel:
+  - balance: Certain unhealthy organs can be detected via the advanced health scanner
+  - balance: If you can't absorb a species' DNA as a changeling, you also can't use
+      transform sting to turn someone into that species.
+  - admin: Various bad things that can happen as a result of Legion organs are now
+      logged
+  Melbert:
+  - qol: Custom emotes now default to both visible and audible rather than just audible
+  - qol: Invoking the custom emote verb now explains how to set your custom emote
+      to visible or audible
+  Pickle-Coding:
+  - balance: Cargo ripley's cell starts fully charged.
+  Profakos:
+  - bugfix: Slimes will no longer consider feeding upon slime people
+  Sadboysuss:
+  - bugfix: HoS on birdshot now has a pet like on all other maps
+  - bugfix: jumpsuit sensors quick maxing now works
+  ShizCalev:
+  - bugfix: Icecream vats will no longer eat cyborg beakers.
+  - bugfix: Balloons are no longer invisible when held.
+  - bugfix: Malf AI can now properly interact with APCs under their control
+  - bugfix: Malf AI & their slaved cyborgs won't be told that access is denied when
+      trying to right-click lock/unlock APCs.
+  Striders13:
+  - admin: sentience balloon can now assign antag to affected mobs
+  Watermelon914:
+  - bugfix: Fixed spies having a slightly increased chance of getting a different
+      cost model for the elite syndicate hardsuit
+  Xander3359:
+  - bugfix: The RD remote works on the AI upload door now
+  carlarctg:
+  - balance: Halved Psyker echolocation cooldown. This will hopefully make it actually
+      usable.
+  dopamiin0:
+  - rscadd: Nanotrasen has made strides in their frontier sector food networks, increasing
+      the selection of produce available to chefs.
+  grungussuss and Virgilcore:
+  - sound: added sounds for the gateway
+  iwishforducks:
+  - image: Medical doctors and CMOs now start with their jumpsuits rather than surgery
+      scrubs and caps.
+  kawoppi:
+  - bugfix: 'underage drinkers beware: the Booze-O-Mat and ShadyCigs Deluxe check
+      your age again'
+  necromanceranne:
+  - bugfix: Miners can actually access and fix their engineering issues on the lavaland
+      base via the engineering section of the base. AGAIN.
+  - bugfix: The gulag SMES unit is no longer needlessly draining the entire power
+      grid of the main mining base. AGAIN.
+  nikothedude:
+  - spellcheck: Improved the grammar/spelling of a few raptor descriptions
+  starrm4nn:
+  - balance: Buffs Antihol's purge rate to 8u/tick when pure (6u/tick minimum).
+  - balance: Multiver stops purging when Anacea is present in the bloodstream.
+  tmyqlfpir:
+  - bugfix: '[Metastation] Service hallway door being bypassed by lying down'
+2024-05-22:
+  Bisar:
+  - balance: A wound being inflicted doesn't get broadcasted to everyone in view until
+      a higher severity now.
+  - sound: Wound sounds drop off more quickly, and no longer travel through walls.
+      This has no effect on attack sounds.
+  Fikou:
+  - spellcheck: the nuke op reinforcement beacon no longer talks about clones
+  Horatio22:
+  - spellcheck: Corrects spelling of "amulette" to "amulet"
+  - spellcheck: Correctly spells "received."
+  Iamgoofball:
+  - spellcheck: Removes a shit clown name and adds a better clown name instead
+  SyncIt21:
+  - bugfix: Crafting menu loads long lists faster
+  - bugfix: Monkey power reactions are instant and won't occur when exact reagent
+      requirements (50u power & 1u water) or above aren't met. Stops players from
+      cheesing monkeys from plumbing factories
+  Watermelon914:
+  - qol: New players will no longer start with ghost ears, ghost sight and ghost whispers
+      on by default.
+  Wayland-Smithy:
+  - qol: Crew Monitor UI now scrolls properly even after clicking the inner list.
+  Xander3359:
+  - bugfix: fixed a weird door in icebox bridge
+  hack-wrench:
+  - rscadd: Added smoke kit (5 grenades) with four grenades to uplink by 2 TC
+  improvedname:
+  - rscdel: Removes night vision quirk
+  necromanceranne:
+  - rscadd: The Research Director is now actually strong.
+  - rscadd: Fitness bros will determine the Research Director to be stronger than
+      they actually are, without even working out. How does he do it?
+  - balance: Suplexing a rod grants a large burst of athletics experience.
+  - rscadd: The more sentient casualties of the rod, the more experience suplexing
+      that rod grants. Absorb the souls of the weak and feeble.
+  nikothedude:
+  - rscadd: Adds a new deathmatch modifier that enables quirks
+  - bugfix: The deathmatch modifier menu works now
+  norsvenska:
+  - spellcheck: The message displayed when adjusting a mask no longer incorrectly
+      states the way in which the mask has moved.
+2024-05-23:
+  Jacquerel:
+  - balance: The melee attacks from small mobs spawned by Legions can now be dodged.
+  - balance: Legions spawn their mobs less often.
+  - bugfix: Legions cannot spawn mobs while inside pipes or closets.
+  Muffindrake:
+  - balance: reduced claymore/weak force from 30 to 24 and armor penetration from
+      15 to 10
+  hack-wrench:
+  - rscadd: Added RUN_SERVER.bat for maintainer issues
+  paganiy:
+  - balance: Auto-aim in combat mode at mobs on the floor is disabled after the projectile
+      passes 10 tiles.
+2024-05-24:
+  00-Steven:
+  - bugfix: Smoker quirk users can select a favourite brand again.
+  Ben10Omintrix:
+  - rscadd: adds a new fish to lava and plasma rivers, the lava loop
+  DATA-xPUNGED:
+  - bugfix: The Lance Crew Evacuation System now moves in the right direction in Hyperspace.
+  EEASAS:
+  - rscadd: Remapped NorthStar's medbay a little bit
+  Rhials:
+  - spellcheck: Fixes a typo with latejoin AIs
+  by INFRARED_BARON:
+  - image: 'Changes icons of: Gygax, d-gygax, durand, ripley variants, firefighter
+      statue, phazon & odysseus. Adds new icons for polar hide item.'
+2024-05-25:
+  00-Steven:
+  - bugfix: Airlock electronics created by deconstructing roundstart airlocks inherit
+      their cycling id properly.
+  - spellcheck: Examining a renamed airlock assembly no longer says it has a paper
+      placard that is "labelled with written on it is".
+  - bugfix: Mixing the reagents for moon rocks, bLaSToFF ampoules, or SaturnX globs
+      in amounts less than the minimum for the recipe no longer eats the reagents
+      without doing anything.
+  - bugfix: Airlocks without access requirements no longer create airlock electronics
+      with a broken menu.
+  - spellcheck: When a vendor tells you something dropped onto the floor, the line
+      no longer starts with a broken character in the case of cigarette boxes.
+  Ben10Omintrix:
+  - balance: you can now polymorph into raptors
+  - balance: raptors overall have less health and no longer have armor against ranged
+      attacks
+  BramvanZijp:
+  - bugfix: Fixed an inconsistency regarding the interactions between the Piercing
+      Hypo Borg upgrade and Hacked Borg Hypos.
+  Derpguy3:
+  - spellcheck: A handful of grammar errors in some department signs has been fixed.
+  Jacquerel:
+  - bugfix: The destructive analyser once more hungers for multitools
+  PapaMichael:
+  - bugfix: Epinephrine will prevent metabolism of all allergic reagents (instead
+      of just one), if taken with multiple chemicals that one is allergic to.
+  TiviPlus:
+  - qol: Added a "Remind me later" button for tutorials
+  Twaticus:
+  - image: resprites egg (and more)
+  jlsnow301:
+  - bugfix: You can no longer open the loot panel at range as a blind person and cheese
+      item names
+  nikothedude:
+  - code_imp: New signals for atom storage remove and insert
+2024-05-26:
+  Jacquerel:
+  - bugfix: Ghosts can more reliably become a harvester.
+  OverwatchVoice:
+  - qol: The "Proto-Nitrate BZ response" atmsopheric reaction now lists it's required
+      temperature.
+  Rhials:
+  - admin: Admins can now reroll random events into something else.
+  grungussuss:
+  - qol: tramstation upload now has an extra motion camera
+  - qol: tramstation SM setup now has an emergency cooling setup
+  - bugfix: changed layout of Northstar dining hall so customer bots can reach the
+      kitchen counter
+  paganiy:
+  - bugfix: You can shoot at items on the floor again
+  thegrb93:
+  - qol: Made borg inventory not shift around depending on equipped items
+  tmyqlfpir:
+  - bugfix: '[Ice Box Station] Dorm 1''s door no longer shares ID with dorm 2''s door'
+2024-05-27:
+  Melbert:
+  - refactor: Refactored the way high toxins cause you to vomit.
+  Time-Green:
+  - rscdel: Removes sentient disease from the game
+  - rscdel: Miasma and gibs no longer generates random diseases
+  YesterdaysPromise:
+  - image: Cleaned a single stray pixel in a single frame of a bite telegraphing accidentaly
+      found while re-organizing the files.
+  by INFRARED_BARON:
+  - image: Changes the sprites of bone and ash drake armor (suit + helmet mob/objs)
+  necromanceranne:
+  - bugfix: Material floor tiles once again have their improved sprite.
+2024-05-28:
+  Echriser:
+  - bugfix: computers with no lights can now turn on using the on/off signal
+  - bugfix: RGB lights on PDA circuits now use a signal
+  - bugfix: the is_off signal now works on consoles
+  - bugfix: printing text on a console component now uses a signal
+  - refactor: each input signal in console circuits now have their own proc
+  EnterTheJake:
+  - bugfix: Rust debuffs now gets properly removed if you derust a tile you  are standing
+      on.
+  Fikou:
+  - image: makes food hud burger icon have a sharp outline
+  Fluffles:
+  - bugfix: echolocation is less laggy. and works.
+  Higgin:
+  - balance: Viruses now self-heal much more effectively with good mood, sleep, food,
+      and spaceacillin.
+  - balance: Viruses now punish being hungry more. Stay fed!
+  - balance: Spaceacillin now gives 200 ticks of symptom resistance, declining over
+      time, rather than 100.
+  - balance: Viruses now progress slightly slower.
+  - balance: Viruses now only hide if their stealth stat is greater than their total
+      computed severity.
+  Jacquerel:
+  - balance: Mobs significantly larger than humans, such as Space Dragons and Xenomorph
+      Queens, breakout of being arrested by a mech significantly faster.
+  - bugfix: Venus Man Traps cannot use vines to drag around machines or objects that
+      are bolted, welded, rooted to, or otherwise are part of the ground
+  - bugfix: Standing on a table will not prevent you from being grappled by a Venus
+      Man Trap
+  LemonInTheDark:
+  - refactor: I have reworked how parallax and its animations (space travel) work.
+      Please report any bugs lads!
+  Pickle-Coding:
+  - spellcheck: Fixes labour camp shuttle retrieval message starting with "/p".
+  Whoneedspacee:
+  - refactor: Wendigos abilities have been changed into actions that can be added
+      to any mob.
+  zxaber:
+  - qol: Traitor-created Infected AIs no longer hear the Malf AI antag sound alert.
+2024-05-29:
+  Absolucy:
+  - bugfix: Fix a rare issue where a turf would remain permanently "elevated" if an
+      elevated object was initialized inside of a non-turf object.
+  Capsandi:
+  - sound: Disposal chutes will no longer play a sound for each item when many items
+      enter it at once
+  FearfulFurnishing:
+  - bugfix: fixed watcher wreath bounties being incompletable
+  FlufflesTheDog:
+  - bugfix: some missing modsuit (un)sealing messages should no longer be missing
+  - bugfix: MOD circuit adapter core deployed parts output should work again
+  - bugfix: Modsuit painter works again
+  Melbert:
+  - bugfix: The Bar on Icebox should receive less trash
+  Mey-Ha-Zah:
+  - image: Revamped Contractor Gear. You'll stand out more now, but hey, that's why
+      the syndicate contracts out work in the first place.
+  NewyearnewmeUwu:
+  - bugfix: Fixed a typo preventing creation of paystands using an ID.
+  Time-Green:
+  - rscdel: Wipes the last echo of sentient disease from existence
+  jlsnow301:
+  - rscadd: Added a screentip for hilbert's hotel door
+  - bugfix: Fixed alt-click interaction with hilbert's hotel door
+  - bugfix: Lootpanel no longer opens up when alt clicking objects on your person

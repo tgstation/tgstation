@@ -609,10 +609,11 @@
  * Returns the access list for this mob
  */
 /mob/living/proc/get_access()
+	var/list/access_list = list()
+	SEND_SIGNAL(src, COMSIG_MOB_RETRIEVE_SIMPLE_ACCESS, access_list)
 	var/obj/item/card/id/id = get_idcard()
-	if(isnull(id))
-		return list()
-	return id.GetAccess()
+	access_list += id?.GetAccess()
+	return access_list
 
 /mob/living/proc/get_id_in_hand()
 	var/obj/item/held_item = get_active_held_item()
