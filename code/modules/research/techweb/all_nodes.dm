@@ -447,6 +447,7 @@
 		"piercesyringe",
 		"plasmarefiller",
 		"smoke_machine",
+		"sleeper",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 2000,

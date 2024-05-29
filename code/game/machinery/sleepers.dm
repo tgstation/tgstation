@@ -18,8 +18,6 @@
 	var/min_health = -25
 	///Whether the machine can be operated by the person inside of it.
 	var/controls_inside = FALSE
-	///Whether this sleeper can be deconstructed and drop the board, if its on mapload.
-	var/deconstructable = FALSE
 	///Message sent when a user enters the machine.
 	var/enter_message = span_boldnotice("You feel cool air surround you. You go numb as your senses turn inward.")
 
@@ -54,9 +52,6 @@
 
 /obj/machinery/sleeper/Initialize(mapload)
 	. = ..()
-	if(mapload && !deconstructable)
-		LAZYREMOVE(component_parts, circuit)
-		QDEL_NULL(circuit)
 	occupant_typecache = GLOB.typecache_living
 	update_appearance()
 	reset_chem_buttons()
@@ -307,7 +302,6 @@
 	icon_state = "sleeper_s"
 	base_icon_state = "sleeper_s"
 	controls_inside = TRUE
-	deconstructable = TRUE
 
 ///Fully upgraded variant, the circuit using tier 4 parts.
 /obj/machinery/sleeper/syndie/fullupgrade
@@ -327,7 +321,6 @@
 	base_icon_state = "partypod"
 	circuit = /obj/item/circuitboard/machine/sleeper/party
 	controls_inside = TRUE
-	deconstructable = TRUE
 	enter_message = span_boldnotice("You're surrounded by some funky music inside the chamber. You zone out as you feel waves of krunk vibe within you.")
 
 	//Exclusively uses non-lethal, "fun" chems. At an obvious downside.
