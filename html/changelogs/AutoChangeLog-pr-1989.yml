@@ -1,0 +1,6 @@
+author: "HimKobold"
+delete-after: True
+changes:
+  - rscadd: "Hydrogen Peroxide & Acetone Oxide now do organ damage on consumption (but not on touch)."
+  - bugfix: "Acetone Oxide & Hydrogen Peroxide now do damage appropriate to the volume touched."
+  - bugfix: "#1889\n\\:cl:"
