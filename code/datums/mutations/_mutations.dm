@@ -76,6 +76,8 @@
 	var/energy_coeff = -1
 	/// List of strings of valid chromosomes this mutation can accept.
 	var/list/valid_chrom_list = list()
+	/// List of traits that are added or removed by the mutation with GENETIC_TRAIT source.
+	var/list/mutation_traits
 
 /datum/mutation/human/New(class = MUT_OTHER, timer, datum/mutation/human/copymut)
 	. = ..()
@@ -103,7 +105,7 @@
 	if(limb_req && !acquirer.get_bodypart(limb_req))
 		return TRUE
 	for(var/datum/mutation/human/mewtayshun as anything in acquirer.dna.mutations) //check for conflicting powers
-		if(!(mewtayshun.type in conflicts) && !(type in mewtayshun.conflicts))
+		if(!(mewtayshun.type in typesof(conflicts)) && !(type in typesof(mewtayshun.conflicts)))
 			continue
 		to_chat(acquirer, span_warning("You feel your genes resisting something."))
 		return TRUE
@@ -121,6 +123,8 @@
 		owner.overlays_standing[layer_used] = mut_overlay
 		owner.apply_overlay(layer_used)
 	grant_power() //we do checks here so nothing about hulk getting magic
+	for(var/i in mutation_traits)
+		ADD_TRAIT(owner, i, GENETIC_MUTATION)
 	if(!modified)
 		addtimer(CALLBACK(src, PROC_REF(modify), 0.5 SECONDS)) //gonna want children calling ..() to run first
 

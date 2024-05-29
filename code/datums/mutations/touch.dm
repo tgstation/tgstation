@@ -85,3 +85,171 @@
 	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "zapper"
 	inhand_icon_state = "zapper"
+
+/datum/mutation/human/lay_on_hands
+	name = "Mending Touch"
+	desc = "The affected can lay their hands on other people to transfer a small amount of their injuries to themselves."
+	quality = POSITIVE
+	locked = FALSE
+	difficulty = 16
+	text_gain_indication = "<span class='notice'>Your hand feels blessed!</span>"
+	text_lose_indication = "<span class='notice'>Your hand feels secular once more.</span>"
+	power_path = /datum/action/cooldown/spell/touch/lay_on_hands
+	instability = 35
+	energy_coeff = 1
+	power_coeff = 1
+
+/datum/mutation/human/lay_on_hands/modify()
+	. = ..()
+	var/datum/action/cooldown/spell/touch/lay_on_hands/to_modify =.
+
+	if(!istype(to_modify)) // null or invalid
+		return
+
+	// More healing if powered up.
+	to_modify.heal_multiplier = GET_MUTATION_POWER(src)
+	// Less pain if synchronized.
+	to_modify.pain_divider = GET_MUTATION_SYNCHRONIZER(src)
+
+/datum/action/cooldown/spell/touch/lay_on_hands
+	name = "Mending Touch"
+	desc = "You can now lay your hands on other people to transfer a small amount of their physical injuries to yourself."
+	button_icon_state = "zap"
+	sound = 'sound/weapons/zapbang.ogg'
+	cooldown_time = 12 SECONDS
+	school = SCHOOL_RESTORATION
+	invocation_type = INVOCATION_NONE
+	spell_requirements = NONE
+	antimagic_flags = NONE
+
+	hand_path = /obj/item/melee/touch_attack/lay_on_hands
+	draw_message = span_notice("You ready your hand to transfer injuries to yourself.")
+	drop_message = span_notice("You lower your hand.")
+	/// Multiplies the amount healed, without increasing the recieved damage.
+	var/heal_multiplier = 1
+	/// Divides the incoming pain from healing.
+	var/pain_divider = 1
+
+/datum/action/cooldown/spell/touch/lay_on_hands/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/mendicant)
+
+	if(!iscarbon(victim))
+		return
+
+	var/mob/living/hurtguy = victim
+
+
+	// Heal potentially much more, but hurt more as well
+	if(HAS_TRAIT_FROM(mendicant, TRAIT_PACIFISM, HIPPOCRATIC_OATH_TRAIT))
+		heal_multiplier *= 2
+		pain_divider /= 2
+		to_chat(mendicant, span_green("You can feel the magic of the Rod of Aesculapius aiding your efforts!"))
+
+	// If a normal pacifist, just heal more
+	else if(HAS_TRAIT(mendicant, TRAIT_PACIFISM))
+		heal_multiplier++
+		to_chat(mendicant, span_green("Your peaceful nature helps you guide the pain to yourself."))
+
+	var/success
+	if(iscarbon(hurtguy))
+		success = do_complicated_heal(mendicant, hurtguy, heal_multiplier, pain_divider)
+	else
+		success = do_simple_heal(mendicant, hurtguy, heal_multiplier, pain_divider)
+
+	// No healies in the end, cancel
+	if(!success)
+		return
+
+	hurtguy.update_damage_overlays()
+	mendicant.update_damage_overlays()
+
+	hurtguy.visible_message(span_notice("[mendicant] lays hands on [target]!"))
+	to_chat(target, span_boldnotice("[mendicant] lays hands on you, healing you!"))
+	playsound(mendicant, 'sound/magic/staff_healing.ogg', 25, vary = TRUE, extrarange = -1)
+	return success
+
+/datum/action/cooldown/spell/touch/lay_on_hands/proc/do_simple_heal(mob/living/carbon/mendicant, mob/living/hurtguy, heal_multiplier, pain_divider)
+	// Did the transfer work?
+	var/transferred = FALSE
+
+	// Damage to heal
+	var/brute_to_heal = min(hurtguy.getBruteLoss(), 35 * heal_multiplier)
+	// no double dipping
+	var/burn_to_heal = min(hurtguy.getFireLoss(), (35 - brute_to_heal) * heal_multiplier)
+
+	// Get at least organic limb to transfer the damage to
+	var/list/mendicant_organic_limbs = list()
+	for(var/obj/item/bodypart/possible_limb in mendicant.bodyparts)
+		if(IS_ORGANIC_LIMB(possible_limb))
+			mendicant_organic_limbs += possible_limb
+	// None? Gtfo
+	if(isnull(mendicant_organic_limbs))
+		return transferred
+
+	// Try to use our active hand, otherwise pick at random
+	var/obj/item/bodypart/mendicant_transfer_limb = mendicant.get_active_hand()
+	if(!(mendicant_transfer_limb in mendicant_organic_limbs))
+		mendicant_transfer_limb = pick(mendicant_organic_limbs)
+
+	if(brute_to_heal)
+		hurtguy.adjustBruteLoss(brute_to_heal)
+		transferred = TRUE
+
+	if(burn_to_heal)
+		hurtguy.adjustFireLoss(burn_to_heal)
+		transferred = TRUE
+
+	return transferred
+
+/datum/action/cooldown/spell/touch/lay_on_hands/proc/do_complicated_heal(mob/living/carbon/mendicant, mob/living/carbon/hurtguy, heal_multiplier, pain_divider)
+
+	// Did the transfer work?
+	var/transferred = FALSE
+	// Get the hurtguy's limbs and the mendicant's limbs to attempt a 1-1 transfer.
+	var/list/hurt_limbs = hurtguy.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC) + hurtguy.get_wounded_bodyparts(BODYTYPE_ORGANIC)
+	var/list/mendicant_organic_limbs = list()
+	for(var/obj/item/bodypart/possible_limb in mendicant.bodyparts)
+		if(IS_ORGANIC_LIMB(possible_limb))
+			mendicant_organic_limbs += possible_limb
+
+	// If we have no organic available limbs just give up.
+	if(!length(mendicant_organic_limbs) || !length(hurt_limbs))
+		return
+
+	// Counter to make sure we don't take too much from separate limbs
+	var/total_damage_healed = 0
+	// Transfer damage from one limb to the mendicant's counterpart.
+	for(var/obj/item/bodypart/affected_limb as anything in hurt_limbs)
+		var/obj/item/bodypart/mendicant_transfer_limb = mendicant.get_bodypart(affected_limb.body_zone)
+		// If the compared limb isn't organic, skip it and pick a random one.
+		if(!(mendicant_transfer_limb in mendicant_organic_limbs))
+			mendicant_transfer_limb = pick(mendicant_organic_limbs)
+
+		// Transfer at most 35 damage by default.
+		var/brute_damage = min(affected_limb.brute_dam, 35 * heal_multiplier)
+		// no double dipping
+		var/burn_damage = min(affected_limb.burn_dam, (35 * heal_multiplier) - brute_damage)
+		if((brute_damage || burn_damage) && total_damage_healed < (35 * heal_multiplier))
+			total_damage_healed = brute_damage + burn_damage
+			transferred = TRUE
+			// Heal!
+			affected_limb.heal_damage(brute_damage * heal_multiplier, burn_damage * heal_multiplier, required_bodytype = BODYTYPE_ORGANIC)
+			// Hurt!
+			mendicant_transfer_limb.receive_damage(brute_damage * pain_divider, burn_damage * pain_divider, forced = TRUE, wound_bonus = CANT_WOUND)
+
+		// Force light wounds onto you.
+		for(var/datum/wound/iter_wound as anything in affected_limb.wounds)
+			if(iter_wound.severity > WOUND_SEVERITY_MODERATE)
+				continue
+			transferred = TRUE
+			iter_wound.remove_wound()
+			iter_wound.apply_wound(mendicant_transfer_limb)
+
+
+	return transferred
+
+/obj/item/melee/touch_attack/lay_on_hands
+	name = "\improper mending touch"
+	desc = "Unlike in your favorite tabletop games, you sadly can't cast this on yourself, so you can't use that as a Scapegoat." // mayus is reference. if you get it youre cool
+	icon = 'icons/obj/weapons/hand.dmi'
+	icon_state = "zapper"
+	inhand_icon_state = "zapper"

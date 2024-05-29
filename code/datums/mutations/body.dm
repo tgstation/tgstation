@@ -331,6 +331,7 @@
 	difficulty = 14
 	synchronizer_coeff = 1
 	power_coeff = 1
+	mutation_traits = list(TRAIT_NOFIRE_SPREAD)
 
 /datum/mutation/human/fire/on_life(seconds_per_tick, times_fired)
 	if(SPT_PROB((0.05+(100-dna.stability)/19.5) * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick))

@@ -27,5 +27,5 @@
 		return
 	H.dna.add_mutation(/datum/mutation/human/hulk)
 	H.dna.add_mutation(/datum/mutation/human/xray)
-	H.dna.add_mutation(/datum/mutation/human/pressure_adaptation)
+	H.dna.add_mutation(/datum/mutation/human/adaptation/pressure)
 	H.dna.add_mutation(/datum/mutation/human/telekinesis)
