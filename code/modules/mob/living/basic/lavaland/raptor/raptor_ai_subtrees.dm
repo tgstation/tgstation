@@ -2,7 +2,7 @@
 	target_key = BB_INJURED_RAPTOR
 	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/heal_raptor
 	finding_behavior = /datum/ai_behavior/find_hunt_target/injured_raptor
-	hunt_targets = list(/mob/living/basic/mining/raptor)
+	hunt_targets = list(/mob/living/basic/raptor)
 	hunt_chance = 70
 	hunt_range = 9
 
@@ -15,7 +15,7 @@
 	target_key = BB_RAPTOR_VICTIM
 	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/bully_raptors
 	finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_victim
-	hunt_targets = list(/mob/living/basic/mining/raptor)
+	hunt_targets = list(/mob/living/basic/raptor)
 	hunt_chance = 30
 	hunt_range = 9
 
@@ -38,7 +38,7 @@
 	target_key = BB_RAPTOR_BABY
 	hunting_behavior = /datum/ai_behavior/hunt_target/care_for_young
 	finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_baby
-	hunt_targets = list(/mob/living/basic/mining/raptor/baby_raptor)
+	hunt_targets = list(/mob/living/basic/raptor/baby_raptor)
 	hunt_chance = 75
 	hunt_range = 9
 
