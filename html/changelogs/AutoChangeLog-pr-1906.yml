@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Star Gazers will now retaliate if their owner is attacked."
+  - qol: "Star Gazers now use more advanced pathfinding."
