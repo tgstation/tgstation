@@ -547,6 +547,7 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/surgery_tray/full/advanced,
 /obj/item/defibrillator/compact/combat/loaded/nanotrasen,
+/obj/item/healthanalyzer/advanced,
 /turf/open/floor/iron/white/smooth_large,
 /area/shuttle/escape)
 "lw" = (
