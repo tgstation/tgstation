@@ -122,7 +122,7 @@
 "bo" = (
 /obj/machinery/door/airlock/external/glass/ruin{
 	space_dir = 4;
-	name = "dock 4 external airlock"
+	name = "Dock 4 External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "donk_dock_4"
@@ -216,7 +216,8 @@
 "bY" = (
 /obj/machinery/door/airlock/highsecurity{
 	desc = "It's labelled AI CORE - SENIOR EMPLOYEES ONLY";
-	id_tag = "donk_aicore_door_bolts"
+	id_tag = "donk_aicore_door_bolts";
+	name = "Secure Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/structure/cable/layer1,
@@ -410,7 +411,9 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "dj" = (
-/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/airlock/public/glass{
+	name = "Glass Airlock"
+	},
 /obj/structure/cable/layer1,
 /obj/machinery/door/firedoor,
 /turf/open/floor/wood,
@@ -658,7 +661,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "ga" = (
 /obj/machinery/door/airlock/external/glass/ruin{
-	name = "dock 1 internal airlock"
+	name = "Dock 1 Internal Airlock"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -748,7 +751,8 @@
 	},
 /obj/machinery/door/airlock/wood{
 	desc = "It's labelled MANAGERS OFFICE - SENIOR EMPLOYEES ONLY";
-	id_tag = "donk_office_entrance_gamma"
+	id_tag = "donk_office_entrance_gamma";
+	name = "Executive Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/command,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -997,7 +1001,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "iH" = (
 /obj/machinery/door/airlock/external/glass/ruin{
-	name = "dock 4 internal airlock"
+	name = "Dock 4 Internal Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/welded,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -1372,7 +1376,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/maint/disposals)
 "mf" = (
 /obj/machinery/door/airlock/external/glass/ruin{
-	name = "dock 2 internal airlock"
+	name = "Dock 2 Internal Airlock"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -1417,7 +1421,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/maint/toolstorage)
 "mB" = (
 /obj/machinery/door/airlock/external/glass/ruin{
-	name = "dock 4 internal airlock"
+	name = "Dock 4 Internal Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/welded,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -1484,7 +1488,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "nf" = (
 /obj/machinery/door/airlock/external/glass/ruin{
-	name = "dock 1 internal airlock"
+	name = "Dock 1 Internal Airlock"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -1830,6 +1834,16 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
+"qz" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	space_dir = 8;
+	name = "Dock 1 External Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "donk_dock_1"
+	},
+/turf/open/floor/carpet/orange,
+/area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "qB" = (
 /obj/structure/closet/crate/cardboard{
 	desc = "A fine example of the ubiquitous cardboard box. Handy if you want to store things. This box is labelled 'OUTLET 6013 - TOY STOCK' and has the Donk Co. logo stamped on it."
@@ -1899,7 +1913,8 @@
 "rd" = (
 /obj/machinery/door/airlock/highsecurity{
 	desc = "It's labelled AI CORE - SENIOR EMPLOYEES ONLY";
-	id_tag = "donk_aicore_door_bolts"
+	id_tag = "donk_aicore_door_bolts";
+	name = "Secure Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/locked{
 	id_tag = "donk_aicore_door_bolts"
@@ -2019,7 +2034,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/maint)
 "sk" = (
-/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/airlock/public/glass{
+	name = "Glass Airlock"
+	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/layer1,
 /obj/machinery/duct,
@@ -2153,7 +2170,8 @@
 	},
 /obj/machinery/door/airlock/wood{
 	desc = "It's labelled WAITING ROOM - SENIOR EMPLOYEES ONLY";
-	id_tag = "donk_office_entrance_gamma"
+	id_tag = "donk_office_entrance_gamma";
+	name = "Executive Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/command,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -2326,7 +2344,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "uE" = (
-/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/airlock/public/glass{
+	name = "Glass Airlock"
+	},
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -3003,7 +3023,7 @@
 /obj/structure/cable/layer1,
 /obj/effect/mapping_helpers/airlock/access/all/away/command,
 /obj/machinery/door/airlock/wood{
-	name = "executive airlock";
+	name = "Executive Airlock";
 	desc = "It's labelled MANAGEMENT - SENIOR EMPLOYEES ONLY"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -3024,7 +3044,8 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
 	desc = "It's labelled SYSTEM CONTROL - SENIOR EMPLOYEES ONLY";
-	id_tag = "donk_door_bolts"
+	id_tag = "donk_door_bolts";
+	name = "Secure Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/command,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -3236,7 +3257,8 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/command,
 /obj/machinery/door/airlock/highsecurity{
 	desc = "It's labelled SYSTEM CONTROL - SENIOR EMPLOYEES ONLY";
-	id_tag = "donk_door_bolts"
+	id_tag = "donk_door_bolts";
+	name = "Secure Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -3293,7 +3315,9 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "DI" = (
-/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/airlock/public/glass{
+	name = "Glass Airlock"
+	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
@@ -3636,7 +3660,7 @@
 "Gw" = (
 /obj/machinery/door/airlock/external/glass/ruin{
 	space_dir = 8;
-	name = "dock 2 external airlock"
+	name = "Dock 2 External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "donk_dock_2"
@@ -3872,7 +3896,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "Ic" = (
 /obj/machinery/door/airlock/external/glass/ruin{
-	name = "dock 3 internal airlock"
+	name = "Dock 3 Internal Airlock"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -4518,7 +4542,9 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "NH" = (
-/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/airlock/public/glass{
+	name = "Glass Airlock"
+	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/layer1,
 /turf/open/floor/wood,
@@ -4546,7 +4572,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "NZ" = (
 /obj/machinery/door/airlock/external/glass/ruin{
-	name = "dock 2 internal airlock"
+	name = "Dock 2 Internal Airlock"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -4992,7 +5018,8 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /obj/machinery/door/airlock/wood{
-	desc = "It's labelled MANAGERS OFFICE - SENIOR EMPLOYEES ONLY"
+	desc = "It's labelled MANAGERS OFFICE - SENIOR EMPLOYEES ONLY";
+	name = "Ecevutive Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/command,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -5295,7 +5322,8 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/away/command,
 /obj/machinery/door/airlock/wood{
-	desc = "It's labelled CONFERENCE ROOM - SENIOR EMPLOYEES ONLY"
+	desc = "It's labelled CONFERENCE ROOM - SENIOR EMPLOYEES ONLY";
+	name = "Executive Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -5336,7 +5364,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/wood{
-	desc = "It's labelled CONFERENCE ROOM - SENIOR EMPLOYEES ONLY"
+	desc = "It's labelled CONFERENCE ROOM - SENIOR EMPLOYEES ONLY";
+	name = "Executive Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/command,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -5551,7 +5580,8 @@
 "WA" = (
 /obj/machinery/door/airlock/highsecurity{
 	desc = "It's labelled AI CORE - SENIOR EMPLOYEES ONLY";
-	id_tag = "donk_aicore_door_bolts"
+	id_tag = "donk_aicore_door_bolts";
+	name = "Secure Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/access/all/away/command,
@@ -5566,7 +5596,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "WF" = (
 /obj/machinery/door/airlock/external/glass/ruin{
-	name = "dock 3 internal airlock"
+	name = "Dock 3 Internal Airlock"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -5692,7 +5722,7 @@
 "XC" = (
 /obj/machinery/door/airlock/external/glass/ruin{
 	space_dir = 4;
-	name = "dock 3 external airlock"
+	name = "Dock 3 External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "donk_dock_3"
@@ -6132,7 +6162,7 @@ Pv
 gK
 Pv
 Pv
-gK
+qz
 Pv
 Gw
 Pv
