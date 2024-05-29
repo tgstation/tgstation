@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "Slime steroid potions now boost ooze production by an actually notable amount, reaching the max production after 4 potions."
+  - spellcheck: "The description for the industrial grey extract now properly says that it produces biocubes, rather than monkey cubes."
+  - qol: "Industrial extracts now always layer their output below the extract itself."
