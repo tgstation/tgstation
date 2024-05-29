@@ -2,7 +2,7 @@
 /obj/machinery/mining_weather_monitor
 	name = "barometric monitor"
 	desc = "A machine monitoring atmospheric data from mining environments. Provides warnings about incoming weather fronts."
-	icon = 'icons/obj/miningradio.dmi'
+	icon = 'icons/obj/devices/miningradio.dmi'
 	icon_state = "wallmount"
 	light_power = 1
 	light_range = 1.6

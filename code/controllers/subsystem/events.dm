@@ -23,6 +23,10 @@ SUBSYSTEM_DEF(events)
 		if(!event.typepath || !event.valid_for_map())
 			continue //don't want this one! leave it for the garbage collector
 		control += event //add it to the list of all events (controls)
+
+	frequency_lower = CONFIG_GET(number/events_frequency_lower)
+	frequency_upper = CONFIG_GET(number/events_frequency_upper)
+
 	reschedule()
 	// Instantiate our holidays list if it hasn't been already
 	if(isnull(GLOB.holidays))
@@ -61,8 +65,13 @@ SUBSYSTEM_DEF(events)
 /datum/controller/subsystem/events/proc/reschedule()
 	scheduled = world.time + rand(frequency_lower, max(frequency_lower,frequency_upper))
 
-//selects a random event based on whether it can occur and it's 'weight'(probability)
-/datum/controller/subsystem/events/proc/spawnEvent()
+/**
+ * Selects a random event based on whether it can occur and it's 'weight'(probability)
+ *
+ * Arguments:
+ * * excluded_event - The event path we will be foregoing, if present.
+ */
+/datum/controller/subsystem/events/proc/spawnEvent(datum/round_event_control/excluded_event)
 	set waitfor = FALSE //for the admin prompt
 	if(!CONFIG_GET(flag/allow_random_events))
 		return
@@ -73,6 +82,8 @@ SUBSYSTEM_DEF(events)
 	var/list/event_roster = list()
 
 	for(var/datum/round_event_control/event_to_check in control)
+		if(excluded_event && event_to_check.typepath == excluded_event.typepath) //If an event has been rerolled we won't just roll the same one again.
+			continue
 		if(!event_to_check.can_spawn_event(players_amt))
 			continue
 		if(event_to_check.weight < 0) //for round-start events etc.
@@ -85,7 +96,8 @@ SUBSYSTEM_DEF(events)
 			event_roster[event_to_check] = event_to_check.weight
 
 	var/datum/round_event_control/event_to_run = pick_weight(event_roster)
-	TriggerEvent(event_to_run)
+	if(event_to_run)
+		TriggerEvent(event_to_run)
 
 ///Does the last pre-flight checks for the passed event, and runs it if the event is ready.
 /datum/controller/subsystem/events/proc/TriggerEvent(datum/round_event_control/event_to_trigger)
@@ -103,8 +115,8 @@ SUBSYSTEM_DEF(events)
 
 ///Sets the event frequency bounds back to their initial value.
 /datum/controller/subsystem/events/proc/resetFrequency()
-	frequency_lower = initial(frequency_lower)
-	frequency_upper = initial(frequency_upper)
+	frequency_lower = CONFIG_GET(number/events_frequency_lower)
+	frequency_upper = CONFIG_GET(number/events_frequency_upper)
 
 /**
  * HOLIDAYS

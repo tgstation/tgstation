@@ -765,7 +765,7 @@ ADMIN_VERB(reestablish_tts_connection, R_DEBUG, "Re-establish Connection To TTS"
 	var/list/sorted = list()
 	for (var/source in per_source)
 		sorted += list(list("source" = source, "count" = per_source[source]))
-	sorted = sortTim(sorted, GLOBAL_PROC_REF(cmp_timer_data))
+	sortTim(sorted, GLOBAL_PROC_REF(cmp_timer_data))
 
 	// Now that everything is sorted, compile them into an HTML output
 	var/output = "<table border='1'>"

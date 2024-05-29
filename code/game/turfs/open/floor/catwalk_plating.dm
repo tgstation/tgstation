@@ -16,6 +16,7 @@
 	footstep = FOOTSTEP_CATWALK
 	overfloor_placed = TRUE
 	underfloor_accessibility = UNDERFLOOR_VISIBLE
+	rust_resistance = RUST_RESISTANCE_BASIC
 	var/covered = TRUE
 	var/catwalk_type = "maint"
 	var/static/list/catwalk_underlays = list()
@@ -90,7 +91,7 @@
 	icon_state = "titanium_above"
 	floor_tile = /obj/item/stack/tile/catwalk_tile/titanium
 	catwalk_type = "titanium"
-
+	rust_resistance = RUST_RESISTANCE_TITANIUM
 
 /turf/open/floor/catwalk_floor/iron_smooth //the original green type
 	name = "smooth plated catwalk floor"

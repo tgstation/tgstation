@@ -42,7 +42,7 @@
 	/// Does this portal bypass teleport restrictions? like TRAIT_NO_TELEPORT and NOTELEPORT flags.
 	var/force_teleport = FALSE
 	/// Does this portal create spark effect when teleporting?
-	var/sparkless = FALSE
+	var/sparkless = TRUE
 	/// If FALSE, the wibble filter will not be applied to this portal (only a visual effect).
 	var/wibbles = TRUE
 
@@ -69,6 +69,7 @@
 
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
 	if(user && Adjacent(user))
+		playsound(loc, "sound/effects/portal_travel.ogg" , 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		teleport(user)
 		return TRUE
 
@@ -78,6 +79,7 @@
 		return TRUE
 
 /obj/effect/portal/Bumped(atom/movable/bumper)
+	playsound(loc, "sound/effects/portal_travel.ogg" , 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	teleport(bumper)
 
 /obj/effect/portal/attack_hand(mob/user, list/modifiers)
@@ -85,10 +87,13 @@
 	if(.)
 		return
 	if(Adjacent(user))
+		playsound(loc, "sound/effects/portal_travel.ogg" , 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		teleport(user)
+
 
 /obj/effect/portal/attack_robot(mob/living/user)
 	if(Adjacent(user))
+		playsound(loc, "sound/effects/portal_travel.ogg" , 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		teleport(user)
 
 /obj/effect/portal/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override)
@@ -121,6 +126,7 @@
 		QDEL_NULL(linked)
 	else
 		linked = null
+	playsound(loc, "sound/effects/portal_close.ogg" , 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return ..()
 
 /obj/effect/portal/attack_ghost(mob/dead/observer/O)
@@ -140,10 +146,12 @@
 		no_effect = TRUE
 	else
 		last_effect = world.time
+	var/turf/start_turf = get_turf(M)
 	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel, forced = force_teleport))
 		if(isprojectile(M))
 			var/obj/projectile/P = M
 			P.ignore_source_check = TRUE
+		new /obj/effect/temp_visual/portal_animation(start_turf, src, M)
 		return TRUE
 	return FALSE
 
@@ -206,3 +214,22 @@
 	. = ..()
 	if (. && !isdead(M))
 		qdel(src)
+
+/**
+ * Animation used for transitioning atoms which are teleporting somewhere via a portal
+ *
+ * To use, pass it the atom doing the teleporting and the atom that is being teleported in init.
+ */
+/obj/effect/temp_visual/portal_animation
+	duration = 0.25 SECONDS
+
+/obj/effect/temp_visual/portal_animation/Initialize(mapload, atom/portal, atom/movable/teleporting)
+	. = ..()
+	if(isnull(portal) || isnull(teleporting))
+		return
+
+	appearance = teleporting.appearance
+	dir = teleporting.dir
+	layer = portal.layer + 0.01
+	alpha = teleporting.alpha
+	animate(src, pixel_x = (portal.x * 32) - (x * 32), pixel_y = (portal.y * 32) - (y * 32), alpha = 0, time = duration)

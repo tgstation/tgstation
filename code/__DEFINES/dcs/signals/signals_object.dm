@@ -366,11 +366,11 @@
 
 // /obj/item/grenade signals
 
-///called in /obj/item/gun/process_fire (user, target, params, zone_override)
+///called in /obj/item/grenade/proc/detonate(): (lanced_by)
 #define COMSIG_GRENADE_DETONATE "grenade_prime"
-//called from many places in grenade code (armed_by, nade, det_time, delayoverride)
+///called in /obj/item/grenade/gas_crystal/arm_grenade(): (armed_by, nade, det_time, delayoverride)
 #define COMSIG_MOB_GRENADE_ARMED "grenade_mob_armed"
-///called in /obj/item/gun/process_fire (user, target, params, zone_override)
+///called in /obj/item/grenade/proc/arm_grenade() and /obj/item/grenade/gas_crystal/arm_grenade(): (det_time, delayoverride)
 #define COMSIG_GRENADE_ARMED "grenade_armed"
 
 // /obj/projectile signals (sent to the firer)
@@ -423,7 +423,7 @@
 #define COMSIG_VIM_HEADLIGHTS_TOGGLED "vim_headlights_toggled"
 
 ///from /datum/computer_file/program/messenger/proc/receive_message
-#define COMSIG_COMPUTER_RECIEVED_MESSAGE "computer_recieved_message"
+#define COMSIG_COMPUTER_RECEIVED_MESSAGE "computer_received_message"
 ///from /datum/computer_file/program/virtual_pet/proc/handle_level_up
 #define COMSIG_VIRTUAL_PET_LEVEL_UP "virtual_pet_level_up"
 
@@ -448,7 +448,10 @@
 	/// Prevents click from happening.
 	#define COMPONENT_CANCEL_EQUIPMENT_CLICK (1<<0)
 
+///from base of /obj/item/attack(): (mob/living, mob/living, params)
 #define COMSIG_ITEM_ATTACK "item_attack"
+///from base of /obj/item/attack(): (mob/living, mob/living, params)
+#define COMSIG_ITEM_POST_ATTACK "item_post_attack" // called only if the attack was executed
 ///from base of obj/item/attack_self(): (/mob)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 //from base of obj/item/attack_self_secondary(): (/mob)

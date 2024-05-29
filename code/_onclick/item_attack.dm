@@ -236,6 +236,8 @@
 	user.do_attack_animation(target_mob)
 	target_mob.attacked_by(src, user)
 
+	SEND_SIGNAL(src, COMSIG_ITEM_POST_ATTACK, target_mob, user, params)
+
 	log_combat(user, target_mob, "attacked", src.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
@@ -287,7 +289,7 @@
 		if(body_position == LYING_DOWN)
 			zone_hit_chance += 10
 		targeting = get_random_valid_zone(targeting, zone_hit_chance)
-	var/targeting_human_readable = parse_zone(targeting)
+	var/targeting_human_readable = parse_zone_with_bodypart(targeting)
 
 	send_item_attack_message(attacking_item, user, targeting_human_readable, targeting)
 

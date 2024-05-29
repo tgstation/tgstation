@@ -586,6 +586,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/turf/T = get_turf(src)
 	T.turf_flags |= NO_LAVA_GEN
 
+INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
+/obj/effect/mapping_helpers/no_atoms_ontop
+	icon_state = "no_atoms_ontop"
+
+/obj/effect/mapping_helpers/no_atoms_ontop/Initialize(mapload)
+	. = ..()
+	var/turf/loc_turf = get_turf(src)
+	loc_turf.turf_flags |= TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES
+
 ///Helpers used for injecting stuff into atoms on the map.
 /obj/effect/mapping_helpers/atom_injector
 	name = "Atom Injector"
@@ -914,8 +923,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 					var/datum/species/new_human_species = GLOB.species_list[species_to_pick]
 					if(new_human_species)
 						new_human.set_species(new_human_species)
-						new_human_species = new_human.dna.species
-						new_human.fully_replace_character_name(new_human.real_name, new_human_species.random_name(new_human.gender, TRUE, TRUE))
+						new_human.fully_replace_character_name(new_human.real_name, new_human.generate_random_mob_name())
 					else
 						stack_trace("failed to spawn cadaver with species ID [species_to_pick]") //if it's invalid they'll just be a human, so no need to worry too much aside from yelling at the server owner lol.
 		else

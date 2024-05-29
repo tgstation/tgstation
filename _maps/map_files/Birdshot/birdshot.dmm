@@ -49319,7 +49319,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer2{
 	dir = 6
 	},
-/obj/machinery/meter,
+/obj/machinery/meter/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
 "qQg" = (
@@ -76062,6 +76062,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
+/mob/living/basic/spider/giant/sgt_araneus,
 /turf/open/floor/stone,
 /area/station/command/heads_quarters/hos)
 "yaG" = (

@@ -36,6 +36,9 @@
 	/// The default color for the reel overlay if no line is equipped.
 	var/default_line_color = "gray"
 
+	///should there be a fishing line?
+	var/display_fishing_line = TRUE
+
 	///The name of the icon state of the reel overlay
 	var/reel_overlay = "reel_overlay"
 
@@ -154,9 +157,11 @@
 
 /// Generates the fishing line visual from the current user to the target and updates inhands
 /obj/item/fishing_rod/proc/create_fishing_line(atom/movable/target, target_py = null)
+	if(!display_fishing_line)
+		return null
 	var/mob/user = loc
 	if(!istype(user))
-		return
+		return null
 	if(fishing_line)
 		QDEL_NULL(fishing_line)
 	var/beam_color = line?.line_color || default_line_color

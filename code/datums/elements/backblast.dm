@@ -38,6 +38,9 @@
 
 /// For firing an actual backblast pellet
 /datum/element/backblast/proc/pew(obj/item/gun/weapon, mob/living/user, atom/target)
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		return
+
 	var/turf/origin = get_turf(weapon)
 	var/backblast_angle = get_angle(target, origin)
 	explosion(weapon, devastation_range = dev_range, heavy_impact_range = heavy_range, light_impact_range = light_range, flame_range = flame_range, adminlog = FALSE, protect_epicenter = TRUE, explosion_direction = backblast_angle, explosion_arc = blast_angle)

@@ -70,6 +70,6 @@
 			provides the user with superior armor and mobility compared to the standard Syndicate MODsuit."
 	item = /obj/item/mod/control/pre_equipped/traitor_elite
 	// This one costs more than the nuke op counterpart
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 	progression_minimum = 90 MINUTES
 	cost = 16

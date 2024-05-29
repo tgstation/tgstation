@@ -93,6 +93,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IS_SOLID (1<<6)
 /// This turf will never be cleared away by other objects on Initialize.
 #define NO_CLEARING (1<<7)
+/// This atom is a pseudo-floor that blocks map generation's checkPlaceAtom() from placing things like trees ontop of it.
+#define TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES (1<<8)
+
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
@@ -129,6 +132,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EVENT_PROTECTED (1<<15)
 /// This Area Doesn't have Flood or Bomb Admin Messages, but will still log
 #define QUIET_LOGS (1<<16)
+/// This area does not allow virtual entities to enter.
+#define VIRTUAL_SAFE_AREA (1<<17)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

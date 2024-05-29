@@ -20,8 +20,8 @@
 	)
 	tool_behaviors = list(TOOL_WIRECUTTER)
 	time = 0.5 SECONDS
-	always_available = FALSE
 	category = CAT_WEAPON_AMMO
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/pulseslug
 	name = "Pulse Slug Shell"
@@ -71,8 +71,8 @@
 	category = CAT_WEAPON_AMMO
 
 /datum/crafting_recipe/improvisedslug
-	name = "Improvised Shotgun Shell"
-	result = /obj/item/ammo_casing/shotgun/improvised
+	name = "Junk Shell"
+	result = /obj/effect/spawner/random/junk_shell
 	reqs = list(
 		/obj/item/stack/sheet/iron = 2,
 		/obj/item/stack/cable_coil = 1,
@@ -85,10 +85,10 @@
 
 /datum/crafting_recipe/trashball
 	name = "Trashball"
-	always_available = FALSE
 	result = /obj/item/stack/cannonball/trashball
 	reqs = list(
 		/obj/item/stack/sheet = 5,
 		/datum/reagent/consumable/space_cola = 10,
 	)
 	category = CAT_WEAPON_AMMO
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED

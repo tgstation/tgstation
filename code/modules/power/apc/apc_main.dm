@@ -250,6 +250,7 @@
 
 /obj/machinery/power/apc/proc/on_saboteur(datum/source, disrupt_duration)
 	SIGNAL_HANDLER
+	disrupt_duration *= 0.1 // so, turns out, failure timer is in seconds, not deciseconds; without this, disruptions last 10 times as long as they probably should
 	energy_fail(disrupt_duration)
 	return COMSIG_SABOTEUR_SUCCESS
 
@@ -704,6 +705,8 @@
 /obj/machinery/power/apc/proc/draw_energy(amount)
 	var/grid_used = min(terminal?.surplus(), amount)
 	terminal?.add_load(grid_used)
+	if(QDELETED(cell))
+		return grid_used
 	var/cell_used = 0
 	if(amount > grid_used)
 		cell_used += cell.use(amount - grid_used, force = TRUE)

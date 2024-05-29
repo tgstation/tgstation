@@ -92,6 +92,11 @@ if $grep -i'centcomm' $map_files; then
     echo -e "${RED}ERROR: Misspelling(s) of CentCom detected in maps, please remove the extra M(s).${NC}"
     st=1
 fi;
+if $grep -i'eciev' $map_files; then
+	echo
+    echo -e "${RED}ERROR: Common I-before-E typo detected in maps.${NC}"
+    st=1
+fi;
 
 section "whitespace issues"
 part "space indentation"
@@ -205,6 +210,11 @@ if $grep 'NanoTrasen' $code_files; then
     echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please uncapitalize the T(s).${NC}"
     st=1
 fi;
+if $grep -i'eciev' $code_files; then
+	echo
+    echo -e "${RED}ERROR: Common I-before-E typo detected in code.${NC}"
+    st=1
+fi;
 part "map json naming"
 if ls _maps/*.json | $grep "[A-Z]"; then
 	echo
@@ -286,6 +296,12 @@ if [ "$pcre2_support" -eq 1 ]; then
 	if $grep -P '^/(obj|mob|turf|area|atom)/.+/Initialize\((?!mapload).*\)' $code_files; then
 		echo
 		echo -e "${RED}ERROR: Initialize override without 'mapload' argument.${NC}"
+		st=1
+	fi;
+	part "pronoun helper spellcheck"
+	if $grep -P '%PRONOUN_(?!they|They|their|Their|theirs|Theirs|them|Them|have|are|were|do|theyve|Theyve|theyre|Theyre|s|es)' $code_files; then
+		echo
+		echo -e "${RED}ERROR: Invalid pronoun helper found.${NC}"
 		st=1
 	fi;
 else
