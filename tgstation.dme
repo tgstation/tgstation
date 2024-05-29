@@ -554,6 +554,7 @@
 #include "code\__HELPERS\sorts\TimSort.dm"
 #include "code\__HELPERS\~monkestation-helpers\announcements.dm"
 #include "code\__HELPERS\~monkestation-helpers\antags.dm"
+#include "code\__HELPERS\~monkestation-helpers\atoms.dm"
 #include "code\__HELPERS\~monkestation-helpers\icon_smoothing.dm"
 #include "code\__HELPERS\~monkestation-helpers\roundend.dm"
 #include "code\__HELPERS\~monkestation-helpers\time.dm"

@@ -12,6 +12,9 @@
 
 /obj/item/storage/apply_fantasy_bonuses(bonus)
 	. = ..()
+	if(isnull(atom_storage)) // some abstract types of storage (yes i know) don't get a datum
+		return
+
 	atom_storage.max_slots = modify_fantasy_variable("max_slots", atom_storage.max_slots, round(bonus/2))
 	atom_storage.max_total_storage = modify_fantasy_variable("max_total_storage", atom_storage.max_total_storage, round(bonus/2))
 	LAZYSET(fantasy_modifications, "max_specific_storage", atom_storage.max_specific_storage)
@@ -25,9 +28,13 @@
 		atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
 
 /obj/item/storage/remove_fantasy_bonuses(bonus)
+	if(isnull(atom_storage)) // some abstract types of storage (yes i know) don't get a datum
+		return ..()
+
 	atom_storage.max_slots = reset_fantasy_variable("max_slots", atom_storage.max_slots)
 	atom_storage.max_total_storage = reset_fantasy_variable("max_total_storage", atom_storage.max_total_storage)
 	var/previous_max_storage = LAZYACCESS(fantasy_modifications, "max_specific_storage")
+	LAZYREMOVE(fantasy_modifications, "max_specific_storage")
 	if(previous_max_storage)
 		atom_storage.max_specific_storage = previous_max_storage
 	return ..()

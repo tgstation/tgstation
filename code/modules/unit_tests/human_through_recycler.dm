@@ -18,7 +18,7 @@
 	TEST_ASSERT(chewer.bloody, "The emagged recycler did not become bloody after crushing the assistant!")
 
 	// Now, let's test to see if all of their clothing got properly deleted.
-	TEST_ASSERT_EQUAL(length(assistant.contents), 0, "Assistant still has items in its contents after being put through an emagged recycler!")
+	TEST_ASSERT_EQUAL(length(assistant.effective_contents()), 0, "Assistant still has items in its contents after being put through an emagged recycler!")
 	// Consistent Assistants will always have the following: ID, PDA, backpack, a uniform, a headset, and a pair of shoes. If any of these are still present, then the recycler did not properly delete the assistant's clothing.
 	// However, let's check for EVERYTHING just in case, because we don't want to miss anything.
 	// This is just what we expect to be deleted.
