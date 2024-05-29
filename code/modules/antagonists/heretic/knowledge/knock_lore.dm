@@ -5,21 +5,22 @@
  *
  * A Locksmith’s Secret
  * Grasp of Knock
- * > Sidepaths:
- *   Ashen Eyes
- *	 Codex Cicatrix
  * Key Keeper’s Burden
- *
+ * > Sidepaths:
+ *   Mindgate
  * Rite Of Passage
  * Mark Of Knock
  * Ritual of Knowledge
  * Burglar's Finesse
  * > Sidepaths:
- *   Apetra Vulnera
  *   Opening Blast
+ *   Unfathomable Curio
+ * 		Unsealed arts
  *
  * Opening Blade
  * Caretaker’s Last Refuge
+ * > Sidepaths:
+ * 	 	Apetra Vulnera
  *
  * Many secrets behind the Spider Door
  */
@@ -45,11 +46,7 @@
 		DNA locks on mechs will be removed, and any pilot will be ejected. Works on consoles. \
 		Makes a distinctive knocking sound on use."
 	gain_text = "Nothing may remain closed from my touch."
-	next_knowledge = list(
-		/datum/heretic_knowledge/key_ring,
-		/datum/heretic_knowledge/medallion,
-		/datum/heretic_knowledge/codex_cicatrix,
-	)
+	next_knowledge = list(/datum/heretic_knowledge/key_ring)
 	cost = 1
 	route = PATH_KNOCK
 
@@ -106,7 +103,10 @@
 		/obj/item/card/id = 1,
 	)
 	result_atoms = list(/obj/item/card/id/advanced/heretic)
-	next_knowledge = list(/datum/heretic_knowledge/limited_amount/rite_of_passage)
+	next_knowledge = list(
+		/datum/heretic_knowledge/limited_amount/rite_of_passage,
+		/datum/heretic_knowledge/spell/mind_gate,
+	)
 	cost = 1
 	route = PATH_KNOCK
 
@@ -146,12 +146,13 @@
 	gain_text = "Their trinkets will be mine, as will their lives in due time."
 	adds_sidepath_points = 1
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/apetra_vulnera,
 		/datum/heretic_knowledge/spell/opening_blast,
 		/datum/heretic_knowledge/blade_upgrade/flesh/knock,
+		/datum/heretic_knowledge/unfathomable_curio,
+		/datum/heretic_knowledge/painting,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
-	cost = 2
+	cost = 1
 	route = PATH_KNOCK
 
 /datum/heretic_knowledge/blade_upgrade/flesh/knock //basically a chance-based weeping avulsion version of the former
@@ -174,7 +175,10 @@
 		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
 	gain_text = "Then I saw my my own reflection cascaded mind-numbingly enough times that I was but a haze."
 	adds_sidepath_points = 1
-	next_knowledge = list(/datum/heretic_knowledge/ultimate/knock_final)
+	next_knowledge = list(
+		/datum/heretic_knowledge/ultimate/knock_final,
+		/datum/heretic_knowledge/spell/apetra_vulnera,
+	)
 	route = PATH_KNOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 1

@@ -56,7 +56,7 @@
 	return ..()
 
 /datum/hallucination/delusion/start()
-	if(!hallucinator.client || !delusion_icon_file)
+	if(!hallucinator.client)
 		return FALSE
 
 	feedback_details += "Delusion: [delusion_name]"
@@ -179,6 +179,36 @@
 	delusion_icon_state = "robot"
 	delusion_name = "cyborg"
 	play_wabbajack = TRUE
+
+/// Hallucination used by the path of moon heretic to turn everyone into a lunar mass
+/datum/hallucination/delusion/preset/moon
+	delusion_icon_file = 'icons/mob/nonhuman-player/eldritch_mobs.dmi'
+	delusion_icon_state = "moon_mass"
+	delusion_name = "moon"
+	duration = 15 SECONDS
+	affects_others = TRUE
+	random_hallucination_weight = 0
+
+// Hallucination used by heretic paintings
+/datum/hallucination/delusion/preset/heretic
+	random_hallucination_weight = 0
+	dynamic_icon = TRUE
+	delusion_name = "Heretic"
+	affects_others = TRUE
+	affects_us = FALSE
+	duration = 11 SECONDS
+
+/datum/hallucination/delusion/preset/heretic/make_delusion_image(mob/over_who)
+	var/static/icon/heretic_icon
+	if(isnull(heretic_icon))
+		heretic_icon = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/heretic, r_hand = NO_REPLACE))
+	delusion_icon_file = heretic_icon
+	return ..()
+
+/datum/hallucination/delusion/preset/heretic/gate
+	delusion_name = "Mind Gate"
+	duration = 60 SECONDS
+	affects_us = TRUE
 
 /datum/hallucination/delusion/preset/cyborg/make_delusion_image(mob/over_who)
 	. = ..()

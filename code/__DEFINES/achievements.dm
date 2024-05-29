@@ -43,6 +43,7 @@
 #define MEDAL_BLADE_ASCENSION "Blade"
 #define MEDAL_COSMOS_ASCENSION "Cosmos"
 #define MEDAL_KNOCK_ASCENSION "Knock"
+#define MEDAL_MOON_ASCENSION "Moon"
 #define MEDAL_TOOLBOX_SOUL "Toolsoul"
 #define MEDAL_CHEM_TUT "Beginner Chemist"
 #define MEDAL_HOT_DAMN "Hot Damn!"

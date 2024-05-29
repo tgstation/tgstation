@@ -72,9 +72,9 @@
 		I spoke, and heard my own words echoed back."
 	adds_sidepath_points = 1
 	next_knowledge = list(
+		/datum/heretic_knowledge/summon/fire_shark,
 		/datum/heretic_knowledge/mark/cosmic_mark,
 		/datum/heretic_knowledge/essence,
-		/datum/heretic_knowledge/summon/fire_shark,
 	)
 	spell_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 1

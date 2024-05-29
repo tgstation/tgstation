@@ -26,7 +26,6 @@
 		Also has a chance to transfer wounds from you to the victim."
 	gain_text = "\"No matter the man, we bleed all the same.\" That's what the Marshal told me."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/apetra_vulnera,
 		/datum/heretic_knowledge/spell/void_phase,
 		/datum/heretic_knowledge/summon/raw_prophet,
 	)

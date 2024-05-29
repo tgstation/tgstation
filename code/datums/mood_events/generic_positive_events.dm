@@ -360,6 +360,11 @@
 	special_screen_obj = "birthday"
 	special_screen_replace = FALSE
 
+/datum/mood_event/moon_smile
+	description = "THE MOON SHOWS ME THE TRUTH AND ITS SMILE IS FACED TOWARDS ME!!!"
+	mood_change = 10
+	timeout = 2 MINUTES
+
 ///Wizard cheesy grand finale - what the wizard gets
 /datum/mood_event/madness_elation
 	description = "Madness truly is the greatest of blessings..."

@@ -6,7 +6,7 @@
 	gain_text = "Piercing eyes guided them through the mundane. Neither darkness nor terror could stop them."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/ash_passage,
-		/datum/heretic_knowledge/limited_amount/flesh_ghoul,
+		/datum/heretic_knowledge/spell/moon_smile,
 	)
 	required_atoms = list(
 		/obj/item/organ/internal/eyes = 1,
@@ -25,7 +25,7 @@
 	gain_text = "The flesh of humanity is weak. Make them bleed. Show them their fragility."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mad_mask,
-		/datum/heretic_knowledge/summon/raw_prophet,
+		/datum/heretic_knowledge/moon_amulette,
 	)
 	required_atoms = list(
 		/obj/item/bodypart/leg/left = 1,
@@ -63,8 +63,8 @@
 		They also have the ability to create a ring of fire around themselves for a length of time."
 	gain_text = "I combined my principle of hunger with my desire for destruction. The Marshal knew my name, and the Nightwatcher gazed on."
 	next_knowledge = list(
-		/datum/heretic_knowledge/summon/stalker,
 		/datum/heretic_knowledge/spell/flame_birth,
+		/datum/heretic_knowledge/spell/moon_ringleader,
 	)
 	required_atoms = list(
 		/obj/effect/decal/cleanable/ash = 1,

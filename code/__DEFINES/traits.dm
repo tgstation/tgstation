@@ -1316,6 +1316,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///trait determines if this mob can breed given by /datum/component/breeding
 #define TRAIT_MOB_BREEDER "mob_breeder"
+
+/// Trait determines if this mob has examined an eldritch painting
+#define TRAIT_ELDRITCH_PAINTING_EXAMINE "eldritch_painting_examine"
+
+/// Trait used by the /datum/brain_trauma/severe/flesh_desire trauma to change their preferences of what they eat
+#define TRAIT_FLESH_DESIRE "flesh_desire"
+
 ///trait given to food that can be baked by /datum/component/bakeable
 #define TRAIT_BAKEABLE "bakeable"
 

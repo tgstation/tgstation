@@ -1985,6 +1985,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/list/food_flags = FOOD_FLAGS
 
+	if(HAS_TRAIT(src, TRAIT_FLESH_DESIRE))
+		return list(
+			"liked_food" = bitfield_to_list(GORE | MEAT, food_flags),
+			"disliked_food" = null,
+			"toxic_food" = bitfield_to_list(VEGETABLES | DAIRY | FRUIT | FRIED, food_flags),
+		)
 	return list(
 		"liked_food" = bitfield_to_list(liked_food, food_flags),
 		"disliked_food" = bitfield_to_list(disliked_food, food_flags),
