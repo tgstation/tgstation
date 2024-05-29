@@ -179,10 +179,10 @@
 /obj/item/circuit_component/bci_core/proc/on_organ_implanted(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
 
-	update_charge_action()
-
 	user_port.set_output(owner)
 	user = WEAKREF(owner)
+
+	update_charge_action()
 
 	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
