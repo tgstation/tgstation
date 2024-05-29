@@ -164,6 +164,13 @@
 #define HUMAN_MAX_OXYLOSS 3
 #define HUMAN_CRIT_MAX_OXYLOSS (SSMOBS_DT/3)
 
+/// How long it takes to return to 0 stam
+#ifdef UNIT_TESTS
+#define STAMINA_REGEN_TIME (0.2 SECONDS)
+#else
+#define STAMINA_REGEN_TIME (10 SECONDS)
+#endif
+
 #define HEAT_DAMAGE_LEVEL_1 1 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 400K point
 #define HEAT_DAMAGE_LEVEL_3 4 //Amount of damage applied when your body temperature passes the 460K point and you are on fire

@@ -143,8 +143,9 @@
 		amount = min(amount, 0)
 	return ..()
 
-/mob/living/carbon/stamcrit_check(stamina_level)
-	if(stamina_level > DAMAGE_PRECISION && (maxHealth - stamina_level) <= crit_threshold && stat != DEAD)
+/mob/living/carbon/received_stamina_damage(current_level, amount_actual, amount)
+	. = ..()
+	if((maxHealth - current_level) <= crit_threshold && stat != DEAD)
 		apply_status_effect(/datum/status_effect/incapacitating/stamcrit)
 
 /**

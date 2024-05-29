@@ -1,12 +1,10 @@
 /datum/status_effect/incapacitating/stamcrit
 	status_type = STATUS_EFFECT_REFRESH
-	duration = 10 SECONDS
+	duration = STAMINA_REGEN_TIME
 	/// Cooldown between displaying warning messages that we hit diminishing returns
 	COOLDOWN_DECLARE(warn_cd)
 	/// A counter that tracks every time we've taken enough damage to trigger diminishing returns
 	var/diminishing_return_counter = 0
-	/// If TRUE, we reset stamina to 0 on removal
-	var/refund_stamina = TRUE
 
 /datum/status_effect/incapacitating/stamcrit/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
@@ -42,8 +40,6 @@
 	UnregisterSignal(owner, COMSIG_LIVING_HEALTH_UPDATE)
 	UnregisterSignal(owner, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE)
 	owner.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_FLOORED), STAMINA)
-	if(refund_stamina)
-		owner.adjustStaminaLoss(-INFINITY)
 	return ..()
 
 /datum/status_effect/incapacitating/stamcrit/proc/update_diminishing_return(datum/source, type, amount, forced)
@@ -71,5 +67,4 @@
 /datum/status_effect/incapacitating/stamcrit/proc/check_remove(datum/source, ...)
 	SIGNAL_HANDLER
 	if(owner.maxHealth - owner.getStaminaLoss() > owner.crit_threshold)
-		refund_stamina = FALSE // We healed out of stamcrit from some other means, like a chem, don't go all the way to 0
 		qdel(src)

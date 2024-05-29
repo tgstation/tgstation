@@ -434,39 +434,42 @@
 /mob/living/proc/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype = ALL)
 	if(!can_adjust_stamina_loss(amount, forced, required_biotype))
 		return 0
-	. = staminaloss
+	var/old_amount = staminaloss
 	staminaloss = clamp((staminaloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, max_stamina)
-	. -= staminaloss
-	if(amount > 0)
+	var/delta = old_amount - staminaloss
+	if(delta <= 0)
 		// need to check for stamcrit AFTER canadjust but BEFORE early return here
-		stamcrit_check(staminaloss)
-	if(!.) // no change, no need to update
+		received_stamina_damage(staminaloss, -1 * delta)
+	if(delta == 0) // no change, no need to update
 		return 0
 	if(updating_stamina)
 		updatehealth()
-	return .
+	return delta
 
 /mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype = ALL)
 	if(!forced && (status_flags & GODMODE))
 		return 0
 	if(!forced && !(mob_biotypes & required_biotype))
 		return 0
-	. = staminaloss
+	var/old_amount = staminaloss
 	staminaloss = amount
-	. -= staminaloss
-	if(amount > 0)
-		stamcrit_check(staminaloss)
-	if(!.) // no change, no need to update
+	var/delta = old_amount - staminaloss
+	if(delta <= 0 && amount >= DAMAGE_PRECISION)
+		received_stamina_damage(staminaloss, -1 * delta, amount)
+	if(delta == 0) // no change, no need to update
 		return 0
 	if(updating_stamina)
 		updatehealth()
-	return .
+	return delta
 
-/// Stub proc for entering / refreshing stamcrit upon taking stamina damage (even at max stamina).
-/mob/living/proc/stamcrit_check(stamina_level)
-	// In a perfect world this would not be necessary but this is not a perfect world
-	// If (in the future) adjustXLoss procs differentate failure to apply from no change, this can be removed
-	return
+/// The mob has received stamina damage
+///
+/// - current_level: The mob's current stamina damage amount (to save unnecessary getStaminaLoss() calls)
+/// - amount_actual: The amount of stamina damage received, in actuality
+/// For example, if you are taking 50 stamina damage but are at 90, you would actually only recieve 30 stamina damage (due to the cap)
+/// - amount: The amount of stamina damage received, raw
+/mob/living/proc/received_stamina_damage(current_level, amount_actual, amount)
+	addtimer(CALLBACK(src, PROC_REF(setStaminaLoss), 0, TRUE, TRUE), STAMINA_REGEN_TIME, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /**
  * heal ONE external organ, organ gets randomly selected from damaged ones.
