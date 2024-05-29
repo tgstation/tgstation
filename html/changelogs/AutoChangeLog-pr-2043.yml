@@ -1,4 +1,0 @@
-author: "Absolucy, Kylerace"
-delete-after: True
-changes:
-  - admin: "admins/maintainers can now make the profiler focus on specific subsystems by setting the subsystem var profile_focused to TRUE"

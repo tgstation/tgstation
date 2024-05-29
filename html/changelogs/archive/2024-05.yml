@@ -290,3 +290,39 @@
   - rscadd: Stamp Right click functionality
   Tractor Mann:
   - rscadd: Added IPC bodyparts as researchable prints!
+2024-05-29:
+  Absolucy:
+  - bugfix: Fix "never for this round" polls being broken.
+  - bugfix: Fixed midround prompt icons for changelings and paradox clones.
+  - bugfix: Non-crew antags (nukies, wizards, ninjas) will now be properly removed
+      from the crew manifest.
+  - image: New liquid plasma sprites from SS14!
+  Absolucy, Cheshify:
+  - qol: telecomms is quieter and less ear-damaging.
+  - sound: 'modified tcomms sound to remove high-tones. fix: the telecomms sound only
+      comes from the server hub machine.'
+  Absolucy, Kylerace:
+  - admin: admins/maintainers can now make the profiler focus on specific subsystems
+      by setting the subsystem var profile_focused to TRUE
+  Absolucy, Melbert:
+  - rscadd: Cigarette smoke is now more smokey.
+  - rscadd: Taking a cigarette out of your mouth will let out a big puff of smoke.
+  Absolucy, Rhials, Ghommie:
+  - rscadd: Shuttle Firesale positive station trait. Some emergency shuttle options
+      have been put on sale!
+  - rscadd: Misplaced Wallet positive station trait. You wouldn't steal from a missing
+      wallet, would you??
+  - rscadd: Wisdom Cow Invasion positive station trait.
+  - rscadd: Advanced Medbots positive station trait. Better roundstart medbots!
+  - rscadd: Loaner Shuttle positive station trait. More shuttle loan offers and more
+      payout!
+  - qol: Station Trait titles are now italicized for easier reading.
+  - balance: '"Scarves" and "Wallets!" are now neutral traits.'
+  - balance: Halved the weight of station traits such as scarves, wallets and glitched
+      PDAs.
+  Absolucy, Swiftfeather:
+  - qol: Increased threshold of trace n2o required to make euphoria and giggles happen.
+  Flleeppyy, ancient-engineer:
+  - rscadd: Adds new heretic path moon
+  dieamond13:
+  - rscadd: adds propeller hats, rainbow bowties, and swirl lollipops

@@ -1,5 +1,0 @@
-author: "Absolucy, Cheshify"
-delete-after: True
-changes:
-  - qol: "telecomms is quieter and less ear-damaging."
-  - sound: "modified tcomms sound to remove high-tones. fix: the telecomms sound only comes from the server hub machine."

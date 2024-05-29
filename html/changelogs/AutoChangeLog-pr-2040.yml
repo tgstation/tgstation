@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Non-crew antags (nukies, wizards, ninjas) will now be properly removed from the crew manifest."
