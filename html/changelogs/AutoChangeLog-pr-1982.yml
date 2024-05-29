@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Beam rifles will no longer inappropriately retain any bonuses they may gain from wizardry."
+  - bugfix: "Inappropriate stack traces over bonuses being applied to components\nthat gain bonuses innately (like Mythril stacks) should cease."
