@@ -5741,6 +5741,7 @@
 #include "monkestation\code\datums\keybinding\carbon.dm"
 #include "monkestation\code\datums\keybinding\communication.dm"
 #include "monkestation\code\datums\keybinding\living.dm"
+#include "monkestation\code\datums\looping_sounds\weather.dm"
 #include "monkestation\code\datums\mind\_mind.dm"
 #include "monkestation\code\datums\quirks\negative_quirks.dm"
 #include "monkestation\code\datums\quirks\neutral_quirks.dm"
