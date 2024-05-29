@@ -377,6 +377,10 @@
 	},
 /turf/open/floor/stone,
 /area/shuttle/pirate)
+"qA" = (
+/obj/machinery/power/shuttle_engine/propulsion/right,
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate)
 "HQ" = (
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord,
 /turf/open/floor/stone,
@@ -544,6 +548,6 @@ ap
 al
 ap
 aB
-ai
+qA
 aa
 "}
