@@ -1,4 +1,0 @@
-author: "Capsandi"
-delete-after: True
-changes:
-  - sound: "Disposal chutes will no longer play a sound for each item when many items enter it at once"
