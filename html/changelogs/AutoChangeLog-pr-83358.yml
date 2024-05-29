@@ -1,0 +1,4 @@
+author: "improvedname"
+delete-after: True
+changes:
+  - balance: "Adds a threshold to oculine and increases metabolism, and reduces the amount of oculine in a carrot"
