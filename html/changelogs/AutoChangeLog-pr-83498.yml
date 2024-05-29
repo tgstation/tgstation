@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fix a rare issue where a turf would remain permanently \"elevated\" if an elevated object was initialized inside of a non-turf object."

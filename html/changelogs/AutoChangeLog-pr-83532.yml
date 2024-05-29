@@ -1,0 +1,4 @@
+author: "grungussus"
+delete-after: True
+changes:
+  - bugfix: "fixed metal foam plating description and add more user friendly explanation on how to replace tiling."
