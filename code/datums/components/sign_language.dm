@@ -7,11 +7,12 @@
 #define SIGN_TRAIT_BLOCKED 5
 #define SIGN_HANDS_COMPLETELY_RESTRAINED 6
 #define SIGN_SLOWLY_FROM_CUFFS 7
-/// Defines to determine the tone of the signer's message.
-#define TONE_NEUTRAL 0
-#define TONE_INQUISITIVE 1 // a question
-#define TONE_EMPHATIC 2 // an exclamation
-#define TONE_INQUISITIVE_EMPHATIC 3 // a bit of both
+
+// Defines to determine the tone of the signer's message.
+#define TONE_NEUTRAL 0 //! a statement
+#define TONE_INQUISITIVE 1 //! a question
+#define TONE_EMPHATIC 2 //! an exclamation
+#define TONE_INQUISITIVE_EMPHATIC 3 //! both a question and an exclamation (interrobang)
 
 
 /**
@@ -237,8 +238,7 @@
 	return SPELL_INVOCATION_ALWAYS_SUCCEED
 
 /// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
-/// Changes our message based on conditions 
-/// that limit or alter our ability to communicate 
+/// Changes our message based on conditions that limit or alter our ability to communicate 
 /datum/component/sign_language/proc/on_treat_living_message(atom/movable/source, list/message_args)
 	SIGNAL_HANDLER
 
@@ -286,7 +286,6 @@
 	if(timeleft(tonal_timerid) > 0)
 		remove_tonal_indicator()
 		deltimer(tonal_timerid)
-	// Determine tone based on punctuation
 	switch(emote_tone)
 		if(TONE_INQUISITIVE)
 			tonal_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "signlang1", TYPING_LAYER)
@@ -309,6 +308,7 @@
 	message = sanitize_message(message)
 	speech_args[SPEECH_MESSAGE] = message
 
+/// Send a visible message depending on the tone of the message that the sender is trying to convey to the world.
 /datum/component/sign_language/proc/emote_tone(mob/living/carbon/carbon_parent, emote_tone)
 	switch(emote_tone)
 		if(TONE_INQUISITIVE)

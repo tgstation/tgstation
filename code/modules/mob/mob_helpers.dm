@@ -122,7 +122,7 @@
 */
 /proc/stifled(phrase, definitive_limit = null)
 	phrase = html_decode(phrase)
-	var/num_words
+	var/num_words = 0
 	var/words = splittext(phrase, " ")
 	if(definitive_limit > 0) // in case someone passes a negative
 		num_words = min(definitive_limit, length(words))
