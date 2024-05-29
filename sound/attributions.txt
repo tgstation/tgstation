@@ -171,3 +171,5 @@ lizard_laugh1.ogg: https://youtu.be/I7CX0AS8RNI , License: CC-BY-3.0
 moth_laugh1.ogg: https://github.com/BeeStation/BeeStation-Hornet/blob/11ba3fa04105c93dd96a63ad4afaef4b20c02d0d/sound/emotes/ , license: CC-BY-SA-3.0
 whistle1.ogg: https://freesound.org/people/taure/sounds/411638/ , license: CC0 1.0 DEED
 
+portal_close, portal_open_1 , portal_open_2 , portal_open_3 , portal_travel made by @virgilcore (discord IGN)
+

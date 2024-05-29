@@ -666,6 +666,9 @@
 	light_color = "#ffcc66"
 	light_system = OVERLAY_LIGHT
 
+/obj/item/flashlight/lantern/on
+	start_on = TRUE
+
 /obj/item/flashlight/lantern/heirloom_moth
 	name = "old lantern"
 	desc = "An old lantern that has seen plenty of use."
