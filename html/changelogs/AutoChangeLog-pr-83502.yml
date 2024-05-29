@@ -1,0 +1,5 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - bugfix: "Fixed a missing access helper in Northstar Medbay. Assistants should no longer be trapped post-mending."
+  - bugfix: "Replaced an incorrect disposal variant in Northstar's Medbay."

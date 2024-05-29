@@ -1,0 +1,4 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "viruses can no longer potentially have 8 symptoms"
