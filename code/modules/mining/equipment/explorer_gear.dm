@@ -188,6 +188,7 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/armor/bone/Initialize(mapload)
 	. = ..()
@@ -197,6 +198,9 @@
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
 	desc = "An intimidating tribal helmet, it doesn't look very comfortable."
+	icon_state = "skull"
+	inhand_icon_state = null
+	strip_delay = 100
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES
 	cold_protection = HEAD
@@ -204,9 +208,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	armor_type = /datum/armor/hooded_explorer
-	icon_state = "skull"
-	inhand_icon_state = null
-	strip_delay = 100
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/head/helmet/skull/Initialize(mapload)
 	. = ..()
