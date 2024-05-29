@@ -151,7 +151,7 @@
 	if(!pick)
 		balloon_alert(user, "no skin picked!")
 		return
-	mod.theme.set_skin(pick)
+	mod.theme.set_skin(mod, pick)
 
 /obj/item/mod/paint/proc/check_menu(obj/item/mod/control/mod, mob/user)
 	if(user.incapacitated() || !user.is_holding(src) || !mod || mod.active || mod.activating)
@@ -186,7 +186,7 @@
 	if(!(skin in mod.theme.variants))
 		balloon_alert(user, "incompatible theme!")
 		return TRUE
-	mod.theme.set_skin(skin)
+	mod.theme.set_skin(mod, skin)
 	balloon_alert(user, "skin applied")
 	qdel(src)
 	return TRUE

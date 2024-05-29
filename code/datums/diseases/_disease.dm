@@ -140,9 +140,9 @@
 		if(affected_mob.mob_mood) // this and most other modifiers below a shameless rip from sleeping healing buffs, but feeling good helps make it go away quicker
 			switch(affected_mob.mob_mood.sanity_level)
 				if(SANITY_LEVEL_GREAT)
-					recovery_prob += 0.2
+					recovery_prob += 0.4
 				if(SANITY_LEVEL_NEUTRAL)
-					recovery_prob += 0.1
+					recovery_prob += 0.2
 				if(SANITY_LEVEL_DISTURBED)
 					recovery_prob += 0
 				if(SANITY_LEVEL_UNSTABLE)
