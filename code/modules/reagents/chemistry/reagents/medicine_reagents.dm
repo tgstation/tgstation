@@ -1351,9 +1351,7 @@
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
 	. = ..()
 	metabolizer.AdjustAllImmobility(-20 * REM * seconds_per_tick)
-	// If stamina critted, brings them out of it; otherwise, heals (quite a bit) of stamina
-	// damage without totally negating the slowness of having taken stamina damage
-	if(metabolizer.adjustStaminaLoss(metabolizer.getStaminaLoss() > 100 ? -21 : -10 * REM * seconds_per_tick, updating_stamina = FALSE))
+	if(metabolizer.adjustStaminaLoss(-10 * REM * seconds_per_tick, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
 	metabolizer.set_jitter_if_lower(20 SECONDS * REM * seconds_per_tick)
 	metabolizer.set_dizzy_if_lower(20 SECONDS * REM * seconds_per_tick)
@@ -1362,6 +1360,7 @@
 	. = ..()
 	affected_mob.add_traits(list(TRAIT_SLEEPIMMUNE, TRAIT_BATON_RESISTANCE), type)
 	affected_mob.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
+	RegisterSignal(affected_mob, COMSIG_CARBON_ENTER_STAMCRIT, PROC_REF(on_stamcrit))
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -1369,6 +1368,16 @@
 	affected_mob.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	affected_mob.remove_status_effect(/datum/status_effect/dizziness)
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
+	UnregisterSignal(affected_mob, COMSIG_CARBON_ENTER_STAMCRIT)
+
+/datum/reagent/medicine/changelingadrenaline/proc/on_stamcrit(mob/living/affected_mob)
+	SIGNAL_HANDLER
+	affected_mob.adjustStaminaLoss(-10, updating_stamina = TRUE)
+	to_chat(affected_mob, span_changeling("Our gene-stim flares! We are invigorated, but its potency wanes."))
+	volume -= (min(volume, 1))
+	return STAMCRIT_CANCELLED
+
+
 
 /datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/metabolizer, seconds_per_tick, times_fired)
 	. = ..()

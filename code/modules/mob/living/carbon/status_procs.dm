@@ -1,3 +1,5 @@
+#define STAMCRIT_CANCELLED (1<<0)
+
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting
 
@@ -10,7 +12,8 @@
 		return
 	if(check_stun_immunity(CANKNOCKDOWN))
 		return
-	SEND_SIGNAL(src, COMSIG_CARBON_ENTER_STAMCRIT)
+	if (SEND_SIGNAL(src, COMSIG_CARBON_ENTER_STAMCRIT) & STAMCRIT_CANCELLED)
+		return
 
 	to_chat(src, span_notice("You're too exhausted to keep going..."))
 	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_FLOORED), STAMINA)
