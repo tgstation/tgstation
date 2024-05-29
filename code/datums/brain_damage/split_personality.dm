@@ -307,7 +307,10 @@
 	if(prob(15))
 		playsound(owner,'sound/effects/sf_hiccup_male_01.ogg', 50)
 		owner.emote("hiccup")
-	owner.adjustStaminaLoss(-5) //too drunk to feel anything
+	//too drunk to feel anything
+	//if they're to this point, they're likely dying of liver damage
+	//and not accounting for that, the split personality is temporary
+	owner.adjustStaminaLoss(-25)
 	duration_in_seconds -= seconds_per_tick
 
 /mob/living/split_personality/blackout
