@@ -316,3 +316,11 @@
 	suffix = "lavaland_surface_mookvillage.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+
+/datum/map_template/ruin/lavaland/shuttle_wreckage
+	name = "Lava-Ruin Shuttle Wreckage"
+	id = "shuttle_wreckage"
+	description = "Not every shuttle makes it back to CentCom."
+	cost = 5
+	suffix = "lavaland_surface_shuttle_wreckage.dmm"
+	allow_duplicates = FALSE
