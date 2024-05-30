@@ -32,7 +32,7 @@
 	/// The shell storing the parent circuit
 	var/atom/movable/shell_parent = null
 	/// The shell's type (used for prefix naming)
-	var/shell_type = "Camera"
+	var/camera_prefix = "Camera"
 	/// Camera random ID
 	var/c_tag_random = 0
 
@@ -152,16 +152,16 @@
  */
 /obj/item/circuit_component/remotecam/proc/update_camera_name_network()
 	if(!parent || !parent.display_name || parent.display_name == "")
-		shell_camera.c_tag = "[shell_type]: unspecified #[c_tag_random]"
+		shell_camera.c_tag = "[camera_prefix]: unspecified #[c_tag_random]"
 		current_camera_name = ""
 	else if(current_camera_name != parent.display_name)
 		current_camera_name = parent.display_name
 		var/new_cam_name = reject_bad_name(current_camera_name, allow_numbers = TRUE, ascii_only = FALSE, strict = TRUE, cap_after_symbols = FALSE)
 		//Set camera name using parent circuit name
 		if(new_cam_name)
-			shell_camera.c_tag = "[shell_type]: [new_cam_name] #[c_tag_random]"
+			shell_camera.c_tag = "[camera_prefix]: [new_cam_name] #[c_tag_random]"
 		else
-			shell_camera.c_tag = "[shell_type]: unspecified #[c_tag_random]"
+			shell_camera.c_tag = "[camera_prefix]: unspecified #[c_tag_random]"
 
 	if(!network.value || network.value == "")
 		shell_camera.network = list("ss13")
@@ -244,22 +244,22 @@
 	desc = "Digitizes user's sight for surveillance-on-the-go. User must have fully functional eyes for digitizer to work. Camera range input is either 0 (near) or 1 (far). Network field is used for camera network."
 	category = "BCI"
 
-	shell_type = "BCI"
+	camera_prefix = "BCI"
 	required_shells = list(/obj/item/organ/internal/cyberimp/bci)
 
 /obj/item/circuit_component/remotecam/drone
 	display_name = "Drone Camera"
 	desc = "Capture the surrounding sight for surveillance-on-the-go. Camera range input is either 0 (near) or 1 (far). Network field is used for camera network."
 
-	shell_type = "Drone"
 	required_shells = list(/mob/living/circuit_drone)
+	camera_prefix = "Drone"
 
 /obj/item/circuit_component/remotecam/airlock
 	display_name = "Airlock Camera"
 	desc = "A peephole camera that captures both sides of the airlock. Network field is used for camera network."
 
-	shell_type = "Airlock"
 	required_shells = list(/obj/machinery/door/airlock)
+	camera_prefix = "Airlock"
 
 	camera_range_settable = 0
 
@@ -269,8 +269,8 @@
 	display_name = "Polaroid Camera Add-On"
 	desc = "Relays a polaroid camera's feed as a digital stream for surveillance-on-the-go. Network field is used for camera network."
 
-	shell_type = "Polaroid"
 	required_shells = list(/obj/item/camera)
+	camera_prefix = "Polaroid"
 
 	camera_range_settable = 0
 
