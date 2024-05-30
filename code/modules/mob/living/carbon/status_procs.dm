@@ -1,5 +1,3 @@
-#define STAMCRIT_CANCELLED (1<<0)
-
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting
 
