@@ -71,8 +71,8 @@
 	network = add_input_port("Network", PORT_TYPE_STRING, default = "ss13")
 	isactive = add_input_port("Is Active", PORT_TYPE_SIGNAL)
 
-	true = add_output_port("True", PORT_TYPE_SIGNAL)
-	false = add_output_port("False", PORT_TYPE_SIGNAL)
+	true = add_output_port("On", PORT_TYPE_SIGNAL)
+	false = add_output_port("Off", PORT_TYPE_SIGNAL)
 	result = add_output_port("Result", PORT_TYPE_NUMBER)
 
 	if(camera_range_settable)
@@ -95,11 +95,10 @@
 
 /obj/item/circuit_component/remotecam/input_received(datum/port/input/port)
 	var/logic_result = shell_camera ? current_camera_state : FALSE
-	if(COMPONENT_TRIGGERED_BY(isactive, port))
-		if(logic_result)
-			true.set_output(COMPONENT_SIGNAL)
-		else
-			false.set_output(COMPONENT_SIGNAL)
+	if(logic_result)
+		true.set_output(COMPONENT_SIGNAL)
+	else
+		false.set_output(COMPONENT_SIGNAL)
 	result.set_output(logic_result)
 
 /**
