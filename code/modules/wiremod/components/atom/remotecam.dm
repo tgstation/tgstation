@@ -24,7 +24,7 @@
 	/// The network to use
 	var/datum/port/input/network
 	/// The trigger for the true/false signals
-	var/datum/port/input/isactive
+	var/datum/port/input/checkcamera
 
 	/// Signals sent on is active signal
 	var/datum/port/output/true
@@ -69,7 +69,7 @@
 	if(camera_range_settable)
 		camera_range = add_input_port("Camera Range", PORT_TYPE_NUMBER, default = 0)
 	network = add_input_port("Network", PORT_TYPE_STRING, default = "ss13")
-	isactive = add_input_port("Is Active", PORT_TYPE_SIGNAL)
+	checkcamera = add_input_port("Check Camera", PORT_TYPE_SIGNAL)
 
 	true = add_output_port("On", PORT_TYPE_SIGNAL)
 	false = add_output_port("Off", PORT_TYPE_SIGNAL)
