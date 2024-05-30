@@ -5,7 +5,6 @@
 		/turf/closed/mineral/gibtonite/ice/icemoon = 4,
 	)
 
-
 	weighted_mob_spawn_list = list(
 		/mob/living/basic/mining/goldgrub = 10,
 		/mob/living/basic/mining/legion/snow = 50,
