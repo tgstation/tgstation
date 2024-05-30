@@ -34,7 +34,7 @@
 	acid = 100
 
 /obj/vehicle/sealed/mecha/gygax/dark
-	desc = "A lightweight exosuit, painted in a dark scheme. This model appears to have some modifications."
+	desc = "A lightweight exosuit, painted in a dark scheme. This model's armor has been upgraded with a cutting-edge armor composite, resulting in greater protection and performance at the cost of modularity."
 	name = "\improper Dark Gygax"
 	ui_theme = "syndicate"
 	icon_state = "darkgygax"
