@@ -78,6 +78,7 @@
 	stop_process()
 	remove_camera()
 	shell_parent = null
+	current_camera_state = FALSE
 
 /obj/item/circuit_component/remotecam/Destroy()
 	stop_process()
