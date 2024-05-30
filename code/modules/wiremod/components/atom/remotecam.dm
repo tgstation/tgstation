@@ -96,6 +96,17 @@
 	return ..()
 
 /obj/item/circuit_component/remotecam/input_received(datum/port/input/port)
+	if(shell_parent && shell_camera)
+		update_camera_name_network()
+		if(COMPONENT_TRIGGERED_BY(start, port))
+			start_process()
+			current_camera_state = TRUE
+		else if(COMPONENT_TRIGGERED_BY(stop, port))
+			stop_process()
+			close_camera() //Instantly turn off the camera
+			current_camera_state = FALSE
+	if(port == network || port == camera_range) //Do not update output ports if changed network or camera range
+		return
 	var/logic_result = shell_camera ? current_camera_state : FALSE
 	if(logic_result)
 		true.set_output(COMPONENT_SIGNAL)
@@ -144,19 +155,6 @@
 /obj/item/circuit_component/remotecam/proc/close_camera()
 	if(shell_camera?.camera_enabled)
 		shell_camera.toggle_cam(null, 0)
-
-/**
- * Handle the camera updating logic
- */
-/obj/item/circuit_component/remotecam/proc/update_camera_process(datum/port/input/port)
-	update_camera_name_network()
-	if(COMPONENT_TRIGGERED_BY(start, port))
-		start_process()
-		current_camera_state = TRUE
-	else if(COMPONENT_TRIGGERED_BY(stop, port))
-		stop_process()
-		close_camera() //Instantly turn off the camera
-		current_camera_state = FALSE
 
 /**
  * Set the camera range
@@ -274,34 +272,6 @@
 	camera_range_settable = 0
 
 	current_camera_range = 0
-
-/obj/item/circuit_component/remotecam/bci/input_received(datum/port/input/port)
-	if(shell_parent && shell_camera)
-		update_camera_process(port)
-	//Do not update output ports if changed network or camera range
-	if(port != network && port != camera_range)
-		return ..()
-
-/obj/item/circuit_component/remotecam/drone/input_received(datum/port/input/port)
-	if(shell_parent && shell_camera)
-		update_camera_process(port)
-	//Do not update output ports if changed network or camera range
-	if(port != network && port != camera_range)
-		return ..()
-
-/obj/item/circuit_component/remotecam/airlock/input_received(datum/port/input/port)
-	if(shell_parent && shell_camera)
-		update_camera_process(port)
-	//Do not update output ports if changed network
-	if(port != network)
-		return ..()
-
-/obj/item/circuit_component/remotecam/polaroid/input_received(datum/port/input/port)
-	if(shell_parent && shell_camera)
-		update_camera_process(port)
-	//Do not update output ports if changed network
-	if(port != network)
-		return ..()
 
 /obj/item/circuit_component/remotecam/bci/register_shell(atom/movable/shell)
 	. = ..()
