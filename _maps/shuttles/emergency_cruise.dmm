@@ -546,8 +546,8 @@
 /obj/item/stack/medical/gauze/twelve,
 /obj/item/stack/medical/suture/medicated,
 /obj/structure/window/reinforced/spawner/directional/west,
+/obj/item/defibrillator/compact/combat/loaded/nanotrasen,
 /obj/item/healthanalyzer/advanced,
-/obj/item/defibrillator/compact/loaded,
 /turf/open/floor/iron/white/smooth_large,
 /area/shuttle/escape)
 "lw" = (
