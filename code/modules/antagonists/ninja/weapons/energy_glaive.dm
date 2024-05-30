@@ -71,7 +71,6 @@
 	who.forceMove(where)
 	who.put_in_hands(src)
 	charges--
-	balloon_alert(who, "[charges]/4 left")
 	addtimer(CALLBACK(src, PROC_REF(add_charge), who), GLAIVE_COOLDOWN)
 
 /obj/item/energy_glaive/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -94,7 +93,7 @@
 
 /obj/item/energy_glaive/proc/add_charge(mob/living/give_ballon)
 	charges++
-	balloon_alert(give_ballon, "[charges]/4 ready")
+	balloon_alert(give_ballon, "[charges]/4 throw charges")
 
 /obj/item/energy_glaive/proc/double_attack(mob/attacker, mob/living/attack_me)
 	if(double_attack)
