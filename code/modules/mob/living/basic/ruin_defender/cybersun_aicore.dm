@@ -114,7 +114,7 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 	//how long after casting until the lightning strikes and damage is dealt
 	var/lightning_delay = 1 SECONDS
 
-/datum/action/cooldown/spell/pointed/lightning_strike/Activate(atom/target)
+/datum/action/cooldown/spell/pointed/lightning_strike/cast(atom/target)
 	. = ..()
 	//this is where the spell will hit. it will not move even if the target does, allowing the spell to be dodged.
 	var/turf/lightning_danger_zone
@@ -129,8 +129,8 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 		return
 
 /obj/effect/temp_visual/lightning_strike
-	name = "holographic target"
-	desc = "A lightning bolt is about to hit this location. This handy hologram exists to warn people so they don't stand here."
+	name = "lightning strike"
+	desc = "A lightning bolt is about to hit this location. There's a handy hologram to warn people so they don't stand here."
 	icon = 'icons/mob/telegraphing/telegraph_holographic.dmi'
 	icon_state = "target_circle"
 	duration = 1 SECONDS
@@ -187,8 +187,6 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 	var/barrage_amount = 3
 	var/barrage_delay = 0.7 SECONDS
 
-/datum/action/cooldown/spell/pointed/projectile/cybersun_barrage/Activate(atom/target)
-
 /datum/action/cooldown/spell/pointed/projectile/cybersun_barrage/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)
 	var/turf/lockon_zone
 	if (isturf(target))
@@ -196,13 +194,13 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 	else
 		lockon_zone = target.loc
 	owner.Beam(lockon_zone, icon_state = "1-full", beam_color = COLOR_MEDIUM_DARK_RED, time = 1 SECONDS)
-	playsound(lockon_zone, 'sound/machines/terminal_prompt_deny.ogg', vol = 70, vary = TRUE)
+	playsound(lockon_zone, 'sound/machines/terminal_prompt_deny.ogg', vol = 60, vary = TRUE)
+	if(!do_after(src, barrage_delay, src))
+		return
 	. = ..()
 
 /datum/action/cooldown/spell/pointed/projectile/cybersun_barrage/fire_projectile(atom/target)
 	. = ..()
-	if(!do_after(src, barrage_delay, src))
-		return
 	current_amount--
 	for(var/i in 1 to barrage_amount)
 		var/obj/projectile/to_fire = new projectile_type()
