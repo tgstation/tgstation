@@ -88,17 +88,9 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
-"wo" = (
-/obj/item/shard/titanium,
-/turf/open/lava/smooth/lava_land_surface,
-/area/ruin/unpowered)
 "xz" = (
 /obj/machinery/computer,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered)
-"yb" = (
-/obj/item/stack/sheet/mineral/titanium,
-/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered)
 "yZ" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
@@ -387,7 +379,7 @@ ky
 Om
 lu
 tx
-wo
+lu
 HM
 Lz
 Lz
@@ -410,7 +402,7 @@ tD
 lu
 hT
 lu
-wo
+lu
 Lz
 KN
 Lz
@@ -431,9 +423,9 @@ bl
 Om
 hY
 hT
-wo
 lu
-yb
+lu
+lu
 sE
 tp
 se
