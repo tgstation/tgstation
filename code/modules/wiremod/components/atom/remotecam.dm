@@ -26,6 +26,8 @@
 
 	/// Allow camera range to be set or not
 	var/camera_range_settable = 1
+	/// Used only for the BCI shell type, as the COMSIG_MOVABLE_MOVED signal need to be assigned to the user mob, not the shell circuit
+	var/camera_signal_move_override = FALSE
 
 	/// Camera object
 	var/obj/machinery/camera/shell_camera = null
@@ -120,7 +122,8 @@
 		update_camera_location()
 	else
 		cameranet_remove() //Remove camera from global cameranet until user activates the camera first
-	RegisterSignal(shell_parent, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
+	if(!camera_signal_move_override)
+		RegisterSignal(shell_parent, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
 	RegisterSignal(shell_parent, COMSIG_ATOM_EMP_ACT, PROC_REF(set_camera_emp))
 
 /**
@@ -128,7 +131,9 @@
  */
 /obj/item/circuit_component/remotecam/proc/remove_camera()
 	if(shell_camera)
-		UnregisterSignal(shell_parent, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_EMP_ACT))
+		if(!camera_signal_move_override)
+			UnregisterSignal(shell_parent, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(shell_parent, COMSIG_ATOM_EMP_ACT)
 		if(current_camera_emp)
 			deltimer(current_camera_emp_timer_id)
 			current_camera_emp = FALSE
@@ -247,6 +252,9 @@
 	camera_prefix = "BCI"
 	required_shells = list(/obj/item/organ/internal/cyberimp/bci)
 
+	/// BCIs are organs, and thus the signal must be assigned ONLY when the shell has been installed in a mob - otherwise the camera will never update position
+	camera_signal_move_override = TRUE
+
 /obj/item/circuit_component/remotecam/drone
 	display_name = "Remote Camera"
 	desc = "Capture the surrounding environment for surveillance-on-the-go. Camera range input is either 0 (near) or 1 (far). Network field is used for camera network."
@@ -275,6 +283,29 @@
 	if(istype(shell_parent, /obj/item/organ/internal/cyberimp/bci))
 		shell_camera = new /obj/machinery/camera (shell_parent)
 		init_camera()
+		RegisterSignal(shell_parent, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_organ_implanted))
+		RegisterSignal(shell_parent, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
+		var/obj/item/organ/internal/cyberimp/bci/bci = shell_parent
+		if(bci.owner) //If somehow the camera was added while shell is already installed inside a mob, assign signals
+			on_organ_implanted(null, bci.owner)
+
+/obj/item/circuit_component/remotecam/bci/unregister_shell(atom/movable/shell)
+	if(shell_camera)
+		UnregisterSignal(shell_parent, list(COMSIG_ORGAN_IMPLANTED, COMSIG_ORGAN_REMOVED))
+	. = ..()
+
+/obj/item/circuit_component/remotecam/bci/Destroy()
+	if(shell_camera)
+		UnregisterSignal(shell_parent, list(COMSIG_ORGAN_IMPLANTED, COMSIG_ORGAN_REMOVED))
+	return ..()
+
+/obj/item/circuit_component/remotecam/bci/proc/on_organ_implanted(datum/source, mob/living/carbon/owner)
+	SIGNAL_HANDLER
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
+
+/obj/item/circuit_component/remotecam/bci/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
+	SIGNAL_HANDLER
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
 
 /obj/item/circuit_component/remotecam/drone/register_shell(atom/movable/shell)
 	. = ..()
