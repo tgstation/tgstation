@@ -39,6 +39,8 @@
 	var/obj/machinery/camera/shell_camera = null
 	/// The shell storing the parent circuit
 	var/atom/movable/shell_parent = null
+	/// The shell's type (used for prefix naming)
+	var/shell_type = "Camera"
 	/// Camera random ID
 	var/c_tag_random = 0
 
@@ -104,7 +106,7 @@
 /**
  * Initializes the camera
  */
-/obj/item/circuit_component/remotecam/proc/init_camera(shell_name)
+/obj/item/circuit_component/remotecam/proc/init_camera()
 	shell_camera.desc = "This camera belongs in a circuit. If you see this, tell a coder!"
 	shell_camera.AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 	shell_camera.use_power = NO_POWER_USE
@@ -117,7 +119,7 @@
 	current_camera_network = ""
 	close_camera()
 	update_camera_range()
-	update_camera_name_network(shell_name)
+	update_camera_name_network()
 	if(current_camera_state)
 		start_process()
 		update_camera_location()
@@ -146,8 +148,8 @@
 /**
  * Handle the camera updating logic
  */
-/obj/item/circuit_component/remotecam/proc/update_camera_process(datum/port/input/port, shell_name)
-	update_camera_name_network(shell_name)
+/obj/item/circuit_component/remotecam/proc/update_camera_process(datum/port/input/port)
+	update_camera_name_network()
 	if(COMPONENT_TRIGGERED_BY(start, port))
 		start_process()
 		current_camera_state = TRUE
@@ -165,18 +167,18 @@
 /**
  * Updates the camera name and network
  */
-/obj/item/circuit_component/remotecam/proc/update_camera_name_network(shell_name)
+/obj/item/circuit_component/remotecam/proc/update_camera_name_network()
 	if(!parent || !parent.display_name || parent.display_name == "")
-		shell_camera.c_tag = "[shell_name]: unspecified #[c_tag_random]"
+		shell_camera.c_tag = "[shell_type]: unspecified #[c_tag_random]"
 		current_camera_name = ""
 	else if(current_camera_name != parent.display_name)
 		current_camera_name = parent.display_name
 		var/new_cam_name = reject_bad_name(current_camera_name, allow_numbers = TRUE, ascii_only = FALSE, strict = TRUE, cap_after_symbols = FALSE)
 		//Set camera name using parent circuit name
 		if(new_cam_name)
-			shell_camera.c_tag = "[shell_name]: [new_cam_name] #[c_tag_random]"
+			shell_camera.c_tag = "[shell_type]: [new_cam_name] #[c_tag_random]"
 		else
-			shell_camera.c_tag = "[shell_name]: unspecified #[c_tag_random]"
+			shell_camera.c_tag = "[shell_type]: unspecified #[c_tag_random]"
 
 	if(!network.value || network.value == "")
 		shell_camera.network = list("ss13")
@@ -241,18 +243,21 @@
 	desc = "Digitizes user's sight for surveillance-on-the-go. User must have fully functional eyes for digitizer to work. Camera range input is either 0 (near) or 1 (far). Network field is used for camera network."
 	category = "BCI"
 
+	shell_type = "BCI"
 	required_shells = list(/obj/item/organ/internal/cyberimp/bci)
 
 /obj/item/circuit_component/remotecam/drone
 	display_name = "Drone Camera"
 	desc = "Capture the surrounding sight for surveillance-on-the-go. Camera range input is either 0 (near) or 1 (far). Network field is used for camera network."
 
+	shell_type = "Drone"
 	required_shells = list(/mob/living/circuit_drone)
 
 /obj/item/circuit_component/remotecam/airlock
 	display_name = "Airlock Camera"
 	desc = "A peephole camera that captures both sides of the airlock. Network field is used for camera network."
 
+	shell_type = "Airlock"
 	required_shells = list(/obj/machinery/door/airlock)
 
 	camera_range_settable = 0
@@ -263,6 +268,7 @@
 	display_name = "Polaroid Camera Add-On"
 	desc = "Relays a polaroid camera's feed as a digital stream for surveillance-on-the-go. Network field is used for camera network."
 
+	shell_type = "Polaroid"
 	required_shells = list(/obj/item/camera)
 
 	camera_range_settable = 0
@@ -271,28 +277,28 @@
 
 /obj/item/circuit_component/remotecam/bci/input_received(datum/port/input/port)
 	if(shell_parent && shell_camera)
-		update_camera_process(port, "BCI")
+		update_camera_process(port)
 	//Do not update output ports if changed network or camera range
 	if(port != network && port != camera_range)
 		return ..()
 
 /obj/item/circuit_component/remotecam/drone/input_received(datum/port/input/port)
 	if(shell_parent && shell_camera)
-		update_camera_process(port, "Drone")
+		update_camera_process(port)
 	//Do not update output ports if changed network or camera range
 	if(port != network && port != camera_range)
 		return ..()
 
 /obj/item/circuit_component/remotecam/airlock/input_received(datum/port/input/port)
 	if(shell_parent && shell_camera)
-		update_camera_process(port, "Airlock")
+		update_camera_process(port)
 	//Do not update output ports if changed network
 	if(port != network)
 		return ..()
 
 /obj/item/circuit_component/remotecam/polaroid/input_received(datum/port/input/port)
 	if(shell_parent && shell_camera)
-		update_camera_process(port, "Polaroid")
+		update_camera_process(port)
 	//Do not update output ports if changed network
 	if(port != network)
 		return ..()
@@ -301,25 +307,25 @@
 	. = ..()
 	if(istype(shell, /obj/item/organ/internal/cyberimp/bci))
 		shell_camera = new /obj/machinery/camera (shell_parent)
-		init_camera("BCI")
+		init_camera()
 
 /obj/item/circuit_component/remotecam/drone/register_shell(atom/movable/shell)
 	. = ..()
 	if(istype(shell, /mob/living/circuit_drone))
 		shell_camera = new /obj/machinery/camera (shell_parent)
-		init_camera("Drone")
+		init_camera()
 
 /obj/item/circuit_component/remotecam/airlock/register_shell(atom/movable/shell)
 	. = ..()
 	if(istype(shell, /obj/machinery/door/airlock))
 		shell_camera = new /obj/machinery/camera (shell_parent)
-		init_camera("Airlock")
+		init_camera()
 
 /obj/item/circuit_component/remotecam/polaroid/register_shell(atom/movable/shell)
 	. = ..()
 	if(istype(shell, /obj/item/camera))
 		shell_camera = new /obj/machinery/camera (shell_parent)
-		init_camera("Polaroid")
+		init_camera()
 
 /obj/item/circuit_component/remotecam/bci/process(seconds_per_tick)
 	if(!shell_parent || !shell_camera)
