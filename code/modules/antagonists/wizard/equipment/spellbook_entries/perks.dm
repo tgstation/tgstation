@@ -230,26 +230,24 @@
 
 /obj/effect/magnitizm/New(loc, ...)
 	. = ..()
-	RegisterSignal(CALLBACK(owner, COMSIG_LIVING_LIFE, PROC_REF(magnetik_check)))
 	transform *= 0.4
-	timer = addtimer(CALLBACK(src, PROC_REF(magnetik)), 1 SECONDS)
 
 /obj/effect/magnitizm/orbit(atom/A, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 	. = ..()
-	if(isliving(A))
-		owner = A
+	if(!isliving(A))
+		return
+	owner = A
+	timer = addtimer(CALLBACK(src, PROC_REF(magnetik)), 1 SECONDS)
+	RegisterSignal(CALLBACK(owner, COMSIG_LIVING_LIFE, PROC_REF(magnetik_check)))
 
 /obj/effect/magnitizm/proc/perform_throw(obj/throw_it, atom/throw_there)
 	throw_it.throw_at(throw_there, 5, 2)
 
 /obj/effect/magnitizm/stop_orbit()
-	Destroy()
-
-/obj/effect/magnitizm/Destroy(force)
-	. = ..()
 	owner = null
 	timer = null
 	UnregisterSignal(owner, COMSIG_LIVING_LIFE)
+	Destroy()
 
 /obj/effect/magnitizm/proc/magnetik_check()
 	SIGNAL_HANDLER
