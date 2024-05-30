@@ -43,7 +43,7 @@
 	get_ghost()
 
 /datum/brain_trauma/special/imaginary_friend/proc/make_friend()
-	friend = new(get_turf(owner), owner)
+	friend = new(get_turf(owner))
 
 /// Tries a poll for the imaginary friend
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
