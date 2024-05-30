@@ -23,14 +23,6 @@
 	var/datum/port/input/camera_range
 	/// The network to use
 	var/datum/port/input/network
-	/// The trigger for the true/false signals
-	var/datum/port/input/checkcamera
-
-	/// Signals sent on is active signal
-	var/datum/port/output/true
-	var/datum/port/output/false
-	/// The result from the output
-	var/datum/port/output/result
 
 	/// Allow camera range to be set or not
 	var/camera_range_settable = 1
@@ -71,11 +63,6 @@
 	if(camera_range_settable)
 		camera_range = add_input_port("Camera Range", PORT_TYPE_NUMBER, default = 0)
 	network = add_input_port("Network", PORT_TYPE_STRING, default = "ss13")
-	checkcamera = add_input_port("Check Camera", PORT_TYPE_SIGNAL)
-
-	true = add_output_port("On", PORT_TYPE_SIGNAL)
-	false = add_output_port("Off", PORT_TYPE_SIGNAL)
-	result = add_output_port("Result", PORT_TYPE_NUMBER)
 
 	if(camera_range_settable)
 		current_camera_range = camera_range.value
@@ -97,7 +84,6 @@
 	return ..()
 
 /obj/item/circuit_component/remotecam/input_received(datum/port/input/port)
-	var/refresh_output_ports = port != network && port != camera_range //Do not update output ports if changed network or camera range
 	if(shell_parent && shell_camera)
 		update_camera_name_network()
 		if(COMPONENT_TRIGGERED_BY(start, port))
@@ -107,13 +93,6 @@
 			stop_process()
 			close_camera() //Instantly turn off the camera
 			current_camera_state = FALSE
-	if(refresh_output_ports)
-		var/logic_result = shell_camera ? current_camera_state : FALSE
-		if(logic_result)
-			true.set_output(COMPONENT_SIGNAL)
-		else
-			false.set_output(COMPONENT_SIGNAL)
-		result.set_output(logic_result)
 
 /**
  * Initializes the camera
