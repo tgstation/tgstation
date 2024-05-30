@@ -47,9 +47,9 @@
 /mob/living/basic/pet/gondola/gondolapod/examine(mob/user)
 	. = ..()
 	if (contents.len)
-		. += span_notice("It looks like it hasn't made its delivery yet.</b>")
+		. += span_notice("It looks like it hasn't made its delivery yet.")
 	else
-		. += span_notice("It looks like it has already made its delivery.</b>")
+		. += span_notice("It looks like it has already made its delivery.")
 
 /mob/living/basic/pet/gondola/gondolapod/setOpened()
 	opened = TRUE
