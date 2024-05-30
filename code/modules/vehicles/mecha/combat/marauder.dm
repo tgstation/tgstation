@@ -111,7 +111,7 @@
 	)
 
 /datum/armor/mecha_seraph
-	melee = 75
+	melee = 80
 	bullet = 65
 	laser = 65
 	energy = 50
