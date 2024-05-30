@@ -45,7 +45,7 @@ type Design = {
   amount: number;
 };
 
-export const Biogenerator = (props) => {
+export const Biogenerator = () => {
   const { act, data } = useBackend<BiogeneratorData>();
   const {
     processing,
@@ -171,6 +171,7 @@ export const Biogenerator = (props) => {
                   efficiency={efficiency}
                   max_output={max_output}
                   space={beaker ? beakerMaxVolume - beakerCurrentVolume : 1}
+                  key={selectedCategory} // needed to refresh useState when the category changes
                 />
               </Table>
             </Section>
@@ -181,12 +182,21 @@ export const Biogenerator = (props) => {
   );
 };
 
-const ItemList = (props) => {
+type ItemListProps = {
+  items: Design[];
+  processing: BooleanLike;
+  efficiency: number;
+  biomass: number;
+  space: number;
+  max_output: number;
+  beaker: BooleanLike;
+};
+
+const ItemList = (props: ItemListProps) => {
   const { act } = useBackend();
+
   const items = props.items.map((item) => {
-    const [amount, setAmount] = useState(
-      item.is_reagent ? Math.min(Math.max(props.space, 1), 10) : 1,
-    );
+    const amount = item.is_reagent ? Math.min(Math.max(props.space, 1), 10) : 1;
     const disabled =
       props.processing ||
       (item.is_reagent && !props.beaker) ||
@@ -202,44 +212,84 @@ const ItemList = (props) => {
       disabled,
       max_amount,
       amount,
-      setAmount,
     };
   });
-  return items.map((item) => (
-    <Table.Row key={item.id}>
-      <Table.Cell>
-        <span
-          className={classes(['design32x32', item.id])}
-          style={{
-            verticalAlign: 'middle',
-          }}
-        />{' '}
-        <b>{item.name}</b>
-      </Table.Cell>
-      <Table.Cell collapsing>
-        <NumberInput
-          value={item.amount}
-          step={1}
-          width="35px"
-          minValue={1}
-          maxValue={item.max_amount}
-          onChange={(value) => item.setAmount(value)}
-        />
-      </Table.Cell>
-      <Table.Cell collapsing>
-        <Button
-          fluid
-          align="right"
-          content={parseFloat((item.cost * item.amount).toFixed(2)) + ' BIO'}
-          disabled={item.disabled}
-          onClick={() =>
-            act('create', {
-              id: item.id,
-              amount: item.amount,
-            })
-          }
-        />
-      </Table.Cell>
-    </Table.Row>
-  ));
+
+  const [itemAmounts, setItemIDAmount] = useState(() => {
+    return items.map((item) => {
+      return {
+        id: item.id,
+        amount: item.amount,
+      };
+    });
+  });
+
+  const setItemAmount = (itemID: number, newAmount: number) => {
+    setItemIDAmount((oldState) => {
+      return oldState.map((item) => {
+        let itemAmount = item.amount;
+        if (item.id === itemID) {
+          itemAmount = newAmount;
+        }
+
+        return {
+          id: item.id,
+          amount: itemAmount,
+        };
+      });
+    });
+  };
+
+  const getItemAmount = (id: number) => {
+    for (let design of itemAmounts) {
+      if (design.id === id) {
+        return design.amount;
+      }
+    }
+
+    return -1;
+  };
+
+  return items.map((item) => {
+    const amount = getItemAmount(item.id);
+
+    return (
+      <Table.Row key={item.id}>
+        <Table.Cell>
+          <span
+            className={classes(['design32x32', item.id])}
+            style={{
+              verticalAlign: 'middle',
+            }}
+          />{' '}
+          <b>{item.name}</b>
+        </Table.Cell>
+        <Table.Cell collapsing>
+          <NumberInput
+            value={amount}
+            step={1}
+            width="35px"
+            minValue={1}
+            maxValue={item.max_amount}
+            onChange={(value) => setItemAmount(item.id, value)}
+          />
+        </Table.Cell>
+        <Table.Cell collapsing>
+          <Button
+            fluid
+            align="right"
+            disabled={item.disabled}
+            onClick={() =>
+              act('create', {
+                id: item.id,
+                amount: amount,
+              })
+            }
+          >
+            {parseFloat((item.cost * amount).toFixed(2)) + ' BIO'}
+          </Button>
+        </Table.Cell>
+      </Table.Row>
+    );
+  });
 };
