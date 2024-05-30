@@ -462,9 +462,9 @@
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "dC" = (
-/obj/structure/cable/layer1,
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/lattice/catwalk,
+/obj/structure/cable,
 /turf/open/space/basic,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
 "dD" = (
@@ -574,6 +574,11 @@
 /obj/item/dualsaber/toy,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
+"ff" = (
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/obj/structure/cable/multilayer,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "fg" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/engineering/tool_advanced,
@@ -643,9 +648,9 @@
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "fT" = (
-/obj/structure/cable/layer1,
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/lattice/catwalk,
+/obj/structure/cable,
 /turf/open/space/basic,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "fW" = (
@@ -723,7 +728,7 @@
 "gK" = (
 /obj/machinery/door/airlock/external/glass/ruin{
 	space_dir = 8;
-	name = "dock 1 external airlock"
+	name = "Dock 1 External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "donk_dock_1"
@@ -1756,9 +1761,9 @@
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "pG" = (
-/obj/structure/cable/layer1,
 /obj/structure/grille,
 /obj/structure/lattice/catwalk,
+/obj/structure/cable,
 /turf/open/space/basic,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "pN" = (
@@ -1834,16 +1839,6 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
-"qz" = (
-/obj/machinery/door/airlock/external/glass/ruin{
-	space_dir = 8;
-	name = "Dock 1 External Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "donk_dock_1"
-	},
-/turf/open/floor/carpet/orange,
-/area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "qB" = (
 /obj/structure/closet/crate/cardboard{
 	desc = "A fine example of the ubiquitous cardboard box. Handy if you want to store things. This box is labelled 'OUTLET 6013 - TOY STOCK' and has the Donk Co. logo stamped on it."
@@ -2313,9 +2308,9 @@
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "tZ" = (
-/obj/structure/cable/layer1,
 /obj/structure/lattice/catwalk,
 /obj/effect/spawner/random/structure/grille,
+/obj/structure/cable,
 /turf/open/space/basic,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
 "uj" = (
@@ -2370,9 +2365,9 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
 "va" = (
-/obj/structure/cable/layer1,
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/lattice/catwalk,
+/obj/structure/cable,
 /turf/open/space/basic,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "ve" = (
@@ -2717,6 +2712,11 @@
 	},
 /turf/open/floor/circuit/red/off,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
+"xK" = (
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/obj/structure/cable/multilayer,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "xN" = (
 /obj/structure/cable/layer1,
 /obj/effect/decal/cleanable/dirt,
@@ -3011,9 +3011,9 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "At" = (
-/obj/structure/cable/layer1,
 /obj/structure/grille,
 /obj/structure/lattice/catwalk,
+/obj/structure/cable,
 /turf/open/space/basic,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "Au" = (
@@ -3210,9 +3210,9 @@
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "CD" = (
-/obj/structure/cable/layer1,
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/lattice/catwalk,
+/obj/structure/cable,
 /turf/open/space/basic,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "CF" = (
@@ -3413,8 +3413,8 @@
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "EC" = (
 /obj/structure/grille,
-/obj/structure/cable/layer1,
 /obj/structure/lattice/catwalk,
+/obj/structure/cable,
 /turf/open/space/basic,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "EK" = (
@@ -3528,12 +3528,12 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "FE" = (
-/obj/structure/cable/layer1,
 /obj/structure/grille/broken,
 /obj/effect/spawner/random/trash/crushed_can,
 /obj/structure/lattice/catwalk,
 /obj/effect/spawner/random/trash/crushed_can,
 /obj/effect/spawner/random/trash/garbage,
+/obj/structure/cable,
 /turf/open/space/basic,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "FI" = (
@@ -4133,6 +4133,12 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
+"Kv" = (
+/obj/machinery/door/poddoor/shutters/preopen,
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/obj/structure/cable/multilayer,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hauntedtradingpost/office)
 "KC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -4426,9 +4432,7 @@
 	codes_txt = "patrol;next_patrol=hall2"
 	},
 /mob/living/simple_animal/bot/firebot{
-	maints_access_required = list("syndicate");
-	bot_mode_flags = 3;
-	prev_access = list("syndicate")
+	bot_mode_flags = 3
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
@@ -4823,9 +4827,8 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/maint)
 "QA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/plasma/plastitanium,
 /obj/structure/sign/warning,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "QF" = (
@@ -5378,6 +5381,11 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
+"Ve" = (
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/obj/structure/cable/multilayer,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
 "Vf" = (
 /obj/effect/spawner/random/structure/furniture_parts,
 /obj/effect/spawner/random/entertainment/musical_instrument,
@@ -5475,9 +5483,7 @@
 	codes_txt = "patrol;next_patrol=hall4"
 	},
 /mob/living/simple_animal/bot/firebot{
-	maints_access_required = list("syndicate");
-	bot_mode_flags = 3;
-	prev_access = list("syndicate")
+	bot_mode_flags = 3
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
@@ -5508,9 +5514,9 @@
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "Wf" = (
-/obj/structure/cable/layer1,
 /obj/structure/grille,
 /obj/structure/lattice/catwalk,
+/obj/structure/cable,
 /turf/open/space/basic,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
 "Wg" = (
@@ -6054,7 +6060,7 @@ wn
 lQ
 ys
 ys
-ys
+ff
 lQ
 gz
 TC
@@ -6162,7 +6168,7 @@ Pv
 gK
 Pv
 Pv
-qz
+gK
 Pv
 Gw
 Pv
@@ -6312,7 +6318,7 @@ qR
 (8,1,1) = {"
 qR
 At
-nF
+xK
 nh
 Ne
 Ne
@@ -7211,7 +7217,7 @@ NS
 "}
 (28,1,1) = {"
 pG
-JY
+Kv
 ej
 br
 xY
@@ -7446,7 +7452,7 @@ ur
 pz
 pz
 pz
-yI
+Ve
 yI
 yI
 pz
