@@ -151,7 +151,7 @@
 				else
 					alternative_step = "Finish operation"
 			data["procedures"] += list(list(
-				"name" = capitalize("[parse_zone(procedure.location)] [procedure.name]"),
+				"name" = capitalize("[patient.parse_zone_with_bodypart(procedure.location)] [procedure.name]"),
 				"next_step" = capitalize(surgery_step.name),
 				"chems_needed" = chems_needed,
 				"alternative_step" = alternative_step,

@@ -23,7 +23,7 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/cyborg
 	desc = "A 6-shot grenade launcher."
 	name = "multi grenade launcher"
-	icon = 'icons/mob/mecha_equipment.dmi'
+	icon = 'icons/obj/devices/mecha_equipment.dmi'
 	icon_state = "mecha_grenadelnchr"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/grenademulti
 	pin = /obj/item/firing_pin
