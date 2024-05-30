@@ -65,6 +65,7 @@
 		return
 
 	friend.key = ghost.key
+	friend.attach_to_owner(owner)
 	friend_initialized = TRUE
 	friend.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(friend)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
