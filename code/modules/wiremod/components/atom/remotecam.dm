@@ -272,27 +272,27 @@
 
 /obj/item/circuit_component/remotecam/bci/register_shell(atom/movable/shell)
 	. = ..()
-	if(istype(shell, /obj/item/organ/internal/cyberimp/bci))
+	if(istype(shell_parent, /obj/item/organ/internal/cyberimp/bci))
 		shell_camera = new /obj/machinery/camera (shell_parent)
 		init_camera()
 
 /obj/item/circuit_component/remotecam/drone/register_shell(atom/movable/shell)
 	. = ..()
-	if(istype(shell, /mob/living/circuit_drone))
+	if(istype(shell_parent, /mob/living/circuit_drone))
 		current_camera_state = FALSE //Always reset camera state for built-in shell components
 		shell_camera = new /obj/machinery/camera (shell_parent)
 		init_camera()
 
 /obj/item/circuit_component/remotecam/airlock/register_shell(atom/movable/shell)
 	. = ..()
-	if(istype(shell, /obj/machinery/door/airlock))
+	if(istype(shell_parent, /obj/machinery/door/airlock))
 		current_camera_state = FALSE //Always reset camera state for built-in shell components
 		shell_camera = new /obj/machinery/camera (shell_parent)
 		init_camera()
 
 /obj/item/circuit_component/remotecam/polaroid/register_shell(atom/movable/shell)
 	. = ..()
-	if(istype(shell, /obj/item/camera))
+	if(istype(shell_parent, /obj/item/camera))
 		current_camera_state = FALSE //Always reset camera state for built-in shell components
 		shell_camera = new /obj/machinery/camera (shell_parent)
 		init_camera()
