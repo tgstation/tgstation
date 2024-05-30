@@ -38,6 +38,8 @@
 	var/current_camera_state = FALSE
 	/// Used to store the camera emp state
 	var/current_camera_emp = FALSE
+	/// Used to store the camera emp timer id
+	var/current_camera_emp_timer_id
 	/// Used to store the last string used for the camera name
 	var/current_camera_name = ""
 	/// Used to store the current camera range setting (near/far)
@@ -116,6 +118,9 @@
 /obj/item/circuit_component/compare/remotecam/proc/remove_camera()
 	if(shell_camera)
 		UnregisterSignal(shell_parent, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_EMP_ACT))
+		if(current_camera_emp)
+			deltimer(current_camera_emp_timer_id)
+			current_camera_emp = FALSE
 		QDEL_NULL(shell_camera)
 
 /**
@@ -184,13 +189,15 @@
  * Set the camera as emp'd
  */
 /obj/item/circuit_component/compare/remotecam/proc/set_camera_emp(datum/source, severity, protection)
+	if(current_camera_emp)
+		return
 	if(!prob(150 / severity))
 		return
 	current_camera_emp = TRUE
 	close_camera()
-	addtimer(CALLBACK(src, PROC_REF(post_emp_reset)), REMOTECAM_EMP_RESET)
+	current_camera_emp_timer_id = addtimer(CALLBACK(shell_camera, PROC_REF(post_emp_reset)), REMOTECAM_EMP_RESET, TIMER_STOPPABLE)
 	for(var/mob/M as anything in GLOB.player_list)
-		if (M.client?.eye == src)
+		if (M.client?.eye == shell_camera)
 			M.reset_perspective(null)
 			to_chat(M, span_warning("The screen bursts into static!"))
 
