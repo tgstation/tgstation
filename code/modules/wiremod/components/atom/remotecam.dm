@@ -244,15 +244,11 @@
 
 	required_shells = list(/obj/item/organ/internal/cyberimp/bci)
 
-	var/obj/item/organ/internal/cyberimp/bci/bci = null
-
 /obj/item/circuit_component/remotecam/drone
 	display_name = "Drone Camera"
 	desc = "Capture the surrounding sight for surveillance-on-the-go. Camera range input is either 0 (near) or 1 (far). Network field is used for camera network."
 
 	required_shells = list(/mob/living/circuit_drone)
-
-	var/mob/living/circuit_drone/drone = null
 
 /obj/item/circuit_component/remotecam/airlock
 	display_name = "Airlock Camera"
@@ -275,59 +271,43 @@
 	current_camera_range = 0
 
 /obj/item/circuit_component/remotecam/bci/input_received(datum/port/input/port)
-	if(bci && shell_camera)
+	if(shell_parent && shell_camera)
 		update_camera_process(port, "BCI")
 	//Do not update output ports if changed network or camera range
 	if(port != network && port != camera_range)
-		. = ..()
+		return ..()
 
 /obj/item/circuit_component/remotecam/drone/input_received(datum/port/input/port)
-	if(drone && shell_camera)
+	if(shell_parent && shell_camera)
 		update_camera_process(port, "Drone")
 	//Do not update output ports if changed network or camera range
 	if(port != network && port != camera_range)
-		. = ..()
+		return ..()
 
 /obj/item/circuit_component/remotecam/airlock/input_received(datum/port/input/port)
 	if(shell_parent && shell_camera)
 		update_camera_process(port, "Airlock")
 	//Do not update output ports if changed network
 	if(port != network)
-		. = ..()
+		return ..()
 
 /obj/item/circuit_component/remotecam/polaroid/input_received(datum/port/input/port)
 	if(shell_parent && shell_camera)
 		update_camera_process(port, "Polaroid")
 	//Do not update output ports if changed network
 	if(port != network)
-		. = ..()
-
-/obj/item/circuit_component/remotecam/bci/Destroy()
-	bci = null
-	return ..()
-
-/obj/item/circuit_component/remotecam/drone/Destroy()
-	drone = null
-	return ..()
-
-/obj/item/circuit_component/remotecam/airlock/Destroy()
-	return ..()
-
-/obj/item/circuit_component/remotecam/polaroid/Destroy()
-	return ..()
+		return ..()
 
 /obj/item/circuit_component/remotecam/bci/register_shell(atom/movable/shell)
 	. = ..()
 	if(istype(shell, /obj/item/organ/internal/cyberimp/bci))
-		bci = shell
-		shell_camera = new /obj/machinery/camera (bci)
+		shell_camera = new /obj/machinery/camera (shell_parent)
 		init_camera("BCI")
 
 /obj/item/circuit_component/remotecam/drone/register_shell(atom/movable/shell)
 	. = ..()
 	if(istype(shell, /mob/living/circuit_drone))
-		drone = shell
-		shell_camera = new /obj/machinery/camera (drone)
+		shell_camera = new /obj/machinery/camera (shell_parent)
 		init_camera("Drone")
 
 /obj/item/circuit_component/remotecam/airlock/register_shell(atom/movable/shell)
@@ -342,27 +322,14 @@
 		shell_camera = new /obj/machinery/camera (shell_parent)
 		init_camera("Polaroid")
 
-/obj/item/circuit_component/remotecam/bci/unregister_shell(atom/movable/shell)
-	bci = null
-	return ..()
-
-/obj/item/circuit_component/remotecam/drone/unregister_shell(atom/movable/shell)
-	drone = null
-	return ..()
-
-/obj/item/circuit_component/remotecam/airlock/unregister_shell(atom/movable/shell)
-	return ..()
-
-/obj/item/circuit_component/remotecam/polaroid/unregister_shell(atom/movable/shell)
-	return ..()
-
 /obj/item/circuit_component/remotecam/bci/process(seconds_per_tick)
-	if(!bci || !shell_camera)
+	if(!shell_parent || !shell_camera)
 		return
 	//Camera is currently emp'd
 	if (current_camera_emp)
 		close_camera()
 		return
+	var/obj/item/organ/internal/cyberimp/bci/bci = shell_parent
 	//If shell is not currently inside a head, or user is currently blind, or user is dead
 	if(!bci.owner || bci.owner.is_blind() || bci.owner.stat >= UNCONSCIOUS)
 		close_camera()
@@ -386,12 +353,13 @@
 		shell_camera.toggle_cam(null, 0)
 
 /obj/item/circuit_component/remotecam/drone/process(seconds_per_tick)
-	if(!drone || !shell_camera)
+	if(!shell_parent || !shell_camera)
 		return
 	//Camera is currently emp'd
 	if (current_camera_emp)
 		close_camera()
 		return
+	var/mob/living/circuit_drone/drone = shell_parent
 	//If shell is destroyed
 	if(drone.health < 0)
 		close_camera()
