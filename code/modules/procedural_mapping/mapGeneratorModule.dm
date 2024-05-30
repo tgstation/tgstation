@@ -108,7 +108,7 @@
 
 //Checks and Rejects dense turfs
 /datum/map_generator_module/proc/checkPlaceAtom(turf/T)
-	if(!T)
+	if(!T || (T.turf_flags & TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES))
 		return FALSE
 	if(T.density)
 		return FALSE
