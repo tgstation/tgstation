@@ -6107,6 +6107,7 @@
 #include "code\modules\wiremod\components\atom\matscanner.dm"
 #include "code\modules\wiremod\components\atom\pinpointer.dm"
 #include "code\modules\wiremod\components\atom\reagentscanner.dm"
+#include "code\modules\wiremod\components\atom\remotecam.dm"
 #include "code\modules\wiremod\components\atom\self.dm"
 #include "code\modules\wiremod\components\atom\species.dm"
 #include "code\modules\wiremod\components\bci\install_detector.dm"
