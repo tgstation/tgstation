@@ -712,7 +712,7 @@
 /obj/item/storage/backpack/dufflebag/syndie/cyborg_support
 	desc = "A large duffle bag, packed to the brim of supplies to support cyborgs units"
 
-/obj/item/storage/backpack/dufflebag/syndie/cyborg_support/Populatecontents()
+/obj/item/storage/backpack/dufflebag/syndie/cyborg_support/PopulateContents()
 	new /obj/item/storage/belt/utility/syndicate(src)
 	new /obj/item/clothing/glasses/hud/diagnostic/night(src)
 	new /obj/item/stock_parts/cell/bluespace(src)
