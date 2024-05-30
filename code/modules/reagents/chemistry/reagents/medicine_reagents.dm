@@ -1372,12 +1372,10 @@
 
 /datum/reagent/medicine/changelingadrenaline/proc/on_stamcrit(mob/living/affected_mob)
 	SIGNAL_HANDLER
-	affected_mob.adjustStaminaLoss(-10, updating_stamina = TRUE)
+	affected_mob?.setStaminaLoss(90, updating_stamina = TRUE)
 	to_chat(affected_mob, span_changeling("Our gene-stim flares! We are invigorated, but its potency wanes."))
 	volume -= (min(volume, 1))
 	return STAMCRIT_CANCELLED
-
-
 
 /datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/metabolizer, seconds_per_tick, times_fired)
 	. = ..()
