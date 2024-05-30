@@ -9,7 +9,7 @@
  *
  * Attaches a camera for surveillance-on-the-go.
  */
-/obj/item/circuit_component/compare/remotecam
+/obj/item/circuit_component/remotecam
 	display_name = "Camera Abstract Type"
 	desc = "This is the abstract parent type - do not use this directly!"
 	category = "Entity"
@@ -23,6 +23,14 @@
 	var/datum/port/input/camera_range
 	/// The network to use
 	var/datum/port/input/network
+	/// The trigger for the true/false signals
+	var/datum/port/input/isactive
+
+	/// Signals sent on is active signal
+	var/datum/port/output/true
+	var/datum/port/output/false
+	/// The result from the output
+	var/datum/port/output/result
 
 	/// Allow camera range to be set or not
 	var/camera_range_settable = 1
@@ -47,7 +55,7 @@
 	/// Used to store the last string used for the camera network
 	var/current_camera_network = ""
 
-/obj/item/circuit_component/compare/remotecam/get_ui_notices()
+/obj/item/circuit_component/remotecam/get_ui_notices()
 	. = ..()
 	if(camera_range_settable)
 		. += create_ui_notice("Energy Usage For Near (0) Range: [display_energy(REMOTECAM_ENERGY_USAGE_NEAR)] Per [DisplayTimeText(COMP_CLOCK_DELAY)]", "orange", "clock")
@@ -55,44 +63,51 @@
 	else
 		. += create_ui_notice("Energy Usage While Active: [display_energy(current_camera_range > 0 ? REMOTECAM_ENERGY_USAGE_FAR : REMOTECAM_ENERGY_USAGE_NEAR)] Per [DisplayTimeText(COMP_CLOCK_DELAY)]", "orange", "clock")
 
-/obj/item/circuit_component/compare/remotecam/populate_ports()
-	. = ..()
-	compare.name = "Is Active" //Rename compare port
-
-/obj/item/circuit_component/compare/remotecam/populate_custom_ports()
+/obj/item/circuit_component/remotecam/populate_ports()
 	start = add_input_port("Start", PORT_TYPE_SIGNAL)
 	stop = add_input_port("Stop", PORT_TYPE_SIGNAL)
 	if(camera_range_settable)
 		camera_range = add_input_port("Camera Range", PORT_TYPE_NUMBER, default = 0)
 	network = add_input_port("Network", PORT_TYPE_STRING, default = "ss13")
+	isactive = add_input_port("Is Active", PORT_TYPE_SIGNAL)
+
+	true = add_output_port("True", PORT_TYPE_SIGNAL)
+	false = add_output_port("False", PORT_TYPE_SIGNAL)
+	result = add_output_port("Result", PORT_TYPE_NUMBER)
 
 	if(camera_range_settable)
 		current_camera_range = camera_range.value
 	c_tag_random = rand(1, 999)
 
-/obj/item/circuit_component/compare/remotecam/register_shell(atom/movable/shell)
+/obj/item/circuit_component/remotecam/register_shell(atom/movable/shell)
 	shell_parent = shell
 	stop_process()
 	. = ..()
 
-/obj/item/circuit_component/compare/remotecam/unregister_shell(atom/movable/shell)
+/obj/item/circuit_component/remotecam/unregister_shell(atom/movable/shell)
 	stop_process()
 	remove_camera()
 	. = ..()
 
-/obj/item/circuit_component/compare/remotecam/Destroy()
+/obj/item/circuit_component/remotecam/Destroy()
 	stop_process()
 	remove_camera()
 	current_camera_state = FALSE
 	return ..()
 
-/obj/item/circuit_component/compare/remotecam/do_comparisons()
-	return shell_camera ? current_camera_state : FALSE
+/obj/item/circuit_component/remotecam/input_received(datum/port/input/port)
+	var/logic_result = shell_camera ? current_camera_state : FALSE
+	if(COMPONENT_TRIGGERED_BY(isactive, port))
+		if(logic_result)
+			true.set_output(COMPONENT_SIGNAL)
+		else
+			false.set_output(COMPONENT_SIGNAL)
+	result.set_output(logic_result)
 
 /**
  * Initializes the camera
  */
-/obj/item/circuit_component/compare/remotecam/proc/init_camera(shell_name)
+/obj/item/circuit_component/remotecam/proc/init_camera(shell_name)
 	shell_camera.desc = "This camera belongs in a circuit. If you see this, tell a coder!"
 	shell_camera.AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 	shell_camera.use_power = NO_POWER_USE
@@ -115,7 +130,7 @@
 /**
  * Remove the camera
  */
-/obj/item/circuit_component/compare/remotecam/proc/remove_camera()
+/obj/item/circuit_component/remotecam/proc/remove_camera()
 	if(shell_camera)
 		UnregisterSignal(shell_parent, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_EMP_ACT))
 		if(current_camera_emp)
@@ -126,14 +141,14 @@
 /**
  * Close the camera state (only if it's already active)
  */
-/obj/item/circuit_component/compare/remotecam/proc/close_camera()
+/obj/item/circuit_component/remotecam/proc/close_camera()
 	if(shell_camera?.camera_enabled)
 		shell_camera.toggle_cam(null, 0)
 
 /**
  * Handle the camera updating logic
  */
-/obj/item/circuit_component/compare/remotecam/proc/update_camera_process(datum/port/input/port, shell_name)
+/obj/item/circuit_component/remotecam/proc/update_camera_process(datum/port/input/port, shell_name)
 	update_camera_name_network(shell_name)
 	if(COMPONENT_TRIGGERED_BY(start, port))
 		start_process()
@@ -146,13 +161,13 @@
 /**
  * Set the camera range
  */
-/obj/item/circuit_component/compare/remotecam/proc/update_camera_range()
+/obj/item/circuit_component/remotecam/proc/update_camera_range()
 	shell_camera.setViewRange(current_camera_range > 0 ? REMOTECAM_RANGE_FAR : REMOTECAM_RANGE_NEAR)
 
 /**
  * Updates the camera name and network
  */
-/obj/item/circuit_component/compare/remotecam/proc/update_camera_name_network(shell_name)
+/obj/item/circuit_component/remotecam/proc/update_camera_name_network(shell_name)
 	if(!parent || !parent.display_name || parent.display_name == "")
 		shell_camera.c_tag = "[shell_name]: unspecified #[c_tag_random]"
 		current_camera_name = ""
@@ -180,7 +195,7 @@
 /**
  * Update the chunk for the camera (if enabled)
  */
-/obj/item/circuit_component/compare/remotecam/proc/update_camera_location(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+/obj/item/circuit_component/remotecam/proc/update_camera_location(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 	if(current_camera_state)
 		GLOB.cameranet.updatePortableCamera(shell_camera, 0.5 SECONDS)
@@ -188,7 +203,7 @@
 /**
  * Set the camera as emp'd
  */
-/obj/item/circuit_component/compare/remotecam/proc/set_camera_emp(datum/source, severity, protection)
+/obj/item/circuit_component/remotecam/proc/set_camera_emp(datum/source, severity, protection)
 	if(current_camera_emp)
 		return
 	if(!prob(150 / severity))
@@ -204,7 +219,7 @@
 /**
  * Restore emp'd camera
  */
-/obj/item/circuit_component/compare/remotecam/proc/post_emp_reset()
+/obj/item/circuit_component/remotecam/proc/post_emp_reset()
 	current_camera_emp = FALSE
 
 /**
@@ -212,7 +227,7 @@
  *
  * Starts draining cell per second while camera is active
  */
-/obj/item/circuit_component/compare/remotecam/proc/start_process()
+/obj/item/circuit_component/remotecam/proc/start_process()
 	START_PROCESSING(SSclock_component, src)
 
 /**
@@ -220,10 +235,10 @@
  *
  * Stops draining cell per second
  */
-/obj/item/circuit_component/compare/remotecam/proc/stop_process()
+/obj/item/circuit_component/remotecam/proc/stop_process()
 	STOP_PROCESSING(SSclock_component, src)
 
-/obj/item/circuit_component/compare/remotecam/bci
+/obj/item/circuit_component/remotecam/bci
 	display_name = "BCI Camera"
 	desc = "Digitizes user's sight for surveillance-on-the-go. User must have fully functional eyes for digitizer to work. Camera range input is either 0 (near) or 1 (far). Network field is used for camera network."
 	category = "BCI"
@@ -232,7 +247,7 @@
 
 	var/obj/item/organ/internal/cyberimp/bci/bci = null
 
-/obj/item/circuit_component/compare/remotecam/drone
+/obj/item/circuit_component/remotecam/drone
 	display_name = "Drone Camera"
 	desc = "Capture the surrounding sight for surveillance-on-the-go. Camera range input is either 0 (near) or 1 (far). Network field is used for camera network."
 
@@ -240,7 +255,7 @@
 
 	var/mob/living/circuit_drone/drone = null
 
-/obj/item/circuit_component/compare/remotecam/airlock
+/obj/item/circuit_component/remotecam/airlock
 	display_name = "Airlock Camera"
 	desc = "A peephole camera that captures both sides of the airlock. Network field is used for camera network."
 
@@ -252,7 +267,7 @@
 
 	var/obj/machinery/door/airlock/airlock = null
 
-/obj/item/circuit_component/compare/remotecam/polaroid
+/obj/item/circuit_component/remotecam/polaroid
 	display_name = "Polaroid Camera Add-On"
 	desc = "Relays a polaroid camera's feed as a digital stream for surveillance-on-the-go. Network field is used for camera network."
 
@@ -265,51 +280,51 @@
 	var/obj/item/circuit_component/camera/polaroid = null
 
 
-/obj/item/circuit_component/compare/remotecam/bci/input_received(datum/port/input/port)
+/obj/item/circuit_component/remotecam/bci/input_received(datum/port/input/port)
 	if(bci && shell_camera)
 		update_camera_process(port, "BCI")
 	//Do not update output ports if changed network or camera range
 	if(port != network && port != camera_range)
 		. = ..()
 
-/obj/item/circuit_component/compare/remotecam/drone/input_received(datum/port/input/port)
+/obj/item/circuit_component/remotecam/drone/input_received(datum/port/input/port)
 	if(drone && shell_camera)
 		update_camera_process(port, "Drone")
 	//Do not update output ports if changed network or camera range
 	if(port != network && port != camera_range)
 		. = ..()
 
-/obj/item/circuit_component/compare/remotecam/airlock/input_received(datum/port/input/port)
+/obj/item/circuit_component/remotecam/airlock/input_received(datum/port/input/port)
 	if(airlock && shell_camera)
 		update_camera_process(port, "Airlock")
 	//Do not update output ports if changed network
 	if(port != network)
 		. = ..()
 
-/obj/item/circuit_component/compare/remotecam/polaroid/input_received(datum/port/input/port)
+/obj/item/circuit_component/remotecam/polaroid/input_received(datum/port/input/port)
 	if(polaroid && shell_camera)
 		update_camera_process(port, "Polaroid")
 	//Do not update output ports if changed network
 	if(port != network)
 		. = ..()
 
-/obj/item/circuit_component/compare/remotecam/bci/Destroy()
+/obj/item/circuit_component/remotecam/bci/Destroy()
 	bci = null
 	return ..()
 
-/obj/item/circuit_component/compare/remotecam/drone/Destroy()
+/obj/item/circuit_component/remotecam/drone/Destroy()
 	drone = null
 	return ..()
 
-/obj/item/circuit_component/compare/remotecam/airlock/Destroy()
+/obj/item/circuit_component/remotecam/airlock/Destroy()
 	airlock = null
 	return ..()
 
-/obj/item/circuit_component/compare/remotecam/polaroid/Destroy()
+/obj/item/circuit_component/remotecam/polaroid/Destroy()
 	polaroid = null
 	return ..()
 
-/obj/item/circuit_component/compare/remotecam/bci/register_shell(atom/movable/shell)
+/obj/item/circuit_component/remotecam/bci/register_shell(atom/movable/shell)
 	. = ..()
 	bci = null
 	shell_camera = null
@@ -318,7 +333,7 @@
 		shell_camera = new /obj/machinery/camera (bci)
 		init_camera("BCI")
 
-/obj/item/circuit_component/compare/remotecam/drone/register_shell(atom/movable/shell)
+/obj/item/circuit_component/remotecam/drone/register_shell(atom/movable/shell)
 	. = ..()
 	drone = null
 	shell_camera = null
@@ -327,7 +342,7 @@
 		shell_camera = new /obj/machinery/camera (drone)
 		init_camera("Drone")
 
-/obj/item/circuit_component/compare/remotecam/airlock/register_shell(atom/movable/shell)
+/obj/item/circuit_component/remotecam/airlock/register_shell(atom/movable/shell)
 	. = ..()
 	airlock = null
 	shell_camera = null
@@ -336,7 +351,7 @@
 		shell_camera = new /obj/machinery/camera (airlock)
 		init_camera("Airlock")
 
-/obj/item/circuit_component/compare/remotecam/polaroid/register_shell(atom/movable/shell)
+/obj/item/circuit_component/remotecam/polaroid/register_shell(atom/movable/shell)
 	. = ..()
 	polaroid = null
 	shell_camera = null
@@ -345,24 +360,24 @@
 		shell_camera = new /obj/machinery/camera (polaroid)
 		init_camera("Polaroid")
 
-/obj/item/circuit_component/compare/remotecam/bci/unregister_shell(atom/movable/shell)
+/obj/item/circuit_component/remotecam/bci/unregister_shell(atom/movable/shell)
 	bci = null
 	. = ..()
 
-/obj/item/circuit_component/compare/remotecam/drone/unregister_shell(atom/movable/shell)
+/obj/item/circuit_component/remotecam/drone/unregister_shell(atom/movable/shell)
 	drone = null
 	. = ..()
 
-/obj/item/circuit_component/compare/remotecam/airlock/unregister_shell(atom/movable/shell)
+/obj/item/circuit_component/remotecam/airlock/unregister_shell(atom/movable/shell)
 	airlock = null
 	. = ..()
 
-/obj/item/circuit_component/compare/remotecam/polaroid/unregister_shell(atom/movable/shell)
+/obj/item/circuit_component/remotecam/polaroid/unregister_shell(atom/movable/shell)
 	polaroid = null
 	. = ..()
 
 
-/obj/item/circuit_component/compare/remotecam/bci/process(seconds_per_tick)
+/obj/item/circuit_component/remotecam/bci/process(seconds_per_tick)
 	if(!bci || !shell_camera)
 		return
 	//Camera is currently emp'd
@@ -391,7 +406,7 @@
 	if(current_camera_state ^ shell_camera.camera_enabled)
 		shell_camera.toggle_cam(null, 0)
 
-/obj/item/circuit_component/compare/remotecam/drone/process(seconds_per_tick)
+/obj/item/circuit_component/remotecam/drone/process(seconds_per_tick)
 	if(!drone || !shell_camera)
 		return
 	//Camera is currently emp'd
@@ -415,7 +430,7 @@
 	if(current_camera_state ^ shell_camera.camera_enabled)
 		shell_camera.toggle_cam(null, 0)
 
-/obj/item/circuit_component/compare/remotecam/airlock/process(seconds_per_tick)
+/obj/item/circuit_component/remotecam/airlock/process(seconds_per_tick)
 	if(!airlock || !shell_camera)
 		return
 	//Camera is currently emp'd
@@ -431,7 +446,7 @@
 	if(current_camera_state ^ shell_camera.camera_enabled)
 		shell_camera.toggle_cam(null, 0)
 
-/obj/item/circuit_component/compare/remotecam/polaroid/process(seconds_per_tick)
+/obj/item/circuit_component/remotecam/polaroid/process(seconds_per_tick)
 	if(!polaroid || !shell_camera)
 		return
 	//Camera is currently emp'd

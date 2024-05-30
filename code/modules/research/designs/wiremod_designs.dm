@@ -470,22 +470,22 @@
 /datum/design/component/bci/bci_camera
 	name = "BCI Camera"
 	id = "comp_camera_bci"
-	build_path = /obj/item/circuit_component/compare/remotecam/bci
+	build_path = /obj/item/circuit_component/remotecam/bci
 
 /datum/design/component/drone_camera
 	name = "Drone Camera"
 	id = "comp_camera_drone"
-	build_path = /obj/item/circuit_component/compare/remotecam/drone
+	build_path = /obj/item/circuit_component/remotecam/drone
 
 /datum/design/component/airlock_camera
 	name = "Airlock Camera"
 	id = "comp_camera_airlock"
-	build_path = /obj/item/circuit_component/compare/remotecam/airlock
+	build_path = /obj/item/circuit_component/remotecam/airlock
 
 /datum/design/component/polaroid_camera
 	name = "Polaroid Camera Add-On"
 	id = "comp_camera_polaroid"
-	build_path = /obj/item/circuit_component/compare/remotecam/polaroid
+	build_path = /obj/item/circuit_component/remotecam/polaroid
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
