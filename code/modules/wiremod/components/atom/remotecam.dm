@@ -82,12 +82,10 @@
 /obj/item/circuit_component/remotecam/register_shell(atom/movable/shell)
 	shell_parent = shell
 	stop_process()
-	. = ..()
 
 /obj/item/circuit_component/remotecam/unregister_shell(atom/movable/shell)
 	stop_process()
 	remove_camera()
-	. = ..()
 
 /obj/item/circuit_component/remotecam/Destroy()
 	stop_process()
@@ -362,19 +360,19 @@
 
 /obj/item/circuit_component/remotecam/bci/unregister_shell(atom/movable/shell)
 	bci = null
-	. = ..()
+	return ..()
 
 /obj/item/circuit_component/remotecam/drone/unregister_shell(atom/movable/shell)
 	drone = null
-	. = ..()
+	return ..()
 
 /obj/item/circuit_component/remotecam/airlock/unregister_shell(atom/movable/shell)
 	airlock = null
-	. = ..()
+	return ..()
 
 /obj/item/circuit_component/remotecam/polaroid/unregister_shell(atom/movable/shell)
 	polaroid = null
-	. = ..()
+	return ..()
 
 
 /obj/item/circuit_component/remotecam/bci/process(seconds_per_tick)
