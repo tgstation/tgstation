@@ -109,6 +109,7 @@
 	current_camera_name = ""
 	if(camera_range_settable)
 		current_camera_range = camera_range.value
+	current_cameranet_state = TRUE
 	current_camera_emp = FALSE
 	current_camera_network = ""
 	close_camera()
@@ -211,7 +212,7 @@
 		return
 	current_camera_emp = TRUE
 	close_camera()
-	current_camera_emp_timer_id = addtimer(CALLBACK(shell_camera, PROC_REF(post_emp_reset)), REMOTECAM_EMP_RESET, TIMER_STOPPABLE)
+	current_camera_emp_timer_id = addtimer(CALLBACK(shell_camera, PROC_REF(remove_camera_emp)), REMOTECAM_EMP_RESET, TIMER_STOPPABLE)
 	for(var/mob/M as anything in GLOB.player_list)
 		if (M.client?.eye == shell_camera)
 			M.reset_perspective(null)
@@ -220,7 +221,7 @@
 /**
  * Restore emp'd camera
  */
-/obj/item/circuit_component/remotecam/proc/post_emp_reset()
+/obj/item/circuit_component/remotecam/proc/remove_camera_emp()
 	current_camera_emp = FALSE
 
 /**
