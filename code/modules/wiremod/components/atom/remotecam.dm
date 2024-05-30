@@ -324,8 +324,6 @@
 
 /obj/item/circuit_component/remotecam/bci/register_shell(atom/movable/shell)
 	. = ..()
-	bci = null
-	shell_camera = null
 	if(istype(shell, /obj/item/organ/internal/cyberimp/bci))
 		bci = shell
 		shell_camera = new /obj/machinery/camera (bci)
@@ -333,8 +331,6 @@
 
 /obj/item/circuit_component/remotecam/drone/register_shell(atom/movable/shell)
 	. = ..()
-	drone = null
-	shell_camera = null
 	if(istype(shell, /mob/living/circuit_drone))
 		drone = shell
 		shell_camera = new /obj/machinery/camera (drone)
@@ -342,8 +338,6 @@
 
 /obj/item/circuit_component/remotecam/airlock/register_shell(atom/movable/shell)
 	. = ..()
-	airlock = null
-	shell_camera = null
 	if(istype(shell, /obj/machinery/door/airlock))
 		airlock = shell
 		shell_camera = new /obj/machinery/camera (airlock)
@@ -351,8 +345,6 @@
 
 /obj/item/circuit_component/remotecam/polaroid/register_shell(atom/movable/shell)
 	. = ..()
-	polaroid = null
-	shell_camera = null
 	if(istype(shell, /obj/item/camera))
 		polaroid = shell
 		shell_camera = new /obj/machinery/camera (polaroid)
@@ -373,7 +365,6 @@
 /obj/item/circuit_component/remotecam/polaroid/unregister_shell(atom/movable/shell)
 	polaroid = null
 	return ..()
-
 
 /obj/item/circuit_component/remotecam/bci/process(seconds_per_tick)
 	if(!bci || !shell_camera)
