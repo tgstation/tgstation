@@ -130,7 +130,7 @@
 //doors get closed and bolted, shutters get cycled open/closed
 /obj/item/pressure_plate/invisible_tripwire
 	name = "Sonic Tripwire"
-	desc = "An invisible trigger for a trap of some kind."
+	desc = "An invisible trigger for some shutters."
 	icon = 'icons/effects/mapping_helpers.dmi'
 	max_integrity = 50
 	invisibility = INVISIBILITY_ABSTRACT
@@ -166,17 +166,25 @@
 			can_trigger = FALSE
 		addtimer(CALLBACK(src, PROC_REF(trigger)), trigger_delay)
 
-/obj/item/pressure_plate/invisible_tripwire/trigger()
-	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE)
-	if(!do_after(0.1 SECONDS))
-		SEND_SIGNAL(src, COMSIG_AIRLOCK_SET_BOLT)
-	if(!do_after(15 SECONDS))
-		SEND_SIGNAL(src, COMSIG_AIRLOCK_SET_BOLT)
+/obj/item/pressure_plate/invisible_tripwire/airlock/trigger()
+
 
 /obj/item/pressure_plate/invisible_tripwire/Destroy()
 	if(donk_ai_slave == TRUE)
 		GLOB.selfdestructs_when_boss_dies -= src
 	return ..()
+
+/obj/item/pressure_plate/invisible_tripwire/airlock
+	desc = "An invisible trigger for some doors."
+
+/obj/item/pressure_plate/invisible_tripwire/airlock/trigger()
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE)
+	if(!do_after(0.1 SECONDS))
+		SEND_SIGNAL(src, COMSIG_AIRLOCK_SET_BOLT)
+	if(!resets_self)
+		return
+	if(!do_after(15 SECONDS))
+		SEND_SIGNAL(src, COMSIG_AIRLOCK_SET_BOLT)
 
 //variant on invisible trip wire, this one triggers if you stay in the area too long
 /obj/item/pressure_plate/puzzle/invisible_tripwire/delay
