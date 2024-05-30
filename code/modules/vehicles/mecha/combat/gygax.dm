@@ -60,6 +60,7 @@
 		MECHA_R_ARM = null,
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/radio, /obj/item/mecha_parts/mecha_equipment/air_tank/full, /obj/item/mecha_parts/mecha_equipment/thrusters/ion),
 		MECHA_POWER = list(),
+		MECHA_ARMOR = list(),
 	)
 	destruction_sleep_duration = 20
 
