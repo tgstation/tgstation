@@ -217,7 +217,7 @@
 		return
 	current_camera_emp = TRUE
 	close_camera()
-	current_camera_emp_timer_id = addtimer(CALLBACK(shell_camera, PROC_REF(remove_camera_emp)), REMOTECAM_EMP_RESET, TIMER_STOPPABLE)
+	current_camera_emp_timer_id = addtimer(CALLBACK(src, PROC_REF(remove_camera_emp)), REMOTECAM_EMP_RESET, TIMER_STOPPABLE)
 	for(var/mob/M as anything in GLOB.player_list)
 		if (M.client?.eye == shell_camera)
 			M.reset_perspective(null)
