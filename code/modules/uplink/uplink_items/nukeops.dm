@@ -540,6 +540,13 @@
 	cost = 18
 	purchasable_from = UPLINK_NUKE_OPS
 
+/datum/uplink/bundles_tc/cyborg_support
+	name = "Cyborg support Kit bag"
+	desc = "A duffle bag containing a full toolbelt including a inducer an spare battery, with a emergency reboot module and a emagg."
+	item = /obj/item/storage/backpack/dufflebag/syndie/cyborg_support
+	cost = 12
+	purchasable_from = UPLINK_NUKE_OPS
+
 // Mech related gear
 
 /datum/uplink_category/mech
