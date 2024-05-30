@@ -86,10 +86,12 @@
 /obj/item/circuit_component/remotecam/unregister_shell(atom/movable/shell)
 	stop_process()
 	remove_camera()
+	shell_parent = null
 
 /obj/item/circuit_component/remotecam/Destroy()
 	stop_process()
 	remove_camera()
+	shell_parent = null
 	current_camera_state = FALSE
 	return ..()
 
@@ -262,8 +264,6 @@
 
 	current_camera_range = 0
 
-	var/obj/machinery/door/airlock/airlock = null
-
 /obj/item/circuit_component/remotecam/polaroid
 	display_name = "Polaroid Camera Add-On"
 	desc = "Relays a polaroid camera's feed as a digital stream for surveillance-on-the-go. Network field is used for camera network."
@@ -273,9 +273,6 @@
 	camera_range_settable = 0
 
 	current_camera_range = 0
-
-	var/obj/item/circuit_component/camera/polaroid = null
-
 
 /obj/item/circuit_component/remotecam/bci/input_received(datum/port/input/port)
 	if(bci && shell_camera)
@@ -292,14 +289,14 @@
 		. = ..()
 
 /obj/item/circuit_component/remotecam/airlock/input_received(datum/port/input/port)
-	if(airlock && shell_camera)
+	if(shell_parent && shell_camera)
 		update_camera_process(port, "Airlock")
 	//Do not update output ports if changed network
 	if(port != network)
 		. = ..()
 
 /obj/item/circuit_component/remotecam/polaroid/input_received(datum/port/input/port)
-	if(polaroid && shell_camera)
+	if(shell_parent && shell_camera)
 		update_camera_process(port, "Polaroid")
 	//Do not update output ports if changed network
 	if(port != network)
@@ -314,11 +311,9 @@
 	return ..()
 
 /obj/item/circuit_component/remotecam/airlock/Destroy()
-	airlock = null
 	return ..()
 
 /obj/item/circuit_component/remotecam/polaroid/Destroy()
-	polaroid = null
 	return ..()
 
 /obj/item/circuit_component/remotecam/bci/register_shell(atom/movable/shell)
@@ -338,15 +333,13 @@
 /obj/item/circuit_component/remotecam/airlock/register_shell(atom/movable/shell)
 	. = ..()
 	if(istype(shell, /obj/machinery/door/airlock))
-		airlock = shell
-		shell_camera = new /obj/machinery/camera (airlock)
+		shell_camera = new /obj/machinery/camera (shell_parent)
 		init_camera("Airlock")
 
 /obj/item/circuit_component/remotecam/polaroid/register_shell(atom/movable/shell)
 	. = ..()
 	if(istype(shell, /obj/item/camera))
-		polaroid = shell
-		shell_camera = new /obj/machinery/camera (polaroid)
+		shell_camera = new /obj/machinery/camera (shell_parent)
 		init_camera("Polaroid")
 
 /obj/item/circuit_component/remotecam/bci/unregister_shell(atom/movable/shell)
@@ -358,11 +351,9 @@
 	return ..()
 
 /obj/item/circuit_component/remotecam/airlock/unregister_shell(atom/movable/shell)
-	airlock = null
 	return ..()
 
 /obj/item/circuit_component/remotecam/polaroid/unregister_shell(atom/movable/shell)
-	polaroid = null
 	return ..()
 
 /obj/item/circuit_component/remotecam/bci/process(seconds_per_tick)
@@ -419,7 +410,7 @@
 		shell_camera.toggle_cam(null, 0)
 
 /obj/item/circuit_component/remotecam/airlock/process(seconds_per_tick)
-	if(!airlock || !shell_camera)
+	if(!shell_parent || !shell_camera)
 		return
 	//Camera is currently emp'd
 	if (current_camera_emp)
@@ -435,7 +426,7 @@
 		shell_camera.toggle_cam(null, 0)
 
 /obj/item/circuit_component/remotecam/polaroid/process(seconds_per_tick)
-	if(!polaroid || !shell_camera)
+	if(!shell_parent || !shell_camera)
 		return
 	//Camera is currently emp'd
 	if (current_camera_emp)
