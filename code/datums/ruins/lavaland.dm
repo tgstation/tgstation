@@ -321,6 +321,5 @@
 	name = "Lava-Ruin Shuttle Wreckage"
 	id = "shuttle_wreckage"
 	description = "Not every shuttle makes it back to CentCom."
-	cost = 5
 	suffix = "lavaland_surface_shuttle_wreckage.dmm"
 	allow_duplicates = FALSE
