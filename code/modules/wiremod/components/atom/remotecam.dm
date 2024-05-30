@@ -97,6 +97,7 @@
 	return ..()
 
 /obj/item/circuit_component/remotecam/input_received(datum/port/input/port)
+	var/refresh_output_ports = port != network && port != camera_range //Do not update output ports if changed network or camera range
 	if(shell_parent && shell_camera)
 		update_camera_name_network()
 		if(COMPONENT_TRIGGERED_BY(start, port))
@@ -106,14 +107,13 @@
 			stop_process()
 			close_camera() //Instantly turn off the camera
 			current_camera_state = FALSE
-	if(port == network || port == camera_range) //Do not update output ports if changed network or camera range
-		return
-	var/logic_result = shell_camera ? current_camera_state : FALSE
-	if(logic_result)
-		true.set_output(COMPONENT_SIGNAL)
-	else
-		false.set_output(COMPONENT_SIGNAL)
-	result.set_output(logic_result)
+	if(refresh_output_ports)
+		var/logic_result = shell_camera ? current_camera_state : FALSE
+		if(logic_result)
+			true.set_output(COMPONENT_SIGNAL)
+		else
+			false.set_output(COMPONENT_SIGNAL)
+		result.set_output(logic_result)
 
 /**
  * Initializes the camera
