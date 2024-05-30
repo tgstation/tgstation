@@ -390,14 +390,14 @@ SUBSYSTEM_DEF(dynamic)
 			advisory_string += scramble_message_replace_chars("Your sector's advisory level is ERROR. An electromagnetic field has stormed through nearby surveillance equipment, causing major data loss. Partial data was recovered and showed no credible threats to Nanotrasen assets within the Spinward Sector; however, the Department of Intelligence advises maintaining high alert against potential threats due to the lack of complete data.", 35)
 			return advisory_string
 
-		if(HAS_TRAIT(SSstation, STATION_TRAIT_ASSISTANT_GIMMICKS))
-			advisory_string += "Advisory Level: <b>Grey Sky</b></center><BR>"
-			advisory_string += "Your sector's advisory level is Grey Sky. Our sensors detect abnormal activity among the assistants assigned to your station. We advise you to closely monitor the Tool Storage, Bridge, Tech Storage, and Brig for gathering crowds or petty thievery."
-			return advisory_string
-
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_BLIZZARD))
 			advisory_string += "Advisory Level: <b>Ice Giant</b></center><BR>"
 			advisory_string += "The ongoing blizzard has interfered with our surveillance equipment, and we cannot provide an accurate threat summary at this time. We advise you to stay safe and avoid traversing the area around the station."
+			return advisory_string
+
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_ASSISTANT_GIMMICKS))
+			advisory_string += "Advisory Level: <b>Grey Sky</b></center><BR>"
+			advisory_string += "Your sector's advisory level is Grey Sky. Our sensors detect abnormal activity among the assistants assigned to your station. We advise you to closely monitor the Tool Storage, Bridge, Tech Storage, and Brig for gathering crowds or petty thievery."
 			return advisory_string
 
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_WISE_COWS))
