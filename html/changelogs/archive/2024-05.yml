@@ -326,3 +326,40 @@
   - rscadd: Adds new heretic path moon
   dieamond13:
   - rscadd: adds propeller hats, rainbow bowties, and swirl lollipops
+2024-05-30:
+  Absolucy:
+  - balance: Slime steroid potions now boost ooze production by an actually notable
+      amount, reaching the max production after 4 potions.
+  - spellcheck: The description for the industrial grey extract now properly says
+      that it produces biocubes, rather than monkey cubes.
+  - qol: Industrial extracts now always layer their output below the extract itself.
+  - bugfix: The "weather" sound mixer volume now actually affects weather.
+  - qol: Star Gazers will now retaliate if their owner is attacked.
+  - qol: Star Gazers now use more advanced pathfinding.
+  - bugfix: Beam rifles will no longer inappropriately retain any bonuses they may
+      gain from wizardry.
+  - bugfix: 'Inappropriate stack traces over bonuses being applied to components
+
+      that gain bonuses innately (like Mythril stacks) should cease.'
+  - qol: If you don't breathe at all, eye covering is now enough to protect you from
+      pepper apray.
+  Absolucy, moocowswag:
+  - balance: Reinforced sections of station hull have gotten better at mitigating
+      explosive shockwaves.
+  AlbertNanotracen:
+  - bugfix: propeller hat now has the right name in the store
+  HimKobold:
+  - rscadd: Hydrogen Peroxide & Acetone Oxide now do organ damage on consumption (but
+      not on touch).
+  - bugfix: Acetone Oxide & Hydrogen Peroxide now do damage appropriate to the volume
+      touched.
+  - bugfix: '#1889
+
+      \:cl:'
+  Oricana-16:
+  - code_imp: Non-carbons (simple mobs and stuff like that) can now be made as ERTs
+  - admin: Added Moffroach Station Inspectors ERT
+  - bugfix: BCIs now correctly show their charge by default.
+  Uristthedorf:
+  - rscadd: Sleeper boards can now be printed with advanced biotech.
+  - rscadd: Existing sleepers can be deconstructed for board.

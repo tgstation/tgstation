@@ -1,5 +1,0 @@
-author: "Uristthedorf"
-delete-after: True
-changes:
-  - rscadd: "Sleeper boards can now be printed with advanced biotech."
-  - rscadd: "Existing sleepers can be deconstructed for board."
