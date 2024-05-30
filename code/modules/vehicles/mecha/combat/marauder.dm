@@ -29,7 +29,7 @@
 	bullet = 60
 	laser = 60
 	energy = 30
-	bomb = 30
+	bomb = 50
 	fire = 100
 	acid = 100
 
@@ -150,7 +150,7 @@
 	melee = 80
 	bullet = 60
 	laser = 50
-	energy = 50
+	energy = 30
 	bomb = 50
 	fire = 100
 	acid = 100
