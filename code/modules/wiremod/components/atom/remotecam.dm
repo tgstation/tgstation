@@ -88,11 +88,12 @@
 /obj/item/circuit_component/remotecam/unregister_shell(atom/movable/shell)
 	stop_process()
 	remove_camera()
+	shell_parent = null
 
 /obj/item/circuit_component/remotecam/Destroy()
 	stop_process()
 	remove_camera()
-	current_camera_state = FALSE
+	shell_parent = null
 	return ..()
 
 /obj/item/circuit_component/remotecam/input_received(datum/port/input/port)
@@ -147,7 +148,6 @@
 			deltimer(current_camera_emp_timer_id)
 			current_camera_emp = FALSE
 		QDEL_NULL(shell_camera)
-	shell_parent = null
 
 /**
  * Close the camera state (only if it's already active)
