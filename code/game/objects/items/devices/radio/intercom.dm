@@ -11,7 +11,7 @@
 	item_flags = NO_BLOOD_ON_ITEM
 
 	overlay_speaker_idle = "intercom_s"
-	overlay_speaker_active = "intercom_recieve"
+	overlay_speaker_active = "intercom_receive"
 
 	overlay_mic_idle = "intercom_m"
 	overlay_mic_active = null
@@ -168,7 +168,7 @@
 /**
  * Proc called whenever the intercom's area loses or gains power. Responsible for setting the `on` variable and calling `update_icon()`.
  *
- * Normally called after the intercom's area recieves the `COMSIG_AREA_POWER_CHANGE` signal, but it can also be called directly.
+ * Normally called after the intercom's area receives the `COMSIG_AREA_POWER_CHANGE` signal, but it can also be called directly.
  * Arguments:
  * * source - the area that just had a power change.
  */

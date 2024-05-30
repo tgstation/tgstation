@@ -21,6 +21,8 @@
 #define FACTION_CLOWN "clowns"
 /// Headslugs
 #define FACTION_CREATURE "creature"
+/// Cats
+#define FACTION_CAT "cat"
 /// Faithless and shadowpeople
 #define FACTION_FAITHLESS "faithless"
 /// Gnomes
@@ -81,7 +83,8 @@
 #define FACTION_TURRET "turret"
 /// Vines, lots of overlap with plants
 #define FACTION_VINES "vines"
-
+///raptor factions
+#define FACTION_RAPTOR "raptor"
 // Antagonist factions
 
 /// Cultists and their constructs

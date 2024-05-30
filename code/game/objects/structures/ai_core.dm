@@ -12,6 +12,8 @@
 	var/datum/ai_laws/laws
 	var/obj/item/circuitboard/aicore/circuit
 	var/obj/item/mmi/core_mmi
+	/// only used in cases of AIs piloting mechs or shunted malf AIs, possible later use cases
+	var/mob/living/silicon/ai/remote_ai = null
 
 /obj/structure/ai_core/Initialize(mapload)
 	. = ..()
@@ -58,10 +60,19 @@
 		update_appearance()
 
 /obj/structure/ai_core/Destroy()
+	if(istype(remote_ai))
+		remote_ai.break_core_link()
+		remote_ai = null
 	QDEL_NULL(circuit)
 	QDEL_NULL(core_mmi)
 	QDEL_NULL(laws)
 	return ..()
+
+/obj/structure/ai_core/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+	. = ..()
+	if(. > 0 && istype(remote_ai))
+		to_chat(remote_ai, span_danger("Your core is under attack!"))
+	
 
 /obj/structure/ai_core/deactivated
 	icon_state = "ai-empty"
@@ -126,8 +137,8 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/ai_core/latejoin_inactive/attackby(obj/item/P, mob/user, params)
-	if(P.tool_behaviour == TOOL_MULTITOOL)
+/obj/structure/ai_core/latejoin_inactive/attackby(obj/item/tool, mob/user, params)
+	if(tool.tool_behaviour == TOOL_MULTITOOL)
 		active = !active
 		to_chat(user, span_notice("You [active? "activate" : "deactivate"] \the [src]'s transmitters."))
 		return
@@ -136,38 +147,40 @@
 /obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(state == AI_READY_CORE)
 		if(!core_mmi)
 			balloon_alert(user, "no brain installed!")
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 		else if(!core_mmi.brainmob?.mind || suicide_check())
 			balloon_alert(user, "brain is inactive!")
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 		else
 			balloon_alert(user, "connecting neural network...")
 			if(!tool.use_tool(src, user, 10 SECONDS))
-				return TOOL_ACT_TOOLTYPE_SUCCESS
+				return ITEM_INTERACT_SUCCESS
 			if(!ai_structure_to_mob())
-				return TOOL_ACT_TOOLTYPE_SUCCESS
+				return ITEM_INTERACT_SUCCESS
 			balloon_alert(user, "connected neural network")
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 
-/obj/structure/ai_core/attackby(obj/item/P, mob/living/user, params)
+/obj/structure/ai_core/attackby(obj/item/tool, mob/living/user, params)
+	if(remote_ai)
+		to_chat(remote_ai, span_danger("CORE TAMPERING DETECTED!"))
 	if(!anchored)
-		if(P.tool_behaviour == TOOL_WELDER)
+		if(tool.tool_behaviour == TOOL_WELDER)
 			if(state != EMPTY_CORE)
 				balloon_alert(user, "core must be empty to deconstruct it!")
 				return
 
-			if(!P.tool_start_check(user, amount=1))
+			if(!tool.tool_start_check(user, amount=1))
 				return
 
 			balloon_alert(user, "deconstructing frame...")
-			if(P.use_tool(src, user, 20, volume=50) && state == EMPTY_CORE)
+			if(tool.use_tool(src, user, 20, volume=50) && state == EMPTY_CORE)
 				balloon_alert(user, "deconstructed frame")
 				deconstruct(TRUE)
 			return
@@ -180,41 +193,41 @@
 	else
 		switch(state)
 			if(EMPTY_CORE)
-				if(istype(P, /obj/item/circuitboard/aicore))
-					if(!user.transferItemToLoc(P, src))
+				if(istype(tool, /obj/item/circuitboard/aicore))
+					if(!user.transferItemToLoc(tool, src))
 						return
 					playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 					balloon_alert(user, "circuit board inserted")
 					update_appearance()
 					state = CIRCUIT_CORE
-					circuit = P
+					circuit = tool
 					return
 			if(CIRCUIT_CORE)
-				if(P.tool_behaviour == TOOL_SCREWDRIVER)
-					P.play_tool_sound(src)
+				if(tool.tool_behaviour == TOOL_SCREWDRIVER)
+					tool.play_tool_sound(src)
 					balloon_alert(user, "board screwed into place")
 					state = SCREWED_CORE
 					update_appearance()
 					return
-				if(P.tool_behaviour == TOOL_CROWBAR)
-					P.play_tool_sound(src)
+				if(tool.tool_behaviour == TOOL_CROWBAR)
+					tool.play_tool_sound(src)
 					balloon_alert(user, "circuit board removed")
 					state = EMPTY_CORE
 					circuit.forceMove(loc)
 					return
 			if(SCREWED_CORE)
-				if(P.tool_behaviour == TOOL_SCREWDRIVER && circuit)
-					P.play_tool_sound(src)
+				if(tool.tool_behaviour == TOOL_SCREWDRIVER && circuit)
+					tool.play_tool_sound(src)
 					balloon_alert(user, "circuit board unfastened")
 					state = CIRCUIT_CORE
 					update_appearance()
 					return
-				if(istype(P, /obj/item/stack/cable_coil))
-					var/obj/item/stack/cable_coil/C = P
+				if(istype(tool, /obj/item/stack/cable_coil))
+					var/obj/item/stack/cable_coil/C = tool
 					if(C.get_amount() >= 5)
 						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 						balloon_alert(user, "adding cables to frame...")
-						if(do_after(user, 20, target = src) && state == SCREWED_CORE && C.use(5))
+						if(do_after(user, 2 SECONDS, target = src) && state == SCREWED_CORE && C.use(5))
 							balloon_alert(user, "added cables to frame.")
 							state = CABLED_CORE
 							update_appearance()
@@ -222,26 +235,26 @@
 						balloon_alert(user, "need five lengths of cable!")
 					return
 			if(CABLED_CORE)
-				if(P.tool_behaviour == TOOL_WIRECUTTER)
+				if(tool.tool_behaviour == TOOL_WIRECUTTER)
 					if(core_mmi)
 						balloon_alert(user, "remove the [AI_CORE_BRAIN(core_mmi)] first!")
 					else
-						P.play_tool_sound(src)
+						tool.play_tool_sound(src)
 						balloon_alert(user, "cables removed")
 						state = SCREWED_CORE
 						update_appearance()
 						new /obj/item/stack/cable_coil(drop_location(), 5)
 					return
 
-				if(istype(P, /obj/item/stack/sheet/rglass))
+				if(istype(tool, /obj/item/stack/sheet/rglass))
 					if(!core_mmi)
 						balloon_alert(user, "add a brain first!")
 						return
-					var/obj/item/stack/sheet/rglass/G = P
+					var/obj/item/stack/sheet/rglass/G = tool
 					if(G.get_amount() >= 2)
 						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 						balloon_alert(user, "adding glass panel...")
-						if(do_after(user, 20, target = src) && state == CABLED_CORE && G.use(2))
+						if(do_after(user, 2 SECONDS, target = src) && state == CABLED_CORE && G.use(2))
 							balloon_alert(user, "added glass panel")
 							state = GLASS_CORE
 							update_appearance()
@@ -249,7 +262,7 @@
 						balloon_alert(user, "need two sheets of reinforced glass!")
 					return
 
-				if(istype(P, /obj/item/ai_module))
+				if(istype(tool, /obj/item/ai_module))
 					if(!core_mmi)
 						balloon_alert(user, "no brain installed!")
 						return
@@ -259,12 +272,12 @@
 					if(core_mmi.laws.id != DEFAULT_AI_LAWID)
 						balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] already has set laws!")
 						return
-					var/obj/item/ai_module/module = P
+					var/obj/item/ai_module/module = tool
 					module.install(laws, user)
 					return
 
-				if(istype(P, /obj/item/mmi) && !core_mmi)
-					var/obj/item/mmi/M = P
+				if(istype(tool, /obj/item/mmi) && !core_mmi)
+					var/obj/item/mmi/M = tool
 					if(!M.brain_check(user))
 						var/install = tgui_alert(user, "This [AI_CORE_BRAIN(M)] is inactive, would you like to make an inactive AI?", "Installing AI [AI_CORE_BRAIN(M)]", list("Yes", "No"))
 						if(install != "Yes")
@@ -292,40 +305,51 @@
 					update_appearance()
 					return
 
-				if(P.tool_behaviour == TOOL_CROWBAR && core_mmi)
-					P.play_tool_sound(src)
+				if(tool.tool_behaviour == TOOL_CROWBAR && core_mmi)
+					tool.play_tool_sound(src)
 					balloon_alert(user, "removed [AI_CORE_BRAIN(core_mmi)]")
-					core_mmi.forceMove(loc)
-					return
+					if(remote_ai)
+						var/mob/living/silicon/ai/remoted_ai = remote_ai
+						remoted_ai.break_core_link()
+						if(!IS_MALF_AI(remoted_ai))
+							//don't pull back shunted malf AIs
+							remoted_ai.death(gibbed = TRUE, drop_mmi = FALSE)
+							///the drop_mmi param determines whether the MMI is dropped at their current location
+							///which in this case would be somewhere else, so we drop their MMI at the core instead
+							remoted_ai.make_mmi_drop_and_transfer(core_mmi, src)
+					core_mmi.forceMove(loc) //if they're malf, just drops a blank MMI, or if it's an incomplete shell
+					return					//it drops the mmi that was put in before it was finished
 
 			if(GLASS_CORE)
-				if(P.tool_behaviour == TOOL_CROWBAR)
-					P.play_tool_sound(src)
+				if(tool.tool_behaviour == TOOL_CROWBAR)
+					tool.play_tool_sound(src)
 					balloon_alert(user, "removed glass panel")
 					state = CABLED_CORE
 					update_appearance()
 					new /obj/item/stack/sheet/rglass(loc, 2)
 					return
 
-				if(P.tool_behaviour == TOOL_SCREWDRIVER)
+				if(tool.tool_behaviour == TOOL_SCREWDRIVER)
 					if(suicide_check())
 						to_chat(user, span_warning("The brain installed is completely useless."))
 						return
-					P.play_tool_sound(src)
-					balloon_alert(user, "connected monitor[core_mmi?.brainmob?.mind ? " and neural network" : ""]")
+					tool.play_tool_sound(src)
+
+					var/atom/alert_source = src
 					if(core_mmi.brainmob?.mind)
-						ai_structure_to_mob()
+						alert_source = ai_structure_to_mob() || alert_source
 					else
 						state = AI_READY_CORE
 						update_appearance()
+					alert_source.balloon_alert(user, "connected monitor[core_mmi?.brainmob?.mind ? " and neural network" : ""]")
 					return
 
 			if(AI_READY_CORE)
-				if(istype(P, /obj/item/aicard))
+				if(istype(tool, /obj/item/aicard))
 					return //handled by /obj/structure/ai_core/transfer_ai()
 
-				if(P.tool_behaviour == TOOL_WIRECUTTER)
-					P.play_tool_sound(src)
+				if(tool.tool_behaviour == TOOL_WIRECUTTER)
+					tool.play_tool_sound(src)
 					balloon_alert(user, "disconnected monitor")
 					state = GLASS_CORE
 					update_appearance()
@@ -354,11 +378,10 @@
 
 	if(core_mmi.force_replace_ai_name)
 		ai_mob.fully_replace_character_name(ai_mob.name, core_mmi.replacement_ai_name())
-	if(core_mmi.braintype == "Android")
-		ai_mob.posibrain_inside = TRUE
+	ai_mob.posibrain_inside = core_mmi.braintype == "Android"
 	deadchat_broadcast(" has been brought online at <b>[get_area_name(ai_mob, format_text = TRUE)]</b>.", span_name("[ai_mob]"), follow_target = ai_mob, message_type = DEADCHAT_ANNOUNCEMENT)
 	qdel(src)
-	return TRUE
+	return ai_mob
 
 /obj/structure/ai_core/update_icon_state()
 	switch(state)
@@ -379,7 +402,7 @@
 			icon_state = "ai-empty"
 	return ..()
 
-/obj/structure/ai_core/deconstruct(disassembled = TRUE)
+/obj/structure/ai_core/atom_deconstruct(disassembled = TRUE)
 	if(state >= GLASS_CORE)
 		new /obj/item/stack/sheet/rglass(loc, 2)
 	if(state >= CABLED_CORE)
@@ -388,7 +411,6 @@
 		circuit.forceMove(loc)
 		circuit = null
 	new /obj/item/stack/sheet/plasteel(loc, 4)
-	qdel(src)
 
 /// Quick proc to call to see if the brainmob inside of us has suicided. Returns TRUE if we have, FALSE in any other scenario.
 /obj/structure/ai_core/proc/suicide_check()
@@ -431,10 +453,7 @@ That prevents a few funky behaviors.
 		to_chat(user, "[span_boldnotice("Transfer successful")]: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null
 		AI.battery = circuit.battery
-		if(core_mmi && core_mmi.braintype == "Android")
-			AI.posibrain_inside = TRUE
-		else
-			AI.posibrain_inside = FALSE
+		AI.posibrain_inside = isnull(core_mmi) || core_mmi.braintype == "Android"
 		qdel(src)
 	else //If for some reason you use an empty card on an empty AI terminal.
 		to_chat(user, span_alert("There is no AI loaded on this terminal."))
@@ -442,5 +461,10 @@ That prevents a few funky behaviors.
 /obj/item/circuitboard/aicore
 	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent
 	var/battery = 200 //backup battery for when the AI loses power. Copied to/from AI mobs when carding, and placed here to avoid recharge via deconning the core
+
+/obj/item/circuitboard/aicore/Initialize(mapload)
+	. = ..()
+	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI))
+		return INITIALIZE_HINT_QDEL
 
 #undef AI_CORE_BRAIN

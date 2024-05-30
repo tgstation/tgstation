@@ -12,7 +12,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	accesses = list(ACCESS_CENT_SPECOPS)
 	wreckage = /obj/structure/mecha_wreckage/marauder
-	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 	mech_type = EXOSUIT_MODULE_MARAUDER
 	force = 45
 	max_equip_by_category = list(
@@ -117,7 +117,7 @@
 	base_icon_state = "mauler"
 	accesses = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/mauler
-	mecha_flags = ID_LOCK_ON | CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = ID_LOCK_ON | CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 	max_equip_by_category = list(
 		MECHA_L_ARM = 1,
 		MECHA_R_ARM = 1,

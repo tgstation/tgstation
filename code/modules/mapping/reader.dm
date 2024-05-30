@@ -46,7 +46,6 @@
  * Files are kinda susy, and may not actually work. buyer beware
  * Lists support assoc values as expected
  * These constants can be further embedded into lists
- * One var edited list will be shared among all the things it is applied to
  *
  * There can be no padding in front of, or behind a path
  *
@@ -931,8 +930,10 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 		if(!new_z)
 			old_area = crds.loc
-			old_area.turfs_to_uncontain += crds
-			area_instance.contained_turfs.Add(crds)
+			LISTASSERTLEN(old_area.turfs_to_uncontain_by_zlevel, crds.z, list())
+			LISTASSERTLEN(area_instance.turfs_by_zlevel, crds.z, list())
+			old_area.turfs_to_uncontain_by_zlevel[crds.z] += crds
+			area_instance.turfs_by_zlevel[crds.z] += crds
 		area_instance.contents.Add(crds)
 
 		if(GLOB.use_preloader)
@@ -950,7 +951,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 		// Note: we make the assertion that the last path WILL be a turf. if it isn't, this will fail.
 		if(placeOnTop)
-			instance = crds.PlaceOnTop(null, members[index], CHANGETURF_DEFER_CHANGE | (no_changeturf ? CHANGETURF_SKIP : NONE))
+			instance = crds.load_on_top(members[index], CHANGETURF_DEFER_CHANGE | (no_changeturf ? CHANGETURF_SKIP : NONE))
 		else if(no_changeturf)
 			instance = create_atom(members[index], crds)//first preloader pass
 		else
@@ -1005,8 +1006,6 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	if (!text)
 		return
 
-	// If we're using a semi colon, we can do this as splittext rather then constant calls to find_next_delimiter_position
-	// This does make the code a bit harder to read, but saves a good bit of time so suck it up
 	var/position
 	var/old_position = 1
 	while(position != 0)

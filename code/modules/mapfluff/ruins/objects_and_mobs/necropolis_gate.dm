@@ -81,7 +81,6 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "gate_blocker"
 	layer = EDGED_TURF_LAYER
-	plane = GAME_PLANE_UPPER
 	pixel_x = -32
 	pixel_y = -32
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -263,7 +262,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 
 	var/static/list/give_turf_traits
 	if(!give_turf_traits)
-		give_turf_traits = string_list(list(TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED))
+		give_turf_traits = string_list(list(TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_IMMERSE_STOPPED))
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 
 /obj/structure/stone_tile/singularity_pull()

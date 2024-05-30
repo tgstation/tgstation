@@ -61,7 +61,7 @@
 	weapon.attack(C, src)
 	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
 	if(C.stat == DEAD)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 2)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 0.2 SECONDS)
 		back_to_idle()
 
 
@@ -71,7 +71,7 @@
 	switch(mode)
 		if(BOT_IDLE) // idle
 			update_appearance()
-			SSmove_manager.stop_looping(src)
+			GLOB.move_manager.stop_looping(src)
 			look_for_perp() // see if any criminals are in range
 			if(!mode && bot_mode_flags & BOT_MODE_AUTOPATROL) // still idle, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
@@ -80,7 +80,7 @@
 			playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
 			// general beepsky doesn't give up so easily, jedi scum
 			if(frustration >= 20)
-				SSmove_manager.stop_looping(src)
+				GLOB.move_manager.stop_looping(src)
 				back_to_idle()
 				return
 			if(target) // make sure target exists
@@ -91,7 +91,7 @@
 					return
 				else // not next to perp
 					var/turf/olddist = get_dist(src, target)
-					SSmove_manager.move_to(src, target, 1, 4)
+					GLOB.move_manager.move_to(src, target, 1, 4)
 					if((get_dist(src, target)) >= (olddist))
 						frustration++
 					else
@@ -117,25 +117,21 @@
 		if((C.name == oldtarget_name) && (world.time < last_found + 100))
 			continue
 
-		threatlevel = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, PROC_REF(check_for_weapons)))
+		threatlevel = C.assess_threat(judgement_criteria)
 
-		if(!threatlevel)
+		if (threatlevel < THREAT_ASSESS_DANGEROUS)
 			continue
-
-		else if(threatlevel >= 4)
-			target = C
-			oldtarget_name = C.name
-			speak("Level [threatlevel] infraction alert!")
-			playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
-			playsound(src,'sound/weapons/saberon.ogg',50,TRUE,-1)
-			visible_message(span_warning("[src] ignites his energy swords!"))
-			icon_state = "grievous-c"
-			visible_message("<b>[src]</b> points at [C.name]!")
-			mode = BOT_HUNT
-			INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
-			break
-		else
-			continue
+		target = C
+		oldtarget_name = C.name
+		speak("Level [threatlevel] infraction alert!")
+		playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
+		playsound(src,'sound/weapons/saberon.ogg',50,TRUE,-1)
+		visible_message(span_warning("[src] ignites his energy swords!"))
+		icon_state = "grievous-c"
+		visible_message("<b>[src]</b> points at [C.name]!")
+		mode = BOT_HUNT
+		INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
+		break
 
 /mob/living/simple_animal/bot/secbot/grievous/explode()
 	var/atom/Tsec = drop_location()

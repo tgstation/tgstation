@@ -1,4 +1,5 @@
-#define THERMAL_REGULATOR_COST 18 // the cost per tick for the thermal regulator
+/// Charge per tick consumed by the thermal regulator
+#define THERMAL_REGULATOR_COST (0.018 * STANDARD_CELL_CHARGE)
 
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
 //      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!
@@ -57,11 +58,17 @@
 	equip_delay_other = 80
 	resistance_flags = NONE
 	actions_types = list(/datum/action/item_action/toggle_spacesuit)
-	var/temperature_setting = BODYTEMP_NORMAL /// The default temperature setting
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high /// If this is a path, this gets created as an object in Initialize.
-	var/cell_cover_open = FALSE /// Status of the cell cover on the suit
-	var/thermal_on = FALSE /// Status of the thermal regulator
-	var/show_hud = TRUE /// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
+	/// The default temperature setting
+	var/temperature_setting = BODYTEMP_NORMAL
+	/// If this is a path, this gets created as an object in Initialize.
+	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
+	/// Status of the cell cover on the suit
+	var/cell_cover_open = FALSE
+	/// Status of the thermal regulator
+	var/thermal_on = FALSE
+	/// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
+	var/show_hud = TRUE
 
 /datum/armor/suit_space
 	bio = 100
@@ -160,7 +167,7 @@
 
 /obj/item/clothing/suit/space/crowbar_act(mob/living/user, obj/item/tool)
 	toggle_spacesuit_cell(user)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/suit/space/screwdriver_act(mob/living/user, obj/item/tool)
 	var/range_low = 20 // Default min temp c
@@ -174,7 +181,7 @@
 	if(deg_c && deg_c >= range_low && deg_c <= range_high)
 		temperature_setting = round(T0C + deg_c, 0.1)
 		to_chat(user, span_notice("You see the readout change to [deg_c] c."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 // object handling for accessing features of the suit
 /obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
@@ -189,10 +196,9 @@
 		return
 
 /// Open the cell cover when ALT+Click on the suit
-/obj/item/clothing/suit/space/AltClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return ..()
+/obj/item/clothing/suit/space/click_alt(mob/living/user)
 	toggle_spacesuit_cell(user)
+	return CLICK_ACTION_SUCCESS
 
 /// Remove the cell whent he cover is open on CTRL+Click
 /obj/item/clothing/suit/space/CtrlClick(mob/living/user)
@@ -226,7 +232,7 @@
  * Toggle the space suit's thermal regulator status...
  * Can't do it if it has no charge.
  * Arguments:
- * * toggler - User mob who recieves the to_chat messages.
+ * * toggler - User mob who receives the to_chat messages.
  * * manual_toggle - If false get a differently-flavored message about it being disabled by itself
  */
 /obj/item/clothing/suit/space/proc/toggle_spacesuit(mob/toggler, manual_toggle = TRUE)

@@ -114,7 +114,7 @@
 // SINGULO BEACON SPAWNER
 /obj/item/sbeacondrop
 	name = "suspicious beacon"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "beacon"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'

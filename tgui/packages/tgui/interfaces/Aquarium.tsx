@@ -1,6 +1,14 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
-import { Button, Flex, Knob, NumberInput, LabeledControls, Section } from '../components';
+import {
+  Button,
+  Flex,
+  Knob,
+  LabeledControls,
+  NumberInput,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -14,8 +22,8 @@ type Data = {
   feeding_interval: number;
 };
 
-export const Aquarium = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const Aquarium = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     temperature,
     fluid_type,
@@ -76,8 +84,9 @@ export const Aquarium = (props, context) => {
                 value={feeding_interval}
                 minValue={1}
                 maxValue={7}
+                step={1}
                 unit="minutes"
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('feeding_interval', {
                     feeding_interval: value,
                   })

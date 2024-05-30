@@ -10,11 +10,13 @@
 **/
 /mob/living/proc/gib(drop_bitflags=NONE)
 	var/prev_lying = lying_angle
-	if(stat != DEAD)
-		death(TRUE)
+	spawn_gibs(drop_bitflags)
 
 	if(!prev_lying)
 		gib_animation()
+
+	if(stat != DEAD)
+		death(TRUE)
 
 	ghostize()
 	spill_organs(drop_bitflags)
@@ -22,7 +24,6 @@
 	if(drop_bitflags & DROP_BODYPARTS)
 		spread_bodyparts(drop_bitflags)
 
-	spawn_gibs(drop_bitflags)
 	SEND_SIGNAL(src, COMSIG_LIVING_GIBBED, drop_bitflags)
 	qdel(src)
 
@@ -36,6 +37,8 @@
  * * DROP_BODYPARTS - Gibs will spawn with bodypart limbs present
 **/
 /mob/living/proc/spawn_gibs(drop_bitflags=NONE)
+	if(flags_1 & HOLOGRAM_1)
+		return
 	new /obj/effect/gibspawner/generic(drop_location(), src, get_static_viruses())
 
 /**
@@ -105,7 +108,6 @@
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "deathgasp")
 
 	set_stat(DEAD)
-	unset_machine()
 	timeofdeath = world.time
 	station_timestamp_timeofdeath = station_time_timestamp()
 	var/turf/death_turf = get_turf(src)

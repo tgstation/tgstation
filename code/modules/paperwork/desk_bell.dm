@@ -69,7 +69,7 @@
 			playsound(user, 'sound/items/change_drill.ogg', 50, vary = TRUE)
 			broken_ringer = FALSE
 			times_rang = 0
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 		return FALSE
 	return ..()
 
@@ -84,7 +84,7 @@
 			new/obj/item/stack/sheet/iron(drop_location())
 		new/obj/item/stack/sheet/iron(drop_location())
 		qdel(src)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /// Check if the clapper breaks, and if it does, break it

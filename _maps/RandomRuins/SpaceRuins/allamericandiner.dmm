@@ -150,7 +150,6 @@
 	},
 /obj/effect/turf_decal/siding/brown,
 /obj/machinery/jukebox{
-	active = 1;
 	req_access = null
 	},
 /turf/open/floor/iron,
@@ -246,12 +245,7 @@
 /area/ruin/space/has_grav/allamericandiner)
 "nq" = (
 /obj/machinery/shower/directional/east,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/item/soap,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
@@ -361,7 +355,7 @@
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
 "ri" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "Trash Dumpster"
 	},
 /obj/structure/plasticflaps,
@@ -611,12 +605,7 @@
 /area/ruin/space/has_grav/allamericandiner)
 "CF" = (
 /obj/machinery/shower/directional/west,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/item/soap,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
@@ -647,8 +636,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
 "DZ" = (
-/obj/machinery/door/window{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Kitchen"
 	},
 /obj/effect/decal/cleanable/dirt,

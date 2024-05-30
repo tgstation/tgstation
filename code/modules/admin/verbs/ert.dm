@@ -121,7 +121,7 @@
 		var/list/spawnpoints = GLOB.emergencyresponseteamspawn
 		var/index = 0
 
-		var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you wish to be considered for [ertemplate.polldesc]?", "deathsquad")
+		var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for [span_notice(ertemplate.polldesc)]?", check_jobban = "deathsquad", alert_pic = /obj/item/card/id/advanced/centcom/ert, role_name_text = "emergency response team")
 		var/teamSpawned = FALSE
 
 		// This list will take priority over spawnpoints if not empty
@@ -261,18 +261,14 @@
 
 	return
 
-/client/proc/summon_ert()
-	set category = "Admin.Fun"
-	set name = "Summon ERT"
-	set desc = "Summons an emergency response team"
-
-	message_admins("[key_name(usr)] is creating a CentCom response team...")
-	if(holder?.makeEmergencyresponseteam())
-		message_admins("[key_name(usr)] created a CentCom response team.")
-		log_admin("[key_name(usr)] created a CentCom response team.")
+ADMIN_VERB(summon_ert, R_FUN, "Summon ERT", "Summons an emergency response team.", ADMIN_CATEGORY_FUN)
+	message_admins("[key_name_admin(user)] is creating a CentCom response team...")
+	if(user.holder?.makeEmergencyresponseteam())
+		message_admins("[key_name_admin(user)] created a CentCom response team.")
+		log_admin("[key_name(user)] created a CentCom response team.")
 	else
-		message_admins("[key_name_admin(usr)] tried to create a CentCom response team. Unfortunately, there were not enough candidates available.")
-		log_admin("[key_name(usr)] failed to create a CentCom response team.")
+		message_admins("[key_name_admin(user)] tried to create a CentCom response team. Unfortunately, there were not enough candidates available.")
+		log_admin("[key_name(user)] failed to create a CentCom response team.")
 
 #undef ERT_EXPERIENCED_LEADER_CHOOSE_TOP
 #undef DUMMY_HUMAN_SLOT_ADMIN

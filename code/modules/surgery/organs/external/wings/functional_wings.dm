@@ -29,13 +29,13 @@
 	// grind_results = list(/datum/reagent/flightpotion = 5)
 	food_reagents = list(/datum/reagent/flightpotion = 5)
 
-/obj/item/organ/external/wings/functional/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/external/wings/functional/Insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	if(. && isnull(fly))
 		fly = new
 		fly.Grant(receiver)
 
-/obj/item/organ/external/wings/functional/Remove(mob/living/carbon/organ_owner, special, moving)
+/obj/item/organ/external/wings/functional/Remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	fly.Remove(organ_owner)
@@ -50,7 +50,7 @@
 
 ///Called on_life(). Handle flight code and check if we're still flying
 /obj/item/organ/external/wings/functional/proc/handle_flight(mob/living/carbon/human/human)
-	if(human.movement_type & ~FLYING)
+	if(!(human.movement_type & FLYING))
 		return FALSE
 	if(!can_fly(human))
 		toggle_flight(human)
@@ -112,19 +112,22 @@
 		human.remove_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), SPECIES_FLIGHT_TRAIT)
 		passtable_off(human, SPECIES_FLIGHT_TRAIT)
 		close_wings()
-	human.update_body_parts()
+
+	human.refresh_gravity()
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/external/wings/functional/proc/open_wings()
 	var/datum/bodypart_overlay/mutant/wings/functional/overlay = bodypart_overlay
 	overlay.open_wings()
 	wings_open = TRUE
+	owner.update_body_parts()
 
 ///close our wings
 /obj/item/organ/external/wings/functional/proc/close_wings()
 	var/datum/bodypart_overlay/mutant/wings/functional/overlay = bodypart_overlay
 	wings_open = FALSE
 	overlay.close_wings()
+	owner.update_body_parts()
 
 	if(isturf(owner?.loc))
 		var/turf/location = loc
@@ -139,9 +142,9 @@
 
 /datum/bodypart_overlay/mutant/wings/functional/get_global_feature_list()
 	if(wings_open)
-		return GLOB.wings_open_list
+		return SSaccessories.wings_open_list
 	else
-		return GLOB.wings_list
+		return SSaccessories.wings_list
 
 ///Update our wingsprite to the open wings variant
 /datum/bodypart_overlay/mutant/wings/functional/proc/open_wings()
@@ -186,6 +189,9 @@
 	desc = "Powered by pure edgy-teenager-notebook-scribblings. Just kidding. But seriously, how do these keep you flying?!"
 	sprite_accessory_override = /datum/sprite_accessory/wings/skeleton
 
+/obj/item/organ/external/wings/functional/moth/make_flap_sound(mob/living/carbon/wing_owner)
+	playsound(wing_owner, 'sound/voice/moth/moth_flutter.ogg', 50, TRUE)
+
 ///mothra wings, which relate to moths.
 /obj/item/organ/external/wings/functional/moth/mothra
 	name = "mothra wings"
@@ -203,3 +209,9 @@
 	name = "fly wings"
 	desc = "Fly as a fly."
 	sprite_accessory_override = /datum/sprite_accessory/wings/fly
+
+///slime wings, which relate to slimes.
+/obj/item/organ/external/wings/functional/slime
+	name = "slime wings"
+	desc = "How does something so squishy even fly?"
+	sprite_accessory_override = /datum/sprite_accessory/wings/slime

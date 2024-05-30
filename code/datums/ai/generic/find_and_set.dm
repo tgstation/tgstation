@@ -7,16 +7,15 @@
 	action_cooldown = 2 SECONDS
 
 /datum/ai_behavior/find_and_set/perform(seconds_per_tick, datum/ai_controller/controller, set_key, locate_path, search_range)
-	. = ..()
 	if (controller.blackboard_key_exists(set_key))
-		finish_action(controller, TRUE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	if(QDELETED(controller.pawn))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	var/find_this_thing = search_tactic(controller, locate_path, search_range)
-	if(find_this_thing)
-		controller.set_blackboard_key(set_key, find_this_thing)
-		finish_action(controller, TRUE)
-	else
-		finish_action(controller, FALSE)
+	if(isnull(find_this_thing))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	controller.set_blackboard_key(set_key, find_this_thing)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	return locate(locate_path) in oview(search_range, controller.pawn)
@@ -62,6 +61,13 @@
 	var/mob/living/living_pawn = controller.pawn
 	return locate(locate_path) in living_pawn.held_items
 
+/datum/ai_behavior/find_and_set/in_hands/given_list
+
+/datum/ai_behavior/find_and_set/in_hands/given_list/search_tactic(datum/ai_controller/controller, locate_paths)
+	var/list/found = typecache_filter_list(controller.pawn, locate_paths)
+	if(length(found))
+		return pick(found)
+
 /**
  * Variant of find and set that takes a list of things to find.
  */
@@ -71,6 +77,16 @@
 	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)
 	if(length(found))
 		return pick(found)
+
+/// Like find_and_set/in_list, but we return the turf location of the item instead of the item itself.
+/datum/ai_behavior/find_and_set/in_list/turf_location
+
+/datum/ai_behavior/find_and_set/in_list/turf_location/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
+	. = ..()
+	if(isnull(.))
+		return null
+
+	return get_turf(.)
 
 /**
  * Variant of find and set which returns an object which can be animated with a staff of change
@@ -148,3 +164,16 @@
 		return pick(customers)
 
 	return null
+
+/datum/ai_behavior/find_and_set/nearby_friends
+	action_cooldown = 2 SECONDS
+
+/datum/ai_behavior/find_and_set/nearby_friends/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	var/atom/friend = locate(/mob/living/carbon/human) in oview(search_range, controller.pawn)
+
+	if(isnull(friend))
+		return null
+
+	var/mob/living/living_pawn = controller.pawn
+	var/potential_friend = living_pawn.faction.Find(REF(friend)) ? friend : null
+	return potential_friend

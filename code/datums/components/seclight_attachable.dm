@@ -50,7 +50,7 @@
 	if(istype(starting_light))
 		add_light(starting_light)
 
-/datum/component/seclite_attachable/Destroy(force, silent)
+/datum/component/seclite_attachable/Destroy(force)
 	if(light)
 		remove_light()
 	return ..()
@@ -236,7 +236,7 @@
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(unscrew_light), source, user, tool)
-	return COMPONENT_BLOCK_TOOL_ATTACK
+	return ITEM_INTERACT_BLOCKING
 
 /// Invoked asyncronously from [proc/on_screwdriver]. Handles removing the light from our parent.
 /datum/component/seclite_attachable/proc/unscrew_light(obj/item/source, mob/user, obj/item/tool)

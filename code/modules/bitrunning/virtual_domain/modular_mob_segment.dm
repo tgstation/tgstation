@@ -72,6 +72,12 @@
 		/mob/living/basic/trooper/syndicate/melee,
 	)
 
+/datum/modular_mob_segment/abductor_agents
+	mobs = list(
+		/mob/living/basic/trooper/abductor/melee,
+		/mob/living/basic/trooper/abductor/ranged,
+	)
+
 /datum/modular_mob_segment/syndicate_elite
 	mobs = list(
 		/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
@@ -145,9 +151,9 @@
 
 /datum/modular_mob_segment/xenos
 	mobs = list(
-		/mob/living/simple_animal/hostile/alien,
-		/mob/living/simple_animal/hostile/alien/sentinel,
-		/mob/living/simple_animal/hostile/alien/drone,
+		/mob/living/basic/alien,
+		/mob/living/basic/alien/sentinel,
+		/mob/living/basic/alien/drone,
 	)
 
 #undef SPAWN_ALWAYS

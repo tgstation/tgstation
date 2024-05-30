@@ -1,7 +1,8 @@
 /datum/action/cooldown/spell/touch/star_touch
 	name = "Star Touch"
-	desc = "Marks someone with a star mark or puts someone with a star mark to sleep for 4 seconds, removing the star mark. \
-		You and your target are linked with a cosmic ray, burning them for up to a minute, or \
+	desc = "Manifests cosmic fields on tiles next to you while marking the victim with a star mark \
+		or consuming an already present star mark to put them to sleep for 4 seconds. \
+		They will then be linked to you with a cosmic ray, burning them for up to a minute, or \
 		until they can escape your sight. Star Touch can also remove Cosmic Runes, or teleport you \
 		to your Star Gazer when used on yourself."
 	background_icon_state = "bg_heretic"
@@ -236,10 +237,7 @@
 
 /// What to process when the beam is connected to a target
 /datum/status_effect/cosmic_beam/proc/on_beam_tick(mob/living/target)
-	var/need_mob_update
-	need_mob_update = target.adjustFireLoss(3, updating_health = FALSE)
-	need_mob_update += target.adjustCloneLoss(1, updating_health = FALSE)
-	if(need_mob_update)
+	if(target.adjustFireLoss(3, updating_health = FALSE))
 		target.updatehealth()
 
 /// What to remove when the beam disconnects from a target

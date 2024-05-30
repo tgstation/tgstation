@@ -9,6 +9,7 @@ reset_label = "GBP: Reset"
 "Code Improvement" = 2
 "Documentation" = 1
 "Feature" = -6
+"Good First PR" = 6
 "Feedback" = 2
 "Fix" = 3
 "Grammar and Formatting" = 1

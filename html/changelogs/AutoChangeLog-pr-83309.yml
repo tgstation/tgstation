@@ -1,0 +1,5 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "You can no longer force NODE Drones off of ore vents. That includes using fulton packs!"
+  - bugfix: "When a NODE Drone is forcibly separated from its vent, it will fly away."

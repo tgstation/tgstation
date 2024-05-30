@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	nightshift_allowed = FALSE
 	bulb_colour = "#d6b6a6ff"
 	brightness = 3
-	fire_brightness = 2
+	fire_brightness = 3.5
 	bulb_power = 0.5
 
 /obj/machinery/light/very_dim/directional/north

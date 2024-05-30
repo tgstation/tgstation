@@ -3,7 +3,7 @@
 	cost = BITRUNNER_COST_LOW
 	desc = "An abandoned and infested factory manufacturing disposal pipes."
 	difficulty = BITRUNNER_DIFFICULTY_LOW
-	extra_loot = list(/obj/item/stack/pipe_cleaner_coil/random/five = 1)
+	completion_loot = list(/obj/item/stack/pipe_cleaner_coil/random/five = 1)
 	help_text = "Not long ago, this place was thriving with activity. The workers \
 	seemed to have left in a hurry, and now productivity is in the bin. Something \
 	must have trashed the place, but what?"
@@ -15,7 +15,6 @@
 		/datum/modular_mob_segment/hivebots_strong
 	)
 	reward_points = BITRUNNER_REWARD_LOW
-	safehouse_path = /datum/map_template/safehouse/shuttle
 
 // ID Trims
 /datum/id_trim/factory
@@ -76,7 +75,7 @@
 	r_pocket = /obj/item/assembly/flash/handheld
 
 /datum/outfit/factory/qm
-	name = "Factory Quatermaster"
+	name = "Factory Quartermaster"
 
 	id_trim = /datum/id_trim/factory/qm
 	id = /obj/item/card/id/advanced/silver

@@ -2,7 +2,7 @@
 /datum/action/cooldown/spell/touch/scream_for_me
 	name = "Scream For Me"
 	desc = "This wicked spell inflicts many severe wounds on your target, causing them to \
-		likely bleed to death unless they recieve immediate medical attention."
+		likely bleed to death unless they receive immediate medical attention."
 	button_icon_state = "scream_for_me"
 	sound = null //trust me, you'll hear their wounds
 

@@ -77,12 +77,17 @@
 
 /datum/round_event/ghost_role/bitrunning_glitch/spawn_role()
 	var/datum/round_event_control/bitrunning_glitch/cyber_control = control
+	if(!length(cyber_control.active_servers))
+		return WAITING_FOR_SOMETHING
 
-	var/obj/machinery/quantum_server/unlucky_server = pick(cyber_control.active_servers)
+	var/datum/weakref/server_ref = pick(cyber_control.active_servers)
+	var/obj/machinery/quantum_server/unlucky_server = server_ref?.resolve()
+	if(isnull(unlucky_server))
+		return WAITING_FOR_SOMETHING
+
 	cyber_control.active_servers.Cut()
-
 	if(!unlucky_server.validate_mutation_candidates())
-		return MAP_ERROR
+		return WAITING_FOR_SOMETHING
 
 	spawned_mobs = unlucky_server.setup_glitch(forced_role)
 

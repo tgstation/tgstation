@@ -2,8 +2,8 @@
 /datum/computer_file/program/emojipedia
 	filename = "emojipedia"
 	filedesc = "EmojiPedia"
-	category = PROGRAM_CATEGORY_CREW // we want everyone to be able to access this application, since everyone can send emoji via PDA messages
-	program_icon_state = "generic"
+	downloader_category = PROGRAM_CATEGORY_DEVICE // we want everyone to be able to access this application, since everyone can send emoji via PDA messages
+	program_open_overlay = "generic"
 	extended_desc = "This program allows you to view all the emojis you can send via PDA messages."
 	size = 3
 	tgui_id = "NtosEmojipedia"
@@ -14,7 +14,7 @@
 /datum/computer_file/program/emojipedia/New()
 	. = ..()
 	// Sort the emoji list so it's easier to find things and we don't have to keep sorting on ui_data since the number of emojis can not change in-game.
-	emoji_list = sortTim(emoji_list, /proc/cmp_text_asc)
+	sortTim(emoji_list, /proc/cmp_text_asc)
 
 /datum/computer_file/program/emojipedia/ui_static_data(mob_user)
 	var/list/data = list()

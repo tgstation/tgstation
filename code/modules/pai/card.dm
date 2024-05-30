@@ -21,6 +21,14 @@
 	/// Prevents a crew member from hitting "request pAI" repeatedly
 	var/request_spam = FALSE
 
+/obj/item/pai_card/Initialize(mapload)
+	. = ..()
+
+	update_appearance()
+	SSpai.pai_card_list += src
+	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
+
 /obj/item/pai_card/attackby(obj/item/used, mob/user, params)
 	if(pai && istype(used, /obj/item/encryptionkey))
 		if(!pai.encrypt_mod)
@@ -63,12 +71,10 @@
 	emotion_icon = initial(emotion_icon)
 	update_appearance()
 
-/obj/item/pai_card/Initialize(mapload)
-	. = ..()
-
-	update_appearance()
-	SSpai.pai_card_list += src
-	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
+/obj/item/pai_card/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(pai)
+		return pai.on_saboteur(source, disrupt_duration)
 
 /obj/item/pai_card/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is staring sadly at [src]! [user.p_They()] can't keep living without real human intimacy!"))
@@ -92,7 +98,7 @@
 		ui = new(user, src, "PaiCard")
 		ui.open()
 
-/obj/item/pai_card/ui_status(mob/user)
+/obj/item/pai_card/ui_status(mob/user, datum/ui_state/state)
 	if(user in get_nested_locs(src))
 		return UI_INTERACTIVE
 	return ..()
@@ -236,14 +242,13 @@
 	notify_ghosts(
 		"[user] is requesting a pAI companion! Use the pAI button to submit yourself as one.",
 		source = user,
-		alert_overlay = alert_overlay,
-		action = NOTIFY_ORBIT,
-		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		header = "pAI Request!",
+		alert_overlay = alert_overlay,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		ignore_key = POLL_IGNORE_PAI,
 	)
 
-	addtimer(VARSET_CALLBACK(src, request_spam, FALSE), PAI_SPAM_TIME, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
+	addtimer(VARSET_CALLBACK(src, request_spam, FALSE), PAI_SPAM_TIME, TIMER_UNIQUE|TIMER_DELETE_ME)
 	return TRUE
 
 /**

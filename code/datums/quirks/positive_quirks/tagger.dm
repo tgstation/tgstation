@@ -1,10 +1,10 @@
 /datum/quirk/item_quirk/tagger
 	name = "Tagger"
-	desc = "You're an experienced artist. People will actually be impressed by your graffiti, and you can get twice as many uses out of drawing supplies."
+	desc = "You're an experienced artist. People will actually be impressed by your graffiti, and you can get twice as many uses out of drawing supplies in half the time."
 	icon = FA_ICON_SPRAY_CAN
 	value = 4
 	mob_trait = TRAIT_TAGGER
-	gain_text = span_notice("You know how to tag walls efficiently.")
+	gain_text = span_notice("You know how to tag walls efficiently and quickly.")
 	lose_text = span_danger("You forget how to tag walls properly.")
 	medical_record_text = "Patient was recently seen for possible paint huffing incident."
 	mail_goodies = list(

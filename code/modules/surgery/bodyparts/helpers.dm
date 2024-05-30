@@ -15,6 +15,7 @@
 /mob/living/carbon/proc/del_and_replace_bodypart(obj/item/bodypart/new_limb, special)
 	var/obj/item/bodypart/old_limb = get_bodypart(new_limb.body_zone)
 	if(old_limb)
+		old_limb.drop_limb(special = TRUE)
 		qdel(old_limb)
 	new_limb.try_attach_limb(src, special = special)
 
@@ -82,7 +83,7 @@
 
 /mob/living/carbon/proc/get_missing_limbs()
 	RETURN_TYPE(/list)
-	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	var/list/full = GLOB.all_body_zones.Copy()
 	for(var/zone in full)
 		if(get_bodypart(zone))
 			full -= zone
@@ -99,7 +100,7 @@
 	return list()
 
 /mob/living/carbon/get_disabled_limbs()
-	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	var/list/full = GLOB.all_body_zones.Copy()
 	var/list/disabled = list()
 	for(var/zone in full)
 		var/obj/item/bodypart/affecting = get_bodypart(zone)
@@ -172,11 +173,21 @@
 /mob/living/carbon/proc/synchronize_bodytypes()
 	var/all_limb_flags = NONE
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
-		for(var/obj/item/organ/external/ext_organ as anything in limb.external_organs)
+		for(var/obj/item/organ/external/ext_organ in limb)
 			all_limb_flags |= ext_organ.external_bodytypes
 		all_limb_flags |= limb.bodytype
 
 	bodytype = all_limb_flags
+
+/// Makes sure that the owner's bodyshape flags match the flags of all of it's parts and organs
+/mob/living/carbon/proc/synchronize_bodyshapes()
+	var/all_limb_flags = NONE
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		for(var/obj/item/organ/external/ext_organ in limb)
+			all_limb_flags |= ext_organ.external_bodyshapes
+		all_limb_flags |= limb.bodyshape
+
+	bodyshape = all_limb_flags
 
 /proc/skintone2hex(skin_tone)
 	. = 0

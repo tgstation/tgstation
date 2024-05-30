@@ -31,6 +31,7 @@
 		force_unwielded = 5, \
 		force_wielded = 10, \
 	)
+	AddElement(/datum/element/disarm_attack)
 
 	var/static/list/slapcraft_recipe_list = list(\
 		/datum/crafting_recipe/pillow_suit, /datum/crafting_recipe/pillow_hood,\
@@ -101,14 +102,15 @@
 	if(pillow_trophy)
 		. += span_notice("Alt-click to remove the tag!")
 
-/obj/item/pillow/AltClick(mob/user)
-	. = ..()
+/obj/item/pillow/click_alt(mob/user)
+	if(!user.can_hold_items(src))
+		return CLICK_ACTION_BLOCKING
 	if(!pillow_trophy)
 		balloon_alert(user, "no tag!")
-		return
+		return CLICK_ACTION_BLOCKING
 	balloon_alert(user, "removing tag...")
 	if(!do_after(user, 2 SECONDS, src))
-		return
+		return CLICK_ACTION_BLOCKING
 	if(last_fighter)
 		pillow_trophy.desc = "A pillow tag taken from [last_fighter] after a gruesome pillow fight."
 	user.put_in_hands(pillow_trophy)
@@ -116,6 +118,7 @@
 	balloon_alert(user, "tag removed")
 	playsound(user,'sound/items/poster_ripped.ogg', 50)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/pillow/update_appearance(updates)
 	. = ..()

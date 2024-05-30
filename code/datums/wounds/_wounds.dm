@@ -16,11 +16,6 @@
 
 #define WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS 15
 
-// Applied into wounds when they're scanned with the wound analyzer, halves time to treat them manually.
-#define TRAIT_WOUND_SCANNED "wound_scanned"
-// I dunno lol
-#define ANALYZER_TRAIT "analyzer_trait"
-
 /datum/wound
 	/// What it's named
 	var/name = "Wound"
@@ -220,13 +215,13 @@
 		var/msg = span_danger("[victim]'s [limb.plaintext_zone] [occur_text]!")
 		var/vis_dist = COMBAT_MESSAGE_RANGE
 
-		if(severity > WOUND_SEVERITY_MODERATE)
+		if(severity > WOUND_SEVERITY_SEVERE)
 			msg = "<b>[msg]</b>"
 			vis_dist = DEFAULT_MESSAGE_RANGE
 
 		victim.visible_message(msg, span_userdanger("Your [limb.plaintext_zone] [occur_text]!"), vision_distance = vis_dist)
 		if(sound_effect)
-			playsound(L.owner, sound_effect, sound_volume + (20 * severity), TRUE)
+			playsound(L.owner, sound_effect, sound_volume + (20 * severity), TRUE, falloff_exponent = SOUND_FALLOFF_EXPONENT + 2,  ignore_walls = FALSE, falloff_distance = 0)
 
 	wound_injury(old_wound, attack_direction = attack_direction)
 	if(!demoted)

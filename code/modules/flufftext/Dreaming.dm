@@ -1,3 +1,5 @@
+#define DREAMING_SOURCE "dreaming_source"
+
 /**
  * Begins the dreaming process on a sleeping carbon.
  *
@@ -6,7 +8,7 @@
  */
 
 /mob/living/carbon/proc/handle_dreams()
-	if(prob(10) && !dreaming)
+	if(!HAS_TRAIT(src, TRAIT_DREAMING) && prob(10))
 		dream()
 
 /**
@@ -22,7 +24,7 @@
 
 	var/datum/dream/chosen_dream = pick_weight(GLOB.dreams)
 
-	dreaming = TRUE
+	ADD_TRAIT(src, TRAIT_DREAMING, DREAMING_SOURCE)
 	dream_sequence(chosen_dream.GenerateDream(src), chosen_dream)
 
 /**
@@ -38,7 +40,7 @@
 
 /mob/living/carbon/proc/dream_sequence(list/dream_fragments, datum/dream/current_dream)
 	if(stat != UNCONSCIOUS || HAS_TRAIT(src, TRAIT_CRITICAL_CONDITION))
-		dreaming = FALSE
+		REMOVE_TRAIT(src, TRAIT_DREAMING, DREAMING_SOURCE)
 		current_dream.OnDreamEnd(src)
 		return
 	var/next_message = dream_fragments[1]
@@ -56,7 +58,7 @@
 			AdjustSleeping(next_wait)
 		addtimer(CALLBACK(src, PROC_REF(dream_sequence), dream_fragments, current_dream), next_wait)
 	else
-		dreaming = FALSE
+		REMOVE_TRAIT(src, TRAIT_DREAMING, DREAMING_SOURCE)
 		current_dream.OnDreamEnd(src)
 
 //-------------------------
@@ -180,3 +182,5 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 
 /datum/dream/hear_something/proc/StopSound(mob/living/carbon/dreamer)
 	SEND_SOUND(dreamer, sound(channel=reserved_sound_channel))
+
+#undef DREAMING_SOURCE

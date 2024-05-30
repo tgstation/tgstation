@@ -121,7 +121,6 @@
 	// Chemicals that can be mixed by a single skilled Chemist.
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/medicine/leporazine,\
-		/datum/reagent/medicine/clonexadone,\
 		/datum/reagent/medicine/mine_salve,\
 		/datum/reagent/medicine/c2/convermol,\
 		/datum/reagent/medicine/ephedrine,\

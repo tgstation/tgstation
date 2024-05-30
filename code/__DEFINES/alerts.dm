@@ -24,6 +24,7 @@
 #define ALERT_EMBEDDED_OBJECT "embeddedobject"
 #define ALERT_SHOES_KNOT "shoealert"
 #define ALERT_RADIOACTIVE_AREA "radioactive_area"
+#define ALERT_UNPOSSESS_OBJECT "unpossess_object"
 
 //antag related
 #define ALERT_HYPNOSIS "hypnosis"
@@ -46,11 +47,9 @@
 #define ALERT_HACKING_APC "hackingapc"
 
 /** MODsuit/Mech related */
-#define ALERT_MODSUIT_CHARGE "mod_charge"
 #define ALERT_MECH_DAMAGE "mech_damage"
 
 /** Food related */
-#define ALERT_NUTRITION "nutrition"
 #define ALERT_DISGUST "disgust"
 
 /** Environment related */

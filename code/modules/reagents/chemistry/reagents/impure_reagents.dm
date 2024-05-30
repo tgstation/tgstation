@@ -60,13 +60,14 @@
 
 // Unique
 
-/datum/reagent/impurity/eigenswap
+/datum/reagent/inverse/eigenswap
 	name = "Eigenswap"
 	description = "This reagent is known to swap the handedness of a patient."
 	ph = 3.3
 	chemical_flags = REAGENT_DONOTSPLIT
+	tox_damage = 0
 
-/datum/reagent/impurity/eigenswap/on_mob_life(mob/living/carbon/affected_mob)
+/datum/reagent/inverse/eigenswap/on_mob_life(mob/living/carbon/affected_mob)
 	. = ..()
 	if(!prob(creation_purity * 100))
 		return
@@ -103,6 +104,9 @@
 
 /datum/reagent/inverse/cryostylane/on_mob_add(mob/living/carbon/affected_mob, amount)
 	. = ..()
+	if(HAS_TRAIT(affected_mob, TRAIT_RESISTCOLD))
+		holder.remove_reagent(type, volume)
+		return
 	cube = new /obj/structure/ice_stasis(get_turf(affected_mob))
 	cube.color = COLOR_CYAN
 	cube.set_anchored(TRUE)
@@ -112,11 +116,14 @@
 	cryostylane_alert.attached_effect = src //so the alert can reference us, if it needs to
 
 /datum/reagent/inverse/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(current_cycle >= 60)
-		holder.remove_reagent(type, volume) // remove it all if we're past 60 cycles
-		return ..()
+	. = ..()
 	if(!cube || affected_mob.loc != cube)
 		metabolization_rate += 0.01
+
+/datum/reagent/inverse/cryostylane/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(current_cycle >= 60)
+		holder.remove_reagent(type, volume) // remove it all if we're past 60 cycles
+		return
 	return ..()
 
 /datum/reagent/inverse/cryostylane/on_mob_delete(mob/living/carbon/affected_mob, amount)

@@ -61,6 +61,7 @@
 		/datum/atom_hud/alternate_appearance/basic/one_person,
 		"in_love",
 		image(icon = 'icons/effects/effects.dmi', icon_state = "love_hearts", loc = date),
+		null,
 		new_owner,
 	))
 
@@ -114,7 +115,6 @@
 		need_mob_update += rewarded.adjustFireLoss(-25, updating_health = FALSE)
 		need_mob_update += rewarded.adjustToxLoss(-25, updating_health = FALSE)
 		need_mob_update += rewarded.adjustOxyLoss(-25, updating_health = FALSE)
-		need_mob_update += rewarded.adjustCloneLoss(-25, updating_health = FALSE)
 		if(need_mob_update)
 			rewarded.updatehealth()
 
@@ -360,7 +360,7 @@
 /*
  * A status effect used for preventing caltrop message spam
  *
- * While a mob has this status effect, they won't recieve any messages about
+ * While a mob has this status effect, they won't receive any messages about
  * stepping on caltrops. But they will be stunned and damaged regardless.
  *
  * The status effect itself has no effect, other than to disappear after
@@ -523,7 +523,7 @@
 				return
 			if(prob(1))//low chance of the alternative reality returning to monkey
 				var/obj/item/organ/external/tail/monkey/monkey_tail = new ()
-				monkey_tail.Insert(human_mob, drop_if_replaced = FALSE)
+				monkey_tail.Insert(human_mob, movement_flags = DELETE_IF_REPLACED)
 			var/datum/species/human_species = human_mob.dna?.species
 			if(human_species)
 				human_species.randomize_active_features(human_mob)
@@ -562,7 +562,7 @@
 	return ..()
 
 /datum/status_effect/tinlux_light/on_apply()
-	mob_light_obj = owner.mob_light(2)
+	mob_light_obj = owner.mob_light(2, 1.5, "#ccff33")
 	return TRUE
 
 /datum/status_effect/tinlux_light/on_remove()

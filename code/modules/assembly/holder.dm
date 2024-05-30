@@ -1,11 +1,11 @@
 /obj/item/assembly_holder
 	name = "Assembly"
-	icon = 'icons/obj/assemblies/new_assemblies.dmi'
+	icon = 'icons/obj/devices/new_assemblies.dmi'
 	icon_state = "assembly_holder"
 	inhand_icon_state = "assembly"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 2
@@ -141,8 +141,6 @@
 
 	return ..()
 
-/obj/item/assembly_holder/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/item/assembly_holder/screwdriver_act(mob/user, obj/item/tool)
 	if(..())

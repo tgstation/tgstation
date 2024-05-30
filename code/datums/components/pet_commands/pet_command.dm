@@ -30,10 +30,18 @@
 /// Register a new guy we want to listen to
 /datum/pet_command/proc/add_new_friend(mob/living/tamer)
 	RegisterSignal(tamer, COMSIG_MOB_SAY, PROC_REF(respond_to_command))
+	RegisterSignal(tamer, COMSIG_MOB_AUTOMUTE_CHECK, PROC_REF(waive_automute))
 
 /// Stop listening to a guy
 /datum/pet_command/proc/remove_friend(mob/living/unfriended)
-	UnregisterSignal(unfriended, COMSIG_MOB_SAY)
+	UnregisterSignal(unfriended, list(COMSIG_MOB_SAY, COMSIG_MOB_AUTOMUTE_CHECK))
+
+/// Stop the automute from triggering for commands (unless the spoken text is suspiciously longer than the command)
+/datum/pet_command/proc/waive_automute(mob/living/speaker, client/client, last_message, mute_type)
+	SIGNAL_HANDLER
+	if(mute_type == MUTE_IC && find_command_in_text(last_message, check_verbosity = TRUE))
+		return WAIVE_AUTOMUTE_CHECK
+	return NONE
 
 /// Respond to something that one of our friends has asked us to do
 /datum/pet_command/proc/respond_to_command(mob/living/speaker, speech_args)
@@ -51,10 +59,15 @@
 
 	try_activate_command(speaker)
 
-/// Returns true if we find any of our spoken commands in the text
-/datum/pet_command/proc/find_command_in_text(spoken_text)
+/**
+ * Returns true if we find any of our spoken commands in the text.
+ * if check_verbosity is true, skip the match if there spoken_text is way longer than the match
+ */
+/datum/pet_command/proc/find_command_in_text(spoken_text, check_verbosity = FALSE)
 	for (var/command as anything in speech_commands)
 		if (!findtext(spoken_text, command))
+			continue
+		if(check_verbosity && length(spoken_text) > length(command) + MAX_NAME_LEN)
 			continue
 		return TRUE
 	return FALSE

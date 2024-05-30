@@ -1,7 +1,7 @@
 /datum/quirk/tin_man
 	name = "Tin Man"
 	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, most of your internal organs have been replaced with surplus prosthetics."
-	icon = FA_ICON_ROBOT
+	icon = FA_ICON_USER_GEAR
 	value = -6
 	medical_record_text = "During physical examination, patient was found to have numerous low-budget prosthetic internal organs. \
 		<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
@@ -30,7 +30,7 @@
 	for(var/organ_slot in possible_organ_slots)
 		var/organ_path = possible_organ_slots[organ_slot]
 		var/obj/item/organ/new_organ = new organ_path()
-		new_organ.Insert(human_holder, special = TRUE, drop_if_replaced = FALSE)
+		new_organ.Insert(human_holder, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /datum/quirk/tin_man/post_add()
 	to_chat(quirk_holder, span_boldannounce("Most of your internal organs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. \

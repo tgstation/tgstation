@@ -45,14 +45,14 @@
 	icon_state = "cmo"
 
 /obj/structure/closet/secure_closet/ert_med/PopulateContents()
-	..()
+	. = ..()
+	new /mob/living/basic/bot/medbot(src)
 	new /obj/item/storage/medkit/o2(src)
 	new /obj/item/storage/medkit/toxin(src)
 	new /obj/item/storage/medkit/fire(src)
 	new /obj/item/storage/medkit/brute(src)
 	new /obj/item/storage/medkit/regular(src)
 	new /obj/item/defibrillator/compact/combat/loaded/nanotrasen(src)
-	new /mob/living/simple_animal/bot/medbot(src)
 
 /obj/structure/closet/secure_closet/ert_engi
 	name = "emergency response team engineer locker"

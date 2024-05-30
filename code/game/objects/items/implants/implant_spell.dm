@@ -25,12 +25,11 @@
 	return ..()
 
 /obj/item/implant/spell/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Spell Implant<BR>
-				<b>Life:</b> 4 hours after death of host<BR>
-				<b>Implant Details:</b> <BR>
-				<b>Function:</b> [spell_to_give ? "Allows a non-wizard to cast [spell_to_give] as if they were a wizard." : "None."]"}
-	return dat
+	return "<b>Implant Specifications:</b><BR> \
+		<b>Name:</b> Spell Implant<BR> \
+		<b>Life:</b> 4 hours after death of host<BR> \
+		<b>Implant Details:</b> <BR> \
+		<b>Function:</b> [spell_to_give ? "Allows a non-wizard to cast [spell_to_give] as if they were a wizard." : "None."]"
 
 /obj/item/implant/spell/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()

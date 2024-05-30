@@ -69,8 +69,9 @@
 		var/cached_multiplier = (recipe.food_multiplier * rating_amount)
 		for(var/i in 1 to cached_multiplier)
 			var/atom/processed_food = new recipe.output(drop_location())
-			processed_food.reagents.clear_reagents()
-			what.reagents.copy_to(processed_food, what.reagents.total_volume, multiplier = 1 / cached_multiplier)
+			if(processed_food.reagents && what.reagents)
+				processed_food.reagents.clear_reagents()
+				what.reagents.copy_to(processed_food, what.reagents.total_volume, multiplier = 1 / cached_multiplier)
 			if(cached_mats)
 				processed_food.set_custom_materials(cached_mats, 1 / cached_multiplier)
 
@@ -84,7 +85,7 @@
 /obj/machinery/processor/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/processor/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(processing)
@@ -146,7 +147,7 @@
 		span_notice("You turn on [src]."), \
 		span_hear("You hear a food processor."))
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, TRUE)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	var/total_time = 0
 	for(var/atom/movable/movable_input as anything in processor_contents)
 		var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(movable_input)
@@ -208,8 +209,8 @@
 /obj/machinery/processor/slime/process()
 	if(processing)
 		return
-	var/mob/living/simple_animal/slime/picked_slime
-	for(var/mob/living/simple_animal/slime/slime in range(1,src))
+	var/mob/living/basic/slime/picked_slime
+	for(var/mob/living/basic/slime/slime in range(1,src))
 		if(!CanReach(slime)) //don't take slimes behind glass panes or somesuch; also makes it ignore slimes inside the processor
 			continue
 		if(slime.stat)
@@ -226,7 +227,7 @@
 	picked_slime.forceMove(src)
 
 /obj/machinery/processor/slime/process_food(datum/food_processor_process/recipe, atom/movable/what)
-	var/mob/living/simple_animal/slime/processed_slime = what
+	var/mob/living/basic/slime/processed_slime = what
 	if (!istype(processed_slime))
 		return
 
@@ -236,9 +237,9 @@
 		return
 	var/core_count = processed_slime.cores
 	for(var/i in 1 to (core_count+rating_amount-1))
-		var/atom/movable/item = new processed_slime.coretype(drop_location())
+		var/atom/movable/item = new processed_slime.slime_type.core_type(drop_location())
 		adjust_item_drop_location(item)
-		SSblackbox.record_feedback("tally", "slime_core_harvested", 1, processed_slime.colour)
+		SSblackbox.record_feedback("tally", "slime_core_harvested", 1, processed_slime.slime_type.colour)
 	return ..()
 
 #undef PROCESSOR_SELECT_RECIPE

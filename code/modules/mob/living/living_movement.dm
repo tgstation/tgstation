@@ -60,7 +60,8 @@
 	if(.)
 		return
 	if(mover.throwing)
-		return (!density || (body_position == LYING_DOWN) || (mover.throwing.thrower == src && !ismob(mover)))
+		var/mob/thrower = mover.throwing.get_thrower()
+		return (!density || (body_position == LYING_DOWN) || (thrower == src && !ismob(mover)))
 	if(buckled == mover)
 		return TRUE
 	if(ismob(mover) && (mover in buckled_mobs))

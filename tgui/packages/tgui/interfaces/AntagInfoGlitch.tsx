@@ -17,8 +17,8 @@ const textStyles = {
   },
 } as const;
 
-export const AntagInfoGlitch = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const AntagInfoGlitch = (props) => {
+  const { data } = useBackend<Data>();
   const { antag_name, objectives = [] } = data;
 
   return (
@@ -64,8 +64,8 @@ export const AntagInfoGlitch = (props, context) => {
   );
 };
 
-const SpecificInfo = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const SpecificInfo = (props) => {
+  const { data } = useBackend<Data>();
   const { antag_name } = data;
 
   switch (antag_name) {
@@ -98,7 +98,7 @@ const SpecificInfo = (props, context) => {
     case 'NetGuardian Prime':
       return (
         <Stack.Item grow>
-          <span style={{ ...textStyles.danger, 'font-size': '16px' }}>
+          <span style={{ ...textStyles.danger, fontSize: '16px' }}>
             ORGANIC LIFE MUST BE TERMINATED.
           </span>
         </Stack.Item>

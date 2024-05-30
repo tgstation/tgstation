@@ -11,7 +11,7 @@
 /obj/item/implant/radio/antenna
 	name = "internal antenna organ"
 	desc = "The internal organ part of the antenna. Science has not yet given it a good name."
-	icon = 'icons/obj/radio.dmi'//maybe make a unique sprite later. not important
+	icon = 'icons/obj/devices/voice.dmi'//maybe make a unique sprite later. not important
 	icon_state = "walkietalkie"
 
 /obj/item/implant/radio/antenna/Initialize(mapload)

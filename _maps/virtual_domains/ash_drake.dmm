@@ -56,7 +56,9 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
 "L" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "lavaland_boss"
+	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "P" = (

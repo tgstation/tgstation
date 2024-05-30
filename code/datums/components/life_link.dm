@@ -72,8 +72,6 @@
 			host.adjustToxLoss(amount, forced = TRUE)
 		if(OXY)
 			host.adjustOxyLoss(amount, forced = TRUE)
-		if(CLONE)
-			host.adjustCloneLoss(amount, forced = TRUE)
 
 	on_passed_damage?.Invoke(our_mob, host, amount)
 	return COMPONENT_IGNORE_CHANGE

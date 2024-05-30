@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
@@ -10,8 +11,8 @@ type Data = {
   max_temperature: number;
 };
 
-export const AtmosTempGate = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const AtmosTempGate = (props) => {
+  const { act, data } = useBackend<Data>();
   const { on, temperature, min_temperature, max_temperature } = data;
 
   return (
@@ -36,7 +37,7 @@ export const AtmosTempGate = (props, context) => {
                 minValue={min_temperature}
                 maxValue={max_temperature}
                 step={1}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('temperature', {
                     temperature: value,
                   })

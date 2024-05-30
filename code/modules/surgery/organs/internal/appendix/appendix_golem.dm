@@ -12,7 +12,7 @@
 	. = ..()
 	smelter = new(src)
 
-/obj/item/organ/internal/appendix/golem/on_insert(mob/living/carbon/organ_owner)
+/obj/item/organ/internal/appendix/golem/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_for_lava))
 
@@ -25,7 +25,7 @@
 	if (smelter.owner != owner)
 		smelter.Grant(owner)
 
-/obj/item/organ/internal/appendix/golem/on_remove(mob/living/carbon/organ_owner)
+/obj/item/organ/internal/appendix/golem/on_mob_remove(mob/living/carbon/organ_owner)
 	UnregisterSignal(organ_owner, COMSIG_MOVABLE_MOVED)
 	smelter?.Remove(organ_owner) // Might have been deleted by Destroy already
 	return ..()

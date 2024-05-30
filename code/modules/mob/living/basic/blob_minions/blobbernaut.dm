@@ -10,7 +10,7 @@
 	icon_dead = "blobbernaut_dead"
 	health = BLOBMOB_BLOBBERNAUT_HEALTH
 	maxHealth = BLOBMOB_BLOBBERNAUT_HEALTH
-	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	melee_damage_lower = BLOBMOB_BLOBBERNAUT_DMG_SOLO_LOWER
 	melee_damage_upper = BLOBMOB_BLOBBERNAUT_DMG_SOLO_UPPER
 	melee_attack_cooldown = CLICK_CD_MELEE
@@ -22,7 +22,6 @@
 	verb_ask = "demands"
 	verb_exclaim = "roars"
 	verb_yell = "bellows"
-	force_threshold = 10
 	pressure_resistance = 50
 	mob_size = MOB_SIZE_LARGE
 	hud_type = /datum/hud/living/blobbernaut
@@ -32,6 +31,7 @@
 /mob/living/basic/blob_minion/blobbernaut/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	AddElement(/datum/element/damage_threshold, 10)
 
 /mob/living/basic/blob_minion/blobbernaut/death(gibbed)
 	flick("blobbernaut_death", src)
@@ -86,7 +86,7 @@
 	health = maxHealth / 2 // Start out injured to encourage not beelining away from the blob
 	SEND_SOUND(src, sound('sound/effects/blobattack.ogg'))
 	SEND_SOUND(src, sound('sound/effects/attackblob.ogg'))
-	to_chat(src, span_infoplain("You are powerful, hard to kill, and slowly regenerate near nodes and cores, [span_cultlarge("but will slowly die if not near the blob")] or if the factory that made you is killed."))
+	to_chat(src, span_infoplain("You are powerful, hard to kill, and slowly regenerate near nodes and cores, [span_cult_large("but will slowly die if not near the blob")] or if the factory that made you is killed."))
 	to_chat(src, span_infoplain("You can communicate with other blobbernauts and overminds <b>telepathically</b> by attempting to speak normally"))
 	to_chat(src, span_infoplain("Your overmind's blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!"))
 	to_chat(src, span_infoplain("The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]"))

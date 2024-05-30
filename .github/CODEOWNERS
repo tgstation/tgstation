@@ -125,7 +125,8 @@
 
 # tralezab
 /code/__DEFINES/basic_mobs.dm @tralezab
-/code/datums/ai @tralezab
+/code/datums/ai/ @tralezab
+/code/modules/religion/ @tralezab
 
 # Watermelon914
 

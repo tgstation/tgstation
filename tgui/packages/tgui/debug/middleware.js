@@ -5,9 +5,14 @@
  */
 
 import { KEY_BACKSPACE, KEY_F10, KEY_F11, KEY_F12 } from 'common/keycodes';
+
 import { globalEvents } from '../events';
 import { acquireHotKey } from '../hotkeys';
-import { openExternalBrowser, toggleDebugLayout, toggleKitchenSink } from './actions';
+import {
+  openExternalBrowser,
+  toggleDebugLayout,
+  toggleKitchenSink,
+} from './actions';
 
 // prettier-ignore
 const relayedTypes = [

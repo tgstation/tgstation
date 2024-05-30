@@ -49,8 +49,7 @@
 	else //Maybe uses plasma in the future, although that wouldn't make any sense...
 		leaping = TRUE
 		//Because the leaping sprite is bigger than the normal one
-		body_position_pixel_x_offset = -32
-		body_position_pixel_y_offset = -32
+		body_position_pixel_x_offset = -8
 		update_icons()
 		ADD_TRAIT(src, TRAIT_MOVE_FLOATING, LEAPING_TRAIT) //Throwing itself doesn't protect mobs against lava (because gulag).
 		throw_at(A, MAX_ALIEN_LEAP_DIST, pounce_speed, src, FALSE, TRUE, callback = CALLBACK(src, PROC_REF(leap_end)))
@@ -58,7 +57,6 @@
 /mob/living/carbon/alien/adult/hunter/proc/leap_end()
 	leaping = FALSE
 	body_position_pixel_x_offset = 0
-	body_position_pixel_y_offset = 0
 	REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)
 	update_icons()
 
@@ -74,7 +72,7 @@
 			var/blocked = FALSE
 			if(ishuman(hit_atom))
 				var/mob/living/carbon/human/H = hit_atom
-				if(H.check_shields(src, 0, "the [name]", attack_type = LEAP_ATTACK))
+				if(H.check_block(src, 0, "the [name]", attack_type = LEAP_ATTACK))
 					blocked = TRUE
 			if(!blocked)
 				L.visible_message(span_danger("[src] pounces on [L]!"), span_userdanger("[src] pounces on you!"))

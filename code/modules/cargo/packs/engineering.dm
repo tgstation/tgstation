@@ -25,6 +25,7 @@
 					/obj/item/mecha_parts/part/ripley_left_leg,
 					/obj/item/stock_parts/capacitor,
 					/obj/item/stock_parts/scanning_module,
+					/obj/item/stock_parts/servo,
 					/obj/item/circuitboard/mecha/ripley/main,
 					/obj/item/circuitboard/mecha/ripley/peripherals,
 					/obj/item/mecha_parts/mecha_equipment/drill,
@@ -73,7 +74,7 @@
 	desc = "No rechargers? No problem, with the NT-75 EPI, you can recharge any standard \
 		cell-based equipment anytime, anywhere. Contains two Inducers."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/item/inducer/sci {cell_type = /obj/item/stock_parts/cell/inducer_supply; opened = 0} = 2) //FALSE doesn't work in modified type paths apparently.
+	contains = list(/obj/item/inducer/orderable = 2)
 	crate_name = "inducer crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
@@ -213,6 +214,14 @@
 	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
 
+/datum/supply_pack/engineering/ceturtlenecks
+	name = "Chief Engineer Turtlenecks"
+	desc = "Contains the CE's turtleneck and turtleneck skirt."
+	cost = CARGO_CRATE_VALUE * 2
+	access = ACCESS_CE
+	contains = list(/obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck,
+					/obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck/skirt,
+				)
 
 /// Engine Construction
 
@@ -271,6 +280,7 @@
 	crate_name = "supermatter shard crate"
 	crate_type = /obj/structure/closet/crate/secure/radiation
 	dangerous = TRUE
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /datum/supply_pack/engine/tesla_coils
 	name = "Tesla Coil Crate"

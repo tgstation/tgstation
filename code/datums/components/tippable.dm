@@ -231,10 +231,11 @@
 	is_tipped = new_status
 	if(is_tipped)
 		tipped_mob.transform = turn(tipped_mob.transform, 180)
-		ADD_TRAIT(tipped_mob, TRAIT_IMMOBILIZED, TIPPED_OVER)
-	else
-		tipped_mob.transform = turn(tipped_mob.transform, -180)
-		REMOVE_TRAIT(tipped_mob, TRAIT_IMMOBILIZED, TIPPED_OVER)
+		tipped_mob.add_traits(list(TRAIT_MOB_TIPPED, TRAIT_IMMOBILIZED), TIPPED_OVER)
+		return
+
+	tipped_mob.transform = turn(tipped_mob.transform, -180)
+	tipped_mob.remove_traits(list(TRAIT_MOB_TIPPED, TRAIT_IMMOBILIZED), TIPPED_OVER)
 
 /**
  * Accepts "roleplay" in the form of emotes, which removes a quarter of the remaining time left to untip ourself.

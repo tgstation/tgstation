@@ -9,7 +9,7 @@
 		return COMPONENT_INCOMPATIBLE
 	myacclimator = parent
 
-/datum/component/plumbing/acclimator/Destroy(force, silent)
+/datum/component/plumbing/acclimator/Destroy(force)
 	myacclimator = null
 	return ..()
 

@@ -5,11 +5,11 @@
 @use '../colors.scss' with (
   $primary: #3f021a,
   $good: #e62626,
-  $bad: #970934,
+  $bad: #970934
 );
 @use '../base.scss' with (
   $color-bg: #240101,
-  $color-bg-grad-spread: 12%,
+  $color-bg-grad-spread: 12%
 );
 
 .theme-ntos_spooky {

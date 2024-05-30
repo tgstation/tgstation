@@ -6,10 +6,12 @@
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = TRUE
+	req_stat = DEAD
+	ignores_fakedeath = TRUE
 
 /datum/action/changeling/headcrab/sting_action(mob/living/user)
 	set waitfor = FALSE
-	var/confirm = tgui_alert(user, "Are we sure we wish to kill ourself and create a headslug?", "Last Resort", list("Yes", "No"))
+	var/confirm = tgui_alert(user, "Are we sure we wish to destroy our body and create a headslug?", "Last Resort", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 
@@ -23,9 +25,9 @@
 		if(!eyes || blinded_human.is_blind())
 			continue
 		to_chat(blinded_human, span_userdanger("You are blinded by a shower of blood!"))
-		blinded_human.Stun(2 SECONDS)
+		blinded_human.Stun(4 SECONDS)
 		blinded_human.set_eye_blur_if_lower(40 SECONDS)
-		blinded_human.adjust_confusion(3 SECONDS)
+		blinded_human.adjust_confusion(12 SECONDS)
 
 	for(var/mob/living/silicon/blinded_silicon in range(2,user))
 		to_chat(blinded_silicon, span_userdanger("Your sensors are disabled by a shower of blood!"))
@@ -39,6 +41,7 @@
 	. = TRUE
 	addtimer(CALLBACK(src, PROC_REF(spawn_headcrab), stored_mind, user_turf, organs), 1 SECONDS)
 
+/// Creates the headrab to occupy
 /datum/action/changeling/headcrab/proc/spawn_headcrab(datum/mind/stored_mind, turf/spawn_location, list/organs)
 	var/mob/living/basic/headslug/crab = new(spawn_location)
 	for(var/obj/item/organ/I in organs)

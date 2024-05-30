@@ -7,7 +7,7 @@
 /obj/item/bitrunning_disk
 	name = "generic bitrunning program"
 	desc = "A disk containing source code."
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	base_icon_state = "datadisk"
 	icon_state = "datadisk0"
 	/// Name of the choice made
@@ -48,7 +48,7 @@
 		names += initial(thing.name)
 
 	var/choice = tgui_input_list(user, message = "Select an ability",  title = "Bitrunning Program", items = names)
-	if(isnull(choice))
+	if(isnull(choice) || !user.is_holding(src))
 		return
 
 	for(var/datum/action/thing as anything in selectable_actions)
@@ -105,7 +105,7 @@
 		names += initial(thing.name)
 
 	var/choice = tgui_input_list(user, message = "Select an ability",  title = "Bitrunning Program", items = names)
-	if(isnull(choice))
+	if(isnull(choice) || !user.is_holding(src))
 		return
 
 	for(var/obj/thing as anything in selectable_items)

@@ -34,7 +34,7 @@
 	var/list/turfs_to_shred
 	///A list of turfs directly under turfs_to_shred, for creating a proper chasm to the floor below.
 	var/list/underbelly = list()
-	///The edges of our fault line, to recieve light damage.
+	///The edges of our fault line, to receive light damage.
 	var/list/edges = list()
 
 /datum/round_event/earthquake/setup()

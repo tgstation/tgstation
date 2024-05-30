@@ -5,6 +5,7 @@
  */
 
 import * as keycodes from 'common/keycodes';
+
 import { globalEvents, KeyEvent } from './events';
 import { createLogger } from './logging';
 

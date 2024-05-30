@@ -79,7 +79,6 @@
 		need_mob_update = user.adjustBruteLoss(-hp_gained, updating_health = FALSE)
 		need_mob_update += user.adjustToxLoss(-hp_gained, updating_health = FALSE)
 		need_mob_update += user.adjustFireLoss(-hp_gained, updating_health = FALSE)
-		need_mob_update += user.adjustCloneLoss(-hp_gained, updating_health = FALSE)
 		need_mob_update += user.adjustOrganLoss(ORGAN_SLOT_BRAIN, -hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
 		user.set_nutrition(min(user.nutrition + hp_gained, NUTRITION_LEVEL_FULL))
 		if(need_mob_update)

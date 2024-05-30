@@ -19,20 +19,14 @@
 	priority_announce("A large organic energy flux has been recorded near [station_name()], please stand by.", "Lifesign Alert")
 
 /datum/round_event/ghost_role/space_dragon/spawn_role()
-
-	var/list/candidates = get_candidates(ROLE_SPACE_DRAGON, ROLE_SPACE_DRAGON)
-	if(!candidates.len)
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_SPACE_DRAGON, role = ROLE_SPACE_DRAGON, alert_pic = /mob/living/basic/space_dragon, amount_to_pick = 1)
+	if(isnull(chosen_one))
 		return NOT_ENOUGH_PLAYERS
-
-	var/mob/dead/selected = pick(candidates)
-	var/key = selected.key
-
 	var/spawn_location = find_space_spawn()
 	if(isnull(spawn_location))
 		return MAP_ERROR
-
-	var/mob/living/basic/space_dragon/dragon = new (spawn_location)
-	dragon.key = key
+	var/mob/living/basic/space_dragon/dragon = new(spawn_location)
+	dragon.key = chosen_one.key
 	dragon.mind.add_antag_datum(/datum/antagonist/space_dragon)
 	playsound(dragon, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(dragon)] has been made into a Space Dragon by an event.")

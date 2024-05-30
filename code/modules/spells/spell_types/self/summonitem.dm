@@ -138,7 +138,6 @@
 					item_to_retrieve = null
 					break
 
-				SEND_SIGNAL(holding_mark, COMSIG_MAGIC_RECALL, caster, item_to_retrieve)
 				holding_mark.dropItemToGround(item_to_retrieve)
 
 			else if(isobj(item_to_retrieve.loc))
@@ -157,15 +156,6 @@
 
 			infinite_recursion += 1
 
-	else
-		// Organs are usually stored in nullspace
-		if(isorgan(item_to_retrieve))
-			var/obj/item/organ/organ = item_to_retrieve
-			if(organ.owner)
-				// If this code ever runs I will be happy
-				log_combat(caster, organ.owner, "magically removed [organ.name] from", addition = "COMBAT MODE: [uppertext(caster.combat_mode)]")
-				organ.Remove(organ.owner)
-
 	if(!item_to_retrieve)
 		return
 
@@ -176,6 +166,8 @@
 	else
 		item_to_retrieve.forceMove(caster.drop_location())
 		item_to_retrieve.loc.visible_message(span_warning("[item_to_retrieve] suddenly appears!"))
+
+	SEND_SIGNAL(item_to_retrieve, COMSIG_MAGIC_RECALL, caster, item_to_retrieve)
 	playsound(get_turf(item_to_retrieve), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 
 /datum/action/cooldown/spell/summonitem/abductor

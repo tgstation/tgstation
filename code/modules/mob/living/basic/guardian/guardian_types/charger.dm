@@ -6,7 +6,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	speed = -0.5
-	damage_coeff = list(BRUTE = 0.75, BURN = 0.75, TOX = 0.75, CLONE = 0.75, STAMINA = 0, OXY = 0.75)
+	damage_coeff = list(BRUTE = 0.75, BURN = 0.75, TOX = 0.75, STAMINA = 0, OXY = 0.75)
 	playstyle_string = span_holoparasite("As a <b>charger</b> type you do medium damage, have light damage resistance, move very fast, can be ridden, and can charge at a location, damaging any target hit and forcing them to drop any items they are holding.")
 	creator_name = "Charger"
 	creator_desc = "Moves very fast, does medium damage on attack, can be ridden and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding."
@@ -46,7 +46,7 @@
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/guardian/do_charge_indicator(atom/charger, atom/charge_target)
 	playsound(charger, 'sound/items/modsuit/loader_launch.ogg', 75, TRUE)
 	var/obj/effect/temp_visual/decoy/decoy_flash = new /obj/effect/temp_visual/decoy(charger.loc, charger)
-	animate(decoy_flash, alpha = 0, color = "#FF0000", transform = matrix() * 2, time = 3)
+	animate(decoy_flash, alpha = 0, color = COLOR_RED, transform = matrix() * 2, time = 3)
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/guardian/can_hit_target(atom/movable/source, atom/target)
 	var/mob/living/living_target = target
@@ -62,7 +62,7 @@
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/guardian/hit_target(atom/movable/source, mob/living/target, damage_dealt)
 	if(ishuman(target))
 		var/mob/living/carbon/human/hit_human = target
-		if(hit_human.check_shields(src, charge_damage, name, attack_type = LEAP_ATTACK))
+		if(hit_human.check_block(src, charge_damage, name, attack_type = LEAP_ATTACK))
 			return
 	. = ..()
 	var/mob/living/hit_mob = target

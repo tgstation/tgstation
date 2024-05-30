@@ -64,7 +64,14 @@
 
 /obj/structure/spawner/Initialize(mapload)
 	. = ..()
-	AddComponent(spawner_type, mob_types, spawn_time, max_mobs, faction, spawn_text)
+	AddComponent(\
+		spawner_type, \
+		spawn_types = mob_types, \
+		spawn_time = spawn_time, \
+		max_spawned = max_mobs, \
+		faction = faction, \
+		spawn_text = spawn_text, \
+	)
 
 /obj/structure/spawner/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(faction_check(faction, user.faction, FALSE) && !user.client)
@@ -74,7 +81,7 @@
 
 /obj/structure/spawner/syndicate
 	name = "warp beacon"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/machines/beacon.dmi'
 	icon_state = "syndbeacon"
 	spawn_text = "warps in from"
 	mob_types = list(/mob/living/basic/trooper/syndicate/ranged)
@@ -100,7 +107,7 @@
 	name = "Laughing Larry"
 	desc = "A laughing, jovial figure. Something seems stuck in his throat."
 	icon_state = "clownbeacon"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/machines/beacon.dmi'
 	max_integrity = 200
 	max_mobs = 15
 	spawn_time = 15 SECONDS

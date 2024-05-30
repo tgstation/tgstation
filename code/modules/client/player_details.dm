@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(player_details)
 	/// Callbacks invoked when this client logs out
 	var/list/post_logout_callbacks = list()
 	/// List of names this key played under this round
+	/// assoc list of name -> mob tag
 	var/list/played_names = list()
 	/// Lazylist of preference slots this client has joined the round under
 	/// Numbers are stored as strings
@@ -27,14 +28,29 @@ GLOBAL_LIST_EMPTY(player_details)
 /datum/player_details/New(key)
 	achievements = new(key)
 
-/proc/log_played_names(ckey, ...)
+/// Writes all of the `played_names` into an HTML-escaped string.
+/datum/player_details/proc/get_played_names()
+	var/list/previous_names = list()
+	for(var/previous_name in played_names)
+		previous_names += html_encode("[previous_name] ([played_names[previous_name]])")
+	return previous_names.Join("; ")
+
+/// Adds the new names to the player's played_names list on their /datum/player_details for use of admins.
+/// `ckey` should be their ckey, and `data` should be an associative list with the keys being the names they played under and the values being the unique mob ID tied to that name.
+/proc/log_played_names(ckey, data)
 	if(!ckey)
 		return
-	if(args.len < 2)
+
+	var/datum/player_details/writable = GLOB.player_details[ckey]
+	if(isnull(writable))
 		return
-	var/list/names = args.Copy(2)
-	var/datum/player_details/P = GLOB.player_details[ckey]
-	if(P)
-		for(var/name in names)
-			if(name)
-				P.played_names |= name
+
+	for(var/name in data)
+		if(!name)
+			continue
+		var/mob_tag = data[name]
+		var/encoded_name = html_encode(name)
+		if(writable.played_names.Find("[encoded_name]"))
+			continue
+
+		writable.played_names += list("[encoded_name]" = mob_tag)

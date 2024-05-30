@@ -56,6 +56,9 @@
 	// No tongue, no tastin'
 	if(!tongue?.sense_of_taste || HAS_TRAIT(src, TRAIT_AGEUSIA))
 		return NONE
+	// Handled in here since the brain trauma can't modify taste directly (/datum/brain_trauma/severe/flesh_desire)
+	if(HAS_TRAIT(src, TRAIT_FLESH_DESIRE))
+		return GORE | MEAT
 	return tongue.liked_foodtypes
 
 /**
@@ -83,6 +86,8 @@
 	// No tongue, no tastin'
 	if(!tongue)
 		return TOXIC
+	if(HAS_TRAIT(src, TRAIT_FLESH_DESIRE))
+		return VEGETABLES | DAIRY | FRUIT | FRIED
 	return tongue.toxic_foodtypes
 
 /**

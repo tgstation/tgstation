@@ -44,9 +44,8 @@
 	notify_ghosts(
 		"The Space Dragon has opened a rift!",
 		source = new_rift,
-		action = NOTIFY_ORBIT,
-		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		header = "Carp Rift Opened",
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 	)
 	ASSERT(dragon.rift_ability == src) // Badmin protection.
 	QDEL_NULL(dragon.rift_ability) // Deletes this action when used successfully, we re-gain a new one on success later.
@@ -161,7 +160,7 @@
 			newcarp.faction = dragon.owner.current.faction.Copy()
 		if(SPT_PROB(1.5, seconds_per_tick))
 			var/rand_dir = pick(GLOB.cardinals)
-			SSmove_manager.move_to(src, get_step(src, rand_dir), 1)
+			GLOB.move_manager.move_to(src, get_step(src, rand_dir), 1)
 		return
 
 	// Increase time trackers and check for any updated states.
@@ -198,9 +197,8 @@
 		notify_ghosts(
 			"The carp rift can summon an additional carp!",
 			source = src,
-			action = NOTIFY_ORBIT,
-			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 			header = "Carp Spawn Available",
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		)
 		last_carp_inc -= carp_interval
 

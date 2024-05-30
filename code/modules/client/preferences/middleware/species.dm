@@ -9,7 +9,6 @@
 /datum/asset/spritesheet/species
 	name = "species"
 	early = TRUE
-	cross_round_cachable = TRUE
 
 /datum/asset/spritesheet/species/create_spritesheets()
 	var/list/to_insert = list()

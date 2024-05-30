@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	faction = list(FACTION_MINING)
 	max_mobs = 3
 	max_integrity = 250
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/wolf)
+	mob_types = list(/mob/living/basic/mining/wolf)
 	move_resist = INFINITY
 	anchored = TRUE
 	scanner_taggable = TRUE
@@ -40,10 +40,9 @@ GLOBAL_LIST_INIT(ore_probability, list(
 			var/turf/closed/mineral/clearable = potential
 			clearable.ScrapeAway(flags = CHANGETURF_IGNORE_AIR)
 
-/obj/structure/spawner/ice_moon/deconstruct(disassembled)
+/obj/structure/spawner/ice_moon/atom_deconstruct(disassembled)
 	destroy_effect()
 	drop_loot()
-	return ..()
 
 /**
  * Effects and messages created when the spawner is destroyed

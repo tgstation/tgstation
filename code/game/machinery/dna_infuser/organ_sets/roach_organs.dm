@@ -63,15 +63,16 @@
 
 /obj/item/organ/internal/heart/roach/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "has hardened, somewhat translucent skin.")
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_They %PRONOUN_have hardened, somewhat translucent skin.")
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/roach)
+	AddElement(/datum/element/update_icon_blocker)
 	roach_shell = new()
 
 /obj/item/organ/internal/heart/roach/Destroy()
 	QDEL_NULL(roach_shell)
 	return ..()
 
-/obj/item/organ/internal/heart/roach/on_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/heart/roach/on_mob_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	if(!ishuman(organ_owner))
 		return
@@ -82,11 +83,11 @@
 	RegisterSignal(human_owner, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(do_block_effect))
 	human_owner.physiology.knockdown_mod *= 3
 
-	var/obj/item/bodypart/chest/chest = human_owner.get_bodypart(BODY_ZONE_CHEST)
-	chest.add_bodypart_overlay(roach_shell)
-	human_owner.update_body_parts()
+/obj/item/organ/internal/heart/roach/on_bodypart_insert(obj/item/bodypart/limb)
+	. = ..()
+	limb.add_bodypart_overlay(roach_shell)
 
-/obj/item/organ/internal/heart/roach/on_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/heart/roach/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	if(!ishuman(organ_owner) || QDELETED(organ_owner))
 		return
@@ -96,9 +97,10 @@
 	UnregisterSignal(human_owner, list(COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, COMSIG_MOB_AFTER_APPLY_DAMAGE))
 	human_owner.physiology.knockdown_mod /= 3
 
-	var/obj/item/bodypart/chest/chest = human_owner.get_bodypart(BODY_ZONE_CHEST)
-	chest.remove_bodypart_overlay(roach_shell)
-	human_owner.update_body_parts()
+/obj/item/organ/internal/heart/roach/on_bodypart_remove(obj/item/bodypart/limb)
+	. = ..()
+
+	limb.remove_bodypart_overlay(roach_shell)
 
 /**
  * Signal proc for [COMSIG_MOB_APPLY_DAMAGE_MODIFIERS]
@@ -137,7 +139,7 @@
 	if(!ishuman(blocker) || blocker.stat >= UNCONSCIOUS)
 		return FALSE
 	// No tactical spinning
-	if(blocker.flags_1 & IS_SPINNING_1)
+	if(HAS_TRAIT(blocker, TRAIT_SPINNING))
 		return FALSE
 	if(blocker.body_position == LYING_DOWN || (blocker.dir & attack_direction))
 		return TRUE
@@ -193,7 +195,7 @@
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/roach)
 
-/obj/item/organ/internal/liver/roach/on_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/liver/roach/on_mob_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	if(!ishuman(organ_owner))
 		return
@@ -201,13 +203,13 @@
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.tox_mod *= 2
 
-/obj/item/organ/internal/liver/roach/on_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/liver/roach/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	if(!ishuman(organ_owner) || QDELETED(organ_owner))
 		return
 
 	var/mob/living/carbon/human/human_owner = organ_owner
-	human_owner.physiology.tox_mod /= 2
+	human_owner.physiology.tox_mod *= 0.5
 
 /// Roach appendix:
 /// No appendicitus! weee!

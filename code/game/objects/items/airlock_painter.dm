@@ -2,7 +2,7 @@
 	name = "airlock painter"
 	desc = "An advanced autopainter preprogrammed with several paintjobs for airlocks. Use it on an airlock during or after construction to change the paintjob."
 	desc_controls = "Alt-Click to remove the ink cartridge."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "paint_sprayer"
 	inhand_icon_state = "paint_sprayer"
 	worn_icon_state = "painter"
@@ -10,7 +10,7 @@
 
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.5)
 
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	usesound = 'sound/effects/spray2.ogg'
@@ -147,20 +147,22 @@
 	else
 		return ..()
 
-/obj/item/airlock_painter/AltClick(mob/user)
-	. = ..()
-	if(ink && user.can_perform_action(src))
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		ink.forceMove(user.drop_location())
-		user.put_in_hands(ink)
-		to_chat(user, span_notice("You remove [ink] from [src]."))
-		ink = null
+/obj/item/airlock_painter/click_alt(mob/user)
+	if(!ink)
+		return CLICK_ACTION_BLOCKING
+
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	ink.forceMove(user.drop_location())
+	user.put_in_hands(ink)
+	to_chat(user, span_notice("You remove [ink] from [src]."))
+	ink = null
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/airlock_painter/decal
 	name = "decal painter"
 	desc = "An airlock painter, reprogramed to use a different style of paint in order to apply decals for floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed."
 	desc_controls = "Alt-Click to remove the ink cartridge."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "decal_sprayer"
 	inhand_icon_state = "decal_sprayer"
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.5)
@@ -327,7 +329,6 @@
 
 /datum/asset/spritesheet/decals
 	name = "floor_decals"
-	cross_round_cachable = TRUE
 
 	/// The floor icon used for blend_preview_floor()
 	var/preview_floor_icon = 'icons/turf/floors.dmi'
