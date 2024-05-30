@@ -78,7 +78,6 @@
 	stop_process()
 	remove_camera()
 	shell_parent = null
-	current_camera_state = FALSE
 
 /obj/item/circuit_component/remotecam/Destroy()
 	stop_process()
@@ -279,18 +278,21 @@
 /obj/item/circuit_component/remotecam/drone/register_shell(atom/movable/shell)
 	. = ..()
 	if(istype(shell, /mob/living/circuit_drone))
+		current_camera_state = FALSE //Always reset camera state for built-in shell components
 		shell_camera = new /obj/machinery/camera (shell_parent)
 		init_camera()
 
 /obj/item/circuit_component/remotecam/airlock/register_shell(atom/movable/shell)
 	. = ..()
 	if(istype(shell, /obj/machinery/door/airlock))
+		current_camera_state = FALSE //Always reset camera state for built-in shell components
 		shell_camera = new /obj/machinery/camera (shell_parent)
 		init_camera()
 
 /obj/item/circuit_component/remotecam/polaroid/register_shell(atom/movable/shell)
 	. = ..()
 	if(istype(shell, /obj/item/camera))
+		current_camera_state = FALSE //Always reset camera state for built-in shell components
 		shell_camera = new /obj/machinery/camera (shell_parent)
 		init_camera()
 
