@@ -29,8 +29,6 @@
 	var/our_leg_zones = (GLOB.all_body_zones - GLOB.leg_zones)
 	user.regenerate_limbs(excluded_zones = our_leg_zones) // why is this exclusive rather than inclusive
 
-	// Upgrade our stamina, lose our arms!
-	user.max_stamina *= 2
 	user.add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_R_ARM), CHANGELING_TRAIT)
 
 	// Revert above mob changes.
@@ -48,6 +46,5 @@
 
 /datum/action/changeling/adrenaline/proc/unsting_action(mob/living/user)
 	to_chat(user, span_changeling("The muscles in our limbs shift back to their usual places."))
-	user.max_stamina /= 2
 	user.remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_R_ARM), CHANGELING_TRAIT)
 	return
