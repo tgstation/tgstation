@@ -329,7 +329,6 @@
 		"comp_assoc_list_remove",
 		"comp_assoc_list_set",
 		"comp_binary_convert",
-		"comp_camera_polaroid",
 		"comp_clock",
 		"comp_comparison",
 		"comp_concat",
@@ -861,7 +860,6 @@
 	design_ids = list(
 		"assembly_shell",
 		"bot_shell",
-		"comp_camera_airlock",
 		"comp_equip_action",
 		"controller_shell",
 		"dispenser_shell",
@@ -901,7 +899,6 @@
 	description = "Grants access to movable shells."
 	prereq_ids = list("adv_shells", "robotics")
 	design_ids = list(
-		"comp_camera_drone",
 		"comp_pathfind",
 		"comp_pull",
 		"drone_shell",

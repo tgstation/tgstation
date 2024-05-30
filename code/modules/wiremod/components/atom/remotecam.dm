@@ -243,22 +243,17 @@
 	display_name = "BCI Camera"
 	desc = "Digitizes user's sight for surveillance-on-the-go. User must have fully functional eyes for digitizer to work. Camera range input is either 0 (near) or 1 (far). Network field is used for camera network."
 	category = "BCI"
-
 	camera_prefix = "BCI"
 	required_shells = list(/obj/item/organ/internal/cyberimp/bci)
 
 /obj/item/circuit_component/remotecam/drone
 	display_name = "Drone Camera"
 	desc = "Capture the surrounding sight for surveillance-on-the-go. Camera range input is either 0 (near) or 1 (far). Network field is used for camera network."
-
-	required_shells = list(/mob/living/circuit_drone)
 	camera_prefix = "Drone"
 
 /obj/item/circuit_component/remotecam/airlock
 	display_name = "Airlock Camera"
 	desc = "A peephole camera that captures both sides of the airlock. Network field is used for camera network."
-
-	required_shells = list(/obj/machinery/door/airlock)
 	camera_prefix = "Airlock"
 
 	camera_range_settable = 0
@@ -268,8 +263,6 @@
 /obj/item/circuit_component/remotecam/polaroid
 	display_name = "Polaroid Camera Add-On"
 	desc = "Relays a polaroid camera's feed as a digital stream for surveillance-on-the-go. Network field is used for camera network."
-
-	required_shells = list(/obj/item/camera)
 	camera_prefix = "Polaroid"
 
 	camera_range_settable = 0
