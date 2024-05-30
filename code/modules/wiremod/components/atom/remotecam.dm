@@ -247,12 +247,12 @@
 	required_shells = list(/obj/item/organ/internal/cyberimp/bci)
 
 /obj/item/circuit_component/remotecam/drone
-	display_name = "Drone Camera"
-	desc = "Capture the surrounding sight for surveillance-on-the-go. Camera range input is either 0 (near) or 1 (far). Network field is used for camera network."
+	display_name = "Remote Camera"
+	desc = "Capture the surrounding environment for surveillance-on-the-go. Camera range input is either 0 (near) or 1 (far). Network field is used for camera network."
 	camera_prefix = "Drone"
 
 /obj/item/circuit_component/remotecam/airlock
-	display_name = "Airlock Camera"
+	display_name = "Peephole Camera"
 	desc = "A peephole camera that captures both sides of the airlock. Network field is used for camera network."
 	camera_prefix = "Airlock"
 
@@ -261,7 +261,7 @@
 	current_camera_range = 0
 
 /obj/item/circuit_component/remotecam/polaroid
-	display_name = "Polaroid Camera Add-On"
+	display_name = "Camera Stream Add-On"
 	desc = "Relays a polaroid camera's feed as a digital stream for surveillance-on-the-go. Network field is used for camera network."
 	camera_prefix = "Polaroid"
 
