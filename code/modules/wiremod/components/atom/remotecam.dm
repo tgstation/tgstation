@@ -165,7 +165,7 @@
 		current_camera_network = ""
 	else if(current_camera_network != network.value)
 		current_camera_network = network.value
-		var/new_net_name = lowertext(sanitize(current_camera_network))
+		var/new_net_name = LOWER_TEXT(sanitize(current_camera_network))
 		//Set camera network string
 		if(new_net_name)
 			shell_camera.network = list("[new_net_name]")
