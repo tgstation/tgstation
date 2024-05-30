@@ -42,6 +42,14 @@
 /obj/item/shard/titanium,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface)
+"m" = (
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"n" = (
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/turf/open/floor/mineral/titanium,
+/area/lavaland/surface)
 "o" = (
 /obj/structure/window/reinforced/shuttle,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -100,6 +108,14 @@
 /area/lavaland/surface)
 "A" = (
 /mob/living/basic/mining/goliath,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"B" = (
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/turf/open/floor/mineral/plastitanium/red,
+/area/lavaland/surface)
+"C" = (
+/obj/effect/mob_spawn/corpse/human/legioninfested,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface)
 "D" = (
@@ -257,7 +273,7 @@ j
 y
 h
 M
-i
+B
 Z
 r
 r
@@ -298,7 +314,7 @@ g
 w
 w
 S
-W
+C
 w
 M
 i
@@ -381,7 +397,7 @@ W
 W
 X
 G
-F
+n
 M
 l
 w
@@ -453,7 +469,7 @@ q
 W
 W
 T
-W
+m
 k
 r
 r
