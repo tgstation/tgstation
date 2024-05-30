@@ -38,6 +38,8 @@
 
 	/// Used to store the current process state
 	var/current_camera_state = FALSE
+	/// Used to store the current cameranet state
+	var/current_cameranet_state = TRUE
 	/// Used to store the camera emp state
 	var/current_camera_emp = FALSE
 	/// Used to store the camera emp timer id
@@ -88,6 +90,7 @@
 		update_camera_name_network()
 		if(COMPONENT_TRIGGERED_BY(start, port))
 			start_process()
+			cameranet_add()
 			current_camera_state = TRUE
 		else if(COMPONENT_TRIGGERED_BY(stop, port))
 			stop_process()
@@ -114,6 +117,8 @@
 	if(current_camera_state)
 		start_process()
 		update_camera_location()
+	else
+		cameranet_remove() //Remove camera from global cameranet until user activates the camera first
 	RegisterSignal(shell_parent, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
 	RegisterSignal(shell_parent, COMSIG_ATOM_EMP_ACT, PROC_REF(set_camera_emp))
 
@@ -126,6 +131,7 @@
 		if(current_camera_emp)
 			deltimer(current_camera_emp_timer_id)
 			current_camera_emp = FALSE
+		cameranet_add() //Readd camera to cameranet before deleting camera
 		QDEL_NULL(shell_camera)
 
 /**
@@ -174,8 +180,26 @@
  */
 /obj/item/circuit_component/remotecam/proc/update_camera_location(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
-	if(current_camera_state)
+	if(current_camera_state && current_cameranet_state)
 		GLOB.cameranet.updatePortableCamera(shell_camera, 0.5 SECONDS)
+
+/**
+ * Add camera from global cameranet
+ */
+/obj/item/circuit_component/remotecam/proc/cameranet_add()
+	if(!current_cameranet_state)
+		GLOB.cameranet.cameras += shell_camera
+		GLOB.cameranet.addCamera(shell_camera)
+		current_cameranet_state = TRUE
+
+/**
+ * Remove camera from global cameranet
+ */
+/obj/item/circuit_component/remotecam/proc/cameranet_remove()
+	if(current_cameranet_state)
+		GLOB.cameranet.removeCamera(shell_camera)
+		GLOB.cameranet.cameras -= shell_camera
+		current_cameranet_state = FALSE
 
 /**
  * Set the camera as emp'd
