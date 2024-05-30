@@ -617,7 +617,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 					E.announce_chance = 0
 		E.processing = TRUE
 	if(holder)
-		log_admin("[key_name(holder)] used secret [action]")
+		log_admin("[key_name(holder)] used secret: [action].")
 #undef THUNDERDOME_TEMPLATE_FILE
 #undef HIGHLANDER_DELAY_TEXT
 

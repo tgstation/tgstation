@@ -49,3 +49,17 @@
 		/mob/living/basic/mining/legion = 19,
 		/mob/living/basic/mining/legion/dwarf = 1,
 	)
+
+/obj/effect/spawner/random/lavaland_mob/raptor
+	name = "random raptor"
+	desc = "Chance to spawn a rare shiny version."
+	icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
+	icon_state = "raptor_red"
+	loot = list(
+		/mob/living/basic/raptor/red = 20,
+		/mob/living/basic/raptor/white = 20,
+		/mob/living/basic/raptor/purple = 20,
+		/mob/living/basic/raptor/green = 20,
+		/mob/living/basic/raptor/yellow = 20,
+		/mob/living/basic/raptor/black = 1,
+	)

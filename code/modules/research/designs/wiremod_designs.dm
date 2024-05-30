@@ -81,6 +81,11 @@
 	id = "comp_logic"
 	build_path = /obj/item/circuit_component/compare/logic
 
+/datum/design/component/toggle
+	name = "Toggle Component"
+	id = "comp_toggle"
+	build_path = /obj/item/circuit_component/compare/toggle
+
 /datum/design/component/delay
 	name = "Delay Component"
 	id = "comp_delay"
@@ -221,6 +226,11 @@
 	id = "comp_health"
 	build_path = /obj/item/circuit_component/health
 
+/datum/design/component/compare/health_state
+	name = "Compare Health State Component"
+	id = "comp_health_state"
+	build_path = /obj/item/circuit_component/compare/health_state
+
 /datum/design/component/matscanner
 	name = "Material Scanner"
 	id = "comp_matscanner"
@@ -336,6 +346,11 @@
 	name = "NTNet Transmitter"
 	id = "comp_ntnet_send"
 	build_path = /obj/item/circuit_component/ntnet_send
+
+/datum/design/component/list_literal/ntnet_send
+	name = "NTNet Transmitter List Literal"
+	id = "comp_ntnet_send_list_literal"
+	build_path = /obj/item/circuit_component/list_literal/ntnet_send
 
 /datum/design/component/list_literal
 	name = "List Literal Component"
