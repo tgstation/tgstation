@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "When removing a corrupted organ from a patient, the patient will now be checked for Holy Water or magic resistance, rather than the person performing the surgery."
