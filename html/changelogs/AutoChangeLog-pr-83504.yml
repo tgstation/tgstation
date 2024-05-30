@@ -1,4 +1,0 @@
-author: "tmyqlfpir"
-delete-after: True
-changes:
-  - bugfix: "Drones stored inside objects will call the stored object's relaymove() and return upon move"

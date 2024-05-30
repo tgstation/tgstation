@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Trees will no longer be growing through railings on forest planets"
-  - bugfix: "Trees/plants will no longer grow through wood pathways on Icebox"
-  - bugfix: "Railings will no longer appear ontop of rock walls on icebox"

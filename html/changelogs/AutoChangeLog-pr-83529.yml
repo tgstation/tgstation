@@ -1,4 +1,0 @@
-author: "Fluffles"
-delete-after: True
-changes:
-  - bugfix: "holodecks no longer use increasing amounts of power the longer they're on"
