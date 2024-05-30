@@ -40,11 +40,6 @@
 /obj/structure/chair/comfy/shuttle,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
-"kz" = (
-/obj/item/shard/titanium,
-/obj/item/stack/sheet/iron,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered)
 "lu" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered)
@@ -79,6 +74,12 @@
 "tx" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/lava/smooth/lava_land_surface,
+/area/ruin/unpowered)
+"tD" = (
+/obj/item/stack/sheet/mineral/titanium/fifty{
+	amount = 4
+	},
+/turf/open/floor/mineral/titanium,
 /area/ruin/unpowered)
 "uh" = (
 /turf/closed/mineral/random,
@@ -115,8 +116,15 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
+"DL" = (
+/obj/item/stack/sheet/mineral/titanium/fifty{
+	amount = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
 "Ee" = (
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/item/stack/sheet/iron,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "Fq" = (
@@ -134,6 +142,9 @@
 /area/ruin/unpowered)
 "FY" = (
 /obj/item/stack/sheet/iron/five,
+/obj/item/stack/sheet/mineral/titanium/fifty{
+	amount = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/unpowered)
 "Ga" = (
@@ -210,13 +221,19 @@
 "SV" = (
 /turf/template_noop,
 /area/template_noop)
-"To" = (
-/obj/item/stack/sheet/iron,
-/turf/open/floor/mineral/titanium,
-/area/ruin/unpowered)
 "Tq" = (
 /mob/living/basic/mining/goliath,
 /turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+"TQ" = (
+/obj/item/stack/sheet/iron,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"XU" = (
+/obj/item/stack/sheet/mineral/titanium/fifty{
+	amount = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "XZ" = (
 /obj/structure/chair/comfy/shuttle{
@@ -285,7 +302,7 @@ hT
 yZ
 yZ
 sE
-JN
+sE
 HM
 hT
 BT
@@ -307,11 +324,11 @@ sE
 NI
 fz
 sE
-Lz
+tp
 lu
 lu
 lu
-Qq
+TQ
 yZ
 yZ
 FL
@@ -350,8 +367,8 @@ FY
 lu
 lu
 fz
-Lz
-Lz
+DL
+tp
 lu
 lu
 lu
@@ -367,7 +384,7 @@ FL
 yZ
 yZ
 ky
-FY
+Om
 lu
 tx
 wo
@@ -375,7 +392,7 @@ HM
 Lz
 Lz
 tp
-kz
+sE
 Lz
 sE
 Lz
@@ -389,7 +406,7 @@ Fq
 yZ
 yZ
 Lz
-To
+tD
 lu
 hT
 lu
@@ -411,14 +428,14 @@ Fq
 Lz
 Lz
 bl
-FY
+Om
 hY
 hT
 wo
 lu
 yb
 sE
-Lz
+tp
 se
 FR
 HM
@@ -434,12 +451,12 @@ Lz
 GF
 xz
 Lz
-Om
+tD
 dI
 lu
 lu
 lu
-HM
+Lz
 HM
 Pa
 yZ
@@ -454,17 +471,17 @@ Fq
 GZ
 gP
 Om
-Lz
+tp
 JD
-HM
+Lz
 hT
 lu
 lu
 bl
 Lz
-bl
+Lz
 FR
-FR
+XU
 FI
 Ga
 uh
