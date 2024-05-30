@@ -307,6 +307,7 @@
 	weight = 3
 	event_control_path = /datum/round_event_control/ion_storm
 	weight_multiplier = 2
+	trait_to_give = STATION_TRAIT_ION_STORMS
 
 /datum/station_trait/random_event_weight_modifier/rad_storms
 	name = "Radiation Stormfront"
@@ -719,7 +720,7 @@
 	weight = 3
 	show_in_report = TRUE
 	report_message = "It looks like the storm is not gonna calm down anytime soon, stay safe out there."
-
+	trait_to_give = STATION_TRAIT_BLIZZARD
 	storm_type = /datum/weather/snow_storm/forever_storm
 
 #undef GLOW_NEBULA

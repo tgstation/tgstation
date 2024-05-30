@@ -291,6 +291,7 @@
 	event_control_path = /datum/round_event_control/wisdomcow
 	weight_multiplier = 3
 	max_occurrences_modifier = 10 //lotta cows
+	trait_to_give = STATION_TRAIT_WISE_COWS
 
 /datum/station_trait/bright_day
 	name = "Bright Day"
@@ -352,7 +353,7 @@
 /// Spawns assistants with some gear, either gimmicky or functional. Maybe, one day, it will inspire an assistant to do something productive or fun
 /datum/station_trait/assistant_gimmicks
 	name = "Geared Assistants Pilot"
-	report_message = "The Nanotrassen Assistant Affairs division is performing a pilot to see if different assistant equipments help improve productivity!"
+	report_message = "The Nanotrassen Assistant Affairs division is performing a pilot to see if different assistant equipment helps improve productivity!"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 3
 	trait_to_give = STATION_TRAIT_ASSISTANT_GIMMICKS
