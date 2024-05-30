@@ -244,9 +244,10 @@
 	throw_it.throw_at(throw_there, 5, 2)
 
 /obj/effect/magnitizm/stop_orbit()
+	if(!isnull(owner))
+		UnregisterSignal(owner, COMSIG_LIVING_LIFE)
 	owner = null
 	timer = null
-	UnregisterSignal(owner, COMSIG_LIVING_LIFE)
 	Destroy()
 
 /obj/effect/magnitizm/proc/magnetik_check()
