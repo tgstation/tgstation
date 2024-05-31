@@ -2,7 +2,7 @@
 /obj/item/fish_feed
 	name = "fish feed can"
 	desc = "A refillable can that dispenses nutritious fish feed."
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/aquarium/supplies.dmi'
 	icon_state = "fish_feed"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -58,7 +58,7 @@
 	name = "ominous fish case"
 
 /obj/item/storage/fish_case/syndicate/get_fish_type()
-	return pick(/obj/item/fish/donkfish, /obj/item/fish/emulsijack)
+	return pick(/obj/item/fish/donkfish, /obj/item/fish/emulsijack, /obj/item/fish/jumpercable)
 
 /obj/item/storage/fish_case/tiziran
 	name = "imported fish case"
@@ -76,6 +76,7 @@
 		/obj/item/fish/boned = 1,
 		/obj/item/fish/clownfish/lube = 3,
 		/obj/item/fish/emulsijack = 1,
+		/obj/item/fish/jumpercable = 1,
 		/obj/item/fish/sludgefish/purple = 1,
 		/obj/item/fish/pufferfish = 3,
 		/obj/item/fish/slimefish = 2,
@@ -93,7 +94,7 @@
 /obj/item/aquarium_kit
 	name = "DIY Aquarium Construction Kit"
 	desc = "Everything you need to build your own aquarium. Raw materials sold separately."
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/aquarium/supplies.dmi'
 	icon_state = "construction_kit"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -104,14 +105,14 @@
 /obj/item/aquarium_prop
 	name = "generic aquarium prop"
 	desc = "very boring"
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/aquarium/supplies.dmi'
 
 	w_class = WEIGHT_CLASS_TINY
 	var/layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
 
 /obj/item/aquarium_prop/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/aquarium_content)
+	AddComponent(/datum/component/aquarium_content, icon)
 
 /obj/item/aquarium_prop/rocks
 	name = "rocks"

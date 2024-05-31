@@ -295,6 +295,26 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+5
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
 
+/obj/item/fish/jumpercable
+	name = "monocloning jumpercable"
+	desc = "A surprisingly useful if nasty looking creation from the syndicate fish labs. Drop one in a tank, and \
+		watch it self-feed and multiply. Generates more and more power as a growing swarm!"
+	icon_state = "jumpercable"
+	dedicated_in_aquarium_icon_state = "jumpercable_small"
+	sprite_width = 17
+	sprite_height = 5
+	stable_population = 12
+	average_size = 110
+	average_weight = 10000
+	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
+	required_temperature_min = MIN_AQUARIUM_TEMP+10
+	required_temperature_max = MIN_AQUARIUM_TEMP+30
+	fish_traits = list(
+		/datum/fish_trait/parthenogenesis,
+		/datum/fish_trait/mixotroph,
+		/datum/fish_trait/electrogenesis,
+	)
+
 /obj/item/fish/ratfish
 	name = "ratfish"
 	desc = "A rat exposed to the murky waters of maintenance too long. Any higher power, if it revealed itself, would state that the ratfish's continued existence is extremely unwelcome."
@@ -400,9 +420,9 @@
 /obj/item/fish/mastodon
 	name = "unmarine mastodon"
 	desc = "A monster of exposed muscles and innards, wrapped in a fish-like skeleton. You don't remember ever seeing it on the catalog."
-	icon = 'icons/obj/aquarium_wide.dmi'
+	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "mastodon"
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
 	dedicated_in_aquarium_icon_state = "mastodon_small"
 	base_pixel_x = -16
 	pixel_x = -16
@@ -612,3 +632,26 @@
 		return FALSE
 	target.apply_status_effect(/datum/status_effect/ice_block_talisman, freeze_timer SECONDS)
 	return FALSE
+
+/obj/item/fish/zipzap
+	name = "anxious zipzap"
+	desc = "A fish overflowing with crippling anxiety and electric potential. Worried about the walls of its tank closing in constantly. Both literally and as a general metaphorical unease about life's direction."
+	icon_state = "zipzap"
+	icon_state_dead = "zipzap_dead"
+	sprite_width = 8
+	sprite_height = 8
+	stable_population = 3
+	average_size = 30
+	average_weight = 500
+	random_case_rarity = FISH_RARITY_VERY_RARE
+	favorite_bait = list(/obj/item/food/bait/doughball)
+	required_temperature_min = MIN_AQUARIUM_TEMP+18
+	required_temperature_max = MIN_AQUARIUM_TEMP+26
+	fish_traits = list(
+		/datum/fish_trait/no_mating,
+		/datum/fish_trait/wary,
+		/datum/fish_trait/anxiety,
+		/datum/fish_trait/electrogenesis,
+	)
+	//anxiety naturally limits the amount of zipzaps per tank, so they are stronger alone
+	electrogenesis_power = 20 MEGA JOULES
