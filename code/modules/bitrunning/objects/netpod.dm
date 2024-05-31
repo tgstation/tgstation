@@ -14,7 +14,7 @@
 	/// Whether we have an ongoing connection
 	var/connected = FALSE
 	/// A player selected outfit by clicking the netpod
-	var/datum/outfit/netsuit = /datum/outfit/job/bitrunner
+	var/datum/outfit/netsuit = /datum/outfit/job/prisoner
 	/// Holds this to see if it needs to generate a new one
 	var/datum/weakref/avatar_ref
 	/// The linked quantum server

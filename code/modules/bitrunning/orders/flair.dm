@@ -39,6 +39,18 @@
 	item_path = /obj/item/clothing/shoes/jackboots
 	cost_per_order = 1000
 
+//MONKESTATION ADDITION START
+/datum/orderable_item/bitrunning_flair/jumpsuit
+	item_path = /obj/item/clothing/under/rank/cargo/bitrunner
+	desc = "An upgrade over the usual orange shirt...right?"
+	cost_per_order = 1000
+
+/datum/orderable_item/bitrunning_flair/mannitol
+	item_path = /obj/item/reagent_containers/cup/bottle/mannitol
+	desc = "A healing potion for your brain, acquired by doing the same thing that caused brain damage in the first place..."
+	cost_per_order = 1000
+
+//MONKESTATION ADDITION END
 /datum/orderable_item/bitrunning_flair/neon_lining
 	item_path = /obj/item/stack/neon_lining/twenty
 	cost_per_order = 250
