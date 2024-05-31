@@ -875,6 +875,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/maint/toolstorage)
 "hT" = (
 /obj/effect/mapping_helpers/damaged_window,
+/obj/effect/spawner/structure/window/reinforced/indestructible,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "hV" = (
@@ -2978,14 +2979,6 @@
 /obj/item/coin/silver,
 /obj/item/card/id/away/donk/boss,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/ruin/space/has_grav/hauntedtradingpost/public)
-"Ah" = (
-/obj/structure/cable/layer1,
-/obj/machinery/camera/autoname/directional/west{
-	camera_construction_state = 1;
-	camera_enabled = 0
-	},
-/turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
 "Aj" = (
 /obj/structure/cable/layer1,
@@ -5240,11 +5233,10 @@
 /obj/effect/decal/cleanable/dirt,
 /mob/living/basic/bot/cleanbot{
 	additional_access = /datum/id_trim/away/hauntedtradingpost;
-	unique_name = 1;
-	name = "\improper Henry";
 	bot_mode_flags = 0;
-	maints_access_required = list("syndicate");
-	desc = "A dusty and dented old cleaning robot, he looks determined to cleanse the world."
+	name = "\improper Henry";
+	unique_name = 1;
+	desc = "A dusty and dented old cleaning robot. Despite his scars and his aging body, he determinedly stands by to cleanse the galaxy. One stain at a time."
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/maint)
@@ -6892,7 +6884,7 @@ wX
 uZ
 Zt
 uT
-Ah
+uT
 uT
 dj
 gv
