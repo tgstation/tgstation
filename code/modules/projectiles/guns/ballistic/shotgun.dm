@@ -342,3 +342,17 @@
 /obj/item/gun/ballistic/shotgun/hook/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	hook.afterattack(target, user, proximity_flag, click_parameters)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/gun/ballistic/shotgun/musket
+	name = "\improper Donk Co. Musket"
+	icon_state = "donk_musket"
+	inhand_icon_state = "donk_musket"
+	worn_icon_state = "donk_musket"
+	desc = "A large-bore boltloading firearm with a classy wooden frame. Cheap to buy and easy to maintain, but needs to reload after every shot."
+	casing_ejector = TRUE
+	semi_auto = TRUE
+	alternative_caliber = CALIBER_50BMG
+	bolt_wording = "bolt"
+	bolt_type = BOLT_TYPE_LOCKING
+	internal_magazine = TRUE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
