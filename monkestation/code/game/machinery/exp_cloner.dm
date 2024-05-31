@@ -81,6 +81,9 @@
 	attempting = FALSE
 	return CLONING_SUCCESS //so that we don't spam clones with autoprocess unless we leave a body in the scanner
 
+/obj/machinery/clonepod/experimental/exp_clone_check(mob/living/carbon/human/mob_occupant)
+	if(!mob_occupant?.mind) //When experimental cloner fails to get a ghost, it won't spit out a body, so we don't get an army of brainless rejects.
+		qdel(mob_occupant)
 
 /obj/machinery/clonepod/experimental/proc/get_clone_preview(datum/dna/clone_dna)
 	RETURN_TYPE(/image)
