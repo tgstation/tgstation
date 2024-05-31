@@ -1,5 +1,6 @@
+import { useContext } from 'react';
+
 import { resolveAsset } from '../../assets';
-import { useLocalState } from '../../backend';
 import {
   Box,
   Button,
@@ -9,9 +10,10 @@ import {
   Section,
   Stack,
 } from '../../components';
+import { ParticleContext } from '.';
 
 export const ShowDesc = (props) => {
-  const [desc, setdesc] = useLocalState('desc', '');
+  const { desc, setDesc } = useContext(ParticleContext);
   return (
     <Modal
       width={'60em'}
@@ -21,29 +23,29 @@ export const ShowDesc = (props) => {
         title={'Var Details'}
         buttons={
           VarExplanation[desc].dataunit ? (
-            <Button content="Dismiss" onClick={() => setdesc('')} />
+            <Button content="Dismiss" onClick={() => setDesc('')} />
           ) : (
             <>
               <Button
                 content="Motion basics"
                 selected={desc === 'motion'}
-                onClick={() => setdesc('motion')}
+                onClick={() => setDesc('motion')}
               />
               <Button
                 content="Rand types"
                 selected={desc === 'randtypes'}
-                onClick={() => setdesc('randtypes')}
+                onClick={() => setDesc('randtypes')}
               />
               <Button
                 content="Generator types"
                 selected={desc === 'gentypes'}
-                onClick={() => setdesc('gentypes')}
+                onClick={() => setDesc('gentypes')}
               />
               <Button
                 icon="x"
                 tooltip={'Dismiss'}
                 color={'red'}
-                onClick={() => setdesc('')}
+                onClick={() => setDesc('')}
               />
             </>
           )

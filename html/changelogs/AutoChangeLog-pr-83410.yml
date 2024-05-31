@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Venus Man Traps cannot use vines to drag around machines or objects that are bolted, welded, rooted to, or otherwise are part of the ground"
-  - bugfix: "Standing on a table will not prevent you from being grappled by a Venus Man Trap"

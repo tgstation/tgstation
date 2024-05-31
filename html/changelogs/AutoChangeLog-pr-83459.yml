@@ -1,8 +1,0 @@
-author: "Higgin"
-delete-after: True
-changes:
-  - balance: "Viruses now self-heal much more effectively with good mood, sleep, food, and spaceacillin."
-  - balance: "Viruses now punish being hungry more. Stay fed!"
-  - balance: "Spaceacillin now gives 200 ticks of symptom resistance, declining over time, rather than 100."
-  - balance: "Viruses now progress slightly slower."
-  - balance: "Viruses now only hide if their stealth stat is greater than their total computed severity."
