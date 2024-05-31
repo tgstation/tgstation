@@ -108,6 +108,21 @@
 	stamina = 6
 	embedding = null
 
+/obj/projectile/bullet/pellet/flechette
+	damage = 4
+	wound_bonus = -25
+	bare_wound_bonus = 50
+	wound_falloff_tile = -10
+	speed = 0.9
+	ricochet_decay_chance = 0.6
+	ricochet_decay_damage = 0.3
+	demolition_mod = 10
+	weak_against_armour = TRUE
+
+/obj/projectile/bullet/pellet/shotgun_improvised/Initialize(mapload)
+	. = ..()
+	range = rand(3, 8)
+
 // Mech Scattershot
 
 /obj/projectile/bullet/scattershot
