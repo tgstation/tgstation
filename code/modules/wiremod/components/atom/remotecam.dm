@@ -291,7 +291,7 @@
 /obj/item/circuit_component/remotecam/bci/unregister_shell(atom/movable/shell)
 	if(shell_camera)
 		UnregisterSignal(shell_parent, list(COMSIG_ORGAN_IMPLANTED, COMSIG_ORGAN_REMOVED))
-	. = ..()
+	return ..()
 
 /obj/item/circuit_component/remotecam/bci/Destroy()
 	if(shell_camera)
