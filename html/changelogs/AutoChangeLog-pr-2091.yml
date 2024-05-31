@@ -1,0 +1,4 @@
+author: "Uristthedorf"
+delete-after: True
+changes:
+  - bugfix: "Speed related fixes from TG, including preventing adamantine armor slowdown from being nullified."
