@@ -241,6 +241,7 @@ function Item(props: Props) {
         <Button
           align="right"
           width={5}
+          pr={0}
           disabled={disabled}
           onClick={() =>
             act('create', {
