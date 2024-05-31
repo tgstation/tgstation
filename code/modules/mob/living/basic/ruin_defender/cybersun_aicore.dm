@@ -17,12 +17,14 @@
 	maxHealth = 250
 	faction = list(ROLE_SYNDICATE)
 	ai_controller = /datum/ai_controller/basic_controller/cybersun_ai_core
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minimum_survivable_temperature = 0
-	maximum_survivable_temperature = 1500
+	unsuitable_atmos_damage = 0
 	combat_mode = TRUE
 	move_resist = INFINITY
 	damage_coeff = list(BRUTE = 1.5, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
+	light_system = OVERLAY_LIGHT
+	light_range = 2
+	light_power = 0.6
+	light_color = "#eb1809"
 	/// Ability which fires da lightning bolt
 	var/datum/action/cooldown/mob_cooldown/lightning_strike
 	/// Ability which fires da big laser
@@ -124,9 +126,9 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 		lightning_danger_zone = target.loc
 	new/obj/effect/temp_visual/lightning_strike(lightning_danger_zone)
 	playsound(owner, 'sound/effects/sparks1.ogg', vol = 120, vary = TRUE)
-	if(do_after(owner, lightning_delay))
-		new/obj/effect/temp_visual/lightning_strike_zap(lightning_danger_zone)
-		return
+//	if(do_after(owner, lightning_delay))
+//		new/obj/effect/temp_visual/lightning_strike_zap(lightning_danger_zone)
+//		return
 
 /obj/effect/temp_visual/lightning_strike
 	name = "lightning strike"
@@ -148,6 +150,7 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 	addtimer(CALLBACK(src, PROC_REF(zap)), duration, TIMER_DELETE_ME)
 
 /obj/effect/temp_visual/lightning_strike/proc/zap()
+	new/obj/effect/temp_visual/lightning_strike_zap(loc)
 	playsound(src, 'sound/magic/lightningbolt.ogg', vol = 70, vary = TRUE)
 	if (!isturf(loc))
 		return
@@ -187,25 +190,25 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 	var/barrage_amount = 3
 	var/barrage_delay = 0.7 SECONDS
 
-/datum/action/cooldown/spell/pointed/projectile/cybersun_barrage/cast(obj/projectile/to_fire, atom/target, mob/user, iteration)
+/datum/action/cooldown/spell/pointed/projectile/cybersun_barrage/cast(obj/projectile/to_fire, atom/target, mob/user, atom/caster, iteration)
 	var/turf/lockon_zone
 	if (isturf(target))
 		lockon_zone = target
 	else
 		lockon_zone = target.loc
-	owner.Beam(lockon_zone, icon_state = "1-full", beam_color = COLOR_MEDIUM_DARK_RED, time = 1 SECONDS)
+	caster.Beam(lockon_zone, icon_state = "1-full", beam_color = COLOR_MEDIUM_DARK_RED, time = barrage_delay)
 	playsound(lockon_zone, 'sound/machines/terminal_prompt_deny.ogg', vol = 60, vary = TRUE)
-	if(!do_after(src, barrage_delay, src))
-		return
 	. = ..()
 
 /datum/action/cooldown/spell/pointed/projectile/cybersun_barrage/after_cast(atom/target)
+	. = ..()
 	if(do_after(owner, barrage_delay))
 		for(var/i in 1 to barrage_amount)
-			var/obj/projectile/to_fire = new projectile_type()
-			ready_projectile(to_fire, target, owner, i)
-			SEND_SIGNAL(owner, COMSIG_MOB_SPELL_PROJECTILE, src, target, to_fire)
-			to_fire.fire()
+			if(do_after(0.15 SECONDS))
+				var/obj/projectile/to_fire = new projectile_type()
+				ready_projectile(to_fire, target, owner, i)
+				SEND_SIGNAL(owner, COMSIG_MOB_SPELL_PROJECTILE, src, target, to_fire)
+				to_fire.fire()
 		return
 
 /obj/projectile/beam/laser/cybersun/weaker
