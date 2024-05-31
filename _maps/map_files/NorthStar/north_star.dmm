@@ -65698,7 +65698,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "qSD" = (
-/obj/item/kirbyplants/organic/plant21,
+/obj/structure/aquarium/lawyer,
 /turf/open/floor/wood/parquet,
 /area/station/service/lawoffice)
 "qSJ" = (
