@@ -791,14 +791,7 @@
 "hf" = (
 /obj/structure/cable/layer1,
 /obj/structure/sign/poster/contraband/syndicate_pistol/directional/west,
-/mob/living/simple_animal/bot/secbot{
-	maints_access_required = list("syndicate");
-	faction = list("Syndicate");
-	baton_type = /obj/item/melee/baton/security/cattleprod;
-	fair_market_price_arrest = 50;
-	fair_market_price_detain = 25;
-	payment_department = null
-	},
+/mob/living/simple_animal/bot/secbot,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
 "hi" = (
@@ -2479,7 +2472,7 @@
 "vH" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/camera/xray/directional/east,
-/obj/item/restraints/legcuffs/beartrap/prearmed,
+/obj/effect/mine/shrapnel/sting,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "vM" = (
@@ -3993,26 +3986,6 @@
 	desc = "A typical example of the ubiquitous cardboard box. Handy if you want to store things. This box is labelled 'OUTLET 6013' and has the Donk Co. logo stamped on it."
 	},
 /obj/effect/decal/cleanable/oil/slippery,
-/obj/item/ammo_casing/shotgun/improvised{
-	pixel_y = -1;
-	pixel_x = -10
-	},
-/obj/item/ammo_casing/shotgun/improvised{
-	pixel_y = -1;
-	pixel_x = 10
-	},
-/obj/item/ammo_casing/shotgun/improvised{
-	pixel_y = -7;
-	pixel_x = -5
-	},
-/obj/item/ammo_casing/shotgun/improvised{
-	pixel_y = 5;
-	pixel_x = 6
-	},
-/obj/item/ammo_casing/shotgun/improvised{
-	pixel_y = 6;
-	pixel_x = -5
-	},
 /obj/item/trash/popcorn/salty,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
@@ -4245,6 +4218,7 @@
 	pipe_color = "#FF7B00";
 	color = "#FF7B00"
 	},
+/obj/item/restraints/legcuffs/beartrap/prearmed,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "Lt" = (
