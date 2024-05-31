@@ -646,24 +646,6 @@
 	name = "Winter Coat Hood (Worn)"
 	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
 
-/datum/greyscale_config/heck_suit
-	name = "H.E.C.K. Suit"
-	icon_file = 'icons/obj/clothing/suits/armor.dmi'
-	json_config = 'code/datums/greyscale/json_configs/heck_suit.json'
-
-/datum/greyscale_config/heck_suit/worn
-	name = "H.E.C.K. Suit (Worn)"
-	icon_file = 'icons/mob/clothing/suits/armor.dmi'
-
-/datum/greyscale_config/heck_helmet
-	name = "H.E.C.K. Helmet"
-	icon_file = 'icons/obj/clothing/head/helmet.dmi'
-	json_config = 'code/datums/greyscale/json_configs/heck_helmet.json'
-
-/datum/greyscale_config/heck_helmet/worn
-	name = "H.E.C.K. Helmet (Worn)"
-	icon_file = 'icons/mob/clothing/head/helmet.dmi'
-
 //
 // COSTUMES
 // (It's better these stay paired together)

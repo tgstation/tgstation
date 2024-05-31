@@ -265,10 +265,6 @@
 	resistance_flags = FIRE_PROOF|LAVA_PROOF|ACID_PROOF
 	transparent_protection = HIDESUITSTORAGE|HIDEJUMPSUIT
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/pickaxe)
-	greyscale_colors = "#4d4d4d#808080"
-	greyscale_config = /datum/greyscale_config/heck_suit
-	greyscale_config_worn = /datum/greyscale_config/heck_suit/worn
-	flags_1 = IS_PLAYER_COLORABLE_1
 
 /datum/armor/hooded_hostile_environment
 	melee = 70
@@ -282,7 +278,6 @@
 /obj/item/clothing/suit/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
-	AddElement(/datum/element/gags_recolorable)
 
 /obj/item/clothing/suit/hooded/hostile_environment/process(seconds_per_tick)
 	var/mob/living/carbon/wearer = loc
@@ -312,14 +307,9 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSMOUTH
 	actions_types = list()
-	greyscale_colors = "#4d4d4d#808080#ff3300"
-	greyscale_config = /datum/greyscale_config/heck_helmet
-	greyscale_config_worn = /datum/greyscale_config/heck_helmet/worn
-	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
-	update_appearance()
 	AddComponent(/datum/component/butchering/wearable, \
 	speed = 0.5 SECONDS, \
 	effectiveness = 150, \
@@ -330,7 +320,6 @@
 	butcher_callback = CALLBACK(src, PROC_REF(consume)), \
 	)
 	AddElement(/datum/element/radiation_protected_clothing)
-	AddElement(/datum/element/gags_recolorable)
 
 /obj/item/clothing/head/hooded/hostile_environment/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
