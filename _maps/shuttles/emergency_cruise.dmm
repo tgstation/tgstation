@@ -546,7 +546,10 @@
 /obj/item/stack/medical/gauze/twelve,
 /obj/item/stack/medical/suture/medicated,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/item/defibrillator/compact/combat/loaded/nanotrasen,
+/obj/item/defibrillator/compact/combat/loaded/nanotrasen{
+	combat = 0;
+	safety = 1
+	},
 /obj/item/healthanalyzer/advanced,
 /turf/open/floor/iron/white/smooth_large,
 /area/shuttle/escape)
