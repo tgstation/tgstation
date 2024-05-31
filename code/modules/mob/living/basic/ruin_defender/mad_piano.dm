@@ -36,7 +36,7 @@
 	AddElement(/datum/element/death_drops, death_loot)
 	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(aggro_tantrum))
 	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = 2, works_in_containers = FALSE)
-	AddElement(/datum/element/waddling)
+	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 
 /mob/living/basic/mad_piano/proc/aggro_tantrum(datum/source, mob/living/victim)
 	SIGNAL_HANDLER
@@ -63,11 +63,12 @@
 	return
 
 /datum/ai_controller/basic_controller/mad_piano
-	idle_behavior = /datum/idle_behavior/idle_random_walk
+	idle_behavior = /datum/idle_behavior/walk_near_target/mad_piano
 	max_target_distance = 2
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mad_piano,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_TARGETLESS_TIME = 2 SECONDS,
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
@@ -77,6 +78,9 @@
 	)
 /datum/targeting_strategy/basic/mad_piano
 
+/datum/idle_behavior/walk_near_target/mad_piano
+	walk_chance = 50
+	minimum_distance = 5
 
 /datum/ai_planning_subtree/sleep_with_no_target/mad_piano
 	sleep_behaviour = /datum/ai_behavior/sleep_after_targetless_time/mad_piano
