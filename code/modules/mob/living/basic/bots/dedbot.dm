@@ -1,7 +1,7 @@
 ///////////////Donk Exenteration Drone - DED////////////
 //A patrolling bot that cuts you up if you get close. Use ranged weapons or avoid it.
 
-#define SPIN_SLASH_ABILITY_TYPEPATH /datum/action/cooldown/mob_cooldown/spell/aoe/exenterate
+#define SPIN_SLASH_ABILITY_TYPEPATH /datum/action/cooldown/spell/aoe/exenterate
 
 /mob/living/basic/bot/dedbot
 	name = "\improper Donk Exenteration Drone" //Exenteration means ripping entrails out, ouch!
@@ -15,7 +15,7 @@
 	melee_damage_upper = 20
 	light_power = 0
 	ai_controller = /datum/ai_controller/basic_controller/bot/dedbot
-	faction = list(ROLE_SYNDICATE, FACTION_SILICON, FACTION_TURRET)
+	faction = list(ROLE_SYNDICATE)
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = "eviscerates"
 	attack_verb_simple = "eviscerate"
@@ -46,11 +46,13 @@
 	)
 	grant_actions_by_list(innate_actions)
 
-/mob/living/basic/bot/dedbot/proc/aggro(datum/source, mob/living/victim)
+/mob/living/basic/bot/dedbot/proc/aggro(datum/source, mob/living/victim, datum/ai_controller/controller)
 	SIGNAL_HANDLER
-	if(!istype(victim) || !istype(victim, /mob/living/carbon) || victim.stat == DEAD || in_faction(victim))
-		return
-
+	if(istype(victim) || istype(victim, /mob/living/carbon) || victim.stat != DEAD || !in_faction(victim))
+		var/datum/action/cooldown/using_action = controller.blackboard[BB_DEDBOT_SLASH]
+		if (using_action?.IsAvailable())
+			return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+	return
 
 /mob/living/basic/bot/dedbot/proc/in_faction(mob/target)
 	for(var/faction1 in faction)
@@ -59,13 +61,14 @@
 	return FALSE
 
 /datum/ai_controller/basic_controller/bot/dedbot
+	max_target_distance = 1
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 	ai_movement = /datum/ai_movement/jps/bot
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/mob_cooldown/bot/exenterate,
+		/datum/ai_planning_subtree/targeted_mob_ability/exenterate,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/find_patrol_beacon,
 		/datum/ai_planning_subtree/manage_unreachable_list,
@@ -78,28 +81,24 @@
 		BB_BOT_SUMMON_TARGET,
 	)
 
-
-/datum/ai_planning_subtree/mob_cooldown/bot/exenterate
-//	ability_key = BB_DEDBOT_SLASH
-//	finish_planning = FALSE
-// why aint dis workin
+/datum/ai_planning_subtree/targeted_mob_ability/exenterate
+	ability_key = BB_DEDBOT_SLASH
+	finish_planning = FALSE
 
 
-
-
-/datum/action/cooldown/mob_cooldown/spell/aoe/exenterate
+/datum/action/cooldown/spell/aoe/exenterate
 	name = "Exenterate"
 	desc = "Disembowel every living thing in range with your blades."
 	button_icon = 'icons/obj/weapons/stabby.dmi'
 	button_icon_state = "huntingknife"
-	click_to_activate = TRUE
+	click_to_activate = FALSE
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
 	cooldown_time = 0.5 SECONDS
+	spell_requirements = null
+	aoe_radius = 2
 	//how much damage this ability does
 	var/damage_dealt = 18
-	//range of the spin ability's aoe
-	var/exenteration_reach = 1
 	/// weighted list of body zones this can hit
 	var/static/list/valid_targets = list(
 		BODY_ZONE_CHEST = 2,
@@ -108,21 +107,14 @@
 		BODY_ZONE_R_LEG = 1,
 		BODY_ZONE_L_LEG = 1,
 	)
-	/// list of things this ability doesn't damage
-	var/list/damage_blacklist_typecache = list(
-		/mob/living/basic/bot/dedbot,
-		/mob/living/basic/viscerator,
-		/mob/living/basic/pet/dog,
-		)
 
-/datum/action/cooldown/mob_cooldown/spell/aoe/exenterate/Activate(mob/living/source)
-	. = ..()
-	source.Shake(2, 0, 0.2 SECONDS)
-	for(var/mob/living/living_mob in range(exenteration_reach, src))
-		if (is_type_in_typecache(living_mob, damage_blacklist_typecache))
-			continue
+/datum/action/cooldown/spell/aoe/exenterate/cast_on_thing_in_aoe(atom/victim, atom/caster)
+	.
+	caster.Shake(1, 0.2, 0.3 SECONDS)
+	for(var/mob/living/living_mob in range(aoe_radius,caster))
+		if(living_mob == caster)
+			return
 		to_chat(living_mob, span_warning("You are cut by the drone's blades!"))
-		living_mob.apply_damage(damage_dealt, damagetype = BRUTE, def_zone = valid_targets, sharpness = SHARP_EDGED)
-
+		living_mob.apply_damage(damage = damage_dealt, damagetype = BRUTE, def_zone = valid_targets, sharpness = SHARP_EDGED)
 
 #undef SPIN_SLASH_ABILITY_TYPEPATH
