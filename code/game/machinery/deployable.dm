@@ -77,8 +77,7 @@
 		else
 			to_chat(user, span_notice("You start adding [I] to [src]..."))
 			playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
-			if(do_after(user, 50, target=src))
-				W.use(5)
+			if(do_after(user, 50, target=src) && W.use(5))
 				var/turf/T = get_turf(src)
 				T.PlaceOnTop(/turf/closed/wall/mineral/wood/nonmetal)
 				qdel(src)
@@ -86,12 +85,12 @@
 	return ..()
 
 /obj/structure/barricade/wooden/crowbar_act(mob/living/user, obj/item/tool)
-	balloon_alert(user, "deconstructing barricade...")
+	loc.balloon_alert(user, "deconstructing barricade...")
 	if(!tool.use_tool(src, user, 2 SECONDS, volume=50))
 		return
-	balloon_alert(user, "barricade deconstructed")
+	loc.balloon_alert(user, "barricade deconstructed")
 	tool.play_tool_sound(src)
-	new /obj/item/stack/sheet/mineral/wood(get_turf(src), drop_amount)
+	new /obj/item/stack/sheet/mineral/wood(drop_location(), drop_amount)
 	qdel(src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
