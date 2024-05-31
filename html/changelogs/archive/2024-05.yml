@@ -363,3 +363,6 @@
   Uristthedorf:
   - rscadd: Sleeper boards can now be printed with advanced biotech.
   - rscadd: Existing sleepers can be deconstructed for board.
+2024-05-31:
+  Syndie Kate:
+  - bugfix: Made the sandevistan bundle not spawn mantis blades.
