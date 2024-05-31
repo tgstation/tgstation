@@ -233,13 +233,13 @@
 			if(copytext(new_image.icon_state, 1, 3) == "d-") //3 == length("d-") + 1
 				return
 
-// #ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING
 	// Deny placing posters if we are attempting to place it on something that is not the south face of a northern wall.
-	var/direction = get_cardinal_dir(user, src)
+	var/direction = get_dir(user, src)
 	if(direction & ~NORTH)
 		balloon_alert(user, "can't place it there!")
 		return
-// #endif
+#endif
 
 	var/stuff_on_wall = 0
 	for(var/obj/contained_object in contents) //Let's see if it already has a poster on it or too much stuff
