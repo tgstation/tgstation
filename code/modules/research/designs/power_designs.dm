@@ -107,7 +107,7 @@
 	id = "bioelec_gen"
 	build_path = /obj/item/aquarium_upgrade/bioelec_gen
 	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 

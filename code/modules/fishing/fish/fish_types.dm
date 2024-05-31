@@ -312,7 +312,7 @@
 	fish_traits = list(
 		/datum/fish_trait/parthenogenesis,
 		/datum/fish_trait/mixotroph,
-		/datum/fish_trait/electrogenesis
+		/datum/fish_trait/electrogenesis,
 	)
 
 /obj/item/fish/ratfish
@@ -651,7 +651,7 @@
 		/datum/fish_trait/no_mating,
 		/datum/fish_trait/wary,
 		/datum/fish_trait/anxiety,
-		/datum/fish_trait/electrogenesis
+		/datum/fish_trait/electrogenesis,
 	)
 	//anxiety naturally limits the amount of zipzaps per tank, so they are stronger alone
 	electrogenesis_power = 20 MEGA JOULES
