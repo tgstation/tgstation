@@ -3,14 +3,35 @@
 /obj/item/stack/sheet/iron/five,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
+"bw" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/mineral/titanium,
+/area/ruin/unpowered)
+"cB" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/rubble,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
 "dI" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Cockpit"
 	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium,
+/area/ruin/unpowered)
+"dK" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/rubble,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "en" = (
 /obj/effect/mob_spawn/corpse/human/charredskeleton,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
+"eQ" = (
+/obj/item/shard/titanium,
+/obj/effect/decal/cleanable/glass,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "fy" = (
@@ -18,6 +39,8 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "fz" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/ash,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "gP" = (
@@ -36,9 +59,22 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
+"iU" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/glass,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
 "ky" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
+"ld" = (
+/obj/item/stack/sheet/mineral/titanium/fifty{
+	amount = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/mineral/titanium,
 /area/ruin/unpowered)
 "lu" = (
 /turf/open/lava/smooth/lava_land_surface,
@@ -47,9 +83,23 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/unpowered)
+"oE" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ruin/unpowered)
+"py" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
 "rn" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface)
+"rr" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/glass,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
 "rE" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
@@ -58,6 +108,7 @@
 /area/ruin/unpowered)
 "se" = (
 /obj/structure/table,
+/obj/effect/decal/cleanable/ash,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "sE" = (
@@ -79,6 +130,8 @@
 /obj/item/stack/sheet/mineral/titanium/fifty{
 	amount = 4
 	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/ash,
 /turf/open/floor/mineral/titanium,
 /area/ruin/unpowered)
 "uh" = (
@@ -88,6 +141,10 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
+"vf" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
 "xz" = (
 /obj/machinery/computer,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -95,17 +152,36 @@
 "yZ" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/ruin/unpowered)
+"zk" = (
+/obj/effect/spawner/random/structure/crate,
+/obj/effect/decal/cleanable/glass,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
+"Bb" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
 "BT" = (
 /obj/effect/mob_spawn/corpse/human/charredskeleton,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/unpowered)
+"Cg" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
 "CX" = (
 /obj/item/stack/sheet/mineral/titanium,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/titanium/yellow,
+/area/ruin/unpowered)
+"Dq" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "Dy" = (
 /obj/item/shard/titanium,
 /obj/machinery/light/small/directional/east,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "DL" = (
@@ -114,10 +190,19 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
+"DZ" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ruin/unpowered)
 "Ee" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/item/stack/sheet/iron,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
+"Er" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/mineral/titanium,
 /area/ruin/unpowered)
 "Fq" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -130,6 +215,7 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface)
 "FR" = (
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "FY" = (
@@ -137,14 +223,24 @@
 /obj/item/stack/sheet/mineral/titanium/fifty{
 	amount = 4
 	},
+/obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/mineral/titanium,
 /area/ruin/unpowered)
 "Ga" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/unpowered)
+"Gx" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
 "GF" = (
 /obj/structure/window/reinforced/shuttle/unanchored,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
+"GS" = (
+/obj/item/stack/sheet/iron/five,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "GZ" = (
@@ -167,6 +263,8 @@
 "JN" = (
 /obj/item/shard/titanium,
 /obj/item/stack/sheet/mineral/titanium,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/glass,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "KN" = (
@@ -180,13 +278,30 @@
 /mob/living/basic/mining/goldgrub,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
+"Ma" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
 "NI" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
+"NS" = (
+/obj/item/stack/sheet/iron,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
 "Om" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/titanium,
+/area/ruin/unpowered)
+"On" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/ash,
 /turf/open/floor/mineral/titanium,
 /area/ruin/unpowered)
 "OZ" = (
@@ -204,7 +319,14 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "Qq" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/glass,
 /turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"Rm" = (
+/obj/item/shard/titanium,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "St" = (
 /obj/structure/window/reinforced/shuttle,
@@ -215,11 +337,36 @@
 /area/template_noop)
 "Tq" = (
 /mob/living/basic/mining/goliath,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+"Tt" = (
+/obj/item/stack/sheet/iron,
+/obj/effect/decal/cleanable/glass,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
+"TF" = (
+/obj/effect/decal/cleanable/rubble,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "TQ" = (
 /obj/item/stack/sheet/iron,
+/obj/effect/decal/cleanable/glass,
 /turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"Vs" = (
+/obj/item/stack/sheet/mineral/titanium,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
+"VN" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/mineral/titanium,
+/area/ruin/unpowered)
+"XT" = (
+/obj/item/stack/sheet/mineral/titanium,
+/obj/effect/decal/cleanable/glass,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "XU" = (
 /obj/item/stack/sheet/mineral/titanium/fifty{
@@ -236,6 +383,11 @@
 "Zo" = (
 /obj/effect/mob_spawn/corpse/human/legioninfested,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered)
+"Zq" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 
 (1,1,1) = {"
@@ -271,7 +423,7 @@ GZ
 gP
 yZ
 fy
-Lz
+iU
 fy
 yZ
 hT
@@ -293,8 +445,8 @@ hT
 hT
 yZ
 yZ
-sE
-sE
+Rm
+Rm
 HM
 hT
 BT
@@ -308,14 +460,14 @@ SV
 SV
 uh
 sZ
-hT
+Gx
 ky
 HM
 ih
 sE
 NI
-fz
-sE
+vf
+eQ
 tp
 lu
 lu
@@ -333,7 +485,7 @@ hT
 yZ
 yZ
 yZ
-Lz
+py
 Tq
 lu
 lu
@@ -343,7 +495,7 @@ lu
 hT
 Qq
 lu
-uH
+zk
 St
 FL
 FL
@@ -358,14 +510,14 @@ uH
 FY
 lu
 lu
-fz
+Zq
 DL
-tp
+NS
 lu
 lu
 lu
 lu
-Lz
+Cg
 St
 FL
 FL
@@ -376,18 +528,18 @@ FL
 yZ
 yZ
 ky
-Om
+VN
 lu
 tx
 lu
-HM
-Lz
-Lz
+Vs
+dK
+Bb
 tp
 sE
 Lz
-sE
-Lz
+eQ
+py
 St
 FL
 FL
@@ -397,15 +549,15 @@ Fq
 Fq
 yZ
 yZ
-Lz
-tD
+cB
+ld
 lu
 hT
 lu
 lu
-Lz
+Ma
 KN
-Lz
+Dq
 LQ
 Lz
 sE
@@ -418,9 +570,9 @@ FL
 Fq
 Fq
 Lz
-Lz
+TF
 bl
-Om
+Er
 hY
 hT
 lu
@@ -439,7 +591,7 @@ FL
 (10,1,1) = {"
 Fq
 Fq
-Lz
+Cg
 GF
 xz
 Lz
@@ -448,7 +600,7 @@ dI
 lu
 lu
 lu
-Lz
+Ma
 HM
 Pa
 yZ
@@ -462,17 +614,17 @@ FL
 Fq
 GZ
 gP
-Om
-tp
+bw
+Tt
 JD
-Lz
+TF
 hT
 lu
 lu
-bl
+GS
+TF
 Lz
-Lz
-FR
+DZ
 XU
 FI
 Ga
@@ -485,16 +637,16 @@ SV
 GZ
 gP
 gP
-Om
+VN
 Ee
 Hy
-sE
+eQ
 rE
-Lz
+rr
 Lz
 OZ
 en
-FR
+oE
 yZ
 yZ
 FL
@@ -507,14 +659,14 @@ SV
 GZ
 gP
 Lz
-Lz
+py
 hT
 hT
 St
-sE
+Rm
 HM
 Om
-Lz
+py
 Om
 FI
 Ga
@@ -532,10 +684,10 @@ Lz
 lu
 lu
 lu
-sE
+Rm
 JN
 Dy
-Om
+On
 Om
 GZ
 FL
@@ -554,7 +706,7 @@ Fq
 rn
 lu
 lu
-HM
+XT
 yZ
 St
 St
@@ -575,7 +727,7 @@ FL
 FL
 FL
 Lz
-Lz
+py
 St
 yZ
 FL
