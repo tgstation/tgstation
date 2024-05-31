@@ -17,13 +17,9 @@
 		#undef EXPERIMENT_MY_COOL_FEATURE
 	#endif
 
-	#ifdef EXPERIMENT_WALLENING_SIGNS
-		#warn EXPERIMENT_WALLENING_SIGNS is only available on 515+
-		#undef EXPERIMENT_WALLENING_SIGNS
-	#endif
-
 #elif defined(UNIT_TESTS)
 	#define EXPERIMENT_MY_COOL_FEATURE
+	//#define EXPERIMENT_WALLENING_SIGNS
 #endif
 
 #if DM_VERSION >= 516
