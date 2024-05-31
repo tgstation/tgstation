@@ -16963,9 +16963,6 @@
 /turf/closed/wall,
 /area/station/security/evidence)
 "ggl" = (
-/obj/structure/chair/office{
-	dir = 4
-	},
 /obj/effect/landmark/start/cargo_technician,
 /obj/structure/chair/office{
 	dir = 4
@@ -51004,7 +51001,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "rTF" = (
