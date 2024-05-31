@@ -103,6 +103,15 @@
 	variance = 25
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 
+/obj/item/ammo_casing/shotgun/fletchette
+	name = "/improper Donk Co Flechette Shell"
+	desc = "."
+	icon_state = "improvshell"
+	projectile_type = /obj/projectile/bullet/pellet/shotgun_improvised
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1)
+	pellets = 8
+	variance = 35
+
 /obj/item/ammo_casing/shotgun/ion
 	name = "ion shell"
 	desc = "An advanced shotgun shell which uses a subspace ansible crystal to produce an effect similar to a standard ion rifle. \
