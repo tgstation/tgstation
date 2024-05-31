@@ -1,0 +1,4 @@
+author: "Uristthedorf"
+delete-after: True
+changes:
+  - qol: "Clones made in an experimental cloner that don't have a mind will be deleted."
