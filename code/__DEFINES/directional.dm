@@ -54,14 +54,14 @@
 }
 
 /// Create directional subtypes for a path IN ALL CARDINAL DIRECTIONS to simplify mapping.
-#define MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS_ALL_CARDINALS(path, offset)\
-NORTH_DIRECTIONAL_HELPER(path, offset)\
-SOUTH_DIRECTIONAL_HELPER(path, offset)\
-EAST_DIRECTIONAL_HELPER(path, offset)\
-WEST_DIRECTIONAL_HELPER(path, offset)
+#define MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(path, offset)\
+NORTH_DIRECTIONAL_HELPER(##path, ##offset)\
+SOUTH_DIRECTIONAL_HELPER(##path, ##offset)\
+EAST_DIRECTIONAL_HELPER(##path, ##offset)\
+WEST_DIRECTIONAL_HELPER(##path, ##offset)
 
 /// Create directional subtypes for a path for "visible" directions- as in they aren't meant to display if shown southernly (e.g. posters, signs). Simplifies mapping.
-#define MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS_VISIBLE_CARDINALS(path, offset)\
-NORTH_DIRECTIONAL_HELPER(path, offset)\
-EAST_DIRECTIONAL_HELPER(path, offset)\
-WEST_DIRECTIONAL_HELPER(path, offset)
+#define MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(path, offset)\
+NORTH_DIRECTIONAL_HELPER(##path, ##offset)\
+EAST_DIRECTIONAL_HELPER(##path, ##offset)\
+WEST_DIRECTIONAL_HELPER(##path, ##offset)
