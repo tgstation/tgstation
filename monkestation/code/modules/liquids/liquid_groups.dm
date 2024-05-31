@@ -74,7 +74,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	color = "#[random_short_color()]"
 	expected_turf_height = height
 	reagents = new(100000) // this is a random number used on creation it expands based on the turfs in the group
-	if(created_liquid)
+	if(!QDELETED(created_liquid))
 		add_to_group(created_liquid.my_turf)
 		cached_edge_turfs[created_liquid.my_turf] = list(NORTH, SOUTH, EAST, WEST)
 	SSliquids.active_groups |= src
@@ -87,29 +87,28 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	if(src in SSliquids.arrayed_groups)
 		SSliquids.arrayed_groups -= src /// Someone made a massive fucky wucky if this is happening
 
-	for(var/t in members)
-		var/turf/T = t
-		T.liquids.liquid_group = null
+	for(var/turf/member_turf as anything in members)
+		member_turf?.liquids?.liquid_group = null
 	members = list()
 	burning_members = null
 	return ..()
 
 /datum/liquid_group/proc/removed_reagent(datum/reagents/source, datum/reagent/modified)
 	for(var/turf/member as anything in members)
-		if(!member.liquids)
+		if(QDELETED(member.liquids))
 			continue
 		modified.remove_from_member(member.liquids)
 
 ///GROUP CONTROLLING
 /datum/liquid_group/proc/add_to_group(turf/T)
-	if(!T)
+	if(QDELETED(T))
 		return
-	if(!T.liquids)
+	if(QDELETED(T.liquids))
 		T.liquids = new(T, src)
 		cached_edge_turfs[T] = list(NORTH, SOUTH, EAST, WEST)
 
 	if(!members)
-		qdel(T.liquids)
+		QDEL_NULL(T.liquids)
 		return
 
 	members[T] = TRUE
@@ -131,20 +130,19 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		SSliquids.burning_turfs -= T
 
 	members -= T
-	if(T.liquids)
-		T.liquids.liquid_group = null
+	T.liquids?.liquid_group = null
 
 	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
 		reagent.remove_from_member(T.liquids)
 
-	if(!members.len)
+	if(!length(members))
 		qdel(src)
 		return
 	process_group()
 
 /datum/liquid_group/proc/remove_all()
 	for(var/turf/member in members)
-		qdel(member.liquids)
+		QDEL_NULL(member.liquids)
 
 /datum/liquid_group/proc/merge_group(datum/liquid_group/otherg)
 	if(otherg == src)
@@ -190,7 +188,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 /datum/liquid_group/proc/process_group(from_SS = FALSE)
 	if(merging)
 		return
-	if(!members || !members.len) // this ideally shouldn't exist, ideally groups would die before they got to this point but alas here we are
+	if(!members || !length(members)) // this ideally shouldn't exist, ideally groups would die before they got to this point but alas here we are
 		check_dead()
 		return
 
@@ -238,7 +236,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	if(old_overlay != group_overlay_state)
 		for(var/turf/member in members)
-			if(!member.liquids)
+			if(QDELETED(member.liquids))
 				remove_from_group(member)
 				continue
 
@@ -257,7 +255,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	if(!(member in members))
 		return
-	if(!turf_reagents)
+	if(QDELETED(turf_reagents))
 		return
 	turf_reagents.expose(member, TOUCH, liquid = TRUE)
 
@@ -271,7 +269,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	slippery = FALSE
 	for(var/reagent_type in reagents.reagent_list)
 		var/datum/reagent/pulled_reagent = reagent_type
-		var/amount = pulled_reagent.volume / members.len
+		var/amount = pulled_reagent.volume / length(members)
 		if(!amount)
 			continue
 		if(pulled_reagent.type in turf_reagents.previous_reagent_list)
@@ -287,7 +285,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	if(!total_reagent_volume)
 		for(var/turf/member in members)
 			remove_from_group(member)
-			qdel(member.liquids)
+			QDEL_NULL(member.liquids)
 		return
 
 	var/list/removed_turf = list()
@@ -297,11 +295,11 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 			return
 		while(turfs_to_remove > 0)
 			turfs_to_remove--
-			if(members && members.len)
+			if(members && length(members))
 				var/turf/picked_turf = pick(members)
-				if(picked_turf.liquids)
+				if(!QDELETED(picked_turf.liquids))
 					remove_from_group(picked_turf)
-					qdel(picked_turf.liquids)
+					QDEL_NULL(picked_turf.liquids)
 					removed_turf |= picked_turf
 					if(!total_reagent_volume)
 						reagents_per_turf = 0
@@ -324,17 +322,17 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 		for(var/dir in GLOB.cardinals)
 			var/turf/open/open_turf = get_step(remover_turf, dir)
-			if(!isopenturf(open_turf) || !open_turf.liquids)
+			if(!isopenturf(open_turf) || QDELETED(open_turf.liquids))
 				continue
 			check_edges(open_turf)
 	process_group()
 
 /datum/liquid_group/proc/remove_any(obj/effect/abstract/liquid_turf/remover, amount)
 	reagents.remove_any(amount, TRUE)
-	if(remover)
+	if(!QDELETED(remover))
 		check_liquid_removal(remover, amount)
 	total_reagent_volume = reagents.total_volume
-	reagents_per_turf = total_reagent_volume / members.len
+	reagents_per_turf = total_reagent_volume / length(members)
 	expected_turf_height = CEILING(reagents_per_turf, 1) / LIQUID_HEIGHT_DIVISOR
 	if(!total_reagent_volume && !reagents.total_volume)
 		remove_all()
@@ -342,13 +340,13 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 /datum/liquid_group/proc/remove_specific(obj/effect/abstract/liquid_turf/remover, amount, datum/reagent/reagent_type)
 	reagents.remove_reagent(reagent_type.type, amount)
-	if(remover)
+	if(!QDELETED(remover))
 		check_liquid_removal(remover, amount)
 	total_reagent_volume = reagents.total_volume
 
 /datum/liquid_group/proc/transfer_to_atom(obj/effect/abstract/liquid_turf/remover, amount, atom/transfer_target, transfer_method = INGEST)
 	reagents.trans_to(transfer_target, amount, methods = transfer_method)
-	if(remover)
+	if(!QDELETED(remover))
 		check_liquid_removal(remover, amount)
 	total_reagent_volume = reagents.total_volume
 
@@ -385,9 +383,9 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	var/total_removed = length(members) + 1 / total_reagent_volume
 	var/remove_amount = total_removed / length(reagents.reagent_list)
-	if(!transfer)
+	if(QDELETED(transfer))
 		transfer = new()
-	if(!transfer.liquid_group)
+	if(QDELETED(transfer.liquid_group))
 		transfer.liquid_group = new(1, transfer)
 	for(var/datum/reagent/reagent_type in reagents.reagent_list)
 		transfer.liquid_group.reagents.add_reagent(reagent_type.type, remove_amount, no_react = TRUE)
@@ -454,7 +452,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	if(GLOB.liquid_debug_colors)
 		new_color = color
-	else if(cached_reagent_list.len != reagents.reagent_list.len)
+	else if(length(cached_reagent_list) != length(reagents.reagent_list))
 		new_color = mix_color_from_reagents(reagents.reagent_list)
 		cached_reagent_list = list()
 		cached_reagent_list |= reagents.reagent_list
@@ -473,7 +471,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	group_alpha = clamp(round(alpha_setting / alpha_divisor, 1), 120, 255)
 	group_color = new_color
 	for(var/turf/member in members)
-		if(!member.liquids)
+		if(QDELETED(member.liquids))
 			continue
 		member.liquids.alpha = group_alpha
 		member.liquids.color = group_color
@@ -490,7 +488,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 			total_burn_rate += burn_power
 	group_burn_rate = total_burn_rate * 0.5 //half power because reasons
 	if(!total_burn_power)
-		if(burning_members.len)
+		if(length(burning_members))
 			extinguish_all()
 		group_burn_power = 0
 		return
@@ -540,18 +538,18 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 			var/turf/picked_turf = burning_members[1]
 			extinguish(picked_turf)
 			remove_from_group(picked_turf)
-			qdel(picked_turf.liquids)
+			QDEL_NULL(picked_turf.liquids)
 			removed_turf |= picked_turf
 
 
 		for(var/turf/remover in removed_turf)
 			for(var/dir in GLOB.cardinals)
 				var/turf/open/open_turf = get_step(remover, dir)
-				if(!isopenturf(open_turf) || !open_turf.liquids)
+				if(!isopenturf(open_turf) || QDELETED(open_turf.liquids))
 					continue
 				check_edges(open_turf)
 
-		while(removed_turf.len)
+		while(length(removed_turf))
 			var/turf/picked_turf = pick(removed_turf)
 			var/list/output = try_split(picked_turf, TRUE)
 			removed_turf -= picked_turf
@@ -576,7 +574,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/list/spreading_turfs = list()
 	for(var/dir in directions)
 		var/turf/open/open_adjacent = get_step(burning_member, dir)
-		if(!open_adjacent || !open_adjacent.liquids)
+		if(QDELETED(open_adjacent) || QDELETED(open_adjacent.liquids))
 			continue
 		spreading_turfs |= open_adjacent
 
@@ -590,7 +588,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		build_fire_cache(member)
 
 	for(var/turf/open/adjacent_turf in cached_fire_spreads[member])
-		if(adjacent_turf.liquids && adjacent_turf.liquids.liquid_group == src && adjacent_turf.liquids.fire_state < member.liquids.fire_state)
+		if(!QDELETED(adjacent_turf.liquids) && adjacent_turf.liquids.liquid_group == src && adjacent_turf.liquids.fire_state < member.liquids.fire_state)
 			adjacent_turf.liquids.fire_state = group_fire_state
 			member.liquids.set_fire_effect()
 			burning_members |= adjacent_turf
@@ -614,7 +612,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	if(SSliquids.burning_turfs[member])
 		SSliquids.burning_turfs -= member
 	burning_members -= member
-	if(!member.liquids)
+	if(QDELETED(member.liquids))
 		return
 	member.liquids.fire_state = LIQUID_FIRE_STATE_NONE
 	member.liquids.set_fire_effect()
@@ -626,7 +624,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/adjacent_liquid = 0
 	for(var/tur in member.get_atmos_adjacent_turfs())
 		var/turf/adjacent_turf = tur
-		if(adjacent_turf.liquids)
+		if(!QDELETED(adjacent_turf.liquids))
 			if(adjacent_turf.liquids.liquid_group == member.liquids.liquid_group)
 				adjacent_liquid++
 	if(adjacent_liquid < 2)
@@ -652,7 +650,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/list/passed_directions = list()
 	for(var/direction in GLOB.cardinals)
 		var/turf/directional_turf = get_step(checker, direction)
-		if(directional_turf.liquids)
+		if(!QDELETED(directional_turf.liquids))
 			continue
 		passed_directions.Add(direction)
 
@@ -686,13 +684,13 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/obj/effect/abstract/liquid_turf/current_head
 	///compares after each iteration to see if we even need to continue
 	var/visited_length = 0
-	while(queued_liquids.len)
+	while(length(queued_liquids))
 		current_head = queued_liquids[1]
 		queued_turf = current_head.my_turf
 		queued_liquids -= current_head
 
 		for(var/turf/adjacent_turf in get_adjacent_open_turfs(queued_turf))
-			if(!adjacent_turf.liquids || !members[adjacent_turf])
+			if(QDELETED(adjacent_turf.liquids) || !members[adjacent_turf])
 				continue
 			if(!(adjacent_turf in queued_turf.atmos_adjacent_turfs)) //i hate that this is needed
 				continue
@@ -721,13 +719,13 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/obj/effect/abstract/liquid_turf/current_head
 	///compares after each iteration to see if we even need to continue
 	var/visited_length = 0
-	while(queued_liquids.len)
+	while(length(queued_liquids))
 		current_head = queued_liquids[1]
 		queued_turf = current_head.my_turf
 		queued_liquids -= current_head
 
 		for(var/turf/adjacent_turf in get_adjacent_open_turfs(queued_turf))
-			if(!adjacent_turf.liquids || !members[adjacent_turf])
+			if(QDELETED(adjacent_turf.liquids) || !members[adjacent_turf])
 				continue
 
 			visited_length = length(previously_visited)
@@ -747,10 +745,10 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/turf/head_turf = source
 	var/obj/effect/abstract/liquid_turf/current_head
 
-	var/generated_key = "[world.time]_activemembers[members.len]"
+	var/generated_key = "[world.time]_activemembers[length(members)]"
 	var/adjacent_liquid_count = -1
 	for(var/turf/adjacent_turf in get_adjacent_open_turfs(head_turf))
-		if(!adjacent_turf.liquids || !members[adjacent_turf]) //empty turf or not our group just skip this
+		if(QDELETED(adjacent_turf.liquids) || !members[adjacent_turf]) //empty turf or not our group just skip this
 			continue
 		///the section is a little funky, as if say a cross shaped liquid removal occurs this will leave 3 of them in the same group, not a big deal as this only affects turfs that are like 5 tiles total
 		current_head = adjacent_turf.liquids
@@ -763,7 +761,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	if(current_head)
 		connected_liquids = return_connected_liquids(current_head, adjacent_liquid_count)
 
-	if(!length(connected_liquids) || connected_liquids.len == members.len) //yes yes i know if two groups are identical in size this will break but fixing this would add to much processing
+	if(!length(connected_liquids) || length(connected_liquids) == length(members)) //yes yes i know if two groups are identical in size this will break but fixing this would add to much processing
 		if(return_list)
 			return connected_liquids
 		return FALSE
@@ -793,7 +791,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		if(new_turf in members)
 			new_group.members -= new_turf
 
-	if(!new_group.members.len)
+	if(!length(new_group.members))
 		qdel(new_group)
 		return FALSE
 
@@ -812,7 +810,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 					exists_already = TRUE
 					break
 			if(!exists_already)
-				if(cardinal.liquids)
+				if(!QDELETED(cardinal.liquids))
 					var/list/temp = return_connected_liquids(cardinal.liquids)
 					if(isnull(temp) || !length(temp))
 						continue
@@ -873,7 +871,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 				if(new_turf in members)
 					new_group.members -= new_turf
 
-			if(!new_group.members.len)
+			if(!length(new_group.members))
 				qdel(new_group)
 				return
 
@@ -908,9 +906,9 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 			return
 		if(isspaceturf(Z_turf_below))
 			return FALSE
-		if(!Z_turf_below.liquids)
+		if(QDELETED(Z_turf_below.liquids))
 			Z_turf_below.liquids = new(Z_turf_below)
-		if(!source_turf.liquids)
+		if(QDELETED(source_turf.liquids))
 			remove_from_group(source_turf)
 			if(source_turf in cached_edge_turfs)
 				cached_edge_turfs -= source_turf
@@ -918,33 +916,33 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		source_turf.liquids.liquid_group.transfer_reagents_to_secondary_group(source_turf.liquids, Z_turf_below.liquids)
 
 		var/obj/splashy = new /obj/effect/temp_visual/liquid_splash(Z_turf_below)
-		if(Z_turf_below.liquids.liquid_group)
+		if(!QDELETED(Z_turf_below.liquids?.liquid_group))
 			splashy.color = Z_turf_below.liquids.liquid_group.group_color
 		return FALSE
 
-	if(!new_turf.liquids && !istype(new_turf, /turf/open/openspace) && !isspaceturf(new_turf) && !istype(new_turf, /turf/open/floor/plating/ocean) && source_turf.turf_height == new_turf.turf_height) // no space turfs, or oceans turfs, also don't attempt to spread onto a turf that already has liquids wastes processing time
+	if(QDELETED(new_turf.liquids) && !istype(new_turf, /turf/open/openspace) && !isspaceturf(new_turf) && !istype(new_turf, /turf/open/floor/plating/ocean) && source_turf.turf_height == new_turf.turf_height) // no space turfs, or oceans turfs, also don't attempt to spread onto a turf that already has liquids wastes processing time
 		if(reagents_per_turf < LIQUID_HEIGHT_DIVISOR)
 			return FALSE
 		if(!length(members))
 			return FALSE
-		reagents_per_turf = total_reagent_volume / members.len
+		reagents_per_turf = total_reagent_volume / length(members)
 		expected_turf_height = CEILING(reagents_per_turf, 1) / LIQUID_HEIGHT_DIVISOR
 		new_turf.liquids = new(new_turf, src)
 		new_turf.liquids.alpha = group_alpha
 		check_edges(new_turf)
 
 		var/obj/splashy = new /obj/effect/temp_visual/liquid_splash(new_turf)
-		if(new_turf.liquids.liquid_group)
+		if(!QDELETED(new_turf.liquids?.liquid_group))
 			splashy.color = new_turf.liquids.liquid_group.group_color
 
 		water_rush(new_turf, source_turf)
 
-	else if(source_turf.liquids && source_turf.liquids.liquid_group && new_turf.liquids && new_turf.liquids.liquid_group && new_turf.liquids.liquid_group != source_turf.liquids.liquid_group && source_turf.turf_height == new_turf.turf_height && new_turf.liquids.liquid_group.can_merge)
+	else if(!QDELETED(source_turf?.liquids?.liquid_group) && !QDELETED(new_turf?.liquids?.liquid_group) && new_turf.liquids.liquid_group != source_turf.liquids.liquid_group && source_turf.turf_height == new_turf.turf_height && new_turf.liquids.liquid_group.can_merge)
 		merge_group(new_turf.liquids.liquid_group)
 		return FALSE
 	else if(source_turf.turf_height != new_turf.turf_height)
 		if(new_turf.turf_height < source_turf.turf_height) // your going down
-			if(!new_turf.liquids)
+			if(QDELETED(new_turf.liquids))
 				new_turf.liquids = new(new_turf)
 			if(new_turf.turf_height + new_turf.liquids.liquid_group.expected_turf_height < source_turf.turf_height)
 				var/obj/effect/abstract/liquid_turf/turf_liquids = new_turf.liquids
@@ -953,7 +951,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		else if(source_turf.turf_height < new_turf.turf_height)
 			if(source_turf.turf_height + expected_turf_height < new_turf.turf_height)
 				return
-			if(!new_turf.liquids)
+			if(QDELETED(new_turf.liquids))
 				new_turf.liquids = new(new_turf)
 			var/obj/effect/abstract/liquid_turf/turf_liquids = new_turf.liquids
 			trans_to_seperate_group(turf_liquids.liquid_group.reagents, 10, source_turf) //overflows out
