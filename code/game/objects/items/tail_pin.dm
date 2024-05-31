@@ -28,7 +28,7 @@
 	poster_item_name = "party game poster"
 	poster_item_desc = "Place it on a wall to start playing pin the tail on the corgi."
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/party_game, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/party_game, 32)
 
 /obj/structure/sign/poster/party_game/attackby(obj/item/I, mob/user, params)
 	. = ..()

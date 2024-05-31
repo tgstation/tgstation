@@ -283,7 +283,7 @@
 	name = "ripped poster"
 	desc = "You can't make out anything from the poster's original print. It's ruined."
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/ripped, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/ripped, 32)
 
 /obj/structure/sign/poster/random
 	name = "random poster" // could even be ripped
@@ -295,6 +295,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/ripped, 32)
 		/obj/structure/sign/poster/abductor,
 	)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/random, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/random, 32)
 
 #undef PLACE_SPEED

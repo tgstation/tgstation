@@ -8,12 +8,12 @@
 
 	plane = FLOOR_PLANE //one with the floor
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fake_stairs, 0)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/fake_stairs, 0)
 
 /obj/structure/fake_stairs/wood
 	icon_state = "stairs_wood"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fake_stairs/wood, 0)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/fake_stairs/wood, 0)
 
 /obj/structure/fake_stairs/stone
 	icon_state = "stairs_stone"

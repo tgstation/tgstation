@@ -332,7 +332,7 @@
 	icon_state = "pepper"
 	reagent_id = /datum/reagent/consumable/condensedcapsaicin
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 30)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/reagent_dispensers/wall/peppertank, 30)
 
 /obj/structure/reagent_dispensers/wall/peppertank/Initialize(mapload)
 	. = ..()
@@ -388,7 +388,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	icon_state = "virus_food"
 	reagent_id = /datum/reagent/consumable/virus_food
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/reagent_dispensers/wall/virusfood, 30)
 
 /obj/structure/reagent_dispensers/wall/virusfood/Initialize(mapload)
 	. = ..()

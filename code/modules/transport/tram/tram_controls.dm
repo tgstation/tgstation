@@ -250,4 +250,4 @@
 				else
 					return
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/computer/tram_controls, 32)

@@ -161,7 +161,7 @@
 	/// What's in the urinal
 	var/obj/item/hidden_item
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/urinal, 32)
 
 /obj/structure/urinal/Initialize(mapload)
 	. = ..()
@@ -293,7 +293,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	///Amount of shift the pixel for placement
 	var/pixel_shift = 14
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sink, (-14))
 
 /obj/structure/sink/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
 	. = ..()
@@ -520,7 +520,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	pixel_z = 4
 	pixel_shift = 16
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sink/kitchen, (-16))
 
 /obj/structure/sink/greyscale
 	icon_state = "sink_greyscale"

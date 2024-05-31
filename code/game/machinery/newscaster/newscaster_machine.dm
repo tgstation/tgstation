@@ -66,7 +66,7 @@
 /obj/machinery/newscaster/pai/ui_state(mob/user)
 	return GLOB.reverse_contained_state
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/newscaster, 30)
 
 /obj/machinery/newscaster/Initialize(mapload, ndir, building)
 	. = ..()

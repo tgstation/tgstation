@@ -344,7 +344,7 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 	var/friendc = FALSE      // track if Friend Computer mode
 	var/last_picture  // For when Friend Computer mode is undone
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/status_display/evac, 32)
 
 /obj/machinery/status_display/evac/Initialize(mapload)
 	. = ..()
@@ -476,7 +476,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	current_mode = SD_PICTURE
 	var/emotion = AI_DISPLAY_DONT_GLOW
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/status_display/ai, 32)
 
 /obj/machinery/status_display/ai/attack_ai(mob/living/silicon/ai/user)
 	if(!isAI(user))
@@ -591,7 +591,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 		message2 = firstline_to_secondline[message1]
 	return ..() // status displays call update appearance on init so i suppose we should set the messages before calling parent as to not call it twice
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/status_display/random_message, 32)
 
 #undef MAX_STATIC_WIDTH
 #undef FONT_STYLE

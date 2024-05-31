@@ -88,11 +88,11 @@
 	var/area/station/ai_monitored/area_motion = null
 	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/emp_proof, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/motion, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/camera, 0)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/camera/autoname, 0)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/camera/emp_proof, 0)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/camera/motion, 0)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/camera/xray, 0)
 
 /datum/armor/machinery_camera
 	melee = 50

@@ -21,7 +21,7 @@
 	/// Whether we should populate our own contents on Initialize()
 	var/populate_contents = TRUE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/fireaxecabinet, 32)
 
 /datum/armor/structure_fireaxecabinet
 	melee = 50
@@ -209,7 +209,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 /obj/structure/fireaxecabinet/empty
 	populate_contents = FALSE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/empty, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/fireaxecabinet/empty, 32)
 
 /obj/item/wallframe/fireaxecabinet
 	name = "fire axe cabinet"
@@ -226,7 +226,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/empty, 32)
 	item_path = /obj/item/crowbar/mechremoval
 	item_overlay = "crowbar"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/fireaxecabinet/mechremoval, 32)
 
 /obj/structure/fireaxecabinet/mechremoval/atom_deconstruct(disassembled = TRUE)
 	if(held_item && loc)
@@ -236,7 +236,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval, 32)
 /obj/structure/fireaxecabinet/mechremoval/empty
 	populate_contents = FALSE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval/empty, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/fireaxecabinet/mechremoval/empty, 32)
 
 /obj/item/wallframe/fireaxecabinet/mechremoval
 	name = "mech removal tool cabinet"

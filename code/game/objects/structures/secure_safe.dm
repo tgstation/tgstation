@@ -34,7 +34,7 @@
 	anchored = TRUE
 	density = FALSE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/secure_safe, 32)
 
 /obj/structure/secure_safe/Initialize(mapload)
 	. = ..()

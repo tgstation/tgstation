@@ -14,7 +14,7 @@
 	// Kind of a cop-out
 	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Call Elevator")
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/button/elevator, 32)
 
 /obj/item/assembly/control/elevator
 	name = "elevator controller"

@@ -42,7 +42,7 @@
 /obj/machinery/ticket_machine/on_deconstruction(disassembled = TRUE)
 	new /obj/item/wallframe/ticket_machine(loc)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/ticket_machine, 32)
 
 /obj/machinery/ticket_machine/examine(mob/user)
 	. = ..()

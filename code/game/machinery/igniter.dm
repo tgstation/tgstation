@@ -150,7 +150,7 @@
 	var/last_spark = 0
 	var/datum/effect_system/spark_spread/spark_system
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/sparker, 26)
 
 /obj/machinery/sparker/ordmix
 	id = INCINERATOR_ORDMIX_IGNITER

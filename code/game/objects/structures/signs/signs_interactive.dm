@@ -3,7 +3,7 @@
 	desc = "It's your run-of-the-mill wall clock showing both the local Coalition Standard Time and the galactic Treaty Coordinated Time. Perfect for staring at instead of working."
 	icon_state = "clock"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/clock, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/clock, 32)
 
 /obj/structure/sign/clock/examine(mob/user)
 	. = ..()
@@ -15,7 +15,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/clock, 32)
 	desc = "It's an old-school wall calendar. Sure, it might be obsolete with modern technology, but it's still hard to imagine an office without one."
 	icon_state = "calendar"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/calendar, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/calendar, 32)
 
 /obj/structure/sign/calendar/examine(mob/user)
 	. = ..()

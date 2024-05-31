@@ -23,7 +23,7 @@
 	fire = 50
 	acid = 50
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/barsign, 32)
 
 /obj/machinery/barsign/Initialize(mapload)
 	. = ..()
@@ -529,7 +529,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	req_access = null
 	disassemble_result = /obj/item/wallframe/barsign/all_access
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/barsign/all_access, 32)
 
 /obj/item/wallframe/barsign
 	name = "bar sign frame"

@@ -22,4 +22,4 @@
 		return
 	. += emissive_appearance(icon, "emissive", src)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/mining_weather_monitor, 28)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/mining_weather_monitor, 28)

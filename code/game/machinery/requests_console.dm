@@ -401,8 +401,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 /obj/machinery/requests_console/auto_name // Register an autoname variant and then make the directional helpers before undefing all the magic bits
 	auto_name = TRUE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/requests_console, 30)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/requests_console/auto_name, 30)
 
 /obj/item/wallframe/requests_console
 	name = "requests console"

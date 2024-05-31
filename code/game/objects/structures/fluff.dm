@@ -327,4 +327,4 @@
 	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "wallsign"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fluff/wallsign, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/fluff/wallsign, 32)

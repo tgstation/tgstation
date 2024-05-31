@@ -390,4 +390,4 @@
 	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
 		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/elevator_control_panel, 31)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/elevator_control_panel, 31)

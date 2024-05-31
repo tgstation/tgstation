@@ -257,7 +257,7 @@
 	var/specialfunctions = OPEN // Bitflag, see assembly file
 	var/sync_doors = TRUE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/button/door, 24)
 
 /obj/machinery/button/door/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

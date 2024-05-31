@@ -154,4 +154,4 @@
 
 	return return_overlays
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/digital_clock, 28)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/digital_clock, 28)

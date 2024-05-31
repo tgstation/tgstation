@@ -43,7 +43,7 @@
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/computer/security/telescreen/entertainment, 32)
 
 /obj/item/wallframe/telescreen/entertainment
 	name = "entertainment telescreen frame"

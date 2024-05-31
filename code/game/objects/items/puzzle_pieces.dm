@@ -354,7 +354,7 @@
 	playsound(src, 'sound/machines/terminal_button07.ogg', 45, TRUE)
 	on_puzzle_complete()
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/button, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/puzzle/button, 32)
 
 /obj/machinery/puzzle/keycardpad
 	name = "keycard panel"
@@ -377,7 +377,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/button, 32)
 	playsound(src, 'sound/machines/beep.ogg', 45, TRUE)
 	on_puzzle_complete()
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/puzzle/keycardpad, 32)
 
 /obj/machinery/puzzle/password
 	name = "password panel"
@@ -414,7 +414,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
 	playsound(src, 'sound/machines/terminal_button07.ogg', 45, TRUE)
 	on_puzzle_complete()
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/puzzle/password, 32)
 
 /obj/machinery/puzzle/password/pin
 	desc = "A panel that controls something nearby. This one requires a PIN password, so let's start by typing in 1234..."
@@ -449,7 +449,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password, 32)
 	for(var/digit in 0 to 9)
 		digit_to_color["[digit]"] = pick_n_take(possible_colors)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/puzzle/password/pin, 32)
 
 //
 // blockade

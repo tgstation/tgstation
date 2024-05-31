@@ -36,7 +36,7 @@
 
 	density = FALSE //this is a wallmount
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/computer/auxiliary_base, 32)
 
 /obj/machinery/computer/auxiliary_base/Initialize(mapload)
 	. = ..()

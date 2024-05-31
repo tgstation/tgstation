@@ -102,4 +102,4 @@
 	. += span_notice("There's a small inscription on the button...")
 	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/transport/tram, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/button/transport/tram, 32)

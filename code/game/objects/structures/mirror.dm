@@ -61,7 +61,7 @@
 		return FALSE
 	return TRUE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/mirror, 28)
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
@@ -74,7 +74,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	. = ..()
 	atom_break(null, mapload)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/mirror/broken, 28)
 
 /obj/structure/mirror/attack_hand(mob/living/carbon/human/user)
 	. = ..()

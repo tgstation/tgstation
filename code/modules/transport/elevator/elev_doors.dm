@@ -12,5 +12,5 @@ GLOBAL_LIST_EMPTY(elevator_doors)
 	icon_state = "right"
 	base_state = "right"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/elevator/left, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/elevator/right, 0)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/door/window/elevator/left, 0)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/door/window/elevator/right, 0)

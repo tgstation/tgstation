@@ -71,10 +71,10 @@ DEFINE_BITFIELD(sign_features, list(
 	icon_state = "stat_display_tram"
 	sign_features = DISPLAY_TRAM
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display, 32)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/delam, 32)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/dual, 32)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/incident_display, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/incident_display/delam, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/incident_display/dual, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/incident_display/tram, 32)
 
 /obj/machinery/incident_display/Initialize(mapload)
 	..()

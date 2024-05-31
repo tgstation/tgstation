@@ -58,7 +58,7 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 	///How far to shift the sprite when placing.
 	var/pixel_shift = 16
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/shower, (-16))
 
 /obj/machinery/shower/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
 	. = ..()

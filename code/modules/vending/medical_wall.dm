@@ -29,7 +29,7 @@
 	tiltable = FALSE
 	light_mask = "wallmed-light-mask"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/vending/wallmed, 32)
 
 /obj/item/vending_refill/wallmed
 	machine_name = "NanoMed"

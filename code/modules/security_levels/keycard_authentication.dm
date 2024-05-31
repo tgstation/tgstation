@@ -23,7 +23,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 
 	COOLDOWN_DECLARE(access_grant_cooldown)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/keycard_auth, 26)
 
 /obj/machinery/keycard_auth/Initialize(mapload)
 	. = ..()

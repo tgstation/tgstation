@@ -779,7 +779,7 @@
 	. = ..()
 	icon_state = "wall_safe[unlocked ? "" : "_locked"]"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/pod, 32)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/item/storage/pod, 32)
 
 /obj/item/storage/pod/PopulateContents()
 	new /obj/item/clothing/head/helmet/space/orange(src)

@@ -51,7 +51,7 @@
 	map_spawned = FALSE
 	mode = BS_MODE_OPEN
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/bluespace_vendor, 30)
 
 /datum/armor/machinery_bluespace_vendor
 	energy = 100

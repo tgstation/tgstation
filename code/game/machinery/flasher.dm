@@ -22,7 +22,7 @@
 	/// Duration of time between flashes.
 	var/flash_cooldown_duration = 15 SECONDS
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/flasher, 26)
 
 /obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
 	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it

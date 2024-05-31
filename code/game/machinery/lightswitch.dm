@@ -15,7 +15,7 @@
 	/// Should this lightswitch automatically rename itself to match the area it's in?
 	var/autoname = TRUE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/light_switch, 26)
 
 /obj/machinery/light_switch/Initialize(mapload)
 	. = ..()
