@@ -26,7 +26,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/defibrillator_mount, 28
 	defib = new/obj/item/defibrillator/loaded(src)
 	find_and_hang_on_wall()
 
-MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/defibrillator_mount, 28)
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/defibrillator_mount/loaded, 28)
 
 /obj/machinery/defibrillator_mount/Destroy()
 	QDEL_NULL(defib)
