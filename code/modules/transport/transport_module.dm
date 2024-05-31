@@ -165,7 +165,7 @@
 
 				initial_contents += new_initial_contents
 
-///scan the locs we're on for anything that should be added to our transport_contents and builds the list
+///verify the movables in our list of contents are actually on our loc
 /obj/structure/transport/linear/proc/verify_transport_contents()
 	for(var/atom/movable/movable_contents as anything in transport_contents)
 		if(!(movable_contents.loc in locs))
