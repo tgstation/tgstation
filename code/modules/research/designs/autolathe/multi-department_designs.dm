@@ -32,7 +32,7 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
-	
+
 /datum/design/tscanner
 	name = "T-Ray Scanner"
 	id = "tscanner"
