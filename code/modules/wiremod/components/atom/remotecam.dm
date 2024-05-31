@@ -88,16 +88,17 @@
 	return ..()
 
 /obj/item/circuit_component/remotecam/input_received(datum/port/input/port)
-	if(shell_parent && shell_camera)
-		update_camera_name_network()
-		if(COMPONENT_TRIGGERED_BY(start, port))
-			start_process()
-			cameranet_add()
-			current_camera_state = TRUE
-		else if(COMPONENT_TRIGGERED_BY(stop, port))
-			stop_process()
-			close_camera() //Instantly turn off the camera
-			current_camera_state = FALSE
+	if(!shell_parent || !shell_camera)
+		return
+	update_camera_name_network()
+	if(COMPONENT_TRIGGERED_BY(start, port))
+		start_process()
+		cameranet_add()
+		current_camera_state = TRUE
+	else if(COMPONENT_TRIGGERED_BY(stop, port))
+		stop_process()
+		close_camera() //Instantly turn off the camera
+		current_camera_state = FALSE
 
 /**
  * Initializes the camera
@@ -130,15 +131,16 @@
  * Remove the camera
  */
 /obj/item/circuit_component/remotecam/proc/remove_camera()
-	if(shell_camera)
-		if(!camera_signal_move_override)
-			UnregisterSignal(shell_parent, COMSIG_MOVABLE_MOVED)
-		UnregisterSignal(shell_parent, COMSIG_ATOM_EMP_ACT)
-		if(current_camera_emp)
-			deltimer(current_camera_emp_timer_id)
-			current_camera_emp = FALSE
-		cameranet_add() //Readd camera to cameranet before deleting camera
-		QDEL_NULL(shell_camera)
+	if(!shell_camera)
+		return
+	if(!camera_signal_move_override)
+		UnregisterSignal(shell_parent, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(shell_parent, COMSIG_ATOM_EMP_ACT)
+	if(current_camera_emp)
+		deltimer(current_camera_emp_timer_id)
+		current_camera_emp = FALSE
+	cameranet_add() //Readd camera to cameranet before deleting camera
+	QDEL_NULL(shell_camera)
 
 /**
  * Close the camera state (only if it's already active)
@@ -193,19 +195,21 @@
  * Add camera from global cameranet
  */
 /obj/item/circuit_component/remotecam/proc/cameranet_add()
-	if(!current_cameranet_state)
-		GLOB.cameranet.cameras += shell_camera
-		GLOB.cameranet.addCamera(shell_camera)
-		current_cameranet_state = TRUE
+	if(current_cameranet_state)
+		return
+	GLOB.cameranet.cameras += shell_camera
+	GLOB.cameranet.addCamera(shell_camera)
+	current_cameranet_state = TRUE
 
 /**
  * Remove camera from global cameranet
  */
 /obj/item/circuit_component/remotecam/proc/cameranet_remove()
-	if(current_cameranet_state)
-		GLOB.cameranet.removeCamera(shell_camera)
-		GLOB.cameranet.cameras -= shell_camera
-		current_cameranet_state = FALSE
+	if(!current_cameranet_state)
+		return
+	GLOB.cameranet.removeCamera(shell_camera)
+	GLOB.cameranet.cameras -= shell_camera
+	current_cameranet_state = FALSE
 
 /**
  * Set the camera as emp'd
@@ -280,13 +284,14 @@
 
 /obj/item/circuit_component/remotecam/bci/register_shell(atom/movable/shell)
 	. = ..()
-	if(istype(shell_parent, /obj/item/organ/internal/cyberimp/bci))
-		shell_camera = new /obj/machinery/camera (shell_parent)
-		init_camera()
-		RegisterSignals(shell_parent, list(COMSIG_ORGAN_IMPLANTED, COMSIG_ORGAN_REMOVED), PROC_REF(on_organ_implanted))
-		var/obj/item/organ/internal/cyberimp/bci/bci = shell_parent
-		if(bci.owner) //If somehow the camera was added while shell is already installed inside a mob, assign signals
-			RegisterSignal(bci.owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
+	if(!istype(shell_parent, /obj/item/organ/internal/cyberimp/bci))
+		return
+	shell_camera = new /obj/machinery/camera (shell_parent)
+	init_camera()
+	RegisterSignals(shell_parent, list(COMSIG_ORGAN_IMPLANTED, COMSIG_ORGAN_REMOVED), PROC_REF(on_organ_implanted))
+	var/obj/item/organ/internal/cyberimp/bci/bci = shell_parent
+	if(bci.owner) //If somehow the camera was added while shell is already installed inside a mob, assign signals
+		RegisterSignal(bci.owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
 
 /obj/item/circuit_component/remotecam/bci/unregister_shell(atom/movable/shell)
 	if(shell_camera)
@@ -308,24 +313,27 @@
 
 /obj/item/circuit_component/remotecam/drone/register_shell(atom/movable/shell)
 	. = ..()
-	if(istype(shell_parent, /mob/living/circuit_drone))
-		current_camera_state = FALSE //Always reset camera state for built-in shell components
-		shell_camera = new /obj/machinery/camera (shell_parent)
-		init_camera()
+	if(!istype(shell_parent, /mob/living/circuit_drone))
+		return
+	current_camera_state = FALSE //Always reset camera state for built-in shell components
+	shell_camera = new /obj/machinery/camera (shell_parent)
+	init_camera()
 
 /obj/item/circuit_component/remotecam/airlock/register_shell(atom/movable/shell)
 	. = ..()
-	if(istype(shell_parent, /obj/machinery/door/airlock))
-		current_camera_state = FALSE //Always reset camera state for built-in shell components
-		shell_camera = new /obj/machinery/camera (shell_parent)
-		init_camera()
+	if(!istype(shell_parent, /obj/machinery/door/airlock))
+		return
+	current_camera_state = FALSE //Always reset camera state for built-in shell components
+	shell_camera = new /obj/machinery/camera (shell_parent)
+	init_camera()
 
 /obj/item/circuit_component/remotecam/polaroid/register_shell(atom/movable/shell)
 	. = ..()
-	if(istype(shell_parent, /obj/item/camera))
-		current_camera_state = FALSE //Always reset camera state for built-in shell components
-		shell_camera = new /obj/machinery/camera (shell_parent)
-		init_camera()
+	if(!istype(shell_parent, /obj/item/camera))
+		return
+	current_camera_state = FALSE //Always reset camera state for built-in shell components
+	shell_camera = new /obj/machinery/camera (shell_parent)
+	init_camera()
 
 /obj/item/circuit_component/remotecam/bci/process(seconds_per_tick)
 	if(!shell_parent || !shell_camera)
