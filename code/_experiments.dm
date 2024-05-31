@@ -6,6 +6,9 @@
 // EXPERIMENT_MY_COOL_FEATURE
 // - Does something really cool, just so neat, absolutely banging, gaming and chill
 
+// EXPERIMENT_WALLENING
+// - Stop-gap for some things that we want to implement (and pretty much orphan) in the codebase while wallening is being developed
+
 #if DM_VERSION < 515
 
 	// You can't X-macro custom names :(
@@ -13,6 +16,12 @@
 		#warn EXPERIMENT_MY_COOL_FEATURE is only available on 515+
 		#undef EXPERIMENT_MY_COOL_FEATURE
 	#endif
+
+	#ifdef EXPERIMENT_WALLENING
+		#warn EXPERIMENT_WALLENING is only available on 515+
+		#undef EXPERIMENT_WALLENING
+	#endif
+
 #elif defined(UNIT_TESTS)
 	#define EXPERIMENT_MY_COOL_FEATURE
 #endif
