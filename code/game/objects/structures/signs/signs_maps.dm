@@ -16,7 +16,7 @@
 	desc = "A direction sign, pointing out which way the Science department is."
 	icon_state = "direction_sci"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/science, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/science, 32)
@@ -27,7 +27,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/science
 	desc = "A direction sign, pointing out which way the Engineering department is."
 	icon_state = "direction_eng"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/engineering, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/engineering, 32)
@@ -38,7 +38,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/enginee
 	desc = "A direction sign, pointing out which way the Security department is."
 	icon_state = "direction_sec"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/security, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/security, 32)
@@ -49,7 +49,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/securit
 	desc = "A direction sign, pointing out which way the Medbay is."
 	icon_state = "direction_med"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/medical, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/medical, 32)
@@ -60,7 +60,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/medical
 	desc = "A direction sign, pointing out which way the escape shuttle dock is."
 	icon_state = "direction_evac"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/evac, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/evac, 32)
@@ -71,7 +71,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/evac, 3
 	desc = "A direction sign, pointing out which way the Cargo Bay is."
 	icon_state = "direction_supply"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/supply, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/supply, 32)
@@ -82,7 +82,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/supply,
 	desc = "A direction sign, pointing out which way the Command department is."
 	icon_state = "direction_bridge"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/command, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/command, 32)
@@ -93,7 +93,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/command
 	desc = "A direction sign, pointing out which way the station's Vault is."
 	icon_state = "direction_vault"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/vault, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/vault, 32)
@@ -104,7 +104,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/vault, 
 	desc = "A direction sign, pointing out which way the station's AI Upload is."
 	icon_state = "direction_upload"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/upload, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/upload, 32)
@@ -115,7 +115,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/upload,
 	desc = "A direction sign, pointing out which way the dormitories are."
 	icon_state = "direction_dorms"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/dorms, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/dorms, 32)
@@ -126,7 +126,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/dorms, 
 	desc = "A direction sign, pointing out which way the hot stuff is."
 	icon_state = "direction_lavaland"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/lavaland, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/lavaland, 32)
@@ -137,7 +137,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/lavalan
 	desc = "A direction sign, pointing out which way the arrivals shuttle dock is."
 	icon_state = "direction_arrival"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/arrival, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/arrival, 32)

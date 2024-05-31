@@ -15,7 +15,7 @@
 	icon_state = "random_official"
 	never_random = TRUE
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/random, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/random, 32)
@@ -29,7 +29,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/ra
 	desc = "A poster glorifying the station's security force."
 	icon_state = "here_for_your_safety"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/here_for_your_safety, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/here_for_your_safety, 32)
@@ -40,7 +40,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/he
 	desc = "A poster depicting the Nanotrasen logo."
 	icon_state = "nanotrasen_logo"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/nanotrasen_logo, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/nanotrasen_logo, 32)
@@ -51,7 +51,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/na
 	desc = "A poster warning of the dangers of poor hygiene."
 	icon_state = "cleanliness"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/cleanliness, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/cleanliness, 32)
@@ -62,7 +62,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/cl
 	desc = "A poster encouraging you to help fellow crewmembers."
 	icon_state = "help_others"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/help_others, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/help_others, 32)
@@ -73,7 +73,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/he
 	desc = "A poster glorifying the engineering team."
 	icon_state = "build"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/build, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/build, 32)
@@ -84,7 +84,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/bu
 	desc = "A poster blessing this area."
 	icon_state = "bless_this_spess"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/bless_this_spess, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/bless_this_spess, 32)
@@ -95,7 +95,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/bl
 	desc = "A poster depicting an atom."
 	icon_state = "science"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/science, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/science, 32)
@@ -106,7 +106,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/sc
 	desc = "Arf arf. Yap."
 	icon_state = "ian"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/ian, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/ian, 32)
@@ -117,7 +117,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/ia
 	desc = "A poster instructing the viewer to obey authority."
 	icon_state = "obey"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/obey, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/obey, 32)
@@ -128,7 +128,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/ob
 	desc = "A poster instructing the viewer to walk instead of running."
 	icon_state = "walk"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/walk, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/walk, 32)
@@ -139,7 +139,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/wa
 	desc = "A poster instructing cyborgs to state their laws."
 	icon_state = "state_laws"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/state_laws, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/state_laws, 32)
@@ -150,7 +150,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/st
 	desc = "Ian is love, Ian is life."
 	icon_state = "love_ian"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/love_ian, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/love_ian, 32)
@@ -161,7 +161,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/lo
 	desc = "A poster advertising the television show Space Cops."
 	icon_state = "space_cops"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/space_cops, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/space_cops, 32)
@@ -172,7 +172,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/sp
 	desc = "This thing is all in Japanese."
 	icon_state = "ue_no"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/ue_no, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/ue_no, 32)
@@ -183,7 +183,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/ue
 	desc = "LEGS: Leadership, Experience, Genius, Subordination."
 	icon_state = "get_your_legs"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/get_your_legs, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/get_your_legs, 32)
@@ -194,7 +194,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/ge
 	desc = "A poster instructing the viewer not to ask about things they aren't meant to know."
 	icon_state = "do_not_question"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/do_not_question, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/do_not_question, 32)
@@ -205,7 +205,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/do
 	desc = " A poster encouraging you to work for your future."
 	icon_state = "work_for_a_future"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/work_for_a_future, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/work_for_a_future, 32)
@@ -216,7 +216,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/wo
 	desc = "A poster reprint of some cheap pop art."
 	icon_state = "soft_cap_pop_art"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/soft_cap_pop_art, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/soft_cap_pop_art, 32)
@@ -227,7 +227,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/so
 	desc = "A poster instructing the viewer to wear internals in the rare environments where there is no oxygen or the air has been rendered toxic."
 	icon_state = "safety_internals"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/safety_internals, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/safety_internals, 32)
@@ -238,7 +238,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/sa
 	desc = "A poster instructing the viewer to wear eye protection when dealing with chemicals, smoke, or bright lights."
 	icon_state = "safety_eye_protection"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/safety_eye_protection, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/safety_eye_protection, 32)
@@ -249,7 +249,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/sa
 	desc = "A poster instructing the viewer to report suspicious activity to the security force."
 	icon_state = "safety_report"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/safety_report, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/safety_report, 32)
@@ -260,7 +260,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/sa
 	desc = "A poster encouraging the swift reporting of crime or seditious behavior to station security."
 	icon_state = "report_crimes"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/report_crimes, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/report_crimes, 32)
@@ -271,7 +271,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/re
 	desc = "A poster displaying an Ion Rifle."
 	icon_state = "ion_rifle"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/ion_rifle, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/ion_rifle, 32)
@@ -282,7 +282,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/io
 	desc = "Foam Force, it's Foam or be Foamed!"
 	icon_state = "foam_force_ad"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/foam_force_ad, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/foam_force_ad, 32)
@@ -293,7 +293,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/fo
 	desc = "Cohiba Robusto, the classy cigar."
 	icon_state = "cohiba_robusto_ad"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/cohiba_robusto_ad, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/cohiba_robusto_ad, 32)
@@ -304,7 +304,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/co
 	desc = "A reprint of a poster from 2505, commemorating the 50th Anniversary of Nanoposters Manufacturing, a subsidiary of Nanotrasen."
 	icon_state = "anniversary_vintage_reprint"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/anniversary_vintage_reprint, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/anniversary_vintage_reprint, 32)
@@ -315,7 +315,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/an
 	desc = " Simple, yet awe-inspiring."
 	icon_state = "fruit_bowl"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/fruit_bowl, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/fruit_bowl, 32)
@@ -326,7 +326,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/fr
 	desc = "A poster advertising the latest PDA from Nanotrasen suppliers."
 	icon_state = "pda_ad"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/pda_ad, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/pda_ad, 32)
@@ -337,7 +337,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/pd
 	desc = "Enlist in the Nanotrasen Deathsquadron reserves today!"
 	icon_state = "enlist"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/enlist, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/enlist, 32)
@@ -348,7 +348,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/en
 	desc = " A poster advertising Nanomichi brand audio cassettes."
 	icon_state = "nanomichi_ad"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/nanomichi_ad, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/nanomichi_ad, 32)
@@ -359,7 +359,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/na
 	desc = "A poster boasting about the superiority of 12 gauge shotgun shells."
 	icon_state = "twelve_gauge"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/twelve_gauge, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/twelve_gauge, 32)
@@ -370,7 +370,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/tw
 	desc = "I told you to shake it, no stirring."
 	icon_state = "high_class_martini"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/high_class_martini, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/high_class_martini, 32)
@@ -381,7 +381,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/hi
 	desc = "The Owl would do his best to protect the station. Will you?"
 	icon_state = "the_owl"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/the_owl, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/the_owl, 32)
@@ -392,7 +392,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/th
 	desc = "This poster reminds the crew that Eroticism, Rape and Pornography are banned on Nanotrasen stations."
 	icon_state = "no_erp"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/no_erp, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/no_erp, 32)
@@ -403,7 +403,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/no
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
 	icon_state = "wtf_is_co2"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/wtf_is_co2, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/wtf_is_co2, 32)
@@ -414,7 +414,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/wt
 	desc = "A poster advertising the escapades of Dick Gumshue, mouse detective. Encouraging crew to bring the might of justice down upon wire saboteurs."
 	icon_state = "dick_gum"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/dick_gum, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/dick_gum, 32)
@@ -426,7 +426,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/di
 	// And yet people still believe...
 	icon_state = "there_is_no_gas_giant"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/there_is_no_gas_giant, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/there_is_no_gas_giant, 32)
@@ -437,7 +437,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/th
 	desc = "A periodic table of the elements, from Hydrogen to Oganesson, and everything inbetween."
 	icon_state = "periodic_table"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/periodic_table, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/periodic_table, 32)
@@ -460,7 +460,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/pe
 	. += "\t[span_info("Nanotrasen: Always looking after your health.")]"
 	return .
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/plasma_effects, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/plasma_effects, 32)
@@ -471,7 +471,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/pl
 	desc = "A poster depicting TerraGov's logo and motto, reminding viewers of who's looking out for humankind."
 	icon_state = "terragov"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/terragov, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/terragov, 32)
@@ -482,7 +482,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/te
 	desc = "This informational poster provides information on some of the prizes available via the NT Corporate Perks program, including a two-week vacation for two on the resort world Idyllus."
 	icon_state = "corporate_perks_vacation"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/corporate_perks_vacation, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/corporate_perks_vacation, 32)
@@ -501,7 +501,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/co
 	. += "\t[span_info("Jim Norton's Québécois Coffee: Toujours Le Bienvenu.")]"
 	return .
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/jim_nortons, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/jim_nortons, 32)
@@ -512,7 +512,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/ji
 	desc = "An advertisement for 24-Seven supermarkets, advertising their new 24-Stops as part of their partnership with Nanotrasen."
 	icon_state = "twenty_four_seven"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/twenty_four_seven, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/twenty_four_seven, 32)
@@ -523,7 +523,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/tw
 	desc = "An advertisement for Nanotrasen's TCG cards: BUY MORE CARDS."
 	icon_state = "tactical_game_cards"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/tactical_game_cards, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/tactical_game_cards, 32)
@@ -534,7 +534,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/ta
 	desc = "An advertisement for Midtown Slice Pizza, the official pizzeria partner of Nanotrasen. Midtown Slice: like a slice of home, no matter where you are."
 	icon_state = "midtown_slice"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/midtown_slice, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/midtown_slice, 32)
@@ -547,7 +547,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/mi
 	desc = "This informational poster uses Safety Moth™ to tell the viewer to wear hardhats in cautious areas. \"It's like a lamp for your head!\""
 	icon_state = "aspev_hardhat"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/moth_hardhat, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/moth_hardhat, 32)
@@ -558,7 +558,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/mo
 	desc = "This informational poster uses Safety Moth™ to tell atmospheric technicians correct types of piping to be used. \"Pipes, not Pumps! Proper pipe placement prevents poor performance!\""
 	icon_state = "aspev_piping"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/moth_piping, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/moth_piping, 32)
@@ -569,7 +569,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/mo
 	desc = "This informational poster uses Safety Moth™ to tell the viewer to seek CMO approval before cooking methamphetamine. \"Stay close to the target temperature, and never go over!\" ...You shouldn't ever be making this."
 	icon_state = "aspev_meth"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/moth_meth, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/moth_meth, 32)
@@ -580,7 +580,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/mo
 	desc = "This informational poster uses Safety Moth™ to inform the viewer to help injured/deceased crewmen with their epinephrine injectors. \"Prevent organ rot with this one simple trick!\""
 	icon_state = "aspev_epi"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/moth_epi, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/moth_epi, 32)
@@ -591,7 +591,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/mo
 	desc = "This informational poster uses Safety Moth™ to tell the viewer to hide in lockers when the Supermatter Crystal has delaminated, to prevent hallucinations. Evacuating might be a better strategy."
 	icon_state = "aspev_delam"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/moth_delam, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/moth_delam, 32)
@@ -604,7 +604,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/mo
 	desc = "A crudely-made poster asking the reader to please pay for any items they may wish to leave the station with."
 	icon_state = "gas_payment"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/fluff/lizards_gas_payment, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/fluff/lizards_gas_payment, 32)
@@ -615,7 +615,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/fluff/lizar
 	desc = "A crudely-made poster asking the reader to turn off the power before they leave. Hopefully, it's turned on for their re-opening."
 	icon_state = "gas_power"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/fluff/lizards_gas_power, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/fluff/lizards_gas_power, 32)
@@ -626,7 +626,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/fluff/lizar
 	desc = "A poster that informs of active holidays. None are today, so you should get back to work."
 	icon_state = "holiday_none"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/festive, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/festive, 32)
@@ -637,7 +637,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/fe
 	desc = "An outdated poster containing a list of supposed 'kill words' and code phrases. The poster alleges rival corporations use these to remotely deactivate their agents."
 	icon_state = "boombox"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/boombox, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/boombox, 32)
@@ -648,7 +648,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/bo
 	desc = "A poster reminding the crew that corporate secrets should stay in the workplace."
 	icon_state = "download_gun"
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/official/download, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/official/download, 32)

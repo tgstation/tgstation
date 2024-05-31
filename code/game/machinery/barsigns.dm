@@ -23,7 +23,7 @@
 	fire = 50
 	acid = 50
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/machinery/barsign, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/barsign, 32)
@@ -533,7 +533,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/barsign, 32)
 	req_access = null
 	disassemble_result = /obj/item/wallframe/barsign/all_access
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/machinery/barsign/all_access, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/barsign/all_access, 32)

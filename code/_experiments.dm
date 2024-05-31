@@ -6,8 +6,8 @@
 // EXPERIMENT_MY_COOL_FEATURE
 // - Does something really cool, just so neat, absolutely banging, gaming and chill
 
-// EXPERIMENT_WALLENING
-// - Stop-gap for some things that we want to implement (and pretty much orphan) in the codebase while wallening is being developed
+// EXPERIMENT_WALLENING_SIGNS
+// - Stop-gap for sign/poster directional related stuff like placing them on south related stuff and discarding everything that's not a northern directional on other signs
 
 #if DM_VERSION < 515
 
@@ -17,9 +17,9 @@
 		#undef EXPERIMENT_MY_COOL_FEATURE
 	#endif
 
-	#ifdef EXPERIMENT_WALLENING
-		#warn EXPERIMENT_WALLENING is only available on 515+
-		#undef EXPERIMENT_WALLENING
+	#ifdef EXPERIMENT_WALLENING_SIGNS
+		#warn EXPERIMENT_WALLENING_SIGNS is only available on 515+
+		#undef EXPERIMENT_WALLENING_SIGNS
 	#endif
 
 #elif defined(UNIT_TESTS)

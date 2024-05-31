@@ -233,7 +233,7 @@
 			if(copytext(new_image.icon_state, 1, 3) == "d-") //3 == length("d-") + 1
 				return
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 	// Deny placing signs if we are attempting to place it on something that is not the south face of a northern wall.
 	if(!check_wall_face(user, src, NORTH))
 		balloon_alert(user, "can't place it there!")

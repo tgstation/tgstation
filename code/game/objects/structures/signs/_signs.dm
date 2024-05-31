@@ -214,7 +214,7 @@
 	if(!iswallturf(target) || !proximity)
 		return
 
-#ifdef EXPERIMENT_WALLENING
+#ifdef EXPERIMENT_WALLENING_SIGNS
 	// Deny placing signs if we are attempting to place it on something that is not the south face of a northern wall.
 	if(!check_wall_face(user, target, NORTH))
 		balloon_alert(user, "can't place it there!")
