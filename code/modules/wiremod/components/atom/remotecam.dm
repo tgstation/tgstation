@@ -295,6 +295,8 @@
 	RegisterSignal(shell_parent, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
 	var/obj/item/organ/internal/cyberimp/bci/bci = shell_parent
 	if(bci.owner) //If somehow the camera was added while shell is already installed inside a mob, assign signals
+		if(bciuser) //This should never happen... But if it does, unassign move signal from old mob
+			UnregisterSignal(bciuser, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
 		bciuser = bci.owner
 		RegisterSignal(bciuser, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
 
