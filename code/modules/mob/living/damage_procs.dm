@@ -483,7 +483,7 @@
 ///
 /// - current_level: The mob's current stamina damage amount (to save unnecessary getStaminaLoss() calls)
 /// - amount_actual: The amount of stamina damage received, in actuality
-/// For example, if you are taking 50 stamina damage but are at 90, you would actually only recieve 30 stamina damage (due to the cap)
+/// For example, if you are taking 50 stamina damage but are at 90, you would actually only receive 30 stamina damage (due to the cap)
 /// - amount: The amount of stamina damage received, raw
 /mob/living/proc/received_stamina_damage(current_level, amount_actual, amount)
 	addtimer(CALLBACK(src, PROC_REF(setStaminaLoss), 0, TRUE, TRUE), STAMINA_REGEN_TIME, TIMER_UNIQUE|TIMER_OVERRIDE)
