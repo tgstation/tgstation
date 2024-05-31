@@ -187,7 +187,7 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 	var/barrage_amount = 3
 	var/barrage_delay = 0.7 SECONDS
 
-/datum/action/cooldown/spell/pointed/projectile/cybersun_barrage/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)
+/datum/action/cooldown/spell/pointed/projectile/cybersun_barrage/cast(obj/projectile/to_fire, atom/target, mob/user, iteration)
 	var/turf/lockon_zone
 	if (isturf(target))
 		lockon_zone = target
@@ -199,15 +199,14 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 		return
 	. = ..()
 
-/datum/action/cooldown/spell/pointed/projectile/cybersun_barrage/fire_projectile(atom/target)
-	. = ..()
-	current_amount--
-	for(var/i in 1 to barrage_amount)
-		var/obj/projectile/to_fire = new projectile_type()
-		ready_projectile(to_fire, target, owner, i)
-		SEND_SIGNAL(owner, COMSIG_MOB_SPELL_PROJECTILE, src, target, to_fire)
-		to_fire.fire()
-	return TRUE
+/datum/action/cooldown/spell/pointed/projectile/cybersun_barrage/after_cast(atom/target)
+	if(do_after(owner, barrage_delay))
+		for(var/i in 1 to barrage_amount)
+			var/obj/projectile/to_fire = new projectile_type()
+			ready_projectile(to_fire, target, owner, i)
+			SEND_SIGNAL(owner, COMSIG_MOB_SPELL_PROJECTILE, src, target, to_fire)
+			to_fire.fire()
+		return
 
 /obj/projectile/beam/laser/cybersun/weaker
 	damage = 11
