@@ -259,6 +259,9 @@
 	/// BCIs are organs, and thus the signal must be assigned ONLY when the shell has been installed in a mob - otherwise the camera will never update position
 	camera_signal_move_override = TRUE
 
+	/// Store the BCI owner as a variable, so we can remove the move signal if the user was gibbed/destroyed while the BCI is still installed
+	var/mob/living/carbon/bciuser = null
+
 /obj/item/circuit_component/remotecam/drone
 	display_name = "Remote Camera"
 	desc = "Capture the surrounding environment for surveillance-on-the-go. Camera range input is either 0 (near) or 1 (far). Network field is used for camera network."
@@ -292,25 +295,38 @@
 	RegisterSignal(shell_parent, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
 	var/obj/item/organ/internal/cyberimp/bci/bci = shell_parent
 	if(bci.owner) //If somehow the camera was added while shell is already installed inside a mob, assign signals
-		RegisterSignal(bci.owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
+		bciuser = bci.owner
+		RegisterSignal(bciuser, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
 
 /obj/item/circuit_component/remotecam/bci/unregister_shell(atom/movable/shell)
 	if(shell_camera)
+		if(bciuser)
+			UnregisterSignal(bciuser, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
+			bciuser = null
 		UnregisterSignal(shell_parent, list(COMSIG_ORGAN_IMPLANTED, COMSIG_ORGAN_REMOVED))
 	return ..()
 
 /obj/item/circuit_component/remotecam/bci/Destroy()
 	if(shell_camera)
+		if(bciuser)
+			UnregisterSignal(bciuser, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
+			bciuser = null
 		UnregisterSignal(shell_parent, list(COMSIG_ORGAN_IMPLANTED, COMSIG_ORGAN_REMOVED))
 	return ..()
 
 /obj/item/circuit_component/remotecam/bci/proc/on_organ_implanted(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
+	if(bciuser)
+		return
+	bciuser = owner
+	RegisterSignal(bciuser, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
 
 /obj/item/circuit_component/remotecam/bci/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
-	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
+	if(!bciuser)
+		return
+	UnregisterSignal(bciuser, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
+	bciuser = null
 
 /obj/item/circuit_component/remotecam/drone/register_shell(atom/movable/shell)
 	. = ..()
