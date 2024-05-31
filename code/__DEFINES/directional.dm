@@ -29,25 +29,25 @@
 #define REVERSE_DIR(dir) ( ((dir & 85) << 1) | ((dir & 170) >> 1) )
 
 /// Directional offset to place a wall item on the north side of a wall turf.
-#define NORTH_DIRECTIONAL_HELPER(path, offset)\
+#define NORTH_MAPPING_DIRECTIONAL_HELPER(path, offset)\
 ##path/directional/north {\
 	dir = NORTH; \
 	pixel_y = offset; \
 }
 /// Directional offset to place a wall item on the south side of a wall turf.
-#define SOUTH_DIRECTIONAL_HELPER(path, offset)\
+#define SOUTH_MAPPING_DIRECTIONAL_HELPER(path, offset)\
 ##path/directional/south {\
 	dir = SOUTH; \
 	pixel_y = -offset; \
 }
 /// Directional offset to place a wall item on the east side of a wall turf.
-#define EAST_DIRECTIONAL_HELPER(path, offset)\
+#define EAST_MAPPING_DIRECTIONAL_HELPER(path, offset)\
 ##path/directional/east {\
 	dir = EAST; \
 	pixel_x = offset; \
 }
 /// Directional offset to place a wall item on the west side of a wall turf.
-#define WEST_DIRECTIONAL_HELPER(path, offset)\
+#define WEST_MAPPING_DIRECTIONAL_HELPER(path, offset)\
 ##path/directional/west {\
 	dir = WEST; \
 	pixel_x = -offset; \
@@ -55,13 +55,13 @@
 
 /// Create directional subtypes for a path IN ALL CARDINAL DIRECTIONS to simplify mapping.
 #define MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(path, offset)\
-NORTH_DIRECTIONAL_HELPER(##path, ##offset)\
-SOUTH_DIRECTIONAL_HELPER(##path, ##offset)\
-EAST_DIRECTIONAL_HELPER(##path, ##offset)\
-WEST_DIRECTIONAL_HELPER(##path, ##offset)
+NORTH_MAPPING_DIRECTIONAL_HELPER(##path, ##offset)\
+SOUTH_MAPPING_DIRECTIONAL_HELPER(##path, ##offset)\
+EAST_MAPPING_DIRECTIONAL_HELPER(##path, ##offset)\
+WEST_MAPPING_DIRECTIONAL_HELPER(##path, ##offset)
 
 /// Create directional subtypes for a path for "visible" directions- as in they aren't meant to display if shown southernly (e.g. posters, signs). Simplifies mapping.
 #define MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(path, offset)\
-NORTH_DIRECTIONAL_HELPER(##path, ##offset)\
-EAST_DIRECTIONAL_HELPER(##path, ##offset)\
-WEST_DIRECTIONAL_HELPER(##path, ##offset)
+NORTH_MAPPING_DIRECTIONAL_HELPER(##path, ##offset)\
+EAST_MAPPING_DIRECTIONAL_HELPER(##path, ##offset)\
+WEST_MAPPING_DIRECTIONAL_HELPER(##path, ##offset)
