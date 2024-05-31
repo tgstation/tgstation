@@ -167,13 +167,9 @@
 
 ///scan the locs we're on for anything that should be added to our transport_contents and builds the list
 /obj/structure/transport/linear/proc/verify_transport_contents()
-	transport_contents = list()
-	for(var/turf/turf_loc in locs)
-		for(var/atom/movable/movable_contents as anything in turf_loc)
-			if(movable_contents == src)
-				continue
-
-			add_item_on_transport(src, movable_contents)
+	for(var/atom/movable/movable_contents as anything in transport_contents)
+		if(!(movable_contents.loc in locs))
+			remove_item_from_transport(movable_contents)
 
 ///signal handler for COMSIG_MOVABLE_UPDATE_GLIDE_SIZE: when a movable in transport_contents changes its glide_size independently.
 ///adds that movable to a lazy list, movables in that list have their glide_size updated when the tram next moves
