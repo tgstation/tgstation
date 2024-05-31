@@ -300,7 +300,9 @@
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(power , T, 0, 0)
 		e.start(holder.my_atom)
-	if (ismob(holder.my_atom) && clear_mob_reagents)
+	if (ismob(holder.my_atom))
+		if(!clear_mob_reagents)
+			return
 		// Only clear reagents if they use a special explosive reaction to do it; it shouldn't apply
 		// to any explosion inside a person
 		holder.clear_reagents()
@@ -309,7 +311,6 @@
 			var/vomit_flags = MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE
 			// The vomiting here is for effect, not meant to help with purging
 			victim.vomit(vomit_flags, distance = 5)
-		return
 		// Not quite the same if the reaction is in their stomach; they'll throw up
 		// from any explosion, but it'll only make them puke up everything in their
 		// stomach
