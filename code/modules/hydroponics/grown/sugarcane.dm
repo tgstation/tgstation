@@ -14,7 +14,7 @@
 	yield = 4
 	instability = 15
 	growthstages = 2
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/sugar = 0.25)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.25)
 	mutatelist = list(/obj/item/seeds/bamboo, /obj/item/seeds/sugarcane/saltcane)
 
 /obj/item/food/grown/sugarcane
@@ -66,7 +66,7 @@
 	plantname = "Saltcane"
 	product = /obj/item/food/grown/sugarcane/saltcane
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/salt = 0.25)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/salt = 0.25)
 	mutatelist = null
 
 /obj/item/food/grown/sugarcane/saltcane
